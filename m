@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3948" "Wednesday" "9" "November" "2016" "15:45:30" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4429782.ZdpFBnFWqz@blackgate>" "91" "[oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)" nil nil nil "11" "2016110914:45:30" "[oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)" (number mark "U       ago@gentoo.o Nov  9   91/3948  " thread-indent "\"[oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2129" "Tuesday" "13" "September" "2016" "21:53:03" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160913215303.56ec6504@hboeck.de>" "61" "Re: [oss-security] Heapoverflow in giflib5.1.4" "^Cc:" nil nil "9" "2016091319:53:03" "[oss-security] Heapoverflow in giflib5.1.4" (number mark "        hanno@hboeck Sep 13   61/2129  " thread-indent "\"Re: [oss-security] Heapoverflow in giflib5.1.4\"\n") "<20160913192423.GA13420@hunt>" ("<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>" "<20160913185508.1351b147@hboeck.de>" "<20160913192423.GA13420@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20054 invoked by uid 550); 9 Nov 2016 14:46:27 -0000
+Received: (qmail 32179 invoked by uid 550); 13 Sep 2016 19:53:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 32155 invoked from network); 13 Sep 2016 19:53:16 -0000
+Message-ID: <20160913215303.56ec6504@hboeck.de>
+In-Reply-To: <20160913192423.GA13420@hunt>
+References: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
+	<20160913185508.1351b147@hboeck.de>
+	<20160913192423.GA13420@hunt>
+X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-32429-1473796384-0001-2"
+Cc: "vul@724safe" <vul@724safe.com>, oss-security@lists.openwall.com
+Date: Tue, 13 Sep 2016 21:53:03 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16016 invoked from network); 9 Nov 2016 14:45:46 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:45:30 +0100
-Message-ID: <4429782.ZdpFBnFWqz@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)
+Subject: Re: [oss-security] Heapoverflow in giflib5.1.4
+To: Seth Arnold <seth.arnold@canonical.com>
 
-If it is suitable for a CVE please assign one. Thanks.
+--=_zucker.schokokeks.org-32429-1473796384-0001-2
+Content-Type: multipart/mixed; boundary="MP_/2D.k=LdNeDlBoXI89BCxEhC"
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+--MP_/2D.k=LdNeDlBoXI89BCxEhC
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-A fuzz on an updated version revealed a memory allocation failure.
+On Tue, 13 Sep 2016 12:24:23 -0700
+Seth Arnold <seth.arnold@canonical.com> wrote:
 
-The complete ASan output:
+> Hanno, can you still reproduce this issue? I followed your excellent
+> reproducer script and I don't get any ASAN warnings. If you still get
+> ASAN warnings this may indicate the source of the confusion.
 
-# dwarfdump $FILE
-==27994==WARNING: AddressSanitizer failed to allocate 0x62696c2f7273752f bytes 
-==27994==AddressSanitizer's allocator is terminating the process instead of 
-returning 0 
-==27994==If you don't like this behavior set allocator_may_return_null=1 
-==27994==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0) 
-   #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67 
-   #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159 
-   #2 0x4cec76 in __sanitizer::ReportAllocatorCannotReturnNull() 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 
-   #3 0x42204c in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317 
-   #4 0x42204c in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359 
-   #5 0x42204c in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718 
-   #6 0x4c0ab1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53 
-   #7 0x5b582e in do_decompress_zlib 
-/tmp/dwarf-20161021/libdwarf/dwarf_init_finish.c:1085:12 
-   #8 0x5b582e in _dwarf_load_section 
-/tmp/dwarf-20161021/libdwarf/dwarf_init_finish.c:1159 
-   #9 0x5bb479 in dwarf_srcfiles 
-/tmp/dwarf-20161021/libdwarf/./dwarf_line.c:336:11 
-   #10 0x5145cd in print_one_die_section 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:812:28 
-   #11 0x512262 in print_infos 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16 
-   #12 0x4faafa in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9 
-   #13 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654 
-   #14 0x7f578f45a61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289 
-   #15 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+Ok, interesting:
+I can't reproduce it any more with my poc or the poc from bug 102 with
+the git code.
 
-Affected version:
-20161021
+I can however easily generate another sample that causes the same bug.
+See attachment.
 
-Fixed version:
-N/A
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+--MP_/2D.k=LdNeDlBoXI89BCxEhC
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=gif2rgb-oob-new.gif
 
-CVE:
-N/A
+R0lGODdhAgACAKEDAAAAABwP8fdnZ////ywAAAAAAgACAAADA1QGBQA7
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00024-libdwarf-memalloc-do_decompress_zlib
+--MP_/2D.k=LdNeDlBoXI89BCxEhC--
 
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
+--=_zucker.schokokeks.org-32429-1473796384-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Note:
-This bug was found with American Fuzzy Lop.
+-----BEGIN PGP SIGNATURE-----
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-memory-allocation-failure-in-do_decompress_zlib-dwarf_init_finish-c
+iQIcBAEBCAAGBQJX2FkfAAoJEKWIAHK7tR5C+z0QAJzhwUJShEGYlO1f7ngQL20r
+1DhirxhHGqH/1jBHmtF/CcJHUdUXI3rMo0dzCt5yIRhejepd5Uokio/SnUtSEEM0
+m5lWWA85DqmvzCvNN47fPF7fZxwPJoMeWuGMfc/AUEigvT528BrUI8fgc3fT8viz
+Q/XVfgrrMuIlH2Ri5LwF1Oi+b8BkW4QKG2PWOEpY/YKnX70VrPMP5yv8KuCiS8eM
+Y0uAgVN5bBdpIjAtLQGIHUJptg+nKs7iii3x7mIHJZM+2SRLNUiP4rrJAVX9wgFK
+FaG1TVm7qQrVK+sFihdbfdR8VHsQb6K/dSn4H6/hSuB8yOEp8/tHnX0G9PtWoejl
+gPUGli+/ACRZ28vxzz48w6M+TTR4UXT8Xt+Yu/MNGBfh0BeqsQ9MoS9rguEJmoeK
+x59KXptFvW+VxT86bXkXUhJi5/34FRwRNArQhlDENT/VselBU0DZyiKJESqrUZ+P
+qmnMJozOeb1hGO10NNrOO5nI0XgjaWSgl7wQQkR7owkW9ZgCoI+7G4V7K/4c/mxW
+LoHxpeZxZAMFSTrif2Vb6uVWghm88HG7iZmrK5crhZBTaHNYxsRD4KisrLP3Klvv
+rLMbJfihLeX+18qdAs1oHGXnQV/8PFs+5Qe4If1Z6qk1qAg3xIGq2vlhXMHUN/da
+4ESHOn7ulNmxYv64Zupv
+=hI3p
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-32429-1473796384-0001-2--
