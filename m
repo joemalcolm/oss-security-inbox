@@ -1,84 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/2
-Message-ID: <3e7ac139-077b-9d9e-7ad0-ed90083d8937@redhat.com>
-Date: Mon, 18 Jul 2016 10:51:32 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/7
+Message-ID: <20160913165006.GA9055@openwall.com>
+Date: Tue, 13 Sep 2016 18:50:06 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "vul @ 724safe" <vul@...safe.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Requests: HarfBuzz - Chromium CVE issues
+Subject: Re: Heapoverflow in giflib5.1.4
 Content-Type: text/plain; charset=utf-8
 
-On 07/18/2016 01:30 AM, cve-assign@...re.org wrote:
->> atleast 3 issues in here which are CVE worthy
-> 
->> 1. Heap based buffer overflow:
->> https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
-> 
->> 2. Fix hmtx wrong table length check:
->> https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
-> 
->> 3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
->> https://github.com/behdad/harfbuzz/issues/156
-> 
-> As far as we can tell, these correspond to:
-> 
-> 1 - https://github.com/behdad/harfbuzz/commit/f96664974774bfeb237a7274f512f64aaafb201e
->     fixed in 1.0.5
-> 
-> 2 - https://github.com/behdad/harfbuzz/commit/63ef0b41dc48d6112d1918c1b1de9de8ea90adb5
->     fixed in 1.0.6
-> 
-> 3 - https://github.com/behdad/harfbuzz/commit/df698f3299d92867e3305715f675b2621c316acd
->     the unpatched code is not in any release; the patched code is new in 1.1.0
-> 
-> df698f3299d92867e3305715f675b2621c316acd mentions "I rewrote the table
-> checking yesterday ... and introduced the exact same issue again." Is
-> there a particular motivation for having a CVE ID? We don't know of
-> anyone who is shipping products based on unreleased HarfBuzz code
-> obtained from GitHub, and the one-day existence of the problematic
-> code also seems to suggest minimal real-world relevance. The HarfBuzz
-> documentation doesn't specifically recommend that people ship
-> unreleased HarfBuzz code. A CVE ID isn't, in general, required for
-> each issue noted at any arbitrary point during development.
-> 
-> Would it be OK to keep CVE-2016-2052 for
-> 63ef0b41dc48d6112d1918c1b1de9de8ea90adb5 (which is really a "before
-> 1.0.6" issue as stated in that CVE), and assign one new ID for
-> f96664974774bfeb237a7274f512f64aaafb201e (the "before 1.0.5" issue)?
-> 
-Sure, i dont mind as long as its communicated well etc!
->> how does
->> MITRE plan to handle vendors who assign one CVE to multiple non-related
->> issues?
-> 
-> Anyone is free to submit new CVE ID requests with sufficient
-> information to show that additional IDs are required. Typically this
-> means that the requester should, for example, track down all of the
-> upstream version information.
-> 
-> In general, it is not realistic to expect that the "multiple
-> non-related issues" case can be completely eliminated when CVE IDs
-> are originally assigned. When product A repackages code from product
-> B, there can be a disparity in whether the B maintainers are as
-> interested in CVE as the A maintainers. Also, the A maintainers do not
-> necessarily have any motivation for investigating the precise details
-> of what was fixed in B, unless the A maintainers are backporting
-> patches. For example, A might just be updating to the latest version
-> of B, because the B Release Notes stated that it was a security
-> update. Suppose that the A maintainers confirm that the B maintainers
-> have not been, and will not be, using CVE IDs themselves. Would it be
-> better for the A maintainers to use one CVE ID immediately, or should
-> everyone wait (potentially forever) for someone to investigate the
-> precise details?
-> 
+On Tue, Sep 13, 2016 at 11:20:08PM +0800, vul @ 724safe wrote:
+> With Address Sanitizer there is aa heap overflow in giflib 5.1.4
+> More details are available at:
+> https://sourceforge.net/p/giflib/bugs/102/
 
-This means that, if you dont have motivation for investigating the
-individual issues, it is ok to assign CVEs to multiple unrelated issues?
+When posting to oss-security, please include the actual detail right in
+your posting (up to 200 KB including MIME overhead, but of course try to
+keep it smaller than that if at all practical) - not only via external
+links.  I've attached the content of the above link now.  Luckily, this
+one PoC GIF file is tiny:
 
-It so, that means everyone is free to do the above mentioned.
+$ base64 poc
+R0lGODdhKP9/AADZACwAHQAAKAAAAPngp5Lb5QAD4wAAAgAAOwAd
 
+Ideally, you would also investigate and patch issues found by ASan,
+rather than merely include its output, but I realize we can't actually
+expect anything specific from volunteers.  So whatever we've got.
 
+Thanks,
 
+Alexander
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+View attachment "giflib-102-Heap_overflow_in_gif2rgb.c.txt" of type "text/plain" (2519 bytes)
+
+Download attachment "poc" of type "application/octet-stream" (39 bytes)
