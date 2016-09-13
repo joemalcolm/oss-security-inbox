@@ -1,49 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/31/3
-Message-ID: <20160731133956.GB15386@kroah.com>
-Date: Sun, 31 Jul 2016 06:39:56 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: badUSB exploit - affects all Linux distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/2
+Message-ID: <87r38ohvku.fsf@redhat.com>
+Date: Tue, 13 Sep 2016 13:45:37 +0200
+From: Martin Prpic <mprpic@...hat.com>
+To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-6299 mock: privilige escalation via mock-scm
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 31, 2016 at 01:34:02PM +0200, פאי פי wrote:
-> Title: badUSB exploit - affects all Linux distros
-> ---------------------------------------------------------
-> 
-> Dear oss-security mail list members,
-> 
-> Please, I urge you to fix the known badUSB security exploit that exists in any Linux distro.
+Hi,
 
-First off, it is not an "exploit", is is "working as designed". :)
+It was found that mock's scm plug-in would parse a given spec file with
+root priviliges. This could allow an attacker who is able to start a
+build of an rpm with a specially crafted spec file within mock's
+environment to elevate their priviliges and escape the chroot.
 
-> There is available (to the general public) a relatively cheap product
-> which does the "rubberducky" attack, it uses the badUSB exploit.
+Red Hat bug:
 
-Not really, that device just acts like the USB device it said it is (a
-keyboard).  This device has been around for years and is very useful for
-development efforts.
+https://bugzilla.redhat.com/show_bug.cgi?id=1375490
 
->     1. Copy-paste a bash script
->     2. chmod it so that it will execute (under normal user - NOT root)
->     3. malware is active... 
+Upstream patch:
 
-So can your USB keyboard :)
+https://github.com/rpm-software-management/mock/commit/8b02f43beadacf6911200b48d94e39e891a41da9
 
-Anyway, Linux (the kernel), provides you the abilities to disable all
-USB devices and only enable the ones you deem "safe", whenever you
-decide to.  It is up to you how you determine this.  By default, most
-Linux distros do not enable this option for obvious reasons.
-
-> Note that by default - Linux's firewall is disabled, therefore
-> allowing an easy access to the attacker via internet.
-
-No, that's your distro's decision, many enable it by default.
-
-Anyway, best of luck, but this is a distro-specific issue and I suggest
-working with your distro to enable that option by default if you so
-desire it.
-
-thanks,
-
-greg k-h
+--
+Martin Prpič / Red Hat Product Security
