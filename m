@@ -1,61 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/2
-Message-ID: <CANEZYrcYGQf_-+nO9o2X=SPwO5LvPLN+BiYCVOfvDy3M4AVvXQ@mail.gmail.com>
-Date: Fri, 16 Sep 2016 02:15:59 +0000
-From: Gulshan Singh <gsingh2011@...il.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Libarchive/bsdtar: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/9
+Message-ID: <20160913192423.GA13420@hunt>
+Date: Tue, 13 Sep 2016 12:24:23 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: "vul@...safe" <vul@...safe.com>, oss-security@...ts.openwall.com
+Subject: Re: Heapoverflow in giflib5.1.4
 Content-Type: text/plain; charset=utf-8
 
-I dug into
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/,
-which I had reported here earlier (thanks for the mention):
-https://github.com/libarchive/libarchive/issues/747
+On Tue, Sep 13, 2016 at 06:55:08PM +0200, Hanno Böck wrote:
+> Two notes:
+> * This is a bug *only* in the gif2rgb command line tool, not in giflib
+>   itself.
+> * I reported this before. The giflib maintainer claimed multiple times
+>   that he has fixed it, yet he hasn't. See:
+> https://sourceforge.net/p/giflib/bugs/79/
 
-After digging into the bug, it seemed it wasn't exploitable, and could only
-lead to a crash, so I decided to not send it out to the list and request a
-CVE.
+Hanno, can you still reproduce this issue? I followed your excellent
+reproducer script and I don't get any ASAN warnings. If you still get ASAN
+warnings this may indicate the source of the confusion.
 
-On Thu, Sep 15, 2016 at 8:54 AM Agostino Sarubbo <ago@...too.org> wrote:
+Thanks
 
-> Hello all.
->
-> I'd like to make people aware of the following crashes in libarchive/bsdtar
-> found by fuzzing (all issues are public on github):
->
-> The most dangerous, an out of bounds stack write (which is also fixed
-> upstream):
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer-overflow-in-bsdtar_expand_char-util-c/
->
->
-> The following are buffer over read of 1 (all are unfixed upstream ATM):
->
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-detect_form-archive_read_support_format_mtree-c/
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-read_header-archive_read_support_format_7zip-c/
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-bid_entry-archive_read_support_format_mtree-c/
->
-> As stated in the posts, the two latest bug could be the same, but I didn't
-> have an upstream response about, so I posted both stacktrace to better
-> track
-> the issues.
->
->
-> The following are use-after-free (all are unfixed upstream ATM):
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-bid_entry-archive_read_support_format_mtree-c/
->
-> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-detect_form-archive_read_support_format_mtree-c/
->
-> As stated in the posts, they could be the same.
-> I didn't have an upstream response too for those.
->
->
-> Agostino
->
+ubuntu@x1:~$ git clone --depth=1 git://git.code.sf.net/p/giflib/code giflib-code
+Cloning into 'giflib-code'...
+remote: Counting objects: 149, done.
+remote: Compressing objects: 100% (147/147), done.
+remote: Total 149 (delta 22), reused 10 (delta 0)
+Receiving objects: 100% (149/149), 389.03 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (22/22), done.
+Checking connectivity... done.
+ubuntu@x1:~$  cd giflib-code/
+ubuntu@x1:~/giflib-code$ CFLAGS="-fsanitize=address -g" LDFLAGS="-fsanitize=address" ./autogen.sh
+Warning: This script will run configure for you -- if you need to pass
+  arguments to configure, please give them as arguments to this script.
+aclocal: warning: couldn't open directory 'm4': No such file or directory
+configure.ac:14: installing './ar-lib'
+configure.ac:14: installing './compile'
+configure.ac:15: installing './config.guess'
+configure.ac:15: installing './config.sub'
+configure.ac:5: installing './install-sh'
+configure.ac:5: installing './missing'
+Makefile.am: installing './INSTALL'
+parallel-tests: installing './test-driver'
+lib/Makefile.am: installing './depcomp'
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+[...]
+configure: creating ./config.status
+config.status: creating util/Makefile
+config.status: creating lib/Makefile
+config.status: creating Makefile
+config.status: creating doc/Makefile
+config.status: creating pic/Makefile
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+ubuntu@x1:~/giflib-code$ make -j
+make  all-recursive
+make[1]: Entering directory '/home/ubuntu/giflib-code'
+Making all in lib
+make[2]: Entering directory '/home/ubuntu/giflib-code/lib'
+  CC       dgif_lib.lo
+  CC       gif_font.lo
+  CC       egif_lib.lo
+  CC       gif_hash.lo
+  CC       gifalloc.lo
+  CC       openbsd-reallocarray.lo
+  CC       gif_err.lo
+  CC       quantize.lo
+  CCLD     libgif.la
+ar: `u' modifier ignored since `D' is the default (see `U')
+make[2]: Leaving directory '/home/ubuntu/giflib-code/lib'
+Making all in util
+make[2]: Entering directory '/home/ubuntu/giflib-code/util'
+  CC       getarg.o
+  CC       gif2rgb.o
+  CC       qprintf.o
+  CC       gifbuild.o
+  CC       gifecho.o
+  CC       gifinto.o
+  CC       giftext.o
+  CC       giftool.o
+  CC       gifclrmp.o
+  CC       giffix.o
+  CC       gifbg.o
+  CC       gifcolor.o
+  CC       giffilter.o
+  CC       gifsponge.o
+  CC       gifhisto.o
+  CC       gifwedge.o
+  AR       libgetarg.a
+ar: `u' modifier ignored since `D' is the default (see `U')
+  CCLD     gif2rgb
+  CCLD     gifecho
+  CCLD     giffix
+  CCLD     giftext
+  CCLD     gifinto
+  CCLD     giftool
+  CCLD     gifbg
+  CCLD     gifclrmp
+  CCLD     gifcolor
+  CCLD     giffilter
+  CCLD     gifsponge
+  CCLD     gifwedge
+  CCLD     gifhisto
+  CCLD     gifbuild
+make[2]: Leaving directory '/home/ubuntu/giflib-code/util'
+Making all in pic
+make[2]: Entering directory '/home/ubuntu/giflib-code/pic'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/ubuntu/giflib-code/pic'
+make[2]: Entering directory '/home/ubuntu/giflib-code'
+make[2]: Leaving directory '/home/ubuntu/giflib-code'
+make[1]: Leaving directory '/home/ubuntu/giflib-code'
+ubuntu@x1:~/giflib-code$ wget https://sourceforge.net/p/giflib/bugs/79/attachment/gif2rgb-oob-heap-read.gif
+--2016-09-13 19:19:27--  https://sourceforge.net/p/giflib/bugs/79/attachment/gif2rgb-oob-heap-read.gif
+Resolving sourceforge.net (sourceforge.net)... 216.34.181.60
+Connecting to sourceforge.net (sourceforge.net)|216.34.181.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 20 [image/gif]
+Saving to: ‘gif2rgb-oob-heap-read.gif’
 
+gif2rgb-oob-heap-read.gif    100%[=============================================>]      20  --.-KB/s    in 0s
+
+2016-09-13 19:19:27 (2.73 MB/s) - ‘gif2rgb-oob-heap-read.gif’ saved [20/20]
+
+ubuntu@x1:~/giflib-code$  util/gif2rgb gif2rgb-oob-heap-read.gif
+Background color out of range for colormap
+ubuntu@x1:~/giflib-code$ 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
