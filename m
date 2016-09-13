@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1786" "Saturday" "6" "January" "2018" "15:13:38" "+0100" "Ailin Nemui" "ailin.nemui@gmail.com" "<1515248018.2869.2.camel@gmail.com>" "79" "[oss-security] Irssi 1.0.6: CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207" nil nil nil "1" "2018010614:13:38" "[oss-security] Irssi 1.0.6: CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207" (number mark "U       ailin.nemui@ Jan  6   79/1786  " thread-indent "\"[oss-security] Irssi 1.0.6: CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4113" "Tuesday" "13" "September" "2016" "13:24:58" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160913202458.GB13420@hunt>" "99" "Re: [oss-security] Heapoverflow in giflib5.1.4" "^Cc:" nil nil "9" "2016091320:24:58" "[oss-security] Heapoverflow in giflib5.1.4" (number mark "        seth.arnold@ Sep 13   99/4113  " thread-indent "\"Re: [oss-security] Heapoverflow in giflib5.1.4\"\n") "<20160913215303.56ec6504@hboeck.de>" ("<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>" "<20160913185508.1351b147@hboeck.de>" "<20160913192423.GA13420@hunt>" "<20160913215303.56ec6504@hboeck.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27943 invoked by uid 550); 6 Jan 2018 14:18:18 -0000
+Received: (qmail 7838 invoked by uid 550); 13 Sep 2016 20:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,122 +11,123 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 7813 invoked from network); 13 Sep 2016 20:25:14 -0000
+Message-ID: <20160913202458.GB13420@hunt>
+Mail-Followup-To: Hanno =?iso-8859-1?Q?B=F6ck?= <hanno@hboeck.de>,
+	"vul@724safe" <vul@724safe.com>, oss-security@lists.openwall.com
+References: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
+ <20160913185508.1351b147@hboeck.de>
+ <20160913192423.GA13420@hunt>
+ <20160913215303.56ec6504@hboeck.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+g7M9IMkV8truYOl"
+Content-Disposition: inline
+In-Reply-To: <20160913215303.56ec6504@hboeck.de>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: "vul@724safe" <vul@724safe.com>, oss-security@lists.openwall.com
+Date: Tue, 13 Sep 2016 13:24:58 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18294 invoked from network); 6 Jan 2018 14:13:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=9kiNO+XVYHeh5897D9dQ8MaBKSHMmIZUpI5qYxs0E+0=;
-        b=GhkMNIH2SzM3692hLfO3IwqB5Zt1NeJbRXpTs7DmVYYqR2hTAowoJ+r72F+6mYXt0Q
-         v+f/81CrBgg/RmLaN2aft+NrNq+8WkO0qVa/YwrO1M1KkP2vRK5Qi6mwUocIkaGKNzk4
-         0lqQaJgWL6hWDUx9gEoACuE4yBdtvqqZ5qx9L/W43A1yyJlXeNUFxnwcX6SKV1+54rIJ
-         oo+80kQO58HWVS0wEfq+OxelvaiYy0rxrnsMo6Nwo/b9o3jX+Hz+VAYTHnpfmC2w9nBu
-         NXoXLh7mvYu7OiV+QV0bprY1LfhmJUkNT7TpfHZ0EH9in2J6Y4KjTmFfPUjSQNxzOawc
-         r43g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=9kiNO+XVYHeh5897D9dQ8MaBKSHMmIZUpI5qYxs0E+0=;
-        b=ngH/miAz0YLlXmsdv7afWqXofiM7N6Ojy1M0RvafKeEzxkOXK/itIMYNNUEPoTZSSf
-         JNSlk7IytYczAUZ3aEYpMFORMzjCwLFfyOMLoAxwBV8hvKTwptff/rCInJFQ/I44mr+8
-         sts4RPu+BmHuqimhYPKhm5s+ciTBl6lIRmn+7hRJdfWIGeOrx+u2EtBrq7xZ77cSjn7Y
-         kRBAXLvcvZTq9x38DcWJi7QlzsweyRhuAv7l0Mk3CLtCNocviAHr7omMlQYAKdUHD9hy
-         +vywzdTKj0Uc/HH5B/20ZwuNDaixF3hkXLcEb0FW1tAe7DSJnYcol2ehYwzCpzXXBwkE
-         cddw==
-X-Gm-Message-State: AKGB3mLeLCzloX4D4iJS3LtxEs8h84ueiQA+zPo6RetDs5Q0Xx0qI0ww
-	6VirsaNpcHsvj7lo7JSiIdijew==
-X-Google-Smtp-Source: ACJfBos9APlyF28A8g02BWmUHeof0bbgIHgmOS1DhOhLFURePHMxEO2MxMUmENQMXO6rdDNa/mOIkw==
-X-Received: by 10.80.159.137 with SMTP id c9mr8842163edf.136.1515248020259;
-        Sat, 06 Jan 2018 06:13:40 -0800 (PST)
-Message-ID: <1515248018.2869.2.camel@gmail.com>
-From: Ailin Nemui <ailin.nemui@gmail.com>
-To: oss-security@lists.openwall.com
-Date: Sat, 06 Jan 2018 15:13:38 +0100
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Irssi 1.0.6: CVE-2018-5206, CVE-2018-5205, CVE-2018-5208,
- CVE-2018-5207
+Subject: Re: [oss-security] Heapoverflow in giflib5.1.4
+To: Hanno =?iso-8859-1?Q?B=F6ck?= <hanno@hboeck.de>
 
-IRSSI-SA-2018-01 Irssi Security Advisory [1]
-============================================
-CVE-2018-5206, CVE-2018-5205, CVE-2018-5208, CVE-2018-5207
+--+g7M9IMkV8truYOl
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Description
------------
+On Tue, Sep 13, 2016 at 09:53:03PM +0200, Hanno B=F6ck wrote:
+> I can however easily generate another sample that causes the same bug.
+> See attachment.
 
-Multiple vulnerabilities have been located in Irssi.
+This attachment does indeed trigger ASAN here, too:
 
-(a) When the channel topic is set without specifying a sender, Irssi
-    may dereference NULL pointer. Found by Joseph Bisch. (CWE-476)
+ubuntu@x1:~/giflib-code$ util/gif2rgb gif2rgb-oob-new.gif=20
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D5394=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address 0x=
+60200000efdc at pc 0x000000402b8b bp 0x7ffdafbd60f0 sp 0x7ffdafbd60e0
+READ of size 1 at 0x60200000efdc thread T0
+    #0 0x402b8a in DumpScreen2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:2=
+94
+    #1 0x4045a8 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:480
+    #2 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
+    #3 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
+    #4 0x4015c8 in _start (/home/ubuntu/giflib-code/util/.libs/lt-gif2rgb+0=
+x4015c8)
 
-    CVE-2018-5206 was assigned to this issue.
+0x60200000efdc is located 0 bytes to the right of 12-byte region [0x6020000=
+0efd0,0x60200000efdc)
+allocated by thread T0 here:
+    #0 0x7f2a76f9179a in __interceptor_calloc (/usr/lib/x86_64-linux-gnu/li=
+basan.so.2+0x9879a)
+    #1 0x7f2a76cf0e55 in GifMakeMapObject /home/ubuntu/giflib-code/lib/gifa=
+lloc.c:55
+    #2 0x7f2a76ce3179 in DGifGetScreenDesc /home/ubuntu/giflib-code/lib/dgi=
+f_lib.c:268
+    #3 0x7f2a76ce2412 in DGifOpenFileHandle /home/ubuntu/giflib-code/lib/dg=
+if_lib.c:140
+    #4 0x7f2a76ce1dde in DGifOpenFileName /home/ubuntu/giflib-code/lib/dgif=
+_lib.c:61
+    #5 0x4034f3 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:356
+    #6 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
+    #7 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
++0x2082f)
 
-(b) When using incomplete escape codes, Irssi may access data beyond
-    the end of the string. (CWE-126) Found by Joseph Bisch.
-
-    CVE-2018-5205 was assigned to this issue.
-
-(c) A calculation error in the completion code could cause a heap
-    buffer overflow when completing certain strings. (CWE-126) Found
-    by Joseph Bisch.
-
-    CVE-2018-5208 was assigned to this issue.
-
-(d) When using an incomplete variable argument, Irssi may access data
-    beyond the end of the string. (CWE-126) Found by Joseph Bisch.
-
-    CVE-2018-5207 was assigned to this issue.
-
-
-Impact
-------
-
-May affect the stability of Irssi.
-
-
-Affected versions
------------------
-
-(a,b,c,d) All Irssi versions that we observed.
-
-
-Fixed in
---------
-
-Irssi 1.0.6
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/giflib-code/ut=
+il/gif2rgb.c:294 DumpScreen2RGB
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa 06 fa fa fa 02 fa
+=3D>0x0c047fff9df0: fa fa 02 fa fa fa 00 00 fa fa 00[04]fa fa 03 fa
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07=20
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+=3D=3D5394=3D=3DABORTING
 
 
-Recommended action
-------------------
+Thanks Hanno
 
-Upgrade to Irssi 1.0.6. Irssi 1.0.6 is a maintenance release in the
-1.0 series, without any new features.
+--+g7M9IMkV8truYOl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQEcBAEBAgAGBQJX2GCaAAoJEPMhclmdjS6XWlsH/Rkm71T/hWR/pJBZM1x8ziEj
+BWHXyaqWYgtu60ZH5cCEQritMPudhPS5Vuwm0u6ENkWhQLl3XtnvetbmuAvIzcGn
+uoicpwMMY8GG2BO1/Z5pkKgUTIyHJ0CcEWu6NJv1LST3fCOAfLqiUSI6b/OG5woe
+ryOVcWrsrA7/obGQq6il4TBNEzjdxvr8JxKX67ufHploZ7XIkJwQ7hfE+gglH9Sz
+b9ggvyCgoMvU5170aUAAxA1sUXyAJC/VftU2+EfTmV/ec5otHzOXARVmiCXzO2tg
+DKUTMkmE+XGz4MPKHBInD0QbYDIpg0IF51LQ/QDpnVblGndUSShWY5ZatGxR7nY=
+=9cm/
+-----END PGP SIGNATURE-----
 
-Mitigating facts
-----------------
-
-(a) requires a broken ircd or control over the ircd
-
-(b,d) requires user to install malicious or broken files or enter
-      affected commands
-
-
-Patch
------
-https://github.com/irssi/irssi/releases/download/1.0.6/irssi-1.0.5_1.0.
-6.diff
-
-
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2018_01.txt
+--+g7M9IMkV8truYOl--
