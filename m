@@ -1,80 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/9
-Message-ID: <CAFJuDmMn+tNjYrcJXQoLokV-sPJphBRE-1OGWn_WYjtRoDfCoA@mail.gmail.com>
-Date: Sat, 5 Mar 2016 15:25:49 -0500
-From: Adam Caudill <adam@...mcaudill.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/11
+Message-ID: <alpine.GSO.2.20.1609131447570.990@freddy.simplesystems.org>
+Date: Tue, 13 Sep 2016 14:57:01 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: libxml with CGI fix
 Content-Type: text/plain; charset=utf-8
 
-I very much like the idea of being able to get an ID instantly - it
-greatly simplifies an otherwise time consuming process. That said, I
-can see some issues with OVE:
+On Tue, 13 Sep 2016, watashiwaher wrote:
 
-* No Lookup - For a customer, going from OVE to what it represents
-could be complicated. It depends entirely on the researcher or vendor
-publishing a reference for that ID.
+> Hi, huys! There is a known httpoxy vulnerability ( https://httpoxy.org/ ).
+> There is a problem with CGI usage in all application which use libxml2
+> library. Attacker can make requests via attacker proxy from target server
+> using this vulnerability. I reported this problem in the 5th august, but
+> developers didn't reply me at all, and I don't know if they want to
+> response.
 
-* Invalid Entries - As noted, there's no way to see if a given ID is
-considered valid, and while there is value to just having an ID, this
-model makes later curation more difficult. With no information behind
-the ID, there's no opportunity to later expand into a more complete
-solution.
+The referenced web site provides the advice "Do it “at the edge”, 
+where HTTP requests first enter your system.".  In this case libxml2 
+is not the edge.  The edge is the parser which accepts the CGI 
+requests.
 
-Here is what I would like to see:
+Adding detection of "REQUEST_METHOD" to libxml2 may reduce the 
+potential menace.
 
-* Simple ID Request - Data required should be minimal, though I think
-a few basic items are needed. Perhaps vendor, product, version(s),
-title, and contact information. Optionally, the requestor should be
-able to provide their GPG public key, a detailed description,
-reference URL(s), etc. The ID should then be instantly issued, and
-given a status of assigned.
+The libxml2 developers should have responded to you but I can see why 
+they would not consider this to be their problem.
 
-* Simple Updates - The requestor should be able to easily add / update
-information as research, vendor coordination, etc. proceeds. Vendors
-should have a similar mechanism to provide additional information.
-Prior to publishing, a few additional items should be required, such
-as the detailed description, if not included in the original request.
+If you break libxml2 support for HTTP_PROXY (and/or http_proxy) then 
+the proxy capabilty can't be used outside of CGI applications, which 
+is likely to break existing valid uses.
 
-* Curation & Publishing - At the point that the requestor is ready to
-publish the issue (may be at the time of the initial request, such as
-the requests that we normally see on this list, or at a later time
-after working with the vendor), they can request publication, and this
-is where curation comes into play. This is the first point where
-someone other than the requestor and vendor have a role to play. This
-could be handled in a number of different ways - most likely review
-the information listed and if there is confirmation of the issue (the
-code that is vulnerable, a change log, or other vendor confirmation),
-then it is published and all the information is then made public.
-
-There are various points here where additional services could be added
-as time goes on, vendors could register their contact information
-which could allow them to be automatically notified when a new entry
-is added for one of their products. Could offer assistance in
-contacting unresponsive vendors, etc. - it is important though to
-focus on automated functionality. I suspect that excessive manual work
-is one of the main reasons that CVE has failed to meet the needs of
-the community.
-
-
---Adam Caudill
-http://adamcaudill.com
-
-
-On Sat, Mar 5, 2016 at 12:20 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Fri, Mar 04, 2016 at 02:08:15PM -0500, Art Manion wrote:
->> I think it's been said on this list previously -- these are two separate
->> activities:
->>
->> 1. Assigning IDs
->
-> Problem solved:
->
-> http://www.openwall.com/ove
->
->> 2. Analysis, deconfliction, write-up
->
-> Having IDs is of some use even without or before all of that.
->
-> Alexander
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
