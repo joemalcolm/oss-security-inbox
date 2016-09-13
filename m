@@ -1,35 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/2
-Message-ID: <alpine.LFD.2.20.1607281651320.26930@wniryva>
-Date: Thu, 28 Jul 2016 17:00:39 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: paulus@....ibm.com, David Gibson <dgibson@...hat.com>
-Subject: CVE-2016-5412 Kernel: powerpc: kvm: Infinite loop via H_CEDE hypercall when running under hypervisor-mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/12
+Message-ID: <20160913202458.GB13420@hunt>
+Date: Tue, 13 Sep 2016 13:24:58 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: "vul@...safe" <vul@...safe.com>, oss-security@...ts.openwall.com
+Subject: Re: Heapoverflow in giflib5.1.4
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Tue, Sep 13, 2016 at 09:53:03PM +0200, Hanno Böck wrote:
+> I can however easily generate another sample that causes the same bug.
+> See attachment.
 
-Linux kernel built with for the PowerPC platform with KVM Virtualisation with 
-hypervisor-mode support(CONFIG_KVM_BOOK3S_64_HV) enabled is vulnerable to a 
-DoS issue. It could occur if a guest kernel running under hypervisor-mode KVM 
-(i.e. "HV KVM" rather than "PR KVM"), does the H_CEDE hypercall while a 
-suspended transaction exists, the host CPU may, under certain circumstances, 
-hang in an infinite loop with interrupts disabled.
+This attachment does indeed trigger ASAN here, too:
 
-A user/process inside guest could use this flaw to crash the host kernel 
-resulting in DoS.
+ubuntu@x1:~/giflib-code$ util/gif2rgb gif2rgb-oob-new.gif 
+=================================================================
+==5394==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efdc at pc 0x000000402b8b bp 0x7ffdafbd60f0 sp 0x7ffdafbd60e0
+READ of size 1 at 0x60200000efdc thread T0
+    #0 0x402b8a in DumpScreen2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:294
+    #1 0x4045a8 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:480
+    #2 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
+    #3 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+    #4 0x4015c8 in _start (/home/ubuntu/giflib-code/util/.libs/lt-gif2rgb+0x4015c8)
 
-Upstream patches:
------------------
-   -> https://marc.info/?l=kvm&m=146968629127349&w=2
+0x60200000efdc is located 0 bytes to the right of 12-byte region [0x60200000efd0,0x60200000efdc)
+allocated by thread T0 here:
+    #0 0x7f2a76f9179a in __interceptor_calloc (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9879a)
+    #1 0x7f2a76cf0e55 in GifMakeMapObject /home/ubuntu/giflib-code/lib/gifalloc.c:55
+    #2 0x7f2a76ce3179 in DGifGetScreenDesc /home/ubuntu/giflib-code/lib/dgif_lib.c:268
+    #3 0x7f2a76ce2412 in DGifOpenFileHandle /home/ubuntu/giflib-code/lib/dgif_lib.c:140
+    #4 0x7f2a76ce1dde in DGifOpenFileName /home/ubuntu/giflib-code/lib/dgif_lib.c:61
+    #5 0x4034f3 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:356
+    #6 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
+    #7 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1349916
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/giflib-code/util/gif2rgb.c:294 DumpScreen2RGB
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa 06 fa fa fa 02 fa
+=>0x0c047fff9df0: fa fa 02 fa fa fa 00 00 fa fa 00[04]fa fa 03 fa
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+==5394==ABORTING
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Thanks Hanno
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
