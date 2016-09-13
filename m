@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/4
-Message-ID: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
-Date: Tue, 13 Sep 2016 23:20:08 +0800
-From: vul@...safe <vul@...safe.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/1
+Message-ID: <8e6b5a03-cc0f-a4b0-cf47-7aa25aca207b@ipsumj.de>
+Date: Tue, 13 Sep 2016 01:53:00 +0000
+From: HW42 <hw42@...umj.de>
 To: oss-security@...ts.openwall.com
-Subject: Heapoverflow in giflib5.1.4
+Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+From the advisory:
+> on MySQL versions in branches 5.5 and 5.6.
+> The datadir location for my.cnf has only been removed from MySQL starting
+> from 5.7 branch however in many configurations it will still load config
+> from:
+> 
+> /var/lib/mysql/.my.cnf
 
-With Address Sanitizer there is aa heap overflow in giflib 5.1.4
-More details are available at:
-https://sourceforge.net/p/giflib/bugs/102/
- 
--- F4B3CD@...RLAB
+This is only the case if HOME is set to /var/lib/mysql, right? So for
+example not in the Debian config?
 
+> IX. VENDOR RESPONSE / SOLUTION
+> -------------------------
+[...]
+> No official patches or mitigations are available at this time from the vendor.
+> As temporary mitigations, users should ensure that no mysql config files are
+> owned by mysql user, and create root-owned dummy my.cnf files that are not in
+> use.
 
+Would it not be a better mitigation to not read the conf files from the
+data directory at all? Something like the attached patch.
+
+View attachment "mysql.patch" of type "text/x-diff" (1062 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (826 bytes)
