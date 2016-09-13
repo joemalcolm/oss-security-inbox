@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/9
-Message-ID: <CAKG8Do5ebwd1h2XAEYntLh0k4oes5pLRR0UOw2nEVwNFLhk3dg@mail.gmail.com>
-Date: Wed, 17 Aug 2016 19:30:10 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/6
+Message-ID: <20160913185508.1351b147@hboeck.de>
+Date: Tue, 13 Sep 2016 18:55:08 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: "vul@...safe" <vul@...safe.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Heapoverflow in giflib5.1.4
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-This is to disclose the following CVE:
+On Tue, 13 Sep 2016 23:20:08 +0800
+"vul@...safe" <vul@...safe.com> wrote:
 
-CVE-2016-5404 freeipa: Insufficient privileges check in certificate
-revocation
+> With Address Sanitizer there is aa heap overflow in giflib 5.1.4
+> More details are available at:
+> https://sourceforge.net/p/giflib/bugs/102/
 
-Description :
-An insufficient permission check issue was found in the way IPA server
-treats certificate revocation requests. An attacker logged in with the
-'retrieve certificate' permission enabled could use this flaw to revoke
-certificates, possibly triggering a denial of service attack.
-
-All versions are affected.
-
-Patches can be found on the corresponding Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-5404
-
-Impact: Moderate
-CVSS3 scoring : 4.3 CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
-
-Reported by: Fraser Tweedale (Red Hat)
-
-Best Regards,
+Two notes:
+* This is a bug *only* in the gif2rgb command line tool, not in giflib
+  itself.
+* I reported this before. The giflib maintainer claimed multiple times
+  that he has fixed it, yet he hasn't. See:
+https://sourceforge.net/p/giflib/bugs/79/
 
 -- 
-Cedric Buissart,
-Product Security
+Hanno Böck
+https://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
