@@ -1,36 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/2
-Message-ID: <20160625051239.GA16648@eldamar.local>
-Date: Sat, 25 Jun 2016 07:12:39 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: David Sinquin <david@...quin.eu>, Ben Hutchings <ben@...adent.org.uk>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Linux CVE-2016-1237: nfsd: any user can set a file's ACL over NFS and grant access to it
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/4
+Message-ID: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
+Date: Tue, 13 Sep 2016 23:20:08 +0800
+From: vul@...safe <vul@...safe.com>
+To: oss-security@...ts.openwall.com
+Subject: Heapoverflow in giflib5.1.4
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello,
 
-David Sinquin reported that anyone may be able to grant themselves
-permissions to a file by setting the ACL. nfsd did not check
-permissions when setting ACLs.
+With Address Sanitizer there is aa heap overflow in giflib 5.1.4
+More details are available at:
+https://sourceforge.net/p/giflib/bugs/102/
+ 
+-- F4B3CD@...RLAB
 
-CVE-2016-1237 was assigned by the Debian security team for this issue
-were David Singuin initially reported the issue.
 
-The permission checks and inode locking were lost in a refactoring
-with commit 4ac7249ea5a0ceef9f8269f63f33cc873c3fac61 which was in
-v3.14-rc1.
-
-The issue is fixed with commit
-999653786df6954a31044528ac3f7a5dadca08f4 in Linus' tree.
-
-Introduced in: https://git.kernel.org/linus/4ac7249ea5a0ceef9f8269f63f33cc873c3fac61 (v3.14-rc1)
-
-Prerequisite: https://git.kernel.org/linus/485e71e8fb6356c08c7fc6bcce4bf02c9a9a663f 
-
-Fixed by https://git.kernel.org/linus/999653786df6954a31044528ac3f7a5dadca08f4 
-
-Regards,
-Salvatore
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
