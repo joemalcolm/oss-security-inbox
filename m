@@ -1,39 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/16/2
-Message-ID: <86413253.kTlB1PI1Wh@asterixp50>
-Date: Sat, 16 Jul 2016 12:05:39 +0200
-From: David Faure <faure@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/8
+Message-ID: <CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>
+Date: Tue, 13 Sep 2016 22:11:42 +0300
+From: watashiwaher <watashiwaher@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: kde-security@....org
-Subject: CVE Request for KNewStuff/KArchive issue
+Subject: libxml with CGI fix
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi, huys! There is a known httpoxy vulnerability ( https://httpoxy.org/ ).
+There is a problem with CGI usage in all application which use libxml2
+library. Attacker can make requests via attacker proxy from target server
+using this vulnerability. I reported this problem in the 5th august, but
+developers didn't reply me at all, and I don't know if they want to
+response.
 
-Could I get a CVE number for the issue below?
+So here is my original report to libxml2 team (with patch):
 
-When using KNewStuff, one of the KDE Frameworks, to download and install files 
-from the internet (e.g. a wallpaper, a plasma applet, etc.), it was possible 
-to download a maliciously crafted archive file (e.g. tar.gz or zip) containing 
-relative paths leading to outside the extraction directory (say 
-"../../../.bashrc" for instance).
+There is a security problem in libxml2.
+>
+> Problem:
+> There is a httpoxy vulnerability in libxml2 ( http://libpoxy.org )
+> It affects the usage of libxml2 inside CGI applications.
+>
+> libxml2 is used in many popular products. So if someone of these popular products will be used inside CGI script, attacker will be able to override HTTP_PROXY environment variable by placing Proxy header with desired proxy name. It will affect the usage of xmlNanoHTTPInit function inside nanohttp.c. Requests will go through proxies of the attacker.
+>
+> Possible solutions:
+> I found 2 possible solutions.
+> 1) Use HTTP_PROXY variable in lower case
+>    (Curl style)
+>    It works because CGI variables are sent only in upper case.
+>    But doesn't work on windows because getenv is not case
+>    sensitive in the Windows operating system.
+> 2) Do not accept HTTP_PROXY variable when REQUEST_METHOD environment variable defined.
+>    (Python style)
+>    It works because REQUEST_METHOD variable indicates that CGI is used.
+>    But there is a problem with windows (we can't use HTTP_PROXY in CGI at all)
+>    and with other operation systems (where HTTP_PROXY is already used in uppercase )
+>
+> I made a mall patch that uses both solutions in the same time. It doesn't accept HTTP_PROXY when REQUEST_METHOD defined. In non windows OS it accepts it in lower case anyway, in windows it doesn't accept it.
+>
+> Example of vulnerability (what I found):
 
-The fix has already been reviewed and submitted:
-   https://git.reviewboard.kde.org/r/128185/
-This fix is one layer below KNewStuff, in the framework called KArchive, which 
-handles extraction of .tar.gz / .zip archives. KArchive now prevents files from 
-being written outside of the extraction directory, in all cases.
+First time I found httpoxy vulnerability in perlmagick
 
-Versions up to KArchive 5.23.0 are affected, the fix is in KArchive 5.24.0, 
-which I released a week ago.
+( http://www.imagemagick.org/script/perl-magick.php )
 
-To my knowledge, no CVE has been requested for this yet, but to make sure, you 
-could check if someone else from kde-security emailed you in the past month 
-already (issue known since June 14, 2016, sorry for the delay on my part).
 
-Thanks.
 
--- 
-David Faure, faure@....org, http://www.davidfaure.fr
-Working on KDE Frameworks 5
+Code like this was used inside CGI script:
+> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+> Image::Magick->New()->Get('http://somesite.com/somefile.txt');
+> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+Actually this code called ImageMagick to download this file.
+> Inside Imagemagick code was like this:
+> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+> char
+> buffer[MaxBufferExtent],
+> *type; int
+> bytes; void
+> *context; type=(char *) NULL;
+> context=xmlNanoHTTPMethod(filename,(const char *) NULL,
+> (const char *) NULL,&type,(const char *) NULL,0);
+> if (context != (void *) NULL)
+> {
+> ssize_t
+> count; while ((bytes=xmlNanoHTTPRead(context,buffer,MaxBufferExtent)) > 0)
+> count=(ssize_t) fwrite(buffer,bytes,1,file);
+> (void) count;
+> xmlNanoHTTPClose(context);
+> xmlFree(type);
+> xmlNanoHTTPCleanup();
+> }
+> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+And finally xmlNanoHTTPInit inside libxml2 function used environment
+> variable HTTP_PROXY. I want to say that developers of any software which
+> uses libxml2 may not know about httpoxy vulnerability and about the
+> possibility of usage HTTP_PROXY variable with libxml2 library.
+
+
+> Example of vulnerability (what I found):
+>
+> First time I found httpoxy vulnerability in perlmagick
+> ( http://www.imagemagick.org/script/perl-magick.php )
+>
+> Code like this was used inside CGI script:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+> Image::Magick->New()->Get('http://somesite.com/somefile.txt');
+> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>
+> Actually this code called ImageMagick to download this file.
+> Inside Imagemagick code was like this:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+> char
+>   buffer[MaxBufferExtent],
+>   *type;
+>
+> int
+>   bytes;
+>
+> void
+>   *context;
+>
+> type=(char *) NULL;
+> context=xmlNanoHTTPMethod(filename,(const char *) NULL,
+>   (const char *) NULL,&type,(const char *) NULL,0);
+> if (context != (void *) NULL)
+>   {
+>     ssize_t
+>       count;
+>
+>     while ((bytes=xmlNanoHTTPRead(context,buffer,MaxBufferExtent)) > 0)
+>       count=(ssize_t) fwrite(buffer,bytes,1,file);
+>     (void) count;
+>     xmlNanoHTTPClose(context);
+>     xmlFree(type);
+>     xmlNanoHTTPCleanup();
+>   }
+> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>
+> And finally xmlNanoHTTPInit inside libxml2 function used environment variable HTTP_PROXY.
+>
+> I want to say that developers of any software which uses libxml2 may not know about httpoxy vulnerability and about the possibility of usage HTTP_PROXY variable with libxml2 library.
+> The easiest way to fix possible vulnerability everywhere is just to fix it inside libxml2.
+>
+>
+Patch address: https://bugzilla.gnome.org/attachment.cgi?id=332806
 
