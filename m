@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/1
-Message-ID: <1457668155.3681.17.camel@bonedaddy.net>
-Date: Fri, 11 Mar 2016 11:49:15 +0800
-From: Paul Wise <pabs3@...edaddy.net>
-To: oss-security <oss-security@...ts.openwall.com>, cve <cve@...re.org>
-Subject: debbugs for cve-assign@...re.org?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/10
+Message-ID: <20160913215303.56ec6504@hboeck.de>
+Date: Tue, 13 Sep 2016 21:53:03 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Seth Arnold <seth.arnold@...onical.com>
+Cc: "vul@...safe" <vul@...safe.com>, oss-security@...ts.openwall.com
+Subject: Re: Heapoverflow in giflib5.1.4
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, 13 Sep 2016 12:24:23 -0700
+Seth Arnold <seth.arnold@...onical.com> wrote:
 
-I would like to suggest using debbugs for cve-assign@...re.org.
+> Hanno, can you still reproduce this issue? I followed your excellent
+> reproducer script and I don't get any ASAN warnings. If you still get
+> ASAN warnings this may indicate the source of the confusion.
 
-debbugs is based on email so it is the lowest friction for researchers
-and doesn't change their workflow except they now get an immediate CVE
-after sending a detailed report to the submission address.
+Ok, interesting:
+I can't reproduce it any more with my poc or the poc from bug 102 with
+the git code.
 
-The Debian project doesn't have much of a problem with spam other than
-spammers occasionally harvesting bug email addresses and replying to
-them. This could be mitigated by not putting bug number email addresses
-on the bug reports. Debian does that for transparency though. Spammers
-haven't learnt to file bug reports yet though.
-
-One thing that would need adding is support for private bugs and
-authenticated commands to change bugs between public and private.
-
-One other thing that would need adding is some support for the CVE ID
-syntax. Nice URLs could be provided by mod_rewrite.
-
-debbugs is also used by the GNU project.
+I can however easily generate another sample that causes the same bug.
+See attachment.
 
 -- 
-bye,
-pabs
+Hanno Böck
+https://hboeck.de/
 
-http://bonedaddy.net/pabs3/
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
+Download attachment "gif2rgb-oob-new.gif" of type "image/gif" (42 bytes)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Content of type "application/pgp-signature" skipped
