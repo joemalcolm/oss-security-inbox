@@ -1,129 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/12
-Message-ID: <20160503175618.GA11827@w1.fi>
-Date: Tue, 3 May 2016 20:56:18 +0300
-From: Jouni Malinen <j@...fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: hostapd/wpa_supplicant - psk configuration parameter update allowing arbitrary data to be written
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/5
+Message-ID: <53319709-5162-e3c0-e9c0-f50acc148929@724safe.com>
+Date: Wed, 14 Sep 2016 00:22:43 +0800
+From: vul@...safe <vul@...safe.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -libdwarf 20160613 heap-buffer-overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 03, 2016 at 01:29:28AM -0400, cve-assign@...re.org wrote:
-> > Identifier: related to CVE-2016-2447
-> 
-> We understand the existence of the CVE-2016-2447 ID in
-> http://source.android.com/security/bulletin/2016-05-01.html and that
-> the reports credit Imre Rad; however, there are different exploitation
-> scenarios that affect different versions from the perspective of
-> hostapd/wpa_supplicant, and thus it is probably simplest for most
-> people to have separate hostapd/wpa_supplicant CVE IDs.
+Hello,
 
-Agreed. CVE-2016-2447 is an instance of CVE-2016-4477 on a specific
-platform. I updated the w1.fi security advisory 2016-1 with the assigned
-new CVE IDs as follows:
+A heap-buffer-overflow was found in the latest libdward 20160613  version.
 
+[Introduction]
+The DWARF Debugging Information Format is of interest to programmers
+working on compilers and debuggers (and anyone interested in reading or
+writing DWARF information). It was developed by a committee (known as
+the PLSIG at the time) starting around 1991. Starting around 1991 SGI
+got involved with the committee and then developed the libdwarf and
+dwarfdump tools for SGI-internal use and as part of SGI IRIX developer
+tools. From around 1993 dwarfdump and libdwarf were shipped (as an
+executable and archive respectively, not source) with every release of
+the SGI MIPS/IRIX C compiler. In 1994 (I think the correct year) SGI
+agreed (at my request) to open-source libdwarf (and in 1999 to
+open-source dwarfdump) so anyone could use them.
 
-psk configuration parameter update allowing arbitrary data to be written
+[Version]
+libdwarf-20160613.tar.gz
 
-Published: May 2, 2016
-Identifiers: CVE-2016-4476 and CVE-2016-4477
-   (CVE-2016-2447 is an instance of CVE-2016-4477 on Android)
-Latest version available from: http://w1.fi/security/2016-1/
+[Vulnerability]
+With AddressSanitizer, we found a Heap-Buffer-overflow in the latest
+release version of dwarfdump. The crash output is as follows:
 
+==17411==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0xf3808904 at pc 0x80a6f76 bp 0xffb95e78 sp 0xffb95a5c
+READ of size 4 at 0xf3808904 thread T0
+==17411==WARNING: Trying to symbolize code, but external symbolizer is
+not initialized!
+    #0 0x80a6f75 in __interceptor_memcpy ??:?
+    #1 0x8426c3b in _dwarf_read_loc_section
+/home/starlab/fuzzing/dwarf-20160613/libdwarf/./dwarf_loc.c:919
+    #2 0x84250e2 in _dwarf_get_loclist_count
+/home/starlab/fuzzing/dwarf-20160613/libdwarf/./dwarf_loc.c:970
+    #3 0x8438826 in dwarf_get_loclist_c
+/home/starlab/fuzzing/dwarf-20160613/libdwarf/./dwarf_loc2.c:551
+    #4 0x81a1be8 in get_location_list
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:3523
+    #5 0x816e1a2 in print_attribute
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:2456
+    #6 0x81684ac in print_one_die
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1452
+    #7 0x816047c in print_die_and_children_internal
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1041
+    #8 0x8161c86 in print_die_and_children_internal
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1136
+    #9 0x8161c86 in print_die_and_children_internal
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1136
+    #10 0x8161c86 in print_die_and_children_internal
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1136
+    #11 0x815dd57 in print_die_and_children
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:915
+    #12 0x815b75c in print_one_die_section
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:825
+    #13 0x81564d1 in print_infos
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:371
+    #14 0x80eed18 in process_one_file
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/dwarfdump.c:1352
+    #15 0x80e66fa in main
+/home/starlab/fuzzing/dwarf-20160613/dwarfdump/dwarfdump.c:645
+    #16 0xf7553af2 in __libc_start_main ??:?
+    #17 0x80d23e4 in _start ??:?
 
-Vulnerability
+0xf3808904 is located 0 bytes to the right of 34052-byte region
+[0xf3800400,0xf3808904)
+allocated by thread T0 here:
+    #0 0x80bb011 in __interceptor_malloc ??:?
+    #1 0xf7780517 in elf_rawdata ??:?
 
-A vulnerability was found in how hostapd and wpa_supplicant writes the
-configuration file update for the WPA/WPA2 passphrase parameter. If this
-parameter has been updated to include control characters either through
-a WPS operation (CVE-2016-4476) or through local configuration change
-over the wpa_supplicant control interface (CVE-2016-4477), the resulting
-configuration file may prevent the hostapd and wpa_supplicant from
-starting when the updated file is used. In addition for wpa_supplicant,
-it may be possible to load a local library file and execute code from
-there with the same privileges under which the wpa_supplicant process
-runs.
+SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 ??
+Shadow bytes around the buggy address:
+  0x3e7010d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3e7010e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3e7010f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3e701100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x3e701110: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x3e701120:[04]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e701130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e701140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e701150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e701160: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x3e701170: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:     fa
+  Heap right redzone:    fb
+  Freed heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==17411==ABORTING
 
-The WPS trigger for this requires local user action to authorize the WPS
-operation in which a new configuration would be received. The attacker
-would also need to be in radio range of the device or have access to the
-IP network to act as a WPS External Registrar. Such an attack could
-result in denial of service by not allowing hostapd or wpa_supplicant to
-start after they have been stopped.
+[Reproduce]
+Reproduce the problem by run "./dwarfdump poc"
 
-The local configuration update through the control interface SET_NETWORK
-command could allow privilege escalation for the local user to run code
-from a locally stored library file under the same privileges as the
-wpa_supplicant process has. The assumption here is that a not fully
-trusted user/application might have access through a connection manager
-to set network profile parameters like psk, but would not have access to
-set other configuration file parameters. If the connection manager in
-such a case does not filter out control characters from the psk value,
-it could have been possible to practically update the global parameters
-by embedding a newline character within the psk value. In addition, the
-untrusted user/application would need to be able to install a library
-file somewhere on the device from where the wpa_supplicant process has
-privileges to load the library.
+[POC]
+poc file is in the attachement
 
-Similarly to the SET_NETWORK case, if a connection manager exposes
-access to the SET_CRED or SET commands, similar issue with newline
-characters can exist as those commands do not filter out control
-characters from the value.
+This vulnerability was foud by F4B3CD@...RLAB
 
-It should also be noted that providing unlimited access to the
-wpa_supplicant control interface would allow arbitrary SET commands to
-be issued. Such unlimited access should not be provided to untrusted
-users/applications.
+Best regards,
+STARLAB
 
-
-Vulnerable versions/configurations
-
-For the local control interface attack vector (CVE-2016-4477):
-
-wpa_supplicant v0.4.0-v2.5 with control interface enabled
-
-update_config=1 must have been enabled in the configuration file.
-
-
-For the WPS attack vector (CVE-2016-4476):
-
-wpa_supplicant v0.6.7-v2.5 with CONFIG_WPS build option enabled
-hostapd v0.6.7-v2.5 with CONFIG_WPS build option enabled
-
-WPS needs to be enabled in the runtime operation and the WPS operation
-needs to have been authorized by the local user over the control
-interface. For wpa_supplicant, update_config=1 must have been enabled in
-the configuration file.
-
-
-Acknowledgments
-
-Thanks to Google for reporting this issue and Imre Rad of SEARCH-LAB
-Ltd. discovering it.
-
-
-Possible mitigation steps
-
-- Merge the following commits to hostapd/wpa_supplicant and rebuild it:
-
-  CVE-2016-4476:
-  WPS: Reject a Credential with invalid passphrase
-  CVE-2016-4477:
-  Reject psk parameter set with invalid passphrase character
-  Reject SET_CRED commands with newline characters in the string values
-  Reject SET commands with newline characters in the string values
-  CVE-2016-4476 and CVE-2016-4477:
-  Remove newlines from wpa_supplicant config network output
-
-  These patches are available from http://w1.fi/security/2016-1/
-
-- Update to hostapd/wpa_supplicant v2.6 or newer, once available
-
-
-Change history
-
-May 3, 2016
-- Added CVE IDs
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+Download attachment "poc" of type "application/octet-stream" (83328 bytes)
