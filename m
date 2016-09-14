@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2561" "Friday" "7" "July" "2017" "14:26:53" "+0200" "Ailin Nemui" "ailin.nemui@gmail.com" "<1499430413.31897.1.camel@gmail.com>" "97" "[oss-security] Irssi 1.0.4: CVE-2017-10965, CVE-2017-10966." nil nil nil "7" "2017070712:26:53" "[oss-security] Irssi 1.0.4: CVE-2017-10965, CVE-2017-10966." (number mark "U       ailin.nemui@ Jul  7   97/2561  " thread-indent "\"[oss-security] Irssi 1.0.4: CVE-2017-10965, CVE-2017-10966.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2590" "Wednesday" "14" "September" "2016" "17:08:31" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0JNongOXWU3NE22_fEwAVHUW=ydeKhqv2zkwTP1sv53g@mail.gmail.com>" "84" "Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" "^Date:" nil nil "9" "2016091423:08:31" "[oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" (number mark "        kseifried@re Sep 14   84/2590  " thread-indent "\"Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection\"\n") "<20160914223729.GL25324@hunt>" ("<nqpirj$fvm$1@blaine.gmane.org>" "<nraqt1$a2m$1@blaine.gmane.org>" "<8b02b17e-cc12-5145-9957-381c583aa76c-IBi9RG/b67k@public.gmane.org>" "<1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>" "<20160914092135.GA16607@inutil.org>" "<CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>" "<20160914223729.GL25324@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13664 invoked by uid 550); 7 Jul 2017 12:30:35 -0000
+Received: (qmail 20013 invoked by uid 550); 14 Sep 2016 23:08:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11357 invoked from network); 7 Jul 2017 12:27:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=90rI0XmtOpvfrHxwMozaDd+/VLVLdv07cvTsEzGA0sg=;
-        b=ATP1CmQcuTqA1gOUX3I875fiLukechHnTwdUEz3HxIIwhEreVyOOk5nQeClzTFEO89
-         uiTkzflkGpERSUCGaTmCJJ09oFnK75MzsXDhb0vQ737VCySQ0i3r0p07DKE+SkUXG8u1
-         o+cB9IV5+7J3XLVMPbAo15TCiDmjk2iQtrg2OLlukN9Kozws2g6d5hZUSmTWTaUVjRRI
-         vx9doT2qhVdgmmWBczmWpOD5bmTW+yQVX1AnjxJnhBEE9R09qZui1Fp5SNjkFQ31r+TJ
-         IkosLogUh3ljFmMF8ce5qVFDQvD7lCCLu0hiD+p0UzD29ndm8Fn1UiO8MpHYL6BA5INX
-         6mnA==
+Received: (qmail 19989 invoked from network); 14 Sep 2016 23:08:44 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=90rI0XmtOpvfrHxwMozaDd+/VLVLdv07cvTsEzGA0sg=;
-        b=MgQQNt78REcwwneO9PZuTidYuVAOLdh+azTTJjzefJu+m1fh/RiwmnTn+LkvMHXk9g
-         VfVWBM0I8aH7hefao50OEj5Vn0CGcj/ve/+mYgvlZKF/CG515zL7lOaMawWU/7oClEBV
-         I/7dR6fJlVK/z1/tGtAGgbWghVjsstTp3QuaLCGazcFAAadO5S87ToKB90+v4rQDAjT9
-         61DbExli64EkvCh/nf5BHrpp6rOPfPIB4NjZ4ZQAZO7EdTFJ2dkNzmYigWnIoOpEdAh9
-         5twOU/J4sH6tbecnhFc+OHkt8Pryb2kuCHqUc8yuUkDOGhFPtLc1iFHrtmyz7Vvyw3mA
-         mLfA==
-X-Gm-Message-State: AIVw113Ily8o2VfxJej3op1jvA6qF9tfh+3mT+0zZ0sLLwM49tz5qim9
-	aHlNL1yf4WX8Ldme
-X-Received: by 10.28.212.207 with SMTP id l198mr1984589wmg.23.1499430414939;
-        Fri, 07 Jul 2017 05:26:54 -0700 (PDT)
-Message-ID: <1499430413.31897.1.camel@gmail.com>
-From: Ailin Nemui <ailin.nemui@gmail.com>
-To: oss-security@lists.openwall.com
-Date: Fri, 07 Jul 2017 14:26:53 +0200
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.24.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Irssi 1.0.4: CVE-2017-10965, CVE-2017-10966.
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=C+DTHmFWZB0EftmdjekNRfMddrLiHWtPyxxtWM+tdhY=;
+        b=ch7S04VZspHX1/j/+UdtWOv7Bi1LS1e3YT6fz+niqRdKMWbHQSdGTWJnAFZD+u08XT
+         363cZdinOPNrW8McEDYFUIPgHTr892ST10qms/tSPiXQkvU+w/4fJZTZp6L3e4fOFqwT
+         wyZLA3K+dkxLOQM/tDXEh0TPyY1uHx0qyz4zeoUt4OgHDrf6vRQKUml4wAFwGqDr4+GB
+         EdXcCZL5+U78zAL0aJYSzBVoFE8gEBkCHdVaAlFjnjmHo2KNTJTDxFo4vnVNifmw+wmr
+         k4srnyST+gs6RH7TsTDJWcNy70fcCE1Oco0hfKZOorEQCnyCrC7WycFvUB128DS2VTl6
+         2d4A==
+X-Gm-Message-State: AE9vXwMD4xlsvdKKYzWD9FRKmmjystvvzmXnLv263/MCf+6NRe7GnjQcsVwsNZ6iDQmdQw7wFnUsgC3odL9WwoL4
+X-Received: by 10.202.179.214 with SMTP id c205mr4934979oif.190.1473894511965;
+ Wed, 14 Sep 2016 16:08:31 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20160914223729.GL25324@hunt>
+References: <nqpirj$fvm$1@blaine.gmane.org> <nraqt1$a2m$1@blaine.gmane.org>
+ <8b02b17e-cc12-5145-9957-381c583aa76c-IBi9RG/b67k@public.gmane.org>
+ <1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>
+ <20160914092135.GA16607@inutil.org> <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
+ <20160914223729.GL25324@hunt>
+Message-ID: <CANO=Ty0JNongOXWU3NE22_fEwAVHUW=ydeKhqv2zkwTP1sv53g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113ce0aad2c09a053c7fcec1
+Date: Wed, 14 Sep 2016 17:08:31 -0600
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow
+ SQL injection
+To: oss-security <oss-security@lists.openwall.com>
 
-> Irssi 1.0.4 has been released. This release fixes two remote crash 
-> issues in Irssi as well as a few bugs, correcting a mistake that was 
-> introduced in 1.0.3 while parsing some time-related settings. There 
-> are no new features. All Irssi users should upgrade to this version. 
-> See the NEWS for details.
+--001a113ce0aad2c09a053c7fcec1
+Content-Type: text/plain; charset=UTF-8
+
+On Wed, Sep 14, 2016 at 4:37 PM, Seth Arnold <seth.arnold@canonical.com>
+wrote:
+
+> On Wed, Sep 14, 2016 at 10:22:58AM -0600, Kurt Seifried wrote:
+> > Ideally people should get CVEs and then post to oss-security with the
+> > information and the CVE. A lot of people consume the list data and the
+> > current method means that people end up searching their DBs, making sure
+> > it's new, then entering it, then updating it with a CVE. If people got
+> CVEs
+> > first this would vastly simplify things.
 >
-> Our bug reporter Brian ‘geeknik’ Carpenter writes:
+> I don't like the idea of waiting on CVE assignment before posting
+> information here:
 >
-> >    34 days after reading Fuzzing Irssi, my AFL instance was
-> >    finally able to trigger a null pointer dereference in irssi 
-> >    1.0.2. […] Hopefully this one isn’t fixed yet.
-> >
-> >    35 days after reading Fuzzing Irssi, my AFL instance triggered 
-> >    a heap-use-after-free in irssi 1.0.2. Compiled on Debian 8 x64 
-> >    following the instructions and patches of the referenced 
-> >    article. (;
+> - MITRE's team does impressive work, but some assignments take
+>   significantly longer than others; a request here, publicly, allows users
+>   to mitigate or fix before a number is known.
 >
-> For more information refer to the security advisory.
+
+So join the DWF and help us get the OpenSource CVEs out quicker.
+
+
+> - In cases when there are no fixes yet, or incomplete fixes, it may not be
+>   known how many CVEs are even needed -- making the issues widely known
+>   earlier increases the chances of someone preparing patches, to clarify
+>   how many issues existed.
 >
-> Thanks, Brian!
 
-IRSSI-SA-2017-07 Irssi Security Advisory [1]
-============================================
-CVE-2017-10965, CVE-2017-10966.
+Also solved in DWF land (
+https://github.com/distributedweaknessfiling/DWF-Database), I explicitly
+setup the DWF up to handle this, the database explicitly supports a
+"REPLACED_BY" state for a CVE:
 
-Description
------------
+REPLACED_BY
 
-Two vulnerabilities have been located in Irssi.
+A list of one or more CVE's that have replaced this entry and what the
+relationship is (e.g. a CVE split may break a single existing CVE into
+multiple CVEs). The format is RELATION:CVE, if there are multiple entries
+they are comma separated (the entire field is quoted). Valid relationships
+are currently:
 
-(a) When receiving messages with invalid time stamps, Irssi would try
-    to dereference a NULL pointer. Found by Brian 'geeknik' Carpenter
-    of Geeknik Labs. (CWE-690)
+DUPLICATE_OF
+SPLIT_TO
+SPLIT_FROM
+MERGED_TO
+MERGED_FROM
+REJECT
 
-    CVE-2017-10965 [2] was assigned to this bug
+This field is only used if the CVE is split/merged/found to be a duplicate
+or rejected.
 
-(b) While updating the internal nick list, Irssi may incorrectly use
-    the GHashTable interface and free the nick while updating it. This
-    will then result in use-after-free conditions on each access of
-    the hash table. Found by Brian 'geeknik' Carpenter of Geeknik
-    Labs. (CWE-416 caused by CWE-227)
-
-    CVE-2017-10966 [3] was assigned to this bug
-
-
-Impact
-------
-
-(a) May result in denial of service (remote crash).
-
-(b) Undefined behaviour.
+So if we need to clean things up later, we can easily.
 
 
-Affected versions
------------------
 
-All Irssi versions that we observed.
+>
+> - With MITRE's reduced scope of CVE coverage, there's the risk that
+>   software that's important to list members or the wider computing public
+>   may not get a number at all. Not getting a number assigned may give the
+>   impression that the issue isn't important.
+>
 
-
-Fixed in
---------
-
-Irssi 1.0.4
-
-
-Recommended action
-------------------
-
-Upgrade to Irssi 1.0.4. Irssi 1.0.4 is a maintenance release in the
-1.0 series, without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect.
+This is the Open Source Security List. The DWF mandate is all Open Source.
+So once the DWF is up and running the Venn diagram of oss-security and DWF
+is basically a single circle =).
 
 
-Mitigating facts
-----------------
-
-(a) requires control over the ircd
-
-(b) should not happen with a conforming ircd
+>
+> Thanks
+>
 
 
-Patch
------
 
-https://github.com/irssi/irssi/commit/5e26325317c72a04c1610ad952974e206
-384d291
+-- 
 
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-References
-----------
-
-[1] https://irssi.org/security/irssi_sa_2017_07.txt
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10965
-[3] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10966
+--001a113ce0aad2c09a053c7fcec1--
