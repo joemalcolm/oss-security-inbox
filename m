@@ -1,81 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/25/4
-Message-ID: <42EB0848-2832-4DF0-B39F-7555B0A78B2A@icu-project.org>
-Date: Thu, 24 Nov 2016 22:54:20 -0800
-From: "Steven R. Loomis" <srl@...-project.org>
-To: <oss-security@...ts.openwall.com>, <dmoppert@...hat.com>
-CC: <cve-assign@...re.org>
-Subject: Re: Re: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/4
+Message-ID: <1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>
+Date: Wed, 14 Sep 2016 11:03:34 +0200
+From: Anonymous <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Andreas Stieger <astieger@...e.com> wrote:
 
-Thanks. I’ve also updated https://sites.google.com/site/icusite/security
-Hopefully we will work more closely and quickly in the future.
+Hi Andreas
 
-Steven
------BEGIN PGP SIGNATURE-----
+Many thanks for your reply. 
 
-iQEcBAEBCAAGBQJYN+ASAAoJEKyl2+H9j6vxBdEIANRofsWFNel4N4ww/fN2VcMn
-lLjAEbb1KZkvLrsCCpJWZZYDfsFDdxkp8KeRVi/NehyZiNEczElRSwY/V/mtagaZ
-LmYe4AilNB64+uJnIUzkAIV3qFh1YFIRKAtqsQT/Wn+y1gLl2EwMEmuiVT97ynoC
-pTJqla4EMi7HKznbo8B6pYy3DIh7wBRY01SrjK+npZ32yWyPGMbENJ8Gx0mDOVGV
-sYQMlHl7BdIMhXufw6vZFZPJUv7gKbkJo//8Hjvj0cjheToaVaHTDMvZn8tLUmB4
-jzCusjYjsmm1NY3JlKJgZEYj/3Z8uXZu3AI3nG/hXdoRqvqOKeB/VWWywXME+Do=
-=eyIZ
------END PGP SIGNATURE-----
+> I noticed that in your original e-mail to this list, you did not cc
+> cve-assign.
+
+That's true, but I never did in the past, as this mailing list is (or was?)
+monitored by mitre, so posting here has been sufficient until now. 
+
+Furthermore in this case I was not quite certain that a CVE was actually
+required for this, so I was kind of hoping for guidance. 
+
+> Also note that there are new procedures, including a request
+> form, in addition to the previous recommendation to contact a CNA
+> https://cve.mitre.org/cve/request_id.html
+
+I was not aware of that, thanks for the heads up. Will follow these
+guidelines and use the form in the future. 
+
+Cheers
+Damien
 
 
 
-
-
-
-El 11/24/16 4:51 PM, "cve-assign@...re.org" <cve-assign@...re.org> escribió:
-
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA256
->
->> https://bugzilla.redhat.com/show_bug.cgi?id=1383569
->
->> http://bugs.icu-project.org/trac/ticket/10891
->> http://bugs.icu-project.org/trac/changeset/35699
->
->> https://bugs.php.net/bug.php?id=67397
->
->> Note that the PHP bug is exactly the same flaw, but they worked around
->> it by limiting the length of strings passed to icu.  I don't believe
->> this needs a separate CVE even though it was "fixed" independently.
->
->Use CVE-2014-9911 for the ICU vulnerability, and use CVE-2014-9912 for
->the PHP vulnerability. Admittedly, the code changes in ICU and PHP had
->the same motivation. However, the code is not shared between
->ures_getByKeyWithFallback in ICU and get_icu_disp_value_src_php in
->PHP. Thus, two CVE IDs exist. This is also consistent with similar
->ICU/PHP situations in the
->http://www.openwall.com/lists/oss-security/2016/07/24/2 and
->http://www.openwall.com/lists/oss-security/2016/09/15/10 posts.
->
->- -- 
->CVE Assignment Team
->M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
->[ A PGP key is available for encrypted communications at
->  http://cve.mitre.org/cve/request_id.html ]
->-----BEGIN PGP SIGNATURE-----
->Version: GnuPG v1
->
->iQIcBAEBCAAGBQJYN4pmAAoJEHb/MwWLVhi2iXQP/0p5ye6sA3p3BNLXi1HvLKN3
->kTljswgWfZxD5/GINLjMGzf0Gr94weE6GfbxmrYbenjmghKTPU+tRgfpOd6TwteU
->kai0Vuluk020bYb9d769qyYc47rzKZ0h5FJCc/Ef+kQNWPMOHS+ogF8D11p575W0
->gFZyiw9h5HNHT7A5VV1NisFN607Q3IwJncNZfI1PLwZJ/t1dtNI8HGsKZCo5tlKq
->ZdWIibAuVThj9k4OKmZfdxe3SHInFv2dfDoLXwQH+hwnLLs7xkN3X5Tu/PXpkqtV
->cc/eqZTRW1TSxou4p0S8T7d410z3WArVecVNfFZxv58xua+Goj/bXwPRuAUQTY8q
->SpuR3NDwFoM23IURqTStQ/+NXbhGtjJpUltQjZ776hBEm/S/rljYMA5sJs4sBtjI
->VsiA8jqjeewOheQQnEOA/VVH8JvQQ8AATOKD6gRkDCuxTYwhemabzR9jUOpVP/Cv
->9f/4e/KIYug2wHcfTtEoqZEGtgIEQRdcGpEjOq7y7X9ETMWnTRNh1iIzKVOilFyv
->uCcNE1m0JJPALb0p72AqDb5rEL8cWynrvNQrcLifONF5/65uEa+5Hi4rXhayaQN1
->MDo0OTwKJUw90vhEeLP+hTx3bQJtp6bRTfz1avIhEmG0DmoErm9opAj/pK7o8uWV
->1EQnxE97WQjHimhYejXd
->=jGfq
->-----END PGP SIGNATURE-----
 
