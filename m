@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1312" "Tuesday" "14" "April" "2015" "16:07:10" "+0200" "Hannes Trunde" "hannes.trunde@gmail.com" "<001301d076bc$4d9f9e60$e8dedb20$@gmail.com>" "36" "[oss-security] CVE request: SQL injection vulnerability in WordPress plugins Community Events 1.3.5, Tune Library 1.5.4, WP Symposium 15.1" nil nil nil "4" "2015041414:07:10" "[oss-security] CVE request: SQL injection vulnerability in WordPress plugins Community Events 1.3.5, Tune Library 1.5.4, WP Symposium 15.1" (number mark "        hannes.trund Apr 14   36/1312  " thread-indent "\"[oss-security] CVE request: SQL injection vulnerability in WordPress plugins Community Events 1.3.5, Tune Library 1.5.4, WP Symposium 15.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1577" "Wednesday" "14" "September" "2016" "19:59:04" "+0800" "Matt Johnston" "matt@ucc.asn.au" "<20160914115904.GD17345@ucc.gu.uwa.edu.au>" "39" "[oss-security] CVE request for Dropbear SSH <2016.74" nil nil nil "9" "2016091411:59:04" "[oss-security] CVE request for Dropbear SSH <2016.74" (number mark "U       matt@ucc.asn Sep 14   39/1577  " thread-indent "\"[oss-security] CVE request for Dropbear SSH <2016.74\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19649 invoked by uid 550); 14 Apr 2015 14:22:03 -0000
+Received: (qmail 30174 invoked by uid 550); 14 Sep 2016 13:37:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9310 invoked from network); 14 Apr 2015 14:07:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding:thread-index:content-language;
-        bh=Os3yvu+whF197IPWsz4eose3EtjqZc/xOa1IOTso71o=;
-        b=d+Kjy36L+VcLRJCV1VaOtqX9gk+TSqj+uw5gaJIYoAoX4qPFfw+92LMmWnkiEa9thh
-         nSnSisKKyWG4IhAEjPxLDBQ+amKEalqwsSo2dFbJwLDIGgE2O4BMlwSYR4Fu5H366N2e
-         ayEQaKmKHQgHcqkNkU8mAu6l1287LyljKJyyoOm26CYNlgjePYBBU1D85W2JXiyn5Adi
-         3yMLwMUz2VEuNTskanq+9udOkO3aff5enfH+n6jHbwkkWErn4EjW+L3s7U8dd3chvfRw
-         aXfR1l0QZoszpuK0gh5SXlQXVdZ5zFM5gukQdS5J60D290jCBQURNMFbohXI2DHYL84C
-         APhg==
-X-Received: by 10.180.20.14 with SMTP id j14mr15875563wie.45.1429020432502;
-        Tue, 14 Apr 2015 07:07:12 -0700 (PDT)
-Message-ID: <001301d076bc$4d9f9e60$e8dedb20$@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdB2urW9b2iYgI+iR2alAAIyqExZ2A==
-Content-Language: de-at
-Date: Tue, 14 Apr 2015 16:07:10 +0200
-From: "Hannes Trunde" <hannes.trunde@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: SQL injection vulnerability in WordPress plugins Community Events 1.3.5, Tune Library 1.5.4, WP Symposium 15.1
-To: <oss-security@lists.openwall.com>
+Received: (qmail 7491 invoked from network); 14 Sep 2016 11:59:19 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2A3AwB/OtlX/8+AX4JcHgYMgzoBAQEBA?=
+ =?us-ascii?q?XV8jiaqMoIDJId/FAECAQEBAQEBAV4nhSIGAQEHMTs0BRiJDg6udoUvAQEFh24?=
+ =?us-ascii?q?MARwIjCIXgSaBS2KBfgtYgi+PKYpEhiWJJXGBB4RgiRSMW4N7HjYUR4IXGoFqY?=
+ =?us-ascii?q?wGEJyuCAQEBAQ?=
+X-IPAS-Result: =?us-ascii?q?A2A3AwB/OtlX/8+AX4JcHgYMgzoBAQEBAXV8jiaqMoIDJId?=
+ =?us-ascii?q?/FAECAQEBAQEBAV4nhSIGAQEHMTs0BRiJDg6udoUvAQEFh24MARwIjCIXgSaBS?=
+ =?us-ascii?q?2KBfgtYgi+PKYpEhiWJJXGBB4RgiRSMW4N7HjYUR4IXGoFqYwGEJyuCAQEBAQ?=
+X-IronPort-AV: E=Sophos;i="5.30,333,1470672000"; 
+   d="scan'208";a="240329421"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ucc.asn.au;
+	s=ucc-2016-3; t=1473854306;
+	bh=6oBw9NdUa6XSVRtuBgm4+pW20x1YqBEd5d4hJDGlNZE=;
+	h=Date:From:To:Subject;
+	b=gXhzk8Zsywc6jA7+wlqiAixltECl9vGORtrDrI/dWzOdFcemZyplDjVtykm4FdaET
+	 PKiW93010WPHBbxrkiieQN20T5clAVwgE+4PH7I5zcNvY8P3/l3fFSVnnzpXI6B4Gn
+	 unCst/szvoutcmkEycXuDaD69p8GlUG4GiwAmVuY=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ucc.asn.au;
+	s=ucc-2016-3; t=1473854305;
+	bh=6oBw9NdUa6XSVRtuBgm4+pW20x1YqBEd5d4hJDGlNZE=;
+	h=Date:From:To:Subject;
+	b=WZbS1rp0gSX3/Op0bAIEf4OvwhxYHgw0vhieeS3/1mpdu75UAnDOq/G0VbdjpcNIN
+	 mImKr7MiXjemW/6pupaQ23//+vu1OP83IicLw2XgGgm+pXoHwFGpCYYZhxboY/PA6G
+	 YNBc+aUPJGA70SiyhueV3V2dAmrzLb0CDAI5cbq8=
+Date: Wed, 14 Sep 2016 19:59:04 +0800
+From: Matt Johnston <matt@ucc.asn.au>
+To: oss-security@lists.openwall.com
+Message-ID: <20160914115904.GD17345@ucc.gu.uwa.edu.au>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-snowman: =?utf-8?Q?=E2=98=83_9dmzfODFclXOaMo0X0ST7l?=
+ =?utf-8?Q?BWoLpTHjUWz2qsF1vPFFP9GF6OPK3IsmGF?=
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE request for Dropbear SSH <2016.74
 
 Hi,
 
-during a research I found 3 SQL injection vulnerabilities in 3 different
-WordPress plugins and wanted to ask for CVE assignments for them. I've
-already contacted the WordPress.org team and the plugin authors, who either
-released updates already or are working on a fix. I've also sent a mail to
-cve-assign@mitre.org asking for instructions on how to get CVE IDs assigned
-to those 3 vulnerabilities but didn't get a response yet.
+Dropbear 2016.74 fixed security issues, can I please have 5
+CVEs assigned. The first one has different exposure for
+client/server parts so I assume it should have separate
+CVEs?
 
-1) WP Community Events plugin SQL injection vulnerability
-Affected version: 1.3.5 (and likely all versions below)
-Fixed version: 1.4
-Plugin URL: https://wordpress.org/plugins/community-events/
-Changelog: https://wordpress.org/plugins/community-events/changelog/
+Cheers,
+Matt
+(please CC replies)
 
-2) WP Tune Library plugin SQL injection vulnerability
-Affected version: 1.5.4 (and likely all versions below)
-Fixed version: 1.5.5
-Plugin URL: https://wordpress.org/plugins/tune-library/
-Changelog: https://wordpress.org/plugins/tune-library/changelog/
+2016.74 - 21 July 2016
 
-3) WP Symposium plugin SQL injection vulnerability
-Affected version: 15.1 (and likely all versions below)
-Fixed version: Not yet available, author is working on a fix
-Plugin URL: https://wordpress.org/plugins/wp-symposium/  (still disabled by
-WordPress.org team)
+- Security: Message printout was vulnerable to format string injection.
 
-If you need any further information please let me know!
+  If specific usernames including "%" symbols can be created on a system
+  (validated by getpwnam()) then an attacker could run arbitrary code as root
+  when connecting to Dropbear server.
 
-Thank you very much!
+  A dbclient user who can control username or host arguments could potentially
+  run arbitrary code as the dbclient user. This could be a problem if scripts
+  or webpages pass untrusted input to the dbclient program.
+  https://secure.ucc.asn.au/hg/dropbear/rev/b66a483f3dcb
 
-Hannes Trunde
+- Security: dropbearconvert import of OpenSSH keys could run arbitrary code as
+  the local dropbearconvert user when parsing malicious key files
+  https://secure.ucc.asn.au/hg/dropbear/rev/34e6127ef02e
 
+- Security: dbclient could run arbitrary code as the local dbclient user if
+  particular -m or -c arguments are provided. This could be an issue where
+  dbclient is used in scripts.
+  https://secure.ucc.asn.au/hg/dropbear/rev/eed9376a4ad6
 
+- Security: dbclient or dropbear server could expose process memory to the
+  running user if compiled with DEBUG_TRACE and running with -v
+  https://secure.ucc.asn.au/hg/dropbear/rev/6a14b1f6dc04
 
-
+  The security issues were reported by an anonymous researcher working with
+  Beyond Security's SecuriTeam Secure Disclosure www.beyondsecurity.com/ssd.html
