@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/8
-Message-ID: <36b82e6f-869b-57c5-366f-f47686dc53bb@orlitzky.com>
-Date: Mon, 26 Dec 2016 14:51:27 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/7
+Message-ID: <20160914115904.GD17345@ucc.gu.uwa.edu.au>
+Date: Wed, 14 Sep 2016 19:59:04 +0800
+From: Matt Johnston <matt@....asn.au>
 To: oss-security@...ts.openwall.com
-Subject: Incomplete fix for CVE-2016-8641 (Nagios local root via (sym)links)
+Subject: CVE request for Dropbear SSH <2016.74
 Content-Type: text/plain; charset=utf-8
 
-I don't know what I'm doing, and could use some advice.
+Hi,
 
-CVE-2016-8641 relates to a symlink attack in the Nagios init script. If
-he wishes, the "nagios" user can replace a specific file with a symlink,
-and then the init script will chown the target of that symlink to the
-"nagios" user the next time it is run.
+Dropbear 2016.74 fixed security issues, can I please have 5
+CVEs assigned. The first one has different exposure for
+client/server parts so I assume it should have separate
+CVEs?
 
-A fix for this was released:
+Cheers,
+Matt
+(please CC replies)
 
-https://github.com/NagiosEnterprises/nagioscore/commit/f2ed227673d3b2da643eb5cad26b2d87674f28c1
+2016.74 - 21 July 2016
 
-Largely it consists of passing "-h" to chown, preventing chown from
-following symlinks. And yet symlinks are not the only kind of link.
-Chown will follow the other kind, too, meaning that the fix in that
-commit is insufficient. I'm able to pull off the same sort of attack.
+- Security: Message printout was vulnerable to format string injection.
 
-I sent a note to the Nagios maintainer a few minutes ago, but I don't
-know what the best course of action is regarding the CVE. Start a new
-one? Amend the existing one? Pretend it never happened because it's
-Christmas?
+  If specific usernames including "%" symbols can be created on a system
+  (validated by getpwnam()) then an attacker could run arbitrary code as root
+  when connecting to Dropbear server.
+
+  A dbclient user who can control username or host arguments could potentially
+  run arbitrary code as the dbclient user. This could be a problem if scripts
+  or webpages pass untrusted input to the dbclient program.
+  https://secure.ucc.asn.au/hg/dropbear/rev/b66a483f3dcb
+
+- Security: dropbearconvert import of OpenSSH keys could run arbitrary code as
+  the local dropbearconvert user when parsing malicious key files
+  https://secure.ucc.asn.au/hg/dropbear/rev/34e6127ef02e
+
+- Security: dbclient could run arbitrary code as the local dbclient user if
+  particular -m or -c arguments are provided. This could be an issue where
+  dbclient is used in scripts.
+  https://secure.ucc.asn.au/hg/dropbear/rev/eed9376a4ad6
+
+- Security: dbclient or dropbear server could expose process memory to the
+  running user if compiled with DEBUG_TRACE and running with -v
+  https://secure.ucc.asn.au/hg/dropbear/rev/6a14b1f6dc04
+
+  The security issues were reported by an anonymous researcher working with
+  Beyond Security's SecuriTeam Secure Disclosure www.beyondsecurity.com/ssd.html
