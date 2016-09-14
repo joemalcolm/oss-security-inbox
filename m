@@ -1,64 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/1
-Message-ID: <20161230134600.vva3eii4zfzm3r3d@eldamar.local>
-Date: Fri, 30 Dec 2016 14:46:00 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Ben Hutchings <benh@...ian.org>, Marcus Meissner <meissner@...e.de>
-Subject: Re: Linux Kernel use-after-free in SCSI generic device interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/1
+Message-ID: <alpine.DEB.2.20.1609140812200.31085@tvnag.unkk.fr>
+Date: Wed, 14 Sep 2016 08:13:05 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY VULNERABILITY] curl escape and unescape integer overflows
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus, hi List
+curl escape and unescape integer overflows
+==========================================
 
-On Fri, Dec 09, 2016 at 12:14:15AM +0100, Marcus Meissner wrote:
-> Hi folks,
->
-> This is CVE-2016-9576.
->
-> This original post from  Dmitry Vyukov <dvyukov @ google . com> has a kasan/syzkaller report:
-> https://marc.info/?l=linux-scsi&m=148010092224801&w=2
->
-> https://gist.githubusercontent.com/dvyukov/80cd94b4e4c288f16ee4c787d404118b/raw/10536069562444da51b758bb39655b514ff93b45/gistfile1.txt
->
-> which in turn turned out to be a kernel memory read or
-> potentially even a kernel memory write, in using the scatter gather
-> write mode of the /dev/sg* scsi generic devices.
->
-> The affected code is in Linux down to 2.6.something (problem might require splice() to be exploitable).
->
-> Linus has committed a fix for this to mainline:
->
-> commit a0ac402cfcdc904f9772e1762b3fda112dcc56a0
-> Author: Linus Torvalds <torvalds@...ux-foundation.org>
-> Date:   Tue Dec 6 16:18:14 2016 -0800
->
->     Don't feed anything but regular iovec's to blk_rq_map_user_iov
->
->     In theory we could map other things, but there's a reason that function
->     is called "user_iov".  Using anything else (like splice can do) just
->     confuses it.
->
->     Reported-and-tested-by: Johannes Thumshirn <jthumshirn@...e.de>
->     Cc: Al Viro <viro@...IV.linux.org.uk>
->     Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+Project cURL Security Advisory, September 14, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20160914.html)
 
-Just a heads up on CVE-2016-9576.
+VULNERABILITY
+-------------
 
-Ben Hutchings (Cc'ed) noticed that whilst the originally identified
-commit does partly address the issue, the completed fix for the sg and
-bsg driver appears to be 128394eff343fc6d2f32172f03e24829539c5835.
+The four libcurl functions `curl_escape()`, `curl_easy_escape()`,
+`curl_unescape` and `curl_easy_unescape` perform string URL percent escaping
+and unescaping. They accept custom string length inputs in signed integer
+arguments. (The functions having names without "easy" being the deprecated
+versions of the others.)
 
-https://git.kernel.org/linus/128394eff343fc6d2f32172f03e24829539c5835
+The provided string length arguments were not properly checked and due to
+arithmetic in the functions, passing in the length 0xffffffff (2^32-1 or
+`UINT_MAX` or even just -1) would end up causing an allocation of zero bytes
+of heap memory that curl would attempt to write gigabytes of data into.
 
-In Debian for the upcoming kernel updates for 3.16.x in Jessie and
-3.2.x in Wheezy, thus the above was used to address CVE-2016-9576.
+The use of 'int' for this input type in the API is of course unwise but has
+remained so in order to maintain the API over the years.
 
-https://anonscm.debian.org/cgit/kernel/linux.git/commit/?h=jessie&id=160c700612e57b2939fda763430e08dd089b2496
-https://anonscm.debian.org/cgit/kernel/linux.git/commit/?h=wheezy-security&id=d8cef48e69ba67583c1fc2ec8953538218054cfe
+We are not aware of any exploit of this flaw.
 
-This might raise the question if we need two CVE assignments per the
-two commits, or just keeping the one assigned CVE to identify the
-issue?
+INFO
+----
 
-Regards,
-Salvatore
+This flaw does not affect the curl command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-7167 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following libcurl versions.
+
+- Affected versions: libcurl 7.11.1 to and including 7.50.2
+- Not affected versions: libcurl < 7.11.1 and libcurl >= 7.50.3
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.50.3, these functions will deny negative string lengths from
+being used.
+
+A [patch for CVE-2016-7167](https://curl.haxx.se/CVE-2016-7167.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.50.3
+
+  B - Apply the patch to your version and rebuild
+
+  C - Make sure you don't pass in string lengths larger than `INT_MAX`
+      (typically 2^31) or negative values to the `curl_easy_(un)escape()`
+      functions!
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 8 by the Mitre CVE
+Assignment Team based on the discussions in [PHP bug report
+72674](https://bugs.php.net/bug.php?id=72674).
+
+libcurl 7.50.3 was released on September 14 2016, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+Thanks to the Mitre CVE Assignment Team for reporting this to us.
+
+-- 
+
+  / daniel.haxx.se
