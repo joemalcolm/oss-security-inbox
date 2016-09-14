@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/4
-Message-ID: <20160507141409.GA11843@eldamar.local>
-Date: Sat, 7 May 2016 16:14:09 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Ben Hutchings <benh@...ian.org>
-Subject: CVE Request: Linux: [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/5
+Message-ID: <20160914092135.GA16607@inutil.org>
+Date: Wed, 14 Sep 2016 11:21:35 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+> > I noticed that in your original e-mail to this list, you did not cc
+> > cve-assign.
+> 
+> That's true, but I never did in the past, as this mailing list is (or was?)
+> monitored by mitre, so posting here has been sufficient until now. 
 
-Please assign a CVE for the following issue, which could lead to
-overwriting of kernel memory:
+That said, I really hope that MITRE will continue to use this list for CVE 
+assignments. List members have often followed up with information on CVE
+requests which noone would be able to provide for the web-based approach.
 
->     [media] videobuf2-v4l2: Verify planes array in buffer dequeueing
->     
->     When a buffer is being dequeued using VIDIOC_DQBUF IOCTL, the exact buffer
->     which will be dequeued is not known until the buffer has been removed from
->     the queue. The number of planes is specific to a buffer, not to the queue.
->     
->     This does lead to the situation where multi-plane buffers may be requested
->     and queued with n planes, but VIDIOC_DQBUF IOCTL may be passed an argument
->     struct with fewer planes.
->     
->     __fill_v4l2_buffer() however uses the number of planes from the dequeued
->     videobuf2 buffer, overwriting kernel memory (the m.planes array allocated
->     in video_usercopy() in v4l2-ioctl.c)  if the user provided fewer
->     planes than the dequeued buffer had. Oops!
->     
->     Fixes: b0e0e1f83de3 ("[media] media: videobuf2: Prepare to divide videobuf2")
-
-Fixed in
-https://git.kernel.org/linus/2c1f6951a8a82e6de0d82b1158b5e493fc6c54ab (v4.6-rc6)
-(Cc'ed to stable@...r.kernel.org for v4.4+, fixed in v4.5.3 and
-v4.4.9)
-
-Introduced by
-https://git.kernel.org/linus/b0e0e1f83de31aa0428c38b692c590cc0ecd3f03 (v4.4-rc1)
-
-Regards,
-Salvatore
+Cheers,
+        Moritz
