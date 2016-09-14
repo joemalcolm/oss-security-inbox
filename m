@@ -1,60 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/11/2
-Message-ID: <7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG>
-Date: Sun, 11 Dec 2016 17:29:13 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/10
+Message-ID: <20160914223729.GL25324@hunt>
+Date: Wed, 14 Sep 2016 15:37:29 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Sep 14, 2016 at 10:22:58AM -0600, Kurt Seifried wrote:
+> Ideally people should get CVEs and then post to oss-security with the
+> information and the CVE. A lot of people consume the list data and the
+> current method means that people end up searching their DBs, making sure
+> it's new, then entering it, then updating it with a CVE. If people got CVEs
+> first this would vastly simplify things.
 
-> Sam Whited discovered that MCabber versions 1.0.3 and before, was
-> vulnerable to an attack identical to Gajim's CVE-2015-8688 which
-> can lead to a malicious actor MITMing a conversation, or adding
-> themselves as an entity on a third parties roster (thereby granting
-> themselves the associated privileges
-> 
-> https://gultsch.de/gajim_roster_push_and_message_interception.html
-> https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
-> https://bugs.debian.org/845258
+I don't like the idea of waiting on CVE assignment before posting
+information here:
 
-Use CVE-2016-9928.
+- MITRE's team does impressive work, but some assignments take
+  significantly longer than others; a request here, publicly, allows users
+  to mitigate or fix before a number is known.
 
-At present, we do not understand whether the behavior of other
-mentioned products, such as slixmpp and SleekXMPP, should be
-considered a vulnerability. If the situation is essentially "the
-product could be improved to make it less likely for third-party code
-authors to accidentally create an unsafe interaction," then typically
-a CVE ID is not required.
+- In cases when there are no fixes yet, or incomplete fixes, it may not be
+  known how many CVEs are even needed -- making the issues widely known
+  earlier increases the chances of someone preparing patches, to clarify
+  how many issues existed.
 
-However, if (for example) there is going to be a DSA for the
-python-sleekxmpp and python3-sleekxmpp packages, then we can assign an
-ID. As far as we can tell, the python3-slixmpp* packages are not
-available in jessie, and poezio is packaged for Fedora but not for any
-Debian distribution.
+- With MITRE's reduced scope of CVE coverage, there's the risk that
+  software that's important to list members or the wider computing public
+  may not get a number at all. Not getting a number assigned may give the
+  impression that the issue isn't important.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Thanks
 
-iQIcBAEBCAAGBQJYTdLcAAoJEHb/MwWLVhi2fMwQALgaLk/cdN/g6ETDkT9L5bQp
-hq/oRUmZtIZOVOa/qY5cVSuS30aaGwDA2SwV9KCbb7oi0G1pRGk5/HSD+i34+SVx
-Y2PH6faXAnvtbOV808IItGWS2Y4wqQXH1bEm4pwY8abLyUsraO4I0vUip3/GSImj
-vy0qSkMBI9OadLJS1LSVIProiwZlI33NqFJOF0cPaWpChJpMfoPNJdn2qUUgJR2F
-F14MgvAjK/V1bDps/tLVNn7Rxvy7d10gBBgc0DHtNNCjLQSeZVdVkv88cDO0SZga
-QeARph2MVTPNcd2GjHcubT+FHL91mgWCyz6GGQK3/qkvq7elhmHXeR+Na7LHn5VJ
-vMrrq159mJCIKto+ThHNXLDxEqSXL83vi6x4luECf4FZrqW4GN904uvp07gtGTHW
-CsQbKQXVHsjWnojcX527MkTEVeWPE9/WslSXbWixgdlN4mKbwPlbZ8dC22xmGQqm
-TiEnn2ZmJyLLirixXFGrauRxcbFQm5byURSsJd3IfNphIwyk2jU/o4nj5HqLKGWo
-xwcLstCeVoeQntVYMjapmev7CG+NYSWoB7gq+Lf9Z93hL7xE71FM11o5M4FaCjyo
-z/rkgEm4cUaJ76S7jjURtOsillPTVb13fHTR+F04B7c4aaVXvvicIR26FdEQENc8
-iggKnJPJaFpxWZK5+T7P
-=X469
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
