@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/3
-Message-ID: <CALPTtNXwk-si9KX9c8dMY2uyKAFdc6NLGPUxrVgXMSCDGQU0xw@mail.gmail.com>
-Date: Fri, 10 Jun 2016 09:23:50 +0200
-From: Reed Loden <reed@...dloden.com>
-To: Sam Saffron <sam.saffron@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Ruby gem rack-mini-profiler CVE-2016-4442
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/9
+Message-ID: <20160914222916.GM24597@yuggoth.org>
+Date: Wed, 14 Sep 2016 22:29:16 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 10, 2016 at 8:10 AM, Sam Saffron <sam.saffron@...il.com> wrote:
+On 2016-09-14 10:22:58 -0600 (-0600), Kurt Seifried wrote:
+> Ideally people should get CVEs and then post to oss-security with the
+> information and the CVE. A lot of people consume the list data and the
+> current method means that people end up searching their DBs, making sure
+> it's new, then entering it, then updating it with a CVE. If people got CVEs
+> first this would vastly simplify things.
 
->
-> I am not sure how to go about announcing this CVE, where else to I
-> need to post this?
->
-
-This is actually somewhat documented, believe it or not!
-
-http://guides.rubygems.org/security/#reporting-security-vulnerabilities
-
-Yay for documentation! Though, boo for it needing to be updated since OSVDB
-is gone now. :(
-
-~reed
-
+At least for some projects, if a vulnerability is already public or
+becomes public prior to requesting a CVE privately from some CNA, it
+makes more sense to go ahead and widely inform the community (via
+this ML and elsewhere) and then associate a CVE with it afterward.
+While having a unique identifier is important, I think rapid
+dissemination of vulnerabilities so that downstream users can patch
+their systems is more important.
+-- 
+Jeremy Stanley
