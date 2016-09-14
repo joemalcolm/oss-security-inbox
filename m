@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/7
-Message-Id: <20161001205947.0427D34E006@smtpvbsrv1.mitre.org>
-Date: Sat,  1 Oct 2016 16:59:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: bfriesen@...ple.dallas.tx.us
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/8
+Message-ID: <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
+Date: Wed, 14 Sep 2016 10:22:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Ideally people should get CVEs and then post to oss-security with the
+information and the CVE. A lot of people consume the list data and the
+current method means that people end up searching their DBs, making sure
+it's new, then entering it, then updating it with a CVE. If people got CVEs
+first this would vastly simplify things.
 
-> Today we received a report from Marco Grassi about a heap overflow in
-> the 8BIM reader. 8BIM is a metadata chunk often attached to JPEG
-> files.
-> 
-> After investigation it was found that there was a small unsigned
-> overflow leading to a huge size value, which then resulted in a heap
-> overflow (causing a crash).
-> 
-> https://sourceforge.net/p/graphicsmagick/code/ci/5c7b6d6094a25e99c57f8b18343914ebfd8213ef/
+On Wed, Sep 14, 2016 at 3:21 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
 
->> coders/meta.c
->> parse8BIM
+> > > I noticed that in your original e-mail to this list, you did not cc
+> > > cve-assign.
+> >
+> > That's true, but I never did in the past, as this mailing list is (or
+> was?)
+> > monitored by mitre, so posting here has been sufficient until now.
+>
+> That said, I really hope that MITRE will continue to use this list for CVE
+> assignments. List members have often followed up with information on CVE
+> requests which noone would be able to provide for the web-based approach.
+>
+> Cheers,
+>         Moritz
+>
 
-Use CVE-2016-7800.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX8CLoAAoJEHb/MwWLVhi25tIQAKwOxW+rmQR3/yYEeOUs12z6
-dAu3II8DrfdEIetl+Tqtl3p0+qno6pIcU33e1M58u09xzHaeI1bLbHfajWMLHsHS
-89z+9p7NVUh9YTEHmVtrFPtCwa8KLkxDG7FrG3tJ0kANFC5qNFqsQrO3V3X2F6CO
-Ntj1crMkglIgKdqEyBfHAYVZCz4ViP4khbyIG/jZaD3jDr+tIq0eTT5/Sk3us9dM
-WTUdlN2ZBx2dPMtDKDnTI76AlDow4qQdpuwuUatjaE1P3NsUA2IoyE1P31s4Sdid
-Vg4D+IarUiubUg7ZyojpAZl1wvz+wXkh4YO7nwOxUsJ6fNcWeYRNtKGScyqyMOC8
-6cPXmHkbbe92mtYDf0aEgwCsWaaFtcByPADn1S50dqN9ABwzN7uKgC6dxE+Ca8Et
-gv/d/j8uMlZPZsS3Eo3V8U/df7MlTBo/X9Nt5CsNgZvwdcL9j6MN0CBFUXOEAiRZ
-IZwPFb+YNzoOmhz9WRHqhJC73pcM3h951fZYipRKq/5FnydhhMaKzzqFZbThE4Gz
-jJS96Mm8o9XEAeU9qntREWrshaot070IXUgnINMG56fllJOOwAWbAFyr7ZHWH6Sc
-6ZLAzwMqY+uxYQgMAHmhYyFllrg2mUZC+keMM1Pemci1Iny+GiWx6rXtoEPWqdgr
-th/lBrPHnXbti+aatzvs
-=g+mv
------END PGP SIGNATURE-----
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
