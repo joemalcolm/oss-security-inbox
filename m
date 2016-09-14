@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/4
-Message-ID: <CAMYtjAppEswaDgzgB4Wf9vPFJZVcco3M1KTR68hVCawtR4u1xQ@mail.gmail.com>
-Date: Wed, 13 Jul 2016 10:12:23 +0200
-From: Pere Orga <pere@...a.cat>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/2
+Message-ID: <nraqt1$a2m$1@blaine.gmane.org>
+Date: Wed, 14 Sep 2016 08:32:03 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal Core - SA-CORE-2016-002
+Subject: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 2016-09-07 19:30, Damien Regad wrote:
+> Greetings
+> 
+> jdavidlists reported an issue [1] with ADOdb 5.x, qstr() method,
+> improperly quoting strings resulting in a potential SQL injection attack
+> vector.
+> 
+> This affects only PDO-based drivers, and only in the case where the
+> query is built by inlining the quoted string, e.g.
+> 
+> $strHack = 'xxxx\\\' OR 1 -- ';
+> $sql = "SELECT * FROM employees WHERE name = " . $db->qstr( $strHack );
+> $rs = $db->getAll($strSQL); // dumps the whole table
+> 
+> Note that it is not recommended to write SQL as per the above example,
+> the code should be rewritten to use query parameters, like
+> 
+> $strHack = 'xxxx\\\' OR 1 -- ';
+> $sql = "SELECT * FROM employees WHERE name = ?"
+> $rs = $db->getAll($strSQL, array($strHack));
+> 
+> Please let me know if a CVE is needed for this.
+> 
+> Patch for the issue is available [2], and will be included in upcoming
+> ADOdb v5.20.7 release.
+> 
+> Best regards
+> Damien Regad
+> ADOdb maintainer
+> 
+> 
+> [1] https://github.com/ADOdb/ADOdb/issues/226
+> [2] https://github.com/ADOdb/ADOdb/commit/bd9eca9
 
-Please can I have CVE IDs assigned to the following Drupal
-vulnerabilities (see https://www.drupal.org/SA-CORE-2016-002):
+Should I assume from the silence that no CVE is required for this ?
 
-Saving user accounts can sometimes grant the user all roles (User
-module - Drupal 7 - Moderately Critical)
-Views can allow unauthorized users to see Statistics information
-(Views module - Drupal 8 - Less Critical)
+Thanks for your reply.
+Damien
 
-And for the Views contrib module (SA-CONTRIB-2016-036)
-https://www.drupal.org/node/2749333
 
-Thanks
-Pere Orga on behalf of the Drupal Security team
+
 
