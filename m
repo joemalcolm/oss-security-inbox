@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["672" "Tuesday" "27" "March" "2018" "10:58:50" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" "<CAKQ1sVM601_qrcr_-Y8axM=etSCDVh7k3h_ZkRjSA1Va1aH_Tw@mail.gmail.com>" "22" "[oss-security] Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values" nil nil nil "3" "2018032708:58:50" "[oss-security] Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values" (number mark "U       ylavic.dev@g Mar 27   22/672   " thread-indent "\"[oss-security] Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using too small Accept-Language values\"\n") "<726F94CB-5FAE-4BBC-B08F-825ECD096569@opencsw.org>" ("<E1f0KKp-00036s-1Z@romulus.home.bitnebula.com>" "<726F94CB-5FAE-4BBC-B08F-825ECD096569@opencsw.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1862" "Wednesday" "14" "September" "2016" "15:37:29" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160914223729.GL25324@hunt>" "46" "Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" "^Date:" nil nil "9" "2016091422:37:29" "[oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" (number mark "        seth.arnold@ Sep 14   46/1862  " thread-indent "\"Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection\"\n") "<CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>" ("<nqpirj$fvm$1@blaine.gmane.org>" "<nraqt1$a2m$1@blaine.gmane.org>" "<8b02b17e-cc12-5145-9957-381c583aa76c-IBi9RG/b67k@public.gmane.org>" "<1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>" "<20160914092135.GA16607@inutil.org>" "<CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13367 invoked by uid 550); 27 Mar 2018 09:00:07 -0000
+Received: (qmail 25758 invoked by uid 550); 14 Sep 2016 22:37:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11507 invoked from network); 27 Mar 2018 08:59:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iIu3wwRxCrBIYNnY1vkY7/HpFuWZ5MvAp1JJxCX+7FI=;
-        b=Ad74tqvn71GrJSlkw8Hf/4AiMOzzD+xTiefnv+LCh9x1ySHjAMjrxZ4pNIUdzypsIK
-         rICpVb6Y2ABkXfJknKOOKJnGC+aI7fiwZ3siHWb8WX1PCC6D8jcXjRcXcs23vPumVW+/
-         2jcTUVThlBrhRMpWznfNCjWq0XSFxabs61mBy6OaRHcTqIkUXG4mnX20+FRBYg3oStA5
-         MXjPdQgAOQCnz5jPFWGG6b2aiYeWRVTFShppy/3umtJxVe58hIS4sr866apeGwKBpG+J
-         rrU1QBpxxgWikgz6TQY2ylxsEcvlBRSpPxu/GeOBAzStVDVBsYxVqPhLPy++IGVk0WaG
-         ANXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iIu3wwRxCrBIYNnY1vkY7/HpFuWZ5MvAp1JJxCX+7FI=;
-        b=sODaDJZyBPGPDiE5flPGtsVRexjZy9iu/Fbda6ZxGKrzZQWPIUBAQmwwhEWJvuhBcF
-         40uNavfbdv6tbD6ezl2JGc5HTMevuvbCpcssPTCL/KvM9EBsjVJ0kT3WPxbdbKPECldl
-         E0+R+Z0P8cO9hunJLA5HlFcRa6if/Wwb2tJ0oxfv9lIoRL1QtgI+rJen7rQAUlZtYRy4
-         01YZ2sREyOwQ+Nb6CbqmGhIdbGTwKS/DJzlqZi3ltx3AnGjIZ2JKL4ZDY9xjGMJdnUZj
-         ZRzD6abhDxxKIpUUQn5F1y2FDYR/qjLfPWuAdejafBpgXw+Bs0aIEQTFaWX0iwM/bxFs
-         hBlA==
-X-Gm-Message-State: AElRT7H4YHmJ3WGNdTkmtOL+Dn/IMDK/fhpcGAWpq7nmDC7hFR5HYzBv
-	xyp8WJVnE0By4pt1xoulkL9z4oOGQh6LuKQYbbMB9w==
-X-Google-Smtp-Source: AIpwx48IfmEtqKD+B22YkMt01LIxCao4o07JV3qOGvG4odE7zIfLuzBR0E1MP73xcuEgEGzJkFqht3v4Ott3O0+Ra7s=
-X-Received: by 10.237.50.100 with SMTP id y91mr32802998qtd.146.1522141131553;
- Tue, 27 Mar 2018 01:58:51 -0700 (PDT)
+Received: (qmail 25739 invoked from network); 14 Sep 2016 22:37:43 -0000
+Message-ID: <20160914223729.GL25324@hunt>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <nqpirj$fvm$1@blaine.gmane.org>
+ <nraqt1$a2m$1@blaine.gmane.org>
+ <8b02b17e-cc12-5145-9957-381c583aa76c-IBi9RG/b67k@public.gmane.org>
+ <1797555053.495533413.810249.dregad-mantisbt.org@news.gmane.org>
+ <20160914092135.GA16607@inutil.org>
+ <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <726F94CB-5FAE-4BBC-B08F-825ECD096569@opencsw.org>
-References: <E1f0KKp-00036s-1Z@romulus.home.bitnebula.com> <726F94CB-5FAE-4BBC-B08F-825ECD096569@opencsw.org>
-From: Yann Ylavic <ylavic.dev@gmail.com>
-Date: Tue, 27 Mar 2018 10:58:50 +0200
-Message-ID: <CAKQ1sVM601_qrcr_-Y8axM=etSCDVh7k3h_ZkRjSA1Va1aH_Tw@mail.gmail.com>
-To: Dagobert Michelsen <dam@opencsw.org>
-Cc: httpd-security <security@httpd.apache.org>, announce@httpd.apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: CVE-2017-15710: Out of bound write in mod_authnz_ldap when using
- too small Accept-Language values
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ai3I8gwHc37+ASRI"
+Content-Disposition: inline
+In-Reply-To: <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Wed, 14 Sep 2016 15:37:29 -0700
+From: Seth Arnold <seth.arnold@canonical.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow
+ SQL injection
+To: oss-security@lists.openwall.com
 
-Hi Dago,
+--ai3I8gwHc37+ASRI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Mon, Mar 26, 2018 at 9:42 PM, Dagobert [...] wrote:
->
-> Am 26.03.2018 um 07:06 schrieb Daniel Ruggeri:
->>
->> Users of (the now end-of-life) httpd 2.2 who cannot upgrade at this time
->> should apply CVE-2017-15710.patch, which is available at
->>
->>   https://www.apache.org/dist/httpd/patches/apply_to_2.2.34/
->
-> This link does not exist, there is only
->   https://www.apache.org/dist/httpd/patches/apply_to_2.4.27/
+On Wed, Sep 14, 2016 at 10:22:58AM -0600, Kurt Seifried wrote:
+> Ideally people should get CVEs and then post to oss-security with the
+> information and the CVE. A lot of people consume the list data and the
+> current method means that people end up searching their DBs, making sure
+> it's new, then entering it, then updating it with a CVE. If people got CVEs
+> first this would vastly simplify things.
 
-Thanks for noticing and letting us know.
+I don't like the idea of waiting on CVE assignment before posting
+information here:
 
-The 2.2 version of httpd has ended its long life and went to the attic
-(almost simultaneously with this announcement):
-  https://archive.apache.org/dist/httpd/patches/apply_to_2.2.34/
+- MITRE's team does impressive work, but some assignments take
+  significantly longer than others; a request here, publicly, allows users
+  to mitigate or fix before a number is known.
 
-Regards,
-Yann.
+- In cases when there are no fixes yet, or incomplete fixes, it may not be
+  known how many CVEs are even needed -- making the issues widely known
+  earlier increases the chances of someone preparing patches, to clarify
+  how many issues existed.
+
+- With MITRE's reduced scope of CVE coverage, there's the risk that
+  software that's important to list members or the wider computing public
+  may not get a number at all. Not getting a number assigned may give the
+  impression that the issue isn't important.
+
+Thanks
+
+--ai3I8gwHc37+ASRI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJX2dEpAAoJEPMhclmdjS6XWskIAL0qTPpf3ig2Clm1qJHp8WhI
+yPNWEuPU7u4T7kKs084DQg6NKGIGaTCP5dLSDXTQ323uAm/S/wnd7hpPhZnPvDoV
+4KDntO9R92GpwhpHWC9T6v5Uqmvl/vQcw+IZebRxWlSjgNwxkatwVGkJOR/KQ9VV
+iO96Uxw7+pRNyVPCSEbq6VkRRNhmq+2j0csaWySC/kAeKY/jhlxHbFYzc3U5I3ZK
+9qQA7kYB+I4e5wyGMlL1y9X6aoJywu99mZ/9TQEu7gqOETpv2cDc/1J3SYoICw0f
+BuoOj6rLXSmFyeugflmhXyck9s4/onUAJlE2K3abZNU/Sc8GadVBEt4X6zI3Xn4=
+=deoz
+-----END PGP SIGNATURE-----
+
+--ai3I8gwHc37+ASRI--
