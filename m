@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/1
-Message-Id: <20160802000720.DF2953AE011@smtpvbsrv1.mitre.org>
-Date: Mon,  1 Aug 2016 20:07:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/12
+Message-Id: <20160915220008.70B7972E020@smtpvbsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 18:00:08 -0400 (EDT)
 From: cve-assign@...re.org
-To: petrella.pietro@...il.com
+To: noloader@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0
+Subject: Re: Does a documentation bug elevate to CVE status? - Crypto++
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I discovered a directory traversal issue on minifierBundleDir
-> barebone.jsp variable on a website with Liferay 5.1.0.
-> 
-> However, i report the following vulnerable URL of example:
-> 
-> /html/js/barebone.jsp?minifierBundleDir=/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E%2Fetc%2Fhosts%00.html
-> 
-> It's important to note that the url requested is built in the following 
-> manner:
-> - only .. "encoded characters" are permitted when you insert the 
-> traversal request
-> - At the end of the file is necessary insert %00 and .html otherwise
-> the request is not accepted
+> did not tell users that they must define -DNDEBUG when using alternate
+> build systems, like Autotools or CMake
 
-Use CVE-2016-6517.
+> machinery could engage that
+> egresses the sensitive information to the file system (core files and
+> the like). On some platforms, like Ubuntu with Apport, Apple with
+> CrashReporter, and Windows with Windows Error Reporting, the sensitive
+> information is egressed to a third party
+
+Use CVE-2016-7420 for this Crypto++ (aka cryptopp) vulnerability.
+
+In general, documentation bugs can have CVEs. Maybe the easiest
+example to find is CVE-2010-4179.
+http://www.openwall.com/lists/oss-security/2015/11/10/12 is another
+example of how misleading documentation can have a CVE.
 
 - -- 
 CVE Assignment Team
@@ -35,17 +35,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXn95qAAoJEHb/MwWLVhi2EagP+wbDTXE/Nu6kzML6gHfT1YL/
-ASt1JVhMFSk/1HLg3/ZLC1+lj7UVjj8Dhe/6xR+VZjbhT+lfZT0mkMJMlXjkpW56
-Xr4QbP1rsgoZD3gIn3vZt714Kg2Slk+FgtYxnxXr14IkfjndbLRGteCTMp1oof2u
-ZLwyHQkX8aa+QWF/NmfGaGqVmXmpD3tEkhwPujqNPfvdeY+qnsTflJnckHFPrNrm
-XLwGnPE5oCYaTWR4Mik7fElYtm+KitiwLN1SNi8mtjhvftlpojNtpeTUyq0oZrkh
-pmMIWLJW6sEhniWJ1AEnKngbZjDYA6JmP5sLkhP/vvGKTAUqb+5/XMDW1BgDr9Z5
-+bmfGN1y+6hzbN/O1Eau6Xt0eFLyVTokc3bAszxB6+Oq3Mu3EXyRgF1wwwo2cT5i
-XJ6Ait8TD6alYs4Apz6SVk81FkmmF42/sMdXMqpkrAekaLwX2iCtDimaCthZLJGJ
-2rwT3ajPb+YMoeTXAGwipYxcHXh08A5YRZEgW1xzevJDng8qTNycPqb9QF2QmSHo
-5LGU29Ct1om7rMzSeYoF/ZqYVlq8yOTK0NdkdNsxr52yKS4KNY1ebM7X9IrYfdcT
-7ZRJGcIc0xS1ZfrW8WcfUWYnS6ke31nmXFLb6e73EmgM4+SX4lO1mIeBqGjekZYv
-P1MEHsLUulw40je0Ag1O
-=jL50
+iQIcBAEBCAAGBQJX2xl8AAoJEHb/MwWLVhi2cUUP/RAYclh+VWjbrJskPz/HaJUL
+lL8Pveg4jRTcU+CYN5R5sBoPajPAEthbv+UyWg7H3d2vW905yh2sy5hUnKj6weuG
+v8pFDXEqWXY4OKaaXRVp9FcDd5pFR+YWHAGddzilWuOTyIZ6KOQeiKo8GG/og5/d
+2YanGHpD884MGB189SB+LZcUv/NjYl5X4ONIM4nR/t3KlpRA9kWYBi0o9KwSrStS
+jb3kK3ZiKw60WmVuwfRbvklb8zDSvxhMRpiqrOju2HgiY5E0ajZOhQQwEoNdcnlO
+HA0IYW5BJO83coM8a7c1z3RRrmncJucZL8uxcPistwKhZyWFnvAKnp2zpNnmGM2S
+z3CcTK1h7U+434xCNcKXTWFnMr4+WWIS9N8NfYyAFbGY+5nZ/G2Dpro9ObQQIikG
+zzrwdVgdWxrXKUeP5mfqM5F0GDhKNZIK1nKX++7S/y4HO4xBJAwyHKXRg42S4yX0
+yfUbknygpqKrJGIG1EjOzUqmlgS2nsclq6nJRv5YuJgTqRh6ZQC7b/Zwr+Sil8tP
+ZLu4kv1IVv52Z5jjk1pUfHe6AW2lfu82iUzKFZaW0m9MUaq9ULNL3+CSkUBM4oxv
+ay2L+gKNE4SExGYj7brfYkm/1r5d7eo7WIrINrbdz6XojOKKbCAs4nTlvKQoVn9m
+esrwC4mjLKJ8/DHt7D7X
+=du18
 -----END PGP SIGNATURE-----
