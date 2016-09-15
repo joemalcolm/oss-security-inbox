@@ -1,110 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/20/2
-Message-ID: <001201d24364$45662b80$d0328280$@apache.org>
-Date: Sun, 20 Nov 2016 11:28:27 -0800
-From: "Apache OpenOffice Security" <orcmid@...che.org>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE-2016-6804 Apache OpenOfice Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/3
+Message-Id: <20160915053703.A0B3572E007@smtpvbsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 01:37:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: vul@...safe.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -libdwarf 20160613 heap-buffer-overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 4
+> 
+> _dwarf_read_loc_section
+> dwarf_loc.c:919
 
+Use CVE-2016-7410 for this buffer over-read.
 
-CVE-2016-6804
-<http://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-6804>
-Apache OpenOffice Advisory
-<https://www.openoffice.org/security/cves/CVE-2016-6804.html>
-
-Title: Windows Installer Execution of Arbitrary Code with Elevated Privileges
-
-Version 1.0
-Announced October 11, 2016
-
-Description
-
-The Apache OpenOffice installer for Windows contained a defective
-operation that allows execution of arbitrary code with elevated 
-privileges.
-
-The location in which the installer is run may have been previously
-poisoned by a file that impersonates a dynamic-link library that 
-the installer depends upon.  The counterfeit is operated instead 
-because of a search-path defect in the installer.  The counterfeit 
-will be operated under the administrative privileges of the OpenOffice
-installer, compromising the user's PC.
-
-Severity: Medium
-
-    There are no known exploits of this vulnerability.
-    Proof-of-concept demonstrations exist.
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-
-    All Apache OpenOffice versions 4.1.2 and older 
-    are affected.  OpenOffice.org versions are also
-    affected.
-
-    
-Mitigation:
-
-Install Apache OpenOffice 4.1.3 for the latest maintenance and 
-cumulative security fixes.  Use <https://www.openoffice.org/download/>.
-
-
-Defenses and Work-Arounds:
-
-If you are unable to update to 4.1.3, there are other 
-precautions that can be taken.  These precautions are also 
-recommended as protection against other software that may 
-have the vulnerability.
-
-When executing .exe installers, ensure that the installer
-is in a file folder that has no files but the installer 
-.exe file.
-
-If an installer proposes a folder to extract the setup
-files into before the actual install, choose the name of 
-a folder that is not in use.  Delete such a folder of setup 
-files after the installation completes successfully.  To 
-reinstall without downloading again, preserve the installer 
-.exe on private removable storage.
-
-
-Further Information:
-
-For additional information and assistance, consult the Apache
-OpenOffice Community Forums, <https://forum.openoffice.org/> or 
-make requests to the <mailto:users@...noffice.apache.org> public
-mailing list.  Defects not involving suspected security
-vulnerabilities can be reported via
-<http://www.openoffice.org/qa/issue_handling/pre_submission.html>.
-
-      
-The latest information on Apache OpenOffice security bulletins 
-can be found at the Bulletin Archive page 
-<http://www.openoffice.org/security/bulletin.html>.
-
-Credits: 
-
-The Apache OpenOffice project acknowledges the reporting and
-analysis for CVE-2016-6804 by Stefan Kanthak and by Himanshu Mehta.
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQEcBAEBCAAGBQJYD4CxAAoJEPluif/UVmKKwJ0IAIp5Z5WGus5iaDcOYanVS+QN
-ng1SCb+0jitCiqmVy9Xv5/diVEgogRxOu0tryV5flAaChepsRehpuJmRRftxYTS0
-aNkQiKDSkd9d3XswAa0xfcQWaojANgYwV6aMGx1MstfRo3aIdRtHvNqjygU1ANyR
-z3UipEyRYmrRgeeHq5cBNBQQv+gGfKXMHr2nvfaOD5FSqvwa/3jEWbpagYHwXfyV
-18QqITRw5qG6sP/sQXw1I3CPez4+SbZebJZ2cuBSnnSmoojOQ3EJi69hESLOM2S5
-I4xiraQSYygTeybU3u2OARtsXejb8qa7d9pYB+JwboPVKam03s32X+0ZnBnv3Y4=
-=nKLP
+iQIcBAEBCAAGBQJX2jLpAAoJEHb/MwWLVhi2p78P/Radj5UkaF2fCmkMqPEqMn+R
+Q7X/vpsabO3Yj7GZkQdcEB1RdiXA3Eqo+EhFXrIZzAinTDmKrWsgFiyXcM3C9R0f
+9mhY9RTd/w3Yi3c4iP2wX41O41rCwyaKXkO310iwTGdEqba9KKiIirUPeeFcuV9N
+eyxKbuV4X3aHl0EW5HUy37f/XXBIBNqt8LCFybq+3ZszXRhY+HfIKTx+h5iOv2Qk
+sx7dgEBsz8roNN+9sue+cH1H6xOkRB/wg3Tcf1O3s6ChmBJ86jwDpBmM8CutsJzn
+0mSLzdJt3sBx8romxS/XCb7I9O63LMDq8/iWRNOAgAltPOCwpvDMJZg+euYZx8en
+Gexabth4rZ1SCVNX+bazY0HhVh0FKJRhL5UqK60+8jKFFSWxYGXetrAHjpIXRX0i
+v3mizGwr8GTY4S8/P1djCt8BFMhIcYh3iDgq9Hmxr300apJF9H8/7vCZ5UmtRxsH
+mHlgQcN4lT8qf7nI4fNnPFRMlPZlfpAkyC+M6bZT6Zo0oKF44pfRf1z4A4DTbitd
+HmOlTiGHJ+f85ISI9SoUYy4R4sVO2BXBQ0hw1xAcY0CVoSPeZXF7pTQCGROMEpxJ
+Yn/jRFryI7WRhdix4doqu+DvjW9WmEJZz8yqc6YZD25JkyaeCwdpJb9LpXue60pF
+3eIKvk8nL7JiAKRPstES
+=fJku
 -----END PGP SIGNATURE-----
-
-
-
-
