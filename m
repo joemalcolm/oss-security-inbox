@@ -1,52 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/21
-Message-ID: <CANO=Ty0PxH3R6erUL1y=zoqpuxTh3y8Kxu_D6i60gnC=F=EcWA@mail.gmail.com>
-Date: Wed, 4 May 2016 10:47:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Older OpenSSL RSA key/64 bit bug (now with added CVE!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/1
+Message-Id: <20160915045824.7C28F8BC36E@smtpvmsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 00:58:24 -0400 (EDT)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
-
----------- Forwarded message ----------
-From: <cve-assign@...re.org>
-Date: Wed, May 4, 2016 at 9:25 AM
-Subject: Re: [oss-security] broken RSA keys
-To: solar@...nwall.com
-Cc: cve-assign@...re.org, kseifried@...hat.com
-
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> On Wed, May 04, 2016 at 07:50:24AM -0600, Kurt Seifried wrote:
->> Is this something we should look at with respect to CVE assignment (ala
->> CVE-2008-0166)?
+> ADOdb 5.x, qstr() method,
+> improperly quoting strings resulting in a potential SQL injection attack
+> vector.
 
-> The old OpenSSL bug from 2000 could get a CVE from 2000, since that's
-> when it was publicly reported
+> Note that it is not recommended to write SQL as per the above ...
 
->>> http://marc.info/?l=openssl-users&m=95961024500509
->>>
->>> Under 64 bit HP-UX,
->>> the problem manifests itself as RSA_F4 becoming 0x1000100010001. The bug
->>> is that 1 is an int, and according to the ANSI C standard, shifting more
->>> than the size of the an expression is undefined. On this architechture,
->>> only the 5 least significant bits of the shift is used, thus 1<<32==1
+> https://github.com/ADOdb/ADOdb/issues/226
+> https://github.com/ADOdb/ADOdb/commit/bd9eca9f40220f9918ec3cc7ae9ef422b3e448b8
 
-Use CVE-2000-1254. The commit is:
-https://git.openssl.org/?p=openssl.git;a=commit;h=db82b8f9bd432a59aea8e1014694e15fc457c2bb
+>> SECURITY: ADODB qstr does not quote properly with PDO
 
-(We are not sure how this CVE ID would be used. It is possible that
-nobody will use this ID for OpenSSL risk management, but someone will
-use this ID in deciding to pursue further research on "shifting more
-than the size of an expression" issues.)
+>> labels
+>> security
 
-If this ID is sent in an oss-security followup, the Subject: header
-should be changed to mention OpenSSL. Also, MITRE currently plans to
-publish the CVE for this along with the CVEs for the OpenSSL
-2016-05-03 issues, which should be very soon.
+>>> Should I assume from the silence that no CVE is required for this ?
 
-- --
+It only means that the CVE Team at MITRE is not in an optimal position
+to decide whether a CVE ID should exist for a specific library issue
+that's exploitable only when application code has used that library in
+a "not recommended" way. It's best for a maintainer to suggest what
+outcome they prefer, e.g., "it's not recommended but people still can
+use ADOdb that way; thus, we consider this a required security fix."
+
+Because "security" is still present in the title and labels of 226,
+we're making the conclusion that this is a security problem and
+assigning an ID, CVE-2016-7405.
+
+>>>> That's true, but I never did in the past, as this mailing list is (or was?)
+>>>> monitored by mitre, so posting here has been sufficient until now.
+
+The current situation is that the CVE Team at MITRE receives both the
+oss-security messages and the https://cveform.mitre.org form output.
+We let people choose either method for obtaining a CVE ID from us,
+depending on their disclosure goals, their perspective about open
+pre-assignment discussion, or other factors. People using
+https://cveform.mitre.org are free to forward our replies to
+oss-security if they're relevant to the list, e.g.,
+http://www.openwall.com/lists/oss-security/2016/09/08/14 did this.
+
+- -- 
 CVE Assignment Team
 M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 [ A PGP key is available for encrypted communications at
@@ -54,27 +58,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXKhODAAoJEHb/MwWLVhi2bREQAKYSRGk+hCcwiAy19+RYQC1g
-AvRnK7+5kJnLXVdQO7K2yPQo1aLHcKgbmv+VNcu9tf4kJg/7ebROecdgrtWXHzI1
-yksyozDzX574LtFuyBWDax7ethEWdHY1BSmSWRIUOmFj6IOTSks8eI7T5rgEd+Gp
-dB2kRLSKEWlPV1ld6B//bfnW1bo/cbfuEgxCkpYh97zwbADSZdGltTqpvzQGt6d/
-BRCDLoV688aTS1lEqrrmxcf4BaAWUa1TMHuCg3GSuTfnu8iVDvOuuMrvDItpmovk
-5/Z3G/Z23RHwAq6R8yMmXPdDq4aelS0IzxuFCCEU9zCcZsAc90HP1Vt6CDgOQagW
-kVRMi2wTVsy+FqlMyDN5CeGDmwlKe5BegAB/sanRzUlv4gn0/rpF223bvgKcYYRc
-4LJlOMxhn+eymktp+8neJhwlR5rWzC2Na4HxJFitKQmv2FnQhzYD3BvNyhQSPwJ9
-k4ky1/+/T6WyxNNXsA2DnqbYBgDD4crq58IDHfdVEBXpq+wiyGT+b32FS1+fLC29
-cIi97XUrzUh6Fzvx1m3Bjwbt31B/lWs13iNy8qz5Z+91Y6ud5UERqjZ2ogv/AVIX
-Na3ycUizKATKRdfr2WuEOFXR5Cu+rLB8ayPVlKAc8bNeUcWpOoWUrWTsTyBC0rzT
-yka/lgb3X77XRXs9gYgt
-=yEbu
+iQIcBAEBCAAGBQJX2indAAoJEHb/MwWLVhi2YqoQAIYLL1M8cHumDhNP7YH3uBaP
+QTsrzO2a2XF51eB4o+bgnht9lLI5eGeOqRdcsT1LfviSH4D/cIRwDTCn3lhykgI0
+bWdypB/Pkni2rlHaiIcxB8T9Qxcy/BI4JGjEv8BTJZ68YfN7I64PXkUKEGXDb5L3
+0t/vOhzILU+9M2nep50LMeehPIVxyvBla7EIhhVN1fiV6cZAaTSb9MfG/0nBC8xo
+EmipAxQmFX6l/5O46cB9jt81rlWdVTt5t3grhlFn0N0VQvHGVX+kW5kYz391wZMS
+bEmDQDQRkvPdJQHEws8lzCGql1eX+cFuiptHLWjMIQZ7FxXQultR+ECVgd6i3q1L
+HjKoHin1x/LqRyWp3pQMnnvqyjV4o/MUpMC5KPZdZalCcFLqenc/pboKugBa2pkT
+weop+fXTS9fadfd9WSgMLCWXWu/OyseszqSGM74JJu1IJXlwa8cb24/GHjIrjvsC
+FZfk5u8xE4zaV+I8y5Dq/pDwSG6nH/AcZT51c44k+vpEl/kXPuhwPEcZTzmnknKw
+S5K9NLksiD0jqogHf595Okt0FopH+86aPwePye1JvmXFBfQf26DCswRg+1/p3g09
+GXYT9leG+v8lFMXf9g3tzL5yq+ENlSKlkFbJq7k1uGdsKUOdMrGhqToWkeJYSp0D
+SNkQDCDU0zfiY/s8xutp
+=Gaft
 -----END PGP SIGNATURE-----
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
