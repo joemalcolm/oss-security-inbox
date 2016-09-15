@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/16/2
-Message-ID: <alpine.LFD.2.20.1605161718050.4904@wniryva>
-Date: Mon, 16 May 2016 17:30:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Radim Krcmar <rkrcmar@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: CVE-2016-3713 Linux kernel: kvm: OOB r/w access issue with MSR 0x2F8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/8
+Message-ID: <30086816.X7GymaXB0v@willoughby>
+Date: Thu, 15 Sep 2016 17:52:52 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Libarchive/bsdtar: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello all.
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) with 
-variable Memory Type Range Registers(MTRR) support is vulnerable to an 
-out-of-bounds r/w access issue. It could occur while accessing processor's 
-MTRRs via ioctl(2) calls.
+I'd like to make people aware of the following crashes in libarchive/bsdtar 
+found by fuzzing (all issues are public on github):
 
-A privileged user inside guest could use this flaw to manipulate host kernel's 
-memory bytes leading to information disclosure OR potentially crashing the 
-kernel resulting in DoS.
-
-'CVE-2016-3713' has been assigned to this issue by Red Hat Inc. A proposed 
-patch is attached herein to fix this issue.
-
-Reference:
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1332139
+The most dangerous, an out of bounds stack write (which is also fixed 
+upstream):
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer-overflow-in-bsdtar_expand_char-util-c/ 
 
 
-This issue was reported by Mr David Matlack of Google Inc.
+The following are buffer over read of 1 (all are unfixed upstream ATM):
+
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-detect_form-archive_read_support_format_mtree-c/ 
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-read_header-archive_read_support_format_7zip-c/
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-bid_entry-archive_read_support_format_mtree-c/
+
+As stated in the posts, the two latest bug could be the same, but I didn't 
+have an upstream response about, so I posted both stacktrace to better track 
+the issues.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-View attachment "KVM-MTRR-remove-MSR-0x2f8.patch" of type "text/plain" (1644 bytes)
+The following are use-after-free (all are unfixed upstream ATM):
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-bid_entry-archive_read_support_format_mtree-c/
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-detect_form-archive_read_support_format_mtree-c/
+
+As stated in the posts, they could be the same.
+I didn't have an upstream response too for those.
+
+
+Agostino
