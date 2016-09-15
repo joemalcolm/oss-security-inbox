@@ -1,37 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/8
-Message-Id: <20160921162950.B2DF572E020@smtpvbsrv1.mitre.org>
-Date: Wed, 21 Sep 2016 12:29:50 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/10
+Message-Id: <20160915165716.A063E6C1FB6@smtpvmsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 12:57:16 -0400 (EDT)
 From: cve-assign@...re.org
-To: tdecacqu@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Nova
+To: kaplanlior@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@....net
+Subject: Re: CVE assignment for PHP 5.6.26 and 7.0.11
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Title: Nova may fail to delete images in resize state regression
-> Affects: ==13.0.0
-> 
-> If an
-> authenticated user deletes an instance while it is in resize state, it
-> will cause the original instance to not be deleted from the compute node
-> it was running on. An attacker can use this to launch a denial of
-> service attack. All Nova setups are affected.
-> 
-> This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
-> re-introduced in the first release of Mitaka version of Nova and it was
-> re-fixed in nova-13.1.0.
-> 
-> https://launchpad.net/bugs/1589821
+> bug #73052 (Memory Corruption in During Deserialized-object Destruction).
+> https://bugs.php.net/bug.php?id=73052
+> https://github.com/php/php-src/commit/6a7cc8ff85827fa9ac715b3a83c2d9147f33cd43?w=1
 
->> cleanup_incomplete_migrations periodic task regression with commit
->> 099cf53925c0a0275325339f21932273ee9ce2bc
+Use CVE-2016-7411.
 
->> This reverts commit 099cf53925c0a0275325339f21932273ee9ce2bc.
 
-Use CVE-2016-7498.
+> bug #72293 (Heap overflow in mysqlnd related to BIT fields).
+> https://bugs.php.net/bug.php?id=72293
+> https://github.com/php/php-src/commit/28f80baf3c53e267c9ce46a2a0fadbb981585132?w=1
+
+Use CVE-2016-7412.
+
+
+> bug #72860 (wddx_deserialize use-after-free).
+> https://bugs.php.net/bug.php?id=72860
+> https://github.com/php/php-src/commit/b88393f08a558eec14964a55d3c680fe67407712?w=1
+
+Use CVE-2016-7413.
+
+
+> bug #72928 (Out of bound when verify signature of zip phar in
+> phar_parse_zipfile).
+> https://bugs.php.net/bug.php?id=72928
+> https://github.com/php/php-src/commit/0bfb970f43acd1e81d11be1154805f86655f15d5?w=1
+
+Use CVE-2016-7414.
+
+
+> bug #73007 (add locale length check).
+> https://bugs.php.net/bug.php?id=73007
+> https://github.com/php/php-src/commit/6d55ba265637d6adf0ba7e9c9ef11187d1ec2f5b?w=1
+
+The related upstream code can be found in the
+http://source.icu-project.org/repos/icu/icu/trunk/source/common/locid.cpp
+file.
+
+What we will do for now is assign one CVE ID for the "ICU for C/C++"
+product and a separate CVE ID for PHP. In other words, the bug #73007
+discoverer has indicated that it is a bug in that ICU product.
+However, it is a bug at a different level within the PHP distribution,
+because 6d55ba265637d6adf0ba7e9c9ef11187d1ec2f5b implies that PHP is
+intended to operate safely even with an unpatched copy of the ICU
+library.
+
+Use CVE-2016-7415 for ICU for C/C++.
+
+Use CVE-2016-7416 for PHP.
+
+(If there happens to be further information indicating that locid.cpp
+was supposed to behave as originally written, then we can reject
+CVE-2016-7415.)
+
+
+> bug #73029 (Missing type check when unserializing SplArray).
+> https://bugs.php.net/bug.php?id=73029
+> https://github.com/php/php-src/commit/ecb7f58a069be0dec4a6131b6351a761f808f22e?w=1
+
+Use CVE-2016-7417.
+
+
+> bug #73065 (Out-Of-Bounds Read in php_wddx_push_element).
+> https://bugs.php.net/bug.php?id=73065
+> https://github.com/php/php-src/commit/c4cca4c20e75359c9a13a1f9a36cb7b4e9601d29?w=1
+
+Use CVE-2016-7418. The scope of this CVE also includes all of the
+"other four similar issues" in the "[2016-09-12 06:44 UTC]" comment.
 
 - -- 
 CVE Assignment Team
@@ -41,17 +87,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX4rTJAAoJEHb/MwWLVhi2XbYQAJyHRL8m6k3pOx7KnR0yhb3r
-UaUcM8iKeJlbL218NgqOcMt0TEhwq6MmhWAWWoa6ptVoVGuriZuuzEXA9QcrgEIU
-GF2PEN5umuD6XDP2kqg7InlP1DkGyCU4j5nu4vqg5h31oxuxedQ2kROzUUZbeDew
-6fyMpay+suYOTc2eQaP86kTqrx69B/zm0K1agR49Z1dDF/+B0J/HiPAXV+3tmwRy
-XfbtQyZwIfLF4wbFmPZVMYuUZqXZhM0piRdFwmkjTiF3Wkf5neo50+qZnU3N8g7b
-izWhpemQ+LhZdPEiS2XX7xB+xhZHyGxDrBXdEsf4dEc2NdpjQ4vr/fgk4c41XCvM
-2DTtNQLAiTfq5P5KoFS0loAkzTH4H3IRk9iBA9ta2bK6IdDN9arZOwAdxXEgx8Ju
-gdoGqGcX9dKrIqo7EMB8u2cM6pdz4BZQqJw6ceXXjBcc+ai46C+6NqwMlTnyYLs2
-7gFr6J/RqQpWfQDDZA2LzQbSEFzEJhR3J6eHO/0KuPGMzFVWcAWXJPa1b99ZwTjF
-fcGD56XcbJROXbSb+kPxj7kw29k5/1rxaY4qXiWXpvsBXI4juLHH7l2lVMmlLXZ6
-xmyNlBIEs/tE3xnj541xAVODZjYkYNiLqvwZaNk/TAiIJ5E85IIp+Eg9r0+OxpuH
-kh4a4OUoAvv//hPZkckh
-=b3GM
+iQIcBAEBCAAGBQJX2tJ1AAoJEHb/MwWLVhi2IyQP/2dJs6voIoZb57o76tqlBsaO
+K+4xjRwksJr7R295ckj4eyNfyrUp0md6czc1Nfo0YNiUaS4PuaDPO+hgTyquLIDX
+C+F2+fi+mvKnwk4s6DmFtTsFQ/9ZERvvkvKjIN2URWMG9wQd/wGsM9/8bqa/P5wy
+lykrJHFhoWqYImdijQpfQnqgdXEmRVFEUUy+06OAKJ0UU5VhpTdAt9Si+eEGw4Ke
+LCYd174/PpmN/WGtA3re0nvvWxA51CspUjOjWo2cVo0jZDHKKjb38A5z3t8IiZOQ
+cX/rOPcrBh4LMQ6NIgaQtNZvg7em9eO4cbbTsPo9B3N2aAhNdjVGsMuDzvrWdQ6x
+w866h801+XSQcAdvjtqTv7mRVdG2mYeMhTRKQlXIj6wnP6m7jKMR2Ns6ob6WlOFU
+VQao4JTjKWmcfc+S0SYNdJlXRQAiBjFF8y+bhmmxJUnK07K8gAe1kqisVBD3Son7
+ri7DbOnQNZ5Vx6IRcXh04L5jSK3e11Y6r4MOS3s8ugz8O0c8qPBOUIpd3/0MnSi2
+uJYid6ful550Jr5g/E42voFQjy7AFxUAneJbAMPPE4iK1QIpoJBAy4UwMIQbxvv7
+kSeFi4oPeqGzPla649fBkzD0vTw35ElOOtZsEhQ14sohULuG+84VEA+FM/RDauUz
+nyz6Llcs3sWHY+YCWJSQ
+=VwnS
 -----END PGP SIGNATURE-----
