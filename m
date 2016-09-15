@@ -1,41 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/21/2
-Message-ID: <CACn5sdSPZ7+z-LGK1PBrmv6ozCVHhNA6XCrQpJc-YR09ickhAA@mail.gmail.com>
-Date: Mon, 21 Mar 2016 10:57:51 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Stack exhaustion in libxml2 parsing xml files in recover mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/4
+Message-Id: <20160915054101.4E3A28BC3EB@smtpvmsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 01:41:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: chenruiqi@....cn
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS vulns in b2evolution v6.7.5
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We found a denegation of service parsing a specially crafted xml in libxml2
-if recover mode is used. It was reported to the libxml2 bug tracker some
-time ago but the maintainers are quite busy, so they haven't fixed it.
+> forum with some evil code
+> https://github.com/b2evolution/b2evolution/commit/9a4ab85439d1b838ee7b8eeebbf59174bb787811
 
-$ gdb --args xmllint --recover no-recover.xml
-...
-Program received signal SIGSEGV, Segmentation fault.
-_int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
-3302    malloc.c: No such file or directory.
-(gdb) bt
-#0  _int_malloc (av=0x7ffff7826760 <main_arena>, bytes=2) at malloc.c:3302
-#1  0x00007ffff74ea7b0 in __GI___libc_malloc (bytes=2) at malloc.c:2891
-#2  0x00007ffff78d9c19 in xmlStrndup__internal_alias (cur=0x555556888570
-"b", len=1) at ../../xmlstring.c:45
-#3  0x00007ffff7882800 in xmlNewReference__internal_alias
-(doc=doc@...ry=0x55555577c000,
-name=name@...ry=0x555556888570 "b") at ../../tree.c:2609
-#4  0x00007ffff78856f7 in xmlStringGetNodeList__internal_alias
-(doc=doc@...ry=0x55555577c000, value=<optimized out>) at ../../tree.c:1583
-#5  0x00007ffff788592c in xmlStringGetNodeList__internal_alias
-(doc=doc@...ry=0x55555577c000, value=<optimized out>) at ../../tree.c:1591
-#6  0x00007ffff788592c in xmlStringGetNodeList__internal_alias
-(doc=doc@...ry=0x55555577c000, value=<optimized out>) at ../../tree.c:1591
-....
+Use CVE-2016-7149.
 
-A reproducer is available upon request. Please assign a CVE.
 
-Regards,
-Gus.
+> Edit the "Short site name"
+> https://github.com/b2evolution/b2evolution/commit/dd975fff7fce81bf12f9c59edb1a99475747c83c
 
+Use CVE-2016-7150.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX2jQYAAoJEHb/MwWLVhi2uiIP/2drloezwZ44oHZCA4fFelrs
+IQxqLq8IISpHE+EMLJL2fr+9+Etjkte+D1gD0IhUSwM8gBLT5l0QoKJKQG5shpmH
+uzCvz8lebBIEs+MExRDNg/yaN8L15u/Fw/CHwP6axSZK0WId0cJh8aIJ7vXHTecl
+iyFBiUT/bQo+EqTnzIWfDOyiAx+0xoGJUd8URQCroJGf0j4ZwmeOPjdy0NdGDavR
+p+DY4A18FENakMUpLx5hFGudCQCCoLk648lKsVfSqq9gDKrDiUSOmvNMBn6n80Vs
+q3YhFfbr4hGo4Degw6HBRJyOShzr/UpuYsYuEEut2g3DRVX8vCtNv04D6yA0ChUj
+dylwLceHC+D5lXdQEayNUtKuKrDQCR/MqzFfS6DRCghbBnObt3mdxuoSivxLX5gN
+fASKsXcPe+n9SVTJya/RG6svo0rxJD6oa0h3QQinE3bDF4+uQ10A6IpsFdzVDRew
+VtSCAzVktXMG+qU+ld2F/iu7ArLmvCtsu/Sxs1EP/iJKIkkIFkOiEOXLBU+Ye0kt
+fCmXRI2SKReJgv67KvXZJxA7t+p+9++gaHOUpcrvHESv8HiFs+swBMwLmCSLxHYv
+pqbwfpQ46+tj7MkW6D/+irj2fdgOjiStxq+7o/Mwd2uh5oEo3LFKnP4ciz0ajSUT
+B3LOjIAhuRfXD4XkcDlX
+=4IsD
+-----END PGP SIGNATURE-----
