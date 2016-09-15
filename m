@@ -1,89 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/3
-Message-ID: <CANO=Ty3pi9EBe-yARnJamWb1hW9p0Bztmj_Gr9SyWyXDqfCLDQ@mail.gmail.com>
-Date: Wed, 9 Mar 2016 09:10:04 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/2
+Message-Id: <20160915051926.430853AE020@smtpvbsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 01:19:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: matt@....asn.au
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Dropbear SSH <2016.74
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 9, 2016 at 8:59 AM, Tim Brown <tmb@...35.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Sunday 06 March 2016 21:39:54 Gsunde Orangen wrote:
->
->
-> Quite, as much as I appreciate the options presented over the last few
-> days, I
-> don't think any of them are the winning horse.
->
+> The first one has different exposure for
+> client/server parts so I assume it should have separate
+> CVEs?
 
-It's simple. The winning horse is CVE. Or something that is fully CVE
-compatible, like DWF.
-
-To put it bluntly DWF is as close to 100% CVE compatible as it can be:
-
-Numerically DWF can generally be mapped directly to CVE with no conflict,
-if you spot a conflict between CVE and DWF please notify us so we can fix
-it.
-
-If you already have a CVE identifier you can map it directly to DWF, e.g.
-CVE-2000-1234 maps directly to DWF-2000-1234.
-
-https://github.com/distributedweaknessfiling/DWF-Documentation
-
-Also the SPLIT/MERGE and general process for numbering authorities are
-similar, if not nearly identical. I can say this with some authority having
-assigned close to 5,000 CVE's =).
+We don't feel that it's a case of independent mistakes in the client
+and server. The type of exposure is not, by itself, relevant to the
+number of CVEs.
 
 
-> As would I however, even with pointers from SC about who to poke within
-> MITRE
-> we came up short tracking a warm body down for (~7) months (even one that
-> was
-> willing to say no). That being said, we have now located a new warm body at
-> MITRE who has made themselves known to us, I am more than happy to approach
-> them about the following:
->
+> - Security: Message printout was vulnerable to format string injection.
+> 
+>   If specific usernames including "%" symbols can be created on a system
+>   (validated by getpwnam()) then an attacker could run arbitrary code as root
+>   when connecting to Dropbear server.
+> 
+>   A dbclient user who can control username or host arguments could potentially
+>   run arbitrary code as the dbclient user. This could be a problem if scripts
+>   or webpages pass untrusted input to the dbclient program.
+>   https://secure.ucc.asn.au/hg/dropbear/rev/b66a483f3dcb
 
-So to put it bluntly: good luck. In my role as  a Red Hat employee I'm on
-the CVE Editorial board and I can't get answers out of them. I'm now
-posting things like:
-
-====
-Can someone from Mitre at least confirm that they have seen this email?
-It's been over a week now with no reply from Mitre on anything:
-
-https://cve.mitre.org/data/board/archives/2016-03/msg00000.html
-https://cve.mitre.org/data/board/archives/2016-03/msg00006.html
-https://cve.mitre.org/data/board/archives/2016-03/msg00008.html
-====
+Use CVE-2016-7406 for all of this.
 
 
+> - Security: dropbearconvert import of OpenSSH keys could run arbitrary code as
+>   the local dropbearconvert user when parsing malicious key files
+>   https://secure.ucc.asn.au/hg/dropbear/rev/34e6127ef02e
 
->
-> Indeed, such a project requires a vendor neutral host. If OWASP are up for
-> it,
-> then I would gladly support them running with the above proposal, if not
-> then
-> a good faith alternative ought to be sought.
->
-
-Or better yet a community led effort, like DWF that is also willing to work
-with Mitre (whether or not Mitre returns the favor remains to be seen).
+Use CVE-2016-7407. (Admittedly, we do not completely understand
+whether this is identical to a code problem previously found in
+PuTTY.)
 
 
->
-> Tim
-> --
-> Tim Brown
-> <mailto:tmb@...35.com>
->
+> - Security: dbclient could run arbitrary code as the local dbclient user if
+>   particular -m or -c arguments are provided. This could be an issue where
+>   dbclient is used in scripts.
+>   https://secure.ucc.asn.au/hg/dropbear/rev/eed9376a4ad6
+
+Use CVE-2016-7408.
 
 
+> - Security: dbclient or dropbear server could expose process memory to the
+>   running user if compiled with DEBUG_TRACE and running with -v
+>   https://secure.ucc.asn.au/hg/dropbear/rev/6a14b1f6dc04
 
+Use CVE-2016-7409.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.comTo put it bluntly,
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJX2i6BAAoJEHb/MwWLVhi2JT0P/RAN6ZPGdz5CQVvwxeZktmlW
+0YO1CqcbjygdvN05/9gH0SDi4y+tKd1EEDsUoC9D40QKj1z2gACSbjdaxr3p8QSE
+M9ifpotk7+9Qr6mjD+HXDWc+4gQTXH7SzLNiEv3PR/bu3lgc7+jRGU0bQRYSG8Vs
+aYwGioFpu6QT57a+fdoaTEffz323eK3EY3CwQLGzKKJX7njeNos9H4nkv63KtU+z
+dp5487NPuGxJmuC3XWpD9fwZSy4+vpIOD74zvf9POnwb04jQxHSJanhJ82vmFH/f
+//MbplQeZzqz4ahcdLi5Gl6oXoLqn0f1nB4hJF5qHkuSXCN3ZSSM6+vbS4PZFpGP
+7kVQFcV1RZmOVPLb+sMPWFARfQs/tkJ/aBtNbo8Pz/22jZaJBvIu3jm/qI60CaMi
+CgWjBRYzJc8G3R5CkPJhEsdZmiRvEKgKukA1deQK/rn7pIskRecXomiM0NgdOsE/
+Lds+20GxqOUA61we6rT5SDdSG2Cvmcp5cFxx+aZNeSIp3zBjQQ7er1p/41KZHPt/
+Ro6ButS2P2/uJO/wyoCTYSpVgevxUT/fjhqBqRv8kviCYQIBt8h/WVrf/7aAPUFT
+u7zs4V+/GkIX3tfy4NF+wi1JfLBAFLI5qeOnEgsIabuKODklyfZJ/P2Y8/csNo/8
+HvkiTNnp74e393zYdSmH
+=1PAi
+-----END PGP SIGNATURE-----
