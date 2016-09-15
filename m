@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/2
-Message-ID: <56D2E491.1000505@gmail.com>
-Date: Sun, 28 Feb 2016 17:14:09 +0500
-From: "Alexander E. Patrakov" <patrakov@...il.com>
-To: oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/5
+Message-ID: <1124637520.495617646.963543.dregad-mantisbt.org@news.gmane.org>
+Date: Thu, 15 Sep 2016 09:43:04 +0200
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
 Content-Type: text/plain; charset=utf-8
 
-27.02.2016 18:44, cve-assign@...re.org пишет:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> When executing a program via "runuser -u nonpriv program" the
->> nonpriv session can
->> escape to the parent session by using the TIOCSTI ioctl to push
->> characters into the
->> terminal's input buffer
->
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
->
-> Use CVE-2016-2779.
+cve-assign wrote:
 
-One more case:
+> Because "security" is still present in the title and labels of 226,
+> we're making the conclusion that this is a security problem and
+> assigning an ID, CVE-2016-7405.
 
-chroot --userspec=someuser:somegroup / /path/to/test
+Thank you. 
 
-This also runs "id" at the end.
+> The current situation is that the CVE Team at MITRE receives both the
+> oss-security messages and the https://cveform.mitre.org form output.
+> We let people choose either method for obtaining a CVE ID from us,
+> depending on their disclosure goals, their perspective about open
+> pre-assignment discussion, or other factors. 
 
--- 
-Alexander E. Patrakov
+Thanks for the clarification. 
+
+
+
