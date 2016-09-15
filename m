@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/4
-Message-ID: <d636dcedeede4aaba19662fe4d148b08@imshyb02.MITRE.ORG>
-Date: Fri, 30 Dec 2016 13:00:23 -0500
-From: <cve-assign@...re.org>
-To: <glennrp@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libpng NULL pointer dereference bugfix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/6
+Message-ID: <CAEsznC48dANrm2DNVq3jh-PMiYu-72DE7ybFJo3z0RMsiKmi2A@mail.gmail.com>
+Date: Thu, 15 Sep 2016 14:44:40 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "security@....net" <security@....net>
+Subject: CVE assignment for PHP 5.6.26 and 7.0.11
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> NULL pointer dereference bug in png_set_text_2()
-> 
-> an application
-> has to load a text chunk into the png structure, then delete all text, then
-> add another text chunk
+Both PHP versions have been tagged.
 
-Use CVE-2016-10087.
+Please assign CVEs to the following issues:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+PHP 5.6.26 only:
 
-iQIcBAEBCAAGBQJYZqBTAAoJEHb/MwWLVhi2wCQP/0MuFVxaThebajC21ogCNkZ+
-W1xIxSwriMBZPbTJmRVj10wdi07UhFH4ut5zAlFmL7nePhuTfZuH9C0BfjA124o9
-IFWlLaABz/yzPGFrWcapbdTkCFiE46xThxvhLoc9ESXtmlesN6tf+2nz7yBre2kS
-ySc20NoQNRCmTikdad9jerh+A9YjNmEZnS9g6ydxAAzuid1VHRZa8JGaq5ShgmBb
-oOmpEcxpsgqZxoSb62PR6NoKXgIkDTCrkcYvDXo3XNwHZ2d2/4eMK+FTvrClB84O
-7x4nFXgWnGlfL6PWOJVzXn51Guij2GHrUOKaC6X8OMR+8crF0jZncOq+yJr0HcNo
-ZEU0TQrIBj7CIOeflynhJS+ABbbABTLyODZJiBXxI5mSv/pWjTttcJ5ClIgesQAP
-/C151FeN05hc1bXQBV8VlXKpN+Ge7MMGZKnbbLO6ld1jEaIjKWfWIL4npceeAkJS
-MhHwg3VwwfcDZGsa6II6iy6Sny5ddEdsQSI0MKned3AI8U6Q7rZ51/NJvnA4t1A0
-7PQDwWd/kiftZD0JDPQI9xFtQXRR9QweHWsS0lNxApBITocMKqQQ0vv1Fo6vbJMs
-aHAkSpBo4IvyPkW5JBmA1WXXuNs8HRGZUDVLjlcErgr5+KpTbs3gt1J2/28kBL/+
-6UOSSsIexpBKzfoJj3tu
-=H34M
------END PGP SIGNATURE-----
+bug #73052 (Memory Corruption in During Deserialized-object Destruction).
+https://bugs.php.net/bug.php?id=73052
+http://git.php.net/?p=php-src.git;a=commit;h=6a7cc8ff85827fa9ac715b3a83c2d9147f33cd43
+
+
+PHP 5.6.26 and 7.0.11:
+
+bug #72293 (Heap overflow in mysqlnd related to BIT fields).
+https://bugs.php.net/bug.php?id=72293
+http://git.php.net/?p=php-src.git;a=commit;h=28f80baf3c53e267c9ce46a2a0fadbb981585132
+
+bug #72860 (wddx_deserialize use-after-free).
+https://bugs.php.net/bug.php?id=72860
+http://git.php.net/?p=php-src.git;a=commit;h=b88393f08a558eec14964a55d3c680fe67407712
+
+bug #72928 (Out of bound when verify signature of zip phar in
+phar_parse_zipfile).
+https://bugs.php.net/bug.php?id=72928
+http://git.php.net/?p=php-src.git;a=commit;h=0bfb970f43acd1e81d11be1154805f86655f15d5
+
+bug #73007 (add locale length check).
+https://bugs.php.net/bug.php?id=73007
+http://git.php.net/?p=php-src.git;a=commit;h=6d55ba265637d6adf0ba7e9c9ef11187d1ec2f5b
+
+bug #73029 (Missing type check when unserializing SplArray).
+https://bugs.php.net/bug.php?id=73029
+http://git.php.net/?p=php-src.git;a=commit;h=ecb7f58a069be0dec4a6131b6351a761f808f22e
+
+bug #73065 (Out-Of-Bounds Read in php_wddx_push_element).
+https://bugs.php.net/bug.php?id=73065
+http://git.php.net/?p=php-src.git;a=commit;h=c4cca4c20e75359c9a13a1f9a36cb7b4e9601d29
+
+Thanks,
+
+Kaplan
+
