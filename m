@@ -1,60 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/4
-Message-ID: <20160512001231.GB27943@phlsvsds.ph.intel.com>
-Date: Wed, 11 May 2016 20:12:32 -0400
-From: "ira.weiny" <ira.weiny@...el.com>
-To: Yann Droneaud <ydroneaud@...eya.com>
-Cc: oss-security@...ts.openwall.com, Doug Ledford <dledford@...hat.com>, Red Hat Security Response Team <secalert@...hat.com>, Ben Hutchings <benh@...ian.org>, linux-rdma@...r.kernel.org
-Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/11
+Message-ID: <CAH8yC8k=G2OFp+9v53Lno-UATnXdG563oN3-JkGhxDGoFSuNPw@mail.gmail.com>
+Date: Thu, 15 Sep 2016 16:51:26 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Does a documentation bug elevate to CVE status?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 09, 2016 at 09:48:59PM +0200, Yann Droneaud wrote:
-> Hi,
-> 
-> 
-> As a workaround, I would suggest that systems which do not require
-> (userspace) RDMA/Infiniband to blacklist/remove the following modules:
-> 
->   rdma_ucm
->   ib_uverbs
->   ib_ucm
->   ib_umad
+Hi Everyone,
 
-NOTE: AFAICT ib_umad is not vulnerable as it uses correct write/read semantics.
-However, if you are disabling the other modules you probably have no use for
-ib_umad either.
+Please forgive my ignorance and hair splitting. We were talking with
+the Debian Security Team and FW alerted us to a gap in our
+documentation. The gap is simple: we handle sensitive information and
+did not tell users that they must define -DNDEBUG when using alternate
+build systems, like Autotools or CMake. The project's supported build
+system, [GNU] Make, adds the define.
 
-Ira
+The higher level concern is assert is a debugging and diagnostic aide
+that eventually raises a SIGABRT. We use them for debugging and
+diagnostics for development. During production, the assert is expected
+to be removed with NDEBUG and a C++ throw() follows.
 
-> 
-> For example, adds the following in /etc/modprobe.d/blacklist.conf
-> 
->   blacklist rdma_ucm
->   blacklist ib_uverbs
->   blacklist ib_ucm
->   blacklist ib_umad
-> 
-> Those building their own kernel might want to disable, if not already,
-> 
->   CONFIG_INFINIBAND_USER_ACCESS, 
->   CONFIG_INFINIBAND_USER_MAD,
->   CONFIG_INFINIBAND_ADDR_TRANS
-> 
-> (Unfortunately the last one will also disable those features:
->   iSCSI Extensions for RDMA (iSER)
->   iSCSI Extensions for RDMA (iSER) target support
->   RDS over Infiniband and iWARP
->   9P RDMA Transport (Experimental)
->   RPC-over-RDMA transport
->     (which actually disable NFSoRDMA))
-> 
-> Regards.
-> 
-> -- 
-> Yann Droneaud
-> OPTEYA
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe linux-rdma" in
-> the body of a message to majordomo@...r.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+If the assert is _not_ removed, then machinery could engage that
+egresses the sensitive information to the file system (core files and
+the like). On some platforms, like Ubuntu with Apport, Apple with
+CrashReporter, and Windows with Windows Error Reporting, the sensitive
+information is egressed to a third party (multiple; the platform
+provider and the developer).
+
+We know entities like Apple, Google, Microsoft and  app developers
+receive the information; see for example, the comment at
+https://github.com/weidai11/cryptopp/pull/172#issuecomment-218705068.
+
+So my question is, does a documentation bug elevate to CVE status?
+
+Thanks in advance,
+
+Jeff
