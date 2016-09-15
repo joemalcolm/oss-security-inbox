@@ -1,4 +1,9 @@
-Received: (qmail 23831 invoked by uid 550); 20 Jul 2023 14:31:28 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1556" "Thursday" "15" "September" "2016" "17:52:52" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<30086816.X7GymaXB0v@willoughby>" "31" "[oss-security] Libarchive/bsdtar: multiple crashes" "^Date:" nil nil "9" "2016091515:52:52" "[oss-security] Libarchive/bsdtar: multiple crashes" (number mark "        ago@gentoo.o Sep 15   31/1556  " thread-indent "\"[oss-security] Libarchive/bsdtar: multiple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 32356 invoked by uid 550); 15 Sep 2016 15:53:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,46 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26423 invoked from network); 20 Jul 2023 13:42:20 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=geeklan;
-	 bh=sKg3Wsov5X+mNW97sWw90kblTvs=; b=Oc6yuWcnql52mzdfNrpYNYC8wLqo
-	SOISWMpTTjKii5rh/IkBtoSms2rg/wIBN47oCy0b3dsj9umxT2oqmPpZOCGxJJEW
-	/h4/5b7gelQ6obr39OJ9asIPXNQ7KGuYQd0rR3z/vxM9Aa0XvEdw9wWbPO5dVJ9J
-	N3PzkMh8Pv0lqt/5S+0GhxI6lKOoZKuBte10b5Lh9evzhR2f9CW6uRq3xBZEqcKE
-	ab/tCdXn3AUw8G9R0xPm1OfUWFs/UIC24+uJyXiAnEfUT0WNCEisiLEDdXhBDjdP
-	ObhQctjWIKwjMlCrxBi/9ZjPaOlxnaJH8qIErbk4Pws+r3uxCSQG64U7vw==
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
-	:date:mime-version:subject:to:references:from:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=geeklan; b=RhC
-	qNAynRWcWEY1T+vetRbhaI5ZiF2OOtOqvOfBcJbYGN57IBmyCXG4kE3Dl2GuIy5J
-	s8eiIj5e4IpW9QUGCz/OKqxR2iS/5bm7NWeBPeYEDadxtYGHBR9spj3uVnchFZwU
-	/zLefkv3CncQMzJuOHfZblRjb7wsWzKS7NuZWo00gbquoa2158r/b2gFRRtXJ6ZO
-	bjJHD9+6jDYpYVnu/NSXp/W5clh2fX8SuzGwH+K3bEkgrrRnZJ5UeVrdN+BU5adk
-	G0rVjYSxPNat2jqcWRXVv2XF0zCgGmzpCYztoZZUHjK6WpIrETXBhpdczqJ89+u6
-	4OSkyRs4HWOTYY/Alrg==
-Message-ID: <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
-Date: Thu, 20 Jul 2023 14:41:57 +0100
+Received: (qmail 32188 invoked from network); 15 Sep 2016 15:53:10 -0000
+Message-ID: <30086816.X7GymaXB0v@willoughby>
+User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-References: <e9c022742fc07cee@cvs.openbsd.org> <ZLk1hSUEt00caovk@itl-email>
-From: Sevan Janiyan <venture37@geeklan.co.uk>
-In-Reply-To: <ZLk1hSUEt00caovk@itl-email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Date: Thu, 15 Sep 2016 17:52:52 +0200
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Libarchive/bsdtar: multiple crashes
+To: OSS Security List <oss-security@lists.openwall.com>
 
-On 20/07/2023 14:24, Demi Marie Obenour wrote:
-> Should there be a system-wide configuration file containing a list of 
-> known-good PKCS#11 libraries? ssh-agent having to guess if something is 
-> a PKCS#11 library is less than awesome.
+Hello all.
 
-There's a compile time setting for paths from which you are able to load 
-libraries from.
+I'd like to make people aware of the following crashes in libarchive/bsdtar 
+found by fuzzing (all issues are public on github):
+
+The most dangerous, an out of bounds stack write (which is also fixed 
+upstream):
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer-overflow-in-bsdtar_expand_char-util-c/ 
 
 
-Sevan
+The following are buffer over read of 1 (all are unfixed upstream ATM):
+
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-detect_form-archive_read_support_format_mtree-c/ 
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-read_header-archive_read_support_format_7zip-c/
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-bid_entry-archive_read_support_format_mtree-c/
+
+As stated in the posts, the two latest bug could be the same, but I didn't 
+have an upstream response about, so I posted both stacktrace to better track 
+the issues.
+
+
+The following are use-after-free (all are unfixed upstream ATM):
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-bid_entry-archive_read_support_format_mtree-c/
+https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-detect_form-archive_read_support_format_mtree-c/
+
+As stated in the posts, they could be the same.
+I didn't have an upstream response too for those.
+
+
+Agostino
