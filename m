@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/4
-Message-ID: <alpine.GSO.2.20.1610070832040.3266@freddy.simplesystems.org>
-Date: Fri, 7 Oct 2016 08:35:33 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: GraphicsMagick CVE Request - WPG Reader Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/7
+Message-ID: <20160915124244.GG19475@suse.de>
+Date: Thu, 15 Sep 2016 14:42:44 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: ben@...rtzlander.org
+Subject: CVE-2016-6519: openstack-manila: Persistent XSS in Metadata field
 Content-Type: text/plain; charset=utf-8
 
-Two security issues have been discovered in the WPG format reader in
-GraphicsMagick 1.3.25 (and earlier):
+Hi,
 
-1. In a build with QuantumDepth=8 (the default), there is no check
-    that the provided colormap is not larger than 256 entries,
-    resulting in potential heap overflow.  This problem does not occur
-    with larger QuantumDepth values.
+One of SUSE customers has found Persistent XSS in Metadata field in Openstack Manila.
 
-2. The assertion:
+Openstack Manila is currently not covered by the Openstack Security Team, so they
+defered announcement to us.
 
-    ReferenceBlob: Assertion `blob != (BlobInfo *) NULL' failed.
+------------------------------------
 
-    is thrown (causing a crash) for some files due to a logic error
-    which leads to passing a NULL pointer where a NULL pointer is not
-    allowed.
+CVE-2016-6519: OpenStack manila-ui: Persistent XSS in Metadata field
 
-These issues were discovered using American Fuzzy Lop by fuzzing with
-the corpus by Moshe Kaplan discovered on Github at
-https://github.com/moshekaplan/FuzzGraphicsMagick.
+It was discovered that the Metadata field in the "Create Share" form allows users to inject malicious HTML/JavaScript code that will be reflected in the "Shares" overview. The issue comes from a mark_safe() call on the user supplied metadata.
 
-A patch resolving the two above issues is attached.
+https://github.com/openstack/manila-ui/blob/d5fe23e4ba30846acdd09fa1dc61a415016a7e26/manila_ui/dashboards/project/shares/shares/tabs.py#L49
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-View attachment "wpg.c.patch" of type "text/plain" (6399 bytes)
+Remote, authenticated, but unprivileged users could exploit this vulnerability to escalate privileges by stealing session cookies.
+
+Due to the size limitation of metadata strings the malicious payload needs to be split over multiple keys. In order to reproduce this issue, in Horizon, go to Project -> Compute -> Shares -> Create Share. In the Metadata field, add the following payload:
+
+a=<script>alert("test")/*
+b=*/<script>
+
+As soon as the share is created, the payload is reflected in the browser. It will also be reflected each time the Shares list will be loaded (e.g. by clicking on Project -> Compute -> Shares).
+
+The issue was discovered by Niklaus Schiess, the fix was provided Valeriy Ponomaryov.
+
+MITRE assigned CVE-2016-6519 to this issue.
+The upstream bug is https://bugs.launchpad.net/manila-ui/+bug/1597738
+The SUSE bug is https://bugzilla.suse.com/show_bug.cgi?id=988935
+SUSE's evaluation has a CVSS base score 6.0 (AV:N/AC:M/Au:S/C:P/I:P/A:P)
+
+-----------------------------------
+
+The proposed upstream fix is attached.
+
+Ciao, Marcus
+
+View attachment "fix_v2_for_bug_1597738_stable_mitaka_and_liberty.txt" of type "text/plain" (8139 bytes)
