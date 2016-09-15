@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["216" "Thursday" "21" "July" "2016" "08:49:23" "+0200" "Christian Wressnegger" "c.wressnegger@tu-bs.de" "<57907073.60501@tu-bs.de>" "6" "[oss-security] Re: Buffer overflow in libarchive-3.2.0" nil nil nil "7" "2016072106:49:23" "[oss-security] Re: Buffer overflow in libarchive-3.2.0" (number mark "U       c.wressnegge Jul 21    6/216   " thread-indent "\"[oss-security] Re: Buffer overflow in libarchive-3.2.0\"\n") "<20160720135454.5D99273C088@smtpvmsrv1.mitre.org>" ("<20160720135454.5D99273C088@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1335" "Thursday" "15" "September" "2016" "01:41:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160915054101.4E3A28BC3EB@smtpvmsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5" nil nil nil "9" "2016091505:41:01" "[oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5" (number mark "U       cve-assign@m Sep 15   36/1335  " thread-indent "\"[oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5\"\n") "<6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>" ("<6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20105 invoked by uid 550); 21 Jul 2016 06:49:38 -0000
+Received: (qmail 26489 invoked by uid 550); 15 Sep 2016 05:41:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,24 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20084 invoked from network); 21 Jul 2016 06:49:37 -0000
-To: cve-assign@mitre.org
-References: <20160720135454.5D99273C088@smtpvmsrv1.mitre.org>
-Cc: oss-security@lists.openwall.com
-From: Christian Wressnegger <c.wressnegger@tu-bs.de>
-Message-ID: <57907073.60501@tu-bs.de>
-Date: Thu, 21 Jul 2016 08:49:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
-MIME-Version: 1.0
-In-Reply-To: <20160720135454.5D99273C088@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: Buffer overflow in libarchive-3.2.0
+Received: (qmail 26471 invoked from network); 15 Sep 2016 05:41:12 -0000
+From: cve-assign@mitre.org
+To: chenruiqi@360.cn
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>
+Message-Id: <20160915054101.4E3A28BC3EB@smtpvmsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 01:41:01 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5
 
-On 07/20/2016 03:54 PM, cve-assign@mitre.org wrote:
->> https://github.com/libarchive/libarchive/commit/3014e19820ea53c15c90f9d447ca3e668a0b76c6
-> 
-> Use CVE-2016-6250 for everything fixed by this commit.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you!
+> forum with some evil code
+> https://github.com/b2evolution/b2evolution/commit/9a4ab85439d1b838ee7b8eeebbf59174bb787811
+
+Use CVE-2016-7149.
+
+
+> Edit the "Short site name"
+> https://github.com/b2evolution/b2evolution/commit/dd975fff7fce81bf12f9c59edb1a99475747c83c
+
+Use CVE-2016-7150.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX2jQYAAoJEHb/MwWLVhi2uiIP/2drloezwZ44oHZCA4fFelrs
+IQxqLq8IISpHE+EMLJL2fr+9+Etjkte+D1gD0IhUSwM8gBLT5l0QoKJKQG5shpmH
+uzCvz8lebBIEs+MExRDNg/yaN8L15u/Fw/CHwP6axSZK0WId0cJh8aIJ7vXHTecl
+iyFBiUT/bQo+EqTnzIWfDOyiAx+0xoGJUd8URQCroJGf0j4ZwmeOPjdy0NdGDavR
+p+DY4A18FENakMUpLx5hFGudCQCCoLk648lKsVfSqq9gDKrDiUSOmvNMBn6n80Vs
+q3YhFfbr4hGo4Degw6HBRJyOShzr/UpuYsYuEEut2g3DRVX8vCtNv04D6yA0ChUj
+dylwLceHC+D5lXdQEayNUtKuKrDQCR/MqzFfS6DRCghbBnObt3mdxuoSivxLX5gN
+fASKsXcPe+n9SVTJya/RG6svo0rxJD6oa0h3QQinE3bDF4+uQ10A6IpsFdzVDRew
+VtSCAzVktXMG+qU+ld2F/iu7ArLmvCtsu/Sxs1EP/iJKIkkIFkOiEOXLBU+Ye0kt
+fCmXRI2SKReJgv67KvXZJxA7t+p+9++gaHOUpcrvHESv8HiFs+swBMwLmCSLxHYv
+pqbwfpQ46+tj7MkW6D/+irj2fdgOjiStxq+7o/Mwd2uh5oEo3LFKnP4ciz0ajSUT
+B3LOjIAhuRfXD4XkcDlX
+=4IsD
+-----END PGP SIGNATURE-----
