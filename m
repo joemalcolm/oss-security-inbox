@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1045" "Monday" "28" "June" "2021" "09:58:23" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" nil "32" "[oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal" nil nil nil "6" nil nil (number mark "U       aki.tuomi@do Jun 28   32/1045  " thread-indent "\"[oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3373" "Thursday" "15" "September" "2016" "12:57:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160915165716.A063E6C1FB6@smtpvmsrv1.mitre.org>" "93" "[oss-security] Re: CVE assignment for PHP 5.6.26 and 7.0.11" nil nil nil "9" "2016091516:57:16" "[oss-security] Re: CVE assignment for PHP 5.6.26 and 7.0.11" (number mark "U       cve-assign@m Sep 15   93/3373  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.26 and 7.0.11\"\n") "<CAEsznC48dANrm2DNVq3jh-PMiYu-72DE7ybFJo3z0RMsiKmi2A@mail.gmail.com>" ("<CAEsznC48dANrm2DNVq3jh-PMiYu-72DE7ybFJo3z0RMsiKmi2A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19634 invoked by uid 550); 28 Jun 2021 09:58:56 -0000
+Received: (qmail 26567 invoked by uid 550); 15 Sep 2016 16:57:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +12,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23795 invoked from network); 28 Jun 2021 06:58:35 -0000
-Date: Mon, 28 Jun 2021 09:58:23 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@dovecot.fi>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <915539867.13379.1624863503635@appsuite-dev.open-xchange.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.6-Rev0
-X-Originating-Client: open-xchange-appsuite
-Subject: [oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal
+Received: (qmail 26529 invoked from network); 15 Sep 2016 16:57:28 -0000
+From: cve-assign@mitre.org
+To: kaplanlior@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
+In-Reply-To: <CAEsznC48dANrm2DNVq3jh-PMiYu-72DE7ybFJo3z0RMsiKmi2A@mail.gmail.com>
+Message-Id: <20160915165716.A063E6C1FB6@smtpvmsrv1.mitre.org>
+Date: Thu, 15 Sep 2016 12:57:16 -0400 (EDT)
+Subject: [oss-security] Re: CVE assignment for PHP 5.6.26 and 7.0.11
 
-Open-Xchange Security Advisory 2021-06-28
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected product: Dovecot IMAP Server
-Vendor: OX Software GmbH
+> bug #73052 (Memory Corruption in During Deserialized-object Destruction).
+> https://bugs.php.net/bug.php?id=73052
+> https://github.com/php/php-src/commit/6a7cc8ff85827fa9ac715b3a83c2d9147f33cd43?w=1
 
-Internal reference: DOP-2159 
-Vulnerability type: Path Traversal (CWE-24)
-Vulnerable version: 2.3.11
-Vulnerable component: oauth2
-Report confidence: Confirmed
-Solution status: Fixed in 2.3.15
-Researcher credits: Kirin of Tencent Security Xuanwu Lab.
-Vendor notification: 2021-03-22
-CVE reference: CVE-2021-29157
-CVSS: 6.7 (CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
+Use CVE-2016-7411.
 
-Vulnerability Details:
-If attacker can gain access to local filesystem, it is possible to trick Dovecot to use attacker specified key to validate tokens.
 
-Steps to reproduce:
+> bug #72293 (Heap overflow in mysqlnd related to BIT fields).
+> https://bugs.php.net/bug.php?id=72293
+> https://github.com/php/php-src/commit/28f80baf3c53e267c9ce46a2a0fadbb981585132?w=1
 
-Configure Dovecot to perform OAUTH2 authentication with local JWT validation using posix fs driver.
+Use CVE-2016-7412.
 
-Place base64 encoded HS256 shared key in a location that is readable by dovecot, and use ../../../../../location/to/path as key azp. 
 
-You can now forge tokens and authenticate as any valid user.
+> bug #72860 (wddx_deserialize use-after-free).
+> https://bugs.php.net/bug.php?id=72860
+> https://github.com/php/php-src/commit/b88393f08a558eec14964a55d3c680fe67407712?w=1
 
-Risk:
-Attacker can gain access using forged credentials.
+Use CVE-2016-7413.
 
-Solution:
-Upgrade to fixed version.
+
+> bug #72928 (Out of bound when verify signature of zip phar in
+> phar_parse_zipfile).
+> https://bugs.php.net/bug.php?id=72928
+> https://github.com/php/php-src/commit/0bfb970f43acd1e81d11be1154805f86655f15d5?w=1
+
+Use CVE-2016-7414.
+
+
+> bug #73007 (add locale length check).
+> https://bugs.php.net/bug.php?id=73007
+> https://github.com/php/php-src/commit/6d55ba265637d6adf0ba7e9c9ef11187d1ec2f5b?w=1
+
+The related upstream code can be found in the
+http://source.icu-project.org/repos/icu/icu/trunk/source/common/locid.cpp
+file.
+
+What we will do for now is assign one CVE ID for the "ICU for C/C++"
+product and a separate CVE ID for PHP. In other words, the bug #73007
+discoverer has indicated that it is a bug in that ICU product.
+However, it is a bug at a different level within the PHP distribution,
+because 6d55ba265637d6adf0ba7e9c9ef11187d1ec2f5b implies that PHP is
+intended to operate safely even with an unpatched copy of the ICU
+library.
+
+Use CVE-2016-7415 for ICU for C/C++.
+
+Use CVE-2016-7416 for PHP.
+
+(If there happens to be further information indicating that locid.cpp
+was supposed to behave as originally written, then we can reject
+CVE-2016-7415.)
+
+
+> bug #73029 (Missing type check when unserializing SplArray).
+> https://bugs.php.net/bug.php?id=73029
+> https://github.com/php/php-src/commit/ecb7f58a069be0dec4a6131b6351a761f808f22e?w=1
+
+Use CVE-2016-7417.
+
+
+> bug #73065 (Out-Of-Bounds Read in php_wddx_push_element).
+> https://bugs.php.net/bug.php?id=73065
+> https://github.com/php/php-src/commit/c4cca4c20e75359c9a13a1f9a36cb7b4e9601d29?w=1
+
+Use CVE-2016-7418. The scope of this CVE also includes all of the
+"other four similar issues" in the "[2016-09-12 06:44 UTC]" comment.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX2tJ1AAoJEHb/MwWLVhi2IyQP/2dJs6voIoZb57o76tqlBsaO
+K+4xjRwksJr7R295ckj4eyNfyrUp0md6czc1Nfo0YNiUaS4PuaDPO+hgTyquLIDX
+C+F2+fi+mvKnwk4s6DmFtTsFQ/9ZERvvkvKjIN2URWMG9wQd/wGsM9/8bqa/P5wy
+lykrJHFhoWqYImdijQpfQnqgdXEmRVFEUUy+06OAKJ0UU5VhpTdAt9Si+eEGw4Ke
+LCYd174/PpmN/WGtA3re0nvvWxA51CspUjOjWo2cVo0jZDHKKjb38A5z3t8IiZOQ
+cX/rOPcrBh4LMQ6NIgaQtNZvg7em9eO4cbbTsPo9B3N2aAhNdjVGsMuDzvrWdQ6x
+w866h801+XSQcAdvjtqTv7mRVdG2mYeMhTRKQlXIj6wnP6m7jKMR2Ns6ob6WlOFU
+VQao4JTjKWmcfc+S0SYNdJlXRQAiBjFF8y+bhmmxJUnK07K8gAe1kqisVBD3Son7
+ri7DbOnQNZ5Vx6IRcXh04L5jSK3e11Y6r4MOS3s8ugz8O0c8qPBOUIpd3/0MnSi2
+uJYid6ful550Jr5g/E42voFQjy7AFxUAneJbAMPPE4iK1QIpoJBAy4UwMIQbxvv7
+kSeFi4oPeqGzPla649fBkzD0vTw35ElOOtZsEhQ14sohULuG+84VEA+FM/RDauUz
+nyz6Llcs3sWHY+YCWJSQ
+=VwnS
+-----END PGP SIGNATURE-----
