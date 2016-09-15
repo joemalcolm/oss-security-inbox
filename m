@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/12
-Message-ID: <D3E08781.193C42%vel@apache.org>
-Date: Mon, 22 Aug 2016 10:42:09 -0400
-From: Velmurugan Periasamy <vel@...che.org>
-To: "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>, <victor.hora@...urusglobal.com>
-CC: "dev@...ger.incubator.apache.org" <dev@...ger.incubator.apache.org>, "user@...ger.incubator.apache.org" <user@...ger.incubator.apache.org>, "private@...ger.incubator.apache.org" <private@...ger.incubator.apache.org>, Velmurugan Periasamy <vel@...che.org>
-Subject: CVE update (CVE-2016-5395) - Fixed in Apache Ranger 0.6.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/1
+Message-ID: <CAH8yC8k3dB68=n-t-7d+-nL8dVWzUOmwX8YZrO+1p+Dv2uv-Nw@mail.gmail.com>
+Date: Thu, 15 Sep 2016 18:11:47 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Does a documentation bug elevate to CVE status? - Crypto++
 Content-Type: text/plain; charset=utf-8
 
-Hello:
+Damn, you guys are ruthless...
 
-Here¹s a CVE update for Ranger 0.6.1 release. Please see below details.
+The Crypto++ project is tracking this at
+https://github.com/weidai11/cryptopp/issues/277.
 
-Release details can be found at
-https://cwiki.apache.org/confluence/display/RANGER/0.6.1+Release+-+Apache+Ra
-nger
+Please make it a public bug/CVE. The Crypto++ project believe in
+complete transparency so decision makers can assess risk and and apply
+remediations commensurate with their data security posture.
 
-Thank you,
-Velmurugan Periasamy
-
-----------------------------------------------------------------------------
--------------------
-CVE-2016-5395: Apache Ranger Stored Cross Site Scripting vulnerability
-----------------------------------------------------------------------------
--------------------
-Severity: Normal 
-Vendor: The Apache Software Foundation
-Versions Affected: All 0.5.x versions of Apache Ranger and version 0.6.0
-Users Affected: All users of ranger policy admin tool
-Description: Apache Ranger was found to be vulnerable to a
-Stored Cross-Site Scripting in the create user functionality. Admin users
-can
-store some arbitrary javascript code to be executed when normal users login
-and
-access policies. 
-Fix details: Added logic to sanitize the user input
-Mitigation: Users should upgrade to 0.6.1 or later version of Apache Ranger
-with the fix.
-Credit: Thanks to Victor Hora from Securus Global for reporting this issue.
-----------------------------------------------------------------------------
--------------------
-
-
-
+Jeffrey Walton on behalf of Crypto++ project.
