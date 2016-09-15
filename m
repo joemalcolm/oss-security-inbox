@@ -1,70 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/1
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B1E83C@EX02.corp.qihoo.net>
-Date: Sat, 8 Oct 2016 07:09:17 +0000
-From: 连一汉 <lianyihan@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ffmpeg before 3.1.4 [CVE-2016-7562] [CVE-2016-7122] [CVE-2016-7450] [CVE-2016-7502] [CVE-2016-7555] [CVE-2016-7785] [CVE-2016-7905]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/9
+Message-ID: <2189744.h571I5Sgop@willoughby>
+Date: Thu, 15 Sep 2016 18:05:41 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com, vul@...safe.com
+Subject: Re: CVE request -libdwarf 20160613 heap-buffer-overflow
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-7562
+On Wednesday 14 September 2016 00:22:43 vul@...safe, 
+vul@...safe.com wrote:
+> Hello,
+> 
+> A heap-buffer-overflow was found in the latest libdward 
+20160613  version.
 
-ff_draw_pc_font in ffmpeg before 3.1.4 uses incorrect font_height value ,which allows remote attackers to cause ffmpeg service a out-of-bounds array write fault
-when it uses 'ansi' to decode a AVI file which has a crafted 'strf' struct.
+I forwarded this bug to upstream which was NOT aware of this 
+problem.
 
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/496267f8e9ec218351e4359e1fde48722d4fc804
+I guess that drop an e-mail to upstream before the 
+announcement does not cost much.
+Thanks.
 
-
-
-CVE-2016-7122
-
-avi_read_nikon in ffmpeg before 3.1.4 is vulnerable to infinite loop when it decode an AVI file which has a crafted 'nctg' struct.
-
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/ed38046c5c2e3b310980be32287179895c83e0d8
-
-
-
-
-CVE-2016-7450
-
-i2f in ffmpeg before 3.1.4 uses incorrect re_signal value ,which results in an out-of-bounds array read .
-
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/ac8ac46641adef208485baebc3734463bf0bd266
-
-
-
-
-CVE-2016-7502
-
-cavs_idct8_add_c in ffmpeg before 3.1.4 uses incorrect block value ,which results in an out-of-bounds array read .
-
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/9d738e6968757d4e70c8e07e0b720ac0004accc4
-
-
-
-
-CVE-2016-7555
-
-avi_read_header in ffmpeg before 3.1.4 is vulnerable to a memory leakage issue when it decodes an AVI file which has a crafted 'strh' struct.
-
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/8834e080c20d3d23c3ffe779371359f9b9b835ec
-
-
-CVE-2016-7785
-
-avi_read_seek in ffmpeg before 3.1.4 uses incorrect scale value , which allows remote attackers to cause a assert fault of service via an AVI file which has a craft 'strh' struct.
-
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/c8c5f66b42edc37474baa5cb51460cbf6f33075b
-
-
-
-
-CVE-2016-7905
-
-read_gab2_sub in ffmpeg before 3.1.4 is vulnerable to a null-point-exception when it decodes an AVI file which has a crafted 'gab2' struct.
-
-fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/622ccbd8ab894e3ac6cdf607e3d4f39e406786e9
-
-
-Reported by LianYihan in Qihoo 360 Gear Team.
+Agostino
 
