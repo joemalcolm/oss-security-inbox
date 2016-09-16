@@ -1,77 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/4
-Message-ID: <CANO=Ty1eVmPTCoVn-x5snXBMTmpDctfO_b+52zaC+km=Xz64Pw@mail.gmail.com>
-Date: Fri, 16 Dec 2016 10:50:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/6
+Message-ID: <20160916150053.76622e04@hboeck.de>
+Date: Fri, 16 Sep 2016 15:00:53 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Out of bounds heap bugs in glib, heap buffer overflow in gnome-session
 Content-Type: text/plain; charset=utf-8
 
->
-> On Wed, Dec 14, 2016 at 11:57 AM, Sona Sarmadi <sona.sarmadi@...a.com>
-> wrote:
->
->>
->>
->> On 2016-12-14 15:26, Kurt Seifried wrote:
->> > Why are you complaining about a nist.gov website/data on an opensource
->> > security mailing list/to MITRE? (hint: we can't fix it and neither can
->> > MITRE) Please contact NIST.
->> >
->> Thanks for being so helpful.
->>
->> I was just trying to see of there are other people out there who also
->> think this is a problem. This list seemed like a place where I could
->> find such people.
->> Perhaps someone knows a work around, perhaps some post-processing tool.
->> If none exists, I guess we have to try to fix the problem at the source
->> or use another CVE databse.
->>
->> Cheers
->> //Sona
->> > On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com>
->> wrote:
->> >
->> >> Hi all,
->> >>
->> >> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
->> >> vulnerable versions correctly. One example is the following CVE.
->> Vulnerable
->> >>
->>
->>
->
->
-So I've been thinking about the question here (and several other recent
-postings) and my response (less than ideal, and unnecessarily grumpy for
-which I apologize). Here are my assumptions:
+https://blog.fuzzing-project.org/53-Out-of-bounds-heap-bugs-in-glib,-heap-buffer-overflow-in-gnome-session.html
 
-1) We (infosec, technology, basically everyone) needs better context
-sensitive help/guidance. Obviously this won't happen globally so
+By testing GNOME-related packages with Address Sanitizer I recently
+discovered several trivial to find bugs.
 
-2) We (infosec, technology, basically everyone) needs better public
-documentation on things that people ask, for example the CVE
-"***RESERVED*** description question I got so often I updated the CVE
-Wikipedia entry, searchability and SEO ranking is an issue here (what good
-are docs if google/bing/etc don't show them to people asking questions?)
+Two out of bounds bugs in the glib library were uncovered by running
+the test suite with Address Sanitizer enabled. One heap buffer overflow
+in the parameter parsing of gnome-session was uncovered by trying to
+start GNOME. Given that these bugs weren't discovered earlier means
+that most likely nobody ever used Address Sanitizer to test GNOME
+components.
 
-3) We do have a number of specific sites we should probably target to
-include the information (Wikipedia, StackExchange sites, etc.)
+I strongly recommend to GNOME and to other software communities to use
+Address Sanitizer testing in order to improve the quality of their
+software.
 
-4) We definitely have a number of sites where people ask questions (this
-list, Reddit, etc.)
+Out of bounds read in g_unichar_iswide_bsearch() / glib
+https://bugzilla.gnome.org/show_bug.cgi?id=766211
+Upstream bug report (again reported here)
+https://git.gnome.org/browse/glib/commit/?id=bcbd8d7
+Commit / fix
+Fixed in 2.48.2.
 
-This feeds into my CVE Mentor idea, we need people that can easily be
-discovered and either know the answers, know where to find the answer, or
-know who to ask/further direct people to for help. But we need it more
-generally than just for CVE.
+Out of bounds read in token_stream_prepare() / glib
+https://bugzilla.gnome.org/show_bug.cgi?id=762417
+Upstream bug report
+https://git.gnome.org/browse/glib/commit/glib/gvariant-parser.c?id=aead1c046dd39748cca449b55ec300ba5f025365
+Commit / fix
+Fixed in 2.48.0.
 
-Now, I suspect many of my assumptions are wrong/out dated. So I would
-appreciate if people would give feedback (where do you go for security
-info? instagram?) I would appreciate that.
+Heap buffer overflow in gnome-session
+https://bugzilla.gnome.org/show_bug.cgi?id=768441
+Upstream bug report
+https://git.gnome.org/browse/gnome-session/commit/?h=gnome-3-20&id=634ab70d9f03b1650be4b8259091ca3036f0fbf9
+Commit / fix
+Fixed in 3.20.2.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
 
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
