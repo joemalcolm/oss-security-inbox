@@ -1,64 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/7
-Message-ID: <CANO=Ty3x2M-OqiUoQssjW4WjuamLyjpVeFckCH2GuZVVeh5xLg@mail.gmail.com>
-Date: Tue, 10 May 2016 10:43:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, security@...keeper.com
-Subject: Re: BitKeeper /tmp vulns
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/16
+Message-ID: <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
+Date: Fri, 16 Sep 2016 15:46:51 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: John Haxby <john.haxby@...cle.com>, oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-Hopefully security@...keeper.com (it doesn't bounce so I assume it's valid)
-will review/address these.
+On 9/16/16 12:16 PM, John Haxby wrote:
+> Hello All,
+> 
+> A little while ago, one of our users discovered that by setting the
+> hostname to $(something unpleasant), bash would run "something
+> unpleasant" when it expanded \h in the prompt string.
 
-On Tue, May 10, 2016 at 10:24 AM, Michael Scherer <misc@...b.org> wrote:
+I finally got this message, three hours later.
 
-> On Tue, May 10, 2016 at 09:31:27AM -0600, Kurt Seifried wrote:
-> > Not found by me, mentioned on HackerNews:
-> >
-> > https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/bk.sh#L485
->
-> Just to clarify, the vuln was not mentioned on HN, just the new about it
-> being
-> under a free license. Then I did a git clone, and grep /tmp and pointed on
-> internal
-> IRC that, as usual, there is a ton of /tmp issue (and then Kurt did see
-> and asked where I did see it,
-> and answered on HN (to the question "bk is now opensource").
->
-> > BitKeeper is under Apache license so here it is.
-> >
-> > Also a quick look at the source shows a ton of other potential /tmp/
-> vulns,
-> > CC'ing bitkeeper security
->
-> for example:
->
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/bk_version#L1563
->
-> There is also a few here:
->
-> https://github.com/bitkeeper-scm/bitkeeper/blob/master/src/utils/extractor.c
->
-> but that's the installation script, so unlikely to be exploitable.
->
-> Or in apply-patch, etc.
->
-> But there is also a few projects that are bundled (like zlib), and a few
-> scripts that
-> are used only at installation and/or build time, so classifying everything
-> is more
-> work than what I have time to devote for the project.
->
-> --
-> Michael Scherer
->
+I assume you're using $HOSTNAME as a shorthand; bash only uses the
+return value from gethostname().
 
+It's unlikely that something like this could be accomplished without
+existing privilege.  If you have a fake DHCP server on your network, for
+instance, you have massive problems aside from this issue.  If someone
+sets the hostname on the local machine, he already has privilege.
 
+> 
+> I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+
+Yes, that is the current fix for this.  There are other ways to do it.
+
+This issue has been public since October, 2015, in Ubuntu's bash bug
+database.
+
+https://bugs.launchpad.net/ubuntu/+source/bash/+bug/1507025
 
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
