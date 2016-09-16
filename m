@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/24
-Message-Id: <20160818211312.5589DABCA54@smtpvmsrv1.mitre.org>
-Date: Thu, 18 Aug 2016 17:13:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: eric.pruitt@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - slock, all versions NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/5
+Message-ID: <alpine.LFD.2.20.1609161709040.28695@wniryva>
+Date: Fri, 16 Sep 2016 17:10:41 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: scsi: mptsas: OOB access when freeing MPTSASRequest object
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> The screen locking application slock (http://tools.suckless.org/slock/)
-> calls crypt(3) and uses the return value for strcmp(3) without checking
-> to see if the return value of crypt(3) was a NULL pointer. If the hash
-> returned by (getspnam()->sp_pwdp) is invalid, crypt(3) will return NULL
-> and set errno to EINVAL. This will cause slock to segfault which then
-> leaves the machine unprotected. A couple of common scenarios where this
-> might happen are:
-> 
-> - a machine using NSS for authentication; on the machine I discovered
->   this bug, (getspnam()->sp_pwdp) returns "*".
-> - the user's account has been disabled for one reason or another; maybe
->   account expiry or password expiry.
+Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is 
+vulnerable to an invalid memory access issue. It could occur while processing 
+scsi io requests in mptsas_process_scsi_io_request.
 
-Use CVE-2016-6866.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance on the host resulting in DoS.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03604.html
 
-iQIcBAEBCAAGBQJXtiRVAAoJEHb/MwWLVhi2sacP+gMeIHHCDQ9cy+JpK1eCnSCS
-sazQCwgyDrGdrT9a842vGgkenEmHfeIwJHlpsMsmB4SBhRjUkWSMDKwh/VYyIFAI
-U3bIi2B3jqG70onrQJnHPYisz/shOdyv5m4GxTCFVn17i0R4iJ9h3yO7coFG2QMT
-GxMlm+QkxvUiTz4hEKI6pt7Cpca/5819cqs7fJr368zP1KB54b0dIRNFzFYMOyqk
-Q6M9SvJICMz5j5rrxYFijhfTrB8AiuU0XNgwZs/sJhRXy8xdf1n+m5C60eDLG+o4
-Qx2KzHhlDScl680OQNi77MCSHq8Ffb5bEWZDsxujqcN3p4JDGMTBKAJ2vWfDajog
-7Ugaqz4ddnj2EY8+ZL6jPzxq1HqBbUmwCCCwvoeltF6etclaGB4Hps6p7ffB3zQy
-rXsAUC659T/xPURObeHB+krNEadz/lcx1/ucA7+DXmtBmd/oHDYsbwU91M/z+oCQ
-6K/CIT2ZTKbUPDP8mdQfpgPsURRXc+oMl8AsUf9OBlnNPn1MGeGfbNOUZz8tJnuT
-coI//OylyihxjQaOK36vxTu4WtMtvH+bR6tH39TSTxyyKiOFG4xavWCJpshUwDa0
-tx9QK6RbbWLfIm+PaSkiFqpsZ+oy25DI2FmUPe47u8qStCAVm5TSnOi3/YuPfTMr
-osR1b1FAQ/zhY7kYhD1n
-=HbWC
------END PGP SIGNATURE-----
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1376776
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
