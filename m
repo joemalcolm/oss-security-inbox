@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1782" "Friday" "20" "January" "2017" "22:25:27" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e5990a8df9974dd6b9a11601e84de16a@imshyb01.MITRE.ORG>" "40" "[oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb" nil nil nil "1" "2017012103:25:27" "[oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb" (number mark "U       cve-assign@m Jan 20   40/1782  " thread-indent "\"[oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb\"\n") "<alpine.LFD.2.20.1701202004350.14113@wniryva>" ("<alpine.LFD.2.20.1701202004350.14113@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["832" "Saturday" "17" "September" "2016" "03:00:10" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>" "33" "[oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()" nil nil nil "9" "2016091619:00:10" "[oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()" (number mark "U       marco.gra@gm Sep 17   33/832   " thread-indent "\"[oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15806 invoked by uid 550); 21 Jan 2017 03:25:40 -0000
+Received: (qmail 1513 invoked by uid 550); 16 Sep 2016 19:00:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15788 invoked from network); 21 Jan 2017 03:25:39 -0000
-In-Reply-To: <alpine.LFD.2.20.1701202004350.14113@wniryva>
-Message-ID: <e5990a8df9974dd6b9a11601e84de16a@imshyb01.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<liqiang6-s@360.cn>
-Date: Fri, 20 Jan 2017 22:25:27 -0500
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb
-To: <ppandit@redhat.com>
+Received: (qmail 1451 invoked from network); 16 Sep 2016 19:00:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=x67WpV2yAJ9qIH756NPefaZSoaWqlQDCK86HSC67Phs=;
+        b=Vl6TNcQ04adi8C0CDXXJStxCG67Jk/+oLEyzh4vMNtNDw86lZOoXag0PAmrH7JlIRP
+         sSfnhC91iNUUVdNZ0dwOViL2Fj+3QWBoHZv6SgV+vuvfOqALdY/PFOk8ycZOP0mus0rZ
+         ZNdS7VM8roYzFjqD5VA6Olms49SxBXWL8x6aeFry9XQFjPS8frEXlP5GxLAEYVhSVS8Y
+         i/jAzbLkLOkAKxX7CsLxFqrH8Js9SdFW7mDjaNX8EA2XsP+4a/ny3kiAIVVFKqcukGyr
+         QGuOFkzStDNBWFrXpk3XKz4grKIeCMhZJLBZr/s8EGQPgPymheIv63KV46RvpKl2+MdE
+         W6dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=x67WpV2yAJ9qIH756NPefaZSoaWqlQDCK86HSC67Phs=;
+        b=YVzNz6hvG5vNv8jrMtc3mgwe590/wCkg7ZOU0DrNB1G1mBENZkyUqlLyDMd92GYfBO
+         lGE/4DsgNt9XWsvHA/9P4SQP9Wqp9puSUoZ792ikC6AS4oHGmAtWrDEsiaurcV2h9DQT
+         Yr1188Zm75WU68ddp5rvK7XF8roielhJQjQSmvaCc/uUxq/kNCuhm9/d2BViScB6WCC/
+         C54xVeJDlTj1wkWqhgBYBfNt+VpXzEbQVCRog7CUAfn45at/fWWpWnq9xzok+iwuMu3r
+         /YWJPt861gPnHNyNN4HTGmcBO2EYM0YMOwHkrQSPV/mKdVNoeV+0uXOOeXL2A64PF99z
+         p0YQ==
+X-Gm-Message-State: AE9vXwN8pd7ro4XWcA28uHxlwEYT+QTAsqTAJDZzyQQHekQvYdeqZrhphatsVfLFGPOOG0KNFjrCR3NRHIrRsw==
+X-Received: by 10.36.107.211 with SMTP id v202mr7573078itc.51.1474052411216;
+ Fri, 16 Sep 2016 12:00:11 -0700 (PDT)
+MIME-Version: 1.0
+From: Marco Grassi <marco.gra@gmail.com>
+Date: Sat, 17 Sep 2016 03:00:10 +0800
+Message-ID: <CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> [] Quick Emulator(Qemu) built with the virtual hardware watchdog 'wdt_i6300esb'
-> support is vulnerable to a memory leakage issue. It could occur while doing a
-> device unplug operation; Doing so repeatedly would result in leaking host
-> memory, affecting other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS and/or
-> potentially crash the Qemu process on the host.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2016-12/msg03104.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1415199
-> http://git.qemu.org/?p=qemu.git;a=commit;h=eb7a20a3616085d46aa6b4b4224e15587ec67e6e
+inspecting this code you can notice that:
 
-Use CVE-2016-10155 for this (i.e., a memory consumption issue, not an
-information disclosure issue).
+http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+the int32_t user_len is taken from the scsi command
 
-iQIcBAEBCAAGBQJYgtMJAAoJEHb/MwWLVhi23iYP/0M7c/5IxIOs6ejY6ctVyWwk
-X82bhgKruTtEl9/+QUrBcajqDZTo+n2yPt8SM0OurkAKaFNpxFL2P5L6395yQQHr
-YYdBCRGF3eNHLJvDDFZ0THOy9H4OUtge2cmtS1krMUSup2v7RsSK+Bg5WbrWOlPX
-sr17IPrV9r3eZTWLwDWQiZLGcmao/CordQ9TuUqU/TPLiEQJ6H5i1R9p2tGSktPq
-eNMo4VCTuIZl9PKQessKJpuJIzen7t9RN/Ldhn6cws41tzlhbqloJ5v1hmXrpGYZ
-846f6TdhyWOJZVSqpaLFqOsWbkY8EukMaTXashkh0geIjANpaYvwehUzkB4IoMVm
-hlZMf1YH+6Swb1y1RdrhtjRfgDPz2dnkjfbfOTShkrnfA9lJ0te6pl25FIGy2/Mn
-4jHR8ZloDLgrS2AEuMS/gUa5mSFrdJOfUiqCamEIHtuTQy570uSetce0U2jpTSz5
-yNh+ismsGYJatsdASrvWz6dRFbMqgp7m7A0L8Et8b2J8DEczqp05m8is7SMf7PKF
-nL1kmcXp+dzASgHyiQxd2rygJjS3uQY8/2wJ49r5U3SpDV9P6zbHwv7E4rD0UtrP
-n5FEOIZLh9I7GLXUcprWF5D27ZNCS/eLj0s0oJLuwVD2R+pAwD7ODs1hpa0yWtPL
-KJJTWGKN1M6fvKI9GpTf
-=UoYR
------END PGP SIGNATURE-----
+user_len = pcmdmessagefld->cmdmessage.Length;
+
+and used directly without sanitization in a memcpy to a heap buffer of
+fixed size 1032
+
+memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
+
+potentially causing kernel heap corruption and arbitrary kernel code execution.
+
+
+The issue has been already acknowledged and patched in a development
+branch, the patch is here:
+
+http://marc.info/?l=linux-scsi&m=147394713328707&w=2
+
+this patch have been applied to a 4.9 scsi branch here
+(4.9/scsi-queue), and at some point it will land in master
+
+http://marc.info/?l=linux-scsi&m=147394796228991&w=2
+
+Thanks
+
+Marco
+
+https://marcograss.github.io
