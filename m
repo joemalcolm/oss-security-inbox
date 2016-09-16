@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/3
-Message-Id: <20160714180943.CEF62B2E017@smtpvbsrv1.mitre.org>
-Date: Thu, 14 Jul 2016 14:09:43 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/10
+Message-Id: <20160916172432.9CAC052E020@smtpvbsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 13:24:32 -0400 (EDT)
 From: cve-assign@...re.org
-To: tyhicks@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com, zhenhaohong@...il.com
+Subject: Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> ecryptfs-setup-swap script that is provided by the upstream
-> ecryptfs-utils project. The script can be used to convert an existing,
-> unencrypted swap partition into a swap partition that is encrypted.
-> System admins may use this tool and the Ubuntu installer uses it when
-> the user opts into home directory encryption.
+> Quick emulator(Qemu) built with the virtio framework is vulnerable to a null
+> pointer dereference flaw. It could occur if the guest was to set the I/O
+> descriptor buffer length to a large value.
 > 
-> On systems using systemd 211 or newer and GPT partitioning, the
-> unencrypted swap partition was being automatically activated during boot
-> and the encrypted swap was not used. This was due to ecryptfs-setup-swap
-> not marking the swap partition as "no-auto", as defined by the
-> Discoverable Partitions Spec
+> A privileged user inside guest could use this flaw to crash the Qemu instance
+> on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03546.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1376755
 
-> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
-> partitioning
-> Bug: https://launchpad.net/bugs/1447282
-> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/857
-> (Please ignore the inaccurate commit message for commit 857)
+>> virtio back end uses set of buffers to facilitate I/O operations.
+>> If its size is too large, 'cpu_physical_memory_map' could return
+>> a null address. This would result in a null dereference
+>> while un-mapping descriptors. Add check to avoid it.
 
-Use CVE-2015-8946.
+Use CVE-2016-7422.
 
-
-> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
-> partitioning on a NVMe or MMC drive. This bug is due to an incomplete
-> fix for bug 1447282.
-> Bug: https://launchpad.net/bugs/1597154
-> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/882
-
-Use CVE-2016-6224.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
+that may be an expected place for a later update.
 
 - -- 
 CVE Assignment Team
@@ -48,17 +40,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXh9TcAAoJEHb/MwWLVhi2VUAP/RibsMY5eaJJQfehovvPDDZL
-N4qZ33Rn347WoQnvnHm+dSaxC6Jys2jtGCyqJZ4xTxJXUFIZzsBDyIVONpuUd6Sz
-mrnLDSPtBAvfzrBYcUbVoJLMYAoYWC27I9NcnwttE4MTLBvlDLhws2ncZJ+werph
-bSVzBS8qGPj7LFJGTP1YiFj9qTbnbJwxRAvPIIz2wAcTyOljKcQTmpGXYoqSZIOV
-oE6jSlA9HIsvgLS+VHuOzqWJTfABcjEtN6VHJEQovp0DI8EfrWenYMpGH8kFCgtO
-KW3Y45IgJeEksbfIfX2ehlWkOEABZsRsg9sjFZGlVrLUCDsN35ooVLOLIvE+yebU
-StESPy77rxhkjS709PBr+JeKMS276AIqoK/5TRu9B7Y5Lmz5FuPLhlOn79JJfoLW
-XUoFrF9U9MeJk8EV1Hm+x3uU0EvVvWOXvtpL4VdrOfLBhihvUf8SXn3e2IkYxbuj
-erfnb/0EIILAj+oulMAmyQ2gcN0JNso4nDWNFua+0+TBd1Ep5OPV5AgogxXemew8
-L5Z3hQkSwFGbXrIkdUSYm+MD/VyxMC7lwSOIYs2S3hwtnN/m1eILOzgYGqTt6Tls
-/sjTgi2l1v+sJeQPoFTo7Riuzqe7F+kUlBCjg8lyi9QF5evvlrWIhxS1kHmlrQlI
-we6cyqgnjlYJRq+QWyvm
-=11vA
+iQIcBAEBCAAGBQJX3CoJAAoJEHb/MwWLVhi22UAP/i8JPCu45VXEBOxfSHFq2RuT
+TFTLRJoGrzZSJmk0xJQzLevXfM/u/dP7M4bXXdiGETuXDoytygrZvpQX4TjhRcJa
+6B2gCLdlPpcH+m3BW9OzfR3mxMVwGwBMLpDIKo4lRMBkW4Sm9BT5druuJtnYqrpi
+28FtGgLimIIjWykf+XOPCSA1/7jOURlpQWp3AXzdJ4bbPekMIbwGjWDpsbxQFnWt
+UyutNxjJMXKegxNbgKmqtle6O63HewHzzmkMwFpq9VH6yA84kA3ckc+Kn5o88mAz
+4GOVBazW2WLaouT0mcNTSuEzKMVJZTFeMo9LkdOP70ds9ChkMUm4RE55jTTvy1HF
+0EE7q9z9dKnO0DWht7/KtBO4o7pPSiSvz3Amc56D4rUzww2w4SkBwwQp40Eyt9K0
+SNLEL62COpHMbqz0O+lZV/04ZgTvxwO82ALOOGHKzgFXEVZtr3QImugNKBDFItkF
+AzMP9005g6XoXKDNgMDJVz07cDiVU5/tOwTFaFe88CVJR6l9Ez6RSkMUbdloHZD0
+LlsaUPUhVLvKCV+RzUF1MH8Z8i4kIfbSkhSu65VqGeN05dUV+ClmUTj0Q10OGXnm
+UmsmrsdkTDRvye6giFtkXrnV6aPLNkY+SXIePG1IYChtR8XVrHH+3LNeFmkSUMJr
+r6mhE1RiIJ8ZeEkzvS3K
+=d+8E
 -----END PGP SIGNATURE-----
