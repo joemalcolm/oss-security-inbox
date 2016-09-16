@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7804" "Tuesday" "28" "November" "2017" "14:19:58" "+0100" "Bram Moolenaar" "Bram@moolenaar.net" "<201711281319.vASDJwca010001@masaka.moolenaar.net>" "147" "Re: [oss-security] Security risk of server side text editing ..." "^Cc:" nil nil "11" "2017112813:19:58" "[oss-security] Security risk of server side text editing ..." (number mark "        Bram@moolena Nov 28  147/7804  " thread-indent "\"Re: [oss-security] Security risk of server side text editing ...\"\n") "<20171127202612.GA18592@openwall.com>" ("<20171127202612.GA18592@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1911" "Friday" "16" "September" "2016" "13:24:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160916172432.9CAC052E020@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc" nil nil nil "9" "2016091617:24:32" "[oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc" (number mark "U       cve-assign@m Sep 16   46/1911  " thread-indent "\"[oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc\"\n") "<alpine.LFD.2.20.1609161611510.28695@wniryva>" ("<alpine.LFD.2.20.1609161611510.28695@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19462 invoked by uid 550); 28 Nov 2017 13:48:18 -0000
+Received: (qmail 9542 invoked by uid 550); 16 Sep 2016 17:24:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,163 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29899 invoked from network); 28 Nov 2017 13:20:18 -0000
-Message-Id: <201711281319.vASDJwca010001@masaka.moolenaar.net>
-In-Reply-To: <20171127202612.GA18592@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: oss-security@lists.openwall.com
-Date: Tue, 28 Nov 2017 14:19:58 +0100
-From: Bram Moolenaar <Bram@moolenaar.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Security risk of server side text editing ...
-To: Solar Designer <solar@openwall.com>
+Received: (qmail 9519 invoked from network); 16 Sep 2016 17:24:44 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com, zhenhaohong@gmail.com
+In-Reply-To: <alpine.LFD.2.20.1609161611510.28695@wniryva>
+Message-Id: <20160916172432.9CAC052E020@smtpvbsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 13:24:32 -0400 (EDT)
+Subject: [oss-security] Re: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Solar Designer wrote:
+> Quick emulator(Qemu) built with the virtio framework is vulnerable to a null
+> pointer dereference flaw. It could occur if the guest was to set the I/O
+> descriptor buffer length to a large value.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu instance
+> on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03546.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1376755
 
-> On Mon, Nov 27, 2017 at 02:10:54PM -0500, Scott Court wrote:
-> > Here's the summary you asked for. As far as I've been able to tell,
-> > there are three vulnerabilities being discussed here:
-> 
-> Thank you for trying to do the right thing, but I'm concerned that with
-> the "multiple vulnerabilities in Vim" approach we can identify lots of
-> them and "fix" lots of them yet not achieve a sensible goal - in fact,
-> we already started down that path.
-> 
-> >     1. CVE-2017-1000382
-> 
-> Kurt assigned this one to:
-> 
-> "Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
-> most likely) ignores umask when creating a swap file
-> (\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
-> or otherwise accessible in ways not intended by the user running the vi
-> binary."
+>> virtio back end uses set of buffers to facilitate I/O operations.
+>> If its size is too large, 'cpu_physical_memory_map' could return
+>> a null address. This would result in a null dereference
+>> while un-mapping descriptors. Add check to avoid it.
 
-I still haven't found any reason why umask would apply to intermediate
-or temporary files.  It is intended to be used for newly created files.
-Setting the access of the swap file equal to the edited file is the
-right thing to do.
+Use CVE-2016-7422.
 
-> While ignoring of umask might be the CVE-worthy issue here, in practice
-> most of the files Hanno found were probably from systems that had most
-> distros' default non-root user umask of 022 or 002 anyway.
-> 
-> So fixing this CVE as worded does little to address Hanno's findings.
-> 
-> > This vulnerability was discovered by Hanno Bock. When editing a text
-> > file in Vim, a .swp file is created in the same directory (if you edit
-> > "foo", the swap file will be ".foo.swp"). Hanno pointed out that this
-> > could create a security vulnerability on PHP enabled webservers as follows:
-> > 
-> > If a user goes to edit a .php file in the public_html directory (say
-> > "foo.php"), a swap file will be created in the public_html directory
-> > called ".foo.php.swp". This then exposes the contents of the PHP script
-> > foo.php to the world. All someone has to do is go to
-> > "http://example.com/.foo.php.swp" and he can view the .swp file which
-> > contains the contents of the original foo.php file.
-> > 
-> > Hanno pointed out that this causes a problem with Wordpress sites if the
-> > site administrator edits the wp-config.php file in Vim: he exposes all
-> > of the database credentials. This is made worse if Vim crashes while he
-> > is editing it as then the .wp-config.php.swp file sticks around. He
-> > claims he has found 750 websites that are vulnerable to this.
-> 
-> This is a good summary of the actual issue that we should address, but
-> the CVE is only partially related to it.  Fixing the CVE (as described)
-> means honoring the umask, but it would do little to reduce the number of
-> vulnerable sites Hanno would find.  Improving Vim to always use 0600
-> might or might not be considered a fix for the CVE (maybe 0600 & ~umask
-> would be, even if anything stricter than 0600 breaks the functionality),
-> but it would do much more to address Hanno's findings (only leaving out
-> the special case of the web server running as the same (pseudo-)user who
-> edits the files, which I expect is less common than editing with umask
-> 022 or 002).
-> 
-> So let's focus on what actually matters rather than on what fits a CVE.
-> 
-> >     2. Vim .swp file group (Doesn't have a CVE ID)
-> > 
-> > This vulnerability was discovered by me. When Vim creates a .swp file,
-> > the .swp file is created with the owner and group set to the editor and
-> > editor's primary group respectively. The .swp file is the set to the
-> > same permissions as the original file (i.e. chmod 640). This creates a
-> > security vulnerability when the editor's primary group is not the same
-> > as the original file's group.
-> > 
-> > For example, say the root user's primary group is "users", which every
-> > user is a member of. If root goes to edit /etc/shadow, the
-> > /etc/.shadow.swp file is created with permissions 640 and user:group set
-> > to root:users. The original /etc/shadow file had user:group set to
-> > root:shadow though; this now exposes the /etc/shadow file (which mind
-> > you contains hashes of every user's password) to every user on the system.
-> > 
-> > Originally, I thought this was an extension of CVE-2017-1000382 so I
-> > didn't bother trying to get a CVE ID for it; however, upon looking at it
-> > for a second time, it seems that this is indeed a different
-> > vulnerability. It is possible to patch this vulnerability without
-> > patching CVE-2017-1000382.
-> 
-> I agree this is a separate issue from ignoring the umask, and is
-> probably a CVE-worthy vulnerability as well (if the first CVE is in fact
-> limited to the umask), but for practical purposes there's just one thing
-> to change in response to both issues: make those files 0600.
-> 
-> >     3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
-> > 
-> > I'm not quite sure who discovered this vulnerability (I don't use or
-> > follow vim.tiny); however, it has been discussed on here so I will
-> > include my limited knowledge of it for completeness sake. This is a race
-> > condition in which a world writable SUID binary is temporarily created.
-> > This could (or course) theoretically allow an arbitrary user to write to
-> > that binary and execute arbitrary code as root; however, there is debate
-> > as to whether or not doing this is actually feasible.
-> 
-> This not a vulnerability in Vim, and is not CVE-worthy.  Most programs,
-> text editors included, are unsafe to use on pathnames in untrusted
-> directories, period.  We might want to harden Vim to make it less unsafe
-> when misused like that, but calling that a vulnerability and those
-> changes a fix would encourage the misuses and further misunderstandings.
-> 
-> If I understand correctly, the specific example posted by Roman relied
-> on a file being replaced with a symlink, so this falls in the above
-> category - misuse of Vim in an untrusted directory.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/virtio/virtio.c but
+that may be an expected place for a later update.
 
-I have fixed this anyway, patch 8.0.1300.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> OTOH, as an exception, Vim can and should be made safe when editing a
-> file with an untrusted owner if that file (the specific hard link to it
-> corresponding to the pathname being edited) is located in a trusted
-> directory (including all of its parent directories) - e.g., /var/run/foo
-> where only foo itself is under a potential attacker's control.  If Vim
-> would sometimes copy the SUID/SGID bits from such file to another
-> (temporary) file that does not yet have the user and group ownership
-> also already copied to it (which would have already been racy as well),
-> then that's a concern and is something that should be fixed - again, by
-> simply setting those files' permissions to 0600 (no need for any fancy
-> logic).  I don't know, and am not too interested, whether such an issue
-> currently exists (I think it does not, as I saw code masking the
-> permissions to 0777), nor whether it's CVE-worthy (it might be if it
-> exists).  I care more about the trivial proper change we should make in
-> response to all of these non-misuse issues at once, without needing to
-> enumerate and categorize them.
-> 
-> If upstream approaches this differently, distros should throw the fancy
-> logic out and hard-code 0600.
-> 
-> > I believe these are the three big ones
-> 
-> Thanks, but I think enumerating and categorizing them is a distraction,
-> except to the extent necessary for us to get on the same page and make
-> the trivial change. ;-)
-
--- 
-I started out with nothing, and I still have most of it.
-                                -- Michael Davis -- "Tonight Show"
-
- /// Bram Moolenaar -- Bram@Moolenaar.net -- http://www.Moolenaar.net   \\\
-///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
-\\\  an exciting new programming language -- http://www.Zimbu.org        ///
- \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
+iQIcBAEBCAAGBQJX3CoJAAoJEHb/MwWLVhi22UAP/i8JPCu45VXEBOxfSHFq2RuT
+TFTLRJoGrzZSJmk0xJQzLevXfM/u/dP7M4bXXdiGETuXDoytygrZvpQX4TjhRcJa
+6B2gCLdlPpcH+m3BW9OzfR3mxMVwGwBMLpDIKo4lRMBkW4Sm9BT5druuJtnYqrpi
+28FtGgLimIIjWykf+XOPCSA1/7jOURlpQWp3AXzdJ4bbPekMIbwGjWDpsbxQFnWt
+UyutNxjJMXKegxNbgKmqtle6O63HewHzzmkMwFpq9VH6yA84kA3ckc+Kn5o88mAz
+4GOVBazW2WLaouT0mcNTSuEzKMVJZTFeMo9LkdOP70ds9ChkMUm4RE55jTTvy1HF
+0EE7q9z9dKnO0DWht7/KtBO4o7pPSiSvz3Amc56D4rUzww2w4SkBwwQp40Eyt9K0
+SNLEL62COpHMbqz0O+lZV/04ZgTvxwO82ALOOGHKzgFXEVZtr3QImugNKBDFItkF
+AzMP9005g6XoXKDNgMDJVz07cDiVU5/tOwTFaFe88CVJR6l9Ez6RSkMUbdloHZD0
+LlsaUPUhVLvKCV+RzUF1MH8Z8i4kIfbSkhSu65VqGeN05dUV+ClmUTj0Q10OGXnm
+UmsmrsdkTDRvye6giFtkXrnV6aPLNkY+SXIePG1IYChtR8XVrHH+3LNeFmkSUMJr
+r6mhE1RiIJ8ZeEkzvS3K
+=d+8E
+-----END PGP SIGNATURE-----
