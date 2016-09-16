@@ -1,38 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/7
-Message-ID: <20160223164136.GA24225@altlinux.org>
-Date: Tue, 23 Feb 2016 19:41:36 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/7
+Message-Id: <4ee5cd2a-2692-446b-abf2-923003c1b9fc@googlegroups.com>
+Date: Fri, 16 Sep 2016 08:55:29 -0700 (PDT)
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+Subject: Fwd: CVE-2016-7420 and dev-brach 'trap' ready for testing
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 23, 2016 at 07:17:54PM +0300, Solar Designer wrote:
-> On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
-> > Sending content from [0] also to oss-security as requested last time:
-> 
-> Thank you.  This public disclosure is very late, though.  I didn't
-> realize you were still holding some of your findings on this.
-> 
-> > With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
-> > ownership of slave pts devices in /dev/pts to the same uid holding the
-> > master file descriptor for the slave.
-> 
-> I think pt_chown is only needed for legacy BSD pty's, and no longer
-> needed for Unix 98 pty's that Linux systems use these days.  Perhaps it
-> should be dropped from upstream glibc by now.
+The improved code should be available in Master in the next few days. After 
+about three or four weeks we will release Crypto++ 5.6.5.
 
-Just for the record, pt_chown is not enabled by default in upstream glibc
-starting with glibc-2.18, one has to specify --enable-pt_chown configure
-option explicitly to build pt_chown.
+The decision to release Crypto++ 5.6.5 was driven by Error Reporting 
+services like Apport, CrashReporter and WER; and company's like Apple, 
+Google and Microsoft's cooperation with governments to mine sensitive 
+information.
 
-glibc documentation clearly states that "the use of pt_chown introduces
-additional security risks to the system and you should enable it only
-if you understand and accept those risks":
-https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
+On Friday, September 16, 2016 at 11:51:36 AM UTC-4, Jeffrey Walton wrote:
+>
+> Hi Everyone,
+>
+> CVE-2016-7420 caused us to cut-in CRYPTOPP_ASSERT a little earlier than 
+> expected. <trap.h> and CRYPTOPP_ASSERT have existed in Master for over a 
+> year. We set up a dev-branch called 'trap' to isolate the cut-in during 
+> testing.
+>
+> The cut-over to CRYPTOPP_ASSERT occurred at 
+> https://github.com/weidai11/cryptopp/commit/399a1546de71f41598c15edada28e7f0d616f541 
+> . It tested OK under modern versions of Clang, CGG, Solaris and Visual 
+> Studio.
+>
+> The defining factor of CRYPTOPP_ASSERT is it abandons Posix NDEBUG, which 
+> we used to rely upon to remove asserts. We switched strategies, and now we 
+> enable CRYPTOPP_ASSERT if any the following are defined: CRYPTOPP_DEBUG, 
+> DEBUG, _DEBUG. This strategy side steps bad release/production 
+> configurations due to policy (Debian never defines NDEBUG) and 
+> errors/omissions (users or Autotools or CMake or Eclipse <other build 
+> system> fails to define NDEBUG).
+>
+> CRYPTOPP_ASSERT also adds a nice feature: it raises SIGTRAP rather than 
+> SIGABRT. SIGABRT will snap the debugger, if present. And it won't follow 
+> Posix's idiotic footsteps and crash the program with a SIGABRT while a 
+> developer is debugging it.
+>
+> The last two, DEBUG and _DEBUG, are set in Visual Studio projects by 
+> Microsoft; and they cause CRYPTOPP_DEBUG to be set automatically. BSD, 
+> Linux, Solaris and Unix user will have to -DCRYPTOPP_DEBUG=1 or uncomment 
+> CRYPTOPP_DEBUG in config.h.
+>
+> If all goes well with testing, then we will merge Trap dev-branch into 
+> Master this weekend or early next week. Our test script takes two or three 
+> days to run on IoT gadets like BeableBoards and CubieTrucks, so the 
+> earliest we can merge will be late Saturday or Sunday.
+>
+> Jeff
+>
 
-
--- 
-ldv
-
-Content of type "application/pgp-signature" skipped
+Content of type "text/html" skipped
