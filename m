@@ -1,4 +1,9 @@
-Received: (qmail 18357 invoked by uid 550); 18 Apr 2023 20:19:27 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1769" "Friday" "16" "September" "2016" "17:16:06" "+0100" "John Haxby" "john.haxby@oracle.com" "<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "57" "[oss-security] CVE-2016-0634 -- bash prompt expanding $HOSTNAME" "^Cc:" nil nil "9" "2016091616:16:06" "[oss-security] CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "        john.haxby@o Sep 16   57/1769  " thread-indent "\"[oss-security] CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 26513 invoked by uid 550); 16 Sep 2016 16:26:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,104 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 22345 invoked from network); 16 Sep 2016 16:16:40 -0000
+Message-ID: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+Cc: chet.ramey@case.edu
+Date: Fri, 16 Sep 2016 17:16:06 +0100
+From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9782 invoked from network); 18 Apr 2023 20:12:42 -0000
-Date: Tue, 18 Apr 2023 22:12:29 +0200
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Subject: [oss-security] CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 To: oss-security@lists.openwall.com
-Message-ID: <20230418201229.bx-3k%steffen@sdaoden.eu>
-In-Reply-To: <043b8fbe6e014f17@millert.dev>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
- <20230416205727.0XQJ2%steffen@sdaoden.eu>
- <20230418005741.GA25557@openwall.com>
- <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
- <043b82cc304acacf@millert.dev>
- <wbhfpn7kbwg64jordjxtpqfmmowes5rncupgzfbnqdz3uljioq@hgz2w4thzmya>
- <043b8fbe6e014f17@millert.dev>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-450-g9589f04a75
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth:
- Unauthorized management command execution
 
-Todd C. Miller wrote in
- <043b8fbe6e014f17@millert.dev>:
- |On Wed, 19 Apr 2023 02:59:26 +0800, Ruihan Li wrote:
- |
- |> Yeah, I see that you are removing ioctl calls on standard file
- |> descriptors. So actually, just to confirm, it is feasible to avoid
- |> all ioctl calls to standard file descriptors with root privileges
- |> (under all command line arguments), by using /dev/tty, assuming
- |> something like the window size... Right?
- |
- |For the most part, yes.  There are still some calls to isatty(3)
+Hello All,
 
-Frozen asset that i am,.., but i want to add this.
-The POSIX standard says (i think quoting C99)
+A little while ago, one of our users discovered that by setting the
+hostname to $(something unpleasant), bash would run "something
+unpleasant" when it expanded \h in the prompt string.
 
-  [.]the standard input and standard output streams are fully
-  buffered if and only if stream can be determined not to refer to
-  an interactive device.[.]
+We informed Chet (cc'd) and this has been fixed in the recently
+announced bash-4.4.
 
-Unless there is a new way of checking and/or unless creating
-interactive devices is restrained to /dev/tty (pty etc) it seems
-some calls done by C libraries cannot be avoided, only be delayed
-a bit further down the road than what musl does.
+I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
 
-  $ cat t.c
-  #include <stdio.h>
-  int main(void) { putc('\n',stdout);return 0; }
-  $ gcc -o zt t.c
+--------------------
+@@ -5569,9 +5703,17 @@ decode_prompt_string (string)
 
-GNU libc:
+ 	    case 'h':
+ 	    case 'H':
+-	      temp = savestring (current_host_name);
+-	      if (c == 'h' && (t = (char *)strchr (temp, '.')))
++	      t_host = savestring (current_host_name);
++	      if (c == 'h' && (t = (char *)strchr (t_host, '.')))
+ 		*t = '\0';
++	      if (promptvars || posixly_correct)
++		/* Make sure that expand_prompt_string is called with a
++		   second argument of Q_DOUBLE_QUOTES if we use this
++		   function here. */
++		temp = sh_backslash_quote_for_double_quotes (t_host);
++	      else
++		temp = savestring (t_host);
++	      free (t_host);
+ 	      goto add_string;
 
-  $ strace ./zt
-  newfstatat(1, "", {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
+ 	    case '#':
+--------------------
 
-  $ strace ./zt >/dev/null
-  newfstatat(1, "", {st_mode=S_IFCHR|0666, st_rdev=makedev(0x1, 0x3), ...}, AT_EMPTY_PATH) = 0
-  ioctl(1, TCGETS, 0x7ffe2151dc30)        = -1 ENOTTY (Inappropriate ioctl for device)
+There is a related fix (but not one necessarily covered by CVE-2016-0634):
 
-  $ mkfifo c; cat < c & strace ./zt > c
-  newfstatat(1, "", {st_mode=S_IFIFO|0640, st_size=0, ...}, AT_EMPTY_PATH) = 0
+--------------------
+@@ -5479,7 +5609,11 @@ decode_prompt_string (string)
 
-musl always simply says
+ 	    case 's':
+ 	      temp = base_pathname (shell_name);
+-	      temp = savestring (temp);
++	      /* Try to quote anything the user can set in the file system */
++	      if (promptvars || posixly_correct)
++		temp = sh_backslash_quote_for_double_quotes (temp);
++	      else
++		temp = savestring (temp);
+ 	      goto add_string;
 
-  ioctl(1, TIOCGWINSZ, {ws_row=55, ws_col=191, ws_xpixel=1910, ws_ypixel=1045}) = 0
-or
-  ... = -1 ENOTTY (Not a tty)
+ 	    case 'v':
+--------------------
 
- |using the standard file descriptors when setting up the event loop
- |to run the program but that is after the user has been verified.
- |I will add checks that the fd is a character special file before
- |calling isatty(3).  In most cases the code wants the contents of
- |struct stat anyway, so the S_ISCHR check is basically free.
- |
- |> If this is the case, I think it should not be difficult for other
- |> setuid programs to do similar things.  I am just thinking for a
- |> while, and cannot find a case where ioctl calls are unavoidable.
- |
- |If there are setuid programs that call ttyname(3) that will also
- |call tcgetattr(3).  Also, the glibc getpass(3) function will use
- |tcgetattr(3) and tcsetattr(3) (to disable echo) on the standard
- |input if /dev/tty is not available.  For getpass(3) this could be
- |avoided by only trying to disable echo when using /dev/tty.  That
- |would change the behavior of things like:
- |
- |    su < /some/other/tty 
+I appreciate that it's relatively difficult to set the hostname to a
+string of your choosing but there are plenty of helpful agents that will
+call sethostname(2) on your behalf.
 
-..even though it mostly reiterates what is said.
-
- |when /dev/tty is unavailable but I don't know what use case that
- |would actually support.
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+jch
