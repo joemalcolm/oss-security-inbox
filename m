@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/30/1
-Message-ID: <alpine.LFD.2.20.1608301244260.2278@wniryva>
-Date: Tue, 30 Aug 2016 12:45:44 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/4
+Message-ID: <alpine.LFD.2.20.1609161611510.28695@wniryva>
+Date: Fri, 16 Sep 2016 16:15:24 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: Felix Wilhelm <fwilhelm@...w.de>
-Subject: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
+cc: Qinghao Tang <luodalongde@...il.com>, zhenhao hong <zhenhaohong@...il.com>
+Subject: CVE request Qemu: virtio: null pointer dereference in virtqueu_map_desc
 Content-Type: text/plain; charset=utf-8
 
    Hello,
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to a directory/path traversal issue. 
-It could occur while creating or accessing files on a shared host directory.
+Quick emulator(Qemu) built with the virtio framework is vulnerable to a null 
+pointer dereference flaw. It could occur if the guest was to set the I/O 
+descriptor buffer length to a large value.
 
-A privileged user inside guest could use this flaw to access undue files on 
-the host.
+A privileged user inside guest could use this flaw to crash the Qemu instance 
+on the host resulting in DoS.
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03546.html
 
 Reference:
 ----------
-   -> http://wiki.qemu.org/Documentation/9psetup
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1376755
 
-This flaw was reported by Mr Felix Wilhelm.
+This issue was independently reported by Qinghao Tang and Zhenhao Hong of the 
+Marvel Team of 360.cn Inc.
 
 Thank you.
 --
