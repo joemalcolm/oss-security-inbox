@@ -1,51 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/8
-Message-ID: <57179A2C.5030007@cleal.org>
-Date: Wed, 20 Apr 2016 16:03:08 +0100
-From: Dominic Cleal <dominic@...al.org>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-3693: Foreman application information leakage through templates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/14
+Message-ID: <7c365a7a-c510-b6e6-2609-da62b69fd62b@case.edu>
+Date: Fri, 16 Sep 2016 14:49:11 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Jan Schaumann <jschauma@...meister.org>, oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-3693: Foreman application information leakage through template
-rendering
+On 9/16/16 1:38 PM, Jan Schaumann wrote:
+> John Haxby <john.haxby@...cle.com> wrote:
 
-A provisioning template containing `inspect` will expose sensitive
-information about the Rails controller and application when rendered
-when using Safemode rendering (the default setting). This includes the
-application secret token, possibly permitting a privilege escalation
-when the app is using signed cookies.
+(I didn't get this message.)
 
-Thanks to Ivan Necas for reporting the issue.
+>> A little while ago, one of our users discovered that by setting the
+>> hostname to $(something unpleasant), bash would run "something
+>> unpleasant" when it expanded \h in the prompt string.
 
-As a precaution, the security token may be regenerated with:
+This issue has been public since October, 2015 in Ubuntu's bug tracking
+system.
 
-  chown foreman /usr/share/foreman/config/initializers/local_secret_token.rb
-  foreman-rake security:generate_token
-  chown root /usr/share/foreman/config/initializers/local_secret_token.rb
 
-Mitigation: remove edit_provisioning_templates from untrusted users.
+> To clarify: this is only triggered if the hostname has been set, not the
+> $HOSTNAME variable, right?
 
-Affects all known Foreman versions
-Fix released in Foreman 1.11.1 and safemode 1.2.4
+Bash doesn't use $HOSTNAME; it sets it if it's not already set.  The
+shell's idea of the current hostname is set using gethostname().  If
+gethostname() fails, the hostname gets set to "??host??".  The \h
+prompt expansion uses the shell's idea of the current hostname.
 
-Patches:
-1. The safemode gem (https://rubygems.org/gems/safemode) was patched to
-disallow the inspect instance method:
-https://github.com/svenfuchs/safemode/commit/0f764a1720a3a68fd2842e21377c8bfad6d7126f
-2. Foreman was patched to use this in
-https://github.com/theforeman/foreman/commit/82f9b93c54f72c5814df6bab7fad057eab65b2f2
+If your privileged application (either a user with privilege or a hostname-
+setting agent) allows the hostname to be set to any arbitrary string of
+characters, you're going to have problems regardless.
 
-More information:
-http://theforeman.org/security.html#2016-3693
-http://projects.theforeman.org/issues/14635
-http://theforeman.org/
-
+Chet
 -- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
