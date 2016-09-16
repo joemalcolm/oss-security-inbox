@@ -1,70 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/7
-Message-ID: <CAK0Odpw=eJnFMWzwyoeit1PTGMkVW0NNf0GFc+p0MXLiMXryow@mail.gmail.com>
-Date: Mon, 25 Jul 2016 11:49:28 +0200
-From: Bálint Réczey <balint@...intreczey.hu>
-To: oss-security@...ts.openwall.com
-Cc: "Eric W. Biederman" <ebiederm@...ssion.com>,  Shadow package maintainers <pkg-shadow-devel@...ts.alioth.debian.org>
-Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/18
+Message-ID: <160916195601.AA66726.SM@caleb.ins.cwru.edu>
+Date: Fri, 16 Sep 2016 15:56:01 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: john.haxby@...cle.com, oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> > I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+> 
+> Yes, that is the current fix for this.  There are other ways to do it.
 
-While this is not immediately clear from the Shadow homepage the
-development continued on GitHub where I have opened two issues
-for the two potential security problems:
+Here's a patch to bash-4.3 that will fix this.
 
-Incorrect integer handling CVE-2016-6252:
-https://github.com/shadow-maint/shadow/issues/27
+Chet
 
-Potentially unsafe use of getlogin CVE-2016-6251:
-https://github.com/shadow-maint/shadow/issues/28
 
-Probably upstream's issue tracker would be the best place
-to discuss the fixes in detail. With upstream development
-happening on GitHub the pkg-shadow-devel list could host
-mostly Debian-packaging releated discussions and probably
-not all oss-security subscribers would like to get all the
-messages.
+View attachment "prompt-string-comsub.patch" of type "text/plain " (3323 bytes)
 
-Cheers,
-Balint
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
-2016-07-25 10:39 GMT+02:00 Sebastian Krahmer <krahmer@...e.com>:
-> On Mon, Jul 25, 2016 at 10:03:31AM +0200, Sebastian Krahmer wrote:
->> On Wed, Jul 20, 2016 at 11:48:52PM +0200, Nicolas François wrote:
->> > Hi,
->> >
->> > The first point looks like a non issue to me.
->> >
->> > getlogin() is used to differentiate users with the same UID.
->> > The result of getlogin() is checked: if it returns a username that do not
->> > have the UID returned by getuid(), it will be ignored.
->> >
->> >
->> > Best Regards,
->> > --
->> > Nekral
->>
->> I agree that its not a severe issue. But its dubious code at best.
->> I couldnt even imagine someone would have usernames with different UID's?
->> Maybe such configs should not be encouraged and potential issues with
->> that discussed.
->>
->> My understanding of secure coding is that getlogin() should not
->> be trusted. Having same username with multiple UIDs is also to be avoided
->> IMHO, since its asking for trouble (I dont know if thats some requirement
->> of LSB or POSIX or so?)
->
-> Err, sorry. Shared UID, different name (the other way around, thanks Alex).
-> But then you are open to GID hopping attacks (as also previously
-> pointed out) since you actually _do_ rely on getlogin() trust.
->
-> Sebastian
->
-> --
->
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.com - SuSE Security Team
->
