@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/6
-Message-ID: <20160705182522.GA26179@eldamar.local>
-Date: Tue, 5 Jul 2016 20:25:22 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: libgd: global out of bounds read when encoding gif from malformed input with gd2togif
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/3
+Message-Id: <512ACAF7-7491-4805-84E5-7EB9E2727EAF@apache.org>
+Date: Fri, 16 Sep 2016 20:57:21 +0100
+From: Flavio Junqueira <fpj@...che.org>
+To: lyon.yang.s@...il.com
+Cc: DevZooKeeper <dev@...keeper.apache.org>, security@...keeper.apache.org, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com, security@...che.org
+Subject: [SECURITY] CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Apologies for the duplicate, this report has a correction over the previous version sent earlier.
 
-The following (older) issue in libgd's issue tracker can be found,
-with possible security impact for applications using the libgd
-library. If I see it correctly this is not an issue in the gd2togif
-utility but in the library. It was reported upstream as:
+#######################################################
+CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
 
-https://github.com/libgd/libgd/issues/209
+Severity: moderate
 
-with the fix
+Vendor:
+The Apache Software Foundation
 
-https://github.com/libgd/libgd/commit/82b80dcb70a7ca8986125ff412bceddafc896842 (gd-2.2.0)
+Versions Affected:
+ZooKeeper 3.4.0 to 3.4.8
+ZooKeeper 3.5.0 to 3.5.2
+The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
 
-Could you assign a CVE for this issue?
+Note: The 3.5 branch is still alpha at this time.
 
-Regards,
-Salvatore
+Description:
+The ZooKeeper C client shells "cli_st" and "cli_mt" have a buffer
+overflow vulnerability associated with parsing of the input command
+when using the "cmd:<cmd>" batch mode syntax. If the command string
+exceeds 1024 characters a buffer overflow will occur. There is no
+known compromise which takes advantage of this vulnerability, and if
+security is enabled the attacker would be limited by client level
+security constraints. The C cli shell is intended as a sample/example
+of how to use the C client interface, not as a production tool - the
+documentation has also been clarified on this point.
+
+Mitigation:
+It is important to use the fully featured/supported Java cli shell rather
+than the C cli shell independent of version.
+
+- ZooKeeper 3.4.x users should upgrade to 3.4.9 or apply this patch:
+https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=27ecf981a15554dc8e64a28630af7a5c9e2bdf4f
+
+- ZooKeeper 3.5.x users should upgrade to 3.5.3 when released or apply
+this patch:
+https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=f09154d6648eeb4ec5e1ac8a2bacbd2f8c87c14a
+
+The patch solves the problem reported here, but it does not make the
+client ready for production use. The community has no plan to make
+this client production ready at this time, and strongly recommends that
+users move to the Java cli and use the C cli for illustration purposes only.
+
+Credit:
+This issue was discovered by Lyon Yang (@l0Op3r)
+
+References:
+https://zookeeper.apache.org/security.html
+#######################################################
