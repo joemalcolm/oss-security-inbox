@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3874" "Saturday" "8" "October" "2016" "22:21:25" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1702944.HEYk80P7xf@arcadia>" "98" "[oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)" nil nil nil "10" "2016100820:21:25" "[oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)" (number mark "U       ago@gentoo.o Oct  8   98/3874  " thread-indent "\"[oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4111" "Friday" "16" "September" "2016" "15:56:01" "-0400" "Chet Ramey" "chet.ramey@case.edu" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" "144" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" "^Cc:" nil nil "9" "2016091619:56:01" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "        chet.ramey@c Sep 16  144/4111  " thread-indent "\"[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 29924 invoked by uid 550); 8 Oct 2016 20:21:18 -0000
+Received: (qmail 19974 invoked by uid 550); 16 Sep 2016 22:14:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +11,165 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29852 invoked from network); 8 Oct 2016 20:21:15 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Sat, 08 Oct 2016 22:21:25 +0200
-Message-ID: <1702944.HEYk80P7xf@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+Received: (qmail 11436 invoked from network); 16 Sep 2016 19:57:33 -0000
+References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com> <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
+In-Reply-To: Message from chet.ramey@case.edu of Fri, 16 Sep 2016 15:46:51 -0400 (id <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>)
+Message-ID: <160916195601.AA66726.SM@caleb.ins.cwru.edu>
+Read-Receipt-To: chet.ramey@case.edu
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)
+Content-Type: multipart/mixed ;
+	boundary="ZLr4uOg0000084dU4T"
+Content-ID: <160916195601.AA66726.SM@caleb.ins.cwru.edu>
+X-Junkmail-Whitelist: YES (by domain whitelist at mpv1-2015.case.edu)
+Cc: chet.ramey@case.edu
+Date: Fri, 16 Sep 2016 15:56:01 -0400
+From: Chet Ramey <chet.ramey@case.edu>
+Reply-To: oss-security@lists.openwall.com
+Sender: chet <chet@caleb.ins.cwru.edu>
+Subject: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+To: john.haxby@oracle.com, oss-security@lists.openwall.com
 
-Description:
-Graphicsmagick is an Image Processing System.
+--ZLr4uOg0000084dU4T
+Content-Type: text/plain ; charset="us-ascii"
+Content-Disposition: inline
 
-After the first round of fuzzing where I discovered some slowness issues that 
-make the fuzz hard, the second round revealed a stack-buffer-overflow.
+> > I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+> 
+> Yes, that is the current fix for this.  There are other ways to do it.
 
-The complete ASan output:
+Here's a patch to bash-4.3 that will fix this.
 
-# gm identify $FILE
-==23362==ERROR: AddressSanitizer: stack-buffer-overflow on address 
-0x7fffaab3b8e0 at pc 0x000000453e36 bp 0x7fffaab3b570 sp 0x7fffaab3ad20
-READ of size 769 at 0x7fffaab3b8e0 thread T0
-    #0 0x453e35 in StrtolFixAndCheck /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:2596
-    #1 0x4545c1 in __interceptor_strtol /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:633
-    #2 0x7f73e9a847df in ReadSCTImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sct.c:191:19
-    #3 0x7f73f473eb13 in ReadImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1607:13
-    #4 0x7f73f473ca94 in PingImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1370:9
-    #5 0x7f73f4651b25 in IdentifyImageCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8375:17
-    #6 0x7f73f465797c in MagickCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8865:17
-    #7 0x7f73f46cf6fe in GMCommandSingle /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17379:10
-    #8 0x7f73f46cd926 in GMCommand /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17432:16
-    #9 0x7f73f352a61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x418c88 in _init (/usr/bin/gm+0x418c88)
+Chet
 
-Address 0x7fffaab3b8e0 is located in stack of thread T0 at offset 800 in frame
-    #0 0x7f73e9a8399f in ReadSCTImage /var/tmp/portage/media-
-gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sct.c:126
 
-  This frame has 2 object(s):
-    [32, 800) 'buffer'
-    [928, 930) 'magick' 0x10007555f710: 00 00 00 00 00 00 00 00 00 00 00 
-00[f2]f2 f2 f2
-  0x10007555f720: f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 02 f3 f3 f3
-  0x10007555f730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007555f740: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 04 f2 00 f2
-  0x10007555f750: f2 f2 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x10007555f760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==23362==ABORTING
+--ZLr4uOg0000084dU4T
+Content-Type: text/plain ; charset="us-ascii"
+Content-Disposition: attachment; filename="prompt-string-comsub.patch"
 
-Affected version:
-1.3.25
+*** ../bash-4.3-patched/parse.y	2015-08-13 15:11:54.000000000 -0400
+--- parse.y	2016-03-07 15:44:14.000000000 -0500
+***************
+*** 5259,5263 ****
+    int result_size, result_index;
+    int c, n, i;
+!   char *temp, octal_string[4];
+    struct tm *tm;  
+    time_t the_time;
+--- 5259,5263 ----
+    int result_size, result_index;
+    int c, n, i;
+!   char *temp, *t_host, octal_string[4];
+    struct tm *tm;  
+    time_t the_time;
+***************
+*** 5407,5411 ****
+  	    case 's':
+  	      temp = base_pathname (shell_name);
+! 	      temp = savestring (temp);
+  	      goto add_string;
+  
+--- 5407,5415 ----
+  	    case 's':
+  	      temp = base_pathname (shell_name);
+! 	      /* Try to quote anything the user can set in the file system */
+! 	      if (promptvars || posixly_correct)
+! 		temp = sh_backslash_quote_for_double_quotes (temp);
+! 	      else
+! 		temp = savestring (temp);
+  	      goto add_string;
+  
+***************
+*** 5497,5503 ****
+  	    case 'h':
+  	    case 'H':
+! 	      temp = savestring (current_host_name);
+! 	      if (c == 'h' && (t = (char *)strchr (temp, '.')))
+  		*t = '\0';
+  	      goto add_string;
+  
+--- 5501,5515 ----
+  	    case 'h':
+  	    case 'H':
+! 	      t_host = savestring (current_host_name);
+! 	      if (c == 'h' && (t = (char *)strchr (t_host, '.')))
+  		*t = '\0';
++ 	      if (promptvars || posixly_correct)
++ 		/* Make sure that expand_prompt_string is called with a
++ 		   second argument of Q_DOUBLE_QUOTES if we use this
++ 		   function here. */
++ 		temp = sh_backslash_quote_for_double_quotes (t_host);
++ 	      else
++ 		temp = savestring (t_host);
++ 	      free (t_host);
+  	      goto add_string;
+  
+*** ../bash-4.3-patched/y.tab.c	2015-08-13 15:11:54.000000000 -0400
+--- y.tab.c	2016-03-07 15:44:14.000000000 -0500
+***************
+*** 7571,7575 ****
+    int result_size, result_index;
+    int c, n, i;
+!   char *temp, octal_string[4];
+    struct tm *tm;  
+    time_t the_time;
+--- 7571,7575 ----
+    int result_size, result_index;
+    int c, n, i;
+!   char *temp, *t_host, octal_string[4];
+    struct tm *tm;  
+    time_t the_time;
+***************
+*** 7719,7723 ****
+  	    case 's':
+  	      temp = base_pathname (shell_name);
+! 	      temp = savestring (temp);
+  	      goto add_string;
+  
+--- 7719,7727 ----
+  	    case 's':
+  	      temp = base_pathname (shell_name);
+! 	      /* Try to quote anything the user can set in the file system */
+! 	      if (promptvars || posixly_correct)
+! 		temp = sh_backslash_quote_for_double_quotes (temp);
+! 	      else
+! 		temp = savestring (temp);
+  	      goto add_string;
+  
+***************
+*** 7809,7815 ****
+  	    case 'h':
+  	    case 'H':
+! 	      temp = savestring (current_host_name);
+! 	      if (c == 'h' && (t = (char *)strchr (temp, '.')))
+  		*t = '\0';
+  	      goto add_string;
+  
+--- 7813,7827 ----
+  	    case 'h':
+  	    case 'H':
+! 	      t_host = savestring (current_host_name);
+! 	      if (c == 'h' && (t = (char *)strchr (t_host, '.')))
+  		*t = '\0';
++ 	      if (promptvars || posixly_correct)
++ 		/* Make sure that expand_prompt_string is called with a
++ 		   second argument of Q_DOUBLE_QUOTES if we use this
++ 		   function here. */
++ 		temp = sh_backslash_quote_for_double_quotes (t_host);
++ 	      else
++ 		temp = savestring (t_host);
++ 	      free (t_host);
+  	      goto add_string;
+  
 
-Fixed version:
-1.3.26 ( not yet released)
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/0a0dfa81906d
+--ZLr4uOg0000084dU4T
+Content-Type: text/plain ; charset="us-ascii"
+Content-Description: Signature file
+Content-Disposition: inline
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, UTech, CWRU    chet@case.edu    http://cnswww.cns.cwru.edu/~chet/
 
-CVE:
-N/A
-
-Timeline:
-2016-09-09: bug discovered
-2016-09-09: bug reported privately to upstream
-2016-09-10: no upstream response
-2016-09-15: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-stack-based-buffer-overflow-in-readsctimage-sct-c/
+--ZLr4uOg0000084dU4T--
 
