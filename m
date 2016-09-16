@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/5
-Message-ID: <1695997.I5q5FJauoq@willoughby>
-Date: Fri, 09 Sep 2016 15:59:04 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/12
+Message-ID: <20160916173838.GL8683@netmeister.org>
+Date: Fri, 16 Sep 2016 13:38:38 -0400
+From: Jan Schaumann <jschauma@...meister.org>
 To: oss-security@...ts.openwall.com
-Cc: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: GraphicsMagick 1.3.25 fixes some security issues
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 06 September 2016 20:50:23 Bob Friesenhahn wrote:
-> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when 
-> a 'count' value is returned.  The bug caused a heap read overflow (due 
-> to using strlcpy() to copy a possibly unterminated string) which could 
-> allow an untrusted file to crash the software.
+John Haxby <john.haxby@...cle.com> wrote:
+ 
+> A little while ago, one of our users discovered that by setting the
+> hostname to $(something unpleasant), bash would run "something
+> unpleasant" when it expanded \h in the prompt string.
 
+To clarify: this is only triggered if the hostname has been set, not the
+$HOSTNAME variable, right?
 
-For who is interested, the details of the issue N° 4 are documented here:
+Your subject line suggests setting $HOSTNAME would lead to command
+execution, which would be a vulnerability reminiscent of shellshock, but
+quickly glancing at the code, it looks like $HOSTNAME is only used if
+gethostname(3) returned an empty string?
 
-https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/[1] 
-
-
-The same block of code, which was rewritten because of the overflows, 
-contains also a null pointer access:
-
-https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/[2] 
-
-
-Unfortunately this problem was not reproducible by Mr Friesenhahn, but 
-seems to be disappeared after the commit which fixed the overflows.
-
---
-Agostino
-
---------
-[1] https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/
-[2] https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/
-
+-Jan
