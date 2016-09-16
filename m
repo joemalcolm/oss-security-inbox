@@ -1,75 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/1
-Message-Id: <20160819001841.A0F926DC092@smtpvmsrv1.mitre.org>
-Date: Thu, 18 Aug 2016 20:18:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: rs@...skills.cz
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Requests Facebook HHVM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/8
+Message-ID: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
+Date: Fri, 16 Sep 2016 17:16:06 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello All,
 
-> -Fix out of bounds write access in
-> mb_detect_encoding, mb_send_mail, mb_detect_order.
-> https://github.com/facebook/hhvm/commit/365abe807cab2d60dc9ec307292a06181f77a9c2
+A little while ago, one of our users discovered that by setting the
+hostname to $(something unpleasant), bash would run "something
+unpleasant" when it expanded \h in the prompt string.
 
-Use CVE-2016-6870. The scope of this CVE is all of the incorrect uses
-of strndup that were fixed in this commit. The commit message
-references t11337047, which possibly is a bug that was discovered much
-earlier. However, because we don't know of any earlier public
-disclosure of t11337047, there isn't a separate CVE ID for t11337047.
+We informed Chet (cc'd) and this has been fixed in the recently
+announced bash-4.4.
 
+I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
 
-> -Fix buffer overrun due to integer overflow in bcmath
-> https://github.com/facebook/hhvm/commit/c00fc9d3003eb06226b58b6a48555f1456ee2475
+--------------------
+@@ -5569,9 +5703,17 @@ decode_prompt_string (string)
 
-Use CVE-2016-6871.
+ 	    case 'h':
+ 	    case 'H':
+-	      temp = savestring (current_host_name);
+-	      if (c == 'h' && (t = (char *)strchr (temp, '.')))
++	      t_host = savestring (current_host_name);
++	      if (c == 'h' && (t = (char *)strchr (t_host, '.')))
+ 		*t = '\0';
++	      if (promptvars || posixly_correct)
++		/* Make sure that expand_prompt_string is called with a
++		   second argument of Q_DOUBLE_QUOTES if we use this
++		   function here. */
++		temp = sh_backslash_quote_for_double_quotes (t_host);
++	      else
++		temp = savestring (t_host);
++	      free (t_host);
+ 	      goto add_string;
 
+ 	    case '#':
+--------------------
 
-> -Fix integer overflow in StringUtil::implode
-> https://github.com/facebook/hhvm/commit/2c9a8fcc73a151608634d3e712973d192027c271
+There is a related fix (but not one necessarily covered by CVE-2016-0634):
 
-Use CVE-2016-6872.
+--------------------
+@@ -5479,7 +5609,11 @@ decode_prompt_string (string)
 
+ 	    case 's':
+ 	      temp = base_pathname (shell_name);
+-	      temp = savestring (temp);
++	      /* Try to quote anything the user can set in the file system */
++	      if (promptvars || posixly_correct)
++		temp = sh_backslash_quote_for_double_quotes (temp);
++	      else
++		temp = savestring (temp);
+ 	      goto add_string;
 
-> -Fix self recursion in compact
-> https://github.com/facebook/hhvm/commit/e264f04ae825a5d97758130cf8eec99862517e7e
+ 	    case 'v':
+--------------------
 
-Use CVE-2016-6873.
+I appreciate that it's relatively difficult to set the hostname to a
+string of your choosing but there are plenty of helpful agents that will
+call sethostname(2) on your behalf.
 
-
-> -Fix recursion checks in array_*_recursive
-> https://github.com/facebook/hhvm/commit/05e706d98f748f609b19d8697e490eaab5007d69
-
-Use CVE-2016-6874.
-
-
-> -Fix infinite recursion in wddx
-> https://github.com/facebook/hhvm/commit/1888810e77b446a79a7674784d5f139fcfa605e2
-
-Use CVE-2016-6875.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXtk/uAAoJEHb/MwWLVhi2OFwP/Aig7rJ2rCVEyv+/KwDJBC+a
-ufukAbNgsFbzHChTJxntRrWS3PJt7DKkZ4a2wlPzdUd4rQKGFObmMMm4OIWw2xaj
-TiBngAelDRJNDNP/ZmkEySj9RGS33UMg+6QnI5pOFI3r7uXIqBau+cjIyq3diqUC
-NFlaiFy2TcIb82bYRET3r4SIk8019uaP2rfN5CDLKuNPpYIM3d/Xo0490MwufTHh
-QyTiFtFDwsZdtCQz5wFR949Lt+B6rEFdhzYDaqjJr9We6POxvy799/8LUI2UGtwN
-P6UiCzS1o/ybx6QCh+Lx7wDNBuT/3t0aeFhWx1FJuFodtF9yiILMxD4BpaARlnva
-4Nv/+TNhCmcGGLyE3wCrcAVeCX/QcsAaM9fXYVGy2SuqRmljW7sQIhpkaCIzQCwq
-EEGCZMeqPBZ1pMlIJgKmWa0PvKfkv0nDtNhQqNN57hS3YcePE8rShO7+/HYRQaYL
-zMe8u6OWVZr432Iwcia1Zjxnmi6ix1g3Ua8gz8oWAGrvw5/6T0gEzRyz+OB79+y+
-3OKeE/GDQA/aVRutZciQrrHT30uzkgwtoAQdafur5Cna0cEqRQnclcwFxUfPdpr4
-qJJFWH2vmPncge0xx2auUaDv8+7OBOonUvlmEWIfowSdg66D0Qm6EyqN6UNZqm5a
-tVSy0zt3nnIATS36SGDd
-=tBiw
------END PGP SIGNATURE-----
+jch
