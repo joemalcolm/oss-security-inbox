@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/6
-Message-ID: <CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>
-Date: Mon, 14 Nov 2016 14:36:16 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/3
+Message-ID: <alpine.LFD.2.20.1609161502430.28695@wniryva>
+Date: Fri, 16 Sep 2016 15:05:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: liqiang6-s@....cn
+Subject: CVE Request: Qemu: scsi: pvscsi: infinite loop when processing IO requests
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: MySQL / MariaDB / PerconaDB - Root Privilege Escalation
-CVE-2016-6664 / (Oracle)CVE-2016-5617
+   Hello,
 
-Discovered by:
-Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
+emulation support is vulnerable to an infinite loop issue. It could occur 
+while processing SCSI IO requests.
 
-MySQL-based databases including MySQL, MariaDB and PerconaDB are affected
-by a privilege escalation vulnerability which can let attackers who have
-gained access to mysql system user (for example through CVE-2016-6663)
-to further escalate their privileges to root user allowing them to
-fully compromise the system.
-The vulnerability stems from unsafe file handling of error logs and other files.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-Affected versions:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03609.html
 
-MySQL
-<= 5.5.51
-<= 5.6.32
-<= 5.7.14
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1376731
 
-MariaDB
-All current
+This issue was reported by Li Qiang of 360.cn Inc.
 
-Percona Server
-< 5.5.51-38.2
-< 5.6.32-78-1
-< 5.7.14-8
-
-Percona XtraDB Cluster
-< 5.6.32-25.17
-< 5.7.14-26.17
-< 5.5.41-37.0
-
-
-The latest / up-to-date advisory and a PoC exploit can be found at:
-
-https://legalhackers.com/advisories/MySQL-Maria-Percona-RootPrivEsc-CVE-2016-6664-5617-Exploit.html
-
-A copy of the advisory/exploit is also attached to this message.
-
-PoC Video (showing the rootshell part towards the end) is at:
-http://legalhackers.com/videos/MySQL-MariaDB-PerconaDB-PrivEsc-Race-CVE-2016-6663-5616-6664-5617-Exploits.html
-
-Attacker will need to obtain mysql account first which could be gained
-with the other exploit (CVE-2016-6663) I discovered:
-http://legalhackers.com/advisories/MySQL-Maria-Percona-PrivEscRace-CVE-2016-6663-5616-Exploit.html
-
-More updates on the feed:
-https://twitter.com/dawid_golunski
-
-
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
-
-View attachment "MySQL-Maria-Percona-RootPrivEsc-CVE-2016-6664-5617-Exploit.txt" of type "text/plain" (17665 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
