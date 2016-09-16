@@ -1,31 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/05/2
-Message-ID: <1454682395.12024.102.camel@fahlgren-laptop>
-Date: Fri, 05 Feb 2016 15:26:35 +0100
-From: Daniel Fahlgren <daniel@...lgren.se>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request uclibc-ng dns resolver issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/13
+Message-Id: <36166682-96E9-439E-B56A-1CA357A8423D@apache.org>
+Date: Fri, 16 Sep 2016 19:10:54 +0100
+From: Flavio Junqueira <fpj@...che.org>
+To: lyon.yang.s@...il.com
+Cc: DevZooKeeper <dev@...keeper.apache.org>, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, security@...keeper.apache.org
+Subject: [SECURITY] CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+############################################################
+CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
 
-Uclibc-ng 1.0.12 has been released which fixes some issues found in the
-dns resolver code.
+Severity: moderate
 
-The first is a denial of service while parsing compressed items. An
-attacker can make the application end up in an infinit loop. Fixed by:
+Vendor:
+The Apache Software Foundation
 
-http://repo.or.cz/uclibc-ng.git/commit/16719c1a7078421928e6d31dd1dec574825ef515
+Versions Affected:
+ZooKeeper 3.4.0 to 3.4.8
+ZooKeeper 3.5.0 to 3.5.2
+The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
 
-The other problem is that a crafted packet will make the parser
-terminate early. The buffer is never initialized and is later passed to
-strdup(). Fixed by:
+Note: The 3.5 branch is still alpha at this time.
 
-http://repo.or.cz/uclibc-ng.git/commit/bb01edff0377f2585ce304ecbadcb7b6cde372ac
+Description:
+The ZooKeeper C client shells "cli_st" and "cli_mt" have a buffer
+overflow vulnerability associated with parsing of the input command
+when using the "cmd:<cmd>" batch mode syntax. If the command string
+exceeds 1024 characters a buffer overflow will occur. There is no
+known compromise which takes advantage of this vulnerability, and if
+security is enabled the attacker would be limited by client level
+security constraints. The C cli shell is intended as a sample/example
+of how to use the C client interface, not as a production tool - the
+documentation has also been clarified on this point.
 
-Can one or two CVEs be assigned for these issues?
+Mitigation:
+It is important to use the fully featured/supported Java cli shell rather
+than the C cli shell independent of version.
 
-Best regards,
-Daniel Fahlgren
+- ZooKeeper 3.4.x users should upgrade to 3.4.9 or apply this patch:
+https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=27ecf981a15554dc8e64a28630af7a5c9e2bdf4f <https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=27ecf981a15554dc8e64a28630af7a5c9e2bdf4f>
 
+- ZooKeeper 3.5.x users should upgrade to 3.5.3 when released or apply
+this patch:
+https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=f09154d6648eeb4ec5e1ac8a2bacbd2f8c87c14a <https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=f09154d6648eeb4ec5e1ac8a2bacbd2f8c87c14a>
+
+The patch solves the problem reported here, but it does not make the
+client ready for production use. The community has no plan to make
+this client production ready at this time, and strongly recommends that
+users move to the Java cli and use the C cli for illustration purposes only.
+
+
+Credit:
+This issue was discovered by Lyon Yang, an Apple security researcher.
+
+References:
+https://zookeeper.apache.org/security.html <https://zookeeper.apache.org/security.html>
+############################################################
