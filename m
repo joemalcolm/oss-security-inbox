@@ -1,209 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/3
-Message-ID: <88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0@EX02.corp.qihoo.net>
-Date: Mon, 24 Oct 2016 07:44:27 +0000
-From: 石磊 <shilei-c@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS SSL3_AL_WARNING undefined alert Remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/9
+Message-Id: <20160916172249.12FAB42E003@smtpvbsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 13:22:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request: Qemu: scsi: pvscsi: infinite loop when processing IO requests
 Content-Type: text/plain; charset=utf-8
 
-In August, Shi Lei from Gear Team, Qihoo 360 Inc., found a Denial of Service issue in OpenSSL while openssl is handling "SSL3_AL_WARNING" undefined alerts.
-This issue has been assigned with CVE number, CVE-2016-8610, and it was called 'SSL-Death-Alert'.
-
-The story is as follow.
-
-
-
-We reported this issue to OpenSSL team in early September, and they told us they won't treat it as a security issue, but they allowed us to discuss it with whomever we wish.
-
-BTW, the issue has been fixed in the official release on September 22nd.
-
-
-
-As the saying goes in 'The X Files', the truth is out there. Security researchers write exploits because they like the truth.
-
-With further research in this flaw, we found that it could easily cause a DoS to those which use OpenSSL to support SSL(e.g, Nginx). For instance, visitors couldn't open the website powered by nginx until the attack stops.
-
-Considering the widely deployment of the combination of nginx with OpenSSL in nowaday's web servers, we believe this is an important issue that has a huge influence.
-
-
-
-After internal team discussion，we choose to disclose the details together with the Red Hat Product Security Team.
-
-With the help of Huzaifa Sidhpurwala from Red Hat Product Security Team, this issue has been further confirmed and has been informed to both the nginx team and other Linux distros.
-
-
-
-At last, we were very grateful to the Red Hat Security Team and the OpenSSL Team for their help!
-
-
-
-Details about the security flaw:
-
-=======
-
-Product: OpenSSL
-
-Affected Versions: 1.1.0, 1.0.2 - 1.0.2h, All 1.0.1, All 0.9.8
-
-Vulnerability Type: DoS
-
-Vendor URL: https://www.openssl.org/
-
-CVE ID: CVE-2016-8610
-
-Name: SSL Death Alert
-
-
-
-Description
-
-============
-
-It was found that function "ssl3_read_bytes" in ssl/s3_pkt.c might lead to higher CPU usage due to improper handling of warning packets.
-
-
-
-An attacker could repeat the undefined plaintext warning packets of "SSL3_AL_WARNING" during the handshake, which will easily make to consume 100% CPU on the server. It is an implementation problem in OpenSSL that OpenSSL would ignore undefined warning, and continue dealing with the remaining data(if exist). So the attacker could pack multiple alerts inside a single record and send a large number of there large records. Then the server will be fallen in a meaningless cycle, and not available to any others.
-
-Any ssl supported server which used OpenSSL may be influenced.
-
-
-
-A successful exploitation of this vulnerability could easy cause a DoS attack to the server (such as openssl s_server, nginx, etc).
-
-
-
-Shi Lei from Gear Team, Qihoo 360 Inc., reported this vulnerability.
-
-
-
-
-
-Countermeasures
-
-============
-
-Upgrade to the latest version(1.0.2j, 1.1.0b):
-
-https://www.openssl.org/source/
-
-
-
-Patch link:
-
-https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=af58be768ebb690f78530f796e92b8ae5c9a4401
-
-
-
-References
-
-============
-
-[1] https://www.openssl.org/
-
-[2] https://access.redhat.com/security/cve/CVE-2016-8610/
-
-[3] http://security.360.cn/cve/CVE-2016-8610/
-
-[4] https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=af58be768ebb690f78530f796e92b8ae5c9a4401
-
-
-
-
-
-An attack scenarios(Without PoC):
-
-=====================
-
-# uname -a
-
-Linux localhost.localdomain 4.4.7-300.fc23.x86_64 #1 SMP Wed Apr 13 02:52:52 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
-
-
-
-#yum install nginx
-
-# nginx -V
-
-nginx version: nginx/1.8.1
-
-built by gcc 5.3.1 20160406 (Red Hat 5.3.1-6) (GCC)
-
-built with OpenSSL 1.0.2h-fips  3 May 2016 (running with OpenSSL 1.0.2g-fips  1 Mar 2016)
-
-TLS SNI support enabled
-
-configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=nginx --group=nginx --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_perl_module --with-mail --with-mail_ssl_module --with-pcre --with-pcre-jit --with-google_perftools_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m64 -mtune=generic' --with-ld-opt='-Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -Wl,-E'
-
-
-
-#cat /etc/nginx/nginx.conf
-
-user nginx;
-
-worker_processes 4;
-
-error_log /var/log/nginx/error.log;
-
-pid /run/nginx.pid;
-
-events {
-
-    worker_connections 1024;
-
-}
-
-
-
-# netstat -ntlp
-
-Active Internet connections (only servers)
-
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-
-tcp       15      0 0.0.0.0:443             0.0.0.0:*               LISTEN      103334/nginx: maste
-
-tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      103334/nginx: maste
-
-
-
-
-
-Running the PoC…
-
-
-
-#/root/openssl-flood-alerts.py
-
-And then we will found that nginx was out of service.
-
-
-
-#curl https://x.x.x.x/
-
-curl: (28) Operation timed out after 0 milliseconds with 0 out of 0 bytes received
-
-
-
-#top
-
-...
-
-   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
-
-
-
-103336 nginx     20   0  126920   9984   6876 R 100.0  0.5   0:32.65 nginx
-
-103337 nginx     20   0  126920   9984   6876 R  99.7  0.5   0:32.00 nginx
-
-103335 nginx     20   0  126920   9984   6876 R  99.3  0.5   0:32.54 nginx
-103338 nginx     20   0  126920   9984   6876 R  98.7  0.5   0:30.64 nginx
-
---
-Regards,
-
-Shi Lei / Gear Team, Qihoo 360 Inc.
-GPG Key ID 37048936 / 5C4C 85C6 068C A5A0 23FA  0294 D9CE 9C25 3704 8936
-
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
+> emulation support is vulnerable to an infinite loop issue. It could occur
+> while processing SCSI IO requests.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03609.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1376731
+> http://git.qemu.org/?p=qemu.git;a=commit;h=d251157ac1928191af851d199a9ff255d330bec9
+
+>> scsi: pvscsi: limit process IO loop to ring size
+>> 
+>> Vmware Paravirtual SCSI emulator while processing IO requests
+>> could run into an infinite loop if 'pvscsi_ring_pop_req_descr'
+>> always returned positive value. Limit IO loop to the ring size.
+
+Use CVE-2016-7421.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX3CoDAAoJEHb/MwWLVhi24c4P/0e14e2CUn0/9Kgusithfj+j
+Q1W7xnYwIPhTlgHHMb28a1xU2ORq5Vf8cGVaan1NRZIEIcfdZRHbAgqbzvdWgTGq
+RDHsQVpls9wfftF9uQJqA8m/LplqiOf4e9EhWqa7kI47ji9JrsebZgY07lGWP6kY
+5wir89tG1sqT56dcyJb1zirWSqcNb74iFXG22Ksm1apXan9ax2HiHWEyAs6QZZXx
+kOTo7TnD+mVoJM9OdcQ9PW1JhSnH11715E88wEftKxNseqeDMKbhM7rGJlL6JTAx
+hy9o0RTLbPPfRKtpMvA389ivcRpWHpHqryynUd9uGb1p63JLqATspWTdpqHljM4k
+asqDs+exTj9cyrGRXDoycdfuEjrxCyb1FgW5on6ThoT2Q/Y4anl4SMOxyL/Lh05k
+YIHFnR1hcBkiZJucM8dWuDyzVwrWJiKDRBvcXOX+hpyWcHaD/PeaK6tfBb61wKjP
+KWvDkQ3jjGD+qMfRfQ/tN7buZAo3MhZpjXJ/zj002stu20RGjsmfxRgJuZlI/eZM
+iJBZ4tZTW7xo2o3i+XOhPokOSQEVhEHJ6TJ6MH3CyJysqoU7N2tjKsmd4/jasPvQ
+Zgw+DTRGKHsEdxvcZUXpcPZK+3hC4yk0FTweLw8lRyAiiYcBCle32hHlZ5KK7vft
+p6cmljAyzzWwLuN0pDgP
+=B4w3
+-----END PGP SIGNATURE-----
