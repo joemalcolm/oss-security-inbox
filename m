@@ -1,92 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/10
-Message-ID: <7fd323f9-7980-ad90-2475-80975b5e5438@sysdream.com>
-Date: Wed, 12 Oct 2016 15:31:10 +0200
-From: Sysdream Labs <labs@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/15
+Message-ID: <CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>
+Date: Sat, 17 Sep 2016 03:00:10 +0800
+From: Marco Grassi <marco.gra@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, spip-team-owner@...o.net
-Subject: CVE-2016-7999: SPIP 3.1.2 Server Side Request Forgery
+Cc: cve-assign@...re.org
+Subject: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
 Content-Type: text/plain; charset=utf-8
 
-## SPIP 3.1.2 Server Side Request Forgery (CVE-2016-7999)
+Hello,
 
-### Product Description
+inspecting this code you can notice that:
 
-SPIP is a publishing system for the Internet, which put importance on collaborative working, multilingual environments and ease of use. It is free software, distributed under the GNU/GPL licence.
+http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
 
-### Vulnerability Description
+the int32_t user_len is taken from the scsi command
 
-It's possible to send HTTP/FTP requests using the `valider_xml` file.
-Attackers can make it look like the server is sending the request, possibly bypassing access controls such as a firewall that would prevent the attacker from accessing the URLs directly.
+user_len = pcmdmessagefld->cmdmessage.Length;
 
-**Access Vector**: remote
+and used directly without sanitization in a memcpy to a heap buffer of
+fixed size 1032
 
-**Security Risk**: medium
+memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
 
-**Vulnerability**: CWE-918
-
-**CVSS Base Score**: 5.5 (Medium)
-
-**CVE-ID**: CVE-2016-7999
-
-### Proof of Concept
-
-    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=http://router-dev.srv/
-    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=ftp://ftp.debian.org/
+potentially causing kernel heap corruption and arbitrary kernel code execution.
 
 
-### Vulnerable code
+The issue has been already acknowledged and patched in a development
+branch, the patch is here:
 
-The FTP connection is initialized by the `is_dir` function inside `valider_xml`, line 79 :
+http://marc.info/?l=linux-scsi&m=147394713328707&w=2
 
-    if (is_dir($url)) {
+this patch have been applied to a 4.9 scsi branch here
+(4.9/scsi-queue), and at some point it will land in master
 
-Other PHP Wrappers supporting `is_dir` can be called using this function.
+http://marc.info/?l=linux-scsi&m=147394796228991&w=2
 
-The HTTP connection is initiated at line 123:
+Thanks
 
-    $res = $transformer_xml(recuperer_page($url));
+Marco
 
-### Timeline (dd/mm/yyyy)
-
-* 15/09/2016 : Initial discovery
-* 26/09/2016 : Contact with SPIP Team
-* 27/09/2016 : Answer from SPIP Team, sent advisory details
-* 27/09/2016 : Server Side Request Forgery vulnerability correct vulnerabilities.
-* 30/09/2016 : SPIP 3.1.3 Released
-
-### Fixes
-
-* https://core.spip.net/projects/spip/repository/revisions/23188
-* https://core.spip.net/projects/spip/repository/revisions/23193
-
-### Affected versions
-
-* Version <= 3.1.2
-
-### Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
-
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+https://marcograss.github.io
