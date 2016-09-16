@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2259" "Friday" "12" "June" "2015" "22:27:48" "+0300" "Solar Designer" "solar@openwall.com" "<20150612192748.GA13099@openwall.com>" "58" "Re: [oss-security] Linux namespaces: It is possible to escape from bind mounts" nil nil nil "6" "2015061219:27:48" "[oss-security] Linux namespaces: It is possible to escape from bind mounts" (number mark "        solar@openwa Jun 12   58/2259  " thread-indent "\"Re: [oss-security] Linux namespaces: It is possible to escape from bind mounts\"\n") "<20150403105802.GA21110@pc.thejh.net>" ("<20150403105802.GA21110@pc.thejh.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2767" "Friday" "16" "September" "2016" "15:00:53" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160916150053.76622e04@hboeck.de>" "75" "[oss-security] Out of bounds heap bugs in glib, heap buffer overflow in gnome-session" "^Date:" nil nil "9" "2016091613:00:53" "[oss-security] Out of bounds heap bugs in glib, heap buffer overflow in gnome-session" (number mark "U       hanno@hboeck Sep 16   75/2767  " thread-indent "\"[oss-security] Out of bounds heap bugs in glib, heap buffer overflow in gnome-session\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25704 invoked by uid 550); 12 Jun 2015 19:28:11 -0000
+Received: (qmail 32721 invoked by uid 550); 16 Sep 2016 13:01:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25675 invoked from network); 12 Jun 2015 19:28:08 -0000
-Message-ID: <20150612192748.GA13099@openwall.com>
-References: <20150403105802.GA21110@pc.thejh.net>
+Received: (qmail 32697 invoked from network); 16 Sep 2016 13:01:06 -0000
+Message-ID: <20160916150053.76622e04@hboeck.de>
+X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150403105802.GA21110@pc.thejh.net>
-User-Agent: Mutt/1.4.2.3i
-Cc: Jann Horn <jann@thejh.net>
-Date: Fri, 12 Jun 2015 22:27:48 +0300
-From: Solar Designer <solar@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-14226-1474030856-0001-2"
+Date: Fri, 16 Sep 2016 15:00:53 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux namespaces: It is possible to escape from bind mounts
+Subject: [oss-security] Out of bounds heap bugs in glib, heap buffer overflow in
+ gnome-session
 To: oss-security@lists.openwall.com
 
-On Fri, Apr 03, 2015 at 12:58:02PM +0200, Jann Horn wrote:
-> See here for the corresponding patches:
-> <http://permalink.gmane.org/gmane.linux.kernel.containers/29173>
-> <http://permalink.gmane.org/gmane.linux.kernel.containers/29177>
-> 
-> Given that it went over a public mailinglist now, I guess there's
-> not much sense in keeping it secret anymore.
-> 
-> Containers on Linux normally use bind mounts to restrict how much
-> of the filesystem is visible for processes inside the container.
-> However, if an attacker can gain capabilities within such a
-> container or can create another user and mount namespace within
-> the existing container, he can do something similar to a
-> double-chroot attack to break out of the bind mount and gain
-> access to the full filesystem to which the bind mount refers:
-> 
-> Create folders /A, /A/B, /C, /D inside the namespace.
-> Bind-mount the /A inside the namespace to /D.
-> Let a process chdir to /D/B.
-> Move /D/B over into /C.
-> The process which chdir'ed to /D/B is now in /C/B, but at the
-> same time it is in a bind mount with /D as root. It can then
-> traverse upwards, past what looks like / inside the namespace.
+--=_zucker.schokokeks.org-14226-1474030856-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I had Jann's message flagged as needing further attention, but I never
-got back far enough in my stack of e-mails.  Luckily, Jann was
-persistent enough and tested OpenVZ for this issue, and found it
-vulnerable, and reported the issue to OpenVZ developers.  Thanks!
+https://blog.fuzzing-project.org/53-Out-of-bounds-heap-bugs-in-glib,-heap-b=
+uffer-overflow-in-gnome-session.html
 
-So, yes, OpenVZ simfs-based (but not ploop-based) containers turned out
-to be affected by this issue, allowing an in-container root to access
-outside files up to the mount point of the underlying filesystem (so
-e.g. up to /vz if a separate filesystem is mounted on /vz on a server).
+By testing GNOME-related packages with Address Sanitizer I recently
+discovered several trivial to find bugs.
 
-With proper bind mount(s) already precreated, a non-root in-container
-user could exploit this as well, but that's uncommon.
+Two out of bounds bugs in the glib library were uncovered by running
+the test suite with Address Sanitizer enabled. One heap buffer overflow
+in the parameter parsing of gnome-session was uncovered by trying to
+start GNOME. Given that these bugs weren't discovered earlier means
+that most likely nobody ever used Address Sanitizer to test GNOME
+components.
 
-OpenVZ bug:
-https://bugzilla.openvz.org/show_bug.cgi?id=3256
+I strongly recommend to GNOME and to other software communities to use
+Address Sanitizer testing in order to improve the quality of their
+software.
 
-OpenVZ/RHEL6 fix:
-https://openvz.org/Download/kernel/rhel6-testing/042stab108.3
+Out of bounds read in g_unichar_iswide_bsearch() / glib
+https://bugzilla.gnome.org/show_bug.cgi?id=3D766211
+Upstream bug report (again reported here)
+https://git.gnome.org/browse/glib/commit/?id=3Dbcbd8d7
+Commit / fix
+Fixed in 2.48.2.
 
-OpenVZ/RHEL5 fix:
-https://openvz.org/Download/kernel/rhel5-testing/028stab119.2
+Out of bounds read in token_stream_prepare() / glib
+https://bugzilla.gnome.org/show_bug.cgi?id=3D762417
+Upstream bug report
+https://git.gnome.org/browse/glib/commit/glib/gvariant-parser.c?id=3Daead1c=
+046dd39748cca449b55ec300ba5f025365
+Commit / fix
+Fixed in 2.48.0.
 
-(And a fix went into Owl last night.)
+Heap buffer overflow in gnome-session
+https://bugzilla.gnome.org/show_bug.cgi?id=3D768441
+Upstream bug report
+https://git.gnome.org/browse/gnome-session/commit/?h=3Dgnome-3-20&id=3D634a=
+b70d9f03b1650be4b8259091ca3036f0fbf9
+Commit / fix
+Fixed in 3.20.2.
 
-A slightly simpler variation of the attack, without a "d" directory:
 
-cd /
-mkdir a a/b c
-mount -o bind a c
-cd c/b
-mv /a/b /
-ls -l ../../../../../..
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Alexander
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+--=_zucker.schokokeks.org-14226-1474030856-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIbBAEBCAAGBQJX2+0FAAoJEKWIAHK7tR5CRnoP9R2nLZBsNKkKA9B0cH0Wd+gg
+kEIaQXSqUd2UoUYT4HWtSj6ZA63JsdkvJcOclym3+I4+B1tsZk2H56R06tcMddLK
+sH9jJf7z+qUiLRSJh83bYfNXFqZIeSctDbdD387AHuR2a5XOxro22HpTJc0yfBnO
+gSm+uIiXX9FjznAYjReDpBUvloeOCCkyekHvnuM+L6WoTEGl6qRLdi8rH13C5Jl7
+w5bUcesqFk6PpW9nq5/BXxOO0hbls8C5ITp6G4yuTkoYAgl/91ojIUZxs0kwrlMh
+ilE9REBqP51Q0LsGyekQD29q/H9mDZWbqo9U66p6fresKaiXy30v6kL3S6JZyZM2
+qtTCFSiLocyuL5TRvP0suRT6LUFBdSmHTHARiIn8WBXqGLhYv0Pt+PkEO3iinkYX
+/0IxXfzkctYUgvAzMPX5a7u1G7SqsmsRDdDzvH2OT7IdzTUwkKa72JbHDtXAAau0
+7IjQr4h5her5/3GMwpdos8OEU0SfVr9xeDUYElkT6wAng19RJ2MiEz1XBPPYNx3v
+cqawUN8iGCjxDmZufpov3j1Lagy0BoVnDLYIDqk4ZXfFv5biBr4m62J1lPc83mL7
+Vqgd7ga4U+PGE23fL2wuHzMsv8/w7uNqlyK51iBYEv728n7Kif2pk6Yz3CWX+4+t
+s/qQHh4+PAXR+whKvF8=
+=Gm3l
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-14226-1474030856-0001-2--
