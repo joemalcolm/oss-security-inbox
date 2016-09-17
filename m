@@ -1,79 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/18
-Message-Id: <20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Aug 2016 18:57:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/1
+Message-Id: <20160917014919.76934B2E003@smtpvbsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 21:49:19 -0400 (EDT)
 From: cve-assign@...re.org
-To: greg@...ah.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, meissner@...e.de
-Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> What "tool" was assigned this CVE for other operating systems
-> that do the same thing (all BSDs, OS-X, Windows, etc.)?
+> https://blogs.gentoo.org/ago/2016/09/17/libav-null-pointer-dereference-in-put_no_rnd_pixels8_xy2_mmx-rnd_template-c/
+> 
+> A fuzzing, with an mp3 file as input, discovered a null pointer access in
+> put_no_rnd_pixels8_xy2_mmx.
+> 
+> Input #0, h263, from '9.crashes'
+> 
+> AddressSanitizer: SEGV on unknown address
+> 
+> put_no_rnd_pixels8_xy2_mmx libav-11.7/libavcodec/x86/rnd_template.c:37:5
+> 
+> https://git.libav.org/?p=libav.git;a=commit;h=136f55207521f0b03194ef5b55ba70f1635d6aee
 
-We didn't find any information about a tool name and thus simply
-listed the OS itself (CVE-2011-0638, CVE-2011-0639).
+>> mpegvideo_motion: Handle edge emulation even without unrestricted_mv
+>> 
+>> Fix out of bounds read.
+>> 
+>> libavcodec/mpegvideo_motion.c
 
-
->>   - the Linux kernel does not require a configuration in which a newly
->>     connected USB device is recognized in any way
-
-> I don't understand this statement, can you clarify?
-
-To clarify: the ability of an attacker to connect a USB device and
-trigger potentially unsafe device communication (e.g., injecting text
-into an application) does not mean that the Linux kernel is missing an
-access-control feature.
-
-
->>    - a Linux distribution may ship with a default configuration in
->>      which a newly connected USB device can operate as a keyboard and
->>      inject text into an application
-
-> Yes, but I don't understand, perhaps what you really mean to say is:
->        A Linux distribution may ship with a default configuration of
->        trusting all new devices that are plugged in without any form of
->        userspace authentication before they begin to operate.
-
-Agreed. If it is trusting all new devices in this way, it would also
-be trusting all new devices that wish to operate as keyboards.
-
-
->>     there is no comprehensive method
->>     for "asking a user" about a new USB device in a way that is
->>     compatible with all use cases
-
-> Huh?
-
-A Linux distribution cannot expect that there is a logged-in user who
-can provide sane answers to questions about each new USB device at the
-instant that that device is connected. For example, there isn't a
-comprehensive solution of the form "a distribution must ensure that
-an application pops up a dialog asking about each new device."
-
-
->>   - if anyone (whether a Linux distribution or other type of product)
->>     is announcing a required security update, in which software or
->>     configuration is being changed to address malicious keyboard
->>     attacks, then we can assign a CVE ID to associate with the update
->>     announcement
-
-> Why would a CVE be needed for a "my distro decides to not trust USB
-> devices as much as your distro does" type decision?
-
-To improve the usability of CVE for patch management, we allow a CVE
-mapping for an issue where the author of the code has announced a
-required security patch, even if the issue is not universally
-recognized as an exploitable vulnerability. This can be helpful in
-situations where a vendor has direct knowledge of advertised use cases
-or customer expectations. For example, if there's a Linux distro
-designed specifically for connecting compromised mobile phones over
-USB and initiating forensic analysis, then it's perhaps reasonable to
-say that unrestricted acceptance of new USB keyboards is a CVE-worthy
-vulnerability for that one distro.
+Use CVE-2016-7424.
 
 - -- 
 CVE Assignment Team
@@ -83,17 +40,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXu4LCAAoJEHb/MwWLVhi25yAQAIpHJGpnkiVI8osth0zpuGNJ
-RwNEne6YpaP0evP3Rj8RahQ8qMB0lEQPnH0sHliuRT5rUsZx40IEsHNoOOg8s5EE
-vKxuYU/lhrYsWPqYTkjKJjxvuLO2dARzytDkLCyK69snQzEBYY8i7YTlI/Q2+1Fd
-qKy0RlbJdrdGzjIuR+j3zovMna3qFIsnWPl0uVi5RQCM8S6AJy6KTCeSYurncsqu
-KDIjvWIWMavV5mTzy1RevSShB6StnP/F8MeUqIUF3xbIAfGOqG51mr7XnUYOEIPM
-U0imdTupQgJ4wJjYs7Q0RiSSUrlbLHWD+s7URoqez5rqMgbBc1ugq1uBlo5DBHWk
-uwEwn4mwVrMXu9k04yY8FyplntQDkDULKCCC1hsiExMO5gBhCDYi9CbYrTszP8NF
-q/ynMDJxOY5GmFPD5fafmKUKa3G+KXRt7MpU+LNfH5c7KiOcNOt7Igon2NI2RqOA
-HxliE2ZhB4kkf/qD+wqbVC0ZQegXnnKiIOEvFqUY2FpHOLvZ0A+EuIlGjy+N8zLW
-Eji1Imq6wr+p95eXzvp5w2fVVydujDQD/xI2p3isb7Tv640s4plC22rjMVPd0zbz
-hE6g97Q2gSzCsBnC3ZlF30PVeLw2vErlnFoBqy6IRgBRBNQCzv94SRy9DUNICKX+
-fhdbnuRUSLsHmqtLmH7+
-=fXqf
+iQIcBAEBCAAGBQJX3KC3AAoJEHb/MwWLVhi22mgQAIBJvVTNLEjK2nah32PovlaX
+Ttm/nelFwY1rclJ0omateDF2UVID2ha/pI7V14mLiEcf1YfrLa+fh4AsCHOPFcSw
+sMxzP79oyiSi5H5zwj4O1RAYD5zi3t4sWyM18cig+Sd10iMhTI6JShcBOtrbL344
+o1d/x4DLUoBQIUDx+LVOwIXq5QreSM48mrJANIKhIBu1tzEu41yceD+lr2l05etH
+63GgxmF5WOP3vPB7pEr4b21HdfonAKjOjZpevVUhHfzzjP5ccYHDd5bMbwUXwEi8
+WO1UhmZPekY3zWTOSSLAaZL8DjtqJg2FIacpHrZk+czjbet4ybOualFfGOyE2Vvh
+AMCo5XIR63z73A4e9QbkN/UvxjGnjbY8/lz9poWGvzVfEj2FCaItgXWW1QOgqc/V
+Xasq9ZRsrZ25RILLRVA65w4RTEssHN+A6meyvU6Vub/R+M5jbZLqOq1JHvE9C8PO
+yjJv1Gdc6evvHM+54QURCjnDIU7XNczvy2ALpfYRC+5S3ILSKuvQ0pbvebXIHofU
+XVvAToc04+Bn5wJXQ68H8ZERrKgwS0Od9RFcWNs3tYSXU+P7/A806OiBbxdw8riX
+jrxDBGftqSlptgA2tcuyA0pcQFF6yTMLverW9CQdzE1Lsv6+WDh3Nv5iztJQIHrC
+3CA42JEkSvBTLCKzrG8z
+=OD1P
 -----END PGP SIGNATURE-----
