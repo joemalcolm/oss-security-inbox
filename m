@@ -1,37 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/15
-Message-ID: <20161102135241.20a8c3c4@pc1>
-Date: Wed, 2 Nov 2016 13:52:41 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/2
+Message-Id: <20160917015114.28FD28BC7E7@smtpvmsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 21:51:14 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2 Nov 2016 12:53:04 +0100
-Robert Scheck <robert@...oraproject.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On the other hand, I am wondering if this should be really classified
-> as a security related issue.
+> http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
+> 
+> the int32_t user_len is taken from the scsi command
+> 
+> user_len = pcmdmessagefld->cmdmessage.Length;
+> 
+> and used directly without sanitization in a memcpy to a heap buffer of
+> fixed size 1032
+> 
+> memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
+> 
+> potentially causing kernel heap corruption and arbitrary kernel code execution.
+> 
+> The issue has been already acknowledged and patched in a development
+> branch:
+> http://marc.info/?l=linux-scsi&m=147394713328707&w=2
+> http://marc.info/?l=linux-scsi&m=147394796228991&w=2
 
-Ambiguitiy in character encodings can often be a source of security
-issues.
+Use CVE-2016-7425.
 
-Just think of the following:
-* A Certificate Authority is using different pieces of software that
-  mix different IDNA encodings.
-* I request a certificate for strasse.de, but the verification mail
-  goes to xn--strae-oqa.de.
-* I am the owner of xn--strae-oqa.de and now have a valid certificate
-  for strasse.de.
+This is not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/scsi/arcmsr/arcmsr_hba.c
+but may be there later.
 
-IMHO the whole idea of suddenly changing how international domain names
-are encoded is a very problematic security violation.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJX3KBcAAoJEHb/MwWLVhi2PsAQAJiBt13fFrxXEIx2r4qo9M9A
+z/lQ08hVmRkuCtR3hUPz6qRiLR6k6iWMdzE4m0ic2Nwckggoiv3S1siYdE/lO2q9
+ngVLJ3EgmchdCD/R13bSEMGA4RP4zMBAQCuf4m+7oOiMWiXhmUZiFgz3QEH1Uatw
+tRV+wJyTCkmTs3ooqXQW/JWXvs6kHxm5xY5qv3IGcMHNhMtpB19sRCLzFWIiSmxU
+T/VtuhLPRhtecxrZfHgyIumTNtbeycjm/zBfQ1/RRg5kDmGRGAC32hUN+zBYchyW
+NDlbveQqKhazRZ4tm7/HChH0Ah6ignen3GkyTMh8/ad69h/oEJ96TwLoBpxU+QL3
+rKcb+I75TBB50ixD9cAaD1cOeYLvYGdtMRw+d30M6u5P0qSXMQsof8F2bgwIVH3g
+9PiQFiSzJQeuXMxBpAJDsb0st4HiB0U7SeJYp1/eP0W4ojaZwBvcPqz84xoUPue8
+XYlLde7OP7wIH+NW5ttpS0KmM8iGpcO5Sd0xB6fHo3Ms33SM4DP5PcNNgRjfky9R
+ixlOUFp28vrIWUFRmlexqEgvGNMUWhwJOemsV/y3629MuhfASay2+4+xs0AMKpKa
+tsIRk7hKjhgbl3iHJdAedXPbJT8wwuCbQXm6mU628BWire9smJKsYwIp+HAPVkU9
+Q8bkubcBFrhLpuFa+/3b
+=bvH5
+-----END PGP SIGNATURE-----
