@@ -1,4 +1,9 @@
-Received: (qmail 24135 invoked by uid 550); 28 Dec 2025 23:09:45 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1857" "Friday" "16" "September" "2016" "21:51:14" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160917015114.28FD28BC7E7@smtpvmsrv1.mitre.org>" "49" "[oss-security] Re: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()" nil nil nil "9" "2016091701:51:14" "[oss-security] Re: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()" (number mark "U       cve-assign@m Sep 16   49/1857  " thread-indent "\"[oss-security] Re: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()\"\n") "<CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>" ("<CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9717 invoked by uid 550); 17 Sep 2016 01:51:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,125 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22209 invoked from network); 28 Dec 2025 10:00:24 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
-Organization: Gentoo
-References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
-User-Agent: mu4e 1.12.13; emacs 31.0.50
-Date: Sun, 28 Dec 2025 10:00:08 +0000
-Message-ID: <87y0mnj593.fsf@gentoo.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Many vulnerabilities in GnuPG
+Received: (qmail 9699 invoked from network); 17 Sep 2016 01:51:25 -0000
+From: cve-assign@mitre.org
+To: marco.gra@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>
+Message-Id: <20160917015114.28FD28BC7E7@smtpvmsrv1.mitre.org>
+Date: Fri, 16 Sep 2016 21:51:14 -0400 (EDT)
+Subject: [oss-security] Re: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
 
---=-=-=
-Content-Type: text/plain
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Demi Marie Obenour <demiobenour@gmail.com> writes:
+> http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
+> 
+> the int32_t user_len is taken from the scsi command
+> 
+> user_len = pcmdmessagefld->cmdmessage.Length;
+> 
+> and used directly without sanitization in a memcpy to a heap buffer of
+> fixed size 1032
+> 
+> memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
+> 
+> potentially causing kernel heap corruption and arbitrary kernel code execution.
+> 
+> The issue has been already acknowledged and patched in a development
+> branch:
+> http://marc.info/?l=linux-scsi&m=147394713328707&w=2
+> http://marc.info/?l=linux-scsi&m=147394796228991&w=2
 
-> https://gpg.fail lists many vulnerabilities in GnuPG, one of which
-> allows remote code execution.
+Use CVE-2016-7425.
 
-> All are zero-days to the best of my knowledge.
+This is not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/scsi/arcmsr/arcmsr_hba.c
+but may be there later.
 
-In 2.5.14:
-
-commit 115d138ba599328005c5321c0ef9f00355838ca9
-Author:     Werner Koch <wk@gnupg.org>
-AuthorDate: Thu Oct 23 11:36:04 2025 +0200
-Commit:     Werner Koch <wk@gnupg.org>
-CommitDate: Thu Oct 23 11:37:59 2025 +0200
-
-    gpg: Fix possible memory corruption in the armor parser.
-
-    * g10/armor.c (armor_filter): Fix faulty double increment.
-
-    * common/iobuf.c (underflow_target): Assert that the filter
-    implementations behave well.
-    --
-
-    This fixes a bug in a code path which can only be reached with special
-    crafted input data and would then error out at an upper layer due to
-    corrupt input (every second byte in the buffer is unitialized
-    garbage).  No fuzzing has yet hit this case and we don't have a test
-    case for this code path.  However memory corruption can never be
-    tolerated as it always has the protential for remode code execution.
-
-    Reported-by: 8b79fe4dd0581c1cd000e1fbecba9f39e16a396a
-    Fixes-commit: c27c7416d5148865a513e007fb6f0a34993a6073
-    which fixed
-    Fixes-commit: 7d0efec7cf5ae110c99511abc32587ff0c45b14f
-
-In 2.5.13:
-
-commit 8abc320f2a75d6c7339323a3cff8a8489199f49f
-Author:     Werner Koch <wk@gnupg.org>
-AuthorDate: Wed Oct 22 12:39:15 2025 +0200
-Commit:     Werner Koch <wk@gnupg.org>
-CommitDate: Wed Oct 22 12:39:15 2025 +0200
-
-    gpg: Error out on unverified output for non-detached signatures.
-
-    * g10/mainproc.c (do_proc_packets): Never reset the any.data flag.
-    --
-
-    Fixes-commit: 3b1b6f9d98b38480ba2074158fa640b881cdb97e
-    Updates-commit: 69384568f66a48eff3968bb1714aa13925580e9f
-    Reported-by: 8b79fe4dd0581c1cd000e1fbecba9f39e16a396a
-
-
-commit 8abc320f2a75d6c7339323a3cff8a8489199f49f
-Author:     Werner Koch <wk@gnupg.org>
-AuthorDate: Wed Oct 22 12:39:15 2025 +0200
-Commit:     Werner Koch <wk@gnupg.org>
-CommitDate: Wed Oct 22 12:39:15 2025 +0200
-
-    gpg: Error out on unverified output for non-detached signatures.
-
-    * g10/mainproc.c (do_proc_packets): Never reset the any.data flag.
-
-commit db9705ef594d5a2baf0e95e13cf6170b621dfc51
-Author:     Werner Koch <wk@gnupg.org>
-AuthorDate: Wed Oct 22 11:19:55 2025 +0200
-Commit:     Werner Koch <wk@gnupg.org>
-CommitDate: Wed Oct 22 11:20:10 2025 +0200
-
-    gpg: Avoid potential downgrade to SHA1 in 3rd party key signatures.
-
-But it isn't clear to me what...
-* the mapping between all of the vulnerabilities listed on the website is vs GnuPG commits (unfortunately
-  no CVE identifiers yet either);
-* GnuPG bug tracker links map to commits or vulnerabilities;
-* whether these fixes are complete for a specific vulnerability or not.
-
-The relevant public bugs I'm aware of for GnuPG are:
-* https://dev.gnupg.org/T7909
-* https://dev.gnupg.org/T7900
-* https://dev.gnupg.org/T7902
-* https://dev.gnupg.org/T7903
-but some linked therein are still marked private.
-
-Finally, to end the dump of what I know so far: Werner Koch has
-published a response to the cleartext signature vulnerabilities:
-https://gnupg.org/blog/20251226-cleartext-signatures.html.
-
-sam
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmlQ/6gbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTEsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkMrl
-AQDZzNP+LP1IPSQdPI/bVYv6n30nUE+Dre622gIX1/0/EwEAlX0F1jgCOH6hRmKl
-pvossjWVtkbPKOBCqF8Pfts1igk=
-=pXhW
+iQIcBAEBCAAGBQJX3KBcAAoJEHb/MwWLVhi2PsAQAJiBt13fFrxXEIx2r4qo9M9A
+z/lQ08hVmRkuCtR3hUPz6qRiLR6k6iWMdzE4m0ic2Nwckggoiv3S1siYdE/lO2q9
+ngVLJ3EgmchdCD/R13bSEMGA4RP4zMBAQCuf4m+7oOiMWiXhmUZiFgz3QEH1Uatw
+tRV+wJyTCkmTs3ooqXQW/JWXvs6kHxm5xY5qv3IGcMHNhMtpB19sRCLzFWIiSmxU
+T/VtuhLPRhtecxrZfHgyIumTNtbeycjm/zBfQ1/RRg5kDmGRGAC32hUN+zBYchyW
+NDlbveQqKhazRZ4tm7/HChH0Ah6ignen3GkyTMh8/ad69h/oEJ96TwLoBpxU+QL3
+rKcb+I75TBB50ixD9cAaD1cOeYLvYGdtMRw+d30M6u5P0qSXMQsof8F2bgwIVH3g
+9PiQFiSzJQeuXMxBpAJDsb0st4HiB0U7SeJYp1/eP0W4ojaZwBvcPqz84xoUPue8
+XYlLde7OP7wIH+NW5ttpS0KmM8iGpcO5Sd0xB6fHo3Ms33SM4DP5PcNNgRjfky9R
+ixlOUFp28vrIWUFRmlexqEgvGNMUWhwJOemsV/y3629MuhfASay2+4+xs0AMKpKa
+tsIRk7hKjhgbl3iHJdAedXPbJT8wwuCbQXm6mU628BWire9smJKsYwIp+HAPVkU9
+Q8bkubcBFrhLpuFa+/3b
+=bvH5
 -----END PGP SIGNATURE-----
---=-=-=--
