@@ -1,43 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/9
-Message-ID: <20161104114855.GA13029@hurricane.linuxnetz.de>
-Date: Fri, 4 Nov 2016 12:48:55 +0100
-From: Robert Scheck <robert@...oraproject.org>
-To: Daniel Stenberg <daniel@...x.se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/7
+Message-Id: <20160918144138.A17646C571B@smtpvmsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 10:41:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+Subject: Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 04 Nov 2016, Daniel Stenberg wrote:
-> DENIC alledgedly has rules that should prevent separate registrations like
-> in the straße.de case. Still it seems that this particular host name is
-> registered by two different entities unless there's some background juggling
-> that we can't easily see from the outside.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It is possible (and also allowed by the DENIC), that e.g. "straße.de" and
-"strasse.de" have two different domain owners. I performed at least one
-registration for a customer for a "ß"-domain after the "ß" sunrise period
-was over, where the "ß"-domain owner is not the owner of the corresponding
-"ss"-domain. Not sure which rules you refer to, but except the "ß"-sunrise
-period in 2010, I'm able to register "ß"-domains on first come, first serve
-basis at DENIC.
+> can falsely report a
+> certificate as valid under certain circumstances
 
-The DENIC FAQ (https://www.denic.de/en/faqs/faqs-about-idns-ss/) mentions
-also that e.g. "mueller.de" and "müller.de" are two completely different
-domain names (even "ue" is the German transcription of "ü") - and here the
-argumentation is, that "bauer.de" is not the same like "baür.de" (which is
-from the non-technical perspective of a German native speaker obviously
-true). From my understanding, the argumentation here is non-IDNA mueller.de
-vs. IDNA2003 müller.de, while now it is IDNA2003 strasse.de vs. IDNA2008
-straße.de - which might be slightly different, because it's a switch of the
-IDNA version rather the introduction.
+>> if the serial from the revoked certificate is a
+>> prefix of the other one, and the additional bytes happen to be equal
+>> on the system doing the verification.
+ 
+> https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
+> https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9
+> https://bugzilla.redhat.com/show_bug.cgi?id=1374266
 
-For those who didn't notice, Florian also started a German thread on the
-public DENIC mailing list (https://www.denic.de/en/service/mailing-lists/)
-about exactly this topic (I'm not sure if there is a public archive).
+Use CVE-2016-7444.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Greetings,
-  Robert
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBCAAGBQJX3qaBAAoJEHb/MwWLVhi2ZIQQALqBsgvjmj3aKEwKaFKSvNcM
+vOm5UKhOpdwYX7syoPi9J/IfGcvs2Z8K1GPnOxvyyuFBcBzbypgW+UnEvv8kT7ze
+5ckPgFSjfaco1cYcBhKq5hlQoTLayhH3YP8XDzWlfE3KijEJAQuA6+wcHL2ddg3d
+29nAuKgIkd27SZMEDDcv+x8b3Ibnds/LWUWFleAEPBBiyTrSgeLiWmgLToHSiOND
+wyfmiNg9SouaBm3icAnd95AHYQmMztrd5xEvuAWK3ZsMFgJtrPjK1kTk13madyfN
+TgwwQ2PM99EmRgaXHqvrXeRcohRQtV2ptgMqQS9a31fk7uJb8HITNgESoM4z2FRF
+dLpLzDAMm9X1IKXRDDHqOPobFgwe/ZyG3MEl8994N1Y3N2QYrXm84SmiWTYtDlcD
+HX2NFievDARKQBzHvJhQwDw98rdFb9P7CLvz4dolVix07xZzy505exktxpAH0yTs
+2LXkpB1FQb99ZJzPPZ967S1bY0fpANQzCFLBQlZ8B5g2bmUwo52c+C+JsHay/+3i
+dnFPSxTJVXRStPHs1II7NufIGjBlitfIHIRlpTtzCsFTy7ppgI5PEfpA/tnCFkXR
+bhrtIOGqqGyj2ySa4nmYhA95MRLO7XoNIXYT5byRpXI6I6pIEIRkNxeYIChSydEY
+m1uV5gCz/FIWXRCl6Dzi
+=1u4M
+-----END PGP SIGNATURE-----
