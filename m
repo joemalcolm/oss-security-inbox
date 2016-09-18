@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/5
-Message-Id: <20160511142655.B3EC6332010@smtpvbsrv1.mitre.org>
-Date: Wed, 11 May 2016 10:26:55 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/6
+Message-Id: <20160918144006.CDF1F33200B@smtpvbsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 10:40:06 -0400 (EDT)
 From: cve-assign@...re.org
-To: tiwai@...e.de, kangjielu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
-Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
+To: vul@...safe.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - openjpeg null ptr dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
->   ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
+> AddressSanitizer: SEGV on unknown address
 > 
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
->   ALSA: timer: Fix leak in events via snd_timer_user_ccallback
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
->   ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
+> https://github.com/uclouvain/openjpeg/issues/843
 
+Use CVE-2016-7445.
 
-> Maybe we can fold
-
-That is not what we are going to do. Because the meaning of
-CVE-2016-4569 was already established to be the
-http://comments.gmane.org/gmane.linux.kernel/2214250 issue with the
-"tread" object, which is only
-cec8f96e49d9be372fdb0c3836dcf31ec71e457e, we are keeping that
-ID assignment the same.
-
-Use CVE-2016-4578 for both 9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-and e4ec8cc8039a7063e24204299b462bd1383184a5.
+(A NULL pointer dereference is within the scope of CVE when it affects
+a library that can realistically be used to build a multiple-input
+application. For example, openjpeg-nullptr-github-issue-842.ppm
+crashes the application, and the application was supposed to have
+remained running to display other images in other windows.)
 
 - -- 
 CVE Assignment Team
@@ -41,17 +31,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXM0CDAAoJEHb/MwWLVhi2YdAQAKibrD8XeEWMfNOhVt1JJZyK
-7tjA7BnVA96YCv/wl5Ry4hbNCA7TmFIYjq4M9Fahbr/dlJxkol4xXGCmX2sOTA8l
-vAKVt30oYpgmESleRz8vJ5JVSYEXmem4v4y4xX37w3WNf6fXhB83zm1nniWddwio
-GLV7UGxZTfs+jCeZo0ou+Db02YpqgR5E0oOOIvPNuX6xLkNQy0JFNzRTKfP0Eo2W
-wLoKx7R6l74pe1FPoOqkGEs8oQ7fs1M9nQfUydsUqwTz8fGtwxVScOthze3FguaK
-UFJOr5pfM7aV5pZbxhvh/umd5hnl8LmkT91VqhpA8r5M2l9rqV0vRzr1PfbXeQfe
-UOpsS24GKgQ0wvGPBvxU8GCJcY3NPs2mF6fxrR46fwf1R5sZfwRV/nrS76E2CSuZ
-9VQ1v90VkH1uRZd8g7iluwlTa+V5EWiqUcTxuQPv1SjZGNDUqV+wOW8ttazCszwe
-DdjJRvmBnyyb835BJo24afw0u/QZkQCwdtub4ZQqBkuGudYIK+8AZsMG3vZ+Jlt7
-ZL4VFrSRsDW1c8pfBEkdH9/YJIEeEHckLOWcD2DoqokzcjVcr4DDw3bVuBTK2hwn
-OwMX7iXXuPEuJFeotCiv4VkK94DfdtVwJ4p55ErIDHHpkXBMB8BLuBdgvbNXw/FO
-DU8UQO+pwaNTDNx55N9Z
-=M8WL
+iQIcBAEBCAAGBQJX3qbJAAoJEHb/MwWLVhi2dMIP/1Gynw4G1wvocXs2eT0FqQrA
+WpR15GQzvHzMbVoeKcG9dLx+kGU/VbZXqxPv1EAFFPa6/Tv9ZOnbD2Kj6nmO1W1k
+tF/jLpeViTxqnvZEVJ9HSFBC5sVj/SEj1QV4/C31Uv1WRyu2XeTJfxWfjzsT4ts5
+nxbwqZAFJFCnXTjPMh2a1LIp+NBd1J8v/ohsHfZsPYQMO8FeXtJ6zuOKeO2hDiFo
+krPkMMELB/0HSHd4LQ7KLgAWyUeVyfcpWliVUyAMzXRm0XkDeEwec/7LAVAXeD3y
+CA7w6CVy8dPa3cA8sGcphSWKCdt0iq+DJBAT2VvpGC5XSzD+c32cwB4ME5wxr/tB
+KIi3Wg9iuv7jZLykPz4Ir5HlDNO+6FJ9hAZYHSQVHoq+Z3d1TX84Msk8EkuFZsNi
+tEutJ7/Tg8Yfwn5QnVtaKIq9vMBSeyEdN8CChQyS/iuS+LNtIxTMdiSXT6Z2B9cL
+MJ56Vz35ArTpil3jF4SlKyeTE2tikdOmg0rjr8jbhpIeCXDTjM/HJ60ekkjdQids
+L5erXn3RfYKKequqNVLIhejzHir1DXa+cfplvPRTDD8FIXOZyjw+0yCfyI64rY8V
+4ucN0O5dzpMNzO+KNErIxX8E5Sea0ERPhnp97sYDwIpEtcn0Lu2odsjVtnIzOdAq
+5BdJZ0sBPI/EM7bXZJDc
+=EcEl
 -----END PGP SIGNATURE-----
