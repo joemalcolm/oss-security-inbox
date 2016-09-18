@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2945" "Wednesday" "8" "June" "2016" "17:15:59" "+0200" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>" "72" "Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" "^Date:" nil nil "6" "2016060815:15:59" "[oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations" (number mark "        gsunde.orang Jun  8   72/2945  " thread-indent "\"Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations\"\n") "<20160608085431.GA4278@openwall.com>" ("<20160608085431.GA4278@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["861" "Sunday" "18" "September" "2016" "14:31:24" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160918123124.poc7x5skdijl2j3m@eldamar.local>" "24" "[oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" nil nil nil "9" "2016091812:31:24" "[oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" (number mark "U       carnil@debia Sep 18   24/861   " thread-indent "\"[oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26466 invoked by uid 550); 8 Jun 2016 15:16:12 -0000
+Received: (qmail 12066 invoked by uid 550); 18 Sep 2016 12:31:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26441 invoked from network); 8 Jun 2016 15:16:11 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 12045 invoked from network); 18 Sep 2016 12:31:37 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=5aOsvA2NXRXIM89A0O0FwHmx1/noPUVkE4HCd3kLTk0=;
-        b=xsceq+lfxTemSGaEIjecKOBSD0wSRpm/4tAqYS4a/lbpb8jSUV0iieyr7OodjrxHDX
-         24eUGg9W/2tjz2CIzvEYzQEcOJ4qqCbylVzxgRJAAEJajgf9W1tEmVxf2CtmHNnKz2Dt
-         oCoGe0hHjm0gi6Uj5niKcn3I9JfkBkbpsz6RgAp3MneLLW+/0Clict2DLYYV6P7N9+Jf
-         jnqIoGUknUKBGNozOjxdNrrb+8Mkf6LD9CGa+n7++793WlfQJ8HXFrzcKpl6Ga77fMXN
-         MCgh8dHiJWMePyBQX2HFAHnn5ek89I7Ox+utkQg6fykHD2TWC+MvonIkVvzhPSUcEoR/
-         MGwA==
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=BhkuYjA8VdsUw5Rfk1Bqg8qhxD3Aa18eJJZvr9uGh+g=;
+        b=oMW3JyLVShCqYI50w0YsL+eK7uJdA0MGBwqq/yO1eQHuKTRHMJ1Nt7PqmSWBww86R4
+         rU0dzGTZQPVlRNyy3tSlK9lDbw/s/gNe+JWTCdtTTG0W4YQQmHEJPmWmAEl2QmfTtcMg
+         1cOCaykZJOYdLxGAWCfvr/y6kJhV9JgExnjzYm5FANkbT49/ySB7tkv7OHxxJoc0s0Rh
+         /DAvRgPtKOSqlwfqspxqUijcnzXUC7bjkvrPJovOC1YkkQZ4/cOzeghLrm9Re0VnkvMD
+         aoFtHkrQ6Vu9FCgycrOWWOlRRtwCDdYVrYfTrii8IUlBxZvP8Y57sOS7dOmOAeAJgcyq
+         /yGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=5aOsvA2NXRXIM89A0O0FwHmx1/noPUVkE4HCd3kLTk0=;
-        b=FfsnOFbeSbkyG+ORb5h7U2EKcl2f1iHQbSgpmo7XgHGYxLmC0RDqn09EqqlHTNWiFv
-         u63nZ6L9Qi/bYe6XFSSH+1mZ7Oe7zTQGUnHWwGageUGarZVYkYKaiQXEogC50GD/kcbq
-         XgetbNd4uaTUdHbth+EMxWCzdpTBDN3G4aPf8YqmH/IzoyD7RJ6eUIv73JmFTCTXXNWx
-         WX5RzHtwlAlAi/i6vzbThnMd3d9DsRdl7gsVrQFec7zDxhTBjSoVhK9nU01NdKKiPXR4
-         NK5Hj+esCMuDnWwXQnlO9naxFuEUYWXmppwqfJZXHdnL1Dpw+3RxyRdpNs7JDrPGiNAg
-         klcQ==
-X-Gm-Message-State: ALyK8tLcE34vgjOg/3uDgk58D2MGlLJfEhPqHocFn8pZkCAR5Ux56xQIYz9iK0SDV1IF4YTn8lTnfaZp3BvH2Q==
-X-Received: by 10.202.52.85 with SMTP id b82mr2777093oia.158.1465398959667;
- Wed, 08 Jun 2016 08:15:59 -0700 (PDT)
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:content-transfer-encoding
+         :user-agent;
+        bh=BhkuYjA8VdsUw5Rfk1Bqg8qhxD3Aa18eJJZvr9uGh+g=;
+        b=O/Kh8hUAojA1/AFHA15856P72649nxA2InCaDUfIa8MpNpxcmatQJb51Bw9X4NVFe1
+         J/MHbG2KRXjakKwljlRnlGef83Vcy9TqX6nQqZ8ZBaUVE5vBw9rz6052DIo2CtI0xvzP
+         dm4Ki5qOeQh8m+fHCNXYml3TbLXskNFx65aes2/lAgNp4pkpnr/p4uHJUcOgChMVatL4
+         ahSKht4EPgr0BicU7FpU1T1dUFPVjgHe0Ihq1yRq40zEk7V5IgXCO8xjq6qDAnaTwUgK
+         ifYM1CD9TIGegiHEzVyMa1ToCKcCdreeN9qwx5Ex01Qp3YaTaEL34JOPtgTubl9hgdug
+         MAmQ==
+X-Gm-Message-State: AE9vXwOQgXt5eiPH15HMIP9/mbeISSRUJf0DgKd18aIJkip8xtndscCIgIMSlxgxO5Qypg==
+X-Received: by 10.194.5.230 with SMTP id v6mr22810277wjv.92.1474201885919;
+        Sun, 18 Sep 2016 05:31:25 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 18 Sep 2016 14:31:24 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20160918123124.poc7x5skdijl2j3m@eldamar.local>
 MIME-Version: 1.0
-In-Reply-To: <20160608085431.GA4278@openwall.com>
-References: <20160608085431.GA4278@openwall.com>
-Message-ID: <CAOTQaXHLe6ST5SOQhH_hig1KD9UyhzMUvr4iXiJz5szm5hsUow@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113d433e71ffed0534c5c815
-Date: Wed, 8 Jun 2016 17:15:59 +0200
-From: Gsunde Orangen <gsunde.orangen@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-2178: OpenSSL DSA follows a non-constant
- time codepath for certain operations
-To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: NeoMutt/20160910 (1.7.0)
+Subject: [oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
 
---001a113d433e71ffed0534c5c815
-Content-Type: text/plain; charset=UTF-8
+Hi
 
-Whilst there is a commit in openssl and a CVE ID, I wonder why this hasn't
-been announced yet by OpenSSL.org and why there are no official fix
-releases (yet).
-What made this issue different to the usual coordinated disclosures being
-practiced with the OpenSSL team?
+Some days ago new GnuTLS version were released for GNUTLS-SA-2016-3
+(OCSP validation issue):
 
-2016-06-08 10:54 GMT+02:00 Solar Designer <solar@openwall.com>:
+> Stefan Bühler discovered an issue that affects validation of
+> certificates using OCSP responses, which can falsely report a
+> certificate as valid under certain circumstances. That issue affects
+> gnutls 3.3.24, 3.4.14, 3.5.3 and previous versions. Write-up[0] by
+> Stefan Bühler
+> Recommendation: Upgrade to GnuTLS versions 3.4.15, 3.5.4 or apply the
+> patch referenced in the mail above.
 
-> Hi,
->
-> Just off Twitter:
->
-> <mjos_crypto> Out today: This is the OpenSSL side-channel vulnerability I
-> mentioned last week; now on ePrint. Also CVE-2016-2178.
-> http://eprint.iacr.org/2016/594
-> <@mjos_crypto> @mjos_crypto Currently unfixed in essentially all distros.
-> <mjos_crypto> Note that CVE-2016-2178 /
-> http://eprint.iacr.org/2016/594.pdf most severely actually impacts
-> OpenSSH, which uses the OpenSSL library.
-> <mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from
-> Monday.
-> https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
->
-> http://eprint.iacr.org/2016/594
->
-> | "Make Sure DSA Signing Exponentiations Really are Constant-Time''
-> |
-> | Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
-> |
-> | Abstract: TLS and SSH are two of the most commonly used protocols for
-> securing Internet traffic. Many of the implementations of these protocols
-> rely on the cryptographic primitives provided in the OpenSSL library. In
-> this work we disclose a vulnerability in OpenSSL, affecting all versions
-> and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005, which
-> renders the implementation of the DSA signature scheme vulnerable to
-> cache-based side-channel attacks. Exploiting the software defect, we
-> demonstrate the first published cache-based key-recovery attack on these
-> protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key from
-> an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit DSA
-> key from an stunnel server.
-> |
-> | Category / Keywords: applied cryptography; digital signatures;
-> side-channel analysis; timing attacks; cache-timing attacks; DSA; OpenSSL;
-> CVE-2016-2178
-> |
-> | Date: received 6 Jun 2016, last revised 7 Jun 2016
->
->
-> https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
->
-> | author        Cesar Pereida
-> |       Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
-> | committer     Matt Caswell
-> |       Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
->
-> | Fix DSA, preserve BN_FLG_CONSTTIME
-> |
-> | Operations in the DSA signing algorithm should run in constant time in
-> | order to avoid side channel attacks. A flaw in the OpenSSL DSA
-> | implementation means that a non-constant time codepath is followed for
-> | certain operations. This has been demonstrated through a cache-timing
-> | attack to be sufficient for an attacker to recover the private DSA key.
-> |
-> | CVE-2016-2178
->
-> Alexander
->
+Upstream fix is at [1]. This is as well tracked in Red Hat's bugzilla
+at [2].
 
---001a113d433e71ffed0534c5c815--
+Could you please assign a CVE for this issue?
+
+Regards,
+Salvatore
+
+ [0] https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
+ [1] https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9 
+ [2] https://bugzilla.redhat.com/show_bug.cgi?id=1374266
