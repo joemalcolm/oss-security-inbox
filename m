@@ -1,51 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/4
-Message-Id: <20160108153837.733EF6C00E2@smtpvmsrv1.mitre.org>
-Date: Fri,  8 Jan 2016 10:38:37 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/8
+Message-Id: <20160918154533.28FC16C579F@smtpvmsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 11:45:33 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
+To: bfriesen@...ple.dallas.tx.us
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: WordPress: cross-site scripting vulnerability fixed in new 4.4.1 release
+Subject: Re: GraphicsMagick 1.3.25 fixes some security issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://wordpress.org/news/2016/01/wordpress-4-4-1-security-and-maintenance-release/
-> 
->> WordPress versions 4.4 and earlier are affected by a cross-site
->> scripting vulnerability that could allow a site to be compromised.
->> This was reported by Crtc4L.
-> 
-> There is no reference to the fix, but the change seems to be
-> 
-> https://core.trac.wordpress.org/changeset/36185
-> 
-> Cf. as well https://twitter.com/brutelogic/status/685105483397619713
+> Date: Tue, 6 Sep 2016 20:50:23 -0500 (CDT)
 
-Use CVE-2016-1564. This ID applies to the entirety of changeset/36185
-(for example, we do not know whether the change involving
-$this->stylesheet corresponds to a separate discovery).
+> Yesterday GraphicsMagick 1.3.25 was released. It fixes several
+> security issues:
+
+> 1. A last instance of CVE-2016-2317 (heap buffer overflow) in the MVG
+> rendering code (also impacts SVG). This problem was originally
+> reported by Gustavo Grieco.
+
+CVE does not support the concept of a different "instance" of an ID
+number that has different affected versions. For the aspect of the
+heap buffer overflow issue in MVG/SVG rendering that remained present
+in the 1.3.24 release (and was not fixed until 1.3.25), use
+CVE-2016-7446.
+
+This should be considered a clarification to the following NEWS
+excerpts:
+
+   http://www.graphicsmagick.org/NEWS.html#may-30-2016
+   1.3.24 (May 30, 2016)
+   SVG: Fixed heap and stack buffer overflows, as well as segmentation
+   violations (CVE-2016-2317 and CVE-2016-2318).
+
+   http://www.graphicsmagick.org/NEWS.html#september-5-2016
+   1.3.25 (September 5, 2016)
+   SVG/MVG: Fix another case of CVE-2016-2317 (heap buffer overflow)
+   in the MVG rendering code (also impacts SVG).
+
+
+> 2. A possible heap overflow of the EscapeParenthesis() function.
+> While I was not able to reproduce it for myself, the implementation is
+> replaced with a different algorithm. This problem was reported by
+> Gustavo Grieco.
+
+Use CVE-2016-7447.
+
+
+> 3. The Utah RLE reader did not validate that header information was
+> reasonable given the file size and so it could cause huge memory
+> allocations and/or consume huge amounts of CPU. This problem was
+> reported by Agostino Sarubbo.
+
+Use CVE-2016-7448.
+
+
+> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when
+> a 'count' value is returned. The bug caused a heap read overflow (due
+> to using strlcpy() to copy a possibly unterminated string) which could
+> allow an untrusted file to crash the software.
+
+>> Fix heap buffer read overflow while copying sized TIFF attributes.
+
+>> http://hg.code.sf.net/p/graphicsmagick/code/rev/eb58028dacf5
+
+>>> https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/
+>>> https://blogs.gentoo.org/ago/2016/09/07/graphicsmagick-null-pointer-dereference-in-magickstrlcpy-utility-c/
+
+>>>> The problem was due to the definition of strlcpy() in that it is 
+>>>> supposed to return the number of characters which would have been 
+>>>> copied if the destination buffer was large enough. To satisfy this 
+>>>> requirement, strlcpy() needs to continue scanning memory until it 
+>>>> encounters a null byte in memory.
+>>>> 
+>>>> The strlcpy() function has very nice properties but this weakness is 
+>>>> something that developers need to be aware of.
+
+Use CVE-2016-7449 for all of these reported TIFF problems. The
+ultimate vulnerability was use of:
+
+  strlcpy(attribute,text,Min(sizeof(attribute),(count+1)));
+
+three times in coders/tiff.c, where strlcpy is not an appropriate
+function choice for this type of scenario of untrusted-data copying.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWj9b9AAoJEL54rhJi8gl5xCoQAIjZVJGRAEUNc3NK8wGYyKi6
-jngwkTCRRaStqGwP5sGuiyAGGHB1kvSnzIn12Ptr2/aXuQszGLXYjNUjO9wp0DUV
-zHyDHNje+pzaQ+fTmplH+jdqmLWhxfNXI1S691NZ1HzrtqJ3LolrzMgH+XkQKWII
-iICBqr2xRLhSi7bAoFSKAV0ng4jE2f9IDpi+Eab0DKQHo5JKR5bFobvU6vq0dLhX
-uQyO/k20thjj4OCw7VXZLfGky1PSy5314ruPaTZwghWTWylX6Vr9pXU8RhobKOYT
-cGdfC1HHwydcYJOTx5vAAh2QQlobCRY1h35Qdcd1FQjPdSTuuki80+zaPVdpBtOM
-Oyq1idcHDk+ApWtj15BwSb6ujWlbBcNvWGjQx49WBE0a3o1XIaZmD/LG5QuMFuJi
-4FQhSvA2095UTJaa28Vo+DlV4zcZWnxQBgTOQAQ6fZnCKmLePGPTugKaHWWDhlVP
-LWC4Q5T27x/hTTFaph615V/ttJ09y+ULxwwx4ghbOrn9R6HZ5jFhJ+oNGjN9K72I
-tVqieqwwPctQKujb7rtIZBakJQRhMQrHB5mlgwN7uwoAfcLu5VbA2IsKWGQtPBwU
-PoL/wb60/S7sj3Z/KbKj4e28hKn66y/Fh5yL+5hPhpugoVtJqNhObCr5CSGJ5Sdk
-7lNVEZxFLFZbtqmfkjrD
-=MSDs
+iQIcBAEBCAAGBQJX3rYOAAoJEHb/MwWLVhi2T8AP/2FLvqniHnnBY6teYw5BlnFI
+CfQhTDZnh9Y1/yKcHci9A3QPtcuNRkhpwTXIV3pBNsTLIm+/E+/q28YZzS+j9pzJ
+wdURRmR40Hg1fCztO+VRpoe2WTu1qwKiC7nVcnol2fGqtx+umy25Frtwo6TaQ6q6
+D1YpbHwP4u5S91KX2dC3BStKY4jwgRtMCCOiojelKftvpxYu8oLXsVwBwKGOZPr9
+Kk4SJiFdSKQrJzzZKB8srIwLkDjA8fXz3KV7nfSznt6TGwQyx0hMJdHm/bif9oVt
+ILZ6/IKXlAgN3z+gVdEhPaqzMjyUXskfiX1+8UZx2d9cumSlW9xbaQUBrdhIbC3w
+6d0Mwcs/fG0zYULNpIiVCJrQFNjkAsIEL9wcEqaUoQmifXqgFZ4g1FPJi1xyjUNg
+hrkSOn4N/e2Y7LYlPgJeCUEjl+f00FA5/2rWSyk8V78vz5cLpFV5tQ2+5mRhXJCO
+mcmfo0TPeboyYidBXlLWj9BVPHSJySeylYdH6yHnhD1ZjC1C4gQVHhIcYezkFIiO
+KspZxgBpo+FC6uXnm4Pn3tR2o+XdgDvg8oe7pW4ZNb1lB6qMd90sMnWGIW+4XSWQ
+JQurAylyajRnZ0MN8pHR9fel++8aaIXqY/QK1JwUC3MIBZdwHs1OH6t2VBu4eNff
+Lk+EMJgP868wTRmhGWwK
+=DLQk
 -----END PGP SIGNATURE-----
