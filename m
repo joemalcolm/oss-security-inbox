@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7841" "Saturday" "1" "July" "2017" "15:23:07" "-0400" "Stiepan" "stie@itk.swiss" "<JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>" "133" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070119:23:07" "[oss-security] accepting new members to (linux-)distros lists" (number mark "U       stie@itk.swi Jul  1  133/7841  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170701140735.GA10593@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>" "<20170630201642.GA9159@openwall.com>" "<e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>" "<20170701140735.GA10593@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1656" "Sunday" "18" "September" "2016" "13:06:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918170654.46FF36C5824@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities" nil nil nil "9" "2016091817:06:54" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities" (number mark "U       cve-assign@m Sep 18   39/1656  " thread-indent "\"[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities\"\n") "<CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>" ("<CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11287 invoked by uid 550); 1 Jul 2017 21:50:00 -0000
+Received: (qmail 20305 invoked by uid 550); 18 Sep 2016 17:07:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,156 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26581 invoked from network); 1 Jul 2017 19:23:29 -0000
-Authentication-Results: mail1.protonmail.ch; dkim=none
-Message-ID: <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
-In-Reply-To: <20170701140735.GA10593@openwall.com>
-References: <20170628200239.GA25525@openwall.com>
- <20170630132209.GA4625@openwall.com>
- <20170630195516.GB1011@hunt>
- <20170630201642.GA9159@openwall.com>
- <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
- <20170701140735.GA10593@openwall.com>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_46acd99474cbd5314cb8955e4eb890ff"
-Date: Sat, 01 Jul 2017 15:23:07 -0400
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 20287 invoked from network); 18 Sep 2016 17:07:06 -0000
+From: cve-assign@mitre.org
+To: felixk3y@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>
+Message-Id: <20160918170654.46FF36C5824@smtpvmsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 13:06:54 -0400 (EDT)
+Subject: [oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities
 
---b1_46acd99474cbd5314cb8955e4eb890ff
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-SSBoYXZlIGEgZ2VuZXJhbCByZW1hcmsgb24gdGhlIHJlY2VudCBkZXZlbG9w
-bWVudHMgb24gdGhpcyBsaXN0LCBpbiBwYXJ0aWN1bGFyIGluIHJlbGF0aW9u
-IHdpdGggdGhlICJkaXN0cm9zIiBsaXN0IGFuZCBlc3BlY2lhbGx5LCBmb2N1
-c2luZyBvbiBMaW51eCBrZXJuZWwgc2VjdXJpdHk6CmEgY29yZSBpc3N1ZSBh
-dCBoYW5kIHNlZW1zIHRvIGJlIHRoZSBmdW5kaW5nIG9mIHdvcmsgdGhhdCBm
-b2xsb3dzIGR1ZSBkaWxpZ2VuY2UsIHN0YW5kYXJkcyBhbmQgc28gZm9ydGgs
-IHdoaWNoIGlzIGEgdG9wIHByaW9yaXR5LCBhbmQgc2hvdWxkIGJlIGdpdmVu
-IGFwcHJvcHJpYXRlIGltcG9ydGFuY2UgYXQgdGhlIHRvcCBkZWNpc2lvbi1t
-YWtpbmcgbGV2ZWwuIEkgdGhpbmsgdGhhdCBpbiB0aGF0IGxpbmUsIGFwcGx5
-aW5nIGZvciBpbnN0aXR1dGlvbmFsIGZ1bmRpbmcgdGhyb3VnaCBjYWxscyBm
-b3IgSDIwMjAgcHVibGljLXByaXZhdGUgcGFydG5lcnNoaXBzIHN1Y2ggYXMg
-aHR0cHM6Ly9lYy5ldXJvcGEuZXUvcmVzZWFyY2gvcGFydGljaXBhbnRzL3Bv
-cnRhbC9kZXNrdG9wL2VuL29wcG9ydHVuaXRpZXMvaDIwMjAvdG9waWNzL2Rz
-LTA4LTIwMTcuaHRtbCBhbmQgc2ltaWxhciBub24tRXVyb3BlYW4gaW5pdGlh
-dGl2ZXMgLSBpZiB0aGVyZSBhcmUgYW55IC0gd291bGQgYmUgbW9yZSB0aGFu
-IGFwcHJvcHJpYXRlLCBhcyBMaW51eCBpcyBhIGNvcmUgcHJpdmFjeS1lbmhh
-bmNpbmcgdGVjaG5vbG9neSwgaW4gYWRkaXRpb24gdG8gdGhlIGZhY3QgdGhh
-dCAiT3BlbiBzb3VyY2UgYW5kIGV4dGVybmFsbHkgYXVkaXRhYmxlIHNvbHV0
-aW9ucyBhcmUgZW5jb3VyYWdlZCBpbiBvcmRlciB0byBtYXhpbWlzZSB1cHRh
-a2UgYW5kIGluY3JlYXNlIHRoZSB0cnVzdHdvcnRoaW5lc3Mgb2YgcHJvcG9z
-ZWQgc29sdXRpb25zLiIuIEJ5IHRoZSB3YXksIHRoZSBzYW1lIHdvdWxkIGFw
-cGx5IGZvciBCU0RzLCB3aGVyZSBJIGhhdmUgYSBtb3JlIGRpcmVjdCBpbnRl
-cmVzdCwgYWx0aG91Z2ggdGhleSBkbyBub3Qgc2hhcmUgTGludXgncyBFdXJv
-cGVhbiBoZXJpdGFnZSEgOykKU3RpZXBhbiBBdXLDqWxpZW4gS292YWMKTSBT
-YyBpbiBJQ1QgU2VjdXJpdHkKCklUIEtvdmFjLCBHZW5ldmEgQ0gKc3RpZSBh
-dCBpdGsgZG90IHN3aXNzCgo+IC0tLS0tLS0tIE9yaWdpbmFsIE1lc3NhZ2Ug
-LS0tLS0tLS0KPiBTdWJqZWN0OiBSZTogW29zcy1zZWN1cml0eV0gYWNjZXB0
-aW5nIG5ldyBtZW1iZXJzIHRvIChsaW51eC0pZGlzdHJvcyBsaXN0cwo+IExv
-Y2FsIFRpbWU6IEp1bHkgMSwgMjAxNyAyOjA3IFBNCj4gVVRDIFRpbWU6IEp1
-bHkgMSwgMjAxNyAyOjA3IFBNCj4gRnJvbTogc29sYXJAb3BlbndhbGwuY29t
-Cj4gVG86IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20KPiBPbiBT
-YXQsIEp1bCAwMSwgMjAxNyBhdCAwMTo1Nzo1NVBNICswMjAwLCBNYXJrIEhh
-dGxlIHdyb3RlOgo+PiBXZSAoV2luZCBSaXZlcikgY2FuIHRha2UgYSBtb3Jl
-IGFjdGl2ZSByb2xlIGluIGF0IGxlYXN0IHNvbWUgb2YgdGhlCj4+IGFkbWlu
-aXN0cmF0aXZlIHRhc2tzLi4KPiBUaGFuayB5b3UhCj4+IEhvd2V2ZXIsIEkg
-Y2FuIGFzc3VyZSB5b3Ugd2UgZG9uInQgaGF2ZSB0aGUgdGltZSBvcgo+PiBh
-YmlsaXR5IHRvIGRvIGl0IG91cnNlbHZlcy4KPiBObyAidGltZSBvciBhYmls
-aXR5IiB0byB0YWtlIGNhcmUgb2YgYW55IG9uZSAob3IgcHJlZmVyYWJseSBt
-b3JlKSBvZiB0aGUKPiBhZG1pbmlzdHJhdGl2ZSBtaWNyby1yb2xlcyBJIGxp
-c3RlZD8gVGhpcyBtYWtlcyBubyBzZW5zZSB0byBtZS4gQWxsIG9mCj4gdGhl
-IGFkbWluaXN0cmF0aXZlIHRhc2tzIGNvbWJpbmVkIGFyZSBmYXIgbGVzcyB0
-aGFuIG9uZSBmdWxsLXRpbWUgam9iLgo+IFdpdGggZ29vZCBkaXNjaXBsaW5l
-IGFuZCBmb2N1cywgdGhleSBjYW4gcHJvYmFibHkgYmUgdGFrZW4gY2FyZSBv
-ZiB3aXRoCj4gMSBob3VyIG9mIGVmZm9ydCBwZXIgZGF5IG9uIGF2ZXJhZ2Ug
-KG9mIGNvdXJzZSwgdGhlcmUgd2lsbCBiZSBvY2Nhc2lvbmFsCj4gYnVzeSBk
-YXlzLCBidXQgYWxzbyBtYW55IGRheXMgd2l0aCBubyB3b3JrIG9mIHRoaXMg
-dHlwZSkuIEFsbCBvZiB0aGVtCj4gYXQgb25jZS4gSSB0aGluayBJIGtub3cg
-dGhpcyBiZWNhdXNlIG9mIG1lIGJlaW5nIHRoZSBmYWxsYmFjayBwZXJzb24K
-PiBmb3IgdGhpcyB0eXBlIG9mIHdvcmsgc28gZmFyLiBPVE9ILCBJIGRvIHJl
-Y29nbml6ZSB0aGF0IEkgbGlzdGVkIGEgZmV3Cj4gYWRkaXRpb25hbCB0YXNr
-cyBub3cgLSBzdWNoIGFzIHByb2R1Y2luZyBzdGF0aXN0aWNzIC0gYW5kIHRo
-ZSBleHRlbnQgb2YKPiB3b3JrIG9uIHRhc2tzIGludm9sdmluZyBtb25pdG9y
-aW5nIGV4dGVybmFsIHJlc291cmNlcyBjYW4gdmFyeSBncmVhdGx5Lgo+IFNv
-IG1heWJlIGl0InMgbW9yZSB0aGFuIDEgaG91ci9kYXkgb24gYXZlcmFnZSB3
-aXRoIHRob3NlIGV4dHJhIHRhc2tzIGFuZAo+IGRlc2lyZWQgZ3JlYXRlciBl
-eHRlbnQgbm93LiBCdXQgbm90IG11Y2ggbW9yZS4KPiBXaGF0IEkgZG8gdW5k
-ZXJzdGFuZCBpcyBuZWVkaW5nIHRvIHRlbXBvcmFyaWx5IHRyYW5zZmVyIHJl
-c3BvbnNpYmlsaXR5Cj4gdG8gYW5vdGhlciBkaXN0cm8gaWYgeW91ciBvd24g
-dGVhbSBzdWJzY3JpYmVkIHRvIHRoZSBsaXN0IGlzIHNtYWxsIGFuZAo+IG1h
-bnkgb2YgdGhlc2UgcGVvcGxlIG1heSBzaW11bHRhbmVvdXNseSBnbyBvbiB2
-YWNhdGlvbi4KPiBBIHJlYXNvbiB3aHkgSSBsaXN0ZWQgc28gbWFueSBhZG1p
-bmlzdHJhdGl2ZSBtaWNyby10YXNrcy9yb2xlcyBpcyB0aGF0Cj4gSSJkIGxp
-a2UgdG8gYWxsb3cgZm9yIGFuIGV2ZW4gKG9yIGNsb3NlIHRvIGl0KSBkaXN0
-cmlidXRpb24gb2YgdGhlCj4gZWZmb3J0IGFjcm9zcyB0aGUgZGlzdHJvcywg
-d2hlcmUgZXZlcnkgb25lIG9mIHRoZW0gYmVhcnMgYSB0aW55IHBvcnRpb24K
-PiBvZiB0aGlzIHNtYWxsIHRvdGFsIGVmZm9ydCBvZiBydW5uaW5nIHRoZSBs
-aXN0LiBUaGlzIHdvdWxkIGFsc28gc2VydmUKPiB0byBlbnN1cmUgYW5kIGRl
-bW9uc3RyYXRlIHRvIHRoZSByZXN0IG9mIHVzIHRoYXQgZXZlcnkgZGlzdHJv
-IGlzIHN0aWxsCj4gYW4gYWN0aXZlIG1lbWJlciwgd2l0aG91dCB1cyBuZWVk
-aW5nIHJlc3BvbnNpdmVuZXNzIHRlc3RzLgo+IFRoZSB0ZWNobmljYWwgZXhw
-ZXJ0aXNlIHRhc2tzIGNvdWxkIGJlIHdvcmtlZCBvbiB0byB2YXJ5aW5nIGV4
-dGVudCwKPiBpbmNsdWRpbmcgYmVjb21pbmcgYSBmdWxsLXRpbWUgam9iIGZv
-ciBzb21lb25lIG9yIGV2ZW4gZm9yIHNldmVyYWwKPiBwZW9wbGUuIFRoZXJl
-InMgbm8gZGVjaXNpb24gb24gdGhlIGV4YWN0IGV4dGVudCB5ZXQsIGJ1dCBp
-dCBzaG91bGQgYmUKPiBzdWZmaWNpZW50IHRvIGFsbW9zdCBhbHdheXMgYXZv
-aWQgdGhpbmdzIGxpa2UgdGhlIHJlY2VudCBpbmNvbXBsZXRlIGZpeAo+IGlu
-IFN1ZG8uCj4+IFNvIHRoZSBtb3JlIHRoZW4gb25lICJhY3RvciIgb24gYW4g
-YWN0aW9uIHdvdWxkIGRlZmluaXRlbHkgYmUgd2hhdCBJIHN1Z2dlc3QuCj4g
-VGhhdCJzIHdpdGhpbiBjb25zaWRlcmF0aW9uLCBidXQgd2UgZ290IHRvIHN0
-YXJ0IGJ5IGxpc3RpbmcgYXQgbGVhc3Qgb25lCj4gZGlzdHJvIHBlciB0YXNr
-LiBXaGVuIHdlIGV2ZW50dWFsbHkgaGF2ZSBtb3JlIHRoYW4gb25lIGxpc3Rl
-ZCBmb3Igc29tZQo+IHRhc2ssIHdlIG9yIHRoZXkgd2lsbCBuZWVkIHRvIGNv
-b3JkaW5hdGUgdGhlaXIgYWN0aXZpdGllcywgYW5kIHRoYXQKPiBjb3VsZCBj
-cmVhdGUgZXh0cmEgd29yay4gUGVyaGFwcyBhICJwcmltYXJ5IGFuZCBiYWNr
-dXAiIGFycmFuZ2VtZW50IGZvcgo+IHR3byBkaXN0cm9zIHNoYXJpbmcgYSB0
-YXNrIHdpbGwgd29yayBiZXN0OiB3aWxsIG5vdCByZXN1bHQgaW4gIm5vIG9u
-ZSJzCj4gcmVzcG9uc2liaWxpdHkiIGFuZCB3aWxsIGhhdmUgbG93IGNvb3Jk
-aW5hdGlvbiBvdmVyaGVhZC4KPiBUaGUgZmlyc3QgYWRtaW5pc3RyYXRpdmUg
-dGFzayBvZiBnZXR0aW5nIGJhY2sgdG8gbWVzc2FnZSBzZW5kZXJzIGlzIHNv
-Cj4gdHJpdmlhbCB0aGF0IEkgdGhpbmsgaXQiZCBtYWtlIHNlbnNlIHRvIGtl
-ZXAgaXQgcmVzZXJ2ZWQgdG8gdGhlIGRpc3Rybwo+IHdobyB3YXMgbGFzdCB0
-byBqb2luLCBwZXJoYXBzIHN3aXRjaGluZyByZXNwb25zaWJpbGl0eSB0byB0
-aGVtIGZyb20gdGhlCj4gcHJldmlvdXMgZGlzdHJvIG9uY2UgdGhlIG5ldyBt
-ZW1iZXIgaGFzIGNvbmZpcm1lZCB0aGV5InJlIHN1Y2Nlc3NmdWxseQo+IHJl
-Y2VpdmluZyBtZXNzYWdlcyB0aHJvdWdoIHRoZSBsaXN0LiBUaGUgbmV3IGRp
-c3RybyB3aWxsIGJlICJwcmltYXJ5Igo+IGFuZCB0aGUgcHJldmlvdXMgd2ls
-bCBiZSAiYmFja3VwIiBmb3IgdGhhdCByb2xlLiBBbHdheXMgdGhhdCB3YXks
-Cj4gdW5sZXNzIHRoZSBuZXdseSBqb2luaW5nIGRpc3RybyBvcHRzIGZvciBz
-b21ldGhpbmcgbGVzcyB0cml2aWFsIHJpZ2h0Cj4gYXdheS4gKEkga25vdyBz
-b21lIHBlb3BsZSB3b3VsZCBiZSBvZmZlbmRlZCBieSBiZWluZyBhc2tlZCB0
-bwo+IHBhcnRpY2lwYXRlIGluIHRoaXMgdHJpdmlhbCBhY3Rpdml0eS4gSSB0
-aGluayB0aGV5ImQgYmUgd3JvbmcsIGJ1dCB3ZQo+IGNhbiBhY2NvbW1vZGF0
-ZSB0aGVpciBlZ29zLCBubyBwcm9ibGVtLikgVGhpcyB3aWxsIHF1aWNrbHkg
-dGVzdCBlYWNoCj4gbmV3IGRpc3RybyJzIHJlc3BvbnNpdmVuZXNzIGFuZCBn
-ZXQgdGhlbSBpbnZvbHZlZCwgYW5kIGhvcGVmdWxseQo+IGVuY291cmFnZSB0
-aGVtIHRvIHBpY2sgdXAgc2V2ZXJhbCBvZiB0aGUgbGVzcyB0cml2aWFsIHRh
-c2tzIGFzIHdlbGwKPiAodGhleSB3aWxsIG5lZWQgdG8sIG9yIG90aGVyd2lz
-ZSB0aGV5ImQgYmUgbGVmdCB3aXRob3V0IGEgdGFzayBvbmNlCj4gYW5vdGhl
-ciBkaXN0cm8gam9pbnMsIHdoaWNoIHdvdWxkIGJlIGluYXBwcm9wcmlhdGUp
-Lgo+PiBVbmZvcnR1bmF0ZWx5IEkgcmVhbGx5IGRvbiJ0IGhhdmUgYSBnb29k
-IHNlbnNlIChiYXNlZCBvbiB0aGUgbGluayB0byB0aGUgdGFza3MpCj4+IGFz
-IHRvIHdoYXQgd291bGQgYmUgYXBwcm9wcmlhdGUgdG8gdm9sdW50ZWVyIGZv
-ci4gSSJtIG9wZW4gdG8gc3VnZ2VzdGlvbnMuCj4gSXQicyByZWFsbHkgYW55
-dGhpbmcgeW91IGZlZWwgbGlrZSBkb2luZy4gUGVyaGFwcyBzZWUgaW4gd2hp
-Y2ggYXJlYXMKPiB5b3UgaGF2ZSBiZWVuIGhlbHBpbmcgYWxyZWFkeSwgYW5k
-IHN1Z2dlc3QgdGhhdCB5b3UgZm9jdXMgb24gdGhvc2UuCj4gSWYgeW91IHJl
-YWxseSB3YW50IG1lIHRvIG5hcnJvdyBkb3duIHRoZSBsaXN0IGZvciB5b3Us
-IGxldCBtZSBrbm93Lgo+IFRoaXMgbWF5IGFsc28gc3RhcnQgaGFwcGVuaW5n
-IG9uIGl0cyBvd24sIGR1ZSB0byBvdGhlciBkaXN0cm9zIHBpY2tpbmcKPiB1
-cCB0YXNrcy4gT25jZSBhIHRhc2sgaXMgdGFrZW4gYnkgb25lIG9yIHR3byBk
-aXN0cm9zLCBJIHdpbGwgd2FudAo+IGZ1cnRoZXIgZGlzdHJvcyB0byB2b2x1
-bnRlZXIgZm9yIG90aGVyIHRhc2tzLiBTbyBpZiB5b3Ugd2FudCB0byBoYXZl
-Cj4gbW9yZSBmcmVlZG9tIG9mIGNob2ljZSwgaHVycnkgdXAuCj4gT1RPSCwg
-d2l0aCBkaXN0cm9zIG5vdCB2b2x1bnRlZXJpbmcgZm9yIHNwZWNpZmljIHRh
-c2tzIChsaWtlIHdlInZlIHNlZW4KPiBzbyBmYXIpLCBJIG1pZ2h0IGp1c3Qg
-YXNzaWduIHRhc2tzIHRvIGRpc3Ryb3MgbXlzZWxmLgo+IEFsZXhhbmRlcg==
+> 1)
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/addressbook/controllers/addressController.php#L166-L175
+> 
+> 2)
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/blog/controllers/blogController.php#L192-L195
+> 
+> 3)
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/core/controllers/expCommentController.php#L129-L134
+> 
+> https://github.com/exponentcms/exponent-cms/commit/e916702a91a6342bbab483a2be2ba2f11dca3aa3
 
---b1_46acd99474cbd5314cb8955e4eb890ff--
+Use CVE-2016-7400 for all of the SQL injection issues fixed in
+e916702a91a6342bbab483a2be2ba2f11dca3aa3.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX3shoAAoJEHb/MwWLVhi2SKgP/0ROz868/9VNunPODC3o0SNo
+DH/VdQ0h1DRDwWBA4R1Lc16Qlsee4m8gInD+8e0LtKWc07OMzg+VqHICTdW3COUd
+Cd+nXTMRmr9T/TIsvfN/tEch23o36/z4d1kA9QDgODELvNW3EsQXwDePMlWbRi80
+7u2Y6uf7gshQmq95fSlsbawkj+0813X5XvCxX22wXZWGCQhlAP9ejxv1Q+Z4qbyu
+JEY5DXYubfEjXsv1AIKyoiAGSGesO3MeXoGXYnPFd8V18NJNZiz4xHe0hurYVhuH
+LNBnsZKO7whSciiUgcXKopbzkKloMEVEdHlu+HZ63eALvMWcKxQrxGlcKTVBWcOs
+CKUlsTjnD7liEZk46HIiVVSUFLnxCR/Q3koR0tgfBRNJQ9zpoMxNwxFKEi0366/Y
+MHDYKuYUvefMTDQJhtVYYNANCC+LQxdeBwfQsVFZnp/2JbCGDs5OSlUwl7WFTVh2
+nI7kF8lqUpDIni5VhYAniEUedGToFMgusDQaWCLWV34Tyhm5XfGn7bMZVr3HLPn9
+wTsfRJnItjgerHSpnezcSc+i4dALBINpjxYyqJCbRMmIx/pwlI77W/fShgXq6VLh
+0eJmP32P3sRV+sGYYphMSUQuyA9Lv3YA9oEuct1/gcGyQDzqhd1HklhbX2/UpykW
+ftRu2RktzIYSf/3CC5oL
+=rC1I
+-----END PGP SIGNATURE-----
