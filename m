@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/10
-Message-ID: <CAH8yC8njcSmRZacKR1Gu1cmTxT9xAegB3D_20qusvJD-szTaXg@mail.gmail.com>
-Date: Thu, 22 Dec 2016 06:42:43 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/4
+Message-ID: <7c197fe9-19b4-6d6b-69a9-5504a9efbcb2@724safe.com>
+Date: Sun, 18 Sep 2016 20:41:43 +0800
+From: vul@...safe <vul@...safe.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+Subject: CVE request - openjpeg null ptr dereference
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 22, 2016 at 6:28 AM, Heiko Schlittermann
-<hs@...littermann.de> wrote:
-> Jeffrey Walton <noloader@...il.com> (Do 22 Dez 2016 12:06:41 CET):
-> …
->> The bad guys already knew about the problem, or the motivated ones
->> found it after the partial disclosure.
->
-> Partial disclousure? I think, there was no disclosure at all, beside
-> requesting a CVE and talking about a possible leak of private
-> information. Is this enough to call it "partial disclousure"?
+# Vulnerability
+openjpeg null ptr dereference in convert.c:1331
 
-All they need is a toehold. When the rumors started circulating about
-CRIME, a number of folks figured out the attack before Duong and Rizzo
-presented it.
+# Version
+2.1.1  ( http://www.openjpeg.org/ )
 
-Jeff
+# Address Sanitizer Output
+ASAN:SIGSEGV
+=================================================================
+==7358==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000 (pc
+0x0815d204 bp 0xff846938 sp 0xff846380 T0)
+    #0 0x815d203 in skip_white
+/home/starlab/fuzzing/openjpeg/src/bin/jp2/convert.c:1331
+    #1 0x8135d81 in main
+/home/starlab/fuzzing/openjpeg/src/bin/jp2/opj_compress.c:1723
+    #2 0xf7343636 in __libc_start_main ??:?
+    #3 0x807a31b in _start ??:?
+
+# PoC
+See poc.ppm
+
+# Analysis
+In convert.c:1483 and convert.c:1485, variable s is uncheck after
+skip_int is called.
+A null ptr will be passed to skip_int again and will cause a null ptr
+dereference.
+
+# Report Timeline
+2016-09-16: FB3F15 of STARLAB discovered this issue
+2016-09-18:Patch released
+
+# Credit
+FB3F15 of STARLAB
+
+# PoC
+https://github.com/STARLABSEC/pocs/raw/master/openjpeg-nullptr-github-issue-842.ppm
+
+# External link
+https://github.com/uclouvain/openjpeg/issues/843
+
+
+
