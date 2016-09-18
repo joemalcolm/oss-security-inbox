@@ -1,37 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/10
-Message-ID: <20161118145826.GA2799@io.lakedaemon.net>
-Date: Fri, 18 Nov 2016 14:58:26 +0000
-From: Jason Cooper <osssecurity@...edaemon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/5
+Message-ID: <CAP145pg=8HG5oAJqBTY71pVCEBsqACFeN3DV35ANjckixNhyCA@mail.gmail.com>
+Date: Sun, 18 Sep 2016 15:23:32 +0200
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Cc: john.haxby@...cle.com
-Subject: Linux encrypted boot security, was: CVE-2016-4484: - Cryptsetup Initrd root Shell
+Subject: Re: CVE request - openjpeg null ptr dereference
 Content-Type: text/plain; charset=utf-8
 
-Hi Jacobo,
+Hi,
 
-On Thu, Nov 17, 2016 at 07:54:20PM -0500, Jacobo Avariento wrote:
-> Actually when using full disk encryption, to lock the BIOS and GRUB must
-> be mandatory, otherwise you are protecting your confidentiality but not
-> your integrity. Even with a password in GRUB with an unprotected BIOS
-> you can also boot from a USB device and access encrypted partitions,
-> delete them, etc.
+2016-09-18 14:41 GMT+02:00 vul@...safe <vul@...safe.com>:
+> # Vulnerability
 
-As long as the user in conscious of the threat model and makes the
-deliberate decision, this is fine.  But please always advise folks,
-"Physical access trumps everything.  Period."
+Would you have an idea who (and how) is exactly *vulnerable* to this
+specific vulnerability?
 
-I can't count the number of hard drives I've pulled and cmos' I've
-reset.  That why I always advise moving all of the unencrypted boot
-material (bootloader, /boot, LUKS header) to a separate thumbdrive and
-to boot via USB.
+> openjpeg null ptr dereference in convert.c:1331
+>
+> # Version
+> 2.1.1  ( http://www.openjpeg.org/ )
+>
+> # Address Sanitizer Output
+> ASAN:SIGSEGV
+> =================================================================
+> ==7358==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000 (pc
+> 0x0815d204 bp 0xff846938 sp 0xff846380 T0)
+>     #0 0x815d203 in skip_white
+> /home/starlab/fuzzing/openjpeg/src/bin/jp2/convert.c:1331
+>     #1 0x8135d81 in main
+> /home/starlab/fuzzing/openjpeg/src/bin/jp2/opj_compress.c:1723
+>     #2 0xf7343636 in __libc_start_main ??:?
+>     #3 0x807a31b in _start ??:?
+>
+> # PoC
+> See poc.ppm
+>
+> # Analysis
+> In convert.c:1483 and convert.c:1485, variable s is uncheck after
+> skip_int is called.
+> A null ptr will be passed to skip_int again and will cause a null ptr
+> dereference.
+>
+> # Report Timeline
+> 2016-09-16: FB3F15 of STARLAB discovered this issue
+> 2016-09-18:Patch released
+>
+> # Credit
+> FB3F15 of STARLAB
+>
+> # PoC
+> https://github.com/STARLABSEC/pocs/raw/master/openjpeg-nullptr-github-issue-842.ppm
+>
+> # External link
+> https://github.com/uclouvain/openjpeg/issues/843
 
-Maintaining physical custody of the boot material keeps it more secure
-and is easier for the user because there are fewer passwords involved.
-And, with UEFI, you can update/configure it from within the OS, which
-means the password for that can be kept in a password manager on the
-encrypted volume.
-
-thx,
-
-Jason.
+-- 
+Robert Święcki
