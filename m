@@ -1,67 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/17
-Message-ID: <4079765.cAzWC0Rqb2@arcadia>
-Date: Sat, 08 Oct 2016 22:29:54 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/11
+Message-Id: <E82F2B4A-DBD5-4B21-A526-0DCC26093A38@oracle.com>
+Date: Sun, 18 Sep 2016 20:06:57 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: potrace: invalid memory access in findnext (decompose.c)
+Cc: Jan Schaumann <jschauma@...meister.org>, "chet.ramey" <chet.ramey@...e.edu>
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-Description:
-potrace is a utility that transforms bitmaps into vector graphics.
 
-A crafted image revealed, through a fuzz testing, the presence of a invalid 
-memory access.
+> On 16 Sep 2016, at 19:49, Chet Ramey <chet.ramey@...e.edu> wrote:
+> 
+> On 9/16/16 1:38 PM, Jan Schaumann wrote:
+>> John Haxby <john.haxby@...cle.com> wrote:
+> 
+> (I didn't get this message.)
 
-The complete ASan output:
+Sorry about that, I thought I’d cc’d you with the right address.
 
-# potrace $FILE
-potrace: warning: 48.crashes: premature end of file                                                                                                                                            
-ASAN:DEADLYSIGNAL                                                                                                                                                                              
-=================================================================                                                                                                                              
-==13940==ERROR: AddressSanitizer: SEGV on unknown address 0x7fd7b865b800 (pc 
-0x7fd7ec5bcbf4 bp 0x7fff9ebad590 sp 0x7fff9ebad360 T0)                                                            
-    #0 0x7fd7ec5bcbf3 in findnext /var/tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:436:11                                                                             
-    #1 0x7fd7ec5bcbf3 in getenv /var/tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:478                                                                                  
-    #2 0x7fd7ec5c3ed9 in potrace_trace /var/tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/potracelib.c:76:7                                                                         
-    #3 0x4fea6e in process_file /var/tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/main.c:1102:10                                                                                   
-    #4 0x4f872b in main /var/tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/main.c:1250:7                                                                                            
-    #5 0x7fd7eb4d961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #6 0x418fc8 in getenv (/usr/bin/potrace+0x418fc8)                                                                                                                                          
-                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                              
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
-gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:436:11 in findnext                                                                   
-==13940==ABORTING
-Affected version:
-1.13
 
-Fixed version:
-N/A
+> 
+>>> A little while ago, one of our users discovered that by setting the
+>>> hostname to $(something unpleasant), bash would run "something
+>>> unpleasant" when it expanded \h in the prompt string.
+> 
+> This issue has been public since October, 2015 in Ubuntu's bug tracking
+> system.
+> 
 
-Commit fix:
-N/A
+Yes, the message was more to let people know that CVE-2016-0634  had been assigned for this issue.   Do you have a link to the Ubuntu issue and a different CVE number?
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+>> To clarify: this is only triggered if the hostname has been set, not the
+>> $HOSTNAME variable, right?
+> 
+> Bash doesn't use $HOSTNAME; it sets it if it's not already set.  The
+> shell's idea of the current hostname is set using gethostname().  If
+> gethostname() fails, the hostname gets set to "??host??".  The \h
+> prompt expansion uses the shell's idea of the current hostname.
+> 
+> If your privileged application (either a user with privilege or a hostname-
+> setting agent) allows the hostname to be set to any arbitrary string of
+> characters, you're going to have problems regardless.
 
-CVE:
-N/A
 
-Timeline:
-2016-08-26: bug discovered
-2016-08-27: bug reported privately to upstream
-2016-08-29: blog post about the issue
+Yes, that’s correct.   A while ago there was a problem that dhcp would let a malicious dhcp server use a hostname of the attackers choosing.   That was bad not least because would expand whatever was given.   The linux sethostname(2) system call doesn’t make any restrictions on what you can use for a system call so any agent (not just that old dhcp version) that sets the hostname could potentially trigger this.   The bar is obviously set quite high for this: you need to find an agent that you can persuade to set the hostname for you — any agent that just blindly sets the hostname to $(do something bad) is broken, but bash shouldn’t make the situation worse by giving you complete control over the machine.
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-findnext-decompose-c/
+> 
+> Chet
+> -- 
+> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+> 		 ``Ars longa, vita brevis'' - Hippocrates
+> Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
