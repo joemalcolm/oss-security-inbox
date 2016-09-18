@@ -1,4 +1,9 @@
-Received: (qmail 19539 invoked by uid 550); 18 Apr 2023 01:26:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2522" "Sunday" "18" "September" "2016" "13:04:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918170439.ADBAF42E002@smtpvbsrv1.mitre.org>" "56" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability" nil nil nil "9" "2016091817:04:39" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability" (number mark "U       cve-assign@m Sep 18   56/2522  " thread-indent "\"[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability\"\n") "<CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>" ("<CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9847 invoked by uid 550); 18 Sep 2016 17:04:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18419 invoked from network); 18 Apr 2023 01:26:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1681781177;
-	bh=1+38gdf9NnaNZjj1icsAf/TtDBxJ2XT04A3GkNV15D8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=qY5hx9FLs1iuiJAS7PIuSm1+8ljUUXG6nWxLQ7uNc5v86c82ehD6bX7UqDl9onxFg
-	 LLhB/HzXMJmUiZbNVPpVWHI7B/Y/TcN9dVR+kRxxCeDjcZkYa73zmjJZuFF50shawk
-	 qAdEEuNRiuR6Vlw9bQAzWynJc8fMA1+hwHbwgQzHzmxBQnq+XQGqQHBomCiTP5R2HS
-	 HFW/VN2G7Cp22I5XRSGKGtSOUF2fdqtfwszM8khzvcwonb7AdjGNdqmRNWh/LiLrWN
-	 WDDLFTNyG2Ptv+sK4KhA5mURVrVsahNz9xzIB1JtuG7CZFjMyk7bUGXyI/JVITm5l2
-	 cbPH/NQ/bARlQ==
-Date: Tue, 18 Apr 2023 01:26:15 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: Benoit Tellier <btellier@apache.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230418012615.GG1655348@millbarge>
-Mail-Followup-To: Benoit Tellier <btellier@apache.org>,
-	oss-security@lists.openwall.com
-References: <b25b13ef-81bb-4d59-930d-a566659f8b2f@apache.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7uYPyRQQ5N0D02nI"
-Content-Disposition: inline
-In-Reply-To: <b25b13ef-81bb-4d59-930d-a566659f8b2f@apache.org>
-Subject: Re: [oss-security] CVE-2023-26269: Apache James server: Privilege
- escalation through unauthenticated JMX
+Received: (qmail 9817 invoked from network); 18 Sep 2016 17:04:51 -0000
+From: cve-assign@mitre.org
+To: felixk3y@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAEiFw0WYE5q8jTO5napPQRKuGfnm1Q-VHg_ioEsKN6PX6Lxdnw@mail.gmail.com>
+Message-Id: <20160918170439.ADBAF42E002@smtpvbsrv1.mitre.org>
+Date: Sun, 18 Sep 2016 13:04:39 -0400 (EDT)
+Subject: [oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerability
 
---7uYPyRQQ5N0D02nI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Mar 31, 2023 at 05:28:03AM +0000, Benoit Tellier wrote:
-> https://james.apache.org/
-> https://www.cve.org/CVERecord?id=CVE-2023-26269
+> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/pixidou/controllers/pixidouController.php#L83-L91
+> The "fid" parameter fail to sufficiently sanitize before using it in an SQL
+> query, In This vulnerability, also lead to Directory traversal, Remote code
+> execution vulnerabilities etc..
+> 
+> 1) Directory traversal vulnerability
+> http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
+> union select
+> 1,'./','1.txt',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../framework/conf/config.php
+> 
+> 2) Remote code execution
+>  i. Upload any legal files through website(.jpg|.gif etc..)
+>  ii. copy file to evil file(.php etc..)
+> 
+> Proof of concept:
+> http://www.exponentcms.org/index.php?controller=pixidou&action=exitEditor&exitType=saveAsIs&fid=-1'
+> union select
+> 1,'./','evil.php',4,5,6,7,8,9,0,1,2,3,4,5%23&cpi=../../../../../../../../etc/passwd
+> 
+> And Now, The SQL Injection vulnerability have been fixed.
+> https://exponentcms.lighthouseapp.com/projects/61783/changesets/c1092f167cc6c78dc8bf9bf149946c5219413df3
+> https://github.com/exponentcms/exponent-cms/commit/c1092f167cc6c78dc8bf9bf149946c5219413df3
 
-Hello Benoit, thanks for contacting the oss-security mail list about this
-security issue in an Apache project.
+Use CVE-2016-7452 for the directory traversal issue fixed by the
+"strpos($this->params['cpi'], '..')" check in
+c1092f167cc6c78dc8bf9bf149946c5219413df3.
 
-I'd like to suggest that your email would be far more useful if
-it included some details like affected versions: ideally, when a
-vulnerability was introduced, and definitely, when it was fixed, if a
-fix is available. Best would be a direct link to a patch in a source
-control system, or attaching the patch directly.
+Use CVE-2016-7453 for the SQL injection issue fixed by the
+intval($this->params['fid']) call in
+c1092f167cc6c78dc8bf9bf149946c5219413df3.
 
-This particular email has very few details and no references for a fix so
-it is very difficult for anyone to take concrete actions.
-
-Here's two recent postings that are far easier for downstream distributors
-and consumers alike to use:
-https://www.openwall.com/lists/oss-security/2023/04/04/1
-https://www.openwall.com/lists/oss-security/2023/03/21/3
-
-I'd like to encourage Apache to use these as inspiration for future
-oss-security postings.
-
-Thanks
-
-
---7uYPyRQQ5N0D02nI
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmQ98bcACgkQ8yFyWZ2N
-LpePiwf/Tkq4xJJ//aXkg8acslL61esl6eAGRjhzKarFMA93Mr0xXtvJed8YviCk
-oBbJk7ga8W/5CAvNJ8+8U7YZnvNow46d9kF3O+GMPwKp8d0BZo+2J5T00O6qFhiL
-RC7fMPJ+ZJJ0yxIgZuHqkR9fr4JaUQ9hfcxtJatqFnDLSgctpYN3pz9Aa/yBjagd
-dqmRd8MPEU9dZFNUkRiSYHhTM2Yr8DR1hi424GNS5bPfmd3KSkxp+khkzeqP7tMo
-a7DbF6Mk6sPoFKi5duHYReyOvl9D0lGDvrhem9eE8FjlJXr7d4Ie1OlfVnw6m4aH
-M/GjAZsol2O2fW/JWBtmpfKyHxrx4w==
-=53JO
+iQIcBAEBCAAGBQJX3shtAAoJEHb/MwWLVhi21KwP/iyL/R3UtWIyGgsRLgYCHfiI
+UcLYWRA9eGFdm9cAeq+C5lJoyKkxjP6jeExQEE0o0jPR0wHcuya87JP8VYxjla0X
+QrsbtRk0N9bWLT9Hnt/AUXl4kRL4/V2rQu1dfdO5/ZT4/fu708qOyBOetVPPp+IY
+i9LteoDEsTeDs8LtF8vQjC9myYSP3uZVOW5yl1s3AmqbebUWHNYOUn5x0ts1h6mu
+4wAxXq7lBS0Lo/pi1OPBZGSlNJ06rgU6giksivSG9EuVQ2c9vngiJLOyGYFCB5kk
+xSHu4m51Wdg34QVlv3qibWtYp9Ni/72yUNpsYwTGZelh4khIRu7sou5Dy0VFKDCX
+elnFnjeF/zffE1hSTZz7Qf6bzikyHr6t7zfoh1Mob3GEc9BskjAuRcy4vS5D1NxK
+vF/ZXTuMA8fYmD83nY55kdGzOBr3rMV22gC2BpMTfAb/GklRTN9X5Jvr2GYQdIF7
+tiNWiq9XA63CrptuZ2iprItCKFNvEtH3O67U7b5ITAzQc8X66PgX9ZpwKAIJGDV8
+EOCycuetg4zUp7uglB5+dznodH404ky2TV0O45K8Bzt4cvh2CBEMNZwI8A4JLzxt
+IuyGjmVlSYEIDzDwK/VV9lHz0uOne5TOs7l5UVTVwk1LGUFWsD6LPyWAIujSplUl
+S56PM1ifmk+8oJ5eQK/e
+=Bayi
 -----END PGP SIGNATURE-----
-
---7uYPyRQQ5N0D02nI--
