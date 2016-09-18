@@ -1,49 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/3
-Message-ID: <be20b15c60174c99ac2f0cd46f050826@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:32:16 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request Qemu: usb: redirector: memory leakage when destroying
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/3
+Message-ID: <20160918123124.poc7x5skdijl2j3m@eldamar.local>
+Date: Sun, 18 Sep 2016 14:31:24 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> Quick Emulator(Qemu) built with the USB redirector usb-guest support is
-> vulnerable to a memory leakage flaw. It could occur while destroying the USB
-> redirector in 'usbredir_handle_destroy'.
-> 
-> A guest user/process could use this issue to leak host memory, resulting in
-> DoS for a host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg01379.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=07b026fd82d6cf11baf7d7c603c4f5f6070b35bf
+Some days ago new GnuTLS version were released for GNUTLS-SA-2016-3
+(OCSP validation issue):
 
->> it doesn't free the vm change state handler
+> Stefan Bühler discovered an issue that affects validation of
+> certificates using OCSP responses, which can falsely report a
+> certificate as valid under certain circumstances. That issue affects
+> gnutls 3.3.24, 3.4.14, 3.5.3 and previous versions. Write-up[0] by
+> Stefan Bühler
+> Recommendation: Upgrade to GnuTLS versions 3.4.15, 3.5.4 or apply the
+> patch referenced in the mail above.
 
-Use CVE-2016-9907.
+Upstream fix is at [1]. This is as well tracked in Red Hat's bugzilla
+at [2].
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Could you please assign a CVE for this issue?
 
-iQIcBAEBCAAGBQJYSPvuAAoJEHb/MwWLVhi2broP/2fJ5v5oVmb9x0tsuXAjZ1Ba
-aXQDcdYBS0GUbME9pWh1rjuHtlYtiwocTpDLRIph38oyyre+ejrTQoqdp8S7pkVL
-oB/ENczkJM94VM88tl+lVs53x+0iZl+a2Xs0K7vFLsc+vYhPeXyzyM0PVm90AjNV
-vlM9sYQDfmZ7LzsQr6CyvOmwe1xfs/1Zo6U62qPkdmjFeBNhUGg/F+NoVv2U2yaQ
-ArsgSON2QE7eyLvpawFqbnWSKITrYKp+3WIEQxRDScWl1dgSY4CPKxBFiKGM7odu
-np7PtDRiJp3S9o9IYAkvJ9B07meSqiy6HLubLDXQsKmV+9S08lXNAhmNo6Esed42
-AIMcasrZNA7S1fCNXM9zykphS/ku3kZKzvdrHxJM7zHtMg9PcKi8fPKybX8ddNju
-suLCPt6HsCNjK/a3duxMJAeUaxo6bgGJa5QdZ7skUzSEKt3ffUPmSDNQG4rjz3N6
-W8RPnbTGCFkNSTmzbIoR6Ho5ttZZ7TTXXTQpQRPuUUiZ5f+p3kII7cQN+z+/Hn61
-UCHkc4NJNnn9tK8M9NBELx6VomVtqWAzMhxw3FcO6eekPW40mMrCuoM+IkQp0a9d
-l9OYJP6Zihlpfa8Nm0kzk26+V+hLR4aXv/zaCzDm9ipe2NRckn6ZIltYzoW7waeI
-Co2uP2bGilgPtZnQhnBK
-=0MJ9
------END PGP SIGNATURE-----
+Regards,
+Salvatore
+
+ [0] https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
+ [1] https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9 
+ [2] https://bugzilla.redhat.com/show_bug.cgi?id=1374266
