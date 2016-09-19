@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/02/6
-Message-ID: <alpine.BSO.2.20.1609021547560.46085@natsu.mindrot.org>
-Date: Fri, 2 Sep 2016 15:52:06 +1000 (AEST)
-From: Damien Miller <djm@...drot.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/19
+Message-Id: <FF64064C-58B8-4A27-AA23-F343C361E5CB@shub-internet.org>
+Date: Mon, 19 Sep 2016 17:33:41 -0500
+From: Brad Knowles <brad@...b-internet.org>
 To: oss-security@...ts.openwall.com
-cc: Solar Designer <solar@...nwall.com>
-Subject: Re: CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities
+Cc: Brad Knowles <brad@...b-internet.org>
+Subject: Re: ezmlm warning
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 13 Aug 2015, Moritz Jodeit wrote:
+On Sep 19, 2016, at 5:06 PM, Solar Designer <solar@...nwall.com> wrote:
 
-> On 12.08.2015 22:48, Solar Designer wrote:
-> > Thank you!
-> > 
-> > Are systems with "keyboard interactive" and "challenge-response"
-> > authentication disabled (all of PAMAuthenticationViaKbdInt,
-> > KbdInteractiveAuthentication, and ChallengeResponseAuthentication, as
-> > applicable to a given sshd version, set to no) affected by these issues
-> > as well?  The code appears to be specific to this mode, but it isn't
-> > immediately clear whether or not these configuration settings prevent
-> > the vulnerable code from being reached in the privsep monitor even when
-> > the privsep child is compromised.  If the settings do not currently
-> > prevent the code from being reached (I hope they do), then this should
-> > be corrected as a hardening measure.
-> 
-> As long as UsePAM is enabled in the configuration, all the PAM-related
-> monitor requests can be send to the monitor. This at least allows
-> triggering the use-after-free even if all the settings you mentioned
-> are set to "no". Not sure if a full authentication is possible in this
-> case though.
+> This is on my back burner.  I might approach experimenting with this
+> some months later.  I'm afraid I have other priorities right now.  For
+> now, I recommend that you don't use DMARC for addresses that you use on
+> mailing lists (posting and/or subscribing); in fact, I am likely to
+> continue to recommend this even if we do deploy a workaround for the
+> lists hosted at Openwall.
 
-Solar just reminded me of this branch of this old thread, prompting
-me to tighten up OpenSSH's privilege separation monitor process:
+This might be verging on heresy, but do note that Mailman should now be DMARC-friendly out-of-the-box.
 
-https://anongit.mindrot.org/openssh.git/commit/?id=775f8a23f235
-https://anongit.mindrot.org/openssh.git/commit/?id=7fd0ea8a1db4
-https://anongit.mindrot.org/openssh.git/commit/?id=b38b95f5bcc5
+--
+Brad Knowles <brad@...b-internet.org>
 
-(there'll be another one for GSSAPI once I can find someone to test it)
 
-Together these more rigorously and explicitly enforce the expected
-request flow in the monitor process.
-
-Thanks for the reminder :)
-
--d
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
