@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/2
-Message-ID: <56FB9D8E.9070104@redhat.com>
-Date: Wed, 30 Mar 2016 15:04:06 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/16
+Message-ID: <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>
+Date: Mon, 19 Sep 2016 14:01:08 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Two flaws - libjpeg and libtiff
+Subject: Re: Re: ezmlm warning
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On Sat, Jul 18, 2015 at 10:40 AM, Solar Designer <solar@...nwall.com> wrote:
 
-We have made two security flaws public today. They were privately
-reported to us by  Aladdin Mubaied. Details as follows:
+> On Thu, Jul 16, 2015 at 05:41:35PM -0700, Reed Loden wrote:
+> > Likely, the ezmlm instance on lists.openwall.com needs to be updated to
+> get
+> > some of the DMARC compliance changes that were made last year (
+> > http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
+>
+> Thank you.  I assume you mean primarily this one:
+>
+> - Added optional rewritefrom feature to ezmlm-send, automatically
+>   enabled when the sender has a "reject" DMARC policy.
+>
 
-1. null pointer dereference in libjpeg library in cjpeg
-This is a flaw in the cjpeg utility available with the libjpeg library,
-details available at:
-https://bugzilla.redhat.com/show_bug.cgi?id=1318509
+Alexander,
 
-2. buffer-overflow in gif2tiff utility:
-This is bundled with libtiff, details available at:
-https://bugzilla.redhat.com/show_bug.cgi?id=1319503
+Any update on getting the ezmlm instance on oss-security updated so people
+with e-mail providers who have implemented DMARC don't get their e-mails
+rejected? Would be much appreciated.
 
+Thanks,
+~reed
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
