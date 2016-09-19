@@ -1,13 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/7
-Message-ID: <9DD65BAF-CD30-48C7-8BE6-4D740A14AD0C@nccgroup.trust>
-Date: Thu, 14 Jul 2016 21:27:36 +0000
-From: Jesse Hertz <Jesse.Hertz@...group.trust>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: #NA-Disclosure <na-disclosure@...group.trust>
-Subject: Re: Multiple Bugs in OpenBSD Kernel 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/10
+Message-ID: <20160919195351.GB29516@hunt>
+Date: Mon, 19 Sep 2016 12:53:51 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Mike Santillana <michael.santillana@...ork.com>
+Cc: oss-security@...ts.openwall.com, 'Apple' via <infosec@...ork.com>
+Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 Content-Type: text/plain; charset=utf-8
 
-For those still unable to view the files, they appear to be viewable on http://seclists.org/oss-sec/2016/q3/68
+On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
+> An IV reuse bug was discovered in Ruby's OpenSSL library when using
+> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+> setting the key, the cipher will default to using a static IV. This creates
+> a static nonce and since aes-gcm is a stream cipher, this can lead to known
+> cryptographic issues.
+> 
+> The documentation does not appear to specify the order of operations when
+> setting the key and IV [1]. As an example, see the following insecure code
+> snippet below:
+> 
+> Vulnerable Code:
+> 
+> def encrypt(plaintext)
+>     cipher = OpenSSL::Cipher.new('aes-256-gcm')
+>     iv = cipher.random_iv # Notice here the IV is set before the key
+>     cipher.key = '11111111111111111111111111111111'
+>     cipher.auth_data = ""
+>     ciphertext = cipher.update(plaintext) + cipher.final
+>     tag = cipher.auth_tag
+> 
+>     puts "[+] Encrypting: #{plaintext}"
+>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+> end
 
-Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
+Hello,
+
+I think you have a mistake in this sample code, 'iv' is assigned but never
+used (aside from being printed).
+
+Your github code is far more complicated but looks like it is doing the
+right thing.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
