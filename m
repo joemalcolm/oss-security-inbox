@@ -1,125 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/19/3
-Message-ID: <CAKws9z0pq63ZK2q_zVgoYF+U+evLNvqD5v=7HKnOy5H263Z8rA@mail.gmail.com>
-Date: Tue, 19 Jul 2016 00:56:58 -0400
-From: Scott Arciszewski <scott@...agonie.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Ruining the Magic of Magento's Encryption Library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/9
+Message-ID: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
+Date: Mon, 19 Sep 2016 15:20:02 -0400
+From: Mike Santillana <michael.santillana@...ork.com>
+To: oss-security@...ts.openwall.com
+Cc: "'Apple' via" <infosec@...ork.com>
+Subject: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 Content-Type: text/plain; charset=utf-8
 
-Hello mcrypt, my old friend
-I've come to exploit you again
-Because a version slowly rotting
-Is well-deserved for a boycotting
-And the S-box that was planted in its GOST
-Still remains
-Within the sound of silence
+Product: Ruby's OpenSSL Library
+Version: Tested on 2.3.1 (latest)
+Bug: IV Reuse
+Impact: Depends on the usage of the library
 
-~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~ 8< ~
+Hello,
 
-Let's talk about Magento.
+An IV reuse bug was discovered in Ruby's OpenSSL library when using
+aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+setting the key, the cipher will default to using a static IV. This creates
+a static nonce and since aes-gcm is a stream cipher, this can lead to known
+cryptographic issues.
 
-The Wikipedia page for Magento begins, "Magento is an open-source
-e-commerce platform written in PHP." This bears emphasis: e-commerce
-platform.
+The documentation does not appear to specify the order of operations when
+setting the key and IV [1]. As an example, see the following insecure code
+snippet below:
 
-When I hear e-commerce, I think "financial information". I think "credit
-card numbers" and "probably PCI-DSS violations should anything be obviously
-stupid".
+Vulnerable Code:
 
-Let's look at how Magento implements cryptography, with a series of
-exhibits followed by an explanation of what's happening and why it's
-dangerous:
+def encrypt(plaintext)
+    cipher = OpenSSL::Cipher.new('aes-256-gcm')
+    iv = cipher.random_iv # Notice here the IV is set before the key
+    cipher.key = '11111111111111111111111111111111'
+    cipher.auth_data = ""
+    ciphertext = cipher.update(plaintext) + cipher.final
+    tag = cipher.auth_tag
 
-  A.
-https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L268-L320
-  B.
-https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L390-L399
-  C.
-https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Crypt.php#L63-L77
+    puts "[+] Encrypting: #{plaintext}"
+    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+#{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+end
 
-D.
-https://github.com/magento/magento2/blob/6ea7d2d85cded3fa0fbcf4e7aa0dcd4edbf568a6/lib/internal/Magento/Framework/Encryption/Encryptor.php#L170
+A developer that uses the code above may incorrectly assume that their code
+is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
+the ‘cipher.random_iv’ method is used. According to the documentation, this
+should generate a random IV each time the encryption method is called.
 
-If you looked at the code, I promise this is every bit as bad as it looks
-at a glance.
+When the code above is run with the same key and same plaintext message,
+the following results are obtained:
 
-EXHIBIT A
-=========
+Output:
+# Run 1
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
+8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+800a5bb48fb1c4ad0b7bdf6054
 
-Magento's decryption expects up to 4 strings concatenated by a : character.
-Depending on the number of pieces, it assumes a totally different setup:
+# Run 2
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
+8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+800a5bb48fb1c4ad0b7bdf6054
 
-1 piece: Blowfish, in ECB mode!
-2 or 3 pieces: Probably blowfish, but maybe AES or Rijndael-256, depending
-on the integer supplied by the attacker.
-4 pieces: We finally get an initialization vector, which means CBC mode can
-be used.
+Notice that in the output above a unique IV is returned for both runs, but
+with the same ciphertext. This proves that even though the random_iv method
+is called, the code is defaulting to a static IV. If an attacker can
+retrieve multiple ciphertext messages, it is possible to decrypt the
+ciphertexts by applying the same attack one would use in a two-time pad
+(XOR ciphertexts and crib drag).
 
-At no point do they authenticate _anything_, so no matter what:
+Next review the following code snippet and output, which depicts a secure
+implementation of the code:
 
-- You get to control which branch is selected by breaking pieces off the
-attacker-chosen message.
-- You get to choose the ciphertext that the attempted decryption is
-performed upon.
+Valid Code:
 
-EXHIBIT B
-=========
+def encrypt(plaintext)
+    cipher = OpenSSL::Cipher.new('aes-256-gcm')
+    cipher.key = '11111111111111111111111111111111'
+    iv = cipher.random_iv # Notice here the IV is set after the key
+    cipher.auth_data = ""
+    ciphertext = cipher.update(plaintext) + cipher.final
+    tag = cipher.auth_tag
 
-If you thought the ability to be encrypted with AES was a saving grace, too
-bad. They hard-code your choice to ECB mode.
+    puts "[+] Encrypting: #{plaintext}"
+    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+#{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+end
 
-The only way you can get CBC mode (which, again, is unauthenticated) is to
-use the non-standard Rijndael256 cipher.
+Output:
+# Run 1
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
+ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
+9a5eaa7e5beefdff5d56cc4136
 
-EXHIBIT C
-=========
+# Run 2
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
+bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
+65846e877dca11a6e13a659540
 
-If you thought it couldn't possibly get any worse, Magento's encryption
-library will either:
+Notice that this time both the IV and ciphertexts are both different for
+the same plaintext. This is the intended result a developer would expect to
+happen when using this library.
 
-- Give you an IV consisting entirely of NULL bytes.
-- Generate it, using rand(), on a 62-character keyspace.
+It should be noted that when I went to Ruby's github page to report this
+bug, I noticed a developer also independently encountered this weird
+phenomenon [2]. Since it has already been brought up to the Ruby team, I
+have not created a new ticket.
 
-(Y'know, because it's not XORed with the plaintext in CBC mode and biases
-aren't a concern or anything.)
+References:
+ [1]
+https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-Authenticated+Encryption+and+Associated+Data+-28AEAD-29
+ [2] https://github.com/ruby/openssl/issues/49
 
-EXHIBIT D
-=========
+I'd like to to request a CVE ID for this issue.
 
-Yes, that is how Magento hashes passwords. Which is weird: They go out of
-their way to compare strings in constant-time, but
+Thanks
 
-PUTTING IT ALL TOGETHER
-=======================
+*WeWork | Mike Santillana*
+Security Engineer
+845-709-5655
+www.wework.com
 
-An attacker has a great deal of control over the ciphertext, and
-incidentally which cipher mode is used by the decryption routine.
-Nothing is authenticated. At all.
-ECB mode everywhere.
-When CBC mode is actually used, it's used with a laughably weak IV and a
-non-standard cipher. Also, unauthenticated.
-
-Magento, one of the largest open source e-commerce platforms, ships a
-broken cryptography library that clueless developers are probably using to
-encrypt your credit card information for their client's customers.
-
-Given the prevalence of ECB mode, and the weak IV used in CBC mode, you
-should assume anything you encrypted with Magento's encryption library is
-both:
-
-- Decryptable, if an attacker can alter plaintexts or ciphertexts and study
-the output of either operation, without the key
-- Forgeable
-
-This cryptography implementation is very irresponsible and, because
-cryptography is involved, warrants immediate full disclosure so everyone
-can cease to use their broken crypto as soon as possible.
-
-If you need a remediation strategy, I've got you covered:
-https://paragonie.com/blog/2015/11/choosing-right-cryptography-library-for-your-php-project-guide
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
+Create Your Life's Work
 
