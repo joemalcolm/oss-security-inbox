@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1694" "Tuesday" "19" "June" "2018" "20:06:04" "+0200" "Pali =?utf-8?B?Um9ow6Fy?=" "pali.rohar@gmail.com" "<20180619180604.e7pwkjjgemwdpwm7@pali>" "51" "[oss-security] CVE-2018-12558: DOS in perl module Email::Address" "^Date:" nil nil "6" "2018061918:06:04" "[oss-security] CVE-2018-12558: DOS in perl module Email::Address" (number mark "        pali.rohar@g Jun 19   51/1694  " thread-indent "\"[oss-security] CVE-2018-12558: DOS in perl module Email::Address\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["869" "Monday" "19" "September" "2016" "13:52:45" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNVZu3oCinNrhmTbeFc_JQcJDS0N55suTN3JFQof2AvbVw@mail.gmail.com>" "28" "Re: [oss-security] Possible CVE for TLS protocol issue" nil nil nil "9" "2016091920:52:45" "[oss-security] Possible CVE for TLS protocol issue" (number mark "U       reed@reedlod Sep 19   28/869   " thread-indent "\"Re: [oss-security] Possible CVE for TLS protocol issue\"\n") "<CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>" ("<CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8004 invoked by uid 550); 19 Jun 2018 18:06:18 -0000
+Received: (qmail 24078 invoked by uid 550); 19 Sep 2016 20:53:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7986 invoked from network); 19 Jun 2018 18:06:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Obq0+K/VJKRoAfpfLmtbKRW/AGaiKQ4t1vVr6CQC+EY=;
-        b=dLOT+PEhzb+xXH0Z4cQ4CwkFYJjaM/QcvNqwluJ0QhYetWAdgw31PfUruBtpdt8ad2
-         zB/aGKkX6eYeB0XwYk8YymIpsIviX+NLGebUmxkVUWpTnJaJ5v2uapUszL+L2QSR9byj
-         mT7wmu34muTpRARpqgDee8kLTWF3FrtAhTVeGqG3WDTBhPOpU6K063hOAoHO50Fe6u2k
-         yUv+DYi+ixBFX2xEJFogut3ItKC9N6XxQN7ob4KBCyg0aKG6v++wmoVIMPr3MMoJM6lr
-         TPwkvyL52LfQawob0ssTSX8MbUrtYuYTMxRHI1pOIXkRPXlDomTkqpDP97Fg8lxzgOSg
-         TqQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Obq0+K/VJKRoAfpfLmtbKRW/AGaiKQ4t1vVr6CQC+EY=;
-        b=aVo+nMDlAGbF7Ii+upjCqwMRSrCBcMiT8Go4GbqUSN09YCXjsV6+e9nQmMizjs/Tp6
-         qL9aeDsLdie5UZZG3X56xjWK3V25z7N5n2p/RrU9uk0ktt30d0qgeTVNIfSerwzAGLNy
-         CCAJp6w8UoVZvjpZqB+BNmesFKWnxO0CP5iBTx6W6tK+JKrz3hMwvs67ZgL4gZrWKCyP
-         JVjfszg7eVCFPD+p8e84vIkZ0pBu2h4K5i2uesdVwA1Ut2HmxvlzYPONyHKCr2eLUTwW
-         15c4CG5oaRBPk1cGF+aWWQw5K7AzZnzBsAgKTimSbzORnNVy8ay5wOsaKKXu/n1kMyFr
-         krZg==
-X-Gm-Message-State: APt69E3L963n9b4hxXfALo/p6TbNebij7egeB5s0GKFCl/En0g9gpDsk
-	ygUmYd5SPRJZ3crfnGZR3YRDqg==
-X-Google-Smtp-Source: ADUXVKK2IKKpJ226+1PbYKZJabHO2AGjG0V25Wlq3qDz/TRcqnk7OnsymUO0IdYMldzUS6uBeiUhrA==
-X-Received: by 2002:a1c:928c:: with SMTP id u134-v6mr12293561wmd.106.1529431566267;
-        Tue, 19 Jun 2018 11:06:06 -0700 (PDT)
-Message-ID: <20180619180604.e7pwkjjgemwdpwm7@pali>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="h4dsucwqmliy6al5"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-Date: Tue, 19 Jun 2018 20:06:04 +0200
-From: Pali =?utf-8?B?Um9ow6Fy?= <pali.rohar@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-12558: DOS in perl module Email::Address
+Received: (qmail 24054 invoked from network); 19 Sep 2016 20:53:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=0BIE9gdm6R94YVCOATlxgy6QuIEa3HNxdrW9TywZkZU=;
+        b=XGOxzAl2++qWQhcEQnXSbWOQ/nEAPuaKyGrXqzQrOal/4UM2qQqxuaMWJllA+IVa02
+         3U4H8bqGqRyS8fs9DSFDip43xy950cOQL4iRkYyxiV7Jdx8rcbl3SfwuHFR92DrLqU3H
+         I6ZgFzGBePCmXim00cvbjaGqcieEa+VNKXAP0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=0BIE9gdm6R94YVCOATlxgy6QuIEa3HNxdrW9TywZkZU=;
+        b=mVor556YF6vZe5qu5TTrXn97wZ8P7612N4YBDcZC78kbt1PqA3QhlFD8ofOOveIgnF
+         ERVw9MOMjrWL+yQZh0jgIjJNCCoLndi+l8XF32HLpEtXjusdq3SraBRt9ZAya0FCOW+r
+         K0/JFMZ8SpyWO5fP9syxaWzkGFWChRjCVMJ9o6XPFvax5IYsaej5Rrh2L+mgIzmUCDkN
+         DN8F0wizFYgZ2xnWpNExCE8p0DVXhjPm6HcJIx7dTiT+VOx4GxZJAqRJ46OXT1YURogD
+         twyL4FRvvs4J5gmjRek0B9n+64kQQqtN34D36fuByLKiHz0ilrrQqpv010Q/nluhjrSg
+         0Elg==
+X-Gm-Message-State: AE9vXwOXHqpLlDC/7JR3itWaN13Ujlw6nOBDh26CgPADdSIUAgXwDrDbBx+MPmDTbjWhg/I262oM7Q6xMJ7FcbYZ
+X-Received: by 10.107.27.14 with SMTP id b14mr42977616iob.60.1474318386524;
+ Mon, 19 Sep 2016 13:53:06 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
+References: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
+From: Reed Loden <reed@reedloden.com>
+Date: Mon, 19 Sep 2016 13:52:45 -0700
+Message-ID: <CALPTtNVZu3oCinNrhmTbeFc_JQcJDS0N55suTN3JFQof2AvbVw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113fdd68b736d8053ce27f04
+Subject: Re: [oss-security] Possible CVE for TLS protocol issue
 
---h4dsucwqmliy6al5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--001a113fdd68b736d8053ce27f04
+Content-Type: text/plain; charset=UTF-8
 
-Hello!
+Seems pretty old, just FYI:
 
-Perl module Email::Address, also in the last version 1.909 is vulnerable
-to Algorithm Complexity problem and can cause Denial of Service when
-attacker prepares specially crafted input. Root of this problem is that
-parsing of email addresses in Email::Address module is done by regular
-expressions, which in perl can be exponential.
+Research paper published: 2015/11/08. Additional content added: 2015/14/09.
 
-The trivial input is 30 form-fields characters. You can test it with
-following oneliner:
+~reed
 
-$ perl -MEmail::Address -E 'Email::Address->parse("\f" x 30)'
+On Mon, Sep 19, 2016 at 1:39 PM, Kurt Seifried <kseifried@redhat.com> wrote:
 
-Vulnerable are all applications which receive (untrusted) emails and
-parse address headers (From/To/Cc/...) by Email::Address module. Such
-application can be DOSed by sending email with 30 form-fields characters
-in From or To header.
+> This was pointed out to me by mjc@:
+>
+> https://kcitls.org/
+>
+> TL;DR: if you can trick someone to install a client certificate you can
+> then spoof any future web site. Certainly not what we want from the people
+> issuing client certificates. It sounds like this is a protocol level
+> vulnerability affecting closed and Open Source vendors potentially, and it
+> is public so posting it here.
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> Red Hat Product Security contact: secalert@redhat.com
+>
 
-Note that this is not the only one problematic input, due to way how is
-Email::Address implemented it should be possible to prepare more
-non-trivial inputs.
-
-This problem was already reported to Debian Security Team and they
-suggested to ask MITRE for assigning CVE identifier. MITRE now assigned
-CVE-2018-12558.
-
-References:
-https://metacpan.org/pod/Email::Address
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D901873
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2018-12558
-
---=20
-Pali Roh=C3=A1r
-pali.rohar@gmail.com
-
---h4dsucwqmliy6al5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQS4VrIQdKium2krgIWL8Mk9A+RDUgUCWylGCgAKCRCL8Mk9A+RD
-Ul2TAKCnPQnzLtbhKInD17okR824G5jFhwCeKKzGoV2nplg3FVdTh3QmigJxzmc=
-=x9T8
------END PGP SIGNATURE-----
-
---h4dsucwqmliy6al5--
+--001a113fdd68b736d8053ce27f04--
