@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2234" "Monday" "4" "January" "2021" "14:27:59" "+0100" "Mauro Matteo Cascella" "mcascell@redhat.com" "<CAA8xKjUGZPdrDvpisd4YpJfwL1wUMbr5KiM7x_SCNetAsLU8Ww@mail.gmail.com>" "64" "[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues" nil nil nil "1" "2021010413:27:59" "[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues" (number mark "U       mcascell@red Jan  4   64/2234  " thread-indent "\"[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues\"\n") "<69a35308-0697-780d-8e72-422c7a2173d8@intel.com>" ("<73386a14-6e5a-83e4-051d-125b5c5fe5d9@intel.com>" "<CAA8xKjULPZw04YY9fd1d83893mmqXX_qp1UjRZdAWP7fU3yC_A@mail.gmail.com>" "<69a35308-0697-780d-8e72-422c7a2173d8@intel.com>") nil nil nil nil nil nil nil "[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4543" "Monday" "19" "September" "2016" "15:20:02" "-0400" "Mike Santillana" "michael.santillana@wework.com" "<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>" "128" "[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" "^Cc:" nil nil "9" "2016091919:20:02" "[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" (number mark "        michael.sant Sep 19  128/4543  " thread-indent "\"[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 6072 invoked by uid 550); 4 Jan 2021 13:34:14 -0000
+Received: (qmail 1596 invoked by uid 550); 19 Sep 2016 19:23:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,165 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3752 invoked from network); 4 Jan 2021 13:28:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1609766894;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/j5/gKF6B7E7RPrIWM3yA5sk3z0EwdaIj83fePF94wE=;
-	b=MMxKa8afJJvffUi/ugIY11w1RDrW4KTlvsWK7ERP0iQJZm4BS79NaTNTrh1zfggJpanNHR
-	JiuBfi2iCVJn24PXLHqMoly+ndajOdvkYVCzP+B57qOJY2uPCU1GiFAphLOsQjnjJZUAmz
-	2i30oYBUiRGNjX2yTMTJXtUE9teZ+48=
-X-MC-Unique: kA4ZTmlHM0uNvNdBTLPODg-1
+Received: (qmail 32301 invoked from network); 19 Sep 2016 19:20:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=wework-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=w57n2VE9LMFc+7XBdvljzhsVvABKiTlIFFA/FoCHzoI=;
+        b=Ab3z/XitWOW2IEnkeYUGMnTzg2BQLL9QnPj54h98Gt9uaFcGlaL7RHS4pdBUjgsuz/
+         2nxg7IPnrMgbMd6UhyJcPLP/XAWaczZt0HePwqavJEhI6FkV6bk5PlD5vjm3XXKmLyk3
+         IhKSFQKIFq1a2rCRUJkCyQOyGb/YRjCAHbv8aicDblUU8hHrHr1KbFXzcM1YU5upNEmS
+         DgAggqu6cHwSwBCNOhq8Yfes3aeS1X3oq0fSzxJ2zvjM2RSBsjHI5BrqEoLK9myKFYYf
+         /tnBs40FkxvUSluiyrKEjYKTMi99DLpzc4TzBgbGtYkb8pbbuFLCJdwf2/1u4MyePKwC
+         xp9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/j5/gKF6B7E7RPrIWM3yA5sk3z0EwdaIj83fePF94wE=;
-        b=qHJZaQKxfGVhtH7PnCRIPDT2Lmd1P8CFu/gKOTsReTCP0mM6E/sPodkc0vllvnmepZ
-         +jmkNvvgP8qTgTmXO9cuhHQBltUht8LSmvVj/PGcclFKEHnqSLxIttmi5Z1LkGjo/WEX
-         YKw5yWKJKHIyr+H+bmUEbIHlrtZHEZxe3nAKhDvgLfKpuQ/O/oETmLymwDFqXLxS4lYz
-         lIY6Hk4HhWGD101/LYPvT8L0OcfwUhkZk241btonp2uj9Ngui7P7wsMdi+ltOGDUm80x
-         6TqabVt3HPGakNsNCk/baRYn8zy2OHaa0TjCN5Pji0b3hlmgfxciwgYXYY7UIYlxZI7k
-         +ZmQ==
-X-Gm-Message-State: AOAM5316yXFR9MQanNnt2EzDdhFpCLXn6wgUkCjOpXKgQNNwCFKMe/gg
-	OD1Umc3VSTFhYZFUy+c7xjlx3LxCXs1vkGPP6JpzC6xKYX/lBgqAe+1NlSfQD0iKm/P4Y+l9cCA
-	l2egFD2jVvl6Vebn8G+NpJgOAFNHblqkUEmmXSC1VQPQO
-X-Received: by 2002:a50:fb97:: with SMTP id e23mr72618933edq.208.1609766890782;
-        Mon, 04 Jan 2021 05:28:10 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyS4p2NXKeO+Cj2jebXSieWHUT9GkSTo0np1SFJE7E8GPFKJDPHW66l1g1CECw7HKSfzjIT9NHioBkERwrxL5E=
-X-Received: by 2002:a50:fb97:: with SMTP id e23mr72618922edq.208.1609766890634;
- Mon, 04 Jan 2021 05:28:10 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=w57n2VE9LMFc+7XBdvljzhsVvABKiTlIFFA/FoCHzoI=;
+        b=Me6x/cGd4bN//0oos8MxusHDOEfY063WPmhYeK90In2n8QfNS5blYHEjQWCnAUytpW
+         Q9WtQk/szgHgGbh5T5Z++jBCzUxlm2SNRfBOZHP1EJ+v0nqkwv4smHZdervOIq5ljbo0
+         FqRaTBl0AK+4cdO599/oEV6bs7kwUD8shzY+av4ZYk7wnoAKpNmJARhFhSHJpzFVi6l7
+         rH5gAKSykOXTPc4SpKggbQPlsunxATKjsgsyPjKUUzJ8yN1hiftltnqPh5aFlqkzalym
+         /vajnHlE+3YNAVzJTcxgvTZ5REnJbR2FDhZq1q0wkikomBoWJwOiwXJu0U464mGkOVkr
+         kv0Q==
+X-Gm-Message-State: AE9vXwMC1kydHL4Tt0Z/DldwVUv2wWGXyOBmaMm/ID5+ubOJw5wMbflKYB+S2VDdk3qsV9DJ/H5n/oFvssiJz9H+
+X-Received: by 10.28.175.147 with SMTP id y141mr10272956wme.9.1474312803187;
+ Mon, 19 Sep 2016 12:20:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <73386a14-6e5a-83e4-051d-125b5c5fe5d9@intel.com>
- <CAA8xKjULPZw04YY9fd1d83893mmqXX_qp1UjRZdAWP7fU3yC_A@mail.gmail.com> <69a35308-0697-780d-8e72-422c7a2173d8@intel.com>
-In-Reply-To: <69a35308-0697-780d-8e72-422c7a2173d8@intel.com>
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Mon, 4 Jan 2021 14:27:59 +0100
-Message-ID: <CAA8xKjUGZPdrDvpisd4YpJfwL1wUMbr5KiM7x_SCNetAsLU8Ww@mail.gmail.com>
-To: Ferruh Yigit <ferruh.yigit@intel.com>
-Cc: oss-security@lists.openwall.com, security@dpdk.org, 
-	security-prerelease@dpdk.org, "dev@dpdk.org" <dev@dpdk.org>, 
-	Ryan Hall <ryan.e.hall@intel.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple
- vhost crypto issues
+Message-ID: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11443f0aec2d3d053ce132e2
+Cc: "'Apple' via" <infosec@wework.com>
+Date: Mon, 19 Sep 2016 15:20:02 -0400
+From: Mike Santillana <michael.santillana@wework.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+To: oss-security@lists.openwall.com
 
-On Mon, Jan 4, 2021 at 12:29 PM Ferruh Yigit <ferruh.yigit@intel.com> wrote:
->
-> On 1/4/2021 8:28 AM, Mauro Matteo Cascella wrote:
-> > Hello,
-> >
-> > Is there any particular reason for the Scope metric to be Unchanged
-> > (S:U) for CVE-2020-14377 and CVE-2020-14378?
-> >
->
-> removed dpdk-announce mail list
->
-> Hi Mauro,
->
-> CVE-2020-14377, the memory over read is in the scope of the same application,
-> that is the reason of the unchanged scope. There is another CVE below that can
-> use this information to figure out where to overwrite for remote execution which
-> has scope set as 'Changed'.
->
-> CVE-2020-14378, can cause loop taken longer time and delays the service, since
-> it is eating the core cycles, if there is something else using that specific
-> core technically it may delay it too, but DPDK mostly uses all core for itself
-> and since mainly the vhost crypto service is affected, scope selected as Unchanged.
->
-> Is there a concern on the selected scope metric?
->
-> Thanks.
->
+--001a11443f0aec2d3d053ce132e2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for the timely reply. With regard to CVE-2020-14377, the
-Scope metric was rated differently by NIST [1] hence my initial
-question.
+Product: Ruby's OpenSSL Library
+Version: Tested on 2.3.1 (latest)
+Bug: IV Reuse
+Impact: Depends on the usage of the library
 
-[1] https://nvd.nist.gov/vuln/detail/CVE-2020-14377
+Hello,
 
-> > On Mon, Sep 28, 2020 at 5:43 PM Ferruh Yigit <ferruh.yigit@intel.com> wrote:
-> >>
-> >> A set of vulnerabilities are fixed in DPDK:
-> >> - CVE-2020-14374
-> >> - CVE-2020-14375
-> >> - CVE-2020-14376
-> >> - CVE-2020-14377
-> >> - CVE-2020-14378
-> >>
-> >> Some downstream stakeholders were warned in advance in order to coordinate the
-> >> release of fixes and reduce the vulnerability window.
-> >>
-> >> Problem:
-> >> A malicious guest can harm the host using vhost crypto, this includes
-> >> executing code in host (VM Escape), reading host application memory
-> >> space to guest and causing partially denial of service in the host.
-> >>
+An IV reuse bug was discovered in Ruby's OpenSSL library when using
+aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+setting the key, the cipher will default to using a static IV. This creates
+a static nonce and since aes-gcm is a stream cipher, this can lead to known
+cryptographic issues.
 
->From the problem statement above I assume all these CVEs lead to some
-kind of guest-to-host compromise, which usually implies a Scope change
-(or at least, this holds true for QEMU flaws). Therefore I was
-wondering what's the reason behind the different evaluation of the
-Scope metric between CVE-2020-14377 and the others.
+The documentation does not appear to specify the order of operations when
+setting the key and IV [1]. As an example, see the following insecure code
+snippet below:
 
-Regards.
---
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+Vulnerable Code:
 
+def encrypt(plaintext)
+    cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
+    iv =3D cipher.random_iv # Notice here the IV is set before the key
+    cipher.key =3D '11111111111111111111111111111111'
+    cipher.auth_data =3D ""
+    ciphertext =3D cipher.update(plaintext) + cipher.final
+    tag =3D cipher.auth_tag
+
+    puts "[+] Encrypting: #{plaintext}"
+    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+#{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+end
+
+A developer that uses the code above may incorrectly assume that their code
+is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
+the =E2=80=98cipher.random_iv=E2=80=99 method is used. According to the doc=
+umentation, this
+should generate a random IV each time the encryption method is called.
+
+When the code above is run with the same key and same plaintext message,
+the following results are obtained:
+
+Output:
+# Run 1
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
+8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+800a5bb48fb1c4ad0b7bdf6054
+
+# Run 2
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
+8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+800a5bb48fb1c4ad0b7bdf6054
+
+Notice that in the output above a unique IV is returned for both runs, but
+with the same ciphertext. This proves that even though the random_iv method
+is called, the code is defaulting to a static IV. If an attacker can
+retrieve multiple ciphertext messages, it is possible to decrypt the
+ciphertexts by applying the same attack one would use in a two-time pad
+(XOR ciphertexts and crib drag).
+
+Next review the following code snippet and output, which depicts a secure
+implementation of the code:
+
+Valid Code:
+
+def encrypt(plaintext)
+    cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
+    cipher.key =3D '11111111111111111111111111111111'
+    iv =3D cipher.random_iv # Notice here the IV is set after the key
+    cipher.auth_data =3D ""
+    ciphertext =3D cipher.update(plaintext) + cipher.final
+    tag =3D cipher.auth_tag
+
+    puts "[+] Encrypting: #{plaintext}"
+    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+#{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+end
+
+Output:
+# Run 1
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
+ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
+9a5eaa7e5beefdff5d56cc4136
+
+# Run 2
+./gcm_encrypt.rb 'This is some secret message.'
+[+] Encrypting: This is some secret message.
+[+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
+bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
+65846e877dca11a6e13a659540
+
+Notice that this time both the IV and ciphertexts are both different for
+the same plaintext. This is the intended result a developer would expect to
+happen when using this library.
+
+It should be noted that when I went to Ruby's github page to report this
+bug, I noticed a developer also independently encountered this weird
+phenomenon [2]. Since it has already been brought up to the Ruby team, I
+have not created a new ticket.
+
+References:
+ [1]
+https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#c=
+lass-OpenSSL::Cipher-label-Authenticated+Encryption+and+Associated+Data+-28=
+AEAD-29
+ [2] https://github.com/ruby/openssl/issues/49
+
+I'd like to to request a CVE ID for this issue.
+
+Thanks
+
+*WeWork | Mike Santillana*
+Security Engineer
+845-709-5655
+www.wework.com
+
+Create Your Life's Work
+
+--001a11443f0aec2d3d053ce132e2--
