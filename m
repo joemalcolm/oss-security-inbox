@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4659" "Friday" "17" "February" "2017" "12:25:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<65b06dc7fec741e9a6d301142f20705d@imshyb01.MITRE.ORG>" "92" "[oss-security] Re: MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021717:25:17" "[oss-security] Re: MITRE is adding data intake to its CVE ID process" (number mark "U       cve-assign@m Feb 17   92/4659  " thread-indent "\"[oss-security] Re: MITRE is adding data intake to its CVE ID process\"\n") "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" ("<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2794" "Monday" "19" "September" "2016" "10:34:47" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8nJ5cqnEdkqRK1AfSM=kCNyFw=rahiWL86Xih5fO9afmQ@mail.gmail.com>" "94" "[oss-security] Fwd: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and down level remediation" "^Date:" nil nil "9" "2016091914:34:47" "[oss-security] Fwd: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and down level remediation" (number mark "        noloader@gma Sep 19   94/2794  " thread-indent "\"[oss-security] Fwd: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and down level remediation\"\n") "<CAH8yC8=-xMe=6ROWMpNQojUi17J6cR6Mc4z6oEU7=any=o-x8w@mail.gmail.com>" ("<CAH8yC8=-xMe=6ROWMpNQojUi17J6cR6Mc4z6oEU7=any=o-x8w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28242 invoked by uid 550); 17 Feb 2017 17:25:32 -0000
+Received: (qmail 32348 invoked by uid 550); 19 Sep 2016 14:39:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28207 invoked from network); 17 Feb 2017 17:25:29 -0000
-From: <cve-assign@mitre.org>
-To: <oss-security@lists.openwall.com>
-CC: <cve-assign@mitre.org>
-In-Reply-To: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
-Message-ID: <65b06dc7fec741e9a6d301142f20705d@imshyb01.MITRE.ORG>
-Date: Fri, 17 Feb 2017 12:25:17 -0500
+Received: (qmail 30108 invoked from network); 19 Sep 2016 14:34:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=TQx9it8PMv0KayV+lRTb/lIKbYuzrzl8Whc+0Kh5P8E=;
+        b=UdmUExbO6qus+JJCVCBtyyEHgke2PubzgVpCYXSc9WrfmNkVoOZ4hqK4jWHUWUlW2X
+         j5A4w27D4CBrlRkqXydYZPi6pzQmU9tUc2Fc1by3ylxUsnFcGxlIHzuVEH1OXzXcF3hY
+         hPJtfAxuEFtlNYsO15Jw3Nt5tLKvWnBNBXfW1m3ukQt9e8T5jPMmEpaGO8rGLwwBqeLT
+         GvArW2U0iKKwk/MllpLwcV32bgeOnuxlZcrHiIrLCh0Zeh6P5HazLn+7SXGAWd867R1P
+         iXMifS5RYEuxWNLlfsjxnbvATKEo/nhCAQuQAxoTNJrJiJN0/o4GnvHVfmYzavtBoLNP
+         gX/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to;
+        bh=TQx9it8PMv0KayV+lRTb/lIKbYuzrzl8Whc+0Kh5P8E=;
+        b=NoDixWgK8RYNGsy/0wlp3dTQz8piP6IBjSQn8JxAhgND/mHO7JDcZUYhQxYz4IJx+W
+         lHby3/w4Lnin9qgBfGoJ+nusNNoTDnigUtnjjNBvEwpnOX2+x8m7uxhDy+bUvBtl1JzE
+         et/cqM+lWbFMKWEelWCeiwi7AbCLUZ2O87ThCt3rJm6FRLm+2Faa+AMp+y6gXWWzomg/
+         2tAJ9sNkC9HsmuAYOOZjTh/Wdv39QF6GJvL1wbbLwh+8Ky7WbCjfJWTfQx42n12Qu08B
+         WtMJF5L0o0oXH2oa4bV7zyLZwO+2GgcpFVmeZY+wA8n2W5scbnj7JMREwegIsdJwjT5I
+         xyeg==
+X-Gm-Message-State: AE9vXwM22Ncunn/E+OzfO0J1zjSr86kBT6J32wWtdYd9oRaszB7PMA6HO2iCAfRwm+vgTljHbZs4qc+4uDbZeQ==
+X-Received: by 10.107.156.129 with SMTP id f123mr35272407ioe.112.1474295687754;
+ Mon, 19 Sep 2016 07:34:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: MITRE is adding data intake to its CVE ID process
+In-Reply-To: <CAH8yC8=-xMe=6ROWMpNQojUi17J6cR6Mc4z6oEU7=any=o-x8w@mail.gmail.com>
+References: <CAH8yC8=-xMe=6ROWMpNQojUi17J6cR6Mc4z6oEU7=any=o-x8w@mail.gmail.com>
+Message-ID: <CAH8yC8nJ5cqnEdkqRK1AfSM=kCNyFw=rahiWL86Xih5fO9afmQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 19 Sep 2016 10:34:47 -0400
+From: Jeffrey Walton <noloader@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Fwd: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and down
+ level remediation
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+---------- Forwarded message ----------
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Mon, Sep 19, 2016 at 10:32 AM
+Subject: CVE-2016-7420 (Info Disclosure due to assert), Crypto++ and
+down level remediation
+To: <redacted; maintainers and distros>
 
-> C11. The https://cveform.mitre.org X.509 certificate chain is
-> incomplete.
->
-> R11. Yes, we realize this and will be adding the missing item (Entrust
-> Certification Authority - L1K) soon.
+Hi Everyone,
 
-Our current maintenance schedule for resolving this is 2017-02-21 at 
-2300 to 2359 UTC.
+Crypto++ 5.6.5 will be released within a month or so to remediate the
+information disclosure from CVE-2016-742. Distros will need to patch
+Crypto++ 5.6.4 and below. The following provides more information and
+procedures we recommend for down level Crypto++.
 
-> C5. I want MITRE to send the https://cveform.mitre.org form data, and
-> the CVE ID, to the oss-security list at the same time that these are
-> sent to the requester.
->
-> R5. We have had internal discussions within MITRE about this. We are
-> able to implement this easily if the community requires this approach.
-> At the moment, we are expecting the requester to resend this
-> information to oss-security once they accept their CVE ID assignment.
+We re-engieered the "debugging and diagnostic" support area because
+documenting the behaviors did *not* reduce the risk; rather it simply
+moved the blame around. You can see the staged changes at
+https://github.com/weidai11/cryptopp/issues/277#issuecomment-247829210
+.
 
-We apologize for the delayed response on this topic. The CVE Team has 
-been considering deeper details of how this could be implemented. The 
-advantage is that oss-security readers would obtain vulnerability 
-details faster. The main disadvantage is that it would discourage some 
-people from ever making CVE requests with public vulnerability 
-information, and thus might make the overall information flow worse. 
-The reasons it could discourage people include:
+We believe the best course of action for a distor is to make the
+asserts inert in Crypto++ 5.6.4 and below because they are expected to
+be removed by NDEBUG. However and simple sed and 's|<exp>||g' won't
+work as expected.
 
-  - At the time of their CVE request, they have a rough draft that
-    proves that a CVE should exist, but they haven't edited it for
-    full technical accuracy and/or spelling/grammar. They do not want
-    unedited text to be publicly attached to their name.
+If you have any problems or questions, then please email me or call
+me. My cell number is <redacted>. My home number is
+<redacted>. Distros get special treatment because they are so
+important to the ecosystem.
 
-  - People sometimes rely on their request remaining non-public, and
-    provide a great variety of information to us when requesting a CVE
-    ID for an already-disclosed vulnerability. They would need to
-    spend extra time on redactions, or MITRE would need to allocate
-    staff time to assess what part of the request seems non-public,
-    and redact it before making the oss-security post. Examples
-    include: (A) some people provide their work email address that
-    they don't ever use on public mailing lists, (B) some people
-    forward email threads with personal email addresses of the
-    vendor's PSIRT staff who responded to them, (C) some people
-    include non-public credentials for a demo site or a download of an
-    unreleased build with an experimental fix, (D) some people refer
-    to embargoed vulnerabilities when clarifying that they have a new
-    request that is different from related embargoed vulnerabilities.
-    
-In general, there's a common case (the requester only provides a
-basic technical outline of the vulnerability and the commit URL)
-where implementation is easy. There are several corner cases where
-implementation is hard. The simple solution is to always ask the
-requester to make their own (correctly threaded) oss-security post
-that contains any or all of the response from MITRE. Until we have a
-better understanding of why that simple solution is incorrect, we are
-continuing to go with that simple solution. Thus far, every
-https://cveform.mitre.org user (who we recognize as being an
-oss-security participant) has made their own subsequent oss-security
-post with at least the CVE ID. In other words, we haven't noticed a 
-problem at this point. We will continue to monitor open-source requests 
-for this situation and may reconsider this position if the problem 
-presents itself.
+My apologies for the inconvenience and trouble this has caused.
 
-One final note: if the person declines to make their own oss-security
-post, this does NOT mean that the vulnerability becomes impossible to
-find. The CVE Team does publish entries on https://cve.mitre.org for
-these public vulnerabilities, and this may happen very quickly when
-the requester writes the description.
+Jeff
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+**********
 
-iQIcBAEBCAAGBQJYpy7yAAoJEHb/MwWLVhi2ol4QAJvLHwhli8Xn4Ib9QfHbD+GN
-xCtdhEaJ7hjt6iHWIxgS/k1kTQN0HLPH8z3ubvN9Uc1dW0UYuaVphxaXJ1vXuVqJ
-/YKrUPw7WdIVWPSPfhLnmisBAI9+8YNhffRP8QAe8FyFSAyDCPYRzpJNo3kpP7s8
-/JO2eJFgB9zVbIfNYGtshdEL/F34UDLbldfC3ihOmFCnGeMpp3+xm/ZJo/XjX6Yv
-k9P9vZEbl3meylrn1UW9314aSDt7kydcNsP6UvtH9mmXKn4ROtKW3+FmyuUX1G4L
-NXkvHCqOVnL3ht0n1ZcTxvCCOACMjYF3WJDgvTJMU7af+sW7KE9FwhCwnVtIJXcd
-Z3xaVOlIsVwkHjntS2+6L0YWeG6fRO9diiNmRajmn5DUbyAShNwtW+zauaA7CrqZ
-meClRv+ndXBjbK2x4n15wJ6ml5R93E3Iq3HdlSf27zS9lNAHLxvq1cQF0WcDMAoG
-SZX0+lVCQtAMXiNJG5AMIY5y933n29Q1h/mVqoml2jwNpq7vlyIeunGAkZ4jzchD
-eRci0wcVboVRp4pMmbT0mvt6pFwStypyFchm/bv+JN1f0o/F0YZegA4rZ6vwtyN6
-NVxa70Sg+gjVx12YIgtwBDaq2Lpfaijcsqf+5kL74XJrCO3lChoQeirmELRzK4gH
-4Jxus+DnasYSrVlsJ9Wq
-=VpXe
------END PGP SIGNATURE-----
+To remediate CVE-2016-7420 in Crypto++ 5.6.4 and below, perform the following.
+
+1. Crypto++ 5.6.2 and below (Crypto++ 5.6.4 and 5.6.3 has it, so skip
+this step).
+
+    (a) Add CRYPTOPP_UNSED macro to config.h
+
+     #define CRYPTOPP_UNSED(x) ((void)(x))
+
+2. Change every assert() to CRYPTOPP_UNUSED()
+
+    (a) replace en masse
+    (b) find with sed or grep and 'assert[[:space:]]*('
+
+3. Verify changes
+
+    (a) cat *.h *.cpp | egrep -v '(<|>|//)' | grep assert
+    (b) should only see compile-time assert
+
+4. Test changes
+
+    (a) 'make clean && make -j 4'
+    (b) './cryptest.exe v'
+
+5. Update the package
+
+    (a) rebuild the library and package it
+          - all asserts rendered inert
+    (b) rebuild all dependent packages
+          - asserts in Crypto++ headers could cross-pollinate
+
+**********
+
+Procedures performed on Crypto++ 5.6.2:
+
+# Prepare
+$ git clone https://github.com/weidai11/cryptopp cryptopp-assert
+$ cd cryptopp-assert
+$ git checkout CRYPTOPP_5_6_2
+
+# Step 1 (Add)
+$ echo "#define CRYPTOPP_UNUSED(x) ((void)(x))" >> config.h
+
+# Step 2 (Replace)
+$ sed -i "" 's|assert[[:space:]]*(|CRYPTOPP_UNUSED(|g' *.h *.cpp
+
+# Step 3 (Verify)
+$ cat *.h *.cpp | egrep -v '(<|>|//)' | grep assert
+#define CRYPTOPP_COMPILE_ASSERT(assertion)
+CRYPTOPP_COMPILE_ASSERT_INSTANCE(assertion, __LINE__)
+#define CRYPTOPP_COMPILE_ASSERT_INSTANCE(assertion, instance)
+
+# Step 4 (Test)
+$ make clean && make -j 4
+$ ./cryptest.exe v   # Tail should report no failures
+
+# Step 5 (Repackage)
+...
