@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2569" "Tuesday" "28" "April" "2015" "11:04:00" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<553FBD80.4000809@redhat.com>" "62" "[oss-security] Limited DoS in mailman (requires non standard config)" nil nil nil "4" "2015042817:04:00" "[oss-security] Limited DoS in mailman (requires non standard config)" (number mark "        kseifried@re Apr 28   62/2569  " thread-indent "\"[oss-security] Limited DoS in mailman (requires non standard config)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["848" "Monday" "19" "September" "2016" "14:01:08" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>" "27" "Re: [oss-security] Re: ezmlm warning" nil nil nil "9" "2016091921:01:08" "[oss-security] Re: ezmlm warning" (number mark "U       reed@reedlod Sep 19   27/848   " thread-indent "\"Re: [oss-security] Re: ezmlm warning\"\n") "<20150718174051.GB2727@openwall.com>" ("<1436834771.18369.ezmlm-warn@lists.openwall.com>" "<CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>" "<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>" "<20150718174051.GB2727@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22215 invoked by uid 550); 28 Apr 2015 17:04:16 -0000
+Received: (qmail 15490 invoked by uid 550); 19 Sep 2016 21:01:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22197 invoked from network); 28 Apr 2015 17:04:15 -0000
-Message-ID: <553FBD80.4000809@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="35LrVEHj3on93j69ua30oL1vwfCvdTtcT"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Tue, 28 Apr 2015 11:04:00 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Limited DoS in mailman (requires non standard config)
-To: mailman-security@python.org,
-        "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 15468 invoked from network); 19 Sep 2016 21:01:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=F8ZTqHvTa/yt8j2qXJjxx/ruODU5AoqpxGsI0m6PtUw=;
+        b=FF9SyVpc9M+HXX1Rc+1+cgxowiqr39go/osz2uGjPUBeEYnwWXagpbugXTgVbu51f8
+         Xc5JI9A4wggcVtFoUQVbrs8/C4F4NyU2CQ8fZ3ezOLGSykw0eO5d8Z8G7XOwtfgM0XhL
+         ukfKgNeUCsNWQtlCsfA+hD0b5B7nYI2DbYun4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=F8ZTqHvTa/yt8j2qXJjxx/ruODU5AoqpxGsI0m6PtUw=;
+        b=kIpmlf1FTxoNXxHaf/g+GjmKsPHY+2I/cm/snmAu7K+8rHq1JKesNiC5tx7x04WYXH
+         X+noqluFJYs/6+9AakGI7PTmfFxpKYiegFR8SS66E8VqZWezx0pKgj0rqrjaJCxgEeFg
+         RjhpWdBaF6tCTqxPMsSfh/bH21m/hlApW3nP7UmG5RadUp3NPX2kiIQ5bGqxWx0so63d
+         IA7rmsd4bmH5g4BQnt8hkKpw3r3qO/B4vIVjUwSR/+A6EEDZgrr34/vIqoHxfqX81dxM
+         rYR7DNSSa6TtHUwaAmFHRlrVI+uC+MqBvR3i8fqRNPC1LBySleUeuZuV1A0v1D9EDrNr
+         bY+w==
+X-Gm-Message-State: AE9vXwOY8/xSfgvmmvTNLYp7bC8xbOGrB7e5fERqLDKuwMNhw6RwovT2S0EVIejWk02HxEt7HfJqNKVqhApUjkQE
+X-Received: by 10.107.27.14 with SMTP id b14mr43013822iob.60.1474318888573;
+ Mon, 19 Sep 2016 14:01:28 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20150718174051.GB2727@openwall.com>
+References: <1436834771.18369.ezmlm-warn@lists.openwall.com>
+ <CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>
+ <CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com> <20150718174051.GB2727@openwall.com>
+From: Reed Loden <reed@reedloden.com>
+Date: Mon, 19 Sep 2016 14:01:08 -0700
+Message-ID: <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113fdd68a3b018053ce29d1e
+Subject: Re: [oss-security] Re: ezmlm warning
 
---35LrVEHj3on93j69ua30oL1vwfCvdTtcT
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+--001a113fdd68a3b018053ce29d1e
+Content-Type: text/plain; charset=UTF-8
 
-So I recently ran into a flaw in mailman where I had imported a text
-list of email addresses of people that wanted to sign up. It turns out
-one of the addresses was in the form "user@domain.tld/random", not sure
-how that snuck in but anyways. When sending email to this list it fails
-due to that address being present:
+On Sat, Jul 18, 2015 at 10:40 AM, Solar Designer <solar@openwall.com> wrote:
 
-from mailman posts log:
+> On Thu, Jul 16, 2015 at 05:41:35PM -0700, Reed Loden wrote:
+> > Likely, the ezmlm instance on lists.openwall.com needs to be updated to
+> get
+> > some of the DMARC compliance changes that were made last year (
+> > http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
+>
+> Thank you.  I assume you mean primarily this one:
+>
+> - Added optional rewritefrom feature to ezmlm-send, automatically
+>   enabled when the sender has a "reject" DMARC policy.
+>
 
-Apr 28 16:46:23 2015 (29704) post to testing from testing-request@XXX,
-size=3D1786, message-id=3D<mailman.0.1430239582.16535.testing@XXX>, 1 failu=
-res
+Alexander,
 
-from smtp-failure log:
+Any update on getting the ezmlm instance on oss-security updated so people
+with e-mail providers who have implemented DMARC don't get their e-mails
+rejected? Would be much appreciated.
 
-smtp-failure:Apr 28 16:46:44 2015 (29704) All recipients refused:
-{'kurt@seifried.org/foo': (501, '5.1.3 Bad recipient address syntax')},
-msgid: <CAEo5KB7F3LNCv7Q09ppqBRgUZTaGizyRHx1WS81w8K7S8Yhk7A@YYY>
+Thanks,
+~reed
 
-So obviously any list configured to require confirmation will not be
-affected by this, but lists using import via file or web interface could
-potentially be affected (if you get a "dirty" list), or lists that are
-require admin approval only and not confirmation (e.g. the admin doesn't
-notice it when they hit accept).
-
-Overall I don't think this is a security vulnerability, if you have
-"require confirmation" and clean any address prior to import it cannot
-be triggered, but it would be nice to have this hardened I think.
-
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
---35LrVEHj3on93j69ua30oL1vwfCvdTtcT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVP72AAAoJEBYNRVNeJnmTi6EP/j1BLSK9+n3+6VBE6ZRgI6jN
-HAaNQ22SYSwMK1pyeM+SkPWa2DQGjmCIETX+NlQOSjjZ1eMQbDNxaVxnYoDaU0PC
-+ZQKoeZ6l+B6fo03ul4JBUfGYuuxOKraeXfsmj+NS3r5rwaGKN4d8rphcX/AkhT5
-qkYX0M9RGdR9oTH9qkdWwGxvckjKGlbun+Q7D/lvj8vGYtuFn/w+8HO8mSeP0cI8
-P3D9za1uFqxJVcMmYVYFdDmm4FW9rncqW1tL5G4ntigFOzrHkNgVqgeFfUddc7sU
-nNDbvARiAwFtZGYNjOnTycDzCM6gq2nAoOcY9+0vpUBAkOvtaLrb1JmN7icMDlRZ
-VTQzsXsCeH2EmDe1cpMcHIdBLxEuY0Vv1VadM58T38Tui5ojjaYwmj42sJtXLQ6D
-emFzDrbBjOj57XK2RzKxFpZCe9XAM8OqtYtemCYNjTWfRkATFaJf0vBGbANrsl3n
-93UclxQxDPBDQckIzKgisF3qJvc+y490UJ9P9Obp0vegxeX8TjOAzGoRbZrRRO5l
-+XOryZfODdDlN5z/UN+343HT7tSvoMSAf1pzPk7B+r46dLK58tx3tzVSNvUSe3zW
-N4Hzzu8j6JVQhecCPsQId0oUnd/haAyxXbNNl9lBrtWqgMQ+7+o1SPaF65A1Sbtw
-VCAbw7oyCojyO+zhfuYU
-=l4rc
------END PGP SIGNATURE-----
-
---35LrVEHj3on93j69ua30oL1vwfCvdTtcT--
+--001a113fdd68a3b018053ce29d1e--
