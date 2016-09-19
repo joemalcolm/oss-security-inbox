@@ -1,4 +1,9 @@
-Received: (qmail 11648 invoked by uid 550); 21 May 2026 16:13:07 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6659" "Monday" "19" "September" "2016" "02:00:55" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>" "112" "[oss-security] CVE Request: Multiple security issues in OpenJPEG" "^CC:" nil nil "9" "2016091902:00:55" "[oss-security] CVE Request: Multiple security issues in OpenJPEG" (number mark "        winsonliu@te Sep 19  112/6659  " thread-indent "\"[oss-security] CVE Request: Multiple security issues in OpenJPEG\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 1488 invoked by uid 550); 19 Sep 2016 02:01:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,48 +11,134 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5956 invoked from network); 21 May 2026 10:49:34 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Pasquale Congiusti <pcongiusti@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <e2ae24fe-2486-faf7-4af5-1f9dd84e3930@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 10:49:24 +0000
+Received: (qmail 1461 invoked from network); 19 Sep 2016 02:01:24 -0000
+Thread-Topic: CVE Request: Multiple security issues in OpenJPEG
+Thread-Index: AdISGafMNg9QRYeSQwWM+BHkUv/P6Q==
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.4.75.21]
+Content-Type: multipart/alternative;
+	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7EXMBXTJ002tence_"
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-45760: Apache Camel K: Camel K Cross-Namespace Build Deputy Attack
+CC: cve-assign <cve-assign@mitre.org>
+Date: Mon, 19 Sep 2016 02:00:55 +0000
+From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE Request: Multiple security issues in OpenJPEG
+To: oss-security <oss-security@lists.openwall.com>
 
-Severity: important=20
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7EXMBXTJ002tence_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Affected versions:
+SGksDQoNClRoaXMgaXMgS2UgTGl1IG9mIFRlbmNlbnQncyBYdWFud3UgTEFC
+LiBJIHJlcG9ydGVkIHNvbWUgc2VjdXJpdHkgaXNzdWVzIHRvIE9wZW5KUEVH
+IHNvbWUgbW9udGhzIGFnby4gQ291bGQgeW91IHBsZWFzZSBhc3NpZ24gc29t
+ZSBDVkUgbnVtYmVycyBmb3IgdGhlbT8gVGhhbmtzLg0KDQpUaGUgbWVtb3J5
+IGlzc3VlcyBtYXkgbGVhZCB0byBjb2RlIGV4ZWN1dGlvbiwgb3RoZXIgaXNz
+dWVzIG1heSBzaW1wbHkgbGVhZCB0byBEb1MgcHJvYmxlbXMuDQoNCkJUVywg
+cHJvb2Ytb2YtY29uY2VwdCBmaWxlcyBmb3IgYWxsIGlzc3VlcyB3ZXJlIHN1
+cHBsaWVkLiBGb3IgbW9yZSBkZXRhaWxzLCBwbGVhc2UgY2xpY2sgdGhlIGlz
+c3VlIGxpbmtzIGJlbG93Lg0KDQoxLiBPdXQtb2YtQm91bmRzIFdyaXRlIGlu
+IG9wal9tcWNfYnl0ZW91dCBvZiBtcWMuYw0KDQpBbiBPdXQtb2YtQm91bmRz
+IFdyaXRlIGlzc3VlIGNhbiBiZSB0cmlnZ2VyZWQgaW4gZnVuY3Rpb24gb3Bq
+X21xY19ieXRlb3V0IG9mIG1xYy5jIGR1cmluZyBleGVjdXRpbmcgb3BqX2Nv
+bXByZXNzLiBUaGlzIGlzc3VlIHdhcyBjYXVzZWQgYnkgYSBtYWxmb3JtZWQg
+Qk1QIGZpbGUuDQoNCkFkZHJlc3NTYW5pdGl6ZXI6IGhlYXAtYnVmZmVyLW92
+ZXJmbG93LCBXUklURSBvZiBzaXplIDENClJlcG9ydCBkYXRlOiAyMDE2LzA5
+LzEyDQpTdGF0dXM6IE5vdCBmaXhlZA0KVXJsOiBodHRwczovL2dpdGh1Yi5j
+b20vdWNsb3V2YWluL29wZW5qcGVnL2lzc3Vlcy84MzUNClJvb3QgY2F1c2U6
+IG5vdCBjbGVhcg0KUGF0Y2g6IG5vIHBhdGNoIHN1cHBsaWVkDQoNCjIuIE91
+dC1vZi1Cb3VuZHMgUmVhZCBpbiBmdW5jdGlvbiBibXAyNHRvaW1hZ2Ugb2Yg
+Y29udmVydGJtcC5jDQoNCkFuIE91dC1vZi1Cb3VuZHMgUmVhZCBpc3N1ZSB3
+YXMgZm91bmQgaW4gZnVuY3Rpb24gYm1wMjR0b2ltYWdlIG9mIGNvbnZlcnRi
+bXAuYyBkdXJpbmcgZXhlY3V0aW5nIG9wal9jb21wcmVzcy4gVGhlIHJvb3Qg
+Y2F1c2Ugb2YgdGhpcyBpc3N1ZSB3YXMgYW4gSW50ZWdlciBPdmVyZmxvdyBp
+c3N1ZS4gVGhpcyBpc3N1ZSB3YXMgY2F1c2VkIGJ5IGEgbWFsZm9ybWVkIEJN
+UCBmaWxlLg0KDQpBZGRyZXNzU2FuaXRpemVyOiBoZWFwLWJ1ZmZlci1vdmVy
+ZmxvdywgUkVBRCBvZiBzaXplIDENClJlcG9ydCBkYXRlOiAyMDE2LzA5LzEy
+DQpTdGF0dXM6IE5vdCBmaXhlZA0KVXJsOiBodHRwczovL2dpdGh1Yi5jb20v
+dWNsb3V2YWluL29wZW5qcGVnL2lzc3Vlcy84MzMNClJvb3QgY2F1c2U6IGlu
+dGVnZXIgb3ZlcmZsb3cNClBhdGNoOiBodHRwczovL2dpdGh1Yi5jb20vdWNs
+b3V2YWluL29wZW5qcGVnL3B1bGwvODM0DQoNCjMuIE51bGwgUG9pbnRlciBB
+Y2Nlc3MgaW4gZnVuY3Rpb24gc3ljYzQyMl90b19yZ2Igb2YgY29sb3IuYw0K
+QSBudWxsIHBvaW50ZXIgYWNjZXNzIGlzc3VlIHdhcyBmb3VuZCBpbiBmdW5j
+dGlvbiBzeWNjNDIyX3RvX3JnYiBvZiBjb2xvci5jIGR1cmluZyBleGVjdXRp
+bmcgb3BqX2RlY29tcHJlc3MuIFRoaXMgaXNzdWUgd2FzIGNhdXNlZCBieSBh
+IG1hbGZvcm1lZCBKMksgZmlsZS4NCg0KQWRkcmVzc1Nhbml0aXplcjogU0VH
+ViBvbiB1bmtub3duIGFkZHJlc3MgMHgwMDAwMDAwMA0KUmVwb3J0IGRhdGU6
+IDIwMTYvMDYvMjgNClN0YXR1czogTm90IGZpeGVkDQpVcmw6IGh0dHBzOi8v
+Z2l0aHViLmNvbS91Y2xvdXZhaW4vb3BlbmpwZWcvaXNzdWVzLzc5Mg0KUm9v
+dCBjYXVzZTogbnVsbCBwb2ludGVyIGRlcmVmZXJlbmNlDQpQYXRjaDogZWFz
+eSB0byBmaXgsIGNoZWNrIGJlZm9yZSBhY2Nlc3NpbmcNCg0KNC4gTnVsbCBQ
+b2ludGVyIEFjY2VzcyBpbiBmdW5jdGlvbiBjb2xvcl9lc3ljY190b19yZ2Ig
+b2YgY29sb3IuYw0KQSBudWxsIHBvaW50ZXIgYWNjZXNzIGlzc3VlIHdhcyBm
+b3VuZCBpbiBmdW5jdGlvbiBjb2xvcl9lc3ljY190b19yZ2Igb2YgY29sb3Iu
+YyBkdXJpbmcgZXhlY3V0aW5nIG9wal9kZWNvbXByZXNzLiBUaGlzIGlzc3Vl
+IHdhcyBjYXVzZWQgYnkgYSBtYWxmb3JtZWQgSjJLIGZpbGUuDQoNCkFkZHJl
+c3NTYW5pdGl6ZXI6IFNFR1Ygb24gdW5rbm93biBhZGRyZXNzIDB4MDAwMDAw
+MDANClJlcG9ydCBkYXRlOiAyMDE2LzA1LzI1DQpTdGF0dXM6IE5vdCBmaXhl
+ZA0KVXJsOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2YWluL29wZW5qcGVn
+L2lzc3Vlcy83ODUNClJvb3QgY2F1c2U6IG51bGwgcG9pbnRlciBkZXJlZmVy
+ZW5jZQ0KUGF0Y2g6IGVhc3kgdG8gZml4LCBjaGVjayBiZWZvcmUgYWNjZXNz
+aW5nDQoNCjUuIE51bGwgUG9pbnRlciBBY2Nlc3MgaW4gZnVuY3Rpb24gc3lj
+YzQ0NF90b19yZ2Igb2YgY29sb3IuYw0KQSBudWxsIHBvaW50ZXIgYWNjZXNz
+IGlzc3VlIHdhcyBmb3VuZCBpbiBmdW5jdGlvbiBzeWNjNDQ0X3RvX3JnYiBv
+ZiBjb2xvci5jIGR1cmluZyBleGVjdXRpbmcgb3BqX2RlY29tcHJlc3MuIFRo
+aXMgaXNzdWUgd2FzIGNhdXNlZCBieSBhIG1hbGZvcm1lZCBKMksgZmlsZS4N
+Cg0KQWRkcmVzc1Nhbml0aXplcjogU0VHViBvbiB1bmtub3duIGFkZHJlc3Mg
+MHgwMDAwMDAwMA0KUmVwb3J0IGRhdGU6IDIwMTYvMDUvMjUNClN0YXR1czog
+Tm90IGZpeGVkDQpVcmw6IGh0dHBzOi8vZ2l0aHViLmNvbS91Y2xvdXZhaW4v
+b3BlbmpwZWcvaXNzdWVzLzc4NA0KUm9vdCBjYXVzZTogbnVsbCBwb2ludGVy
+IGRlcmVmZXJlbmNlDQpQYXRjaDogZWFzeSB0byBmaXgsIGNoZWNrIGJlZm9y
+ZSBhY2Nlc3NpbmcNCg0KNi4gTnVsbCBQb2ludGVyIEFjY2VzcyBpbiBmdW5j
+dGlvbiBpbWFnZXRvcG5tIG9mIGNvbnZlcnQuYw0KQSBudWxsIHBvaW50ZXIg
+YWNjZXNzIGlzc3VlIHdhcyBmb3VuZCBpbiBmdW5jdGlvbiBpbWFnZXRvcG5t
+IG9mIGNvbnZlcnQuYyBkdXJpbmcgZXhlY3V0aW5nIG9wal9kZWNvbXByZXNz
+LiBUaGlzIGlzc3VlIHdhcyBjYXVzZWQgYnkgYSBtYWxmb3JtZWQgSjJLIGZp
+bGUuDQoNCkFkZHJlc3NTYW5pdGl6ZXI6IFNFR1Ygb24gdW5rbm93biBhZGRy
+ZXNzIDB4MDAwMDAwMDANClJlcG9ydCBkYXRlOiAyMDE2LzA1LzA2DQpTdGF0
+dXM6IE5vdCBmaXhlZA0KVXJsOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2
+YWluL29wZW5qcGVnL2lzc3Vlcy83NzYNClJvb3QgY2F1c2U6IG51bGwgcG9p
+bnRlciBkZXJlZmVyZW5jZQ0KUGF0Y2g6IGVhc3kgdG8gZml4LCBjaGVjayBi
+ZWZvcmUgYWNjZXNzaW5nDQoNCjcuIE11bHRpcGxlIGRpdmlzaW9uLWJ5LXpl
+cm8gaXNzdWVzIGluIGZ1bmN0aW9uIG9wal9waV9uZXh0X3JwY2wgb2YgcGku
+Yw0KTXVsdGlwbGUgZGl2aXNpb24tYnktemVybyBpc3N1ZXMgd2VyZSBmb3Vu
+ZCBpbiBmdW5jdGlvbiBvcGpfcGlfbmV4dF9ycGNsIG9mIHBpLmMgZHVyaW5n
+IGV4ZWN1dGluZyBvcGpfZGVjb21wcmVzcy4gVGhlIGlzc3VlcyB3ZXJlIGNh
+dXNlZCBieSBtYWxmb3JtZWQgSjJLIGZpbGVzLg0KDQpBZGRyZXNzU2FuaXRp
+emVyOiBTSUdGUEUsIEFyaXRobWV0aWMgZXhjZXB0aW9uDQpSZXBvcnQgZGF0
+ZTogMjAxNi8wNS8wNg0KU3RhdHVzOiBOb3QgZml4ZWQNClVybDE6IGh0dHBz
+Oi8vZ2l0aHViLmNvbS91Y2xvdXZhaW4vb3BlbmpwZWcvaXNzdWVzLzc4MA0K
+VXJsMjogaHR0cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9vcGVuanBlZy9p
+c3N1ZXMvNzc5DQpSb290IGNhdXNlOiBkaXZpc2lvbi1ieS16ZXJvDQpQYXRj
+aDogZWFzeSB0byBmaXgsIGNoZWNrIGJlZm9yZSBkaXZpZGluZw0KDQo4LiBN
+dWx0aXBsZSBkaXZpc2lvbi1ieS16ZXJvIGlzc3VlcyBpbiBmdW5jdGlvbiBv
+cGpfcGlfbmV4dF9wY3JsIG9mIHBpLmMNCk11bHRpcGxlIGRpdmlzaW9uLWJ5
+LXplcm8gaXNzdWVzIHdlcmUgZm91bmQgaW4gZnVuY3Rpb24gb3BqX3BpX25l
+eHRfcGNybCBvZiBwaS5jIGR1cmluZyBleGVjdXRpbmcgb3BqX2RlY29tcHJl
+c3MuIFRoZSBpc3N1ZXMgd2VyZSBjYXVzZWQgYnkgbWFsZm9ybWVkIEoySyBm
+aWxlcy4NCg0KQWRkcmVzc1Nhbml0aXplcjogU0lHRlBFLCBBcml0aG1ldGlj
+IGV4Y2VwdGlvbg0KUmVwb3J0IGRhdGU6IDIwMTYvMDUvMDYNClN0YXR1czog
+Tm90IGZpeGVkDQpVcmwxOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2YWlu
+L29wZW5qcGVnL2lzc3Vlcy83NzcNClVybDI6IGh0dHBzOi8vZ2l0aHViLmNv
+bS91Y2xvdXZhaW4vb3BlbmpwZWcvaXNzdWVzLzc3OA0KUm9vdCBjYXVzZTog
+ZGl2aXNpb24tYnktemVybw0KUGF0Y2g6IGVhc3kgdG8gZml4LCBjaGVjayBi
+ZWZvcmUgZGl2aWRpbmcNCg0KOS4gTXVsdGlwbGUgZGl2aXNpb24tYnktemVy
+byBpc3N1ZXMgaW4gZnVuY3Rpb24gb3BqX3BpX25leHRfY3BybCBvZiBwaS5j
+DQpNdWx0aXBsZSBkaXZpc2lvbi1ieS16ZXJvIGlzc3VlcyB3ZXJlIGZvdW5k
+IGluIGZ1bmN0aW9uIG9wal9waV9uZXh0X2Nwcmwgb2YgcGkuYyBkdXJpbmcg
+ZXhlY3V0aW5nIG9wal9kZWNvbXByZXNzLiBUaGUgaXNzdWVzIHdlcmUgY2F1
+c2VkIGJ5IG1hbGZvcm1lZCBKMksgZmlsZXMuDQoNCkFkZHJlc3NTYW5pdGl6
+ZXI6IFNJR0ZQRSwgQXJpdGhtZXRpYyBleGNlcHRpb24NClJlcG9ydCBkYXRl
+OiAyMDE2LzAzLzI4DQpTdGF0dXM6IE5vdCBmaXhlZA0KVXJsMTogaHR0cHM6
+Ly9naXRodWIuY29tL3VjbG91dmFpbi9vcGVuanBlZy9pc3N1ZXMvNzMxDQpV
+cmwyOiBodHRwczovL2dpdGh1Yi5jb20vdWNsb3V2YWluL29wZW5qcGVnL2lz
+c3Vlcy83MzINClJvb3QgY2F1c2U6IGRpdmlzaW9uLWJ5LXplcm8NClBhdGNo
+OiBlYXN5IHRvIGZpeCwgY2hlY2sgYmVmb3JlIGRpdmlkaW5nDQoNClJlZ2Fy
+ZHMsDQpLZQ0KVGVuY2VudCdzIFh1YW53dSBMQUINCg==
 
-- Apache Camel K (apache/camel-k) 2.0.0 before 2.8.1
-- Apache Camel K (apache/camel-k) 2.9.0 before 2.9.2
-- Apache Camel K (apache/camel-k) 2.10.0 before 2.10.1
-
-Description:
-
-(Externally Controlled Reference to a Resource in Another Sphere), (Authori=
-zation Bypass Through User-Controlled Key) vulnerability in Apache Camel K.=
- Authorized users in a Kubernetes namespace can create a Build resource, co=
-ntrolling the Pod generation in a namespace of their choice, including the =
-operator namespace.
-
-This issue affects Apache Camel K: from 2.0.0 before 2.8.1, from 2.9.0 befo=
-re 2.9.2, from 2.10.0 before 2.10.1.
-
-Users are recommended to upgrade to version 2.10.1 (or 2.8.1 or 2.9.2), whi=
-ch fixes the issue.
-
-Credit:
-
-@j311yl0v3u (2439839508@qq.com) (finder)
-@b0b0haha (603571786@qq.com) (finder)
-
-References:
-
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-45760
-
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7EXMBXTJ002tence_--
