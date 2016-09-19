@@ -1,90 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/11
-Message-ID: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
-Date: Wed, 13 Jul 2016 14:53:03 -0300
-From: Franco Costantini <franco.costantini.20@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: gustavo.grieco@...g.fr
-Subject: CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/11
+Message-ID: <CAARAU46U0p2cvjaqa_MQX_kULk5cDMTufV52zYu-Ad_=8Ps9tg@mail.gmail.com>
+Date: Mon, 19 Sep 2016 15:59:31 -0400
+From: Mike Santillana <michael.santillana@...ork.com>
+To: oss-security@...ts.openwall.com, seth.arnold@...onical.com
+Cc: "'Apple' via" <infosec@...ork.com>
+Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 Content-Type: text/plain; charset=utf-8
 
-This issue was reported to Redhat secalert, they asked me to disclose it
-publicly.
+Hi Seth,
 
-A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
-It's tested in Ubuntu 14.04, other versions can be affected (in Debian 8,
-an assert inside gtk3 stops the execution before the crash). This issue can
-be reproduced using eog:
+The random_iv method automatically sets the IV to be used by the cipher:
+http://ruby-doc.org/stdlib-1.9.3/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv.
+The reason I do "iv = cipher.random_iv" is to get the IV value so I can
+print the value (or traditionally, pass it along so it can be used in the
+decryption phase).
 
- (gdb) run crash.ico
- Starting program: /usr/bin/eog crash.ico
- [Thread debugging using libthread_db enabled]
- Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
- [New Thread 0x7fffec58e700 (LWP 3709)]
- [New Thread 0x7fffebd8d700 (LWP 3710)]
- [New Thread 0x7fffe9656700 (LWP 3711)]
- [New Thread 0x7fffe8e55700 (LWP 3712)]
+I hope this clears the example up a bit.
 
- (eog:3705): EOG-WARNING **: Couldn't load icon: Icon 'image-loading' not
-present in theme
+Thanks
 
- Program received signal SIGSEGV, Segmentation fault.
- [Switching to Thread 0x7fffe9656700 (LWP 3711)]
- 0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
- (gdb) bt
- #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at
-io-ico.c:589
- #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
- #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
-     buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
- #3  0x00007ffff53e2665 in gdk_pixbuf_loader_load_module (
-     loader=loader@...ry=0x7df420, image_type=image_type@...ry=0x0,
-     error=error@...ry=0x7fffe9655b68) at gdk-pixbuf-loader.c:443
- #4  0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=0x7df420,
-     error=0xaa1aa0) at gdk-pixbuf-loader.c:808
- #5  0x00000000004236ab in eog_image_load ()
- #6  0x00000000004275d7 in ?? ()
- #7  0x0000000000425959 in ?? ()
- #8  0x00007ffff43eff05 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
- #9  0x00007ffff3f53184 in start_thread (arg=0x7fffe9656700)
-     at pthread_create.c:312
- #10 0x00007ffff3c8037d in clone ()
-     at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
 
-The affected function is here:
+*WeWork | Mike Santillana*
+Security Engineer
+845-709-5655
+www.wework.com
 
- static void OneLine32 (struct ico_progressive_state *context)
-{
-        gint X;
-        guchar *Pixels;
+Create Your Life's Work
 
-        X = 0;
-        if (context->Header.Negative == 0)
-                Pixels = (context->pixbuf->pixels +
-                          context->pixbuf->rowstride *
-                          (context->Header.height - context->Lines - 1));
-        else
-                Pixels = (context->pixbuf->pixels +
-                          context->pixbuf->rowstride *
-                          context->Lines);
-        while (X < context->Header.width) {
-                Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
-                Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
-                Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
-                Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
-                X++;
-        }
-}
+On Mon, Sep 19, 2016 at 3:53 PM, Seth Arnold <seth.arnold@...onical.com>
+wrote:
 
-The value of context->Header.height in OneLine32 is a very large number
-(probably it wasn't validated correctly). Such value is used to calculate
-where to write, resulting in an overflow where Pixels is written.
+> On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
+> > An IV reuse bug was discovered in Ruby's OpenSSL library when using
+> > aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+> > setting the key, the cipher will default to using a static IV. This
+> creates
+> > a static nonce and since aes-gcm is a stream cipher, this can lead to
+> known
+> > cryptographic issues.
+> >
+> > The documentation does not appear to specify the order of operations when
+> > setting the key and IV [1]. As an example, see the following insecure
+> code
+> > snippet below:
+> >
+> > Vulnerable Code:
+> >
+> > def encrypt(plaintext)
+> >     cipher = OpenSSL::Cipher.new('aes-256-gcm')
+> >     iv = cipher.random_iv # Notice here the IV is set before the key
+> >     cipher.key = '11111111111111111111111111111111'
+> >     cipher.auth_data = ""
+> >     ciphertext = cipher.update(plaintext) + cipher.final
+> >     tag = cipher.auth_tag
+> >
+> >     puts "[+] Encrypting: #{plaintext}"
+> >     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+> > #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+> > end
+>
+> Hello,
+>
+> I think you have a mistake in this sample code, 'iv' is assigned but never
+> used (aside from being printed).
+>
+> Your github code is far more complicated but looks like it is doing the
+> right thing.
+>
+> Thanks
+>
 
-This issue was found using QuickFuzz, the file to reproduce it is attached.
-Please assign a CVE if suitable.
-
-Regards, Franco
-
-Content of type "text/html" skipped
-
-Download attachment "crash.ico.tar.gz" of type "application/x-gzip" (158 bytes)
