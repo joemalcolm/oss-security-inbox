@@ -1,42 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/2
-Message-ID: <4fd7625ebd8d44e5a39e6cf241e12421@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:12:18 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libming: listswf: heap-based buffer overflow in _iprintf (outputtxt.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/12
+Message-Id: <9C0DC1F6-0473-4888-A051-6CFC8872E94D@gmail.com>
+Date: Mon, 19 Sep 2016 15:03:23 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Mike Santillana <michael.santillana@...ork.com>, 'Apple' via <infosec@...ork.com>
+Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-_iprintf-outputtxt-c
+> On Sep 19, 2016, at 2:53 PM, Seth Arnold <seth.arnold@...onical.com> wrote:
+> 
+> On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
+>> An IV reuse bug was discovered in Ruby's OpenSSL library when using
+>> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+>> setting the key, the cipher will default to using a static IV. This creates
+>> a static nonce and since aes-gcm is a stream cipher, this can lead to known
+>> cryptographic issues.
+>> 
+>> The documentation does not appear to specify the order of operations when
+>> setting the key and IV [1]. As an example, see the following insecure code
+>> snippet below:
+>> 
+>> Vulnerable Code:
+>> 
+>> def encrypt(plaintext)
+>>    cipher = OpenSSL::Cipher.new('aes-256-gcm')
+>>    iv = cipher.random_iv # Notice here the IV is set before the key
+>>    cipher.key = '11111111111111111111111111111111'
+>>    cipher.auth_data = ""
+>>    ciphertext = cipher.update(plaintext) + cipher.final
+>>    tag = cipher.auth_tag
+>> 
+>>    puts "[+] Encrypting: #{plaintext}"
+>>    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+>> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+>> end
+> 
+> Hello,
+> 
+> I think you have a mistake in this sample code, 'iv' is assigned but never
+> used (aside from being printed).
 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 2
+Ruby really likes side-effects. Calling #random_iv generates and sets a new IV on the cipher, then returns it to the caller. Very magical.
 
-Use CVE-2016-9827 for this buffer over-read.
+https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv <https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv>
+> 
+> Your github code is far more complicated but looks like it is doing the
+> right thing.
+> 
+> Thanks
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYRNjHAAoJEHb/MwWLVhi2szoP/2HNdfDuYTk2tUOma5Uavxkg
-fXUl7wnGcKLBJCAtJNw5Qnl4l1AE2Hirrpmfsvbid9hHNCJ8njCtdDwqHXL6IT+H
-ft+XV1aqETr7IkVgC2Wg6x2ZptrFDT5Lab7iNJylDek2iSdT4oscAthjlVCJZcR5
-b9MjXSih+vrsY7MxPkrcn7ZXQwWgM6nBReCpf1gZBc81l7K4ejzGBK0Xc2c6v4/Q
-JxBaY2VxsxX52w842CckemTQvM5Yy7BUCdmXFqfw2dy5stTvM/OouFgqSwBqiR3Q
-/AGXqZ2rIK1XoRVLtohlWUuIeIvVv9OkXNp1qM7L/QKFqURkzieOqzlo4Do97a6e
-13iK8psRtMphfjjCpenjC+gujgAssqdXRDQ7cskcIB+sYwjmGoF97tJZ2OJtgQk0
-TJlW0b/GokrKaeyJdYr2LSlqx+WKcrawOXDbiHAnNpZrswjKCjEbkIsGWMnGt391
-aYVYegERbjlh+KpxurB5Gyocn/EVi9TczWn8TVBZYWyBSmK/ABpv7s5guZHalhH7
-kAOHNI+iMaOcFvDeAG8K0oGNfNoY/oCAJa3USh3Qq/O+S9KUa+2k4sVHLyL6cCMa
-Q0bCcVs5PmYATknEgTOBX9QzRqkQyhpnFB6wgEXeZPZmLf+8f29jWnOk8zQYm+M1
-20ErSFbyOcSIXrnF+S4q
-=6lQs
------END PGP SIGNATURE-----
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
