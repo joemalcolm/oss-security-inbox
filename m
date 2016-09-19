@@ -1,4 +1,9 @@
-Received: (qmail 18246 invoked by uid 550); 31 Mar 2026 12:12:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5111" "Monday" "19" "September" "2016" "13:55:09" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>" "146" "Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" nil nil nil "9" "2016091920:55:09" "[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" (number mark "U       reed@reedlod Sep 19  146/5111  " thread-indent "\"Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode\"\n") "<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>" ("<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3097 invoked by uid 550); 19 Sep 2016 20:55:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,157 +12,184 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18195 invoked from network); 31 Mar 2026 12:12:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=powerdns.com; h=
-	cc:content-type:content-type:date:from:from:message-id
-	:mime-version:reply-to:subject:subject:to:to; s=s1dus; bh=656qKD
-	pXPVth5EmPklvK2TGC0hqKjUhfxBW07yAkKlI=; b=Y9CTZMmILOI/vM7xTKxcpg
-	0KL1xjtqEOVrVv+G7Z8MCyUbtzCDqu55nMclsR0tStjwFiVVMf0UCoUR1ZBgiIMg
-	rG6go4ugqjWJoikMbdcRc33I+yC8sM20IUxC/FsF1x1AXBHYYrCTdrFWQ/gxZ+Fa
-	35OwcNyNyuuoLtZ9kV394TiaAQfhYMuuMPpHfKTdNmRjgUjOPJl9bxG6y1MMYMrq
-	NaZsZ/HI+AlsCveWH4vIL66ItN7akQsOaSKvvmybAF2tg7hpvTmRfh/98knTU77U
-	Ud/osUs9Q7qbEit8k2Fx3QgQIkByk+SOrlz0i9O6NVvq1zjsNii6T47dOYT79pvw
-	==
-Message-ID: <bcf2c942-420e-48d6-876e-375f0d42fc81@powerdns.com>
-Date: Tue, 31 Mar 2026 14:12:28 +0200
+Received: (qmail 2044 invoked from network); 19 Sep 2016 20:55:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=reedloden.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KZ+Wcb/ooNqKzoPbxQmn1fbcnGLeZ2wlyx4lP3Hp3+g=;
+        b=fAZvDKGIYeCZNzCoyXvwJUfipyToAZBnXFvzMw65e+0Si4pGasm2RnMfBlBQTCUNb0
+         SoT0C2PTA7L4ObYwdPBa7EpgC74QCg9NwAW2mIIAQBNYop9CTK48hIWFdJPcQJpxa3eA
+         /wAXUSCFYlZKGh/UMoi7peJPnx0T+McHMGniA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KZ+Wcb/ooNqKzoPbxQmn1fbcnGLeZ2wlyx4lP3Hp3+g=;
+        b=f1PN6/cHHI6kW35tqs9Gdwl9RN/T64R+vkD/29pnqwP+JAslzzwjZiBgU9LU91rZGC
+         HMXfyvKBzmwP7pCIj28N+Uvkl5BqCJDdyD6uDWjQlBr4iokcx22j3mV8OWByxfP7P5ZO
+         tVPVlaH8jXYFV99PQcOLuzHIMNF9h2i4i1FyCqJxAGjRnrvIxUfz2iVO8wTudK0kjcmn
+         3I4dQ4Yo4RJfYHp7zLfmRMIw/EyEZSLuJncx2OUxWpzX07mZFpTHtzO0mrYVqNCD8ozw
+         CqQ6pi0bbaomU9ZrnNr1mmdaFupHyzjSNwzo+ewnq5UL66WIdnHePs6RD+D8yz17Xi6c
+         0Ezg==
+X-Gm-Message-State: AE9vXwOmwdKJO8l/AQ6rh46Lzxc5ydQ2q88O6dc7tIXzPQQNO2MpwjwrSEveu2IMMZjrY6jIM7UAMLZg11h3nImB
+X-Received: by 10.107.4.146 with SMTP id 140mr36744648ioe.158.1474318529557;
+ Mon, 19 Sep 2016 13:55:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Remi Gacogne <remi.gacogne@powerdns.com>
+In-Reply-To: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
+References: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
+From: Reed Loden <reed@reedloden.com>
+Date: Mon, 19 Sep 2016 13:55:09 -0700
+Message-ID: <CALPTtNWcndGBwL-pf0BF_XuSA6UCQajhe6-mgj=G5xa3iK1EEA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Language: en-GB
-Autocrypt: addr=remi.gacogne@powerdns.com; keydata=
- xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
- Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
- WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
- QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
- 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
- AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwJQEEwEKAD4C
- GwMFCwkIBwQFFQoJCAsFFgIDAQACHgECF4AWIQTWMAyry/Rpu+OS5QOiCO1PivWERgUCZ2BL
- BAUJGKx0/QAKCRCiCO1PivWERotnB/0YtsDe/gdEmoOs/tP/FCC9GbhVFKPFJOIBKtaurPAl
- aCJsm+mlN/Ck1HZ8eT8iWG88Vx6rBtCPvxbI8zZthub9yGr8MQcweMHNzrF96VxleLu8ialw
- 0HuoqVLZr2TzTxsoAQY7EYXaRii3GFauWF6Qm/pZonKhViDT1CWjEl8R6oVXRHVT1mg72B4r
- CPVZiFMMylwryZEZyxzcNH9YbaS3JeyrRAeMGaIn3CYWTZjaHfvDTq7hpQwE1C5KaC34K+nB
- lufGB48Pzwy0X0Bk4oUqbrfMzyJuNVejkPd8SLOI3L1qIhwCyYHh6z+OSXRyy2SQq5YWMVKK
- q/XtmO74OHsHzsBNBFY4pAcBCACOvXERmHXKCWzOL3j4cs0VyBE+BE2S2Da/E4Z/rh0Ct4m8
- vmIOtLaWsUySeHkE26PuclnavjQ45L3WgfWqRWT6/0LKj/fHAKkI49AKSHMem5BZegwYzD/f
- /S0brNPGdh0L3319oIfSUsDygPAcIeVlIeCwf36pI3KNole9L4dWgZjPK5qdTo5MzsQzlztE
- I+E2NP0nMcshKfBrGAOnCLsTPrK51yuDoOpL+5TCTI21bJ6zHUMX3LZUlQ3Brg0ogmRIf6eI
- SjEr00F8ECYApzijn4o+zoG+m+mJhj2BMppovKk8c1y95BMMW//bpcfLOsJmbC4aVxgGNugf
- 8FbMpuG5ABEBAAHCwIgEGAEKADICGwwECwkIBwYVCAIJCgsWIQTWMAyry/Rpu+OS5QOiCO1P
- ivWERgUCZ2BLJwUJGKx1IAAKCRCiCO1PivWERk0mB/0bmMVKewslxYaCXdhkiNQ8JxyT/yvC
- iNvB4QYsjgLrPp8/+XQu7Tj7xEgDQML7TkH2glC0S+tOLh9pMzmtC7gy0uGkYjqYXqdehiQ5
- nXelYEA1bH4SKUOSYNSLVRtj5dcFzjenTwPVz8uqYEKftIHr65q+LWdKKB5jETUfDK9W4812
- pyNpwweYFXBQrrYcA9fmVVVthyYaZXirIPCO+acLHt5XdpI4EZ4/wh+lD5jFYVaLnuZLYDmq
- 5vdSn9/zxbxhRKHl+qxPkAzOBGry0lGWIi0jlfn6AQfd8MlODbSdfv9pyfcgWi9Ppk/nA3e3
- /chbQDuea/l3YgcXRObOnf5N
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------HtnO4XTpC1s31E3Z0zzfMaMY"
-Subject: [oss-security] PowerDNS Security Advisory 2026-02 for DNSdist: Multiple issues
+Cc: "'Apple' via" <infosec@wework.com>
+Content-Type: multipart/alternative; boundary=001a113eeb303d9b5e053ce2880a
+Subject: Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in
+ GCM Mode
 
---------------HtnO4XTpC1s31E3Z0zzfMaMY
-Content-Type: multipart/mixed; boundary="------------KA13cun07sIeL5Cln6LGxNDt";
- protected-headers="v1"
-Message-ID: <bcf2c942-420e-48d6-876e-375f0d42fc81@powerdns.com>
-Date: Tue, 31 Mar 2026 14:12:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-Subject: PowerDNS Security Advisory 2026-02 for DNSdist: Multiple issues
-To: oss-security@lists.openwall.com
-Content-Language: en-GB
-Autocrypt: addr=remi.gacogne@powerdns.com; keydata=
- xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
- Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
- WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
- QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
- 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
- AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwJQEEwEKAD4C
- GwMFCwkIBwQFFQoJCAsFFgIDAQACHgECF4AWIQTWMAyry/Rpu+OS5QOiCO1PivWERgUCZ2BL
- BAUJGKx0/QAKCRCiCO1PivWERotnB/0YtsDe/gdEmoOs/tP/FCC9GbhVFKPFJOIBKtaurPAl
- aCJsm+mlN/Ck1HZ8eT8iWG88Vx6rBtCPvxbI8zZthub9yGr8MQcweMHNzrF96VxleLu8ialw
- 0HuoqVLZr2TzTxsoAQY7EYXaRii3GFauWF6Qm/pZonKhViDT1CWjEl8R6oVXRHVT1mg72B4r
- CPVZiFMMylwryZEZyxzcNH9YbaS3JeyrRAeMGaIn3CYWTZjaHfvDTq7hpQwE1C5KaC34K+nB
- lufGB48Pzwy0X0Bk4oUqbrfMzyJuNVejkPd8SLOI3L1qIhwCyYHh6z+OSXRyy2SQq5YWMVKK
- q/XtmO74OHsHzsBNBFY4pAcBCACOvXERmHXKCWzOL3j4cs0VyBE+BE2S2Da/E4Z/rh0Ct4m8
- vmIOtLaWsUySeHkE26PuclnavjQ45L3WgfWqRWT6/0LKj/fHAKkI49AKSHMem5BZegwYzD/f
- /S0brNPGdh0L3319oIfSUsDygPAcIeVlIeCwf36pI3KNole9L4dWgZjPK5qdTo5MzsQzlztE
- I+E2NP0nMcshKfBrGAOnCLsTPrK51yuDoOpL+5TCTI21bJ6zHUMX3LZUlQ3Brg0ogmRIf6eI
- SjEr00F8ECYApzijn4o+zoG+m+mJhj2BMppovKk8c1y95BMMW//bpcfLOsJmbC4aVxgGNugf
- 8FbMpuG5ABEBAAHCwIgEGAEKADICGwwECwkIBwYVCAIJCgsWIQTWMAyry/Rpu+OS5QOiCO1P
- ivWERgUCZ2BLJwUJGKx1IAAKCRCiCO1PivWERk0mB/0bmMVKewslxYaCXdhkiNQ8JxyT/yvC
- iNvB4QYsjgLrPp8/+XQu7Tj7xEgDQML7TkH2glC0S+tOLh9pMzmtC7gy0uGkYjqYXqdehiQ5
- nXelYEA1bH4SKUOSYNSLVRtj5dcFzjenTwPVz8uqYEKftIHr65q+LWdKKB5jETUfDK9W4812
- pyNpwweYFXBQrrYcA9fmVVVthyYaZXirIPCO+acLHt5XdpI4EZ4/wh+lD5jFYVaLnuZLYDmq
- 5vdSn9/zxbxhRKHl+qxPkAzOBGry0lGWIi0jlfn6AQfd8MlODbSdfv9pyfcgWi9Ppk/nA3e3
- /chbQDuea/l3YgcXRObOnf5N
+--001a113eeb303d9b5e053ce2880a
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
---------------KA13cun07sIeL5Cln6LGxNDt
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Was Ruby actually notified of this outside of the GitHub issue? Not sure
+they are monitoring that repository for security issues, so could have been
+missed.
 
-SGkgYWxsLA0KDQpUb2RheSB3ZSByZWxlYXNlZCB0d28gbmV3IHZlcnNpb25zIG9mIEROU2Rpc3Qs
-IDEuOS4xMiBhbmQgMi4wLjMsIGZpeGluZyANCnNldmVyYWwgc2VjdXJpdHkgaXNzdWVzIHRoYXQg
-aGF2ZSBiZWVuIHJlcG9ydGVkIHRvIHVzLiBUaGVzZSBzZWN1cml0eSANCmlzc3VlcyBhcmUgbG93
-LXNldmVyaXR5IG9yIGludm9sdmUgdW51c3VhbCBjb25maWd1cmF0aW9ucy4NCg0KVGhlIGlzc3Vl
-cyBmaXhlZCBpbiB0aGVzZSByZWxlYXNlcyBhcmU6DQotIENWRS0yMDI2LTAzOTY6IEFuIGF0dGFj
-a2VyIG1pZ2h0IGJlIGFibGUgdG8gaW5qZWN0IEhUTUwgY29udGVudCBpbnRvIA0KdGhlIGludGVy
-bmFsIHdlYiBkYXNoYm9hcmQgYnkgc2VuZGluZyBjcmFmdGVkIEROUyBxdWVyaWVzIHRvIGEgRE5T
-ZGlzdCANCmluc3RhbmNlIHdoZXJlIGRvbWFpbi1iYXNlZCBkeW5hbWljIHJ1bGVzIGhhdmUgYmVl
-biBlbmFibGVkIHZpYSBlaXRoZXIgDQoiRHluQmxvY2tSdWxlc0dyb3VwOnNldFN1ZmZpeE1hdGNo
-UnVsZSIgb3IgDQoiRHluQmxvY2tSdWxlc0dyb3VwOnNldFN1ZmZpeE1hdGNoUnVsZUZGSSINCi0g
-Q1ZFLTIwMjYtMDM5NzogV2hlbiB0aGUgaW50ZXJuYWwgd2Vic2VydmVyIGlzIGVuYWJsZWQgKGRl
-ZmF1bHQgaXMgDQpkaXNhYmxlZCksIGFuIGF0dGFja2VyIG1pZ2h0IGJlIGFibGUgdG8gdHJpY2sg
-YW4gYWRtaW5pc3RyYXRvciBsb2dnZWQgdG8gDQp0aGUgZGFzaGJvYXJkIGludG8gdmlzaXRpbmcg
-YSBtYWxpY2lvdXMgd2Vic2l0ZSBhbmQgZXh0cmFjdCBpbmZvcm1hdGlvbiANCmFib3V0IHRoZSBy
-dW5uaW5nIGNvbmZpZ3VyYXRpb24gZnJvbSB0aGUgZGFzaGJvYXJkDQotIENWRS0yMDI2LTI0MDI4
-OiBBbiBhdHRhY2tlciBtaWdodCBiZSBhYmxlIHRvIHRyaWdnZXIgYW4gb3V0LW9mLWJvdW5kcyAN
-CnJlYWQgYnkgc2VuZGluZyBhIGNyYWZ0ZWQgRE5TIHJlc3BvbnNlIHBhY2tldCwgd2hlbiBjdXN0
-b20gTHVhIGNvZGUgdXNlcyANCiJuZXdETlNQYWNrZXRPdmVybGF5IiB0byBwYXJzZSBETlMgcGFj
-a2V0cw0KLSBDVkUtMjAyNi0yNDAyOTogV2hlbiB0aGUgImVhcmx5X2FjbF9kcm9wIiAoImVhcmx5
-QUNMRHJvcCIgaW4gTHVhKSANCm9wdGlvbiBpcyBkaXNhYmxlZCAoZGVmYXVsdCBpcyBlbmFibGVk
-KSBvbiBhIEROUyBvdmVyIEhUVFBzIGZyb250ZW5kIA0KdXNpbmcgdGhlICJuZ2h0dHAyIiBwcm92
-aWRlciwgdGhlIEFDTCBjaGVjayBpcyBza2lwcGVkLCBhbGxvd2luZyBhbGwgDQpjbGllbnRzIHRv
-IHNlbmQgRG9IIHF1ZXJpZXMgcmVnYXJkbGVzcyBvZiB0aGUgY29uZmlndXJlZCBBQ0wNCi0gQ1ZF
-LTIwMjYtMjQwMzA6IEFuIGF0dGFja2VyIG1pZ2h0IGJlIGFibGUgdG8gdHJpY2sgRE5TZGlzdCBp
-bnRvIA0KYWxsb2NhdGluZyB0b28gbXVjaCBtZW1vcnkgd2hpbGUgcHJvY2Vzc2luZyBETlMgb3Zl
-ciBRVUlDIG9yIEROUyBvdmVyIA0KSFRUUC8zIHBheWxvYWRzLCByZXN1bHRpbmcgaW4gZGVuaWFs
-IG9mIHNlcnZpY2UNCi0gQ1ZFLTIwMjYtMjc4NTM6IEFuIGF0dGFja2VyIG1pZ2h0IGJlIGFibGUg
-dG8gdHJpZ2dlciBhbiBvdXQtb2YtYm91bmRzIA0Kd3JpdGUgYnkgc2VuZGluZyBjcmFmdGVkIERO
-UyByZXNwb25zZXMgdG8gYSBETlNkaXN0IHVzaW5nIHRoZSANCiJETlNRdWVzdGlvbjpjaGFuZ2VO
-YW1lIiBvciAiRE5TUmVzcG9uc2U6Y2hhbmdlTmFtZSIgbWV0aG9kcyBpbiBjdXN0b20gDQpMdWEg
-Y29kZS4gSW4gc29tZSBjYXNlcyB0aGUgcmV3cml0dGVuIHBhY2tldCBtaWdodCBiZWNvbWUgbGFy
-Z2VyIHRoYW4gDQp0aGUgaW5pdGlhbCByZXNwb25zZSBhbmQgZXZlbiBleGNlZWQgNjU1MzUgYnl0
-ZXMsIHBvdGVudGlhbGx5IGxlYWRpbmcgdG8gDQphIGNyYXNoIHJlc3VsdGluZyBpbiBkZW5pYWwg
-b2Ygc2VydmljZQ0KLSBDVkUtMjAyNi0yNzg1NDogRGVuaWFsIG9mIHNlcnZpY2Ugd2hlbiB1c2lu
-ZyANCkROU1F1ZXN0aW9uOmdldEVETlNPcHRpb25zIG1ldGhvZCBpbiBjdXN0b20gTHVhIGNvZGUN
-Cg0KDQpUaGUgZnVsbCBzZWN1cml0eSBhZHZpc29yeSBjYW4gYmUgZm91bmQgYXQgDQpodHRwczov
-L3d3dy5kbnNkaXN0Lm9yZy9zZWN1cml0eS1hZHZpc29yaWVzL3Bvd2VyZG5zLWFkdmlzb3J5LWZv
-ci1kbnNkaXN0LTIwMjYtMDIuaHRtbA0KDQpNaW5pbWFsIHBhdGNoZXMgY2FuIGJlIGZvdW5kIGF0
-IA0KaHR0cHM6Ly9kb3dubG9hZHMucG93ZXJkbnMuY29tL3BhdGNoZXMvMjAyNi0wMi8NCg0KUGxl
-YXNlIGZlZWwgZnJlZSB0byBjb250YWN0IG1lIGRpcmVjdGx5IGlmIHlvdSBoYXZlIGFueSBxdWVz
-dGlvbi4NCg0KQmVzdCByZWdhcmRzLA0KLS0gDQpSZW1pIEdhY29nbmUNClBvd2VyRE5TLkNPTSBC
-ViAtIGh0dHBzOi8vd3d3LnBvd2VyZG5zLmNvbS8NCg==
+https://www.ruby-lang.org/en/security/ defines their security reporting
+processes.
 
---------------KA13cun07sIeL5Cln6LGxNDt--
+~reed
 
---------------HtnO4XTpC1s31E3Z0zzfMaMY
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+On Mon, Sep 19, 2016 at 12:20 PM, Mike Santillana <
+michael.santillana@wework.com> wrote:
 
------BEGIN PGP SIGNATURE-----
+> Product: Ruby's OpenSSL Library
+> Version: Tested on 2.3.1 (latest)
+> Bug: IV Reuse
+> Impact: Depends on the usage of the library
+>
+> Hello,
+>
+> An IV reuse bug was discovered in Ruby's OpenSSL library when using
+> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+> setting the key, the cipher will default to using a static IV. This creat=
+es
+> a static nonce and since aes-gcm is a stream cipher, this can lead to kno=
+wn
+> cryptographic issues.
+>
+> The documentation does not appear to specify the order of operations when
+> setting the key and IV [1]. As an example, see the following insecure code
+> snippet below:
+>
+> Vulnerable Code:
+>
+> def encrypt(plaintext)
+>     cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
+>     iv =3D cipher.random_iv # Notice here the IV is set before the key
+>     cipher.key =3D '11111111111111111111111111111111'
+>     cipher.auth_data =3D ""
+>     ciphertext =3D cipher.update(plaintext) + cipher.final
+>     tag =3D cipher.auth_tag
+>
+>     puts "[+] Encrypting: #{plaintext}"
+>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+> end
+>
+> A developer that uses the code above may incorrectly assume that their co=
+de
+> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
+> the =E2=80=98cipher.random_iv=E2=80=99 method is used. According to the d=
+ocumentation, this
+> should generate a random IV each time the encryption method is called.
+>
+> When the code above is run with the same key and same plaintext message,
+> the following results are obtained:
+>
+> Output:
+> # Run 1
+> ./gcm_encrypt.rb 'This is some secret message.'
+> [+] Encrypting: This is some secret message.
+> [+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
+> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+> 800a5bb48fb1c4ad0b7bdf6054
+>
+> # Run 2
+> ./gcm_encrypt.rb 'This is some secret message.'
+> [+] Encrypting: This is some secret message.
+> [+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
+> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+> 800a5bb48fb1c4ad0b7bdf6054
+>
+> Notice that in the output above a unique IV is returned for both runs, but
+> with the same ciphertext. This proves that even though the random_iv meth=
+od
+> is called, the code is defaulting to a static IV. If an attacker can
+> retrieve multiple ciphertext messages, it is possible to decrypt the
+> ciphertexts by applying the same attack one would use in a two-time pad
+> (XOR ciphertexts and crib drag).
+>
+> Next review the following code snippet and output, which depicts a secure
+> implementation of the code:
+>
+> Valid Code:
+>
+> def encrypt(plaintext)
+>     cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
+>     cipher.key =3D '11111111111111111111111111111111'
+>     iv =3D cipher.random_iv # Notice here the IV is set after the key
+>     cipher.auth_data =3D ""
+>     ciphertext =3D cipher.update(plaintext) + cipher.final
+>     tag =3D cipher.auth_tag
+>
+>     puts "[+] Encrypting: #{plaintext}"
+>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+> end
+>
+> Output:
+> # Run 1
+> ./gcm_encrypt.rb 'This is some secret message.'
+> [+] Encrypting: This is some secret message.
+> [+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
+> ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
+> 9a5eaa7e5beefdff5d56cc4136
+>
+> # Run 2
+> ./gcm_encrypt.rb 'This is some secret message.'
+> [+] Encrypting: This is some secret message.
+> [+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
+> bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
+> 65846e877dca11a6e13a659540
+>
+> Notice that this time both the IV and ciphertexts are both different for
+> the same plaintext. This is the intended result a developer would expect =
+to
+> happen when using this library.
+>
+> It should be noted that when I went to Ruby's github page to report this
+> bug, I noticed a developer also independently encountered this weird
+> phenomenon [2]. Since it has already been brought up to the Ruby team, I
+> have not created a new ticket.
+>
+> References:
+>  [1]
+> https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/
+> OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-
+> Authenticated+Encryption+and+Associated+Data+-28AEAD-29
+>  [2] https://github.com/ruby/openssl/issues/49
+>
+> I'd like to to request a CVE ID for this issue.
+>
+> Thanks
+>
+> *WeWork | Mike Santillana*
+> Security Engineer
+> 845-709-5655
+> www.wework.com
+>
+> Create Your Life's Work
+>
 
-iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAmnLui0ACgkQogjtT4r1
-hEZavwf7BK7w6pBEft3cN3F/6oA5uJTKKRgeMycZz72xMotcG5hH6DI7mz2PmK8X
-MqvrJUfgFpLE74S56AOVCADItAGQolVQ5tgAojmckY2nvl/umVPeI4yKNBTXm62V
-cxjONYmg+SUN3Blba239JEoYHnAWhQYO/MpfJeT+6zzaOKSIxFybOPR1L1+D5saR
-3e3YmBjjB2+23OLWniDPGBGu/b75rR+zWo3KIDAunwxZpE5uz08s/hXr/vqTEmZc
-Ulero3oKyQGP8K86ezu4gE0EXFnUXh3R03Fha3sG3GuRlVVLn2wPghSvf2On3kH1
-bnHDvXr6auiNlU2hmbeMR5z6jFwcOw==
-=PRNe
------END PGP SIGNATURE-----
-
---------------HtnO4XTpC1s31E3Z0zzfMaMY--
-
+--001a113eeb303d9b5e053ce2880a--
