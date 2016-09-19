@@ -1,4 +1,9 @@
-Received: (qmail 17968 invoked by uid 550); 18 Aug 2022 08:25:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6495" "Monday" "19" "September" "2016" "15:03:23" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" "<9C0DC1F6-0473-4888-A051-6CFC8872E94D@gmail.com>" "136" "Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" nil nil nil "9" "2016091920:03:23" "[oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" (number mark "U       bperry.volat Sep 19  136/6495  " thread-indent "\"Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode\"\n") "<20160919195351.GB29516@hunt>" ("<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>" "<20160919195351.GB29516@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6070 invoked by uid 550); 19 Sep 2016 20:03:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,179 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17943 invoked from network); 18 Aug 2022 08:25:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm1; t=1660811138; x=
-	1660897538; bh=PMMHHU70no4wFAuT5ThXHRPOl2YI0TKp09BWWxNpQT4=; b=n
-	K7Iy/uxlbMyLqU0Coa4mcD/0uiC+SDWiR7stgHRQkCYpnvNSFWpWgmgO+QCt00mS
-	NEubm86cT18DY5Oo8njOpq/rQFh9tYlcFwnFRqREj1Ys8j9qXrhUUaWl4FKNvu3P
-	RUCv6gEx89Z+WTm7Ql7sNGpcNITw/SUt2bAyGGL2oC5UhmCk8S+xYW54GBAwGY7S
-	92QajD60754fIn61Spv0BrRQBSoZ3Mpfycm9oa2ZWpbHAgPF51mbLjeFllvziOk6
-	qV9OAiaecWdKIthsq7DQTIguzQKIdad3yQS3I6ZpffiQ6P8yBm5zEV9uP3NsGIy9
-	5Lz7imltZorrqlpRFbOPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1660811138; x=1660897538; bh=P
-	MMHHU70no4wFAuT5ThXHRPOl2YI0TKp09BWWxNpQT4=; b=Yt10U8ytf/YdtI24P
-	h7P6Nl74oxEhrg5PtC6otCdtv5ftY2iu0TwaOrKGUPu0OhO+iQ9lcI2SOGa+CFJp
-	YZimTHiz5I3SW/fJGrTZfhKBsg77EZhWGu5wf0mOGoZ6ecNZj/ll7AaaQykNOtxj
-	gSMZ72I3zGMjr3+22r60zz5tok5KG0gkTlXoCjciwealvqb76RPh7E6PkYDln4ui
-	G7DuC5pdCO+YmaRuKT6I1B9tg0F670qdhTzBpd1nqjyPCy/SW2RzwWgU1JlX/+pH
-	QsKsKmlsQ31XMx+JS+7EMpxNnQapIr+nidLWtLPD/n+ppDFdYrKtnCMKxyvvm1Lq
-	XP0eA==
-X-ME-Sender: <xms:gff9YrznOM_jYW37JN3KjdZPNBtv18F62wNZ3WaGjLXuYUpBqy6GYw>
-    <xme:gff9YjSvs0xlHV34kRorlmlAnqmvnVjCDli_VSfsJuedwicUxe3HiePSUUNvDm3lB
-    g07XT2JcRqTjg>
-X-ME-Received: <xmr:gff9YlWpOqss2UWqrx6ForAkgr0Vwgmk3pgfAjAKlF03zhmx5VaQUsdJlloB_oUIxWzbvSeJ6zT60Yc5iBNKfYO_K9ffMtKo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehkedgtdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggugfgjsehtke
-    ertddttdejnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhm
-    qeenucggtffrrghtthgvrhhnpeeuheekheelffefieduteefkeejffdvueehjeejffehle
-    dugfetkedvleekudduvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:gvf9YljjW7EnvvfiLy2AkRO63oubNesj8BD6yTMLstCjdXX_NBQZaQ>
-    <xmx:gvf9YtCgxDPUAOgJ-_lEAF_CyU6LeeeoSS_YnOZc-pvZX4HJ0WfVAQ>
-    <xmx:gvf9YuL02dNbBLMblIGi35HSyGX42l6TD30J6mF1uYaFtTxPNAnNKg>
-    <xmx:gvf9Ygq8Ue4Qi-wzxeqa6vIb2fquM8QA9JszMyzGSNgwJVmhCsgttg>
-Feedback-ID: i787e41f1:Fastmail
-Date: Thu, 18 Aug 2022 10:25:35 +0200
-From: Greg KH <greg@kroah.com>
+Received: (qmail 6019 invoked from network); 19 Sep 2016 20:03:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:mime-version:from:in-reply-to:date:cc:message-id:references
+         :to;
+        bh=JN3PkHQYjUhq9ebXquJVcEqPjmvjB3UIvTx6qZU64yw=;
+        b=NXLNGVQ2NEnO42B9iQRbdLex2RrzVb4Kkhqhv82+D8FewO0W5wGI49ns6xmuse9Sx7
+         GuuVLMy5s4bR3QryGjBCg9JLIku204UsMdL35Jl6QhfkKlKIvlekG72Dg701l2jpYYLF
+         hF3i0dfmm3V5Jtjm6HCq6aiD+r+JVnAVdz5J+HF2xxG22GtJvod3RBGNyKwaf0sz37/2
+         3B0vkP4srdOkHfGRXiO9HF/rpAwCFSBxy3W3u3sz6SYnAn4LjFNu/o4PPzxRgkkh/HXp
+         FKC8xmidHWCQ3v71ISkDMcrZB02J6KKp0IY++lfviCq7xYG7ALa25g1abs2rDmOoK7Ev
+         sWJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
+         :message-id:references:to;
+        bh=JN3PkHQYjUhq9ebXquJVcEqPjmvjB3UIvTx6qZU64yw=;
+        b=QlC6RJ+1Qr3cUoP20hZni40zzZUTBMBrUVsmP9Xp6RfIm9e7t/URV84YBQI7opnIcN
+         s8Ir793gBM5VJkva1p/+0MzdCyjTuQGR4t4U9MZeptnxX5h8oYYYddiVbRuH7PxEFEXt
+         d+1pSzVBk6GENz9Lxo1hOtBRKwTbikCF35y6T8WcBsS/mT9tOssKhsnkscgZnUDgwVlN
+         uI2d/E7UonIlYKQFHOqennf8zAWLuxRvM7V7MOfMyQ3wOfiwKF8MuVdAU8I8pwC34jKu
+         yyBWxnjWSZw8IkmpRaoiQQVOYXIzF/BWVjTL5YJX5Di+E2mJaQVC3JpLOKsOYvrS/mGt
+         hmXQ==
+X-Gm-Message-State: AE9vXwObGOjd4u1h43ySe/MoYNxtz7QrndEad4CO8ngp5z+w0DA7nmTpaG93eA4Wy47mPQ==
+X-Received: by 10.202.84.197 with SMTP id i188mr23844501oib.93.1474315410587;
+        Mon, 19 Sep 2016 13:03:30 -0700 (PDT)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_314D323D-E4C5-4089-A47D-332184CE2D5C"; protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Pgp-Agent: GPGMail
+From: Brandon Perry <bperry.volatile@gmail.com>
+In-Reply-To: <20160919195351.GB29516@hunt>
+Date: Mon, 19 Sep 2016 15:03:23 -0500
+Cc: Mike Santillana <michael.santillana@wework.com>,
+ 'Apple' via <infosec@wework.com>
+Message-Id: <9C0DC1F6-0473-4888-A051-6CFC8872E94D@gmail.com>
+References: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com> <20160919195351.GB29516@hunt>
 To: oss-security@lists.openwall.com
-Message-ID: <Yv33fx1J/hQXTtSk@kroah.com>
-References: <OSZP286MB1910B2AA75597E9B1724117EAA6D9@OSZP286MB1910.JPNP286.PROD.OUTLOOK.COM>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <OSZP286MB1910B2AA75597E9B1724117EAA6D9@OSZP286MB1910.JPNP286.PROD.OUTLOOK.COM>
-Subject: Re: [oss-security] Linux kernel: stack-out-of-bounds in profile_pc
+X-Mailer: Apple Mail (2.3124)
+Subject: Re: [oss-security] CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 
-On Thu, Aug 18, 2022 at 05:41:30AM +0000, 黄 晓 wrote:
-> Hello:
->       
->       I found a bug through the syzkaller fuzz tool, you need to set CONFIG_KASAN=y, the crash information is displayed as out-of-bounds reading, I am weak and unable to analyze the harm of this bug.
-> The bug program cannot be reproduced stably and needs to be run multiple times.
+--Apple-Mail=_314D323D-E4C5-4089-A47D-332184CE2D5C
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_D9EEA4ED-2B0D-412F-AEEE-6BAE76B9B206"
 
-It would have been helpful to notify the developers and maintainers of
-this code that there is an issue.  They will not see a random email on
-the oss-security mailing list as they are not subscribed here.
 
-To find who is responsible for this code, use the get_maintainers.pl
-script in the kernel tree.  The output for it for this problem is:
+--Apple-Mail=_D9EEA4ED-2B0D-412F-AEEE-6BAE76B9B206
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-$ ./scripts/get_maintainer.pl arch/x86/kernel/time.c
-Thomas Gleixner <tglx@linutronix.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Ingo Molnar <mingo@redhat.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Borislav Petkov <bp@alien8.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Dave Hansen <dave.hansen@linux.intel.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-x86@kernel.org (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-"H. Peter Anvin" <hpa@zytor.com> (reviewer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-linux-kernel@vger.kernel.org (open list:X86 ARCHITECTURE (32-BIT AND 64-BIT))
 
-Also, this issue seems to require root permissions (i.e. write
-permissions on the kernel profiler) in order to be triggered.
+> On Sep 19, 2016, at 2:53 PM, Seth Arnold <seth.arnold@canonical.com> wrot=
+e:
+>=20
+> On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
+>> An IV reuse bug was discovered in Ruby's OpenSSL library when using
+>> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+>> setting the key, the cipher will default to using a static IV. This crea=
+tes
+>> a static nonce and since aes-gcm is a stream cipher, this can lead to kn=
+own
+>> cryptographic issues.
+>>=20
+>> The documentation does not appear to specify the order of operations when
+>> setting the key and IV [1]. As an example, see the following insecure co=
+de
+>> snippet below:
+>>=20
+>> Vulnerable Code:
+>>=20
+>> def encrypt(plaintext)
+>>    cipher =3D OpenSSL::Cipher.new('aes-256-gcm')
+>>    iv =3D cipher.random_iv # Notice here the IV is set before the key
+>>    cipher.key =3D '11111111111111111111111111111111'
+>>    cipher.auth_data =3D ""
+>>    ciphertext =3D cipher.update(plaintext) + cipher.final
+>>    tag =3D cipher.auth_tag
+>>=20
+>>    puts "[+] Encrypting: #{plaintext}"
+>>    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+>> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+>> end
+>=20
+> Hello,
+>=20
+> I think you have a mistake in this sample code, 'iv' is assigned but never
+> used (aside from being printed).
 
-Hope this helps,
+Ruby really likes side-effects. Calling #random_iv generates and sets a new=
+ IV on the cipher, then returns it to the caller. Very magical.
 
-greg k-h
+https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#m=
+ethod-i-random_iv <https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/Op=
+enSSL/Cipher.html#method-i-random_iv>
+>=20
+> Your github code is far more complicated but looks like it is doing the
+> right thing.
+>=20
+> Thanks
+
+
+--Apple-Mail=_D9EEA4ED-2B0D-412F-AEEE-6BAE76B9B206
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html charset=
+=3Dus-ascii"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode=
+: space; -webkit-line-break: after-white-space;" class=3D""><br class=3D"">=
+<div><blockquote type=3D"cite" class=3D""><div class=3D"">On Sep 19, 2016, =
+at 2:53 PM, Seth Arnold &lt;<a href=3D"mailto:seth.arnold@canonical.com" cl=
+ass=3D"">seth.arnold@canonical.com</a>&gt; wrote:</div><br class=3D"Apple-i=
+nterchange-newline"><div class=3D""><div class=3D"">On Mon, Sep 19, 2016 at=
+ 03:20:02PM -0400, Mike Santillana wrote:<br class=3D""><blockquote type=3D=
+"cite" class=3D"">An IV reuse bug was discovered in Ruby's OpenSSL library =
+when using<br class=3D"">aes-gcm. When encrypting data with aes-*-gcm, if t=
+he IV is set before<br class=3D"">setting the key, the cipher will default =
+to using a static IV. This creates<br class=3D"">a static nonce and since a=
+es-gcm is a stream cipher, this can lead to known<br class=3D"">cryptograph=
+ic issues.<br class=3D""><br class=3D"">The documentation does not appear t=
+o specify the order of operations when<br class=3D"">setting the key and IV=
+ [1]. As an example, see the following insecure code<br class=3D"">snippet =
+below:<br class=3D""><br class=3D"">Vulnerable Code:<br class=3D""><br clas=
+s=3D"">def encrypt(plaintext)<br class=3D""> &nbsp;&nbsp;&nbsp;cipher =3D O=
+penSSL::Cipher.new('aes-256-gcm')<br class=3D""> &nbsp;&nbsp;&nbsp;iv =3D c=
+ipher.random_iv # Notice here the IV is set before the key<br class=3D""> &=
+nbsp;&nbsp;&nbsp;cipher.key =3D '11111111111111111111111111111111'<br class=
+=3D""> &nbsp;&nbsp;&nbsp;cipher.auth_data =3D ""<br class=3D""> &nbsp;&nbsp=
+;&nbsp;ciphertext =3D cipher.update(plaintext) + cipher.final<br class=3D""=
+> &nbsp;&nbsp;&nbsp;tag =3D cipher.auth_tag<br class=3D""><br class=3D""> &=
+nbsp;&nbsp;&nbsp;puts "[+] Encrypting: #{plaintext}"<br class=3D""> &nbsp;&=
+nbsp;&nbsp;puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} =
+|<br class=3D"">#{bin2hex(tag)} | #{bin2hex(ciphertext)}"<br class=3D"">end=
+<br class=3D""></blockquote><br class=3D"">Hello,<br class=3D""><br class=
+=3D"">I think you have a mistake in this sample code, 'iv' is assigned but =
+never<br class=3D"">used (aside from being printed).<br class=3D""></div></=
+div></blockquote><div><br class=3D""></div><div>Ruby really likes side-effe=
+cts. Calling #random_iv generates and sets a new IV on the cipher, then ret=
+urns it to the caller. Very magical.</div><div><br class=3D""></div><div><a=
+ href=3D"https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Ciph=
+er.html#method-i-random_iv" class=3D"">https://ruby-doc.org/stdlib-2.0.0/li=
+bdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv</a></div><br class=
+=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><div class=3D"">=
+<br class=3D"">Your github code is far more complicated but looks like it i=
+s doing the<br class=3D"">right thing.<br class=3D""><br class=3D"">Thanks<=
+br class=3D""></div></div></blockquote></div><br class=3D""></body></html>=
+
+--Apple-Mail=_D9EEA4ED-2B0D-412F-AEEE-6BAE76B9B206--
+
+--Apple-Mail=_314D323D-E4C5-4089-A47D-332184CE2D5C
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQIcBAEBCgAGBQJX4ESPAAoJEKJq8VjVbt2pJVIP/iA8CRvz5F/IY9afCUi8noOG
+6QaMyn+ZpshNA1VsbFbFz9s1EbSDdGpSQsIqqxsKc67CFpvJLV1u8v4wYAijW4g9
+z3GJk7hfmokhmi15PzQzcSA2RayJ5euMX5k4pPS/H6YZk0Zm5Lxz1c5d0sod8pW8
+IWsYSi4ApPKz9ylnxDswpPJai9FD+VefFuxB5zEL6Z8eIsN8wwwkEI5FSk/578s9
+fTaFit0M2WzU+xNlOz/hDpUjEgcJbPvQfl9MD7gOFYyrzrOkPA+QYQ8IsmP5xLcd
+bPGgQjc4ahFsq55eaa9otd9vuzbSctScCIqcGwZF7MHaz7mGVNYQ7JiwNU9/VZBn
+6zGycWIc2CijFIYuOUXHEj16y1iF8xr8KQ87Nsu2L0aZFFDgAmyB6a5F41GE8Ho0
+kRRnPw/zgPwem5/ym0U3xVENCbIH5n8IliViEO86Wm+ZB2zYW6efrf819vWMDfaP
+i0ylE1PjQALL8ue9efve6sos5Lhtp7iy+wCDqT/9OgrKwbsxDzDA4pDGkG+qziEv
+4b5K26ugfvhgqvz4WcN4AOmXq0kR4z3QGRfcP2dqtNg4wnNVBYmag00+V9H/AtKy
+sxvy6Z6NstYmogaOVA4PfJbKgpjHOXEvSg+zAsURoIwqeT0uA4lcvg3nTzzITjsf
+V1sdH6XC21kq/5IjIPMI
+=Q6Nh
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_314D323D-E4C5-4089-A47D-332184CE2D5C--
