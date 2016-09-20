@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/5
-Message-ID: <CADLX=aHqBcivip=qZkCMu94Nzv1rnvN7eJSym1CStDTOdmUSKQ@mail.gmail.com>
-Date: Thu, 7 Jan 2016 16:40:03 +0530
-From: Rahul Pratap Singh <techno.rps@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/20/1
+Message-Id: <92B9C3B6-236F-44BF-951C-2E3B3C6D466B@oracle.com>
+Date: Tue, 20 Sep 2016 09:29:55 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: WP Symposium Pro Social Network plugin XSS and Critical CSRF
+Cc: Jan Schaumann <jschauma@...meister.org>, "chet.ramey" <chet.ramey@...e.edu>
+Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-During my research, I found some vulnerabilites in "WP Symposium Pro Social
-Network plugin" version 15.12 (latest) and wanted to request you to assign
-CVE-id for them. I've already contacted vendor, who has deployed a patch.
+> On 19 Sep 2016, at 19:32, Seth Arnold <seth.arnold@...onical.com> wrote:
+> 
+> On Sun, Sep 18, 2016 at 08:06:57PM +0100, John Haxby wrote:
+>>>>> A little while ago, one of our users discovered that by setting the
+>>>>> hostname to $(something unpleasant), bash would run "something
+>>>>> unpleasant" when it expanded \h in the prompt string.
+>>> 
+>>> This issue has been public since October, 2015 in Ubuntu's bug tracking
+>>> system.
+>>> 
+>> 
+>> Yes, the message was more to let people know that CVE-2016-0634  had
+>> been assigned for this issue.   Do you have a link to the Ubuntu issue
+>> and a different CVE number?
+> 
+> Hello John; we did not assign a CVE number for this issue.
+> 
+> Bernd Dietzel reported it at:
+> https://bugs.launchpad.net/ubuntu/+source/bash/+bug/1507025
 
+Thanks.   CVE-2016-0634 can stand then.
 
-vendor: https://wordpress.org/support/plugin/wp-symposium-pro
+[The internal process we follow for acquiring CVEs is heavily oriented towards closed source so my apologies for not bringing this forward sooner.]
 
-Patch: Update to version 16.1
+jch
 
-Pls, let me know, if any additional information is needed.
-
-Ref:
-https://wordpress.org/plugins/wp-symposium-pro/changelog/
-http://www.wpsymposiumpro.com/wp-symposium-pro-16-01-critical-update/
-
+Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
