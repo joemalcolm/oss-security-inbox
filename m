@@ -1,47 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/2
-Message-ID: <1935548.nJNUl5RvF6@cbuissar-ltop>
-Date: Mon, 21 Nov 2016 11:58:29 +0100
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/20/3
+Message-Id: <20160920190834.6093EABC04D@smtpvmsrv1.mitre.org>
+Date: Tue, 20 Sep 2016 15:08:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: usb: xhci memory leakage during device unplug
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is to inform you of the following CVE:
+> Quick Emulator(Qemu) built with the USB xHCI controller emulation support is
+> vulnerable to a memory leakage issue. It could occur while doing a USB device
+> unplug operation; Doing so repeatedly would result in leaking host memory,
+> affecting other services on the host.
+> 
+> A privileged user inside guest could use this flaw to cause a DoS on the host
+> and/or potentially crash the Qemu process instance on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg02773.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=b53dd4495ced2432a0b652ea895e651d07336f7e
+> 
+> If the xhci uses msix, it doesn't free the corresponding
+> memory, thus leading a memory leak. This patch avoid this.
 
-CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
+Use CVE-2016-7466.
 
-Description :
-A vulnerability in ipsilon was found that allows attacker to log out active
-sessions of other users. This issue is related to how it tracks sessions, and
-allows an unauthenticated attacker to view and terminate active sessions from
-other users.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Note: this bug can also be triggered accidentally.
-
-Upstream patch : 
-https://pagure.io/ipsilon/c/511fa8b7001c2f9a42301aa1d4b85aaf170a461c
-
-Vulnerable versions: 
-All versions of Ipsilon 2.0 before 2.0.2 are vulnerable.
-All versions of Ipsilon 1.2 before 1.2.1 are vulnerable.
-All versions of Ipsilon 1.1 before 1.1.2 are vulnerable.
-All versions of Ipsilon 1.0 before 1.0.3 are vulnerable.
-
-Impact: Important
-CVSS3 scoring : 8.2 AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H
-
-Reported by: Patrick Uiterwijk (Red Hat) and Howard Johnson
-
-Reference :
-https://ipsilon-project.org/advisory/CVE-2016-8638.txt
-
-Best Regards,
-
---
-Cedric Buissart
-Red Hat Product Security
------------------------------------------
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJX4YgUAAoJEHb/MwWLVhi2ggQP/2DNMvmdNLOKphMe5SZwN1OG
+pYSTUN1hLW4abmL3deZExJCf/zVnF70tCcussvYPVi2TvheXLefPBeuMVoUAktm1
+1CdkDzpdQf/C+Ht48c2W/dh5LVvT90/ZQR/t7rKfttcM8efHjWFnCoYsgewyrTbv
+iZyVKCHG1Ww0Mobjh19eLKgwymCAF4fjT5bY8IItwCyNOXfj+MiKh4lH31Ja3RBw
+7jfJFfxRjjUippAukxuZ70EOlyGPxWO8Ln6/w2NVHYNPWKzjakc+8vXlv7bZi0bZ
+boJOPrVeoyGoQsoqDwshfOv7TSmvz2edCvn9zbL2I07Je8tn4goY02MLB0sxOS89
+dlasZ0MPEsmG+OrtDKDQ8C+tPAkXZ9egbFitp+bPSiFB8cLN3LyE99vhzIVe+IEZ
+jizMhnbGOpmLyXjDb7CfoCoZXbOxD4KHaSpLj1kS+tCdyWTRANoRccOVgMNOEnXL
+3568h8XWTLQ3tyUwEuRqeTSu889iBM453JwSGvWYxC8wyBHxI64uXddwsfHqrljF
+nM++SLFhiVouccTBOdG5My7KBoRKlK5nQ0/stiXU9ACFPuLnnbR+iDqrdBwEW6jR
+ycD6fgB3i0c6NXs17pWBGQup89UPpJjdEYFiukr1g0dUIH0u1Adf7EuzW9U+amJq
+QqiwCA/ontAPMEBeCNxA
+=RuAu
+-----END PGP SIGNATURE-----
