@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2384" "Monday" "9" "December" "2019" "15:42:47" "+0100" "Noel Kuntze" "noel.kuntze+oss-security@thermi.consulting" nil "71" nil "^Date:" nil nil "12" nil nil (number mark "        noel.kuntze+ Dec  9   71/2384  " thread-indent "\"Re: [oss-security] Shell wildcards considered dangerous?\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Shell wildcards considered dangerous?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4784" "Tuesday" "20" "September" "2016" "11:51:22" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1623280.0e6yKCzhd8@willoughby>" "120" "[oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)" nil nil nil "9" "2016092009:51:22" "[oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)" (number mark "U       ago@gentoo.o Sep 20  120/4784  " thread-indent "\"[oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13780 invoked by uid 550); 9 Dec 2019 14:48:18 -0000
+Received: (qmail 26481 invoked by uid 550); 20 Sep 2016 09:51:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7299 invoked from network); 9 Dec 2019 14:43:00 -0000
-X-Virus-Scanned: amavisd-new at thermi.consulting
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thermi.consulting;
-	s=201909; t=1575902568;
-	bh=LfNXzo96YZNT8geY9dfyIPsLcaMuuyMEYMcYNUK9q6o=;
-	h=Subject:To:From:Date:MIME-Version:Content-Type;
-	b=dmWyenHiOhDID++beGJM2JoAcj8LOvIeavs+XLTejhvDyPAg6HZKozEtNtpjhQiYw
-	 WAMuXtIhxfaNlhiQgxBkzQJ33eX3zU9LVxqcP8+zb9MRGEtT1prDUL1rM/qVldmWFz
-	 yzTdOMAlFIEeocmRAQbdTzUnoxA+yzAvYBoli1zUA/P3HAONlxsdR4QYCPcQGxeXYJ
-	 eOaDhjPDxvv/EREAaxVHT+3xNOKYwq51M3kRpMwXC8ZwTrf8RIW/l8rT4aQfOXlUXB
-	 2sEcQ/cqJteyYnPtYHW2Uger4/wmf1sDfq1zyaLrl60nRoL4ccwgdRPTUD0EYWrjhz
-	 1ayxK3c7cj4GQ==
-References: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
-Message-ID: <8bd059ae-5faa-46fa-71d0-bb0f61ea8e62@thermi.consulting>
-MIME-Version: 1.0
-In-Reply-To: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Date: Mon, 9 Dec 2019 15:42:47 +0100
-From: Noel Kuntze <noel.kuntze+oss-security@thermi.consulting>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Shell wildcards considered dangerous?
+Received: (qmail 26449 invoked from network); 20 Sep 2016 09:51:41 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Cc: cve-assign <cve-assign@mitre.org>
+Date: Tue, 20 Sep 2016 11:51:22 +0200
+Message-ID: <1623280.0e6yKCzhd8@willoughby>
+User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)
 
-Hello,
+If it is suitable for a CVE please assign one. 
+Thanks.
 
-That is only a problem if the developer(s) foolishly didn't use "--" to terminate the command line options
-or they did, but the argument parser of the called program does not understand that "--" is a command line option terminator.
-See how the man page for GNU optarg (man 3 optarg).
-Quote below:
-[...]
-       By default, getopt() permutes the contents of argv as it scans, so that
-       eventually all the nonoptions are at the end.  Two other modes are also
-       implemented.   If  the first character of optstring is '+' or the envi‐
-       ronment variable POSIXLY_CORRECT is set, then option  processing  stops
-       as soon as a nonoption argument is encountered.  If the first character
-       of optstring is '-', then each nonoption argv-element is handled as  if
-       it were the argument of an option with character code 1.  (This is used
-       by programs that were written to expect options and other argv-elements
-       in any order and that care about the ordering of the two.)  The special
-       argument "--" forces an end of option-scanning regardless of the  scan‐
-       ning mode.
+Description:
+Libav is an open source set of tools for audio and video processing.
 
-So no, if the developers took care and thought about this beforehand and checked, it's not a problem.
+A fuzzing with an mp3 file as input discovered a null pointer access in 
+ff_put_pixels8_xy2_mmx.
 
-TL;DR: Best practice is to do prog --arg1 --arg2 [...] -- non-opt-args
-Check if prog understands that -- terminates the list of passed options.
+The complete ASan output:
 
-Kind regards
+# avconv -i $FILE -f null -
+avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
+  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
+(tags/RELEASE_381/final)
+[h263 @ 0x61a00001f280] Format detected only with low score of 25, 
+misdetection possible!
+[h263 @ 0x619000000580] warning: first frame is no keyframe
+[h263 @ 0x619000000580] cbpc damaged at 2 0
+[h263 @ 0x619000000580] Error at MB: 2
+[h263 @ 0x619000000580] concealing 6336 DC, 6336 AC, 6336 MV errors
+[h263 @ 0x61a00001f280] Estimating duration from bitrate, this may be 
+inaccurate
+Input #0, h263, from '70.crashes':
+  Duration: N/A, bitrate: N/A
+    Stream #0.0: Video: h263, yuv420p, 1408x1152 [PAR 12:11 DAR 4:3], 25 fps, 
+25 tbn, 29.97 tbc
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf56.1.0
+    Stream #0.0: Video: rawvideo, yuv420p, 1408x1152 [PAR 12:11 DAR 4:3], 
+q=2-31, 200 kb/s, 25 tbn, 25 tbc
+    Metadata:
+      encoder         : Lavc56.1.0 rawvideo
+Stream mapping:
+  Stream #0:0 -> #0:0 (h263 (native) -> rawvideo (native))
+Press ctrl-c to stop encoding
+[h263 @ 0x61900001cc80] warning: first frame is no keyframe
+[h263 @ 0x61900001cc80] cbpc damaged at 2 0
+[h263 @ 0x61900001cc80] Error at MB: 2
+[h263 @ 0x61900001cc80] concealing 6336 DC, 6336 AC, 6336 MV errors
+[h263 @ 0x61900001cc80] warning: first frame is no keyframe
+[h263 @ 0x61900001cc80] cbpc damaged at 0 0
+[h263 @ 0x61900001cc80] Error at MB: 0
+[h263 @ 0x61900001cc80] concealing 99 DC, 99 AC, 99 MV errors
+Input stream #0:0 frame changed from size:1408x1152 fmt:yuv420p to 
+size:176x144 fmt:yuv420p
+[h263 @ 0x61900001cc80] warning: first frame is no keyframe
+ASAN:DEADLYSIGNAL
+=================================================================
+==28973==ERROR: AddressSanitizer: SEGV on unknown address 0x7f22da99ac95 (pc 
+0x7f22e80d8892 bp 0x7ffcd7c28e90 sp 0x7ffcd7c28e20 T0)
+    #0 0x7f22e80d8891 in ff_put_pixels8_xy2_mmx /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5
+    #1 0x7f22e7217de0 in hpel_motion /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:224:5
+    #2 0x7f22e7217de0 in apply_8x8 /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:798
+    #3 0x7f22e7217de0 in mpv_motion_internal /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:877
+    #4 0x7f22e7217de0 in ff_mpv_motion /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:981
+    #5 0x7f22e714459b in mpv_decode_mb_internal /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2223:21
+    #6 0x7f22e714459b in ff_mpv_decode_mb /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2358
+    #7 0x7f22e6056c95 in decode_slice /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:273:13
+    #8 0x7f22e60522cd in ff_h263_decode_frame /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:575:11
+    #9 0x7f22e79dd906 in avcodec_decode_video2 /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1600:19
+    #10 0x5647eb in decode_video /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:1259:11
+    #11 0x5647eb in process_input_packet /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:1398
+    #12 0x550e63 in process_input /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:2440:11
+    #13 0x550e63 in transcode /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:2488
+    #14 0x550e63 in main /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:2647
+    #15 0x7f22e3d7261f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #16 0x41d098 in _init (/usr/bin/avconv+0x41d098)
 
-Noel
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5 in 
+ff_put_pixels8_xy2_mmx
+==28973==ABORTING
 
+Affected version:
+11.7
 
-Am 09.12.19 um 14:23 schrieb Georgi Guninski:
-> Remote version of this affects wu-ftpd from 2003:
-> https://www.debian.org/security/2003/dsa-377
->
-> Summary:  For trusted command PROGRAM, executing
-> PROGRAM *.EXT
-> may lead to arbitrary code execution, e.g. for
-> PROGRAM=EXT=tar
->
-> The main idea is the wildcard to add program options.
->
-> Open problem:
->
-> Are popular programs other than tar vulnerable?
->
-> Since shell wildcards are unlikely to change, should best practice
-> include not using *.EXT in shell?
->
->
-> Example exploit vector: starting program in untrusted
-> directories.
->
-> Poc:
-> ====
-> $rm -rf /tmp/1 ;mkdir /tmp/1 ; cd /tmp/1 ; tar cf a.tar /etc/issue
-> $ : >  --to-command="yes .tar"
->
-> #end creating, starts PoC
-> tar xf *.tar
->
-> #.tar (repeats)
-> ====
->
->
+Fixed version:
+N/A
 
--- 
-Noel Kuntze
-IT security consultant
+Commit fix:
+N/A
 
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
+
+Timeline:
+2016-08-15: bug discovered
+2016-08-16: bug reported to upstream
+2016-09-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/20/libav-null-pointer-dereference-in-ff_put_pixels8_xy2_mmx-rnd_template-c
+
+--
+Agostino
