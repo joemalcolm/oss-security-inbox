@@ -1,21 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/14
-Message-ID: <8352bc24d40a4601ad80e0bf3387f0bd@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 18:05:34 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: Re: CVE Request: Blind SQL Injection Vulnerability in Exponent CMS 2.4.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/20/4
+Message-Id: <20160920191158.DCC7442E014@smtpvbsrv1.mitre.org>
+Date: Tue, 20 Sep 2016 15:11:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Possible CVE for TLS protocol issue
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba
+> https://kcitls.org/
 
-For completeness, we can mention that this was assigned CVE-2016-9272.
-(The discoverer used both oss-security and https://cveform.mitre.org
-to contact us about the same issue.)
+Our initial thought is that the essence of the issue is stated very
+near the end of section 5.3 of the
+https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
+document: "can derive the same master secret MS just by engaging in
+the exact same computation." We are not sure whether it makes sense to
+assign a CVE ID to a mathematical fact of that form. The vulnerability
+seems to be that the TLS protocol definition allows rsa_fixed_dh,
+dss_fixed_dh, rsa_fixed_ecdh, and ecdsa_fixed_ecdh, but protocol
+documentation such as RFC 5246 Appendix F does not explicitly point
+out the severity of the outcome when any arbitrary installed client
+certificate is compromised. It does, for example, say "For TLS to be
+able to provide a secure connection, both the client and server
+systems, keys, and applications must be secure," but it doesn't
+delineate the level of connection insecurity that results from a
+seemingly minor client insecurity.
+
+Use CVE-2015-8960 for this vulnerability in the TLS documentation.
+
+It is possible that other issues described in the
+woot15-paper-hlauschek.pdf paper, such as issues related to handling
+of key usage extensions, need their own separate CVE IDs.
+
+In addition, as suggested by section 5.2, a product that originally
+shipped with a compromised client certificate should, in many cases,
+be considered a vulnerable product, regardless of whether that client
+certificate has any known use for authenticating a client. We don't
+know whether there are a huge number of products that have, for
+example, installed test client certificates. Our initial thought is
+that there should be a unique CVE ID for any product that satisfies
+these criteria:
+
+ - when the product was shipped, a default or recommended
+   configuration had an installed client certificate and associated
+   secret key that were both known to the general public (e.g., they
+   were known by anyone who had a copy of the product)
+
+ - the product can be used in a KCI attack, e.g., it meets all of the
+   requirements of section 5.1.1
+
+ - the product could realistically be expected to need secure
+   communication with a server for which a certificate exists, from a
+   commonly recognized Certification Authority, meeting the
+   requirements of section 5.1.2 (e.g., this would often exclude a
+   product that can establish TLS sessions only to a server operated
+   by the vendor)
+
+Post-shipment compromise of a client certificate's secret key is
+currently outside the scope of CVE. The vulnerable behavior is
+releasing a product where a client certificate is installed and its
+secret key is already publicly documented.
+
+Third-party suggestions for improving warning messages for
+client-certificate installation are also currently outside the scope
+of CVE. Although it might be nice for some products to have a warning
+of "Are you completely sure that you want to install this client
+certificate because no unauthorized party knows the secret key?" (or
+similar), we don't want to have free-for-all CVE ID assignment. For
+now, we'll let vendors have CVE IDs if they decide their existing
+certificate-installation dialog is a security problem and they compose
+a better dialog warning that's understandable by their customers.
 
 - -- 
 CVE Assignment Team
@@ -25,17 +82,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYL4i7AAoJEHb/MwWLVhi2tWUQAJIYiYNLgoGa8OGxe+Uv7VpT
-FzRozJNTHJ8PDlLsBzMmHJ+Xew9nWqpZGabdkqwRi4QTUf3K64HBVRy5o0qho+Cm
-ej6FbydqbYJz7UHoj2IQuHlPSoHCfNpS9Crh8xEfC8vrntQf9tfCyWyeM7My8kY7
-AnqeM74rS/6UhYpOdZ/hdTNYXrzy8GiTC9W0cVh34JgeH/PKiJdxiJ5qsKPdsFDZ
-Z7tXz1uXby0T/hhacoLVlSQKq/IZoHyW9udYn/6edg/oPM4nVz48zcg2LSQU8jDR
-7IQUSNwPvHBLveQjXjvmUNx/GYSw5V5F4m+xy0egibb83TccF8oWerOgwwcRCnMx
-mALiuCBhaiW8s7gtOk5COWIHLdID+VKVU/oQswOmV3PHM/yPGa50JdjOOF5QJJru
-vFro8h6/vguI3ZEKDzaVhjpvU/B/d70WsCQFIkgyDet7spSX9ngFWM6fV9s5A5gv
-sQvZsOueHkW351urKasAT/OfM17LBaHZzmJxf/uVcCuUBKPOg/U2t7Kiy3xl20/P
-SCM+iRg3o9haIhHWsFKHW3Yz745OYq+jElRYmdFZRghJy1QZdmUdkXXTSb6RVmXZ
-BKbGveANdHpyLRLXS6yVSsnYmVKl4aYGHmQbSN/0n5H5x00zdzqveb65/tiMQF7V
-/nuVsQacfRvfDYsB2/ol
-=T1Cp
+iQIcBAEBCAAGBQJX4YgdAAoJEHb/MwWLVhi2ygQP/0RLWIentfu+p3xBdmQ4YP5l
+sDb5xUVOsECGnFDEF2B/LnFRSk1nV8EcWPk+U8wB71ztqiLZ6y8mHRwb22P95Lef
+3fMcLhJ7GTNgPMoKXS4bNbUD4qKJsM1Rq4PR5mPrEh3XfSe4Ts4gsElwzmSOyf3k
+RODrZSymGOGl+TGHc0L8LpdUB7RPpsBlUcCw7kLXn82AKOPZBT8aoJFDpXcX+Ome
+sNU8AiiZbXpWtuJjZ3x5oQnGztkOIxTcI8zANZcUWDUNK1tFOKieiTyVWkx7dJ49
+yN07vfsWCQSKSIUd+pMRawXsaOSO6zTUufJoj9SbfNWtma5q60UythHS507afiq6
+AiIalyG3jYLg5Q9puSmbrfOFCsZ99slGZPfc683rwavUQ0M+kmA2HDwdd2NGt5I4
+wRO8p7wX02fH+4xLA9t3bbq+TYqR1vNnj6QjErjB9vHrVdTGJJIiMg+WD2QoH+PQ
+gQtk3p6tKI5awsnXu73dd7/G3Rd5mFoTX0xfygHca7z7DLirFSZ+hcx4/3+FIOyZ
+ZqHHVgxyt2awxyam0iudp1udqEOenIhpNNZqnTaAFaD6aENmMW0CV2SSSf6LkD3B
+x8s5RwE+uX1CKlhH1gkDqx7df6gFeUnNvcwoc5POF0JolevpHrtXSbwBHFFGeT6S
+AsswVVMQxPKkbxx40iqM
+=zIPv
 -----END PGP SIGNATURE-----
