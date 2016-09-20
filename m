@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["518" "Friday" "22" "May" "2020" "13:55:50" "-0400" "Perry E. Metzger" "perry@piermont.com" "<20200522135550.36ba17a4@jabberwock.cb.piermont.com>" "19" "Re: [oss-security] Short notes on qmail security guarantee" "^Cc:" nil nil "5" "2020052217:55:50" "[oss-security] Short notes on qmail security guarantee" (number mark "        perry@piermo May 22   19/518   " thread-indent "\"Re: [oss-security] Short notes on qmail security guarantee\"\n") "<CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>" ("<CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>" "<20200522121750.GA24868@openwall.com>" "<CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Short notes on qmail security guarantee" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4315" "Tuesday" "20" "September" "2016" "15:11:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160920191158.DCC7442E014@smtpvbsrv1.mitre.org>" "88" "[oss-security] Re: Possible CVE for TLS protocol issue" nil nil nil "9" "2016092019:11:58" "[oss-security] Re: Possible CVE for TLS protocol issue" (number mark "U       cve-assign@m Sep 20   88/4315  " thread-indent "\"[oss-security] Re: Possible CVE for TLS protocol issue\"\n") "<CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30602 invoked by uid 550); 22 May 2020 17:56:04 -0000
+Received: (qmail 24355 invoked by uid 550); 20 Sep 2016 19:12:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30577 invoked from network); 22 May 2020 17:56:03 -0000
-Message-ID: <20200522135550.36ba17a4@jabberwock.cb.piermont.com>
-In-Reply-To: <CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>
-References: <CAGUWgD8s3DtM6sG9Pj478H06G_evwPsF49pK5Cig0VUHY_mrQg@mail.gmail.com>
-	<20200522121750.GA24868@openwall.com>
-	<CAGUWgD-+TDkZqLsFsS_kjxn7iMK6ELERGQfKPNF1qMMArhmzcg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Fri, 22 May 2020 13:55:50 -0400
-From: "Perry E. Metzger" <perry@piermont.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Short notes on qmail security guarantee
-To: Georgi Guninski <gguninski@gmail.com>
+Received: (qmail 24337 invoked from network); 20 Sep 2016 19:12:10 -0000
+From: cve-assign@mitre.org
+To: kseifried@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
+Message-Id: <20160920191158.DCC7442E014@smtpvbsrv1.mitre.org>
+Date: Tue, 20 Sep 2016 15:11:58 -0400 (EDT)
+Subject: [oss-security] Re: Possible CVE for TLS protocol issue
 
-On Fri, 22 May 2020 18:45:00 +0300 Georgi Guninski
-<gguninski@gmail.com> wrote:
-> Hi,
-> 
-> Thanks for the info.
-> 
-> I am not professional admin, but does postfix require limits?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Postfix doesn't require them for remote exploitation security. The
-master.cf and main.cf files, which ship with Postfix, do specify some
-limits for performance tuning and to avoid denial of service.
+> https://kcitls.org/
 
-> Do many widely used daemons need limits?
+Our initial thought is that the essence of the issue is stated very
+near the end of section 5.3 of the
+https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
+document: "can derive the same master secret MS just by engaging in
+the exact same computation." We are not sure whether it makes sense to
+assign a CVE ID to a mathematical fact of that form. The vulnerability
+seems to be that the TLS protocol definition allows rsa_fixed_dh,
+dss_fixed_dh, rsa_fixed_ecdh, and ecdsa_fixed_ecdh, but protocol
+documentation such as RFC 5246 Appendix F does not explicitly point
+out the severity of the outcome when any arbitrary installed client
+certificate is compromised. It does, for example, say "For TLS to be
+able to provide a secure connection, both the client and server
+systems, keys, and applications must be secure," but it doesn't
+delineate the level of connection insecurity that results from a
+seemingly minor client insecurity.
 
-Not of the sort qmail apparently demands, no.
+Use CVE-2015-8960 for this vulnerability in the TLS documentation.
 
-Perry
--- 
-Perry E. Metzger		perry@piermont.com
+It is possible that other issues described in the
+woot15-paper-hlauschek.pdf paper, such as issues related to handling
+of key usage extensions, need their own separate CVE IDs.
+
+In addition, as suggested by section 5.2, a product that originally
+shipped with a compromised client certificate should, in many cases,
+be considered a vulnerable product, regardless of whether that client
+certificate has any known use for authenticating a client. We don't
+know whether there are a huge number of products that have, for
+example, installed test client certificates. Our initial thought is
+that there should be a unique CVE ID for any product that satisfies
+these criteria:
+
+ - when the product was shipped, a default or recommended
+   configuration had an installed client certificate and associated
+   secret key that were both known to the general public (e.g., they
+   were known by anyone who had a copy of the product)
+
+ - the product can be used in a KCI attack, e.g., it meets all of the
+   requirements of section 5.1.1
+
+ - the product could realistically be expected to need secure
+   communication with a server for which a certificate exists, from a
+   commonly recognized Certification Authority, meeting the
+   requirements of section 5.1.2 (e.g., this would often exclude a
+   product that can establish TLS sessions only to a server operated
+   by the vendor)
+
+Post-shipment compromise of a client certificate's secret key is
+currently outside the scope of CVE. The vulnerable behavior is
+releasing a product where a client certificate is installed and its
+secret key is already publicly documented.
+
+Third-party suggestions for improving warning messages for
+client-certificate installation are also currently outside the scope
+of CVE. Although it might be nice for some products to have a warning
+of "Are you completely sure that you want to install this client
+certificate because no unauthorized party knows the secret key?" (or
+similar), we don't want to have free-for-all CVE ID assignment. For
+now, we'll let vendors have CVE IDs if they decide their existing
+certificate-installation dialog is a security problem and they compose
+a better dialog warning that's understandable by their customers.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX4YgdAAoJEHb/MwWLVhi2ygQP/0RLWIentfu+p3xBdmQ4YP5l
+sDb5xUVOsECGnFDEF2B/LnFRSk1nV8EcWPk+U8wB71ztqiLZ6y8mHRwb22P95Lef
+3fMcLhJ7GTNgPMoKXS4bNbUD4qKJsM1Rq4PR5mPrEh3XfSe4Ts4gsElwzmSOyf3k
+RODrZSymGOGl+TGHc0L8LpdUB7RPpsBlUcCw7kLXn82AKOPZBT8aoJFDpXcX+Ome
+sNU8AiiZbXpWtuJjZ3x5oQnGztkOIxTcI8zANZcUWDUNK1tFOKieiTyVWkx7dJ49
+yN07vfsWCQSKSIUd+pMRawXsaOSO6zTUufJoj9SbfNWtma5q60UythHS507afiq6
+AiIalyG3jYLg5Q9puSmbrfOFCsZ99slGZPfc683rwavUQ0M+kmA2HDwdd2NGt5I4
+wRO8p7wX02fH+4xLA9t3bbq+TYqR1vNnj6QjErjB9vHrVdTGJJIiMg+WD2QoH+PQ
+gQtk3p6tKI5awsnXu73dd7/G3Rd5mFoTX0xfygHca7z7DLirFSZ+hcx4/3+FIOyZ
+ZqHHVgxyt2awxyam0iudp1udqEOenIhpNNZqnTaAFaD6aENmMW0CV2SSSf6LkD3B
+x8s5RwE+uX1CKlhH1gkDqx7df6gFeUnNvcwoc5POF0JolevpHrtXSbwBHFFGeT6S
+AsswVVMQxPKkbxx40iqM
+=zIPv
+-----END PGP SIGNATURE-----
