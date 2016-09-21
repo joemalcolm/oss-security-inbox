@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3429" "Friday" "20" "January" "2017" "22:24:00" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<352058745dfd4118bd6d669968fb21cd@imshyb01.MITRE.ORG>" "84" "[oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" "^CC:" nil nil "1" "2017012103:24:00" "[oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" (number mark "        cve-assign@m Jan 20   84/3429  " thread-indent "\"[oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel\"\n") "<20170120140117.GA11396@grsecurity.net>" ("<20170120140117.GA11396@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3337" "Wednesday" "21" "September" "2016" "17:28:31" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1512070.Ry1Vm5FAnA@willoughby>" "87" "[oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)" nil nil nil "9" "2016092115:28:31" "[oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)" (number mark "U       ago@gentoo.o Sep 21   87/3337  " thread-indent "\"[oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5635 invoked by uid 550); 21 Jan 2017 03:24:13 -0000
+Received: (qmail 30438 invoked by uid 550); 21 Sep 2016 15:28:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5616 invoked from network); 21 Jan 2017 03:24:12 -0000
-In-Reply-To: <20170120140117.GA11396@grsecurity.net>
-Message-ID: <352058745dfd4118bd6d669968fb21cd@imshyb01.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-Date: Fri, 20 Jan 2017 22:24:00 -0500
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
-To: <spender@grsecurity.net>
+Received: (qmail 30393 invoked from network); 21 Sep 2016 15:28:50 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Wed, 21 Sep 2016 17:28:31 +0200
+Message-ID: <1512070.Ry1Vm5FAnA@willoughby>
+User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If it is suitable for a CVE please assign one. 
+Thanks.
 
-> [] how about a CVE for a recent kernel, for a vulnerability
-> not fixed in any stable kernel yet, and introduced for a pointless mitigation
-> no less:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c4e490cf148e85ead0d1b1c2caaba833f1d5b29f
-> This affects upstream >= 4.8 when CONFIG_SLAB_FREELIST_RANDOM is enabled
+Description:
+Libav is an open source set of tools for audio and video processing.
 
-Use CVE-2017-5546.
+A fuzzing with an mp3 file as input discovered a divide-by-zero in 
+sbr_make_f_master.
 
+The complete ASan output:
+# avconv -i $FILE -f null -
+avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
+  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
+(tags/RELEASE_381/final)
+[mpeg @ 0x61a00001f280] Format detected only with low score of 25, 
+misdetection possible!
+[aac @ 0x619000000580] Sample rate index in program config element does not 
+match the sample rate index configured by the container.
+[aac @ 0x619000000580] SBR was found before the first channel element.
+ASAN:DEADLYSIGNAL
+=================================================================
+==29103==ERROR: AddressSanitizer: FPE on unknown address 0x7fbd80295491 (pc 
+0x7fbd80295491 bp 0x7ffde63eb2f0 sp 0x7ffde63eafa0 T0)
+    #0 0x7fbd80295490 in sbr_make_f_master /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57
+    #1 0x7fbd80295490 in sbr_reset /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1045
+    #2 0x7fbd80295490 in ff_decode_sbr_extension /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1093
+    #3 0x7fbd801efe1b in decode_extension_payload /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2196:15
+    #4 0x7fbd801efe1b in aac_decode_frame_int /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2866
+    #5 0x7fbd801d3bbb in aac_decode_frame /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2959:15
+    #6 0x7fbd823ed42a in avcodec_decode_audio4 /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1657:15
+    #7 0x7fbd83f00b20 in try_decode_frame /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavformat/utils.c:1914:19
+    #8 0x7fbd83ef76e2 in avformat_find_stream_info /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavformat/utils.c:2276:9
+    #9 0x50d195 in open_input_file /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv_opt.c:726:11
+    #10 0x50b625 in open_files /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv_opt.c:2127:15
+    #11 0x50af81 in avconv_parse_options /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv_opt.c:2164:11
+    #12 0x541414 in main /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:2630:11
+    #13 0x7fbd7e77f61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #14 0x41d098 in _init (/usr/bin/avconv+0x41d098)
 
-> since VMAP_STACK was introduced haphazardly in 4.9 without doing any 
-> static analysis beyond a simple grep or smatch it seems, there are probably a 
-> dozen or so DoSes when CONFIG_DEBUG_SG or CONFIG_DEBUG_VIRTUAL is 
-> enabled, or potential silent or not so silent memory corruption when 
-> it's not, as a scatterlist crossing a virtual page boundary will then 
-> end up accessing a totally unrelated adjacent physical page if a stack 
-> address was passed into the scatterlist, and these vulnerabilities will 
-> continue to pop up until something comprehensive is done to prevent 
-> them. Emese's written an IPA GCC plugin to find all the ones you've missed,
-> so we know there still are many that haven't been fixed.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57 in 
+sbr_make_f_master
+==29103==ABORTING
 
-> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6d104af38b570d37aa32a5803b04c354f8ed513d 
+Affected version:
+11.7
 
-Use CVE-2017-5547.
+Fixed version:
+N/A
 
+Commit fix:
+N/A
 
-> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a45f795c65b479b4ba107b6ccde29b896d51ee98
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Use CVE-2016-10153.
+CVE:
+N/A
 
+Timeline:
+2016-08-15: bug discovered
+2016-08-16: bug reported to upstream
+2016-09-21: blog post about the issue
 
-> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=06deeec77a5a689cc94b21a8a91a76e42176685d
+Note:
+This bug was found with American Fuzzy Lop.
 
-Use CVE-2016-10154.
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/21/libav-divide-by-zero-in-sbr_make_f_master-aacsbr-c/
 
-
-> [] 0day alert, not fixed in 4.9 yet:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05a974efa4bdf6e2a150e3f27dc6fcf0a9ad5655
-
-Use CVE-2017-5548.
-
-
-> [] Not to mention the bugs introduced via fixes for VMAP_STACK:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=146cc8a17a3b4996f6805ee5c080e7101277c410
-
-Use CVE-2017-5549.
-
-
-> [] Or how about a CVE for this huge heap infoleak (and while I'm at it, congrats to
-> Al for not covering it up for once, maybe he's learning!):
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9dc6f65bc5e232d1c05fe34b5daadc7e8bbf1fb
-
-Use CVE-2017-5550.
-
-
-> [] Or this (sgid bit not cleared on tmpfs):
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=497de07d89c1410d76a15bec2bb41f24a2a89f31
-
-Use CVE-2017-5551.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIbBAEBCAAGBQJYgtMDAAoJEHb/MwWLVhi22oYP+IqRCDGdu0kTOWAwWBBmU1sg
-wgrB5sfjm3in2XxfWv5KDVzkNu2lCL5h58Ft3yR+gINPj/Ujpxawqpybcxy5Djnd
-EtwdKoasIjnd4UMda93KUphRFBsXsmtjyFD6ON2obYuQAVvOs+OZi+eJddtUKrZO
-jqpWTTydmNLkZzuPD0KCSrweFOiOe8oqFk2MfrnSED3X0jPSxIf7eZSn3BI0xot8
-GRVfUmi2gMok5/Stt+KGqR8VEw+1bu2wCZcd5JYNTWfH94S89DtpttF91ZXbjy/n
-kvFLfMNN7EtJFo7GttT6DALefc/JOitr7mx+f062Avbx9N+Rcg7FPMoiVeY+CZfV
-022xI9IFCW0hxAnPCUBFHyTqPwLX2w2oNajEB4ZCpYETNAoo2tjBCiKwU5wzboR+
-Ciqo0DMNmPONDiHh2OrwFRV1TgfiegWK+209KaWkNfTar5vQwCQvyYJgls7gs+US
-+E4/J7CX/0gWQqFlpVCQ4zBovap0sJGigpmD0wI2jgvTJADrQcjU09I+AkhP2Was
-ztQ0JwOBL5F5SaMx6bQw/BKKzenikzAdQ6nanlOmywwLNUaRVp8V9rPMbAub9h7F
-r7rfcqJwyvirUTlxmesn+zt0pyT0WK6qSwy+K1X9l/C5DcZtPl2iJ/HiuB7dWTFh
-tcLtUrLLY/vly/hTAbM=
-=y6Ka
------END PGP SIGNATURE-----
+--
+Agostino
