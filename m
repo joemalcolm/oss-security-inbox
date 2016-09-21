@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/4
-Message-ID: <20161011150103.GA4569@kroah.com>
-Date: Tue, 11 Oct 2016 17:01:03 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: linux kernel do_blockdev_direct_IO invalid memory access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/6
+Message-Id: <20160921134903.ED6E23AE00B@smtpvbsrv1.mitre.org>
+Date: Wed, 21 Sep 2016 09:49:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 11, 2016 at 04:46:45PM +0200, Greg KH wrote:
-> On Tue, Oct 11, 2016 at 10:22:48PM +0800, Marco Grassi wrote:
-> > Hello,
-> > 
-> > I posted this to ask feedback on security at kernel dot org, but I think my
-> > mail got bounced back. Not sure if from the mailing list or from some
-> > single recipient.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> https://blogs.gentoo.org/ago/2016/09/20/libav-null-pointer-dereference-in-ff_put_pixels8_xy2_mmx-rnd_template-c
 > 
-> It got there, you could have given us a few more hours to respond,
-> especially as most of the USA was still asleep, and others of us were in
-> a conference during the day in Europe. :(
+> A fuzzing with an mp3 file as input discovered a null pointer access in
+> ff_put_pixels8_xy2_mmx.
+> 
+> Input #0, h263, from '70.crashes':
+> 
+> AddressSanitizer: SEGV on unknown address
+> 
+> ff_put_pixels8_xy2_mmx libav-11.7/libavcodec/x86/rnd_template.c:37:5
 
-To be specific, you only gave us one hour advance notice.  Now normally
-the kernel security team is fast, but expecting a response that quickly
-is a bit disingenuous...
+Use CVE-2016-7477.
 
-greg "even I sleep sometimes" k-h
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX4o9eAAoJEHb/MwWLVhi2CuIP/jzcaY8iY1lPRtz5CJxLaohL
+pHTRPAeU2XQOLZfZiQWFX/eUSMT/n7e+hCeqpOkCSsF11zw7sy+DNBFLcVPKYllx
+76H/rEMi/MtBuWqRZlL1Qnd6v7zAA6pGWU7gQ4GkCuc9fhxc6RNHvG+YDcGDo/yq
+kNb7IhJo0lpA5085OkpfVc1JPq5JTCXGt6u1bJrj6HcV9xwbzoE4WQcamcDAdlPA
+xsUocCtcYwymWcZE4yybw64r4A+v9epsQ+ogJVwHmbdWYZIp7h9j8Po71O44Iu2h
+20GZYnHC0XKF+IV0kevBbvzHAC61bSWfRXAnRpwlJFeyf2YBjxjXnBqoG+N8mOUJ
+4VYm5JUvOp41sYaTSMlTwnZz9YnZRXKWPmk9EsuN0KGqo6b7sSqPEi/tz528Xx8Z
+t1A4eObAW4Rdl0xFpgYyf4Av/njeDpBmXFKSMi12WxH0YdLdoFDNxzuydmc9Uvht
+Hsy6sll58btw4TKGhu+6nJXTUUL9fo/0rQy45aWfEvIHqjROJujbKD5WCFfZ1TnO
+siayvHWExhP/4STeJH2ieaK8ILvO+9KVyxAnmkq7D7r8pgLVpYLRA/lWxuO0z11c
+99Ut3P6fPoZy879rIZYDepmClHnlMxu+vFKZMOKPTyeCe/L14/dTokjhSY4Tn0Le
+oCjpCbIiqywaUOZu+8qZ
+=FID6
+-----END PGP SIGNATURE-----
