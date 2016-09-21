@@ -1,54 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/25/3
-Message-ID: <eefb4c78ba324c2788fe59b4fd5582d4@imshyb02.MITRE.ORG>
-Date: Fri, 25 Nov 2016 09:17:48 -0500
-From: <cve-assign@...re.org>
-To: <jsegitz@...e.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: salt confidentiality issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/1
+Message-ID: <f4140eea-595f-612b-8875-36d117aedeb0@redhat.com>
+Date: Wed, 21 Sep 2016 00:39:23 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-> under certain
-> circumstances Salt commands can reach, read data from and write data to,
-> both minions ("original" and "impostor").
+Title: Nova may fail to delete images in resize state regression
+Reporter: Rajesh Tailor (Red Hat)
+Products: Nova
+Affects: ==13.0.0
 
-> ## 10. Here it is the bug: the minion1 is still accepted and responding.
-> We could run any command for the minion2, but the minion1 will listen,
-> execute and respond to them too, not only the accepted minion2.
+Description:
+Rajesh Tailor from Red Hat reported a vulnerability in Nova. If an
+authenticated user deletes an instance while it is in resize state, it
+will cause the original instance to not be deleted from the compute node
+it was running on. An attacker can use this to launch a denial of
+service attack. All Nova setups are affected.
 
-> this is fixed by the 'rotate_aes_key' parameter
-> that was introduced in 2015.8.11 to correct this issue
+Note:
+This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
+re-introduced in the first release of Mitaka version of Nova and it was
+re-fixed in nova-13.1.0.
 
-Use CVE-2016-9639 for the vulnerability fixed in 2015.8.11.
+References:
+https://launchpad.net/bugs/1589821
 
-> the user would have to change that to be vulnerable
+Thanks in advance,
 
-There is no CVE ID for the behavior (in current versions) of accepting
-impostors in a "rotate_aes_key: False" configuration. The documentation
-fully explains the impostor risk in that configuration.
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYOEd1AAoJEHb/MwWLVhi2QdkP/3SEMFkzKwGZvwvUrqZ/wB6U
-7xOuKbfKcTTHa4Fg4luHyQESeSXigrcHf4P8LqTEQIlxdGYcpIft7NRvDvKR77P/
-UuWKIm5neHQjhKveYRm03QqZr43TXZW5K8V91kU7JM98Hak8gJZSgQezm0W8fzOv
-Eog2xlV/Yw7vgTckUKw/0E/IugAeV6gJU4LP/cgI47vXxJHm5L4xSE2ueEMF6v2W
-LH/hv+ywAemjhkg3Tu2DsZ0K+Wxe13tycSgVMVAO9GUA2HQVhShH8f9xhxMseg3m
-BUUq+GpL1PLMLlhR5YoEH3mFvnBzL2BYMtBGrdwIxymgsC4OLieI1ETkHffOs+IJ
-NMtC4YqHSZsE6zWP2sWpwnGD1bj6ErsrfrSOc+bsfpwhCwB0pSRaebXfjrqVwA55
-fmlbCNDMAOgfYvcjDm2FWnDFVapKi5NHMuUuISHXjzQXeLtPoGuvdZQKSWcdkDVI
-V/rBy0+0BtuA3aFMQTTtcevoFALyN+PIhwJwJ1xFdqJTtkY2S5TP8RAKEPfpTcU1
-H+zQPWDT5CArOY+jFDgcpHKDhBi+gsJ9alJLDPA5taaCDcP/7hDQ4GSJlz5bLpzy
-LZZIfhXKBdWl6r2Lk9Ct4L05agWIgPlMOPxe1RG4rv68uCdVJoKqtYu4yWp/wAlj
-bJ+rXv6yW0GRshGrszMC
-=vAVo
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
