@@ -1,133 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/11
-Message-Id: <E1c99mV-00089H-W1@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:35 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 195 (CVE-2016-9383) - x86 64-bit bit test instruction emulation broken
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/10
+Message-Id: <ABD7A6F5-D9A2-491C-9CFC-00BD7E6D658C@berkeley.edu>
+Date: Wed, 21 Sep 2016 12:03:03 -0400
+From: Jamie Whitacre <whitacre@...keley.edu>
+To: Sylvain Corlay <sylvain.corlay@...il.com>
+Cc: oss-security@...ts.openwall.com, Fernando Perez <fperez@....gov>, Matthias Bussonnier <mbussonnier@...keley.edu>
+Subject: Re: CVE Request: ipywidgets executes untrusted JavaScript
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Folks, 
+Is this done?
 
-            Xen Security Advisory CVE-2016-9383 / XSA-195
-                              version 3
+Thanks, 
+Jamie
 
-           x86 64-bit bit test instruction emulation broken
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The x86 instructions BT, BTC, BTR, and BTS, when used with a
-destination memory operand and a source register rather than an
-immediate operand, access a memory location offset from that specified
-by the memory operand as specified by the high bits of the register
-source.
-
-When Xen needs to emulate such an instruction, to efficiently handle
-the emulation, the memory address and register operand are
-recalculated internally to Xen.  In this process, the high bits of an
-intermediate expression were discarded, leading to both the memory
-location and the register operand being wrong.
-
-The wrong memory location would have only a guest local effect (either
-access to an unintended location, or a fault delivered to the guest),
-whereas the wrong register value could lead to either a host crash or
-an unintended host memory access.
-
-IMPACT
-======
-
-A malicious guest can modify arbitrary memory, allowing for arbitrary
-code execution (and therefore privilege escalation affecting the whole
-host), a crash of the host (leading to a DoS), or information leaks.
-
-The vulnerability is sometimes exploitable by unprivileged guest user
-processes.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions are affected.
-
-The vulnerability is only exposed to x86 guests running in 64-bit mode.
-
-On Xen 4.6 and earlier the vulnerability is exposed to all guest user
-processes, including unprivileged processes, in such guests.
-
-On Xen 4.7 and later, the vulnerability is exposed only to guest user
-processes granted a degree of privilege (such as direct hardware
-access) by the guest administrator; or, to all user processes when the
-when the VM has been explicitly configured with a non-default cpu
-vendor string (in xm/xl, this would be done with a `cpuid=' domain
-config option).
-
-The vulnerability is not exposed to 32-bit PV guests.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by George Dunlap of Citrix, using American
-Fuzzy Lop v2.35b.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa195.patch       xen-unstable, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa195*
-6ab5f13b81e3bbf6096020f4c3beeffaff67a075cab67e033ba27d199b41cec1  xsa195.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+> On Aug 11, 2016, at 9:08 AM, Sylvain Corlay <sylvain.corlay@...il.com> wrote:
+> 
+> Hello everyone, 
+> 
+> I am following up on this CVE request. Did we miss something in how the request is formulated?
+> 
+> Thanks,
+> 
+> Sylvain
+> 
+> On Fri, Jul 1, 2016 at 6:12 PM, Sylvain Corlay <sylvain.corlay@...il.com <mailto:sylvain.corlay@...il.com>> wrote:
+> Description
+> 
+> ipywidgets version 5.1.5 (and the companion package widgetsnbextension 1.2.3) fixes a security vulnerability which affects the usage of ipywidgets in conjunction with the Jupyter Notebook. (The GitHub repository for the project is https://github.com/ipython/ipywidgets <https://github.com/ipython/ipywidgets>)
+> 
+> Affected versions
+> 
+> The affected versions of ipywidgets are:
+> 
+> ipywidgets version 5.0.0 ≤ V ≤ 5.1.4 (and widgetsnbextension < 1.2.3), …
+> 
+> Only users who installed ipywidgets using pip or from source on the GitHub repository are affected.
+> 
+> Anaconda users are unaffected because the vulnerable version of ipywidget has never been released to the default conda channel.
+> 
+> Resolution
+> 
+> We recently released ipywidgets version 5.1.5 (widgetsnbextension version 1.2.3). You can check whether your system is affected by running the following command:
+> 
+>    >>> from distutils.version import LooseVersion as V
+>    >>> import ipywidgets
+>    >>> if V('5.0.0') <= V(ipywidgets.__version__) < V('5.1.5'):
+>    >>>     print("Upgrade ipywidgets to 5.1.5")
+> 
+> If your system is vulnerable, you will see the following output:
+> 
+>     Upgrade ipywidgets to 5.1.5
+> 
+> If your system is vulnerable please upgrade to ipywidgets version 5.1.5. Use the following command to install:
+> 
+>    $ pip install "ipywidgets>=5.1.5"
+> 
+> or
+> 
+>    $ conda install "ipywidgets>=5.1.5"
+> 
+> Technical details
+> 
+> The vulnerability was discovered following an investigation of a potential vulnerability reported by Brian Granger to the ipython-security mailing list (security@...thon.org <mailto:security@...thon.org>) on May 5.
+> 
+> The reason for such behavior was determined on May 5 by Matthias Bussonnier.
+> 
+> A fix was proposed written and reviewed, then [merged](https://github.com/ipython/ipywidgets/pull/591 <https://github.com/ipython/ipywidgets/pull/591>) into the development branch on May 20, and a non vulnerable version released on May 25.
+> 
+> A widget snapshotting feature introduced in ipywidgets 5.0.0 (https://github.com/ipython/ipywidgets/pull/314/ <https://github.com/ipython/ipywidgets/pull/314/>) allowed untrusted javascript code to execute in an untrusted notebook on loading and saving of a notebook.  A well crafted notebook could execute arbitrary code with the rights of the current user in the context of the page, the notebook server, and available kernels.
+> 
+> We recommend immediate upgrade of the ipywidgets package.
+> 
+> There is no simple configuration option that could mitigate the system for vulnerability. The user must upgrade to ipywidget version 5.1.5 or downgrade to 4.x.
+> 
+> Future Plan
+> 
+> The security issue resulted from the seemingly harmless combination of calls:
+> 
+>     json = cell.get_json()
+>     json = update_json(json)
+>     cell.clear_output()
+>     cell.from_json()
+> 
+> The clear_output()  method has as a consequence to mark the cell as trusted (as it has no output that can potentially execute javascript). This is followed by the next call which can trigger JavaScript execution in the page context.
+> 
+> We plan on improving the notebook API so that clear_output() does not change the trusted status of a cell (or a notebook), to prevent mistakes like this from having security consequences. This will lead to the slight behavior change that an empty cell with no output can be untrusted.
+> 
+> We learned that we are not completely ready for fast release of security fixes. The time from vulnerability discovery to available fix, release, and announcement can and should be shorter.
+> 
+> We encourage users who find possible security issues to notify security@...thon.org <mailto:security@...thon.org>.
+> 
+> Thanks!
+> 
+> The Jupyter team
+> 
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYNDL4AAoJEIP+FMlX6CvZnzYH/RtmqS8kpqLKShvrQx5Ueh+M
-LaHBWJiU0z1m9FaF9RvEgfvWpUCcD/qyC4rLHmkwhkyS6aIToh2XVXzQyebIqw/7
-CCDXaY8TkYlLPYRdNseX5X5blpu1EnqW5yQMJz6QkgDK+Qu4F1jDimSd5JffrFkJ
-WkpWwsoppNHwYyaENq59lg7R1WxNq0uSLxMPTnk/RpMmizKyU8gK7RrQWHJNoy6n
-l3vSTKx9sCDo+AgMQgbDMdpvv1l1It+QcRXXBrBp7qAdz+0H7VRkUFOnBUFMQQo3
-OjmjStKxnE9E7Uh6+373xj2Z6Nts+wkD72vRHHg/1KTZ5FN5XnS2CvPDNuGZD50=
-=AtOu
------END PGP SIGNATURE-----
-
-Download attachment "xsa195.patch" of type "application/octet-stream" (1734 bytes)
