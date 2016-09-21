@@ -1,38 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/1
-Message-ID: <alpine.LFD.2.20.1603011538510.26817@wniryva>
-Date: Tue, 1 Mar 2016 15:47:58 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Donghai Zdh <donghai.zdh@...baba-inc.com>
-Subject: CVE request Qemu: OOB access in address_space_rw leads to segmentation fault
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/11
+Message-ID: <1474486066.2424.9.camel@devio.us>
+Date: Wed, 21 Sep 2016 21:27:46 +0200
+From: "A.N." <ailin@...io.us>
+To: oss-security@...ts.openwall.com
+Subject: Irssi Security Advisory CVE-2016-7044+CVE-2016-7045
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+We are sad to have to announce the following security issue:
 
-Qemu emulator built to use 'address_space_translate' to map an address to a 
-MemoryRegionSection is vulnerable to an OOB r/w access issue. It could occur 
-while doing pci_dma_read/write calls. Affects Qemu versions >= 1.6.0 and <= 
-2.3.1.
+Canonical URL http://irssi.org/security/irssi_sa_2016.txt
 
-A privileged user inside guest could use this flaw to crash the guest instance 
-resulting in DoS.
+heap corruption and missing boundary checks
+===========================================
+CWE Classification: CWE-20, CWE-823, CWE-126, CWE-122
 
-Upstream patches:
+CVE-2016-7044 [1] was assigned to bug 1
+CVE-2016-7045 [2] was assigned to bug 2
+
+
+Description
+-----------
+
+Gabriel Campana and Adrien Guinet from Quarkslab reported two remote
+crash and heap corruption vulnerabilites in Irssi's format parsing
+code.
+
+They also provided us with proof of concept exploit code and patches
+to fix those issues.
+
+
+Impact
+------
+
+Remote crash and heap corruption. Remote code execution seems
+difficult since only Nuls are written.
+
+
+Detailed analysis
 -----------------
-   ->  http://git.qemu.org/?p=qemu.git;a=commit;h=c3c1bb99d1c11978d9ce94d1bd
-   ->  http://git.qemu.org/?p=qemu.git;a=commit;h=e4a511f8cc6f4a46d409fb5c9f
-   ->  http://git.qemu.org/?p=qemu.git;a=commit;h=965eb2fcdfe919ecced6c34803
-   ->  http://git.qemu.org/?p=qemu.git;a=commit;h=b242e0e0e2969c044a318e56f7
-  [*] https://lists.gnu.org/archive/html/qemu-stable/2016-01/msg00060.html
 
-Reference:
+Based on analysis Provided by Gabriel Campana and Adrien Guinet from
+Quarkslab:
+
+Bug 1
+
+The unformat_24bit_color() function is called by format_send_to_gui()
+to decode 24bit color codes into their components. The pointer is
+advanced unconditionally without checking if a complete code was
+supplied.
+
+Thus, after the return of unformat_24bit_color(), ptr might be invalid
+and point out of the buffer.
+
+Bug 2
+
+The format_send_to_gui() function does not validate the length of the
+string before incrementing the `ptr' pointer in all cases.
+
+If that happens, the pointer `ptr' can be incremented twice and thus
+end past the boundaries of the original `dup' buffer.
+
+
+Affected versions
+-----------------
+
+Irssi 0.8.17-beta up to and including 0.8.19 up to 0.8.19-219-g52fedea
+
+Bug 1 affects only Irssis compiled with true-color enabled.
+Bug 2 affects all Irssis regardless of compilation flags.
+
+
+Fixed in
+--------
+
+Irssi 0.8.20
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 0.8.20. Irssi 0.8.20 is a maintenance release
+without any new features.
+
+After installing the updated packages, one can issue the /upgrade
+command to load the new binary. TLS connections will require
+/reconnect. If the buf.pl script is loaded and symlinked into
+~/.irssi/scripts/autorun, text buffer content will be saved and
+restored.
+
+
+Fallback action
+---------------
+
+Distributions which need to remain on Irssi 0.8.17 are strongly urged
+to apply the patch and provide updated packages.
+
+Those totally unable to upgrade, but with Perl support enabled in
+their Irssi, can load the following script and add it to
+~/.irssi/scripts/autorun as a first aid to mitigating these issues: 
+
+https://irssi.org/security/sa_patch.pl
+
+
+Patch
+-----
+
+https://github.com/irssi/irssi/commit/295a4b77f07f14602eeaa371f00ddbf09
+910c82b
+
+
+References
 ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1300771
-
-This issue was discovered by  Donghai Zdh of Alibaba Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7044
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7045
