@@ -1,37 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/3
-Message-ID: <56A90755.2030706@river.com>
-Date: Wed, 27 Jan 2016 11:07:17 -0700
-From: Richard Johnson <rdump@...er.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/7
+Message-ID: <1512070.Ry1Vm5FAnA@willoughby>
+Date: Wed, 21 Sep 2016 17:28:31 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: pool@...ts.ntp.org, team@...urity.debian.org, secalert@...hat.com
-Subject: Re: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+Cc: cve-assign@...re.org
+Subject: libav: divide-by-zero in sbr_make_f_master (aacsbr.c)
 Content-Type: text/plain; charset=utf-8
 
-On 2016-01-27 06:05, Loganaden Velvindron wrote:
-> Shouldn't we have some kind of policy for operators participating in
-> pool.ntp.org to prevent such issues ?
+If it is suitable for a CVE please assign one. 
+Thanks.
 
+Description:
+Libav is an open source set of tools for audio and video processing.
 
-If the issue is 'port scanning by the IPv6 NTP pool participant', why bother?
+A fuzzing with an mp3 file as input discovered a divide-by-zero in 
+sbr_make_f_master.
 
-Any IPv6 NTP pool provider will naturally have peer IPv6 addresses to use and
-record. It's one way that researchers at measurement organizations already
-track IPv6 use and growth.
+The complete ASan output:
+# avconv -i $FILE -f null -
+avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
+  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
+(tags/RELEASE_381/final)
+[mpeg @ 0x61a00001f280] Format detected only with low score of 25, 
+misdetection possible!
+[aac @ 0x619000000580] Sample rate index in program config element does not 
+match the sample rate index configured by the container.
+[aac @ 0x619000000580] SBR was found before the first channel element.
+ASAN:DEADLYSIGNAL
+=================================================================
+==29103==ERROR: AddressSanitizer: FPE on unknown address 0x7fbd80295491 (pc 
+0x7fbd80295491 bp 0x7ffde63eb2f0 sp 0x7ffde63eafa0 T0)
+    #0 0x7fbd80295490 in sbr_make_f_master /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57
+    #1 0x7fbd80295490 in sbr_reset /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1045
+    #2 0x7fbd80295490 in ff_decode_sbr_extension /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1093
+    #3 0x7fbd801efe1b in decode_extension_payload /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2196:15
+    #4 0x7fbd801efe1b in aac_decode_frame_int /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2866
+    #5 0x7fbd801d3bbb in aac_decode_frame /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2959:15
+    #6 0x7fbd823ed42a in avcodec_decode_audio4 /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1657:15
+    #7 0x7fbd83f00b20 in try_decode_frame /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavformat/utils.c:1914:19
+    #8 0x7fbd83ef76e2 in avformat_find_stream_info /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavformat/utils.c:2276:9
+    #9 0x50d195 in open_input_file /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv_opt.c:726:11
+    #10 0x50b625 in open_files /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv_opt.c:2127:15
+    #11 0x50af81 in avconv_parse_options /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv_opt.c:2164:11
+    #12 0x541414 in main /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/avconv.c:2630:11
+    #13 0x7fbd7e77f61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #14 0x41d098 in _init (/usr/bin/avconv+0x41d098)
 
-Others can, do, and will use popular public services like NTP to enumerate and
-record active peer addresses as well. And some of those others will do things
-with that data.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-
+video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57 in 
+sbr_make_f_master
+==29103==ABORTING
 
-A policy that says "do not log peer addresses" would be nice for privacy
-reasons, and bad for maintenance reasons. Practically speaking, violations
-will be undetectable, and it'll be unenforceable.
+Affected version:
+11.7
 
-Maybe a policy that says 'do not engage in DoS' instead?
+Fixed version:
+N/A
 
-Either way, when we don't want to be scanned, regardless of how the scanner
-gets their target addresses, we tend to use perimeter firewalls.
+Commit fix:
+N/A
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Richard
+CVE:
+N/A
 
+Timeline:
+2016-08-15: bug discovered
+2016-08-16: bug reported to upstream
+2016-09-21: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/21/libav-divide-by-zero-in-sbr_make_f_master-aacsbr-c/
+
+--
+Agostino
