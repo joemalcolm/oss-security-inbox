@@ -1,66 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/15
-Message-ID: <CA+KTh2wi+=Wda7+DzuBDigcGJDokK1R7xfCN9UZeMwncfAiT+g@mail.gmail.com>
-Date: Wed, 19 Oct 2016 09:39:59 +1300
-From: Emmanuel Law <emmanuel.law@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/8
+Message-Id: <20160921162950.B2DF572E020@smtpvbsrv1.mitre.org>
+Date: Wed, 21 Sep 2016 12:29:50 -0400 (EDT)
+From: cve-assign@...re.org
+To: tdecacqu@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-What about local escalations? They can be used to bypass disable_functions,
-a security feature, in PHP.
-IMO they should be assigned CVEs so that they can be tacked and back-ported
-if desired.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've came across php distros where these would have been patched, but
-didn't because CVE was not assigned and the maintainers were not aware that
-it was a security issue.
+> Title: Nova may fail to delete images in resize state regression
+> Affects: ==13.0.0
+> 
+> If an
+> authenticated user deletes an instance while it is in resize state, it
+> will cause the original instance to not be deleted from the compute node
+> it was running on. An attacker can use this to launch a denial of
+> service attack. All Nova setups are affected.
+> 
+> This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
+> re-introduced in the first release of Mitaka version of Nova and it was
+> re-fixed in nova-13.1.0.
+> 
+> https://launchpad.net/bugs/1589821
 
+>> cleanup_incomplete_migrations periodic task regression with commit
+>> 099cf53925c0a0275325339f21932273ee9ce2bc
 
+>> This reverts commit 099cf53925c0a0275325339f21932273ee9ce2bc.
 
-On Wed, Oct 19, 2016 at 1:14 AM, Remi Collet <remi@...oraproject.org> wrote:
+Use CVE-2016-7498.
 
-> Le 18/10/2016 à 14:06, Adam Maris a écrit :
-> > On 18/10/16 09:42, Lior Kaplan wrote:
-> >> Hi,
-> >>
-> >> Please assign a CVE for the following issue:
-> >>
-> >> Bug #73147    Use After Free in unserialize()
-> >> https://bugs.php.net/bug.php?id=73147
-> >> http://git.php.net/?p=php-src.git;a=commit;h=
-> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f
-> >>
-> >>
-> >> Thanks,
-> >>
-> >> Kaplan
-> >>
-> > 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
-> > has CVE assigned.
-> > Here you request CVE for another one issue (even the documentation says
-> > it's unsafe to use
-> > unserialize on untrusted input).
-> >
-> > Are you planning to obtain CVEs also for other security bugs or do you
-> > treat the rest as
-> > CVE-unworthy? Or are reporters/community supposed to do it?
->
-> All the remaining bugs, despite reported as security issue, involved
-> some very big strings to reproduce (~2GB)
->
-> Which is prevented by any decent memory_limit value
-> And by max_input_size for remote access.
->
->
-> Remi
->
->
-> P.S. just my 0,02€, but indeed, CVE-unworthy
->
-> > Thanks!
-> >
->
->
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJX4rTJAAoJEHb/MwWLVhi2XbYQAJyHRL8m6k3pOx7KnR0yhb3r
+UaUcM8iKeJlbL218NgqOcMt0TEhwq6MmhWAWWoa6ptVoVGuriZuuzEXA9QcrgEIU
+GF2PEN5umuD6XDP2kqg7InlP1DkGyCU4j5nu4vqg5h31oxuxedQ2kROzUUZbeDew
+6fyMpay+suYOTc2eQaP86kTqrx69B/zm0K1agR49Z1dDF/+B0J/HiPAXV+3tmwRy
+XfbtQyZwIfLF4wbFmPZVMYuUZqXZhM0piRdFwmkjTiF3Wkf5neo50+qZnU3N8g7b
+izWhpemQ+LhZdPEiS2XX7xB+xhZHyGxDrBXdEsf4dEc2NdpjQ4vr/fgk4c41XCvM
+2DTtNQLAiTfq5P5KoFS0loAkzTH4H3IRk9iBA9ta2bK6IdDN9arZOwAdxXEgx8Ju
+gdoGqGcX9dKrIqo7EMB8u2cM6pdz4BZQqJw6ceXXjBcc+ai46C+6NqwMlTnyYLs2
+7gFr6J/RqQpWfQDDZA2LzQbSEFzEJhR3J6eHO/0KuPGMzFVWcAWXJPa1b99ZwTjF
+fcGD56XcbJROXbSb+kPxj7kw29k5/1rxaY4qXiWXpvsBXI4juLHH7l2lVMmlLXZ6
+xmyNlBIEs/tE3xnj541xAVODZjYkYNiLqvwZaNk/TAiIJ5E85IIp+Eg9r0+OxpuH
+kh4a4OUoAvv//hPZkckh
+=b3GM
+-----END PGP SIGNATURE-----
