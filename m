@@ -1,73 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/12
-Message-id: <9F8556B6-3B55-4BFF-898A-92B084238AB6@me.com>
-Date: Thu, 28 Jul 2016 13:58:08 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Reflected XSS and SQLi in Huge IT Joomla Slider v1.0.9 extension
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/1
+Message-ID: <CAFkM3a+tCC+PgnDtQ8HEvz3CNp_7C4Tmr8NxomgpznGpBKnkUw@mail.gmail.com>
+Date: Thu, 22 Sep 2016 11:37:40 +0800
+From: 王畅 <fyth.cnss@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XSS Vulnerability in Exponent CMS 2.3.9
 Content-Type: text/plain; charset=utf-8
 
-Title: Reflected XSS and SQLi in Huge IT Joomla Slider v1.0.9 extension
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-07-22
-Download Site: http://extensions.joomla.org/extensions/extension/photos-a-images/slider
-Vendor: huge-it.com
-Vendor Notified: 2016-07-22
-Vendor Contact:
-Description: Huge-IT Slider extension is one of the powerful products that our company offer. It gives style and charm to your site and help to attract the attention of visitors to certain parts of the content.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access to the administrative panel to exploit this vulnerability.
+Hi, I reported a Cross Site Scripting vulnerability to the
+ExponentCMS team on a few days ago:
+vulnerability:
 
-XSS in ./admin/views/slider/tmpl/default.php via id variable:
-275:                    <a class="modal" rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_slider&view=video&tmpl=component&pid=<?php echo $_GET['id']; ?>" title="Video" >
 
-SQL Injection in the following sections of code:
+/framework/modules/file/connector/uploader.php
 
-in file ./admin/models/slider.php
-53:        $id_cat = JRequest::getVar('id');
-54-        $query = $db->getQuery(true);
-55-        $query->select('#__huge_itslider_images.name as name,'
-56-                . '#__huge_itslider_images.id ,'
-57-                . '#__huge_itslider_sliders.name as portName,'
-58-                . 'slider_id, #__huge_itslider_images.description as description,image_url,sl_url,sl_type,link_target,#__huge_itslider_images.ordering,#__huge_itslider_images.published,published_in_sl_width');
---
-69:        $id_cat = JRequest::getVar('id');
-70-        $query = $db->getQuery(true);
-71-        $query->select('*');
-72-        $query->from('#__huge_itslider_images');
-73-        $query->where('slider_id=' . $id_cat);
-74-        $db->setQuery($query);
---
-117:        $id_cat = JRequest::getVar('id');
-118-
-119-        $query = $db->getQuery(true);
-120-        $query->update('#__huge_itslider_sliders')->set('name ="' . $name . '"')
-121-                ->set('sl_height="' . $sl_height . '"')->set('slider_list_effects_s="' . $slider_effects_list . '"')
-122-                ->set('pause_on_hover="' . $pause_on_hover . '"')
---
-133:        $id_cat = JRequest::getVar('id');
-134-        $query = $db->getQuery(true);
-135-        $query->update('#__huge_itslider_sliders')->set('slider_list_effects_s ="' . $styleName . '"')->where('id="' . $id_cat . '"');
-136-        $db->setQuery($query);
-137-        $db->execute();
-138-    }
---
-182:        $id_cat = JRequest::getVar('removeslide');
-183:        $id = JRequest::getVar('id');
-184-        $db = JFactory::getDBO();
-185-        $query = $db->getQuery(true);
-186-        $query->delete('#__huge_itslider_images')->where('id =' . $id_cat);
-187-        $db->setQuery($query);
-188-        $db->execute();
+line 85-86:
+```
 
-CVE-2016-1000121 XSS
-CVE-2016-1000122 SQLi
-Exploit Code:
-	• XSS:
-	•  
-	• http://192.168.0.125/administrator/index.php?option=com_slider&view=slider&id=1%20--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
-	•  
-	• SQLi:
-	•  
-	• http://192.168.0.125/administrator/index.php?option=com_slider&view=slider&id=HERE
-Advisory: http://www.vapidlabs.com/advisory.php?v=168
+$funcNum = $_GET['CKEditorFuncNum'] ;
+echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(".$funcNum.",
+'".$url."', '".$message."');</script>";
+
+```
+
+"$_GET['CKEditorFuncNum']"  was printed out without any sanitization.
+
+
+PoC:http://exponentcms.org/framework/modules/file/connector/uploader.php?CKEditorFuncNum=[removed]<svg/onload=alert(1)>
+
+
+And Now, this vulnerability have been
+fixed.https://exponentcms.lighthouseapp.com/projects/61783/changesets/3f06b07755f35b96eff05ed3e3e1df2b907cade1
+
+https://github.com/exponentcms/exponent-cms/commit/3f06b07755f35b96eff05ed3e3e1df2b907cade1
+
+
+This issue was reported by Wang Chang of silence.com.cn Inc. and I would like
+to request a CVE for this issue (if not done so).
+
+Thank you.
+---------------------------------http://www.silence.com.cn
+wangchang#silence.com.cn
+PKAV Team
+
