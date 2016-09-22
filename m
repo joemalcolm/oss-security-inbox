@@ -1,47 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/6
-Message-ID: <1996716.Vy6ClD1zHv@x2>
-Date: Wed, 02 Mar 2016 08:53:51 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/5
+Message-ID: <20160922140609.GA31107@pisco.westfalen.local>
+Date: Thu, 22 Sep 2016 16:06:09 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Bob Beck <beck@...nbsd.org>, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: Re: CVE's for SSLv2 support
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE Request: VLC: Potential divide-by-zero issue
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, March 01, 2016 09:16:05 PM Kurt Seifried wrote:
-> On Tue, Mar 1, 2016 at 9:03 PM, Bob Beck <beck@...nbsd.org> wrote:
-> > While you certainly won't see me defending SSLv2 (I think we were the
-> > first to delete it outright)
-> > there are many other things that currently fall into that category..
-> > I'm agreeing with your sentiment
-> > but if you are to consider usage of SSLv2 as CVE worthy, then you will
-> > need to do the same for SSH version 1,
-> > among other things.   So while I certainly appreciate and even agree
-> > with your sentiment, it seems rather timed
-> > politically based on a decision made by one implementaiton of SSL/TLS
-> > that reflects a decision made by most other
-> > implementations long ago.   So far from me to say what CVE's should
-> > and shouldn't be used for and issued for, but
-> > if this is the road we're going down can I please have permission to
-> > use your above quoted paragraph
-> > with s/SSLv2/SSH V1/g to request a CVE for *usage or support* of SSH
-> > version 1? You said it perfectly.
+On Thu, Sep 22, 2016 at 07:12:32AM +0000, ajax secure wrote:
+> Hi
 > 
-> I would be totally fine with that, SSH protocol v1 is long overdue for
-> "needs to be taken out back and shot along with whoever enabled it by
-> default". From OpenSSH's sshd_config:
+> Xiangkun Jia has discovered a divide-by-zero in VLC, which makes the application crashed and may be caused by buffer overflow. The fix is in
 > 
-> # The default requires explicit activation of protocol 1
+> http://git.videolan.org/?p=vlc/vlc-2.2.git;a=commit;h=85a64e10d665edf8a29526543b5c6fd4923437fd
 > 
-> I think that says it all.
+> Can you assign a CVE for this issue? Thank you.
 
-I'm not entirely sure that CVE is the right vehicle to express the issue. 
-Exploitation of this would be an attacker uses code to exploit a poor 
-implementation or design problem. There are code weaknesses tracked by CWE, 
-vulnerabilities in implementations tracked by CVE, and attacks tracked by 
-CAPEC. They reference each other as follows CAPEC->CVE->CWE.
+Crashes without the potential for code injection in enduser applications
+usually don't receive CVE ID assignments.
 
-Maybe a CWE somewhere in this category is what you are after:
-https://cwe.mitre.org/data/definitions/958.html
-
--Steve
+Cheers,
+        Moritz
