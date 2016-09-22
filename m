@@ -1,65 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/3
-Message-ID: <ab2d729f-e62c-3d92-09d2-4845bbae7a97@suse.com>
-Date: Tue, 10 May 2016 14:09:11 +0200
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com, mprpic@...hat.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: three issues in libksba
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/3
+Message-ID: <HK2PR04MB070661404763CA3B45FF7C219CC90@HK2PR04MB0706.apcprd04.prod.outlook.com>
+Date: Thu, 22 Sep 2016 07:12:32 +0000
+From: ajax secure <ajax4sec@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: CVE Request: VLC: Potential divide-by-zero issue
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi
 
-On 04/29/2016 06:13 PM, cve-assign@...re.org wrote:
-> > Integer overflow in the DN decoder src/dn.c
-> >
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
->
-> This might be an error in the original
-> https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
-> any obvious relationship between
-> 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
-> The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
-> focus on "read access out of bounds." Also, there is no other recent
-> commit at
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=history;f=src/dn.c
-> that refers to an integer overflow. Possibly there was an inapplicable
-> copy-and-paste of "Integer overflow in the" from the previous report
-> about the BER decoder.
->
-> Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-> issue that is described as "Fix encoding of invalid utf-8 strings in
-> dn.c" and "read access out of bounds."
+Xiangkun Jia has discovered a divide-by-zero in VLC, which makes the application crashed and may be caused by buffer overflow. The fix is in
 
+http://git.videolan.org/?p=vlc/vlc-2.2.git;a=commit;h=85a64e10d665edf8a29526543b5c6fd4923437fd
 
-There is a follow-up fix in libksba 1.3.4 for this issue:
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=6be61daac047d8e6aa941eb103f8e71a1d4e3c75
+Can you assign a CVE for this issue? Thank you.
 
-> Fix an OOB read access in _ksba_dn_to_str.
->
-> * src/dn.c (append_utf8_value): Use a straightforward check to fix an
-> off-by-one.
-> --
->
-> The old fix for the problem from April 2015 had an off-by-one in the
-> bad encoding handing.
->
-> Fixes-commit: 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-> <http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=object;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3>
-> GnuPG-bug-id: 2344
-> Reported-by: Pascal Cuoq
-> Signed-off-by: Werner Koch <wk@...pg.org>
+Regards,
+Xiangkun Jia
+Institute of Software, Chinese Academy of Sciences
 
-Andreas
-
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
