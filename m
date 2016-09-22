@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/16
-Message-ID: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
-Date: Wed, 24 Feb 2016 14:08:27 -0500
-From: Fernando Muñoz <fernando@...l-life.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/4
+Message-ID: <1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>
+Date: Thu, 22 Sep 2016 07:58:47 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: bash-completion: dequote command injection
+Subject: kernel: ACPI table override is allowed when securelevel is enabled
 Content-Type: text/plain; charset=utf-8
 
-Marcelo Echeverria and Fernando Muñoz discovered that the dequote
-function included in bash-completion allows to execute arbitrary
-commands since it uses the eval function to call printf and perform
-the actual dequoting. bash-completion is included on Debian, Ubuntu
-OpenSuse [1] and probably other distros.
+Hello,
 
-# type dequote
-dequote is a function
-dequote()
-{
-    eval printf %s "$1" 2> /dev/null
-}
+A vulnerability was found in the RHEL7 kernel. When RHEL7 is booted with UEFI Secure Boot enabled,
+securelevel is set. The kernel uses the state of securelevel to prevent userspace from inserting
+untrusted privileged code at runtime.
 
-# dequote ';id'
-uid=0(root) gid=0(root) groups=0(root)
+The ACPI tables provided by firmware can be overwritten using the initrd. From the kernel documentation:
 
-- Issue reported to maintainers on 24/02/2016 [2]
+  If the ACPI_INITRD_TABLE_OVERRIDE compile option is true, it is possible to
+  override nearly any ACPI table provided by the BIOS with an instrumented,
+  modified one.
 
-While researching we noted that this security problem was first
-identified on 2014 [3] however nobody reported the issue to
-bash-completion at that time.
+RHEL7 has CONFIG_ACPI_INITRD_TABLE_OVERRIDE kernel config option enabled, and will load ACPI tables
+appended to the initrd, even if booted with UEFI Secure Boot enabled and securelevel set.
 
+Upstream patch: https://github.com/mjg59/linux/commit/a4a5ed2835e8ea042868b7401dced3f517cafa76
 
-[1] https://lists.gnu.org/archive/html/bug-bash/2014-04/msg00057.html
-[2] https://github.com/scop/bash-completion/issues/6
-[3] https://lists.gnu.org/archive/html/bug-bash/2014-04/msg00058.html
+The securelevel patchset was not accepted to an upstream kernel, see http://www.zdnet.com/article/matthew-garrett-is-not-forking-linux/
+and https://linux.slashdot.org/story/15/10/06/1553233/matthew-garrett-forks-the-linux-kernel ,it is
+maintained now by MJG: https://github.com/mjg59/linux .
+
+CVE-2016-3699 was assigned to this security flaw internally by the Red Hat.
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
