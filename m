@@ -1,770 +1,427 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/1
-Message-Id: <20160525022346.7244DABC185@smtpvmsrv1.mitre.org>
-Date: Tue, 24 May 2016 22:23:46 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/22/2
+Message-Id: <20160922051720.E6D8C6C09A8@smtpvmsrv1.mitre.org>
+Date: Thu, 22 Sep 2016 01:17:20 -0400 (EDT)
 From: cve-assign@...re.org
-To: liuyue0310@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, davea42@...uxmail.org
-Subject: Re: CVE request: Multiple vunerabilities in libdwarf & dwarfdump
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, roucaries.bastien@...il.com, team@...urity.debian.org, luciano@...ian.org
+Subject: Re: CVE Requests: Various ImageMagick issues (as reported in the Debian BTS)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> And anther one https://bugzilla.redhat.com/show_bug.cgi?id=1330237
+> Date: Sun, 7 Aug 2016 17:12:15 +0200
 
-> There is a NULL pointer dereference bug in libdwarf-20160115 and latest git code.
-> 
-> The bug is at file dwarf_leb.c:147
->  143             byte_length++;
->  144             if (byte_length > BYTESLEBMAX) {
->  145                 /*  Erroneous input. What to do?
->  146                     Abort? Return error? Just stop here?*/
->  147                 *leb128_length = BYTESLEBMAX;               <- $pc
->  148                 return number;
->  149             }
->  150         }
-> 
-> which triggered by dwarf_form.c:918
->  913             *return_sval = (Dwarf_Signed) ret_value;
->  914             return DW_DLV_OK;
->  915             }
->  916
->  917         case DW_FORM_sdata:
->  918             ret_value =
->  919                 (_dwarf_decode_s_leb128(attr->ar_debug_ptr, NULL));
->  920             *return_sval = ret_value;
->  921             return DW_DLV_OK;
->  922
+> off-by-one error leading to segfault:
+>	Debian Bug: https://bugs.debian.org/832455
+>	Additional references:
+>	----------------------
+>	https://github.com/ImageMagick/ImageMagick/commit/a54fe0e8600eaf3dc6fe717d3c0398001507f723
 
-Use CVE-2016-5027.
+Use CVE-2016-7513.
 
 
-> DW201605-019
-> 
->  id: DW201605-019
-> 
->  cve:
-> 
->  datereported: 20160523
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: Null dereference in print_frame_inst_bytes (dwarfdump)
-> 
->  product: libdwarf
-> 
->  description: The null dereference is due to a corrupted object file.
->  Libdwarf was not dealing with empty (bss-like) sections since it really
->  did not expect to see such in sections it reads! Now libdwarf catches the
->  object error so dwarfdump sees the section as empty (as indeed it is!).
-> 
->  datefixed: 20160523
-> 
->  references: dwarftests/liu/NULLdeference0522c.elf
-> 
->  gitfixid: a55b958926cc67f89a512ed30bb5a22b0adb10f4
-> 
->  tarrelease:
+> out-of-bounds read in coders/psd.c:
+>	Debian Bug: https://bugs.debian.org/832457
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1533442
+>	https://github.com/ImageMagick/ImageMagick/issues/83
+>	https://github.com/ImageMagick/ImageMagick/commit/198fffab4daf8aea88badd9c629350e5b26ec32f
+>	https://github.com/ImageMagick/ImageMagick/commit/6f1879d498bcc5cce12fe0c5decb8dbc0f608e5d
+>	https://github.com/ImageMagick/ImageMagick/commit/e14fd0a2801f73bdc123baf4fbab97dec55919eb
+>	https://github.com/ImageMagick/ImageMagick/commit/280215b9936d145dd5ee91403738ccce1333cab1
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-Use CVE-2016-5028.
+Use CVE-2016-7514.
 
 
-> DW201605-018
-> 
->  id: DW201605-018
-> 
->  cve:
-> 
->  datereported: 20160522
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: Null dereference in create_fullest_file_path().
-> 
->  product: libdwarf
-> 
->  description: The null dereference in create_fullest_file_path() causes a
->  crash. This is due to corrupted dwarf and the fix detects this corruption
->  and if that null string pointer happens undetected a static string is
->  substituted so readers can notice the situation.
-> 
->  202             }
-> 203             if (dirno > 0 && fe->fi_dir_index > 0) {
-> 204                 inc_dir_name = (char *)
->                         line_context->lc_include_directories[
-> 205                     fe->fi_dir_index - 1];
-> 206                 incdirnamelen = strlen(inc_dir_name);  <- $pc
-> 207             }
-> 208             full_name = (char *) _dwarf_get_alloc(dbg,
-> #0  create_fullest_file_path (dbg=<optimized out>,
-> fe=0x68d510, line_context=0x68c4f0, name_ptr_out=<optimized
-> out>, error=0x7fffffffe2b8) at ./dwarf_line.c:206
-> #1  0x00007ffff7b6d3f9 in dwarf_filename (context=<optimized
-> out>, fileno_in=<optimized out>, ret_filename=0x7fffffffe280,
-> error=0x7fffffffe2b8) at ./dwarf_line.c:1418
-> #2  dwarf_linesrc (line=<optimized out>,
-> ret_linesrc=<optimized out>, error=<optimized out>) at
-> ./dwarf_line.c:1436
-> 
-> 
->  datefixed: 20160522
-> 
->  references: dwarftests/liu/NULLdereference0522.elf
-> 
->  gitfixid: acae971371daa23a19358bc62204007d258fbc5e
-> 
->  tarrelease:
+> rle file handling for corrupted file:
+>	Debian Bug: https://bugs.debian.org/832461
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1533445
+>	https://github.com/ImageMagick/ImageMagick/issues/82
+>	https://github.com/ImageMagick/ImageMagick/commit/2ad6d33493750a28a5a655d319a8e0b16c392de1
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-Use CVE-2016-5029.
+Use CVE-2016-7515.
 
 
-> DW201605-017
-> 
->  id: DW201605-017
-> 
->  cve:
-> 
->  datereported: 20160519
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: Null dereference bug in
->  _dwarf_calculate_info_section_end_ptr().
-> 
->  product: libdwarfj
-> 
->  description: NULL dereference bug in
->  _dwarf_calculate_info_section_end_ptr().
-> 
-> 1742         Dwarf_Off off2 = 0;
-> 1743         Dwarf_Small *dataptr = 0;
-> 1744
-> 1745         dbg = context->cc_dbg;
-> 1746         dataptr = context->cc_is_info? dbg->de_debug_info.dss_data:                 <- $pc
-> 1747             dbg->de_debug_types.dss_data;
-> 1748         off2 = context->cc_debug_offset;
-> 1749         info_start = dataptr + off2;
-> 1750         info_end = info_start + context->cc_length +
-> #0  _dwarf_calculate_info_section_end_ptr
-> (context=context@...ry=0x0) at dwarf_query.c:1746
-> #1  0x00002aaaaace307d in
-> _dwarf_extract_string_offset_via_str_offsets
-> (dbg=dbg@...ry=0x655a70, info_data_ptr=0x6629f0
-> "", attrnum=attrnum@...ry=121,
-> attrform=attrform@...ry=26, cu_context=0x0,
-> str_sect_offset_out=str_sect_offset_out@...ry=0x7fffffffd718,
-> error=error@...ry=0x7fffffffd878) at dwarf_form.c:1099
-> #2  0x00002aaaaacf4ed7 in dwarf_get_macro_defundef
-> (macro_context=macro_context@...ry=0x65b790,
-> op_number=op_number@...ry=1,
-> line_number=line_number@...ry=0x7fffffffd858,
-> index=index@...ry=0x7fffffffd860,
-> offset=offset@...ry=0x7fffffffd868,
-> forms_count=forms_count@...ry=0x7fffffffd7ce,
-> macro_string=macro_string@...ry=0x7fffffffd870,
-> error=error@...ry=0x7fffffffd878) at dwarf_macro5.c:557
-> ------
-> _dwarf_calculate_info_section_end_ptr (context=context@...ry=0x0) at
->   dwarf_query.c:1746
-> 1746        dataptr = context->cc_is_info? dbg->de_debug_info.dss_data:
-> gef> p/x $rdi
-> $4 = 0x0
-> 
-> 
->  datefixed: 20160522
-> 
->  references: regressiontests/liu/NULLdereference0519.elf
-> 
->  gitfixid: 6fa3f710ee6f21bba7966b963033a91d77c952bd
-> 
->  tarrelease:
+> buffer overflow in sun file handling:
+>	Debian Bug: https://bugs.debian.org/832464
+>	Additional references:
+>	----------------------
+>	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26838
+>	https://github.com/ImageMagick/ImageMagick/commit/78f82d9d1c2944725a279acd573a22168dc6e22a
+>	https://github.com/ImageMagick/ImageMagick/commit/bd96074b254c6607a0f7731e59f923ad19d5a46d
+>	https://github.com/ImageMagick/ImageMagick/commit/450bd716ed3b9186dd10f9e60f630a3d9eeea2a4
 
-Use CVE-2016-5030.
-
-However, is this a typo or is there a "libdwarfj" library?
+Use CVE-2015-8957.
 
 
-> DW201605-016
-> 
->  id: DW201605-016
-> 
->  cve:
-> 
->  datereported: 20160519
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: Invalid dwarf leads to dwarfdump crash in
->  print_frame_inst_bytes.
-> 
->  product: dwarfdump
-> 
->  description: Corrupted dwarf crashes dwarfdump
-> 
-> 1297         }
-> 1298         len = len_in;
-> 1299         endpoint = instp + len;
-> 1300         for (; len > 0;) {
-> 1301             unsigned char ibyte = *instp;           <- $pc
-> 1302             int top = ibyte & 0xc0;
-> 1303             int bottom = ibyte & 0x3f;
-> 1304             int delta = 0;
-> 1305             int reg = 0;
-> #0  print_frame_inst_bytes (dbg=dbg@...ry=0x655ca0,
-> cie_init_inst=<optimized out>, len_in=<optimized out>,
-> data_alignment_factor=-4, code_alignment_factor=4,
-> addr_size=addr_size@...ry=4, offset_size=4, version=3,
-> config_data=config_data@...ry=0x63cda0 <g_config_file_data>)
-> at print_frames.c:1301
-> #1  0x000000000041b70c in print_one_cie
-> (dbg=dbg@...ry=0x655ca0, cie=<optimized out>,
-> cie_index=cie_index@...ry=2, address_size=<optimized out>,
-> config_data=config_data@...ry=0x63cda0 <g_config_file_data>)
-> at print_frames.c:1161
-> #2  0x000000000041cf52 in print_frames (dbg=0x655ca0,
-> print_debug_frame=print_debug_frame@...ry=1, print_eh_frame=0,
-> config_data=config_data@...ry=0x63cda0 <g_config_file_data>)
-> at print_frames.c:2229
-> gef> p/x $r13
-> $1 = 0x4bcad8
-> gef> p/x *$r13
-> Cannot access memory at address 0x4bcad8
-> 
-> 
->  datefixed: 20160522
-> 
->  references: regressiontests/liu/OOB_READ0519.elf
-> 
->  gitfixid: 6fa3f710ee6f21bba7966b963033a91d77c952bd
-> 
->  tarrelease:
+> potential DOS in sun file handling due to malformed files:
+>	Debian Bug: https://bugs.debian.org/832465
+>	Additional references:
+>	----------------------
+>	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26857
+>	https://github.com/ImageMagick/ImageMagick/commit/b8f17d08b7418204bf8a05a5c24e87b2fc395b75
+>	https://github.com/ImageMagick/ImageMagick/commit/1aa0c6dab6dcef4d9bc3571866ae1c1ddbec7d8f
+>	https://github.com/ImageMagick/ImageMagick/commit/6b4aff0f117b978502ee5bcd6e753c17aec5a961
+>	https://github.com/ImageMagick/ImageMagick/commit/8ea44b48a182dd46d018f4b4f09a5e2ee9638105
 
-If the vulnerability is specific to dwarfdump, and is not present in
-libdwarf itself, then we need additional analysis from you before
-assigning a CVE ID. "crashes dwarfdump" is not sufficient because we
-think that dwarfdump has no need to remain running after a bad file is
-encountered. There cannot be a CVE ID if a simple and complete
-workaround for the crash problem is to not try to dump that file
-again. If you believe the crash is potentially exploitable for code
-execution, please provide further information about that.
+Use CVE-2015-8958.
 
 
-> DW201605-015
-> 
->  id: DW201605-015
-> 
->  cve:
-> 
->  datereported: 20160517
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read bug in print_frame_inst_bytes()
-> 
->  product: libdwarf
-> 
->  description: Test object shows an invalid read in
->  print_frame_inst_bytes().
-> 
-> 1294         for (; len > 0;) {
-> 1295             unsigned char ibyte = *instp;           <- $pc
-> 1296             int top = ibyte & 0xc0;
-> #0  print_frame_inst_bytes (dbg=dbg@...ry=0x654c80,
->    cie_init_inst=<optimized out>, len=503715, data_alignment_factor=-4,
->    code_alignment_factor=1, addr_size=addr_size@...ry=4, offset_size=4,
->    version=3, config_data=config_data@...ry=0x63bda0
->    <g_config_file_data>) at print_frames.c:1295
-> #1  0x000000000041b64c in print_one_cie (dbg=dbg@...ry=0x654c80,
->    cie=<optimized out>, cie_index=cie_index@...ry=1,
->    address_size=<optimized out>, config_data=
->    config_data@...ry=0x63bda0 <g_config_file_data>) at print_frames.c:1161
-> #2  0x000000000041ce92 in print_frames (dbg=0x654c80,
->    print_debug_frame=print_debug_frame@...ry=1, print_eh_frame=0,
->    config_data=config_data@...ry=0x63bda0 <g_config_file_data>)
->    at print_frames.c:2209
-> gef> x/10x $r13
-> 0x5e7981:       Cannot access memory at address 0x5e7981
-> gef> p/x $r13
-> $14 = 0x5e7981
-> 
-> 
->  datefixed: 20150518
-> 
->  references: regressiontests/liu/OOB0517_03.elf
-> 
->  gitfixid: ac6673e32f3443a5d36c2217cb814000930b2c54
-> 
->  tarrelease:
+> out of bounds problem in rle, pict, viff and sun files:
+>	Debian Bug: https://bugs.debian.org/832467
 
-Use CVE-2016-5031.
+>	https://bugs.launchpad.net/bugs/1533452
+>	https://github.com/ImageMagick/ImageMagick/issues/77
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 4
+> viff.c
+
+Use CVE-2016-7516.
 
 
-> DW201605-014
-> 
->  id: DW201605-014
-> 
->  cve:
-> 
->  datereported: 20160517
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read bug in dwarf_get_xu_hash_entry()
-> 
->  product: libdwarf
-> 
->  description: Test object shows an invalid read in dwarf_get
->  _xu_hash_entry, lin 211.
-> 
-> #0  dwarf_get_xu_hash_entry (xuhdr=xuhdr@...ry=0x657360,
->    index=index@...ry=2897626028, hash_value=
->    hash_value@...ry=0x7fffffffd5b0,
->    index_to_sections=index_to_sections@...ry=0x7fffffffd5a8,
->    err=err@...ry=0x7fffffffdb08) at dwarf_xu_index.c:211
-> #1  0x00002aaaaacfd05e in _dwarf_search_fission_for_key (
->    dbg=0x654a50, error=0x7fffffffdb08, percu_index_out=<synthetic pointer>,
->    key_in=0x7fffffffd670, xuhdr=0x657360) at dwarf_xu_index.c:363
-> #2  dwarf_get_debugfission_for_key (dbg=dbg@...ry=0x654a50,
->    key=key@...ry=0x7fffffffd670, key_type=key_type@...ry=0x2aaaaad15e2a
->    "tu", percu_out=percu_out@...ry=0x65a830,
->    error=error@...ry=0x7fffffffdb08) at dwarf_xu_index.c:577
-> 
-> 
->  datefixed: 20150518
-> 
->  references: regressiontests/liu/OOB0517_02.elf
-> 
->  gitfixid: ac6673e32f3443a5d36c2217cb814000930b2c54
-> 
->  tarrelease:
+>	https://bugs.launchpad.net/bugs/1533449
+>	https://github.com/ImageMagick/ImageMagick/issues/80
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+> pict.c
 
-Use CVE-2016-5032.
+Use CVE-2016-7517.
 
 
-> DW201605-013
-> 
->  id: DW201605-013
-> 
->  cve:
-> 
->  datereported: 20160517
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read bug in print_exprloc_content
-> 
->  product: libdwarf
-> 
->  description: Test object shows an invalid write in print_exprloc_content.
-> 
-> #0  print_exprloc_content (dbg=dbg@...ry=0x654ea0,
->    die=die@...ry=0x65b110, attrib=attrib@...ry=0x65b590,
->    esbp=esbp@...ry=0x7fffffffcef0, showhextoo=1) at print_die.c:4182
-> #1  0x0000000000412fb1 in get_attr_value (dbg=dbg@...ry=0x654ea0,
->    tag=<optimized out>, die=die@...ry=0x65b110,
->    dieprint_cu_goffset=dieprint_cu_goffset@...ry=11,
->    attrib=attrib@...ry=0x65b590, srcfiles=srcfiles@...ry=0x0,
->    cnt=cnt@...ry=0, esbp=esbp@...ry=0x7fffffffcef0, show_form=0,
->    local_verbose=0) at print_die.c:4972
-> 
-> 
->  datefixed: 20150518
-> 
->  references: regressiontests/liu/OOB0517_01.elf
-> 
->  gitfixid: ac6673e32f3443a5d36c2217cb814000930b2c54
-> 
->  tarrelease:
+>	https://bugs.launchpad.net/bugs/1533447
+>	https://github.com/ImageMagick/ImageMagick/issues/81
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+> sun.c
 
-Use CVE-2016-5033.
+Use CVE-2016-7518.
 
 
-> DW201605-012
-> 
->  id: DW201605-012
-> 
->  cve:
-> 
->  datereported: 20160513
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB write. From relocation records
-> 
->  product: libdwarf
-> 
->  description: Test object shows an invalid write in dwarf_elf_access.c
->  (when doing the relocations). Adding the relocation value to anything
->  overflowed and disguised the bad relocation record. With a 32bit kernel
->  build the test could show a double-free and coredump due to the unchecked
->  invalid writes from relocations.
-> 
->  datefixed: 20160517
-> 
->  references: regressiontests/liu/HeapOverflow0513.elf
-> 
->  gitfixid: 10ca310f64368dc083efacac87732c02ef560a92
-> 
->  tarrelease:
+>	https://bugs.launchpad.net/bugs/1533445
+>	https://github.com/ImageMagick/ImageMagick/issues/82
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+> rle.c
 
-Use CVE-2016-5034.
+Use CVE-2016-7519.
 
 
-> DW201605-011
-> 
->  id: DW201605-011
-> 
->  cve:
-> 
->  datereported: 20160506
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read bug in _dwarf_read_line_table_header
-> 
->  product: libdwarf
-> 
->  description: Test object shows null dereference at line 62 of
->  dwarf_line_table_reader.c. Frame code and linetable code was not noticing
->  data corruption.
-> 
->  datefixed: 20160512
-> 
->  references: regressiontests/liu/OOB_read4.elf
-> 
->  gitfixid: 82d8e007851805af0dcaaff41f49a2d48473334b
-> 
->  tarrelease:
+> heap overflow in hdr file handling:
+>	Debian Bug: https://bugs.debian.org/832469
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1537213
+>	https://github.com/ImageMagick/ImageMagick/issues/90
+>	https://github.com/ImageMagick/ImageMagick/commit/14e606db148d6ebcaae20f1e1d6d71903ca4a556
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-Use CVE-2016-5035.
+Use CVE-2016-7520.
 
 
-> DW201605-010
-> 
->  id: DW201605-010
-> 
->  cve:
-> 
->  datereported: 20160506
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read bug in dump_block
-> 
->  product: libdwarf
-> 
->  description: Test object shows null dereverence at line 186 of
->  dump_block() in print_sections.c Frame code was not noticing frame data
->  corruption.
-> 
->  datefixed: 20160512
-> 
->  references: regressiontests/liu/OOB_read3.elf
->  regressiontests/liu/OOB_read3_02.elf
-> 
->  gitfixid: 82d8e007851805af0dcaaff41f49a2d48473334b
-> 
->  tarrelease:
+> heap buffer overflow in psd file handling:
+>	Debian Bug: https://bugs.debian.org/832474
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1537418
+>	https://github.com/ImageMagick/ImageMagick/issues/92
+>	https://github.com/ImageMagick/ImageMagick/commit/30eec879c8b446b0ea9a3bb0da1a441cc8482bc4
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-Use CVE-2016-5036.
+Use CVE-2016-7521.
 
 
-> DW201605-009
-> 
->  id: DW201605-009
-> 
->  cve:
-> 
->  datereported: 20160505
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: NULL dereference in _dwarf_load_section
-> 
->  product: libdwarf
-> 
->  description: Test object shows null dereverence at line 1010
->  if(!strncmp("ZLIB",(const char *)src,4)) { in dwarf_init_finish.c The zlib
->  code was not checking for a corrupted length-value.
-> 
->  datefixed: 20160506
-> 
->  references: regressiontests/liu/NULLderefer0505_01.elf
-> 
->  gitfixid: b6ec2dfd850929821626ea63fb0a752076a3c08a
-> 
->  tarrelease: 20160507
+> out of bound access for malformed psd file:
+>	Debian Bug: https://bugs.debian.org/832475
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1537419
+>	https://github.com/ImageMagick/ImageMagick/issues/93
+>	https://github.com/ImageMagick/ImageMagick/commit/4b1b9c0522628887195bad3a6723f7000b0c9a58
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 2
 
-Use CVE-2016-5037.
+Use CVE-2016-7522.
 
 
-> DW201605-008
-> 
->  id: DW201605-008
-> 
->  cve:
-> 
->  datereported: 20160505
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read in dwarf_get_macro_startend_file()
-> 
->  product: libdwarf
-> 
->  description: Test object shows out of bound read. OOB at: line 772
->  *src_file_name = macro_context->mc_srcfiles[trueindex]; in dwarf_macro5.c
->  A string offset into .debug_str is outside the bounds of the .debug_str
->  section.
-> 
->  datefixed: 20160512
-> 
->  references: regressiontests/liu/OOB0505_02.elf
->  regressiontests/liu/OOB0505_02_02.elf
-> 
->  gitfixid: 82d8e007851805af0dcaaff41f49a2d48473334b
-> 
->  tarrelease:
+> meta file out of bound access:
+>	Debian Bug: https://bugs.debian.org/832478
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1537420
+>	https://github.com/ImageMagick/ImageMagick/issues/96
+>	https://github.com/ImageMagick/ImageMagick/commit/f8c318d462270b03e77f082e2a3a32867cacd3c6
+>	https://github.com/ImageMagick/ImageMagick/commit/5a34d7ac889bd6645f6cfd164636e3efb56dbb2f
 
-Use CVE-2016-5038.
+We are not sure that we understand this set of references.
+bugs/1537420 does not link to issues/96.
+
+We will assign separate CVE IDs for these pairs of references:
+
+> https://bugs.launchpad.net/bugs/1537420
+> https://github.com/ImageMagick/ImageMagick/issues/94
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+> meta.c:496
+
+Use CVE-2016-7523.
 
 
-> DW201605-007
-> 
->  id: DW201605-007
-> 
->  cve:
-> 
->  datereported: 20160505
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: OOB read bug in get_attr_value()
-> 
->  product: libdwarf
-> 
->  description: Test object shows out of bound read. Object had data
->  all-bits-on so the existing length check did not work due to wraparound.
->  Added a check not susceptible to that error
->  (DW_DLE_FORM_BLOCK_LENGTH_ERROR).
-> 
->  datefixed: 20160506
-> 
->  references: regressiontests/liu/OOB0505_01.elf
-> 
->  gitfixid: eb1472afac95031d0c9dd8c11d527b865fe7deb8
-> 
->  tarrelease: 20160507
+> https://bugs.launchpad.net/bugs/1537422
+> https://github.com/ImageMagick/ImageMagick/issues/96
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+> meta.c:465
 
-Use CVE-2016-5039.
+Use CVE-2016-7524.
 
 
-> DW201605-006
-> 
->  id: DW201605-006
-> 
->  cve:
-> 
->  datereported: 20160505
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: Two Heap-Overflow bug
-> 
->  product: libdwarf
-> 
->  description: Two test objects showing a heap overflow in libdwarf when
->  using dwarfdump. It seems that these were fixed by the previous git
->  update. Neither gdb nor valgrind find any errors when building with
->  yesterday's commit.
-> 
->  datefixed: 20160504
-> 
->  references: regressiontests/liu/free_invalid_address.elf
->  regressiontests/liu/heapoverflow01b.elf
-> 
->  gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
-> 
->  tarrelease: 20160507
+> heap buffer overflow in psd file coder:
+>	Debian Bug: https://bugs.debian.org/832480
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1537424
+>	https://github.com/ImageMagick/ImageMagick/issues/98
+>	https://github.com/ImageMagick/ImageMagick/commit/5f16640725b1225e6337c62526e6577f0f88edb8
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-We cannot assign a CVE ID without more analysis from you about why
-these two issues are being combined into a single DW201605-006 ID, and
-about whether they are independent of the issue "fixed by the previous
-git update." A "heap overflow" is often a consequence of other code
-problems, and the term "heap overflow" is often misused to refer to an
-invalid read operation instead of an invalid write operation.
+Use CVE-2016-7525.
 
 
-> DW201605-005
-> 
->  id: DW201605-005
-> 
->  cve:
-> 
->  datereported: 20160502
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: A specially crafted DWARF section results in reading a
->  compilation unit header that crashes the application.
-> 
->  product: libdwarf
-> 
->  description: If the data read for a compilation unit header contains a too
->  large length value the library will read outside of its bounds and crash
->  the application.
-> 
->  datefixed: 20160504
-> 
->  references: regressiontests/liu/null02.elf
-> 
->  gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
-> 
->  tarrelease: 20160507
+> out of bound access in wpg file coder:
+>	Debian Bug: https://bugs.debian.org/832482
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1539050
+>	https://bugs.launchpad.net/bugs/1542115
+>	https://github.com/ImageMagick/ImageMagick/issues/102
+>	https://github.com/ImageMagick/ImageMagick/issues/122
+>	https://github.com/ImageMagick/ImageMagick/commit/b6ae2f9e0ab13343c0281732d479757a8e8979c7
+>	https://github.com/ImageMagick/ImageMagick/commit/d9b2209a69ee90d8df81fb124eb66f593eb9f599
+>	https://github.com/ImageMagick/ImageMagick/commit/a251039393f423c7858e63cab6aa98d17b8b7a41
 
-Use CVE-2016-5040.
+We will assign separate CVE IDs for these subsets of the references:
+
+>	https://bugs.launchpad.net/bugs/1539050
+>	https://github.com/ImageMagick/ImageMagick/issues/102
+>	https://github.com/ImageMagick/ImageMagick/commit/b6ae2f9e0ab13343c0281732d479757a8e8979c7
+>	https://github.com/ImageMagick/ImageMagick/commit/d9b2209a69ee90d8df81fb124eb66f593eb9f599
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 2
+
+Use CVE-2016-7526.
 
 
-> DW201605-004
-> 
->  id: DW201605-004
-> 
->  cve:
-> 
->  datereported: 20160502
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: A specially crafted DWARF section results in a null
->  dereference reading debugging information entries which crashes the
->  application.
-> 
->  product: libdwarf
-> 
->  description: If no DW_AT_name is present in a debugging information entry
->  using DWARF5 macros a null dereference in dwarf_macro5.c will crash the
->  application.
-> 
->  datefixed: 20160504
-> 
->  references: regressiontests/liu/null01.elf
-> 
->  gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
-> 
->  tarrelease: 20160507
+>	https://bugs.launchpad.net/bugs/1542115
+>	https://github.com/ImageMagick/ImageMagick/issues/122
+>	https://github.com/ImageMagick/ImageMagick/commit/a251039393f423c7858e63cab6aa98d17b8b7a41
+> AddressSanitizer: global-buffer-overflow
+> READ of size 4096
 
-Use CVE-2016-5041.
+Use CVE-2016-7527.
 
 
-> DW201605-003
-> 
->  id: DW201605-003
-> 
->  cve:
-> 
->  datereported: 20160502
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: A specially crafted DWARF section results in an infinite
->  loop that eventually crashes the application.
-> 
->  product: libdwarf
-> 
->  description: In dwarf_get_aranges_list() an invalid count will iterate,
->  reading from memory addresses that increase till it all fails.
-> 
->  datefixed: 20160504
-> 
->  references: regressiontests/liu/infiniteloop.elf
-> 
->  gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
-> 
->  tarrelease: 20160507
+> out of bound access for viff file coder:
+>	Debian Bug: https://bugs.debian.org/832483
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1537425
+>	https://github.com/ImageMagick/ImageMagick/issues/99
+>	https://github.com/ImageMagick/ImageMagick/commit/ca0c886abd6d3ef335eb74150cd23b89ebd17135
+> AddressSanitizer: SEGV on unknown address
 
-Use CVE-2016-5042.
+Use CVE-2016-7528.
 
 
-> DW201605-002
-> 
->  id: DW201605-002
-> 
->  cve:
-> 
->  datereported: 20160502
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: A specially crafted DWARF section results in a read outside
->  the bounds of in memory data so the calling application can crash.
-> 
->  product: libdwarf
-> 
->  description: Out of bound read bug in libdwarf git code. dwarf_dealloc()
->  did not check the Dwarf_Ptr space argument before using it. This will lead
->  to a out-of-bound read bug.
-> 
-> backtrace:
-> #0  dwarf_dealloc (dbg=dbg@...ry=0x655f30, space=0xa0,
-> alloc_type=alloc_type@...ry=1) at dwarf_alloc.c:477
-> #1  0x00002aaaaacf3296 in dealloc_srcfiles
-> (dbg=0x655f30, srcfiles=0x66b8f0, srcfiles_count=17) at
-> dwarf_macro5.c:1025 #2  0x00002aaaaacf50e6 in dealloc_srcfiles
-> (srcfiles_count=<optimized out>, srcfiles=<optimized out>,
-> dbg=<optimized out>) at dwarf_macro5.c:1021 -----
-> gef> p &r->rd_dbg
-> $14 = (void **) 0x90
-> 
-> 
->  datefixed: 20160504
-> 
->  references: regressiontests/liu/outofbound01.elf
-> 
->  gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
-> 
->  tarrelease: 20160507
+> out of bound access in xcf file coder:
+>	Debian Bug: https://bugs.debian.org/832504
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1539051
+>	https://bugs.launchpad.net/bugs/1539052
+>	https://github.com/ImageMagick/ImageMagick/issues/104
+>	https://github.com/ImageMagick/ImageMagick/issues/103
+>	https://github.com/ImageMagick/ImageMagick/commit/a2e1064f288a353bc5fef7f79ccb7683759e775c
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-Use CVE-2016-5043.
+Use CVE-2016-7529.
 
 
-> DW201605-001
-> 
->  id: DW201605-001
-> 
->  cve:
-> 
->  datereported: 20160502
-> 
->  reportedby: Yue Liu
-> 
->  vulnerability: A specially crafted DWARF section results in a duplicate
->  free() in libdwarf and the calling application will crash.
-> 
->  product: libdwarf
-> 
->  description: In file dwarf_elf_access.c:1071
-> 
-> WRITE_UNALIGNED(dbg,target_section + offset,
->     &outval,sizeof(outval),reloc_size);
-> 
-> 
->  A crafted ELF file may lead to a large offset value, which bigger than the
->  size of target_section heap chunk, then this WRITE_UNALIGNED() function
->  will write the value of &outval out of the heap chunk. offset is a 64bit
->  unsigned int value, so this is more than a heap overflow bug, but also a
->  Out-of-Bound write bug. So WRITE_UNALIGNED() need more strictly checking
->  to prevent this.
-> 
->  datefixed: 20160504
-> 
->  references: regressiontests/liu/heapoverflow01.elf
-> 
->  gitfixid: 98a3da1e8237fe0d45b67ef77f3fa5ed9ff0215f
-> 
->  tarrelease: 20160507
+> out of bound in quantum handling:
+>	Debian Bug: https://bugs.debian.org/832506
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1539067
+>	https://bugs.launchpad.net/bugs/1539053
+>	https://github.com/ImageMagick/ImageMagick/issues/105
+>	https://github.com/ImageMagick/ImageMagick/commit/63346f34f9d19179599b5b256e5e8d3dda46435c
+>	https://github.com/ImageMagick/ImageMagick/commit/c4e63ad30bc42da691f2b5f82a24516dd6b4dc70
+>	https://github.com/ImageMagick/ImageMagick/issues/110
+>	https://github.com/ImageMagick/ImageMagick/commit/b5ed738f8060266bf4ae521f7e3ed145aa4498a3
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
 
-Use CVE-2016-5044.
+Use CVE-2016-7530.
+
+
+> pbd file out of bound access:
+>	Debian Bug: https://bugs.debian.org/832633
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1539061
+>	https://bugs.launchpad.net/bugs/1542112
+>	https://github.com/ImageMagick/ImageMagick/issues/107
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 28
+> WRITE of size 1
+
+Use CVE-2016-7531.
+
+
+> Fix handling of corrupted psd file:
+>	Debian Bug: https://bugs.debian.org/832776
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1539066
+>	https://github.com/ImageMagick/ImageMagick/issues/109
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 5632
+
+Use CVE-2016-7532.
+
+
+> wpg file out of bound for corrupted file:
+>	Debian Bug: https://bugs.debian.org/832780
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1542114
+>	https://github.com/ImageMagick/ImageMagick/issues/120
+>	https://github.com/ImageMagick/ImageMagick/commit/bef1e4f637d8f665bc133a9c6d30df08d983bc3a
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
+
+Use CVE-2016-7533.
+
+
+> out of bound access in generic decoder:
+>	Debian Bug: https://bugs.debian.org/832785
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1542785
+>	https://github.com/ImageMagick/ImageMagick/issues/126
+>	https://github.com/ImageMagick/ImageMagick/commit/430403b0029b37decf216d57f810899cab2317dd
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 2
+
+Use CVE-2016-7534.
+
+
+> out of bound access for corrupted psd file:
+>	Debian Bug: https://bugs.debian.org/832787
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1545180
+>	https://github.com/ImageMagick/ImageMagick/issues/128
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
+
+Use CVE-2016-7535.
+
+
+> SEGV reported in corrupted profile handling:
+>	Debian Bug: https://bugs.debian.org/832789
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1545367
+>	https://github.com/ImageMagick/ImageMagick/issues/130
+>	https://github.com/ImageMagick/ImageMagick/commit/478cce544fdf1de882d78381768458f397964453
+> AddressSanitizer: SEGV on unknown address
+
+Use CVE-2016-7536.
+
+
+> out of bound access for corrupted pdb file:
+>	Debian Bug: https://bugs.debian.org/832791
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1553366
+>	https://github.com/ImageMagick/ImageMagick/issues/143
+>	https://github.com/ImageMagick/ImageMagick/commit/424d40ebfcde48bb872eba75179d3d73704fdf1f
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 128
+
+Use CVE-2016-7537.
+
+
+> SIGABRT for corrupted pdb file:
+>	Debian Bug: https://bugs.debian.org/832793
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1556273
+>	https://github.com/ImageMagick/ImageMagick/issues/148
+>	https://github.com/ImageMagick/ImageMagick/commit/53c1dcd34bed85181b901bfce1a2322f85a59472
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 65700
+
+Use CVE-2016-7538.
+
+
+> DOS due to corrupted DDS files:
+>	Debian Bug: https://bugs.debian.org/832944
+>	Additional references:
+>	----------------------
+>	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26861
+>	https://github.com/ImageMagick/ImageMagick/commit/93ab016764c7f787829d9065440d86f5609765110
+
+This has a stray '9' character. It is supposed to be:
+https://github.com/ImageMagick/ImageMagick/commit/3ab016764c7f787829d9065440d86f5609765110
+
+>	https://github.com/ImageMagick/ImageMagick/commit/9b428b7af688fe319320aed15f2b94281d1e37b4
+
+Use CVE-2015-8959 for this entire coders/dds.c report from 2015.
+
+
+> DOS due to corrupted DDS files:
+>	Debian Bug: https://bugs.debian.org/832942
+>	Additional references:
+>	----------------------
+>	https://github.com/ImageMagick/ImageMagick/commit/21eae25a8db5fdcd112dbcfcd9e5c37e32d32e2f
+>	https://github.com/ImageMagick/ImageMagick/commit/d7325bac173492b358417a0ad49fabad44447d52
+>	https://github.com/ImageMagick/ImageMagick/commit/504ada82b6fa38a30c846c1c29116af7290decb2
+
+Use CVE-2014-9907 for this entire coders/dds.c report from 2014.
+
+
+> potential DOS by not releasing memory:
+>	Debian Bug: https://bugs.debian.org/833101
+>	Additional references:
+>	----------------------
+>	Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4e81ce8b07219c69a9aeccb0f7f7b927ca6db74c
+>	http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=28946
+
+Use CVE-2016-7539.
+
+
+> writing to rgf format aborts:
+>	Debian Bug: https://bugs.debian.org/827643
+>	Additional references:
+>	----------------------
+>	https://bugs.launchpad.net/bugs/1594060
+>	https://github.com/ImageMagick/ImageMagick/pull/223
+
+Use CVE-2016-7540.
 
 - -- 
 CVE Assignment Team
@@ -774,17 +431,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXRQuYAAoJEHb/MwWLVhi228oP+gJ1Dvqw1e+qh+daCWr2MQt4
-6TTVHAcdclKRByocqSDIzac0/qIzePuHlhke4h842y6p92Ldr4zjfQZAcA18KeNt
-SSrD+v6QYeEsjWF0rgsOxLfjpNuHa6D3sjxXA8jeDN8OkQvnqCHX1gnW0pPLadF8
-Xt0xZBTEdTvKinNix5mYrtkofLcNBBepKSu5VkfEXFLzP+rZKZVxvUD+1pNKWUOL
-fHYk97aL8SH1HeLcXATs8S6Pe2W3VMxsW5AleqTEGeIm9jRB9JR/UgldFP9DkjX2
-GPnefpDDk/enizVw0yQxUGX2VpoXhJN/cAQ9vagegyXLGhoqWxiNTYyPq6RgNQu0
-WpPdJyy+6TXDx3dLeDoTy4O30l7A1WKW8dl4WGwSXlfILVn/mSjfPjHyfmE/otfN
-r0Ek/palVxlWwQRTZ924uqkQn7Pz+ACA8fl8RapQwxGgveyEXuGcw33jhLv+NUZx
-H12FdhsspZa568k8mEKZJiST44cfyBZwj+aNZOoV/MC180qTpdfgZlsH5+CZa59O
-P9XSImd/MWaUsLV34cCCY3qDPdP4uWAO9PKbic82JNXJbXhsxavm4U90qPDXYTCe
-58KJHA+Amq0j0SAzLLhNk5Q/Tps0fjbZ2RvyXQuQ8vDzxq6IXT9V0w5pr8jg3RRr
-d2iFHpD4XlMwxmlXD0Er
-=/Qjv
+iQIcBAEBCAAGBQJX42gvAAoJEHb/MwWLVhi2ItEP/0xGPlLZNqqWzGSq/xBspzMX
+bwnMiwZrZXwKktNqOzhi4AhwLFPJzF74nVFf/DX1p5ZkmwfIlIdzFfYfPAlMDPH1
+A/NLVnuDGmPOGblStiv92LbIBYXk8Rib1ise+37ekwsG6qa0RIk8VfSS+PTXUa62
+4bec1cH+mWKaC5o27jOcWqaGoV2anFicXKiwQfj93HYtiauXN00dzWOtkGK/Av/q
+NlAe5pABEu8vVgIaXC7ZsHpAMNxlZSU015KffjgdAaXh/NK7g5Pkg9Zj0bo/A72q
+5JHYCU7QMJBgnc6QDXC6vM+9DMOmWSzbaYH/5MFF1y897HqaIHhBef1yeg/kRtkX
+ojzMsVzMls8jdFnRH+05lp63YfL9WKGsXe9o0rQcEX+wWg5rePaJNDLhVc04iSG0
+26MjVd/Dd+uhDSLBZpf31tDCjO6rBMO17kl606OUI2isxmUUPogB4iT1tNeM5QtW
+FqHaH+/i+DArcNI5yWIRf2OmFSfWKjkzJ7IRWvXpCJ1Kbwc8WbJgRqF0r6zVuAq5
+gJjgtQUdjoQMhpsPDQkOKjxsCoqBFwv/a6wNeA0o/ov9z6ue8gz9PY/9sxUsgt7N
++mMHvGwWg9/CXVxPTZyNjA5ViJUwG/wrl7Hd6Ri5kJqaUNMtX6uB9+BXfFLkUn8Q
+Kpv5aJqNL+N3osUfnMd4
+=GSns
 -----END PGP SIGNATURE-----
