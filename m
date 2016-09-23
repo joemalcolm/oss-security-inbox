@@ -1,26 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/13
-Message-ID: <20160512211648.GA18760@pisco.westfalen.local>
-Date: Thu, 12 May 2016 23:16:48 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request : Use-after-free in openjpeg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/4
+Message-ID: <CAH6wpnqzeNtpykT7emtDU1-GV7AvjFP5-YroWcCC4UZyQEFvtA@mail.gmail.com>
+Date: Fri, 23 Sep 2016 12:14:14 +0100
+From: Martyn Taylor <mtaylor@...hat.com>
+To: security@...che.org, Matthias Kaiser <matthias.kaiser@...e-white.com>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  dev@...ivemq.apache.org, users@...ivemq.apache.org
+Subject: [CVE-2016-4978] Apache ActiveMQ Artemis: Deserialization of untrusted input vunerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 15, 2015 at 05:33:55PM +0200, FEIST Josselin wrote:
-> Hi,
-> 
-> Use-after-free was found in openjpeg
-> (https://github.com/uclouvain/openjpeg). The vuln is fixed in version
-> 2.1.1 and was located in opj_j2k_write_mco function. More details are
-> available here : https://github.com/uclouvain/openjpeg/issues/563.
-> Is it possible to get a CVE for this ?
-> 
-> Credit goes to the static analyzer Gueb.
+Severity: Important
 
-Explicitly adding cve-assign to CC, this seems to have fallen through
-the cracks.
+Vendor: The Apache Software Foundation
 
-Cheers,
-        Moritz
+Versions Affected: Apache Artemis 1.0.0, 1.1.0, 1.2.0, 1.3.0
+
+A class implementing the Serializable interface is free to implement
+the “readObject(java.io.ObjectInputStream
+in)” method however it chooses. This readObject method is used during the
+deserialization process, when constructing a java object from a serialized
+byte stream. It is possible to implement the method in such a way that can
+result in java code being executed during the deserialization of an object
+of this class (gadget class).
+
+The JMS specification outlines a getObject() method on the
+javax.jms.ObjectMessage
+class. The Apache Artemis implementation of this method allows
+deserialization of objects, from untrusted input. There are several places
+where Apache Artemis uses this getObject() method. In the JMS Core client,
+the Artemis broker and the Artemis REST component. These Artemis components
+may therefore be vulnerable to a remote code execution attack. Successful
+exploitations of this vulnerability rely on these "gadget classes"  being
+present on the Artemis classpath and the sender of the untrusted input
+being authenticated and authorized to send messages to the Artemis broker.
+
+The code execution exploit may happen under the following circumstances:
+
+· In the JMS client when consuming an object message.
+
+· In the REST module when a REST client requests to consume a message that
+was originally sent as an object message (cross protocol).
+
+· In the Artemis management layer, when a client sends an object message to
+a management address.
+
+· On the broker when an AMQP client consumes a message that was originally
+sent as an object message (cross protocol).
+
+For this exploit to occur the sender of the compromised message needs to be
+authenticated and authorized in order to send the message to the Artemis
+broker and affected classes (gadget classes) present on the Artemis class
+path.
+
+Mitigation:
+To secure the Apache Artemis broker and management layer:
+** Upgrade to 1.4.0.
+
+For the Apache Artemis REST module and Apache Artemis JMS client.
+** Upgrade to Apache Artemis 1.4.0
+** Configure the appropriate deserialization white/black lists as outlined
+in the Artemis documentation.
+
+Credit: This issue was discovered by Matthias Kaiser of Code White (
+www.code-white.com)
+
