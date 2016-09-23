@@ -1,50 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/9
-Message-ID: <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
-Date: Wed, 5 Oct 2016 09:54:07 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/6
+Message-ID: <CY1PR17MB0313FFDC60CA5F5ABE1EFB90DBC80@CY1PR17MB0313.namprd17.prod.outlook.com>
+Date: Fri, 23 Sep 2016 09:48:07 +0000
+From: Hu Chaojian <chaojianhu@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request Qemu: hw: net: Fix a heap overflow in xlnx.xps-ethernetlite
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 5, 2016 at 9:47 AM, Hanno Böck <hanno@...eck.de> wrote:
-> On Wed, 5 Oct 2016 09:13:03 -0700
-> Tavis Ormandy <taviso@...gle.com> wrote:
->
->> If you're using ImageMagick, I would recommend disabling the PS, EPS,
->> PDF and XPS coders in policy.xml. Applications like gimp, evince,
->> claws, and most other applications that generate thumbnails of PDF/PS
->> documents should probably not do so without a prompt (NOTE: A lot of
->> packages do this
->
-> I was surprised to see evince in this list. It uses poppler for pdf and
-> libspectre for postscript, so there seems to be no use of
-> ghostscript (maybe in an older version).
-> Also for claws the only use of ghostscript is in a plugin that's not
-> enabled by default.
+The .receive callback of xlnx.xps-ethernetlite doesn't check the length
 
-It might be an old version but the version I have on RHEL7 and Ubuntu
-LTS both invoke gs by default.
+of data before calling memcpy. As a result, the NetClientState object in
+heap will be overflowed. Attackers may leverage it to execute arbitrary
 
-$ evince --version
-GNOME Document Viewer 3.14.2
-
-> While I agree that avoiding parsing for things like thumbnails should
-> be tried I still wonder what the overall solution to this is. Because
-> even if we avoid non-prompted ps parsing we still want to be able to
-> parse PS files without code execution.
-> Do you feel dSAFER could be secured or is this a loosing battle?
->
+code with privileges of the qemu process on the host.
 
 
-As I understand it, there are also complicated licensing issues with
-ghostscript that are going to impede progress.
+Upstream patches:
 
-The problem is a big mess.
+https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01598.html
+https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01877.html<https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01598.htmlhttps://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01877.html>
 
-> --
-> Hanno Böck
-> https://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+This issue was discovered by chaojianhu<chaojianhu@...mail.com>
+
+Thanks,
+
+Chaojian Hu
+
+
+-------------------------------------------------------------------------------------------
+
+p.s.
+
+Alistair (the code maintainer) have requested a cve id for this vulnerability.
+
+
+>>Hello chaojianhu,
+
+>>I created a CVE, but I can't access it. Do you know how to expose the CVE?
+
+>>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7161
+
+>>Thanks,
+
+>>Alistair
+
+
+But there seems a small problem.
