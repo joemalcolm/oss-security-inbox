@@ -1,12 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/4
-Message-ID: <CAHmME9poTixFqc3TXGfPReg32rUUw_XVko61sONSZnRdxkLLdQ@mail.gmail.com>
-Date: Thu, 14 Jan 2016 15:46:26 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: "cgit@...ts.zx2c4.com" <cgit@...ts.zx2c4.com>, oss-security <oss-security@...ts.openwall.com>
-Cc: Daniel Chromek <chromek@...t.sk>,  Krzysztof Katowicz-Kowalewski <krzysztof.kowalewski@...t.pl>, Erik Cabetas <erik@...ludesecurity.com>,  Konstantin Ryabitsev <mricon@...nel.org>
-Subject: Re: CVE Request: CGit - Multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/7
+Message-ID: <9cfba660-64cf-c287-2be2-2545c46afac3@gentoo.org>
+Date: Fri, 23 Sep 2016 14:35:41 +0200
+From: Thomas Deutschmann <whissi@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVEs for vulnerabilities listed in MySQL 5.6.33 release note
 Content-Type: text/plain; charset=utf-8
 
-These issues are fixed in the new release, v0.12:
-http://lists.zx2c4.com/pipermail/cgit/2016-January/002817.html
+Hi,
+
+the MySQL 5.6.33 changelog [1] lists multiple fixed vulnerabilities but
+I can't find CVEs for all of these problems. Am I missing something? If
+not, could you please assign CVEs which would help tracking the status
+of these problems in MariaDB and Percona-Server (see Percona's latest
+release notes for their 5.6.32-based fork [2] which seems to address
+vulnerabilities listed in 5.6.33):
+
+> For mysqld_safe, the argument to --malloc-lib now must be one of the
+>  directories /usr/lib, /usr/lib64, /usr/lib/i386-linux-gnu, or 
+> /usr/lib/x86_64-linux-gnu. In addition, the --mysqld and 
+> --mysqld-version options can be used only on the command line and not
+> in an option file. (Bug #24464380)
+
+This one seems to be related to CVE-2016-6662 but one could argue this
+deserve its one CVE.
+
+
+> It was possible to write log files ending with .ini or .cnf that 
+> later could be parsed as option files. The general query log and
+> slow query log can no longer be written to a file ending with .ini
+> or .cnf. (Bug #24388753)
+
+This is CVE-2016-6662.
+
+
+> Privilege escalation was possible by exploiting the way REPAIR TABLE
+> used temporary files. (Bug #24388746)
+
+This one seems to be without a CVE (I guess this isn't CVE-2016-6663).
+
+
+Thanks!
+
+
+
+See also:
+=========
+[1] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-33.html
+
+[2]
+https://www.percona.com/blog/2016/09/21/percona-server-5-6-32-78-1-is-now-available/
+
+
+-- 
+Regards,
+Thomas
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
