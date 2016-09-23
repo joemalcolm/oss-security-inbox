@@ -1,51 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/5
-Message-ID: <5693649D.2050802@census-labs.com>
-Date: Mon, 11 Jan 2016 10:15:25 +0200
-From: Stelios Tsampas <stelios@...sus-labs.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: CVE-2015-8396: GDCM buffer overflow in ImageRegionReader::ReadIntoBuffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/8
+Message-Id: <20160923152407.120626C54F4@smtpvmsrv1.mitre.org>
+Date: Fri, 23 Sep 2016 11:24:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: chaojianhu@...mail.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Qemu: hw: net: Fix a heap overflow in xlnx.xps-ethernetlite
 Content-Type: text/plain; charset=utf-8
 
-Grassroots DICOM (GDCM) is a C++ library for processing DICOM medical
-images.
-It provides routines to view and manipulate a wide range of image formats
-and can be accessed through many popular programming languages like Python,
-C#, Java and PHP.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-GDCM versions 2.6.0 and 2.6.1 (and possibly previous versions) are prone
-to an
-integer overflow vulnerability which leads to a buffer overflow and
-potentially to remote code execution. The vulnerability is triggered by the
-exposed function gdcm::ImageRegionReader::ReadIntoBuffer, which copies
-DICOM
-image data to a buffer. ReadIntoBuffer checks whether the supplied
-buffer is
-large enough to hold the necessary data, however in this check it fails to
-detect the occurrence of an integer overflow, which leads to a buffer
-overflow
-later on in the code. The buffer overflow will occur regardless of the
-size of
-the buffer supplied to the ReadIntoBuffer call.
+> The .receive callback of xlnx.xps-ethernetlite doesn't check the length
+> of data before calling memcpy. As a result, the NetClientState object in
+> heap will be overflowed. Attackers may leverage it to execute arbitrary
+> code with privileges of the qemu process on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01598.html
+> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01877.html
 
-More information about this vulnerability can be found at
-http://census-labs.com/news/2016/01/11/gdcm-buffer-overflow-imageregionreaderreadintobuffer/
+Yes, this was already assigned CVE-2016-7161. Other references are:
 
-The GDCM project has released version 2.6.2 that addresses this issue.
-It is advised to upgrade all GDCM installations to the latest stable
-release.
+  http://git.qemu.org/?p=qemu.git;a=commit;h=a0d1cbdacff5df4ded16b753b38fdd9da6092968
+  http://patchwork.ozlabs.org/patch/657076/
 
-Disclosure Timeline
--------------------
-CVE assignment:    December 2nd, 2015
-Vendor Contact:    December 4th, 2015
-Vendor Patch Release: December 23rd, 2015
-Public Advisory: January 11th, 2016
+>> I created a CVE, but I can't access it. Do you know how to expose the CVE?
+>> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7161
 
-Regards,
+This resulted from the https://cveform.mitre.org web site, not an
+oss-security post. In that situation, the "Select a request type"
+"Notify CVE about a publication" process could have been used. At the
+moment, that process is not used for a vulnerability that has an
+oss-security post.
 
-Stelios Tsampas
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-IT Security Researcher
-CENSUS S.A.
+iQIcBAEBCAAGBQJX5UhtAAoJEHb/MwWLVhi2S3UP/R3rj9yUK8LxskuVYnFoIwxZ
+mUZOJYVo5yTfV416+mFy9JU9ztqk2+JnidQ+iOZ1p3zpc352r6gftyLl0cghu2jx
+vzN2OuBeXPBUWsgBLa3fFyNz+7gHTwNO0ISmg11y5717QvGeC00jFcfVCp9awpiS
+AvnbVqhVr5LFfN5zrT456r3E1QbcV4gS0bbgob9RYDUf5YNDCelp4iY4jbZV/Ns2
+06nrDsz6aWKyXzlebpfyPBpn04HyqiXEUwTkex0HH2YjmH+iDYVdBBYmLwwOSoLY
+p+ybpHfETfvL0xIASMPVFHETZmlcS8aeInzJ0726zcYDwxSoWjRsxyJ8Qt2UI0ux
+ZpfhFSMWumPhqJbpD37laElxaSxgOdpY61UBW6ZgIMO1wO64v6dRuSMHXSVJXXFs
+olOAR5zp5UCLgMW8CBgzAU6DnpnYAzF14O+h+24g3W9DhXmX5oXSdY1FyP1D+Vsq
+K7NH87RCygBm9VVXVo5ErGCI08bzJaYSDju9lefEU0ldsq5zGXVCFK7HBhKOpvrT
+YGE1uhU1rjS+TtSAuJ2UbqIJBcT9WGGmVNk+Cv1PVvWBvxrUkZiDey9rjQjDm1Ng
+YrPX94o+rtn5QGG0T9VDoSBfMmf+5mp5Jkcq34R/ol5k56wpEr5BXyARc8iFj13C
+KownOKU8+XCHIPViQvEu
+=4P8S
+-----END PGP SIGNATURE-----
