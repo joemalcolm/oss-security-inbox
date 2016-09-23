@@ -1,4 +1,9 @@
-Received: (qmail 17481 invoked by uid 550); 17 Mar 2023 15:07:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1565" "Friday" "23" "September" "2016" "11:25:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160923152546.C7048332026@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Assignment for Crypto++ and \"AES and incorrect argument to _freea() under Microsoft compilers\"" nil nil nil "9" "2016092315:25:46" "[oss-security] Re: CVE Assignment for Crypto++ and \"AES and incorrect argument to _freea() under Microsoft compilers\"" (number mark "U       cve-assign@m Sep 23   38/1565  " thread-indent "\"[oss-security] Re: CVE Assignment for Crypto++ and \"AES and incorrect argument to _freea() under Microsoft compilers\"\"\n") "<CAH8yC8k=JmgBjwV2HD_tmyg7-U-9HPLmeJMAKPk2TBm5KrsfKw@mail.gmail.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9943 invoked by uid 550); 23 Sep 2016 15:26:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,43 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28649 invoked from network); 17 Mar 2023 14:51:30 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679064677;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nUY9USsnanod+9yBh6BqXIJyerib1/5WXvFPRYsJsrg=;
-        b=mfTeoJeCS2EkT9Dsz7Azx8sl6w85bnjAlnmX3A6WWbD4AkqFoSmKTf2PiCmiAaLmlz
-         QmOaN3eqxDNdFAs2HOljtYBNKzqpZiLryKf86+HjJKAaeLQvvwKOjpH+4kwjgJU8wpi7
-         /grjAel16VPoVZIY8xjU1Rc2NNLFXGbUuo2Yu2tw9R5QjmBYFFeujCEq+EPjos6FwXCg
-         oehWq8ocQ6Bvzbt1zyCCY4d+OIdilURyya+sgma1iQD65RQNJdPiS3vOCYIQRFTJERq4
-         KdSfWUP8OdOmH1PeH1uBgdULvM9ICOhVXncHfqnDEJ4IfI58EeQ+W7syEj3Zxs8bHdKq
-         an9Q==
-X-Gm-Message-State: AO0yUKW6i7LaXZdJYJ6k1gxa/K2lT20al58NKuUxM2mMRx+Pw/f07ipq
-	pKhvKlWfnE23dDknAprxnD/wZPfw5bUqLrwlSpB56cgQ+Eg=
-X-Google-Smtp-Source: AK7set9W63NUcWYq8Uc9julYcZme7uaBmkmdjH+BRX1QqzqY8xZHcDsLstXCbVMXY9U0DVNKMkZypJPx+4en0I8ANzw=
-X-Received: by 2002:a2e:9255:0:b0:295:acea:5875 with SMTP id
- v21-20020a2e9255000000b00295acea5875mr1186430ljg.2.1679064677563; Fri, 17 Mar
- 2023 07:51:17 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230314095103.1ed76cc0.hanno@hboeck.de> <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
- <20230315094018.27d65aae@fabiankeil.de>
-In-Reply-To: <20230315094018.27d65aae@fabiankeil.de>
-From: Ed Maste <emaste@freebsd.org>
-Date: Fri, 17 Mar 2023 10:51:05 -0400
-Message-ID: <CAPyFy2AoQ_OueQR5tfmYO6fV87E6OKZSBdufeuw2F-_UN+XY=Q@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+Received: (qmail 9907 invoked from network); 23 Sep 2016 15:25:58 -0000
+From: cve-assign@mitre.org
+To: noloader@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jbyrd@giganticsoftware.com
+In-Reply-To: <CAH8yC8k=JmgBjwV2HD_tmyg7-U-9HPLmeJMAKPk2TBm5KrsfKw@mail.gmail.com>
+Message-Id: <20160923152546.C7048332026@smtpvbsrv1.mitre.org>
+Date: Fri, 23 Sep 2016 11:25:46 -0400 (EDT)
+Subject: [oss-security] Re: CVE Assignment for Crypto++ and "AES and incorrect argument to _freea() under Microsoft compilers"
 
-On Wed, 15 Mar 2023 at 04:45, Fabian Keil <freebsd-listen@fabiankeil.de> wrote:
->
-> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't
-> noticed any problems.
->
-> According to the commit message "TIOCSTI is still used in tcsh,
-> but as tcsh isn't compiled on ElectroBSD we don't care".
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-All of tcsh's uses of TIOCSTI are in `#ifdef TIOCSTI` blocks so tcsh
-should still build and function with it removed (e.g., with the ioctl
-renamed) I imagine.
+> a crash in Crypto++'s AES implementation under
+> Microsoft compilers due to use of `_malloca`, `AliasedWithTables` and
+> `_freea`. Crypto++ can potentially free the wrong pointer
+> 
+> https://github.com/weidai11/cryptopp/issues/302
+
+>> if at any point the "space" pointer is changed from its original
+>> location by the 256-byte rounding function, you're guaranteed to be in
+>> for some pain at _freea time, as _freea refers to a memory address
+>> that was never allocated in the first place.
+
+Use CVE-2016-7544.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX5UhlAAoJEHb/MwWLVhi2SQ8P/37MUnrxMF7PynvK/O7dYgZj
+h9CP649WDx0v+hl+Z95wYGMX/ciy/iBwiFnCkrIEtT/FhvREtHt1KB06E6ZG0R0N
+ViqluDFJH+XsbIW1o8ETV/BOR70GPIpQzwwKKOP75qqGUcjKeEZon7LTqUFZgZsu
+Qn7c14zB7vYe66liSjT6+0bWtgxLK7DG7zbNBbjmw9tBxOG1igAh5qz9G6Kfct4H
+Pnoo1EZZ7k4qjGliGvoqvHkwfJWrjT89JUntQPBI5JPfTtd1RIjOVDvxCH0qLOXT
+kd+67l8eW8E1ST/wCJ565FaCAEvUEI25rvnAroL76fN1n2acgmgNmmrBKbLZVqqj
+n9f+R1DEJeip7eV44A/36n8Jwk7Y8k14aT4FhlboVtgyp9nDnR/jepm5Pn+hfUMr
+OPQPSOoCWF0O7TZfS6IG8Zf6Dluaw/XTinHLVM+H/SqVgadQJFwRawgbxQYVCrht
+21etDccBSvarT8WF6xzLKEgRk18GNFSRt37rfyI3PnR62Vv4I8DrKt5pgtV4D0iz
+GT7W3gV8x4C7UKtbA+pVnPYbPs7aOczcnH3E+GEIDeeB4r8SKWiDvI4FcDXd9N4V
+54rW4IhgBzmPWFUPlEMN6mfaOZHWcvA3XhDRRwo/GT7Mh8FBySXP+m/gWcw9G34I
+r5UwZOXTT2nm1iMsR7t+
+=n5Dw
+-----END PGP SIGNATURE-----
