@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1845" "Friday" "31" "July" "2015" "12:21:31" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20150731172130.GA30077@boyd>" "51" "Re: [oss-security] RE: strings /libbfd crash" nil nil nil "7" "2015073117:21:31" "[oss-security] RE: strings /libbfd crash" (number mark "        tyhicks@cano Jul 31   51/1845  " thread-indent "\"Re: [oss-security] RE: strings /libbfd crash\"\n") "<5457C7B6.7050205@internot.info>" ("<5457C7B6.7050205@internot.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2730" "Friday" "23" "September" "2016" "01:08:17" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>" "86" "[oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)" nil nil nil "9" "2016092301:08:17" "[oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)" (number mark "U       tdecacqu@red Sep 23   86/2730  " thread-indent "\"[oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state regression (CVE-2016-7498)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5587 invoked by uid 550); 31 Jul 2015 17:21:46 -0000
+Received: (qmail 2025 invoked by uid 550); 23 Sep 2016 01:08:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5563 invoked from network); 31 Jul 2015 17:21:45 -0000
-Message-ID: <20150731172130.GA30077@boyd>
-References: <5457C7B6.7050205@internot.info>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
-Content-Disposition: inline
-In-Reply-To: <5457C7B6.7050205@internot.info>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: security@ubuntu.com
-Date: Fri, 31 Jul 2015 12:21:31 -0500
-From: Tyler Hicks <tyhicks@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] RE: strings /libbfd crash
+Received: (qmail 2007 invoked from network); 23 Sep 2016 01:08:07 -0000
 To: oss-security@lists.openwall.com
+From: Tristan Cacqueray <tdecacqu@redhat.com>
+Message-ID: <cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>
+Date: Fri, 23 Sep 2016 01:08:17 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 23 Sep 2016 01:07:55 +0000 (UTC)
+Subject: [oss-security] [OSSA 2016-011] Nova may fail to delete images in resize state
+ regression (CVE-2016-7498)
 
---EeQfGwPcQSOJBaQU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE
+Content-Type: multipart/mixed; boundary="Tw5RpG0nveQbAJS40qbBWpMjSSW8uLfWj"
+From: Tristan Cacqueray <tdecacqu@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <cb66c7f5-a882-5553-8657-a0bafdf14b2a@redhat.com>
+Subject: [OSSA 2016-011] Nova may fail to delete images in resize state
+ regression (CVE-2016-7498)
+
+--Tw5RpG0nveQbAJS40qbBWpMjSSW8uLfWj
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On 2014-11-04 05:21:42, Joshua Rogers wrote:
-> I'd like to expand on this:
-> http://openwall.com/lists/oss-security/2014/10/27/4
-> and mention that 'ihex.c' is also vulnerable to the same thing, as they
-> share the same code.
->=20
-> > :10010000214601360121470136007EFE09D2190140
-> > :100110002146017E17C0001FF5F16002148011928
-> > :10012000194E79234623965778239EDA3F01B2CAA7
-> > :100130003F0156702B5E712B722B732146013421C7
-> > :00000001Ff
->=20
-> is an example of code that will crash it.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2016-011: Nova may fail to delete images in resize state regression
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-This was never fixed upstream. I've opened a bug and attached a patch:
+:Date: September 21, 2016
+:CVE: CVE-2016-7498
 
-  https://sourceware.org/bugzilla/show_bug.cgi?id=3D18750
 
-I think this deserves CVE assignment since the srec.c issue was assigned
-CVE-2014-8504 and it is very similar in nature.
+Affects
+~~~~~~~
+- Nova: =3D=3D13.0.0
 
-Tyler
 
---EeQfGwPcQSOJBaQU
+Description
+~~~~~~~~~~~
+Rajesh Tailor from Red Hat reported a vulnerability in Nova. If an
+authenticated user deletes an instance while it is in resize state, it
+will cause the original instance to not be deleted from the compute
+node it was running on. An attacker can use this to launch a denial of
+service attack. All Nova setups are affected.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/327398 (Mitaka)
+- https://review.openstack.org/326262 (Newton)
+
+
+Credits
+~~~~~~~
+- Rajesh Tailor from Red Hat (CVE-2016-7498)
+
+
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/bugs/1589821
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-7498
+
+
+Notes
+~~~~~
+- This bug is similar to OSSA-2015-017 (CVE-2015-3280) and was
+  re-introduced in the first release of Mitaka version of Nova and it
+  was re-fixed in nova-13.1.0.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+--Tw5RpG0nveQbAJS40qbBWpMjSSW8uLfWj--
+
+--6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2
 
-iQIcBAEBCgAGBQJVu66aAAoJENaSAD2qAscKZucP/AjoUuh2auj+IHWJbyDaW/1Q
-rx/e+Xty2QXpS2A4G377sBF6y2uuUU5F0e2hl1avOhi+V5jiKvxh/d3t8ZyfLx6/
-6KK/3ZkbUzqMmWEa3boSIomMBugQjLXm8nE9FCBOIhrVKpqD7CEZfVecmJOOSkUR
-yzrzOK3425gTqsTTMdhnQwfLpN7v5SzNPhlkhFrf0aF2MoFSctyHeAhpGnQrW5vy
-qzAH6/43OU++xCg8qfTTIuZObDh9XndIc17L8BPUo6oBB8VAwhA700UPWH6Cpr0N
-MlGAE23kuk+S6pRSrE4xEKHXT05/zqI8sh4+IYC+OuR5+arpGr7KJCzQ+azyd05N
-yIGvqeobC5O8YkIScbO6xfP0H86An5XDOmpjrbuguDWy6YZdMzIWkxFtCIwCx11c
-+D+YnrXqfLi2pGDmB+KLV/iT/MAKH9WZ/WXqw0yPFWUlbNSBrnVSBdQJBf7zrY+4
-2SJOCpT+zoqbQ6lSgmArM2uWMeRLw3oBHfGsHaWF3fFv0tf7aY7UbB4yIgL07qxw
-UVCA3qywjuPFQdgvYKV3NLNrf9aB0s70L1kbikhnFDa57OhzTfJEyKRJ77Iu0NBJ
-gHOfOJ1k1iFpDz+1HAa+lSlrOP/jQsMABjY3Dym/rYnAAML5Hwj+9VouZf2Me0JL
-oa3ZlC48/G3VHcgnEMA8
-=MbKH
+iQEcBAEBCAAGBQJX5ICBAAoJECK5oFySXMXYLEgH/RO5sF0Tune3oL7unAYW+pTc
+ZDHIPcsLWiBiS8fxeZngl9dPY9xcMGNMdK3G7wnVfOpm/eTUvwlm9FgLBRTs6FX4
+vag2KmxJCyWOavX5zh7h9tYryTugRWNAPFyjknlJ7gbE71i4s46bTlvZAL0w+gQ5
+pEM/AUpKC2wLlpkydDV6VbnmxXZBUG5awI9qJ/BtGuuhzF9bVtb4I6ZxeNbuG4Bs
+FrSQrg8IX2fCGYxUTGhdR8oZlf3nnHfi1tLYwxxdOrQC63HBGljsPpjqOpAZtb6/
+fZag0ypXaqVwIlvD8lSRyIAOMX8I6U4mCbfKHJazOYZhB9EN1wTm6gB8f3gn9JI=
+=sb9a
 -----END PGP SIGNATURE-----
 
---EeQfGwPcQSOJBaQU--
+--6N2pN2f5uMJScRo8aeNop7jIp2NhvnfSE--
