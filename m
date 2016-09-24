@@ -1,37 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/6
-Message-ID: <20160816201908.GB10132@kroah.com>
-Date: Tue, 16 Aug 2016 22:19:08 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/24/1
+Message-ID: <20160924134419.2wc6wvb3i5tnzd6c@eldamar.local>
+Date: Sat, 24 Sep 2016 15:44:19 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: irssi: information disclosure vulnerabilit in buf.pl
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 16, 2016 at 08:15:49PM +0200, Sona Sarmadi wrote:
-> 
-> 
-> On 2016-08-15 09:53, Greg KH wrote:
-> > On Mon, Aug 15, 2016 at 06:23:04AM +0000, Sona Sarmadi wrote:
-> >>>> This vulnerability is currently only fixed in mainline kernels (4.7 &
-> >>>> 4.8). Does anyone know if there is any work ongoing to backport this
-> >>>> fix to the  older versions?
-> >>> I just added the fix for this issue to the stable kernel queues and it will
-> >>> show up in the next stable releases, in about 2 days after it passes all of
-> >>> the needed review.
-> >>>
-> >>> Hope this helps,
-> >>>
-> >>> greg k-h
-> >> Great, thanks, this helps :)
-> > You can _always_ just apply the patch to your local tree, there's never
-> > a need to wait for me to get a kernel out.  That's the advantage of
-> > having the source for your systems :)
-> Yes, we can do that but sometimes the patches for newer kernels don't
-> apply cleanly on older versions.
-> There is always a risk that our home grown patches have undesired side
-> effects. We prefer your sign of approval on patches for older kernels :)
+Hi
 
-Heh, fair enough.  This fix is now in the kernels that were released
-today (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
+An information disclosure vulnerability in the buf.pl script provided
+by irssi, a terminal based IRC client has been found. Quoting the
+advisory at:
 
-greg k-h
+https://irssi.org/2016/09/22/buf.pl-update/
+
+                  ]
+> buf.pl update available
+> 
+> Posted on September 22^nd 2016
+> 
+> An information disclosure vulnerability was found, reported and fixed
+> in the buf.pl script by its author.
+> 
+> CWE Classification: CWE-732, CWE-538
+> 
+> Impact
+> 
+> Other users on the same machine may be able to retrieve the whole
+> window contents after /UPGRADE when the buf.pl script is loaded.
+> Furthermore, this dump of the windows contents is never removed
+> afterwards.
+> 
+> Since buf.pl is also an Irssi core script and we recommended its use
+> to retain your window content, many people could potentially be
+> affected by this.
+> 
+> Remote users may be able to retrieve these contents when combined with
+> other path traversal vulnerabilities in public facing services on that
+> machine.
+> 
+> Detailed analysis
+> 
+> buf.pl restores the scrollbuffer between “/upgrade”s by writing the
+> contents to a file, and reading that after the new process was
+> spawned. Through that file, the contents of (private) chat
+> conversations may leak to other users.
+> 
+> Mitigating facts
+> 
+> Careful users with a limited umask (e.g. 077) are not affected by this
+> bug.  However, most Linux systems default to a umask of 022, meaning
+> that files written without further restricting the permissions, are
+> readable by any user.
+> 
+> Affected versions
+> 
+> All up to 2.13
+> 
+> Fixed versions
+> 
+> buf.pl 2.20
+> 
+> Resolution
+> 
+> Update the buf.pl script with the latest version from scripts.irssi.org.
+
+Upstream fix:
+https://github.com/irssi/scripts.irssi.org/commit/f1b1eb154baa684fad5d65bf4dff79c8ded8b65a
+
+Debian Bug report: https://bugs.debian.org/838762
+
+Could a CVE be assigned for this issue?
+
+Regards,
+Salvatore
