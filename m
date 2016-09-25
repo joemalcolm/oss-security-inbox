@@ -1,74 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/6
-Message-ID: <CAPiURgU=B9-scN=io0cJrS-4FfrLCnJ=MFiBSfMoKyCG-L0kQA@mail.gmail.com>
-Date: Mon, 1 Aug 2016 14:19:59 -0700
-From: Grant Ridder <shortdudey123@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/25/2
+Message-ID: <trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>
+Date: Sun, 25 Sep 2016 22:06:58 +0200
+From: cookieopfer@....net
 To: oss-security@...ts.openwall.com
-Cc: seb@...ian.org, CVE ID Requests <cve-assign@...re.org>, mongodb-user@...glegroups.com
-Subject: Re: Re: CVE request: mongodb: world-readable .dbshell history file
+Subject: ffmpeg afl bugs
 Content-Type: text/plain; charset=utf-8
 
-FWIW, the vendor has closed https://jira.mongodb.org/browse/SERVER-25335
-with "Works as Designed"
+Hi,
 
--Grant
+couldn't build ffmpeg, because of
+"register size specification" error.
 
-On Fri, Jul 29, 2016 at 10:28 AM, <cve-assign@...re.org> wrote:
+tried to catch this overflow from afl
+fuzzer:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832908
-> >
-> > | During the report on redis-tools
-> > | (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460), lamby@
-> > | linked to a codesearch and the same bug was found in mongodb-clients.
-> > |
-> > | mongodb-clients stores its history in ~/.dbshell, this file is created
-> > | with permissions 0644. Home folders are world readable as well in
-> > | debian, so any user can access other users mongodb history, even though
-> > | db.auth commands don't appear to be logged like redis did.
-> > |
-> > | I filed a bug on upstream as well:
-> > | https://jira.mongodb.org/browse/SERVER-25335
-> >
-> > The mongodb client doesn't store authentication commands, but there's
-> > still information leakage, though, even if only about database and
-> > collection names, or data structure.
-> >
-> > As for data itself, the history could also contain sensitive
-> > information; for instance, if usernames for some other service were
-> > stored in a mongo collection, the history could contain lines like:
-> >
-> >   db.users.find({user:"foo"})
-> >
-> > or even:
-> >
-> >   db.users.update({user:"foo"},{$set:{password:"OhComeOnNow"}})
->
-> Use CVE-2016-6494.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXm5HHAAoJEHb/MwWLVhi20SgQAKIXsSDuAQzAY3DN67osMxAg
-> BuEh9En380VzBzqz+O83tjJyqJ6kx+Ed9WWc6Yl4nd0rUW1YdnOSvK+RF1c0nN2s
-> ndfb3cHkC2sTCfJyh5GvDdthYLr0Th0GabAzmgOoc4QhCSHykxxGFHgEhI5Wem6T
-> MclVy95MpBRb3g2XNH2ue96CxRFK2buT3fZerewZe8OBh7dh6nxDEKfLKodz8zaK
-> vUgINsgoP53GuhlCJYExf9O4JLY2wn3CFjWTGfoMY7wDxl9Rr5VwOuBaSgO6i+Ay
-> MxjMApDumENwSBtXtUQ/54WPez4IxqWU193gq31V4kVWEfBvlb9QHUsd1qyWsQVp
-> OtboCgvY2K0u5O9ZVK/H+zJDhqe/fxw2HjMxlwju3ENORuCUFpz/nErLWXSc+iaj
-> C2WmJPD0O+8mzJnOCjY8WuHJtetGorivbbKTbWk2C5r3NHMI7X9DYKiiz5ISD6Us
-> kXVjWxXdHqfCVG3JvpmJi78Pw/+DPgw9D3sg4BTY+bhEB+Gguvh8TMVTkjtOSsBh
-> i5ORa+1EhvGhYVXVZJZUK0bvEH/Pxuh6Yc2WX8LWFG2Fauw5d+1sSovLls6oLnp7
-> xDXqv7DN6NTu3iza24JWfsZBOUTVKminX42EonOu7yOVtW5oIRO6wCALd0OiL/SP
-> EOsVcn9sPCF9HQog0jSZ
-> =OQs9
-> -----END PGP SIGNATURE-----
->
 
+$ ./ffmpeg -i /tmp/ffmpeg-h264-call-stack-overflow.mp4 19.mp3
+ffmpeg version N-81723-g6d9a46e Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 4.4.5 (Debian 4.4.5-8)
+  configuration: --disable-yasm
+  libavutil      55. 30.100 / 55. 30.100
+  libavcodec     57. 57.101 / 57. 57.101
+  libavformat    57. 50.100 / 57. 50.100
+  libavdevice    57.  0.102 / 57.  0.102
+  libavfilter     6. 62.100 /  6. 62.100
+  libswscale      4.  1.100 /  4.  1.100
+  libswresample   2.  1.100 /  2.  1.100
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+bla
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0xa256360] overread end of atom 'stsd' by 4294967134 bytes
+bla
+bla
+bla
+bla
+bla
+bla
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/ffmpeg-h264-call-stack-overflow.mp4':
+  Metadata:
+    major_brand     : mp42
+    minor_version   : 19529854
+    compatible_brands: mp42isom
+    creation_time   : 2014-11-14T07:34:24.000000Z
+  Duration: 00:02:55.78, bitrate: 0 kb/s
+    Stream #0:0(eng): Data: none ([0][16][0]1 / 0x31001000), 3 kb/s (default)
+    Metadata:
+      creation_time   : 2014-11-14T07:34:24.000000Z
+      handler_name    : dia Handler
+Output #0, mp3, to '19.mp3':
+Output file #0 does not contain any stream
+
+
+
+
+
+
+
+
+
+./libavformat/mov.c
+$ grep -n bla ./libavformat/mov.c
+4789:              printf("bla\n");
+
+
+Have fun with ffmpeg-h264-call-stack-overflow.mp4
