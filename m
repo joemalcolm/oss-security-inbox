@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/9
-Message-ID: <20160914222916.GM24597@yuggoth.org>
-Date: Wed, 14 Sep 2016 22:29:16 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/25/3
+Message-ID: <20160925233516.GA10278@openwall.com>
+Date: Mon, 26 Sep 2016 01:35:16 +0200
+From: Solar Designer <solar@...nwall.com>
+To: cookieopfer@....net
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ffmpeg afl bugs
 Content-Type: text/plain; charset=utf-8
 
-On 2016-09-14 10:22:58 -0600 (-0600), Kurt Seifried wrote:
-> Ideally people should get CVEs and then post to oss-security with the
-> information and the CVE. A lot of people consume the list data and the
-> current method means that people end up searching their DBs, making sure
-> it's new, then entering it, then updating it with a CVE. If people got CVEs
-> first this would vastly simplify things.
+On Sun, Sep 25, 2016 at 10:06:58PM +0200, cookieopfer@....net wrote:
+> Have fun with ffmpeg-h264-call-stack-overflow.mp4
 
-At least for some projects, if a vulnerability is already public or
-becomes public prior to requesting a CVE privately from some CNA, it
-makes more sense to go ahead and widely inform the community (via
-this ML and elsewhere) and then associate a CVE with it afterward.
-While having a unique identifier is important, I think rapid
-dissemination of vulnerabilities so that downstream users can patch
-their systems is more important.
--- 
-Jeremy Stanley
+Perhaps you meant to share this file with this community?  Please do.
+If the file is smaller than 150 KB, please attach it to your reply.
+Otherwise, please either try to produce a smaller testcase (below
+150 KB) or share the (larger) file via an external URL.
+
+We already got a "Can you send me the sample file?" in the moderation
+queue, but we prefer that the file be shared with the entire community.
+
+Thanks,
+
+Alexander
