@@ -1,60 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/4
-Message-Id: <20160107160502.5193472E077@smtpvbsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 11:05:02 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security+ml@...lde.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE id request: dhcpcd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/3
+Message-ID: <2A704EDCB5C64F40AF988060A961492BBB311E@EXMBX-TJ007.tencent.com>
+Date: Mon, 26 Sep 2016 05:17:41 +0000
+From: pwchen(陈佩文) <pwchen@...cent.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-6823 - ImageMagick BMP Coder Out-Of-Bounds Write Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi.
 
-> http://roy.marples.name/projects/dhcpcd/info/76a1609352263bd9def1300d7ba990679571fa30
+This is PwChen of Tencent's Xuanwu Lab & RayZhong of Tencent's Keen Lab.
 
-> dhcp_optlen now returns the length of the data we can sanely work on
-> given the option definition and data length. Call dhcp_optlen in
-> dhcp_envoption1 to take into ensure these bounds are not overstepped.
-> Fixes an issue reported by Nico Golde where extra undersized data was
-> present in the option. An example of this would be an array of
-> uint16's with a trailing byte.
+During our research, we found an Out-Of-Bounds write vulnerability in
+ImageMagick's BMP coders.
 
->> can lead to a heap overflow via malformed dhcp responses later in
->> print_option (via dhcp_envoption1) due to incorrect option length
->> values
+When ImageMagick is converting other format to BMP format, it will
+pass image's height and width parameter into 'BMP coder'.
 
-Use CVE-2016-1503.
+There is an arithmetic overflow vulnerability when the BMP coder is
+calculating the image size by multiplying the height and width. This
+can directly cause an Out-Of-Bounds Write.
+
+The ImageMagick team has fixed the vulnerability we reported.
+
+Attached is a proof of concept.
+
+python -c 'print "P3\x0a14096\x201048576\x0a255\x00"' > PoC.ppm
+convert PoC.ppm crash.bmp
 
 
-> http://roy.marples.name/projects/dhcpcd/info/595883e2a431f65d8fabf33059aa4689cca17403
+Upstream fix:
+https://github.com/ImageMagick/ImageMagick/commit/e7094d16cd8aee6bb48cf1d369f617f7edf89993
+https://github.com/ImageMagick/ImageMagick/commit/4cc6ec8a4197d4c008577127736bf7985d632323
 
-> Ensure that option length fits inside data length less option size.
-> Thanks to Nico Golde for the report.
+Debian Bug report:
+https://bugs.debian.org/834504
 
->> can lead to an invalid read/crash via malformed dhcp responses
 
-Use CVE-2016-1504.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWjovzAAoJEL54rhJi8gl5qPoP/09Wz1OS85Nf+AvNIW+/8W2p
-K/P2rZtH5LFO5Q372bnGNqwJZchiWn2GF/luo5WNv9tD8YnGOc4FpG/q3Ib7OimO
-3ZlREA6SmpCis0Xm/coLp8OeKyKJyBnLzPY2F0f3fzNvxMm7+bLT+qNcl/gxUv3K
-uPbRsSJlm7pJGX/mDIhEzlsgbVFJAxEa6/DMPnPMQYt6nRE84h7E5+baha7kTss2
-FCSI0fvDM6pM0424hF2tJ7KxVjatpr89gs8GM/esJ/7O84dSxbfuHIuhRnO3Cdz2
-GZshNjPg1mVg5PVZ8KlgKHR7K16cGjCBg6MVvZ4PO1R+gCJeWTEUuwIZstNYNLr5
-86ikcvgmLIA6gBv4urTq5f4qk9cMd9bT9HoTuGEvcNjQUkXxH3r2b2m6Z5iFTBHA
-Yz3V2+qC667Dz2Cc6u7XRbdytFDHBdRVdN75kL4e49i3T1h2e1hL6OUywh9mcTVW
-WRBFUMfjb/6ygG1e8uAt11dvu0hPKFLjhra3kupnkvsPSoS7Q+cFIpZp8wxI178n
-yyjRJtXJg1SwQgxAvjz/mxdDVaNYy+/l9DROO/PtJkvLapnXBSGr6X7ETRbbt3bp
-wIiDA3XsCx89wdg04BroekQQj2LuTqal0ka7deq2zlESe8Lp318ZvddHydNvhLBP
-v+u2ckznzWdtquNvh3Fe
-=4+1K
------END PGP SIGNATURE-----
+Regards,
+Peiwen Chen
+Tencent's Xuanwu Lab
