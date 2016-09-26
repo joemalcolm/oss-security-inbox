@@ -1,59 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/5
-Message-ID: <CACn5sdQdx5A0vn88nZHTkYE_T6cgP8zrcPfeFBKUGp-W7AjdKA@mail.gmail.com>
-Date: Wed, 13 Jul 2016 14:35:07 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/6
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A012003B7@EX02.corp.qihoo.net>
+Date: Mon, 26 Sep 2016 06:42:38 +0000
+From: 连一汉 <lianyihan@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file.
 Content-Type: text/plain; charset=utf-8
 
-Another read out-of-bounds was found in the process of fixing
-CVE-2016-6132. Details are here:
 
-https://github.com/libgd/libgd/issues/247#issuecomment-232084241
 
-In fact, the libgd developers confirmed that this issue is not the
-same as CVE-2016-6132. Please assign a CVE if suitable.
-Fortunately, both issues are fixed now.
+I'm Lian ,a security researcher from Qihoo 360 .
 
-Thanks!
 
-2016-06-30 17:48 GMT+02:00  <cve-assign@...re.org>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+
+I found a vulnerability of ffmpeg . And this could cause ffmpeg get into endless loop !
+
 >
->> A read out-of-bands was found in the parsing of TGA files using the
->> last revision of libgd (a6a0e7f) but older versions can be affected. A
->> reproducer and some technical details are available here:
->>
->> https://github.com/libgd/libgd/issues/247
+
+> ================== target system ======================
+
 >
->>> AddressSanitizer: heap-buffer-overflow ...
->>> READ of size 4
->>> ... in gdImageCreateFromTgaCtx
+
+> ffmpeg version 3.1.2 Copyright (c)
+
 >
-> Use CVE-2016-6132 for this buffer over-read issue.
+
+> Ffmpeg -i poc.swf -b:v 640k -y output.ts
+
 >
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
+
+> ================== target web site ======================
+
 >
-> iQIcBAEBCAAGBQJXdT8ZAAoJEHb/MwWLVhi2SjkQAIges7jISzaEMV4SPSu9Di8B
-> 4re9gzln2m8wIKQ3c9NLFGp5lR8fWCx73vSguwBUWVPBFCJZntup5rZlX/rq9P3+
-> fFmMhM8g+lsDczm5bNhqUp3lQbSGzts/gPMUbEWlKYKX4sNRdwzlIoxiHq2NxwcB
-> ue/Ci1nNDkL2ykvfJA8z3twOm9kFu/qMY+CG6oZ5wA6HSRiRb7kxYCmUd1HMlDKb
-> JOhjyJ+qMKwAaQbQKMERSOz03tvzCzCgZvmUOjtd0lsk7a/E1Q3wwPWJ8+wyBbdw
-> DZalq2JBQyFNkQ/sy9NGWpya1OSLiuly7xwH+qOGuFmxlXpB87UWq1Mkq6+Hfib5
-> 0pq4cKvdM3gBe1k1lXMAVxikTamvnLizMmRz+tcwHFoGCQoSTwuIegBst3vx9yIJ
-> 7QEiq1ergZTJEpMoG6EtxBSsOejSfhWmRYkcGkaCusYrDdT2WXFly7zWAQtnL5qT
-> 7X5QcpuYs/in7C0rY3UoJqOsDX7cO8b21g16Ya3pGyFjX5DIUr/ZPqSF2GcB6jXn
-> /rPyeSvv1py40HWsvx8ZUQND9rgGn2g5CPIfEkYapp6IAYtJgA96jIORfuui4lEp
-> +PAKIvn5LVsdAMcoq50RdOpCqD9VRjA1B6EgtZsjUs1bDsdB7qujm+wBIsu9vkGo
-> qhxbyEP0bA9VFaM6jxMO
-> =BZV9
-> -----END PGP SIGNATURE-----
+
+> https://ffmpeg.org/
+
+>
+
+> ========================= key codes ======================
+
+>
+
+> swfdec.c: line 121
+
+>
+
+> zlib_refill()
+
+> {
+
+
+
+> retry:
+
+
+
+> ret = inflate(z, Z_NO_FLUSH); // ret is always 2 (Z_NEED_DICT) , and other variates will not been changed.
+
+
+
+> if (buf_size - z->avail_out == 0)
+
+>  goto retry;
+
+
+
+
+
+Our understanding is that swfdec.c is part of the libavformat library and thus this issue may affect other applications that use that library.
+
+
+
+Use CVE-2016-6881.
+
+
+
+--
+
+CVE Assignment Team
+
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA [ A PGP key is available for encrypted communications at
+
+  http://cve.mitre.org/cve/request_id.html ]
+
