@@ -1,74 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/26/1
-Message-ID: <5F068C2EDBA6AA42BC96594345ABE70149E7A475@tri02mailstr03.trianz.int>
-Date: Fri, 26 Feb 2016 05:15:54 +0000
-From: Shivaprasad Sadashivappa <Shivaprasad.S@...anz.com>
-To: "c-users@...ces.apache.org" <c-users@...ces.apache.org>, "c-dev@...ces.apache.org" <c-dev@...ces.apache.org>, "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>
-CC: Gustavo Grieco <gustavo.grieco@...g.fr>
-Subject: RE: CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/4
+Message-Id: <20160926054327.477DD6DCCBC@smtpvmsrv1.mitre.org>
+Date: Mon, 26 Sep 2016 01:43:27 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: irssi: information disclosure vulnerabilit in buf.pl
 Content-Type: text/plain; charset=utf-8
-
-Hi,
-
-Could you please let me know how to reproduce the issue, we are using xerces-c in one our product.
-
-Ahead Together,
-Shivaprasad BS
-
-
-
-
-E mail: Official shivaprasad.s@...anz.com 
-Mobile: +91 9900633664
-www.trianz.com l LinkedIn | Facebook | Twitter space  leave 
-Note: This message (including any attachments) contains business proprietary/confidential information intended for a specific individual and purpose, and is protected by law.  If you are not the intended recipient, you should delete this message.  Any disclosure, copying, or distribution of this message, or the taking of any action based on it, without the express permission of the originator, is strictly prohibited.  If you believe that you have received this email in error, please contact the sender immediately and delete the email and all of its attachments.
-Trianz Email Privacy and Confidential Policy
-
------Original Message-----
-From: Cantor, Scott [mailto:cantor.2@....edu] 
-Sent: Thursday, February 25, 2016 7:51 PM
-To: c-dev@...ces.apache.org; c-users@...ces.apache.org; security@...che.org; oss-security@...ts.openwall.com; bugtraq@...urityfocus.com
-Cc: Gustavo Grieco
-Subject: CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-CVE-2016-0729: Apache Xerces-C XML Parser Crashes on Malformed Input
+> An information disclosure vulnerability in the buf.pl script
+> 
+> https://irssi.org/2016/09/22/buf.pl-update/
+> https://bugs.debian.org/838762
+> https://github.com/irssi/scripts.irssi.org/commit/f1b1eb154baa684fad5d65bf4dff79c8ded8b65a
 
-Severity: Critical
+>>> This patch sets a safer umask of 077 for the scrollbuffer dump, and will
+>>> remove the temporary file after use to further reduce the attack surface.
 
-Vendor: The Apache Software Foundation
+>> Other users on the same machine may be able to retrieve the whole
+>> window contents after /UPGRADE when the buf.pl script is loaded.
+>> Furthermore, this dump of the windows contents is never removed
+>> afterwards.
+>>
+>> Since buf.pl is also an Irssi core script and we recommended its use
+>> to retain your window content, many people could potentially be
+>> affected by this.
 
-Versions Affected: Apache Xerces-C XML Parser library versions prior to V3.1.3
+>> buf.pl restores the scrollbuffer between upgrades by writing the
+>> contents to a file, and reading that after the new process was
+>> spawned. Through that file, the contents of (private) chat
+>> conversations may leak to other users.
+>>
+>> Mitigating facts
+>>
+>> Careful users with a limited umask (e.g. 077) are not affected by this
+>> bug.  However, most Linux systems default to a umask of 022, meaning
+>> that files written without further restricting the permissions, are
+>> readable by any user.
 
-Description: The Xerces-C XML parser mishandles certain kinds of malformed input documents, resulting in buffer overlows during processing and error reporting. The overflows can manifest as a segmentation fault or as memory corruption during a parse operation. The bugs allow for a denial of service attack in many applications by an unauthenticated attacker, and could conceivably result in remote code execution.
+Use CVE-2016-7553.
 
-Mitigation: Applications that are using library versions older than
-V3.1.3 should upgrade as soon as possible. Distributors of older versions should apply the patches from this subversion revision:
-
-http://svn.apache.org/viewvc?view=revision&revision=1727978
-
-Credit: This issue was reported by Gustavo Grieco.
-
-References:
-http://xerces.apache.org/xerces-c/secadv/CVE-2016-0729.txt
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWzlsyAAoJEDeLhFQCJ3liUAsP/Rr4rBKVPxOw3+5JDiQWT27y
-/TT1kLFV+u6LtuBL3q6rwOIANquEMP1nJPVuYtceNF66xHi7eX6HZ8jZch6T+uvZ
-Bt+kUTOfG4PW1RLm83W1kof58PTI5mIYBWofAQzXm9TSyvoHF5GXWqzNyGOKauYN
-pto5xvJzEN5gM7DjbXF8OoIesNVaqCnr+9A2WmCCdNGNzSQLlUVDg9kDvXUdDvHD
-+TXHDfgP8OSEYl5e3B3P5OV6SzUi2xdATR6zQgb1QANJy7FoK/FOP5+2J8ccultu
-mXlVHpsGlPoIi85nyKVykK3hTT4DyhqSwCa9ek3D5i7lIEk2dXxeevh90is3y/Al
-0GSUoG7yXbfe7xmlcUUghdYeYBP6JSOiOqAREUsKfY6nYo4XpGwvJRz/Xgk7iw9y
-p39sCIKuJBpqe1Vgy8ONeTFc0WZkkriq23n2oZ4zxoOImF5k44f01olZhA/wmE1P
-Wi6Qrafn6myUtp1TAXWoakfxJo0DgHfH6fazlmYSPHIyfLShrAcG6aETDn92KsDp
-gy4a5ulP/qpkncJrF2+XeM1wgQSTpUln2664fSwRw5whqg/PW/qGx+/1sltwOSQe
-l4bvQhr9xvkv+W++aPFgmJF3HW0Gnsglty6KQAcQ/RqheZ+/vL9buCqWw2xg4bkN
-BQJ4QvN4uaHIUxhzVfiL
-=vI5o
+iQIcBAEBCAAGBQJX6LTCAAoJEHb/MwWLVhi2zq8P/jv2PkFRxBcw1jgDgBMydNuc
++50A3BrF0Uj83eta6SaLs/oh794JIPBAK4oLo4qQ4y1wF/BTHHH3euawbh+OwTYU
+Uz2LN6tCne6lc/Aig0qdbzrTAYVaLiHX5q7LTP34N7yrVfxtKhoxN15wePu+i4I1
+uWmu7UfmowJrORf1hOQajrLtYXgowVpXFjCSju7ZedvM6vJ4yEUFym+UHh+Smasv
+tLfTDDdyvquKKdyKNKpbTYjvaS5YB109a4+doacyziBbnXH3PR8P97ZiNK6MrBs4
+dfwSV+gfdoTEAyHqg5k49G/EEWM5TgxIPz9ve5SZkTmKLQZ0irWEQOekeTy0Z2XL
+nkqu8Ns/mPMe0wP1yvo5NXo8m8aoPpvhuZBxdLU+oHPFM4USn3N00N23qx8Al7VG
+cYblMi1b/+w9gzGbV7JpyESDyf2e1eYMt96Lqi5Rv5WzOp0vLlFzJBDGn1fvr7ci
+QUldD1AMQ8eqkaYcNJ1tq+4uydDj/Vh8huc/HxDS02Bevma4Kx/xHriX8c7nS0Yp
++gvhxU+xOK56M0Ab2JgcI/Q65He1O3VVrlbpIlPZRv8kPIn61IrYZSW0A25DcFcm
+eF8SKi8i1u9/kXZayDAve+aspQfaYwozABrqI5V+b3KHSs/jo/7JThMqk1/5g4XY
+oG0zGz58jhOzLNlu3Hgs
+=g0/I
 -----END PGP SIGNATURE-----
-
