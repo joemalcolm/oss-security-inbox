@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2459" "Friday" "21" "June" "2019" "17:44:33" "+0100" "Simon McVittie" "smcv@debian.org" "<20190621164433.GA13111@espresso.pseudorandom.co.uk>" "44" "Re: [oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062116:44:33" "[oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        smcv@debian. Jun 21   44/2459  " thread-indent "\"Re: [oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190615155740.GA2960@kroah.com>" "<02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>" "<20190621095616.GA5186@espresso.pseudorandom.co.uk>" "<20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil "Re: [oss-security] Re: Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6696" "Monday" "26" "September" "2016" "07:54:24" "+0000" "=?gb2312?B?cHdjaGVuKLPCxeXOxCk=?=" "pwchen@tencent.com" "<2A704EDCB5C64F40AF988060A961492BBB3B0E@EXMBX-TJ007.tencent.com>" "113" "[oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability" "^Date:" nil nil "9" "2016092607:54:24" "[oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability" (number mark "U       pwchen@tence Sep 26  113/6696  " thread-indent "\"[oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16294 invoked by uid 550); 21 Jun 2019 16:44:49 -0000
+Received: (qmail 13755 invoked by uid 550); 26 Sep 2016 15:25:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16275 invoked from network); 21 Jun 2019 16:44:49 -0000
-Message-ID: <20190621164433.GA13111@espresso.pseudorandom.co.uk>
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>
- <20190615155740.GA2960@kroah.com>
- <02594cdc8ff7c6ff19a3042d824fb27f9d3302c3.camel@debian.org>
- <20190621095616.GA5186@espresso.pseudorandom.co.uk>
- <20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>
+Received: (qmail 15501 invoked from network); 26 Sep 2016 07:54:44 -0000
+Thread-Topic: CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read
+ Vulnerability
+Thread-Index: AdIXyzKppeNj7CILSIiaqcu1zqPlpQ==
+Message-ID: <2A704EDCB5C64F40AF988060A961492BBB3B0E@EXMBX-TJ007.tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.4.75.6]
+Content-Type: multipart/alternative;
+	boundary="_000_2A704EDCB5C64F40AF988060A961492BBB3B0EEXMBXTJ007tencent_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190621150836.ieiciui3n6vrd5wb@matica.foolinux.mooo.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Fri, 21 Jun 2019 17:44:33 +0100
-From: Simon McVittie <smcv@debian.org>
+Date: Mon, 26 Sep 2016 07:54:24 +0000
+From: =?gb2312?B?cHdjaGVuKLPCxeXOxCk=?= <pwchen@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read
+ Vulnerability
+To: oss-security <oss-security@lists.openwall.com>
 
-On Fri, 21 Jun 2019 at 08:08:36 -0700, Ian Zimmerman wrote:
-> On 2019-06-21 10:57, Simon McVittie wrote:
-> > If upstream projects have a stable branch that is genuinely stable
-> > and bugfix-only to minimize the risk of regressions
-> 
-> Doesn't this simply shift the work of backporting ("crazy and bound to
-> always fail in the end") from the distro maintainer to the upstream
-> stable branch maintainer?
+--_000_2A704EDCB5C64F40AF988060A961492BBB3B0EEXMBXTJ007tencent_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Yes. If we want fixes with minimal regression risk then someone has to
-do the work, and it might as well be someone who understands the upstream
-codebase and is releasing something that regression-averse redistributors
-can share, rather than each redistributor reinventing essentially the same
-backports. It isn't coincidence that the stable branches in dbus closely
-match what I need as a downstream maintainer, and I'd be delighted to
-see more downstream maintainers get involved upstream.
+SGkuDQoNClRoaXMgaXMgUGVpd2VuQ2hlbiBvZiBUZW5jZW50J3MgWHVhbnd1
+IExhYiAmIFJheVpob25nIG9mIFRlbmNlbnQncyBLZWVuIExhYi4NCkR1cmlu
+ZyBvdXIgcmVzZWFyY2gsIHdlIGZvdW5kIGFuIE91dC1PZi1Cb3VuZHMgd3Jp
+dGUgdnVsbmVyYWJpbGl0eSBpbg0KIEltYWdlTWFnaWNrJ3MgU0dJIGNvZGVy
+Lg0KDQpXaGVuIEltYWdlTWFnaWNrIGlzIGlkZW50aWZ5aW5nIFNHSSBmb3Jt
+YXQgaW1hZ2UsIHdlIGNhbiBjcmFmdCBhIHNnaSBmaWxlDQp3aXRoIGJpZyB2
+YWx1ZSBvZiByb3cuIEl0IHdpbGwgcmVhZCBhIGNlcnRhaW4gbnVtYmVyIG9m
+IHRpbWVzIHdoaWNoIGlzDQpjb250cm9sbGFibGUgYnkgdmFsdWUgb2Ygcm93
+LCBJdCBjYXVzZSBhbiBPdXQtT2YtQm91bmRzIFJlYWQuDQoNClRoZSBJbWFn
+ZU1hZ2ljayB0ZWFtIGhhcyBmaXhlZCB0aGUgdnVsbmVyYWJpbGl0eSB3ZSBy
+ZXBvcnRlZC4NCg0KDQpVcHN0cmVhbSBmaXg6DQpodHRwczovL2dpdGh1Yi5j
+b20vSW1hZ2VNYWdpY2svSW1hZ2VNYWdpY2svY29tbWl0LzdhZmNmOWY3MTA0
+M2RmMTU1MDhlNDZmMDc5Mzg3YmQ0Njg5YTczOGQNCmh0dHBzOi8vZ2l0aHVi
+LmNvbS9JbWFnZU1hZ2ljay9JbWFnZU1hZ2ljay9jb21taXQvOGY4OTU5MDMz
+ZTRlNTk0MThkNjUwNmIzNDU4MjlhZjFmN2E3MTEyNw0KDQpEZWJpYW4gQnVn
+IHJlcG9ydDoNCmh0dHBzOi8vYnVncy5kZWJpYW4ub3JnL2NnaS1iaW4vYnVn
+cmVwb3J0LmNnaT9idWc9ODM2Nzc2DQoNCg0KQXR0YWNoZWQgaXMgYSBwcm9v
+ZiBvZiBjb25jZXB0IGFuZCBiYWNrdHJhY2UuDQoNCiQgaGV4ZHVtcCBQb0Mu
+c2dpDQowMDAwMDAwIGRhMDEgMDEwMCAwMDAwIGZmZmUgMDIwMCAwNDAwDQow
+MDAwMDBjDQoNCiQgY29udmVydCBQb0Muc2dpDQoNCg0KUHJvZ3JhbSByZWNl
+aXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVudGF0aW9uIGZhdWx0Lg0KWy0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLXJlZ2lzdGVycy0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLV0NClJBWDogMHgwDQpSQlg6IDB4MQ0KUkNYOiAweGY5MzkN
+ClJEWDogMHg2MDMxYjAgLS0+IDB4MA0KUlNJOiAweDdmZmZmN2ZlODA5MCAt
+LT4gMHgxDQpSREk6IDB4N2ZmZmY3ZGNlZjk4IC0tPiAweDENClJCUDogMHhk
+ZmJjDQpSU1A6IDB4N2ZmZmZmZmY1ZTYwIC0tPiAweGZmZmZmZmZmNTQ1MzUy
+NTQNClJJUDogMHg3ZmZmZjc0ZWFlOGIgKDxJZGVudGlmeUltYWdlR3JheSs3
+OTU+OiBtb3ZzcyAgeG1tMCxEV09SRCBQVFIgW3IxNStyYXgqNF0pDQpSOCA6
+IDB4NzQ0ODUwIC0tPiAweDANClI5IDogMHgxDQpSMTA6IDB4NjlhMDAwIC0t
+PiAweDANClIxMTogMHgxDQpSMTI6IDB4NjQxNjAwIC0tPiAweDYwMDAwMDAw
+MA0KUjEzOiAweDY1MzVmMCAtLT4gMHgxNzAwMDAwMDAxDQpSMTQ6IDB4NjAz
+MTc4IC0tPiAweDYwMzFiMCAtLT4gMHgwDQoNClIxNTogMHg3NjUwMDAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIDw9PSBlbmQgYWRkcmVzcyBvZiBoZWFw
+DQoNClstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1jb2RlLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tXQ0KICAgMHg3ZmZmZjc0ZWFlN2QgPElkZW50
+aWZ5SW1hZ2VHcmF5Kzc4MT46IGluYyAgICBCWVRFIFBUUiBbcmR4K3JjeCox
+XQ0KICAgMHg3ZmZmZjc0ZWFlODAgPElkZW50aWZ5SW1hZ2VHcmF5Kzc4ND46
+IG1vdiAgICBEV09SRCBQVFIgW3JheF0sMHg1MTc3DQogICAweDdmZmZmNzRl
+YWU4NiA8SWRlbnRpZnlJbWFnZUdyYXkrNzkwPjogbW92ICAgIHJheCxRV09S
+RCBQVFIgW3JzcCsweDMwXQ0KPT4gMHg3ZmZmZjc0ZWFlOGIgPElkZW50aWZ5
+SW1hZ2VHcmF5Kzc5NT46IG1vdnNzICB4bW0wLERXT1JEIFBUUiBbcjE1K3Jh
+eCo0XQ0KICAgMHg3ZmZmZjc0ZWFlOTEgPElkZW50aWZ5SW1hZ2VHcmF5Kzgw
+MT46IG1vdmFwcyBYTU1XT1JEIFBUUiBbcnNwKzB4NDBdLHhtbTANCiAgIDB4
+N2ZmZmY3NGVhZTk2IDxJZGVudGlmeUltYWdlR3JheSs4MDY+OiBtb3YgICAg
+cmF4LFFXT1JEIFBUUiBbcnNwKzB4MjhdDQogICAweDdmZmZmNzRlYWU5YiA8
+SWRlbnRpZnlJbWFnZUdyYXkrODExPjogbW92c3MgIHhtbTQsRFdPUkQgUFRS
+IFtyMTUrcmF4KjRdDQogICAweDdmZmZmNzRlYWVhMSA8SWRlbnRpZnlJbWFn
+ZUdyYXkrODE3Pjogc3Vic3MgIHhtbTAseG1tNA0KWy0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLXN0YWNrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+XQ0KMDA6MDAwMHwgcnNwIDB4N2ZmZmZmZmY1ZTYwIC0tPiAweGZmZmZmZmZm
+NTQ1MzUyNTQNCjAxOjAwMDh8ICAgICAweDdmZmZmZmZmNWU2OCAtLT4gMHgw
+DQowMjowMDE2fCAgICAgMHg3ZmZmZmZmZjVlNzAgLS0+IDB4NjNkNjAwIC0t
+PiAweDY1MzVmMCAtLT4gMHgxNzAwMDAwMDAxDQowMzowMDI0fCAgICAgMHg3
+ZmZmZmZmZjVlNzggLS0+IDB4NjE0MTYwIC0tPiAweDFhOQ0KMDQ6MDAzMnwg
+ICAgIDB4N2ZmZmZmZmY1ZTgwIC0tPiAweDANCjA1OjAwNDB8ICAgICAweDdm
+ZmZmZmZmNWU4OCAtLT4gMHgxDQowNjowMDQ4fCAgICAgMHg3ZmZmZmZmZjVl
+OTAgLS0+IDB4MA0KMDc6MDA1NnwgICAgIDB4N2ZmZmZmZmY1ZTk4IC0tPiAw
+eGZlZmYNClstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0NCkxlZ2VuZDogc3RhY2ssIGNvZGUs
+IGRhdGEsIGhlYXAsIHJvZGF0YSwgdmFsdWUNClN0b3BwZWQgcmVhc29uOiBT
+SUdTRUdWDQoweDAwMDA3ZmZmZjc0ZWFlOGIgaW4gSXNQaXhlbE1vbm9jaHJv
+bWUgKGltYWdlPTxvcHRpbWl6ZWQgb3V0PiwgcGl4ZWw9PG9wdGltaXplZCBv
+dXQ+KSBhdCAuL01hZ2lja0NvcmUvcGl4ZWwtYWNjZXNzb3IuaDo1NjENCjU2
+MSAgIHJlZF9ncmVlbj0oTWFnaWNrUmVhbFR5cGUpIHBpeGVsW2ltYWdlLT5j
+aGFubmVsX21hcFtSZWRQaXhlbENoYW5uZWxdLm9mZnNldF0tDQoNCmdkYi1w
+ZWRhJCBidA0KIzAgIDB4MDAwMDdmZmZmNzRlYWU4YiBpbiBJc1BpeGVsTW9u
+b2Nocm9tZSAoaW1hZ2U9PG9wdGltaXplZCBvdXQ+LCBwaXhlbD08b3B0aW1p
+emVkIG91dD4pIGF0IC4vTWFnaWNrQ29yZS9waXhlbC1hY2Nlc3Nvci5oOjU2
+MQ0KIzEgIElkZW50aWZ5SW1hZ2VHcmF5IChpbWFnZT08b3B0aW1pemVkIG91
+dD4sIGV4Y2VwdGlvbj08b3B0aW1pemVkIG91dD4pIGF0IE1hZ2lja0NvcmUv
+YXR0cmlidXRlLmM6NjgzDQojMiAgMHgwMDAwN2ZmZmY3NGViYjdhIGluIElk
+ZW50aWZ5SW1hZ2VUeXBlIChpbWFnZT0weDY1MzVmMCwgZXhjZXB0aW9uPTB4
+NjE0MTYwKSBhdCBNYWdpY2tDb3JlL2F0dHJpYnV0ZS5jOjgyMQ0KIzMgIDB4
+MDAwMDdmZmZmNzY0N2QzOSBpbiBJZGVudGlmeUltYWdlIChpbWFnZT0weDY1
+MzVmMCwgZmlsZT08b3B0aW1pemVkIG91dD4sIHZlcmJvc2U9PG9wdGltaXpl
+ZCBvdXQ+LCBleGNlcHRpb249MHg2MTQxNjApIGF0IE1hZ2lja0NvcmUvaWRl
+bnRpZnkuYzo0OTQNCiM0ICAweDAwMDA3ZmZmZjcxMDI0YTYgaW4gSWRlbnRp
+ZnlJbWFnZUNvbW1hbmQgKGltYWdlX2luZm89PG9wdGltaXplZCBvdXQ+LCBh
+cmdjPTxvcHRpbWl6ZWQgb3V0PiwgYXJndj08b3B0aW1pemVkIG91dD4sIG1l
+dGFkYXRhPTxvcHRpbWl6ZWQgb3V0PiwgZXhjZXB0aW9uPTxvcHRpbWl6ZWQg
+b3V0PikgYXQgTWFnaWNrV2FuZC9pZGVudGlmeS5jOjMzNg0KIzUgIDB4MDAw
+MDdmZmZmNzE1M2U1MyBpbiBNYWdpY2tDb21tYW5kR2VuZXNpcyAoaW1hZ2Vf
+aW5mbz08b3B0aW1pemVkIG91dD4sIGNvbW1hbmQ9PG9wdGltaXplZCBvdXQ+
+LCBhcmdjPTxvcHRpbWl6ZWQgb3V0PiwgYXJndj08b3B0aW1pemVkIG91dD4s
+IG1ldGFkYXRhPTxvcHRpbWl6ZWQgb3V0PiwgZXhjZXB0aW9uPTxvcHRpbWl6
+ZWQgb3V0PikgYXQgTWFnaWNrV2FuZC9tb2dyaWZ5LmM6MTgzDQojNiAgMHgw
+MDAwMDAwMDAwNDAxY2FlIGluIE1hZ2lja01haW4gKGFyZ2M9PG9wdGltaXpl
+ZCBvdXQ+LCBhcmd2PTxvcHRpbWl6ZWQgb3V0PikgYXQgdXRpbGl0aWVzL21h
+Z2ljay5jOjE0NQ0KIzcgIG1haW4gKGFyZ2M9PG9wdGltaXplZCBvdXQ+LCBh
+cmd2PTxvcHRpbWl6ZWQgb3V0PiwgYXJndkBlbnRyeT0weDdmZmZmZmZmZWI0
+OCkgYXQgdXRpbGl0aWVzL21hZ2ljay5jOjE3Ng0KIzggIDB4MDAwMDdmZmZm
+NWEzYjgzMCBpbiBfX2xpYmNfc3RhcnRfbWFpbiAobWFpbj0weDQwMTVmMCA8
+bWFpbj4sIGFyZ2M9MHgyLCBhcmd2PTB4N2ZmZmZmZmZlYjQ4LCBpbml0PTxv
+cHRpbWl6ZWQgb3V0PiwgZmluaT08b3B0aW1pemVkIG91dD4sIHJ0bGRfZmlu
+aT08b3B0aW1pemVkIG91dD4sIHN0YWNrX2VuZD0weDdmZmZmZmZmZWIzOCkg
+YXQgLi4vY3N1L2xpYmMtc3RhcnQuYzoyOTENCiM5ICAweDAwMDAwMDAwMDA0
+MDE1MTkgaW4gX3N0YXJ0ICgpDQoNCg0KZ2RiLXBlZGEkIHZtbWFwDQpTdGFy
+dCAgICAgICAgICAgICAgRW5kICAgICAgICAgICAgICAgIFBlcm0gTmFtZQ0K
+MHgwMDQwMDAwMCAgICAgICAgIDB4MDA0MDMwMDAgICAgICAgICByLXhwIC91
+c3IvbG9jYWwvYmluL21hZ2ljaw0KMHgwMDYwMjAwMCAgICAgICAgIDB4MDA2
+MDMwMDAgICAgICAgICByLS1wIC91c3IvbG9jYWwvYmluL21hZ2ljaw0KMHgw
+MDYwMzAwMCAgICAgICAgIDB4MDA2MDQwMDAgICAgICAgICBydy1wIC91c3Iv
+bG9jYWwvYmluL21hZ2ljaw0KMHgwMDYwNDAwMCAgICAgICAgIDB4MDA3NjUw
+MDAgICAgICAgICBydy1wIFtoZWFwXQ0KMHgwMDAwN2ZmZmY1NTNmMDAwIDB4
+MDAwMDdmZmZmNTgxNzAwMCByLS1wIC91c3IvbGliL2xvY2FsZS9sb2NhbGUt
+YXJjaGl2ZQ0KDQoNClJlZ2FyZHMsDQpQZWl3ZW4gQ2hlbg0KVGVuY2VudCdz
+IFh1YW53dSBMYWINCg0K
 
-I agree that backporting will always fail in the end, but to quote Keynes,
-"in the long run, we are all dead". Backporting indefinitely can't work,
-because eventually the backports either become infeasible, or have a
-greater regression risk than upgrading to the latest version; but if
-backports can remain feasible and lower-risk than the latest upstream
-development release for the support lifetime of a downstream stable
-release, or even for a fraction of the support lifetime of a downstream,
-then that finite lifetime has still provided value.
-
-Sure, some projects are so fast-moving that backports quickly become
-infeasible, but a lot of projects just aren't that fast (perhaps despite
-their maintainers' best intentions). Similarly, I'm sure there are some
-projects that have such good QA that the latest feature release always
-has a lower regression risk than backporting fixes, but I'm not sure
-that I could name one.
-
-A few high-profile projects like the Linux kernel are blessed with
-large numbers of developers, a strict review process, lots of QA and
-enough early-adopter users that release candidates actually get tested;
-but despite all that, even the Linux kernel suffers from regressions
-and destabilizing changes, and even the Linux kernel has backport-based
-stable-branches for downstreams' benefit (two tiers of stable-branches,
-even). For those of us who are trying to keep smaller projects afloat
-with resources that add up to a fraction of a full-time developer,
-trying to do better than the Linux kernel doesn't seem viable.
-
-    smcv
+--_000_2A704EDCB5C64F40AF988060A961492BBB3B0EEXMBXTJ007tencent_--
