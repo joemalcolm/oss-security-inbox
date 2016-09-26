@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/3
-Message-ID: <56E112D4.1070302@oracle.com>
-Date: Wed, 09 Mar 2016 22:23:16 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/2
+Message-ID: <trinity-b4ba7486-1df9-44b1-927e-feeb38f0466e-1474851796223@3capp-gmx-bs55>
+Date: Mon, 26 Sep 2016 03:03:16 +0200
+From: cookieopfer@....net
 To: oss-security@...ts.openwall.com
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: Re: Re: ffmpeg afl bugs
 Content-Type: text/plain; charset=utf-8
 
-On 03/ 9/16 04:22 PM, Carlos Alberto Lopez Perez wrote:
-> On 06/03/16 19:46, Alan Coopersmith wrote:
->> On 03/ 4/16 04:07 PM, Tim wrote:
->>> * No moderation required.  Let the public decide if they believe the
->>>     researcher or vendor.  If a moderator does bother to look over the
->>>     content, they could deduplicate/link issues together and address any
->>>     confusion, but beyond that, it isn't their job to decide what is a
->>>     vulnerability and what isn't.
->>
->> If the site displays *any* user-submitted text, you need at least enough
->> moderation to filter out spammers & trolls.
->>
->
-> I don't think you need that level of moderation if you implement basic
-> measures against spammers like requiring the creation of an account with
-> e-mail verification.
->
-> Just look to all the public bugzillas out there that allow commenting
-> (mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
-> with spam. But you have to create an account first to do any comment.
 
-I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
-I've had to deal with spam there, and I've seen reports of spams in other
-public bugzillas for open source projects.
 
-github requires account creation as well, and I'm sure we've all seen out
-of control comment threads there that had to be locked down to stop abuse.
+> Have fun with ffmpeg-h264-call-stack-overflow.mp4
+> > Perhaps you meant to share this file with this community?
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+yes, I forgot to mention it is in
+/usr/share/doc/afl/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4
+ 
+> Hmm... I think that
+> docs/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4 is just a sample
+> file that comes with AFL (and dates back to December 2014). I doubt it
+> still crashes anything
 
+see above! not crashing, but:
+
+ "overread end of atom 'stsd' by 4294967134 bytes"
+
+> and I'm not sure what the original reporter was trying to say.
+> 
+> /mz
+
+I just can't fix it further on this machine, so I only could post the
+trace.
+
+Also thanks for afl-fuzz!
+Download attachment "ffmpeg-h264-call-stack-overflow.mp4" of type "video/mp4" (1259 bytes)
