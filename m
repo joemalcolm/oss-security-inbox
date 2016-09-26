@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1670" "Thursday" "31" "December" "2015" "13:42:46" "-0500" "Glenn Randers-Pehrson" "glennrp@gmail.com" "<CA+PdXcsSzW3-Ocn0ZUzARJ0Gkt-1Sg23V5K7m_3OzSQHBXA0aw@mail.gmail.com>" "43" "[oss-security] CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with \"-loco\" option" nil nil nil "12" "2015123118:42:46" "[oss-security] CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with \"-loco\" option" (number mark "U       glennrp@gmai Dec 31   43/1670  " thread-indent "\"[oss-security] CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with \"-loco\" option\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1866" "Monday" "26" "September" "2016" "11:53:49" "-0700" "Tim Graham" "timograham@gmail.com" "<94b6bfdb-3b5e-459d-8e74-054325ee56f7@googlegroups.com>" "31" "[oss-security] [ANNOUNCE] Django security releases issued: 1.9.10 and 1.8.15" "^Cc:" nil nil "9" "2016092618:53:49" "[oss-security] [ANNOUNCE] Django security releases issued: 1.9.10 and 1.8.15" (number mark "U       timograham@g Sep 26   31/1866  " thread-indent "\"[oss-security] [ANNOUNCE] Django security releases issued: 1.9.10 and 1.8.15\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29981 invoked by uid 550); 31 Dec 2015 18:42:58 -0000
+Received: (qmail 4070 invoked by uid 550); 26 Sep 2016 18:54:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29963 invoked from network); 31 Dec 2015 18:42:58 -0000
+Received: (qmail 4026 invoked from network); 26 Sep 2016 18:54:01 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=6f1xF5wG+45Xqqknk13sEG75+WWasFIfbLTKmL68htI=;
-        b=jyUv9UtywhMlTLDDQ3sDBSZIBp9a41WcLGAymwHHE/WpkCnFoDLzT9VHSwQhimkAc3
-         r/JGSDbkd7znaCs21u4Gi0zR9bJCPfgASXwh/mnQbO2YN5v/gGD9lLkm/soUKmL84Hon
-         N8t+tsOhxfG16b6TaYM4dmT9z/kllYtvnnC3cD4LR65U8/jhEFUnUtPwymd7QChmCDHs
-         4EIKihzIECOTH6kpiGY3MI5VK+KCoTRF/9hCYUeI68x6OAEAwXuYa/qY8A06TAUL4O/E
-         Q+xlOwx/Wnc3QChy6tY90caIIHXqCNvYy0/1Zf0RFNiyNTa2Cm2DS5dRraHKLWnYMVT7
-         AZHA==
+        h=date:from:to:cc:message-id:subject:mime-version;
+        bh=50diP3NrVwIIlX1ABMwrH78uxGnWB6g9LRxbKVNEQCs=;
+        b=sxNCkGSD/zz7n8zy595FUZj6kVyAjDJW8/LXQxr08+I1ctiIwncqsI5NzyltLHnMBu
+         RaA2yzKKkEZKTgz6IeOgC8VC9cliTkb4GWfyUGzcneQHKNThpk0XHQNjhKlx10VqMBg0
+         yVV8xi56uAGO8fGNMrmDwU7lc2FIxJp66Ve8Puso61sewuIh4AXG+1D9DsHU3m5X3BGc
+         ymrh7g+632ppK2q/EVsbjcLBeHxd3NTdycWiEae5ku17N0QrPAVWrUQcV4lwAeNPicul
+         xA6ZhpXj+Hd/6xsEVS/ZwZEdYtkSyOBr0PD2oSxO1v6KJs9Y9ykNN8Q00kw+NiJK5OEA
+         Sqtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:message-id:subject:mime-version;
+        bh=50diP3NrVwIIlX1ABMwrH78uxGnWB6g9LRxbKVNEQCs=;
+        b=OIojxY2mfoInQaq3CCuYLbSwhZ2EvmSbYM0IZxxIsZxdKEaf4E+p27C80iAVC+44R9
+         fHLoAHeZuMOgyHVD3sYHzQWonDA+QLOW1fkTXkd2o1scTOat66GDN3BAuFtQseWOiVIR
+         hmxryZeTlGlhYLkHy4w8eW6dZyhcPJjVn0QpalVihTYo/yILEDd2TFyJ1QN+kb0fc9k9
+         aBmMsGkLqsUVl3nCGz++M8VX9q+ObVkPr3s8LrEtSFSDLepuRQESyxy7aH5Sxw8n0tSm
+         1v3tVYigyq6kPyRcBQGXNcjt1jL0nwA+dt8KcSIq89gRCJabjx9X+aLZZfneZfV4omvd
+         T75A==
+X-Gm-Message-State: AA6/9RmxGozYdz/zcjJlEwfS+dDbdJMulRd+hmSe3OHw9yFwaM1zSYszwvZ6daMjdU/X/jtdpZWQ
+X-Received: by 10.36.103.4 with SMTP id u4mr759631itc.9.1474916030161;
+        Mon, 26 Sep 2016 11:53:50 -0700 (PDT)
+X-Google-Already-Archived: Yes
+X-Google-Already-Archived-Group-Id: 5f8633310a
+X-Google-Doc-Id: c3509f8ba73be
+X-Google-Thread-Id: 930bd1c4b7083e92
+X-Google-Message-Url: http://groups.google.com/group/django-announce/msg/c3509f8ba73be
+X-Google-Thread-Url: http://groups.google.com/group/django-announce/t/930bd1c4b7083e92
+X-Google-Web-Client: true
+Message-Id: <94b6bfdb-3b5e-459d-8e74-054325ee56f7@googlegroups.com>
 MIME-Version: 1.0
-X-Received: by 10.55.78.70 with SMTP id c67mr92913997qkb.37.1451587366465;
- Thu, 31 Dec 2015 10:42:46 -0800 (PST)
-Date: Thu, 31 Dec 2015 13:42:46 -0500
-Message-ID: <CA+PdXcsSzW3-Ocn0ZUzARJ0Gkt-1Sg23V5K7m_3OzSQHBXA0aw@mail.gmail.com>
-From: Glenn Randers-Pehrson <glennrp@gmail.com>
-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-Cc: Brian Carpenter <brian.carpenter@gmail.com>
-Content-Type: multipart/alternative; boundary=001a114a9bbe56b7fd0528360531
-Subject: [oss-security] CVE request: pngcrush-1.3.35 through 1.7.88 segfault when run with
- "-loco" option
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_486_1658264407.1474916029646"
+X-Google-Token: EL3dpb8F3CHcyLogfNI0
+X-Google-IP: 71.175.65.78
+Cc: django-users@googlegroups.com, django-developers@googlegroups.com,
+	oss-security@lists.openwall.com
+Date: Mon, 26 Sep 2016 11:53:49 -0700 (PDT)
+From: Tim Graham <timograham@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [ANNOUNCE] Django security releases issued: 1.9.10 and 1.8.15
+To: django-announce <django-announce@googlegroups.com>
 
---001a114a9bbe56b7fd0528360531
+------=_Part_486_1658264407.1474916029646
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_487_1089142892.1474916029647"
+
+------=_Part_487_1089142892.1474916029647
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-I am requsting a CVE for the following vulnerability in pngcrush.
+Today the Django team issued 1.9.10 and 1.8.15 as part of our security 
+process. These releases address a security issue, and we encourage all 
+users to upgrade as soon as possible.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Details are available on the Django project weblog:
 
+https://www.djangoproject.com/weblog/2016/sep/26/security-releases/
 
+As a reminder, we ask that potential security issues be reported via 
+private email to security@djangoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
 
-Pngcrush versions 1.7.35 through 1.7.88 will segfault when run with
-the "-loco" option and multiple trials.  This is due to attempting to
-write to a file that has not yet been opened.
+------=_Part_487_1089142892.1474916029647
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-The vulnerability can be exploited trivially to create a Denial of Service.
-Remote exploit is possible if the application accepts remote input and
-accepts the "-loco" option.  No specially crafted PNG file is needed; any
-valid PNG file can be used in an attack.
+<div dir="ltr">Today the Django team issued 1.9.10 and 1.8.15
+ as part of our security process. These releases address a security 
+issue, and we encourage all users to upgrade as soon as possible.<br><br>Details are available on the Django project weblog:<br><a href="https://www.djangoproject.com/weblog/2016/sep/26/security-releases/"><br>https://www.djangoproject.com/weblog/2016/sep/26/security-releases/</a><br><br>As a reminder, we ask that potential security issues be reported via private email to <a href="mailto:security@djangoproject.com" target="_blank" rel="nofollow">security@djangoproject.com</a> and not via Django&#39;s Trac instance or the django-developers list. Please see <a href="https://www.djangoproject.com/security" target="_blank" rel="nofollow">https://www.djangoproject.com/<wbr>security</a> for further information.</div>
+------=_Part_487_1089142892.1474916029647--
 
-The bug was discovered by Brian Carpenter using AFL, and is fixed in
-pngcrush-1.7.91, which was released on December 31, 2015.
-
-Glenn Randers-Pehrson
-pngcrush author and maintainer
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJWhXTvAAoJEPVJhL+hbGQP6vkP/1fqKQBMXffpVZEJ1DzmTeo5
-+F0mLYhRax0xKvvOBFw3jvmCF7Wr7FATXEjUiHc3u9FNeIQwmLosBvCajnWYhExC
-jjiweKt7ZBg/7NPFLEcKFtVASjQCkSMFTsWO6jWi1PIxJYztp/BGT1FB/H3ecrUZ
-IHwReuFu3qnjB9hbUy9pbrJmeVSyQY1DWnFwLFJ8PaMrHpvJfXiraPHNaR4WDDDp
-PgmxVF8GrpINh8oBZP1gLlBiSsiAUvt6C4Bpr/LaMrP/6nnPBW0y3bptGorxa5gY
-4Z2k/P+12lU15oV//RG1gYGAE5R7I2fteOLA0ES1Xsvw6re8tJ0oEl9SWmhCBBAj
-n2C3sCLhK619/KHWx6tety9N5ZCBHdrk6hwYzLVFVLOLmHPyrhhJCI+HJeKde4nw
-BhruvP+iuhxqjCDoHPoxLnK5FMdYxrGn2vB2lq6AGjFuKtd7Nb2hTsYZu7bnGWYQ
-dpNiVruRkdABLm621twGdU3GN45DwgfTy8kucypPmkxhmUgz2z30EExNcS1r0ph2
-ywmCUz11jYH4oJIrZE3LNSPzuT3zymBmwENbY5GYbAnAYnjbVyy/HcIrp9+eALxZ
-EkO4hGAFidhijHn8NnMpQI9EIoNMPhiJN9fYKfO56GNFysKEFBeOwzOLIuAYQQb+
-v0R8JFw32Xm4ULrDjXk3
-=Lm3P
------END PGP SIGNATURE-----
-
---001a114a9bbe56b7fd0528360531--
+------=_Part_486_1658264407.1474916029646--
