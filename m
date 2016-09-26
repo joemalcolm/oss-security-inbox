@@ -1,50 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/7
-Message-ID: <b3d257e8a29d4b1794dce5fb4da89638@imshyb02.MITRE.ORG>
-Date: Mon, 12 Dec 2016 18:34:07 -0500
-From: <cve-assign@...re.org>
-To: <noloader@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <ngg@...sorit.com>, <koczka@...sorit.com>, <jean-pierre.muench@....de>, <mouse008@...il.com>
-Subject: Re: CVE Request: Potential DoS in Crypto++ ASN.1 parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/10
+Message-ID: <20160926165409.ekk6dztdpttnnf67@jwilk.net>
+Date: Mon, 26 Sep 2016 18:54:09 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* up201407890@...nos.dcc.fc.up.pt, 2016-09-25, 13:49:
+>When executing a program via the SELinux sandbox, the nonpriv session can 
+>escape to the parent session by using the TIOCSTI ioctl to push characters 
+>into the terminal's input buffer, allowing an attacker to escape the sandbox.
 
-> When Crypto++ library parses an ASN.1 data value, the library
-> allocates for the content octets based on the length octets. Later, if
-> there's too few or too little content octets, the library throws a
-> BERDecodeErr exception. The memory for the content octets will be
-> zeroized (even if unused), which could take a long time on a large
-> allocation.
+Apparently every single program that tries to run stuff with reduced privileges 
+falls through this trap.
 
-> https://groups.google.com/forum/#!msg/cryptopp-users/fEQ8jWg_K8g/qOLHGIDICwAJ
-> https://github.com/weidai11/cryptopp/issues/346
+Are there any use cases for TIOCSTI other than producing exploits?
 
->> several BERDecode* functions
->> bug was found using "honggfuzz"
-
-Use CVE-2016-9939.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYTzNzAAoJEHb/MwWLVhi2eccQALN5rY/Oya5G4EuRxjZyZyKt
-IcuPVecHhTCDl4yM4nZ7r1/+6yV8VCI4RglDOKnjSPhm8+Hf/UrinX6E/4uch3Vs
-RHMWCLprB8W0mabXau6y8//C6uiwvZ6cZjn3oth1hF6akLMtdbgZ9Frhadmrh+rl
-ITHbVoZd7fya8VWNNTnDoA2jdQmB8JU+/MjfZ4NqjIAs+rULhlzXFesxKV+Z++Yl
-J38WhIOnQ4gCftHNQKabFosULdM6VuQikoIVfHtbvJIn8Q8nMWuc0yfUMgtpxPpw
-Mmagdht7R7EoWYy4vaqznqdJ40p428Qa1HKhC/XXG+CPqRyDaqPhrHX0UyjdhYFc
-LCrSGaVSs4v4WMkCEk+Bz9/xuclx7YI9Ss+JJMcQW3CgrDV5HIS+ILOTA+A/s+N7
-Izn7jbR3mbsNgJ0PkGQUVZ0GbRcJyUT4bB+Y9ayjDNOpLPstnUpEZFRkSGXGKUmd
-Ig3WTZyovrk8AO3dR5rTmsal66nwKOzstZpNKoGT21a2o8MC+wp1ZCEwu1dK7Vm1
-mltJzfcAyitMOkxIKxURbCqPcK4BcFI7/YUDKW7HMGiPR1s4bDG8PKZ/t4gZsl7X
-3O00PQVOEsfMxs9HcRfrzFLpCiAhmDQ3v6FYgYfm8S72+U2RCGO0ASxs3lLfzDTC
-OHCW0YL4p6J40zb3Why4
-=l+lt
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
