@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/7
-Message-ID: <alpine.LFD.2.20.1602162208400.13313@wniryva>
-Date: Tue, 16 Feb 2016 22:14:14 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Qinghao Tang <luodalongde@...il.com>
-Subject: CVE request Qemu: usb: null pointer dereference in remote NDIS control message handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/5
+Message-Id: <20160926054540.231936DCCB9@smtpvmsrv1.mitre.org>
+Date: Mon, 26 Sep 2016 01:45:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: cookieopfer@....net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: ffmpeg afl bugs
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Qemu emulator built with the USB Net device emulation support is vulnerable to 
-a NULL pointer dereference issue. It could occur while processing remote NDIS 
-control message packets, when the USB configuration descriptor object is null.
+> ffmpeg version N-81723-g6d9a46e Copyright (c) 2000-2016 the FFmpeg developers
+> 
+> /usr/share/doc/afl/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4
+> 
+> Input #0, mov,mp4,m4a,3gp,3g2,mj2
+> 
+> overread end of atom 'stsd' by 4294967134 bytes
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-instance resulting in DoS.
+Use CVE-2016-7554.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg02553.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1302299
-
-This issue was discovered by Qinghao Tang of 360.cn Marvel Team.
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJX6LUTAAoJEHb/MwWLVhi2MggP/1SfPxFGyp8gOPQyeKFxcSJl
+g3T8gAdp9OMOj3Qru+dH+qwBIYKomr0T+k6w5qv/ihaihqI2tuDV/lytFJ29asee
+7yuc4TFnQRFHShXqnAnjzgDHSb86pK5QfwQQAAyIp8U3oCkmuLe22JcionfW1gQy
+hDmz/6jz7/k5MzYyTAV3h0jq3y9QQLLnn2IOofUVm915kaa2JiLoRe3U2P+OCaN4
+o1rMsYxlqKgxQg4B5+IyXYTlczeqEioaYeW3lvfploX2ji+scfdN+5Q5y802Hc8b
+HB5Ia3+L1bUeHVbNUTDvXzaTUPl+L68eVvsj4E0FJXcbwdG+07hQBcDOwXo3OhoR
+6707noYWX6v6lNlYObCJRTbrUYbj5YOHDdiHg6spVyehlBQPEnCtZzxXp7GAM+SE
+xOsyArQYWO4f8N12dHyVNvc8sywF5mU0LNwELE2eROjmHURf/i9tVzr5CWzQUaGN
+JPSLLpfQR+ex6D91+gCn+RcNqVXfxOpccjnUe+t9xQhnDPbdkZ+FhV1gP6WKPfwG
+yaMvAoWkZkDE3SlikQaF66giuXPltQX/pMbyRi6SCFD+0VLjbDQU68C0S6nYDhND
+G55sKC8WYZfR2aCiJ/d8ZhvtTaYk6HOfNG/l/dJrM1nXMGxnHPuLwXXO4DAIHc8Y
+yi+xnI3SJRzi3a00kOI0
+=Tla5
+-----END PGP SIGNATURE-----
