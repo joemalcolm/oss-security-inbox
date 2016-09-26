@@ -1,72 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/11
-Message-ID: <0ec5e8a9b0de4b66b53020497c808828@imshyb02.MITRE.ORG>
-Date: Thu, 15 Dec 2016 12:47:41 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/8
+Message-ID: <2A704EDCB5C64F40AF988060A961492BBB3B0E@EXMBX-TJ007.tencent.com>
+Date: Mon, 26 Sep 2016 07:54:24 +0000
+From: pwchen(陈佩文) <pwchen@...cent.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-7101 - ImageMagick SGI Coder Out-Of-Bounds Read Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi.
 
-> http://scarybeastsecurity.blogspot.de/2016/12/redux-compromising-linux-using-snes.html
+This is PeiwenChen of Tencent's Xuanwu Lab & RayZhong of Tencent's Keen Lab.
+During our research, we found an Out-Of-Bounds write vulnerability in
+ ImageMagick's SGI coder.
 
-> 1: Missing X register value clamp for the MOV (X)+,A instruction
+When ImageMagick is identifying SGI format image, we can craft a sgi file
+with big value of row. It will read a certain number of times which is
+controllable by value of row, It cause an Out-Of-Bounds Read.
 
-Use CVE-2016-9957.
-
-
-> 2: Missing SP register value clamp for the RET1 instruction
-
-Use CVE-2016-9958.
+The ImageMagick team has fixed the vulnerability we reported.
 
 
-> Although most operations on the A, X and Y registers clamp the
-> resulting values carefully, the very interesting new multiply
-> instruction, MUL, does not:
-> 
-> generate 8-bit register values that are out of bounds
+Upstream fix:
+https://github.com/ImageMagick/ImageMagick/commit/7afcf9f71043df15508e46f079387bd4689a738d
+https://github.com/ImageMagick/ImageMagick/commit/8f8959033e4e59418d6506b345829af1f7a71127
 
-Use CVE-2016-9959 for this MUL vulnerability.
+Debian Bug report:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=836776
 
 
-> the DIV instruction is just as interesting as the MUL one. It also
-> does transforms on the values of incoming registers, leaving the
-> results in the A and Y registers, without any clamping on the Y result
+Attached is a proof of concept and backtrace.
 
-> Even though this code is fairly simple, I don.t claim to understand it
-> 100%, particularly with large input values. What I do know is that I
-> see various integer overflow opportunities, integer underflow
-> opportunities, less useful div-by-zero issues, etc.
+$ hexdump PoC.sgi
+0000000 da01 0100 0000 fffe 0200 0400
+000000c
 
-There does not seem to be enough information for a detailed CVE
-mapping of the DIV behavior.
+$ convert PoC.sgi
 
-Use CVE-2016-9960 for the divide-by-zero errors.
 
-Use CVE-2016-9961 for the other mishandling of integer values.
+Program received signal SIGSEGV, Segmentation fault.
+[------------------------registers------------------------]
+RAX: 0x0
+RBX: 0x1
+RCX: 0xf939
+RDX: 0x6031b0 --> 0x0
+RSI: 0x7ffff7fe8090 --> 0x1
+RDI: 0x7ffff7dcef98 --> 0x1
+RBP: 0xdfbc
+RSP: 0x7fffffff5e60 --> 0xffffffff54535254
+RIP: 0x7ffff74eae8b (<IdentifyImageGray+795>: movss  xmm0,DWORD PTR [r15+rax*4])
+R8 : 0x744850 --> 0x0
+R9 : 0x1
+R10: 0x69a000 --> 0x0
+R11: 0x1
+R12: 0x641600 --> 0x600000000
+R13: 0x6535f0 --> 0x1700000001
+R14: 0x603178 --> 0x6031b0 --> 0x0
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+R15: 0x765000                          <== end address of heap
 
-iQIcBAEBCAAGBQJYUtTVAAoJEHb/MwWLVhi2MM8P/19Vn5IpJepycCBEWK1v+hGy
-AWvrShniZPMU5zF8hZq+mpzw0/m52Sopwd20aYe2jINiHs1+bv+PfbCDkqH3c3Bv
-7rbLKHKeftsB3XRufVpBiSW/c/HguprTinIFoDJhR2752PRGZ8fIKSHM9JRQQlRt
-6TqJE8h3eIvduzsJI8otg4eqtWUji6UkurUuBeYh8oK6VTGYZEQZ2WjMaF1HsYz8
-RJcHHr9auEnS6YJh4mHb/iwW1duSHSw/Q5Z8iwMGrkKnqbat+mA1XcOzTaOYcQat
-yjQMoFLVHmMXmEtWQoYJY9EdYj2xvSo9tpPXgtRS3ozKjeri/g/vNpefErBSdRnS
-FaaELv8BxHg1Yw90BHk4+miXDSOLrNl646ZA7cnIGTzI0Rg9aqPkhTUn/NyoKoQ4
-O66ToS4OE+zufKTiKFQUifX2reL/C8/zJuLIT2QxqUeXzS5XNDnX3GrGGJikqz2v
-OSlMirr6m3zetBvJkx7uTXl+vpQVSHzOFI7efKEp2xuXC3hv0TYiIPXdNfRIM7CL
-ut1qIGdpdJpWiA2dfgKEsArbjvqPRGa31D3+RbDwoeFsrViXg5zwAXsY3TnwyotS
-2FQ3Vh/ozWQgjcf6g0hcWfwxo5W2igPEOG8sYXgsnJ6tMk1C+3Uy/4ocAMxIyZKZ
-NYIBp2AGdYbNm6R7Ck7J
-=m+et
------END PGP SIGNATURE-----
+[---------------------------code---------------------------]
+   0x7ffff74eae7d <IdentifyImageGray+781>: inc    BYTE PTR [rdx+rcx*1]
+   0x7ffff74eae80 <IdentifyImageGray+784>: mov    DWORD PTR [rax],0x5177
+   0x7ffff74eae86 <IdentifyImageGray+790>: mov    rax,QWORD PTR [rsp+0x30]
+=> 0x7ffff74eae8b <IdentifyImageGray+795>: movss  xmm0,DWORD PTR [r15+rax*4]
+   0x7ffff74eae91 <IdentifyImageGray+801>: movaps XMMWORD PTR [rsp+0x40],xmm0
+   0x7ffff74eae96 <IdentifyImageGray+806>: mov    rax,QWORD PTR [rsp+0x28]
+   0x7ffff74eae9b <IdentifyImageGray+811>: movss  xmm4,DWORD PTR [r15+rax*4]
+   0x7ffff74eaea1 <IdentifyImageGray+817>: subss  xmm0,xmm4
+[---------------------------stack---------------------------]
+00:0000| rsp 0x7fffffff5e60 --> 0xffffffff54535254
+01:0008|     0x7fffffff5e68 --> 0x0
+02:0016|     0x7fffffff5e70 --> 0x63d600 --> 0x6535f0 --> 0x1700000001
+03:0024|     0x7fffffff5e78 --> 0x614160 --> 0x1a9
+04:0032|     0x7fffffff5e80 --> 0x0
+05:0040|     0x7fffffff5e88 --> 0x1
+06:0048|     0x7fffffff5e90 --> 0x0
+07:0056|     0x7fffffff5e98 --> 0xfeff
+[-----------------------------------------------------------]
+Legend: stack, code, data, heap, rodata, value
+Stopped reason: SIGSEGV
+0x00007ffff74eae8b in IsPixelMonochrome (image=<optimized out>, pixel=<optimized out>) at ./MagickCore/pixel-accessor.h:561
+561   red_green=(MagickRealType) pixel[image->channel_map[RedPixelChannel].offset]-
+
+gdb-peda$ bt
+#0  0x00007ffff74eae8b in IsPixelMonochrome (image=<optimized out>, pixel=<optimized out>) at ./MagickCore/pixel-accessor.h:561
+#1  IdentifyImageGray (image=<optimized out>, exception=<optimized out>) at MagickCore/attribute.c:683
+#2  0x00007ffff74ebb7a in IdentifyImageType (image=0x6535f0, exception=0x614160) at MagickCore/attribute.c:821
+#3  0x00007ffff7647d39 in IdentifyImage (image=0x6535f0, file=<optimized out>, verbose=<optimized out>, exception=0x614160) at MagickCore/identify.c:494
+#4  0x00007ffff71024a6 in IdentifyImageCommand (image_info=<optimized out>, argc=<optimized out>, argv=<optimized out>, metadata=<optimized out>, exception=<optimized out>) at MagickWand/identify.c:336
+#5  0x00007ffff7153e53 in MagickCommandGenesis (image_info=<optimized out>, command=<optimized out>, argc=<optimized out>, argv=<optimized out>, metadata=<optimized out>, exception=<optimized out>) at MagickWand/mogrify.c:183
+#6  0x0000000000401cae in MagickMain (argc=<optimized out>, argv=<optimized out>) at utilities/magick.c:145
+#7  main (argc=<optimized out>, argv=<optimized out>, argv@...ry=0x7fffffffeb48) at utilities/magick.c:176
+#8  0x00007ffff5a3b830 in __libc_start_main (main=0x4015f0 <main>, argc=0x2, argv=0x7fffffffeb48, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffeb38) at ../csu/libc-start.c:291
+#9  0x0000000000401519 in _start ()
+
+
+gdb-peda$ vmmap
+Start              End                Perm Name
+0x00400000         0x00403000         r-xp /usr/local/bin/magick
+0x00602000         0x00603000         r--p /usr/local/bin/magick
+0x00603000         0x00604000         rw-p /usr/local/bin/magick
+0x00604000         0x00765000         rw-p [heap]
+0x00007ffff553f000 0x00007ffff5817000 r--p /usr/lib/locale/locale-archive
+
+
+Regards,
+Peiwen Chen
+Tencent's Xuanwu Lab
+
