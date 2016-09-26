@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2097" "Friday" "2" "December" "2016" "19:24:09" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<050445c18a3443e9ad987c659ab83817@imshyb02.MITRE.ORG>" "51" "[oss-security] Re: CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE" nil nil nil "12" "2016120300:24:09" "[oss-security] Re: CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE" (number mark "U       cve-assign@m Dec  2   51/2097  " thread-indent "\"[oss-security] Re: CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE\"\n") "<CAAeHK+yMo_kYnhJf_rJX7tNkBefWXuKMsXTF1aB6-RqsLZn4ZQ@mail.gmail.com>" ("<CAAeHK+yMo_kYnhJf_rJX7tNkBefWXuKMsXTF1aB6-RqsLZn4ZQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1710" "Monday" "26" "September" "2016" "06:42:38" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A012003B7@EX02.corp.qihoo.net>" "31" "[oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file." nil nil nil "9" "2016092606:42:38" "[oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file." (number mark "U       lianyihan@36 Sep 26   31/1710  " thread-indent "\"[oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf file.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27865 invoked by uid 550); 3 Dec 2016 00:24:22 -0000
+Received: (qmail 27949 invoked by uid 550); 26 Sep 2016 07:33:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27847 invoked from network); 3 Dec 2016 00:24:22 -0000
-From: <cve-assign@mitre.org>
-To: <andreyknvl@google.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<kcc@google.com>, <dvyukov@google.com>, <edumazet@google.com>
-In-Reply-To: <CAAeHK+yMo_kYnhJf_rJX7tNkBefWXuKMsXTF1aB6-RqsLZn4ZQ@mail.gmail.com>
-Message-ID: <050445c18a3443e9ad987c659ab83817@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 19:24:09 -0500
+Received: (qmail 5611 invoked from network); 26 Sep 2016 06:42:51 -0000
+From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [CVE-2016-6881] ffmpeg endless loop when dealing with craft
+ swf file.
+Thread-Index: AdIXwQRvdCFL2a2rTceddC2BpAslOQ==
+Date: Mon, 26 Sep 2016 06:42:38 +0000
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A012003B7@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.15]
+Content-Type: multipart/alternative;
+	boundary="_000_A962A2D04FAB5C4499FEFD15B642FA0A012003B7EX02corpqihoone_"
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE
+Subject: [oss-security] [CVE-2016-6881] ffmpeg endless loop when dealing with craft swf
+ file.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--_000_A962A2D04FAB5C4499FEFD15B642FA0A012003B7EX02corpqihoone_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> There's a bug in SO_{SND|RCV}BUFFORCE setsockopt() implementation,
-> which allows CAP_NET_ADMIN users to cause memory corruption.
-> 
-> The fix is upstream:
-> https://github.com/torvalds/linux/commit/b98b0bc8c431e3ceb4b26b0dfc8db509518fb290
+DQoNCkknbSBMaWFuICxhIHNlY3VyaXR5IHJlc2VhcmNoZXIgZnJvbSBRaWhv
+byAzNjAgLg0KDQoNCg0KSSBmb3VuZCBhIHZ1bG5lcmFiaWxpdHkgb2YgZmZt
+cGVnIC4gQW5kIHRoaXMgY291bGQgY2F1c2UgZmZtcGVnIGdldCBpbnRvIGVu
+ZGxlc3MgbG9vcCAhDQoNCj4NCg0KPiA9PT09PT09PT09PT09PT09PT0gdGFy
+Z2V0IHN5c3RlbSA9PT09PT09PT09PT09PT09PT09PT09DQoNCj4NCg0KPiBm
+Zm1wZWcgdmVyc2lvbiAzLjEuMiBDb3B5cmlnaHQgKGMpDQoNCj4NCg0KPiBG
+Zm1wZWcgLWkgcG9jLnN3ZiAtYjp2IDY0MGsgLXkgb3V0cHV0LnRzDQoNCj4N
+Cg0KPiA9PT09PT09PT09PT09PT09PT0gdGFyZ2V0IHdlYiBzaXRlID09PT09
+PT09PT09PT09PT09PT09PT0NCg0KPg0KDQo+IGh0dHBzOi8vZmZtcGVnLm9y
+Zy8NCg0KPg0KDQo+ID09PT09PT09PT09PT09PT09PT09PT09PT0ga2V5IGNv
+ZGVzID09PT09PT09PT09PT09PT09PT09PT0NCg0KPg0KDQo+IHN3ZmRlYy5j
+OiBsaW5lIDEyMQ0KDQo+DQoNCj4gemxpYl9yZWZpbGwoKQ0KDQo+IHsNCg0K
+DQoNCj4gcmV0cnk6DQoNCg0KDQo+IHJldCA9IGluZmxhdGUoeiwgWl9OT19G
+TFVTSCk7IC8vIHJldCBpcyBhbHdheXMgMiAoWl9ORUVEX0RJQ1QpICwgYW5k
+IG90aGVyIHZhcmlhdGVzIHdpbGwgbm90IGJlZW4gY2hhbmdlZC4NCg0KDQoN
+Cj4gaWYgKGJ1Zl9zaXplIC0gei0+YXZhaWxfb3V0ID09IDApDQoNCj4gIGdv
+dG8gcmV0cnk7DQoNCg0KDQoNCg0KT3VyIHVuZGVyc3RhbmRpbmcgaXMgdGhh
+dCBzd2ZkZWMuYyBpcyBwYXJ0IG9mIHRoZSBsaWJhdmZvcm1hdCBsaWJyYXJ5
+IGFuZCB0aHVzIHRoaXMgaXNzdWUgbWF5IGFmZmVjdCBvdGhlciBhcHBsaWNh
+dGlvbnMgdGhhdCB1c2UgdGhhdCBsaWJyYXJ5Lg0KDQoNCg0KVXNlIENWRS0y
+MDE2LTY4ODEuDQoNCg0KDQotLQ0KDQpDVkUgQXNzaWdubWVudCBUZWFtDQoN
+Ck0vUyBNMzAwLCAyMDIgQnVybGluZ3RvbiBSb2FkLCBCZWRmb3JkLCBNQSAw
+MTczMCBVU0EgWyBBIFBHUCBrZXkgaXMgYXZhaWxhYmxlIGZvciBlbmNyeXB0
+ZWQgY29tbXVuaWNhdGlvbnMgYXQNCg0KICBodHRwOi8vY3ZlLm1pdHJlLm9y
+Zy9jdmUvcmVxdWVzdF9pZC5odG1sIF0NCg0K
 
->> CAP_NET_ADMIN users should not be allowed to set negative
->> sk_sndbuf or sk_rcvbuf values, as it can lead to various memory
->> corruptions, crashes, OOM...
-
-Use CVE-2016-9793. This affects, for example, 4.8.12.
-
-
-We might not completely understand the CVE implications of the "Note
-that before
-https://github.com/torvalds/linux/commit/82981930125abfd39d7c8378a9cfdf5e1be2002b
-the bug was even more serious, since SO_SNDBUF and SO_RCVBUF were
-vulnerable" comment within the
-b98b0bc8c431e3ceb4b26b0dfc8db509518fb290 commit message.
-82981930125abfd39d7c8378a9cfdf5e1be2002b is a commit from 2012. The
-3.5 release has this, whereas the 3.4 release does not.
-
-For now, we are assigning CVE-2012-6704 to mean the analogous
-vulnerability involving SO_SNDBUF and SO_RCVBUF that affects "before
-3.5" kernels.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYQhAGAAoJEHb/MwWLVhi2Q70QALXvPXP7eiF3IBAKa2pTZOXs
-J9JGbNp3LcZhAbLlIsXD033lVMI04KB6eyymajLFxQ4++r+eqVq7EixYu8l5Aady
-MBNB5Oy8yzOG4+7ktAIPUNkCipbt016/VtTVgC6ryQbhDJHwrzSaL+2z7ukGRiTo
-MzN/4ojgB0QWs8gKfugH+Sk9MvjklxuRQr/wejVXxfpayfC+1KBWHzC/T/mv0mVv
-j8D8g2i5OmuJ6iemExzT13vvPY/kO6AdvNypMXc8ZL1i2rQD/xsQhNkRGubE6ace
-cqFGuYlj3RxVUh1dDF86hSbzJPj71vrfqKzlkx3Ml92yDMQxGz7xFbWIJLO69MD8
-uBXGR9C5v7UJJKtHen5b+eyngvs/9aOLI12jbxWbdvg+MHJ/ZqYJP3tQ88iOCXuY
-fKJc+dgfYoPDybYgaD3jOhOT7ZfsRQvkiORSe9EU1s9/ic6dS8u1i3Z3j4DQ5RyH
-lIr2V/tT2JVd65Vm1UJuENO/tQCHTKj+PQBrRjqHk2tHzlx8dpH0G4fjyOewwTYl
-U//XW9U5flbUqViKHpRqhN1czZNBwYOV2nCJ22j9dgX0m/QEDkREibtBLVkHZiNX
-eC96vz5DQvTAvS4klSGdQOJ85TwEBxG8y4PGfz2XND/CjrKfaBr8sDBLh7YPUhfb
-2+HqiZwP/N92Pq3N5vah
-=a80X
------END PGP SIGNATURE-----
+--_000_A962A2D04FAB5C4499FEFD15B642FA0A012003B7EX02corpqihoone_--
