@@ -1,56 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/1
-Message-ID: <20161102050757.GG14890@sin.redhat.com>
-Date: Wed, 2 Nov 2016 15:37:58 +1030
-From: Doran Moppert <dmoppert@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/1
+Message-ID: <CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>
+Date: Sun, 25 Sep 2016 17:11:38 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
 To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request:  XXE in perl Image::Info and XML::Twig
+Cc: cookieopfer@....net
+Subject: Re: ffmpeg afl bugs
 Content-Type: text/plain; charset=utf-8
 
-Starting with this bug in XML::LibXML:
+>> Have fun with ffmpeg-h264-call-stack-overflow.mp4
+>
+> Perhaps you meant to share this file with this community?
 
-> XML-LibXML: External entities are parsed by default
+Hmm... I think that
+docs/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4 is just a sample
+file that comes with AFL (and dates back to December 2014). I doubt it
+still crashes anything, and I'm not sure what the original reporter
+was trying to say.
 
-https://rt.cpan.org/Public/Bug/Display.html?id=118032
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=838097
-https://bugzilla.redhat.com/show_bug.cgi?id=1377996
-
-.. which is an insecure default setting, probably not worthy of a CVE in
-itself.
-
-
-I did a brief audit of other CPAN modules in Fedora that may suffer from
-XXE, which uncovered these two:
-
-> XML-Twig: expand_external_ents fails to work as documented
-
-https://rt.cpan.org/Public/Bug/Display.html?id=118097
-https://bugzilla.redhat.com/show_bug.cgi?id=1379553
-
-This option (which defaults to 0) is supposed to control XXE parsing
-documents with XML::Twig, but it has no effect and XXE always takes
-place.
-
-No fix is available yet, and my perl isn't up to proposing a sensible
-patch.
-
-XML::Twig 1.49 does feature an undocumented option 'NoXxe' which can be
-used to prevent entity expansion, but that option isn't present in 1.50
-(current development branch) or in earlier versions (up to 1.44) I have
-checked.
-
-
-> Image-Info: XXE in SVG files
-
-https://rt.cpan.org/Public/Bug/Display.html?id=118099
-https://bugzilla.redhat.com/show_bug.cgi?id=1379556
-
-This was promptly fixed in 1.38_50 / 1.39.
-
-
-Thanks,
--- 
-Doran Moppert
-Red Hat Product Security
-
-Content of type "application/pgp-signature" skipped
+/mz
