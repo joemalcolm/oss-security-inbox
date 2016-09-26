@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1300" "Tuesday" "31" "January" "2017" "10:16:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<56fb00f92d6f4f429556c5b5424c6388@imshyb01.MITRE.ORG>" "33" "[oss-security] Re: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)" nil nil nil "1" "2017013115:16:06" "[oss-security] Re: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)" (number mark "U       cve-assign@m Jan 31   33/1300  " thread-indent "\"[oss-security] Re: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)\"\n") "<9288234.IgCNv62ja1@arcadia>" ("<9288234.IgCNv62ja1@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2354" "Monday" "26" "September" "2016" "01:43:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160926054327.477DD6DCCBC@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: CVE Request: irssi: information disclosure vulnerabilit in buf.pl" nil nil nil "9" "2016092605:43:27" "[oss-security] Re: CVE Request: irssi: information disclosure vulnerabilit in buf.pl" (number mark "U       cve-assign@m Sep 26   57/2354  " thread-indent "\"[oss-security] Re: CVE Request: irssi: information disclosure vulnerabilit in buf.pl\"\n") "<20160924134419.2wc6wvb3i5tnzd6c@eldamar.local>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28591 invoked by uid 550); 31 Jan 2017 15:16:20 -0000
+Received: (qmail 23880 invoked by uid 550); 26 Sep 2016 05:43:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,27 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28544 invoked from network); 31 Jan 2017 15:16:18 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <9288234.IgCNv62ja1@arcadia>
-Message-ID: <56fb00f92d6f4f429556c5b5424c6388@imshyb01.MITRE.ORG>
-Date: Tue, 31 Jan 2017 10:16:06 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
+Received: (qmail 23862 invoked from network); 26 Sep 2016 05:43:39 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20160924134419.2wc6wvb3i5tnzd6c@eldamar.local>
+Message-Id: <20160926054327.477DD6DCCBC@smtpvmsrv1.mitre.org>
+Date: Mon, 26 Sep 2016 01:43:27 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: irssi: information disclosure vulnerabilit in buf.pl
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
+> An information disclosure vulnerability in the buf.pl script
 > 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
-> 
-> splt_cue_export_to_file libmp3splt-0.9.2/src/cue.c:725
+> https://irssi.org/2016/09/22/buf.pl-update/
+> https://bugs.debian.org/838762
+> https://github.com/irssi/scripts.irssi.org/commit/f1b1eb154baa684fad5d65bf4dff79c8ded8b65a
 
-Use CVE-2017-5665.
+>>> This patch sets a safer umask of 077 for the scrollbuffer dump, and will
+>>> remove the temporary file after use to further reduce the attack surface.
+
+>> Other users on the same machine may be able to retrieve the whole
+>> window contents after /UPGRADE when the buf.pl script is loaded.
+>> Furthermore, this dump of the windows contents is never removed
+>> afterwards.
+>>
+>> Since buf.pl is also an Irssi core script and we recommended its use
+>> to retain your window content, many people could potentially be
+>> affected by this.
+
+>> buf.pl restores the scrollbuffer between upgrades by writing the
+>> contents to a file, and reading that after the new process was
+>> spawned. Through that file, the contents of (private) chat
+>> conversations may leak to other users.
+>>
+>> Mitigating facts
+>>
+>> Careful users with a limited umask (e.g. 077) are not affected by this
+>> bug.  However, most Linux systems default to a umask of 022, meaning
+>> that files written without further restricting the permissions, are
+>> readable by any user.
+
+Use CVE-2016-7553.
 
 - -- 
 CVE Assignment Team
@@ -42,17 +64,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYkKj0AAoJEHb/MwWLVhi2chAP/2AbNCqqgNqb+SVg15pzegAy
-4kFc436rib1t18uFrm6gxIXHlQA0BLVgex8DISdUEXRr503uOzwsTjDDgwFHwbHl
-E7PmvzcfyhnZ1sujcfbd87pm6qf9Jv8eAlNr1DZTYu0VkFH0HkAIO3dzACNlTDDE
-9tXV2kMBEfyZfdXY8Fha4KZdG7NUCKUQqns1rdm2JGa583VLC984YiEvGPIv1xFf
-zmxURxRDRkgNPmhPmfRun3rPJbx0dqRDJqlxOsRxL1W+Axb+ogSxAu79WpEn4jvN
-2doXQnZujQudiusVkqK4QXfzmcQMncQIN0fOygsJIySI38iJYHh3wBzWwPNDhI3x
-H9r/nakhrBRiE/29r+4fzQvyOU3iARvh04iJlikXLEFz8GrER4kg+8rUI4wIDpn/
-Vum4k7o+N0nni1FcAUEaL2JtRRuj55ikWzG+BwqhBzmSW3TG4UinyRu35Yu16aTI
-YHPjJQKPziVFtn2Q8TH/nPlnIcshc4zcqRD8m4B/7usRsFMJuSOStx1gA2SBanLG
-2bPFXCXhZX/Hv4hHl8Yzw7HKI8W3dxWcNBtBXcsvx6XRuTHXUhTEc6m0fHRyLU+i
-O7jzRx+7qaqP4UnYwOAH0J2HA9Pp9XY2UGW7K9BbSw4Z/6vzNC10QWU4lf0Cg7FC
-myDnoBgiEOuCOOfErLrK
-=Ip7W
+iQIcBAEBCAAGBQJX6LTCAAoJEHb/MwWLVhi2zq8P/jv2PkFRxBcw1jgDgBMydNuc
++50A3BrF0Uj83eta6SaLs/oh794JIPBAK4oLo4qQ4y1wF/BTHHH3euawbh+OwTYU
+Uz2LN6tCne6lc/Aig0qdbzrTAYVaLiHX5q7LTP34N7yrVfxtKhoxN15wePu+i4I1
+uWmu7UfmowJrORf1hOQajrLtYXgowVpXFjCSju7ZedvM6vJ4yEUFym+UHh+Smasv
+tLfTDDdyvquKKdyKNKpbTYjvaS5YB109a4+doacyziBbnXH3PR8P97ZiNK6MrBs4
+dfwSV+gfdoTEAyHqg5k49G/EEWM5TgxIPz9ve5SZkTmKLQZ0irWEQOekeTy0Z2XL
+nkqu8Ns/mPMe0wP1yvo5NXo8m8aoPpvhuZBxdLU+oHPFM4USn3N00N23qx8Al7VG
+cYblMi1b/+w9gzGbV7JpyESDyf2e1eYMt96Lqi5Rv5WzOp0vLlFzJBDGn1fvr7ci
+QUldD1AMQ8eqkaYcNJ1tq+4uydDj/Vh8huc/HxDS02Bevma4Kx/xHriX8c7nS0Yp
++gvhxU+xOK56M0Ab2JgcI/Q65He1O3VVrlbpIlPZRv8kPIn61IrYZSW0A25DcFcm
+eF8SKi8i1u9/kXZayDAve+aspQfaYwozABrqI5V+b3KHSs/jo/7JThMqk1/5g4XY
+oG0zGz58jhOzLNlu3Hgs
+=g0/I
 -----END PGP SIGNATURE-----
