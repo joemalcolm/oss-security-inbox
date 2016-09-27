@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1220" "Wednesday" "25" "August" "2021" "10:49:04" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "36" "[oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 25   36/1220  " thread-indent "\"[oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1483" "Tuesday" "27" "September" "2016" "16:55:12" "-0400" "Leo Famulari" "leo@famulari.name" "<20160927205512.GA25156@jasmine>" "43" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" "^Cc:" nil nil "9" "2016092720:55:12" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "        leo@famulari Sep 27   43/1483  " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27865 invoked by uid 550); 25 Aug 2021 08:15:04 -0000
+Received: (qmail 3078 invoked by uid 550); 27 Sep 2016 21:50:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1043 invoked from network); 25 Aug 2021 02:49:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=V04UcMDq90anfFIOtyfOqKKd3rkIbEnJYzjflWOco9U=;
-        b=Zl9J13/1spBx7W2rEroebZoaaPYmkFCqeMboYP9I7N8HiNd+wXacsUPHB6e3T54xyT
-         3c86OxEUaFEhuHzwQKzvQzh+iYxn4QDax+EFFijJvisHDdePlu6G8qqhBEFk9WnGp4QX
-         8QIGc0O6vyboMJxCQpjtBnsZv+tseOXNs702WGlDwld5cbqbWYlRk3bjmCKI4mZ157Q0
-         fGAH/F3XSnc7JTFBHRpdepKE5TPdmhe7CUUyh2TpaZXt1fYPl/yxjyxcQsespVcjHkWu
-         xBJQJ39M8U1ON9tpqsTr87wzIiMtzl5DKtGWjm2zIDtGPdtqjlsVsLQHQnmxV4ShRI34
-         xgNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=V04UcMDq90anfFIOtyfOqKKd3rkIbEnJYzjflWOco9U=;
-        b=YaBg5buxxpzIPW6Zd9GOu7GWYFzbq1roPTbSYpeipGFQBEMwgnYpD2w+lTB2ONci94
-         f5JjXg+DmRDlRlwVi00aeH2x4Fru1gZFd8hopC4sgIIiMsl4y7OgIdiMIiE2UqMfnjpH
-         BMNqppuDY9iBl+i1x6Le7dh/AfbI6+dD3W/CTSoomw2l7Xno09BrhC7mipbroaTPkMLw
-         Y5zJQJj2nbVNC2vUT4YrnY/e4Zk5XZjpBKBLrlV64kktzg0DcnztxkKMXirK+MoL1zva
-         dwhdVELMHsBQ/meWu7pltXxMGGqf5r8fvM4sfzvCs7WydA+LjKjPbujdEpZj5H6R8u6j
-         X+YQ==
-X-Gm-Message-State: AOAM533ekRP+dab+WNd92kvxJ0qcqv/pv3VsglZE6++KbNzVXM1GjqGA
-	85owW2QFtQvABsgmiR7+Rs7deHzO+yJzhidbuVVArDhKYRQMKg==
-X-Google-Smtp-Source: ABdhPJwSQYxpMq8+f+/kut1u+1pwet01L6jq9vmm9Vs0ly0zQesVWIAWOxqXsaS18wUD2XlSry78qiTurkCbb3eetis=
-X-Received: by 2002:a25:2a90:: with SMTP id q138mr5563940ybq.379.1629859755598;
- Tue, 24 Aug 2021 19:49:15 -0700 (PDT)
+Received: (qmail 11502 invoked from network); 27 Sep 2016 20:55:26 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=7D9tg
+	Fkfdanj818CetOvO4zYtms=; b=jKExyw1wKFNTW20lj8USRD38aWZJ5dZqO+1G1
+	CPhVuUY0+7fVmDEykYajcefJ++Qor6cALayTNdKmItAAYlhH9A0st4b8k9SCBCer
+	NaFbNzp1qZlLUAwSJamkMmhusz68+LGFyK8YEHBOC7yTlYqvBmCdg8Sikw3U66OJ
+	Vg5Itg=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=7D9tgFkfdanj818CetOvO4zYtms=; b=ASS+C
+	EjV5mpTnw4XWD3MgGJE/TuJ51JDp2PBhTzFsSHlRmj4pgvwUfFidjEN87EwJQlv/
+	ALjJ2sD1VAKz2Iurq6edsDYQwzQz16rvIGxTGMw6KpDvQNAX/HrqRPUI1UjB9Gnx
+	m9JQvc7O8k7+ff+CwRiZ5ebQgnAf5y2ey9K9JY=
+X-Sasl-enc: 6MzSoGh/DZ3xPUwsraFS7TRUX99QVD9FPsYgqk0zJ/wV 1475009713
+Message-ID: <20160927205512.GA25156@jasmine>
+References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
+ <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
+ <160916195601.AA66726.SM@caleb.ins.cwru.edu>
 MIME-Version: 1.0
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Wed, 25 Aug 2021 10:49:04 +0800
-Message-ID: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
+Content-Disposition: inline
+In-Reply-To: <160916195601.AA66726.SM@caleb.ins.cwru.edu>
+User-Agent: Mutt/1.7.0 (2016-08-17)
+Cc: john.haxby@oracle.com, chet.ramey@case.edu
+Date: Tue, 27 Sep 2016 16:55:12 -0400
+From: Leo Famulari <leo@famulari.name>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
+ $HOSTNAME
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in
- btrfs_rm_device in fs/btrfs/volumes.c
 
-Hello, there is a null pointer dereference bug in the btrfs_rm_device
-function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
-Fortunately, triggering the bug requires =E2=80=98CAP_SYS_ADMIN=E2=80=99.
+On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
+> > > I believe the fix in parse.y is this (Chet, please correct me if I'm =
+wrong):
+> >=20
+> > Yes, that is the current fix for this.  There are other ways to do it.
+>=20
+> Here's a patch to bash-4.3 that will fix this.
 
-#Root Cause
-When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
-volume device,
-it would call btrfs_ioctl_rm_dev_v2 function to implement. And
-btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
-if the id of the volume device is illegal, it would trigger a
-null-ptr-deref bug to cause DoS.
+Hi Chet,
 
-# Analyse
-https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=3D=
-bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
+Thanks for the patch! Do you plan to add it to the bash-4.3-patches
+series [0]?
 
-#Fix
-the patch for this issue, not available upstream now.
-https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/=
-#u
+[0]
+https://ftp.gnu.org/gnu/bash/bash-4.3-patches/
 
+--UugvWAfsgieZRqgk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-#Timeline
-*2021/8/6 - Vulnerability reported to maintainer and CC to
-linux-btrfs@vger.kernel.org.
-*2021/8/6 - Vulnerability confirmed and patched.
-*2021/8/10 - Vulnerability reported to secalert@redhat.com.
-*2021/8/25 - Opened on oss-security@lists.openwall.com.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-#Credit
-the issue is reported by Active Defense Lab of Venustech.
+iQIcBAEBCAAGBQJX6tysAAoJECZG+jC6yn8IXkQQAOQTz7xo/vJRAEWgJqezaq8f
+/kUg5Y8wUcaWfEWEJ6iP2Jp4HrlksMrNMGat4Bp1in6f37wvFuwM3ynlfW1IksKm
+tEzskoB8sKM5ChX7aCMQDEkdqFBtP92YuZUUYfAGVFuG+aNIOe8VR/TuwBFZMG9M
+tc4XBX1x/KzCIyIDV7XkhYRhA6EYKvTh1DUyeI3whI0IKNZgsROC0u1AsuVtpX1P
+9FGS04u10hdUyQgt8FzGI/z4qyD1qkhgx/jM8P8zbnKbTMbR5wedKpqfl+afINFg
+gXYhKGSzAc9l9SUDvQXRsHUjSLoLa+8UouOeoUrZfPjS8Ot015vlAypTciYqvU0+
++RaMkznhKffipwWfuEqPDKCqmdb3S9i8HHzjvIDE39gdEPIXQW/sjj0R8XHgx6gx
+xiiyILYKpJoQYuOQuIseWc+4JsjWSNrn+uvQ1iXbhufw9aS+dPydWFaBesPwYx+M
+1e9eHz2QvxwXRUBi+I2UVJPTCrR5T/jP7cLAE16AofxPqWBAHKyugYVQ04AF4wQ9
+56b2LepqwPfHSJ5nswA2zNlnpEyy0fJmjD0252saETLxfbwoAm2n6ifgy8lSJ1Lr
+iCEsnrBKUZf0m5rZm3H4ukM3l2UvkZ9rVKnahySE8vozLakWVg30yvZh8RXjC2QD
+Rz9u1AqLbcwPq/6Xmm44
+=TDwW
+-----END PGP SIGNATURE-----
 
-Regards,
- butt3rflyh4ck.
---=20
-Active Defense Lab of Venustech
+--UugvWAfsgieZRqgk--
