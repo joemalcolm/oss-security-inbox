@@ -1,4 +1,9 @@
-Received: (qmail 9826 invoked by uid 550); 31 Jan 2024 07:10:04 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1705" "Tuesday" "27" "September" "2016" "08:48:42" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>" "48" "[oss-security] ImageMagick identify \"d:\" hangs" "^Date:" nil nil "9" "2016092713:48:42" "[oss-security] ImageMagick identify \"d:\" hangs" (number mark "        bfriesen@sim Sep 27   48/1705  " thread-indent "\"[oss-security] ImageMagick identify \"d:\" hangs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10062 invoked by uid 550); 27 Sep 2016 13:48:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,96 +11,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9802 invoked from network); 31 Jan 2024 07:10:03 -0000
-Date: Wed, 31 Jan 2024 08:12:18 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <1pq83ns8-252p-nq92-oop-75122p30qq94@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 10024 invoked from network); 27 Sep 2016 13:48:54 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+Message-ID: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-0853 : OCSP verification bypass
- with TLS session reuse
+Content-Type: multipart/mixed; BOUNDARY="-559023410-1040300044-1474984122=:5577"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 27 Sep 2016 08:48:42 -0500 (CDT)
+Date: Tue, 27 Sep 2016 08:48:42 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] ImageMagick identify "d:" hangs
+To: oss-security@lists.openwall.com
 
-OCSP verification bypass with TLS session reuse
-===============================================
+---559023410-1040300044-1474984122=:5577
+Content-Type: text/plain; format=flowed; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Project curl Security Advisory, January 31 2024 -
-[Permalink](https://curl.se/docs/CVE-2024-0853.html)
+Today I noticed ImageMagick issue #275 
+(https://github.com/ImageMagick/ImageMagick/issues/275) which was 
+posted 4 days ago.   I was able to reproduce this issue with the 
+ImageMagick provided by my Ubuntu system (6.8.9-9).
 
-VULNERABILITY
--------------
+The problem is that a file name ending with a colon (':') causes the 
+program to hang forever.  If an attacker is able to have some control 
+over the input file name, then this could be used to cause DOS by 
+hanging the program.
 
-curl inadvertently kept the SSL session ID for connections in its cache even
-when the verify status (*OCSP stapling*) test failed. A subsequent transfer to
-the same hostname could then succeed if the session ID cache was still fresh,
-which then skipped the verify status check.
+The following is the text from the problem report:
 
-INFO
-----
+   qwerty4030 commented 4 days ago • edited
+   Version: ImageMagick 6.9.3-10 Q16 x86_64 2016-05-04
+   http://www.imagemagick.org
+   Copyright: Copyright (C) 1999-2016 ImageMagick Studio LLC
+   License: http://www.imagemagick.org/script/license.php
+   Features: Cipher DPC OpenMP
+   Delegates (built-in): jng jpeg lzma png tiff xml zlib
 
-This issue is limited to curl built to use OpenSSL and when using TLS 1.2 only
-and not TLS 1.3.
+   OS: 4.4.10-22.54.amzn1.x86_64 (amazon linux)
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2024-0853 to this issue.
+   identify hangs on the following commands:
 
-CWE-299: Improper Check for Certificate Revocation
+   identify "d:" (no output, just hangs forever)
+   identify "d::" (no output, just hangs forever)
+   identify "http:"
+   error : Unknown IO error (hangs after this message)
+   identify "http::"
+   error : Unknown IO error (hangs after this message)
 
-Severity: Low
+>From my own investigations, I used
 
-AFFECTED VERSIONS
------------------
+   identify -debug all "d:"
 
-- Affected versions: curl 8.5.0 to and including 8.5.0
-- Not affected versions: curl < 8.5.0 and >= 8.6.0
-- Introduced-in: https://github.com/curl/curl/commit/395365ad2d9a6c3f1a35d
+and see that a temporary file is reported to be created and then the 
+program hangs which no apparent CPU usage.
 
-libcurl is used by many applications, but not always advertised as such!
-
-This flaw is also accessible using the curl command line tool.
-
-SOLUTION
-------------
-
-If verify status fails, make sure the session id is not cached.
-
-- Fixed-in: https://github.com/curl/curl/commit/c28e9478cb2548848ec
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.6.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use curl built to use OpenSSL
-
-  D - Do not allow TLS 1.2 for your transfers
-
-TIMELINE
---------
-
-This issue was reported to the curl project on December 29, 2023. We contacted
-distros@openwall on January 24, 2024.
-
-curl 8.6.0 was released on January 31 2024 around 07:00 UTC, coordinated with
-the publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
+Bob
 -- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+---559023410-1040300044-1474984122=:5577--
