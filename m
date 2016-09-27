@@ -1,98 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/9
-Message-ID: <20160106171436.GA13013@ubuntumail>
-Date: Wed, 6 Jan 2016 17:14:37 +0000
-From: Serge Hallyn <serge.hallyn@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/9
+Message-ID: <20160927205512.GA25156@jasmine>
+Date: Tue, 27 Sep 2016 16:55:12 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, john.johansen@...onical.com
-Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
+Cc: john.haxby@...cle.com, chet.ramey@...e.edu
+Subject: Re: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-Quoting Eric W. Biederman (ebiederm@...ssion.com):
-> Serge Hallyn <serge.hallyn@...ntu.com> writes:
+On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
+> > > I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+> > 
+> > Yes, that is the current fix for this.  There are other ways to do it.
 > 
-> > Quoting Eric W. Biederman (ebiederm@...ssion.com):
-> >> cve-assign@...re.org writes:
-> >> 
-> >> > Use CVE-2015-8709 for the issue fixed in the
-> >> > https://lkml.org/lkml/2015/12/25/71 post.
-> >> >
-> >> > (This is not yet available at
-> >> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
-> >> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
-> >> > current end of the earlier discussion.)
-> >> >
-> >> > This issue has been covered in security advisories from one or more
-> >> > Linux distributions, e.g.,
-> >> >
-> >> >>> http://www.ubuntu.com/usn/usn-2847-1
-> >> >>> 
-> >> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
-> >> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
-> >> >>> a root owned process entering the user namespace to elevate its privileges
-> >> >>> and potentially gain access outside of the namespace.
-> >> >>> (http://bugs.launchpad.net/bugs/1527374)
-> >> >
-> >> >
-> >> > There has been some discussion of whether the finding was a
-> >> > vulnerability discovery, e.g.,
-> >> >
-> >> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
-> >> >>>> From: Jann Horn <jann@...jh.net>
-> >> >>>> 
-> >> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
-> >> >>>> manpage says "the process has full privileges for operations
-> >> >>>> inside the user namespace, but is unprivileged for operations
-> >> >>>> outside the namespace". ptrace()ing a process in the
-> >> >>>> namespace can reasonably be considered an "operation inside
-> >> >>>> the user namespace" ...
-> >> >>>> 
-> >> >>>> In my opinion, this patch is somewhere between hardening and
-> >> >>>> a security feature, but I wouldn't really call it a vuln fix.
-> >> >
-> >> >
-> >> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
-> >> >>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
-> >> >>>>> 
-> >> >>>>>> ptrace()ing a process in the
-> >> >>>>>> namespace can reasonably be considered an "operation inside
-> >> >>>>>> the user namespace"
-> >> >>>>> 
-> >> >>>>> Except by creating a file in the host namespace, you were, as
-> >> >>>>> root in the container, able to escape your namespace, right?
-> >> >
-> >> > We feel that, more generally, the usn-2847-1 mention of "and
-> >> > potentially gain access outside of the namespace" is a realistic
-> >> > concern.
-> >> 
-> >> My mind is boggling at some of the logic involved here.
-> >> 
-> >> There is no potentially gaining access outside of the namespace when it
-> >> is access to things that were put inside the namespace.
-> >> 
-> >> The discussion was about how to make it easier for userspace not to do
-> >> stupid things, not how to fix a bug in the kernel.
-> >> 
-> >> The code we have been discussing most definitely does not make it safe
-> >> for a arbitrary root owned processes to call setns and enter a user
-> >> namespace with a hostile user namespace root.  You have to close file
-> >> descriptors, unmap files and do I don't know what else.  Properly
-> >> and safely dropping privileges is a challenging problem.
-> >> 
-> >> Calling bug because it is possible to use a kernel feature wrong feels
-> >> completely inappropriate.
-> >
-> > I could be wrong but think you are misunderstanding the cve.
-> >
-> > IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
-> > setresuid(0,0); then between the setns and the setuids the container
-> > can ptrace your task and do things using the host uids.  That's bad.
-> 
-> It is a pain but it is perfectly possible to:
-> 	/* Mess with caps so the next line does not clear CAP_SYS_ADMIN */
-> 	setresuid(container_root_uid, container_root_uid);
-> 	setns(some_userns);
+> Here's a patch to bash-4.3 that will fix this.
 
-That works for root, but not for unprivileged user.
+Hi Chet,
 
-Worth doing when possible though.
+Thanks for the patch! Do you plan to add it to the bash-4.3-patches
+series [0]?
+
+[0]
+https://ftp.gnu.org/gnu/bash/bash-4.3-patches/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
