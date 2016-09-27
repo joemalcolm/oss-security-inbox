@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/5
-Message-ID: <20160428083833.GA31434@openwall.com>
-Date: Thu, 28 Apr 2016 11:38:33 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/7
+Message-ID: <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
+Date: Tue, 27 Sep 2016 09:56:58 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Cc: das das <scusec2010@...il.com>
-Subject: Re: CVE request:SQL injection in TeamPass
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 27 Sep 2016, Jakub Wilk wrote:
 
-On Thu, Apr 28, 2016 at 04:20:08PM +0800, das das wrote:
-> I sent you an email about the vulnerability found in Teampass,
-> http://www.openwall.com/lists/oss-security/2016/04/14/1
+> * Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>, 2016-09-27, 08:48:
+>> From my own investigations, I used
+>>
+>>  identify -debug all "d:"
+>> 
+>> and see that a temporary file is reported to be created and then the 
+>> program hangs which no apparent CPU usage.
+>
+> strace tells me that it waits for input on stdin.
+> This is a simpler way to make it "hang":
+>
+>  identify -
 
-I imagine that the MITRE folks are busy with higher-priority requests.
+This is what I expected was happening.  The main thing to investigate 
+is if the "ImageTragick" patches distributions are using do protect 
+against this possible issue as well.
 
-> however,I haven't received any reply yet.Does cve still accept such
-> vulnerabilities in Teampass?Because There are some Teampass
-> vulnerabilities witch are found latey,and I don't know whether they
-> should be submitted.
-
-I think you're confusing notifying the community and obtaining CVE IDs.
-It does make perfect sense for you to be notifying the community even if
-you're not receiving CVE IDs promptly (or at all).  If you need some IDs
-for tracking, please feel free to obtain and self-assign OVE IDs, and
-include those right in your initial notifications to oss-security:
-
-http://www.openwall.com/ove/
-
-Alexander
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
