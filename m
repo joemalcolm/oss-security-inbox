@@ -1,4 +1,9 @@
-Received: (qmail 19745 invoked by uid 550); 2 Apr 2024 17:48:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9575" "Tuesday" "27" "September" "2016" "10:13:49" "+0000" "=?gb2312?B?d2luc29ubGl1KMH1v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F706707654@EXMBX-TJ002.tencent.com>" "160" "[oss-security] CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c" "^CC:" nil nil "9" "2016092710:13:49" "[oss-security] CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c" (number mark "U       winsonliu@te Sep 27  160/9575  " thread-indent "\"[oss-security] CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6022 invoked by uid 550); 27 Sep 2016 10:14:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,76 +11,184 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5988 invoked from network); 27 Sep 2016 10:14:13 -0000
+Thread-Topic: CVE Request: libgd: Integer overflow in function
+ gdImageWebpCtx of gd_webp.c
+Thread-Index: AdIYpwMEFZOJ6/MATg2raXATY4/+cw==
+Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F706707654@EXMBX-TJ002.tencent.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.4.75.20]
+Content-Type: multipart/alternative;
+	boundary="_000_1F2D4DA31CA62740BFF46830A0E6A4F706707654EXMBXTJ002tence_"
+MIME-Version: 1.0
+CC: cve-assign <cve-assign@mitre.org>
+Date: Tue, 27 Sep 2016 10:13:49 +0000
+From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9380 invoked from network); 2 Apr 2024 17:42:05 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Tue, 2 Apr 2024 17:41:47 -0000 (UTC)
-Message-ID: <uuhg0r$3dd$1@ciao.gmane.io>
-References: <r57psoo4-64q4-4nnr-qp6s-q4n32584698o@vanv.qr>
- <3561b05d-5ad0-41be-b50f-687e13d614e0@ipsumj.de>
- <uufob6$13tl$1@ciao.gmane.io>
-User-Agent: slrn/1.0.3 (Linux)
-Subject: [oss-security] Re: finding similar compromises (was Re: From xz to ibus: more
- questionable tarballs)
+Subject: [oss-security] CVE Request: libgd: Integer overflow in function gdImageWebpCtx of
+ gd_webp.c
+To: oss-security <oss-security@lists.openwall.com>
 
-On 2024-04-02, Tavis Ormandy wrote:
-> On 2024-04-01, HW42 wrote:
->> Hi Jan,
->>
->> great that you are looking for further problems. (Just to be clear, I'm
->> not associated with ibus in any way.)
->>
->
-> Yes, agreed. In the interests of discussing things in the open after
-> just complaining about embargoes... :)
->
-> It occurred to me that I could grep around in an SKS dump for any keys
-> that had similar options that Jia Tan used -- algorithm preferences and
-> so on -- and see if any jumped out as suspicious.
->
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F706707654EXMBXTJ002tence_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-FYI, of the 22,885,940 signature packets in my SKS dump, 1186 had the
-same options as Jia's (algo, keylen, expiry, prefs).
+SGVsbG8sDQoNClRoaXMgaXMgS2UgTGl1IG9mIFRlbmNlbnQncyBYdWFud3Ug
+TEFCLiBJIHJlcG9ydGVkIGFuIGludGVnZXIgb3ZlcmZsb3cgdnVsbmVyYWJp
+bGl0eSB0byBsaWJnZCBsYXN0IG1vbnRoLCB0aGUgdnVsbmVyYWJpbGl0eSBj
+b3VsZCBsZWFkIHRvIGhlYXAgYnVmZmVyIG92ZXJmbG93IGNpcmN1bXN0YW5j
+ZSBhbmQgUEhQIHdhcyBhbHNvIGFmZmVjdGVkLiBOb3cgYm90aCBsaWJnZCBh
+bmQgUEhQIGhhdmUgYmVlbiBmaXhlZCB0aGlzIGlzc3VlLiBDb3VsZCB5b3Ug
+cGxlYXNlIGFzc2lnbiBhIENWRSBudW1iZXIgZm9yIGl0PyBUaGFua3MuDQoN
+ClJlZ2FyZHMsDQpLZQ0KDQpERVNDUklQVElPTg0KPT09PT09PT09PT09PT09
+PT09PT09PQ0KQW4gaW50ZWdlciBvdmVyZmxvdyB2dWxuZXJhYmlsaXR5IHdh
+cyBmb3VuZCBpbiBmdW5jdGlvbiBnZEltYWdlV2VicEN0eCBvZiBmaWxlIGdk
+X3dlYnAuYyBpbiBsaWJnZC4gSXQgY291bGQgbGVhZCB0byBoZWFwIGJ1ZmZl
+ciBvdmVyZmxvdyBjaXJjdW1zdGFuY2UuIEJvdGggUEhQIDcuMC4xMCBhbmQg
+bGliZ2QgMi4yLjMgd2VyZSBhZmZlY3RlZCBieSB0aGlzIGlzc3VlLg0KDQoN
+CkFGRkVDVEVEIFZFTkRPUlMNCj09PT09PT09PT09PT09PT09PT09PT0NClBI
+UCByZXBvcnRlZCB2aWEgaHR0cHM6Ly9idWdzLnBocC5uZXQvYnVnLnBocD9p
+ZD03MzAwMw0KUEhQIGZpeGVkIHZpYSBodHRwczovL2dpdGh1Yi5jb20vcGhw
+L3BocC1zcmMvY29tbWl0L2MxODI2M2UwZTA3NjlmYWVlOTZhNWQwZWUwNGI3
+NTBjNDQyNzgzYzYNCmxpYmdkIHJlcG9ydGVkIHZpYSBodHRwczovL2dpdGh1
+Yi5jb20vbGliZ2QvbGliZ2QvaXNzdWVzLzMwOA0KbGliZ2QgZml4ZWQgdmlh
+IGh0dHBzOi8vZ2l0aHViLmNvbS9saWJnZC9saWJnZC9jb21taXQvNDBiZWMw
+ZjM4ZjUwZTg1MTBmNWJiNzFhODJmNTE2ZDQ2ZmFjZGUwMw0KDQoNCkNSRURJ
+VA0KPT09PT09PT09PT09PT09PT09PT09PQ0KVGhpcyB2dWxuZXJhYmlsaXR5
+IHdhcyBkaXNjb3ZlcmVkIGJ5IEtlIExpdSBvZiBUZW5jZW50J3MgWHVhbnd1
+IExBQi4NCg0KDQpWVUxORVJBQklMSVRZIERFVEFJTFMNCj09PT09PT09PT09
+PT09PT09PT09PT0NClRoZSBiYWQgY29kZSBsaWVzIGluIGZ1bmN0aW9uIGdk
+SW1hZ2VXZWJwQ3R4IG9mIGZpbGUgZ2Rfd2VicC5jLg0KDQphcmdiID0gKHVp
+bnQ4X3QgKilnZE1hbGxvYyhnZEltYWdlU1goaW0pICogNCAqIGdkSW1hZ2VT
+WShpbSkpOyAgLyogaW50ZWdlciBvdmVyZmxvdyEhISAqLw0KDQpUaGVyZSBp
+cyBubyBvdmVyZmxvdyBjaGVjayBiZWZvcmUgY2FsbGluZyB0aGUgZ2RNYWxs
+b2MgZnVuY3Rpb24uIEFjdHVhbGx5LCBhbiBpbnRlZ2VyIG92ZXJmbG93IGNh
+biBiZSBoYXBwZW5lZCBoZXJlLiBGb3IgZXhhbXBsZSwgMHg4MDAwICogMHg4
+MDAxICogNCA9IDB4MTAwMDIwMDAwIC0+IE92ZXJmbG93IC0+IDB4MjAwMDAu
+IFRoZSBidWZmZXIgd2lsbCBiZSBvdmVyZmxvd2VkIGluIHRoZSBmb2xsb3dp
+bmcgZm9yIGxvb3AuDQoNCmZvciAoeSA9IDA7IHkgPCBnZEltYWdlU1koaW0p
+OyB5KyspIHsNCiAgICBmb3IgKHggPSAwOyB4IDwgZ2RJbWFnZVNYKGltKTsg
+eCsrKSB7DQogICAgICAgIHJlZ2lzdGVyIGludCBjOw0KICAgICAgICByZWdp
+c3RlciBjaGFyIGE7DQogICAgICAgIGMgPSBpbS0+dHBpeGVsc1t5XVt4XTsN
+CiAgICAgICAgYSA9IGdkVHJ1ZUNvbG9yR2V0QWxwaGEoYyk7DQogICAgICAg
+IGlmIChhID09IDEyNykgew0KICAgICAgICAgICAgYSA9IDA7DQogICAgICAg
+IH0gZWxzZSB7DQogICAgICAgICAgICBhID0gMjU1IC0gKChhIDw8IDEpICsg
+KGEgPj4gNikpOw0KICAgICAgICB9DQogICAgICAgICoocCsrKSA9IGdkVHJ1
+ZUNvbG9yR2V0UmVkKGMpOyAgICAvLyBoZWFwIGJ1ZmZlciBvdmVyZmxvdyEh
+IQ0KICAgICAgICAqKHArKykgPSBnZFRydWVDb2xvckdldEdyZWVuKGMpOyAg
+Ly8gaGVhcCBidWZmZXIgb3ZlcmZsb3chISENCiAgICAgICAgKihwKyspID0g
+Z2RUcnVlQ29sb3JHZXRCbHVlKGMpOyAgIC8vIGhlYXAgYnVmZmVyIG92ZXJm
+bG93ISEhDQogICAgICAgICoocCsrKSA9IGE7ICAgIC8vIGhlYXAgYnVmZmVy
+IG92ZXJmbG93ISEhDQogICAgfQ0KfQ0KDQoNClBPQw0KPT09PT09PT09PT09
+PT09PT09PT09PQ0KVGhpcyBpc3N1ZSB3YXMgcmVwb3J0ZWQgdG8gUEhQIG9y
+aWdpbmFsbHkuIFNvIGN1cnJlbnRseSB0aGUgcHJvb2Ytb2YtY29uY2VwdCBm
+aWxlIGlzIG9ubHkgYXZhaWxhYmxlIGZvciBQSFAuIEJ1dCBJIHRoaW5rIGl0
+J3Mgbm90IGhhcmQgdG8gd3JpdGUgYSBQb0MgZm9yIGxpYmdkLg0KDQo8P3Bo
+cA0KICAgIGluaV9zZXQoJ21lbW9yeV9saW1pdCcsIC0xKTsNCiAgICAkaW0g
+PSBpbWFnZWNyZWF0ZXRydWVjb2xvcigweDgwMDAsIDB4ODAwMSk7DQogICAg
+aW1hZ2V3ZWJwKCRpbSwgJ3BocC53ZWJwJyk7DQogICAgaW1hZ2VkZXN0cm95
+KCRpbSk7DQo/Pg0KDQoNCkVYQ0VQVElPTiBMT0cNCj09PT09PT09PT09PT09
+PT09PT09PT0NCkFsc28sIHRoZSBleGNlcHRpb24gbG9nIHdhcyBnZW5lcmF0
+ZWQgYnkgUEhQLg0KDQo9PTI1ODM9PUVSUk9SOiBBZGRyZXNzU2FuaXRpemVy
+OiBoZWFwLWJ1ZmZlci1vdmVyZmxvdyBvbiBhZGRyZXNzIDB4N2ZmMTNkNDNl
+ODAwIGF0IHBjIDB4MDAwMDAwYTc3ZDBkIGJwIDB4N2ZmZThlY2RhZTkwIHNw
+IDB4N2ZmZThlY2RhZTg4DQpXUklURSBvZiBzaXplIDEgYXQgMHg3ZmYxM2Q0
+M2U4MDAgdGhyZWFkIFQwDQogICAgIzAgMHhhNzdkMGMgaW4gZ2RJbWFnZVdl
+YnBDdHggcGhwLXNyYy1tYXN0ZXIvZXh0L2dkL2xpYmdkL2dkX3dlYnAuYzox
+Mzk6NA0KICAgICMxIDB4OWMwYWFjIGluIF9waHBfaW1hZ2Vfb3V0cHV0X2N0
+eCBwaHAtc3JjLW1hc3Rlci9leHQvZ2QvZ2RfY3R4LmM6MTc1OjYNCiAgICAj
+MiAweDlhYWI3ZCBpbiB6aWZfaW1hZ2V3ZWJwIHBocC1zcmMtbWFzdGVyL2V4
+dC9nZC9nZC5jOjI2OTA6Mg0KICAgICMzIDB4MjY1NTk2NyBpbiBaRU5EX0RP
+X0lDQUxMX1NQRUNfUkVUVkFMX1VOVVNFRF9IQU5ETEVSIHBocC1zcmMtbWFz
+dGVyL1plbmQvemVuZF92bV9leGVjdXRlLmg6NjI4OjINCiAgICAjNCAweDIw
+Mzk5ZTAgaW4gZXhlY3V0ZV9leCBwaHAtc3JjLW1hc3Rlci9aZW5kL3plbmRf
+dm1fZXhlY3V0ZS5oOjQzMjo3DQogICAgIzUgMHgyMDNmNzVhIGluIHplbmRf
+ZXhlY3V0ZSBwaHAtc3JjLW1hc3Rlci9aZW5kL3plbmRfdm1fZXhlY3V0ZS5o
+OjQ3NDoyDQogICAgIzYgMHgxYjQxMDMzIGluIHplbmRfZXhlY3V0ZV9zY3Jp
+cHRzIHBocC1zcmMtbWFzdGVyL1plbmQvemVuZC5jOjE0NjQ6NA0KICAgICM3
+IDB4MTYwYTgxMyBpbiBwaHBfZXhlY3V0ZV9zY3JpcHQgcGhwLXNyYy1tYXN0
+ZXIvbWFpbi9tYWluLmM6MjUzNzoxNA0KICAgICM4IDB4MmJhYmQ3OSBpbiBk
+b19jbGkgcGhwLXNyYy1tYXN0ZXIvc2FwaS9jbGkvcGhwX2NsaS5jOjk5MDo1
+DQogICAgIzkgMHgyYmE0ZjBkIGluIG1haW4gcGhwLXNyYy1tYXN0ZXIvc2Fw
+aS9jbGkvcGhwX2NsaS5jOjEzNzg6MTgNCiAgICAjMTAgMHg3ZmYyNTAyNmZm
+NDQgaW4gX19saWJjX3N0YXJ0X21haW4gL2J1aWxkL2VnbGliYy1vR1V6d1gv
+ZWdsaWJjLTIuMTkvY3N1L2xpYmMtc3RhcnQuYzoyODc6MA0KICAgICMxMSAw
+eDQ2OTg1NiBpbiBfc3RhcnQgPz86MDowDQoNCjB4N2ZmMTNkNDNlODAwIGlz
+IGxvY2F0ZWQgMCBieXRlcyB0byB0aGUgcmlnaHQgb2YgMTMxMDcyLWJ5dGUg
+cmVnaW9uIFsweDdmZjEzZDQxZTgwMCwweDdmZjEzZDQzZTgwMCkNCmFsbG9j
+YXRlZCBieSB0aHJlYWQgVDAgaGVyZToNCiAgICAjMCAweDRmMDgxMiBpbiBt
+YWxsb2MgPz86MDowDQogICAgIzEgMHgxOGU2ODg2IGluIF9lbWFsbG9jIHBo
+cC1zcmMtbWFzdGVyL1plbmQvemVuZF9hbGxvYy5jOjI0MDI6MTENCiAgICAj
+MiAweGE3NzRiMCBpbiBnZEltYWdlV2VicEN0eCBwaHAtc3JjLW1hc3Rlci9l
+eHQvZ2QvbGliZ2QvZ2Rfd2VicC5jOjEyMzoyMA0KICAgICMzIDB4OWMwYWFj
+IGluIF9waHBfaW1hZ2Vfb3V0cHV0X2N0eCBwaHAtc3JjLW1hc3Rlci9leHQv
+Z2QvZ2RfY3R4LmM6MTc1OjYNCiAgICAjNCAweDlhYWI3ZCBpbiB6aWZfaW1h
+Z2V3ZWJwIHBocC1zcmMtbWFzdGVyL2V4dC9nZC9nZC5jOjI2OTA6Mg0KICAg
+ICM1IDB4MjY1NTk2NyBpbiBaRU5EX0RPX0lDQUxMX1NQRUNfUkVUVkFMX1VO
+VVNFRF9IQU5ETEVSIHBocC1zcmMtbWFzdGVyL1plbmQvemVuZF92bV9leGVj
+dXRlLmg6NjI4OjINCiAgICAjNiAweDIwMzk5ZTAgaW4gZXhlY3V0ZV9leCBw
+aHAtc3JjLW1hc3Rlci9aZW5kL3plbmRfdm1fZXhlY3V0ZS5oOjQzMjo3DQog
+ICAgIzcgMHgyMDNmNzVhIGluIHplbmRfZXhlY3V0ZSBwaHAtc3JjLW1hc3Rl
+ci9aZW5kL3plbmRfdm1fZXhlY3V0ZS5oOjQ3NDoyDQogICAgIzggMHgxYjQx
+MDMzIGluIHplbmRfZXhlY3V0ZV9zY3JpcHRzIHBocC1zcmMtbWFzdGVyL1pl
+bmQvemVuZC5jOjE0NjQ6NA0KICAgICM5IDB4MTYwYTgxMyBpbiBwaHBfZXhl
+Y3V0ZV9zY3JpcHQgcGhwLXNyYy1tYXN0ZXIvbWFpbi9tYWluLmM6MjUzNzox
+NA0KICAgICMxMCAweDJiYWJkNzkgaW4gZG9fY2xpIHBocC1zcmMtbWFzdGVy
+L3NhcGkvY2xpL3BocF9jbGkuYzo5OTA6NQ0KICAgICMxMSAweDJiYTRmMGQg
+aW4gbWFpbiBwaHAtc3JjLW1hc3Rlci9zYXBpL2NsaS9waHBfY2xpLmM6MTM3
+ODoxOA0KICAgICMxMiAweDdmZjI1MDI2ZmY0NCBpbiBfX2xpYmNfc3RhcnRf
+bWFpbiAvYnVpbGQvZWdsaWJjLW9HVXp3WC9lZ2xpYmMtMi4xOS9jc3UvbGli
+Yy1zdGFydC5jOjI4NzowDQoNClNVTU1BUlk6IEFkZHJlc3NTYW5pdGl6ZXI6
+IGhlYXAtYnVmZmVyLW92ZXJmbG93ID8/OjAgPz8NClNoYWRvdyBieXRlcyBh
+cm91bmQgdGhlIGJ1Z2d5IGFkZHJlc3M6DQogIDB4MGZmZWE3YTdmY2IwOiAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MA0KICAweDBmZmVhN2E3ZmNjMDogMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAg
+MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDANCiAgMHgwZmZlYTdhN2ZjZDA6IDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
+DQogIDB4MGZmZWE3YTdmY2UwOiAwMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAw
+MCAwMCAwMCAwMCAwMCAwMCAwMCAwMA0KICAweDBmZmVhN2E3ZmNmMDogMDAg
+MDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAN
+Cj0+MHgwZmZlYTdhN2ZkMDA6W2ZhXWZhIGZhIGZhIGZhIGZhIGZhIGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhDQogIDB4MGZmZWE3YTdmZDEwOiBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYQ0K
+ICAweDBmZmVhN2E3ZmQyMDogZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmENCiAgMHgwZmZlYTdhN2ZkMzA6IGZhIGZh
+IGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhIGZhDQog
+IDB4MGZmZWE3YTdmZDQwOiBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBmYSBm
+YSBmYSBmYSBmYSBmYSBmYSBmYQ0KICAweDBmZmVhN2E3ZmQ1MDogZmEgZmEg
+ZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmEgZmENClNo
+YWRvdyBieXRlIGxlZ2VuZCAob25lIHNoYWRvdyBieXRlIHJlcHJlc2VudHMg
+OCBhcHBsaWNhdGlvbiBieXRlcyk6DQogIEFkZHJlc3NhYmxlOiAgICAgICAg
+ICAgMDANCiAgUGFydGlhbGx5IGFkZHJlc3NhYmxlOiAwMSAwMiAwMyAwNCAw
+NSAwNiAwNw0KICBIZWFwIGxlZnQgcmVkem9uZTogICAgICAgZmENCiAgSGVh
+cCByaWdodCByZWR6b25lOiAgICAgIGZiDQogIEZyZWVkIGhlYXAgcmVnaW9u
+OiAgICAgICBmZA0KICBTdGFjayBsZWZ0IHJlZHpvbmU6ICAgICAgZjENCiAg
+U3RhY2sgbWlkIHJlZHpvbmU6ICAgICAgIGYyDQogIFN0YWNrIHJpZ2h0IHJl
+ZHpvbmU6ICAgICBmMw0KICBTdGFjayBwYXJ0aWFsIHJlZHpvbmU6ICAgZjQN
+CiAgU3RhY2sgYWZ0ZXIgcmV0dXJuOiAgICAgIGY1DQogIFN0YWNrIHVzZSBh
+ZnRlciBzY29wZTogICBmOA0KICBHbG9iYWwgcmVkem9uZTogICAgICAgICAg
+ZjkNCiAgR2xvYmFsIGluaXQgb3JkZXI6ICAgICAgIGY2DQogIFBvaXNvbmVk
+IGJ5IHVzZXI6ICAgICAgICBmNw0KICBDb250YWluZXIgb3ZlcmZsb3c6ICAg
+ICAgZmMNCiAgQXJyYXkgY29va2llOiAgICAgICAgICAgIGFjDQogIEludHJh
+IG9iamVjdCByZWR6b25lOiAgICBiYg0KICBBU2FuIGludGVybmFsOiAgICAg
+ICAgICAgZmUNCiAgTGVmdCBhbGxvY2EgcmVkem9uZTogICAgIGNhDQogIFJp
+Z2h0IGFsbG9jYSByZWR6b25lOiAgICBjYg0KPT0yNTgzPT1BQk9SVElORw0K
+DQoNClBBVENIDQo9PT09PT09PT09PT09PT09PT09PT09DQpJdCdzIHZlcnkg
+ZWFzeSB0byB3cml0ZSBhIHBhdGNoIGZvciB0aGlzIGlzc3VlLiBKdXN0IGNh
+bGwgZnVuY3Rpb24gb3ZlcmZsb3cyIHRvIGNoZWNrIGlmIG92ZXJmbG93IGV4
+aXN0cyBvciBub3QgYmVmb3JlIGNhbGxpbmcgZnVuY3Rpb24gZ2RNYWxsb2Mu
+DQoNCmlmIChvdmVyZmxvdzIoZ2RJbWFnZVNYKGltKSwgNCkpIHsNCiAgICBy
+ZXR1cm47DQp9DQoNCmlmIChvdmVyZmxvdzIoZ2RJbWFnZVNYKGltKSAqIDQs
+IGdkSW1hZ2VTWShpbSkpKSB7DQogICAgcmV0dXJuOw0KfQ0KDQoNClRJTUVM
+SU5FDQo9PT09PT09PT09PT09PT09PT09PT09DQoyMDE2LzA5LzAyIC0gUmVw
+b3J0IHRvIFBIUCBhcyBCVUcgNzMwMDMNCjIwMTYvMDkvMDYgLSBXcm90ZSBh
+IHBhdGNoIGFuZCBjcmVhdGVkIGEgcHVsbCByZXF1ZXN0IGZvciBsaWJnZA0K
+MjAxNi8wOS8wNiAtIFdyb3RlIGEgcGF0Y2ggYW5kIGNyZWF0ZWQgYSBwdWxs
+IHJlcXVlc3QgZm9yIHBocC1zcmMNCjIwMTYvMDkvMTYgLSBGaXhlZCBpbiBQ
+SFAgdmlhIDQ2ZGYwNjQgYW5kIGMxODI2M2UNCjIwMTYvMDkvMTYgLSBGaXhl
+ZCBpbiBsaWJnZCB2aWEgNDBiZWMwZg0K
 
-Around 26 were made +/- a month of Jias, I checked them all manually.
-
-Around ~11 had github accounts that matched the user id -- no obvious
-malice. A few were package signing keys, but browsing the releases they
-seem okay to me.
-
-There was a cluster from Warwick students, I'm thinking they use the
-same distribution as Jia? e.g, these all look similar:
-
-    E1FE439D3D8EE51B
-    5DB5A25F19EE1E29
-    70A3969D7067B537
-    9471FAF63F9D494D
-
-Note: You can fetch them with something like gpg --recv-key xxx
-
-In summary, nothing suspicious jumps out, I'm just documenting it here
-to save anyone else the effort.
-
-If I extend the search for keys generated at any time (not just close to
-when Jia's key was generated), there are 1,186 matches. That's probably
-too much to check manually, but I'll check the user\d+@free-email
-ones this afternoon....
-
-$ grep -cP '<\w+\d+@.*\>' matches.txt
-58
-
-I guess it's alo possible Jia just entered "5y" manually at the
---full-generate-key prompt, or doesn't use that expiration consistently.
-If so, there are 26,871 matching keys to check :(
-
-Anyway, I feel like my eyeballs did their part :)
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
-
+--_000_1F2D4DA31CA62740BFF46830A0E6A4F706707654EXMBXTJ002tence_--
