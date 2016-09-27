@@ -1,41 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/7
-Message-ID: <20161108131240.GA19683@cassiel.pault.ag>
-Date: Tue, 8 Nov 2016 08:12:40 -0500
-From: Paul Tagliamonte <paultag@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: netcat-traditional nc buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/1
+Message-ID: <20160927012359.GA30247@sin.redhat.com>
+Date: Tue, 27 Sep 2016 10:54:00 +0930
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
 Content-Type: text/plain; charset=utf-8
 
-The following invocation of nc:
+First, CVE-2016-3181 and CVE-2016-3182 have been identified by upstream as the
+same underlying issue.
 
-$ nc pault.ag 2124124124
+https://github.com/uclouvain/openjpeg/issues/724
 
-Results in a buffer overflow:
+> Origin of the issue is the same as #725
 
-*** buffer overflow detected ***: nc terminated
-======= Backtrace: =========
-/lib/x86_64-linux-gnu/libc.so.6(+0x70bcb)[0x7fc8eecaebcb]
-/lib/x86_64-linux-gnu/libc.so.6(__fortify_fail+0x37)[0x7fc8eed370e7]
-/lib/x86_64-linux-gnu/libc.so.6(+0xf7220)[0x7fc8eed35220]
-/lib/x86_64-linux-gnu/libc.so.6(+0xf67d9)[0x7fc8eed347d9]
-/lib/x86_64-linux-gnu/libc.so.6(_IO_default_xsputn+0xac)[0x7fc8eecb2bec]
-/lib/x86_64-linux-gnu/libc.so.6(_IO_vfprintf+0xcd3)[0x7fc8eec859f3]
-/lib/x86_64-linux-gnu/libc.so.6(__vsprintf_chk+0x8c)[0x7fc8eed3486c]
-/lib/x86_64-linux-gnu/libc.so.6(__sprintf_chk+0x7d)[0x7fc8eed347bd]
-nc[0x402b20]
-nc[0x402112]
-/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf1)[0x7fc8eec5e2b1]
-nc[0x402341]
+https://github.com/uclouvain/openjpeg/issues/725
+
+Original requests:
+
+http://seclists.org/oss-sec/2016/q1/630
+http://seclists.org/oss-sec/2016/q1/631
 
 
-This appears to not happen with other versions of netcat, such as the
-one on OSX.
+.. it gets more interesting.  The reproducer on issue 725 happens to tickle
+a flaw in a patch for CVE-2013-6045 that was posted here back when:
 
-I'm unsure of the security implications of this, but it's not out of the
-question to use this as a DOS, at least.
+http://seclists.org/oss-sec/2013/q4/412
 
-Cheers,
-   Paul
+segfault-1.patch uses:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
++		tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
+
+which should have used compcsize instead of comp0size.
+
+Upstream never included this patch - deeper work went into eliminating this and
+other issues in openjpeg-1.5.2.  The patch that addresses this particular issue
+seems to be 69cd4f92 (hunk starting /* testcase 1336.pdf.asan.47.376 */).
+
+https://github.com/uclouvain/openjpeg/commit/69cd4f92
+https://github.com/uclouvain/openjpeg/issues/297
+
+This hasn't been an issue in upstream openjpeg releases for a long time ...
+but there are LTS distributions around still shipping 1.5.1 (or 1.3) with the
+patches from here applied.  Those should preferably upgrade to 1.5.2:  changing
+comp0size to compcsize eliminates this particular crash, but the upstream fixes
+that got into 1.5.2 seem to more thoroughly address some of the underlying
+problems.
+
+
+
+-- 
+Doran Moppert
+Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
