@@ -1,40 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/14/1
-Message-ID: <30653c2b-5754-e3a1-94d4-9ead3e9ca65b@redhat.com>
-Date: Thu, 14 Jul 2016 11:44:33 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Requests: HarfBuzz - Chromium CVE issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/5
+Message-ID: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
+Date: Tue, 27 Sep 2016 08:48:42 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Today I noticed ImageMagick issue #275 
+(https://github.com/ImageMagick/ImageMagick/issues/275) which was 
+posted 4 days ago.   I was able to reproduce this issue with the 
+ImageMagick provided by my Ubuntu system (6.8.9-9).
 
-Google released a chromium advisory[0], in which a bunch of harfbuzz
-issues were mentioned. However only one CVE was assigned to multiple
-issues as per https://bugs.chromium.org/p/chromium/issues/detail?id=544270
+The problem is that a file name ending with a colon (':') causes the 
+program to hang forever.  If an attacker is able to have some control 
+over the input file name, then this could be used to cause DOS by 
+hanging the program.
 
+The following is the text from the problem report:
 
-Looking a bit into the attached bug and going a few links down, i
-realized that there are atleast 3 issues in here which are CVE worthy.
-Details as follows:
+   qwerty4030 commented 4 days ago • edited
+   Version: ImageMagick 6.9.3-10 Q16 x86_64 2016-05-04
+   http://www.imagemagick.org
+   Copyright: Copyright (C) 1999-2016 ImageMagick Studio LLC
+   License: http://www.imagemagick.org/script/license.php
+   Features: Cipher DPC OpenMP
+   Delegates (built-in): jng jpeg lzma png tiff xml zlib
 
-1. Heap based buffer overflow:
-https://github.com/behdad/harfbuzz/issues/139#issuecomment-146984679
+   OS: 4.4.10-22.54.amzn1.x86_64 (amazon linux)
 
-2. Fix hmtx wrong table length check:
-https://github.com/behdad/harfbuzz/issues/139#issuecomment-148289957
+   identify hangs on the following commands:
 
-3. heap-buffer-overflow in hb_ot_face_metrics_accelerator_t::get_advance
-https://github.com/behdad/harfbuzz/issues/156
+   identify "d:" (no output, just hangs forever)
+   identify "d::" (no output, just hangs forever)
+   identify "http:"
+   error : Unknown IO error (hangs after this message)
+   identify "http::"
+   error : Unknown IO error (hangs after this message)
 
-Can MITRE please assign CVEs to these issues?
+>From my own investigations, I used
 
-Also, assuming we still have a policy of one issue one CVE, how does
-MITRE plan to handle vendors who assign one CVE to multiple non-related
-issues?
+   identify -debug all "d:"
 
+and see that a temporary file is reported to be created and then the 
+program hangs which no apparent CPU usage.
 
-[0]
-http://googlechromereleases.blogspot.in/2016/01/stable-channel-update_20.html
+Bob
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
