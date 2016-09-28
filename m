@@ -1,39 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/24/2
-Message-ID: <57BD9BF5.2040501@cleal.org>
-Date: Wed, 24 Aug 2016 14:07:01 +0100
-From: Dominic Cleal <dominic@...al.org>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-6319: Foreman stored XSS in form label helpers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/12
+Message-Id: <20160928201933.246876C542B@smtpvmsrv1.mitre.org>
+Date: Wed, 28 Sep 2016 16:19:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: pere@...a.cat
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Requests for Drupal Core - SA-CORE-2016-004
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6319: Foreman stored XSS in form label helpers
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The "label" parameter of all form helpers used to construct web UI
-components was not escaped allowing XSS (cross-site scripting). The
-Foreman itself did not contain exploitable code but other plugins that
-relied on these form helpers could be vulnerable. One known vulnerable
-plugin is Remote Execution. All versions of this plugin are affected.
+> https://www.drupal.org/SA-CORE-2016-004
 
-Affects Foreman 1.6.0 and higher
-Fix released in Foreman 1.12.2
+> Users without "Administer comments" can set comment visibility on
+> nodes they can edit
 
-Patch:
-https://github.com/theforeman/foreman/commit/0f35fe14acf0d0d3b55e9337bc5e2b9640ff2372
-
-More information:
-https://theforeman.org/security.html#2016-6319
-http://projects.theforeman.org/issues/16024
-https://theforeman.org
-
--- 
-Dominic Cleal
-dominic@...al.org
+Use CVE-2016-7570.
 
 
+> Cross-site Scripting in http exceptions
+
+Use CVE-2016-7571.
 
 
+> Full config export can be downloaded without administrative permissions
 
+Use CVE-2016-7572.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX7CVvAAoJEHb/MwWLVhi2BdYQAIBhKIpY/Uq+mCbHDidgRMra
+g9tgf7Jit9kDtGhS93eafrBhFVsiZgNPa7F3kPxsVivbPL2fzyAM5QLIuh9FK9dB
+PrsubVdejpqpEXTcAPvgiB1nxkqLsYqf5uFlUBSYkgDuSYdf5AVt4xZ2u7hh+PEO
+zlkS3Y+8hteaR1k/Oy/LXR8+QeHYD4126AhocIEX7yooyQLEDC6zaU7BvgWVXpY3
+Sv8dDMQ7eUk+UBgEfih33/+spqMrVKQJcKcIDP5yIH+hCaYTEK8atHJIIFQL1R0b
+cjEshwhdDCAFnqn5qtxTdZTQlx5PZGD0aZCiuVzr/5eNE61UGnVfmkQMMu8mDJkQ
+kivhXiH2A7noNPd6S3SWRbNIfP5HXta30BcSWQwZKAPERnNFbFwLs/L1Lzf7MiL1
+D4Cccl+j3Bvval90rrKDYHcbavKnvLraEms5TWWUB/fwTMVUlgGstRd/RmyPRMnm
+TBfsNn62LidMEDQfiJdtPgcoM6lPeEs/FxrClRu/B4FcGRYduxFOSWuLod53rr+8
+TFWEsHF7+PdGiz4WjeSHMh9it8Mw15qlvcnYegsPiNkbCx0cYH4BYaPMx8oEEVNR
+zf4eAfW+2ne4QaL9MiK7x/aMV+n2BkNBloYLRz5pk4exEtVmf8l0Hzh88uUtLebo
+sPe3L9lN2+vXKIalxg0Q
+=/g1W
+-----END PGP SIGNATURE-----
