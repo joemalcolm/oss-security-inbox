@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/16
-Message-ID: <2147367.62QfxKV9DH@blackgate>
-Date: Wed, 09 Nov 2016 15:50:38 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libming: listmp3: left shift in listmp3.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/2
+Message-ID: <122945095.MCtYvXDq6T@xps>
+Date: Wed, 28 Sep 2016 23:35:43 +0200
+From: Albert Astals Cid <aacid@....org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, security@....org
+Subject: kdesu vulnerability: need CVE
 Content-Type: text/plain; charset=utf-8
 
-If it is suitable for a CVE please assign one. Thanks.
+Hi, Albert from KDE, can we get a CVE assigned for kdesu?
 
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
+The problem is that you could sneak an unicode string terminator in the kdesu invocation
+and the label showing which command will be executed ended there but we did execute the whole thing,
+that is,
+  
+   echo Hi@; whoami > /tmp/filebyroot
 
-A fuzzing revealed a left shift in listmp3. The bug does not reside in any 
-shared object but if you have a web application that calls directly the 
-listmp3 binary to parse untrusted mp3, then you are affected.
+If @ is the unicode string terminator would only tell the user kdesu would execute "echo Hi"
+but would create the /tmp/filebyroot file as root
 
-The complete UBSan output:
+The fix is already available at
+https://github.com/KDE/kde-cli-tools/commit/5eda179a099ba68a20dc21dc0da63e85a565a171
 
-# listmp3 $FILE
-listmp3.c:94:23: runtime error: left shift of negative value -1
-listmp3.c:95:23: runtime error: left shift of negative value -1
-
-Affected version:
-0.4.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00046-libming-leftshift-listmp3_c
-
-Timeline:
-2016-08-13: bug discovered
-2016-10-20: bug reported to upstream
-2016-11-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-left-shift-in-listmp3-c
+Thanks,
+  Albert
