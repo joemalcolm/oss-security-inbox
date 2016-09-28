@@ -1,45 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/4
-Message-ID: <20160729170700.977@usenet.piggo.com>
-Date: Fri, 29 Jul 2016 15:16:18 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: mongodb: world-readable .dbshell history file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/8
+Message-Id: <20160928191539.9875452E01B@smtpvbsrv1.mitre.org>
+Date: Wed, 28 Sep 2016 15:15:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: zhangkaixiang@....cn
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: docker2aci: Path traversals present in image converting
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832908:
+> https://github.com/appc/docker2aci/issues/201
+> 
+> tmpLayerPath := path.Join(tmpDir, layerIDs[i])
+> 
+>          tmpLayerPath += ".tar"
+> 
+>          layerFile, err := extractEmbeddedLayer(lb.file, layerIDs[i], tmpLayerPath)// without essential check
+>                                                                                    // for layerpath, may breakout
+>                                                                                    // tmpDir.
+> 
+> Build or downloading a malicious image as an archive file, containing
+> some layer files with relative names, like "../../../etc/ filename",
+> as well modifying the content of some corresponding json file related
+> to it. then running docker2aci to convert the docker's image to aci.
+> Overview of the content of malicious image:
+> 
+> ../../../etc
+> 
+> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625
+> 
+> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/json
+> 
+> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/VERSION
+> 
+> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/layer.tar
+> 
+> 
+> and logs:
+>          tmpDir:  /tmp/docker2aci-878549369
+> tmpLayerPath:  /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
+> Extracting ../../../etc
+> 
+> then check the results:  ls /etc/*.tar
+> /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
 
-,----
-| During the report on redis-tools
-| (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460), lamby@
-| linked to a codesearch and the same bug was found in mongodb-clients.
-| 
-| mongodb-clients stores its history in ~/.dbshell, this file is created
-| with permissions 0644. Home folders are world readable as well in
-| debian, so any user can access other users mongodb history, even though
-| db.auth commands don't appear to be logged like redis did.
-| 
-| I filed a bug on upstream as well:
-| https://jira.mongodb.org/browse/SERVER-25335
-`----
+>> From: Alex Crawford
+>> 
+>> Our initial analysis confirms there is a path traversal bug in the
+>> docker layer conversion library. However, due to the specific nature
+>> of how a malicious image must be crafted to exploit this bug (i.e.,
+>> invalid format), the attack vector is largely mitigated ... the bug
+>> has limited impact and will not affect typical usage of docker2aci.
 
-The mongodb client doesn't store authentication commands, but there's
-still information leakage, though, even if only about database and
-collection names, or data structure.
+Use CVE-2016-7569.
 
-As for data itself, the history could also contain sensitive
-information; for instance, if usernames for some other service were
-stored in a mongo collection, the history could contain lines like:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-  db.users.find({user:"foo"})
-
-or even:
-
-  db.users.update({user:"foo"},{$set:{password:"OhComeOnNow"}})
-
-Cheers,
-
---Seb
-
+iQIcBAEBCAAGBQJX7BZQAAoJEHb/MwWLVhi2j48QAJMAr2JXCS3f8oYQ0pClZyyv
+giFGlitDkJiq0ieJWq8YGeS/5319DiGYSuDftn/eQMMgTdTAO5pNDQMi6B/SO/e0
+g5Wjl3clShOTT8uYdLrsSA3MzG8XENseOsjWBJRrXifPdEPQWCP1iTsyKewIEa1O
+LRe04oGRW7snRbhsAsf4cgY2F4MW4yrlx0Gyi+6uZg4YQS4/FUaGcWtlM6+ax0Up
++S5QSrX8SMRSczLsPod+gD9x/x+SufrmmXGVU9iyFt55SYV1ZIVVG5IPsijU7uvT
+YHEV/1kX4cLQ0QY7LByd7Pcaoz+njMV7XRYi3HuYyKg85TRxITfw8cXXaHEUDimi
+c7hPSyKZ3vttWC70v+ACaKk22IGP5LoRLsNUUngWJgY+TEpNgFIAKOVVnJZyWzGB
+ROvmEYA+9cO6Niyfs/nh2G+ASDbnlyaHUDya5Ps85kw5n782eKTUe+aWXZPuYpqa
+DwT5tqLmp3UpEQTfjKRvOQG5KYvBKWPV3kPz2yBVybEFUSZgRIiaSXqazqpjNIyZ
+ZW4TXEVGANjtuSrSUHe59AKChShEC4ZSop1WtKcDwQBg45YLsuudrZ3vtV6YybJR
+Ndd4sEU0H3CWAKcaytnbu6IDcCucCfHwkXeel3LdX2MVLw10yRNvOwBA1mCBdBs3
+isEgR9ts2t3oSQlVYbB2
+=oBJi
+-----END PGP SIGNATURE-----
