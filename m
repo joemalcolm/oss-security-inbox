@@ -1,42 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/5
-Message-ID: <579F7AF1.2090108@gmail.com>
-Date: Mon, 1 Aug 2016 18:38:09 +0200
-From: "petrella.pietro" <petrella.pietro@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/9
+Message-Id: <20160928122002.671555ec3ab226712057df54@andrewayer.name>
+Date: Wed, 28 Sep 2016 12:20:02 -0700
+From: Andrew Ayer <agwa@...rewayer.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE:Request - Path Traversal Barebone.jsp - Liferay 5.1.0
+Subject: CVE Request: systemd v209+: local denial-of-service attack
 Content-Type: text/plain; charset=utf-8
 
+systemd[1] fails an assertion in manager_invoke_notify_message[2] when
+a zero-length message is received over its notification socket.
+After failing the assertion, PID 1 hangs in the pause system call.
+It is no longer possible to start and stop daemons or cleanly reboot
+the system. Inetd-style services managed by systemd no longer accept
+connections.
 
-I discovered a /directory traversal issue /on *minifierBundleDir 
-*/barebone.jsp /_variable___on a website with *Liferay 5.1.0*. I don't 
-exclude that this vulnerability is present in other Liferay versions as 
-well.
+Since the notification socket, /run/systemd/notify, is world-writable,
+this allows a local user to perform a denial-of-service attack against
+systemd.
 
-However, i report the following vulnerable URL of example:
+Proof-of-concept:
 
-https://mysite.it/html/js/barebone.jsp?browserId=firefox&themeId=sometheme&colorSchemeId=01&minifierType=js&minifierBundleId=javascript.barebone.files&*minifierBundleDir**=**/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E/%2E%2E%2Fetc%2Fhosts%00.html*&t=1429132297000
+        NOTIFY_SOCKET=/run/systemd/notify systemd-notify ""
 
-It's important to note that the url requested is built in the following 
-manner:
-- only .. "encoded characters" are permitted when you insert the 
-traversal request
-- At the end of the file is necessary insert *%00* and *.html* otherwise 
-the request is not accepted
+This vulnerability is present in all versions of systemd since at
+least v209[3].
 
-So, to navigate filesystem is recommended to use Burp Suite "repeater 
-tab" tool.
+This has been reported to systemd.[4]
 
-If there are no CVE about this finding, at this pourpose i require a CVE 
-please.
-
-Thank you
-Pietro
-
--- -- -- -- --
-Pietro Petrella
-Information Security Consultant
-(CISSP, OPST, RHCE, ISO 27001:2013)
-PGP: 5017 E6A8 9E1E 5B39 8C52 05C7 81A5 C3C9 8ED5 4730
-
-
+[1] https://github.com/systemd/systemd/
+[2] https://github.com/systemd/systemd/blob/b8fafaf4a1cffd02389d61ed92ca7acb1b8c739c/src/core/manager.c#L1666
+[3] https://github.com/systemd/systemd/commit/5ba6985b6c8ef85a8bcfeb1b65239c863436e75b#diff-ab78220e12703ee63fa1e6a2caa16bebR1325
+[4] https://github.com/systemd/systemd/issues/4234
