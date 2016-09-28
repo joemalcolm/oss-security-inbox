@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/5
-Message-ID: <5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>
-Date: Mon, 21 Nov 2016 16:56:13 +0000
-From: Scott Gravelle <scottg@...rezzio.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Multiple XSS vulnerabilities affecting five WordPress Plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/14
+Message-ID: <alpine.GSO.2.20.1609281712500.18003@freddy.simplesystems.org>
+Date: Wed, 28 Sep 2016 17:15:53 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: Tavis Ormandy <taviso@...gle.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-Any plans to get CVEs assigned to these vulnerabilities you guys found?  Our vulnerability scanner does not have a feature to filter off OVE.
+On Wed, 28 Sep 2016, Tavis Ormandy wrote:
+>
+> (/etc/passwd) /dumpname load 256 string filenameforall
+> $ convert test.gif png:test.png
+> <creates a file called test.png containing first line of /etc/passwd>
+>
+> Also seems to work with gm convert.
 
-Scott Gravelle
-Infrastructure and Security
+It is good that you did not single out just one using program.
 
-scottg@...rezzio.com
-866-847-4515 x1217
-imprezzio.com
+This issue seems to afflict any program which invokes Ghostscript in 
+general and not just *Magick.  However, 'convert' does offer to write 
+a rendered result to an output file.
 
-
------Original Message-----
-From: Summer of Pwnage [mailto:lists@...urify.nl]
-Sent: Saturday, November 19, 2016 2:51 AM
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins
-
-Please see attached advisories for more information. These issues were found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community project. Its goal is to contribute to the security of popular, widely used OSS projects in a fun and educational way.
-
-
-
-
-
-
-This message may be subject to nondisclosure, copyright and privacy policy. If you have received this message in error, please notify the sender
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
