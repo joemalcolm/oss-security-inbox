@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/16
-Message-ID: <CAP9m6YeuL4wmjT+uwGuYYvsUvq4gh9-La=O5hjkqrAY7yOBAJQ@mail.gmail.com>
-Date: Thu, 5 May 2016 09:11:08 -0400
-From: Stanislav Datskovskiy <stas@...er-os.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/2
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BFB7FF@EX02.corp.qihoo.net>
+Date: Wed, 28 Sep 2016 08:27:15 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: cve-assign <cve-assign@...re.org>
+Subject: CVE Request: docker2aci: Path traversals present in image converting
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+DESCRIPTION
 
-My program parsed out RSA moduli in all rfc2440/4880-compatible formats.
 
-The SKS dump was from slightly over a year ago. A more recent on will be fed in
-next.
 
-- -S
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+This is Kaixiang Zhang of the Cloud Security Team, Qihoo 360. I submitted an path traversal vulnerability to docker2aci <https://github.com/appc/docker2aci/issues/201> recently. The issue exists in image converting, there must be a possibility that it extracts embedded layer data to arbitrary directories or paths since no essential check for the output file path. Could you please assign a CVE number for it? Thanks.
 
-iQEcBAEBCgAGBQJXK0ZcAAoJELmCKKABq//HXR4H/24arPafKlXV3nLo95JSA3lk
-Zhf2KXjdFrzJQSYLqdUtxTG/U8zsqIK0EZhMvoXU1iARxujmMWfCqnE7XyRSYMGm
-hP52kC7fQyw2ku80vJfcua5V8depEpEg39m/tI+iRUJrd9FZ7AB7dmnbmeuC9dK5
-5l3cvuq7VmWDvbjTeq3tiSAANCIg2oZpwgtQSucEIPQ/G80M79FKeact6w9DfyKK
-9S8WdGNXnttGfSF227nzi4DLAoErf9BaF6Btb39kqhx/X6jk8NOtsCIo3/7g1JRD
-/EmWKXUsKQK95r9ZuO2K0tCMv+YB1RCEa5kXySB8qFHmKvgsH+Ry4/C1M3QCNek=
-=j0R9
------END PGP SIGNATURE-----
+
+
+Source info
+
+
+
+tmpLayerPath := path.Join(tmpDir, layerIDs[i])
+
+         tmpLayerPath += ".tar"
+
+         layerFile, err := extractEmbeddedLayer(lb.file, layerIDs[i], tmpLayerPath)// without essential check for layerpath, may breakout tmpDir.
+
+
+
+Proof-of-concept
+
+
+
+Build or downloading a malicious image as an archive file, containing some layer files with relative names ,like “../../../etc/ filename”, as well modifying the content of some corresponding json file related to it. then running docker2aci to convert the docker’s image to aci. Overview of the content of malicious image:
+
+../../../etc
+
+../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625
+
+../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/json
+
+../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/VERSION
+
+../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/layer.tar
+
+
+and logs:
+         tmpDir:  /tmp/docker2aci-878549369
+tmpLayerPath:  /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
+Extracting ../../../etc
+
+then check the results:  ls /etc/*.tar
+/etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
+
+Of course, the tar file content could be modified by yourself.
+
+Best regards&
