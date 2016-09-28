@@ -1,35 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/9
-Message-ID: <alpine.LFD.2.20.1612081258430.26257@wniryva>
-Date: Thu, 8 Dec 2016 13:02:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: liq3ea@...il.com, psirt@...wei.com
-Subject: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/5
+Message-Id: <20160928172659.DF3656C5385@smtpvmsrv1.mitre.org>
+Date: Wed, 28 Sep 2016 13:26:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: jericho@...rition.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - OpenSLP 2.0 Memory Corruption
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
-vulnerable to a divide by zero issue. It could occur while copying VGA data 
-when cirrus graphics mode was set to be VGA.
+> : : https://sourceforge.net/p/openslp/mercurial/ci/34fb3aa5e6b4997fa21cb614e480de36da5dbc9a/
+> 
+> : Use CVE-2016-7567.
+> 
+> Why did this get a 2016 CVE?
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-instance on the host, resulting in DoS.
+>> Bug 151: Fix memory corruption due to possible overflow in SLPFoldWhiteSpace
+>> 
+>> 2015-12-01
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
+"possible overflow" in the 2015 reference was not interpreted to mean
+a definitive statement of a security problem, and the defining
+reference is the
+http://www.openwall.com/lists/oss-security/2016/09/27/4 posting
+itself, which occurred in 2016. In other words, either a CVE-2015-
+number or a CVE-2016- number may have been reasonable but we chose the
+latter.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo 
-360.cn Inc. and PSIRTeam of Huawei Inc.
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJX6/yDAAoJEHb/MwWLVhi2gXgQALabK0bQBMvo1WbF4nbg2zDB
+nJxmBxNLCbIE0EzGimrh/ytHwHO2eBpVxRsHTGBD9gkiKWi6IdlNk6nPqNndwmGf
+XfNVA/HCAd5LbuvkxOgYtAxTEWfvbvUqty5xtXl8Fr9OzBzO8D3a6IheTRgTqdP0
+VhOBUiLi9G/EEuDGIKP1ly5/1UhSWGc83itsjlR/4751EnXPkIX7xkp8QLged5pR
+YAoxVg66bbmuL5g9PKA+1Vit5MmlookIJ8t6CYcPHoSolmRc4Wfa7WDMxgxZrp63
+BkML/2DlFoM/zWP9APLOtlLN+tx2NuQKDv01f7t6zXD4nmZug/kK5CwOSErooM+l
+e/dga/C4SUzNzH1VHppFYyeZtzBBV7ggsW1d6GUp6OKQaBbd32st+18Qb9qiQ3HA
+Ina1/a+kiAL7yrSY07Rc06Z1P8KzhQTWK/apEnE/bLdSLtuFmDZtr0u80auLfZvy
+KOMOa1+UOhome6x8cs+oCMTF5/DxPF2+K1Jyss6uW8tFlfywLsnmkC7KLRSzsqzu
+KKEyrf5vCuZELF5V6UjYdgELTYcNJZmhjgBk8ReKofJ5AXHW+hRy7EagZnQ+9DX2
+K+Y6JubZxBI2Ie/8TZ+ec4Vf23E8xjPiRr7qxSYWxmBvzjNhwaWhgn1FQ0yG/+t3
+cYwq0Wg1ktDWw26KYtvm
+=l+Su
+-----END PGP SIGNATURE-----
