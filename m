@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1519" "Monday" "18" "January" "2016" "13:54:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: Buffer Overflow in lha compression utility" nil nil nil "1" "2016011818:54:41" "[oss-security] Re: Buffer Overflow in lha compression utility" (number mark "U       cve-assign@m Jan 18   39/1519  " thread-indent "\"[oss-security] Re: Buffer Overflow in lha compression utility\"\n") "<569CADC1.7000407@gmail.com>" ("<569CADC1.7000407@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1670" "Wednesday" "28" "September" "2016" "16:11:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read" "^Cc:" nil nil "9" "2016092820:11:20" "[oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read" (number mark "U       cve-assign@m Sep 28   48/1670  " thread-indent "\"[oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read\"\n") "<6c6e2d2c-2fc9-9538-88e8-ac2f309211c3@gmail.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21704 invoked by uid 550); 18 Jan 2016 18:54:54 -0000
+Received: (qmail 3502 invoked by uid 550); 28 Sep 2016 20:11:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21679 invoked from network); 18 Jan 2016 18:54:53 -0000
+Received: (qmail 3477 invoked from network); 28 Sep 2016 20:11:32 -0000
+In-Reply-To: <6c6e2d2c-2fc9-9538-88e8-ac2f309211c3@gmail.com>
+Message-Id: <20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org
+Date: Wed, 28 Sep 2016 16:11:20 -0400 (EDT)
 From: cve-assign@mitre.org
-To: pariszoump@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <569CADC1.7000407@gmail.com>
-Message-Id: <20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>
-Date: Mon, 18 Jan 2016 13:54:41 -0500 (EST)
-Subject: [oss-security] Re: Buffer Overflow in lha compression utility
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
+To: oss-security@lists.openwall.com
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The header_size variable is determined from the first byte of the lha
-> archive header, which is read by the get_byte function. The returned
-> value is used in:
-> 
-> header_size + 2 - COMMON_HEADER_SIZE
-> 
-> to determine the elements' size used in fread() .
-> 
-> If the header_size is less than abs(2 - COMMON_HEADER_SIZE) = abs(2 -
-> 21) = 19 then the size parameter is overflowed and a buffer overflow
-> occurs in fread.
+> mujs str Out-of-Bound read 1 byte in function chartorune.
+> http://bugs.ghostscript.com/show_bug.cgi?id=697136
 
-Use CVE-2016-1925 for these CWE-130 issues.
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 1
+>> 
+>> We were unconditionally reading the next character if we encountered
+>> a '*' in a multi-line comment; possibly reading past the end of
+>> the input.
+
+Use CVE-2016-7563.
+
+
+> mujs "char *s" Heap overflow in Fp_toString at jsfunction.c:72
+> http://bugs.ghostscript.com/show_bug.cgi?id=697137
+
+>> AddressSanitizer: heap-buffer-overflow
+>> WRITE of size 1
+>> 
+>> We were not allocating space for the terminating zero byte.
+
+Use CVE-2016-7564.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWnTRlAAoJEL54rhJi8gl5bdUP/123UJ7W73/BOu1E/j1kKrFJ
-NMHjJZtEwjLmwZLCbV0HQ2l7311hbMZnjNm1lHLJuX695ca7prndMGEV5va5NVRF
-5X6z9OTBkitYTJVTp/RoolXPL+jXQr/LTXiieHl3M/Iq+lUV1fqZvWf5kytnGo2N
-AzQFGpDct0B7JfM6fGn8t6qd+/5ar56EAU01IEwyqSeKzIiQtAUes/y8D7D7RAyk
-O+B2lJMQ92/np8/i0guLoVs9P60xqDF0QPlVLQGKwZsBt/5T432JnUUkP/vyUYqc
-vY7aoe8tM6ib5Y1loSk6hTUynHR34EyQc4ZfyE9OL0ugdz4GDy/QzOWbDfrSlIw1
-u31ac9pRcGwHxToryqFmulPpfQlRclbnHQgqkNmPq0FrR9Q0WAYSiXHdHyqktKTv
-pMMZtO7UF6yABYSWVPyivprflRYbyP+Mm52VnOG/W27bevEeK46UUjlHPYVn/Qi4
-wFNhDvTh+fjkiGcfuR6wfIT2ABipkBeR8opAvz2XS8W7/ukDaIJZ1QVExThxMu57
-9H/uqLcAor7FrQiDfZv+s7SzstS898UeJvTbOn8HRZBerj6OkaPW9xR6v/B5Tf1W
-ssXuU2vaIe/7isYeWV8YzzD9dNJlGneHUBonSucu+buVx84spJqTP9NvRIcy2Z3U
-1IeE6G2X4oMRf3Kxm8Sj
-=h+oU
+iQIcBAEBCAAGBQJX7COpAAoJEHb/MwWLVhi24ugP/19AmMjWnrZ9kH88CpBt/y0M
+s6rWfYpCF0k56G6RSlkuUm/XOlqBPAsWK9I3REM32shkCLaA0L96IeQnW1h/flT1
+7m30tJmxi31i31XfvpnBJWl06EqKTMZvNdNQBO+JS79ehBGmhmsIWjs9EkbBpNIv
+9jr3rzWE+K7IAZcWAGu5e56mCC+FpNE1djZ8Iaw+RuX2oVOvJoDTq1hskiRMijKw
+qXiudF6upJ8HUzBWN3mbDAUtuA0VmYClQZ39iy7V6nH7QuwbG4XLvzAjkCjmzwhS
+bkg7zFhNOMw6J1nuVD5s5VtrhRctgaPaDDaTnNsw7IYjyYNbO+obhw3x1ZnqrXcx
++wN3ZfMzxk0Q4n4KypmF2OJ6QITYqH5K6ofO5D9OI39cUmjsBEj1smqxSZq01xrU
+YxDyGS4gNQ6hWKS23/wgPt9YAjX+2xBMnAyygBrAzNcfFmO42XUpHDWl2ArnXQ1l
+kVyZLKOxFbGeTcsMyDFAjsDwD9tffl/6jDkZgd34em6kS1+lE7bccy2+IUsynrxz
+7zqhueAX7uOOVbjgJ4bVpGYgebj2J8AVHJoJJKtaWskCBKbxyxbT49twJ56lSDd9
+s5kVrUGdOz6+9RO7GJ/6dEwqJjmUYXh8O/3qI3h4gjmeTHAIaJ+uxhZ5J34Sj8xe
+B6ZoBxrnz+3QVOfjQ49u
+=iapx
 -----END PGP SIGNATURE-----
