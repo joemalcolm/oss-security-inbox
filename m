@@ -1,65 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/29/1
-Message-Id: <20160529032255.12FC7332079@smtpvbsrv1.mitre.org>
-Date: Sat, 28 May 2016 23:22:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/1
+Message-ID: <CAJ_zFkKcsBVfV8AT3yUhAcMUSE-A89saZdfGMM822q43MsVLWw@mail.gmail.com>
+Date: Wed, 28 Sep 2016 16:03:08 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Sep 28, 2016 at 3:15 PM, Bob Friesenhahn
+<bfriesen@...ple.dallas.tx.us> wrote:
+> On Wed, 28 Sep 2016, Tavis Ormandy wrote:
+>>
+>>
+>> (/etc/passwd) /dumpname load 256 string filenameforall
+>> $ convert test.gif png:test.png
+>> <creates a file called test.png containing first line of /etc/passwd>
+>>
+>> Also seems to work with gm convert.
+>
+>
+> It is good that you did not single out just one using program.
+>
+> This issue seems to afflict any program which invokes Ghostscript in general
+> and not just *Magick.  However, 'convert' does offer to write a rendered
+> result to an output file.
+>
 
-> Date: Tue, 2 Feb 2016 17:10:22 +0100
-> To: <oss-security@...ts.openwall.com>
+I think I see the problem, ghostscript broke -dSAFER then they fixed
+it later but didn't allocate a CVE, so the distros never updated.
 
-> Date:	Mon, 25 Jan 2016 16:50:38 +0100
-> To:	bugtraq@...urityfocus.com
+http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ae930279498a5961fcf5d70ffe86864883609cbc
 
-> The FastCGI Process Manager (FPM) SAPI of PHP was vulnerable to memory
-> leak and buffer overflow in the access logging feature.
+I think it should be fixed in gs 9.10 or later (Debian appears to be
+on 9.06), but you can still enumerate filenames (just not the
+content).
 
-> the PHP engine performed an out-of-boundaries read and also wrote a \n
-> character outside of the allocated memory.
-
-> http://git.php.net/?p=php-src.git;a=commit;h=2721a0148649e07ed74468f097a28899741eb58f
-> http://www.search-lab.hu/about-us/news/111-some-unusual-vulnerabilities-in-the-php-engine
-
->> as it has some strict prerequisites, the severity is low.
-
->> This was just an expanded version of the default access.format
->> template, we added the REMOTE_ADDR and REQUEST_URI fields
-
-As explained in the www.search-lab.hu post (in the section between "We
-found the answer by reviewing the source code" and "And here we are"),
-there was really only one underlying problem: the code misinterpreted
-the semantics of the snprintf return value. Use CVE-2016-5114. The
-other outcomes were consequences of this. The "memory leak" is the
-same as the "out-of-boundaries read": extra bytes from process memory
-were being written to a log file that might be readable by untrusted
-users. The "buffer overflow" is the same as the "wrote a \n character
-outside of the allocated memory."
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXSmAHAAoJEHb/MwWLVhi2KkwQAJYehVlnt9SusqqgXhyhdZgt
-TwqfEcyDihIZRtNw1MVqSTyR3B5Tf8S0SiSeINC2uRvaWSia/NlSEjWuMshmDkIn
-vXsPj60bPpjtvU9DXK7NZ2L35zOqwaVLf/n/XnNf2dkHIVCE2uNfm2GvNyGjGSGn
-8W38RS9xu1BJeF1PKtgkd3CdYKbfy2J/NZs59E02yhJ5gtQoR64n86zj2qdv5lhd
-/pTvd3QzdCztOU+/wKRA/vOlm0UJKc4vMyP92ffYPuQkPaqaA2AovzCGJuJ+vKoL
-XHSKvwigkLK1VECfTHpxmt0JXOHe4UMdDjSFPXryixjWxT0D3OnYU1lJKCn7XjKx
-UBGOm+p3CvEZ5+3pxDqI5oULJokn6ZiLBLuWP2rhDITcyEsRbr745UQCJ0kZjuSu
-tHheUYJWRHo4XOHQkeV2eiVrZTjTo/1txTUZCoenV57WK8EnOiKuoFaBbq0xddtq
-UfQMWB6wYFf7n7O4LuMPxcE4UgC6dO04CuY12yHduarvxcPb/r7n9H8ACyexb93k
-OvmhaX2fDJNEjQ2ZGIBvOhKXJAYCe/kHjCeFH256xAfQhe2eW14SLo53Akt6dgvg
-0jzyABI/KSbJnpWqwB3Bf1K9vfmSmBCEWYJVlY0HCtE5caqe+IJSE5RygSlR22Ha
-7YksgydiRGiXmapN76dc
-=ONL0
------END PGP SIGNATURE-----
+Tavis
