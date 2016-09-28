@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/23
-Message-ID: <20160818195024.GB17944@1wt.eu>
-Date: Thu, 18 Aug 2016 21:50:24 +0200
-From: Willy Tarreau <w@....eu>
-To: Adam Maris <amaris@...hat.com>
-Cc: oss-security@...ts.openwall.com, Marcus Meissner <meissner@...e.de>, Greg KH <greg@...ah.com>, cve-assign@...re.org, security@...nel.org
-Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/11
+Message-Id: <20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>
+Date: Wed, 28 Sep 2016 16:11:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 18, 2016 at 08:16:27PM +0200, Adam Maris wrote:
-> Attacker doesn't necessarily need to have physical access to USB port. He
-> can somehow
-> hand USB off to the victim that will with good intentions stick it to his
-> USB port, unexpectedly
-> causing kernel panic. Difference is that one probably wouldn't pour glue or
-> corrosive liquid
-> into his USB port believing that nothing bad will happen.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Well, it happened to me when I was a kid, with a PS/2 port. I handed off
-a device to someone of trust to connect to the PS/2 port and parallel port.
-(PS/2 to pick the +5V). I wired it wrong and the motherboard died, as
-amazing as it seems and the person didn't find it fun as it was not his PC.
+> mujs str Out-of-Bound read 1 byte in function chartorune.
+> http://bugs.ghostscript.com/show_bug.cgi?id=697136
 
-So yes it can be done even without suspecting. It's easy to do whatever you
-want using a USB stick. You can use the 3W it provides to charge a 300V
-capacitor and discharge it on the D+/D- to test the clamping diodes
-robustness, etc...
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 1
+>> 
+>> We were unconditionally reading the next character if we encountered
+>> a '*' in a multi-line comment; possibly reading past the end of
+>> the input.
 
-Thus I don't think either that something "only causing a panic" deserves
-a CVE. It needs to be fixed however, for sure!
+Use CVE-2016-7563.
 
-Regards,
-Willy
+
+> mujs "char *s" Heap overflow in Fp_toString at jsfunction.c:72
+> http://bugs.ghostscript.com/show_bug.cgi?id=697137
+
+>> AddressSanitizer: heap-buffer-overflow
+>> WRITE of size 1
+>> 
+>> We were not allocating space for the terminating zero byte.
+
+Use CVE-2016-7564.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX7COpAAoJEHb/MwWLVhi24ugP/19AmMjWnrZ9kH88CpBt/y0M
+s6rWfYpCF0k56G6RSlkuUm/XOlqBPAsWK9I3REM32shkCLaA0L96IeQnW1h/flT1
+7m30tJmxi31i31XfvpnBJWl06EqKTMZvNdNQBO+JS79ehBGmhmsIWjs9EkbBpNIv
+9jr3rzWE+K7IAZcWAGu5e56mCC+FpNE1djZ8Iaw+RuX2oVOvJoDTq1hskiRMijKw
+qXiudF6upJ8HUzBWN3mbDAUtuA0VmYClQZ39iy7V6nH7QuwbG4XLvzAjkCjmzwhS
+bkg7zFhNOMw6J1nuVD5s5VtrhRctgaPaDDaTnNsw7IYjyYNbO+obhw3x1ZnqrXcx
++wN3ZfMzxk0Q4n4KypmF2OJ6QITYqH5K6ofO5D9OI39cUmjsBEj1smqxSZq01xrU
+YxDyGS4gNQ6hWKS23/wgPt9YAjX+2xBMnAyygBrAzNcfFmO42XUpHDWl2ArnXQ1l
+kVyZLKOxFbGeTcsMyDFAjsDwD9tffl/6jDkZgd34em6kS1+lE7bccy2+IUsynrxz
+7zqhueAX7uOOVbjgJ4bVpGYgebj2J8AVHJoJJKtaWskCBKbxyxbT49twJ56lSDd9
+s5kVrUGdOz6+9RO7GJ/6dEwqJjmUYXh8O/3qI3h4gjmeTHAIaJ+uxhZ5J34Sj8xe
+B6ZoBxrnz+3QVOfjQ49u
+=iapx
+-----END PGP SIGNATURE-----
