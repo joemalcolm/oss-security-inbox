@@ -1,24 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/10/7
-Message-ID: <56BBAA64.4050701@gmail.com>
-Date: Wed, 10 Feb 2016 22:23:48 +0100
-From: FEIST Josselin <josselin.feist@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request : Use-after-free in accel-ppp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/7
+Message-Id: <20160928185409.5FF6C36E015@smtpvbsrv1.mitre.org>
+Date: Wed, 28 Sep 2016 14:54:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: winsonliu@...cent.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A use-after-free in accel-ppp was reported one month ago. accel-ppp is a
-VPN server (https://accel-ppp.org)
-Since I got no news from the dev (neither by email or through the
-forum), I would suggest to use this service carefully.
+> An integer overflow vulnerability was found in function gdImageWebpCtx
+> of file gd_webp.c in libgd. It could lead to heap buffer overflow
+> circumstance. Both PHP 7.0.10 and libgd 2.2.3 were affected
+> 
+> PHP reported via https://bugs.php.net/bug.php?id=73003
+> PHP fixed via https://github.com/php/php-src/commit/c18263e0e0769faee96a5d0ee04b750c442783c6
+> libgd reported via https://github.com/libgd/libgd/issues/308
+> libgd fixed via https://github.com/libgd/libgd/commit/40bec0f38f50e8510f5bb71a82f516d46facde03
+> 
+> argb = (uint8_t *)gdMalloc(gdImageSX(im) * 4 * gdImageSY(im));  /* integer overflow!!! */
+> 
+> There is no overflow check before calling the gdMalloc function.
+> 
+> POC
+>     ini_set('memory_limit', -1);
+>     $im = imagecreatetruecolor(0x8000, 0x8001);
+>     imagewebp($im, 'php.webp');
+>     imagedestroy($im);
+> 
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
+> 
+> PATCH
+> if (overflow2(gdImageSX(im), 4)) {
+>     return;
+> }
+> 
+> if (overflow2(gdImageSX(im) * 4, gdImageSY(im))) {
+>     return;
+> }
 
-More details about the vuln here :
-http://accel-ppp.org/forum/viewtopic.php?f=18&t=581
+Use CVE-2016-7568.
 
-The vuln was found with the help of the analyzer GUEB.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Best regards,
-Josselin Feist
-
+iQIcBAEBCAAGBQJX7BFqAAoJEHb/MwWLVhi2kfoP/1owiTLiVQs33ewsVmLqdrmq
+L20K6eMWkt15djVUcpGtBvH4ebcbnXZdXUIsqKOuQoiwWMYWpC0FTCD9tOK3SKLI
+uKcaIcuPKgXfUM3KDgJww1tBZ8t+AKwjRf18A23KAFmJ63LO+QgrZT5nwmW0lff1
+QOZ/7F80hBQJa2rOqOCWRg0BWZvPJ5djKfgQ4+3pwEl++4CRoKP2ABsdqwL6SCNe
+kw7OvYITxfx9BGEGPh6/NCZoLvTVXEHZjHQVhWlobpGpO75DPC5eEyxCXEO3KBxK
+4mKQADERR1yIafLLtlkWYg2awsHg2JOahcjL2vK2/32OOG2gkXe6ihsgUWKWZp/V
+HcFBK6l9xo4R5eVm11sr0t9F0H/IYSfqOd7wijfDZbwNELqLi8gO0vWcvj2HNfLs
+KzosUgCtz74JVz3vAXdk5e83EJv/9DTXbC5kyA+yfIXaGjm97jSkrXsfktNsnQ4N
+5cSWbuxg9W/I5qGuXmhNhqE1EJVRWBkc/3DaCQoS6/XRV9PiUqg0EhZFAtHCcrOg
+xO55mA4m1ZjIHUaox4RBEeLIHpIeSNBywAsfFtOmCMTfupNTM1xWft4Nsg3be/p+
+4yKY3wr8YZ70fWopenDixR9OKMcUINTCFNB0HGPAsUhBuu4849yExTanXfAdaTa3
+EQl2ePo/sn4HttO+tXO2
+=3man
+-----END PGP SIGNATURE-----
