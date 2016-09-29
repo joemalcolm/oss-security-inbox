@@ -1,21 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/13
-Message-ID: <CACn5sdRX-tyOuVDXfTeFXfen6hq54e_zMVhsd5_TYW1XsHHk+w@mail.gmail.com>
-Date: Wed, 24 Feb 2016 09:10:37 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [Pixman] create_bits(): Cast the result of height * stride to size_t
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/21
+Message-ID: <CAM1yOjZV28=4LFjZtYWPB5W6HXRzxVttU2eXaUzCfUyLakN4Zg@mail.gmail.com>
+Date: Thu, 29 Sep 2016 11:50:28 -0400
+From: Mike Kienenberger <mkienenb@...il.com>
+To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
+Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: CVE-2016-5019: MyFaces Trinidad view state deserialization security vulnerability
 Content-Type: text/plain; charset=utf-8
 
- Hi,
+CVE-2016-5019 Apache MyFaces Trinidad information disclosure vulnerability
 
-There is an (old) integer overflow in create_bits in the pixman library.
-Patch and details are available here:
+Severity: Important
 
-https://web.archive.org/web/20141227044037/http://lists.freedesktop.org/archives/pixman/2014-April/003244.html
+Vendor:
+The Apache Software Foundation
 
-Please, assign a CVE to this issue.
+Versions Affected:
+Trinidad from 1.0.0 to 1.0.13
+Trinidad from 1.2.1 to 1.2.14
+Trinidad from 2.0.0 to 2.0.1
+Trinidad from 2.1.0 to 2.1.1
 
-Regards,
-Gustavo.
+Description:
 
+Trinidad’s CoreResponseStateManager both reads and writes view state
+strings using
+ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
+bypasses the
+view state security features provided by the JSF implementations - ie. the view
+state is not encrypted and is not MAC’ed.
+
+Trinidad’s CoreResponseStateManager will blindly deserialize untrusted
+view state
+strings, which makes Trinidad-based applications vulnerable to deserialization
+attacks.
+
+Mitigation:
+
+All users of Apache Trinidad should upgrade to either 2.1.2, 2.0.2, or
+1.2.15 and
+enable view state encryption using org.apache.myfaces.USE_ENCRYPTION and related
+web configuration parameters.
+See http://wiki.apache.org/myfaces/Secure_Your_Application for details.
+
+Upgrading all Commons Collections jars on the class path to 3.2.2/4.1
+will prevent
+certain well-known vectors of attack, but will not entirely resolve this issue.
+
+References:
+https://issues.apache.org/jira/browse/TRINIDAD-2542
+
+This issue was discovered by Teemu Kääriäinen and reported by Andy Schwartz
