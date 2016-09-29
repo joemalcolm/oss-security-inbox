@@ -1,130 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/9
-Message-ID: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
-Date: Mon, 19 Sep 2016 15:20:02 -0400
-From: Mike Santillana <michael.santillana@...ork.com>
-To: oss-security@...ts.openwall.com
-Cc: "'Apple' via" <infosec@...ork.com>
-Subject: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/13
+Message-ID: <alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>
+Date: Thu, 29 Sep 2016 16:02:10 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: c-ares development <c-ares@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] c-ares: single byte out of buffer write
 Content-Type: text/plain; charset=utf-8
 
-Product: Ruby's OpenSSL Library
-Version: Tested on 2.3.1 (latest)
-Bug: IV Reuse
-Impact: Depends on the usage of the library
+`ares_create_query` single byte out of buffer write
+=================================================
 
-Hello,
+Project c-ares Security Advisory, September 29, 2016 -
+[Permalink](https://c-ares.haxx.se/adv_20160929.html)
 
-An IV reuse bug was discovered in Ruby's OpenSSL library when using
-aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
-setting the key, the cipher will default to using a static IV. This creates
-a static nonce and since aes-gcm is a stream cipher, this can lead to known
-cryptographic issues.
+VULNERABILITY
+-------------
 
-The documentation does not appear to specify the order of operations when
-setting the key and IV [1]. As an example, see the following insecure code
-snippet below:
+When a string is passed in to `ares_create_query` or `ares_mkquery` and uses
+an escaped trailing dot, like "hello\.", c-ares calculates the string length
+wrong and subsequently writes outside of the the allocated buffer with one
+byte. The wrongly written byte is the least significant byte of the 'dnsclass'
+argument; most commonly 1.
 
-Vulnerable Code:
+We have been seen proof of concept code showing how this can be exploited in a
+real-world system, but we are not aware of any such instances having actually
+happened in the wild.
 
-def encrypt(plaintext)
-    cipher = OpenSSL::Cipher.new('aes-256-gcm')
-    iv = cipher.random_iv # Notice here the IV is set before the key
-    cipher.key = '11111111111111111111111111111111'
-    cipher.auth_data = ""
-    ciphertext = cipher.update(plaintext) + cipher.final
-    tag = cipher.auth_tag
+INFO
+----
 
-    puts "[+] Encrypting: #{plaintext}"
-    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
-#{bin2hex(tag)} | #{bin2hex(ciphertext)}"
-end
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-5180 to this issue.
 
-A developer that uses the code above may incorrectly assume that their code
-is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
-the ‘cipher.random_iv’ method is used. According to the documentation, this
-should generate a random IV each time the encryption method is called.
+AFFECTED VERSIONS
+-----------------
 
-When the code above is run with the same key and same plaintext message,
-the following results are obtained:
+This flaw exists in the following c-ares versions.
 
-Output:
-# Run 1
-./gcm_encrypt.rb 'This is some secret message.'
-[+] Encrypting: This is some secret message.
-[+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
-8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
-800a5bb48fb1c4ad0b7bdf6054
+- Affected versions: libcurl 1.0.0 to and including 1.11.0
+- Not affected versions: c-ares >= 1.12.0
 
-# Run 2
-./gcm_encrypt.rb 'This is some secret message.'
-[+] Encrypting: This is some secret message.
-[+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
-8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
-800a5bb48fb1c4ad0b7bdf6054
+THE SOLUTION
+------------
 
-Notice that in the output above a unique IV is returned for both runs, but
-with the same ciphertext. This proves that even though the random_iv method
-is called, the code is defaulting to a static IV. If an attacker can
-retrieve multiple ciphertext messages, it is possible to decrypt the
-ciphertexts by applying the same attack one would use in a two-time pad
-(XOR ciphertexts and crib drag).
+In version 1.12.0, the function has been corrected and a test case have been
+added to verify.
 
-Next review the following code snippet and output, which depicts a secure
-implementation of the code:
+A [patch for CVE-2016-5180](https://c-ares.haxx.se/CVE-2016-5180.patch) is
+available.
 
-Valid Code:
+RECOMMENDATIONS
+---------------
 
-def encrypt(plaintext)
-    cipher = OpenSSL::Cipher.new('aes-256-gcm')
-    cipher.key = '11111111111111111111111111111111'
-    iv = cipher.random_iv # Notice here the IV is set after the key
-    cipher.auth_data = ""
-    ciphertext = cipher.update(plaintext) + cipher.final
-    tag = cipher.auth_tag
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-    puts "[+] Encrypting: #{plaintext}"
-    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
-#{bin2hex(tag)} | #{bin2hex(ciphertext)}"
-end
+  A - Upgrade c-ares to version 1.12.0
 
-Output:
-# Run 1
-./gcm_encrypt.rb 'This is some secret message.'
-[+] Encrypting: This is some secret message.
-[+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
-ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
-9a5eaa7e5beefdff5d56cc4136
+  B - Apply the patch to your version and rebuild
 
-# Run 2
-./gcm_encrypt.rb 'This is some secret message.'
-[+] Encrypting: This is some secret message.
-[+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
-bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
-65846e877dca11a6e13a659540
+  C - Make *really* sure you don't pass in strings to either of these functions
+      that use escaped trailing dots.
 
-Notice that this time both the IV and ciphertexts are both different for
-the same plaintext. This is the intended result a developer would expect to
-happen when using this library.
+TIME LINE
+---------
 
-It should be noted that when I went to Ruby's github page to report this
-bug, I noticed a developer also independently encountered this weird
-phenomenon [2]. Since it has already been brought up to the Ruby team, I
-have not created a new ticket.
+It was reported to the c-ares project on September 22 by Gzob Qq.
 
-References:
- [1]
-https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-Authenticated+Encryption+and+Associated+Data+-28AEAD-29
- [2] https://github.com/ruby/openssl/issues/49
+c-ares 1.12.0 was released on September 29 2016, coordinated with the
+publication of this advisory.
 
-I'd like to to request a CVE ID for this issue.
+CREDITS
+-------
 
-Thanks
+Thanks to Gzob Qq for the report and to Mattias Nissler for code reviews of
+the patch.
 
-*WeWork | Mike Santillana*
-Security Engineer
-845-709-5655
-www.wework.com
+-- 
 
-Create Your Life's Work
-
+  / daniel.haxx.se
