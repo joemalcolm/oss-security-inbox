@@ -1,25 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/24/1
-Message-ID: <1466753023.11831.9.camel@ellerman.id.au>
-Date: Fri, 24 Jun 2016 17:23:43 +1000
-From: Michael Ellerman <mpe@...erman.id.au>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Linux: powerpc/tm: Always reclaim in start_thread() for exec() class syscalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/22
+Message-ID: <CAM1yOjZBQC8v0TAyi95b=1G11j-8wTrhZG4kJWG=Y8K8W5mYPw@mail.gmail.com>
+Date: Thu, 29 Sep 2016 11:50:02 -0400
+From: Mike Kienenberger <mkienenb@...il.com>
+To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
+Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The Apache MyFaces team is pleased to announce the release of Apache
+MyFaces Trinidad 2.1.2.
+.
+MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
+that provides an extendibles framework and extensive skinning support.
+This version is designed to be used with the JSF 2.1 specification.
 
-We've found an issue in the handling of Transactional Memory on powerpc
-systems. An unprivileged local user can crash the kernel by starting a
-transaction, suspending it, and then calling any of the exec() class system
-calls.
+CVE-2016-5019:
+Trinidad’s CoreResponseStateManager both reads and writes view state
+strings using
+ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
+bypasses the
+view state security features provided by the JSF implementations - ie. the view
+state is not encrypted and is not MAC’ed.  Trinidad’s
+CoreResponseStateManager will
+blindly deserialize untrusted view state strings, which makes Trinidad-based
+applications vulnerable to deserialization attacks.
 
-More info:
- https://patchwork.ozlabs.org/patch/636776/
- https://patchwork.ozlabs.org/patch/636774/ (test case)
+Apache MyFaces Trinidad is available in both binary and source
+distributions, and there are examples available as well:
 
-Could you please allocate a CVE for this?
+    * http://myfaces.apache.org/trinidad/download.html
 
-cheers
+Apache MyFaces Trinidad is available in the central Maven repository
+under Group ID "org.apache.myfaces.trinidad"
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Release Notes - MyFaces Trinidad - Version 2.1.2
+
+Bug
+    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
+deserialization security vulnerability
+
+    [TRINIDAD-2228] - java.lang.UnsupportedOperationException
+    [TRINIDAD-2282] - In validateLength, a default hintRange message
+is displayed instead of hintMaximum even when minimum value is not set
+    [TRINIDAD-2436] - We should update Table's selection state during
+invoke application phase
+    [TRINIDAD-2445] - Prevent exceptions from propagating out of the
+ServletFilter
+    [TRINIDAD-2541] - Check UTF-8 encoding in example files
+
+Improvement
+
+    [TRINIDAD-2239] - Improve the ancestor based change filtering
+mechanism by introducing a formal ComponentChangeFilter
+    [TRINIDAD-2441] - URLUtil to escape a URL and remove invalid characters
+    [TRINIDAD-2540] - Align Trinidad 2.1.x so it can be editable using
+Netbeans 8
+
+regards,
+
+Mike Kienenberger
