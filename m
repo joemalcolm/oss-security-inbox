@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/23/1
-Message-ID: <alpine.LFD.2.20.1605231637460.27295@wniryva>
-Date: Mon, 23 May 2016 16:40:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request: Qemu: scsi: pvscsi: out-of-bounds access issue in pvsci_ring_init_msg/data routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/12
+Message-ID: <20160929134526.GA24474@kroah.com>
+Date: Thu, 29 Sep 2016 15:45:26 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
+> Hi there,
+> 
+> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I
+> have a working exploit to escalade privileges which requires the ip6_tables
+> module to be loaded, that it is properly blocked on all up-to-date versions.
+> 
+> Due to the number of users running vulnerable code(not update to 4.7 or
+> higher), and that this exploit is only available to security researchers and
+> kernel packagers upon request but that I don't want it to spread.
+> 
+>  
+> 
+> I have reported this issue to Linux kernel official and they have already fixed
+> this.
 
-Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
-emulation support is vulnerable to an OOB r/w access issue. It could occur 
-while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS' or 
-'PVSCSI_CMD_SETUP_MSG_RING'.
+Note, this was fixed many months ago, in May of 2016, and went into the
+stable kernel updates in June, 2016.  Any distro that updated to the
+stable kernel updates received this fix then.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+Any distro that hasn't updated their kernel since then, well, you need
+to revaluate your trust of such a distro :)
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg03774.html
+thanks,
 
-
-This issue was discovered by Mr Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+greg k-h
