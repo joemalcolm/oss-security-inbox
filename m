@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/6
-Message-Id: <20160629142913.D220C6C05C7@smtpvmsrv1.mitre.org>
-Date: Wed, 29 Jun 2016 10:29:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: idolf@...gle.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/18
+Message-ID: <20160929142357.GA25419@kroah.com>
+Date: Thu, 29 Sep 2016 16:23:57 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> heap-based buffer overflow in
-> LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
-> attacker to control the size of the allocated heap-buffer while
-> independently controlling the data to be written to the buffer with no
-> restrictions on the size of the written data.
+On Fri, Sep 30, 2016 at 12:14:04AM +1000, Vitaly Nikolenko wrote:
+> Wasn't this already covered by CVE-2016-4997? There's a public exploit
 > 
-> revision 1.44
-> date: 2016-06-28 17:12:19 +0200; author: erouault; commitid: 2SqWSFG5a8Ewffcz;
+> https://www.exploit-db.com/exploits/40049/
 > 
-> * libtiff/tif_pixarlog.c: fix potential buffer write overrun in
-> PixarLogDecode() on corrupted/unexpected images (reported by Mathias
-> Svensson)
+> I'm assuming for IPv6 this would be exactly the same except for
+> changing the setsockopt optname from IPT_SO_SET_REPLACE to
+> IP6T_SO_SET_REPLACE. The code path for IPv6 looks almost identical
+> unless I'm missing something?
+> 
+> Commit ce683e5f9d045e5d67d1312a42b359cb2ab2a13c included fixes for
+> ARP, IP and IPv6 and my assumption was that CVE-2016-4997 covered all
+> of them.
 
-Use CVE-2016-5875.
+I knew this looked familiar, thanks for bringing this up.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXc9qbAAoJEHb/MwWLVhi2SmoP/iycenqjeZtYwVOBTw09R7cq
-Bgb6m/EvOeK7dxwW+PHMLnyM1bdCk1ZL4mocOPJwrsFLj1wm8QBsCWtF2nLsV2tA
-59rtB8OEdDIL9rl/kArHf/ozqY1O8CSxFts0IqeU40/wp9SHHGK3U9N63LjqBXrP
-IvhLFvfGdXyXWISfqP1ve7VkXR8AsVZ/zJVjwPFHXbjzYMOmKeo1V6jRlTBHWEai
-TPTtmehZyG9mwVHu18QKJNI3Xc1S0evadv576MUCsyCdU5zIuVbGNPNEQXhX7/ZB
-iX9YnWxT+a+aomECJgbF5tXUZy82EqoQU+kfnMkIHUJlxImCAemFAqTeQZ8Z5cjQ
-OA73XZhUWp93P7y/ncKpWyRyIDc159R7CpKFa+fC7ax8btJp6vOx3VNM7LwdZ4Dg
-BVUprEW+eeAvqQ7dDh/lmZ4ynrwd+uWZZTRXBDPNkJvB5vifyIR+79qf8uLDIWRw
-MXMzY9ANqZQwyASiu1j0DWwrr8sWALFR3AznIH0Ny1VEJwIVLYBhp97Dh/nkyLUe
-1q+SdiSKtkvCSYlSMhehbETITlGVa6pht7Kh0PLm4ZzAkxZqq5u29hRrf7XOvMpl
-WJMY/2YqjouCRWYvotiw970plPHqOozcTz/WFGZHTNBj5fh/iFe/ZEsaF/WjpN95
-l3SBEFinwfRH77apDjF1
-=0JY6
------END PGP SIGNATURE-----
+greg k-h
