@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["629" "Saturday" "14" "November" "2015" "15:32:32" "+0000" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGD68dSoCEH6i_-zch9gP4fsrXJM5jXytT5u6juG+RgaGw@mail.gmail.com>" "22" "[oss-security] New security advisory for Apache CXF" nil nil nil "11" "2015111415:32:32" "[oss-security] New security advisory for Apache CXF" (number mark "U       coheigea@apa Nov 14   22/629   " thread-indent "\"[oss-security] New security advisory for Apache CXF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["611" "Thursday" "29" "September" "2016" "16:18:44" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1609291617400.13997@tvnag.unkk.fr>" "25" "[oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write" nil nil nil "9" "2016092914:18:44" "[oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write" (number mark "U       daniel@haxx. Sep 29   25/611   " thread-indent "\"[oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write\"\n") "<alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31902 invoked by uid 550); 14 Nov 2015 15:32:53 -0000
+Received: (qmail 19965 invoked by uid 550); 29 Sep 2016 14:18:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31849 invoked from network); 14 Nov 2015 15:32:47 -0000
+Received: (qmail 19854 invoked from network); 29 Sep 2016 14:18:57 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Thu, 29 Sep 2016 16:18:44 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: c-ares hacking <c-ares@cool.haxx.se>
+cc: oss-security@lists.openwall.com
+In-Reply-To: <alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>
+Message-ID: <alpine.DEB.2.20.1609291617400.13997@tvnag.unkk.fr>
+References: <alpine.DEB.2.20.1609291125510.13997@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-X-Received: by 10.28.158.75 with SMTP id h72mr1390495wme.74.1447515152155;
- Sat, 14 Nov 2015 07:32:32 -0800 (PST)
-Date: Sat, 14 Nov 2015 15:32:32 +0000
-X-Gmail-Original-Message-ID: <CAB8XdGD68dSoCEH6i_-zch9gP4fsrXJM5jXytT5u6juG+RgaGw@mail.gmail.com>
-Message-ID: <CAB8XdGD68dSoCEH6i_-zch9gP4fsrXJM5jXytT5u6juG+RgaGw@mail.gmail.com>
-From: Colm O hEigeartaigh <coheigea@apache.org>
-To: "users@cxf.apache.org" <users@cxf.apache.org>, "dev@cxf.apache.org" <dev@cxf.apache.org>, 
-	Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: multipart/alternative; boundary=001a114b40ce7390c5052481e282
-Subject: [oss-security] New security advisory for Apache CXF
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: [oss-security] Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write
 
---001a114b40ce7390c5052481e282
-Content-Type: text/plain; charset=UTF-8
+On Thu, 29 Sep 2016, Daniel Stenberg wrote:
 
-A new security advisory has been released for Apache CXF:
+> INFO
+> ----
+>
+> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+> CVE-2016-5180 to this issue.
+>
+> AFFECTED VERSIONS
+> -----------------
+>
+> This flaw exists in the following c-ares versions.
+>
+> - Affected versions: libcurl 1.0.0 to and including 1.11.0
+> - Not affected versions: c-ares >= 1.12.0
 
-CVE-2015-5253
-<http://cxf.apache.org/security-advisories.data/CVE-2015-5253.txt.asc?version=1&modificationDate=1447433340000&api=v2>:
-Apache CXF SAML SSO processing is vulnerable to a wrapping attack
+Sorry for being sloppy. I meant to write c-ares above and not libcurl. This 
+was a copy and paste error that is already fixed in the web version of this 
+advisory at
 
-Please update to the latest CXF versions if you are using SAML SSO. More
-information on CXF security advisories at the following page:
-http://cxf.apache.org/security-advisories.html
-
-Colm.
+  https://c-ares.haxx.se/adv_20160929.html
 
 -- 
-Colm O hEigeartaigh
 
-Talend Community Coder
-http://coders.talend.com
-
---001a114b40ce7390c5052481e282--
+  / daniel.haxx.se
