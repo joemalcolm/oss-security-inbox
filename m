@@ -1,54 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/5
-Message-ID: <7bcfced93a1e4f6f9a526e70be02d7d5@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:38:59 -0400
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: net: eepro100 memory leakage at device unplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/20
+Message-ID: <20160929154004.kphifrcks2b7boh6@jwilk.net>
+Date: Thu, 29 Sep 2016 17:40:04 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: git-hub: missing sanitization of data received from GitHub
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+git-hub <https://github.com/sociomantic-tsunami/git-hub> is a Git command-line 
+interface to GitHub. When you ask it to clone a repository, it will call:
 
-> Quick Emulator(Qemu) built with the i8255x (PRO100) NIC emulation support is
-> vulnerable to a memory leakage issue. It could occur while unplugging the
-> device, and doing so repeatedly would result in leaking host memory affecting,
-> other services on the host.
-> 
-> A privileged user inside guest could use this flaw to cause a DoS on the host
-> and/or potentially crash the Qemu process on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg03024.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1389538
+   git clone <repourl> <reponame>
 
->> Fix memory leak and simplify code for VMStateDescription
+where both <repourl> and <reponame> come from GitHub API, without any 
+sanitization. Operators of the GitHub server (or a MitM attacker[*]) could 
+exploit it for directory traversal or, more excitingly, for arbitrary code 
+execution, either via option injection, e.g.:
 
-Use CVE-2016-9101.
+   git clone 'git://-esystem("cowsay pwned > \x2fdev\x2ftty")/' --config=core.gitProxy=perl
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/eepro100.c but
-that may be an expected place for a later update.
+or more directly with git-remote-ext, e.g.:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+   git clone 'ext::sh -c cowsay% pwned% >% /dev/tty' moo
 
-iQIcBAEBCAAGBQJYFktnAAoJEHb/MwWLVhi2lRUQAKvmWbVHDslM/pVcKhOXd48q
-4VW+EZjJHnlkF39M1UFWsflRqFrVreNrXRVgTX7bGkV1QkbpyuWjCw3fHn02PCf4
-9h19lPYSlxUt/P6kF8RVgQmC0FEv7fAB7nzftdmozHaL+G0MJCjdP0T+M9zBvEIg
-nEPXrD+G7CWH8CR3LaDDNFl6O673QMyte9/garR8wOohsJnsxI4FBGdmJqmbrYnm
-DbYw41H893s9F2t/ofW4ZyiwMDlJJG49DySb2yLHROFfd0y8n0qP0RviPl8p+EsL
-hwOODU5ttVwIX3BQUkPNdumwxizTuIGY/m6lyibjj4SoyGNKiI3a05BwXI3mQhaA
-cEbBu73o8rr7Yzp9J24n8WsbFdcGsTCWI2WYuG9g/qvEQuIlGFqMIdy/Z3GvpZuA
-+h/IUZ+eDs5bc6vkDiCE88H3ZIi5ReSVCV9g4Bv/wfqwJ13qmLDooYeaWHjARY8h
-Vse1XkGked1vz4uLYuB/X8N4uNytSnuDSUBTpvdXFaBZPSahqP12qQvOBnHxHT8l
-wSTjpjcaVTsvXf5CqDgDYG6h8TcA8cGvvrn3XGP+UpsgvtqJcaccPF4N3awygFQu
-fPcfl0dQU68NiuxPM7n0N+2qdPPkxu95ZqnobjeEMvaYRqQSJc6YJzkRMJXO2QCZ
-Dt1YlBbsK4nRlp+7XF/D
-=GdbU
------END PGP SIGNATURE-----
+
+Upstream bug report:
+https://github.com/sociomantic-tsunami/git-hub/issues/197
+
+
+[*] git-hub is implemented in Python, which didn't verify HTTPS certificates 
+before 2.7.9; and git-hub doesn't enable verification on its own either.
+
+-- 
+Jakub Wilk
