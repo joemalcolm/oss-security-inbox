@@ -1,39 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/7
-Message-ID: <20160718145653.GA2103@openwall.com>
-Date: Mon, 18 Jul 2016 17:56:53 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/6
+Message-ID: <20160929103210.bm5itc2cu4a672ws@jwilk.net>
+Date: Thu, 29 Sep 2016 12:32:10 +0200
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Cc: Richard Rowe <arch.richard@...il.com>
-Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 19, 2016 at 02:00:53AM +1200, Richard Rowe wrote:
-> The Apache Software Foundation have an advisory available at
-> https://www.apache.org/security/asf-httpoxy-response.txt
+* Christos Zoulas <christos@...las.com>, 2016-09-26, 13:53:
+>On the BSDs TIOCSTI has been limited to the superuser since the 4.4BSD Lite 2 
+>release in 1995 (IIRC).
 
-Neither the Apache advisory above nor the httpoxy website currently
-mention the below detail, so I thought I'd post:
+Hmm. I've just tried OpenBSD 5.7 and FreeBSD 10.3, and TIOCSTI works fine for 
+non-root users.
 
-Apache httpd trunk's suexec wrapper was patched to filter out HTTP_PROXY
-on February 13, 2015:
-
-http://mail-archives.apache.org/mod_mbox/httpd-cvs/201502.mbox/%3C20150213232410.B89BCAC0110@hades.apache.org%3E
-http://svn.apache.org/r1659711
-https://svn.apache.org/repos/asf/httpd/httpd/trunk/CHANGES
-
-  *) suexec: Filter out the HTTP_PROXY environment variable because it is
-     treated as alias for http_proxy by some programs. [Stefan Fritsch]
-
-The httpoxy website refers to a posting by Stefan Fritsch:
-
-http://mail-archives.apache.org/mod_mbox/httpd-dev/201502.mbox/%3C2651807.jIIY3NPtlf@k%3E
-
-but not yet to its apparent outcome, above.
-
-httpd 2.4.23's suexec does not yet include this change (different branch).
-
-Of course, it's just suexec, which isn't always used, so it was not a
-complete fix anyway.
-
-Alexander
+-- 
+Jakub Wilk
