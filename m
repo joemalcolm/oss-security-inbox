@@ -1,4 +1,9 @@
-Received: (qmail 24307 invoked by uid 550); 8 Sep 2025 17:46:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2022" "Thursday" "29" "September" "2016" "11:50:02" "-0400" "Mike Kienenberger" "mkienenb@gmail.com" "<CAM1yOjZBQC8v0TAyi95b=1G11j-8wTrhZG4kJWG=Y8K8W5mYPw@mail.gmail.com>" "53" "[oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released" nil nil nil "9" "2016092915:50:02" "[oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released" (number mark "U       mkienenb@gma Sep 29   53/2022  " thread-indent "\"[oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17672 invoked by uid 550); 29 Sep 2016 16:24:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27785 invoked from network); 8 Sep 2025 15:43:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1757346207; x=1757432607; bh=IJ8c6pz6DqzCYBUbAB4aSWPbExgaAtZ/FPx
-	3tX3+WHo=; b=Dn+AfTDLTdwwjgE3EeXS+B5kIwiywNIuAAW4gZGOJshEdoBWN5s
-	9TfsAxKztA5AQFIMCUpQW6zugVpHjd3kew3brVh9jeR3mL3TNnCYNcufN/eWNkmP
-	hkrH7SG3MBBDuPWuqW9t0k5ePMO03GSA29wiyDwyDDNQ6UH/F6sTxbhaBovUJRvH
-	sf8cZR/+7IhO4ZSxa7PK9jIpfGJ8CeDVCk9bXbtswIX0pVuOyjEkuvj1MVkjNZ9o
-	vmi+1jhg7UnX0DapXoC9jQwoxY2LpJu7nsv1Oj95DLVABmB9qgYwP88FvO4sZg75
-	FDednyxMPetqO7rnJldLQLoFM7/1CTrtuPw==
-X-ME-Sender: <xms:n_m-aCCmES_9ReD6_-MfewbG882REad5x5-78bgsCRJ3deA3nsgdXA>
-    <xme:n_m-aOjmZkdX6PC7g6bR0bwLzjmpK0jYp8JgEvj7MeJe3vqdp0zXsp1scUlJCXC6F
-    S_nOcPh5PFEBQOe>
-X-ME-Received: <xmr:n_m-aO9BmlDWWtq0YBpE96KxuVmuHxdAN5bykid0hGK5JhTtJa465pJUXUewaA49ZB5nOeltUW3NIOe928NGh2m7OrbgkBAy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeelvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfvffhufgtgfesthekredttddvje
-    enucfhrhhomheptfhosggvrhhtucftohhthhgvnhgsvghrghcuoehrrhifohestghprghn
-    rdhorhhgqeenucggtffrrghtthgvrhhnpeejgfduleelgeelgfeigeeigfdvjeeghfduve
-    fhgeefvefghedttddvjeeklefhvdenucffohhmrghinhepmhgvthgrtghprghnrdhorhhg
-    pdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehrrhifohestghprghnrdhorhhgpdhnsggprhgtphhtthhopedupdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhish
-    htshdrohhpvghnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:n_m-aC_CY5RhZM13On6NWcpq4lkgr2hObhRZGGfg6DsXO7FSQ9HpCQ>
-    <xmx:n_m-aPDU7lXDmThKJq9WX9EeHStOqwskWjtZt5eXUj7GH854IilCbA>
-    <xmx:n_m-aKxTP6bGNZNfKTRFThtRjlcIIKvacY4h-SI9oq7qkKsVzQgk7A>
-    <xmx:n_m-aMTHRtEcHfbTAgeYb4MSsIkN7CfT6RA7XnU9kqFRAqyP8k4ThQ>
-    <xmx:n_m-aJ8clgdY37o1TwPqrus4G2LGrO6nlUkNF59XwIm1uew-1bqK2Q>
-    <xmx:n_m-aFLX3DK94nwN3ps927A79aBY35OgkfVENZpylpmiKQdSfnhwRZ-O5g8i>
-Feedback-ID: ia0f04183:Fastmail
-Message-ID: <d8715cdb-d2be-4fd7-aafe-502e74ebd585@cpan.org>
-Date: Mon, 8 Sep 2025 16:43:26 +0100
+Received: (qmail 24420 invoked from network); 29 Sep 2016 15:50:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=q4LpoE7ipFmMYRVsGD6rgM/pSThyJQYWle/njMy8uPM=;
+        b=Vm9hPMkpWtXxAMqFKyEKYpVhrduNPSyrJxWUS5YQrwLiKRStEzZ2BRS2PINB1HVL0W
+         /NuJx481XkSgMsDpfOWOF4qD0teX0E1GDMcZg/mOaUqXCD7tQUyYCtJ71Of3OX3zfj9L
+         QSAZrn7pf5V/njG+yPkRbSsy24b+UQwewrshSLpCH8k31qV5XCvkrBmrMqNEGLLoJ9Vs
+         lp09OFugA0YhaRwVXyXuC63JRFZs+oSkzrIT22Eq5Nm/TB3N6UTwVVh9EPZqZVEcsL2w
+         W7XsaDf6Kkl1VnViZMubBoHHy6MbKoeppv3up/qUJ691CvqjIO+0e9H3xXNbDVfY9d4u
+         l24g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=q4LpoE7ipFmMYRVsGD6rgM/pSThyJQYWle/njMy8uPM=;
+        b=N2kUwADd6LrG4SH8icksMx++5qSgHtI1fhuA3DUCzAui7uhYLp6+9fWjqvI6a5CAMJ
+         tf66USuvopgYFh4uNwSOeTiVAeXQMW2JWom5LYteLdrX9Y6+LFv1UgJIU9y/45azezo4
+         MjQn0BUIcBI01367RUneKJ5ENvZpdBvZhUxP5iSIO/quiJTrfyNedJ6eQWbeIbegySwr
+         OFaRKB9phVr8jFNeHaV8fIkW9v+CeTIBiCu6IvpFDY/k5JDGWjJ/c4Vfctrliapkq+YK
+         a7zBeJlJKwXXBLogjl8T9viCqM2nL0+P5Xun3g+I/EPLFkdP38U2gkkviQHnQzb797Fm
+         j5yw==
+X-Gm-Message-State: AA6/9Rlt8D7jOz7ULNV96XRqYGLjaVdnv/hPu0Vy6R8VxogO1E8ULb8rzDt5XZ2+cw6DHCnZcGumz8raelpVUQ==
+X-Received: by 10.157.47.165 with SMTP id r34mr1525326otb.64.1475164222898;
+ Thu, 29 Sep 2016 08:50:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-From: Robert Rothenberg <rrwo@cpan.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2025-40929: Cpanel::JSON::XS before version 4.40 for Perl has an
- integer buffer overflow causing a segfault when parsing crafted JSON,
- enabling denial-of-service attacks or other unspecified impact
+From: Mike Kienenberger <mkienenb@gmail.com>
+Date: Thu, 29 Sep 2016 11:50:02 -0400
+Message-ID: <CAM1yOjZBQC8v0TAyi95b=1G11j-8wTrhZG4kJWG=Y8K8W5mYPw@mail.gmail.com>
+To: announce@myfaces.apache.org, MyFaces Development <dev@myfaces.apache.org>, 
+	MyFaces Discussion <users@myfaces.apache.org>
+Cc: "security@apache.org" <security@apache.org>, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released
 
-========================================================================
-CVE-2025-40929                                       CPAN Security Group
-========================================================================
+The Apache MyFaces team is pleased to announce the release of Apache
+MyFaces Trinidad 2.1.2.
+=2E
+MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
+that provides an extendibles framework and extensive skinning support.
+This version is designed to be used with the JSF 2.1 specification.
 
-         CVE ID:  CVE-2025-40929
-   Distribution:  Cpanel-JSON-XS
-       Versions:  before 4.40
+CVE-2016-5019:
+Trinidad=E2=80=99s CoreResponseStateManager both reads and writes view state
+strings using
+ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
+bypasses the
+view state security features provided by the JSF implementations - ie. the =
+view
+state is not encrypted and is not MAC=E2=80=99ed.  Trinidad=E2=80=99s
+CoreResponseStateManager will
+blindly deserialize untrusted view state strings, which makes Trinidad-based
+applications vulnerable to deserialization attacks.
 
-       MetaCPAN:  https://metacpan.org/dist/Cpanel-JSON-XS
-       VCS Repo:  https://github.com/rurban/Cpanel-JSON-XS
+Apache MyFaces Trinidad is available in both binary and source
+distributions, and there are examples available as well:
 
-Cpanel::JSON::XS before version 4.40 for Perl has an integer buffer
-overflow causing a segfault when parsing crafted JSON, enabling
-denial-of-service attacks or other unspecified impact
+    * http://myfaces.apache.org/trinidad/download.html
 
-Description
------------
-Cpanel::JSON::XS before version 4.40 for Perl has an integer buffer
-overflow causing a segfault when parsing crafted JSON, enabling
-denial-of-service attacks or other unspecified impact
+Apache MyFaces Trinidad is available in the central Maven repository
+under Group ID "org.apache.myfaces.trinidad"
 
-Problem types
--------------
-- CWE-122 Heap-based Buffer Overflow
+Release Notes - MyFaces Trinidad - Version 2.1.2
 
-Solutions
----------
-Update to 4.40 or later, or apply the provided patch
+Bug
+    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
+deserialization security vulnerability
 
-References
-----------
-https://metacpan.org/release/RURBAN/Cpanel-JSON-XS-4.39/source/XS.xs#L713
-https://metacpan.org/release/RURBAN/Cpanel-JSON-XS-4.40/changes
-https://github.com/rurban/Cpanel-JSON-XS/commit/378236219eaa35742c3962ecbdee364903b0a1f2.patch
+    [TRINIDAD-2228] - java.lang.UnsupportedOperationException
+    [TRINIDAD-2282] - In validateLength, a default hintRange message
+is displayed instead of hintMaximum even when minimum value is not set
+    [TRINIDAD-2436] - We should update Table's selection state during
+invoke application phase
+    [TRINIDAD-2445] - Prevent exceptions from propagating out of the
+ServletFilter
+    [TRINIDAD-2541] - Check UTF-8 encoding in example files
 
-Credits
--------
-Michael Hudak of rasotec, reporter
+Improvement
 
+    [TRINIDAD-2239] - Improve the ancestor based change filtering
+mechanism by introducing a formal ComponentChangeFilter
+    [TRINIDAD-2441] - URLUtil to escape a URL and remove invalid characters
+    [TRINIDAD-2540] - Align Trinidad 2.1.x so it can be editable using
+Netbeans 8
+
+regards,
+
+Mike Kienenberger
