@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1133" "Thursday" "11" "June" "2020" "19:35:57" "+0100" "Ian Jackson" "ijackson@chiark.greenend.org.uk" "<24290.31117.921352.498399@chiark.greenend.org.uk>" "28" "[oss-security] adns (dns resolver library) multiple vulns" "^Date:" nil nil "6" "2020061118:35:57" "[oss-security] adns (dns resolver library) multiple vulns" (number mark "U       ijackson@chi Jun 11   28/1133  " thread-indent "\"[oss-security] adns (dns resolver library) multiple vulns\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] adns (dns resolver library) multiple vulns" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["642" "Thursday" "29" "September" "2016" "16:23:57" "+0200" "Greg KH" "greg@kroah.com" "<20160929142357.GA25419@kroah.com>" "17" "Re: [oss-security] CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call" "^Cc:" nil nil "9" "2016092914:23:57" "[oss-security] CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call" (number mark "        greg@kroah.c Sep 29   17/642   " thread-indent "\"Re: [oss-security] CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call\"\n") "<CACXSKC8AZevw7LatqKf8RdVWR9srfkEQ49RQABHbQeK38Ono+w@mail.gmail.com>" ("<F73DA7D7DA7D984B81025139D7CADECC0120DCFC@EX02.corp.qihoo.net>" "<20160929134526.GA24474@kroah.com>" "<CACXSKC8AZevw7LatqKf8RdVWR9srfkEQ49RQABHbQeK38Ono+w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 8133 invoked by uid 550); 11 Jun 2020 19:47:19 -0000
+Received: (qmail 32445 invoked by uid 550); 29 Sep 2016 14:24:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19656 invoked from network); 11 Jun 2020 18:36:10 -0000
+Received: (qmail 32427 invoked from network); 29 Sep 2016 14:24:03 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=gJ+0/E26dho/LCXBtuOOb9v6Ld4=; b=aGmgG
+	AihUi+SC7HW0gTzaYjWoYddZTGKx4OFjtnYgEqF8yLVGcjdj3kaPzBS++HSm+Sim
+	l4BRTrEWaon7IC3hPp15lQDb4vF83trifgIPvKTnkdYr1GyrwjstP6Bj2rSxbCGF
+	Wl1DhdLQajVYKUY9Ifje2ijA8iRHGEBAz1d97U=
+X-Sasl-enc: qkPR/p2Sf1EO5ngOuL6jMcI6YMIXDVotSQqhAjU8eg21 1475159032
+Message-ID: <20160929142357.GA25419@kroah.com>
+References: <F73DA7D7DA7D984B81025139D7CADECC0120DCFC@EX02.corp.qihoo.net>
+ <20160929134526.GA24474@kroah.com>
+ <CACXSKC8AZevw7LatqKf8RdVWR9srfkEQ49RQABHbQeK38Ono+w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-ID: <24290.31117.921352.498399@chiark.greenend.org.uk>
-X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
-Date: Thu, 11 Jun 2020 19:35:57 +0100
-From: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Content-Disposition: inline
+In-Reply-To: <CACXSKC8AZevw7LatqKf8RdVWR9srfkEQ49RQABHbQeK38Ono+w@mail.gmail.com>
+User-Agent: Mutt/1.7.0 (2016-08-17)
+Cc: "cve-assign@mitre.org" <cve-assign@mitre.org>
+Date: Thu, 29 Sep 2016 16:23:57 +0200
+From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] adns (dns resolver library) multiple vulns
-To: oss-security@lists.openwall.com 
+Subject: Re: [oss-security] CVE request - Linux kernel through 4.6.2 allows
+ escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
+To: oss-security@lists.openwall.com
 
-Hi.  I'm the upstream maintainer for adns.  There were outstanding
-security problems which I have sat on for far too long, but I have now
-finally dealt with them properly.  My apologies.
+On Fri, Sep 30, 2016 at 12:14:04AM +1000, Vitaly Nikolenko wrote:
+> Wasn't this already covered by CVE-2016-4997? There's a public exploit
+> 
+> https://www.exploit-db.com/exploits/40049/
+> 
+> I'm assuming for IPv6 this would be exactly the same except for
+> changing the setsockopt optname from IPT_SO_SET_REPLACE to
+> IP6T_SO_SET_REPLACE. The code path for IPv6 looks almost identical
+> unless I'm missing something?
+> 
+> Commit ce683e5f9d045e5d67d1312a42b359cb2ab2a13c included fixes for
+> ARP, IP and IPv6 and my assumption was that CVE-2016-4997 covered all
+> of them.
 
-The fixes have incorporated in adns 1.5.2 and 1.6.0.  See the release
-announcement here:
-  https://www.chiark.greenend.org.uk/pipermail/adns-announce/2020/000004.html
+I knew this looked familiar, thanks for bringing this up.
 
-If you prefer to apply specific patches, the relevant commits are
-in my git repository:
-  https://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/git/adns.git/
-  https://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/githttp/adns.git
-in this commit range
-  2f6e879e0fca1715d5c5946bcedb4f821ce64d77..bb4e05849170034447d60a6f7cb71d5f255b0ecc
-(which you will find is covered by the signed tag adns-1.5.2).
-
-The most serious problems are remote code execution, within the
-adns-using application, exploitable by the local recursive resolver.
-
-Thanks for your attention.
-
-Ian.
-
--- 
-Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.  
-
-Pronouns: they/he.  If I emailed you from @fyvzl.net or @evade.org.uk,
-that is a private address which bypasses my fierce spamfilter.
+greg k-h
