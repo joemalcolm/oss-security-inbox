@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/6
-Message-ID: <f6c1ae32-c8fa-96f2-a300-87fd0accd6fe@redhat.com>
-Date: Wed, 3 Aug 2016 09:27:00 +0200
-From: Daniel J Walsh <dwalsh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/4
+Message-ID: <87shsjcs42.fsf@mid.deneb.enyo.de>
+Date: Thu, 29 Sep 2016 05:17:01 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: systemd-machined: information exposure for docker containers
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
+* Tavis Ormandy:
 
-
-On 08/01/2016 12:24 PM, Shiz wrote:
->> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
+> On Wed, Sep 28, 2016 at 3:15 PM, Bob Friesenhahn
+> <bfriesen@...ple.dallas.tx.us> wrote:
+>> On Wed, 28 Sep 2016, Tavis Ormandy wrote:
+>>>
+>>>
+>>> (/etc/passwd) /dumpname load 256 string filenameforall
+>>> $ convert test.gif png:test.png
+>>> <creates a file called test.png containing first line of /etc/passwd>
+>>>
+>>> Also seems to work with gm convert.
 >>
->> *Which* unprivileged user processes?
 >>
->> If the unprivileged user processes are not in a container, they can get a
->> significant amount of the same information by reading the host's /proc.
-> Except if a host is running with hidepid={1,2}, which is not entirely uncommon
-> especially in hardened systems. In that regard it /does/ qualify as infoleak.
+>> It is good that you did not single out just one using program.
+>>
+>> This issue seems to afflict any program which invokes Ghostscript in general
+>> and not just *Magick.  However, 'convert' does offer to write a rendered
+>> result to an output file.
+>>
 >
-> - Shiz
-Then simply rpm -e oci-register-machine
+> I think I see the problem, ghostscript broke -dSAFER then they fixed
+> it later but didn't allocate a CVE, so the distros never updated.
+>
+> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ae930279498a5961fcf5d70ffe86864883609cbc
+>
+> I think it should be fixed in gs 9.10 or later (Debian appears to be
+> on 9.06), but you can still enumerate filenames (just not the
+> content).
 
+Is anyone investigating this and taking care of CVE assignment already?
