@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1500" "Thursday" "14" "May" "2015" "14:40:57" "-0700" "Kevin McArthur" "kevin@stormtide.ca" "<55551669.5060308@stormtide.ca>" "47" "Re: [oss-security] CVE Request: Insufficient TLS Protection in Composer (PHP)" nil nil nil "5" "2015051421:40:57" "[oss-security] CVE Request: Insufficient TLS Protection in Composer (PHP)" (number mark "        kevin@stormt May 14   47/1500  " thread-indent "\"Re: [oss-security] CVE Request: Insufficient TLS Protection in Composer (PHP)\"\n") "<CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>" ("<CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1931" "Thursday" "29" "September" "2016" "15:58:28" "-0400" "Chet Ramey" "chet.ramey@case.edu" "<5c9fe5e0-1e15-2e7f-4c7d-1df4968b6525@case.edu>" "59" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" "^Cc:" nil nil "9" "2016092919:58:28" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "        chet.ramey@c Sep 29   59/1931  " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<20160927205512.GA25156@jasmine>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" "<20160927205512.GA25156@jasmine>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11699 invoked by uid 550); 14 May 2015 22:06:56 -0000
+Received: (qmail 9836 invoked by uid 550); 29 Sep 2016 19:59:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30106 invoked from network); 14 May 2015 21:41:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=stormtide.ca; s=google-stormtide;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=IBz//pY9msyIlD5yH+RiezPLfvhrQ8x2Pq2xK+ajhKo=;
-        b=bXFhhnJ8TDUO24arPRYvxEsBM1KdNGvV/nu/HpYIxzh/C0HWBwuE/Sodx6wuHgkbrN
-         bHhX8phJh8yE/BJ5aIDlO/z2HNV2KV/YLrjB3PxDaLUVi9kd+KvSwrolHkRO38ybWXEp
-         DRCzAz7dxZKoCW3I3yHAZTSpg31Oi1ZzCJ3fY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=IBz//pY9msyIlD5yH+RiezPLfvhrQ8x2Pq2xK+ajhKo=;
-        b=gzt7VgtDF0/dTwmqGSQP+ouW+wgchUC9qSSUUShlmZnE4PrP2zBmKg3G4fgrNJV9E8
-         sT3FBE3VzfsRqVIfOIMleK6bYXkN8fCjg3l/KVxvf4tzPdm1mhKSmVg7d21EgYCt0v7U
-         cqVEl605TBYOFmCmReo6ApVA8TlaPX1nSSZj8TXNSEfXlofIBe3SicY078V3rfJ+pzKE
-         Hy57kRORIIKx0N5ibFpavfZ9ch4cslfsss/sdXgc7j+k/IzKtMDWizAzyNf+MYEwmasf
-         5Sxiuy+nOvphZtFyFF+zR11UfIZghimxWElOc1we61+qQvBimUvFFooj+ugocwrHKmyI
-         P5fw==
-X-Gm-Message-State: ALoCoQkAQhTHcqkseKiadRLTLu2k39X3jhey1Co3gdZ/uYv25Q52/fSFnnyGLpL0OCjgyG3cO1uX
-X-Received: by 10.70.40.164 with SMTP id y4mr11935176pdk.25.1431639659564;
-        Thu, 14 May 2015 14:40:59 -0700 (PDT)
-Message-ID: <55551669.5060308@stormtide.ca>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
+Received: (qmail 9811 invoked from network); 29 Sep 2016 19:58:59 -0000
+References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
+ <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
+ <160916195601.AA66726.SM@caleb.ins.cwru.edu> <20160927205512.GA25156@jasmine>
+Message-ID: <5c9fe5e0-1e15-2e7f-4c7d-1df4968b6525@case.edu>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
+ Gecko/20100101 Thunderbird/45.3.0
 MIME-Version: 1.0
-References: <CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>
-In-Reply-To: <CALwr1G=mfjVLrsYN0Yi33UV82F3520Nsm0CpFbFx-AB1J5D+rA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Thu, 14 May 2015 14:40:57 -0700
-From: Kevin McArthur <kevin@stormtide.ca>
+In-Reply-To: <20160927205512.GA25156@jasmine>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="HCO6NUOBLDkv7GMuBVi90GBpxRWqlTQ1i"
+X-Junkmail-Whitelist: YES (by domain whitelist at mpv1-2015.case.edu)
+Cc: chet.ramey@case.edu, john.haxby@oracle.com
+Date: Thu, 29 Sep 2016 15:58:28 -0400
+From: Chet Ramey <chet.ramey@case.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: Insufficient TLS Protection in Composer
- (PHP)
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
+ $HOSTNAME
+To: Leo Famulari <leo@famulari.name>, oss-security@lists.openwall.com
 
-Thanks Padraic for applying for a CVE on this one. As it doesn't appear
-its going to get patched, a CVE is probably the right way to go.
+--HCO6NUOBLDkv7GMuBVi90GBpxRWqlTQ1i
+Content-Type: multipart/mixed; boundary="fh1iXPsJiXajkjrWPSpEfkSA5Wj2NK65e";
+ protected-headers="v1"
+From: Chet Ramey <chet.ramey@case.edu>
+Reply-To: chet.ramey@case.edu
+To: Leo Famulari <leo@famulari.name>, oss-security@lists.openwall.com
+Cc: chet.ramey@case.edu, john.haxby@oracle.com
+Message-ID: <5c9fe5e0-1e15-2e7f-4c7d-1df4968b6525@case.edu>
+Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
+ $HOSTNAME
+References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
+ <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
+ <160916195601.AA66726.SM@caleb.ins.cwru.edu> <20160927205512.GA25156@jasmine>
+In-Reply-To: <20160927205512.GA25156@jasmine>
 
-Not sure if its just getting lost in the shuffle, but, this
-remote-code-execution vulnerability in Composer is widely deployed and
-trivially exploited.
+--fh1iXPsJiXajkjrWPSpEfkSA5Wj2NK65e
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I can give it a name/branding if it'll help speed up the CVE issuance.
-
--- 
-
-Kevin McArthur
-
-
-On 2015-05-11 12:03 PM, Pádraic Brady wrote:
-> Hi all,
->
-> A brief update to clarify this is a CVE request in the subject line
-> and copy the guys at MITRE. Also to clarify that this vulnerability
-> occurs from relying the PHP openssl extensions default configuration.
-> That default configuration disables peer verification on PHP versions
-> less than PHP 5.6 (when it was significantly reworked to be more
-> secure by default).
->
-> On 25 April 2015 at 19:49, Pádraic Brady <padraic.brady@gmail.com> wrote:
->> My I request a CVE ID for the following, which is a publicly disclosed
->> unpatched vulnerability on Composer's issue tracker since 2012.
->> Composer is an open source package manager for PHP. The specific issue
->> pertaining to this request is a failure to perform TLS peer
->> verification on remote requests when making any API request or
->> retrieving any file, i.e. there is a singular client class.
+On 9/27/16 4:55 PM, Leo Famulari wrote:
+> On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
+>>>> I believe the fix in parse.y is this (Chet, please correct me if I'm w=
+rong):
+>>>
+>>> Yes, that is the current fix for this.  There are other ways to do it.
 >>
->> Ref: https://github.com/composer/composer/issues/1074
->>
->> Kind regards,
->> Paddy
->>
->> --
->> Pádraic Brady
-> Kind regards,
-> Paddy
->
-> --
-> Pádraic Brady
->
-> http://blog.astrumfutura.com
+>> Here's a patch to bash-4.3 that will fix this.
+>=20
+> Hi Chet,
+>=20
+> Thanks for the patch! Do you plan to add it to the bash-4.3-patches
+> series [0]?
+
+Yes, I plan to.
+
+
+--=20
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, UTech, CWRU    chet@case.edu    http://cnswww.cns.cwru.edu/~che=
+t/
+
+
+--fh1iXPsJiXajkjrWPSpEfkSA5Wj2NK65e--
+
+--HCO6NUOBLDkv7GMuBVi90GBpxRWqlTQ1i
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iFsEARECABsFAlftcm4UHGNoZXQucmFtZXlAY2FzZS5lZHUACgkQu1hp8GTqdKtt
+BwCggWNPnQ7tP+COjRvE6BC9mnr6OZkAnRX4c6d/OvM1MkUQWMH9wgPlX0mo
+=aQk+
+-----END PGP SIGNATURE-----
+
+--HCO6NUOBLDkv7GMuBVi90GBpxRWqlTQ1i--
 
