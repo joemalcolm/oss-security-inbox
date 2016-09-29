@@ -1,21 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/13/3
-Message-ID: <1481647175.3250.4.camel@redhat.com>
-Date: Tue, 13 Dec 2016 17:39:35 +0100
-From: Adam Maris <amaris@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-9583 jasper: Out of bounds heap read in jpc_pi_nextpcrl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/15
+Message-ID: <VI1PR06MB1087A485F2E0965FAFE79083A9CE0@VI1PR06MB1087.eurprd06.prod.outlook.com>
+Date: Thu, 29 Sep 2016 13:54:53 +0000
+From: Mario Pirker <mpirker@...ux.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+For completeness - here is a link to the advisory released by NCC Group:
+https://github.com/nccgroup/TriforceLinuxSyscallFuzzer/tree/master/crash_reports/report_compatIpt
 
-We've assigned CVE-2016-9583 to following vulnerability:
+Thanks.
+Mario
 
-https://github.com/mdadams/jasper/issues/103
+> Am 29.09.2016 um 15:45 schrieb Greg KH <greg@...ah.com>:
+> 
+> On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
+>> Hi there,
+>> 
+>> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I
+>> have a working exploit to escalade privileges which requires the ip6_tables
+>> module to be loaded, that it is properly blocked on all up-to-date versions.
+>> 
+>> Due to the number of users running vulnerable code(not update to 4.7 or
+>> higher), and that this exploit is only available to security researchers and
+>> kernel packagers upon request but that I don't want it to spread.
+>> 
+>> 
+>> 
+>> I have reported this issue to Linux kernel official and they have already fixed
+>> this.
+> 
+> Note, this was fixed many months ago, in May of 2016, and went into the
+> stable kernel updates in June, 2016.  Any distro that updated to the
+> stable kernel updates received this fix then.
+> 
+> Any distro that hasn't updated their kernel since then, well, you need
+> to revaluate your trust of such a distro :)
+> 
+> thanks,
+> 
+> greg k-h
 
-Best Regards,
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
