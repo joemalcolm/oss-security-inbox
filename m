@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5385" "Sunday" "15" "November" "2020" "12:40:08" "+0000" "=?gb2312?B?a2l5aW4o?==?gb2312?B?0vw=?==?gb2312?B?wcEp?=" "kiyin@tencent.com" "<c94dc00201e741daa78ce7c466d53136@tencent.com>" "89" "[oss-security] Linux kernel: net/x25: a couple of overflows" nil nil nil "11" "2020111512:40:08" "[oss-security] Linux kernel: net/x25: a couple of overflows" (number mark "U       kiyin@tencen Nov 15   89/5385  " thread-indent "\"[oss-security] Linux kernel: net/x25: a couple of overflows\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: net/x25: a couple of overflows" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["546" "Thursday" "29" "September" "2016" "08:27:47" "-0400" "Christos Zoulas" "christos@zoulas.com" "<20160929122747.1155317FDAB@rebar.astron.com>" "14" "Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape" "^Date:" nil nil "9" "2016092912:27:47" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" (number mark "        christos@zou Sep 29   14/546   " thread-indent "\"Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape\"\n") "<20160929103210.bm5itc2cu4a672ws@jwilk.net>" ("<20160929103210.bm5itc2cu4a672ws@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28540 invoked by uid 550); 15 Nov 2020 12:48:35 -0000
+Received: (qmail 14173 invoked by uid 550); 29 Sep 2016 13:00:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,117 +11,29 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 29843 invoked from network); 29 Sep 2016 12:27:59 -0000
+In-Reply-To: <20160929103210.bm5itc2cu4a672ws@jwilk.net>
+       from Jakub Wilk (Sep 29, 12:32pm)
+Organization: Astron Software
+X-Mailer: Mail User's Shell (7.2.6 beta(4.pl1)+dynamic 20000103)
+Message-Id: <20160929122747.1155317FDAB@rebar.astron.com>
+Date: Thu, 29 Sep 2016 08:27:47 -0400
+From: christos@zoulas.com (Christos Zoulas)
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25976 invoked from network); 15 Nov 2020 12:40:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-	s=s202002; t=1605444008;
-	bh=0AbgXutBukzUE4t0SNKIyp83mibxtlhhqY/nKqKD9Jc=;
-	h=From:To:Subject:Date;
-	b=izfYXpy2vnYMRLkOmmsoBdWsck3y8I1WQJCRQIU3AZtdQjpwjnmuXVf7yeSNWws5r
-	 pNl1t8GxmdVn0av0DZw0mdiSJmGPkFGL68uKKnIoNNcYfJOlc4Hw8ofHDEB69B20Kz
-	 1yy+hbvenksy4m0n1BObdWfmqh9K5pH1OLIFISqM=
-From: =?gb2312?B?a2l5aW4o0vzBwSk=?= <kiyin@tencent.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: Linux kernel: net/x25: a couple of overflows
-Thread-Index: Ada7S3ucyG3FLVJDSCevWSxIezcOfg==
-Date: Sun, 15 Nov 2020 12:40:08 +0000
-Message-ID: <c94dc00201e741daa78ce7c466d53136@tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [9.19.161.120]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Subject: [oss-security] Linux kernel: net/x25: a couple of overflows
+Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
+To: oss-security@lists.openwall.com
 
-SGksDQoNClRoZSAueDI1X2FkZHJbXSBhZGRyZXNzIGNvbWVzIGZyb20gdGhl
-IHVzZXIgYW5kIGlzIG5vdCBuZWNlc3NhcmlseSBOVUwgdGVybWluYXRlZC4g
-VGhpcyBsZWFkcyB0byBhIGNvdXBsZSBwcm9ibGVtcy4NCg0KMSkgeDI1X2Jp
-bmQgcmVhZCBvdmVyZmxvdw0KDQpodHRwczovL2dpdC5rZXJuZWwub3JnL3B1
-Yi9zY20vbGludXgva2VybmVsL2dpdC9zdGFibGUvbGludXguZ2l0L3RyZWUv
-bmV0L3gyNS9hZl94MjUuYz9oPXY1LjkuMyNuNjc3DQoNCjY3NwlzdGF0aWMg
-aW50IHgyNV9iaW5kKHN0cnVjdCBzb2NrZXQgKnNvY2ssIHN0cnVjdCBzb2Nr
-YWRkciAqdWFkZHIsIGludCBhZGRyX2xlbikNCjY3OAl7DQo2NzkJCXN0cnVj
-dCBzb2NrICpzayA9IHNvY2stPnNrOw0KNjgwCQlzdHJ1Y3Qgc29ja2FkZHJf
-eDI1ICphZGRyID0gKHN0cnVjdCBzb2NrYWRkcl94MjUgKil1YWRkcjsNCjY4
-MQkJaW50IGxlbiwgaSwgcmMgPSAwOw0KNjgyCQ0KNjgzCQlpZiAoYWRkcl9s
-ZW4gIT0gc2l6ZW9mKHN0cnVjdCBzb2NrYWRkcl94MjUpIHx8DQo2ODQJCQlh
-ZGRyLT5zeDI1X2ZhbWlseSAhPSBBRl9YMjUpIHsNCjY4NQkJCXJjID0gLUVJ
-TlZBTDsNCjY4NgkJCWdvdG8gb3V0Ow0KNjg3CQl9DQo2ODgJDQo2ODkJCS8q
-IGNoZWNrIGZvciB0aGUgbnVsbF94MjVfYWRkcmVzcyAqLw0KNjkwCQlpZiAo
-c3RyY21wKGFkZHItPnN4MjVfYWRkci54MjVfYWRkciwgbnVsbF94MjVfYWRk
-cmVzcy54MjVfYWRkcikpIHsNCjY5MQkNCjY5MgkJCWxlbiA9IHN0cmxlbihh
-ZGRyLT5zeDI1X2FkZHIueDI1X2FkZHIpOyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIDwtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSB0aGVyZSBpcyBubyBj
-aGVjayB3aGV0aGVyIHRoZSBhZGRyLT5zeDI1X2FkZHIueDI1X2FkZHIgaXMg
-bnVsbC10ZXJtaW5hdGVkLiBpZiBub3QsIHN0cmxlbiB3aWxsIHJlYWQgb3V0
-IG9mIHNvY2thZGRyX3gyNSBzdHJ1Y3QuDQo2OTMJCQlmb3IgKGkgPSAwOyBp
-IDwgbGVuOyBpKyspIHsNCjY5NAkJCQlpZiAoIWlzZGlnaXQoYWRkci0+c3gy
-NV9hZGRyLngyNV9hZGRyW2ldKSkgew0KNjk1CQkJCQlyYyA9IC1FSU5WQUw7
-DQo2OTYJCQkJCWdvdG8gb3V0Ow0KNjk3CQkJCX0NCjY5OAkJCX0NCjY5OQkJ
-fQ0KLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4u
-Li4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLg0KNzEzCX0N
-Cg0KYWZmZWN0ZWQgTGludXgga2VybmVsIHZlcnNpb25zOg0KMi42LjM0oas1
-LjkuOA0KDQoyKSB4MjVfYWRkcl9hdG9uIHdyaXRlIG92ZXJmbG93DQoNClRo
-ZSBjYWxsIHRyZWUgaXM6DQogIHgyNV9jb25uZWN0KCkNCiAgLS0+IHgyNV93
-cml0ZV9pbnRlcm5hbCgpDQogICAgICAtLT4geDI1X2FkZHJfYXRvbigpDQoN
-Cmh0dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwv
-Z2l0L3N0YWJsZS9saW51eC5naXQvdHJlZS9uZXQveDI1L2FmX3gyNS5jP2g9
-djUuOS4zI24xNTQNCjE1NAlpbnQgeDI1X2FkZHJfYXRvbih1bnNpZ25lZCBj
-aGFyICpwLCBzdHJ1Y3QgeDI1X2FkZHJlc3MgKmNhbGxlZF9hZGRyLA0KMTU1
-CQkJICBzdHJ1Y3QgeDI1X2FkZHJlc3MgKmNhbGxpbmdfYWRkcikNCjE1Ngl7
-DQoxNTcJCXVuc2lnbmVkIGludCBjYWxsZWRfbGVuLCBjYWxsaW5nX2xlbjsN
-CjE1OAkJY2hhciAqY2FsbGVkLCAqY2FsbGluZzsNCjE1OQkJaW50IGk7DQox
-NjAJDQoxNjEJCWNhbGxlZCAgPSBjYWxsZWRfYWRkci0+eDI1X2FkZHI7ICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIDwtLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLSB0aGVyZSBpcyBubyBjaGVjayBvZiB4MjUtPmRlc3RfYWRkciwgeDI1
-LT5zb3VyY2VfYWRkciBpbiB0aGVzZSB0aHJlZSBmdW5jdGlvbnMuDQoxNjIJ
-CWNhbGxpbmcgPSBjYWxsaW5nX2FkZHItPngyNV9hZGRyOw0KMTYzCQ0KMTY0
-CQljYWxsZWRfbGVuICA9IHN0cmxlbihjYWxsZWQpOw0KMTY1CQljYWxsaW5n
-X2xlbiA9IHN0cmxlbihjYWxsaW5nKTsgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICA8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gdGhlIHN0cmxlbiBp
-biB4MjVfYWRkcl9hdG9uKCkgd2lsbCBsZWFkIHRvIHdyaXRlIG92ZXJmbG93
-IHRoZSAiYWRkcmVzc2VzIiBidWZmZXIgZnJvbSB4MjVfd3JpdGVfaW50ZXJu
-YWwoKQ0KMTY2CQ0KMTY3CQkqcCsrID0gKGNhbGxpbmdfbGVuIDw8IDQpIHwg
-KGNhbGxlZF9sZW4gPDwgMCk7DQoxNjgJDQoxNjkJCWZvciAoaSA9IDA7IGkg
-PCAoY2FsbGVkX2xlbiArIGNhbGxpbmdfbGVuKTsgaSsrKSB7DQoxNzAJCQlp
-ZiAoaSA8IGNhbGxlZF9sZW4pIHsNCjE3MQkJCQlpZiAoaSAlIDIgIT0gMCkg
-ew0KMTcyCQkJCQkqcCB8PSAoKmNhbGxlZCsrIC0gJzAnKSA8PCAwOyAgICAg
-ICAgICAgICAgICAgICA8LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gIHdyaXRl
-IG92ZXJmbG93IHRoZSAiYWRkcmVzc2VzIiBidWZmZXIgZnJvbSB4MjVfd3Jp
-dGVfaW50ZXJuYWwoKQ0KMTczCQkJCQlwKys7DQoxNzQJCQkJfSBlbHNlIHsN
-CjE3NQkJCQkJKnAgPSAweDAwOw0KMTc2CQkJCQkqcCB8PSAoKmNhbGxlZCsr
-IC0gJzAnKSA8PCA0Ow0KMTc3CQkJCX0NCjE3OAkJCX0gZWxzZSB7DQoxNzkJ
-CQkJaWYgKGkgJSAyICE9IDApIHsNCjE4MAkJCQkJKnAgfD0gKCpjYWxsaW5n
-KysgLSAnMCcpIDw8IDA7DQoxODEJCQkJCXArKzsNCjE4MgkJCQl9IGVsc2Ug
-ew0KMTgzCQkJCQkqcCA9IDB4MDA7DQoxODQJCQkJCSpwIHw9ICgqY2FsbGlu
-ZysrIC0gJzAnKSA8PCA0Ow0KMTg1CQkJCX0NCjE4NgkJCX0NCjE4NwkJfQ0K
-MTg4CQ0KMTg5CQlyZXR1cm4gMSArIChjYWxsZWRfbGVuICsgY2FsbGluZ19s
-ZW4gKyAxKSAvIDI7DQoxOTAJfQ0KDQp0aGlzIHNlY3VyaXR5IGJ1ZyBoYXMg
-YmVlbiBleGlzdGVkIGZvciAyNCB5ZWFycyBzaW5jZSBYLjI1IFByb2plY3Qg
-YWRkZWQgZmlyc3QgaW4gTGludXgga2VybmVsIDIuMS4xNi4NCg0KYWZmZWN0
-ZWQgTGludXgga2VybmVsIHZlcnNpb25zOg0KMi4xLjE2oas1LjkuOA0KDQpw
-YXRjaDoNClRoZSB4MjUgcHJvdG9jb2wgb25seSBhbGxvd3MgMTUgY2hhcmFj
-dGVyIGFkZHJlc3NlcyBzbyBwdXR0aW5nIGEgTlVMIHRlcm1pbmF0b3IgYXMg
-dGhlIDE2dGggY2hhcmFjdGVyIGlzIHNhZmUuDQoNCmRpZmYgLS1naXQgYS9u
-ZXQveDI1L2FmX3gyNS5jIGIvbmV0L3gyNS9hZl94MjUuYyBpbmRleCAwYmJi
-MjgzZjIzYzkuLjMxODBmMTU5NDJmZSAxMDA2NDQNCi0tLSBhL25ldC94MjUv
-YWZfeDI1LmMNCisrKyBiL25ldC94MjUvYWZfeDI1LmMNCkBAIC02ODYsNiAr
-Njg2LDggQEAgc3RhdGljIGludCB4MjVfYmluZChzdHJ1Y3Qgc29ja2V0ICpz
-b2NrLCBzdHJ1Y3Qgc29ja2FkZHIgKnVhZGRyLCBpbnQgYWRkcl9sZW4pDQog
-CQlnb3RvIG91dDsNCiAJfQ0KIA0KKwlhZGRyLT5zeDI1X2FkZHIueDI1X2Fk
-ZHJbWDI1X0FERFJfTEVOIC0gMV0gPSAnXDAnOw0KKw0KIAkvKiBjaGVjayBm
-b3IgdGhlIG51bGxfeDI1X2FkZHJlc3MgKi8NCiAJaWYgKHN0cmNtcChhZGRy
-LT5zeDI1X2FkZHIueDI1X2FkZHIsIG51bGxfeDI1X2FkZHJlc3MueDI1X2Fk
-ZHIpKSB7DQogDQpAQCAtNzc5LDYgKzc4MSw3IEBAIHN0YXRpYyBpbnQgeDI1
-X2Nvbm5lY3Qoc3RydWN0IHNvY2tldCAqc29jaywgc3RydWN0IHNvY2thZGRy
-ICp1YWRkciwNCiAJCWdvdG8gb3V0Ow0KIA0KIAlyYyA9IC1FTkVUVU5SRUFD
-SDsNCisJYWRkci0+c3gyNV9hZGRyLngyNV9hZGRyW1gyNV9BRERSX0xFTiAt
-IDFdID0gJ1wwJzsNCiAJcnQgPSB4MjVfZ2V0X3JvdXRlKCZhZGRyLT5zeDI1
-X2FkZHIpOw0KIAlpZiAoIXJ0KQ0KIAkJZ290byBvdXQ7DQoNClJlZ2FyZHMs
-DQpraXlpbi4NCg==
+On Sep 29, 12:32pm, jwilk@jwilk.net (Jakub Wilk) wrote:
+-- Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
+
+| * Christos Zoulas <christos@zoulas.com>, 2016-09-26, 13:53:
+| >On the BSDs TIOCSTI has been limited to the superuser since the 4.4BSD Lite 2 
+| >release in 1995 (IIRC).
+| 
+| Hmm. I've just tried OpenBSD 5.7 and FreeBSD 10.3, and TIOCSTI works fine for 
+| non-root users.
+
+I am wrong, sorry. It still works on BSD for the owner of the tty controlling
+process group. I guess it is time to fix it everywhere.
+
+christos
