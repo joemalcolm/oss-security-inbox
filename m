@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/2
-Message-Id: <20160112083910.313881BE690@smtpvbsrv1.mitre.org>
-Date: Tue, 12 Jan 2016 03:39:10 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE for node.js websockets (ws)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/17
+Message-ID: <alpine.DEB.2.20.1609291617400.13997@tvnag.unkk.fr>
+Date: Thu, 29 Sep 2016 16:18:44 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: c-ares hacking <c-ares@...l.haxx.se>
+cc: oss-security@...ts.openwall.com
+Subject: Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 29 Sep 2016, Daniel Stenberg wrote:
 
-> CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
+> INFO
+> ----
+>
+> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+> CVE-2016-5180 to this issue.
+>
+> AFFECTED VERSIONS
+> -----------------
+>
+> This flaw exists in the following c-ares versions.
+>
+> - Affected versions: libcurl 1.0.0 to and including 1.11.0
+> - Not affected versions: c-ares >= 1.12.0
 
-> If not who is sitting on it?
+Sorry for being sloppy. I meant to write c-ares above and not libcurl. This 
+was a copy and paste error that is already fixed in the web version of this 
+advisory at
 
-In our experience, the string "CVE-PENDING" has little or no
-correlation with whether anyone has done any type of CVE request.
+  https://c-ares.haxx.se/adv_20160929.html
 
-We'll interpret it as a new request to MITRE unless someone else
-happens to have received a request.
+-- 
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
-Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
-TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
-KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
-bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
-vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
-SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
-ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
-voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
-qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
-HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
-8dm8oDFJmGuW1J/mkWaI
-=mvzn
------END PGP SIGNATURE-----
+  / daniel.haxx.se
