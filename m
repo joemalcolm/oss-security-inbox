@@ -1,44 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/8
-Message-Id: <20160314043135.C858372E003@smtpvbsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:31:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: dkasyanov@...udlinux.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/10
+Message-ID: <F73DA7D7DA7D984B81025139D7CADECC0120DCFC@EX02.corp.qihoo.net>
+Date: Thu, 29 Sep 2016 07:43:35 +0000
+From: 张谦 <zhangqian-c@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi there,
+I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I have a working exploit to escalade privileges which requires the ip6_tables module to be loaded, that it is properly blocked on all up-to-date versions.
+Due to the number of users running vulnerable code(not update to 4.7 or higher), and that this exploit is only available to security researchers and kernel packagers upon request but that I don't want it to spread.
 
-> If "PK\x05\x06" signature is located at end of `buf`
-> variable, it will read out-of-bound `buf` variable and copy to
-> `locator`.
-> 
-> https://bugs.php.net/bug.php?id=71498
-> https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
+I have reported this issue to Linux kernel official and they have already fixed this.
+And I would like to request CVE-ID for this issue.
 
-Use CVE-2016-3142.
+DESCRIPTION
+===========
+The IPv6 netfilter subsystem in the Linux kernel through 4.6.2 does not validate certain offset fields,
+which allows local users to escalade privileges via an IP6T_SO_SET_REPLACE compat setsockopt call
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+PRODUCTS AFFECTED
+==================
+Linux Kernel through 4.6.2
+Ubuntu 14.04
+Ubuntu 16.04
 
-iQIcBAEBCAAGBQJW5j5TAAoJEL54rhJi8gl5DhgQAIB326lNzHLeRy16mjDXg0Dm
-JkKHcv92P5w3NQUOyZbO0HkRqxCrlEcf5x6qhO0ShhuAe4m/3qS0HHugKHbabALV
-nsFSUjoiodWChNdFS9qHznv2sPUvuNujbJludULqNKSHbZm7sqwrOHIos6TXEqWr
-/9ALj350BvarXe4f12esAWWLYyFoqhY09EheHd3TU8IxK0Rk9uCUDNNrfju4e/Q1
-fmHe2zMBvJ8bKVqazp6FSg0hkigSkZyMQ7Iz3NePrIGcKe7t1nMcP9T6T5oAmtHy
-hfmnplpJ/cBjUFDwYCp467CdIm7pH9d/5GgoewCXMH8LJv4MPR/aVxSyPDVExFy3
-8q1eH1ziIr/NjMYTmIB9y6OtSaW6A8Qh9oU9trXgTihQzR3ZY/G5iDB/w8EZ7lcn
-3iPUkWC2SQBUqZUY3xSTViF/uI5CvbkAmSbExJmj1b4XCd1lzKo+LxQ2dvAKEGuk
-Iy7WYUO/toCVAOrnB2acBGp4dY8CJWPPKol7rDVctBS2DHzp/oHokpA9m5Q0x+91
-AUUbgQbb+/Tpo+YvDq3LZ1+cEgWH4Ge3HvjjdJczNZ+gmCv1Mte8vk4zwRGwyPwG
-BfngJsGqwnU6SJnXahIuRF+OMpeLY4mgMHxSrvoQSJIe3c+wtVz+GOWr7jgOHxZH
-k4UsurZYNZpUmtXRpAkZ
-=+dfJ
------END PGP SIGNATURE-----
+VULNERABILITY DETAILS
+====================
+In net/ipv6/netfilter/ip6_tables.c:1490
+check_compat_entry_size_and_hooks(struct compat_ip6t_entry *e, . . .)
+{
+xt_ematch_foreach(ematch, e) {
+                   ret = compat_find_calc_match(ematch, &e->ipv6, &off);
+                   if (ret != 0)
+                            goto release_matches;
+                  ++j;
+}
+
+t = compat_ip6t_get_target(e);
+target = xt_request_find_target(NFPROTO_IPV6, t->u.user.name, t->u.user.revision);
+
+t->u.kernel.target = target;
+}
+
+struct xt_entry_target *
+compat_ip6t_get_target(struct compat_ip6t_entry *e)
+{
+         return (void *)e + e->target_offset;
+}
+
+/* can only be xt_entry_match, so no use of typeof here */
+#define xt_ematch_foreach(pos, entry) \
+         for ((pos) = (struct xt_entry_match *)entry->elems; \
+            (pos) < (struct xt_entry_match *)((char *)(entry) + \
+                 (entry)->target_offset); \
+            (pos) = (struct xt_entry_match *)((char *)(pos) + \
+            (pos)->u.match_size))
+
+The entry->target_offset field didn’t verification well, so that it can cause a memory corruption via t->u.kernel.target = target
+
+CREDIT
+======
+This issue was discovered by Qian Zhang@...velTeam Qihoo 360
+
+PATCH
+===========
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ce683e5f9d045e5d67d1312a42b359cb2ab2a13c
+
+regards,
+Qian Zhang@...velTeam Qihoo 360
+
+Content of type "text/html" skipped
