@@ -1,38 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/3
-Message-ID: <CAHbk4RL5S3VMX375NbqUUMmfWaUUM4wP1vNnYTvO4w2QMGE9qQ@mail.gmail.com>
-Date: Mon, 12 Dec 2016 10:40:16 -0600
-From: Sam Whited <sam@...whited.com>
-To: oss-security@...ts.openwall.com
-Cc: Salvatore Bonaccorso <carnil@...ian.org>, cve-assign@...re.org
-Subject: Re: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/23
+Message-ID: <CAM1yOjbkx_c4D4_HY3ovdFLDiRirWrnKa0OUwra=ZitrLbrSKw@mail.gmail.com>
+Date: Thu, 29 Sep 2016 11:50:11 -0400
+From: Mike Kienenberger <mkienenb@...il.com>
+To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
+Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 1.2.15 released
 Content-Type: text/plain; charset=utf-8
 
-Oops, I got the autoreply about not using this list to request CVEs
-after sending that message; now I'm a bit more confused about the
-current procedure; please advise.
+The Apache MyFaces team is pleased to announce the release of Apache
+MyFaces Trinidad 1.2.15.
 
-—Sam
+MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
+that provides an extendibles framework and extensive skinning support.
+This version is designed to be used with the JSF 1.2 specification and
+works with either Mojarra or MyFaces.
 
-On Mon, Dec 12, 2016 at 10:36 AM, Sam Whited <sam@...whited.com> wrote:
-> On Sun, Dec 11, 2016 at 4:29 PM,  <cve-assign@...re.org> wrote:
->> Use CVE-2016-9928.
->
-> Thanks;
->
-> For my edification: would it be better to send something to this list
-> for CVEs in open source software in the future? I've tried the Google
-> Docs form linked from the website a few times and never gotten a
-> response.
->
-> Best,
-> Sam
->
-> --
-> Sam Whited
+CVE-2016-5019:
+Trinidad’s CoreResponseStateManager both reads and writes view state
+strings using
+ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
+bypasses the
+view state security features provided by the JSF implementations - ie. the view
+state is not encrypted and is not MAC’ed.  Trinidad’s
+CoreResponseStateManager will
+blindly deserialize untrusted view state strings, which makes Trinidad-based
+applications vulnerable to deserialization attacks.
 
+Apache MyFaces Trinidad is available in both binary and source
+distributions, and there are examples available as well:
 
+    * http://myfaces.apache.org/trinidad/download.html
 
--- 
-Sam Whited
-pub 4096R/54083AE104EA7AD3
+Apache MyFaces Trinidad is available in the central Maven repository
+under Group ID "org.apache.myfaces.trinidad"
+
+Release Notes - MyFaces Trinidad - Version 1.2.15
+
+Bug
+    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
+deserialization security vulnerability
+
+    [TRINIDAD-195] - Two requests at the same time throw an exception
+when the server just started
+    [TRINIDAD-943] - handle session timeout
+    [TRINIDAD-1683] - client-side convertNumber causes loss of precision
+    [TRINIDAD-1804] - Resources not found(404) errors
+    [TRINIDAD-1960] - NullPointerException in
+LocaleInfoScriptlet.getSupportedLocaleVariant
+    [TRINIDAD-2009] - tr:table selectAll also selects disabled chekcboxes
+    [TRINIDAD-2017] - Trinidad statemananger needs to store everything
+on the client, when HTML_Basic is used, in combination with standard
+client-side state-saving
+    [TRINIDAD-2021] - Wrong behavior in TrNumberFormat
+    [TRINIDAD-2023] - CheckSerializationConfigurator should use the
+Trinidad specific ObjectInputStream (ObjectInputStreamResolveClass)
+class
+    [TRINIDAD-2024] - UIXCollection holding only to application data
+    [TRINIDAD-2028] - Should reset value on component at the beginning of decode
+    [TRINIDAD-2033] - trh:tableLayout tag doc should call out
+table-layout:fixed as desirable for programmatically-resizable cell
+contents
+    [TRINIDAD-2036] - While ResourceServlet references files of type
+"ico", they won't load because CoreRenderKitResourceLoader doesn't
+register them
+    [TRINIDAD-2039] - Icons are created if the string for the resource
+is an empty string in Trinidad 1.2
+    [TRINIDAD-2045] - UIXCollection should release the reference to
+the model at the very end of processSaveState
+    [TRINIDAD-2047] - UIXCollection saves the stamp state when there is no stamp
+    [TRINIDAD-2048] - ComponentUtils.getScopedIdForComponent() is not
+producing consistent scoped IDs for components relocated during tag
+execution
+    [TRINIDAD-2051] - NPE in BAseChangeManager
+    [TRINIDAD-2057] - UIXTree/UIXTreeTable/UIXTable RowKeySets require
+that their attributes are only fetched when the component is in
+context
+    [TRINIDAD-2061] - add a utility method in PartialPageUtils to send
+a <noop/> ppr response
+    [TRINIDAD-2097] - tr:selectOneListBox - item not selected - wrong
+item of selected item returned by SimpleSelectOneRenderer.resolveIndex
+    [TRINIDAD-2110] - workaround for jsf portlet bridge 2.0 nullviewstatetoken
+    [TRINIDAD-2173] - tr:table component renders navigation bar
+wrongly for unknown row count
+
+Improvement
+
+    [TRINIDAD-1729] - provide a hook for for an external decorator of
+Skin InputStreamProvider
+
+New Feature
+
+    [TRINIDAD-1457] - Need the ability to bypass the Cache on ResourceServlet
+    [TRINIDAD-2062] - Need to add a utility method to
+ExternalContextUtils to get the writer from the ExternalContext
+
+regards,
+
+Mike Kienenberger
