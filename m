@@ -1,136 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/9
-Message-ID: <20160913192423.GA13420@hunt>
-Date: Tue, 13 Sep 2016 12:24:23 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: "vul@...safe" <vul@...safe.com>, oss-security@...ts.openwall.com
-Subject: Re: Heapoverflow in giflib5.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/16
+Message-ID: <CACXSKC8AZevw7LatqKf8RdVWR9srfkEQ49RQABHbQeK38Ono+w@mail.gmail.com>
+Date: Fri, 30 Sep 2016 00:14:04 +1000
+From: Vitaly Nikolenko <vnik5287@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 13, 2016 at 06:55:08PM +0200, Hanno Böck wrote:
-> Two notes:
-> * This is a bug *only* in the gif2rgb command line tool, not in giflib
->   itself.
-> * I reported this before. The giflib maintainer claimed multiple times
->   that he has fixed it, yet he hasn't. See:
-> https://sourceforge.net/p/giflib/bugs/79/
+Wasn't this already covered by CVE-2016-4997? There's a public exploit
 
-Hanno, can you still reproduce this issue? I followed your excellent
-reproducer script and I don't get any ASAN warnings. If you still get ASAN
-warnings this may indicate the source of the confusion.
+https://www.exploit-db.com/exploits/40049/
 
-Thanks
+I'm assuming for IPv6 this would be exactly the same except for
+changing the setsockopt optname from IPT_SO_SET_REPLACE to
+IP6T_SO_SET_REPLACE. The code path for IPv6 looks almost identical
+unless I'm missing something?
 
-ubuntu@x1:~$ git clone --depth=1 git://git.code.sf.net/p/giflib/code giflib-code
-Cloning into 'giflib-code'...
-remote: Counting objects: 149, done.
-remote: Compressing objects: 100% (147/147), done.
-remote: Total 149 (delta 22), reused 10 (delta 0)
-Receiving objects: 100% (149/149), 389.03 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (22/22), done.
-Checking connectivity... done.
-ubuntu@x1:~$  cd giflib-code/
-ubuntu@x1:~/giflib-code$ CFLAGS="-fsanitize=address -g" LDFLAGS="-fsanitize=address" ./autogen.sh
-Warning: This script will run configure for you -- if you need to pass
-  arguments to configure, please give them as arguments to this script.
-aclocal: warning: couldn't open directory 'm4': No such file or directory
-configure.ac:14: installing './ar-lib'
-configure.ac:14: installing './compile'
-configure.ac:15: installing './config.guess'
-configure.ac:15: installing './config.sub'
-configure.ac:5: installing './install-sh'
-configure.ac:5: installing './missing'
-Makefile.am: installing './INSTALL'
-parallel-tests: installing './test-driver'
-lib/Makefile.am: installing './depcomp'
-checking for a BSD-compatible install... /usr/bin/install -c
-checking whether build environment is sane... yes
-checking for a thread-safe mkdir -p... /bin/mkdir -p
-checking for gawk... gawk
-[...]
-configure: creating ./config.status
-config.status: creating util/Makefile
-config.status: creating lib/Makefile
-config.status: creating Makefile
-config.status: creating doc/Makefile
-config.status: creating pic/Makefile
-config.status: creating config.h
-config.status: executing depfiles commands
-config.status: executing libtool commands
-ubuntu@x1:~/giflib-code$ make -j
-make  all-recursive
-make[1]: Entering directory '/home/ubuntu/giflib-code'
-Making all in lib
-make[2]: Entering directory '/home/ubuntu/giflib-code/lib'
-  CC       dgif_lib.lo
-  CC       gif_font.lo
-  CC       egif_lib.lo
-  CC       gif_hash.lo
-  CC       gifalloc.lo
-  CC       openbsd-reallocarray.lo
-  CC       gif_err.lo
-  CC       quantize.lo
-  CCLD     libgif.la
-ar: `u' modifier ignored since `D' is the default (see `U')
-make[2]: Leaving directory '/home/ubuntu/giflib-code/lib'
-Making all in util
-make[2]: Entering directory '/home/ubuntu/giflib-code/util'
-  CC       getarg.o
-  CC       gif2rgb.o
-  CC       qprintf.o
-  CC       gifbuild.o
-  CC       gifecho.o
-  CC       gifinto.o
-  CC       giftext.o
-  CC       giftool.o
-  CC       gifclrmp.o
-  CC       giffix.o
-  CC       gifbg.o
-  CC       gifcolor.o
-  CC       giffilter.o
-  CC       gifsponge.o
-  CC       gifhisto.o
-  CC       gifwedge.o
-  AR       libgetarg.a
-ar: `u' modifier ignored since `D' is the default (see `U')
-  CCLD     gif2rgb
-  CCLD     gifecho
-  CCLD     giffix
-  CCLD     giftext
-  CCLD     gifinto
-  CCLD     giftool
-  CCLD     gifbg
-  CCLD     gifclrmp
-  CCLD     gifcolor
-  CCLD     giffilter
-  CCLD     gifsponge
-  CCLD     gifwedge
-  CCLD     gifhisto
-  CCLD     gifbuild
-make[2]: Leaving directory '/home/ubuntu/giflib-code/util'
-Making all in pic
-make[2]: Entering directory '/home/ubuntu/giflib-code/pic'
-make[2]: Nothing to be done for 'all'.
-make[2]: Leaving directory '/home/ubuntu/giflib-code/pic'
-make[2]: Entering directory '/home/ubuntu/giflib-code'
-make[2]: Leaving directory '/home/ubuntu/giflib-code'
-make[1]: Leaving directory '/home/ubuntu/giflib-code'
-ubuntu@x1:~/giflib-code$ wget https://sourceforge.net/p/giflib/bugs/79/attachment/gif2rgb-oob-heap-read.gif
---2016-09-13 19:19:27--  https://sourceforge.net/p/giflib/bugs/79/attachment/gif2rgb-oob-heap-read.gif
-Resolving sourceforge.net (sourceforge.net)... 216.34.181.60
-Connecting to sourceforge.net (sourceforge.net)|216.34.181.60|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 20 [image/gif]
-Saving to: ‘gif2rgb-oob-heap-read.gif’
+Commit ce683e5f9d045e5d67d1312a42b359cb2ab2a13c included fixes for
+ARP, IP and IPv6 and my assumption was that CVE-2016-4997 covered all
+of them.
 
-gif2rgb-oob-heap-read.gif    100%[=============================================>]      20  --.-KB/s    in 0s
+--
+Vitaly
 
-2016-09-13 19:19:27 (2.73 MB/s) - ‘gif2rgb-oob-heap-read.gif’ saved [20/20]
-
-ubuntu@x1:~/giflib-code$  util/gif2rgb gif2rgb-oob-heap-read.gif
-Background color out of range for colormap
-ubuntu@x1:~/giflib-code$ 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+On 29 September 2016 at 23:45, Greg KH <greg@...ah.com> wrote:
+> On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
+>> Hi there,
+>>
+>> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I
+>> have a working exploit to escalade privileges which requires the ip6_tables
+>> module to be loaded, that it is properly blocked on all up-to-date versions.
+>>
+>> Due to the number of users running vulnerable code(not update to 4.7 or
+>> higher), and that this exploit is only available to security researchers and
+>> kernel packagers upon request but that I don't want it to spread.
+>>
+>>
+>>
+>> I have reported this issue to Linux kernel official and they have already fixed
+>> this.
+>
+> Note, this was fixed many months ago, in May of 2016, and went into the
+> stable kernel updates in June, 2016.  Any distro that updated to the
+> stable kernel updates received this fix then.
+>
+> Any distro that hasn't updated their kernel since then, well, you need
+> to revaluate your trust of such a distro :)
+>
+> thanks,
+>
+> greg k-h
