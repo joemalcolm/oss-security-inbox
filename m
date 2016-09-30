@@ -1,50 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/11
-Message-Id: <20160315234036.61BDBB2E19E@smtpvbsrv1.mitre.org>
-Date: Tue, 15 Mar 2016 19:40:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: elbrus@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/7
+Message-ID: <CAKG8Do7TtAE4D4u3YrHdhh44QmgvxyP4PwA1dOwD79pVRwqU8g@mail.gmail.com>
+Date: Fri, 30 Sep 2016 17:57:28 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: pacemaker DoS when pacemaker remote is in use
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-> http://bugs.cacti.net/view.php?id=2667
-> 
-> case TREE_ITEM_TYPE_HEADER:
-> 
-> where id=" . $_GET["parent_id"]);
+Last February was reported a vulnerability against pacemaker when pacemaker
+remote is in use, allowing a remote, unauthenticated, attacker to launch a
+DoS attack.
+I have not found a CVE request for it, so here is one :
 
-> POC && EXP
-> /tree.php?action=item_edit&tree_id=2&parent_id=8%20and%20sleep(1)
+If a corosync node is connected to a pacemaker_remote node, the
+connection can be trivially killed simply by connecting to the remote on its
+standard TCP port (typically 3121):
 
->> tree.php
->> 
->> +  input_validate_input_number(get_request_var("parent_id"));
+2016-02-18T18:06:45.258661+00:00 d52-54-77-77-77-01 crmd[2637]:    error:
+Unexpected pacemaker_remote client takeover. Disconnecting
 
-Use CVE-2016-3172.
+Takeover is allowed in order to support migration of the remote primitive
+from
+one corosync node to another, but since this is a trivial denial of service
+attack, it should only be allowed once a valid authkey is provided.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The flaw has been fixed in Pacemaker-1.1.15
 
-iQIcBAEBCAAGBQJW6J0SAAoJEL54rhJi8gl5wSMQAKCXHxaRSnS5tv4i/uuP5VgQ
-SCXTR1VCtGN+L40tk9PTdMZCOQVbztdlWApRJd9pQByKHL1uCO1msyR7JowOsMFk
-7lQGhOT5n1xlaAmEwXzlGGflFU7/CNUNYn8ywR8vTYR8KMCuVTqACGU+KhokzHao
-1d9RG/rdTS/n5dPCa/IQfyGq8+eaYM972FrwqWjYHUPRVVF3/AYPwv6bhgdYFUwA
-gmy70yIs9OYS+AZskqd1ViYwyqkrvh1A9SH9lM+g5oGVj74bXXqR35iRml86njr8
-+cD8hpI9ngcz2J+XYEiQFNr1uTGhPCWHrAgkvEvAp521VFegJN/Lp84It1Nfq80P
-URK6fu9FC7K5lEseiIK4rcge3ETcDqi8dSmgRODLtUz5WKOBOfIBRT1oJFOHNH70
-FRyjLXSIEGVFb/oL7bkpffsucI4DLq0BpYGGex2wGT+puts6OGKdThKbSWlOxRDJ
-vUaWf5XospQa9rdSxOzVk5qh4hXx23v02hS3+rvmoznFHvaOFhMKaBVso1ZA3dSx
-MlBVVNBQzVXm+iFr/DgWOilFy5x06KtkmzrImItPJwSANwTr2/txA+z+sdE7liiA
-SDP/WUSadyPCBtdylQcq6AS8GH6/I3Wqx5/iz87Ou7UlkUjGXa+LNbPFKRd903/w
-dnhgQ7X5YlApn7+ywcfE
-=6K3M
------END PGP SIGNATURE-----
+=> Upstream bug :
+ - Bug 5269 - DoS: valid authkey should be required for takeover of a
+Pacemaker remote
+http://bugs.clusterlabs.org/show_bug.cgi?id=5269
+
+=> Upstream fix :
+ - Fix: remote: cl#5269 - Notify other clients of a new connection only if
+the handshake has completed (bsc#967388)
+https://github.com/ClusterLabs/pacemaker/commit/5ec24a26
+
+Thanks!
+
+-- 
+Cedric Buissart,
+Product Security
+
