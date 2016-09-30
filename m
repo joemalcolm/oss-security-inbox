@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/1
-Message-ID: <ad660c2632fa4e6790fb12dc654b6769@imshyb02.MITRE.ORG>
-Date: Wed, 23 Nov 2016 20:29:24 -0500
-From: <cve-assign@...re.org>
-To: <kcwu@...e.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: w3m - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/2
+Message-Id: <20160930065326.E65F713A5B9@smtpvmsrv1.mitre.org>
+Date: Fri, 30 Sep 2016 02:53:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: jwilk@...lk.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: git-hub: missing sanitization of data received from GitHub
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-CVE-2016-9621 - https://github.com/tats/w3m/issues/29 global-buffer-overflow write
+> https://github.com/sociomantic-tsunami/git-hub/issues/197
+> 
+> When you ask it to clone a repository, it will call:
+> 
+>    git clone <repourl> <reponame>
+> 
+> where both <repourl> and <reponame> come from GitHub API, without any
+> sanitization. Operators of the GitHub server (or a MitM attacker) could
+> exploit it for directory traversal or, more excitingly, for arbitrary code
+> execution, either via option injection, e.g.:
+> 
+>    git clone 'git://-esystem("cowsay pwned > \x2fdev\x2ftty")/' --config=core.gitProxy=perl
+> 
+> or more directly with git-remote-ext, e.g.:
+> 
+>    git clone 'ext::sh -c cowsay% pwned% >% /dev/tty' moo
 
-CVE-2016-9622 - https://github.com/tats/w3m/issues/32 null deref
-
-CVE-2016-9623 - https://github.com/tats/w3m/issues/33 null deref
-
-CVE-2016-9624 - https://github.com/tats/w3m/issues/35 near-null deref
-
-CVE-2016-9625 - https://github.com/tats/w3m/issues/36 stack overflow
-
-CVE-2016-9626 - https://github.com/tats/w3m/issues/37 stack overflow
-
-
->  https://github.com/tats/w3m/issues/38 heap overflow read + deref
-
-This is a single issue described as "Prevent array index out of bounds for symbol"
-in https://github.com/tats/w3m/commit/0c3f5d0e0d9269ad47b8f4b061d7818993913189
-
-Use CVE-2016-9627.
-
-
-CVE-2016-9628 - https://github.com/tats/w3m/issues/39 null deref
-
-CVE-2016-9629 - https://github.com/tats/w3m/issues/40 null deref
-
-CVE-2016-9630 - https://github.com/tats/w3m/issues/41 global-buffer-overflow read
-
-CVE-2016-9631 - https://github.com/tats/w3m/issues/42 null deref
-
-CVE-2016-9632 - https://github.com/tats/w3m/issues/43 global-buffer-overflow read
-
-CVE-2016-9633 - https://github.com/tats/w3m/issues/23 OOM
+Use CVE-2016-7793 for the missing validation of <repourl>, and use
+CVE-2016-7794 for the missing validation of <reponame>. Roughly
+speaking, the proper constraints on <reponame> will be simpler than
+the proper constraints on <repourl>. We do not feel it is sensible to
+break this down further (e.g., what specific validation rules are
+required by not yet implemented) because the validation strategy is
+still being discussed in 197.
 
 - -- 
 CVE Assignment Team
@@ -52,17 +44,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYNkGwAAoJEHb/MwWLVhi2OBoP/2hAgLEX4dNUdROa3s7mzq3P
-2WL7yqZUisyAmTfJT9D9clv6hI8tgu2vjpNDz3Cilq2Q0OyzvuJ1LnQ9jBXuENo7
-8YjvaeS4ZtJJR5OnMTNf6chYFm5x2pw7dfGYWoUtZR0IalxXIWzXJMw0u8INf2BF
-hh0agXsmgjlf1xqE+UPxPPNFuyfqcpNqt0P1wyLUv+oT5IFVIqKYdu3jt1TpjnSr
-swvJphIAdvxanEztk+3y9vsm9oXVLE3bWbYlrtvMnIkqq7IJRgN1HnXOG3Szv8Wq
-/o2caFc+d1PQEY8csaISbuRQKkJ+ah8bBtU1WSprnjIKvXo523VJ6MDwUvFbpOMw
-9IJXTLbCwpayIKlyDlZ8hywEWhqEM8BMjSqsVTTNcX+OLVGYQrGTr9J4Nelb2tNr
-QqFUjtJbKXyvC+k7YU6gxIhIrPuzJmznMCKlvjPEI1U5epFXpAU/j/SL5Y02kGJA
-E2X+moIuddy/eCm2XCVrV48+JQ5ogkurvsjqYNLey5q3AY/abMT0Y0/db2iLx//2
-Erjgbh9y4AeCu12EkezM+x8VPWXlOaRPRq7fWCAnX5FNPB1zWPc0XvHkhohUNYfS
-3iWnh66BF9mkwhozZdUqhIiRmeLkPG9dvdEq5Vp8/anU2RLHfzE1jew1vcSaXRXk
-fxLX2vS3cGtCddByKBMN
-=9Mxk
+iQIcBAEBCAAGBQJX7gsWAAoJEHb/MwWLVhi2E8AP/j7PSkFw3SXjin0TVbXv3EmH
+xSGpLV0UKT6QUwq5UOU3t8B676rCoQR3u1p401pvQRiEBnRrLk9O/Qm4aQDovXvE
+NnT2D5nlc9XOOD9i2mffWsebhe/KXwIb8c9YLmBrhsIvQZxNlkn7SMz9VrkoI/Wp
+6qwcl05asMSaayrkSuZs73mpQU3vF2FK04hVK/LNsUT0Sym+XZG5Ir1I9zgrNsxB
+AqhdnL2ODDTIRB2f/0UQsLrokvFJwzaHfwkbUEw6g+e4e35gaPLzG7Si2o4cmGiE
++WsyGZJV9owX/0yhxJ9VMxOC9wCr8KPNX+vJjEoAJWai3kDe7xGPSAPVEhICUmCN
+MfH7brfQV+wIXfqP4HTb+bFZmrkizQE4jowqqUObpWkpnAatmi8KrOTTUbx0ZIcX
+vmqdaRYFkS/66SRr47Dm05hZ/6WbcEbw5IemxNJtMYjDd/lgFJb0aTiJt1LjeaUc
+OzdmiD2cQRKlO7ylDsqtx0vIOC6+pM11waw+uhtwZxEHUZQrdHQ+q2sA/u6C2JEd
+8jx/5b/Tnudanx3FWlVTGOkiSqMtoSCVdeC1WcAECcRfx4dT0qgkoV5kT8RlRCcD
+3efnJPsEocUuPTNv22jzz+v2E8lFgjKYTmHxSLT+lG/XGmpQyIdRD+LyXebHS5Rj
+CKOO5Su92yI9fZCpnboN
+=2FzE
 -----END PGP SIGNATURE-----
