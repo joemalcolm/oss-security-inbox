@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/16
-Message-Id: <20160509232519.6082F52E015@smtpvbsrv1.mitre.org>
-Date: Mon,  9 May 2016 19:25:19 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/1
+Message-Id: <20160930065202.8889413A978@smtpvmsrv1.mitre.org>
+Date: Fri, 30 Sep 2016 02:52:02 -0400 (EDT)
 From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
+To: agwa@...rewayer.name
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requested: two stack exhaustation parsing xml files using mxml
+Subject: Re: CVE Request: systemd v209+: local denial-of-service attack
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> We found two stack exhaustion conditions that can easily crash mxml
-> when parsing an xml.
+> https://github.com/systemd/systemd/issues/4234
+> https://www.agwa.name/blog/post/how_to_crash_systemd_in_one_tweet
 
-(The two example XML documents seem dissimilar. For example,
-stack-exhaustion-2.xml starts with "<?xml" whereas
-stack-exhaustion-1.xml does not.)
+> systemd fails an assertion in manager_invoke_notify_message when
+> a zero-length message is received over its notification socket.
+> After failing the assertion, PID 1 hangs in the pause system call.
+> It is no longer possible to start and stop daemons or cleanly reboot
+> the system. Inetd-style services managed by systemd no longer accept
+> connections.
+> 
+> Since the notification socket, /run/systemd/notify, is world-writable,
+> this allows a local user to perform a denial-of-service attack against
+> systemd.
+> 
+> Proof-of-concept:
+> 
+>         NOTIFY_SOCKET=/run/systemd/notify systemd-notify ""
+
+Use CVE-2016-7795.
 
 
-> Recursion using mxmlDelete at mxml-node.c:217 (stack-exhaustion-1.xml)
+>> https://github.com/systemd/systemd/issues/4234#issuecomment-250441246
 
-Use CVE-2016-4570.
+>> Older distros are affected differently I think: no assertion is
+>> triggered but manager_dispatch_notify_fd() still returns an error
+>> which has the bad side effect to disable the notification handler
+>> completely
 
-
-> Recursion using mxml_write_node at mxml-file.c:2739 (stack-exhaustion-2.xml)
-
-Use CVE-2016-4571.
+Use CVE-2016-7796.
 
 - -- 
 CVE Assignment Team
@@ -36,17 +49,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXMRwEAAoJEHb/MwWLVhi2WDIP/jQvTGHSQ5QKY3VfTq5WaVji
-Ykggk/CpRwh8z7Cf3xPdNkWv4dUXh8mG0f7w7hJNiVMP7wywinNUh9mLCorwKdkQ
-4I8dQxKdF3OaGXnGHQxBKnQTRGZJmgNVs+ShQKOQIPxlC7F+fd5XF3kz8yC6oCdc
-hfiGkKH0p987wDExPluTuztFNmGrYpEPt22i644dDw7GegtvG0Fm7D5V6SsxTIsI
-SYztQnZod9S/MmgKRrThakIKr9/uzFTDEcCiOVlJwBAdiKaPjO3CZMgSiINHXicU
-75fNVh67FKFJDIYe4jRASdMabRgnVSLZdXP/VTcBo3lJa8A6v5wnhXn0HbPx0NPL
-P/sfs29Q6WV5Ean9uGCWqGi2ME3420xUFSu0/0xo4ewaj5QKPoQOJJM2tEy6U3wS
-uWmjYfh0K6wxUT7oQCo9Itlf/utgJqSA75K4J1UFfjbKNqKamA/hcCNcHmSzVSxK
-cBItGvGPDH+OjYA61wIOJt6PVwuSPGpcXpZPUG95t6eNXVjoSsbKAXfZbotbE5xd
-k02vrTth2t4rYwgbjfVJ2eYnW8yE42XGKzDzVTd01mohUNxXl8WzE2YPyYu6g6fx
-oXuGPZlUVtPuYjy6rLSGZ3VQoi7JUwOp4raUGHM5EVFhLCHDCzOt2quyxwqJ9omR
-o07Fd42eg20ZAHDPfcoS
-=/ZGU
+iQIcBAEBCAAGBQJX7gspAAoJEHb/MwWLVhi2AEYQAI5Dkd5GxOBYhdhVAfMnJ6Xs
+wkc8q9UDwm7dotGM4fnDy5noR0NEzi/+1d8v2F+i7WafNc1RCzvYlLL0W89UjAkj
+cz3LQ/DWAnF9PxWU8M2uRDmSanjDwESqTXmsTqapeXK+bY70qbVKpTVJLkItaFOj
+lW/43C7W6SVHNBhSly9DLUGzVbokd2kaHwnIDg0LGdeBdjd4aT9iKzGuN57JteQT
+cAMFVlcMrq+VyuQpisI4nzTdDxTQehdCe5r6L1d/AHn8UQ7rFE1hi6wGQCcZ+e3q
+SsIxPmno3oUUEfQiRqjlOy8LSUor7t1t/VlwlZeznGzIrH0YVSOtZ4DCnBiWbzgQ
+6AAaVk/L0MnSIRsVXyZLsIWtjOSFSWCP0A8lg5DB7mgabyHk6hWKM1lk/IHkuWOi
+ZsQDJuKMQT8ZDQJ+28ouxjCmc8nY9SpDqD2BM5qZEdqs9LWfzB6Jv/cFAcbeEJsi
+M8T+4GGb8TobihbyAZjebWPwtQIejObUgNpuVUMqOCYQypzPwYzqiVeAihfPynCY
+rG/bbD7LagaU5kUJA9w0w032pitwbA9i4yt4Bxw6BG3TfBAxAIb3GMJrYD2EX4Jv
+1jZrHbQ9bsshA01vo+ozm7hVZiL/J9GikM/mc+9vCeaDuwtcfLofKa+MskeFCw3w
+E5NYYC+/fcM2fQkTX1jM
+=XTWD
 -----END PGP SIGNATURE-----
