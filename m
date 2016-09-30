@@ -1,44 +1,190 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/3
-Message-ID: <20161119115932.1854beff@pc1>
-Date: Sat, 19 Nov 2016 11:59:32 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/6
+Message-ID: <CAARAU444QiAcq1eEXy3_QzyT_cPb4ysvN1HEP=ka8kO6+2ki9Q@mail.gmail.com>
+Date: Fri, 30 Sep 2016 10:00:29 -0400
+From: Mike Santillana <michael.santillana@...ork.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: gstreamer plugins
+Cc: "'Apple' via" <infosec@...ork.com>
+Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
+
+Is there any update on the cve request? Additionally, the ruby team has
+made a commit to fix this:
+https://github.com/ruby/openssl/commit/8108e0a6db133f3375608303fdd2083eb5115062
+
+Thanks,
 
 
-On Fri, 18 Nov 2016 17:31:19 +0100
-Marcus Meissner <meissner@...e.de> wrote:
+*WeWork | Mike Santillana*
+Security Engineer
+www.wework.com
+Create Your Life's Work
 
-> 1. Bufferoverflow in VMNC decoder in gstreamer plugins:
-> 	https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-risky-design-decisions-in.html
+On Mon, Sep 19, 2016 at 6:02 PM, Mike Santillana <
+michael.santillana@...ork.com> wrote:
 
-I wanted to point out that while it's good the buffer overflow gets
-fixed, that's by far not the major issue here.
+> Hi Reed,
+>
+> Yes this has been submitted via HackerOne as well.
+>
+> Thanks
+>
+>
+> *WeWork | Mike Santillana*
+> Security Engineer
+> 845-709-5655
+> www.wework.com
+>
+> Create Your Life's Work
+>
+> On Mon, Sep 19, 2016 at 4:55 PM, 'Reed Loden' via Information Security <
+> infosec@...ork.com> wrote:
+>
+>> Was Ruby actually notified of this outside of the GitHub issue? Not sure
+>> they are monitoring that repository for security issues, so could have been
+>> missed.
+>>
+>> https://www.ruby-lang.org/en/security/ defines their security reporting
+>> processes.
+>>
+>> ~reed
+>>
+>> On Mon, Sep 19, 2016 at 12:20 PM, Mike Santillana <
+>> michael.santillana@...ork.com> wrote:
+>>
+>>> Product: Ruby's OpenSSL Library
+>>> Version: Tested on 2.3.1 (latest)
+>>> Bug: IV Reuse
+>>> Impact: Depends on the usage of the library
+>>>
+>>> Hello,
+>>>
+>>> An IV reuse bug was discovered in Ruby's OpenSSL library when using
+>>> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
+>>> setting the key, the cipher will default to using a static IV. This
+>>> creates
+>>> a static nonce and since aes-gcm is a stream cipher, this can lead to
+>>> known
+>>> cryptographic issues.
+>>>
+>>> The documentation does not appear to specify the order of operations when
+>>> setting the key and IV [1]. As an example, see the following insecure
+>>> code
+>>> snippet below:
+>>>
+>>> Vulnerable Code:
+>>>
+>>> def encrypt(plaintext)
+>>>     cipher = OpenSSL::Cipher.new('aes-256-gcm')
+>>>     iv = cipher.random_iv # Notice here the IV is set before the key
+>>>     cipher.key = '11111111111111111111111111111111'
+>>>     cipher.auth_data = ""
+>>>     ciphertext = cipher.update(plaintext) + cipher.final
+>>>     tag = cipher.auth_tag
+>>>
+>>>     puts "[+] Encrypting: #{plaintext}"
+>>>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+>>> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+>>> end
+>>>
+>>> A developer that uses the code above may incorrectly assume that their
+>>> code
+>>> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
+>>> the ‘cipher.random_iv’ method is used. According to the documentation,
+>>> this
+>>> should generate a random IV each time the encryption method is called.
+>>>
+>>> When the code above is run with the same key and same plaintext message,
+>>> the following results are obtained:
+>>>
+>>> Output:
+>>> # Run 1
+>>> ./gcm_encrypt.rb 'This is some secret message.'
+>>> [+] Encrypting: This is some secret message.
+>>> [+] CipherMessage (IV | Tag | Ciphertext): e32594080cca2b37f7d7e968 |
+>>> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+>>> 800a5bb48fb1c4ad0b7bdf6054
+>>>
+>>> # Run 2
+>>> ./gcm_encrypt.rb 'This is some secret message.'
+>>> [+] Encrypting: This is some secret message.
+>>> [+] CipherMessage (IV | Tag | Ciphertext): 431d70714f5e5f876d1c7830 |
+>>> 8c676db7551cf046266252ee776ecaa9 | 81092d16b62902d9985656253891dc
+>>> 800a5bb48fb1c4ad0b7bdf6054
+>>>
+>>> Notice that in the output above a unique IV is returned for both runs,
+>>> but
+>>> with the same ciphertext. This proves that even though the random_iv
+>>> method
+>>> is called, the code is defaulting to a static IV. If an attacker can
+>>> retrieve multiple ciphertext messages, it is possible to decrypt the
+>>> ciphertexts by applying the same attack one would use in a two-time pad
+>>> (XOR ciphertexts and crib drag).
+>>>
+>>> Next review the following code snippet and output, which depicts a secure
+>>> implementation of the code:
+>>>
+>>> Valid Code:
+>>>
+>>> def encrypt(plaintext)
+>>>     cipher = OpenSSL::Cipher.new('aes-256-gcm')
+>>>     cipher.key = '11111111111111111111111111111111'
+>>>     iv = cipher.random_iv # Notice here the IV is set after the key
+>>>     cipher.auth_data = ""
+>>>     ciphertext = cipher.update(plaintext) + cipher.final
+>>>     tag = cipher.auth_tag
+>>>
+>>>     puts "[+] Encrypting: #{plaintext}"
+>>>     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
+>>> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
+>>> end
+>>>
+>>> Output:
+>>> # Run 1
+>>> ./gcm_encrypt.rb 'This is some secret message.'
+>>> [+] Encrypting: This is some secret message.
+>>> [+] CipherMessage (IV | Tag | Ciphertext): 8beb4aa05533e90f4f4eddd3 |
+>>> ea1b015958a9b8bd2aafa61887309caf | 19574a9c9869b92140a57a5fd43a14
+>>> 9a5eaa7e5beefdff5d56cc4136
+>>>
+>>> # Run 2
+>>> ./gcm_encrypt.rb 'This is some secret message.'
+>>> [+] Encrypting: This is some secret message.
+>>> [+] CipherMessage (IV | Tag | Ciphertext): 87361b3f1e32291602ac7b40 |
+>>> bce7093daa10cc9d2fad0f2b91e077f2 | 47f9a5ba55631204233ace70f169e6
+>>> 65846e877dca11a6e13a659540
+>>>
+>>> Notice that this time both the IV and ciphertexts are both different for
+>>> the same plaintext. This is the intended result a developer would expect
+>>> to
+>>> happen when using this library.
+>>>
+>>> It should be noted that when I went to Ruby's github page to report this
+>>> bug, I noticed a developer also independently encountered this weird
+>>> phenomenon [2]. Since it has already been brought up to the Ruby team, I
+>>> have not created a new ticket.
+>>>
+>>> References:
+>>>  [1]
+>>> https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSS
+>>> L/Cipher.html#class-OpenSSL::Cipher-label-Authenticated+Encr
+>>> yption+and+Associated+Data+-28AEAD-29
+>>>  [2] https://github.com/ruby/openssl/issues/49
+>>>
+>>> I'd like to to request a CVE ID for this issue.
+>>>
+>>> Thanks
+>>>
+>>> *WeWork | Mike Santillana*
+>>> Security Engineer
+>>> 845-709-5655
+>>> www.wework.com
+>>>
+>>> Create Your Life's Work
+>>>
+>>
+>>
+>
 
-This is a very problematic design decision with the functionality of
-tracker/GNOME that exposes all files on a system to who knows how many
-decoders of probably overall very low quality.
-Almost certainly there are countless other vulnerabilities of similar
-kind in all kinds of gstreamer codecs. (and I haven't checked, but I
-assume tracker also exposes other files to other equally problematic
-decoders)
-
-I think this is kinda a symptom of two goals clashing: We have projects
-like gstreamer that attempt to parse every file format ever seen in
-their are - which of course has some value, especially in terms of
-preserving digital culture. But on the other hand exposing this code to
-untrusted inputs is a security disaster.
-
-I'm wondering if there is any statement or reaction from either gnome
-or fedora on this.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
