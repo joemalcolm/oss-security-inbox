@@ -1,4 +1,9 @@
-Received: (qmail 18224 invoked by uid 550); 7 Apr 2026 14:31:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["922" "Friday" "30" "September" "2016" "14:54:20" "+0800" "Carl Peng" "felixk3y@gmail.com" "<CAEiFw0URs1e9oVb-Jzh3qDe-bOyEVJo7iL3Bx0YFSTFK9FRB-A@mail.gmail.com>" "34" "[oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability" "^Date:" nil nil "9" "2016093006:54:20" "[oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability" (number mark "U       felixk3y@gma Sep 30   34/922   " thread-indent "\"[oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7304 invoked by uid 550); 30 Sep 2016 13:29:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,61 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30561 invoked from network); 7 Apr 2026 04:10:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
-	s=42; h=From:To:Date:Message-ID:CC;
-	bh=kiwXyN0eK5rcscbfdqB4Qi1R77/5ydNvRFJ9JAeQiR0=; b=UkMj1IY4fFuHf07JTk8yb33Sha
-	alR6oxzKxPVhgSzGdbYv/o/EjHlYmg0ohKNRuehwwulu4aTk3EGWcm7yOkUBIm5vwsOW2Rk5i9OiM
-	3LLUwaUvZZCmc9mfD7eXT3WoALuktM38LYSOBy4Iz3V/NYP6aQkO8DdMFsA6oHsH12BDcy7WXE58y
-	jSJno8HyPc7xpvvHrfSOgTq9BrRa6pbqV/Pl79z/9WK9gYh2szF51hgg4riez+JJv8wTaiZgJe578
-	vw04dowrtr0r643WT0wEzmxY0c9hQUD904AHp5lgfOu7LwEimJL4zecH9KG8xoae4WO27qpQnALFi
-	ubGQRHVZ+N4ehtHu5SF/qb4NXQxGeLCP2sWOrtYscYuDj01VdPRI/HoeZ7L4UTXHrB9uTrbFdlOTv
-	3YYilww5AwWWmZxkLZSVgJVFuodlDrnCSEp3pdvGMy5GgYY2+Vipvl7ty406wFpeYW3cldkc9NRN0
-	PFuNEm0M7aDxcdUgZ9d2OsCX;
-Message-ID: <2f748af7-2d2e-40e5-9c96-7927fd10b12c@samba.org>
-Date: Tue, 7 Apr 2026 16:10:05 +1200
+Received: (qmail 27798 invoked from network); 30 Sep 2016 06:54:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/KJClajwMYehL8N1kGrX+ZVTxGSmlOFYrf+fbQwb46E=;
+        b=iL6RmoL+MSbCgfdIswBafmSpTT+D816Y0q1nKN5sp5PU/NWMysAlhQ6yOKeNsVrc3Z
+         QDPe9Y9yI462HWAYw10GrjoT0wj/MFw4CFWH3xdjbQOLNpfn0XknFsZlLHNBqZjThZAU
+         fQu0P4snQlNUR4I8uZecU7HLoM5wW1Yx1mBUARn9EMnex5nyqYjlkDFqqBvVaq6UFtTx
+         eQv61mFjJg+EuO7Pwlth+TxSY9uyXAo8X5PbGThBf0wNj4UsQ/dANrYuS0E0/uwy0ZRi
+         TZ/Z3yBd6Tm+z1qjrDQMcpryCDtc6PZPNUlM08izxMhbSbHkDytMp5Xp4bCyhLirLAIg
+         8feg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/KJClajwMYehL8N1kGrX+ZVTxGSmlOFYrf+fbQwb46E=;
+        b=Tg8Aas3qHOfYiwzCc/aw4jw511DIB00+5kYb0fUpeiysmHQzLhVsXO1aGfzqpg430+
+         V3GJOCKyvTy/Vb6raGN8GZQi/psj207uSFsUNSfC+Si5vCZT0sbFdwPeBQHEKaK1Dms0
+         VdmkOqAG8GcGR9hrKCPG/uZuPGxOKbGllviW2lzAn5iQ6nIPYNKo93lsQ7OeFJCGdMKw
+         RrbjO/rXmxtz/D01nLi5RnrJveuCSuP6W3HzRoY5TstbQkgNja2BJmkKN3GPagDumtUo
+         dm4dYO9CKD5svFLSlrD8gzJdgYdFY/r7dG/VFM16H79ffUuRpy0I/IakUSO9xEB5avPG
+         76BA==
+X-Gm-Message-State: AA6/9RnMJvRa9aKgoYB/T13wU/E3YCPuJN0712IK1XlXyXPnpkT/1fWJRvzim3LXZ0a4nPwiY36CzN1eBtMOLg==
+X-Received: by 10.28.62.2 with SMTP id l2mr2468753wma.117.1475218460563; Thu,
+ 29 Sep 2016 23:54:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: samba-technical <samba-technical@lists.samba.org>,
- samba <samba@lists.samba.org>, oss-security@lists.openwall.com
-References: <d9b75448-c072-40ec-9740-1c68d4cee279@samba.org>
-Content-Language: en-NZ
-From: Douglas Bagnall <dbagnall@samba.org>
-In-Reply-To: <d9b75448-c072-40ec-9740-1c68d4cee279@samba.org>
+Message-ID: <CAEiFw0URs1e9oVb-Jzh3qDe-bOyEVJo7iL3Bx0YFSTFK9FRB-A@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a1148ef624ee01a053db410db
+Date: Fri, 30 Sep 2016 14:54:20 +0800
+From: Carl Peng <felixk3y@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: b2evolution 6.7.6 Object Injection vulnerability
+To: oss-security@lists.openwall.com
+
+--001a1148ef624ee01a053db410db
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: Heads-up: Upcoming Samba security releases (2026-04-09)
 
-I was a little inaccurate in this message, sorry.
+hello,
+ i reported a object injection vulnerability to b2evolution team, and now
+it has been fixed.
 
-Below I have amended the impacted components to reflect that one of
-the bad ones requires an unusual configuration, and one of the AD
-bugs affects domain members, not the DC.
+Vulnerability:
+/htsrv/call_plugin.php #lines 31~40
+```
+param( 'params', 'string', null ); // serialized
+if( is_null($params) )
+{ // Default:
+$params = array();
+}
+else
+{ // params given. This may result in "false", but this means that
+unserializing failed.
+$params = @unserialize($params); //object injection
+}
+```
+The parameter of "params" may lead to Object Injection by sending
+"params=serialized+object+here"
+fixed:
+https://github.com/b2evolution/b2evolution/commit/25c21cf9cc4261324001f9039509710b37ee2c4d
 
-On 06/04/2026 2:53 pm, Douglas Bagnall via samba-technical wrote:
-> This is a heads-up that there will be Samba security updates for
-> 4.22, 4.23, and 4.24 on Thursday, April 9, 2026. Please make sure
-> that your Samba servers will be updated soon after the release!
-> 
-> Impacted components:
->  - File Services, CVSS 10.0, affecting some configurations
->  - File Services, CVSS 10.0, affecting some configurations
->  - File Services, CVSS 7.1 affecting some configurations
->  - File Services, CVSS 6.5 affecting uncommon configurations
->  - AD DC CVSS 8.0, affecting some configurations
->  - AD DC CVSS 7.5, affecting uncommon configurations> 
- Impacted components:
-  - File Services, CVSS 10.0, affecting some configurations
-  - File Services, CVSS 10.0, affecting uncommon configurations
-  - File Services, CVSS 7.1 affecting some configurations
-  - File Services, CVSS 6.5 affecting uncommon configurations
-  - Domain members CVSS 8.0, affecting some configurations
-  - AD DC CVSS 7.5, affecting uncommon configurations
+This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
+to request CVE for this issue (if not done so).
 
+-------------------http://www.silence.com.cn/
+penghua@silence.com.cn
+PKAV Team
 
-Release is still Thursday 9 April.
-
-Douglas
-
+--001a1148ef624ee01a053db410db--
