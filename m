@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/13
-Message-Id: <36166682-96E9-439E-B56A-1CA357A8423D@apache.org>
-Date: Fri, 16 Sep 2016 19:10:54 +0100
-From: Flavio Junqueira <fpj@...che.org>
-To: lyon.yang.s@...il.com
-Cc: DevZooKeeper <dev@...keeper.apache.org>, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, security@...keeper.apache.org
-Subject: [SECURITY] CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/3
+Message-ID: <CAEiFw0URs1e9oVb-Jzh3qDe-bOyEVJo7iL3Bx0YFSTFK9FRB-A@mail.gmail.com>
+Date: Fri, 30 Sep 2016 14:54:20 +0800
+From: Carl Peng <felixk3y@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: b2evolution 6.7.6 Object Injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-############################################################
-CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
+hello,
+ i reported a object injection vulnerability to b2evolution team, and now
+it has been fixed.
 
-Severity: moderate
+Vulnerability:
+/htsrv/call_plugin.php #lines 31~40
+```
+param( 'params', 'string', null ); // serialized
+if( is_null($params) )
+{ // Default:
+$params = array();
+}
+else
+{ // params given. This may result in "false", but this means that
+unserializing failed.
+$params = @unserialize($params); //object injection
+}
+```
+The parameter of "params" may lead to Object Injection by sending
+"params=serialized+object+here"
+fixed:
+https://github.com/b2evolution/b2evolution/commit/25c21cf9cc4261324001f9039509710b37ee2c4d
 
-Vendor:
-The Apache Software Foundation
+This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
+to request CVE for this issue (if not done so).
 
-Versions Affected:
-ZooKeeper 3.4.0 to 3.4.8
-ZooKeeper 3.5.0 to 3.5.2
-The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
+-------------------http://www.silence.com.cn/
+penghua@...ence.com.cn
+PKAV Team
 
-Note: The 3.5 branch is still alpha at this time.
-
-Description:
-The ZooKeeper C client shells "cli_st" and "cli_mt" have a buffer
-overflow vulnerability associated with parsing of the input command
-when using the "cmd:<cmd>" batch mode syntax. If the command string
-exceeds 1024 characters a buffer overflow will occur. There is no
-known compromise which takes advantage of this vulnerability, and if
-security is enabled the attacker would be limited by client level
-security constraints. The C cli shell is intended as a sample/example
-of how to use the C client interface, not as a production tool - the
-documentation has also been clarified on this point.
-
-Mitigation:
-It is important to use the fully featured/supported Java cli shell rather
-than the C cli shell independent of version.
-
-- ZooKeeper 3.4.x users should upgrade to 3.4.9 or apply this patch:
-https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=27ecf981a15554dc8e64a28630af7a5c9e2bdf4f <https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=27ecf981a15554dc8e64a28630af7a5c9e2bdf4f>
-
-- ZooKeeper 3.5.x users should upgrade to 3.5.3 when released or apply
-this patch:
-https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=f09154d6648eeb4ec5e1ac8a2bacbd2f8c87c14a <https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=f09154d6648eeb4ec5e1ac8a2bacbd2f8c87c14a>
-
-The patch solves the problem reported here, but it does not make the
-client ready for production use. The community has no plan to make
-this client production ready at this time, and strongly recommends that
-users move to the Java cli and use the C cli for illustration purposes only.
-
-
-Credit:
-This issue was discovered by Lyon Yang, an Apple security researcher.
-
-References:
-https://zookeeper.apache.org/security.html <https://zookeeper.apache.org/security.html>
-############################################################
