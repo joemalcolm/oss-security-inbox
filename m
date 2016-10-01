@@ -1,93 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/20
-Message-ID: <20160504161626.GA18912@openwall.com>
-Date: Wed, 4 May 2016 19:16:26 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Adrien Nader <adrien@...k.org>
-Cc: oss-security@...ts.openwall.com, David Moreno Montero <dmoreno@...albits.com>, Zachary Grafton <zachary.grafton@...il.com>, Remi Birot-Delrue <asgeir@...e.fr>
-Subject: Re: libonion 0.8 contains security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/3
+Message-ID: <CADSYzsv2SWT=HDdeDRXC-CvfFo7g37m-CL0Sd9sONEBGhX2Mrw@mail.gmail.com>
+Date: Fri, 30 Sep 2016 21:15:35 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 04, 2016 at 02:23:36PM +0200, Adrien Nader wrote:
-> I've also found myself calling shutdown() simply so that I could
-> receive an error event and could then close everything, albeit in a
-> slightly different context.
-> 
-> I'm wondering if this is a common practice. I hadn't read about it I
-> think and I'm once again wondering how many people do this.
+CVE: CVE-2016-1240
+Vulnerability: Tomcat packaging on Debian-based distros - Local Root
+Privilege Escalation
+Affected packages: Tomcat 6/7/8 deb packages (up to 8.0.36-2)
+Systems affected: Debian & Ubuntu & possibly others (using the
+affected deb packages)
 
-I don't know if it's common or not.
+Discovered by:
+Dawid Golunski (http://legalhackers.com)
 
-I also don't know if it's common and intended or is a hack to use
-EPOLLONESHOT for race-free multi-threaded use of a shared epoll
-instance.  In other words, I don't know if it was meant that we rely on
-the one-shot property working 100% reliably as much as we would rely
-e.g. on a futex (which we would have needed in absence of this feature).
-If anyone in here knows the answer, please post (and yes, this is
-security-relevant).  I suspect some answers could be obtained on LKML.
+Tomcat (6, 7, 8) packages provided by default repositories on Debian-based
+distributions (including Debian, Ubuntu etc.) provide a vulnerable
+tomcat init script that allows local attackers who have already gained access
+to the tomcat account (for example, by exploiting an RCE vulnerability
+in a java web application hosted on Tomcat, uploading a webshell etc.) to
+escalate their privileges from tomcat user to root and fully compromise the
+target system.
 
-As it happens, these two tricks are very powerful, especially combined.
+The full Advisory and a PoC exploit can be found at:
 
-> Also, does
-> anyone know of more "usage tricks" than what is in man 7 epoll?
+http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
 
-Below is one we've been considering as an alternative fix for the races
-in onion, and which I guess David might implement in master branch now.
-(It's a more invasive change, so for the 0.8 release I advocated that we
-go with the shutdown() workaround that I described.)  Here's an excerpt
-from my posting to onion-dev on March 13:
-
----
-Looks like the epoll interface is lacking in that it only has a timeout
-for the epoll_wait() call, but not per-fd timeouts.  If it could raise
-per-fd events for per-fd timeouts, then the same one-shot mechanism
-would prevent the race here.
-
-... actually, it almost can:
-
-http://stackoverflow.com/questions/10772208/epoll-and-timeouts#18454825
-
-"Try pairing each socket with a timer fd object (timerfd_create). For
-each socket in your application, create a timer that's initially set to
-expire after 500ms, and add the timer to the epoll object (same as with
-a socket - via epoll_ctl and EPOLL_CTL_ADD). Then, whenever data arrives on
-a socket, reset that socket's associated timer back to a 500ms timeout.
-
-If a timer expires (because a socket has been inactive for 500ms) then
-the timer will become "read ready" in the epoll object and cause any
-thread waiting on epoll_wait to wake up. That thread may then handle the
-timeout for the timer's associated socket."
-
-This should be much more scalable than your current linear scanning of
-the list of slots - that approach needed to be reworked anyway.
----
-
-This was further discussed between David and me on GitHub:
-
----
-> I think we can add a timerfd slot that wakes up on next timeout, do the
-> closing of fds if necessary, and loop over all the slots to check the
-> new expiration time. This expiration time has to be reset as well on new
-> slots and slot function dispatching, as user could set a new timeout
-> sooner than the current timeout. timerfd allows to reset a running
-> timer.
-
-This sounds good to me.  I am also considering using timerfd's if/when I
-eventually replace my use of onion with own code.
-
-Waking up on each exact timeout may be more costly than waking up once
-per second.  So you'll want to group nearby timeouts, with some
-reasonable granularity.
----
-
-While I am posting the above, let's please keep further discussion on
-oss-security, if any, security-focused.  I felt the above was (barely)
-on topic because it's about races, and those are security hazards.
-
-epoll usage tricks in general, beyond security relevant ones, are
-off-topic for oss-security.  Adrien, I am not saying that your message
-was off-topic for oss-security; rather, I am saying that just like this
-reply of mine, yours was also barely on topic (and that's fine), so
-let's not stray farther into arbitrary epoll usage tricks or whatever.
-
-Alexander
+-- 
+Regards,
+Dawid Golunski
+http://legalhackers.com
