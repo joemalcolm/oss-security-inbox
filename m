@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/9
-Message-ID: <CAKG8Do5JnkxQhd90yXCmkM_OXBKMxTZN9sYzGVRJL98q33v_TQ@mail.gmail.com>
-Date: Tue, 17 May 2016 20:40:37 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/5
+Message-ID: <alpine.GSO.2.20.1610011036390.13801@freddy.simplesystems.org>
+Date: Sat, 1 Oct 2016 10:43:18 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: RHSA-2016:1086 libndp: denial of service due to insufficient validation of source of NDP messages
+Subject: GraphicsMagick CVE request: 8BIM/8BIMW unsigned underflow leads to heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+Today we received a report from Marco Grassi about a heap overflow in 
+the 8BIM reader.  8BIM is a metadata chunk often attached to JPEG 
+files.
 
-An improper input validation check, and improper origin check flaw during
-the reception of NDP message was discovered in libndp. An attacker in a
-non local network could use this flaw to advertise a node as a router, and
-cause a denial of service attack, or act as a man in the middle.
+After investigation it was found that there was a small unsigned 
+overflow leading to a huge size value, which then resulted in a heap 
+overflow (causing a crash).
 
-The patches enforce that hop limit must be 255, to ensure that the NDP
-message
-has not been routed.
+We believe that this issue exists in all GraphicsMagick releases to 
+date (including 1.3.25).
 
-Patches can be found upsteam:
+The fix to this may be found in GraphicsMagick Mercurial at 
+"https://sourceforge.net/p/graphicsmagick/code/ci/5c7b6d6094a25e99c57f8b18343914ebfd8213ef/".
 
- -  libndp: validate the IPv6 hop limit
-https://github.com/jpirko/libndp/commit/a4892df306e0532487f1634ba6d4c6d4bb381c7f
-
- -  libndb: reject redirect and router advertisements from non-link-local
-https://github.com/jpirko/libndp/commit/2af9a55b38b55abbf05fd116ec097d4029115839
-  https://people.freedesktop.org/~lkundrak/.libndp/
-
-Known affected packages : NetworkManager >= 1.0
-
-Thanks to Julien Bernard (Viagénie) for discovering the issue
-
-Kind regards,
---
-Cedric Buissart
-Purkynova 99
-Brno 612 45
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
