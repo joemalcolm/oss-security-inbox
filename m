@@ -1,103 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/19
-Message-ID: <CAKws9z3xksc=cvW-Zm==jfUZOX1zyNEeC7OZ4BSXXQ54d=1F5w@mail.gmail.com>
-Date: Tue, 22 Nov 2016 10:17:24 -0500
-From: Scott Arciszewski <scott@...agonie.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: WordPress (all versions): SPOF, RCE, and Negligence
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/6
+Message-Id: <20161001205813.074156C4B2D@smtpvmsrv1.mitre.org>
+Date: Sat,  1 Oct 2016 16:58:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: imagemagick mogrify global buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 22, 2016 at 5:13 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Hi,
->
-> Sorry, but I find a lot of your statements very questionable.
->
-> On Mon, 21 Nov 2016 11:54:33 -0500
-> Scott Arciszewski <scott@...agonie.com> wrote:
->
->> Consequently, the WordPress update server is one of the largest single
->> points of failure (SPOF) on the Internet.
->
-> Yeah, just like the update servers from Microsoft (which are definitely
-> a bigger POF). Or Apple. Or Google. Or Samsung. Or Mozilla.
->
-> Granted, having signatures as an additional protection on top of TLS
-> improves security, but it's an unfortunate fact that update
-> infrastructure is a big attack surface and a complicated problem.
-> Signatures can only change a single point of failure to two points of
-> failure.
-> The solution is probably something along the lines of transparency logs
-> and for binary software reproducible builds, but nobody has anything in
-> that space that works today.
->
-> Wordpress could do better in terms of security with some issues, e.g. I
-> find it disappointing that they don't seem to show any interest in
-> deploying CSP.
-> But the fact that Wordpress has auto updates at all imho puts it
-> in front of every other CMS out there in terms of security.
-> For all the others they basically expect their users to manually
-> install updates, sometimes within hours as could've been seen with
-> every RCE in joomla or drupal that was discovered in the past.
-> Wordpress having an auto update has probably protected millions of
-> webpages from being compromised.
->
->
->
-> --
-> Hanno Böck
-> https://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi Hanno,
+> https://github.com/ImageMagick/ImageMagick/issues/280
+> https://github.com/ImageMagick/ImageMagick/commit/a7bb158b7bedd1449a34432feb3a67c8f1873bfa
+> 
+> AddressSanitizer: global-buffer-overflow
+> READ of size 4
 
-I'm glad you brought these points up. The subject of secure code
-delivery is a thorny problem that I've thought about a lot, and I'm
-glad to hear similar issues from cryptography researchers --
-especially ones whom I respect.
+>> MagickCore/profile.c
 
-> Granted, having signatures as an additional protection on top of TLS
-> improves security, but it's an unfortunate fact that update
-> infrastructure is a big attack surface and a complicated problem.
-> Signatures can only change a single point of failure to two points of
-> failure.
+Use CVE-2016-7799 for this buffer over-read issue.
 
-Quick aside: From
-https://paragonie.com/blog/2016/10/guide-automatic-security-updates-for-php-developers#elements-automatic-updates
-(linked in my initial email), I outlined the elements of a secure
-automatic update system. They are (for the sake of permanent record
-here)...
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-1. Offline Cryptographic Signatures
-2. Reproducible Builds
-3. Decentralized Authenticity / Userbase Consistency Verification
-4. Transport-Layer Security
-5. Mirrors and Other Availability Concerns
-6. Separation of Privileges
-
-I'm fully in agreement that offline signatures alone are not enough.
-However, it's the most straightforward addition to their protocol to
-satisfy one of these requirements.
-
-> The solution is probably something along the lines of transparency logs
-> and for binary software reproducible builds, but nobody has anything in
-> that space that works today.
-
-Binary software reproducible builds isn't entirely relevant to PHP
-development (the closest we have to a binary is a PHP Archive, or
-Phar), but on the note of "nobody has anything in that space that
-works today", see:
-
-* https://paragonie.com/blog/2016/05/keyggdrasil-continuum-cryptography-powering-cms-airship
-* https://paragonie.com/project/pharaoh
-
-I apologize if anything I said in my initial email implied that
-signatures were enough. They're just the first step towards a
-resilient solution.
-
-With respect,
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
+iQIcBAEBCAAGBQJX8CJPAAoJEHb/MwWLVhi2P6EQALYfi29fmCoymW+3x38u8m+3
+mrC+hPMgq8i729ec/SaUaSqy70Nixu2QoG/5uz8+M4sTuB9eQQpB4Hq1zM4dW4EB
+I0J9/wC4nGII32c3lusuN3UZ5tM0jEfiUlYJFIRm95KDaYkH8g9+NNcj2zkO9yLK
+I3s/PSilLuEsiHM/CLQDEoY3uXScELKq2RLCVwowl79Gs7fX3JNajH9Q87PS730e
+S7IcJmRkwo+VyIWfIA3vu+mVLp+esUuBdvmj1CNMZaNGsqFvdAjUvSGtyOOdNfvD
+y0J9n07GUxEl6BEoysBaZa4PEdOUuqTKzy7rfSMC16cxvEiix6LX96Znx9/59k73
+0CbjUZOrEMmXyornJszwl0iXcb4lviv2AcpcW9oDO+Ud96MDLlAfwdAqczyk15dS
+YIPZ0s8jtAJKP8Tl5oHTtDDU2t2h9iYeZCic1dTWloCzRkYoGEL2pPRdIqmIxrMp
+uf+3rCkN0uU4gU1U3p/hUbyiepi5ukHFmAvn9+llQ3Um+8v4Ki/yzOOolAyVl5aQ
+FZTlzn/1LLQYlrPsyNeJkCLDOcM1o0tRMYhCwagDF20KuU3J0zM/D+LwpSxchNIC
+C7D74ub/3Lw4YfRv+UYK8l0NgfkiFhTuro7AjoB1dKjmmQW/sy8LnG4IOF/PIUFX
+T/7CPx8PmTGY5SISkkMn
+=v71F
+-----END PGP SIGNATURE-----
