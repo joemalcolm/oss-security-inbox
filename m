@@ -1,113 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/13
-Message-ID: <2751056.p2fs675oKu@arcadia>
-Date: Sat, 08 Oct 2016 22:17:29 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/2
+Message-Id: <20161001033217.088D733202F@smtpvbsrv1.mitre.org>
+Date: Fri, 30 Sep 2016 23:32:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: michael.santillana@...ork.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, infosec@...ork.com
+Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzzing revealed an out bounds read,
+> https://github.com/ruby/openssl/issues/49
+> https://github.com/ruby/openssl/commit/8108e0a6db133f3375608303fdd2083eb5115062
+> http://stackoverflow.com/questions/35991551
+> https://github.com/attr-encrypted/attr_encrypted/issues/203
+> https://github.com/attr-encrypted/encryptor/pull/22
 
-The complete ASan output:
+> A developer that uses the code above may incorrectly assume that their code
+> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
+> the 'cipher.random_iv' method is used. According to the documentation, this
+> should generate a random IV each time the encryption method is called.
 
-# dwarfdump $FILE
-==24449==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x6110000059ed at pc 0x000000606cd5 bp 0x7fff42bdc5f0 sp 0x7fff42bdc5e8
-READ of size 1 at 0x6110000059ed thread T0
-    #0 0x606cd4 in _dwarf_get_abbrev_for_code 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9
-    #1 0x576086 in dwarf_siblingof_b 
-/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:1628:12
-    #2 0x517e73 in print_die_and_children_internal 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:1163:17
-    #3 0x517c6b in print_die_and_children_internal 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
-    #4 0x5147cc in print_die_and_children 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
-    #5 0x5147cc in print_one_die_section 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:831
-    #6 0x512262 in print_infos 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
-    #7 0x4faaea in process_one_file 
-/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
-    #8 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
-    #9 0x7fa649d7e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+> even though the random_iv method is called, the code is defaulting to
+> a static IV.
 
-0x6110000059ed is located 0 bytes to the right of 237-byte region 
-[0x611000005900,0x6110000059ed)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7fa64ae58206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+>> Cipher#iv= does not preserve the IV in gctx->iv because gctx->key_set
+>> is already set by the pre-initialization in Cipher#initialize, and the
+>> subsequent call of Cipher#key= resets the IV to uninitialized (zeroed
+>> by OPENSSL_zalloc() in EVP_CipherInit_ex()) gctx->iv.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9 in _dwarf_get_abbrev_for_code
-Shadow bytes around the buggy address:
-  0x0c227fff8ae0: 00 00 00 00 00 00 00 00 06 fa fa fa fa fa fa fa
-  0x0c227fff8af0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c227fff8b00: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c227fff8b10: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff8b30: 00 00 00 00 00 00 00 00 00 00 00 00 00[05]fa fa
-  0x0c227fff8b40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c227fff8b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b60: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b80: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24449==ABORTING
+Use CVE-2016-7798 for this issue in the openssl gem for Ruby. (Note
+that https://github.com/ruby/openssl/blob/master/History.md describes
+this as "openssl gem, formerly a standard library of Ruby,
+ext/openssl.") The same CVE ID applies to the effects of this
+vulnerability on the encryptor gem and the attr_encrypted gem.
 
-Affected version:
-20161001 and past
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13 
-and then 
-https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2 
-(because of a mistake)
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2016-10-04: bug discovered
-2016-10-04: bug reported privately to upstream
-2016-10-04: upstream realeased a patch
-2016-10-06: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c-2/
-
+iQIcBAEBCAAGBQJX7y3BAAoJEHb/MwWLVhi2y+AP/2aiU7pR293xXNVq9qmU0Rzi
+9DuMjQ4w9XA97ngKxzqt+ehdfcQDI/ZkDf/bH24d3VF5wQWjW6VmQ7xFIcnGADj1
+tPrl8RiiPP2d9vzNjihalCUDoQ5GpTsAM3GFylZa81mAFAQ76ZmoxHPCzd9yzWbc
+u+r71UfcawiU67LTggIZP4ods8elCHMWFUPriWOML8uXDjYYlaUwWdip0jIsgqNC
+S74Txv4GwhBtA+Pj/3Tsv9eXZ1OzcwoOa0c9rJYwlNRWUEQB5IX9sZSLN2SlTxcO
+yf8VSXBCKqx+4/zJHTeeIVZvSt/4p9uGhJiHpLHaNyZicD7sYbKYDJuY+zaMYc5e
+6r3QE1X5JT9zxjIVKYny0BcXnrSPBhp3is7orTDr0Uc26Hnn6jxraHwLlEBkF19f
+GofQxRj3cLPrS7tChacYp7qYTvmahNaQZWC6ei76+ulZDkL28xkto0QWf8CNo2eX
+x1nS0B1hDXwH314APoxY1+pKoHGFbXqAFE6yqhWB77SLZWYVlT4ixqvv7w/fIM7N
+Me8bbpeC9e3o31tE4qv2fqvytOZw9h/LdTwoGBToWhfOkK7jGwOti8SE24pb2hOC
+hx+G4eswZOiwkqJiU4gmN+eljOQwdUD92BzklwCxLA0V1D8KxSyILkWgEHgJMuL/
+LkjwXsTybnRdUMr+IAVC
+=FWLM
+-----END PGP SIGNATURE-----
