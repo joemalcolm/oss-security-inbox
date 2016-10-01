@@ -1,4 +1,9 @@
-Received: (qmail 5431 invoked by uid 550); 6 Nov 2023 22:56:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2217" "Friday" "30" "September" "2016" "21:46:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161001014635.7AE08332038@smtpvbsrv1.mitre.org>" "51" "[oss-security] Re: CVE request: pacemaker DoS when pacemaker remote is in use" nil nil nil "9" "2016100101:46:35" "[oss-security] Re: CVE request: pacemaker DoS when pacemaker remote is in use" (number mark "U       cve-assign@m Sep 30   51/2217  " thread-indent "\"[oss-security] Re: CVE request: pacemaker DoS when pacemaker remote is in use\"\n") "<CAKG8Do7TtAE4D4u3YrHdhh44QmgvxyP4PwA1dOwD79pVRwqU8g@mail.gmail.com>" ("<CAKG8Do7TtAE4D4u3YrHdhh44QmgvxyP4PwA1dOwD79pVRwqU8g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21851 invoked by uid 550); 1 Oct 2016 01:46:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28028 invoked from network); 6 Nov 2023 22:21:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	pietroalbini.org; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1699309246; x=1699395646; bh=9IfMIb7XtS
-	CqG3hJy/1X+9ujbLwpCTV3rtNnOm6pWfg=; b=c/CCjC8fd9sXFuP801XKcnYGcB
-	fEsBUe80IPBr5QgqtTBkqy3Se0fjeTS4beM0oeSKTm3N7pCAnONkcp2Faw3xaRsy
-	VkM/zWkDlW89lUTWo345amd+OqX5Q7AV+FlAvI3j4V5WptsHaVx5aCMeTpswwqAg
-	xHr8sOH4Ux91Ngm1JpuoZdF4b81GEfpo9TpJDrbTbtNzJmsHRmUCfnaSo2yodcZO
-	bWfmrYKpxJnc33tSh++Lbn+0XHXMqdbFWyPS55tyW+DegHBy5KKeyEhTUpodp3gr
-	oo0pedpXNhzV25Df+WNHR/VrwkdyGezkAcBLIqhN8/CK+sHc7e0GNKj8HsYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1699309246; x=
-	1699395646; bh=9IfMIb7XtSCqG3hJy/1X+9ujbLwpCTV3rtNnOm6pWfg=; b=V
-	8oXCdSHDyB/oZkS9oKdEnpAlGegEHud5CkRlUhHQxCvUybYQFhZnDxgvouyenAis
-	wSV/mqZcB2CnthBguznk8i+n37h0ERYEBdFKuiepVLjrREcOZ3MfQO0ZR+nmph1X
-	bH7wBG8uUWjLeomlByrO/k7c4v3FTSE3Btf/Lvt4a65Vz7tQmkQ+fLR2gfNFGC+t
-	iJT0d2CEg7fGJG6ZEUWd7moe4Ephuhv3Vdp0WRU/yfUVSJfe+ly6u/zvU26RNQ5A
-	Iu0Eh8e5yvrsGnQHaw7a/CCC/a3F0GCMEC4qmxWMjpteRUuBXqjes5Dgrr+fDgud
-	sxOOCMlsxEhE3Uc1Gofmw==
-X-ME-Sender: <xms:vmZJZfi-G_jSmUqAx7JojdSaGPpDPMlA5htOSHN8QRVfPtS8uk6xtQ>
-    <xme:vmZJZcA7-fUSJHX-wZF29q7Jk9x_waQTWV6nbKHzoDHfbcuMlb49V5PFj1EpzqZY0
-    mbDoaqXXzs9pZoC-og>
-X-ME-Received: <xmr:vmZJZfFILTO7dW3ZbZ6rdtDjjoWeFK67bxCmg98LKSzn8fHVXbvRjPP53ngfarxKSAzk8oh4hwTNP1z_d_9UZGxuQlJpwp3-kRlj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddugedgudehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefkffggfgfuvfhfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpefrihgv
-    thhrohcutehlsghinhhiuceophhivghtrhhosehpihgvthhrohgrlhgsihhnihdrohhrgh
-    eqnecuggftrfgrthhtvghrnhepheeuvefhvdelkeeugfeludehfeekveekvddtieffuddv
-    vdffieevgfeivdeifefgnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpihgvthhrohesphhi
-    vghtrhhorghlsghinhhirdhorhhg
-X-ME-Proxy: <xmx:vmZJZcQA4PrCJ7yKbUETAL6snq3UdOx2KTMlDTWJW5E-VBLDm83pSg>
-    <xmx:vmZJZcwvBPu9iR6E2yA8FLH4scxJQTSsu905n6JYmO26XUNHrrscCw>
-    <xmx:vmZJZS4-sBxSEZI-Ae_TvzLsmcRu71MlE-FOsUn3GKSSuTuWUD60pg>
-    <xmx:vmZJZZrgBGv9LF87Rpaj1f9340pc59tj5QHZ7Dp6iHQwG45gl3oPcg>
-Feedback-ID: i6b794706:Fastmail
-Message-ID: <dd885ef0-4191-4224-8707-73e9f1061f0e@pietroalbini.org>
-Date: Mon, 6 Nov 2023 23:20:08 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
-References: <0c602545-dfad-4d49-beaa-b5094b343af8@app.fastmail.com>
- <20231105230810.GA26924@openwall.com>
-Content-Language: en-US
-From: Pietro Albini <pietro@pietroalbini.org>
-In-Reply-To: <20231105230810.GA26924@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2022-46176: Cargo does not check SSH host keys
+Received: (qmail 21833 invoked from network); 1 Oct 2016 01:46:48 -0000
+From: cve-assign@mitre.org
+To: cbuissar@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CAKG8Do7TtAE4D4u3YrHdhh44QmgvxyP4PwA1dOwD79pVRwqU8g@mail.gmail.com>
+Message-Id: <20161001014635.7AE08332038@smtpvbsrv1.mitre.org>
+Date: Fri, 30 Sep 2016 21:46:35 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: pacemaker DoS when pacemaker remote is in use
 
-Hello all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
- > I think the libgit2 issue was never brought to oss-security, so I am
- > passing its mention to here now.  Also per that thread, CVE-2022-46176
- > is only for the Cargo issue.  libgit2 was supposed to get its own CVE,
- > but no one in the thread knew whether they actually did.
+> Last February was reported a vulnerability against pacemaker when pacemaker
+> remote is in use, allowing a remote, unauthenticated, attacker to launch a
+> DoS attack.
+> 
+> If a corosync node is connected to a pacemaker_remote node, the
+> connection can be trivially killed simply by connecting to the remote on its
+> standard TCP port (typically 3121):
+> 
+> 2016-02-18T18:06:45.258661+00:00 d52-54-77-77-77-01 crmd[2637]:    error:
+> Unexpected pacemaker_remote client takeover. Disconnecting
+> 
+> Takeover is allowed in order to support migration of the remote primitive from
+> one corosync node to another, but since this is a trivial denial of service
+> attack, it should only be allowed once a valid authkey is provided.
+> 
+> The flaw has been fixed in Pacemaker-1.1.15
+> 
+> Bug 5269 - DoS: valid authkey should be required for takeover of a Pacemaker remote
+> http://bugs.clusterlabs.org/show_bug.cgi?id=5269
+> 
+> Fix: remote: cl#5269 - Notify other clients of a new connection only if the handshake has completed (bsc#967388)
+> https://github.com/ClusterLabs/pacemaker/commit/5ec24a2642bd0854b884d1a9b51d12371373b410
+>> lrmd/tls_backend.c
 
-The Rust project was in contact with the libgit2 maintainers to coordinate the 
-two disclosures (that's why we mentioned it in the distros email), but some 
-miscommunication happened and the libgit2 side of the advisory didn't end up 
-being posted here by its maintainers.
+Use CVE-2016-7797.
 
-libgit2's advisory is available here, and has CVE-2023-22742 assigned to it:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://github.com/libgit2/libgit2/security/advisories/GHSA-8643-3wh5-rmjq
-
- > I don't know whether libgit2 was actually fixed on that date as planned.
-
-The libgit2 advisory and fix ended up being published later, on January 20th.
-
-Pietro.
-Rust Security Response WG
+iQIcBAEBCAAGBQJX7xUaAAoJEHb/MwWLVhi28DcP/jUPa6znvw/gipgp+uU2k22l
+/jbc1F3ISC0VjsA6pZFYPKH/693gTNWjxstCYDB6OEAOx5oDl4Es3FqYBbCjwLb1
+t8Vl4obIttPV8Kc6v7p6yvr4p+ghXbCiVfljpQJCSA0cESzRa5cyN0H8zOIzZnvs
+vF2z7cohAciS8Q79lOSkXGZDnWPIIL1yvLMzabLQDsO0nVpCJriH395ui5u+OozS
++F4UuKNpYR4QRrW4uM3Y3Mxk5obspGJMtXgsi6hWKFcK9WGfwbO3nqv9LMnp+aJ1
++2VkNTt3JfXYnswZ7Lbgh1fnaRvJJ9Xgp5p7bzVAA1s9bIae9T9mF/z7D5woVipd
+MCq5qtIV7rPzZqZnpuOWEbGCUTB8sUr8QTWXAZmFpy9JOPslFTu4GHAIZvga5xTl
+iBN1/MATIkacDed6fGVjDxWDef7y4si/om62DCeTKhwr51BOej0oCM+meam9ladT
+0GQRTVYhfctLVa6R4j4dh7DH77Z+3cd5d5CN5NT6Rv58CUhVqUgoCtdhd98j77ia
+Tvq2PMjd8YZvWVX2hENdBdbNhkkhs7vSf6W2Mf+U7tKnnjUQqug+7nXm5O+0QQRy
+S0+5pZyTDA+Nud+x9Zp62Ezc05BjbiTOOl2wLgn8uERUlTmfCR7rjxdJuG9uXZNa
+UZxQ9GHnN9+B5qd/UJOx
+=7VcV
+-----END PGP SIGNATURE-----
