@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2983" "Wednesday" "20" "July" "2016" "23:48:52" "+0200" "Nicolas =?iso-8859-1?Q?Fran=E7ois?=" "nicolas.francois@centraliens.net" "<20160720214852.GA23823@nekral.nekral.homelinux.net>" "77" "[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" nil nil nil "7" "2016072021:48:52" "[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package" (number mark "U       nicolas.fran Jul 20   77/2983  " thread-indent "\"[oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package\"\n") "<871t2pycqx.fsf_-_@x220.int.ebiederm.org>" ("<20160719093915.GA29047@suse.de>" "<20160719125119.GA7146@suse.de>" "<871t2pycqx.fsf_-_@x220.int.ebiederm.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2332" "Friday" "30" "September" "2016" "23:32:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161001033217.088D733202F@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" nil nil nil "9" "2016100103:32:17" "[oss-security] Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode" (number mark "U       cve-assign@m Sep 30   50/2332  " thread-indent "\"[oss-security] Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode\"\n") "<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>" ("<CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16134 invoked by uid 550); 20 Jul 2016 21:55:30 -0000
+Received: (qmail 25761 invoked by uid 550); 1 Oct 2016 03:32:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,101 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13854 invoked from network); 20 Jul 2016 21:50:00 -0000
-Date: Wed, 20 Jul 2016 23:48:52 +0200
-From: Nicolas =?iso-8859-1?Q?Fran=E7ois?= <nicolas.francois@centraliens.net>
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Sebastian Krahmer <krahmer@suse.com>, oss-security@lists.openwall.com,
-	pkg-shadow-devel@lists.alioth.debian.org
-Message-ID: <20160720214852.GA23823@nekral.nekral.homelinux.net>
-Mail-Followup-To: "Eric W. Biederman" <ebiederm@xmission.com>,
-	Sebastian Krahmer <krahmer@suse.com>,
-	oss-security@lists.openwall.com,
-	pkg-shadow-devel@lists.alioth.debian.org
-References: <20160719093915.GA29047@suse.de>
- <20160719125119.GA7146@suse.de>
- <871t2pycqx.fsf_-_@x220.int.ebiederm.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <871t2pycqx.fsf_-_@x220.int.ebiederm.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] Re: [Pkg-shadow-devel] subuid security patches for shadow package
+Received: (qmail 25743 invoked from network); 1 Oct 2016 03:32:28 -0000
+From: cve-assign@mitre.org
+To: michael.santillana@wework.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, infosec@wework.com
+In-Reply-To: <CAARAU46rH-SFtFof=E55kkPY3YyBGOWugZh==qE9zaRCQuPWLg@mail.gmail.com>
+Message-Id: <20161001033217.088D733202F@smtpvbsrv1.mitre.org>
+Date: Fri, 30 Sep 2016 23:32:17 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The first point looks like a non issue to me.
+> https://github.com/ruby/openssl/issues/49
+> https://github.com/ruby/openssl/commit/8108e0a6db133f3375608303fdd2083eb5115062
+> http://stackoverflow.com/questions/35991551
+> https://github.com/attr-encrypted/attr_encrypted/issues/203
+> https://github.com/attr-encrypted/encryptor/pull/22
 
-getlogin() is used to differentiate users with the same UID.
-The result of getlogin() is checked: if it returns a username that do not
-have the UID returned by getuid(), it will be ignored.
+> A developer that uses the code above may incorrectly assume that their code
+> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
+> the 'cipher.random_iv' method is used. According to the documentation, this
+> should generate a random IV each time the encryption method is called.
 
+> even though the random_iv method is called, the code is defaulting to
+> a static IV.
 
-Best Regards,
--- 
-Nekral
+>> Cipher#iv= does not preserve the IV in gctx->iv because gctx->key_set
+>> is already set by the pre-initialization in Cipher#initialize, and the
+>> subsequent call of Cipher#key= resets the IV to uninitialized (zeroed
+>> by OPENSSL_zalloc() in EVP_CipherInit_ex()) gctx->iv.
 
+Use CVE-2016-7798 for this issue in the openssl gem for Ruby. (Note
+that https://github.com/ruby/openssl/blob/master/History.md describes
+this as "openssl gem, formerly a standard library of Ruby,
+ext/openssl.") The same CVE ID applies to the effects of this
+vulnerability on the encryptor gem and the attr_encrypted gem.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On Tue, Jul 19, 2016 at 08:32:38AM -0500, Eric W. Biederman wrote:
-> 
-> Adding the shadow-development list, so there is a chance other people
-> familiar with the code can comment as well.
-> 
-> Sebastian Krahmer <krahmer@suse.com> writes:
-> 
-> > On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
-> >> Hi
-> >> 
-> >> The shadow package contains newuidmap and newgidmap suid
-> >> binaries in order to allow users to take advantage of the
-> >> userns feature of uid-mappings.
-> >> 
-> >> I added patches here:
-> >> 
-> >> https://bugzilla.suse.com/show_bug.cgi?id=979282
-> >> 
-> >> they consist of:
-> >> 
-> >> 1) Removing getlogin() to find out about users.
-> >>    It relies on utmp, which is not a trusted base of info (group writable).
-> >> 
-> >> 2) Cleaning up UID retrieval and computation. The 'long long' code was
-> >>    totally unclear to me, as the numbers are converted to ulong right
-> >>    afterwards anyway. Additionally there was a *int overflow*, which can be
-> >>    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
-> >>    which produces no error but tries to write large "count" values to the uid_map
-> >>    file. Kernel may check for overflows itself, but it should not be allowed
-> >>    by a suid binary to be written in the first place.
-> >
-> > After checking some kernels, it looks like this int wrap is exploitable as a LPE,
-> > as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
-> > as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
-> > different view on the upper and lower bounds, making newuidmap overflow (and pass)
-> > and still being in bounds inside the kernel.
-> >
-> > Maybe it would be wise to align integer widths of kernel and the userspace
-> > tools.
-> >
-> > So everyone shipping newuidmap as mode 04755 should fix it. :)
-> 
-> Thank you for the review and looking at this.  I agree that the integer
-> size issues should all be locked down and handled more clearly.
-> 
-> I think it should be code in have_sub_uids and have_sub_gids that should
-> be catching overflows and the like.  Limiting things to what is actually
-> allowed by the subuid file.
-> 
-> I also agree that the kernel is permitting more than it needs to which
-> in case like this is not helpful.
-> 
-> The issues with the library functions get_my_pwent and getulong I will
-> have to come up to speed on before I comment knowledgably, but they
-> definitely appear to be worth looking at.
-> 
-> Eric
-> 
-> _______________________________________________
-> Pkg-shadow-devel mailing list
-> Pkg-shadow-devel@lists.alioth.debian.org
-> http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/pkg-shadow-devel
+iQIcBAEBCAAGBQJX7y3BAAoJEHb/MwWLVhi2y+AP/2aiU7pR293xXNVq9qmU0Rzi
+9DuMjQ4w9XA97ngKxzqt+ehdfcQDI/ZkDf/bH24d3VF5wQWjW6VmQ7xFIcnGADj1
+tPrl8RiiPP2d9vzNjihalCUDoQ5GpTsAM3GFylZa81mAFAQ76ZmoxHPCzd9yzWbc
+u+r71UfcawiU67LTggIZP4ods8elCHMWFUPriWOML8uXDjYYlaUwWdip0jIsgqNC
+S74Txv4GwhBtA+Pj/3Tsv9eXZ1OzcwoOa0c9rJYwlNRWUEQB5IX9sZSLN2SlTxcO
+yf8VSXBCKqx+4/zJHTeeIVZvSt/4p9uGhJiHpLHaNyZicD7sYbKYDJuY+zaMYc5e
+6r3QE1X5JT9zxjIVKYny0BcXnrSPBhp3is7orTDr0Uc26Hnn6jxraHwLlEBkF19f
+GofQxRj3cLPrS7tChacYp7qYTvmahNaQZWC6ei76+ulZDkL28xkto0QWf8CNo2eX
+x1nS0B1hDXwH314APoxY1+pKoHGFbXqAFE6yqhWB77SLZWYVlT4ixqvv7w/fIM7N
+Me8bbpeC9e3o31tE4qv2fqvytOZw9h/LdTwoGBToWhfOkK7jGwOti8SE24pb2hOC
+hx+G4eswZOiwkqJiU4gmN+eljOQwdUD92BzklwCxLA0V1D8KxSyILkWgEHgJMuL/
+LkjwXsTybnRdUMr+IAVC
+=FWLM
+-----END PGP SIGNATURE-----
