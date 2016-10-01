@@ -1,32 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/12
-Message-ID: <3454029.yBeZ0OJpNZ@arcadia>
-Date: Fri, 02 Dec 2016 19:16:04 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/1
+Message-Id: <20161001014635.7AE08332038@smtpvbsrv1.mitre.org>
+Date: Fri, 30 Sep 2016 21:46:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: cbuissar@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: pacemaker DoS when pacemaker remote is in use
 Content-Type: text/plain; charset=utf-8
 
-On Friday 02 December 2016 13:07:34 cve-assign@...re.org wrote:
-> > https://blogs.gentoo.org/ago/2016/12/01/imagemagick-heap-based-buffer-over
-> > flow-in-ispixelgray-pixel-accessor-h-incomplete-fix-for-cve-2016-9556
-> > 
-> > AddressSanitizer: heap-buffer-overflow
-> > READ of size 4
-> >
-> >     #0 0x7f897b123266 in IsPixelGray
-> >     ImageMagick-7.0.3-8/./MagickCore/pixel-accessor.h:507:30
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> Last February was reported a vulnerability against pacemaker when pacemaker
+> remote is in use, allowing a remote, unauthenticated, attacker to launch a
+> DoS attack.
 > 
-> Use CVE-2016-9773 for the vulnerability present in "an updated version
-> which includes the fix for CVE-2016-9556."
+> If a corosync node is connected to a pacemaker_remote node, the
+> connection can be trivially killed simply by connecting to the remote on its
+> standard TCP port (typically 3121):
+> 
+> 2016-02-18T18:06:45.258661+00:00 d52-54-77-77-77-01 crmd[2637]:    error:
+> Unexpected pacemaker_remote client takeover. Disconnecting
+> 
+> Takeover is allowed in order to support migration of the remote primitive from
+> one corosync node to another, but since this is a trivial denial of service
+> attack, it should only be allowed once a valid authkey is provided.
+> 
+> The flaw has been fixed in Pacemaker-1.1.15
+> 
+> Bug 5269 - DoS: valid authkey should be required for takeover of a Pacemaker remote
+> http://bugs.clusterlabs.org/show_bug.cgi?id=5269
+> 
+> Fix: remote: cl#5269 - Notify other clients of a new connection only if the handshake has completed (bsc#967388)
+> https://github.com/ClusterLabs/pacemaker/commit/5ec24a2642bd0854b884d1a9b51d12371373b410
+>> lrmd/tls_backend.c
 
-The updated version which includes the fix for CVE-2016-9556 is 7.0.3.8 ( as 
-stated under the affected version 'field'.
+Use CVE-2016-7797.
 
-Anyway, upstream added a patch for this issue:
-https://github.com/ImageMagick/ImageMagick/commit/4e8c2ed53fcb54a34b3a6185b2584f26cf6874a3
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+iQIcBAEBCAAGBQJX7xUaAAoJEHb/MwWLVhi28DcP/jUPa6znvw/gipgp+uU2k22l
+/jbc1F3ISC0VjsA6pZFYPKH/693gTNWjxstCYDB6OEAOx5oDl4Es3FqYBbCjwLb1
+t8Vl4obIttPV8Kc6v7p6yvr4p+ghXbCiVfljpQJCSA0cESzRa5cyN0H8zOIzZnvs
+vF2z7cohAciS8Q79lOSkXGZDnWPIIL1yvLMzabLQDsO0nVpCJriH395ui5u+OozS
++F4UuKNpYR4QRrW4uM3Y3Mxk5obspGJMtXgsi6hWKFcK9WGfwbO3nqv9LMnp+aJ1
++2VkNTt3JfXYnswZ7Lbgh1fnaRvJJ9Xgp5p7bzVAA1s9bIae9T9mF/z7D5woVipd
+MCq5qtIV7rPzZqZnpuOWEbGCUTB8sUr8QTWXAZmFpy9JOPslFTu4GHAIZvga5xTl
+iBN1/MATIkacDed6fGVjDxWDef7y4si/om62DCeTKhwr51BOej0oCM+meam9ladT
+0GQRTVYhfctLVa6R4j4dh7DH77Z+3cd5d5CN5NT6Rv58CUhVqUgoCtdhd98j77ia
+Tvq2PMjd8YZvWVX2hENdBdbNhkkhs7vSf6W2Mf+U7tKnnjUQqug+7nXm5O+0QQRy
+S0+5pZyTDA+Nud+x9Zp62Ezc05BjbiTOOl2wLgn8uERUlTmfCR7rjxdJuG9uXZNa
+UZxQ9GHnN9+B5qd/UJOx
+=7VcV
+-----END PGP SIGNATURE-----
