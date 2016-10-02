@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/9
-Message-Id: <bffeab9e56b0b9ef@openbsd.org>
-Date: Thu, 10 Mar 2016 05:12:01 -0700 (MST)
-From: Damien Miller <djm@...nbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/4
+Message-ID: <8737ke7byg.fsf@mid.deneb.enyo.de>
+Date: Sun, 02 Oct 2016 22:06:15 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Announce: Portable OpenSSH 7.2p2 released
+Subject: NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure
 Content-Type: text/plain; charset=utf-8
 
-Portable OpenSSH 7.2p2 has just been released. It will be available
-from the mirrors listed at http://www.openssh.com/ shortly.
+It seems this was never disclosed properly; there are still a couple
+of hidden Mozilla bugs about this.
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support. OpenSSH also includes
-transitional support for the legacy SSH 1.3 and 1.5 protocols that
-may be enabled at compile-time.
+The NSS 3.22.1 announcement
 
-Once again, we would like to thank the OpenSSH community for
-their continued support of the project, especially those who
-contributed code or patches, reported bugs, tested snapshots or
-donated to the project. More information on donations may be found
-at: http://www.openssh.com/donations.html
+  <https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_3.22.1_release_notes>
 
-Changes since OpenSSH 7.2p1
-===========================
+mentions one:
 
-This release fixes a security bug:
+  bug 1194680: NSS has been changed to use the PR_GetEnvSecure
+    function that was made available in NSPR 4.12
 
- * sshd(8): sanitise X11 authentication credentials to avoid xauth
-   command injection when X11Forwarding is enabled.
+The story behind this is that NSS uses environment variables to
+configure lots of things, some of which refer to file system
+locations.  Others can be degrade the operation of NSS in various
+ways, forcing compatibility modes and so on.
 
-   Full details of the vulnerability are available at:
-   http://www.openssh.com/txt/x11fwd.adv
+Previously, these environment variables were not ignored SUID
+binaries.  NSPR 4.12 and NSS 3.22.1 introduce a new API,
+PR_GetEnVSecure, to address this.  It's a very thin wrapper around
+glibc's secure_getenv and similar functions on other systems.
 
-Checksums:
-==========
-
- - SHA1 (openssh-7.2p2.tar.gz) = 70e35d7d6386fe08abbd823b3a12a3ca44ac6d38
- - SHA256 (openssh-7.2p2.tar.gz) = pyeB0aBDh2oiT/GwAy2qQJTYdWWmhSh1nBwsq1SCVIw=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available as RELEASE_KEY.asc from
-the mirror sites.
-
-Reporting Bugs:
-===============
-
-- Please read http://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
-
-OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
-Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
-Tim Rice and Ben Lindstrom.
-
+Both NSPR and NSS need to be upgraded to address this; even if you run
+s/PR_GetEnvSecure/secure_getenv/ on the NSS sources, some unprotected
+environment variable lookups remain in NSPR.
