@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4684" "Saturday" "2" "May" "2015" "15:53:30" "+0300" "Solar Designer" "solar@openwall.com" "<20150502125329.GA6820@openwall.com>" "126" "Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" nil nil nil "5" "2015050212:53:30" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" (number mark "        solar@openwa May  2  126/4684  " thread-indent "\"Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam\"\n") "<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" ("<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1027" "Sunday" "2" "October" "2016" "22:06:15" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<8737ke7byg.fsf@mid.deneb.enyo.de>" "25" "[oss-security] NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure" nil nil nil "10" "2016100220:06:15" "[oss-security] NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure" (number mark "U       fw@deneb.eny Oct  2   25/1027  " thread-indent "\"[oss-security] NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15536 invoked by uid 550); 2 May 2015 12:53:44 -0000
+Received: (qmail 32049 invoked by uid 550); 2 Oct 2016 20:06:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,144 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15511 invoked from network); 2 May 2015 12:53:43 -0000
-Message-ID: <20150502125329.GA6820@openwall.com>
-References: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com, Vasily Kulikov <segoon@openwall.com>
-Date: Sat, 2 May 2015 15:53:30 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam
-To: Wen Xu <hotdog3645@gmail.com>
+Received: (qmail 32023 invoked from network); 2 Oct 2016 20:06:28 -0000
+From: Florian Weimer <fw@deneb.enyo.de>
+To: oss-security@lists.openwall.com
+Date: Sun, 02 Oct 2016 22:06:15 +0200
+Message-ID: <8737ke7byg.fsf@mid.deneb.enyo.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure
 
-Hi,
+It seems this was never disclosed properly; there are still a couple
+of hidden Mozilla bugs about this.
 
-I expect MITRE will assign a CVE ID.
+The NSS 3.22.1 announcement
 
-On Sat, May 02, 2015 at 06:31:12PM +0800, Wen Xu wrote:
-> Recently we found a use-after-free bug which can lead to kernel arbitrary
-> execution in Linux kernel.
-> The bug was reported to the linux security group and it has been fixed.(commit
-> a134f083e79f ("ipv4: Missing sk_nulls_node_init() in ping_unhash()"). You
-> can find the fix commit here:
-> https://github.com/torvalds/linux/commit/6c3c1eb3c35e8856d6dcb01b412316a676f58bbe
+  <https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_3.22.1_release_notes>
 
-More specifically:
+mentions one:
 
-https://github.com/torvalds/linux/commit/a134f083e79fb4c3d0a925691e732c56911b4326
+  bug 1194680: NSS has been changed to use the PR_GetEnvSecure
+    function that was made available in NSPR 4.12
 
-> The bug exists in all versions of linux kernel.
+The story behind this is that NSS uses environment variables to
+configure lots of things, some of which refer to file system
+locations.  Others can be degrade the operation of NSS in various
+ways, forcing compatibility modes and so on.
 
-"All" as in "all upstream versions that contain the feature at all
-(3.0+), and likely some backports".  It appears the bug got introduced
-in Vasily's forward-porting of the functionality to newer 2.6.x kernels
-before it finally got merged in this thread:
+Previously, these environment variables were not ignored SUID
+binaries.  NSPR 4.12 and NSS 3.22.1 introduce a new API,
+PR_GetEnVSecure, to address this.  It's a very thin wrapper around
+glibc's secure_getenv and similar functions on other systems.
 
-https://lkml.org/lkml/2011/5/13/382
-
-Vasily's patch against RHEL5 kernels that we still use in Owl looks
-unaffected.  It has:
-
-+               write_lock_bh(&ping_table.lock);
-+               sk_del_node_init(sk);
-+               sock_put(sk);
-
-where sk_del_node_init() calls sk_node_init(), which does
-"node->pprev = NULL;"  I'd like Vasily to double-check this, though.
-
-> And the credit is to Wen Xu and wushi of KeenTeam.
-
-Cool!  How did you find this bug?  Did/do you actively search for more
-bugs with usage of these and similar kernel interfaces?  (I think
-someone should!)
-
-Do you have a reproducer (non-weaponized exploit) that you could post?
-
-Is my understanding correct that to trigger the bug you need direct
-access to a ping socket, not indirect via the ping utility (if that is
-enabled at all)?  By default, access to ping sockets is disabled:
-
-	/*
-	 * Sane defaults - nobody may create ping sockets.
-	 * Boot scripts should set this to distro-specific group.
-	 */
-	net->ipv4.ping_group_range.range[0] = make_kgid(&init_user_ns, 1);
-	net->ipv4.ping_group_range.range[1] = make_kgid(&init_user_ns, 0);
-
-and distros are supposed to enable it selectively - e.g., on Owl we
-enable it for group _icmp only:
-
-_icmp:x:111:
-
-# Range of group IDs permitted to access non-raw (datagram) ICMP sockets.
-#
-# These are an Openwall extension to the Linux kernel.  Our ping(1) program is
-# able to use these sockets, which enables it to start and run without
-# requiring root privileges nor a capability.  Access to these sockets is
-# restricted at all primarily in order to reduce direct exposure of the added
-# kernel code to potential attacks.  In other words, we gain privilege
-# separation due to keeping this access restricted and installing ping(1) SGID.
-#
-net.ipv4.ping_group_range = 111 111
-
-and install ping as:
-
--rwx--s--x 1 root _icmp 34336 Aug 14  2012 /bin/ping
-
-So there's a layer of privsep here.
-
-I'd like us to learn something useful from this.  Maybe it's "don't add
-more code to the kernel, even if it's for security" - but we knew that,
-and this is why there's the layer of privsep mentioned above (to make
-things no worse than before even in presence of bugs in the new code).
-
-Are there distros that enable access to ping sockets for all users by
-default?
-
-Then, perhaps we should harden the poison pointers to be either below
-typical mmap_min_addr or in an unmapped portion of kernel space?  Do I
-understand correctly that, short of possible mmap_min_addr bypasses in
-general (if relevant), this would mitigate the issue?
-
-Right now, they are:
-
-/*
- * These are non-NULL pointers that will result in page faults
- * under normal circumstances, used to verify that nobody uses
- * non-initialized list entries.
- */
-#define LIST_POISON1  ((void *) 0x00100100 + POISON_POINTER_DELTA)
-#define LIST_POISON2  ((void *) 0x00200200 + POISON_POINTER_DELTA)
-
-I'd change them to e.g.:
-
-#define LIST_POISON1  ((void *) 0x00000100 + POISON_POINTER_DELTA)
-#define LIST_POISON2  ((void *) 0x00000200 + POISON_POINTER_DELTA)
-
-where POISON_POINTER_DELTA would normally be 0 on 32-bit x86, so they'd
-be below mmap_min_addr on that arch.  Meanwhile, a mitigation appears to
-be to set mmap_min_addr higher than 0x00200200 (slightly over 2 MB), but
-that's not great as it leaves significantly less ASCII-armored space for
-libraries.
-
-BTW, it appears that on x86_64 POISON_POINTER_DELTA is
-0xdead000000000000 by default, which I guess would hit an unmapped page
-even with the current LIST_POISON2 value?  If so, is the bug at worst a
-kernel Oops on x86_64 unless someone changed POISON_POINTER_DELTA in
-their build?
-
-config ILLEGAL_POINTER_VALUE
-	hex
-	default 0 if X86_32
-	default 0xdead000000000000 if X86_64
-
-Regardless, as a supporter of that kernel patch, I am embarrassed!
-
-Thanks,
-
-Alexander
+Both NSPR and NSS need to be upgraded to address this; even if you run
+s/PR_GetEnvSecure/secure_getenv/ on the NSS sources, some unprotected
+environment variable lookups remain in NSPR.
