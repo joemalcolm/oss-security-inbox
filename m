@@ -1,36 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/31/1
-Message-ID: <20160531110944.58e24e2c@redhat.com>
-Date: Tue, 31 May 2016 11:09:44 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
-To: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security issues addressed in GraphicsMagick SVG reader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/1
+Message-ID: <CAFkTriKAFZKb2_5V8xtyJJQ-DaaY4XimBkZvneRD3wXYMxjnmA@mail.gmail.com>
+Date: Sun, 2 Oct 2016 13:30:21 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: imagemagick mogrify use after free
 Content-Type: text/plain; charset=utf-8
-
-On Fri, 27 May 2016 09:37:38 -0500 (CDT)
-Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
-
-> ===========================================
-> SVG Security Improvements in GraphicsMagick
-> ===========================================
-> 
-> This is a summary of security improvements made to development
-> GraphicsMagick's SVG reader since the 1.3.23 release.  These
-> improvements were made in response to fuzz testing by Gustavo Grieco
-> (using Quickfuzz) which and which resulted in CVE-2016-2317 and
-> CVE-2016-2318.  We are thankful that Gustavo has been willing to
-> continue fuzz testing as improvements have been made.
 
 Hi,
 
-I'm curious, are these the CVEs for the issues that still have an
-outstanding CVE request at http://seclists.org/oss-sec/2016/q2/180 - or
-are they completely unrelated?
+imagemagick identify suffers of a use after free issue, which I reported
+and has been patched, you can find a reproducer in the github bug tracker
+issue link
 
-(If they are indeed the same/related, can you give more details about
-the exact mapping?)
+issue: *https://github.com/ImageMagick/ImageMagick/issues/281
+<https://github.com/ImageMagick/ImageMagick/issues/281>*
+patch: *https://github.com/ImageMagick/ImageMagick/commit/d63a3c5729df59f183e9e110d5d8385d17caaad0
+<https://github.com/ImageMagick/ImageMagick/commit/d63a3c5729df59f183e9e110d5d8385d17caaad0>*
 
-Thanks, 
--- 
-Stefan Cornelius / Red Hat Product Security
+Thanks,
+
+Marco Grassi (@marcograss) of Tencent's Keen Lab
+
+=================================================================
+==5303==ERROR: AddressSanitizer: heap-use-after-free on address
+0x60600003c628 at pc 0x0000016cfeba bp 0x7ffeb3910f50 sp 0x7ffeb3910f48
+READ of size 4 at 0x60600003c628 thread T0
+    #0 0x16cfeb9 in SetImageDepth
+/home/bob/VulnResearch/misc/ImageMagick/MagickCore/attribute.c:1040:43
+    #1 0x16383cf in WriteTIFFImage
+/home/bob/VulnResearch/misc/ImageMagick/coders/tiff.c:3212:16
+    #2 0x18bfcfc in WriteImage
+/home/bob/VulnResearch/misc/ImageMagick/MagickCore/constitute.c:1100:14
+    #3 0x18c2594 in WriteImages
+/home/bob/VulnResearch/misc/ImageMagick/MagickCore/constitute.c:1319:13
+    #4 0x2ff1c7f in MogrifyImageCommand
+/home/bob/VulnResearch/misc/ImageMagick/MagickWand/mogrify.c:3974:17
+    #5 0x2f8cead in MagickCommandGenesis
+/home/bob/VulnResearch/misc/ImageMagick/MagickWand/mogrify.c:183:14
+    #6 0x4f5da9 in MagickMain
+/home/bob/VulnResearch/misc/ImageMagick/utilities/magick.c:145:10
+    #7 0x4f5da9 in main
+/home/bob/VulnResearch/misc/ImageMagick/utilities/magick.c:176
+    #8 0x7fc9edea082f in __libc_start_main
+/build/glibc-GKVZIf/glibc-2.23/csu/../csu/libc-start.c:291
+    #9 0x422428 in _start
+(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x422428)
+
+0x60600003c628 is located 8 bytes inside of 56-byte region
+[0x60600003c620,0x60600003c658)
+freed by thread T0 here:
+    #0 0x4c23d0 in __interceptor_cfree.localalias.0
+(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x4c23d0)
+    #1 0x5ac708 in RelinquishMagickMemory
+/home/bob/VulnResearch/misc/ImageMagick/MagickCore/memory.c:1002:3
+
+previously allocated by thread T0 here:
+    #0 0x4c2558 in __interceptor_malloc
+(/home/bob/VulnResearch/misc/ImageMagick/utilities/magick+0x4c2558)
+    #1 0x55c149 in NewLinkedList
+/home/bob/VulnResearch/misc/ImageMagick/MagickCore/linked-list.c:717:32
+
+SUMMARY: AddressSanitizer: heap-use-after-free
+/home/bob/VulnResearch/misc/ImageMagick/MagickCore/attribute.c:1040:43 in
+SetImageDepth
+Shadow bytes around the buggy address:
+  0x0c0c7ffff870: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
+  0x0c0c7ffff880: fd fd fd fa fa fa fa fa fd fd fd fd fd fd fd fa
+  0x0c0c7ffff890: fa fa fa fa fd fd fd fd fd fd fd fa fa fa fa fa
+  0x0c0c7ffff8a0: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
+  0x0c0c7ffff8b0: fd fd fd fa fa fa fa fa 00 00 00 00 00 00 00 00
+=>0x0c0c7ffff8c0: fa fa fa fa fd[fd]fd fd fd fd fd fa fa fa fa fa
+  0x0c0c7ffff8d0: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
+  0x0c0c7ffff8e0: fd fd fd fa fa fa fa fa fd fd fd fd fd fd fd fa
+  0x0c0c7ffff8f0: fa fa fa fa fd fd fd fd fd fd fd fa fa fa fa fa
+  0x0c0c7ffff900: fd fd fd fd fd fd fd fa fa fa fa fa fd fd fd fd
+  0x0c0c7ffff910: fd fd fd fa fa fa fa fa fd fd fd fd fd fd fd fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==5303==ABORTING
+
