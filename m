@@ -1,33 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/5
-Message-ID: <CAC_overhfzw39AL6+0r5hq8JhHb8AOD6-+-V-+ejfDE8OPZb7A@mail.gmail.com>
-Date: Wed, 04 May 2016 00:05:16 +0000
-From: Brandon Dees <brandon@...tta.com>
-To: oss-security@...ts.openwall.com, Seth Arnold <seth.arnold@...onical.com>
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/02/3
+Message-Id: <20161002154541.522FC6CC0E3@smtpvmsrv1.mitre.org>
+Date: Sun,  2 Oct 2016 11:45:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: imagemagick mogrify use after free
 Content-Type: text/plain; charset=utf-8
 
-is it appropriate to ask if the same issues are present in GraphicsMagick
-as well?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, May 3, 2016 at 6:52 PM Tim <tim-security@...tinelchicken.org> wrote:
+> https://github.com/ImageMagick/ImageMagick/issues/281
+> https://github.com/ImageMagick/ImageMagick/commit/d63a3c5729df59f183e9e110d5d8385d17caaad0
 
->
-> > Or, replace the strings with arrays and use execve() instead of system().
->
-> ^^^
->
-> That.
->
-> system() should be taken out into the street and shot.  There's just
-> no good reason for a respectable programmer to use it.
->
-> Not saying that's the *only* thing they would need to do, but we need
-> to encourage development platforms, in general, to stop offering up
-> awful interfaces like this.  Heck, Node.js offers a child_process.exec()
-> call that isn't exec at all.  It is (approximately) system().  Surely
-> that won't lead to any problems...
->
-> tim
->
+>> AddressSanitizer: heap-use-after-free
+>> READ of size 4
 
+>> magick/attribute.c
+
+Use CVE-2016-7906.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX8SsRAAoJEHb/MwWLVhi2lOoP/3hkMq06zT1dP90mnGALwTqX
+nwKllShGOAfGlGdtJi7LiE+CeSfgXcyMOc666VG26dQb19Aj6moFemWIEZ4GVC5v
+WNNGrSVRJvZAlW1LEN1tVwenv4kuevJI5KhoPRWXmUYkbsxdRwKS8pkPKyoYvs5v
+c5ttxtdooyvRky2YvRReJ6Qgci0A61D3w8j47qC7yMcI3LJhX0us9WbWTnaLG7x8
+ZF+DqtLBUcAgc08RTw1nUUDqxVNeGLAwnu8Ak+f5GQCudd9g570wXjL0UPznLOnC
+Wz4fAFfU5NSayq3S/GiileILeDTHJ79ObkOiC9WIjltoRn8iercvs/6tXpvMAWFo
+J2WlfitHrepRrK3R517kpnxSTmJyYU6pEu1DtA10DjHo0KFYOLy0+D/N6r8IufNj
+mNCKPgtJO6JdNsHrhNBC/dYxkB/3QiGOWayF3dK/MxhD8irfr7gR2w5q2PfTAn+/
+dJ4MLvZl+nMPh6Hb7gtIWHHVmryJtoVCwSJIEO3JpNvVnViyGw9iRhRutdDL5rbK
+0JEz/2wJ0eDXJ9J/fI+K1Z/Dcc9rgXBeTuAdirkuJWnAd/6ngChoJYHKd0lAIFzT
+tyP+64xEg+XYbG7Cj3MrXrQjaDJdGW/b9uW5rwqgqduWEXvUQS91O/r3CERu6cLu
+7dpxAcUqkCcF0KlNm7HU
+=C5KK
+-----END PGP SIGNATURE-----
