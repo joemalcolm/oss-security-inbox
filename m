@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/6
-Message-Id: <20160314042747.2E64052E002@smtpvbsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:27:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdronov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (digi_acceleport driver)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/3
+Message-ID: <alpine.LFD.2.20.1610031723380.30560@wniryva>
+Date: Mon, 3 Oct 2016 17:25:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE Request Qemu: net: pcnet: infinite loop in pcnet_rdra_addr
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> http://seclists.org/bugtraq/2016/Mar/61
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283378
+Quick Emulator(Qemu) built with the AMD PC-Net II emulator support is 
+vulnerable to an infinite loop issue. It could occur while receiving packets 
+via pcnet_receive().
 
-Use CVE-2016-3140.
+A privileged user/process inside guest could use this issue to crash the Qemu 
+process on the host leading to DoS.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07942.html
 
-iQIcBAEBCAAGBQJW5j1nAAoJEL54rhJi8gl5PeAQAKRXQU49edyEmO9wPRGDZrFa
-GmBBtFJPkjBCEYJlmWzf/f/NkiPfJ8tIPCDvICX5YyiZI47c/vhs3JFzroFKnPoe
-YrIpLfTATVoVjYne9f5OtdM1VMKadN/zkARck/D/DG9YXtgOX9f9N66Le0noyWt5
-5eKUhzN4zas81LZX+q2WA9uipmRny+W+NruUT8MxFo3v0tWI7o2uZ0ChP4TuRg2U
-TGXb/Np6N8hBOa/g/yuBxOrx3HlQ3pXpTD4yOkVw8jA0pAmhR3ZVEi7Z1G+h86b5
-x/Fm/LJSX+IsIYQrIwhEeJDoRc14Okg5Gau/a+BA2o38wj1E4rEsCB6EW7GXCqx9
-ftPGvj7dyIQvECeD6o6Ea02RPDvu9ppvbbDDBImq9Z4adEX/O4aEXXpVf8g+8vjT
-CV0lKf0aV/a+lxg961X/qWRDYpZNeXCLVgcrVbVcWZl7XqeUwUk0SorxKW7irI9o
-Boh8RYvwRsHiTc95S68Yuq9anlDSkDXJ0jxXwRiLp5l5wGzTcxIvULSGNGbfGTMW
-29TCNcSMfJSddkyiMa6A7G4SfVxO4JJaYWo15XEwGf2H7giT65ZT1f+UB4R+kc3p
-sTKT8/0xh/k93BtzHP4PouYOo0WzltRuusK+4SWq+D/3NY2unD6q/GSR4PFoq1Hp
-q/ltj2gXcq1yuZk/JZPc
-=sofM
------END PGP SIGNATURE-----
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
