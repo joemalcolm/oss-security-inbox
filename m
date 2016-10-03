@@ -1,145 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/1
-Message-ID: <57BE3588.40608@igalia.com>
-Date: Thu, 25 Aug 2016 02:02:16 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2016-0005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/5
+Message-Id: <20161003142341.C426D42E00C@smtpvbsrv1.mitre.org>
+Date: Mon,  3 Oct 2016 10:23:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0005
-------------------------------------------------------------------------
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Date reported      : August 25, 2016
-Advisory ID        : WSA-2016-0005
-Advisory URL       : https://webkitgtk.org/security/WSA-2016-0005.html
-CVE identifiers    : CVE-2016-4583, CVE-2016-4585, CVE-2016-4586,
-                     CVE-2016-4587, CVE-2016-4588, CVE-2016-4589,
-                     CVE-2016-4590, CVE-2016-4591, CVE-2016-4592,
-                     CVE-2016-4622, CVE-2016-4623, CVE-2016-4624,
-                     CVE-2016-4651.
+> Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator
+> support is vulnerable to an infinite loop issue. It could occur while
+> processing packets on the transmit queue in 'mcf_fec_do_tx'.
+> 
+> A privileged user/process inside guest could use this issue to crash the Qemu
+> process on the host leading to DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05557.html
 
-Several vulnerabilities were discovered in WebKitGTK+.
+>> http://git.qemu.org/?p=qemu.git;a=commit;h=070c4b92b8cd5390889716677a0b92444d6e087a
 
-CVE-2016-4583
-    Versions affected: WebKitGTK+ before 2.12.2.
-    Credit to Roeland Krak.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to bypass the Same Origin
-    Policy and obtain image date from an unintended web site via a
-    timing attack involving an SVG document.
+Use CVE-2016-7908.
 
-CVE-2016-4585
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to Takeshi Terada of Mitsui Bussan Secure Directions, Inc.
-    (www.mbsd.jp).
-    Cross-site scripting (XSS) vulnerability in the WebKit Page Loading
-    implementation in Apple iOS before 9.3.3, Safari before 9.1.2, and
-    tvOS before 9.2.2 allows remote attackers to inject arbitrary web
-    script or HTML via an HTTP response specifying redirection that is
-    mishandled by Safari.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2016-4586
-    Versions affected: WebKitGTK+ before 2.12.1.
-    Credit to Apple.
-    WebKit in Apple Safari before 9.1.2 and tvOS before 9.2.2 allows
-    remote attackers to execute arbitrary code or cause a denial of
-    service (memory corruption) via a crafted web site.
-
-CVE-2016-4587
-    Versions affected: WebKitGTK+ before 2.10.1.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.3.3 and tvOS before 9.2.2 allows remote
-    attackers to obtain sensitive information from uninitialized process
-    memory via a crafted web site.
-
-CVE-2016-4588
-    Versions affected: WebKitGTK+ before 2.12.3.
-    Credit to Apple.
-    WebKit in Apple tvOS before 9.2.2 allows remote attackers to execute
-    arbitrary code or cause a denial of service (memory corruption) via
-    a crafted web site.
-
-CVE-2016-4589
-    Versions affected: WebKitGTK+ before 2.12.3.
-    Credit to Tongbo Luo and Bo Qu of Palo Alto Networks.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4622, CVE-2016-4623,
-    and CVE-2016-4624.
-
-CVE-2016-4590
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to xisigr of Tencent's Xuanwu Lab (www.tencent.com).
-    WebKit in Apple iOS before 9.3.3 and Safari before 9.1.2 mishandles
-    about: URLs, which allows remote attackers to bypass the Same Origin
-    Policy via a crafted web site.
-
-CVE-2016-4591
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to ma.la of LINE Corporation.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 mishandles the location variable, which allows remote
-    attackers to access the local filesystem via unspecified vectors.
-
-CVE-2016-4592
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Mikhail.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to cause a denial of service
-    (memory consumption) via a crafted web site.
-
-CVE-2016-4622
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to Samuel Gross working with Trend Micro's Zero Day
-    Initiative.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4589, CVE-2016-4623,
-    and CVE-2016-4624.
-
-CVE-2016-4623
-    Versions affected: WebKitGTK+ before 2.12.0.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4589, CVE-2016-4622,
-    and CVE-2016-4624.
-
-CVE-2016-4624
-    Versions affected: WebKitGTK+ before 2.12.4.
-    Credit to Apple.
-    WebKit in Apple iOS before 9.3.3, Safari before 9.1.2, and tvOS
-    before 9.2.2 allows remote attackers to execute arbitrary code or
-    cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-4589, CVE-2016-4622,
-    and CVE-2016-4623.
-
-CVE-2016-4651
-    Versions affected: WebKitGTK+ before 2.12.0.
-    Credit to Obscure.
-    Cross-site scripting (XSS) vulnerability in the WebKit JavaScript
-    bindings in Apple iOS before 9.3.3 and Safari before 9.1.2 allows
-    remote attackers to inject arbitrary web script or HTML via a
-    crafted HTTP/0.9 response, related to a "cross-protocol cross-site
-    scripting (XPXSS)" vulnerability.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-August 25, 2016
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+iQIcBAEBCAAGBQJX8mkIAAoJEHb/MwWLVhi2JYoP/3+0IfxTkbFklvyaC8xBr/WW
+LOk4tonp6F9z+camxOsWlHoIMMJgJ8J8L2qgfVGspdtSHkG+d3XSJ7r287aftPiq
+raCjWOW8vpVS9YgE60K04VJTqOBwepq25okTngZenmFX4SgqdR4WdETTNoyXgssS
+Qmh5PR2zVLuQ/ZJgoYvL9rjnEGWjwXtaxCi4OwFLrcvU7NmxEP9vRi4l73a81qbU
+i6KkzJDzYmhGe2RRWGkTkCdsDEf85n8E6lHTN1u7JQ4j3AN1EbF9J6xZxhvwXmna
+wB8QMWYx1l/TNePFvw6fIwnTApmeetAlsPrkxSJ/zp0g4vFSOP6ApG4Y962yiTdP
+WuPU14aqHxY5Qqwj5rSCjuxUoKFWUaXovIpiTi3BsnGO8+4iuPOkzh1yLvdI+XIU
+3Hhk/oTcfutLbsQ+Dx762D/mP5iH49PDgaqq8zsPbhUmxMycaWAQQi35T195TW2q
+euMcc+MNzkLrDxwTpCqzVsJYewTmYzyE/LJXi93wxphkYmAV6qhipTw2iqiFkOrf
+DiNnJwLILlr3suNbZwBfoMLwa3ynoUjbk5Zw6Qcp3U5QFOGbM0THRI3yCIB8m6u1
+D4tru7IyKkjeV2p05Vv/Ollo3DvHetwN7cOo9D8mr+fRLngeNC6U0cgPX1mo9qvs
+pzZ1pgv1R0dLJsp5F7yN
+=1UlC
+-----END PGP SIGNATURE-----
