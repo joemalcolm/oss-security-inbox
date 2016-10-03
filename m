@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/3
-Message-ID: <5774BEE6.3090203@cock.li>
-Date: Thu, 30 Jun 2016 06:40:38 +0000
-From: "ncl@...k.li" <ncl@...k.li>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: CVE request: Heap-based buffer overflow in LibTIFF when using the PixarLog compression format
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/7
+Message-ID: <87oa31xsds.fsf@mid.deneb.enyo.de>
+Date: Mon, 03 Oct 2016 19:19:11 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-1246: Buffer overflow in DBD-mysql error reporting (Perl DBI module)
 Content-Type: text/plain; charset=utf-8
 
-cve-assign@...re.org:
->> heap-based buffer overflow in
->> LibTIFF in the file libtiff/tif_pixarlog.c. The vulnerability allows an
->> attacker to control the size of the allocated heap-buffer while
->> independently controlling the data to be written to the buffer with no
->> restrictions on the size of the written data.
-> 
->> revision 1.44
->> date: 2016-06-28 17:12:19 +0200; author: erouault; commitid: 2SqWSFG5a8Ewffcz;
-> 
->> * libtiff/tif_pixarlog.c: fix potential buffer write overrun in
->> PixarLogDecode() on corrupted/unexpected images (reported by Mathias
->> Svensson)
-> 
-> Use CVE-2016-5875.
+When a reporting a variable bind error, DBD-mysql would try to
+construct the error message in a fixed-size buffer on the stack,
+possibly leading to arbitrary code execution.
 
-I think this is a duplicate with CVE-2016-5320 and CVE-2016-5314.
+It depends on the application whether untrusted data is included in
+the error message.  -D_FORTIFY_SOURCE=2 would catch this and turn the
+issue into a mere crash.
 
-CVE-2016-5875 (buffer overrun in PixarLogDecode()) is CVE-2016-5314
-(PixarLogDecode() out-of-bound writes) which causes CVE-2016-5320
-(rgb2ycbcr command execution).
+Upstream commit:
+
+  <https://github.com/perl5-dbi/DBD-mysql/commit/7c164a0c86cec6ee95df1d141e67b0e85dfdefd2>
+
+Upstream credits Pali Rohár with reporting and fixing this issue.
+
+Here is what I used to validate the patch:
+
+use strict;
+use warnings;
+
+use DBI;
+
+my $dbh = DBI->connect("DBI:mysql:mysql:",
+                       "root", "",
+                       { PrintError => 0, RaiseError => 1});
+
+$dbh->do('CREATE TEMPORARY TABLE t (i INTEGER NOT NULL)');
+$dbh->begin_work;
+my $st = $dbh->prepare('INSERT INTO t VALUES (?)');
+$st->bind_param(1, 'X' x 64, DBI::SQL_INTEGER);
+$dbh->commit;
