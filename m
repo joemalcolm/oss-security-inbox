@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/9
-Message-ID: <CACLE=7OEtfjRELpFyehAAZaNbQ8LanYLmHs8rHKLGphvteXadg@mail.gmail.com>
-Date: Tue, 15 Mar 2016 22:24:14 +0100
-From: Romain Manni-Bucau <rmannibucau@...che.org>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Cc: security@...che.org
-Subject: [ANNOUNCE][CVE-2016-0779] Apache TomEE 1.7.4 and 7.0.0-M3 releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/2
+Message-ID: <alpine.LFD.2.20.1610031659410.30046@wniryva>
+Date: Mon, 3 Oct 2016 17:01:03 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx
 Content-Type: text/plain; charset=utf-8
 
-Note: resending this mail since it seems some recipients have been rejected
-
-The Apache Team Team is pleased to announce the availability of:
-
-Apache TomEE 7.0.0-M3 and 1.7.4
-
-When downloading, please verify signatures using the KEYS file available at:
-http://www.apache.org/dist/tomee
-
-Maven artifacts are also available in the central Maven repository.
-
-The releases are primarily security releases to address CVE-2016-0779, EJBd
-protocol allows to exploit 0-day vulnerability in all previous releases.
+   Hello,
 
 
-The Apache TomEE Team
+Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator 
+support is vulnerable to an infinite loop issue. It could occur while 
+processing packets on the transmit queue in 'mcf_fec_do_tx'.
 
+A privileged user/process inside guest could use this issue to crash the Qemu 
+process on the host leading to DoS.
+
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05557.html
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
