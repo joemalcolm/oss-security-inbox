@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["236" "Wednesday" "28" "September" "2016" "11:11:31" "-0500" "jericho" "jericho@attrition.org" "<alpine.LNX.2.00.1609281110050.22653@forced.attrition.org>" "9" "[oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption" "^cc:" nil nil "9" "2016092816:11:31" "[oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption" (number mark "        jericho@attr Sep 28    9/236   " thread-indent "\"[oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["605" "Monday" "3" "October" "2016" "16:37:43" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610031633160.29684@wniryva>" "19" "[oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function" nil nil nil "10" "2016100311:07:43" "[oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function" (number mark "U       ppandit@redh Oct  3   19/605   " thread-indent "\"[oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7174 invoked by uid 550); 28 Sep 2016 16:54:27 -0000
+Received: (qmail 7959 invoked by uid 550); 3 Oct 2016 11:08:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,31 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 10095 invoked from network); 28 Sep 2016 16:11:46 -0000
-X-Authentication-Warning: forced.attrition.org: jericho owned process doing -bs
-Message-ID: <alpine.LNX.2.00.1609281110050.22653@forced.attrition.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
-X-Attrition: Attrition is only good when forced. http://attrition.org/
-X-OSVDB: Everything is vulnerable. http://osvdb.org/
-X-Message-Flag: WARNING: Over 110000 published security vulnerabilities. How many do you have?
-X-Copyright: This e-mail copyright by jericho at attrition.org where applicable
-X-Encryption: rot26
-X-MSMail-Priority: High
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-cc: oss-security@lists.openwall.com
-Date: Wed, 28 Sep 2016 11:11:31 -0500 (CDT)
-From: jericho <jericho@attrition.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - OpenSLP 2.0 Memory Corruption
-To: cve-assign@mitre.org
+Received: (qmail 7935 invoked from network); 3 Oct 2016 11:08:01 -0000
+Date: Mon, 3 Oct 2016 16:37:43 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1610031633160.29684@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Mon, 03 Oct 2016 11:07:49 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function
 
+   Hello,
 
-: : The following commit fixes a memory corruption bug that I reported in 
-: : OpenSLP:
-:
-: : https://sourceforge.net/p/openslp/mercurial/ci/34fb3aa5e6b4997fa21cb614e480de36da5dbc9a/
+Quick Emulator(Qemu) built with the i.MX Fast Ethernet Controller emulator 
+support is vulnerable to an infinite loop issue. It could occur while 
+processing packets on the transmit queue in 'imx_fec_do_tx'.
 
-: Use CVE-2016-7567.
+A privileged user/process inside guest could use this issue to crash the Qemu 
+process on the host leading to DoS.
 
-Why did this get a 2016 CVE?
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05556.html
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
