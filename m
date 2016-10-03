@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10225" "Friday" "5" "March" "2021" "17:07:53" "+0000" "Xen.org security team" "security@xen.org" nil "223" "[oss-security] Xen Security Advisory 369 v2 (CVE-2021-28039) - Linux: special config may crash when trying to map foreign pages" nil nil nil "3" nil nil (number mark "U       security@xen Mar  5  223/10225 " thread-indent "\"[oss-security] Xen Security Advisory 369 v2 (CVE-2021-28039) - Linux: special config may crash when trying to map foreign pages\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 369 v2 (CVE-2021-28039) - Linux: special config may crash when trying to map foreign pages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["942" "Monday" "3" "October" "2016" "19:19:11" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87oa31xsds.fsf@mid.deneb.enyo.de>" "31" "[oss-security] CVE-2016-1246: Buffer overflow in DBD-mysql error reporting (Perl DBI module)" nil nil nil "10" "2016100317:19:11" "[oss-security] CVE-2016-1246: Buffer overflow in DBD-mysql error reporting (Perl DBI module)" (number mark "U       fw@deneb.eny Oct  3   31/942   " thread-indent "\"[oss-security] CVE-2016-1246: Buffer overflow in DBD-mysql error reporting (Perl DBI module)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6055 invoked by uid 550); 5 Mar 2021 17:08:11 -0000
+Received: (qmail 13649 invoked by uid 550); 3 Oct 2016 17:19:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,246 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5955 invoked from network); 5 Mar 2021 17:08:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=pcs0J1LGYyWD7P7XSVjGHJrS5z474WyVnONCbcRttWs=; b=gbcqdpYStqyx7Nyz9vVFGxyCHM
-	GUAajoYTHYe6983ylwOH7tzRQYsmpeh2+hDukRcJbIWUg/9VsWCXReZIND0B09e4HHFzqVcDOvFer
-	cWQWwLMdgKjff9Tx+zaH6Uh3p7KyfExg0oFNPCbtJAEHSbtWtzqqbOEg7U++t7a/DiGw=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 13608 invoked from network); 3 Oct 2016 17:19:23 -0000
+From: Florian Weimer <fw@deneb.enyo.de>
+To: oss-security@lists.openwall.com
+Date: Mon, 03 Oct 2016 19:19:11 +0200
+Message-ID: <87oa31xsds.fsf@mid.deneb.enyo.de>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lIDvd-0006DY-2i@xenbits.xenproject.org>
-Date: Fri, 05 Mar 2021 17:07:53 +0000
-Subject: [oss-security] Xen Security Advisory 369 v2 (CVE-2021-28039) - Linux: special
- config may crash when trying to map foreign pages
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2016-1246: Buffer overflow in DBD-mysql error reporting (Perl DBI module)
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+When a reporting a variable bind error, DBD-mysql would try to
+construct the error message in a fixed-size buffer on the stack,
+possibly leading to arbitrary code execution.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+It depends on the application whether untrusted data is included in
+the error message.  -D_FORTIFY_SOURCE=3D2 would catch this and turn the
+issue into a mere crash.
 
-            Xen Security Advisory CVE-2021-28039 / XSA-369
-                              version 2
+Upstream commit:
 
-   Linux: special config may crash when trying to map foreign pages
+  <https://github.com/perl5-dbi/DBD-mysql/commit/7c164a0c86cec6ee95df1d141e=
+67b0e85dfdefd2>
 
-UPDATES IN VERSION 2
-====================
+Upstream credits Pali Roh=E1r with reporting and fixing this issue.
 
-CVE assigned.
+Here is what I used to validate the patch:
 
-ISSUE DESCRIPTION
-=================
+use strict;
+use warnings;
 
-With CONFIG_XEN_BALLOON_MEMORY_HOTPLUG disabled and
-CONFIG_XEN_UNPOPULATED_ALLOC enabled the Linux kernel will use guest
-physical addresses allocated via the ZONE_DEVICE functionality for
-mapping foreign guest's pages.
+use DBI;
 
-This will result in problems, as the p2m list will only cover the initial
-memory size of the domain plus some padding at the end. Most ZONE_DEVICE
-allocated addresses will be outside the p2m range and thus a mapping can't
-be established with those memory addresses, resulting in a crash.
+my $dbh =3D DBI->connect("DBI:mysql:mysql:",
+                       "root", "",
+                       { PrintError =3D> 0, RaiseError =3D> 1});
 
-The attack involves doing I/O requiring large amounts of data to be
-mapped by the Dom0 or driver domain.  The amount of data needed to
-result in a crash can vary depending on the memory layout of the
-affected Dom0 or driver domain.
-
-IMPACT
-======
-
-A Dom0 or driver domain based on a Linux kernel (configured as
-described above) can be crashed by a malicious guest administrator, or
-possibly malicious unprivileged guest processes.
-
-VULNERABLE SYSTEMS
-==================
-
-Only x86 paravirtualized (PV) Dom0 or driver domains are
-affected.
-
-Only Linux kernels configured *with* CONFIG_XEN_UNPOPULATED_ALLOC and
-*without* CONFIG_XEN_BALLOON_MEMORY_HOTPLUG are vulnerable.  Only
-kernels from kernel version 5.9 onwards are affected.
-
-CONFIG_XEN_BALLOON_MEMORY_HOTPLUG is enabled by default in upstream
-Linux when Xen support is enabled, so kernels using upstream default
-Kconfig are not affected.  Most distribution kernels supporting Xen
-dom0 use are likewise not vulnerable.
-
-Arm systems or x86 PVH or x86 HVM driver domains are not affected.
-
-MITIGATION
-==========
-
-There is no mitigation available.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa369-linux.patch           Linux 5.9-stable - 5.12-rc
-
-$ sha256sum xsa369*
-937df4f078a070cf47bdd718c6b8a042ec6bee255eedc422d833c2ae3dd561c7  xsa369-linux.patch
-$
-
-CREDITS
-=======
-
-This issue was discovered by Marek Marczykowski-Górecki of Invisible
-Things Lab.
-
-For patch:
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This was reported publicly multiple times, before the XSA could be
-issued.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBCZVUMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZp8wIALvuzrh0iQDIg86Mx/eTtfVflmrz91YiDPfhrDj1
-L1D2lR+uFPKFpb3CdDTlzKoby/1ym4wbTLCjnDdXxjmPTdn4KybcBNbNONt2p69X
-dr/3KsO6yW5tjSi3FRZnnyTnTJN/q65tijG23sAcF7KuNW+xT2d70tWMH+LeMQZO
-fGkztK08cZspFfZZiOJHuqi5qpzoaBw7/vqlCphoiDMeE1EOGpaa/+bGb4doehyj
-dN8dyEWbyWdTp5lAxmduJfDMuixeESIxPnXP8jV3Z9b+Gt5l9S0cM+DCWDRUkW3M
-W0Z7va35sFLCx4+N7fLuzMUkzoLWpTJq2i2m9lploexe3nY=
-=PtNk
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa369-linux.patch"
-Content-Disposition: attachment; filename="xsa369-linux.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ZW46IGZpeCBwMm0gc2l6ZSBpbiBkb20wIGZvciBkaXNhYmxlZCBtZW1v
-cnkgaG90cGx1ZyBjYXNlCgpTaW5jZSBjb21taXQgOWUyMzY5YzA2YzhhMTgg
-KCJ4ZW46IGFkZCBoZWxwZXJzIHRvIGFsbG9jYXRlIHVucG9wdWxhdGVkCm1l
-bW9yeSIpIGZvcmVpZ24gbWFwcGluZ3MgYXJlIHVzaW5nIGd1ZXN0IHBoeXNp
-Y2FsIGFkZHJlc3NlcyBhbGxvY2F0ZWQKdmlhIFpPTkVfREVWSUNFIGZ1bmN0
-aW9uYWxpdHkuCgpUaGlzIHdpbGwgcmVzdWx0IGluIHByb2JsZW1zIGZvciB0
-aGUgY2FzZSBvZiBubyBiYWxsb29uIG1lbW9yeSBob3RwbHVnCmJlaW5nIGNv
-bmZpZ3VyZWQsIGFzIHRoZSBwMm0gbGlzdCB3aWxsIG9ubHkgY292ZXIgdGhl
-IGluaXRpYWwgbWVtb3J5CnNpemUgb2YgdGhlIGRvbWFpbi4gQW55IFpPTkVf
-REVWSUNFIGFsbG9jYXRlZCBhZGRyZXNzIHdpbGwgYmUgb3V0c2lkZQp0aGUg
-cDJtIHJhbmdlIGFuZCB0aHVzIGEgbWFwcGluZyBjYW4ndCBiZSBlc3RhYmxp
-c2hlZCB3aXRoIHRoYXQgbWVtb3J5CmFkZHJlc3MuCgpGaXggdGhhdCBieSBl
-eHRlbmRpbmcgdGhlIHAybSBzaXplIGZvciB0aGF0IGNhc2UuIEF0IHRoZSBz
-YW1lIHRpbWUgYWRkCmEgY2hlY2sgZm9yIGEgdG8gYmUgY3JlYXRlZCBtYXBw
-aW5nIHRvIGJlIHdpdGhpbiB0aGUgcDJtIGxpbWl0cyBpbgpvcmRlciB0byBk
-ZXRlY3QgZXJyb3JzIGVhcmx5LgoKV2hpbGUgY2hhbmdpbmcgYSBjb21tZW50
-LCByZW1vdmUgc29tZSAzMi1iaXQgbGVmdG92ZXJzLgoKVGhpcyBpcyBYU0Et
-MzY5LgoKRml4ZXM6IDllMjM2OWMwNmM4YTE4ICgieGVuOiBhZGQgaGVscGVy
-cyB0byBhbGxvY2F0ZSB1bnBvcHVsYXRlZCBtZW1vcnkiKQpDYzogPHN0YWJs
-ZUB2Z2VyLmtlcm5lbC5vcmc+ICMgNS45ClJlcG9ydGVkLWJ5OiBNYXJlayBN
-YXJjenlrb3dza2ktR8OzcmVja2kgPG1hcm1hcmVrQGludmlzaWJsZXRoaW5n
-c2xhYi5jb20+ClNpZ25lZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9z
-c0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGlj
-aEBzdXNlLmNvbT4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdy
-b3NzQHN1c2UuY29tPgotLS0KIGFyY2gveDg2L2luY2x1ZGUvYXNtL3hlbi9w
-YWdlLmggfCAxMiArKysrKysrKysrKysKIGFyY2gveDg2L3hlbi9wMm0uYyAg
-ICAgICAgICAgICAgfCAxMCArKysrKystLS0tCiBhcmNoL3g4Ni94ZW4vc2V0
-dXAuYyAgICAgICAgICAgIHwgMjUgKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQogMyBmaWxlcyBjaGFuZ2VkLCAyMSBpbnNlcnRpb25zKCspLCAyNiBkZWxl
-dGlvbnMoLSkKCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS94
-ZW4vcGFnZS5oIGIvYXJjaC94ODYvaW5jbHVkZS9hc20veGVuL3BhZ2UuaApp
-bmRleCAxYTE2MmU1NTk3NTMuLjcwNjhlNGJiMDU3ZCAxMDA2NDQKLS0tIGEv
-YXJjaC94ODYvaW5jbHVkZS9hc20veGVuL3BhZ2UuaAorKysgYi9hcmNoL3g4
-Ni9pbmNsdWRlL2FzbS94ZW4vcGFnZS5oCkBAIC04Niw2ICs4NiwxOCBAQCBj
-bGVhcl9mb3JlaWduX3AybV9tYXBwaW5nKHN0cnVjdCBnbnR0YWJfdW5tYXBf
-Z3JhbnRfcmVmICp1bm1hcF9vcHMsCiB9CiAjZW5kaWYKIAorLyoKKyAqIFRo
-ZSBtYXhpbXVtIGFtb3VudCBvZiBleHRyYSBtZW1vcnkgY29tcGFyZWQgdG8g
-dGhlIGJhc2Ugc2l6ZS4gIFRoZQorICogbWFpbiBzY2FsaW5nIGZhY3RvciBp
-cyB0aGUgc2l6ZSBvZiBzdHJ1Y3QgcGFnZS4gIEF0IGV4dHJlbWUgcmF0aW9z
-CisgKiBvZiBiYXNlOmV4dHJhLCBhbGwgdGhlIGJhc2UgbWVtb3J5IGNhbiBi
-ZSBmaWxsZWQgd2l0aCBwYWdlCisgKiBzdHJ1Y3R1cmVzIGZvciB0aGUgZXh0
-cmEgbWVtb3J5LCBsZWF2aW5nIG5vIHNwYWNlIGZvciBhbnl0aGluZworICog
-ZWxzZS4KKyAqCisgKiAxMHggc2VlbXMgbGlrZSBhIHJlYXNvbmFibGUgYmFs
-YW5jZSBiZXR3ZWVuIHNjYWxpbmcgZmxleGliaWxpdHkgYW5kCisgKiBsZWF2
-aW5nIGEgcHJhY3RpY2FsbHkgdXNhYmxlIHN5c3RlbS4KKyAqLworI2RlZmlu
-ZSBYRU5fRVhUUkFfTUVNX1JBVElPCSgxMCkKKwogLyoKICAqIEhlbHBlciBm
-dW5jdGlvbnMgdG8gd3JpdGUgb3IgcmVhZCB1bnNpZ25lZCBsb25nIHZhbHVl
-cyB0by9mcm9tCiAgKiBtZW1vcnksIHdoZW4gdGhlIGFjY2VzcyBtYXkgZmF1
-bHQuCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni94ZW4vcDJtLmMgYi9hcmNoL3g4
-Ni94ZW4vcDJtLmMKaW5kZXggOTU0NWI4ZGY1MzE1Li5lZDM1ODVlZWJjNGUg
-MTAwNjQ0Ci0tLSBhL2FyY2gveDg2L3hlbi9wMm0uYworKysgYi9hcmNoL3g4
-Ni94ZW4vcDJtLmMKQEAgLTQxNiw2ICs0MTYsOSBAQCB2b2lkIF9faW5pdCB4
-ZW5fdm1hbGxvY19wMm1fdHJlZSh2b2lkKQogCXhlbl9wMm1fbGFzdF9wZm4g
-PSB4ZW5fbWF4X3AybV9wZm47CiAKIAlwMm1fbGltaXQgPSAocGh5c19hZGRy
-X3QpUDJNX0xJTUlUICogMTAyNCAqIDEwMjQgKiAxMDI0IC8gUEFHRV9TSVpF
-OworCWlmICghcDJtX2xpbWl0ICYmIElTX0VOQUJMRUQoQ09ORklHX1hFTl9V
-TlBPUFVMQVRFRF9BTExPQykpCisJCXAybV9saW1pdCA9IHhlbl9zdGFydF9p
-bmZvLT5ucl9wYWdlcyAqIFhFTl9FWFRSQV9NRU1fUkFUSU87CisKIAl2bS5m
-bGFncyA9IFZNX0FMTE9DOwogCXZtLnNpemUgPSBBTElHTihzaXplb2YodW5z
-aWduZWQgbG9uZykgKiBtYXgoeGVuX21heF9wMm1fcGZuLCBwMm1fbGltaXQp
-LAogCQkJUE1EX1NJWkUgKiBQTURTX1BFUl9NSURfUEFHRSk7CkBAIC02NTIs
-MTAgKzY1NSw5IEBAIGJvb2wgX19zZXRfcGh5c190b19tYWNoaW5lKHVuc2ln
-bmVkIGxvbmcgcGZuLCB1bnNpZ25lZCBsb25nIG1mbikKIAlwdGVfdCAqcHRl
-cDsKIAl1bnNpZ25lZCBpbnQgbGV2ZWw7CiAKLQlpZiAodW5saWtlbHkocGZu
-ID49IHhlbl9wMm1fc2l6ZSkpIHsKLQkJQlVHX09OKG1mbiAhPSBJTlZBTElE
-X1AyTV9FTlRSWSk7Ci0JCXJldHVybiB0cnVlOwotCX0KKwkvKiBPbmx5IGlu
-dmFsaWQgZW50cmllcyBhbGxvd2VkIGFib3ZlIHRoZSBoaWdoZXN0IHAybSBj
-b3ZlcmVkIGZyYW1lLiAqLworCWlmICh1bmxpa2VseShwZm4gPj0geGVuX3Ay
-bV9zaXplKSkKKwkJcmV0dXJuIG1mbiA9PSBJTlZBTElEX1AyTV9FTlRSWTsK
-IAogCS8qCiAJICogVGhlIGludGVyZmFjZSByZXF1aXJlcyBhdG9taWMgdXBk
-YXRlcyBvbiBwMm0gZWxlbWVudHMuCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni94
-ZW4vc2V0dXAuYyBiL2FyY2gveDg2L3hlbi9zZXR1cC5jCmluZGV4IDdlYWIx
-NGQ1NjM2OS4uMWEzYjc1NjUyZmE0IDEwMDY0NAotLS0gYS9hcmNoL3g4Ni94
-ZW4vc2V0dXAuYworKysgYi9hcmNoL3g4Ni94ZW4vc2V0dXAuYwpAQCAtNTks
-MTggKzU5LDYgQEAgc3RhdGljIHN0cnVjdCB7CiB9IHhlbl9yZW1hcF9idWYg
-X19pbml0ZGF0YSBfX2FsaWduZWQoUEFHRV9TSVpFKTsKIHN0YXRpYyB1bnNp
-Z25lZCBsb25nIHhlbl9yZW1hcF9tZm4gX19pbml0ZGF0YSA9IElOVkFMSURf
-UDJNX0VOVFJZOwogCi0vKiAKLSAqIFRoZSBtYXhpbXVtIGFtb3VudCBvZiBl
-eHRyYSBtZW1vcnkgY29tcGFyZWQgdG8gdGhlIGJhc2Ugc2l6ZS4gIFRoZQot
-ICogbWFpbiBzY2FsaW5nIGZhY3RvciBpcyB0aGUgc2l6ZSBvZiBzdHJ1Y3Qg
-cGFnZS4gIEF0IGV4dHJlbWUgcmF0aW9zCi0gKiBvZiBiYXNlOmV4dHJhLCBh
-bGwgdGhlIGJhc2UgbWVtb3J5IGNhbiBiZSBmaWxsZWQgd2l0aCBwYWdlCi0g
-KiBzdHJ1Y3R1cmVzIGZvciB0aGUgZXh0cmEgbWVtb3J5LCBsZWF2aW5nIG5v
-IHNwYWNlIGZvciBhbnl0aGluZwotICogZWxzZS4KLSAqIAotICogMTB4IHNl
-ZW1zIGxpa2UgYSByZWFzb25hYmxlIGJhbGFuY2UgYmV0d2VlbiBzY2FsaW5n
-IGZsZXhpYmlsaXR5IGFuZAotICogbGVhdmluZyBhIHByYWN0aWNhbGx5IHVz
-YWJsZSBzeXN0ZW0uCi0gKi8KLSNkZWZpbmUgRVhUUkFfTUVNX1JBVElPCQko
-MTApCi0KIHN0YXRpYyBib29sIHhlbl81MTJnYl9saW1pdCBfX2luaXRkYXRh
-ID0gSVNfRU5BQkxFRChDT05GSUdfWEVOXzUxMkdCKTsKIAogc3RhdGljIHZv
-aWQgX19pbml0IHhlbl9wYXJzZV81MTJnYih2b2lkKQpAQCAtNzkwLDIwICs3
-NzgsMTMgQEAgY2hhciAqIF9faW5pdCB4ZW5fbWVtb3J5X3NldHVwKHZvaWQp
-CiAJCWV4dHJhX3BhZ2VzICs9IG1heF9wYWdlcyAtIG1heF9wZm47CiAKIAkv
-KgotCSAqIENsYW1wIHRoZSBhbW91bnQgb2YgZXh0cmEgbWVtb3J5IHRvIGEg
-RVhUUkFfTUVNX1JBVElPCi0JICogZmFjdG9yIHRoZSBiYXNlIHNpemUuICBP
-biBub24taGlnaG1lbSBzeXN0ZW1zLCB0aGUgYmFzZQotCSAqIHNpemUgaXMg
-dGhlIGZ1bGwgaW5pdGlhbCBtZW1vcnkgYWxsb2NhdGlvbjsgb24gaGlnaG1l
-bSBpdAotCSAqIGlzIGxpbWl0ZWQgdG8gdGhlIG1heCBzaXplIG9mIGxvd21l
-bSwgc28gdGhhdCBpdCBkb2Vzbid0Ci0JICogZ2V0IGNvbXBsZXRlbHkgZmls
-bGVkLgorCSAqIENsYW1wIHRoZSBhbW91bnQgb2YgZXh0cmEgbWVtb3J5IHRv
-IGEgWEVOX0VYVFJBX01FTV9SQVRJTworCSAqIGZhY3RvciB0aGUgYmFzZSBz
-aXplLgogCSAqCiAJICogTWFrZSBzdXJlIHdlIGhhdmUgbm8gbWVtb3J5IGFi
-b3ZlIG1heF9wYWdlcywgYXMgdGhpcyBhcmVhCiAJICogaXNuJ3QgaGFuZGxl
-ZCBieSB0aGUgcDJtIG1hbmFnZW1lbnQuCi0JICoKLQkgKiBJbiBwcmluY2lw
-bGUgdGhlcmUgY291bGQgYmUgYSBwcm9ibGVtIGluIGxvd21lbSBzeXN0ZW1z
-IGlmCi0JICogdGhlIGluaXRpYWwgbWVtb3J5IGlzIGFsc28gdmVyeSBsYXJn
-ZSB3aXRoIHJlc3BlY3QgdG8KLQkgKiBsb3dtZW0sIGJ1dCB3ZSB3b24ndCB0
-cnkgdG8gZGVhbCB3aXRoIHRoYXQgaGVyZS4KIAkgKi8KLQlleHRyYV9wYWdl
-cyA9IG1pbjMoRVhUUkFfTUVNX1JBVElPICogbWluKG1heF9wZm4sIFBGTl9E
-T1dOKE1BWE1FTSkpLAorCWV4dHJhX3BhZ2VzID0gbWluMyhYRU5fRVhUUkFf
-TUVNX1JBVElPICogbWluKG1heF9wZm4sIFBGTl9ET1dOKE1BWE1FTSkpLAog
-CQkJICAgZXh0cmFfcGFnZXMsIG1heF9wYWdlcyAtIG1heF9wZm4pOwogCWkg
-PSAwOwogCWFkZHIgPSB4ZW5fZTgyMF90YWJsZS5lbnRyaWVzWzBdLmFkZHI7
-Ci0tIAoyLjI2LjIKCg==
-
---=separator--
+$dbh->do('CREATE TEMPORARY TABLE t (i INTEGER NOT NULL)');
+$dbh->begin_work;
+my $st =3D $dbh->prepare('INSERT INTO t VALUES (?)');
+$st->bind_param(1, 'X' x 64, DBI::SQL_INTEGER);
+$dbh->commit;
