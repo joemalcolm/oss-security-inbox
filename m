@@ -1,67 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/3
-Message-ID: <20161015160319.GA19386@openwall.com>
-Date: Sat, 15 Oct 2016 18:03:19 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Stenberg <daniel@...x.se>
-Subject: Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/1
+Message-ID: <alpine.LFD.2.20.1610031633160.29684@wniryva>
+Date: Mon, 3 Oct 2016 16:37:43 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2016 at 04:02:10PM +0200, Daniel Stenberg wrote:
-> `ares_create_query` single byte out of buffer write
-> =================================================
-> 
-> Project c-ares Security Advisory, September 29, 2016 -
-> [Permalink](https://c-ares.haxx.se/adv_20160929.html)
-> 
-> VULNERABILITY
-> -------------
-> 
-> When a string is passed in to `ares_create_query` or `ares_mkquery` and uses
-> an escaped trailing dot, like "hello\.", c-ares calculates the string length
-> wrong and subsequently writes outside of the the allocated buffer with one
-> byte. The wrongly written byte is the least significant byte of the 
-> 'dnsclass' argument; most commonly 1.
-> 
-> We have been seen proof of concept code showing how this can be exploited 
-> in a real-world system, but we are not aware of any such instances having 
-> actually happened in the wild.
-> 
-> INFO
-> ----
-> 
-> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-> CVE-2016-5180 to this issue.
+   Hello,
 
-Yesterday, Daniel also blogged about exploitation of this vulnerability,
-crediting its original reporter for the attack detail.
+Quick Emulator(Qemu) built with the i.MX Fast Ethernet Controller emulator 
+support is vulnerable to an infinite loop issue. It could occur while 
+processing packets on the transmit queue in 'imx_fec_do_tx'.
 
-https://daniel.haxx.se/blog/2016/10/14/a-single-byte-write-opened-a-root-execution-exploit/
+A privileged user/process inside guest could use this issue to crash the Qemu 
+process on the host leading to DoS.
 
-It's a rebirth of attacks on dlmalloc.  Initially, such attacks were
-directly on pointer writes in dlmalloc's unlink(), using it as a
-write-what-where primitive (with some minor complications: flags and an
-extra write).  In or around 2003, Stefan Esser proposed hardening
-unlink() with a sanity check, which got into glibc's dlmalloc shortly
-thereafter.  Per Daniel's blog post, as I understood it, in the reborn
-attack unlink() would instead free extra memory, essentially turning the
-heap overflow into a use-after-free alike, which is then exploited as if
-it were such.  Was this demonstrated before, or is it novel?  (Might be
-in those later Phrack articles or such, but I forget.)
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05556.html
 
-Here's the relevant excerpt:
+This issue was reported by Li Qiang of 360.cn Inc.
 
-"Writing 1 to that byte clears 2 flags, sets one flag and clears the
-lowest bits of the chunk size.  The important flag it sets is called
-prev_inuse and is used by dlmalloc to tell if it can merge adjacent
-areas on free.  (so, if the value 1 simply had been a 2 instead, this
-flaw could not have been exploited this way!)
-
-When the c-ares buffer that had overflowed is then freed again, dlmalloc
-gets fooled into consolidating that buffer with the subsequent one in
-memory (since it had toggled that bit) and thus the larger piece of
-assumed-to-be-free memory is partly still being in use.  Open for
-manipulations!"
-
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
