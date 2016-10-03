@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/1
-Message-ID: <520fe7bf505c433392c547157534c5f6@imshyb02.MITRE.ORG>
-Date: Mon, 21 Nov 2016 22:05:37 -0500
-From: <cve-assign@...re.org>
-To: <henri@...v.fi>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: LibTIFF tiffcrop: Heap buffer overflow via writeBufferToSeparateStrips
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/6
+Message-Id: <20161003142526.0B3F933203C@smtpvbsrv1.mitre.org>
+Date: Mon,  3 Oct 2016 10:25:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE Request Qemu: net: pcnet: infinite loop in pcnet_rdra_addr
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2592
+> Quick Emulator(Qemu) built with the AMD PC-Net II emulator support is
+> vulnerable to an infinite loop issue. It could occur while receiving packets
+> via pcnet_receive().
 > 
->         * tools/tiffcrop.c: fix multiple uint32 overflows in
->         writeBufferToSeparateStrips(), writeBufferToContigTiles() and
->         writeBufferToSeparateTiles() that could cause heap buffer overflows.
+> A privileged user/process inside guest could use this issue to crash the Qemu
+> process on the host leading to DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07942.html
 
->> Bug 2592 -
->> Summary:  Heap buffer overflow via writeBufferToSeparateStrips tiffcrop.c:1170
+Use CVE-2016-7909.
 
->> AddressSanitizer: heap-buffer-overflow
->> READ of size 223
-
-Use CVE-2016-9532 for this integer overflow report with resultant
-buffer over-read.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/pcnet.c but
+that may be an expected place for a later update.
 
 - -- 
 CVE Assignment Team
@@ -34,17 +34,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYM7WhAAoJEHb/MwWLVhi2CxIP/iBsAzZXlwVnlKsgeCs0sjc3
-qG3xsKjFnuGmgOYwcFKcIUGVNT7B+Y6ilrAs5fXmS403ezZwmCNCXIRALITJKoTK
-KVaUWTq0VEh5ntAHezJwMviREfl0+g3gX22yRJU6jsuW5l2xXvZWFKNMfAJvCnz/
-x54Flhv2SawR1bKt7zlbxg40IivcQZuwIsL8ZestE00vBT/lMoEv2Z/xoDJGpbJM
-V7fbvoR7UBcR6hqSoDi4D94y9Hsa6NC7PIfkL1ffGaIRyCIwegTwwyEB6WR/76I0
-J/e0fDMicsTR4iTVrzGQNHGnj/cAmeTPGErQpIu5ndXKFbMQJfLjxyoUuWTFu2aN
-GalgWMeVNv6crJH23eEjfPqqCSO9cU/9z2qQc6P5WYleKtRLlxRdoWllSJVZzeSw
-+uy+1hdIseX18Y2pb14iG4iNSWPpbxUCPgsSS+izzqPc82rnKnTYGqJaDmsGN8oL
-yquVr8ainyRe2s5fuPqAydsfBvfikuC88QYeTU6CjhNBYVj9yG0SgXSu3fb/d3KP
-BKSvWHmKEAREkiu3M0e8Cby1x8E4sM3jCRTCUOcSuAU1tNB+o2CyR6+GLjpthBtH
-XufZ1CLcjZNJzsdgH9urWZnH064SRvQ6qF9JJ6Ri/luTMz47IwjiuDv3NUxcafX8
-6bGDLHQIyR2Tax1nHY7B
-=pC5y
+iQIcBAEBCAAGBQJX8mkOAAoJEHb/MwWLVhi2JRgP/0R6RXhk6Rx/TmowN+McLxwo
+yEuTpDJH+ne/x8E0sos7b9jllE9IKT15shKIp+IiM+djZuLO7h8aezt1FIU+2We8
+OTIN1PnHm0G8eR3F26Pd3LdcwmGu7umk0EZ+rl5liYtUq8UzLA6pOwp9/YmLO3wz
+6Df0CDCdctImfy5AhSUuzERLrAFIq29DRtUupsjwQyTawC3e+OfLmgCsmILGy+U5
+Kb550wAuD7owYGMcGdDvaBaGg20kA73lz1XkXo1JvhxlhW41n9fcnr8IZZ/wFIEm
+wNlI8otT4R0YlSbi6lREHtH4XY8t0syUzjANcXyQVmdsq8kKVLGJpCaoPtiyzBkJ
+9JKkcyBQxO6DMvCVlvZnowEIRlNAS0d+lVx5Dz+BItA6PZn1g2pv7vfqVdP6uINR
+b1vXcE4d1P5g89cM/YVt0f6PaCTU03N/IYnE+aSvgtgfOpDYOAr4/6k7f5vhdGvL
+rhcnr5l8wFXVXW7bUcjaFYeLoGMZ6o2PFHNmx7cJY8ia8f5G24+pCWduCL/raq30
+mjfkTzozorVIIuNnBCduk5rTk6YIamGRK/6Ix/jaEXrNjBDRtet5Q7nVJkDFUwAS
+M1mgfUYDUmxSv87r8nUnvJtj9uVFLBHknZWpjoJ16OTpKwSn7HWrDs6fR6q22rb7
+7FsvrZnifI3TIUn0t9Nz
+=eytu
 -----END PGP SIGNATURE-----
