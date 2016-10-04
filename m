@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/8
-Message-ID: <87ins4bkcs.fsf@mid.deneb.enyo.de>
-Date: Thu, 03 Nov 2016 17:26:27 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/8
+Message-ID: <1630041.nLTca8CMjC@xps>
+Date: Tue, 04 Oct 2016 23:35:00 +0200
+From: Albert Astals Cid <aacid@....org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>, security@....org
+Subject: KMail vulnerabilites: need 3 CVE
 Content-Type: text/plain; charset=utf-8
 
-* Daniel Stenberg:
+Hi, Albert from KDE, can we get three CVE assigned for KMail?
 
-> When curl is built with libidn to handle International Domain Names
-> (IDNA), it translates them to puny code for DNS resolving using the
-> IDNA 2003 standard, while IDNA 2008 is the modern and up-to-date
-> IDNA standard.
+Here are the summaries
 
-I think everyone in the software space assumes that all DNS registries
-block registrations which would allocate names colliding under the
-IDNA 2003 and 2008 standards to different owners.  There were even
-attempts at the registry level to automatically alias different
-encodings (something which is difficult because it interferes with the
-goal to make the whole thing application-centric).
+KMail: HTML injection in plain text viewer
+KMail: JavaScript access to local and remote URLs
+KMail: JavaScript execution in HTML Mails
 
-> For example, `straße.de` is translated into `strasse.de` using IDNA
-> 2003 but is translated into `xn--strae-oqa.de` using IDNA
-> 2008. Needless to say, those host names could very well resolve to
-> different addresses and be two completely independent servers. IDNA
-> 2008 is mandatory for .de domains.
+Fixes for them are already in our various of our repos, I can link to them if 
+you need it, but i didn't since there's many of them (fixing spans through 
+various repos and commits) and didn't seem like it added much.
 
-What does DENIC say about this matter?  It looks like their
-implementation of IDNA is just very broken.
+Thanks,
+  Albert
