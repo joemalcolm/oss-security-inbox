@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6071" "Monday" "30" "January" "2017" "15:36:37" "-0300" "dequis" "dx@dxzone.com.ar" "<CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>" "203" "[oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee" nil nil nil "1" "2017013018:36:37" "[oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee" (number mark "U       dx@dxzone.co Jan 30  203/6071  " thread-indent "\"[oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5009" "Tuesday" "4" "October" "2016" "16:46:53" "+0200" "Matthieu Herrb" "matthieu.herrb@laas.fr" "<20161004144653.GB20328@paperthin-usb.laas.fr>" "150" "[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" nil nil nil "10" "2016100414:46:53" "[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" (number mark "U       matthieu.her Oct  4  150/5009  " thread-indent "\"[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29901 invoked by uid 550); 30 Jan 2017 18:39:33 -0000
+Received: (qmail 12108 invoked by uid 550); 4 Oct 2016 15:18:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,241 +12,166 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28201 invoked from network); 30 Jan 2017 18:37:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kiace-com-ar.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=RyFbFfjMM+D1Bhdc/QOEz87vVrbmDi+FQ4wdz4nBhLg=;
-        b=Ast7SrYjRYUGvCZYyJh08kf3Ruy1BrXToeoEE3JUfVJ9RXnk+wUzD8Pt4kbBBVUjuO
-         pd9JVA892SZyaE1bAUSr0ov1Uk607DLegm5BnQrK2sgJRQWNempbl52hhNba1Z1O2/p4
-         0nqsztghU7P0LAoeuudscqUoxpG1TRM4lJbgGQXVRBJoM6Fr1rgzObmJi/zuQ27FYELo
-         OXl+AD3M/PpNaElPQe/4DxImXyV61vyf8uFIFCUJtZ/bM2SijzLQ5rnQ0gDktzqPIysV
-         mL95bA/B5hdDNfpvit/Qd44hL9c83ndE3o1S/4BnEtN88zZmyeziHsnGMI8q2gvFwS1+
-         WkkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=RyFbFfjMM+D1Bhdc/QOEz87vVrbmDi+FQ4wdz4nBhLg=;
-        b=XKvE5Tkjavux/vXCQggCKxSvZtH93RkA/BUvaejXiL0Xv5dFx/kx4lbur4q7w6a3QK
-         lvdXkBPy3GdQY49vnS+LTZZBfFbs0C/7dJL5Yx75Guq/4GL82K3shXjeFVAKsA53BLG5
-         d2vfBWgum/n0Zxi5KOa18gL4eioW96JGHCjhATes+BRcTRgl3PJuwz0tXKS8hxcCO5pM
-         plQyNm+8S6GU/aXumK0epZ/pqH3WcZG1DmBBZiCUW1JdfbvrRQzjSNETiGQIhJLtBrYw
-         NduMNA+6KKtkQ73U7dFdPLMU2yXQELcDr/5SkK4YXaQNexYJxOcKPBBrIOxI8r7+FcBV
-         NDng==
-X-Gm-Message-State: AIkVDXIvevrR7VQheGcKcsGXBHJ1hGbO87GI4dqsWkdZOqK6LTgXKdBNemV9XNucCt+0RPrQs66Riv1olcMe9w==
-X-Received: by 10.200.35.6 with SMTP id a6mr21446226qta.210.1485801417861;
- Mon, 30 Jan 2017 10:36:57 -0800 (PST)
-MIME-Version: 1.0
-Sender: hola@kiace.com.ar
-From: dequis <dx@dxzone.com.ar>
-Date: Mon, 30 Jan 2017 15:36:37 -0300
-X-Google-Sender-Auth: 6LNOZmkubO24idXbSFKD9KU-ea0
-Message-ID: <CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>
+Received: (qmail 30038 invoked from network); 4 Oct 2016 14:47:07 -0000
+Date: Tue, 4 Oct 2016 16:46:53 +0200
+From: Matthieu Herrb <matthieu.herrb@laas.fr>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee
+Message-ID: <20161004144653.GB20328@paperthin-usb.laas.fr>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TakKZr9L6Hm6aLOc"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: [oss-security] X.Org security advisory: Protocol handling issues in X Window System
+ client libraries
+
+--TakKZr9L6Hm6aLOc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+X.Org security advisory: October 4, 2016
 
-Hi oss-security,
+Protocol handling issues in X Window System client libraries
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-I've just released BitlBee 3.5.1 which includes fixes for these issues:
+Description
 
-a) bitlbee-libpurple: Use after free when expiring file transfer requests.
-b) Null pointer dereference with file transfer request from unknown contacts.
-c) Incomplete fix for issue (b), which left bitlbee-libpurple affected.
+Tobias Stoeckmann from the OpenBSD project has discovered a number of
+issues in the way various X client libraries handle the responses they
+receive from servers, and has worked with X.Org's security team to
+analyze, confirm, and fix these issues. These issue come in addition
+to the ones discovered by Ilja van Sprundel in 2013.
 
-I have already requested three CVEs to the distros mailing list when
-the issue was not public, but did not receive any reply at the time of
-this writing. If it is appropriate, I'd like to request them in this
-list instead.
+Most of these issues stem from the client libraries trusting the
+server to send correct protocol data, and not verifying that the
+values will not overflow or cause other damage. Most of the time X
+clients & servers are run by the same user, with the server more
+privileged than the clients, so this is not a problem, but there are
+scenarios in which a privileged client can be connected to an
+unprivileged server, for instance, connecting a setuid X client (such
+as a screen lock program) to a virtual X server (such as Xvfb or
+Xephyr) which the user has modified to return invalid data,
+potentially allowing the user to escalate their privileges.
 
-The first two were already public (fixed in 3.5, released 2017-01-08) but were
-not considered security issues before. The third issue is what 3.5.1
-fixes.
+The X.Org security team would like to take this opportunity to remind
+X client authors that current best practices suggest separating code
+that requires privileges from the GUI, to reduce the attack surface of
+issues like this.
 
-Distros that do not ship the bitlbee-libpurple variant can ignore
-3.5.1 if they already have 3.5.
 
-The full advisories (without attachments) follow, with links to the
-full version in the tracker:
+Affected libraries and CVE Ids
 
-----------------------------------------------------------------------
-
-https://bugs.bitlbee.org/ticket/1281
-
-# bitlbee-libpurple: Use after free when expiring file transfer requests
-
-## Description
-
-Pending file transfer requests expire after 120 seconds, which may
-result in use after free if the corresponding account is disconnected.
-A malicious remote server could force this disconnection.
-
-## Impact
-
-This results in denial of service (remote crash of the BitlBee
-instance), or remote code execution (theoretically).
-
-For BitlBee servers configured in ForkDaemon mode (default) or inetd
-mode, the crash is limited to one user connection, who may just
-reconnect.
-
-* Access Vector: Network
-* Access Complexity: High
-* Authentication: None
-* Confidentiality Impact: None
-* Integrity Impact: None
-* Availability Impact: Partial
-* Exploitability: Functional Exploit Exists
-* Remediation Level: Official Fix
-* Report Confidence: Confirmed
-* Target Distribution: Medium
-* CVSS v2 score: 1.6
-
-## Affected versions
-
-bitlbee-libpurple 3.4.2 or older
-
-## Unaffected versions
-
-bitlbee (non-libpurple builds), any version
-
-bitlbee-libpurple 3.5
-
-## Resolution
-
-* Upgrade to 3.5 (released 2017-01-08)
-
-* For 3.4.2 see the attached
-0001-purple-fix-file-transfer-memory-management-3.4.2.patch [not
-included in this email]
-
-* For 3.4.1 and 3.4 see the attached
-0001-purple-fix-file-transfer-memory-management-3.4-3.4.1.patch [not
-included in this email]
-
-* For earlier versions upgrading is strongly recommended because of
-the amount of accumulated bugfixes, but the following line may be
-removed from `protocols/purple/purple.c` to prevent any processing of
-incoming file transfers:
-
-    purple_xfers_set_ui_ops(&bee_xfer_uiops);
-
-## Discussion
-
-This affects any libpurple protocol when used through BitlBee. It does
-not affect other libpurple-based clients such as pidgin.
-
-This is a very visible issue - all file transfer request attempts and
-all disconnections will be logged in the control channel and visible
-by the targeted user. File transfer requests look like this:
-
-    <@root> [account] - File transfer request from [username] for
-[filename] (0 kb).
-    <@root> Accept the file transfer if you'd like the file. If you
-don't, issue the 'transfer reject' command.
-
-Cancelling the file transfer request using the "transfer reject"
-command before the disconnection happens can prevent this. However,
-using that command after the account is disconnected will result in an
-immediate crash.
-
-## References
-
-Original bugfix commit:
-
-https://github.com/bitlbee/bitlbee/commit/ea902752503fc5b356d6513911081ec932d804f2
-
-
-----------------------------------------------------------------------
-
-https://bugs.bitlbee.org/ticket/1282
-
-# Null pointer dereference with file transfer request from unknown contacts
-
-## Description
-
-Receiving a file transfer request from a contact not in the contact
-list results in a null pointer dereference, leading to remote DoS by
-malicious remote clients.
-
-Additionally, due to an incomplete fix of the issue above in BitlBee
-3.5, the bitlbee-libpurple variant is still affected in 3.5.
-
-## Impact
-
-This results in denial of service (remote crash of the BitlBee
-instance). Remote code execution does not seem to be possible (fixed
-offset)
-
-For BitlBee servers configured in ForkDaemon mode (default) or inetd
-mode, the crash is limited to one user connection, who may just
-reconnect.
-
-CVSS for bitlbee 3.4.2 and lower:
-
-* Access Vector: Network
-* Access Complexity: Low
-* Authentication: None
-* Confidentiality Impact: None
-* Integrity Impact: None
-* Availability Impact: Partial
-* Exploitability: Functional Exploit Exists
-* Remediation Level: Official Fix
-* Report Confidence: Confirmed
-* Target Distribution: High
-* CVSS v2 score: 4.1
-
-CVSS for bitlbee-libpurple 3.5:
-
-* Target Distribution: Medium
-* CVSS v2 score: 3.1
-
-## Affected versions
-
-bitlbee-libpurple 3.5 or older
-
-bitlbee (non-libpurple builds) 3.4.2 or older
-
-## Unaffected versions
-
-bitlbee-libpurple 3.5.1 or newer
-
-bitlbee (non-libpurple builds) 3.5 or newer
-
-## Resolution
-
-* Upgrade to 3.5.1 (released 2017-01-30)
-
-* For 3.5 see the attached
-0001-Fix-null-pointer-dereference-on-ft-attempts-3.5.patch [not
-included in this email]
-
-* For 3.4.2, 3.4.1 and 3.4 see the attached
-0001-Fix-null-pointer-dereference-on-ft-attempts-3.4.x.patch [not
-included in this email]
-
-* For 3.2.x and 3.2.x see the attached
-0001-Fix-null-pointer-dereference-on-ft-attempts-3.0.x-3.2.x.patch
-[not included in this email]
-
-## Discussion
-
-The issue from 3.4.2 and older only affects the jabber protocol, which
-is the only non-purple protocol which implements file transfers.
-
-The issue that is still present in 3.5 affects any libpurple protocol
-that implements file transfers when used through BitlBee. It does not
-affect other libpurple-based clients such as pidgin.
-
-There's no visible effect of the issue other than the crash.
-
-## References
-
-Incomplete fix commit included in 3.5:
-
-https://github.com/bitlbee/bitlbee/commit/701ab8129ba9ea64f569daedca9a8603abad740f
-
-Libpurple specific bugfix commit included in 3.5.1:
-
-https://github.com/bitlbee/bitlbee/commit/30d598ce7cd3f136ee9d7097f39fa9818a272441
+libX11 - insufficient validation of data from the X server
+	 can cause out of boundary memory read (XGetImage())
+	 or write (XListFonts()).
+	 Affected versions libX11 <=3D 1.6.3
+
+libXfixes - insufficient validation of data from the X server
+	can cause an integer overflow on 32 bit architectures.
+	Affected versions : libXfixes <=3D 5.0.2
+
+libXi - insufficient validation of data from the X server
+	can cause out of boundary memory access or
+	endless loops (Denial of Service).
+	Affected versions libXi <=3D 1.7.6
+
+libXrandr - insufficient validation of data from the X server
+	can cause out of boundary memory writes.
+	Affected versions: libXrandr <=3D 1.5.0
+
+libXrender - insufficient validation of data from the X server
+	can cause out of boundary memory writes.
+	Affected version: libXrender <=3D 0.9.9
+
+XRecord - insufficient validation of data from the X server
+        can cause out of boundary memory access or
+	endless loops (Denial of Service).
+	 Affected version libXtst <=3D 1.2.2
+
+libXv - insufficient validation of data from the X server
+        can cause out of boundary memory and memory corruption.
+	CVE-2016-5407
+	affected versions libXv <=3D 1.0.10
+
+libXvMC - insufficient validation of data from the X server
+	can cause a one byte buffer read underrun.
+	Affected versions: libXvMC <=3D 1.0.9
+
+
+Fixes
+
+Fixes are available in the following git commits.
+
+lib/libX11
+8ea762f Validation of server responses in XGetImage()
+8c29f16 The validation of server responses avoids out of boundary accesses.
+
+libXfixes
+61c1039 Integer overflow on illegal server response
+
+libXi
+19a9cd6 Properly validate server responses.
+
+libXrandr
+a0df3e1 Avoid out of boundary accesses on illegal responses
+
+libXrender
+9362c7d Validate lengths while parsing server data.
+8fad00b Avoid OOB write in XRenderQueryFilters
+
+lib/libXtst
+9556ad6 Out of boundary access and endless loop in libXtst
+
+libXv
+87b3c94 Protocol handling issues in libXv
+
+libXvMC
+2cd95e7 Avoid buffer underflow on empty strings.
+
+
+They will also be available in these modules releases from X.Org:
+
+ * libX11 1.6.4
+ * libXfixes 5.0.3
+ * libXi 1.7.7
+ * libXrandr 1.5.1
+ * libXrender 0.9.10
+ * libXtst 1.2.3
+ * libXv 1.0.11
+ * libXvMC 1.0.10
+
+Thanks
+
+X.Org thanks Tobias Stoeckmann for reporting these issues to our
+security team and assisting them in understanding them and evaluating
+our fixes.
+
+--=20
+Matthieu Herrb
+
+--TakKZr9L6Hm6aLOc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBV/PA3Whzk+430Sj4AQJLrA//TzLzO1zK/tvQKbQXCpKY3zUA1456PY1A
+aparEICK+pipvYvSOSrE9dyG05nsX9NCIlvaIuMxWnc+bhAoBCZDE8wRV95jsa4E
+JackRZ1A3EdYG5ulvKvFuYd4T10IJz06QshUpv9DuQeNTnFwHXep2ANPr+nFVF7l
+H1qqZRyxwVZkFOBmLdqGigWTs7nd0GbJrBxE5IUYODOhvPxAhZxQNMu8g1vDRKcO
+SppynwzXFY0kHCbemFdJrZBG+UjNkxlZZVBEfTia+MzJjFxL1r0zgL9S/ftfGg2H
+AGHLwK9tnSlhUf9uu2z5ouFKCprSUUTNfiEI67rSZ3sF1czjecEGDuLeq+0Ar/Zo
+AtkU69cIhFi1EloqY15vvgPEqIz4Eg9tTMBvEU/X+nBOJYRZ0Vl+rOxHgHNfSHwl
+CrUm323gZHk/V8eDE3oxwm0m76dOzNyzXn6SaTb9TQjd/VDZHPK0xuee3vvQLnMn
++5ivwyaxO4yqGNZdMozcw6aBBRPAkqk4QaN7iewpyJaO0BfAynsjNcTg05sJKfsO
+7uo2zoRgv3+03lGFrpXGX3cPtuuONuj0R6/R6HObGj9nIJj5BQf4D306fD7gv/nB
+oPw8RxtS5ThUEKlh0dHHai47L9xYio5HBX32c4cHjzSsEzzs2So0WmXwjqCg62iR
+i2Cw0P3XONk=
+=C5rF
+-----END PGP SIGNATURE-----
+
+--TakKZr9L6Hm6aLOc--
