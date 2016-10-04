@@ -1,54 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/5
-Message-Id: <20160217144805.4E680332030@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Feb 2016 09:48:05 -0500 (EST)
-From: cve-assign@...re.org
-To: florent.daigniere@...stmatta.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, sandeepk.l337@...il.com
-Subject: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/1
+Message-Id: <E1brPBc-0005Mo-Si@xenbits.xenproject.org>
+Date: Tue, 04 Oct 2016 12:51:08 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 190 (CVE-2016-7777) - CR0.TS and CR0.EM not always honored for x86 HVM guests
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> How different is it from CVE-2012-1301 ?
+            Xen Security Advisory CVE-2016-7777 / XSA-190
+                              version 5
 
-See the
-https://github.com/umbraco/Umbraco-CMS/commit/924a016ffe7ae7ea6d516c07a7852f0095eddbce
-commit. The vendor added
+        CR0.TS and CR0.EM not always honored for x86 HVM guests
 
-   && requestUri.Port == 80
+UPDATES IN VERSION 5
+====================
 
-to address the 127.0.0.1:25 and 127.0.0.1:8080 attack vectors
-mentioned by Sandeep Kamble. This is not the same as the question of
-whether, or when, the earlier discovery of a different attack
-methodology:
+Public release.
 
-  http://seclists.org/fulldisclosure/2012/Apr/65
-  http://umbraco.com/umbraco/dashboard/FeedProxy.aspx?url=http://en.wikipedia.org/wiki/Open_proxy
+ISSUE DESCRIPTION
+=================
 
-was addressed. Accordingly, the new ID CVE-2015-8813 is needed for the
-SSRF vulnerability involving non-80 port numbers.
+Instructions touching FPU, MMX, or XMM registers are required to raise
+a Device Not Available Exception (#NM) when either CR0.EM or CR0.TS are
+set.  (Their AVX or AVX-512 extensions would consider only CR0.TS.)
+While during normal operation this is ensured by the hardware, if a
+guest modifies instructions while the hypervisor is preparing to
+emulate them, the #NM delivery could be missed.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Guest code in one task may thus (unintentionally or maliciously) read
+or modify register state belonging to another task in the same VM.
+
+IMPACT
+======
+
+A malicious unprivileged guest user may be able to obtain or corrupt
+sensitive information (including cryptographic material) in other
+programs in the same guest.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen expose the vulnerabilty to their x86 HVM guests.
+
+In order to exploit the vulnerability, the attacker needs to be able to
+trigger the Xen instruction emulator.
+
+On Xen 4.7 the emulator can only be triggered: by user mode tasks which
+have been given access to memory-mapped IO; in guests which have been
+migrated between systems with CPUs from different vendors; or in guests
+which have been configured with a CPU vendor different from the host's.
+
+On Xen 4.6 and earlier, all HVM guests can trigger the emulator by
+attempting to execute an invalid opcode, exposing the vulnerability.
+
+The vulnerability is only exposed to x86 HVM guests.
+
+The vulnerability is not exposed to x86 PV or ARM guests.
+
+MITIGATION
+==========
+
+On Xen 4.7, not migrating across CPU vendors will avoid this
+vulnerability.  (Unless the guest grants mmio access to unprivileged
+tasks, or has been configured with a specific CPU vendor, eg using the
+xl "cpuid" configuraton option.)
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich from SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa190.patch           xen-unstable, Xen 4.7.x
+xsa190-4.6.patch       Xen 4.6.x
+xsa190-4.5.patch       Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa190*
+21e7b1d08874527ab2e4cd23d467e9945afcd753dd3390ab2aaf9d24d231916c  xsa190.patch
+477d56c41cc2101432459ab79e4d5663aade779c36285f5c1d6d6ed4e34e1009  xsa190-4.5.patch
+dbfc4b36132c841959847dfbb85a188ee6489ad3b8d7ecec43c55a303a43df21  xsa190-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWxIdUAAoJEL54rhJi8gl5zuEP/3DwlNaP5H+cDd2MC0Nh4LYB
-zGn/lJv20cPAIhn8pBYAkQjpJhbbQmuFc4iael57H1E1rZ/2tkNC25OhQfHpi6mR
-ayok6XyWttguUb1gsoJJR1gsYxc8oH12Wj6Uhq+vhnFO3FoEpHnk3pFvdKiFQ5kc
-zjywXUKqwDbyzdNv8y2tvTxrNFooDQXXmP1d84HkGeuWl1R22pNzIGcJ94P31Rha
-AXayg5NBdD88nu/d1mNfuoh3MHVWgRVoDcZV/TBDZrXUO0l9HRgyignfXtczpE0H
-o/fAKBfAyQGlvqjjCu44DjpELyN3m4EopxifYnQ4tRX7BfuHs7hbZO3uG7oTZJUN
-6j+lwoo/jXvnJV0+hq7lzO2X43qK+ZTGMMs88HArhnQ2k6PGqZVm1lvgTpLT8C2p
-YU3FROSPg4aztIGoqAqk+aZfAolts2UV2e7oRMCiKohdD03UNc68AsFuIG/WTlGw
-BF79uRCAUnBSsjK/Jl00nhMAxEtPNveLFJLNg0kZ9ZZdtJ0Ditb5ivud1S4153yV
-/h3hvpPIUDJKr0LMrrn2S4HikTFtGqeB/unKyfvh3iQRmiSpxBu9zhQkaw5tbHMs
-zN92b+o2ifvi4cOyXS6ckVREvmhLnlyV+dtVAeZKS85s4JljbhWHmS/OE/5kBwNN
-w0/ED5xiMkc1RSqdA5da
-=KXUT
+iQEcBAEBAgAGBQJX86WyAAoJEIP+FMlX6CvZZOQH/0rLFSZeiGeWDlKzQJoB3VLy
+zDvpDKjfhuwPyWT9+oyfwUHxARWuJkYSy85bpVuNWmxtb1tGy+QTjbSZgyVrsRXY
+4t09MzhTF9CuNhqTghEGbFeGdh20ht3EoDjiwkjlbfb4TQ439e189qo9Oe0J/LvD
+4XjL/oHza0YMI/wFviANUZvvTzAcjTAw1Zwk6dpnM17cwK4HduPYBncUyfDrSa3G
+97nOraBXh/CiwWlm6goRSOI73ORUkYYBwJLGcq3a50HJPJ7pCbBaRJpDCalMPZ2B
+Lf+HO38HROEGBbTfkOjyZKkbTjQ2njTu0kHaBl+IVK8LI3PLv35n5MQ6qStYL/U=
+=7/xB
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa190.patch" of type "application/octet-stream" (5643 bytes)
+
+Download attachment "xsa190-4.5.patch" of type "application/octet-stream" (5223 bytes)
+
+Download attachment "xsa190-4.6.patch" of type "application/octet-stream" (5223 bytes)
