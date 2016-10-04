@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["631" "Tuesday" "8" "September" "2020" "08:07:57" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<d5e3c4bd-b157-d9bd-5114-6c683be5a338@oracle.com>" "14" "Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities" "^Cc:" nil nil "9" "2020090815:07:57" "[oss-security] Re: [FD] libcroco multiple vulnerabilities" (number mark "        alan.coopers Sep  8   14/631   " thread-indent "\"Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities\"\n") "<3c159080-5b82-0a64-8fb3-dc4864688d2a@oracle.com>" ("<50f7b717.f5b.15c809f2452.Coremail.qflb.wu@dbappsecurity.com.cn>" "<8490d99d-bb3f-a827-4c22-74a0d22244a4@oracle.com>" "<3c159080-5b82-0a64-8fb3-dc4864688d2a@oracle.com>") nil nil nil nil nil nil nil "Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1606" "Tuesday" "4" "October" "2016" "14:32:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161004183210.EA2B1B2E027@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)" "^Cc:" nil nil "10" "2016100418:32:10" "[oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)" (number mark "        cve-assign@m Oct  4   36/1606  " thread-indent "\"[oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)\"\n") "<DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>" ("<DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 7916 invoked by uid 550); 8 Sep 2020 15:08:34 -0000
+Received: (qmail 3649 invoked by uid 550); 4 Oct 2016 18:32:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7895 invoked from network); 8 Sep 2020 15:08:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=subject : from : to :
- cc : reply-to : references : message-id : date : mime-version :
- in-reply-to : content-type : content-transfer-encoding; s=corp-2020-01-29;
- bh=n7FcvYF2yVCcw7HmSwmLBcDhSKRUilZmmuqm2Dcec0c=;
- b=o3Fs09KZ4AVlRS2IYhRZmEZ+bRXdzqsm4ksuhUhVrq0dyGoFBwBxFO9J0f8CK7R0HuSz
- 4xllIV+HATgfwnb4ofaE/IuoHglPIqtxeNjx/yh1tHaTKBpN/j7kyO6ICYPpE1ebQpLt
- /i0a3hprQxhUlxzx42/4KCbOAnQGWF9F7VsvbvHGo0hgBtIRXx6MyVjg257LycFA5SL6
- v13GlvXf5A8/7ayWeLtOKbHjzlYq13/yHi4Kup76WQAiBbBVZqwPz077cgho3Lobg7uO
- lZ9k1GLxlUY7qsoK/5zKhY0D6YqPE/oiLiOPKBdZ9DY8GO7wpcCx0lX2KlA2MvyMMUMC Ew== 
-References: <50f7b717.f5b.15c809f2452.Coremail.qflb.wu@dbappsecurity.com.cn>
- <8490d99d-bb3f-a827-4c22-74a0d22244a4@oracle.com>
- <3c159080-5b82-0a64-8fb3-dc4864688d2a@oracle.com>
-Message-ID: <d5e3c4bd-b157-d9bd-5114-6c683be5a338@oracle.com>
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
-MIME-Version: 1.0
-In-Reply-To: <3c159080-5b82-0a64-8fb3-dc4864688d2a@oracle.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9737 signatures=668679
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 phishscore=0 suspectscore=0
- spamscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2009080143
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9738 signatures=668679
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 mlxscore=0 bulkscore=0 suspectscore=0 spamscore=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 clxscore=1034
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2009080143
-Cc: oss-security@lists.openwall.com
-Date: Tue, 8 Sep 2020 08:07:57 -0700
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Received: (qmail 3628 invoked from network); 4 Oct 2016 18:32:22 -0000
+In-Reply-To: <DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>
+Message-Id: <20161004183210.EA2B1B2E027@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue,  4 Oct 2016 14:32:10 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: [FD] libcroco multiple vulnerabilities
-To: "qflb.wu" <qflb.wu@dbappsecurity.com.cn>
+Subject: [oss-security] Re: CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)
+To: steve@collectiveidea.com
 
-On 8/13/20 10:57 AM, Alan Coopersmith wrote:
-> Upstream closed these bugs as WONTFIX today since they have ended
-> maintenance of the standalone libcroco, as discussed in the comments on
-> https://gitlab.gnome.org/Archive/libcroco/-/issues/8
-> (which is a different security fix, for CVE-2020-12825).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Distro maintainers should take note that GNU gettext also has an
-embedded copy of libcroco sources:
+> I'd like to request a CVE to track a security vulnerability found in
+> Bundler (bundler.io <http://bundler.io/>). Bundler allows the user to
+> specify sources from which Ruby gems are installed. If a secondary
+> source is specified, even if scoped to a specific gem, that source is
+> silently applied to all declared gems. This allows an attacker to
+> introduce arbitrary code into an application via gem name collision on
+> the secondary source, which will unexpectedly (and without warning)
+> take priority over the primary source.
 
-https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=tree;f=libtextstyle/gnulib-local/lib/libcroco
+Use CVE-2016-7954.
 
--- 
-	-Alan Coopersmith-               alan.coopersmith@oracle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX8/U7AAoJEHb/MwWLVhi2xrwP/RjNz+PRsrpnt6grFruRj6rH
+IvSdysqLU3/+gK2Q+1mXtdydmkn05PMLHrB58Os6hP+K5POjPnNjXsc+VfaoD83r
+S4wmDBs3H4l3XMrT+WHOqvZWsF74iDlTSFA35DNLFRW6Ad5IwPNuMcUBE8yqlMyK
+SQ6aU0BvwB7yygmeK6RBvDICsUthcyrTooXkmeDKe1EhRxgKXwdvFVeknKiCOneK
+hTMvNl6MyWU6BW3W0AelJG0mcndEu9Ai7DUf50mgCtuJCLay0wKLn8QrcYg7dWR8
+17xFYh8v3soNMNrWBhyKcJUxWPz/YhNKbqjvXnk4Q1BIiEaBmYL4/Mw08dj+nKmy
+2LTE+Kcx9vKHedo6lNT/Qxuug+S1czmbGESfygWACDpl2frB9YwVaU8MbFxZkfVj
+utU9+zrQBhRQXUw9ZMN83dJqqiC8956/IGWczI++rvp8cqrMETP91PueK23wE091
+SEzfASXty4n2HdD4AWwg0caECoDeUiDZP8UrQkkLDYu9Xlyeqw9C1vgiATTT3Uni
+bTFjnBhrohCXEh/uvoWJIqZZbO8DRQ0KWI6FlcDuDzubGrih0M4CM7KZ0bDRpwGC
+9VGbDtdGK0XPOzzHvPUr+GDSjwZCJ0aFTaxlxwa+ol15mLKyBWCkLHd/8NYHvM5E
+is4rHDl4O1P83Wx0+Er0
+=RpXj
+-----END PGP SIGNATURE-----
