@@ -1,42 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/5
-Message-Id: <20160418151135.DC4656C08A9@smtpvmsrv1.mitre.org>
-Date: Mon, 18 Apr 2016 11:11:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/4
+Message-Id: <20161004164544.B3A4342E016@smtpvbsrv1.mitre.org>
+Date: Tue,  4 Oct 2016 12:45:44 -0400 (EDT)
 From: cve-assign@...re.org
-To: rbarlow@...hat.com
+To: meissner@...e.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - Pulp < 2.3.0 shipped the same authentication CA key/cert to all users
+Subject: Re: X.Org security advisory: Protocol handling issues in X Window System client libraries
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://github.com/pulp/pulp/pull/627
-> https://bugzilla.redhat.com/show_bug.cgi?id=1003326
+> libX11 - insufficient validation of data from the X server
+>        can cause out of boundary memory read (XGetImage())
+>        or write (XListFonts()).
+>        Affected versions libX11 <= 1.6.3
 
-> I learned during our refactor this weekend that we have ca.{crt,key}
-> files in our git repository that our RPM packages and installs on
-> every Pulp installation. This is very bad.
-> 
-> To make matters worse, there is only a tiny paragraph in our docs that
-> mention quite casually that you should make your own SSL certificates.
-> This is putting our users at risk, particularly ones who don't know
-> the full depths of our use of CA certificates. This is particularly
-> bad due to the understated nature of the documentation telling users
-> that they can change the CA if they want to.
-> 
-> A very easy solution would be to have the %post% section of our spec
-> file autogenerate a new CA certificate and key when the package is
-> installed. This has the benefit of still making it easy to install
-> Pulp for newcomers, while also not putting those users at risk to man
-> in the middle attacks.
+> https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=8ea762f94f4c942d898fdeb590a1630c83235c17 Validation of server responses in XGetImage()
 
-Use CVE-2013-7450.
+Use CVE-2016-7942.
 
-(We're interpreting this as a request from the Pulp upstream vendor.
-In general, it would be hard for a third party to determine whether a
-"tiny paragraph" was generally recognized as a required part of the
-installation process.)
+
+> https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=8c29f1607a31dac0911e45a0dd3d74173822b3c9 The validation of server responses avoids out of boundary accesses.
+
+Use CVE-2016-7943.
+
+
+> libXfixes - insufficient validation of data from the X server
+>       can cause an integer overflow on 32 bit architectures.
+>       Affected versions : libXfixes <= 5.0.2
+> https://cgit.freedesktop.org/xorg/lib/libXfixes/commit/?id=61c1039ee23a2d1de712843bed3480654d7ef42e Integer overflow on illegal server response
+
+Use CVE-2016-7944.
+
+
+> libXi - insufficient validation of data from the X server
+>       can cause out of boundary memory access or
+>       endless loops (Denial of Service).
+>       Affected versions libXi <= 1.7.6
+> https://cgit.freedesktop.org/xorg/lib/libXi/commit/?id=19a9cd607de73947fcfb104682f203ffe4e1f4e5 Properly validate server responses.
+
+Use CVE-2016-7945 for all of the integer overflows
+
+Use CVE-2016-7946 for all of the other mishandling of the reply data.
+
+
+> libXrandr - insufficient validation of data from the X server
+>       can cause out of boundary memory writes.
+>       Affected versions: libXrandr <= 1.5.0
+> https://cgit.freedesktop.org/xorg/lib/libXrandr/commit/?id=a0df3e1c7728205e5c7650b2e6dce684139254a6 Avoid out of boundary accesses on illegal responses
+
+Use CVE-2016-7947 for all of the integer overflows
+
+Use CVE-2016-7948 for all of the other mishandling of the reply data.
+
+
+> libXrender - insufficient validation of data from the X server
+>       can cause out of boundary memory writes.
+>       Affected version: libXrender <= 0.9.9
+
+> https://cgit.freedesktop.org/xorg/lib/libXrender/commit/?id=9362c7ddd1af3b168953d0737877bc52d79c94f4 Validate lengths while parsing server data.
+
+Use CVE-2016-7949.
+
+
+> https://cgit.freedesktop.org/xorg/lib/libXrender/commit/?id=8fad00b0b647ee662ce4737ca15be033b7a21714 Avoid OOB write in XRenderQueryFilters
+
+Use CVE-2016-7950.
+
+
+> XRecord - insufficient validation of data from the X server
+>         can cause out of boundary memory access or
+>       endless loops (Denial of Service).
+>        Affected version libXtst <= 1.2.2
+> https://cgit.freedesktop.org/xorg/lib/libXtst/commit/?id=9556ad67af3129ec4a7a4f4b54a0d59701beeae3 Out of boundary access and endless loop in libXtst
+
+Use CVE-2016-7951 for all of the integer overflows
+
+Use CVE-2016-7952 for all of the other mishandling of the reply data.
+
+
+> libXv - insufficient validation of data from the X server
+>         can cause out of boundary memory and memory corruption.
+>       CVE-2016-5407
+>       affected versions libXv <= 1.0.10
+> https://cgit.freedesktop.org/xorg/lib/libXv/commit/?id=d9da580b46a28ab497de2e94fdc7b9ff953dab17 Protocol handling issues in libXv
+
+(aka 87b3c94)
+
+People may want to look at https://access.redhat.com/security/cve/cve-2016-5407
+in the coming days for additional information.
+
+
+> libXvMC - insufficient validation of data from the X server
+>       can cause a one byte buffer read underrun.
+>       Affected versions: libXvMC <= 1.0.9
+> https://cgit.freedesktop.org/xorg/lib/libXvMC/commit/?id=2cd95e7da8367cccdcdd5c9b160012d1dec5cbdb Avoid buffer underflow on empty strings.
+
+Use CVE-2016-7953.
 
 - -- 
 CVE Assignment Team
@@ -46,17 +107,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXFPhHAAoJEHb/MwWLVhi207MP/3/VQ1gkERwBsXA06wuvGKLs
-+yj8bThKbQoRfcoMaUJZi36ep1JZS0hQrPptujqpmhbZS5yFCDEivgq8aTtkdZpy
-7566asH0nm4smGReWHUpMHwWHLCUWwx3Sfdq66ETvE+ubXA2iCm/sw4QQjsN0t49
-HxUsBjPIEEGlngAs9Vxt9/c/ufAzqgr5BdTTDJ5202mvKI/b9YLLqIw5QT0Ni44G
-FcYXFseLI6Amuj04YXkwvMCyYVzRdfvsaIwmhtRlKj+lWnahHC084Ng9Bs2ztpbO
-j3Sfp0UWUWVbyudgTqi56hBNEmkqf40cvgfGBnD6lTyfBohbKsVAu5325rWdfc7+
-80UEqstAPECVtsER0Nqp7JBddXyAtaosjuCqWTx86txH4twYuq4m5k8mL+sRrVwB
-7O5uOm7BkC/5KuFOl5M3UvYn17AhMF7BSh6/lQFJZKK31oS9D2cYXdlwKsgWyKh3
-PeH1yTUrFvwLvFve1HcKPEwgl3vU5ZDHHZGBdXaEC9PB9ZtjMlOxPyjKQOjbTmU3
-gLuDYymW+KFwJqPGRfGKXRYQSjY5r3DsZU339qZ3Uw9O8QJc6XvZWczNpoej0SKX
-CLzHyrn6rFo8WGa1/a6uWtMssnEVGBVCZ0L8RyoAc5pCLOeOcGjDJjVJCZsdxgcF
-mit5sStdITcfq/DGsFwU
-=jmq0
+iQIcBAEBCAAGBQJX89wWAAoJEHb/MwWLVhi2B1oQAIpH3CzWwMQ3IAuGhWgV5YvZ
+LSmNkx+lXjT2yFHpkOxie4JgX0udC/KbK+SnTKZNS3pP3Bkq0A6M1nw3o1bOFyeL
+qTAIncyXiyWEIhWsU/1VXExdlWY3ZakxEZiKxkHZqAgr96+p0+3w8I1URpDmE4Dz
+G552K/E3OOrxFBgd5tj724HXYkyrXaWbpxAvYGMt971OHplv5fVKCZnakDL11DVR
+4yFGJmFTVsN28X2qgOJif5K6m8BlP3X6y3349FygbfdwWrEUVGWI+X5izL5G11Bf
+vxJ24ibfi3f9f5ktT2m561k4ftR/nMIyFJiRv+3L2MGIsPFIgjvp5SyHsvEZKh4Y
+GTLGggTQJ1dMrKEdrTGXizyewRVga07+8h9XtPgPpHoqNk3hjnkC0LHiA7lHh+HR
+YCyID6lAR1BGnfvEW5tkf9dQszk0Xoi+rbF/x5fDxOhCYA/8ywJmd3O6QUefLaHG
+1BLJCoH/+7FUg9MMKKGDBrova0m1mwcDHncbSNz0aA7Scti06WX1xLZP3w2VT079
+eD1Q7JQ8A8xeEVqCrRLyI0B+Y3RcSIoZUMLjwVjN+9ao29JmAykAH6kyoT0zfB+u
+F8tVW0BRQudxuhTEtLPnK2EfBb+gG5asMPLSNZixYDe+hHh5jM1VMzv6GE90mlqA
+mQ0YAv9uozEzoV/R5ADg
+=Lv54
 -----END PGP SIGNATURE-----
