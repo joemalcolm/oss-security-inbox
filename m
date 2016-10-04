@@ -1,42 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/2
-Message-ID: <20160905135748.GA11745@kroah.com>
-Date: Mon, 5 Sep 2016 15:57:48 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/5
+Message-Id: <DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>
+Date: Tue, 4 Oct 2016 13:00:22 -0400
+From: Steve Richert <steve@...lectiveidea.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: Linux kernel mbcache lock contention denial of service.
+Subject: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2016 at 03:28:51PM +1000, Wade Mealing wrote:
-> Gday,
-> 
-> A design flaw was found in the file extended attribute handling of the
-> linux kernels handling of cached attributes.  Too many entries in the
-> cache cause a soft lockup while attempting to iterate the cache and
-> access relevant locks.
-> 
-> Upstream has replaced the mbcache code with an updated version which
-> was not a patch but a clear-cut reimplementation of the code, no
-> single diff
-> 
-> Soft lockup information is in both the bugzilla.kernel.org and
-> referred to in the LWN article.  This would affect containers running
-> with ext4 as it shares the same mbcache between all containers/host.
-> 
-> This did not affect Red Hat Enterprise Linux versions 5,6 or 7, so I
-> can't validate the claim that it does affect other newer kernels.
-> This may be worthwhile tracking for others who are affected by this
-> flaw.
-> 
-> For those following along at home, this seemed to be fixed in:
-> 
->  ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
-> v4.6
+Hello,
 
-That commit is for only the ext2 filesystem, how would it fix an issue
-in ext4?
+I'd like to request a CVE to track a security vulnerability found in Bundler (bundler.io <http://bundler.io/>). Bundler allows the user to specify sources from which Ruby gems are installed. If a secondary source is specified, even if scoped to a specific gem, that source is silently applied to all declared gems. This allows an attacker to introduce arbitrary code into an application via gem name collision on the secondary source, which will unexpectedly (and without warning) take priority over the primary source.
 
-totally confused,
+The issue seems to exist in all 1.x versions of Bundler. Bundler 2 is still in development and seems to resolve the issue. The Bundler team does not currently plan on releasing a patch for 1.x versions.
 
-greg k-h
+No CVE has been requested previously that I'm aware of.
+
+Thank you!
