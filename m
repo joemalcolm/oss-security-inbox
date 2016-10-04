@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1323" "Friday" "7" "April" "2017" "12:29:13" "-0400" "Denis Magda" "dmagda@apache.org" "<B39FC5C0-9AC5-4E84-A450-AFF690B74D9C@apache.org>" "35" "[oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite" nil nil nil "4" "2017040716:29:13" "[oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite" (number mark "U       dmagda@apach Apr  7   35/1323  " thread-indent "\"[oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4310" "Tuesday" "4" "October" "2016" "17:22:17" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161004152217.GJ21798@suse.de>" "130" "Re: [oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" nil nil nil "10" "2016100415:22:17" "[oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries" (number mark "U       meissner@sus Oct  4  130/4310  " thread-indent "\"Re: [oss-security] X.Org security advisory: Protocol handling issues in X Window System client libraries\"\n") "<20161004144653.GB20328@paperthin-usb.laas.fr>" ("<20161004144653.GB20328@paperthin-usb.laas.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9313 invoked by uid 550); 7 Apr 2017 16:34:39 -0000
+Received: (qmail 24251 invoked by uid 550); 4 Oct 2016 15:22:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,151 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4068 invoked from network); 7 Apr 2017 16:29:28 -0000
-From: Denis Magda <dmagda@apache.org>
+Received: (qmail 24233 invoked from network); 4 Oct 2016 15:22:30 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 4 Oct 2016 17:22:17 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Message-ID: <20161004152217.GJ21798@suse.de>
+References: <20161004144653.GB20328@paperthin-usb.laas.fr>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <B39FC5C0-9AC5-4E84-A450-AFF690B74D9C@apache.org>
-Date: Fri, 7 Apr 2017 12:29:13 -0400
-Cc: oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
-To: user@ignite.apache.org,
- dev@ignite.apache.org,
- announce@apache.org,
- Pierre Ernst <pernst@salesforce.com>,
- security <security@apache.org>
-X-Mailer: Apple Mail (2.3273)
-Subject: [oss-security] [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack
- in Apache Ignite
+Content-Disposition: inline
+In-Reply-To: <20161004144653.GB20328@paperthin-usb.laas.fr>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] X.Org security advisory: Protocol handling issues
+ in X Window System client libraries
 
-[CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Ap=
-ache Ignite
+Hi,
 
-Severity: Important
+Mitre, can you assign CVE ids for the issues without?
 
-Vendor: The Apache Software Foundation
+Ciao, Marcus
+On Tue, Oct 04, 2016 at 04:46:53PM +0200, Matthieu Herrb wrote:
+> X.Org security advisory: October 4, 2016
+> 
+> Protocol handling issues in X Window System client libraries
+> ============================================================
+> 
+> Description
+> 
+> Tobias Stoeckmann from the OpenBSD project has discovered a number of
+> issues in the way various X client libraries handle the responses they
+> receive from servers, and has worked with X.Org's security team to
+> analyze, confirm, and fix these issues. These issue come in addition
+> to the ones discovered by Ilja van Sprundel in 2013.
+> 
+> Most of these issues stem from the client libraries trusting the
+> server to send correct protocol data, and not verifying that the
+> values will not overflow or cause other damage. Most of the time X
+> clients & servers are run by the same user, with the server more
+> privileged than the clients, so this is not a problem, but there are
+> scenarios in which a privileged client can be connected to an
+> unprivileged server, for instance, connecting a setuid X client (such
+> as a screen lock program) to a virtual X server (such as Xvfb or
+> Xephyr) which the user has modified to return invalid data,
+> potentially allowing the user to escalate their privileges.
+> 
+> The X.Org security team would like to take this opportunity to remind
+> X client authors that current best practices suggest separating code
+> that requires privileges from the GUI, to reduce the attack surface of
+> issues like this.
+> 
+> 
+> Affected libraries and CVE Ids
+> 
+> libX11 - insufficient validation of data from the X server
+> 	 can cause out of boundary memory read (XGetImage())
+> 	 or write (XListFonts()).
+> 	 Affected versions libX11 <= 1.6.3
+> 
+> libXfixes - insufficient validation of data from the X server
+> 	can cause an integer overflow on 32 bit architectures.
+> 	Affected versions : libXfixes <= 5.0.2
+> 
+> libXi - insufficient validation of data from the X server
+> 	can cause out of boundary memory access or
+> 	endless loops (Denial of Service).
+> 	Affected versions libXi <= 1.7.6
+> 
+> libXrandr - insufficient validation of data from the X server
+> 	can cause out of boundary memory writes.
+> 	Affected versions: libXrandr <= 1.5.0
+> 
+> libXrender - insufficient validation of data from the X server
+> 	can cause out of boundary memory writes.
+> 	Affected version: libXrender <= 0.9.9
+> 
+> XRecord - insufficient validation of data from the X server
+>         can cause out of boundary memory access or
+> 	endless loops (Denial of Service).
+> 	 Affected version libXtst <= 1.2.2
+> 
+> libXv - insufficient validation of data from the X server
+>         can cause out of boundary memory and memory corruption.
+> 	CVE-2016-5407
+> 	affected versions libXv <= 1.0.10
+> 
+> libXvMC - insufficient validation of data from the X server
+> 	can cause a one byte buffer read underrun.
+> 	Affected versions: libXvMC <= 1.0.9
+> 
+> 
+> Fixes
+> 
+> Fixes are available in the following git commits.
+> 
+> lib/libX11
+> 8ea762f Validation of server responses in XGetImage()
+> 8c29f16 The validation of server responses avoids out of boundary accesses.
+> 
+> libXfixes
+> 61c1039 Integer overflow on illegal server response
+> 
+> libXi
+> 19a9cd6 Properly validate server responses.
+> 
+> libXrandr
+> a0df3e1 Avoid out of boundary accesses on illegal responses
+> 
+> libXrender
+> 9362c7d Validate lengths while parsing server data.
+> 8fad00b Avoid OOB write in XRenderQueryFilters
+> 
+> lib/libXtst
+> 9556ad6 Out of boundary access and endless loop in libXtst
+> 
+> libXv
+> 87b3c94 Protocol handling issues in libXv
+> 
+> libXvMC
+> 2cd95e7 Avoid buffer underflow on empty strings.
+> 
+> 
+> They will also be available in these modules releases from X.Org:
+> 
+>  * libX11 1.6.4
+>  * libXfixes 5.0.3
+>  * libXi 1.7.7
+>  * libXrandr 1.5.1
+>  * libXrender 0.9.10
+>  * libXtst 1.2.3
+>  * libXv 1.0.11
+>  * libXvMC 1.0.10
+> 
+> Thanks
+> 
+> X.Org thanks Tobias Stoeckmann for reporting these issues to our
+> security team and assisting them in understanding them and evaluating
+> our fixes.
+> 
+> -- 
+> Matthieu Herrb
 
-Versions Affected: Apache Ignite 1.0.0-RC3 to 1.8
-
-Description:
-Apache Ignite uses an update notifier component to update the users about n=
-ew project releases that include additional functionality, bug fixes and pe=
-rformance improvements. To do that the component communicates to an externa=
-l PHP server (http://ignite.run) where it needs to send some system propert=
-ies like Apache Ignite or Java version. This feature is enabled by default =
-and used to send sensitive data over HTTP by mistake, such as installation =
-folders or environment variables stored in Java system properties. The seco=
-nd issue is because TLS is not used between the application and the PHP ser=
-ver, a Man-in-the-middle attack is possible and a malicious actor could alt=
-er the response coming from the ignite.run server. This response is parsed =
-by the Apache ignite component as XML, and a XXE attack can be triggered.
-
-Both issues mentioned above were fixed as a part of Apache Ignite 1.9 relea=
-se. The relevant commits with the changes:
-
-Mitigation:
-Users must upgrade to Apache Ignite 1.9 or later versions or disable the up=
-date notifier.
-
-Credit:
-Pierre Ernst, Salesforce
 
 
-
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
