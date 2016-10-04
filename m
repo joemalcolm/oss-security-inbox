@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/02/1
-Message-ID: <1459602897.9149.3.camel@debian.org>
-Date: Sat, 02 Apr 2016 15:14:57 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, Johannes Segitz <jsegitz@...e.com>,  Theodore Ts'o <tytso@....edu>, Ben Hutchings <ben@...adent.org.uk>
-Subject: Re: ext4 data corruption due to punch hole races
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/9
+Message-Id: <BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>
+Date: Tue, 4 Oct 2016 18:11:42 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org
+Subject: Handful of libass issues
 Content-Type: text/plain; charset=utf-8
 
-On jeu., 2016-03-31 at 17:11 +0200, Johannes Segitz wrote:
-> Hello,
-> 
-> Jan Kara fixed some issues in the Linux kernel with security implications.
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=972174
-> 
-> "When punching holes into a file races with the page fault of the same
-> area, it is possible that freed blocks remain referenced from page cache
-> pages mapped to process' address space. Thus modification of these blocks
-> can corrupt data someone else is now storing in those blocks (which
-> obviously has security implications if you can trick filesystem into
-> storing some important file in those blocks).
-> 
-> This affects all the kernels where we support ext4 for writing. Relevant
-> fixes upstream are commits ea3d7209ca01da209cda6f0dea8be9cc4b7a933b,
-> 17048e8a083fec7ad841d88ef0812707fbc7e39f,
-> 32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70,
-> 011278485ecc3cd2a3954b5d4c73101d919bf1fa."
-> 
+The open source libass library is used to read and render subtitles onto images or frames of a movie. It is a popular library used in a few well-known media players. It seems it is usually shipped statically? Not sure.
 
-Hey,
+https://github.com/libass/libass <https://github.com/libass/libass>
 
-any reason why those commits weren't CC: stable? If this really affects all
-kernels where ext4 writing is possible, that means basically all current
-stable kernels more or less, I guess?
+Attached are 4 test cases and their asan/valgrind results tested against version 0.13.3. 
 
-Regards,
--- 
-Yves-Alexis
+One is in wrap_lines_smart() (https://github.com/libass/libass/pull/240/commits/b72b283b936a600c730e00875d7d067bded3fc26 <https://github.com/libass/libass/pull/240/commits/b72b283b936a600c730e00875d7d067bded3fc26>).
+
+One is coeff_blur121() (https://github.com/libass/libass/pull/240/commits/08e754612019ed84d1db0d1fc4f5798248decd75 <https://github.com/libass/libass/pull/240/commits/08e754612019ed84d1db0d1fc4f5798248decd75>).
+
+The third is a huge memory allocation leading to a crash that wasn’t fixed because a good solution is unavailable at the moment.
+
+The fourth is in check_allocations() (https://github.com/libass/libass/pull/240/commits/aa54e0b59200a994d50a346b5d7ac818ebcf2d4b <https://github.com/libass/libass/pull/240/commits/aa54e0b59200a994d50a346b5d7ac818ebcf2d4b>).
+
+These should be fixed in the 0.13.4 release, but are fixed currently on master. Thanks to the libass team for the quick turnaround. 
+
+Of note, there seems to have been an old PR to potentially resolve the wrap_lines_smart() issue, but there seems to be some confusion regarding it.
+
+https://github.com/libass/libass/pull/229 <https://github.com/libass/libass/pull/229>
+
+The PR to fix the issues except the memory DoS is at:
+
+https://github.com/libass/libass/pull/240 <https://github.com/libass/libass/pull/240>
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Let me know if you have any issues reproducing.
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "samples.zip" of type "application/zip" (21293 bytes)
+
+Content of type "text/html" skipped
