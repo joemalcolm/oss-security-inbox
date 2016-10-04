@@ -1,35 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/1
-Message-ID: <CALPTtNW1aQq5JkniYnFJzox6Pz_ygbWGmapEK0fXPN1SWGBFkw@mail.gmail.com>
-Date: Wed, 6 Jan 2016 16:17:57 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE request: Missing normalization in ruby gem rack-attack <4.3.1 when used with ruby on rails
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/3
+Message-ID: <20161004152217.GJ21798@suse.de>
+Date: Tue, 4 Oct 2016 17:22:17 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: X.Org security advisory: Protocol handling issues in X Window System client libraries
 Content-Type: text/plain; charset=utf-8
 
-Saw this tweeted. No public security notification outside of the release
-notes and a few tweets, it seems. :(
+Hi,
 
-Rack::Attack <4.3.1 does not normalize paths before processing them,
-meaning that if there is a throttle or block rule for /login, a malicious
-user could use /login/ to bypass the check. This only affects Rails
-applications.
+Mitre, can you assign CVE ids for the issues without?
 
-More details: https://github.com/kickstarter/rack-attack/releases/tag/v4.3.1
+Ciao, Marcus
+On Tue, Oct 04, 2016 at 04:46:53PM +0200, Matthieu Herrb wrote:
+> X.Org security advisory: October 4, 2016
+> 
+> Protocol handling issues in X Window System client libraries
+> ============================================================
+> 
+> Description
+> 
+> Tobias Stoeckmann from the OpenBSD project has discovered a number of
+> issues in the way various X client libraries handle the responses they
+> receive from servers, and has worked with X.Org's security team to
+> analyze, confirm, and fix these issues. These issue come in addition
+> to the ones discovered by Ilja van Sprundel in 2013.
+> 
+> Most of these issues stem from the client libraries trusting the
+> server to send correct protocol data, and not verifying that the
+> values will not overflow or cause other damage. Most of the time X
+> clients & servers are run by the same user, with the server more
+> privileged than the clients, so this is not a problem, but there are
+> scenarios in which a privileged client can be connected to an
+> unprivileged server, for instance, connecting a setuid X client (such
+> as a screen lock program) to a virtual X server (such as Xvfb or
+> Xephyr) which the user has modified to return invalid data,
+> potentially allowing the user to escalate their privileges.
+> 
+> The X.Org security team would like to take this opportunity to remind
+> X client authors that current best practices suggest separating code
+> that requires privileges from the GUI, to reduce the attack surface of
+> issues like this.
+> 
+> 
+> Affected libraries and CVE Ids
+> 
+> libX11 - insufficient validation of data from the X server
+> 	 can cause out of boundary memory read (XGetImage())
+> 	 or write (XListFonts()).
+> 	 Affected versions libX11 <= 1.6.3
+> 
+> libXfixes - insufficient validation of data from the X server
+> 	can cause an integer overflow on 32 bit architectures.
+> 	Affected versions : libXfixes <= 5.0.2
+> 
+> libXi - insufficient validation of data from the X server
+> 	can cause out of boundary memory access or
+> 	endless loops (Denial of Service).
+> 	Affected versions libXi <= 1.7.6
+> 
+> libXrandr - insufficient validation of data from the X server
+> 	can cause out of boundary memory writes.
+> 	Affected versions: libXrandr <= 1.5.0
+> 
+> libXrender - insufficient validation of data from the X server
+> 	can cause out of boundary memory writes.
+> 	Affected version: libXrender <= 0.9.9
+> 
+> XRecord - insufficient validation of data from the X server
+>         can cause out of boundary memory access or
+> 	endless loops (Denial of Service).
+> 	 Affected version libXtst <= 1.2.2
+> 
+> libXv - insufficient validation of data from the X server
+>         can cause out of boundary memory and memory corruption.
+> 	CVE-2016-5407
+> 	affected versions libXv <= 1.0.10
+> 
+> libXvMC - insufficient validation of data from the X server
+> 	can cause a one byte buffer read underrun.
+> 	Affected versions: libXvMC <= 1.0.9
+> 
+> 
+> Fixes
+> 
+> Fixes are available in the following git commits.
+> 
+> lib/libX11
+> 8ea762f Validation of server responses in XGetImage()
+> 8c29f16 The validation of server responses avoids out of boundary accesses.
+> 
+> libXfixes
+> 61c1039 Integer overflow on illegal server response
+> 
+> libXi
+> 19a9cd6 Properly validate server responses.
+> 
+> libXrandr
+> a0df3e1 Avoid out of boundary accesses on illegal responses
+> 
+> libXrender
+> 9362c7d Validate lengths while parsing server data.
+> 8fad00b Avoid OOB write in XRenderQueryFilters
+> 
+> lib/libXtst
+> 9556ad6 Out of boundary access and endless loop in libXtst
+> 
+> libXv
+> 87b3c94 Protocol handling issues in libXv
+> 
+> libXvMC
+> 2cd95e7 Avoid buffer underflow on empty strings.
+> 
+> 
+> They will also be available in these modules releases from X.Org:
+> 
+>  * libX11 1.6.4
+>  * libXfixes 5.0.3
+>  * libXi 1.7.7
+>  * libXrandr 1.5.1
+>  * libXrender 0.9.10
+>  * libXtst 1.2.3
+>  * libXv 1.0.11
+>  * libXvMC 1.0.10
+> 
+> Thanks
+> 
+> X.Org thanks Tobias Stoeckmann for reporting these issues to our
+> security team and assisting them in understanding them and evaluating
+> our fixes.
+> 
+> -- 
+> Matthieu Herrb
 
-Fixed by:
-https://github.com/kickstarter/rack-attack/commit/76c2e3143099d938883ae5654527b47e9e6a8977
 
-Related tweets:
 
-https://twitter.com/rorsecurity/status/678878091314335744
-https://twitter.com/IncludeSecurity/status/677905982391984129
-
-This could almost be categorized as CWE-289 "Authentication Bypass by
-Alternate Name", but it's not really authentication here. I couldn't find a
-better CWE without getting too generic.
-
-Needs a CVE assigned.
-
-~reed
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
