@@ -1,35 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/18
-Message-ID: <6aa8b189.1329d.1548107c1d2.Coremail.pengdawei521@163.com>
-Date: Thu, 5 May 2016 21:07:29 +0800 (CST)
-From: Vinc3nt4H <pengdawei521@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/2
+Message-ID: <20161004144653.GB20328@paperthin-usb.laas.fr>
+Date: Tue, 4 Oct 2016 16:46:53 +0200
+From: Matthieu Herrb <matthieu.herrb@...s.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS
+Subject: X.Org security advisory: Protocol handling issues in X Window System client libraries
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Description of the potential vulnerability:
-When a app send a evil data to com.samsung.android.jam.IAndroidShm  service by service command (Android system command) , can cause to IAndroidShm service crash.
+X.Org security advisory: October 4, 2016
+
+Protocol handling issues in X Window System client libraries
+============================================================
+
+Description
+
+Tobias Stoeckmann from the OpenBSD project has discovered a number of
+issues in the way various X client libraries handle the responses they
+receive from servers, and has worked with X.Org's security team to
+analyze, confirm, and fix these issues. These issue come in addition
+to the ones discovered by Ilja van Sprundel in 2013.
+
+Most of these issues stem from the client libraries trusting the
+server to send correct protocol data, and not verifying that the
+values will not overflow or cause other damage. Most of the time X
+clients & servers are run by the same user, with the server more
+privileged than the clients, so this is not a problem, but there are
+scenarios in which a privileged client can be connected to an
+unprivileged server, for instance, connecting a setuid X client (such
+as a screen lock program) to a virtual X server (such as Xvfb or
+Xephyr) which the user has modified to return invalid data,
+potentially allowing the user to escalate their privileges.
+
+The X.Org security team would like to take this opportunity to remind
+X client authors that current best practices suggest separating code
+that requires privileges from the GUI, to reduce the attack surface of
+issues like this.
 
 
-Steps to reproduce the issue:
-1 A PC connect S6 device;
-2 Input command: adb shell;
-3 Android Input command:
-service call com.samsung.android.jam.IAndroidShm 5 i32 917154658 i32 998369275 i32 1652062893 i32 2113420870 i32 1380178743 i32 47342718 i32 543810222 i32 1481030271
+Affected libraries and CVE Ids
+
+libX11 - insufficient validation of data from the X server
+	 can cause out of boundary memory read (XGetImage())
+	 or write (XListFonts()).
+	 Affected versions libX11 <= 1.6.3
+
+libXfixes - insufficient validation of data from the X server
+	can cause an integer overflow on 32 bit architectures.
+	Affected versions : libXfixes <= 5.0.2
+
+libXi - insufficient validation of data from the X server
+	can cause out of boundary memory access or
+	endless loops (Denial of Service).
+	Affected versions libXi <= 1.7.6
+
+libXrandr - insufficient validation of data from the X server
+	can cause out of boundary memory writes.
+	Affected versions: libXrandr <= 1.5.0
+
+libXrender - insufficient validation of data from the X server
+	can cause out of boundary memory writes.
+	Affected version: libXrender <= 0.9.9
+
+XRecord - insufficient validation of data from the X server
+        can cause out of boundary memory access or
+	endless loops (Denial of Service).
+	 Affected version libXtst <= 1.2.2
+
+libXv - insufficient validation of data from the X server
+        can cause out of boundary memory and memory corruption.
+	CVE-2016-5407
+	affected versions libXv <= 1.0.10
+
+libXvMC - insufficient validation of data from the X server
+	can cause a one byte buffer read underrun.
+	Affected versions: libXvMC <= 1.0.9
 
 
-Affected versions: KK(4.4), L(5.0/5.1) 
+Fixes
+
+Fixes are available in the following git commits.
+
+lib/libX11
+8ea762f Validation of server responses in XGetImage()
+8c29f16 The validation of server responses avoids out of boundary accesses.
+
+libXfixes
+61c1039 Integer overflow on illegal server response
+
+libXi
+19a9cd6 Properly validate server responses.
+
+libXrandr
+a0df3e1 Avoid out of boundary accesses on illegal responses
+
+libXrender
+9362c7d Validate lengths while parsing server data.
+8fad00b Avoid OOB write in XRenderQueryFilters
+
+lib/libXtst
+9556ad6 Out of boundary access and endless loop in libXtst
+
+libXv
+87b3c94 Protocol handling issues in libXv
+
+libXvMC
+2cd95e7 Avoid buffer underflow on empty strings.
 
 
-Fix:
-http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
-SVE-2015-5133: IAndroidShm IAPAService service DoS
+They will also be available in these modules releases from X.Org:
 
+ * libX11 1.6.4
+ * libXfixes 5.0.3
+ * libXi 1.7.7
+ * libXrandr 1.5.1
+ * libXrender 0.9.10
+ * libXtst 1.2.3
+ * libXv 1.0.11
+ * libXvMC 1.0.10
 
-We report this to samsung, samsung reply to us if we want to get CVE request it by ourself.
+Thanks
 
+X.Org thanks Tobias Stoeckmann for reporting these issues to our
+security team and assisting them in understanding them and evaluating
+our fixes.
 
-Best regards,
-Vinc3nt4H of Alibaba Mobile Security Team
+-- 
+Matthieu Herrb
 
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
