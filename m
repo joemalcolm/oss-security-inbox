@@ -1,52 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/1
-Message-ID: <20160305000740.GB1250@sentinelchicken.org>
-Date: Fri, 4 Mar 2016 16:07:40 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/04/7
+Message-Id: <20161004183210.EA2B1B2E027@smtpvbsrv1.mitre.org>
+Date: Tue,  4 Oct 2016 14:32:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: steve@...lectiveidea.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for code execution via gem name collission in bundler (was Re: CVE Request)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> The level of frustration in the research community has been growing,
-> with steady calls for a new CVE-like solution that is designed to
-> address these needs in a more effective way. I greatly appreciate the
-> work that has been done, but at this point CVE is becoming less
-> useful, less relevant - if this isn't addressed, my expectation is
-> that a CVE-like solution will be adopted by the community, and
-> researchers will begin moving away from requesting CVEs.
+> I'd like to request a CVE to track a security vulnerability found in
+> Bundler (bundler.io <http://bundler.io/>). Bundler allows the user to
+> specify sources from which Ruby gems are installed. If a secondary
+> source is specified, even if scoped to a specific gem, that source is
+> silently applied to all declared gems. This allows an attacker to
+> introduce arbitrary code into an application via gem name collision on
+> the secondary source, which will unexpectedly (and without warning)
+> take priority over the primary source.
 
+Use CVE-2016-7954.
 
-The CVE system is clearly breaking down.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I think we need a system that is less moderated and more content
-driven.  I imagine a simple site, which looks like a stripped-down bug
-tracker.  Let's suppose it acts like this:
-
-* Any researcher can post "claims" about vulnerabilities.  This
-  assigns an identifier immediately.
-
-* Claims about vulnerabilities may be reviewed, eventually, by an
-  authority whose job it is to be sure the claim is associated
-  properly with a real product/version and that the product owners are
-  notified through an automated process (e.g. "security@...").
-
-* Product owners can respond to claims, which will appear along side
-  the claim.  Links to patches or refutations can be included.
-
-* No moderation required.  Let the public decide if they believe the
-  researcher or vendor.  If a moderator does bother to look over the
-  content, they could deduplicate/link issues together and address any
-  confusion, but beyond that, it isn't their job to decide what is a
-  vulnerability and what isn't.
-
-* All information posted in this system exists publicly forever.
-  Links to external content (that isn't well represented in the
-  posting) are frowned upon, since the Internet Archive clearly can't
-  keep up with everything.  We need an archive that doesn't go away.
-
-
-Ok, beat it up.
-
-tim
+iQIcBAEBCAAGBQJX8/U7AAoJEHb/MwWLVhi2xrwP/RjNz+PRsrpnt6grFruRj6rH
+IvSdysqLU3/+gK2Q+1mXtdydmkn05PMLHrB58Os6hP+K5POjPnNjXsc+VfaoD83r
+S4wmDBs3H4l3XMrT+WHOqvZWsF74iDlTSFA35DNLFRW6Ad5IwPNuMcUBE8yqlMyK
+SQ6aU0BvwB7yygmeK6RBvDICsUthcyrTooXkmeDKe1EhRxgKXwdvFVeknKiCOneK
+hTMvNl6MyWU6BW3W0AelJG0mcndEu9Ai7DUf50mgCtuJCLay0wKLn8QrcYg7dWR8
+17xFYh8v3soNMNrWBhyKcJUxWPz/YhNKbqjvXnk4Q1BIiEaBmYL4/Mw08dj+nKmy
+2LTE+Kcx9vKHedo6lNT/Qxuug+S1czmbGESfygWACDpl2frB9YwVaU8MbFxZkfVj
+utU9+zrQBhRQXUw9ZMN83dJqqiC8956/IGWczI++rvp8cqrMETP91PueK23wE091
+SEzfASXty4n2HdD4AWwg0caECoDeUiDZP8UrQkkLDYu9Xlyeqw9C1vgiATTT3Uni
+bTFjnBhrohCXEh/uvoWJIqZZbO8DRQ0KWI6FlcDuDzubGrih0M4CM7KZ0bDRpwGC
+9VGbDtdGK0XPOzzHvPUr+GDSjwZCJ0aFTaxlxwa+ol15mLKyBWCkLHd/8NYHvM5E
+is4rHDl4O1P83Wx0+Er0
+=RpXj
+-----END PGP SIGNATURE-----
