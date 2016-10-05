@@ -1,73 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/11
-Message-ID: <CAARAU46U0p2cvjaqa_MQX_kULk5cDMTufV52zYu-Ad_=8Ps9tg@mail.gmail.com>
-Date: Mon, 19 Sep 2016 15:59:31 -0400
-From: Mike Santillana <michael.santillana@...ork.com>
-To: oss-security@...ts.openwall.com, seth.arnold@...onical.com
-Cc: "'Apple' via" <infosec@...ork.com>
-Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/4
+Message-ID: <CAA7hUgHwN_AymJRzV8SRiAB0F6hyxxwx+O3X8j7+LKWOvypJiQ@mail.gmail.com>
+Date: Wed, 5 Oct 2016 13:06:03 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
 Content-Type: text/plain; charset=utf-8
 
-Hi Seth,
+Hi,
 
-The random_iv method automatically sets the IV to be used by the cipher:
-http://ruby-doc.org/stdlib-1.9.3/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv.
-The reason I do "iv = cipher.random_iv" is to get the IV value so I can
-print the value (or traditionally, pass it along so it can be used in the
-decryption phase).
-
-I hope this clears the example up a bit.
-
-Thanks
-
-
-*WeWork | Mike Santillana*
-Security Engineer
-845-709-5655
-www.wework.com
-
-Create Your Life's Work
-
-On Mon, Sep 19, 2016 at 3:53 PM, Seth Arnold <seth.arnold@...onical.com>
-wrote:
-
-> On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
-> > An IV reuse bug was discovered in Ruby's OpenSSL library when using
-> > aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
-> > setting the key, the cipher will default to using a static IV. This
-> creates
-> > a static nonce and since aes-gcm is a stream cipher, this can lead to
-> known
-> > cryptographic issues.
-> >
-> > The documentation does not appear to specify the order of operations when
-> > setting the key and IV [1]. As an example, see the following insecure
-> code
-> > snippet below:
-> >
-> > Vulnerable Code:
-> >
-> > def encrypt(plaintext)
-> >     cipher = OpenSSL::Cipher.new('aes-256-gcm')
-> >     iv = cipher.random_iv # Notice here the IV is set before the key
-> >     cipher.key = '11111111111111111111111111111111'
-> >     cipher.auth_data = ""
-> >     ciphertext = cipher.update(plaintext) + cipher.final
-> >     tag = cipher.auth_tag
-> >
-> >     puts "[+] Encrypting: #{plaintext}"
-> >     puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
-> > #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
-> > end
+On 27 September 2016 at 03:24, Doran Moppert <dmoppert@...hat.com> wrote:
+> First, CVE-2016-3181 and CVE-2016-3182 have been identified by upstream as the
+> same underlying issue.
 >
-> Hello,
+> https://github.com/uclouvain/openjpeg/issues/724
 >
-> I think you have a mistake in this sample code, 'iv' is assigned but never
-> used (aside from being printed).
+>> Origin of the issue is the same as #725
 >
-> Your github code is far more complicated but looks like it is doing the
-> right thing.
+> https://github.com/uclouvain/openjpeg/issues/725
+[...]
+> .. it gets more interesting.  The reproducer on issue 725 happens to tickle
+> a flaw in a patch for CVE-2013-6045 that was posted here back when:
 >
-> Thanks
+> http://seclists.org/oss-sec/2013/q4/412
 >
+> segfault-1.patch uses:
+>
+> +               tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
+>
+> which should have used compcsize instead of comp0size.
 
+Yes, indeed. This patch also introduced a regression in the processing
+of some images.
+Cf. https://bugs.debian.org/734238
+
+> This hasn't been an issue in upstream openjpeg releases for a long time ...
+> but there are LTS distributions around still shipping 1.5.1 (or 1.3) with the
+> patches from here applied.  Those should preferably upgrade to 1.5.2:  changing
+> comp0size to compcsize eliminates this particular crash, but the upstream fixes
+> that got into 1.5.2 seem to more thoroughly address some of the underlying
+> problems.
+
+Do you specifically know of a distribution that still has that patch?
+If I remember the context correctly, the use of comp0size could then
+lead to a heap buffer overflow later on. Was that what you noticed?
+
+In any case, the patch should indeed better be replaced by the one
+provided upstream (cf. the Debian bug report).
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
