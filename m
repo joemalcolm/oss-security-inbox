@@ -1,60 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/19
-Message-ID: <20160503232637.GA2319@hunt>
-Date: Tue, 3 May 2016 16:26:37 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Karim Valiev <valievkarim@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/2
+Message-Id: <20161005022322.18575ABC00D@smtpvmsrv1.mitre.org>
+Date: Tue,  4 Oct 2016 22:23:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: bperry.volatile@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Handful of libass issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 04, 2016 at 01:38:49AM +0300, Karim Valiev wrote:
-> The exploit was posted at Hacker News comments thread, so it's time to
-> disclose the full story.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for this; here's the bulk of my reply to the distros@ list yesterday:
+> One is in wrap_lines_smart()
+> https://github.com/libass/libass/pull/240/commits/b72b283b936a600c730e00875d7d067bded3fc26
 
-========
+Use CVE-2016-7969.
 
-[...] I see attempts in the source code to apply
-whitelists to allowed characters:
 
-http://git.imagemagick.org/repos/ImageMagick/commit/06c41aba39b97203f6b9a0be6a2ccf8888cddc93
+> One is coeff_blur121()
+> https://github.com/libass/libass/pull/240/commits/08e754612019ed84d1db0d1fc4f5798248decd75
 
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_- "
-".@&;<>()/\\\'\":%=~`";
+Use CVE-2016-7970.
 
-followed several days later by:
 
-http://git.imagemagick.org/repos/ImageMagick/commit/a347456a1ef3b900c20402f9866992a17eb5d181
+> The third is a huge memory allocation leading to a crash that wasn't
+> fixed because a good solution is unavailable at the moment.
 
-"^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-"+&@...?=~_|!:,.;()";
+Use CVE-2016-7971.
 
-The ; and | entries make me think they haven't actually thought this
-thing through in any real way yet. Shellshock showed that e.g. () may
-look harmless enough without the $ but it is also dangerous. I think it's
-probably a mistake to try to whitelist filter input in this fashion and
-try to continue on in the case of failure. Error out in the case of
-oddball inputs.
 
-Another approach is to quote inputs following Florian Weimer's advice:
-http://www.openwall.com/lists/oss-security/2014/02/04/7
+> The fourth is in check_allocations()
+> https://github.com/libass/libass/pull/240/commits/aa54e0b59200a994d50a346b5d7ac818ebcf2d4b
 
-        return "'" + s.replace("'"', r"'\''")  + "'"
+Use CVE-2016-7972.
 
-(In Python, but the idea should translate well.)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Or, generate the filenames to contain only safe chars. (See mkstemp(3),
-the function already exists.)
-
-Or, replace the strings with arrays and use execve() instead of system().
-
-Or, scrap the entire delegates.xml idea, it seems like a strange thing to
-bolt on to the side of the image processing toolkit.
-
-========
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJX9GN/AAoJEHb/MwWLVhi27igP/0aqAYD3zoMNk7XowyJnZxKx
+xpO94xWthIYcxmPgllTuzCWeM/vn4OLQ5rHUzWHp678mcepx46jUPqeOivFad272
+rOfP31o7vOOFQ3wfEcPq4tDmSTXJ44HZEJDR0aORHdZfQzm5aV0xsUR40JVEHPTQ
++lj1TZQYVYzixrWjp1yC0x7QG/c791+9ue+pU2qeUM8XHRpg69+wCw3e4Uom/gK9
+bxMI7Hzm+rJayUZG5VGdfun0/77oeh2Rl6OAcuJx+m6/EljkHJluGfy6gDmsj7qW
+cG+Svo57+JWQwl9lN5tmAx6qiEOZld4IDpdwglseqDYtsOo71AMhaM5/2mh2xR07
+VwxWBK59Kn+Fy6WLV7qeGwhqND6vyCxfjFalixu+HNKsqPr02vBn5UBrMY5c7WRW
+u7bGmxYx6SlfhH7GvThzGOq9Ks0wLXL6A7WMI2RKG6k3+P96WQNZRW37FbE6U+gJ
+c0ce2tLqD1P9NGTENjcdHzse9VhERswmt8TWV7MYzTQS9dQnZwjo6MPkQmEisbE3
+jCQebWjTYXvVWu9ZkVqXCfxBtUeEWJ5gyq0fiQ/kbA0teHHD/g4KgiafU0gDmNCU
+GIM3HlpBV8rNs9ZzoTXgx+wnMQaZO1eVf6fYPaBHVEAzfsD8IQb81GBV7QsR3u4Z
+QkSgtZKJ3TCUPgi/hxwY
+=msJI
+-----END PGP SIGNATURE-----
