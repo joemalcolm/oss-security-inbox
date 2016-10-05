@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1045" "Monday" "10" "August" "2015" "11:23:02" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87d1yv1oqx.fsf@redhat.com>" "34" "[oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" nil nil nil "8" "2015081009:23:02" "[oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding" (number mark "        mprpic@redha Aug 10   34/1045  " thread-indent "\"[oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1673" "Wednesday" "5" "October" "2016" "19:33:31" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161005193331.07a56d5f@pc1>" "47" "Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100517:33:31" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        hanno@hboeck Oct  5   47/1673  " thread-indent "\"Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<20161005184753.417dd846@pc1>" "<alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 31928 invoked by uid 550); 10 Aug 2015 09:23:18 -0000
+Received: (qmail 26437 invoked by uid 550); 5 Oct 2016 17:33:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31903 invoked from network); 10 Aug 2015 09:23:18 -0000
-User-agent: mu4e 0.9.9.5; emacs 24.3.1
-Message-ID: <87d1yv1oqx.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Mon, 10 Aug 2015 11:23:02 +0200
-From: Martin Prpic <mprpic@redhat.com>
+Received: (qmail 26387 invoked from network); 5 Oct 2016 17:33:32 -0000
+Message-ID: <20161005193331.07a56d5f@pc1>
+In-Reply-To: <alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>
+References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
+	<20161005184753.417dd846@pc1>
+	<alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>
+X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-8588-1475688812-0001-2"
+Date: Wed, 5 Oct 2016 19:33:31 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: GNUTLS-SA-2015-3 double free in certificate DN decoding
-To: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
+Subject: Re: [oss-security] CVE Request - multiple ghostscript -dSAFER
+ sandbox problems
+To: oss-security@lists.openwall.com
 
-Hi,
+--=_zucker.schokokeks.org-8588-1475688812-0001-2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-GnuTLS released versions 3.4.4 and 3.3.17 that fix one security issue:
+On Wed, 5 Oct 2016 12:24:46 -0500 (CDT)
+Bob Friesenhahn <bfriesen@simple.dallas.tx.us> wrote:
 
-http://www.gnutls.org/security.html#GNUTLS-SA-2015-3
+> There is only one open-sourced Postscript interpreter (Ghostscript)=20
+> that I am aware of.
 
-"Kurt Roeckx reported that decoding a specific certificate with very
-long DistinguishedName (DN) entries leads to double free, which may
-result to a denial of service. Since the DN decoding occurs in almost
-all applications using certificates it is recommended to upgrade the
-latest GnuTLS version fixing the issue. Recommendation: Upgrade to
-GnuTLS 3.4.4, or 3.3.17."
+That's unfortunate.
 
-The upstream patch that fixes this issue is available at:
+> There are perhaps two open-sourced PDF interpreters available=20
+> (Ghostscript and derivatives of 'xpdf' like 'poppler').
 
-https://gitlab.com/gnutls/gnutls/commit/272854367efc130fbd4f1a51840d80c630214e12
+There's two more from the browser world: pdfium and PDF.js.
 
-Can a CVE please be assigned to this issue?
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Also, there is still no CVE for the issue before this one. The CVE
-request was sent on May 5:
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-http://seclists.org/oss-sec/2015/q2/367
+--=_zucker.schokokeks.org-8588-1475688812-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
-Can a CVE be assigned to this as well?
+-----BEGIN PGP SIGNATURE-----
 
-Thank you!
+iQIcBAEBCAAGBQJX9TlrAAoJEKWIAHK7tR5C26wP/1os1uFbF0YRWgcCl0UGAFo8
+Mp20ioOFz40AkqHekWUPcimVk1tsfEolQXeUhJxaINIWE8P0zm0CRApsbMz6+iGE
+r8hYUezYu22Si42v5O1oYih9/MKMfwnDBpfJqt50UvQ4pzUheTE1F1m0cFVc5gcA
+jkKLdYm/SV0Jm+a7QEpDXca8LpbdHi4L65QGWZbn+EGgvO84v+c/RHPfIpmS8Gvc
+L48HJlJVGm7mbBbHwOe+sDXEQ3OikqPmDS31b+ppfkZ3FWmXKF7Y+NQKwya03Ipo
+KvMsPnBvtenCNy51luJSiGkfyuHliUdzq4TgWqD5kryzVZXundMiZv3cetkoVDf5
+FrG6Y1rC689U4jfMvlbCtS/kP47NdvCrz4rLtXhyYpGTv7N2lvvC+KMtbiOxfEuA
+b73qvv2L43cvdA4KZN0fFb575USJV10L5JOSvnnV6RJBBXkFYuLNSvL+fsLk+kU9
+5wNnL7qRH9hvAPw7Tob0K+lSbVX32leGPemqn8WGytxlGwmUcIjYDn3cPaYEMg15
+aGRuJrqy73MA4qlfBun7CMjCTJtODgkIEzUMG2egqdwJfHiegf+YjdBMvPLzmLtL
+3nbbShjCA6V9Hvd6tkg0cvGW+R1Z5qxRWLveW/If2lQvuCYeIm9axZz+lGzs6h09
+pwoM6WdG4xJpiy/hp/MX
+=rXb6
+-----END PGP SIGNATURE-----
 
-Refs:
-rhbz GNUTLS-SA-2015-2: https://bugzilla.redhat.com/1218426
-rhbz GNUTLS-SA-2015-3: https://bugzilla.redhat.com/1251902
-
--- 
-Martin Prpič / Red Hat Product Security
+--=_zucker.schokokeks.org-8588-1475688812-0001-2--
