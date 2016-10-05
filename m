@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/06/1
-Message-ID: <57050808.7000401@upv.es>
-Date: Wed, 6 Apr 2016 14:58:48 +0200
-From: Hector Marco-Gisbert <hecmargi@....es>
-To: fulldisclosure@...lists.org, full-disclosure@...ts.grok.org.uk, bugs@...uritytracker.com, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: CVE-2016-3672 - Unlimiting the stack not longer disables ASLR
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/13
+Message-ID: <20161005193254.7a46fc48@pc1>
+Date: Wed, 5 Oct 2016 19:32:54 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+On Wed, 5 Oct 2016 10:09:07 -0700
+Tavis Ormandy <taviso@...gle.com> wrote:
 
-We have fixed an old and very known weakness in the Linux ASLR implementation.
+> Ahh, no, I was right - it's using libgs, and the same issues apply
+> there.
 
-The weakness allowed any user able to running 32-bit applications in a x86
-machine disable the ASLR by setting the RLIMIT_STACK resource to unlimited.
-
-This is a very old trick to disable ASLR, but unfortunately it was still present
-in current Linux systems.
-
-Details at:
-http://hmarco.org/bugs/CVE-2016-3672-Unlimiting-the-stack-not-longer-disables-ASLR.html
-
-
-Best,
-Hector.
-
-
+To clarify the confusion here:
+I didn't see ghostscript as a dependency and saw libspectre for ps
+rendering. But libspected itself uses ghostscript, so it seems it's
+just a wrapper around it.
 
 -- 
-Dr. Hector Marco-Gisbert @ http://hmarco.org/
-Cyber Security Researcher @ http://cybersecurity.upv.es
-Universitat Politècnica de València (Spain)
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
