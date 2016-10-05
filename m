@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/3
-Message-ID: <20161115032707.GA5104@jasmine>
-Date: Mon, 14 Nov 2016 22:27:07 -0500
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/17
+Message-ID: <db3c98e6-3e7d-c98b-7cb1-777cf7d484a3@sysdream.com>
+Date: Wed, 5 Oct 2016 20:13:12 +0200
+From: Sysdream Labs <labs@...dream.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
+Cc: spip-team-owner@...o.net
+Subject: SPIP vulnerabilities: request for 5 CVE
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 14, 2016 at 08:45:51PM +0000, Hector Marco wrote:
-> Hello All,
-> 
-> Affected package
-> ----------------
-> Cryptsetup <= 2:1
+Hello,
 
-Hi,
+We need 5 CVE ID for the following vulnerabilities found in SPIP <= 3.1.2 (http://www.spip.net/):
 
-Can you clarify which versions are affected?
+* Template Compiler/Composer PHP Code Execution
+* Cross-Site Request Forgery
+* Reflected Cross-Site Scripting
+* File Enumeration / Path Traversal
+* Server Side Request Forgery
 
-The latest upstream version is 1.7.3:
+Thank you in advance,
 
-https://gitlab.com/cryptsetup/cryptsetup/commits/master
 
-What is the 2:1 version?
+Best regards,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
