@@ -1,65 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/4
-Message-Id: <1466532058.213043.644361457.02F3FA4A@webmail.messagingengine.com>
-Date: Tue, 21 Jun 2016 13:00:58 -0500
-From: Gregory Haynes <greg@...ghaynes.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/3
+Message-ID: <CALPTtNUgr7_3=pnVO-5Lny735zBFsy=9nCiyotxNELUWk_KLUQ@mail.gmail.com>
+Date: Tue, 4 Oct 2016 19:32:03 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request Openstack-infra puppet-gerrit module xss vulnerability
+Cc: steve@...lectiveidea.com, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: CVE request for code execution via gem name collission in bundler (was Re: CVE Request)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I asked the Bundler team about this issue since this seemed to be lacking
+details. They said that they attempted to fix this generic issue in Bundler
+1.7 (see
+http://bundler.io/blog/2014/08/14/bundler-may-install-gems-from-a-different-source-than-expected-cve-2013-0334.html),
+and they were able to fix most of the issues.
 
-Hello Everyone,
+However, there are some edge cases, which I think Steve is referring to.
+Specifically, see https://github.com/bundler/bundler/issues/3671.
+Additionally, see also https://github.com/bundler/bundler/pull/3696
+(failing spec that shows the issue) and
+https://github.com/bundler/bundler/pull/4714 (PR where the issue was fixed,
+but only on Bundler 2.x branch).
 
-A vulnerability was discovered in the OpenStack-Infra Puppet module
-for Gerrit (see below). In order to ensure full traceability, we need
-a CVE number assigned. This issue is already public.
+The team was never able to remove all possibilities of namespace collisions
+while keeping the existing lockfile format, which is why the fix was only
+on Bundler 2.x.
 
-It was recently discovered that our puppet-gerrit module configures
-Gerrit in a way which makes it vulnerable to a XSS attack. This stems
-from our configuration marking text/html as a 'safe' mimetype[1].
-This configuration change was first made in May 2014[2] but we believe
-it did not begin working until Feb 2015[3]. Using this, a user could
-potentially craft a review which when visited at the proper url would
-have access to the account information of any user visiting that url.
+~reed
 
-It is highly recommended that all downstream users of this module
-apply this commit[4] to protect themselves against this attack.
+On Tue, Oct 4, 2016 at 11:32 AM, <cve-assign@...re.org> wrote:
 
-Thanks,
-Greg
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > I'd like to request a CVE to track a security vulnerability found in
+> > Bundler (bundler.io <http://bundler.io/>). Bundler allows the user to
+> > specify sources from which Ruby gems are installed. If a secondary
+> > source is specified, even if scoped to a specific gem, that source is
+> > silently applied to all declared gems. This allows an attacker to
+> > introduce arbitrary code into an application via gem name collision on
+> > the secondary source, which will unexpectedly (and without warning)
+> > take priority over the primary source.
+>
+> Use CVE-2016-7954.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJX8/U7AAoJEHb/MwWLVhi2xrwP/RjNz+PRsrpnt6grFruRj6rH
+> IvSdysqLU3/+gK2Q+1mXtdydmkn05PMLHrB58Os6hP+K5POjPnNjXsc+VfaoD83r
+> S4wmDBs3H4l3XMrT+WHOqvZWsF74iDlTSFA35DNLFRW6Ad5IwPNuMcUBE8yqlMyK
+> SQ6aU0BvwB7yygmeK6RBvDICsUthcyrTooXkmeDKe1EhRxgKXwdvFVeknKiCOneK
+> hTMvNl6MyWU6BW3W0AelJG0mcndEu9Ai7DUf50mgCtuJCLay0wKLn8QrcYg7dWR8
+> 17xFYh8v3soNMNrWBhyKcJUxWPz/YhNKbqjvXnk4Q1BIiEaBmYL4/Mw08dj+nKmy
+> 2LTE+Kcx9vKHedo6lNT/Qxuug+S1czmbGESfygWACDpl2frB9YwVaU8MbFxZkfVj
+> utU9+zrQBhRQXUw9ZMN83dJqqiC8956/IGWczI++rvp8cqrMETP91PueK23wE091
+> SEzfASXty4n2HdD4AWwg0caECoDeUiDZP8UrQkkLDYu9Xlyeqw9C1vgiATTT3Uni
+> bTFjnBhrohCXEh/uvoWJIqZZbO8DRQ0KWI6FlcDuDzubGrih0M4CM7KZ0bDRpwGC
+> 9VGbDtdGK0XPOzzHvPUr+GDSjwZCJ0aFTaxlxwa+ol15mLKyBWCkLHd/8NYHvM5E
+> is4rHDl4O1P83Wx0+Er0
+> =RpXj
+> -----END PGP SIGNATURE-----
+>
 
-1:
-https://review.openstack.org/#/c/332219/
-
-2:
-http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=346618da6d0527335b67d17dea78f7d6c55fb129
-
-3:
-http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=c53838ae2246f74fd5206a1bdb7b8cac656529d9
-
-4:
-http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=8573c2ee172f66c1667de49685c88fdc8883ca8b
-
-  -- 
-  Gregory Haynes
-  greg@...ghaynes.net
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJXaX7NAAoJELwhhWqbFNDRFp4P/i8eqQYWzV6mbrPZKvYfF2HN
-KWleeHMIIeMVcDpC2F/3rYIla0A+SMQqrKzPkbYJh10hEbdiEG/mDuYuYkISD/pf
-Hud9a216bfZdj/naQzyc+0m4bae5Q7viudseX1oFDyHbSTGzEoWcPtakdp+BmYQ7
-TsPJm9XsT0F29U0+hQBGOBzzkg5uP+56seou7wZ7WcmuWzLrbWGF8wPJ/XFitqjz
-N7VN+Ckpd2jsRvlSNCEutS10pBXeH53NB4OWOMcfhOY3Xp2w6sqP3sOopvZZvoBz
-u468Q2gd7bOmwfKnLKeeuO/JLrN8AJ2wH1vEXPwrVUgXj15Sf34j36XIpcLfTAVK
-UH3FQ/xq57sdh79Ixa3E6uhlYOtLV9jF6+1Vt9eMApue6ERuv6phmXI6Ni1BM+hW
-5pFXJJN/r/rAyTaY8cZLNV56OSPIRE95sJ2bWJ535W/4Unqt+pbTK4FRPBdBJNf3
-IKPeh+Uxt7f3HbUwSWA72/1qOWH5yWQs6tanovg2CGwmoTzpRwz5ho+ARjjUljHq
-tFfiVrsytW9bF16ffXVpUUnAAIqCWm/ZnTXlS96Xuqdj9pW0jTuW9EA8fzsYMQcL
-nCf8gxHTPGW87P0v9Sf3IxmKp95X3QEdy+WdoH/F/UWTEp4uqICuiMVxwawv3AFL
-G+xXItIFLYST0JUA0EiQ
-=mBX/
------END PGP SIGNATURE-----
