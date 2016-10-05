@@ -1,67 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/29/7
-Message-ID: <9846A6064BD102419D06814DD0D78DE11296CE0F@CIO-KRC-D2MBX08.osuad.osu.edu>
-Date: Wed, 29 Jun 2016 14:37:11 +0000
-From: "Cantor, Scott" <cantor.2@....edu>
-To: "c-dev@...ces.apache.org" <c-dev@...ces.apache.org>, "c-users@...ces.apache.org" <c-users@...ces.apache.org>, "security@...che.org" <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>
-Subject: CVE-2016-4463: Apache Xerces-C XML Parser Crashes on Malformed DTD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/5
+Message-ID: <6a70d108.3e4.15795170728.Coremail.hongkun.zeng@dbappsecurity.com.cn>
+Date: Wed, 5 Oct 2016 21:44:56 +0800 (GMT+08:00)
+From: "Hongkun Zeng" <hongkun.zeng@...ppsecurity.com.cn>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-7903: Dotclear <= 2.10.2 Password Reset Address Spoof
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Vulnerability: Dotclear <= 2.10.2 Password Reset Address Spoof
+CVE: CVE-2016-7903
+Discovered by: Hongkun Zeng (http://www.dbappsecurity.com.cn/)
 
 
-CVE-2016-4463: Apache Xerces-C XML Parser Crashes on Malformed DTD
+Dotclear is an open source blog publishing application distributed under the GNU GPLv2.
 
-Severity: Important
 
-Vendor: The Apache Software Foundation
+The vulnerability can be triggered only if the Host header is not part of the web server routing process (e.g. if several domains are served by the same web server). This can lead to phishing attacks because of the modification of the site's links. (A remote unauthenticated attacker can change the host in reset password address.)
 
-Versions Affected: Apache Xerces-C XML Parser library versions
-prior to V3.1.4
 
-Description: The Xerces-C XML parser fails to successfully parse a
-DTD that is deeply nested, and this causes a stack overflow, which
-makes a denial of service attack against many applications possible
-by an unauthenticated attacker.
-
-Mitigation: Applications that are using library versions older than
-V3.1.4 should upgrade as soon as possible. Distributors of older
-versions should apply the patches from this subversion revision:
-
-http://svn.apache.org/viewvc?view=revision&revision=1747619
-
-Note that the nesting limit is currently implemented as a compile-time
-constant in order to maintain ABI-compatibility.
-
-In addition, a related enhancement was made to enable applications
-to fully disable DTD processing through the use of an environment
-variable. Distributors of older versions are urged to incorporate
-this patch to enable applications to more fully protect themselves
-from future issues if they do not require DTD support. This change
-is ABI-compatible and can be found in this subversion revision:
-
-http://svn.apache.org/viewvc?view=revision&revision=1747620
-
-Credit: This issue was reported by Brandon Perry.
-
-References:
-http://xerces.apache.org/xerces-c/secadv/CVE-2016-4463.txt
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXXqPQAAoJEDeLhFQCJ3liyRwQAI5aUjhKtZtw+51EgNizpuLa
-dvfEP27anUXLKwLXt+WIfogW3TLQ4HwyiszanO4YTlwz3qbKO3TJQXdT4kTQx6/k
-KhWr7+vsn7pBEPiiC7kj3lH7QHCd+T8/W+Xik/rKDFV1qAAKuoFgYJ31qED8I65z
-371Tdm+p2QE4Nh9M7k7LUs+yWu5XdwJIS61L3R/MpEptynuo7Onbp+sjF6OQCZHc
-u1KJ3zAlKzP4iwtxKjvoXqOnLgYwjtqC2p7nYBEXOEn4DA4Q/PMrfdYIebjUo/Wy
-CeIN5TGJ2aunMkVK0RgxCqjr0sl2cYqY8iegUqp9Iz4+rMpy5ZDLNyyjgbXgSY73
-8145xO2tscLs7bLXAXUGbLlOPxnDqVieGlYyHICFnl58I4ekfhwtMmd9d2WOlaVE
-7NEPTorFiHI+wdK2yebCLAMaJbL9KJQiJa/4xw9qvpZ4DQ7aein9jq7fklQ62crc
-Ff4h4icX4icM1/s1tvcEM1lZw8Td4UyXkwvoEmfZg7dVy4NW+XM/Kn4FUCPRnC9A
-XVAabL3K290Mz77YLqUTk733w1q/lFCxgOCJF18/OJef2azMn74QgFbLcBD16i2O
-FNxdtPsSRGNsfOGN08Uiwg9RN6uqoZ6Rxwq3hEcAiufYQHFiXldlS26koP2QMk03
-gNuHTr22AcR0ZgoW9GYP
-=eilz
------END PGP SIGNATURE-----
+Fix commit: https://hg.dotclear.org/dotclear/rev/bb06343f4247
