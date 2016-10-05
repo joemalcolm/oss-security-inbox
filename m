@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/1
-Message-Id: <1451953836.236177.482914922.46C7D6CD@webmail.messagingengine.com>
-Date: Tue, 05 Jan 2016 00:30:36 +0000
-From: Filippo Valsorda <ml@...ippo.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/21
+Message-ID: <87pone32pv.fsf@mid.deneb.enyo.de>
+Date: Wed, 05 Oct 2016 23:28:28 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: python-rsa signature forgery
+Subject: Re: NSPR 4.12, NSS 3.22.1 and PR_GetEnvSecure
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+* Florian Weimer:
 
-please assign a CVE to this signature forgery vulnerability in
-python-rsa. It allows an attacker to fake signatures for arbitrary
-messages for any key with low exponent "e" (like the common 3).
+> It seems this was never disclosed properly; there are still a couple
+> of hidden Mozilla bugs about this.
+>
+> The NSS 3.22.1 announcement
+>
+>   <https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_3.22.1_release_notes>
+>
+> mentions one:
+>
+>   bug 1194680: NSS has been changed to use the PR_GetEnvSecure
+>     function that was made available in NSPR 4.12
+>
+> The story behind this is that NSS uses environment variables to
+> configure lots of things, some of which refer to file system
+> locations.  Others can be degrade the operation of NSS in various
+> ways, forcing compatibility modes and so on.
+>
+> Previously, these environment variables were not ignored SUID
+> binaries.  NSPR 4.12 and NSS 3.22.1 introduce a new API,
+> PR_GetEnVSecure, to address this.  It's a very thin wrapper around
+> glibc's secure_getenv and similar functions on other systems.
+>
+> Both NSPR and NSS need to be upgraded to address this; even if you run
+> s/PR_GetEnvSecure/secure_getenv/ on the NSS sources, some unprotected
+> environment variable lookups remain in NSPR.
 
-Writeup:
-https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/
-Fix:
-https://bitbucket.org/sybren/python-rsa/pull-requests/14/security-fix-bb06-attack-in-verify-by/diff
-Project: https://pypi.python.org/pypi/rsa
+Debian has released DSA-3687-1 and DSA-3688-1, explicitly mentioning
+this as a security issue:
 
-Thanks,
-Filippo
+  <https://lists.debian.org/debian-security-announce/2016/msg00268.html>
+  <https://lists.debian.org/debian-security-announce/2016/msg00269.html>
