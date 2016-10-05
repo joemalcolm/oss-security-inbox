@@ -1,26 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/2
-Message-ID: <CAGeh-pG-+vdAo2TxfnJERYBB-rgcsUX=TX7L71wLGPJXq+dLmg@mail.gmail.com>
-Date: Tue, 24 May 2016 10:41:08 +0200
-From: Dejan Bosanac <dejan@...httale.net>
-To: "dev@...ivemq.apache.org" <dev@...ivemq.apache.org>,  "users@...ivemq.apache.org" <users@...ivemq.apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE] CVE-2016-3088: ActiveMQ Fileserver web application vulnerabilities﻿
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/14
+Message-ID: <20161005193331.07a56d5f@pc1>
+Date: Wed, 5 Oct 2016 19:33:31 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
-There's a security vulnerability reported against Apache
-ActiveMQ 5.13.2 and older versions.
+On Wed, 5 Oct 2016 12:24:46 -0500 (CDT)
+Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
 
-Please check the following document and see if you’re affected by the issue.
+> There is only one open-sourced Postscript interpreter (Ghostscript) 
+> that I am aware of.
 
-http://activemq.apache.org/security-advisories.data/CVE-2016-3088-announcement.txt
+That's unfortunate.
 
-Vulnerability is similar to the one reported in CVE-2015-1830 (
-http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcement.txt).
-The fileserver web application will be removed in 5.14.0 release and users
-are advised not to use it and disable it in older versions.
+> There are perhaps two open-sourced PDF interpreters available 
+> (Ghostscript and derivatives of 'xpdf' like 'poppler').
 
-Regards
---
-Dejan Bosanac
-about.me/dejanb
+There's two more from the browser world: pdfium and PDF.js.
 
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+Content of type "application/pgp-signature" skipped
