@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/5
-Message-ID: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
-Date: Tue, 27 Sep 2016 08:48:42 -0500 (CDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/12
+Message-ID: <alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>
+Date: Wed, 5 Oct 2016 12:24:46 -0500 (CDT)
 From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: ImageMagick identify "d:" hangs
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
-Today I noticed ImageMagick issue #275 
-(https://github.com/ImageMagick/ImageMagick/issues/275) which was 
-posted 4 days ago.   I was able to reproduce this issue with the 
-ImageMagick provided by my Ubuntu system (6.8.9-9).
+On Wed, 5 Oct 2016, Hanno Böck wrote:
+>
+> I was surprised to see evince in this list. It uses poppler for pdf and
+> libspectre for postscript, so there seems to be no use of
+> ghostscript (maybe in an older version).
 
-The problem is that a file name ending with a colon (':') causes the 
-program to hang forever.  If an attacker is able to have some control 
-over the input file name, then this could be used to cause DOS by 
-hanging the program.
+There is only one open-sourced Postscript interpreter (Ghostscript) 
+that I am aware of.
 
-The following is the text from the problem report:
+There are perhaps two open-sourced PDF interpreters available 
+(Ghostscript and derivatives of 'xpdf' like 'poppler').
 
-   qwerty4030 commented 4 days ago • edited
-   Version: ImageMagick 6.9.3-10 Q16 x86_64 2016-05-04
-   http://www.imagemagick.org
-   Copyright: Copyright (C) 1999-2016 ImageMagick Studio LLC
-   License: http://www.imagemagick.org/script/license.php
-   Features: Cipher DPC OpenMP
-   Delegates (built-in): jng jpeg lzma png tiff xml zlib
+ImageMagick and GraphicsMagick are depending on Ghostscript.
 
-   OS: 4.4.10-22.54.amzn1.x86_64 (amazon linux)
+Since Postscript is a format commonly sent to printers, many programs 
+produce it, and thus it is used as an intermediate format.  The 
+typical use case is for ImageMagick/GraphicsMagick to automatically 
+run an external utility which converts from the format being read into 
+Postscript, then Ghostscript is used to convert it to a raster format 
+(e.g. PNM), and then the raster format is read by 
+ImageMagick/GraphicsMagick before being output to the final format.
 
-   identify hangs on the following commands:
-
-   identify "d:" (no output, just hangs forever)
-   identify "d::" (no output, just hangs forever)
-   identify "http:"
-   error : Unknown IO error (hangs after this message)
-   identify "http::"
-   error : Unknown IO error (hangs after this message)
-
->From my own investigations, I used
-
-   identify -debug all "d:"
-
-and see that a temporary file is reported to be created and then the 
-program hangs which no apparent CPU usage.
+Disabling Ghostscript or requiring user input to proceed will cause a 
+lot of breakage.
 
 Bob
 -- 
