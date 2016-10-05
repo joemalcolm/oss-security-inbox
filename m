@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12161" "Wednesday" "20" "May" "2020" "14:54:38" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20200520125438.GB12616@f195.suse.de>" "308" "[oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil "5" "2020052012:54:38" "[oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" (number mark "U       mgerstner@su May 20  308/12161 " thread-indent "\"[oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1162" "Wednesday" "5" "October" "2016" "10:04:03" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>" "29" "Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100517:04:03" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct  5   29/1162  " thread-indent "\"Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<20161005184753.417dd846@pc1>" "<CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24380 invoked by uid 550); 20 May 2020 12:54:50 -0000
+Received: (qmail 12200 invoked by uid 550); 5 Oct 2016 17:04:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,325 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24349 invoked from network); 20 May 2020 12:54:50 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 20 May 2020 14:54:38 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: trousers-tech@lists.sourceforge.net, security@suse.de
-Message-ID: <20200520125438.GB12616@f195.suse.de>
+Received: (qmail 12182 invoked from network); 5 Oct 2016 17:04:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=zso0ZAN6NuMTwQxsv57MfeMLzzyg31IzpLr3Sglld+I=;
+        b=MAA8b19TuKwEUGQ+SmaFLgynwyFZvin7Svk0yqRzVoFXCkQireOMq7tG71l7t9OU5L
+         CJ3lAqPfqLbPKfddJ4fM/Yz/xlUt46aFLnfy5gDQuLLpzwMzgT0JB2OGTxstPfqQDJ3x
+         f70ytYNTFZKjLCOm+yOThClbb6CsY0sBctw/JbrzImGMSm1DW+m3JrxptQBzxGPQhsIM
+         zTz7n+HR4z2yxXV39FcYL4yr+L4PE4IJF2Yzb6KKg2SrQ6wSI4aP2jSC/QmFnUReeP/g
+         DgtBPjZi7g1OW/ZOeaXsKK3zPRh5dXGj1j7M4RwliBw0SuqvY/ggHMq8VdJzmUGgR7E5
+         qjfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=zso0ZAN6NuMTwQxsv57MfeMLzzyg31IzpLr3Sglld+I=;
+        b=mTDIJguO+q1JzW1DdbaxNSWSKHHTS5mhVVCtgqzRfGLUptmax2SXFmq8Gkbq8jqzit
+         UZ85ecDVUfS4slcfrNhNB2fkPzv9sL0T8/yIrdYOFq8bv9vZF8f2nLjf9SiqONPZtQ8H
+         Ny8T0h/2dtOC52yWdfDuIZW6YlLnPW1BlGr/0l80vrsTLHsORvjdbJkogc/VZW/ppzJY
+         1BR0Ds8w9br6Eo5D2dpocPekP9dRnP1dA2e2bqzQgLxxX26Uwi2idsWr49isk2jo/NfC
+         6u8mz5L+2pa8AXDQ9edSTSl0WxEZ6bA+5hu22fTWBczzO9vtu5rxQ80GBlkFf3k1rn47
+         58BQ==
+X-Gm-Message-State: AA6/9RnlSic8kBfCeHAOtRMLjajRtDGYgzGOYaFA2O4zKEl0wokHZ3xf7EVYTH9U59ayAtHQgJmlWE5N6HDk/6Le
+X-Received: by 10.176.64.39 with SMTP id h36mr7714087uad.12.1475687063734;
+ Wed, 05 Oct 2016 10:04:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="JgQwtEuHJzHdouWu"
-Content-Disposition: inline
-Subject: [oss-security] Multiple Security Issues in the TrouSerS tpm1.2 tscd Daemon
-
---JgQwtEuHJzHdouWu
-Content-Type: multipart/mixed; boundary="xgyAXRrhYN0wYx8y"
-Content-Disposition: inline
-
-
---xgyAXRrhYN0wYx8y
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
+References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
+ <20161005184753.417dd846@pc1> <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
+Message-ID: <CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Date: Wed, 5 Oct 2016 10:04:03 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems
+To: oss-security@lists.openwall.com
 
-Hello,
+On Wed, Oct 5, 2016 at 9:54 AM, Tavis Ormandy <taviso@google.com> wrote:
+> On Wed, Oct 5, 2016 at 9:47 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+>> On Wed, 5 Oct 2016 09:13:03 -0700
+>> Tavis Ormandy <taviso@google.com> wrote:
+>>
+>>> If you're using ImageMagick, I would recommend disabling the PS, EPS,
+>>> PDF and XPS coders in policy.xml. Applications like gimp, evince,
+>>> claws, and most other applications that generate thumbnails of PDF/PS
+>>> documents should probably not do so without a prompt (NOTE: A lot of
+>>> packages do this
+>>
+>> I was surprised to see evince in this list. It uses poppler for pdf and
+>> libspectre for postscript, so there seems to be no use of
+>> ghostscript (maybe in an older version).
+>> Also for claws the only use of ghostscript is in a plugin that's not
+>> enabled by default.
+>
+> It might be an old version but the version I have on RHEL7 and Ubuntu
+> LTS both invoke gs by default.
+>
+> $ evince --version
+> GNOME Document Viewer 3.14.2
 
-I have discovered multiple security issues in the tcsd daemon of the TrouSe=
-rS
-[1] tpm 1.2 stack.
+Oops, I think I may be wrong about that, I just saw that some of my
+test cases repro and assumed it was using ghostscript.
 
-Introduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Maybe there are poppler issues as well, sigh.
 
-The tcsd daemon manages access to the tpm 1.2 compliant /dev/tpm0 device on
-Linux systems. The daemon utilizes an unprivileged user and group account to
-run as. These are called tss:tss by default.
-
-The tcsd can be started directly as the tss user and group e.g. via systemd=
- or
-via start-stop-daemon. In this case the /dev/tpm0 device needs to be owned =
-by
-the tss user. This mode of operation is safe and is not affected by the
-following findings.
-
-If the tcsd is started with root privileges then it opens /dev/tpm0 as root
-and drops privileges to the unprivileged user afterwards. In this case the =
-tss
-user can achieve privilege escalations. The following logic is performed by
-the tcsd:
-
-1) the daemon reads in the configuration in /etc/tcsd.conf after making sure
-  that the config file is owned by tss:tss mode 0600 (function
-  `conf_file_init()`). From this configuration file the path `system_ps_fil=
-e`
-  (by default /var/lib/tpm/system.data) is parsed and used for further
-  operations.
-
-2) the daemon makes sure that the directory where the `system_ps_file` is
-  contained in exists (function `ps_dirs_init()`, /var/lib/tpm by default).
-  The directory is created, if necessary, using `mkdir()` and mode 0700.
-  Afterwards an explicit `chown()` to mode 0700 is made in case the mode of
-  the directory doesn't match this mode yet.
-
-3) in the function `ps_init_disk_cache()` the function `get_file()` is call=
-ed
-  which opens the `system_ps_file` using `O_RDWR|O_CREAT` and mode 0600:
-
-  `openat(AT_FDCWD, "/var/lib/tpm/system.data", O_RDWR|O_CREAT, 0600) =3D 4`
-
-4) only after these steps a privilege drop to the tss uid is performed in
-   the `main()` function.
-
-Security Issues
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The security issues resulting from this are as follows:
-
-a) Since /var/lib/tpm is owned by the tss user (as per dist/Makefile.am), t=
-he
-   creation of the `system.data` file in step 3) is prone to symlink attack=
-s. The
-   tss user can thereby cause the creation of new files or the corruption of
-   existing files. These new files end up with mode 0600 and no `chown()` t=
-o the
-   tss user is performed by the tcsd. Thus it looks like no full local root
-   privilege escalation can be achieved but only DoS attacks.
-
-b) The tcsd only drops the root uid, not the root gid in step 4). A call to
-   `setgid()` is missing. Therefore the tcsd continues to run with root gro=
-up
-   privileges it doesn't actually require. This could allow further privile=
-ge
-   escalations when combined with other, yet unknown attack vectors.
-
-c) The configuration file /etc/tcsd.conf is _required_ by the tcsd to be
-   owned by tss:tss mode 0600. Therefore the unprivileged user can change a=
-ll
-   daemon related settings, including the `system_ps_file` path. This means
-   the `mkdir()` and `chmod()` performed in step 2) can be directed to an
-   arbitrary path. This also includes the symlink attack described in a)
-   for arbitrary paths.
-
-   Further security issues could stem from this by manipulating other config
-   file options. I did not look deeper into this.
-
-d) Not directly related to the logic above. The example RPM spec file [5] in
-   the TrouSerS repository is using unsafe file and directory modes for
-   /var/lib/tpm and /usr/sbin/tcsd:
-
-   ```
-   # create the default location for the persistent store files
-   if test -e %{_localstatedir}/tpm; then
-        mkdir -p %{_localstatedir}/tpm
-        /bin/chown tss:tss %{_localstatedir}/tpm
-        /bin/chmod 1777 %{_localstatedir}/tpm
-   fi
-
-   # chown the daemon
-   /bin/chown tss:tss %{_sbindir}/tcsd
-   ```
-
-   So here a public sticky-bit directory is setup in /var/lib/tpm. This cou=
-ld
-   allow arbitrary users to setup the symlink attack mentioned in a). It co=
-uld
-   also lead to an information leak. Once the tcsd is started as root the m=
-ode
-   of /var/lib/tpm will be corrected in step 1), however.
-
-   Passing ownership of /usr/sbin/tcsd to the tss user would allow the tss
-   user to replace the tcsd binary by malicious code that will potentially =
-be
-   executed by the root user, leading to arbitrary code execution.
-
-   I'm not aware of any distribution actually using this spec file or parts=
- of
-   it. Still it is a very bad example.
-
-Mitigation and Bugfixes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-It seems best to me to run the tcsd as the tss:tss user and group right away
-and to not rely on the privilege drop logic implemented in the daemon itsel=
-f.
-All of a), b) and c) should no longer be problematic in this case. I found
-that on Debian and Gentoo Linux this is already the case. To make this work=
- a
-udev rule needs to be packaged that passes ownership of /dev/tpm0 device to
-the tss user. To prevent regressions when switching from the privilege drop
-approach to this new approach, a possibly already existing
-/var/lib/tpm/system.auth file needs to be safely chown()'ed to the tss user
-during package updates.
-
-On SUSE and Fedora Linux the tcsd is started as root via systemd, thus they
-are affected by the security issues. A preliminary suggested source code fix
-is attached to this mail. It makes sure that `O_NOFOLLOW` is added to step =
-3)
-to prevent a symlink attack. It also adds a drop of the root gid to the tss
-gid. And it modifies the check of /etc/tcsd.conf such that ownership root:t=
-ss
-and mode 0640 are necessary. The packaging needs to be adjusted accordingly.
-
-The correct long term fix should probably be to *only* open /dev/tpm0 as ro=
-ot,
-immediately drop to tss:tss and only then perform the further initialization
-steps. The initialization sequence in `tcsd_startup()` is currently running
-completely in the root user context and seems rather complex. Maybe there a=
-re
-more details to this that I don't know of yet. For this reason I didn't try=
- a
-patch in this direction yet.
-
-Upstream Reporting
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-I reported issues a), b) and d) privately to the documented upstream contac=
-ts
-without much success (see Timeline below). The SUSE Security Team 90 days
-maximum disclosure time has been reached, therefore I'm publishing this now=
- in
-an uncoordinated way. While working on a fix I additionally discovered issue
-c). SUSE is tracking the issues in bsc#1164472 [6] currently.
-
-Issues a), b) and c) deserve CVE assignments in my opinion. I can't request
-CVEs myself though, because IBM upstream is a CNA themselves. Therefore
-upstream is required to assign their own CVEs.
-
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-2020-02-19: I reported findings a), b) and d) to honclo@linux.vnet.ibm.com,
-            the security contact of the project according to the README fil=
-e [2].
-2020-02-28: I reported findings a), b) and d) to debora@linux.ibm.com, the
-            maintainer of the project according to the AUTHORS file [3].
-2020-03-16: I received a reply from debora@linux.ibm.com, stating that she
-            will look into the findings.
-2020-05-06: I reminded debora@linux.ibm.com that the latest disclosure time
-            [4] for the findings is approaching and asked for any updates.
-2020-05-20: I started working on a bugfix and mitigations, discovered the
-            additional finding c) and started publishing the findings.
-
-[1]: https://sourceforge.net/projects/trousers
-[2]: https://sourceforge.net/p/trousers/trousers/ci/master/tree/README
-[3]: https://sourceforge.net/p/trousers/trousers/ci/master/tree/AUTHORS
-[4]: https://en.opensuse.org/openSUSE:Security_disclosure_policy
-[5]: https://sourceforge.net/p/trousers/trousers/ci/master/tree/dist/trouse=
-rs.spec.in
-[6]: https://bugzilla.suse.com/show_bug.cgi?id=3D1164472
-
-Best Regards
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
-
-
---xgyAXRrhYN0wYx8y
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="tcsd_fixes.patch"
-Content-Transfer-Encoding: quoted-printable
-
-Index: trousers-0.3.14/src/tcs/ps/tcsps.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- trousers-0.3.14.orig/src/tcs/ps/tcsps.c
-+++ trousers-0.3.14/src/tcs/ps/tcsps.c
-@@ -72,7 +72,7 @@ get_file()
- 	}
-=20
- 	/* open and lock the file */
--	system_ps_fd =3D open(tcsd_options.system_ps_file, O_CREAT|O_RDWR, 0600);
-+	system_ps_fd =3D open(tcsd_options.system_ps_file, O_CREAT|O_RDWR|O_NOFOL=
-LOW, 0600);
- 	if (system_ps_fd < 0) {
- 		LogError("system PS: open() of %s failed: %s",
- 				tcsd_options.system_ps_file, strerror(errno));
-Index: trousers-0.3.14/src/tcsd/svrside.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- trousers-0.3.14.orig/src/tcsd/svrside.c
-+++ trousers-0.3.14/src/tcsd/svrside.c
-@@ -473,6 +473,7 @@ main(int argc, char **argv)
- 		}
- 		return TCSERR(TSS_E_INTERNAL_ERROR);
- 	}
-+	setgid(pwd->pw_gid);
- 	setuid(pwd->pw_uid);
- #endif
- #endif
-Index: trousers-0.3.14/src/tcsd/tcsd_conf.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- trousers-0.3.14.orig/src/tcsd/tcsd_conf.c
-+++ trousers-0.3.14/src/tcsd/tcsd_conf.c
-@@ -743,7 +743,7 @@ conf_file_init(struct tcsd_config *conf)
- #ifndef SOLARIS
- 	struct group *grp;
- 	struct passwd *pw;
--	mode_t mode =3D (S_IRUSR|S_IWUSR);
-+	mode_t mode =3D (S_IRUSR|S_IWUSR|S_IRGRP);
- #endif /* SOLARIS */
- 	TSS_RESULT result;
-=20
-@@ -798,15 +798,15 @@ conf_file_init(struct tcsd_config *conf)
- 	}
-=20
- 	/* make sure user/group TSS owns the conf file */
--	if (pw->pw_uid !=3D stat_buf.st_uid || grp->gr_gid !=3D stat_buf.st_gid) {
-+	if (stat_buf.st_uid !=3D 0 || grp->gr_gid !=3D stat_buf.st_gid) {
- 		LogError("TCSD config file (%s) must be user/group %s/%s", tcsd_config_f=
-ile,
--				TSS_USER_NAME, TSS_GROUP_NAME);
-+				"root", TSS_GROUP_NAME);
- 		return TCSERR(TSS_E_INTERNAL_ERROR);
- 	}
-=20
--	/* make sure only the tss user can manipulate the config file */
-+	/* make sure only the tss user can read (but not manipulate) the config f=
-ile */
- 	if (((stat_buf.st_mode & 0777) ^ mode) !=3D 0) {
--		LogError("TCSD config file (%s) must be mode 0600", tcsd_config_file);
-+		LogError("TCSD config file (%s) must be mode 0640", tcsd_config_file);
- 		return TCSERR(TSS_E_INTERNAL_ERROR);
- 	}
- #endif /* SOLARIS */
-
---xgyAXRrhYN0wYx8y--
-
---JgQwtEuHJzHdouWu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl7FKI4ACgkQFMQFyXGS
-NVMuIBAAg5alyQcVaXfp1dhRH83fSO7E9wQxDQMNjIEHqsZL5AvkQ7XHXtE8dHo0
-F7D5cOsu8Yyyj8wU6WoZl/nN6sy9PGuhYt+cwvVlNDPt8iQJHkAAqqBedpFJCnnK
-ZoswnDICA13Q7tO0ih14EMfW2WNKOcW2jrktHh2q9hDd6sDhu8dzHI2f2EuA3qq7
-ow6vFFhusgc1Vy6afE3l1+MBK3hNHF9eVqa3uzPxCLgwh/k0C+4iYcizM9uI0wki
-BlrTePPqIkRswRVEYNSE3bgVKl48Bhd5/V5cxPoxaWJbSZjPaa2U1GyFd8YhLY17
-1shVyKq9E5F9NMn6TWSBWpkPOd63SYGItLxoQFHYA5PvvUDjR6Mu4e4TULPa+DLB
-rVWtiaDXma9VwgPysR3as9l5bgb+rDuDgjnVzyJJzobrfkF1u3NM5dgq4jf0q1n8
-8LQpOFhfv+n1+vGP97nyYZI/lw9tv/XzQh7Ajq8SH3GIyRAZA7mTDN+0mBt/obvG
-b0c9gYOF0gH742DpQGr7KOcHvipcgorbqJMUKU3ZyEywJueFn0dvK3SKsVNdVq2f
-wDwcbwnFYPQZVihDlvaCqy5SWjbJAce7ZK8F5lTt3wQKMlxJgLdPxa4bPN5bxy4Y
-2N3Ra4Z4KHoBBcPS/9C9zeu50fpEWWFCgwp2UAqOFg7lcWzM5Ao=
-=mWDW
------END PGP SIGNATURE-----
-
---JgQwtEuHJzHdouWu--
+Tavis.
