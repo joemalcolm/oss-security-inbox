@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7139" "Monday" "5" "October" "2020" "17:57:28" "-0500" "Daniel Sprouse" "daniel.a.sprouse@gmail.com" "<CAC4ZH8DfBuQYVKFDBt93W+9k+2FTtqDZde78xNk4X54rX1wvZw@mail.gmail.com>" "154" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020100522:57:28" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       daniel.a.spr Oct  5  154/7139  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201005204820.GA8410@openwall.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1382" "Wednesday" "5" "October" "2016" "12:24:46" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>" "35" "Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100517:24:46" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        bfriesen@sim Oct  5   35/1382  " thread-indent "\"Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<20161005184753.417dd846@pc1>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<20161005184753.417dd846@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26117 invoked by uid 550); 6 Oct 2020 10:44:08 -0000
+Received: (qmail 9601 invoked by uid 550); 5 Oct 2016 17:25:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,197 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21926 invoked from network); 5 Oct 2020 22:58:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=2vvTBtgbSyIluyoUTPrbqw2d4iCtYicmL6DH9fy+iVc=;
-        b=cEof1jxC/LJ+Nc7my6oLxGvucWR28Inil168dBgIzFCP7DcQeJqKCUyaWD/W2YbsTA
-         UfADhYOdgCowSXJc87n9Ax7lKrzSRYYnT5xrXkBqMJUI7beRxVre71wwKmYIL2xB4g7p
-         /unJzNPYwe8lQiPG5ORhApqe7TtYLCsI3f7VaHmvC7mBJwBj/cyEdWDrVnVpU+1Jx7q9
-         yod7zuBYtAa129PfV53YdJXSO/5bL+SGmRlRR1gd83hF3Ocq2N+7K16/FVOPAV61ADjB
-         rPIcjSTPuTQdIXUkSYGxgPck76CYj3sZDQeVl4Lg4hyHeY/GidNkQsU3njRj+LmJz/Bx
-         kH1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=2vvTBtgbSyIluyoUTPrbqw2d4iCtYicmL6DH9fy+iVc=;
-        b=rOUkqNhks2ccBSF+yG8FHtXUiyzJm/gC4pa4R88AQNOcIj3nC5vi8BSS8mnrGGu6mF
-         EB4OGoUD4KVyUaODGanYh67ub5sPqLZbk45KXiaO+XANlYee9tW/VlQKKk8NGe/ChK6/
-         FLQqaRXPXsBuNDdIhgQWKmpsvirAd/vPot1Nplx4QdOpCHineXCVnWZGn/Vb+JtK6koC
-         tFrEvxcLvXES3h5aW8r77Wp+LQvrnoAXjHhfmo6kGQqCSGXZTpVsQPIYIUxg5xax1OQA
-         wATZ4AF7hL034l9DimUmGCfDiYXqMsqJG4g+szzpRjKDEk2KRCpWoDZEoujS/2ui/n0G
-         LoQA==
-X-Gm-Message-State: AOAM533eGY6vYBGaiXWfB6PlkN7tg/YWthVYn/nyhgMIX4gjHW7g6De/
-	Mnje1yNxCrUQDtZVEXRs/A6KK29pmMVKRX2vMHqhYNrR9fM=
-X-Google-Smtp-Source: ABdhPJxXpsPzYbR8KMpnsazFVOnvkHB5myDo6AV+JnNhECiQK3Ft++3B3t2WxymYez9eJELteBobMFj6vKuXN0vyhYY=
-X-Received: by 2002:a19:2291:: with SMTP id i139mr484966lfi.387.1601938721248;
- Mon, 05 Oct 2020 15:58:41 -0700 (PDT)
+Received: (qmail 9582 invoked from network); 5 Oct 2016 17:24:59 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <20161005184753.417dd846@pc1>
+Message-ID: <alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>
+References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com> <20161005184753.417dd846@pc1>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
- <20201005204820.GA8410@openwall.com>
-In-Reply-To: <20201005204820.GA8410@openwall.com>
-From: Daniel Sprouse <daniel.a.sprouse@gmail.com>
-Date: Mon, 5 Oct 2020 17:57:28 -0500
-Message-ID: <CAC4ZH8DfBuQYVKFDBt93W+9k+2FTtqDZde78xNk4X54rX1wvZw@mail.gmail.com>
+Content-Type: multipart/mixed; BOUNDARY="-559023410-2032315143-1475688286=:29692"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 05 Oct 2016 12:24:47 -0500 (CDT)
+Date: Wed, 5 Oct 2016 12:24:46 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox
+ problems
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000006e998105b0f46cb7"
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop
- and/or mobile market?
 
---0000000000006e998105b0f46cb7
-Content-Type: text/plain; charset="UTF-8"
+---559023410-2032315143-1475688286=:29692
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-I have to admit that as a unix/linux admin I have wondered how browsers are
-able to skate by without their own unique no-login user, for security
-purposes. It would make everything about them easier to control and secure.
+On Wed, 5 Oct 2016, Hanno Böck wrote:
+>
+> I was surprised to see evince in this list. It uses poppler for pdf and
+> libspectre for postscript, so there seems to be no use of
+> ghostscript (maybe in an older version).
 
-On Mon, Oct 5, 2020 at 3:50 PM Solar Designer <solar@openwall.com> wrote:
+There is only one open-sourced Postscript interpreter (Ghostscript) 
+that I am aware of.
 
-> Hi all,
->
-> As a moderator I approved all messages in this thread so far, but I am
-> unhappy about the quality of both Georgi's message and the replies.
->
-> This is a valid topic, but there's no room in it for trolling (that's
-> how Georgi's message came across, even if maybe unintentionally) nor for
-> responding only about the presumed trolling.  Just assume good faith and
-> post a response that's actually useful to others in here.  I'll try:
->
-> On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
-> > Are there major security changes needed if
-> > gnu/linux dominates the desktop and/or mobile phone
-> > markets?
->
-> I'd say yes, major security changes are needed.
->
-> On the desktop, major Linux distributions (and by the way *BSDs and
-> Solaris are not very different in this respect, I think) when used as
-> single-user desktop systems lack security isolation between applications
-> of the user.  (And also between the user and root, due to the typical
-> recommended use of sudo from the user account.)
->
-> This kind of security isolation is something we have on Android, but at
-> the price of the user not having full access to (not entirely) their
-> device.  The user cannot even have e.g. a file manager app with which
-> they'd access all files of other apps.
->
-> Then there's the trend towards having a desktop-like Linux system on
-> mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
-> we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
-> aware, so far this means lack of isolation between the apps just like we
-> have on the desktop.
->
-> We need the best of both worlds - isolation, yet full control.  I guess
-> this could be achieved by devices gaining a physical button that would
-> need to be pressed at the time a newly installed app is to be granted
-> privileges by a component in the system's TCB.  Said component would
-> also need to assure the user that it's the only one in control at the
-> moment (kind of after a SAK) and that the displayed privileges request
-> is truthful and complete, e.g. by lighting a dedicated LED.  You want to
-> install an all-powerful file manager?  Just wait for that LED to light
-> up, review what privileges would be granted to where, and press that
-> button to accept.  Perhaps too cumbersome for typical users.  Maybe an
-> alternative approach could be developed where a portion of the
-> touchscreen (or a secondary one) would be reserved for interacting with
-> the OS TCB.  Perhaps something like MacBook Pro's Touch Bar could be
-> used for that purpose - and having that is already a precedent, it's
-> just not used for a security purpose yet (or I haven't heard of that).
->
-> Then there's the issue of attack surface and of few layers of security.
-> Linux kernel is quite poor in this respect when it comes to attacks by a
-> locally running program.  Even Android doesn't change that.  One way to
-> address this is to introduce a security layer between the (host) Linux
-> kernel and the program, running programs in VMs.  This replaces the
-> attack surface with that of the hypervisor (and of the UI and components
-> needed to integrate the VMs back).  Another (poor man's) way to
-> partially mitigate this is to have something watch and protect the Linux
-> kernel (Samsung KNOX, LKRG).
->
-> A desktop Linux distro that theoretically gets close to what's needed is
-> Qubes OS.  It runs programs in VMs yet integrates them on a single
-> desktop.  It effectively reserves a portion of the screen for control by
-> not letting VMs access full screen mode by default.
->
-> In practice though, there are severe security risks even with Qubes OS.
-> The in-VM systems need to be updated, and each update is a risk of
-> bringing in malicious code.  When most VMs are based off the same Fedora
-> template, updating that means trusting all installed packages' Fedora
-> maintainers.  Any package can gain full control through a malicious pre-
-> or post-install script, even if the software it installs is never
-> explicitly used in a given VM.  This means instant access to all VMs on
-> next system restart.
->
-> For typical desktop Linux users, realistically most security is provided
-> by the web browser, which these days at least uses a sandbox, protecting
-> the user's files and other apps from itself.  That's something the
-> underlying systems tend to lack.
->
-> > Remarks:
-> > 1. there was android malware on google play
->
-> Yet Android at least tries to limit apps to the permissions you approve
-> them to have, and isolates them from other apps (except for shared
-> storage of pictures and "SD card" if you agree to those permissions).
->
-> Desktop distros and desktop-like mobile distros don't even have that in
-> their typical usage.
->
-> > 2. ad-free and free as in beer android games are hard to find for us
->
-> I guess weird out-of-line things like that is part of why people think
-> Georgi was trolling.
->
-> > 3. we are pissed off by browsers accessing the microphone
-> > or camera (seen in the wild)
->
-> I don't know what this refers to, but I guess if unauthorized by the
-> user that would be a browser vulnerability or a modified malicious copy
-> of the browser (malware) or maybe active modification of a browser on
-> the system (also by malware).
->
-> Sure malware and social engineering are valid threats to keep in mind.
->
-> It's also a good idea not to rely solely on the browser's built-in
-> authorization checks, but to limit its access to system resources such
-> as the microphone and camera.  Qubes OS does that.
->
-> > 4. reading $HOME might reveal more interesting stuff than
-> > root reading /etc/ (on debian 10 /home/loser is 755 and the
-> > default umask is 0022)
->
-> Now this is about the lack of security isolation between the users, if
-> there's more than one actual user on a system.  I also do think this is
-> very wrong and needs to change (and is an easy change, unlike others I
-> pointed out above).
->
-> Relaxed file permissions like that may also further weaken some partial
-> sandboxes (when a service is running with its dedicated credentials, but
-> with retained filesystem access - such as because it needs that).
->
-> Then there are also plenty of other local security risks on typical
-> Linux distros, starting with risky data processing by apport and abrt.
-> Those would matter more if other issues I mentioned are addressed.
->
-> I might be right or wrong or (most likely) both, but I hope this sets
-> the tone for constructive further discussion.
->
-> Alexander
->
+There are perhaps two open-sourced PDF interpreters available 
+(Ghostscript and derivatives of 'xpdf' like 'poppler').
 
+ImageMagick and GraphicsMagick are depending on Ghostscript.
 
+Since Postscript is a format commonly sent to printers, many programs 
+produce it, and thus it is used as an intermediate format.  The 
+typical use case is for ImageMagick/GraphicsMagick to automatically 
+run an external utility which converts from the format being read into 
+Postscript, then Ghostscript is used to convert it to a raster format 
+(e.g. PNM), and then the raster format is read by 
+ImageMagick/GraphicsMagick before being output to the final format.
+
+Disabling Ghostscript or requiring user input to proceed will cause a 
+lot of breakage.
+
+Bob
 -- 
--- -- Sincerely Yours,
-.                Daniel Sprouse
-
-Daniel Allen Sprouse
-Unix/Linux Administrator
-daniel.a.sprouse@gmail.com
-google voice: 512-815-2048
-
-ne tectis a demergu, pater, formabis foramine in landa.
-.
-
---0000000000006e998105b0f46cb7--
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+---559023410-2032315143-1475688286=:29692--
