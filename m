@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/2
-Message-ID: <alpine.LFD.2.20.1606021054530.24989@wniryva>
-Date: Thu, 2 Jun 2016 10:56:53 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/8
+Message-ID: <20161005184753.417dd846@pc1>
+Date: Wed, 5 Oct 2016 18:47:53 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Wed, 5 Oct 2016 09:13:03 -0700
+Tavis Ormandy <taviso@...gle.com> wrote:
 
-Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
-is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO 
-buffer for command and information transfer. The OOB write occurs while 
-reading from information transfer buffer via non-DMA mode in routine 
-get_cmd().
+> If you're using ImageMagick, I would recommend disabling the PS, EPS,
+> PDF and XPS coders in policy.xml. Applications like gimp, evince,
+> claws, and most other applications that generate thumbnails of PDF/PS
+> documents should probably not do so without a prompt (NOTE: A lot of
+> packages do this
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+I was surprised to see evince in this list. It uses poppler for pdf and
+libspectre for postscript, so there seems to be no use of
+ghostscript (maybe in an older version).
+Also for claws the only use of ghostscript is in a plugin that's not
+enabled by default.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg00150.html
+While I agree that avoiding parsing for things like thumbnails should
+be tried I still wonder what the overall solution to this is. Because
+even if we avoid non-prompted ps parsing we still want to be able to
+parse PS files without code execution.
+Do you feel dSAFER could be secured or is this a loosing battle?
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1341931
+-- 
+Hanno Böck
+https://hboeck.de/
 
-This issue was discovered by Li Qiang of 360.cn Inc.
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Content of type "application/pgp-signature" skipped
