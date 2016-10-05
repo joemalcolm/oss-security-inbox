@@ -1,37 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/24/1
-Message-ID: <20160824065811.GB7400@sin.redhat.com>
-Date: Wed, 24 Aug 2016 16:28:12 +0930
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/1
+Message-Id: <20161005020829.767928BC2DD@smtpvmsrv1.mitre.org>
+Date: Tue,  4 Oct 2016 22:08:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: aacid@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@....org
+Subject: Re: KMail vulnerabilites: need 3 CVE
 Content-Type: text/plain; charset=utf-8
 
-The inclusion of "INPUTRC" in env_keep in /etc/sudoers allowed
-information disclosure through readline-enabled programs parsing the
-named file with elevated privileges.  Local users with sudo access could
-read (portions of) specially-formatted files with elevated privileges.
-Future versions of readline will make the vulnerability more significant
-by showing error messages for malformed entries, rather than silently
-ignoring them.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This flaw is distribution-specific - upstream sudo does not include
-INPUTRC, and we are not aware at this time of any other distros that
-include it.
+> KMail: HTML injection in plain text viewer
 
-The following packages address this issue:
+Use CVE-2016-7966.
 
-	sudo-1.8.15-2.fc22
-	sudo-1.8.15-2.fc23
-	sudo-1.8.16-4.fc24
-	sudo-1.8.17p1-1.mga5
 
-This was brought to our attention by Grisha Levit.
+> KMail: JavaScript access to local and remote URLs
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1339935
+Use CVE-2016-7967.
 
--- 
-Doran Moppert
-Red Hat Product Security
 
-Content of type "application/pgp-signature" skipped
+> KMail: JavaScript execution in HTML Mails
+
+Use CVE-2016-7968.
+
+
+> Fixes for them are already in our various of our repos
+
+We think you mean that this includes fixes within the past week or so,
+such as (among others) the
+https://quickgit.kde.org/?p=messagelib.git&a=shortlog remove/disable
+commits related to JavaScript.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX9GBAAAoJEHb/MwWLVhi290AP/37+M4O8X5a1ssxCzi6s59GL
+rJbpY3mLpWZ31r44TcgjvIVj29oP8FbjCyMzJvl7TpnjxNQt4B3sISzsXpmnuXXT
+Lgc6xxRlqA2vOk0GU7FRb9l75pYj7o1AOATP8ARwfyX2bnEWf/308HbTfv8oT1ox
+y9o/4as4qJtssNR87IORwvcUmaHsMajLTy2N4tmMZE7eAWDNoJaQRpzvi7WYwZvo
+YYXDID7JichQcvSH11hJ1dcchEdsQLscixgq4mUosxU62uDTvkfRjCrgdsOtZndN
+p+WJ/S+DwMVTFej8R4btEdth6KYaSIfTNMbl1iMPdNVyOOJKO1UMLQPXYKgSw7fK
+5RZN1j98KCGec0hP9msukF+/8/8W2Arp3AxWX2TP+4YcuNTuCWjwctxqrSSVdfju
+GANZqCcTLBXcDxdfrzyOOSWASMH0ud5zQvGrfASIwPn6D/EJj4JUQgp9Qae1c2hp
+2/IIUlnlyY3Dcy0ho5AediKu3Aa1kH2Qascn8HdFbF8BRrj/3iND3tD4uOWL5NSu
+FeezAOYcdiUKFOjU0lGoOjBdPYsFZN1VZTViixQ0+r3LUs0n/ufN3hSxCC8mDfNU
+vsWN77/ahR0AYimNp1zxjTdvjmNrYuaoUIuKFgC9uRehyEbvLxd2Z9c8fJb6x+A/
+lFkx5UJwcRVWmU2ELitN
+=EKKi
+-----END PGP SIGNATURE-----
