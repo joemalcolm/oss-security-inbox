@@ -1,42 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/5
-Message-Id: <6921209F-B318-4448-B0C1-55798888CDE3@gmail.com>
-Date: Thu, 24 Nov 2016 15:22:28 +0800
-From: haojun hou <haojunhou@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/9
+Message-ID: <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
+Date: Wed, 5 Oct 2016 09:54:07 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - BigTree CMS 4.2.13 Extension Form Builder Multiple Cross-Site Scripting (XSS)
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
-Hi:
-BigTree CMS 4.2.13 Extension Form Builder- Multiple Cross-Site Scripting (XSS) 
+On Wed, Oct 5, 2016 at 9:47 AM, Hanno Böck <hanno@...eck.de> wrote:
+> On Wed, 5 Oct 2016 09:13:03 -0700
+> Tavis Ormandy <taviso@...gle.com> wrote:
+>
+>> If you're using ImageMagick, I would recommend disabling the PS, EPS,
+>> PDF and XPS coders in policy.xml. Applications like gimp, evince,
+>> claws, and most other applications that generate thumbnails of PDF/PS
+>> documents should probably not do so without a prompt (NOTE: A lot of
+>> packages do this
+>
+> I was surprised to see evince in this list. It uses poppler for pdf and
+> libspectre for postscript, so there seems to be no use of
+> ghostscript (maybe in an older version).
+> Also for claws the only use of ghostscript is in a plugin that's not
+> enabled by default.
 
-Procuct: BigTree CMS Extension Form Builder
+It might be an old version but the version I have on RHEL7 and Ubuntu
+LTS both invoke gs by default.
 
-Vendor: BigTree CMS Developer
+$ evince --version
+GNOME Document Viewer 3.14.2
 
-https://www.bigtreecms.org/extensions/details/com.fastspot.form-builder
-
-Vunlerable Version: 1.1
-
-Tested Version: 1.1
-
-Author: Haojun Hou in ADLab of Venustech 
-
-Advisory Details:
-
-Haojun Hou in ADLab of Venustech discovered Multiple Cross-Site Scripting (XSS) in BigTree CMS Extension “Form Builder”, which can be exploited to add,modify or delete information in application`s database and gain complete control over the application.
-
-
-
-The vulnerability exists due to insufficientfiltration of user-supplied data in multiple HTTP POST parameters passed to “site/index.php/../../extensions/com.fastspot.form-builder/ajax/redraw-field.php” url. An attacker could execute arbitrary HTML and script code in browser in context of the vulnerable website.
-
-The exploitation examples below uses the "alert()" JavaScript function to see a  pop-up messagebox:
-
-(1)POST id= "?><script>alert("hacked by ADLab");</script><?"
-
-(2)POST name= "?><script>alert("hacked by ADLab");</script><?"
-
-(3)POST type= "?><script>alert("hacked by ADLab");</script><?"
+> While I agree that avoiding parsing for things like thumbnails should
+> be tried I still wonder what the overall solution to this is. Because
+> even if we avoid non-prompted ps parsing we still want to be able to
+> parse PS files without code execution.
+> Do you feel dSAFER could be secured or is this a loosing battle?
+>
 
 
-Could you please help me assign a  CVE for this issue?
+As I understand it, there are also complicated licensing issues with
+ghostscript that are going to impede progress.
+
+The problem is a big mess.
+
+> --
+> Hanno Böck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
