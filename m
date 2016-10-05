@@ -1,41 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/9
-Message-Id: <20160905230413.2A24973C3E1@smtpvmsrv1.mitre.org>
-Date: Mon,  5 Sep 2016 19:04:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: nenolod@...eferenced.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/7
+Message-ID: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
+Date: Wed, 5 Oct 2016 09:13:03 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi, just an update and CVE request for various ghostscript issues. In
+general, the security properties of -dSAFER are not well tested and
+it's probably not wise to rely on it. The issues below were found just
+by browsing the commands available, I haven't tried fuzzing it.
 
-> As is Nefarious:
-> 
-> https://github.com/evilnet/nefarious2/commit/f50a84bad996d438e7b31b9e74c32a41e43f8be5
+These are all possible to exploit via PDF or PS (or the various
+similar formats, like XPS).
 
-Use CVE-2016-7145 for this issue only in the Nefarious 2 codebase.
+If you're using ImageMagick, I would recommend disabling the PS, EPS,
+PDF and XPS coders in policy.xml. Applications like gimp, evince,
+claws, and most other applications that generate thumbnails of PDF/PS
+documents should probably not do so without a prompt (NOTE: A lot of
+packages do this
+https://codesearch.debian.net/search?q=-dSAFER+&perpkg=1 )
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+bug: various userparams allow %pipe% in paths, allowing remote shell
+command execution.
+id: http://bugs.ghostscript.com/show_bug.cgi?id=697178
+repro: http://www.openwall.com/lists/oss-security/2016/09/30/8
+patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=71ac874
+cve: please assign
 
-iQIcBAEBCAAGBQJXzfmPAAoJEHb/MwWLVhi2ddEQAJT9z+GrwHozuewZnzrnsjnP
-Ttp6f5/53smFgZ583+v6u2nBOZo9FK4TpbdIbfauIor9zNiJ1GUBbmLBhOQzxtY7
-RzKTLr6s0yoXZxNd908axT9Udwv8Gy/9OvCPnlri7sgFaMgngjzn6PKnU2qWyJD7
-PRqdTKRyLaHJP0aTpx5ICKtkK1+4h7ZySZltTk8yAgpZX92G4Rv7AtusdD97l8dc
-l6kAZLVVT4WcaNWGQ515HZYmLLgq0T0/yAxeQ6usFetK0tSDxuWS2XGLYCjVugx2
-/TjGNyy0qself/BZ+8a4khXEnd1qh0UjUAIWdbkCJQpGqx4uB8trBe321aToh6BE
-BhSWL1jCrJI8CobEhDEQyK/oUdWRGbcy67vm6Z/SIle/iHOjXWV8ksye53ROuk01
-nKkPcH25Yl85vWrGbzg5mLGLzPN0m6o9Fl1s3hGnRdUX7bWT5vrXDwmGN9ohU7fj
-GukbbX/CajBcGl9o4M72ljnXXss9umSR7bTW1NYSim/oRtKUNMAQQU7gcMD9a1rN
-ROY9OMP7TYnUfa8skDkNBN6W5saqaGVsvTEIyahFxueSJcLkZa0wF85Kwp63P7PI
-cY1sospQrBTGZYaWfpRsqhw3AQSsAg5qi5hpxBD1MDfwkY27s8Yg4KzHGPw50w4Y
-YeJil6lI83C45YU9Zl1m
-=dre8
------END PGP SIGNATURE-----
+bug: .libfile doesn't check PermitFileReading array, allowing remote
+file disclosure.
+id: http://bugs.ghostscript.com/show_bug.cgi?id=697169
+repro: http://www.openwall.com/lists/oss-security/2016/09/29/28
+patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=cf046d2
+cve: please assign
+
+bug: reference leak in .setdevice allows use-after-free and remote
+code execution
+id: http://bugs.ghostscript.com/show_bug.cgi?id=697179
+repro: http://bugs.ghostscript.com/show_bug.cgi?id=697179#c0
+patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=d5ad1e02
+cve: please assign
+
+bug: type confusion in .initialize_dsc_parser allows remote code execution
+id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
+repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
+patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
+cve: please assign
+
+There are a few other minor issues and leaks, but these are the
+important ones if you're not going to disable using gs. Please also
+check that you're shipping the patch for CVE-2013-5653.
+
+Tavis.
