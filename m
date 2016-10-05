@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/12
-Message-ID: <20160114223207.GB30647@localhost.localdomain>
-Date: Thu, 14 Jan 2016 14:32:07 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
-To: Jan Schaumann <jschauma@...meister.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/6
+Message-ID: <3fd205c8.3e9.15795832e18.Coremail.hongkun.zeng@dbappsecurity.com.cn>
+Date: Wed, 5 Oct 2016 23:43:04 +0800 (GMT+08:00)
+From: "Hongkun Zeng" <hongkun.zeng@...ppsecurity.com.cn>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-7902: Dotclear <= 2.10.2 (Media Manager) Unrestricted File Upload
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 14, 2016 at 01:11:29PM -0500, Jan Schaumann wrote:
-> Why is version 5.3 not affected?
+Vulnerability: Dotclear <= 2.10.2 (Media Manager) Unrestricted File Upload
+CVE: CVE-2016-7902
+Discovered by: Hongkun Zeng (http://www.dbappsecurity.com.cn/)
 
-The information leak is in resend_bytes() ["if (out_start < out_last)"
-should be "if (out_start <= out_last)"], but in OpenSSH 5.3, there is no
-call to resend_bytes(), at all (roaming_client.c does not even exist).
 
-With best regards,
+Dotclear is an open source blog publishing application distributed under the GNU GPLv2.
 
--- 
-the Qualys Security Advisory team
+
+The fileUnzip->unzip() method not properly verifying the extension of files in zip archive.
+This could be exploited to execute arbitrary PHP code by uploading a zip archive file contain the files which extensions (like .php.txt or .php%20).
+Successful exploitation of this vulnerability requires an account with permissions to manage media items.
+
+
+Fix commit: https://hg.dotclear.org/dotclear/rev/a9db771a5a70
+
+
+Best Regards,
+Hongkun Zeng
+---------------------------------------------------
+hongkun.zeng@...ppsecurity.com.cn
