@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["969" "Tuesday" "14" "March" "2017" "23:00:26" "+0100" "Solar Designer" "solar@openwall.com" "<20170314220026.GA14618@openwall.com>" "16" "Re: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)" "^Date:" nil nil "3" "2017031422:00:26" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)" (number mark "        solar@openwa Mar 14   16/969   " thread-indent "\"Re: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)\"\n") "<923996.603905351-sendEmail@localhost>" ("<923996.603905351-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["356" "Wednesday" "5" "October" "2016" "23:27:00" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87twcq32sb.fsf@mid.deneb.enyo.de>" "11" "Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100521:27:00" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        fw@deneb.eny Oct  5   11/356   " thread-indent "\"Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<20161005182507.tbpgjh6kvi4ygvdl@jwilk.net>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<20161005184753.417dd846@pc1>" "<alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>" "<20161005193331.07a56d5f@pc1>" "<20161005182507.tbpgjh6kvi4ygvdl@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 11362 invoked by uid 550); 14 Mar 2017 22:04:20 -0000
+Received: (qmail 5760 invoked by uid 550); 5 Oct 2016 21:27:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9262 invoked from network); 14 Mar 2017 22:00:34 -0000
-Message-ID: <20170314220026.GA14618@openwall.com>
-References: <923996.603905351-sendEmail@localhost>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <923996.603905351-sendEmail@localhost>
-User-Agent: Mutt/1.4.2.3i
-Date: Tue, 14 Mar 2017 23:00:26 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5739 invoked from network); 5 Oct 2016 21:27:12 -0000
+References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
+	<20161005184753.417dd846@pc1>
+	<alpine.GSO.2.20.1610051214000.29692@freddy.simplesystems.org>
+	<20161005193331.07a56d5f@pc1>
+	<20161005182507.tbpgjh6kvi4ygvdl@jwilk.net>
+In-Reply-To: <20161005182507.tbpgjh6kvi4ygvdl@jwilk.net> (Jakub Wilk's message
+	of "Wed, 5 Oct 2016 20:25:07 +0200")
+Message-ID: <87twcq32sb.fsf@mid.deneb.enyo.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 05 Oct 2016 23:27:00 +0200
+From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)
+Subject: Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems
 To: oss-security@lists.openwall.com
 
-On Sun, Feb 26, 2017 at 11:45:35AM +0000, Agostino Sarubbo wrote:
-> ==6096==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004bbc35 bp 0x7ffd65dbabf0 sp 0x7ffd65dba3a0
-> READ of size 33872 at 0x61a00001f708 thread T0
->     #0 0x4bbc34 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
->     #1 0x7efec209d7df in MSADPCM::initializeCoefficients() /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:369:3
->     #2 0x7efec209d7df in MSADPCM::createDecompress(Track*, File*, bool, bool, long*)
+* Jakub Wilk:
 
-Agostino asked the list moderators to post to this thread that the above
-is CVE-2017-6827.
+> * Hanno B=F6ck <hanno@hboeck.de>, 2016-10-05, 19:33:
+>>> There are perhaps two open-sourced PDF interpreters available
+>>> (Ghostscript and derivatives of 'xpdf' like 'poppler').
+>>There's two more from the browser world: pdfium and PDF.js.
+>
+> There's also mupdf.
 
-Alexander
-
-P.S. Next time I'd prefer another moderator to handle this sort of
-requests, if any, since I don't care about CVEs much.  I mostly care
-about security issues getting brought to this list, which was already
-the case.
+Do any of these have CUPS integration and can replace Ghostscript
+there?
