@@ -1,105 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/5
-Message-Id: <20160505050222.ABB4B3AE03D@smtpvbsrv1.mitre.org>
-Date: Thu,  5 May 2016 01:02:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: boehme.marcel@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, bschmidt@...hat.com, florian@...h-krohm.de, nickc@...hat.com
-Subject: Re: CVE Request: No Demangling During Analysis of Untrusted Binaries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/16
+Message-ID: <CAJEJqRz_5LVLYTd1eqEQQhu3jz=6+txBK7_OKZe6Lytov1dRSA@riseup.net>
+Date: Wed, 5 Oct 2016 13:45:02 -0400
+From: David Manouchehri <david.manouchehri@...eup.net>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: eva.wu@...winnertech.com
+Subject: CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The official Allwinner 3.4 kernels (H3, H8 and A83T) shipped a driver
+called sunxi-debug, which allows any process (file permissions are set to
+666) to escalate to root without any interaction.
 
-> 1) Exploitable Buffer Overflow (Fixed in GCC trunk)
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69687
+Full PoC/"exploit" is simply:
 
-As far as we can tell, you sent a CVE request for this vulnerability
-to cve-assign@...re.org (from a different email address of yours) on
-2016-02-05, and we replied with a CVE ID on 2016-02-06. Is there an
-additional aspect of 69687 that you are reporting now?
+echo "rootmydevice" > /proc/sunxi_debug/sunxi_debug
 
-Our reply at that time was:
+This was originally spotted in April 2016 and removed after media coverage
+in May. If a CVE could be assigned to it, that would be appreciated.
 
-  > https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69687
+Thanks,
 
-  >> Since n is a signed int, n wraps over at some iteration. Since,
-  >> realloc expects n to be unsigned, we end up allocating less memory
-  >> then actually needed. In the beginning though n is too large and
-  >> xrealloc simply complains. However, if you play a bit with the length
-  >> of arg, you'll quickly turn that integer overflow in a buffer
-  >> overflow.
+David Manouchehri
 
-  Use CVE-2016-2226 for this incorrect handling of a signed int.
+References:
 
+https://github.com/Manouchehri/linux-3.4-sunxi/blob/master/arch/arm/mach-sunxi/sunxi-debug.c#L41-L52
+(The
+original repository has had the backdoor erased from history.)
+http://irclog.whitequark.org/linux-sunxi/2016-04-29#16314390
+http://forum.armbian.com/index.php/topic/1108-security-alert-for-allwinner-sun8i-h3a83th8/
+https://www.rapid7.com/db/modules/post/multi/escalate/allwinner_backdoor
+http://www.theregister.co.uk/2016/05/09/allwinners_allloser_custom_kernel_has_a_nasty_root_backdoor/
+http://arstechnica.com/security/2016/05/chinese-arm-vendor-left-developer-backdoor-in-kernel-for-android-pi-devices/
+http://www.androidauthority.com/chinese-arm-vendor-left-developer-backdoor-in-kernel-for-android-692146/
+http://news.softpedia.com/news/chinese-arm-chip-vendor-left-god-mode-feature-in-android-kernel-code-504037.shtml
+https://www.heise.de/security/meldung/Allwinner-vergisst-Root-Cheatcode-im-Kernel-fuer-Sunxi-SoCs-3207356.html
+https://news.ycombinator.com/item?id=11672590
+https://olimex.wordpress.com/2016/05/10/how-to-root-any-allwinner-device-running-android-and-most-of-the-chinese-pi-clones-which-bet-on-allwinner-android-linux-kernel/
 
-> 2) Invalid Write due to a Use-After-Free (Fixed in GCC trunk)
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70481
-
-Comment 2 says "two distinct bugs."
-
-Use CVE-2016-4487 for the btypevec bug.
-
-Use CVE-2016-4488 for the ktypevec bug.
-
-
-> 3) Invalid Write due to Integer Overflow (Fixed in GCC trunk)
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70492
-
-Use CVE-2016-4489.
-
-
-> 4) Write Access Violation (Fixed in GCC trunk)
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70498
-
-Use CVE-2016-4490 for this issue described as "Root cause: In
-cp-demangle.c sometimes length-variables are of type long ... Other
-times they are of type int."
-
-Note that this CVE ID is not about the Comment 1 "case where
-consume_count returns -1" -- that comment does not belong in 70498 at
-all.
-
-
-> 5) Various Stack Corruptions (Patch under Review)
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70909
-> https://gcc.gnu.org/ml/gcc-patches/2016-05/threads.html#00105
-
-Use CVE-2016-4491 for this issue caused by a lack of checking for "has
-itself as ancestor more than once."
-
-
-> 6) Write Access Violation (Patch under Review)
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70926
-> https://gcc.gnu.org/ml/gcc-patches/2016-05/threads.html#00223
-
-Use CVE-2016-4492 for both of the "first read the value of a length
-variable len from the mangled string, then strncpy len characters from
-the mangled string; more than necessary" issues.
-
-Use CVE-2016-4493 for both of the "read the value of an array index n
-from the mangled string, which can be negative due to an overflow"
-issues.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXKtL3AAoJEHb/MwWLVhi2+5gP/3qHIH8ngHS85trkFRrAiLtn
-5nNVzyil6xjQCo7F7ScLfYQK0AfKGhBhQzO16dAI2hHMIRc8AaXH4cinRHHHQrYM
-hrwj5SoZoXMgrUZLZJ2v1H0oidBwMFUqprnC1NEgqNMoRw6DM0NZTsy4opgKCl1R
-dbSfqBybZr+qscnn4wAaN2ctOS0A2/PlSIxDJ5LRPEJyb+fLNVVnbj5LIybjD/To
-uPpQPkGKekK3oD52huRlb5hLy9qq3eVzoyu0Lup34ec0iRnLQjqwmYm8dZvbhPnt
-QMgZPe0iyRaQAtpE5nj7eZDhFuQ9vqS1KikzuinZRUkLcIGroGmnUtGdCCDUHzL1
-s12c6fpGkU2Huuz9mgVrdtOKdcSyFnvEl14xMCQLBhf8LVNKQ9RkVaHPUWLt+0uw
-/BtwNCs6NSAGtfi0yuX4F76u3SGKTnell7Za9BJQKXZFeDtwTUc9N01eWGpovB1l
-um6HQ75vca6+kxlX6ZZn9Zm7Dr1CNtcCLfKka9MtxmfkaucV5vOjlqURA58jrpdS
-NJU5TgRr2WcFqI/3gfOzQFkz1R1voZMgQJEKNIRtLC04nLWxXwoRAGQ9oJK34y0Z
-BVoWD9jDc3lEXx+X5MOmUZy4+RQQl0qizLquLxqTXbRUBpgsFP0Mw/w7dWCkghCA
-kazRhIrShTety5Dx7/qO
-=Qvdr
------END PGP SIGNATURE-----
