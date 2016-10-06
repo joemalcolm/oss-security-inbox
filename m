@@ -1,69 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/7
-Message-ID: <283cdffc6e30491c830b633484ad68b2@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:38:18 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request Qemu: 9pfs: memory leakage via proxy/handle callbacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/2
+Message-ID: <20161006011255.GB5763@sin.redhat.com>
+Date: Thu, 6 Oct 2016 11:42:56 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Subject amended to reflect the need for a new CVE.
 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-> File System(9pfs) support, is vulnerable to memory leakage issue. It could
-> occur via its '9p-handle' or '9p-proxy' backend drivers as they do not free
-> their respective allocated data objects.
+On Oct 05 2016, Raphael Geissert wrote:
+> > http://seclists.org/oss-sec/2013/q4/412
+> >
+> > segfault-1.patch uses:
+> >
+> > +               tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
+> >
+> > which should have used compcsize instead of comp0size.
 > 
-> A privileged user inside guest could use this flaw to leak host memory, thus
-> affecting other services on the host and/or potentially crash the Qemu process
-> on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg03278.html
+> Yes, indeed. This patch also introduced a regression in the processing
+> of some images.
+> Cf. https://bugs.debian.org/734238
 
->> 9pfs: adjust the order of resource cleanup in device unrealize
->> http://git.qemu.org/?p=qemu.git;a=commit;h=4774718e5c194026ba5ee7a28d9be49be3080e42
+Thanks for the reference.  The corrected patch attached to
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734238#53 agrees with
+my analysis.
 
-Use CVE-2016-9913.
+> Do you specifically know of a distribution that still has that patch?
+
+Red Hat Enterprise Linux and Ubuntu LTS seem to be still carrying the
+original patch.  Possibly others, but these are the only ones I've
+identified.
+
+> If I remember the context correctly, the use of comp0size could then
+> lead to a heap buffer overflow later on. Was that what you noticed?
+
+Yes:  the use of comp0size under-allocates buffers for components 1..N,
+which are then overflowed in later processing.
+
+using issue725.jp2 from
+https://github.com/uclouvain/openjpeg-data/tree/master/input/nonregression/
+
+$ valgrind j2k_to_image -i issue725.jp2 -o o.ppm
+[INFO] tile 1 of 1
+==13969== Invalid write of size 4
+==13969==    at 0x4E52B3A: t1_decode_cblks (t1.c:1560)
+==13969==    by 0x4E5BD53: tcd_decode_tile (tcd.c:1424)
+==13969==    by 0x4E42749: j2k_read_eoc (j2k.c:1670)
+==13969==    by 0x4E42EB7: j2k_decode (j2k.c:1998)
+==13969==    by 0x4E468C4: opj_jp2_decode (jp2.c:778)
+==13969==    by 0x4E49A2F: opj_decode_with_info (openjpeg.c:168)
+==13969==    by 0x4E4999F: opj_decode (openjpeg.c:157)
+==13969==    by 0x404294: main (j2k_to_image.c:674)
+==13969==  Address 0x64b7a1c is 0 bytes after a block of size 396 alloc'd
+==13969==    at 0x4C29BFD: malloc (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
+==13969==    by 0x4E5BCD0: tcd_decode_tile (tcd.c:1418)
+==13969==    by 0x4E42749: j2k_read_eoc (j2k.c:1670)
+==13969==    by 0x4E42EB7: j2k_decode (j2k.c:1998)
+==13969==    by 0x4E468C4: opj_jp2_decode (jp2.c:778)
+==13969==    by 0x4E49A2F: opj_decode_with_info (openjpeg.c:168)
+==13969==    by 0x4E4999F: opj_decode (openjpeg.c:157)
+==13969==    by 0x404294: main (j2k_to_image.c:674)
+==13969== 
 
 
->> 9pfs: add cleanup operation in FileOperations
->> http://git.qemu.org/?p=qemu.git;a=commit;h=702dbcc274e2ca43be20ba64c758c0ca57dab91d
+-- 
+Doran Moppert
+Red Hat Product Security
 
-Use CVE-2016-9914.
-
-
->> 9pfs: add cleanup operation for handle backend driver
->> http://git.qemu.org/?p=qemu.git;a=commit;h=971f406b77a6eb84e0ad27dcc416b663765aee30
-
-Use CVE-2016-9915.
-
-
->> 9pfs: add cleanup operation for proxy backend driver
->> http://git.qemu.org/?p=qemu.git;a=commit;h=898ae90a44551d25b8e956fd87372d303c82fe68
-
-Use CVE-2016-9916.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYSPwLAAoJEHb/MwWLVhi2DDYP/2J/BVlx1Mb5J7Xm+kF4f2mS
-FAI/6LOEmrlhzq89mOW1sHCcM6ocAFaeW7EDyv8+fo+Dy0c45a/fpAKNNtQNIpGz
-/8gmkXYsFpz52WJ+JAqkLHGSm859+zOUq61JIhJf0KWsuxvqi+OH214qXxkHSxG9
-a/Qd2Q3giiPPVp+3geOlGG4+b9kbyA89utr3dMQ+pNa+66pm3Pu6vuu9SZNq2uMp
-fq6Oc2hRYfj+jVbMVbCfQyJfBXxBdgyX89U6ehpFyaEGmlrfd78WuAyYQ9qEaoDF
-ivyGJt+J4koqx2qwjFyMDR8lKZ9rCffXkCm3mavamNzG9FnV3qpCxI/4DloveAWn
-3cqVFx+b5NcMOpPSiLVNTLchsPoRUsH3jJWGwqBlcShhB5GE7KQ3BJrRfFPyEVtq
-rAOHB42Z16I2y6z0xOxuu8Vafc2egNJegIYXfYZfF+2OOtxmGykjnb0IERgMeptZ
-aahBOwremjQPEyQB9yIFcrovfUVHtx3ofnfqWqW4BoV0AyN5wAQoK+8smq91ZaJn
-fqTtd5rtKBNld4jsbUaX0Udui6Gcy/FQNuT9dBAyuObOoreXEgSWx099h40W+R69
-ZG63UhFFNlb9jtZ88azaA54IMdETf8FLaUwdk7K7lNUCsPLI1cbM+3XNQhYHRjmL
-XWqSVQ6M+yZo0z5gEnN7
-=ezyO
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
