@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/20
-Message-ID: <56E6E3ED.6050903@igalia.com>
-Date: Mon, 14 Mar 2016 17:16:45 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/1
+Message-ID: <CACn5sdQZPFShZBtHviBu_tS=NeN_uEobPQh8CzLHbmvsG-sTGg@mail.gmail.com>
+Date: Wed, 5 Oct 2016 22:43:19 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: WebKitGTK+ Security Advisory WSA-2016-0002
+Subject: librsvg and cairo are causing libpng to write out-of-bounds
 Content-Type: text/plain; charset=utf-8
 
-On 14/03/16 13:29, Tomas Hoger wrote:
-> On Fri, 11 Mar 2016 15:25:39 +0100 Carlos Alberto Lopez Perez wrote:
-> 
->> Advisory ID        : WSA-2016-0002
->> Advisory URL       : http://webkitgtk.org/security/WSA-2016-0002.html
->> CVE identifiers    : CVE-2016-1723, CVE-2016-1724, CVE-2016-1725,
->>                      CVE-2016-1726, CVE-2016-1727, CVE-2016-1728.
->>
->> Several vulnerabilities were discovered on WebKitGTK+.
-> 
-> Are further details of these issues available anywhere?  WSA only
-> re-uses Mitre CVE descriptions derived form Apple advisories, but is
-> there info which bugs/commits these CVEs correspond to?
-> 
+Hello,
 
-Per policy [1], the details of security bugs in WebKit and their fixes
-are available only to members of the WebKit Security Group.
+We found a write out-of-bounds affecting librsvg 2.40 and cairo 1.14.6
+(but other versions could be affected). It was tested in ArchLinux
+(x86_64). In this odd issue, the interaction between librsvg and cairo
+is somehow causing the function png_write_row in libpng to write out
+of bounds. To reproduce:
 
-If you have a legitimate reason that you need to know specific details
-about any of this bugs, then you should state the reason in a inquiry
-directed to security@...kit.org rather than to this mailing list.
-
-
-[1] https://webkit.org/security-policy/
-
+$ gdb --args rsvg-convert -o /dev/null libpng-crash.svg
+...
+Thread 1 "rsvg-convert" received signal SIGSEGV, Segmentation fault.
+0x00007ffff6753e1e in __memmove_sse2_unaligned_erms () from /usr/lib/libc.so.6
+(gdb) bt
+#0  0x00007ffff6753e1e in __memmove_sse2_unaligned_erms () from
+/usr/lib/libc.so.6
+#1  0x00007ffff423cce8 in png_write_row () from /usr/lib/libpng16.so.16
+#2  0x00007ffff423d0ab in png_write_image () from /usr/lib/libpng16.so.16
+#3  0x00007ffff7046455 in ?? () from /usr/lib/libcairo.so.2
+#4  0x00007ffff7046e09 in cairo_surface_write_to_png_stream () from
+/usr/lib/libcairo.so.2
+#5  0x00000000004021c6 in ?? ()
+#6  0x00007ffff66f0291 in __libc_start_main () from /usr/lib/libc.so.6
+#7  0x0000000000402a49 in ?? ()
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+I don't think there is bug in libpng, but i'm not sure where the other
+libraries are failing. Interestingly enough, there is no indication of
+invalid memory reads or writes before the crash.
+The compressed reproducer is attached. Hopefully someone will be able
+to find and isolate this vulnerability.
+
+Regards,
+Gustavo.
+
+Download attachment "libpng-crash.svg.gz" of type "application/x-gzip" (17949 bytes)
