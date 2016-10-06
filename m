@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/1
-Message-ID: <1887043.2OYlfbTScZ@blackgate>
-Date: Mon, 17 Oct 2016 09:30:49 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: Hanno Böck <hanno@...eck.de>
-Cc: Graham Christensen <graham@...hamc.com>, oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/5
+Message-ID: <CACn5sdQxo7hS2_7m4_tMS2iK_b2YZSjmCL41yYof6J7qwWtN1w@mail.gmail.com>
+Date: Thu, 6 Oct 2016 12:09:05 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: DoS loading a SVG in Firefox
 Content-Type: text/plain; charset=utf-8
 
-On Monday 17 October 2016 01:02:45 Hanno Böck wrote:
-> I tested the code again with afl (after the fixes for the stuff
-> Agostino reported) and it immediately found multiple issues:
+Hello,
 
-Great job. I also was waiting for the next release to re-fuzz
+Some months ago, we found that just loading this image:
 
-> https://github.com/mdadams/jasper/issues/31
-> double free on jpeg parsing
+https://dcc.fceia.unr.edu.ar/~ggrieco/oom.svg (518K)
 
-This is a duplicate of the double-free I reported, but upstream 
-said that he can't reproduce.
+will cause Firefox to consume all your memory. Once you click, you
+cannot stop the memory constant memory leak. It can take a few minutes
+(we tested in a desktop computer with 16GB). At the end, Firefox will
+abort or it will be terminated by the OS.
 
---
-Agostino
+At least Firefox 49 and 51 in several platforms are affected. A report
+in the Mozilla bug tracker was filled:
 
+https://bugzilla.mozilla.org/show_bug.cgi?id=1297206
+
+Please assign a CVE if suitable.
+
+Regards,
+Gustavo.
