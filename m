@@ -1,62 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/2
-Message-ID: <2413003.GtkKFizscD@chimera>
-Date: Wed, 27 Jan 2016 12:24:06 +0100
-From: Luca BRUNO <lucab@...ian.org>
-To: pool@...ts.ntp.org, oss-security@...ts.openwall.com, linuxbrad@...il.com
-Cc: team@...urity.debian.org, secalert@...hat.com
-Subject: shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/8
+Message-ID: <20161006194301.GE24597@yuggoth.org>
+Date: Thu, 6 Oct 2016 19:43:01 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2016-012] Malicious qemu-img input may exhaust resources in Cinder, Glance, Nova (CVE-2015-5162)
 Content-Type: text/plain; charset=utf-8
 
-[cross-posted to pool-ntp and oss-sec]
+================================================================
+OSSA-2016-012: Malicious qemu-img input may exhaust resources in
+Cinder, Glance, Nova
+================================================================
 
-Hi,
-while reviewing network logs this morning I spotted some anomalies related
-to scan probes, ntp.org pools and IPv6.
+:Date: October 06, 2016
+:CVE: CVE-2015-5162
 
-It looks like Brad already observed and blogged about this some days ago,
-but I haven't seen this discussed in the usual ntp-pools, Debian and
-oss-sec ML, so I'm reposting this here:
-http://netpatterns.blogspot.de/2016/01/the-rising-sophistication-of-network.html
 
-In summary, some machines (which seem related to the shodan.io scanning project)
-are actively participating in pool.ntp.org as IPv6 endpoints.
-However, clients connecting to them for NTP timesync, are subsequently scanned
-by probes originating from *.scan6.shodan.io hosts.
+Affects
+~~~~~~~
+- Cinder: <=7.0.2, >=8.0.0 <=8.1.1
+- Glance: <=11.0.1, ==12.0.0
+- Nova: <=12.0.4, ==13.0.0
 
-Confirming original report from Brad, I can add that those scanners seem to
-implement some kind of rate-limiting: they will timeout NTP and won't re-scan
-recent clients when doing multiple/subsequent NTP requests.
-Moreover, this is not targeted/restricted to the Debian pool only, but plague
-the whole IPv6 pool, as seen on a sample query to the RedHat pool:
 
-```
-$ dig +short -t AAAA 2.rhel.pool.ntp.org | grep -E ':[[:xdigit:]]00[[:xdigit:]]$'
-2a03:b0c0:3:d0::18:b001
-$ dig +short -x 2a03:b0c0:3:d0::18:b001
-analog.data.shodan.io.
-```
-(Upon querying this server for NTP, the machine immediately got IPv6-scanned
-by rock.scan6.shodan.io)
+Description
+~~~~~~~~~~~
+Richard W.M. Jones of Red Hat reported a vulnerability that affects
+OpenStack Cinder, Glance and Nova. By providing a maliciously
+crafted disk image an attacker can consume considerable amounts of
+RAM and CPU time resulting in a denial of service via resource
+exhaustion. Any project which makes calls to qemu-img without
+appropriate ulimit restrictions in place is affected by this flaw.
 
-pool.ntp.org services are the default NTP servers in many default configurations
-(at least most of Linux distro) and I guess that this kind of behavior is dangerously
-increasing the exposure level of way too many systems.
 
-For ntp.org admins: can those rogue server be expunged from the pools, and the whole
-shodan.io situation clarified? (Brad's post has a comprehensive endpoints list and 
-helper tools for detection)
+Patches
+~~~~~~~
+- https://review.openstack.org/382573 (cinder) (Liberty)
+- https://review.openstack.org/378012 (glance) (Liberty)
+- https://review.openstack.org/327624 (nova) (Liberty)
+- https://review.openstack.org/375625 (cinder) (Mitaka)
+- https://review.openstack.org/377736 (glance) (Mitaka)
+- https://review.openstack.org/326327 (nova) (Mitaka)
+- https://review.openstack.org/375102 (cinder) (Newton)
+- https://review.openstack.org/377734 (glance) (Newton)
+- https://review.openstack.org/307663 (nova) (Newton)
+- https://review.openstack.org/375099 (cinder) (Ocata)
+- https://review.openstack.org/375526 (glance) (Ocata)
 
-For oss-sec crowd: is there anything we can do to improve the situation and avoid
-similar cases in the future? Should crowd-sourced and fundamental services like this
-be encouraged to move to a stronger WoT?
 
-Ciao, Luca
+Credits
+~~~~~~~
+- Richard W.M. Jones from Red Hat (CVE-2015-5162)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1449062
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5162
+
+
+Notes
+~~~~~
+- Separate Ocata patches are listed for Cinder and Glance, as they
+  were fixed during the Newton release freeze after it branched from
+  master.
+
 
 -- 
- .''`.  ** Debian GNU/Linux **  | Luca Bruno (kaeso)
-: :'  :   The Universal O.S.    | lucab (AT) debian.org
-`. `'`                          | GPG: 0xBB1A3A854F3BBEBF
-  `-     http://www.debian.org  | Debian GNU/Linux Developer
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
