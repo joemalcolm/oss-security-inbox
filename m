@@ -1,54 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/13
-Message-ID: <20160822152448.GC3132@suse.de>
-Date: Mon, 22 Aug 2016 17:24:49 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/4
+Message-ID: <d6eac17d-a019-fde7-0904-1f26a2bc9455@apache.org>
+Date: Thu, 6 Oct 2016 11:43:49 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Adam Maris <amaris@...hat.com>, Greg KH <greg@...ah.com>, cve-assign@...re.org, security@...nel.org
-Subject: Re: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+Subject: [SECURITY] CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer overflow
 
-This seems a bit sore topic, and Mitre does not want to chime in.
+Severity: Moderate
 
-Perhaps we need to add more criteria to select CVE assignment.
+Vendor: The Apache Software Foundation
 
-- simple DOS (e.g. NULL ptr dereference) when plugging in: No CVE
-- code execution (use after free, write overflows) when plugging in: Assign CVE
+Versions Affected:
+- Apache Tomcat JK ISAPI Connector 1.2.0 to 1.2.41
+
+Description
+The IIS/ISAPI specific code implements special handling when a virtual
+host is present. The virtual host name and the URI are concatenated to
+create a virtual host mapping rule. The length checks prior to writing
+to the target buffer for this rule did not take account of the length of
+the virtual host name, creating the potential for a buffer overflow.
+It is not known if this overflow is exploitable.
+
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat JK ISAPI Connector 1.2.42
+- Where available, use IIS configuration to restrict the maximum URI
+  length to 4095 - (the length of the longest virtual host name)
+
+Credit:
+This issue was discovered by The Apache Tomcat Security Team.
 
 
-That said, this leaves malicious USB devices posing as regular keyboards 
-for text injection unclassified ... 
-
-Ciao, Marcus
-
-On Thu, Aug 18, 2016 at 09:50:24PM +0200, Willy Tarreau wrote:
-> On Thu, Aug 18, 2016 at 08:16:27PM +0200, Adam Maris wrote:
-> > Attacker doesn't necessarily need to have physical access to USB port. He
-> > can somehow
-> > hand USB off to the victim that will with good intentions stick it to his
-> > USB port, unexpectedly
-> > causing kernel panic. Difference is that one probably wouldn't pour glue or
-> > corrosive liquid
-> > into his USB port believing that nothing bad will happen.
-> 
-> Well, it happened to me when I was a kid, with a PS/2 port. I handed off
-> a device to someone of trust to connect to the PS/2 port and parallel port.
-> (PS/2 to pick the +5V). I wired it wrong and the motherboard died, as
-> amazing as it seems and the person didn't find it fun as it was not his PC.
-> 
-> So yes it can be done even without suspecting. It's easy to do whatever you
-> want using a USB stick. You can use the 3W it provides to charge a 300V
-> capacitor and discharge it on the D+/D- to test the clamping diodes
-> robustness, etc...
-> 
-> Thus I don't think either that something "only causing a panic" deserves
-> a CVE. It needs to be fixed however, for sure!
-> 
-> Regards,
-> Willy
-> 
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+References:
+[1] http://tomcat.apache.org/security-jk.html
