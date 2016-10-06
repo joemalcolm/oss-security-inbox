@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4315" "Tuesday" "20" "September" "2016" "15:11:58" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160920191158.DCC7442E014@smtpvbsrv1.mitre.org>" "88" "[oss-security] Re: Possible CVE for TLS protocol issue" nil nil nil "9" "2016092019:11:58" "[oss-security] Re: Possible CVE for TLS protocol issue" (number mark "U       cve-assign@m Sep 20   88/4315  " thread-indent "\"[oss-security] Re: Possible CVE for TLS protocol issue\"\n") "<CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2426" "Thursday" "6" "October" "2016" "11:14:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161006151431.80DF36C58F9@smtpvmsrv1.mitre.org>" "71" "[oss-security] Re: SPIP vulnerabilities: request for 5 CVE" nil nil nil "10" "2016100615:14:31" "[oss-security] Re: SPIP vulnerabilities: request for 5 CVE" (number mark "U       cve-assign@m Oct  6   71/2426  " thread-indent "\"[oss-security] Re: SPIP vulnerabilities: request for 5 CVE\"\n") "<db3c98e6-3e7d-c98b-7cb1-777cf7d484a3@sysdream.com>" ("<db3c98e6-3e7d-c98b-7cb1-777cf7d484a3@sysdream.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24355 invoked by uid 550); 20 Sep 2016 19:12:11 -0000
+Received: (qmail 30551 invoked by uid 550); 6 Oct 2016 15:14:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24337 invoked from network); 20 Sep 2016 19:12:10 -0000
+Received: (qmail 30530 invoked from network); 6 Oct 2016 15:14:43 -0000
 From: cve-assign@mitre.org
-To: kseifried@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
-Message-Id: <20160920191158.DCC7442E014@smtpvbsrv1.mitre.org>
-Date: Tue, 20 Sep 2016 15:11:58 -0400 (EDT)
-Subject: [oss-security] Re: Possible CVE for TLS protocol issue
+To: labs@sysdream.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, spip-team-owner@rezo.net
+In-Reply-To: <db3c98e6-3e7d-c98b-7cb1-777cf7d484a3@sysdream.com>
+Message-Id: <20161006151431.80DF36C58F9@smtpvmsrv1.mitre.org>
+Date: Thu,  6 Oct 2016 11:14:31 -0400 (EDT)
+Subject: [oss-security] Re: SPIP vulnerabilities: request for 5 CVE
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://kcitls.org/
+Can you provide further information about whether each of these issues
+could have been fixed independently?
 
-Our initial thought is that the essence of the issue is stated very
-near the end of section 5.3 of the
-https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
-document: "can derive the same master secret MS just by engaging in
-the exact same computation." We are not sure whether it makes sense to
-assign a CVE ID to a mathematical fact of that form. The vulnerability
-seems to be that the TLS protocol definition allows rsa_fixed_dh,
-dss_fixed_dh, rsa_fixed_ecdh, and ecdsa_fixed_ecdh, but protocol
-documentation such as RFC 5246 Appendix F does not explicitly point
-out the severity of the outcome when any arbitrary installed client
-certificate is compromised. It does, for example, say "For TLS to be
-able to provide a secure connection, both the client and server
-systems, keys, and applications must be secure," but it doesn't
-delineate the level of connection insecurity that results from a
-seemingly minor client insecurity.
+We are aware of:
 
-Use CVE-2015-8960 for this vulnerability in the TLS documentation.
+  https://core.spip.net/projects/spip/repository/revisions/23200
+  https://core.spip.net/projects/spip/repository/revisions/23201
+  https://core.spip.net/projects/spip/repository/revisions/23202
 
-It is possible that other issues described in the
-woot15-paper-hlauschek.pdf paper, such as issues related to handling
-of key usage extensions, need their own separate CVE IDs.
+and these seem to indicate separate findings related to three
+items on your list. Thus, we can initially assign these IDs:
 
-In addition, as suggested by section 5.2, a product that originally
-shipped with a compromised client certificate should, in many cases,
-be considered a vulnerable product, regardless of whether that client
-certificate has any known use for authenticating a client. We don't
-know whether there are a huge number of products that have, for
-example, installed test client certificates. Our initial thought is
-that there should be a unique CVE ID for any product that satisfies
-these criteria:
+> * Cross-Site Request Forgery
 
- - when the product was shipped, a default or recommended
-   configuration had an installed client certificate and associated
-   secret key that were both known to the general public (e.g., they
-   were known by anyone who had a copy of the product)
+Use CVE-2016-7980.
 
- - the product can be used in a KCI attack, e.g., it meets all of the
-   requirements of section 5.1.1
 
- - the product could realistically be expected to need secure
-   communication with a server for which a certificate exists, from a
-   commonly recognized Certification Authority, meeting the
-   requirements of section 5.1.2 (e.g., this would often exclude a
-   product that can establish TLS sessions only to a server operated
-   by the vendor)
+> * Reflected Cross-Site Scripting
 
-Post-shipment compromise of a client certificate's secret key is
-currently outside the scope of CVE. The vulnerable behavior is
-releasing a product where a client certificate is installed and its
-secret key is already publicly documented.
+Use CVE-2016-7981.
 
-Third-party suggestions for improving warning messages for
-client-certificate installation are also currently outside the scope
-of CVE. Although it might be nice for some products to have a warning
-of "Are you completely sure that you want to install this client
-certificate because no unauthorized party knows the secret key?" (or
-similar), we don't want to have free-for-all CVE ID assignment. For
-now, we'll let vendors have CVE IDs if they decide their existing
-certificate-installation dialog is a security problem and they compose
-a better dialog warning that's understandable by their customers.
+
+> * File Enumeration / Path Traversal
+
+Use CVE-2016-7982.
+
+
+Is your reported Server Side Request Forgery a completely separate
+problem? Is it resultant from an authorization issue, e.g., possibly
+the wrong users have access to XML validation:
+
+  -   if (!autoriser('sauvegarder')) {
+  +   if (!autoriser('webmestre')) {
+
+and also XML validation could be performed through CSRF? In other
+words, is valider_xml.php supposed to block everyone from performing
+an XML validation of an off-site document, or is it only supposed to
+have access control for this functionality?
+
+
+> * Template Compiler/Composer PHP Code Execution
+
+Is there public information about this already on an spip.net web site
+(such as a Redmine revision) or the https://sysdream.com/news/lab/ web
+site? Is this unrelated to the valider_xml.php script?
 
 - -- 
 CVE Assignment Team
@@ -95,17 +78,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX4YgdAAoJEHb/MwWLVhi2ygQP/0RLWIentfu+p3xBdmQ4YP5l
-sDb5xUVOsECGnFDEF2B/LnFRSk1nV8EcWPk+U8wB71ztqiLZ6y8mHRwb22P95Lef
-3fMcLhJ7GTNgPMoKXS4bNbUD4qKJsM1Rq4PR5mPrEh3XfSe4Ts4gsElwzmSOyf3k
-RODrZSymGOGl+TGHc0L8LpdUB7RPpsBlUcCw7kLXn82AKOPZBT8aoJFDpXcX+Ome
-sNU8AiiZbXpWtuJjZ3x5oQnGztkOIxTcI8zANZcUWDUNK1tFOKieiTyVWkx7dJ49
-yN07vfsWCQSKSIUd+pMRawXsaOSO6zTUufJoj9SbfNWtma5q60UythHS507afiq6
-AiIalyG3jYLg5Q9puSmbrfOFCsZ99slGZPfc683rwavUQ0M+kmA2HDwdd2NGt5I4
-wRO8p7wX02fH+4xLA9t3bbq+TYqR1vNnj6QjErjB9vHrVdTGJJIiMg+WD2QoH+PQ
-gQtk3p6tKI5awsnXu73dd7/G3Rd5mFoTX0xfygHca7z7DLirFSZ+hcx4/3+FIOyZ
-ZqHHVgxyt2awxyam0iudp1udqEOenIhpNNZqnTaAFaD6aENmMW0CV2SSSf6LkD3B
-x8s5RwE+uX1CKlhH1gkDqx7df6gFeUnNvcwoc5POF0JolevpHrtXSbwBHFFGeT6S
-AsswVVMQxPKkbxx40iqM
-=zIPv
+iQIcBAEBCAAGBQJX9mnXAAoJEHb/MwWLVhi2/qcQAKEeOApYMW4Czdtc9dQYq5c1
+BvrVK73txuLW346VYOGYB2HNp9b1RPoH34buXakJGXrhgyhbK/1fl1WILdUROuMs
+UeEievyso1zudb2seSC/mPdvoyMfiKYQdQEvquQsuNNbdohR2TxA7i7k/33gpEoN
+jQwsDCdm4xQQDPG5hrK39LmhboqgZtrYhZXetHWGloMMYWVMgoVOopdNXdMajXJ5
+ycSlJoqMsMVWiZ4JKWPbEaFY7fJwHs3f5ZRa7WRRzAy6IdLQN/9Wo/awZsVTfe/s
+mTC7bz3iiUCCu+XYWhmZGFG9JBBz4FL68CsYXw3tkjS8h0Gi4IsIKUc3ZiTm/2ee
+boZiAJlRJETfgKozM/E3fyLytPeUX+2r8UI2SkkyjXM0JZ/r5NJuiaSumLo3sxst
+bXsd5ruDb7FQyaQqkyPutti0Iz3gdM8MPqhGkwIG/xfDs6U/M9RFdPB91ShmuqWd
+fYARzhJLsm+s2lQgMVzxLEAm7GVpJdORSRTW8JnlzxdeYy/Z/f1Nh6hxvi1pjGVO
+voAvlQNNnVJYeWYoDwXBK0qF31CRNq5/wePt6JY1h92fwzgMo4w84Yny91qsHlY4
+f0uaSduqB8DgO+P78X7fTai6T0j9i+6Qsnqukr9U/79Nt/tlmIJ+gs9DFF8RwQRz
+IlWWaW48n/lLS/vAtKMl
+=7eq2
 -----END PGP SIGNATURE-----
