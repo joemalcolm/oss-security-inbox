@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["838" "Monday" "22" "June" "2020" "16:50:17" "-0500" "Sean Owen" "srowen@apache.org" "<CAEccTyzGvMVto7NL0+aCXKPQG57b0fZVeA03ioGCqtUKFKrjCQ@mail.gmail.com>" "29" "[oss-security] CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled standalone master" nil nil nil "6" "2020062221:50:17" "[oss-security] CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled standalone master" (number mark "U       srowen@apach Jun 22   29/838   " thread-indent "\"[oss-security] CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled standalone master\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled standalone master" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10075" "Friday" "7" "October" "2016" "08:35:33" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1610070832040.3266@freddy.simplesystems.org>" "182" "[oss-security] GraphicsMagick CVE Request - WPG Reader Issues" nil nil nil "10" "2016100713:35:33" "[oss-security] GraphicsMagick CVE Request - WPG Reader Issues" (number mark "U       bfriesen@sim Oct  7  182/10075 " thread-indent "\"[oss-security] GraphicsMagick CVE Request - WPG Reader Issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15477 invoked by uid 550); 22 Jun 2020 22:22:32 -0000
+Received: (qmail 13481 invoked by uid 550); 7 Oct 2016 13:35:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,197 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8106 invoked from network); 22 Jun 2020 21:50:41 -0000
-X-Gm-Message-State: AOAM530AkTuFdstWUsDsztlAacju4DHs78QzTpfpLGRdJ2qBc/rei0HG
-	Dqc/FacybaHZw7akcz7zTkys/9HupByB3ny5yHI=
-X-Google-Smtp-Source: ABdhPJyLuicloQkt4DAfc+N5Lqy6jQvf0/sndpNgF1wfCrZNivayoEJnd4tjN6mB8pQgDUfDhZ3JyvT1QQeOZERxv10=
-X-Received: by 2002:a2e:9cd5:: with SMTP id g21mr10338240ljj.9.1592862628294;
- Mon, 22 Jun 2020 14:50:28 -0700 (PDT)
-MIME-Version: 1.0
-From: Sean Owen <srowen@apache.org>
-Date: Mon, 22 Jun 2020 16:50:17 -0500
-X-Gmail-Original-Message-ID: <CAEccTyzGvMVto7NL0+aCXKPQG57b0fZVeA03ioGCqtUKFKrjCQ@mail.gmail.com>
-Message-ID: <CAEccTyzGvMVto7NL0+aCXKPQG57b0fZVeA03ioGCqtUKFKrjCQ@mail.gmail.com>
+Received: (qmail 13463 invoked from network); 7 Oct 2016 13:35:46 -0000
+Date: Fri, 7 Oct 2016 08:35:33 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@freddy.simplesystems.org
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2020-9480: Apache Spark RCE vulnerability in auth-enabled
- standalone master
+Message-ID: <alpine.GSO.2.20.1610070832040.3266@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="-559023410-1936695736-1475847334=:3266"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Fri, 07 Oct 2016 08:35:34 -0500 (CDT)
+Subject: [oss-security] GraphicsMagick CVE Request - WPG Reader Issues
 
-Severity: Important
+---559023410-1936695736-1475847334=:3266
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 
-Vendor: The Apache Software Foundation
+Two security issues have been discovered in the WPG format reader in
+GraphicsMagick 1.3.25 (and earlier):
 
-Versions Affected:
-Apache Spark 2.4.5 and earlier
+1. In a build with QuantumDepth=8 (the default), there is no check
+    that the provided colormap is not larger than 256 entries,
+    resulting in potential heap overflow.  This problem does not occur
+    with larger QuantumDepth values.
 
-Description:
-In Apache Spark 2.4.5 and earlier, a standalone resource manager's master may
-be configured to require authentication (spark.authenticate) via a
-shared secret. When enabled, however, a specially-crafted RPC to the
-master can succeed in starting an application's resources on the Spark
-cluster, even without the shared key. This can be leveraged to execute
-shell commands on the host machine.
+2. The assertion:
 
-This does not affect Spark clusters using other resource managers
-(YARN, Mesos, etc).
+    ReferenceBlob: Assertion `blob != (BlobInfo *) NULL' failed.
 
+    is thrown (causing a crash) for some files due to a logic error
+    which leads to passing a NULL pointer where a NULL pointer is not
+    allowed.
 
-Mitigation:
-Users should update to Spark 2.4.6 or 3.0.0.
-Where possible, network access to the cluster machines should be
-restricted to trusted hosts only.
+These issues were discovered using American Fuzzy Lop by fuzzing with
+the corpus by Moshe Kaplan discovered on Github at
+https://github.com/moshekaplan/FuzzGraphicsMagick.
 
-Credit:
-Ayoub Elaassal
+A patch resolving the two above issues is attached.
 
-References:
-https://spark.apache.org/security.html
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+---559023410-1936695736-1475847334=:3266
+Content-Type: text/plain; charset=US-ASCII; name=wpg.c.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.GSO.2.20.1610070835330.3266@freddy.simplesystems.org>
+Content-Description: 
+Content-Disposition: attachment; filename=wpg.c.patch
+
+ZGlmZiAtciAxYzA3ZjcwZTVkZDkgY29kZXJzL3dwZy5jDQotLS0gYS9jb2Rl
+cnMvd3BnLmMJTW9uIFNlcCAwNSAxNDoxNjo0MiAyMDE2IC0wNTAwDQorKysg
+Yi9jb2RlcnMvd3BnLmMJRnJpIE9jdCAwNyAwODozMjo1OCAyMDE2IC0wNTAw
+DQpAQCAtMjEsNyArMjEsNyBAQA0KICUgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICUNCiAlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+U29mdHdhcmUgRGVzaWduICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAlDQogJSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEphcm9zbGF2
+IEZvanRpayAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJQ0KLSUg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBKdW5lIDIwMDAgLSAyMDE1
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICUNCislICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgSnVuZSAyMDAwIC0gMjAxNiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAlDQogJSAgICAgICAgICAgICAgICAg
+ICAgICAgICBSZXdvcmsgZm9yIEdyYXBoaWNzTWFnaWNrICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgJQ0KICUgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICBCb2IgRnJpZXNlbmhhaG4gICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICUNCiAlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEZl
+Yi1NYXkgMjAwMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAl
+DQpAQCAtOTM1LDYgKzkzNSw3IEBADQogDQogICB1bnNpZ25lZCBjaGFyDQog
+ICAgICpCSW1nQnVmZjsNCisgIEJsb2JJbmZvICpUbXBCbG9iOw0KIA0KICAg
+dENUTSBDVE07ICAgICAgICAgLypjdXJyZW50IHRyYW5zZm9ybSBtYXRyaXgq
+Lw0KIA0KQEAgLTExMzEsMTIgKzExMzIsMTIgQEANCiAgICAgICAgICAgICAg
+ICAgICBpZihCaXRtYXBIZWFkZXIyLlJvdEFuZ2xlICYgMHg4MDAwKQ0KICAg
+ICAgICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAgICBy
+b3RhdGVkX2ltYWdlID0gRmxvcEltYWdlKGltYWdlLCBleGNlcHRpb24pOw0K
+LSAgICAgICAgICAgICAgICAgICAgICBpZiAocm90YXRlZF9pbWFnZSAhPSAo
+SW1hZ2UgKikgTlVMTCkNCisgICAgICAgICAgICAgICAgICAgICAgaWYgKHJv
+dGF0ZWRfaW1hZ2UgIT0gKEltYWdlICopTlVMTCkNCiAgICAgICAgICAgICAg
+ICAgICAgICAgICB7DQorICAgICAgICAgICAgICAgICAgICAgICAgICBUbXBC
+bG9iID0gcm90YXRlZF9pbWFnZS0+YmxvYjsNCiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHJvdGF0ZWRfaW1hZ2UtPmJsb2IgPSBpbWFnZS0+YmxvYjsN
+Ci0gICAgICAgICAgICAgICAgICAgICAgICAgIGltYWdlLT5ibG9iID0gTlVM
+TDsNCi0gICAgICAgICAgICAgICAgICAgICAgICAgICh2b2lkKSBSZW1vdmVM
+YXN0SW1hZ2VGcm9tTGlzdCgmaW1hZ2UpOw0KLSAgICAgICAgICAgICAgICAg
+ICAgICAgICAgQXBwZW5kSW1hZ2VUb0xpc3QoJmltYWdlLHJvdGF0ZWRfaW1h
+Z2UpOw0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgaW1hZ2UtPmJsb2Ig
+PSBUbXBCbG9iOw0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgUmVwbGFj
+ZUltYWdlSW5MaXN0KCZpbWFnZSxyb3RhdGVkX2ltYWdlKTsNCiAgICAgICAg
+ICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICB9DQog
+ICAgICAgICAgICAgICAgICAgLyogZmxpcCBjb21tYW5kICovDQpAQCAtMTE0
+NSwxMCArMTE0NiwxMCBAQA0KICAgICAgICAgICAgICAgICAgICAgICByb3Rh
+dGVkX2ltYWdlID0gRmxpcEltYWdlKGltYWdlLCBleGNlcHRpb24pOw0KICAg
+ICAgICAgICAgICAgICAgICAgICBpZiAocm90YXRlZF9pbWFnZSAhPSAoSW1h
+Z2UgKikgTlVMTCkNCiAgICAgICAgICAgICAgICAgICAgICAgICB7DQorICAg
+ICAgICAgICAgICAgICAgICAgICAgICBUbXBCbG9iID0gcm90YXRlZF9pbWFn
+ZS0+YmxvYjsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHJvdGF0ZWRf
+aW1hZ2UtPmJsb2IgPSBpbWFnZS0+YmxvYjsNCi0gICAgICAgICAgICAgICAg
+ICAgICAgICAgIGltYWdlLT5ibG9iID0gTlVMTDsNCi0gICAgICAgICAgICAg
+ICAgICAgICAgICAgICh2b2lkKSBSZW1vdmVMYXN0SW1hZ2VGcm9tTGlzdCgm
+aW1hZ2UpOw0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgQXBwZW5kSW1h
+Z2VUb0xpc3QoJmltYWdlLHJvdGF0ZWRfaW1hZ2UpOwkJDQorICAgICAgICAg
+ICAgICAgICAgICAgICAgICBpbWFnZS0+YmxvYiA9IFRtcEJsb2I7DQorICAg
+ICAgICAgICAgICAgICAgICAgICAgICBSZXBsYWNlSW1hZ2VJbkxpc3QoJmlt
+YWdlLHJvdGF0ZWRfaW1hZ2UpOw0KICAgICAgICAgICAgICAgICAgICAgICAg
+IH0NCiAgICAgICAgICAgICAgICAgICAgIH0NCiAJCQ0KQEAgLTExNjAsMTAg
+KzExNjEsMTAgQEANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIGV4Y2VwdGlvbik7DQogICAgICAgICAgICAg
+ICAgICAgICAgIGlmIChyb3RhdGVkX2ltYWdlICE9IChJbWFnZSAqKSBOVUxM
+KQ0KICAgICAgICAgICAgICAgICAgICAgICAgIHsNCisgICAgICAgICAgICAg
+ICAgICAgICAgICAgIFRtcEJsb2IgPSByb3RhdGVkX2ltYWdlLT5ibG9iOw0K
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgcm90YXRlZF9pbWFnZS0+Ymxv
+YiA9IGltYWdlLT5ibG9iOw0KLSAgICAgICAgICAgICAgICAgICAgICAgICAg
+aW1hZ2UtPmJsb2IgPSBOVUxMOw0KLSAgICAgICAgICAgICAgICAgICAgICAg
+ICAgKHZvaWQpIFJlbW92ZUxhc3RJbWFnZUZyb21MaXN0KCZpbWFnZSk7DQot
+ICAgICAgICAgICAgICAgICAgICAgICAgICBBcHBlbmRJbWFnZVRvTGlzdCgm
+aW1hZ2Uscm90YXRlZF9pbWFnZSk7DQorICAgICAgICAgICAgICAgICAgICAg
+ICAgICBpbWFnZS0+YmxvYiA9IFRtcEJsb2I7DQorICAgICAgICAgICAgICAg
+ICAgICAgICAgICBSZXBsYWNlSW1hZ2VJbkxpc3QoJmltYWdlLHJvdGF0ZWRf
+aW1hZ2UpOw0KICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAg
+ICAgICAgICAgICAgIH0gICAgICAgICAgICAgICAgDQogICAgICAgICAgICAg
+ICAgIH0NCkBAIC0xMjEwLDcgKzEyMTEsNyBAQA0KIA0KICAgICAgICAgICBI
+ZWFkZXIuRGF0YU9mZnNldD1UZWxsQmxvYihpbWFnZSkrUmVjMi5SZWNvcmRM
+ZW5ndGg7DQogDQotICAgICAgICAgIGlmIChsb2dnaW5nKSAodm9pZClMb2dN
+YWdpY2tFdmVudChDb2RlckV2ZW50LEdldE1hZ2lja01vZHVsZSgpLA0KKyAg
+ICAgICAgICBpZihsb2dnaW5nKSAodm9pZClMb2dNYWdpY2tFdmVudChDb2Rl
+ckV2ZW50LEdldE1hZ2lja01vZHVsZSgpLA0KICAgICAgICAgICAgICJQYXJz
+aW5nIG9iamVjdDogJVgiLCBSZWMyLlJlY1R5cGUpOw0KIA0KICAgICAgICAg
+ICBzd2l0Y2goUmVjMi5SZWNUeXBlKQ0KQEAgLTEyMjQsMTggKzEyMjUsMjAg
+QEANCiAgICAgICAgICAgICAgIFdQR19QYWxldHRlLlN0YXJ0SW5kZXg9UmVh
+ZEJsb2JMU0JTaG9ydChpbWFnZSk7DQogICAgICAgICAgICAgICBXUEdfUGFs
+ZXR0ZS5OdW1PZkVudHJpZXM9UmVhZEJsb2JMU0JTaG9ydChpbWFnZSk7DQog
+DQorCQkJLyogU2FuaXR5IGNoZWNrIGZvciBhbW91bnQgb2YgcGFsZXR0ZSBl
+bnRyaWVzLiAqLw0KKyAgICAgICAgICAgICAgaWYoIChXUEdfUGFsZXR0ZS5O
+dW1PZkVudHJpZXMtV1BHX1BhbGV0dGUuU3RhcnRJbmRleCkgPiAoUmVjMi5S
+ZWNvcmRMZW5ndGgtMi0yKSAvIDMpDQorICAgICAgICAgICAgICAgICBUaHJv
+d1JlYWRlckV4Y2VwdGlvbihDb3JydXB0SW1hZ2VFcnJvcixJbnZhbGlkQ29s
+b3JtYXBJbmRleCxpbWFnZSk7ICAgICAgICAgICAgICAgICANCisgDQogICAg
+ICAgICAgICAgICBpbWFnZS0+Y29sb3JzPVdQR19QYWxldHRlLk51bU9mRW50
+cmllczsNCiAgICAgICAgICAgICAgIGlmICghQWxsb2NhdGVJbWFnZUNvbG9y
+bWFwKGltYWdlLGltYWdlLT5jb2xvcnMpKQ0KICAgICAgICAgICAgICAgICBU
+aHJvd1JlYWRlckV4Y2VwdGlvbihSZXNvdXJjZUxpbWl0RXJyb3IsTWVtb3J5
+QWxsb2NhdGlvbkZhaWxlZCxpbWFnZSk7DQorDQogICAgICAgICAgICAgICBm
+b3IgKGk9V1BHX1BhbGV0dGUuU3RhcnRJbmRleDsNCiAgICAgICAgICAgICAg
+ICAgICAgaSA8IChpbnQpV1BHX1BhbGV0dGUuTnVtT2ZFbnRyaWVzOyBpKysp
+DQogICAgICAgICAgICAgICAgIHsNCi0gICAgICAgICAgICAgICAgICBpbWFn
+ZS0+Y29sb3JtYXBbaV0ucmVkPQ0KLSAgICAgICAgICAgICAgICAgICAgU2Nh
+bGVDaGFyVG9RdWFudHVtKFJlYWRCbG9iQnl0ZShpbWFnZSkpOw0KLSAgICAg
+ICAgICAgICAgICAgIGltYWdlLT5jb2xvcm1hcFtpXS5ncmVlbj0NCi0gICAg
+ICAgICAgICAgICAgICAgIFNjYWxlQ2hhclRvUXVhbnR1bShSZWFkQmxvYkJ5
+dGUoaW1hZ2UpKTsNCi0gICAgICAgICAgICAgICAgICBpbWFnZS0+Y29sb3Jt
+YXBbaV0uYmx1ZT0NCi0gICAgICAgICAgICAgICAgICAgIFNjYWxlQ2hhclRv
+UXVhbnR1bShSZWFkQmxvYkJ5dGUoaW1hZ2UpKTsNCisgICAgICAgICAgICAg
+ICAgICBpbWFnZS0+Y29sb3JtYXBbaV0ucmVkPVNjYWxlQ2hhclRvUXVhbnR1
+bShSZWFkQmxvYkJ5dGUoaW1hZ2UpKTsNCisgICAgICAgICAgICAgICAgICBp
+bWFnZS0+Y29sb3JtYXBbaV0uZ3JlZW49U2NhbGVDaGFyVG9RdWFudHVtKFJl
+YWRCbG9iQnl0ZShpbWFnZSkpOw0KKyAgICAgICAgICAgICAgICAgIGltYWdl
+LT5jb2xvcm1hcFtpXS5ibHVlPVNjYWxlQ2hhclRvUXVhbnR1bShSZWFkQmxv
+YkJ5dGUoaW1hZ2UpKTsNCiAgICAgICAgICAgICAgICAgICAodm9pZCkgUmVh
+ZEJsb2JCeXRlKGltYWdlKTsgICAvKk9wYWNpdHk/PyovDQogICAgICAgICAg
+ICAgICAgIH0NCiAgICAgICAgICAgICAgIGJyZWFrOw0KQEAgLTEzMTQsMTAg
+KzEzMTcsMTAgQEANCiAJCSAgcm90YXRlZF9pbWFnZSA9IEZsb3BJbWFnZShp
+bWFnZSwgZXhjZXB0aW9uKTsNCiAgICAgICAgICAgICAgICAgICBpZiAocm90
+YXRlZF9pbWFnZSAhPSAoSW1hZ2UgKikgTlVMTCkNCiAgICAgICAgICAgICAg
+ICAgICAgIHsNCisgICAgICAgICAgICAgICAgICAgICAgVG1wQmxvYiA9IHJv
+dGF0ZWRfaW1hZ2UtPmJsb2I7DQogICAgICAgICAgICAgICAgICAgICAgIHJv
+dGF0ZWRfaW1hZ2UtPmJsb2IgPSBpbWFnZS0+YmxvYjsNCi0gICAgICAgICAg
+ICAgICAgICAgICAgaW1hZ2UtPmJsb2IgPSBOVUxMOw0KLSAgICAgICAgICAg
+ICAgICAgICAgICAodm9pZCkgUmVtb3ZlTGFzdEltYWdlRnJvbUxpc3QoJmlt
+YWdlKTsNCi0gICAgICAgICAgICAgICAgICAgICAgQXBwZW5kSW1hZ2VUb0xp
+c3QoJmltYWdlLHJvdGF0ZWRfaW1hZ2UpOw0KKyAgICAgICAgICAgICAgICAg
+ICAgICBpbWFnZS0+YmxvYiA9IFRtcEJsb2I7DQorICAgICAgICAgICAgICAg
+ICAgICAgIFJlcGxhY2VJbWFnZUluTGlzdCgmaW1hZ2Uscm90YXRlZF9pbWFn
+ZSk7DQogICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAg
+ICAgLyogVHJ5IHRvIGNoYW5nZSBDVE0gYWNjb3JkaW5nIHRvIEZsaXAgLSBJ
+IGFtIG5vdCBzdXJlLCBtdXN0IGJlIGNoZWNrZWQuCQkgIA0KICAgICAgICAg
+ICAgICAgICAgICAgIFR4KDAsMCk9LTE7ICAgICAgVHgoMSwwKT0wOyAgIFR4
+KDIsMCk9MDsNCkBAIC0xMzMwLDEwICsxMzMzLDEwIEBADQogCQkgIHJvdGF0
+ZWRfaW1hZ2UgPSBGbGlwSW1hZ2UoaW1hZ2UsIGV4Y2VwdGlvbik7DQogICAg
+ICAgICAgICAgICAgICAgaWYgKHJvdGF0ZWRfaW1hZ2UgIT0gKEltYWdlICop
+IE5VTEwpDQogICAgICAgICAgICAgICAgICAgICB7DQorICAgICAgICAgICAg
+ICAgICAgICAgIFRtcEJsb2IgPSByb3RhdGVkX2ltYWdlLT5ibG9iOw0KICAg
+ICAgICAgICAgICAgICAgICAgICByb3RhdGVkX2ltYWdlLT5ibG9iID0gaW1h
+Z2UtPmJsb2I7DQotICAgICAgICAgICAgICAgICAgICAgIGltYWdlLT5ibG9i
+ID0gTlVMTDsNCi0gICAgICAgICAgICAgICAgICAgICAgKHZvaWQpIFJlbW92
+ZUxhc3RJbWFnZUZyb21MaXN0KCZpbWFnZSk7DQotICAgICAgICAgICAgICAg
+ICAgICAgIEFwcGVuZEltYWdlVG9MaXN0KCZpbWFnZSxyb3RhdGVkX2ltYWdl
+KTsNCisgICAgICAgICAgICAgICAgICAgICAgaW1hZ2UtPmJsb2IgPSBUbXBC
+bG9iOw0KKyAgICAgICAgICAgICAgICAgICAgICBSZXBsYWNlSW1hZ2VJbkxp
+c3QoJmltYWdlLHJvdGF0ZWRfaW1hZ2UpOw0KICAgICAgICAgICAgICAgICAg
+ICAgfQ0KICAgICAgICAgICAgICAgICAgIC8qIFRyeSB0byBjaGFuZ2UgQ1RN
+IGFjY29yZGluZyB0byBGbGlwIC0gSSBhbSBub3Qgc3VyZSwgbXVzdCBiZSBj
+aGVja2VkLg0KICAgICAgICAgICAgICAgICAgICAgIGZsb2F0X21hdHJpeCBU
+eCgzLDMpOw0K
+
+---559023410-1936695736-1475847334=:3266--
