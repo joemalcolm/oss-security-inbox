@@ -1,157 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/3
-Message-ID: <CAFR3uCO-7U0pAyrP7RKfLNUN1JeA6UbB=TpsHLff1hiuHeudLw@mail.gmail.com>
-Date: Mon, 19 Dec 2016 14:47:38 +0000
-From: Agustin Mista <mista.agustin@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/5
+Message-ID: <80dec0d7-75a1-6319-6ad9-d316d4bb7d34@sysdream.com>
+Date: Fri, 7 Oct 2016 16:35:57 +0200
+From: Sysdream Labs <labs@...dream.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, spip-team-owner@...o.net
+Subject: Re: SPIP vulnerabilities: request for 5 CVE
 Content-Type: text/plain; charset=utf-8
 
-Hi Brandon,
+Thanks.
 
-Thunderbird 45 seems to be handling this corrupted file properly. Also, we
-used Valgrind
-and found nothing suspicious.
+> 
+> Is there public information about this already on an spip.net web site
+> (such as a Redmine revision) or the https://sysdream.com/news/lab/ web
+> site? Is this unrelated to the valider_xml.php script?
+> 
 
-Regards.
-Agustín.
+All the fixes related to the issues are here:
 
-El jue., 15 dic. 2016 a las 13:10, Brandon Perry (<bperry.volatile@...il.com>)
-escribió:
+* https://core.spip.net/projects/spip/repository/revisions/23179
+* https://core.spip.net/projects/spip/repository/revisions/23180
+* https://core.spip.net/projects/spip/repository/revisions/23181
+* https://core.spip.net/projects/spip/repository/revisions/23182
+* https://core.spip.net/projects/spip/repository/revisions/23183
+* https://core.spip.net/projects/spip/repository/revisions/23184
+* https://core.spip.net/projects/spip/repository/revisions/23185
+* https://core.spip.net/projects/spip/repository/revisions/23186
+* https://core.spip.net/projects/spip/repository/revisions/23187
+* https://core.spip.net/projects/spip/repository/revisions/23188
+* https://core.spip.net/projects/spip/repository/revisions/23189
+* https://core.spip.net/projects/spip/repository/revisions/23190
+* https://core.spip.net/projects/spip/repository/revisions/23191
+* https://core.spip.net/projects/spip/repository/revisions/23192
+* https://core.spip.net/projects/spip/repository/revisions/23193
+* https://core.spip.net/projects/spip/repository/revisions/23200
+* https://core.spip.net/projects/spip/repository/revisions/23201
+* https://core.spip.net/projects/spip/repository/revisions/23202
 
 
-> On Dec 15, 2016, at 10:04 AM, Brandon Perry <bperry.volatile@...il.com>
-wrote:
->
->
->> On Dec 15, 2016, at 8:38 AM, Agustin Mista <mista.agustin@...il.com>
-wrote:
->>
->> We found a heap use-after-free in a recent revision of libical (
->> f3688b444f820cecf51b1539b0856a392c0fdb0f),
->> using a specially crafted ics file. This bugs looks particularly
-dangerous
->> since it allows to read a big chunk of the heap memory.
->>
->> The address sanitizer report is as follows:
->>
->> ==14573==ERROR: AddressSanitizer: heap-use-after-free on address
->> 0x60700001e394 at pc 0x00000044478e bp 0x7fffffffc4a0 sp 0x7fffffffbc28
->> READ of size 62 at 0x60700001e394 thread T0
->> #0 0x44478d (/home/agustin/Code/libical/build/src/test/parser+0x44478d)
->> #1 0x444eb3 (/home/agustin/Code/libical/build/src/test/parser+0x444eb3)
->> #2 0x4461f0 (/home/agustin/Code/libical/build/src/test/parser+0x4461f0)
->> #3 0x7ffff7b519e8 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x19a9e8)
->> #4 0x7ffff7b5a40f (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x1a340f)
->> #5 0x7ffff7add113 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x126113)
->> #6 0x7ffff7a978ec (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0xe08ec)
->> #7 0x7ffff7a97b4a (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0xe0b4a)
->> #8 0x7ffff7a96f11 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0xdff11)
->> #9 0x4b8db7 (/home/agustin/Code/libical/build/src/test/parser+0x4b8db7)
->> #10 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
->> #11 0x4b829c (/home/agustin/Code/libical/build/src/test/parser+0x4b829c)
->>
->> 0x60700001e394 is located 4 bytes inside of 66-byte region
-[0x60700001e390,
->> 0x60700001e3d2)
->> freed by thread T0 here:
->> #0 0x49a99b (/home/agustin/Code/libical/build/src/test/parser+0x49a99b)
->> #1 0x7ffff7abab48 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x103b48)
->> #2 0x7ffff7ad0da1 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x119da1)
->> #3 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
->> #4 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
->>
->> previously allocated by thread T0 here:
->> #0 0x49ac1b (/home/agustin/Code/libical/build/src/test/parser+0x49ac1b)
->> #1 0x7ffff7aba55a (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x10355a)
->> #2 0x7ffff7ad7777 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x120777)
->> #3 0x7ffff7ad808a (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x12108a)
->> #4 0x7ffff7ad0220 (/home/agustin/Code/libical/build/lib/libical.so.2+
->> 0x119220)
->> #5 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
->> #6 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
->>
->> SUMMARY: AddressSanitizer: heap-use-after-free ??:0 ??
->> Shadow bytes around the buggy address:
->> 0x0c0e7fffbc20: fd fd fd fd fd fd fd fd fa fa fa fa fd fd fd fd
->> 0x0c0e7fffbc30: fd fd fd fd fd fd fa fa fa fa fd fd fd fd fd fd
->> 0x0c0e7fffbc40: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
->> 0x0c0e7fffbc50: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
->> 0x0c0e7fffbc60: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fa fa
->> =>0x0c0e7fffbc70: fa fa[fd]fd fd fd fd fd fd fd fd fa fa fa fa fa
->> 0x0c0e7fffbc80: fd fd fd fd fd fd fd fd fd fd fa fa fa fa 00 00
->> 0x0c0e7fffbc90: 00 00 00 00 00 00 03 fa fa fa fa fa fd fd fd fd
->> 0x0c0e7fffbca0: fd fd fd fd fd fa fa fa fa fa fd fd fd fd fd fd
->> 0x0c0e7fffbcb0: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
->> 0x0c0e7fffbcc0: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
->>
->>
->> And the backtrace is available here:
->>
->> #0 0x00007ffff61cfc37 in __GI_raise (sig=sig@...ry=6)
->> at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
->> #1 0x00007ffff61d3028 in __GI_abort () at abort.c:89
->> #2 0x00000000004b1356 in __sanitizer::Abort() ()
->> #3 0x00000000004a2037 in __asan::AsanDie() ()
->> #4 0x00000000004a8a6f in __sanitizer::Die() ()
->> #5 0x00000000004a06cb in
-__asan::ScopedInErrorReport::~ScopedInErrorReport()
->> ()
->> #6 0x00000000004a0211 in __asan_report_error ()
->> #7 0x00000000004447a9 in printf_common(void*, char const*,
-__va_list_tag*)
->> ()
->> #8 0x0000000000444eb4 in vsnprintf ()
->> #9 0x00000000004461f1 in snprintf ()
->> #10 0x00007ffff7b519e9 in icalreqstattype_as_string_r (stat=...)
->> at /home/agustin/Code/libical/src/libical/icaltypes.c:171
->> #11 0x00007ffff7b5a410 in icalvalue_as_ical_string_r
-(value=0x60e0000280c0)
->> at /home/agustin/Code/libical/src/libical/icalvalue.c:1208
->> #12 0x00007ffff7add114 in icalproperty_as_ical_string_r
->> (prop=0x6060000010a0)
->> at /home/agustin/Code/libical/src/libical/icalproperty.c:442
->> #13 0x00007ffff7a978ed in icalcomponent_as_ical_string_r
->> (impl=0x60700001e7f0)
->> at /home/agustin/Code/libical/src/libical/icalcomponent.c:291
->> #14 0x00007ffff7a97b4b in icalcomponent_as_ical_string_r
->> (impl=0x60700000ded0)
->> at /home/agustin/Code/libical/src/libical/icalcomponent.c:300
->> #15 0x00007ffff7a96f12 in icalcomponent_as_ical_string
-(impl=0x60700000ded0)
->> at /home/agustin/Code/libical/src/libical/icalcomponent.c:247
->> #16 0x00000000004b8db8 in main (argc=2, argv=0x7fffffffdf08)
->> at /home/agustin/Code/libical/src/test/icaltestparser.c:109
->>
->> It is worth to mention there is a very similar bug found (CVE-2016-5824)
-on
->> the libical version used by
->> Thunderbird but we think is *not* the same as this one. In fact, we've
->> tested it on Thunderbird and it does *not* crash.
->
-> I’ve found multiple use-after-frees in libical that affected Thunderbird
-that did not cause Thunderbird to crash. Did you run this through valgrind
-or are you using Thunderbird not crashing as evidence it isn’t vulnerable.
+We will point to the revision numbers in our announcements.
 
-An example: https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 <
-https://bugzilla.mozilla.org/show_bug.cgi?id=1275400>
->
->>
->> The reproducer is available upon request.
->>
->> Unfortunately, there is no fix yet, but upstream is working on it.
->>
->> Regards.
->
+So we still need CVE for :
 
+* Template Compiler/Composer PHP Code Execution
+
+https://core.spip.net/projects/spip/repository/revisions/23186
+https://core.spip.net/projects/spip/repository/revisions/23189
+https://core.spip.net/projects/spip/repository/revisions/23192
+
+* Server Side Request Forgery
+https://core.spip.net/projects/spip/repository/revisions/23188
+https://core.spip.net/projects/spip/repository/revisions/23193
+
+Best regards,
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
