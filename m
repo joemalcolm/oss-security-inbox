@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/3
-Message-ID: <CAEsznC46-6Z7vLuP2FDuNVATcOkGV8jERu8q059AFaP=TjusPA@mail.gmail.com>
-Date: Fri, 8 Jul 2016 15:39:03 +0200
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: On anonymous CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/2
+Message-ID: <alpine.LFD.2.20.1610071639580.8956@wniryva>
+Date: Fri, 7 Oct 2016 16:44:35 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu virtio-gpu: memory leak in virtio_gpu_resource_create_2d
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-I'm sorry for sending this to the cve-assign mail, but I think this is
-important to how CVE assignment process should work and the importance of
-cooperating with the upstream projects.
+Quick Emulator(Qemu) built with the Virtio GPU Device support is vulnerable to 
+a memory leakage issue. It could occur while processing virtio GPU command 
+VIRTIO_GPU_CMD_RESOURCE_CREATE_2D.
 
-In the past year+ I've been dealing with CVE assignment and the PHP
-project. During this period we managed to work closer with the Linux
-distributions and also to improve the internal process regarding CVE
-requests.
+A privileged user/process inside guest could use this flaw to exhaust host 
+memory resulting in DoS.
 
-I've blogged about a recent problem I encountered with is request and
-assignment of CVE for issues almost a year old without any public info
-about this ("anonymous requests"). Meaning that me, being part of upstream
-(incl. the security team), don't even know we've got CVE assigned and can
-update things on our side (and also other relevant upstreams such as libgd).
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg04129.html
 
-More details at
-https://liorkaplan.wordpress.com/2016/07/07/anonymous-cve-requests/
+This issue was reported by Li Qiang of 360.cn Inc.
 
-I'll be happy to be referred to the right forum to further discuss this.
-Till then, I hope you'll take these remakes into consideration, so the
-whole eco system could work more smoothly.
-
-Kaplan
-The PHP project
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
