@@ -1,93 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/2
-Message-ID: <alpine.DEB.2.20.1612201640450.22627@tvnag.unkk.fr>
-Date: Wed, 21 Dec 2016 07:59:15 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: printf floating point buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/4
+Message-ID: <alpine.GSO.2.20.1610070832040.3266@freddy.simplesystems.org>
+Date: Fri, 7 Oct 2016 08:35:33 -0500 (CDT)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: GraphicsMagick CVE Request - WPG Reader Issues
 Content-Type: text/plain; charset=utf-8
 
-printf floating point buffer overflow
-=====================================
+Two security issues have been discovered in the WPG format reader in
+GraphicsMagick 1.3.25 (and earlier):
 
-Project curl Security Advisory, December 21, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161221A.html)
+1. In a build with QuantumDepth=8 (the default), there is no check
+    that the provided colormap is not larger than 256 entries,
+    resulting in potential heap overflow.  This problem does not occur
+    with larger QuantumDepth values.
 
-VULNERABILITY
--------------
+2. The assertion:
 
-libcurl's implementation of the printf() functions triggers a buffer overflow
-when doing a large floating point output. The bug occurs when the conversion
-outputs more than 255 bytes.
+    ReferenceBlob: Assertion `blob != (BlobInfo *) NULL' failed.
 
-The flaw happens because the floating point conversion is using system
-functions without the correct boundary checks.
+    is thrown (causing a crash) for some files due to a logic error
+    which leads to passing a NULL pointer where a NULL pointer is not
+    allowed.
 
-The functions have been documented as deprecated for a long time and users are
-discouraged from using them in "new programs" as they are planned to get
-removed at a future point. But as the functions are present and there's
-nothing preventing users from using them, we expect there to be a certain
-amount of existing users in the wild.
+These issues were discovered using American Fuzzy Lop by fuzzing with
+the corpus by Moshe Kaplan discovered on Github at
+https://github.com/moshekaplan/FuzzGraphicsMagick.
 
-If there are any application that accepts a format string from the outside
-without necessary input filtering, it could allow remote attacks.
+A patch resolving the two above issues is attached.
 
-This flaw does not exist in the command line tool.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-9586 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following libcurl versions.
-
-- Affected versions: libcurl 7.1 to and including 7.51.0
-- Not affected versions: libcurl >= 7.52.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.52.0, the conversion is limited to never generate a larger output
-than what fits in the fixed size buffer.
-
-A [patch for CVE-2016-9586](https://curl.haxx.se/CVE-2016-9586.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.52.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use the `curl_mprintf()` functions
-
-TIME LINE
----------
-
-It was first reported to the curl project on November 8 by Daniel Stenberg.
-
-We contacted distros@...nwall on December 13.
-
-curl 7.52.0 was released on December 21 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Daniel Stenberg.
-
+Bob
 -- 
-
-  / daniel.haxx.se
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+View attachment "wpg.c.patch" of type "text/plain" (6399 bytes)
