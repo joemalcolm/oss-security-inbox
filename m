@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/1
-Message-ID: <alpine.LFD.2.20.1603041532360.19054@wniryva>
-Date: Fri, 4 Mar 2016 15:34:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/6
+Message-ID: <5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>
+Date: Fri, 7 Oct 2016 10:45:16 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Leo Famulari <leo@...ulari.name>, oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu, john.haxby@...cle.com
+Subject: Re: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On 9/27/16 4:55 PM, Leo Famulari wrote:
+> On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
+>>>> I believe the fix in parse.y is this (Chet, please correct me if I'm wrong):
+>>>
+>>> Yes, that is the current fix for this.  There are other ways to do it.
+>>
+>> Here's a patch to bash-4.3 that will fix this.
+> 
+> Hi Chet,
+> 
+> Thanks for the patch! Do you plan to add it to the bash-4.3-patches
+> series [0]?
 
-Qemu emulator built with the Pseudo Random Number Generator(PRNG) back-end 
-support is vulnerable to an arbitrary stack based allocation and memory 
-corruption via random bytes issue. It could occur when a guest requests for 
-entropy for random number generation.
+This went out as bash-4.3 patch 47.
 
-A user/process inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=60253ed1e6ec6d8e5ef2efe7bf755f475dce9956
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, UTech, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1314676
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+Download attachment "signature.asc" of type "application/pgp-signature" (192 bytes)
