@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/13
-Message-ID: <20160718205351.658cc486@pc1>
-Date: Mon, 18 Jul 2016 20:53:51 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: libupnp write files via POST
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/07/3
+Message-ID: <alpine.LFD.2.20.1610071644500.8956@wniryva>
+Date: Fri, 7 Oct 2016 16:46:11 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: usb: hcd-ehci: memory leak in ehci_process_itd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-Wanted to point out this report by Matthew Garret (not sure if there's
-anything else than a couple of tweets public):
-https://twitter.com/mjg59/status/755062278513319936
+Qemu emulator(Qemu) built with the USB EHCI emulation support is vulnerable to 
+a memory leakage flaw. It could occur while processing isochronous transfer 
+descriptors(iTD), with buffer page select(PG) index that falls beyond buffer 
+page array area.
 
-Notable:
-"Reported this to upstream 8 months ago without response, so: libupnp's
-default behaviour allows anyone to write to your filesystem"
-"Seriously. Find a device running a libupnp based server (Shodan says
-there's rather a lot), and POST a file to /testfile. Then GET /testfile"
-"…and yeah if the server is running as root (it is) and is using / as
-the web root (probably not, but maybe) this gives full host fs access"
+A privileged user inside guest could use this flaw to leak Qemu memory bytes 
+leading to a DoS on the host.
 
-And later on:
-"Emailed the Debian security team a couple of months ago, no response"
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg06609.html
 
-Not good...
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1382668
 
-Patch:
-https://github.com/mjg59/pupnp-code/commit/be0a01bdb83395d9f3a5ea09c1308a4f1a972cbd
+This issue was reported by Li Qiang of 360.cn Inc.
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
