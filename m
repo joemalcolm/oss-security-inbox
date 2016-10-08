@@ -1,81 +1,258 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/12
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97383@EX02.corp.qihoo.net>
-Date: Fri, 8 Apr 2016 07:16:12 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3658 - libtiff 4.0.6 illegel read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/16
+Message-ID: <8583684.bKZSpiVIs8@arcadia>
+Date: Sat, 08 Oct 2016 22:23:13 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)
 Content-Type: text/plain; charset=utf-8
 
-Details
+Description:
+Graphicsmagick is an Image Processing System.
 
-=======
+After the first round of fuzzing where I discovered some slowness issues that 
+make the fuzz hard, the second round revealed a memory allocation failure.
 
+The complete ASan output:
 
+# gm identify $FILE
+==20592==ERROR: AddressSanitizer failed to allocate 0x7fff03000 (34358702080) 
+bytes of LargeMmapAllocator (error code: 12)
+==20592==Process memory map follows:
+        0x000000400000-0x000000522000   /usr/bin/gm
+        0x000000722000-0x000000723000   /usr/bin/gm
+        0x000000723000-0x000000726000   /usr/bin/gm
+        0x000000726000-0x000001399000
+        0x00007fff7000-0x00008fff7000
+        0x00008fff7000-0x02008fff7000
+        0x02008fff7000-0x10007fff8000
+        0x600000000000-0x602000000000
+        0x602000000000-0x602000010000
+        0x602000010000-0x603000000000
+        0x603000000000-0x603000010000
+        0x603000010000-0x604000000000
+        0x604000000000-0x604000010000
+        0x604000010000-0x606000000000
+        0x606000000000-0x606000010000
+        0x606000010000-0x607000000000
+        0x607000000000-0x607000010000
+        0x607000010000-0x608000000000
+        0x608000000000-0x608000010000
+        0x608000010000-0x60a000000000
+        0x60a000000000-0x60a000010000
+        0x60a000010000-0x60b000000000
+        0x60b000000000-0x60b000010000
+        0x60b000010000-0x60c000000000
+        0x60c000000000-0x60c000010000
+        0x60c000010000-0x60d000000000
+        0x60d000000000-0x60d000010000
+        0x60d000010000-0x60f000000000
+        0x60f000000000-0x60f000010000
+        0x60f000010000-0x610000000000
+        0x610000000000-0x610000010000
+        0x610000010000-0x611000000000
+        0x611000000000-0x611000010000
+        0x611000010000-0x612000000000
+        0x612000000000-0x612000010000
+        0x612000010000-0x614000000000
+        0x614000000000-0x614000020000
+        0x614000020000-0x616000000000
+        0x616000000000-0x616000020000
+        0x616000020000-0x618000000000
+        0x618000000000-0x618000020000
+        0x618000020000-0x619000000000
+        0x619000000000-0x619000020000
+        0x619000020000-0x61a000000000
+        0x61a000000000-0x61a000020000
+        0x61a000020000-0x61b000000000
+        0x61b000000000-0x61b000020000
+        0x61b000020000-0x61d000000000
+        0x61d000000000-0x61d000020000
+        0x61d000020000-0x61e000000000
+        0x61e000000000-0x61e000020000
+        0x61e000020000-0x621000000000
+        0x621000000000-0x621000020000
+        0x621000020000-0x623000000000
+        0x623000000000-0x623000020000
+        0x623000020000-0x624000000000
+        0x624000000000-0x624000020000
+        0x624000020000-0x625000000000
+        0x625000000000-0x625000020000
+        0x625000020000-0x640000000000
+        0x640000000000-0x640000003000
+        0x7f889986d000-0x7f889988b000   
+/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
+        0x7f889988b000-0x7f8899a8a000   
+/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
+        0x7f8899a8a000-0x7f8899a8b000   
+/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
+        0x7f8899a8b000-0x7f8899a8c000   
+/usr/lib64/GraphicsMagick-1.3.25/modules-Q32/coders/sgi.so
+        0x7f8899a8c000-0x7f8899a8e000
+        0x7f8899a8e000-0x7f88a0100000   /usr/lib64/locale/locale-archive
+        0x7f88a0100000-0x7f88a0200000
+        0x7f88a0300000-0x7f88a0400000
+        0x7f88a049b000-0x7f88a27ed000
+        0x7f88a27ed000-0x7f88a27f6000   /usr/lib64/libltdl.so.7.3.1
+        0x7f88a27f6000-0x7f88a29f5000   /usr/lib64/libltdl.so.7.3.1
+        0x7f88a29f5000-0x7f88a29f6000   /usr/lib64/libltdl.so.7.3.1
+        0x7f88a29f6000-0x7f88a29f7000   /usr/lib64/libltdl.so.7.3.1
+        0x7f88a29f7000-0x7f88a2a0c000   /lib64/libz.so.1.2.8
+        0x7f88a2a0c000-0x7f88a2c0b000   /lib64/libz.so.1.2.8
+        0x7f88a2c0b000-0x7f88a2c0c000   /lib64/libz.so.1.2.8
+        0x7f88a2c0c000-0x7f88a2c0d000   /lib64/libz.so.1.2.8
+        0x7f88a2c0d000-0x7f88a2c1c000   /lib64/libbz2.so.1.0.6
+        0x7f88a2c1c000-0x7f88a2e1b000   /lib64/libbz2.so.1.0.6
+        0x7f88a2e1b000-0x7f88a2e1c000   /lib64/libbz2.so.1.0.6
+        0x7f88a2e1c000-0x7f88a2e1d000   /lib64/libbz2.so.1.0.6
+        0x7f88a2e1d000-0x7f88a2ec4000   /usr/lib64/libfreetype.so.6.12.3
+        0x7f88a2ec4000-0x7f88a30c4000   /usr/lib64/libfreetype.so.6.12.3
+        0x7f88a30c4000-0x7f88a30ca000   /usr/lib64/libfreetype.so.6.12.3
+        0x7f88a30ca000-0x7f88a30cb000   /usr/lib64/libfreetype.so.6.12.3
+        0x7f88a30cb000-0x7f88a311f000   /usr/lib64/liblcms2.so.2.0.6
+        0x7f88a311f000-0x7f88a331e000   /usr/lib64/liblcms2.so.2.0.6
+        0x7f88a331e000-0x7f88a331f000   /usr/lib64/liblcms2.so.2.0.6
+        0x7f88a331f000-0x7f88a3324000   /usr/lib64/liblcms2.so.2.0.6
+        0x7f88a3324000-0x7f88a34b7000   /lib64/libc-2.22.so
+        0x7f88a34b7000-0x7f88a36b7000   /lib64/libc-2.22.so
+        0x7f88a36b7000-0x7f88a36bb000   /lib64/libc-2.22.so
+        0x7f88a36bb000-0x7f88a36bd000   /lib64/libc-2.22.so
+        0x7f88a36bd000-0x7f88a36c1000
+        0x7f88a36c1000-0x7f88a36d7000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f88a36d7000-0x7f88a38d6000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f88a38d6000-0x7f88a38d7000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f88a38d7000-0x7f88a38d8000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f88a38d8000-0x7f88a38de000   /lib64/librt-2.22.so
+        0x7f88a38de000-0x7f88a3ade000   /lib64/librt-2.22.so
+        0x7f88a3ade000-0x7f88a3adf000   /lib64/librt-2.22.so
+        0x7f88a3adf000-0x7f88a3ae0000   /lib64/librt-2.22.so
+        0x7f88a3ae0000-0x7f88a3af7000   /lib64/libpthread-2.22.so
+        0x7f88a3af7000-0x7f88a3cf6000   /lib64/libpthread-2.22.so
+        0x7f88a3cf6000-0x7f88a3cf7000   /lib64/libpthread-2.22.so
+        0x7f88a3cf7000-0x7f88a3cf8000   /lib64/libpthread-2.22.so
+        0x7f88a3cf8000-0x7f88a3cfc000
+        0x7f88a3cfc000-0x7f88a3df9000   /lib64/libm-2.22.so
+        0x7f88a3df9000-0x7f88a3ff8000   /lib64/libm-2.22.so
+        0x7f88a3ff8000-0x7f88a3ff9000   /lib64/libm-2.22.so
+        0x7f88a3ff9000-0x7f88a3ffa000   /lib64/libm-2.22.so
+        0x7f88a3ffa000-0x7f88a3ffc000   /lib64/libdl-2.22.so
+        0x7f88a3ffc000-0x7f88a41fc000   /lib64/libdl-2.22.so
+        0x7f88a41fc000-0x7f88a41fd000   /lib64/libdl-2.22.so
+        0x7f88a41fd000-0x7f88a41fe000   /lib64/libdl-2.22.so
+        0x7f88a41fe000-0x7f88a4a0d000   /usr/lib64/libGraphicsMagick.so.3.15.1
+        0x7f88a4a0d000-0x7f88a4c0d000   /usr/lib64/libGraphicsMagick.so.3.15.1
+        0x7f88a4c0d000-0x7f88a4c3e000   /usr/lib64/libGraphicsMagick.so.3.15.1
+        0x7f88a4c3e000-0x7f88a4cc4000   /usr/lib64/libGraphicsMagick.so.3.15.1
+        0x7f88a4cc4000-0x7f88a4d3f000
+        0x7f88a4d3f000-0x7f88a4d61000   /lib64/ld-2.22.so
+        0x7f88a4eab000-0x7f88a4ec0000
+        0x7f88a4ec0000-0x7f88a4ec7000   /usr/lib64/gconv/gconv-modules.cache
+        0x7f88a4ec7000-0x7f88a4eea000   
+/usr/share/locale/it/LC_MESSAGES/libc.mo
+        0x7f88a4eea000-0x7f88a4f54000
+        0x7f88a4f54000-0x7f88a4f60000
+        0x7f88a4f60000-0x7f88a4f61000   /lib64/ld-2.22.so
+        0x7f88a4f61000-0x7f88a4f62000   /lib64/ld-2.22.so
+        0x7f88a4f62000-0x7f88a4f63000
+        0x7ffe83ea9000-0x7ffe83eca000   [stack]
+        0x7ffe83f49000-0x7ffe83f4b000   [vvar]
+        0x7ffe83f4b000-0x7ffe83f4d000   [vdso]
+        0xffffffffff600000-0xffffffffff601000   [vsyscall]
+==20592==End of process memory map.
+==20592==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+(0)" (0x0, 0x0)
+    #0 0x4c9aed in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+    #1 0x4d0623 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159
+    #2 0x4d0811 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
+const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183
+    #3 0x4d984a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_posix.cc:122
+    #4 0x421bdf in 
+__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
+unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+    #5 0x421bdf in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator 
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+    #6 0x421bdf in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+    #7 0x421bdf in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
+    #8 0x4c01b1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
+    #9 0x7f88a479e12d in MagickMalloc /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/memory.c:156:10
+    #10 0x7f88a479e12d in MagickMallocArray /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/memory.c:347
+    #11 0x7f8899872d7a in ReadSGIImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sgi.c:498:19
+    #12 0x7f88a4558b13 in ReadImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1607:13
+    #13 0x7f88a4556a94 in PingImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1370:9
+    #14 0x7f88a446bb25 in IdentifyImageCommand /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8375:17
+    #15 0x7f88a447197c in MagickCommand /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8865:17
+    #16 0x7f88a44e96fe in GMCommandSingle /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17379:10
+    #17 0x7f88a44e7926 in GMCommand /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17432:16
+    #18 0x7f88a334461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #19 0x418c88 in _init (/usr/bin/gm+0x418c88)
 
-Product: libtiff
+Affected version:
+1.3.25
 
-Affected Versions: <= 4.0.6
+Fixed version:
+1.3.26 (not yet released)
 
-Vulnerability Type: Illegel read
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/c53725cb5449
 
-Vendor URL: http://www.remotesensing.org/libtiff/
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE ID: CVE-2016-3658
+CVE:
+N/A
 
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+Timeline:
+2016-09-09: bug discovered
+2016-09-09: bug reported privately to upstream
+2016-09-10: no upstream response
+2016-09-15: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
 
-
-Introduction
-
-Illegal read occurs in the TIFFWriteDirectoryTagLongLong8Array function in tif_dirwrite.c when using tiffset command, which allows attackers to exploit this issue to cause denial-of-service.
-
-
-
-/libtiff/tif_dirwrite.c: 1625
-1623    for (q=p, ma=value, mb=0; mb<count; ma++, mb++, q++)
-1624    {
-1625        if (*ma>0xFFFFFFFF)
-1626        {
-1627            TIFFErrorExt(tif->tif_clientdata,module,
-1628                         "Attempt to write value larger than 0xFFFFFFFF in Classic TIFF file.");
-1629            _TIFFfree(p);
-1630            return(0);
-1631        }
-1632        *q= (uint32)(*ma);
-1633       }
-
-
-gdb --args ./tiffset -s 300 296 poc.tif
-……
-Program received signal SIGSEGV, Segmentation fault.
-TIFFWriteDirectoryTagLongLong8Array (tif=0x606010, ndir=0x7fffffffe1f0, dir=0x606560, tag=<optimized out>, count=1, value=0x0) at tif_dirwrite.c:1625
-1625                 if (*ma>0xFFFFFFFF)
-(gdb) bt
-#0  TIFFWriteDirectoryTagLongLong8Array (tif=0x606010, ndir=0x7fffffffe1f0, dir=0x606560, tag=<optimized out>, count=1, value=0x0) at tif_dirwrite.c:1625
-#1  0x00007ffff7abd867 in TIFFWriteDirectorySec (tif=0x606010, isimage=1, imagedone=1, pdiroff=0x0) at tif_dirwrite.c:550
-#2  0x00007ffff7ad302c in TIFFRewriteDirectory (tif=tif@...ry=0x606010) at tif_dirwrite.c:359
-#3  0x0000000000401a70 in main (argc=5, argv=<optimized out>) at tiffset.c:344
-(gdb) l
-1620                 return(0);
-1621             }
-1622
-1623             for (q=p, ma=value, mb=0; mb<count; ma++, mb++, q++)
-1624             {
-1625                 if (*ma>0xFFFFFFFF)
-1626                 {
-1627                     TIFFErrorExt(tif->tif_clientdata,module,
-1628                                  "Attempt to write value larger than 0xFFFFFFFF in Classic TIFF file.");
-1629                     _TIFFfree(p);
-(gdb) p ma
-$1 = (uint64 *) 0x0
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-
-
-Thank you!
-
-Best Regards,
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-magickmalloc-memory-c/
 
