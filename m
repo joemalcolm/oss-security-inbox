@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/9
-Message-ID: <86dc641af9b1454bb9cb64f523c87a60@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:24:21 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/2
+Message-ID: <CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>
+Date: Sat, 8 Oct 2016 10:15:55 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: invalid memory accesses parsing object files in libgit2
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://simplesamlphp.org/security/201612-01
-> https://github.com/simplesamlphp/saml2/pull/81
-> https://github.com/simplesamlphp/saml2/commit/7008b0916426212c1cc2fc238b38ab9ebff0748c
+We recently reported two invalid memory accesses in the last revision
+of libgit2:
 
->> convert an error state, signaled by the value -1, to a successful
->> verification of the signature (represented by the boolean true)
+* Read out-of-bounds in git_oid_nfmt:
+https://github.com/libgit2/libgit2/issues/3936
 
->> an error during signature verification is treated as a successful
->> verification
+* DoS using a null pointer derreference in git_commit_message:
+https://github.com/libgit2/libgit2/issues/3937
 
-Use CVE-2016-9814.
+The developers are preparing a patch to harden object parsing in libgit2 here:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/libgit2/libgit2/pull/3956
 
-iQIcBAEBCAAGBQJYRNj2AAoJEHb/MwWLVhi2LPoQAIka//ctCZOUgkIQaf0t5UYI
-hgd2XPcl6LHfOzJA+hvmERO4uxgceqNQ8nhZxkIsWs8tA/eibpHBpz2UebkcKt6r
-3IRwP3Xo3NBVpHXYcL6snoDJ6eYipeQeVwEVnoudxIFrzXcHL7YJNpXbRDUA/n44
-hoDlc2OZyeMzPWU+fvLXuyi/ylm2AOUJIbb9icONyhdKKyQiI61oInhbGCG47qi0
-lhUUQMyTHgTlRtYGSUyJWzRo0u5OIJaS+XAgUPhWK670kTJ8ZEhVcKJNRrLiRxu6
-1SHna5o26O6LHTIyJMhKcOfMYpWCUnHhqBTn+IwBalumYJucBW3k9MIBn3M0Odtp
-s8mcPQ4NX70uLCEh7+alOF4Pi7tUI6N+KvFX5IUsbBhVW0afpSgl9B5BsLmEmDKT
-M+szOjUQ1AaNfptqpDTWSSpusK9assQ+2g5warmw6ndPvhcjx4/1KmpInI0kCMQ3
-9nZ/blvuMPd9QkiuD9YKG1qOnAO1qK7IdWKDwmVvZqweuawfJgoUknHd4a5tduaJ
-REMTO+CPkk2th2dEAi9/yZywzCExOw2Am5qOIwiv6tei0GFmwRHrauglQQDE4NP8
-rU49wxNYW1UOP6Yd4d2rZHiJQBhvkByhPSIWJWxggnl4cTLL5sKxSdFLech1bWuv
-6ZF1/SgEqZUECFXhsUlY
-=NZRo
------END PGP SIGNATURE-----
+Please assign one or more CVE if suitable.
+
+Regards,
+Gustavo.
