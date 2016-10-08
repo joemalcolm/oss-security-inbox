@@ -1,55 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/8
-Message-Id: <20160418161241.6E4973AE019@smtpvbsrv1.mitre.org>
-Date: Mon, 18 Apr 2016 12:12:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: throber3@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - samsumg android phone msm_sensor_config function write some range kernel address with any value
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/12
+Message-ID: <2323220.oXSkLC07fN@arcadia>
+Date: Sat, 08 Oct 2016 22:16:25 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
->             The v4l-subdev driver provides an ioctl system call
-> interface to user space clients for communication. When processing
-> this communication, the msm_sensor_config function uses the
-> user-supplied value gpio_config.gpio_name as an index to a buffer for
-> write operations without any boundary checks.
-> 
-> kernel/SM-G9008V_CHN_KK_Opensource/Kernel/drivers/media/platform/msm/camera_v2/sensor/msm_sensor.c
-> 
-> msm_sensor_config
-> 
->              fix:
->              http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
->              SVE-2015-4958: msm_sensor_config security issues
+A fuzzing revealed an out bounds read,
 
->> A vulnerability using without checking the boundary of buffers can
->> lead to memory corruption. The applied patch avoids an illegal access
->> to memory by checking the boundary.
+The complete ASan output:
 
-Use CVE-2016-4038.
+# dwarfdump $FILE
+==30323==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x611000005a00 at pc 0x000000606e87 bp 0x7ffe35e5e5b0 sp 0x7ffe35e5e5a8
+READ of size 1 at 0x611000005a00 thread T0
+    #0 0x606e86 in _dwarf_get_abbrev_for_code 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:624:43
+    #1 0x576086 in dwarf_siblingof_b 
+/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:1628:12
+    #2 0x517e73 in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1163:17
+    #3 0x517c6b in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
+    #4 0x5147cc in print_die_and_children 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
+    #5 0x5147cc in print_one_die_section 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:831
+    #6 0x512262 in print_infos 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
+    #7 0x4faaea in process_one_file 
+/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
+    #8 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
+    #9 0x7f5912c2361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+0x611000005a00 is located 0 bytes to the right of 256-byte region 
+[0x611000005900,0x611000005a00)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f5913cfd206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
-iQIcBAEBCAAGBQJXFQcVAAoJEHb/MwWLVhi29+4QAJqIKrKg3nHrIRLo3As2XVYk
-XRR2wf3C5QNOiUxF9O8GNmjY7AFsmKt7PiqRJ2wlHhz1zk/+eTuun3DTaGvE16Ni
-ouaNJ+4CQExCOrXKaVfjvbIvg7eWKfh6BZpF0aimIF2I6YhDC8ndc9zT/1HZhwkM
-u44A+HlJWuS9a0msUImOatTr3HKpE1bmaFDmUwH9GkhHYm/6juypbXLXVeeyKS+1
-P7qyzF5pTl9ODwtY7zIu+wfL0x3oDkxg9Gi/JU1XIpfixxIeLmtp6UOFfE9+8Wgo
-HR9hITU61KLtjd/db+5l24KyqpTOQkhOCfxi1tm1bX5EozlfCGReLQMBK6toloKL
-isxDO1oUREc2gmoT2GXvMzqkqaVV5J5qZ69bKBX/Y2BPIZ+U7woVE7Ctdj0TTX1v
-Y5cLdude4R02gqmIEopW0EgkAW34pU2izlur5V006O01HuKpywPwdNAEJbAcbcT8
-fagMDmE+eQsyfjbrualJv/BfxlnmxMdhAzsUPzZbRVXnxGmwDlE/mtFvKsc1K4hc
-KrFCurxRAGufI1nXXZT1YY6DRStFKts2gSxJJbYoip49T8f8B+cUfD7rdDyBLGjr
-80f4dof6KZFXr9aoq6Dfn4c1+DtfSZUx59+nb8Dv1hK2cYQiP/ZfYFG3bPZ30jfu
-2Ha3vXCFz5R/FR0vUywf
-=pyJr
------END PGP SIGNATURE-----
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:624:43 in _dwarf_get_abbrev_for_code
+Shadow bytes around the buggy address:
+  0x0c227fff8af0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c227fff8b00: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c227fff8b10: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff8b40:[fa]fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff8b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b60: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b80: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa
+  0x0c227fff8b90: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==30323==ABORTING
+
+Affected version:
+20161001 and past
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/268c1f18d1d28612af3b72d7c670076b1b88e51c/tree/libdwarf/dwarf_util.c?diff=0b28b923c3bd9827d1d904feed2abadde4fa5de2
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-10-03: bug discovered
+2016-10-03: bug reported privately to upstream
+2016-10-03: upstream realeased a patch
+2016-10-04: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/04/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c/
+
