@@ -1,50 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/11/1
-Message-ID: <CABuU+O1eQnw21SVtGAf6YQyqEPpm=f4ntDLT0O9k37w9-fZ-MQ@mail.gmail.com>
-Date: Thu, 11 Aug 2016 12:49:25 +0200
-From: "F. Alonso" <rs@...skills.cz>
-To: oss-security@...ts.openwall.com
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: CVE Requests Facebook HHVM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/7
+Message-Id: <20161008153546.5A92852E4A0@smtpvbsrv1.mitre.org>
+Date: Sat,  8 Oct 2016 11:35:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: invalid memory accesses parsing object files in libgit2
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following commits patched several security flaws that I recently
-reported to Facebook's complete toolchain for the PHP language, HHVM [1]
-version 3.14.2 and 3.14.3.
+> We recently reported two invalid memory accesses in the last revision
+> of libgit2
 
-Could you assing CVEs for those issues?
-
-
--Fix out of bounds write access in
-mb_detect_encoding, mb_send_mail, mb_detect_order.
-https://github.com/facebook/hhvm/commit/365abe807cab2d60dc9ec307292a06181f77a9c2
-
--Fix buffer overrun due to integer overflow in bcmath
-https://github.com/facebook/hhvm/commit/c00fc9d3003eb06226b58b6a48555f1456ee2475
-
--Fix integer overflow in StringUtil::implode
-https://github.com/facebook/hhvm/commit/2c9a8fcc73a151608634d3e712973d192027c271
-
--Fix self recursion in compact
-https://github.com/facebook/hhvm/commit/e264f04ae825a5d97758130cf8eec99862517e7e
-
--Fix recursion checks in array_*_recursive
-https://github.com/facebook/hhvm/commit/05e706d98f748f609b19d8697e490eaab5007d69
-
--Fix infinite recursion in wddx
-https://github.com/facebook/hhvm/commit/1888810e77b446a79a7674784d5f139fcfa605e2
-
-[1] https://github.com/facebook/hhvm
+> The developers are preparing a patch to harden object parsing in libgit2 here:
+> 
+> https://github.com/libgit2/libgit2/pull/3956
 
 
-Thank you,
+> * Read out-of-bounds in git_oid_nfmt:
+> https://github.com/libgit2/libgit2/issues/3936
 
--- 
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 1
 
-Francisco Alonso.
-http://twitter.com/revskills
-PGP: 0xE2E64DCA
---
+Use CVE-2016-8568.
 
+
+> * DoS using a null pointer dereference in git_commit_message:
+> https://github.com/libgit2/libgit2/issues/3937
+
+>> AddressSanitizer: SEGV on unknown address
+
+Use CVE-2016-8569.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX+RBBAAoJEHb/MwWLVhi2pIsP/3r+mK3MErKPVn3pSw9s7j68
+2hvKXTV5xyzdCrM85se+AVo2KszYtmIVpfojhUxTGh1vJ10ZCNprPwQQzMiqMKoU
+DN9OOECQITgmMeSirRVCN9mfbVLhHP0mnrJn8E07iFpi+zjwBpIcXEVdilZPXSpT
+GvmhnFVhQYxskJz9BxxT0euow5GNMVdLXz8uMyCIi7YdxZxHPmMFYnHtZutnr6Bp
+2QTkbarZA1qaTd6xrf3VKVJNXJbs3x8+MNyMMEss26L+3nZZUM5KOZOzsHmXrwIY
+tiA6J6jB3sWn6X4LopdXswQyidjYmdahv8QyuX6yBPJwntmswHpkCBMBNhrXGMqA
++KoR7dVMkh48KH+KMgB2QyeQ7nYasCSZ5J/OWnm9TiMgeaw+39dKcc/9gRmgxwfV
+KH6aZWHT11XUGfRK0cXEOKaO3S5+SWXzfPg2AELEkqA+v0qZO0h1ax1dUcYgCuWp
+8XRTyEXZzWhQOG3oP8KK74liddEUoJBXa/GmBAr9iGqt0PzJAn2/gLpqP0zW1R9C
+8YboSai6v51uQuGJutlNFeor5PY0gDVaEzbtRdXL42U7RkyutwEraDcmfoWsi/lL
+lqRoltnxseYju9ztrQF9B88wE1LSa6/SbuZx+3HZJGKOGPIQVvcqnrcUVsg/P1V8
+pfrxWeIOGJG7GMSeCynU
+=i1n/
+-----END PGP SIGNATURE-----
