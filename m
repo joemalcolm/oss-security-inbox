@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["990" "Tuesday" "28" "April" "2015" "23:15:54" "-0700" "Mark Sapiro" "mark@msapiro.net" "<5540771A.4050005@msapiro.net>" "32" "[oss-security] Re: Limited DoS in mailman (requires non standard config)" nil nil nil "4" "2015042906:15:54" "[oss-security] Re: Limited DoS in mailman (requires non standard config)" (number mark "        mark@msapiro Apr 28   32/990   " thread-indent "\"[oss-security] Re: Limited DoS in mailman (requires non standard config)\"\n") "<55406D07.4080607@redhat.com>" ("<553FBD80.4000809@redhat.com>" "<553FC853.3080009@msapiro.net>" "<55406D07.4080607@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["473" "Saturday" "8" "October" "2016" "10:15:55" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>" "19" "[oss-security] CVE request: invalid memory accesses parsing object files in libgit2" nil nil nil "10" "2016100813:15:55" "[oss-security] CVE request: invalid memory accesses parsing object files in libgit2" (number mark "U       gustavo.grie Oct  8   19/473   " thread-indent "\"[oss-security] CVE request: invalid memory accesses parsing object files in libgit2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3392 invoked by uid 550); 29 Apr 2015 06:16:23 -0000
+Received: (qmail 31842 invoked by uid 550); 8 Oct 2016 13:16:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3368 invoked from network); 29 Apr 2015 06:16:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=msapiro.net;
-	s=default; t=1430288155;
-	bh=SXH5J9mMIuNbKEvNBOYBqBGAVZpXxcsdsFhZlxAuW+g=;
-	h=Date:From:To:Subject:References:In-Reply-To;
-	b=LaGnQhpTFVPMxq7hOUSv7EuWlJkm/NRmfYv/AslhaMUdnvPTJrFFqORelfEeZlH7w
-	 L0fdmuQB+i0IOVuOG/soqNh8+wTvtYdsw1dCUml4e0tN7pnPw59iZBK4gkBRO1Vn2m
-	 UHAGX85P0t8rr2+a2rsVhTphyAnUmR71a+xn+2Ss=
-Message-ID: <5540771A.4050005@msapiro.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <553FBD80.4000809@redhat.com> <553FC853.3080009@msapiro.net> <55406D07.4080607@redhat.com>
-In-Reply-To: <55406D07.4080607@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="J6j0x2tS8wRagGHIlEwHk8OowlLWgfqFM"
-X-GPC-MailScanner-ID: CDB946900B9.A45B3
-X-GPC-MailScanner: Found to be clean
-X-GPC-MailScanner-SpamCheck: not spam, SpamAssassin (not cached, score=-1.87,
-	required 5, autolearn=not spam, ALL_TRUSTED -1.00, BAYES_00 -0.75,
-	DKIM_SIGNED 0.10, DKIM_VALID -0.10, DKIM_VALID_AU -0.10,
-	T_RP_MATCHES_RCVD -0.01, X_GPC_SASL -0.01)
-X-GPC-MailScanner-From: mark@msapiro.net
-Date: Tue, 28 Apr 2015 23:15:54 -0700
-From: Mark Sapiro <mark@msapiro.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Limited DoS in mailman (requires non standard config)
-To: Kurt Seifried <kseifried@redhat.com>, mailman-security@python.org, 
- "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 31775 invoked from network); 8 Oct 2016 13:16:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=cDcZsN17wIaINXG0ML4ue2ayq0wzQ3BFQS8FO3b62Hk=;
+        b=rMWxW8rwr/9O5gI7fXrbQV1JgNFDuhiurHjcBEI/jpx2VG/0FPZeUEXgh9m3dY/JOB
+         hHuedgh8gG/1SPicTYoIruPzt7uy31Fz+2HtoP26T0IEG1bevg1GU8/1I+8n2MZGDWYz
+         z4XK264HqzTQ1RU/Xo+l/ixXrxbxZCjMaCzhSbhLSFZzxN26LIhYjQJ6Db8fZ2wIkvS1
+         4oD8XcIbxGzqjcmmjMftztwX/FFDJtVpiBd0dxM/VX7gilSX9twWTW+yoiDOgRizlGS4
+         8wxUpiihi9EQzDcqfypFDUT8Dh9CYRixdeUglnV4yhDumoI53CYBOqLOIpHDnp8tNuzs
+         LLXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=cDcZsN17wIaINXG0ML4ue2ayq0wzQ3BFQS8FO3b62Hk=;
+        b=HvtTLyG/1tgtsEOlrWaaR8vETCI9GPL26l6VvXeCrTq/BR/iT0N3egdBWPXcq6A7td
+         /URYUDzK4nPcy+T/OGbt5hMO6E03m6FaA4v9hIMovUkOgFgnR4EkyYsWVhCQkryiqm1Q
+         0kcwBBI8NrlN3MI6NUMVAiTHjJPfEklUFcjMAUP/f0YcniH4Hh53SANebOJ0EmpesjmF
+         Ho98XQO70RH7F/imXWFhq+f5P36lukeF5ScWU9G9lUfSq2hcvLHesYR+01Uv14rtbeyO
+         pARATjvCF5tZYjES1x3vTGL7SbqZcF5uh4/LkceI4+rZ2KMNjWK1i/qghSYzxPDvIwUC
+         dL3w==
+X-Gm-Message-State: AA6/9RmPHTxZQvQQo5LknEic7qPV4PDj0OcyEG4xvdg1z5fbqMUYzrMCAGV4QVV+6krcGt3+ytlry8Lr7p/3UA==
+X-Received: by 10.107.58.10 with SMTP id h10mr17153032ioa.78.1475932555625;
+ Sat, 08 Oct 2016 06:15:55 -0700 (PDT)
+MIME-Version: 1.0
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Sat, 8 Oct 2016 10:15:55 -0300
+Message-ID: <CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE request: invalid memory accesses parsing object files in libgit2
 
---J6j0x2tS8wRagGHIlEwHk8OowlLWgfqFM
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On 04/28/2015 10:32 PM, Kurt Seifried wrote:
-> CentOS 6.6 with mailman-2.1.12-18.el6.x86_64
->=20
-> Which is.. ergh. I did not realize how old this is.
+We recently reported two invalid memory accesses in the last revision
+of libgit2:
 
+* Read out-of-bounds in git_oid_nfmt:
+https://github.com/libgit2/libgit2/issues/3936
 
-Email address validation was strengthened in Mailman 2.1.15. Prior to
-that, it would allow a slash (/) in an email address domain but not since.
+* DoS using a null pointer derreference in git_commit_message:
+https://github.com/libgit2/libgit2/issues/3937
 
---=20
-Mark Sapiro <mark@msapiro.net>        The highway is for gamblers,
-San Francisco Bay Area, California    better use your sense - B. Dylan
+The developers are preparing a patch to harden object parsing in libgit2 here:
 
+https://github.com/libgit2/libgit2/pull/3956
 
---J6j0x2tS8wRagGHIlEwHk8OowlLWgfqFM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Please assign one or more CVE if suitable.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iEYEARECAAYFAlVAdxoACgkQVVuXXpU7hpPjxwCgvrYEusLY6W09y33Lt3cvAgck
-zBUAniTWTPBZHorm+OGcULE+wFuA7zvO
-=CUem
------END PGP SIGNATURE-----
-
---J6j0x2tS8wRagGHIlEwHk8OowlLWgfqFM--
+Regards,
+Gustavo.
