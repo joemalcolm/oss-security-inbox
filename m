@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/8
-Message-ID: <CACn5sdQe0-qg68k+Zb5XtTk9Q2z1j38akrPxbAQQu_4Qf+g3Lw@mail.gmail.com>
-Date: Tue, 3 May 2016 18:36:50 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: out-of-bounds read parsing an XML in libxml2 using recover mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/6
+Message-Id: <20161008153429.C0F6142E066@smtpvbsrv1.mitre.org>
+Date: Sat,  8 Oct 2016 11:34:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: labs@...dream.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, spip-team-owner@...o.net
+Subject: Re: SPIP vulnerabilities: request for 5 CVE
 Content-Type: text/plain; charset=utf-8
 
- Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We found an out-of-bounds read parsing a specially crafted xml in libxml2
-if recover mode is used. It affects all versions.  It was discovered before
-by another guy but for some reason, never reported or fixed. Since upstream
-is not responding, i think it is a good time to publish some details here.
+> * Template Compiler/Composer PHP Code Execution
+> https://core.spip.net/projects/spip/repository/revisions/23186
+> https://core.spip.net/projects/spip/repository/revisions/23189
+> https://core.spip.net/projects/spip/repository/revisions/23192
 
-$ xmllint -recover ohizsmaase.xml.-6355798974422201279
-...
-==2994== ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x60040000d5d3 at pc 0x73320a bp 0x7fffffffc1e0 sp 0x7fffffffc1d8
-READ of size 1 at 0x60040000d5d3 thread T0
-...
-0x60040000d5d3 is located 0 bytes to the right of 3-byte region
-[0x60040000d5d0,0x60040000d5d3)
+Use CVE-2016-7998.
 
-And backtrace is here:
 
-...
-#7  0x000000000073320a in xmlBufAttrSerializeTxtContent
-(buf=0x600c0000a7c0, doc=0x601e0000ef50, attr=0x601000007ea0,
-string=0x60040000d5d0 <incomplete sequence \341>) at xmlsave.c:2057
-#8  0x000000000072af0b in xmlAttrSerializeContent (buf=0x600c0000a820,
-attr=0x601000007ea0) at xmlsave.c:443
-#9  0x000000000072c36c in xmlAttrDumpOutput (ctxt=0x601c0000ca60,
-cur=0x601000007ea0) at xmlsave.c:780
-#10 0x000000000072c3b2 in xmlAttrListDumpOutput (ctxt=0x601c0000ca60,
-cur=0x601000007ea0) at xmlsave.c:797
-#11 0x000000000072dc22 in xmlNodeDumpOutputInternal (ctxt=0x601c0000ca60,
-cur=0x60180000b440) at xmlsave.c:1055
-#12 0x000000000072ef8a in xmlDocContentDumpOutput (ctxt=0x601c0000ca60,
-cur=0x601e0000ef50) at xmlsave.c:1234
-#13 0x000000000073246c in xmlSaveDoc (ctxt=0x601c0000ca60,
-doc=0x601e0000ef50) at xmlsave.c:1936
-#14 0x000000000040a238 in parseAndPrintFile (filename=0x7fffffffe759
-"ohizsmaase.xml.-6355798974422201279", rectxt=0x0) at xmllint.c:2689
-#15 0x000000000040fe5e in main (argc=3, argv=0x7fffffffe4a8) at
-xmllint.c:3739
+> * Server Side Request Forgery
+> https://core.spip.net/projects/spip/repository/revisions/23188
+> https://core.spip.net/projects/spip/repository/revisions/23193
 
-A reproducer is available upon request. Please assign a CVE if necesary.
+(In other words, the :// substring is rejected to prevent
+outbound network traffic.)
 
-Regards,
-Gustavo.
+Use CVE-2016-7999.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX+RA3AAoJEHb/MwWLVhi2GqIQAKupTLee7N5Q7UpyJJkiM8ek
+CHcI1zwsMiH1MKmXkUCxiSW12C7Av9D9AW057G7N18HmL8bIuRHwBUDtsFq6zlAQ
+526Vm7CJDRuO74UK2ximr47KodVBd09fJonRl7MPEDXgllppCvkmh/1ctKTdrJ8+
+6DKd5ErXO/zoAWFIgfXwXllYBFKnzrH9gqYJO8X1T5UFQ/Mka6WDzkVH83h4D96e
+8dcrHT9yISaF8kyPf/qwrkgxEzXE4lfECZZI4sVI4lu1KCVAtx07DiWXAT+D7VW2
+BuTylk9PxONmGmL6ZTeYSEOSYT+QqheBn2ZniSpS4r7M9dAytKtjxFSR2a3AFXu9
+9F6uyTdOcKJZv1hhBg6O6eGYQlip83KvySAXm+USPd90oU3DDEqhisVl211ZNqWj
+pj4Pl8gTAftRWlZz//URJvpwATa1r0hl1fnuBdQxnfdoPvhiMNqQBBu8BICJXTby
+Hc9A/6RLMX4kFmzg+ReqTnFlg2xGroplayg8u/oAH/C0c5tId9m34i2/rX1B9naY
+lfpjHADIejCh+FEU6uR23lza6UR8cgNYwrSaexED1y6tG9ec1RdtpohAL9WKf0Kx
+BqwWCoKLZYYisfQMtGfD4F4/Qp08F68QkAslfz1xXqeYv1wlHIEDI9xKXpc/fovM
+mLEFfwUdXnAHGHUyumCj
+=v5y8
+-----END PGP SIGNATURE-----
