@@ -1,4 +1,9 @@
-Received: (qmail 3097 invoked by uid 550); 24 Jan 2023 16:07:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3874" "Saturday" "8" "October" "2016" "22:21:25" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1702944.HEYk80P7xf@arcadia>" "98" "[oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)" nil nil nil "10" "2016100820:21:25" "[oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)" (number mark "U       ago@gentoo.o Oct  8   98/3874  " thread-indent "\"[oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29924 invoked by uid 550); 8 Oct 2016 20:21:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,438 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 2034 invoked from network); 24 Jan 2023 16:07:18 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Message-Id: <E26A8338-E55F-429C-A9C8-6D35F92C9200@beckweb.net>
-Date: Tue, 24 Jan 2023 17:07:07 +0100
+Received: (qmail 29852 invoked from network); 8 Oct 2016 20:21:15 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1674576438;d48f2534;
-X-HE-SMSGID: 1pKLpD-0002iH-CF
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
-
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Azure AD Plugin 306.va_7083923fd50
-* Bitbucket OAuth Plugin 0.13
-* Gerrit Trigger Plugin 2.38.1
-* Kubernetes Credentials Provider Plugin 1.209.v862c6e5fb_1ef
-* OpenId Connect Authentication Plugin 2.5
-* Orka by MacStadium Plugin 1.32
-* Script Security Plugin 1229.v4880b_b_e905a_6
-* Semantic Versioning Plugin 1.15
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* BearyChat Plugin
-* Cisco Spark Notifier Plugin
-* GitHub Pull Request Builder Plugin
-* GitHub Pull Request Coverage Status Plugin
-* JIRA Pipeline Steps Plugin
-* Keycloak Authentication Plugin
-* MSTest Plugin
-* OpenID Plugin
-* PWauth Security Realm Plugin
-* RabbitMQ Consumer Plugin
-* TestComplete support Plugin
-* TestQuality Updater Plugin
-* view-cloner Plugin
-* visualexpert Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-01-24/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3016 / CVE-2023-24422
-Script Security Plugin provides a sandbox feature that allows low
-privileged users to define scripts, including Pipelines, that are generally
-safe to execute. Calls to code defined inside a sandboxed script are
-intercepted, and various allowlists are checked to determine whether the
-call is to be allowed.
-
-In Script Security Plugin 1228.vd93135a_2fb_25 and earlier, property
-assignments performed implicitly by the Groovy language runtime when
-invoking map constructors were not intercepted by the sandbox.
-
-This vulnerability allows attackers with permission to define and run
-sandboxed scripts, including Pipelines, to bypass the sandbox protection
-and execute arbitrary code in the context of the Jenkins controller JVM.
-
-
-SECURITY-2137 / CVE-2023-24423
-Gerrit Trigger Plugin 2.38.0 and earlier does not require POST requests for
-several HTTP endpoints, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to rebuild previous builds triggered by
-Gerrit.
-
-
-SECURITY-2978 / CVE-2023-24424
-OpenId Connect Authentication Plugin 2.4 and earlier does not invalidate
-the existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-3022 / CVE-2023-24425
-Kubernetes Credentials Provider Plugin 1.208.v128ee9800c04 and earlier does
-not set the appropriate context for Kubernetes credentials lookup, allowing
-the use of System-scoped credentials otherwise reserved for the global
-configuration.
-
-This allows attackers with Item/Configure permission to access and
-potentially capture Kubernetes credentials they are not entitled to.
-
-
-SECURITY-2980 / CVE-2023-24426
-Azure AD Plugin 303.va_91ef20ee49f and earlier does not invalidate the
-existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-2982 / CVE-2023-24427
-Bitbucket OAuth Plugin 0.12 and earlier does not invalidate the existing
-session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-
-SECURITY-2981 / CVE-2023-24428
-Bitbucket OAuth Plugin 0.12 and earlier does not implement a state
-parameter in its OAuth flow, a unique and non-guessable value associated
-with each authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-
-SECURITY-2973 (1) / CVE-2023-24429
-Semantic Versioning Plugin defines a controller/agent message that
-processes a given file as XML and its XML parser is not configured to
-prevent XML external entity (XXE) attacks.
-
-Semantic Versioning Plugin 1.14 and earlier does not restrict execution of
-the controller/agent message to agents, and implements no limitations about
-the file path that can be parsed. This allows attackers able to control
-agent processes to have Jenkins parse a crafted file that uses external
-entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-This is due to an incomplete fix of
-link:/security/advisory/2022-03-15/#SECURITY-2124[SECURITY-2124].
-
-NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
-LTS 2.303.2 and earlier. See the
-link:/doc/upgrade-guide/2.303/#upgrading-to-jenkins-lts-2-303-3[LTS upgrade
-guide].
-
-
-SECURITY-2973 (2) / CVE-2023-24430
-Semantic Versioning Plugin 1.14 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the contents of the version file for
-the 'Determine Semantic Version' build step to have agent processes parse a
-crafted file that uses external entities for extraction of secrets from the
-Jenkins agent or server-side request forgery.
-
-NOTE: Because Jenkins agent processes usually execute build tools whose
-input (source code, build scripts, etc.) is controlled externally, this
-vulnerability only has a real impact in very narrow circumstances: when
-attackers can control XML files, but are unable to change build steps,
-Jenkinsfiles, test code that gets executed on the agents, or similar.
-
-
-SECURITY-2772 (1) / CVE-2023-24431
-Orka by MacStadium Plugin 1.31 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2772 (2) / CVE-2023-24432 (CSRF) & CVE-2023-24433 (missing permiss=
-ion check)
-Orka by MacStadium Plugin 1.31 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP server using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2789 (1) / CVE-2023-24436
-GitHub Pull Request Builder Plugin 1.42.2 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2789 (2) / CVE-2023-24434 (CSRF) & CVE-2023-24435 (missing permiss=
-ion check)
-GitHub Pull Request Builder Plugin 1.42.2 and earlier does not perform
-permission checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2786 / CVE-2023-24437 (CSRF) & CVE-2023-24438 (missing permission =
-check)
-JIRA Pipeline Steps Plugin 2.0.165.v8846cf59f3db and earlier does not
-perform permission checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2774 / CVE-2023-24439 (storage) & CVE-2023-24440 (masking)
-JIRA Pipeline Steps Plugin 2.0.165.v8846cf59f3db and earlier stores the
-private key unencrypted in its global configuration file
-`org.thoughtslive.jenkins.plugins.jira.JiraStepsConfig.xml` on the Jenkins
-controller as part of its configuration.
-
-This key can be viewed by users with access to the Jenkins controller file
-system.
-
-Additionally, the global configuration form does not mask the API key,
-increasing the potential for attackers to observe and capture it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2292 / CVE-2023-24441
-MSTest Plugin 1.0.0 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the contents of the report file for
-the 'Publish MSTest test result report' post-build step to have agent
-processes parse a crafted file that uses external entities for extraction
-of secrets from the Jenkins agent or server-side request forgery.
-
-NOTE: Because Jenkins agent processes usually execute build tools whose
-input (source code, build scripts, etc.) is controlled externally, this
-vulnerability only has a real impact in very narrow circumstances: when
-attackers can control XML files, but are unable to change build steps,
-Jenkinsfiles, test code that gets executed on the agents, or similar.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2767 / CVE-2023-24442
-GitHub Pull Request Coverage Status Plugin 2.2.0 and earlier stores the
-GitHub Personal Access Token, Sonar access token and Sonar password
-unencrypted in its global configuration file
-`com.github.terma.jenkins.githubprcoveragestatus.Configuration.xml` on the
-Jenkins controller as part of its configuration.
-
-These credentials can be viewed by users with access to the Jenkins
-controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2987 / CVE-2023-24456
-Keycloak Authentication Plugin 2.3.0 and earlier does not invalidate the
-existing session on login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2986 / CVE-2023-24457
-Keycloak Authentication Plugin 2.3.0 and earlier does not implement a state
-parameter in its OAuth flow, a unique and non-guessable value associated
-with each authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2741 / CVE-2023-24443
-TestComplete support Plugin 2.8.1 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the zip archive input file for the
-'TestComplete Test' build step to have Jenkins parse a crafted file that
-uses external entities for extraction of secrets from the Jenkins
-controller or server-side request forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2996 / CVE-2023-24444
-OpenID Plugin 2.4 and earlier does not invalidate the existing session on
-login.
-
-This allows attackers to use social engineering techniques to gain
-administrator access to Jenkins.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2997 / CVE-2023-24445
-OpenID Plugin 2.4 and earlier improperly determines that a redirect URL
-after login is legitimately pointing to Jenkins.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2995 / CVE-2023-24446
-OpenID Plugin 2.4 and earlier does not implement a state parameter in its
-OAuth flow, a unique and non-guessable value associated with each
-authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2778 / CVE-2023-24447 (CSRF) & CVE-2023-24448 (missing permission =
-check)
-RabbitMQ Consumer Plugin 2.8 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified AMQP server using attacker-specified username and
-password.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2985 / CVE-2023-24449
-PWauth Security Realm Plugin 0.4 and earlier does not restrict the names of
-files in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to check for the
-existence of an attacker-specified file path on the Jenkins controller file
-system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2787 / CVE-2023-24450
-view-cloner Plugin 1.1 and earlier stores passwords unencrypted in job
-`config.xml` files on the Jenkins controller as part of its configuration.
-
-These passwords can be viewed by users with Item/Extended Read permission
-or access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2803 / CVE-2023-24451
-Cisco Spark Notifier Plugin 1.1.1 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2745 / CVE-2023-24458 (CSRF) & CVE-2023-24459 (missing permission =
-check)
-BearyChat Plugin 3.0.2 and earlier does not perform a permission check in a
-method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2800 / CVE-2023-24452 (CSRF) & CVE-2023-24453 (missing permission =
-check)
-TestQuality Updater Plugin 1.3 and earlier does not perform a permission
-check in a method implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified username and password.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2091 / CVE-2023-24454
-TestQuality Updater Plugin 1.3 and earlier stores the TestQuality Updater
-password unencrypted in its global configuration file
-`com.testquality.jenkins.TestQualityNotifier.xml` on the Jenkins controller
-as part of its configuration.
-
-This password can be viewed by users with access to the Jenkins controller
-file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2709 / CVE-2023-24455
-visualexpert Plugin 1.3 and earlier does not restrict the names of files in
-methods implementing form validation.
-
-This allows attackers with Item/Configure permission to check for the
-existence of an attacker-specified file path on the Jenkins controller file
-system.
-
-As of publication of this advisory, there is no fix.
+Date: Sat, 08 Oct 2016 22:21:25 +0200
+Message-ID: <1702944.HEYk80P7xf@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)
+
+Description:
+Graphicsmagick is an Image Processing System.
+
+After the first round of fuzzing where I discovered some slowness issues that 
+make the fuzz hard, the second round revealed a stack-buffer-overflow.
+
+The complete ASan output:
+
+# gm identify $FILE
+==23362==ERROR: AddressSanitizer: stack-buffer-overflow on address 
+0x7fffaab3b8e0 at pc 0x000000453e36 bp 0x7fffaab3b570 sp 0x7fffaab3ad20
+READ of size 769 at 0x7fffaab3b8e0 thread T0
+    #0 0x453e35 in StrtolFixAndCheck /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:2596
+    #1 0x4545c1 in __interceptor_strtol /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:633
+    #2 0x7f73e9a847df in ReadSCTImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sct.c:191:19
+    #3 0x7f73f473eb13 in ReadImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1607:13
+    #4 0x7f73f473ca94 in PingImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/constitute.c:1370:9
+    #5 0x7f73f4651b25 in IdentifyImageCommand /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8375:17
+    #6 0x7f73f465797c in MagickCommand /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:8865:17
+    #7 0x7f73f46cf6fe in GMCommandSingle /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17379:10
+    #8 0x7f73f46cd926 in GMCommand /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/magick/command.c:17432:16
+    #9 0x7f73f352a61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x418c88 in _init (/usr/bin/gm+0x418c88)
+
+Address 0x7fffaab3b8e0 is located in stack of thread T0 at offset 800 in frame
+    #0 0x7f73e9a8399f in ReadSCTImage /var/tmp/portage/media-
+gfx/graphicsmagick-1.3.25/work/GraphicsMagick-1.3.25/coders/sct.c:126
+
+  This frame has 2 object(s):
+    [32, 800) 'buffer'
+    [928, 930) 'magick' 0x10007555f710: 00 00 00 00 00 00 00 00 00 00 00 
+00[f2]f2 f2 f2
+  0x10007555f720: f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 02 f3 f3 f3
+  0x10007555f730: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x10007555f740: 00 00 00 00 00 00 00 00 f1 f1 f1 f1 04 f2 00 f2
+  0x10007555f750: f2 f2 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x10007555f760: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==23362==ABORTING
+
+Affected version:
+1.3.25
+
+Fixed version:
+1.3.26 ( not yet released)
+
+Commit fix:
+http://hg.code.sf.net/p/graphicsmagick/code/rev/0a0dfa81906d
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-09-09: bug discovered
+2016-09-09: bug reported privately to upstream
+2016-09-10: no upstream response
+2016-09-15: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-stack-based-buffer-overflow-in-readsctimage-sct-c/
 
