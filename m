@@ -1,29 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/5
-Message-ID: <20160322234759.GA530@openwall.com>
-Date: Wed, 23 Mar 2016 02:47:59 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/10
+Message-ID: <1975736.yU59nFIvqB@arcadia>
+Date: Sat, 08 Oct 2016 22:07:40 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-1805 Linux kernel: pipe: iovec overrun leading to memory corruption
+Subject: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 22, 2016 at 03:04:50PM -0600, Scotty Bauer wrote:
-> Kingroot is the application it was discovered in by the Zimperium folks.
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-Thanks.  Meanwhile, @idl3r tweeted what is claimed to be and looks like
-a relevant but possibly incomplete PoC for this bug:
+A fuzzing with the upstream security policy enabled revealed a buffer overflow 
+read.
 
-<idl3r> Sent a proposal about CVE-2015-1805 to CSW but got no response. Didn't know you guys found it too :D @jduck @ZIMPERIUM
-<@idl3r> @jduck Here is a rough PoC if you'd like to try, better success rate is also possible https://github.com/idl3r/testcode/blob/master/test2.c
+The complete ASan output:
 
-I've attached this file, for archival.
+# identify $FILE
+==13198==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x61400000fbc0 at pc 0x7f7a28f71a91 bp 0x7fff6820aaa0 sp 0x7fff6820aa98                                                                                                                                      
+READ of size 10 at 0x61400000fbc0 thread T0                                                                                                                                                                                                                                    
+    #0 0x7f7a28f71a90 in IsPixelMonochrome /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/./MagickCore/pixel-
+accessor.h:557:24                                                                                                                            
+    #1 0x7f7a28f71a90 in IdentifyImageMonochrome /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:758                                                                                                                                
+    #2 0x7f7a28f71dc6 in IdentifyImageType /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:819:7                                                                                                                                    
+    #3 0x7f7a293216ce in IdentifyImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/identify.c:524:8                                                                                                                                         
+    #4 0x7f7a28924f86 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:336:22                                                                                                                                 
+    #5 0x7f7a289ba26a in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14                                                                                                                                  
+    #6 0x4f1fb5 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10                                                                                                                                                    
+    #7 0x4f1fb5 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176                                                                                                                                                             
+    #8 0x7f7a2785e61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #9 0x419138 in _init (/usr/bin/magick+0x419138)                                                                                                                                                                                                                            
 
-The default target_addr looks like it was being tested on a specific
-kernel for AArch64, but there's nothing very arch specific in here.
-The SELinux mode check suggests that target_addr is probably meant to
-hit that one variable in the kernel, although there are many other
-relevant targets.
+0x61400000fbc0 is located 0 bytes to the right of 384-byte region 
+[0x61400000fa40,0x61400000fbc0)                                                                                                                                                                              
+allocated by thread T0 here:                                                                                                                                                                                                                                                   
+    #0 0x4c1105 in __interceptor_posix_memalign /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/asan_malloc_linux.cc:124                                                                                                            
+    #1 0x7f7a293cac65 in AcquireAlignedMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:258:7
+    #2 0x7f7a28fb8e9d in AcquireCacheNexusPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:4634:33
+    #3 0x7f7a28fb8e9d in SetPixelCacheNexusPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:4746
+    #4 0x7f7a28fa9f9e in GetVirtualPixelsFromNexus /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:2629:10
+    #5 0x7f7a28fd2a5e in GetCacheViewVirtualPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache-
+view.c:664:10
+    #6 0x7f7a28f70e46 in IdentifyImageMonochrome /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:753:7
+    #7 0x7f7a28f71dc6 in IdentifyImageType /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:819:7
+    #8 0x7f7a293216ce in IdentifyImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/identify.c:524:8
+    #9 0x7f7a28924f86 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:336:22
+    #10 0x7f7a289ba26a in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
+    #11 0x4f1fb5 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
+    #12 0x4f1fb5 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
+    #13 0x7f7a2785e61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
-Alexander
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/./MagickCore/pixel-
+accessor.h:557:24 in IsPixelMonochrome
+Shadow bytes around the buggy address:
+  0x0c287fff9f20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c287fff9f30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c287fff9f40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c287fff9f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c287fff9f60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c287fff9f70: 00 00 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa
+  0x0c287fff9f80: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c287fff9f90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c287fff9fa0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c287fff9fb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x0c287fff9fc0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==13198==ABORTING
 
-View attachment "CVE-2015-1805.c" of type "text/x-c" (6951 bytes)
+Affected version:
+Tested on 7.0.3.0 but 7.0.3.1/7.0.3.2 did not include any fix
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-09-14: bug discovered
+2016-09-14: bug reported to upstream
+2016-10-07: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/07/imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
+
+
