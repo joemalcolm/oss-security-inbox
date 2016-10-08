@@ -1,101 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/4
-Message-ID: <CAB_jSYzrYau1c_zEO-BczpEKc7W617NKeuphfJt=HLgE9bMbfA@mail.gmail.com>
-Date: Tue, 17 May 2016 17:01:24 +0800
-From: Marina Glancy <marina@...dle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/13
+Message-ID: <2751056.p2fs675oKu@arcadia>
+Date: Sat, 08 Oct 2016 22:17:29 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Moodle security release 3.0.4, 2.9.6, 2.8.12, 2.7.14
+Subject: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications have now been made public
-following release of Moodle 3.0.4, 2.9.6, 2.8.12 and 2.7.14. Thanks to
-OSS members for their cooperation.
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-==============================================================================
-MSA-16-0013: Users are able to change profile fields that were locked by the
-administrator
+A fuzzing revealed an out bounds read,
 
-Description:       User editing form only disabled the profile fields in UI
-                   and did not actually prevent users from editing them
-Issue summary:     Tricky users can change locked profile fields
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
-                   and earlier unsupported versions
-Versions fixed:    3.0.4, 2.9.6, 2.8.12 and 2.7.14
-Reported by:       Vadim Dvorovenko
-Issue no.:         MDL-53954
-CVE identifier:    CVE-2016-3729
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53954
+The complete ASan output:
 
-==============================================================================
-MSA-16-0015: Information disclosure of hidden forum names and sub-names.
+# dwarfdump $FILE
+==24449==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x6110000059ed at pc 0x000000606cd5 bp 0x7fff42bdc5f0 sp 0x7fff42bdc5e8
+READ of size 1 at 0x6110000059ed thread T0
+    #0 0x606cd4 in _dwarf_get_abbrev_for_code 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9
+    #1 0x576086 in dwarf_siblingof_b 
+/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:1628:12
+    #2 0x517e73 in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1163:17
+    #3 0x517c6b in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
+    #4 0x5147cc in print_die_and_children 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
+    #5 0x5147cc in print_one_die_section 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:831
+    #6 0x512262 in print_infos 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
+    #7 0x4faaea in process_one_file 
+/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
+    #8 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
+    #9 0x7fa649d7e61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-Description:       Name of the inaccessible forum or forum discussion could be
-                   disclosed as part of the error message on the subscription
-                   page
-Issue summary:     Information disclosure of hidden forum names and sub-names.
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5 and 2.8 to 2.8.11
-Versions fixed:    3.0.4, 2.9.6 and 2.8.12
-Reported by:       Callum
-Issue no.:         MDL-53696
-CVE identifier:    CVE-2016-3731
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53696
+0x6110000059ed is located 0 bytes to the right of 237-byte region 
+[0x611000005900,0x6110000059ed)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7fa64ae58206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
-==============================================================================
-MSA-16-0016: User can view badges of other users without proper permissions
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9 in _dwarf_get_abbrev_for_code
+Shadow bytes around the buggy address:
+  0x0c227fff8ae0: 00 00 00 00 00 00 00 00 06 fa fa fa fa fa fa fa
+  0x0c227fff8af0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c227fff8b00: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c227fff8b10: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff8b30: 00 00 00 00 00 00 00 00 00 00 00 00 00[05]fa fa
+  0x0c227fff8b40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff8b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b60: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b80: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24449==ABORTING
 
-Description:       Capability check to view other badges was performed for the
-                   current user instead for the user whose badges are being
-                   viewed
-Issue summary:     Badges code checks viewotherbadges capability in the wrong
-                   context
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
-                   and earlier unsupported versions
-Versions fixed:    3.0.4, 2.9.6 and 2.8.12
-Reported by:       Tim Hunt
-Issue no.:         MDL-53589
-CVE identifier:    CVE-2016-3732
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53589
+Affected version:
+20161001 and past
 
-==============================================================================
-MSA-16-0017: Course idnumber not protected from teacher restore
+Fixed version:
+N/A
 
-Description:       During the course restore teacher could overwrite idnumber
-                   even without having the capability to change it
-Issue summary:     Course idnumber not protected from teacher restore
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
-                   and earlier unsupported versions
-Versions fixed:    3.0.4, 2.9.6, 2.8.12 and 2.7.14
-Reported by:       Donna Hrynkiw
-Issue no.:         MDL-51369
-CVE identifier:    CVE-2016-3733
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-51369
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13 
+and then 
+https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2 
+(because of a mistake)
 
-==============================================================================
-MSA-16-0018: CSRF in script marking forum posts as read
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Description:       CSRF possible in the URL that marks forum posts as read
-Issue summary:     Forum markposts.php missing sesskey check
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.3, 2.9 to 2.9.5, 2.8 to 2.8.11, 2.7 to 2.7.13
-                   and earlier unsupported versions
-Versions fixed:    3.0.4, 2.9.6, 2.8.12 and 2.7.14
-Reported by:       Andrew Nicols
-Issue no.:         MDL-53755
-CVE identifier:    CVE-2016-3734
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-53755
+Timeline:
+2016-10-04: bug discovered
+2016-10-04: bug reported privately to upstream
+2016-10-04: upstream realeased a patch
+2016-10-06: blog post about the issue
 
-==============================================================================
+Note:
+This bug was found with American Fuzzy Lop.
 
-Marina Glancy
-Development Process Manager
-e: marina@...dle.com
-p: +61 8 9467 4167 w: moodle.com
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c-2/
+
