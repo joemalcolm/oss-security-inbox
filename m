@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3086" "Wednesday" "16" "January" "2019" "09:26:24" "+0400" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tRb__-uRn5B7hqN1q+yt3s7MPeC-GBEzfK3Ua9NkBm1hw@mail.gmail.com>" "77" "[oss-security] Heap based buffer overflow in wolfSSL" nil nil nil "1" "2019011605:26:24" "[oss-security] Heap based buffer overflow in wolfSSL" (number mark "U       mishra.dhira Jan 16   77/3086  " thread-indent "\"[oss-security] Heap based buffer overflow in wolfSSL\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4334" "Saturday" "8" "October" "2016" "22:08:44" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2582876.eMMFeVNJGl@arcadia>" "108" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)" nil nil nil "10" "2016100820:08:44" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)" (number mark "U       ago@gentoo.o Oct  8  108/4334  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17582 invoked by uid 550); 16 Jan 2019 11:42:44 -0000
+Received: (qmail 22510 invoked by uid 550); 8 Oct 2016 20:08:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,94 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9865 invoked from network); 16 Jan 2019 05:26:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=dm3bt0yDIJb10yiaY881f5QXCLuQGcfNo14rOUu9+bA=;
-        b=FTLgdazTyi/BnXYCcWcK3WPLUnbCVjHetpLJhHl7l0DcEz/Gm97AQXA3ilpbVEFP0M
-         8YPQUTTsXWu+gfYe9szqg2doULVpWAU2NhUT2squ3MCHXCO7ymBzi7cu7nvTXaUlM5tG
-         GfItHemj8Ii5F2VzeDkrH+2bjnPZzcljLSiAGDp3VTy1Aqi1y2yBIyPyFQIbe6lKf+OH
-         HV3+vsmGs76fmzXpTusbX6Q9Az4EUCsoNcCnIJGr0V8A9EBFCvXIvj+rl4Wfcz8N7Ri9
-         +2/Lxn6XWfp9LPTTUcdyKNh1PShY1illOeJ+aHTxZhPzOrvM3VC6tEki9s+nayqBFfJo
-         Vg+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=dm3bt0yDIJb10yiaY881f5QXCLuQGcfNo14rOUu9+bA=;
-        b=lgiDc77m2dTGJJX78NDS/LEbZ+FLAXQgHU9zTphYHrUGjss4z0yOGY+7TPcgm6SiHL
-         dMXdfaMroTSyoyZSJgp5V6h+hTS7QFv2cWiSEQNpmgHlo1Zpdc6nt2RAtJddNkhBQpiO
-         izmDU8Og20E0qXK6bdBcQbPJo+VbAekDiAe1awUVwu9U9uUVTpWC9t1imQwJ4bANZLca
-         9VITmRqMCBMVUGAlrJXTW+QbjmxDnkl0nsRt2/WfZhXc63pffRw98UCceRNR34U0kjew
-         /tJGVgeSE9hZiYX2PIEdQzg3QQ54E1yhgOQItkHv0OO3Ny61Vxl3/EPtiFJL/UdIHtkF
-         hnlg==
-X-Gm-Message-State: AJcUukfMe0UseesVsfRyAg4pF41oKavBiNrnjCP+/zgvcp3or9JUD+71
-	hvetZ999b1TCRtwdDQOVyJkupxsjH4W2FD+qdbVL7IiLmnQ=
-X-Google-Smtp-Source: ALg8bN7RyMIrFoSFGnyNAr3GdWqklwM0cp/83d6EgOmGAUouDRst2h7IbNNdLXOqc0rCmjy4zCHTWfOESMLGaXyrrk4=
-X-Received: by 2002:a63:ff16:: with SMTP id k22mr7231071pgi.244.1547616395265;
- Tue, 15 Jan 2019 21:26:35 -0800 (PST)
-MIME-Version: 1.0
-From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
-Date: Wed, 16 Jan 2019 09:26:24 +0400
-Message-ID: <CAG8b5tRb__-uRn5B7hqN1q+yt3s7MPeC-GBEzfK3Ua9NkBm1hw@mail.gmail.com>
+Received: (qmail 22419 invoked from network); 8 Oct 2016 20:08:34 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000007d0e29057f8c8567"
-Subject: [oss-security] Heap based buffer overflow in wolfSSL
+Date: Sat, 08 Oct 2016 22:08:44 +0200
+Message-ID: <2582876.eMMFeVNJGl@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)
 
---0000000000007d0e29057f8c8567
-Content-Type: text/plain; charset="UTF-8"
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-Hi List,
+A fuzzing revealed an out bounds read,
 
-## Summary:
-wolfSSL is an C-language-based SSL/TLS library targeted at IoT, embedded,
-and RTOS environments a heap-based-buffer overflow was observed in
-tls_bench.c which is a benchmark tool in wolfSSL.
+The complete ASan output:
 
-## ASAN
-==4088==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x619000000480 at pc 0x00000050ff16 bp 0x7fef206fdbf0 sp 0x7fef206fdbe8
-WRITE of size 1 at 0x619000000480 thread T2
-    #0 0x50ff15  (/wolfssl/examples/benchmark/tls_bench+0x50ff15)
-    #1 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
-    #2 0x7fef243ac6da  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
-    #3 0x7fef23ab188e  (/lib/x86_64-linux-gnu/libc.so.6+0x12188e)
+# dwarfdump $FILE
+==22886==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x61300000de1c at pc 0x000000462c7c bp 0x7ffe80a3d230 sp 0x7ffe80a3c9e0
+READ of size 1 at 0x61300000de1c thread T0
+    #0 0x462c7b in __interceptor_strlen /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:581
+    #1 0x60489f in _dwarf_get_size_of_val 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:267:21
+    #2 0x5f2834 in dwarf_attrlist 
+/tmp/dwarf-20161001/libdwarf/dwarf_query.c:389:27
+    #3 0x519ed5 in print_one_die 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1409:13
+    #4 0x51710c in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1047:36
+    #5 0x517c6b in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
+    #6 0x5147cc in print_die_and_children 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
+    #7 0x5147cc in print_one_die_section 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:831
+    #8 0x512262 in print_infos 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
+    #9 0x4faaea in process_one_file 
+/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
+    #10 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
+    #11 0x7f7cd096261f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #12 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-0x619000000480 is located 0 bytes to the right of 1024-byte region
-[0x619000000080,0x619000000480)
-allocated by thread T2 here:
-    #0 0x4d1fa0  (/wolfssl/examples/benchmark/tls_bench+0x4d1fa0)
-    #1 0x50f277  (/wolfssl/examples/benchmark/tls_bench+0x50f277)
-    #2 0x4dfa52  (/wolfssl/examples/benchmark/tls_bench+0x4dfa52)
+0x61300000de1c is located 0 bytes to the right of 348-byte region 
+[0x61300000dcc0,0x61300000de1c)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f7cd1a3c206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
-Thread T2 created by T0 here:
-    #0 0x435490  (/wolfssl/examples/benchmark/tls_bench+0x435490)
-    #1 0x50cbf5  (/wolfssl/examples/benchmark/tls_bench+0x50cbf5)
-    #2 0x5101d0  (/wolfssl/examples/benchmark/tls_bench+0x5101d0)
-    #3 0x7fef239b1b96  (/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-(/wolfssl/examples/benchmark/tls_bench+0x50ff15)
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:581 in __interceptor_strlen
 Shadow bytes around the buggy address:
-  0x0c327fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c327fff8080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c327fff8090:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c327fff80e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9b80: 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa fa
+  0x0c267fff9b90: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c267fff9ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c267fff9bc0: 00 00 00[04]fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9bf0: 00 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa
+  0x0c267fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
 Shadow byte legend (one shadow byte represents 8 application bytes):
   Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
+  Partially addressable: 01 02 03 04 05 06 07 
   Heap left redzone:       fa
+  Heap right redzone:      fb
   Freed heap region:       fd
   Stack left redzone:      f1
   Stack mid redzone:       f2
   Stack right redzone:     f3
+  Stack partial redzone:   f4
   Stack after return:      f5
   Stack use after scope:   f8
   Global redzone:          f9
@@ -111,15 +103,31 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:           fe
   Left alloca redzone:     ca
   Right alloca redzone:    cb
-==4088==ABORTING
+==22886==ABORTING
+Affected version:
+20161001 and past
 
-References:
-https://github.com/wolfSSL/wolfssl
-https://github.com/wolfSSL/wolfssl/issues/2032
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-6439
+Fixed version:
+N/A
 
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13 
+and then 
+https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2 
+(because of a mistake)
 
-Thank you
-@mishradhiraj_
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
---0000000000007d0e29057f8c8567--
+Timeline:
+2016-10-04: bug discovered
+2016-10-04: bug reported privately to upstream
+2016-10-04: upstream realeased a patch
+2016-10-06: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_size_of_val-dwarf_util-c/
+
