@@ -1,50 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/6
-Message-Id: <20161003142526.0B3F933203C@smtpvbsrv1.mitre.org>
-Date: Mon,  3 Oct 2016 10:25:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: net: pcnet: infinite loop in pcnet_rdra_addr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/17
+Message-ID: <4079765.cAzWC0Rqb2@arcadia>
+Date: Sat, 08 Oct 2016 22:29:54 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: potrace: invalid memory access in findnext (decompose.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+potrace is a utility that transforms bitmaps into vector graphics.
 
-> Quick Emulator(Qemu) built with the AMD PC-Net II emulator support is
-> vulnerable to an infinite loop issue. It could occur while receiving packets
-> via pcnet_receive().
-> 
-> A privileged user/process inside guest could use this issue to crash the Qemu
-> process on the host leading to DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07942.html
+A crafted image revealed, through a fuzz testing, the presence of a invalid 
+memory access.
 
-Use CVE-2016-7909.
+The complete ASan output:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/pcnet.c but
-that may be an expected place for a later update.
+# potrace $FILE
+potrace: warning: 48.crashes: premature end of file                                                                                                                                            
+ASAN:DEADLYSIGNAL                                                                                                                                                                              
+=================================================================                                                                                                                              
+==13940==ERROR: AddressSanitizer: SEGV on unknown address 0x7fd7b865b800 (pc 
+0x7fd7ec5bcbf4 bp 0x7fff9ebad590 sp 0x7fff9ebad360 T0)                                                            
+    #0 0x7fd7ec5bcbf3 in findnext /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:436:11                                                                             
+    #1 0x7fd7ec5bcbf3 in getenv /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:478                                                                                  
+    #2 0x7fd7ec5c3ed9 in potrace_trace /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/potracelib.c:76:7                                                                         
+    #3 0x4fea6e in process_file /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/main.c:1102:10                                                                                   
+    #4 0x4f872b in main /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/main.c:1250:7                                                                                            
+    #5 0x7fd7eb4d961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #6 0x418fc8 in getenv (/usr/bin/potrace+0x418fc8)                                                                                                                                          
+                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:436:11 in findnext                                                                   
+==13940==ABORTING
+Affected version:
+1.13
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Fixed version:
+N/A
 
-iQIcBAEBCAAGBQJX8mkOAAoJEHb/MwWLVhi2JRgP/0R6RXhk6Rx/TmowN+McLxwo
-yEuTpDJH+ne/x8E0sos7b9jllE9IKT15shKIp+IiM+djZuLO7h8aezt1FIU+2We8
-OTIN1PnHm0G8eR3F26Pd3LdcwmGu7umk0EZ+rl5liYtUq8UzLA6pOwp9/YmLO3wz
-6Df0CDCdctImfy5AhSUuzERLrAFIq29DRtUupsjwQyTawC3e+OfLmgCsmILGy+U5
-Kb550wAuD7owYGMcGdDvaBaGg20kA73lz1XkXo1JvhxlhW41n9fcnr8IZZ/wFIEm
-wNlI8otT4R0YlSbi6lREHtH4XY8t0syUzjANcXyQVmdsq8kKVLGJpCaoPtiyzBkJ
-9JKkcyBQxO6DMvCVlvZnowEIRlNAS0d+lVx5Dz+BItA6PZn1g2pv7vfqVdP6uINR
-b1vXcE4d1P5g89cM/YVt0f6PaCTU03N/IYnE+aSvgtgfOpDYOAr4/6k7f5vhdGvL
-rhcnr5l8wFXVXW7bUcjaFYeLoGMZ6o2PFHNmx7cJY8ia8f5G24+pCWduCL/raq30
-mjfkTzozorVIIuNnBCduk5rTk6YIamGRK/6Ix/jaEXrNjBDRtet5Q7nVJkDFUwAS
-M1mgfUYDUmxSv87r8nUnvJtj9uVFLBHknZWpjoJ16OTpKwSn7HWrDs6fR6q22rb7
-7FsvrZnifI3TIUn0t9Nz
-=eytu
------END PGP SIGNATURE-----
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-08-26: bug discovered
+2016-08-27: bug reported privately to upstream
+2016-08-29: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-findnext-decompose-c/
+
