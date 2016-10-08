@@ -1,4 +1,9 @@
-Received: (qmail 1333 invoked by uid 550); 26 Jun 2024 16:52:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1585" "Saturday" "8" "October" "2016" "11:34:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161008153429.C0F6142E066@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: SPIP vulnerabilities: request for 5 CVE" nil nil nil "10" "2016100815:34:29" "[oss-security] Re: SPIP vulnerabilities: request for 5 CVE" (number mark "U       cve-assign@m Oct  8   42/1585  " thread-indent "\"[oss-security] Re: SPIP vulnerabilities: request for 5 CVE\"\n") "<80dec0d7-75a1-6319-6ad9-d316d4bb7d34@sysdream.com>" ("<80dec0d7-75a1-6319-6ad9-d316d4bb7d34@sysdream.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16048 invoked by uid 550); 8 Oct 2016 15:34:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1300 invoked from network); 26 Jun 2024 16:52:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
-	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
-	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
-	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=b5+o990/PtTCOfLwsyaMQzrdAEDUDtduUyfEDjSLSz4=; t=1719420774; x=1719852774;
-	 b=jrTOYOiYZx630jQmTqVuMIcrq4pityqj7J0dhyp5nDjQ3ekWUUImf+wJAIUN3BwF9BImQaQtgw
-	NU7JYLcDgEU/WNhY1+ItEWComd4DB/bMdhauAo19yoJ8OoxFkfm2P+jqMBPDH2ZgcJDMmjGy0ZyiF
-	Q3183Ka6zU1u3RQLa862EQU9mFxHx4+UGjVNAmo/REggnkOGAjHoH9IANcB1KsA+VjwPfuFGMW69x
-	Z8S+Ra9q2fjUhuVFSxpkNUq1Ar0CjaYXAY17fkHfBg/et36mRbFOXR7IBrztd5z3DUCyysa8GnO+c
-	rjtgmjWiGplhA20pEWB3uSkNSne4OTyWbm3rA==;
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
-Message-Id: <E80810A1-A473-4C59-85CA-6E1C392E92BA@beckweb.net>
-Date: Wed, 26 Jun 2024 18:52:33 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3774.300.61.1.2)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1719420774;87d72ef7;
-X-HE-SMSGID: 1sMVsx-0001Md-Gf
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Received: (qmail 16030 invoked from network); 8 Oct 2016 15:34:41 -0000
+From: cve-assign@mitre.org
+To: labs@sysdream.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, spip-team-owner@rezo.net
+In-Reply-To: <80dec0d7-75a1-6319-6ad9-d316d4bb7d34@sysdream.com>
+Message-Id: <20161008153429.C0F6142E066@smtpvbsrv1.mitre.org>
+Date: Sat,  8 Oct 2016 11:34:29 -0400 (EDT)
+Subject: [oss-security] Re: SPIP vulnerabilities: request for 5 CVE
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+> * Template Compiler/Composer PHP Code Execution
+> https://core.spip.net/projects/spip/repository/revisions/23186
+> https://core.spip.net/projects/spip/repository/revisions/23189
+> https://core.spip.net/projects/spip/repository/revisions/23192
 
-* Bitbucket Branch Source Plugin 887.va_d359b_3d2d8d
-* Plain Credentials Plugin 183.va_de8f1dd5a_2b_
-* Structs Plugin 338.v848422169819
+Use CVE-2016-7998.
 
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2024-06-26/
+> * Server Side Request Forgery
+> https://core.spip.net/projects/spip/repository/revisions/23188
+> https://core.spip.net/projects/spip/repository/revisions/23193
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+(In other words, the :// substring is rejected to prevent
+outbound network traffic.)
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Use CVE-2016-7999.
 
----
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-SECURITY-3371 / CVE-2024-39458
-When Structs Plugin 337.v1b_04ea_4df7c8 and earlier fails to configure a
-build step, it logs a warning message containing diagnostic information
-that may contain secrets passed as step parameters.
-
-This can result in accidental exposure of secrets through the default
-system log.
-
-
-SECURITY-2495 / CVE-2024-39459
-When creating secret file credentials Plain Credentials Plugin
-182.v468b_97b_9dcb_8 and earlier attempts to decrypt the content of the
-file to check if it constitutes a valid encrypted secret. In rare cases the
-file content matches the expected format of an encrypted secret, and the
-file content will be stored unencrypted (only Base64 encoded) on the
-Jenkins controller file system.
-
-These credentials can be viewed by users with access to the Jenkins
-controller file system (global credentials) or with Item/Extended Read
-permission (folder-scoped credentials).
-
-NOTE: Secret file credentials stored unencrypted are unusable, as they
-would be decrypted during their use. Any successfully used secret file
-credentials are therefore unaffected.
-
-
-SECURITY-3363 / CVE-2024-39460
-Bitbucket Branch Source Plugin 886.v44cf5e4ecec5 and earlier prints the
-Bitbucket OAuth access token as part of the Bitbucket URL in the build log
-in some cases.
-
-
-
+iQIcBAEBCAAGBQJX+RA3AAoJEHb/MwWLVhi2GqIQAKupTLee7N5Q7UpyJJkiM8ek
+CHcI1zwsMiH1MKmXkUCxiSW12C7Av9D9AW057G7N18HmL8bIuRHwBUDtsFq6zlAQ
+526Vm7CJDRuO74UK2ximr47KodVBd09fJonRl7MPEDXgllppCvkmh/1ctKTdrJ8+
+6DKd5ErXO/zoAWFIgfXwXllYBFKnzrH9gqYJO8X1T5UFQ/Mka6WDzkVH83h4D96e
+8dcrHT9yISaF8kyPf/qwrkgxEzXE4lfECZZI4sVI4lu1KCVAtx07DiWXAT+D7VW2
+BuTylk9PxONmGmL6ZTeYSEOSYT+QqheBn2ZniSpS4r7M9dAytKtjxFSR2a3AFXu9
+9F6uyTdOcKJZv1hhBg6O6eGYQlip83KvySAXm+USPd90oU3DDEqhisVl211ZNqWj
+pj4Pl8gTAftRWlZz//URJvpwATa1r0hl1fnuBdQxnfdoPvhiMNqQBBu8BICJXTby
+Hc9A/6RLMX4kFmzg+ReqTnFlg2xGroplayg8u/oAH/C0c5tId9m34i2/rX1B9naY
+lfpjHADIejCh+FEU6uR23lza6UR8cgNYwrSaexED1y6tG9ec1RdtpohAL9WKf0Kx
+BqwWCoKLZYYisfQMtGfD4F4/Qp08F68QkAslfz1xXqeYv1wlHIEDI9xKXpc/fovM
+mLEFfwUdXnAHGHUyumCj
+=v5y8
+-----END PGP SIGNATURE-----
