@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["948" "Wednesday" "15" "June" "2016" "09:54:21" "-0700" "Tim" "tim-security@sentinelchicken.org" "<20160615165420.GG1225@sentinelchicken.org>" "28" "Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" nil nil nil "6" "2016061516:54:21" "[oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client" (number mark "U       tim-security Jun 15   28/948   " thread-indent "\"Re: [oss-security] CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client\"\n") "<CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>" ("<CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>" "<20160614211623.GB11505@sentinelchicken.org>" "<CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3347" "Saturday" "8" "October" "2016" "22:29:54" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<4079765.cAzWC0Rqb2@arcadia>" "58" "[oss-security] potrace: invalid memory access in findnext (decompose.c)" nil nil nil "10" "2016100820:29:54" "[oss-security] potrace: invalid memory access in findnext (decompose.c)" (number mark "U       ago@gentoo.o Oct  8   58/3347  " thread-indent "\"[oss-security] potrace: invalid memory access in findnext (decompose.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20408 invoked by uid 550); 15 Jun 2016 16:55:03 -0000
+Received: (qmail 30020 invoked by uid 550); 8 Oct 2016 20:29:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20390 invoked from network); 15 Jun 2016 16:55:02 -0000
-Date: Wed, 15 Jun 2016 09:54:21 -0700
-From: Tim <tim-security@sentinelchicken.org>
+Received: (qmail 29989 invoked from network); 8 Oct 2016 20:29:45 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20160615165420.GG1225@sentinelchicken.org>
-References: <CAKG8Do5XPLJTJR9iaTRMOtFFZYan_Eeaf7KxxLWDgWiUQDsEbw@mail.gmail.com>
- <20160614211623.GB11505@sentinelchicken.org>
- <CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>
+Date: Sat, 08 Oct 2016 22:29:54 +0200
+Message-ID: <4079765.cAzWC0Rqb2@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKG8Do524=Adj62mrRP0eZb0bp7CbXN3yi_Mid5VxFvdE1sE=A@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] CVE request: Python HTTP header injection in
- urrlib2/urllib/httplib/http.client
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] potrace: invalid memory access in findnext (decompose.c)
 
+Description:
+potrace is a utility that transforms bitmaps into vector graphics.
 
-> Reproducible on all python versions I tested : 2.4, 2.6, 2.7, 3.4 and 3.5
-> 
-> Fixed branches :
-> 3.4 / 3.5 : revision 94952 : https://hg.python.org/cpython/rev/bf3e1c9b80e9
-> 2.7 : revision 94951 : https://hg.python.org/cpython/rev/1c45047c5102
-> 
+A crafted image revealed, through a fuzz testing, the presence of a invalid 
+memory access.
 
+The complete ASan output:
 
-Thank you Cedric!
+# potrace $FILE
+potrace: warning: 48.crashes: premature end of file                                                                                                                                            
+ASAN:DEADLYSIGNAL                                                                                                                                                                              
+=================================================================                                                                                                                              
+==13940==ERROR: AddressSanitizer: SEGV on unknown address 0x7fd7b865b800 (pc 
+0x7fd7ec5bcbf4 bp 0x7fff9ebad590 sp 0x7fff9ebad360 T0)                                                            
+    #0 0x7fd7ec5bcbf3 in findnext /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:436:11                                                                             
+    #1 0x7fd7ec5bcbf3 in getenv /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:478                                                                                  
+    #2 0x7fd7ec5c3ed9 in potrace_trace /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/potracelib.c:76:7                                                                         
+    #3 0x4fea6e in process_file /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/main.c:1102:10                                                                                   
+    #4 0x4f872b in main /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/main.c:1250:7                                                                                            
+    #5 0x7fd7eb4d961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #6 0x418fc8 in getenv (/usr/bin/potrace+0x418fc8)                                                                                                                                          
+                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/decompose.c:436:11 in findnext                                                                   
+==13940==ABORTING
+Affected version:
+1.13
 
-Here are the additional details I promised:
-  http://blog.blindspotsecurity.com/2016/06/advisory-http-header-injection-in.html
+Fixed version:
+N/A
 
-The gist of it is that protocol injection can occur not only if an
-application sets a header based on user-supplied values, but also if
-the application ever tries to fetch a URL specified by an attacker
-(SSRF case) OR if the application ever accesses any malicious web
-server (redirection case).  URLs of the following form allow
-injection into the HTTP stream:
+Commit fix:
+N/A
 
-  http://127.0.0.1%0d%0aX-injected:%20header%0d%0ax-leftover:%20:12345/foo
-  http://localhost%00%0d%0ax-bar:%20:12345/foo
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-More details in the blog post, of course.
+CVE:
+N/A
 
-Best regards,
-tim
+Timeline:
+2016-08-26: bug discovered
+2016-08-27: bug reported privately to upstream
+2016-08-29: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-findnext-decompose-c/
+
