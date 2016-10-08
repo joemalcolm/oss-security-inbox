@@ -1,4 +1,9 @@
-Received: (qmail 17958 invoked by uid 550); 11 Jul 2024 19:06:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4046" "Saturday" "8" "October" "2016" "22:17:29" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2751056.p2fs675oKu@arcadia>" "104" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)" nil nil nil "10" "2016100820:17:29" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)" (number mark "U       ago@gentoo.o Oct  8  104/4046  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17955 invoked by uid 550); 8 Oct 2016 20:17:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +12,118 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17937 invoked from network); 11 Jul 2024 19:06:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:References:In-Reply-To:Date:To:From:Subject:
-	Message-ID:Reply-To:Cc:Content-ID:Content-Description;
-	bh=H8cnSqyskC6JvcsGBjn6gl4nD8PXK5TGDWudFRd7FUc=; b=OtehnDoiJJSfxrlvsLswGmGhFg
-	OnDLYKTrC51U6DtdpFb8ESRfetfFdxHYiCVDk+MLsrSsRcBBfPKmLiIrpvx1iOsbjrF3xSmrieen3
-	mIaHlPLmL4ncIS+Dwv4LOINPjjSV6nUHK0dRF8B4QEfzLqJlBQcox89rWTXOS461VCjOBXsHN+o7X
-	SobGbysEilwBukQQN7Xlf4VtPxoUTuthTEm4Md6OT6wAshvJpBmN74RZyf87DFGjg2IfaszvEdT1g
-	37yF1H0beHLDUBvMCazIna5+WtSab4JCogUd5hfGJ51SGtkTYw4jygDdNIvAzO/bnaeMKKUjFAsBo
-	zR6QqFeA==;
-Message-ID: <da14cfdfa8a410fd8589ad93f7e6a9eb271f52b1.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 17884 invoked from network); 8 Oct 2016 20:17:19 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Date: Thu, 11 Jul 2024 21:06:40 +0200
-In-Reply-To: <3a3e9afa77884b05733a5cdfc3eaa65defa45fa4.camel@corsac.net>
-References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
-	 <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
-	 <bda1ece8-8302-4a04-9f16-c78b51b0dbb2@analygence.com>
-	 <3a3e9afa77884b05733a5cdfc3eaa65defa45fa4.camel@corsac.net>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.3-1 
+Date: Sat, 08 Oct 2016 22:17:29 +0200
+Message-ID: <2751056.p2fs675oKu@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
 MIME-Version: 1.0
-X-Debian-User: corsac
-Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
- despite CVE-2024-26621 patch
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-On Thu, 2024-07-11 at 09:07 +0200, Yves-Alexis Perez wrote:
-> > If you want to see the lack of randomization, try the test with an x86=
-=20
-> > kernel, not amd64.
->=20
-> I don't have one at hand unfortunately, but I'll try setting up a VM or
-> something just to be sure. Thanks.
+A fuzzing revealed an out bounds read,
 
-So I did try with an x86 VM and it does confirm your finding. On an unstable
-kernel the simple `cat /proc/self/maps |grep libc.so |head -n1` (with libc6=
- on
-x86 beeing more than 2M) I get no randomness at all.
+The complete ASan output:
 
-Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+# dwarfdump $FILE
+==24449==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x6110000059ed at pc 0x000000606cd5 bp 0x7fff42bdc5f0 sp 0x7fff42bdc5e8
+READ of size 1 at 0x6110000059ed thread T0
+    #0 0x606cd4 in _dwarf_get_abbrev_for_code 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9
+    #1 0x576086 in dwarf_siblingof_b 
+/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:1628:12
+    #2 0x517e73 in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1163:17
+    #3 0x517c6b in print_die_and_children_internal 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
+    #4 0x5147cc in print_die_and_children 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
+    #5 0x5147cc in print_one_die_section 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:831
+    #6 0x512262 in print_infos 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
+    #7 0x4faaea in process_one_file 
+/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
+    #8 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
+    #9 0x7fa649d7e61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmaQLUAACgkQ3rYcyPpX
-RFvWbAgAy9nuAhjaNtgT7zBs1/Th5E4/veuUQWdkh4CUbaRjpndmYI9fWGVxtyfh
-p1xc10mkxVi0onVw5hwd3fb3GxvSCtZEDfFG/8qfAC5wIn05/ZvKyZvaBySYMqSm
-au1tgM1A0CPrsbcf0wVJoE+hoQnGBl/d2fvd3cp9fDV3+ItYtbzH5XIgRugaGkfz
-3kx+CK8kM5FbtWZ12ZkERXbvIUf8vqTuGbfqR3M6g3w8eqBqzkmi8TQcbhOP1X4N
-G0aJe3K5omlz77wxrCxBfBCT37uhPT6ljfJYaRUWhGXzT3UACmqM9QXu30/XBgjd
-rl9bGcbbvQJ+h5WZady6GLEQZg/Qsw=3D=3D
-=3DMbeb
------END PGP SIGNATURE-----
+0x6110000059ed is located 0 bytes to the right of 237-byte region 
+[0x611000005900,0x6110000059ed)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7fa64ae58206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9 in _dwarf_get_abbrev_for_code
+Shadow bytes around the buggy address:
+  0x0c227fff8ae0: 00 00 00 00 00 00 00 00 06 fa fa fa fa fa fa fa
+  0x0c227fff8af0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c227fff8b00: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c227fff8b10: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff8b30: 00 00 00 00 00 00 00 00 00 00 00 00 00[05]fa fa
+  0x0c227fff8b40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff8b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b60: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff8b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff8b80: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24449==ABORTING
+
+Affected version:
+20161001 and past
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13 
+and then 
+https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2 
+(because of a mistake)
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-10-04: bug discovered
+2016-10-04: bug reported privately to upstream
+2016-10-04: upstream realeased a patch
+2016-10-06: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c-2/
+
