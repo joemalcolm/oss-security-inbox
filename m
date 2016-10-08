@@ -1,64 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/4
-Message-ID: <CADSYzsucRUuig5_vSn66P_4oYbw2tSKBHbNbfKGxrF5R4k-uAg@mail.gmail.com>
-Date: Tue, 20 Dec 2016 17:12:58 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/8
+Message-ID: <3959521.p6bvcEHnKb@arcadia>
+Date: Sat, 08 Oct 2016 22:05:12 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Nagios Core < 4.2.2 Curl Command Injection leading to Remote Code Execution [CVE-2016-9565]
+Subject: libav: null pointer dereference in get_vlc2 (get_bits.h)
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability:
-Nagios Core < 4.2.2  Curl Command Injection / Remote Code Execution
+Description:
+Libav is an open source set of tools for audio and video processing.
 
-CVE-2016-9565
+A crafted file causes a NULL pointer access.
 
-Discovered by: Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+This issue was discovered the past year, but I didn’t make the report and I 
+didn’t follow the state because of a lack of time.
+Since I saw that the issue does not happen anymore on the git head, I 
+asked to a libav developer (Luca Barbato) about. He said that the commit 
+e5b019725f53b79159931d3a7317107cbbfd0860 make the issue not 
+anymore reachable through the provided testcase, but the issue is still 
+here (maybe another round of fuzzing will re-discover it on master)
 
-Severity: High
+The complete ASan output:
 
-Nagios Core comes with a PHP/CGI front-end which allows to view status
-of the monitored hosts.
-This front-end contained a Command Injection vulnerability in a RSS feed reader
-class that loads (via insecure clear-text HTTP or HTTPS accepting self-signed
-certificates) the latest Nagios news from a remote RSS feed (located on the
-vendor's server on the Internet) upon log-in to the Nagios front-end.
-The vulnerability could potentially enable remote unauthenticated attackers who
- managed to impersonate the feed server (via DNS poisoning, domain
-hijacking etc.), to provide a malicious response that injects
-parameters to
-curl command used by the affected RSS client class and effectively
-read/write arbitrary files on the vulnerable Nagios server.
-This could lead to Remote Code Execution in the context of www-data/nagios user
-on default Nagios installs that follow the official setup guidelines.
+# avconv -i $FILE -f null -
+ASAN:SIGSEGV
+===============================================
+==================
+==20876==ERROR: AddressSanitizer: SEGV on unknown address 
+0x0000000000fc (pc 0x7f5273202c6c bp 0x7ffc8442a690 sp 
+0x7ffc8442a520 T0)
+    #0 0x7f5273202c6b in get_vlc2 /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530:5
+    #1 0x7f5273202c6b in mpeg4_decode_sprite_trajectory 
+/var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:182
+    #2 0x7f527322cbd8 in decode_vop_header /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:2232:13
+    #3 0x7f527322cbd8 in ff_mpeg4_decode_picture_header 
+/var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:2491
+    #4 0x7f52731fa9ae in mpeg4_decode_header /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4video_parser.c:92:11
+    #5 0x7f52731fa9ae in mpeg4video_parse /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4video_parser.c:132
+    #6 0x7f52735c88e6 in av_parser_parse2 /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/parser.c:157:13
+    #7 0x7f52754f84dd in parse_packet /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:794:15
+    #8 0x7f52754d5e64 in read_frame_internal /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:960:24
+    #9 0x7f52754e3783 in avformat_find_stream_info 
+/var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:2156:15
+    #10 0x4f62f6 in open_input_file /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv_opt.c:726:11
+    #11 0x4f474f in open_files /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv_opt.c:2127:15
+    #12 0x4f3f62 in avconv_parse_options /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv_opt.c:2164:11
+    #13 0x528727 in main /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv.c:2629:11
+    #14 0x7f527027eaa4 in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.20-r2/work/glibc-2.20/csu/libc-start.c:289
+    #15 0x43a5d6 in _start (/usr/bin/avconv+0x43a5d6)
 
-The full up-to-date advisory and a PoC exploit can be found at:
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530 get_vlc2
+==20876==ABORTING
 
-https://legalhackers.com/advisories/Nagios-Exploit-Command-Injection-CVE-2016-9565-2008-4796.html
+Affected version:
+11.3 (and maybe past versions) to 11.7
 
-A copy of the current advisory has also been attached to this message.
+Fixed version:
+N/A
 
-Video PoC:
+Commit fix:
+N/A
 
-https://legalhackers.com/videos/Nagios-Exploit-Command-Injection-CVE-2016-9565-2008-4796.html
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2015-07-27: bug discovered
+2016-09-14: bug reported to upstream
+2016-09-24: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+This bug does not affect ffmpeg.
+The stacktrace is about 11.3 but as said before, the issue is present on 
+11.7 too.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-get_vlc2_get_bits_h/[1] 
 
 
-Attackers who have successfully exploited this vulnerability and achieved code
-execution with 'nagios' group privileges, could escalate their
-privileges to root system account via another Nagios vulnerability
-(CVE-2016-9566) described at:
+--------
+[1] https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-get_vlc2_get_bits_h/
 
-https://legalhackers.com/advisories/Nagios-Exploit-Root-PrivEsc-CVE-2016-9566.html
-
-For updates, follow:
-
-https://twitter.com/dawid_golunski
-
-
---
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
-
-View attachment "Nagios-Command-Injection.txt" of type "text/plain" (21761 bytes)
