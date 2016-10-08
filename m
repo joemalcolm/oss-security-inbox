@@ -1,34 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/07/1
-Message-ID: <20160707114924.GA15061@eldamar.local>
-Date: Thu, 7 Jul 2016 13:49:24 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: perl5-porters@...l.org
-Subject: CVE Request: perl: XSLoader: could load shared library from incorrect location
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/4
+Message-Id: <20161008153116.ADD9242E066@smtpvbsrv1.mitre.org>
+Date: Sat,  8 Oct 2016 11:31:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: usb: hcd-ehci: memory leak in ehci_process_itd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Jakub Wilk reported in [1] that the Perl module List::MoreUtils tried
-to load code from a subdirectory of the current working directory
-despite explicitly removing the current directory from @INC, which
-could lead to the execution of arbitrary code if cwd is unstrusted, as
-demonstrated in the bugreport.
+> Qemu emulator(Qemu) built with the USB EHCI emulation support is vulnerable to
+> a memory leakage flaw. It could occur while processing isochronous transfer
+> descriptors(iTD), with buffer page select(PG) index that falls beyond buffer
+> page array area.
+> 
+> A privileged user inside guest could use this flaw to leak Qemu memory bytes
+> leading to a DoS on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg06609.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1382668
 
-While analyzing the issue[2], it turns out that the issue is actually in
-XSLoader, which uses caller() information to locate the .so file to
-load. This can be incorrect if XSLoader::load() is called in a string
-eval. The fix commited upstream is [3].
+Use CVE-2016-7995.
 
-@MITRE: Could you please assign a CVE for this issue in XSLoader? Do
-you think List::MoreUtils needs a separate CVE as well, despite the
-underlying issue lying in XSLoader[4]?
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
+that may be an expected place for a later update.
 
-Regards,
-Salvatore
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
- [1] https://bugs.debian.org/829138
- [2] https://rt.cpan.org/Ticket/Display.html?id=115808
- [3] http://perl5.git.perl.org/perl.git/commitdiff/08e3451d7
- [4] https://bugs.debian.org/829578
+iQIcBAEBCAAGBQJX+RAjAAoJEHb/MwWLVhi2+GkP/iijvoEQc43FUbjFUHUX7hGF
+U63WmvG3sLBr1ZkUGs/ycPfc/jFQJDnqFrbLANsLAM/hrDb/sii942XTTSS2YAAi
++sB4Nhc10DXFRxIfHLezshzQTlKR7qlQQ147ySaTDDOYqcgJoj94tjy22JE7xnVB
+0JGsaKkkuZUHlAkkwnT3BIOD3saTUTXTiolxnTwDNQZ0Yq5jm++4S4wrmpVgyw+o
+Hv8d9fJkdPvDiLmwMh72XFYE01JnFRbbE9ETdv4DTFBX1NChIFC9BjJnD7vZa/7d
+qvxYk3EwM53FWiFFxAGQlkdAGmZGMLnRNs6oxeIZSXByqDN4FW4iBveuE9wgBbF2
+NzfkWXNiBChQj2QXbOorgZxrV80BjnN/B+k3501UiWjNy0a5JrEmnP6HVSt209qR
+iyNIn9o2CnAkvgnTFmX/n7e8FYAr77EhNCAJ9ti5/xlwxsOyIe/73jf6t6+B0E2J
+3XgflusB1EVIiIorRXE8z2PZUDhdI1YaPFWsg09wDeuNuMEmfW8rHEwPS46qCDiD
+MYOkhYQakPHJuPLFbM4l62tJxuN9jYf75bmgNU2+LbQFGibcnnn9v02Tl/vMMoLv
+lpr2EABB1UOg155JKFFKa2+SwssuoqNmIcDdUO0Y6gv3OYSAi38iIgG/AcCk2/m8
+vscLmA0alX3tOSdBSEtL
+=1cxH
+-----END PGP SIGNATURE-----
