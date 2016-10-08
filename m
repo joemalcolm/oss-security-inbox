@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6948" "Wednesday" "18" "January" "2017" "09:17:15" "+0100" "Michal Hrusecky" "Michal.Hrusecky@nic.cz" "<20170118081715.wbv34nzrvicm6vxb@workbook.ipv6.hrusecky.net>" "166" "Re: [oss-security] linux-distros subscription" nil nil nil "1" "2017011808:17:15" "[oss-security] linux-distros subscription" (number mark "U       Michal.Hruse Jan 18  166/6948  " thread-indent "\"Re: [oss-security] linux-distros subscription\"\n") "<20170115023720.GA21220@openwall.com>" ("<20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>" "<20170115023720.GA21220@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4031" "Saturday" "8" "October" "2016" "22:05:12" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<3959521.p6bvcEHnKb@arcadia>" "105" "[oss-security] libav: null pointer dereference in get_vlc2 (get_bits.h)" nil nil nil "10" "2016100820:05:12" "[oss-security] libav: null pointer dereference in get_vlc2 (get_bits.h)" (number mark "U       ago@gentoo.o Oct  8  105/4031  " thread-indent "\"[oss-security] libav: null pointer dereference in get_vlc2 (get_bits.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9238 invoked by uid 550); 18 Jan 2017 17:21:23 -0000
+Received: (qmail 29744 invoked by uid 550); 8 Oct 2016 20:05:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,193 +12,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1552 invoked from network); 18 Jan 2017 08:17:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nic.cz; s=default;
-	t=1484727436; bh=opeNds5kSxzZ1FpFhhhld39bzoJhuW6sF61opDtD2cs=;
-	h=Date:From:To;
-	b=IcE0ZhlCWD6VDUGL7bboQbl18wPs6Oa77Wr7y9ZkBHdKTYJai+xi7vtKY11iQyCeW
-	 k18yDiJEOuChqPb/4NLi5VWhHidqZtf2/+fjz31wsVkveDUe1q32nW7mskqrOsxYEU
-	 zflpiM1z3owXBCbENYGEN8zjDqfG9XrdtS3Qm+UQ=
-Date: Wed, 18 Jan 2017 09:17:15 +0100
-From: Michal Hrusecky <Michal.Hrusecky@nic.cz>
+Received: (qmail 29712 invoked from network); 8 Oct 2016 20:05:04 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20170118081715.wbv34nzrvicm6vxb@workbook.ipv6.hrusecky.net>
-References: <20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>
- <20170115023720.GA21220@openwall.com>
+Date: Sat, 08 Oct 2016 22:05:12 +0200
+Message-ID: <3959521.p6bvcEHnKb@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cjkob5jco4n2csqh"
-Content-Disposition: inline
-In-Reply-To: <20170115023720.GA21220@openwall.com>
-X-Operating-System: Linux
-User-Agent: Mutt/1.6.2 (2016-07-01)
-X-Virus-Scanned: clamav-milter 0.99.2 at mail
-X-Virus-Status: Clean
-Subject: Re: [oss-security] linux-distros subscription
+Content-Type: multipart/alternative; boundary="nextPart24198550.dXEckqPAcX"
+Content-Transfer-Encoding: 7Bit
+Subject: [oss-security] libav: null pointer dereference in get_vlc2 (get_bits.h)
 
---cjkob5jco4n2csqh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--nextPart24198550.dXEckqPAcX
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Solar Designer -  3:37 15.01.17 wrote:
-> Hi Michal,
->=20
-> On Fri, Jan 13, 2017 at 10:36:11AM +0100, Michal Hrusecky wrote:
-> > I would like to request subscription to linux-distros mailing list. I'm=
- one of
-> > the maintainers of Turris OS - OpenWRT fork used on Turris and Turris O=
-mnia
-> > routers[1].
-> >=20
-> > Not sure what has to be part of application, on wiki[2] I found only th=
-at I
-> > should request it here.
->=20
-> Right.  This basically tells us there's interest, and from whom and for
-> what reasons.  That's useful, so thanks for posting your request.
->=20
-> However, in practice the list membership has been frozen since the last
-> distro addition in April 2014, so for almost 3 years now.  Since then,
-> there were only removals and changes in who's subscribed for the
-> previously accepted distros.
+Description:
+Libav is an open source set of tools for audio and video processing.
 
-Thanks for the info.
+A crafted file causes a NULL pointer access.
 
-> Perhaps we'll be forced to re-open this can of worms, or shut down these
-> lists for good.  Simply keeping them frozen is unfair to new distros
-> requesting membership now.  Simply accepting all who request membership
-> based on mostly objective criteria yet without introducing distro's
-> userbase size as a criterion is, in my opinion, going to make things
-> worse overall (in terms of balance of benefit to users vs. risk of
-> leaks).  Yet we might, as long as the benefit-risk is still deemed to be
-> positive (even if less than now).  Just to be fair.
+This issue was discovered the past year, but I didn=E2=80=99t make the repo=
+rt and I=20
+didn=E2=80=99t follow the state because of a lack of time.
+Since I saw that the issue does not happen anymore on the git head, I=20
+asked to a libav developer (Luca Barbato) about. He said that the commit=20
+e5b019725f53b79159931d3a7317107cbbfd0860 make the issue not=20
+anymore reachable through the provided testcase, but the issue is still=20
+here (maybe another round of fuzzing will re-discover it on master)
 
-Ok, what I forgot to mention is a user-base. Our distribution is quite smal=
-l, we
-have about 7 thousand users. Our distribution runs on routers we gave away =
-in
-the past and new ones that we are selling and both have by default automatic
-updates enabled - so they get updates including security ones quite soon af=
-ter
-we release them.
+The complete ASan output:
 
-> Here's a thread from 2015 with some half-baked thoughts on the issues:
->=20
-> http://www.openwall.com/lists/oss-security/2015/03/20/5
+# avconv -i $FILE -f null -
+ASAN:SIGSEGV
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D20876=3D=3DERROR: AddressSanitizer: SEGV on unknown address=20
+0x0000000000fc (pc 0x7f5273202c6c bp 0x7ffc8442a690 sp=20
+0x7ffc8442a520 T0)
+    #0 0x7f5273202c6b in get_vlc2 /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530:5
+    #1 0x7f5273202c6b in mpeg4_decode_sprite_trajectory=20
+/var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:182
+    #2 0x7f527322cbd8 in decode_vop_header /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:2232:13
+    #3 0x7f527322cbd8 in ff_mpeg4_decode_picture_header=20
+/var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4videodec.c:2491
+    #4 0x7f52731fa9ae in mpeg4_decode_header /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4video_parser.c:92:11
+    #5 0x7f52731fa9ae in mpeg4video_parse /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/mpeg4video_parser.c:132
+    #6 0x7f52735c88e6 in av_parser_parse2 /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/parser.c:157:13
+    #7 0x7f52754f84dd in parse_packet /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:794:15
+    #8 0x7f52754d5e64 in read_frame_internal /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:960:24
+    #9 0x7f52754e3783 in avformat_find_stream_info=20
+/var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavformat/utils.c:2156:15
+    #10 0x4f62f6 in open_input_file /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv_opt.c:726:11
+    #11 0x4f474f in open_files /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv_opt.c:2127:15
+    #12 0x4f3f62 in avconv_parse_options /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv_opt.c:2164:11
+    #13 0x528727 in main /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/avconv.c:2629:11
+    #14 0x7f527027eaa4 in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.20-r2/work/glibc-2.20/csu/libc-start.c:289
+    #15 0x43a5d6 in _start (/usr/bin/avconv+0x43a5d6)
 
-Thanks for the context, I understand it is a hard decision.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
+video/libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530 get_vlc2
+=3D=3D20876=3D=3DABORTING
 
-> Here are some recent requests:
->=20
-> http://www.openwall.com/lists/oss-security/2016/10/21/2
-> http://www.openwall.com/lists/oss-security/2016/10/25/2
->=20
-> What's common about the timing of these: they were triggered by
-> vulnerabilities that attracted a lot of media attention.  This may be
-> primarily about publicity and checklists ("our competitors are on that
-> list, we should be too") and only secondarily about security.  I do
-> value the persistence of some distros/people reminding me about their
-> requests, though - suggesting their interest is more likely genuine.
-> And your request isn't nearly that "badly" timed. ;-)
->=20
-> > Probably you will need some proof that I'm who I claim to be. You can s=
-ee bunch
-> > of commits on our gitlab[3] (signed by the same key I'm using to sign t=
-his
-> > mail) and you can reach me and some of my colleagues on security@turris=
-.cz
-> > e-mail alias that is also listed as security contact on our web[4].
-> >=20
-> > We have infrastructure in place to work on embargoed issues without dis=
-closing
-> > them to public. Not sure whether there are any other requirements to me=
-et. If
-> > so, please let me know.
-> >=20
-> > [1] https://omnia.turris.cz/en/
-> > [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
-> > [3] https://gitlab.labs.nic.cz/turris/openwrt/commits/test
-> > [4] https://www.turris.cz/en/contacts
->=20
-> What would have been some recent issue likely handled via the distros
-> list (this is often stated in the follow-up postings on oss-security,
-> albeit not always) where the advance notification would have helped your
-> project release a fix substantially sooner?
+Affected version:
+11.3 (and maybe past versions) to 11.7
 
-Hard to guess what is there. But basically before we release anything we do
-test it, so from the point when we learn about the issue, it takes days to
-release a fix (after commiting fix, we build binaries, do some testing and =
-only
-after that we release it for everybody). What is most important for us is I
-would remotely exploitable kernel issues (here testing takes even more time=
-),
-openssl, openssh and lighttpd.
+Fixed version:
+N/A
 
-> I notice you fixed OpenSSL CVE-2016-7056 promptly:
->=20
-> https://gitlab.labs.nic.cz/turris/openwrt/commit/9aa88e76e70250dd219e8e22=
-8162bde045ade4f9
->=20
-> However, that issue wasn't on the distros list.
->=20
-> I also notice you've been on oss-security for half a year.  That's good.
-> However, I wasn't able to find any record of your past participation in
-> this specific community.  You might want to get more involved first.
+Commit fix:
+N/A
 
-Yep, using it as one source of information about vulnerabilities we need to
-fix. Was thinking how to respond to the contribution part, other mails help=
-ed
-me to get some idea what can I do to improve. I admit that I'm new to this
-field and I'm here mostly to learn about potential threads to our users.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Company I work for contributes to security in general, but probably not in =
-this
-specific community. I'm from CZ.NIC which among other stuff runs Czech CSIRT
-team. But that is even different department. What we do in our team regardi=
-ng
-security is probably nothing that would help us to discover new
-vulnerabilities. What we do is provide people option to send us firewall lo=
-gs
-and we use the results to build greylist[1] and we allow people to check
-whether their IP tried to attack any of our users[2].
+CVE:
+N/A
 
-[1] https://www.turris.cz/en/greylist
-[2] https://amihacked.turris.cz/
+Timeline:
+2015-07-27: bug discovered
+2016-09-14: bug reported to upstream
+2016-09-24: blog post about the issue
 
-Personally, I'm not involved in those projects as I'm working most of the t=
-ime
-on our distribution. I asked for the membership as I would be the one handl=
-ing
-the issues on our end and I understand the need to limit the audience as mu=
-ch
-as possible.
+Note:
+This bug was found with American Fuzzy Lop.
+This bug does not affect ffmpeg.
+The stacktrace is about 11.3 but as said before, the issue is present on=20
+11.7 too.
 
-> And if/when we do re-open the list for additional distros, you'll be
-> able to re-request membership.
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-g=
+et_vlc2_get_bits_h/[1]=20
 
-Thank you, I will reapply when that happens and in the meantime will think
-about suggestions others posted about how to contribute back.
 
---cjkob5jco4n2csqh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+--------
+[1] https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-=
+in-get_vlc2_get_bits_h/
 
------BEGIN PGP SIGNATURE-----
+--nextPart24198550.dXEckqPAcX--
 
-iQIzBAEBCAAdFiEEo5WdE9VMgau/ozp2sqowqJRyn7MFAlh/JIYACgkQsqowqJRy
-n7O4mxAAjK1WLNwAEDOYej4GJjglUsVp9y+JB35uJomU3iEFl5ZWZtVB5LyvOwTe
-3+Jc6T1uUwBPVtmuG3UlnkHKn+VsE0HZ2DG7FoGUh9LEjjGpexFoiq4nEf5wNZpX
-53GMkJs8wBsuPG4Y+itTZp/DPTwi7RpUmK7NXKPJ5uF2D93XtSZAtB3tjzWaLVnL
-OCESJ3pLo66nmos6wcovI6nPmp1YNn2G/LfaIaOJEhzc5xwo2TnfAa+C63cxbsUQ
-Icz8nKzt7U2ds8k2bVzd/PX+pRLlFPH6r0NWh7GEjN3S5wShjbGjk1k+V80/mv/u
-ehOUogkKyu9wdzhaRlnmo4rdeu0CmmTFXqndLxBcZR+tSGog3U797TGdpJQhDa2r
-W/MYUR5OyfTqrB0inGma5foubIjnssrm6c065mSQIE+1GrrOnAJUaa6bNdwxmHo1
-D/TfbLT2mOmE7wMeADZgkILLxMahEDFyM0JJxBS0UM8/udbWinVIC6Co2Hwz9QzO
-ykphACQ2JUIOUa8P9LlgYYrkZhIvIU/1jqi/HhrvluolVCEsQ1NV7ukW6DU7hxuC
-GjdZWOjWnJqPnn5NrTZlOt2SUZbCPUkIs7xPm4bClIdF0zQolkOG2iay41xNHevz
-Q8Z4AjZ76egMU3C5+qdStI0TJrOR3Wh4+FOgYTFTfDyrbNq7zOQ=
-=LFEi
------END PGP SIGNATURE-----
-
---cjkob5jco4n2csqh--
