@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6325" "Monday" "30" "July" "2018" "16:10:46" "+0200" "Daniel Beck" "ml@beckweb.net" "<19B3BD42-B3FF-4D64-BAAB-685557443BCD@beckweb.net>" "175" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "7" "2018073014:10:46" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jul 30  175/6325  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6656" "Saturday" "8" "October" "2016" "22:06:26" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<11716477.MTzBsLzZIC@arcadia>" "101" "[oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)" nil nil nil "10" "2016100820:06:26" "[oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)" (number mark "U       ago@gentoo.o Oct  8  101/6656  " thread-indent "\"[oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16235 invoked by uid 550); 30 Jul 2018 14:11:01 -0000
+Received: (qmail 5919 invoked by uid 550); 8 Oct 2016 20:06:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,191 +12,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16190 invoked from network); 30 Jul 2018 14:11:00 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <19B3BD42-B3FF-4D64-BAAB-685557443BCD@beckweb.net>
-Date: Mon, 30 Jul 2018 16:10:46 +0200
+Received: (qmail 5766 invoked from network); 8 Oct 2016 20:06:16 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1532959860;93f90afe;
-X-HE-SMSGID: 1fk8sq-0006re-Ik
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Date: Sat, 08 Oct 2016 22:06:26 +0200
+Message-ID: <11716477.MTzBsLzZIC@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-* AccuRev Plugin 0.7.17
-* Agiletestware Pangolin Connector for TestRail Plugin 2.2
-* Anchore Container Image Scanner Plugin 1.0.17
-* Confluence Publisher Plugin 2.0.2
-* Inedo BuildMaster Plugin 2.0
-* Inedo ProGet Plugin 1.0
-* Kubernetes Plugin 1.10.2
-* Maven Artifact ChoiceListProvider (Nexus) Plugin 1.3.2
-* meliora-testlab Plugin 1.15
-* Publish Over CIFS Plugin 0.11
-* Resource Disposer Plugin 0.12
-* SaltStack Plugin 3.1.6
-* Shelve Project Plugin 2.0
-* SSH Agent Plugin 1.16
-* Tinfoil Security Plugin 2.0
-* TraceTronic ECU-TEST Plugin 2.4
+A fuzzing with the upstream security policy enabled revealed a memory allocate 
+failure.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-07-30/
+The complete ASan output:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+# identify $FILE
+==25084==WARNING: AddressSanitizer failed to allocate 0x46bf39483ac bytes                                                                                                                                                                                                      
+==25084==AddressSanitizer's allocator is terminating the process instead of 
+returning 0                                                                                                                                                                                        
+==25084==If you don't like this behavior set allocator_may_return_null=1                                                                                                                                                                                                       
+==25084==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0)                                                                            
+    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67                                                                                                                                   
+    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159                              
+    #2 0x4ce826 in __sanitizer::ReportAllocatorCannotReturnNull() 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_allocator.cc:147                                                                            
+    #3 0x421bfc in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317                                                                                                                                                                                                   
+    #4 0x421bfc in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359                       
+    #5 0x421bfc in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718                                                                       
+    #6 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53                                                                                                                                   
+    #7 0x7f76c7533ff4 in AcquireQuantumPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47                                                                                                                                  
+    #8 0x7f76c7533ff4 in SetQuantumDepth /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:693                                                                                                                                          
+    #9 0x7f76c7532676 in AcquireQuantumInfo /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:125:10                                                                                                                                    
+    #10 0x7f76baf3607e in ReadTIFFImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/tiff.c:1431:18                                                                                                                                              
+    #11 0x7f76c7067b12 in ReadImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
+    #12 0x7f76c77ff406 in ReadStream /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
+    #13 0x7f76c70665ca in PingImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
+    #14 0x7f76c7066e25 in PingImages /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
+    #15 0x7f76c68ec4c3 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
+    #16 0x7f76c698226a in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
+    #17 0x4f1fb5 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
+    #18 0x4f1fb5 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
+    #19 0x7f76c582661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #20 0x419138 in _init (/usr/bin/magick+0x419138)
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Affected version:
+7.0.3.0
 
----
+Fixed version:
+7.0.3.1
 
-SECURITY-704
-When using the `sshagent` step inside a `withDockerContainer` block in 
-Pipeline, the resulting logging of the `ssh-add` command included the SSH 
-key passphrase in plain text.
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-SECURITY-997
-Resource Disposer Plugin did not perform permission checks on an API 
-endpoint. This allowed users with Overall/Read access to Jenkins to stop 
-tracking a specified resource.
+CVE:
+N/A
 
-Additionally, this API endpoint did not require POST requests, resulting 
-in a CSRF vulnerability.
+Timeline:
+2016-09-14: bug discovered
+2016-09-14: bug reported to upstream
+2016-09-16: upstream released a patch
+2016-09-21: upstream released 7.0.3.1
+2016-10-07: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
 
-SECURITY-975
-Publish Over CIFS Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to initiate CIFS connections to an attacker specified host.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-982
-Confluence Publisher Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to submit login requests to Confluence using attacker-
-specified credentials.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1016
-Kubernetes Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to connect to an attacker-specified Kubernetes cluster using 
-attacker-specified credentials IDs obtained through another method, 
-capturing credentials stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-840
-Tinfoil Security Plugin stored the API Secret Key in its configuration 
-unencrypted in its global configuration file on the Jenkins master. This 
-key could be viewed by users with access to the master file system.
-
-
-SECURITY-932
-TraceTronic ECU-TEST Plugin unconditionally disabled SSL/TLS certificate 
-validation for the entire Jenkins master JVM.
-
-
-SECURITY-994
-TraceTronic ECU-TEST Plugin did not perform permission checks on a method 
-implementing form validation. This allowed users with Overall/Read access 
-to Jenkins to connect to an attacker-specified URL, with the path suffix
-`/app-version-info` appended.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1009
-SaltStack Plugin did not perform permission checks on methods implementing 
-form validation. This allowed users with Overall/Read access to Jenkins to 
-connect to an attacker-specified URL using attacker-specified credentials 
-IDs obtained through another method, capturing credentials stored in 
-Jenkins, and to cause Jenkins to submit HTTP requests to attacker-
-specified URLs.
-
-Additionally, these form validation methods did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1021
-Accurev Plugin did not perform permission checks on a method implementing 
-form validation. This allowed users with Overall/Read access to Jenkins to 
-connect to an attacker-specified Accurev server using attacker-specified 
-credentials IDs obtained through another method, capturing credentials 
-stored in Jenkins.
-
-Additionally, these form validation methods did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-1001
-Shelve Project Plugin did not escape the names of shelved projects on the 
-UI, potentially resulting in a stored XSS vulnerability.
-
-
-SECURITY-1022
-Maven Artifact ChoiceListProvider (Nexus) Plugin did not perform 
-permission checks on a method implementing form validation. This allowed 
-users with Overall/Read access to Jenkins to connect to an attacker-
-specified Nexus or Artifactory server using attacker-specified credentials 
-IDs obtained through another method, capturing credentials stored in 
-Jenkins.
-
-Additionally, this form validation method did not require POST requests, 
-resulting in a CSRF vulnerability.
-
-
-SECURITY-847
-meliora-testlab Plugin stored the API Key in its configuration unencrypted 
-in its global configuration file on the Jenkins master. This key could be 
-viewed by users with access to the master file system.
-
-Additionally, the API key was not masked from view using a password form 
-field.
-
-
-SECURITY-995
-Agiletestware Pangolin Connector for TestRail Plugin did not perform 
-permission checks on an API endpoint used to validate and save the plugin 
-configuration. This allowed users with Overall/Read access to Jenkins to 
-override the plugin configuration.
-
-Additionally, the API endpoint did not require POST requests, resulting in 
-a CSRF vulnerability.
-
-
-SECURITY-1039
-Anchore Container Image Scanner Plugin stored the password in its 
-configuration unencrypted in its global configuration file on the Jenkins 
-master. This password could be viewed by users with access to the master 
-file system.
-
-
-SECURITY-933
-Inedo ProGet Plugin unconditionally disabled SSL/TLS certificate 
-validation for the entire Jenkins master JVM.
-
-
-SECURITY-935
-Inedo ProGet Plugin unconditionally disabled SSL/TLS certificate validation 
-for the entire Jenkins master JVM.
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
 
