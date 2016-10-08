@@ -1,86 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/10
-Message-ID: <20160727200021.GB3330@motoko>
-Date: Wed, 27 Jul 2016 22:00:21 +0200
-From: Christian Rebischke <Chris.Rebischke@...hlinux.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: cve request: systemd-machined: information exposure for docker containers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/1
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B1E83C@EX02.corp.qihoo.net>
+Date: Sat, 8 Oct 2016 07:09:17 +0000
+From: 连一汉 <lianyihan@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: ffmpeg before 3.1.4 [CVE-2016-7562] [CVE-2016-7122] [CVE-2016-7450] [CVE-2016-7502] [CVE-2016-7555] [CVE-2016-7785] [CVE-2016-7905]
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 27, 2016 at 01:27:08PM -0400, Daniel J Walsh wrote:
-> 
-> 
-> On 07/27/2016 01:05 PM, Christian Rebischke wrote:
-> > On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@...re.org wrote:
-> >> -----BEGIN PGP SIGNED MESSAGE-----
-> >> Hash: SHA256
-> >>
-> >>> Once docker containers register themselves to systemd-machined
-> >>> by oci-register-machine. Any unprivileged user could run
-> >>> machinectl to list every single containers running in the host
-> >>> even if the containers do not belong to this user (including containers
-> >>> belong to the root user), and access sensitive information associated
-> >>> with any individual container including its internal IP address, OS
-> >>> version, running processes, and file path for its rootfs.
-> >>>
-> >>> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
-> >>> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
-> >>>            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
-> >>>           Leader: 43494 (sleep)
-> >>>          Service: docker; class container
-> >>>             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
-> >>>          Address: 172.17.0.2
-> >>>                   fe80::42:acff:fe11:2
-> >>>               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
-> >>>             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
-> >>>                   43494 sleep 3000
-> >> Use CVE-2016-6349.
-> > Hello,
-> > I don't think that the bug for this problem lies in systemd.
-> > It's more a design mistake in docker or oci-register-machine.
-> > I have forwarded this issue to the systemd developer team and I don't
-> > think they will fix this in the future. In their opinion it's a
-> > bug in docker or oci-register-machine:
-> >
-> > https://github.com/systemd/systemd/issues/3815
-> >
-> > by the way.. I would feel glad if the security researchers would first
-> > message the developers and then assign a CVE a bug. This is the normal
-> > way for a full disclosure.
-> >
-> > best regards,
-> >
-> > Christian Rebischke
-> Why is this a bug in oci-register-machine?  All it is doing is calling
-> the systemd-machine call to register with it using the three flags
-> available.
-> Is systemd saying we should not use that call?
+CVE-2016-7562
 
-Let me quote Lennart Poettering:
+ff_draw_pc_font in ffmpeg before 3.1.4 uses incorrect font_height value ,which allows remote attackers to cause ffmpeg service a out-of-bounds array write fault
+when it uses 'ansi' to decode a AVI file which has a crafted 'strf' struct.
 
----
-machined is a system service and is for registering containers running
-on the system. There's no concept of "user containers" with that, and
-unprivileged users do not have the privileges to even register any
-containers with machined.
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/496267f8e9ec218351e4359e1fde48722d4fc804
 
-If you ask me the CVE is complete and utter rubbish. At least against
-systemd. If Docker knows a concept of user containers, then good for
-them, but in that case they shouldn't register them with machined
-really, if they are not supposed to be visible on the host.
 
-Generally though I think the CVE is without merit entirely, after all
-"ps" is generally unrestricted, and hence you can always see container
-processes running on the host anyway.
----
 
-In my opinion I would say you shouldn't use this call if you don't want
-an information leak. Even if systemd would fix the output of 
-`machinectl status ..`. The information leak would still be there
-because you could still see informations about the container with `ps`
- or other tools. systemd is not designed for 'user containers'. 
+CVE-2016-7122
 
-If yo have further questions. I would say that you ask the
-systemd-developers on their mailing list directly. 
+avi_read_nikon in ffmpeg before 3.1.4 is vulnerable to infinite loop when it decode an AVI file which has a crafted 'nctg' struct.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/ed38046c5c2e3b310980be32287179895c83e0d8
+
+
+
+
+CVE-2016-7450
+
+i2f in ffmpeg before 3.1.4 uses incorrect re_signal value ,which results in an out-of-bounds array read .
+
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/ac8ac46641adef208485baebc3734463bf0bd266
+
+
+
+
+CVE-2016-7502
+
+cavs_idct8_add_c in ffmpeg before 3.1.4 uses incorrect block value ,which results in an out-of-bounds array read .
+
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/9d738e6968757d4e70c8e07e0b720ac0004accc4
+
+
+
+
+CVE-2016-7555
+
+avi_read_header in ffmpeg before 3.1.4 is vulnerable to a memory leakage issue when it decodes an AVI file which has a crafted 'strh' struct.
+
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/8834e080c20d3d23c3ffe779371359f9b9b835ec
+
+
+CVE-2016-7785
+
+avi_read_seek in ffmpeg before 3.1.4 uses incorrect scale value , which allows remote attackers to cause a assert fault of service via an AVI file which has a craft 'strh' struct.
+
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/c8c5f66b42edc37474baa5cb51460cbf6f33075b
+
+
+
+
+CVE-2016-7905
+
+read_gab2_sub in ffmpeg before 3.1.4 is vulnerable to a null-point-exception when it decodes an AVI file which has a crafted 'gab2' struct.
+
+fixs:https://git.ffmpeg.org/gitweb/ffmpeg.git/commit/622ccbd8ab894e3ac6cdf607e3d4f39e406786e9
+
+
+Reported by LianYihan in Qihoo 360 Gear Team.
+
