@@ -1,67 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/15/3
-Message-ID: <CANVjZ_R-e0M_JQ66CNpBN2YbcKj46gHyZYBCNoEj9WPA3JyNuw@mail.gmail.com>
-Date: Fri, 15 Jul 2016 10:14:52 +0200
-From: Justin Ross <jross@...che.org>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>, announce@...che.org,  security@...che.org
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY] CVE-2016-4467: Apache Qpid Proton: Failure to verify that the server host name matches the certificate host name on Windows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/9
+Message-ID: <11716477.MTzBsLzZIC@arcadia>
+Date: Sat, 08 Oct 2016 22:06:26 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
 Content-Type: text/plain; charset=utf-8
 
-CVE-ID: CVE-2016-4467
-
-Severity: Medium
-
-Affected versions: 0.8 through 0.13.0 (inclusive)
-
-Fixed in Versions: 0.13.1 and later
-
-Short Description:
-
-The Proton C client and C-based client bindings may fail to verify that the
-server host name matches the domain name in the subject's Common Name (CN)
-or subjectAltName field in X.509 certificates when running on Windows
-operating systems.
-
 Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-Messaging applications using the Proton C library to provide SSL/TLS
-authentication on Windows can falsely authenticate a server whose name does
-not match the server name in the connection specifier.  Proton C bindings
-are affected to a greater or lesser degree depending on how they use the
-underlying Proton C library.
+A fuzzing with the upstream security policy enabled revealed a memory allocate 
+failure.
 
-In Proton C, this can only happen if PN_SSL_VERIFY_PEER_NAME has been
-specified as the verification mode and pn_ssl_set_peer_hostname() has not
-been called at all or has been called with a NULL value for a particular
-pn_ssl_t object.
+The complete ASan output:
 
-In the Proton C++ binding, this will always happen unless the application
-has separately specified a virtual_host name for an SSL/TLS connection.
+# identify $FILE
+==25084==WARNING: AddressSanitizer failed to allocate 0x46bf39483ac bytes                                                                                                                                                                                                      
+==25084==AddressSanitizer's allocator is terminating the process instead of 
+returning 0                                                                                                                                                                                        
+==25084==If you don't like this behavior set allocator_may_return_null=1                                                                                                                                                                                                       
+==25084==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0)                                                                            
+    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67                                                                                                                                   
+    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159                              
+    #2 0x4ce826 in __sanitizer::ReportAllocatorCannotReturnNull() 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_allocator.cc:147                                                                            
+    #3 0x421bfc in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317                                                                                                                                                                                                   
+    #4 0x421bfc in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359                       
+    #5 0x421bfc in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718                                                                       
+    #6 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53                                                                                                                                   
+    #7 0x7f76c7533ff4 in AcquireQuantumPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47                                                                                                                                  
+    #8 0x7f76c7533ff4 in SetQuantumDepth /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:693                                                                                                                                          
+    #9 0x7f76c7532676 in AcquireQuantumInfo /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:125:10                                                                                                                                    
+    #10 0x7f76baf3607e in ReadTIFFImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/tiff.c:1431:18                                                                                                                                              
+    #11 0x7f76c7067b12 in ReadImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
+    #12 0x7f76c77ff406 in ReadStream /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
+    #13 0x7f76c70665ca in PingImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
+    #14 0x7f76c7066e25 in PingImages /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
+    #15 0x7f76c68ec4c3 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
+    #16 0x7f76c698226a in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
+    #17 0x4f1fb5 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
+    #18 0x4f1fb5 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
+    #19 0x7f76c582661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #20 0x419138 in _init (/usr/bin/magick+0x419138)
 
-In the Proton Python and Ruby bindings, this will only happen if the
-application has separately specified a NULL virtual_host name for an
-SSL/TLS connection after creating the connection but before the
-authentication step.
+Affected version:
+7.0.3.0
 
-This issue only occurs on Windows versions of Proton that use the default
-SChannel-based security layer.
+Fixed version:
+7.0.3.1
 
-In any of the preceding cases, it is possible for a man-in-the-middle
-attacker to spoof an SSL/TLS server if they had a certificate that was
-valid for any of the application's Certificate Authorities.
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
 
-Resolution:
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Proton release 0.13.1 resolves this issue in the SChannel-based security
-layer by obtaining a default non-NULL peer hostname from the associated
-connection address when initialized and by always failing hostname
-verification if PN_SSL_VERIFY_PEER_NAME has been specified along with a
-NULL peer hostname.  This resolution matches the associated behaviour of
-the OpenSSL-based security layer.
+CVE:
+N/A
 
-References:
+Timeline:
+2016-09-14: bug discovered
+2016-09-14: bug reported to upstream
+2016-09-16: upstream released a patch
+2016-09-21: upstream released 7.0.3.1
+2016-10-07: blog post about the issue
 
-PROTON-1228
-PROTON-1233
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
 
