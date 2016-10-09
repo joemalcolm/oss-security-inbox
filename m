@@ -1,50 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/13
-Message-ID: <CANO=Ty1TbCM61zupjejP+GSY_j3nio5HtbukQ-4QTGd2mZs6Aw@mail.gmail.com>
-Date: Thu, 22 Dec 2016 09:29:37 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/09/1
+Message-ID: <20161009092824.GA5176@suse.de>
+Date: Sun, 9 Oct 2016 11:28:25 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: potrace: memory allocation failure
 Content-Type: text/plain; charset=utf-8
 
-Red Hat has no problem with this, Merry Christmas / Happy Holidays / Happy
-New years everyone!
+Hi,
 
-On Thu, Dec 22, 2016 at 8:36 AM, Heiko Schlittermann <hs@...littermann.de>
-wrote:
+did you attach the reproducer files somewhere?
 
-> Heiko Schlittermann <hs@...littermann.de> (Do 22 Dez 2016 11:40:35 CET):
-> > Kurt H Maier <khm@...ops.net> (Do 22 Dez 2016 01:57:33 CET):
-> > > On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
-> > > >
-> > > > In case the distros are ready already, we could release on 23rd, but
-> I
-> > > > need feedbeck from the distros and ack from the other developers.
-> > > >
-> > > Please pursue this possibility.
-> >
-> > Ok, I asked the distro@vs… list to get clearance. If the major distros
-> > supporting Exim give their ok, we're prepared to release sooner. Stay
-> > tuned.
->
-> Still one major distro is missing from the list of OKs. :-((
->
->     Best regards from Dresden/Germany
->     Viele Grüße aus Dresden
->     Heiko Schlittermann
-> --
->  SCHLITTERMANN.de ---------------------------- internet & unix support -
->  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
->  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
->  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
->
-
-
+Ciao, Marcus
+On Sat, Oct 08, 2016 at 10:30:54PM +0200, Agostino Sarubbo wrote:
+> Description:
+> potrace is a utility that transforms bitmaps into vector graphics.
+> 
+> A crafted image, through a fuzz testing, causes the memory allocation to fail.
+> 
+> This is the first case where my ASan symbolyzer didn’t start up correctly. I’m 
+> reporting only what it prints at the end (not useful at all but demostrates a 
+> bit that the issue exist)
+> 
+> # potrace $FILE
+> potrace: warning: 2.hangs: premature end of file
+> ==13660==ERROR: AddressSanitizer failed to allocate 0x200003000 (8589946880) 
+> bytes of LargeMmapAllocator (error code: 12)
+> ==13660==AddressSanitizer CHECK failed: /var/tmp/portage/sys-
+> devel/llvm-3.8.1/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+> (0)" (0x0, 0x0)
+> 
+> Affected version:
+> 1.13
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> N/A
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> N/A
+> 
+> Timeline:
+> 2016-08-26: bug discovered
+> 2016-08-27: bug reported privately to upstream
+> 2016-08-29: blog post about the issue
+> 
+> Note:
+> This bug was found with American Fuzzy Lop.
+> 
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/08/29/potrace-memory-allocation-failure/
+> 
+> 
 
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
