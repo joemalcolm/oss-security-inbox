@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/12/3
-Message-Id: <1478939985.2087788.785402465.36AF3B93@webmail.messagingengine.com>
-Date: Sat, 12 Nov 2016 09:39:45 +0100
-From: Ondřej Surý <ondrej@...y.org>
-To: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, Dariusz Dwornikowski <dariusz.dwornikowski@...put.poznan.pl>, Sam Trenholme <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
-Subject: Remote crash in MaraDNS 2.0.13 and git master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/2
+Message-ID: <CADSYzssdZ5k5H92mOKaLHE38Db0har=n4azHZeNosC-wsr55dw@mail.gmail.com>
+Date: Mon, 10 Oct 2016 04:32:57 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Vulnerability: Apache Tomcat packaging on RedHat-based distros
 
-while playing with fuzzing the DNS servers with AFL (2.35b) I found a
-remote crash bug in MaraDNS 2.0.13 js_readuint16. It can be also
-reproduced using https://github.com/samboy/MaraDNS/ master branch.
+CVE-2016-5425
 
-Attached is patch to allow the fuzzing (it overrides getudp() with
-read(0, ..)), the input data that crashes MaraDNS, and the bt full
-output.
+Discovered by:
+Dawid Golunski (http://legalhackers.com)
 
-Please assign CVE, I would provide a patch, but MaraDNS code is
-extremely hard to navigate for me, so I'll leave the fix for the code
-author.
+Affected systems: Multiple Tomcat packages on RedHat-based systems
+including: CentOS,Fedora,OracleLinux,RedHat etc.
 
-AFL has finished only 1 cycle (and found the 1 unique crash), so I'll
-keep it running for a while.
+Short Description:
 
-Cheers,
+Apache Tomcat packages provided by default repositories of RedHat-based
+distributions (including CentOS, RedHat, OracleLinux, Fedora,  etc.)
+create a tmpfiles.d configuration file with insecure permissions which
+allow attackers who are able to write files with tomcat user permissions
+(for example, through a vulnerability in web application hosted on Tomcat)
+to escalate their privileges from tomcat user to root and fully compromise
+the target system.
+
+Full advisory and a working root privilege escalation exploit can be found
+at:
+
+http://legalhackers.com/advisories/Tomcat-RedHat-Pkgs-Root-PrivEsc-Exploit-CVE-2016-5425.html
+
+
+BTW. If you are using Tomcat on a Debian-based distro,  you may want
+to check out
+my previous Tomcat advisory and exploit at:
+
+http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
+
+
 -- 
-Ondřej Surý <ondrej@...y.org>
-Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
-Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
-fast DNS(SEC) resolver
-Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
-pečení chleba všeho druhu
-
-Download attachment "maradns.btfull" of type "application/octet-stream" (3678 bytes)
-
-View attachment "allow-fuzzing.patch" of type "text/x-patch" (1799 bytes)
-
-Download attachment "id:000000,sig:11,src:007564,op:havoc,rep:32" of type "application/octet-stream" (23 bytes)
+Regards,
+Dawid Golunski
+http://legalhackers.com
