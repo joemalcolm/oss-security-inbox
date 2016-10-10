@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2102" "Tuesday" "17" "November" "2015" "14:09:32" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<564B7B6C.7090503@gmail.com>" "47" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111719:09:32" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       danielmicay@ Nov 17   47/2102  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<564B6536.2030908@redhat.com>" "<564B7757.6080100@gmail.com>" "<365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1585" "Monday" "10" "October" "2016" "13:51:45" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161010175145.900E46C0754@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read" nil nil nil "10" "2016101017:51:45" "[oss-security] Re: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read" (number mark "U       cve-assign@m Oct 10   40/1585  " thread-indent "\"[oss-security] Re: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read\"\n") "<alpine.LFD.2.20.1610101653450.27939@wniryva>" ("<alpine.LFD.2.20.1610101653450.27939@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15733 invoked by uid 550); 17 Nov 2015 19:09:49 -0000
+Received: (qmail 32280 invoked by uid 550); 10 Oct 2016 17:51:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15712 invoked from network); 17 Nov 2015 19:09:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type;
-        bh=WANKVgcCii01Upg4M3h7PQawiNnNIX9NT09ZGusUEoQ=;
-        b=wAG86/ExizpMC+j31ziE1SetCoozCPGS5MtGPUTturcIWyH+rTTJlnboLz9bR0gumh
-         Y7vYuWBkHDgcy50K847SwjWCc41Sp2QxZPK06Q3erYBjFErpE5drFmcI42GpLjND6EpC
-         3Zv5TxRHPf3y2GzhE95aIIH3px/gHXGAgncQ0OL9tDZFGUq/wNcxa/9PAZVjfAZusQ3W
-         A7cG5R0v2PwAJopuZQqbzhBC56vgT2fdhxHvGyVlKTBod3LLt84ij1MdqHob2d/EK62o
-         vGT2EVA8MdMYtsOFxOa5dA22JAmjjGZJqP1vNBAilAdf+yw0Nw8ErMj54kCWG9yEYVN1
-         FYWA==
-X-Received: by 10.141.6.69 with SMTP id i66mr4463211qhd.68.1447787377061;
-        Tue, 17 Nov 2015 11:09:37 -0800 (PST)
-To: oss-security@lists.openwall.com
-References: <20151117153951.GA28672@openwall.com>
- <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com>
- <564B6536.2030908@redhat.com> <564B7757.6080100@gmail.com>
- <365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>
-From: Daniel Micay <danielmicay@gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <564B7B6C.7090503@gmail.com>
-Date: Tue, 17 Nov 2015 14:09:32 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <365956254.15394397.1447786639162.JavaMail.zimbra@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="ouaVgvBuCt6X1eFtiOSTIs8uspF8pOxAm"
-Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
+Received: (qmail 32258 invoked from network); 10 Oct 2016 17:51:57 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1610101653450.27939@wniryva>
+Message-Id: <20161010175145.900E46C0754@smtpvmsrv1.mitre.org>
+Date: Mon, 10 Oct 2016 13:51:45 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read
 
---ouaVgvBuCt6X1eFtiOSTIs8uspF8pOxAm
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Why not both?
->=20
-> Security is about layers, this is a nice place for a new security layer.
+> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
+> to a memory leakage issue. It could occur while doing a I/O read operation in
+> v9fs_read() routine.
+> 
+> A privileged user/process inside guest could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07127.html
 
-It needs to provide something meaningful to be a layer. There is a
-performance and complexity budget too. Landing a security feature should
-involve explaining the threat model and the plan to fully address it. It
-can be a very narrow threat model, sure. SSP is an example of a feature
-with *very* narrow threat model and a very high performance cost for
-what it actually accomplishes and yet it's still quite useful (but it
-could be replaced with something much better).
+Use CVE-2016-8577.
 
-It's not going to be increasing the cost of exploit development if it
-only means a script ends up finding different gadgets instead. Maybe it
-leads to better tooling being developed if it's far enough along, but
-that's one person investing their time once, not every exploit taking
-more resources to develop. If it's incomplete, how is it a layer?
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/9pfs/9p.c but
+that may be an expected place for a later update.
 
-
---ouaVgvBuCt6X1eFtiOSTIs8uspF8pOxAm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWS3tsAAoJEPnnEuWa9fIqCJcQAJGYYumDsx+n93mCpv9a8SAd
-dgXyjLzwGegq9W1BJcVG12/WFk3y7fdcX7p62ZTG9O6RzFyXJ0eFaauSShK2cjT0
-KXbScVYtPrMZnq817I4Af8TZZ/31p8F7W0LANGqrV/W8cg9K4T/btVuNRb4wLjAz
-TKxVsusFGs1DCh+jyji15a1r1k7ezpzxU9msU1i8cFOhAGLU5kVraN2qfFr7JKJh
-yLL5PSrLrAAOcZCsi9MQHNy/kSYyAdmeWjAjjRHFwUy/7NZUbYjSQAI5VMVYQT0X
-0WMiVy2RV7MHaACyaspQLwDMjEm7575Oc8Qg/SO0ZLCLxjbmdTbKzEjI0+Kkkckb
-kHFu/KJNNWFVnHGJA7EjBoFYMPe0vPbg31u8hvACGfCF6OOwnlMfT7yYr82ov28c
-tP2diHU03dxKRnB4Kg1LILzJFoRZD90HgFUorIBLcXLyvXW4EIMsJycAp1SeSzF5
-BeLfz0Xd9FVZnoly7WFmGAVEFwucPxSemMQHuRElss8fKh+8cMbwZTtsMCWFyehW
-1fh5xmJ+2fldipN7GFASbpv6E5XNgu78kkSEci7/EUUojDNdLSo4ccm+iVA/53cL
-fHoO9xlrghX/f/ZfHIfVXmBRBw1nV9/XKudgkA2J8erSMCEgQBmbCNxftlhwmfMf
-10N+/gkrjBo9aG8q4Pvu
-=D+Bj
+iQIcBAEBCAAGBQJX+9Q0AAoJEHb/MwWLVhi25+sQAIvJVq0jkV+yHeVKA95GPwuC
+u1Khmdz9uLRHxSriWfHRM8P/lHHFaJ6YIS8Dn1BvcWh6b/96xkjML9uKl2O2Zmb/
+EIJu2RZk4vKJV7+XGv2uKxxd+ysfMTCwSB5ktJh9id5fKSbLrMNsIRmrAty3CA98
++pW2HRSUFUdygfBB8Ubd2OAIdWL5Ggfd3zKC5CV0q77+qYTFiupXXZGgOr0Yxaky
+7tsf/aviEJPraro5vWwC3Qtg12CEn+wz/WimFFi4P4ejDFUWPQOcIjMScvfIEwOT
+0n+lzysBA0pU3okv0CVkq1WeG5eCuC5+sN40zWp3tlEGNRXQAsyY27uoMMT4qgAw
+0lvLe77ZgXRsM3HbS8TfxhJy75dHyJTNymyWjfTRkdC1Gii3FyK2bpQuOeq8fnr3
+v1FEqnhoPGSgzWSdjlu367gEZ78KuaLgD2qqmxyvUmum127dhiBkGmhSqSSCbmNd
+NVWAzXeKWUbZv0jT4qigZ/68zXCoRdXUBCe4hsknjevAUA+h/wI/L8KB1rQC4gw9
+ZZAtUotefB67bfMSdMsVLT6e2aR6laBrwOTttqf6dDStTgVeeSfpmUezaD7nXv92
+1gihMM+4S7HM8wJVjd1c415Q25Vtk72S/1hpuEQse24tbcs5bfXLWrvhHjWXUCBJ
+LY2WgmOMb06yZp0j8SJs
+=8uAy
 -----END PGP SIGNATURE-----
-
---ouaVgvBuCt6X1eFtiOSTIs8uspF8pOxAm--
