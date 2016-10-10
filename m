@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/29/2
-Message-ID: <CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>
-Date: Thu, 29 Dec 2016 12:17:16 -0500
-From: Glenn Randers-Pehrson <glennrp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: libpng NULL pointer dereference bugfix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/12
+Message-Id: <20161010175012.4CD3AB2E051@smtpvbsrv1.mitre.org>
+Date: Mon, 10 Oct 2016 13:50:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: usb: xHCI: infinite loop vulnerability in xhci_ring_fetch
 Content-Type: text/plain; charset=utf-8
 
-libpng-1.6.27 has been released to fix an old NULL pointer dereference
-bug in png_set_text_2() discovered and patched by Patrick  Keshishian.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-New releases of legacy branches (1.0.67, 1.2.57, 1.4.20, and 1.5.28) have
-also been released.  Other versions can be patched by adding a single
-line
+> Quick Emulator(Qemu) built with the USB xHCI controller emulation support is
+> vulnerable to an infinite loop issue. It could occur while processing USB
+> command ring in 'xhci_ring_fetch'.
+> 
+> A privileged user/process inside guest could use this issue to crash the Qemu
+> process on the host leading to DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01265.html
 
-      info_ptr->max_text = 0;
+Use CVE-2016-8576.
 
-at the appropriate spot in png.c.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-xhci.c but
+that may be an expected place for a later update.
 
-The potential "NULL dereference" bug that has existed in libpng
-since version 0.71 of June 26, 1995.  To be vulnerable, an application
-has to load a text chunk into the png structure, then delete all text, then
-add another text chunk to the same png structure, which seems to be
-an unlikely sequence, but it has happened.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Applications that I have looked at (firefox, imagemagick, graphicsmagick,
-pngcrush) do not appear to be vulnerable.
-
-I reported the bug using CERT's online reporting system several days
-ago but have not received any response.
-
-Glenn Randers-Pehrson
-libpng custodian
-
+iQIcBAEBCAAGBQJX+9QuAAoJEHb/MwWLVhi227sP/j2SzIXfALbHnYVcFBjeESHT
+cpjqznKkdukL1ETxQrO7VTi+BHkIbWB49Ey0PdvxXCR3cg/oRTE6WozOIefxNEtP
+O6rinOZTu8Fwubv3h9VDEi7g/qRPkkvaxKDUjyUNLerz5fvBMPubAPlxjgDOJeuu
+cplrkPTehzHIarXH0GViJ1V0I7f1As1T+PrQvfjP55ZOawefWwj1fJRDjzAuddhZ
+ggO0hSxk2pz+YjC2NAYcKCQ2uPUNVkJa7CqqwQBvQUMCdmESGUSYrWAnpBd3V5rX
+rRfvF7w7vHWmgU4XoKxJDHm6nr+l6HECS1uEi5+4N/NDLUhsE6MRKH9/zdJMsMCe
+jkAydq0lnOTBrB/lyVVBeTbAz5jtZNvIQWPwGVHH5bZjiCb8jJbn8vc8+E5OWSFx
+UA04ab3p2GjiY4QQIz8jNSlF/JAQzorkmRi3ZTR5jVeMr+Ca/OgkMRvurBI2LZFh
+HM61RVhU3Ix/ed/24SXQ30yTscNbX1iampTRYZKjVPzgIM2x+sfe+O8AtgVYPwPn
+iqnoHRp8sFYHalP0xcda9kQjmgUadcx7cCC6yzDF+6OKbA8vS2rmviJad12IpozE
+IEcmXHVxenxSjop9unjmEEc2NlQ11ygHxuDEldrKUFibmtEDFQs9k0cJzFckH4Qq
+qNTrXolM1XmhrzPru8jl
+=WSUH
+-----END PGP SIGNATURE-----
