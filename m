@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/10
-Message-ID: <16a1c14b-1402-3eab-4e2c-44aa75192d8b@sumptuouscapital.com>
-Date: Fri, 4 Nov 2016 14:59:46 +0100
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-To: Robert Scheck <robert@...oraproject.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/7
+Message-ID: <alpine.LFD.2.20.1610101653450.27939@wniryva>
+Date: Mon, 10 Oct 2016 16:56:22 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read 
 Content-Type: text/plain; charset=utf-8
 
-On 11/04/2016 12:48 PM, Robert Scheck wrote:
-> For those who didn't notice, Florian also started a German thread on the
-> public DENIC mailing list (https://www.denic.de/en/service/mailing-lists/)
-> about exactly this topic (I'm not sure if there is a public archive).
+   Hello,
 
-I believe the archive should be at
-https://www.denic.de/service/mailinglisten/public-l/ , although it
-doesn't seem updated since april (although if low volume and the
-discussion was started today it might only be updated infrequently)
+Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
+to a memory leakage issue. It could occur while doing a I/O read operation in 
+v9fs_read() routine.
 
--- 
-----------------------------
-Kristian Fiskerstrand
-Blog: https://blog.sumptuouscapital.com
-Twitter: @krifisk
-----------------------------
-Public OpenPGP keyblock at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-----------------------------
-Nil desperandum
-Never give up
+A privileged user/process inside guest could use this flaw to crash the Qemu 
+process instance resulting in Dos.
 
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07127.html
 
+This issue was reported by Li Qiang of 360.cn Inc.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
