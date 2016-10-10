@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/6
-Message-ID: <CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com>
-Date: Mon, 21 Nov 2016 12:26:02 -0600
-From: Michael Babker <michael.babker@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: WordPress (all versions): SPOF, RCE, and Negligence
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/3
+Message-ID: <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
+Date: Mon, 10 Oct 2016 08:01:15 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Leo Famulari" <leo@...ulari.name>
+CC: "john.haxby@...cle.com" <john.haxby@...cle.com>
+Subject: RE: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 21, 2016 at 11:32 AM, Ben Tasker <ben@...tasker.co.uk> wrote:
+Hi Chet,
 
-> There was a similar issue a while back where Joomla! decided to run a
-> version check to ensure PHP version was >= 5.3.10. It broke a number of
-> sites, and the most common fix seems to have been a core-hack to disable
-> that check. The logic for inserting that check was reasonable, but lacked
-> consideration of who the market actually is.
+> > Thanks for the patch! Do you plan to add it to the bash-4.3-patches
+> > series [0]?
+> 
+> This went out as bash-4.3 patch 47.
 
+Where can we find patch 47 for bash-4.3? 
 
-While I can somewhat understand why the Linux distributions choose the
-model they use for their "long term support" packages, it honestly does a
-disservice to those of us who now have to defensively code around it.  We
-can no longer rely on a package's version to accurately represent the state
-of the code base.
+commit a0c0a00fc419b7bc08202a79134fcd5bc0427071
+Author: Chet Ramey <chet.ramey@...e.edu>
+Date:   Thu Sep 15 16:59:08 2016 -0400
 
-I was Joomla's release lead at the time this decision was made.  We did not
-arbitrarily choose a PHP version number, arbitrarily locking out vendor
-modified PHP builds distributed with the LTS distros, just because we
-wanted to.  We first attempted to implement bcrypt password hashing using
-feature detection, after hacking the polyfill library to lower its PHP
-minimum from 5.3.7 (which blocked some of its checks) to be able to try and
-support the PHP 5.3.3 build the distros have elected to stabilize on and
-modify.  This effort failed catastrophically, and our project collectively
-decided we could not revert support for bcrypt hashed passwords and could
-not try to support this feature using feature detection mechanisms; it was
-too unreliable and we elected therefore to lock on a version number which
-we knew would satisfy all of our requirements natively.  We could have
-locked to 5.3.7 but elected to bump to 5.3.10 due to the security issues
-fixed between those releases and at that point Ubuntu's LTS was at that
-version so it helped us to make a logical choice.
+    Bash-4.4 distribution sources and documentation
 
-While I understand where you are coming from, to be quite frank, I don't
-believe the PHP ecosystem and its major players can continue to cater to
-these modified PHP builds as might have been expected in years past.
+commit 30a978b7d808c067219c95be88c4979b6a7aa251
+Author: Chet Ramey <chet.ramey@...e.edu>
+Date:   Mon Jun 20 15:14:49 2016 -0400
 
+    Bash-4.3 patch 46
+
+Thanks
+//Sona
