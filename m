@@ -1,46 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/6
-Message-Id: <C5D9B35B-045D-41DD-9419-14D50BE494BA@gmail.com>
-Date: Sat, 25 Jun 2016 10:41:16 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/5
+Message-ID: <2129956.DqTODQi6KW@willoughby>
+Date: Mon, 10 Oct 2016 10:16:42 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Re: libical 0.47 SEGV on unknown address
+Cc: Sona Sarmadi <sona.sarmadi@...a.com>
+Subject: Re: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 Content-Type: text/plain; charset=utf-8
 
+On Monday 10 October 2016 08:01:15 Sona Sarmadi wrote:
+> Where can we find patch 47 for bash-4.3? 
 
-> On Jun 25, 2016, at 10:34 AM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
-> 
-> On 06/24/16 06:54 AM, Brandon Perry wrote:
->> I am posting this to Full Disclosure/OSS instead of reporting it because I have
->> opened a handful of libical bugs in the Mozilla bug tracker, alerted
->> security@...illa.org <mailto:security@...illa.org>, and worked to show how and
->> where to reproduce the bugs in Thunderbird, but Mozilla hasn’t shown any care at
->> all about the bugs. Perhaps if I give a sample to the community of the bugs in
->> the bug reports, Mozilla will take the bug reports more seriously. This bug
->> attached had not been reported yet.
-> 
-> Did you report them to libcial upstream?  http://libical.github.io/libical/ <http://libical.github.io/libical/>
-
-I had initially asked for contact information regarding reporting potentially sensitive security test cases, but after a couple of days, I decided to look into another product that I figured would have more visibility and more power to get things fixed.
-
-https://github.com/libical/libical/issues/235 <https://github.com/libical/libical/issues/235>
-> 
->> My roommate mentioned Thunderbird being a second-class citizen in the Mozilla
->> world, so if this is the case, this should be made explicit in regards to bug
->> bounty expectations.
-> 
-> While Thunderbird is still a beloved child of Mozilla, it's been told it's time
-> to move out of its parents house and find its own sources of income/support:
-> 
-> https://groups.google.com/d/msg/mozilla.governance/kAyVlhfEcXg/Eqyx1X62BQAJ
-> https://blog.mozilla.org/thunderbird/2015/12/thunderbird-active-daily-inquiries-surpass-10-million/
-> 
-> --
-> 	-Alan Coopersmith-              alan.coopersmith@...cle.com
-> 	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-047 
 
 
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+--
+Agostino
