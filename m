@@ -1,88 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/10
-Message-ID: <alpine.DEB.2.20.1602232249280.6588@tvnag.unkk.fr>
-Date: Tue, 23 Feb 2016 22:51:20 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: oss-security@...ts.openwall.com
-Subject: libssh2 Truncated Difffie-Hellman secret length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/13
+Message-Id: <20161010175145.900E46C0754@smtpvmsrv1.mitre.org>
+Date: Mon, 10 Oct 2016 13:51:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read
 Content-Type: text/plain; charset=utf-8
 
-Hey all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This advisory was posted earlier today to the libssh2 project's mailing list. 
-There's still an ongoing discussion about a possibly amended patch.
+> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
+> to a memory leakage issue. It could occur while doing a I/O read operation in
+> v9fs_read() routine.
+> 
+> A privileged user/process inside guest could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07127.html
 
+Use CVE-2016-8577.
 
-Truncated Difffie-Hellman secret length
-=======================================
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/9pfs/9p.c but
+that may be an expected place for a later update.
 
-Project libssh2 Security Advisory, February 23rd 2016 -
-[Permalink](https://www.libssh2.org/adv_20160223.html)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-VULNERABILITY
--------------
-
-During the SSHv2 handshake when libssh2 is to get a suitable value for 'group
-order' in the Diffle Hellman negotiation, it would pass in number of *bytes*
-to a function that expected number of *bits*. This would result in the library
-generating numbers using only an 8th the number of random bits than what were
-intended: 128 or 256 bits instead of 1023 or 2047
-
-Using such drastically reduced amount of random bits for Diffie Hellman
-weakended the handshake security significantly.
-
-There are no known exploits of this flaw at this time.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-0787 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: all versions to and including 1.6.0
-- Not affected versions: libssh2 >= 1.7.0
-
-libssh2 is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-libssh2 1.7.0 makes sure that there's a convertion done from number of bytes
-to number of bits when the internal `_libssh2_bn_rand` function is called.
-
-A patch for this problem is available at:
-
-     https://www.libssh2.org/CVE-2016-0787.patch
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-A - Upgrade to libssh2 1.7.0
-
-B - Apply the patch and rebuild libssh2
-
-TIME LINE
----------
-
-It was first reported to the libssh2 project on February 7 2016 by Andreas
-Schneider.
-
-libssh2 1.7.0 was released on February 23rd 2016, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Reported by Andreas Schneider.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+iQIcBAEBCAAGBQJX+9Q0AAoJEHb/MwWLVhi25+sQAIvJVq0jkV+yHeVKA95GPwuC
+u1Khmdz9uLRHxSriWfHRM8P/lHHFaJ6YIS8Dn1BvcWh6b/96xkjML9uKl2O2Zmb/
+EIJu2RZk4vKJV7+XGv2uKxxd+ysfMTCwSB5ktJh9id5fKSbLrMNsIRmrAty3CA98
++pW2HRSUFUdygfBB8Ubd2OAIdWL5Ggfd3zKC5CV0q77+qYTFiupXXZGgOr0Yxaky
+7tsf/aviEJPraro5vWwC3Qtg12CEn+wz/WimFFi4P4ejDFUWPQOcIjMScvfIEwOT
+0n+lzysBA0pU3okv0CVkq1WeG5eCuC5+sN40zWp3tlEGNRXQAsyY27uoMMT4qgAw
+0lvLe77ZgXRsM3HbS8TfxhJy75dHyJTNymyWjfTRkdC1Gii3FyK2bpQuOeq8fnr3
+v1FEqnhoPGSgzWSdjlu367gEZ78KuaLgD2qqmxyvUmum127dhiBkGmhSqSSCbmNd
+NVWAzXeKWUbZv0jT4qigZ/68zXCoRdXUBCe4hsknjevAUA+h/wI/L8KB1rQC4gw9
+ZZAtUotefB67bfMSdMsVLT6e2aR6laBrwOTttqf6dDStTgVeeSfpmUezaD7nXv92
+1gihMM+4S7HM8wJVjd1c415Q25Vtk72S/1hpuEQse24tbcs5bfXLWrvhHjWXUCBJ
+LY2WgmOMb06yZp0j8SJs
+=8uAy
+-----END PGP SIGNATURE-----
