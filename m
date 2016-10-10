@@ -1,4 +1,9 @@
-Received: (qmail 20443 invoked by uid 550); 22 Sep 2023 11:42:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1188" "Monday" "10" "October" "2016" "04:32:57" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzssdZ5k5H92mOKaLHE38Db0har=n4azHZeNosC-wsr55dw@mail.gmail.com>" "37" "[oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)" nil nil nil "10" "2016101007:32:57" "[oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)" (number mark "U       dawid@legalh Oct 10   37/1188  " thread-indent "\"[oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros - Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3574 invoked by uid 550); 10 Oct 2016 07:53:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20422 invoked from network); 22 Sep 2023 11:42:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1695382944;
-	bh=mGbCogMbRPz1SUdLUFYtYkvfE0bQpw+dfjP64x9vFCU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type;
-	b=in3JhLLZK/lmBMO4zubJiSHg8L4qiKPvlQC3Xljw2ywfmy1xZ1Il8bq10TJDDHXv6
-	 6EiwWN3Hz4hmZG82vZaK5RA+/4qMcbZazlCAp+Amz+yRzcNVWRlPth2xO0JOKjUctT
-	 wUu1qRqaj/Vr13nMxWa3iQSiKA6z+AxNDBhEpak1DCE2WQb2QQQ5R6GHmTNKTiEFY6
-	 ou/JgHO1c4abCWb01Rv+l3vaVNx9WWwWImqkZM8fUmS8XBLmiQQ+8LPX2f5cpLoLdf
-	 dxpqeuaBC/yC8dXMlMbBtHeWGFsfBtPHmei/h14K/zQcYaarnlKPn6rQM1KlQ4gWIz
-	 larXHsJIUSuQA==
-Message-ID: <72a6e741-1420-d21d-11cc-2592598e53f4@canonical.com>
-Date: Fri, 22 Sep 2023 07:42:22 -0400
+Received: (qmail 14256 invoked from network); 10 Oct 2016 07:33:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=B6C78yPjGZoDrqeul5VrQBrq5u8bZa32RtDafPsZ2lQ=;
+        b=E9/8gJVfpOqZ0Vj1ALZwBvLW7MFneFhmPaXgEKfZqXuUtiwW/+iIGfsN2R+2JwwWNH
+         hWHqzsqh0fODesEWchNBgtudeVuNISvlRdnEljG2BSREHDJzjdl4eYSlMsDqNAMBfdTi
+         GnG7pE2b3o8mQkIkvQQYJxgK2Bx9qNswdjKRf45FAUwVMR7/QzO7bus5PYEGxHKQnVR+
+         6VxRSuYdEOGZGb5o+MHyvxU4KEfjk0B6jYIIRkrD5uxuVpsotba0Q6aHXMACbQAgzpV+
+         LGLOErwOoq0QuqMa4q3afZJa0MUul7O9Pq7id3LLH5aCjwGoShljrcytwP6hP7+QoCUZ
+         +p4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=B6C78yPjGZoDrqeul5VrQBrq5u8bZa32RtDafPsZ2lQ=;
+        b=FfwFASXj3Q5/8MXBcHXDXd9Z0vUYZHfdu0YRZftkYZBANDbV4CxmqD73yd1WTxn/NW
+         DIal3Nep9hEdsK63fX5R0P7XWRt0RUZ7zjqFWT98hWftHg0b9wSczBHXLMkAQB97DR9V
+         fTizzWa5PHk2wKubKAN6aLnQoIMA9P+VXf6i76geRAmHwIEs7rnbErgfQSgj/FE+Pl6v
+         ST79v8n1lxv78I/uX780vtdzjLXHycg8v0FUy8anxOVOxooFy673TWg/aT0tUdZC4w7b
+         m/wKshz1WOnghGroNWLb8icz/1X/kIzfwfoB3HOPQstpDUed3LB1Z4lHPKvyfmyjk0X3
+         PVug==
+X-Gm-Message-State: AA6/9RnbkwvvwJqNltmUm8rULzPYOX/HvWn83NHWfZmYCIopMe8v9KMjhcBzmnhWwQml2kEBnS8FzbzjMUdt+A==
+X-Received: by 10.194.6.36 with SMTP id x4mr2866490wjx.175.1476084778289; Mon,
+ 10 Oct 2016 00:32:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Content-Language: en-CA
-To: oss-security@lists.openwall.com, =?UTF-8?Q?Hanno_B=c3=b6ck?=
- <hanno@hboeck.de>
-References: <20230921205250.GA13106@openwall.com>
- <20230922072817.092917d2.hanno@hboeck.de>
-From: Marc Deslauriers <marc.deslauriers@canonical.com>
-In-Reply-To: <20230922072817.092917d2.hanno@hboeck.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
- WebP Codec
+From: Dawid Golunski <dawid@legalhackers.com>
+Date: Mon, 10 Oct 2016 04:32:57 -0300
+Message-ID: <CADSYzssdZ5k5H92mOKaLHE38Db0har=n4azHZeNosC-wsr55dw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE-2016-5425 - Apache Tomcat packaging on RedHat-based distros -
+ Root Privilege Escalation (affecting CentOS, Fedora, OracleLinux, RedHat etc.)
 
-On 2023-09-22 01:28, Hanno Böck wrote:
-> On Thu, 21 Sep 2023 22:52:50 +0200
-> Solar Designer <solar@openwall.com> wrote:
-> 
->> However, another maybe-important one also made it into 1.3.2:
->>
->> commit 95ea5226c870449522240ccff26f0b006037c520
->> Author: Vincent Rabaud <vrabaud@google.com>
->> Date:   Mon Sep 11 16:06:08 2023 +0200
->>
->>      Fix invalid incremental decoding check.
-> 
-> It does not look to me that this fix is in 1.3.2:
-> https://github.com/webmproject/libwebp/commits/v1.3.2
-> 
-> I've seen this commit as well and have been wondering for a few days if
-> we'll hear about abother libwebp issue soon.
-> 
+Vulnerability: Apache Tomcat packaging on RedHat-based distros
 
-We (Ubuntu) didn't include that second commit in our libwebp updates, and I 
-don't believe Red Hat/Fedora did either. If that second commit does have a 
-security impact, it probably needs a different CVE to clear up confusion.
+CVE-2016-5425
 
-Marc.
+Discovered by:
+Dawid Golunski (http://legalhackers.com)
+
+Affected systems: Multiple Tomcat packages on RedHat-based systems
+including: CentOS,Fedora,OracleLinux,RedHat etc.
+
+Short Description:
+
+Apache Tomcat packages provided by default repositories of RedHat-based
+distributions (including CentOS, RedHat, OracleLinux, Fedora,  etc.)
+create a tmpfiles.d configuration file with insecure permissions which
+allow attackers who are able to write files with tomcat user permissions
+(for example, through a vulnerability in web application hosted on Tomcat)
+to escalate their privileges from tomcat user to root and fully compromise
+the target system.
+
+Full advisory and a working root privilege escalation exploit can be found
+at:
+
+http://legalhackers.com/advisories/Tomcat-RedHat-Pkgs-Root-PrivEsc-Exploit-CVE-2016-5425.html
+
+
+BTW. If you are using Tomcat on a Debian-based distro,  you may want
+to check out
+my previous Tomcat advisory and exploit at:
+
+http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
+
+
+-- 
+Regards,
+Dawid Golunski
+http://legalhackers.com
