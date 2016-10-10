@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1509" "Friday" "21" "July" "2017" "04:00:55" "+0200" "Franz Pletz" "fpletz@fnordicwalking.de" "<20170721040055.7209cabe@yolovo>" "40" "Re: [oss-security] NIX-2017-0003: LDAP with useTLS option disabled TLS peer verification" "^Date:" nil nil "7" "2017072102:00:55" "[oss-security] NIX-2017-0003: LDAP with useTLS option disabled TLS peer verification" (number mark "        fpletz@fnord Jul 21   40/1509  " thread-indent "\"Re: [oss-security] NIX-2017-0003: LDAP with useTLS option disabled TLS peer verification\"\n") "<874lu7uccv.fsf@grahamc.com>" ("<874lu7uccv.fsf@grahamc.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["352" "Monday" "10" "October" "2016" "10:12:21" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20161010081221.GA20544@lorien.valinor.li>" "16" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" nil nil nil "10" "2016101008:12:21" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "U       carnil@debia Oct 10   16/352   " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" "<20160927205512.GA25156@jasmine>" "<5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>" "<3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1567 invoked by uid 550); 21 Jul 2017 10:49:19 -0000
+Received: (qmail 3835 invoked by uid 550); 10 Oct 2016 08:12:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24111 invoked from network); 21 Jul 2017 02:01:11 -0000
-Message-ID: <20170721040055.7209cabe@yolovo>
-In-Reply-To: <874lu7uccv.fsf@grahamc.com>
-References: <874lu7uccv.fsf@grahamc.com>
-X-Mailer: Claws Mail 3.15.0-dirty (GTK+ 2.24.31; x86_64-unknown-linux-gnu)
-X-Face: (C&]]j"8g!1JH#PrAAuZTTtl6CAu?S]m6@'20~I5e*Mg%PO6AVO+K|]p:+ov4@ll/sA%_\%[?G:
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/zi..=PU9AiDp0UydkdotVWf"; protocol="application/pgp-signature"
-Date: Fri, 21 Jul 2017 04:00:55 +0200
-From: Franz Pletz <fpletz@fnordicwalking.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] NIX-2017-0003: LDAP with useTLS option disabled
- TLS peer verification
+Received: (qmail 3817 invoked from network); 10 Oct 2016 08:12:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7kCV2iZic4F2ERRRQCJmA8cxnfNN+KJqnx4p3RD4Bj0=;
+        b=CVXdw+0uwTQPPlhxkz/uZqtTUAXZ6yQHKCAhRFBFol7OIf3AmhRYqlRXqI5LU2I4hf
+         wrtlQCb9aXqv+T9BbfGGE6u5+RGs6zsXWVJxUTHKRXYq16Fdgyu0uCpzgUG4OQzMXxtK
+         PE5lwHRX3Y37D4WYYikbAi6s9ZVc8HZt9vkFTokTwRea/TZuZQtONHejuIyGxeMMuQS0
+         ciEjfX/Be/YwErHesQuUdit3Loo1lzpYJLgGa4I+Fi0bxMQ0jsj/fvDafrPn2lH2mTQ6
+         RXOH7itj82RDjjEAz17bhpPzH6puO+I5PLW/8BNZnRCwW+SVK/1xyaM9EJj+wazTKg4W
+         njkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7kCV2iZic4F2ERRRQCJmA8cxnfNN+KJqnx4p3RD4Bj0=;
+        b=kJjeMRxs2cDX1iO9QNavnBY7Eli+UFQNp40j6S5ta3ADZIWjTw/dpAz2oEejU6fuZl
+         SCIs53tPpgm0wW9fB7ysrMLhGcvTYSa7z3E9ZlvATNjPBATxYAZnJAjLTJRjNA8RjDT1
+         A8iIhz3pn5oG8CG/P83cC/M4GIhadMbDnrfF6SS7K7lYet+j+6XKeS6zPouzC3zhIVCL
+         slfU602NdzqIsTfo3r4Sch2/onUPoRzLhQNMBhVVoKJrNeDblNEdtGX817iVG6jRQZuh
+         qZ7oA/LkCfNXY5bUWE92PJj4N3X/q/0Fb7Xn6B3OnhLu5FeWCwbXCO+ZqI0jfYzsejCO
+         oWJg==
+X-Gm-Message-State: AA6/9RkW73SCrfKWbxJ/4XnCf4YhGPdzItqKLMdQni4Q6EQiVs8fz5AJu77CoTsS4XyY2g==
+X-Received: by 10.36.73.23 with SMTP id z23mr9192976ita.32.1476087144375;
+        Mon, 10 Oct 2016 01:12:24 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 10 Oct 2016 10:12:21 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
+Cc: Leo Famulari <leo@famulari.name>,
+	"john.haxby@oracle.com" <john.haxby@oracle.com>
+Message-ID: <20161010081221.GA20544@lorien.valinor.li>
+References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
+ <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
+ <160916195601.AA66726.SM@caleb.ins.cwru.edu>
+ <20160927205512.GA25156@jasmine>
+ <5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>
+ <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
+ $HOSTNAME
 
---Sig_/zi..=PU9AiDp0UydkdotVWf
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Wed, 19 Jul 2017 21:27:12 -0400
-Graham Christensen <graham@grahamc.com> wrote:
+On Mon, Oct 10, 2016 at 08:01:15AM +0000, Sona Sarmadi wrote:
+> Hi Chet,
+> 
+> > > Thanks for the patch! Do you plan to add it to the bash-4.3-patches
+> > > series [0]?
+> > 
+> > This went out as bash-4.3 patch 47.
+> 
+> Where can we find patch 47 for bash-4.3? 
 
-[..]
->=20
->                          Nix Security Advisory
->                              NIX-2017-0003
->                               2017-07-19
->                          ---------------------
->             LDAP with useTLS disabled TLS peer verification
-[..]
+See: https://ftp.gnu.org/pub/gnu/bash/bash-4.3-patches/bash43-047
 
-CVE-2017-11501 has been assigned to this vulnerability.
-
---Sig_/zi..=PU9AiDp0UydkdotVWf
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEijlhXc54rwguI/MDhG/e13kmF7QFAllxYFcACgkQhG/e13km
-F7Qj2hAAiUWA3qCOV+b7cFLvC5wB4alhDcPgrAr7xYu7o0XWlMCkCC/83sq5v915
-l0rf/8ygqdvTT/dDGMfh0gOlTBkGkDebneATyAdd6OL460h0GJhImF0VASW3XwVz
-48xX3mpRENOpT8Y0YKlDWZ3lmLOJr/UgUGfClOMv7nLmsxUusZlQh1CIAjtZZlsK
-T4Pq+HChQJt77pvm3UdVqrVOpkVyvmun+/awrIGrBBe3g5bL0JgBeGotQ3UJAJ+r
-BCuuidNXwVlaIV2UKA2HCtNxJbQszRzzlXRC5VOTLTu8DywLhUOUWmnezE3FpioA
-XkGDwC/yKOc6qOBIrMxSI59kDLVytuk4KI/D2r71/r94PbHXQjsiC6y+wXBcBSAm
-pP48FU9niKnDcnmXSWuACdC9QMjW5RS+vF3jh777azX07lGCrrD1Olq4TatTVNc+
-JGmQQP3tCKaQnmZyJexEY9OPNYH4qP49DsSeJtbBEOwxVdOFtaklukLlG0rfKMXN
-HfAd11AinEuP9hQuNSkoDymtgf2p5IiJKulSSzC7Qq7L4tGwrZl0MoLi7RpElw1P
-MwPt8Yyt/Vw99DgqpJBiYNY9dBv6BwMMpQpT8ERJ9J0tZ1nddM44naDntQE2stcM
-e+41qU0qDZgp/pnirtw/fP/2YRA0b/MnZ6Az/JxFs7g/Tt/yfd0=
-=oIbY
------END PGP SIGNATURE-----
-
---Sig_/zi..=PU9AiDp0UydkdotVWf--
+Regards,
+Salvatore
