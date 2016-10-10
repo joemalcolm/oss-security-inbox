@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2021" "Sunday" "18" "December" "2016" "18:59:25" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20161218175925.GE31981@jumper.schlittermann.de>" "58" "[oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016121817:59:25" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       hs@schlitter Dec 18   58/2021  " thread-indent "\"[oss-security] CVE-2016-9963 Exim private information leak\"\n") "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1632" "Monday" "10" "October" "2016" "13:53:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161010175332.3A7F46C074E@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines" nil nil nil "10" "2016101017:53:32" "[oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines" (number mark "U       cve-assign@m Oct 10   40/1632  " thread-indent "\"[oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines\"\n") "<alpine.LFD.2.20.1610101656300.27939@wniryva>" ("<alpine.LFD.2.20.1610101656300.27939@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28301 invoked by uid 550); 18 Dec 2016 20:28:45 -0000
+Received: (qmail 10152 invoked by uid 550); 10 Oct 2016 17:53:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26434 invoked from network); 18 Dec 2016 17:59:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-To;
-	bh=rWLS4rNDhmcI0n1bYskfMjg7yX3EKRJoEZrJXDvFKcI=; b=Hwlf/fAqzkTYqjpxlBqiCbf/1R
-	+Js50HM0hxorstxi6gRH/CM+Mlc90LkXDRMOABWqL/FkRm+sxmD8OPdQBLvyPGtdrzkJRm6kXmauU
-	0KBiY5VsEnQIErKizVnpL6kgXVx2kYc/RYDr8iKWmtdjXFwy9lP4aJL7YSu3FyVrJEKQ=;
-Date: Sun, 18 Dec 2016 18:59:25 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20161218175925.GE31981@jumper.schlittermann.de>
-References: <20161215233645.GJ29010@jumper.schlittermann.de>
- <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sXc4Kmr5FA7axrvy"
-Content-Disposition: inline
-In-Reply-To: <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
-Organization: schlittermann -- internet & unix support
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE-2016-9963 Exim private information leak
+Received: (qmail 10134 invoked from network); 10 Oct 2016 17:53:43 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
+In-Reply-To: <alpine.LFD.2.20.1610101656300.27939@wniryva>
+Message-Id: <20161010175332.3A7F46C074E@smtpvmsrv1.mitre.org>
+Date: Mon, 10 Oct 2016 13:53:32 -0400 (EDT)
+Subject: [oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
 
---sXc4Kmr5FA7axrvy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
+> to a null pointer dereference issue. It could occur while doing an I/O vector
+> unmarshalling operation in v9fs_iov_vunmarshal() routine.
+> 
+> A privileged user/process inside guest could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
 
-cve-assign@mitre.org <cve-assign@mitre.org> (Fr 16 Dez 2016 06:33:41 CET):
->=20
-> Use CVE-2016-9963.
+Use CVE-2016-8578.
 
-Today we released Exim 4.87.1 (security fix for 4.87)
-              and Exim 4.88   (new release)
-into a protected repository.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=fsdev/9p-iov-marshal.c but
+that may be an expected place for a later update.
 
-This, and the details of the CVE-2016-9963, where announced to
-distro@vs.openwall.org and to a limited set of known maintainers,
-contributors and friends of the Exim project.
-
-On Dec, 25th we will make the details and the above mentioned releases
-available to the public.
-
-If you feel that we missed you, please contact me via GPG signed mail,
-send me your public SSH key and explain, why we should grant to access
-already now.
-
-Thank you for your understanding.
-
-PS: My GPG key expires in January, an updated version should be available
-through the keyservers and on
-https://schlittermann.de/keys/gpg/hs@schlittermann.de/F69376CE.asc
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---sXc4Kmr5FA7axrvy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCgAGBQJYVs55AAoJEGoXY4qgRQz1R+sH/iLmzaFqo3vDW117CnA0GPKJ
-VxQFxzfyn2sXvzOgwuTJ98p3pJNjFnpT0AmDEKo6Wmniz+5V9MQgfctKs4sjyChx
-QSf4Athtga2vDxIRuyp2yGMOToX7ZcxVZ1PxKsRr5FR3bKHjPa4iEqf9gh6YEnG2
-/3PcthQdN7s+iX8/YSAxmgN/J8yg+ECHa+r3zgfq/jbQG+GwYO9zbWtfkrLL25Jv
-mt3gnl5I/kzxfsvc+h4rGcW6S7oiamPUQoFMWjmW+GEBaEI14h0n2L7Z/5ihkdeC
-YHzL6yXtZ4GDq2cM7gQuKzOyeY1D9fYOtM1NLA4oZpLjEFleMBGIGG7QUOtWMIg=
-=GFiW
+iQIcBAEBCAAGBQJX+9Q5AAoJEHb/MwWLVhi2mwMP/0jl7A1btTRICOrx2gAEjWOR
++q8XeDpGWNXOKf1+XKpVPwrwLZ7jDuvuR3VfBgwOtpA7hMoLAcIX8G6m+FlLHwlX
+dJafKAaunKt0L4LFV0l8Qbe2vSITJHF8yY8ftfEkRjx+yozwh4waJYPsmU4M1Akr
+atzlUD24VsiW7UFfITEFC6N428ms2ReYL5P6o0uRgoXWVo8/3uBpaj7daH6BaCzb
+1MBBcbV5Zn/qSDSM115WcN2rO3W3jBL2chUPAd/rJlr0JqiVFCVxodFvrW0Tl0Jp
+K5InpRCqpBrPZrWMRFDaZj8Saf+6IWI5Q0WI15DqJXQtnJMgndEksAIJWT7SboIL
+FVROFUlO7XkICK0riBgJVAV+ZII7u8IJ0dchxV555dErvsVneJllpQag9iisN9Hj
+PAXg2I+kbPAb1DWoXhUDbzg/HcNgvHUk+6GYZUHAMVbp6ENggCrHmEj9R5zxRatD
+vmpgv+OVhlRTCBsvDNDILSALk6TRWM5Ol6/iLHC+qBXbcRNi5kYdGAXZk5bvT1IW
+BnQeRLlotkFFmY3BWVvj9r4phLfjS4AHDIslI+oRYRroe4Dm+sSYky3N6+yZVMuH
+Cyh1g1X7sI7fiBA9lCJzMCYBsmnsE6Fk6tA+NqHmk3zU3lR8tSXtVpbNv15vL4XO
+AgAKlVBqomng0+P1MIeh
+=L1Fq
 -----END PGP SIGNATURE-----
-
---sXc4Kmr5FA7axrvy--
