@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2525" "Thursday" "2" "March" "2017" "16:33:47" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<313929.373256059-sendEmail@localhost>" "64" "[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)" nil nil nil "3" "2017030216:33:47" "[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)" (number mark "U       ago@gentoo.o Mar  2   64/2525  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["613" "Monday" "10" "October" "2016" "17:00:15" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610101656300.27939@wniryva>" "20" "[oss-security] CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines" nil nil nil "10" "2016101011:30:15" "[oss-security] CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines" (number mark "U       ppandit@redh Oct 10   20/613   " thread-indent "\"[oss-security] CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7851 invoked by uid 550); 2 Mar 2017 16:34:08 -0000
+Received: (qmail 1655 invoked by uid 550); 10 Oct 2016 11:30:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7638 invoked from network); 2 Mar 2017 16:34:04 -0000
-Message-ID: <313929.373256059-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Mar 2017 16:33:47 +0000
+Received: (qmail 1637 invoked from network); 10 Oct 2016 11:30:31 -0000
+Date: Mon, 10 Oct 2016 17:00:15 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1610101656300.27939@wniryva>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-964812.880921276"
-Subject: [oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 10 Oct 2016 11:30:20 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
 
-------MIME delimiter for sendEmail-964812.880921276
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+   Hello,
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
+to a null pointer dereference issue. It could occur while doing an I/O vector 
+unmarshalling operation in v9fs_iov_vunmarshal() routine.
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+A privileged user/process inside guest could use this flaw to crash the Qemu 
+process instance resulting in Dos.
 
-The complete ASan output:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
 
-# podofocolor dummy $FILE foo
-==7677==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000054b701 bp 0x7ffe64ec7cb0 sp 0x7ffe64ec7c80 T0)
-==7677==The signal is caused by a READ memory access.
-==7677==Hint: address points to the zero page.
-    #0 0x54b700 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11
-    #1 0x55b772 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::pop_back() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/stl_deque.h:1459:4
-    #2 0x52c84d in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:190:35
-    #3 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
-    #4 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
-    #5 0x7fc9a444f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
+This issue was reported by Li Qiang of 360.cn Inc.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement()
-==7677==ABORTING
 
-Affected version:
-0.9.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00216-podofo-nullptr-graphicsstack-h
-
-Timeline:
-2017-03-01: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-graphicsstacktgraphicsstackelementtgraphicsstackelement-graphicsstack-h
-
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-964812.880921276--
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
