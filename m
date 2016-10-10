@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/6
-Message-ID: <4a28b9ab-e52e-8de1-3b83-d7dbb1881653@redhat.com>
-Date: Mon, 11 Jul 2016 17:19:23 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/8
+Message-ID: <alpine.LFD.2.20.1610101656300.27939@wniryva>
+Date: Mon, 10 Oct 2016 17:00:15 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
 Content-Type: text/plain; charset=utf-8
 
-On 07/11/2016 01:32 PM, Cedric Buissart wrote:
+   Hello,
 
-> I looked at other projects to see what is being done to prevent this
-> particular loop from happening. Until now, tools I checked are protected
-> either by detecting the loop (i.e.: actively searching for a relative
-> offset of 0 for the next EBR, as done by this util-linux patch; partprobe
-> and fdisk are doing that), or enforcing a limit on the maximum number of
-> partitions for a device (Linux kernel, kpartx & other tools I currently
-> checked)
+Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
+to a null pointer dereference issue. It could occur while doing an I/O vector 
+unmarshalling operation in v9fs_iov_vunmarshal() routine.
 
-How does util-linux protect against loops which are non-empty?  Does it 
-reject negative offsets?
+A privileged user/process inside guest could use this flaw to crash the Qemu 
+process instance resulting in Dos.
 
-Thanks,
-Florian
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
