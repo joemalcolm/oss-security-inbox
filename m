@@ -1,54 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/5
-Message-ID: <2016111816520848294763@gmail.com>
-Date: Fri, 18 Nov 2016 16:52:10 +0800
-From: "wykcomputer@...il.com" <wykcomputer@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: [Bug Report] Vulnerability in libbpg
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/14
+Message-Id: <20161010175332.3A7F46C074E@smtpvmsrv1.mitre.org>
+Date: Mon, 10 Oct 2016 13:53:32 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
+Subject: Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-    I'm a security researcher. And I find one vulnerability in libbpg, this is a double-free issue, which can lead to remote-code-execution.
-    I have reported it to the author of libbpg, but no responding, so I report it to you.
-    The PoC file is the attachment.
-    
-    Run the command ./bpgdec PoC.bpg, we wil get the crash log as follows.    
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-    Crash Log：
-Program received signal SIGSEGV, Segmentation fault.
-0x000000000042a158 in av_buffer_unref (buf=0x64bcb0) at libavutil/buffer.c:111
-111     b = (*buf)->buffer;
-(gdb) bt
-#0  0x000000000042a158 in av_buffer_unref (buf=0x64bcb0) at libavutil/buffer.c:111
-#1  0x000000000042a8fa in av_frame_unref (frame=0x64bb30) at libavutil/frame.c:101
-#2  0x000000000042a8b3 in av_frame_free (frame=0x638020) at libavutil/frame.c:92
-#3  0x0000000000406ec7 in bpg_decoder_decode (img=0x638010, buf=0x638250 "BPG\373\026\t\201\026\201\026", buf_len=2412) at libbpg.c:1890
+> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
+> to a null pointer dereference issue. It could occur while doing an I/O vector
+> unmarshalling operation in v9fs_iov_vunmarshal() routine.
+> 
+> A privileged user/process inside guest could use this flaw to crash the Qemu
+> process instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
 
+Use CVE-2016-8578.
 
-    After reading the libbpg source code, I think it's a double-free issue.
-    Double Free:
-int bpg_decoder_decode(BPGDecoderContext *img, const uint8_t *buf, int buf_len)
-//...
-ret = hevc_decode_start(img, buf + idx, buf_len - idx,
-width, height, img->format, bit_depth, has_alpha); 
-|
-|->ret = hevc_decode_frame_internal(s, abuf, cbuf, buf, buf_len, 1);
-|
-|->ret = hevc_write_frame(s->dec_ctx, s->frame, cbuf->buf, cbuf->len);
-|
-|->len = avcodec_decode_video2(avctx, frame, &got_frame, &avpkt);
-|
-|->av_frame_unref(picture); //the first free
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=fsdev/9p-iov-marshal.c but
+that may be an expected place for a later update.
 
-av_frame_free(&img->frame); //the second free in int bpg_decoder_decode(BPGDecoderContext *img, const uint8_t *buf, int buf_len)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-    Fix:
-Avoid double free, choose one of the first and second free. Maybe remove the second one. 
-
-
-
-wykcomputer@...il.com
-
-Content of type "text/html" skipped
-
-Download attachment "PoC.bpg" of type "application/octet-stream" (2412 bytes)
+iQIcBAEBCAAGBQJX+9Q5AAoJEHb/MwWLVhi2mwMP/0jl7A1btTRICOrx2gAEjWOR
++q8XeDpGWNXOKf1+XKpVPwrwLZ7jDuvuR3VfBgwOtpA7hMoLAcIX8G6m+FlLHwlX
+dJafKAaunKt0L4LFV0l8Qbe2vSITJHF8yY8ftfEkRjx+yozwh4waJYPsmU4M1Akr
+atzlUD24VsiW7UFfITEFC6N428ms2ReYL5P6o0uRgoXWVo8/3uBpaj7daH6BaCzb
+1MBBcbV5Zn/qSDSM115WcN2rO3W3jBL2chUPAd/rJlr0JqiVFCVxodFvrW0Tl0Jp
+K5InpRCqpBrPZrWMRFDaZj8Saf+6IWI5Q0WI15DqJXQtnJMgndEksAIJWT7SboIL
+FVROFUlO7XkICK0riBgJVAV+ZII7u8IJ0dchxV555dErvsVneJllpQag9iisN9Hj
+PAXg2I+kbPAb1DWoXhUDbzg/HcNgvHUk+6GYZUHAMVbp6ENggCrHmEj9R5zxRatD
+vmpgv+OVhlRTCBsvDNDILSALk6TRWM5Ol6/iLHC+qBXbcRNi5kYdGAXZk5bvT1IW
+BnQeRLlotkFFmY3BWVvj9r4phLfjS4AHDIslI+oRYRroe4Dm+sSYky3N6+yZVMuH
+Cyh1g1X7sI7fiBA9lCJzMCYBsmnsE6Fk6tA+NqHmk3zU3lR8tSXtVpbNv15vL4XO
+AgAKlVBqomng0+P1MIeh
+=L1Fq
+-----END PGP SIGNATURE-----
