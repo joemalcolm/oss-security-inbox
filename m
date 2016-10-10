@@ -1,28 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/2
-Message-ID: <CACn5sdQhDOBYjZ86=9G_tE3n_MZZ=az179T67ztn0pZvUHeiKw@mail.gmail.com>
-Date: Sat, 8 Oct 2016 10:15:55 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/9
+Message-ID: <20161010121518.tnvomatyp65fwoyz@perpetual.pseudorandom.co.uk>
+Date: Mon, 10 Oct 2016 13:15:18 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: invalid memory accesses parsing object files in libgit2
+Subject: fd.o #98157: dbus format string vulnerability fixed in 1.10.12
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=98157
+Versions affected: dbus >= 1.4.0
+Mitigated in: dbus >= 1.9.10, 1.8.x >= 1.8.16, 1.6.x >= 1.6.30
+Fixed in: dbus >= 1.11.6, 1.10.x >= 1.10.12, 1.8.x >= 1.8.22
+Exploitable by: local users
+Impact: unknown, possibly arbitrary code execution
+Reporter: Simon McVittie, Collabora Ltd.
 
-We recently reported two invalid memory accesses in the last revision
-of libgit2:
+D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
+asynchronous inter-process communication system, commonly used
+for system services or within a desktop session on Linux and other
+operating systems.
 
-* Read out-of-bounds in git_oid_nfmt:
-https://github.com/libgit2/libgit2/issues/3936
+A format string vulnerability in the reference bus implementation,
+dbus-daemon, could potentially allow local users to cause arbitrary
+code execution or denial of service.
 
-* DoS using a null pointer derreference in git_commit_message:
-https://github.com/libgit2/libgit2/issues/3937
+In versions of dbus-daemon that are also vulnerable to CVE-2015-0245,
+this format string vulnerability is available to all local users.
+These versions should be patched or updated immediately.
 
-The developers are preparing a patch to harden object parsing in libgit2 here:
+In versions of dbus-daemon where CVE-2015-0245 was already fixed, this
+is not believed to be exploitable in practice, because the relevant
+message is ignored unless it comes from the owner of the bus name
+org.freedesktop.systemd1. On the system bus, this bus name is only
+allowed to be owned by uid 0; it is intended to be owned by systemd,
+and no mechanism is currently known by which an attacker who does not
+already have root privileges could induce systemd to send messages
+that would trigger the format string vulnerability.
 
-https://github.com/libgit2/libgit2/pull/3956
+Patching or updating dbus-daemon is strongly recommended. A minimal
+patch is attached to this advisory.
 
-Please assign one or more CVE if suitable.
+Please reference fd.o #98157 or
+<https://bugs.freedesktop.org/show_bug.cgi?id=98157> in any notices
+that refer to this vulnerability.
 
 Regards,
-Gustavo.
+    S
+-- 
+Simon McVittie
+Collabora Ltd. <https://www.collabora.com/> / Debian <https://www.debian.org/>
+
+View attachment "0001-dbus_activation_systemd_failure-do-not-use-non-liter.patch" of type "text/x-diff" (2079 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
