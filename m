@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["370" "Tuesday" "23" "April" "2019" "11:00:27" "+0200" "Florian Weimer" "fweimer@redhat.com" "<874l6pgkpg.fsf@oldenburg2.str.redhat.com>" "12" "Re: [oss-security] Nokogiri security update v1.10.3" "^Cc:" nil nil "4" "2019042309:00:27" "[oss-security] Nokogiri security update v1.10.3" (number mark "        fweimer@redh Apr 23   12/370   " thread-indent "\"Re: [oss-security] Nokogiri security update v1.10.3\"\n") "<CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>" ("<CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Nokogiri security update v1.10.3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["171" "Monday" "10" "October" "2016" "10:16:42" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2129956.DqTODQi6KW@willoughby>" "8" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" nil nil nil "10" "2016101008:16:42" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "U       ago@gentoo.o Oct 10    8/171   " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>" "<3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3738 invoked by uid 550); 23 Apr 2019 09:00:44 -0000
+Received: (qmail 16154 invoked by uid 550); 10 Oct 2016 08:17:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +11,26 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3718 invoked from network); 23 Apr 2019 09:00:43 -0000
-References: <CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>
-In-Reply-To: <CAGJbjKYzq0PbZYOedTha2xaOOUgTg-UJjp6CrWjwaaA8qwiTKg@mail.gmail.com>
-	(Mike Dalessio's message of "Mon, 22 Apr 2019 13:12:21 -0400")
-Message-ID: <874l6pgkpg.fsf@oldenburg2.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.42]); Tue, 23 Apr 2019 09:00:31 +0000 (UTC)
-Cc: nokogiri-talk <nokogiri-talk@googlegroups.com>,  ruby-talk <ruby-talk@ruby-lang.org>,  ruby-security-ann@googlegroups.com,  oss-security@lists.openwall.com
-Date: Tue, 23 Apr 2019 11:00:27 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Nokogiri security update v1.10.3
-To: Mike Dalessio <mike.dalessio@gmail.com>
+Received: (qmail 16128 invoked from network); 10 Oct 2016 08:17:01 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: Sona Sarmadi <sona.sarmadi@enea.com>
+Date: Mon, 10 Oct 2016 10:16:42 +0200
+Message-ID: <2129956.DqTODQi6KW@willoughby>
+User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
+References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com> <5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu> <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
 
-* Mike Dalessio:
+On Monday 10 October 2016 08:01:15 Sona Sarmadi wrote:
+> Where can we find patch 47 for bash-4.3? 
 
-> This is a security release. It addresses a CVE in upstream libxslt rated as
-> "Priority: medium" by Canonical, and "NVD Severity: high" by Debian. More
-> details are available below.
+http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-047 
 
-Note that the Debian security tracker only relays what NVD provides in
-this field.  It is not updated if a separate review yields different
-results.
 
-Thanks,
-Florian
+--
+Agostino
