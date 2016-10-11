@@ -1,62 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/1
-Message-Id: <20160506023911.7A4638BC1B1@smtpvmsrv1.mitre.org>
-Date: Thu,  5 May 2016 22:39:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: pengdawei521@....com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/9
+Message-ID: <87pon7t2f8.fsf@gnu.org>
+Date: Tue, 11 Oct 2016 15:56:11 +0200
+From: ludo@....org (Ludovic Courtès)
+To: oss-security@...ts.openwall.com
+Cc: Christopher Allan Webber <cwebber@...tycloud.org>, Andy Wingo <wingo@...ox.com>, Mark H Weaver <mhw@...ris.org>
+Subject: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+GNU Guile, an implementation of the Scheme language, provides a “REPL
+server” which is a command prompt that developers can connect to for
+live coding and debugging purposes.  The REPL server is started by the
+‘--listen’ command-line option or equivalent API.
 
-> When a app send a evil data to com.samsung.android.jam.IAndroidShm
-> service by service command (Android system command) , can cause to
-> IAndroidShm service crash.
+Christopher Allan Webber reported that the REPL server is vulnerable to
+the HTTP inter-protocol attack as described at
+<https://en.wikipedia.org/wiki/Inter-protocol_exploitation>, notably the
+HTML form protocol attack described at
+<https://www.jochentopf.com/hfpa/hfpa.pdf>.
 
-> adb shell;
+This constitutes a remote code execution vulnerability for developers
+running a REPL server that listens on a loopback device or private
+network.  Applications that do not run a REPL server, as is usually the
+case, are unaffected.
 
-> service call com.samsung.android.jam.IAndroidShm 5 i32 917154658 i32
-> 998369275 i32 1652062893 i32 2113420870 i32 1380178743 i32 47342718
-> i32 543810222 i32 1481030271
+Developers can work around this vulnerability by binding the REPL server
+to a Unix-domain socket, for instance by running:
 
-> Fix:
-> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
-> SVE-2015-5133: IAndroidShm IAPAService service DoS
+  guile --listen=/some/file
 
->> A vulnerability without proper exception handling in system services
->> can lead to crash by calling malicious service commands.
+A modification to the REPL server that detects attempts to exploit this
+vulnerability is available upstream and will be part of Guile 2.0.13, to
+be released shortly.
 
-Use CVE-2016-4546.
-
-If you have additional reports about Samsung software, then
-oss-security readers might find it useful if you include a reference
-establishing that the software is open source. For example, we
-selected an arbitrary Samsung repository of
-git://opensource.samsung.com/SM-N900P and found a
-vendor/samsung/common/external/jack/android/AndroidShm.cpp file
-that may be related.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXLANMAAoJEHb/MwWLVhi2150P/Rz+lyS2h7ZVm90d3Y1V2sSp
-8M+zy6rN8YhjOizW2VhAWpf1U0ekDahXV9qDVmjOVxqiP5l3UXPVTb62Ee6zgYjd
-fGPkYxQDMroqps42ryIg7K5eNsKGO0iZ+tsi8wfdH1wzk+opa6ta45CTqPHUl9vS
-STi5sZoX2txMXCbfdcGsuudylkVG7y3FbjGw//cT7DcoHHQbWmSF7SmQwcdBzq/c
-0Xl67OUOWBKFnNgrLdqifeS6Msa0YW52omLmSMOiLm9/+1jN5bCpfVrwWI78ALeG
-FxfHi6HiVWZAyHPt894kCnNeynKa8uw2bWAEgy7RiHf42OBNp+15Crzdg2FvpBCa
-8WXRgij1+ML7YtPbG0PfBt66rtlSpznlxp7jCeyriiKqsvSyKcS0rxVWNDbinn8g
-vmApz6CqDAotB/PS4/dAv9EyvPlK/bSPiqmbYE0jDw2UmTKVrjc6DnlD0iSPgE4L
-y4D6wmFLqSIljFadZVnnHqIGrdqJZQU14yWbw31Fjpp+NdKrMfG2VP/F7ZPPF1Qo
-Dk+JYGurrooQwbDsEZ/6TTRXNEMfEtQRLHm7xCXzaxTFjwn12rA6jRlje0MoIPqQ
-7Qtersx91679csj9cqAXlBbxgTwpFlIv5XqEcZRPiFKYK02NH/y2vyRE/2yCWkjW
-pU6S7ZescwAX+GAeFsur
-=GdhJ
------END PGP SIGNATURE-----
+Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=08c021916dbd3a235a9f9cc33df4c418c0724e03
