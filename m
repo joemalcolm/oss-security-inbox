@@ -1,57 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/15/5
-Message-ID: <CAAeBhPfv200duAxCKnYkABgyt-34u_cP_YrrRajPWZ-Md+H9GA@mail.gmail.com>
-Date: Sun, 14 Feb 2016 22:07:21 -0500
-From: David Leo <httpsonly.github.io@...il.com>
-To: fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: Browser Security Tool: HTTPS Only (Why, How, Open Source, Python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/5
+Message-ID: <CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>
+Date: Tue, 11 Oct 2016 09:03:36 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
 Content-Type: text/plain; charset=utf-8
 
-(@moderators The original post was too brief. This one has details.)
+On Wed, Oct 5, 2016 at 1:12 PM, Tavis Ormandy <taviso@...gle.com> wrote:
+> On Wed, Oct 5, 2016 at 9:13 AM, Tavis Ormandy <taviso@...gle.com> wrote:
+>> bug: type confusion in .initialize_dsc_parser allows remote code execution
+>> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
+>> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
+>> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
+>
+> It was pointed out to me that my testcase doesn't work on the 9.0x
+> versions, because it doesn't allow encoding 64-bit integers, but it's
+> still exploitable.
+>
 
-Summary
+Here is a different type confusion bug, originally I thought it was
+just a NULL dereference, but after seeing the patch it does look
+exploitable.
 
-This tool completely locks browser - just HTTPS, nothing else. This
-tool is extremely simple - less than 100 lines of code(Python and
-JavaScript).
+patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=f5c7555c303
+repro: clear 16#41414141 .sethalftone5
 
-Why
+Please assign a CVE for this one.
 
-Firefox Add-on Firesheep Brings Hacking to the Masses
-http://www.pcworld.com/article/208727/Firesheep_Brings_Hacking_to_the_Masses.html
-"Firesheep is basically a packet sniffer that can analyze all the
-unencrypted Web traffic"
-(Quite a while ago, it's become a "casual game")
-
-Yes, Mozilla said, "Gradually phasing out access to browser features
-for non-secure websites", in April 2015. After more than six months,
-they have done nothing useful.
-
-The Chrome team wanted the same stuff:
-https://www.chromium.org/Home/chromium-security/marking-http-as-non-secure
-Again, nothing significant has been achieved yet.
-
-And there is HTTPS Everywhere, with SO MANY rules:
-https://www.eff.org/https-everywhere/atlas/
-It's still able to access HTTP by default, but there is "Block all
-HTTP requests". The problem: nothing happens when browser tries HTTP -
-there should be warning(it's incorrect behavior) and options(try
-HTTPS, Google Cache, etc). People complained, months ago:
-https://github.com/EFForg/https-everywhere/issues/1329
-
-How
-
-PAC(Proxy auto-config) is used:
-If it's HTTPS, that's fine.
-If it's HTTP, user gets warning and options(try HTTPS, Google Cache -
-it has HTTPS, etc).
-Anything else, it goes to 0.0.0.0
-
-It's a simple tool that does one job, and does it very well.
-
-URLs
-
-https://httpsonly.github.io/
-https://github.com/httpsonly/httpsonly
-
-Best Wishes,
+Tavis.
