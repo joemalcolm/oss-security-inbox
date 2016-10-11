@@ -1,71 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/1
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B53451@EX02.corp.qihoo.net>
-Date: Thu, 8 Dec 2016 02:33:57 +0000
-From: 连一汉 <lianyihan@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [CVE-2016-9561] ffmpeg crashes on decoding MOV file 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/8
+Message-ID: <alpine.LFD.2.20.1610112245410.16258@wniryva>
+Date: Tue, 11 Oct 2016 22:47:00 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Sabrina Dubroca <sdubroca@...hat.com>
+Subject: Re: CVE-2016-7039 Kernel: net: unbounded recursion in the vlan GRO processing
 Content-Type: text/plain; charset=utf-8
 
++-- On Mon, 10 Oct 2016, P J P wrote --+
+| Linux kernel built with the 802.1Q/802.1ad VLAN(CONFIG_VLAN_8021Q) OR Virtual
+| eXtensible Local Area Network(CONFIG_VXLAN) with Transparent Ethernet
+| Bridging(TEB) GRO support, is vulnerable to a stack overflow issue. It could
+| occur while receiving large packets via GRO path; As an unlimited recursion
+| could unfold in both VLAN and TEB modules, leading to a stack corruption in
+| the kernel.
 
-Hi , I’m Lian Yihan ,a security researcher in Qihoo 360 Gear Team.
+Upstream patch: (under review)
+---------------
+  -> https://patchwork.ozlabs.org/patch/680412/
 
-I found a vulnerability in ffmpeg <= 3.2. When ffmpeg decodes a small craft MOV file which is just a few megabits, it will allocate a huge memory(about a few gigabits) and then be killed by OS .
-
-========================= target version ==========================
-
-Ffmpeg 3.2
-
-========================= target command =========================
-
-Ffmpeg -i input.mov -y 1.ts
-
-============================= key information ==========================
-
-0x00000000007ae7b6 in avformat_find_stream_info (ic=0x2173290, options=0x7ffff7f74010) at libavformat/utils.c:3377
-3377            avctx = st->internal->avctx;
-
-(gdb) p ic->nb_streams
-$3 = 26418
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Breakpoint 3, che_configure (ac=0x19ff1810, che_pos=AAC_CHANNEL_FRONT, type=1, id=0, channels=0x7fffffffd458) at libavcodec/aacdec_template.c:135
-135                 if (!(ac->che[type][id] = av_mallocz(sizeof(ChannelElement))))									// malloc a big memory on every loop.
-(gdb) p sizeof(ChannelElement)
-$4 = 547744
-
-The total memory allocated is about 26418*547744 at last.
-
-============================ my test info =========================== ffmpeg version 3.2 Copyright (c) 2000-2016 the FFmpeg developers
-  built with clang version 3.8.0 (tags/RELEASE_380/final)
-  configuration: --cc=afl-clang-fast --enable-debug=3 --disable-asm --disable-stripping --disable-optimizations --disable-shared
-  libavutil      55. 34.100 / 55. 34.100
-  libavcodec     57. 64.100 / 57. 64.100
-  libavformat    57. 56.100 / 57. 56.100
-  libavdevice    57.  1.100 / 57.  1.100
-  libavfilter     6. 65.100 /  6. 65.100
-  libswscale      4.  2.100 /  4.  2.100
-  libswresample   2.  3.100 /  2.  3.100
-[mov,mp4,m4a,3gp,3g2,mj2 @ 0x2a582b0] overread end of atom 'tkhd' by 32 bytes
-[mov,mp4,m4a,3gp,3g2,mj2 @ 0x2a582b0] stream 1, timescale not set Killed
-
------邮件原件-----
-发件人: cve-request@...re.org [mailto:cve-request@...re.org] 
-发送时间: 2016年11月23日 8:40
-收件人: 连一汉
-抄送: cve-request@...re.org
-主题: Re: [scr264871] Huge memory allocated
-
-> [VulnerabilityType Other]
-> Huge memory allocated , result in DoS of ffmpeg.
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> ffmpeg - 3.2
-
-Use CVE-2016-9561.
-
+Thank you.
 --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA [ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
