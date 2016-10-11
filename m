@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/2
-Message-ID: <CALJHwhSqW32_ii65vffOokARjT2efpK=iSfDuqVK62ay0+jB3w@mail.gmail.com>
-Date: Tue, 12 Jul 2016 18:20:18 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5389: linux kernel - challange ack information leak.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/6
+Message-Id: <20161011162708.0C94F3AE011@smtpvbsrv1.mitre.org>
+Date: Tue, 11 Oct 2016 12:27:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: marco.gra@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: linux kernel do_blockdev_direct_IO invalid memory access
 Content-Type: text/plain; charset=utf-8
 
-I've since been contacted by the researcher and have been told that
-CVE-2016-5696 was reserved by mitre for this issue.  I'd like to
-withdraw the usage of this CVE number and use CVE-2016-5696.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Sorry for any confusion.
+> BUG: KASAN: wild-memory-access on address 0005080000000000
+> https://gist.github.com/marcograss/40850adb3c599ac38e0beac31617d56b
+> 
+>   int fd = open("./hurrdurr", O_APPEND|O_RDWR|0x40);
+>   fcntl(fd, 4, 0x44000, 0, 0, 0);
+>   fallocate(fd, 0, 0x21, 0xafa6);
+>   sendfile(fd, fd, &offset, 0x800);
 
-Wade Mealing
+Use CVE-2016-8601.
 
-On Tue, Jul 12, 2016 at 2:33 PM, Wade Mealing <wmealing@...hat.com> wrote:
-> Gday,
->
-> Red Hat Product Security has been made aware of an important issue in
-> the Linux kernel's implementation of challenge ACKS as specified in
-> RFC 5961. An attacker which knows a connections client IP, server IP
-> and server port can abuse the challenge ACK mechanism
-> to determine the accuracy of a normally 'blind' attack on the client or server.
->
-> Successful exploitation of this flaw could allow a remote attacker to
-> inject or control a TCP stream contents in a connection between a
-> Linux device and its connected client/server.
->
-> * This does NOT mean that cryptographic information is exposed.
-> * This is not a Man in the Middle (MITM) attack.
->
-> This was reported to Red Hat by Yue Cao, part of the Cyber Security
-> Group in the University of California
->
-> Thanks,
->
-> Wade Mealing
-> Red Hat Product Security Team
->
-> Red Hat Bugzilla:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1354708
->
-> Patch:
->
-> https://www.mail-archive.com/netdev@vger.kernel.org/msg118677.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJX/RJEAAoJEHb/MwWLVhi2yj0P/2qJJyACywfMz3qISvkHem8T
+8vS2DrjBIC2LWMFAJZUuoI0qoA4sZ5B6MQKPEEbDE9F0GSwRWXMeddl1xjpEyhh1
+BwVYgfRfjYZIdgo6HQnlP4BiFlArELn6PZqLxbP0JqvOVrdWKrI0Snw8oyV5KoO1
++oSbgpTiYIVsxfolgbk/LSSEuv7w+1KZMQGVmEpUt5aerASDbFlOYLRnXbgThaM9
+BYjjpfYGJ7iC4F+MUwCOLH8BUw0QMQsUJ33AgjVvpCa9d/XajJN44ToBYfNghOYq
+cGKUOtB7P6abUxVYPJWFWT7Hyn3d/OBsY4tE5Rx6yTfNg7z6MFjhdzhy92QclbqA
+jJnKGvNSjUXoiBKh3SqZ/bL8pLlzVvXxkW8sjLlfIcKP8VicGRQtV7gphQnb6MXK
+2rEp1qlTbNmyvnJ6HCLa83XjuYs81ngOzU3vXJ7BDhh0V5vLvyN1hwg9b+V4kL3A
+6yrACwIWOwxyAvUaXLUn+jAO1LWIKmWYOf7ok1xbSNhRlD/x2/RON+CR05S7jEX9
+QXTibJFWYNbslLPSYhgDSR7j8lLgbRmlppl/SFP5TBDeYB+FyvtnHCdRen/XCvZQ
+mEN+1cBwmQ48w2X/gE8ZI957LCnWzJsbwFdrj9ECueVgf/P0vfE/4isxVsgbnOPe
+ALHNeskNgkbeDnKt5ymx
+=wgdQ
+-----END PGP SIGNATURE-----
