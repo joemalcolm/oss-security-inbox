@@ -1,59 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/7
-Message-ID: <e510445958b0452499da785a4d64ab4b@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:21:05 -0500
-From: <cve-assign@...re.org>
-To: <security@....org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/4
+Message-ID: <20161011150103.GA4569@kroah.com>
+Date: Tue, 11 Oct 2016 17:01:03 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: linux kernel do_blockdev_direct_IO invalid memory access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Oct 11, 2016 at 04:46:45PM +0200, Greg KH wrote:
+> On Tue, Oct 11, 2016 at 10:22:48PM +0800, Marco Grassi wrote:
+> > Hello,
+> > 
+> > I posted this to ask feedback on security at kernel dot org, but I think my
+> > mail got bounced back. Not sure if from the mailing list or from some
+> > single recipient.
+> 
+> It got there, you could have given us a few more hours to respond,
+> especially as most of the USA was still asleep, and others of us were in
+> a conference during the day in Europe. :(
 
-> A malicious guest may be able to crash the host.
+To be specific, you only gave us one hour advance notice.  Now normally
+the kernel security team is fast, but expecting a response that quickly
+is a bit disingenuous...
 
-> x86 systems are not affected.
-
-> ffdefdaa67748df7fccbc82011202724c622ca432cd121853ecab45ff4657406  xsa201-1.patch
-
-Use CVE-2016-9815.
-
-
-> 0665eb575b056f98d5330ef23f497b2b3de1a15319e2012005890a17df32a7ed  xsa201-2.patch
-
-Use CVE-2016-9816.
-
-
-> 4486d5efb59c1f1fff04a3cb697f948d5bf680e2a1c0d76cd44382ad8fa9095e  xsa201-3.patch
-> ca82c82acd51bf3cb8114d1843519c28e3df26243bd45eb712ff10ba11061b93  xsa201-3-4.7.patch
-
-Use CVE-2016-9817.
-
-
-> 1de6ddb4b5b46ae390ec4587e588c00a706f4a68365d379db7ad54234f770d48  xsa201-4.patch
-
-Use CVE-2016-9818.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYRNkEAAoJEHb/MwWLVhi2qkoP+gPLRp8bs5dFIQelz0NUnFgh
-TVuE883HifFhNiWgAk+L7D7+COlgqJcK+SChwjdCtfMTMfLUv6KRUJGExd3lXmqF
-AZ9cJr1Qfp0xGStwdyeOTXi6mHnQAdr4zw8em2rQQE72quJSesxhm9I2LOLGnWAr
-2zq5TZeAPmu27wdzkT+nakz7XWyD8ecxlypRhCn+Y1aCWi/KMME4blEsjGGW7+vU
-RoXbPyB1eF5bVhq6PQA2mnyZw8X2r02xUux0TACbNvG3SCa2DvlVVMOTitBbmmUv
-rL4ptE71hKfhV5uds7Ptf+hJNJLLBwRemjQ1cd+j7iTRC2Mb4TUOr5kKYAHaZRxi
-C25wKWjpM8957eeS7+EnY3o7XYfI0fVRLgyZNKDinuJUUAqEgtLVMyMu7coUsWCr
-Yl68yJ6je392WmQmW3fffHk4d3Rl/GnVVOQy3qnVTcLZp2McM67IwCnHDFqBMRwb
-6mGN6nc2MPSDPhZgOb5nmR44ho/JjSJoHYktudamJIEhr4WTpZuoKnUIOadQyc91
-x/WFi/IVarv06SN4OEfT/grE0ujZmBnlefdLmee5R247V5E52unS4g/z1CNqTgNm
-X+u7bfvxbxIzZf8GdtJrf98apo9mDcdwfmdRuuPSUOG13ySlKxj8SY/3NSE6o30j
-4XyiforlM4vWauldBk3V
-=OdPm
------END PGP SIGNATURE-----
+greg "even I sleep sometimes" k-h
