@@ -1,4 +1,9 @@
-Received: (qmail 23928 invoked by uid 550); 6 May 2026 23:21:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["917" "Tuesday" "11" "October" "2016" "09:03:36" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>" "22" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016101116:03:36" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct 11   22/917   " thread-indent "\"[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11751 invoked by uid 550); 11 Oct 2016 16:04:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,90 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23824 invoked from network); 6 May 2026 21:47:22 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-Organization: Gentoo
-User-Agent: mu4e 1.14.1; emacs 31.0.50
-Date: Wed, 06 May 2026 22:47:09 +0100
-Message-ID: <87mryccisi.fsf@gentoo.org>
+Received: (qmail 11733 invoked from network); 11 Oct 2016 16:04:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=HVsP69i68LC3PXrxqhgnCIIBUPve+J7krn11YFh1gYE=;
+        b=hM7Dlzkgdu2xT4XvnCnmHSAqjIxirewklKO+Oqdpqc/H425Xq1McU4YAdGZ+f6nkZu
+         HKYsYwvAGd6SESruZx/Ew+h5m36E/NJsVLElu8w+tVPbqNgRvW5Mhx2Mq2X495wtj6Uy
+         BviPsL3eMHd2gPNHzMSBW6iux/jOpHKV6BU37U1dtvd9RMSdqisUEMPBS8A98qqUTH+Z
+         OoKQCGVtcFfxNPH1Z2UbX1FTChFPtA7Mg5HmO6S0z6IQ24qEuEj1QSqGOZo46W73njrO
+         8qq/MsEdzKvmj2bwes4fbCaXCWNco/LKj+3UOKe7CT5Im+O/j2Xxgif451WtfBtJtAx6
+         59SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=HVsP69i68LC3PXrxqhgnCIIBUPve+J7krn11YFh1gYE=;
+        b=aw6IgA2npCPq1HuPskwsLGcGXN/bVKXmtcbr3JSilCf3bqfjGJDAtgLZu16bp6NVtJ
+         LHGguG8VrQMhugtKG5j/c0yLRPzUinNVlW6GYPkjZr9pT3xP+xJBzqpGEvPkkHJOLWeN
+         E00GU4goETIdj60OFG0wq72q/AvKX8luitawHQdOIoi+wJRcEZjfrlIeog80F8MyRDOI
+         jW2am1ER6HG1rmI9UNE2/1ZTbSr9rE+GJLJ1vU4lO3P6qUQ5msUlMrXWSBfQiIG/cSqJ
+         OHbMxU6wLtHvSs8duKK34YRlGTJgVZF5WssAPnrHCkTv1iZunAIUfhmc/VyqyTstLnb3
+         M5lw==
+X-Gm-Message-State: AA6/9RnY4AiM0JTwOTypLvxnM2r8Q+v0K4z84OTs0PZV7RAYKK+QMUKl2B/C56FCZ4JKIP+who6eygcDH/05ZPfK
+X-Received: by 10.31.234.194 with SMTP id i185mr3767321vkh.127.1476201837266;
+ Tue, 11 Oct 2016 09:03:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] Vulnerability fixes in Tor 0.4.9.7
+In-Reply-To: <CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>
+References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
+ <CAJ_zFkL0F5i-=14bDxN3_PDAvNqQT8PMNGmmij60DLuaHj+meA@mail.gmail.com>
+Message-ID: <CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 11 Oct 2016 09:03:36 -0700
+From: Tavis Ormandy <taviso@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+To: oss-security@lists.openwall.com
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Wed, Oct 5, 2016 at 1:12 PM, Tavis Ormandy <taviso@google.com> wrote:
+> On Wed, Oct 5, 2016 at 9:13 AM, Tavis Ormandy <taviso@google.com> wrote:
+>> bug: type confusion in .initialize_dsc_parser allows remote code execution
+>> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
+>> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
+>> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
+>
+> It was pointed out to me that my testcase doesn't work on the 9.0x
+> versions, because it doesn't allow encoding 64-bit integers, but it's
+> still exploitable.
+>
 
-=46rom diffing 0.4.9.6 and 0.4.9.7 [0]:
-```
-+Changes in version 0.4.9.7 - 2026-05-06
-+  This is a security release fixing several major bugfixes that were repor=
-ted
-+  in the past weeks. Huge thanks to everyone that reported these issues! We
-+  strongly recommend upgrading as soon as possible.
-+
-+  o Major bugfixes (cell handling):
-+    - Fix out-of-bounds read (OOB) when END, TRUNCATE and TRUNCATED cell
-+      have no reason in their payload. TROVE-2026-011. Found by Found by
-+      Brian Carpenter (geeknik). Fixes bug 41254; bugfix
-+      on 0.1.1.1-alpha.
-+
-+  o Major bugfixes (conflux):
-+    - Do not attempt or accept BEGIN_DIR via conflux legs. TROVE-2026-
-+      008. Credit to Anas Cherni from Calif.io in collaboration with
-+      Claude and Anthropic Research. Fixes bug 41243; bugfix
-+      on 0.4.8.1-alpha.
-+
-+  o Major bugfixes (conflux, relay):
-+    - Adjust conflux out-of-order queue accounting when clearing a
-+      queue. TROVE-2026-010. Found by aptupdate. Fixes bug 41251; bugfix
-+      on 0.4.8.1-alpha.
-+
-+  o Major bugfixes (pathbias):
-+    - Fix a client-side crash caused by double-close of a circuit while
-+      under circuit queue memory pressure. TROVE-2026-009. Found by
-+      cypherpunks. Fixes bug 41237; bugfix on 0.3.3.6-rc.
-+
-+  o Major bugfixes (relay):
-+    - Fix null pointer dereference when receiving a CERT cell out of
-+      order. TROVE-2026-006. Found by Fwame. Fixes bug 41240; bugfix
-+      on 0.2.4.4-alpha.
-+
-+  o Major bugfixes (relay, onion service):
-+    - Fix off-by-one out-of-bounds read if a malformed BEGIN cell is
-+      received. TROVE-2026-007. Found by Flanagan. Fixes bug 41245;
-+      bugfix on 0.2.4.7-alpha.
-+
-+  o Minor features (fallbackdir):
-+    - Regenerate fallback directories generated on May 06, 2026.
-+
-+  o Minor features (geoip data):
-+    - Update the geoip files to match the IPFire Location Database, as
-+      retrieved on 2026/05/06.
-+
-```
+Here is a different type confusion bug, originally I thought it was
+just a NULL dereference, but after seeing the patch it does look
+exploitable.
 
-The referenced bugs are private, so no more details are available
-yet. There were several recent other security releases too for Tor.
+patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=f5c7555c303
+repro: clear 16#41414141 .sethalftone5
 
-[0] https://gitlab.torproject.org/tpo/core/tor/-/blob/tor-0.4.9.7/ReleaseNo=
-tes#L5
+Please assign a CVE for this one.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn7tt0bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkPKh
-AP46pKRF1edKSWvY3qtsAwE7UR/+syzn89p2pJvctTegkgEA3HXyrPpnt8RkHokM
-7MK0JOfSncxKYe+BSIppBKXsgwg=
-=455r
------END PGP SIGNATURE-----
---=-=-=--
+Tavis.
