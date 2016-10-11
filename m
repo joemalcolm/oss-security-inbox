@@ -1,4 +1,9 @@
-Received: (qmail 22462 invoked by uid 550); 27 Oct 2023 13:25:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["709" "Tuesday" "11" "October" "2016" "17:01:03" "+0200" "Greg KH" "greg@kroah.com" "<20161011150103.GA4569@kroah.com>" "17" "Re: [oss-security] linux kernel do_blockdev_direct_IO invalid memory access" nil nil nil "10" "2016101115:01:03" "[oss-security] linux kernel do_blockdev_direct_IO invalid memory access" (number mark "U       greg@kroah.c Oct 11   17/709   " thread-indent "\"Re: [oss-security] linux kernel do_blockdev_direct_IO invalid memory access\"\n") "<20161011144645.GB3606@kroah.com>" ("<CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>" "<20161011144645.GB3606@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32685 invoked by uid 550); 11 Oct 2016 15:01:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,243 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22429 invoked from network); 27 Oct 2023 13:25:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1698413118; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=X4tVCbrXbDdPCqytCYZ/bwaqLKRyUA4vFn0zrqW4e6U=;
-	b=QCveds382Cv4ox2Y2yGWL38yZjZBuy8iylOpqMj18ks0HV0FZMlHktn1GMIcJFMJmZVsIY
-	qKB+4KCSW+ZQhfCFDwLn2TdfWsIDjjkhYzaESvYELeedLa1WdHNSAVRhyxUjPkvV9pqhT7
-	BRtzQAfeqduCQ1bEEu6ZhTl1dq85d/E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1698413118;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=X4tVCbrXbDdPCqytCYZ/bwaqLKRyUA4vFn0zrqW4e6U=;
-	b=8LecchxH7NGXAxdTehDXpGO+GYAusjuGE43VOWmNzUIRtYoJn7w6Zu1avdFCU0MVDByAGq
-	Vp63cS0eenNBfhCQ==
-Date: Fri, 27 Oct 2023 15:25:16 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 32664 invoked from network); 11 Oct 2016 15:01:07 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=7+u33TEyVhRS2AThjUMTx+FfF7w=; b=Gxi0H
+	3wPAkMXmq8YDgTKjZueTYcVSXlYzhIHs0r32CW6wQybuAEej/rPPt7U82mglMoAT
+	AHZOnSTSsxSAPh1V3jlaSAA5VzKJphQEshSebLgyal+wXxe2U3JtmYXZgVc4Usxi
+	xhfkGFp09NsxuYjYFI1rWrAFD45lhiRvj7ItaA=
+X-Sasl-enc: esH2oAUIUAWY0M5fnq08CFIuvhkrG0qkqUSVfWolQlrC 1476198055
+Date: Tue, 11 Oct 2016 17:01:03 +0200
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ZTu6QIy-6vMegQf4@kasco.suse.de>
+Cc: cve-assign@mitre.org
+Message-ID: <20161011150103.GA4569@kroah.com>
+References: <CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>
+ <20161011144645.GB3606@kroah.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="2MHyqmK0LYxClMby"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] Security issues in passim local caching server
+In-Reply-To: <20161011144645.GB3606@kroah.com>
+User-Agent: Mutt/1.7.1 (2016-10-04)
+Subject: Re: [oss-security] linux kernel do_blockdev_direct_IO invalid memory
+ access
 
---2MHyqmK0LYxClMby
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 27 Oct 2023 15:25:16 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: Security issues in passim local caching server
+On Tue, Oct 11, 2016 at 04:46:45PM +0200, Greg KH wrote:
+> On Tue, Oct 11, 2016 at 10:22:48PM +0800, Marco Grassi wrote:
+> > Hello,
+> > 
+> > I posted this to ask feedback on security at kernel dot org, but I think my
+> > mail got bounced back. Not sure if from the mailing list or from some
+> > single recipient.
+> 
+> It got there, you could have given us a few more hours to respond,
+> especially as most of the USA was still asleep, and others of us were in
+> a conference during the day in Europe. :(
 
-Hello list,
+To be specific, you only gave us one hour advance notice.  Now normally
+the kernel security team is fast, but expecting a response that quickly
+is a bit disingenuous...
 
-this is a report about findings in the passim [1] local caching server.
-
-1) Introduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Passim is a relatively new project for a local caching server that helps
-distributing publicly available files in local networks to save network
-bandwidth. It is a dependency of new fwupd [2] releases, which is why it
-has come to our attention.
-
-Passim consists of a daemon component running as a separate passim user
-and group. The daemon offers a local D-Bus interface over which only the
-root user may publish or unpublish files on the network. Non-root users
-may only inspect the available items via D-Bus.
-
-Furthermore the daemon announces all cached items via the Ahavi
-discovery protocol. For retrieval of individual items a small libsoup
-based HTTP server is integrated into the daemon, listening on port
-25000.
-
-A small command line programm `passim` allows to interact with the
-daemon's D-Bus interface.
-
-The findings in this report are based on the upstream release tag 0.1.3.
-
-2) Findings
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2.1) Remote DoS Against `passimd` by Triggering NULL Pointer Dereference
-------------------------------------------------------------------------
-
-When accessing a URL different from the root "/" and without passing any
-parameters "?" then a segmentation fault is the result in passim-server.c:7=
-51
-(null pointer dereference, because there is no request).
-
-Example:
-
-    root# curl -v -k 'https://localhost:27500/myfile'
-    root# journalctl -u passim.service | tail -n 5
-    Oct 25 12:45:24 mybox passimd[5091]: accepting HTTP/1.1 GET /myfile  fr=
-om ::1:39278 (loopback)
-    Oct 25 12:45:24 mybox passimd[5091]: g_strsplit: assertion 'string !=3D=
- NULL' failed
-    Oct 25 12:45:29 mybox systemd[1]: passim.service: Main process exited, =
-code=3Ddumped, status=3D11/SEGV
-    Oct 25 12:45:29 mybox systemd[1]: passim.service: Failed with result 'c=
-ore-dump'.
-
-Upstream has library settings in effect to abort on failing assertions
-instead of trying to continue, to prevent possible memory access errors
-from becoming exploitable.
-
-This issue is fixed via upstream commit 1f7bcea [3].
-
-2.2) Serving Static Files from a Directory owned by Unprivileged Users
-----------------------------------------------------------------------
-
-Passim supports the configuration of static directories on the local
-file system, whose content will be processed and published upon startup.
-
-Consider a directory controlled by 'nobody':
-
-    root# cat /etc/passim.d/nobody.conf
-    [passim]
-    Path=3D/var/lib/nobody/passim
-
-There's two things that I found problematic in such a scenario.
-
-### a) Placing Inaccessible Files in the Directory
-
-    root# sudo -u nobody -g nobody /bin/bash
-    nobody$ mkdir /var/lib/nobody/passim
-    nobody$ touch /var/lib/nobody/passim/somefile
-    nobody$ chmod 000 /var/lib/nobody/passim/somefile
-
-This will prevent future starts of `passimd`:
-
-    root# systemctl restart passim.service
-    Job for passim.service failed because the control process exited with e=
-rror code.
-    See "systemctl status passim.service" and "journalctl -xeu passim.servi=
-ce" for details.
-    root# journalctl -u passim.service | tail -n 6
-    Oct 25 12:56:58 mybox passimd[5330]: scanning /var/lib/nobody/passim
-    Oct 25 12:56:58 mybox passimd[5330]: failed to scan sysconfpkg director=
-y: Error opening file /var/lib/nobody/passim/somefile: Permission denied
-    Oct 25 12:56:58 mybox systemd[1]: passim.service: Main process exited, =
-code=3Dexited, status=3D1/FAILURE
-    Oct 25 12:56:58 mybox systemd[1]: passim.service: Failed with result 'e=
-xit-code'.
-    Oct 25 12:56:58 mybox systemd[1]: Failed to start Local Caching Server.
-
-This opens a local DoS vector against passimd for the unprivileged user
-that owns the directory. This is also valid for other situations like a
-FIFO placed there, broken symlinks or symlinks to inaccessible locations
-as well as race conditions (time of readdir() vs. time of open()).
-
-This has at least partially been addressed by upstream commit f4c34bd3.
-
-### b) Placing Symlinks to Otherwise Inaccessible Data in the Directory
-
-Although `passimd` runs with low privileges by default there are some
-interesting files that a local attacker might want to get their hands
-on. Since `passimd` follows symlinks in the directory one could try to
-"publish" files from /proc/<pidof passimd> by placing symlinks. This is
-somewhat difficult though, since a race condition has to be won (the PID
-of a starting `passimd` needs to be known to place a proper symlink).
-Also there are not that many interesting files in there I believe. E.g.
-/proc/<pid>/mem cannot be shared this way, since it cannot be read
-sequentially.
-
-A much simpler attack is to publish the SSL private key of `passimd` though:
-
-    root# sudo -u nobody -g nobody /bin/bash
-    nobody$ mkdir /var/lib/nobody/passim
-    nobody$ ln -s /var/lib/passim/secret.key /var/lib/nobody/passim/secret
-
-    root# systemctl restart passim.service
-    root# passim dump
-    passimd is running
-    1c69e7e4d7b7ed655eafa94942a5ef04f7c7688a0519be387133176154f58fe6 secret=
- size:2.5=A0kB
-    root# sha256sum /var/lib/passim/secret.key
-    1c69e7e4d7b7ed655eafa94942a5ef04f7c7688a0519be387133176154f58fe6  /var/=
-lib/passim/secret.key
-
-=46rom here on the local attacker can simply download the now shared
-"secret key" from localhost.
-
-It has to be noted that this SSL private key has no security purpose in
-passimd but only serves to prevent network traffic security scanners
-from raising alarm over unencrypted traffic.
-
-Thus currently there is no known information leak using this attack that
-has attacker value. It is still crossing of a security boundary and
-could be problematic in the future.
-
-Upstream issue #26 [5] deals with this issue but is not yet completely
-fixed, due to a remaining race condition.
-
-Bugfix Release and Upstream Reporting
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-I reported these issues to the upstream author on 2023-10-25. No
-coordinated disclosure was desired so bugfixes have been and still are
-developed publicly over the GitHub issue tracker.
-
-There are some disagreements with upstream about whether these issues
-are qualifying as security issues. I believe they are. Due to this no
-CVEs have been assigned as of now.
-
-Passim is packaged, to my knowledge, in Fedora Linux and Arch Linux
-already. Otherwise it should not be widespread.
-
-Upstream is working on a new release of Passim containing fixes for
-these and some other non-security issues I reported as well.
-
-References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1]: https://github.com/hughsie/passim
-[2]: https://github.com/fwupd/fwupd
-[3]: https://github.com/hughsie/passim/issues/25
-[4]: https://github.com/hughsie/passim/commit/4cba26103daab69aedf584ae3a69b=
-a48f4c34bd3
-[5]: https://github.com/hughsie/passim/issues/26
-
-Cheers
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
-
---2MHyqmK0LYxClMby
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmU7uj0ACgkQFMQFyXGS
-NVNNmg//Vpp3AXgJ6S61Graj3f/WrFi6lTJsAAR+uAWK7xA6j2nKt+sLGQ+sGeuc
-euJPC2q8oxnwzCuV5q9Yfi01Vs28p/V1tSLUvPkRfn2wXYh2mQPzK31eWF0ba+qf
-Dizi9rp3qpBjl/8bs0EMcxhJNP8lyzXprwOkPZlcDRxQt5kPUNhY3i6QeQaJ6gpW
-JIXvzjU3g1aqmWxuC5Mayxpn4icGfPVSPDTxqWLteVpLKuNeYl7DL0QV10QEpOpS
-sornQfepMhAlOlFcw+kFCYsixQd6WBsedrQUmw51ZxxkGWj8ijbkpGatjKHFVVdj
-StLCzTOecsZZ4kASR9YYPKWafR30GJEw/L8AARVMKogdl4RwLqaeoXaRRGSZjVUE
-YONEVyo0ncCmla94RupoYCPM2WIzTt/T8tskMBYMrpKndZ6Q4Ny2aQ/skFNrXUwo
-E3T5N2/ZT/xADNEkmc6c8/cT5v8E657b+0SzVWceiz60aqfbEEcGZQ+e4Y+ICDZ0
-ELyY7PJ9o7raG0xEx2yqIP6WaK5W+HDWPuBBIufsj5CtIbjzG5TZF8o2pTCGh2MQ
-FB9nWYI8lCjVlMPr9jM5PDBiWUr1QbwBJo4m3V1OptAAlBCcqu8rFdMimzwckSvU
-6qlIPQeS2qJfMCXpdePoBOwStOAjRmiFqBAtcmDfL014P3Kq+t8=
-=b3u7
------END PGP SIGNATURE-----
-
---2MHyqmK0LYxClMby--
+greg "even I sleep sometimes" k-h
