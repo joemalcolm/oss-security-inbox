@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1294" "Tuesday" "19" "May" "2015" "11:01:48" "+0200" "Vasyl Kaigorodov" "vkaigoro@redhat.com" "<20150519090148.GB24390@mail.corp.redhat.com>" "41" "[oss-security] CVE request: python-tornado: XSRF cookie allows side-channel attack against TLS (BREACH)" nil nil nil "5" "2015051909:01:48" "[oss-security] CVE request: python-tornado: XSRF cookie allows side-channel attack against TLS (BREACH)" (number mark "        vkaigoro@red May 19   41/1294  " thread-indent "\"[oss-security] CVE request: python-tornado: XSRF cookie allows side-channel attack against TLS (BREACH)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1466" "Tuesday" "11" "October" "2016" "12:28:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161011162833.2F1006C1338@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Cc:" nil nil "10" "2016101116:28:33" "[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        cve-assign@m Oct 11   37/1466  " thread-indent "\"[oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>" ("<CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17775 invoked by uid 550); 19 May 2015 09:01:59 -0000
+Received: (qmail 7895 invoked by uid 550); 11 Oct 2016 16:28:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17746 invoked from network); 19 May 2015 09:01:58 -0000
-Message-ID: <20150519090148.GB24390@mail.corp.redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="VrqPEDrXMn8OVzN4"
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Date: Tue, 19 May 2015 11:01:48 +0200
-From: Vasyl Kaigorodov <vkaigoro@redhat.com>
+Received: (qmail 7875 invoked from network); 11 Oct 2016 16:28:44 -0000
+In-Reply-To: <CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>
+Message-Id: <20161011162833.2F1006C1338@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Tue, 11 Oct 2016 12:28:33 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: python-tornado: XSRF cookie allows side-channel attack
- against TLS (BREACH)
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+To: taviso@google.com
 
---VrqPEDrXMn8OVzN4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Version 3.2.2 of Tornado fixes BREACH attach possibility:
+> Here is a different type confusion bug, originally I thought it was
+> just a NULL dereference, but after seeing the patch it does look
+> exploitable.
+> 
+> id: http://bugs.ghostscript.com/show_bug.cgi?id=697203
+> patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=f5c7555c30393e64ec1f5ab0dfae5b55b3b3fc78
+> repro: clear 16#41414141 .sethalftone5
+> 
+> Please assign a CVE for this one.
 
-https://github.com/tornadoweb/tornado/commit/1c36307463b1e8affae100bf938694=
-8e6c1b2308
+Use CVE-2016-8602.
 
-References:
-https://bugzilla.novell.com/show_bug.cgi?id=3D930362
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1222816
-
-Can a CVE be assigned for this please?
-
-Thanks.
---=20
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-Free/Busy status: https://url.corp.redhat.com/vk-free-busy-status
-
-Come talk to Red Hat Product Security at the Summit!
-Red Hat Summit 2015 - https://www.redhat.com/summit/
-
---VrqPEDrXMn8OVzN4
-Content-Type: application/pgp-signature
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVWvv8AAoJECF7+fyrtugozPAIAJc5/fELdWQzkg0lqFy5nHeP
-FpX05k0Yu43WRPgb1/t0iNyokUX7xwo1wYAnIE0Hf3tBA4kqyscwZYaVFneMUWA5
-+O4zKS2LHL3Bplv913V/octT4AstjvX9/yKv9erm96GERfKPXotOZrMvXE0z1Ypj
-luYlt8LInuguLjsRdWrUdZAromrJK24Kci1EeokkJWnrAOo6mPHVutqh7JDDcnY0
-06EvJyjn6BwMZ3X9gkNYqdTAhQPay6eVfBXnXuGlz6DZGYl/ytd13rN6Xd2KDrRW
-/khUGRCNgqG+XsCodEQKXx42R0q1IFQ1RQotZBUhMtO5jLv7iqxSgLKr9f17U74=
-=u6QG
+iQIcBAEBCAAGBQJX/RJMAAoJEHb/MwWLVhi2eRAP/0pY2yag9OtfjcTBqJ30efgV
+pdWeaaGnY/V793JA8TuygA4GfWlutx7wEHaIsO+FR4Ur3YD63r4Ru3dkMk5w6nHR
+GAKfKseZDGPx4vYHqmvMULmwmh97WkBZXgwSFmIP2Z7qBnXzTb0LphhvQLymZTDu
+gc/B8hlTRbjVKZk2nwq5VajG5I6zY776Ok0fN6TSkVkrN6QWTdzOHr7XsNw33fks
+a01IqHrb3kMeaOOTyyrnm1nCehz3yF7uqBJb7PzY28FFqeX6rKqB3hulkB+7Ulnn
+7txIzxqdeHJHJjAG3Z0drfu0yoDcXXFl6aVSy/+2mxPs5H+CyTHzzmCkWdWDlw4y
+6sJahKu+A/Q0yxsfqmFqc0wXQXv0/Db8hbaP5ZPa1Io9Hp3VqM/ZmGt0elsFWFq1
+QcKV3TF35PfNJeR/5EuVBUCQLH017pA4ozT90qPYDTFAcbUZMH1PBlcNheLz10M4
+XXFsaocBYbKDxcr22/cWiUWOTefDgkBdFTWzg5RxVLAEcY2/ov1KdwRmRF9O1X+h
+z/bwoD/HHbt3xTwoZ7zZuj8qK1hli2aoiIk4sGekwD0lmmbECyL1kSYpZORAXLG9
+3adzKdoIQ+31rrubIoJbOrZVtv0O+/7ZfIAcJVMytz3seQH7QYP6BEgVGlH34v7d
+YgyQlr15jLLG5YrXRhQN
+=YVnm
 -----END PGP SIGNATURE-----
-
---VrqPEDrXMn8OVzN4--
