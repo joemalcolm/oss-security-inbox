@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1200" "Thursday" "12" "May" "2016" "18:09:46" "+0800" "WinsonLiu" "stackexploit@gmail.com" "<CAAejdtx6_HPJ3gjhbraHDOW76EbnH0PZzxVLr5S1qYf=Hwsfsg@mail.gmail.com>" "40" "Re: [oss-security] Re: CVE Request - OpenJPEG: Security Fixes" nil nil nil "5" "2016051210:09:46" "[oss-security] Re: CVE Request - OpenJPEG: Security Fixes" (number mark "U       stackexploit May 12   40/1200  " thread-indent "\"Re: [oss-security] Re: CVE Request - OpenJPEG: Security Fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["821" "Tuesday" "11" "October" "2016" "14:11:59" "+0200" "Ludovic =?utf-8?B?Q291cnTDqHM=?=" "ludo@gnu.org" "<878ttvw0ds.fsf@gnu.org>" "21" "[oss-security] CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification" nil nil nil "10" "2016101112:11:59" "[oss-security] CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification" (number mark "U       ludo@gnu.org Oct 11   21/821   " thread-indent "\"[oss-security] CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1383 invoked by uid 550); 12 May 2016 11:24:18 -0000
+Received: (qmail 19598 invoked by uid 550); 11 Oct 2016 13:03:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26017 invoked from network); 12 May 2016 10:09:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=xDdl603R6iGIsbjEWY/04YFt/2ZH0Npl6Z68VvZZtao=;
-        b=kzPaH+eRQJwiqAVBEnLOA9x5K7DIl5L+SYLgrtNgu4yMFNGyqF7mrdW8TOkMLvVa+I
-         obcDdfmr9OKoSaJ5F/SBbP3YerPbnEW7D6picWRGBWGY8940DyR6CY4y0BFNVWqSQZG/
-         ShQIZ5EK7/1sEHUYJBtWZ4fZ5L4wytDpxUoBs8SfQ4piE70m0oCYzSteU+nFB5bX3lRc
-         ounwju9wlbyc/x8R4YFcUkbnwhjXEnhNwQkbHfM5/m0srEWmiavtfq98PVndGf6WPywo
-         SIJPkhquZu1JzVfLxn13zE0urI2ApZmi1MfOqM2hLb1CmWLBkcw+n7Q9Sw+TEU4w6nxO
-         xb5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=xDdl603R6iGIsbjEWY/04YFt/2ZH0Npl6Z68VvZZtao=;
-        b=OkCGulCVPBMk93kj4lc21ndTKQoDhhkmkeVD770CIoCrcse08F9/YthzoiLFsqhEbt
-         OyDnfxKvQ6AsWXiXKQ8kWo7c6wX27BE94uRkxyt5metKFApiaC+7pxZOd70f97+nxrmw
-         SuqP46JtGDdb2iENXfFREaals0YJwnW1CmDOa9PIY80yF0AVFTFIHqyETzn6Eidpjmdm
-         6uum7p1Du5ciqkIdAgbLNpKiQZBXYviCsaxTnt5qNEqW50o+3zbD/2YWff4baDijK85r
-         ttL5CTRDU3j5sT/f8d1/k25bi9P9pk/nD0Dah2sav9efCu4v2vPmypxdXNJ/HLUMa8HW
-         ea8g==
-X-Gm-Message-State: AOPr4FVKjux/2UHSp1K01fSdYf068EbtkfCOkMOpaUn4AL2P+tAj8HXAMmQmGiMYvtAgFkoKwWR9cS5co4L6YA==
-MIME-Version: 1.0
-X-Received: by 10.107.132.194 with SMTP id o63mr6348976ioi.118.1463047786446;
- Thu, 12 May 2016 03:09:46 -0700 (PDT)
-Date: Thu, 12 May 2016 18:09:46 +0800
-Message-ID: <CAAejdtx6_HPJ3gjhbraHDOW76EbnH0PZzxVLr5S1qYf=Hwsfsg@mail.gmail.com>
-From: WinsonLiu <stackexploit@gmail.com>
+Received: (qmail 30175 invoked from network); 11 Oct 2016 12:12:40 -0000
+From: ludo@gnu.org (Ludovic =?utf-8?Q?Court=C3=A8s?=)
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a113ff55499c73d0532a25bf0
-Subject: Re: [oss-security] Re: CVE Request - OpenJPEG: Security Fixes
+CC: Andy Wingo <wingo@pobox.com>, Mark H Weaver <mhw@netris.org>
+X-URL: http://www.fdn.fr/~lcourtes/
+X-Revolutionary-Date: 20 =?utf-8?Q?Vend=C3=A9miaire?= an 225 de la
+ =?utf-8?Q?R=C3=A9volution?=
+X-PGP-Key-ID: 0x090B11993D9AEBB5
+X-PGP-Key: http://www.fdn.fr/~lcourtes/ludovic.asc
+X-PGP-Fingerprint: 3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5
+X-OS: x86_64-unknown-linux-gnu
+Date: Tue, 11 Oct 2016 14:11:59 +0200
+Message-ID: <878ttvw0ds.fsf@gnu.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.2.x-3.x [generic]
+X-Received-From: 2001:4830:134:3::e
+Subject: [oss-security] CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification
 
---001a113ff55499c73d0532a25bf0
-Content-Type: text/plain; charset=UTF-8
+The =E2=80=98mkdir=E2=80=99 procedure of GNU=C2=A0Guile, an implementation =
+of the Scheme
+programming language, temporarily changed the process=E2=80=99 umask to zer=
+o.
+During that time window, in a multithreaded application, other threads
+could end up creating files with insecure permissions.  For example,
+=E2=80=98mkdir=E2=80=99 without the optional =E2=80=98mode=E2=80=99 argumen=
+t would create directories
+as 0777.
 
->
-> Hi,
->
->
->> Some security issues of OpenJPEG have been fixed. Please consider
->> assigning CVE numbers to them.
->
->
->> 2. Issue 775
->
-> OpenJPEG Out-of-Bounds Access in function opj_tgt_reset of tgt.c
->
-> Fixed via
->> https://github.com/uclouvain/openjpeg/commit/1a8318f6c24623189ecb65e049267c6f2e005c0e
->
->
-> Is that a different issue than CVE-2016-1924?
->
+This can be worked around by always passing the optional =E2=80=98mode=E2=
+=80=99 argument
+to Guile=E2=80=99s =E2=80=98mkdir=E2=80=99 procedure.
 
-Hi Moritz,
+This will be fixed in Guile=C2=A02.0.13, to be released shortly.
 
-You are right. Issue 775 was a duplicate of CVE-2016-1924.
+Upstream bug report: http://bugs.gnu.org/24659
+Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=3Dstable-2.0&id=
+=3D245608911698adb3472803856019bdd5670b6614
 
-I didn't notice that limingxing has been reported this issue (reported at
-http://seclists.org/oss-sec/2016/q1/128 and assigned CVE-2016-1924). I have
-tested the proof-of-concept file supplied by limingxing and confirmed that
-issue 775 was a duplicate of CVE-2016-1924. It seems that limingxing did
-not report it to the official developers because I could not find any
-information about this issue on GitHub and the official developers did not
-fix it for a long time. I thought this was a new issue and reported it to
-them after I did some fuzz testing. Anyway, this issue has been fixed by
-the official developers now.
-
-Regards,
-Ke Liu of Tencent's Xuanwu LAB
-
---001a113ff55499c73d0532a25bf0--
+Ludo=E2=80=99.
