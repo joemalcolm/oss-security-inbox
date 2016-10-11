@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/11
-Message-ID: <CANO=Ty12XVisk8s8SrAuQoPeNtt2Q=hGWN9bAg0XGZDDMCkMMA@mail.gmail.com>
-Date: Thu, 14 Jan 2016 12:53:53 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: CVE request for Kubernetes api server: build config to a strategy that isn't allowed by policy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/3
+Message-ID: <20161011144645.GB3606@kroah.com>
+Date: Tue, 11 Oct 2016 16:46:45 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: linux kernel do_blockdev_direct_IO invalid memory access
 Content-Type: text/plain; charset=utf-8
 
-Ping, Mitre can I get a CVE here please? Also for the other Kubertes issue.
+On Tue, Oct 11, 2016 at 10:22:48PM +0800, Marco Grassi wrote:
+> Hello,
+> 
+> I posted this to ask feedback on security at kernel dot org, but I think my
+> mail got bounced back. Not sure if from the mailing list or from some
+> single recipient.
 
-On Tue, Jan 12, 2016 at 11:04 AM, Kurt Seifried <kseifried@...hat.com>
-wrote:
+It got there, you could have given us a few more hours to respond,
+especially as most of the USA was still asleep, and others of us were in
+a conference during the day in Europe. :(
 
-> CVE request (one is the problem, the other the fix):
->
-> https://github.com/openshift/origin/issues/6556
-> https://github.com/openshift/origin/pull/6576
->
-> You can modify a build so that it escalates privileges when built, you
-> can't build it yourself (that fails) but if the imagestream trigger is used
-> then it would build and you'd have escalated privileges.
->
-> --
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
->
+> Anyway reposting here,
+> 
+> the following program will cause a invalid memory access
+> 
+> BUG: KASAN: wild-memory-access on address 0005080000000000
+> 
+> See this link for the full sanitizer report, stacktrace and trigger poc
+> 
+> https://gist.github.com/marcograss/40850adb3c599ac38e0beac31617d56b
+> 
+> tested on current master, with KASAN.
 
+Can you take this to the linux-fsdevel mailing list now that you have
+made it public?  That's the best place to resolve this.
 
+thanks,
 
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+greg k-h
