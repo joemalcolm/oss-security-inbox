@@ -1,4 +1,9 @@
-Received: (qmail 21751 invoked by uid 550); 4 Feb 2024 16:33:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3184" "Wednesday" "12" "October" "2016" "15:26:23" "+0200" "Sysdream Labs" "labs@sysdream.com" "<bba41ca7-d5c1-bb07-47fc-dcec4898e81f@sysdream.com>" "102" "[oss-security] CVE-2016-7980: SPIP 3.1.2 Exec Code Cross-Site Request Forgery" nil nil nil "10" "2016101213:26:23" "[oss-security] CVE-2016-7980: SPIP 3.1.2 Exec Code Cross-Site Request Forgery" (number mark "U       labs@sysdrea Oct 12  102/3184  " thread-indent "\"[oss-security] CVE-2016-7980: SPIP 3.1.2 Exec Code Cross-Site Request Forgery\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26576 invoked by uid 550); 12 Oct 2016 13:26:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,228 +12,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21620 invoked from network); 4 Feb 2024 16:32:54 -0000
-Date: Sun, 4 Feb 2024 17:35:20 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 26552 invoked from network); 12 Oct 2016 13:26:37 -0000
+X-Virus-Scanned: amavisd-new at sysdream.com
 To: oss-security@lists.openwall.com
-Cc: Qualys Security Advisory <qsa@qualys.com>,
-	Adhemerval Zanella <adhemerval.zanella@linaro.org>
-Message-ID: <20240204163520.GA20987@openwall.com>
-References: <20240130183915.GB16546@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="FL5UXtIhxfXey3p5"
-Content-Disposition: inline
-In-Reply-To: <20240130183915.GB16546@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Out-of-bounds read & write in the glibc's qsort()
+Cc: fulldisclosure@seclists.org, spip-team-owner@rezo.net
+From: Sysdream Labs <labs@sysdream.com>
+Message-ID: <bba41ca7-d5c1-bb07-47fc-dcec4898e81f@sysdream.com>
+Date: Wed, 12 Oct 2016 15:26:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="LsAR9hgoXJSaputKSDTqJlwXTTSUbIH2h"
+Subject: [oss-security] CVE-2016-7980: SPIP 3.1.2 Exec Code Cross-Site Request Forgery
 
---FL5UXtIhxfXey3p5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--LsAR9hgoXJSaputKSDTqJlwXTTSUbIH2h
+Content-Type: multipart/mixed; boundary="9IO1isMMif4xlirCn263FJBpVvtTxCi6g"
+From: Sysdream Labs <labs@sysdream.com>
+To: oss-security@lists.openwall.com
+Cc: fulldisclosure@seclists.org, spip-team-owner@rezo.net
+Message-ID: <bba41ca7-d5c1-bb07-47fc-dcec4898e81f@sysdream.com>
+Subject: CVE-2016-7980: SPIP 3.1.2 Exec Code Cross-Site Request Forgery
 
-Hi,
+--9IO1isMMif4xlirCn263FJBpVvtTxCi6g
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Great findings and excellent quality write-up from Qualys, as usual.
+## SPIP 3.1.2 Exec Code Cross-Site Request Forgery (CVE-2016-7980)
 
-On Tue, Jan 30, 2024 at 06:39:37PM +0000, Qualys Security Advisory wrote:
-> We therefore decided to assess the robustness of the glibc's qsort()
-> implementation, by calling it with a nontransitive comparison function:
-> 
-> ------------------------------------------------------------------------
->   1 #include <limits.h>
->   2 #include <stdlib.h>
->   3 #include <sys/time.h>
->   4 
->   5 static int
->   6 cmp(const void * const pa, const void * const pb)
->   7 {
->   8     const int a = *(const int *)pa;
->   9     const int b = *(const int *)pb;
->  10     return (a - b);
->  11 }
->  12 
->  13 int
->  14 main(const int argc, const char * const argv[])
->  15 {
->  16     if (argc != 2) return __LINE__;
->  17     const size_t nmemb = strtoul(argv[1], NULL, 0);
->  18     if (nmemb <= 0 || nmemb >= (1<<28)) return __LINE__;
->  19 
->  20     int * const pcanary1 = calloc(1 + nmemb + 1, sizeof(int));
->  21     if (!pcanary1) return __LINE__;
->  22     int * const array = pcanary1 + 1;
->  23     int * const pcanary2 = array + nmemb;
->  24 
->  25     struct timeval tv;
->  26     if (gettimeofday(&tv, NULL)) return __LINE__;
->  27     srandom((tv.tv_sec << 16) ^ tv.tv_usec);
->  28 
->  29     const int canary1 = *pcanary1 = (random() << 16) ^ random();
->  30     const int canary2 = *pcanary2 = (random() << 16) ^ random();
->  31     array[random() % nmemb] = INT_MIN;
->  32 
->  33     qsort(array, nmemb, sizeof(int), cmp);
->  34     if (*pcanary1 != canary1) abort();
->  35     if (*pcanary2 != canary2) abort();
->  36     return 0;
->  37 }
+### Product Description
 
-I've attached an enhanced version of the above program to this message.
+SPIP is a publishing system for the Internet, which put importance on colla=
+borative working, multilingual environments and ease of use. It is free sof=
+tware, distributed under the GNU/GPL licence.
 
-> We therefore decided to assess the robustness of the glibc's quick sort
-> (instead of its merge sort, which was clearly not crashing), by forcing
-> qsort() to call _quicksort(). Locally, forcing the malloc() at line 221
-> to fail is very easy: we simply execute our program with a low RLIMIT_AS
-> ("The maximum size of the process's virtual memory", man setrlimit); and
-> this works even when executing a SUID-root program. So we executed our
-> program in the following loop instead:
-> 
-> 
-> ------------------------------------------------------------------------
-> $ while true; do n=$((RANDOM*64+RANDOM+1)); prlimit --as=$((n*4/2*3)) ./qsort $n; done
-> Aborted (core dumped)
+### Vulnerability Description
 
-While we have to do it externally with "prlimit" or such when attacking
-an existing program, for our own testing we can instead set RLIMIT_AS
-right from the test program.  This eliminates the need for choosing a
-value for RLIMIT_AS that's barely sufficient for the program to work,
-but not sufficient for glibc to choose merge sort.  In the attached
-program, I simply set RLIMIT_AS to 0 right before the call to qsort(),
-which lets the program continue running (even though it's already beyond
-limit) but makes any further memory allocations from the kernel fail.
+The vulnerable request to `valider_xml` (see: *SPIP 3.1.2 Template Compiler=
+/Composer PHP Code Execution - CVE-2016-7998*) is vulnerable to Cross-Site =
+Request Forgery, allowing the execution of the CVE-2016-7998 attack by tric=
+king an administrator to open the malicious link.
 
-I also added a test that the sort order is correct when qsort() is
-called with a proper, transitive comparison function.
+**Access Vector**: remote
 
-This makes me wonder whether/how glibc upstream tests quick sort, given
-that without the RLIMIT_AS trick or such that code is not reached.  If
-glibc tests do not include this yet (I didn't see it), then maybe they
-should make use of the "set RLIMIT_AS to 0" trick in a bundled test?
-Searching the glibc tree for RLIMIT_AS now, I see some tests do set it
-for similar reasons, but none of them are for qsort() and they use
-various non-zero values.
+**Security Risk**: high
 
-> To patch these out-of-bounds memory accesses in _quicksort(), a simple
-> check "tmp_ptr > base_ptr &&" can be added in front of the cmp() call at
-> line 227 (of course this does not magically result in a correctly sorted
-> array if cmp() is nontransitive, but at least it does not result in a
-> memory corruption anymore).
+**Vulnerability**: CWE-352
 
-I confirmed (with the attached test program) that this one-line change
-indeed makes qsort() robust also when applied on top of RHEL9's patched
-glibc 2.34, as found in Rocky Linux 9 (patch attached).  We now use this
-in Rocky Linux SIG/Security package of glibc for EL9:
+**CVSS Base Score**: 8.3 (High)
 
-https://sig-security.rocky.page/packages/glibc/
+**CVE-ID**: CVE-2016-7980
 
-> In fact, while drafting this advisory, we discovered that such a check
-> ("tmp_ptr != base_ptr &&") has already been added to the glibc's master
-> branch (which will become glibc 2.39 in February 2024), by the following
-> commit ("stdlib: Fix array bounds protection in insertion sort phase of
-> qsort"):
-> 
->   https://sourceware.org/git?p=glibc.git;a=commit;h=b9390ba93676c4b1e87e218af5e7e4bb596312ac
+### Proof of Concept
 
-This commit also adds a test, but I don't see how that test would
-possibly detect the issue.  It sorts a tiny array and does not set
-RLIMIT_AS, so it probably does not reach quick sort, does it?  Well,
-maybe it did briefly while glibc experimented with introsort, but
-perhaps currently it does not:
+    http://spip-dev.srv/ecrire/?exec=3Dvalider_xml&var_url=3D/tmp/directory=
+&ext=3Dhtml
 
-As you've identified in the "last-minute note", a later commit ("stdlib:
-Reinstate stable mergesort implementation on qsort") made/reverted lots
-of other changes:
+### Timeline (dd/mm/yyyy)
 
-https://sourceware.org/git/?p=glibc.git;a=commit;h=709fbd3ec3595f2d1076b4fec09a739327459288
+* 15/09/2016 : Initial discovery
+* 26/09/2016 : Contact with SPIP Team
+* 27/09/2016 : Answer from SPIP Team, sent advisory details
+* 28/09/2016 : Fixes issued for CSRF
+* 30/09/2016 : SPIP 3.1.3 Released
 
-It's so invasive I cannot easily tell whether qsort() remained robust
-after it or not.  There's no longer a "tmp_ptr != base_ptr &&" check.
-So, lacking known-working tests in glibc tree, we don't know about glibc
-2.39's status with respect to this issue.
+### Fixes
 
-I don't have a glibc 2.39 build handy.  Perhaps someone on a distro that
-has already updated can run the attached test program and let us know?
+* https://core.spip.net/projects/spip/repository/revisions/23200
+* https://core.spip.net/projects/spip/repository/revisions/23201
+* https://core.spip.net/projects/spip/repository/revisions/23202
 
-Alexander
 
---FL5UXtIhxfXey3p5
-Content-Type: text/x-c; charset=us-ascii
-Content-Disposition: attachment; filename="glibc-qualys-rocky-qsort-test.c"
+### Affected versions
 
-/* glibc quick sort test originally by Qualys, enhanced for Rocky Linux */
+* Version <=3D 3.1.2
 
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <sys/resource.h>
+### Credits
 
-static int
-cmp(const void * const pa, const void * const pb)
-{
-    const int a = *(const int *)pa;
-    const int b = *(const int *)pb;
-    return (a - b);
-}
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
 
-int
-main(const int argc, const char * const argv[])
-{
-    if (argc != 2) return __LINE__;
-    const size_t nmemb = strtoul(argv[1], NULL, 0);
-    if (nmemb <= 0 || nmemb >= (1<<28)) return __LINE__;
+--=20
+SYSDREAM Labs <labs@sysdream.com>
 
-    int * const pcanary1 = calloc(1 + nmemb + 1, sizeof(int));
-    if (!pcanary1) return __LINE__;
-    int * const array = pcanary1 + 1;
-    int * const pcanary2 = array + nmemb;
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
 
-    struct timeval tv;
-    if (gettimeofday(&tv, NULL)) return __LINE__;
-    srandom((tv.tv_sec << 16) ^ tv.tv_usec);
+* Website: https://sysdream.com/
+* Twitter: @sysdream
 
-    const int canary1 = *pcanary1 = (random() << 16) ^ random();
-    const int canary2 = *pcanary2 = (random() << 16) ^ random();
-    array[random() % nmemb] = INT_MIN;
 
-    /* Force fallback from merge to quick sort */
-    const struct rlimit rlim = {};
-    setrlimit(RLIMIT_AS, &rlim);
+--9IO1isMMif4xlirCn263FJBpVvtTxCi6g--
 
-    qsort(array, nmemb, sizeof(int), cmp);
-    if (*pcanary1 != canary1) abort();
-    if (*pcanary2 != canary2) abort();
+--LsAR9hgoXJSaputKSDTqJlwXTTSUbIH2h
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-    for (size_t i = 0; i < nmemb; i++)
-        array[i] = random();
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-    qsort(array, nmemb, sizeof(int), cmp);
-    if (*pcanary1 != canary1) abort();
-    if (*pcanary2 != canary2) abort();
+iQIcBAEBCAAGBQJX/jn/AAoJEI60jNnVslmhjk4P/1uv4Ms517auffhDeE5v+d3m
+wq5xulvZr5XEpMspZ9y8oOyrlCaC2kB17m+HQZlrLltesq0xfolK3LLvC/cSMFBq
+XaCFm+fPqZ1oK8ARTDqtFoGj8oWvHK/qH9PG5O5ywt+F9B46t7taR15Fjx6swor+
+0JvGK+uzQjE3Wi7feB4Ycdse8FjhIMlC8eH60PSOgfG9mqzB+5oME/WdAS5MyLEz
+AHJ9mOL7MAHynuRWf18FIJExc9A+z8jlA7hbaPxDfQrRsROF4LX86XSRaq5pn2kZ
+QFYws8Q0rmXoSlB5oshgMhIgdfxsCjDlFatBZ8bmH96sQnC5FocJRb1RVQq2R9L4
+ayyJzRFOSnPdBSteZgBJL8WD9jymqHzzlBO1iss5B9IlKI30XY/wC0hnmKBpuYgd
+9zpzyppyzJ06j+df+8OxOyz8zCpJHNz7uOuqshrnfBzkZVLxzM0V8siZLw4cAwXa
+qCx2mMTEo6RfNiBjuh2TqD3c+tXgVd5YGV7wJ+GHKjOihnq3q/Z2Q2C8l3msYDMk
+cbycWyPioget8H1W2Cv5R+MCUMax+I887rHcmJr8imgK398aJAvLNwCCJNu/RHBy
+NyFGhfQ0l4fBq4+0V1WKf5rKDnTSK/yD7afoiT5Vg6kquEyEuK7boFiRprKcA0BR
+ZwVL09R16Gu06akk44Y0
+=5qRX
+-----END PGP SIGNATURE-----
 
-    for (size_t i = 1; i < nmemb; i++)
-        if (array[i - 1] > array[i]) abort();
-
-    puts("PASSED");
-
-    return 0;
-}
-
---FL5UXtIhxfXey3p5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="glibc-2.34-qualys-rocky-qsort.patch"
-
-diff -urpN glibc-2.34-sanitize-env/stdlib/qsort.c glibc-2.34-qsort/stdlib/qsort.c
---- glibc-2.34-sanitize-env/stdlib/qsort.c	2021-08-02 03:33:43.000000000 +0200
-+++ glibc-2.34-qsort/stdlib/qsort.c	2024-01-31 17:21:15.061418442 +0100
-@@ -225,7 +225,7 @@ _quicksort (void *const pbase, size_t to
-     while ((run_ptr += size) <= end_ptr)
-       {
- 	tmp_ptr = run_ptr - size;
--	while ((*cmp) ((void *) run_ptr, (void *) tmp_ptr, arg) < 0)
-+	while (tmp_ptr > base_ptr && (*cmp) ((void *) run_ptr, (void *) tmp_ptr, arg) < 0)
- 	  tmp_ptr -= size;
- 
- 	tmp_ptr += size;
-
---FL5UXtIhxfXey3p5--
+--LsAR9hgoXJSaputKSDTqJlwXTTSUbIH2h--
