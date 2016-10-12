@@ -1,38 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/2
-Message-ID: <56FCDD9C.7090000@cleal.org>
-Date: Thu, 31 Mar 2016 09:19:40 +0100
-From: Dominic Cleal <dominic@...al.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/7
+Message-ID: <956e00cf-2553-d3fe-83f1-00e3c0b1075a@sysdream.com>
+Date: Wed, 12 Oct 2016 15:27:32 +0200
+From: Sysdream Labs <labs@...dream.com>
 To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-2100: Foreman private bookmarks can be viewed and edited
+Cc: fulldisclosure@...lists.org, spip-team-owner@...o.net
+Subject: CVE-2016-7981: SPIP 3.1.2 Reflected Cross-Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-2100: Foreman allows read and write access to search bookmarks
-set as 'private' to other users.
+## SPIP 3.1.2 Reflected Cross-Site Scripting (CVE-2016-7981)
 
-Bookmarks can be stored for quick access to frequent searches in the
-Foreman web UI, which can be used to filter lists of hosts and other
-objects.  These are either marked private or public, however the UI and
-API for users to manage their bookmarks listed all bookmarks, including
-private bookmarks of other users.  This allowed them to be viewed,
-edited, or deleted.
+### Product Description
 
-Affects: Foreman 0.3 or higher
-Fix released in Foreman 1.10.3 and Foreman 1.11.0-RC2
+SPIP is a publishing system for the Internet, which put importance on collaborative working, multilingual environments and ease of use. It is free software, distributed under the GNU/GPL licence.
 
-Patch:
-https://github.com/theforeman/foreman/commit/a61344da14f73920b4bdc7ad8220e7a0ed998031
+### Vulnerability Description
 
-More information:
-http://theforeman.org/security.html#2016-2100
-http://projects.theforeman.org/issues/13828
-http://theforeman.org/
+The `var_url` parameter of the `valider_xml` file is not correctly sanitized and can be used to trigger a reflected XSS vulnerability.
+
+**Access Vector**: remote
+
+**Security Risk**: medium
+
+**Vulnerability**: CWE-79
+
+**CVSS Base Score**: 6.8 (Medium)
+
+**CVE-ID**: CVE-2016-7981
+
+### Proof of Concept
+
+    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=%22%3E%3Ch1%3EXSS!%3C/h1%3E
+
+### Vulnerable code
+
+The `$url variable` is not properly sanitized in `valider_xml.php`, line 134 :
+
+    $res =
+      "<div style='text-align: center'>" . $err . "</div>" .
+      "<div style='margin: 10px; text-align: left'>" . $texte . '</div>';
+    $bandeau = "<a href='$url_aff'>$url</a>";
+
+The Cross-Site Scripting vulnerability is triggered on line 146 :
+
+    echo "<h1>", $titre, '<br>', $bandeau, '</h1>',
+
+
+### Timeline (dd/mm/yyyy)
+
+* 15/09/2016 : Initial discovery
+* 26/09/2016 : Contact with SPIP Team
+* 27/09/2016 : Answer from SPIP Team, sent advisory details
+* 27/09/2016 : Incorrect fix from SPIP Team.
+* 27/09/2016 : New proof of concept for bypassing fixes for XSS sent.
+* 27/09/2016 : Fixes issued for XSS (23185).
+* 30/09/2016 : SPIP 3.1.3 Released
+
+### Fixes
+
+* https://core.spip.net/projects/spip/repository/revisions/23200
+* https://core.spip.net/projects/spip/repository/revisions/23201
+* https://core.spip.net/projects/spip/repository/revisions/23202
+
+
+### Affected versions
+
+* Version <= 3.1.2
+
+### Credits
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
 
 -- 
-Dominic Cleal
-dominic@...al.org
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
