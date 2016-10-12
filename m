@@ -1,36 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/6
-Message-ID: <CANO=Ty1cSnXsM01ebMNTvKLeaoPy0t7Mucb9EFAprr95rXFvSw@mail.gmail.com>
-Date: Wed, 9 Mar 2016 12:06:26 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "David A. Wheeler" <dwheeler@...eeler.com>,  cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/2
+Message-Id: <20161012041104.D4A0552E014@smtpvbsrv1.mitre.org>
+Date: Wed, 12 Oct 2016 00:11:04 -0400 (EDT)
+From: cve-assign@...re.org
+To: ludo@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, cwebber@...tycloud.org, wingo@...ox.com, mhw@...ris.org
+Subject: Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 9, 2016 at 12:04 PM, David A. Wheeler <dwheeler@...eeler.com>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> All - I've chatted with some of the people who fund the CVE work at MITRE.
-> I've learned that CVEs *are* being issued, but obviously that is happening
-> too slowly.
->
-> They're having a meeting tomorrow (March 10) to try to figure out what
-> the problems are and how to fix it.  I don't know what they'll do.
-> However, I'm hopeful that  this will mean that the CVE work will get
-> back on track soon.
->
-> --- David A. Wheeler
->
+> GNU Guile, an implementation of the Scheme language, provides a "REPL
+> server" which is a command prompt that developers can connect to for
+> live coding and debugging purposes. The REPL server is started by the
+> '--listen' command-line option or equivalent API.
+> 
+> Christopher Allan Webber reported that the REPL server is vulnerable to
+> the HTTP inter-protocol attack as described at
+> <https://en.wikipedia.org/wiki/Inter-protocol_exploitation>, notably the
+> HTML form protocol attack described at
+> <https://www.jochentopf.com/hfpa/hfpa.pdf>.
+> 
+> This constitutes a remote code execution vulnerability for developers
+> running a REPL server that listens on a loopback device or private
+> network. Applications that do not run a REPL server, as is usually the
+> case, are unaffected.
+> 
+> Developers can work around this vulnerability by binding the REPL server
+> to a Unix-domain socket, for instance by running:
+> 
+>   guile --listen=/some/file
+> 
+> A modification to the REPL server that detects attempts to exploit this
+> vulnerability is available upstream and will be part of Guile 2.0.13, to
+> be released shortly.
+> 
+> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=08c021916dbd3a235a9f9cc33df4c418c0724e03
 
-This is literally the first I'm hearing of this, will any board members be
-present?
+>> +;;; Here we add a procedure to 'before-read-hook' that looks for a possible
+>> +;;; HTTP request-line in the first line of input from the client socket. If
+>> +;;; present, the socket is drained and closed
 
+Use CVE-2016-8606.
 
--- 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJX/bZEAAoJEHb/MwWLVhi2ENkQAIyMUaLq9mwR5hvyeoP+4GF0
+p5rA477BYUM3KhnHqk7kNmuGb4OjP/mCc+6POvYqwyJOCt3vsYnBfp77dL0VgKgV
+Zoabg0kfNFXJFvhWeIE3qwAnI9zMVV/H2S63C9c3KuHsxy8a/6/q5PpznwhcjG+L
+AqWlHvSYhNmTtanR8nyRwcchEavatZh8eTXP9ITpFRZ+xuu6XoHwhmlmKE9srIBq
+Fun81jQGTN+dPCYcrviqJjW4258328oua0he4gCxKsM/JRLCWxTNtwgmh0EH8hro
+uJyb76LNk9RgA64po2qrr3Q2LUN2lpSILci8V9mQhWMvLBtyxSKzrgq0FKuJoxjr
+oFauy+LbwXUD0pHjfy9SiOjxEpwP5/jt9tpVoaMdRVjigJ86sm8zOx5d4BmgyPuA
+98uYtuCvB+AHblQJh5i9M3rln56rkgopDjR2suKJVSN0t3kHxEPDe1rdgDOGXrxz
+5kG/g/a5E92omW9J+4e+GiTj+NMSocrHKPOZGUHSlZl68EL8Fe4wqRHA+I9081dq
+XDmtF1mzHQ3tSY+jxhVckFb1IKvReR7JeCKKpsdkQDMIG7BfJsbQoB6IQEsASRtD
+PbXFvubj7LHEuTikLQc3qWXSAgzLpioyNVDxcxANdf0mirKXchysbpuv1uviC7Oa
+zHs39ZEyvoopDQP8s6ef
+=YKYq
+-----END PGP SIGNATURE-----
