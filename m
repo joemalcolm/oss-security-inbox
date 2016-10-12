@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1598" "Friday" "26" "August" "2016" "15:32:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160826193207.933116C5275@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit" "^Cc:" nil nil "8" "2016082619:32:07" "[oss-security] Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit" (number mark "        cve-assign@m Aug 26   37/1598  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit\"\n") "<18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>" ("<18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2535" "Wednesday" "12" "October" "2016" "00:11:04" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161012041104.D4A0552E014@smtpvbsrv1.mitre.org>" "58" "[oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks" nil nil nil "10" "2016101204:11:04" "[oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks" (number mark "U       cve-assign@m Oct 12   58/2535  " thread-indent "\"[oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks\"\n") "<87pon7t2f8.fsf@gnu.org>" ("<87pon7t2f8.fsf@gnu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18242 invoked by uid 550); 26 Aug 2016 19:32:21 -0000
+Received: (qmail 25704 invoked by uid 550); 12 Oct 2016 04:11:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18147 invoked from network); 26 Aug 2016 19:32:20 -0000
-In-Reply-To: <18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>
-Message-Id: <20160826193207.933116C5275@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 26 Aug 2016 15:32:07 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request -- linux kernel: Setting a POSIX ACL via setxattr doesn't clear the setgid bit
-To: vdronov@redhat.com
+Received: (qmail 25683 invoked from network); 12 Oct 2016 04:11:16 -0000
+From: cve-assign@mitre.org
+To: ludo@gnu.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, cwebber@dustycloud.org, wingo@pobox.com, mhw@netris.org
+In-Reply-To: <87pon7t2f8.fsf@gnu.org>
+Message-Id: <20161012041104.D4A0552E014@smtpvbsrv1.mitre.org>
+Date: Wed, 12 Oct 2016 00:11:04 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://www.spinics.net/lists/linux-fsdevel/msg98328.html
-> http://marc.info/?l=linux-fsdevel&m=147162313630259&w=2
-> https://bugzilla.redhat.com/show_bug.cgi?id=1368938
+> GNU Guile, an implementation of the Scheme language, provides a "REPL
+> server" which is a command prompt that developers can connect to for
+> live coding and debugging purposes. The REPL server is started by the
+> '--listen' command-line option or equivalent API.
 > 
-> When file permissions are modified via chmod(2) and the user is not in
-> the owning group or capable of CAP_FSETID, the setgid bit is cleared in
-> inode_change_ok(). Setting a POSIX ACL via setxattr(2) sets the file
-> permissions as well as the new ACL, but doesn't clear the setgid bit in
-> a similar way; this allows to bypass the check in chmod(2).
+> Christopher Allan Webber reported that the REPL server is vulnerable to
+> the HTTP inter-protocol attack as described at
+> <https://en.wikipedia.org/wiki/Inter-protocol_exploitation>, notably the
+> HTML form protocol attack described at
+> <https://www.jochentopf.com/hfpa/hfpa.pdf>.
+> 
+> This constitutes a remote code execution vulnerability for developers
+> running a REPL server that listens on a loopback device or private
+> network. Applications that do not run a REPL server, as is usually the
+> case, are unaffected.
+> 
+> Developers can work around this vulnerability by binding the REPL server
+> to a Unix-domain socket, for instance by running:
+> 
+>   guile --listen=/some/file
+> 
+> A modification to the REPL server that detects attempts to exploit this
+> vulnerability is available upstream and will be part of Guile 2.0.13, to
+> be released shortly.
+> 
+> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=08c021916dbd3a235a9f9cc33df4c418c0724e03
 
-Use CVE-2016-7097.
+>> +;;; Here we add a procedure to 'before-read-hook' that looks for a possible
+>> +;;; HTTP request-line in the first line of input from the client socket. If
+>> +;;; present, the socket is drained and closed
+
+Use CVE-2016-8606.
 
 - -- 
 CVE Assignment Team
@@ -44,17 +65,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXwJjjAAoJEHb/MwWLVhi284YP/ihwFVoOjVLV9YP0yvlP/659
-WSAvWtzaMIG6QuQvvJ5G9SdEhHTr7Jj1kvG0ro1pVKLHp7qjyJaKpGBTQHCcLJiP
-Y90qISQr59A9ar25u7TuCEzsBxmIxgj474jk8PQQDG3AgekMfxyWYRFiowpzZW1i
-oi4ruafp0pXwIj11iXtQH0fsyDfSZ19R9q7xCxm7P6aJKHT8OyJBcsvHmKunBodx
-usfOWEPslskKWXkR5QPLVJdDmUaemDQTWqoVxUW3DjKBqda6YnmUWlV2DcQNpKxz
-BOoak6kfSk9Oo8o37TGvFSqSRr5TEADZXQtIHSOpojK97AWY9MS1wDQI4Vw67Ift
-626pc/Eg7eI/kSXuY+/v3XFK9P5Eml9xrciRyeQEQYbU3+jYNZ36QT0mSx/wniq4
-Y9WsYw2r+FxQjj9F4Er3LEBKdGEv9Zz1B359/VvP747wIC9QYGI6X88PGxlFmp0I
-zU/lSHz0K3hp/3tAjfs9LeGNZmjW6JJqfbX0EBReF1OL1UexbXrEZ2AYWuP6x0E9
-UjrGrADbN/d6ZJljO2cgtGZURfiek3c8dFBrq44Brc4ZRs3zK5YbEORXbFd44gWM
-PRJnTHnfb+FVMcPVmeWgobMDMGjzXB6JTceS8gS6+9SNdnYgKsMuQ7ZTmAEIG2zV
-OmwRfyzqMNzGOiB7/ZS/
-=9rZk
+iQIcBAEBCAAGBQJX/bZEAAoJEHb/MwWLVhi2ENkQAIyMUaLq9mwR5hvyeoP+4GF0
+p5rA477BYUM3KhnHqk7kNmuGb4OjP/mCc+6POvYqwyJOCt3vsYnBfp77dL0VgKgV
+Zoabg0kfNFXJFvhWeIE3qwAnI9zMVV/H2S63C9c3KuHsxy8a/6/q5PpznwhcjG+L
+AqWlHvSYhNmTtanR8nyRwcchEavatZh8eTXP9ITpFRZ+xuu6XoHwhmlmKE9srIBq
+Fun81jQGTN+dPCYcrviqJjW4258328oua0he4gCxKsM/JRLCWxTNtwgmh0EH8hro
+uJyb76LNk9RgA64po2qrr3Q2LUN2lpSILci8V9mQhWMvLBtyxSKzrgq0FKuJoxjr
+oFauy+LbwXUD0pHjfy9SiOjxEpwP5/jt9tpVoaMdRVjigJ86sm8zOx5d4BmgyPuA
+98uYtuCvB+AHblQJh5i9M3rln56rkgopDjR2suKJVSN0t3kHxEPDe1rdgDOGXrxz
+5kG/g/a5E92omW9J+4e+GiTj+NMSocrHKPOZGUHSlZl68EL8Fe4wqRHA+I9081dq
+XDmtF1mzHQ3tSY+jxhVckFb1IKvReR7JeCKKpsdkQDMIG7BfJsbQoB6IQEsASRtD
+PbXFvubj7LHEuTikLQc3qWXSAgzLpioyNVDxcxANdf0mirKXchysbpuv1uviC7Oa
+zHs39ZEyvoopDQP8s6ef
+=YKYq
 -----END PGP SIGNATURE-----
