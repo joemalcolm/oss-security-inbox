@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2505" "Sunday" "24" "April" "2016" "12:52:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160424165242.6CE3F332037@smtpvbsrv1.mitre.org>" "57" "[oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function" nil nil nil "4" "2016042416:52:42" "[oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function" (number mark "U       cve-assign@m Apr 24   57/2505  " thread-indent "\"[oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function\"\n") "<CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>" ("<CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["321" "Wednesday" "12" "October" "2016" "14:59:08" "+0800" "freener" "freener.gdx@gmail.com" "<CABNVnE1M298EeNrfBsHWfBxSMBfdSTu1XZ1swRpRVWNKkCGtXw@mail.gmail.com>" "15" "[oss-security] CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" nil nil nil "10" "2016101206:59:08" "[oss-security] CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" (number mark "U       freener.gdx@ Oct 12   15/321   " thread-indent "\"[oss-security] CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7402 invoked by uid 550); 24 Apr 2016 16:52:55 -0000
+Received: (qmail 25782 invoked by uid 550); 12 Oct 2016 07:08:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7380 invoked from network); 24 Apr 2016 16:52:54 -0000
-From: cve-assign@mitre.org
-To: gustavo.grieco@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CACn5sdTyH2a6dbw4JDvUGHK39AzhWNxfrTLpaftkjDYmQjAu9A@mail.gmail.com>
-Message-Id: <20160424165242.6CE3F332037@smtpvbsrv1.mitre.org>
-Date: Sun, 24 Apr 2016 12:52:42 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: jq: stack exhaustion using jv_dump_term() function
+Received: (qmail 21590 invoked from network); 12 Oct 2016 06:59:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=So6CAoZsAdQp455vWzyvxWIWkJc/kN1Yq7UuVY+U1fc=;
+        b=g7YDiiHoTEt0AThUFf5V21BaSho2XLajPuj3SRgsW6isSCPSanz+fbTXS7a0HYzR4N
+         cm3DfstiDu1MnVibfDFDY/Ia3Pk757ywya0DsfOiNZzWj2eH8Hdh97+0bjLozA8gEw19
+         GVEigcow/6hc0sgLZvy2q0EkgycwY8FU9H7R2/F6T3iTrXwY+iv1PwqJ/+frN+4JEAud
+         B2kKewUHoN6pP631qmasr92voQF27a5TL0mstns9XlXOs1nkjtjE57TIdQvSuKuRfUlb
+         WSfrPxwnXtAxJ1rirlHnv594tNp5WL00w2Qgn39NG2Hg1URyYxXRnm/sz7ky3aN3QHxP
+         kXyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=So6CAoZsAdQp455vWzyvxWIWkJc/kN1Yq7UuVY+U1fc=;
+        b=WTcAe6D1KBGfsnXH+iNV4QapaRtnKRL5Df/IocRucnSD2XlCmcAfqYJ3keXudqIi91
+         KW0qqTg6Lxhd0OdAI9Fn5cDiHG2zBDt/jZvx2AYSIaJ3r/NkN0KGqjb72KTSpAxO+v8T
+         o4KC3T/nmfRdIk/hKBPkQwy/wqQVoQDKkG5N6x3UR3mECrSOZllaOgQKs0H/TS0g0maP
+         eWRHkBHBqmrIqU4mEAi+JoMXlDbEe51W8dRkc/OqeAjACJwdj0uaMzyBcNIKuvf2FB8w
+         BDUzSCcDYfUYWtEro/zb0fqD1ASPztHMZRPsbL9148cgtEWPML8leOCgs8TSAlV8e/ge
+         /wNQ==
+X-Gm-Message-State: AA6/9RnkTC/3LXSr1x86rggZef2Ep6M0rrKlYhAmThhb2Ra4EKCmlQZPrCBMTmx3WxHWPGlheapsJ5hnzhF/mQ==
+X-Received: by 10.159.49.26 with SMTP id m26mr499246uab.63.1476255548879; Tue,
+ 11 Oct 2016 23:59:08 -0700 (PDT)
+MIME-Version: 1.0
+From: freener <freener.gdx@gmail.com>
+Date: Wed, 12 Oct 2016 14:59:08 +0800
+Message-ID: <CABNVnE1M298EeNrfBsHWfBxSMBfdSTu1XZ1swRpRVWNKkCGtXw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=f403045dcd2696ba4b053ea58738
+Subject: [oss-security] CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap
+ Buffer Overflow
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--f403045dcd2696ba4b053ea58738
+Content-Type: text/plain; charset=UTF-8
 
-> A crash caused by stack exhaustion parsing a JSON was found. It affects, at
-> least version 1.5 as well as the last git revision. Technical details and a
-> reproducer are available here:
-> 
-> https://github.com/stedolan/jq/issues/1136
+hi,
 
->> jq . qcufnzxcnp.json.4167733746247029131
->> 
->> Program received signal SIGSEGV, Segmentation fault.
+    This is a buffer overflow vulnerability in wifi driver brcmfmac.
 
->>> https://github.com/stedolan/jq/blob/master/README.md
->>> jq is a lightweight and flexible command-line JSON processor.
+    The vulnerability has been patched in in Linux kernel 4.7.7 and 4.8.1.
 
-We do not feel that a stack-exhaustion attack against a command-line
-program requires a CVE ID in all cases. A jq bug was discovered; the
-question is whether it's a security bug. This depends on the existence
-of a common use case in which an unattended process receives untrusted
-JSON files, and (for example) the overall resource consumption is
-substantially higher than what an attacker could achieve by submitting
-a JSON file that is parsed without encountering any jq bugs.
+     https://patchwork.kernel.org/patch/9313305/
 
-Our understanding is that https://jqplay.org/ is an existence proof of
-"unattended process receives untrusted JSON files." Also,
-https://stedolan.github.io/jq/manual/ might imply that the . filter is
-not expected to result in a lot of resource consumption (stack
-exhaustion or anything else). So, a need for a CVE ID seems plausible;
-however, we would like to have more information about security
-relevance if anyone wants many CVE IDs for many different jq bugs
-causing stack exhaustion.
 
-Use CVE-2016-4074.
+     thanks.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXHPkoAAoJEHb/MwWLVhi2klQP/0JXSWdl1OK3qZD/7Ze8TGyi
-rbzXE7w0xk9/QPTjbvODOxDDIWOu1WKPbXLtk0Q3pMBbEIsSNB0gIF0uBpxA6jWa
-i+faeokrPE2VH8cKd1Esvo7GJ0hbGxF2o2StNIkqoTPlV+Ycy13NEt9fgJ1KBf7K
-kdmB9fd5yBLiP6Fbiob1jB7a/YSXIZ7QmtlrverLnrC2lNpKTIzMp2ena5wE5QBB
-ebc0cvtW149ktlfz3axexPM/GVOAnIPLqCtDskDjgSD2BngPuFIfI4+isai+mPQS
-6xRO4zJuZokKGLwIe2XuHCu3BSqHO5GXP2vgOy8JDEUaKejvUQlqdDpvqypa3CrN
-pNAGz4BXrOrCuXQOIsVcHFjSjzauAIP5ttioSX6DEeGCSkhSGuLe7v62SvlEJCmP
-clKRaXK0cTzYOneNiZncha8mUQpWpAe9q9DNutnQhIuA6d5Jx4wzXA8f8MmpUG5T
-eO9df1RkNca7+PzNSgspBQTdqBKcDCVqJSY47/VIf9oZKPyzKUI0k2pDgyajwIDv
-frelAoZ3CM2iPZdjJUY3EAn/CJV1rWMGFIUbCSDkyTshlP07V2cSbDj3KGySt0ZA
-Tdtt3Pt2r4CbBn3rwLd1g5GOTW7Od54wxUTnSOaFikZo6oEVhmOyG3AGIBsdtbxM
-mQMgvymwfziBQ5SeGM7D
-=BV9n
------END PGP SIGNATURE-----
+--f403045dcd2696ba4b053ea58738--
