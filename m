@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/8
-Message-Id: <20160628225329.CD59CB2E08C@smtpvbsrv1.mitre.org>
-Date: Tue, 28 Jun 2016 18:53:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/1
+Message-Id: <20161012040737.9D9D152E019@smtpvbsrv1.mitre.org>
+Date: Wed, 12 Oct 2016 00:07:37 -0400 (EDT)
 From: cve-assign@...re.org
-To: pernst@...esforce.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - python-docx 0.8.5 - XXE
+To: ludo@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, wingo@...ox.com, mhw@...ris.org
+Subject: Re: CVE request: GNU Guile <= 2.0.12: Thread-unsafe umask modification
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The python-docx package
-> (https://github.com/python-openxml/python-docx) is vulnerable to XML
-> External Entity attacks (XXE).
+> The mkdir procedure of GNU Guile, an implementation of the Scheme
+> programming language, temporarily changed the process' umask to zero.
+> During that time window, in a multithreaded application, other threads
+> could end up creating files with insecure permissions. For example,
+> mkdir without the optional mode argument would create directories
+> as 0777.
 > 
-> Version 0.8.6 (https://github.com/python-openxml/python-docx/releases/tag/v0.8.6)
-> contains a fix.
+> This can be worked around by always passing the optional mode argument
+> to Guile's mkdir procedure.
+> 
+> This will be fixed in Guile 2.0.13, to be released shortly.
+> 
+> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=245608911698adb3472803856019bdd5670b6614
+> Upstream bug report: http://bugs.gnu.org/24659
 
-> xml_string = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-> <!DOCTYPE w:document [
->   <!ENTITY xxe SYSTEM "file:///etc/passwd" >
-> ...
-> updateZip('whatever.docx', 'word/document.xml', xml_string)
-> ...
-> document = docx.Document('whatever.docx')
+>> changes the process' umask globally for a short duration
 
-Use CVE-2016-5851.
+Use CVE-2016-8605.
 
 - -- 
 CVE Assignment Team
@@ -36,17 +38,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXcv+EAAoJEHb/MwWLVhi2iGIP/iS3BoqMNj+DVhTwEE9w+BQJ
-O6RXn8MsUBUQT8eo5HR+2gecYDP3vuj4I7BrAhFesXAkabTxsxFRHZqOOqmvG0ij
-8f+m/heZFBl9CQywSJLOT+K9eQ4442Bs01c0Ex/e+Y0RfmMP50azlIQMZaNeNQS8
-+2AsgU7V2nIscTKRF39ciP2fGywsrkH+zlTbA1HSct9ZrFnPog6f4Exkoaru06lg
-lFzUJoG/JRLW8SuAZ2uNeuFEKlvhE8bfhy/TBva5IwjnBUfIAp0nQ9EjyCywTGOq
-cmMrVpq8fzhACzE8Nq+BKKFTZ07YSXFB8fYJ8U3p6ztG7iCfZ/neIiuXm8JVsJB2
-gytmOWgqjenUO/IpLgHLxAvOQ+rrRhYAC39XZT6cRrXvoyVnm8TLRmIzkNoItwrQ
-JAMtPzkEKWJurtvUuPFZ3DhpdPYXdOzczK2zS54XUONiMfw67fb/Rmx5mez6k7tr
-B/9fOB3ai+kMg1okYojgENJJhXxOtbtekPMkMY8pQJM1CvYW32So3FIn7TfrD6hX
-wJWqHfok1k5/+vki7XO7wxoNuYGObRq2IGLlz1JpZs6iR5QIIRxE4l8Lx2c43lwr
-OeEfZMClCsAo16VYRJMBOIT15hgpfmXMIekk63nhtx7NOzoCzAUTgRvv6fjQ4yNG
-x8/OUsWj1ULmPDDqpiUt
-=X9jU
+iQIcBAEBCAAGBQJX/baaAAoJEHb/MwWLVhi2DcYQAKDqyMz9vFBIQlUp04fqGCLm
++2Edb5JItWj6y0x7F8rt+LM/jfxTHFq+HxH7pRQS59rERvAbhhUFU2Q+AhUeZRM9
+mpzxr0bGwlDGatdSLQbgrD5+BGCi/FrtIg3ggQxoGXMaKLWu6yjNg7c+l6Bp37ic
+h/XZ5Ur2M4dfaDnn1WGWdtAbcLbBKevglzKpbYcrgU4mokPiZ/Axzhp4zuxbvXP4
+uVKgVQTOeFcp2NstpDdzhomSvIdya1owA6DJd1HsiTgCtV1oKJ6Qy0T5uQ5sUplX
+6/ecG+gbebj1M52AFsmYMFuG3r6Ho9u1NB4CCzW27yuwmZU9w8gAHrMBlNxu8EZl
+M/xCgLr8JO8ve5zxwvdNdfadBtsXUgS2n0HgEMHQXOn+a2wrC+fBTG41OvC3qre4
+x3GkXOdC8IhAVXO2OVxUl7oo57nahSKct7Q8+Mh3BQ5PnzC2IqpYdN0riC6G/pCy
+YXS1ySEYB1nzQGdP+5VCLCOu0jKpQ2Bp/byOBljKHTc7mv/s1HEpke3n8/FNwuFq
+1nxFlNU0WzmpEpzYhAd7S2CxeDBhO2HVKeg9eCAdnMmRpytlQhKQN/S5wwRxcZOr
+3QCwcJldiufM7wv2D0jmiUR05AbWsG6Hj1femNoP3rxgOQIoYjwdEFpsDFKcSEMq
+DtztboX+z/tA/saF7SWP
+=ZBNv
 -----END PGP SIGNATURE-----
