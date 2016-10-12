@@ -1,62 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/4
-Message-ID: <56B0D4EE.8010002@firma.seznam.cz>
-Date: Tue, 2 Feb 2016 17:10:22 +0100
-From: Štefan Šafár <stefan.safar@...ma.seznam.cz>
-To: <oss-security@...ts.openwall.com>
-Subject: Fwd: PHP-FPM fpm_log.c memory leak and buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/10
+Message-ID: <7fd323f9-7980-ad90-2475-80975b5e5438@sysdream.com>
+Date: Wed, 12 Oct 2016 15:31:10 +0200
+From: Sysdream Labs <labs@...dream.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org, spip-team-owner@...o.net
+Subject: CVE-2016-7999: SPIP 3.1.2 Server Side Request Forgery
 Content-Type: text/plain; charset=utf-8
 
-Forwarding this email as it seems it wasn't sent here. Perhaps a CVE
-should be issued?
+## SPIP 3.1.2 Server Side Request Forgery (CVE-2016-7999)
+
+### Product Description
+
+SPIP is a publishing system for the Internet, which put importance on collaborative working, multilingual environments and ease of use. It is free software, distributed under the GNU/GPL licence.
+
+### Vulnerability Description
+
+It's possible to send HTTP/FTP requests using the `valider_xml` file.
+Attackers can make it look like the server is sending the request, possibly bypassing access controls such as a firewall that would prevent the attacker from accessing the URLs directly.
+
+**Access Vector**: remote
+
+**Security Risk**: medium
+
+**Vulnerability**: CWE-918
+
+**CVSS Base Score**: 5.5 (Medium)
+
+**CVE-ID**: CVE-2016-7999
+
+### Proof of Concept
+
+    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=http://router-dev.srv/
+    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=ftp://ftp.debian.org/
 
 
--------- Forwarded Message --------
-Subject: 	PHP-FPM fpm_log.c memory leak and buffer overflow
-Date: 	Mon, 25 Jan 2016 16:50:38 +0100
-From: 	Imre RAD <imre.rad@...rch-lab.hu>
-To: 	bugtraq@...urityfocus.com
+### Vulnerable code
+
+The FTP connection is initialized by the `is_dir` function inside `valider_xml`, line 79 :
+
+    if (is_dir($url)) {
+
+Other PHP Wrappers supporting `is_dir` can be called using this function.
+
+The HTTP connection is initiated at line 123:
+
+    $res = $transformer_xml(recuperer_page($url));
+
+### Timeline (dd/mm/yyyy)
+
+* 15/09/2016 : Initial discovery
+* 26/09/2016 : Contact with SPIP Team
+* 27/09/2016 : Answer from SPIP Team, sent advisory details
+* 27/09/2016 : Server Side Request Forgery vulnerability correct vulnerabilities.
+* 30/09/2016 : SPIP 3.1.3 Released
+
+### Fixes
+
+* https://core.spip.net/projects/spip/repository/revisions/23188
+* https://core.spip.net/projects/spip/repository/revisions/23193
+
+### Affected versions
+
+* Version <= 3.1.2
+
+### Credits
+
+* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
+
+
+-- 
+SYSDREAM Labs <labs@...dream.com>
+
+GPG :
+47D1 E124 C43E F992 2A2E
+1551 8EB4 8CD9 D5B2 59A1
+
+* Website: https://sysdream.com/
+* Twitter: @sysdream
 
 
 
-The FastCGI Process Manager (FPM) SAPI of PHP was vulnerable to memory
-leak and buffer overflow in the access logging feature.
-
-PHP-FPM offers customization of the access log lines based on format
-string variables which can be specified with the access.format option of
-the FPM configuration file.
-The log lines were compiled in php-fpm.c. The %{something}e fields were
-processed at line 237:
-
-len2 = snprintf(b, FPM_LOG_BUFFER - len, "%s", env ? env : "-");
-...
-len += len2;
-...
-    if (!test && strlen(buffer) > 0) {
-         buffer[len] = '\n';
-        write(fpm_log_fd, buffer, len + 1);
-    }
-
-In case the string being appended to the access log line buffer was
-longer than the remaining space, the len variable became longer than the
-buffer (FPM_LOG_BUFFER) size, because snprintf returns the number of
-characters (excluding the terminating null byte) which would have been
-written to the final string if enough space had been available. Then the
-PHP engine performed an out-of-boundaries read and also wrote a \n
-character outside of the allocated memory.
-
-The fix is available with the commit
-http://git.php.net/?p=php-src.git;a=commit;h=2721a0148649e07ed74468f097a28899741eb58f
-The fixed versions of PHP are: 5.5.31, 5.6.17 and 7.0.2.
-
-More information:
-http://www.search-lab.hu/about-us/news/111-some-unusual-vulnerabilities-in-the-php-engine
-
-Imre Rad
-Search-Lab Ltd.
-http://www.search-lab.hu/
-http://www.scademy.com/
 
 
 
 
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
