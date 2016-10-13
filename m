@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/22/3
-Message-ID: <20160722202704.GA6498@kroah.com>
-Date: Fri, 22 Jul 2016 13:27:04 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/8
+Message-ID: <1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>
+Date: Thu, 13 Oct 2016 10:07:08 -0400 (EDT)
+From: CAI Qian <caiqian@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>, Marco Grassi <marco.gra@...il.com>
-Subject: Re: panic at big_key_preparse #4.7-r6/rc7 & master
+Subject: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 22, 2016 at 10:54:09PM +0800, zer0mem@...oo.com wrote:
-> Hi,
-> 
-> Following code will panic 4.7-rc6/rc7 & master
-> 
-> However will not panic at latest stable 4.6.4 kernel apparently
+Running the trinity syscall fuzzer inside a docker container as an non-privileged user below,
 
-Did you email the Linux kernel developers responsible for this code to
-report this?
+$ trinity -g vfs --arch 64 --disable-fds=sockets --disable-fds=perf --disable-fds=epoll
+--disable-fds=eventfd --disable-fds=pseudo --disable-fds=timerfd --disable-fds=memfd
+--disable-fds=drm
 
-thanks,
+always trigger a deadlock/hang at the fdatasync() syscall within 30 minutes with traces
+(including sysrq-w info as well) like this, http://people.redhat.com/qcai/tmp/dmesg
 
-greg k-h
+This can be reproduced on any kernel post v4.4-rc1 as long as including this commit.
+
+fc0561cefc04e7803c0f6501ca4f310a502f65b8
+xfs: optimise away log forces on timestamp updates for fdatasync
+
+Reverted the above commit against the latest mainline allows the trinity to run more than
+10 hours without any deadlock/hang.
+
+This had also been reported to the XFS maintainer and diagnosed as a page lock order bug
+in the XFS seek hole/data implementation and presumably is still working on a fix better
+than to revert the above commit.
+
+   CAI Qian
