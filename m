@@ -1,91 +1,193 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/17/3
-Message-Id: <20160617135951.F3F486C05C4@smtpvmsrv1.mitre.org>
-Date: Fri, 17 Jun 2016 09:59:51 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/1
+Message-ID: <CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>
+Date: Thu, 13 Oct 2016 11:51:26 +0800
+From: freener <freener.gdx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+hi,
+    I found a stack buffer overflow vulnerability in Broadcom wifi driver
+brcmfmac, this issue has been fixed, I would like to
+request a CVE-ID for this issue.
 
-> https://blog.fuzzing-project.org/46-Various-invalid-memory-reads-in-ImageMagick-WPG,-DDS,-DCM.html
+Description
+=========
 
-> An out of bounds memory read in the VerticalFilter() function can be
-> triggered by a malformed DDS file.
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/791aa82c8064ee8965a63ccf4384f56b95057e5b
+Cfg80211 module in kernel is the main interface to operate on wifi.
+This module defines an operation data structure which stores many
+commands and callback functions to control the wifi, and those
+callback functions are implemented in wifi driver finally, executables
+can communicate with this module by netlink socket.
 
-The "out of bounds memory read" seems to be a valid concern, and is
-assigned the CVE-2016-5687 ID. However, we do not happen to understand
-why 791aa82c8064ee8965a63ccf4384f56b95057e5b is a fix.
+To trigger the bug the exploit should send a NL80211_CMD_START_AP or
+NL80211_CMD_NEW_BEACON command to nl80211 socket in kernel.
+NL80211_CMD_START_AP is equal with NL80211_CMD_NEW_BEACON according
+with the definition in nl80211.h. Hostapd uses NL80211_CMD_NEW_BEACON.
+
+       static struct genl_ops nl80211_ops[] = {
+                 ...
+                 {
+                         .cmd = NL80211_CMD_START_AP,
+                         .policy = nl80211_policy,
+                         .flags = GENL_ADMIN_PERM,
+                         .doit  = nl80211_start_ap,
+                         .internal_flags = NL80211_FLAG_NEED_NETDEV_UP
+| NL80211_FLAG_NEED_RTNL,
+                 },
+                 ...
+       }
+
+When kernel receives the NL80211_CMD_START_AP command then it will
+call nl80211_start_ap function,  but it requries executable owns
+CAP_NET_ADMIN permission.
+
+In nl80211_start_ap, it will parse the data received from user, and
+store the result in cfg80211_ap_settings structure。
+
+       static int nl80211_start_ap( struct sk_buff *skb, struct
+genl_info *info ) {
+                ...
+                struct cfg80211_ap_settings params;
+                ...
+                memset( &params,  0, sizeof(params) );
+                ...
+                err = nl80211_parse_beacon( info, &params.beacon );
+
+                if ( info->attrs[NL80211_ATTR_SSID] ) {
+                         params.ssid = nla_data(
+info->attrs[NL80211_ATTR_SSID] );
+                         params.ssid_len = nla_len(
+info->attrs[NL80211_ATTR_SSID] );
+                         if ( params.ssid_len == 0 || params.ssid_len
+> IEEE80211_MAX_SSID_LEN )
+                                 return -EINVAL;
+                }
+
+               ...
+               err = rdev_start_ap( rdev, dev, &params );
+               ...
+       }
+
+      struct cfg80211_ap_settings {
+	    struct cfg80211_chan_def chandef;
+
+	    struct cfg80211_beacon_data beacon;
+
+	     int beacon_interval, dtim_period;
+	     const u8 *ssid;
+	     size_t ssid_len;
+	     enum nl80211_hidden_ssid hidden_ssid;
+	     struct cfg80211_crypto_settings crypto;
+	     bool privacy;
+	     enum nl80211_auth_type auth_type;
+	     int inactivity_timeout;
+	     u8 p2p_ctwindow;
+	     bool p2p_opp_ps;
+	     const struct cfg80211_acl_data *acl;
+	     bool radar_required;
+       };
+
+       struct cfg80211_beacon_data {
+              const u8 *head, *tail;
+              const u8 *beacon_ies;
+              const u8 *proberesp_ies;
+              const u8 *assocresp_ies;
+              const u8 *probe_resp;
+
+             size_t head_len, tail_len;
+             size_t beacon_ies_len;
+             size_t proberesp_ies_len;
+	     size_t assocresp_ies_len;
+	     size_t probe_resp_len;
+        };
+
+It also does many checks, the interface type must be NL80211_IFTYPE_AP
+or NL80211_IFTYPE_P2P_GO, and data must contain informations about
+NL80211_ATTR_BEACON_INTERVAL, NL80211_ATTR_DTIM_PERIOD,
+NL80211_ATTR_BEACON_HEAD. Finally it will call rdev_start_ap function.
+
+NL80211_ATTR_SSID is optional, user can send a netlink packet which
+does not contain information about NL80211_ATTR_SSID, so params.ssid
+and params.ssid_len will be 0. It's the key point in the exploit.
+
+       static inline int rdev_start_ap( struct
+cfg80211_registered_device *rdev, struct net_device *dev, struct
+cfg80211_ap_settings *settings ) {
+                ...
+                ret = rdev->ops->start_ap( &rdev->wiphy, dev, settings );
+                ...
+       }
+
+rdev_start_ap will call the callback function defined in brcmfmac driver.
+
+      static struct cfg80211_ops wl_cfg80211_ops = {
+              ...
+              .start_ap = brcmf_cfg80211_start_ap;
+              ...
+      }
+
+If the netlink packet does not contian info about NL80211_ATTR_SSID,
+brcmf_cfg80211_start_ap will call brcmf_parse_tlvs to parse head data
+further. The data format is TLV (Type, Length, Value ),
+it will parse type WLAN_EID_SSID info in data, all those datas are
+controlled by user. It does not
+check the length of data before calling memcpy to copy the data to
+stack buffer. The length of stack buffer ssid_le.SSID is 32, so we can
+construct a malicous data packet in NL80211_CMD_START_AP command, and
+make WLAN_EID_SSID's length large then 32. When it copies the data, it
+will overflow the stack buffer.
+
+       brcmf_cfg80211_start_ap(   struct cfg80211_ap_settings *settings ) {
+               s32  ie_offset;
+               struct brcmf_tlv *ssid_ie;
+               struct brcmf_ssid_le ssid_le;
+
+               memset( &ssid_le, 0, sizeof(ssid_le) );
+
+               if  ( settings->ssid == NULL || settings->ssid_len == 0 ) {
+                        ie_offset = DOT11_MGMT_HDR_LEN +
+DOT11_BCN_PRB_FIXED_LEN;
+                        ssid_ie = brcmf_parse_tlvs( (u8
+*)&settings->beacon.head[ie_offset], settings->beacon.head_len -
+ie_offset, WLAN_EID_SSID );
+                       if ( !ssid_ie )
+                              return -EINVAL;
+
+                      memcpy( ssid_le.SSID, ssid_ie->data,
+ssid_ie->len );   //overflow here.
+                      ssid_le.SSID_len = cpu_to_le32( ssid_ie->len );
+               }
+               else {
+                      memcpy( ssid_le.SSID, settings->ssid,
+settings->ssid_len );
+                      ssid_le.SSID_len = cput_to_le32( (u32)settings->ssid_len);
+               }
+               ...
+      }
 
 
-> Several bugs in the WPG parser could lead to a heap overflow and random
-> invalid memory writes. These bugs only seem to appear when a memory
-> limit is set.
-> 
-> Sample for heap write overflow in SetPixelIndex
-> 
-> Sample for unclear invalid write in ScaleCharToQuantum
-> 
-> Sample for unclear invalid write in SetPixelIndex
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/fc43974d34318c834fbf78570ca1a3764ed8c7d7
-> https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178955d5f3e9316f2f
-
-As far as we can tell, this can be thought of as a single issue in
-which some type of input validation (associated with a SetImageExtent
-return-value check) occurred in the wrong place, and was accompanied
-by incorrect error handling. The various write-access observations
-would then be consequences of this.
-
-Use CVE-2016-5688 for this entire report about the WPG parser.
+Credit
+=====
+This issue was discovered by Daxing Guo of Tencent's Xuanwu Lab
 
 
-> Null pointer accesses and unclear segfaults can happen in the DCM
-> parser.
-> 
-> Sample for null pointer access in ReadDCMImage
-> 
-> Sample for null pointer access in ReadDCMImage (different code)
-> 
-> Sample for unclear segfault in ReadDCMImage
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/5511ef530576ed18fd636baa3bb4eda3d667665d
+Patch
+=====
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=ded89912156b1a47d940a0c954c43afbabd0c42c
 
-As far as we can tell, there are three separate issues identified in
-the fix. (These do not necessarily map directly to the three samples.)
+2016-10-12 14:59 GMT+08:00 freener <freener.gdx@...il.com>:
 
-Use CVE-2016-5689 for the lack of required NULL pointer checks.
+> hi,
+>
+>     This is a buffer overflow vulnerability in wifi driver brcmfmac.
+>
+>     The vulnerability has been patched in in Linux kernel 4.7.7 and 4.8.1.
+>
+>      https://patchwork.kernel.org/patch/9313305/
+>
+>
+>      thanks.
+>
 
-Use CVE-2016-5690 for the error in the for statement in the "Compute
-pixel scaling table" part of the ReadDCMImage function.
-
-Use CVE-2016-5691 for the lack of validation of pixel.red,
-pixel.green, and pixel.blue.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXZAH0AAoJEHb/MwWLVhi26YQP/1wB8tcmsY0Ljb68BDyylo+8
-Fsl4LBITCVw2cPLJKw/cPupFN0I4kTG38EEr4HNemfIt8zGSYKGfcdr+geTB+WGK
-Y/EgTBwJrSCLt7KQOADAi1uNHHuq9+7uoZ1zjhffO729MqY73g0Vh4oi7waNqJBm
-N52k4VJA24s0zHFLQX3A29gaVsdMHxW/bTdsOiI6+VicMWYdfSHSbzfK4MP0daCK
-Y2OGnAFJAhcsZHKjXSiyEBCdH2dATjLuBONW3Y+bYaDvZ9Q313eKoDXJZ7ng/Idp
-UAfHpKYgkkN4wbOS+Y5AFYSaGGpLeMxzg6z113sAPw8pB5ukEoQvjm5FQq78HDGk
-sQSrunAuZS/9vLLmypTEpj0tuTDzi4V+WDqcwneTYh5xMxtLcMlaECMVOealOwFV
-63Vf6sRV7TindQ3AulzIl+qux6cQJzh+8mWYfOA7UdpYrX1qDInPdX2ZiuSLQ9UW
-jusvHE1wbXj7F7VBmuZHmUOFQX0T2hI0jJa81YdQvoDXVxp+kerIIwVAcB7Xc/3+
-/Kh8kw0xiaewVhe4lo/SwkUhTecNxm3hw22aCITvCMo9Hcg6qzwBmMBKJtcRWbYd
-gIB/KopZv0CLwOGDvRcZql+QA811Ee9QBR28e7gJ48PjiJmKEgXvcNDhuGb29n2c
-z6A2Z9cyks8gJCWERGvF
-=Pvf8
------END PGP SIGNATURE-----
