@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1053" "Wednesday" "11" "May" "2016" "16:28:57" "-0300" "Oliveira Lima" "oliveiralimajr@gmail.com" "<CAGDGa53U+Nq3nZv-u7azf--UuHdex0PmXB6tmaRct81scV5y7Q@mail.gmail.com>" "42" "[oss-security] Request CVE ID for Simple Photo Gallery 1.8.0 - Stored XSS" nil nil nil "5" "2016051119:28:57" "[oss-security] Request CVE ID for Simple Photo Gallery 1.8.0 - Stored XSS" (number mark "U       oliveiralima May 11   42/1053  " thread-indent "\"[oss-security] Request CVE ID for Simple Photo Gallery 1.8.0 - Stored XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1877" "Thursday" "13" "October" "2016" "03:03:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161013070308.6FFD713A870@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" nil nil nil "10" "2016101307:03:08" "[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" (number mark "U       cve-assign@m Oct 13   47/1877  " thread-indent "\"[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow\"\n") "<CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>" ("<CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21820 invoked by uid 550); 11 May 2016 19:55:21 -0000
+Received: (qmail 24177 invoked by uid 550); 13 Oct 2016 07:03:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5177 invoked from network); 11 May 2016 19:29:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=k1xDO1AwciS6pyBXc3tJfE7kbcs28BJN2uSdlFJxwa4=;
-        b=IPCYWxHewjOVOCpoiR4ZdqM83tuC+AH415Z7ukkbNH1QrtqmdIA6YYdEgGnQja7m1R
-         rYdFJITdNHg9Wss5pEQ7jvzUa0iYDpxgRrPZclyb4GfKMKIMSQYUoY/7OklOi5Ca6KFb
-         pCy9v+alFd82/Vvz/LC0/eJ6gaGZ882kLn9SQokKBKeYgliYA6cvibF7emV+eX1qhKTt
-         872fHq2dUB5Doi0gMIzaT91UE1fAhhf6ZDA8Qt50UhVVSSldxMgL2BGGHbFNcSEkn8U6
-         5TU3dkbE/pcdFJiqlyxh6YwRHKjWfu9lJQ/shdNu/6I8IS9w1XujBR0jGPs6Cv92jDga
-         0qvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=k1xDO1AwciS6pyBXc3tJfE7kbcs28BJN2uSdlFJxwa4=;
-        b=l1KzryNwFl7v1iepOCZ5GJgVP74SoBWjxppWKyfYjH1d0/wdsl8/yOKpYEvM2axtAr
-         NrlwjEGYErixmndtqrbpzsd6VFv4wZboEuqG4r/+6c5n1U0/vdqRnnUmnGD3v3o7HstL
-         Wn0LqNRvDej2eWD1bqVsOwOlSQNtFVYnxJpCebHyK5JPIxUZ8+uwLyF/LsYRdgB0n9ev
-         qxEHmKsOSmoLiHbse9dWriPYpKlHOyGw3p+keMmIp4ykQl/ksCB0hVFwwki5N2a13nI7
-         z4E2UakxD4EHU6lOmzoi+bx1MoCn6P+qd1LiKdfp+OOGe0LqfFRu381hKUGzHvstEGrC
-         sSBw==
-X-Gm-Message-State: AOPr4FWq6dwLlPNzr7qxQopN79XOYVKV/76QKfwnOqK8fDsVd+okbxiivGlt0MjLSyjl8eJ69huIXFKb82nKUQ==
-MIME-Version: 1.0
-X-Received: by 10.176.4.69 with SMTP id 63mr2336380uav.32.1462994937310; Wed,
- 11 May 2016 12:28:57 -0700 (PDT)
-Date: Wed, 11 May 2016 16:28:57 -0300
-Message-ID: <CAGDGa53U+Nq3nZv-u7azf--UuHdex0PmXB6tmaRct81scV5y7Q@mail.gmail.com>
-From: Oliveira Lima <oliveiralimajr@gmail.com>
-To: cve-assign@mitre.org, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=94eb2c000e6c8c17a90532960df6
-Subject: [oss-security] Request CVE ID for Simple Photo Gallery 1.8.0 - Stored XSS
+Received: (qmail 24062 invoked from network); 13 Oct 2016 07:03:22 -0000
+From: cve-assign@mitre.org
+To: freener.gdx@gmail.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>
+Message-Id: <20161013070308.6FFD713A870@smtpvmsrv1.mitre.org>
+Date: Thu, 13 Oct 2016 03:03:08 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow
 
---94eb2c000e6c8c17a90532960df6
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-request CVE ID for Simple Photo Gallery <= 1.8.0 - Stored Cross-Site
-Scripting (XSS)
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=ded89912156b1a47d940a0c954c43afbabd0c42c
 
-Description
-***********************
+> I found a stack buffer overflow vulnerability in Broadcom wifi driver
+> brcmfmac, this issue has been fixed,
 
-The plugin allows the execution of malicious codes on name input of the
-gallery and album.
+> To trigger the bug the exploit should send a NL80211_CMD_START_AP or
+> NL80211_CMD_NEW_BEACON command to nl80211 socket in kernel.
 
-Proof of Concept URL
-***************************
+> NL80211_ATTR_SSID is optional, user can send a netlink packet which
+> does not contain information about NL80211_ATTR_SSID, so params.ssid
+> and params.ssid_len will be 0. It's the key point in the exploit.
 
-http://www.rootlabs.com.br/xss-simple-photo-gallery/
+> It does not
+> check the length of data before calling memcpy to copy the data to
+> stack buffer.
 
-Report Timeline
-************************
-26-April-2016- Reported
-27-April-2016- Vendor Response
-27 -April-2016- Vendor Fixed
-28-April-2016- Public disclosed
+>> brcmfmac: avoid potential stack overflow in brcmf_cfg80211_start_ap()
 
-Vendo Reference
-*****************
-https://br.wordpress.org/plugins/simple-photo-gallery/changelog/
+>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
 
-References
-*****************
+Use CVE-2016-8658.
 
-<https://br.wordpress.org/plugins/simple-photo-gallery/changelog/>
-http://www.rootlabs.com.br/xss-simple-photo-gallery/
-https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Oliveira Lima Jr
-rootlabs.com.br
-Linkedin <http://br.linkedin.com/pub/oliveira-lima-junior/2b/48/285/>
-@oliveiralimajr <https://twitter.com/oliveiralimajr>
-
---94eb2c000e6c8c17a90532960df6--
+iQIcBAEBCAAGBQJX/zAMAAoJEHb/MwWLVhi25+oQAKs2qjaGbVngpPWsnbCsPONI
+6NjXoz9otsl0g1RrLuKHYB7S7fIY2D5JqKh+dNFuFwUkcTIo7nojVgcZSTp1FEnH
+V/LHG3uPo2rmul/65vo1a3H90C6ZSJlHsOE1DaUbLIDNUr6fReAWWinP2Mv7IPft
+2BSXXriH544MBkwL5GEMVtfKEcLvzWrOK/poxN1dFyCUGCtD7vNFs0CEhT/eqhZZ
+YZVcV1wvIHnbPbpBc0riuzZcej4ofcfcyIoLFqHWuV4R4VnPzXjWVB2Zm9O+DJkh
+y1/xHDGo4Yasfx3V3hX03ylHe4BrJaA6rz6ptBLuBQUU976r8Hu7UAZ1deR0beSe
+WkEbKaXPl/kIBpyjCM4XHhc4L6CXM9W6QUy03j1ueWIRj7C4ImNUIR6ti87uDVG1
+WqMcOtdsG0N7mXd7y2e4T2slW9BYa/+FdT/rcdVtSVPis7FWH+N3DiG76/0BTcCj
+iuUBZHF81CnrkJQZo/pLmAPy2GC7iaaqTT8J6P0f52+CnbFPHBPaYYOaAb3zy3Vk
+F7SJM1sbPEan2Wyb6CW0wJVDGKXjvFgNj4QYm0etoVMsQiz0puhBWC1GXVbzhsCS
+DxXRW58QtkN5ODLSXYGMO3H4kQwuUv6P0nKYrrpv7nCIkS4uXZWydpQcN3+zVvuP
+5l5c5X60MnOYzYVMOH4P
+=kCpv
+-----END PGP SIGNATURE-----
