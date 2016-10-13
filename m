@@ -1,71 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/4
-Message-ID: <2F6C06FC-4F95-43BB-957C-8C7D30BB0BA4@360.cn>
-Date: Fri, 8 Apr 2016 04:58:48 +0000
-From: 王梅 <wangmei@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3624 libtiff: Out-of-bounds Write in the rgb2ycbcr tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/4
+Message-ID: <20161013101019.uiaqlniqatzmc6j4@perpetual.pseudorandom.co.uk>
+Date: Thu, 13 Oct 2016 11:10:19 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: bubblewrap LPE
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+On Wed, 12 Oct 2016 at 15:12:47 +0200, Sebastian Krahmer wrote:
+> /usr/bin/bwrap may be installed mode 04755 or with cap_sys_admin and other
+> file caps. I dont know if there are any dists already shipping it that way,
+> but the Makefile and some RedHat spec files contain file caps for it.
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type:  Out-of-bounds Write
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-3624
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+It needs to be setuid root (or CAP_SYS_ADMIN, which might as well be setuid
+root) to be useful on any distribution whose kernel doesn't normally allow
+unprivileged users to open user-namespaces; in particular, Debian, RHEL,
+and backports to older/LTS Ubuntu (but not current Ubuntu).
 
-Introduction
-============
+> For some reason it sets the PR_SET_DUMPABLE flag, as seen below. The comment about
+> it looks strange to me. If thats really true, suid programs shouldn't
+> be forced to play with the dumpable flag to achieve their goal.
 
-Out-of-bounds Write occurred in function cvtClump in rgb2ycbcr allows attackers to cause a denial of service when param v was set to -1.
+I assume the developers of Bubblewrap wouldn't have done this if the
+kernel (or at least *a* kernel they care about) didn't require it.
+But hopefully becoming dumpable can be restricted to smaller sections
+of the code.
 
+If it's only for write_uid_gid_map(), then one way would be for that
+function to fork(), with the child making itself dumpable and writing
+the map files, and the parent just waiting for the child?
 
+> Once the dumpable flag is set, there is a chance we could attach to the process,
+> once the remaining caps are dropped and the whole process runs as user.
 
-libtiff-master/libtiff/rgb2ycbcr.c:193
+I have reported this to
+<https://github.com/projectatomic/bubblewrap/issues/107>.
 
-187                             lumaGreen[TIFFGetG(RGB)] +
-188                             lumaBlue[TIFFGetB(RGB)];
-189                         /* accumulate chrominance */
-190                         Cb += (TIFFGetB(RGB) - Y) * D1;
-191                         Cr += (TIFFGetR(RGB) - Y) * D2;
-192                         /* emit luminence */
-193                         *op++ = V2Code(Y,
-194                             refBlackWhite[0], refBlackWhite[1], 255);
-195                 }
+I believe the intention is that none of the operations that can pass over
+the privilege separation socket are problematic, because they only affect
+the sandboxed processes, and if you can ptrace bwrap then you can certainly
+ptrace and subvert the sandboxed processes too. SETUP_SET_HOSTNAME clearly
+doesn't match that intention, *if* Bubblewrap didn't unshare the UTS namespace
+beforehand; Bubblewrap does insist that --hostname can't be used without
+--unshare-uts, but you're right that a user outside the sandbox can ptrace
+it and bypass that check by making it behave as though --hostname had been
+used.
 
+As a quick temporary fix for Debian, I'm reverting the addition of
+SETUP_SET_HOSTNAME.
 
+Am I right in thinking that this pseudocode would fix it while reinstating
+the feature?
 
-gdb rgb2ycbcr
+    case PRIV_SEP_OP_SET_HOSTNAME:
+      if (!opt_unshare_uts)
+        die_with_error ("Refusing to set hostname in original namespace");
+      else if (!sethostname (... as before))
+        die_with_error (... as before);
 
-(gdb) r -c none  -r -1  -h -1  -v -1 sample/rgb2ycbcr_cvtClump.tif 1.tif
-
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000000401440 in cvtClump (op=0x1 <Address 0x1 out of bounds>, raster=0x7ffff7249f90, ch=152, cw=65312, w=65312)
-    at rgb2ycbcr.c:193
-193                             *op++ = V2Code(Y,
-(gdb) p op
-$6 = (unsigned char *) 0x1 <Address 0x1 out of bounds>
-(gdb) p *op
-Cannot access memory at address 0x1
-(gdb) bt
-#0  0x0000000000401440 in cvtClump (op=0x1 <Address 0x1 out of bounds>, raster=0x7ffff7249f90, ch=152, cw=65312, w=65312)
-    at rgb2ycbcr.c:193
-#1  0x0000000000401757 in cvtStrip (op=0x0, raster=0x7ffff7249f90, nrows=152, width=65312) at rgb2ycbcr.c:245
-#2  0x00000000004018b7 in cvtRaster (tif=0x604010, raster=0x7ffff4cab010, width=65312, height=152) at rgb2ycbcr.c:267
-#3  0x0000000000401f03 in tiffcvt (in=0x605560, out=0x604010) at rgb2ycbcr.c:352
-#4  0x000000000040108a in main (argc=11, argv=0x7fffffffe3b8) at rgb2ycbcr.c:127
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
-
-
-Thank you!
-Best Regards,
-
-
-Mei
-
+Thanks,
+    S
