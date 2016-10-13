@@ -1,68 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/3
-Message-ID: <a21ce701-cd83-f4da-736a-0977b1e7f31f@redhat.com>
-Date: Tue, 17 May 2016 10:19:16 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/10
+Message-ID: <ad59c912-423e-baa2-4a31-413251d0ee5c@oracle.com>
+Date: Thu, 13 Oct 2016 16:26:58 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: ImageMagick heap overflow and out of bounds read
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
-On 05/11/2016 12:01 PM, Hanno Böck wrote:
+On 13/10/16 13:46, Vladis Dronov wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
 
-> https://blog.fuzzing-project.org/45-ImageMagick-heap-overflow-and-out-of-bounds-read.html
->
-> Recently the ImageTragick vulnerability shed some light on the security
-> status of ImageMagick.
->
-> This made me wonder how resilient to fuzzing ImageMagick is these days.
-> It's pretty much a posterchild example for a good fuzzing target: Lots
-> of supported complex binary file formats.
->
-> I already did some fuzzing on ImageMagick, but as far as I remember
-> that was before I used american fuzzy lop and was done with zzuf. I was
-> also aware that others did some more thorough fuzzing on ImageMagick.
-> http://www.openwall.com/lists/oss-security/2014/12/24/1
->
-> What I did now was relatively simple: I took a trivial, few pixels PNG
-> and used ImageMagick's "convert" tool to convert it into all file
-> formats that have both read and write support in ImageMagick. I used
-> that to run a fuzzing job with afl and asan. By design ImageMagick will
-> sometimes do huge memory allocations, these can be prevented by setting
-> limits for the width, height and memory usage in the policy.xml file.
->
-> I discovered one heap buffer overflow in the PICT parser and one heap
-> out of bounds read in the PSD parser. Given how big the attack surface
-> is this is not terrible, but it shows that despite previous efforts
-> there's still potential to fuzz ImageMagick.
->
-> https://crashes.fuzzing-project.org/imagemagick-heapoverflow-WritePixelCachePixels.pict
-> Sample file for heap buffer overflow in WritePixelCachePixels() (PICT
-> format)
-> https://github.com/ImageMagick/ImageMagick/commit/cfbe890d0cfcd5d3b0f63744a6901e40e992e07c
-> Git commit / fix
->
-> https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-PushShortPixel.psd
-> Sample file for heap out of bounds read in PushShortPixel() (PSD format)
-> https://github.com/ImageMagick/ImageMagick/commit/15dd190dfd7e7a3341bdc378f4f0daba9873322c
-> Git commit / fix
->
-> https://www.imagemagick.org/script/changelog.php
-> Both issues have been fixed in the versions 6.9.4-0 and 7.0.1-2. In the
-> meantime new versions (6.9.4-1, 7.0.1-3) came out that, as far as I
-> understand the ChangeLog, remove another potential vector for the
-> ImageTragick vulnerabilities, so you should preferrably update to those.
->
-Hello,
+This bug isn't accessible.   Do you think you could post the reproducer
+or open the bug please?
 
-This seems to have fallen through the cracks.
-Mitre, do you want to assign CVE IDs to these vulnerabilities?
-
-Thanks!
-Best Regards,
-
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
-
-
+jch
