@@ -1,69 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/5
-Message-ID: <42e97a56-3538-0864-ee40-2494df567745@halfdog.net>
-Date: Wed, 24 Feb 2016 05:43:04 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/7
+Message-ID: <562698334.718761.1476365601025.JavaMail.zimbra@redhat.com>
+Date: Thu, 13 Oct 2016 09:33:21 -0400 (EDT)
+From: CAI Qian <caiqian@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+Subject: Re: cve request: systemd-machined: information exposure for docker containers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Dmitry V. Levin wrote:
-> On Tue, Feb 23, 2016 at 07:17:54PM +0300, Solar Designer wrote:
->> On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
->>> Sending content from [0] also to oss-security as requested last
->>> time:
->> 
->> Thank you.  This public disclosure is very late, though.  I
->> didn't realize you were still holding some of your findings on
->> this.
->> 
->>> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to
->>> change ownership of slave pts devices in /dev/pts to the same
->>> uid holding the master file descriptor for the slave.
->> 
->> I think pt_chown is only needed for legacy BSD pty's, and no
->> longer needed for Unix 98 pty's that Linux systems use these
->> days.  Perhaps it should be dropped from upstream glibc by now.
+
+----- Original Message -----
+> From: cve-assign@...re.org
+> To: caiqian@...hat.com
+> Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+> Sent: Tuesday, July 26, 2016 3:24:13 PM
+> Subject: Re: cve request: systemd-machined: information exposure for docker containers
 > 
-> Just for the record, pt_chown is not enabled by default in upstream
-> glibc starting with glibc-2.18, one has to specify
-> --enable-pt_chown configure option explicitly to build pt_chown.
-
-Thanks for that information. So for pt_chown, this could hopefully be
-just an Ubuntu issue. Should we assign an CVE for that?
-
-On the other hand, the TIOCGPTN ioctl still is problematic with
-USERNS, also for other tools. I just started with pt_chown for
-demonstration because it is SUID, perhaps there are other programs
-using this ioctl.
-
-Should information about this risk/attack method just be added to the
-kernel docs/man-page of TIOCGPTN or is it a separate vulnerability
-with need for addressing (another CVE?).
-
-> glibc documentation clearly states that "the use of pt_chown
-> introduces additional security risks to the system and you should
-> enable it only if you understand and accept those risks": 
-> https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
-
-Another
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 > 
-argument for having some community check tool + procedure
-(sketched in mail before) to make mistakes only once (when not
-everyone is reading all the docs).
+> > Once docker containers register themselves to systemd-machined
+> > by oci-register-machine. Any unprivileged user could run
+> > machinectl to list every single containers running in the host
+> > even if the containers do not belong to this user (including containers
+> > belong to the root user), and access sensitive information associated
+> > with any individual container including its internal IP address, OS
+> > version, running processes, and file path for its rootfs.
+> > 
+> > $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+> > cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+> >            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+> >           Leader: 43494 (sleep)
+> >          Service: docker; class container
+> >             Root:
+> >             /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+> >          Address: 172.17.0.2
+> >                   fe80::42:acff:fe11:2
+> >               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+> >             Unit:
+> >             docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+> >                   43494 sleep 3000
+> 
+> Use CVE-2016-6349.
+It turns out this CVE is against oci-register-machine NOT systemd. The fix is here,
 
-hd
+https://github.com/projectatomic/oci-register-machine/pull/22
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlbNQt0ACgkQxFmThv7tq+7cYwCeIz3bGFV7lJwTS6naQrzLfAoc
-h7EAnioQTLYVtsNJ5jX0+hiW9QekLUVg
-=B5H+
------END PGP SIGNATURE-----
+   CAI Qian
