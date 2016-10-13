@@ -1,18 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/4
-Message-Id: <46B49944-E27F-410E-A3BE-93A46F51B001@topsec.com.cn>
-Date: Fri, 18 Nov 2016 16:33:15 +0800
-From: ChenQin <chenqin@...sec.com.cn>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/9
+Message-ID: <1880446022.2861488.1476368746117.JavaMail.zimbra@redhat.com>
+Date: Thu, 13 Oct 2016 10:25:46 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
+To: David Howells <dhowells@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2579 <http://bugzilla.maptools.org/show_bug.cgi?id=2579>
-fixed:
-  * tools/tiff2pdf.c: fix read -largely- outsize of buffer in
-        t2p_readwrite_pdf_image_tile(), causing crash, when reading a
-        JPEG compressed image with TIFFTAG_JPEGTABLES length being one.
-        Reported as MSVR 35101 by Axel Souchet and Vishal Chauhan from
-        the MSRC Vulnerabilities & Mitigations team.
+Hello, David,
+
+Could you, please, tell, if you plan to submit that patch of yours to be merged upstream?
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
 
+----- Original Message -----
+From: "Greg KH" <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Sent: Thursday, October 13, 2016 2:57:17 PM
+Subject: Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+
+On Thu, Oct 13, 2016 at 08:46:51AM -0400, Vladis Dronov wrote:
+> Hello,
+> 
+> It was found that when gcc stack protector is turned on, proc_keys_show() can
+> cause a panic in the Linux kernel due to the stack corruption. This happens
+> because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
+> 
+> CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
+> in the public communications regarding this flaw.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+> 
+> Note: Unfortunately, I'm not sure if the patch was already sent to security@...nel.org
+> or alike by the patch author.
+
+Nope, I don't think that security@...nel.org was sent the patch, but if
+the maintainer of the subsytem already knows about it (it looks like he
+wrote the patch), then there was no need to let that alias know about
+it, right?
+
+Any idea if this is going to be submitted to be merged upstream?
+
+thanks,
+
+greg k-h
