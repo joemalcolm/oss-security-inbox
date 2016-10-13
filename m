@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1807" "Sunday" "6" "November" "2016" "17:52:31" "-0500" "Siddharth Sharma" "siddharth@redhat.com" "<1232346907.5838823.1478472751323.JavaMail.zimbra@redhat.com>" "44" "Re: [oss-security] nfsd-ganesha allows anyone to call into DBUS?" nil nil nil "11" "2016110622:52:31" "[oss-security] nfsd-ganesha allows anyone to call into DBUS?" (number mark "U       siddharth@re Nov  6   44/1807  " thread-indent "\"Re: [oss-security] nfsd-ganesha allows anyone to call into DBUS?\"\n") "<20160912095353.GB17469@suse.de>" ("<20160912095353.GB17469@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1468" "Thursday" "13" "October" "2016" "10:25:46" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1880446022.2861488.1476368746117.JavaMail.zimbra@redhat.com>" "43" "Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)" "^Cc:" nil nil "10" "2016101314:25:46" "[oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)" (number mark "        vdronov@redh Oct 13   43/1468  " thread-indent "\"Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)\"\n") "<20161013125717.GA16563@kroah.com>" ("<1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>" "<1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>" "<20161013125717.GA16563@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17489 invoked by uid 550); 6 Nov 2016 23:13:05 -0000
+Received: (qmail 19487 invoked by uid 550); 13 Oct 2016 14:25:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8101 invoked from network); 6 Nov 2016 22:52:54 -0000
-Date: Sun, 6 Nov 2016 17:52:31 -0500 (EST)
-From: Siddharth Sharma <siddharth@redhat.com>
-To: oss-security@lists.openwall.com
-Cc: matt@linuxbox.com, philippe deniel <philippe.deniel@cea.fr>
-Message-ID: <1232346907.5838823.1478472751323.JavaMail.zimbra@redhat.com>
-In-Reply-To: <20160912095353.GB17469@suse.de>
-References: <20160912095353.GB17469@suse.de>
+Received: (qmail 19458 invoked from network); 13 Oct 2016 14:25:58 -0000
+Message-ID: <1880446022.2861488.1476368746117.JavaMail.zimbra@redhat.com>
+In-Reply-To: <20161013125717.GA16563@kroah.com>
+References: <1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com> <1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com> <20161013125717.GA16563@kroah.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.36.4.142]
+X-Originating-IP: [10.40.0.183]
 X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF49 (Linux)/8.0.6_GA_5922)
-Thread-Topic: nfsd-ganesha allows anyone to call into DBUS?
-Thread-Index: D6EXK3No+nL28tXv5unESXUbP6n5Wg==
-Subject: Re: [oss-security] nfsd-ganesha allows anyone to call into DBUS?
+Thread-Topic: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
+Thread-Index: rc2Qje7HACOFD36AsMwYMKeuSAkh5Q==
+Cc: oss-security@lists.openwall.com
+Date: Thu, 13 Oct 2016 10:25:46 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] kernel: Stack corruption while reading
+ /proc/keys (CVE-2016-7042)
+To: David Howells <dhowells@redhat.com>
 
-Hi,
+Hello, David,
 
-Which version of nfs-ganesha did you use ? Can you be more specific
-I tried to reproduce this quite a lot of times in my testing environment
-But I always get 
+Could you, please, tell, if you plan to submit that patch of yours to be merged upstream?
 
-~]$  dbus-send --print-reply --system --dest=org.ganesha.nfsd  /org/ganesha/nfsd/ExportMgr org.ganesha.nfsd.exportmgr.AddExport  string:$GANESHA_DIR/exports/export.$VOL.conf string:"EXPORT(Path=/$SERV_MALICIOUS_CONTENT)"
-Error org.freedesktop.DBus.Error.AccessDenied: Rejected send message, 1 matched rules; type="method_call", sender=":1.159" (uid=1000 pid=3852 comm="dbus-send --print-reply --system --dest=org.ganesh") 
-
-anything you did differently ?
------------------------------------------------------------------
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
-Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
 
 ----- Original Message -----
-From: "Sebastian Krahmer" <krahmer@suse.com>
+From: "Greg KH" <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Cc: matt@linuxbox.com, "philippe deniel" <philippe.deniel@cea.fr>
-Sent: Monday, September 12, 2016 3:23:53 PM
-Subject: [oss-security] nfsd-ganesha allows anyone to call into DBUS?
+Sent: Thursday, October 13, 2016 2:57:17 PM
+Subject: Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 
-Hi
+On Thu, Oct 13, 2016 at 08:46:51AM -0400, Vladis Dronov wrote:
+> Hello,
+> 
+> It was found that when gcc stack protector is turned on, proc_keys_show() can
+> cause a panic in the Linux kernel due to the stack corruption. This happens
+> because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
+> 
+> CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
+> in the public communications regarding this flaw.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+> 
+> Note: Unfortunately, I'm not sure if the patch was already sent to security@kernel.org
+> or alike by the patch author.
 
-The nfs-ganesha (userspace nfsd) offers a dbus API to control/admin
-the nfsd via cmdline tools and some qt+python code.
+Nope, I don't think that security@kernel.org was sent the patch, but if
+the maintainer of the subsytem already knows about it (it looks like he
+wrote the patch), then there was no need to let that alias know about
+it, right?
 
-The default dbus config seems to allow anyone to connect to
-it and invoke methods. The code at least does not check any polkit
-authorizations or dbus sender (at a first look). Am I missing something? If I dont,
-the DBUS API should be declared experimental and disabled by default,
-since there are some methods which would allow users to gain root.
+Any idea if this is going to be submitted to be merged upstream?
 
-https://github.com/nfs-ganesha/nfs-ganesha/
-https://github.com/nfs-ganesha/nfs-ganesha/wiki/Dbusinterface
+thanks,
 
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
+greg k-h
