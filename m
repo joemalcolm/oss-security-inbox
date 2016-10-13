@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1408" "Wednesday" "7" "March" "2018" "07:20:47" "-0700" "Kurt Seifried" "kseifrie@redhat.com" "<A0F9A5C4-B009-40D3-B3B7-CE1AB9B0B8FB@redhat.com>" "35" "Re: [oss-security] memcached UDP amplification attacks" "^Cc:" nil nil "3" "2018030714:20:47" "[oss-security] memcached UDP amplification attacks" (number mark "        kseifrie@red Mar  7   35/1408  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<20180307110950.4eb041a8@redhat.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" "<20180307110950.4eb041a8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1004" "Thursday" "13" "October" "2016" "10:07:08" "-0400" "CAI Qian" "caiqian@redhat.com" "<1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>" "22" "[oss-security] CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation" nil nil nil "10" "2016101314:07:08" "[oss-security] CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation" (number mark "U       caiqian@redh Oct 13   22/1004  " thread-indent "\"[oss-security] CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation\"\n") "<963884651.726428.1476366904945.JavaMail.zimbra@redhat.com>" ("<963884651.726428.1476366904945.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21662 invoked by uid 550); 7 Mar 2018 14:21:00 -0000
+Received: (qmail 32756 invoked by uid 550); 13 Oct 2016 14:07:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21640 invoked from network); 7 Mar 2018 14:21:00 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=peSQftBqKgWhSoLHftD5Hom3HVzy7suE6xXeD68lqbA=;
-        b=M55W+acMRo2YoS6oABfODoEprSVHRDaUtJmRtSmD9/QJz1Vw7ELwyJrn4ANTyl015L
-         Dy6OBF8TjvFGOGgoR88MTv7Gk3xFqXUu/YqdgYrv09Q7gkIR1CSdVU6ytR2Uc8nINbTU
-         o12rnknQtn1r2aFzYQqMU3Ki8mOVLlIpTlVk4YBw1nLcnXSFnefTg2LxKnRbZMApUEEE
-         +j2JFJ4jWC5ib9PefMYBCVagYCVXnnf9xuEXyl7oJn4nda+78n7yLTcVHNnZaJvkrMJB
-         ouPDc/86rQaKMkF+GJqXEIRwlQS5CVOcTMMIDzFmupoxVy2UhbKBGRfdnEEx2QufUgWW
-         Rp5g==
-X-Gm-Message-State: AElRT7EH9e2npYOAgqxSalj9dVzNYQXhfhZzOHy9XgF58lP3iPnlIW5/
-	bLqRNSY9quFMYgzJJoJrMNhOvA==
-X-Google-Smtp-Source: AG47ELtmtQ01Qj6Cve9DnOTlLUy6xmfxRflmg1WDQHSX0sOlGkC6p173aIoZuZ40wpT05ZFYQkiVnQ==
-X-Received: by 2002:a17:902:8487:: with SMTP id c7-v6mr8548779plo.143.1520432448552;
-        Wed, 07 Mar 2018 06:20:48 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (1.0)
-X-Mailer: iPad Mail (15D100)
-In-Reply-To: <20180307110950.4eb041a8@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A0F9A5C4-B009-40D3-B3B7-CE1AB9B0B8FB@redhat.com>
-References: <20180302124428.440b9c3b@pc1> <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com> <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com> <20180307110950.4eb041a8@redhat.com>
-Cc: Kurt Seifried <kseifried@redhat.com>, oss-security@lists.openwall.com
-Date: Wed, 7 Mar 2018 07:20:47 -0700
-From: Kurt Seifried <kseifrie@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] memcached UDP amplification attacks
-To: Tomas Hoger <thoger@redhat.com>
+Received: (qmail 32735 invoked from network); 13 Oct 2016 14:07:20 -0000
+Date: Thu, 13 Oct 2016 10:07:08 -0400 (EDT)
+From: CAI Qian <caiqian@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>
+In-Reply-To: <963884651.726428.1476366904945.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.18.41.13]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
+Thread-Index: iQU5r9CeEuByr2ZZ6M/Ek5qvrO6o2A==
+Subject: [oss-security] CVE request: kernel - local DoS due to a page lock order bug in the
+ XFS seek hole/data implementation
 
-Actually the 50k was based on a private but trustworthy reporter (The 3 let=
-ter agency people), some people store very big things in memcached like cac=
-hed web pages...
+Running the trinity syscall fuzzer inside a docker container as an non-privileged user below,
 
-> On Mar 7, 2018, at 3:09 AM, Tomas Hoger <thoger@redhat.com> wrote:
->=20
->> On Fri, 2 Mar 2018 21:42:30 -0700 Kurt Seifried wrote:
->>=20
->> I have assigned CVE-2018-1000115 to this issue:
->>=20
->> Memcached version 1.5.5 contains an Insufficient Control of Network
->> Message Volume (Network Amplification, CWE-406) vulnerability in the
->> UDP support of the memcached server that can result in denial of
->> service via network flood (traffic amplification of 1:50,000 has been
->> reported by reliable sources). This attack appear to be exploitable
->> via network connectivity to port 11211 UDP. This vulnerability
->> appears to have been fixed in 1.5.6 due to the disabling of the UDP
->> protocol by default.
->=20
-> Minor nitpick, the description mentions 1:50,000 ratio, apparently
-> based on the information in the following reference:
->=20
->> https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html
->=20
-> where it's mentioned as:
->=20
-> """
-> Worse, memcached can have an amplification factor of over 50,000,
-> meaning a 203 byte request results in a 100 megabyte response.
-> """
->=20
-> However, 200 * 50k =3D 10m, not 100m.  Wonder if I'm doing my math wrong.
->=20
-> --=20
-> Tomas Hoger / Red Hat Product Security
+$ trinity -g vfs --arch 64 --disable-fds=sockets --disable-fds=perf --disable-fds=epoll
+--disable-fds=eventfd --disable-fds=pseudo --disable-fds=timerfd --disable-fds=memfd
+--disable-fds=drm
+
+always trigger a deadlock/hang at the fdatasync() syscall within 30 minutes with traces
+(including sysrq-w info as well) like this, http://people.redhat.com/qcai/tmp/dmesg
+
+This can be reproduced on any kernel post v4.4-rc1 as long as including this commit.
+
+fc0561cefc04e7803c0f6501ca4f310a502f65b8
+xfs: optimise away log forces on timestamp updates for fdatasync
+
+Reverted the above commit against the latest mainline allows the trinity to run more than
+10 hours without any deadlock/hang.
+
+This had also been reported to the XFS maintainer and diagnosed as a page lock order bug
+in the XFS seek hole/data implementation and presumably is still working on a fix better
+than to revert the above commit.
+
+   CAI Qian
