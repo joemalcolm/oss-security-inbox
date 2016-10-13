@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/1
-Message-ID: <alpine.LFD.2.20.1610031633160.29684@wniryva>
-Date: Mon, 3 Oct 2016 16:37:43 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/6
+Message-ID: <20161013125717.GA16563@kroah.com>
+Date: Thu, 13 Oct 2016 14:57:17 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Thu, Oct 13, 2016 at 08:46:51AM -0400, Vladis Dronov wrote:
+> Hello,
+> 
+> It was found that when gcc stack protector is turned on, proc_keys_show() can
+> cause a panic in the Linux kernel due to the stack corruption. This happens
+> because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
+> 
+> CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
+> in the public communications regarding this flaw.
+> 
+> References:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+> 
+> Note: Unfortunately, I'm not sure if the patch was already sent to security@...nel.org
+> or alike by the patch author.
 
-Quick Emulator(Qemu) built with the i.MX Fast Ethernet Controller emulator 
-support is vulnerable to an infinite loop issue. It could occur while 
-processing packets on the transmit queue in 'imx_fec_do_tx'.
+Nope, I don't think that security@...nel.org was sent the patch, but if
+the maintainer of the subsytem already knows about it (it looks like he
+wrote the patch), then there was no need to let that alias know about
+it, right?
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
+Any idea if this is going to be submitted to be merged upstream?
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05556.html
+thanks,
 
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+greg k-h
