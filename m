@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/4
-Message-Id: <20161024151435.03B366C55E7@smtpvmsrv1.mitre.org>
-Date: Mon, 24 Oct 2016 11:14:35 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/3
+Message-Id: <20161013070308.6FFD713A870@smtpvmsrv1.mitre.org>
+Date: Thu, 13 Oct 2016 03:03:08 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
-Subject: Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream
+To: freener.gdx@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the Intel HDA controller emulation support is
-> vulnerable to an infinite loop issue. It could occur while processing the DMA
-> buffer stream while doing data transfer in 'intel_hda_xfer'.
-> 
-> A privileged user inside guest could use this flaw to consume excessive CPU
-> cycles on the host, resulting in DoS.
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=ded89912156b1a47d940a0c954c43afbabd0c42c
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg04717.html
+> I found a stack buffer overflow vulnerability in Broadcom wifi driver
+> brcmfmac, this issue has been fixed,
 
->> If this
->> length and buffer pointer were to be same, 'copy' could be
->> set to zero(0), leading to an infinite loop.
+> To trigger the bug the exploit should send a NL80211_CMD_START_AP or
+> NL80211_CMD_NEW_BEACON command to nl80211 socket in kernel.
 
-Use CVE-2016-8909.
+> NL80211_ATTR_SSID is optional, user can send a netlink packet which
+> does not contain information about NL80211_ATTR_SSID, so params.ssid
+> and params.ssid_len will be 0. It's the key point in the exploit.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/audio/intel-hda.c but
-that may be an expected place for a later update.
+> It does not
+> check the length of data before calling memcpy to copy the data to
+> stack buffer.
+
+>> brcmfmac: avoid potential stack overflow in brcmf_cfg80211_start_ap()
+
+>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+
+Use CVE-2016-8658.
 
 - -- 
 CVE Assignment Team
@@ -38,17 +41,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYDiS2AAoJEHb/MwWLVhi2EdIP/13s4aqAkXD/OaxOK3qRouWo
-ONcmv+2QlJXZfy6Jm42tkh9Piw0GdGtaPbdGi6lWdE+skngIqsQn9agnQHNh3DZg
-YE0hU7meNnfXuGKJZZ2sQlKJtT5kfcoFYv0V0D9OL+EOkd5Aul+cUrw/dXHrUvag
-WUO2o2VwLfCnKKC7j8Y1lEDxfuy5uN8Wf312pvDusyEPKWfJ+JYRsmF2uCOSWgTg
-VxjHCDyMsvUTmqIVblfo+oVHD8u3yqONAPfX7Q/UeIk3QDo7sXT1qVCbt7dOAhJA
-9ieYKuDy7XKDoyQOCZIiOnfdV4Lz9FMVjZThDnrtD4hpoe79U7lV0RJGl0cXYg2o
-tWxz7QGJj3bPoxTDVFU/5CqfuD5/p00HDEhbz55FrPva2UTnddIYQ4Aqt5KZp55v
-D1G7GtnLnw+YxD4KJ81cTeCvArAg3mtTij2H3skhJ2xrxsN94CgvhhjxRqjCaUHJ
-1XDjVPJSuRHpV3kAApRGYuRC2oq8KzgeAMyYuRom8DbBlBIWcmoF1npwYY+Umv5+
-B384U55gEqpplZspdxEoJgQQIj/x1PdmEpJ0EE8Qsx3+FhN0OtmFHhLuwPNdWir0
-gKXY9Z/Jgdg+g6COXB6Tb0T7bNTVdUNfcx3+GyxamgpXfnnkTS38fSNg9QOCcv3X
-56I0ORxCBj7wQTmT5UFB
-=5rof
+iQIcBAEBCAAGBQJX/zAMAAoJEHb/MwWLVhi25+oQAKs2qjaGbVngpPWsnbCsPONI
+6NjXoz9otsl0g1RrLuKHYB7S7fIY2D5JqKh+dNFuFwUkcTIo7nojVgcZSTp1FEnH
+V/LHG3uPo2rmul/65vo1a3H90C6ZSJlHsOE1DaUbLIDNUr6fReAWWinP2Mv7IPft
+2BSXXriH544MBkwL5GEMVtfKEcLvzWrOK/poxN1dFyCUGCtD7vNFs0CEhT/eqhZZ
+YZVcV1wvIHnbPbpBc0riuzZcej4ofcfcyIoLFqHWuV4R4VnPzXjWVB2Zm9O+DJkh
+y1/xHDGo4Yasfx3V3hX03ylHe4BrJaA6rz6ptBLuBQUU976r8Hu7UAZ1deR0beSe
+WkEbKaXPl/kIBpyjCM4XHhc4L6CXM9W6QUy03j1ueWIRj7C4ImNUIR6ti87uDVG1
+WqMcOtdsG0N7mXd7y2e4T2slW9BYa/+FdT/rcdVtSVPis7FWH+N3DiG76/0BTcCj
+iuUBZHF81CnrkJQZo/pLmAPy2GC7iaaqTT8J6P0f52+CnbFPHBPaYYOaAb3zy3Vk
+F7SJM1sbPEan2Wyb6CW0wJVDGKXjvFgNj4QYm0etoVMsQiz0puhBWC1GXVbzhsCS
+DxXRW58QtkN5ODLSXYGMO3H4kQwuUv6P0nKYrrpv7nCIkS4uXZWydpQcN3+zVvuP
+5l5c5X60MnOYzYVMOH4P
+=kCpv
 -----END PGP SIGNATURE-----
