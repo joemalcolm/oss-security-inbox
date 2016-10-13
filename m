@@ -1,4 +1,9 @@
-Received: (qmail 9987 invoked by uid 550); 21 Jun 2024 17:59:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1445" "Thursday" "13" "October" "2016" "03:01:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161013070125.9C7331BE0E7@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: bubblewrap LPE" nil nil nil "10" "2016101307:01:25" "[oss-security] Re: bubblewrap LPE" (number mark "U       cve-assign@m Oct 13   34/1445  " thread-indent "\"[oss-security] Re: bubblewrap LPE\"\n") "<20161012131247.GB14056@suse.de>" ("<20161012131247.GB14056@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13729 invoked by uid 550); 13 Oct 2016 07:01:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28218 invoked from network); 21 Jun 2024 17:50:16 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: David Philip Brondsema <brondsem@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <5ba6465f-0850-e097-dda4-33a2fffb9efd@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 21 Jun 2024 17:49:12 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-38379: Apache Allura: Stored authenticated XSS 
+Received: (qmail 13698 invoked from network); 13 Oct 2016 07:01:37 -0000
+From: cve-assign@mitre.org
+To: krahmer@suse.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20161012131247.GB14056@suse.de>
+Message-Id: <20161013070125.9C7331BE0E7@smtpvbsrv1.mitre.org>
+Date: Thu, 13 Oct 2016 03:01:25 -0400 (EDT)
+Subject: [oss-security] Re: bubblewrap LPE
 
-Severity: moderate
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> Once the dumpable flag is set, there is a chance we could attach to the process,
+> once the remaining caps are dropped and the whole process runs as user.
+> 
+> Luckily, that happens at line 1707, right after a PrivSep socket has been opened!
 
-- Apache Allura 1.4.0 through 1.17.0
+Use CVE-2016-8659 for this issue in which there is unintended
+functionality of attaching to the process because of the details
+of the code near 1707.
 
-Description:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Apache Allura's neighborhood settings are vulnerable to a stored XSS attack=
-.=C2=A0 Only neighborhood admins can access these settings, so the scope of=
- risk is limited to configurations where neighborhood admins are not fully =
-trusted.
-
-This issue affects Apache Allura: from 1.4.0 through 1.17.0.
-
-Users are recommended to upgrade to version 1.17.1, which fixes the issue.
-
-Credit:
-
-=C3=96mer "WASP" Akincir  (finder)
-
-References:
-
-https://allura.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-38379
-
+iQIcBAEBCAAGBQJX/zCzAAoJEHb/MwWLVhi2N7MP/iBQbZmO7LEnU4n2DN0AgDwV
+WiZAzDsNl6rfFMDC25pSmy+0wY5E9qzbXdOWxiAphntuwG7K2qPeM78FrqcBr6wB
+/bMwj1Xp7fIWZIAt5O9Nnd/0B+KQgYwU0KjaJVyEyHW59Qhk/WWIqWViqia3CDL0
+zWVF/Ofnu2pTeoIOIBmnjAdgkiSihpU1XlR16e2YGfJAKAlaS0td+4jhogUmgkg3
+Sa5IbvgTVrLdG0LALAa9NQeN2guOslDkiQepW4NjhNungSJbmrkgq3xdMey2GHrC
+1hV1DgHbBLg43Kz7Mp1wKLxAn+VWvZrPHfYAP/gwpmA9kuUet1PAlN84awi2VbQg
+fTiY2f7/0AyQsIhhgPQVqfsidw2xBQ0DYc7uoQftFff/MmVFs0+K4miuFqmeQ06B
+WyFs4ur43J2EiS/rBJnZlNlqaBGvVg9pzeLv5MhfYnvteFGDxALfKAKNqIpQYHsZ
+c0JynLFP+el/XMBS2pt8cJiD1xVhGS/G3eCGCUWTmPBmaMfLHcJeyxO8ZmLcDetN
+zLPWjCDgtqUWGtfKWTR643I1cu5IVD3w2/k+glXwy3spz5JiKl5tfAFodDSUi35m
+Yn54sbPQ5ohVqoUrSd7FzTzrgfVAZJVNjcqbG+3VGpnfscgn0dSsEiH2i2jTlOy7
+Vxo15BHmFPpa4CuVsG/j
+=/As/
+-----END PGP SIGNATURE-----
