@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/6
-Message-Id: <20160401220924.8B09373C090@smtpvmsrv1.mitre.org>
-Date: Fri,  1 Apr 2016 18:09:24 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/2
+Message-Id: <20161013070125.9C7331BE0E7@smtpvbsrv1.mitre.org>
+Date: Thu, 13 Oct 2016 03:01:25 -0400 (EDT)
 From: cve-assign@...re.org
-To: squid3@...enet.co.nz
+To: krahmer@...e.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Squid HTTP Proxy
+Subject: Re: bubblewrap LPE
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> 1) A buffer overrun (on write(2)) has been found in Squid proxy 'pinger'
-> process that allows an attacker to craft ICMPv6 messages that will
-> either crash the child process (if the OS prootects against over-write)
-> or alter heap contents allowing the attacker to bypass CVE-2014-7142
-> protection and leak arbitrary heap data into the Squid log files. The
-> pinger is setuid root (though it does drop those privileges prior to
-> this attack being possible).
+> Once the dumpable flag is set, there is a chance we could attach to the process,
+> once the remaining caps are dropped and the whole process runs as user.
 > 
-> Patch for this issue is available at:
-> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14015.patch
-> 
-> The upstream advisory will be at this URL:
-> http://www.squid-cache.org/Advisories/SQUID-2016_3.txt
+> Luckily, that happens at line 1707, right after a PrivSep socket has been opened!
 
-Use CVE-2016-3947.
-
-
-> 2) A secondary issue with the same Denial of Service effects as
-> CVE-2016-2569 has been found that is not covered by the existing fix.
-> All Squid-3.x versions up to and including 3.5.15, and 4.0.x versions up
-> to and including 4.0.7 are vulnerable to this issue independent of the
-> fix for CVE-2016-2569.
-> 
-> Patch for this is available at:
-> http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14016.patch
-> 
-> The upstream advisory will be at this URL:
-> http://www.squid-cache.org/Advisories/SQUID-2016_4.txt
-
-Use CVE-2016-3948.
+Use CVE-2016-8659 for this issue in which there is unintended
+functionality of attaching to the process because of the details
+of the code near 1707.
 
 - -- 
 CVE Assignment Team
@@ -50,17 +28,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW/vEJAAoJEL54rhJi8gl5CDQQAKX+bY+PFOebFBtOrDhYR7tI
-4zbp+0MHv8pZjM+o6xW1tU1zYl/+VwCt2qv/O3R4Gt7JWZfOQthrwA1yzU3fNku7
-kI6aQZWVisiY6gsjI9Wj1Sfklehm9qSTDXyesMy+RB+oXNqhhR3l9B1GzLwMIcOH
-I4chWJNXKoU1o3YWp27cnfLg4QgLzQn7pKLx+rpuOh//oFwfuOkWf3cNLXrRYLew
-JDnwc3l+XmwHRtkX/E+su8ipC1dmxovtvqfQtjkjPmuosElSP3RgvtiMro3iK3MV
-WF6vM+dV7cAa//mZPd8GDzSeAPYLjiSovwhNWAmW4AlsEpUvGdO5SJ3HrThuhaku
-7Lwx9BoRjH2yNqZl23jsLnwTTL2U5DjDePjpVzfKtaIDh5ccam1zHui7g8/j6Hpa
-cmWlrlFhhB/FeUNR3EdYrPUF60AcapqJu4sQcpiMdPVFtDnxySj4XKe9yqbvNG3w
-OoFxeqOs4n9D2bEA5yTcF5DjbYN/EK08cz7pAi1kUjdbtcG6DeTprJpfvwzjleY5
-lx7NFYAJe1I0V7ZplDsUacMuN0AbPDqbkpZ46oWLkiDPassty66SLnVoepsMAlrh
-8WF3zq19oyjUMp5gsxUEonZ4f4cVVNlD+jL/BDdWrbRBSvtw+ceQAwCvkFnS20Sh
-NcYcZZpfjqharCUG2qxn
-=ZN5k
+iQIcBAEBCAAGBQJX/zCzAAoJEHb/MwWLVhi2N7MP/iBQbZmO7LEnU4n2DN0AgDwV
+WiZAzDsNl6rfFMDC25pSmy+0wY5E9qzbXdOWxiAphntuwG7K2qPeM78FrqcBr6wB
+/bMwj1Xp7fIWZIAt5O9Nnd/0B+KQgYwU0KjaJVyEyHW59Qhk/WWIqWViqia3CDL0
+zWVF/Ofnu2pTeoIOIBmnjAdgkiSihpU1XlR16e2YGfJAKAlaS0td+4jhogUmgkg3
+Sa5IbvgTVrLdG0LALAa9NQeN2guOslDkiQepW4NjhNungSJbmrkgq3xdMey2GHrC
+1hV1DgHbBLg43Kz7Mp1wKLxAn+VWvZrPHfYAP/gwpmA9kuUet1PAlN84awi2VbQg
+fTiY2f7/0AyQsIhhgPQVqfsidw2xBQ0DYc7uoQftFff/MmVFs0+K4miuFqmeQ06B
+WyFs4ur43J2EiS/rBJnZlNlqaBGvVg9pzeLv5MhfYnvteFGDxALfKAKNqIpQYHsZ
+c0JynLFP+el/XMBS2pt8cJiD1xVhGS/G3eCGCUWTmPBmaMfLHcJeyxO8ZmLcDetN
+zLPWjCDgtqUWGtfKWTR643I1cu5IVD3w2/k+glXwy3spz5JiKl5tfAFodDSUi35m
+Yn54sbPQ5ohVqoUrSd7FzTzrgfVAZJVNjcqbG+3VGpnfscgn0dSsEiH2i2jTlOy7
+Vxo15BHmFPpa4CuVsG/j
+=/As/
 -----END PGP SIGNATURE-----
