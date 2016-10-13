@@ -1,4 +1,9 @@
-Received: (qmail 28566 invoked by uid 550); 11 Dec 2024 07:27:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1654" "Thursday" "13" "October" "2016" "09:33:21" "-0400" "CAI Qian" "caiqian@redhat.com" "<562698334.718761.1476365601025.JavaMail.zimbra@redhat.com>" "40" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" nil nil nil "10" "2016101313:33:21" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" (number mark "U       caiqian@redh Oct 13   40/1654  " thread-indent "\"[oss-security] Re: cve request: systemd-machined: information exposure for docker containers\"\n") "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" ("<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5718 invoked by uid 550); 13 Oct 2016 13:33:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,120 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28548 invoked from network); 11 Dec 2024 07:27:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1733902038; bh=anoxwoVi3MbCkPVj94K4rMhG83IF6wG180PDTzFDPqo=;
-	h=Date:From:To:Subject:From;
-	b=OB61wYc0WKqxRXBtmg0cg9Z4ZkDfPScgal3sWRuza7CTM7j39dkmQf8bBghdb8tQk
-	 PUhEkNCLc8ZBAujsuu33yPFkkzSI5Bkvv3YL3oH+QoPNKxzzA5MTQUawXOP92kp8p9
-	 tkKtGjam/nuuoNq9h1yCSKKWQBWYQnPO0gkGRktVkrbdJ7LruBWQuAfoPSwHquRZOM
-	 nsmRQhllG0/Dtwdyi9ciHSkG32EFn7wJYtF61F/6o1qMzxtcd/UKKBf1HHwvul4MkV
-	 8a/NSpkCxKXJN/teJ3uBp4E32vzdTgFGky/15b5zKGRonzB92qd7iiLP1+vanLhdX6
-	 T75jl9E81ajMg==
-Date: Wed, 11 Dec 2024 08:27:18 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <q901so86-n601-s296-p516-o89p7q69p2n9@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 5700 invoked from network); 13 Oct 2016 13:33:33 -0000
+Date: Thu, 13 Oct 2016 09:33:21 -0400 (EDT)
+From: CAI Qian <caiqian@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <562698334.718761.1476365601025.JavaMail.zimbra@redhat.com>
+In-Reply-To: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
+References: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-11053: netrc and redirect credential
- leak
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.18.41.13]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
+Thread-Topic: cve request: systemd-machined: information exposure for docker containers
+Thread-Index: IdVf/9wGFzfQWHbifGEJn+/zALFzxw==
+Subject: [oss-security] Re: cve request: systemd-machined: information exposure for docker
+ containers
 
-netrc and redirect credential leak
-==================================
 
-Project curl Security Advisory, December 11th 2024 -
-[Permalink](https://curl.se/docs/CVE-2024-11053.html)
 
-VULNERABILITY
--------------
+----- Original Message -----
+> From: cve-assign@mitre.org
+> To: caiqian@redhat.com
+> Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+> Sent: Tuesday, July 26, 2016 3:24:13 PM
+> Subject: Re: cve request: systemd-machined: information exposure for docker containers
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > Once docker containers register themselves to systemd-machined
+> > by oci-register-machine. Any unprivileged user could run
+> > machinectl to list every single containers running in the host
+> > even if the containers do not belong to this user (including containers
+> > belong to the root user), and access sensitive information associated
+> > with any individual container including its internal IP address, OS
+> > version, running processes, and file path for its rootfs.
+> > 
+> > $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
+> > cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
+> >            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
+> >           Leader: 43494 (sleep)
+> >          Service: docker; class container
+> >             Root:
+> >             /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
+> >          Address: 172.17.0.2
+> >                   fe80::42:acff:fe11:2
+> >               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
+> >             Unit:
+> >             docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
+> >                   43494 sleep 3000
+> 
+> Use CVE-2016-6349.
+It turns out this CVE is against oci-register-machine NOT systemd. The fix is here,
 
-When asked to both use a `.netrc` file for credentials and to follow HTTP
-redirects, curl could leak the password used for the first host to the
-followed-to host under certain circumstances.
+https://github.com/projectatomic/oci-register-machine/pull/22
 
-This flaw only manifests itself if the netrc file has an entry that matches
-the redirect target hostname but the entry either omits just the password or
-omits both login and password.
-
-INFO
-----
-
-A curl transfer with `a.tld` that redirects to `b.tld` that uses a `.netrc`
-like below (with a match, but no password specified for the second host),
-would make curl pass on `alicespassword` as password even in the second
-transfer to the separate host `b.tld`.
-
-~~~
-machine a.tld
-   login alice
-   password alicespassword
-
-default
-   login bob
-~~~
-
-This bug is **not** considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2024-11053 to this issue.
-
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 6.5 to and including 8.11.0
-- Not affected versions: curl < 6.5 and >= 8.11.1
-- Introduced-in: https://github.com/curl/curl/commit/ae1912cb0d494b48d514
-
-libcurl is used by many applications, but not always advertised as such!
-
-SOLUTION
-------------
-
-- Fixed-in: https://github.com/curl/curl/commit/e9b9bbac22c26cf6731
-
-The fix also addresses a few other .netrc related issues.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 8.11.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Avoid using netrc together with redirects
-
-TIMELINE
----------
-
-This issue was reported to the curl project on November 8, 2024. We contacted
-distros@openwall on December 3, 2024.
-
-curl 8.11.1 was released on December 11 2024 around 06:00 UTC, coordinated
-with the publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+   CAI Qian
