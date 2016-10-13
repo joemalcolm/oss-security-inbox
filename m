@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/04/4
-Message-ID: <a5a9f33f-b61b-6f95-fa81-f0a3cd8defb1@securify.nl>
-Date: Thu, 4 Aug 2016 19:40:14 +0200
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/5
+Message-ID: <1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>
+Date: Thu, 13 Oct 2016 08:46:51 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple Cross-Site Scripting vulnerabilities affecting seven WordPress Plugins
+Subject: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+Hello,
 
+It was found that when gcc stack protector is turned on, proc_keys_show() can
+cause a panic in the Linux kernel due to the stack corruption. This happens
+because xbuf[] is not big enough to hold a 64-bit timeout value rendered as weeks.
 
+CVE-2016-7042 was assigned to this flaw internally by the Red Hat. Please, use it
+in the public communications regarding this flaw.
 
-View attachment "cross_site_scripting_in_activity_log_wordpress_plugin.txt" of type "text/plain" (3984 bytes)
+References:
 
-View attachment "cross_site_scripting_in_count_per_day_wordpress_plugin.txt" of type "text/plain" (3422 bytes)
+https://bugzilla.redhat.com/show_bug.cgi?id=1373966 (patch)
 
-View attachment "cross_site_scripting_in_formbuilder_wordpress_plugin.txt" of type "text/plain" (4163 bytes)
+https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
 
-View attachment "cross_site_scripting_in_wordpress_landing_pages_plugin.txt" of type "text/plain" (3802 bytes)
+Note: Unfortunately, I'm not sure if the patch was already sent to security@...nel.org
+or alike by the patch author.
 
-View attachment "cross_site_scripting_vulnerability_in_events_made_easy_wordpress_plugin.txt" of type "text/plain" (12233 bytes)
-
-View attachment "cross_site_scripting_vulnerability_in_search_function_activity_log_wordpress_plugin.txt" of type "text/plain" (3991 bytes)
-
-View attachment "stored_cross_site_scripting_vulnerability_in_count_per_day_wordpress_plugin.txt" of type "text/plain" (4232 bytes)
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
