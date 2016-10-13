@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["511" "Wednesday" "27" "January" "2021" "20:31:51" "+1100" "Dave Horsfall" "dave@horsfall.org" "<alpine.BSF.2.21.9999.2101272010280.36435@aneurin.horsfall.org>" "10" "Re: [oss-security] Baron Samedit: Heap-based buffer overflow in Sudo (CVE-2021-3156)" nil nil nil "1" "2021012709:31:51" "[oss-security] Baron Samedit: Heap-based buffer overflow in Sudo (CVE-2021-3156)" (number mark "U       dave@horsfal Jan 27   10/511   " thread-indent "\"Re: [oss-security] Baron Samedit: Heap-based buffer overflow in Sudo (CVE-2021-3156)\"\n") "<20210127093340.6d976bc2@computer>" ("<20210126181453.GA4184@localhost.localdomain>" "<20210127093340.6d976bc2@computer>") nil nil nil nil nil nil nil "Re: [oss-security] Baron Samedit: Heap-based buffer overflow in Sudo (CVE-2021-3156)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1728" "Thursday" "13" "October" "2016" "18:10:41" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161013161041.GR25134@suse.de>" "42" "[oss-security] CVE Request: another recursion in GRE" nil nil nil "10" "2016101316:10:41" "[oss-security] CVE Request: another recursion in GRE" (number mark "U       meissner@sus Oct 13   42/1728  " thread-indent "\"[oss-security] CVE Request: another recursion in GRE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10046 invoked by uid 550); 27 Jan 2021 10:05:19 -0000
+Received: (qmail 25903 invoked by uid 550); 13 Oct 2016 16:10:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9928 invoked from network); 27 Jan 2021 09:32:08 -0000
-X-RG-Spam: Unknown
-X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgeduledrvdekgddtgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfupfevtfgpvffgnffuvffttedpqfgfvfenuceurghilhhouhhtmecugedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvffujgfkfhgfgggtsehttddttddtredvnecuhfhrohhmpeffrghvvgcujfhorhhsfhgrlhhluceouggrvhgvsehhohhrshhfrghllhdrohhrgheqnecuggftrfgrthhtvghrnheptddtueffkedtuefgfeeuteelhfeigeffffdvgeegffevffehvddtffdvhfeggfeinecuffhomhgrihhnpegtohhmphhuthhinhhgfhhorhhgvggvkhhsrdgtohhmnecukfhppeduuddtrddugedurdduleefrddvfeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehhvghloheprghnvghurhhinhdrhhhorhhsfhgrlhhlrdhorhhgpdhinhgvthepuddutddrudeguddrudelfedrvdeffedpmhgrihhlfhhrohhmpeeouggrvhgvsehhohhrshhfrghllhdrohhrgheqpdhrtghpthhtohepoehmrhhluhguohdttddusehgmhgrihhlrdgtohhmqedprhgtphhtthhopeeoohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomheq
-X-RazorGate-Vade-Verdict: clean 0
-X-RazorGate-Vade-Classification: clean
-X-RG-VS-CLASS: clean
-X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
-Date: Wed, 27 Jan 2021 20:31:51 +1100 (EST)
-From: Dave Horsfall <dave@horsfall.org>
-To: OSS Security <oss-security@lists.openwall.com>
-In-Reply-To: <20210127093340.6d976bc2@computer>
-Message-ID: <alpine.BSF.2.21.9999.2101272010280.36435@aneurin.horsfall.org>
-References: <20210126181453.GA4184@localhost.localdomain> <20210127093340.6d976bc2@computer>
-User-Agent: Alpine 2.21.9999 (BSF 287 2018-06-16)
-X-GPG-Public-Key: http://www.horsfall.org/gpgkey.pub
-X-GPG-Fingerprint: 05B4 FFBC 0218 B438 66E0  587B EF46 7357 EF5E F58B
-X-Home-Page: http://www.horsfall.org/
-X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
+Received: (qmail 25885 invoked from network); 13 Oct 2016 16:10:53 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 13 Oct 2016 18:10:41 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>,
+	cve-assign@mitre.org
+Message-ID: <20161013161041.GR25134@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: Re: [oss-security] Baron Samedit: Heap-based buffer overflow in Sudo
- (CVE-2021-3156)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] CVE Request: another recursion in GRE
 
-> I think that's a very fair point. Also it seems the development trend in 
-> sudo is to actually increase complexity even more and adding all kinds 
-> of features that really should not be part of a suid tool, see e.g. 
-> https://computingforgeeks.com/better-secure-new-sudo-release/
+Hi,
 
-I just happen to have a very much simplified version called "ssu"; I 
-worked on it and fixed a few gaping security holes...  They should have 
-been obvious to any novice programmer (which said idiot^2 boss was not).
+While debugging the issue CVE-2016-7039, SUSE engineer Michal Kubecek also spotted
+a similar problem fixed earlier this year.
 
--- Dave
+If a packet has the layout: | IPv4 header | GRE header | IPv4 header | GRE header | ...
+depending on left over stack it could run the kernel out of stack due to
+recursion and so crash the kernel.
+This might be hard to hit with regular Ethernet MTUs, but easier with Jumbo frames.
+
+Michal has a testcase in 
+https://bugzilla.suse.com/show_bug.cgi?id=1001486#c5
+
+
+As far as I see fixed in 4.6, introduced in 3.13 (bf5a755f).
+
+commit fac8e0f579695a3ecbc4d3cac369139d7f819971
+Author: Jesse Gross <jesse@kernel.org>
+Date:   Sat Mar 19 09:32:01 2016 -0700
+
+    tunnels: Don't apply GRO to multiple layers of encapsulation.
+    
+    When drivers express support for TSO of encapsulated packets, they
+    only mean that they can do it for one layer of encapsulation.
+    Supporting additional levels would mean updating, at a minimum,
+    more IP length fields and they are unaware of this.
+    
+    No encapsulation device expresses support for handling offloaded
+    encapsulated packets, so we won't generate these types of frames
+    in the transmit path. However, GRO doesn't have a check for
+    multiple levels of encapsulation and will attempt to build them.
+    
+    UDP tunnel GRO actually does prevent this situation but it only
+    handles multiple UDP tunnels stacked on top of each other. This
+    generalizes that solution to prevent any kind of tunnel stacking
+    that would cause problems.
+    
+    Fixes: bf5a755f ("net-gre-gro: Add GRE support to the GRO stack")
+    Signed-off-by: Jesse Gross <jesse@kernel.org>
+    Signed-off-by: David S. Miller <davem@davemloft.net>
+
+Ciao, Marcus
