@@ -1,52 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/9
-Message-Id: <20160111174311.7B06D6C00D9@smtpvmsrv1.mitre.org>
-Date: Mon, 11 Jan 2016 12:43:11 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/12
+Message-Id: <20161013161227.DCB286C4FDC@smtpvmsrv1.mitre.org>
+Date: Thu, 13 Oct 2016 12:12:27 -0400 (EDT)
 From: cve-assign@...re.org
-To: wmealing@...hat.com
+To: caiqian@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel - SCTP denial of service during heartbeat timeout functions.
+Subject: Re: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> A case can occur when sctp_accept() is called by the user during
-> a heartbeat timeout event after the 4-way handshake.  Since
-> sctp_assoc_migrate() changes both assoc->base.sk and assoc->ep, the
-> bh_sock_lock in sctp_generate_heartbeat_event() will be taken with
-> the listening socket but released with the new association socket.
-> The result is a deadlock on any future attempts to take the listening
-> socket lock.
+> trinity syscall fuzzer
 
-> Ensure the socket taken is also the same one that is released by
-> saving a copy of the socket before entering the timeout event
-> critical section.
+> always trigger a deadlock/hang at the fdatasync() syscall
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1297389
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/sctp/sm_sideeffect.c?id=635682a14427d241bab7bbdeebb48a7d7b91638e
+> diagnosed as a page lock order bug
+> in the XFS seek hole/data implementation
 
-Use CVE-2015-8767.
+Use CVE-2016-8660.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWk+k+AAoJEL54rhJi8gl5nzEP/R0YgH6KMRbLsizjooACajGq
-DEFdPkZnEKKUY846dC5wE7FOv9REuXCqAxszvg9M5r+Oje7riOKJl5pnFSvC5abx
-zgUWCjdKgOOZE74YKfsNPd6EVh6qmhPvJ7y5/hNW6zYqLOEJhqlk9Gkfqmx/0O2A
-941849R/aPvsZ4Wcg/MvmEk7kuol8LcufauXAQyUWc5cAFnwHPtsyvlpLFcoOU30
-QwYqTPVx2NzOuYN/aoJlIZyAzcuacp/RLrBW2VOL6fOA8FNFexDf0G0yWM5xSbab
-DRPqY/eNx1iOzQUNFOi8tVdc//HrQXemM3vIdesJc2/BVWiNslhTdkc9m7IRou0i
-reBUqqqjkBaHjzN6dHYCqw8O1H9Nsdv0Z8nKAzzoaGSO4TuXlxj/sjbbolfQpg2B
-0QUhbkB977ARyxrUjnstL9jyBoXxJGLanSByq7imsXBjSCWyhs9k3BkUsjwavE8J
-thNB1ULSn4KbeGHrIM1jj3qAVIvQtwa+cUWp0CXHPN+oevH+kUCGJK2fpb+t9g1b
-s3w4uLyXeMEoHKjn1jrwO4jl8L17f7uGMUXpxPV0bWuLg182V4zvf2WekfvzKGgB
-McFeoNTpUCvg8lM5eja0rR5GjAyR1zJR2xc/zQsDBmFMITJcmOk7ZXYTbMuxfu3c
-/IrELQSgNN9Svqk1Rjyg
-=CDOr
+iQIcBAEBCAAGBQJX/7HXAAoJEHb/MwWLVhi2L14QALYZjH8BXahbcIAhmFqjaZoI
+/OuQXX01GrInM0Oiy0gOAHSicfuEIZciBafpwbvFrYWqEulZaEn8QgfYnpObMPy6
+RTchZX02eqPE12o8jp2C/nL09TW5iAaseduinfmWsq0A4AtEfGMVX6mSpsYUBkvi
+MCkdvo3zceAb3CFpZspF3Irls4yqs6Hcn3doGp0meFc/7ICg1HMqKT/3XPLWYacd
+QIHYL6PrC1jYp2TDWhujQWdDz0I9t2i8d6sasBAONoOoeb7fgxQsExkM988N6USt
+fBXdFO2oFXAnVsYZx/b93GYeJ4UeubB9Bnecm9C1XcunFCAnPXwVOHX6b2vTscmf
+3O9eLwn0jTpF+1Vfl4o9KgoKnZknSBgFiFxZ7/IeCNQOpfFm6XVkl5pL/RomTYEI
+nthYgXwu9yXcM/LWbSgMIIQxeUvGob2+qToL14iKOoCs4BX7dhUHBTL+Ss8x46D6
+Ad4bJOuS0bS0q/PdGbWcMDedZS0NdH5+/pxTkfL36sr6iHqHU8mrrWtXu3Nf6BVu
+SCoQYI8f1YzclBNw4wHuWZcIPkp2g7XPkyF7F5xbQjoNQ1/7eKQbZsAkTWkQT5DZ
+OF7H91Ljf0fnzLBH8NTNleRRiZY8OQOB0H+9wCvWxrmv0TbsXUjn+WTEEnorLTyG
+RiMSBIazOttES1wnrCmd
+=4qj4
 -----END PGP SIGNATURE-----
