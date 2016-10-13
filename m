@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["848" "Monday" "19" "September" "2016" "14:01:08" "-0700" "Reed Loden" "reed@reedloden.com" "<CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>" "27" "Re: [oss-security] Re: ezmlm warning" nil nil nil "9" "2016091921:01:08" "[oss-security] Re: ezmlm warning" (number mark "U       reed@reedlod Sep 19   27/848   " thread-indent "\"Re: [oss-security] Re: ezmlm warning\"\n") "<20150718174051.GB2727@openwall.com>" ("<1436834771.18369.ezmlm-warn@lists.openwall.com>" "<CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>" "<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>" "<20150718174051.GB2727@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1237" "Thursday" "13" "October" "2016" "12:12:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161013161227.DCB286C4FDC@smtpvmsrv1.mitre.org>" "34" "[oss-security] Re: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation" nil nil nil "10" "2016101316:12:27" "[oss-security] Re: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation" (number mark "U       cve-assign@m Oct 13   34/1237  " thread-indent "\"[oss-security] Re: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation\"\n") "<1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>" ("<1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15490 invoked by uid 550); 19 Sep 2016 21:01:41 -0000
+Received: (qmail 3674 invoked by uid 550); 13 Oct 2016 16:12:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15468 invoked from network); 19 Sep 2016 21:01:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reedloden.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=F8ZTqHvTa/yt8j2qXJjxx/ruODU5AoqpxGsI0m6PtUw=;
-        b=FF9SyVpc9M+HXX1Rc+1+cgxowiqr39go/osz2uGjPUBeEYnwWXagpbugXTgVbu51f8
-         Xc5JI9A4wggcVtFoUQVbrs8/C4F4NyU2CQ8fZ3ezOLGSykw0eO5d8Z8G7XOwtfgM0XhL
-         ukfKgNeUCsNWQtlCsfA+hD0b5B7nYI2DbYun4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=F8ZTqHvTa/yt8j2qXJjxx/ruODU5AoqpxGsI0m6PtUw=;
-        b=kIpmlf1FTxoNXxHaf/g+GjmKsPHY+2I/cm/snmAu7K+8rHq1JKesNiC5tx7x04WYXH
-         X+noqluFJYs/6+9AakGI7PTmfFxpKYiegFR8SS66E8VqZWezx0pKgj0rqrjaJCxgEeFg
-         RjhpWdBaF6tCTqxPMsSfh/bH21m/hlApW3nP7UmG5RadUp3NPX2kiIQ5bGqxWx0so63d
-         IA7rmsd4bmH5g4BQnt8hkKpw3r3qO/B4vIVjUwSR/+A6EEDZgrr34/vIqoHxfqX81dxM
-         rYR7DNSSa6TtHUwaAmFHRlrVI+uC+MqBvR3i8fqRNPC1LBySleUeuZuV1A0v1D9EDrNr
-         bY+w==
-X-Gm-Message-State: AE9vXwOY8/xSfgvmmvTNLYp7bC8xbOGrB7e5fERqLDKuwMNhw6RwovT2S0EVIejWk02HxEt7HfJqNKVqhApUjkQE
-X-Received: by 10.107.27.14 with SMTP id b14mr43013822iob.60.1474318888573;
- Mon, 19 Sep 2016 14:01:28 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20150718174051.GB2727@openwall.com>
-References: <1436834771.18369.ezmlm-warn@lists.openwall.com>
- <CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>
- <CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com> <20150718174051.GB2727@openwall.com>
-From: Reed Loden <reed@reedloden.com>
-Date: Mon, 19 Sep 2016 14:01:08 -0700
-Message-ID: <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113fdd68a3b018053ce29d1e
-Subject: Re: [oss-security] Re: ezmlm warning
+Received: (qmail 3653 invoked from network); 13 Oct 2016 16:12:39 -0000
+From: cve-assign@mitre.org
+To: caiqian@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1215560150.734283.1476367628231.JavaMail.zimbra@redhat.com>
+Message-Id: <20161013161227.DCB286C4FDC@smtpvmsrv1.mitre.org>
+Date: Thu, 13 Oct 2016 12:12:27 -0400 (EDT)
+Subject: [oss-security] Re: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
 
---001a113fdd68a3b018053ce29d1e
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sat, Jul 18, 2015 at 10:40 AM, Solar Designer <solar@openwall.com> wrote:
+> trinity syscall fuzzer
 
-> On Thu, Jul 16, 2015 at 05:41:35PM -0700, Reed Loden wrote:
-> > Likely, the ezmlm instance on lists.openwall.com needs to be updated to
-> get
-> > some of the DMARC compliance changes that were made last year (
-> > http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
->
-> Thank you.  I assume you mean primarily this one:
->
-> - Added optional rewritefrom feature to ezmlm-send, automatically
->   enabled when the sender has a "reject" DMARC policy.
->
+> always trigger a deadlock/hang at the fdatasync() syscall
 
-Alexander,
+> diagnosed as a page lock order bug
+> in the XFS seek hole/data implementation
 
-Any update on getting the ezmlm instance on oss-security updated so people
-with e-mail providers who have implemented DMARC don't get their e-mails
-rejected? Would be much appreciated.
+Use CVE-2016-8660.
 
-Thanks,
-~reed
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---001a113fdd68a3b018053ce29d1e--
+iQIcBAEBCAAGBQJX/7HXAAoJEHb/MwWLVhi2L14QALYZjH8BXahbcIAhmFqjaZoI
+/OuQXX01GrInM0Oiy0gOAHSicfuEIZciBafpwbvFrYWqEulZaEn8QgfYnpObMPy6
+RTchZX02eqPE12o8jp2C/nL09TW5iAaseduinfmWsq0A4AtEfGMVX6mSpsYUBkvi
+MCkdvo3zceAb3CFpZspF3Irls4yqs6Hcn3doGp0meFc/7ICg1HMqKT/3XPLWYacd
+QIHYL6PrC1jYp2TDWhujQWdDz0I9t2i8d6sasBAONoOoeb7fgxQsExkM988N6USt
+fBXdFO2oFXAnVsYZx/b93GYeJ4UeubB9Bnecm9C1XcunFCAnPXwVOHX6b2vTscmf
+3O9eLwn0jTpF+1Vfl4o9KgoKnZknSBgFiFxZ7/IeCNQOpfFm6XVkl5pL/RomTYEI
+nthYgXwu9yXcM/LWbSgMIIQxeUvGob2+qToL14iKOoCs4BX7dhUHBTL+Ss8x46D6
+Ad4bJOuS0bS0q/PdGbWcMDedZS0NdH5+/pxTkfL36sr6iHqHU8mrrWtXu3Nf6BVu
+SCoQYI8f1YzclBNw4wHuWZcIPkp2g7XPkyF7F5xbQjoNQ1/7eKQbZsAkTWkQT5DZ
+OF7H91Ljf0fnzLBH8NTNleRRiZY8OQOB0H+9wCvWxrmv0TbsXUjn+WTEEnorLTyG
+RiMSBIazOttES1wnrCmd
+=4qj4
+-----END PGP SIGNATURE-----
