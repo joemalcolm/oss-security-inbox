@@ -1,52 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/2
-Message-ID: <fc81166c6bd64f25b3de82878a578fba@imshyb02.MITRE.ORG>
-Date: Wed, 9 Nov 2016 00:44:42 -0500
-From: <cve-assign@...re.org>
-To: <anemec@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/9
+Message-ID: <alpine.LFD.2.20.1610141644230.13950@wniryva>
+Date: Fri, 14 Oct 2016 16:46:18 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Huawei PSIRT <psirt@...wei.com>
+Subject: CVE request Qemu: char: divide by zero error in serial_update_parameters
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> 1.5.3 - 2016-11-05
-> 
-> * Security issue: Fixed a bug where HKDF would return an empty
-> byte-string if used with a length less than algorithm.digest_size.
-> Credit to Markus Doering for reporting the issue.
-> 
-> https://cryptography.io/en/latest/changelog/#id1
-> https://github.com/pyca/cryptography/issues/3211
-> https://github.com/pyca/cryptography/commit/b924696b2e8731f39696584d12cceeb3aeb2d874
+Quick Emulator(Qemu) built with the 16550A UART emulation support is 
+vulnerable to a divide by zero issue. It could occur while updating serial 
+device parameters in 'serial_update_parameters'.
 
->> hazmat/primitives/kdf/hkdf.py
->> 
->> -  while (self._algorithm.digest_size // 8) * len(output) < self._length:
->> +  while self._algorithm.digest_size * (len(output) - 1) < self._length:
+A privileged guest user could use this flaw to crash the Qemu process instance 
+on the host, resulting in DoS.
 
-Use CVE-2016-9243.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02461.html
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1384909
 
-iQIcBAEBCAAGBQJYIrdLAAoJEHb/MwWLVhi20v8P/12FFKS4lmHBohPiqZfVYIVf
-FVVBabdQeQKkm/T/zs+Dn0itq4FZX/jo3GYiJfC9zX7EPtmOq6QQQmKZImDeD72m
-Tt3eMzUCdN5ofWm9+QHzi4Bg9Gh5ZtTQU1VppMslSxKCl5bB5kliEr+KH5iBndCw
-ElvNUpqsODuqiajKwY5F+jTu7wazdxbG8vGds2dTy19SsBx+xOTP4wFt5vIKc4TN
-s06d5AV7qJ9fZkXQgR62T2+huElM0yCYf7qx7B36YyT8Sj4pKrLAm/QdMx8e5azn
-gEmvp6afOtXv+o+lqXQcsExQtHEz3W0ezVCsAZqA4ckGxSxcNZ2JwfQQizO/kHVK
-+TMkYnMchlr80ev61VTV7AbXTnn/RHbHkHQA3nRRKXbR+umqzpcrpB4wFELwLqw9
-hchlE5DebRoYGVSiFPTKsTmYca2OelbmEQcz7fRbaha1g2G6BoR9/bRPfZTj7PBk
-J1yHdJqfF15EQUamOUpzSAzNubHly0jdOKNSE2kUMWZFCsDcvbsC/Hsvn2YXn7We
-KlMWBZ7z1BdC7UEuNpDozVG9Dc62gX187+czppqmAaw9BD9cGH92QVghTsZ5Zxj3
-UXrP0nt96ImQC/OlDVcdpUvqKE77K2Zb5OVFWLgU69VyaUc/oRMch6TgJ4VpCm6/
-elSR/llcBZcHjvKLrYwP
-=4CW6
------END PGP SIGNATURE-----
+This issue was reported by Huawei Product Security Incident Response Team 
+(PSIRT), Huawei Inc.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
