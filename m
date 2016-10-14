@@ -1,84 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/6
-Message-ID: <alpine.DEB.2.20.1609071338210.787@tvnag.unkk.fr>
-Date: Wed, 7 Sep 2016 13:39:36 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: Incorrect reuse of client certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/6
+Message-ID: <alpine.LFD.2.20.1610141638130.13950@wniryva>
+Date: Fri, 14 Oct 2016 16:42:09 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Huawei PSIRT <psirt@...wei.com>
+Subject: CVE request Qemu: dma: rc4030 divide by zero error in set_next_tick
 Content-Type: text/plain; charset=utf-8
 
-Incorrect reuse of client certificates 
-======================================
+   Hello,
 
-Project cURL Security Advisory, September 7th 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160907.html)
+Quick Emulator(Qemu) built with the JAZZ RC4030 chipset emulation support is 
+vulnerable to a divide by zero issue. It could occur while computing its 
+periodic timer's next tick value.
 
-VULNERABILITY
--------------
+A privileged guest user could use this flaw to crash the Qemu process instance 
+on the host resulting in DoS.
 
-libcurl built on top of NSS (Network Security Services) incorrectly re-used
-client certificates if a certificate from file was used for one TLS connection
-but no certificate set for a subsequent TLS connection.
-
-While the symptoms are similar to CVE-2016-5420 (Re-using connection with wrong
-client cert), this vulnerability was caused by an implementation detail of the
-NSS backend in libcurl, which is orthogonal to the cause of CVE-2016-5420.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-7141 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw is present in curl and libcurl only if they are built with the
-support for NSS and only if the libnsspem.so library is available at run-time.
-
-- Affected versions: libcurl 7.19.6 to and including 7.50.1
-- Not affected versions: libcurl >= 7.50.2
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A fix for this flaw is included in libcurl 7.50.2 via
-[commit `curl-7_50_2~32`](https://github.com/curl/curl/commit/curl-7_50_2~32).
-For older releases of libcurl there is a
-[patch for CVE-2016-7141](https://curl.haxx.se/CVE-2016-7141.patch).
-
-RECOMMENDATIONS
+Upstream patch:
 ---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02577.html
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+This issue was reported by Huawei Product Security Incident Response Team 
+(PSIRT), Huawei Inc.
 
-  A - Apply the patch on the source code of libcurl and rebuild.
-
-  B - Configure libcurl to use a different TLS backend and rebuild.
-
-  C - Use certificates from NSS database instead of loading them from files.
-
-TIME LINE
----------
-
-This flaw was reported by Red Hat on August 22nd.  The patch fixing the flaw
-was published on September 5th.  CVE-2016-7141 was assigned to this flaw on
-September 6th.  This advisory was published on September 7th.
-
-CREDITS
--------
-
-Reported by Red Hat.  Security advisory coordinated by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
