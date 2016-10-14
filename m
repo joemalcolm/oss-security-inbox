@@ -1,59 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/8
-Message-Id: <20160124180726.F02FE6C00EA@smtpvmsrv1.mitre.org>
-Date: Sun, 24 Jan 2016 13:07:26 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: tiff: potential out-of-bound write in NeXTDecode()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/2
+Message-ID: <alpine.LFD.2.20.1610141145160.5203@wniryva>
+Date: Fri, 14 Oct 2016 11:48:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+  Hello John,
 
-> Could you assign a CVE for the following issue in tiff:
-> 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2508
-> 
->> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
->>
->>         * libtiff/tif_next.c: fix potential out-of-bound write in NeXTDecode()
->>         triggered by http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
->>         (bugzilla #2508)
-> 
-> Fixing commit:
-> 
-> https://github.com/vadz/libtiff/commit/b18012dae552f85dcc5c57d3bf4e997a15b1cc1c
++-- On Thu, 13 Oct 2016, John Haxby wrote --+
+| On 13/10/16 13:46, Vladis Dronov wrote:
+| > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+| 
+| This bug isn't accessible.   Do you think you could post the reproducer
+| or open the bug please?
 
-As mentioned in the
-http://openwall.com/lists/oss-security/2015/02/07/5 post, this
-libtiff5.tif file was first associated with CVE-2015-1547. However,
-https://bugs.mageia.org/show_bug.cgi?id=15519 is about "libtiff new
-security issue (second issue from PoC for CVE-2015-1547) ... this is
-actually another issue in libtiff itself." This suggests that a
-separate CVE ID is useful, because there were two separate types of
-problems, discovered at different times, that were triggered by the
-same example .tif file. Use CVE-2015-8784.
+Please see this one:
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWpQ/XAAoJEL54rhJi8gl5fHkQAJn5r1tcywWFYkpi7xgmiS7X
-GZ00mtvvyl4tO13+qnLSH7Odv7wfVUaKhcdoAXbCjqvlGYwfHt93+kP/6uqjD/te
-sJgo2E89yzaI+kc5p3+Ta1FubRfG/rljUyk+RnxZ1LprGf9eZ9BHV4C0ORNHyUOC
-nA/UvWsbmaVZoWn2FqakcFsPA/GzcfYjBNdLPNvZe/RdUzyivm79k/VUgHz+EzbT
-ERPaA5scDo7irc0jNjkerkNCuav8Wsn3nnXBVDngewQb5h0BUhjVIKhJOnOugqS6
-/fNMxKj8whnhuQI9NsYlqPXo+bmLXOJWc5aoAXZD/kabMOU2zUvMguqCZChRx+GM
-Ww3bYOed4b7ug0K5p8ZIeO6oP/XoInrQbPC09kvVX/xnKXXicIbxmnENVjbWOu80
-lXyoRp2qI3FnaIVhHWBkRbnxWVhqlSyr2fUeu9DBW52TMVgTWnr6Ovm/9lDtv67P
-JFFwTN15Zxvi6B8o2B/Rrpo6smTPWDV6D88rqF+U0wR/MZ9kJ5zHGR4tFTMUQK3J
-P6cGRkSnJwhrdp6eWiaLu9EZkOwSTPBhioEoSaWG1EmzFI6gXzlmd8gGeG/XikAQ
-c7oEaLuVxXhZyHBTBn+og+73FTJCdTHJLi4MgQWnErkaA9Tjzu9vNKqe4rotIiCH
-eH4woIieb01417xgvS7x
-=EnxA
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
