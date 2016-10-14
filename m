@@ -1,45 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/27/2
-Message-Id: <20160227134425.4F5F26C012D@smtpvmsrv1.mitre.org>
-Date: Sat, 27 Feb 2016 08:44:25 -0500 (EST)
-From: cve-assign@...re.org
-To: up201407890@...nos.dcc.fc.up.pt
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: util-linux runuser tty hijacking via TIOCSTI ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/1
+Message-ID: <5EDB84F4B23F5B4DB6500A89258280E03251E6E6@EX02.corp.qihoo.net>
+Date: Fri, 14 Oct 2016 02:53:13 +0000
+From: 张开翔 <zhangkaixiang@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: docker2aci: infinite loop in deps walking(CVE-2016-8579)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> When executing a program via "runuser -u nonpriv program" the
-> nonpriv session can
-> escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the
-> terminal's input buffer
+It was found that docker2aci fall into an infinite loop while traversing the dependency ancestry of a malformed image file.
+,this flaw may cause excessive CPU cycles & resources consume on the host. The happens because no essential check for duplicated
+image ID found in  getAncestry() in docker2aci,
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815922
 
-Use CVE-2016-2779.
+CVE-2016-8579 was assigned to this flaw by cve-assign@...re.org<mailto:cve-assign@...re.org>. Here the reply from CVE Assignment Team:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+docker2aci is apparently a library [...] and we almost always recognize
 
-iQIcBAEBCAAGBQJW0aedAAoJEL54rhJi8gl5pAoQAKWMwUdm+ZVBG7mMq8qqlCSQ
-an4Xqnp7s8vlogDY3NDBvVYazYVtg5Ajh9fSrWtNJeRcRkfiOw856XYNyN3mXcvn
-JXD2XMllsy+UsynMKzt4rlp6qlUCa26s4q60q6eDhoZRkRu/YjpitlnJwB6o2+yJ
-J8rZ3gZgzBL9ydfn0e+dOTdHrrpkM6mnKl1i6XKiHAdCz9AXqEn+rWVpsp6tfg8p
-Xnjr7VYQYBqELHzX4w7wuyMsc1zSSFd4X2dqT50ypNbRVh+UjZLR5bO4NNIILFB4
-YJGuGIKKc6rkGgNrNa7CM7Ll0f2O+i1Bpb4Iv+39ACT5TRXuFGwh2O//ZRCeLVbl
-edEhEnc60xcJAGnf47bA11thDvgxS11sc/tI++2bW3jYARRzybSS6Ym0hvGP/lGE
-8VycZrUMMDKKTXWu7mXxqTnbIDh91y1jVpdfZ077Qf9maEzpTM89zXuMc2GTbylY
-on8ZoRqxNto++aejWpILRvno9iA7jxXj68ex4Lb8IFNJeQNoKYaZRs/OxM62RmUV
-GAK/HrGbhM/A2/6AvFbrYEdXIbEzbFJqbLuZ0p/+sQZzQuoD9p992Cm2+yjPkoC0
-CJOzwgm9GSPYzvLmIOGWw/7n+H+a2HRGxKzscwc6GP2fmSfYdyfcCS76fcKlx30N
-uTHZfWSO+IA9Kz9tUgc2
-=L3QX
------END PGP SIGNATURE-----
+the potential for an unattended use case for any library.
+
+[...]
+
+Someone can call the ConvertSavedFile function from an arbitrary
+
+application. [...] It might be automated with cron or a similar unattended
+
+tool that runs in an unrestricted (non-container) environment. Thus,
+
+there is an availability impact because no human is around to notice
+
+the CPU usage.
+
+
+
+Use CVE-2016-8579.
+
+
+References:
+
+https://github.com/appc/docker2aci/issues/203(issue)
+
+https://github.com/lucab/docker2aci/commit/54331ec7020e102935c31096f336d31f6400064f(patch)
+
+Please, use it in the public communications regarding this flaw.
+
+
+Best regards,
+
+Kaixiang Zhang of Gear Team, Qihoo 360
+
