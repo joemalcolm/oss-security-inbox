@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/11
-Message-ID: <CA+q1=fTZxdEBOCoUTSXgusCP1k4wm_fJJqSLyucqbjs5LE+1_A@mail.gmail.com>
-Date: Mon, 5 Sep 2016 16:26:02 -0700
-From: Diogo Mónica <diogo.monica@...ker.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/5
+Message-ID: <20161014110106.GG31594@dhcp-25-225.brq.redhat.com>
+Date: Fri, 14 Oct 2016 13:01:07 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
->From I can understand from this report, the author creates a swarm, messes
-with the local certificate for a worker, and then tries to join the swarm.
-The worker fails because the author messed with the local state.
+On Fri, Oct 14, 2016 at 11:57:15AM +0100, John Haxby wrote:
+> On 14/10/16 07:18, P J P wrote:
+> > +-- On Thu, 13 Oct 2016, John Haxby wrote --+
+> > | On 13/10/16 13:46, Vladis Dronov wrote:
+> > | > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+> > | 
+> > | This bug isn't accessible.   Do you think you could post the reproducer
+> > | or open the bug please?
+> > 
+> > Please see this one:
+> >   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
+> > 
+> > Thank you.
+> 
+> Sorry, that's not why I was asking.  You provided links to two bugs: one
+> has the patch and a reproducer, the other has the patch.  Unfortunately
+> the former is a link to a bug that no one outside Red Hat has access to.
+>  In the past when people have posted links to oss-security that do not
+> have general access the access permissions have been relaxed or the
+> relevant content posted on the list.
+> 
+> That's what I was asking for:  inaccessible links are not helpful on an
+> open list.
 
-This does not make the manager not available to the rest of the worker
-nodes, and is essentially a self-DoS (I modified my local configuration in
-such a way that docker doesn't run).
+The other link to internal bug was posted by mistake. I am sorry for
+that. https://bugzilla.redhat.com/show_bug.cgi?id=1373966 has all the
+information we can share.
 
-A simple rm -rf /var/lib/docker/swarm should clean all the state. Not CVE
-worthy.
-
+Thanks,
 -- 
-Diogo Mónica
-
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
