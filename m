@@ -1,72 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/8
-Message-id: <etPan.576c1f7b.5aae323e.126b@me.com>
-Date: Thu, 23 Jun 2016 20:42:13 +0300
-From: Kirill Zaitsev <k.zaitsev@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/4
+Message-ID: <041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>
+Date: Fri, 14 Oct 2016 11:57:15 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: RCE vulnerability in Openstack Murano using insecure YAML tags (CVE-2016-4972)
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
-==============================================================
-RCE vulnerability in Openstack Murano using insecure YAML tags
-==============================================================
+On 14/10/16 07:18, P J P wrote:
+> +-- On Thu, 13 Oct 2016, John Haxby wrote --+
+> | On 13/10/16 13:46, Vladis Dronov wrote:
+> | > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+> | 
+> | This bug isn't accessible.   Do you think you could post the reproducer
+> | or open the bug please?
+> 
+> Please see this one:
+>   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
+> 
+> Thank you.
 
-:Date: June 23, 2016
-:CVE: CVE-2016-4972
+Sorry, that's not why I was asking.  You provided links to two bugs: one
+has the patch and a reproducer, the other has the patch.  Unfortunately
+the former is a link to a bug that no one outside Red Hat has access to.
+ In the past when people have posted links to oss-security that do not
+have general access the access permissions have been relaxed or the
+relevant content posted on the list.
 
+That's what I was asking for:  inaccessible links are not helpful on an
+open list.
 
-Affects
-~~~~~~~
-- Murano: <=2015.1.1; <=1.0.2; ==2.0.0
-- Murano-dashboard: <=2015.1.1; <=1.0.2; ==2.0.0
-- Python-muranoclient: <=0.7.2; >=0.8.0<=0.8.4
-
-
-Description
-~~~~~~~~~~~
-Kirill Zaitsev from Mirantis reported a vulnerability in OpenStack
-Murano applications processing. Using extended YAML tags in Murano
-application YAML files, an attacker can perform a Remote Code
-Execution attack.
-
-Vulnerability has been verified in all currently supported branches.
-Further examination of code suggest, that it is also present in kilo and
-juno versions of murano.
-
-Patches
-~~~~~~~
-- https://review.openstack.org/#/c/333444/ (Liberty)
-- https://review.openstack.org/#/c/333425/ (Liberty)
-- https://review.openstack.org/#/c/333432/ (Liberty)
-- https://review.openstack.org/#/c/333443/ (Mitaka)
-- https://review.openstack.org/#/c/333424/ (Mitaka)
-- https://review.openstack.org/#/c/333439/ (Mitaka)
-- https://review.openstack.org/#/c/333423/ (Newton)
-- https://review.openstack.org/#/c/333440/ (Newton)
-- https://review.openstack.org/#/c/333428/ (Newton)
-
-
-Credits
-~~~~~~~
-- Kirill Zaitsev from Mirantis (CVE-2016-4972)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/python-muranoclient/+bug/1586078
-- https://bugs.launchpad.net/murano/+bug/1586079
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4972
-
-Notes
-~~~~~
-- Fixes for this bug are going to be included in the upcoming releases
-  of murano 1.0.3(liberty), 2.0.1(mitaka), 3.0.0(newton) and 
-  python-muranoclient 0.7.3(liberty), 0.8.5(mitaka), 0.9.0(newton)
-
-
--- 
-Kirill Zaitsev
-Murano Project Technical Lead
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+jch
