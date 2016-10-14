@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1033" "Friday" "29" "April" "2016" "10:26:00" "+1000" "Brendan Scarvell" "bscarvell@iix.net" "<CAOJmqsBw6V5m4NbHzX4-KLhjgZqmzHLem_ZfTrgiwx9SBc979g@mail.gmail.com>" "36" "[oss-security] CVE Request - Multiple vulnerabilities in Activiti Explorer" nil nil nil "4" "2016042900:26:00" "[oss-security] CVE Request - Multiple vulnerabilities in Activiti Explorer" (number mark "U       bscarvell@ii Apr 29   36/1033  " thread-indent "\"[oss-security] CVE Request - Multiple vulnerabilities in Activiti Explorer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["708" "Friday" "14" "October" "2016" "16:44:16" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610141642160.13950@wniryva>" "24" "[oss-security] CVE request Qemu: net: OOB buffer access in rocker switch emulation" nil nil nil "10" "2016101411:14:16" "[oss-security] CVE request Qemu: net: OOB buffer access in rocker switch emulation" (number mark "U       ppandit@redh Oct 14   24/708   " thread-indent "\"[oss-security] CVE request Qemu: net: OOB buffer access in rocker switch emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3575 invoked by uid 550); 29 Apr 2016 00:26:13 -0000
+Received: (qmail 23706 invoked by uid 550); 14 Oct 2016 11:14:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3552 invoked from network); 29 Apr 2016 00:26:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=iix-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=IntzdVVQjpFnUHFAe8uirGFdNAjuNSGcsxhpJ6ZfiHM=;
-        b=164qIvnvWEGRS8d6IFGgTaFb9Cl3db19RPZFL2ZwLbf4mDPYUNvxjX5TFfOIdL3Sw3
-         IWS09LWXo+yZhNIDe5u718Ya7JCDZ5rDd11jORWpG+h0/+hpJng0+V975dRQmD6ngI4R
-         XjmDvobxywAcNGqtuIqh9kMWcM8amSgzkGK05MCIQ7uALjjPaiVhT8mIiioq0UFMChXr
-         6Iz1YIg8HvN8+pMs4OyiE9PGZ3Q9x/ExZvklfcJC17VfXqjXFhh+TyEyf6DbJWnoZ2Eq
-         Yj4DVKmSQp2oFyiFHT60njCStzSCP6TIf97/YqqbD5jwvCBQyk1yLN95q1cyYt86+bZ2
-         PpZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=IntzdVVQjpFnUHFAe8uirGFdNAjuNSGcsxhpJ6ZfiHM=;
-        b=QIZHmV5MnhSTbJ/DSztKgemayoP1Z+z8uvJa6u4Q/rYN8NQ7Qy2abMe2D6NBPr/6yr
-         66i+rxpBfH8Q1mqm5UCZJdcwx4HpNXZ2uMxR0r5s/QseQXeQGFTGlDTkW3/fiDXOIHPG
-         iax947RpuxRC7MVhwV7qXk5dz/qtO/U/iVRAZ6UNYVqp0TfXJVQJmJD/pg1xci58cDOK
-         fAJGBK94qK/OYmcHq5P0zyhqKAJwY5mTUAzJZi1OTMJf6OszfoZ+uwNFd79j+d0iI551
-         5VO8totklJQNDjYm2efKgrR2R9Y1hi/EQ8iD078R/urfrJiAVLfzRQbbhcr03q8Ob3+n
-         EP6g==
-X-Gm-Message-State: AOPr4FXMoL7HKgoE+1pIW+BSIFBPpDKRhnoMyCTNmN6WpHaOVPpJX/GC2/l752bN91TLe7qElQIPRWPBKCz+2WSZ
+Received: (qmail 23634 invoked from network); 14 Oct 2016 11:14:33 -0000
+Date: Fri, 14 Oct 2016 16:44:16 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Huawei PSIRT <psirt@huawei.com>
+Message-ID: <alpine.LFD.2.20.1610141642160.13950@wniryva>
 MIME-Version: 1.0
-X-Received: by 10.55.200.137 with SMTP id t9mr18162601qkl.41.1461889560966;
- Thu, 28 Apr 2016 17:26:00 -0700 (PDT)
-Date: Fri, 29 Apr 2016 10:26:00 +1000
-Message-ID: <CAOJmqsBw6V5m4NbHzX4-KLhjgZqmzHLem_ZfTrgiwx9SBc979g@mail.gmail.com>
-From: Brendan Scarvell <bscarvell@iix.net>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a1145beb0fb93a0053194afa4
-Subject: [oss-security] CVE Request - Multiple vulnerabilities in Activiti Explorer
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 14 Oct 2016 11:14:21 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: net: OOB buffer access in rocker switch
+ emulation
 
---001a1145beb0fb93a0053194afa4
-Content-Type: text/plain; charset=UTF-8
+   Hello,
 
-Good morning
+Quick Emulator(Qemu) built with the Rocker switch emulation support is 
+vulnerable to an OOB read access issue. It could occur while performing a DMA 
+access 'TEST_DMA_CTRL_INVERT' test.
 
-I've discovered a stored XSS and an XXE vulnerability in Alfresco's Activi
-Explorer.
+A privileged guest user could use this issue to crash the Qemu process 
+instance on the host resulting in DoS.
 
-Comments created for "tasks" aren't having HTML characters sanitized
-correctly resulting in a stored XSS being executed when any user visits the
-page.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02501.html
 
-Activiti Explorer also has the parsing of external entities enabled and
-I've noticed that deployments tab is vulnerable to XXE. An attacker is able
-to upload malicious XML files to read arbitrary files off the server.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1384896
 
+This issue was reported by Huawei Product Security Incident Response Team 
+(PSIRT), Huawei Inc.
 
-I've attempted to report the issue to the vendor several times, however
-have received no response.
-
-Timeline:
-March 11  - Contacted vendor, no response
-March 17  - Contacted vendor, no response.
-March 24  - Contacted vendor, no response
-April 1      - Contacted vendor, no response
-April 15    - Contacted vendor, gave deadline for April 29th.
-April 29th - Still no response
-
-Could a CVE ID please be assigned to these issues.
-
-
-Thanks,
-
-Brendan Scarvell
-
---001a1145beb0fb93a0053194afa4--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
