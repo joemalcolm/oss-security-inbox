@@ -1,30 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/22/2
-Message-ID: <56A126C4.7090905@andrewg.com>
-Date: Thu, 21 Jan 2016 18:43:16 +0000
-From: Andrew Gallagher <andrewg@...rewg.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/14/10
+Message-ID: <54ab75c6-2dc8-bdb2-4704-e0e9eecc2973@oracle.com>
+Date: Fri, 14 Oct 2016 13:23:36 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Prime example of a can of worms
+Subject: Re: kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 21 Jan 2016 10:15:55 -0500 Steve Grubb wrote:
-> 
-> Hallway discussions mentioned that ECC is dead due to trust issues
-> and fuzzy IP issues which slowed vendor uptake. There was a mention
-> of RSA officially being allowed to go to 16k key sizes.
+On 14/10/16 12:13, Petr Matousek wrote:
+>> > The other link to internal bug was posted by mistake. I am sorry for
+>> > that. https://bugzilla.redhat.com/show_bug.cgi?id=1373966 has all the
+>> > information we can share.
+> Scratch that. 1373966 is a Fedora bug so I opened it. It is accessible
+> now.
 
-Was there any mention of the relative ease of quantum attacks against
-ECC compared to classically-equivalent RSA? [1] That was suggested on
-a couple of discussion groups as a possible motivation for the newly
-rekindled RSA love.
+Manu thanks Petr.   Both answers were fine, but I'm glad I can get at
+the reproducer now.
 
-[1] http://arxiv.org/abs/quant-ph/0301141
+thanks again.
 
--- 
-Andrew Gallagher
-Senior Systems Engineer, Ward Solutions Ltd.
-2054 Castle Drive, Citywest, Dublin 24
-+353 87 1200174
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+jch
