@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2971" "Wednesday" "16" "March" "2016" "19:03:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160316230344.72F466DC015@smtpvmsrv1.mitre.org>" "70" "[oss-security] Re: Three CVE requests for PHP" "^Cc:" nil nil "3" "2016031623:03:44" "[oss-security] Re: Three CVE requests for PHP" (number mark "        cve-assign@m Mar 16   70/2971  " thread-indent "\"[oss-security] Re: Three CVE requests for PHP\"\n") "<20160316205050.GB2990@pisco.westfalen.local>" ("<20160316205050.GB2990@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1282" "Friday" "14" "October" "2016" "13:01:07" "+0200" "Petr Matousek" "pmatouse@redhat.com" "<20161014110106.GG31594@dhcp-25-225.brq.redhat.com>" "32" "Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)" "^Cc:" nil nil "10" "2016101411:01:07" "[oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)" (number mark "        pmatouse@red Oct 14   32/1282  " thread-indent "\"Re: [oss-security] kernel: Stack corruption while reading /proc/keys (CVE-2016-7042)\"\n") "<041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>" ("<1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>" "<1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>" "<ad59c912-423e-baa2-4a31-413251d0ee5c@oracle.com>" "<alpine.LFD.2.20.1610141145160.5203@wniryva>" "<041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3963 invoked by uid 550); 16 Mar 2016 23:03:57 -0000
+Received: (qmail 25678 invoked by uid 550); 14 Oct 2016 11:01:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3945 invoked from network); 16 Mar 2016 23:03:56 -0000
-In-Reply-To: <20160316205050.GB2990@pisco.westfalen.local>
-Message-Id: <20160316230344.72F466DC015@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 16 Mar 2016 19:03:44 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 25656 invoked from network); 14 Oct 2016 11:01:22 -0000
+Message-ID: <20161014110106.GG31594@dhcp-25-225.brq.redhat.com>
+References: <1317626822.2210899.1474545527129.JavaMail.zimbra@redhat.com>
+ <1061369962.2838882.1476362811840.JavaMail.zimbra@redhat.com>
+ <ad59c912-423e-baa2-4a31-413251d0ee5c@oracle.com>
+ <alpine.LFD.2.20.1610141145160.5203@wniryva>
+ <041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <041f8f08-d2d2-d1ec-78f3-18b3d5f6160e@oracle.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Fri, 14 Oct 2016 11:01:10 +0000 (UTC)
+Cc: oss-security@lists.openwall.com
+Date: Fri, 14 Oct 2016 13:01:07 +0200
+From: Petr Matousek <pmatouse@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Three CVE requests for PHP
-To: jmm@debian.org
+Subject: Re: [oss-security] kernel: Stack corruption while reading /proc/keys
+ (CVE-2016-7042)
+To: John Haxby <john.haxby@oracle.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Oct 14, 2016 at 11:57:15AM +0100, John Haxby wrote:
+> On 14/10/16 07:18, P J P wrote:
+> > +-- On Thu, 13 Oct 2016, John Haxby wrote --+
+> > | On 13/10/16 13:46, Vladis Dronov wrote:
+> > | > https://bugzilla.redhat.com/show_bug.cgi?id=1373499 (reproducer, patch)
+> > | 
+> > | This bug isn't accessible.   Do you think you could post the reproducer
+> > | or open the bug please?
+> > 
+> > Please see this one:
+> >   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373966
+> > 
+> > Thank you.
+> 
+> Sorry, that's not why I was asking.  You provided links to two bugs: one
+> has the patch and a reproducer, the other has the patch.  Unfortunately
+> the former is a link to a bug that no one outside Red Hat has access to.
+>  In the past when people have posted links to oss-security that do not
+> have general access the access permissions have been relaxed or the
+> relevant content posted on the list.
+> 
+> That's what I was asking for:  inaccessible links are not helpful on an
+> open list.
 
-> ZipArchive::extractTo allows for directory traversal when creating directories
-> https://bugs.php.net/bug.php?id=70350
-> https://github.com/facebook/hhvm/commit/65c95a01541dd2fbc9c978ac53bed235b5376686
+The other link to internal bug was posted by mistake. I am sorry for
+that. https://bugzilla.redhat.com/show_bug.cgi?id=1373966 has all the
+information we can share.
 
-Use CVE-2014-9767 for this issue that was apparently disclosed in
-https://bugs.php.net/bug.php?id=67996 in 2014. The issue could be
-relevant in cases where, for example:
-
-  - a parent directory is on a filesystem that can't support many
-    inodes, and the attacker can cause a DoS by creating thousands of
-    empty directories there
-
-  - a parent directory is served by the web server and allows a full
-    directory listing, and the attacker can therefore post spam in the
-    form of directory names
-
-
-> https://bugs.php.net/bug.php?id=70385
-> https://bugs.php.net/bug.php?id=70312
-
-These were mentioned here 6 months ago in the
-http://www.openwall.com/lists/oss-security/2015/09/08/8 and earlier
-posts. We don't see any issue with re-opening the discussion at this
-point, but could you please provide new information or a
-counterargument?
-
-For example, in 70385, is the security concern that someone may deploy
-a web application that accepts arbitrary untrusted TIFF files and is
-intended to print EXIF values, but would realistically instead print
-the contents of other memory locations associated with a different
-client's session?
-
-In 70312, the "[2015-08-21 02:00 UTC]" comment says 'I'm sorry but I
-cannot change the bug type. It is not "Security".' Was it supposed to
-have been categorized as a security bug, or is the discussion from 6
-months ago applicable:
-
-  This might be primarily an interoperability bug. 70312 doesn't attempt
-  to show that the hashes produced by PHP's HAVAL implementation had
-  weaker security properties than those produced by a correct
-  implementation. (One might also argue that applications requiring
-  especially good hash properties should not be using HAVAL at all.)
-
-?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6eWGAAoJEL54rhJi8gl52vwQAJKFdLmLfg4LSaa+Z07OnbH+
-nUuELFK3Y2d4q/cxj5Uy/uQSDh1ufVmOhLEu0aajVfIqSiVxyzxQ3BjRKTIvprtf
-Nennjbzwm9agJVyP2szFphJzvlrJrhKHkXU3jT1616tHl7ZFWcuthz4Fk3z0873k
-2cJ6c6ek3sRK+Vv5WoNw1iFjkPu7qAQloX+x2ZxvT01zeElp2zrz7JJ4y1AGv6nb
-54Wl334PCwuf0F/vV5G/GO3XQJdB5daQVMQ8OyRQVkn5KnqCDI8ceD0aG+Q1JZed
-seV2eo2lwhYzddd3cV03/R1zKUFXisUZEdjjnas5EXHdl/rdcN+clmYTNqjL6UaM
-Mo6PTOdN/egwAJC481zOdNjKWu2h8KT3XCXP1SLw6y0FC1IOeELnJqcFjEej1lDx
-nGWcw3AuHmf7+Iq4vw/16EB2ETTtM3GYEq2nFgxAImPSjtdLR6UznWV5ZHCwtWC/
-RaGDY4ZGK2iKRMdCshOCeh0wp9f5D9pnZA89PygH+yThzjD5v9Y51EuBHVN3FUcP
-ZpIRFLVJJ5Vx+PibCXygHpD9DHN3PHEbdEMGP6hDeokLON9CrN8Uu6XzwbLDrQxM
-sTrn1AgElznVv5o4N3HwxcmDQwANG71EQeKwaV01gSEX/v2X9evV4I4AMfGv0d7k
-CAqu4MIzM9VyDkcLYcF/
-=mvYU
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
