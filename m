@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/15
-Message-ID: <753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>
-Date: Thu, 8 Dec 2016 16:21:26 +0100
-From: Florian Pritz <bluewind@...u.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/9
+Message-Id: <20161015164603.2A9F752E4DF@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:46:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
+Subject: Re: CVE request Qemu: net: OOB buffer access in rocker switch emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The linux kernel contains a bug where a fragmented IPv6 packet causes a
-panic after a timeout (seems to be roughly 60 seconds). This can be
-triggered remotely via the internet and results in a DoS (kernel panic).
+> Quick Emulator(Qemu) built with the Rocker switch emulation support is
+> vulnerable to an OOB read access issue. It could occur while performing a DMA
+> access 'TEST_DMA_CTRL_INVERT' test.
+> 
+> A privileged guest user could use this issue to crash the Qemu process
+> instance on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02501.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1384896
 
-Details: https://bugzilla.kernel.org/show_bug.cgi?id=189851
+>> While testing host DMA access, a buffer address
+>> is written to register 'TEST_DMA_ADDR' and its size is written to
+>> register 'TEST_DMA_SIZE'. When performing TEST_DMA_CTRL_INVERT
+>> test, if DMA buffer size was greater than 'INT_MAX', it leads to
+>> an invalid buffer access. Limit the DMA buffer size to avoid it.
 
-This is fixed by commit 79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
-Author: David Ahern <dsa@...ulusnetworks.com>
-Date:   Sun Nov 27 18:52:53 2016 -0800
+Use CVE-2016-8668.
 
-    net: handle no dst on skb in icmp6_send
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/rocker/rocker.c but
+that may be an expected place for a later update.
 
-Reference:
-https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit/?id=79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Can a CVE be assigned to this issue?
-
-Florian
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (859 bytes)
+iQIcBAEBCAAGBQJYAlsOAAoJEHb/MwWLVhi2+IoP/0i4fPGczDVTahpTjfF2hwho
+7LuBxbaC/CN9Jkr9MUTgtda45X4NT3K6XbR6xrZA3Nv8Mtcbo7ZO/c91LmIhib8n
+QpV8DixIv+KTXj0NFZ2jWPThjb65wSUDIVHMSt9e8pbk6zmqmUVAy2K85FV+rHXq
+fhX89bgXPoT0WqK2ukxhZz/3pBiVoCRPlxQx4TuTYppB7O8K3XOPEktmqOvamtfo
+uSZLbPZlPSbmQ5w2GFLSAl22yeiRMznRzXQK5GT33Pu1109gY5kWfP5tLmDn8vS0
+bD6m7jXKQqplrS48YbbwGlFGwcn7hXxH81kj2JrQImtK6i7o0o/ONhhlnu5cuq/K
+nuboysIih7EGoY3vax0pbyisB5wOmp7pGc9e4b+AQP/kgbE2L+iHOlZigw1cUO2n
+uc1vRl5mr4Z60ubIQTBUPceVMa2LHydj5/WjoryidKxqpFGY/Bu4YGkYnApEOhQY
+iAR1Q82CMCzUVB6L7GszkS96+7DVfBWblBxVf23cJNwFq/xylUvtkUfj3rEOAsgA
+OC1/LoqcCNyPQSek2hIaGZrUYoEKKetDtV1mNLn3JnUpCw0K42F6yEWxAtwXgYRj
+ezqVXUq8JDiGXHvnN6k31Yixu8RsKCO1bvmiC10FMJtYZVsOr6rvnIIOGBC2ChfM
+wJ+NxzkQZ4MdGyqPJdvA
+=+r3h
+-----END PGP SIGNATURE-----
