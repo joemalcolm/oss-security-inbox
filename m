@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1853" "Wednesday" "13" "July" "2016" "11:25:58" "+1000" "David Black" "dblack@atlassian.com" "<CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>" "43" "[oss-security] CVE request for the Play Framework" nil nil nil "7" "2016071301:25:58" "[oss-security] CVE request for the Play Framework" (number mark "U       dblack@atlas Jul 13   43/1853  " thread-indent "\"[oss-security] CVE request for the Play Framework\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1658" "Saturday" "15" "October" "2016" "12:47:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161015164723.AD7EC6C0661@smtpvmsrv1.mitre.org>" "41" "[oss-security] Re: CVE request Qemu: char: divide by zero error in serial_update_parameters" nil nil nil "10" "2016101516:47:23" "[oss-security] Re: CVE request Qemu: char: divide by zero error in serial_update_parameters" (number mark "U       cve-assign@m Oct 15   41/1658  " thread-indent "\"[oss-security] Re: CVE request Qemu: char: divide by zero error in serial_update_parameters\"\n") "<alpine.LFD.2.20.1610141644230.13950@wniryva>" ("<alpine.LFD.2.20.1610141644230.13950@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20188 invoked by uid 550); 13 Jul 2016 01:26:30 -0000
+Received: (qmail 11847 invoked by uid 550); 15 Oct 2016 16:47:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20167 invoked from network); 13 Jul 2016 01:26:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=oJiguej6zqGSsKwx0VZGdYu3DGqddLi2LOm1peYxu70=;
-        b=x+Euc1GlRBcyVaWNa3o26J03UiUv/PW/IKaKJvzZCQc1eR9wHOMMe/L3QagPpgNLqO
-         5bVpkrF8HesDOf/ehYThmAW+TXKWxK0byee/Ie/mA1mVxAQ9jayzHRYCSUw2TcJuyDzK
-         EZfEeF11THgN+QL7bDybMraXLVqWdNyDsFIusqfntQjx39nntDDesHSU12QzvyaqhSKV
-         oLXKHlKjlWBpSVOIMiTTcgtWwTcWJ9CFiV1CvagyqaWBz7njYgoF95h+d0LILA5gIXaz
-         afOLuYsvugEu9rmkuqR0sSZ6obGzb82EcQ4nkNrTUft7f8ABSDJx/oIaWpRGRsLVT+/y
-         QPqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=oJiguej6zqGSsKwx0VZGdYu3DGqddLi2LOm1peYxu70=;
-        b=FjUZ50WXf+UBXQhhkV5R1jpmygPypwvYSEtV7ANz30s2oUr2bv3+BeugM+vpg6lqb+
-         uxfkz8hVsGw+H4htNHbeN5LAHXX3GPHFJAnEyrY5MQ+W1iUkdY8Yt11kLLDRZoy7RruS
-         u7opNKlfM1WPlLYd6RIIrn/EHdKZNlzah+ntmSOt7Lkwqr6uvN17js3Lewldd/qLBK6t
-         Da67HsmZ5cGTyfObTaC1Bp5MFfJZBkB/EJT8LHW37jXPSXWTyeb5xNSc0kTp52+TNhxV
-         e2m3fLUc7yOXf3AG9RzvDDq/KnYuhg/vwTN/KJv12MNuNf/nvorH1nP1jG7PtCbvEjGU
-         fgCQ==
-X-Gm-Message-State: ALyK8tKFeuhVp+Qku2lD/H1YPx8sHBaHjtlcmS8EInsYKCK6dex1MO/ldBcDPgC+T2YUVu14jThDjNjKH3UNc4wH
-X-Received: by 10.129.101.213 with SMTP id z204mr3908455ywb.153.1468373177639;
- Tue, 12 Jul 2016 18:26:17 -0700 (PDT)
-MIME-Version: 1.0
-From: David Black <dblack@atlassian.com>
-Date: Wed, 13 Jul 2016 11:25:58 +1000
-Message-ID: <CAAYo3BupQw4M1Ct5nO4UVC87TmQatCdcxbmZpaiyckMb8ws4sQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE request for the Play Framework
+Received: (qmail 11823 invoked from network); 15 Oct 2016 16:47:35 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, psirt@huawei.com
+In-Reply-To: <alpine.LFD.2.20.1610141644230.13950@wniryva>
+Message-Id: <20161015164723.AD7EC6C0661@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:47:23 -0400 (EDT)
+Subject: [oss-security] Re: CVE request Qemu: char: divide by zero error in serial_update_parameters
 
-In version 2.5.0 of the Play Framework a CSRF bypass that depends upon
-an implementation bug in chrome's beacon api[0][1] was fixed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The issue was that the Play Framework's CSRF implementation could be
-bypassed in chrome in certain situations using Beacon requests because
-the framework assumed that it is only possible to send what is
-considered a simple request cross-domain. In other words the framework
-assumed that POST requests with a content-type of
-application/x-www-form-urlencoded or text/plain or multipart/form-data
-need to have CSRF checks applied and requests with any other
-content-type need not be checked.
+> Quick Emulator(Qemu) built with the 16550A UART emulation support is
+> vulnerable to a divide by zero issue. It could occur while updating serial
+> device parameters in 'serial_update_parameters'.
+> 
+> A privileged guest user could use this flaw to crash the Qemu process instance
+> on the host, resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02461.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1384909
 
-The Beacon (sendBeacon) https://w3c.github.io/beacon/ implementation
-in chrome[0][1] currently allows requests to be sent cross-domain with
-non-simple content-types. That is, it is possible to send a post
-request with a content-type of "application/json" (or any arbitrary
-content type of an attacker's choice) from an attacker's site (e.g.
-https://attacker.com) to https://example.com in chrome through
-executing the following javascript:
+Use CVE-2016-8669.
 
-var payload = '{"key": "value"}';
-navigator.sendBeacon('https://example.com', new Blob([payload], {type:
-'application/json'}));
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/char/serial.c but
+that may be an expected place for a later update.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The fix can be found at
-https://github.com/playframework/playframework/pull/5608 in commit
-7e52bd5f37a4b7b8fd154551d31940a125d81054
-(https://github.com/playframework/playframework/pull/5608/commits/7e52bd5f37a4b7b8fd154551d31940a125d81054).
-
-
-
-Can a CVE be assigned for this issue?
-
-
-[0] - https://bugs.chromium.org/p/chromium/issues/detail?id=490015#c8
-[1] https://github.com/w3c/beacon/pull/23/ clarified when
-implementations of the Beacon API need to first make a CORS preflight
-request (when non-simple content-types are sent cross-domain using the
-beacon api then a CORS preflight request needs to be sent first).
-
--- 
-David Black / Security Engineer.
+iQIcBAEBCAAGBQJYAlsWAAoJEHb/MwWLVhi2ZNgP/3Q2O/R4RvBqZ3ySzmRc4kBJ
+KZMiY1SO+pPhKz2ogREuCqE6/ioBa9181Jcd7b+VsDXqhYLpIqvfr/gOA2QfQRJW
+OS2JYBpHf36RT8CzPnSKq825UjpYLj3tObbv/BiGuIEqU0Eky79Q/sFkOqCZJZn/
+vFKwuSqNtqcvD6c1fQWz5BQQhgYOqZtPNPeDvdV6AGSh7qny/wjpA57LrGqv16M+
+FX5iBo0nmOB9SPPHBGIMQlXq7hIq73mnhqu6hXNqrZo9ZDEBSf+t2bRzufNi4o47
+WefYhqJ/J8Sku+X28ul+BndLhmo/XYhlwXVgp4gv5I+ybEW/l+8+VZvRCyjiVmrl
+DtZyp9N2FMXqueJeMk85D7Qn2v6Us1gfLjk22GfYiP9H+z+8KGbiHf8EjHj7vuCC
+OFE0guEqT80ev/hAP65NAidxVxquuxEkAiu2gGDUhnImi5kBY038Df4mPju8tYIo
+W5H/kFK6vzHayyF8/JZlz5XbdhMQsX3aQ51sfvgxQTkyjNJ8/ZpLVDLdQRMmDpvG
+jE1QuOXaO+CNAnluwFfcGkkSA7JZw2AgVYGy8yWhHSF3eFG1YR5pf6eu+c0S+Oug
+rjATBMRpPmGi9WWooDi1i/F6FkFS/wTbHyUGeNtHG8lWqAWYFjV7IGyJ4IK1CICK
+3v8A+xpCXBAJY7oQbNmw
+=eIjR
+-----END PGP SIGNATURE-----
