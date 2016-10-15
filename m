@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/11
-Message-ID: <20160503173526.GA6669@openwall.com>
-Date: Tue, 3 May 2016 20:35:26 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL Security Advisory [3rd May 2016]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/7
+Message-ID: <CAOc73CA3jpn3V=m0js8=n0jrLZ9=-bUmjVn3+D=ab2tzQBYyhQ@mail.gmail.com>
+Date: Sun, 16 Oct 2016 00:50:36 +0800
+From: Ben Woods <woodsb02@...il.com>
+To: dcoffin@...ercom.net, oss-security@...ts.openwall.com
+Subject: dcraw and CVE-2015-8366 + CVE-2015-8367
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 03, 2016 at 06:52:43PM +0200, Gsunde Orangen wrote:
-> * Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)
-> The advisory says: "This issue was introduced as part of the fix for
-> Lucky 13 padding attack (CVE-2013-0169)".
-> So the following versions should be affected (ref.
-> https://openssl.org/news/vulnerabilities.html#y2013):
->  - 1.0.2 through 1.02g
->  - 1.0.1d through 1.0.1s
->  - 1.0.0k and all later versions
->  - 0.9.8y and all later versions
+Hi Dave,
 
-You're assuming that all versions with the fix for CVE-2013-0169 are
-affected, but the description also says that the new bug is in AES-NI
-specific code.  AES-NI support appears to be missing in 1.0.0 and older.
-I've just tried grepping 1.0.0t for aesenc (one of the AES-NI mnemonics,
-present in the 1.0.1 tree) - it isn't in there.
+I was wondering if you could comment on whether dcraw is affected by these
+2 CVEs and whether new versions have been released which remove the
+vulnerability?
 
-Alexander
+I noticed you mentioned in the mailing list post below that "CVE-2015-8366
+will be fixed in v9.27" - did that end up getting fixed in 9.27? How about
+CVE-2015-83667?
+http://seclists.org/oss-sec/2016/q1/526
+
+CVE-2015-8366
+Index overflow in smal_decode_segment
+Fixed in LibRaw by:
+https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+
+
+CVE-2015-8367
+Memory objects are not intialized properly
+Fixed in LibRaw by:
+https://github.com/LibRaw/LibRaw/commit/490ef94d1796f730180039e80997efe5c58db780
+
+
+Thanks for your help.
+
+Regards,
+Ben
+
+--
+From: Benjamin Woods
+woodsb02@...il.com
+
