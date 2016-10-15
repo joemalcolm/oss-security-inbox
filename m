@@ -1,70 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/6
-Message-ID: <bba41ca7-d5c1-bb07-47fc-dcec4898e81f@sysdream.com>
-Date: Wed, 12 Oct 2016 15:26:23 +0200
-From: Sysdream Labs <labs@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/3
+Message-ID: <20161015160319.GA19386@openwall.com>
+Date: Sat, 15 Oct 2016 18:03:19 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, spip-team-owner@...o.net
-Subject: CVE-2016-7980: SPIP 3.1.2 Exec Code Cross-Site Request Forgery
+Cc: Daniel Stenberg <daniel@...x.se>
+Subject: Re: [SECURITY ADVISORY] c-ares: single byte out of buffer write
 Content-Type: text/plain; charset=utf-8
 
-## SPIP 3.1.2 Exec Code Cross-Site Request Forgery (CVE-2016-7980)
+On Thu, Sep 29, 2016 at 04:02:10PM +0200, Daniel Stenberg wrote:
+> `ares_create_query` single byte out of buffer write
+> =================================================
+> 
+> Project c-ares Security Advisory, September 29, 2016 -
+> [Permalink](https://c-ares.haxx.se/adv_20160929.html)
+> 
+> VULNERABILITY
+> -------------
+> 
+> When a string is passed in to `ares_create_query` or `ares_mkquery` and uses
+> an escaped trailing dot, like "hello\.", c-ares calculates the string length
+> wrong and subsequently writes outside of the the allocated buffer with one
+> byte. The wrongly written byte is the least significant byte of the 
+> 'dnsclass' argument; most commonly 1.
+> 
+> We have been seen proof of concept code showing how this can be exploited 
+> in a real-world system, but we are not aware of any such instances having 
+> actually happened in the wild.
+> 
+> INFO
+> ----
+> 
+> The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+> CVE-2016-5180 to this issue.
 
-### Product Description
+Yesterday, Daniel also blogged about exploitation of this vulnerability,
+crediting its original reporter for the attack detail.
 
-SPIP is a publishing system for the Internet, which put importance on collaborative working, multilingual environments and ease of use. It is free software, distributed under the GNU/GPL licence.
+https://daniel.haxx.se/blog/2016/10/14/a-single-byte-write-opened-a-root-execution-exploit/
 
-### Vulnerability Description
+It's a rebirth of attacks on dlmalloc.  Initially, such attacks were
+directly on pointer writes in dlmalloc's unlink(), using it as a
+write-what-where primitive (with some minor complications: flags and an
+extra write).  In or around 2003, Stefan Esser proposed hardening
+unlink() with a sanity check, which got into glibc's dlmalloc shortly
+thereafter.  Per Daniel's blog post, as I understood it, in the reborn
+attack unlink() would instead free extra memory, essentially turning the
+heap overflow into a use-after-free alike, which is then exploited as if
+it were such.  Was this demonstrated before, or is it novel?  (Might be
+in those later Phrack articles or such, but I forget.)
 
-The vulnerable request to `valider_xml` (see: *SPIP 3.1.2 Template Compiler/Composer PHP Code Execution - CVE-2016-7998*) is vulnerable to Cross-Site Request Forgery, allowing the execution of the CVE-2016-7998 attack by tricking an administrator to open the malicious link.
+Here's the relevant excerpt:
 
-**Access Vector**: remote
+"Writing 1 to that byte clears 2 flags, sets one flag and clears the
+lowest bits of the chunk size.  The important flag it sets is called
+prev_inuse and is used by dlmalloc to tell if it can merge adjacent
+areas on free.  (so, if the value 1 simply had been a 2 instead, this
+flaw could not have been exploited this way!)
 
-**Security Risk**: high
+When the c-ares buffer that had overflowed is then freed again, dlmalloc
+gets fooled into consolidating that buffer with the subsequent one in
+memory (since it had toggled that bit) and thus the larger piece of
+assumed-to-be-free memory is partly still being in use.  Open for
+manipulations!"
 
-**Vulnerability**: CWE-352
-
-**CVSS Base Score**: 8.3 (High)
-
-**CVE-ID**: CVE-2016-7980
-
-### Proof of Concept
-
-    http://spip-dev.srv/ecrire/?exec=valider_xml&var_url=/tmp/directory&ext=html
-
-### Timeline (dd/mm/yyyy)
-
-* 15/09/2016 : Initial discovery
-* 26/09/2016 : Contact with SPIP Team
-* 27/09/2016 : Answer from SPIP Team, sent advisory details
-* 28/09/2016 : Fixes issued for CSRF
-* 30/09/2016 : SPIP 3.1.3 Released
-
-### Fixes
-
-* https://core.spip.net/projects/spip/repository/revisions/23200
-* https://core.spip.net/projects/spip/repository/revisions/23201
-* https://core.spip.net/projects/spip/repository/revisions/23202
-
-
-### Affected versions
-
-* Version <= 3.1.2
-
-### Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
