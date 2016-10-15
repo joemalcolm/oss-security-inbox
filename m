@@ -1,41 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/8
-Message-ID: <CANO=Ty3Ru9FEkXs93PY5KgQbT2Gru6S0HHGfciUgZwuXVLy=aA@mail.gmail.com>
-Date: Wed, 14 Sep 2016 10:22:58 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: ADOdb PDO driver: incorrect quoting may allow SQL injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/4
+Message-Id: <20161015164223.DC55E52E011@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:42:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
+Subject: Re: CVE request Qemu: dma: rc4030 divide by zero error in set_next_tick
 Content-Type: text/plain; charset=utf-8
 
-Ideally people should get CVEs and then post to oss-security with the
-information and the CVE. A lot of people consume the list data and the
-current method means that people end up searching their DBs, making sure
-it's new, then entering it, then updating it with a CVE. If people got CVEs
-first this would vastly simplify things.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Sep 14, 2016 at 3:21 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
+> Quick Emulator(Qemu) built with the JAZZ RC4030 chipset emulation support is
+> vulnerable to a divide by zero issue. It could occur while computing its
+> periodic timer's next tick value.
+> 
+> A privileged guest user could use this flaw to crash the Qemu process instance
+> on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02577.html
 
-> > > I noticed that in your original e-mail to this list, you did not cc
-> > > cve-assign.
-> >
-> > That's true, but I never did in the past, as this mailing list is (or
-> was?)
-> > monitored by mitre, so posting here has been sufficient until now.
->
-> That said, I really hope that MITRE will continue to use this list for CVE
-> assignments. List members have often followed up with information on CVE
-> requests which noone would be able to provide for the web-based approach.
->
-> Cheers,
->         Moritz
->
+Use CVE-2016-8667.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/dma/rc4030.c but
+that may be an expected place for a later update.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJYAlsIAAoJEHb/MwWLVhi2+64P/2Jr6tZwPQJcfz2igrYRV7Rj
+CdEpz77vj+57XV+DwcnxgFtZAh1KnZ6KKwlVsLSuNAI7pRmeP33DtSMRt3ICT8kh
+ON+ZpSG8SaT2qQ3tDitB2gN1QXgm/1V6Y90b2qmcgj0SBadXvWAhdkbMFgvGFWrS
++XpHlDw8gGkfSGYj3oQZ6VCl3G6ZaH/AsU27l9IwjT9/ow1IZreSSnBEKcNy6pe3
+f+ONhuESyxLrro6Oq4rD9uzk/8K8MpzG/UaVylfRZ9nM7Glgdye2yL0vaB/k7k+1
+CMqfgKnYo0si2QSopTUtdShUOXgJSRHtNku9EC+vy2ggstF8J8qm3u4xHupn2Da/
+fNALN1VFuuoOfnt18DKHH0JrWFKGw4XfhoawJqevfc8ronrJR3SGkBQGgXfw8Cvy
++yHaEoFBVfqeXcygPesGuPSMHy7fG0uKu2o14Cu2fNHiH6MyQoUhDdKl2QQImWY4
+dQYk9z+XMDkJk3DxKzRUbtF9klBsidPJOJ8Jw2o6wI9vjmWsyuc+b4UsjypPCpAI
+0DN5DdXtAMkO+ZY8/yPkIgnb1w048qyR9IqncDXO6InBcHWTCv14vZ+6UpwCZCl6
+o3MkN7yE0OtM8MAQEDfiS/j6CsKp0UMMhx4HYZP/bQr+kgrLh0WOJqK4Rj/Ew7dq
+1ZQLVkYSPzfxBYZAYDOJ
+=eFPo
+-----END PGP SIGNATURE-----
