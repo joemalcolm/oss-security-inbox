@@ -1,36 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/21
-Message-ID: <20160505145031.GA22827@eldamar.local>
-Date: Thu, 5 May 2016 16:50:31 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: PHP: several issues fixed with 7.0.6, 5.6.21 and 5.5.35
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/8
+Message-Id: <20161015165046.C3C9842E192@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:50:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-With the 7.0.6, 5.6.21 and 5.5.35 PHP releases several issues were
-fixed, of those at least those four were as well commited to 5.5.35
-(only in security-fixes mode) and might warrant a CVE:
+> https://blog.fuzzing-project.org/54-Update-on-MatrixSSL-miscalculation-incomplete-fix-for-CVE-2016-6887.html
+> 
+> This wasn't
+> really fixed, but only worked around by restricting the allowed size of
+> the modulus. Not surprisingly it is still possible to find inputs that
+> cause miscalculations
 
-1/ bcpowmod accepts negative scale and corrupts _one_ definition
-   - https://bugs.php.net/bug.php?id=72093
-   - https://git.php.net/?p=php-src.git;a=commit;h=d650063a0457aec56364e4005a636dc6c401f9cd
+Use CVE-2016-8671.
 
-2/ xml_parse_into_struct segmentation fault
-   - https://bugs.php.net/bug.php?id=72099
-   - https://git.php.net/?p=php-src.git;a=commit;h=dccda88f27a084bcbbb30198ace12b4e7ae961cc
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-3/ Out-of-bounds reads in zif_grapheme_stripos with negative offset
-   - https://bugs.php.net/bug.php?id=72061
-   - https://git.php.net/?p=php-src.git;a=commit;h=fd9689745c44341b1bd6af4756f324be8abba2fb
-
-4/ Out of bounds heap read access in exif header processing
-   - https://bugs.php.net/bug.php?id=72094
-   - https://git.php.net/?p=php-src.git;a=commit;h=082aecfc3a753ad03be82cf14f03ac065723ec92
-
-I merely only have checked the php changelogs, but cannot give
-background on the impact of those.
-
-Regards,
-Salvatore
+iQIcBAEBCAAGBQJYAltIAAoJEHb/MwWLVhi2zbEP/2dfjbYAydVRa5AoGGA7TPmb
+xILs2/DjLQhrk9/jLLwQ64Is/c9JrGHTSt7repvMcitLMAhDgVrlH+6LFa7z7inx
+WPx1eqz4hI84Rs8/56MlGSjXTjLEiTQm5curt42r8VnVy66P+kAYRYmgSn6viHti
+dnWeyY1nHM0Bj7xbh2rDS+WGiMdyKbD58JE1M9c/x40ypA7PHeyiOaEQiI0kkV/g
+GBV74nCAljX+4pznRutKPQTJr8gSo7KzBKCRMhZJUIMcIEWITHxZ4bhDSOvGE5ZV
+jtKDs4ALgYOh04IcYXam+TsnpO0TWtUE6IcbmvnBsnzKOt92sypRNQg/7ieMzvuk
+qqFPKi5yjR2jDkCi0AXpfciWEOFeJECbxoKS5Q8TIuToC/DbMndN57BuaSaL/g+6
+sffL7qTjUdYtOjOLjGt/pAUjWCYu6mkoxiT+naD/oBU1UVQsBgBuYCQ4z99Joa7D
+da22R9nUvL+khiic6nvQTCVMP2CqJji4TAoe6zbBTX7HxYGW53e7HvH0Lk7UAIF6
+nHgbB+3uf6PetCTA7lPkc/UHdFhYoV8VtpLQA4KOu2fqkGByhb8HifJvYS6YMZCt
+NH9CYar381eIYh5/w7+rzFLF0jTwxjKrbMrkcHPq3jvoBfRbHk+Fatbt1w6vv2Ww
+0RWeF3ma0TjarX46TTMB
+=PwKE
+-----END PGP SIGNATURE-----
