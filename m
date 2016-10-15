@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/15
-Message-ID: <alpine.LFD.2.20.1612060030210.20462@wniryva>
-Date: Tue, 6 Dec 2016 00:39:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@...il.com>
-Subject: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/2
+Message-ID: <20161015173558.657276ad@pc1>
+Date: Sat, 15 Oct 2016 17:35:58 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+https://blog.fuzzing-project.org/54-Update-on-MatrixSSL-miscalculation-incomplete-fix-for-CVE-2016-6887.html
 
-Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
-to an information leakage issue. It could occur while processing 
-'VIRTIO_GPU_CMD_GET_CAPSET_INFO' command.
+CVE-assigners: I think this could get a CVE as an incomplete fix for
+CVE-2016-6887
 
-A guest user/process could use this flaw to leak contents of the host memory 
-bytes.
+----------
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2016-11/msg00019.html
+I recently [1] reported how I found various bugs in the bignum
+implementation of MatrixSSL, some of them leading to remotely
+exploitable vulnerabilities.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+One of the bugs was that the modular exponentiation function -
+pstm_exptmod() - produced wrong results for some inputs . This wasn't
+really fixed, but only worked around by restricting the allowed size of
+the modulus. Not surprisingly it is still possible to find inputs that
+cause miscalculations (code). I reported this to MatrixSSL on August
+1st.
+
+Recently MatrixSSL released another update (3.8.6) fixing several
+vulnerabilities reported by Craig Young from Tripwire [2]. However the
+pstm_exptmod() bug is still there.
+
+It is unclear how exploitable such bugs are, but given that it's used
+in the context of cryptographic functions handling secret key material
+this is clearly a reason for concern.
+
+MatrixSSL has long advertised itself as a safer alternative to OpenSSL,
+because it didn't suffer from the same kind of high severity bugs. I
+think it has been sufficiently shown that this was due to the fact that
+nobody was looking. But what's more worrying is that bugs they knew
+about for several months now don't get fixed properly.
+
+[1]
+https://blog.fuzzing-project.org/51-Fun-with-Bignums-Crashing-MatrixSSL-and-more.html
+[2]
+http://www.tripwire.com/state-of-security/security-data-protection/cyber-security/flawed-matrixssl-code-highlights-need-for-better-iot-update-practices/
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+View attachment "matrixssl-exptmod-bug-variant2.c" of type "text/x-c++src" (4564 bytes)
+
+Content of type "application/pgp-signature" skipped
