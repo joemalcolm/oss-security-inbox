@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1914" "Monday" "14" "May" "2018" "10:05:20" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" "53" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" "^Date:" nil nil "5" "2018051408:05:20" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "        corsac@debia May 14   53/1914  " thread-indent "\"[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1503" "Saturday" "15" "October" "2016" "12:49:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161015164912.E7B5F52E013@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf" nil nil nil "10" "2016101516:49:12" "[oss-security] Re: CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf" (number mark "U       cve-assign@m Oct 15   38/1503  " thread-indent "\"[oss-security] Re: CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf\"\n") "<20161015045711.2hyce3mpwtmypwri@eldamar.local>" ("<20161015045711.2hyce3mpwtmypwri@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26285 invoked by uid 550); 14 May 2018 08:05:44 -0000
+Received: (qmail 21964 invoked by uid 550); 15 Oct 2016 16:49:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26264 invoked from network); 14 May 2018 08:05:43 -0000
-Message-ID: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-yWkURFHMjh27uXznBNOR"
-X-Mailer: Evolution 3.28.2-1 
-Mime-Version: 1.0
-Date: Mon, 14 May 2018 10:05:20 +0200
-From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
-To: oss-security@lists.openwall.com
+Received: (qmail 21946 invoked from network); 15 Oct 2016 16:49:24 -0000
+From: cve-assign@mitre.org
+To: carnil@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20161015045711.2hyce3mpwtmypwri@eldamar.local>
+Message-Id: <20161015164912.E7B5F52E013@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:49:12 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf
 
---=-yWkURFHMjh27uXznBNOR
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I guess most people have already saw  this, but just in case, it seems that=
- a
-vulnerability in PGP/MIME and S/MIME handling in various mail clients will =
-be
-published tomorrow.
+> On the PHP bug tracker Emmanuel Law reported a flaw in the libgd
+> library in dynamicGetbuf. The PHP bug report is at (cannot quote the
+> full report for the list archive, sinc a bit long):
+> 
+> https://bugs.php.net/bug.php?id=73280
+> 
+> It has been reported upstream apparently (not via the issue tracker)
+> and fixed in upstream as with commit:
+> 
+> https://github.com/libgd/libgd/commit/53110871935244816bbb9d131da0bccff734bfe9
 
-Debian Security team didn't get any private information yet, but there have
-been multiple twitter threads and blog posts published already:
+Use CVE-2016-8670.
 
-https://twitter.com/seecurity/status/995906576170053633
-https://arstechnica.com/information-technology/2018/05/critical-pgp-and-smi=
-me-
-bugs-can-reveal-encrypted-e-mails-uninstall-now/
-https://www.eff.org/deeplinks/2018/05/attention-pgp-users-new-vulnerabiliti=
-es-
-require-you-take-action-now
-
-GnuPG has posted a tweet (https://twitter.com/gnupg/status/9959310835847577=
-60)
-indicating it's likely a vulnerability in mail clients themselves and not in
-the protocol, and which is related to HTML mail handling.
-
-The vulnerabilities apparently enable an attacker to decrypt previous mails,
-but my (wild) guess is that the attack actually requests decryption from the
-mail client (which has access to the private key), rather than by actually
-decrypting itself.
-
-Regards,
---=20
-Yves-Alexis Perez - Debian Security
-
-
---=-yWkURFHMjh27uXznBNOR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEzBAABCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlr5Q0AACgkQ3rYcyPpX
-RFuUUAf+Mqv6urcHdvB62LVRwPnj4ZHQIHulT/o6m/pX0T8+gstDDMl2APqtcUIR
-6fnyjqTpUfIqPiNMoL8zX2CKw5DqUlN72lwQwxmmimNq/wkgrLE1Zu0vsoUaRukP
-nzka46hVc8DxF+YI5sZE32AkXMlKFTHTvode/sLMV1I0jFBtkW3sGWCtbwuOCVj0
-KOIo0Fr7GN1WSCRP9iVQFExgVdQoq2VwosEAaKdYLQDkJT4nsOdgaPmF3bxDMpQE
-9yV7phJfdwfC+C+4IzW3SRTp21ALaKSqmVxPboehNbbb/mNfvwygl2dIGLYu5f+4
-8lyCfdcX6MZdp31HBYXTfIyMD9PUow==
-=k5vq
+iQIcBAEBCAAGBQJYAls+AAoJEHb/MwWLVhi2Yd4QALCxw5Y5ssKyrdOrL/zMqkyM
+Z7f28GAeF9mBXlsCONMOUKEqlMust0szGm/qWpBq9BV4OzPK5LRgqtNMhW0u0Z2M
+ZjJ0oJNC6XygJoM55fv2c7Ehd+ej1+wP+iSk8sow8i0y1IN34hPcMFA6Yk0jLcZa
+HBgPrIG3S6o2I4SL7mW5MTyWk0YefskJ+bgsPRMf9aDAHyPfq1UTInNAyyhXaygV
+9c2J6Tn2cLhZWk1E8vIzm3jeWsP1N19DOlqW3jcQqgifPV2Xtsjet+pIH5wHy+Zw
+sNp7pAD3gkCnjyQHacvDEx16HDgNN0MLPIyW2zk5m8+cgwclC2/wybsoOX1zhB53
+hFSmpU0NueGhbKm64lIg7H/nE5Tvpo+C5KHzNmJulXgU9HddAwWQJOgPVVxaape4
+ZvlerrSGWGS65nv6S19AcJYdVRZRCle35bezUzzXA7/45WvGXUqxpyDT2M0EU3US
+TKc6f5HlnY6LSUKdKsvTUO1LPwsZ4hKXbdRthaIVpOEvtt03mAa58skKjtedR/29
+UJ0TmKc2/l7vVqmPk/6VWXHMXJnNKMUTBoa9N8os2PBib2iPV4Dt686IVgWEwg5x
+i3aUovCSC5MFH9xWxpHG5HUHrhelz2WjNPwCwgyR0XNY9NaMpYC8zrh/3kkFF0uc
+q0yGUgrVc+MlwVg9GxOX
+=j63U
 -----END PGP SIGNATURE-----
-
---=-yWkURFHMjh27uXznBNOR--
