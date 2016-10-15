@@ -1,46 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/6
-Message-ID: <CAOp4FwSj_OAUV0qsnE35VR4UdFCC1qjvQXy9_Rf=-kK0S1eMQQ@mail.gmail.com>
-Date: Tue, 1 Mar 2016 17:39:16 +0000
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/6
+Message-Id: <20161015164912.E7B5F52E013@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:49:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libgd: Stack Buffer Overflow in GD dynamicGetbuf
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 1, 2016 at 5:33 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> So there is this proposed RFC:
->
-> https://tools.ietf.org/html/rfc6176
->
-> TL;DR: SSLv2 needs to be shot.
->
-> Now we have yet another significant SSLv2 problem, DROWN, bad enough in
-> fact that Red Hat has now disabled SSLv2 in OpenSSL by default (already
-> done in NSS/GnuTLS), so from my vendor perspective, we're treating SSLv2
-> support as a security problem, the solution of which is to remove said
-> support.
->
-> But more generally, should we look at assigning CVE's for support of SSLv2,
-> much like we would for products supporting DES or other known insecure
-> cryptographic algorithms, hashes, digests and protocols? My personal vote
-> is for yes.
->
->
->
->
-Btw, FreeBSD has done some work there:
-https://wiki.freebsd.org/LibreSSL/PatchingPorts#SSLv2.2FSSLv3_method_failures
+> On the PHP bug tracker Emmanuel Law reported a flaw in the libgd
+> library in dynamicGetbuf. The PHP bug report is at (cannot quote the
+> full report for the list archive, sinc a bit long):
+> 
+> https://bugs.php.net/bug.php?id=73280
+> 
+> It has been reported upstream apparently (not via the issue tracker)
+> and fixed in upstream as with commit:
+> 
+> https://github.com/libgd/libgd/commit/53110871935244816bbb9d131da0bccff734bfe9
 
-Linking with LibreSSL would help uncover those cases, and assign CVEs :)
+Use CVE-2016-8670.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
->
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
->
-
+iQIcBAEBCAAGBQJYAls+AAoJEHb/MwWLVhi2Yd4QALCxw5Y5ssKyrdOrL/zMqkyM
+Z7f28GAeF9mBXlsCONMOUKEqlMust0szGm/qWpBq9BV4OzPK5LRgqtNMhW0u0Z2M
+ZjJ0oJNC6XygJoM55fv2c7Ehd+ej1+wP+iSk8sow8i0y1IN34hPcMFA6Yk0jLcZa
+HBgPrIG3S6o2I4SL7mW5MTyWk0YefskJ+bgsPRMf9aDAHyPfq1UTInNAyyhXaygV
+9c2J6Tn2cLhZWk1E8vIzm3jeWsP1N19DOlqW3jcQqgifPV2Xtsjet+pIH5wHy+Zw
+sNp7pAD3gkCnjyQHacvDEx16HDgNN0MLPIyW2zk5m8+cgwclC2/wybsoOX1zhB53
+hFSmpU0NueGhbKm64lIg7H/nE5Tvpo+C5KHzNmJulXgU9HddAwWQJOgPVVxaape4
+ZvlerrSGWGS65nv6S19AcJYdVRZRCle35bezUzzXA7/45WvGXUqxpyDT2M0EU3US
+TKc6f5HlnY6LSUKdKsvTUO1LPwsZ4hKXbdRthaIVpOEvtt03mAa58skKjtedR/29
+UJ0TmKc2/l7vVqmPk/6VWXHMXJnNKMUTBoa9N8os2PBib2iPV4Dt686IVgWEwg5x
+i3aUovCSC5MFH9xWxpHG5HUHrhelz2WjNPwCwgyR0XNY9NaMpYC8zrh/3kkFF0uc
+q0yGUgrVc+MlwVg9GxOX
+=j63U
+-----END PGP SIGNATURE-----
