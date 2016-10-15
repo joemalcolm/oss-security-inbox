@@ -1,4 +1,9 @@
-Received: (qmail 3679 invoked by uid 550); 3 Apr 2024 13:04:47 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7898" "Saturday" "15" "October" "2016" "17:35:58" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161015173558.657276ad@pc1>" "241" "[oss-security] Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)" "^Cc:" nil nil "10" "2016101515:35:58" "[oss-security] Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)" (number mark "        hanno@hboeck Oct 15  241/7898  " thread-indent "\"[oss-security] Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17446 invoked by uid 550); 15 Oct 2016 15:36:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,114 +11,257 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17411 invoked from network); 15 Oct 2016 15:36:11 -0000
+Message-ID: <20161015173558.657276ad@pc1>
+X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-26778-1476545759-0001-2"
+Cc: cve-assign@mitre.org
+Date: Sat, 15 Oct 2016 17:35:58 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18292 invoked from network); 3 Apr 2024 02:24:28 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=M/duIPmsWqvhQsBk8Epf4z5XNPQvhAr5SAElqVoUGNj+2i7is+61/To8+gTpVXy28qMRQrjVNiILa7g6fqZ5ykVMByvjsAVTOguqyVvcYZHQ66FTXyoboTdaZOwHsRD2v2h+P6k9Ow8OcWLD41DDJPytuq2peDOwq33bLuiwgj/SgrgRpZKUtP+9D2Etm9ym3qNzm2c7iUd1fICZlZjccpWJoRzLmkWHBQEpur4gl3gAN6UcPdrgKnDVwakfIqbdlx7oo2IX7wfTr3H3kCl0XRn18ipDcluLrHNXCJt4Zutvpe4Wk4kag2eHL3TbnyBjTGAlU/A0/BiDJ3IlR3ZRow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tgqPrWuDFw3E9SwGQYOFH9ymrD3WT0GojAdRmrGoPNE=;
- b=FUROZoBx9jSFT8O3Pr7W+a5RybFr6buaJQyaTeGVOjJTs+PUc6TemaGrZqoMJhPjKUWm5b9h3ij4dFc20t0XDq9hvU026z2C3+dZJjEbfBlL3O+1HOxd8Keo/93LEvQGaR39e0NfWfCuqsdfw+Jdpy8NUK10xUz+J/VXm6aRD9OnngFvCs/LXl8hPTGU9KWtApwMoZ4CoEn+9TrT0V5UU/HjFLNmdgpowX6BGZGK88plEuP6Pmv+KIvCey4STNS9u3RZOyz2aFCXFlMbdc8G+yzJsJj2NALruV3fxW+VfJtIMY/36St148IAYidyTQ5FfjPOXTu3MdG4Q4ngg7oblA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bristol.ac.uk; dmarc=pass action=none
- header.from=bristol.ac.uk; dkim=pass header.d=bristol.ac.uk; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bristol.ac.uk;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tgqPrWuDFw3E9SwGQYOFH9ymrD3WT0GojAdRmrGoPNE=;
- b=aXq/V4YGHphspsHWZ5jEmsZCocrAH69t1J31gOAfyx7DyHLRMiSPVyOgtfrZobOAPeHFKbZerZ6yWxJM8e/DKxuGBT3ZvbFbp+7S3Phi/EHFHiSESja539TxRz88tTTj88BP1mVYyxNWMFiSldXppapjDif808oVWkw6CCfKBCylCvSwGAp5+JFFa8/wKAkKWjKYSNTko90eqNwRFhaIsgfDa5K9ddSknYirWQBs49l0ujF6w+ixZNNgiF2gEgPNlV/kzaTqvPlxO7XxupYi0AcFopUc1Cx8fwSwwxDo58F93V2n1cWTSqEt+P8jV/GLDz6VuXfne6UPITh8HzB7Dw==
-From: Maysara Alhindi <maysara.alhindi@bristol.ac.uk>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: Looking for developers who know how to use Seccomp for a paid
- study
-Thread-Index: AQHahW4C1oSLiPyi7UuGqOdqxQytDQ==
-Date: Wed, 3 Apr 2024 02:24:20 +0000
-Message-ID:
- <HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2@HE1PR06MB4137.eurprd06.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: HE1PR06MB4137:EE_|GV1PR06MB8404:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- OUIpaUx9wrymR6hR7/PIhIkauK3Cgd9eWCBRvtc30sH9txoHsL27EDsVu+KCPFIJfKLfClZR3bL9Yl6IG5uZ2Njzx7p6ET6oWQCOmpLsb1SrbQcviJVshTxVlT2l6STzQEZ1sZYdo47oX2SmsadlvGTtusCsp/PVufu77kXFq3EppDB/TZBN6y7TrKs2ho5kOzmgcm5yqsjkyKh/ItOZmn4aYQP+17C5Tzg8MTpJtNJ1s01Vll2JEsz8BG7mFS2rv5Ue8bKODZRtI4I/juMBEW8dX9xzDQrpDL9xXrXiRvbjhQ/OVayv5k4gvFuyPvIAjs5buw0gDlnyp8HXcXgnl9uHKLrbPFm40TdhPD7L8ohLBuOczqoE8SJ0XO38nmPHZzCKfvaHHCohh73gFWC3Y1gIqWtz09SoBHiPnpz/51O/q59nMUUCIbIOjEyq2zjyVSUBUopVzxXK+/gaLByOgrk3Lwer3Vi/I7cguIJQHps+JXNHw/z/XKT/InwuawbTStUVOr3jIYvO9aQLP948CzY0AF7eKEvCDjZGXkv34CNF0p4QuPROo1JlecRTnwTov8lJeem8MfX6S+3yGFku3gEUP3Bt4WtwPb1D048VXwmbpZB0X82XiWZhcfUGU7h/uBF5jhqYbFt4zrTdMMzdug87abmRfcRmIAnQMyNMzWk=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HE1PR06MB4137.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(366007)(1800799015);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?VB2Wn+ryefEccqt1L0VQ+KxnQLcWZXY9whwON0StOo4anc9mAiLV+j+oDb?=
- =?iso-8859-1?Q?yCJZmobbSEYl5XcvAyXdlD9AhnSIQDttAF5hEpYX/6vMfWpY0rbmeV1mhy?=
- =?iso-8859-1?Q?k82Exp2F9EtQ1Tjx7bwqJf6akWZtwxjGHTr6f3tyIkQiz3xFO6+g5xAyao?=
- =?iso-8859-1?Q?n/hnwAEshY7bv03BfqO/Tu7vgm2cBb1M24pqlWq+XjV/FUYCSfvIzljokT?=
- =?iso-8859-1?Q?sdSPZKaUtA7ka0fXz9VN9vs+pY6MD5goaaeulNN72gTMsE+nqUFcwuR0bN?=
- =?iso-8859-1?Q?5wO+r7ashe/Ivmcc6zeW4twgqo+bvNmcNRBQt9iaZqzq3D2nNL6O+NQkou?=
- =?iso-8859-1?Q?VtzpeKm59ecs951TpYLRSdHndOUZs1zJVAJufpHO9xwuynnA5ym5csvMLh?=
- =?iso-8859-1?Q?U94iECoakuRa34VzHR2yjqxieWidlkkVtrDkPWfUHYbw8GFxRWkHygUOTT?=
- =?iso-8859-1?Q?Az/NTHQURCG+5fFjx4cRwpiGhFXZ3L0qN0jRmvqN5sLNVDJ8jBZB5w2LgB?=
- =?iso-8859-1?Q?kh6el7Xq4g9RQXSA7d/Mg26m1wzPiKJpLf9cwvG/9S7N5L+IbngqEmHV/9?=
- =?iso-8859-1?Q?LUCCrpqmCAC6qK5DIe59uz+U4B20tp0qBObElTjL+lbOY1LZdgz4ppEkO7?=
- =?iso-8859-1?Q?m2Kq31RIDWZEwfIQwEbAI0aU/KOmeDN7bpX79iYF4NzcRssKOhwZrnPlQp?=
- =?iso-8859-1?Q?dG3eypkkFPn2o/JPP54+NOEidzxU53VLP7RW8rakVZdhH6jtZ8sL7DRzAq?=
- =?iso-8859-1?Q?WvewZAW/NjR4SB7FhxGQqyj017g0m0dAgZ5YL8VxbZpb2K7ZNd5jpbPucG?=
- =?iso-8859-1?Q?/8ULuLYQUSpBGm8GlLhaLYcmDhVuTOxvtP+BaeyHAyhwqM/VpamPtD/VE4?=
- =?iso-8859-1?Q?ob5olhCPjWWVUL//EuSkAEmW34AZ5/uGJop+0GucEw94vc9Vr7mVZVHgD9?=
- =?iso-8859-1?Q?huCecF0ZiZe7RXnLaA+ORTTuuk/jRv+eX2/+o6ljZUK+yTS8VxP9qvHhKn?=
- =?iso-8859-1?Q?KN0n5DRKwF6I6XdLDsjDUXwx4AwjjSD2ADPMTKjt09U51TNbC2sU4EBu8/?=
- =?iso-8859-1?Q?thn5MDIedWftHqeoGCMp+cUXebK2cZlvHiI9G09WwP6dVPyQFY4U88KA6X?=
- =?iso-8859-1?Q?cEFnT6kcdnpxBbSruHYdEzrkELq3nga9uw2W8hixzRo6XGsVahRUe8xLBE?=
- =?iso-8859-1?Q?5F6EJ3aCSaEBd7hV7dd7YOP3KnWR0UqVRXVeeUgbGmY8QnPlPa1UmTHP9d?=
- =?iso-8859-1?Q?ihFOOjajQMoI5hbBTPzm9Al4x85+D4V+5sL3jZg4glbXPkFoAXKu/j3l9B?=
- =?iso-8859-1?Q?2IcymfA3l/Cpr4jnRzmxi7GDUzv1lkS47uhH12Hvtuq++MNXMJQch/ZhYa?=
- =?iso-8859-1?Q?9BF1FQuqGYz5QEHk5ghRHHEhVZfWdLa4V8AlnvS7voKAWtUQotJnPL4QFu?=
- =?iso-8859-1?Q?CVEOVLFkm6C64S+WflmK1ChH5zZ0fYvCAxYKGStFLyNLd6H5UWr/Q4dvei?=
- =?iso-8859-1?Q?mu+EYKzXIjC9PeC1sQ9MbewD2P96udhx8rMDS0fBTpWTnq0wImC5LhyzlV?=
- =?iso-8859-1?Q?NzAFwYsPKFc6FEwdQkzk4tMCveI6dTxP3lrQlKYun9xoTORSPpAPonj3y1?=
- =?iso-8859-1?Q?88qlsceFHoIzo=3D?=
-Content-Type: multipart/alternative;
-	boundary="_000_HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2HE1PR06MB4137eurp_"
-MIME-Version: 1.0
-X-OriginatorOrg: bristol.ac.uk
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HE1PR06MB4137.eurprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2ffc3ed5-028b-4ff1-7da9-08dc53852bb7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2024 02:24:20.8360
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b2e47f30-cd7d-4a4e-a5da-b18cf1a4151b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0ve42khDAj5thcWDY92FKmSVYfHZAMvHH00Gzg7Mi5qIfrTOCnIVFdTn/OH/bSqmRex34HYfOsqDidI/Y03MTg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR06MB8404
-Subject: [oss-security] Looking for developers who know how to use Seccomp for a paid study
+Subject: [oss-security] Update on MatrixSSL miscalculation (incomplete fix for
+ CVE-2016-6887)
+To: oss-security@lists.openwall.com
 
---_000_HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2HE1PR06MB4137eurp_
-Content-Type: text/plain; charset="iso-8859-1"
+--=_zucker.schokokeks.org-26778-1476545759-0001-2
+Content-Type: multipart/mixed; boundary="MP_/+PihBfVc4qVjWUwoqrNPw1h"
+
+--MP_/+PihBfVc4qVjWUwoqrNPw1h
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Hello,
+https://blog.fuzzing-project.org/54-Update-on-MatrixSSL-miscalculation-inco=
+mplete-fix-for-CVE-2016-6887.html
 
-I am Maysara, a PhD student at the University of Bristol.
+CVE-assigners: I think this could get a CVE as an incomplete fix for
+CVE-2016-6887
 
-I am looking for C developers who have experience with Seccomp for a 1.5-ho=
-ur study where you will be asked to use Seccomp to sandbox a simple C progr=
-am. You will get  (200=A3 Amazon voucher) as a reimbursement for your time.
+----------
 
-This study aims to evaluate the usability of Seccomp and is part of a PhD p=
-roject.
+I recently [1] reported how I found various bugs in the bignum
+implementation of MatrixSSL, some of them leading to remotely
+exploitable vulnerabilities.
 
-If you are interested, feel free to email me at:
-dl21421 at bristol.ac.uk
+One of the bugs was that the modular exponentiation function -
+pstm_exptmod() - produced wrong results for some inputs . This wasn't
+really fixed, but only worked around by restricting the allowed size of
+the modulus. Not surprisingly it is still possible to find inputs that
+cause miscalculations (code). I reported this to MatrixSSL on August
+1st.
 
-The study has been approved by the ethics committee of the university, and =
-I am happy to provide the full details of the study and answer any question=
-s.
+Recently MatrixSSL released another update (3.8.6) fixing several
+vulnerabilities reported by Craig Young from Tripwire [2]. However the
+pstm_exptmod() bug is still there.
 
-Appreciate your help,
-Maysara.
+It is unclear how exploitable such bugs are, but given that it's used
+in the context of cryptographic functions handling secret key material
+this is clearly a reason for concern.
 
---_000_HE1PR06MB4137DB91DDCDC96DD46B3F10AE3D2HE1PR06MB4137eurp_--
+MatrixSSL has long advertised itself as a safer alternative to OpenSSL,
+because it didn't suffer from the same kind of high severity bugs. I
+think it has been sufficiently shown that this was due to the fact that
+nobody was looking. But what's more worrying is that bugs they knew
+about for several months now don't get fixed properly.
+
+[1]
+https://blog.fuzzing-project.org/51-Fun-with-Bignums-Crashing-MatrixSSL-and=
+-more.html
+[2]
+http://www.tripwire.com/state-of-security/security-data-protection/cyber-se=
+curity/flawed-matrixssl-code-highlights-need-for-better-iot-update-practice=
+s/
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+--MP_/+PihBfVc4qVjWUwoqrNPw1h
+Content-Type: text/x-c++src
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment; filename=matrixssl-exptmod-bug-variant2.c
+
+/* MatrixSSL miscalculation bug
+ * demonstrating incomplete fix for Use CVE-2016-6887
+ *
+ * by Hanno B=C3=B6ck, license: CC0 / public domain
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <openssl/bn.h>
+#include <crypto/cryptoApi.h>
+
+unsigned char a1[] =3D {
+  0xe7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xff,
+  0xff, 0xff, 0xe1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x14, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x74, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0xb7, 0xcc, 0x03, 0x00, 0x00
+};
+
+unsigned int a1_len =3D 197;
+
+unsigned char b1[] =3D {
+  0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00
+};
+
+unsigned int b1_len =3D 50;
+
+unsigned char m1[] =3D {
+  0xe7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xcc, 0xb9, 0x6c, 0x00,
+  0x00, 0x00, 0x00, 0xff
+};
+
+unsigned int m1_len =3D 64;
+
+/* test bn functions from openssl/libcrypto */
+char *bntest(unsigned char *a_raw, int a_len, unsigned char *b_raw, int b_l=
+en,
+	     unsigned char *m_raw, int m_len)
+{
+	BN_CTX *bctx =3D BN_CTX_new();
+	BIGNUM *a =3D BN_new();
+	BIGNUM *b =3D BN_new();
+	BIGNUM *m =3D BN_new();
+	BIGNUM *res1 =3D BN_new();
+	char *result;
+
+	BN_bin2bn(a_raw, a_len, a);
+	BN_bin2bn(b_raw, b_len, b);
+	BN_bin2bn(m_raw, m_len, m);
+
+	BN_mod_exp(res1, a, b, m, bctx);
+	result =3D BN_bn2hex(res1);
+	printf("openssl:\n%s\n", result);
+
+	BN_free(a);
+	BN_free(b);
+	BN_free(m);
+	BN_free(res1);
+	BN_CTX_free(bctx);
+
+	return result;
+}
+
+char *matrixtest(unsigned char *a_raw, int a_len, unsigned char *b_raw,
+		 int b_len, unsigned char *m_raw, int m_len)
+{
+	unsigned char *rr =3D malloc(4096);
+	char *buf, *buf_ptr;
+	int i, s;
+	pstm_int a, b, m, r;
+
+	if (pstm_init_for_read_unsigned_bin(NULL, &a, a_len) < 0) {
+		printf("pstm_init_for_read_unsigned_bin a error\n");
+		return 0;
+	}
+	if (pstm_read_unsigned_bin(&a, a_raw, a_len) !=3D 0) {
+		printf("pstm_read_unsigned_bin a error\n");
+		return 0;
+	}
+	if (pstm_init_for_read_unsigned_bin(NULL, &b, b_len) < 0) {
+		printf("pstm_init_for_read_unsigned_bin b error\n");
+		return 0;
+	}
+	if (pstm_read_unsigned_bin(&b, b_raw, b_len) !=3D 0) {
+		printf("pstm_read_unsigned_bin b error\n");
+		return 0;
+	}
+	if (pstm_init_for_read_unsigned_bin(NULL, &m, m_len) < 0) {
+		printf("pstm_init_for_read_unsigned_bin c error\n");
+		return 0;
+	}
+	if (pstm_read_unsigned_bin(&m, m_raw, m_len) !=3D 0) {
+		printf("pstm_read_unsigned_bin c error\n");
+		return 0;
+	}
+
+	if (pstm_init(NULL, &r) !=3D 0) {
+		printf("pstm_init r error\n");
+		return 0;
+	}
+
+	if (pstm_exptmod(NULL, &a, &b, &m, &r) !=3D 0) {
+		printf("pstm_exptmod error\n");
+		return 0;
+	}
+
+	if (pstm_to_unsigned_bin(0, &r, rr) < 0) {
+		printf("pstm_to_unsigned_bin error\n");
+		return 0;
+	}
+	s =3D pstm_unsigned_bin_size(&r);
+	buf =3D buf_ptr =3D malloc(s * 2 + 1);
+	for (i =3D 0; i < s; i++) {
+		buf_ptr +=3D sprintf(buf_ptr, "%02X", rr[i]);
+	}
+
+	printf("matrixssl:\n%s\n", buf);
+	return buf;
+}
+
+int main(int argc, char *argv[])
+{
+	char *r1, *r2;
+
+	r1 =3D matrixtest(a1, a1_len, b1, b1_len, m1, m1_len);
+
+	r2 =3D bntest(a1, a1_len, b1, b1_len, m1, m1_len);
+
+	if (strcmp(r1, r2) !=3D 0)
+		printf("Results differ!\n");
+
+	return 0;
+}
+
+--MP_/+PihBfVc4qVjWUwoqrNPw1h--
+
+--=_zucker.schokokeks.org-26778-1476545759-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCAAGBQJYAkzeAAoJEKWIAHK7tR5C7iEQAKwEXK5aXowRHO+ot+q+MOxM
+e3aS6EBOFHGeXhzT2lqkfYlfJv01YH1FtvAoQmeuNOfJjdYGKbN8qkI6bAVAGQSs
+bcri6nYJtWIwg4nQLmbDqYhIeBUThKE7sjuYUbu+ruB4C7CUD2K7KoslEH+AbtlN
+6oh4JyUKKKPhKhqgn1CVBHhAnvK3jeiztceTavxs2FKRfdV9WYGB3yaO4NF/DJ9+
+NtKCU5zQqxvbSaE1ePrJyDUzNRlpkvHfIUai8KX2ZrzlMsrKdq3jU6AVp57Auehb
+oJ8B/B42y11rOtDOo+39ZJEdnpLrEJ1dK/vnKpQKSSGfqR7Ch7ib0I6GnXP78+HS
+WSeTtENn3Q1M0CC+FSLfoh4iGUCyBXYF1x/HJkg08/AFiBm/XcdTfhCsyNMmVJBn
+mHanWweQkjj75nkSOvtBXjPN2O91T5a9YX/KyEFNlD6asC9eAtKXY6L+Wv38i1En
+aRME+uQAOsRCURP0ytZ5MmtLAt1g+c+ofEW9Vd+FGnY/Xv3A47ZDO8mrOndLkdDI
+dGFex14DJ+RJfny0+IorWA9qrwn8K5DK+07ln1QwF4kY6ymp7K+f+vujHux/4djC
+jT8prD61VnUrR9SS3MBcCPqZJLJTgp0IDJdxb/6CXJrWXECbPM8WfHJmMfStStRt
+oUEMXZLGxPsRpJGCncAB
+=lAxP
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-26778-1476545759-0001-2--
