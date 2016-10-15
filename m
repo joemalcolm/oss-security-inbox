@@ -1,4 +1,9 @@
-Received: (qmail 5383 invoked by uid 550); 28 Apr 2022 15:45:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1979" "Saturday" "15" "October" "2016" "12:46:03" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161015164603.2A9F752E4DF@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: CVE request Qemu: net: OOB buffer access in rocker switch emulation" "^Cc:" nil nil "10" "2016101516:46:03" "[oss-security] Re: CVE request Qemu: net: OOB buffer access in rocker switch emulation" (number mark "U       cve-assign@m Oct 15   47/1979  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: OOB buffer access in rocker switch emulation\"\n") "<alpine.LFD.2.20.1610141642160.13950@wniryva>" ("<alpine.LFD.2.20.1610141642160.13950@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13737 invoked by uid 550); 15 Oct 2016 17:00:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,87 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13695 invoked from network); 15 Oct 2016 17:00:53 -0000
+In-Reply-To: <alpine.LFD.2.20.1610141642160.13950@wniryva>
+Message-Id: <20161015164603.2A9F752E4DF@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, psirt@huawei.com
+Date: Sat, 15 Oct 2016 12:46:03 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5358 invoked from network); 28 Apr 2022 15:45:16 -0000
-Date: Thu, 28 Apr 2022 15:45:02 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20220428154502.j4hzupl7hsipgtfk@yuggoth.org>
-References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="znnlwoz5xivmiml6"
-Content-Disposition: inline
-In-Reply-To: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] CVE-2022-21449 and version reporting
+Subject: [oss-security] Re: CVE request Qemu: net: OOB buffer access in rocker switch emulation
+To: ppandit@redhat.com
 
---znnlwoz5xivmiml6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 2022-04-28 14:12:04 +0000 (+0000), Seaman, Chad wrote:
-[...]
-> In what universe exactly are versions omitted from vulnerability
-> reporting because a vendor =E2=80=9Cno longer supports that version=E2=80=
-=9D=E2=80=A6 this
-> non-supported version is still vulnerable?
+> Quick Emulator(Qemu) built with the Rocker switch emulation support is
+> vulnerable to an OOB read access issue. It could occur while performing a DMA
+> access 'TEST_DMA_CTRL_INVERT' test.
+> 
+> A privileged guest user could use this issue to crash the Qemu process
+> instance on the host resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02501.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1384896
 
-The alternative is what projects I work on do: If the oldest
-supported version is vulnerable, then assume all unsupported
-versions are also vulnerable unless someone is able to find evidence
-to the contrary (we basically just always list <=3D the oldest fixed
-version as vulnerable).
+>> While testing host DMA access, a buffer address
+>> is written to register 'TEST_DMA_ADDR' and its size is written to
+>> register 'TEST_DMA_SIZE'. When performing TEST_DMA_CTRL_INVERT
+>> test, if DMA buffer size was greater than 'INT_MAX', it leads to
+>> an invalid buffer access. Limit the DMA buffer size to avoid it.
 
-> Are exploit developers expected to check against the version of
-> the vulnerable application during their exploit detonation to
-> ensure they=E2=80=99re =E2=80=9Conly infecting supported versions?=E2=80=
-=9D.
+Use CVE-2016-8668.
 
-Vulnerability managers' jobs aren't to make things easier for
-exploit developers, quite the opposite in fact. My goal is to make
-sure users know when they may be running vulnerable software and
-disseminate fixes for all supported releases, where possible.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/rocker/rocker.c but
+that may be an expected place for a later update.
 
-> Why is this being allowed=E2=80=A6 this is dangerous for everyone involved
-> save for Oracle=E2=80=99s own ego or public image?
-
-Speaking from the perspective of volunteer-run open source projects
-like the ones I work on, there are only so many hours in the day so
-we have to limit what versions of software we can effectively test
-and fix. In our case, as I said, we just assume all older versions
-that that are also vulnerable unless we happen to find information
-to the contrary, but I can certainly understand if others have a
-policy to only bother providing information about versions they
-support (and flat out tell users to upgrade to a supported version).
---=20
-Jeremy Stanley
-
---znnlwoz5xivmiml6
-Content-Type: application/pgp-signature; name="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmJqtnhfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCkAQA//d3fp+XDsR8PoHiRDWlmb64M5kacd4QypnLyP35G/dwpGpR02ijKGxpkm
-n46+3WVbstOsjNN8/SRaYw3bCCENDqibtTB6vXhNjtoKuuO2hhDn7ZkuZyBa5iHn
-Jf41sHIhRJfPGsfZAyoFLo9XaK7WCGnHRuYsbXRYWBw6noQOgVBLQ4zjhVaoBRW/
-BVYeYpgygVAlBMYXaBdU0UsE2Mg/nxNYK4cbviOAkNAfzlGxprBcnkKrCU7tgUDS
-SkXJQYweca1pcsR0y9B8X+qCAxp5ODJItx9yNVh01RZMovt7MwtlsTuuaWYcrW3L
-y78F/ofoqyyFbFNew9UEJFq6BHpMDrBkkiodtRGKVpmeNaG0Dlvj4D9tD08hEPaj
-b3wyB9+qhjY2scIhgYKZAb01MI/s1+/8urMoWJapkM2b67yB0YNhUOUE27Jk0xzE
-0IQegVmRl2C+BC4bdTKI4jHJXTaSYAPW62cRzyUajw/GP0485YznkFAtjoe4waLP
-zoZssnud3DxSiG0ahrn4QUnyEjX3M23kLzzKNxJKZW7w5dnXu3h3upoSF1BElmUR
-iEvm2EgDbfw9uYuxjw44e/fr9FrdO+3u2m9I35DZZonbb5uPJ7Bl98dPABGFVtaF
-O/CepiVKE0Kw3qTajncj728+LopkCVuZNzL4kivbzWgQPb07jZo=
-=eljq
+iQIcBAEBCAAGBQJYAlsOAAoJEHb/MwWLVhi2+IoP/0i4fPGczDVTahpTjfF2hwho
+7LuBxbaC/CN9Jkr9MUTgtda45X4NT3K6XbR6xrZA3Nv8Mtcbo7ZO/c91LmIhib8n
+QpV8DixIv+KTXj0NFZ2jWPThjb65wSUDIVHMSt9e8pbk6zmqmUVAy2K85FV+rHXq
+fhX89bgXPoT0WqK2ukxhZz/3pBiVoCRPlxQx4TuTYppB7O8K3XOPEktmqOvamtfo
+uSZLbPZlPSbmQ5w2GFLSAl22yeiRMznRzXQK5GT33Pu1109gY5kWfP5tLmDn8vS0
+bD6m7jXKQqplrS48YbbwGlFGwcn7hXxH81kj2JrQImtK6i7o0o/ONhhlnu5cuq/K
+nuboysIih7EGoY3vax0pbyisB5wOmp7pGc9e4b+AQP/kgbE2L+iHOlZigw1cUO2n
+uc1vRl5mr4Z60ubIQTBUPceVMa2LHydj5/WjoryidKxqpFGY/Bu4YGkYnApEOhQY
+iAR1Q82CMCzUVB6L7GszkS96+7DVfBWblBxVf23cJNwFq/xylUvtkUfj3rEOAsgA
+OC1/LoqcCNyPQSek2hIaGZrUYoEKKetDtV1mNLn3JnUpCw0K42F6yEWxAtwXgYRj
+ezqVXUq8JDiGXHvnN6k31Yixu8RsKCO1bvmiC10FMJtYZVsOr6rvnIIOGBC2ChfM
+wJ+NxzkQZ4MdGyqPJdvA
+=+r3h
 -----END PGP SIGNATURE-----
-
---znnlwoz5xivmiml6--
