@@ -1,132 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/12
-Message-ID: <3b0ab9e5-d160-c5fe-a554-a5ac61eede34@cpanel.net>
-Date: Thu, 19 May 2016 16:27:09 -0500
-From: John Lightsey <jd@...nel.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/5
+Message-Id: <20161015164723.AD7EC6C0661@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 12:47:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
+Subject: Re: CVE request Qemu: char: divide by zero error in serial_update_parameters
 Content-Type: text/plain; charset=utf-8
 
-On 5/19/16 2:00 PM, Simon McVittie wrote:
-> Bob, if you would like distributions to pick up GraphicsMagick security
-> fixes in a timely way, it would probably be really useful to do an
-> upstream release - distributions are typically a lot more confident about
-> backporting large changes to their stable branches without regressions
-> if they've been able to get some testing on the same changes in their
-> unstable branches first.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I spent quite a bit of time looking at the ImageMagick, GraphicsMagick,
-RedHat and Debian changes trying to piece together a proper list of
-flaws to fix through backporting and policy file changes.
+> Quick Emulator(Qemu) built with the 16550A UART emulation support is
+> vulnerable to a divide by zero issue. It could occur while updating serial
+> device parameters in 'serial_update_parameters'.
+> 
+> A privileged guest user could use this flaw to crash the Qemu process instance
+> on the host, resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02461.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1384909
 
-I also spent some time looking at the remaining delegates trying to
-figure out which will have near-identical flaws to the issues that have
-already been fixed.
+Use CVE-2016-8669.
 
-This is the list I'm working off of. For RedHat and Debian, I only
-checked the ImageMagick updates.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/char/serial.c but
+that may be an expected place for a later update.
 
-CVE-2016–3714 - RCE via shell characters in delegate invocation.
-ImageMagick: Fixed
-GraphicsMagick: Not vulnerable
-RedHat: Fixed
-Debian: Fixed
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2016-3718 - SSRF via HTTP and FTP coders
-ImageMagick: Not fixed
-GraphicsMagick: Not fixed
-RedHat: Fixed
-Debian: Fixed
-
-CVE-2016-3715 - File deletion via EPHEMERAL coder
-ImageMagick: Fixed
-GraphicsMagick: Fixed
-RedHat: Fixed
-Debian: Fixed
-
-CVE-2016-3716 - File move via MSL coder
-ImageMagick: Fixed
-GraphicsMagick: Fixed
-RedHat: Fixed
-Debian: Fixed
-
-CVE-2016-3717 - File read via LABEL coder
-ImageMagick: Not fixed?
-GraphicsMagick: Not fixed?
-RedHat: Fixed
-Debian: Fixed
-
-No CVE assigned - Heap overflow in PICT parser
-ImageMagick: Fixed
-GraphicsMagick: ??
-RedHat: Not fixed
-Debian: Not fixed
-Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
-
-No CVE assigned - Out of bounds read in the PSD parser
-ImageMagick: Fixed
-GraphicsMagick: ??
-RedHat: Not fixed
-Debian: Not fixed
-Reference: http://www.openwall.com/lists/oss-security/2016/05/11/3
-
-No CVE assigned - RCE via gnuplot delegate
-ImageMagick: Fixed
-GraphicsMagick: Fixed
-RedHat: Not fixed
-Debian: Fixed
-Reference: http://www.openwall.com/lists/oss-security/2016/05/09/1
-
-No CVE assigned - File read via man delegate
-ImageMagick: Fixed
-GraphicsMagick: Fixed
-RedHat: Not fixed
-Debian: Not fixed
-Reference:
-https://sourceforge.net/p/graphicsmagick/mailman/message/35072963/
-
-The core problems brought up in CVE-2016-3718 and CVE-2016-3717 haven't
-been fully addressed anywhere.
-
-It's trivial to generate SSRF payloads for the formats processed through
-html2ps and soffice. I'd also expect that SSRF is normal behavior for
-uniconvertor, and RCE is normal behavior for blender and povray, but I
-haven't verified.
-
-If those are all counted separately...
-
-No CVE assigned - SSRF via html2ps delegates
-ImageMagick: Not fixed
-GraphicsMagick: Not fixed
-RedHat: Not fixed
-Debian: Not fixed
-
-No CVE assigned - SSRF via soffice delegates
-ImageMagick: Not fixed
-GraphicsMagick: Not vulnerable
-RedHat: Not fixed
-Debian: Not fixed
-
-No CVE assigned - (assumed) SSRF via uniconvertor delegates
-ImageMagick: Not fixed
-GraphicsMagick: Not vulnerable
-RedHat: Not fixed
-Debian: Not fixed
-
-No CVE assigned - (assumed) RCE via blender delegate
-ImageMagick: Not fixed
-GraphicsMagick: Not vulnerable
-RedHat: Not fixed
-Debian: Not fixed
-
-No CVE assigned - (assumed) RCE via povray delegate
-ImageMagick: Fixed
-GraphicsMagick: Fixed
-RedHat: Not fixed
-Debian: Not fixed
-
-Are there other formats that are unsafe and should be removed using the
-policy configuration files?
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3691 bytes)
+iQIcBAEBCAAGBQJYAlsWAAoJEHb/MwWLVhi2ZNgP/3Q2O/R4RvBqZ3ySzmRc4kBJ
+KZMiY1SO+pPhKz2ogREuCqE6/ioBa9181Jcd7b+VsDXqhYLpIqvfr/gOA2QfQRJW
+OS2JYBpHf36RT8CzPnSKq825UjpYLj3tObbv/BiGuIEqU0Eky79Q/sFkOqCZJZn/
+vFKwuSqNtqcvD6c1fQWz5BQQhgYOqZtPNPeDvdV6AGSh7qny/wjpA57LrGqv16M+
+FX5iBo0nmOB9SPPHBGIMQlXq7hIq73mnhqu6hXNqrZo9ZDEBSf+t2bRzufNi4o47
+WefYhqJ/J8Sku+X28ul+BndLhmo/XYhlwXVgp4gv5I+ybEW/l+8+VZvRCyjiVmrl
+DtZyp9N2FMXqueJeMk85D7Qn2v6Us1gfLjk22GfYiP9H+z+8KGbiHf8EjHj7vuCC
+OFE0guEqT80ev/hAP65NAidxVxquuxEkAiu2gGDUhnImi5kBY038Df4mPju8tYIo
+W5H/kFK6vzHayyF8/JZlz5XbdhMQsX3aQ51sfvgxQTkyjNJ8/ZpLVDLdQRMmDpvG
+jE1QuOXaO+CNAnluwFfcGkkSA7JZw2AgVYGy8yWhHSF3eFG1YR5pf6eu+c0S+Oug
+rjATBMRpPmGi9WWooDi1i/F6FkFS/wTbHyUGeNtHG8lWqAWYFjV7IGyJ4IK1CICK
+3v8A+xpCXBAJY7oQbNmw
+=eIjR
+-----END PGP SIGNATURE-----
