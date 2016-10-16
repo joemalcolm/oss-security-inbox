@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["421" "Monday" "16" "December" "2019" "14:15:35" "+0000" "daniel gaspar" "danielvazgaspar@gmail.com" nil "22" nil nil nil nil "12" nil nil (number mark "U       danielvazgas Dec 16   22/421   " thread-indent "\"[oss-security] [CVE-2019-12414] Apache Incubator Superset medata data leak vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12414] Apache Incubator Superset medata data leak vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1617" "Saturday" "15" "October" "2016" "22:50:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016025034.CDBBE6C0D4B@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)" nil nil nil "10" "2016101602:50:34" "[oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)" (number mark "U       cve-assign@m Oct 15   40/1617  " thread-indent "\"[oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)\"\n") "<2751056.p2fs675oKu@arcadia>" ("<2751056.p2fs675oKu@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13742 invoked by uid 550); 16 Dec 2019 15:19:32 -0000
+Received: (qmail 13333 invoked by uid 550); 16 Oct 2016 02:50:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20396 invoked from network); 16 Dec 2019 14:15:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=8EXQ0eyyzJAx14LjMlh+BaBv5zXbRKfjyIBKMvbpT1o=;
-        b=OrD5lsAXuyp26DuPQb+fB2Zp1jPI6pqFyivgWgz/FbmllGW6TStJTUBCV06HV4iyrr
-         z6BlEL/4kNRE5aYAKbvF4LUU6+TmuTuaxcNTRXeW02d30P42FwyY2lzQ3U/qJ9kMonBd
-         L+jBf+YaBpM7h4LhZAJZa3JBIUYnMeuQ5HEttbwvKguel59uwYcFnmAzRXN85rdrO064
-         lm3LQMZGqEYo5Jk/7HMSh3wYz++d5EC+MzVEuOoBvENmCM+H+gOhczBEJYjFipi0v4Ym
-         Ict5yFfLOX46xnZiMcff0xZcSbp/BNI5Q7WXoZxhlZmUzK5iWK5K4XoDJQFWJl9tneUa
-         FdHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=8EXQ0eyyzJAx14LjMlh+BaBv5zXbRKfjyIBKMvbpT1o=;
-        b=ot8nNfmwnWEKGOokJA3I5khMDeCF1Tzs4jF++Ce6cI2KThK/HQE2Ntd8ZG/gJtY9Im
-         JiLbAPNAS6nyGV1Ri2LrDOk82QSbYZLwYLwT3kFP0NZEqhq+X8zlQByBgQph8v7iXn3u
-         mxYlxk/7bXsLKnQcccFrMmGJi8DHlPLtrHiFhwigVvkxYlaycWaM6fL/JxrzfOh3kRnl
-         hIMNGwvnD20hU/muI7XNA7r7ymSuZFDiW2vUpizLjoKIVBxwq/sxMpv7vu0uSwLPkMnW
-         IFPtZaOsbxW2S/ogkYVYKE92TDCRQP3s73LbdVp7uNVf4S8GPv4/id3nqVFPh4532gQJ
-         eddg==
-X-Gm-Message-State: APjAAAU1lzq+YAx9jqqtMSV+MQklmbzmEHGrzDquV1yCKAzrVg/adx5d
-	NAjKyvpzJuKdT8ePI9GQSH9xswXLzDKwD767Hsp+cE89cU4=
-X-Google-Smtp-Source: APXvYqzMjD7vCEAN+6r6G5C5VT0eETLEptXIDGTsBWlNIqOx5cIjshS3ysnC6uSzIVEhh8acpSt4Ta+uzc0Ox+7l8Fc=
-X-Received: by 2002:ab0:20a:: with SMTP id 10mr23449159uas.19.1576505746048;
- Mon, 16 Dec 2019 06:15:46 -0800 (PST)
-MIME-Version: 1.0
-From: daniel gaspar <danielvazgaspar@gmail.com>
-Date: Mon, 16 Dec 2019 14:15:35 +0000
-Message-ID: <CALSkbjpG+QgQg4LRS5hMG-oZZ3uxTb4xeg8MCyc0dHED9jRLPg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000facd100599d2d810"
-Subject: [oss-security] [CVE-2019-12414] Apache Incubator Superset medata data leak vulnerability
+Received: (qmail 12267 invoked from network); 16 Oct 2016 02:50:46 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <2751056.p2fs675oKu@arcadia>
+Message-Id: <20161016025034.CDBBE6C0D4B@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:50:34 -0400 (EDT)
+Subject: [oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)
 
---000000000000facd100599d2d810
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Low
+> https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c-2/
 
-Vendor:
-The Apache Software Foundation
+> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+> libdwarf/dwarf_util.c:590:9 in _dwarf_get_abbrev_for_code
 
-Product:
-Apache Incubator Superset
+> Commit fix:
+> https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13
+> and then
+> https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2
+> (because of a mistake)
 
-Versions Affected:
-Superset < 0.32
+Use CVE-2016-8681.
 
-Description:
-A user can view database names that he has no access to on a dropdown list
-in SQLLab
+(This has the same fix as CVE-2016-8679 but seems distinct.)
 
-Mitigation:
-Superset users with version prior to 0.32 should upgrade to 0.32 or higher
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---000000000000facd100599d2d810--
+iQIcBAEBCAAGBQJYAuddAAoJEHb/MwWLVhi2l7EP/1T9zeweglEA9u8ZOy49fD+0
+7dTVP84wg1PDV20ox6rFpO8cULGEkBdpeCKbmhloMDV8A1B1S0a/FkKzSuzJ8ib2
+s770i5d1tLYHMoavotL94ta7rnoh65ePtbCSIyH4FWD74IUu+pVxvNrsEfXG2jiJ
+I5DdWRIJAOEpws0XNVSsoOogyQiJ5FEwRsUFeZwN5q5sdjtGXDqit0YMmDjrBJYu
+6xMUh3LouC1S2kJ3R5LOMcPg/hzMcConeiRM3DYyn/30KiFxWwiTnrFBOkfwEBLs
+F+UIfrYbGi21bywCmVb0pdRZzcdOuQQDaHDfBxjmJg9jFk/Jf8WXvJM0ArMFBWzN
+05FqkcCBYAdXMmPoPykVEtOKNMvnxQKll3L5WnizKY500oafNiFoR5+CmqQCr958
+gBMCQQnZqP0BSLZb4GDFwdXKl0dWYbvnyw7VJ7xV4an05hJ2U1xDPDDiltZ4irxQ
+MNjxnG57ByTv8zV5s5HuxHdm59Ud29vQU3fDVvDOkBIajxlLQ/Da/PzRk0uREpTu
+vwcSkyfda0FZsLhV/xjVghHVexbIBGxQ8+7De/myAM6PHcf970dyTMDKtToVDzB2
+3/I9DmTr6wSnAPjPXCQL+93HC5dytjjqg4JTCAthKGvS82iPlNZ7+b57mosxgXow
+9GmBfxF8pSb6AJ0AxCnD
+=RxUq
+-----END PGP SIGNATURE-----
