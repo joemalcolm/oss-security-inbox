@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4384" "Monday" "1" "May" "2017" "11:26:37" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<69904.7908160253-sendEmail@localhost>" "100" "[oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)" nil nil nil "5" "2017050111:26:37" "[oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)" (number mark "U       ago@gentoo.o May  1  100/4384  " thread-indent "\"[oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1517" "Saturday" "15" "October" "2016" "22:55:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016025531.7B7C142E008@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)" nil nil nil "10" "2016101602:55:31" "[oss-security] Re: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)" (number mark "U       cve-assign@m Oct 15   36/1517  " thread-indent "\"[oss-security] Re: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)\"\n") "<8583684.bKZSpiVIs8@arcadia>" ("<8583684.bKZSpiVIs8@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30056 invoked by uid 550); 1 May 2017 11:26:57 -0000
+Received: (qmail 1989 invoked by uid 550); 16 Oct 2016 03:40:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,112 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29989 invoked from network); 1 May 2017 11:26:56 -0000
-Message-ID: <69904.7908160253-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:26:37 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-460229.938224987"
-Subject: [oss-security] libsndfile: heap-based buffer overflow in flac_buffer_copy (flac.c)
+Received: (qmail 1954 invoked from network); 16 Oct 2016 03:40:53 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <8583684.bKZSpiVIs8@arcadia>
+Message-Id: <20161016025531.7B7C142E008@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:55:31 -0400 (EDT)
+Subject: [oss-security] Re: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)
 
-------MIME delimiter for sendEmail-460229.938224987
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
-libsndfile is a C library for reading and writing files containing sampled sound.
+> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-magickmalloc-memory-c/
+> 
+> AddressSanitizer failed to allocate 0x7fff03000 bytes of LargeMmapAllocator
+> MagickMalloc ... GraphicsMagick-1.3.25/magick/memory.c:156:10
+> MagickMallocArray ... GraphicsMagick-1.3.25/magick/memory.c:347
+> ReadSGIImage ... GraphicsMagick-1.3.25/coders/sgi.c:498:19
+> 
+> http://hg.code.sf.net/p/graphicsmagick/code/rev/c53725cb5449
 
-The complete ASan output of the issue:
+Use CVE-2016-8684.
 
-# sndfile-convert $FILE out.wav
-==26966==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x621000001110 at pc 0x7fd12fe865e6 bp 0x7ffea55e99f0 sp 0x7ffea55e99e8
-READ of size 4 at 0x621000001110 thread T0
-    #0 0x7fd12fe865e5 in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:41
-    #1 0x7fd12fe86ef4 in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:928:3
-    #2 0x7fd12fe721fb in flac_read_flac2i /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:979:13
-    #3 0x7fd12fdca3a2 in sf_readf_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1835:10
-    #4 0x514b5d in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:87:16
-    #5 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3
-    #6 0x7fd12ed6578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-0x621000001110 is located 0 bytes to the right of 4112-byte region [0x621000000100,0x621000001110)
-allocated by thread T0 here:
-    #0 0x4d94e8 in malloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fd12eb2d492 in safe_malloc_muladd2_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/include/share/alloc.h:153
-    #2 0x7fd12eb2d492 in allocate_output_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:1294
-    #3 0x7fd12eb2d492 in read_frame_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2035
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:41 in flac_buffer_copy
-Shadow bytes around the buggy address:
-  0x0c427fff81d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c427fff81e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c427fff81f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c427fff8200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c427fff8210: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c427fff8220: 00 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8230: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8240: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8250: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8260: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff8270: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==26966==ABORTING
-
-Affected version:
-1.0.28
-
-Fixed version:
-N/A
-
-Commit fix:
-https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8363
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00266-libsndfile-heapoverflow-flac_buffer_copy
-
-Timeline:
-2017-04-12: bug discovered and reported to upstream
-2017-04-12: upstream released a patch
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libsndfile-heap-based-buffer-overflow-in-flac_buffer_copy-flac-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-460229.938224987--
-
+iQIcBAEBCAAGBQJYAudwAAoJEHb/MwWLVhi2L20QALRIKnrluB4Mbj2R6hqtDsYa
+teAcD9UacPWhRtgKG1kLDCPKFcSS+Ci06fMbySoiEtaL6PbgxapAC+MCOGlDO4fY
+RnrYlwpl5fFDf6vsdNwt7/oTL4JBn/6BKpSPyC0EpRzs3EYB5pNYlxmj3GJCFDD8
+NAIP/hMk2UF8c/pf7WUV4rosJatBvJB1EhebpCKTqIjIA5vGx5tO+WfHTfDwmnwg
+xqbSV3JMawld57Ru6ZHv/oRbBHwtLV15OhwBsnMs/lmtNERkcIXWF4zHSY/0F2lY
+GGstrL3sjvK3BjTG+wFv1r+lOCGKYPW/blraOHc2VnCEWuGZ1tRqGliiNWFKoYzG
+xEwZoAP7g1GaIOmSWd4FjvkZ/X3nBxr1LlTLr3qjK/WcHa1ZmCCbmutU08Frg8Ul
+BoZCpAjTMJP82jZUejoVNn3EmweZORtuTn2dfKRGBZnTezT+J67ZLN1ON1XOt+pE
+B9YKKSTVmmcWzJrYbf67C74V3KT4FHeQ7QEJkyTzpym87CDMOAKliVgrLg0Zq8bt
+QNPqrmjR5ZaKP2FGAL2bTYRrc8nYKtFDjeTgdRcWXJN3aQiwCM0bTHHz/DArjVoY
+TSEIROVopNepqXz/CwF2m0obx9arw+rPvhTie6Nl7JVApsWHLSn1t6mW7amBeXAN
+PUyNYRlhb/laUYo7Z3RM
+=y1zP
+-----END PGP SIGNATURE-----
