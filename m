@@ -1,56 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/9
-Message-ID: <398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>
-Date: Wed, 27 Jul 2016 13:27:08 -0400
-From: Daniel J Walsh <dwalsh@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: cve request: systemd-machined: information exposure for docker containers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/14
+Message-Id: <20161016030229.F231642E027@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 23:02:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> AddressSanitizer: SEGV on unknown address
+> 0x527ebf in bmp_getdata ... jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
+> 
+> AddressSanitizer: SEGV on unknown address
+> 0x528252 in bmp_getdata ... jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5
+
+Use CVE-2016-8690 for both of these (the first and fifth items in the
+http://www.openwall.com/lists/oss-security/2016/08/23/6 post).
 
 
-On 07/27/2016 01:05 PM, Christian Rebischke wrote:
-> On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@...re.org wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA256
->>
->>> Once docker containers register themselves to systemd-machined
->>> by oci-register-machine. Any unprivileged user could run
->>> machinectl to list every single containers running in the host
->>> even if the containers do not belong to this user (including containers
->>> belong to the root user), and access sensitive information associated
->>> with any individual container including its internal IP address, OS
->>> version, running processes, and file path for its rootfs.
->>>
->>> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
->>> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
->>>            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
->>>           Leader: 43494 (sleep)
->>>          Service: docker; class container
->>>             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
->>>          Address: 172.17.0.2
->>>                   fe80::42:acff:fe11:2
->>>               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
->>>             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
->>>                   43494 sleep 3000
->> Use CVE-2016-6349.
-> Hello,
-> I don't think that the bug for this problem lies in systemd.
-> It's more a design mistake in docker or oci-register-machine.
-> I have forwarded this issue to the systemd developer team and I don't
-> think they will fix this in the future. In their opinion it's a
-> bug in docker or oci-register-machine:
->
-> https://github.com/systemd/systemd/issues/3815
->
-> by the way.. I would feel glad if the security researchers would first
-> message the developers and then assign a CVE a bug. This is the normal
-> way for a full disclosure.
->
-> best regards,
->
-> Christian Rebischke
-Why is this a bug in oci-register-machine?  All it is doing is calling
-the systemd-machine call to register with it using the three flags
-available.
-Is systemd saying we should not use that call?
+> AddressSanitizer: FPE on unknown address
+> 0x56de63 in jpc_dec_process_siz ... jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17
+
+Use CVE-2016-8691.
+
+
+> AddressSanitizer: FPE on unknown address
+> 0x56dee3 in jpc_dec_process_siz ... jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18
+
+Use CVE-2016-8692.
+
+
+> AddressSanitizer: attempting double-free
+> 0x51f8f8 in mem_close ... jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3
+
+Use CVE-2016-8693.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAu2GAAoJEHb/MwWLVhi2D2wQAI6W9/5UOJJD9vMc25GdYVGo
+Is0tX/21v2ibFpgyAAHBLaQd1ohNeu9U5Y6Nj9lAYAydmcoEZrXX9FxEMNp6XlI3
+ybIDOapRLsjqLovdEzZUEnEDiHWAFS/t/p4hZv67PB7fHWKkeA3QhthSf3OlGVNm
+IDQX8jMzhb96ZLS9aq5Hlz28K2z2Bx9j08WXQ0Fkp2ksMOCdNF0QwRp1TuA7Ork8
+gtxNSVS+r8oAwWBH9fdwU8d9rgBoh0nkMVt9PJex5Hd4ys8CrOS6gBBc9HqDcxdc
+bVdYRUuNbXJjZdlOcfQU37a6MyWJ0gCmCp6xs7u1joAnNmzT9C894xLInJFzx37n
+JVqNBMltWgkkp1ClyVIdkRJErif2JstRpL59JBaMXgSRD0ZCZRsMrehc6SobX0A1
+iUGxdjG/jpP7c8ZPaC2SS/1y0cEpP7CsbDFliZaGxt6QcKOfNqs33L3DSuc7qn0d
+OJIH4GMNlZQFgf7+c67+ZSi86HVmTda9DJjm2a9uqU7tKKE/kJWC9OyWTef9K0aJ
+1HAu1yNjgGmc/oIIMCk/8wNO4UqlHiXhcF/kjWUBc4/eTAPxYLHSH5703HTStaVU
+EN0ONeBMsfx6lhZgoJqDC+ItztjnDR90VGJyrH98XoEn+3KzjGkgEeaYv/N/mUfw
+Q/58lzCKYeVI4ovM1u+J
+=1lOZ
+-----END PGP SIGNATURE-----
