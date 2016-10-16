@@ -1,23 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/6
-Message-ID: <20160729122530.3574dcaf@pc1>
-Date: Fri, 29 Jul 2016 12:25:30 -0400
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple issues fixed in GNU libidn 1.33
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/3
+Message-Id: <20161016024753.8DF2E6C0D4B@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:47:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)
 Content-Type: text/plain; charset=utf-8
 
-Thanks for raising this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-libidn is also bundled in glibc, I have reported those a while ago:
-https://sourceware.org/bugzilla/show_bug.cgi?id=19728
-https://sourceware.org/bugzilla/show_bug.cgi?id=19729
+> https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_size_of_val-dwarf_util-c
+> 
+> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+> 0x60489f in _dwarf_get_size_of_val ... libdwarf/dwarf_util.c:267:21
+> 
+> Commit fix:
+> https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13
+> and then
+> https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2
 
--- 
-Hanno Böck
-https://hboeck.de/
+Use CVE-2016-8679.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+(This has the same fix as CVE-2016-8681 but seems distinct.)
 
-Content of type "application/pgp-signature" skipped
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAudSAAoJEHb/MwWLVhi21csQAIhNJ/W+Q4efpfHddoeY6wTi
+KZyamuq4W+Fska+8pzKInu0oiIUYm2HeoFiDqSOr8BI77tR6G8PQvm7H9V7WCATq
+qSXkMNFJ3KUHIkH/DN5ZI55InyftiAb1fTuI6GfnyeLiF7oD2k2Lysg/xyw62nAA
+tJmT0cbCYd42u6PoNlRcsoZZF74Wrmkdqk2+2ec/n36/kkwIbPULXcL/bOA0IUuF
+3RP9qDk757WQNHmm2buGM5n/ygKCUuV9AejoUM6UWIzwETW+DUE85PTX9rH7TH+h
+dDgmUjAhvq4nSULg6g+7kELKlhGnCq62/XAdzqIkDT6OvSqel6HfmL93y2JSb7je
+Owl27JhKzEKQiGULp4HpVIlH+CG/edIcSZDxY114vGLe+pzJCiQir3aQ0r7GYcvk
+zAyBf9JJOR2cyiUxfDJEn/7Rhlt1wMiJ/R01jl96Gno0iv1Es4fXzMXc17HU7pLk
+ikhJwFOit1vEyxxWOnwfvISPPHbNNfY9TSsKsB0qGmWUzxICG3doaCII5P/HK/hP
+jF/I/uQk4Dtp6X0U70m0hz58XxqBHT8CfGoXJnOZ8DT01sVO2lDU66ygFQYTET1k
+3fMXBpFNR73dhMfsPJz+MIbisQCgDx9+2jacGB7w2YojTpTvs09A47mxoCNWfzsb
+QHxcDWF3zOBmzf22yYWn
+=nGbM
+-----END PGP SIGNATURE-----
