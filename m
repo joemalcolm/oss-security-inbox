@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["770" "Monday" "30" "January" "2017" "15:27:59" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701301524160.12782@wniryva>" "24" "[oss-security] CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer" nil nil nil "1" "2017013009:57:59" "[oss-security] CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer" (number mark "U       ppandit@redh Jan 30   24/770   " thread-indent "\"[oss-security] CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2190" "Sunday" "16" "October" "2016" "20:52:39" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<4660482.3AE3K0588b@arcadia>" "64" "[oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)" nil nil nil "10" "2016101618:52:39" "[oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)" (number mark "U       ago@gentoo.o Oct 16   64/2190  " thread-indent "\"[oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20226 invoked by uid 550); 30 Jan 2017 09:58:20 -0000
+Received: (qmail 5724 invoked by uid 550); 16 Oct 2016 18:52:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20194 invoked from network); 30 Jan 2017 09:58:19 -0000
-Date: Mon, 30 Jan 2017 15:27:59 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Jiang Xin <jiangxin1@huawei.com>
-Message-ID: <alpine.LFD.2.20.1701301524160.12782@wniryva>
+Received: (qmail 5478 invoked from network); 16 Oct 2016 18:52:24 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Sun, 16 Oct 2016 20:52:39 +0200
+Message-ID: <4660482.3AE3K0588b@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Mon, 30 Jan 2017 09:58:08 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: sd: sdhci OOB access during multi block SDMA
- transfer
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)
 
-   Hello,
+A note outside the blog post:
+This issue does not affect any library, but it is only in the mujstest binary.
+There aren't known applications which use mujstest, but if you have an 
+application or website which relies on mujstest you are invited to apply the 
+patch or use the newer package when it will be released. Thanks.
 
-Quick emulator(Qemu) built with the SDHCI device emulation support is 
-vulnerable to an OOB heap access issue. It could occur while doing a multi 
-block SDMA transfer via 'sdhci_sdma_transfer_multi_blocks' routine.
+Description:
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS or potentially execute arbitrary code with privileges of the 
-Qemu process on the host.
+A fuzzing revealed a strcpy-param-overlap.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg06191.html
+The complete ASan output:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1417559
+# mujstest $FILE
+==26843==ERROR: AddressSanitizer: strcpy-param-overlap: memory ranges 
+[0x0000013c5d40,0x0000013c62ed) and [0x0000013c6285, 0x0000013c6832) overlap
+    #0 0x473129 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
+r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:545
+    #1 0x4f7910 in main /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
+    #2 0x7f8af37a961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
 
-This issue was reported by Jiang Xin of Huawei PSIR team.
+0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
+defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
+0x0000013c6285 is located 5 bytes inside of global variable 'getline_buffer' 
+defined in 'platform/x11/jstest_main.c:24:13' (0x13c6280) of size 4096
+SUMMARY: AddressSanitizer: strcpy-param-overlap /var/tmp/portage/sys-
+devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:545 in __interceptor_strcpy
+==26843==ABORTING
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Affected version:
+1.9a
+
+Fixed version:
+1.10 (not yet released)
+
+Commit fix:
+http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-08-04: bug discovered
+2016-08-05: bug reported to upstream
+2016-09-22: upstream released a patch
+2016-09-25: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/25/mupdf-mujstest-strcpy-param-overlap-in-main-jstest_main-c/
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
