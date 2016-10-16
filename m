@@ -1,67 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/8
-Message-ID: <CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>
-Date: Wed, 14 Dec 2016 08:09:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: why many CVEs are ** RESERVED ** on Mitre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/6
+Message-Id: <20161016025220.4E2E36C0D4B@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:52:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 14, 2016 at 7:36 AM, Sevan Janiyan <venture37@...klan.co.uk>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hello,
->
-> On 14/12/2016 14:24, Kurt Seifried wrote:
-> > ** RESERVED ** This candidate has been reserved by an organization
-> > or individual that will use it when announcing a new security problem.
-> > When the candidate has been publicized, the details for this
-> > candidate will be provided.
-> >
-> > This means that the entry number has been reserved by Mitre for an issue
-> or
-> > a CNA has reserved the number. So in the case where a CNA requests a
-> block
-> > of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
-> > of 500), the CVE number will be marked as reserved even though the CVE
-> > itself may not be assigned by the CNA for some time. Until the CVE is
-> > assigned AND Mitre is made aware of it (e.g. the embargo passes and the
-> > issue is made public), AND Mitre has researched the issue and written a
-> > description of it, entries will show up as "** RESERVED **".
->
-> This creates a situation where the Mitre site dose not provide any
-> information despite, marking the CVE as reserved despite an official
-> advisory for effected software referencing the CVE.
->
+> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-stack-based-buffer-overflow-in-readsctimage-sct-c/
 
-So? Also this isn't really the appropriate place for this discussion and
-this will be my last reply to this thread.
+> AddressSanitizer: stack-buffer-overflow ... READ of size 769
+> 0x7f73e9a8399f in ReadSCTImage ... GraphicsMagick-1.3.25/coders/sct.c:126
 
+> http://hg.code.sf.net/p/graphicsmagick/code/rev/0a0dfa81906d
 
->
-> Somewhat frustrating when performing vulnerability management as the
-> mitre URL is self documenting but useless to reference as a source.
->
+Use CVE-2016-8682.
 
-I would suggest you consider getting involved in helping create CVEs if it
-is such an important resource, rather then just being a somewhat classic
-"Free rider"
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://en.wikipedia.org/wiki/Free_rider_problem
-
-
-
->
->
-> Sevan
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJYAudjAAoJEHb/MwWLVhi2Cd4P/2uPjJJV28gcOqSxM0Xj1TSh
+UIn+ZanqSHgiWTIlWtTyj2dc6VPvvQDNNInI4TAHhUSvKxS/LW3g2UiH0hekIjVh
+JdUkDQvFfgh0gfHpVtqHejfHQEn7ImG5a7JqwXzTrtzQRcGcQQU7UIXkNV+ekdpw
+n2TUNDaKej8gTHt586futWz3v3Q0v5e8PCZuT1zKUyXSX0uLpk3r/fUnxyfjvR3z
+M4bStOOgTR3MJUw45GV02rTbZI/huQEdqW2ESc61d56inr5Vo5j/bw5Cu1LooWne
+AQngylwjPZmmmmhCpcmV5izqHyt5WcMnMrHustBToBapbweL/hhY7Xmag+nT2ydL
+f5AR7Q0WlgOfEYacl3haA3ux7aa2RAEBUttSH6fXtneTlWJybsyeDWpwZ7uCJZWX
+C250fBsOsk3A+BgHzXuMhvKvIoXbQCdjpI92r5aN3j+GKm/WmrqazFgWenczbymJ
+Rl+YYVXyVALbeGh5XzV7rUr6Vsz757YGSjrylk7iK1sBj99ZRW8zqjSBz0AE8pXU
+csKWMvaExOLHy3VaqmImQIJ0Ey3+LIxzGNd1pNNWJ5nFPXwvo1Vci6cfIgqItHEw
+1BoO0N/TzxVdM8s10sR7TDqFkCinofPxCszrMQWu3b7cv854CLX8cxpfJZjtYCJk
+ln3CicstgzDPDtG29ma/
+=yO2d
+-----END PGP SIGNATURE-----
