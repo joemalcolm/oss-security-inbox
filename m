@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2819" "Tuesday" "26" "May" "2015" "23:21:49" "+0100" "Stephane Chazelas" "stephane.chazelas@gmail.com" "<20150526222149.GB4292@chaz.gmail.com>" "87" "[oss-security] Re: Re: hwclock(8) SUID privilege escalation" nil nil nil "5" "2015052622:21:49" "[oss-security] Re: Re: hwclock(8) SUID privilege escalation" (number mark "        stephane.cha May 26   87/2819  " thread-indent "\"[oss-security] Re: Re: hwclock(8) SUID privilege escalation\"\n") "<20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>" ("<20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1382" "Saturday" "15" "October" "2016" "22:52:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016025220.4E2E36C0D4B@smtpvmsrv1.mitre.org>" "34" "[oss-security] Re: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)" nil nil nil "10" "2016101602:52:20" "[oss-security] Re: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)" (number mark "U       cve-assign@m Oct 15   34/1382  " thread-indent "\"[oss-security] Re: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)\"\n") "<1702944.HEYk80P7xf@arcadia>" ("<1702944.HEYk80P7xf@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21796 invoked by uid 550); 26 May 2015 22:25:25 -0000
+Received: (qmail 23873 invoked by uid 550); 16 Oct 2016 02:52:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21742 invoked from network); 26 May 2015 22:25:21 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-Message-ID: <20150526222149.GB4292@chaz.gmail.com>
-References: <20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 05448b1b.skybroadband.com
-Content-Disposition: inline
-In-Reply-To: <20150526173040.54227agdaxfauco4@webmail.alunos.dcc.fc.up.pt>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Tue, 26 May 2015 23:21:49 +0100
-From: Stephane Chazelas <stephane.chazelas@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Re: hwclock(8) SUID privilege escalation
-To: oss-security@lists.openwall.com
+Received: (qmail 23851 invoked from network); 16 Oct 2016 02:52:31 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <1702944.HEYk80P7xf@arcadia>
+Message-Id: <20161016025220.4E2E36C0D4B@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:52:20 -0400 (EDT)
+Subject: [oss-security] Re: graphicsmagick: stack-based buffer overflow in ReadSCTImage (sct.c)
 
-2015-05-26 17:30:40 +0200, up201407890@alunos.dcc.fc.up.pt:
-[...]
-> >No, bash does NOT drop privileges if ruid != euid when called as
-> >sh either . If it were, it would break those commands that use
-> >system()/popen() from suid/sgid executables (which arguably they
-> >shouldn't be doing) and expect the euid/egid to be preserved.
-[...]
-> I'm talking about this:
-> 
-> # gcc -xc - -otest <<< 'main(int argc, char *argv[]){system(argv[1]);}'
-> # chmod +s test
-> # exit
-> $ ls -l ./test /bin/sh
-> lrwxrwxrwx. 1 root root 9 May 24 11:58 /bin/sh -> /bin/bash
-> -rwsrwsr-x. 1 root root 8497 May 26 15:36 test
-> $ ./test /bin/sh
-> $ whoami
-> saken
-> 
-> $ su
-> Password:
-> # ln -sf /bin/dash /bin/sh
-> # exit
-> $ ./test /bin/sh
-> # whoami
-> root
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I do get "root" with both dash and bash, but after
-investigation, that's because I'm on a Debian based system. So
-we're both right, but my version is only true on Debian.
+> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-stack-based-buffer-overflow-in-readsctimage-sct-c/
 
-Since 1999, Debian (and derivatives) does disable the dropping
-of privileged when called as sh.
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=52586
+> AddressSanitizer: stack-buffer-overflow ... READ of size 769
+> 0x7f73e9a8399f in ReadSCTImage ... GraphicsMagick-1.3.25/coders/sct.c:126
 
-$ cat bash-4.3/debian/patches/privmode.diff
-# DP: XXX missing description
-# DP:
-# DP: Comment from Chet Ramey <chet@nike.ins.cwru.edu>:
-# DP:
-# DP: Nope.  This will allow setuid scripts if not called as `sh' and not
-# DP: called with the -p option.  I won't install this.
+> http://hg.code.sf.net/p/graphicsmagick/code/rev/0a0dfa81906d
 
+Use CVE-2016-8682.
 
---- a/shell.c
-+++ b/shell.c
-@@ -492,7 +492,7 @@
-   if (dump_translatable_strings)
-     read_but_dont_execute = 1;
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--  if (running_setuid && privileged_mode == 0)
-+  if (running_setuid && privileged_mode == 0 && act_like_sh == 0)
-     disable_priv_mode ();
-
-   /* Need to get the argument to a -c option processed in the
-
-(looks like from the comment, Chet misinterpreted the patch. It
-will allow setuid scripts if called as sh with or without -p.
-When not called as sh, you need -p to allow setuid (not drop
-privileges)).
-
-[...]
-> I believe that's what setuid()/seteuid()/setreuid() are for if you
-> really want to execute stuff as another user.
-> 
-> Setting setuid(0) before the system() call on my test and executing
-> /bin/sh (which is linked to bash) would drop me into a root shell.
-> This doesn't happen if there is no setuid(0) call.
-> The same doesn't happen when /bin/sh is linked to dash, there is no
-> need for setuid(0), it will drop me instantly into a root shell.
-[...]
-
-But then if you do that, the shell can no longer detect it is
-called as setuid and cannot enter the privileged mode (which
-disables export functions importing, BASH_ENV...).
-
-You'd need to call sh with -p, but system()/popen() won't do
-that for you.
-
-IOW, to work around that security restriction in non-Debian
-bash, one could end up doing something less safe (not only call
-system() in a setuid command, but also do it in a way that
-prevents the shell from taking precautions).
-
--- 
-Stephane
-
+iQIcBAEBCAAGBQJYAudjAAoJEHb/MwWLVhi2Cd4P/2uPjJJV28gcOqSxM0Xj1TSh
+UIn+ZanqSHgiWTIlWtTyj2dc6VPvvQDNNInI4TAHhUSvKxS/LW3g2UiH0hekIjVh
+JdUkDQvFfgh0gfHpVtqHejfHQEn7ImG5a7JqwXzTrtzQRcGcQQU7UIXkNV+ekdpw
+n2TUNDaKej8gTHt586futWz3v3Q0v5e8PCZuT1zKUyXSX0uLpk3r/fUnxyfjvR3z
+M4bStOOgTR3MJUw45GV02rTbZI/huQEdqW2ESc61d56inr5Vo5j/bw5Cu1LooWne
+AQngylwjPZmmmmhCpcmV5izqHyt5WcMnMrHustBToBapbweL/hhY7Xmag+nT2ydL
+f5AR7Q0WlgOfEYacl3haA3ux7aa2RAEBUttSH6fXtneTlWJybsyeDWpwZ7uCJZWX
+C250fBsOsk3A+BgHzXuMhvKvIoXbQCdjpI92r5aN3j+GKm/WmrqazFgWenczbymJ
+Rl+YYVXyVALbeGh5XzV7rUr6Vsz757YGSjrylk7iK1sBj99ZRW8zqjSBz0AE8pXU
+csKWMvaExOLHy3VaqmImQIJ0Ey3+LIxzGNd1pNNWJ5nFPXwvo1Vci6cfIgqItHEw
+1BoO0N/TzxVdM8s10sR7TDqFkCinofPxCszrMQWu3b7cv854CLX8cxpfJZjtYCJk
+ln3CicstgzDPDtG29ma/
+=yO2d
+-----END PGP SIGNATURE-----
