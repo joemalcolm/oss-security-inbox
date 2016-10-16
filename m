@@ -1,84 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/11
-Message-ID: <20160307162430.GG1250@sentinelchicken.org>
-Date: Mon, 7 Mar 2016 08:24:30 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Cc: mark@...phey.com
-Subject: CVE Replacement Via Blockchains (was: Concerns about CVE coverage shrinking - direct impact to researchers/companies)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/4
+Message-Id: <20161016024912.B0B4442E02B@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:49:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> ... to make following proposal
-> 
-> RFC: "Distributed Cryptoenhanced Vulnerability Enumeration (DCVE)":
-> 
-> To address the points mentioned before, assume we would take the a
-> blockchain database [0] approach to handle most of the issues for us.
-> 
-> a) Chain layout: Start a chain every year, so it will not grow arbitrary
-> large. The root entry is the PGP key of chain manager (some group, board
-> - - does not be the ones running the data systems)
-> 
-> b) Chain hosting: as the information is easy to distribute,
-> cryptographically secured, redundant, any number of volunteers can host
-> them.
-> 
-> c) Entry: A "permitted contributor" signature is made using one of the
-> previous keys already recorded onto the key of the new contributor.
-> 
-> d) Proof of work: To add elements perform calculation (1
-> non-parallelizable CPU-h? - this is also the minimal delay for updates),
-> thus limiting the amount of garbage to be added by adversaries.
-> 
-> e) Unique IDs: The unique ID for a DCVE entry is the SHA256-hash of the
-> first element dealing with that issue.
-> 
-> f) Updates: The entry may be updated by anyone, but usually one may want
-> to filter out all entries not from the creator. The creator may later on
-> approve foreign entry by adding a linking the record (or the key of the
-> contributor) to the chain by himself.
-> 
-> g) Related material: To keep chain entries small (16kb?), they may
-> reference external material via http(s)-URLs. If it is a single file,
-> checksum information can be added. When important material is found,
-> anyone feeling the need to mirror it can create an update to that entry
-> and add the reference to the mirrored data.
-> 
-> h) Sensitive information: Each DVCE chain may contain also encrypted
-> messages. The key can be added later on to the chain, thus making the
-> previously recorded information public.
-> 
-> i) Non-repudiation (create): Each added entry has to be signed with the
-> key of the creator)
-> 
-> j) Non-repudiation (read): When important for the creator, giving read
-> access to one encrypted DCVE-chain should only happen after receiving a
-> signed access-request.
-> 
-> k) Prioritizing: to ease sifting through the important entries, any
-> contributor can add a rating entry to DVCE chains to give opinion to
-> their risk but also the quality of the chain (thus contributors may
-> build a reputation, making it easier to get heard).
-> 
-> Any thoughts on the idea itself?
-> How to realize: summer of code?
+> https://blogs.gentoo.org/ago/2016/10/04/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c/
 
+> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+> libdwarf/dwarf_util.c:624:43 in _dwarf_get_abbrev_for_code
 
-This is a really nice idea.  Especially the part about agreeing not to
-take legal action in order to read the content.  It may not be legally
-enforcable everywhere, but it certainly helps and would allow the
-block chains to be mirrored anywhere it does apply.
+> https://sourceforge.net/p/libdwarf/code/ci/268c1f18d1d28612af3b72d7c670076b1b88e51c/tree/libdwarf/dwarf_util.c?diff=0b28b923c3bd9827d1d904feed2abadde4fa5de2
 
-There are a variety of technical issues to be solved, but it seems
-doable.  For instance, you'd need some kind of layman's web front-end
-that gives people access to everything, with appropriate disclaimers
-on it, but all sounds doable.  The up-front work would be significant,
-but once it is out there, the hosting and moderation work could be
-made minimal with the right design.
+Use CVE-2016-8680.
 
-Mark: Does this sound interesting to you?  With your expertise in
-getting projects started, maybe this is something you'd be interested
-in helping get off the ground.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-tim
+iQIcBAEBCAAGBQJYAudXAAoJEHb/MwWLVhi2ohsP/1Cco5DxH5s7xrI2OQ5S3npL
+a4i0ykWBel0oObYzllOxCErUKsIRwgHuL59kMcKyYfiMf4StxpRRoCKXN0UJUPjG
+jzyvJCrDwv3/yPfioei4oixSqoonDPnnMso/5+mTJEE5Swo+iLIpH8JRUBQhmPNs
+JUl/NutBuTxlLqw9dXbo1Cb6JDrB1bRdlVXVonqqZ+ymk+RE3EtozsEA0ePKqnBK
+41BMl/uwO8Ue1pCbdIFGbhuQieFJbYKASWJV6gK6zyx8J+W6pRjT9b8yWvDVfejO
+kLLR0NyZni5powlZ8w+2Eyeb/zaLJlSQus+4vwEhTbbIMJkqtxCiFj46ksS2ty0Y
+1x6fbW1/fHd5251NQp8uTl+1u3mhHpat5D9UABq5tPutLDRsASGvzkPIDi3GLHbi
+M0I6lajCrptz3b6YgqyPOprAMlSUPS06T/9rcTC7I3GfGL/WN8klBgwmolrVdifj
+RjlvQxWFnVi1JDKSodj9hbxcz3g6IFOSKyACuvdXph+943c6yYm3ZFb6GVQtZbsI
+Zl9CvCmpM7rhE/Yc02EQeqPN73myVtdJHZiU3EAlxD9+ShlzmXoSkXrZoNucBb6x
+LaA3v+xv1hePJkxsC3Ut/S99F5R/A6s0XGLuDSIQlSCr/Qs9vyzr7GNygVHmTYFd
+jc7kJQ4SsHC12NUfqejb
+=cKdI
+-----END PGP SIGNATURE-----
