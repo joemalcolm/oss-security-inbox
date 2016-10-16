@@ -1,20 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/13
-Message-ID: <CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>
-Date: Thu, 27 Oct 2016 08:35:01 -0700
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2016-5195 test case
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/18
+Message-ID: <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>
+Date: Sun, 16 Oct 2016 10:23:43 +0000
+From: Graham Christensen <graham@...hamc.com>
+To: oss-security@...ts.openwall.com, ago@...too.org
+Cc: cve-assign@...re.org
+Subject: Re: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
-I sat on this longer than makes any sense given how easy to reproduce
-CVE-2016-5195 is, but here's a reasonably portable reproducer.  It's
-intended to have no side effects, but your mileage may vary.
+For what it is worth, Jasper has recently issued a release fixing many
+CVEs, and would likely appreciate these fussing results as bug reports on
+their github project: https://github.com/mdadams/jasper/
+On Sat, Oct 15, 2016 at 11:21 PM <cve-assign@...re.org> wrote:
 
-https://github.com/amluto/vulnerabilities/blob/master/others/CVE-2016-5195/test_CVE-2016-5195.c
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > AddressSanitizer: SEGV on unknown address
+> > 0x527ebf in bmp_getdata ...
+> jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
+> >
+> > AddressSanitizer: SEGV on unknown address
+> > 0x528252 in bmp_getdata ...
+> jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5
+>
+> Use CVE-2016-8690 for both of these (the first and fifth items in the
+> http://www.openwall.com/lists/oss-security/2016/08/23/6 post).
+>
+>
+> > AddressSanitizer: FPE on unknown address
+> > 0x56de63 in jpc_dec_process_siz ...
+> jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17
+>
+> Use CVE-2016-8691.
+>
+>
+> > AddressSanitizer: FPE on unknown address
+> > 0x56dee3 in jpc_dec_process_siz ...
+> jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18
+>
+> Use CVE-2016-8692.
+>
+>
+> > AddressSanitizer: attempting double-free
+> > 0x51f8f8 in mem_close ...
+> jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3
+>
+> Use CVE-2016-8693.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJYAu2GAAoJEHb/MwWLVhi2D2wQAI6W9/5UOJJD9vMc25GdYVGo
+> Is0tX/21v2ibFpgyAAHBLaQd1ohNeu9U5Y6Nj9lAYAydmcoEZrXX9FxEMNp6XlI3
+> ybIDOapRLsjqLovdEzZUEnEDiHWAFS/t/p4hZv67PB7fHWKkeA3QhthSf3OlGVNm
+> IDQX8jMzhb96ZLS9aq5Hlz28K2z2Bx9j08WXQ0Fkp2ksMOCdNF0QwRp1TuA7Ork8
+> gtxNSVS+r8oAwWBH9fdwU8d9rgBoh0nkMVt9PJex5Hd4ys8CrOS6gBBc9HqDcxdc
+> bVdYRUuNbXJjZdlOcfQU37a6MyWJ0gCmCp6xs7u1joAnNmzT9C894xLInJFzx37n
+> JVqNBMltWgkkp1ClyVIdkRJErif2JstRpL59JBaMXgSRD0ZCZRsMrehc6SobX0A1
+> iUGxdjG/jpP7c8ZPaC2SS/1y0cEpP7CsbDFliZaGxt6QcKOfNqs33L3DSuc7qn0d
+> OJIH4GMNlZQFgf7+c67+ZSi86HVmTda9DJjm2a9uqU7tKKE/kJWC9OyWTef9K0aJ
+> 1HAu1yNjgGmc/oIIMCk/8wNO4UqlHiXhcF/kjWUBc4/eTAPxYLHSH5703HTStaVU
+> EN0ONeBMsfx6lhZgoJqDC+ItztjnDR90VGJyrH98XoEn+3KzjGkgEeaYv/N/mUfw
+> Q/58lzCKYeVI4ovM1u+J
+> =1lOZ
+> -----END PGP SIGNATURE-----
+>
 
-This will use /proc/self/mem or ptrace automatically, and it's
-intended to be portable to a wide range of kernels.  It's an improved
-version of the test case I originally sent out to distros (oops!).
-
---Andy
