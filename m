@@ -1,42 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/5
-Message-ID: <n6e47d$hou$1@ger.gmane.org>
-Date: Mon, 4 Jan 2016 16:47:57 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/10
+Message-Id: <20161016025812.1F72742E008@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:58:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: potrace: memory allocation failure
 Content-Type: text/plain; charset=utf-8
 
-On 2016-01-03 18:03, cve-assign@...re.org 
-wrote:
-> In general, a vendor can choose to request a CVE ID for a
-> vulnerability in beta software. This is unusual and (in cases of many
-> other products) often not a good idea, but there is no absolute
-> restriction on having a CVE ID.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The reason for requesting a CVE for a beta release is that this code has 
-been out there and used "in production" for several years, despite being 
-"beta" (change was committed [1] in Feb 2010).
+> https://blogs.gentoo.org/ago/2016/08/29/potrace-memory-allocation-failure
 
-> Use CVE-2014-9759 for the vulnerability caused by the
-> master_crypto_salt spelling.
+> AddressSanitizer failed to allocate 0x200003000 bytes of LargeMmapAllocator
 
-Thank you.
+Use CVE-2016-8686.
 
-> There is no CVE ID for the general issue of "Implement a white list of
-> options .
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-None was needed. The issue, as you correctly interpreted, is the 
-disclosure of the crypto salt.
-
->> Further details available in our issue tracker [3]
->> [3] https://mantisbt.org/bugs/view.php?id=20277
->
-> It currently gives an "Access Denied." error.
-
-Apologies, I forgot to make the issue public after releasing the patch. 
-It is available now.
-
-
-[1] https://github.com/mantisbt/mantisbt/commit/eb5623605
-
+iQIcBAEBCAAGBQJYAud7AAoJEHb/MwWLVhi2mLoP+gOHwdcHB9ST9f6s+cXdsw5L
+CNiHdy5X+nYHsvDCYqZq8v5x+wCcSzAKzdMyU/VhWMQVLWMKNKXfL+qm/EI67L9m
++7CG8d0G1pWuES1ynTn078ZS/wxIkudo5keiyCWGLl6ckJp0YLcQhCVC1fARNh9T
+5bTetm3By5PzKGxvQO0NOOHo53Tn3bTZSf30fXqwb/qce2boMw1uD0eupRkqEwtN
+jGLQYVN+31RvhJe42ojZU3NaB7XOhxZURrejLVjgjp8hSOAvSKsqP4AsECO8Dckv
+9/MVc+duI35gecZ8gZHjPiMt1mlDvJrG+5fPXnbL0g7IG4VOiwCrzVkxiRGTsyE7
+Dcy/JGivXOZmq2ZzB6sWT7jvKVne9/5eOKTl40ldv0Gl4XnEgoKr8lADEA8C5/5p
+8+yWIj/wpap5TES5k32Yh24jkEYtOTxPwkwIvIZxIfyGqT2Tx/vG20EML7nC+gXd
+fxjUrXuHIjwFoBxQ7tzArv4V9/zheGVXozTjvKoNRYkzpHcE33Q9zDIBy9dUTdkL
+/8AALluIu/CQo3Rmfw//6IOVCUXCWmqyj1dWTJNI6Y9Cn7uyKmnDAhbwO82xC9NE
+4FOu0TtpHWqsFQeSNbAjK7RK0bM8oFK9zK0ECUzFkci5b9HqIWn8XluBPn//exQt
+DC56la9Lf9FJgtXtaUa0
+=PZwg
+-----END PGP SIGNATURE-----
