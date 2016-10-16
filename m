@@ -1,4 +1,9 @@
-Received: (qmail 19651 invoked by uid 550); 6 Mar 2025 16:34:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3606" "Sunday" "16" "October" "2016" "20:52:34" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<20511243.IiplisyCjp@arcadia>" "97" "[oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)" nil nil nil "10" "2016101618:52:34" "[oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)" (number mark "U       ago@gentoo.o Oct 16   97/3606  " thread-indent "\"[oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5180 invoked by uid 550); 16 Oct 2016 18:52:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16302 invoked from network); 6 Mar 2025 15:33:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mumble.net; s=20240127;
-	t=1741275187;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:  in-reply-to:in-reply-to;
-	bh=cLyfBxEvJoRmoBo/XA9GVBxKWk/rRuEobqj0M3kvno8=;
-	b=nGYLC0FVYzQAuVdwUXnwLpBKPsZnLIKbCdbgpN/3V5TiUDY5FJWhwpsStKoz0S+mPYbjRN
-	zjj62yOEE8l0OZfbDAFZdnsUcOfKjY1UAqwetuEdQN4iljvx/mSXoEsS2UIbKdYTzeweG7
-	nuNXQ90/EhNLjdbpRqRmRA5ZBIR37rI=
-To: oss-security@lists.openwall.com
-CC: Solar Designer <solar@openwall.com>,
-	Tavis Ormandy <taviso@gmail.com>,
-	Jacob Bachmeyer <jcb62281@gmail.com>
-In-reply-to: <97c9b035-2a68-4182-93c8-0495abdd193f@gmail.com> (jcb62281@gmail.com)
-Date: Thu, 6 Mar 2025 15:33:06 +0000
-From: Taylor R Campbell <campbell+oss-security@mumble.net>
+Received: (qmail 4070 invoked from network); 16 Oct 2016 18:52:19 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Date: Sun, 16 Oct 2016 20:52:34 +0200
+Message-ID: <20511243.IiplisyCjp@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250306153307.4BECE60BA7@jupiter.mumble.net>
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)
 
-> Date: Wed, 5 Mar 2025 23:50:45 -0600
-> From: Jacob Bachmeyer <jcb62281@gmail.com>
-> 
-> On 3/5/25 23:34, Solar Designer wrote:
-> > Indeed, HMAC wouldn't be any weaker than its underlying hash on its own
-> > even when used with a publicly known example key.  So I can see how they
-> > could have (wrongly) expected the same from CMAC.
-> 
-> If the system is no weaker if the HMAC key is known, then you should not 
-> be using HMAC and you should be using a plain digest instead.  (Or am I 
-> missing something?  What would HMAC with a known key give you that a 
-> plain digest does not?)
+A note outside the blog post:
+This issue does not affect any library, but it is only in the mujstest binary.
+There aren't known applications which use mujstest, but if you have an 
+application or website which relies on mujstest you are invited to apply the 
+patch or use the newer package when it will be released. Thanks.
 
-Veering slightly off-topic, but MD hash functions such as SHA-256 are
-vulnerable to length extension attacks: an adversary's knowledge of a
-secret message's hash h = H(m) is enough for them to predict the
-hashes of _related_ messages, h' = H(m || pad(m) || s) for any suffix
-s.  That is, there's an easy-to-compute function f(h, s) = H(m ||
-pad(m) || s).  Such attacks can break some protocols.
+Description:
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-If you use HMAC-H_k(m) instead of H(m), even with a fixed public key
-k, that defeats such attacks without losing pretty much any other
-security.  So it's not completely bonkers to reach for HMAC with a
-fixed key.  It's a little silly -- you could use H(H(0^d || m))
-instead, where 0^d is a hash-length string of all zeros, for the same
-security, or use SHA-3 or BLAKE2 which address length extension
-attacks in other ways.
+A fuzzing revealed a global buffer overflow write.
 
-Of course, length extension attacks are not relevant to signatures, so
-it's extra silly to use HMAC under a fixed key for them -- but still
-not harmful to security.  The real problem here is that CMAC is
-abjectly unfit for signatures.
+The complete ASan output:
+
+# mujstest $FILE
+=================================================================
+==2244==ERROR: AddressSanitizer: global-buffer-overflow on address 
+0x0000013c6140 at pc 0x000000473526 bp 0x7fff866f77d0 sp 0x7fff866f6f80
+WRITE of size 1181 at 0x0000013c6140 thread T0
+    #0 0x473525 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
+r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:547
+    #1 0x4f7910 in main /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
+    #2 0x7f3a6c18661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
+
+0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
+defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/sys-
+devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:547 in __interceptor_strcpy
+Shadow bytes around the buggy address:
+  0x000080270bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270bf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080270c20: 00 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9
+  0x000080270c30: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270c40: f9 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+  0x000080270c50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2244==ABORTING
+
+Affected version:
+1.9a
+
+Fixed version:
+1.10 (not yet released)
+
+Commit fix:
+http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-08-04: bug discovered
+2016-08-05: bug reported to upstream
+2016-09-22: upstream released a patch
+2016-09-24: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflow-in-main-jstest_main-c/
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
