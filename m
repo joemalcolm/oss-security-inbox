@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1411" "Thursday" "8" "October" "2015" "15:09:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151008190948.9A7BAB2E4E3@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request: Gummi" nil nil nil "10" "2015100819:09:48" "[oss-security] Re: CVE request: Gummi" (number mark "U       cve-assign@m Oct  8   40/1411  " thread-indent "\"[oss-security] Re: CVE request: Gummi\"\n") "<56169779.3060002@danielstender.com>" ("<56169779.3060002@danielstender.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1771" "Saturday" "15" "October" "2016" "22:42:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016024233.399CF42E027@smtpvbsrv1.mitre.org>" "43" "[oss-security] Re: libav: null pointer dereference in get_vlc2 (get_bits.h)" nil nil nil "10" "2016101602:42:33" "[oss-security] Re: libav: null pointer dereference in get_vlc2 (get_bits.h)" (number mark "U       cve-assign@m Oct 15   43/1771  " thread-indent "\"[oss-security] Re: libav: null pointer dereference in get_vlc2 (get_bits.h)\"\n") "<3959521.p6bvcEHnKb@arcadia>" ("<3959521.p6bvcEHnKb@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25906 invoked by uid 550); 8 Oct 2015 19:10:01 -0000
+Received: (qmail 1466 invoked by uid 550); 16 Oct 2016 03:10:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25878 invoked from network); 8 Oct 2015 19:10:00 -0000
-In-Reply-To: <56169779.3060002@danielstender.com>
-Message-Id: <20151008190948.9A7BAB2E4E3@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, 756432@bugs.debian.org, team@security.debian.org, carnil@debian.org
-Date: Thu,  8 Oct 2015 15:09:48 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Gummi
-To: debian@danielstender.com
+Received: (qmail 1434 invoked from network); 16 Oct 2016 03:10:53 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <3959521.p6bvcEHnKb@arcadia>
+Message-Id: <20161016024233.399CF42E027@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:42:33 -0400 (EDT)
+Subject: [oss-security] Re: libav: null pointer dereference in get_vlc2 (get_bits.h)
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> release is 0.6.5.
+> https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-get_vlc2_get_bits_h/
 > 
-> The program uses predictable filenames for files in /tmp, which produces a race
-> condition
+> A crafted file causes a NULL pointer access.
 > 
-> I'm Debian maintainer for this software.
+> AddressSanitizer: SEGV on unknown address
 > 
-> https://bugs.debian.org/756432
+> 0x7f5273202c6b in get_vlc2 ... libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530:5
 
-Use CVE-2015-7758.
+> https://github.com/libav/libav/commit/e5b019725f53b79159931d3a7317107cbbfd0860
 
-Note that the discussion referenced by the bug report suggests that
-Linux exploitability depends on the /proc/sys/fs/protected_symlinks
-file.
+> He said that the commit e5b019725f53b79159931d3a7317107cbbfd0860 make
+> the issue not anymore reachable through the provided testcase, but the
+> issue is still here
+
+Use CVE-2016-8675 for the issue that was fixed by
+e5b019725f53b79159931d3a7317107cbbfd0860. Use CVE-2016-8676 for the
+issue that remains after e5b019725f53b79159931d3a7317107cbbfd0860.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWFr7qAAoJEL54rhJi8gl5yNgQAIL2pKeo+zvzciqCpj0iSFYK
-WITk6rVfX72Tp6FSQBLcXxGpBlOHbtz7gT8bqE/Xk8iCkcBayXyTWEs2LQvMwhws
-rzyDeGFrj8iL/Z35PjAwDG5eGgsqcoDdlgCcu8SdKQX03qE6wI7jpKH2MZ2KF0JH
-gQ3FuzvEiGvPDpSS31Y1PtoOZ2+5tO5duO6DS3mcilwwr19Dw8YnMg/Xa0snQAU1
-/FjH1vt0WafAKxJwobjFUeZYfhYHGSA8hF6vofWOLT4hm5pIDpi22JgUEJdkzFq0
-a18fKa6AW26LRWi6Qh41xCz8jbOnXJMoNTv+KwbyXOK0ZayXx/UD//SEhrx0DXgZ
-C45Zu8bYnsXTckK35nELVHfPkswb1+BPwUkItehVcmCVxdT985p8M2pclRTAPTOu
-KR2PUb9OAlGeZ5fk9ex1y/uUMg18ZBhssCqN8uC11YuzfdeVHsBfVUeO6jUCleIn
-/KHqBTeXu6TZONKYIerExDuqKYW44ueHmgk+BzrjBeTlE7TmJuqwrYg0p+enRU6P
-XwKvE1bKuZ+mMM2OW+zgl0iErFhZtsfXF1YNYUXudLKUCyNJtqGZl9WwJDvZA7eb
-vetVlXgIkuz15KPumfilIZd+D3x5cba/kPtqN2upnoluFvFElJKS6s/g3ANZoVXz
-XNKwz/M8+eIpxi1KsXjV
-=9wUr
+iQIcBAEBCAAGBQJYAudAAAoJEHb/MwWLVhi2BeoQALT+/NOvMXNAUFbTth5ZENQR
+9obKiTpG1etX5K3BJjkmRffEgprSU8o0KqE6hHSgav9IPoX5t1Ic8mHVPGrzDWBI
+G+ubzdVIXhbidIfXg4qF0yHbyPpU25sNga61gsAYRrOcZiKzbNnhRUsMhuvv2cHx
+XJWrTDjVQsE9foEeIdTnONcWUMBQ7mZfjWz+GVJmgICC0Lna/HcitQ0pO2G35kQ2
+7sGaQ/szDWZCDbJ9CjonJKqZtI1a45wIX/3I3qy28KOIojguk6b6me0iAcQSSC2r
+Ext8uDLlVcgMHAChF+mSbo1Yctij2RFiOSz9YdK+Errnw3I3gb8Ad7sXfHNpGw2a
+aAudyYgdLk8w2a7yP4Wpzy/Mr/KaxyU52qJp/BXe4pvFCippCaa/iwXG9DF9MbC+
+H1vgAbzI5tlCeV5r7d08OuZlHx+t29Ki+iyoy7xpArPs5TOVz+Ut5iAlTMquJKsh
+8X6azUINjDpJILy/sJKP5R3PKoapjkYA1Tjn3WeTs9NfYsOBOdBrjpp0V6k7B5hq
+h9q3LcCOOkKnVvaSi7n9naMZt7QRsId/Wc62bqUkR0N1sHLE5Co0wxFArbdyAjs9
+8uX7ZIdiWr7qRxviilT5105jO4sCTEBsGz3lcjgezNMRMS1F+OpdU9BJ45s4fFgz
+2svTRycflYTFU6E/BO0U
+=atYc
 -----END PGP SIGNATURE-----
