@@ -1,47 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/24/2
-Message-ID: <77a1786f87af437db7e807c5380cdd29@imshyb02.MITRE.ORG>
-Date: Sat, 24 Dec 2016 12:30:11 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: Re: Qt QXmlSimpleReader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/16
+Message-ID: <1705729.nZSttpXEVz@arcadia>
+Date: Sun, 16 Oct 2016 12:30:53 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: Graham Christensen <graham@...hamc.com>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sunday 16 October 2016 10:23:43 Graham Christensen wrote:
+> For what it is worth, Jasper has recently issued a release fixing many
+> CVEs, and would likely appreciate these fussing results as bug reports on
+> their github project: https://github.com/mdadams/jasper/
 
-In case anyone immediately needs to track QXmlSimpleReader behavior,
-we're assigning an ID for one issue that seems best understood at this
-point:
+This was already done.
 
-> I just found that (at least for a rebuild of the RHEL7 package of
-> qt-4.8.5-12) it is possible to trigger a stack overflow by nesting many
-> XML opening tags. Luckily, there doesn't appear to be a way to jump
-> over the guard page to another thread's stack on RHEL7/x86_64, but
-> that's platform specific.
+I will quote my first mail which includes the details and the commit fix.
 
-Use CVE-2016-10040.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYXrAJAAoJEHb/MwWLVhi238YP+gIKi52EJvWROru80v6ROwz/
-KkfY2zyKmbbp3EQ33yuzjtdO2UWHW99oYph+4adlYdpMo3szFHSrHc8zvsdsM1j6
-xbZK3bj8IYp2jN+B8adKEnY3VgsmXJ2kqa6B+Fvs6fDBjSB0oJ5WBHSBATrv0vg5
-zSHSVjf3I3aNEI7MFsGNWqY1T4QZmpUOx4td2ofAToxZqyYeHhcfxXM4kuhXrraL
-Dve31NR0RtWELMLexx9c1GFTftkhzspoXeVachJOoxeaGxZfOnXAEf7+6z8mq3cV
-ytRFhdncbLwuwAbxy34po7LXh0m5LbQJuBc3RUSntxIb3E6n52X4fpf9CYvQDavq
-s4lPuMMo4OyQ7uEEsf20T2k4nAsme18QigKmGAIPDnwVIJp0HStjky5+HgkK/5by
-bSttkBIyHNaYf9LTRVBZD/NWeoSkVhen6rqcKhd4JNy3DduoirRhp0rUN7QteW35
-5tvvAXeyfxd7FWLBBFgE2VQeDm9StrobdEuFUL/SFimrN0e/UX9RHBU34b6D/XlJ
-FaRj7eSwEtGl2lTZym27xuSIcQ08m4SU+paUcWxcIjcDgNI7f9oIAPLrcB7b6fNz
-isuovpCpGIDROdc8MuBu0SAmz3wVipC9x0aQcoVE+VH18dJtaB+aoiEY57Eri5Fp
-mIbe+axP5b0rPKySAXRx
-=sy6o
------END PGP SIGNATURE-----
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
