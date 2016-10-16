@@ -1,45 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/9
-Message-ID: <9d50e9bb03ad40c1aa9547b96436ce27@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 13:04:21 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: OpenAFS: directory information leaks (OPENAFS-SA-2016-003)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/21
+Message-ID: <4660482.3AE3K0588b@arcadia>
+Date: Sun, 16 Oct 2016 20:52:39 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A note outside the blog post:
+This issue does not affect any library, but it is only in the mujstest binary.
+There aren't known applications which use mujstest, but if you have an 
+application or website which relies on mujstest you are invited to apply the 
+patch or use the newer package when it will be released. Thanks.
 
-> https://www.openafs.org/pages/security/OPENAFS-SA-2016-003.txt
-> https://www.openafs.org/pages/security/openafs-sa-2016-003.patch
-> https://www.openafs.org/pages/security/openafs-sa-2016-003-master.patch
+Description:
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-Use CVE-2016-9772.
+A fuzzing revealed a strcpy-param-overlap.
 
-(There may have been a reason to have multiple CVE IDs; however, we
-were unable to determine a multiple ID mapping in a reasonable amount
-of time. We will be staying with the single CVE ID.)
+The complete ASan output:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+# mujstest $FILE
+==26843==ERROR: AddressSanitizer: strcpy-param-overlap: memory ranges 
+[0x0000013c5d40,0x0000013c62ed) and [0x0000013c6285, 0x0000013c6832) overlap
+    #0 0x473129 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
+r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:545
+    #1 0x4f7910 in main /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
+    #2 0x7f8af37a961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
 
-iQIcBAEBCAAGBQJYQbY0AAoJEHb/MwWLVhi2rCYP/R06PGsESKbHs4M06OIodwOn
-OQpxBbMkwNUzXj//H6VZT67nwKG2AvOracpXA4ZBn7T7CqfCEc0sVFZFqztAz1NF
-racpIH5B01hRSXkz60wVbyUuAsoz4+lhf1+PpVg9y715nPDXwE52tD6DRnOCX4dl
-GK6gzoP1ALPXZMYjpMEjfhI/VsmLVOrKj5muLEdnidg2eRo82E0uEA4i35LcQsIk
-uKVwTcx4ExTrZg1BaeD3988A7nqX8dU+VBNEr9GW7FKnYwULYg8Fy4Df7M4FOJxH
-zQ+4FG54WbN6cziWEZ95r6yQMK9FhgLAsLZ/QkdrFtCDhple3mmwKCoPHJuo7yEC
-V2qPicsHeXamira2k6YOuUm0BQhQIQGDt6q92XyvEEJTJgjjT5Nrlk8Ynd27hv3e
-8INrtJU548dZ7rV9epvhAjO90AVk6QxZ1wyXgLe/9MKRRglkxeFOXrKibvHzGamX
-PkXRh+s1kjrfwG7Il0JxXyRI9Mr+BLKU9406qZoni8ZW2Li2nvAtk8vyKl+zaorL
-jYvMLtyv+65Q9lcFFrEVT4HcSz5PcRNbZUpYvffj8XAbt/EbH+GtihI3ITAp3U6w
-NTVr60XmYfd0LktB/K08j3E8hFWQokqd16nBM6xwepSTYDQyQQtPV6/g52bNXv7Q
-LkhL31PKC9peRd39a3Ve
-=j/50
------END PGP SIGNATURE-----
+0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
+defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
+0x0000013c6285 is located 5 bytes inside of global variable 'getline_buffer' 
+defined in 'platform/x11/jstest_main.c:24:13' (0x13c6280) of size 4096
+SUMMARY: AddressSanitizer: strcpy-param-overlap /var/tmp/portage/sys-
+devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:545 in __interceptor_strcpy
+==26843==ABORTING
+
+Affected version:
+1.9a
+
+Fixed version:
+1.10 (not yet released)
+
+Commit fix:
+http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-08-04: bug discovered
+2016-08-05: bug reported to upstream
+2016-09-22: upstream released a patch
+2016-09-25: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/25/mupdf-mujstest-strcpy-param-overlap-in-main-jstest_main-c/
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
