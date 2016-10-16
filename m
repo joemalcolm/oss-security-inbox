@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1710" "Wednesday" "21" "October" "2015" "14:56:50" "-0500" "Tyler Hicks" "tyhicks@canonical.com" "<20151021195650.GB2430@boyd>" "44" "Re: [oss-security] CVE Request: BusyBox tar directory traversal" nil nil nil "10" "2015102119:56:50" "[oss-security] CVE Request: BusyBox tar directory traversal" (number mark "        tyhicks@cano Oct 21   44/1710  " thread-indent "\"Re: [oss-security] CVE Request: BusyBox tar directory traversal\"\n") "<20151021153633.GA2430@boyd>" ("<20151021153633.GA2430@boyd>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1433" "Saturday" "15" "October" "2016" "22:43:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016024352.0ABDF42E008@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)" "^Cc:" nil nil "10" "2016101602:43:52" "[oss-security] Re: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)" (number mark "U       cve-assign@m Oct 15   34/1433  " thread-indent "\"[oss-security] Re: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)\"\n") "<11716477.MTzBsLzZIC@arcadia>" ("<11716477.MTzBsLzZIC@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17592 invoked by uid 550); 21 Oct 2015 19:57:05 -0000
+Received: (qmail 5615 invoked by uid 550); 16 Oct 2016 02:44:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17568 invoked from network); 21 Oct 2015 19:57:05 -0000
-Message-ID: <20151021195650.GB2430@boyd>
-References: <20151021153633.GA2430@boyd>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FkmkrVfFsRoUs1wW"
-Content-Disposition: inline
-In-Reply-To: <20151021153633.GA2430@boyd>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: security@ubuntu.com, Denys Vlasenko <vda.linux@googlemail.com>
-Date: Wed, 21 Oct 2015 14:56:50 -0500
-From: Tyler Hicks <tyhicks@canonical.com>
+Received: (qmail 5588 invoked from network); 16 Oct 2016 02:44:03 -0000
+In-Reply-To: <11716477.MTzBsLzZIC@arcadia>
+Message-Id: <20161016024352.0ABDF42E008@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 15 Oct 2016 22:43:52 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: BusyBox tar directory traversal
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
+To: ago@gentoo.org
 
---FkmkrVfFsRoUs1wW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 2015-10-21 10:36:33, Tyler Hicks wrote:
-> Hello - The BusyBox implementation of tar will extract a symlink that
-> points outside of the current working directory and then follow that
-> symlink when extracting other files. This allows for a directory
-> traversal attack when extracting untrusted tarballs.
+> https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
+> 
+> AddressSanitizer failed to allocate 0x46bf39483ac bytes
+> 0x7f76c7533ff4 in AcquireQuantumPixels ... ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
 
-I forgot to mention that I took a look at BusyBox's protections against
-directory traversal attacks while extracting files with absolute paths
-or dot dot ("..") components and it seems to sufficiently protect
-against those attacks.
+Use CVE-2016-8677.
 
-The function can be found here:
-
-  http://git.busybox.net/busybox/tree/archival/libarchive/unsafe_prefix.c
-
-Tyler
-
---FkmkrVfFsRoUs1wW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCgAGBQJWJ+4CAAoJENaSAD2qAscKXLcQALCVcVCnKitwUyzxr+1d0ncu
-mBmlhTcjHE1PebyT2pEJRwAILCJNx/m3498BBtZVdmtt2IxD53F9WAFq6zuuD4e5
-QI8/3QQNZWtucu3lc1FaM1JcKYi049gx42p84H9F3GdZBCHig8/nb6pK/bxNTN08
-9eWa+7p323pu53pJRAVwfw3oaoMm3qzQWxJFNNAx8naP5cxNygiAO1VfcWJAZhok
-tgR46je29uv/B8vpZCPZZfqG1cFHBsMFOay+qqHGQrIAye270UGLgXUd+wOR9ZH2
-knFGaZ+bUWxQcKTVkvz/Q8q1I2QeZClVqoQC7cVOvSDiABKB0scKXXdHU54qibSh
-e/GImZxgowD/IdwHLjySmbOCvqNvd0tdgalBhO8zNsdKcu3NI4LZuEfxKHDMXgz4
-QiiM7/KKAzR/AVFqZQGG75bJvkPmojTptnTpOtIAPrHQy7B9PE4nOxsRDRUdZnb9
-+pav00EQH/js35TkbzpTbpmwQTnLWSg87NYI4G66B6SLyNdsoMpjHx6zBYfCUNia
-XVTUvXndVXxxR+ZgHqW9imtsNzbE2fLPEW+lDuUCtS2ETmDnwfBL0lRGmH5U98yc
-A0wdzkZg6xZIdnosjhGfuFBzgU3e7epiQC+h7g4KE0uW1AQth/Vn8+ezaz5VXvF0
-ypGZm5JVO+ngmRiQ+K22
-=SpNh
+iQIcBAEBCAAGBQJYAudGAAoJEHb/MwWLVhi2jykP/R5qNgKdkgNnM512wFtsSkAh
+VReHDp0AOkHDZrJI78N2dO0ps+69tpj6N36iYtCZ7V4J9ulDF9m8ejEzqDbdiz1l
+IJi6MPCXrzLrxz//+dzjEJ3BVJRNq0wPX9gvAjRwR4+PJR9JX7aMqr0P3YouI1T4
+BYfEc/8/EWIyXh5nbO3o94+aUs59ckAZZiwYmnzQUOLcKy8Md1Tb1BdZpx4NaSdE
+0EF+jkaowo4vWk4+Z9tDUOPQwJG/HUqSpvUWyMcGSjDjEatxHJ1NmktcH5QcMFAL
+Ku8ppzMK5VbqKpXk+/ZiP5IULLLB6vegIy4f44/WhM1Hku3dfd7O46n3D+2RUhyf
+8Qs5nCMJd64x7Xn/9G07v2eQjuZYgNv8hq5R19WzJP2ZSj83ifvHCgJxiRf83ykD
+ZkBDyLsqQVZyIjIuFhEMjtx2UAMgpK+CPTTBg+OEFb9k6JR209KFPu61e2YWqQBk
+cQFU2pezH6rS32PWo1PxuWEyRLo7I/qSre2llOmrY+6q10CrlYHsugkAAE+YI5ej
+TPLK2rbuRpmMQeFEsDyrQOQdIaj1GdswFS+54wt36H6/L5CNOryyetow8ptZoINU
+XWl3E7jpfIh/Eqoe33uuPYJVlGOBIF/VpIGIUsk3/+p2I2q4jV4XmOFE9tCKgeUa
+JTVD7jnrPudcvjofke4K
+=pzqG
 -----END PGP SIGNATURE-----
-
---FkmkrVfFsRoUs1wW--
