@@ -1,99 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/5
-Message-ID: <1731353.bZ4GPg8qyj@blackgate>
-Date: Tue, 18 Oct 2016 16:50:41 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign <cve-assign@...re.org>
-Subject: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/22
+Message-ID: <20161017010245.267aae32@pc1>
+Date: Mon, 17 Oct 2016 01:02:45 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Graham Christensen <graham@...hamc.com>
+Cc: oss-security@...ts.openwall.com, ago@...too.org, cve-assign@...re.org
+Subject: Re: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+Hi,
 
-Another round of fuzzing on an updated version (1.900.5) revealed that the 
-previous issues, reported as CVE-2016-8690, are unfixed.
+On Sun, 16 Oct 2016 10:23:43 +0000
+Graham Christensen <graham@...hamc.com> wrote:
 
-The complete ASan output:
+> For what it is worth, Jasper has recently issued a release fixing many
+> CVEs, and would likely appreciate these fussing results as bug
+> reports on their github project: https://github.com/mdadams/jasper/
 
-# imginfo -f $FILE
-THE BMP FORMAT IS NOT FULLY SUPPORTED!                                                                                                                                                                                                                                         
-THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.                                                                                                                                                                                                              
-IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA                                                                                                                                                                                                                
-TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.                                                                                                                                                                                                                              
-skipping unknown data in BMP file                                                                                                                                                                                                                                              
-ASAN:DEADLYSIGNAL                                                                                                                                                                                                                                                              
-=================================================================                                                                                                                                                                                                              
-==19659==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x7f90527a18fe bp 0x7ffcfacc8070 sp 0x7ffcfacc7ee0 T0)
-    #0 0x7f90527a18fd in bmp_getdata /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:394:5
-    #1 0x7f90527a18fd in bmp_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:201
-    #2 0x7f9052748f39 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
-    #3 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
-    #4 0x7f905185761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #5 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
+I tested the code again with afl (after the fixes for the stuff
+Agostino reported) and it immediately found multiple issues:
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:394:5 in 
-bmp_getdata
-==19659==ABORTING
+https://github.com/mdadams/jasper/issues/28
+Heap overflow in jpc_dec_cp_setfromcox()
 
-# imginfo -f $FILE
-THE BMP FORMAT IS NOT FULLY SUPPORTED!
-THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.
-IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA
-TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.
-ASAN:DEADLYSIGNAL
-=================================================================
-==11248==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x7f888b2f5a44 bp 0x7ffea5b3b070 sp 0x7ffea5b3aee0 T0)
-    #0 0x7f888b2f5a43 in bmp_getdata /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:398:5
-    #1 0x7f888b2f5a43 in bmp_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:201
-    #2 0x7f888b29cf39 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
-    #3 0x4f1686 in main /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
-    #4 0x7f888a3ab61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #5 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
+https://github.com/mdadams/jasper/issues/29
+Heap overflow in jpc_getuint16()
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
-libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:398:5 in 
-bmp_getdata
-==11248==ABORTING
+https://github.com/mdadams/jasper/issues/30
+segfault / null pointer access in jpc_pi_destroy
 
-Affected version:
-1.900.5
+https://github.com/mdadams/jasper/issues/31
+double free on jpeg parsing
 
-Fixed version:
-N/A
+https://github.com/mdadams/jasper/issues/32
+assert in jpc_dec_tiledecode()
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+This will need some work till it's fuzzing resistant.
 
-CVE:
-N/A
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Timeline:
-2016-10-17: bug discovered
-2016-10-17: bug reported to upstream
-2016-10-18: blog post about the issue
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/18/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c-incomplete-fix-for-cve-2016-8690
+Content of type "application/pgp-signature" skipped
