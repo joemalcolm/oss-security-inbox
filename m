@@ -1,4 +1,9 @@
-Received: (qmail 26425 invoked by uid 550); 16 Jan 2024 20:35:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3110" "Saturday" "15" "October" "2016" "22:59:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016025953.75DA06C0D7A@smtpvmsrv1.mitre.org>" "78" "[oss-security] Re: Libarchive/bsdtar: multiple crashes" nil nil nil "10" "2016101602:59:53" "[oss-security] Re: Libarchive/bsdtar: multiple crashes" (number mark "U       cve-assign@m Oct 15   78/3110  " thread-indent "\"[oss-security] Re: Libarchive/bsdtar: multiple crashes\"\n") "<30086816.X7GymaXB0v@willoughby>" ("<30086816.X7GymaXB0v@willoughby>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3501 invoked by uid 550); 16 Oct 2016 03:00:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,128 +12,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26215 invoked from network); 16 Jan 2024 20:35:48 -0000
-Date: Tue, 16 Jan 2024 21:37:24 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Marco Benatto <mbenatto@redhat.com>,
-	Pavel Raiskup <praiskup@redhat.com>, Zack Miele <zmiele@redhat.com>
-Message-ID: <20240116203724.GA6491@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Mock, Snap, LXC expose(d) chroot, container trees with unsafe permissions and contents to host users, pose risk to host
+Received: (qmail 3375 invoked from network); 16 Oct 2016 03:00:04 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <30086816.X7GymaXB0v@willoughby>
+Message-Id: <20161016025953.75DA06C0D7A@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:59:53 -0400 (EDT)
+Subject: [oss-security] Re: Libarchive/bsdtar: multiple crashes
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-When Marco / Red Hat kindly brought the CVE-2023-6395 Mock issue:
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer-overflow-in-bsdtar_expand_char-util-c/
 
-https://www.openwall.com/lists/oss-security/2024/01/16/1
+>> AddressSanitizer: stack-buffer-overflow ... WRITE of size 4
+>> 
+>> Upstream was not able to reproduce the issue, maybe different compiler
+>> and compiler options, so he committed the fix based on what the
+>> stacktrace printed.
+>> 
+>> https://github.com/libarchive/libarchive/commit/e37b620fe8f14535d737e89a4dcabaed4517bf1a
 
-to linux-distros on January 8, this reminded me about another concern I
-had also having to do with Mock, so I shared it with Marco and
-linux-distros members on that same day and planned to post about it to
-oss-security on the same day that CVE-2023-6395 was to be disclosed
-publicly, which is today.  Included below is the essence of what was
-said in the linux-distros thread, starting with my message:
+Use CVE-2016-8687.
 
-Thank you Marco (and Red Hat) for bringing this to linux-distros.
 
-While we're on the topic of Mock and its security updates, here's a
-different concern I have:
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-detect_form-archive_read_support_format_mtree-c/
 
-The chroot trees that mock creates tend to be accessible by any system
-user, not only those in the mock group.  This means that vulnerabilities
-in SUID/SGID/setcap programs in current and leftover mock root trees may
-be exploitable by any system user - an unnecessary and maybe unexpected
-security exposure.
+>> AddressSanitizer: heap-buffer-overflow ... READ of size 1
 
-$ id
-uid=1001(user) gid=1001(user) groups=1001(user) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-$ ls -ld /var/lib/mock
-drwxrwxr-x. 6 root mock 4096 Nov 22 23:07 /var/lib/mock
-$ ls -l /var/lib/mock/rocky-9-x86_64/root/sbin/unix_chkpwd
--rwsr-xr-x. 1 root root 23832 Oct 28 11:26 /var/lib/mock/rocky-9-x86_64/root/sbin/unix_chkpwd
-$ /var/lib/mock/rocky-9-x86_64/root/sbin/unix_chkpwd
-This binary is not designed for running in this way
--- the system administrator has been informed
 
-This shows that a user not in group mock could indeed run a SUID root
-program from a mock root tree.  If that program contains a vulnerability
-on its own (such as if it's an outdated copy) or when run from such
-unexpected (by itself and its package) location, that is then exposed
-for attacks by the user.
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
 
-A further issue is that any world-writable directories in mock trees:
+>> AddressSanitizer: unknown-crash ... READ of size 1
 
-$ ls -ld /var/lib/mock/rocky-9-x86_64/root/tmp
-drwxrwxrwt. 4 root root 20480 Nov 22 23:44 /var/lib/mock/rocky-9-x86_64/root/tmp
 
-are in fact writable by all system users, including not in group mock,
-and can be used for (symlink or such) attacks on a current or future
-mock build (if a package's build uses temporary files unsafely).
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-bid_entry-archive_read_support_format_mtree-c/
 
-They can also be used for disk space exhaustion on /var (perhaps to
-prevent logs from being written), although this is only a new issue if
-the host's /var/tmp isn't on the same device.
+>> AddressSanitizer: heap-buffer-overflow ... READ of size 1
 
-I suggest that /var/lib/mock permissions be hardened to 770 or 1770.
-Optionally also permissions on /var/lib/mock/* and /var/lib/mock/*/root.
 
-This change would not prevent users in group mock from performing such
-attacks, but that can be considered a justified risk, to be documented.
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-bid_entry-archive_read_support_format_mtree-c/
 
-I'll plan on mentioning this concern on oss-security also on January 16,
-or/and you may.
+>> AddressSanitizer: heap-use-after-free ... READ of size 1
 
-On Mon, Jan 08, 2024 at 10:47:31PM +0100, Vegard Nossum wrote:
-> I'm wondering if this isn't an even wider class of issues --
 
-Yes, I think it's part of a wider class of issues.
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-detect_form-archive_read_support_format_mtree-c/
 
-> here's an example of setuid-root binaries from snaps on an Ubuntu system:
-> 
-> $ ls -l $(find /snap/ -type f -executable -perm -4000 -name su 2>/dev/null)
-> -rwsr-xr-x 1 root root 44664 nov.  29  2022 /snap/core18/2796/bin/su
-> -rwsr-xr-x 1 root root 44664 nov.  29  2022 /snap/core18/2812/bin/su
-> -rwsr-xr-x 1 root root 67816 mai   30  2023 /snap/core20/2015/usr/bin/su
-> -rwsr-xr-x 1 root root 67816 mai   30  2023 /snap/core20/2105/usr/bin/su
-> -rwsr-xr-x 1 root root 55672 f??vr. 21  2022 /snap/core22/1033/usr/bin/su
-> -rwsr-xr-x 1 root root 55672 f??vr. 21  2022 /snap/core22/864/usr/bin/su
-> 
-> (I count 64 such binaries on this particular system when not restricting
-> to "su" -- if there are older versions, as indeed there seems to be at a
-> glance, it's not unthinkable to find something buggy there that maybe
-> shouldn't be runnable.)
-> 
-> I could be completely wrong, I haven't looked into it. At a glance, many
-> of these binaries will not run directly because they are trying to load
-> older versions of shared libraries that don't exist in the default
-> search paths.
+>> AddressSanitizer: heap-use-after-free ... READ of size 1
 
-That's a very good point about incompatible shared libraries - things
-can be much worse if the libraries do exist, but are just sufficiently
-different to expose or create a vulnerability - potentially one that
-didn't exist with binary+libraries versions in either the chroot or the
-host system on its own.
+>> https://github.com/libarchive/libarchive/commit/eec077f52bfa2d3f7103b4b74d52572ba8a15aca
 
-On Tue, Jan 09, 2024 at 03:52:27AM +0000, Seth Arnold wrote:
-> On Mon, Jan 08, 2024 at 10:47:31PM +0100, Vegard Nossum wrote:
-> > I don't want to derail the thread too much, but I'm wondering if this
-> > isn't an even wider class of issues -- here's an example of setuid-root
-> > binaries from snaps on an Ubuntu system:
-> 
-> Hello Vegard. Yes, this is a familiar old friend; here's an instance
-> from LXC in 2013: https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1244635
-> 
-> Several years ago, when we were preparing fixes for a snapd issue,
-> I believe we issued *two* snapd updates -- the first to fix the bug,
-> the second to force snapd to garbage collect the old and vulnerable
-> version. (Which sort of defeats the point of snapd storing multiple
-> versions for roll-back.)
-> 
-> I suspect few application authors distributing snaps themselves would
-> think of it.
+Use CVE-2016-8688 for all of eec077f52bfa2d3f7103b4b74d52572ba8a15aca.
+The commit message explains that there is a single code problem that
+could lead to the various reports in the above five blog posts.
 
-Alexander
+
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-read_header-archive_read_support_format_7zip-c/
+
+>> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+
+>> https://github.com/libarchive/libarchive/commit/7f17c791dcfd8c0416e2cd2485b19410e47ef126
+
+Use CVE-2016-8689.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAueBAAoJEHb/MwWLVhi2DmkP/jIITERPW+3gZpCoB6m74SrZ
+lkyE2s/GR+ckzez27+UZCieJMcBDlb9GlWFioNksZ3Q5QNOmdGOXz0NlQ2d/tMRq
+TivSUiMIbIhWKIAXtu7Ypdcav2/qJsenQPkZ2yNX8rWJWVvI4q3A0dG5/GQlevCH
+IwBeJd3U6S2KR9LbhwXFoNASBLAX5ONTZ1RBpvgUJ2p38SljsF4M8JWQ1OcBEyKS
+V8SD0QWsehQ4KTUvWtb4ZPC+h9tNZ22msStRf2GN/q5fe05UiNDvVOzkJCxUxpau
+lafgNUnKDHgNNVKUozBDhe3l2ORV63y/+7vwlzuhD4sFdnqyI+Bz4w9+98gF29jp
+e+Z7XAlcFG3lBik3me9pwd5K6VZy8Q3EvYJzGtZ3mXV4SKVDpkIXU+toKaB7pRWv
+G8eOro4IaOlArf2nA6O3oMafenxi1nYaoliwL33L9ORq/s+quGOy8BF2PLAuf/Da
+pK+vWYzw8ErCi06fl35nw0MBEaQwcoP53TPLmckEwdt4pGBugnL4cOEYgynsH4aN
+U4+FiQkeFkuFayjt/GNGjV8K2oFSff96kM5O2/PLbMGgVPnxAe4gCH9NiAfoerd1
+g0C+r6cE2FpwFAmx1xzcy/1XrAOzodS4+NQLR21vZZd/knGBA05dV3XbZgZ2iWE1
+iXqAGl4W7dvYgHHbUyTg
+=+kz6
+-----END PGP SIGNATURE-----
