@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/9
-Message-Id: <20160916172249.12FAB42E003@smtpvbsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 13:22:49 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/13
+Message-Id: <20161016024233.399CF42E027@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:42:33 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request: Qemu: scsi: pvscsi: infinite loop when processing IO requests
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libav: null pointer dereference in get_vlc2 (get_bits.h)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus
-> emulation support is vulnerable to an infinite loop issue. It could occur
-> while processing SCSI IO requests.
+> https://blogs.gentoo.org/ago/2016/09/07/libav-null-pointer-dereference-in-get_vlc2_get_bits_h/
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
+> A crafted file causes a NULL pointer access.
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03609.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1376731
-> http://git.qemu.org/?p=qemu.git;a=commit;h=d251157ac1928191af851d199a9ff255d330bec9
+> AddressSanitizer: SEGV on unknown address
+> 
+> 0x7f5273202c6b in get_vlc2 ... libav-11.3/work/libav-11.3/libavcodec/get_bits.h:530:5
 
->> scsi: pvscsi: limit process IO loop to ring size
->> 
->> Vmware Paravirtual SCSI emulator while processing IO requests
->> could run into an infinite loop if 'pvscsi_ring_pop_req_descr'
->> always returned positive value. Limit IO loop to the ring size.
+> https://github.com/libav/libav/commit/e5b019725f53b79159931d3a7317107cbbfd0860
 
-Use CVE-2016-7421.
+> He said that the commit e5b019725f53b79159931d3a7317107cbbfd0860 make
+> the issue not anymore reachable through the provided testcase, but the
+> issue is still here
+
+Use CVE-2016-8675 for the issue that was fixed by
+e5b019725f53b79159931d3a7317107cbbfd0860. Use CVE-2016-8676 for the
+issue that remains after e5b019725f53b79159931d3a7317107cbbfd0860.
 
 - -- 
 CVE Assignment Team
@@ -38,17 +37,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX3CoDAAoJEHb/MwWLVhi24c4P/0e14e2CUn0/9Kgusithfj+j
-Q1W7xnYwIPhTlgHHMb28a1xU2ORq5Vf8cGVaan1NRZIEIcfdZRHbAgqbzvdWgTGq
-RDHsQVpls9wfftF9uQJqA8m/LplqiOf4e9EhWqa7kI47ji9JrsebZgY07lGWP6kY
-5wir89tG1sqT56dcyJb1zirWSqcNb74iFXG22Ksm1apXan9ax2HiHWEyAs6QZZXx
-kOTo7TnD+mVoJM9OdcQ9PW1JhSnH11715E88wEftKxNseqeDMKbhM7rGJlL6JTAx
-hy9o0RTLbPPfRKtpMvA389ivcRpWHpHqryynUd9uGb1p63JLqATspWTdpqHljM4k
-asqDs+exTj9cyrGRXDoycdfuEjrxCyb1FgW5on6ThoT2Q/Y4anl4SMOxyL/Lh05k
-YIHFnR1hcBkiZJucM8dWuDyzVwrWJiKDRBvcXOX+hpyWcHaD/PeaK6tfBb61wKjP
-KWvDkQ3jjGD+qMfRfQ/tN7buZAo3MhZpjXJ/zj002stu20RGjsmfxRgJuZlI/eZM
-iJBZ4tZTW7xo2o3i+XOhPokOSQEVhEHJ6TJ6MH3CyJysqoU7N2tjKsmd4/jasPvQ
-Zgw+DTRGKHsEdxvcZUXpcPZK+3hC4yk0FTweLw8lRyAiiYcBCle32hHlZ5KK7vft
-p6cmljAyzzWwLuN0pDgP
-=B4w3
+iQIcBAEBCAAGBQJYAudAAAoJEHb/MwWLVhi2BeoQALT+/NOvMXNAUFbTth5ZENQR
+9obKiTpG1etX5K3BJjkmRffEgprSU8o0KqE6hHSgav9IPoX5t1Ic8mHVPGrzDWBI
+G+ubzdVIXhbidIfXg4qF0yHbyPpU25sNga61gsAYRrOcZiKzbNnhRUsMhuvv2cHx
+XJWrTDjVQsE9foEeIdTnONcWUMBQ7mZfjWz+GVJmgICC0Lna/HcitQ0pO2G35kQ2
+7sGaQ/szDWZCDbJ9CjonJKqZtI1a45wIX/3I3qy28KOIojguk6b6me0iAcQSSC2r
+Ext8uDLlVcgMHAChF+mSbo1Yctij2RFiOSz9YdK+Errnw3I3gb8Ad7sXfHNpGw2a
+aAudyYgdLk8w2a7yP4Wpzy/Mr/KaxyU52qJp/BXe4pvFCippCaa/iwXG9DF9MbC+
+H1vgAbzI5tlCeV5r7d08OuZlHx+t29Ki+iyoy7xpArPs5TOVz+Ut5iAlTMquJKsh
+8X6azUINjDpJILy/sJKP5R3PKoapjkYA1Tjn3WeTs9NfYsOBOdBrjpp0V6k7B5hq
+h9q3LcCOOkKnVvaSi7n9naMZt7QRsId/Wc62bqUkR0N1sHLE5Co0wxFArbdyAjs9
+8uX7ZIdiWr7qRxviilT5105jO4sCTEBsGz3lcjgezNMRMS1F+OpdU9BJ45s4fFgz
+2svTRycflYTFU6E/BO0U
+=atYc
 -----END PGP SIGNATURE-----
