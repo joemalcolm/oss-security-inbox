@@ -1,30 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/1
-Message-ID: <3230301C09DEF9499B442BBE162C5E48ABE280AE@SESTOEX04.enea.se>
-Date: Wed, 17 Aug 2016 11:54:56 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE-2016-5696: linux kernel - challange ack information leak.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/20
+Message-ID: <20511243.IiplisyCjp@arcadia>
+Date: Sun, 16 Oct 2016 20:52:34 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)
 Content-Type: text/plain; charset=utf-8
 
+A note outside the blog post:
+This issue does not affect any library, but it is only in the mujstest binary.
+There aren't known applications which use mujstest, but if you have an 
+application or website which relies on mujstest you are invited to apply the 
+patch or use the newer package when it will be released. Thanks.
 
-> > > You can _always_ just apply the patch to your local tree, there's
-> > > never a need to wait for me to get a kernel out.  That's the
-> > > advantage of having the source for your systems :)
-> > Yes, we can do that but sometimes the patches for newer kernels don't
-> > apply cleanly on older versions.
-> > There is always a risk that our home grown patches have undesired side
-> > effects. We prefer your sign of approval on patches for older kernels
-> > :)
-> 
-> Heh, fair enough.  This fix is now in the kernels that were released today
-> (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> 
-> greg k-h
+Description:
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-Thanks a lot Greg, yes this helps :) I could apply  patch from linux-3.14.y branch 
-to linux-3.12.y as well (the code looks similar). 
+A fuzzing revealed a global buffer overflow write.
 
-//Sona
+The complete ASan output:
+
+# mujstest $FILE
+=================================================================
+==2244==ERROR: AddressSanitizer: global-buffer-overflow on address 
+0x0000013c6140 at pc 0x000000473526 bp 0x7fff866f77d0 sp 0x7fff866f6f80
+WRITE of size 1181 at 0x0000013c6140 thread T0
+    #0 0x473525 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
+r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:547
+    #1 0x4f7910 in main /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
+    #2 0x7f3a6c18661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
+
+0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
+defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/sys-
+devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:547 in __interceptor_strcpy
+Shadow bytes around the buggy address:
+  0x000080270bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270bf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080270c20: 00 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9
+  0x000080270c30: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270c40: f9 f9 f9 f9 f9 f9 f9 f9 04 f9 f9 f9 f9 f9 f9 f9
+  0x000080270c50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270c70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2244==ABORTING
+
+Affected version:
+1.9a
+
+Fixed version:
+1.10 (not yet released)
+
+Commit fix:
+http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-08-04: bug discovered
+2016-08-05: bug reported to upstream
+2016-09-22: upstream released a patch
+2016-09-24: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflow-in-main-jstest_main-c/
 
 
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
