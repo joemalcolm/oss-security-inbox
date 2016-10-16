@@ -1,28 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/13
-Message-ID: <20161102110745.o3la3xffk4xh6rgr@symphytum.spacehopper.org>
-Date: Wed, 2 Nov 2016 11:07:45 +0000
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/11
+Message-Id: <20161016025953.75DA06C0D7A@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:59:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Libarchive/bsdtar: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-On 2016/11/02 08:13, Daniel Stenberg wrote:
-> In version 7.51.0, the parser function is fixed.
-> 
-> A [patch for CVE-2016-8625](https://curl.haxx.se/CVE-2016-8625.patch) is
-> available.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This switches to using libidn2, which hasn't had a substantial commit
-in around 5 years (https://gitlab.com/jas/libidn2/commits/master), and
-currently doesn't even show up in the file listing for the https
-version of alpha.gnu.org/gnu/libidn/. (Somehow http and https are
-different; the https version has HSTS headers which you might need to
-take into account if comparing).
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer-overflow-in-bsdtar_expand_char-util-c/
 
-Moving something as widely used as curl to this makes me feel a little
-uneasy (and I'm a bit surprised it wasn't called out specifically in the
-release notes).
+>> AddressSanitizer: stack-buffer-overflow ... WRITE of size 4
+>> 
+>> Upstream was not able to reproduce the issue, maybe different compiler
+>> and compiler options, so he committed the fix based on what the
+>> stacktrace printed.
+>> 
+>> https://github.com/libarchive/libarchive/commit/e37b620fe8f14535d737e89a4dcabaed4517bf1a
 
-Has anyone poked at it much yet?
+Use CVE-2016-8687.
 
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-detect_form-archive_read_support_format_mtree-c/
+
+>> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
+
+>> AddressSanitizer: unknown-crash ... READ of size 1
+
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-bid_entry-archive_read_support_format_mtree-c/
+
+>> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-bid_entry-archive_read_support_format_mtree-c/
+
+>> AddressSanitizer: heap-use-after-free ... READ of size 1
+
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-detect_form-archive_read_support_format_mtree-c/
+
+>> AddressSanitizer: heap-use-after-free ... READ of size 1
+
+>> https://github.com/libarchive/libarchive/commit/eec077f52bfa2d3f7103b4b74d52572ba8a15aca
+
+Use CVE-2016-8688 for all of eec077f52bfa2d3f7103b4b74d52572ba8a15aca.
+The commit message explains that there is a single code problem that
+could lead to the various reports in the above five blog posts.
+
+
+
+> https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-read_header-archive_read_support_format_7zip-c/
+
+>> AddressSanitizer: heap-buffer-overflow ... READ of size 1
+
+>> https://github.com/libarchive/libarchive/commit/7f17c791dcfd8c0416e2cd2485b19410e47ef126
+
+Use CVE-2016-8689.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAueBAAoJEHb/MwWLVhi2DmkP/jIITERPW+3gZpCoB6m74SrZ
+lkyE2s/GR+ckzez27+UZCieJMcBDlb9GlWFioNksZ3Q5QNOmdGOXz0NlQ2d/tMRq
+TivSUiMIbIhWKIAXtu7Ypdcav2/qJsenQPkZ2yNX8rWJWVvI4q3A0dG5/GQlevCH
+IwBeJd3U6S2KR9LbhwXFoNASBLAX5ONTZ1RBpvgUJ2p38SljsF4M8JWQ1OcBEyKS
+V8SD0QWsehQ4KTUvWtb4ZPC+h9tNZ22msStRf2GN/q5fe05UiNDvVOzkJCxUxpau
+lafgNUnKDHgNNVKUozBDhe3l2ORV63y/+7vwlzuhD4sFdnqyI+Bz4w9+98gF29jp
+e+Z7XAlcFG3lBik3me9pwd5K6VZy8Q3EvYJzGtZ3mXV4SKVDpkIXU+toKaB7pRWv
+G8eOro4IaOlArf2nA6O3oMafenxi1nYaoliwL33L9ORq/s+quGOy8BF2PLAuf/Da
+pK+vWYzw8ErCi06fl35nw0MBEaQwcoP53TPLmckEwdt4pGBugnL4cOEYgynsH4aN
+U4+FiQkeFkuFayjt/GNGjV8K2oFSff96kM5O2/PLbMGgVPnxAe4gCH9NiAfoerd1
+g0C+r6cE2FpwFAmx1xzcy/1XrAOzodS4+NQLR21vZZd/knGBA05dV3XbZgZ2iWE1
+iXqAGl4W7dvYgHHbUyTg
+=+kz6
+-----END PGP SIGNATURE-----
