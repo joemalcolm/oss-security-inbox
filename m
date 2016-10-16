@@ -1,116 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/11
-Message-ID: <1474486066.2424.9.camel@devio.us>
-Date: Wed, 21 Sep 2016 21:27:46 +0200
-From: "A.N." <ailin@...io.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/17
+Message-ID: <1491121.JZs8W73v97@arcadia>
+Date: Sun, 16 Oct 2016 12:41:15 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Irssi Security Advisory CVE-2016-7044+CVE-2016-7045
+Subject: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
-We are sad to have to announce the following security issue:
+Hello all,
 
-Canonical URL http://irssi.org/security/irssi_sa_2016.txt
+I would like to inform people that the jasper development is alive on github 
+since few days, I filed the bugs and some was fixed.
 
-heap corruption and missing boundary checks
-===========================================
-CWE Classification: CWE-20, CWE-823, CWE-126, CWE-122
-
-CVE-2016-7044 [1] was assigned to bug 1
-CVE-2016-7045 [2] was assigned to bug 2
+Below the link to my blogs for each issue which contains the commit fix and 
+or/the status.
 
 
-Description
------------
+On Tuesday 23 August 2016 20:40:27 Agostino Sarubbo wrote:
+> Hello all,
+> 
+> I fuzzed jasper and it revealed some crashes,
+> we know that jasper has no more release(s) since a lot of time, so there are
+> some unfixed vulnerabilities.
+> Based on what I said, I don't know if any of the following crashes have been
+> reported in the past.
+> 
+> I know that Jasper clearly state about its capability on the BMP format, so
+> if you think that something is suitable for an identifier, please assign
+> one. Thanks.
+> 
+> NOTE: The command used in all cases was: imginfo $CRAFTED_IMAGE
 
-Gabriel Campana and Adrien Guinet from Quarkslab reported two remote
-crash and heap corruption vulnerabilites in Irssi's format parsing
-code.
+> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
+> r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5 in bmp_getdata
+https://blogs.gentoo.org/ago/2016/10/16/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c/
 
-They also provided us with proof of concept exploit code and patches
-to fix those issues.
-
-
-Impact
-------
-
-Remote crash and heap corruption. Remote code execution seems
-difficult since only Nuls are written.
-
-
-Detailed analysis
------------------
-
-Based on analysis Provided by Gabriel Campana and Adrien Guinet from
-Quarkslab:
-
-Bug 1
-
-The unformat_24bit_color() function is called by format_send_to_gui()
-to decode 24bit color codes into their components. The pointer is
-advanced unconditionally without checking if a complete code was
-supplied.
-
-Thus, after the return of unformat_24bit_color(), ptr might be invalid
-and point out of the buffer.
-
-Bug 2
-
-The format_send_to_gui() function does not validate the length of the
-string before incrementing the `ptr' pointer in all cases.
-
-If that happens, the pointer `ptr' can be incremented twice and thus
-end past the boundaries of the original `dup' buffer.
+> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
+> r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5 in bmp_getdata
+https://blogs.gentoo.org/ago/2016/10/16/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c/
 
 
-Affected versions
------------------
-
-Irssi 0.8.17-beta up to and including 0.8.19 up to 0.8.19-219-g52fedea
-
-Bug 1 affects only Irssis compiled with true-color enabled.
-Bug 2 affects all Irssis regardless of compilation flags.
+> SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
+> r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17 in
+> jpc_dec_process_siz
+https://blogs.gentoo.org/ago/2016/10/16/jasper-two-divide-by-zero-in-jpc_dec_process_siz-jpc_dec-c/
 
 
-Fixed in
---------
-
-Irssi 0.8.20
-
-
-Recommended action
-------------------
-
-Upgrade to Irssi 0.8.20. Irssi 0.8.20 is a maintenance release
-without any new features.
-
-After installing the updated packages, one can issue the /upgrade
-command to load the new binary. TLS connections will require
-/reconnect. If the buf.pl script is loaded and symlinked into
-~/.irssi/scripts/autorun, text buffer content will be saved and
-restored.
+> SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
+> r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18 in
+> jpc_dec_process_siz
+https://blogs.gentoo.org/ago/2016/10/16/jasper-two-divide-by-zero-in-jpc_dec_process_siz-jpc_dec-c/
 
 
-Fallback action
----------------
-
-Distributions which need to remain on Irssi 0.8.17 are strongly urged
-to apply the patch and provide updated packages.
-
-Those totally unable to upgrade, but with Perl support enabled in
-their Irssi, can load the following script and add it to
-~/.irssi/scripts/autorun as a first aid to mitigating these issues: 
-
-https://irssi.org/security/sa_patch.pl
+> SUMMARY: AddressSanitizer: double-free /var/tmp/temp/portage/sys-
+> devel/llvm-3.8.0-r2/work/llvm-3.8.0.src/projects/compiler-
+> rt/lib/asan/asan_malloc_linux.cc:38 in free
+https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
 
 
-Patch
------
+SUMMARY:
+The two SEGV are patched and they aren't in any release
+The two FPE are patches and they are in 1.900.4
+The double-free is unfixed.
 
-https://github.com/irssi/irssi/commit/295a4b77f07f14602eeaa371f00ddbf09
-910c82b
 
-
-References
-----------
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7044
-[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7045
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
