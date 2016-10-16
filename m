@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/6
-Message-ID: <e70a1c4d0998472088fc16181d68f78c@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 01:36:58 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request Qemu: display: virtio-gpu: memory leakage when destroying gpu resource
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/2
+Message-Id: <20161016024535.717936C0D4B@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:45:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
-> vulnerable to a memory leakage issue. It could occur while destroying gpu
-> resource object in 'virtio_gpu_resource_destroy'
-> 
-> A guest user/process could use this flaw to leak host memory bytes, resulting
-> in DoS for a host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg05043.html
+> https://blogs.gentoo.org/ago/2016/10/07/imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
 
->> the 'iov' and 'addrs' field in resource is not freed
+> AddressSanitizer: heap-buffer-overflow ... READ of size 10
+> ImageMagick-7.0.3-0/./MagickCore/pixel-accessor.h:557:24 in IsPixelMonochrome
 
-Use CVE-2016-9912.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu.c but
-that may be an expected place for a later update.
+Use CVE-2016-8678.
 
 - -- 
 CVE Assignment Team
@@ -36,17 +26,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSPwEAAoJEHb/MwWLVhi2PNkQAJ04jluxiwMJkFYyHnxywbvq
-uhCBuwqncHIs/MUMLdYrNB3NvUQm1W4DmF1iVOKpP/r4jhXbZ52cS89hEbCfFL/W
-rPsr5H1tVLyUmXEroMxoyT9RJRlNlMp4FXTYCmbsZStqW+KLsXc/IiiUqfPJfw00
-qo2AHZc4xMpSqYKSUPwZYN4UG4uosve1mYcmII7CTg2nTFqeFeufq6A+N8/HKpFC
-dYp4fcGkM1B8V4W2FL95oWalMUmDjFGnVfXQrlSnJB1XcOEFqsebcUq7xFcE2psi
-FCYkoz098xv1TIYWCwIj3Oscl/AH8SDtrXokXbtYqxbeq0mKIkaTqtLsj4CiooxY
-KhuJs27nJZJZZve15r2CZ6g8poHMZH+WdSWrF4tZNlgDsOojLnrI8+vPqknfM91B
-8AxAuEGPcGSFa9JHSP8EhJ7Jr1aahoL4OqJQSSesqk9PckKQREsLqS5cnMEQj+OE
-mHe4a2bPj900Okq5SXnnZt1t8T8WyIzgC2rgfDuMuCfoC38NF1dRjQ8TcK0oL6r6
-sK52vKKO9Rmo/JLdVkjjgvu0UZZ5c21FfhJbKROkWYE9TmNc+Kuf2f5ypk1bHzA6
-A3fB5mNz2nwV95JyQgr+TVyfT1Pf0mZfl1U/gRJE0M7t3m3DYQiYXeWJ9heRKgQj
-+G1h8Edu8sXg+DMskaTQ
-=vdtL
+iQIcBAEBCAAGBQJYAudMAAoJEHb/MwWLVhi2q1AQAIBi/od3vsXpt53PUspCr8sZ
+IwEVpM7XL9/Ee7rH4GJTI7dJp/FOf+obiVIASLMIIvpC7Kgy8omoBDIZ2s8mmCkv
+jMM4MUSs2QUZFjoR26uYW9L+IiwQyD4bBMlMUOFuKUoHbOYpVb7QQABft5NV8H81
+RB6ZmbSzDmLwVRIQOLV27L4EZx+kUJb72mbs9VfMIFO5hwF5UX1mCUqp6jQ25UP4
+/zlYPPcUsTTcAjRiai+zSxSIKKySfzuEJF4XiHdETPNFguMDquH505OBg8zenpjZ
+djYjpnI2cVxFe/yWVpa7d+oTEya7jscuV8PlqquOtLfmfOCYGTI8V7js0Zd3yx8/
+/4lhcaMyULhILvho2191mh7CD4SkgL8XNq94DrlQ8IhcZflzCdUOU0lQCn6RRdfg
+GqfZ82obAIdg/DJSrMO5QOt5DYyAYNpPS1AFAOpH2UgIfhEcHaAbv3wkudG7vnK2
+3Jlj4vUmAxcfWHHSKgpYVh0ffrBHegDypLV5wwHlg/XIVEfEwQ6EjFePMqFHO2AJ
+atXRM85uh93WWok09ay+oW84JHzX5F9jDTrTM+92XG62KrRWRCjQviMAZKbx5+yB
+kvcH0IWZ0aHRs0BOJ5nuhk8h1VocdzSZwe3nJw1aOJ+UCpzPQqHu60PxqMbrLyyb
+3r1w88ZsRdwdsxJ8fch0
+=Im8q
 -----END PGP SIGNATURE-----
