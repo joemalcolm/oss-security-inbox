@@ -1,43 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/6
-Message-ID: <CA+T2pCG=MJMxQZXgGsCevny2_tSkiBcya-hebS8HxuEMCxQw_A@mail.gmail.com>
-Date: Mon, 5 Sep 2016 17:26:06 -0500
-From: William Pitcock <nenolod@...eferenced.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/12
+Message-Id: <20161016030402.059446C0D7D@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 23:04:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: potrace: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-UnrealIRCd is also affected:
+> https://blogs.gentoo.org/ago/2016/08/08/potrace-multiple-three-null-pointer-dereference-in-bm_readbody_bmp-bitmap_io-c/
 
-https://github.com/unrealircd/unrealircd/commit/f473e355e1dc422c4f019dbf86bc50ba1a34a766
+> AddressSanitizer: SEGV on unknown address
+> 0x4f027b in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:717:4
 
-As is Nefarious:
+Use CVE-2016-8694.
 
-https://github.com/evilnet/nefarious2/commit/f50a84bad996d438e7b31b9e74c32a41e43f8be5
 
-William
+> AddressSanitizer: SEGV on unknown address
+> 0x4f0957 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:744:4
 
-On Sun, Sep 4, 2016 at 4:45 PM, Antoine Beaupré <anarcat@...ian.org> wrote:
-> inspircd published 2.0.23 that fixes an issue with SASL
-> authentication. The details are here:
->
-> http://www.inspircd.org/2016/09/03/v2023-released.html
->
-> All versions are affected.
->
-> Upstream hasn't requested a CVE yet. I told them I would request one
-> from here on IRC.
->
-> It seems to also affect Charybdis, which fixed the issue in the
-> upcoming 3.5.3 release:
->
-> https://github.com/charybdis-ircd/charybdis/commit/818a3fda944b26d4814132cee14cfda4ea4aa824
->
-> A.
->
-> --
-> All governments are run by liars and nothing they say should be
-> believed.
->                        - I. F. Stone
+Use CVE-2016-8695.
+
+
+> AddressSanitizer: SEGV on unknown address
+> 0x4f10b7 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:651:11
+
+Use CVE-2016-8696.
+
+
+> https://blogs.gentoo.org/ago/2016/08/08/potrace-divide-by-zero-in-bm_new-bitmap-h/
+
+> AddressSanitizer: FPE on unknown address
+> 0x508d51 in bm_new /tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap.h:63:24
+
+Use CVE-2016-8697.
+
+
+> https://blogs.gentoo.org/ago/2016/08/08/potrace-multiplesix-heap-based-buffer-overflow-in-bm_readbody_bmp-bitmap_io-c/
+
+> AddressSanitizer: heap-buffer-overflow ... READ of size 4
+> 0x4f3709 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:717:4
+
+Use CVE-2016-8698.
+
+
+> AddressSanitizer: heap-buffer-overflow ... READ of size 4
+> 0x4f3728 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:651:11
+
+Use CVE-2016-8699.
+
+
+> AddressSanitizer: heap-buffer-overflow ... READ of size 4
+> 0x4f37a8 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:652:11
+
+Use CVE-2016-8700.
+
+
+> AddressSanitizer: heap-buffer-overflow ... READ of size 4
+> 0x4f3829 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:690:4
+
+Use CVE-2016-8701.
+
+
+> AddressSanitizer: heap-buffer-overflow ... READ of size 4
+> 0x4f38d4 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:744:4
+
+Use CVE-2016-8702.
+
+
+> AddressSanitizer: heap-buffer-overflow ... READ of size 4
+> 0x4f3947 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:601:2
+
+Use CVE-2016-8703.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAueMAAoJEHb/MwWLVhi2FLUQAIQfsa5xZPZvWE5y4yTcOu3U
+m03UQx9odWYGvpUgdADOSKwQ1+GFPSJpi+OvaLQmDfss/BdWUKHg+3U69gz5xw7t
+QQ2DeV/Ei80uQr86hV212NHXHRd3e0debRecETnZQfZTBIuCfU9AMKo7NhPmFX6x
+0nnhfoDh1mFA4OYnoBachWW3LtxI2wyELYXEQsL+wEKNXZCzlcuPdbahcg7dY/G2
+pqdd44JsNZvTlGOD1izHWrHCLprr2pvxNkgHKyJO9BnA+1n1aSXGsydO8P9xjdyB
+p01Ro73so2ThiTq98R6KkPD1aPSdZK1pm0ivj4BiXk2Qn4ay1HifwyV5F+0rJwv6
+xRcfLbcFErELio36DocC7F+8mot1cVIliNUgzOrW9+PBu7q+ns9cBmvDhgaszRp+
+1IF5J4HyCJzDg5Db9qUQbk9+XindKjDSPlWYCh4sYFryHZBAz5YG+YaDzYTSxqzq
+YUWeCjNFnmOqc0IBeoE15DDB4mWLdqGTxfWdFIP5jy9ivZH38V+G2s/TMrxqDRy4
+xt0JCLAK1UAPWIrTVgXzKSm0QUJJRh/5pd5/oJbHtLPy+Bhmc+AcbfMsMbbvYWML
+STn0lvtUfFXfRQUambTGirq2/4Z0sdcUD6RzR8mFVKjSVLdgo3Q0zymyUbGovX7Q
+JL23K3iztdYCJxzUs4fS
+=zR6v
+-----END PGP SIGNATURE-----
