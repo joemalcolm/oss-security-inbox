@@ -1,101 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/03/13
-Message-ID: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
-Date: Tue, 3 May 2016 10:59:12 -0700
-From: Ryan Huber <rhuber@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: ImageMagick Is On Fire -- CVE-2016-3714
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/7
+Message-Id: <20161016025407.15BD46C0D67@smtpvmsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:54:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: graphicsmagick: memory allocation failure in ReadPCXImage (pcx.c)
 Content-Type: text/plain; charset=utf-8
 
-There are multiple vulnerabilities in ImageMagick, a package commonly
-used by web services to process images. One of the vulnerabilities can
-lead to remote code execution (RCE) if you process user submitted
-images. The exploit for this vulnerability is being used in the wild.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A number of image processing plugins depend on the ImageMagick
-library, including, but not limited to, PHP's imagick, Ruby's rmagick
-and paperclip, and nodejs's imagemagick.
+> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-readpcximage-pcx-c/
+> 
+> AddressSanitizer failed to allocate 0x4cd6a6000 bytes of LargeMmapAllocator
+> 0x7ff8e887beba in ReadPCXImage ... GraphicsMagick-1.3.25/coders/pcx.c:467:16
+> 
+> http://hg.code.sf.net/p/graphicsmagick/code/rev/b9edafd479b9
 
-If you use ImageMagick or an affected library, we recommend you
-mitigate the known vulnerabilities by doing at least one these two
-things (but preferably both!):
+Use CVE-2016-8683.
 
-1. Verify that all image files begin with the expected "magic bytes"
-corresponding to the image file types you support before sending them
-to ImageMagick for processing. (see FAQ for more info)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-2. Use a policy file to disable the vulnerable ImageMagick coders. The
-global policy for ImageMagick is usually found in "/etc/ImageMagick".
-This policy.xml example will disable the coders EPHEMERAL, URL, MVG,
-and MSL.
-
-Github Gist showing an example policy file:
-https://gist.github.com/rawdigits/d73312d21c8584590783a5e07e124723
-
-FAQ
-
-Who found this bug?
-
-Stewie (https://hackerone.com/stewie) found the initial bug, and
-Nikolay Ermishkin (https://twitter.com/__sl1m) from the Mail.Ru
-Security Team found additional issues, including the RCE.
-
-Will you share the exploit with me?
-
-No. We would like to give people a chance to patch before it is more
-widely available. The exploit is trivial, so we expect it to be
-available within hours of this post. Updates and PoC will eventually
-be available here.
-
-Are patches available?
-
-Yes, but they appear to be incomplete. Everyone would have preferred
-to wait for patches before disclosing, but working exploits are
-readily available.
-
-What are "magic bytes"?
-
-The first few bytes of a file can often used to identify the type of
-file. Some examples are GIF images, which start with the hex bytes "47
-49 46 38", and JPEG images, which start with "FF D8". This list on
-Wikipedia has the magic bytes for most common file types.
-
-Why are you disclosing a vulnerability like this?
-
-We have collectively determined that these vulnerabilities are
-available to individuals other than the person(s) who discovered them.
-An unknowable number of people having access to these vulnerabilities
-makes this a critical issue for everyone using this software.
-ImageMagick also disclosed this on their forum a few hours ago.
-
-How well-tested are these mitigations?
-
-They are effective against all of the exploit samples we've seen, but
-we cannot guarantee they will eliminate all vectors of attack.
-
-Are there other ways to mitigate?
-
-Sandboxing ImageMagick is worth investigating, but we are not
-providing specific instructions for doing this.
-
-What else should I know?
-
-We did not find this vulnerability ourselves. We understand the
-mechanisms involved, but credit for finding this vulnerability should
-go to the researcher(s).
-
-Vulnerabilities need names! What is its name??!?
-
-If you must, we've been calling it "ImageTragick".
-
-How can I contact you?
-
-imagetragick@...il.com
-
-
--- 
-Ryan Huber
-rhuber@...il.com
-@ryanhuber
-https://github.com/rawdigits
-+1 (312) 380 6136
+iQIcBAEBCAAGBQJYAudpAAoJEHb/MwWLVhi2gGgP/Ap9/pDnuCPqVn/qnhRromrx
+9QKzln7BUKzpxejBtCjEdD6goq8EB8okxves+eVeBEJPMX+EdhqOTWotZw8xSip/
+b8gSBWG7NcTXVu/G8EHW1wlc8J3QRRRtQobNgCpRiURy31FQKqZdLYzhZndntbFH
+GiyxfdSR+zV+l0uE5EsDYIffL0o2HDTOzx/cDJE3Wn6X39xOqGXXciwLoopE1kD4
+p52FNXZjsy6TSO7bXBjVhYgGVF/HgoK7dqwglJ5vHFSkuG0mga4FjMOo+jBYRI9O
+0TMhtigGVyr6YYSPqJS03tZEfhExbY3Vvrj7ZEH0PIqnxNG/VbruZwYkCtwgo3Bq
+F93DTl2vfDTvn8VQuoSgmO+P/8nTfc4G/XlLuvuuGX03Yag7bjKhi34G2BTObbQJ
+2OHB47g+iCoDSCxQyeOIm25safvTEGm7G/bUp711E8IKfpnp39bbihM4NdLUfeVK
+ZqHiLYrlC6STGG+Ck+x5qhk0BF6u0iSGXldm+AJDKJVC4HLqS5rs0co/8ehXHw0l
+syc9sH4FZhCgFWikJs/hcdFwBkysGBFownL+VUIX+2xFfccV0RdvBQbnkD5pNaTn
+ufQHHiYdisPRs9md0jyHKt9ZX3N+kBjiDw/aoLE/1kkXJrxnzRIfG23tGLrIJT20
+tpTSMf9s9E/DW3wIsppH
+=HEJV
+-----END PGP SIGNATURE-----
