@@ -1,55 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/14
-Message-ID: <20160615100547.GD12588@suse.de>
-Date: Wed, 15 Jun 2016 12:05:47 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/8
+Message-Id: <20161016024107.656D242E008@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:41:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: mupdf: use-after-free in pdf_to_num (pdf-object.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This looks like a NULL pointer dereference, not a division by 0.
+> https://blogs.gentoo.org/ago/2016/09/22/mupdf-use-after-free-in-pdf_to_num-pdf-object-c
 
-Ciao, Marcus
-On Wed, Jun 15, 2016 at 02:37:11AM +0000, 张开翔 wrote:
-> Details
-> =======
+> fuzzing through mutool
 > 
-> Product: libtiff
-> Affected Versions: <= 4.0.6
-> Vulnerability Type: divide by zero
-> Vendor URL: http://www.remotesensing.org/libtiff/
-> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-> CVE ID: CVE-2016-5323
-> Tested system version:
->        fedora23 32bit
->        fedora23 64bit
->        CentOS Linux release 7.1.1503 64bit
+> AddressSanitizer: heap-use-after-free ... READ of size 1
 > 
-> Introduction
-> =======
-> 
-> t was always corrupted when I use tiffcrop command followed by a crafted TIFF image in function _TIFFFax3fillruns () without checking the value of divisor, it causes a divide by zero flaw. Attackers cound exploit this issue to cause denial-of-service.
-> 
-> Here is the stack info:
-> gdb –args ./tiffcrop _TIFFFax3fillruns.tif tmpout.tif
-> --- ---
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
-> 407                              ZERO(n, cp);
-> (gdb) bt
-> #0  0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
-> #1  0x00007ffff7ae087c in Fax3DecodeRLE (tif=0x662010, buf=0x0, occ=8192, s=<optimized out>) at tif_fax3.c:1527
-> #2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=8192, size@...ry=-1) at tif_read.c:668
-> #3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
-> #4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=1, spp=129, tl=1024, tw=64, imagewidth=32, imagelength=32, obuf=0x7ffff7ee5010 "", in=0x662010) at tiffcrop.c:994
-> #5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
-> #6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
-> (gdb) p cp
-> $2 = (unsigned char *) 0x0
-> 
-> 
+> 0x7fbc4c3824e4 in pdf_to_num ... mupdf-1.9a/work/mupdf-1.9a/source/pdf/pdf-object.c:375:35
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+> http://git.ghostscript.com/?p=mupdf.git;h=1e03c06456d997435019fb3526fa2d4be7dbc6ec
+> http://bugs.ghostscript.com/show_bug.cgi?id=697015
+> http://bugs.ghostscript.com/show_bug.cgi?id=697019
+
+Use CVE-2016-8674 for all of 1e03c06456d997435019fb3526fa2d4be7dbc6ec,
+including both 697015 and 697019.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAuc6AAoJEHb/MwWLVhi2Yq4P/iMeQIU5r6VsYn7jm1727NJ0
+VH49R7zD4YX5sjAqQSNMUj6zN7N1w/ExjY4ctwQwk83mB3o4w4uXVkL3r2+7jwVC
+GpiOXZLg7GoFAXnhisqBxLRhOvMh2O+t/5AOezQus+cZ+wST+pvx/rUTMMmUAecL
+ikuVsJkm5DZkTJ1vKPtZadtIzn8dz/UsbroiN8pYt4IGf+mlW7zhAV65Tkn7U/VI
+CjQZwMRW7K5MHMwjYJKyrITHRzWOPQwywYh0z6JuxaeQjdnjgiP0AIldapmcCFpZ
+poWLGG9I6o1D2pCPwYXxckKQa9qoW3fBb8qUiSQ4jhgndC/7bpYUsyubyE/bGwW2
+Cg3ygkasV97IyV6VyvjuuCiaXtuaIll3SFIpivo0JasdgKvrctVmSJPGIie01syk
+L1V4KbomGtAKf6fx5a0ur28nFcfuDZrg2iEZSHDXHdDjsaA1mjSByaqCRZW8nEOa
+C5F/UnfssQWywv0ex7A28Edw3605KKbMJwY2bqEOojGCz2VId4DwmPWwBWoxxpPQ
+Z+auozZlMCoWWTpaYYy3WxCXfjEZBcFHBbbn0XW4Ulp3V48XvWGX2Oqh1ItCqxuJ
+HzEgJoChNKX4UWZMoo0EWbjR+cDBa04sZ2Gd2KSh++1lv94YoL2F5QwWv0hlEMZ/
+KeqSQtvtdyZOjXL+cA1G
+=Zekw
+-----END PGP SIGNATURE-----
