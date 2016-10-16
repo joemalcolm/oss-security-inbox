@@ -1,34 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/08/6
-Message-ID: <CA+PdXcs2t_Jj2m+jx9Q2TbfstaX_PijmfYEcJm=LZMk-Xy4m0g@mail.gmail.com>
-Date: Fri, 8 Jul 2016 15:43:31 -0400
-From: Glenn Randers-Pehrson <glennrp@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: CVE ID Requests <cve-assign@...re.org>
-Subject: Re: On anonymous CVE assignments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/19
+Message-ID: <11022030.6ZF3cfAM3U@arcadia>
+Date: Sun, 16 Oct 2016 20:52:31 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: mupdf: mujstest: global-buffer-overflow in my_getline (jstest_main.c)
 Content-Type: text/plain; charset=utf-8
 
-*CVE*-*2016*-*3751*(H)
+A note outside the blog post:
+This issue does not affect any library, but it is only in the mujstest binary.
+There aren't known applications which use mujstest, but if you have an 
+application or website which relies on mujstest you are invited to apply the 
+patch or use the newer package when it will be released. Thanks.
 
-On Fri, Jul 8, 2016 at 9:55 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+Description:
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-> Also if projects don't like "Surprise" CVEs one way to deal with that is to
-> request the CVE's themselves when they know something is a security
-> vulnerability. Also making it easy to contact them helps, the harder you
-> make it for a security researcher to deal with you, the less likely they
-> are to.
->
+A fuzzing revealed a global buffer overflow write.
 
-It's hard to do that when a "surprise" CVE was never sent to the project,
-for example  *CVE*-*2016*-*3751*(H) which just appeared in an Android
-security
-bulletin.  It claims that libpng has a bug that allows privilidge escalation
-and was reported 3 Dec 2015. I'm guessing that it is a duplicate of
-CVE-2015-8126 or CVE-2015-8472, but it's hard to tell for sure without
-seeing it.  All I've been able to find out is that it is a "reserved" CVE,
-with
-no clue as to who reserved it.
+The complete ASan output:
 
-Glenn Randers-Pehrson
-libpng custodian
+# mujstest $FILE
+==1278==ERROR: AddressSanitizer: global-buffer-overflow on address 
+0x0000013c7280 at pc 0x0000004fa432 bp 0x7ffea75837d0 sp 0x7ffea75837c8
+WRITE of size 1 at 0x0000013c7280 thread T0
+    #0 0x4fa431 in my_getline /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:214:5
+    #1 0x4fa431 in main /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:335
+    #2 0x7fb62229661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
 
+0x0000013c7280 is located 0 bytes to the right of global variable 
+'getline_buffer' defined in 'platform/x11/jstest_main.c:24:13' (0x13c6280) of 
+size 4096
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/app-
+text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:214:5 in my_getline
+Shadow bytes around the buggy address:
+  0x000080270e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x000080270e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x000080270e50:[f9]f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270e60: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270e70: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270e80: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270e90: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x000080270ea0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1278==ABORTING
+
+Affected version:
+1.9a
+
+Fixed version:
+1.10 (not yet released)
+
+Commit fix:
+http://git.ghostscript.com/?p=mupdf.git;h=446097f97b71ce20fa8d1e45e070f2e62676003e
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-08-04: bug discovered
+2016-08-05: bug reported to upstream
+2016-09-22: upstream released a patch
+2016-09-24: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflow-in-my_getline-jstest_main-c/
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
