@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/2
-Message-ID: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
-Date: Wed, 14 Dec 2016 09:44:52 +0100
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: why many CVEs are ** RESERVED ** on Mitre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/1
+Message-Id: <20161016024352.0ABDF42E008@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:43:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi again,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Does anyone know why Mitre lists many CVEs ** RESERVED ** while they are
-public (e.g. curl CVEs below)?
+> https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
+> 
+> AddressSanitizer failed to allocate 0x46bf39483ac bytes
+> 0x7f76c7533ff4 in AcquireQuantumPixels ... ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-8615
+Use CVE-2016-8677.
 
-https://curl.haxx.se/docs/security.html:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2016-8615
-CVE-2016-8616
-CVE-2016-8617
-CVE-2016-8618
-CVE-2016-8619
-CVE-2016-8620
-CVE-2016-8621
-CVE-2016-8622
-CVE-2016-8623
-CVE-2016-8624
-CVE-2016-8625
-
-Shouldn't Mitre follow a process and update the page after CVEs have
-been made public e.g. by upstream project? Or perhaps there is another
-reason for these CVEs not to be updated?
-
-Best,
----------------------------------------
-Sona Sarmadi
-Security Responsible for Enea Linux
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJYAudGAAoJEHb/MwWLVhi2jykP/R5qNgKdkgNnM512wFtsSkAh
+VReHDp0AOkHDZrJI78N2dO0ps+69tpj6N36iYtCZ7V4J9ulDF9m8ejEzqDbdiz1l
+IJi6MPCXrzLrxz//+dzjEJ3BVJRNq0wPX9gvAjRwR4+PJR9JX7aMqr0P3YouI1T4
+BYfEc/8/EWIyXh5nbO3o94+aUs59ckAZZiwYmnzQUOLcKy8Md1Tb1BdZpx4NaSdE
+0EF+jkaowo4vWk4+Z9tDUOPQwJG/HUqSpvUWyMcGSjDjEatxHJ1NmktcH5QcMFAL
+Ku8ppzMK5VbqKpXk+/ZiP5IULLLB6vegIy4f44/WhM1Hku3dfd7O46n3D+2RUhyf
+8Qs5nCMJd64x7Xn/9G07v2eQjuZYgNv8hq5R19WzJP2ZSj83ifvHCgJxiRf83ykD
+ZkBDyLsqQVZyIjIuFhEMjtx2UAMgpK+CPTTBg+OEFb9k6JR209KFPu61e2YWqQBk
+cQFU2pezH6rS32PWo1PxuWEyRLo7I/qSre2llOmrY+6q10CrlYHsugkAAE+YI5ej
+TPLK2rbuRpmMQeFEsDyrQOQdIaj1GdswFS+54wt36H6/L5CNOryyetow8ptZoINU
+XWl3E7jpfIh/Eqoe33uuPYJVlGOBIF/VpIGIUsk3/+p2I2q4jV4XmOFE9tCKgeUa
+JTVD7jnrPudcvjofke4K
+=pzqG
+-----END PGP SIGNATURE-----
