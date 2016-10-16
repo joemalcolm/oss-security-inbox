@@ -1,37 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/29/3
-Message-ID: <20160329150003.GA11169@eldamar.local>
-Date: Tue, 29 Mar 2016 17:00:03 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Partial SMAP bypass on 64-bit Linux kernels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/15
+Message-Id: <20161016025531.7B7C142E008@smtpvbsrv1.mitre.org>
+Date: Sat, 15 Oct 2016 22:55:31 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Feb 26, 2016 at 12:28:23PM -0800, Andy Lutomirski wrote:
-> Hi all-
+> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-magickmalloc-memory-c/
 > 
-> Those of you using 64-bit Linux kernels on SMAP-capable systems (which
-> are still very rare in the server space) with ia32 emulation enabled
-> will want to backport:
+> AddressSanitizer failed to allocate 0x7fff03000 bytes of LargeMmapAllocator
+> MagickMalloc ... GraphicsMagick-1.3.25/magick/memory.c:156:10
+> MagickMallocArray ... GraphicsMagick-1.3.25/magick/memory.c:347
+> ReadSGIImage ... GraphicsMagick-1.3.25/coders/sgi.c:498:19
 > 
-> https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urgent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
-> 
-> That patch fixes a bug that exposed a fairly large kernel code surface
-> to a straightforward SMAP bypass.
-> 
-> Credit to Brian Gerst who noticed the bug.
-> 
-> This bug is present in all kernels from 3.10 on AFAICT.  Kernels
-> before 3.10 don't support SMAP in the first place.  32-bit kernels are
-> not affected (but why would you be running a 32-bit kernel on
-> SMAP-capable hardware in the first place?).
+> http://hg.code.sf.net/p/graphicsmagick/code/rev/c53725cb5449
 
-@MITRE CVE assignment team: Would it make sense to have a CVE id
-assigned for this issue for better trackability? If so can you assign
-one?
+Use CVE-2016-8684.
 
-Regards,
-Salvatore
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYAudwAAoJEHb/MwWLVhi2L20QALRIKnrluB4Mbj2R6hqtDsYa
+teAcD9UacPWhRtgKG1kLDCPKFcSS+Ci06fMbySoiEtaL6PbgxapAC+MCOGlDO4fY
+RnrYlwpl5fFDf6vsdNwt7/oTL4JBn/6BKpSPyC0EpRzs3EYB5pNYlxmj3GJCFDD8
+NAIP/hMk2UF8c/pf7WUV4rosJatBvJB1EhebpCKTqIjIA5vGx5tO+WfHTfDwmnwg
+xqbSV3JMawld57Ru6ZHv/oRbBHwtLV15OhwBsnMs/lmtNERkcIXWF4zHSY/0F2lY
+GGstrL3sjvK3BjTG+wFv1r+lOCGKYPW/blraOHc2VnCEWuGZ1tRqGliiNWFKoYzG
+xEwZoAP7g1GaIOmSWd4FjvkZ/X3nBxr1LlTLr3qjK/WcHa1ZmCCbmutU08Frg8Ul
+BoZCpAjTMJP82jZUejoVNn3EmweZORtuTn2dfKRGBZnTezT+J67ZLN1ON1XOt+pE
+B9YKKSTVmmcWzJrYbf67C74V3KT4FHeQ7QEJkyTzpym87CDMOAKliVgrLg0Zq8bt
+QNPqrmjR5ZaKP2FGAL2bTYRrc8nYKtFDjeTgdRcWXJN3aQiwCM0bTHHz/DArjVoY
+TSEIROVopNepqXz/CwF2m0obx9arw+rPvhTie6Nl7JVApsWHLSn1t6mW7amBeXAN
+PUyNYRlhb/laUYo7Z3RM
+=y1zP
+-----END PGP SIGNATURE-----
