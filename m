@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/2
-Message-ID: <CABEk9YwpYud4vgFLWJQTV6PFPdGQ2ejd6ueJMimsgKw94KgnYQ@mail.gmail.com>
-Date: Fri, 3 Jun 2016 15:26:24 +0200
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Taesoo Kim <taesoo@...ech.edu>, Chengyu Song <csong84@...ech.edu>
-Subject: CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/1
+Message-ID: <1887043.2OYlfbTScZ@blackgate>
+Date: Mon, 17 Oct 2016 09:30:49 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: Hanno Böck <hanno@...eck.de>
+Cc: Graham Christensen <graham@...hamc.com>, oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Monday 17 October 2016 01:02:45 Hanno Böck wrote:
+> I tested the code again with afl (after the fixes for the stuff
+> Agostino reported) and it immediately found multiple issues:
 
-In function tipc_nl_compat_link_dump of file net/tipc/netlink_compat.c,
-link_info.str is a char array of size 60. Memory after the NULL
-byte is not initialized. Sending the whole object out can cause
-a leak of sensitive info in kernel stack.
+Great job. I also was waiting for the next release to re-fuzz
 
-Fix info:
-https://patchwork.ozlabs.org/patch/629100/
+> https://github.com/mdadams/jasper/issues/31
+> double free on jpeg parsing
 
-Please help assign a CVE to this vulnerability.
+This is a duplicate of the double-free I reported, but upstream 
+said that he can't reproduce.
 
-
-Thanks,
-Kangjie Lu
+--
+Agostino
 
