@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/13
-Message-ID: <CANO=Ty2A-uvus0c_cMh3WR3VKP9-7L4oHtQ2M-P1EJ=dJwFaiQ@mail.gmail.com>
-Date: Mon, 19 Sep 2016 14:39:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Possible CVE for TLS protocol issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/2
+Message-ID: <20161017085807.GH18601@suse.com>
+Date: Mon, 17 Oct 2016 10:58:07 +0200
+From: Johannes Segitz <jsegitz@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: potrace: invalid memory access in findnext (decompose.c)
 Content-Type: text/plain; charset=utf-8
 
-This was pointed out to me by mjc@:
+On Sat, Oct 08, 2016 at 10:29:54PM +0200, Agostino Sarubbo wrote:
+> A crafted image revealed, through a fuzz testing, the presence of a invalid 
+> memory access.
 
-https://kcitls.org/
+Thanks for the report. Can you please post the reproducer?
 
-TL;DR: if you can trick someone to install a client certificate you can
-then spoof any future web site. Certainly not what we want from the people
-issuing client certificates. It sounds like this is a protocol level
-vulnerability affecting closed and Open Source vendors potentially, and it
-is public so posting it here.
+Johannes
+-- 
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nürnberg)
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
