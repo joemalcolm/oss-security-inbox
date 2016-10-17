@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/03/4
-Message-Id: <20160603151004.0FD7A6C0400@smtpvmsrv1.mitre.org>
-Date: Fri,  3 Jun 2016 11:10:04 -0400 (EDT)
-From: cve-assign@...re.org
-To: kangjielu@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taesoo@...ech.edu, csong84@...ech.edu
-Subject: Re: CVE Request: tipc: an infoleak in tipc_nl_compat_link_dump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/3
+Message-ID: <1933473.yD5She0Zb5@blackgate>
+Date: Mon, 17 Oct 2016 11:30:55 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: Johannes Segitz <jsegitz@...e.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: potrace: invalid memory access in findnext (decompose.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Monday 17 October 2016 10:58:07 
+Johannes Segitz wrote:
+> Thanks for the report. Can you 
+please post the reproducer?
 
-> In function tipc_nl_compat_link_dump of file net/tipc/netlink_compat.c,
-> link_info.str is a char array of size 60. Memory after the NULL
-> byte is not initialized. Sending the whole object out can cause
-> a leak of sensitive info in kernel stack.
-> 
-> https://patchwork.ozlabs.org/patch/629100/
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=5d2be1422e02ccd697ccfcd45c85b4a26e6178e2
+Attached.
 
-Use CVE-2016-5243.
+Content of type "text/html" skipped
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUZw5AAoJEHb/MwWLVhi2+IoP/22pu8mdKyqH4/UuIFtGLmfl
-ymJ+oHCNz6O/3cy9YbBSkkmNMDvwng1UW6+Gtyn4GjaJqFdhYDNCRZuwdXg+u/eP
-WoF2maZ8jo882luNajmzoaQAkjxjlsB/OqJZP47yKpoGwbgqvjdr5xfg0qvP6RIV
-vw0qZYfqZZan4rtr9dE3MolpIHP0AEXPTuNHZeCrtuyfTagJjCOD+dr1UuRKIXll
-zfvbSH1074IHgGExx4USTVx5/oAkfATy5wxqWtq/fRxvJno/5+I154bOknRI5mj5
-GmhY0BIpWACUiOaoyN1aM34usXMNvtWuYqJo0s+mZgOkTn5c0W6O7bSswyJcLpjE
-F0b8xkWs3PlpajNMZBbpzw00NTadviVhBroF/Ef4oDV5IaCab83A368MESS3RJHF
-W0WFDhlnTMpUqZeiWN55seh25vwEp0zff98a0cpaToj8b+OOwHD0qGhRQ9LPNydw
-18CndQnJk+upioqEgmWvwRT9UPfoN4MCVyW6zeMP0IO4nCJjlZ8QW980u1zz2Wx4
-2raWb9cMh2ipURwb+k5OfTAVM97TMarppWIBb+WIMrzKDGpv/OUGU/Hn8ZpxZsGF
-vesvNFDSl3ydlZdBuL0lkvXC4HiW/Bc121bovocuUYecpo8ZRn1/fViCHfir/d4S
-ZL3a1PZlbuY02U3vHp3o
-=uadr
------END PGP SIGNATURE-----
+Download attachment "CVE-2016-8685.poc" of type "image/bmp" (128 bytes)
