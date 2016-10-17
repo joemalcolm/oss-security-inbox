@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5573" "Wednesday" "24" "June" "2020" "08:43:30" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2006240841110.4820@tvnag.unkk.fr>" "151" "[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect" nil nil nil "6" "2020062406:43:30" "[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect" (number mark "U       daniel@haxx. Jun 24  151/5573  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP redirect" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["587" "Monday" "17" "October" "2016" "09:30:49" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1887043.2OYlfbTScZ@blackgate>" "21" "Re: [oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016101707:30:49" "[oss-security] Re: Fuzzing jasper" (number mark "        ago@gentoo.o Oct 17   21/587   " thread-indent "\"Re: [oss-security] Re: Fuzzing jasper\"\n") "<20161017010245.267aae32@pc1>" ("<1528713.C8CqGc87r5@arcadia>" "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>" "<20161017010245.267aae32@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28422 invoked by uid 550); 24 Jun 2020 06:43:44 -0000
+Received: (qmail 9501 invoked by uid 550); 17 Oct 2016 07:31:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,172 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28386 invoked from network); 24 Jun 2020 06:43:43 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 24 Jun 2020 08:43:30 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.2006240841110.4820@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 9477 invoked from network); 17 Oct 2016 07:31:07 -0000
+Message-ID: <1887043.2OYlfbTScZ@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.21-gentoo; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <20161017010245.267aae32@pc1>
+References: <1528713.C8CqGc87r5@arcadia> <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com> <20161017010245.267aae32@pc1>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: Partial password leak over DNS on HTTP
- redirect
+Content-Type: multipart/alternative; boundary="nextPart1631645.d6MQB2r49G"
+Content-Transfer-Encoding: 7Bit
+Cc: Graham Christensen <graham@grahamc.com>, oss-security@lists.openwall.com, cve-assign@mitre.org
+Date: Mon, 17 Oct 2016 09:30:49 +0200
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: Fuzzing jasper
+To: Hanno =?ISO-8859-1?Q?B=F6ck?= <hanno@hboeck.de>
 
-Partial password leak over DNS on HTTP redirect
-===============================================
+--nextPart1631645.d6MQB2r49G
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-Project curl Security Advisory, June 24th 2020 -
-[Permalink](https://curl.haxx.se/docs/CVE-2020-8169.html)
+On Monday 17 October 2016 01:02:45 Hanno B=C3=B6ck wrote:
+> I tested the code again with afl (after the fixes for the stuff
+> Agostino reported) and it immediately found multiple issues:
 
-VULNERABILITY
--------------
+Great job. I also was waiting for the next release to re-fuzz
 
-libcurl can be tricked to prepend a part of the password to the host name
-before it resolves it, potentially leaking the partial password over the
-network and to the DNS server(s).
+> https://github.com/mdadams/jasper/issues/31
+> double free on jpeg parsing
 
-libcurl can be given a username and password for HTTP authentication when
-requesting an HTTP resource - used for HTTP Authentication such as Basic,
-Digest, NTLM and similar. The credentials are set, either together with
-`CURLOPT_USERPWD` or separately with `CURLOPT_USERNAME` and
-`CURLOPT_PASSWORD`. Important detail: these strings are given to libcurl as
-plain C strings and they are not supposed to be URL encoded.
+This is a duplicate of the double-free I reported, but upstream=20
+said that he can't reproduce.
 
-In addition, libcurl also allows the credentials to be set in the URL, using
-the standard RFC 3986 format: `http://user:password@host/path`. In this case,
-the name and password are URL encoded as that's how they appear in URLs.
+--
+Agostino
 
-If the options are set, they override the credentials set in the URL.
+--nextPart1631645.d6MQB2r49G--
 
-Internally, this is handled by storing the credentials in the "URL object" so
-that there is only a single set of credentials stored associated with this
-single URL.
-
-When libcurl handles a relative redirect (as opposed to an absolute URL
-redirect) for an HTTP transfer, the server is only sending a new path to the
-client and that path is applied on to the existing URL. That "applying" of the
-relative path on top of an absolute URL is done by libcurl first generating a
-full absolute URL out of all the components it has, then it applies the
-redirect and finally it deconstructs the URL again into its separate
-components.
-
-This security vulnerability originates in the fact that curl did not correctly
-URL encode the credential data when set using one of the `curl_easy_setopt`
-options described above. This made curl generate a badly formatted full URL
-when it would do a redirect and the final re-parsing of the URL would then go
-bad and wrongly consider a part of the password field to belong to the host
-name.
-
-The wrong host name would then be used in a name resolve lookup, potentially
-leaking the host name + partial password in clear text over the network (if
-plain DNS was used) and in particular to the used DNS server(s).
-
-The password leak is triggered if an at sign (`@`) is used in the password
-field, like this: `passw@rd123`. If we also consider a user `dan`, curl would
-generate a full URL like:
-
-  `https://dan:passw@rd123@example.com/path`
-
-... while a correct one should have been:
-
-  `https://dan:passw%40rd123@example.com/path`
-
-... when parsing the wrongly generated URL, libcurl would end up with user
-name `dan` and password `passw` talking to the host `rd123@example.com`. That
-bad host name would then be passed on to the name resolver function in use
-(and for all typical cases return a "cannot resolve host name" error).
-
-There's no hint in the name resolve as to how large portion of the password
-that is actually prepended to the host name (ie an observer won't know how
-much data there was on the left side of the `@`), but it can of course be a
-significant enough clue for an attacker to figure out the rest.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-Requirements to trigger this flaw.
-
-  1. a password set with a `@` in it
-  2. an HTTP transfer
-  3. a *relative* redirect that curl follows (`CURLOPT_FOLLOWLOCATION` enabled)
-
-This bug was brought in commit
-[46e164069d](https://github.com/curl/curl/commit/46e164069d), first shipped in
-curl 7.62.0.
-
-This flaw can happen to users of the curl tool as well as for applications
-using libcurl.
-
-This bug was reported and inadvertently fixed and pushed to the public source
-respository before anyone realized its security impact.
-
-The effects of this flaw is somewhat reduced if DNS-over-HTTPS is used, since
-then at least the name won't be observable on the network by a passive
-by-stander but only by the DoH server.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8169 to this issue.
-
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-
-Severity: 5.5 (Medium)
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.62.0 to and including 7.70.0
-- Not affected versions: libcurl < 7.62.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2020-8169](https://github.com/curl/curl/commit/600a8cded447cd)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.71.0
-
-  B - Apply the patch on your libcurl version and rebuild
-
-  C - Disable `CURLOPT_FOLLOWLOCATION` or redirects to HTTP(S).
-
-TIMELINE
---------
-
-This issue was first reported to the curl project on May 14, 2020. The initial
-fix was done, verified and pushed to git on the same day. (As a regular
-non-security related fix.)
-
-On May 15, 2020, the bug was reported again but then with the security impact
-highlighted.
-
-This advisory was posted on June 24th 2020.
-
-CREDITS
--------
-
-The security issue was reported by Marek Szlagor. The initial bug report was
-done by Gregory Jefferis and Jeroen Ooms. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
