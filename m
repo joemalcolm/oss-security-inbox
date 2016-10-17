@@ -1,77 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/7
-Message-ID: <CAFJuDmNWWkHoh5brvTgZNYzNeH3ZbueHDBYC=WG7P1H7fJbKOA@mail.gmail.com>
-Date: Fri, 4 Mar 2016 16:56:13 -0500
-From: Adam Caudill <adam@...mcaudill.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>,  cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/17/4
+Message-ID: <1531511.3Otosgf4bN@blackgate>
+Date: Mon, 17 Oct 2016 17:04:53 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)
 Content-Type: text/plain; charset=utf-8
 
-CVE clearly plays an important role - customers and clients rely on
-them, researchers need them to coordinate with vendors - they play an
-important role in so many parts of vulnerability disclosure and
-management - yet as Kurt points out, researchers request CVEs, and the
-requests are rejected because of this coverage policy (assuming the
-researcher gets a response; anyone that has watched this list has seen
-the issues with requests not being responded to). By rejecting these
-requests, and leaving legitimate vulnerabilities in software with a
-significant user base without a CVE, it makes work for difficult for
-researchers, for vendors, and for customers.
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-The level of frustration in the research community has been growing,
-with steady calls for a new CVE-like solution that is designed to
-address these needs in a more effective way. I greatly appreciate the
-work that has been done, but at this point CVE is becoming less
-useful, less relevant - if this isn't addressed, my expectation is
-that a CVE-like solution will be adopted by the community, and
-researchers will begin moving away from requesting CVEs.
+A fuzzing with the upstream security policy enabled revealed a memory 
+allocation failure.
 
-At least one (very prolific) researcher has already moved to
-self-assigning CVE-like IDs that are outside of the normal CVE range
-to address this issue. Others are trying to create their own
-registries, and as Kurt points out, some are just not requesting IDs
-of any sort now.
+The complete ASan output:
+# identify $FILE
+==14275==ERROR: AddressSanitizer failed to allocate 0x99ad49000 (41252327424) 
+bytes of LargeMmapAllocator (error code: 12)
+==14275==Process memory map follows:
+[..cut here..]
+==14275==End of process memory map.
+==14275==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+(0)" (0x0, 0x0)
+    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159
+    #2 0x4d0cc1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
+const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183
+    #3 0x4d9cfa in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_posix.cc:122
+    #4 0x42208f in 
+__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
+unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+    #5 0x42208f in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator 
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+    #6 0x42208f in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+    #7 0x42208f in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
+    #8 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
+    #9 0x7fe5713b3b3b in AcquireMagickMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:460:10
+    #10 0x7fe5713b3b3b in AcquireVirtualMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:642
+    #11 0x7fe564f7af95 in ReadPCXImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/pcx.c:400:16
+    #12 0x7fe571087b12 in ReadImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
+    #13 0x7fe57181f406 in ReadStream /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
+    #14 0x7fe5710865ca in PingImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
+    #15 0x7fe571086e25 in PingImages /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
+    #16 0x7fe57090c4c3 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
+    #17 0x7fe5709a226a in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
+    #18 0x4f1fb5 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
+    #19 0x4f1fb5 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
+    #20 0x7fe56f84661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #21 0x419138 in _init (/usr/bin/magick+0x419138)
 
-This is a legitimate problem, the frustration level is growing, some
-type of solution is needed.
+Affected version:
+7.0.3.2
 
---Adam Caudill
-http://adamcaudill.com
+Fixed version:
+7.0.3.3
 
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/aea6c6507f55632829e6432f8177a084a57c9fcc
 
-On Fri, Mar 4, 2016 at 3:25 PM, Mike Prosser <mprosser@...antec.com> wrote:
-> While it would have an impact for sure on our community, I think the biggest impact would be on customers since CVEs have become a Vulnerability Name when calling support with concerns....rather than just a common tracking reference.
->
-> -Mike
-> Symantec Software Security Group
->
->
-> -----Original Message-----
-> From: owner-cve-editorial-board-list@...ts.mitre.org [mailto:owner-cve-editorial-board-list@...ts.mitre.org] On Behalf Of Art Manion
-> Sent: Friday, March 04, 2016 1:08 PM
-> To: Kurt Seifried <kseifried@...hat.com>; cve-editorial-board-list <cve-editorial-board-list@...TS.MITRE.ORG>; oss-security <oss-security@...ts.openwall.com>
-> Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
->
-> On 2016-03-04 13:24, Kurt Seifried wrote:
->> So I've now heard from several security researchers that they are
->> unable to get CVEs for issues that need CVEs (e.g. widely used
->> hardware/software with flaws that have real world impacts and need to
->> be properly tracked. This has definitely resulted in issues being
->> publicized with no CVE that then makes it much harder to track and
->> deal with these issues.
->
-> I think it's been said on this list previously -- these are two separate
-> activities:
->
-> 1. Assigning IDs
->
-> 2. Analysis, deconfliction, write-up
->
-> Binding these together results in delay, because #2 takes considerably more calendar time and effort.  Another result is a limited but fairly high quality set of entries (once #2 is complete).
->
-> I share Kurt's concern that CVE is not meeting a researcher/disclosure use case of having IDs for vulnerabilities, and that the community will at some point stop bothering with CVE.
->
-> I'm not sure how bad such an outcome would be, or what impact that would have on CVE.
->
->  - Art
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-09-14: bug discovered
+2016-09-14: bug reported to upstream
+2016-10-07: upstream released a patch
+2016-10-08: upstream released 7.0.3.3
+2016-10-17: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/17/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c/
+
