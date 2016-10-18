@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/11
-Message-ID: <CAJ_zFkKKPfO-w1iBcLMdLF=ZGLQG43jJQRxMYYUwGFm7Wx0WHA@mail.gmail.com>
-Date: Wed, 5 Oct 2016 10:09:07 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/1
+Message-ID: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
+Date: Tue, 18 Oct 2016 10:42:15 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Subject: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 5, 2016 at 10:04 AM, Tavis Ormandy <taviso@...gle.com> wrote:
-> On Wed, Oct 5, 2016 at 9:54 AM, Tavis Ormandy <taviso@...gle.com> wrote:
->> On Wed, Oct 5, 2016 at 9:47 AM, Hanno Böck <hanno@...eck.de> wrote:
->>> On Wed, 5 Oct 2016 09:13:03 -0700
->>> Tavis Ormandy <taviso@...gle.com> wrote:
->>>
->>>> If you're using ImageMagick, I would recommend disabling the PS, EPS,
->>>> PDF and XPS coders in policy.xml. Applications like gimp, evince,
->>>> claws, and most other applications that generate thumbnails of PDF/PS
->>>> documents should probably not do so without a prompt (NOTE: A lot of
->>>> packages do this
->>>
->>> I was surprised to see evince in this list. It uses poppler for pdf and
->>> libspectre for postscript, so there seems to be no use of
->>> ghostscript (maybe in an older version).
->>> Also for claws the only use of ghostscript is in a plugin that's not
->>> enabled by default.
->>
->> It might be an old version but the version I have on RHEL7 and Ubuntu
->> LTS both invoke gs by default.
->>
->> $ evince --version
->> GNOME Document Viewer 3.14.2
->
-> Oops, I think I may be wrong about that, I just saw that some of my
-> test cases repro and assumed it was using ghostscript.
->
-> Maybe there are poppler issues as well, sigh.
->
+Hi,
 
-Ahh, no, I was right - it's using libgs, and the same issues apply there.
+Please assign a CVE for the following issue:
 
-Tavis.
+Bug #73147    Use After Free in unserialize()
+https://bugs.php.net/bug.php?id=73147
+http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+
+Thanks,
+
+Kaplan
+
