@@ -1,56 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/30/2
-Message-Id: <20160130011501.F2C0B3AE00B@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Jan 2016 20:15:01 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zuozhi.fzz@...baba-inc.com
-Subject: Re: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/15
+Message-ID: <CA+KTh2wi+=Wda7+DzuBDigcGJDokK1R7xfCN9UZeMwncfAiT+g@mail.gmail.com>
+Date: Wed, 19 Oct 2016 09:39:59 +1300
+From: Emmanuel Law <emmanuel.law@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+What about local escalations? They can be used to bypass disable_functions,
+a security feature, in PHP.
+IMO they should be assigned CVEs so that they can be tacked and back-ported
+if desired.
 
-> Qemu emulator built with the USB EHCI emulation support is vulnerable to a
-> null pointer dereference flaw. It could occur when an application attempts to
-> write to EHCI capabilities registers.
-> 
-> A privileged user inside quest could use this flaw to crash the Qemu process
-> instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05899.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1301643
+I've came across php distros where these would have been patched, but
+didn't because CVE was not assigned and the maintainers were not aware that
+it was a security issue.
 
->> usb: ehci: add capability mmio write function
 
->> its mmio '.write' function was missing, which lead to a null
->> pointer dereference issue
 
-Use CVE-2016-2198.
+On Wed, Oct 19, 2016 at 1:14 AM, Remi Collet <remi@...oraproject.org> wrote:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
-that may be an expected place for a later update.
+> Le 18/10/2016 à 14:06, Adam Maris a écrit :
+> > On 18/10/16 09:42, Lior Kaplan wrote:
+> >> Hi,
+> >>
+> >> Please assign a CVE for the following issue:
+> >>
+> >> Bug #73147    Use After Free in unserialize()
+> >> https://bugs.php.net/bug.php?id=73147
+> >> http://git.php.net/?p=php-src.git;a=commit;h=
+> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+> >>
+> >>
+> >> Thanks,
+> >>
+> >> Kaplan
+> >>
+> > 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
+> > has CVE assigned.
+> > Here you request CVE for another one issue (even the documentation says
+> > it's unsafe to use
+> > unserialize on untrusted input).
+> >
+> > Are you planning to obtain CVEs also for other security bugs or do you
+> > treat the rest as
+> > CVE-unworthy? Or are reporters/community supposed to do it?
+>
+> All the remaining bugs, despite reported as security issue, involved
+> some very big strings to reproduce (~2GB)
+>
+> Which is prevented by any decent memory_limit value
+> And by max_input_size for remote access.
+>
+>
+> Remi
+>
+>
+> P.S. just my 0,02€, but indeed, CVE-unworthy
+>
+> > Thanks!
+> >
+>
+>
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWrA0IAAoJEL54rhJi8gl58PcP/2F+tp54ZD2CLMjKWW4D9W5G
-YoICQDA5qfy7VkJDEOwOnZ4clI+F2KFaUh34p0BQ2IVNHsvc+wMMofOfO9enlkIY
-s7hKhWNvBeaSR4UPSej14hxtY32uqoD2jEHBo+XCQ8DLH1CFJcMvC6sqEhuOGS0I
-1Ayl0xKBQTnl+5lFR2ayNMRbDac7lCvgVQx1jmptuydpuJW6h8CKzVt6hUyvZcL0
-qPwA7Q/bqkz4KFFzFb1JvW81fHZ95pBxbfgNn+RNey+BAEm46hLtBZOjOf70qgto
-iRGWEuAEyAcHdAE9HwvKHFXNaNVACNftvoEnzeR5krvxQke2JujtQWU8gZRQ/DYP
-vzdhAWEmmXl1d708zywYasVHRQka62H1ou7RhcIvEKw542gUTvoTUL0wefnHKb6X
-2fTzt3oQeE3OKqNYCXvcc6LxYqwCz9efcf4DX+e7VW2CbbDSvWghRgPwhZIj9+rr
-FEMQGtnN/NY7FnFBOlkUTRspk6sIsn3MeILU2hsNBuxzGs0vczM1fbYsdSEBR+2N
-KUlz5fMtC3bdl0/2xnb/ptdLxGEclbjWv8xnyT/McEFevIm2EqPi/iRz3YWgsJf0
-O31vnHuf4WZMqT+thvERuzm6gNrR1IvL6KxQvWDnTRxes2HQk2Vs2wmKv5ccIFBV
-Ew8JiuDju097TPIRuhuT
-=EwFk
------END PGP SIGNATURE-----
