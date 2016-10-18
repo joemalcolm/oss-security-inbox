@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/1
-Message-ID: <alpine.LFD.2.20.1610241602370.6422@wniryva>
-Date: Mon, 24 Oct 2016 16:06:34 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Huawei PSIRT <psirt@...wei.com>
-Subject: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/13
+Message-ID: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
+Date: Tue, 18 Oct 2016 13:19:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Huzaifa Sidhpurwala <huzaifas@...hat.com>, CVE ID Requests <cve-assign@...re.org>
+Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Tue, Jul 12, 2016 at 1:46 PM, Paul Wouters <pwouters@...hat.com> wrote:
 
-Quick Emulator(Qemu) built with the Intel HDA controller emulation support is 
-vulnerable to an infinite loop issue. It could occur while processing the DMA 
-buffer stream while doing data transfer in 'intel_hda_xfer'.
+>
+>
+> I have tested openswan and strongswan and confirmed it contains the same
+> amplification that is inherent in being IKEv1 compliant.
+>
+> Neither implementation has applied the hardening that libreswan has
+> applied for this that was the original information that caused
+> CVE-2016-5361 to be issued for libreswan.
+>
+> I believe MITRE needs to fix the inconsistency in the issuance of
+> CVE-2016-5361, expand it to be about the IKEv1 protocol, and gather
+> the other vendor information and patches, or issue additional vendor
+> specific CVE's. I believe the first solution is better.
+>
+> Paul
+>
 
-A privileged user inside guest could use this flaw to consume excessive CPU 
-cycles on the host, resulting in DoS.
+So I had a chance to talk to Paul
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg04717.html
+Basically: the RFC doesn't define a specific way to handle this, as such a
+CVE cannot be given to the RFC (currently CVEs will be given to
+RFCs/protocols that say "do something bad" like using weak encryption
+algorithms).
 
+As such it was left up to all the IKE implementations themselves to
+determine what to do with respect to retransmits.
 
-This issue was reported by Huawei Product Security Incident Response Team 
-(PSIRT), Huawei Inc.
+I think it's safe to say an amplification of 1:10 or more qualifies as a
+problem, I'm not sure what the exact amplification ratio to qualify for a
+CVE is (1:3, 1:7?) but I think 1:10 or more should definitely qualify.
 
+Thus a lot of other IKE implementations will be needing CVEs for this class
+of problem (as well as other protocols).
 
-Thank you.
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
