@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/4
-Message-ID: <20160815075453.GE6359@kroah.com>
-Date: Mon, 15 Aug 2016 09:54:53 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/1
+Message-ID: <20161018230613.GH19318@oevtugenva.nrevsny.pk>
+Date: Tue, 18 Oct 2016 19:06:13 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master
+Cc: musl@...ts.openwall.com, Ville Laurikari <ville@...rikari.net>
+Subject: CVE Request - TRE & musl libc regex integer overflows in buffer size computations
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 15, 2016 at 09:20:17AM +0800, Marco Grassi wrote:
-> Hello, this program will cause a use after free of read 4 in
-> tcp_xmit_retransmit_queue or other tcp_ functions, often in another totally
-> unrelated process.
-> 
-> reproducer + KASAN report is provided, tested on master available at the
-> time of writing and on 4.8 rc1
+Due to incorrect use of integer types and missing overflow checks in
+the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
+regex implementation (both original version and the one used in musl
+libc) are subject to integer overflows in buffer size computation.
 
-Did you send this to the netdev@...r.kernel.org mailing list so that it
-can get fixed?  I don't see it there :(
+If the caller passes to regcomp a regular expression whose internal
+representation requires a large number of states and/or a large number
+of tags, too little space will be allocated during regexec, resulting
+in out-of-bound memory writes.
 
-thanks,
+An attacker who controls the regular expression and/or the string
+being searched can potentially exploit these writes to achieve
+controlled heap corruption.
 
-greg k-h
+All versions of the TRE library and musl libc are affected. The
+attached patch fixes the issue in musl and should be easy to adapt for
+use with original TRE. musl git master is fixed as of commit
+c3edc06d1e1360f3570db9155d6b318ae0d0f0f7.
+
+Rich
+
+View attachment "0001-fix-missing-integer-overflow-checks-in-regexec-buffe.patch" of type "text/plain" (2685 bytes)
