@@ -1,50 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/2
-Message-ID: <56D49C6C.9090201@eenterphace.org>
-Date: Mon, 29 Feb 2016 20:30:52 +0100
-From: Moritz Bechler <mbechler@...terphace.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/4
+Message-ID: <58a56ff2-6a32-cbfb-514f-afca19b97d39@fedoraproject.org>
+Date: Tue, 18 Oct 2016 14:14:26 +0200
+From: Remi Collet <remi@...oraproject.org>
 To: oss-security@...ts.openwall.com
-Subject: Java Deserialization continued, Analysis Tooling and (potentially) bypassing Application Level Filtering
+Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Le 18/10/2016 à 14:06, Adam Maris a écrit :
+> On 18/10/16 09:42, Lior Kaplan wrote:
+>> Hi,
+>>
+>> Please assign a CVE for the following issue:
+>>
+>> Bug #73147    Use After Free in unserialize()
+>> https://bugs.php.net/bug.php?id=73147
+>> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+>>
+>>
+>> Thanks,
+>>
+>> Kaplan
+>>
+> 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
+> has CVE assigned.
+> Here you request CVE for another one issue (even the documentation says
+> it's unsafe to use
+> unserialize on untrusted input).
+> 
+> Are you planning to obtain CVEs also for other security bugs or do you
+> treat the rest as
+> CVE-unworthy? Or are reporters/community supposed to do it?
 
-sharing some results from my research on deserialization
-(vulnerabilities, or rather gadgets):
+All the remaining bugs, despite reported as security issue, involved
+some very big strings to reproduce (~2GB)
 
-- a static bytecode analyzer that traces invocations reachable
-from deserialization that helps (high FP rate, obviously) with finding
-gadget chains even when more complex interactions are involved:
-<https://github.com/mbechler/serianalyzer>
-
-- through it discovered a few more RCE gadgets most notably ones in
-Hibernate
-
-- and MyFaces (actually that's RCE via EL injection via deserialization)
-that one is only usable in a JSF context - but MyFaces also performs
-unsafe deserization when org.apache.myfaces.USE_ENCRYPTION=false (yes,
-also with server side state saving, and while being totally unnecessary
-they are unwilling to fix this:
-<https://issues.apache.org/jira/browse/MYFACES-4021>).
-
-- and a method for bypassing application level filtering. Basically you
-can open up JRMP (RMI) listeners and connections via various gadgets
-(in the standard library) which then again use a standard
-ObjectInputStream and can be used to exploit otherwise filtered gadgets.
-Jenkins just fixed this sepecific vector (CVE-2016-0788) but this
-potentially affects anybody that is using application level filters
-(i.e. filtering ObjectInputStreams) and either is using blacklisting or
-a too broad whitelist.
-
-These are all now available in my ysoserial branch
-<https://github.com/mbechler/ysoserial>
-
-
-regards
-
-Moritz
+Which is prevented by any decent memory_limit value
+And by max_input_size for remote access.
 
 
+Remi
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+P.S. just my 0,02€, but indeed, CVE-unworthy
+
+> Thanks!
+> 
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (247 bytes)
