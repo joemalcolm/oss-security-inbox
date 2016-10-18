@@ -1,126 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/7
-Message-Id: <E1c99m1-00083i-DF@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:05 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 191 (CVE-2016-9386) - x86 null segments not always treated as unusable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/10
+Message-Id: <20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>
+Date: Tue, 18 Oct 2016 12:34:36 -0400 (EDT)
+From: cve-assign@...re.org
+To: kaplanlior@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-            Xen Security Advisory CVE-2016-9386 / XSA-191
-                              version 3
+> Please assign a CVE for the following issue:
+> 
+> Bug #73147    Use After Free in unserialize()
+> https://bugs.php.net/bug.php?id=73147
+> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
 
-           x86 null segments not always treated as unusable
+Can you clarify what should be the scope of this CVE?
+zend_unset_property doesn't exist at all in PHP 7.0.11. The
+0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
+zend_unset_property for PHP 7.0.12, and arranges for
+zend_unset_property to be called only from
+"ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
 
-UPDATES IN VERSION 3
-====================
+We're not sure whether that affects anything outside of the CURLFile
+implementation. However, 73147 discusses other concerns such as "The
+similar bug can be also triggered via Exception::__toString with
+DateInterval::__wakeup" and "The problem is that every __wakeup that
+modifies any property would produce the same problem."
 
-Public release.
+There seems to be a related code change between 7.0.11 and 7.0.12 that
+arranges for additional calls to zend_unset_property:
 
-ISSUE DESCRIPTION
-=================
+  http://git.php.net/?p=php-src.git;a=blobdiff;f=Zend/zend_exceptions.c;h=f21968733581a3cb672d039bec16ce6f17a93db9;hp=95d18f45fbea8808c00975b5df4619d5d6745ab0;hb=689a9b8def07875641b3132a82c701fb7acb676c;hpb=4165d976066129000d947ffa3be73f91e9867635
 
-The Xen x86 emulator erroneously failed to consider the unusability of
-segments when performing memory accesses.
+So, some of the options include:
 
-The intended behaviour is as follows: The user data segment (%ds, %es,
-%fs and %gs) selectors may be NULL in 32-bit to prevent access.  In
-64-bit, NULL has a special meaning for user segments, and there is no
-way of preventing access.  However, in both 32-bit and 64-bit, a NULL
-LDT system segment is intended to prevent access.
+1. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f is a complete security
+patch that fixes everything discussed in 73147, including the "other
+concerns" mentioned above.
 
-On Intel hardware, loading a NULL selector zeros the base as well as most
-attributes, but sets the limit field to its largest possible value.  On AMD
-hardware, loading a NULL selector zeros the attributes, leaving the stale base
-and limit intact.
+2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
+implementation. The "other concerns" mentioned above are
+vulnerabilities that still exist in 7.0.12.
 
-Xen may erroneously permit the access using unexpected base/limit values.
+3. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
+above Zend/zend_exceptions.c diff is a complete security patch that
+fixes everything discussed in 73147, including the "other concerns"
+mentioned above. There only needs to be one CVE ID associated with
+this complete security patch.
 
-Ability to exploit this vulnerability on Intel is easy, but on AMD depends in
-a complicated way on how the guest kernel manages LDTs.
+4. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
+above Zend/zend_exceptions.c diff is a complete security patch that
+fixes everything discussed in 73147, including the "other concerns"
+mentioned above. There should be one CVE ID for the security fix to
+the CURLFile implementation, and a separate CVE ID for the security
+fix found in Zend/zend_exceptions.c.
 
-IMPACT
-======
+Which of the above (1 through 4) is correct and/or preferred?
 
-An unprivileged guest user program may be able to elevate its privilege
-to that of the guest operating system.
-
-VULNERABLE SYSTEMS
-==================
-
-The vulnerability is only exposed to HVM guests.
-
-ARM systems are NOT vulnerable.
-
-All versions of Xen are affected.
-
-However, we believe that the vulnerability cannot be exploited on Xen
-4.7 by completely unprivileged guest processes, unless the VM has been
-explicitly configured with a non-default cpu vendor string (in xm/xl,
-this would be done with a `cpuid=' domain config option).
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa191.patch           xen-unstable, Xen 4.7.x
-xsa191-4.6.patch       Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa191*
-dca534cf4d3711ea8797846a18238ca16cc9e7a24a887300db22c3ba3d95c199  xsa191.patch
-d95a1f0dd5c45497ca56e2e1390fc688bf0a4a7a7fd10c65ae25b4bbb3353b69  xsa191-4.6.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYNDIWAAoJEIP+FMlX6CvZ4qQH/jlfd6BV63CSggCQVd0sB3a4
-j7MgRZ8h0aFrCLl+0tj3QwsiW0TRDsKiTNy2xY1kxkLsQdIAeYjBddyYiJ2nbCr9
-kCR2WLcWB3csf4So/85q8OMfsob7H+8PR/OsT3iY6Fo/5PzNy5wvWtU/+TRaoZIy
-t9OvybZ0HYhtvQ/YHv5njKZ3nyHo6MRwGpPOrzSn8UN7p+sr3DDGiuw9LNjtnepb
-dijO0c9artbWCjVkRlbe1w5514FH1vPleopGmXjTz/Wy5zNHWZL1RaVzh4N36ahP
-V1joPxt+C75iRArp6y0ncloyKjgx8pMfOzCcLp9VS6dwF3zwZ5rxxtFynlRjg94=
-=pUW4
+iQIcBAEBCAAGBQJYBk6wAAoJEHb/MwWLVhi2Yo8QAKuttCiRlpUzKx0qxM5tOGyb
+NkmqUkuN00zgavqyeBrPPM0WnzaF0VKdGS/0rW6ExBog6gbhgl1hUSIzug4PcnlX
+Nk2acUlS21JmMFXroeKFQh5IvEvsvjEWwmpogopyoNv7c+Asal+F8BFP1DiVKR3a
+g3Iv/tqjpIqh87qVESZSce/u6u44v4wd6V4ouTFe9mYiUQSPMkssTjRMjMwulVlp
+A17ddOUZ06qubRpu3S6eBzDLtLkOuEMpFKxxYssEl+zoa0ac1Aq9HqkNoo632wSR
+mHeB9yZ5tpQ+cbOwPZ30GoQW2JkrtRcj2UpdnTAl9JoFgpGa8xVl7DR9bQCe2XMB
+OFfRx9+x1TTJZGQ+EppmmNA/kpskHSZE1AeoeZj4lD7gvQjHUJcmjtkrSik9Dt86
+dinb2KiiNeedyTH3TfBcmbIKU9ub6ztsf3Rl1ODcsOb//5ru0vTihLPGw6icoBcG
+jYN61oXHyNRLfwQRdXoSEciLpDkiPVYf50B83XXOQGUMA68oNV+Ns/lSInxh33zU
+FKR1ePK/cBjr6D+/sV32tre1IPvHATh/uB1ECP8H4NvRixFqtvy64a0xCsd5WJB7
+sOq9wAH5Q6ebiShuncSS35F+47ILMdiIu7hT8F6gVQvGccnPMS6DgldGeb0RS56I
+5haHYZHlQuvZEF8ZtfhR
+=o6SF
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa191.patch" of type "application/octet-stream" (5957 bytes)
-
-Download attachment "xsa191-4.6.patch" of type "application/octet-stream" (5155 bytes)
