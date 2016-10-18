@@ -1,45 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/10
-Message-ID: <15299dfb124a4dd3b82a88f7137f2a7a@imshyb02.MITRE.ORG>
-Date: Thu, 10 Nov 2016 12:29:55 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libming: listmp3: divide-by-zero in printMP3Headers (listmp3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/3
+Message-ID: <CAEsznC5BCaqRXQo1=SfvhgZTDfk=XJ2bwP05B6=qKW7mWTcNMg@mail.gmail.com>
+Date: Tue, 18 Oct 2016 15:18:55 +0300
+From: Lior Kaplan <kaplanlior@...il.com>
+To: Adam Maris <amaris@...hat.com>
+Cc: oss-security@...ts.openwall.com, Stanislav Malyshev <stas@....net>
+Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Adam,
 
-> https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-divide-by-zero-in-printmp3headers-list
-> 
-> if you have a web application that calls directly the
-> listmp3 binary to parse untrusted mp3, then you are affected.
-> 
-> AddressSanitizer: FPE on unknown address
-> a divide by zero
+On behalf of the PHP security team, I intend to request only one CVE.
+(in addition to #73003 that, as you mentioned, already had CVE assigned by
+libgd)
 
-Use CVE-2016-9265.
+The rest of the bugs weren't assessed as "CVE needed". You're welcome to
+contact
+the PHP security list for further discussion.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Kaplan
 
-iQIcBAEBCAAGBQJYJK00AAoJEHb/MwWLVhi2PBcP/1yhSanzSSFcosnQDR6SBgGL
-3PAxiDKEweFRzhDjXy2KhO1lF4c6sLqjaGOKwyBaqh2QI0kmEuU0rzTLxv3e+XST
-NSsBK6/WyrevX2RxbBDK7kTTPjlEI6VPWFBbooB74oChUbeMVndiKAciz2vod5NX
-EUaAvRDG2O8rF+RKcUFmiNQeTQKqn/AVUVOquA+/JniVY/+xyPkXQ+7wyfQhYojd
-SuVDxRRIfzFYBSFhCdtLYY5WrMWdKEVVRBgPDqTtxjuXa7Xga0GALapE1S9zfY1w
-Da7oct44Ns/xuMQIhWo/Q+ilxWZ0T9nQ0ShmWUMnGFxWWXc9iRPqbvfRNHZ7Nrlr
-tm9vnhck9hUZEgYPpoyka8sOmk0DGIrXc2OUWj3IcBSX6R0lXaglh62UD/lri5lM
-MzTaAPR0nzysvgqo3fweZKFJJqB3dw5yEtr8FW8Hhxys3Q/h1gTdRY268LVhePma
-ANtkDMsfQPAtShLrSEbKgIsPV9rjxEV53qi8JnK4t59mf5Z5ziVJ+S6FT44qMUhp
-YLQYnHSAJwT43q96KTVm6ok28hHvKzPCSPUkXE6BNyuXZGDRUDneqDkrvCly94mx
-OxexVIi4z5r/srLJ5O0vpXjK//tZFFKWDUrrwo6dIrwn/BbPp4s6Qng/aPe0jylD
-9c3RUlO53BDm0PJHS/ZC
-=RSl5
------END PGP SIGNATURE-----
+
+On Tue, Oct 18, 2016 at 3:06 PM, Adam Maris <amaris@...hat.com> wrote:
+
+> On 18/10/16 09:42, Lior Kaplan wrote:
+>
+>> Hi,
+>>
+>> Please assign a CVE for the following issue:
+>>
+>> Bug #73147    Use After Free in unserialize()
+>> https://bugs.php.net/bug.php?id=73147
+>> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d
+>> 3e88389a5776f878021b4c59f
+>>
+>> Thanks,
+>>
+>> Kaplan
+>>
+>> 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
+> has CVE assigned.
+> Here you request CVE for another one issue (even the documentation says
+> it's unsafe to use
+> unserialize on untrusted input).
+>
+> Are you planning to obtain CVEs also for other security bugs or do you
+> treat the rest as
+> CVE-unworthy? Or are reporters/community supposed to do it?
+>
+> Thanks!
+>
+> --
+> Adam Mariš, Red Hat Product Security
+> 1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
+>
+>
+>
+
