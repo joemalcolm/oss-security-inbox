@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/28/3
-Message-Id: <20160828153329.EAB6252E01A@smtpvbsrv1.mitre.org>
-Date: Sun, 28 Aug 2016 11:33:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: dmisra@...isign.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dawid@...alhackers.com
-Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/2
+Message-ID: <45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>
+Date: Tue, 18 Oct 2016 14:06:41 +0200
+From: Adam Maris <amaris@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: kaplanlior@...il.com
+Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 18/10/16 09:42, Lior Kaplan wrote:
+> Hi,
+>
+> Please assign a CVE for the following issue:
+>
+> Bug #73147    Use After Free in unserialize()
+> https://bugs.php.net/bug.php?id=73147
+> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+>
+> Thanks,
+>
+> Kaplan
+>
+16 bugs marked as 'security' were fixed in php 5.6.27 of which only one has CVE assigned.
+Here you request CVE for another one issue (even the documentation says it's unsafe to use
+unserialize on untrusted input).
 
-> Isn't this a common enough and plausible scenario
+Are you planning to obtain CVEs also for other security bugs or do you treat the rest as
+CVE-unworthy? Or are reporters/community supposed to do it?
 
-We don't think that any realistic "internet archive - way back
-machine" clone would place any archived files into a directory from
-which the web server is able to do unrestricted code execution. From
-day one, they would store all untrusted files at a location that
-allows no code execution (or allows only sandboxed code execution), to
-enable later scalability to archiving of non-jpeg files.
+Thanks!
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
 
-iQIcBAEBCAAGBQJXwwOZAAoJEHb/MwWLVhi2KMQQAJn+5GP2E2L46kbkWCyC3raT
-EEtdOLAHMGf7p+9NrM9RySnzHSw26gG5gPTqmbby8OqEhZnv7SLN/c9YohHgyGJW
-HOUqF8wlpk7kHu2MZXRt/OblwgwEiWUuxoQ5iYejwO3/l/iyX+ePJIj+9F+pZ1c+
-j6Z4Yki2vBXgpYp9rRBQ7jIvwded+ircNeRV9VSsl/Ibfa6HktiaQPNpRskA1MJp
-k2pC/i3Bz+Dlk2NhjhitBl8LoXTzPldkoHuXqcf2L5lbyKXejwDKBma2HuWxwb+0
-GCYRtiaU/8Ok9669SknOdRXvancKqKMMQRYD826aYeR8Q38IFeSXxV9DD8bix9It
-nRw/cH6SX8wOcAIEZpPW1njDpNP6JhYsvQGJN6klAZWLk7dU6KL2rxFmwD8UNklU
-XS6p7fqmA6SkiRS3Qaz5R7z5WKIgvtflsuILUKDxneD6BV+DSM4JqDFq4fnWKhoj
-1gsjlNPZDuf20VkUN/E88BaN1sfAEecAvlGp9ztt3fIie4OyrVE7ELNw46QHmDJf
-0MB7RbAj+tXoLuYa62fYvkulLhW6aWc6f1PUFcSEdOHQ7IbSehs10WPewttKJsU6
-8Fn4LoAr0XXjE6BgUzIoXEyeakK/gtEIEX4OlbFF0xoKpZBCkRmSx4eykS7ZlmzJ
-mnehgTg6NjN2nNs7YLOD
-=1Xnl
------END PGP SIGNATURE-----
+
