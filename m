@@ -1,51 +1,186 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/7
-Message-ID: <e4777233e05c49e58a16df69ab235437@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 13:01:32 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Kernel: kvm: out of bounds memory access via vcpu_id
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/6
+Message-ID: <2510502.0NpgWQPfkR@blackgate>
+Date: Tue, 18 Oct 2016 16:51:33 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign <cve-assign@...re.org>
+Subject: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-> Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support
-> is vulnerable to an out-of-bounds memory access issue. It could occur on x86
-> platform, while servicing I/O APIC requests with larger vcpu_id.
-> 
-> A guest user/process could use this flaw to crash the host kernel resulting in
-> DoS or it could potentially be used to escalate privileges on a host.
-> 
-> https://git.kernel.org/linus/81cdb259fb6d8c1c4ecfeea389ff5a73c07f5755
-> https://bugzilla.redhat.com/show_bug.cgi?id=1400804
+Another round of fuzzing on an updated version (1.900.5) revealed a memory 
+allocation failure.
 
->> KVM: x86: fix out-of-bounds accesses of rtc_eoi map
->> KVM was using arrays of size KVM_MAX_VCPUS with vcpu_id, but ID can be bigger
->> that the maximal number of VCPUs, resulting in out-of-bounds access.
+The complete ASan output:
 
-Use CVE-2016-9777.
+# imginfo -f $FILE
+THE BMP FORMAT IS NOT FULLY SUPPORTED!                                                                                                                                                                                                                                         
+THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.                                                                                                                                                                                                              
+IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA                                                                                                                                                                                                                
+TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.                                                                                                                                                                                                                              
+==18943==ERROR: AddressSanitizer failed to allocate 0x1000002000 (68719484928) 
+bytes of LargeMmapAllocator (error code: 12)                                                                                                                                                    
+==18943==Process memory map follows:                                                                                                                                                                                                                                           
+        0x000000400000-0x000000520000   /usr/bin/imginfo                                                                                                                                                                                                                       
+        0x00000071f000-0x000000720000   /usr/bin/imginfo                                                                                                                                                                                                                       
+        0x000000720000-0x000000724000   /usr/bin/imginfo                                                                                                                                                                                                                       
+        0x000000724000-0x0000013a6000                                                                                                                                                                                                                                          
+        0x00007fff7000-0x00008fff7000                                                                                                                                                                                                                                          
+        0x00008fff7000-0x02008fff7000                                                                                                                                                                                                                                          
+        0x02008fff7000-0x10007fff8000                                                                                                                                                                                                                                          
+        0x600000000000-0x602000000000                                                                                                                                                                                                                                          
+        0x602000000000-0x602000010000                                                                                                                                                                                                                                          
+        0x602000010000-0x603000000000                                                                                                                                                                                                                                          
+        0x603000000000-0x603000010000                                                                                                                                                                                                                                          
+        0x603000010000-0x604000000000                                                                                                                                                                                                                                          
+        0x604000000000-0x604000010000                                                                                                                                                                                                                                          
+        0x604000010000-0x606000000000                                                                                                                                                                                                                                          
+        0x606000000000-0x606000010000                                                                                                                                                                                                                                          
+        0x606000010000-0x60b000000000                                                                                                                                                                                                                                          
+        0x60b000000000-0x60b000010000                                                                                                                                                                                                                                          
+        0x60b000010000-0x619000000000                                                                                                                                                                                                                                          
+        0x619000000000-0x619000020000                                                                                                                                                                                                                                          
+        0x619000020000-0x625000000000                                                                                                                                                                                                                                          
+        0x625000000000-0x625000020000                                                                                                                                                                                                                                          
+        0x625000020000-0x640000000000                                                                                                                                                                                                                                          
+        0x640000000000-0x640000003000                                                                                                                                                                                                                                          
+        0x7f4f00738000-0x7f4f03593000                                                                                                                                                                                                                                          
+        0x7f4f03593000-0x7f4f035fc000   /usr/lib64/libjpeg.so.62.2.0                                                                                                                                                                                                           
+        0x7f4f035fc000-0x7f4f037fb000   /usr/lib64/libjpeg.so.62.2.0                                                                                                                                                                                                           
+        0x7f4f037fb000-0x7f4f037fc000   /usr/lib64/libjpeg.so.62.2.0                                                                                                                                                                                                           
+        0x7f4f037fc000-0x7f4f037fd000   /usr/lib64/libjpeg.so.62.2.0                                                                                                                                                                                                           
+        0x7f4f037fd000-0x7f4f03990000   /lib64/libc-2.22.so                                                                                                                                                                                                                    
+        0x7f4f03990000-0x7f4f03b90000   /lib64/libc-2.22.so                                                                                                                                                                                                                    
+        0x7f4f03b90000-0x7f4f03b94000   /lib64/libc-2.22.so                                                                                                                                                                                                                    
+        0x7f4f03b94000-0x7f4f03b96000   /lib64/libc-2.22.so                                                                                                                                                                                                                    
+        0x7f4f03b96000-0x7f4f03b9a000                                                                                                                                                                                                                                          
+        0x7f4f03b9a000-0x7f4f03bb0000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1                                                                                                                                                                                 
+        0x7f4f03bb0000-0x7f4f03daf000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1                                                                                                                                                                                 
+        0x7f4f03daf000-0x7f4f03db0000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1                                                                                                                                                                                 
+        0x7f4f03db0000-0x7f4f03db1000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1                                                                                                                                                                                 
+        0x7f4f03db1000-0x7f4f03db3000   /lib64/libdl-2.22.so
+        0x7f4f03db3000-0x7f4f03fb3000   /lib64/libdl-2.22.so
+        0x7f4f03fb3000-0x7f4f03fb4000   /lib64/libdl-2.22.so
+        0x7f4f03fb4000-0x7f4f03fb5000   /lib64/libdl-2.22.so
+        0x7f4f03fb5000-0x7f4f03fbb000   /lib64/librt-2.22.so
+        0x7f4f03fbb000-0x7f4f041bb000   /lib64/librt-2.22.so
+        0x7f4f041bb000-0x7f4f041bc000   /lib64/librt-2.22.so
+        0x7f4f041bc000-0x7f4f041bd000   /lib64/librt-2.22.so
+        0x7f4f041bd000-0x7f4f041d4000   /lib64/libpthread-2.22.so
+        0x7f4f041d4000-0x7f4f043d3000   /lib64/libpthread-2.22.so
+        0x7f4f043d3000-0x7f4f043d4000   /lib64/libpthread-2.22.so
+        0x7f4f043d4000-0x7f4f043d5000   /lib64/libpthread-2.22.so
+        0x7f4f043d5000-0x7f4f043d9000
+        0x7f4f043d9000-0x7f4f044d6000   /lib64/libm-2.22.so
+        0x7f4f044d6000-0x7f4f046d5000   /lib64/libm-2.22.so
+        0x7f4f046d5000-0x7f4f046d6000   /lib64/libm-2.22.so
+        0x7f4f046d6000-0x7f4f046d7000   /lib64/libm-2.22.so
+        0x7f4f046d7000-0x7f4f04891000   /usr/lib64/libjasper.so.1.0.0
+        0x7f4f04891000-0x7f4f04a90000   /usr/lib64/libjasper.so.1.0.0
+        0x7f4f04a90000-0x7f4f04a94000   /usr/lib64/libjasper.so.1.0.0
+        0x7f4f04a94000-0x7f4f04aa3000   /usr/lib64/libjasper.so.1.0.0
+        0x7f4f04aa3000-0x7f4f04aac000
+        0x7f4f04aac000-0x7f4f04ace000   /lib64/ld-2.22.so
+        0x7f4f04c67000-0x7f4f04cc2000
+        0x7f4f04cc2000-0x7f4f04ccd000
+        0x7f4f04ccd000-0x7f4f04cce000   /lib64/ld-2.22.so
+        0x7f4f04cce000-0x7f4f04ccf000   /lib64/ld-2.22.so
+        0x7f4f04ccf000-0x7f4f04cd0000
+        0x7ffeaeaca000-0x7ffeaeaeb000   [stack]
+        0x7ffeaeb8a000-0x7ffeaeb8c000   [vvar]
+        0x7ffeaeb8c000-0x7ffeaeb8e000   [vdso]
+        0xffffffffff600000-0xffffffffff601000   [vsyscall]
+==18943==End of process memory map.
+==18943==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+(0)" (0x0, 0x0)
+    #0 0x4c9ccd in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+    #1 0x4d0803 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159
+    #2 0x4d09f1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
+const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183
+    #3 0x4d9a2a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_posix.cc:122
+    #4 0x421dbf in 
+__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
+unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+    #5 0x421dbf in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator 
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+    #6 0x421dbf in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+    #7 0x421dbf in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
+    #8 0x4c0391 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
+    #9 0x7f4f0474e170 in jas_malloc /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_malloc.c:117:9
+    #10 0x7f4f0474e170 in jas_alloc2 /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_malloc.c:141
+    #11 0x7f4f04764b4f in bmp_getinfo /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:297:25
+    #12 0x7f4f04764b4f in bmp_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:132
+    #13 0x7f4f0470ef39 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
+    #14 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
+    #15 0x7f4f0381d61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #16 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Affected version:
+1.900.5
 
-iQIcBAEBCAAGBQJYQbY8AAoJEHb/MwWLVhi2E6UP/3Od6kwDOaaTEft5Cuqq33E3
-Pk4zhnbtJa1Vo+obCpQreKP8Oq7oCThS0vDTHdfG2CgKg8tb1JtU3CGZFjxSewQR
-ZMZ/zY0WvTVT52MWeQyQv6+WRRMQ0yDdnIAGwkkRlTFSniy+TVzABb6dLkYKTvFM
-lRRROHOs/A4lknKXiCYRwGq8UyZ1i3Yr3uG8uzdGXBb5mDEmwp3C3CcFDpHsgThf
-w2i0W0z+lqx4jkBAbL37T0ev3nSBgP8HLaAOx4hoIX/+/eHQ66NYq6Tu5t6OdPVq
-6orHYpY1kq9R84hZ6C8jDJfTHyRbje82thzGzoSKPF4rmpNaKUIpKVGxVUXkYcvY
-ZqJc4sN2oMoQWXM/rL27maBdKqwxX7HRN5WzsTfJdQN5AJW1J45aW9J7C1XyG6ms
-0Po83l4dp8E7XDU8EVR4UJEiSBjAF8Dsns/tssql3mxtbh5yoAeg2R95nud5PPFH
-C9V++FSvycUFpSBZa4zjSaEOIWjnsqMo1npgKvCEXZeevtgWKK8ogIhx42keyd5P
-ypPY2K0mnTS0olx+nJl41Nxc7iJv0V5/pdJI6BDlSXitAaJWvgWlU3SHD9CI77hW
-2gu8mrzq5r0P8UsfgtdfReLpdBTUZmG1WWd1exyFV00xJvO9opXbQcH3ocJONtcq
-yprynboLM9ZITozRH1L2
-=f3+j
------END PGP SIGNATURE-----
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-10-17: bug discovered
+2016-10-17: bug reported to upstream
+2016-10-18: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/18/jasper-memory-allocation-failure-in-jas_malloc-jas_malloc-c
