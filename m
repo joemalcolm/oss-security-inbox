@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1879" "Friday" "9" "September" "2016" "05:28:26" "+0800" "redrain root" "rootredrain@gmail.com" "<CAPGxrc-RbECjbYfpBZPHusDYo_B5BDrKKzRKQ1zwbaNN21wLqA@mail.gmail.com>" "62" "[oss-security] CVE request - Airmail URLScheme render and file:// xss vulnerability" nil nil nil "9" "2016090821:28:26" "[oss-security] CVE request - Airmail URLScheme render and file:// xss vulnerability" (number mark "U       rootredrain@ Sep  9   62/1879  " thread-indent "\"[oss-security] CVE request - Airmail URLScheme render and file:// xss vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3886" "Tuesday" "18" "October" "2016" "19:06:13" "-0400" "Rich Felker" "dalias@libc.org" "<20161018230613.GH19318@brightrain.aerifal.cx>" "104" "[oss-security] CVE Request - TRE & musl libc regex integer overflows in buffer size computations" nil nil nil "10" "2016101823:06:13" "[oss-security] CVE Request - TRE & musl libc regex integer overflows in buffer size computations" (number mark "U       dalias@libc. Oct 18  104/3886  " thread-indent "\"[oss-security] CVE Request - TRE & musl libc regex integer overflows in buffer size computations\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21574 invoked by uid 550); 8 Sep 2016 21:28:39 -0000
+Received: (qmail 30427 invoked by uid 550); 19 Oct 2016 00:35:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +12,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21556 invoked from network); 8 Sep 2016 21:28:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=OP1SkJ7kteMaNUih4hi6d2+X/RbfGsvyBZJU4B7HRiM=;
-        b=PM8HW/4+vPtF3hzxXJEM6v4Rof9uajgAmzio6JQ8dUddZay6nGIqik9d1JkbfwBrU6
-         48GP+hQDUgx2Q2CuAXemrImuYdY/5ODuKT7uM47qPciL/VVGqRZGKvPspXHzbtMZhUlJ
-         Ly0qUFyT0Iy0zUWB28+y4ROtZd5hfeQ0uxmAqrIxTDdAzz35YIRK/MQntY3WIvDRN9uV
-         qeD5Ow66rMD1o+jQna0wO1T1y/uzbSuw57/Yh6NGyuW+Fc0fuGIsc+HUeo7nnHZIg3sn
-         D0wC3+yYdEz27w21j0NGep0StR26HKBJR05wp7ImS6Dvv5W1iSdHYTxgat2BMmRzEUpw
-         avpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=OP1SkJ7kteMaNUih4hi6d2+X/RbfGsvyBZJU4B7HRiM=;
-        b=aMw9Sfw+wDzik53iA1Dp8zl6ypIwTMsPpTgNarTxRkC7tks1YpexJ5hGXXZx+2cCkF
-         EeGxZC27SWG8RmnJHaxVj5btCsStWH06ZNaITvCx1CTD0T/IlJb1VLBWzFnPoOYhDtyq
-         sxD42P17/1Nc/AiKaoVxCBasb0R008kDc4E+XdsFQCI5KdL6aqQQMb1b3tsTcviw+0cY
-         I8RfqHbE1zToV1HWeOxNJWdAzHiFlRG/9XmX15tDtdUrTFlkjbO3QIlv0IyZujm0TYcM
-         /+12xUa9bWLNzwDHsClBX2nz7ZYF7Wjch64faFEKUGDknOBgzD38HezLEjRPkNg0gSkZ
-         NnGQ==
-X-Gm-Message-State: AE9vXwMPPwbvfVrgCf0Ztl+H+HEmsAvz6oJWgqJleVtgCw4HZ/n2RdCqsCA17Bo+vkc1qpYcsxYkuSlmVxLqzA==
-X-Received: by 10.129.179.197 with SMTP id r188mr139340ywh.88.1473370106827;
- Thu, 08 Sep 2016 14:28:26 -0700 (PDT)
-MIME-Version: 1.0
-From: redrain root <rootredrain@gmail.com>
-Date: Fri, 9 Sep 2016 05:28:26 +0800
-Message-ID: <CAPGxrc-RbECjbYfpBZPHusDYo_B5BDrKKzRKQ1zwbaNN21wLqA@mail.gmail.com>
+Received: (qmail 32330 invoked from network); 18 Oct 2016 23:06:26 -0000
+Date: Tue, 18 Oct 2016 19:06:13 -0400
+From: Rich Felker <dalias@libc.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a114ae966d71a24053c05b5dc
-Subject: [oss-security] CVE request - Airmail URLScheme render and file:// xss vulnerability
+Cc: musl@lists.openwall.com, Ville Laurikari <ville@laurikari.net>
+Message-ID: <20161018230613.GH19318@brightrain.aerifal.cx>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="fdj2RfSjLxBAspz7"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: Rich Felker <dalias@aerifal.cx>
+Subject: [oss-security] CVE Request - TRE & musl libc regex integer overflows in buffer size
+ computations
 
---001a114ae966d71a24053c05b5dc
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Airmail is a popular email client on iOS and OS X.
-I found a vulnerability in airmail of the latest version which could cause
-a file:// xss and arbitrary file read.
+Due to incorrect use of integer types and missing overflow checks in
+the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
+regex implementation (both original version and the one used in musl
+libc) are subject to integer overflows in buffer size computation.
 
-Author: redrain, yu.hong@chaitin.com
-Date: 2016-08-15
-Version: 3.0.2 and earlier
-Platform: OS X and iOS
-Site: http://airmailapp.com/
-Vendor: http://airmailapp.com/
-Vendor Notified: 2016-08-15
+If the caller passes to regcomp a regular expression whose internal
+representation requires a large number of states and/or a large number
+of tags, too little space will be allocated during regexec, resulting
+in out-of-bound memory writes.
 
-Vulnerability:
-There is a file:// xss in airmail version 3.0.2 and earlier.
-The app can deal the URLscheme render with link detection, any user can
-edit the email content in reply with the evil code with the TL;DR.
+An attacker who controls the regular expression and/or the string
+being searched can potentially exploit these writes to achieve
+controlled heap corruption.
 
-Airmail implements its user interface using an embedded version of WebKit,
-furthermore Airmail on OS X will render any URI as a clickable HTML <a
-href=3D link. An attacker can create a simple JavaScript URI (e.g.,
-javascript:) which when clicked grants the attacker initial JavaScript
-execution (XSS) in the context of the application DOM.
+All versions of the TRE library and musl libc are affected. The
+attached patch fixes the issue in musl and should be easy to adapt for
+use with original TRE. musl git master is fixed as of commit
+c3edc06d1e1360f3570db9155d6b318ae0d0f0f7.
+
+Rich
+
+--fdj2RfSjLxBAspz7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="0001-fix-missing-integer-overflow-checks-in-regexec-buffe.patch"
+
+>From c3edc06d1e1360f3570db9155d6b318ae0d0f0f7 Mon Sep 17 00:00:00 2001
+From: Rich Felker <dalias@aerifal.cx>
+Date: Thu, 6 Oct 2016 18:34:58 -0400
+Subject: [PATCH] fix missing integer overflow checks in regexec buffer size
+ computations
+
+most of the possible overflows were already ruled out in practice by
+regcomp having already succeeded performing larger allocations.
+however at least the num_states*num_tags multiplication can clearly
+overflow in practice. for safety, check them all, and use the proper
+type, size_t, rather than int.
+
+also improve comments, use calloc in place of malloc+memset, and
+remove bogus casts.
+---
+ src/regex/regexec.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/src/regex/regexec.c b/src/regex/regexec.c
+index 16c5d0a..dd52319 100644
+--- a/src/regex/regexec.c
++++ b/src/regex/regexec.c
+@@ -34,6 +34,7 @@
+ #include <wchar.h>
+ #include <wctype.h>
+ #include <limits.h>
++#include <stdint.h>
+ 
+ #include <regex.h>
+ 
+@@ -206,11 +207,24 @@ tre_tnfa_run_parallel(const tre_tnfa_t *tnfa, const void *string,
+ 
+   /* Allocate memory for temporary data required for matching.	This needs to
+      be done for every matching operation to be thread safe.  This allocates
+-     everything in a single large block from the stack frame using alloca()
+-     or with malloc() if alloca is unavailable. */
++     everything in a single large block with calloc(). */
+   {
+-    int tbytes, rbytes, pbytes, xbytes, total_bytes;
++    size_t tbytes, rbytes, pbytes, xbytes, total_bytes;
+     char *tmp_buf;
++
++    /* Ensure that tbytes and xbytes*num_states cannot overflow, and that
++     * they don't contribute more than 1/8 of SIZE_MAX to total_bytes. */
++    if (num_tags > SIZE_MAX/(8 * sizeof(int) * tnfa->num_states))
++      goto error_exit;
++
++    /* Likewise check rbytes. */
++    if (tnfa->num_states+1 > SIZE_MAX/(8 * sizeof(*reach_next)))
++      goto error_exit;
++
++    /* Likewise check pbytes. */
++    if (tnfa->num_states > SIZE_MAX/(8 * sizeof(*reach_pos)))
++      goto error_exit;
++
+     /* Compute the length of the block we need. */
+     tbytes = sizeof(*tmp_tags) * num_tags;
+     rbytes = sizeof(*reach_next) * (tnfa->num_states + 1);
+@@ -221,10 +235,9 @@ tre_tnfa_run_parallel(const tre_tnfa_t *tnfa, const void *string,
+       + (rbytes + xbytes * tnfa->num_states) * 2 + tbytes + pbytes;
+ 
+     /* Allocate the memory. */
+-    buf = xmalloc((unsigned)total_bytes);
++    buf = calloc(total_bytes, 1);
+     if (buf == NULL)
+       return REG_ESPACE;
+-    memset(buf, 0, (size_t)total_bytes);
+ 
+     /* Get the various pointers within tmp_buf (properly aligned). */
+     tmp_tags = (void *)buf;
+-- 
+2.10.0
 
 
-PoC:
-javascript://www.baidu.com/research?%0Aprompt(1)
-
-=E2=80=8B
-
-Arbitrary file read:
-
-javascript://www.baidu.com/research?%0Afunction%20reqListene
-r%20()%20%7B%0A%20%20prompt(this.responseText)%3B%0A%7D%0Ava
-r%20oReq%20%3D%20new%20XMLHttpRequest()%3B%0AoReq.addEventLi
-stener(%22load%22%2C%20reqListener)%3B%0AoReq.open(
-%22GET%22%2C%20%22file%3A%2F%2F%2Fetc%2Fpasswd%22)%3B%0AoReq.send()%3B
-
-
-=E2=80=8B
-Resolution:
-
-Airmail call the webkit to translate the html, javascript: and
-javascript://%0a%0d  are supported because of link detection in webkit
-info.plist.
-
-So we can just broke the URI, for example, add a =E2=80=9C<blank>=E2=80=9D =
-behind the
-=E2=80=9Cjavascript=E2=80=9D OS X and iOS will not render this URI as a cli=
-ckable HTML <a
-href=3Dxxx>
-
-
-Could you assign CVE id for this?
-
-Regards,
-redrain
-
---001a114ae966d71a24053c05b5dc--
+--fdj2RfSjLxBAspz7--
