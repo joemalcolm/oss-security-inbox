@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/12
-Message-ID: <8eff73fa-3688-7ae2-06d3-e45d22d3691c@redhat.com>
-Date: Thu, 18 Aug 2016 11:51:02 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/12
+Message-ID: <20161018174426.GB29378@motoko>
+Date: Tue, 18 Oct 2016 19:44:37 +0200
+From: Christian Rebischke <Chris.Rebischke@...hlinux.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-6323: Missing unwind information on ARM EABI (32-bit) causes backtrace generation to hang
+Subject: veracrypt security fixes in 1.19
 Content-Type: text/plain; charset=utf-8
 
-Andreas Schwab of SuSE reported and fixed a glibc bug where the 
-makecontext function would create an execution context which is 
-incompatible with the unwinder, causing it to hang when the generation 
-of a backtrace is attempted:
+Hello,
+I don't think this was topic in this mailinglist before.
+Veracrypt has fixed several security issues [1].
+Are there any CVEs available for this issues?
 
-   https://sourceware.org/bugzilla/show_bug.cgi?id=20435
- 
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=9e2ff6c9cc54c0b4402b8d49e4abe7000fde7617
+In case of no, will be any CVEs assigned for the issues in
+veracrypt <= 1.18?
 
-This is a minor denial-of-service vulnerability.
+Best regards,
 
-The bug is specific to ARM EABI (32-bit) and does not affect other 
-architectures.  So far, only certain applications compiled using gccgo 
-(not the main golang.org toolchain) are known to be affected.
+Christian Rebischke
 
-Red Hat Product Security has assigned CVE-2016-6323 to this issue.
 
-Thanks,
-Florian
+[1] https://ostif.org/the-veracrypt-audit-results/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
