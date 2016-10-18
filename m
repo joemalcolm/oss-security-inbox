@@ -1,37 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/9
-Message-ID: <20160505130336.7557b73b@pc1>
-Date: Thu, 5 May 2016 13:03:36 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/11
+Message-ID: <20161018170935.GA26921@inutil.org>
+Date: Tue, 18 Oct 2016 19:09:35 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+Subject: CVE request for tor
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 5 May 2016 13:34:05 +0300
-Solar Designer <solar@...nwall.com> wrote:
+Hi,
+please assign a CVE ID for
+https://blog.torproject.org/blog/tor-0289-released-important-fixes
 
-> On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
-> > older versions of GPG
-> > will regard the bottom 32 bits of a modulus as the 'fingerprint',
-> > rather than performing a hash.  
-> 
-> Are you sure? 
+Fix: https://github.com/torproject/tor/commit/3cea86eb2fbb65949673eb4ba8ebb695c87a57ce
+Bug: https://trac.torproject.org/projects/tor/ticket/20384
 
-https://tools.ietf.org/html/rfc4880
-
-"V3 keys are deprecated.  They contain three weaknesses.  First, it is
-relatively easy to construct a V3 key that has the same Key ID as any
-other key because the Key ID is simply the low 64 bits of the public
-modulus."
-
-I had forgotten about that, but it probably also explains the two
-pre-2000 keys with small factors I found.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Cheers,
+        Moritz
