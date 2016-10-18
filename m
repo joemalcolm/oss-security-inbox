@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1633" "Thursday" "18" "April" "2019" "18:59:26" "+0300" "Jouni Malinen" "j@w1.fi" "<20190418155926.GB5455@w1.fi>" "42" "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" nil nil nil "4" "2019041815:59:26" "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" (number mark "U       j@w1.fi      Apr 18   42/1633  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with unexpected fragment" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1324" "Tuesday" "18" "October" "2016" "19:44:37" "+0200" "Christian Rebischke" "Chris.Rebischke@archlinux.org" "<20161018174426.GB29378@motoko>" "40" "[oss-security] veracrypt security fixes in 1.19" nil nil nil "10" "2016101817:44:37" "[oss-security] veracrypt security fixes in 1.19" (number mark "U       Chris.Rebisc Oct 18   40/1324  " thread-indent "\"[oss-security] veracrypt security fixes in 1.19\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5273 invoked by uid 550); 18 Apr 2019 15:59:42 -0000
+Received: (qmail 20319 invoked by uid 550); 18 Oct 2016 17:44:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5227 invoked from network); 18 Apr 2019 15:59:41 -0000
-X-Virus-Scanned: Debian amavisd-new at w1.fi
-Date: Thu, 18 Apr 2019 18:59:26 +0300
-From: Jouni Malinen <j@w1.fi>
+Received: (qmail 20287 invoked from network); 18 Oct 2016 17:44:52 -0000
+Date: Tue, 18 Oct 2016 19:44:37 +0200
+From: Christian Rebischke <Chris.Rebischke@archlinux.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20190418155926.GB5455@w1.fi>
+Message-ID: <20161018174426.GB29378@motoko>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="3siQDZowHQqNOShm"
+Content-Disposition: inline
+User-Agent: Mutt/1.7.1 (2016-10-04)
+Subject: [oss-security] veracrypt security fixes in 1.19
+
+--3siQDZowHQqNOShm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] wpa_supplicant/hostapd: EAP-pwd message reassembly issue with
- unexpected fragment
 
-Published: April 18, 2019
-Latest version available from: https://w1.fi/security/2019-5/
+Hello,
+I don't think this was topic in this mailinglist before.
+Veracrypt has fixed several security issues [1].
+Are there any CVEs available for this issues?
 
-Vulnerability
+In case of no, will be any CVEs assigned for the issues in
+veracrypt <= 1.18?
 
-EAP-pwd implementation in hostapd (EAP server) and wpa_supplicant (EAP
-peer) was discovered not to validate fragmentation reassembly state
-properly for a case where an unexpected fragment could be received. This
-could result in process termination due to NULL pointer dereference.
+Best regards,
 
-An attacker in radio range of a station device with wpa_supplicant
-network profile enabling use of EAP-pwd could cause the wpa_supplicant
-process to terminate by constructing unexpected sequence of EAP
-messages. An attacker in radio range of an access point that points to
-hostapd as an authentication server with EAP-pwd user enabled in runtime
-configuration (or in non-WLAN uses of EAP authentication as long as the
-attacker can send EAP-pwd messages to the server) could cause the
-hostapd process to terminate by constructing unexpected sequence of EAP
-messages.
+Christian Rebischke
 
 
-Vulnerable versions/configurations
+[1] https://ostif.org/the-veracrypt-audit-results/
 
-All hostapd and wpa_supplicant versions with EAP-pwd support
-(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
-in the runtime configuration) are vulnerable against the process
-termination (denial of service) attack.
+--3siQDZowHQqNOShm
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Possible mitigation steps
+iQIcBAEBCgAGBQJYBl+FAAoJENIUYePf4gYNlbsQAK3dWQTIxNOMrfPd/Uq+ZklW
+3deATuLomcC58C1Fs0Y+mHXMvBYatjK66MKgad1ow9Gc6s12qjPBP6I7UTuV9K8o
+gHkf78ApP1706fy72JMCCSXdh1pDKFaIaO+NTjXr5wM1wUu1TYGjZ+Xs4sXNVI4a
+AYEKLSN4VGw6XD/c9MVpo0xXs6xhGW2+eXWZVp71MHidKa3VDOdCNob50cCb71kU
+5rKpzreaBM/AaqDIKII3ZjXeURRNmpkkt9oxe83b7tnLvNpngpHeUEoiEt2mbTOk
+T7inVfA4+pbIUznNzLnftSu14KCpId2qX1N2KiM4PLQupeUc91+QfWea32oCRNzg
+adg85vpDLIQJPhW4e7z+kQJWVF/JIzWwOL85074wRaf6aQP8RJUBf5uuvS96SS2M
+IH35yAaVrhQxq1luJL7Yv37zS1U7OmP39/gtZzEhud6P4Zu1elCyeweYaqjphvXN
+IPkc9b3GeIwSLH91OiYOa2ASGgxc3iVk/IZHVjs6SKwo6Ek6whzTjxUzFxJhes6Z
+oQqahL3VE0tjNXbOIHVMmvWkM3Ptu+SWwUVFBXGct7GHk3E5wOZoe23uDkxzjOvo
+jzsFaKDBJb+dFeiXf8iOyeparTD2C+KODdTPc2UJh3oMV2XxtUDcBxGF3/t4zoZJ
+bJe+/AR87Z0lVpzyo87B
+=LTQh
+-----END PGP SIGNATURE-----
 
-- Merge the following commits to wpa_supplicant/hostapd and rebuild:
-
-  EAP-pwd peer: Fix reassembly buffer handling
-  EAP-pwd server: Fix reassembly buffer handling
-
-  These patches are available from https://w1.fi/security/2019-5/
-
-- Update to wpa_supplicant/hostapd v2.8 or newer, once available
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+--3siQDZowHQqNOShm--
