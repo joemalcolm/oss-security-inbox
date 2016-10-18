@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["394" "Tuesday" "8" "June" "2021" "13:44:32" "+1000" "Wade Mealing" "wmealing@redhat.com" nil "26" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "6" nil nil (number mark "U       wmealing@red Jun  8   26/394   " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["344" "Tuesday" "18" "October" "2016" "10:42:15" "+0300" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>" "16" "[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "10" "2016101807:42:15" "[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       kaplanlior@g Oct 18   16/344   " thread-indent "\"[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25860 invoked by uid 550); 8 Jun 2021 03:44:59 -0000
+Received: (qmail 11585 invoked by uid 550); 18 Oct 2016 07:42:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25839 invoked from network); 8 Jun 2021 03:44:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1623123886;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/SVvxcs87pIcJwZ+Exp15mtoCoAVtUGQOmk6vGB4GEM=;
-	b=gDR10OyymvcuXy3/815FRyjFlJgcwh6Zb9SAWpUmM1a4h4o2H1fExf3uC3lFCf+ucKI2+x
-	+NKyn+52Y5ZAXWptqBnKvokz/r0EJRqgz0GmoEGNJfitQf6nWpji7tM9WI6bNdFR0Ka2Ih
-	C04ReVQKbXY9I61hlHauj+XnPP7ZKTY=
-X-MC-Unique: xcpbLIlRON-qvaGV5zNoAw-1
+Received: (qmail 11549 invoked from network); 18 Oct 2016 07:42:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=9wJnw4C7FjXLVRzGnh9tv8Mz1OMUGdZbRlA9jmlg22c=;
+        b=Ijwl6juhg7svZVBG54jxR/t6iuAE3KRD7/eini+uTIGMuBm55fyQ18VaPfXOCiks5Z
+         pveCot0r0IJnXw2UkipSC1dquuHxjZSfgo7eHhnfaXSIFOfpXywfG0EoVDDBcuSxr3+e
+         /xWeT6+j+4E4R6S88V+XCHUT4rLCPJvCdAyyJoniNnO8Fi30WPflXyDsxSbYfMaj735A
+         SolVKdX5XVLGtC3rZfmuUj4+0lGOgWaZlerfUcB8M6G5hUCHHTOkI36OFkf9+epFUdor
+         LYJNx08GLFjfB50zAQm83iqgx/kokUlAJjnlSA7QB8rlNDsta9yeoL67DgyTgNyUrMB9
+         ShKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=/SVvxcs87pIcJwZ+Exp15mtoCoAVtUGQOmk6vGB4GEM=;
-        b=Bis6Q1uWtYDh9uLkF/POPpSKlYU9XElDE7y+eO6SvfbV0soD+qgUXtKL0RzUJ1K+ZR
-         NSp9Nl/Br5Cg/kXPfC9movmcZPoD8mzhjnRW0JoU2yrvbv4gqWUb56BePNt3f8zxsjdz
-         Q3BaVNH6N8MlaoTxm0K8TE/Ahl0PZqbZ8larr7wfBD2gYnkLCNLidO6ktCgKGDruBhMo
-         bymOSAju0wFsbkPsiep7ChIJeufGm0N5RTQ1OgqOYe2jjIGhXUsamPqhK3HzMnKlRydt
-         Xcx9vHsPpPJdkZLQVa5Fyfll6QEwJgMJKN0/J7UM6Sus0qOdcuOGfPgM68jBt/yqLHDZ
-         hNNw==
-X-Gm-Message-State: AOAM5326+8q2G3X1uRAbvQt7u9e0RuVpj34L6TGj7pMLbgvIHU+hmN53
-	QNqMkNxmm23+GJoJvMTVtjp/te3CMI90zdx8ylXAEgF2+ca9lvUY4XaEmDqr8c7UCCAFIcvlwgo
-	2/XeUXr1XPjNq17PY8Kp18+OLtqY9kC5OMrb2t32ML/YP
-X-Received: by 2002:a5d:85da:: with SMTP id e26mr17183059ios.79.1623123883620;
-        Mon, 07 Jun 2021 20:44:43 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyA1dw+GTkOCIRg+b/fMX0h3kXKYl6R6qjaiEvLkJRYaAItWS4BxLdzkl/Z+mz/cwuxCi184sJ90yHkqkirt1Q=
-X-Received: by 2002:a5d:85da:: with SMTP id e26mr17183043ios.79.1623123883293;
- Mon, 07 Jun 2021 20:44:43 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=9wJnw4C7FjXLVRzGnh9tv8Mz1OMUGdZbRlA9jmlg22c=;
+        b=mgr+BTm6NMV0c9s1Pz+1nnieS5oKI6QQZ0Z9QbJsZbanS/vLos/7aN+j476UJkDSqD
+         84zRXf6QExLhji8X/u6nqgXp2sHR0FwoSf+XNdfO6Tm90rT23MFfujEkViSTZb98UriS
+         KbERJGVeM6uPMvbUgawto4hY2r3+iUj7l4FJuixo2jFzm7xwtEyI2ILx+k6/apRBb7ti
+         /gt7hYht5MaAWlBdfQViuDqBjU4XJCYgEOo9mho/xmPCzN81/5HsZnG1WDamRFtU83OZ
+         GwFa1HCqdw2KNdivxSAOFbv48jpp/MJyF8vmRtD5dMjsK39zKCix/rosUeLu3w2BieGM
+         DzBw==
+X-Gm-Message-State: AA6/9Rn6mKrJEpsYgWF5uvAVFzf1y97Q0b/I6yaaw3SVwx5Nxca8E+vbTbUpF92lRjMRywAswniJ0zRwgHFgDg==
+X-Received: by 10.31.95.7 with SMTP id t7mr1263733vkb.0.1476776536060; Tue, 18
+ Oct 2016 00:42:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
- <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
-In-Reply-To: <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
-From: Wade Mealing <wmealing@redhat.com>
-Date: Tue, 8 Jun 2021 13:44:32 +1000
-Message-ID: <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
+From: Lior Kaplan <kaplanlior@gmail.com>
+Date: Tue, 18 Oct 2016 10:42:15 +0300
+Message-ID: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=wmealing@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="0000000000007d94b005c438fa82"
-Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
+Content-Type: multipart/alternative; boundary=001a114e2932d838b1053f1ed478
+Subject: [oss-security] CVE assignment for PHP 5.6.27 and 7.0.12
 
---0000000000007d94b005c438fa82
-Content-Type: text/plain; charset="UTF-8"
+--001a114e2932d838b1053f1ed478
+Content-Type: text/plain; charset=UTF-8
 
-Red Hat has assigned CVE-2021-3587 to this issue
+Hi,
 
-Thank you!
+Please assign a CVE for the following issue:
 
+Bug #73147    Use After Free in unserialize()
+https://bugs.php.net/bug.php?id=73147
+http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
 
--- 
+Thanks,
 
-Wade Mealing
+Kaplan
 
-Product Security - Kernel, RHCE
-
-Red Hat
-
-<https://www.redhat.com>
-
-wmealing@redhat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
-
-secalert@redhat.com for urgent response
-
---0000000000007d94b005c438fa82--
-
+--001a114e2932d838b1053f1ed478--
