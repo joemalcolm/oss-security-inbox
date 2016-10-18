@@ -1,27 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/6
-Message-ID: <alpine.GSO.2.20.1611220833280.19696@freddy.simplesystems.org>
-Date: Tue, 22 Nov 2016 08:40:15 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/5
+Message-ID: <1731353.bZ4GPg8qyj@blackgate>
+Date: Tue, 18 Oct 2016 16:50:41 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Libtiff 4.0.7 release fixes many security issues
+Cc: cve-assign <cve-assign@...re.org>
+Subject: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)
 Content-Type: text/plain; charset=utf-8
 
-It is perhaps not broadly known that libtiff 4.0.7 was released on 
-November 20th, and it addresses a great many security issues.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-The release notes may be read at 
-"http://www.simplesystems.org/libtiff/v4.0.7.html".
+Another round of fuzzing on an updated version (1.900.5) revealed that the 
+previous issues, reported as CVE-2016-8690, are unfixed.
 
-The release notes are based on information which was available when 
-the bug was reported or the commit made.  If there was a CVE number, 
-it was made note of.  If there was a vendor issue number, that was 
-made note of.  Many issues may have had CVEs assigned later and (due 
-to lack of resources and incomplete information) we did not attempt to 
-investigate and back-annotate the change logs with CVE numbers.
+The complete ASan output:
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+# imginfo -f $FILE
+THE BMP FORMAT IS NOT FULLY SUPPORTED!                                                                                                                                                                                                                                         
+THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.                                                                                                                                                                                                              
+IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA                                                                                                                                                                                                                
+TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.                                                                                                                                                                                                                              
+skipping unknown data in BMP file                                                                                                                                                                                                                                              
+ASAN:DEADLYSIGNAL                                                                                                                                                                                                                                                              
+=================================================================                                                                                                                                                                                                              
+==19659==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f90527a18fe bp 0x7ffcfacc8070 sp 0x7ffcfacc7ee0 T0)
+    #0 0x7f90527a18fd in bmp_getdata /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:394:5
+    #1 0x7f90527a18fd in bmp_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:201
+    #2 0x7f9052748f39 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
+    #3 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
+    #4 0x7f905185761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #5 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:394:5 in 
+bmp_getdata
+==19659==ABORTING
+
+# imginfo -f $FILE
+THE BMP FORMAT IS NOT FULLY SUPPORTED!
+THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.
+IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA
+TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.
+ASAN:DEADLYSIGNAL
+=================================================================
+==11248==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f888b2f5a44 bp 0x7ffea5b3b070 sp 0x7ffea5b3aee0 T0)
+    #0 0x7f888b2f5a43 in bmp_getdata /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:398:5
+    #1 0x7f888b2f5a43 in bmp_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:201
+    #2 0x7f888b29cf39 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
+    #3 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
+    #4 0x7f888a3ab61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #5 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:398:5 in 
+bmp_getdata
+==11248==ABORTING
+
+Affected version:
+1.900.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-10-17: bug discovered
+2016-10-17: bug reported to upstream
+2016-10-18: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/18/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c-incomplete-fix-for-cve-2016-8690
