@@ -1,45 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/8
-Message-ID: <5b255e157f6640988ff729ba46e4896d@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 12:43:58 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/7
+Message-ID: <6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>
+Date: Wed, 19 Oct 2016 16:27:37 +0000
+From: "Seaman, Chad" <cseaman@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "CVE ID Requests" <cve-assign@...re.org>
+CC: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi All,
 
-> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-get_attr_value-print_die-c
-> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-> 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 1
+I’m a little late to the conversation but I did some fairly extensive research on this topic about 9 months ago, white paper here.
 
-We would need more impact analysis before assigning a CVE ID for this.
-It seems to affect only the dwarfdump command-line program, not
-library code that is used in arbitrary applications.
+https://community.akamai.com/docs/DOC-5289
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Regards,
+Chad
 
-iQIcBAEBCAAGBQJYJgKVAAoJEHb/MwWLVhi2IdUP/2OaC1OfaPFR++3Jzepg9MNl
-4gPc8ehCElI+uhC6eq9d2CJZHM+a608/IlA5jDTxuSTuzS2aQjNZ2OgNWYl7dPjy
-K63lDfs7Xs25ChrVlynW5pcPXYcJ2f8GZpqZgaRB35nBUtjjQcQweQvW5lga3zLl
-225z8m2EOId3KME5Vklr2gxbdH9fNeIqRUqdCa7gpyG/PzwZWnUg/blStSyw+S4i
-yDCxL8iP7AlH/d0vdinT9rK9Ez0A/13IKLbcTU0Rk7YLFv8X5sbFYETnszU6pWBO
-1RlglJh7xNEY204ibV17+6OawS/DyC8KvrLAAXEwtwBaWgj2IfgsmVtO4aNv9hdr
-6eDQqIgCO90I8+aNQGQsAZZeNeeYE6ydfx+8+SVGHcbTc4uEqryynfCRNmy6eSET
-qniAB3s2fl8872starbxjFfQFmashOzEWxDRLsIEHcfgw+y7mcZSHZOcPuzWb0+Y
-tEVrJQWGRtpZL5paeqG/ML4zJNaTZ6Ypn52hafUoCFECVc3CZTRVVF6l+5Ac/pM0
-sCtElvwhZ92HHGsa96salFE/B0ebcNmElKOanQ4C1pIOM4k9UJcbkmmXNgkLjIpk
-c4Pum2dsIqiBgDEGMUTZKDCBcoEj/ivghYM2F7KslH0O5Ei/FIdkOuiraNU15YEg
-6vwiWK7F7KAvl2XJdJvU
-=Ts69
------END PGP SIGNATURE-----
+On 10/18/16, 10:58 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+
+    On Tue, Oct 18, 2016 at 6:57 PM, <cve-assign@...re.org> wrote:
+    >
+    > There are at least three different scenarios:
+    >
+    >  1. Amplification only exists because of a server-side coding error,
+    >     and fixing that error has no adverse impact on clients and
+    >     requires no client-side changes. For example: for the protocol in
+    >     question, the client simply never needs an unauthenticated UDP
+    >     request to result in a larger UDP reply.
+    >
+    >  2. Amplification is not caused by a coding error, but it is possible
+    >     to reduce the amplification ratio without completely breaking the
+    >     ability of clients to communicate with servers.
+    >
+    >  3. Amplification is not caused by a coding error, and it is not
+    >     possible to reduce the amplification ratio without completely
+    >     breaking the ability of clients to communicate with servers. The
+    >     only options are to mitigate attacks (as in
+    >     https://capec.mitre.org/data/definitions/490.html) or to change
+    >     the protocol.
+    >
+    > If someone can request a CVE ID for any of these three scenarios,
+    > should we encourage them to be most liberal with CVE ID requests in
+    > scenario 1, and most conservative with CVE ID requests in scenario 3?
+    > Or do we ideally want to enumerate everything, even a 1:1.1 ratio
+    > that's baked into a protocol design, and can't be fixed without
+    > changing every client and server?
+    >
+    > Finally, do we want CVEs for all types of amplification, or only
+    > amplification that can be used for DoS attacks against unrelated third
+    > parties? For example, there's a class of amplification issues
+    > affecting automated error reporting. This can exist in server-side
+    > code in which exception handlers (something like "constraint
+    > violation: length_a > length_b") are able to send outbound network
+    > traffic to a vendor's server. Here, there can be cases where an
+    > attacker sends an unauthenticated hundred-byte packet to a customer's
+    > server, and the customer's server then immediately sends a
+    > million-byte system-health report to the vendor. The attacker
+    > generally can repeat this, although there might be a rate limit.
+    > Suppose that the customer wants to send these reports, and the vendor
+    > wants to receive these reports, and (maybe?) the intervening ISPs can
+    > handle the load. Would this be a CVE because of the huge amplification
+    > ratio, or is amplification a CVE only in certain special cases?
+    >
+    
+    So some additional comments/criteria:
+    
+    1) can this actually be exploited in practice in a reasonable manner (e.g.
+    a 1:1000 amplification I think we'd all agree is a realistic problem)
+    2) is this being actively used in the wild to exploit systems or cause DoS
+    situations? In the case of this IKEv1 issue it sounds like yes
+    
+    and my favorite "should this get a CVE test" question:
+    
+    3) can it be fixed in a way that still lets the service/clients work?
+    
+    If it can be fixed in a way that leaves the service/clients working ok then
+    chances are the old behavior is not something we want to live with anymore
+    and we need to get rid of it.
+    
+    
+    >
+    > - --
+    > CVE Assignment Team
+    > M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+    > [ A PGP key is available for encrypted communications at
+    >   http://cve.mitre.org/cve/request_id.html ]
+    > -----BEGIN PGP SIGNATURE-----
+    > Version: GnuPG v1
+    >
+    > iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
+    > KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
+    > 71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
+    > WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
+    > NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
+    > +jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
+    > /jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
+    > N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
+    > XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
+    > E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
+    > xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
+    > VMx2oAIYBoExovJrb2pG
+    > =xNIJ
+    > -----END PGP SIGNATURE-----
+    >
+    
+    
+    
+    -- 
+    
+    --
+    Kurt Seifried -- Red Hat -- Product Security -- Cloud
+    PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+    Red Hat Product Security contact: secalert@...hat.com
+    
+
