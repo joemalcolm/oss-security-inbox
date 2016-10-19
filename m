@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/8
-Message-ID: <575B352F.9000808@canonical.com>
-Date: Fri, 10 Jun 2016 14:46:23 -0700
-From: John Johansen <john.johansen@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: Jann Horn <jannh@...gle.com>, Tyler Hicks <tyhicks@...onical.com>, "security@...nel.org" <security@...nel.org>
-Subject: [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/3
+Message-ID: <88E4FB7D4EC3E04EAA5DAFEB85C81D4232B14140@EX02.corp.qihoo.net>
+Date: Wed, 19 Oct 2016 01:36:31 +0000
+From: 石磊 <shilei-c@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
 Content-Type: text/plain; charset=utf-8
 
-This is a forward notification of a local priv escalation flaw from
-security@...nel.org to the OSS security list. The CRD was for
-2016-06-08 14:00:00 UTC. Patches attached to the email.
+Hi,
 
-The flaw in eCryptfs was assigned CVE-2016-1583.
+The OpenSSH has a memory exhaustion bug in key exchange process.
+An unauthenticated peer could repeat the KEXINIT and cause allocation of up to 384MB(not 128MB that the official said).
+In the default case, an attacker can build 100 such connections, which will consume 38400 MB of memory on the server.
 
-If backporting these patches to kernels pre 4.6 you may need to
-cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
+The patch is here:
+http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/kex.c?rev=1.127&content-type=text/x-cvsweb-markup
 
 
-View attachment "2of3.patch" of type "text/plain" (2331 bytes)
+--
+Regards,
 
-Download attachment "crasher.tar" of type "application/x-tar" (10240 bytes)
+Shi Lei / Gear Team, Qihoo 360 Inc.
+GPG Key ID 37048936 / 5C4C 85C6 068C A5A0 23FA  0294 D9CE 9C25 3704 8936
 
-View attachment "1of3.patch" of type "text/plain" (1908 bytes)
-
-View attachment "3of3.patch" of type "text/x-patch" (1862 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
