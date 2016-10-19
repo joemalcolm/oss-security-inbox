@@ -1,46 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/15
-Message-Id: <20161016025531.7B7C142E008@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:55:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: graphicsmagick: memory allocation failure in MagickMalloc (memory.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/4
+Message-ID: <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
+Date: Tue, 18 Oct 2016 20:58:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: CVE ID Requests <cve-assign@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>,  Huzaifa Sidhpurwala <huzaifas@...hat.com>
+Subject: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Oct 18, 2016 at 6:57 PM, <cve-assign@...re.org> wrote:
+>
+> There are at least three different scenarios:
+>
+>  1. Amplification only exists because of a server-side coding error,
+>     and fixing that error has no adverse impact on clients and
+>     requires no client-side changes. For example: for the protocol in
+>     question, the client simply never needs an unauthenticated UDP
+>     request to result in a larger UDP reply.
+>
+>  2. Amplification is not caused by a coding error, but it is possible
+>     to reduce the amplification ratio without completely breaking the
+>     ability of clients to communicate with servers.
+>
+>  3. Amplification is not caused by a coding error, and it is not
+>     possible to reduce the amplification ratio without completely
+>     breaking the ability of clients to communicate with servers. The
+>     only options are to mitigate attacks (as in
+>     https://capec.mitre.org/data/definitions/490.html) or to change
+>     the protocol.
+>
+> If someone can request a CVE ID for any of these three scenarios,
+> should we encourage them to be most liberal with CVE ID requests in
+> scenario 1, and most conservative with CVE ID requests in scenario 3?
+> Or do we ideally want to enumerate everything, even a 1:1.1 ratio
+> that's baked into a protocol design, and can't be fixed without
+> changing every client and server?
+>
+> Finally, do we want CVEs for all types of amplification, or only
+> amplification that can be used for DoS attacks against unrelated third
+> parties? For example, there's a class of amplification issues
+> affecting automated error reporting. This can exist in server-side
+> code in which exception handlers (something like "constraint
+> violation: length_a > length_b") are able to send outbound network
+> traffic to a vendor's server. Here, there can be cases where an
+> attacker sends an unauthenticated hundred-byte packet to a customer's
+> server, and the customer's server then immediately sends a
+> million-byte system-health report to the vendor. The attacker
+> generally can repeat this, although there might be a rate limit.
+> Suppose that the customer wants to send these reports, and the vendor
+> wants to receive these reports, and (maybe?) the intervening ISPs can
+> handle the load. Would this be a CVE because of the huge amplification
+> ratio, or is amplification a CVE only in certain special cases?
+>
 
-> https://blogs.gentoo.org/ago/2016/09/15/graphicsmagick-memory-allocation-failure-in-magickmalloc-memory-c/
-> 
-> AddressSanitizer failed to allocate 0x7fff03000 bytes of LargeMmapAllocator
-> MagickMalloc ... GraphicsMagick-1.3.25/magick/memory.c:156:10
-> MagickMallocArray ... GraphicsMagick-1.3.25/magick/memory.c:347
-> ReadSGIImage ... GraphicsMagick-1.3.25/coders/sgi.c:498:19
-> 
-> http://hg.code.sf.net/p/graphicsmagick/code/rev/c53725cb5449
+So some additional comments/criteria:
 
-Use CVE-2016-8684.
+1) can this actually be exploited in practice in a reasonable manner (e.g.
+a 1:1000 amplification I think we'd all agree is a realistic problem)
+2) is this being actively used in the wild to exploit systems or cause DoS
+situations? In the case of this IKEv1 issue it sounds like yes
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+and my favorite "should this get a CVE test" question:
 
-iQIcBAEBCAAGBQJYAudwAAoJEHb/MwWLVhi2L20QALRIKnrluB4Mbj2R6hqtDsYa
-teAcD9UacPWhRtgKG1kLDCPKFcSS+Ci06fMbySoiEtaL6PbgxapAC+MCOGlDO4fY
-RnrYlwpl5fFDf6vsdNwt7/oTL4JBn/6BKpSPyC0EpRzs3EYB5pNYlxmj3GJCFDD8
-NAIP/hMk2UF8c/pf7WUV4rosJatBvJB1EhebpCKTqIjIA5vGx5tO+WfHTfDwmnwg
-xqbSV3JMawld57Ru6ZHv/oRbBHwtLV15OhwBsnMs/lmtNERkcIXWF4zHSY/0F2lY
-GGstrL3sjvK3BjTG+wFv1r+lOCGKYPW/blraOHc2VnCEWuGZ1tRqGliiNWFKoYzG
-xEwZoAP7g1GaIOmSWd4FjvkZ/X3nBxr1LlTLr3qjK/WcHa1ZmCCbmutU08Frg8Ul
-BoZCpAjTMJP82jZUejoVNn3EmweZORtuTn2dfKRGBZnTezT+J67ZLN1ON1XOt+pE
-B9YKKSTVmmcWzJrYbf67C74V3KT4FHeQ7QEJkyTzpym87CDMOAKliVgrLg0Zq8bt
-QNPqrmjR5ZaKP2FGAL2bTYRrc8nYKtFDjeTgdRcWXJN3aQiwCM0bTHHz/DArjVoY
-TSEIROVopNepqXz/CwF2m0obx9arw+rPvhTie6Nl7JVApsWHLSn1t6mW7amBeXAN
-PUyNYRlhb/laUYo7Z3RM
-=y1zP
------END PGP SIGNATURE-----
+3) can it be fixed in a way that still lets the service/clients work?
+
+If it can be fixed in a way that leaves the service/clients working ok then
+chances are the old behavior is not something we want to live with anymore
+and we need to get rid of it.
+
+
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
+> KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
+> 71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
+> WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
+> NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
+> +jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
+> /jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
+> N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
+> XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
+> E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
+> xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
+> VMx2oAIYBoExovJrb2pG
+> =xNIJ
+> -----END PGP SIGNATURE-----
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
