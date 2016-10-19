@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["381" "Thursday" "13" "July" "2017" "23:26:48" "+0700" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8grQ-mRQ6K1KJZY_=dJbKn_oL9Y=2CxwD0V77zm-1jEBg@mail.gmail.com>" "14" "[oss-security] CVE-2017-7683 - Apache OpenMeetings - Information Disclosure" nil nil nil "7" "2017071316:26:48" "[oss-security] CVE-2017-7683 - Apache OpenMeetings - Information Disclosure" (number mark "U       solomax@apac Jul 13   14/381   " thread-indent "\"[oss-security] CVE-2017-7683 - Apache OpenMeetings - Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4797" "Tuesday" "18" "October" "2016" "20:57:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>" "94" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "10" "2016101900:57:32" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cve-assign@m Oct 18   94/4797  " thread-indent "\"[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>" ("<CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28121 invoked by uid 550); 13 Jul 2017 16:27:03 -0000
+Received: (qmail 26336 invoked by uid 550); 19 Oct 2016 00:57:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +12,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28039 invoked from network); 13 Jul 2017 16:27:02 -0000
-X-Gm-Message-State: AIVw110RGXgZcGR4ggP80cHthch6tGYvhqzKO7vnK84cfQM4F2ZW8lNq
-	alcaeAFcVEoBEeUk6YL9R/BLGb/pYw==
-X-Received: by 10.99.125.25 with SMTP id y25mr10026700pgc.38.1499963208958;
- Thu, 13 Jul 2017 09:26:48 -0700 (PDT)
-MIME-Version: 1.0
-From: Maxim Solodovnik <solomax@apache.org>
-Date: Thu, 13 Jul 2017 23:26:48 +0700
-X-Gmail-Original-Message-ID: <CAJmbs8grQ-mRQ6K1KJZY_=dJbKn_oL9Y=2CxwD0V77zm-1jEBg@mail.gmail.com>
-Message-ID: <CAJmbs8grQ-mRQ6K1KJZY_=dJbKn_oL9Y=2CxwD0V77zm-1jEBg@mail.gmail.com>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	security@openmeetings.apache.org, 
-	Joe Basirico <jbasirico@securityinnovation.com>, 
-	Sharath Unni <sunni@securityinnovation.com>, 
-	Dinesh Shetty <dshetty@securityinnovation.com>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2017-7683 - Apache OpenMeetings - Information Disclosure
+Received: (qmail 26315 invoked from network); 19 Oct 2016 00:57:44 -0000
+From: cve-assign@mitre.org
+To: kseifried@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, huzaifas@redhat.com
+In-Reply-To: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
+Message-Id: <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
+Date: Tue, 18 Oct 2016 20:57:32 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 
-Severity: Lowest
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+> I think it's safe to say an amplification of 1:10 or more qualifies as a
+> problem, I'm not sure what the exact amplification ratio to qualify for a
+> CVE is (1:3, 1:7?) but I think 1:10 or more should definitely qualify.
 
-Versions Affected: Apache OpenMeetings 1.0.0
+The MITRE CVE Team has commented on this in the past in the
+http://www.openwall.com/lists/oss-security/2016/06/10/4 post. Although
+there have been relevant changes since then (such as expansion of the
+CVE CNA program), we're still not sure that it generally makes sense
+to define magic numbers (such as a magic minimum number for the
+amplification ratio) that everyone always must use to decide whether a
+CVE is useful.
 
-Description: Apache OpenMeetings displays Tomcat version and detailed
-error stack trace which is not secure.
-CVE-2017-7683
+For example, if an organization is a CNA for its own products and sees
+an amplification ratio of 1:1.1, but this violates the intended
+security policy of a product and was supposed to be 1:0.9, then they
+can assign a CVE ID. If they're recommending that their customers
+install a patch, then it could make a lot of sense to have a CVE ID,
+so that their customers can use the ID in patch management.
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+However, some CNA organizations assign CVE IDs to arbitrary vendors'
+products based on claims of demonstrated negative impact: this is
+where amplification may pose more difficulty for CVE. As it stands
+today, a CVE ID requester can claim that 1:1.1 has a demonstrated
+negative impact, and (at least in theory) they will get a CVE ID. This
+type of CNA currently can't make up their own arbitrary rules, such as
+"1:10 is a negative impact but 1:9 isn't."
 
-Credit: This issue was identified by Security Innovation
+There are at least three different scenarios:
+
+ 1. Amplification only exists because of a server-side coding error,
+    and fixing that error has no adverse impact on clients and
+    requires no client-side changes. For example: for the protocol in
+    question, the client simply never needs an unauthenticated UDP
+    request to result in a larger UDP reply.
+
+ 2. Amplification is not caused by a coding error, but it is possible
+    to reduce the amplification ratio without completely breaking the
+    ability of clients to communicate with servers.
+
+ 3. Amplification is not caused by a coding error, and it is not
+    possible to reduce the amplification ratio without completely
+    breaking the ability of clients to communicate with servers. The
+    only options are to mitigate attacks (as in
+    https://capec.mitre.org/data/definitions/490.html) or to change
+    the protocol.
+
+If someone can request a CVE ID for any of these three scenarios,
+should we encourage them to be most liberal with CVE ID requests in
+scenario 1, and most conservative with CVE ID requests in scenario 3?
+Or do we ideally want to enumerate everything, even a 1:1.1 ratio
+that's baked into a protocol design, and can't be fixed without
+changing every client and server?
+
+Finally, do we want CVEs for all types of amplification, or only
+amplification that can be used for DoS attacks against unrelated third
+parties? For example, there's a class of amplification issues
+affecting automated error reporting. This can exist in server-side
+code in which exception handlers (something like "constraint
+violation: length_a > length_b") are able to send outbound network
+traffic to a vendor's server. Here, there can be cases where an
+attacker sends an unauthenticated hundred-byte packet to a customer's
+server, and the customer's server then immediately sends a
+million-byte system-health report to the vendor. The attacker
+generally can repeat this, although there might be a rate limit.
+Suppose that the customer wants to send these reports, and the vendor
+wants to receive these reports, and (maybe?) the intervening ISPs can
+handle the load. Would this be a CVE because of the huge amplification
+ratio, or is amplification a CVE only in certain special cases?
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
+KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
+71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
+WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
+NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
++jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
+/jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
+N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
+XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
+E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
+xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
+VMx2oAIYBoExovJrb2pG
+=xNIJ
+-----END PGP SIGNATURE-----
