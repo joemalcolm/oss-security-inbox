@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["474" "Tuesday" "27" "April" "2021" "21:00:22" "+0200" "jleroux@apache.org" "jleroux@apache.org" nil "22" "[oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz" nil nil nil "4" nil nil (number mark "U       jleroux@apac Apr 27   22/474   " thread-indent "\"[oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6788" "Wednesday" "19" "October" "2016" "16:27:37" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>" "112" "Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "10" "2016101916:27:37" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       cseaman@akam Oct 19  112/6788  " thread-indent "\"Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>" ("<CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>" "<20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>" "<CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23949 invoked by uid 550); 27 Apr 2021 19:09:46 -0000
+Received: (qmail 5477 invoked by uid 550); 19 Oct 2016 16:27:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +12,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7529 invoked from network); 27 Apr 2021 19:00:49 -0000
-From: "jleroux@apache.org" <jleroux@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <b484727f-90d2-1a27-4bb2-c5e2b1579df6@apache.org>
-Date: Tue, 27 Apr 2021 21:00:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+Received: (qmail 5457 invoked from network); 19 Oct 2016 16:27:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; s=a1;
+	t=1476894458; bh=0ZR4PuPObjLHyON4MGxg/3o1CYVUjKWc0FukKK3k3yE=;
+	l=6852; h=From:To:CC:Date:References:In-Reply-To:From;
+	b=rb7Gfqht6t38JSqdpMrcv8IxTAmxIeB2vdZm4DUdkLtPlpu0cFNFESzcGskdl8ygP
+	 DyHwf4Rncr3WV8dkmh/zjhZEjZPpqH8xY6F4gWFMaLl6tbMZisD+uYx+JIqnN09UoX
+	 yk3ZijtApXYrcE1P0TVe+lmL86Z+JAMh5E+q1CvI=
+From: "Seaman, Chad" <cseaman@akamai.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "CVE
+ ID Requests" <cve-assign@mitre.org>
+CC: Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Thread-Topic: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
+ DoS amplification attack
+Thread-Index: AQHSKXTAAXVb6GT6MEa3Bd6CqDW/pqCvSHMAgAAhwoCAAJ8PgA==
+Date: Wed, 19 Oct 2016 16:27:37 +0000
+Message-ID: <6CEE412D-0C61-4835-B685-465BF38B6F7B@akamai.com>
+References: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
+ <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
+ <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
+In-Reply-To: <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Microsoft-MacOutlook/f.18.0.160709
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.19.133.57]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <91A4ECC3921DAA418F586EDC53AE3A39@akamai.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-Subject: [oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz
+Subject: Re: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to
+ DoS amplification attack
 
-Severity:
-High, possible RCE
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-OFBiz versions prior to 17.12.07
-
-Description:
-Apache OFBiz has unsafe deserialization prior to 17.12.07 version
-
-Mitigation:
-Upgrade to at least 17.12.07
-or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12212 & OFBIZ-12221
-
-Credit:
-Litch1 from the Security Team of Alibaba Cloud <litch1chk@gmail.com>
-
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
-
+SGkgQWxsLA0KDQpJ4oCZbSBhIGxpdHRsZSBsYXRlIHRvIHRoZSBjb252ZXJz
+YXRpb24gYnV0IEkgZGlkIHNvbWUgZmFpcmx5IGV4dGVuc2l2ZSByZXNlYXJj
+aCBvbiB0aGlzIHRvcGljIGFib3V0IDkgbW9udGhzIGFnbywgd2hpdGUgcGFw
+ZXIgaGVyZS4NCg0KaHR0cHM6Ly9jb21tdW5pdHkuYWthbWFpLmNvbS9kb2Nz
+L0RPQy01Mjg5DQoNClJlZ2FyZHMsDQpDaGFkDQoNCk9uIDEwLzE4LzE2LCAx
+MDo1OCBQTSwgIkt1cnQgU2VpZnJpZWQiIDxrc2VpZnJpZWRAcmVkaGF0LmNv
+bT4gd3JvdGU6DQoNCiAgICBPbiBUdWUsIE9jdCAxOCwgMjAxNiBhdCA2OjU3
+IFBNLCA8Y3ZlLWFzc2lnbkBtaXRyZS5vcmc+IHdyb3RlOg0KICAgID4NCiAg
+ICA+IFRoZXJlIGFyZSBhdCBsZWFzdCB0aHJlZSBkaWZmZXJlbnQgc2NlbmFy
+aW9zOg0KICAgID4NCiAgICA+ICAxLiBBbXBsaWZpY2F0aW9uIG9ubHkgZXhp
+c3RzIGJlY2F1c2Ugb2YgYSBzZXJ2ZXItc2lkZSBjb2RpbmcgZXJyb3IsDQog
+ICAgPiAgICAgYW5kIGZpeGluZyB0aGF0IGVycm9yIGhhcyBubyBhZHZlcnNl
+IGltcGFjdCBvbiBjbGllbnRzIGFuZA0KICAgID4gICAgIHJlcXVpcmVzIG5v
+IGNsaWVudC1zaWRlIGNoYW5nZXMuIEZvciBleGFtcGxlOiBmb3IgdGhlIHBy
+b3RvY29sIGluDQogICAgPiAgICAgcXVlc3Rpb24sIHRoZSBjbGllbnQgc2lt
+cGx5IG5ldmVyIG5lZWRzIGFuIHVuYXV0aGVudGljYXRlZCBVRFANCiAgICA+
+ICAgICByZXF1ZXN0IHRvIHJlc3VsdCBpbiBhIGxhcmdlciBVRFAgcmVwbHku
+DQogICAgPg0KICAgID4gIDIuIEFtcGxpZmljYXRpb24gaXMgbm90IGNhdXNl
+ZCBieSBhIGNvZGluZyBlcnJvciwgYnV0IGl0IGlzIHBvc3NpYmxlDQogICAg
+PiAgICAgdG8gcmVkdWNlIHRoZSBhbXBsaWZpY2F0aW9uIHJhdGlvIHdpdGhv
+dXQgY29tcGxldGVseSBicmVha2luZyB0aGUNCiAgICA+ICAgICBhYmlsaXR5
+IG9mIGNsaWVudHMgdG8gY29tbXVuaWNhdGUgd2l0aCBzZXJ2ZXJzLg0KICAg
+ID4NCiAgICA+ICAzLiBBbXBsaWZpY2F0aW9uIGlzIG5vdCBjYXVzZWQgYnkg
+YSBjb2RpbmcgZXJyb3IsIGFuZCBpdCBpcyBub3QNCiAgICA+ICAgICBwb3Nz
+aWJsZSB0byByZWR1Y2UgdGhlIGFtcGxpZmljYXRpb24gcmF0aW8gd2l0aG91
+dCBjb21wbGV0ZWx5DQogICAgPiAgICAgYnJlYWtpbmcgdGhlIGFiaWxpdHkg
+b2YgY2xpZW50cyB0byBjb21tdW5pY2F0ZSB3aXRoIHNlcnZlcnMuIFRoZQ0K
+ICAgID4gICAgIG9ubHkgb3B0aW9ucyBhcmUgdG8gbWl0aWdhdGUgYXR0YWNr
+cyAoYXMgaW4NCiAgICA+ICAgICBodHRwczovL2NhcGVjLm1pdHJlLm9yZy9k
+YXRhL2RlZmluaXRpb25zLzQ5MC5odG1sKSBvciB0byBjaGFuZ2UNCiAgICA+
+ICAgICB0aGUgcHJvdG9jb2wuDQogICAgPg0KICAgID4gSWYgc29tZW9uZSBj
+YW4gcmVxdWVzdCBhIENWRSBJRCBmb3IgYW55IG9mIHRoZXNlIHRocmVlIHNj
+ZW5hcmlvcywNCiAgICA+IHNob3VsZCB3ZSBlbmNvdXJhZ2UgdGhlbSB0byBi
+ZSBtb3N0IGxpYmVyYWwgd2l0aCBDVkUgSUQgcmVxdWVzdHMgaW4NCiAgICA+
+IHNjZW5hcmlvIDEsIGFuZCBtb3N0IGNvbnNlcnZhdGl2ZSB3aXRoIENWRSBJ
+RCByZXF1ZXN0cyBpbiBzY2VuYXJpbyAzPw0KICAgID4gT3IgZG8gd2UgaWRl
+YWxseSB3YW50IHRvIGVudW1lcmF0ZSBldmVyeXRoaW5nLCBldmVuIGEgMTox
+LjEgcmF0aW8NCiAgICA+IHRoYXQncyBiYWtlZCBpbnRvIGEgcHJvdG9jb2wg
+ZGVzaWduLCBhbmQgY2FuJ3QgYmUgZml4ZWQgd2l0aG91dA0KICAgID4gY2hh
+bmdpbmcgZXZlcnkgY2xpZW50IGFuZCBzZXJ2ZXI/DQogICAgPg0KICAgID4g
+RmluYWxseSwgZG8gd2Ugd2FudCBDVkVzIGZvciBhbGwgdHlwZXMgb2YgYW1w
+bGlmaWNhdGlvbiwgb3Igb25seQ0KICAgID4gYW1wbGlmaWNhdGlvbiB0aGF0
+IGNhbiBiZSB1c2VkIGZvciBEb1MgYXR0YWNrcyBhZ2FpbnN0IHVucmVsYXRl
+ZCB0aGlyZA0KICAgID4gcGFydGllcz8gRm9yIGV4YW1wbGUsIHRoZXJlJ3Mg
+YSBjbGFzcyBvZiBhbXBsaWZpY2F0aW9uIGlzc3Vlcw0KICAgID4gYWZmZWN0
+aW5nIGF1dG9tYXRlZCBlcnJvciByZXBvcnRpbmcuIFRoaXMgY2FuIGV4aXN0
+IGluIHNlcnZlci1zaWRlDQogICAgPiBjb2RlIGluIHdoaWNoIGV4Y2VwdGlv
+biBoYW5kbGVycyAoc29tZXRoaW5nIGxpa2UgImNvbnN0cmFpbnQNCiAgICA+
+IHZpb2xhdGlvbjogbGVuZ3RoX2EgPiBsZW5ndGhfYiIpIGFyZSBhYmxlIHRv
+IHNlbmQgb3V0Ym91bmQgbmV0d29yaw0KICAgID4gdHJhZmZpYyB0byBhIHZl
+bmRvcidzIHNlcnZlci4gSGVyZSwgdGhlcmUgY2FuIGJlIGNhc2VzIHdoZXJl
+IGFuDQogICAgPiBhdHRhY2tlciBzZW5kcyBhbiB1bmF1dGhlbnRpY2F0ZWQg
+aHVuZHJlZC1ieXRlIHBhY2tldCB0byBhIGN1c3RvbWVyJ3MNCiAgICA+IHNl
+cnZlciwgYW5kIHRoZSBjdXN0b21lcidzIHNlcnZlciB0aGVuIGltbWVkaWF0
+ZWx5IHNlbmRzIGENCiAgICA+IG1pbGxpb24tYnl0ZSBzeXN0ZW0taGVhbHRo
+IHJlcG9ydCB0byB0aGUgdmVuZG9yLiBUaGUgYXR0YWNrZXINCiAgICA+IGdl
+bmVyYWxseSBjYW4gcmVwZWF0IHRoaXMsIGFsdGhvdWdoIHRoZXJlIG1pZ2h0
+IGJlIGEgcmF0ZSBsaW1pdC4NCiAgICA+IFN1cHBvc2UgdGhhdCB0aGUgY3Vz
+dG9tZXIgd2FudHMgdG8gc2VuZCB0aGVzZSByZXBvcnRzLCBhbmQgdGhlIHZl
+bmRvcg0KICAgID4gd2FudHMgdG8gcmVjZWl2ZSB0aGVzZSByZXBvcnRzLCBh
+bmQgKG1heWJlPykgdGhlIGludGVydmVuaW5nIElTUHMgY2FuDQogICAgPiBo
+YW5kbGUgdGhlIGxvYWQuIFdvdWxkIHRoaXMgYmUgYSBDVkUgYmVjYXVzZSBv
+ZiB0aGUgaHVnZSBhbXBsaWZpY2F0aW9uDQogICAgPiByYXRpbywgb3IgaXMg
+YW1wbGlmaWNhdGlvbiBhIENWRSBvbmx5IGluIGNlcnRhaW4gc3BlY2lhbCBj
+YXNlcz8NCiAgICA+DQogICAgDQogICAgU28gc29tZSBhZGRpdGlvbmFsIGNv
+bW1lbnRzL2NyaXRlcmlhOg0KICAgIA0KICAgIDEpIGNhbiB0aGlzIGFjdHVh
+bGx5IGJlIGV4cGxvaXRlZCBpbiBwcmFjdGljZSBpbiBhIHJlYXNvbmFibGUg
+bWFubmVyIChlLmcuDQogICAgYSAxOjEwMDAgYW1wbGlmaWNhdGlvbiBJIHRo
+aW5rIHdlJ2QgYWxsIGFncmVlIGlzIGEgcmVhbGlzdGljIHByb2JsZW0pDQog
+ICAgMikgaXMgdGhpcyBiZWluZyBhY3RpdmVseSB1c2VkIGluIHRoZSB3aWxk
+IHRvIGV4cGxvaXQgc3lzdGVtcyBvciBjYXVzZSBEb1MNCiAgICBzaXR1YXRp
+b25zPyBJbiB0aGUgY2FzZSBvZiB0aGlzIElLRXYxIGlzc3VlIGl0IHNvdW5k
+cyBsaWtlIHllcw0KICAgIA0KICAgIGFuZCBteSBmYXZvcml0ZSAic2hvdWxk
+IHRoaXMgZ2V0IGEgQ1ZFIHRlc3QiIHF1ZXN0aW9uOg0KICAgIA0KICAgIDMp
+IGNhbiBpdCBiZSBmaXhlZCBpbiBhIHdheSB0aGF0IHN0aWxsIGxldHMgdGhl
+IHNlcnZpY2UvY2xpZW50cyB3b3JrPw0KICAgIA0KICAgIElmIGl0IGNhbiBi
+ZSBmaXhlZCBpbiBhIHdheSB0aGF0IGxlYXZlcyB0aGUgc2VydmljZS9jbGll
+bnRzIHdvcmtpbmcgb2sgdGhlbg0KICAgIGNoYW5jZXMgYXJlIHRoZSBvbGQg
+YmVoYXZpb3IgaXMgbm90IHNvbWV0aGluZyB3ZSB3YW50IHRvIGxpdmUgd2l0
+aCBhbnltb3JlDQogICAgYW5kIHdlIG5lZWQgdG8gZ2V0IHJpZCBvZiBpdC4N
+CiAgICANCiAgICANCiAgICA+DQogICAgPiAtIC0tDQogICAgPiBDVkUgQXNz
+aWdubWVudCBUZWFtDQogICAgPiBNL1MgTTMwMCwgMjAyIEJ1cmxpbmd0b24g
+Um9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNBDQogICAgPiBbIEEgUEdQIGtl
+eSBpcyBhdmFpbGFibGUgZm9yIGVuY3J5cHRlZCBjb21tdW5pY2F0aW9ucyBh
+dA0KICAgID4gICBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jdmUvcmVxdWVzdF9p
+ZC5odG1sIF0NCiAgICA+IC0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0t
+DQogICAgPiBWZXJzaW9uOiBHbnVQRyB2MQ0KICAgID4NCiAgICA+IGlRSWNC
+QUVCQ0FBR0JRSllCc1FBQUFvSkVMNTRyaEppOGdsNTZXMFAvanRyOGJnMTlD
+Z2l0cXRXdjhHd1lkS3oNCiAgICA+IEtpVklzQXFWWnF1M0lZbm5CSXB3eUZR
+RHZTbyt1dHFBbjcvaGVVVTdWMThKTXhzVXR0UE5KVkFyd0xwWlo1N3MNCiAg
+ICA+IDcxSFlEdXFsaER0cUxMMkhrd1U3YlUyWHRDYlVpTy9MQUFsbkZ1S3hz
+YkhNb1lsa3orRGdmY2Q1Z3RkYkpoY0cNCiAgICA+IFdtTGNSUmdEU1pWM3c3
+eVdnaEJUaENHQWdqUldVM1B3MHFxbzFwL2ErYWJSOEJ5M05HSTF5Uml3aGo1
+SnhjL3UNCiAgICA+IE5ZUlFMd3FiUUl1MXFIOU9KWGNPZjhUbkIxbHl0VEN3
+S2swdTNoWFh5SVdOU0RkUkFZUXY0NzEyQWY3c1N1VmgNCiAgICA+ICtqWU9H
+dTNtaHJPQmphbXRaTkRNcko5cmlGVFJub0liT1NFK21DTC9LcCtyVHEyMk5Y
+K3JZM3BraC9WZnZDQzINCiAgICA+IC9qRjRhTzFIVWp4SEtFbUthdVZvVEFP
+MTB3NkZQemxSbU9NajdrTTIyb3k1NjhNRDZMeWdXc3BOYzljL0x2SlgNCiAg
+ICA+IE4vaEVhenUyTmlVWDN3TnNMc0E0ejFtTFVlYnRqakJvTC9CZ0FBa0ox
+UzFhb0sySkVuOXk1cks0d2YxdkNiaWENCiAgICA+IFhrd0h4b0x1MEJNem5U
+SU9IaVA3MkcxWVpzMkZKZC9wTnc5aUZ2aTZHUnhQZExSUjhUcjlGQ1JqdjRW
+N212UmcNCiAgICA+IEU4cmdZZTNWbHo4WTlBMVNZd21MTFRLcXFOZ0IvR25R
+TlUzcUtsVWptQWZHaUsyVkdqdkhhaDNCY09ZNEd1dHENCiAgICA+IHhjeWI0
+SGR5L2t5dnhPUW82aUhwYWJaUHhZSEdLVklNK0NSVENsbkVxUU0yT1dpTXht
+di9wZlZ2OHNMNzF1VEoNCiAgICA+IFZNeDJvQUlZQm9FeG92SnJiMnBHDQog
+ICAgPiA9eE5JSg0KICAgID4gLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0t
+DQogICAgPg0KICAgIA0KICAgIA0KICAgIA0KICAgIC0tIA0KICAgIA0KICAg
+IC0tDQogICAgS3VydCBTZWlmcmllZCAtLSBSZWQgSGF0IC0tIFByb2R1Y3Qg
+U2VjdXJpdHkgLS0gQ2xvdWQNCiAgICBQR1AgQTkwQiBGOTk1IDczNTAgMTQ4
+RiA2NkJGIDc1NTQgMTYwRCA0NTUzIDVFMjYgNzk5Mw0KICAgIFJlZCBIYXQg
+UHJvZHVjdCBTZWN1cml0eSBjb250YWN0OiBzZWNhbGVydEByZWRoYXQuY29t
+DQogICAgDQoNCg==
