@@ -1,67 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/4
-Message-Id: <20160216144501.833566C08BD@smtpvmsrv1.mitre.org>
-Date: Tue, 16 Feb 2016 09:45:01 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/9
+Message-Id: <20161019213233.2E9CA52E00A@smtpvbsrv1.mitre.org>
+Date: Wed, 19 Oct 2016 17:32:33 -0400 (EDT)
 From: cve-assign@...re.org
-To: squid3@...enet.co.nz
+To: shilei-c@....cn
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service
+Subject: Re: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://www.squid-cache.org/Advisories/SQUID-2016_1.txt
+> The OpenSSH has a memory exhaustion bug in key exchange process. An
+> unauthenticated peer could repeat the KEXINIT and cause allocation of
+> up to 384MB(not 128MB that the official said). In the default case, an
+> attacker can build 100 such connections, which will consume 38400 MB
+> of memory on the server.
 
-> Patch for 3.5 is
-> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.patch>.
-> 
-> Patch for 4.0 is
-> <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.patch>.
+> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/kex.c?rev=1.127&content-type=text/x-cvsweb-markup
 
-Is this correct or do you mean the 4.0 patch is
-http://www.squid-cache.org/Versions/v4/changesets/squid-4-14538.patch instead?
+>> Unregister the KEXINIT handler after message has been received.
 
-
-> A remotely triggerable denial of service has been found in Squid
-> proxy. The proxy incorrectly handles server TLS failure which almost
-> always results in crashing the entire proxy. Denying service for all
-> other clients using it.
-
->   Bug 4437: Fix Segfault on Certain SSL Handshake Errors
->   
->   Squid after an unsuccessful try to connect to the remote server may make two
->   concurrent retries to connect to the remote SSL server, calling twice the
->   FwdState::retryOrBail() method, which may result to unexpected behaviour.
->   
->   Prevent this by just closing the connection to the remote SSL server inside
->   FwdState::connectedToPeer method on error and instead of calling the
->   FwdState::retryOrBail method, just allow comm_close handler to retry the
->   connection if required.
-> 
-> src/FwdState.cc
-
-Use CVE-2016-2390.
+Use CVE-2016-8858.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWwzVEAAoJEL54rhJi8gl5CEcQAJnr/8JJbM4e1Q/o8w3AVYk0
-FUPc250Qj0z4l5Nq8j8OSx5GsLIx9uVe3NnLe50uPYlF0bdM+AEEbi4e6EJSvtdx
-772jj6N/QArkrbf4qTKWtXS812mxLW6CPewOIk+ldMeAKMKUIh3ePuST3RByxJqi
-3oZGzyQbo2MoDQgXVRQFH6uXo1+4dHqmZfOQjLiaXNEFark248mK+DELCM5P5tB6
-F9ATtcaXuqxj5jwGKm9gZUk5uDP9Ed15Wn020fi5saWDYiFJXF3XeaeURzvTnrS2
-AaKgC0Kvw6gwOams+FIxp8NQtP4XSZMefqRNeoAZdeuV76xZOXWLV9ki2RAEIsWF
-p8qfV1bvdY/+seQ4QUqkm/VmRKc3gHecBSSsnmV+YNa213fzcGXYBfP2nTIFTgwF
-cQ7ycLbMEAGwHWava8t6TJF8mE1+oWNejKBwOMPkJMI9v+mCe364V401+KIYms+a
-6qSbk3iuBoHVm3H7Z1ikcJRW92XKX9LaXTVx5JH5B9p+DRryB9u+zgC8VKAWLOAn
-5t4W3JrliAZluSpc7++6TTqOuFOBEsfJ6l66UEv5Xgoj3BhRBEFkflbYedOLfCap
-apjOXQhV5G1H48Pm6bVStDyRE3JQEbxefGkCwOJDAYOWVqULQ0yACpmng14TjQOR
-RVX4OJ1VZboeNcSMFh4H
-=evrD
+iQIcBAEBCAAGBQJYB+W7AAoJEHb/MwWLVhi2PK0QALEeBA+iTzAL1ZrgIoiDJsYm
+xvsg61m19gz/Wf9sxXLPDd13lhRJhEIs/fBfdngIBaXRTi5dYI7HAsVGB2gnWMsj
+fqUZSfmcYri2VunzYWOX8J81OtBxUR670SOA757g7ktd+6MEq2QQNb1vJSOprapU
+1MqZkz9ZD/c/22pAC/SNCIeT4mZpCNxHZwVCPrELIKKnsp9cYQf0xvRBYFnxulre
+RplzO2iq6GDOk4etpA0YyOzOGA6iZt9+O13+ROaILYUIwUF7DseQKNpB2F82An6l
+qCXYE7d0ZMHDRyPZPmKf72VVM92N+KDoRG/8LlFcn4Yso2o7gHmv5UCRUuFVjD15
+3ZDwYbCB+qtYQ5aLm561Jp1+2rTGg+p1G3bvjRAILp4ZFdsyzDgS02r1epg9TBfx
+GU9QN0GJyjNHFR16KJgo5JtPU0lHk+g68JtsmHzXRZemsQ53ujUK/4gv9lB1feuA
+Nw0ABpuznYOgxN/FuEi1k7SasAZH1KRSiUV/UIiAWLayXE/6q9MMYWhzGPjk317c
+dX+ceeov1GfjsZOfnqiK8bzZfrfPm0qBhOZ1mAJsOiSdQjU4nzYJVewTmflrNLnR
+a+0MHCdOp0uOVoG3jLUOc50mRePLscv80DiiuX31ukO1SacGGNEMyAE/N4eqHd57
+ByjtYBRhe+CxotowFPtd
+=Op5b
 -----END PGP SIGNATURE-----
