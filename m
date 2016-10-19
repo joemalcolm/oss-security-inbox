@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["408" "Tuesday" "5" "June" "2018" "21:04:43" "+0200" "Daniel Beck" "ml@beckweb.net" "<1E76A6EF-1593-4183-A222-CDDA8A32296E@beckweb.net>" "43" "Re: [oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "6" "2018060519:04:43" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun  5   43/408   " thread-indent "\"Re: [oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") "<13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>" ("<13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1823" "Wednesday" "19" "October" "2016" "17:34:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations" nil nil nil "10" "2016101921:34:12" "[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations" (number mark "U       cve-assign@m Oct 19   44/1823  " thread-indent "\"[oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations\"\n") "<20161018230613.GH19318@brightrain.aerifal.cx>" ("<20161018230613.GH19318@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21859 invoked by uid 550); 5 Jun 2018 19:04:53 -0000
+Received: (qmail 1593 invoked by uid 550); 19 Oct 2016 21:34:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21840 invoked from network); 5 Jun 2018 19:04:52 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Date: Tue, 5 Jun 2018 21:04:43 +0200
-References: <13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>
-To: oss-security@lists.openwall.com
-In-Reply-To: <13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>
-Message-Id: <1E76A6EF-1593-4183-A222-CDDA8A32296E@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1528225492;bad84d34;
-X-HE-SMSGID: 1fQHG5-0005Zh-9b
-Subject: Re: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Received: (qmail 1572 invoked from network); 19 Oct 2016 21:34:24 -0000
+From: cve-assign@mitre.org
+To: dalias@libc.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, ville@laurikari.net
+In-Reply-To: <20161018230613.GH19318@brightrain.aerifal.cx>
+Message-Id: <20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>
+Date: Wed, 19 Oct 2016 17:34:12 -0400 (EDT)
+Subject: [oss-security] Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> Due to incorrect use of integer types and missing overflow checks in
+> the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
+> regex implementation (both original version and the one used in musl
+> libc) are subject to integer overflows in buffer size computation.
+
+> at least the num_states*num_tags multiplication can clearly
+> overflow in practice. for safety, check them all, and use the proper
+> type, size_t, rather than int.
+
+Use CVE-2016-8859 for this entire report. We do not see a sensible way
+in which the issue of an incorrect data type could be separated from
+the issue of unchecked multiplication.
 
 
-> On 4. Jun 2018, at 14:37, Daniel Beck <ml@beckweb.net> wrote:
-> 
-> SECURITY-810
+> -    buf = xmalloc((unsigned)total_bytes);
+> +    buf = calloc(total_bytes, 1);
 
-CVE-2018-1000182
+If this is a security fix, it would need a separate CVE ID.
 
-> SECURITY-799
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-CVE-2018-1000184
-
-> SECURITY-804
-
-CVE-2018-1000183
-
-> SECURITY-806
-
-CVE-2018-1000185
-
-> SECURITY-805
-
-CVE-2018-1000186
-
-> SECURITY-883
-
-CVE-2018-1000187
-
-> SECURITY-809
-
-CVE-2018-1000188
-
-> SECURITY-807
-
-CVE-2018-1000189
-
-> SECURITY-865
-
-CVE-2018-1000190
-
-> SECURITY-866
-
-CVE-2018-1000191
-
+iQIcBAEBCAAGBQJYB+XPAAoJEHb/MwWLVhi2xZoP/RjFX9HfV8rmj6XtIvK/V8eX
+Nr7peF92wDUfQTnwHGbB4vpPLAeBJpR9O/T9+mxmp5hbl6EhetgugUkkcr9mn8/M
+7yySbr7wCegpAzWHMm51hecozMunOB8Di0dpI/jhdMNra2N4rAFhZ+orAancZSCq
+IhMIHsj9uuxR7segrNyMlZRCGjLFHtro4TeaO7g84ITVQoswFfbP9yuIL1Ddhn+h
+s/AYfV3jqCXBOP6zWxRyZSAXT37HE/ZYVx0T/6wqrzQhX259i8dYnpRTsIvwZEJt
+dbuB7fAvE6CAhGJ/zOGjBF2U2oXnNmOEdyhWjOdB2TlmfpfS8IyO5tN/ki2Qn8Kt
+g4Lkk3+DKquMh+gcSxF8J/Xc7eKS4FOygdCSM+d5wAWr4iMDyTN0hI+zb9ypIkte
+CTO66jlPgFJy6QBFQSTrv2wqftOdkQhuJ2U6u/ZHI+57Xj/S2AZM8FbWU0dgAkEN
+xgtmF1go9v4hiK2Dln5DAyauOCq5LG1KYuddHmT/nDRxa4dMKG7nWPYH8TP+DMJM
+hnFo8BBSicRFBTBkBE57BwRPps31O3HQ2xD9UusXwy1/5Fa5kpFw0V8bHoUeIpDV
+0Uo212/UWa449y5S/QsmoKaLG/pXQn1YEnYmNZ1ASLCUhD9eiyUMFJI1au7d25PC
+15KiklfB4i7WNGH8t79S
+=M+Ab
+-----END PGP SIGNATURE-----
