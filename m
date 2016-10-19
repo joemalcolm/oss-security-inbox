@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1384" "Thursday" "17" "September" "2015" "12:20:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150917162046.2F4C16C0044@smtpvmsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind" nil nil nil "9" "2015091716:20:46" "[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind" (number mark "        cve-assign@m Sep 17   36/1384  " thread-indent "\"[oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind\"\n") "<20150917122333.GB23283@suse.de>" ("<20150917122333.GB23283@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4350" "Tuesday" "18" "October" "2016" "20:58:21" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>" "99" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" nil nil nil "10" "2016101902:58:21" "[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack" (number mark "U       kseifried@re Oct 18   99/4350  " thread-indent "\"[oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack\"\n") "<20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>" ("<CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>" "<20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23932 invoked by uid 550); 17 Sep 2015 16:20:58 -0000
+Received: (qmail 3782 invoked by uid 550); 19 Oct 2016 02:58:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23909 invoked from network); 17 Sep 2015 16:20:58 -0000
-In-Reply-To: <20150917122333.GB23283@suse.de>
-Message-Id: <20150917162046.2F4C16C0044@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, steved@redhat.com, oss-security@lists.openwall.com
-Date: Thu, 17 Sep 2015 12:20:46 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: remote triggerable use-after-free in rpcbind
-To: meissner@suse.de
+Received: (qmail 3746 invoked from network); 19 Oct 2016 02:58:34 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qZlB7fuzfJOISY3nLRAcgb2KKgox/wpmhIzhc4IM8Rk=;
+        b=bHUCaAXoLrsLgy+2JxahXFrMBrbmhJLzTPzYapLIm0jLBIdufxPm34P/TT5Vdiunnc
+         YCYrdNgMXQhGIj97A0eXuwjziX+5SR/lY3+p5iNEU7BMh0VqO4PkojwZbTc0dmKHoh35
+         Z2kLaIzRRtiVZjOqH6ywsrrCUfOOX1zIkXz4NmwPULz+7uaWMeZOe1oNKEctxv1pKe1M
+         EDy/v9XNIuPab7NJbS4S/+5X2MYHBQhd2FTxUuL9oUkdw+BIs7V4qmB70QpAXFw9l5HW
+         RNL77xGoZO6dkdrbZ6VQwI9SEdlDAVLmyAkOHSBXuqkm2JOu5rQ0gEknPRawx/44eOqD
+         HDSQ==
+X-Gm-Message-State: AA6/9RkusV0ULZ9ua7DOu3hU7iM0Wiwis6ECvSdkS46ZcLkyhqiZ/MJ4DzSc8PY7JLSZsO2kJSNo1fMz/VmJVqNH
+X-Received: by 10.157.22.203 with SMTP id s11mr2331363ots.229.1476845901924;
+ Tue, 18 Oct 2016 19:58:21 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
+References: <CANO=Ty0yD+DmmeqC3dS2u=4+QNawqt6OJjyXRW2x1pqid=S5tQ@mail.gmail.com>
+ <20161019005732.6BA9C52E006@smtpvbsrv1.mitre.org>
+From: Kurt Seifried <kseifried@redhat.com>
+Date: Tue, 18 Oct 2016 20:58:21 -0600
+Message-ID: <CANO=Ty3L-TKMUgRknDGdHGDRDrOpKhQ7oyf_ejOYKX9GoFjfoQ@mail.gmail.com>
+To: CVE ID Requests <cve-assign@mitre.org>
+Cc: oss-security <oss-security@lists.openwall.com>, 
+	Huzaifa Sidhpurwala <huzaifas@redhat.com>
+Content-Type: multipart/alternative; boundary=001a113e21b05f63b6053f2efbdc
+Subject: [oss-security] Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a113e21b05f63b6053f2efbdc
+Content-Type: text/plain; charset=UTF-8
 
-> http://www.spinics.net/lists/linux-nfs/msg53045.html
-> https://bugzilla.suse.com/show_bug.cgi?id=946204
+On Tue, Oct 18, 2016 at 6:57 PM, <cve-assign@mitre.org> wrote:
+>
+> There are at least three different scenarios:
+>
+>  1. Amplification only exists because of a server-side coding error,
+>     and fixing that error has no adverse impact on clients and
+>     requires no client-side changes. For example: for the protocol in
+>     question, the client simply never needs an unauthenticated UDP
+>     request to result in a larger UDP reply.
+>
+>  2. Amplification is not caused by a coding error, but it is possible
+>     to reduce the amplification ratio without completely breaking the
+>     ability of clients to communicate with servers.
+>
+>  3. Amplification is not caused by a coding error, and it is not
+>     possible to reduce the amplification ratio without completely
+>     breaking the ability of clients to communicate with servers. The
+>     only options are to mitigate attacks (as in
+>     https://capec.mitre.org/data/definitions/490.html) or to change
+>     the protocol.
+>
+> If someone can request a CVE ID for any of these three scenarios,
+> should we encourage them to be most liberal with CVE ID requests in
+> scenario 1, and most conservative with CVE ID requests in scenario 3?
+> Or do we ideally want to enumerate everything, even a 1:1.1 ratio
+> that's baked into a protocol design, and can't be fixed without
+> changing every client and server?
+>
+> Finally, do we want CVEs for all types of amplification, or only
+> amplification that can be used for DoS attacks against unrelated third
+> parties? For example, there's a class of amplification issues
+> affecting automated error reporting. This can exist in server-side
+> code in which exception handlers (something like "constraint
+> violation: length_a > length_b") are able to send outbound network
+> traffic to a vendor's server. Here, there can be cases where an
+> attacker sends an unauthenticated hundred-byte packet to a customer's
+> server, and the customer's server then immediately sends a
+> million-byte system-health report to the vendor. The attacker
+> generally can repeat this, although there might be a rate limit.
+> Suppose that the customer wants to send these reports, and the vendor
+> wants to receive these reports, and (maybe?) the intervening ISPs can
+> handle the load. Would this be a CVE because of the huge amplification
+> ratio, or is amplification a CVE only in certain special cases?
+>
 
-> frees the netbuf caller_addr and caller_addr.buf. However, it does not
-> clear xp_rtaddr, so xp_rtaddr.buf now refers to memory region A, which
-> is free.
-> 
-> ... It will reuse the buffer inside xp_rtaddr
+So some additional comments/criteria:
 
-Use CVE-2015-7236.
+1) can this actually be exploited in practice in a reasonable manner (e.g.
+a 1:1000 amplification I think we'd all agree is a realistic problem)
+2) is this being actively used in the wild to exploit systems or cause DoS
+situations? In the case of this IKEv1 issue it sounds like yes
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+and my favorite "should this get a CVE test" question:
 
-iQIcBAEBCAAGBQJV+ufJAAoJEL54rhJi8gl5D/4P/31pBr0+iMIFkWB3Evgbk48P
-MrR9qkpkh8/qI5UH5u/53g1/f684gfod4oIFzMG6QcrXYBdoV5RNk/8Z11ShXRCC
-ioUuSu6Rs7qTpbjhWgCHORVLoy5xHO0+vam/rp+HV8ou3aOcmxuFewniUVFhcChw
-l0CcrprES50BVVtIOEnq32qK0uwfeWAVPejEmDUpVeiZtOIjgSNczzV8RFevZ5bw
-60eR72++Qaf5ZbYn/1lI18KCRB5IXJo/Bci9em1VEPonqhJ5TVfNxDmj2TRk3QDK
-foLTa2h8QiTn1KYlrZw5WU73gEGOq+QTWeMwXtRUhMAeApljHZccEFy6IZvUN1kA
-X9reVz73H4ogS2yeERF5+EY6FIpGn1Q2s64CHynXKYzec4R2MYybFiNffn3YL4U/
-I8DwPb7eOH0LVNpPMXs712HgeJBXf+6EXyLY4sFiTjsubJARt/EHwBtfrO+q1o2S
-RJc9iu3eP7IeF0JDW+ANR3gxG6Nd9kyDdCXOJRwe8m7sRzpWzuDI1xgTqTD+HPp8
-/Y+2OU5Op0BbjpzG+ExtPXImhLL1F7Zrv6J5qAz4hv7nIJEiLAfX5Jzu1FVl5gLb
-S7BM9cjlsrRjH49o3Sf9mjwPjUQkP2sJ8K3N/8bWLJX5P2CEV4EGJXRO0/2p6Grv
-v3WLb36O/Vsfn6c05Da7
-=KQBR
------END PGP SIGNATURE-----
+3) can it be fixed in a way that still lets the service/clients work?
+
+If it can be fixed in a way that leaves the service/clients working ok then
+chances are the old behavior is not something we want to live with anymore
+and we need to get rid of it.
+
+
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJYBsQAAAoJEL54rhJi8gl56W0P/jtr8bg19CgitqtWv8GwYdKz
+> KiVIsAqVZqu3IYnnBIpwyFQDvSo+utqAn7/heUU7V18JMxsUttPNJVArwLpZZ57s
+> 71HYDuqlhDtqLL2HkwU7bU2XtCbUiO/LAAlnFuKxsbHMoYlkz+Dgfcd5gtdbJhcG
+> WmLcRRgDSZV3w7yWghBThCGAgjRWU3Pw0qqo1p/a+abR8By3NGI1yRiwhj5Jxc/u
+> NYRQLwqbQIu1qH9OJXcOf8TnB1lytTCwKk0u3hXXyIWNSDdRAYQv4712Af7sSuVh
+> +jYOGu3mhrOBjamtZNDMrJ9riFTRnoIbOSE+mCL/Kp+rTq22NX+rY3pkh/VfvCC2
+> /jF4aO1HUjxHKEmKauVoTAO10w6FPzlRmOMj7kM22oy568MD6LygWspNc9c/LvJX
+> N/hEazu2NiUX3wNsLsA4z1mLUebtjjBoL/BgAAkJ1S1aoK2JEn9y5rK4wf1vCbia
+> XkwHxoLu0BMznTIOHiP72G1YZs2FJd/pNw9iFvi6GRxPdLRR8Tr9FCRjv4V7mvRg
+> E8rgYe3Vlz8Y9A1SYwmLLTKqqNgB/GnQNU3qKlUjmAfGiK2VGjvHah3BcOY4Gutq
+> xcyb4Hdy/kyvxOQo6iHpabZPxYHGKVIM+CRTClnEqQM2OWiMxmv/pfVv8sL71uTJ
+> VMx2oAIYBoExovJrb2pG
+> =xNIJ
+> -----END PGP SIGNATURE-----
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113e21b05f63b6053f2efbdc--
