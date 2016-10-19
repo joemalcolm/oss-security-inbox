@@ -1,53 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/4
-Message-ID: <58a56ff2-6a32-cbfb-514f-afca19b97d39@fedoraproject.org>
-Date: Tue, 18 Oct 2016 14:14:26 +0200
-From: Remi Collet <remi@...oraproject.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/12
+Message-ID: <20161019233004.GJ19318@oevtugenva.nrevsny.pk>
+Date: Wed, 19 Oct 2016 19:30:04 -0400
+From: Rich Felker <dalias@...c.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, ville@...rikari.net
+Subject: Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations
 Content-Type: text/plain; charset=utf-8
 
-Le 18/10/2016 à 14:06, Adam Maris a écrit :
-> On 18/10/16 09:42, Lior Kaplan wrote:
->> Hi,
->>
->> Please assign a CVE for the following issue:
->>
->> Bug #73147    Use After Free in unserialize()
->> https://bugs.php.net/bug.php?id=73147
->> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
->>
->>
->> Thanks,
->>
->> Kaplan
->>
-> 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
-> has CVE assigned.
-> Here you request CVE for another one issue (even the documentation says
-> it's unsafe to use
-> unserialize on untrusted input).
+On Wed, Oct 19, 2016 at 05:34:12PM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
 > 
-> Are you planning to obtain CVEs also for other security bugs or do you
-> treat the rest as
-> CVE-unworthy? Or are reporters/community supposed to do it?
-
-All the remaining bugs, despite reported as security issue, involved
-some very big strings to reproduce (~2GB)
-
-Which is prevented by any decent memory_limit value
-And by max_input_size for remote access.
-
-
-Remi
-
-
-P.S. just my 0,02€, but indeed, CVE-unworthy
-
-> Thanks!
+> > Due to incorrect use of integer types and missing overflow checks in
+> > the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
+> > regex implementation (both original version and the one used in musl
+> > libc) are subject to integer overflows in buffer size computation.
 > 
+> > at least the num_states*num_tags multiplication can clearly
+> > overflow in practice. for safety, check them all, and use the proper
+> > type, size_t, rather than int.
+> 
+> Use CVE-2016-8859 for this entire report. We do not see a sensible way
+> in which the issue of an incorrect data type could be separated from
+> the issue of unchecked multiplication.
 
+Agreed.
 
+> > -    buf = xmalloc((unsigned)total_bytes);
+> > +    buf = calloc(total_bytes, 1);
+> 
+> If this is a security fix, it would need a separate CVE ID.
 
+It's not, just something I did at the same time as fixing the bogus
+cast (which would be unsafe after the type fix) in this line. In
+musl's version of the code, xmalloc is just malloc, and malloc+memset
+was a sloppy way of writing calloc that I cleaned up.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (247 bytes)
+Rich
