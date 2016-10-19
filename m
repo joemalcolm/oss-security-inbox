@@ -1,20 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/4
-Message-Id: <20160314042352.2D22D52E003@smtpvbsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:23:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/10
+Message-Id: <20161019213412.5EE6E8BC62F@smtpvmsrv1.mitre.org>
+Date: Wed, 19 Oct 2016 17:34:12 -0400 (EDT)
 From: cve-assign@...re.org
-To: vdronov@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: crash on invalid USB device descriptors (cdc_acm driver)
+To: dalias@...c.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, ville@...rikari.net
+Subject: Re: CVE Request - TRE & musl libc regex integer overflows in buffer size computations
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://seclists.org/bugtraq/2016/Mar/54
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283366
+> Due to incorrect use of integer types and missing overflow checks in
+> the tre_tnfa_run_parallel function's buffer overflow logic, the TRE
+> regex implementation (both original version and the one used in musl
+> libc) are subject to integer overflows in buffer size computation.
 
-Use CVE-2016-3138.
+> at least the num_states*num_tags multiplication can clearly
+> overflow in practice. for safety, check them all, and use the proper
+> type, size_t, rather than int.
+
+Use CVE-2016-8859 for this entire report. We do not see a sensible way
+in which the issue of an incorrect data type could be separated from
+the issue of unchecked multiplication.
+
+
+> -    buf = xmalloc((unsigned)total_bytes);
+> +    buf = calloc(total_bytes, 1);
+
+If this is a security fix, it would need a separate CVE ID.
 
 - -- 
 CVE Assignment Team
@@ -24,17 +38,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW5jxiAAoJEL54rhJi8gl5WFUP/3z33WUQmeerUw1jHWIod9pA
-WITQqeozGRGSZkaGTSLmAVB+xIgLoyVCAMvCJCeR24DD6gix63EVEFK7R9JUH9wd
-qL8FmZFc9fG+waPA1yk1ZPhmzkX74SE3rtKR2IP5ECN0PnbKNpmrXqn95SXaIW0J
-mJbbU+N1E57F8g7kAU0GUUmAbOWEjtUVgVLALgqNxfROHkd2br9Y5POxWkctkgaj
-VB4JHO9C8ALFStpMtz+Li+1nZzULn6FHN+w4LL63oIRanLWHoJzI1qbaBY3bv5WX
-LmH9KlYF7vId44gjJky3iX6cS0k0ipRAsTKXNFG1XYbId0GKsqMwCyZvRjL59WqL
-LyP/G2KjpyeGxQkXHjohoIBpDlRBypHiNiH6Gdb7Gcyky9IbqR6Bt5da/vduDxmO
-bk53EXO29RHKFLc7yjRQSbu/V7b1cvmAY+mDTObDRDuTg7OVIR8tbhJo++zCMOhy
-NE0jjM1oTEnJVF0nQ4cYdOd63+z3SW8bclHmwd+8Z24K1o8EHYyVbCgvdPHufLfg
-VasXW4y8SCyZHJnyfgeUEeoSUCpLdJBN2kUW5KPylIaO3t/4o+N9h99KbdiHGjd2
-9cfMuplZOQvs6zxluMCowMJnXLIDJEs6jEc7+p0pRf4or6e+ICyVFdBwkxMfW7lZ
-w7ySycQbyZ/euZb7iKoZ
-=5QI+
+iQIcBAEBCAAGBQJYB+XPAAoJEHb/MwWLVhi2xZoP/RjFX9HfV8rmj6XtIvK/V8eX
+Nr7peF92wDUfQTnwHGbB4vpPLAeBJpR9O/T9+mxmp5hbl6EhetgugUkkcr9mn8/M
+7yySbr7wCegpAzWHMm51hecozMunOB8Di0dpI/jhdMNra2N4rAFhZ+orAancZSCq
+IhMIHsj9uuxR7segrNyMlZRCGjLFHtro4TeaO7g84ITVQoswFfbP9yuIL1Ddhn+h
+s/AYfV3jqCXBOP6zWxRyZSAXT37HE/ZYVx0T/6wqrzQhX259i8dYnpRTsIvwZEJt
+dbuB7fAvE6CAhGJ/zOGjBF2U2oXnNmOEdyhWjOdB2TlmfpfS8IyO5tN/ki2Qn8Kt
+g4Lkk3+DKquMh+gcSxF8J/Xc7eKS4FOygdCSM+d5wAWr4iMDyTN0hI+zb9ypIkte
+CTO66jlPgFJy6QBFQSTrv2wqftOdkQhuJ2U6u/ZHI+57Xj/S2AZM8FbWU0dgAkEN
+xgtmF1go9v4hiK2Dln5DAyauOCq5LG1KYuddHmT/nDRxa4dMKG7nWPYH8TP+DMJM
+hnFo8BBSicRFBTBkBE57BwRPps31O3HQ2xD9UusXwy1/5Fa5kpFw0V8bHoUeIpDV
+0Uo212/UWa449y5S/QsmoKaLG/pXQn1YEnYmNZ1ASLCUhD9eiyUMFJI1au7d25PC
+15KiklfB4i7WNGH8t79S
+=M+Ab
 -----END PGP SIGNATURE-----
