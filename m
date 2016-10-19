@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1794" "Friday" "29" "January" "2016" "20:15:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160130011501.F2C0B3AE00B@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write" nil nil nil "1" "2016013001:15:01" "[oss-security] Re: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write" (number mark "U       cve-assign@m Jan 29   46/1794  " thread-indent "\"[oss-security] Re: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write\"\n") "<alpine.LFD.2.20.1601292141150.18369@wniryva>" ("<alpine.LFD.2.20.1601292141150.18369@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2587" "Wednesday" "19" "October" "2016" "17:35:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161019213549.6A26D52E018@smtpvbsrv1.mitre.org>" "58" "[oss-security] Re: CVE request for tor" nil nil nil "10" "2016101921:35:49" "[oss-security] Re: CVE request for tor" (number mark "U       cve-assign@m Oct 19   58/2587  " thread-indent "\"[oss-security] Re: CVE request for tor\"\n") "<20161018170935.GA26921@inutil.org>" ("<20161018170935.GA26921@inutil.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23763 invoked by uid 550); 30 Jan 2016 01:15:13 -0000
+Received: (qmail 11918 invoked by uid 550); 19 Oct 2016 21:36:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23742 invoked from network); 30 Jan 2016 01:15:13 -0000
+Received: (qmail 11900 invoked from network); 19 Oct 2016 21:36:01 -0000
 From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, zuozhi.fzz@alibaba-inc.com
-In-Reply-To: <alpine.LFD.2.20.1601292141150.18369@wniryva>
-Message-Id: <20160130011501.F2C0B3AE00B@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Jan 2016 20:15:01 -0500 (EST)
-Subject: [oss-security] Re: CVE request Qemu: usb: ehci null pointer dereference in ehci_caps_write
+To: jmm@debian.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <20161018170935.GA26921@inutil.org>
+Message-Id: <20161019213549.6A26D52E018@smtpvbsrv1.mitre.org>
+Date: Wed, 19 Oct 2016 17:35:49 -0400 (EDT)
+Subject: [oss-security] Re: CVE request for tor
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Qemu emulator built with the USB EHCI emulation support is vulnerable to a
-> null pointer dereference flaw. It could occur when an application attempts to
-> write to EHCI capabilities registers.
+> https://blog.torproject.org/blog/tor-0289-released-important-fixes
+> https://github.com/torproject/tor/commit/3cea86eb2fbb65949673eb4ba8ebb695c87a57ce
+> https://trac.torproject.org/projects/tor/ticket/20384
+
+> Tor 0.2.8.9 backports a fix for a security hole in previous versions
+> of Tor that would allow a remote attacker to crash a Tor client,
+> hidden service, relay, or authority.
+
+> Prevent a class of security bugs caused by treating the contents of a
+> buffer chunk as if they were a NUL-terminated string. At least one
+> such bug seems to be present in all currently used versions of Tor,
+> and would allow an attacker to remotely crash most Tor instances,
+> especially those compiled with extra compiler hardening. With this
+> defense in place, such bugs can't crash Tor, though we should still
+> fix them as they occur. Closes ticket 20384
+
+> Add a one-word sentinel value of 0x0 at the end of each buf_t chunk
 > 
-> A privileged user inside quest could use this flaw to crash the Qemu process
-> instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05899.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1301643
+> This helps protect against bugs where any part of a buf_t's memory
+> is passed to a function that expects a NUL-terminated input.
 
->> usb: ehci: add capability mmio write function
+Here, we will assign the ID to the broadest possible interpretation of
+the issue, which perhaps can be restated as "Tor internal functions
+were entitled to expect that buf_t data had NUL termination, but the
+implementation of or/buffers.c did not ensure that NUL termination was
+present."
 
->> its mmio '.write' function was missing, which lead to a null
->> pointer dereference issue
+Use CVE-2016-8860.
 
-Use CVE-2016-2198.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ehci.c but
-that may be an expected place for a later update.
+With this CVE, any related "we should still fix them as they occur"
+patches can most likely be treated as defense-in-depth changes, and
+won't require separate CVE IDs.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWrA0IAAoJEL54rhJi8gl58PcP/2F+tp54ZD2CLMjKWW4D9W5G
-YoICQDA5qfy7VkJDEOwOnZ4clI+F2KFaUh34p0BQ2IVNHsvc+wMMofOfO9enlkIY
-s7hKhWNvBeaSR4UPSej14hxtY32uqoD2jEHBo+XCQ8DLH1CFJcMvC6sqEhuOGS0I
-1Ayl0xKBQTnl+5lFR2ayNMRbDac7lCvgVQx1jmptuydpuJW6h8CKzVt6hUyvZcL0
-qPwA7Q/bqkz4KFFzFb1JvW81fHZ95pBxbfgNn+RNey+BAEm46hLtBZOjOf70qgto
-iRGWEuAEyAcHdAE9HwvKHFXNaNVACNftvoEnzeR5krvxQke2JujtQWU8gZRQ/DYP
-vzdhAWEmmXl1d708zywYasVHRQka62H1ou7RhcIvEKw542gUTvoTUL0wefnHKb6X
-2fTzt3oQeE3OKqNYCXvcc6LxYqwCz9efcf4DX+e7VW2CbbDSvWghRgPwhZIj9+rr
-FEMQGtnN/NY7FnFBOlkUTRspk6sIsn3MeILU2hsNBuxzGs0vczM1fbYsdSEBR+2N
-KUlz5fMtC3bdl0/2xnb/ptdLxGEclbjWv8xnyT/McEFevIm2EqPi/iRz3YWgsJf0
-O31vnHuf4WZMqT+thvERuzm6gNrR1IvL6KxQvWDnTRxes2HQk2Vs2wmKv5ccIFBV
-Ew8JiuDju097TPIRuhuT
-=EwFk
+iQIcBAEBCAAGBQJYB+XHAAoJEHb/MwWLVhi2sBMP+wRQ7PiGfYaTU0Cym1dNAYpJ
+cXF5FHCE+wIRIzBh4DxPPPm/335kM4iLd/4mTL0Tt6OXRbqxHBcaGQlcEhchW4YH
+YCoTVuKDZDXo9OD1AaJtWVcV0b8AYk+H0uGCMarvnSiuO5b+149DQiFaSxE9ORVx
+z2c+2GzAXm+rI1kEfRVh/Ak1sVyW6fLh1zazMObvdrvEJutSJw9iVI8/hO6mgQ3I
+EMaqg4WjVdWuEcAfEDmqRT//AF41QsYUYQ916BluCNoMATqGT38IsU5a5ESScTi3
+P5cnEG0fn2KbXYbP449vLhyEOPzS/O/yZDcpiGmgn+Sr8znggwPoetVQ3C84jjVb
+FeyhMRwzEd+ugiSxSeGTja9sDGRugtkcR0XAsMEOn/0qnCTRPK2iTxq3EGt+F7lC
+4swukuQ6rJDY3qmn+7y8eUthu9Y87qwzsEd8l1WomtGLnyErEiolrJO7JngXYQuc
+IEZpoqvmonZd8WPOr4doMH9TT6ybpW7thA+DY1gt0EgsiYaITe9u6c7kcjkhR/5C
+9nda+YakEjAM6r/W0S3Xvo1iJ+k1ar5ZX37o5H/UqMFVtJqs5G8/d6Nejqn9ZiHJ
+m1hdRYbe2Pr0n2gZg1POhYs8JogcqXw6eTYJIAtKy1ssHKU0WnP5YRDiQ1wKWk3g
+RTr0TaPl+xvXHMUq+mxr
+=yC51
 -----END PGP SIGNATURE-----
