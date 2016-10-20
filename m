@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/9
-Message-ID: <alpine.GSO.2.20.1609090953070.18405@freddy.simplesystems.org>
-Date: Fri, 9 Sep 2016 09:56:49 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: Agostino Sarubbo <ago@...too.org>
-cc: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick 1.3.25 fixes some security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/7
+Message-ID: <c9c59fce-758b-3bd2-a255-7434795b9611@isc.org>
+Date: Thu, 20 Oct 2016 14:43:14 -0400
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-2848 has been disclosed.
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 9 Sep 2016, Agostino Sarubbo wrote:
+Last week we notified the related list, distros@...openwall.org,
+about CVE-2016-2848, a vulnerability found in ISC BIND releases
+produced before change #3548, which first appeared in May 2013.
 
-> On Tuesday 06 September 2016 20:50:23 Bob Friesenhahn wrote:
->> 4. The TIFF reader had a bug pertaining to use of TIFFGetField() when
->> a 'count' value is returned.  The bug caused a heap read overflow (due
->> to using strlcpy() to copy a possibly unterminated string) which could
->> allow an untrusted file to crash the software.
->
->
-> For who is interested, the details of the issue N° 4 are documented here:
->
-> https://blogs.gentoo.org/ago/2016/08/23/graphicsmagick-two-heap-based-buffer-overflow-in-readtiffimage-tiff-c/[1]
+Although all of ISC's BIND releases since that date have been immune
+to the vulnerability, several OS distribution packagers were
+maintaining BIND packages which were forked from ISC's
+source line before that change and so we notified that
+list to give packagers warning before our public disclosure of
+the vulnerability.
 
-The problem was due to the definition of strlcpy() in that it is 
-supposed to return the number of characters which would have been 
-copied if the destination buffer was large enough.  To satisfy this 
-requirement, strlcpy() needs to continue scanning memory until it 
-encounters a null byte in memory.
+As we previously announced it was our intention to do,
+we have publicly disclosed CVE-2016-2848 today.
 
-The strlcpy() function has very nice properties but this weakness is 
-something that developers need to be aware of.
+Since information concerning the vulnerability, including
+a reproduction script, exists in a public bug repository
+we urge you to update vulnerable binary packages as soon
+as possible.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Thank you.  The official copy of our vulnerability announcement
+can be found here:  https://kb.isc.org/article/AA-01433/74/CVE-2016-2848
+
+Michael McNally
+ISC Security Officer
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (496 bytes)
