@@ -1,27 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/18
-Message-ID: <20160929142357.GA25419@kroah.com>
-Date: Thu, 29 Sep 2016 16:23:57 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/4
+Message-ID: <20161020074348.GC18803@suse.de>
+Date: Thu, 20 Oct 2016 09:43:48 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
+Cc: cve-assign@...re.org
+Subject: Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 30, 2016 at 12:14:04AM +1000, Vitaly Nikolenko wrote:
-> Wasn't this already covered by CVE-2016-4997? There's a public exploit
-> 
-> https://www.exploit-db.com/exploits/40049/
-> 
-> I'm assuming for IPv6 this would be exactly the same except for
-> changing the setsockopt optname from IPT_SO_SET_REPLACE to
-> IP6T_SO_SET_REPLACE. The code path for IPv6 looks almost identical
-> unless I'm missing something?
-> 
-> Commit ce683e5f9d045e5d67d1312a42b359cb2ab2a13c included fixes for
-> ARP, IP and IPv6 and my assumption was that CVE-2016-4997 covered all
-> of them.
+Hi,
 
-I knew this looked familiar, thanks for bringing this up.
+A general comment on all you fuzzy security researchers.
 
-greg k-h
+Please _always_ attach the testcase and/or make it available via easy accessible means.
+
+(We are very happy that Hanno does this.)
+
+Sincerely, your otherwise very unhappy security incident response engineers.
+
+On Thu, Oct 20, 2016 at 09:27:24AM +0200, Agostino Sarubbo wrote:
+> Description:
+> imagemagick is a software suite to create, edit, compose, or convert bitmap 
+> images.
+> 
+> Another round of fuzzing pointed out that the memory allocation failure I 
+> discovered is still reproducible in the 7.0.3.4 version.
+> As usual, the upstream security policy are enabled.
+> 
+> The interesting part of the ASan stacktrace(not full because is a copy past of 
+> the one in the provious post):
+> 
+> # identify $FILE
+>    #9 0x7f467fd11c67 in AcquireMagickMemory /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
+>     #10 0x7f467fd11c67 in AcquireQuantumMemory /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:533
+>     #11 0x7f4673379018 in ReadRLEImage /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/coders/rle.c:267:36
+>     #12 0x7f467faeca85 in ReadImage /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:496:13
+>     #13 0x7f467fff4def in ReadStream /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/stream.c:1012:9
+>     #14 0x7f467faeb69d in PingImage /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:226:9
+>     #15 0x7f467faebeae in PingImages /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:326:10
+>     #16 0x7f467f40f4da in IdentifyImageCommand /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/identify.c:319:18
+>     #17 0x7f467f48a844 in MagickCommandGenesis /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/mogrify.c:183:14
+>     #18 0x4f1fae in MagickMain /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:145:10
+>     #19 0x4f1fae in main /tmp/portage/media-
+> gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:176
+>     #20 0x7f467e35d61f in __libc_start_main /var/tmp/portage/sys-
+> libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+>     #21 0x4192a8 in _init (/usr/bin/magick+0x4192a8)
+> Affected version:
+> 7.0.3.4
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> N/A
+> 
+> Timeline:
+> 2016-10-13: bug re-discovered
+> 2016-10-13: bug re-reported to upstream
+> 2016-10-20: blog post about the issue
+> 
+> Note:
+> This bug was found with American Fuzzy Lop.
+> 
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
+> 
+
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
