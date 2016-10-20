@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/6
-Message-Id: <20160128064013.706886C02FC@smtpvmsrv1.mitre.org>
-Date: Thu, 28 Jan 2016 01:40:13 -0500 (EST)
-From: cve-assign@...re.org
-To: limingxing@....cn
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: invalid Read in the JasPer's jas_matrix_clip() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/8
+Message-ID: <87shrqafvb.fsf@mid.deneb.enyo.de>
+Date: Thu, 20 Oct 2016 23:07:52 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-2848 has been disclosed.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Michael McNally:
 
-> vulnerability in the way JasPer's jas_matrix_clip() function parsed certain JPEG 2000 image files.
-> 
-> Segmentation fault.
-> jas_matrix_clip
-> jas_seq.c:286
+> Since information concerning the vulnerability, including
+> a reproduction script, exists in a public bug repository
+> we urge you to update vulnerable binary packages as soon
+> as possible.
 
-Use CVE-2016-2089.
+This is in reference to this Debian bug:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=839051>
 
-iQIcBAEBCAAGBQJWqbd7AAoJEL54rhJi8gl5oekQAK6bdMp7NHCZefN6JR6EUtAw
-40qO3ZPE9Q2BXWF1EMCDOOY38d6KVAmNd0tpUO8gIhrKAMTERm3vJo6T4zmieJaM
-nGixHSOwGTNRtPVgR8uhQqcm3b/bIntU30Qjvk9gTn2pdSTaVJbHJdcQMYhuTTrm
-ZSNXaASVT7f6Eohw7LKnpUkFJ3Nx5s/PpLqAiTfGXEck4aVdL6r9hKGi0XBuA13m
-s5Hc5hAr9us89zM6Q6dlluGdP/RIs1yvsZhoOGgplqqv3rF/IKHEkxo7PedSJR52
-dI5JeGbgJnv7YCBo7gOa7z6j5hADJthzmeIiIJBaOgEkwRBLVw/06mKT66yg2Brf
-F7FNjY7lFvilQaN0G/2YgtusejovWXtqlpCaA2GVNRmXuPHu7QgmmCnH5ZLFldPG
-HeNYtFfYtaEDVHGSLwFdHO2vCYLg//r4pBhLDVBdqKQATtehVe547yYZQOzpLMS6
-NivtNV4EtloEYMb18xEmKOTe5Set7u+pfwhTXjQ5Ic+4WD6k6nqXUUQravF1wQH0
-KAziYYqlD7NkfveLiX6SleISKZZcL69EhffjoKMMEH7tAlhn7e23qrtMWlk1HgL6
-i0k1PQsoleAcITP3bsjO4MGrlzSuLmoZAME56FxF8gpKN6M/YPU0Ia71m59R5R9V
-ASipdwlGWBq39LAaDg1X
-=iTFI
------END PGP SIGNATURE-----
+I assumed it was a Debian-specific backporting problem, affecting only
+the LTS branch of the previous (non-current) stable release.  It did
+not occur to me that this was an independent bugfix which happened
+upstream some time ago, and that affected software versions are still
+widely deployed.
