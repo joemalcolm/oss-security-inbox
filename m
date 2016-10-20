@@ -1,53 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/1
-Message-Id: <20160127054008.4655CB2E019@smtpvbsrv1.mitre.org>
-Date: Wed, 27 Jan 2016 00:40:08 -0500 (EST)
-From: cve-assign@...re.org
-To: xiaoqixue_1@....com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: a bug in gif2rgb.c in giflib-5.1.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/5
+Message-ID: <5184269.v1vKSl7Lqd@blackgate>
+Date: Thu, 20 Oct 2016 09:43:40 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: jasper: NULL pointer dereference in jpc_tsfb_synthesize (jpc_tsfb.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-> We find a memory allocation whose size could be zero in gif2rgb.c.
-> and It will result to several memory out of bound read and write. the bug in gif2rgb.c:386 :
-> 
-> 386 if ((ScreenBuffer = (GifRowType *) 
-> 387 malloc(GifFile->SHeight * sizeof(GifRowType))) == NULL) 
-> 388 GIF_EXIT("Failed to allocate memory required, aborted.");
-> 
-> 
-> Please see "http://sourceforge.net/p/giflib/bugs/82/" for more details.
+Another round of fuzzing on an updated version (1.900.5) revealed another NULL 
+pointer access
 
-Can you provide more information about the relationship between
-http://sourceforge.net/p/giflib/bugs/82/ and the above instance of
-GifFile->SHeight in the malloc call? The
-http://sourceforge.net/p/giflib/code/ci/4cc68b315ff9a378aef6664e1be6b2144ad4a5e6/
-patch for http://sourceforge.net/p/giflib/bugs/82/ adds a check for
-"GifFile->SWidth == 0" but does not add new validation of the
-GifFile->SHeight value.
+The complete ASan output:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+# imginfo -f $FILE
+warning: trailing garbage in marker segment (14 bytes)
+warning: not enough tile data (15 bytes)
+warning: bad segmentation symbol
+warning: bad segmentation symbol
+ASAN:DEADLYSIGNAL
+=================================================================
+==7144==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f6d3c37d0b0 bp 0x7ffdc7407a90 sp 0x7ffdc7407a30 T0)
+    #0 0x7f6d3c37d0af in jpc_tsfb_synthesize /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_tsfb.c:152:4
+    #1 0x7f6d3c2f5140 in jpc_dec_tiledecode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:1068:3
+    #2 0x7f6d3c2e5c40 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:623:7
+    #3 0x7f6d3c2ef294 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:390:10
+    #4 0x7f6d3c2ef294 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:254
+    #5 0x7f6d3c2bd061 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_dec.c:215:21
+    #6 0x7f6d3c24df39 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
+    #7 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
+    #8 0x7f6d3b35c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #9 0x418e68 in _init (/usr/bin/imginfo+0x418e68)                                                                                                                                                                                                                           
 
-iQIcBAEBCAAGBQJWqFekAAoJEL54rhJi8gl5AtQP/imjqKTZMrt2KiqYaIAiEbvK
-KBvoKNDaBesh4kJQ2XHIlT+kG5y2Qr0KiXYR3+O0nrbebXzM9pUlcAI6H3jAhiOX
-h2mRNBXKGOof7wbsoAFsKrYEKAdASvLxy+KSl74Bxb00Z68PSezgBo1SoHi/xW3z
-C5yFxRnOjYLlVz/X76+gYYqbLgwnLHUPWN4mIxu2unDZ67Mc43i8br4pr1eXH4an
-1GgExNhoMsIk2vwPLatOL7DDEqBJKLygVh5QYtXs1uXjBx/RA4opzJRsb3mgmX2D
-K4q5mjgrUfx85meR/9zBVs22HLSWcJPQoqQnaRHcKKN0R8J0P+31X2NYBqbMj9d3
-HVZaaX9zB4Uq3Mpj9ZTgGnvyJuI/YVi7VviYTWhn17NGrvH3ivCr/vvhs7nudBti
-PfQj6if3vhy6cH7WYUN9ybzG3NXFdPpL9ZU5WN5GAyICXfYo3m63X03OZWPuTm3h
-skzp2a4dAfh+6KTF53ebUzoi0V+vX3tq5+jnMbDam/UfZBOdq+cK0CYU2VrOmNCj
-F0LcBDjzGBxepVLQS54Bvh/B5ymrIWjcub4zJ6gIIh0Sg5sUBBW2eg80my5wrD46
-7mvpMgl2D2FWy8dHkdyf4abotfnZj62d43XD+tqjfERuTRnJCDNh/O8q4MyMVw73
-69PiDuGJuPAhFns58FDN
-=bNmf
------END PGP SIGNATURE-----
+AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_tsfb.c:152:4 in 
+jpc_tsfb_synthesize                                                                                                                           
+==7144==ABORTING
+
+Affected version:
+1.900.5
+
+Fixed version:
+1.900.9
+
+Commit fix:
+https://github.com/mdadams/jasper/commit/2e82fa00466ae525339754bb3ab0a0474a31d4bd
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Timeline:
+2016-10-19: bug discovered
+2016-10-19: bug reported to upstream
+2016-10-20: upstream released the patch and 1.900.9
+2016-10-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/20/jasper-null-pointer-dereference-in-jpc_tsfb_synthesize-jpc_tsfb-c/
+
