@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2453" "Thursday" "24" "September" "2015" "16:42:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150924204210.6DA5F6C0059@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege" nil nil nil "9" "2015092420:42:10" "[oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege" (number mark "        cve-assign@m Sep 24   62/2453  " thread-indent "\"[oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege\"\n") "<5601973A.5080009@idrix.fr>" ("<5601973A.5080009@idrix.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2528" "Thursday" "20" "October" "2016" "09:27:24" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<5202386.CNWfkh1GhB@blackgate>" "61" "[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)" nil nil nil "10" "2016102007:27:24" "[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)" (number mark "U       ago@gentoo.o Oct 20   61/2528  " thread-indent "\"[oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18068 invoked by uid 550); 24 Sep 2015 20:42:23 -0000
+Received: (qmail 11595 invoked by uid 550); 20 Oct 2016 07:27:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18042 invoked from network); 24 Sep 2015 20:42:22 -0000
-In-Reply-To: <5601973A.5080009@idrix.fr>
-Message-Id: <20150924204210.6DA5F6C0059@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 24 Sep 2015 16:42:10 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - TrueCrypt 7.1a and VeraCrypt 1.14 Local Elevation of Privilege
-To: veracrypt@idrix.fr
+Received: (qmail 11577 invoked from network); 20 Oct 2016 07:27:43 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Thu, 20 Oct 2016 09:27:24 +0200
+Message-ID: <5202386.CNWfkh1GhB@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.21-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-> I would like to request two CVE identifiers for the two security issues
-> described below affecting TrueCrypt 7.1a (latest version) and its fork
-> VeraCrypt 1.14 (latest version) running on all versions of Windows.
-> 
-> These issues were reported by James Forshaw (Google).
+Another round of fuzzing pointed out that the memory allocation failure I 
+discovered is still reproducible in the 7.0.3.4 version.
+As usual, the upstream security policy are enabled.
 
-> Issue 1: Local Elevation of Privilege on Windows by abusing
->               drive letter handling.
+The interesting part of the ASan stacktrace(not full because is a copy past of 
+the one in the provious post):
 
-Use CVE-2015-7358.
+# identify $FILE
+   #9 0x7f467fd11c67 in AcquireMagickMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
+    #10 0x7f467fd11c67 in AcquireQuantumMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/memory.c:533
+    #11 0x7f4673379018 in ReadRLEImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/coders/rle.c:267:36
+    #12 0x7f467faeca85 in ReadImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:496:13
+    #13 0x7f467fff4def in ReadStream /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/stream.c:1012:9
+    #14 0x7f467faeb69d in PingImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:226:9
+    #15 0x7f467faebeae in PingImages /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickCore/constitute.c:326:10
+    #16 0x7f467f40f4da in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/identify.c:319:18
+    #17 0x7f467f48a844 in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/MagickWand/mogrify.c:183:14
+    #18 0x4f1fae in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:145:10
+    #19 0x4f1fae in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.4/work/ImageMagick-7.0.3-4/utilities/magick.c:176
+    #20 0x7f467e35d61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #21 0x4192a8 in _init (/usr/bin/magick+0x4192a8)
+Affected version:
+7.0.3.4
 
+Fixed version:
+N/A
 
-> Issue 2: Local Elevation of Privilege on Windows caused by incorrect
->               Impersonation Token Handling.
+Commit fix:
 
-Use CVE-2015-7359.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
-> For your information, I have sent a similar CVE request to mitre.org.
+Timeline:
+2016-10-13: bug re-discovered
+2016-10-13: bug re-reported to upstream
+2016-10-20: blog post about the issue
 
-That request was about 40 minutes earlier.
+Note:
+This bug was found with American Fuzzy Lop.
 
-Sending the same CVE request to multiple addresses is typically not
-what MITRE wants, although you're certainly welcome to change your
-mind and decide that you had actually preferred that a CVE request be
-publicly archived from the beginning. (It's rare for a vendor to use
-oss-security for CVE requests related to "critical" vulnerabilities
-that don't yet have a fixed release. The issue descriptions here, in
-combination with vendor confirmation, probably make the
-vulnerabilities sufficiently public that they are within the scope of
-the oss-security list charter. We think the implication is that
-readers should look at
-
-  https://code.google.com/p/google-security-research/issues/list?can=1
-
-at a future time, if interested in other details.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWBF+VAAoJEL54rhJi8gl5SUsP/2oSElay/xGb8kSzpdhQWDwh
-6of8eo/Ii4Wj0/0B8h1nzgHweUL528Kkf7cevrW0R9xPIwSEw2xidZdsFJCNX5hE
-FesWoKBu98UXHwBOV0Vz0FjeiQvdiclw2UKNFsOcAi9CPrXkHqIUQAmafaVNVl17
-ZtmRHZlGGPtra05DU7Ttd/0W52ODzcQuI+BDp3pitEjvu6Hsyaw6/5umANi9+tBG
-tOvd4yWefIF+QEG28X7zGRLS1J6SeJIBhZ7eUboKdxWBmh927SlXszZ5RcCgynKf
-8+8is2WeGs9BoxH96yKXqYTDptDXN7SlnrCdK0+D/GZOaN7cKfz7DjwXK5GditJr
-wPTCA39Y61BAzfRxOLkM8L2C/4s4XeGTHDz90MvCgNF4fAvztJa7lJfawry8V+1p
-8sEgCA04Bh2c7xQ5sbgWF/4n+zF+Po/llYy+dZBHwzJCVTevmfRTUBuhe1juYsJQ
-abhRpRL+rfh0SncrNECFCDJNOUh8DMGzLkdEKnpUK44xb07vQ9UqNCoWfjR2v0f+
-fmsOxlFdrgQ6Bq1oz5gOJZKcT7wcCNpltq1TUw1PU/SC+CW2yTCg40mniq4fJy2t
-fd3dtk/CrICDWl+TtBXfh0u6lM6bvH7HiJepSYdWyXyONHgUfmCIwNK6tURtBCTZ
-4inClRaCYGeljBY90rUm
-=FyM2
------END PGP SIGNATURE-----
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
