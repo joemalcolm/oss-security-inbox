@@ -1,50 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/4
-Message-Id: <20160818033356.CBAF3ABC95B@smtpvmsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:33:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: buffer overflow in vmxnet_tx_pkt_parse_headers() in vmxnet3 device emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/1
+Message-ID: <dee4adeb-e6b5-b011-b1cc-7c8e76a3ed1f@redhat.com>
+Date: Thu, 20 Oct 2016 08:39:40 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: OpenSSH: Memory exhaustion issue found in OpenSSH
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is
-> vulnerable to an OOB read access. In that it does not check if packet headers
-> does not check for IP header length. It could lead to a OOB access when
-> reading further packet data.
+On 10/20/2016 03:02 AM, cve-assign@...re.org wrote:
+>> The OpenSSH has a memory exhaustion bug in key exchange process. An
+>> unauthenticated peer could repeat the KEXINIT and cause allocation of
+>> up to 384MB(not 128MB that the official said). In the default case, an
+>> attacker can build 100 such connections, which will consume 38400 MB
+>> of memory on the server.
 > 
-> https://lists.gnu.org/archive/html/qemu-stable/2016-08/msg00077.html
+>> http://cvsweb.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/kex.c?rev=1.127&content-type=text/x-cvsweb-markup
+> 
+>>> Unregister the KEXINIT handler after message has been received.
+> 
+> Use CVE-2016-8858.
+> 
+> 
+OpenSSH upstream dos not consider this as a security issue btw.
 
->> I should have had marked it as "PATCH for v2.6.0"
+It seems the only thing the attacker could do here, is self-dos his own
+connection. Regarding consuming memory on the server, by opening several
+concurrent connections at the same time, there are various protections
+available in opensshd_config file, such as "MaxStartups", which can
+limit the maximum number of sessions per network connections.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/vmxnet_tx_pkt.c;hb=stable-2.6
-but that may be an expected place for a later update.
+This value is effectively set to 10:30:100 so maximum of 100 * 128 MB
+can be allocated, which is pretty much for unauthenticated user. Though
+the rate limiting starts to drop connection after 10, which is like 1GB
+and which should not hurt the server (though it is not cool).
 
-Use CVE-2016-6835 for this buffer over-read.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXtSYeAAoJEHb/MwWLVhi2nswP/Aw5kTs5PCe1z0fnBCxhLtGI
-38WLRfiQ3DlWCAun8FQDCKojRo9jOyLv7CCVzPSYR1i8AQ9ZQrtVy85i3i/up+rT
-nnvCqMqKK41W0YNUimyNItwbCVOKgmXwYVGSNn06twQsPuFY7xRlscxyO0NHw7zF
-3gX2aFNwmUZqGrndazp/afF9y4H1cebkcpqPtKWyv/VEfc/oyiC4MXA9NY/OuFQG
-oAce36Q9rz3RBtIn17RboZti0ADTPYLsGbeswKzNFY41CRP2hR2qDRUV5sDdXBqz
-EfcNbujQaJqsZ+OeMzAjKHwolyryjgme6mQHQwEiWithXjHFZ85DMuVTx/+lJNYr
-7xQoaQbDFqfHcRvxTZtbusTRanCCTMcz8dBFPpWL7XmDOS3ZHo9aOsfQM3+xXjXA
-INc6UO1qPtJPNlFCL0BA5NBKA2FL60OM4bP62zIDYieok6en6eijAjuk+muJVv2H
-ypDB1EEDhBqv3cPl2+Jo/4rwDGtrB5dOO5Troo3vxgCwrDGCloe1mkSL8TU3LP6W
-Egst/gUWMadzJBXz2M4rGEZCEzjdo1TB8M8c+kKWVhTZ+7xUbkX3zR8RZDcEsk7E
-zCjH/Dg/cM0UidQOAOu7ikJSlFlBUYDemsTR4a+3K+4UxKaec6LBnGJGeZZqFwv+
-Fs0fF7b7B7/9HhPKPunW
-=/MUT
------END PGP SIGNATURE-----
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
