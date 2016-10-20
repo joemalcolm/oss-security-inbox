@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2591" "Wednesday" "6" "January" "2016" "23:06:20" "+0000" "halfdog" "me@halfdog.net" "<568D9DEC.7030306@halfdog.net>" "71" "[oss-security] Discuss: Daily/weekly cron jobs best practices" "^Date:" nil nil "1" "2016010623:06:20" "[oss-security] Discuss: Daily/weekly cron jobs best practices" (number mark "        me@halfdog.n Jan  6   71/2591  " thread-indent "\"[oss-security] Discuss: Daily/weekly cron jobs best practices\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3413" "Thursday" "20" "October" "2016" "09:43:40" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<5184269.v1vKSl7Lqd@blackgate>" "71" "[oss-security] jasper: NULL pointer dereference in jpc_tsfb_synthesize (jpc_tsfb.c)" nil nil nil "10" "2016102007:43:40" "[oss-security] jasper: NULL pointer dereference in jpc_tsfb_synthesize (jpc_tsfb.c)" (number mark "U       ago@gentoo.o Oct 20   71/3413  " thread-indent "\"[oss-security] jasper: NULL pointer dereference in jpc_tsfb_synthesize (jpc_tsfb.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17632 invoked by uid 550); 6 Jan 2016 23:03:49 -0000
+Received: (qmail 28497 invoked by uid 550); 20 Oct 2016 07:44:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17558 invoked from network); 6 Jan 2016 23:03:38 -0000
-Message-ID: <568D9DEC.7030306@halfdog.net>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Date: Wed, 6 Jan 2016 23:06:20 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Discuss: Daily/weekly cron jobs best practices
+Received: (qmail 28008 invoked from network); 20 Oct 2016 07:43:58 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Thu, 20 Oct 2016 09:43:40 +0200
+Message-ID: <5184269.v1vKSl7Lqd@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.21-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] jasper: NULL pointer dereference in jpc_tsfb_synthesize (jpc_tsfb.c)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Hello List,
+Another round of fuzzing on an updated version (1.900.5) revealed another NULL 
+pointer access
 
-Different Linux software packages use cron jobs for basic maintenance
-activities, e.g.
+The complete ASan output:
 
-* rotating/compressing/deleting logs (syslog, ntp)
-* cleanup of caches (man, php)
-* notifications (calender, SMART disk check)
+# imginfo -f $FILE
+warning: trailing garbage in marker segment (14 bytes)
+warning: not enough tile data (15 bytes)
+warning: bad segmentation symbol
+warning: bad segmentation symbol
+ASAN:DEADLYSIGNAL
+=================================================================
+==7144==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f6d3c37d0b0 bp 0x7ffdc7407a90 sp 0x7ffdc7407a30 T0)
+    #0 0x7f6d3c37d0af in jpc_tsfb_synthesize /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_tsfb.c:152:4
+    #1 0x7f6d3c2f5140 in jpc_dec_tiledecode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:1068:3
+    #2 0x7f6d3c2e5c40 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:623:7
+    #3 0x7f6d3c2ef294 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:390:10
+    #4 0x7f6d3c2ef294 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_dec.c:254
+    #5 0x7f6d3c2bd061 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jp2/jp2_dec.c:215:21
+    #6 0x7f6d3c24df39 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/base/jas_image.c:380:16
+    #7 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/appl/imginfo.c:188:16
+    #8 0x7f6d3b35c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #9 0x418e68 in _init (/usr/bin/imginfo+0x418e68)                                                                                                                                                                                                                           
 
-Especially interesting are those cron job scripts run as user root but
-processing files owned by dedicated service users. But shell scripts
-often have their problems processing untrusted input:
+AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.5/work/jasper-1.900.5/src/libjasper/jpc/jpc_tsfb.c:152:4 in 
+jpc_tsfb_synthesize                                                                                                                           
+==7144==ABORTING
 
-* the tools invoked in shell scripts often have no or little
-protection against file system modification races
+Affected version:
+1.900.5
 
-* data processing with multiple separate processes, as usually
-employed when using pipes in shell scripts, are inherently racy.
+Fixed version:
+1.900.9
 
-* the tools do not protect against symlink attacks
+Commit fix:
+https://github.com/mdadams/jasper/commit/2e82fa00466ae525339754bb3ab0a0474a31d4bd
 
-Due to that risks, what would be best practices, e.g. for a script
-cleaning up log files for a daemon.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-a) run shell script as daemon user. Ignore script security: a
-malicious daemon user can already perform all those actions by
-himself, not relying on insecure scripts. Pro: no need to perform
-security audits on scripts. Con: below
+CVE:
+N/A
 
-b) run shell script as daemon user and also try to get it secured.
-Pro: attackers without code execution possibilities but ability to
-make daemon e.g. to create problematic files via the daemon are also
-blocked.
+Timeline:
+2016-10-19: bug discovered
+2016-10-19: bug reported to upstream
+2016-10-20: upstream released the patch and 1.900.9
+2016-10-20: blog post about the issue
 
-c) try to make shell script secure, but still run as root. Pro: no
-overhead due to uid-switch (pam/audit logging with su in scripts), no
-risk to leak privileged resources, e.g. open FDs, to lower-priv daemon
-context. Con: any script coding mistake or change in tool behaviour
-(gzip, find, tar, ls, ....) might create privilege escalation hole.
+Note:
+This bug was found with American Fuzzy Lop.
 
-d) do not use shell scripts for that kind of task, use OS-near
-programming language, e.g. C, python, to write specialized helper.
-Pro: Perfect protection possible (openat/fstat/O_NOFOLLOW...). Con:
-higher maintenance effort.
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/20/jasper-null-pointer-dereference-in-jpc_tsfb_synthesize-jpc_tsfb-c/
 
-Are there more variants, arguments? In my opinion, b) is a good
-trade-off between maintainability and security.
-
-Currently the cron scripts seem to be a weak point. I looked at the 8
-daily scripts on my machine, 2 of them belonged to the "daemon"
-example class from above and both were vulnerable to daemon to root
-privilege escalation, see e.g. [1].
-
-hd
-
-[1]
-http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlaNneMACgkQxFmThv7tq+5K8ACgk4cZa5OftLi1uIZ0LQkXH+Qw
-EfsAmwbrYKeQGSkPULQ/NvHroMOhaJ+g
-=tCPm
------END PGP SIGNATURE-----
