@@ -1,51 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/04/4
-Message-ID: <alpine.LFD.2.20.1601041941480.17635@wniryva>
-Date: Mon, 4 Jan 2016 19:44:03 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Qemu: net: vmxnet3: reading IMR registers leads to a crash 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/2
+Message-Id: <20161020052809.33BEA52E006@smtpvbsrv1.mitre.org>
+Date: Thu, 20 Oct 2016 01:28:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-   Hello,
+> https://blogs.gentoo.org/ago/2016/10/17/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c/
+> 
+> AddressSanitizer failed to allocate 0x99ad49000 bytes of LargeMmapAllocator
+> 
+> #9 0x7fe5713b3b3b in AcquireMagickMemory ... ImageMagick-7.0.3-0/MagickCore/memory.c:460:10
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/aea6c6507f55632829e6432f8177a084a57c9fcc
 
-Qemu emulator built with a VMWARE VMXNET3 paravirtual NIC emulator support is 
-vulnerable to crash issue. It could occur while reading Interrupt Mask 
-Registers(IMR).
+>> coders/rle.c
 
-A privileged(CAP_SYS_RAWIO) guest user could use this flaw to crash the Qemu 
-process instance resulting in DoS.
+Use CVE-2016-8862.
 
-Upstream patch:
-- ---------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=c6048f849c7e3f009786df76206e895
-
-Reference:
-- ----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1270876
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBAgAGBQJWin4rAAoJEN0TPTL+WwQf9tsP/jdNbRX2Gu5iIS69tRuYSc5x
-yYWJHosD9akCxj4pZYMbrjoiQeKs7xuVrqhZnKSDzXWnHjfH8tC41s6aWRcP4qp9
-xqooML+OtIAoPFq6El4iBCp7lrp70rPatY+YXfI7IhxLNF6kFoUqBrWJe+aAxMod
-shL3yDKv8J+dgRIc9j36odJpTVgsIyYojRr3Bb1IwfKsHmltVNxNqzHyOPGGU02G
-B1c02Gy2atxkJqRNjrdmze6A1vSlyJiXHbCQxin9BNzc9EJqYer1KdIyztyeTBD0
-OLuBvEZ872iKyCqgj/qQpdKAagQPXNcOG9VREcdoOCW38GFHXNSP1/n4ZbfjsUYX
-oZqLbYnm9Mwq73eIBDJxzpzqwlDQqWFzdXgcPu82KvJt+Q2/Ms718N+0euOuDVOm
-5U8f2VE+0hhCvkNakdKrRq4iy9E2vJLJ5x5yYgSj35rMMAKsx3fuEU8k9a5iyeWz
-dp0VqAE2ene2RnibHrlBR4XXyu20Tvmh3gdDedTj71hCSOZ2o9AgmmIRERLlCZC6
-L9hnOjbNRckIF8GjP9wgEcyzn+Jv2BWzBz1Ea+UEqXlPYtNzBYDHfouRf4/7ncMK
-dTscla0o8lN92phhGmKporhosP3XwydezHbawKWiBenUHWkduKFAwqtMLwRLhbeG
-r7TAUzpYU9gm9WLOCGrt
-=SzBR
+iQIcBAEBCAAGBQJYCFVwAAoJEHb/MwWLVhi2mAsP/1YzJifP793z4w614RoTUA7b
+jUkA+sQqO1K9QCLbLxu2WQim5i/NUQoA6PndyleVK/xUfBLoluPpgIc+goGJI8GX
+IPIas9M30+donfLhxuwvK68rrxxk6F1ISvsSs7ib8vtcb6jPrIuwH1FJurnAwHas
+XSEDMSnwO+kad7wKmshC+GnMwyEi5uj2lXjQxxFF0WiwCJB8Stso8ryPSEGFk6cX
+3zzPDMlg7q1A76uAU002yKzkHwB6QeYG6QzrewBv0fDNyQ3VgLNQDPw7FTz8yFF2
+5A1YfXb5kTodLjzO3ICg/bBGOBctuBueeIay9wNzBIjeXPIHn6cAJkqdHY3UiMSO
+ZUXKwqOwbuvnV9HRVaMjraAzY/wGndn6h8lDqfYWs03AdnaL882+iNuDXh5vTX/u
+iBT+YQKnx8SGykWOscRAW296WCgJ+xNTU+mEuk/SzjFzxNKRsyeTdcRiJOPzdPHx
+5yxxeOdQd4FSYOUL+V29PuLcBivoNI8ZJ+qgsxornsBB/iw+dp9dRQ/i4jGBnamr
+IDW0VSjSl09nO1cNKgnOFvcTGZFblWd2b/2FQPbDMrMUnMa4mKq+PkuDC+FAOh90
+y5OliXNX9mYrmVUtg1SYxJzaQzbs+eumSOK473tyF3sncYldCyZqS3G1ye8F7+4X
+zIVVHtg4Fh4pITfRPJlH
+=4WTn
 -----END PGP SIGNATURE-----
