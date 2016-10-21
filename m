@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4113" "Tuesday" "13" "September" "2016" "13:24:58" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160913202458.GB13420@hunt>" "99" "Re: [oss-security] Heapoverflow in giflib5.1.4" "^Cc:" nil nil "9" "2016091320:24:58" "[oss-security] Heapoverflow in giflib5.1.4" (number mark "        seth.arnold@ Sep 13   99/4113  " thread-indent "\"Re: [oss-security] Heapoverflow in giflib5.1.4\"\n") "<20160913215303.56ec6504@hboeck.de>" ("<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>" "<20160913185508.1351b147@hboeck.de>" "<20160913192423.GA13420@hunt>" "<20160913215303.56ec6504@hboeck.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1558" "Thursday" "20" "October" "2016" "18:55:24" "-0700" "Alex Crawford" "alex.crawford@coreos.com" "<20161021015524.GB23643@buzz.coreos.systems>" "39" "Re: [oss-security] Requesting membership to linux-distros" nil nil nil "10" "2016102101:55:24" "[oss-security] Requesting membership to linux-distros" (number mark "U       alex.crawfor Oct 20   39/1558  " thread-indent "\"Re: [oss-security] Requesting membership to linux-distros\"\n") "<CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>" ("<20161021013642.GA23643@buzz.coreos.systems>" "<CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7838 invoked by uid 550); 13 Sep 2016 20:25:14 -0000
+Received: (qmail 9783 invoked by uid 550); 21 Oct 2016 02:15:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,123 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7813 invoked from network); 13 Sep 2016 20:25:14 -0000
-Message-ID: <20160913202458.GB13420@hunt>
-Mail-Followup-To: Hanno =?iso-8859-1?Q?B=F6ck?= <hanno@hboeck.de>,
-	"vul@724safe" <vul@724safe.com>, oss-security@lists.openwall.com
-References: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
- <20160913185508.1351b147@hboeck.de>
- <20160913192423.GA13420@hunt>
- <20160913215303.56ec6504@hboeck.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+g7M9IMkV8truYOl"
-Content-Disposition: inline
-In-Reply-To: <20160913215303.56ec6504@hboeck.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: "vul@724safe" <vul@724safe.com>, oss-security@lists.openwall.com
-Date: Tue, 13 Sep 2016 13:24:58 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Heapoverflow in giflib5.1.4
-To: Hanno =?iso-8859-1?Q?B=F6ck?= <hanno@hboeck.de>
-
---+g7M9IMkV8truYOl
-Content-Type: text/plain; charset=iso-8859-1
+Received: (qmail 31967 invoked from network); 21 Oct 2016 01:55:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=coreos.com; s=google;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wNzalOarzfx4OOI+JrMfm6/nX1RBgKcPRe1ztliEZw4=;
+        b=RwuMBoTiHU6OLT3mCklRs3SbPsAEGE3+O0lkreHht73jA3qYgPMyERL19LMzNb/bvx
+         nqBWXbrj5H66sUgF5Ji28HI/Ho+xrUU9JEhooJACOUQ7Y7G7zAjuqv1SvYn4fZczuK3z
+         G7dVe9ix4wygl9URtKABYOoUSSZl0cfa/cF5c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wNzalOarzfx4OOI+JrMfm6/nX1RBgKcPRe1ztliEZw4=;
+        b=iGYPxzk9/IX4yumvBFa6sVzE45YnA4LmOxVVr1L0xnIzTrawyDykOC6xooLe6NGBjS
+         I040D36VDMyw02GZd22So/BQC78R25W46mH++HgR7L3e4DYW3PPnKJ66IHkDOJ8E0TPy
+         CdV15uDS+Pm0JeR2sI1Wv49jAuQgqC9a2FLzTje23X9ifk5ntW1wMFrcqSs00MPB47gT
+         rIYUg/CtCbgdviFSy9pH/11RjZXyaDLg9iHEq9qQYwQhUeHn5rucPy2mpytQtu3qljVt
+         wE4+Pgf+MN3El8T7flox+jrRZUkgrQyvVh5NS+PaHx+ahUL+vyKzINaVoh4yXhhGwuMT
+         2ZKA==
+X-Gm-Message-State: AA6/9RngQT+7/yfWdgCnVe6ejQEo+bx6ltW34/Z4pWot4lmdom1waB/6YjCzMblbDd5f2IZx
+X-Received: by 10.98.4.6 with SMTP id 6mr6639957pfe.152.1477014926369;
+        Thu, 20 Oct 2016 18:55:26 -0700 (PDT)
+Date: Thu, 20 Oct 2016 18:55:24 -0700
+From: Alex Crawford <alex.crawford@coreos.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20161021015524.GB23643@buzz.coreos.systems>
+References: <20161021013642.GA23643@buzz.coreos.systems>
+ <CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bCsyhTFzCvuiizWE"
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] Requesting membership to linux-distros
 
-On Tue, Sep 13, 2016 at 09:53:03PM +0200, Hanno B=F6ck wrote:
-> I can however easily generate another sample that causes the same bug.
-> See attachment.
+--bCsyhTFzCvuiizWE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This attachment does indeed trigger ASAN here, too:
+On 10/20, Kurt Seifried wrote:
+> On Thu, Oct 20, 2016 at 7:36 PM, Alex Crawford <alex.crawford@coreos.com>
+> wrote:
+> I found a security page: https://coreos.com/security/ but it only mentions
+> some upstream security. I can't find any security advisories, the closest I
+> can find is a few blog postings. Do you have an advisory page?
 
-ubuntu@x1:~/giflib-code$ util/gif2rgb gif2rgb-oob-new.gif=20
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=3D=3D5394=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address 0x=
-60200000efdc at pc 0x000000402b8b bp 0x7ffdafbd60f0 sp 0x7ffdafbd60e0
-READ of size 1 at 0x60200000efdc thread T0
-    #0 0x402b8a in DumpScreen2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:2=
-94
-    #1 0x4045a8 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:480
-    #2 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
-    #3 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
-+0x2082f)
-    #4 0x4015c8 in _start (/home/ubuntu/giflib-code/util/.libs/lt-gif2rgb+0=
-x4015c8)
+Not at the moment (though, it's been on my mind for a while). The
+closest thing we have is the release notes which will call out CVEs.
+e.g. https://coreos.com/releases/#1122.3.0
 
-0x60200000efdc is located 0 bytes to the right of 12-byte region [0x6020000=
-0efd0,0x60200000efdc)
-allocated by thread T0 here:
-    #0 0x7f2a76f9179a in __interceptor_calloc (/usr/lib/x86_64-linux-gnu/li=
-basan.so.2+0x9879a)
-    #1 0x7f2a76cf0e55 in GifMakeMapObject /home/ubuntu/giflib-code/lib/gifa=
-lloc.c:55
-    #2 0x7f2a76ce3179 in DGifGetScreenDesc /home/ubuntu/giflib-code/lib/dgi=
-f_lib.c:268
-    #3 0x7f2a76ce2412 in DGifOpenFileHandle /home/ubuntu/giflib-code/lib/dg=
-if_lib.c:140
-    #4 0x7f2a76ce1dde in DGifOpenFileName /home/ubuntu/giflib-code/lib/dgif=
-_lib.c:61
-    #5 0x4034f3 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:356
-    #6 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
-    #7 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6=
-+0x2082f)
+-Alex
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/giflib-code/ut=
-il/gif2rgb.c:294 DumpScreen2RGB
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa 06 fa fa fa 02 fa
-=3D>0x0c047fff9df0: fa fa 02 fa fa fa 00 00 fa fa 00[04]fa fa 03 fa
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07=20
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-=3D=3D5394=3D=3DABORTING
-
-
-Thanks Hanno
-
---+g7M9IMkV8truYOl
+--bCsyhTFzCvuiizWE
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBAgAGBQJX2GCaAAoJEPMhclmdjS6XWlsH/Rkm71T/hWR/pJBZM1x8ziEj
-BWHXyaqWYgtu60ZH5cCEQritMPudhPS5Vuwm0u6ENkWhQLl3XtnvetbmuAvIzcGn
-uoicpwMMY8GG2BO1/Z5pkKgUTIyHJ0CcEWu6NJv1LST3fCOAfLqiUSI6b/OG5woe
-ryOVcWrsrA7/obGQq6il4TBNEzjdxvr8JxKX67ufHploZ7XIkJwQ7hfE+gglH9Sz
-b9ggvyCgoMvU5170aUAAxA1sUXyAJC/VftU2+EfTmV/ec5otHzOXARVmiCXzO2tg
-DKUTMkmE+XGz4MPKHBInD0QbYDIpg0IF51LQ/QDpnVblGndUSShWY5ZatGxR7nY=
-=9cm/
+iQIcBAEBCgAGBQJYCXWIAAoJEKYk4DxZNSlCMsQP/2uToCovwnu4UGU//nSWED8n
+iPYt9UbXWkv5T5tDuH1I35p6FZ0ZX6RmjgpF8jHEY3386wzW5hSksZFvwXAS5VHs
+WBaeD5p9oz3URcDCndv8Ay/Y0rQDzh41foL+4aoEPB8g+jIShutRtMF6ioRP78OM
+QiT/nRkjrhrvATJrm5NAyU5DCNBk3jqH5q8s23O7K3qkGUW2eLmwKilGGFhx75Le
+o/GbqbPhHEbtc3x2M061SbxrMUuxLGSHUeu2wEEAwAzn1aZqEMa5JB0gBLxBy0yt
+3tnVq3QIRYqS9GanohW6fJ9dnzpEIvL5O/6WMcCkr5lWn15EKMoyjUIqYuE0YlA/
+nB9SLgxmN/pbMfMKfz04JgFHej6xaelLYrkZdmZitN4aP0Rr2DaH3Mud53vm0+/g
++1+ulwxglFtb4Qnv4Ro8Mnh/rnMktwO2fB5Z6hrY2Zr5J4+QsGRo5SGne/PLr1L/
+5/J7q8q9VEytgEShbyxUwM/JKbZm+4pphuwsK/wOEsUVdUih9mVrSZYfz83y7U1r
+Y7FqcxHlgqGBx1JKyRzftnyoSSrTtK3dH8RML352dLKx+JAl3crevenC9goLyg5r
+1H6e+fjdDTJk+Rl6e3KcId4m/jEBtOo/K7wi5mizrR+5t6FAwpuhLbWNcFE1qr0x
+T36vfni2jxVYNtz2LeeU
+=iSyU
 -----END PGP SIGNATURE-----
 
---+g7M9IMkV8truYOl--
+--bCsyhTFzCvuiizWE--
