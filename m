@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/16/2
-Message-ID: <8b386585-e699-ca12-56b3-6104701f9e9a@redhat.com>
-Date: Tue, 16 Aug 2016 15:34:54 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/1
+Message-ID: <20161021003104.GA16605@openwall.com>
+Date: Fri, 21 Oct 2016 02:31:04 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: cracklib: Stack-based buffer overflow when parsing large GECOS field
+Subject: CVE-2016-5195 "Dirty COW" Linux kernel privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hi,
 
-A security flaw was reported to us by CSG Labs, details as follows:
+This was brought to the linux-distros list (and briefly inadvertently to
+the distros list, although discussion continued on linux-distros only)
+on October 13 and it was made public yesterday, so it must be in here as
+well.  Unfortunately, no one posted about it in here so far (the person
+who brought this to [linux-]distros must have done so!), and I don't
+have time to make a proper posting (with full detail in the message
+itself, as per oss-security list content guidelines), but I figured it's
+better for me to post something than nothing at all.
 
-A stack-based overflow was found in the way cracklib, a library used to
-stop users from choosing easy to guess passwords, handled large GECOS
-field in the /etc/passwd file. When an application compiled against the
-cracklib libary, such as "passwd" is used to parse the GECOS field, it
-could cause the application to crash or execute arbitary code with the
-permissions of the user running such an application.
+Red Hat's description:
 
-To trigger the flaw, you need a specially-crafted "long" GECOS field,
-which can be done by a local user on the system. The attacker then needs
-to run some utility which uses cracklib to process this long GECOS field
-on the system. (such as "passwd" application which runs suid root)
+"A race condition was found in the way the Linux kernel's memory
+subsystem handled the copy-on-write (COW) breakage of private read-only
+memory mappings.  An unprivileged local user could use this flaw to gain
+write access to otherwise read-only memory mappings and thus increase
+their privileges on the system."
 
-All versions of the cracklib library shipped with Red Hat Enterprise
-Linux are compiled with FORTIFY_SOURCE, which detects the
-buffer-overflow and aborts the application safely.
+https://access.redhat.com/security/cve/cve-2016-5195
+https://bugzilla.redhat.com/show_bug.cgi?id=1384344
+https://security-tracker.debian.org/tracker/CVE-2016-5195
+http://www.v3.co.uk/v3-uk/news/2474845/linux-users-urged-to-protect-against-dirty-cow-security-flaw
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619
+https://lkml.org/lkml/2016/10/19/860
+https://dirtycow.ninja
+https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
+https://twitter.com/DirtyCOWVuln
 
-Therefore the maximum impact of this flaw is application crash.
-
-However, there may be other applications, distributions which dont
-compile cracklib with FORTIFY_SOURCE, and this can lead to easy code
-exec or even privsec.
-
-A proposed patch is available at:
-https://bugzilla.redhat.com/attachment.cgi?id=1188599
-
-This flaw was assigned CVE-2016-6318 and it was previously disclosed via
-linux-distros mailing list.
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Alexander
