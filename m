@@ -1,4 +1,9 @@
-Received: (qmail 1921 invoked by uid 550); 30 Jan 2024 13:11:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1359" "Friday" "21" "October" "2016" "03:30:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161021073042.173846C09DC@smtpvmsrv1.mitre.org>" "33" "[oss-security] Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)" nil nil nil "10" "2016102107:30:42" "[oss-security] Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)" (number mark "U       cve-assign@m Oct 21   33/1359  " thread-indent "\"[oss-security] Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)\"\n") "<5202386.CNWfkh1GhB@blackgate>" ("<5202386.CNWfkh1GhB@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27962 invoked by uid 550); 21 Oct 2016 07:30:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,189 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1874 invoked from network); 30 Jan 2024 13:11:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=MXOcSlCBkJ9CQ70sgwho1Hwl0C2uGWGNgUiDqvNQmeA=; b=HtjqrOiEjLyYRzoqhEeDG5Pkb/
-	/ZmSQ9Mf8Du/Vjo9oGqBBgoSZXC3WbGtjwdOPVlBCIAfJpvfnR2AwIe3jo361ZePUw7wHKonw9Rvb
-	mrCKYskXWzu2WGQ/Kwrz3oko2vbd/Bz+YplSipxdwziZHcVQjqfjd6XofZyHupPupnhM=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1rUnvX-000489-JF@xenbits.xenproject.org>
-Date: Tue, 30 Jan 2024 13:13:23 +0000
-Subject: [oss-security] Xen Security Advisory 450 v2 (CVE-2023-46840) - VT-d: Failure to
- quarantine devices in !HVM builds
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Received: (qmail 27944 invoked from network); 21 Oct 2016 07:30:53 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <5202386.CNWfkh1GhB@blackgate>
+Message-Id: <20161021073042.173846C09DC@smtpvmsrv1.mitre.org>
+Date: Fri, 21 Oct 2016 03:30:42 -0400 (EDT)
+Subject: [oss-security] Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2023-46840 / XSA-450
-                               version 2
+> https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
+>
+> still reproducible in the 7.0.3.4 version
+> 
+> #9 0x7f467fd11c67 in AcquireMagickMemory ... ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
 
-           VT-d: Failure to quarantine devices in !HVM builds
+Use CVE-2016-8866.
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Incorrect placement of a preprocessor directive in source code results
-in logic that doesn't operate as intended when support for HVM guests is
-compiled out of Xen.
-
-IMPACT
-======
-
-When a device is removed from a domain, it is not properly quarantined
-and retains its access to the domain to which it was previously
-assigned.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.17 and onwards are vulnerable.  Xen 4.16 and older are not
-vulnerable.
-
-Only Xen running on x86 platforms with an Intel-compatible VT-d IOMMU is
-vulnerable.  Platforms from other manufacturers, or platforms without a
-VT-d IOMMU are not vulnerable.
-
-Only systems where PCI devices are passed through to untrusted or
-semi-trusted guests are vulnerable.  Systems which do not assign PCI
-devices to untrusted guests are not vulnerable.
-
-Xen is only vulnerable when CONFIG_HVM is disabled at build time.  Most
-deployments of Xen are expected to have CONFIG_HVM enabled at build
-time, and would therefore not be vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Teddy Astie of Vates
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa450.patch           xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa450*
-738c79b92ab5ea57f446df3daff6564727fea5feebf8fadeb32acd0cf06ff9fb  xsa450.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmW49MwMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZnwcIALs07CQFYSuQmdgWRYeepkjehMSVhPhvJcYBCFWU
-p+80oreGP2pC1LN+T9ndN0kDeUHAO8PeT+XqxHSNfT16Q5EOSeLpUQ8m+UfHUFLU
-vtPMjR4sMpnvuZfx0OCMJctDDTM+/muw4AH0BO2zxFfDzGkM96zZ6vAokeer+5HQ
-/P9usMm/6jphixVq919RBJ78fFZxKpKhil9tEwNuD6HJW3VNMWp1ypGNyFI3iRhw
-XpYzWMB0eW6B6rSInohHJiTS7P6KE5zeXeBPZ5yVHy2J3e3c7nXyrQaaONSRCBdm
-/Px2xcg1SpH+3UwoT56Z7tj1DhlgjcY4peb5B58oDK68hMU=
-=Dp+G
+iQIcBAEBCAAGBQJYCcNeAAoJEHb/MwWLVhi20/wP/1iiGZqIk9G4dz6hhSnnOnbe
+4rirHjWzkaudO10CibTukcsMKtRDA+1MiluIX4pwgmSiy2F6oFtJK2QH8/Q0/xeD
+tGXs6+r8glxDEpaOxuhWeYZTs811Jln1VFZ9ma0qJ5dcciUZ6ArncwOUojuY9PFj
+QiaZZKurbMj7sbsUwleYU4z7GQjljvQDSYX2BWVsOxgvy1IxXZN5370Dk3cGvfBj
+hU9LNyxSxiTNYrDzL/oU2VraGwcSonpbQQvZ+v3gwVbAzB8CPTWEL4PE2Q/0CKem
++kmoRPL0sKBl73ZPQldOt5FCseOH/RVPIHHFgbsktUKFOipc70nssrPjaOVCBb+D
+JkAWN3+JOIjs0DkDsmHu04d5hg6I4s9fQ3XHNAWf/IRHd1E13F0Oi3lZnCcD+91d
++MHl5q2DA3mRb5tQwugG3YE8Xq6iWJhPsAumBLy50HBSqPBThGNEY9j6l6LxvoHh
++EE5s3kR7VT3RFVWZzxS14s5dkkxeg5Szd/vX3yxug5PV/FQ9OtteBEJSuLBmfci
+LB5AMIo66vyWcHDRPAkJCXO00Bw/J+RdNxITTJn47poBa2gSh08rdx0XRlzb4B/3
+n9ToPs2ABty9XzRxOpNHK9/06X0IqAzCsV09l0MGMtdLjfg/cxoKEWI+jVbFGeeP
+PjCoB0Arz8xQohWdPz9g
+=AyGH
 -----END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa450.patch"
-Content-Disposition: attachment; filename="xsa450.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogVlQtZDogRml4ICJlbHNlIiB2cyAiI2VuZGlmIiBtaXNw
-bGFjZW1lbnQKCkluIGRvbWFpbl9wZ2RfbWFkZHIoKSB0aGUgIiNlbmRpZiIg
-aXMgbWlzcGxhY2VkIHdpdGggcmVzcGVjdCB0byAiZWxzZSIuICBUaGlzCmdl
-bmVyYXRlcyBpbmNvcnJlY3QgbG9naWMgd2hlbiBDT05GSUdfSFZNIGlzIGNv
-bXBpbGVkIG91dCwgYXMgdGhlICJlbHNlIiBib2R5CmlzIGV4ZWN1dGVkIHVu
-Y29uZGl0aW9uYWxseS4KClJld29yayB0aGUgbG9naWMgdG8gdXNlIElTX0VO
-QUJMRUQoKSBpbnN0ZWFkIG9mIGV4cGxpY2l0ICNpZmRlZi1hcnksIGFzIGl0
-J3MKY2xlYXJlciB0byBmb2xsb3cuICBUaGlzIGluIHR1cm4gaW52b2x2ZXMg
-YWRqdXN0aW5nIHAybV9nZXRfcGFnZXRhYmxlKCkgdG8KY29tcGlsZSB3aGVu
-IENPTkZJR19IVk0gaXMgZGlzYWJsZWQuCgpUaGlzIGlzIFhTQS00NTAgLyBD
-VkUtMjAyMy00Njg0MC4KClJlcG9ydGVkLWJ5OiBSZXBvcnRlZC1ieTogVGVk
-ZHkgQXN0aWUgPHRlZGR5LmFzdGllQHZhdGVzLnRlY2g+CkZpeGVzOiAwMzNm
-ZjkwYWE5YzEgKCJ4ODYvUDJNOiBwMm1fe2FsbG9jLGZyZWV9X3B0cCgpIGFu
-ZCBwMm1fYWxsb2NfdGFibGUoKSBhcmUgSFZNLW9ubHkiKQpTaWduZWQtb2Zm
-LWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29t
-PgpSZXZpZXdlZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29t
-PgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9wMm0u
-aCBiL3hlbi9hcmNoL3g4Ni9pbmNsdWRlL2FzbS9wMm0uaAppbmRleCAzMmYz
-ZjM5NGIwNWEuLjZhZGE1ODVlYWFjMiAxMDA2NDQKLS0tIGEveGVuL2FyY2gv
-eDg2L2luY2x1ZGUvYXNtL3AybS5oCisrKyBiL3hlbi9hcmNoL3g4Ni9pbmNs
-dWRlL2FzbS9wMm0uaApAQCAtNDM1LDcgKzQzNSwxNCBAQCBzdGF0aWMgaW5s
-aW5lIGJvb2wgcDJtX2lzX2FsdHAybShjb25zdCBzdHJ1Y3QgcDJtX2RvbWFp
-biAqcDJtKQogICAgIHJldHVybiBwMm0tPnAybV9jbGFzcyA9PSBwMm1fYWx0
-ZXJuYXRlOwogfQogCi0jZGVmaW5lIHAybV9nZXRfcGFnZXRhYmxlKHAybSkg
-ICgocDJtKS0+cGh5c190YWJsZSkKKyNpZmRlZiBDT05GSUdfSFZNCitzdGF0
-aWMgaW5saW5lIHBhZ2V0YWJsZV90IHAybV9nZXRfcGFnZXRhYmxlKGNvbnN0
-IHN0cnVjdCBwMm1fZG9tYWluICpwMm0pCit7CisgICAgcmV0dXJuIHAybS0+
-cGh5c190YWJsZTsKK30KKyNlbHNlCitwYWdldGFibGVfdCBwMm1fZ2V0X3Bh
-Z2V0YWJsZShjb25zdCBzdHJ1Y3QgcDJtX2RvbWFpbiAqcDJtKTsKKyNlbmRp
-ZgogCiAvKgogICogRW5zdXJlIGFueSBkZWZlcnJlZCBwMm0gVExCIGZsdXNo
-IGhhcyBiZWVuIGNvbXBsZXRlZCBvbiBhbGwgVkNQVXMuCmRpZmYgLS1naXQg
-YS94ZW4vZHJpdmVycy9wYXNzdGhyb3VnaC92dGQvaW9tbXUuYyBiL3hlbi9k
-cml2ZXJzL3Bhc3N0aHJvdWdoL3Z0ZC9pb21tdS5jCmluZGV4IDk5YjY0MmYx
-MmVmOS4uNDI0NDg1NTAzMmVlIDEwMDY0NAotLS0gYS94ZW4vZHJpdmVycy9w
-YXNzdGhyb3VnaC92dGQvaW9tbXUuYworKysgYi94ZW4vZHJpdmVycy9wYXNz
-dGhyb3VnaC92dGQvaW9tbXUuYwpAQCAtNDM4LDE1ICs0MzgsMTMgQEAgc3Rh
-dGljIHBhZGRyX3QgZG9tYWluX3BnZF9tYWRkcihzdHJ1Y3QgZG9tYWluICpk
-LCBwYWRkcl90IHBnZF9tYWRkciwKIAogICAgIGlmICggcGdkX21hZGRyICkK
-ICAgICAgICAgLyogbm90aGluZyAqLzsKLSNpZmRlZiBDT05GSUdfSFZNCi0g
-ICAgZWxzZSBpZiAoIGlvbW11X3VzZV9oYXBfcHQoZCkgKQorICAgIGVsc2Ug
-aWYgKCBJU19FTkFCTEVEKENPTkZJR19IVk0pICYmIGlvbW11X3VzZV9oYXBf
-cHQoZCkgKQogICAgIHsKICAgICAgICAgcGFnZXRhYmxlX3QgcGd0ID0gcDJt
-X2dldF9wYWdldGFibGUocDJtX2dldF9ob3N0cDJtKGQpKTsKIAogICAgICAg
-ICBwZ2RfbWFkZHIgPSBwYWdldGFibGVfZ2V0X3BhZGRyKHBndCk7CiAgICAg
-fQogICAgIGVsc2UKLSNlbmRpZgogICAgIHsKICAgICAgICAgaWYgKCAhaGQt
-PmFyY2gudnRkLnBnZF9tYWRkciApCiAgICAgICAgIHsK
-
---=separator--
