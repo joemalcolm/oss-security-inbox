@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["801" "Thursday" "14" "April" "2016" "13:44:36" "-0400" "Naser Farhadi" "n4ser.farhadi@gmail.com" "<BF077EF2-CBB6-4357-A69C-94778080D73E@gmail.com>" "31" "[oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution" nil nil nil "4" "2016041417:44:36" "[oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution" (number mark "U       n4ser.farhad Apr 14   31/801   " thread-indent "\"[oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution\"\n") "<68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>" ("<68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1452" "Friday" "21" "October" "2016" "02:31:04" "+0200" "Solar Designer" "solar@openwall.com" "<20161021003104.GA16605@openwall.com>" "30" "[oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability" nil nil nil "10" "2016102100:31:04" "[oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability" (number mark "U       solar@openwa Oct 21   30/1452  " thread-indent "\"[oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29896 invoked by uid 550); 14 Apr 2016 17:47:57 -0000
+Received: (qmail 21929 invoked by uid 550); 21 Oct 2016 00:32:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27754 invoked from network); 14 Apr 2016 17:44:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:message-id:mime-version:subject:date:references:to:in-reply-to;
-        bh=SUoqDzGC5iwCIo49VY+7gYRF2AD/lBMvhczfFYq2Bvs=;
-        b=rVmybZiLcEPjDD3y8zv047DQWqXGvhvtYdo2m/JqHomdPlyCoGcnUJH4+80A0zaxDN
-         SOrBgzNkCJOjS0brsqBPBxCM8+LU+Busubepn1C9vITKJ8t2zwIqKeS1A0yFoTWHZXGs
-         V5VpMtt8ryiItEwmam9cJXKvya3GkrNYqllVJf4xm2Q6RWc0UKEemLM7dTB0gWxlfJSh
-         gOdwTryN8cUSR3OPKJo2yfOY8a1/mknxevBX4u0cqTulJ/HyJDPDHtabQbOOcSc4PLCi
-         kqdSCN2/i2w+CGGUgfjfyvgDyTU0VotNb9IFEoGNgwC9GrHuAI4IE8yKOlpVAQSGBZ02
-         D7zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:message-id:mime-version:subject:date
-         :references:to:in-reply-to;
-        bh=SUoqDzGC5iwCIo49VY+7gYRF2AD/lBMvhczfFYq2Bvs=;
-        b=OQIZL88dcikWlO4uaRXBgP3zw7x2q+Ehj768+HWgzpafH99U4czt6aBHqXn5N5fjnY
-         x0Nz/c389rAEQzdLyHr6JJiwBbDWb/GBxSCwAIvECDQCaeXfD8kbQcpmvt/a8vkRJ/e2
-         Nz5WO3TtrHFWxSphPSBcjAj4kLdw58iCj0our9NBm0/9u/XP5owzT/g95ZvUGVKF4pdr
-         /2PZSKQ2N+ar9vLFHiBOFp2xhsRWXS7caKAVbvhwklOVnLgKUljng/tjT5hFc1KfM+yO
-         6e45byVkBORPVfPIP4iN0TRoV27bkOS15TkRvouevjXJZTwV2kS7xII1+KiNNPdzOOHq
-         wpKw==
-X-Gm-Message-State: AOPr4FUMan4vnmwj/B2pQv3v3uzC2O6+zoYVtLgUe/CutlJbecZJWcVVsYA87JBkDhkFsQ==
-X-Received: by 10.112.219.101 with SMTP id pn5mr6674750lbc.62.1460655883018;
-        Thu, 14 Apr 2016 10:44:43 -0700 (PDT)
-From: Naser Farhadi <n4ser.farhadi@gmail.com>
-Content-Type: multipart/alternative; boundary="Apple-Mail=_31FEE6B5-6C0C-4E4C-8A7F-813BB4F38D60"
-Message-Id: <BF077EF2-CBB6-4357-A69C-94778080D73E@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Date: Thu, 14 Apr 2016 13:44:36 -0400
-References: <68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>
+Received: (qmail 21750 invoked from network); 21 Oct 2016 00:31:35 -0000
+Date: Fri, 21 Oct 2016 02:31:04 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <68AD5BF8-0B12-4F1E-8DE0-49E36A769AC3@gmail.com>
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] Re: CVE request: OpenCart 2.1.0.2 to 2.2.0.0 - json_decode Function Remote Code Execution
+Message-ID: <20161021003104.GA16605@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2016-5195 "Dirty COW" Linux kernel privilege escalation vulnerability
 
---Apple-Mail=_31FEE6B5-6C0C-4E4C-8A7F-813BB4F38D60
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Hi,
 
-Note:
------------------
-Exploit only works if PHP JSON extension is not installed.
+This was brought to the linux-distros list (and briefly inadvertently to
+the distros list, although discussion continued on linux-distros only)
+on October 13 and it was made public yesterday, so it must be in here as
+well.  Unfortunately, no one posted about it in here so far (the person
+who brought this to [linux-]distros must have done so!), and I don't
+have time to make a proper posting (with full detail in the message
+itself, as per oss-security list content guidelines), but I figured it's
+better for me to post something than nothing at all.
 
-> On Apr 14, 2016, at 1:26 PM, Naser Farhadi <n4ser.farhadi@gmail.com> wrot=
-e:
->=20
-> Hi
->=20
-> OpenCart is prone to a remote code-execution vulnerability.
->=20
-> https://www.exploit-db.com/exploits/39679/ <https://www.exploit-db.com/ex=
-ploits/39679/>
-> http://seclists.org/bugtraq/2016/Apr/61 <http://seclists.org/bugtraq/2016=
-/Apr/61>
-> https://github.com/opencart/opencart/issues/4220 <https://github.com/open=
-cart/opencart/issues/4220>
->=20
-> Could a CVE please be assigned to this issue?
->=20
-> Regards,
-> Naser
+Red Hat's description:
 
+"A race condition was found in the way the Linux kernel's memory
+subsystem handled the copy-on-write (COW) breakage of private read-only
+memory mappings.  An unprivileged local user could use this flaw to gain
+write access to otherwise read-only memory mappings and thus increase
+their privileges on the system."
 
+https://access.redhat.com/security/cve/cve-2016-5195
+https://bugzilla.redhat.com/show_bug.cgi?id=1384344
+https://security-tracker.debian.org/tracker/CVE-2016-5195
+http://www.v3.co.uk/v3-uk/news/2474845/linux-users-urged-to-protect-against-dirty-cow-security-flaw
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619
+https://lkml.org/lkml/2016/10/19/860
+https://dirtycow.ninja
+https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
+https://twitter.com/DirtyCOWVuln
 
---Apple-Mail=_31FEE6B5-6C0C-4E4C-8A7F-813BB4F38D60--
+Alexander
