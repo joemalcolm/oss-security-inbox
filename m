@@ -1,83 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/9
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB6286@EX02.corp.qihoo.net>
-Date: Wed, 15 Jun 2016 02:33:54 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-5320: libtiff 4.0.6 rgb2ycbcr: command excution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/5
+Message-Id: <20161021073042.173846C09DC@smtpvmsrv1.mitre.org>
+Date: Fri, 21 Oct 2016 03:30:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862)
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: command excution
-Vendor URL: http://www.remotesensing.org/libtiff/
-CVE ID: CVE-2016-5320
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
+> https://blogs.gentoo.org/ago/2016/10/20/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862/
+>
+> still reproducible in the 7.0.3.4 version
+> 
+> #9 0x7f467fd11c67 in AcquireMagickMemory ... ImageMagick-7.0.3-4/MagickCore/memory.c:460:10
 
+Use CVE-2016-8866.
 
-Introduction
-=======
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-It was always corrupted when I use rgb2ycbcr command followed by a crafted TIFF image. The vulnerability of out-of-bound writes is in PixarLogDecode () function in tif_pixarlog.c, which cause the function pointer of vgetparent to be coverd with any data, command execution could be possible.
-Tested system version:
-       fedora23 64bit
-       CentOS Linux release 7.1.1503 64bit
-command :
-        ./rgb2ycbcr poc.tif tmpout.tif
-
-  Here is the stack info:
-gdb –args ./rgb2ycbcr poc.tif tmpout.tif
---- ---
-Program received signal SIGSEGV, Segmentation fault.
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[registers]--
-$rax     0x5e5e5e5e5e5e5e5e $rbx     0x0000000000608560 $rcx     0x0000000000608560 $rdx     0x00007fffffffd870 $rsp     0x00007fffffffd7e0 $rbp     0x00007fffffffd810 $rsi     0x000000000000010a
-$rdi     0x0000000000608560 $rip     0x00007ffff7badecb $r8      0x00007ffff7b6be8e $r9      0x0000000000000001 $r10     0x00007fffffffd6d0 $r11     0x00007ffff7b685ab $r12     0x0000000000000020
-$r13     0x0000000000000200 $r14     0x0000000000607010 $r15     0x0000000000000000 $cs      0x0000000000000033 $ss      0x000000000000002b $ds      0x0000000000000000 $es      0x0000000000000000
-$fs      0x0000000000000000 $gs      0x0000000000000000 $eflags  [ CF AF SF IF RF ]
-Flags: [ CARRY  parity  ADJUST  zero  SIGN  trap  INTERRUPT  direction  overflow  RESUME  virtualx86  identification ]
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[stack]--
-0x00007fffffffd7e0|+0x00: 0x0                  <- $sp
-0x00007fffffffd7e8|+0x08: 0x00007fffffffd870 -> 0x3000000010
-0x00007fffffffd7f0|+0x10: 0x10a00000000
-0x00007fffffffd7f8|+0x18: 0x0000000000608560 -> 0x0000000000608998 -> "PredictorVGetField.tif"
-0x00007fffffffd800|+0x20: 0x10600000000
-0x00007fffffffd808|+0x28: 0x0000000000609160 -> "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[...]"
-0x00007fffffffd810|+0x30: 0x00007fffffffd850 -> 0x00007fffffffd940 -> 0x10
-0x00007fffffffd818|+0x38: 0x00007ffff7b6a880 -> <TIFFVGetField+149>: jmp 0x7ffff7b6a887 <TIFFVGetField+156>
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[code:i386:x86-64]--
-0x7ffff7badebd         <PredictorVGetField+224>  mov    rdx,QWORD PTR [rbp-0x28]
-0x7ffff7badec1         <PredictorVGetField+228>  mov    esi,DWORD PTR [rbp-0x1c]
-0x7ffff7badec4         <PredictorVGetField+231>  mov    rcx,QWORD PTR [rbp-0x18]
-0x7ffff7badec8         <PredictorVGetField+235>  mov    rdi,rcx
-0x7ffff7badecb        <PredictorVGetField+238>  call   rax                <- $pc
-0x7ffff7badecd         <PredictorVGetField+240>  leave
-0x7ffff7badece         <PredictorVGetField+241>  ret
-0x7ffff7badecf <PredictorPrintDir>  push   rbp
-0x7ffff7baded0         <PredictorPrintDir+1>  mov    rbp,rsp
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[source:tif_predict.c+706]--
-702                case TIFFTAG_PREDICTOR:
-703                         *va_arg(ap, uint16*) = (uint16)sp->predictor;
-704                         break;
-705                default:
-706                         return (*sp->vgetparent)(tif, tag, ap);                    <- $pc     ; tif=0x00007fffffffd7f8 -> [...] -> "PredictorVGetField.tif", ap=0x00007fffffffd7e8 -> [...] -> 0x3000000010, sp=0x00007fffffffd808 -> [...] -> "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[...]"
-707                }
-708                return 1;
-709         }
-710
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[trace]--
-#0  0x00007ffff7badecb in PredictorVGetField (tif=0x608560, tag=266, ap=0x7fffffffd870) at tif_predict.c:706
-#1  0x00007ffff7b6a880 in TIFFVGetField (tif=0x608560, tag=266, ap=0x7fffffffd870) at tif_dir.c:1174
-#2  0x00007ffff7b6a7dd in TIFFGetField (tif=0x608560, tag=266) at tif_dir.c:1158
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-0x00007ffff7badecb in PredictorVGetField (tif=0x608560, tag=266, ap=0x7fffffffd870) at tif_predict.c:706
-706                     return (*sp->vgetparent)(tif, tag, ap);
-gef> bt
-#0  0x00007ffff7badecb in PredictorVGetField (tif=0x608560, tag=266, ap=0x7fffffffd870) at tif_predict.c:706
-#1  0x00007ffff7b6a880 in TIFFVGetField (tif=0x608560, tag=266, ap=0x7fffffffd870) at tif_dir.c:1174
-#2  0x00007ffff7b6a7dd in TIFFGetField (tif=0x608560, tag=266) at tif_dir.c:1158
-#3  0x0000000000403700 in tiffcvt (in=in@...ry=0x608560, out=out@...ry=0x607010) at rgb2ycbcr.c:328
-#4  0x000000000040183b in main (argc=3, argv=0x7fffffffe328) at rgb2ycbcr.c:127
-
+iQIcBAEBCAAGBQJYCcNeAAoJEHb/MwWLVhi20/wP/1iiGZqIk9G4dz6hhSnnOnbe
+4rirHjWzkaudO10CibTukcsMKtRDA+1MiluIX4pwgmSiy2F6oFtJK2QH8/Q0/xeD
+tGXs6+r8glxDEpaOxuhWeYZTs811Jln1VFZ9ma0qJ5dcciUZ6ArncwOUojuY9PFj
+QiaZZKurbMj7sbsUwleYU4z7GQjljvQDSYX2BWVsOxgvy1IxXZN5370Dk3cGvfBj
+hU9LNyxSxiTNYrDzL/oU2VraGwcSonpbQQvZ+v3gwVbAzB8CPTWEL4PE2Q/0CKem
++kmoRPL0sKBl73ZPQldOt5FCseOH/RVPIHHFgbsktUKFOipc70nssrPjaOVCBb+D
+JkAWN3+JOIjs0DkDsmHu04d5hg6I4s9fQ3XHNAWf/IRHd1E13F0Oi3lZnCcD+91d
++MHl5q2DA3mRb5tQwugG3YE8Xq6iWJhPsAumBLy50HBSqPBThGNEY9j6l6LxvoHh
++EE5s3kR7VT3RFVWZzxS14s5dkkxeg5Szd/vX3yxug5PV/FQ9OtteBEJSuLBmfci
+LB5AMIo66vyWcHDRPAkJCXO00Bw/J+RdNxITTJn47poBa2gSh08rdx0XRlzb4B/3
+n9ToPs2ABty9XzRxOpNHK9/06X0IqAzCsV09l0MGMtdLjfg/cxoKEWI+jVbFGeeP
+PjCoB0Arz8xQohWdPz9g
+=AyGH
+-----END PGP SIGNATURE-----
