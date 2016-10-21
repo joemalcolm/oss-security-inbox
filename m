@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1951" "Friday" "7" "October" "2016" "10:45:16" "-0400" "Chet Ramey" "chet.ramey@case.edu" "<5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>" "59" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" nil nil nil "10" "2016100714:45:16" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "U       chet.ramey@c Oct  7   59/1951  " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<20160927205512.GA25156@jasmine>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" "<20160927205512.GA25156@jasmine>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1551" "Friday" "21" "October" "2016" "17:49:20" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>" "43" "Re: [oss-security] Requesting membership to linux-distros" nil nil nil "10" "2016102123:49:20" "[oss-security] Requesting membership to linux-distros" (number mark "U       kseifried@re Oct 21   43/1551  " thread-indent "\"Re: [oss-security] Requesting membership to linux-distros\"\n") "<20161021015524.GB23643@buzz.coreos.systems>" ("<20161021013642.GA23643@buzz.coreos.systems>" "<CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>" "<20161021015524.GB23643@buzz.coreos.systems>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14227 invoked by uid 550); 7 Oct 2016 14:45:51 -0000
+Received: (qmail 17630 invoked by uid 550); 21 Oct 2016 23:49:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14209 invoked from network); 7 Oct 2016 14:45:50 -0000
-References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
- <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
- <160916195601.AA66726.SM@caleb.ins.cwru.edu> <20160927205512.GA25156@jasmine>
-To: Leo Famulari <leo@famulari.name>, oss-security@lists.openwall.com
-Cc: chet.ramey@case.edu, john.haxby@oracle.com
-From: Chet Ramey <chet.ramey@case.edu>
-Message-ID: <5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>
-Date: Fri, 7 Oct 2016 10:45:16 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.4.0
+Received: (qmail 17612 invoked from network); 21 Oct 2016 23:49:33 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=F9ZUSu8UaS8wLO9DAKaxun0q2vxLd02ApJky4Jru0QM=;
+        b=h3GWG/tT5XmL3x3qhCBxqQu8meBUKue+faZ1YrbuSUHxLIyAmhz67Jng18hzTXle5A
+         ID4HS+siEa64ujbzYh5Hqhj7bXMqf/Sr+VIWSXk3qcG0VuN2KYiznVKYcZ1iN5jzMvFm
+         5Z3qlef+REqdBhZys4qipnMdBMi5OnkZ5B51g4DUe/f3FZa6HB+kFaXrj4/YiMNg/92E
+         fdXavyWJT3YMBzGVOjZ4soxSJEtZ+nMHSj3STfRxTXVfvG8zzJfvpahQj77FPT2XNfqG
+         fwv5mnS+2PDxRJKIQfFOPLNNLEabyV2Fj+1bTkR2FAZj1cBAzUyyXBghVKWmVrVHCX2p
+         njAA==
+X-Gm-Message-State: AA6/9RmSqXl+2fTOLqRCTUESQh7Y9o7kjQRPl8+pgCtK6J/QeLCw9lDTFBWwiaX++1jvfThmYDYzKKKpgNDcBS39
+X-Received: by 10.202.54.2 with SMTP id d2mr12688659oia.145.1477093760999;
+ Fri, 21 Oct 2016 16:49:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160927205512.GA25156@jasmine>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="UDg9nvLdbQGTGLhwnXfsHWRpHSsgp5WxX"
-X-Junkmail-Whitelist: YES (by domain whitelist at mpv1-2015.case.edu)
-Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
- $HOSTNAME
+In-Reply-To: <20161021015524.GB23643@buzz.coreos.systems>
+References: <20161021013642.GA23643@buzz.coreos.systems> <CANO=Ty0UAEvgon1PMdTTp4+7bj5SvpKdSD4Won=7NQXrS-2y2A@mail.gmail.com>
+ <20161021015524.GB23643@buzz.coreos.systems>
+From: Kurt Seifried <kseifried@redhat.com>
+Date: Fri, 21 Oct 2016 17:49:20 -0600
+Message-ID: <CANO=Ty3Su3JaEtEvUs4GO=dg8ufpBZsUALaBCD0COW5j67y8-w@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a113cd270ecbece053f68b09b
+Subject: Re: [oss-security] Requesting membership to linux-distros
 
---UDg9nvLdbQGTGLhwnXfsHWRpHSsgp5WxX
-Content-Type: multipart/mixed; boundary="iIp418B9KCdRJm7F2nedqlXXmKuVD89GQ";
- protected-headers="v1"
-From: Chet Ramey <chet.ramey@case.edu>
-Reply-To: chet.ramey@case.edu
-To: Leo Famulari <leo@famulari.name>, oss-security@lists.openwall.com
-Cc: chet.ramey@case.edu, john.haxby@oracle.com
-Message-ID: <5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>
-Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
- $HOSTNAME
-References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
- <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
- <160916195601.AA66726.SM@caleb.ins.cwru.edu> <20160927205512.GA25156@jasmine>
-In-Reply-To: <20160927205512.GA25156@jasmine>
+--001a113cd270ecbece053f68b09b
+Content-Type: text/plain; charset=UTF-8
 
---iIp418B9KCdRJm7F2nedqlXXmKuVD89GQ
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+It looks like CoreOS is shipping Linux and respecting the various licenses
+in a volume sufficient to make sense for them being given access to the
+Linux distros list, and shipping security updates (I would say they could
+benefit from shipping advisories, but they put the CVE's in the ChangeLog
+so I really can't complain). Assuming they can handle embargoed issues (do
+you have private bug tracking/code repos/CI/whatever else you need to ship
+an update?) I would have no objections to them joining the Linux distros
+list. Can you confirm you have infrastructure to handle embargoed issues?
+If yes I guess it's up to Solar to add you.
 
-On 9/27/16 4:55 PM, Leo Famulari wrote:
-> On Fri, Sep 16, 2016 at 03:56:01PM -0400, Chet Ramey wrote:
->>>> I believe the fix in parse.y is this (Chet, please correct me if I'm w=
-rong):
->>>
->>> Yes, that is the current fix for this.  There are other ways to do it.
->>
->> Here's a patch to bash-4.3 that will fix this.
->=20
-> Hi Chet,
->=20
-> Thanks for the patch! Do you plan to add it to the bash-4.3-patches
-> series [0]?
+On Thu, Oct 20, 2016 at 7:55 PM, Alex Crawford <alex.crawford@coreos.com>
+wrote:
 
-This went out as bash-4.3 patch 47.
-
-
---=20
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, UTech, CWRU    chet@case.edu    http://cnswww.cns.cwru.edu/~che=
-t/
+> On 10/20, Kurt Seifried wrote:
+> > On Thu, Oct 20, 2016 at 7:36 PM, Alex Crawford <alex.crawford@coreos.com
+> >
+> > wrote:
+> > I found a security page: https://coreos.com/security/ but it only
+> mentions
+> > some upstream security. I can't find any security advisories, the
+> closest I
+> > can find is a few blog postings. Do you have an advisory page?
+>
+> Not at the moment (though, it's been on my mind for a while). The
+> closest thing we have is the release notes which will call out CVEs.
+> e.g. https://coreos.com/releases/#1122.3.0
+>
+> -Alex
+>
 
 
---iIp418B9KCdRJm7F2nedqlXXmKuVD89GQ--
 
---UDg9nvLdbQGTGLhwnXfsHWRpHSsgp5WxX
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+-- 
 
------BEGIN PGP SIGNATURE-----
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-iFsEARECABsFAlf3tQYUHGNoZXQucmFtZXlAY2FzZS5lZHUACgkQu1hp8GTqdKsT
-kgCZATfC92rmHfUvyvrEydhrkMEdZKYAn3eCpXL3QaZbjqQqxQRykthAyEqJ
-=ST5z
------END PGP SIGNATURE-----
-
---UDg9nvLdbQGTGLhwnXfsHWRpHSsgp5WxX--
-
+--001a113cd270ecbece053f68b09b--
