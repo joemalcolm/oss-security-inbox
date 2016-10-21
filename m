@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/20
-Message-ID: <CAB8XdGAFWtCvHAhRv0mWNf7weY_Q1ogdF_F14+m+AGr75WsiLQ@mail.gmail.com>
-Date: Thu, 8 Sep 2016 18:43:47 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>
-Cc: Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: New security advisory for Apache CXF Fediz - CVE-2016-4464
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/2
+Message-ID: <20161021013642.GA23643@buzz.coreos.systems>
+Date: Thu, 20 Oct 2016 18:36:42 -0700
+From: Alex Crawford <alex.crawford@...eos.com>
+To: oss-security@...ts.openwall.com
+Subject: Requesting membership to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache CXF Fediz:
+Hello, I run the CoreOS Linux team for CoreOS, Inc [1]. I thought I
+requested membership in the past, but after double-checking I definitely
+did not. Shoot. DirtyCOW reminded me to actually get this set up. Is
+anything else needed from me?
 
-CVE-2016-4464: Apache CXF Fediz application plugins do not match the SAML
-AudienceRestriction values against the list of configured audience URIs.
+Thanks.
 
-http://cxf.apache.org/security-advisories.data/CVE-2016-4464.txt.asc?version=1&modificationDate=1473350153000&api=v2
+-Alex
 
+[1]: https://coreos.com/
 
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
