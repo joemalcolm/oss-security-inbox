@@ -1,89 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/11
-Message-Id: <20160602162134.8A5D56C0659@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Jun 2016 12:21:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: holger@...er-acht.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: mat doesn't remove metadata in embedded images in PDFs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/6
+Message-ID: <1513601.hM9JZeBEYn@blackgate>
+Date: Fri, 21 Oct 2016 17:07:22 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: potrace: memory allocation failure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://digitalcourage.de/blog/2016/using-tails-be-careful-embedded-metadata
-> explains how mat fails to do what it's supposed to do, namely removing
-> embedded meta data. The bug is that it doesn't remove metadata from images
-> embedded in PDFs (while it does remove metadata from PDFs and from
-> images)
+On Saturday 08 October 2016 22:30:54 Agostino Sarubbo wrote:
+> A crafted image, through a fuzz testing, causes the memory allocation to
+> fail.
 > 
-> So basically the core feature of mat is partly broken :/ So I think this
-> warrants a CVE as IMHO this ain't just a missing feature and folks on
-> the #debian-security IRC channel agreed.
-> 
-> This issue is being tracked by it's developers as
-> https://labs.riseup.net/code/issues/11067 and in Debian as
-> https://bugs.debian.org/826101 and affects all versions of mat and is
-> not fixed anywhere yet.
+> This is the first case where my ASan symbolyzer didn’t start up correctly.
+> I’m  reporting only what it prints at the end (not useful at all but
+> demostrates a bit that the issue exist)
 
-https://digitalcourage.de/blog/2016/using-tails-be-careful-embedded-metadata
-says "We were able to recommend a software library to the main
-developer and thus convince him to tackle the problem. He marked the
-issue to be resolved for the next major release, 0.7." In other words,
-because pypdf2 exists, it is possible to address the specific issue of
-metadata inside content that is embedded in a PDF.
+I worked on it and now I'm able to get the full stacktrace, which has been 
+updated on the post.
 
-> Also I wonder if similar bugs happen with other recursive formats, like an
-> OpenDocument text embedding an image or embedding a pdf embedding an
-> image or a zip file containing a zip file containing a .odt file
-> containing an pdf containing an image
+For completeness I'm pasting the interesting trace here:
 
-https://mat.boum.org/ currently says "MAT does its best to scrub as
-much metadata as possible, it's not really efficient at scrubbing
-embedded media inside complex formats. For examples, images embedded
-inside PDF may not be cleaned!"
+   #9 0x500bcb in bm_new /tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/bitmap.h:76:30
+    #10 0x500bcb in bm_readbody_bmp /tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/bitmap_io.c:559
+    #11 0x500bcb in bm_read /tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/bitmap_io.c:133
+    #12 0x4f8608 in process_file /tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/main.c:1058:9
+    #13 0x4f5904 in main /tmp/portage/media-
+gfx/potrace-1.13/work/potrace-1.13/src/main.c:1214:7
+    #14 0x7f167735c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #15 0x4190b8 in getenv (/usr/bin/potrace+0x4190b8)
 
-We prefer not to make decisions on whether a CVE ID should exist on
-the basis of ease-of-fix information. In other words, it is difficult
-to assign CVE IDs if the product's security model is "Complex
-embedding is, in general, unsupported, but we will make one-off
-changes for specific embedding scenarios when a solution is provided
-by a user."
-
-We think you mean that a CVE ID can exist with the rationale of:
-
-  - as of version 0.7, there will be a required security update in
-    which the embedded-in-a-PDF security problem is resolved
-
-  - the CVE ID is needed to tag that required security update
-
-  - as of version 0.7, the https://mat.boum.org/ text may be changed
-    from "images embedded inside PDF may not be cleaned" to something
-    like "images embedded inside complex documents may not be cleaned,
-    but users can rely on cleaning in the specific case of PDF
-    documents"
-
-Does that match your intention for the CVE ID?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUFynAAoJEHb/MwWLVhi2MLQP/i9uyFB9jfMHIMTjfpa4pxNf
-+FeIcxaMQBJ6Dz56ccwaQRl12Q5LVquPeSxvZtfdh96DqpcNXYsRDh73tFDz8gut
-x1QRpxiKxKO/Qi2JEXLQStLqDgtjkasv0BWnaAstLKaDC7RrvKBgH+kd89nsdXom
-rXuVKKrHKlqGcGuvNY6QIP1O2c26iTWC4il4Ml5xb2AcQ0QZuEvEcURzcjFq0I7b
-eltelIndDxhzqPaZ9Pr8KAdjYTAZxkHi/RsYytA7aymHHe8Xye5V2zcXPtORUjsy
-y7WH8HyvEEygChJpvVnriHCq+7uoLLm0jOZDt0NJFeGPm1lK0BDXcy/fCEapUFJi
-0j7npiZOBX4RIxbxv3S313NwNoNQptAI7VuT964h0o1ziZZMPL4t1cKmX08kbOfK
-+KWC6pUwx6dhPGZfhI5+D+iSQPELfeRqkPMcBwhJI23PZQFbbY3oDKJqR2qpFRbp
-zULVuA4PHZnQLrMjjGhwqucNuGcvo5cltJHly7djy4IrksSQw5qip9VGSgYIoDjI
-yA06YHHfbmBVpxpZcEBTS/ire7IhY77bGUK8XTW6kplkuNq0Q5Bb9oZBdP/pDKHB
-NeixHM4QY/RtXfD81UoL6Q0643Qk/2emtgZGc/7/YlYEUP9IMizeBKR0NawdJfad
-EUj+1IljwFdfd8ojFcHM
-=l+kk
------END PGP SIGNATURE-----
+--
+Agostino
