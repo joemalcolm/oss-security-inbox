@@ -1,4 +1,9 @@
-Received: (qmail 1168 invoked by uid 550); 31 Mar 2026 16:31:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1702" "Saturday" "22" "October" "2016" "21:18:11" "+1000" "Allan McRae" "allan@archlinux.org" "<f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>" "50" "[oss-security] Addition to linux-distros for Arch Linux" nil nil nil "10" "2016102211:18:11" "[oss-security] Addition to linux-distros for Arch Linux" (number mark "U       allan@archli Oct 22   50/1702  " thread-indent "\"[oss-security] Addition to linux-distros for Arch Linux\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11470 invoked by uid 550); 22 Oct 2016 11:28:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,63 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 26176 invoked from network); 31 Mar 2026 06:47:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deepin.org;
-	s=ukjg2408; t=1774939594;
-	bh=uxFb0hiLbVjX7pFiWGipbn4e3V/tMd3ow/s9ntSwU44=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=vqyY+a5VlRs+ViTephR197wyWqNmAWM7+5LRdO0AMGovOHqHO5W+SL2hM3kCJoR2A
-	 FL7btXODppNSyfMn/4qLG8B/t683GLgmsuJXs0oYli7ZPjABz/qznTdkxrwZtVvO48
-	 dje1ET1tvUkVkNskJFyACmOhibAL5mjmlVAzzr2o=
-X-QQ-mid: esmtpgz16t1774939590t09cb672e
-X-QQ-Originating-IP: EGM2vSOaX9D6yDu/+WL0K9PZjt0C9bi/WNcZR/KKe8c=
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 15613567221884404066
-EX-QQ-RecipientCnt: 4
-Date: Tue, 31 Mar 2026 14:46:21 +0800
-From: Tianyu Chen <sweetyfish@deepin.org>
+Received: (qmail 5618 invoked from network); 22 Oct 2016 11:18:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=archlinux.org;
+	s=nymeria2; t=1477135097;
+	bh=qHMoE8QqhBF5iZHpUUu9u1F3t6lvQ7HO+rblL8nTsws=;
+	h=To:Cc:From:Subject:Date;
+	b=OFJgx+iJ+mm0jqW7NBE9yqWJcW0A3R0+VT1YHYG1REQJn4A+RuiA5UkMaO/ibCi2S
+	 JLJgRMnIswBDatnUSvD/OQFQcZIQnoHTrvtHDZS3ZV8WnkZaR1lWqRlAs3CH28BHET
+	 O8uxMPGBHZH/9V9eqTTVKB3ExEYld6JgUOTpZyhh1ZLJNox/s7cjsm54SzaTdvABR0
+	 czoAULkLp0cTnBgEcC0KiMfZThTxmWAioV0OlgAGnfOb+VAsxgT6BbSgk+xCto1uNM
+	 yseaEFpyTgatQUMaoadB/rf3zlIUnO24KV82yuqNWso4e76Tx87KM4FIl7wTCPgszE
+	 AvsrVr0I+jvmmoRrIA3VsSMIQ1Y3D2gZJVi15NAnsULNzVwzDkUQc1+KPm1XXrpnAx
+	 4fFPLjJ7WPJft3tB+tI82jm0SVogSl/F4uFzZQYvFoJZY35pQ/3UPeX4+htBtxgSih
+	 47cWRNgksMDZ8R369Ds9Kmf61qMkMqx6HfwpuxULfzMH5uPepEA7cZu5PqcNd2U96Z
+	 Q4+5Pg8XvAi9Pt07TQUgfGfJx3GTlkELJxgUF5JwXwN2T98mMlKZ3TZ/AK/ebhv+4b
+	 TQ3wFsTzjWXUppODjct6fGSRTOzKposIWHrnotuIku0MbzhwYWEGGIKcdMneOp6CpD
+	 ZVKveQxegc0VhMg7CkcqnTwI=
 To: oss-security@lists.openwall.com
-Cc: Christian Brabandt <cb@256bit.org>,
-	Demi Marie Obenour <demiobenour@gmail.com>
-Message-ID: <A71BA2775357E5C6+acttvQU5RdxDk6tj@ut005408-PC>
-References: <aco9Ai89pj+OQ0YS@256bit.org>
- <e1cbe881-2d13-442f-8977-39baaad84ec8@gmail.com>
+Cc: Levente Polyak <anthraxx@archlinux.org>
+From: Allan McRae <allan@archlinux.org>
+Message-ID: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
+Date: Sat, 22 Oct 2016 21:18:11 +1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e1cbe881-2d13-442f-8977-39baaad84ec8@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:deepin.org:qybglogicsvrgz:qybglogicsvrgz3a-1
-X-QQ-XMAILINFO: MKzYG8XJzx27auYMqVeNFWekSOKHQGelBCxWd2iWMGQnr+J17rJrpwsr
-	1vGWXck0Lo/DRNB6neeTx2xwHkiDwxxD1f7Nds86643kMR/8fqyzsG+E1I4LchjAkGo+cf8
-	HAxDd3HXNk1JiX3yXk4uVpuccs1tTs65rcRebQDybR7LoojMCSBw4WCGm+cYcBSrF5/tpxG
-	+2YS1Xs0MjNcxuEw8uJEQJVlys78pERdIgKOgUizD9FqYecrjVkjwba68Hv95xc1kWfEyDV
-	0frDXXHeLoU5NO473Xhwht7PaikEaNvrY8fxl4c1o7kf+mPS4S1RCVwLLRpvascIG09DOd5
-	tjl4DXmf5MiKVVqCguFwcUx6kSRQspmqG3oBItvgQkHfVSLWflXdVS5mG5qKje5NWa8YQtO
-	gfbJlNPwEjMEzfvUZxngGyhPREr3wueD09uwRzwAzhc/RHWMQe2xHKSQgSBd/WgSbzslYFO
-	Slcqts44lWjVeEQDb2GaueAbcUQ169y9pi/A1DFOBfhKYUXU5zCD7hrF9Vrr6IZ3jVcl4WO
-	Xw380/E3baPOEgJyVTFjx9/UsIpXPZgleLUwyqEK+dxecck6XgszqZEFl7YzqCUWdXWFQT7
-	qR7upATdoJAUISdMmHftcWlCWyTQmgfQmGft93U+CmuWdX+Ndqy8EWE+sfT48odKmxqLMv2
-	3FlstDNONtvqSLO+zcRPyEwQHGhDKA9aKqnRLqxgPCmXetkF+zWwXEoFvyV/7DXZczazp5r
-	KT/taCuhRongreDlqcOCaqZ0EQhnnchC1u7WjZriNPJ7V2JQHPa9NL8JCTKbo20gLs1Z7Po
-	507uSjh8ZGAlhDB2WvHfm0n33czZtY2LFd0NI9qtR75WkYXvqhNBdHz3GrCQbA6ZaySZZCy
-	K7ABedKmY+sV/7VGHwYbTZk1JQ+hAhR5WfxybJDFbcWMACjnrVT2DD6REQDm5+waZPDPahy
-	DcRUVlgi1JH5ASrlo2TqMwNFWZRlVks132GPvsjh3VGNHbL8DDe70EDPpwhdd/5Hr+PI0KE
-	FEHQCSqCHorE3eJVHM
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
-Subject: Re: [oss-security] [vim-security] Vim tabpanel modeline escape
- affects Vim < 9.2.0272
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="tw2JfISL9eL34HpXCVg79OaUwEecBg97p"
+Subject: [oss-security] Addition to linux-distros for Arch Linux
 
-On Mon, Mar 30, 2026 at 06:20:28AM -0400, Demi Marie Obenour wrote:
-> Should `modeline` be disabled by default in future releases?
-> It's a huge attack surface.
+--tw2JfISL9eL34HpXCVg79OaUwEecBg97p
+Content-Type: multipart/mixed; boundary="UsNkURtpUSpmxOa4enXqL520rlSxAUqkB";
+ protected-headers="v1"
+From: Allan McRae <allan@archlinux.org>
+To: oss-security@lists.openwall.com
+Cc: Levente Polyak <anthraxx@archlinux.org>
+Message-ID: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
+Subject: Addition to linux-distros for Arch Linux
 
-In Debian, `modeline` is disabled by default.
+--UsNkURtpUSpmxOa4enXqL520rlSxAUqkB
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-https://salsa.debian.org/vim-team/vim/-/blob/debian/sid/debian/runtime/debian.vim#L10
+Hi,
 
-Best,
-Tianyu Chen @ deepin
+Can Levente Polyak (CCed) please be added to the linux-distros list
+representing Arch Linux [1]?  He leads the Arch Linux Security team,
+which monitors and fixes all security issues in our packages [2].
+
+His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
+
+Thanks,
+Allan
+
+[1] https://www.archlinux.org/people/developers/#anthraxx
+[2]
+https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.h=
+tml
+
+
+--UsNkURtpUSpmxOa4enXqL520rlSxAUqkB--
+
+--tw2JfISL9eL34HpXCVg79OaUwEecBg97p
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQExBAEBCAAbBQJYC0rzFBxhbGxhbkBhcmNobGludXgub3JnAAoJEPmf/g/q6Zm9
+R+8IAJUAMh/EOzRKJgPV27ZtdcpA49WMtIRXB70uCGjv3nJAqpxcpMggzuumGFWv
+kCPX6FvbdqK8MRCpSQCt9GbAP93c5vLIOk81T1sUDTkRWTk8kc6UhjVZQaukuNxt
+5vofzZT9rhYv9nV4nQFw5M1j/xuC3ZgdjYBcozxIeNUJLCkKk0uV2kiMimNuRC0D
+wlaqZr4vqxU1NW+hEF0QHsSIDBet/guaYWUvvLnqTcVfhsasUck/yImRaXM5c+G+
++Qnoniqj4TLXP6za7no5aEtMWVPcFLG08YKL6P3lzvUrytLQeI1zuvZMcE63CQcg
+0Obfq40U3SC7OH6fpBPPlQ4HkVE=
+=tmJD
+-----END PGP SIGNATURE-----
+
+--tw2JfISL9eL34HpXCVg79OaUwEecBg97p--
