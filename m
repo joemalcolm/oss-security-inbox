@@ -1,50 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/6
-Message-ID: <56DD3786.2040408@x41-dsec.de>
-Date: Mon, 7 Mar 2016 09:10:46 +0100
-From: Markus Vervier <markus.vervier@...-dsec.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/2
+Message-Id: <20161023010359.42F65336005@smtpvbsrv1.mitre.org>
+Date: Sat, 22 Oct 2016 21:03:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 03/04/2016 07:24 PM, Kurt Seifried wrote:
-> So I've now heard from several security researchers that they are
-> unable to get CVEs for issues that need CVEs (e.g. widely used
-> hardware/software with flaws that have real world impacts and need to
-> be properly tracked. This has definitely resulted in issues being
-> publicized with no CVE that then makes it much harder to track and
-> deal with these issues.
->
-Hi,
+> https://blogs.gentoo.org/ago/2016/10/18/jasper-memory-allocation-failure-in-jas_malloc-jas_malloc-c
+> 
+> AddressSanitizer failed to allocate 0x1000002000 bytes of LargeMmapAllocator
+> 
+> 0x7f4f0474e170 in jas_malloc ... jasper-1.900.5/src/libjasper/base/jas_malloc.c:117:9
+> 0x7f4f04764b4f in bmp_getinfo ... jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:297:25
 
-just in order to second that: We have had similar experience with delays
-and with rejections that
-seemed random. Especially regarding vulnerabilities that did not fit
-into existing vulnerability
-classes or would require some amount of work to validate.
-It seems to me MITRE currently wants to improve CVE quality but does not
-have the resources
-to do a real and fair validation.
-In my mind having a globally accepted enumeration systems and unique
-vulnerability
-identifiers is more important than a small curated but outdated list of
-selected vulnerabilities.
+Use CVE-2016-8886.
 
-Therefore I would appreciate to move back to the old process where you
-would request a CVE,
-get it assigned - but with the possibility of revocation later. Or move
-to a fully automated process
-like OVE as proposed here before.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Markus
-
--- 
-Markus Vervier (Managing Director)
-X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
-Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
-Geschäftsführer: Markus Vervier 
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3843 bytes)
+iQIcBAEBCAAGBQJYDAr6AAoJEHb/MwWLVhi2PDYP/1NmmhW+xfJZfBR9Ol7iijk4
+VYpDfu7DCS8DO/QR2lZZBFJlzZnoe9gtjFgK24s2bj/W3zCwT2wtSzyw+8FLD9DZ
+vWLYte57WNG/e992kUe+Oi0lyittYAz2SRCGGnBj71GE+1P47kx7+lFGAMpphBWC
+syae4OB/mhZ9ynqmXIXejr4oV/OkowEwFfHcU57ph/p4KbaEZTlZohXiHE3v5kHy
+69JHq0ICFpZU4v8WtuUAeDGYTNszTO+LYboO657EMciIYG5lUiIu2EjxvBn8Av+W
+Jj1sg/m+jKMFuVjBv2luKnDU+ljzGyf8106PYFjwlb2ox+bd133hmFJyX0c0H6p/
+VcbY9GOatGle6Mg00OQ+BpIsZ+EonJUc3KH7a+W6GzPAIoPUhaC3nJ5zrgClGVXT
+3oW67lbGeRtEPRz0N+0y0lU38wOE0Zpfdo+3U15ggxvA/W/FPL+pN7KhH2DDMrmH
+sOa/GPzV21eIBh9LVzWOOLV44gviAq7PBuTkt5vkerxV1T8u8JZLmCKgKwMuGPGF
+sPZnkIlM/I01l1TriUZ372jkY2ytTSye3VTWP6KJAA1sonzf/6Rayj73/YIiO2eL
+tbsMlHczFAWHzPQcF/CxCTbYjbVneqjF+0G5UupZcfO7+zeV3RDMp+sbq0Djw1f5
+mKQTqhF8qFf6hiYaVlbf
+=Cy/w
+-----END PGP SIGNATURE-----
