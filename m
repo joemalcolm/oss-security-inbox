@@ -1,58 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/09/2
-Message-Id: <20160109135703.17FCF33217A@smtpvbsrv1.mitre.org>
-Date: Sat,  9 Jan 2016 08:57:03 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/8
+Message-Id: <20161023010023.5F7236C4684@smtpvmsrv1.mitre.org>
+Date: Sat, 22 Oct 2016 21:00:23 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com
-Subject: Re: Qemu: ide: ahci use-after-free vulnerability in aio port commands
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Qemu emulator built with the IDE AHCI Emulation support is vulnerable to a use
-> after free(kind of) issue. It could occur after processing AHCI Native Command
-> Queuing(NCQ) AIO commands.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance or might potentially execute arbitrary code with privileges of the
-> Qemu process on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg01184.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1288532
+> https://github.com/mdadams/jasper/issues/28
+> Heap overflow in jpc_dec_cp_setfromcox()
 
->> when the NCQ
->> command is invalid, the 'aiocb' object is not assigned, and NCQ
->> transfer object is left as 'used'. This leads to a use after
->> free kind of error in 'bdrv_aio_cancel_async' via 'ahci_reset_port'.
->> Reset NCQ transfer object to 'unused' to avoid it.
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
 
-Use CVE-2016-1568.
+> malformed jpeg2000 file
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/ide/ahci.c but
-that may be an expected place for a later update.
+> jpc_dec_cp_setfromcox ... libjasper/jpc/jpc_dec.c:1668:32
+
+Use CVE-2016-8880.
+
+
+> https://github.com/mdadams/jasper/issues/29
+> Heap overflow in jpc_getuint16()
+
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 8
+
+> jpc_getuint16 ... libjasper/jpc/jpc_cs.c:1572:8
+
+Use CVE-2016-8881.
+
+
+> https://github.com/mdadams/jasper/issues/30
+> segfault / null pointer access in jpc_pi_destroy
+
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+
+> jpc_pi_destroy ... libjasper/jpc/jpc_t2cod.c:521:10
+
+> https://github.com/mdadams/jasper/commit/69a1439a5381e42b06ec6a06ed2675eb793babee
+
+Use CVE-2016-8882.
+
+
+> https://github.com/mdadams/jasper/issues/31
+> double free on jpeg parsing
+
+>> From: Agostino Sarubbo
+>> This is a duplicate of the double-free I reported
+>> https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
+
+(this was already assigned CVE-2016-8693)
+
+
+> https://github.com/mdadams/jasper/issues/32
+> assert in jpc_dec_tiledecode()
+
+> imginfo: jpc_dec.c:1072: int jpc_dec_tiledecode(jpc_dec_t *, jpc_dec_tile_t *): Assertion `dec->numcomps >= 3' failed.
+
+> https://github.com/mdadams/jasper/commit/33cc2cfa51a8d0fc3116d16cc1d8fc581b3f9e8d
+
+Use CVE-2016-8883.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWkRD7AAoJEL54rhJi8gl5S1YP/2Nj8+B8iR1aFHR0GXUCsCWk
-nKQYEphcDT0iyFkJ+1iazUA/72yIYp3U+wQaC5BpkUlT+KSWRKoSDCypjTKfXKUn
-HwfAsrio3NAtnpJTapalqVWN4i9fUrzCrRdMDHO+4qgxk/ph0gjxnrGldMhKN7Sz
-BTVqrY802SUFfHcKyX8Mdk7ixqq0V+grix0qRUd5q5cwrGgLsmNyWygU6gHz6rNR
-UfB2ZQLAbybR7nUcdmYFv4oTfc4voCerLS2cWP/KGmput4vnBoZvNgkXxSysTVBE
-dg54hk0xMQJzOjrec05M99wQ0kK7nhIvPyIF6D0zz3aBCJ6gyYHhipfl4skxoGNn
-RE5ljb4483sbyLFBqzj9SmrDbdiPN+1aN8dbh2yelLP5y1ccMwOXxyY3vfxiXbyy
-qsVdyO0dEA9A2s7OsSbROTwR/wHuT6PYyUOxgWx/0+waj/NuwC+znpKjgILoV7Hv
-fGkRtIDGH1UhnlfUlweIKAKnpCYFuJpZhrnDc9Ldtzagw7eveIDUlXjgAE/E/vmc
-+7ySSt2T6d6+J7vDqCyyfjVTSbIaC4EGlpxnAOdLnPf0cFUPxZfPytJLGUthzRpA
-FUMVK8yNErYQEu8T07rfDXbPvk5lJoxPpoC4M1Wfkco33z1EeA03ic0W+dVnRfCC
-VTZRXik6y0D06HcjIrRp
-=iYts
+iQIcBAEBCAAGBQJYDArpAAoJEHb/MwWLVhi2dRAP/1Qvj44C7Wp43GQDGLzXEkL+
+XF25qtPfMJBeNtcPeDmkAAfW04Re10NYptCmmNWH7uxXDeyeakHhJjCaiI372nSe
+e/TZ7adgkaxFAanUc5WF6lhnX8VrCg/Naa/F/aSUk5Y55KgkfmqnXosy84ktIaUs
+aSrPR5k6gogmG85K17Jy3rvysO01ftGKP5uvyT8V49BDAR7S21DGCgGowf53AWid
+J8fFHz64E+8L0Ws2T4secUhHVlxSC7EygVPN6RERspEezM49TDzWn/3jyU2Rnyiq
+Tc4ehZGxJR+TkPzg9dnnH/jrJ0EjLktYOhMttjCXhFUWLNAg9R2mowLxBqfVDsIm
+yotcn7pGVB5VZCHsBz5srzKdLytMV8HlpurVx2fawVh62TRULOon8RLKbGoO6x9d
+XMvOCjxF0+oPIq4wRk4j3FIewlzNi7sktgAJ7dqlADbiNtpOF8EhiWfYq5/+h8BJ
+kUqbLPDVTCF3iQiNkWOL7wdbBPlC3SsdgB73a0U92ApWCz4BZ2cMAbNosrmpbAS9
+DK8DPwwVFFKgMu8FVJhlCa3FSJEsXHMKZHeb0J3merRimupUcoDMIUV5VSHNq8RK
+WodgTixKBURw4XHGVJ3dgX665USRqbvBGxb9zOYWaXZsRrc1uHNRNHDP78h6eY6i
+N8eeB+pE7gmFUQP+7Kng
+=yV6y
 -----END PGP SIGNATURE-----
