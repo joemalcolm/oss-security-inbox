@@ -1,4 +1,9 @@
-Received: (qmail 1830 invoked by uid 550); 12 Jan 2023 14:50:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1413" "Saturday" "22" "October" "2016" "21:05:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161023010529.DB3343AE00F@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)" nil nil nil "10" "2016102301:05:29" "[oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)" (number mark "U       cve-assign@m Oct 22   34/1413  " thread-indent "\"[oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)\"\n") "<2700333.W9CT5MSJyE@blackgate>" ("<2700333.W9CT5MSJyE@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3736 invoked by uid 550); 23 Oct 2016 01:05:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30231 invoked from network); 12 Jan 2023 14:12:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bl8KDwFqzH0StzLQBA5712JnVCew3GL3gTjvzij79Aw=;
-        b=jW2hXdP8dlBrdD1VnAPT0aAmPQ4xwJSdkt28gO+67RDBTMDzHpUBNXOmiS4vFG++9W
-         waYRbBPercGXD/6oh4DGvmXpxTNJduvtDgPrTboKtirqnH2buyrlkSscy54kvJ7KB7eP
-         7PTkvryDlJUtCc5Uu+FQh39Pcs7QwGwB+ScfPSa6hq3SmoB2vRZU5CiNdAxlpsXrDW+G
-         8DNe18spQQwsZZwoT/fGfBOpvuEAl8qlsstr8kIgZ3AW9Y6w7tQOenuzJ58SmStVKzRy
-         yXEwVf4VBA8A/Ertn1NIqS+2wT+SQTOna9QlWE+os+5+AWgbx36Pdn55pITrmXUvGCYa
-         Jybg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Bl8KDwFqzH0StzLQBA5712JnVCew3GL3gTjvzij79Aw=;
-        b=24qjCvluU0WM8T4nDGWusoH/pssarpFbpO3kbRwzLj1vUfkmxKmltAGnY/om7zUDAe
-         NDwLDz8BYHGGpXtKNpqjEWKD/SXmzLyfmb9DUBKPDyouIhsGlmd6q6PQjQXtFrMHh4MD
-         +6+LeBsDdIK9LGMnnGnoFE9e+0v2DHm88iQzWwHTBpaSUbFXQZdLeXPSKLRvdV8AoQhg
-         SGDy4sQjdTzqy/bfnQB+hrv7j3f6CioIDWSeZfYJp4g003IkfFqyNU1TjRwg/e+Ow+YS
-         cJm5JJwxZYBnT3zGEkHTShfXYlBaBjYGGveGP0BXODWKvq3Ge1FWiMCKJ+IpcqQJmX0H
-         mznw==
-X-Gm-Message-State: AFqh2kpZ1cR2Bm5nuqSc8nDoNJM4WymsyvE5QbMAbo5qUt4ve1Uw0Cae
-	aRJGOt4QLQ3Ag7QRtRn8MMKBG8jEAIbegMx3ZbhnG3bY6Q==
-X-Google-Smtp-Source: AMrXdXubsxYnf4oAVCadF0mqWdD53iHNwXHQjGpZ4I/jdn46rhuhyT+7eyLjCY+5WotMuogKb01O+0quhJ/KOxKTa+c=
-X-Received: by 2002:a05:6870:1719:b0:148:bde:dbd9 with SMTP id
- h25-20020a056870171900b001480bdedbd9mr4979161oae.37.1673532761611; Thu, 12
- Jan 2023 06:12:41 -0800 (PST)
-MIME-Version: 1.0
-From: Tal Lossos <tallossos@gmail.com>
-Date: Thu, 12 Jan 2023 16:12:30 +0200
-Message-ID: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
+Received: (qmail 3532 invoked from network); 23 Oct 2016 01:05:41 -0000
+From: cve-assign@mitre.org
+To: ago@gentoo.org
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+In-Reply-To: <2700333.W9CT5MSJyE@blackgate>
+Message-Id: <20161023010529.DB3343AE00F@smtpvbsrv1.mitre.org>
+Date: Sat, 22 Oct 2016 21:05:29 -0400 (EDT)
+Subject: [oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-# Description
-A NULL Pointer Dereference bug in nvmet_setup_auth
-(drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-Since the bug occurs in the authentication feature, it can be easily
-triggered by an unauthorized client in the pre-auth stage.
-Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+> https://blogs.gentoo.org/ago/2016/10/18/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c
+> 
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+> 0x7f8dcb5bc940 in jp2_colr_destroy ... jasper-1.900.5/src/libjasper/jp2/jp2_cod.c:443:3
+> 
+> https://github.com/mdadams/jasper/commit/e24bdc716c3327b067c551bc6cfb97fd2370358d
 
-# Vulnerability
-The vulnerability is caused by a missing goto statement after
-assigning ctrl->ctrl_key to NULL, thus causing a NULL Pointer
-Dereference afterward:
----
-ctrl->ctrl_key =3D nvme_auth_extract_key(host->dhchap_ctrl_secret + 10,
-    host->dhchap_ctrl_key_hash);
-if (IS_ERR(ctrl->ctrl_key)) {
-    ret =3D PTR_ERR(ctrl->ctrl_key);
-    ctrl->ctrl_key =3D NULL;   <--- Assigning NULL
-}
+Use CVE-2016-8887.
 
-pr_debug("%s: using ctrl hash %s key %*ph\n", func,
-    ctrl->ctrl_key->hash > 0 ?   <--- NULL pointer dereference
-    nvme_auth_hmac_name(ctrl->ctrl_key->hash) : "none",
-    (int)ctrl->ctrl_key->len, ctrl->ctrl_key->key);
----
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-# Exploitation
-If an invalid dhchap_ctrl_key (e.g., =E2=80=98DHHC-1:00:AAAA:=E2=80=99) is =
-configured
-in the NVMe target under a host object, when a remote client tries to
-connect to the NVMe subsystem (e.g., NVMe-TCP), the NULL Pointer
-Dereference would be triggered thus causing a DoS on the target
-machine.
-Running =E2=80=98nvme connect=E2=80=99 from a client to the remote subsyste=
-m would
-cause a DoS on the remote target.
-To bypass the authentication feature, we can pass the allowed client=E2=80=
-=99s
-NQN to the =E2=80=98nvme connect=E2=80=99 command, which can be obtained by=
- network
-sniffing.
-
-# Patch
-Bug report - https://lore.kernel.org/linux-nvme/20220823161255.GA21462@lst.=
-de/T/#t
-Fix patch - https://lore.kernel.org/linux-nvme/20220831045908.GC18042@lst.d=
-e/T/#u
-
-
-Regards,
-Tal Lossos
+iQIcBAEBCAAGBQJYDAr/AAoJEHb/MwWLVhi24I8QAKtduMTN4eo5SAOfpBYIgLdr
+9K4Vlzy3AB73c1TA/d/ck8EiG8WeDeHdU4XgZqpG7ZcEl3Yg8Tu1OZI/eNNS4pFs
+z2+TDEzRP71cy7yuX+LwjWFzu5jYDVZl4UYjLS004k5jQ4xvwZ8iuUCP6OmU1lfe
+kyaHWsvX5+uGohyz+Wd71pK8/OJockZmsSRDqaFj0ZN2luYB4daOnkUURiQ+b3Km
+9m6KfDIDw+x2sS9Ts+YFCU0LY/7Em68hh7qabACjXQql1xuwaGoZsw+30HItKfLo
+h41JMuPrEf1LyhJBZrg0URp/+f+Nlq/n3aqwrxRm/iARWw3XsNqrCBPa5QhBCO6e
+lWAGB3S8VnfXeFxsirFCy3yacIF0/sUfc3sYNdqOVOKkDPI3vg6bmwgnVefoD3+J
+4UY3KZOrGp54Y6vTGGiFBb4JMqRy6TijxoGWUhqRBZH5w9p0mbrcK3bC9iCOYndk
+ZCOeC1z+sfXYWSAdsqxInOJlT5WCVBK21qOfIbfcEfJIbaAWQbSZSTQ7OpIM/1K9
+IUuZqNWJNAEDXZi1BsxEr34lGFacIpXsCCiVBKBFrON7GKZPwikTrj13R8N1pCtJ
+FAFqIZflZDcpOoB80DgYgEZMhMV6QqaKkp6WgdwoTI1XXzrtPCFgfOU++JWmn9p+
+oFzCFvJnQ9yyHGdSThSf
+=eoij
+-----END PGP SIGNATURE-----
