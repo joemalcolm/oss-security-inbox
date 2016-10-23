@@ -1,93 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/9
-Message-ID: <11716477.MTzBsLzZIC@arcadia>
-Date: Sat, 08 Oct 2016 22:06:26 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/7
+Message-ID: <295468895.Z3kUJlH9qt@arcadia>
+Date: Sun, 23 Oct 2016 10:01:07 +0200
 From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
+Cc: cve-assign@...re.org
+Subject: jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)
 Content-Type: text/plain; charset=utf-8
 
 Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-A fuzzing with the upstream security policy enabled revealed a memory allocate 
-failure.
+Another round of fuzzing on an updated version (1.900.10) a buffer over read 
+because of an integer overflow.
 
 The complete ASan output:
 
-# identify $FILE
-==25084==WARNING: AddressSanitizer failed to allocate 0x46bf39483ac bytes                                                                                                                                                                                                      
-==25084==AddressSanitizer's allocator is terminating the process instead of 
-returning 0                                                                                                                                                                                        
-==25084==If you don't like this behavior set allocator_may_return_null=1                                                                                                                                                                                                       
-==25084==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0)                                                                            
-    #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67                                                                                                                                   
-    #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
-unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:159                              
-    #2 0x4ce826 in __sanitizer::ReportAllocatorCannotReturnNull() 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_allocator.cc:147                                                                            
-    #3 0x421bfc in 
-__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-__asan::AsanMapUnmapCallback>, 
-__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
->, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317                                                                                                                                                                                                   
-    #4 0x421bfc in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-/var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359                       
-    #5 0x421bfc in __asan::asan_malloc(unsigned long, 
-__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718                                                                       
-    #6 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53                                                                                                                                   
-    #7 0x7f76c7533ff4 in AcquireQuantumPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47                                                                                                                                  
-    #8 0x7f76c7533ff4 in SetQuantumDepth /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:693                                                                                                                                          
-    #9 0x7f76c7532676 in AcquireQuantumInfo /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/quantum.c:125:10                                                                                                                                    
-    #10 0x7f76baf3607e in ReadTIFFImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/tiff.c:1431:18                                                                                                                                              
-    #11 0x7f76c7067b12 in ReadImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
-    #12 0x7f76c77ff406 in ReadStream /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
-    #13 0x7f76c70665ca in PingImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
-    #14 0x7f76c7066e25 in PingImages /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
-    #15 0x7f76c68ec4c3 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
-    #16 0x7f76c698226a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #17 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #18 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #19 0x7f76c582661f in __libc_start_main /var/tmp/portage/sys-
+# imginfo -f $FILE
+warning: not enough tile data (9 bytes)                                                                                                                                                        
+=================================================================                                                                                                                              
+==15870==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x7f0c6a964770 at pc 0x7f0c729e93a4 bp 0x7ffd08758cf0 sp 0x7ffd08758ce8                                                      
+READ of size 8 at 0x7f0c6a964770 thread T0                                                                                                                                                     
+    #0 0x7f0c729e93a3 in jpc_dec_tiledecode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:1126:43                                                   
+    #1 0x7f0c729d9567 in jpc_dec_process_eoc /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:1170:8                                                   
+    #2 0x7f0c729e20c4 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:390:10                                                        
+    #3 0x7f0c729e20c4 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:254                                                               
+    #4 0x7f0c729afc41 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:215:21                                                            
+    #5 0x7f0c7293fa29 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16                                                   
+    #6 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16                                                                                 
+    #7 0x7f0c71a4c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
+    #8 0x418e68 in _init (/usr/bin/imginfo+0x418e68)                                                                                                                                           
+
+0x7f0c6a964770 is located 0 bytes to the right of 64749424-byte region 
+[0x7f0c66ba4800,0x7f0c6a964770)                                                                                         
+allocated by thread T0 here:                                                                                                                                                                   
+    #0 0x4c03b8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52                                                   
+    #1 0x7f0c7297efbe in jas_malloc /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_malloc.c:105:11                                                        
+    #2 0x7f0c7297efbe in jas_alloc2 /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_malloc.c:136                                                           
+    #3 0x7f0c7297fb44 in jas_matrix_create /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_seq.c:129:25                                                    
+    #4 0x7f0c7297f71b in jas_seq2d_create /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_seq.c:90:17                                                      
+    #5 0x7f0c729d4280 in jpc_dec_tileinit /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:702:23                                                      
+    #6 0x7f0c729d4280 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:559                                                      
+    #7 0x7f0c729e20c4 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:390:10                                                        
+    #8 0x7f0c729e20c4 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:254                                                               
+    #9 0x7f0c729afc41 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:215:21                                                            
+    #10 0x7f0c7293fa29 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16                                                  
+    #11 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16
+    #12 0x7f0c71a4c61f in __libc_start_main /var/tmp/portage/sys-
 libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #20 0x419138 in _init (/usr/bin/magick+0x419138)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jpc/jpc_dec.c:1126:43 
+in jpc_dec_tiledecode
+Shadow bytes around the buggy address:
+  0x0fe20d524890: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe20d5248a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe20d5248b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe20d5248c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe20d5248d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fe20d5248e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00[fa]fa
+  0x0fe20d5248f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fe20d524900: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fe20d524910: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fe20d524920: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fe20d524930: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==15870==ABORTING
 
 Affected version:
-7.0.3.0
+1.900.10
 
 Fixed version:
-7.0.3.1
+1.900.12
 
 Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
+https://github.com/mdadams/jasper/commit/988f8365f7d8ad8073b6786e433d34c553ecf568
 
 Credit:
 This bug was discovered by Agostino Sarubbo of Gentoo.
@@ -95,16 +124,23 @@ This bug was discovered by Agostino Sarubbo of Gentoo.
 CVE:
 N/A
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00001-jasper-heapoverflow-jpc_dec_tiledecode
+
 Timeline:
-2016-09-14: bug discovered
-2016-09-14: bug reported to upstream
-2016-09-16: upstream released a patch
-2016-09-21: upstream released 7.0.3.1
-2016-10-07: blog post about the issue
+2016-10-22: bug discovered
+2016-10-22: bug reported to upstream
+2016-10-22: upstream released the patch
+2016-10-23: upstream released 1.900.12
+2016-10-23: blog post about the issue
 
 Note:
 This bug was found with American Fuzzy Lop.
 
 Permalink:
-https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
+https://blogs.gentoo.org/ago/2016/10/23/jasper-heap-based-buffer-overflow-in-jpc_dec_tiledecode-jpc_dec-c/
 
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
