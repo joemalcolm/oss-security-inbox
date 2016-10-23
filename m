@@ -1,55 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/4
-Message-ID: <CAKG8Do4_-amOBNVDiSviBPqT6hQBcAQG5h9_L+JGderoQx0cOw@mail.gmail.com>
-Date: Mon, 11 Jul 2016 13:32:18 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/9
+Message-Id: <20161023165101.0AA6E6C4F04@smtpvmsrv1.mitre.org>
+Date: Sun, 23 Oct 2016 12:51:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 11, 2016 at 12:51 PM, Hanno Böck <hanno@...eck.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Mon, 11 Jul 2016 12:11:43 +0200
-> Cedric Buissart <cbuissar@...hat.com> wrote:
->
-> > CVE-2016-5011: util-linux: Extended partition loop in MBR partition
-> > table leads to DoS
->
-> Have you discovered this bug or do you know how it was discovered?
->
-It was reported to us by Michael Gruhn & Christian Moch
+> the previous assignment on this issue was about only one CVE ( see
+> http://www.openwall.com/lists/oss-security/2016/10/16/18 )
+> 
+> We sayd that the cause of the two null pointer access was the same.
+> 
+> Now for completeness I posted the stacktrace of both locations in bmp_dec.c
+> but I guess that the root cause remains the same.
+> 
+> Do you need to reject one of these two or it is fine as is?
 
->
-> Was it found with fuzzing or code inspection?
->
-I do not know, there was no info on the discovery method in the report.
+We believe it is fine as is. The two issues could be fixed
+independently, although it is unlikely that anyone would do that:
 
->
-> I have done fuzzing on partitioning tools before, however I hadn't
-> found anything, this bug indicates I haven't looked enough :-)
->
-I looked at other projects to see what is being done to prevent this
-particular loop from happening. Until now, tools I checked are protected
-either by detecting the loop (i.e.: actively searching for a relative
-offset of 0 for the next EBR, as done by this util-linux patch; partprobe
-and fdisk are doing that), or enforcing a limit on the maximum number of
-partitions for a device (Linux kernel, kpartx & other tools I currently
-checked)
+                        if (numcmpts == 3) {
+                                jas_matrix_setv(cmpts[0], j, red);
+                                jas_matrix_setv(cmpts[1], j, grn);
+                                jas_matrix_setv(cmpts[2], j, blu);
+                        } else {
+                                jas_matrix_setv(cmpts[0], j, red);
 
->
->
-> --
-> Hanno Böck
-> https://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
->
+394 is the first "red" line; 398 is the second.
 
+In future cases, if you have additional analysis suggesting that two
+findings are best represented with one CVE ID, then please include
+that additional analysis in your first posting about the issue.
+Otherwise, we often won't know, and there could be a perception that
+the number of assigned IDs is inconsistent. Here, neither
+https://blogs.gentoo.org/ago/2016/10/18/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c-incomplete-fix-for-cve-2016-8690
+nor http://www.openwall.com/lists/oss-security/2016/10/18/5 explicitly
+says that "two NULL pointer dereference" ought to have one CVE ID.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Cedric Buissart,
-Product Security
-
+iQIcBAEBCAAGBQJYDOoQAAoJEHb/MwWLVhi2lD8P/iNGYbRzanD6MBGinuytNLub
+LtFCRYCGRIGOWM8a9jFZlDTuqxGLVekgUp7oil9VT8hYd1q9E8nJyWCZALjA0HHD
+cq8ZvKIF43dKn9Ohp33UXWN5icBgsiLBg1bV8wf3gN8PtRINoR+y07K5aZJc5aCN
+4fG67UNUVD/OZ0NnW171dcJpwx9JD2D92ogU18U99Oy195eO4DrSZFFNQHgFeAGh
+jSFDm3r/0HfjEHI54FVGVKAH85RHOkRvDMpjI4J8O12biabUO0S8s/m13N7EYtmD
+9bGalKIdIv/ArK75zfqNrJY+zJ5hddeL2hw5iDTICagR27a7lgVdpid3q0WAnWVE
+5dq86+4fu4K+KWvZZAgT/P7DOt0alnwLsL3LEJEH/uWdscPnCNPmE1NtW4JCTdrR
+3RhkEbgJIozC50yxqw1hHyZP0DDLR/oAS+Fg5gEgY42eurVW9NInXGdl+8bPut81
+g3oGMtggaiZhJ5o6OSRPrNNfc39Jqs/E6on9LfQj3w0krZ7px4sztsWCOC+DCqBU
+/QRPbTt/AbC5bGYfkUUcdgBAIXyvzihAwYrhEnmXlfmcZKKze8+29UumzALEw1Tp
+VTi4fNv3LFOJAUS4NUjItMJ0ivtNtFIogiruXnVRkV4KdU7lu1coCoCfKHaD4wzN
+2XLFOaL8yZZu5tmRhbNK
+=z2oX
+-----END PGP SIGNATURE-----
