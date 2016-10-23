@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1181" "Friday" "2" "July" "2021" "03:22:35" "+0000" "Jihoon Son" "jihoonson@apache.org" nil "28" "[oss-security] CVE-2021-26920: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended " nil nil nil "7" nil nil (number mark "U       jihoonson@ap Jul  2   28/1181  " thread-indent "\"[oss-security] CVE-2021-26920: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-26920: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2438" "Saturday" "22" "October" "2016" "21:08:00" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161023010800.BB61433600A@smtpvbsrv1.mitre.org>" "80" "[oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016102301:08:00" "[oss-security] Re: Fuzzing jasper" (number mark "        cve-assign@m Oct 22   80/2438  " thread-indent "\"[oss-security] Re: Fuzzing jasper\"\n") "<20161017010245.267aae32@pc1>" ("<20161017010245.267aae32@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28618 invoked by uid 550); 2 Jul 2021 05:51:02 -0000
+Received: (qmail 15798 invoked by uid 550); 23 Oct 2016 01:08:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15755 invoked from network); 23 Oct 2016 01:08:12 -0000
+In-Reply-To: <20161017010245.267aae32@pc1>
+Message-Id: <20161023010800.BB61433600A@smtpvbsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 22 Oct 2016 21:08:00 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21689 invoked from network); 2 Jul 2021 03:22:49 -0000
-Content-Type: text/plain; charset=utf-8
-From: Jihoon Son <jihoonson@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ca3815f4-4b9a-83ac-1f79-72a24a8d3f6c@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 02 Jul 2021 03:22:35 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-26920: Apache Druid: The HTTP inputSource allows
- authenticated users to read data from other sources than intended 
+Subject: [oss-security] Re: Fuzzing jasper
+To: hanno@hboeck.de
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
+> https://github.com/mdadams/jasper/issues/28
+> Heap overflow in jpc_dec_cp_setfromcox()
 
-In the Druid ingestion system, the InputSource is used for reading data fro=
-m a certain data source. However, the HTTP InputSource allows authenticated=
- users to read data from other sources than intended, such as the local fil=
-e system, with the privileges of the Druid server process. This is not an e=
-levation of privilege when users access Druid directly, since Druid also pr=
-ovides the Local InputSource, which allows the same level of access. But it=
- is problematic when users interact with Druid indirectly through an applic=
-ation that allows users to specify the HTTP InputSource, but not the Local =
-InputSource. In this case, users could bypass the application-level restric=
-tion by passing a file URL to the HTTP InputSource.
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
 
-Mitigation:
+> malformed jpeg2000 file
 
-Users can avoid the issue by upgrading to 0.21.0 or a higher version.
+> jpc_dec_cp_setfromcox ... libjasper/jpc/jpc_dec.c:1668:32
 
-In an earlier version than 0.21.0, when the user application wants to restr=
-ict the access to the local file system, it should disallow all InputSource=
-s that can read local files, that is the Local, HTTP, and HDFS InputSources.
+Use CVE-2016-8880.
 
-Credit:
 
-This issue was discovered by chybeta from the Security Team of Alibaba Clou=
-d.
+> https://github.com/mdadams/jasper/issues/29
+> Heap overflow in jpc_getuint16()
 
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 8
+
+> jpc_getuint16 ... libjasper/jpc/jpc_cs.c:1572:8
+
+Use CVE-2016-8881.
+
+
+> https://github.com/mdadams/jasper/issues/30
+> segfault / null pointer access in jpc_pi_destroy
+
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+
+> jpc_pi_destroy ... libjasper/jpc/jpc_t2cod.c:521:10
+
+> https://github.com/mdadams/jasper/commit/69a1439a5381e42b06ec6a06ed2675eb793babee
+
+Use CVE-2016-8882.
+
+
+> https://github.com/mdadams/jasper/issues/31
+> double free on jpeg parsing
+
+>> From: Agostino Sarubbo
+>> This is a duplicate of the double-free I reported
+>> https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
+
+(this was already assigned CVE-2016-8693)
+
+
+> https://github.com/mdadams/jasper/issues/32
+> assert in jpc_dec_tiledecode()
+
+> imginfo: jpc_dec.c:1072: int jpc_dec_tiledecode(jpc_dec_t *, jpc_dec_tile_t *): Assertion `dec->numcomps >= 3' failed.
+
+> https://github.com/mdadams/jasper/commit/33cc2cfa51a8d0fc3116d16cc1d8fc581b3f9e8d
+
+Use CVE-2016-8883.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYDArpAAoJEHb/MwWLVhi2dRAP/1Qvj44C7Wp43GQDGLzXEkL+
+XF25qtPfMJBeNtcPeDmkAAfW04Re10NYptCmmNWH7uxXDeyeakHhJjCaiI372nSe
+e/TZ7adgkaxFAanUc5WF6lhnX8VrCg/Naa/F/aSUk5Y55KgkfmqnXosy84ktIaUs
+aSrPR5k6gogmG85K17Jy3rvysO01ftGKP5uvyT8V49BDAR7S21DGCgGowf53AWid
+J8fFHz64E+8L0Ws2T4secUhHVlxSC7EygVPN6RERspEezM49TDzWn/3jyU2Rnyiq
+Tc4ehZGxJR+TkPzg9dnnH/jrJ0EjLktYOhMttjCXhFUWLNAg9R2mowLxBqfVDsIm
+yotcn7pGVB5VZCHsBz5srzKdLytMV8HlpurVx2fawVh62TRULOon8RLKbGoO6x9d
+XMvOCjxF0+oPIq4wRk4j3FIewlzNi7sktgAJ7dqlADbiNtpOF8EhiWfYq5/+h8BJ
+kUqbLPDVTCF3iQiNkWOL7wdbBPlC3SsdgB73a0U92ApWCz4BZ2cMAbNosrmpbAS9
+DK8DPwwVFFKgMu8FVJhlCa3FSJEsXHMKZHeb0J3merRimupUcoDMIUV5VSHNq8RK
+WodgTixKBURw4XHGVJ3dgX665USRqbvBGxb9zOYWaXZsRrc1uHNRNHDP78h6eY6i
+N8eeB+pE7gmFUQP+7Kng
+=yV6y
+-----END PGP SIGNATURE-----
