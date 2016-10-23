@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/8
-Message-Id: <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>
-Date: Wed, 13 Jul 2016 12:59:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/1
+Message-Id: <20161023010246.51126336018@smtpvbsrv1.mitre.org>
+Date: Sat, 22 Oct 2016 21:02:46 -0400 (EDT)
 From: cve-assign@...re.org
-To: caiqian@...hat.com
+To: ago@...too.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
+Subject: Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> It was reported that the mount table expands by a power-of-two
-> with each bind mount command.
+> https://blogs.gentoo.org/ago/2016/10/18/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c-incomplete-fix-for-cve-2016-8690
 
-> If the system is configured in the way that a non-root user
-> allows bind mount even if with limit number of bind mount
-> allowed, a non-root user could cause a local DoS by quickly
-> overflow the mount table.
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+> 0x7f90527a18fd in bmp_getdata ... jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:394:5
 
-> it will cause a deadlock for the whole system,
+Use CVE-2016-8884.
 
->> form of unlimited memory consumption that is causing the problem
 
-Use CVE-2016-6213.
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+> 0x7f888b2f5a43 in bmp_getdata ... jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:398:5
+
+Use CVE-2016-8885.
 
 - -- 
 CVE Assignment Team
@@ -33,17 +32,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXhnMiAAoJEHb/MwWLVhi25Q4P/ig8NsIq4e7iKjGBPBiX8Esd
-rxxdLpmyNfHNqMYelHMtnQXxKlewpg0RanD9tmkeuAcrCsCMrh6dejE1ioPxRhuA
-QOkhnjYhT/uFXPocgyf6EvVR9BzMiX7OmDXqaBBAjifbvfw5EqnZqj7Gyc8g0Scn
-1/uoL9DLf6USbK8Gmho0r2mxtFf0DvhvtSRPSsw9HQjH7kQEMgzjG0bmOsTyGtWB
-XEXERVynveoQmalW2vm+p6TPHHaKrTBrmXPxhgjxynMj1EX6V2j1Om3bQiuJmKUR
-1KVN5pewgVy9ZV0Jk4pAVrYO+U0qvLflZBHknceWlz9YzfZyJYKaiv0RH8RwXYfC
-P1ezDLsuBNup0tgAx+i++05cIFGFRV4ts60wxNJnUcgE21LAZ6qL8LFjZ1ixA9jM
-LjESRjdNw4MeeQOAHt/YzskhP6hTanlZvmLNYyuhZB6a0FXV18xEPVPrlyb5+odD
-2w7jTQqBnWfOTYPAaPPDc72n88y+5jxvGVXLBCcswvwIj0kTwUlZHTD+CSEylXlL
-apZMLo2tgJ+3SsWuiMaSWfZDL79M2fvLkYZ6KVsnONMGRgjIDAwdvp+VgbIfdWlu
-sLS3Rjx9pkjRpt+M6YM7OIIdNYiBgPRZFl6XDv4TIbuA5g/vuJTg44JIJDfj7MiT
-iqRuPFgATt2oMZqUmeZu
-=8iz3
+iQIcBAEBCAAGBQJYDAr0AAoJEHb/MwWLVhi2WH0P/i6yUAGi6CE1rRZQ+qXQbA03
+SNbVOIpbLyceSU4JOM0IL6LjTNUyM3MMwaOt14br8cm4TBuiBbJXK36fLuZyVaBY
+zC037f4NsnDhekzA34pnodMTZDOk/VpNARXr9OM8fvCDfou1idGoSuXuyb3OG/V+
+clbafuDXOT5yqGmDRDmzGX9NeGqbIMjdn3wra1fqeFDXwWOpWMqL+WhnxxVOyIXW
+G5Yh1VZmyGYa8otw56CPll9lZtovv46nyOT4XKgOpvjBWqLkVRVlwon1+AXVUKT4
+ZFeL7QrElFSnQccCxKrmjTk2LVsbU5GE+W9enbnxM4KNVffgQF8XVIJq7PUsbBR8
+bSlSumZCmw8lZPuNZjE35Vne5pMpg3PZgMFLq2eMOgdp07uOF7cQCh1/17pzrKmE
+s0DUOIvfXQ2ojKikI41wrdC6L6MAs5ZTw3UdgGKdn6hxDmdotUAeujuRNu/Sd1zV
+L7ut/q7Vvh4J89Cy2WWglcNEtlqgObVpq+N6QWau9GvK3fq4gNC4xDQB+tREy2Xb
+n/zO16iTGTdvBvnyTgmRFIIYf94YG7heoYyUZnyoVawXWo+d4hy8fKT5Eges8d2v
+AiUh2lPmySXhIQ8vQmSq5qw31cdGWaV+49yBrhxRv1uM/kCeRzh3zwr+UdSyzpsF
+xIsmVdtbbQn29X5zyq8n
+=+kLm
 -----END PGP SIGNATURE-----
