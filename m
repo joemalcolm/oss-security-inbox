@@ -1,4 +1,9 @@
-Received: (qmail 9421 invoked by uid 550); 29 May 2026 06:57:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3505" "Sunday" "23" "October" "2016" "09:58:37" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1686747.IoBOjVF1Mp@arcadia>" "87" "[oss-security] jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)" nil nil nil "10" "2016102307:58:37" "[oss-security] jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)" (number mark "U       ago@gentoo.o Oct 23   87/3505  " thread-indent "\"[oss-security] jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19495 invoked by uid 550); 23 Oct 2016 07:58:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,137 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9237 invoked from network); 29 May 2026 06:57:24 -0000
-Date: Fri, 29 May 2026 08:57:13 +0200
-From: Solar Designer <solar@openwall.com>
-To: =?utf-8?B?UHLDqW5vbT8=?= Ahmed <ahmedabdelmoumen05@gmail.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20260529065713.GA12793@openwall.com>
-References: <CAN+TWHTGkGZu4vdbkMY8F-EDe3m8ScBctW-fdtfcpGbj192SyA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN+TWHTGkGZu4vdbkMY8F-EDe3m8ScBctW-fdtfcpGbj192SyA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux: DMA-after-unmap race in ZCRX via netif_rxq_cleanup_unlease() ordering inversion (netkit + page_pool)
+Received: (qmail 19476 invoked from network); 23 Oct 2016 07:58:10 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Sun, 23 Oct 2016 09:58:37 +0200
+Message-ID: <1686747.IoBOjVF1Mp@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)
 
-Hi Ahmed,
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Your message was CC'ed to oss-security and Linux kernel lists.  Please
-don't ever do that, it is explicitly against our content guidelines:
+Another round of fuzzing on an updated version (1.900.10) revealed that the 
+NULL pointer access identified as CVE-2016-8887 which upstream declared to be 
+fixed in the version 1.900.10 is still here.
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+The complete ASan output:
 
-"Please don't cross-post messages to oss-security and other mailing
-lists at once, especially not to high-volume lists such as LKML and
-netdev, as this tends to result in threads that wander partially or
-fully off-topic (e.g., Linux kernel coding style detail may end up being
-discussed in comments to a patch posted to LKML, but it would be
-off-topic for oss-security). If you feel that something needs to be
-posted to oss-security and to another list, please make separate
-postings. You may mention the other posting(s) in your oss-security
-posting, and even link to other lists' archives."
+# imginfo -f $FILE
+ASAN:DEADLYSIGNAL
+=================================================================
+==20885==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000041defd bp 0xbebebebebebebebe sp 0x7ffc4e4a4550 T0)
+    #0 0x41defc in atomic_compare_exchange_strong /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81
+    #1 0x41defc in 
+__asan::Allocator::AtomicallySetQuarantineFlag(__asan::AsanChunk*, void*, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:465
+    #2 0x41defc in __asan::Allocator::Deallocate(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:525
+    #3 0x41defc in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
+__asan::AllocType) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:709
+    #4 0x4c008c in free /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:41
+    #5 0x7faeeeb2d430 in jp2_colr_destroy /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:450:3
+    #6 0x7faeeeb32b0e in jp2_box_destroy /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:211:3
+    #7 0x7faeeeb32b0e in jp2_box_get /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:314
+    #8 0x7faeeeb369a0 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:156:16
+    #9 0x7faeeeac6a29 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16
+    #10 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16
+    #11 0x7faeedbd361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #12 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
 
-Luckily, this problem isn't happening in this case yet, but it may.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
+atomic_compare_exchange_strong
+==20885==ABORTING
 
-I've removed the CC's now, and ask anyone else replying to do the same.
+Affected version:
+1.900.10
 
-I actually think your report should have been sent to the subsystem
-maintainers and Linux kernel lists only.  Not to the kernel security
-team because you're making this public right away anyway, the issue
-doesn't appear to be severe, and they are flooded with reports already.
-Not to oss-security because the issue does not stand out from the
-hundreds of other kernel bugs/CVEs.
+Fixed version:
+N/A
 
-We do want to handle some Linux kernel issues specially, such as the
-recent series of page cache corruption bugs that were commonly exposed
-on distros and provably allowed for reliable local root exploits.  But
-with so many kernel issues, these are exceptions and not the rule.
+Commit fix:
+N/A
 
-Another detail (actually pointed out to me off-list in response to your
-posting) is that if you only confirmed an issue against an -rc kernel,
-like you wrote here, then it may not be oss-security material unless it
-also applies to released kernel versions.  I don't see you mention the
-oldest affected kernel version (but I do suspect the issue existed for a
-few kernel releases).
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-On Wed, May 27, 2026 at 11:53:45PM +0100, Prénom? Ahmed wrote:
-> The bug is reachable with `CAP_NET_ADMIN` (common in container
-> environments) when using netkit with ZCRX.
+CVE:
+N/A
 
->    - *Potential:* NIC DMA write to physical address 0 (or stale mappings
->    with lazy IOMMU) leading to memory corruption.
->    - *Requirements:* CAP_NET_ADMIN + netkit queue leasing + ZCRX installed
->    on the leased queue.
->    - *Current Status:* No runtime PoC or crash reproduction yet. The race
->    window exists in theory but its practical exploitability needs confirmation.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00002-jasper-NULLptr-jp2_colr_destroy
 
-The previous time a ZCRX issue was brought in here (also AI-generated
-and overstated):
+Timeline:
+2016-10-22: bug re-discovered
+2016-10-22: bug re-reported to upstream
+2016-10-23: blog post about the issue
 
-https://www.openwall.com/lists/oss-security/2026/05/03/7
+Note:
+This bug was found with American Fuzzy Lop.
 
-Brad Spengler pointed out this:
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/23/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c-incomplete-fix-for-cve-2016-8887
 
-https://x.com/spendergrsec/status/2051323307564167621
 
-"the io_register_zcrx_ifq() case does a CAP_NET_ADMIN test against
-the init namespace, so wouldn't be reachable by unpriv userns"
-
-I don't see io_register_zcrx_ifq() in latest mainline, but there is:
-
-int io_register_zcrx(struct io_ring_ctx *ctx,
-                     struct io_uring_zcrx_ifq_reg __user *arg)
-{
-	struct io_uring_zcrx_area_reg area;
-	struct io_uring_zcrx_ifq_reg reg;
-	struct io_uring_region_desc rd;
-	struct io_zcrx_ifq *ifq;
-	int ret;
-	u32 id;
-
-	/*
-	 * 1. Interface queue allocation.
-	 * 2. It can observe data destined for sockets of other tasks.
-	 */
-	if (!capable(CAP_NET_ADMIN))
-		return -EPERM;
-
-Ahmed, does this apply to (non-)exposure of your finding?  That it is
-limited to tasks with CAP_NET_ADMIN on host (not in a container), which
-means the host root user and (it's a stretch) tasks that have or retain
-this capability without full root access (I'm not aware of any).  Pretty
-much not a security issue, then?
-
-> Proposed Fix[image: image.png]
-
-Patch as picture?  This could as well be a rickroll.
-
-> I am happy to provide more details or assist with testing.
-
-Ahmed offered this additional detail off-list with permission to post it:
-
-On Fri, May 29, 2026 at 02:21:19AM +0100, Prénom? Ahmed wrote:
-> Actually the bug is straightforward! DMA is unmapped while NAPI is still
-> running on another CPU. If NAPI touches a descriptor after the unmap, it
-> writes to address 0. Worst case that is physical memory corruption and a
-> local privilege escalation.
-> 
-> I traced the teardown path via ftrace/kprobes and confirmed the race window
-> opens. I did not win the race no because ut depends on hardware and time
-> but the ordering inversion is runtime-confirmed, not just a source-level
-> observation.
-> 
-> Jakub has already reviewed it and proposed a fix. Happy to answer any
-> technical questions.
-
-I'm not getting deep into this specific issue.  My role here is to
-ensure that on oss-security we get precisely what's worthy of being in
-here, and not arbitrary 1% of Linux kernel maybe-security-or-not bugs.
-I'd appreciate your assistance with that going forward.
-
-Thanks,
-
-Alexander
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
