@@ -1,35 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/6
-Message-ID: <alpine.LFD.2.20.1604112359170.31458@wniryva>
-Date: Tue, 12 Apr 2016 00:01:48 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: "Bazhaniuk, Oleksandr" <oleksandr.bazhaniuk@...el.com>
-Subject: CVE Request: Qemu: net: buffer overflow in MIPSnet emulator
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/6
+Message-ID: <1686747.IoBOjVF1Mp@arcadia>
+Date: Sun, 23 Oct 2016 09:58:37 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c) (incomplete fix for CVE-2016-8887)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Qemu emulator built with the MIPSnet controller emulator is vulnerable to a 
-buffer overflow issue. It could occur while receiving network packets in 
-mipsnet_receive(), if the guest NIC is configured to accept large(MTU) 
-packets.
+Another round of fuzzing on an updated version (1.900.10) revealed that the 
+NULL pointer access identified as CVE-2016-8887 which upstream declared to be 
+fixed in the version 1.900.10 is still here.
 
-A remote user/process could use this flaw to crash the Qemu process on a host, 
-resulting in DoS.
+The complete ASan output:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01131.html
+# imginfo -f $FILE
+ASAN:DEADLYSIGNAL
+=================================================================
+==20885==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000041defd bp 0xbebebebebebebebe sp 0x7ffc4e4a4550 T0)
+    #0 0x41defc in atomic_compare_exchange_strong /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81
+    #1 0x41defc in 
+__asan::Allocator::AtomicallySetQuarantineFlag(__asan::AsanChunk*, void*, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:465
+    #2 0x41defc in __asan::Allocator::Deallocate(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:525
+    #3 0x41defc in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
+__asan::AllocType) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:709
+    #4 0x4c008c in free /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:41
+    #5 0x7faeeeb2d430 in jp2_colr_destroy /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:450:3
+    #6 0x7faeeeb32b0e in jp2_box_destroy /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:211:3
+    #7 0x7faeeeb32b0e in jp2_box_get /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_cod.c:314
+    #8 0x7faeeeb369a0 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/jp2/jp2_dec.c:156:16
+    #9 0x7faeeeac6a29 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/libjasper/base/jas_image.c:392:16
+    #10 0x4f1686 in main /tmp/portage/media-
+libs/jasper-1.900.10/work/jasper-1.900.10/src/appl/imginfo.c:188:16
+    #11 0x7faeedbd361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #12 0x418e68 in _init (/usr/bin/imginfo+0x418e68)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1326082
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
+atomic_compare_exchange_strong
+==20885==ABORTING
 
-This issue was discovered by Oleksandr Bazhaniuk of Advanced Threat Research
-team at Intel Inc.
+Affected version:
+1.900.10
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00002-jasper-NULLptr-jp2_colr_destroy
+
+Timeline:
+2016-10-22: bug re-discovered
+2016-10-22: bug re-reported to upstream
+2016-10-23: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/10/23/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c-incomplete-fix-for-cve-2016-8887
+
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
