@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/5
-Message-ID: <5698D299.6020202@redhat.com>
-Date: Fri, 15 Jan 2016 12:06:01 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/3
+Message-Id: <20161023010529.DB3343AE00F@smtpvbsrv1.mitre.org>
+Date: Sat, 22 Oct 2016 21:05:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)
 Content-Type: text/plain; charset=utf-8
 
-On 01/14/2016 06:13 PM, Qualys Security Advisory wrote:
-> Internal stdio buffering is the most severe of the three problems
-> discussed in this section, although GNU/Linux is not affected because
-> the glibc mmap()s and munmap()s (and therefore cleanses) stdio buffers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This will change in glibc 2.23, stdio will use regular malloc and free
-for its buffers.  I did not expect this change to have security
-implications.  Considering that the actual bug lies elsewhere, and stdio
-usage is based on copying out of the buffer (so leaks can still happen
-elsewhere), I do not wish to revert this change.
+> https://blogs.gentoo.org/ago/2016/10/18/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c
+> 
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+> 0x7f8dcb5bc940 in jp2_colr_destroy ... jasper-1.900.5/src/libjasper/jp2/jp2_cod.c:443:3
+> 
+> https://github.com/mdadams/jasper/commit/e24bdc716c3327b067c551bc6cfb97fd2370358d
 
-Florian
+Use CVE-2016-8887.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYDAr/AAoJEHb/MwWLVhi24I8QAKtduMTN4eo5SAOfpBYIgLdr
+9K4Vlzy3AB73c1TA/d/ck8EiG8WeDeHdU4XgZqpG7ZcEl3Yg8Tu1OZI/eNNS4pFs
+z2+TDEzRP71cy7yuX+LwjWFzu5jYDVZl4UYjLS004k5jQ4xvwZ8iuUCP6OmU1lfe
+kyaHWsvX5+uGohyz+Wd71pK8/OJockZmsSRDqaFj0ZN2luYB4daOnkUURiQ+b3Km
+9m6KfDIDw+x2sS9Ts+YFCU0LY/7Em68hh7qabACjXQql1xuwaGoZsw+30HItKfLo
+h41JMuPrEf1LyhJBZrg0URp/+f+Nlq/n3aqwrxRm/iARWw3XsNqrCBPa5QhBCO6e
+lWAGB3S8VnfXeFxsirFCy3yacIF0/sUfc3sYNdqOVOKkDPI3vg6bmwgnVefoD3+J
+4UY3KZOrGp54Y6vTGGiFBb4JMqRy6TijxoGWUhqRBZH5w9p0mbrcK3bC9iCOYndk
+ZCOeC1z+sfXYWSAdsqxInOJlT5WCVBK21qOfIbfcEfJIbaAWQbSZSTQ7OpIM/1K9
+IUuZqNWJNAEDXZi1BsxEr34lGFacIpXsCCiVBKBFrON7GKZPwikTrj13R8N1pCtJ
+FAFqIZflZDcpOoB80DgYgEZMhMV6QqaKkp6WgdwoTI1XXzrtPCFgfOU++JWmn9p+
+oFzCFvJnQ9yyHGdSThSf
+=eoij
+-----END PGP SIGNATURE-----
