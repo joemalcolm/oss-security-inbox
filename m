@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2186" "Tuesday" "10" "January" "2017" "22:39:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<4375de127e2d48fd8cba3125c00de83c@imshyb02.MITRE.ORG>" "54" "[oss-security] Re: CVE request: python-pysaml2 XML external entity attack" nil nil nil "1" "2017011103:39:40" "[oss-security] Re: CVE request: python-pysaml2 XML external entity attack" (number mark "U       cve-assign@m Jan 10   54/2186  " thread-indent "\"[oss-security] Re: CVE request: python-pysaml2 XML external entity attack\"\n") "<20170110072939.GC18447@centurion.befour.org>" ("<20170110072939.GC18447@centurion.befour.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2438" "Saturday" "22" "October" "2016" "21:00:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161023010023.5F7236C4684@smtpvmsrv1.mitre.org>" "80" "[oss-security] Re: Fuzzing jasper" nil nil nil "10" "2016102301:00:23" "[oss-security] Re: Fuzzing jasper" (number mark "U       cve-assign@m Oct 22   80/2438  " thread-indent "\"[oss-security] Re: Fuzzing jasper\"\n") "<20161017010245.267aae32@pc1>" ("<20161017010245.267aae32@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12182 invoked by uid 550); 11 Jan 2017 03:39:52 -0000
+Received: (qmail 16203 invoked by uid 550); 23 Oct 2016 15:21:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 16054 invoked from network); 23 Oct 2016 01:00:35 -0000
+In-Reply-To: <20161017010245.267aae32@pc1>
+Message-Id: <20161023010023.5F7236C4684@smtpvmsrv1.mitre.org>
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
+Date: Sat, 22 Oct 2016 21:00:23 -0400 (EDT)
+From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12164 invoked from network); 11 Jan 2017 03:39:52 -0000
-From: <cve-assign@mitre.org>
-To: <seb@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170110072939.GC18447@centurion.befour.org>
-Message-ID: <4375de127e2d48fd8cba3125c00de83c@imshyb02.MITRE.ORG>
-Date: Tue, 10 Jan 2017 22:39:40 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: python-pysaml2 XML external entity attack
+Subject: [oss-security] Re: Fuzzing jasper
+To: hanno@hboeck.de
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> python-pysaml2 does
-> not sanitize SAML XML requests or responses:
-> 
->   https://github.com/rohe/pysaml2/issues/366
->   https://github.com/rohe/pysaml2/pull/379
->   https://bugs.debian.org/850716
->   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
+> https://github.com/mdadams/jasper/issues/28
+> Heap overflow in jpc_dec_cp_setfromcox()
 
-Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
-parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
 
-The scope of this CVE does not include the various other issues that
-may be found in the above references:
+> malformed jpeg2000 file
 
- - it does not include any aspect of
-   https://bugzilla.gnome.org/show_bug.cgi?id=772726
+> jpc_dec_cp_setfromcox ... libjasper/jpc/jpc_dec.c:1668:32
 
- - it does not include any vulnerabilities in the XML Security Library
-   (xmlsec), such as ones that are now, or previously were, listed at
-   https://github.com/lsh123/xmlsec/issues
+Use CVE-2016-8880.
 
- - it does not include any CWE-776 (Entity Expansion) issues that may
-   have been fixed as a side effect of
-   6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
-   test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
 
-If the references need more CVE IDs related to any of these other
-topics, please let us know.
+> https://github.com/mdadams/jasper/issues/29
+> Heap overflow in jpc_getuint16()
+
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 8
+
+> jpc_getuint16 ... libjasper/jpc/jpc_cs.c:1572:8
+
+Use CVE-2016-8881.
+
+
+> https://github.com/mdadams/jasper/issues/30
+> segfault / null pointer access in jpc_pi_destroy
+
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+
+> jpc_pi_destroy ... libjasper/jpc/jpc_t2cod.c:521:10
+
+> https://github.com/mdadams/jasper/commit/69a1439a5381e42b06ec6a06ed2675eb793babee
+
+Use CVE-2016-8882.
+
+
+> https://github.com/mdadams/jasper/issues/31
+> double free on jpeg parsing
+
+>> From: Agostino Sarubbo
+>> This is a duplicate of the double-free I reported
+>> https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
+
+(this was already assigned CVE-2016-8693)
+
+
+> https://github.com/mdadams/jasper/issues/32
+> assert in jpc_dec_tiledecode()
+
+> imginfo: jpc_dec.c:1072: int jpc_dec_tiledecode(jpc_dec_t *, jpc_dec_tile_t *): Assertion `dec->numcomps >= 3' failed.
+
+> https://github.com/mdadams/jasper/commit/33cc2cfa51a8d0fc3116d16cc1d8fc581b3f9e8d
+
+Use CVE-2016-8883.
 
 - -- 
 CVE Assignment Team
@@ -63,17 +87,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYdacpAAoJEHb/MwWLVhi2dU4QAJC8fNO+tSEsFjLxhpwerqp2
-dqGm/ZfdGZ717A9BROlsycopbF9nVuuTp22PMEaNgJtO+sESnVdSJomVA6XvbGsk
-kd7iq+r3opeplMuyuYkuqQaw585N6MRc27WBh21Cpis8ExlU/bYH3qapTkfV1G88
-h6BqmhBJ2Yzae/FfOfG/kMCbh9Nbwem7gxB1tIHmWBxvKm/TXknH/tO4hOUsZlyt
-sb9SSwYLmqZHbqdv3rBvdoHHS7LwBSL0niKSCpPmyYKwI3P3lrEn+C6DmqqfZpsS
-0wmMse7ILe7/u28IutqCNjA5aDzaiclEE+P7KLgl/xyyGt80icM+tzBSXXwYbzMB
-YTxOiBhCiXKVlkgkNFPpq9wXBU/L5eNqsntKiuqGhFeLZIOGIpE8dSXss1ERVifG
-KL1TOLCj9jPnburB0g7f6FpDB4pSiWvhL47uMdNOSDKFBCT/SP+JiqzfH0PycspT
-v1OrRvQXA08xGX/2kD94os/6yrZwbFe65AdKHui/rHgbAjXLwiKSe9R86ppGJ5OV
-4mAG3qgh3ZJOqX6kPPOMCM7XCxN6/KpQsnLi17Va7fIhr4nq1zAjGTPJw1PhusnZ
-98NJtjIpkXLk5dCxJY3w9RWAykY26HI2k8HPsAPMPClGtJU0EeOUTkbt4Nv4Q0cF
-XZiw9PXbEwe75koEvajV
-=s3t6
+iQIcBAEBCAAGBQJYDArpAAoJEHb/MwWLVhi2dRAP/1Qvj44C7Wp43GQDGLzXEkL+
+XF25qtPfMJBeNtcPeDmkAAfW04Re10NYptCmmNWH7uxXDeyeakHhJjCaiI372nSe
+e/TZ7adgkaxFAanUc5WF6lhnX8VrCg/Naa/F/aSUk5Y55KgkfmqnXosy84ktIaUs
+aSrPR5k6gogmG85K17Jy3rvysO01ftGKP5uvyT8V49BDAR7S21DGCgGowf53AWid
+J8fFHz64E+8L0Ws2T4secUhHVlxSC7EygVPN6RERspEezM49TDzWn/3jyU2Rnyiq
+Tc4ehZGxJR+TkPzg9dnnH/jrJ0EjLktYOhMttjCXhFUWLNAg9R2mowLxBqfVDsIm
+yotcn7pGVB5VZCHsBz5srzKdLytMV8HlpurVx2fawVh62TRULOon8RLKbGoO6x9d
+XMvOCjxF0+oPIq4wRk4j3FIewlzNi7sktgAJ7dqlADbiNtpOF8EhiWfYq5/+h8BJ
+kUqbLPDVTCF3iQiNkWOL7wdbBPlC3SsdgB73a0U92ApWCz4BZ2cMAbNosrmpbAS9
+DK8DPwwVFFKgMu8FVJhlCa3FSJEsXHMKZHeb0J3merRimupUcoDMIUV5VSHNq8RK
+WodgTixKBURw4XHGVJ3dgX665USRqbvBGxb9zOYWaXZsRrc1uHNRNHDP78h6eY6i
+N8eeB+pE7gmFUQP+7Kng
+=yV6y
 -----END PGP SIGNATURE-----
