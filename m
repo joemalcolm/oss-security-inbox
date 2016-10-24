@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4596" "Tuesday" "4" "October" "2016" "12:45:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161004164544.B3A4342E016@smtpvbsrv1.mitre.org>" "113" "[oss-security] Re: X.Org security advisory: Protocol handling issues in X Window System client libraries" nil nil nil "10" "2016100416:45:44" "[oss-security] Re: X.Org security advisory: Protocol handling issues in X Window System client libraries" (number mark "U       cve-assign@m Oct  4  113/4596  " thread-indent "\"[oss-security] Re: X.Org security advisory: Protocol handling issues in X Window System client libraries\"\n") "<20161004152217.GJ21798@suse.de>" ("<20161004152217.GJ21798@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9018" "Monday" "24" "October" "2016" "07:44:27" "+0000" "=?gb2312?B?yq/A2g==?=" "shilei-c@360.cn" "<88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0@EX02.corp.qihoo.net>" "151" "[oss-security] CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS SSL3_AL_WARNING undefined alert Remote DoS" nil nil nil "10" "2016102407:44:27" "[oss-security] CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS SSL3_AL_WARNING undefined alert Remote DoS" (number mark "U       shilei-c@360 Oct 24  151/9018  " thread-indent "\"[oss-security] CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS SSL3_AL_WARNING undefined alert Remote DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15377 invoked by uid 550); 4 Oct 2016 16:45:59 -0000
+Received: (qmail 19793 invoked by uid 550); 24 Oct 2016 12:54:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,125 +12,173 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14324 invoked from network); 4 Oct 2016 16:45:57 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20161004152217.GJ21798@suse.de>
-Message-Id: <20161004164544.B3A4342E016@smtpvbsrv1.mitre.org>
-Date: Tue,  4 Oct 2016 12:45:44 -0400 (EDT)
-Subject: [oss-security] Re: X.Org security advisory: Protocol handling issues in X Window System client libraries
+Received: (qmail 26001 invoked from network); 24 Oct 2016 07:44:41 -0000
+From: =?gb2312?B?yq/A2g==?= <shilei-c@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS
+ SSL3_AL_WARNING undefined alert Remote DoS
+Thread-Index: AdItyCGBXj8RQjwBRa64iDcjsZWAgwAAjAcg
+Date: Mon, 24 Oct 2016 07:44:27 +0000
+Message-ID: <88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.37]
+Content-Type: multipart/alternative;
+	boundary="_000_88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0EX02corpqihoone_"
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS SSL3_AL_WARNING
+ undefined alert Remote DoS
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--_000_88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0EX02corpqihoone_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-> libX11 - insufficient validation of data from the X server
->        can cause out of boundary memory read (XGetImage())
->        or write (XListFonts()).
->        Affected versions libX11 <= 1.6.3
+SW4gQXVndXN0LCBTaGkgTGVpIGZyb20gR2VhciBUZWFtLCBRaWhvbyAzNjAg
+SW5jLiwgZm91bmQgYSBEZW5pYWwgb2YgU2VydmljZSBpc3N1ZSBpbiBPcGVu
+U1NMIHdoaWxlIG9wZW5zc2wgaXMgaGFuZGxpbmcgIlNTTDNfQUxfV0FSTklO
+RyIgdW5kZWZpbmVkIGFsZXJ0cy4NClRoaXMgaXNzdWUgaGFzIGJlZW4gYXNz
+aWduZWQgd2l0aCBDVkUgbnVtYmVyLCBDVkUtMjAxNi04NjEwLCBhbmQgaXQg
+d2FzIGNhbGxlZCAnU1NMLURlYXRoLUFsZXJ0Jy4NCg0KVGhlIHN0b3J5IGlz
+IGFzIGZvbGxvdy4NCg0KDQoNCldlIHJlcG9ydGVkIHRoaXMgaXNzdWUgdG8g
+T3BlblNTTCB0ZWFtIGluIGVhcmx5IFNlcHRlbWJlciwgYW5kIHRoZXkgdG9s
+ZCB1cyB0aGV5IHdvbid0IHRyZWF0IGl0IGFzIGEgc2VjdXJpdHkgaXNzdWUs
+IGJ1dCB0aGV5IGFsbG93ZWQgdXMgdG8gZGlzY3VzcyBpdCB3aXRoIHdob21l
+dmVyIHdlIHdpc2guDQoNCkJUVywgdGhlIGlzc3VlIGhhcyBiZWVuIGZpeGVk
+IGluIHRoZSBvZmZpY2lhbCByZWxlYXNlIG9uIFNlcHRlbWJlciAyMm5kLg0K
+DQoNCg0KQXMgdGhlIHNheWluZyBnb2VzIGluICdUaGUgWCBGaWxlcycsIHRo
+ZSB0cnV0aCBpcyBvdXQgdGhlcmUuIFNlY3VyaXR5IHJlc2VhcmNoZXJzIHdy
+aXRlIGV4cGxvaXRzIGJlY2F1c2UgdGhleSBsaWtlIHRoZSB0cnV0aC4NCg0K
+V2l0aCBmdXJ0aGVyIHJlc2VhcmNoIGluIHRoaXMgZmxhdywgd2UgZm91bmQg
+dGhhdCBpdCBjb3VsZCBlYXNpbHkgY2F1c2UgYSBEb1MgdG8gdGhvc2Ugd2hp
+Y2ggdXNlIE9wZW5TU0wgdG8gc3VwcG9ydCBTU0woZS5nLCBOZ2lueCkuIEZv
+ciBpbnN0YW5jZSwgdmlzaXRvcnMgY291bGRuJ3Qgb3BlbiB0aGUgd2Vic2l0
+ZSBwb3dlcmVkIGJ5IG5naW54IHVudGlsIHRoZSBhdHRhY2sgc3RvcHMuDQoN
+CkNvbnNpZGVyaW5nIHRoZSB3aWRlbHkgZGVwbG95bWVudCBvZiB0aGUgY29t
+YmluYXRpb24gb2Ygbmdpbnggd2l0aCBPcGVuU1NMIGluIG5vd2FkYXkncyB3
+ZWIgc2VydmVycywgd2UgYmVsaWV2ZSB0aGlzIGlzIGFuIGltcG9ydGFudCBp
+c3N1ZSB0aGF0IGhhcyBhIGh1Z2UgaW5mbHVlbmNlLg0KDQoNCg0KQWZ0ZXIg
+aW50ZXJuYWwgdGVhbSBkaXNjdXNzaW9uo6x3ZSBjaG9vc2UgdG8gZGlzY2xv
+c2UgdGhlIGRldGFpbHMgdG9nZXRoZXIgd2l0aCB0aGUgUmVkIEhhdCBQcm9k
+dWN0IFNlY3VyaXR5IFRlYW0uDQoNCldpdGggdGhlIGhlbHAgb2YgSHV6YWlm
+YSBTaWRocHVyd2FsYSBmcm9tIFJlZCBIYXQgUHJvZHVjdCBTZWN1cml0eSBU
+ZWFtLCB0aGlzIGlzc3VlIGhhcyBiZWVuIGZ1cnRoZXIgY29uZmlybWVkIGFu
+ZCBoYXMgYmVlbiBpbmZvcm1lZCB0byBib3RoIHRoZSBuZ2lueCB0ZWFtIGFu
+ZCBvdGhlciBMaW51eCBkaXN0cm9zLg0KDQoNCg0KQXQgbGFzdCwgd2Ugd2Vy
+ZSB2ZXJ5IGdyYXRlZnVsIHRvIHRoZSBSZWQgSGF0IFNlY3VyaXR5IFRlYW0g
+YW5kIHRoZSBPcGVuU1NMIFRlYW0gZm9yIHRoZWlyIGhlbHAhDQoNCg0KDQpE
+ZXRhaWxzIGFib3V0IHRoZSBzZWN1cml0eSBmbGF3Og0KDQo9PT09PT09DQoN
+ClByb2R1Y3Q6IE9wZW5TU0wNCg0KQWZmZWN0ZWQgVmVyc2lvbnM6IDEuMS4w
+LCAxLjAuMiAtIDEuMC4yaCwgQWxsIDEuMC4xLCBBbGwgMC45LjgNCg0KVnVs
+bmVyYWJpbGl0eSBUeXBlOiBEb1MNCg0KVmVuZG9yIFVSTDogaHR0cHM6Ly93
+d3cub3BlbnNzbC5vcmcvDQoNCkNWRSBJRDogQ1ZFLTIwMTYtODYxMA0KDQpO
+YW1lOiBTU0wgRGVhdGggQWxlcnQNCg0KDQoNCkRlc2NyaXB0aW9uDQoNCj09
+PT09PT09PT09PQ0KDQpJdCB3YXMgZm91bmQgdGhhdCBmdW5jdGlvbiAic3Ns
+M19yZWFkX2J5dGVzIiBpbiBzc2wvczNfcGt0LmMgbWlnaHQgbGVhZCB0byBo
+aWdoZXIgQ1BVIHVzYWdlIGR1ZSB0byBpbXByb3BlciBoYW5kbGluZyBvZiB3
+YXJuaW5nIHBhY2tldHMuDQoNCg0KDQpBbiBhdHRhY2tlciBjb3VsZCByZXBl
+YXQgdGhlIHVuZGVmaW5lZCBwbGFpbnRleHQgd2FybmluZyBwYWNrZXRzIG9m
+ICJTU0wzX0FMX1dBUk5JTkciIGR1cmluZyB0aGUgaGFuZHNoYWtlLCB3aGlj
+aCB3aWxsIGVhc2lseSBtYWtlIHRvIGNvbnN1bWUgMTAwJSBDUFUgb24gdGhl
+IHNlcnZlci4gSXQgaXMgYW4gaW1wbGVtZW50YXRpb24gcHJvYmxlbSBpbiBP
+cGVuU1NMIHRoYXQgT3BlblNTTCB3b3VsZCBpZ25vcmUgdW5kZWZpbmVkIHdh
+cm5pbmcsIGFuZCBjb250aW51ZSBkZWFsaW5nIHdpdGggdGhlIHJlbWFpbmlu
+ZyBkYXRhKGlmIGV4aXN0KS4gU28gdGhlIGF0dGFja2VyIGNvdWxkIHBhY2sg
+bXVsdGlwbGUgYWxlcnRzIGluc2lkZSBhIHNpbmdsZSByZWNvcmQgYW5kIHNl
+bmQgYSBsYXJnZSBudW1iZXIgb2YgdGhlcmUgbGFyZ2UgcmVjb3Jkcy4gVGhl
+biB0aGUgc2VydmVyIHdpbGwgYmUgZmFsbGVuIGluIGEgbWVhbmluZ2xlc3Mg
+Y3ljbGUsIGFuZCBub3QgYXZhaWxhYmxlIHRvIGFueSBvdGhlcnMuDQoNCkFu
+eSBzc2wgc3VwcG9ydGVkIHNlcnZlciB3aGljaCB1c2VkIE9wZW5TU0wgbWF5
+IGJlIGluZmx1ZW5jZWQuDQoNCg0KDQpBIHN1Y2Nlc3NmdWwgZXhwbG9pdGF0
+aW9uIG9mIHRoaXMgdnVsbmVyYWJpbGl0eSBjb3VsZCBlYXN5IGNhdXNlIGEg
+RG9TIGF0dGFjayB0byB0aGUgc2VydmVyIChzdWNoIGFzIG9wZW5zc2wgc19z
+ZXJ2ZXIsIG5naW54LCBldGMpLg0KDQoNCg0KU2hpIExlaSBmcm9tIEdlYXIg
+VGVhbSwgUWlob28gMzYwIEluYy4sIHJlcG9ydGVkIHRoaXMgdnVsbmVyYWJp
+bGl0eS4NCg0KDQoNCg0KDQpDb3VudGVybWVhc3VyZXMNCg0KPT09PT09PT09
+PT09DQoNClVwZ3JhZGUgdG8gdGhlIGxhdGVzdCB2ZXJzaW9uKDEuMC4yaiwg
+MS4xLjBiKToNCg0KaHR0cHM6Ly93d3cub3BlbnNzbC5vcmcvc291cmNlLw0K
+DQoNCg0KUGF0Y2ggbGluazoNCg0KaHR0cHM6Ly9naXQub3BlbnNzbC5vcmcv
+Z2l0d2ViLz9wPW9wZW5zc2wuZ2l0O2E9Y29tbWl0O2g9YWY1OGJlNzY4ZWJi
+NjkwZjc4NTMwZjc5NmU5MmI4YWU1YzlhNDQwMQ0KDQoNCg0KUmVmZXJlbmNl
+cw0KDQo9PT09PT09PT09PT0NCg0KWzFdIGh0dHBzOi8vd3d3Lm9wZW5zc2wu
+b3JnLw0KDQpbMl0gaHR0cHM6Ly9hY2Nlc3MucmVkaGF0LmNvbS9zZWN1cml0
+eS9jdmUvQ1ZFLTIwMTYtODYxMC8NCg0KWzNdIGh0dHA6Ly9zZWN1cml0eS4z
+NjAuY24vY3ZlL0NWRS0yMDE2LTg2MTAvDQoNCls0XSBodHRwczovL2dpdC5v
+cGVuc3NsLm9yZy9naXR3ZWIvP3A9b3BlbnNzbC5naXQ7YT1jb21taXQ7aD1h
+ZjU4YmU3NjhlYmI2OTBmNzg1MzBmNzk2ZTkyYjhhZTVjOWE0NDAxDQoNCg0K
+DQoNCg0KQW4gYXR0YWNrIHNjZW5hcmlvcyhXaXRob3V0IFBvQyk6DQoNCj09
+PT09PT09PT09PT09PT09PT09PQ0KDQojIHVuYW1lIC1hDQoNCkxpbnV4IGxv
+Y2FsaG9zdC5sb2NhbGRvbWFpbiA0LjQuNy0zMDAuZmMyMy54ODZfNjQgIzEg
+U01QIFdlZCBBcHIgMTMgMDI6NTI6NTIgVVRDIDIwMTYgeDg2XzY0IHg4Nl82
+NCB4ODZfNjQgR05VL0xpbnV4DQoNCg0KDQojeXVtIGluc3RhbGwgbmdpbngN
+Cg0KIyBuZ2lueCAtVg0KDQpuZ2lueCB2ZXJzaW9uOiBuZ2lueC8xLjguMQ0K
+DQpidWlsdCBieSBnY2MgNS4zLjEgMjAxNjA0MDYgKFJlZCBIYXQgNS4zLjEt
+NikgKEdDQykNCg0KYnVpbHQgd2l0aCBPcGVuU1NMIDEuMC4yaC1maXBzICAz
+IE1heSAyMDE2IChydW5uaW5nIHdpdGggT3BlblNTTCAxLjAuMmctZmlwcyAg
+MSBNYXIgMjAxNikNCg0KVExTIFNOSSBzdXBwb3J0IGVuYWJsZWQNCg0KY29u
+ZmlndXJlIGFyZ3VtZW50czogLS1wcmVmaXg9L3Vzci9zaGFyZS9uZ2lueCAt
+LXNiaW4tcGF0aD0vdXNyL3NiaW4vbmdpbnggLS1jb25mLXBhdGg9L2V0Yy9u
+Z2lueC9uZ2lueC5jb25mIC0tZXJyb3ItbG9nLXBhdGg9L3Zhci9sb2cvbmdp
+bngvZXJyb3IubG9nIC0taHR0cC1sb2ctcGF0aD0vdmFyL2xvZy9uZ2lueC9h
+Y2Nlc3MubG9nIC0taHR0cC1jbGllbnQtYm9keS10ZW1wLXBhdGg9L3Zhci9s
+aWIvbmdpbngvdG1wL2NsaWVudF9ib2R5IC0taHR0cC1wcm94eS10ZW1wLXBh
+dGg9L3Zhci9saWIvbmdpbngvdG1wL3Byb3h5IC0taHR0cC1mYXN0Y2dpLXRl
+bXAtcGF0aD0vdmFyL2xpYi9uZ2lueC90bXAvZmFzdGNnaSAtLWh0dHAtdXdz
+Z2ktdGVtcC1wYXRoPS92YXIvbGliL25naW54L3RtcC91d3NnaSAtLWh0dHAt
+c2NnaS10ZW1wLXBhdGg9L3Zhci9saWIvbmdpbngvdG1wL3NjZ2kgLS1waWQt
+cGF0aD0vcnVuL25naW54LnBpZCAtLWxvY2stcGF0aD0vcnVuL2xvY2svc3Vi
+c3lzL25naW54IC0tdXNlcj1uZ2lueCAtLWdyb3VwPW5naW54IC0td2l0aC1m
+aWxlLWFpbyAtLXdpdGgtaXB2NiAtLXdpdGgtaHR0cF9zc2xfbW9kdWxlIC0t
+d2l0aC1odHRwX3NwZHlfbW9kdWxlIC0td2l0aC1odHRwX3JlYWxpcF9tb2R1
+bGUgLS13aXRoLWh0dHBfYWRkaXRpb25fbW9kdWxlIC0td2l0aC1odHRwX3hz
+bHRfbW9kdWxlIC0td2l0aC1odHRwX2ltYWdlX2ZpbHRlcl9tb2R1bGUgLS13
+aXRoLWh0dHBfZ2VvaXBfbW9kdWxlIC0td2l0aC1odHRwX3N1Yl9tb2R1bGUg
+LS13aXRoLWh0dHBfZGF2X21vZHVsZSAtLXdpdGgtaHR0cF9mbHZfbW9kdWxl
+IC0td2l0aC1odHRwX21wNF9tb2R1bGUgLS13aXRoLWh0dHBfZ3VuemlwX21v
+ZHVsZSAtLXdpdGgtaHR0cF9nemlwX3N0YXRpY19tb2R1bGUgLS13aXRoLWh0
+dHBfcmFuZG9tX2luZGV4X21vZHVsZSAtLXdpdGgtaHR0cF9zZWN1cmVfbGlu
+a19tb2R1bGUgLS13aXRoLWh0dHBfZGVncmFkYXRpb25fbW9kdWxlIC0td2l0
+aC1odHRwX3N0dWJfc3RhdHVzX21vZHVsZSAtLXdpdGgtaHR0cF9wZXJsX21v
+ZHVsZSAtLXdpdGgtbWFpbCAtLXdpdGgtbWFpbF9zc2xfbW9kdWxlIC0td2l0
+aC1wY3JlIC0td2l0aC1wY3JlLWppdCAtLXdpdGgtZ29vZ2xlX3BlcmZ0b29s
+c19tb2R1bGUgLS13aXRoLWRlYnVnIC0td2l0aC1jYy1vcHQ9Jy1PMiAtZyAt
+cGlwZSAtV2FsbCAtV2Vycm9yPWZvcm1hdC1zZWN1cml0eSAtV3AsLURfRk9S
+VElGWV9TT1VSQ0U9MiAtZmV4Y2VwdGlvbnMgLWZzdGFjay1wcm90ZWN0b3It
+c3Ryb25nIC0tcGFyYW09c3NwLWJ1ZmZlci1zaXplPTQgLWdyZWNvcmQtZ2Nj
+LXN3aXRjaGVzIC1zcGVjcz0vdXNyL2xpYi9ycG0vcmVkaGF0L3JlZGhhdC1o
+YXJkZW5lZC1jYzEgLW02NCAtbXR1bmU9Z2VuZXJpYycgLS13aXRoLWxkLW9w
+dD0nLVdsLC16LHJlbHJvIC1zcGVjcz0vdXNyL2xpYi9ycG0vcmVkaGF0L3Jl
+ZGhhdC1oYXJkZW5lZC1sZCAtV2wsLUUnDQoNCg0KDQojY2F0IC9ldGMvbmdp
+bngvbmdpbnguY29uZg0KDQp1c2VyIG5naW54Ow0KDQp3b3JrZXJfcHJvY2Vz
+c2VzIDQ7DQoNCmVycm9yX2xvZyAvdmFyL2xvZy9uZ2lueC9lcnJvci5sb2c7
+DQoNCnBpZCAvcnVuL25naW54LnBpZDsNCg0KZXZlbnRzIHsNCg0KICAgIHdv
+cmtlcl9jb25uZWN0aW9ucyAxMDI0Ow0KDQp9DQoNCg0KDQojIG5ldHN0YXQg
+LW50bHANCg0KQWN0aXZlIEludGVybmV0IGNvbm5lY3Rpb25zIChvbmx5IHNl
+cnZlcnMpDQoNClByb3RvIFJlY3YtUSBTZW5kLVEgTG9jYWwgQWRkcmVzcyAg
+ICAgICAgICAgRm9yZWlnbiBBZGRyZXNzICAgICAgICAgU3RhdGUgICAgICAg
+UElEL1Byb2dyYW0gbmFtZQ0KDQp0Y3AgICAgICAgMTUgICAgICAwIDAuMC4w
+LjA6NDQzICAgICAgICAgICAgIDAuMC4wLjA6KiAgICAgICAgICAgICAgIExJ
+U1RFTiAgICAgIDEwMzMzNC9uZ2lueDogbWFzdGUNCg0KdGNwICAgICAgICAw
+ICAgICAgMCAwLjAuMC4wOjgwICAgICAgICAgICAgICAwLjAuMC4wOiogICAg
+ICAgICAgICAgICBMSVNURU4gICAgICAxMDMzMzQvbmdpbng6IG1hc3RlDQoN
+Cg0KDQoNCg0KUnVubmluZyB0aGUgUG9Doa0NCg0KDQoNCiMvcm9vdC9vcGVu
+c3NsLWZsb29kLWFsZXJ0cy5weQ0KDQpBbmQgdGhlbiB3ZSB3aWxsIGZvdW5k
+IHRoYXQgbmdpbnggd2FzIG91dCBvZiBzZXJ2aWNlLg0KDQoNCg0KI2N1cmwg
+aHR0cHM6Ly94LngueC54Lw0KDQpjdXJsOiAoMjgpIE9wZXJhdGlvbiB0aW1l
+ZCBvdXQgYWZ0ZXIgMCBtaWxsaXNlY29uZHMgd2l0aCAwIG91dCBvZiAwIGJ5
+dGVzIHJlY2VpdmVkDQoNCg0KDQojdG9wDQoNCi4uLg0KDQogICBQSUQgVVNF
+UiAgICAgIFBSICBOSSAgICBWSVJUICAgIFJFUyAgICBTSFIgUyAgJUNQVSAl
+TUVNICAgICBUSU1FKyBDT01NQU5EDQoNCg0KDQoxMDMzMzYgbmdpbnggICAg
+IDIwICAgMCAgMTI2OTIwICAgOTk4NCAgIDY4NzYgUiAxMDAuMCAgMC41ICAg
+MDozMi42NSBuZ2lueA0KDQoxMDMzMzcgbmdpbnggICAgIDIwICAgMCAgMTI2
+OTIwICAgOTk4NCAgIDY4NzYgUiAgOTkuNyAgMC41ICAgMDozMi4wMCBuZ2lu
+eA0KDQoxMDMzMzUgbmdpbnggICAgIDIwICAgMCAgMTI2OTIwICAgOTk4NCAg
+IDY4NzYgUiAgOTkuMyAgMC41ICAgMDozMi41NCBuZ2lueA0KMTAzMzM4IG5n
+aW54ICAgICAyMCAgIDAgIDEyNjkyMCAgIDk5ODQgICA2ODc2IFIgIDk4Ljcg
+IDAuNSAgIDA6MzAuNjQgbmdpbngNCg0KLS0NClJlZ2FyZHMsDQoNClNoaSBM
+ZWkgLyBHZWFyIFRlYW0sIFFpaG9vIDM2MCBJbmMuDQpHUEcgS2V5IElEIDM3
+MDQ4OTM2IC8gNUM0QyA4NUM2IDA2OEMgQTVBMCAyM0ZBICAwMjk0IEQ5Q0Ug
+OUMyNSAzNzA0IDg5MzYNCg0K
 
-> https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=8ea762f94f4c942d898fdeb590a1630c83235c17 Validation of server responses in XGetImage()
-
-Use CVE-2016-7942.
-
-
-> https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=8c29f1607a31dac0911e45a0dd3d74173822b3c9 The validation of server responses avoids out of boundary accesses.
-
-Use CVE-2016-7943.
-
-
-> libXfixes - insufficient validation of data from the X server
->       can cause an integer overflow on 32 bit architectures.
->       Affected versions : libXfixes <= 5.0.2
-> https://cgit.freedesktop.org/xorg/lib/libXfixes/commit/?id=61c1039ee23a2d1de712843bed3480654d7ef42e Integer overflow on illegal server response
-
-Use CVE-2016-7944.
-
-
-> libXi - insufficient validation of data from the X server
->       can cause out of boundary memory access or
->       endless loops (Denial of Service).
->       Affected versions libXi <= 1.7.6
-> https://cgit.freedesktop.org/xorg/lib/libXi/commit/?id=19a9cd607de73947fcfb104682f203ffe4e1f4e5 Properly validate server responses.
-
-Use CVE-2016-7945 for all of the integer overflows
-
-Use CVE-2016-7946 for all of the other mishandling of the reply data.
-
-
-> libXrandr - insufficient validation of data from the X server
->       can cause out of boundary memory writes.
->       Affected versions: libXrandr <= 1.5.0
-> https://cgit.freedesktop.org/xorg/lib/libXrandr/commit/?id=a0df3e1c7728205e5c7650b2e6dce684139254a6 Avoid out of boundary accesses on illegal responses
-
-Use CVE-2016-7947 for all of the integer overflows
-
-Use CVE-2016-7948 for all of the other mishandling of the reply data.
-
-
-> libXrender - insufficient validation of data from the X server
->       can cause out of boundary memory writes.
->       Affected version: libXrender <= 0.9.9
-
-> https://cgit.freedesktop.org/xorg/lib/libXrender/commit/?id=9362c7ddd1af3b168953d0737877bc52d79c94f4 Validate lengths while parsing server data.
-
-Use CVE-2016-7949.
-
-
-> https://cgit.freedesktop.org/xorg/lib/libXrender/commit/?id=8fad00b0b647ee662ce4737ca15be033b7a21714 Avoid OOB write in XRenderQueryFilters
-
-Use CVE-2016-7950.
-
-
-> XRecord - insufficient validation of data from the X server
->         can cause out of boundary memory access or
->       endless loops (Denial of Service).
->        Affected version libXtst <= 1.2.2
-> https://cgit.freedesktop.org/xorg/lib/libXtst/commit/?id=9556ad67af3129ec4a7a4f4b54a0d59701beeae3 Out of boundary access and endless loop in libXtst
-
-Use CVE-2016-7951 for all of the integer overflows
-
-Use CVE-2016-7952 for all of the other mishandling of the reply data.
-
-
-> libXv - insufficient validation of data from the X server
->         can cause out of boundary memory and memory corruption.
->       CVE-2016-5407
->       affected versions libXv <= 1.0.10
-> https://cgit.freedesktop.org/xorg/lib/libXv/commit/?id=d9da580b46a28ab497de2e94fdc7b9ff953dab17 Protocol handling issues in libXv
-
-(aka 87b3c94)
-
-People may want to look at https://access.redhat.com/security/cve/cve-2016-5407
-in the coming days for additional information.
-
-
-> libXvMC - insufficient validation of data from the X server
->       can cause a one byte buffer read underrun.
->       Affected versions: libXvMC <= 1.0.9
-> https://cgit.freedesktop.org/xorg/lib/libXvMC/commit/?id=2cd95e7da8367cccdcdd5c9b160012d1dec5cbdb Avoid buffer underflow on empty strings.
-
-Use CVE-2016-7953.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX89wWAAoJEHb/MwWLVhi2B1oQAIpH3CzWwMQ3IAuGhWgV5YvZ
-LSmNkx+lXjT2yFHpkOxie4JgX0udC/KbK+SnTKZNS3pP3Bkq0A6M1nw3o1bOFyeL
-qTAIncyXiyWEIhWsU/1VXExdlWY3ZakxEZiKxkHZqAgr96+p0+3w8I1URpDmE4Dz
-G552K/E3OOrxFBgd5tj724HXYkyrXaWbpxAvYGMt971OHplv5fVKCZnakDL11DVR
-4yFGJmFTVsN28X2qgOJif5K6m8BlP3X6y3349FygbfdwWrEUVGWI+X5izL5G11Bf
-vxJ24ibfi3f9f5ktT2m561k4ftR/nMIyFJiRv+3L2MGIsPFIgjvp5SyHsvEZKh4Y
-GTLGggTQJ1dMrKEdrTGXizyewRVga07+8h9XtPgPpHoqNk3hjnkC0LHiA7lHh+HR
-YCyID6lAR1BGnfvEW5tkf9dQszk0Xoi+rbF/x5fDxOhCYA/8ywJmd3O6QUefLaHG
-1BLJCoH/+7FUg9MMKKGDBrova0m1mwcDHncbSNz0aA7Scti06WX1xLZP3w2VT079
-eD1Q7JQ8A8xeEVqCrRLyI0B+Y3RcSIoZUMLjwVjN+9ao29JmAykAH6kyoT0zfB+u
-F8tVW0BRQudxuhTEtLPnK2EfBb+gG5asMPLSNZixYDe+hHh5jM1VMzv6GE90mlqA
-mQ0YAv9uozEzoV/R5ADg
-=Lv54
------END PGP SIGNATURE-----
+--_000_88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0EX02corpqihoone_--
