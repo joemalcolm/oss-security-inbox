@@ -1,93 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/17
-Message-ID: <20160818151654.GK2701@suse.de>
-Date: Thu, 18 Aug 2016 17:16:54 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: Greg KH <greg@...ah.com>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
-Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/6
+Message-ID: <alpine.LFD.2.20.1610250103070.21966@wniryva>
+Date: Tue, 25 Oct 2016 01:05:59 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org, hendersa@...ulus.org
+Subject: Re: Re: CVE request Qemu: net: rtl8139: infinite loop while transmit in C+ mode
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 18, 2016 at 04:57:24PM +0200, Greg KH wrote:
-> On Thu, Aug 18, 2016 at 04:39:57PM +0200, Marcus Meissner wrote:
-> > On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
-> > > On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
-> > > > Hi,
-> > > > 
-> > > > I think this does not have a CVE yet, please assign.
-> > > > 
-> > > > https://www.spinics.net/lists/linux-usb/msg144177.html
-> > > > 
-> > > > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-> > > > Platforms:        Ubuntu
-> > > > Versions:         Linux Kernel 4.4.0-22-generic
-> > > 
-> > > Huh?  It's much more pervasive than just that single platform or single
-> > > version.
-> > 
-> > That was the quote from the original e-mail. I read further on it affects
-> > more kernel versions.
-> >  
-> > > > CVSS Score:       4.7
-> > > > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
-> > > > Filed Defects:    
-> > > > Related Defects:  
-> > > > CWE Tags:         
-> > > > Cycle:            
-> > > > Found by:         Jake Lamberson
-> > > > 
-> > > > 
-> > > > Linux Kernel panics when using an OHCI controller if a USB device reports being 
-> > > > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
-> > > > controller driver fails to reserve bandwidth for the device, causing the 
-> > > > keyboard handler to fail when attaching to the HID. Later, when the device is 
-> > > > removed, the system crashes due to a null pointer dereference in a linked list 
-> > > > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
-> > > > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
-> > > > can be re-created with: 
-> > > > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
-> > > > 
-> > > > Note: OHCI is a USB 1.1 controller standard that can be included with devices
-> > > > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
-> > > > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
-> > > > this particular bug.
-> > > > 
-> > > > -----------------
-> > > > 
-> > > > The proposed fixing patch is here:
-> > > > https://www.spinics.net/lists/linux-usb/msg144269.html
-> > > > 
-> > > > 
-> > > > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
-> > > 
-> > > Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
-> > > the usb tree and in linux-next and will be sent to Linus tomorrow.
-> > 
-> > Ah sorry, only looked briefly.
-> 
-> This was also asked about 2 hours ago on the linux-usb mailing list, why
-> all of the sudden interest in something that we had been discussing for
-> weeks now in public?
++-- On Mon, 24 Oct 2016, cve-assign@...re.org wrote --+
+| > https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05495.html
+| >>
+| >> RTL8139 ethernet controller in C+ mode supports multiple
+| >> descriptor rings, each with maximum of 64 descriptors. While
+| >> processing transmit descriptor ring in 'rtl8139_cplus_transmit',
+| >> it does not limit the descriptor count and runs forever.
+| 
+| Use CVE-2016-8910.
 
-No one asked for a CVE before.
+This issue was reported by Mr Andrew Henderson of Intelligent Automation Inc.
 
-If that email request was from Oliver Neukum, he pinged me on it, so I
-started acting on it, so that explains this parallelism.
- 
-> > > And are we really assigning CVE numbers for when you use an active
-> > > "hardware test probe"?  If so, how many are people going to be assigning
-> > > for these same problems on other operating systems?  :)
-> > 
-> > I think attaching malicious USB devices and crashing the kernel should
-> > probably get CVE ids, or do you think it should not?
-> 
-> I don't know, that's why I'm asking, it requires "physical presence"
-> which is much different from most threat models that people work to
-> protect against.
-
-There has been quite a number of CVEs assigned to malicious USB devices
-this year already, this does not seem to be different.
-
-(e.g. CVE-2016-2384, CVE-2016-2188, CVE-2016-2187 etc.)
-
-Ciao, Marcus
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
