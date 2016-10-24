@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4792" "Friday" "6" "May" "2016" "23:11:10" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>" "128" "[oss-security] CVE Request: Squid HTTP caching proxy" nil nil nil "5" "2016050611:11:10" "[oss-security] CVE Request: Squid HTTP caching proxy" (number mark "U       squid3@treen May  6  128/4792  " thread-indent "\"[oss-security] CVE Request: Squid HTTP caching proxy\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1756" "Monday" "24" "October" "2016" "11:14:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161024151435.03B366C55E7@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream" nil nil nil "10" "2016102415:14:35" "[oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream" (number mark "U       cve-assign@m Oct 24   44/1756  " thread-indent "\"[oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream\"\n") "<alpine.LFD.2.20.1610241602370.6422@wniryva>" ("<alpine.LFD.2.20.1610241602370.6422@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7884 invoked by uid 550); 6 May 2016 11:11:43 -0000
+Received: (qmail 1796 invoked by uid 550); 24 Oct 2016 15:14:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,144 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7855 invoked from network); 6 May 2016 11:11:42 -0000
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-From: Amos Jeffries <squid3@treenet.co.nz>
-Message-ID: <583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>
-Date: Fri, 6 May 2016 23:11:10 +1200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="Vk3BNA2QBC03aMWHrIna0dNJ00wbAgtOe"
-Subject: [oss-security] CVE Request: Squid HTTP caching proxy
+Received: (qmail 1778 invoked from network); 24 Oct 2016 15:14:46 -0000
+From: cve-assign@mitre.org
+To: ppandit@redhat.com
+Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, psirt@huawei.com
+In-Reply-To: <alpine.LFD.2.20.1610241602370.6422@wniryva>
+Message-Id: <20161024151435.03B366C55E7@smtpvmsrv1.mitre.org>
+Date: Mon, 24 Oct 2016 11:14:35 -0400 (EDT)
+Subject: [oss-security] Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream
 
---Vk3BNA2QBC03aMWHrIna0dNJ00wbAgtOe
-Content-Type: multipart/mixed; boundary="gUCTtICiremFJFDm3K7pMmjN3QLtb9cVv"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Message-ID: <583f664a-dc8b-93cb-4b88-2b778d705ee0@treenet.co.nz>
-Subject: CVE Request: Squid HTTP caching proxy
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---gUCTtICiremFJFDm3K7pMmjN3QLtb9cVv
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+> Quick Emulator(Qemu) built with the Intel HDA controller emulation support is
+> vulnerable to an infinite loop issue. It could occur while processing the DMA
+> buffer stream while doing data transfer in 'intel_hda_xfer'.
+> 
+> A privileged user inside guest could use this flaw to consume excessive CPU
+> cycles on the host, resulting in DoS.
 
-Hi,
- several serious issues have been reported about the Squid proxy.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg04717.html
 
-(URLs below are now all public, but some of our mirrors may take a few
-more hours to pick up the changes).
+>> If this
+>> length and buffer pointer were to be same, 'copy' could be
+>> set to zero(0), leading to an infinite loop.
 
+Use CVE-2016-8909.
 
-1) Cache Poisoning issue in HTTP Request handling
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/audio/intel-hda.c but
+that may be an expected place for a later update.
 
-Incorrect input validation of HTTP Request messages lets clients use an
-absolute-URI on port 80 to bypass the protection previously added to
-Squid for CVE-2009-0801 and other related attack vectors. This can lead
-to cache poisoning of the Squid and browser caches, bypass of
-same-origin and sandbox protections in browsers.
-
-All Squid 2.x are not vulnerable.
-All Squid-3.x up to and including 3.2.0.10 are not vulnerable unless
- they have been patched for CVE-2009-0801.
-All Squid-3.2.0.11 and later up to and including 3.5.17 are vulnerable.
-All Squid-4.x up to and including 4.0.9 are vulnerable.
-
-Advisory at <http://www.squid-cache.org/Advisories/SQUID-2016_7.txt>
-
-Patch at
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14039.patc=
-h>
-(patches for other versions are TBD.)
-
-
-
-2) Header Smuggling issue in HTTP Request processing
-
-Incorrect input validation allows a client to smuggle Host header value
-past same-origin security protections to cause Squid operating as
-interception or reverse-proxy to contact the wrong origin server. Also
-poisoning any downstream cache which stores the response.
-
-However, the cache poisoning is only possible if the caching agent
-(browser or explicit/forward proxy) is not following RFC 7230 processing
-guidelines and lets the smuggled value through.
-
-NP: This appears to be an example of CWE-144, but smuggling just a
-specific header value instead of a whole message. The result is the same
-as documented for message smuggling but much harder to detect by
-observing log content - since there is no unexplained message or
-response corruption after the attack has happened.
-
-All 2.x versions up to and including 2.7.STABLE9 are vulnerable.
-All 3.x versions up to and including 3.5.17 are vulnerable.
-All 4.x versions are not vulnerable.
-
-Advisory at <http://www.squid-cache.org/Advisories/SQUID-2016_8.txt>
-
-Patches at:
- <http://www.squid-cache.org/Versions/v3/3.1/changesets/squid-3.1-10496.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11842.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/squid-3.3-12698.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/squid-3.4-13236.pat=
-ch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14038.pat=
-ch>
-
-
-
-3) Multiple Denial of Service issues in ESI Response processing.
-
-Due to incorrect pointer handling and reference counting Squid is
-vulnerable to a denial of service attack when processing ESI responses.
-
-All Squid-2.x are not vulnerable.
-Squid-3.x up to and including 3.5.17 and 4.x up to and including 4.0.9
-are affected. Vulnerability is configuration and build dependent. see
-the advisory for more detail if interested.
-
-Advisory at <http://www.squid-cache.org/Advisories/SQUID-2016_9.txt>
-
-Patches at:
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_9.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_9.patch>
-
-
-
-Thanks
-
-Amos Jeffries
-Squid Software Foundation
-
-
---gUCTtICiremFJFDm3K7pMmjN3QLtb9cVv--
-
---Vk3BNA2QBC03aMWHrIna0dNJ00wbAgtOe
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+Version: GnuPG v1
 
-iQIcBAEBAgAGBQJXLHveAAoJEGvSOzfXE+nLFoUP+QFxnGMfydBh1qM77lKeG+AX
-y2RB0OpQnKDIOgw57VFqjU3bu9ftv+4fVhdYuG9F1GPS9AhrzNKO3xrb9P5eGiSQ
-iYExQbpSv2deBTk8yFbQQvJ1b4rpy4bhihaq8U4mx1L5lEEdGPgbEiiqme6dqEEb
-ctCjoTjeunGuItLeNNwLhg4UBsA0rMEtMLlf9QGJkPHkJUfovfq33gcdqI3BDMBN
-hdtxBklAqkgzt2M0M2L+4CkEK9qrpNNjlmgd/4mpc8Ws4D8ovbf72G7hozslYqWj
-Yq2P4QlOsvQw7DllfQGU626u0JKVlLHjr1oG5I/tdlUiWN3wDdx/FiHdNO9pDwoh
-7IitueyzDq6SY/psB45WgED1iGlDAHm5VSXSgVd9iSumPssGZz5b/ZZkqhZF8xsk
-L5E24p4q7byUB4mJ8ksFo78SWDRCAzX+yAljHm3zOPCFiVmmQdK/LMlfutY0HYHd
-s2C4mYbSjOXJsd+4gyLEr9aERfE0S5jXmudeg+o4rppGvGqckduoEZGyGQlLRq1O
-7yhGePifu5SWH0UglfMs6hiEjvjI+XHVO0faSvo0K8Hsx/JZehFgZnxpsymhK7dh
-/NCcdgpD8/vgmGO7N0mywUklwYiwM7imopS/JaZTPZ9XtHSzKpmLxqn8MJfSWFru
-e1t4n7MkOln+fgoMLccS
-=FQ3/
+iQIcBAEBCAAGBQJYDiS2AAoJEHb/MwWLVhi2EdIP/13s4aqAkXD/OaxOK3qRouWo
+ONcmv+2QlJXZfy6Jm42tkh9Piw0GdGtaPbdGi6lWdE+skngIqsQn9agnQHNh3DZg
+YE0hU7meNnfXuGKJZZ2sQlKJtT5kfcoFYv0V0D9OL+EOkd5Aul+cUrw/dXHrUvag
+WUO2o2VwLfCnKKC7j8Y1lEDxfuy5uN8Wf312pvDusyEPKWfJ+JYRsmF2uCOSWgTg
+VxjHCDyMsvUTmqIVblfo+oVHD8u3yqONAPfX7Q/UeIk3QDo7sXT1qVCbt7dOAhJA
+9ieYKuDy7XKDoyQOCZIiOnfdV4Lz9FMVjZThDnrtD4hpoe79U7lV0RJGl0cXYg2o
+tWxz7QGJj3bPoxTDVFU/5CqfuD5/p00HDEhbz55FrPva2UTnddIYQ4Aqt5KZp55v
+D1G7GtnLnw+YxD4KJ81cTeCvArAg3mtTij2H3skhJ2xrxsN94CgvhhjxRqjCaUHJ
+1XDjVPJSuRHpV3kAApRGYuRC2oq8KzgeAMyYuRom8DbBlBIWcmoF1npwYY+Umv5+
+B384U55gEqpplZspdxEoJgQQIj/x1PdmEpJ0EE8Qsx3+FhN0OtmFHhLuwPNdWir0
+gKXY9Z/Jgdg+g6COXB6Tb0T7bNTVdUNfcx3+GyxamgpXfnnkTS38fSNg9QOCcv3X
+56I0ORxCBj7wQTmT5UFB
+=5rof
 -----END PGP SIGNATURE-----
-
---Vk3BNA2QBC03aMWHrIna0dNJ00wbAgtOe--
