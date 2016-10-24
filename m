@@ -1,127 +1,209 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/3
-Message-ID: <CAFkTriJZFFmHycp7jqP-S2j9BSV_nBW6SErPdFiM7s1dVu7hvQ@mail.gmail.com>
-Date: Tue, 28 Jun 2016 15:13:29 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Apache Xerces getLastExtEntityInfo Use-After-Free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/3
+Message-ID: <88E4FB7D4EC3E04EAA5DAFEB85C81D4232B24FE0@EX02.corp.qihoo.net>
+Date: Mon, 24 Oct 2016 07:44:27 +0000
+From: 石磊 <shilei-c@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-8610: SSL Death Alert: OpenSSL SSL/TLS SSL3_AL_WARNING undefined alert Remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Gustavo,
+In August, Shi Lei from Gear Team, Qihoo 360 Inc., found a Denial of Service issue in OpenSSL while openssl is handling "SSL3_AL_WARNING" undefined alerts.
+This issue has been assigned with CVE number, CVE-2016-8610, and it was called 'SSL-Death-Alert'.
 
-thank you for the feedback, yes applying that patch manually to trunk
-resolves the UAF
+The story is as follow.
 
-is there a svn branch where this patch is already applied to retest?
 
-Marco
 
-On Tue, Jun 28, 2016 at 2:57 PM, Gustavo Grieco <gustavo.grieco@...il.com>
-wrote:
+We reported this issue to OpenSSL team in early September, and they told us they won't treat it as a security issue, but they allowed us to discuss it with whomever we wish.
 
-> Hi,
->
-> Is it related with CVE-2016-2099 still unfixed in 3.1.3
-> (https://issues.apache.org/jira/browse/XERCESC-2066) ?
->
-> Thanks!
->
-> 2016-06-28 8:50 GMT+02:00 Marco Grassi <marco.gra@...il.com>:
-> > Hi,
-> >
-> > the attached xml will trigger a UAF in xerces-c version 3.1.3 and the
-> trunk
-> > version
-> >
-> >
-> > ➜  xml cat xerces_uaf | xerces-c-3.1.3/samples/StdInParse
-> > =================================================================
-> > ==16010==ERROR: AddressSanitizer: heap-use-after-free on address
-> 0xf4a0dfcc
-> > at pc 0x0836c7f4 bp 0xfff9a198 sp 0xfff9a188
-> > READ of size 1 at 0xf4a0dfcc thread T0
-> >     #0 0x836c7f3 in
-> >
-> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
-> > const xercesc/internal/ReaderMgr.cpp:833
-> >     #1 0x83a42d4 in
-> > xercesc_3_1::XMLScanner::emitError(xercesc_3_1::XMLErrs::Codes,
-> > xercesc_3_1::XMLExcepts::Codes, unsigned short const*, unsigned short
-> > const*, unsigned short const*, unsigned short const*)
-> > xercesc/internal/XMLScanner.cpp:927
-> >     #2 0x8e40963 in
-> > xercesc_3_1::IGXMLScanner::scanDocument(xercesc_3_1::InputSource const&)
-> > xercesc/internal/IGXMLScanner.cpp:276
-> >     #3 0x84b4cca in
-> xercesc_3_1::SAXParser::parse(xercesc_3_1::InputSource
-> > const&) xercesc/parsers/SAXParser.cpp:575
-> >     #4 0x80533d6 in main src/StdInParse/StdInParse.cpp:186
-> >     #5 0xf6dd5636 in __libc_start_main (/lib32/libc.so.6+0x18636)
-> >     #6 0x80624f1
-> >
-> (/home/bob/VulnResearch/misc/xml/xerces-c-3.1.3/samples/StdInParse+0x80624f1)
-> >
-> > 0xf4a0dfcc is located 44 bytes inside of 56-byte region
-> > [0xf4a0dfa0,0xf4a0dfd8)
-> > freed by thread T0 here:
-> >     #0 0xf7228034 in operator delete(void*)
-> > (/usr/lib32/libasan.so.3+0xc5034)
-> >     #1 0x80992df in xercesc_3_1::XMemory::operator delete(void*)
-> > xercesc/util/XMemory.cpp:89
-> >
-> > previously allocated by thread T0 here:
-> >     #0 0xf72279b4 in operator new(unsigned int)
-> > (/usr/lib32/libasan.so.3+0xc49b4)
-> >     #1 0x8357ad9 in xercesc_3_1::MemoryManagerImpl::allocate(unsigned
-> int)
-> > xercesc/internal/MemoryManagerImpl.cpp:40
-> >     #2 0x8099042 in xercesc_3_1::XMemory::operator new(unsigned int,
-> > xercesc_3_1::MemoryManager*) xercesc/util/XMemory.cpp:68
-> >
-> > SUMMARY: AddressSanitizer: heap-use-after-free
-> > xercesc/internal/ReaderMgr.cpp:833 in
-> >
-> xercesc_3_1::ReaderMgr::getLastExtEntityInfo(xercesc_3_1::ReaderMgr::LastExtEntityInfo&)
-> > const
-> > Shadow bytes around the buggy address:
-> >   0x3e941ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> >   0x3e941bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> >   0x3e941bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> >   0x3e941bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> >   0x3e941be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-> > =>0x3e941bf0: fa fa fa fa fd fd fd fd fd[fd]fd fa fa fa fa fa
-> >   0x3e941c00: fd fd fd fd fd fd fd fa fa fa fa fa 00 00 00 00
-> >   0x3e941c10: 00 00 00 fa fa fa fa fa 00 00 00 00 00 00 00 00
-> >   0x3e941c20: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
-> >   0x3e941c30: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
-> >   0x3e941c40: 00 00 04 fa fa fa fa fa 00 00 00 00 00 00 04 fa
-> > Shadow byte legend (one shadow byte represents 8 application bytes):
-> >   Addressable:           00
-> >   Partially addressable: 01 02 03 04 05 06 07
-> >   Heap left redzone:       fa
-> >   Heap right redzone:      fb
-> >   Freed heap region:       fd
-> >   Stack left redzone:      f1
-> >   Stack mid redzone:       f2
-> >   Stack right redzone:     f3
-> >   Stack partial redzone:   f4
-> >   Stack after return:      f5
-> >   Stack use after scope:   f8
-> >   Global redzone:          f9
-> >   Global init order:       f6
-> >   Poisoned by user:        f7
-> >   Container overflow:      fc
-> >   Array cookie:            ac
-> >   Intra object redzone:    bb
-> >   ASan internal:           fe
-> >   Left alloca redzone:     ca
-> >   Right alloca redzone:    cb
-> > ==16010==ABORTING
-> >
-> >
-> >
-> > Marco
-> >
-> > https://marcograss.github.io/
->
+BTW, the issue has been fixed in the official release on September 22nd.
+
+
+
+As the saying goes in 'The X Files', the truth is out there. Security researchers write exploits because they like the truth.
+
+With further research in this flaw, we found that it could easily cause a DoS to those which use OpenSSL to support SSL(e.g, Nginx). For instance, visitors couldn't open the website powered by nginx until the attack stops.
+
+Considering the widely deployment of the combination of nginx with OpenSSL in nowaday's web servers, we believe this is an important issue that has a huge influence.
+
+
+
+After internal team discussion，we choose to disclose the details together with the Red Hat Product Security Team.
+
+With the help of Huzaifa Sidhpurwala from Red Hat Product Security Team, this issue has been further confirmed and has been informed to both the nginx team and other Linux distros.
+
+
+
+At last, we were very grateful to the Red Hat Security Team and the OpenSSL Team for their help!
+
+
+
+Details about the security flaw:
+
+=======
+
+Product: OpenSSL
+
+Affected Versions: 1.1.0, 1.0.2 - 1.0.2h, All 1.0.1, All 0.9.8
+
+Vulnerability Type: DoS
+
+Vendor URL: https://www.openssl.org/
+
+CVE ID: CVE-2016-8610
+
+Name: SSL Death Alert
+
+
+
+Description
+
+============
+
+It was found that function "ssl3_read_bytes" in ssl/s3_pkt.c might lead to higher CPU usage due to improper handling of warning packets.
+
+
+
+An attacker could repeat the undefined plaintext warning packets of "SSL3_AL_WARNING" during the handshake, which will easily make to consume 100% CPU on the server. It is an implementation problem in OpenSSL that OpenSSL would ignore undefined warning, and continue dealing with the remaining data(if exist). So the attacker could pack multiple alerts inside a single record and send a large number of there large records. Then the server will be fallen in a meaningless cycle, and not available to any others.
+
+Any ssl supported server which used OpenSSL may be influenced.
+
+
+
+A successful exploitation of this vulnerability could easy cause a DoS attack to the server (such as openssl s_server, nginx, etc).
+
+
+
+Shi Lei from Gear Team, Qihoo 360 Inc., reported this vulnerability.
+
+
+
+
+
+Countermeasures
+
+============
+
+Upgrade to the latest version(1.0.2j, 1.1.0b):
+
+https://www.openssl.org/source/
+
+
+
+Patch link:
+
+https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=af58be768ebb690f78530f796e92b8ae5c9a4401
+
+
+
+References
+
+============
+
+[1] https://www.openssl.org/
+
+[2] https://access.redhat.com/security/cve/CVE-2016-8610/
+
+[3] http://security.360.cn/cve/CVE-2016-8610/
+
+[4] https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=af58be768ebb690f78530f796e92b8ae5c9a4401
+
+
+
+
+
+An attack scenarios(Without PoC):
+
+=====================
+
+# uname -a
+
+Linux localhost.localdomain 4.4.7-300.fc23.x86_64 #1 SMP Wed Apr 13 02:52:52 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
+
+
+
+#yum install nginx
+
+# nginx -V
+
+nginx version: nginx/1.8.1
+
+built by gcc 5.3.1 20160406 (Red Hat 5.3.1-6) (GCC)
+
+built with OpenSSL 1.0.2h-fips  3 May 2016 (running with OpenSSL 1.0.2g-fips  1 Mar 2016)
+
+TLS SNI support enabled
+
+configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=nginx --group=nginx --with-file-aio --with-ipv6 --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_perl_module --with-mail --with-mail_ssl_module --with-pcre --with-pcre-jit --with-google_perftools_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -m64 -mtune=generic' --with-ld-opt='-Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -Wl,-E'
+
+
+
+#cat /etc/nginx/nginx.conf
+
+user nginx;
+
+worker_processes 4;
+
+error_log /var/log/nginx/error.log;
+
+pid /run/nginx.pid;
+
+events {
+
+    worker_connections 1024;
+
+}
+
+
+
+# netstat -ntlp
+
+Active Internet connections (only servers)
+
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+
+tcp       15      0 0.0.0.0:443             0.0.0.0:*               LISTEN      103334/nginx: maste
+
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      103334/nginx: maste
+
+
+
+
+
+Running the PoC…
+
+
+
+#/root/openssl-flood-alerts.py
+
+And then we will found that nginx was out of service.
+
+
+
+#curl https://x.x.x.x/
+
+curl: (28) Operation timed out after 0 milliseconds with 0 out of 0 bytes received
+
+
+
+#top
+
+...
+
+   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+
+
+
+103336 nginx     20   0  126920   9984   6876 R 100.0  0.5   0:32.65 nginx
+
+103337 nginx     20   0  126920   9984   6876 R  99.7  0.5   0:32.00 nginx
+
+103335 nginx     20   0  126920   9984   6876 R  99.3  0.5   0:32.54 nginx
+103338 nginx     20   0  126920   9984   6876 R  98.7  0.5   0:30.64 nginx
+
+--
+Regards,
+
+Shi Lei / Gear Team, Qihoo 360 Inc.
+GPG Key ID 37048936 / 5C4C 85C6 068C A5A0 23FA  0294 D9CE 9C25 3704 8936
 
