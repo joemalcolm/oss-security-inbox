@@ -1,62 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/17
-Message-Id: <20160822205557.001A36FC085@smtpvmsrv1.mitre.org>
-Date: Mon, 22 Aug 2016 16:55:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: lshell: shell outbreak vulnerabilities via bad syntax parse and multiline commands
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/2
+Message-ID: <alpine.LFD.2.20.1610241606440.6422@wniryva>
+Date: Mon, 24 Oct 2016 16:10:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Andrew Henderson <hendersa@...ulus.org>
+Subject: CVE request Qemu: net: rtl8139: infinite loop while transmit in C+ mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> 1/ Shell outbreak due to bad syntax parse
->    - https://github.com/ghantoos/lshell/issues/147
->    - https://bugs.debian.org/834949
+Quick Emulator(Qemu) built with the RTL8139 ethernet controller emulation 
+support is vulnerable to an infinite loop issue. It could occur while 
+transmitting packets in C+ mode of operation.
 
-Use CVE-2016-6902.
+A privileged user inside guest could use this flaw to consume excessive CPU 
+cycles on the host, resulting in DoS situation.
 
-
-> 2/ Shell outbreak with multiline commands
->    - https://github.com/ghantoos/lshell/issues/149
->    - Fix: https://github.com/ghantoos/lshell/commit/e72dfcd1f258193f9aaea3591ecbdaed207661a0
->    - https://bugs.debian.org/834946
-
-Use CVE-2016-6903.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05495.html
 
 
-https://bugs.debian.org/834949 and https://bugs.debian.org/834946 also
-mention "Command parser in this shell is beyound of recovery." This
-suggests that other vulnerabilities may be fixed at the same time as
-issues/147, or that other vulnerabilities may be discovered. In
-particular,
-https://github.com/ghantoos/lshell/issues/147#issuecomment-241366750
-mentions a different attack methodology. At least for now,
-https://github.com/ghantoos/lshell/issues/147#issuecomment-241366750
-is within the scope of CVE-2016-6902. It is difficult to predict what
-other CVE IDs may be needed until there is further vendor followup
-about issues/147.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXu2Z5AAoJEHb/MwWLVhi2yV8P/jYtI8rE7dbkIHDCytF6ligt
-O586ap6xBzpt0x874jrEZvteWGm1qDmA0JhQsuRa6CAGWRwOy1DweZpppDZ0u3ic
-85dT8yQw+9Hz3eJe0G/M3WjSk6m2eeyUGf5N6817UAim/SM+RnNVfPrP+ytBCb5Z
-tpdXPW+BKJa1/FsSAcQ6+mzkpytPXb8DFdf9Tb82g8rAPZTMNw/beJXaBo4o+Btr
-ZYOv3QGkpubbak6TWVCI9mmbslekFKrcI7qKYwYAwkON4CUHkXg8/RhbMbLVDzlC
-sSlvPBiGibzm3uNtuMqkbVAKazrpad/NNwt/ioAVYltDOZjIs7jNPe7Va9YLKcBz
-33IVH9QQMQr5CRh5kYgV3coSMRvQfduIIE4I7HxlumlwGJKsvARQ4JiEYhoqrgKv
-/M1pzohNpg7TBW5RjHuYMZougbHa70tezV2+mtjdb28lB3DrsAafNPa+9R9cE+UB
-5fE4Qm7LYRqA4hNtut0OrdEF5zmJL1u8xuVOoj5pUdRDs4A9FL/hT8TEFXsQaknA
-nXNtI+bqYQxOqE1ZXg40WbN6Z/aeZYSIUXhZ1DdirCGqtEsnD6IJ07kch/QuZsUc
-Qd1IoN4d6fCfKcObz2AZ4fg+As7ndsmuMapi+VMPff3JZrqakQVroptK1K2gTHY2
-92ovu5VQOdGYAvoWVFQR
-=ICSm
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
