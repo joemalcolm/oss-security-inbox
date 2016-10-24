@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/3
-Message-ID: <20160512092302.GA13770@lorien.valinor.li>
-Date: Thu, 12 May 2016 11:23:02 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Possible CVE request: gdk-pixbuf: Additional fixes to protect against overlows in pixops_* functions (similar to CVE-2015-7674)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/1
+Message-ID: <alpine.LFD.2.20.1610241602370.6422@wniryva>
+Date: Mon, 24 Oct 2016 16:06:34 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Huawei PSIRT <psirt@...wei.com>
+Subject: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream
 Content-Type: text/plain; charset=utf-8
 
-Hi
+   Hello,
 
-CVE-2015-7674, an interger overflow flaw in the pixops_scale_nearest
-function, was fixed by
+Quick Emulator(Qemu) built with the Intel HDA controller emulation support is 
+vulnerable to an infinite loop issue. It could occur while processing the DMA 
+buffer stream while doing data transfer in 'intel_hda_xfer'.
 
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=e9a5704edaa9aee9498f1fbf6e1b70fcce2e55aa
+A privileged user inside guest could use this flaw to consume excessive CPU 
+cycles on the host, resulting in DoS.
 
-There is another commit in the gdk-pixbuf repository to fix overflows
-in the pixops_composite_nearest, pixops_composite_color_nearest and
-pixops_process functions:
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg04717.html
 
-https://git.gnome.org/browse/gdk-pixbuf/commit/?id=dbfe8f70471864818bf458a39c8a99640895bd22
 
-Can you aassing an additional CVE for this since the scope for
-CVE-2015-7674 was for the pixops_scale_nearest function?
+This issue was reported by Huawei Product Security Incident Response Team 
+(PSIRT), Huawei Inc.
 
-Regards,
-Salvatore
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
