@@ -1,34 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/2
-Message-ID: <alpine.LFD.2.20.1609061630270.20681@wniryva>
-Date: Tue, 6 Sep 2016 16:32:34 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>, Tom Victor <vv474172261@...il.com>
-Subject: CVE request: Qemu: scsi: pvscsi: OOB read and infinite loop while setting descriptor rings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/5
+Message-Id: <20161024151612.199576C560A@smtpvmsrv1.mitre.org>
+Date: Mon, 24 Oct 2016 11:16:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, hendersa@...ulus.org
+Subject: Re: CVE request Qemu: net: rtl8139: infinite loop while transmit in C+ mode
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
-emulation support is vulnerable to an OOB access and/or infinite loop issue. 
-It could occur while processing SCSI commands 'PVSCSI_CMD_SETUP_RINGS'.
+> Quick Emulator(Qemu) built with the RTL8139 ethernet controller emulation
+> support is vulnerable to an infinite loop issue. It could occur while
+> transmitting packets in C+ mode of operation.
+> 
+> A privileged user inside guest could use this flaw to consume excessive CPU
+> cycles on the host, resulting in DoS situation.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05495.html
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg00050.html
+>> RTL8139 ethernet controller in C+ mode supports multiple
+>> descriptor rings, each with maximum of 64 descriptors. While
+>> processing transmit descriptor ring in 'rtl8139_cplus_transmit',
+>> it does not limit the descriptor count and runs forever. Add
+>> check to avoid it.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1373462
+Use CVE-2016-8910.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/rtl8139.c but
+that may be an expected place for a later update.
 
-These issues were reported by Vivtor V and Li Quiang of 360.cn Inc.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJYDiS8AAoJEHb/MwWLVhi2MT0P/i1qqts1Nb1wttHz7EX/EAtm
+qiNtxE7/IMAfHoLZ7UKJWk08RPY6O3wz55lbcPdZFtzJav2Ch2tnG2r25+Lr3OFD
+yXD/zZrA7uxpZ+wyQoWa7m1oQkmaPMUdWDjAnFwOy2eMY6yv+YP9UbU5C1opAqhu
+BVYZOXn+4rBa0LyXmw2DyUvNb2a6ePzyXgrJ42LMIdzKHL4ksyOkQ0frYkB1Vns4
+LVDOE3OV7/LWMPOccwIOlUVHEc4cclMnsTQvVB67dNoiJanQV86+AmzdLsRwJqxr
+cy2O6tKG+Gjc7H90uVLOHwEwUMgjswpj2hD1oFZcqPnbsV9cpnFDgTDK/65mpkab
+oflQM68pdnPuWb05VgR+SAQ3jLTmRePaw73GEWi/vHXLNfLWkxmvqGevzV3swBDi
+VG8TnAyWF939pxWbULRSB/3q5aU69iHUM0WIDWZH/WuQ0jEaPrxJg7R8kiVcdt4J
+E+6mM7GQiGndSHXRyQjbf2SIVR80hNuWtctX3nkaZxWsIJTfFYCc8/Ae/M/HDdkf
+bZHhNK5y7rchWd9DYiRi9Knf4axoNe/KvGy4jVhQnwrN8IKaHVKDqbl6cNKDEpUP
+hPhKk+0JEjBFn0auboRZUUqAV90rwEl/VkMvz73WJU6IALhYNBoUkpDG5XewdA5W
+yfHvedUqbQn9vcV6cnf9
+=OGtv
+-----END PGP SIGNATURE-----
