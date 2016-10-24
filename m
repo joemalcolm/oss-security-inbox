@@ -1,79 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/1
-Message-ID: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
-Date: Mon, 26 Dec 2016 00:21:07 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/24/4
+Message-Id: <20161024151435.03B366C55E7@smtpvmsrv1.mitre.org>
+Date: Mon, 24 Oct 2016 11:14:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
+Subject: Re: CVE request Qemu: audio: intel-hda: infinite loop in processing dma buffer stream
 Content-Type: text/plain; charset=utf-8
 
-PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: CRITICAL
+> Quick Emulator(Qemu) built with the Intel HDA controller emulation support is
+> vulnerable to an infinite loop issue. It could occur while processing the DMA
+> buffer stream while doing data transfer in 'intel_hda_xfer'.
+> 
+> A privileged user inside guest could use this flaw to consume excessive CPU
+> cycles on the host, resulting in DoS.
 
-Discovered by:
-Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg04717.html
 
+>> If this
+>> length and buffer pointer were to be same, 'copy' could be
+>> set to zero(0), leading to an infinite loop.
 
-PHPMailer
-"Probably the world's most popular code for sending email from PHP!
-Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
-Joomla! and many more"
+Use CVE-2016-8909.
 
-Desc:
-An independent research uncovered a critical vulnerability in PHPMailer that
-could potentially be used by (unauthenticated) remote attackers to achieve
-remote arbitrary code execution in the context of the web server user and
-remotely compromise the target web application.
-To exploit the vulnerability an attacker could target common website
-components such as contact/feedback forms, registration forms, password
-email resets and others that send out emails with the help of a vulnerable
-version of the PHPMailer class.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/audio/intel-hda.c but
+that may be an expected place for a later update.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Patching:
-Responsibly disclosed to PHPMailer team.
-They've released a critical security release.
-If you are using an affected release update to the 5.2.18 security
-release as advised at:
-https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
-
-Notes:
-I know this is a bad timing and a short notice (for everyone probably ;)
-I've spent most of my Christmas break working on this issue with
-affected vendors.
-This has been quite a rush as one of the vendors leaked excessive
-information on this vulnerability at one point which could aid
-potential attackers.
-
-I've released a limited advisory at the link below:
-
-https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
-
-This is to give people a chance to immediately patch or at least be
-aware of the issue before we get closer to a working day/end of
-holiday for affected users to act on this issue.
-
-I'm planning to release the full advisory and a PoC exploit shortly so
-that everyone is on the same page.
-
-Upcoming video PoC:
-
-https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
-
-
-For updates follow:
-
-https://twitter.com/dawid_golunski
-
-I'll also send another email to the list once it is published.
-
-For now,
-Patch it now before someone else patches it for you (through a reverse shell ;)
-
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+iQIcBAEBCAAGBQJYDiS2AAoJEHb/MwWLVhi2EdIP/13s4aqAkXD/OaxOK3qRouWo
+ONcmv+2QlJXZfy6Jm42tkh9Piw0GdGtaPbdGi6lWdE+skngIqsQn9agnQHNh3DZg
+YE0hU7meNnfXuGKJZZ2sQlKJtT5kfcoFYv0V0D9OL+EOkd5Aul+cUrw/dXHrUvag
+WUO2o2VwLfCnKKC7j8Y1lEDxfuy5uN8Wf312pvDusyEPKWfJ+JYRsmF2uCOSWgTg
+VxjHCDyMsvUTmqIVblfo+oVHD8u3yqONAPfX7Q/UeIk3QDo7sXT1qVCbt7dOAhJA
+9ieYKuDy7XKDoyQOCZIiOnfdV4Lz9FMVjZThDnrtD4hpoe79U7lV0RJGl0cXYg2o
+tWxz7QGJj3bPoxTDVFU/5CqfuD5/p00HDEhbz55FrPva2UTnddIYQ4Aqt5KZp55v
+D1G7GtnLnw+YxD4KJ81cTeCvArAg3mtTij2H3skhJ2xrxsN94CgvhhjxRqjCaUHJ
+1XDjVPJSuRHpV3kAApRGYuRC2oq8KzgeAMyYuRom8DbBlBIWcmoF1npwYY+Umv5+
+B384U55gEqpplZspdxEoJgQQIj/x1PdmEpJ0EE8Qsx3+FhN0OtmFHhLuwPNdWir0
+gKXY9Z/Jgdg+g6COXB6Tb0T7bNTVdUNfcx3+GyxamgpXfnnkTS38fSNg9QOCcv3X
+56I0ORxCBj7wQTmT5UFB
+=5rof
+-----END PGP SIGNATURE-----
