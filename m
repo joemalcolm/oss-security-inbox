@@ -1,4 +1,9 @@
-Received: (qmail 25639 invoked by uid 550); 15 Jul 2023 10:31:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["339" "Tuesday" "25" "October" "2016" "11:28:09" "-0400" "netblue30" "netblue30@yahoo.com" "<ffc1df4d-7172-c1f6-8bd7-7a26687fa625@yahoo.com>" "10" "Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape" nil nil nil "10" "2016102515:28:09" "[oss-security] CVE-2016-7545 -- SELinux sandbox escape" (number mark "U       netblue30@ya Oct 25   10/339   " thread-indent "\"Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape\"\n") "<1477380542.4640.11.camel@debian.org>" ("<20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>" "<1477380542.4640.11.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7535 invoked by uid 550); 25 Oct 2016 15:30:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,98 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30377 invoked from network); 14 Jul 2023 22:00:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1689372017; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=5umyb/8cbAie0J4muDQ0FrIpwiPMOf2xevxjvNr2yg8=;
-	b=ZoA0/VTKkxLRGVlHikq/yR+REoKW2zjPCea/A3kAbR4xjL7yPwaotWjFbu4FkmUYJGaCZt
-	8ywMs4NfiMEn1pavEw8036RVQGZdJp0xVR6GHc2aQ/pw/sPnBeKk7r9L62WWr+09wbXlIc
-	0h9nTgMr77sSXGe2rQSnZdodG5ZFXyIu6L6HwfYv1dFjo6vFXeH4/jq5u/xxvdE07GZGdA
-	H1oTddLFu7y5/TmKnqw3fSPU1v5zA8SNxhVSQ2R2rVO90vH04ICl2f0NakCmQCgP7eQu1S
-	t3u6pADjn0yZaZd/pj7o0As7P/MsUSKkocjb5FmFUu5RCRk7RAYnYao4cmJWsQ==
-Date: Fri, 14 Jul 2023 22:00:17 +0000
-From: Tomas Mraz <tomas@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZLHFcUb95IUuBQ6p@openssl.org>
+Received: (qmail 3150 invoked from network); 25 Oct 2016 15:23:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1477408993; bh=t+Cv3uNaKG09Rm4zNAm5g6uI+FAkDQuKRSJuGG/+mIM=; h=Subject:To:References:Cc:From:Date:In-Reply-To:From:Subject; b=mZgA8V3R7MSOj93aMpw7fKJtB4wmu9+WESB4ngBy4ohJtYN/QmpbfTbFFm4Qf00Kkb6GXOnt+EVAja0BH7EzpBcQWzNzphozuO2YPr+tHaC32h6U1K7xi+7D7DieMwiX3zZ0IxNsctIb6IY7qNQbH1qtflLM+II6IrydXNSt3v9UErhnwcBihG7qYxIGtE6E61I6XQ2bLbSNNYww9HSIh+5LRd9J7KlxlYK6eJHu3o8pKKfHCm/BDgtJonTQREk+lMqztWfTFNv5o5c5gcAZzzCPjYWf2wYnxgjvQFkLXJw2xkfXZUkXP5VHs2e9yXPojbKZ7KCs8xZBT3wHyAOaig==
+X-Yahoo-Newman-Id: 568712.37684.bm@smtp115.mail.ne1.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: sijbdNAVM1mN0FFMlBaskU_tVrjVmnnPPAk2bgURzv2XxDT
+ LUSp3VfX.vrMRogCCtbNODVqVxJPYE43slcsmARRzyJ2amLT5mf4F4PsjXUq
+ CwQg8ltIPzFlfU69qMfDzfnQwiHrL05bmtZIpS4RTYfoUFrytYjbokCUkyj2
+ JTQADb_va14LULi84SGTFcu_t6_cHrNL3U2KNp86vGuhWuxkvF.5levIDXnQ
+ r4eAmdRH4nrVq8GFKTlLzoxb9WCdpa04DadmzBN4DvrzTcLSQV12FzVIaX38
+ kktZwgt_aXhvPa_VnlQhTxOX6EfadWyfjgFbAmwM8imyal2S21o7Eu6VYdvR
+ CouEAVx0e38EXmomBva0vNSJdwvQIQfGwZlsA8Sq.F0EwPnGVIZHd44gVksU
+ c82ytjSK8s30nKoGzRCsArbh79iLN5e4jjD5tD.nCV2prNrUgch_hFurZWTi
+ DciC.lIVIO.BNNdICPeZAvhpHhFECmjklXzWui0VZTE.YRWzbvBgsX2T216O
+ dfWmo2C2mMhZcs4VDMXddQUcHjllJJrLz_jGbUTLxUQceZ0ytoA0v3CSFGIs
+ -
+X-Yahoo-SMTP: _9B.oumswBDs9iBpteZDNGiB0FJIYg--
+To: Yves-Alexis Perez <corsac@debian.org>, oss-security@lists.openwall.com,
+ up201407890@alunos.dcc.fc.up.pt
+References: <20160925134911.18991732ntfvg5a8@webmail.alunos.dcc.fc.up.pt>
+ <1477380542.4640.11.camel@debian.org>
+Cc: team@security.debian.org
+From: netblue30 <netblue30@yahoo.com>
+Message-ID: <ffc1df4d-7172-c1f6-8bd7-7a26687fa625@yahoo.com>
+Date: Tue, 25 Oct 2016 11:28:09 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+In-Reply-To: <1477380542.4640.11.camel@debian.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2016-7545 -- SELinux sandbox escape
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 10/25/2016 03:29 AM, Yves-Alexis Perez wrote:
+> The commit log reuses the CVE-2016-7545 number, but I guess a new one
+> should
+> be assigned since they don't share the same codebase?
+>
 
-OpenSSL Security Advisory [14th July 2023]
-==========================================
+I guess a new number should have been better from the beginning. I have
+it as CVE-2016-7545 in my release notes for Firejail version 0.9.44.
 
-AES-SIV implementation ignores empty associated data entries (CVE-2023-2975)
-============================================================================
-
-Severity: Low
-
-Issue summary: The AES-SIV cipher implementation contains a bug that causes
-it to ignore empty associated data entries which are unauthenticated as
-a consequence.
-
-Impact summary: Applications that use the AES-SIV algorithm and want to
-authenticate empty data entries as associated data can be misled by removing,
-adding or reordering such empty entries as these are ignored by the OpenSSL
-implementation. We are currently unaware of any such applications.
-
-The AES-SIV algorithm allows for authentication of multiple associated
-data entries along with the encryption. To authenticate empty data the
-application has to call EVP_EncryptUpdate() (or EVP_CipherUpdate()) with
-NULL pointer as the output buffer and 0 as the input buffer length.
-The AES-SIV implementation in OpenSSL just returns success for such a call
-instead of performing the associated data authentication operation.
-The empty data thus will not be authenticated.
-
-As this issue does not affect non-empty associated data authentication and
-we expect it to be rare for an application to use empty associated data
-entries this is qualified as Low severity issue.
-
-OpenSSL versions 3.0.0 to 3.0.9, and 3.1.0 to 3.1.1 are vulnerable to this
-issue. The FIPS provider is not affected as the AES-SIV algorithm is not
-FIPS approved and FIPS provider does not implement it.
-
-OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 6a83f0c9 (for 3.1) and
-commit 00e2f5ee (for 3.0) in the OpenSSL git repository.
-
-This issue was reported on 16th May 2023 by Juerg Wullschleger (Google).
-The fix was developed by Tomas Mraz.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230714.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmSxxSgACgkQUnRmohyn
-nm3ogw//Zqnff7kHNFaqXQB7plwif+utEBi6/siMNC+/bTn8RSRWsuIJp0vgGTB/
-EEkiD2vK5Twrf1mYpKgOiCdQq2AaneHbjqcLtkmBS2apeXcGsBB6ZQgJKe1kRhaL
-nC87QJKuUdlQojS4+SBD+MIz/ET1uQNsjjvKfANpKK0L4TgUs2tHNskZG3H6p4az
-Kt0uhKaAFBp7jGb+wt3zYIgoyLvnZvx51mIwrf/vv3VAJl8OgEgG+hIk+8AtAVEa
-ZCWmkDRuuJxEHuwCjX0iSncwqIViph1JnpqnrXARNcdfZCMdAIfEmVdSTfXmmlQr
-TmQPDiBDIlk5ZjHlOGbVCEkUnPQAwiKEQ5bi0x4zI1e/yN64RTARjjaXn5nQsyTf
-XHHqFQNSCZ9Fpc4JVuJsSzzxnALKuzIC6uUwzPZxfDQ844e7EBim/V42kcbKizbZ
-N073hrxkm54nGRdfXkDguGPGK82GwHJnxPo7COBiBnROswWK++o2eW9PJwD2Vkt3
-dQ7t58YXDc+76+yE+L4mYuF6ml6wmUPx9kBzhzBxjgINZod5O8YyuTRrqnRbtsFU
-yasNBspjAaVdS5zRFewn4ghQTKIv6OfBn2fTIUNVCfXeAR9Dzd5Ts5zAcYJTaT3o
-NNLUBwvP+Fcm2rE2RZ3p6n6YmQLiY8URjtxGGPxJsLDaCTw6IiY=
-=eZhV
------END PGP SIGNATURE-----
+Regards
