@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/01/3
-Message-Id: <291B6ECE-2D59-435D-A986-4582022C9B21@shiz.me>
-Date: Mon, 1 Aug 2016 12:24:21 +0200
-From: Shiz <hi@...z.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/6
+Message-ID: <31464857.ke3DX0TVLo@blackgate>
+Date: Tue, 25 Oct 2016 12:48:25 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: systemd-machined: information exposure for docker containers
+Cc: Marcus Meissner <meissner@...e.de>
+Subject: Re: libwmf: memory allocation failure in wmf_malloc (api.c)
 Content-Type: text/plain; charset=utf-8
 
-
-> On 28 Jul 2016, at 16:42, Simon McVittie <smcv@...ian.org> wrote:
+On Tuesday 25 October 2016 11:41:14 Marcus Meissner wrote:
+> Hi,
 > 
-> *Which* unprivileged user processes?
+> can you send the reproducer too please.
 > 
-> If the unprivileged user processes are not in a container, they can get a
-> significant amount of the same information by reading the host's /proc.
+> Ciao, Marcus
 
-Except if a host is running with hidepid={1,2}, which is not entirely uncommon
-especially in hardened systems. In that regard it /does/ qualify as infoleak.
+https://github.com/asarubbo/poc/blob/master/00015-libwmf-memalloc-wmf_malloc
 
-- Shiz
+Since your previous comment, all blog posts will have a link to the 
+reproducer.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+--
+Agostino
+
