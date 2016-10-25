@@ -1,31 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/6
-Message-ID: <alpine.LFD.2.20.1605302310440.13154@wniryva>
-Date: Mon, 30 May 2016 23:13:15 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE Request Qemu: block: iscsi: buffer overflow in iscsi_aio_ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/4
+Message-ID: <20161025104216.6d74b72d@redhat.com>
+Date: Tue, 25 Oct 2016 10:42:16 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Gsunde Orangen <gsunde.orangen@...il.com>
+Cc: oss-security@...ts.openwall.com, Dawid Golunski <dawid@...alhackers.com>
+Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Tue, 18 Oct 2016 22:56:18 +0200 Gsunde Orangen wrote:
 
-Quick Emulator(Qemu) built with the Block driver for iSCSI images(virtio-blk) 
-support is vulnerable to a heap buffer overflow flaw. It could occur while 
-processing iSCSI asynchronous I/O ioctl(2) calls.
+> Dawid meanwhile updated his post [1] to reflect that the fixes for
+> CVE-2016-6662 were added in 5.5.52/5.6.33/5.7.15.
+> ... But today Oracle states that those versions were still affected
+> [2], thus the fix releases are 5.5.53/5.6.34/5.7.16.
 
-A user inside guest could use this flaw to crash the Qemu process resulting in 
-DoS OR potentially leverage it to execute arbitrary code with privileges of 
-the Qemu process on the host.
+5.5.53/5.6.34/5.7.16 change the defaults for secure_file_priv - the
+change that should break privilege escalation from FILE privilege to
+database administrator. See upstream release notes for details.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-block/2016-05/msg00779.html
+> So which one is correct? Based on the changelogs I assume [1].
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1340924
+The advisory is not very explicit regarding which issue the CVE is for,
+which leaves space for using it to refer to any related change.  Mitre
+CVE description is more specific and says the id is for "general log
+can write to my.cnf".  That description is consistent with how the id
+was used by MariaDB upstream, or where Dawid's advisory says it was
+fixed.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> And btw, Dawid: what happened with CVE-2016-6663? Still not public
+> yet?
+
+That CVE is now listed as fixed in MariaDB 5.5.52 and 10.1.18.  Based
+on information from MariaDB upstream, the CVE is used for the race
+condition issue fixed in this commit:
+
+https://github.com/MariaDB/server/commit/347eeefbfc658c8531878218487d729f4e020805
+
+MySQL fixed the issue in:
+
+https://github.com/mysql/mysql-server/commit/4e5473862e6852b0f3802b0cd0c6fa10b5253291
+
+Looking at the Oracle CPU, it seems CVE-2016-5616 is Oracle's dupe of
+CVE-2016-6663.
+
+It would be nice to have this conclusion confirmed by Oracle, but
+frankly, we're unlikely to see that.  However, Dawid, as the original
+reporter, can ask Oracle what CVEs they assigned to issues he reported,
+and share the response.
+
+-- 
+Tomas Hoger / Red Hat Product Security
