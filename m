@@ -1,4 +1,9 @@
-Received: (qmail 14242 invoked by uid 550); 15 Apr 2023 12:07:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["446" "Tuesday" "25" "October" "2016" "12:55:08" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161025105508.GG8134@suse.de>" "16" "Re: [oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)" nil nil nil "10" "2016102510:55:08" "[oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)" (number mark "U       meissner@sus Oct 25   16/446   " thread-indent "\"Re: [oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)\"\n") "<31464857.ke3DX0TVLo@blackgate>" ("<2620117.JbBQOqU5X0@blackgate>" "<20161025094114.GE8134@suse.de>" "<31464857.ke3DX0TVLo@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16281 invoked by uid 550); 25 Oct 2016 10:55:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,64 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7528 invoked from network); 15 Apr 2023 06:34:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681540467; x=1684132467;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pSK07dI6/MkeTXFzbZyIyXA3freZ8XD9oxJwJCsj4es=;
-        b=la0v9ibkMegbTFvex/f3lOO0pjWVKWP/oq45wJL9A3uPVqXA1fU5ISMbnACHGIumex
-         u6wgZt4KmUwl5aN4E3kVGZPzN6PwiEN4pYprH9HZqiy8q+cEURwXltAY64EShmV46DL8
-         UW5MxFOlT6rXmAtUQEFuS6pgQUyT57T+vZhw1EOe/LhQTeEFgP/0IrI4u8utkEEtY/A2
-         MzNQPEu7pZiU8bVWAR6qoKAot9EILb7vL5Qsbx+RFBPUcnlrDK8dLY7l7yZV1lm7Pofc
-         I/shl0d3Ke1LilE9TZ9T4bgf5H5aVTjt4dCGFazDchXHXyEQuXaVsqQ9/BL3HPa3bjqR
-         ka8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681540467; x=1684132467;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pSK07dI6/MkeTXFzbZyIyXA3freZ8XD9oxJwJCsj4es=;
-        b=QvTMOygbZNzhdyaOelnEgrmHxMCYFOcPK6EPIshwmgKQEg+4s9DlgYyRVBIoFnV+qS
-         hP6/igd6UBROEXj86NaMRoFAnQFrETuD2RrkLVZihmrzQaMWtQHauJw4MiYU5vSNKS0b
-         yNf2L/2JNlK2bdKaaH4LZMS4kE2USmajc3uN+oCxvBF3UBg0ihfKfjad0qbT8i1gXIqv
-         KOZg47DyUXfpJUwssO0ybsIML6KMvSmYITQyvHK1firT6yCrKs75/34S/mxmxgjir77C
-         gCAaFN+j8QStU5MhdWSYlA8z+Z9jzQTgQiwv0Nv6u9QkqZOTwdmoitmM2sQQQVbvuyDX
-         0ygQ==
-X-Gm-Message-State: AAQBX9dl3NWk8wfWPputfmduzxwtTv4yQfB5Lj14vLfqmUjjFUE0Vj8x
-	OGpzWurn/f89fv6K4fYRp7Hl3U3ryZQuThtePeTxWw3sh2c=
-X-Google-Smtp-Source: AKy350bF3dI89erbhLXkhA1Z7yuPsVc4qqvFwfp/1EOcBOjo7SAczY4lWkb3QNI7tzFb7wM8oZqoSrMA7q0MqaBdtMQ=
-X-Received: by 2002:a17:90a:7c0f:b0:23f:83de:7e4a with SMTP id
- v15-20020a17090a7c0f00b0023f83de7e4amr8190435pjf.7.1681540466887; Fri, 14 Apr
- 2023 23:34:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com>
- <87y1mwd1xm.fsf@gentoo.org>
-In-Reply-To: <87y1mwd1xm.fsf@gentoo.org>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Sat, 15 Apr 2023 09:33:24 +0300
-Message-ID: <CAGUWgD8297SAEoSS_hXGzk+VKQ_bE_K5CQeGrA26x0P=xouApQ@mail.gmail.com>
+Received: (qmail 16260 invoked from network); 25 Oct 2016 10:55:20 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 25 Oct 2016 12:55:08 +0200
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] ncurses fixes upstream
+Message-ID: <20161025105508.GG8134@suse.de>
+References: <2620117.JbBQOqU5X0@blackgate>
+ <20161025094114.GE8134@suse.de>
+ <31464857.ke3DX0TVLo@blackgate>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31464857.ke3DX0TVLo@blackgate>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] libwmf: memory allocation failure in wmf_malloc
+ (api.c)
 
-On Thu, Apr 13, 2023 at 3:54=E2=80=AFPM Sam James <sam@gentoo.org> wrote:
->
->
-> "Jonathan Bar Or (JBO)" <jobaror@microsoft.com> writes:
->
+On Tue, Oct 25, 2016 at 12:48:25PM +0200, Agostino Sarubbo wrote:
+> On Tuesday 25 October 2016 11:41:14 Marcus Meissner wrote:
+> > Hi,
+> > 
+> > can you send the reproducer too please.
+> > 
+> > Ciao, Marcus
+> 
+> https://github.com/asarubbo/poc/blob/master/00015-libwmf-memalloc-wmf_malloc
+> 
+> Since your previous comment, all blog posts will have a link to the 
+> reproducer.
 
-> > How can we ensure those fixes get deployed upstream, in major Linux dis=
-tributions?
->
+Thank you! This is very helpful for us distributors :)
 
-Isn't MicroSoft member of linux distros mailing list [0], which
-purpose is exactly quietly trading 0days [1]?
-
-Does the OP with m$ email address realize this?
-
-[0] https://oss-security.openwall.org/wiki/mailing-lists/distros
-[1] https://seclists.org/oss-sec/2019/q3/19
-Re: linux-distros membership application - Microsoft
+Ciao, Marcus
