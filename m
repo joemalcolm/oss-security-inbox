@@ -1,4 +1,9 @@
-Received: (qmail 15671 invoked by uid 550); 5 Dec 2023 13:57:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6369" "Tuesday" "25" "October" "2016" "11:41:14" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161025094114.GE8134@suse.de>" "123" "Re: [oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)" nil nil nil "10" "2016102509:41:14" "[oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)" (number mark "U       meissner@sus Oct 25  123/6369  " thread-indent "\"Re: [oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)\"\n") "<2620117.JbBQOqU5X0@blackgate>" ("<2620117.JbBQOqU5X0@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19673 invoked by uid 550); 25 Oct 2016 09:41:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,146 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15636 invoked from network); 5 Dec 2023 13:57:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
-	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=cT9pt4qsHtwGube0pBSxGN00A75ArgEPRWijy3e8dWo=; b=ZpzLCFMzFeuEjAsNJpRgzVqaiL
-	J3JgNUqb4K+o/S/ZgxETWfVZh2zXLgipET0ZAfdmZ2deQUk5k5nthciPxrkz/Ram7lUx8i1i9KiTU
-	OcsBPS9/TdAXc+Z2JyooPKwIqmLOmts9jrUEdudoCVCzPaG4dYEY6TQjqzV1ub1Ui2y3D4wj/rw8Y
-	I/aPMl5Cl9OFV7vEbzVYJ3zPPOC/ytFXBADYb8ElzY0+dpl+O7y2jBmxFzYoKkUONCGG2GIwon/e9
-	ZeWNQ99lETVOCnNtYEXv++McqgMMWgAZcCBYvduYMk96ii27AVj5IDgcICab4chsyPi6jXJuI0Buj
-	A9cE6Bog==;
-Message-ID: <a4993da7-a79b-c22b-b25c-337537a8f4b3@igalia.com>
-Date: Tue, 5 Dec 2023 14:57:21 +0100
+Received: (qmail 19649 invoked from network); 25 Oct 2016 09:41:27 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 25 Oct 2016 11:41:14 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <20161025094114.GE8134@suse.de>
+References: <2620117.JbBQOqU5X0@blackgate>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-Organization: Igalia S.L.
-Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
- security@webkit.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2023-0011
+In-Reply-To: <2620117.JbBQOqU5X0@blackgate>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] libwmf: memory allocation failure in wmf_malloc
+ (api.c)
 
+Hi,
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0011
-------------------------------------------------------------------------
+can you send the reproducer too please.
 
-Date reported           : December 05, 2023
-Advisory ID             : WSA-2023-0011
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0011.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0011.html
-CVE identifiers         : CVE-2023-42916, CVE-2023-42917.
+Ciao, Marcus
+On Tue, Oct 18, 2016 at 05:17:37PM +0200, Agostino Sarubbo wrote:
+> Description:
+> libwmf is a library for reading vector images in Microsøft’s native Windøws 
+> Metafile Format (WMF) and for either (a) displaying them in, e.g., an X 
+> window; or (b) converting them to more standard/open file formats such as, 
+> e.g., the W3C’s XML-based Scaleable Vector Graphic (SVG) format.
+> 
+> A fuzzing through imagemagick revealed a memory allocation failure. It was 
+> first reported to imagemagick developers(to double-check) which stated that 
+> the issue is in libwmf.
+> Since the libwmf project is dead the issue has not been reported elsewhere.
+> 
+> The complete ASan output:
+> 
+> # identify $FILE
+> ==25497==ERROR: AddressSanitizer failed to allocate 0xfe769000 (4269182976) 
+> bytes of LargeMmapAllocator (error code: 12)                                                                                                                                                       
+> ==25497==Process memory map follows:                                                                                                                                                                                                                                           
+> [..cut here..]
+> ==25497==End of process memory map.
+> ==25497==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+> (0)" (0x0, 0x0)
+>     #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+>     #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
+> unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/sanitizer_common/sanitizer_common.cc:159
+>     #2 0x4d0cc1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
+> const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/sanitizer_common/sanitizer_common.cc:183
+>     #3 0x4d9cfa in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
+> /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/sanitizer_common/sanitizer_posix.cc:122
+>     #4 0x42208f in 
+> __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
+> unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+>     #5 0x42208f in 
+> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+> 4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+> __asan::AsanMapUnmapCallback>, 
+> __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+> 4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+> >, __sanitizer::LargeMmapAllocator 
+> >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+> 4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+> >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+> devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+> rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+>     #6 0x42208f in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+> __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+> /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+>     #7 0x42208f in __asan::asan_malloc(unsigned long, 
+> __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
+>     #8 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
+>     #9 0x7f7173b4d337 in wmf_malloc /tmp/portage/media-libs/libwmf-0.2.8.4-
+> r6/work/libwmf-0.2.8.4/src/api.c:482
+>     #10 0x7f7173b5d2f8 in wmf_scan /tmp/portage/media-libs/libwmf-0.2.8.4-
+> r6/work/libwmf-0.2.8.4/src/player.c:143
+>     #11 0x7f7173d6dcf7 in ReadWMFImage /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/wmf.c:2675:13
+>     #12 0x7f717fde7b12 in ReadImage /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
+>     #13 0x7f718057f406 in ReadStream /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
+>     #14 0x7f717fde65ca in PingImage /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
+>     #15 0x7f717fde6e25 in PingImages /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
+>     #16 0x7f717f66c4c3 in IdentifyImageCommand /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
+>     #17 0x7f717f70226a in MagickCommandGenesis /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
+>     #18 0x4f1fb5 in MagickMain /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
+>     #19 0x4f1fb5 in main /tmp/portage/media-
+> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
+>     #20 0x7f717e5a661f in __libc_start_main /var/tmp/portage/sys-
+> libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+>     #21 0x419138 in _init (/usr/bin/magick+0x419138)
+> 
+> Affected version:
+> 0.2.8.4
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> N/A
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> N/A
+> 
+> Timeline:
+> 2016-09-14: bug discovered
+> 2016-10-18: blog post about the issue
+> 
+> Note:
+> This bug was found with American Fuzzy Lop.
+> 
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/10/18/libwmf-memory-allocation-failure-in-wmf_malloc-api-c
+> 
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2023-42916
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.3.
-    Credit to Clément Lecigne of Google's Threat Analysis Group.
-    Impact: Processing web content may disclose sensitive information.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: An out-of-bounds read was addressed with
-    improved input validation.
-    WebKit Bugzilla: 265041
-
-CVE-2023-42917
-    Versions affected: WebKitGTK and WPE WebKit before 2.42.3.
-    Credit to Clément Lecigne of Google's Threat Analysis Group.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Apple is aware of a report that this issue may have been actively
-    exploited. Description: A memory corruption vulnerability was
-    addressed with improved locking.
-    WebKit Bugzilla: 265067
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-December 05, 2023
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
