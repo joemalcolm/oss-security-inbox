@@ -1,57 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/12
-Message-Id: <9C0DC1F6-0473-4888-A051-6CFC8872E94D@gmail.com>
-Date: Mon, 19 Sep 2016 15:03:23 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Mike Santillana <michael.santillana@...ork.com>, 'Apple' via <infosec@...ork.com>
-Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/10
+Message-ID: <20161025175111.75784zabcvhv5ig4@webmail.alunos.dcc.fc.up.pt>
+Date: Tue, 25 Oct 2016 17:51:11 +0200
+From: up201407890@...nos.dcc.fc.up.pt
+To: "Yves-Alexis Perez" <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com, netblue30 <netblue30@...oo.com>, team@...urity.debian.org, cve-assign@...re.org
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
 Content-Type: text/plain; charset=utf-8
 
+Quoting "Yves-Alexis Perez" <corsac@...ian.org>:
 
-> On Sep 19, 2016, at 2:53 PM, Seth Arnold <seth.arnold@...onical.com> wrote:
-> 
-> On Mon, Sep 19, 2016 at 03:20:02PM -0400, Mike Santillana wrote:
->> An IV reuse bug was discovered in Ruby's OpenSSL library when using
->> aes-gcm. When encrypting data with aes-*-gcm, if the IV is set before
->> setting the key, the cipher will default to using a static IV. This creates
->> a static nonce and since aes-gcm is a stream cipher, this can lead to known
->> cryptographic issues.
->> 
->> The documentation does not appear to specify the order of operations when
->> setting the key and IV [1]. As an example, see the following insecure code
->> snippet below:
->> 
->> Vulnerable Code:
->> 
->> def encrypt(plaintext)
->>    cipher = OpenSSL::Cipher.new('aes-256-gcm')
->>    iv = cipher.random_iv # Notice here the IV is set before the key
->>    cipher.key = '11111111111111111111111111111111'
->>    cipher.auth_data = ""
->>    ciphertext = cipher.update(plaintext) + cipher.final
->>    tag = cipher.auth_tag
->> 
->>    puts "[+] Encrypting: #{plaintext}"
->>    puts "[+] CipherMessage (IV | Tag | Ciphertext): #{bin2hex(iv)} |
->> #{bin2hex(tag)} | #{bin2hex(ciphertext)}"
->> end
-> 
-> Hello,
-> 
-> I think you have a mistake in this sample code, 'iv' is assigned but never
-> used (aside from being printed).
+> On Sun, 2016-09-25 at 13:49 +0200, up201407890@...nos.dcc.fc.up.pt wrote:
+>> When executing a program via the SELinux sandbox, the nonpriv session
+>> can escape to the parent session by using the TIOCSTI ioctl to push
+>> characters into the terminal's input buffer, allowing an attacker to
+>> escape the sandbox.
+>
+> Hi,
+>
+> it seems that firejail was affected by the same vulnerability, which  
+> was fixed
+> in 0.9.44 with  
+> https://github.com/netblue30/firejail/commit/46dc2b34f1fbbc4597
+> b4ff9f6a3cb28b2d500d1b
+>
+> The commit log reuses the CVE-2016-7545 number, but I guess a new one should
+> be assigned since they don't share the same codebase?
+>
+> Regards,
+> --
+> Yves-Alexis Perez - Debian Security
 
-Ruby really likes side-effects. Calling #random_iv generates and sets a new IV on the cipher, then returns it to the caller. Very magical.
-
-https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv <https://ruby-doc.org/stdlib-2.0.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#method-i-random_iv>
-> 
-> Your github code is far more complicated but looks like it is doing the
-> right thing.
-> 
-> Thanks
+Think so, CC'ing mitre.
 
 
-Content of type "text/html" skipped
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+
