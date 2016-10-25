@@ -1,61 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/11
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0B97367@EX02.corp.qihoo.net>
-Date: Fri, 8 Apr 2016 07:13:29 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3633 - libtiff 4.0.6 illegel read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/9
+Message-Id: <20161025165108.37FFE73C0DA@smtpvmsrv1.mitre.org>
+Date: Tue, 25 Oct 2016 12:51:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: corsac@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt, netblue30@...oo.com, team@...urity.debian.org
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape - Firejail is CVE-2016-9016
 Content-Type: text/plain; charset=utf-8
 
-Details
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-=======
+> On Sun, 2016-09-25 at 13:49 +0200, up201407890@...nos.dcc.fc.up.pt wrote:
+>> When executing a program via the SELinux sandbox, the nonpriv session
+>> can escape to the parent session by using the TIOCSTI ioctl to push
+>> characters into the terminal's input buffer, allowing an attacker to
+>> escape the sandbox.
 
+> it seems that firejail was affected by the same vulnerability, which
+> was fixed in 0.9.44 with
+> https://github.com/netblue30/firejail/commit/46dc2b34f1fbbc4597b4ff9f6a3cb28b2d500d1b
+> 
+> The commit log reuses the CVE-2016-7545 number, but I guess a new one
+> should be assigned since they don't share the same codebase?
 
+The ID for the similar Firejail vulnerability is CVE-2016-9016.
+An additional reference is:
 
-Product: libtiff
+  https://firejail.wordpress.com/download-2/release-notes/
 
-Affected Versions: <= 4.0.6
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Vulnerability Type: Illegel read
-
-Vendor URL: http://www.libtiff.org/
-
-CVE ID: CVE-2016-3633
-
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-
-
-
-Introduction
-
-Illegal read occurs in the _ setrow function in thumbnail.c when using thumbnail command, which allows attackers to exploit this issue to cause denial-of-service.
-
-
-/libtiff/tools/thumbnail.c:525
-523  for (y = 0; y < nrows; y++) {
-524      const uint8* src = rows[y] + off;
-525      acc += bits[*src++ & mask0];
-
-gdb  --args  thumbnail  setrow.tif  tmpout.tif
-……
-Program received signal SIGSEGV, Segmentation fault.
-0x08049de5 in setrow (row=0x8061d00 "", nrows=256, rows=0xbfffeba0) at thumbnail.c:525
-525                acc += bits[*src++ & mask0];
-(gdb) bt
-#0  0x08049de5 in setrow (row=0x8061d00 "", nrows=256, rows=0xbfffeba0) at thumbnail.c:525
-#1  0x0804a07a in setImage1 (br=0x804d9b8 "\377", rw=5242880, rh=5242880) at thumbnail.c:581
-#2  0x0804a121 in setImage (br=0x804d9b8 "\377", rw=5242880, rh=5242880) at thumbnail.c:591
-#3  0x0804a2db in generateThumbnail (in=0x804d530, out=0x804d008) at thumbnail.c:633
-#4  0x08048f5f in main (argc=3, argv=0xbffff134) at thumbnail.c:122
-(gdb) p *src
-Cannot access memory at address 0x8204988
-
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
-
-
-Thank you!
-
-Best Regards,
+iQIcBAEBCAAGBQJYD4z3AAoJEHb/MwWLVhi24ewQAIgsLJF0ToaKXKahu7nzwYxk
+R4AnRxXuzA0eLbvH+jqGQxE0NbIlf394O7IwGv6gDLpwAvN0KbgtyEMqrBZ270+L
+UOzydUS4i9Ntlp6e2k/1CLr7Jihphjo60qclGgJEzq187qALfmFyi7H56NWpjBLX
+1JZs7vL3po8ehmEOweb+UdstVrene2UcvX9TZRNGP4GOO1XJ7/VrnvhDBxCNpONR
+0M2F98Jb9XY/jx4Agur64xRrvE3GiuY4S5GC+JOTBcbCXc7l2o+rOXOOEbuOYkxP
+5znGPpya92D6bjDe1LNZ+SntH73vEGJXUHRvqLrZAdRZ4YQCPAxvI87AHNh7e2o8
+a5QayZCYd0QVvHX2fa2lzDOQ2MV8adWj/IU1C6TRNThEQQgZzMvvqtl0nOcdetYh
+blQo8n4WqdRRK3SeBB2z8lnzF3b5H79/PJCUSCI35gT39kw47GetwdtzrEODrl4E
+LxRsl8XsmamWA0qq8DhWg7YlGMSYgx7on8gTyh73lN87cSziq26OnZEuAK1uQbcI
+Ag0OllszMHJMIBY7CxgxAfNcEc91LPwmcNXSSybxJ0QJcFzSnKgWgQqvYLYOcfH7
+olobW7zvnXr9rpYODd9P+EzXBWbvRKzp8tMUljb20jC8DZ49slCwkW+TzfloG6Q3
+kvg8DcdSvh+XK8FzieDu
+=I0E8
+-----END PGP SIGNATURE-----
