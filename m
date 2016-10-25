@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9777" "Monday" "31" "January" "2022" "17:23:58" "+0000" "SBA - Advisory" "advisory@sba-research.org" nil "161" "[oss-security] [SBA-ADV-20220127-01] CVE-2022-24129: Shibboleth Identity Provider OIDC OP Plugin 3.0.3 or below Server-Side Request Forgery" nil nil nil "1" nil nil (number mark "U       advisory@sba Jan 31  161/9777  " thread-indent "\"[oss-security] [SBA-ADV-20220127-01] CVE-2022-24129: Shibboleth Identity Provider OIDC OP Plugin 3.0.3 or below Server-Side Request Forgery\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SBA-ADV-20220127-01] CVE-2022-24129: Shibboleth Identity Provider OIDC OP Plugin 3.0.3 or below Server-Side Request Forgery" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["854" "Tuesday" "25" "October" "2016" "06:22:33" "+0000" "Sona Sarmadi" "sona.sarmadi@enea.com" "<3230301C09DEF9499B442BBE162C5E48ABEA459A@SESTOEX04.enea.se>" "23" "[oss-security] membership request  to the closed linux-distros " nil nil nil "10" "2016102506:22:33" "[oss-security] membership request to the closed linux-distros" (number mark "U       sona.sarmadi Oct 25   23/854   " thread-indent "\"[oss-security] membership request  to the closed linux-distros \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1208 invoked by uid 550); 31 Jan 2022 17:25:43 -0000
+Received: (qmail 26047 invoked by uid 550); 25 Oct 2016 06:22:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,185 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32100 invoked from network); 31 Jan 2022 17:24:11 -0000
-From: SBA - Advisory <advisory@sba-research.org>
+Received: (qmail 26026 invoked from network); 25 Oct 2016 06:22:46 -0000
+From: Sona Sarmadi <sona.sarmadi@enea.com>
 To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [SBA-ADV-20220127-01] CVE-2022-24129: Shibboleth Identity
- Provider OIDC OP Plugin 3.0.3 or below Server-Side Request Forgery
-Thread-Index: AdgWxxDxofVCyP/7TwuFh+dbCgYGcg==
-Date: Mon, 31 Jan 2022 17:23:58 +0000
-Message-ID: <5cd074e373774f239419d7a90bf7c5e4@SATVIEEX03.securityresearch.local>
-Accept-Language: de-AT, en-US
+Thread-Topic: [oss-security] membership request  to the closed linux-distros 
+Thread-Index: AdIuh0KGx0H34hOSTYaxON/mqLT/bg==
+Date: Tue, 25 Oct 2016 06:22:33 +0000
+Message-ID: <3230301C09DEF9499B442BBE162C5E48ABEA459A@SESTOEX04.enea.se>
+Accept-Language: sv-SE, en-US
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.168.120.3]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [172.16.142.231]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Subject: [oss-security] [SBA-ADV-20220127-01] CVE-2022-24129: Shibboleth Identity Provider
- OIDC OP Plugin 3.0.3 or below Server-Side Request Forgery
+X-Outbound-IP: 192.36.1.72
+X-Env-From: sona.sarmadi@enea.com
+X-Proto: esmtps
+X-Revdns: mx-3.enea.com
+X-HELO: mx-3.enea.com
+X-TLS: TLSv1:AES128-SHA:128
+X-Authenticated_ID: 
+X-PolicySMART: 6551647
+X-Virus-Status: Scanned by VirusSMART (c)
+X-Virus-Status: Scanned by VirusSMART (s)
+Subject: [oss-security] membership request  to the closed linux-distros 
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
-MjU2DQoNCiMgU2hpYmJvbGV0aCBJZGVudGl0eSBQcm92aWRlciBPSURDIE9Q
-IFBsdWdpbiBTZXJ2ZXItU2lkZSBSZXF1ZXN0IEZvcmdlcnkgIw0KDQpMaW5r
-OiBodHRwczovL2dpdGh1Yi5jb20vc2JhcmVzZWFyY2gvYWR2aXNvcmllcy90
-cmVlL3B1YmxpYy8yMDIyL1NCQS1BRFYtMjAyMjAxMjctMDFfU2hpYmJvbGV0
-aF9JZFBfT0lEQ19PUF9QbHVnaW5fU1NSRg0KDQojIyBWdWxuZXJhYmlsaXR5
-IE92ZXJ2aWV3ICMjDQoNClNoaWJib2xldGggSWRlbnRpdHkgUHJvdmlkZXIg
-T0lEQyBPUCBwbHVnaW4gMy4wLjMgb3IgYmVsb3cgaXMgcHJvbmUgdG8gYSBz
-ZXJ2ZXItc2lkZSByZXF1ZXN0IGZvcmdlcnkgKFNTUkYpIHZ1bG5lcmFiaWxp
-dHkgZHVlIHRvIGFuIGluc3VmZmljaWVudCByZXN0cmljdGlvbiBvZiB0aGUg
-YHJlcXVlc3RfdXJpYCBwYXJhbWV0ZXIuIFRoaXMgYWxsb3dzIHVuYXV0aGVu
-dGljYXRlZCBhdHRhY2tlcnMgdG8gaW50ZXJhY3Qgd2l0aCBhcmJpdHJhcnkg
-dGhpcmQtcGFydHkgSFRUUCBzZXJ2aWNlcy4NCg0KKiAqKklkZW50aWZpZXIq
-KiAgICAgICAgICAgIDogU0JBLUFEVi0yMDIyMDEyNy0wMQ0KKiAqKlR5cGUg
-b2YgVnVsbmVyYWJpbGl0eSoqIDogU2VydmVyLVNpZGUgUmVxdWVzdCBGb3Jn
-ZXJ5IChTU1JGKQ0KKiAqKlNvZnR3YXJlL1Byb2R1Y3QgTmFtZSoqIDogW0lk
-ZW50aXR5IFByb3ZpZGVyIE9JREMgT1AgUGx1Z2luXShodHRwczovL3NoaWJi
-b2xldGguYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNlcy9JRFBQTFVHSU5TL3Bh
-Z2VzLzEzNzY4Nzg5NzYvT0lEQytPUCkNCiogKipWZW5kb3IqKiAgICAgICAg
-ICAgICAgICA6IFNoaWJib2xldGggQ29uc29ydGl1bQ0KKiAqKkFmZmVjdGVk
-IFZlcnNpb25zKiogICAgIDogPD0gMy4wLjMNCiogKipGaXhlZCBpbiBWZXJz
-aW9uKiogICAgICA6IDMuMC40DQoqICoqQ1ZFIElEKiogICAgICAgICAgICAg
-ICAgOiBDVkUtMjAyMi0yNDEyOQ0KKiAqKkNWU1MgVmVjdG9yKiogICAgICAg
-ICAgIDogQ1ZTUzozLjEvQVY6Ti9BQzpML1BSOk4vVUk6Ti9TOkMvQzpOL0k6
-SC9BOk4NCiogKipDVlNTIEJhc2UgU2NvcmUqKiAgICAgICA6IDguNiAoSGln
-aCkNCg0KIyMgVmVuZG9yIERlc2NyaXB0aW9uICMjDQoNCj4gVGhlIE9JREMg
-T1AgcGx1Z2luIGlzIHRoZSBzdWNjZXNzb3IgdG8gdGhlIG9yaWdpbmFsIEdF
-QU5ULWZ1bmRlZCANCj4gYWRkLW9uIHRvIFNoaWJib2xldGggYW5kIGlzIG5v
-dyBhdmFpbGFibGUgYXMgYW4gb2ZmaWNhbGx5LXN1cHBvcnRlZCANCj4gcGx1
-Z2luIGZvciBJZFANCj4gVjQuMSBhbmQgYWJvdmUuIEl0IHByb3ZpZGVzIGNv
-bmZvcm1hbnQgT0lEQyBPUCBmdW5jdGlvbmFsaXR5IGFsb25nc2lkZSANCj4g
-dGhlIFNBTUwgYW5kIENBUyBzdXBwb3J0IHByZXZpb3VzbHkgbmF0aXZlIHRv
-IHRoZSBJZFAgc29mdHdhcmUuDQoNClNvdXJjZTogPGh0dHBzOi8vc2hpYmJv
-bGV0aC5hdGxhc3NpYW4ubmV0L3dpa2kvc3BhY2VzL0lEUFBMVUdJTlMvcGFn
-ZXMvMTM3Njg3ODk3Ni9PSURDK09QPg0KDQojIyBJbXBhY3QgIyMNCg0KQW4g
-dW5hdXRoZW50aWNhdGVkIGF0dGFja2VyIGNhbiBpbnRlcmFjdCB3aXRoIGFy
-Yml0cmFyeSB0aGlyZC1wYXJ0eSBIVFRQIHNlcnZpY2VzIGJ5IGV4cGxvaXRp
-bmcgdGhlIHZ1bG5lcmFiaWxpdHkgZG9jdW1lbnRlZCBpbiB0aGlzIGFkdmlz
-b3J5LiBUaGlzIG1pZ2h0IGxlYWQgdG8gbWFuaXB1bGF0aW9uIG9mIGludGVy
-bmFsIHNlcnZpY2VzIGFjY2Vzc2libGUgYnkgdGhlIHNlcnZlciBydW5uaW5n
-IHRoZSBhZmZlY3RlZCBzb2Z0d2FyZS4gTW9yZW92ZXIsIGFuIGF0dGFja2Vy
-IGNhbiBzZW5kIG1hbGljaW91cyByZXF1ZXN0cyB0byBleHRlcm5hbCBzZXJ2
-aWNlcywgd2hpbGUgdGhlIHNlcnZlciBydW5uaW5nIHRoZSBhZmZlY3RlZCBz
-b2Z0d2FyZSBhcHBlYXJzIGFzIHRoZSBzb3VyY2Ugb2YgdGhlIGF0dGFjay4N
-Cg0KIyMgVnVsbmVyYWJpbGl0eSBEZXNjcmlwdGlvbiAjIw0KDQpUaGUgT0lE
-QyBzcGVjaWZpY2F0aW9uIGFsbG93cyBhbiBPSURDIFJQIHRvIHNlbmQgYXV0
-aGVudGljYXRpb24gcmVxdWVzdHMgdmlhIGEgcmVxdWVzdCBvYmplY3QuIFRo
-ZXNlIHJlcXVlc3Qgb2JqZWN0cyBjYW4gYmUgZWl0aGVyIHNlbnQgZGlyZWN0
-bHkgYXMgYHJlcXVlc3RgIHBhcmFtZXRlciBvciBpbmRpcmVjdGx5IGJ5IHBh
-c3NpbmcgYW4gVVJMIGFzIGByZXF1ZXN0X3VyaWAgcGFyYW1ldGVyLiBJbiB0
-aGUgbGF0dGVyIGNhc2UsIHRoZSBPSURDIHByb3ZpZGVyIGZldGNoZXMgdGhl
-IHJlcXVlc3Qgb2JqZWN0IHZpYSBhbiBIVFRQLUdFVCByZXF1ZXN0IGZyb20g
-dGhlIHNwZWNpZmllZCBVUkwuDQoNClRoZSBTaGliYm9sZXRoIE9JREMgT1Ag
-cGx1Z2luIHN1cHBvcnRzIHRoaXMgYmVoYXZpb3IsIGJ1dCBkb2VzIG5vdCB2
-YWxpZGF0ZSB0aGUgcGFzc2VkIGByZXF1ZXN0X3VyaWAgYmVmb3JlIGlzc3Vp
-bmcgdGhlIEhUVFAtR0VUIHJlcXVlc3QuDQpBbiB1bmF1dGhlbnRpY2F0ZWQg
-YXR0YWNrZXIgbWlnaHQgZXhwbG9pdCB0aGlzIHRvIHBlcmZvcm0gc2VydmVy
-LXNpZGUgcmVxdWVzdCBmb3JnZXJ5IGFuZCBpc3N1ZSBtYWxpY2lvdXMgSFRU
-UC1HRVQgcmVxdWVzdHMgdG8gc2VydmljZXMgcmVhY2hhYmxlIGJ5IHRoZSBz
-ZXJ2ZXIgcnVubmluZyB0aGUgcGx1Z2luLiBGb3IgZXhhbXBsZSwgYW4gYXR0
-YWNrZXIgY291bGQgdHJ5IHRvIGFjY2VzcyBwcm90ZWN0ZWQgaW50ZXJuYWwg
-c2VydmljZXMgd2hpY2ggYXJlIG5vdCByZWFjaGFibGUgZnJvbSBwdWJsaWMg
-b3IgYWRqYWNlbnQgbmV0d29ya3MsIG90aGVyd2lzZS4NCg0KVGhlIFNoaWJi
-b2xldGggT0lEQyBPUCBwbHVnaW4gZG9lcyBub3QgcmV0dXJuIGluZm9ybWF0
-aW9uIGZyb20gdGhlIGlzc3VlZCBIVFRQIHJlc3BvbnNlIHRvIHRoZSBhdHRh
-Y2tlciB3aGVuIGl0IGNhbm5vdCBwYXJzZSB0aGUgcmVzcG9uc2UgYXMgSldT
-Lg0KVGhlcmVmb3JlLCB0aGUgYWJpbGl0eSBvZiBhbiBhdHRhY2tlciBpcyBt
-b3N0bHkgbGltaXRlZCB0byBpbml0aWF0ZSBvcGVyYXRpb25zIG9uIEhUVFAg
-c2VydmljZXMuDQpBZGRpdGlvbmFsbHksIGFuIGF0dGFja2VyIGNhbiBmaW5k
-IG91dCB0aGUgZXhhY3QgU2hpYmJvbGV0aCBJZFAgdmVyc2lvbiBieSBsZXR0
-aW5nIHRoZSBPSURDIE9QIHBsdWdpbiBjb25uZWN0IHRvIGFuIGF0dGFja2Vy
-LWNvbnRyb2xsZWQgc2VydmljZSBhbmQgaW5zcGVjdGluZyB0aGUgdXNlciBh
-Z2VudCBoZWFkZXIgb2YgdGhlIEhUVFAgcmVxdWVzdC4NCg0KIyMgUHJvb2Yg
-b2YgQ29uY2VwdCAjIw0KDQpXZSBzZXQgdXAgYW4gU2hpYmJvbGV0aCBJZFAg
-dmVyc2lvbiA0LjEuNSB3aXRoIHRoZSBPSURDIE9QIHBsdWdpbiAzLjAuMyBh
-bmQgZGVwbG95ZWQgdGhlIGZvbGxvd2luZyBjbGllbnQgbWV0YWRhdGEuDQoN
-CmBgYGpzb24NClsNCiAgew0KICAgICJzY29wZSI6Im9wZW5pZCBlbWFpbCIs
-DQogICAgInJlZGlyZWN0X3VyaXMiOlsiaHR0cHM6Ly9kZW1vcnAuZXhhbXBs
-ZS5vcmcvcmVkaXJlY3RfdXJpIl0sDQogICAgImNsaWVudF9pZCI6ImRlbW9f
-cnAiLA0KICAgICJjbGllbnRfc2VjcmV0IjoidG9wc2VjcmV0IiwNCiAgICAi
-cmVzcG9uc2VfdHlwZXMiOlsiY29kZSJdLA0KICAgICJncmFudF90eXBlcyI6
-WyJhdXRob3JpemF0aW9uX2NvZGUiXSwNCiAgICAicmVxdWVzdF91cmlzIjpb
-Imh0dHBzOi8vZXhhbXBsZS5vcmciXQ0KICB9DQpdDQpgYGANCg0KSW4gdGhl
-IGNsaWVudCBtZXRhZGF0YSB3ZSBmaXJzdCBzcGVjaWZpZWQgbm8gYHJlcXVl
-c3RfdXJpc2AgcGFyYW1ldGVyLiBXZSB0aGVuIGFsc28gdHJpZWQgdG8gc2V0
-IHRoZSBgcmVxdWVzdF91cmlzYCBwYXJhbWV0ZXIgdG8gYGh0dHBzOi8vZXhh
-bXBsZS5vcmdgIChzZWUgYWJvdmUpLCBib3RoIGxlYWRpbmcgdG8gdGhlIGZv
-bGxvd2luZyBiZWhhdmlvci4NCg0KV2UgaXNzdWVkIGFuIGF1dGhlbnRpY2F0
-aW9uIHJlcXVlc3QgdmlhIHRoZSBmb2xsb3dpbmcgVVJMIHNwZWNpZnlpbmcg
-YW4gYHJlcXVlc3RfdXJpYCBwYXJhbWV0ZXIgcG9pbnRpbmcgdG8gYW4gYXR0
-YWNrZXItY29udHJvbGxlZCBzZXJ2ZXI6DQoNCmBgYHBsYWluDQpodHRwczov
-L2lkcC5leGFtcGxlLm9yZy9pZHAvcHJvZmlsZS9vaWRjL2F1dGhvcml6ZT9j
-bGllbnRfaWQ9ZGVtb19ycCZyZXF1ZXN0X3VyaT1odHRwczovL25hMXdqdnZv
-ZGk3ZnVhNmEzdWxheHRxNDh2ZWwyYS5idXJwY29sbGFib3JhdG9yLm5ldA0K
-YGBgDQoNCk9uIHRoZSBhdHRhY2tlci1jb250cm9sbGVkIHNlcnZlciB3ZSBy
-ZWNlaXZlZCB0aGUgZm9sbG93aW5nIHJlcXVlc3Q6DQoNCmBgYGh0dHANCkdF
-VCAvIEhUVFAvMS4xDQpIb3N0OiBuYTF3anZ2b2RpN2Z1YTZhM3VsYXh0cTQ4
-dmVsMmEuYnVycGNvbGxhYm9yYXRvci5uZXQNCkNvbm5lY3Rpb246IEtlZXAt
-QWxpdmUNClVzZXItQWdlbnQ6IFNoaWJib2xldGhJZHAvNC4xLjUgT3BlblNB
-TUwvNC4xLjENCkFjY2VwdC1FbmNvZGluZzogZ3ppcCxkZWZsYXRlDQpDb25u
-ZWN0aW9uOiBjbG9zZQ0KYGBgDQoNCkFkZGl0aW9uYWxseSwgdGhlIFNoaWJi
-b2xldGggSWRQIGxvZ2dlZCB0aGUgZm9sbG93aW5nIG91dHB1dDoNCg0KYGBg
-cGxhaW4NCjIwMjItMDEtMjggMjA6MjI6NTgsMjkwIC0gMTI3LjAuMC4xIC0g
-RVJST1IgW25ldC5zaGliYm9sZXRoLmlkcC5wbHVnaW4ub2lkYy5vcC5wcm9m
-aWxlLmltcGwuU2V0UmVxdWVzdE9iamVjdFRvUmVzcG9uc2VDb250ZXh0OjE0
-NF0gLSBQcm9maWxlIEFjdGlvbiBTZXRSZXF1ZXN0T2JqZWN0VG9SZXNwb25z
-ZUNvbnRleHQ6IFVuYWJsZSB0byBwYXJzZSByZXF1ZXN0IG9iamVjdCBmcm9t
-IHJlcXVlc3RfdXJpLCBJbnZhbGlkIEpXVCBzZXJpYWxpemF0aW9uOiBNaXNz
-aW5nIGRvdCBkZWxpbWl0ZXIocykgYGBgDQoNClRoaXMgaW5kaWNhdGVzIHRo
-YXQgdGhlIE9JREMgT1AgcGx1Z2luIHNlbnQgdGhlIEhUVFAgcmVxdWVzdCwg
-YnV0IGNvdWxkIG5vdCBwYXJzZSB0aGUgSFRUUCByZXNwb25zZS4NCg0KIyMg
-UmVjb21tZW5kZWQgQ291bnRlcm1lYXN1cmVzICMjDQoNCkFzIGEgY291bnRl
-cm1lYXN1cmUgZm9yIHRoZSB2ZW5kb3Igd2UgcmVjb21tZW5kIHRvIG9ubHkg
-YWNjZXB0IHRoZSBgcmVxdWVzdF91cmlgIHBhcmFtZXRlciB3aGVuIGFuIGFs
-bG93IGxpc3QgaXMgY29uZmlndXJlZCBpbiB0aGUgY2xpZW50IG1ldGFkYXRh
-IGFuZCB0aGUgc3VwcGxpZWQgYHJlcXVlc3RfdXJpYCBtYXRjaGVzIHRoZSBj
-bGllbnQgbWV0YWRhdGEuDQpBZGRpdGlvbmFsbHksIHRoZSBhbGxvdyBsaXN0
-IHNob3VsZCBub3QgYmUgYXJiaXRyYXJpbHkgY29uZmlndXJhYmxlIHZpYSB0
-aGUgZHluYW1pYyBjbGllbnQtcmVnaXN0cmF0aW9uIGVuZHBvaW50Lg0KDQpB
-Y2NvcmRpbmcgdG8gdGhlIHZlbmRvciB0aGlzIGNvdW50ZXJtZWFzdXJlIHdh
-cyBpbXBsZW1lbnRlZCBpbiB2ZXJzaW9uIDMuMC40LCB0aGVyZWZvcmUgd2Ug
-cmVjb21tZW5kIHVzZXJzIHRvIHVzZSB2ZXJzaW9ucyAzLjAuNCBvciBsYXRl
-ci4NCg0KIyMgVGltZWxpbmUgIyMNCg0KKiBgMjAyMi0wMS0yN2A6IGlkZW50
-aWZpY2F0aW9uIG9mIHZ1bG5lcmFiaWxpdHkgaW4gdmVyc2lvbiAzLjAuMw0K
-KiBgMjAyMi0wMS0yN2A6IGluaXRpYWwgdmVuZG9yIGNvbnRhY3QNCiogYDIw
-MjItMDEtMjdgOiBkaXNjbG9zZWQgdnVsbmVyYWJpbGl0eSB0byB2ZW5kb3Ig
-c2VjdXJpdHkgY29udGFjdA0KKiBgMjAyMi0wMS0yOGA6IHZlbmRvciBhY2tu
-b3dsZWRnZWQgdnVsbmVyYWJpbGl0eQ0KKiBgMjAyMi0wMS0yOWA6IHJlcXVl
-c3QgQ1ZFIGZyb20gTUlUUkUNCiogYDIwMjItMDEtMzBgOiBNSVRSRSBhc3Np
-Z25lZCBDVkUtMjAyMi0yNDEyOQ0KKiBgMjAyMi0wMS0zMWA6IHZlbmRvciBy
-ZWxlYXNlZCB2ZXJzaW9uIDMuMC40DQoqIGAyMDIyLTAxLTMxYDogcHVibGlj
-IGRpc2Nsb3N1cmUNCg0KIyMgUmVmZXJlbmNlcyAjIw0KDQoqIE9wZW5JRCBD
-b25uZWN0IHNwZWNpZmljYXRpb246IDxodHRwczovL29wZW5pZC5uZXQvc3Bl
-Y3Mvb3BlbmlkLWNvbm5lY3QtY29yZS0xXzAuaHRtbCNSZXF1ZXN0VXJpUGFy
-YW1ldGVyPg0KKiBWZW5kb3Igc2VjdXJpdHkgYWR2aXNvcnk6IDxodHRwczov
-L3NoaWJib2xldGgubmV0L2NvbW11bml0eS9hZHZpc29yaWVzL3NlY2Fkdl8y
-MDIyMDEzMS50eHQ+DQoNCiMjIENyZWRpdHMgIyMNCg0KKiBEYXZpZCBHbmVk
-dCAoW1NCQSBSZXNlYXJjaF0oaHR0cHM6Ly93d3cuc2JhLXJlc2VhcmNoLm9y
-Zy8pKQ0KKiBBbmRyZWFzIEJlcm5hdWVyLVB1Y2hlZ2dlciAoW1NCQSBSZXNl
-YXJjaF0oaHR0cHM6Ly93d3cuc2JhLXJlc2VhcmNoLm9yZy8pKQ0KKiBGcmFu
-eiBXaWVzaGFpZGVyIChbU0JBIFJlc2VhcmNoXShodHRwczovL3d3dy5zYmEt
-cmVzZWFyY2gub3JnLykpDQotLS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUtLS0t
-LQ0KDQppUUl6QkFFQkNBQWRGaUVFTDlXcC95WldGRDlPcEl0Nis3aUdMMWoz
-ZGJJRkFtSDRHeFVBQ2drUSs3aUdMMWozDQpkYkxkRHcvK01TQ2N6cElERzcw
-TXIwVDNvZnZ1bXVNZTNLOEw1OHo1MGtZU1JBM3VYaENiTktLbEcxMFVXZGxT
-DQpYdzd2OFNLcFNXa29VM3JnaUFFVFJSRkZKaVdkNGxKVHFFU3ozZ3Yrd005
-d3NENWgyWjNHRzRKYWFCVG9vVDF3DQp4YXhkUk55Ty9pYVFsL2VkaHI4RUZL
-SlBWc1hJVk5iYzhvRVVqejZEVngrUmhCaHZmb0twVTVIOWk1WTZ3WUxXDQpt
-YVRTOGlZZUVieWs0aWoweTZBdDJQODR5MDcvTW5KdDBKaWN6U0JQTmMyUDIv
-L0Z1MzQxeloyNXJtYmd2YjUvDQpScTkxS2dTenBkbFRhUmpFSE5YYWF6VkVP
-MWJnTjNyQWRneUkrZXkya0VLd2E5RHdlTzB4Z2FmK3IweFVNcEhVDQpvTWJN
-Mlc4dTIvbjZCYzZmVzNEY2NNTHcxRjRaRmVPb0V3bGE2TTBONERRcUF5Qm9x
-YzhVSTRvUEx5V3k1NmVBDQpTek9oRGVpbkdQNDNUZ3oxTzd4K1JSVmplVUVy
-SHV0MkZtVnhLZEhYbEZtZzd4Q1hSVml1elY5QUFmdHdObVlDDQpWZFRKeW9a
-cnZGcDQrbUVJeFNxbVN4VGMzV0tyUi9YZUlXWGZQbk0vL2NRd0NFUEZpU1Na
-WlJ4M1pjSXp4N0l2DQo4enBqL0pacHF6bzI5bnowNDRnV3ZJRDllNzAwSnZT
-QS9Jbitya2d1czRObkRUVk8wWUExWklmSzc3MHFFeGlQDQpGd0gydVRNdXIy
-V3ZJeS9ZaS83VjB5ZE9nK0tGQXYrQllheHNkTEpHdk9EOWtDSi9NR3hBVjEz
-UUpsUzVaVmFEDQpUanBGMGc4MXM4VmZmZUNxcjJzVTVmTFF6U2ZQRUhGUS9I
-VllaN2E3MjIzMS8wL1FBaW89DQo9MTJ6eg0KLS0tLS1FTkQgUEdQIFNJR05B
-VFVSRS0tLS0tDQo=
+Hi,=20
+
+I sent membership request to the list for a while ago (on behalf of Enea)=20
+and got feedback/improvement suggestions from some members .=20=20
+We have gained some experience and improved our security works=20
+and security updates. We have infrastructure to handle embargoed issues.=20
+I would appreciate if you could re-evaluate our membership request.
+
+I am a member of OPNFV security team:
+https://wiki.opnfv.org/display/security=20
+
+I have been running CII Best Practices Badge program for OPNFV project:
+https://bestpractices.coreinfrastructure.org/projects?q=3Dopnfv=20
+
+I am also a member of Yocto/OpenEmbedded security team:
+https://wiki.yoctoproject.org/wiki/Security
+
+Security Responsible for Enea Linux:
+http://www.enea.com/solutions/Enea-Linux/Security=20=20
+http://www.enea.com/solutions/Enea-Linux/Security/CVEs-list
+
+Thanks
+//Sona
