@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/04/3
-Message-ID: <2349403.hFb0Mj2ZlT@arcadia>
-Date: Sun, 04 Dec 2016 23:35:18 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: libav: multiple crashes from the Undefined Behavior Sanitizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/12
+Message-ID: <1477423135.2290.2.camel@debian.org>
+Date: Tue, 25 Oct 2016 21:18:55 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt,  netblue30@...oo.com, team@...urity.debian.org
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape - Firejail is CVE-2016-9016
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 01 December 2016 14:30:33 Agostino Sarubbo wrote:
-> Affected version / Tested on:
-> 11.8
-> Output/failure:
-> /tmp/portage/media-
-> video/libav-11.8/work/libav-11.8/libavcodec/get_bits.h:530:5: runtime error:
-> load of null pointer of type ‘int16_t’ (aka ‘short’)
-> Commit fix:
-> N/A
-> Fixed version:
-> N/A
-> Testcase:
-> https://github.com/asarubbo/poc/blob/master/00042-libav-loadnullptr-get_bits
-> _h
+On Tue, 2016-10-25 at 12:51 -0400, cve-assign@...re.org wrote:
+> 
+> The ID for the similar Firejail vulnerability is CVE-2016-9016.
+> An additional reference is:
+> 
+>   https://firejail.wordpress.com/download-2/release-notes/
 
-Please ignore the issue above. It was already tracked as CVE-2016-8676.
-
-
-
+Thanks!
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Yves-Alexis
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
