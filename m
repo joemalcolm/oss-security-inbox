@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/11
-Message-Id: <20160301184339.B62C3ABC04A@smtpvmsrv1.mitre.org>
-Date: Tue,  1 Mar 2016 13:43:39 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/3
+Message-ID: <1477380542.4640.11.camel@debian.org>
+Date: Tue, 25 Oct 2016 09:29:02 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt, netblue30 <netblue30@...oo.com>
+Cc: team@...urity.debian.org
+Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sun, 2016-09-25 at 13:49 +0200, up201407890@...nos.dcc.fc.up.pt wrote:
+> When executing a program via the SELinux sandbox, the nonpriv session
+> can escape to the parent session by using the TIOCSTI ioctl to push
+> characters into the terminal's input buffer, allowing an attacker to
+> escape the sandbox.
 
-> much like we would for products supporting DES or other known insecure
-> cryptographic algorithms, hashes, digests and protocols?
+Hi,
 
-It's unclear what the word "we" means here. If Red Hat at some point
-wrote code that ships in a Red Hat product and, upon internal review,
-Red Hat discovers that it supports (for example) DES, then Red Hat can
-choose to assign a CVE ID if Red Hat is announcing a required security
-update to remove DES for reasons of Red Hat policy or perceived
-expectations of Red Hat customers.
+it seems that firejail was affected by the same vulnerability, which was fixed
+in 0.9.44 with https://github.com/netblue30/firejail/commit/46dc2b34f1fbbc4597
+b4ff9f6a3cb28b2d500d1b
 
-MITRE does not assign CVE IDs to track whether the universe of
-products has similar or dissimilar time scales in adapting to
-technology changes.
+The commit log reuses the CVE-2016-7545 number, but I guess a new one should
+be assigned since they don't share the same codebase?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Regards,
+-- 
+Yves-Alexis Perez - Debian Security
 
-iQIcBAEBCAAGBQJW1eJFAAoJEL54rhJi8gl5XpEP/2WyAGm+dz+xLncacnp1fnOr
-iBa0db4eAkxG52l4kUO0Z01/xJD95LvdGiBTOBlfFJ9BUubVIoNvKRq3FrDzB2+s
-VxuJSEpgD++Y5SW9TmpUs/BinM/SgUZdj03z2d74V15IB60s+p4WdszG+zrKt0Pq
-YmPIouVAq3Fzb+ovCvGs0kjNuLmMWI3OntH6xWM+OHdNLbwzhSihbIP4BzolBnm5
-dLnLmQdrElD8nXrVWqfHIPOBvaiz297jYBEFT6dztbfdTR5GreS/GqgAS4qiBwl+
-ZTnqVdVBNx7pbEzkMJcFZznm7HKS7lTegiRq32BC5sLXbppDEUy0eNZIArkpeVCr
-Pb2QNGrt6xF0ueRmyO/FyestW1dV3a77ry8xjY9trozB6yvOf+WR7t40x/Ovt13U
-oEARKy7m3P/f2nV6gnfvtBhrEq8fm0VCVQiEZaXk6fs5NUHCC72ex0ewq3qBAc4o
-lvP4O1fqLQYf4gtSZz46raR0Tear6m3kn3rJEEznNwP562v4cL1vrxnX2bn5z9Ad
-t81pUaILikYB7Ft5+/+pdE/kcVR7m4B6NPq6JojXU7ECZjydgpZcGk16ILVlNTar
-UNY1Okh+QOg5Y5weCeMzpTQD4CsXUyLJuDu2tmaLvPKBu8x+dnsBoVt9Lbstefbr
-qRfdvYK+lXat94W+DxPh
-=QGDB
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
