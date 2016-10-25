@@ -1,58 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/6
-Message-ID: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
-Date: Wed, 20 Jul 2016 22:37:00 +0200
-From: Andreas Stieger <andreas.stieger@...e.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request: multiple issues fixed in GNU libidn 1.33
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/2
+Message-ID: <3230301C09DEF9499B442BBE162C5E48ABEA459A@SESTOEX04.enea.se>
+Date: Tue, 25 Oct 2016 06:22:33 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: membership request  to the closed linux-distros 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi, 
 
-The GNU libidn 1.33 release was announced with the following:
+I sent membership request to the list for a while ago (on behalf of Enea) 
+and got feedback/improvement suggestions from some members .  
+We have gained some experience and improved our security works 
+and security updates. We have infrastructure to handle embargoed issues. 
+I would appreciate if you could re-evaluate our membership request.
 
-https://lists.gnu.org/archive/html/help-libidn/2016-07/msg00009.html
+I am a member of OPNFV security team:
+https://wiki.opnfv.org/display/security 
 
-> ** libidn: Fix out-of-bounds stack read in idna_to_ascii_4i.
-> See tests/tst_toascii64oob.c for regression check (and the comment in
-> it how to use it).  Reported by Hanno Böck <address@...den>.
+I have been running CII Best Practices Badge program for OPNFV project:
+https://bestpractices.coreinfrastructure.org/projects?q=opnfv 
 
-Test:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=9a1a7e15d0706634971364493fbb06e77e74726c
-Fix:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=f20ce1128fb7f4d33297eee307dddaf0f92ac72d
-Changelog:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=d4c533a5d975bf49090d3cd40acd230b8f79dd32
-Follow-up memory leak fix:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=11abd0e02c16f9e0b6944aea4ef0f2df44b42dd4
+I am also a member of Yocto/OpenEmbedded security team:
+https://wiki.yoctoproject.org/wiki/Security
 
-> ** idn: Solve out-of-bounds-read when reading one zero byte as input.
-> Also replaced fgets with getline.  Reported by Hanno Böck <address@...den>.
+Security Responsible for Enea Linux:
+http://www.enea.com/solutions/Enea-Linux/Security  
+http://www.enea.com/solutions/Enea-Linux/Security/CVEs-list
 
-Fix:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=570e68886c41c2e765e6218cb317d9a9a447a041
-Follow-up fix:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=5e3cb9c7b5bf0ce665b9d68f5ddf095af5c9ba60
-
-> ** libidn: stringprep_utf8_nfkc_normalize reject invalid UTF-8.
-> It was always documented to only accept UTF-8 data, but now it doesn't
-> crash when presented with such data.  Reported by Hanno Böck.
-
-Test / Fix:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1fbee57ef3c72db2206dd87e4162108b2f425555
-Changelog:
-http://git.savannah.gnu.org/cgit/libidn.git/commit/?id=1d2413555dcd1fef26b80445a00a4637965a2df0
-
-Could CVEs please be assigned?
-
-Thanks,
-Andreas
-
--- 
-Andreas Stieger <andreas.stieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
+Thanks
+//Sona
