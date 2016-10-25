@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/12
-Message-ID: <5f7c61458c5f4f3d9c95c80a8da2521e@imshyb02.MITRE.ORG>
-Date: Mon, 14 Nov 2016 14:46:55 -0500
-From: <cve-assign@...re.org>
-To: <sebastian@...ping.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <aceballos@...il.com>
-Subject: Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/11
+Message-ID: <CAJ_zFkJFCUiOb+S46jM87qundu4rYO1QhxQ85KJHb_zKVOggzQ@mail.gmail.com>
+Date: Tue, 25 Oct 2016 12:13:44 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: ago@...too.org, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, Oct 22, 2016 at 6:03 PM,  <cve-assign@...re.org> wrote:
+>
+>> https://blogs.gentoo.org/ago/2016/10/18/jasper-memory-allocation-failure-in-jas_malloc-jas_malloc-c
+>>
+>> AddressSanitizer failed to allocate 0x1000002000 bytes of LargeMmapAllocator
+>>
+>> 0x7f4f0474e170 in jas_malloc ... jasper-1.900.5/src/libjasper/base/jas_malloc.c:117:9
+>> 0x7f4f04764b4f in bmp_getinfo ... jasper-1.900.5/src/libjasper/bmp/bmp_dec.c:297:25
+>
+> Use CVE-2016-8886.
+>
 
-> http://lists.gnu.org/archive/html/bug-gnu-chess/2015-10/msg00002.html
-> http://svn.savannah.gnu.org/viewvc?view=rev&root=chess&revision=134
+I'm not sure I understand the concern here. Isn't it usually expected
+that the administrator configures appropriate ulimits, and the code
+should just handle allocation failure gracefully?
 
-> frontend/move.cc
+If we are considering *not* implementing arbitrary hardcoded limits a
+security problem, that seems like a significant change in software
+design philosophy (I've heard it called the zero-one-infinity rule
+before).
 
->> ValidateMove function that is expecting 128
-
-Use CVE-2015-8972.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYKhRRAAoJEHb/MwWLVhi2DwcP/1juLQPRJva94HfwKmS+gZhL
-yhKtVh9QtPrmwwBENu+m7q/DICQbzLMkm55OIxCqI/0IpH6UrSwV3ga1r1n8q6na
-+6Z3hWSsl6AlIZ7ACWSsQikoc9xSRibIG4DIFR9yX6KpRcFX6SxvzZ2gxM5riU4m
-sxreTblY5nqczyW7PT2gIOB93SBzsMnZDXf6eVJkNixuNb2zo0AAA32ccXjPCJJl
-u2dU9q6z6PfuyMWymhXjY31NXzZlm8upMdyrvx/xqdy8Crpw/RYY67AEa1k2l15X
-7C7v466fKnMmR3XYUVRLqnFjFdT2XAc11ITyl9HbXKPpsEbfTnUxiUgmpzIFU9y8
-jrRNdRtsY469RPTxDjZTnfnu8blcTK9CfhzeSWva0SEc0phVtjjyPR6xrNuhUmKh
-6714CVSSKtzbti2m2i/Aio6xfHef7RH7S8TcoEx5xnNHCJ77PPXEWPr2wkeSDeUc
-NEZpw6IV3rhtyOrGNhEWxtU+NOYgK1qGCkpPWfZX3loNVihNETODLD1VsH6YYS0l
-E5/wCzZ9Bu3k9qWgd9VTJQKZ/Jkfg/q4MCFcTqeqDNmEOrg+I8uJegsikwGnLij3
-i79vBgnNt2nVmKIbNsX59zRlfgRS81Ok+zoLrjHEitGsfGYBh26vn7x2l/oFGEgU
-l93Rb5Wp7wStDB4bzHHo
-=Gg4P
------END PGP SIGNATURE-----
+Tavis.
