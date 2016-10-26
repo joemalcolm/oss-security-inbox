@@ -1,79 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/12
-Message-ID: <CANO=Ty0T=HkGovAZzYhvOSZKWCTaQtM1EDuUTZmEBZDA_5Wx1A@mail.gmail.com>
-Date: Wed, 9 Mar 2016 13:55:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "Timothy D. Morgan" <tim-security@...tinelchicken.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/4
+Message-ID: <20161026094640.rv26wlnarguz5lyv@perpetual.pseudorandom.co.uk>
+Date: Wed, 26 Oct 2016 10:46:40 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: jasper: memory allocation failure in jas_malloc (jas_malloc.c)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 9, 2016 at 1:34 PM, Timothy D. Morgan <
-tim-security@...tinelchicken.org> wrote:
+On Wed, 26 Oct 2016 at 10:08:56 +0200, Agostino Sarubbo wrote:
+> more or less I agree with you, but since time ago I saw that similar bugs 
+> reveiced a CVE, I thought that these type of bugs could interest the community 
+> and them I'm sharing them.
+> If I'm not mistaken, CWE-789 covers these type of bugs.
 
->
->
-> > All - I've chatted with some of the people who fund the CVE work at
-> MITRE.
-> > I've learned that CVEs *are* being issued, but obviously that is
-> happening too slowly.
-> >
-> > They're having a meeting tomorrow (March 10) to try to figure out what
-> > the problems are and how to fix it.  I don't know what they'll do.
-> > However, I'm hopeful that  this will mean that the CVE work will get
-> > back on track soon.
->
->
-> Thanks David for finding the right people and raising the issue with
-> them.  I'm sure media coverage is probably helping as well:
->
-> http://www.theregister.co.uk/2016/03/09/hackers_spin_up_alternative_cve_system_as_bugs_go_unchecked/
->
-> Suppose MITRE fixes their issues tomorrow and the CVE goes back to the
-> way it was.  Is that really want we need going forward?  A system
-> that's based on sending emails between humans and posting only
-> one-line descriptions with a series of links (half of which are broken
-> after a short time)?  A system which tries to distribute the load by
-> using "big" software vendors, many of whom have a vested interest in
-> limiting what vulnerabilities get published in their software?
->
-> It seems like we can do better than this.  Infosec hasn't been
-> "working" for some time.  Perhaps we need better tools to help us get
-> ahead of the game.
->
+It depends on the purpose of your software, and how it runs (for example
+a one-shot command-line tool vs. a long-running daemon). If a
+command-line tool for converting JPEG2000 to JPEG (or whatever) exits
+unexpectedly due to a failed attempt to allocate multiple gigabytes
+of memory, that isn't really any worse than exiting unsuccessfully
+because an arbitrary limit on image size was exceeded: the user isn't
+getting their desired JPEG either way.
 
-Even if Mitre had unlimited funding there will be a need for the community
-to be involved, especially if we're going to make sure that CVE/DWF cover
-important flaws (of which there are thousands right now, and we haven't
-even dealt with the IoT or non english software markets like China....).
+Conversely, if a daemon that accepts uploaded JPEG2000 images and
+converts them to JPEG exits unexpectedly due to a failed attempt to
+allocate multiple gigabytes of memory, then that's denying service to
+the service's other users as well, which is an instance CWE-789.
 
-Putting on my info security economics hat:
+For a general-purpose library like jasper, which could be used in
+either of those contexts, I suspect the best you can do is to make sure
+conversion gracefully fails with an appropriate error report (error code
+or exception or whatever you use) if memory can't be allocated or if
+a library-user-specified limit is exceeded - then the library user can
+handle that however they want to, for example by exiting (appropriate
+for a command-line tool) or by reporting an error but continuing to
+accept new requests (appropriate for a daemon).
 
-And I suspect the solution to this is the same as Open Source, we scale
-out, build a community and process that works and change as needed. DWF is
-one such effort. We aim to reduce the cost of vulnerability identification,
-and vulnerability coordination so that there's more less negative incentive
-(cost in time and effort) to do this right.
+Denial-of-service is basically a failure of the "availability" security
+property: the actions of a malicious user make the service unavailable to
+its non-malicious users. However, imposing arbitrary limits can also be
+argued to be a failure of availability: if you put a limit of, say, 100M
+on the uncompressed size of images you are willing to work with, then
+that's denying service to non-malicious users whose images happen to
+need 102M. Choosing where to draw the line is a trade-off rather than an
+absolute, and library code rarely has enough information or configurability
+to make an informed decision about the right place for that trade-off.
 
-As I've repeatedly stated the DWF wants to work with CVE/Mitre if possible,
-forking vulnerability identification will create additional costs
-(retooling all the systems and process that rely on CVE) so I want to
-minimize that as much as possible, the goal is to make things better and
-easier, not to add another standard for the sake of itself.
+(I recognise the hypocrisy in saying this as a maintainer of D-Bus,
+whose messages have a completely arbitrary size limit chosen to make
+it obvious that 32-bit arithmetic on message sizes never overflows :-)
 
-
->
-> --
-> tim
-> @ecbftw
->
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+    S
