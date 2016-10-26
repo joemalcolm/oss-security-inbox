@@ -1,102 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/13
-Message-ID: <20160125193641.GF14069@TC.local>
-Date: Mon, 25 Jan 2016 11:36:41 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2016-0752] Possible Information Leak Vulnerability in Action View
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/5
+Message-ID: <CAKG8Do6j938c8Qkdp0MfqyYwOfdTt9FAgPs251cWVu5Bq65cCw@mail.gmail.com>
+Date: Wed, 26 Oct 2016 17:09:42 +0200
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/
 Content-Type: text/plain; charset=utf-8
 
-Possible Information Leak Vulnerability in Action View
+Hi,
 
-There is a possible directory traversal and information leak vulnerability in
-Action View. This vulnerability has been assigned the CVE identifier
-CVE-2016-0752.
+This is to disclose the following CVE:
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
+CVE-2016-4455: subscription-manager: incorrect permissions in /var/lib/rhsm/
+Description :
 
-Impact
-------
-Applications that pass unverified user input to the `render` method in a
-controller may be vulnerable to an information leak vulnerability.
+It was found that subscription-manager assigned incorrect permissions to
+content in /var/lib/rhsm/, causing an information disclosure flaw. An
+unprivileged local attacker could use this flaw to access sensitive data
+that could later be used for a social engineering attack.
 
-Impacted code will look something like this:
+Upstream patch :
+https://github.com/candlepin/subscription-manager/commit/9dec31
 
-```ruby
-def index
-  render params[:id]
-end
-```
+Impact : Low
+CVSSv2 scoring : 1.7 - AV:L/AC:L/Au:S/C:P/I:N/A:N
+CVSSv3 scoring : 3.3 - AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N
 
-Carefully crafted requests can cause the above code to render files from
-unexpected places like outside the application's view directory, and can
-possibly escalate this to a remote code execution attack.
+Reported by : Robert Scheck
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+Best regards,
 
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-A workaround to this issue is to not pass arbitrary user input to the `render`
-method.  Instead, verify that data before passing it to the `render` method.
-
-For example, change this:
-
-```ruby
-def index
-  render params[:id]
-end
-```
-
-To this:
-
-```ruby
-def index
-  render verify_template(params[:id])
-end
-
-private
-def verify_template(name)
-  # add verification logic particular to your application here
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 3-2-render_data_leak.patch - Patch for 3.2 series
-* 4-1-render_data_leak.patch - Patch for 4.1 series
-* 4-2-render_data_leak.patch - Patch for 4.2 series
-* 5-0-render_data_leak.patch - Patch for 5.0 series
-
-Please note that only the 4.1.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-Thanks John Poulin for reporting this!
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
+Cedric Buissart,
+Product Security
 
-View attachment "3-2-render_data_leak.patch" of type "text/plain" (5922 bytes)
-
-View attachment "4-1-render_data_leak.patch" of type "text/plain" (11315 bytes)
-
-View attachment "4-2-render_data_leak.patch" of type "text/plain" (11315 bytes)
-
-View attachment "5-0-render_data_leak.patch" of type "text/plain" (11029 bytes)
-
-Content of type "application/pgp-signature" skipped
