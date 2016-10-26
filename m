@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/12
-Message-ID: <CACn5sdSJEQf7eF6=xE_-sZxMr9QUGz80O=R_60mybm+CdLyBKQ@mail.gmail.com>
-Date: Tue, 17 May 2016 17:16:17 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/11
+Message-ID: <CAH0z3hMh6Txh5Bi_JTLTkxxsfGrZyNmvB1d1h6aCSZHkBj0O7A@mail.gmail.com>
+Date: Thu, 27 Oct 2016 00:41:28 +0200
+From: Vlad Tsyrklevich <vlad@...rklevich.net>
 To: oss-security@...ts.openwall.com
-Cc: sebastian@...ping.org, karl@...lawek.net
-Subject: CVE-2016-0718: Expat XML Parser Crashes on Malformed Input
+Subject: kernel: low-severity vfio driver integer overflow
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-0718: Expat XML Parser Crashes on Malformed Input
+The vfio driver allows direct user access to devices. The
+VFIO_DEVICE_SET_IRQS ioctl for vfio PCI devices has a state machine
+confusion bug where specifying VFIO_IRQ_SET_DATA_NONE along with
+another bit in VFIO_IRQ_SET_DATA_TYPE_MASK in hdr.flags allows integer
+overflow checks to be skipped for hdr.start/hdr.count. This might
+allow memory corruption later in vfio_pci_set_msi_trigger() with user
+access to an appropriate vfio device file, but it seems difficult to
+usefully exploit in practice.
 
-Severity: Critical
-
-Versions Affected: All Expat XML Parser library versions
-
-Description: The Expat XML parser mishandles certain kinds of malformed
-input documents, resulting in buffer overflows during processing and error
-reporting. The overflows can manifest as a segmentation fault or as memory
-corruption during a parse operation. The bugs allow for a denial of service
-attack in many applications by an unauthenticated attacker, and could
-conceivably result in remote code execution.
-
-Mitigation: Applications that are using Expat should apply the
-attached patch as soon as possible.
-
-Credit: this issue was reported by Gustavo Grieco
-
-and patched by:
-
-* Pascal Cuoq
-* Christian Heimes
-* Karl Waclawek
-* Gustavo Grieco
-* Sebastian Pipping
-
-View attachment "CVE-2016-0718-v2-2-1.patch" of type "text/x-patch" (26435 bytes)
+https://patchwork.kernel.org/patch/9373631/
