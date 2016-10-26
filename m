@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["734" "Saturday" "18" "December" "2021" "11:30:16" "+0100" "Moritz Bechler" "mbechler@eenterphace.org" nil "28" "Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack" nil nil nil "12" nil nil (number mark "U       mbechler@een Dec 18   28/734   " thread-indent "\"Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["747" "Wednesday" "26" "October" "2016" "19:21:24" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQdpOjojXJRfKsHvRR0p+PNmvxciH+hFL-6Xq9mx3Y-Uw@mail.gmail.com>" "28" "[oss-security] CVE requests: some issues in gif2webp" nil nil nil "10" "2016102622:21:24" "[oss-security] CVE requests: some issues in gif2webp" (number mark "U       gustavo.grie Oct 26   28/747   " thread-indent "\"[oss-security] CVE requests: some issues in gif2webp\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32166 invoked by uid 550); 18 Dec 2021 13:23:15 -0000
+Received: (qmail 31784 invoked by uid 550); 26 Oct 2016 22:21:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3673 invoked from network); 18 Dec 2021 10:30:29 -0000
-Message-ID: <11aa374e-5dcf-71a3-9a56-aa1ea764cb12@eenterphace.org>
-Date: Sat, 18 Dec 2021 11:30:16 +0100
+Received: (qmail 31760 invoked from network); 26 Oct 2016 22:21:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=9IPruyoknsLDmmCWBN/Kz9Gvy4JR2U0TDDRKh4UYKfo=;
+        b=i3Mm0c7ntm9KZdfJvIy7ZDuDAlRkMH+bkecWDdxprkChmiXsYQ3F7F2yPqBQ5bG3X1
+         PjVidxfNsS+n0Bg6mzkguBtk6kDW0bMPoNhDnG+a85wy6XqbGi0AVNx2o5Dl7g4wqphF
+         xB+Shxo72xmu9vDKODdM7HXzY/oPWsYMlHEuYXiWAIfcxaatkUHvlTIauDxc3bh0yooU
+         Sfkz15+GL0esYn/2l5/LaAp9bFMrBKzYIDiCvB+Vf7h5P79PgOqt3TrtBCgvOYgWsjN7
+         dAgdGpsXOomD704o+J02LMTW1KjRqZ7VYhBBQi8BjwuBJBakxhgwzMlwqULqVaIGEzzC
+         NQYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=9IPruyoknsLDmmCWBN/Kz9Gvy4JR2U0TDDRKh4UYKfo=;
+        b=fcBb4SfWLtQGq9aD/DOcqaOYxF+eZ47D97x0WjkkVaBttipGM9rDhcU5gzfEjmS2xt
+         tZyZHw2uCt/86CEG1lcc0oTXzoOxuTO0Rpp9KiMmJVpYCqzMuM1xb16glHxwiT2xc5vw
+         FUFKBWWbkaegD9DRDl4inO8SrTaj1VUUVBmkywfMU8PU3F0mw/2bVxOyJWKUmN97maoz
+         TGURTvvwh/jU61DnAe8fbsk6op4bo5Ak1jgooV5LAXUqBBP/rcazBLSZ2MGMU7Vabz3M
+         rQGyIq0MciDOj1XJXEQyYHWhygN0OBVdd5t+Di0Tfgo/PYFuSaUwSq46ESD1lr7iNVnj
+         WySQ==
+X-Gm-Message-State: ABUngvflnX2V0nkMlvpu8uoiATU4Al7K3TM82wmHTqkgIfrNtEgOEdqFDi0gcN8cCsAwKjIP62DUgwBiBNxbdA==
+X-Received: by 10.36.127.213 with SMTP id r204mr8528548itc.8.1477520485293;
+ Wed, 26 Oct 2016 15:21:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Content-Language: en-US
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Wed, 26 Oct 2016 19:21:24 -0300
+Message-ID: <CACn5sdQdpOjojXJRfKsHvRR0p+PNmvxciH+hFL-6Xq9mx3Y-Uw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-References: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
- <CAH8yC8=R7+DwZ19C0c3D_r=BL2Bde7rVQd11RcLKGSkdn0EVqw@mail.gmail.com>
- <fc29939d-fac1-737a-a583-ea14a6a0baa9@eenterphace.org>
-From: Moritz Bechler <mbechler@eenterphace.org>
-In-Reply-To: <fc29939d-fac1-737a-a583-ea14a6a0baa9@eenterphace.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context
- Message Pattern and Context Lookup Pattern vulnerable to a denial of service
- attack
+Content-Type: multipart/alternative; boundary=001a1147cc34aca30a053fcc0b01
+Subject: [oss-security] CVE requests: some issues in gif2webp
 
-Hi,
+--001a1147cc34aca30a053fcc0b01
+Content-Type: text/plain; charset=UTF-8
 
+Hello,
 
-> For =2.15 this is mostly mitigated by the fact protocol and target host 
-> to which lookups are possible are also restricted to localhost by 
-> default. There still seems to be a way to hang/crash the process, thou.
-> 
+We recently reported some issues in gif2webp. These issues were tested in
+ArchLinux using libwebp 0.5.1 (recompiled with ASAN support).
 
-Updating that for completeness: a bypass of that hostname restriction 
-was found by Alvaro Munoz, exploiting different URI interpretations by 
-the standard Uri class and JNDI.
-Therefore 2.15 can be vulnerable again for RCE, if a layout
-with attacker-controlled input outside the message is used or the 
-expression lookup has been re-enabled.
+* NULL pointer derreference
 
-This also requires resolving a DNS name like 127.0.0.1#x.y.z or 
-localhost#x.y.z, which some resolvers and likely recursors will directly 
-reject.
+Bug report: https://bugs.chromium.org/p/webp/issues/detail?id=310 (private)
 
+Fix:
+https://chromium.googlesource.com/webm/libwebp/+/806f6279aef4de8deca01c8e727db4a508716e95
 
+* Several integer overflows:
 
+Report: https://bugs.chromium.org/p/webp/issues/detail?id=314 (private)
 
-Moritz
+Fix:
+https://chromium.googlesource.com/webm/libwebp/+/e2affacc35f1df6cc3b1a9fa0ceff5ce2d0cce83
 
+The reproducers are available upon request. Please assign CVEs if suitable.
 
+Regards,
+Gustavo.
 
-
-
+--001a1147cc34aca30a053fcc0b01--
