@@ -1,4 +1,9 @@
-Received: (qmail 25805 invoked by uid 550); 24 Jul 2022 17:36:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["759" "Wednesday" "26" "October" "2016" "02:04:30" "+0200" "Solar Designer" "solar@openwall.com" "<20161026000430.GA18890@openwall.com>" "22" "Re: [oss-security] Addition to linux-distros for Arch Linux" nil nil nil "10" "2016102600:04:30" "[oss-security] Addition to linux-distros for Arch Linux" (number mark "U       solar@openwa Oct 26   22/759   " thread-indent "\"Re: [oss-security] Addition to linux-distros for Arch Linux\"\n") "<f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>" ("<f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6078 invoked by uid 550); 26 Oct 2016 00:05:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7968 invoked from network); 24 Jul 2022 17:17:51 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AJIora9zV67cO+sAxvC/ZphOdhIW6YJuuzRDF6sEjSoDxle3oPdCUluu
-	1GxLyKBgTW80JAvIRl2MVrguOIv0IlKLisWJhRY=
-X-Google-Smtp-Source: AGRyM1t5hMz+JBUyxaQxe2m+f2+aEW3XVfuFzXNiuxwC1B3llk60PBIKqG3iCKNQQvio0Jqqa+dr86yJSmv23PNGibA=
-X-Received: by 2002:a17:90a:2e0a:b0:1f2:93b6:4d22 with SMTP id
- q10-20020a17090a2e0a00b001f293b64d22mr4542779pjd.156.1658683055870; Sun, 24
- Jul 2022 10:17:35 -0700 (PDT)
-MIME-Version: 1.0
-From: Sheng Zha <zhasheng@apache.org>
-Date: Sun, 24 Jul 2022 13:16:59 -0400
-X-Gmail-Original-Message-ID: <CA+7MY97noRm+cNmUO+QPGRseAvb3vEpyMsG6mVrcVNCLC0yTzg@mail.gmail.com>
-Message-ID: <CA+7MY97noRm+cNmUO+QPGRseAvb3vEpyMsG6mVrcVNCLC0yTzg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2022-24294: ReDoS in Apache MXNet RTC Module
+Received: (qmail 5841 invoked from network); 26 Oct 2016 00:05:05 -0000
+Date: Wed, 26 Oct 2016 02:04:30 +0200
+From: Solar Designer <solar@openwall.com>
+To: Allan McRae <allan@archlinux.org>
+Cc: oss-security@lists.openwall.com,
+	Levente Polyak <anthraxx@archlinux.org>
+Message-ID: <20161026000430.GA18890@openwall.com>
+References: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Addition to linux-distros for Arch Linux
 
-Severity: low
+Hi,
 
-Description:
+On Sat, Oct 22, 2016 at 09:18:11PM +1000, Allan McRae wrote:
+> Can Levente Polyak (CCed) please be added to the linux-distros list
+> representing Arch Linux [1]?  He leads the Arch Linux Security team,
+> which monitors and fixes all security issues in our packages [2].
+> 
+> His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
+> 
+> Thanks,
+> Allan
+> 
+> [1] https://www.archlinux.org/people/developers/#anthraxx
+> [2] https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.html
 
-A regular expression used in Apache MXNet (incubating) is vulnerable
-to a potential denial-of-service by excessive resource consumption.
-The bug could be exploited when loading a model in Apache MXNet that
-has a specially crafted operator name that would cause the regular
-expression evaluation to use excessive resources to attempt a match.
-This issue affects Apache MXNet versions prior to 1.9.1.
+Added.  Note that Levente's key expires 2016-12-31.
 
-Mitigation:
+To others requesting membership: it's still frozen for now.  Allan's
+request was much simpler since it's about changes in who's subscribed
+for a distro that is already subscribed.
 
-Users that depend on MXNet 1.x are advised to upgrade to MXNet>=1.9.1,<2
-
-Credit:
-
-Apache MXNet would like to thank Dwi Siswanto for reporting this issue.
+Alexander
