@@ -1,37 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/3
-Message-ID: <CACG6YS0Q_DcgZ+N9_X1PcdTZ45hkVDe4JYEF-hMaL92b2wh0rw@mail.gmail.com>
-Date: Wed, 13 Jul 2016 10:05:26 +0200
-From: Mathias Svensson <idolf@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Information leak in LibTIFF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/1
+Message-ID: <20161026000430.GA18890@openwall.com>
+Date: Wed, 26 Oct 2016 02:04:30 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Allan McRae <allan@...hlinux.org>
+Cc: oss-security@...ts.openwall.com, Levente Polyak <anthraxx@...hlinux.org>
+Subject: Re: Addition to linux-distros for Arch Linux
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Hi,
 
-I would like to request a CVE number for an information leak in LibTIFF,
-specifically in the file libtiff/tif_read.c.
+On Sat, Oct 22, 2016 at 09:18:11PM +1000, Allan McRae wrote:
+> Can Levente Polyak (CCed) please be added to the linux-distros list
+> representing Arch Linux [1]?  He leads the Arch Linux Security team,
+> which monitors and fixes all security issues in our packages [2].
+> 
+> His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
+> 
+> Thanks,
+> Allan
+> 
+> [1] https://www.archlinux.org/people/developers/#anthraxx
+> [2] https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.html
 
-The vulnerability allows an attacker to specify a negative index into the
-file-content buffer and copy data from that position until the end of the
-buffer.
+Added.  Note that Levente's key expires 2016-12-31.
 
-This will allow an attacker to crash the process by accessing unmapped
-memory and (depending on how LibTIFF is used) might also allow an attacker
-to leak sensitive information.
+To others requesting membership: it's still frozen for now.  Allan's
+request was much simpler since it's about changes in who's subscribed
+for a distro that is already subscribed.
 
-The issue is fixed in CVS HEAD with the commit:
-
-revision 1.49
-date: 2016-07-10 20:00:21 +0200;  author: erouault;  state: Exp;  lines: +6
--3;  commitid: YhOZoKv5OA9gNNdz;
-* libtiff/tif_read.c: Fix out-of-bounds read on
-memory-mapped files in TIFFReadRawStrip1() and TIFFReadRawTile1()
-when stripoffset is beyond tmsize_t max value (reported by
-Mathias Svensson)
-
-
-Kinds regards,
-Mathias Svensson
-Google Security Team
-
+Alexander
