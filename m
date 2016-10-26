@@ -1,47 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/30/10
-Message-Id: <20160630154855.660056C0B4F@smtpvmsrv1.mitre.org>
-Date: Thu, 30 Jun 2016 11:48:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/10
+Message-ID: <CACn5sdRcbLd97UmcuPWptce=EC=cJseGoCw0NaxXZaT+Q7g8bw@mail.gmail.com>
+Date: Wed, 26 Oct 2016 19:32:03 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: DoS loading a SVG in Firefox
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This issue was recently minimized and isolated to the circular use of
+xlink:hrefs:
 
-> A read out-of-bands was found in the parsing of TGA files using the
-> last revision of libgd (a6a0e7f) but older versions can be affected. A
-> reproducer and some technical details are available here:
-> 
-> https://github.com/libgd/libgd/issues/247
+https://bugzilla.mozilla.org/show_bug.cgi?id=1297206#c5
 
->> AddressSanitizer: heap-buffer-overflow ...
->> READ of size 4
->> ... in gdImageCreateFromTgaCtx
+Is a CVE suitable for this DoS?
 
-Use CVE-2016-6132 for this buffer over-read issue.
+Regards,
+Gustavo.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+2016-10-06 12:09 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
 
-iQIcBAEBCAAGBQJXdT8ZAAoJEHb/MwWLVhi2SjkQAIges7jISzaEMV4SPSu9Di8B
-4re9gzln2m8wIKQ3c9NLFGp5lR8fWCx73vSguwBUWVPBFCJZntup5rZlX/rq9P3+
-fFmMhM8g+lsDczm5bNhqUp3lQbSGzts/gPMUbEWlKYKX4sNRdwzlIoxiHq2NxwcB
-ue/Ci1nNDkL2ykvfJA8z3twOm9kFu/qMY+CG6oZ5wA6HSRiRb7kxYCmUd1HMlDKb
-JOhjyJ+qMKwAaQbQKMERSOz03tvzCzCgZvmUOjtd0lsk7a/E1Q3wwPWJ8+wyBbdw
-DZalq2JBQyFNkQ/sy9NGWpya1OSLiuly7xwH+qOGuFmxlXpB87UWq1Mkq6+Hfib5
-0pq4cKvdM3gBe1k1lXMAVxikTamvnLizMmRz+tcwHFoGCQoSTwuIegBst3vx9yIJ
-7QEiq1ergZTJEpMoG6EtxBSsOejSfhWmRYkcGkaCusYrDdT2WXFly7zWAQtnL5qT
-7X5QcpuYs/in7C0rY3UoJqOsDX7cO8b21g16Ya3pGyFjX5DIUr/ZPqSF2GcB6jXn
-/rPyeSvv1py40HWsvx8ZUQND9rgGn2g5CPIfEkYapp6IAYtJgA96jIORfuui4lEp
-+PAKIvn5LVsdAMcoq50RdOpCqD9VRjA1B6EgtZsjUs1bDsdB7qujm+wBIsu9vkGo
-qhxbyEP0bA9VFaM6jxMO
-=BZV9
------END PGP SIGNATURE-----
+> Hello,
+>
+> Some months ago, we found that just loading this image:
+>
+> https://dcc.fceia.unr.edu.ar/~ggrieco/oom.svg (518K)
+>
+> will cause Firefox to consume all your memory. Once you click, you
+> cannot stop the memory constant memory leak. It can take a few minutes
+> (we tested in a desktop computer with 16GB). At the end, Firefox will
+> abort or it will be terminated by the OS.
+>
+> At least Firefox 49 and 51 in several platforms are affected. A report
+> in the Mozilla bug tracker was filled:
+>
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1297206
+>
+> Please assign a CVE if suitable.
+>
+> Regards,
+> Gustavo.
+>
+
