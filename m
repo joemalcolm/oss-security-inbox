@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/5
-Message-ID: <CADSYzsv6ptE2mLgXJUBDqm5HNbi=qC7BRpGr3mrcmx-zF3trJw@mail.gmail.com>
-Date: Tue, 20 Dec 2016 17:16:39 -0200
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/8
+Message-ID: <CACn5sdQLTqa8MLRsaaReoPMBO5D6YJpSEiUQbrHPrny496rbOg@mail.gmail.com>
+Date: Wed, 26 Oct 2016 19:00:23 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]
+Subject: Re: Re: librsvg and cairo are causing libpng to write out-of-bounds
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability:
-Nagios Core < 4.2.4  Root Privilege Escalation CVE-2016-9566
+A patch was recently proposed:
 
-Discovered by: Dawid Golunski (@dawid_golunski)
-https://legalhackers.com
+https://bugs.freedesktop.org/attachment.cgi?id=127421
 
-Severity: High
+thanks to John Bowler and his detailed analysis of this issue:
 
-Nagios Core daemon in versions below 4.2.4 was found to perform unsafe
-operations when handling the log file. This could be exploited by
-malicious local attackers to escalate their privileges from 'nagios'
-system user,
-or from a user belonging to 'nagios' group, to root.
-The exploit could enable the attackers to fully compromise the system on which a
-vulnerable Nagios version was installed.
+https://bugs.freedesktop.org/show_bug.cgi?id=98165
 
-To obtain the necessary level of access (nagios user/group), the
-attackers could potentially use another Nagios vulnerability -
-CVE-2016-9565.
+Can we have a CVE, now that we know it was an integer overflow and we have
+a patch?
 
-
-The full up-to-date advisory and a PoC exploit for CVE-2016-9566 can
-be found at:
-
-https://legalhackers.com/advisories/Nagios-Exploit-Root-PrivEsc-CVE-2016-9566.html
-
-A copy has been attached to this message.
-
-Video PoC:
-https://legalhackers.com/videos/Nagios-Exploit-Root-PrivEsc-CVE-2016-9566.html
-
-
-The aforementioned CVE-2016-9565  vuln can be found at:
-
-https://legalhackers.com/advisories/Nagios-Exploit-Command-Injection-CVE-2016-9565-2008-4796.html
-
-For updates, follow:
-
-https://twitter.com/dawid_golunski
-
--- 
 Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+Gustavo.
 
-View attachment "Nagios-Root.txt" of type "text/plain" (15324 bytes)
+
+2016-10-06 21:02 GMT-03:00 John Bowler <john.cunningham.bowler@...il.com>:
+
+> The bug is not specific to librsvg.  This instance happens in
+> write_png inside cairo-png.c, but the actual bug is elsewhere.  Other
+> exploits probably exist using things other than PNG and SVG.  I think
+> this needs to be CVE'ed immediately.
+>
+> --
+> John Bowler <john.cunningham.bowler@...il.com>
+> +1 (541) 450-9885
+> PO BOX 3151
+> KERBY OR 97531-3151
+> USA
+>
+
