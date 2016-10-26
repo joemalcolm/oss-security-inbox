@@ -1,20 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/3
-Message-ID: <20160107111037.GO8020@coredump>
-Date: Thu, 7 Jan 2016 12:10:37 +0100
-From: Nico Golde <oss-security+ml@...lde.de>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE id request: dhcpcd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/2
+Message-ID: <CADSYzss90v5o_p40F5+_PHhS+EwP3K=FLsB-ak9xazRj9gtm6w@mail.gmail.com>
+Date: Wed, 26 Oct 2016 02:05:11 -0300
+From: Dawid Golunski <dawid@...alhackers.com>
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  bugs@...uritytracker.com, oss-security@...ts.openwall.com
+Subject: CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation
 Content-Type: text/plain; charset=utf-8
 
-dhcpcd recently fixed two security issues. Can you assign CVE ids to these?
+I added a simple PoC video for the CVE-2016-1240 vulnerability.
 
-http://roy.marples.name/projects/dhcpcd/info/76a1609352263bd9
-can lead to a heap overflow via malformed dhcp responses later in print_option (via dhcp_envoption1) due to incorrect option length values. exploitation is non-trivial, but i'd love to be proven wrong.
+In the PoC I used Ubuntu 16.04 with the latest tomcat7 package
+(version: 7.0.68-ubuntu-0.1) installed from the default ubuntu repos
+which appears vulnerable still.
 
-http://roy.marples.name/projects/dhcpcd/info/595883e2a431f65d
-can lead to an invalid read/crash via malformed dhcp responses. not exploitable beyond DoS as far as I can judge.
+The video poc can be found at:
 
-Kind regards,
-Nico
+http://legalhackers.com/videos/Apache-Tomcat-DebPkg-Root-PrivEsc-Exploit.html
+
+-- 
+Regards,
+Dawid Golunski
+http://legalhackers.com
