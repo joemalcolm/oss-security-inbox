@@ -1,4 +1,9 @@
-Received: (qmail 24508 invoked by uid 550); 29 Aug 2022 11:27:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["806" "Wednesday" "26" "October" "2016" "17:09:42" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do6j938c8Qkdp0MfqyYwOfdTt9FAgPs251cWVu5Bq65cCw@mail.gmail.com>" "32" "[oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/" nil nil nil "10" "2016102615:09:42" "[oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/" (number mark "U       cbuissar@red Oct 26   32/806   " thread-indent "\"[oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18305 invoked by uid 550); 26 Oct 2016 15:11:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24484 invoked from network); 29 Aug 2022 11:27:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=z7Y7XJuGU/+6uiZLkpdjYcPV9ctWX7caGdSngkYm2cA=; b=aG9hcVNyVY8OIMCtER5cglBJ9y
-	adPbnUtgocCPXWmZThrcdulQdk2vegCFjhB+sJDDj9ybx1S16iB0Jlum7nRV3M9s6KsWq/IUXs4M1
-	JNvQR4N8cQXPlu5JAYYHVY+aYWw/tphkzXIUmH0a7B5oyRoFe7eJYogbqq8OuSB2LKXeUGiYqBZzx
-	CGJ9hxH/qEXzTvrCDB8YWKkHEXjPLARids+9kNwNeNHj6Gt3qxgeMHrGOhXrQZ5kGEwbxohxoOo5M
-	ArADi1/hiUgPhAK6ExQusidhtOXh27XEfZmPX4SE67r4KfI5IigppHlTMiiJJ4tabCHXLAXALIJDI
-	vwYagAKQ==;
-Message-ID: <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
-Date: Mon, 29 Aug 2022 13:26:49 +0200
+Received: (qmail 18285 invoked from network); 26 Oct 2016 15:11:17 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=52C5o5q9SrF1xypzWsvDNDu0AR9O6Dvi4qLlZ2HyAas=;
+        b=OKuvvxbqyid1qbP+0nrNcfb9Gvw7QMd7eLcjhoGXjSV4VNpzoMPEgLYQvV32jG+jht
+         6ipjXPObOFi7vMYTMX0yqdRwhyWomz5Mxx+0mwpqQEDrIkz4/tk5KGz7kvvIJ3phyVjN
+         4P726/8N/5T53jbv+DMn8I29rqDSVxuDwm6K3j0NiuU18ebkPD70wzpBukSonCDtcvbH
+         BmY5EuIqDAJOYB+ufkRIFYyXnCeFP3+eZ/uLic336+GgfizkURtIZAF9Bi9LgoM4ac5+
+         uuiK1x/yqxQpljXdVENV6b4QvpqM/RnM8VGgrRhg8dh4ErLuFYYK4abih0NSAopSXzN5
+         XCHg==
+X-Gm-Message-State: ABUngvdj3I64Yf8FTb3VZPASGC6a7TFc8dIi0/XlDoS4mEbsFxdDekA1i9R44ESomM6C1byDZZKLPuU5qh8k2qsQ
+X-Received: by 10.107.157.14 with SMTP id g14mr3342424ioe.70.1477494603033;
+ Wed, 26 Oct 2016 08:10:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: en-GB
-To: oss-security@lists.openwall.com, John Helmert III <ajak@gentoo.org>
-References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
- <YwhTtN8duEhxo1hY@gentoo.org>
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Organization: Igalia S.L.
-Mail-Followup-To: oss-security@lists.openwall.com,
- John Helmert III <ajak@gentoo.org>
-In-Reply-To: <YwhTtN8duEhxo1hY@gentoo.org>
+From: Cedric Buissart <cbuissar@redhat.com>
+Date: Wed, 26 Oct 2016 17:09:42 +0200
+Message-ID: <CAKG8Do6j938c8Qkdp0MfqyYwOfdTt9FAgPs251cWVu5Bq65cCw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11409920f8f3de053fc60498
+Subject: [oss-security] CVE-2016-4455: subscription-manager: incorrect permisions in /var/lib/rhsm/
+
+--001a11409920f8f3de053fc60498
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
- WSA-2022-0008
+
+Hi,
+
+This is to disclose the following CVE:
+
+CVE-2016-4455: subscription-manager: incorrect permissions in /var/lib/rhsm/
+Description :
+
+It was found that subscription-manager assigned incorrect permissions to
+content in /var/lib/rhsm/, causing an information disclosure flaw. An
+unprivileged local attacker could use this flaw to access sensitive data
+that could later be used for a social engineering attack.
+
+Upstream patch :
+https://github.com/candlepin/subscription-manager/commit/9dec31
+
+Impact : Low
+CVSSv2 scoring : 1.7 - AV:L/AC:L/Au:S/C:P/I:N/A:N
+CVSSv3 scoring : 3.3 - AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N
+
+Reported by : Robert Scheck
+
+Best regards,
 
 
-On 26/08/2022 07:01, John Helmert III wrote:
-> On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wrote:
->> ------------------------------------------------------------------------
->> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
->> ------------------------------------------------------------------------
->>
->> Date reported           : August 25, 2022
->> Advisory ID             : WSA-2022-0008
->> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.html
->> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.html
->> CVE identifiers         : CVE-2022-32893.
->>
->> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
->>
->> CVE-2022-32893
->>     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
->>     Credit to an anonymous researcher.
->>     Impact: Processing maliciously crafted web content may lead to
->>     arbitrary code execution. Apple is aware of a report that this issue
->>     may have been actively exploited.
-> 
-> According to Apple's security advisories for this (e.g. [1]), this
-> issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
-> on 2022-08-04. A few minutes after that bug was opened, a pull request
-> on GitHub was linked [3] with a patch which also seems to add unit
-> tests. So, it appears to me that this issue was public since at least
-> August 4th, and even more widely publicized with Apple's security
-> advisories on August 17.
-> 
-> WebKit-2.36.6 was released shortly after the first bug report, on
-> 2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
-> 
-> With this bug seemingly being publicly known to be an actively
-> exploited code execution issue, why did it take several weeks and 2
-> WebKit releases to get this issue fixed and a WSA released?
-> 
-> [1] https://support.apple.com/en-us/HT213412
-> [2] https://bugs.webkit.org/show_bug.cgi?id=243557
-> [3] https://github.com/WebKit/WebKit/pull/3023
-> 
+-- 
+Cedric Buissart,
+Product Security
 
-
-We (maintainers of Linux WebKit ports) don't have access to the security
-issues affecting Apple products until those issues are made public by them.
-
-So, we didn't knew until August 17th of this issue. Also you can see
-that the bug report itself or the patch doesn't has any indication that
-it fixes a security-related problem.
-
-Therefore, the time it took us to notice the issue, backport the fix and
-do a new release was just 7-8 days (from 17th to 24-25th of August).
-Which, honestely, it is quite good taking into account that: 1)
-back-porting the fix was not straightforward since it required
-back-porting also a few previous patches in order to be able to merge it
-properly and that 2) we are in August and people is usually on holidays.
-
-On the other hand, I don't know if this issue was or is exploited on
-Linux WebKit users. All I known is that Apple said they are aware of a
-report that this issue was actively exploited (on Apple/WebKit users).
-So I assume this can also affect Linux WebKit users. But I don't have a
-confirmation that this is actually the case, neither I'm aware of any
-PoC demonstrating the issue.
-
-Regards.
+--001a11409920f8f3de053fc60498--
