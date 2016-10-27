@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/16
-Message-ID: <CAJEJqRz_5LVLYTd1eqEQQhu3jz=6+txBK7_OKZe6Lytov1dRSA@riseup.net>
-Date: Wed, 5 Oct 2016 13:45:02 -0400
-From: David Manouchehri <david.manouchehri@...eup.net>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: eva.wu@...winnertech.com
-Subject: CVE request: sunxi-debug (root privilege escalation in Allwinner kernel)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/5
+Message-ID: <20161027083901.GA10554@lorien.valinor.li>
+Date: Thu, 27 Oct 2016 10:39:01 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: bperry.volatile@...il.com, cve-assign@...re.org
+Subject: Re: Re: Handful of libass issues
 Content-Type: text/plain; charset=utf-8
 
-The official Allwinner 3.4 kernels (H3, H8 and A83T) shipped a driver
-called sunxi-debug, which allows any process (file permissions are set to
-666) to escalate to root without any interaction.
+Hi,
 
-Full PoC/"exploit" is simply:
+On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@...re.org wrote:
+> > The third is a huge memory allocation leading to a crash that wasn't
+> > fixed because a good solution is unavailable at the moment.
+> 
+> Use CVE-2016-7971.
 
-echo "rootmydevice" > /proc/sunxi_debug/sunxi_debug
+It looks from the discussion in
+https://github.com/libass/libass/pull/240 that this issue is disputed
+to be actually in libass.
 
-This was originally spotted in April 2016 and removed after media coverage
-in May. If a CVE could be assigned to it, that would be appreciated.
+Should the CVE assignment be revisited, possibly rejected, according
+the upstream discussion?
 
-Thanks,
-
-David Manouchehri
-
-References:
-
-https://github.com/Manouchehri/linux-3.4-sunxi/blob/master/arch/arm/mach-sunxi/sunxi-debug.c#L41-L52
-(The
-original repository has had the backdoor erased from history.)
-http://irclog.whitequark.org/linux-sunxi/2016-04-29#16314390
-http://forum.armbian.com/index.php/topic/1108-security-alert-for-allwinner-sun8i-h3a83th8/
-https://www.rapid7.com/db/modules/post/multi/escalate/allwinner_backdoor
-http://www.theregister.co.uk/2016/05/09/allwinners_allloser_custom_kernel_has_a_nasty_root_backdoor/
-http://arstechnica.com/security/2016/05/chinese-arm-vendor-left-developer-backdoor-in-kernel-for-android-pi-devices/
-http://www.androidauthority.com/chinese-arm-vendor-left-developer-backdoor-in-kernel-for-android-692146/
-http://news.softpedia.com/news/chinese-arm-chip-vendor-left-god-mode-feature-in-android-kernel-code-504037.shtml
-https://www.heise.de/security/meldung/Allwinner-vergisst-Root-Cheatcode-im-Kernel-fuer-Sunxi-SoCs-3207356.html
-https://news.ycombinator.com/item?id=11672590
-https://olimex.wordpress.com/2016/05/10/how-to-root-any-allwinner-device-running-android-and-most-of-the-chinese-pi-clones-which-bet-on-allwinner-android-linux-kernel/
-
+Regards,
+Salvatore
