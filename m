@@ -1,53 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/8
-Message-ID: <56BFA81A.30601@sumptuouscapital.com>
-Date: Sat, 13 Feb 2016 23:03:06 +0100
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/15
+Message-ID: <alpine.LFD.2.20.1610280232200.6132@wniryva>
+Date: Fri, 28 Oct 2016 02:34:22 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: 9pfs: memory leakage when creating extended attribute
 Content-Type: text/plain; charset=utf-8
 
-On 02/13/2016 02:15 PM, Hanno Böck wrote:
-> On Sat, 13 Feb 2016 05:52:44 +0000 halfdog <me@...fdog.net> wrote:
-> 
->> Hence really critical security material perhaps should not go to
->> such platforms, e.g. Ubuntu Launchpad, or the platform should be
->> modified to send security issues only in encrypted mails without
->> talkative title, members without mail public key registered
->> should get only message "Bug [Number]: Info changed" including
->> the HTTPS link to the issue in the platform.
-> 
-> This is roughly what mozilla does and I like it a lot. They have a
-> bug tracker over https and you can add a PGP key. If you don't add
-> a PGP key and report a security bug you won't get updates via mail 
-> unencrypted.
-> 
+   Hello,
 
-Sadly the bugzilla implementation, or rather the perl module they are
-using for it, is flawed and encrypts to the first public key it
-considers viable [0,1] irrespective of usage flags [2], resulting in
-un-decryptable emails unless modifying the OpenPGP certificate
-presented to secureEmail. I'd really like to see this fixed, but I'm
-not sure if the scope is proper for a project such as GSoC. I actually
-just wrote up a slight summary of such a project on [3]
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to memory leakage issue. It could 
+occur while creating extended attribute via 'Txattrcreate' message.
 
-[0] https://bugzilla.mozilla.org/show_bug.cgi?id=790487
-[1] https://github.com/btrott/Crypt-OpenPGP/issues/9
-[2] http://tools.ietf.org/html/rfc4880#section-5.2.3.21
-[3]
-https://download.sumptuouscapital.com/GSoC/perl-bugzilla-openpgp-potential-gsoc-project.txt
+A privileged user inside guest could use this flaw to leak host memory, thus 
+affecting other services on the host and/or potentially crash the Qemu process 
+on the host.
 
--- 
-----------------------------
-Kristian Fiskerstrand
-Blog: https://blog.sumptuouscapital.com
-Twitter: @krifisk
-----------------------------
-Public OpenPGP key at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-----------------------------
-Aquila non capit muscas
-The eagle does not hunt flies
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01861.html
 
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1389550
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
