@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/12/2
-Message-Id: <20161012041104.D4A0552E014@smtpvbsrv1.mitre.org>
-Date: Wed, 12 Oct 2016 00:11:04 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/1
+Message-Id: <20161027064119.26C1813A5A0@smtpvmsrv1.mitre.org>
+Date: Thu, 27 Oct 2016 02:41:19 -0400 (EDT)
 From: cve-assign@...re.org
-To: ludo@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, cwebber@...tycloud.org, wingo@...ox.com, mhw@...ris.org
-Subject: Re: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks
+To: vlad@...rklevich.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: kernel: low-severity vfio driver integer overflow - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> GNU Guile, an implementation of the Scheme language, provides a "REPL
-> server" which is a command prompt that developers can connect to for
-> live coding and debugging purposes. The REPL server is started by the
-> '--listen' command-line option or equivalent API.
+> The vfio driver allows direct user access to devices. The
+> VFIO_DEVICE_SET_IRQS ioctl for vfio PCI devices has a state machine
+> confusion bug where specifying VFIO_IRQ_SET_DATA_NONE along with
+> another bit in VFIO_IRQ_SET_DATA_TYPE_MASK in hdr.flags allows integer
+> overflow checks to be skipped for hdr.start/hdr.count. This might
+> allow memory corruption later in vfio_pci_set_msi_trigger() with user
+> access to an appropriate vfio device file, but it seems difficult to
+> usefully exploit in practice.
 > 
-> Christopher Allan Webber reported that the REPL server is vulnerable to
-> the HTTP inter-protocol attack as described at
-> <https://en.wikipedia.org/wiki/Inter-protocol_exploitation>, notably the
-> HTML form protocol attack described at
-> <https://www.jochentopf.com/hfpa/hfpa.pdf>.
-> 
-> This constitutes a remote code execution vulnerability for developers
-> running a REPL server that listens on a loopback device or private
-> network. Applications that do not run a REPL server, as is usually the
-> case, are unaffected.
-> 
-> Developers can work around this vulnerability by binding the REPL server
-> to a Unix-domain socket, for instance by running:
-> 
->   guile --listen=/some/file
-> 
-> A modification to the REPL server that detects attempts to exploit this
-> vulnerability is available upstream and will be part of Guile 2.0.13, to
-> be released shortly.
-> 
-> Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=08c021916dbd3a235a9f9cc33df4c418c0724e03
+> https://patchwork.kernel.org/patch/9373631/
 
->> +;;; Here we add a procedure to 'before-read-hook' that looks for a possible
->> +;;; HTTP request-line in the first line of input from the client socket. If
->> +;;; present, the socket is drained and closed
+Use CVE-2016-9083 for the "state machine confusion bug."
 
-Use CVE-2016-8606.
+Use CVE-2016-9084 for the separate problem fixed by "kzalloc is
+changed to a kcalloc."
+
+This is not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/vfio/pci/vfio_pci.c
+and
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/vfio/pci/vfio_pci_intrs.c
+but may be there later.
 
 - -- 
 CVE Assignment Team
@@ -52,17 +41,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX/bZEAAoJEHb/MwWLVhi2ENkQAIyMUaLq9mwR5hvyeoP+4GF0
-p5rA477BYUM3KhnHqk7kNmuGb4OjP/mCc+6POvYqwyJOCt3vsYnBfp77dL0VgKgV
-Zoabg0kfNFXJFvhWeIE3qwAnI9zMVV/H2S63C9c3KuHsxy8a/6/q5PpznwhcjG+L
-AqWlHvSYhNmTtanR8nyRwcchEavatZh8eTXP9ITpFRZ+xuu6XoHwhmlmKE9srIBq
-Fun81jQGTN+dPCYcrviqJjW4258328oua0he4gCxKsM/JRLCWxTNtwgmh0EH8hro
-uJyb76LNk9RgA64po2qrr3Q2LUN2lpSILci8V9mQhWMvLBtyxSKzrgq0FKuJoxjr
-oFauy+LbwXUD0pHjfy9SiOjxEpwP5/jt9tpVoaMdRVjigJ86sm8zOx5d4BmgyPuA
-98uYtuCvB+AHblQJh5i9M3rln56rkgopDjR2suKJVSN0t3kHxEPDe1rdgDOGXrxz
-5kG/g/a5E92omW9J+4e+GiTj+NMSocrHKPOZGUHSlZl68EL8Fe4wqRHA+I9081dq
-XDmtF1mzHQ3tSY+jxhVckFb1IKvReR7JeCKKpsdkQDMIG7BfJsbQoB6IQEsASRtD
-PbXFvubj7LHEuTikLQc3qWXSAgzLpioyNVDxcxANdf0mirKXchysbpuv1uviC7Oa
-zHs39ZEyvoopDQP8s6ef
-=YKYq
+iQIcBAEBCAAGBQJYEaDdAAoJEHb/MwWLVhi2SXoP/A1cw0kppdrB03QUfdZM8ShT
+BBnH+GWpricg333jEtfM1ypq5NqN62bG4/SQzvJwqV0HKffodIqzKAqpu0jzvzHA
+rlVs+lrv0folE2T4mZNc0lDWr36lwIf2LJx3tdYnl/EaW11FSVIsO/K5/bnXYU0b
+Yxarmk5jhG48pcjFo969FvpfDYXBZuleuluTWs/t4MM5R5iY/hpA/+vPBqQPf9Qp
+Mb+WwFu4fuXjTxWRTXfaH6l2ZQ4qdjxzwZnHzyj4Xt/B9aXDQx/uibM6gwMlK79d
+HSAElifmLxhBClhRj9t5CWjz7qxtD/Ll7UOklM1a6C+DPwvpYnr5iaz0iQDh4IA9
+ZFWh+EffrFufmrvQ1/3YBLwCUd74thDisbeqZSaIOH9+itdV5rwiuiAz7PusNzcc
+VLTh3kP34kahzIyvpNt342opeA/1dCvv1qNWCC1G9MwJbuW6N7PAm1v7bwr22Fz7
+sFvQ7FB4aUV+AV835wkPNXqZaoyBfzDvzXoW9aFMzQzjcvdKfNT4VU7N2mHJqfYU
+OP5PNuqUg4Wly0Rwych0YpoYTXfvFyy//AvuTIvZRHQErS5ny8gJvjwGg8oVObjr
+l+3WOQxAmJST2jvczPLKhiQP3zPDmlMx9MTUuYWR4MJqaEf7nwjJnqTf5chWGPsR
+9jneh8oMpkQJm0IRDyc+
+=AZ3J
 -----END PGP SIGNATURE-----
