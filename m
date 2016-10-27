@@ -1,108 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/2
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066E5805@EXMBX-TJ002.tencent.com>
-Date: Thu, 8 Sep 2016 03:13:15 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: cve-assign <cve-assign@...re.org>
-Subject: CVE Request: OpenJPEG Heap Buffer Overflow Issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/3
+Message-Id: <20161027070655.76FB46C1A17@smtpvmsrv1.mitre.org>
+Date: Thu, 27 Oct 2016 03:06:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requests: some issues in gif2webp
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is Ke from Tencent's Xuanwu LAB. I reported a security issue of OpenJPEG some days ago and it has been fixed now. The fix is available at https://github.com/uclouvain/openjpeg/commit/e078172b1c3f98d2219c37076b238fb759c751ea . Could you please assign a CVE number for it?
+> * NULL pointer derreference
+> 
+> Bug report: https://bugs.chromium.org/p/webp/issues/detail?id=310 (private)
+> 
+> Fix:
+> https://chromium.googlesource.com/webm/libwebp/+/806f6279aef4de8deca01c8e727db4a508716e95
 
-Thanks.
-
-Regards,
-Ke
-Tencent's Xuanwu LAB
-
-
-DESCRIPTION
-==============
-A Heap Buffer Overflow (Out-of-Bounds Write) issue was found in function opj_dwt_interleave_v of dwt.c. This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of OpenJPEG.
-
-
-CREDIT
-==============
-This vulnerability was discovered by Ke Liu of Tencent's Xuanwu LAB.
+As far as we can tell, what you mean is that gif2webp is a
+command-line program that only operates on one GIF input file, and if
+there's crafted EXTENSION_RECORD_TYPE data, the program will crash
+with a NULL pointer derreference. That would not be a security impact
+for purposes of CVE. The user can work around the bug by not running
+gif2webp again on the crafted file.
 
 
-TESTED VERSION
-==============
-Master version of OpenJPEG (4a2a869)
+> * Several integer overflows:
+> 
+> Report: https://bugs.chromium.org/p/webp/issues/detail?id=314 (private)
+> 
+> Fix:
+> https://chromium.googlesource.com/webm/libwebp/+/e2affacc35f1df6cc3b1a9fa0ceff5ce2d0cce83
 
+Use CVE-2016-9085 for everything fixed by
+e2affacc35f1df6cc3b1a9fa0ceff5ce2d0cce83.
 
-EXCEPTION LOG
-==============
-==5576==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xb4f0197c at pc 0xb748f7e3 bp 0xbf9c1d38 sp 0xbf9c1d30
-WRITE of size 4 at 0xb4f0197c thread T0
-    #0 0xb748f7e2 in opj_dwt_interleave_v src/lib/openjp2/dwt.c:268:7
-    #1 0xb74761ee in opj_dwt_decode_tile src/lib/openjp2/dwt.c:609:4
-    #2 0xb7474108 in opj_dwt_decode src/lib/openjp2/dwt.c:477:9
-    #3 0xb77329e2 in opj_tcd_dwt_decode src/lib/openjp2/tcd.c:1619:31
-    #4 0xb772ffcc in opj_tcd_decode_tile src/lib/openjp2/tcd.c:1306:20
-    #5 0xb74e9a0e in opj_j2k_decode_tile src/lib/openjp2/j2k.c:8134:15
-    #6 0xb7575354 in opj_j2k_decode_tiles src/lib/openjp2/j2k.c:9761:23
-    #7 0xb74cee4c in opj_j2k_exec src/lib/openjp2/j2k.c:7350:43
-    #8 0xb750578b in opj_j2k_decode src/lib/openjp2/j2k.c:9959:15
-    #9 0xb75ca0de in opj_jp2_decode src/lib/openjp2/jp2.c:1492:8
-    #10 0xb7634eb8 in opj_decode src/lib/openjp2/openjpeg.c:412:10
-    #11 0x8140304 in main src/bin/jp2/opj_decompress.c:1332:10
-    #12 0xb71cbaf2 in __libc_start_main /build/eglibc-X4bnBz/eglibc-2.19/csu/libc-start.c:287
-    #13 0x80781eb in _start (bin/opj_decompress+0x80781eb)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-0xb4f0197c is located 4 bytes to the left of 1028-byte region [0xb4f01980,0xb4f01d84)
-allocated by thread T0 here:
-    #0 0x8110949 in __interceptor_posix_memalign (bin/opj_decompress+0x8110949)
-    #1 0xb77533dc in opj_aligned_alloc_n src/lib/openjp2/opj_malloc.c:61:7
-    #2 0xb7752ed3 in opj_aligned_malloc src/lib/openjp2/opj_malloc.c:208:10
-    #3 0xb7474d08 in opj_dwt_decode_tile src/lib/openjp2/dwt.c:576:22
-    #4 0xb7474108 in opj_dwt_decode src/lib/openjp2/dwt.c:477:9
-    #5 0xb77329e2 in opj_tcd_dwt_decode src/lib/openjp2/tcd.c:1619:31
-    #6 0xb772ffcc in opj_tcd_decode_tile src/lib/openjp2/tcd.c:1306:20
-    #7 0xb74e9a0e in opj_j2k_decode_tile src/lib/openjp2/j2k.c:8134:15
-    #8 0xb7575354 in opj_j2k_decode_tiles src/lib/openjp2/j2k.c:9761:23
-    #9 0xb74cee4c in opj_j2k_exec src/lib/openjp2/j2k.c:7350:43
-    #10 0xb750578b in opj_j2k_decode src/lib/openjp2/j2k.c:9959:15
-    #11 0xb75ca0de in opj_jp2_decode src/lib/openjp2/jp2.c:1492:8
-    #12 0xb7634eb8 in opj_decode src/lib/openjp2/openjpeg.c:412:10
-    #13 0x8140304 in main src/bin/jp2/opj_decompress.c:1332:10
-    #14 0xb71cbaf2 in __libc_start_main /build/eglibc-X4bnBz/eglibc-2.19/csu/libc-start.c:287
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow src/lib/openjp2/dwt.c:268 opj_dwt_interleave_v
-Shadow bytes around the buggy address:
-  0x369e02d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369e02e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369e02f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369e0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x369e0310: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x369e0320: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa[fa]
-  0x369e0330: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x369e0340: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x369e0350: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x369e0360: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x369e0370: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==5576==ABORTING
+iQIcBAEBCAAGBQJYEacxAAoJEHb/MwWLVhi2fd0P/3D1sCCixX4yrhproI1v4VJr
+d3iKMxA1uSkyqArZ6AMAnvo3iH/SmVLp9SGs/uXsCeml2CxxuzsDB6X+nlIYZArG
+6OcZ70JEDv4YJXj6eUdg0Xco8Xxjv08v4RvohqVMvxuQIF+8LLHJGz5NH4mOCviT
+Q79TBF4ZSmb33UdT1CqT8OZYL/LokPXnXrGk4CiwL1CZ4Ku3GiSZuOz7J4hDPbEd
++k/6x+PuJd2z8uc6XZ4di136z5fbbgufvl4ZTR5W8nXNU2PnbF+9FSvxYInymXUt
+91JdLnkQ1V83LzuNJxwUoIouSe9EOiz1zwOeSOYaYOV8WHkXLw0YpOeCe6L1rj3G
+llXaQm00azGoIe3M4auH2lGUTqpRO14ZaX8zRnN2pnIKEmnHJ+98nzyr8RHPQgh/
+vhoqLWvgtxQaefgWOa6bMfqXojwoUTT/b/r4SAt9WTYm4YvKoL+OO/TpQrvs5GdA
+w2oihWIRlDO2ncbHhUzQ6fjCmWjVxPElYquVXG0urhyqNyLcVf79o25nG/fMyd5V
+lDLE219oqXtuCZtbVOJkafVz2YlOAQhog0YKyyt9xS2OQf9tsX/lIz+a2q2VAIMT
+g+rxQ+2s2BEVfpj26cexvEpj71XMQjW5OuK6CM0ENqj2sklxCS2gVUTsKN6M5z4p
+LkH4PQK8xJyle9iiKwS/
+=Ra2B
+-----END PGP SIGNATURE-----
