@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/8
-Message-ID: <20160822111911.GA4540@openwall.com>
-Date: Mon, 22 Aug 2016 14:19:11 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/9
+Message-ID: <bbd5381b-ede3-6278-c442-820c74a0d259@apache.org>
+Date: Thu, 27 Oct 2016 13:30:50 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, ouspg@...oulu.fi
-Subject: Re: TLS testing results - OS distro vulnerabilities
+Subject: [SECURITY] CVE-2016-5018 Apache Tomcat Security Manager Bypass
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2016 at 10:46:24AM +0200, Jakub Wilk wrote:
-> * Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, 2016-08-20, 16:50:
-> >We developed a tool to check if languages and libraries verify TLS 
-> >certificates properly. While testing this tool we did a shootout 
-> >against supported versions of the some major Linux distributions.
-> >
-> >Results are available from:
-> >
-> >https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
-> 
-> How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
-> requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
+CVE-2016-5018 Apache Tomcat Security Manager Bypass
 
-I think Mauri isn't subscribed - CC'ing.
+Severity: Low
 
-Alexander
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M9
+Apache Tomcat 8.5.0 to 8.5.4
+Apache Tomcat 8.0.0.RC1 to 8.0.36
+Apache Tomcat 7.0.0 to 7.0.70
+Apache Tomcat 6.0.0 to 6.0.45
+Earlier, unsupported versions may also be affected.
+
+Description
+A malicious web application was able to bypass a configured
+SecurityManager via a Tomcat utility method that was accessible to web
+applications.
+
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M10 or later
+- Upgrade to Apache Tomcat 8.5.5 or later
+- Upgrade to Apache Tomcat 8.0.37 or later
+- Upgrade to Apache Tomcat 7.0.72 or later
+  (Apache Tomcat 7.0.71 has the fix but was not released)
+- Upgrade to Apache Tomcat 6.0.47 or later
+  (Apache Tomcat 6.0.46 has the fix but was not released)
+
+Credit:
+This issue was discovered by Alvaro Munoz of the HP Enterprise Security
+Team and reported responsibly to the Apache Tomcat Security Team.
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
