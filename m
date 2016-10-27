@@ -1,37 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/3
-Message-ID: <alpine.LFD.2.20.1606071247030.8126@wniryva>
-Date: Tue, 7 Jun 2016 12:50:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Huawei PSIRT <psirt@...wei.com>, Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: scsi: esp: OOB r/w access while processing ESP_FIFO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/16
+Message-ID: <00ce3a12-88cc-5727-5ee1-ff13b8748a3f@redhat.com>
+Date: Thu, 27 Oct 2016 22:42:06 +0100
+From: Luke Hinds <lhinds@...hat.com>
+To: openstack@...ts.openstack.org, openstack-dev@...ts.openstack.org, oss-security@...ts.openwall.com
+Subject: [OSSN-0076] Glance Image service v1 and v2 api image-create vulnerability
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Glance Image service v1 and v2 api image-create vulnerability
+---
 
-Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support 
-is vulnerable to an OOB r/w access issue. The controller uses 16-byte FIFO 
-buffer the information transfer. The OOB r/w occurs while reading/writing to 
-this buffer in esp_reg_read() and esp_reg_write() routines.
+### Summary ###
+No limits are enforced within the Glance image service for both v1 and
+v2 `/images` API POST method for authenticated users, resulting in
+possible denial of service attacks through database table saturation.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS OR potentially leverage it to execute arbitrary code with 
-privileges of the Qemu process on the host.
+### Affected Services / Software ###
+All versions of Glance image service.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg01507.html
+### Discussion ###
+Within the Glance image service, calls to the POST method within v1 or
+v2/images creates an image (record) in `queued` status. There is no
+limit enforced within the Glance API on the number of images a single
+tenant may create, just on the total amount of storage a single user may
+consume.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1343323
+Therefore a user could either maliciously or unintentionally fill
+multiple database tables (images, image_properties, image_tags,
+image_members) with useless image records, thereby causing a denial of
+service by lengthening transaction response times in the Glance database.
 
-This issue was independently discovered and reported by Li Qiang of 360.cn Inc 
-and Security Team at Huawei Inc.
+### Recommended Actions ###
+For all versions of Glance that expose either the v1 and v2/images API,
+operators are recommended to deploy external rate-limiting proxies or
+web application firewalls, to provide a front layer of protection to
+glance. The Glance database should be monitored for abnormal growth.
+Although rate-limiting does not eliminate this attack vector, it will
+slow it to the point where you can react prior to a denial of service
+occurring.
+
+The following solutions may be considered, however it is key that the
+operator carefully plans and considers the individual performance needs
+of users and services within their OpenStack cloud, when configuring any
+rate limiting functionality.
+
+#### Repose ####
+Repose provides a rate limiting filter, that can utilise limits by IP,
+Role (OpenStack Identity v3 filter) or header.
+
+https://repose.atlassian.net/wiki/display/REPOSE/Rate+Limiting+Filter
+
+#### NGINX ####
+NGINX provides the limit_req_module, which can be used to provide a
+global rate
+limit. By means of a `map`, it can be limited to just the POST method.
+
+Further details can be found on the nginx site:
+http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
+
+#### HAProxy ####
+HAProxy can provide inherent rate-limiting using stick-tables with a General
+Purpose Counter (gpc)
+
+Further details can be found on the haproxy website:
+
+http://blog.haproxy.com/2012/02/27/use-a-load-balancer-as-a-first-row-of-defense-against-ddos
+
+#### Apache ####
+A number of solutions can be explored here as follows.
+
+##### mod_ratelimit #####
+http://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html
+
+##### mod_qos #####
+http://opensource.adnovum.ch/mod_qos/dos.html
+
+##### mod_evasive #####
+https://www.digitalocean.com/community/tutorials/how-to-protect-against-dos-and-ddos-with-mod_evasive-for-apache-on-centos-7
+
+##### mod_security #####
+https://www.modsecurity.org/
+
+#### Limit `add_image` to admin role ####
+
+Another possible mitigation is to restrict image creation to the admin
+role, however this should only be done for those cases in which there
+are Glance nodes dedicated to end-user access only. Restriction to admin
+only on Glance nodes that serve OpenStack services will for example,
+remove the ability to create snapshots from the Compute API or to create
+bootable volumes from Cinder.
+
+To restrict image creation to the role admin only, amend
+`/etc/glance/policy.json` accordingly.
+
+    "add_image": "role:admin",
+
+### Contacts / References ###
+Author: Luke Hinds, Red Hat
+This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0076
+Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1545092
+OpenStack Security ML : openstack-security@...ts.openstack.org
+OpenStack Security Group : https://launchpad.net/~openstack-ossg
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+Download attachment "0x3C202614.asc" of type "application/pgp-keys" (1699 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
