@@ -1,57 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/9
-Message-Id: <20160526182609.ED687ABC298@smtpvmsrv1.mitre.org>
-Date: Thu, 26 May 2016 14:26:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/7
+Message-ID: <ee9f7a88-b1d2-8a62-e572-c9bb66e36a0e@apache.org>
+Date: Thu, 27 Oct 2016 13:31:42 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2016-6797 Apache Tomcat Unrestricted Access to Global Resources
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-6797 Apache Tomcat Unrestricted Access to Global Resources
 
-> Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter
-> emulation support is vulnerable to an out-of-bounds read access issue. It
-> could occur while looking up MegaRAID Firmware Interface(MFI) command frames
-> in 'megasas_lookup_frame' routine.
-> 
-> A privileged user inside guest could use this flaw to read invalid memory
-> leading to crash the Qemu process on the host.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04424.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1336461
+Severity: Low
 
->> While doing MegaRAID SAS controller command frame lookup, routine
->> 'megasas_lookup_frame' uses 'read_queue_head' value as an index
->> into 'frames[MEGASAS_MAX_FRAMES=2048]' array. Limit its value
->> within array bounds to avoid any OOB access.
+Vendor: The Apache Software Foundation
 
-Use CVE-2016-5107.
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M9
+Apache Tomcat 8.5.0 to 8.5.4
+Apache Tomcat 8.0.0.RC1 to 8.0.36
+Apache Tomcat 7.0.0 to 7.0.70
+Apache Tomcat 6.0.0 to 6.0.45
+Earlier, unsupported versions may also be affected.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but
-that may be an expected place for a later update.
+Description
+The ResourceLinkFactory did not limit web application access to global
+JNDI resources to those resources explicitly linked to the web
+application. Therefore, it was possible for a web application to access
+any global JNDI resource whether an explicit ResourceLink had been
+configured or not.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M10 or later
+- Upgrade to Apache Tomcat 8.5.5 or later
+- Upgrade to Apache Tomcat 8.0.37 or later
+- Upgrade to Apache Tomcat 7.0.72 or later
+  (Apache Tomcat 7.0.71 has the fix but was not released)
+- Upgrade to Apache Tomcat 6.0.47 or later
+  (Apache Tomcat 6.0.46 has the fix but was not released)
 
-iQIcBAEBCAAGBQJXRz1JAAoJEHb/MwWLVhi2IHIP/2H2PSIdn9u6NM0/+piwp64W
-uDXllEWxQn/g0GVY411lOtjVAYx61u1V5735Ft0O4GpgygYbpHzZu1DJ1R5dkVcO
-iebNKl9R0p5XjOnUXSNkXXMJpElpHu1bsoU/szE+APYjBMFxifmDFQzOXojOvo1u
-TYkRxE0JG/SkCWnSChoGEcjOtewqVhI/sYGv+SGRZOClMmKZsv/OQnwhcRYJ9OcE
-/zvrOFMNCpJojNo+6szHlqqQsU1/6URrRBEhGbSpj2TH/9KQHMUKrAnCMxgWe06N
-D4WDQWGb2MUuS7JEdssRGLnIzhr78GR/F24J5ofYCew48oRtxof8NFyRAcy9NUZM
-SKo5POqRX+yfOOcQiHG/zEE2Dg39mYon539jrvx5dhGnrN2nhdY/4jBKl/wEjkR7
-dhbADHx5ogTCbKrm4hwB7KOco3JxywF0G1/G88EMSnXTaOpAdjWvlGdOw+qrGWAe
-MK1DzPgzd//Z7l2OQVFsfLQ0KQIHkZTS7RSOF1ltCF35d1B7ydvd2m51aoaURuSu
-JOL0h8AqaYS2Xo90J9g6nFl48NCFeFvwg5vs4Ag7lQIfh0d+qIZdSaA5AtEBzKbX
-gUaMSkRXwMpUuGtPVldwaYoTn934U6Ip/ffRdeDui4klcOrLITIIadvQspfj9ekG
-slNT+Dd0uYveHivvS8Z6
-=CpLG
------END PGP SIGNATURE-----
+Credit:
+This issue was discovered by the Apache Tomcat Security Team.
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
