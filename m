@@ -1,57 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/16/6
-Message-Id: <20160116165153.8AD7F6C035C@smtpvmsrv1.mitre.org>
-Date: Sat, 16 Jan 2016 11:51:53 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liuling-it@....cn
-Subject: Re: CVE request Qemu: i386: null pointer dereference in vapic_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/10
+Message-ID: <e1000c38-4d7c-9067-7f54-363845f89823@apache.org>
+Date: Thu, 27 Oct 2016 13:31:14 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2016-6794 Apache Tomcat Security System Property Disclosure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-6794 Apache Tomcat System Property Disclosure
 
-> Qemu emulator built with the TPR optimization for 32-bit Windows guests 
-> support is vulnerable to a null pointer dereference flaw. It occurs while 
-> doing I/O port write operations via hmp interface. In that, 'current_cpu' 
-> remains null, which leads to the null pointer dereference.
-> 
-> A user/process could use this flaw to crash the Qemu instance, resulting in 
-> DoS issue.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg02812.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1283934
+Severity: Low
 
->> When I/O port write operation is called from hmp interface,
->> 'current_cpu' remains null, as it is not called from cpu_exec()
->> loop. This leads to a null pointer dereference in vapic_write
->> routine. Add check to avoid it.
+Vendor: The Apache Software Foundation
 
-Use CVE-2016-1922.     
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M9
+Apache Tomcat 8.5.0 to 8.5.4
+Apache Tomcat 8.0.0.RC1 to 8.0.36
+Apache Tomcat 7.0.0 to 7.0.70
+Apache Tomcat 6.0.0 to 6.0.45
+Earlier, unsupported versions may also be affected.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/i386/kvmvapic.c but
-that may be an expected place for a later update.
+Description
+When a SecurityManager is configured, a web application's ability to
+read system properties should be controlled by the SecurityManager.
+Tomcat's system property replacement feature for configuration files
+could be used by a malicious web application to bypass the
+SecurityManager and read system properties that should not be visible.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M10 or later
+- Upgrade to Apache Tomcat 8.5.5 or later
+- Upgrade to Apache Tomcat 8.0.37 or later
+- Upgrade to Apache Tomcat 7.0.72 or later
+  (Apache Tomcat 7.0.71 has the fix but was not released)
+- Upgrade to Apache Tomcat 6.0.47 or later
+  (Apache Tomcat 6.0.46 has the fix but was not released)
 
-iQIcBAEBCAAGBQJWmnRUAAoJEL54rhJi8gl59noQAM/vSEILhzHjyInIECRi5Pa3
-AeMkMitYWVwKxLxy3J6iwItsF3BD6LcpvGHFo0U7v8dhln5vISQIUydx4TojPbtN
-KxF1H8rmpWmf4iJGYaryfqi4frgyUOw1LVzaHKdPSMh4C9EKHE3hiJ2kDOa/6J44
-1VrsmQNjvElfeMMYdlNI7FU1/5MY6HnBGzumu+gjqmdOl/Nz4BzzCMxfUmW7zAIL
-X6DYMReMrSfuSNXUUmwJW5L5VcWQGE90OBSA8izMMtTfvHvGeaTy/iNHwVQncjrw
-oBUpxqstKaAnW0CjuCUefzYQDX0XbXBtgRV5pzIwWg0Kc7WHBz7PrbEDSfHt0Tm7
-N34cM+52zlsuqKo2tvewV+YC4KcvXI1albAxOkt6GNvUK0njhA/H8kykh1UqaSGx
-PvhzZkryc9qD/mgZwpsFLgvNQ257/mwANHwc1F7FtjD3r8YH7Jh+A9EoX26ROKdQ
-AuDNZ3NyfemH6qYvEnmKFuxTyBvM/xB7kLA1pF59rdfWizgSJ2Ceuq2wqKTHdfrZ
-38UPE+X8T6i+z+HEg3kqITuCCe+npMUeDbWUiP0kSw6wYL0OX/SsvtfnNSWAGVZJ
-z477+jMpuUGPspK+rwRbkYvE/xHH1XnbT3rAA/1irXcvGnetlb1nAFPx0Fx06JxZ
-mD1djrzjFtIrW5WGftT1
-=ZYwp
------END PGP SIGNATURE-----
+Credit:
+This issue was discovered by the Apache Tomcat Security Team.
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
