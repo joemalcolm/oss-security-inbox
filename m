@@ -1,49 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/8
-Message-Id: <20160118185441.EB3FE6C00B2@smtpvmsrv1.mitre.org>
-Date: Mon, 18 Jan 2016 13:54:41 -0500 (EST)
-From: cve-assign@...re.org
-To: pariszoump@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Buffer Overflow in lha compression utility
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/8
+Message-ID: <d3cf7807-67e5-d4cf-66f5-e90eb0fbabd2@apache.org>
+Date: Thu, 27 Oct 2016 13:30:37 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2016-0762 Apache Tomcat Realm Timing Attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-0762 Apache Tomcat Realm Timing Attack
 
-> The header_size variable is determined from the first byte of the lha
-> archive header, which is read by the get_byte function. The returned
-> value is used in:
-> 
-> header_size + 2 - COMMON_HEADER_SIZE
-> 
-> to determine the elements' size used in fread() .
-> 
-> If the header_size is less than abs(2 - COMMON_HEADER_SIZE) = abs(2 -
-> 21) = 19 then the size parameter is overflowed and a buffer overflow
-> occurs in fread.
+Severity: Low
 
-Use CVE-2016-1925 for these CWE-130 issues.
+Vendor: The Apache Software Foundation
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M9
+Apache Tomcat 8.5.0 to 8.5.4
+Apache Tomcat 8.0.0.RC1 to 8.0.36
+Apache Tomcat 7.0.0 to 7.0.70
+Apache Tomcat 6.0.0 to 6.0.45
+Earlier, unsupported versions may also be affected.
 
-iQIcBAEBCAAGBQJWnTRlAAoJEL54rhJi8gl5bdUP/123UJ7W73/BOu1E/j1kKrFJ
-NMHjJZtEwjLmwZLCbV0HQ2l7311hbMZnjNm1lHLJuX695ca7prndMGEV5va5NVRF
-5X6z9OTBkitYTJVTp/RoolXPL+jXQr/LTXiieHl3M/Iq+lUV1fqZvWf5kytnGo2N
-AzQFGpDct0B7JfM6fGn8t6qd+/5ar56EAU01IEwyqSeKzIiQtAUes/y8D7D7RAyk
-O+B2lJMQ92/np8/i0guLoVs9P60xqDF0QPlVLQGKwZsBt/5T432JnUUkP/vyUYqc
-vY7aoe8tM6ib5Y1loSk6hTUynHR34EyQc4ZfyE9OL0ugdz4GDy/QzOWbDfrSlIw1
-u31ac9pRcGwHxToryqFmulPpfQlRclbnHQgqkNmPq0FrR9Q0WAYSiXHdHyqktKTv
-pMMZtO7UF6yABYSWVPyivprflRYbyP+Mm52VnOG/W27bevEeK46UUjlHPYVn/Qi4
-wFNhDvTh+fjkiGcfuR6wfIT2ABipkBeR8opAvz2XS8W7/ukDaIJZ1QVExThxMu57
-9H/uqLcAor7FrQiDfZv+s7SzstS898UeJvTbOn8HRZBerj6OkaPW9xR6v/B5Tf1W
-ssXuU2vaIe/7isYeWV8YzzD9dNJlGneHUBonSucu+buVx84spJqTP9NvRIcy2Z3U
-1IeE6G2X4oMRf3Kxm8Sj
-=h+oU
------END PGP SIGNATURE-----
+Description
+The Realm implementations did not process the supplied password if the
+supplied user name did not exist. This made a timing attack possible to
+determine valid user names. Note that the default configuration includes
+the LockOutRealm which makes exploitation of this vulnerability harder.
+
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M10 or later
+- Upgrade to Apache Tomcat 8.5.5 or later
+- Upgrade to Apache Tomcat 8.0.37 or later
+- Upgrade to Apache Tomcat 7.0.72 or later
+  (Apache Tomcat 7.0.71 has the fix but was not released)
+- Upgrade to Apache Tomcat 6.0.47 or later
+  (Apache Tomcat 6.0.46 has the fix but was not released)
+
+Credit:
+This issue was discovered by The Apache Tomcat Security Team.
+
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
