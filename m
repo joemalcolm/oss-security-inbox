@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/14
-Message-ID: <0bd84f88552a45a0a0669d5194dfeb93@imshyb02.MITRE.ORG>
-Date: Thu, 22 Dec 2016 18:57:06 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <zhenhaohong@...il.com>
-Subject: Re: CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/17
+Message-ID: <CALOY+aw+wkyLM1BkHGzPQzbP-8_-RM+hjRa6XyTv0Mnt8fLkaw@mail.gmail.com>
+Date: Thu, 27 Oct 2016 13:58:38 -0700
+From: Adith Sudhakar <adith.sudhakar@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-7067 - CSRF in Monit Service Manager
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
-> vulnerable to an out of bounds memory access issue. It could occur while
-> processing 'VIRTIO_GPU_CMD_GET_CAPSET' command.
-> 
-> A guest user/process could use this flaw to crash the Qemu process instance on
-> a host, resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg01903.html
+I'd found a CSRF issue in Monit(https://mmonit.com/monit/) in the Service
+Manager application that affects versions 5.19.0 and earlier. Red Hat has
+assigned CVE-2016-7067 to this issue. Monit has fixed this issue in version
+5.20.0
 
->> retrieves the maximum capabilities size to fill in the
->> response object. It continues to fill in capabilities even if
->> retrieved 'max_size' is zero(0), thus resulting in OOB access.
->> Add check to avoid it.
+Description:
+The forms in Monit's Service Manager are vulnerable to a cross site request
+forgery attack.
+Successful exploitation will enable an attacker to disable/enable all
+monitoring for a particular host, disable/enable monitoring for a specific
+service.
 
-Use CVE-2016-10028.
+Upstream Commit:
+https://bitbucket.org/tildeslash/monit/commits/c6ec3820e627f85417053e6336de2987f2d863e3?at=master
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
-that may be an expected place for a later update.
+Adith Sudhakar
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYXGfhAAoJEHb/MwWLVhi2GN4P/0mDg9MtY/9ZEuTj9P0t97Cz
-By4R/z4PK8qeFBGVYo5ftRVNRKit77pkB1rCLNkeaL891RjNya3LcFqb8JBLm6g3
-OP6LXA2GhkNdMNEFTAPg2pmnLqFdauHiRtIm/V9bfbCRbdZ+7Ys2rAcRhfc8N85H
-P+V1dHQIvx7VQXwo4pfRdMWXaJZJvbq6Dvvn4wFgcw32HJ39irsiWLa1x3quNmhL
-t5jBL3zp6lfTOO7fqUGLUOk9Rs/g2N5XrUTZ0Rc7Cw+1xjy/luWObIGF5fmnkW6M
-LbBlVoZmnZBJanoSdPTiwy5fURq1T1IjDC3n1ZRB+poVRsIOvCoFYJAozYHwOYeg
-g/kQwY+DYAUh3QE0SHRZJmO/TILS8ghtqrldZtS4WP87d+CMWi6PzMBumScIH9S3
-zPZSs0KLuXhWnus4yrFcYHrc/sonqZSfCvejw/Un2XxFb6fjc8VkwEzWZcFlZ+y8
-EpyDpSjflZcMsqzTK/ETogYtVcKGjjyg7b4tDRrP5Vjm98HmPSiCC+bLtqTcsF2p
-5oBGCwQX2dSNMTKMltUPTNeIdotZkF/6ym6TKnAs9YGGQI0ioxFHuT/6FhF6GAYA
-S2Y63sZbbTxDthsohCQBv/KPJFlHZyo1ih1dxRiVXGTqRjYWc+QZvz+mOJ0A07oT
-2h/TVl7vPCyM3UTD9Tym
-=GOF0
------END PGP SIGNATURE-----
