@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7790" "Wednesday" "17" "February" "2016" "17:24:40" "-0800" "Konstantin Serebryany" "konstantin.s.serebryany@gmail.com" "<CAGQ9bdw_kcv84s+mzevpBnNfhTN9idGRf_JJM7Tw8jk5Jsji_Q@mail.gmail.com>" "210" "Re: [oss-security] Address Sanitizer local root" "^Date:" nil nil "2" "2016021801:24:40" "[oss-security] Address Sanitizer local root" (number mark "        konstantin.s Feb 17  210/7790  " thread-indent "\"Re: [oss-security] Address Sanitizer local root\"\n") "<20160217221921.GB24130@port70.net>" ("<20160217221921.GB24130@port70.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2297" "Thursday" "27" "October" "2016" "08:24:24" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" "<F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>" "64" "Re: [oss-security] Re: Handful of libass issues" nil nil nil "10" "2016102713:24:24" "[oss-security] Re: Handful of libass issues" (number mark "U       bperry.volat Oct 27   64/2297  " thread-indent "\"Re: [oss-security] Re: Handful of libass issues\"\n") "<20161027083901.GA10554@lorien.valinor.li>" ("<BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>" "<20161005022322.18575ABC00D@smtpvmsrv1.mitre.org>" "<20161027083901.GA10554@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32332 invoked by uid 550); 18 Feb 2016 01:26:46 -0000
+Received: (qmail 11688 invoked by uid 550); 27 Oct 2016 13:24:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,250 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31744 invoked from network); 18 Feb 2016 01:25:11 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 11625 invoked from network); 27 Oct 2016 13:24:36 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=Sd1g1MqV9awscZXgGBTNVTday6OFmVZipCCZI0GqTvo=;
-        b=yMwi3RMQcVA/8pDrWCMV3RwSMrXRX33DT/rg4L8hljU1nidxmLesYZ6t5rGGv/Eo91
-         3J162aLpZgk63xRdJGzn2VfnflUHomHCG0Ork1ofnxlnRque9h7OoW08V314DnksjE+e
-         K+DlSl6su3wLPehiN7PdzoHOLdANqO7QWcHjMlWV6y49HZTXR27D7Z6f0dpl0TAwOT//
-         LzjC4iBUWW5jCHDzLsxr4x53x96ohXEp/wQARLLWQ7iGY6cEGrefeHWKkdEoNszlleU7
-         XReIf3oMOfztQbuwUgUYsCOFjD9KDK8DQf8gk4uKT77d/gPrzNvmgkhjy4tORwirr6Fn
-         8dmg==
+        h=subject:mime-version:from:in-reply-to:date:cc:message-id:references
+         :to;
+        bh=fv5hDFoqdzAv/7oeMbFmVv8h8G0AYGoVEJK5IKX1M8k=;
+        b=s9CyBVor6o2SPumzc44n55DXNjQqKW6iRYULPiVPx9b48AE5e0F4wDDJWhdKv6LteK
+         N/K/FdCbNivCyZaJJbeOu3QaGa7cdOnAUUQgEqBBMH+T4dW0qGajqtScUxhrpzgJdG7Z
+         1jSqYRwWj3ET+m672X7G9GsmIavW5g3VkrMnlUS3pQioQDmqp2csQxQfvejcHnhN29JZ
+         T4MaM9KxTlbAWachUfEbbMcq8lqSHFmnQGiZ0qMuASIfGtytVKxLwmStv9wUxhHwuufH
+         gIvdVzBOdxqbwaZBBWT1MxwJ0bHRARvUyXm/tFRY0w6YYof23vQrLOQRcbGUXe6Pzodo
+         dO6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type;
-        bh=Sd1g1MqV9awscZXgGBTNVTday6OFmVZipCCZI0GqTvo=;
-        b=LKStz8PUATdSF6bqegLA38Xzb/pTU79nripHCMmx0Gtd0ryWGkEhGsNuc1e2GscjtW
-         guSXNsL1MxNHtYgIC0W/2oO63J6+nkJRXxAbTBknE+zkQmLi+OSwmHuk3izPmtPWMBsO
-         XE1phU0wt7/0Zukf3FXM1rPKCgeYN82wZZmAayjhdz4r3ndR1Wt8Cdj0edftCFNFdUCM
-         mUPre5Pivbd00Im6jWlYccMtr8nr3Bl76GTX6b6uidecMtpQdfXmN4Ye+AjZb8aTXg4h
-         V4l1HS7KgxxcZuJoxJR011eXd6EO9KKszxxVwBGmn25b1rAWH/VLoqMuXoh0cUVTmWH2
-         lGpQ==
-X-Gm-Message-State: AG10YOQduddJLHS/LhVDRK4exnglziyoixrmPZ8ygZm3GbWQHqPl0ImT9PxX+PIZLBYUt6a893K7uxEtVjITTQ==
-X-Received: by 10.13.216.145 with SMTP id a139mr2581923ywe.245.1455758699718;
- Wed, 17 Feb 2016 17:24:59 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20160217221921.GB24130@port70.net>
-References: <20160217221921.GB24130@port70.net>
-Message-ID: <CAGQ9bdw_kcv84s+mzevpBnNfhTN9idGRf_JJM7Tw8jk5Jsji_Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114e55fa2cede8052c013c0f
-Date: Wed, 17 Feb 2016 17:24:40 -0800
-From: Konstantin Serebryany <konstantin.s.serebryany@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Address Sanitizer local root
-To: oss-security@lists.openwall.com
+        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
+         :message-id:references:to;
+        bh=fv5hDFoqdzAv/7oeMbFmVv8h8G0AYGoVEJK5IKX1M8k=;
+        b=f4wCyqTQPEghkOxf28+HKlIPRnn1GYr292mO1rNfud3cDNinrbmZrd6nX/sEcKyFIk
+         CN6SdrAH5YZap75bn60ErlRWu2ttYUTN0EZvxwRwTeESPkfcJ2E9CyBMXJy4MgF9Z8jE
+         K4BZWFvnx9XUXZLG9IhGha7hNofT1icxiO4KQa7KNIKBYaJw+EhqyXcJvb4Lda8J9hJD
+         SbPIys2GD7Z7oDRQ/0yrKrn7b23RSDxUVE3EgVWReK9lh9AJsLbEMHkya+GDRKq4oGvd
+         WWhoRgFL1x13n2R7soHehNt/phtxRlXL23ze6557jRyTe7RQCEZIQ0aWUeQomErKZo1A
+         8O7A==
+X-Gm-Message-State: ABUngvfEQOgfj33/K93iIr0FYCyrIVw3A/JU3BwJ5n9PUlr9zlTIvc7roL9uCNLLFDf1lg==
+X-Received: by 10.202.105.194 with SMTP id e185mr7523699oic.95.1477574664900;
+        Thu, 27 Oct 2016 06:24:24 -0700 (PDT)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_4D2E6B75-F2B7-4FA4-AC71-F63D63D48702"; protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Pgp-Agent: GPGMail
+From: Brandon Perry <bperry.volatile@gmail.com>
+In-Reply-To: <20161027083901.GA10554@lorien.valinor.li>
+Date: Thu, 27 Oct 2016 08:24:24 -0500
+Cc: oss-security@lists.openwall.com,
+ cve-assign@mitre.org
+Message-Id: <F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>
+References: <BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com> <20161005022322.18575ABC00D@smtpvmsrv1.mitre.org> <20161027083901.GA10554@lorien.valinor.li>
+To: Salvatore Bonaccorso <carnil@debian.org>
+X-Mailer: Apple Mail (2.3124)
+Subject: Re: [oss-security] Re: Handful of libass issues
 
---001a114e55fa2cede8052c013c0f
-Content-Type: text/plain; charset=UTF-8
-
-[I'm one of the asan authors]
-
-Thanks for the detailed explanation of why asan is not a hardening
-technique.
-I agree with most points here but they are not needed simply because asan
-run-time
-is so complex that it can not possibly be verifiable as a secure hardening
-tool.
-
-However using asan in production is sometimes desirable for *testing*
-purposes
-to find the last remaining bugs.
-
-More comments below.
+--Apple-Mail=_4D2E6B75-F2B7-4FA4-AC71-F63D63D48702
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
 
-On Wed, Feb 17, 2016 at 2:19 PM, Szabolcs Nagy <nsz@port70.net> wrote:
+> On Oct 27, 2016, at 3:39 AM, Salvatore Bonaccorso <carnil@debian.org> wro=
+te:
+>=20
+> Hi,
+>=20
+> On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@mitre.org wrote:
+>>> The third is a huge memory allocation leading to a crash that wasn't
+>>> fixed because a good solution is unavailable at the moment.
+>>=20
+>> Use CVE-2016-7971.
+>=20
+> It looks from the discussion in
+> https://github.com/libass/libass/pull/240 that this issue is disputed
+> to be actually in libass.
+>=20
 
-> There is an alarming trend that Address Sanitizer and related
-> compiler instrumentations from compiler-rt are used as a hardening
-> solution and run in production.
->
-> Even though these are debugging and testing tools, there is
-> no clear warning against production use in their documentation:
-> http://clang.llvm.org/docs/
-> And it's obvious how a tool that catches UB can be misunderstood
-> as a hardening tool:
->
-> This analysis concluded that ASan can be used for protection
-> to stop certain attacks:
-> http://scarybeastsecurity.blogspot.dk/2014/09/using-asan-as-protection.html
-> The Tor project distributes ASan "hardened" binaries:
-> https://blog.torproject.org/blog/tor-browser-55a4-hardened-released
-> And there are various projects for full Linux distro instrumentation:
->
-> http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
->
-> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
-> (the later was presented at FOSDEM 2016:
-> https://fosdem.org/2016/schedule/event/csafecode/ )
->
+For context, while the input caused a crash with AFL (not fuzzing with ASAN=
+) and it crashes with ASAN, I was unable to reproduce the crash with libass=
+ externally. I was only able to take up a hug amount of memory and take a l=
+ong time to finish parsing the input.
 
-The linux dostros with asan are primarily for *testing*, not hardening. (At
-least in my view)
+I asked if they dev wanted to reject the CVE but got no strong response eit=
+her way, so I decided to not pursue it.
 
-
->
-> While these are interesting projects, ASan should not be
-> used for hardening in production systems in its current form,
-> so at least the language ("hardening", "protection", "safe")
-> should be fixed.
->
-> My simple local root exploit is that ASan uses a lot
-> of environment variables without checking for secure
-> execution of setuid binaries:
->
-> ASAN_OPTIONS='verbosity=2 log_path=foo' ./suid.exe
->
-> will write to foo.$PID using escalated priviledge, so a
-> normal user may be able to clobber arbitrary root owned files
-> (by creating foo.{1,2,3,..} symlinks to it) which can lead
-> to local root on an "ASan hardened" Linux distribution:
->
-> ASAN_OPTIONS='suppressions="/foo
-> root:passwdhash:12345:0:::::
-> bar" log_path=foo' ./suid.exe
->
-> can easily clobber /etc/shadow with
->
-
-> AddressSanitizer: failed to read suppressions file '/foo
-> root:passwdhash:12345:0:::::
-> bar'
->
-
-nice!
+> Should the CVE assignment be revisited, possibly rejected, according
+> the upstream discussion?
+>=20
+> Regards,
+> Salvatore
 
 
->
-> if there is any setuid root executable built with ASan.
->
-> (This is not a problem for testing where the env var based
-> configuration is convenient and I haven't checked if any
-> of the current ASan distro efforts have setuid executables
-> with instrumentation, but I still find it a security bug
-> given the improper advertisment of the sanitizer tools:
-> this can lead to problems if the documentation is not fixed.)
->
-> Beyond this trivial issue there are plenty reliability
-> problems in the sanitizer runtimes that i think deserve
-> at least a warning. It can crash conforming applications
-> because
->
-> - the shadow map overlaps with something
-> - ulimit -v
-> - overcommit is turned off
-> - it allocates memory but aborts on failure
-> - it interposes __tls_get_addr with non-as-safe code.
-> - it uses initial-exec TLS.
-> - it handles "deadly" signals like SIGBUS
->   (often used by applications using mmaped files).
-> - the c runtime is updated and incompatible
->   (with the various interposition hacks)
-> - does not handle c11 thread creation
->
-> some of the features reduce security:
->
-> - heuristic introspective unwind
-> - nice diagnositc messages at undefined behaviour
-> - interpositions in general (UB according to POSIX)
->
-> other limitations:
->
-> - static linking is not supported
->
-> (This is for ASan only, I briefly looked at thread
-> sanitizer, which seemed even worse for reliability
-> and safe stack
+--Apple-Mail=_4D2E6B75-F2B7-4FA4-AC71-F63D63D48702
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
 
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
 
+iQIcBAEBCgAGBQJYEgAIAAoJEKJq8VjVbt2piFEQAKMaKcQxtIOHranNCoGP9iSB
+N/i0Ita62kM9kRePcyUL0+Xw5jN934N6YiFyR6xrJIpRrkx46AQYYt+/u13+Y+d2
+F+/WCRR+7SfWn6bIZADB0T676fzuFPNG1eYuVs1sXdzIRkCXt5YM02c6qInfHgvT
+okyeAxXKqErt/hipPkqjb+0eZsZvScjTf24Yeg3tjMc9gozruqAX+A0sY9jzjcdG
+0N6GOgc9e7DK3O/z8gWHGiF++Q3ipyN0HgLDCzH6Hn5xC87U+SPc+yYwlidL8sTC
+rJM1Wn4pgDsG4y1zCEtWkrnE433VH3W5bwhe+OXQzW+1E3YjSQpx8ucV96s0Kdko
+F+/gMLd2HChpFzex58TdV7bDtQ4in9Yo9f8ViE1ybbxiFSgYLGGBBS/R3a4YwXh0
+UpeNZ72/0g7r1C8OHB0x3E/HT5ZsX4+fzzIpc0qbWxtnM4SMs88IHsCbosyPztQC
+PkbdlnOsR0rZOg15Xbro79WgokuQjSlj3jCBovC0LjjQcd2eh3QS2yjOG2KE+P18
+n+Jh49KcB95iJFWWkxTCMpNgStfXx+f4dlOV9upnIZYehwunBAhtzGpLbjebb5CV
+/hDy75/GSKt0Pt7SBWUxArRr13b5F1rogM3lt61l2iQSEqWabNz/YkCXCXYSQXIK
+5p7luRFqiav43M/pKa5x
+=FN96
+-----END PGP SIGNATURE-----
 
-
-> that is in fact advertised for hardening
-> but it has plenty reliability problems, needs further
-> analysis.)
->
-
-safe stack is a new thing, not really well tuned and polished,
-but I would love to hear your analysis because we do expect safe stack to
-become a hardening tool.
-
-Also, WDYT about http://clang.llvm.org/docs/ControlFlowIntegrity.html ?
-:)
-
-
-
->
-> I believe some of the problems can be fixed by
-> implementing the runtimes in the libc instead of
->
-
-+1
-Many other problems will be solved by implementing asan/tsan/msan/lsan as
-part of a libc.
-
-
-
-> second guessing libc behaviour with fragile
-> heuristics from a compiler runtime.   This would solve
-> most of the runtime aborts.  I can see an easy way to do
-> this with musl libc
-
-
-Yes, please!
-
-
-> (because a non-host musl is easy to
-> distribute and link against), but non-trivial with glibc.
-> In either case I don't see a solution to the shadow map
-> commit charge unless the kernel is modified.  So I cannot
-> recommend even a careful reimplementation in libc for
-> production use for reliable systems.
->
-
-
-> ASan is also far from providing full memory safety and to a large extent
-> it defeats Address Space Layout Randomization. It was strange to see a
-> hardening effort enabling both PIE and ASan. Even without taking the
-> runtime issues into consideration, it can make exploitation easier. It
-> doesn't work with PaX ASLR for a reason. It's also incompatible with PaX
-> UDEREF on x86_64 but that's a separate kind of issue since it could be
-> altered to reserve the mappings in a way that's compatible.
-> ASan's bounds checking is great at detecting the common cases of
-> overflow for debugging, but it's far from exhaustive. An attacker would
-> be able to bypass it in the general case. It would make it too hard to
-> exploit some vulnerabilities, but it won't prevent exploitation in
-> general.
-> The use-after-free and double-free detection is based on the same
-> quarantine technique in Valgrind. It can only detect the issues before
-> allocations are flushed out of the quarantine by memory pressure. It
-> does mitigate many vulnerabilities but comparable double-free detection
-> could be done in malloc without the drawbacks (two flat arrays providing
-> a ring buffer for a FIFO quarantine + a hash table). The same thing
-> applies to write-after-free but not use-after-free, since that would
-> require instrumentation in the code. A write-after-free can be detected
-> by filling allocations with junk and then checking for it when it's
-> flushed from the quarantine rather than instrumentation. It doesn't need
-> to do the whole allocation to be useful, so there's a large range of
-> tuning for performance. The junk data could come from a stream cipher
-> seeded from the address if desired, but it doesn't seem important.
-> It makes a lot of sense to use UBSan in the trapping mode for hardening,
-> as it has no runtime and is simply adding extra checks branching to an
-> instruction aborting the process. That includes the bounds and object-
-> size sanitizers for bounds checking where object sizes are statically
-> known. They could even be extended to cover cases where the compiler can
-> figure out runtime size bounds at compile-time (for example, usage of
-> memory directly after allocation with malloc(n)).
-> Using ASan doesn't seem advisable. There would need to be an investment
-> in remaking it with hardening in mind. It might not make sense to use
-> the same design at all. For example, Intel MPX is much more oriented
-> towards usage in production, including for hardening.
-
-
-Sadly MPX is too slow, too memory-hungry, and does not protect from
-use-after-free at all.
-
---001a114e55fa2cede8052c013c0f--
+--Apple-Mail=_4D2E6B75-F2B7-4FA4-AC71-F63D63D48702--
