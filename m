@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2874" "Saturday" "27" "July" "2019" "20:40:10" "+0200" "Kristian Fiskerstrand" "k_f@gentoo.org" "<170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>" "75" "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil "7" "2019072718:40:10" "[oss-security] Statistics for distros lists updated for 2019Q2" (number mark "U       k_f@gentoo.o Jul 27   75/2874  " thread-indent "\"Re: [oss-security] Statistics for distros lists updated for 2019Q2\"\n") "<20190726110743.GA20519@openwall.com>" ("<3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>" "<20190725192324.GA17297@openwall.com>" "<d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>" "<20190726081641.GA18818@openwall.com>" "<fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>" "<20190726110743.GA20519@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7254" "Thursday" "27" "October" "2016" "22:42:06" "+0100" "Luke Hinds" "lhinds@redhat.com" "<00ce3a12-88cc-5727-5ee1-ff13b8748a3f@redhat.com>" "178" "[oss-security] [OSSN-0076] Glance Image service v1 and v2 api image-create vulnerability" nil nil nil "10" "2016102721:42:06" "[oss-security] [OSSN-0076] Glance Image service v1 and v2 api image-create vulnerability" (number mark "U       lhinds@redha Oct 27  178/7254  " thread-indent "\"[oss-security] [OSSN-0076] Glance Image service v1 and v2 api image-create vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1580 invoked by uid 550); 27 Jul 2019 18:43:04 -0000
+Received: (qmail 5608 invoked by uid 550); 27 Oct 2016 22:22:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,157 +12,198 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1532 invoked from network); 27 Jul 2019 18:43:03 -0000
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
- <20190725192324.GA17297@openwall.com>
- <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
- <20190726081641.GA18818@openwall.com>
- <fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>
- <20190726110743.GA20519@openwall.com>
-From: Kristian Fiskerstrand <k_f@gentoo.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=k_f@gentoo.org; prefer-encrypt=mutual; keydata=
- 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 kQ==
-Message-ID: <170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>
-Date: Sat, 27 Jul 2019 20:40:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+Received: (qmail 7539 invoked from network); 27 Oct 2016 21:42:25 -0000
+To: openstack@lists.openstack.org, openstack-dev@lists.openstack.org,
+        oss-security@lists.openwall.com
+From: Luke Hinds <lhinds@redhat.com>
+Message-ID: <00ce3a12-88cc-5727-5ee1-ff13b8748a3f@redhat.com>
+Date: Thu, 27 Oct 2016 22:42:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
 MIME-Version: 1.0
-In-Reply-To: <20190726110743.GA20519@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
+Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH"
-Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
+ boundary="Il6LlSHQpTFRW8xR71tMHGDLjIkgN67dc"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Thu, 27 Oct 2016 21:42:14 +0000 (UTC)
+Subject: [oss-security] [OSSN-0076] Glance Image service v1 and v2 api image-create
+ vulnerability
 
---6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH
-Content-Type: multipart/mixed; boundary="TS2U9SKW0DCE47gobwVJeXdz5monkuF83";
+--Il6LlSHQpTFRW8xR71tMHGDLjIkgN67dc
+Content-Type: multipart/mixed; boundary="qFA82vwoIce2AiwoxjRGPajvVO7SOWs1X";
  protected-headers="v1"
-From: Kristian Fiskerstrand <k_f@gentoo.org>
-Reply-To: k_f@gentoo.org
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-Message-ID: <170f95aa-dd99-6dea-fc1d-113324b8f535@gentoo.org>
-Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
-References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
- <20190725192324.GA17297@openwall.com>
- <d576c29f-32ca-bd1f-a0e8-5558774e52c6@gentoo.org>
- <20190726081641.GA18818@openwall.com>
- <fb798362-44b7-b673-6551-60af4cb48d70@gentoo.org>
- <20190726110743.GA20519@openwall.com>
-In-Reply-To: <20190726110743.GA20519@openwall.com>
+From: Luke Hinds <lhinds@redhat.com>
+To: openstack@lists.openstack.org, openstack-dev@lists.openstack.org,
+ oss-security@lists.openwall.com
+Message-ID: <00ce3a12-88cc-5727-5ee1-ff13b8748a3f@redhat.com>
+Subject: [OSSN-0076] Glance Image service v1 and v2 api image-create
+ vulnerability
 
---TS2U9SKW0DCE47gobwVJeXdz5monkuF83
+--qFA82vwoIce2AiwoxjRGPajvVO7SOWs1X
+Content-Type: multipart/mixed;
+ boundary="------------1FD27732830D829CC9D813E1"
+
+This is a multi-part message in MIME format.
+--------------1FD27732830D829CC9D813E1
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-On 26.07.2019 13:07, Solar Designer wrote:
-> On Fri, Jul 26, 2019 at 12:25:47PM +0200, Kristian Fiskerstrand wrote:
->> On 26.07.2019 10:16, Solar Designer wrote:
+Glance Image service v1 and v2 api image-create vulnerability
+---
 
-> Even if we set it to zero, it'd continue to skew the
-> averages.  So we should probably consistently exclude non-positive
-> embargo periods from the calculation of averages.  Will you, please?
->=20
+### Summary ###
+No limits are enforced within the Glance image service for both v1 and
+v2 `/images` API POST method for authenticated users, resulting in
+possible denial of service attacks through database table saturation.
 
-Sure
+### Affected Services / Software ###
+All versions of Glance image service.
 
-> This brings up and leaves open the question of what to do with very
-> short embargo periods like a few hours.  My suggestion is that we
-> continue to include them in the averages, but also add calculation and
-> reporting of median embargo times (also excluding just the non-positive
-> embargo periods from the calculation of the medians).  Can you do it,
-> please?
+### Discussion ###
+Within the Glance image service, calls to the POST method within v1 or
+v2/images creates an image (record) in `queued` status. There is no
+limit enforced within the Glance API on the number of images a single
+tenant may create, just on the total amount of storage a single user may
+consume.
 
-Adding medians is no problem
+Therefore a user could either maliciously or unintentionally fill
+multiple database tables (images, image_properties, image_tags,
+image_members) with useless image records, thereby causing a denial of
+service by lengthening transaction response times in the Glance database.
 
->=20
-> The non-positive embargo periods should probably continue to be listed
-> in the detail table, but a (foot)note should be added explaining that
-> they're excluded from the calculations.
+### Recommended Actions ###
+For all versions of Glance that expose either the v1 and v2/images API,
+operators are recommended to deploy external rate-limiting proxies or
+web application firewalls, to provide a front layer of protection to
+glance. The Glance database should be monitored for abnormal growth.
+Although rate-limiting does not eliminate this attack vector, it will
+slow it to the point where you can react prior to a denial of service
+occurring.
 
-That's also no issue, that said; likely won't spend too much time in
-front of computer the next week.
+The following solutions may be considered, however it is key that the
+operator carefully plans and considers the individual performance needs
+of users and services within their OpenStack cloud, when configuring any
+rate limiting functionality.
 
---=20
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+#### Repose ####
+Repose provides a rate limiting filter, that can utilise limits by IP,
+Role (OpenStack Identity v3 filter) or header.
+
+https://repose.atlassian.net/wiki/display/REPOSE/Rate+Limiting+Filter
+
+#### NGINX ####
+NGINX provides the limit_req_module, which can be used to provide a
+global rate
+limit. By means of a `map`, it can be limited to just the POST method.
+
+Further details can be found on the nginx site:
+http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
+
+#### HAProxy ####
+HAProxy can provide inherent rate-limiting using stick-tables with a General
+Purpose Counter (gpc)
+
+Further details can be found on the haproxy website:
+
+http://blog.haproxy.com/2012/02/27/use-a-load-balancer-as-a-first-row-of-de=
+fense-against-ddos
+
+#### Apache ####
+A number of solutions can be explored here as follows.
+
+##### mod_ratelimit #####
+http://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html
+
+##### mod_qos #####
+http://opensource.adnovum.ch/mod_qos/dos.html
+
+##### mod_evasive #####
+https://www.digitalocean.com/community/tutorials/how-to-protect-against-dos=
+-and-ddos-with-mod_evasive-for-apache-on-centos-7
+
+##### mod_security #####
+https://www.modsecurity.org/
+
+#### Limit `add_image` to admin role ####
+
+Another possible mitigation is to restrict image creation to the admin
+role, however this should only be done for those cases in which there
+are Glance nodes dedicated to end-user access only. Restriction to admin
+only on Glance nodes that serve OpenStack services will for example,
+remove the ability to create snapshots from the Compute API or to create
+bootable volumes from Cinder.
+
+To restrict image creation to the role admin only, amend
+`/etc/glance/policy.json` accordingly.
+
+    "add_image": "role:admin",
+
+### Contacts / References ###
+Author: Luke Hinds, Red Hat
+This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0076
+Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1545092
+OpenStack Security ML : openstack-security@lists.openstack.org
+OpenStack Security Group : https://launchpad.net/~openstack-ossg
 
 
---TS2U9SKW0DCE47gobwVJeXdz5monkuF83--
 
---6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH
+--------------1FD27732830D829CC9D813E1
+Content-Type: application/pgp-keys;
+ name="0x3C202614.asc"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="0x3C202614.asc"
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+Version: GnuPG v2=0A=
+=0A=
+mQENBFcLyhwBCADSNb8iiJtTiTVyLB9gmIah09wj48CULxqIC8VYogNRwky3CmQe=0A=
+fLQgcirIlvWFqL39PHHon3AYzpEU1fBB1G0SN2/bFT+qO/vE8fjkCuAxMJkfollN=0A=
+7Nq9y1/bSnXpw0uS+avKHClLD5OGX2oY2mDkiExkm8bzONu2+Iu3ZW313KU6Qw//=0A=
+sukJNwVVB8t67xsxiADUcfxUYQEZ1CGKPD4KFovrzmRodFE3BtMnsJNzHPMsI1CT=0A=
+Bt+8BuQhmoZ5akQSPQfojfVZvqr3DbCcFEQaBm5GCz6Rdqch1R7kQ+lgudXqpW92=0A=
+N+qm0kozx34TMFHw6mazuV2XhGpRUbV3r2GpABEBAAG0Hkx1a2UgSGluZHMgPGxo=0A=
+aW5kc0ByZWRoYXQuY29tPokBOAQTAQIAIgUCVwvKHAIbAwYLCQgHAwIGFQgCCQoL=0A=
+BBYCAwECHgECF4AACgkQ8WVWFzwgJhRnyQf6AnYhPjNfL6pKCQ/PjmyisgfMIXwH=0A=
+wK3P8Ev2Am1+xipt254NyZbO7P5i7efJ3GZqBc4TR93j8WqKalri+CYYao+PpNqE=0A=
+u6nlA3vbL9LA6W7B/hQLSFt2gNmMp24tNBenpqYkNOQA8A/5H0EOiyvhjepxUQ7+=0A=
+1jz1kKhKFua4a6nBSEdtqNGckOTx9T3q5ktQAp3tjhXQTaqNFKme4Wq5axT/aIe1=0A=
+gJRwa9ZPWEMdK1jyw88vFrEa4Y/3N29QlpaN9XwU4Wp8Amij2MN+C3BjF30sFXd3=0A=
+Cr6KU3VpcqqfM4s1ryrEJCtCpelOs8wK8Hr9xLeZ114PRYm+xSsAacNptLkBDQRX=0A=
+C8ocAQgAuqHCGpL2e3CNLbYFm19la3Z23/zbLZrSZyvhxHDuYlEfdK9qjX7zyYxV=0A=
+yNHyI6jhxDXED6ZObDgZNhST2V+E5h0t5PvLdfzLVffe/2bDa4GP+t63cqxtWPTV=0A=
+kiPHyvDNsBrMmM9n7iiEa01OxKOnAxBxvUJshfzUAiy5AtekrFRFTGOeBRiJXJI7=0A=
+N6dGtFBdQ7KfZRbQT3DMhz0nlERilva/+sbJ1sMbwDixMHhGBzVck9dWs+rJeMnl=0A=
+6lTeDBXg8kYXkMwdcV4vjaoRs7d7haF4vhlL9VQbM1I/3rhUXjXHX8Ct8XMMYhtI=0A=
+mHpbmqueX/lL4Rq71EAKoy4luvQk1QARAQABiQEfBBgBAgAJBQJXC8ocAhsMAAoJ=0A=
+EPFlVhc8ICYUOnUIAKMnO8bxB1UQRAkpzDq97fWaPSJgSxKRD8fzDg2k0zzuxeQ6=0A=
+D6EtSxmViTqYbjxr6Gd/bzuNQOkKy/fQXHbGL/zDurR+Xh+GH7yr+ynFdlWY701O=0A=
+Sa1+xAT5igQaKl29ofjH/I5sxCTZiCwySFcwhdpGUg1IMn7TlzPT6r/2Pafueqyh=0A=
+a0VPUxL91H+2emxu5EALHPaOmwyTlZWUmr4KL5BE88RTdZtu851nXSH6/qtGPmoe=0A=
+NrAh2yuKR9EkQYh9XyqC7dHQM4gM12XGTlwIwEg0zsE7Ve7ZewmXEKeqo2VTMPAm=0A=
+eC5p/0sWKobjfctTp6nuzolU6Ph6zJxPrHK+EoY=3D=0A=
+=3DU3nH=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
+
+--------------1FD27732830D829CC9D813E1--
+
+--qFA82vwoIce2AiwoxjRGPajvVO7SOWs1X--
+
+--Il6LlSHQpTFRW8xR71tMHGDLjIkgN67dc
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQEzBAEBCgAdFiEEICl/zzfUVEdaBsDU24F+DhePmz8FAl08mo4ACgkQ24F+DheP
-mz/pRQf/bhUGV9KNFBg0K19Q0HsxSuEXKcRQK5K/tvO3OLIGL32mtq/l1EzQvEI4
-QKpbh/ku4oNHkAaTYl9vOXppbBP0AWt9VpDhmTeljShY4zyeDYtMVG4KCtuBnXNc
-uau0nwTcBjB9lWlDODc301hg0V0s/tacYL57FoUnc7i7Ey4hEHhZcWSNSM2EKjyV
-LSIaFHmvJF3n2ZZGVlwwSARkx5MKqpRs26hBhXN0/IJrpeEPP0hodqaCahtdjXIP
-FpXmzQq+hnwhani6+O+5L3mGvOvZqLjTTvDbOCR3yU6wKA1P7yL3VnJqEnN17iae
-k49hifP1A52crv8R9UDBVoMljkTyfQ==
-=SDK3
+iQEcBAEBCAAGBQJYEnSyAAoJEPFlVhc8ICYUGRAH/AwATNp0A8PBoPBluqdUlO+h
+/gXdTuyN4BmbqqSY4OTCXCKOjLx2CT29gAtksDzaqTBDbssDOcYijkOiRI4i3ett
+ad0iOexX3/eD6c+2O/nE4CMW2Eyb24VyvlhKt0m6suBAkpxjKuPwalKHFlBvI5IL
+WEfVf0ZNlCgQg/Dg7NjfmIP1PEfU5lwRSCHjZcNMaHmhSsFr4tZfuxu+9AM8ZpOi
+hyAriEpSSf9l9OsLbQWlG2ZxiXu8W17eSELnKEJJxFcCtz09fSv+Sx9zgj+hg6SJ
+1Kx+ui3H8fCkygP3C7XGoZ+lPKha4QAwluBRX14aNQtCVucP/XNVVmPb+QvNyyI=
+=M0WB
 -----END PGP SIGNATURE-----
 
---6hlQf8Mpu1iVWaq8zAtYyhaDQmHcU1mnH--
+--Il6LlSHQpTFRW8xR71tMHGDLjIkgN67dc--
