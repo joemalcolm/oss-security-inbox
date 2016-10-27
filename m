@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/5
-Message-ID: <20161209201906.ltauap7fydkc62f6@eldamar.local>
-Date: Fri, 9 Dec 2016 21:19:06 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/2
+Message-Id: <20161027064453.D3E771BE040@smtpvbsrv1.mitre.org>
+Date: Thu, 27 Oct 2016 02:44:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: gustavo.grieco@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: librsvg and cairo are causing libpng to write out-of-bounds
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Sam Whited discovered that MCabber versions 1.0.3 and before, was
-vulnerable to an attack identical to Gajim's CVE-2015-8688 [1] which
-can lead to a malicious actor MITMing a conversation, or adding
-themselves as an entity on a third parties roster (thereby granting
-themselves the associated priviledges such as observing when the user
-is online).
+> A patch was recently proposed:
+> 
+> https://bugs.freedesktop.org/attachment.cgi?id=127421
+> 
+> thanks to John Bowler and his detailed analysis of this issue:
+> 
+> https://bugs.freedesktop.org/show_bug.cgi?id=98165
+> 
+> Can we have a CVE, now that we know it was an integer overflow and we have
+> a patch?
 
-The issue was fixed in the 1.0.4 release, with patch found at [2].
+Yes, use CVE-2016-9082 for everything fixed by
+attachment.cgi?id=127421. Our understanding is that cairo is the
+primary affected product.
 
-Can a CVE be assigned for this issue?
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Regards,
-Salvatore
-
- [1] https://gultsch.de/gajim_roster_push_and_message_interception.html
- [2] https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
- [3] https://bugs.debian.org/845258
+iQIcBAEBCAAGBQJYEaIXAAoJEHb/MwWLVhi2F84P/RGLhyp408cPps8/bkAIzpL5
+zJ8/+sqWYlVfYt+Mwcd4InGIzxHhaBRtPbX7c8FsWRhySib7QRadPdnp4U9xUNXP
+o7Z4kV55WIaJhqo5soJT0kMBoI+itrktfJHFsyWnX3KGPvrsc+lembzQ0313Bw8f
+G8KSmcSIfEBChOPdqezTsVHggDpwPdmXjBrNrd44WbQJA95oUz9dr9VPknSX52Bw
+eBUJRuZ19EV3qlwaw0zrZcme1oqReyELGj8LRBLXGIbEbKfX9azjnHefWJXQW8qr
+N3iWWoKSHe2RMo61FcG0T75AVF+A8SCsnbrWsmR4tDMmV98KNqdEoBZmvqH0wrBH
+1A3pfvLYE4b9y6IsuWOjSvncvnxaWjHL+U0Vl7ndvHjWUWx6FTXkNLy6+YtxOu7D
+wTfMhCSjaXtGoQS6yXYTJlHO1iFE9E3b/7p7Bn/Wgztba78OUUZQyVf4+jT49YQg
+dO3OlSx0piN/VSg3ow6+YBHcN9Hr4abgRjFQD9stw2Ski8AOnGZ6vAn5XYqP9xLG
+xbWdGECCFX3WlTrQwW/2yKV4B1QndNeqvnhYFTEKNxePPI4236mTHC49mP64SFVG
+qALbGd+izC6KRtK1TG6jmFze8wQ1zyfCg3pWd0wottDwoSDOIkUGLv+6U5Cpqz6O
+nve18XRyf0Tm9+hQQ8/X
+=3wl0
+-----END PGP SIGNATURE-----
