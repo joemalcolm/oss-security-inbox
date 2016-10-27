@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["13358" "Wednesday" "9" "November" "2016" "15:40:50" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1812600.W4HMrhroht@blackgate>" "125" "[oss-security] jasper: use after free in jas_realloc (jas_malloc.c)" nil nil nil "11" "2016110914:40:50" "[oss-security] jasper: use after free in jas_realloc (jas_malloc.c)" (number mark "U       ago@gentoo.o Nov  9  125/13358 " thread-indent "\"[oss-security] jasper: use after free in jas_realloc (jas_malloc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5044" "Thursday" "27" "October" "2016" "12:26:20" "+0100" "Cory Benfield" "cory@lukasa.co.uk" "<7FA392D7-7065-4BE4-80BD-E3118A003F79@lukasa.co.uk>" "87" "[oss-security] CVE-2016-9015: Python urllib3 1.17 and 1.18 certificate verification failure" nil nil nil "10" "2016102711:26:20" "[oss-security] CVE-2016-9015: Python urllib3 1.17 and 1.18 certificate verification failure" (number mark "U       cory@lukasa. Oct 27   87/5044  " thread-indent "\"[oss-security] CVE-2016-9015: Python urllib3 1.17 and 1.18 certificate verification failure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21934 invoked by uid 550); 9 Nov 2016 14:41:08 -0000
+Received: (qmail 32655 invoked by uid 550); 27 Oct 2016 11:26:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,140 +12,127 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21788 invoked from network); 9 Nov 2016 14:41:06 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 32628 invoked from network); 27 Oct 2016 11:26:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lukasa-co-uk.20150623.gappssmtp.com; s=20150623;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=zU7DiLVu2tJMClBUbWEMI0iThPLslr5RxudENcFGyFw=;
+        b=u+L1j/1FtX9ugFw7w1G0pS0/4/zXkwyqcOJzlggI59BiHCkjZfVBacpJT9Hei9WH67
+         /W0oR5IIsd3hHHIdKDLlxd4cFofPTatjYkIQfneC0CPxpCUJf4Ccj4rHD/Io4R5s43LK
+         UylGeeSWGVcHhX8aoyAau1uaqFYEkoUZ3rOFl+SOD3WKM3JAWpk+ZS+U7/yKslT5w4A2
+         W/GrKGlzCaJCn0xGU67+rXFCo+M4z4iS8jccuyd51zF8lSaM4m4T7GZ3lGL+gLJHwLo1
+         /h76dV5Ngr4cLOQc3k5gNt8nbGm/WaPIm65qFxi1M2xeTw1iuQDn8YXTrKh2A6UMJcL5
+         RrfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=zU7DiLVu2tJMClBUbWEMI0iThPLslr5RxudENcFGyFw=;
+        b=I00/z+crlIwLaxR4gJOLazXycYeoN13U5edVU+9hedr4OwVfRd6ecKHsbyYG/VHTu0
+         vwAt3WWO5zabwEszgVbtggsR7buX9gGdhsSuhv57CQb6hijFtN/fMUf17/UkMq1zrXfJ
+         kAdghN3lgdyXurE3vphDtyMUg9SdesqHM4JOV9jxSshHEU2xHgHpLOuA4QHT2AjlihAp
+         c9+pWKPdIiLK8d9dQ2YB+uUPbCJiYVpS7uzpCuM3da+Jt16+RRd6dTpO0Vw0QTOEIAnk
+         1gJDBo1GCcMOf6lYrY0l2hWMy7Fj0oGOpO/tPiTKAsX8dk+dRr0RzL/WWVjIe9f+O3DB
+         a5Ng==
+X-Gm-Message-State: ABUngvcapqTxET4xhC45SJl3NfaxzfoWe5ZHhWkmBOcQ1BKS3JCO4wxYmEgxxhBcp3PZZQ==
+X-Received: by 10.194.142.116 with SMTP id rv20mr6395676wjb.184.1477567581612;
+        Thu, 27 Oct 2016 04:26:21 -0700 (PDT)
+From: Cory Benfield <cory@lukasa.co.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
+Message-Id: <7FA392D7-7065-4BE4-80BD-E3118A003F79@lukasa.co.uk>
+Date: Thu, 27 Oct 2016 12:26:20 +0100
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:40:50 +0100
-Message-ID: <1812600.W4HMrhroht@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] jasper: use after free in jas_realloc (jas_malloc.c)
+X-Mailer: Apple Mail (2.3251)
+Subject: [oss-security] CVE-2016-9015: Python urllib3 1.17 and 1.18 certificate verification
+ failure
 
-If it is suitable for a CVE please assign one. Thanks.
+Versions 1.17 and 1.18 of the Python urllib3 library suffer from a vulnerab=
+ility that can cause them, in certain configurations, to not correctly vali=
+date TLS certificates. This places users of the library with those configur=
+ations at risk of man-in-the-middle and information leakage attacks. This v=
+ulnerability affects users using versions 1.17 and 1.18 of the urllib3 libr=
+ary, who are using the optional PyOpenSSL support for TLS instead of the re=
+gular standard library TLS backend, and who are using OpenSSL 1.1.0 via PyO=
+penSSL. This is an extremely uncommon configuration, so the security impact=
+ of this vulnerability is low.
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+Affected users should upgrade to urllib3 1.18.1, which has been published t=
+oday and contains only the mitigation for this vulnerability on top of the =
+changes in 1.18. If unable to upgrade, users should downgrade their OpenSSL=
+ version or temporarily stop injecting PyOpenSSL into urllib3 until they ar=
+e able to upgrade. A more lengthy description of the vulnerability follows.
 
-A crafted image, maybe posted in the past as testcase for another bug, causes 
-in the 1.900.18 version a use-after-free. No fuzzers involved at this time.
+=E2=80=94
 
-The complete ASan output:
+This vulnerability was introduced in a substantial refactor of the PyOpenSS=
+L contrib module. During this refactor, a branch of code that mapped the Py=
+thon standard library certificate verification constants (ssl.CERT_NONE, ss=
+l.CERT_OPTIONAL, ssl.CERT_REQUIRED) to OpenSSL verification mode flags (SSL=
+_VERIFY_NONE, SSL_VERIFY_PEER, etc.) was accidentally lost. This meant that=
+ Python standard library constants would be passed directly to OpenSSL via =
+the SSL_CTX_set_verify function=E2=80=99s mode argument.
 
-# imginfo -f $FILE
-Corrupt JPEG data: 19 extraneous bytes before marker 0xda                                                                                                                                                                                                                      
-=================================================================                                                                                                                                                                                                              
-==21990==ERROR: AddressSanitizer: heap-use-after-free on address 
-0x619000009b80 at pc 0x7fce4229d29d bp 0x7fffab22f9a0 sp 0x7fffab22f998                                                                                                                                       
-READ of size 8 at 0x619000009b80 thread T0                                                                                                                                                                                                                                     
-    #0 0x7fce4229d29c in jas_realloc /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21                                                                                                                                       
-    #1 0x7fce422a5e38 in mem_resize /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:1001:14                                                                                                                                       
-    #2 0x7fce422a5e38 in mem_write /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:1027                                                                                                                                           
-    #3 0x7fce422a30e5 in jas_stream_flushbuf /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:822:7                                                                                                                                
-    #4 0x7fce422a4b4c in jas_stream_flush /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:752:9                                                                                                                                   
-    #5 0x7fce422a4b4c in jas_stream_seek /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_stream.c:659                                                                                                                                      
-    #6 0x7fce42273928 in jas_image_cmpt_create /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_image.c:351:4                                                                                                                               
-    #7 0x7fce42276986 in jas_image_addcmpt /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_image.c:723:18                                                                                                                                  
-    #8 0x7fce4233e3fc in jpg_mkimage /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/jpg/jpg_dec.c:268:7                                                                                                                                            
-    #9 0x7fce4233e3fc in jpg_decode /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/jpg/jpg_dec.c:183                                                                                                                                               
-    #10 0x7fce422749bd in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_image.c:396:16                                                                                                                                  
-    #11 0x4f1330 in main /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/appl/imginfo.c:203:16                                                                                                                                                                
-    #12 0x7fce4138961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
-    #13 0x418cb8 in _init (/usr/bin/imginfo+0x418cb8)                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                                               
-0x619000009b80 is located 0 bytes inside of 1056-byte region 
-[0x619000009b80,0x619000009fa0)                                                                                                                                                                                   
-freed by thread T0 here:                                                                                                                                                                                                                                                       
-    #0 0x4bff00 in free /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:38                                                                                                                                     
-    #1 0x7fce4229d359 in jas_free /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:225:3                                                                                                                                           
-                                                                                                                                                                                                                                                                               
-previously allocated by thread T0 here:                                                                                                                                                                                                                                        
-    #0 0x4c0208 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52                                                                                                                                   
-    #1 0x7fce4229d0b2 in jas_malloc /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:148:13                                                                                                                                        
-                                                                                                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-use-after-free /tmp/portage/media-
-libs/jasper-1.900.18/work/jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21 
-in jas_realloc                                                                                                              
-Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
-  0x0c327fff9320: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9340: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9350: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0c327fff9360: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-=>0x0c327fff9370:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff9380: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff9390: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff93a0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff93b0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-  0x0c327fff93c0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd                                                                                                                                                                                                              
-Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
-  Addressable:           00                                                                                                                                                                                                                                                    
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==21990==ABORTING
+Unfortunately, these Python standard library constants are Python wrappers =
+around the values of a C enumerated type, declared like this:
 
-Affected version:
-1.900.18
+    enum py_ssl_cert_requirements {
+        PY_SSL_CERT_NONE,
+        PY_SSL_CERT_OPTIONAL,
+        PY_SSL_CERT_REQUIRED
+    };
 
-Fixed version:
-1.900.22
+Per the standard C enumerated type rules, these constants have the values 0=
+, 1, and 2 respectively. These integers do not all map to their OpenSSL ver=
+ification mode flag equivalents. While PY_SSL_CERT_NONE and SSL_VERIFY_NONE=
+ have the same value (0) and PY_SSL_CERT_OPTIONAL and SSL_VERIFY_PEER have =
+the same value (1), PY_SSL_CERT_REQUIRED has the value 2, which maps to SSL=
+_VERIFY_FAIL_IF_NO_PEER_CERT. This flag is defined by the OpenSSL manual pa=
+ge as being meaningless on its own, requiring SSL_VERIFY_PEER to also be se=
+t in order to have any effect. Additionally, the manual page declares that =
+SSL_VERIFY_FAIL_IF_NO_PEER_CERT has no effect in client mode.
 
-Commit fix:
-https://github.com/mdadams/jasper/commit/634ce8e8a5accc0fa05dd2c20d42b4749d4b2735
+In OpenSSL versions prior to 1.1.0, an implementation detail in the OpenSSL=
+ codebase would mean that if any nonzero value was passed to the mode argum=
+ent of SSL_CTX_set_verify this would implicitly have the same effect as set=
+ting SSL_VERIFY_PEER. Essentially, the only value of mode in OpenSSL versio=
+ns prior to 1.1.0 that would cause certificate validation to be disabled wa=
+s 0 (SSL_VERIFY_NONE).
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+In the work done for OpenSSL 1.1.0, this implementation detail was changed =
+to check for the SSL_VERIFY_PEER bit directly. As the OpenSSL flags are a b=
+it mask, passing PY_SSL_CERT_REQUIRED (2) would *not* have the SSL_VERIFY_P=
+EER bit (1) set, which means that OpenSSL would act act as though SSL_VERIF=
+Y_PEER was not set. Thus, if PY_SSL_CERT_REQUIRED is passed to OpenSSL dire=
+ctly in client mode, OpenSSL 1.0.2 and earlier treat it as equivalent to SS=
+L_VERIFY_PEER, whereas OpenSSL 1.1.0 and later treat it as equivalent to SS=
+L_VERIFY_NONE.
 
-CVE:
-N/A
+This is unquestionably an application error. The OpenSSL documentation is c=
+lear that the SSL_VERIFY_FAIL_IF_NO_PEER_CERT flag is both meaningless by i=
+tself and in client mode. However, OpenSSL=E2=80=99s unexpected change in b=
+ehaviour, combined with the fact that it has no way to report an invalid fl=
+ag combination to SSL_CTX_set_verify, means that this application error lea=
+ds to a catastrophic silent security failure when used with OpenSSL 1.1.0.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00028-jasper-uaf-jas_realloc
+The fix for urllib3 is to reintroduce a mapping between the Python standard=
+ library enumerated type and the OpenSSL flags. Other applications should a=
+udit and confirm that they always successfully pass SSL_VERIFY_PEER to SSL_=
+CTX_set_verify. The OpenSSL team have been notified of this behaviour and h=
+ave concluded that it is not a security vulnerability in OpenSSL. However, =
+they are considering reverting this change regardless, on the principle tha=
+t it is better to fail closed than to fail open: https://github.com/openssl=
+/openssl/pull/1793
 
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-06: upstream released a patch and 1.900.22
-2016-11-07: blog post about the issue
+Fortunately, urllib3=E2=80=99s test suite caught this failure, which led to=
+ this investigation. Unfortunately, due to the relative scarcity of OpenSSL=
+ 1.1.0, two released versions of urllib3 had passed before anyone attempted=
+ to run urllib3 with OpenSSL 1.1.0.
 
-Note:
-This bug was found with Address Sanitizer.
+The urllib3 team have contacted downstream redistributors for Red Hat and D=
+ebian: both distributions are not using versions of urllib3 later than 1.16=
+, and so are unaffected. Additionally, the Python Requests library is using=
+ urllib3 version 1.16 and is also not affected.
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/jasper-use-after-free-in-jas_realloc-jas_malloc-c
