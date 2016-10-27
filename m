@@ -1,33 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/9
-Message-Id: <20160928122002.671555ec3ab226712057df54@andrewayer.name>
-Date: Wed, 28 Sep 2016 12:20:02 -0700
-From: Andrew Ayer <agwa@...rewayer.name>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: systemd v209+: local denial-of-service attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/18
+Message-ID: <CANO=Ty3orM88PNLeyyNO41yD+ScJyi5ys4_ZeNAEY+qR+LP6Tw@mail.gmail.com>
+Date: Thu, 27 Oct 2016 16:24:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: openstack@...ts.openstack.org, openstack-dev@...ts.openstack.org
+Subject: Re: [OSSN-0076] Glance Image service v1 and v2 api image-create vulnerability
 Content-Type: text/plain; charset=utf-8
 
-systemd[1] fails an assertion in manager_invoke_notify_message[2] when
-a zero-length message is received over its notification socket.
-After failing the assertion, PID 1 hangs in the pause system call.
-It is no longer possible to start and stop daemons or cleanly reboot
-the system. Inetd-style services managed by systemd no longer accept
-connections.
+Just a note this was assigned CVE-2016-8611
 
-Since the notification socket, /run/systemd/notify, is world-writable,
-this allows a local user to perform a denial-of-service attack against
-systemd.
+On Thu, Oct 27, 2016 at 3:42 PM, Luke Hinds <lhinds@...hat.com> wrote:
 
-Proof-of-concept:
+> Glance Image service v1 and v2 api image-create vulnerability
+> ---
+>
+> ### Summary ###
+> No limits are enforced within the Glance image service for both v1 and
+> v2 `/images` API POST method for authenticated users, resulting in
+> possible denial of service attacks through database table saturation.
+>
+> ### Affected Services / Software ###
+> All versions of Glance image service.
+>
+> ### Discussion ###
+> Within the Glance image service, calls to the POST method within v1 or
+> v2/images creates an image (record) in `queued` status. There is no
+> limit enforced within the Glance API on the number of images a single
+> tenant may create, just on the total amount of storage a single user may
+> consume.
+>
+> Therefore a user could either maliciously or unintentionally fill
+> multiple database tables (images, image_properties, image_tags,
+> image_members) with useless image records, thereby causing a denial of
+> service by lengthening transaction response times in the Glance database.
+>
+> ### Recommended Actions ###
+> For all versions of Glance that expose either the v1 and v2/images API,
+> operators are recommended to deploy external rate-limiting proxies or
+> web application firewalls, to provide a front layer of protection to
+> glance. The Glance database should be monitored for abnormal growth.
+> Although rate-limiting does not eliminate this attack vector, it will
+> slow it to the point where you can react prior to a denial of service
+> occurring.
+>
+> The following solutions may be considered, however it is key that the
+> operator carefully plans and considers the individual performance needs
+> of users and services within their OpenStack cloud, when configuring any
+> rate limiting functionality.
+>
+> #### Repose ####
+> Repose provides a rate limiting filter, that can utilise limits by IP,
+> Role (OpenStack Identity v3 filter) or header.
+>
+> https://repose.atlassian.net/wiki/display/REPOSE/Rate+Limiting+Filter
+>
+> #### NGINX ####
+> NGINX provides the limit_req_module, which can be used to provide a
+> global rate
+> limit. By means of a `map`, it can be limited to just the POST method.
+>
+> Further details can be found on the nginx site:
+> http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
+>
+> #### HAProxy ####
+> HAProxy can provide inherent rate-limiting using stick-tables with a
+> General
+> Purpose Counter (gpc)
+>
+> Further details can be found on the haproxy website:
+>
+> http://blog.haproxy.com/2012/02/27/use-a-load-balancer-as-
+> a-first-row-of-defense-against-ddos
+>
+> #### Apache ####
+> A number of solutions can be explored here as follows.
+>
+> ##### mod_ratelimit #####
+> http://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html
+>
+> ##### mod_qos #####
+> http://opensource.adnovum.ch/mod_qos/dos.html
+>
+> ##### mod_evasive #####
+> https://www.digitalocean.com/community/tutorials/how-to-
+> protect-against-dos-and-ddos-with-mod_evasive-for-apache-on-centos-7
+>
+> ##### mod_security #####
+> https://www.modsecurity.org/
+>
+> #### Limit `add_image` to admin role ####
+>
+> Another possible mitigation is to restrict image creation to the admin
+> role, however this should only be done for those cases in which there
+> are Glance nodes dedicated to end-user access only. Restriction to admin
+> only on Glance nodes that serve OpenStack services will for example,
+> remove the ability to create snapshots from the Compute API or to create
+> bootable volumes from Cinder.
+>
+> To restrict image creation to the role admin only, amend
+> `/etc/glance/policy.json` accordingly.
+>
+>     "add_image": "role:admin",
+>
+> ### Contacts / References ###
+> Author: Luke Hinds, Red Hat
+> This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0076
+> Original LaunchPad Bug : https://bugs.launchpad.net/ossn/+bug/1545092
+> OpenStack Security ML : openstack-security@...ts.openstack.org
+> OpenStack Security Group : https://launchpad.net/~openstack-ossg
+>
+>
+>
 
-        NOTIFY_SOCKET=/run/systemd/notify systemd-notify ""
 
-This vulnerability is present in all versions of systemd since at
-least v209[3].
+-- 
 
-This has been reported to systemd.[4]
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-[1] https://github.com/systemd/systemd/
-[2] https://github.com/systemd/systemd/blob/b8fafaf4a1cffd02389d61ed92ca7acb1b8c739c/src/core/manager.c#L1666
-[3] https://github.com/systemd/systemd/commit/5ba6985b6c8ef85a8bcfeb1b65239c863436e75b#diff-ab78220e12703ee63fa1e6a2caa16bebR1325
-[4] https://github.com/systemd/systemd/issues/4234
