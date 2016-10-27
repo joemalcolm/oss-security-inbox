@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/08/3
-Message-ID: <CABEk9YyTYLpTE0Q5wtvqdHirJd6-2sdJ6Y2YE_kty+wi3DB4jw@mail.gmail.com>
-Date: Sun, 8 May 2016 18:16:50 -0400
-From: Kangjie Lu <kangjielu@...il.com>
-To: oss-security@...ts.openwall.com, Chengyu Song <csong84@...ech.edu>,  Insu Yun <insu@...ech.edu>, Taesoo Kim <taesoo@...ech.edu>
-Subject: CVE Request: kernel information leak vulnerability in Linux sound module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/11
+Message-ID: <97431190-9abf-9096-1212-14685649ed8c@apache.org>
+Date: Thu, 27 Oct 2016 13:31:30 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2016-6796 Apache Tomcat Security Manager Bypass
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+CVE-2016-6796 Apache Tomcat Security Manager Bypass
 
-In file sound/core/timer.c of the latest mainline Linux kernel, the stack
-object “tread” has a total size of 32 bytes. It contains a 8-bytes padding,
-which is not initialized but sent to user via copy_to_user, resulting a
-kernel leak.
+Severity: Low
 
-Fix info:
-http://comments.gmane.org/gmane.linux.kernel/2214250
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M9
+Apache Tomcat 8.5.0 to 8.5.4
+Apache Tomcat 8.0.0.RC1 to 8.0.36
+Apache Tomcat 7.0.0 to 7.0.70
+Apache Tomcat 6.0.0 to 6.0.45
+Earlier, unsupported versions may also be affected.
 
-Please help assign a CVE to this vulnerability.
+Description
+A malicious web application was able to bypass a configured
+SecurityManager via manipulation of the configuration parameters for the
+JSP Servlet.
 
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M10 or later
+- Upgrade to Apache Tomcat 8.5.5 or later
+- Upgrade to Apache Tomcat 8.0.37 or later
+- Upgrade to Apache Tomcat 7.0.72 or later
+  (Apache Tomcat 7.0.71 has the fix but was not released)
+- Upgrade to Apache Tomcat 6.0.47 or later
+  (Apache Tomcat 6.0.46 has the fix but was not released)
 
-Thanks,
-Kangjie Lu
+Credit:
+This issue was discovered by the Apache Tomcat Security Team.
 
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
