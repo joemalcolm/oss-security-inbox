@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/6
-Message-ID: <CAFEMS4tXDKYxKVMmU0zTb_7uzduoUS4_RePnUwz1tj+GQLNw5Q@mail.gmail.com>
-Date: Fri, 27 May 2016 16:17:33 +0100
-From: Keith W <keith.wall@...il.com>
-To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [CVE-2016-4432] Apache Qpid Java Broker - authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/14
+Message-ID: <alpine.LFD.2.20.1610280151370.5357@wniryva>
+Date: Fri, 28 Oct 2016 01:54:24 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: net: eepro100 memory leakage at device unplug
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2016-4432] Apache Qpid Java Broker - authentication bypass
+   Hello,
 
-Severity: Important
+Quick Emulator(Qemu) built with the i8255x (PRO100) NIC emulation support is 
+vulnerable to a memory leakage issue. It could occur while unplugging the 
+device, and doing so repeatedly would result in leaking host memory affecting, 
+other services on the host.
 
-Vendor: The Apache Software Foundation
+A privileged user inside guest could use this flaw to cause a DoS on the host 
+and/or potentially crash the Qemu process on the host.
 
-Versions Affected: Qpid Java Broker versions 6.0.2 and earlier
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg03024.html
 
-Description:
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1389538
 
-The code responsible for handling incoming AMQP 0-8, 0-9, 0-91, and
-0-10 connections contains a flaw that allows authentication to be
-bypassed.  An remote attacker can exploit this vulnerability to
-perform actions, without the need to specify valid credentials.  For
-instance, unauthorised messages could be injected or messages stolen.
+This issue was reported by Li Qiang of 360.cn Inc.
 
-The vulnerability cannot be exploited if the Access Control List (ACL)
-feature is enabled AND access to all virtual hosts controlled.
-
-The vulnerability does not apply to the Broker's AMQP 1.0 support.
-
-The vulnerability does not apply if the Broker is configured to
-require SSL client authentication for all messaging connections.
-
-Resolution:
-
-Users should upgrade the Qpid Java Broker to version 6.0.3 or later
-(recommended).
-
-Mitigation:
-
-If upgrading is not possible, the vulnerability can be mitigated using
-an ACL file containing "ACCESS VIRTUALHOST" clauses that white-lists
-user access to all virtualhosts.
-
-If AMQP 0-8, 0-9, 0-91, and 0-10 support is not required, the
-vulnerability can also be mitigated by turning off these protocols at
-the Port level.
-
-References:
-
-https://issues.apache.org/jira/browse/QPID-7257
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
