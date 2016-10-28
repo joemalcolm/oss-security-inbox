@@ -1,70 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/6
-Message-ID: <56DF4BF7.8010904@redhat.com>
-Date: Tue, 8 Mar 2016 22:02:31 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA 2016-007] Nova host data leak through resize/migration (CVE-2016-2140)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/4
+Message-ID: <alpine.LFD.2.20.1610281523450.17516@wniryva>
+Date: Fri, 28 Oct 2016 15:25:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: 9pfs: memory leakage in v9fs_write
 Content-Type: text/plain; charset=utf-8
 
-On 03/08/2016 08:16 PM, Tristan Cacqueray wrote:
-> ===========================================================
-> OSSA-2016-007: Nova host data leak through resize/migration
-> ===========================================================
-> 
-> :Date: March 08, 2016
-> :CVE: CVE-2016-2140
-> 
-> 
-> Affects
-> ~~~~~~~
-> - Nova: <=2015.1.3, >=12.0.0 <=12.0.2
-> 
-> 
-> Description
-> ~~~~~~~~~~~
-> Matthew Booth from Red Hat reported a vulnerability in Nova instance
-> resize/migration. By overwriting an ephemeral or root disk with a
-> malicious image before requesting a resize, an authenticated user may
-> be able to read arbitrary files from the compute host. Only setups
-> using libvirt driver with raw storage and setting "use_cow_images =
-> False" (not default) are affected.
-> 
-> 
-> Patches
-> ~~~~~~~
-> - https://review.openstack.org/289960 (Kilo)
-> - https://review.openstack.org/289958 (Liberty)
-> - https://review.openstack.org/289957 (Mitaka)
-> 
-> 
-> Credits
-> ~~~~~~~
-> - Matthew Booth from Red Hat (CVE-2016-2140)
-> 
-> 
-> References
-> ~~~~~~~~~~
-> - https://bugs.launchpad.net/bugs/1548450
-> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
-> 
-> 
-> Notes
-> ~~~~~
-> - This fix will be included in future 2015.1.3 (kilo) and 12.0.3
->   (liberty) releases.
+   Hello,
 
-There is a typo in the note, this fix will be included in future
-2015.1.4 (kilo). Further advisories will drop that note entirely, use
-http://releases.openstack.org/ to check stable version number including
-the fix.
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to a memory leakage issue. It could 
+occur when calling v9fs_write call.
 
+A privileged user inside guest could use this flaw to leak the host memory 
+bytes resulting in DoS for other services.
+
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02623.html
+
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
 --
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
