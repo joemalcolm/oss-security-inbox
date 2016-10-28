@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/8
-Message-Id: <20161016024107.656D242E008@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:41:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: mupdf: use-after-free in pdf_to_num (pdf-object.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/1
+Message-ID: <alpine.LFD.2.20.1610281122370.12679@wniryva>
+Date: Fri, 28 Oct 2016 11:24:17 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request  Qemu: 9pfs: information leakage via xattribute
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> https://blogs.gentoo.org/ago/2016/09/22/mupdf-use-after-free-in-pdf_to_num-pdf-object-c
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to an information leakage issue. It 
+could occur by accessing xattribute value before it's written to.
 
-> fuzzing through mutool
-> 
-> AddressSanitizer: heap-use-after-free ... READ of size 1
-> 
-> 0x7fbc4c3824e4 in pdf_to_num ... mupdf-1.9a/work/mupdf-1.9a/source/pdf/pdf-object.c:375:35
+A privileged user inside guest could use this flaw to leak host memory bytes.
 
-> http://git.ghostscript.com/?p=mupdf.git;h=1e03c06456d997435019fb3526fa2d4be7dbc6ec
-> http://bugs.ghostscript.com/show_bug.cgi?id=697015
-> http://bugs.ghostscript.com/show_bug.cgi?id=697019
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01790.html
 
-Use CVE-2016-8674 for all of 1e03c06456d997435019fb3526fa2d4be7dbc6ec,
-including both 697015 and 697019.
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAuc6AAoJEHb/MwWLVhi2Yq4P/iMeQIU5r6VsYn7jm1727NJ0
-VH49R7zD4YX5sjAqQSNMUj6zN7N1w/ExjY4ctwQwk83mB3o4w4uXVkL3r2+7jwVC
-GpiOXZLg7GoFAXnhisqBxLRhOvMh2O+t/5AOezQus+cZ+wST+pvx/rUTMMmUAecL
-ikuVsJkm5DZkTJ1vKPtZadtIzn8dz/UsbroiN8pYt4IGf+mlW7zhAV65Tkn7U/VI
-CjQZwMRW7K5MHMwjYJKyrITHRzWOPQwywYh0z6JuxaeQjdnjgiP0AIldapmcCFpZ
-poWLGG9I6o1D2pCPwYXxckKQa9qoW3fBb8qUiSQ4jhgndC/7bpYUsyubyE/bGwW2
-Cg3ygkasV97IyV6VyvjuuCiaXtuaIll3SFIpivo0JasdgKvrctVmSJPGIie01syk
-L1V4KbomGtAKf6fx5a0ur28nFcfuDZrg2iEZSHDXHdDjsaA1mjSByaqCRZW8nEOa
-C5F/UnfssQWywv0ex7A28Edw3605KKbMJwY2bqEOojGCz2VId4DwmPWwBWoxxpPQ
-Z+auozZlMCoWWTpaYYy3WxCXfjEZBcFHBbbn0XW4Ulp3V48XvWGX2Oqh1ItCqxuJ
-HzEgJoChNKX4UWZMoo0EWbjR+cDBa04sZ2Gd2KSh++1lv94YoL2F5QwWv0hlEMZ/
-KeqSQtvtdyZOjXL+cA1G
-=Zekw
------END PGP SIGNATURE-----
+This issue was reported by Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
