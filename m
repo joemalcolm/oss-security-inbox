@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/12/1
-Message-ID: <20160312102544.GA17695@tunkki>
-Date: Sat, 12 Mar 2016 12:25:44 +0200
-From: Henri Salo <henri@...v.fi>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in WP Super Cache < 1.4.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/2
+Message-ID: <alpine.LFD.2.20.1610281440190.16066@wniryva>
+Date: Fri, 28 Oct 2016 14:41:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: 9pfs: integer overflow leading to OOB access
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello,
 
-On Sun, Apr 05, 2015 at 09:07:23AM +0200, Hanno Böck wrote:
-> https://wordpress.org/plugins/wp-super-cache/changelog/
-> 
-> 1.4.3
-> Security release fixing an XSS bug in the settings page. Props Marc
-> Montpas from Sucuri.
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to an integer overflow issue. It 
+could occur by accessing xattributes values.
 
-Also post http://www.openwall.com/lists/oss-security/2015/04/05/2 notes that
-this might be related commit:
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance resulting in DoS.
 
-https://plugins.trac.wordpress.org/changeset/1127138
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02942.html
 
-This case seems to be still unassigned. Is it possible to get a CVE assigned for
-this vulnerability, thank you? WP Super Cache does have over million active
-installations according to the WordPress Plugin Directory. Is there a reason
-that this never got assigned? If additional information is needed I can provide
-it.
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This issue was reported by Li Qiang of 360.cn Inc.
 
-iQIcBAEBAgAGBQJW4+6oAAoJECet96ROqnV06qcQALfVi9MrvjGYPY7cpEMhG/It
-P2RMSKofO2ksRY/Lzs2O5TLnlggNcQX00K+3dhcUrnPrKVFpWLNvodhddy+1Z5Zn
-0VCAOESlhaa7vhMVWKaOV8dzzO1ykfjOPZma5Ml1MOZSEwxTxCjScBPbKgFtTsNG
-ApZC8KQqkF6tPP6leKvfhtPj56bSuuFsdcY7VsNhmvPcQl41F3YA2TEEw/22C+/p
-496D+rmxkfI+bUei9p3L7KRbo+EBt9Jv0x3YrIUWVYHegjb1ETvcvN4RmTiSeu9U
-XmusNg6+Ej83HPkJvZmM0Pyu7aAGqfRC788yI+tWojjlOci3qHI3bG2W8J7eHjyj
-Qffifk3QpRX3r/UYFpovAst8gAsEfIKRze1SC+o6P1jRiS7zfufSCeSxj4vdcNA/
-DAE2VQ7sgsuS1DmiENpHv5mHsVAtkb5QpjYVq+jK7fZHYPgq5DkwCyG987Z/Rv9S
-72IDqPcHh5zsCiBRm1Fsi/6rX1KRNrAk4rD09Cd6+wU8ulXM8d/JPst6XpNynGl7
-BQONyCNNGZdRy+JGXF0lZ5We1DQ7eHXEB+jkNnXP4JS7UefkoKBO2rjSKfVOWk2l
-pN7VCCyaKsqKvSTtyEQ88Ipb7oIdGLVvHIzqdcWtnwwqwfvGjoHCerFdgdBZfH5c
-GGscrRUOdTPqmpKSDjaV
-=tCbo
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
