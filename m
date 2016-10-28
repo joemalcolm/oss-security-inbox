@@ -1,4 +1,9 @@
-Received: (qmail 11811 invoked by uid 550); 22 Dec 2022 23:23:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["671" "Friday" "28" "October" "2016" "15:06:26" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610281505100.17055@wniryva>" "23" "[oss-security] CVE request Qemu: memory leakage in v9fs_link" nil nil nil "10" "2016102809:36:26" "[oss-security] CVE request Qemu: memory leakage in v9fs_link" (number mark "U       ppandit@redh Oct 28   23/671   " thread-indent "\"[oss-security] CVE request Qemu: memory leakage in v9fs_link\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23977 invoked by uid 550); 28 Oct 2016 09:36:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10063 invoked from network); 22 Dec 2022 23:21:31 -0000
-Date: Fri, 23 Dec 2022 00:21:12 +0100
-From: Solar Designer <solar@openwall.com>
-To: Dominique Martinet <asmadeus@codewreck.org>
-Cc: oss-security@lists.openwall.com,
-	Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <20221222232112.GA29438@openwall.com>
-References: <Y6SJDbKBk471KE4k@p183> <Y6TUJcr/IHrsTE0W@codewreck.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y6TUJcr/IHrsTE0W@codewreck.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat correctly
+Received: (qmail 23952 invoked from network); 28 Oct 2016 09:36:44 -0000
+Date: Fri, 28 Oct 2016 15:06:26 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1610281505100.17055@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Fri, 28 Oct 2016 09:36:32 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: memory leakage in v9fs_link
 
-On Fri, Dec 23, 2022 at 07:03:17AM +0900, Dominique Martinet wrote:
-> Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
-> > --- a/man5/proc.5
-> > +++ b/man5/proc.5
-> > @@ -2092,6 +2092,11 @@ Strings longer than
-> >  .B TASK_COMM_LEN
-> >  (16) characters (including the terminating null byte) are silently truncated.
-> >  This is visible whether or not the executable is swapped out.
-> > +
-> > +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
-> > +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
-> > +reliable. The correct way is to locate closing parenthesis with strrchr(')')
-> > +from the end of the buffer and parse integers from there.
-> 
-> That's still not enough unless new lines are escaped, which they aren't:
-> 
-> $ echo -n 'test) 0 0 0
-> ' > /proc/$$/comm
-> $ cat /proc/$$/stat
-> 71076 (test) 0 0 0
-> ) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
-> 
-> The silver lining here is that comm length is rather small (16) so we
-> cannot emulate full lines and a very careful process could notice that
-> there are not enough fields after the last parenthesis... So just look
-> for the last closing parenthesis in the next line and try again?
+   Hello,
 
-No, just don't treat this file's content as a line (nor as several
-lines) - treat it as a string that might contain new line characters.
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to a memory leakage issue. It could 
+occur when calling v9fs_link call.
 
-The ps command from procps-ng seems to manage, e.g. for your test "ps c"
-prints:
+A privileged user inside guest could use this flaw to leak the host memory 
+bytes resulting in DoS for other services.
 
-29394 pts/3    S      0:00 test) 0 0 0?
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02608.html
 
-where the question mark is what it substitutes for the non-printable
-character (the new line character).  I didn't check whether the process
-name it prints comes from /proc/$$/stat or /proc/$$/status, though (per
-strace, it reads both).
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
 
-> But, really, I just don't see how this can practically be said to be parsable...
+This issue was reported by Li Qiang of 360.cn Inc.
 
-This format certainly makes it easier to get a parser wrong than to get
-it right.
-
-I agree the above man page edit is not enough, and should also mention
-the caveat that this shouldn't be read in nor parsed as a line.
-
-Also, the Linux kernel does have problems with new lines in the comm
-field elsewhere, at least in the log messages it produces:
-
-https://github.com/lkrg-org/lkrg/issues/165
-
-Here I looked into this in context of LKRG development, but with the
-kernel itself also producing messages with comm in them the point of
-only fixing LKRG's messages is moot.
-
-Alexander
-
-P.S. While this thread goes well so far, please note that in general
-CC'ing other lists on postings to oss-security (or vice versa) is
-discouraged.  With such CC's, possible follow-ups from members of those
-other lists can be off-topic for oss-security - e.g., they might focus
-on non-security technicalities.  Probably not this time when only a man
-page is to be patched, but proposed patches to the Linux kernel often
-result in lengthy discussions and multiple versions of the patch.  In
-those cases, I think it's better to have separate threads and only post
-summary follow-up(s) to oss-security (e.g., one message stating that a
-patch was proposed and linking to the thread, and another after the
-final version is merged).
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
