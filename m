@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3674" "Thursday" "30" "July" "2015" "00:26:07" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<55B9A75F.4070902@gmail.com>" "102" "Re: [oss-security] Linux x86_64 NMI security issues" nil nil nil "7" "2015073004:26:07" "[oss-security] Linux x86_64 NMI security issues" (number mark "U       danielmicay@ Jul 30  102/3674  " thread-indent "\"Re: [oss-security] Linux x86_64 NMI security issues\"\n") "<20150730023722.GA15205@openwall.com>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" "<20150730023722.GA15205@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1810" "Sunday" "30" "October" "2016" "15:38:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7bcfced93a1e4f6f9a526e70be02d7d5@imshyb02.MITRE.ORG>" "44" "[oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug" nil nil nil "10" "2016103019:38:59" "[oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug" (number mark "U       cve-assign@m Oct 30   44/1810  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug\"\n") "<alpine.LFD.2.20.1610280151370.5357@wniryva>" ("<alpine.LFD.2.20.1610280151370.5357@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16329 invoked by uid 550); 30 Jul 2015 04:26:24 -0000
+Received: (qmail 9306 invoked by uid 550); 30 Oct 2016 19:39:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,135 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16311 invoked from network); 30 Jul 2015 04:26:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type;
-        bh=zYg+VkH/qtdDEfcJJ4ZzHfUZ+y3X7lm71b/hLPWnNsQ=;
-        b=ou0PslZEt7xBb11pGH/yCYxGA8fRvt+caKF0WVnwAPdlYCWhy2s9JaaY54s6lMQIWV
-         L9xaS39m2whccwb96e9IgxWjr7O8P2xFxnPxlWfO2Hf3ariGui5LI2wPs6T6S55vdGwb
-         QsPILZiR2bb3IzOCxPrFcsgus4dUEE0hPhbPkLnKudCf626DAvoNV7dwJvF0Wjh7dnLG
-         q0a2rctL/yCmX/oNA128NbW4l3mEkRA85xfqMbnU8XrePSndZITmRGR+1bsmBZY2Yynq
-         S0rsbDUhRh2eTca4p6uLoieS1lovOqdU7ULpPBKxe2uLo2D1D8dV+kxeye/QI/x8QQ2C
-         dv2w==
-X-Received: by 10.50.30.10 with SMTP id o10mr1653367igh.86.1438230371746;
-        Wed, 29 Jul 2015 21:26:11 -0700 (PDT)
-To: oss-security@lists.openwall.com
-References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
- <20150730023722.GA15205@openwall.com>
-From: Daniel Micay <danielmicay@gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <55B9A75F.4070902@gmail.com>
-Date: Thu, 30 Jul 2015 00:26:07 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+Received: (qmail 9287 invoked from network); 30 Oct 2016 19:39:11 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1610280151370.5357@wniryva>
+Message-ID: <7bcfced93a1e4f6f9a526e70be02d7d5@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:38:59 -0400
 MIME-Version: 1.0
-In-Reply-To: <20150730023722.GA15205@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="7VUnwVT28DncQIRO7sMcQP1LlA7elkhSI"
-Subject: Re: [oss-security] Linux x86_64 NMI security issues
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: net: eepro100 memory leakage at device unplug
 
---7VUnwVT28DncQIRO7sMcQP1LlA7elkhSI
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 29/07/15 10:37 PM, Solar Designer wrote:
-> On Wed, Jul 22, 2015 at 11:12:00AM -0700, Andy Lutomirski wrote:
->> +++++ CVE-2015-5157 +++++
-> [...]
->> Mitigations: Use seccomp to disable perf_event_open or modify_ldt or
->> run with only a single CPU.  To my knowledge, this cannot be exploited
->> on single-processor systems or in single-threaded applications.
-> [...]
->> +++++ CVE-2015-3290 +++++
->>
->> High impact NMI bug on x86_64 systems 3.13 and newer, embargoed.  Also f=
-ixed by:
->>
->> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?=
-id=3D9b6e6a8334d56354853f9c255d1395c2ba570e0a
->>
->> The other fix (synchronous modify_ldt) does *not* fix CVE-2015-3290.
->>
->> You can mitigate CVE-2015-3290 by blocking modify_ldt or
->> perf_event_open using seccomp.  A fully-functional, portable, reliable
->> exploit is privately available and will be published in a week or two.
->> *Patch your systems*
->=20
-> I understand how seccomp is usable for sandboxing in a program, but how
-> would a sysadmin block syscalls with it?
+> Quick Emulator(Qemu) built with the i8255x (PRO100) NIC emulation support is
+> vulnerable to a memory leakage issue. It could occur while unplugging the
+> device, and doing so repeatedly would result in leaking host memory affecting,
+> other services on the host.
+> 
+> A privileged user inside guest could use this flaw to cause a DoS on the host
+> and/or potentially crash the Qemu process on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg03024.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1389538
 
-The filter will be inherited by all child processes and having
-CAP_SYS_ADMIN removes the need to set PR_SET_NO_NEW_PRIVS.
+>> Fix memory leak and simplify code for VMStateDescription
 
-A global blacklist would really need to be a feature provided by init
-based on a configuration file, ideally with support for parameter filtering
-as blacklisting flags would be useful.
+Use CVE-2016-9101.
 
-You could use init=3D/sbin/seccomp-wrapper with something like this:
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/eepro100.c but
+that may be an expected place for a later update.
 
-    #include <errno.h>
-    #include <seccomp.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #include <unistd.h>
-=20=20=20=20
-    void check(int rc, const char *function) {
-        if (rc) {
-            fprintf(stderr, "%s: %s\n", function, strerror(-rc));
-            exit(1);
-        }
-    }
-=20=20=20=20
-    int main(void) {
-        int rc;
-        scmp_filter_ctx filter =3D seccomp_init(SCMP_ACT_ALLOW);
-        if (!filter) {
-            fprintf(stderr, "seccomp_init\n");
-            return 1;
-        }
-        check(seccomp_attr_set(filter, SCMP_FLTATR_CTL_NNP, 0),
-              "seccomp_attr_set");
-        check(seccomp_rule_add(filter, SCMP_ACT_ERRNO(EPERM), SCMP_SYS(modi=
-fy_ldt), 0),
-              "seccomp_rule_add");
-        check(seccomp_load(filter), "seccomp_load");
-=20=20=20=20
-        char *argv[] =3D {"/sbin/init", NULL};
-        if (execv(argv[0], argv)) {
-            perror("execv");
-        }
-=20=20=20=20
-        return 0;
-    }
-
-(I haven't actually tested this, but it compiles and should work)
-
-
---7VUnwVT28DncQIRO7sMcQP1LlA7elkhSI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJVuadiAAoJEPnnEuWa9fIqymoP/1j4sXVUWlhHFKwqjxc4cWtj
-pu0ESpeQiUHmRtTTooWtmH+hw0oLNLYtmoEmNuH5oakznnQ2WFM0VDfpifeSpzl9
-hFm33QdsBUh2bRtNsS9hIkshkd8/fMcO9VICkUK0DaYJPTdihXzruF/ewOy3WkzS
-fC/cZu6xGA4fizjKoq87O0ZMrUCgK+WCXc7OYFidQT02Gg+6uAnNc3l0PdZ7hZKG
-UpvEHRH4+b9O0dz1/sBK29kTUume0cwHcaIJA2NFO0Yr2C32g7SpZeFViCMqfFRe
-bUlnwXX85ulw8BmHxDHkP/VSEU7RPYUHRS1ks3Dms7gc4st99QiF2UWuDgr9U+hj
-LCWibvP14NLx4kvpgPKPsFb4SKyDdfTosJSXWDZm6ER3JyuWvm7n7CBa+VJ1nD7I
-v5XXxziZtKLqOJoOCxfFGHvhDlSdkVJoraxc7C9y7pGLadwZMXATnt6R9LfV269A
-CNJ0tfVL/M4PhtdygNsrBkqhIuo6Nib7/scrVy6VONCVI5YncLhqZ3hnxJmoGjnG
-F8MQq/5i+DGIoYpU7wBtDghLJ1RYTdIRflrLDPY3cMzcFdeMBO9Sd5ExnVGRxNeO
-NCsRTVJgxLYAQYXUfxqXVA660zyw4Ve48D37YdORtCfip8wiFdKlIYskUD5SjOnC
-Coy4ZW8t8f9Mv4RxYZo0
-=t+ey
+iQIcBAEBCAAGBQJYFktnAAoJEHb/MwWLVhi2lRUQAKvmWbVHDslM/pVcKhOXd48q
+4VW+EZjJHnlkF39M1UFWsflRqFrVreNrXRVgTX7bGkV1QkbpyuWjCw3fHn02PCf4
+9h19lPYSlxUt/P6kF8RVgQmC0FEv7fAB7nzftdmozHaL+G0MJCjdP0T+M9zBvEIg
+nEPXrD+G7CWH8CR3LaDDNFl6O673QMyte9/garR8wOohsJnsxI4FBGdmJqmbrYnm
+DbYw41H893s9F2t/ofW4ZyiwMDlJJG49DySb2yLHROFfd0y8n0qP0RviPl8p+EsL
+hwOODU5ttVwIX3BQUkPNdumwxizTuIGY/m6lyibjj4SoyGNKiI3a05BwXI3mQhaA
+cEbBu73o8rr7Yzp9J24n8WsbFdcGsTCWI2WYuG9g/qvEQuIlGFqMIdy/Z3GvpZuA
++h/IUZ+eDs5bc6vkDiCE88H3ZIi5ReSVCV9g4Bv/wfqwJ13qmLDooYeaWHjARY8h
+Vse1XkGked1vz4uLYuB/X8N4uNytSnuDSUBTpvdXFaBZPSahqP12qQvOBnHxHT8l
+wSTjpjcaVTsvXf5CqDgDYG6h8TcA8cGvvrn3XGP+UpsgvtqJcaccPF4N3awygFQu
+fPcfl0dQU68NiuxPM7n0N+2qdPPkxu95ZqnobjeEMvaYRqQSJc6YJzkRMJXO2QCZ
+Dt1YlBbsK4nRlp+7XF/D
+=GdbU
 -----END PGP SIGNATURE-----
-
---7VUnwVT28DncQIRO7sMcQP1LlA7elkhSI--
