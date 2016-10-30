@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2776" "Wednesday" "2" "March" "2016" "12:00:31" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160302170031.C79B634E007@smtpvbsrv1.mitre.org>" "59" "[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes" "^Cc:" nil nil "3" "2016030217:00:31" "[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes" (number mark "U       cve-assign@m Mar  2   59/2776  " thread-indent "\"[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes\"\n") "<416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>" ("<416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1648" "Sunday" "30" "October" "2016" "15:41:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6aa34810a3694877b8edb2afbfb85e00@imshyb02.MITRE.ORG>" "40" "[oss-security] Re: CVE request  Qemu: 9pfs: information leakage via xattribute" nil nil nil "10" "2016103019:41:46" "[oss-security] Re: CVE request Qemu: 9pfs: information leakage via xattribute" (number mark "U       cve-assign@m Oct 30   40/1648  " thread-indent "\"[oss-security] Re: CVE request  Qemu: 9pfs: information leakage via xattribute\"\n") "<alpine.LFD.2.20.1610281122370.12679@wniryva>" ("<alpine.LFD.2.20.1610281122370.12679@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32084 invoked by uid 550); 2 Mar 2016 17:00:44 -0000
+Received: (qmail 28400 invoked by uid 550); 30 Oct 2016 19:41:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32066 invoked from network); 2 Mar 2016 17:00:43 -0000
-In-Reply-To: <416950326.31158071.1456852194971.JavaMail.zimbra@redhat.com>
-Message-Id: <20160302170031.C79B634E007@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  2 Mar 2016 12:00:31 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
-To: vdronov@redhat.com
+Received: (qmail 28336 invoked from network); 30 Oct 2016 19:41:58 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1610281122370.12679@wniryva>
+Message-ID: <6aa34810a3694877b8edb2afbfb85e00@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:41:46 -0400
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request  Qemu: 9pfs: information leakage via xattribute
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to an information leakage issue. It
+> could occur by accessing xattribute value before it's written to.
+> 
+> A privileged user inside guest could use this flaw to leak host memory bytes.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01790.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=eb687602853b4ae656e9236ee4222609f3a6887d
 
-> The result is an OOM condition and oom-killer is not able to help
-> much, as the memory for the pipe data is a kernel memory and a memory
-> footprint of offensive processes is small.
+>> if the guest
+>> reads this memory before writing to it, this will leak host heap memory
+>> to the guest.
 
-We feel that this should most likely have a CVE ID. The discussion
-outlines a realistic problem "it is possible for a single process to
-cause an OOM condition by filling large pipes with data that are never
-read. A typical process filling 4000 pipes with 1 MB of data will use
-4 GB of memory" and the need for a CVE ID does not depend on the
-details of the solution approach. Also, there doesn't seem to be any
-general opposition to addressing the problem (e.g., see the
-https://lkml.org/lkml/2016/1/19/674 post).
-
-However, the commit indicates that there isn't a mandatory behavior
-change ("The limit are controlled by two new sysctls :
-pipe-user-pages-soft, and pipe-user-pages-hard. Both may be disabled
-by setting them to zero.") -- suggesting a possible interpretation as
-a design enhancement, not a vulnerability fix. Also, the discussion
-doesn't directly comment on whether the "filling large pipes" scenario
-has a security impact that is otherwise unavailable to the attacker,
-e.g., it doesn't discuss the difference between the attacker choosing
-to fill 4000 pipes and the attacker choosing to use mmap.
-
-Is there anyone who believes 759c01142a5d0f364a462346168a56de28a80f52
-must not have a CVE ID?
-
-> The commit says: "Mitigates: CVE-2013-4312 (Linux 2.0+)"
-
-Regardless of any answers to the above question, it is not going to be
-useful to use CVE-2013-4312 to refer to
-759c01142a5d0f364a462346168a56de28a80f52.
+Use CVE-2016-9103.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW1xqUAAoJEL54rhJi8gl5sFcQAJjoPTO/xZL8sFOwfACRAXWD
-ycctDOyagiKIwnf9qyqSw18CTTskA2bRJTlhGywu3XnEKq/yAyYfj2+bNQ5OdvmT
-sQT+JTASckJIDnjqXefSxHZMbBTPOITyEZ52cZSRF8NvWyos1GUBxZRXE6Y1Nrx3
-VF1pNDpbbjJtPpwQ81atxUInE9TDeG0o7BUcX5wP/Q4yIdjU1nZ2MdrYYK4Sn2H2
-2/DECleX8EG8oUrPGxm64OXxmAOxB3E3Vigc0LC6OBindvU6VhjyeKzuKduu4W+m
-6GkIllgEzkBGlwqXTmLvbeB+TpnHU3w6ZdnAynmJHwV+AmivFOPHsJhOXlrAKz7S
-KRIkAgeSHOjqK6rg3V3+/az33v9yzl3dQGEmZYs3d/bX94A2q8Z/ECNOfMHk0uH3
-BbveT32coxxqOjAT4NrOVfWsQtiz2B2hSQek8URYYNuONKI/Qmc6Dk/lnTK5K4jO
-l3/tAqNM/avKbp6Q5rJ+JBZX/nH7x05bNx2klPVB1yZyBn6F+RbJYauQMerEcMUa
-ChSVYfUi7+k9ogqk/7/b8EhJiLK92CmBfsUFTIvuI+UUq0fQNMKGXvmYYJHHKOi/
-DJcKAIid0FLbXXi1YsCrFJu2NrvS0UiKOUeF/D0rVdm3emYGTIWbQOkvuDAsUs7e
-8mWQWhBXp+LU6fTUHdZi
-=pIDG
+iQIcBAEBCAAGBQJYFktzAAoJEHb/MwWLVhi2bhYQAIL6yUfJTuXN+dfnWKCuqg/Z
+eFf9ZkNoPojFWIe8c/++zXZB7OIdfWBQS3L8cPDGOGersI0AqCbgIfwPtrSkYUAK
+xpqjCQnCMM0Rwcz+vzDkG5WgxsJbaykOaiScWooupXdcbVcun15+la34gDayztRg
+7ZadVB/h+aEMX0G9OVhqb0Iw8AD6fmWbGIxY2+1ecb16FJbd2E48MYMMiud/QDRo
+Map9XS688v5vpEyoxSVXOP2lYlhu7mR2SvCnIBmk8vIFM3rW+bdZIJ1O38xunHRY
+kcPcwsArnzM+9Ww9zQL//Saf7U8dDkbt7GXVfngj7I5hedq9FhiJnDIgFoHjhveN
+9tMSWtJ5GlxfaxLBY17gn2qVD8ufwUTDHzCKM+JIulefDvTA+JmC4OHtUJASRq0r
+gx3uzimWNp08aROJsl2YWVszi43IHjVh2Md3+o8gzbH9X7Z4dsU9IBefwN4fbypH
+W6FKbWLBHlndLUxTrtdehDpqK8B2AX9iP/dLPrLMfTVS/4v7sWUmwBV6AEYrBAqo
+LjuOHfu8RTbBFhXd04mqNl/hErpb+dmPIgnBydx9AXaVnwAaXXZn6qc535s3sblq
+CBgxX9jwShg+bjfSc42QHNE3ysrE96YQHkT16hWMxUbc2pzA9iVdpJsOZBnQNj5f
+z7ekgfP+KudJuOrXXZME
+=Hcjr
 -----END PGP SIGNATURE-----
