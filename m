@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3425" "Tuesday" "24" "March" "2015" "03:36:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>" "79" "[oss-security] Re: CVE request for OpenStack Compute (nova)" nil nil nil "3" "2015032407:36:10" "[oss-security] Re: CVE request for OpenStack Compute (nova)" (number mark "        cve-assign@m Mar 24   79/3425  " thread-indent "\"[oss-security] Re: CVE request for OpenStack Compute (nova)\"\n") "<5510E3BE.8030204@redhat.com>" ("<5510E3BE.8030204@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2058" "Sunday" "30" "October" "2016" "14:49:37" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQ7qc6fBEUJ+W5VD=FcGB0-OWg3Bq3OPVLa9XKZMCZG+Q@mail.gmail.com>" "61" "Re: [oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read" nil nil nil "10" "2016103017:49:37" "[oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read" (number mark "U       gustavo.grie Oct 30   61/2058  " thread-indent "\"Re: [oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read\"\n") "<20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>" ("<6c6e2d2c-2fc9-9538-88e8-ac2f309211c3@gmail.com>" "<20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13921 invoked by uid 550); 24 Mar 2015 07:36:23 -0000
+Received: (qmail 26076 invoked by uid 550); 30 Oct 2016 17:49:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13902 invoked from network); 24 Mar 2015 07:36:22 -0000
-In-Reply-To: <5510E3BE.8030204@redhat.com>
-Message-Id: <20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 24 Mar 2015 03:36:10 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for OpenStack Compute (nova)
-To: gmollett@redhat.com
+Received: (qmail 26052 invoked from network); 30 Oct 2016 17:49:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=7Jxcic/XwM9JEr6okIJP84MJvEEhy3i5HBeY8flX70E=;
+        b=bHWyERXHhe3LFBWpUUje1Q/HwocT5nDCKT8YAv/v2lje8qf7VLx77pcTIqPcyP2Znj
+         SHPIqkhviyULDrD93jjtzbRDPkxeZgXKpI4PvIZmTjjqjcrHDrX2rItufX/jdNRNN9eB
+         2293NyRvxRZEMdkbPucTm90Fz6bqNHeftxuiE2eyVwFPZmvGRQ7stf8EiY0myQf6WnFQ
+         9Q4O7RDl2vDqoY58lmVkZ9im1p+f3cAQIkFAjD/jNHz9nBMnDDMpCOXe3Rj50ECr8HyZ
+         XmM/ib3zzWMexLkbVHSz6X4csGRuyNVNC5f4bpjyQ7siE8ZDfPaPU5AB40qGsEP0TARz
+         6r2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=7Jxcic/XwM9JEr6okIJP84MJvEEhy3i5HBeY8flX70E=;
+        b=ffihyfdefrB7dHI9P+gANxa56T05s1kMV3rtBblj1JHOjhurNfJa6wZRSELAO1vQzT
+         VnHZJm5elhIx1xDfAotoTq/DZlzpWbg4y/vmCHazrEVdvhOO3iSg4caDG4bUwb3bo5qt
+         FEF+E535jYmu3wNnr7CSydHjerXcH/KF+1BaxI2almi7xHr5FljQpX8NT654/6T+ZEXN
+         QC/CU1ud3axeCJVHCMY3EMTSzFMj6jYwfDa1NHxNGyx+oAZSLuFPYatFi03Lde6jymlJ
+         50a0dmuZFJAUfi7cPXmlY9vtXyE/AxIDOHYpBAFtpbtnAPI+X+cQlnZAyTpTQnkCPi+T
+         ycTg==
+X-Gm-Message-State: ABUngvft1vvQ74PS8xD/oNsH/NdFLuUzzvZAYCK+ZEQyulaB4D2wDpUHOilRBU5B1xlYJFKUuPierJBDe2ghwQ==
+X-Received: by 10.107.58.10 with SMTP id h10mr17698744ioa.78.1477849778598;
+ Sun, 30 Oct 2016 10:49:38 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>
+References: <6c6e2d2c-2fc9-9538-88e8-ac2f309211c3@gmail.com> <20160928201120.CB064ABC23D@smtpvmsrv1.mitre.org>
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Sun, 30 Oct 2016 14:49:37 -0300
+Message-ID: <CACn5sdQ7qc6fBEUJ+W5VD=FcGB0-OWg3Bq3OPVLa9XKZMCZG+Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a114ac51a15c081054018b7ee
+Subject: Re: [oss-security] Re: CVE request - mujs Heap-Buffer-Overflow write
+ and OOB Read
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--001a114ac51a15c081054018b7ee
+Content-Type: text/plain; charset=UTF-8
 
-> https://bugs.launchpad.net/nova/+bug/1419577
+Despite CVE-2016-7563 looks fixed in the mujs bug tracker, it was not
+properly patched:
 
-Use CVE-2015-2687 for this issue with an unintended loss of access
-control after a failed live migration.
+http://bugs.ghostscript.com/show_bug.cgi?id=697136#c4
 
-For purposes of CVE, we typically don't think of vulnerabilities in
-the way expressed in
-https://bugs.launchpad.net/nova/+bug/1419577/comments/4 "without a way
-to make the migration process fail, this is a bug with security
-consequence, but not a vulnerability." In other words, for a CVE, the
-attacker can be a person who wishes to have an unauthorized volume
-attachment after the bug is triggered. The attacker does not need to
-be a person who has determined a reproducible way to trigger the bug.
+2016-09-28 17:11 GMT-03:00 <cve-assign@mitre.org>:
 
-> if live-migration is executed while process keep using big size of
-> memory by benchmark tool or something like that in VM instance and
-> then the waiting status of live-migration could be persisted,
-> eventually live-migration will be failed.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > mujs str Out-of-Bound read 1 byte in function chartorune.
+> > http://bugs.ghostscript.com/show_bug.cgi?id=697136
+>
+> >> AddressSanitizer: heap-buffer-overflow
+> >> READ of size 1
+> >>
+> >> We were unconditionally reading the next character if we encountered
+> >> a '*' in a multi-line comment; possibly reading past the end of
+> >> the input.
+>
+> Use CVE-2016-7563.
+>
+>
+> > mujs "char *s" Heap overflow in Fp_toString at jsfunction.c:72
+> > http://bugs.ghostscript.com/show_bug.cgi?id=697137
+>
+> >> AddressSanitizer: heap-buffer-overflow
+> >> WRITE of size 1
+> >>
+> >> We were not allocating space for the terminating zero byte.
+>
+> Use CVE-2016-7564.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJX7COpAAoJEHb/MwWLVhi24ugP/19AmMjWnrZ9kH88CpBt/y0M
+> s6rWfYpCF0k56G6RSlkuUm/XOlqBPAsWK9I3REM32shkCLaA0L96IeQnW1h/flT1
+> 7m30tJmxi31i31XfvpnBJWl06EqKTMZvNdNQBO+JS79ehBGmhmsIWjs9EkbBpNIv
+> 9jr3rzWE+K7IAZcWAGu5e56mCC+FpNE1djZ8Iaw+RuX2oVOvJoDTq1hskiRMijKw
+> qXiudF6upJ8HUzBWN3mbDAUtuA0VmYClQZ39iy7V6nH7QuwbG4XLvzAjkCjmzwhS
+> bkg7zFhNOMw6J1nuVD5s5VtrhRctgaPaDDaTnNsw7IYjyYNbO+obhw3x1ZnqrXcx
+> +wN3ZfMzxk0Q4n4KypmF2OJ6QITYqH5K6ofO5D9OI39cUmjsBEj1smqxSZq01xrU
+> YxDyGS4gNQ6hWKS23/wgPt9YAjX+2xBMnAyygBrAzNcfFmO42XUpHDWl2ArnXQ1l
+> kVyZLKOxFbGeTcsMyDFAjsDwD9tffl/6jDkZgd34em6kS1+lE7bccy2+IUsynrxz
+> 7zqhueAX7uOOVbjgJ4bVpGYgebj2J8AVHJoJJKtaWskCBKbxyxbT49twJ56lSDd9
+> s5kVrUGdOz6+9RO7GJ/6dEwqJjmUYXh8O/3qI3h4gjmeTHAIaJ+uxhZ5J34Sj8xe
+> B6ZoBxrnz+3QVOfjQ49u
+> =iapx
+> -----END PGP SIGNATURE-----
+>
 
-We think that nobody commented on whether this is a feasible way to
-actively trigger the bug.
-
-> you're suggesting potential exploits involving
-> 
-> 1. disconnecting physical network interfaces
-
-We think the intended security property of this OpenStack product is:
-"if network connectivity is disrupted by anyone (authorized or not)
-during a live migration, then access control for volumes still must
-match users' expectations afterward."
-
-It is conceivable that the intended security property of this
-OpenStack product is instead "if network connectivity is disrupted
-during a live migration, then access control for volumes afterward is
-undefined." In this case, maybe you mean that the CVE should apply
-only to Havana, because the only relevant root cause is a Havana bug.
-The reasoning in that scenario would be:
-
-   1 - a Havana bug (e.g., 1362916 or possibly the combination of
-       1362916 and a second bug) makes it possible to force a failure
-       of a live migration
-
-   2 - this was not previously considered a vulnerability
-
-   3 - however, the relevant OpenStack product has a required security
-       property of "There must not be any software bugs that allow
-       live-migration failure attacks, because these attacks are
-       equivalent to attacks against volume access control."
-
-   4 - therefore, the bug in item 1 is promoted to a vulnerability,
-       and is the bug directly associated with CVE-2015-2687
-
-   5 - consequently, CVE-2015-2687 would not be used in an advisory
-       because Havana is unsupported by the OpenStack VMT
-
-So, does the OpenStack VMT have a position on whether to choose this
-latter scenario? In other words, if live migration fails because of a
-disconnected physical network interface, is access control for volumes
-intentionally undefined afterward?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVERM0AAoJEKllVAevmvmsbBgIAMGBnjBiFxT9hfdSED6p/WD1
-2kh8GJq8sfECGAS7p7vLcjmqQXKIwJWRD9z974OtRuFSrMcS59Lon/3wVOMO8SGI
-RC/RtM2sG41WyhcM3Io5rlFIQ4ligNTwhd88+1wPRH5CGAJfK9X2HrCew95WR2m+
-bx4bSaNvoolbZMvX11YaQHqX/5HdX1qispLdduKjTEI506YLLP8IAyR8gX1o0cOG
-cU5gMkd0zbVvh67ZdCkIvsIkRIO1ZJC8kStzPJVTDm1+A8GxvBs7/M6nmHG6T4ji
-IFD2w350UT2iZWBWrt6KRfvTDeqAmik9+3u424oFiHtWaMyz+FPMTIO9J8PIBHg=
-=YcdN
------END PGP SIGNATURE-----
+--001a114ac51a15c081054018b7ee--
