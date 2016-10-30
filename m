@@ -1,104 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/11
-Message-ID: <56C5C9A3.6090800@balintreczey.hu>
-Date: Thu, 18 Feb 2016 14:39:47 +0100
-From: Balint Reczey <balint@...intreczey.hu>
-To: oss-security@...ts.openwall.com
-Subject: Re: Address Sanitizer local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/5
+Message-ID: <7bcfced93a1e4f6f9a526e70be02d7d5@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:38:59 -0400
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: net: eepro100 memory leakage at device unplug
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 02/18/2016 11:08 AM, Hanno Böck wrote:
-> Hi,
+> Quick Emulator(Qemu) built with the i8255x (PRO100) NIC emulation support is
+> vulnerable to a memory leakage issue. It could occur while unplugging the
+> device, and doing so repeatedly would result in leaking host memory affecting,
+> other services on the host.
 > 
-> Thanks a lot for your analysis.
-I would like to thank you for your analysis, too.
-
+> A privileged user inside guest could use this flaw to cause a DoS on the host
+> and/or potentially crash the Qemu process on the host.
 > 
-> On Wed, 17 Feb 2016 23:19:21 +0100
-> Szabolcs Nagy <nsz@...t70.net> wrote:
-> 
->> https://blog.hboeck.de/archives/879-Safer-use-of-C-code-running-Gentoo-with-Address-Sanitizer.html
->> (the later was presented at FOSDEM 2016:
->> https://fosdem.org/2016/schedule/event/csafecode/ )
->>
->> While these are interesting projects, ASan should not be
->> used for hardening in production systems in its current form,
->> so at least the language ("hardening", "protection", "safe")
->> should be fixed.
-> 
-> Given that this is my work (I did the asanized Gentoo and the FOSDEM
-> talk) I think I should answer.
-I'm the other guy, working on the special Debian port:
-http://balintreczey.hu/blog/progress-report-on-hardened1-linux-amd64-a-potential-debian-port-with-pie-asan-ubsan-and-more/
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg03024.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1389538
 
-> 
-> I hope I have made it clear that whether using asan for production
-> purposes makes any sense was an open question to me. I have placed
-> warnings that this is experimental and I didn't recommend any production
-> use right now.
-> 
-> I was aware about the performance and memory costs of asan, and I was
-> aware that there are risks involved, but it appeared to me that
-> balancing issues out it would still be a security win and might
-> therefore be an option for some highly security sensitive environments.
-> Your mail makes it clear to me that I was in error and at least in its
-> current form asan is probably not suitable for secure use at all.
-> I will add a note to my blogpost and the Gentoo wiki with a link to
-> your mail to make this clear.
-I was in a situation similar to Hanno's and I added notes about the
-potential risks and limitations linking to this thread.
+>> Fix memory leak and simplify code for VMStateDescription
 
-> 
-> 
-> Appart from that I wonder whether this should have any consequences for
-> asan and which ones. Would it be desirable to:
-> a) Try to fix security issues like the one you presented with suid
-> binaries? (not sure what the best fix would be, maybe detect suid
-> binaries and drop privileges back to user [not sure if that's even
-> possible]).
-> b) Leave issues unfixed and declare that asan is just not good for
-> production use. In this case I agree that the asan documentation should
-> probably include some more obvious warnings / explanations of the
-> risks involved.
-> c) Some other variant, like splitting asan into two different variants.
-> One could imagine having a new cflag that would enable asan, but
-> disable some of the ASAN_OPTIONS things like logging (however thinking
-> about this I don't like it - if I imagine running asan on some kind of
-> server I would want to be able to log issues).
-> 
-ASAN and UBSAN were excellent for finding and fixing bugs in the
-Debian toolchain and now I'm thinking about splitting the effort
-into a QA focused version with ASAN and full UBSAN to find as many
-bugs as possible and a hardening-focused one with trap-only UBSAN,
-PIE, and other security-related features which are safe to use on
-production systems but speed-wise are still tolerable.
-The hardening-focused one should be able to run on
-Grsecurity-enabled kernel.
+Use CVE-2016-9101.
 
-I would also be interested in experimenting with a hardening-focused
-version based on musl if it integrates ASAN features to libc.
-Creating such new ports became much easier thanks to the fixes to
-Debian's tools.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/eepro100.c but
+that may be an expected place for a later update.
 
-The hardened1-linux-amd64 port is not officially accepted to Debian
-and the exact features it would provide can be changed. Ideally
-it would ship a libc with an ABI enforcing safety measures (making
-it ABI-incompatible with standard libc) and compiler defaults to
-help writing secure programs. At the moment don't see such a libc
-variant but musl + ASAN parts could be a good candidate or
-SoftBoundCETS was also suggested to be used. I would like choose
-a technology which runs on all CPU architectures, but if it can
-be sped up by for example intel's MPX then it is a plus.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Comments are welcome!
-
-Cheers,
-Balint
-
-
-[1] https://lists.debian.org/debian-devel/2014/04/msg00400.html
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBCAAGBQJYFktnAAoJEHb/MwWLVhi2lRUQAKvmWbVHDslM/pVcKhOXd48q
+4VW+EZjJHnlkF39M1UFWsflRqFrVreNrXRVgTX7bGkV1QkbpyuWjCw3fHn02PCf4
+9h19lPYSlxUt/P6kF8RVgQmC0FEv7fAB7nzftdmozHaL+G0MJCjdP0T+M9zBvEIg
+nEPXrD+G7CWH8CR3LaDDNFl6O673QMyte9/garR8wOohsJnsxI4FBGdmJqmbrYnm
+DbYw41H893s9F2t/ofW4ZyiwMDlJJG49DySb2yLHROFfd0y8n0qP0RviPl8p+EsL
+hwOODU5ttVwIX3BQUkPNdumwxizTuIGY/m6lyibjj4SoyGNKiI3a05BwXI3mQhaA
+cEbBu73o8rr7Yzp9J24n8WsbFdcGsTCWI2WYuG9g/qvEQuIlGFqMIdy/Z3GvpZuA
++h/IUZ+eDs5bc6vkDiCE88H3ZIi5ReSVCV9g4Bv/wfqwJ13qmLDooYeaWHjARY8h
+Vse1XkGked1vz4uLYuB/X8N4uNytSnuDSUBTpvdXFaBZPSahqP12qQvOBnHxHT8l
+wSTjpjcaVTsvXf5CqDgDYG6h8TcA8cGvvrn3XGP+UpsgvtqJcaccPF4N3awygFQu
+fPcfl0dQU68NiuxPM7n0N+2qdPPkxu95ZqnobjeEMvaYRqQSJc6YJzkRMJXO2QCZ
+Dt1YlBbsK4nRlp+7XF/D
+=GdbU
+-----END PGP SIGNATURE-----
