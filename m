@@ -1,60 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/3
-Message-ID: <CAEsznC5htNHcq=f_tq8A99yD5k4t84AFaW=sj7RL589qMmoaXQ@mail.gmail.com>
-Date: Wed, 25 May 2016 10:51:15 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Fwd: CVE for PHP 5.5.36 issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/8
+Message-ID: <a3bc645664c34b6dbfe5aa8b76797692@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:42:59 -0400
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: 9pfs: integer overflow leading to OOB access
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Please assign CVE for the following issues, expected to be part of PHP
-5.5.36
-Code at http://git.php.net/?p=php-src.git;a=shortlog;h=refs/heads/PHP-5.5
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to an integer overflow issue. It
+> could occur by accessing xattributes values.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02942.html
 
-#72227 is a backport from upstream, so we'd prefer to reuse their CVE (if
-already exists).
-#72135 and 72114 are PHP 5.x only bugs.
+>> Fix this by comparing the offset and the xattr size, which are
+>> both uint64_t, before trying to compute the effective number of bytes
+>> to read or write.
 
-Thanks,
+Use CVE-2016-9104.
 
-Kaplan
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/9pfs/9p.c but
+that may be an expected place for a later update.
 
----------- Forwarded message ----------
-From: Lior Kaplan <kaplanlior@...il.com>
-Date: Wed, May 25, 2016 at 12:55 AM
-Subject: CVE for PHP 5.5.36 issues ?
-To: "security@....net" <security@....net>
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Following my mail bellow from last week, these are the issues which got
-fixed in the security repository for PHP 5.5.
-
-commit 7a1aac3343af85b4af4df5f8844946eaa27394ab
-Author: Stanislav Malyshev <stas@....net>
-Date:   Mon May 23 00:28:02 2016 -0700
-
-    Fixed bug #72227: imagescale out-of-bounds read
-
-    Ported from
-https://github.com/libgd/libgd/commit/4f65a3e4eedaffa1efcf9ee1eb08f0b504fbc31a
-
-commit 97eff7eb57fc2320c267a949cffd622c38712484
-Author: Stanislav Malyshev <stas@....net>
-Date:   Sun May 22 17:49:02 2016 -0700
-
-    Fix bug #72241: get_icu_value_internal out-of-bounds read
-
-commit 0da8b8b801f9276359262f1ef8274c7812d3dfda
-Author: Stanislav Malyshev <stas@....net>
-Date:   Sun May 15 23:26:51 2016 -0700
-
-    Fix bug #72135 - don't create strings with lengths outside int range
-
-commit abd159cce48f3e34f08e4751c568e09677d5ec9c
-Author: Stanislav Malyshev <stas@....net>
-Date:   Mon May 9 21:55:29 2016 -0700
-
-    Fix bug #72114 - int/size_t confusion in fread
-
+iQIcBAEBCAAGBQJYFkuAAAoJEHb/MwWLVhi2fJwQAKH7JgohXVJh8HsReYgIUaBD
+pa9ceIq+t77Ddd8uS0N7srXQnZCXTkM+PKxKLW2cvBtZviUvF0wYCuoUIR3dh66e
+L9otE6tlEUQIMSXFuzWsUNhxQfQRYhdU1x9PuraPdcFSHE881xm9UWkg4L7PXcrL
+m2YS9A2kxniOjVTEWgv/Wt7Ay/hbzKX++asyBq1MomGeKQooy279xgU+C9oly8mV
+Zs6jdxpKcOElyC7qAW9Bn0jQ5FN10mWIBWX6C38MjjpGrtxKJS87gPpz/j2BKNTZ
++JoqjDimpbEvv7PXUXMBzLa19lkJmQS9pAvbnvcVyG7IcAwBCLLP0s0Uvldmd6vX
+2vh/vSrQ2TTktZYxhEy0CMgn5+viynrF0nMZHs2Oc//XS2dsdk/EGsRb9J7q/Oma
+UX1QGfJ/mPekHKhT8uprlpOb2IQKQX6w+GnTWexqWpbT5E/CCsuIHtiYtOxvMCAJ
+qHpXE1apcW66f6lNpGu4W2KDQ+4QZoK8wk7Eo+s36QqYuPO4K0C1h/jJoGvqqcoj
+byN7na2s/ZgGukxK4XOEbIpVxOuJhskf4OuXo1bz4pBhhAo8qtMf4w5bA9j5m0kJ
+Q/V2lN9fiK3CewzS0kLCarid7HRBAHqlETG+5ULKZvfJOFu9Mu3FrGSZGKDYCnAP
+lxrzglHL0JsqKlqwaY5U
+=ja9u
+-----END PGP SIGNATURE-----
