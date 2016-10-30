@@ -1,77 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/15
-Message-ID: <20160125193845.GH14069@TC.local>
-Date: Mon, 25 Jan 2016 11:38:45 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2015-7580] Possible XSS vulnerability in rails-html-sanitizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/3
+Message-ID: <CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>
+Date: Sun, 30 Oct 2016 14:29:17 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request - integer overflow and crash parsing regex in mujs
 Content-Type: text/plain; charset=utf-8
 
-Possible XSS vulnerability in rails-html-sanitizer
+Hi,
 
-There is a possible XSS vulnerability in the white list sanitizer in the
-rails-html-sanitizer gem. This vulnerability has been assigned the CVE
-identifier CVE-2015-7580.
+It seems there is an integer overflow somewhere affecting function
+js_regcomp (line 843 in regexp.c) in mujs. To reproduce (tested in revision
+5c337af4b3df80cf967e4f9f6a21522de84b392a):
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     v1.0.3
+$ echo '(/.{135303839468541,43}/);' | valgrind --quiet ./build/mujs
+==29376== Argument 'size' of function malloc has a fishy (possibly
+negative) value: -5152
+==29376==    at 0x4C2AB8D: malloc (in
+/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29376==    by 0x415FCC: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x41D127: js_newregexp (in
+/home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
+==29376==
+==29376== Invalid write of size 2
+==29376==    at 0x415FE1: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x41D127: js_newregexp (in
+/home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
+==29376==  Address 0x2 is not stack'd, malloc'd or (recently) free'd
+==29376==
+==29376==
+==29376== Process terminating with default action of signal 11 (SIGSEGV)
+==29376==  Access not within mapped region at address 0x2
+==29376==    at 0x415FE1: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x41D127: js_newregexp (in
+/home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
+==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
 
-Impact
-------
-Carefully crafted strings can cause user input to bypass the sanitization in
-the white list sanitizer which will can lead to an XSS attack.
+This test case was found using QuickFuzz. Please assign CVE is suitable.
 
-Vulnerable code will look something like this:
-
-  <%= sanitize user_input, tags: %w(em) %>
-
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-Putting the following monkey patch in an initializer can help to mitigate the
-issue:
-
-```
-class Rails::Html::PermitScrubber
-  alias :old_scrub :scrub
-  alias :old_skip_node? :skip_node?
-
-  def scrub(node)
-    if node.cdata?
-      text = node.document.create_text_node node.text
-      node.replace text
-      return CONTINUE
-    end
-    old_scrub node
-  end
-
-  def skip_node?(node); node.text?; end
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 1-0-whitelist_sanitizer_xss.patch - Patch for 1.0 series
-
-Credits
--------
-Thanks to Arnaud Germis, Nate Clark, and John Colvin for reporting this issue.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "1-0-whitelist_sanitizer_xss.patch" of type "text/plain" (2140 bytes)
-
-Content of type "application/pgp-signature" skipped
