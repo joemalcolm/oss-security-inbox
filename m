@@ -1,33 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/7
-Message-ID: <CAMomwMoURA8sQJajmjdAA21BWY1mQguJb_mmqWprRK77-0huxg@mail.gmail.com>
-Date: Wed, 2 Mar 2016 16:03:54 +0100
-From: Martin Grigorov <mgrigorov@...che.org>
-To: announce@...ket.apache.org,  "users@...ket.apache.org" <users@...ket.apache.org>, "dev@...ket.apache.org" <dev@...ket.apache.org>,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [CVE-2015-7520] Apache Wicket XSS vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/10
+Message-ID: <91dfb06a63e541769819a7edbbee1429@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:45:30 -0400
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: 9pfs: memory leakage in v9fs_write
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to a memory leakage issue. It could
+> occur when calling v9fs_write call.
+> 
+> A privileged user inside guest could use this flaw to leak the host memory
+> bytes resulting in DoS for other services.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02623.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=fdfcc9aeea1492f4b819a24c94dfb678145b1bf9
 
-Versions Affected: Apache Wicket 1.5.x, 6.x and 7.x
+>> doesn't free an IO vector
 
-Description:
+Use CVE-2016-9106.
 
-It is possible for JavaScript statements to break out of a RadioGroup’s and
-CheckBoxMultipleChoice’s “value” attribute of <input> elements
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This might pose a security threat if the written JavaScript contains user
-provided data.
-
-The application developers are recommended to upgrade to:
-
-- Apache Wicket 1.5.15
-- Apache Wicket 6.22.0
-- Apache Wicket 7.2.0
-
-Credit: This issue was reported by Canh Ngo!
-
-Apache Wicket Team
-
+iQIcBAEBCAAGBQJYFkuQAAoJEHb/MwWLVhi2eq8P/2iZ0CeEPUH8YU5Mz7dSLayz
+VLPYWPJWgYviJbAvD7twWyAf2qYYpamLMGY0SiRSaV30xcB+yPbyXKZVwKoB8tt5
+DF4k61Rdzfnshrfo3/flhREW7qZSbKo/NA1HZX4PWwAk3PnD0wDV8AcambyzyB/E
+Jjwfw3fiaoZMtOZlsnsohvMpoI/PvwQYg8RUrD7zB6mit2D/jtdfXG6vuY4b0c22
+1UCitnP2Wsqb2Ex+52jwisTkeLxut6ZYyV77N1BX1WSPeDrESV+9E4mm6rFVYTgY
+1COL7WB1H7ZCoxgQ3G4oXN9YtOKzIDS8L1Zdn1XfKhA68FFtPQ9aP4bSDPlzeXDs
+Ort3rUCS2Fnk5y9WNR40l7r5E1D1ccr/bFS6+/N8dvBlNNGlJkh3bvaaUJgwmzUw
+RL2w7uPLQi+Qpi3AHxxKtY09cRrIa1wfHVVwnJ+x+rGOpFoIQRRK3sAosv3r2AJl
+eakEZxN2UJPmbTckOhOoyJ5ISNFQSytwzTG8a6DzO6+KJgqHBsmj9kTxkIHznKKi
+arlpGH+E6SzwOpTCst6257Ht3gCs0h1SPL1XPcL6fpmoy6ilkedce5rrSYKD+DBq
+f+flLN8q/89q/doPU+lmORuUSzwwzLfKTnJRtX9h2n0jasubBWnVAGyTQqHAmLKE
+/FY1TuwKHWAohSxEpMG6
+=GBCx
+-----END PGP SIGNATURE-----
