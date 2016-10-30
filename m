@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/22/2
-Message-Id: <20160622110200.7BE556C0B46@smtpvmsrv1.mitre.org>
-Date: Wed, 22 Jun 2016 07:02:00 -0400 (EDT)
-From: cve-assign@...re.org
-To: greg@...ghaynes.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request Openstack-infra puppet-gerrit module xss vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/9
+Message-ID: <59c7287f196e4a4987d4987463be8a31@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:44:13 -0400
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: memory leakage in v9fs_link
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> It was recently discovered that our puppet-gerrit module configures
-> Gerrit in a way which makes it vulnerable to a XSS attack. This stems
-> from our configuration marking text/html as a 'safe' mimetype
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to a memory leakage issue. It could
+> occur when calling v9fs_link call.
 > 
-> a user could
-> potentially craft a review which when visited at the proper url would
-> have access to the account information of any user visiting that url.
+> A privileged user inside guest could use this flaw to leak the host memory
+> bytes resulting in DoS for other services.
 > 
-> https://review.openstack.org/#/c/332219/
-> http://git.openstack.org/cgit/openstack-infra/puppet-gerrit/commit/?id=8573c2ee172f66c1667de49685c88fdc8883ca8b
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02608.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=4c1586787ff43c9acd18a56c12d720e3e6be9f7c
 
->> -[mimetype "text/html"]
->> -        safe = true
+>> it doesn't put the 'oldfidp'
+>> fid object, this will make the 'oldfidp->ref' never reach to 0
 
-Use CVE-2016-5737.
+Use CVE-2016-9105.
 
 - -- 
 CVE Assignment Team
@@ -35,17 +34,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXam9xAAoJEHb/MwWLVhi2BAIP/A/nVfFm9lCU2/r5Hn7/CHJ3
-eZkfmbMZU6+GDNx6xp+5ZIu2OOWbEwmCh1daXxCu1z3YSVv/tq06nw5TZ57pufd/
-K1vSdwwm54U1hdT8O/+TGV7tREVfyJMLncVIxwtctHOsnsODOQFCln89fpLYzObH
-HOBOqii6TCqeyCyatjBsKRzIZz4Gy0FN+j3htWR6Ws+TDEujK/yjm/KeLak4QKp8
-ZpVjxq3Cc9HmdQjnTR14uMNr1gcEhvKW9yBjzERarJ7/vzoNQLfLzmVLAnqP7xQK
-vixrgxrD8UNU15frbFfxJ2EQk9wP3j8tXYag8XlAWkjbr++2Fy5EuN68lSqxqfnC
-cgVFvTjyO7ValKzkuCPUBiBEo0e2lvspxZaEIxrqC7VvXWdtuuqftDjOiZ6KI2xN
-R0LpyPylYho5n1lMLI6iZv5XUNpdTkLHLhjAMAZ5oLqqVcoGEeg8orvoC25GZIZg
-+BAmu4k8mhs9oDlFVzXyk4Xpt/E8PBqYcUpfIFGzPYI6N5UUGN1tJ1doj5UXzJ04
-opmmz2X859F8JjXLPutxWxJzVIwo1gS+HTNMEzyvOBgaSTB/6dD4+tGy538AH4Zt
-jtkhEMH8WiYp8hOJ4ShiVBYBkldfOv9ScQoD70UtndKbjJnY4tEutPajqrb09dvX
-tPrQg6mNSnadZYUBFGHA
-=OuaR
+iQIcBAEBCAAGBQJYFkuHAAoJEHb/MwWLVhi2DMAQAIO5vFhKXH1jUOmYSL9U28Ll
+7zekNnjjaInS3IUqygdo9awZVAHmPS93yW3oJJ0jkwYU/TDUtEqDVjLrlylvCfww
+OCJFxc6N8bkgRl8XHmSnON0jehx9Gsm7JbM8u6yYYpmEKR6CEawFzO8nT2wBt0SD
+zgxurZJ8R7WCIcrhBtVBFECI7HGMnyS3XXx/p4Brd4Tv+oFCFHKaV4a9jZY8fmIq
+2Vw9bxLRLNnGLY61GRJNOEk1z836jeeH/S2Ey4vPMDzwRiHd0izXykscMHdVFb/9
+vQ+gzOt2VATieZJxRV7JywxLkDf9ZWqRNeIonW4LfZl+acO/lrTWPZZXmIz/JUSy
+U6/63ksgKrOMcPlRCStX+GmB5fXQ4BZnTQRW5q2pkYtsoL11KsszoQmSDs/9ou0/
+Xm6Duj0UfJGqrUcei8IS01nXSPk+sfnLSyfELe/QxTbd7wHoogjj0L5sdfaTDdDk
+JL/STIuVvsJSehH7LwmBC1//xhTUhWf2h+W2W5I43pvgBGvArBtipY0Pr6Gi/k2Q
+Uuqc1ZgFtyM70umJRTblBzuiEPAWtExZoTPWfQXmTYHHRqWl+kKZ7no3oMNrDOYl
+FbQVdWhUw0lfdyfICJ7U1lW4AiCpNjCs0w2KMT2MEz0OrPpCMQkJaf9swdWdH/Q7
+8ygJtNKg5QpmODGyq2Pv
+=4oL2
 -----END PGP SIGNATURE-----
