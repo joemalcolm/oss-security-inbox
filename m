@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/5
-Message-ID: <57BF4010.8010409@hafd.org>
-Date: Thu, 25 Aug 2016 13:59:28 -0500
-From: Jordan Bettis <jordanb@...d.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/11
+Message-ID: <4b48e4f3ed994d29993afa0620332fe9@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:46:58 -0400
+From: <cve-assign@...re.org>
+To: <hanno@...eck.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: gajim otr plugin cleartext leak
 Content-Type: text/plain; charset=utf-8
 
-On 08/11/2016 10:34 PM, Kurt Seifried wrote:
-> 
-> Please note that the attacker would also have to have access to the local
-> file system, either shell access or by some additional exploit,
-> additionally they would have to have read access to the file wget is
-> downloading (so same security context, or really poor permissions).
-> 
-...
-> Please note again that to exploit this you would need a situation where the
-> attacker can control what wget is fetching, or execute a man in the middle
-> attack, AND has local access to the system downloading the file AND has
-> permissions to read the file AND some sort of additional vulnerability that
-> requires being able to read a file in order to escalate privileges.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Suppose I convince web admin to wget jpeg files from my server into his
-web root. The jpeg directory also contains the file evil.php. During the
-download, evil.php now exists in his web root and I can cause it to be
-executed by visiting the correct path via http.
+> https://trac-plugins.gajim.org/ticket/145
+> https://trac-plugins.gajim.org/changeset/c7c2e519ed63377bc943dd01c4661b0fe49321ae
 
+>> Fix leaking cleartext when using XHTML - Fixes #145
+>> gotr/otrmodule.py
+
+Use CVE-2016-9107.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYFkuXAAoJEHb/MwWLVhi2KSIP/0rIgUof1ST+5BnxeCXgC/cf
+6voDeazO/NdxnU5m4xXNV/csdxuPY939YUI1OMuwfCz9YfceIXlGNVFXwQztgeHu
+YW4dsgA+v8xud9v2t3fnFLgl20+WALJrl8qWc2OMAklw3H91sLFnzjrlZHAMlIpB
+Os68Be99eBlq5FfoGcRfOq45wV08O7NlAMStYua+N8QBWm8dcfTu4UkwjCYnJrm7
+8P9O8gK1KGGwu+ngGnrJZcY4uu52g8dQ0iCOu1AedxpNsyLLNmf0XGKYBfaAGSoe
+WaPlF2mV2iXUXjlIuPVWgKpjau/2lHO7S2OyhHohxVYCGTOrte2X3rFt7ExVhfOH
+tBA5E/5kisM2veqLp4eWTcTwQP5GjehVlkXF7VdKuQmJIEo5RckDGrcI4mWRXgI6
+PFIkse8N7HIrYRh1igHY8Ttzdmv7ZSWejEXI+/kjCVCHRcCczxuXsG3ejPAjWEkQ
+KYXM3g4cbk6jE4nY798WEL9JcN3C3ybDzu0sUh9qQkl7y8WR7xor3ovGyrJg/7l5
+DfOYiaGTKgwQuUle2V16ZbegKyIBNjk2RJmV7xQhFDaxhi7aEfVXgbUaW6txZOvq
+cCAqUlADh5EjjCMP7ryyrtBj+rvefwXwY6Q9sHlNJzpG4MR2vMospSv+xFx8nLzj
+0YLvtzYzc664dGYMBth9
+=XAI4
+-----END PGP SIGNATURE-----
