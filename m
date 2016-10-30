@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1075" "Monday" "22" "October" "2018" "20:26:38" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20181022182638.uja7q6jhxn5md36n@jwilk.net>" "23" "Re: [oss-security] Using quilt on untrusted RPM spec files" "^Date:" nil nil "10" "2018102218:26:38" "[oss-security] Using quilt on untrusted RPM spec files" (number mark "        jwilk@jwilk. Oct 22   23/1075  " thread-indent "\"Re: [oss-security] Using quilt on untrusted RPM spec files\"\n") "<20180927155934.GB8696@f195.suse.de>" ("<20180927155934.GB8696@f195.suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1330" "Sunday" "30" "October" "2016" "15:48:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b6628b3b2ff14e43aaac2bb6cdcb915d@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: CVE request - integer overflow and crash parsing regex in mujs" nil nil nil "10" "2016103019:48:27" "[oss-security] Re: CVE request - integer overflow and crash parsing regex in mujs" (number mark "U       cve-assign@m Oct 30   37/1330  " thread-indent "\"[oss-security] Re: CVE request - integer overflow and crash parsing regex in mujs\"\n") "<CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>" ("<CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3863 invoked by uid 550); 22 Oct 2018 18:26:56 -0000
+Received: (qmail 16014 invoked by uid 550); 30 Oct 2016 19:48:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3840 invoked from network); 22 Oct 2018 18:26:56 -0000
-Message-ID: <20181022182638.uja7q6jhxn5md36n@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20180927155934.GB8696@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20180927155934.GB8696@f195.suse.de>
-User-Agent: NeoMutt/20180716
-X-Ovh-Tracer-Id: 1613414568901269414
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtkedrgedvgdduvdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenuc
-Date: Mon, 22 Oct 2018 20:26:38 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Using quilt on untrusted RPM spec files
-To: oss-security@lists.openwall.com
+Received: (qmail 15956 invoked from network); 30 Oct 2016 19:48:38 -0000
+From: <cve-assign@mitre.org>
+To: <gustavo.grieco@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>
+Message-ID: <b6628b3b2ff14e43aaac2bb6cdcb915d@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:48:27 -0400
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request - integer overflow and crash parsing regex in mujs
 
-* Matthias Gerstner <mgerstner@suse.de>, 2018-09-27, 17:59:
->It turns out that running `quilt setup` on untrusted sources is not a 
->good idea:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Debian largely avoids this problem by having a source package format 
-with built-in patch system[0]. Most of the time the unpacked source 
-package will have patches applied, so there's no need for the reviewer 
-to run untrusted code to prepare the source.
+> an integer overflow somewhere affecting function
+> js_regcomp (line 843 in regexp.c) in mujs
 
-(That said, dpkg-source had quite a few path traversal bugs in the 
-past[1] and I have a hunch there's more to be found...)
+> Argument 'size' of function malloc has a fishy (possibly
+> negative) value: -5152
 
-While debian/rules can have optional "patch" target[2] (which is a bit 
-like RPM's %prep), it felt to disuse these days. A developer wouldn't 
-call "debian/rules patch" against a random not-yet-reviewed package, 
-because it would be unusual to have this target implemented.
+> js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
 
-[0] https://manpages.debian.org/stretch/dpkg-dev/dpkg-source.1.en.html#Format:_3.0_%28quilt%29
-[1] https://security-tracker.debian.org/tracker/source-package/dpkg
-[2] https://www.debian.org/doc/debian-policy/ch-source.html#main-building-script-debian-rules
+> Invalid write of size 2
 
--- 
-Jakub Wilk
+Use CVE-2016-9108.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYFkudAAoJEHb/MwWLVhi2RBgP/RF0bMlb+4D26ZDZ2QWwajjj
+3QerG0bwV1cKaE+emQXe2T0fMeeSNm0B8+SSkLEtbfFSFnQhJgP3cn2xoYOdl0+j
+J72oJMrTay+NRMiSyCoHQ0lXy2K3z1BhvXDTMDCrRtov4curUVQ8Zk35rNDr+DGP
+tUpumfoguit3TrcrlQT19AiKUUJYiXBgD7k6CsGVdZ2ReY3Bi3MwhyHfZ+cNvx71
+hwxAwtvYIU+h/+kUX0fjLQ5w8VadUr4pwYtQNvo6x52QiOFyw5iw2JsJX7q0K72X
+bteIFYG8byQqMJXyYzLwxN4FpWzEW7uPusRjE7I0X62y0rl/RV0AdpFL5+QBLYdC
+5bIDcVbRpcjoQimDk6nP3iVTvaetOvyJHDQxv2UP13pkwW1Y1t4rlI45F/8FVsUz
+jILRhjiW1ITLew+zCmQtirdAsh+pkPRlZCdWKzDdlY/Pxeb0Nqp3kyIZ0kQSpogr
+xjNpJJV9ss7aXjzwYSDR3R9U/91QnPqJ2wagxds6AsnZB6zKG6V01edmgKpMTYue
+vmIFeSY/nul7xAUMl0BYrLoJkwag+aitbQ5FVjU1UaO442W9iraM8Sp5afecXjWD
+kU2CHD7BPP41K1e6Cw/HI2HfNBkhJVdz96SaNq4jA3uwtjkuWaeZ1HnqTxX5yE5V
+niwZyF8JncAPwN2NX7CQ
+=GE43
+-----END PGP SIGNATURE-----
