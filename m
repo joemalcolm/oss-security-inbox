@@ -1,58 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/29/5
-Message-Id: <20160229212648.BCC2B6C082B@smtpvmsrv1.mitre.org>
-Date: Mon, 29 Feb 2016 16:26:48 -0500 (EST)
-From: cve-assign@...re.org
-To: amaris@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Heap buffer overflow in pcretest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/1
+Message-ID: <20161030053557.GA3024@openwall.com>
+Date: Sun, 30 Oct 2016 06:35:57 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-5195 test case
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Andy,
 
-> Heap-based buffer overread caused by specially crafted input triggering
-> infinite loop in pcretest.c 
+On Thu, Oct 27, 2016 at 08:35:01AM -0700, Andy Lutomirski wrote:
+> I sat on this longer than makes any sense given how easy to reproduce
+> CVE-2016-5195 is, but here's a reasonably portable reproducer.  It's
+> intended to have no side effects, but your mileage may vary.
+> 
+> https://github.com/amluto/vulnerabilities/blob/master/others/CVE-2016-5195/test_CVE-2016-5195.c
+> 
+> This will use /proc/self/mem or ptrace automatically, and it's
+> intended to be portable to a wide range of kernels.
 
-Can you clarify the threat model for an infinite loop caused by the
-pcretest.c source code?
+Unfortunately, it still didn't work on systems without O_TMPFILE or/and
+without a defined PR_SET_PTRACER_ANY.
 
-Our understanding is that pcretest and pcre2test are standalone
-command-line programs; they are not normally linked into applications
-that use the PCRE library. This type of bug in pcretest or pcre2test
-might not have any common associated use case in which an unattended
-process receives untrusted patterns, and uses a huge amount of CPU time
-before anyone notices. In other words, a person who has any awareness
-of running pcretest or pcre2test could observe the long run time, and
-could apparently recover from the bug by removing the problematic
-patterns from the set of input patterns, and then running the program
-again. Obviously, some infinite-loop issues have CVE ID assignments
-but they are almost always issues in which the use case is
-realistically unattended (kernel, daemons, CGI scripts, web browsers,
-network-monitoring tools, general-purpose library code, etc.).
+Attached is a slightly more portable version.
 
-If a pattern can result in code execution when pcretest or pcre2test
-is executed with untrusted input, then a CVE ID could be considered.
+> It's an improved
+> version of the test case I originally sent out to distros (oops!).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Why "oops"?  Do you mean just the distros vs. linux-distros issue?
 
-iQIcBAEBCAAGBQJW1LMNAAoJEL54rhJi8gl5JIsP/jgsHL19qJdWD8LwgxXqlhSp
-4WhvoC0kxG/vwKLMKMWh/ofKvV4qF5JY7lpX3s5JFsoZ4FZbizGiPFOYCcF7q/d+
-lwBUmyalBjzqaQReuFvS+TZaNVgVUzlaJ40E0E6d3NoTfZCrD28N+ciVzDKpS2SX
-Fz0svDJMYANQz5Yl15uRMC+3RNkQtLoomxXpO3IhQwboCbmEE2XJUXU0xXBATVHf
-qhzyGsMGa8GRdtKzPY4vYMuGnbfVkCbNzitxjIvFS8zbWtx+ZtqIRiPEFJgwYdRN
-F6REM9tSIDtobLp31+PJrez4AVDT28khm7xjOmcEjtG4zBWQ2iJ/LiuqJzpjWOPR
-NWZjghKZ3pMRIa8h7ygKWHhaYwD9AeSFD3yfyh9gMMqpx65a+QZF7sUlSOkO9bWA
-NOsr3U8c0Vfnf+gsk+SznvaQGTfrL2orKrYh8fIpO8HKiUQwxKUYbvuuHnJJg9Mf
-p+FLM9DploIuGcig4lZ00wi4JzQzCoQdjSpsYMf9xG7pTJzj2qjR3P74RSMax/CY
-bkLGz7J0eE+Ztfxantgajl4jOW0nBx9XcJjV2hstvwYVNkDkrWXw93zbPlMVAajm
-hQ+sEJyJN1ggENvM+pyGDVC2e03eeh1WOiQyzR9Y4hbQ+HXkphhQqLsp6FYs3ymA
-OvK05MdCdUMXe0k14PeN
-=mSgo
------END PGP SIGNATURE-----
+It's OK to send reproducers to the [linux-]distros list (the appropriate
+one) as long as you intend to make them public shortly after public
+disclosure of the issue itself (the earliest of: a few days or when
+other public exploits/reproducers show up).  I think for most issues,
+which are not high impact or/and where non-trivial pre-conditions need
+to be met, it makes sense to make the (non-weaponized) reproducers
+public right away (on the initial public disclosure date, along with
+full vulnerability detail), but occasionally there will be issues like
+this where delaying posting the reproducer a little bit makes sense.
+It's just that I think you shouldn't have delayed as much.  Ideally, you
+should have made a posting in here without the reproducer on the initial
+public disclosure date (in fact, that's your responsibility per the
+[linux-]distros list policy), and as others made reproducers available
+within a day, you should have also posted yours the next day.
+
+Just my opinion.
+
+Thank you for your help in handling of this issue!
+
+Alexander
+
+View attachment "test_CVE-2016-5195.c" of type "text/x-c" (5069 bytes)
+
+View attachment "test_CVE-2016-5195.c.diff" of type "text/plain" (740 bytes)
