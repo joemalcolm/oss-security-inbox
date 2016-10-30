@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/3
-Message-Id: <20161016024753.8DF2E6C0D4B@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:47:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/13
+Message-ID: <d14b218f69c243e8882399bdea634e66@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:49:53 -0400
+From: <cve-assign@...re.org>
+To: <gustavo.grieco@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_size_of_val-dwarf_util-c
+> Despite CVE-2016-7563 looks fixed in the mujs bug tracker, it was not
+> properly patched:
 > 
-> AddressSanitizer: heap-buffer-overflow ... READ of size 1
-> 0x60489f in _dwarf_get_size_of_val ... libdwarf/dwarf_util.c:267:21
-> 
-> Commit fix:
-> https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13
-> and then
-> https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2
+> http://bugs.ghostscript.com/show_bug.cgi?id=697136#c4
 
-Use CVE-2016-8679.
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 1
 
-(This has the same fix as CVE-2016-8681 but seems distinct.)
+Use CVE-2016-9109 for the issue of an incomplete fix for
+CVE-2016-7563.
 
 - -- 
 CVE Assignment Team
@@ -33,17 +30,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAudSAAoJEHb/MwWLVhi21csQAIhNJ/W+Q4efpfHddoeY6wTi
-KZyamuq4W+Fska+8pzKInu0oiIUYm2HeoFiDqSOr8BI77tR6G8PQvm7H9V7WCATq
-qSXkMNFJ3KUHIkH/DN5ZI55InyftiAb1fTuI6GfnyeLiF7oD2k2Lysg/xyw62nAA
-tJmT0cbCYd42u6PoNlRcsoZZF74Wrmkdqk2+2ec/n36/kkwIbPULXcL/bOA0IUuF
-3RP9qDk757WQNHmm2buGM5n/ygKCUuV9AejoUM6UWIzwETW+DUE85PTX9rH7TH+h
-dDgmUjAhvq4nSULg6g+7kELKlhGnCq62/XAdzqIkDT6OvSqel6HfmL93y2JSb7je
-Owl27JhKzEKQiGULp4HpVIlH+CG/edIcSZDxY114vGLe+pzJCiQir3aQ0r7GYcvk
-zAyBf9JJOR2cyiUxfDJEn/7Rhlt1wMiJ/R01jl96Gno0iv1Es4fXzMXc17HU7pLk
-ikhJwFOit1vEyxxWOnwfvISPPHbNNfY9TSsKsB0qGmWUzxICG3doaCII5P/HK/hP
-jF/I/uQk4Dtp6X0U70m0hz58XxqBHT8CfGoXJnOZ8DT01sVO2lDU66ygFQYTET1k
-3fMXBpFNR73dhMfsPJz+MIbisQCgDx9+2jacGB7w2YojTpTvs09A47mxoCNWfzsb
-QHxcDWF3zOBmzf22yYWn
-=nGbM
+iQIcBAEBCAAGBQJYFkuiAAoJEHb/MwWLVhi2RYQP/RUxITs9d7YwygKvsonPO6KY
+G0w5aAZSoJQq5SuQHFpU5B6CBfMfGB4iSWTrdLhu71hSBHlFMoca8Q4Rlirnnefh
+mrK2dUlB4ZeY9iAu/WAsi7svdMhbsaNWD4FchYdm8PTBP10Q0pHCilPAmJI4/fev
+vZIeSeHl0KcYD104MtYD2ek6bOUm56Dxuf2nBTRfVJNBZa/q1FRS62cg+Nkwo4Hx
+sfvepzy26nE0PzCFn1GcPu3H0SuWe1nkgfSwgZjFSDAg+OwueJLAFnm/Y+xloUWv
+lD3WiHU1cESxY4SyH3UgUa2QgNTI0zauLxLzcwLOYMF2rh8UlACG2DqOckgI9Bkk
+GYetbtkGbnZOmwBTEFPdKfFISEo5dBBPRWTxFXnepCnwjU/Gl1gLt07s4/90UM/7
++w+kXl0boDt7W7PUYxyn6lkYUbT6Irodxvk1QDe5LcI5eyU8+QN2yNW1t8sp7qAi
+578PKtcezerFo0L9WHSvNcV3+CM9mO00LdI6ZxCEy8qmc5s5yrnbtIElaNdJfOek
+1riKd3yPvz3T/2EGbpVXE/9gkpz4My37e+bhhkBhzScp6pcM6tOcycBvSzM1LKls
+HNh0uzMpzadWQA474KQsCoXAZ+M3N1ViBmUs0KUCGs9NAqxjYV/pKtONiKUqTHbJ
+4cNzu7H/SxrQp0e6nt3h
+=vKjs
 -----END PGP SIGNATURE-----
