@@ -1,30 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/04/3
-Message-ID: <87r38ze3vk.fsf@angela.anarc.at>
-Date: Sun, 04 Sep 2016 17:45:03 -0400
-From: anarcat@...ian.org (Antoine Beaupré)
-To: oss-security@...ts.openwall.com
-Subject: CVE ID request: certificate spoofing through crafted SASL message in inspircd, charybdis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/6
+Message-ID: <57c860d2be484157a6976154f0dbb8a1@imshyb02.MITRE.ORG>
+Date: Sun, 30 Oct 2016 15:40:41 -0400
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: 9pfs: memory leakage when creating extended attribute
 Content-Type: text/plain; charset=utf-8
 
-inspircd published 2.0.23 that fixes an issue with SASL
-authentication. The details are here:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-http://www.inspircd.org/2016/09/03/v2023-released.html
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to memory leakage issue. It could
+> occur while creating extended attribute via 'Txattrcreate' message.
+> 
+> A privileged user inside guest could use this flaw to leak host memory, thus
+> affecting other services on the host and/or potentially crash the Qemu process
+> on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg01861.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1389550
+> http://git.qemu.org/?p=qemu.git;a=commit;h=ff55e94d23ae94c8628b0115320157c763eb3e06
 
-All versions are affected.
+>> The 'fs.xattr.value' field in V9fsFidState object doesn't consider the
+>> situation that this field has been allocated previously. Every time, it
+>> will be allocated directly.
 
-Upstream hasn't requested a CVE yet. I told them I would request one
-from here on IRC.
+Use CVE-2016-9102.
 
-It seems to also affect Charybdis, which fixed the issue in the
-upcoming 3.5.3 release:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://github.com/charybdis-ircd/charybdis/commit/818a3fda944b26d4814132cee14cfda4ea4aa824
-
-A.
-
--- 
-All governments are run by liars and nothing they say should be
-believed.
-                       - I. F. Stone
+iQIcBAEBCAAGBQJYFkttAAoJEHb/MwWLVhi2xs4QAJlln60/IgqnAibO5sPIrDV8
+IpxLE3wpjyOipSnO9tAQNTy80dZFrKhNTh+MsZYI28ttFrJlL6Upx2Vfx6YknnN/
+v7B+Obih4Z+V9O1q4j9mldmEIjIJ4pBylRjnB/jn4Kq+Mios5lPZjs9OJqry55KQ
+1BOqC+WaZSs+FuyMU9fRp3/VTZIEKIXp4BHZ/qBx7pGwcUtGllqmuUmQAluiQDEA
+8WAX1nuMld09naulyEjR4cdYhDb8nTLMYq2ZOc/epOomcVbChXGByrkMGK1K7RZO
+JfSLV9ptmR1w3g2PRSIOUQrMEnvkQrHbHgyy95cfnUBRG/gVbihIb5DW7dF6VEZ6
+bzylN3jSBKoOd8mb6oIG1qlhGnQ01Rok8wIcE4RGIz55BcPK8K62tSdirasfQ0dG
+ZWG37889erHjd7SUJs4H6fxz+JfUXeZXZ5YeJCY1eKaTly4IvZy2P2k4LmE5NmvT
+fYcp+8QNV/ukSZ2Ws0496mmqe50/CGfX3he4QmdCAkTv6TikbTO9m19bEyxk8yKl
+0OQvcVSYGnfXJ2WNC/6pPhPY1pTP/hamp2f7THdM9XrkwJANKzoAbCPYKlN46bSv
+rMkL0xHWWfxFVebTINJ77aYCNV6nA1xy+12aPitusmcbNFJVCb3MUHA1POEjamFL
+1f6bLO4tTEun2gK4MLKm
+=YQ2j
+-----END PGP SIGNATURE-----
