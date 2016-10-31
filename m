@@ -1,57 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/5
-Message-ID: <20160614135328.34a1e4e4@pc1>
-Date: Tue, 14 Jun 2016 13:53:28 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/4
+Message-ID: <20161031151149.4waow4btnxoevnax@eldamar.local>
+Date: Mon, 31 Oct 2016 16:11:49 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: Various invalid memory reads in ImageMagick (WPG, DDS, DCM)
+Subject: Re: Re: Handful of libass issues
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/46-Various-invalid-memory-reads-in-ImageMagick-WPG,-DDS,-DCM.html
+Hi
 
-Further fuzzing of ImageMagick uncovered some more issues.
+Apologies for the late reply.
 
-An out of bounds memory read in the VerticalFilter() function can be
-triggered by a malformed DDS file.
-https://crashes.fuzzing-project.org/imagemagick-oob-heap-read-VerticalFilter.dds
-Sample file
-https://github.com/ImageMagick/ImageMagick/commit/791aa82c8064ee8965a63ccf4384f56b95057e5b
-Git commit / fix This was fixed in versions 7.0.1-4 and 6.9.4-3.
+On Thu, Oct 27, 2016 at 08:24:24AM -0500, Brandon Perry wrote:
+> 
+> > On Oct 27, 2016, at 3:39 AM, Salvatore Bonaccorso <carnil@...ian.org> wrote:
+> > 
+> > Hi,
+> > 
+> > On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@...re.org wrote:
+> >>> The third is a huge memory allocation leading to a crash that wasn't
+> >>> fixed because a good solution is unavailable at the moment.
+> >> 
+> >> Use CVE-2016-7971.
+> > 
+> > It looks from the discussion in
+> > https://github.com/libass/libass/pull/240 that this issue is disputed
+> > to be actually in libass.
+> > 
+> 
+> For context, while the input caused a crash with AFL (not fuzzing
+> with ASAN) and it crashes with ASAN, I was unable to reproduce the
+> crash with libass externally. I was only able to take up a hug
+> amount of memory and take a long time to finish parsing the input.
+> 
+> I asked if they dev wanted to reject the CVE but got no strong
+> response either way, so I decided to not pursue it.
 
-Several bugs in the WPG parser could lead to a heap overflow and random
-invalid memory writes. These bugs only seem to appear when a memory
-limit is set.
-https://crashes.fuzzing-project.org/imagemagick-heapoverflow-SetPixelIndex.wpg
-Sample for heap write overflow in SetPixelIndex
-https://crashes.fuzzing-project.org/imagemagick-invalid-write-ScaleCharToQuantum.wpg
-Sample for unclear invalid write in ScaleCharToQuantum
-https://crashes.fuzzing-project.org/imagemagick-invalid-write-SetPixelIndex.wpg
-Sample for unclear invalid write in SetPixelIndex
-https://github.com/ImageMagick/ImageMagick/commit/fc43974d34318c834fbf78570ca1a3764ed8c7d7
-Git commit / fix 1
-https://github.com/ImageMagick/ImageMagick/commit/aecd0ada163a4d6c769cec178955d5f3e9316f2f
-Git commit / fix 2 These issues were fixed in versions 7.0.1-4 and
-6.9.4-3.
+Sure understand that. Currently, still the CVE is associated with libass.
 
-Null pointer accesses and unclear segfaults can happen in the DCM
-parser.
-https://crashes.fuzzing-project.org/imagemagick-nullptr-ReadDCMImage-3220.dcm
-Sample for null pointer access in ReadDCMImage
-https://crashes.fuzzing-project.org/imagemagick-nullptr-ReadDCMImage-3240.dcm
-Sample for null pointer access in ReadDCMImage (different code)
-https://crashes.fuzzing-project.org/imagemagick-segv-ReadDCMImage-3968.dcm
-Sample for unclear segfault in ReadDCMImage
-https://github.com/ImageMagick/ImageMagick/commit/5511ef530576ed18fd636baa3bb4eda3d667665d
-Git commit / fix These issues were fixed in versions 7.0.1-7 and
-6.9.4-5.
+@MITRE CVE team, could you clarify the above? Is it still desired to
+have the CVE associated with libass, or shoult it be rejected?
 
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Regards,
+Salvatore
