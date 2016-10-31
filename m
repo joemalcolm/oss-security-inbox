@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["845" "Tuesday" "30" "May" "2017" "11:20:05" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" "16" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Date:" nil nil "5" "2017053015:20:05" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   16/845   " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1191" "Monday" "31" "October" "2016" "11:48:45" "+0100" "Florian Weimer" "fweimer@redhat.com" "<14b76703-8185-dadb-7605-10496331452c@redhat.com>" "45" "[oss-security] Stack guard canary massaging" nil nil nil "10" "2016103110:48:45" "[oss-security] Stack guard canary massaging" (number mark "U       fweimer@redh Oct 31   45/1191  " thread-indent "\"[oss-security] Stack guard canary massaging\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5157 invoked by uid 550); 30 May 2017 15:20:18 -0000
+Received: (qmail 24374 invoked by uid 550); 31 Oct 2016 10:49:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4062 invoked from network); 30 May 2017 15:20:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=yfL3nii8gRfw7JhThJbPoQKxk+xtiBbGujIlKS9dcWg=;
-        b=VvrPjO2uSLKhsquB7Kk3/1jEvLw0SFST286zWWYuE7jRN+MdEdKvMh8dXrms1poZUH
-         5t1I7Vb58hL6Y3rVlB8TuxXZS3Zt2S0P66g/QxnSxLlFnkcncqy11RwDDpRhbF/fbdxd
-         JYSE8eKDs6D53G+XT+liDP2DFVh8DZpxW5Lnckuer/iJ+zWyeYYH9fnQ7sPTuz6rl4gU
-         v/5YQpR6EffXTIwg7fa986mIbygjpvmPs4zLc0zTtuPcgUbhOLQ6dVooVG4h6R7Q9ygw
-         ZDemRDGmSGs6fC+9K4fUWQFS54KDaUs6ixlfQMUEUAOSEshpRaWwRt8OpEbgRX2WEQ3R
-         RUPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=yfL3nii8gRfw7JhThJbPoQKxk+xtiBbGujIlKS9dcWg=;
-        b=dbjYCv8B+bk/GeAXrNbjtH22SCP7EGw1PJK0u4q0kKpTqjHBSC1Fv88DN8C93OJBrz
-         9eq64rkJD5jtpwcN+RgoH5IGxnUtZQE7ui9KMYEDYNvXAkEWdRpYYOaPPy69ZywPJFGG
-         GAnJS+YovoG6l6piSsos2o0M2zcR/gMxzfH3FVNkgyJPmhGXtZo0QO7AsrtFore44kyJ
-         8VdBAxoXFguQqdEyKG3RKCc0+HXb769p4T1HaG8FaYf+jb+3ROuToVV64f7e+iwM5jPZ
-         KCR/uV6ELyHeUqaC8gpCi3xvTx+uGPs/EIqYNE7gzk6UdWRAngjdF6z3p9NBhPP1ibbY
-         96Lw==
-X-Gm-Message-State: AODbwcA/3BrNOHIe++2yTCxMXiUsFb30UzqOL/7vW6l1z12x3FthOJ/R
-	zpcYVRgC2zXoZwcOZc/n0uy+03SHwN6G
-X-Received: by 10.37.77.138 with SMTP id a132mr50183567ybb.170.1496157605862;
- Tue, 30 May 2017 08:20:05 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
- <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk> <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>
-Message-ID: <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 30 May 2017 11:20:05 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: oss-security@lists.openwall.com
+Received: (qmail 24339 invoked from network); 31 Oct 2016 10:48:59 -0000
+To: kernel-hardening@lists.openwall.com, oss-security@lists.openwall.com
+From: Florian Weimer <fweimer@redhat.com>
+Message-ID: <14b76703-8185-dadb-7605-10496331452c@redhat.com>
+Date: Mon, 31 Oct 2016 11:48:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 31 Oct 2016 10:48:47 +0000 (UTC)
+Subject: [oss-security] Stack guard canary massaging
 
-That's not what secure/verified boot means to everyone else, and
-there's nothing in mainline with those properties. To everyone else,
-it's not an arbitrary bureaucratic/marketing feature. It's
-verification of the whole base OS... i.e. Android, Android Things
-(Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
-Windows on mobile devices too, and I really doubt that Microsoft
-doesn't plan on verifying the userspace OS if they don't already.
+Sorry for cross-posting.
 
-Anyway, good luck with meaningless Red Hat security theatre. These
-"vulnerabilities" are just reinforcing the view that security people
-are foolish. There isn't disagreement that it's a meaningless feature
-with this level of incompleteness and yet a CVE is assigned for it?
-Okay then...
+glibc does this to set up the stack canary:
 
-Sorry for thinking that this should be about something more than
-padding CVs and marketing materials.
+static inline uintptr_t __attribute__ ((always_inline))
+_dl_setup_stack_chk_guard (void *dl_random)
+{
+   union
+   {
+     uintptr_t num;
+     unsigned char bytes[sizeof (uintptr_t)];
+   } ret = { 0 };
+
+   if (dl_random == NULL)
+     {
+       ret.bytes[sizeof (ret) - 1] = 255;
+       ret.bytes[sizeof (ret) - 2] = '\n';
+     }
+   else
+     {
+       memcpy (ret.bytes, dl_random, sizeof (ret));
+#if BYTE_ORDER == LITTLE_ENDIAN
+       ret.num &= ~(uintptr_t) 0xff;
+#elif BYTE_ORDER == BIG_ENDIAN
+       ret.num &= ~((uintptr_t) 0xff << (8 * (sizeof (ret) - 1)));
+#else
+# error "BYTE_ORDER unknown"
+#endif
+     }
+   return ret.num;
+}
+
+This is an elaborate way of setting ret.bytes[0] = '\0'.
+
+The intent (determined from an old commit message) is to make it harder 
+to obtain the canary value through a read buffer overflow of a 
+NUL-terminated string: The read overflow will stop at the NUL byte and 
+not include the random canary value, reducing the risk of inappropriate 
+disclosure.
+
+But this reduces entropy of the canary to 24 bits on 32-bit systems, so 
+I wonder if this is the right trade-off here.
+
+Thanks,
+Florian
