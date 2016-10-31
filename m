@@ -1,4 +1,9 @@
-Received: (qmail 3656 invoked by uid 550); 21 Mar 2026 20:20:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1219" "Monday" "31" "October" "2016" "16:11:49" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161031151149.4waow4btnxoevnax@eldamar.local>" "36" "Re: [oss-security] Re: Handful of libass issues" nil nil nil "10" "2016103115:11:49" "[oss-security] Re: Handful of libass issues" (number mark "U       carnil@debia Oct 31   36/1219  " thread-indent "\"Re: [oss-security] Re: Handful of libass issues\"\n") "<F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>" ("<BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>" "<20161005022322.18575ABC00D@smtpvmsrv1.mitre.org>" "<20161027083901.GA10554@lorien.valinor.li>" "<F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9715 invoked by uid 550); 31 Oct 2016 15:12:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 14016 invoked from network); 21 Mar 2026 20:16:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=risingedge.co.za; s=xneelo; h=Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:reply-to:sender:bcc
-	:content-type; bh=WK5+9O6qiTAcA0DGjHi56HfKyN9xcK8pfMwTRLUTWh4=; b=Xtm3oIdFeEm
-	pDU0XIGtMnQkc8NFTuWrxLWm2x6sIw2pVq9jrKvZQ8KRZ0TMZo4rA8GipO07Iayz9E06AwQLiCbLW
-	sfjBDnQoAb8x2aQAb+YTmPpYcSifdTqDemElFrJIgugC8hGQfKg5MDl1b+6iAWwug+Fa0QvCFvxpL
-	Kh45/jqUYwpnlHkMFE+ge+dPcVgAL4pQGiO+eJ5TyZai7tB+OqHG+9hx0AZ52TY86rUo/Rj0SC48Q
-	Qw1G8DS4TuyKYY8zE2rCvzpyKJp+Js5OuY6lNpK3yWwB2HSQE+o5VnbfPB8nVMSQoRwv0oVhAxYc3
-	Y3ZQuUuvdemFzDapRs9sXOw==;
-From: Justin Swartz <justin.swartz@risingedge.co.za>
+Received: (qmail 9688 invoked from network); 31 Oct 2016 15:12:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mujY1uVp5Iru7DNq7+4mzlKgS4kkk4ZFzbKEUfSMThc=;
+        b=BZ/SSYdi44J52HW0VqVCbYRsunnkOKCBRFsXaiTrvr3ZsyzGsruCyqtUAri0jFeics
+         eDk/7TRTV+/lTLK4oTvqkWGqM+1oqu10ZRTVXFkbe0lv0ZQddn9jnFyIidfoZm4Xh715
+         qJwaewUHFIlIn4TVNjToO7o2LlMtppMbFOH+lDRaG19aXDUto//mHt8bc+WMtzbIiedF
+         LynuO0A8vTl47NHz8q+q/T0cANfhBdJBxXS7ETttRTY20JS/gSunwy9ERJp8QPGIsATo
+         udPX44ztJ6T1HIviz+NsL2nQ55lc5XYsMT1YLVHH5bGNr5XsASeMzYY8dPRdyyP+kAZo
+         WP3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mujY1uVp5Iru7DNq7+4mzlKgS4kkk4ZFzbKEUfSMThc=;
+        b=kepeUrzFQn0fO3fPa7PHbh87RPd4cd4u2uu8Jvt6sQMuOafuNrDN/Xv4W2Yiz81gHZ
+         R/vkkqEPX5Cv+DWBf21rUmunYABg6SohBbVyF0wIMG0jQMboqRVcIDcF8xv2jQeLFnl0
+         Lfhi2ZGPKAxdSGh+zphOmqrpMwCxMR3spiDqV3JQEwVf99GmMXTotIBWFOx3LXFxrHkc
+         Goc64+IUILDj6IJN0MeJGZPBHmlfvp/oywpqtJQhfLT3yDuT4RZWD5I557mgkATi+Ybt
+         bbD7OPU5gndUk/Y+IcFY3yO1zG7oChpmzT7oQagpoA/o9lHgyu4AMBZEZeWNsS9LQ6UT
+         cbXg==
+X-Gm-Message-State: ABUngveaJpQnPgxqAuNLoG4OLd4Yu+1wudN6vwafOsfyBHV7vL8PYk6dqQg9+ItCsqkQCg==
+X-Received: by 10.28.157.137 with SMTP id g131mr6529142wme.29.1477926711052;
+        Mon, 31 Oct 2016 08:11:51 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 31 Oct 2016 16:11:49 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Cc: justin.swartz@risingedge.co.za
-Date: Sat, 21 Mar 2026 22:16:52 +0200
-Message-Id: <20260321201652.9287-1-justin.swartz@risingedge.co.za>
-In-Reply-To: <20260321180013.GA20708@openwall.com>
-References: <EEDF7B9C-89E2-4544-A33D-DBF2B0FED6E0.1@smtp-inbound1.duck.com> <20260321180013.GA20708@openwall.com>
+Cc: cve-assign@mitre.org
+Message-ID: <20161031151149.4waow4btnxoevnax@eldamar.local>
+References: <BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>
+ <20161005022322.18575ABC00D@smtpvmsrv1.mitre.org>
+ <20161027083901.GA10554@lorien.valinor.li>
+ <F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authenticated-Sender: justin.swartz@risingedge.co.za
-X-Virus-Scanned: Clear
-X-Originating-IP: 188.40.1.173
-X-SpamExperts-Domain: risingedge.co.za
-X-SpamExperts-Username: 
-Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@risingedge.co.za
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.10)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVqs0WOpGULDjzCSFuzrIJMDCjBckhsoymc
- 2GXaiPadxCu2SmbhJN1U9FKs8X3+Nt0Io1idSgCc/506nnISAkPANvJkKIxakGlbxi+ggiqZlxxH
- xN7wu8yGEPLNcyeaFTgKBQeFdTHzWpESYbmCLMe1BMmyNbDn7R5kilAhwr3KtFb3AgNUGvQRnUF+
- Lycvfx+SVUSshQka8VpEeqGYZUq9E9d2wzwQxbXkmlRlwduBj4hSnw9YyoGHx/ukuag1WKBLWDaO
- GAC1PCRtpOZuVuRfKVFCXTS2zVmMeFsPQMyMp5ya4EnB7foI3WDAWEIqQR42kI22V3+6/8VpCe4k
- l4rBro7NG5FMnAx+YiDY2J/czJYIiHqfCgG4wrA3w4/kQTaLfhXaMgiD0j3v6Ie9X8yyJClZqIWe
- ElTlhke8IyK52DdtyTpRDuDZactSZQHS5CIA4kv6jpHeL4itl5GdKHos6cTrAfIBtLJVe62uoyOA
- UhmSvC6qJad8oDRDO7zv2HyvHObXCPPKSd2xpqdSbP9LdDgGQETciExfV//6y6W7Dk3621qUIfzc
- FXeghALwUxUR37FaFlv3F2PbvabG99OCbPN7v9MApiZJ0jIuv2upMAEiRQv+PVjjwa+Z5RFCOMQ+
- rkssTV42UJ+1K8svYHitXuUtdBRw0CzMOyehQ6vQGMvdVfFE4BvNT4payuSV1mxZzPImFuDj9wtn
- CHpNAoiDqeFMEyid5arI9OX88Mez1seXwD4BM2jQz1LojaPvzWFG78u4Z9swKs6X6s50biZUTMJ7
- bHbjQcSj2k6ROS/HeG5K61yXY75ytT3/xJ9H/2sMZidzpIMUsjKlj5Ezu+Gfw6YEC+Wo4SDETiTT
- GiY2n/4bw2RxeVx5WfYBV5Z0ipKtF1VPccloD2rUVRwpPdcTfqb5R4VemuUI6bcEARsm0MIEL6H2
- 5DNnVReRKfCEH3VMuaKkhDGeWUGKiyBKYF6y5eh+QfFP7pcU8NRnbcMqdtqW+IuA05DGXjIjSPSU
- iMlahI4i4TNLKKi5WRMONPLcJy48BaQZ9dlwiO6d4xuBNw==
-X-Report-Abuse-To: spam@antispamquarantine.host-h.net
-X-Complaints-To: abuse@antispammaster.host-h.net
-Subject: [oss-security] Re: Buffer overflow in /bin/su from UNIX v4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>
+User-Agent: NeoMutt/20161014 (1.7.1)
+Subject: Re: [oss-security] Re: Handful of libass issues
 
-Sat, 21 Mar 2026 19:00:13 +0100, Solar Designer wrote: 
-> On Sat, Mar 21, 2026 at 01:13:47PM -0400, kf503bla@...k.com wrote:
-> > why assign cve to something irrelvent?
+Hi
+
+Apologies for the late reply.
+
+On Thu, Oct 27, 2016 at 08:24:24AM -0500, Brandon Perry wrote:
 > 
-> I guess because (ir)relevance isn't among criteria for (not) assigning a
-> CVE, and because there may be value in having a non-ambiguous way to
-> refer to historical vulnerabilities for illustration of how the current
-> ones fit in historical context.
+> > On Oct 27, 2016, at 3:39 AM, Salvatore Bonaccorso <carnil@debian.org> wrote:
+> > 
+> > Hi,
+> > 
+> > On Tue, Oct 04, 2016 at 10:23:22PM -0400, cve-assign@mitre.org wrote:
+> >>> The third is a huge memory allocation leading to a crash that wasn't
+> >>> fixed because a good solution is unavailable at the moment.
+> >> 
+> >> Use CVE-2016-7971.
+> > 
+> > It looks from the discussion in
+> > https://github.com/libass/libass/pull/240 that this issue is disputed
+> > to be actually in libass.
+> > 
+> 
+> For context, while the input caused a crash with AFL (not fuzzing
+> with ASAN) and it crashes with ASAN, I was unable to reproduce the
+> crash with libass externally. I was only able to take up a hug
+> amount of memory and take a long time to finish parsing the input.
+> 
+> I asked if they dev wanted to reject the CVE but got no strong
+> response either way, so I decided to not pursue it.
 
-Beyond the historical context, there is an argument to be made
-for being aware of known defects in legacy codebases which have
-been resurrected for use on modern resource-constrained hardware.
+Sure understand that. Currently, still the CVE is associated with libass.
 
-For example, the RetroBSD [1] project provides a port of 2.11BSD
-intended for PIC32 (MIPS) targets. There's also an actively
-maintained RetroBSD fork, called DiscoBSD [2], which adds support
-for STM32F4 (ARM Cortex-M4) targets and had its last release [3]
-last month.
-
-And then there's Serge Vakulenko's LiteBSD [4], a 4.4BSD port to
-PIC32.
-
-And who knows where Robert Nordier's port of UNIX V7, v7/x86 [5],
-may be running?
-
-While these projects might modernize parts of the kernel and/or
-userland, there's always the possibility of bug-ridden code (and
-bug-ridden assumptions) being inherited from their respective BSD
-and/or Research UNIX lineage - as we've all seen with BSD derived
-telnet server and client implementations recently.
+@MITRE CVE team, could you clarify the above? Is it still desired to
+have the CVE associated with libass, or shoult it be rejected?
 
 Regards,
-Justin
-
-
---- Links ---
-
-[1] https://retrobsd.org
-[2] http://discobsd.org
-[3] https://github.com/chettrick/discobsd/releases/tag/DISCOBSD_2_6
-[4] https://github.com/sergev/LiteBSD
-[5] https://www.nordier.com/#v7x86
+Salvatore
