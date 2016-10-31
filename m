@@ -1,17 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/23/3
-Message-ID: <20160623121432.GH26237@suse.de>
-Date: Thu, 23 Jun 2016 14:14:32 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: Python HTTP header injection in urrlib2/urllib/httplib/http.client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/3
+Message-ID: <1477914064.3558.4.camel@gmail.com>
+Date: Mon, 31 Oct 2016 07:41:04 -0400
+From: Daniel Micay <danielmicay@...il.com>
+To: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: Re: [kernel-hardening] Re: Stack guard canary massaging
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 17, 2016 at 11:22:32AM +0200, Cedric Buissart wrote:
-> Thanks for details!
-> The glibc side of the issue has its own upstream bug entry:
-> https://sourceware.org/bugzilla/show_bug.cgi?id=20018
+On Mon, 2016-10-31 at 12:22 +0100, Solar Designer wrote:
+> On Mon, Oct 31, 2016 at 11:48:45AM +0100, Florian Weimer wrote:
+> > Sorry for cross-posting.
+> 
+> Sorry to bikeshed, but I think this isn't a kernel-hardening topic at
+> all, so the thread should continue on oss-security only, please.
+> 
+> Florian, if there's a reason why you think it's kernel-hardening
+> related, please let me know.  To me, it looks like userspace hardening
+> that is not even kernel-assisted (at least not directly in this place,
+> even though the kernel may have helped provide the random numbers).
+> 
+> If your cross-posting was to reach more of the right people, then you
+> have already done so, and they can join oss-security now. ;-)
+> 
+> Alexander
 
-Should a CVE also be assigned for the glibc problem?
+The kernel supports SSP but it doesn't appear to do the same thing.
 
-Ciao, Marcus
+arch/*/include/asm/stackprotector.h
+
+Why do the non-x86 implementations XOR in LINUX_VERSION_CODE though? Is
+it supposed to be a placeholder for a random at compile-time value? :\
+
+It's not harmful but that's just... weird.
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
