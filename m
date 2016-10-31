@@ -1,55 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/7
-Message-Id: <20160418160131.5831A3320BD@smtpvbsrv1.mitre.org>
-Date: Mon, 18 Apr 2016 12:01:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: regis.leroy@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Varnish 3 before 3.0.7 was vulnerable to HTTP Smuggling issues: Double Content Length and bad EOL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/1
+Message-ID: <14b76703-8185-dadb-7605-10496331452c@redhat.com>
+Date: Mon, 31 Oct 2016 11:48:45 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: Stack guard canary massaging
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Sorry for cross-posting.
 
-> Changelog is:
->  * Requests with multiple Content-Length headers will now fail.
->  * Stop recognizing a single CR (r) as a HTTP line separator. This
-> opened up a possible cache poisoning attack in stacked installations
-> where sslterminator/varnish/backend had different CR handling.
-> 
-> https://github.com/varnish/Varnish-Cache/commit/29870c8fe95e4e8a672f6f28c5fbe692bea09e9c
-> https://github.com/varnish/Varnish-Cache/commit/85e8468bec9416bd7e16b0d80cb820ecd2b330c3
-> 
-> Combinations of theses two flaws in HTTP protocol handling allows for
-> "HTTP Response Splitting" attacks
-> when another actor in front of Varnish3 can transmit headers in this
-> form (for example):
-> 
->     Dummy: header\rContent-Length: 0\r\n
+glibc does this to set up the stack canary:
 
-Use CVE-2015-8852. As far as we can tell,
-29870c8fe95e4e8a672f6f28c5fbe692bea09e9c is not independently
-exploitable and thus only a single ID is needed.
+static inline uintptr_t __attribute__ ((always_inline))
+_dl_setup_stack_chk_guard (void *dl_random)
+{
+   union
+   {
+     uintptr_t num;
+     unsigned char bytes[sizeof (uintptr_t)];
+   } ret = { 0 };
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+   if (dl_random == NULL)
+     {
+       ret.bytes[sizeof (ret) - 1] = 255;
+       ret.bytes[sizeof (ret) - 2] = '\n';
+     }
+   else
+     {
+       memcpy (ret.bytes, dl_random, sizeof (ret));
+#if BYTE_ORDER == LITTLE_ENDIAN
+       ret.num &= ~(uintptr_t) 0xff;
+#elif BYTE_ORDER == BIG_ENDIAN
+       ret.num &= ~((uintptr_t) 0xff << (8 * (sizeof (ret) - 1)));
+#else
+# error "BYTE_ORDER unknown"
+#endif
+     }
+   return ret.num;
+}
 
-iQIcBAEBCAAGBQJXFQRTAAoJEHb/MwWLVhi2JWQP/1KyFQ29uDWigwCEnW1lY/CX
-cyYnYNbRpsoXBIpkA6nCXJxD4IT3d5QXiWmtpelZy7A0CkdWLFa5dRJCC3wchn/J
-FE4xjsEFpvaiH5GJXwMpETfQ3dPxhXqpFCk8CFt9grirRZNSwziClSc3QF4nZXL5
-XfQMKWkgPE5e1kKbLGncqRyRsT9SY8PURfD6f1BPTZ9AhOUKrSXAIVrANRKhkbSV
-L5TIYxKKegFX/dn+c7lu+ur9TkvdOKHJ4NUPJE2G4UkbajPM9+YhYGJXa7z45+6D
-WJrPNUesSvxbaXQcmhxpbwWmcrnHCec7ONnp8GU047PqD/f2cRiudH0/qjmA3Lla
-t3tZwcRbCMIGEMzMDV82k6H+lh8KUxD+ZAyLpaWa/M+A8qCM7rTt06N0Sk+2bOD5
-LShXWIuWsfXqLhUmwI5irXdwoCPO8qqjawLpPSDxRSTmF0FJp5o3dMAZ9Bod0a4r
-wrC9eoClGb9yYy6Rp6Cu2S3SOLTgIrfNcWqiYKu4TzrlkrtuippLlrsmANeaFnVl
-j1E9hK2+UQI3+l77BufqIUyyOajksb8LMRfIpmH/YFfyXfP1SGcoXVdb8UcForxO
-Wu6muPmPTPrMpocn/sL5M6eGgcqFJ+X99BVzMSq4dn0V/Tn+EWR5kdjGxozkRn0O
-Y+bA2XlK2SlcdBVOOEi6
-=Y81M
------END PGP SIGNATURE-----
+This is an elaborate way of setting ret.bytes[0] = '\0'.
+
+The intent (determined from an old commit message) is to make it harder 
+to obtain the canary value through a read buffer overflow of a 
+NUL-terminated string: The read overflow will stop at the NUL byte and 
+not include the random canary value, reducing the risk of inappropriate 
+disclosure.
+
+But this reduces entropy of the canary to 24 bits on 32-bit systems, so 
+I wonder if this is the right trade-off here.
+
+Thanks,
+Florian
