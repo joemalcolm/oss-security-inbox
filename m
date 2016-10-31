@@ -1,73 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/14
-Message-ID: <5729CA23.7050707@redhat.com>
-Date: Wed, 4 May 2016 12:08:35 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/31/2
+Message-ID: <20161031112236.GA6816@openwall.com>
+Date: Mon, 31 Oct 2016 12:22:36 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: A few Hesiod issues
+Cc: kernel-hardening@...ts.openwall.com
+Subject: Re: Stack guard canary massaging
 Content-Type: text/plain; charset=utf-8
 
-We rediscovered a few Hesiod client issues, some of which have been 
-fixed for a long time in various forks of the Hesiod client.  We did not 
-assign CVE IDs because they are mostly ordinary bugs (no trust boundary 
-is crossed etc.).
+On Mon, Oct 31, 2016 at 11:48:45AM +0100, Florian Weimer wrote:
+> Sorry for cross-posting.
 
-(a) Hard-coded default athena.mit.edu
+Sorry to bikeshed, but I think this isn't a kernel-hardening topic at
+all, so the thread should continue on oss-security only, please.
 
-   <https://bugzilla.redhat.com/show_bug.cgi?id=1332493>
-   <https://github.com/achernya/hesiod/pull/10>
+Florian, if there's a reason why you think it's kernel-hardening
+related, please let me know.  To me, it looks like userspace hardening
+that is not even kernel-assisted (at least not directly in this place,
+even though the kernel may have helped provide the random numbers).
 
-If the configuration file cannot be opened, the hesiod library will 
-default to use athena.mit.edu:
+If your cross-posting was to reach more of the right people, then you
+have already done so, and they can join oss-security now. ;-)
 
-#define DEF_RHS ".athena.mit.edu"
-…
-   /* Try to open the configuration file. */
-   fp = fopen(filename, "r");
-   if (!fp)
-     {
-       /* Use compiled in default domain names. */
-       ctx->lhs = malloc(strlen(DEF_LHS) + 1);
-       ctx->rhs = malloc(strlen(DEF_RHS) + 1);
-
-This means that an attacker who can control the athena.mit.edu zone or 
-one of its parent zones can supply fake Hesiod data in certain cases. 
-(This would allow injection of fake root accounts, for example.)
-
-If a Hesiod deployment uses DNSSEC with a trusted, validating recursive 
-resolver to secure Hesiod data, this issue could result in retrieval of 
-non-DNSSEC-signed Hesiod data (athena.mit.edu is currently unsigned).
-
-glibc did not use a default for RHS since 2000, presumably as part of an 
-update to BIND 8.2.3-T5B.  Current NetBSD sources lack a default as well.
-
-(b) Weak AT_SECURE check
-
-   <https://bugzilla.redhat.com/show_bug.cgi?id=1332508>
-   <https://github.com/achernya/hesiod/pull/9>
-
-hesiod checks the current EUID against the UID (and EGID against GID) in 
-a few places to protect overriding certain configuration values with 
-environment variables:
-
-       configname = ((getuid() == geteuid()) && (getgid() == getegid())) 
-? getenv("HESIOD_CONFIG") : NULL;
-
-This is problematic if the process has elected to become full root, or 
-otherwise made UID == EUID without dropping all privileges.  It does not 
-catch SELinux transitions, either.  In such cases, local attackers who 
-can set the HESIOD_CONFIG or HES_DOMAIN environment variables and run an 
-affected binary with an AT_SECURE transition might be able to elevate 
-their privileges.
-
-glibc has always used secure_getenv for a long time (except for a brief 
-period in 1997).  Current NetBSD source use an equivalent.
-
-(c) A heap-based buffer overflow in TXT record parsing
-
-  <https://sourceware.org/bugzilla/show_bug.cgi?id=20031>
-  <https://github.com/achernya/hesiod/issues/11>
-
-Hesiod treats DNS as trusted, so this is not a vulnerability.
-
-Florian
+Alexander
