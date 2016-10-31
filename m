@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["603" "Wednesday" "30" "October" "2019" "09:06:24" "+0000" "Ash Berlin-Taylor" "ash@apache.org" "<BE259830-444F-44E4-B57E-25CD9D78476F@apache.org>" "19" "[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5 " nil nil nil "10" "2019103009:06:24" "[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5" (number mark "U       ash@apache.o Oct 30   19/603   " thread-indent "\"[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5 \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure vulnerability <= 1.10.5 " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["958" "Monday" "31" "October" "2016" "15:35:41" "-0700" "dormando" "dormando@rydia.net" "<alpine.DEB.2.20.1610311531190.20334@di7>" "27" "[oss-security] Memcached 1.4.32 and earlier buffer overflow." nil nil nil "10" "2016103122:35:41" "[oss-security] Memcached 1.4.32 and earlier buffer overflow." (number mark "U       dormando@ryd Oct 31   27/958   " thread-indent "\"[oss-security] Memcached 1.4.32 and earlier buffer overflow.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11950 invoked by uid 550); 30 Oct 2019 09:15:07 -0000
+Received: (qmail 1833 invoked by uid 550); 1 Nov 2016 03:38:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9357 invoked from network); 30 Oct 2019 09:06:39 -0000
-From: Ash Berlin-Taylor <ash@apache.org>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Date: Wed, 30 Oct 2019 09:06:24 +0000
-Message-Id: <BE259830-444F-44E4-B57E-25CD9D78476F@apache.org>
-Cc: dev@airflow.apache.org,
- Apache Security Team <security@apache.org>,
- Pawel.Kurylowicz@securing.pl,
- Frantisek Uhrecky <frantisek.uhrecky@citadelo.com>,
- Marek Takac <marek.takac@citadelo.com>
-To: users@airflow.apache.org,
- oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-Subject: [oss-security] [CVE-2019-12417] Apache Airflow stored xss and local file disclosure
- vulnerability <= 1.10.5 
+Received: (qmail 28522 invoked from network); 31 Oct 2016 22:35:53 -0000
+Date: Mon, 31 Oct 2016 15:35:41 -0700 (PDT)
+From: dormando <dormando@rydia.net>
+X-X-Sender: dormando@di7
+To: oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1610311531190.20334@di7>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Subject: [oss-security] Memcached 1.4.32 and earlier buffer overflow.
 
-CVE-2019-12417: Stored XSS and Local File Disclosure vulnerability=20
+Release notes with tarball here:
+https://github.com/memcached/memcached/wiki/ReleaseNotes1433
 
-  Versions Affected:
-  <=3D 1.10.5
+Copy/paste from the relase notes:
+Serious remote code execution bugs are fixed in this release.
 
-  Description:
-    A malicious admin user could edit the state of objects in the Airflow m=
-etadata database to execute arbitrary javascript on certain page views. Thi=
-s also presented a Local File Disclosure vulnerability to any file readable=
- by the webserver process.
+The bugs are related to the binary protocol as well as SASL authentication
+of the binary protocol.
 
-  Credit:
-    Thanks to Pawel.Kurylowicz (of securing.pl), and Frantisek Uhrecky and =
-Marek Takac (both of citadelo.com) for all independently reporting this vul=
-nerability.=20
-=20
-Thanks,
-Ash
-Apache Airflow PMC member=
+If you do not use the binary protocol at all, a workaround is to start
+memcached with -B ascii - otherwise you will need the patch in this
+release.
+
+The diff may apply cleanly to older versions as the affected code has not
+changed in a long time.
+
+Full details of the issues may be found here:
+http://blog.talosintel.com/2016/10/memcached-vulnerabilities.html
+
+In summary: two binary protocol parsing errors, and a SASL authentication
+parsing error allows buffer overflows of keys into arbitrary memory
+space. With enough work undesireable effects are possible.
+
+CVE's were requested and assigned by the reporter. I unfortunately don't
+have them handy :(
+
+-Dormando
