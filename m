@@ -1,4 +1,9 @@
-Received: (qmail 26149 invoked by uid 550); 5 May 2022 12:28:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4090" "Tuesday" "1" "November" "2016" "10:19:36" "+0100" "Andrej Nemec" "anemec@redhat.com" "<2a996479-3555-7830-9f01-62cec52c72cf@redhat.com>" "111" "Re: [oss-security] Memcached 1.4.32 and earlier buffer overflow." nil nil nil "11" "2016110109:19:36" "[oss-security] Memcached 1.4.32 and earlier buffer overflow." (number mark "U       anemec@redha Nov  1  111/4090  " thread-indent "\"Re: [oss-security] Memcached 1.4.32 and earlier buffer overflow.\"\n") "<alpine.DEB.2.20.1610311531190.20334@di7>" ("<alpine.DEB.2.20.1610311531190.20334@di7>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 11402 invoked by uid 550); 1 Nov 2016 09:19:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,116 +12,131 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26231 invoked from network); 5 May 2022 12:11:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hq.adiscon.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=IYhKjWcmpoj0k3YoMMtu8K+QymyXOwauBnkm8wZxpk0=;
-        b=nFanQNWe9aau9tjTGCpKbOJ7IK//2lWqXHMPIGKuOBI47n6NdygnOJ89maBAV8aKHt
-         8CzzXEUtAUCbZq8npqBA+Wjn618nOXhEkw7UHr2Ubo6bMYDj/nWl8zrOBSzoSfl53UTB
-         n5b5oG6iQ+c8q6lv6FIjrNl/InbpqQltf/BmwMgZHIvg64J01VVxwTUvAh6qCuajSb2H
-         0UQbfTppNhhx6Qg77yPRGGhXOikxauiytnFpknw138lxR1QZ+GQDeSEZvnp0bwlcA/JN
-         ROgnJzcU1WVZ2/c9rWynauSGKx+/OIZNQEHuigH7pYDgAE5zGGfPrpu+nb8drRqPWxqH
-         Gg8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=IYhKjWcmpoj0k3YoMMtu8K+QymyXOwauBnkm8wZxpk0=;
-        b=T/ShXmTlUyBUlVslnRIo7mX3Oh004AAAiaKRl+m3J687qLZXcWQztWE9JIcBIcQaH2
-         zMQVgi6YZrQkaMSHx94kefPySCrYYo1UMHNWshotXFt+tZmL2Nu0lijOzDPO646tOdOU
-         FonVxKWZXdDBr8YXnBQYIri4DIfmBDL/S7qU2lTkWeYheIASI0/5fJVmZb/0Keof+Gfw
-         WgNwmD9vFut3OxgdkBDYkdnbVLp9rNOuwyyvMI71bYWuwzpd38Hc2Kw6gqVzXnsy81TD
-         NsCmH2LREqO9MTfrjq1oHNBJo3A5D5zhXs4/VKdFl5Qz1TxiNm36kmPPuZ+RIX5Z7xGx
-         2wNA==
-X-Gm-Message-State: AOAM533JHl4g/oCKEQYQRuEYfu3B8tZW7AiQg70ufT/ocO6eTm4Ox74t
-	kXSH371Gz1+dCdY5CKVndgWslB2EaeEocYhMhXVUKWcJq9TizUF+
-X-Google-Smtp-Source: ABdhPJyDTsiEfxpK0SEOzaj1ILiuepDkOZiIO7YRLnHlcfsy0kn4Hcyek9clFTRvPV0s0+vXUCVwMI2ms8yleBwm9QA=
-X-Received: by 2002:a05:6638:250d:b0:32b:6430:f63d with SMTP id
- v13-20020a056638250d00b0032b6430f63dmr9026494jat.294.1651752678924; Thu, 05
- May 2022 05:11:18 -0700 (PDT)
-MIME-Version: 1.0
-From: Rainer Gerhards <rgerhards@hq.adiscon.com>
-Date: Thu, 5 May 2022 14:10:43 +0200
-Message-ID: <CADk+mPB6u97n6EsXZtmUXKn1kXaH7xtSUz3vo3Q4FoOv-RF9UQ@mail.gmail.com>
+Received: (qmail 11384 invoked from network); 1 Nov 2016 09:19:50 -0000
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2022-24903: rsyslog < 8.2204.1 heap buffer overrun
+References: <alpine.DEB.2.20.1610311531190.20334@di7>
+From: Andrej Nemec <anemec@redhat.com>
+Message-ID: <2a996479-3555-7830-9f01-62cec52c72cf@redhat.com>
+Date: Tue, 1 Nov 2016 10:19:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.2.0
+MIME-Version: 1.0
+In-Reply-To: <alpine.DEB.2.20.1610311531190.20334@di7>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="ghrREkjaAnDQ0BTKwXL9XFU2lJTKRtSak"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 01 Nov 2016 09:19:38 +0000 (UTC)
+Subject: Re: [oss-security] Memcached 1.4.32 and earlier buffer overflow.
 
-Severity: High | CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
+--ghrREkjaAnDQ0BTKwXL9XFU2lJTKRtSak
+Content-Type: multipart/mixed; boundary="xJOcmpQJqxCj5aASAEegSeoRPU2LLJiHb";
+ protected-headers="v1"
+From: Andrej Nemec <anemec@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <2a996479-3555-7830-9f01-62cec52c72cf@redhat.com>
+Subject: Re: [oss-security] Memcached 1.4.32 and earlier buffer overflow.
+References: <alpine.DEB.2.20.1610311531190.20334@di7>
+In-Reply-To: <alpine.DEB.2.20.1610311531190.20334@di7>
 
-This is a worst case rating. When syslog best practices are applied
-(no Internet access to rsyslog receivers) the severity is lower.
-Details below.
+--xJOcmpQJqxCj5aASAEegSeoRPU2LLJiHb
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Advisory: https://github.com/rsyslog/rsyslog/security/advisories/GHSA-ggw7-xr6h-mmr8#advisory-comment-72243
+As per Talos page, there seems to be three issues.
 
-Advisory content:
+CVE-2016-8704 - Memcached server append/prepend remote code execution
+vulnerability
 
-### Impact
-Modules for TCP syslog reception have a heap buffer overflow when
-octet-counted framing is used. The attacker can corrupt heap values,
-leading to data integrity issues and availability impact. Remote code
-execution is unlikely to happen but not impossible.
+An integer overflow in the process_bin_append_prepend function which is
+responsible for processing multiple commands of Memcached binary
+protocol can be abused to cause heap overflow and lead to remote code
+execution.
 
-### Affected modules
-* `imtcp`
-* `imptcp`
-* `imhttp` (contributed module)
-* `imgssapi` (long-term semi-contributed module)
-* `imdiag`
+http://www.talosintelligence.com/reports/TALOS-2016-0219/
 
-### Details
-The bug occurs when the octet count is read. While there is a check
-for the maximum number of octets, digits are written to a heap buffer
-even when the octet count is over the maximum, This can be used to
-overrun the memory buffer. This can also be used to corrupt other heap
-buffers. Once the sequence of digits stop, no additional characters
-can be added to the buffer. In our opinion, this makes remote exploits
-impossible or at least highly complex.
+CVE-2016-8705 - Memcached server update remote code execution vulnerability
 
-Octet-counted framing is one of two potential framing modes. It is
-relatively uncommon, but enabled by default on receivers.
+Multiple integer overflows in process_bin_update function which is
+responsible for processing multiple commands of Memcached binary
+protocol can be abused to cause heap overflow and lead to remote code
+execution.
 
-Modules `imtcp`, `imptcp`, `imgssapi`, and `imhttp` are used for
-regular syslog message reception. It is best practice not to directly
-expose them to the public. When this practice is followed, the risk is
-considerably lower.
+http://www.talosintelligence.com/reports/TALOS-2016-0220/
 
-Module `imdiag` is a diagnostics module primarily intended for
-testbench runs. We do not expect it to be present on any production
-installation.
+CVE-2016-8706 - Memcached server SASL authentication remote code
+execution vulnerability
 
-### Patches
-The patch is available via commit ID [PUT HERE].
+An integer overflow in process_bin_sasl_auth function which is
+responsible for authentication commands of Memcached binary protocol can
+be abused to cause heap overflow and lead to remote code execution.
 
-### Workarounds
-Octet-counted framing is not very common. Usually, it needs to be
-specifically enabled at senders. If users do not need it, they can
-turn it off for the most important modules. This will mitigate the
-vulnerability. How to do this depends on the module:
+http://www.talosintelligence.com/reports/TALOS-2016-0221/
 
-* For `imtcp`. `imptcp`, add `SupportOctetCountedFraming="off"` to the
-`input()` definition.
-  Docs: https://www.rsyslog.com/doc/v8-stable/configuration/modules/imtcp.html,
-https://www.rsyslog.com/doc/v8-stable/configuration/modules/imptcp.html,
-https://www.rsyslog.com/doc/v8-stable/configuration/modules/imhttp.html
-* For `imgssapi`octet.-counted framing cannot be turned off.
-* For `imdiag` octect-counted framing cannot be turned off. However,
-`imdiag` should never be present on production systems.
+There is also a talos blog post about these issues:
 
-Note that while octet-counted framing can be disabled sending systems
-have to explicitly enable it, but by default receiving systems
-autodetect if it's in use. The 'normal' reason to enable it is if you
-are sending logs with embedded newlines.
+http://blog.talosintel.com/2016/10/memcached-vulnerabilities.html
 
-### For more information
+Thanks for sharing!
 
-If you have any questions or comments about this advisory:
-* Open an issue in [rsyslog repo](http://github.com/rsyslog)
-* Post to the [rsyslog mailing
-list](https://lists.adiscon.net/mailman/listinfo/rsyslog)
+--=20
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
-Credits to Peter Agten for initially reporting the issue and working
-with us on the resolution.
+On 10/31/2016 11:35 PM, dormando wrote:
+> Release notes with tarball here:
+> https://github.com/memcached/memcached/wiki/ReleaseNotes1433
+>
+> Copy/paste from the relase notes:
+> Serious remote code execution bugs are fixed in this release.
+>
+> The bugs are related to the binary protocol as well as SASL authentication
+> of the binary protocol.
+>
+> If you do not use the binary protocol at all, a workaround is to start
+> memcached with -B ascii - otherwise you will need the patch in this
+> release.
+>
+> The diff may apply cleanly to older versions as the affected code has not
+> changed in a long time.
+>
+> Full details of the issues may be found here:
+> http://blog.talosintel.com/2016/10/memcached-vulnerabilities.html
+>
+> In summary: two binary protocol parsing errors, and a SASL authentication
+> parsing error allows buffer overflows of keys into arbitrary memory
+> space. With enough work undesireable effects are possible.
+>
+> CVE's were requested and assigned by the reporter. I unfortunately don't
+> have them handy :(
+>
+> -Dormando
 
-Rainer Gerhards
+
+
+--xJOcmpQJqxCj5aASAEegSeoRPU2LLJiHb--
+
+--ghrREkjaAnDQ0BTKwXL9XFU2lJTKRtSak
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCgAGBQJYGF4oAAoJEIkERKHVe23ay6UQAIHf9jnyd4SD4Nduedog5QnD
+myH+8bCeEeeH7HyBHilgz04ZR+IUthdElrn3/DWiiuu/IVInC4AnbmBLfIU+oDqr
+QXzTbmelhG6FQUXGe8PH7tFBeN0FiQJ5uV9yqGJ7hKwPy/RYtAcaHco8N5xCKlIT
+h/wFRFtNWwcHlzx+51gRf8Xo7zhQ0FYwqm0Q/3CWazvRN9K5rs/o/Mj7gjd/5GkS
+SaUBlM6Ms0CHhjagNnpJGqFKmTpLe9PxHniMjk+r7juIpi7vOUKHLZ+EIdZUNn8l
+pbBJVPFekp+X58YwPPzZHsgoU+KFEhXwxulXOGL8arpKZ7kU5T8kGgP19ooPSosq
+FVoDkt8l7J+1AJFWyr6hGRcVHnX2yAl1/1E6fdtbayTUOLdLVA+cE/ydYGORJi8r
++SC2jjePk7I+vdojd5afj0mstn+p9iRjCWijyKv3mDnlPgdUvlAaIOftAwx62P3n
+c3M1poGUK0QhRrg9v3JBxF+8zOn/0EPVFWNKjbTA4hFHZqZz8hWvlCUwyBYOFeIs
+nZ7X/vTSmgxYJtWbvegnxLYcLJhCBVvUz5+C2usA9+cip9ctZDqlfC5CcdN3hJGX
+YynjWDH/PkRVbsnkPwkfmnkh4R593XP3qo+w8MrEBrz6fXPbnU0s15Pc6P2NPtIh
+J+AAowGWnrLp1iwTHuTN
+=DkTq
+-----END PGP SIGNATURE-----
+
+--ghrREkjaAnDQ0BTKwXL9XFU2lJTKRtSak--
