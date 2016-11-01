@@ -1,4 +1,9 @@
-Received: (qmail 23662 invoked by uid 550); 5 Mar 2026 19:04:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3051" "Tuesday" "1" "November" "2016" "14:18:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<4d0087966bdd45da8a8802eacdcfa7b2@imshyb02.MITRE.ORG>" "68" "[oss-security] Re: Handful of libass issues" nil nil nil "11" "2016110118:18:40" "[oss-security] Re: Handful of libass issues" (number mark "U       cve-assign@m Nov  1   68/3051  " thread-indent "\"[oss-security] Re: Handful of libass issues\"\n") "<F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>" ("<F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16144 invoked by uid 550); 1 Nov 2016 18:18:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22518 invoked from network); 5 Mar 2026 19:03:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1772737428;
-	bh=TqNuUf3omGdzwefbAZDH8uliH9gHnNlVLCI4rBJQO1Y=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type;
-	b=DorLIP2/cFWWYRYUUGitL1+iqY2I0mPv9FMPPghRsp+43aGh8JAAAjHRTJADZbSOH
-	 P7ZPztnKorMEkOdcnBrAizDrDe1+9GmuphGrTj8xanVSJivbf/Svxa8EO5ZUeb5w5h
-	 J9wf1YVmG2nldozAUJu7I0s5ToijQMQ1E/Hyh9X9rb+4+gklFhZfmiNfZeAtHF3Gcp
-	 Q4ACasuPRIsaXMz8gqZduj7ShcFFiGgiptcGyBpTCYaDsRYBgKaYr+MMzWiqlyO3no
-	 nYBd+y4No2lEdqS/2U8q/L52cnfc+/EJfXfc3vcws8qGsyPDPnK+VHvohlabhWNQDI
-	 r+lABgQscypZ5FB0lk75iy7K6xj7fs50HcrR07Hx1rtjbvnjd/LOvqoahyTXrjD9yA
-	 IdCYdvx21fgT0oT1eRowfMAHm8hKifniv9R5FnPtb/oRPN0XgbNFtT4Iy9oJ91Wibp
-	 IQoSbEOZ7yo3w882Y3a4JRCUXWJZdx+D2NBuVFWHuu1qtOcyo5qh7W4JWTYFpkYI0q
-	 EwLEEwlUNYUzZx9sXguixDUe5+0spzR+NR0qs5z9BikC34fOkmJvsgNFT7VlhhWIZx
-	 FmcpFixX0IW1V8PBtWBxaN8hTjtVExsp8nMPGiPeoTzEv+LrtSu4wxEuCnD4V8SK1q
-	 bqIOeOtTpP+lv9SauDukuw/Y=
-ARC-Seal: i=1; a=rsa-sha256; t=1772737427; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NwhzKe2FeWemwdMp9Z64Ju05VxDGXdUe4gSoCo0xHn97NyGRfWIzfndy7MulwnbkT9
-         O/J93zXRlrIh55g8XAAJ8sLEcAgRjOfgaoyS5hhrMcP0RnvA3Bx+r5ZWrIEXRzdaonR2
-         Dxov3jTcBFWF1oBwObvHYnHW/qIJjSeNdoq93gFtnpb4rHJV2/YijcJnSbVn1bnfFocU
-         0JqBVSmzci2tgrgQx+dPfsjR5tyUDcO7RC10qrRSwgroIRlVzn4E6BuJjl9nUQ0h95wv
-         CBjXTmth4sPJVy0Lcr3VqZP4JwhCaB1zoBfhQrYgMiH573Us288GAnimizSyRotuwlYn
-         Jwaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version;
-        bh=TqNuUf3omGdzwefbAZDH8uliH9gHnNlVLCI4rBJQO1Y=;
-        fh=PsBJVqA2GaRkAYA8EuSXR7Zc/MH4r/AxVOHd6pmMbkw=;
-        b=MEiVsImhPy+eAjlTRl4VtOo3RPK6fZnoniKE51Tm57pD7xjqN/R/2NVbwUn7U6FyAE
-         f5+JJILKEvUiMwogqcw9b+oDCM4p31PAshprm8ZLgDLmXHweTAY/CkDinIryp0N5Bt7R
-         RMCWEB895WTLcLPiEcB0bJOfYq+ZYWJRpOQ/j2rCCEmW95T+JrhItQmudL4DCqHa5J+p
-         ii1S8Rg4EX0a+LOZ+H8c0g9Lm8HndD7nH6ZoBF8/CUtWxf9RxnqDXd3NMzRyHqzxaqfT
-         QAOb3IWreOpgLCy5MTBQf9OJa4BJPuY9b4aPAK9vcEGUylYAgxaxY7VLBxbc8rJpSOks
-         iI2A==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772737427; x=1773342227;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TqNuUf3omGdzwefbAZDH8uliH9gHnNlVLCI4rBJQO1Y=;
-        b=f1RxYKaGvv4tLV7Xnp8y/o4NpewyhDY2Hf5K+6987g2GakMLfnlFBSGoqNJrL4KLVU
-         Xuo4bCqtWyOxaZj/4h9rO9k5hUCy5I3GoRuvDi5i10iBifj+GYqmvSqfCtnvRr0DAd48
-         K+Ss4zkf4uOhNop9uJkD4Xv8ttkd8wbMKw6gb756gGnfvu/3tnsvkqadGgQ5HlQrQwCv
-         JcstNNyBpgm56oJcdjVUBGlEMsJAg78FaW61zgfRKCeHbcbbH7nLtLHgjtaXbOaeuUE6
-         XhzQ6sBwJuoZP2pDfar+3fNBeUoPh7KJ4v70bJ2y4NhxGAOw+VcaxtrO5k0d4hWEE2bx
-         dBUw==
-X-Gm-Message-State: AOJu0Yx1HkF5ZI431+mOccjzb/2N9ZwRSQPK1TofWPeU+2bL+WCZ8kAS
-	WRXROU/h3UQznfcsKBqR2SA1s+4/9mWG9r3x/6uheHeDFsDV21GlODxZdx4twwiDINmeWaPhFh9
-	i1FIDiAqNkN/QxmhGaVp3PbFEmm/IgTO0Rg3bSjGFwyXEwTCdcZ+wfBQEjCTtQFczUAB19n5YBp
-	SeUENqZ5pVlG7/zJvwfpdE2rVoN+UWY32ilwDs5aR97VQEmZU+R0JFyJw1aZTc6LZGmqUNwi0=
-X-Gm-Gg: ATEYQzzqn4i8OliuwNEHipKH9KanG56w8PDUODHb4hnsIUf1+8x/sNElEPMlQ4fEXyY
-	vIbFh+iMw6e4a9EIty6stSYbPhGDSTTm7IoBSMO7K8bPlIsi58F3grOQHnpWNmZ9LDjmqGMkRYC
-	WLW+KWQjs6DnlJkvAp8VuSVs6meiOpBzvtqYN/1ZQTPTTamUOTNzZlj4+aCbFEw26tE5b8IjKu1
-	6ZtVg==
-X-Received: by 2002:a05:6122:8b10:b0:56a:9401:11eb with SMTP id 71dfb90a1353d-56ae74d2a09mr2997142e0c.2.1772737427577;
-        Thu, 05 Mar 2026 11:03:47 -0800 (PST)
-X-Received: by 2002:a05:6122:8b10:b0:56a:9401:11eb with SMTP id
- 71dfb90a1353d-56ae74d2a09mr2997131e0c.2.1772737427117; Thu, 05 Mar 2026
- 11:03:47 -0800 (PST)
+Received: (qmail 16098 invoked from network); 1 Nov 2016 18:18:52 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <F5095245-3270-42FC-9FCC-91C2D121E6DC@gmail.com>
+Message-ID: <4d0087966bdd45da8a8802eacdcfa7b2@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 14:18:40 -0400
 MIME-Version: 1.0
-From: Seth Arnold <seth.arnold@canonical.com>
-Date: Thu, 5 Mar 2026 19:03:36 +0000
-X-Gm-Features: AaiRm52xFsAHRzBdGkdp__7iOHjjMEogoAE5ibIpKcqAdokfPKwXyXy4d1--Zvo
-Message-ID: <CAD9zwiUv6UuakBB6UWanPuqEQS8=Nbp3-Vjb9p6yxix+acTKoA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Ubuntu Security <security@ubuntu.com>
-Content-Type: multipart/alternative; boundary="0000000000009fa91f064c4b989e"
-Subject: [oss-security] CVE-2025-13350 for Ubuntu Linux kernel
+Content-Type: text/plain
+Subject: [oss-security] Re: Handful of libass issues
 
---0000000000009fa91f064c4b989e
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello, today the Ubuntu Security Team published CVE-2025-13350 for the
-Ubuntu packaging of the Linux kernel. The issue comes from an incorrectly
-backported patch that caused us to mix an old-style with a new-style
-garbage collector for Unix Domain Sockets.
+>>> The third is a huge memory allocation leading to a crash that wasn't
+>>> fixed because a good solution is unavailable at the moment.
 
-Upstream kernels weren't affected because they did not cherry-pick pieces
-of the transition.
+>>> https://github.com/libass/libass/pull/240
 
-I thought it worth sending a message to a widely read and widely archived
-place to give everyone peace of mind: If you consume the upstream kernel
-directly, you're fine. This issue only affected Ubuntu and anyone that
-rebuilds Ubuntu kernels.
+>> Use CVE-2016-7971.
 
-Thanks
+The vendor's comment was:
 
---0000000000009fa91f064c4b989e--
+> grigorig commented Oct 5, 2016
+> I don't have a strong opinion about the CVE.
+
+The MITRE CVE team has no current plans to reject this CVE. Someone
+may want to use the CVE ID to track something. For example, there may
+be people who need to track that libass is not suitable for their own
+use case because they require exactly the "the best you can do is to
+make sure [rendering] gracefully fails with an appropriate error
+report (error code or exception or whatever you use) if memory can't
+be allocated or if a library-user-specified limit is exceeded - then
+the library user can handle that however they want to, for example by
+exiting (appropriate for a command-line tool) or by reporting an error
+but continuing to accept new requests (appropriate for a daemon)."
+behavior suggested in the
+http://www.openwall.com/lists/oss-security/2016/10/26/4 post.
+
+Even if neither the upstream vendor nor any Linux distribution will
+ever make any code change for CVE-2016-7971, discussion of the issue
+can help with understanding the product's behavior. For example,
+pull/240 also has a vendor comment of "Normally we should handle
+memory allocation failures gracefully, but there's probably still a
+lot of code which just crashes" that may be very relevant to planning
+other research.
+
+The MITRE CVE team is willing to mark a CVE with "DISPUTED" if someone
+believes that it's based solely on an "AddressSanitizer failed to
+allocate ... bytes of LargeMmapAllocator" misinterpretation, and
+believes that it cannot have any relevance to risk management.
+
+Also, of course, if a finding (such as "AddressSanitizer failed to
+allocate ... bytes of LargeMmapAllocator" without follow-on research)
+has no known audience, then sending a CVE ID request may not be the
+best approach.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYGNtgAAoJEHb/MwWLVhi2NHMP+gNg7Xht/CNWHsVdWq4xXt94
+dt3eBEmYAI08dewav8dTrZ60S+Q0H/j7U4wvwO0xbnrpmnoq1ZjSEKZdXWUZyFnC
+Q5mGmmffyImnHYOyBUfpuNs+6rpo9ymuARgMBOxj1nZlVXz9n53O6jzcGVaPJ6Op
+EzqWoDHRDTkZ7rzDrsFrnrWPaDDusxgHhlIjTQyY0PuXvQEWgG01xDCAZl2x49Cf
+nDtGhA3Ox8K5tTw811CRNb8x57nXAu5OHCZTwr6rB4QFk+Oc/5Lm6SQP5XX8nY0o
+18YNacM1B5pYv999CofBwy4RthFm/J1tQzbATKUlTLBx4Li2+5PiFuomvpEfAJv4
+OhQlYQiUToRBiPBFGrihJB3f9iIW87V4ouX3sTPfBe9UcSjAZsd+VpGIf+SvWJFT
+TTkE/woWvUprfIKXlJLNxfUdFRBlagK6OZgvRYlVixDY96uAYergHFlyDsdPP6eN
+Je847yrnBkSB/KC1GVV/X8B6xNmeTz8JOW60pJ2TV8XvppOWxF+g9OVpQAnFMOYV
+soWxwSrSI5Vim+AfcrWEnHz+WPPPMpSc8xw0djFSOKzh4RJRs8y25hg5+B/UVo5W
+ZGFiLN26U9caRLjWoKK/K+9RL1HNbNA8wZSXb6vsCiNjtSVPQUNxsnbUZTN+SL/x
+sRvikrhVVxQ+YrFPTT+c
+=aMyc
+-----END PGP SIGNATURE-----
