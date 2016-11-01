@@ -1,50 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/14/5
-Message-Id: <20160214175744.C280F332032@smtpvbsrv1.mitre.org>
-Date: Sun, 14 Feb 2016 12:57:44 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, benh@...ian.org
-Subject: Re: CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/9
+Message-ID: <d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 14:17:05 -0400
+From: <cve-assign@...re.org>
+To: <mprpic@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: RCE in Zabbix 2.2 to 3.0.3
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
-> https://lkml.org/lkml/2016/2/13/11
-> ALSA: usb-audio: avoid freeing umidi object twice
->
-> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
-> when tearing down the rawmidi interface. So we shouldn't try to free it
-> in snd_usbmidi_create()
+> https://www.exploit-db.com/exploits/39937/
+> Zabbix 2.2 < 3.0.3 - API JSON-RPC Remote Code Execution
 
-> sound/usb/midi.c
-> snd_usbmidi_create
-> 
-> -   snd_usbmidi_free(umidi);
+> /api_jsonrpc.php
 
-Use CVE-2016-2384.
+> "method": "script.update",
+
+> "command": ""+cmd+""
+
+Use CVE-2016-9140.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWwL7rAAoJEL54rhJi8gl5aVwP/0NkRkHIt/v2RbQ3hDt/zD7S
-gP6sasJfZV2T5GyqoCzqZ87gtgdBhgphX2YNS7s+BFwxvRHLmY9wXVYFpQgVzaNn
-6mvSfz1rrWfjmpIAkcqWrH+LcDsXB4jfnRqu/n3VBPvm7dPdFDydNl87fqzzUxuE
-mzOx+nJZu8fGfOJZCEQM1OCkGCOZwxNtH4XPdhkjuzfBrCUhWOKHwc2yfwsBcBv/
-tsfthuJpffxLm3Dr3HFrkr9CJS/JPUBxNXZHYrHP359id2NZkoq2wp0i4y9DWhwg
-ddHIEdeqO5U6gZB+WolAZL284O5WnVdbHzjZO4Gx6Ik240Ab5rQWmX4WJabSnDwf
-pMr7k5LZWc4lWSE7vJ9Akrz0ZFkZsfqNaCV1RjitRgXQ+F4sm76PaQj/0vAieeaJ
-38JOc4sDQYcvhRvMVjyNyAaaB78fdsoOGkwt7sZR7q+syUDkRaFdrNaeerYk+8Gx
-ojPmweX0ELnw1taN/CwEfBJ6LDDBJfuZmYyPjABKjdaHIvAHzOdZRAez1HDdLX6C
-9hDt/Zq4foSJdZsIpvwDUOUzmLf4tEkBofbQXtz/H7mVrcimNIHInvXHdwLxghop
-XjflF9+S+3n0I+QsJ6p0mNQXm+O0+PiR7ppEZhTqt+GOCGWZEIzJoK4xz8cU0BAV
-Xrgkzti6q4qA2mCEvj+H
-=EO2f
+iQIcBAEBCAAGBQJYGNtZAAoJEHb/MwWLVhi2DQkQALB8gccuZBXkOAwXv3ekuCpi
+cNjh+qEd3pJxkd0EgmeQknO084oLV1rRn6Ss2Uh5FtBOaQJ5K/oiCjcarZ4bT8ro
+oZnBndJwXEVaI1UsH+6ustwZoZSr7dGjw82w82wwVnayGFRMbmWuJNFdPtXUxuKf
+5BWzXo4ZqlZbp5XuGJegm7gbAL56LYTkiMmb5yo+nN/7wApHc0cK8WaXkMW+LXB7
+qlUVefp/uvzG9Ma8Z9TvJnrgAoyCe2L8j2Y2CvZ28TUA4ugg7OaYpZkx/TWf883p
+KSyCiFsomfMwrkKKSZ5c8pFAzOtUdvyVYvgHH9YklhaH6P3s0RZM+DRfmC63rVIG
+kcKN3asrGcP7lawreVsSCZCmMOzwhsmMiRilFmeJ+Tk369T0+B8ZxzgTFQ3QGk6t
++gWS2P6LAAsHfz0YKf/ROoPdKxd6QmagYsfRGQWE/Qc2quH1zBFypjQ3JDWji7Mb
+5REW4en6zQiaTfJMJpwtSyVPjTpNflIXaMysLWRarm6ca3rWZACIe1Wa1quN/Fj+
+rr07YAG9J8MOraHxaR7/ynn+8rBws0QpGEFrorL9IXUfONpWRxvX1gL2T//6QA6N
+67lISYiiR4+9vrpC4Ioa7tqUHJZeZU6bPeBBQLcF9S9slkpJPSpp4CUNY/5E3bcs
+HOZHKY2M77oOr5Hv9UGw
+=yO7W
 -----END PGP SIGNATURE-----
