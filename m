@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1559" "Wednesday" "25" "November" "2015" "10:37:52" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>" "56" "Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" "^Date:" nil nil "11" "2015112517:37:52" "[oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" (number mark "        kseifried@re Nov 25   56/1559  " thread-indent "\"Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/\"\n") "<20151125180702.6d3d075d@pc1>" ("<CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>" "<20151125180702.6d3d075d@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1247" "Tuesday" "1" "November" "2016" "14:17:05" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: RCE in Zabbix 2.2 to 3.0.3" nil nil nil "11" "2016110118:17:05" "[oss-security] Re: RCE in Zabbix 2.2 to 3.0.3" (number mark "U       cve-assign@m Nov  1   36/1247  " thread-indent "\"[oss-security] Re: RCE in Zabbix 2.2 to 3.0.3\"\n") "<877f8na318.fsf@redhat.com>" ("<877f8na318.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5658 invoked by uid 550); 25 Nov 2015 17:38:05 -0000
+Received: (qmail 5687 invoked by uid 550); 1 Nov 2016 18:17:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5626 invoked from network); 25 Nov 2015 17:38:04 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=HZ5dStCHG7T59cA4zctS2hvAW/c9ZBOqxLCWgjC/E3I=;
-        b=glYzvpPN4kRiMximEafMBI+TT0x8p3hZmYJIqhsVCdJkD/oVQcUpHvgImW4r66u1Z0
-         HOeGzYV8Xeod1I714n4ItIs9Ss5eTNqXHy07r2v0LJUkMoMBG4IG/v8nPFKG6gBoZEUy
-         ne6xZjSU0oYAn8/Zkj1dtZadv2Hxn6sn1fhmHrdM3a4yxbl9YOepR5nvWfWvlf/c8GQS
-         26bhjEG7V/p5sbbe4028kOVP/sniTSFOGfZAVO+T+k7szL3rGYeERyT3qTdwtPfc+ESV
-         Y0Lbm870F/TYeJH2CNVYu8tCR/0wauCpE1trd7KUUis9TZ+cB7+pNltgr4Jt1vXrgSas
-         L6jw==
-X-Gm-Message-State: ALoCoQk18b/vFP9y0vb8neKPzwugHVmWGW+6hm2I2T9ytWDrR7LbaUROu8GSJVGHqClR+TlRf9Q7
-MIME-Version: 1.0
-X-Received: by 10.129.77.67 with SMTP id a64mr37181561ywb.47.1448473072304;
- Wed, 25 Nov 2015 09:37:52 -0800 (PST)
-In-Reply-To: <20151125180702.6d3d075d@pc1>
-References: <CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>
-	<20151125180702.6d3d075d@pc1>
-Message-ID: <CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140c36cf14480052560ea10
-Date: Wed, 25 Nov 2015 10:37:52 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 5669 invoked from network); 1 Nov 2016 18:17:16 -0000
+From: <cve-assign@mitre.org>
+To: <mprpic@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <877f8na318.fsf@redhat.com>
+Message-ID: <d99995e4f5284443bbb2f7d7e4b9c004@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 14:17:05 -0400
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: RCE in Zabbix 2.2 to 3.0.3
 
---001a1140c36cf14480052560ea10
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, Nov 25, 2015 at 10:07 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+> https://www.exploit-db.com/exploits/39937/
+> Zabbix 2.2 < 3.0.3 - API JSON-RPC Remote Code Execution
 
-> On Tue, 24 Nov 2015 21:38:35 -0700
-> Kurt Seifried <kseifried@redhat.com> wrote:
->
-> > https://github.com/RedHatProductSecurity/Certificates-Shipped/
-> >
-> > The idea is to create a comprehensive list of shipped certs/keys/etc
-> > by open source vendors/distributions/projects so that:
->
-> That's good, but in this case why limit to open source vendors?
->
+> /api_jsonrpc.php
 
-Because this is the Open Source Security mailing list, and I work for a
-company (Red Hat) that does Open Source and because I have no interest in
-the hassles of dealing with proprietary software (legal
-threats/licensing/DMCA/etc.).
+> "method": "script.update",
 
-If you would like to work with proprietary vendors on such an effort I
-welcome you to try, you can easily setup a project on GitHUB and move ahead
-without any need to coordinate with the Open Source effort.
+> "command": ""+cmd+""
 
+Use CVE-2016-9140.
 
->
-> Actually the MS certs are probably the most interesting for
-> superfish/edell-like scenarios. And I see no reason why they shouldn't
-> be transparent.
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Talk to Microsoft then, OSS-Security is not the forum for dealing with this
-Microsoft related issue.
-
-
->
-> --
-> Hanno B=C3=B6ck
-> http://hboeck.de/
->
-> mail/jabber: hanno@hboeck.de
-> GPG: BBB51E42
->
-
-
-
---=20
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a1140c36cf14480052560ea10--
+iQIcBAEBCAAGBQJYGNtZAAoJEHb/MwWLVhi2DQkQALB8gccuZBXkOAwXv3ekuCpi
+cNjh+qEd3pJxkd0EgmeQknO084oLV1rRn6Ss2Uh5FtBOaQJ5K/oiCjcarZ4bT8ro
+oZnBndJwXEVaI1UsH+6ustwZoZSr7dGjw82w82wwVnayGFRMbmWuJNFdPtXUxuKf
+5BWzXo4ZqlZbp5XuGJegm7gbAL56LYTkiMmb5yo+nN/7wApHc0cK8WaXkMW+LXB7
+qlUVefp/uvzG9Ma8Z9TvJnrgAoyCe2L8j2Y2CvZ28TUA4ugg7OaYpZkx/TWf883p
+KSyCiFsomfMwrkKKSZ5c8pFAzOtUdvyVYvgHH9YklhaH6P3s0RZM+DRfmC63rVIG
+kcKN3asrGcP7lawreVsSCZCmMOzwhsmMiRilFmeJ+Tk369T0+B8ZxzgTFQ3QGk6t
++gWS2P6LAAsHfz0YKf/ROoPdKxd6QmagYsfRGQWE/Qc2quH1zBFypjQ3JDWji7Mb
+5REW4en6zQiaTfJMJpwtSyVPjTpNflIXaMysLWRarm6ca3rWZACIe1Wa1quN/Fj+
+rr07YAG9J8MOraHxaR7/ynn+8rBws0QpGEFrorL9IXUfONpWRxvX1gL2T//6QA6N
+67lISYiiR4+9vrpC4Ioa7tqUHJZeZU6bPeBBQLcF9S9slkpJPSpp4CUNY/5E3bcs
+HOZHKY2M77oOr5Hv9UGw
+=yO7W
+-----END PGP SIGNATURE-----
