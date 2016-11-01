@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2533" "Saturday" "7" "January" "2017" "05:54:01" "-0600" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>" "74" "[oss-security] CVE Request: Plone Multiple Vulnerabilities" nil nil nil "1" "2017010711:54:01" "[oss-security] CVE Request: Plone Multiple Vulnerabilities" (number mark "U       nathan.van.g Jan  7   74/2533  " thread-indent "\"[oss-security] CVE Request: Plone Multiple Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2772" "Tuesday" "1" "November" "2016" "10:58:28" "+0200" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>" "67" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "11" "2016110108:58:28" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       kaplanlior@g Nov  1   67/2772  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12\"\n") "<20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>" ("<CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>" "<20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23887 invoked by uid 550); 7 Jan 2017 13:15:08 -0000
+Received: (qmail 22494 invoked by uid 550); 1 Nov 2016 08:58:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,112 +12,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28632 invoked from network); 7 Jan 2017 11:54:14 -0000
+Received: (qmail 22461 invoked from network); 1 Nov 2016 08:58:40 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=wU77Hwi1yRLk4cixiWSZhE8qyWeCPdozbryWOqMD/RU=;
-        b=C9wr0DnRZrLE+e2raOEKNbamhccMszu3Yjld3qbQqwkFk9eP70YqLxaLh0OMALrDe+
-         5AK75BpJNBFBpofcfnNkpqYUY0tdgNqwzz3rAOfc+h4qLssNvyZPTTrElNvWMv1n9hZU
-         76sbHJ0hRrw+8LYS3u7YUCRBNwkfneyPlb2ioVcUJwMO3y/B6M2QQGF+I1LGxDF40S4d
-         +iWMlQhTTV1mNM+YHtI9t0rl4Bj34hmsjKUEYEzhpeXktqrr41sfJrJVanFe2xT6cE6G
-         B4mA877FT1b7oKDmAGynyrcH3qyv6trYlU3erilJSo5R47+IcROhZrXG7p6XU4K0Nn1N
-         vEAQ==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Owb1dKSZfwxL2vfBy0dCFHlO4jvmmDLFNUCJxZkYHLw=;
+        b=dheu/2ftMeEhjRURqZAoWkVcgf6wXPnszNwfDlMLhbHMJfCp23iwWx8voH2LpHjqQQ
+         wQfjlJENAxbUtz4Pxd7R3shS+C2AG2GYW8XU1V4XWD4u6j9HfkhPKDVo199W3omjXlsm
+         5HDFGAXWgdcfLAgMupg6HJF4Pi7YcJ9Iw09DAOMRHhYviJqwRLItPFabVudJSFjbDdc+
+         qV7fqdVOvn6M7H03OjjsYNAuTGYFLIa0LfkUinLkWQQEipCYjlq6pveLAcKpcM+GL/LN
+         mBHM86eC5zC9qmUG65Un8tRHg633HCZwa+n6V8sVcIFdBtOywo0UFlDByyct0XUKgaF+
+         61SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=wU77Hwi1yRLk4cixiWSZhE8qyWeCPdozbryWOqMD/RU=;
-        b=nXI1Wm+r6zi1JrcGTWcbvmOmZkXypr48Qdie9jt+bN2vzq4AG5z4eUvE5ho/FxKyc6
-         bxfjzrEIkFtkjOlmiD8AXCo1Rr+B+No6lt++sSz/x+mcCcfh9ZKQEJHcTbILiDF2dtVj
-         B7/hzHOwLT/nBGzvGpjNSpdd8uFEFfXX7TasVOjTW/ggBAYjtU64hxElBYg+BwpbQW3k
-         jRuUDqtVi/tRdmewrR6U+IA/w5iFTeMVVAYhepFdhrkuxRwt3WkkVdTx3faQB63XE0rK
-         9rly6g+Vszi3y77L3rdaSpcitUt9zRHud2aWIqn4YfaHUPr8rGHd5N7sLcXI38TJvhL/
-         aDuA==
-X-Gm-Message-State: AIkVDXKN68g6DNLXu1Rgd9Ge1D9fGO5bFbvKb6SEdfZ94Uw55xjz/RZag1Kb0jI8FQMaBVEuz/+3FmGkHeSdNQ==
-X-Received: by 10.31.153.195 with SMTP id b186mr28894359vke.140.1483790042254;
- Sat, 07 Jan 2017 03:54:02 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Owb1dKSZfwxL2vfBy0dCFHlO4jvmmDLFNUCJxZkYHLw=;
+        b=HB13se5npoRFpem5/fUWLkhrcvk64TJv7pIZptURbydCalpj+kw17evn5lrM+YGMIa
+         A3OYHGd0mkr6zQ9ruC9VtQFwGE0/8u9RH7Rva+DnltURvnpkSOeA13KgYVoBuIkpPCkB
+         GSoX6ALHgSK/Le9TXfmNO3XXn6VDGXhYutKxz/1XbuE8R3SdsXBnP2H9fNl1chQbQ9uz
+         X9pryoRIeFgrdLd8EZOvJhKL7PFfvDLC6FPBf6it0PztBzUp5IrbySpjI6IaYshXDbp3
+         oSiKxNQuPAU74PWxgeM2B9glv3CL1PR2fzBOmPeeAB+FWNUhOLIEED5SLffcvBONJojY
+         q1nQ==
+X-Gm-Message-State: ABUngvcizsEW8G65ajz+/6h7TOGKw6oHkBphSRiY0Z4/fdKOKCxdG1zldrX/oQ2Wv6gOVuImx594cTZ+iaYA7g==
+X-Received: by 10.31.151.13 with SMTP id z13mr8453882vkd.41.1477990708832;
+ Tue, 01 Nov 2016 01:58:28 -0700 (PDT)
 MIME-Version: 1.0
-Sender: vangheem@gmail.com
-From: Nathan Van Gheem <nathan.van.gheem@plone.org>
-Date: Sat, 7 Jan 2017 05:54:01 -0600
-X-Google-Sender-Auth: 2PS9AYjO_EJobt9dP9Q6PIwQ4TY
-Message-ID: <CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1141d5b863d1a705457fca93
-Subject: [oss-security] CVE Request: Plone Multiple Vulnerabilities
+In-Reply-To: <20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>
+References: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
+ <20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>
+From: Lior Kaplan <kaplanlior@gmail.com>
+Date: Tue, 1 Nov 2016 10:58:28 +0200
+Message-ID: <CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1140fd582e6e020540398766
+Subject: [oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12
 
---001a1141d5b863d1a705457fca93
+--001a1140fd582e6e020540398766
 Content-Type: text/plain; charset=UTF-8
 
-Dear oss-security List,
+On Tue, Oct 18, 2016 at 7:34 PM, <cve-assign@mitre.org> wrote:
 
-Please provide CVEs for the following 6 issues:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > Please assign a CVE for the following issue:
+> >
+> > Bug #73147    Use After Free in unserialize()
+> > https://bugs.php.net/bug.php?id=73147
+> > http://git.php.net/?p=php-src.git;a=commit;h=
+> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+>
+> Can you clarify what should be the scope of this CVE?
+> zend_unset_property doesn't exist at all in PHP 7.0.11. The
+> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
+> zend_unset_property for PHP 7.0.12, and arranges for
+> zend_unset_property to be called only from
+> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
+>
+> We're not sure whether that affects anything outside of the CURLFile
+> implementation. However, 73147 discusses other concerns such as "The
+> similar bug can be also triggered via Exception::__toString with
+> DateInterval::__wakeup" and "The problem is that every __wakeup that
+> modifies any property would produce the same problem."
+>
+> There seems to be a related code change between 7.0.11 and 7.0.12 that
+> arranges for additional calls to zend_unset_property:
+>
+>   http://git.php.net/?p=php-src.git;a=blobdiff;f=Zend/zend_exceptions.c;h=
+> f21968733581a3cb672d039bec16ce6f17a93db9;hp=95d18f45fbea8808c00975b5df4619
+> d5d6745ab0;hb=689a9b8def07875641b3132a82c701fb7acb676c;hpb=
+> 4165d976066129000d947ffa3be73f91e9867635
+>
+> So, some of the options include:
+>
+> 1. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f is a complete security
+> patch that fixes everything discussed in 73147, including the "other
+> concerns" mentioned above.
+>
+> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
+> implementation. The "other concerns" mentioned above are
+> vulnerabilities that still exist in 7.0.12.
+>
+> 3. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
+> above Zend/zend_exceptions.c diff is a complete security patch that
+> fixes everything discussed in 73147, including the "other concerns"
+> mentioned above. There only needs to be one CVE ID associated with
+> this complete security patch.
+>
+> 4. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
+> above Zend/zend_exceptions.c diff is a complete security patch that
+> fixes everything discussed in 73147, including the "other concerns"
+> mentioned above. There should be one CVE ID for the security fix to
+> the CURLFile implementation, and a separate CVE ID for the security
+> fix found in Zend/zend_exceptions.c.
+>
+> Which of the above (1 through 4) is correct and/or preferred?
+>
 
-1) Filesystem information leak
-A vulnerability that allows remote attackers to obtain information on files
-on the server
-Credit: Sebastian Perez
-Impact: By using relative paths and guessing locations on a server Plone is
-installed on, an attacker can read data from a target server that the
-process running plone has permission to read. The attacker needs
-administrator privileges on the Plone site to perform this attack.
-Reference:
-https://plone.org/security/hotfix/20160830/filesystem-information-leak
+I've asked Stas (who fixed the issue) and #2 is the current situation.
 
-2) Non-Persistent XSS in Plone forms
-z3c.form will currently accept data from GET requests when the form is
-supposed to be POST. This allows a user to inject a potential XSS attack
-into a form. With certain widgets in Plone admin forms, the input is
-expected to be safe and can cause a reflexive XSS attack. Additionally,
-there is potential for an attack that will trick a user into saving a
-persistent XSS.
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
+Kaplan
 
-
-3) Open Redirection
-In multiple places, Plone blindly uses the referer header to redirect a
-user to the next page after a particular action. An attacker could utilize
-this to draw a user into a redirection attack.
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/open-redirection-in-plone
-
-
-4) Non-Persistent XSS
-Plone's URL checking infrastructure includes a method for checking if URLs
-valid and located in the Plone site. By passing javascript into this
-specially crafted url, XSS can be achieved.
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
-
-
-5) Non-Persistent XSS on user form
-Plone has unescaped user input in a page template that is open to XSS
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
-
-
-6) Non-Persistent XSS in Zope2
-In multiple places, Zope2's ZMI pages do not properly escape user input
-Credit: Sebastian Perez
-Reference:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
-
-
-
-Versions Affected:
-4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
-
-Code fixes:
-https://pypi.python.org/pypi/Products.PloneHotfix20160830
-
-Recommended action:
-Install the https://pypi.python.org/pypi/Products.PloneHotfix20160830
-package.
-
---001a1141d5b863d1a705457fca93--
+--001a1140fd582e6e020540398766--
