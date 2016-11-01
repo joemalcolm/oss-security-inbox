@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/11
-Message-ID: <20160125193416.GD14069@TC.local>
-Date: Mon, 25 Jan 2016 11:34:16 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2015-7578] Possible XSS vulnerability in rails-html-sanitizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/4
+Message-ID: <877f8na318.fsf@redhat.com>
+Date: Tue, 01 Nov 2016 11:49:07 +0100
+From: Martin Prpic <mprpic@...hat.com>
+To: "oss security list" <oss-security@...ts.openwall.com>
+Subject: RCE in Zabbix 2.2 to 3.0.3
 Content-Type: text/plain; charset=utf-8
 
-Possible XSS vulnerability in rails-html-sanitizer
+Hello,
 
-There is a possible XSS vulnerability in rails-html-sanitizer. This
-vulnerability has been assigned the CVE identifier CVE-2015-7578.
+Is there a CVE assigned to the issue leveraged in:
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     1.0.3
+https://www.exploit-db.com/exploits/39937/ ?
 
-Impact
-------
-There is a possible XSS vulnerability in rails-html-sanitizer.  Certain
-attributes are not removed from tags when they are sanitized, and these
-attributes can lead to an XSS attack on target applications.
+I don't see anything noted in the 3.0.3 release notes:
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+http://www.zabbix.com/rn3.0.3
 
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-There are no feasible workarounds for this issue.
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 1-0-sanitize_data_attributes.patch - Patch for 1.0 series
-
-Credits
--------
-Thanks to Ben Murphy and Marien for reporting this
+Any info appreciated! Thanks!
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "1-0-sanitize_data_attributes.patch" of type "text/plain" (7269 bytes)
-
-Content of type "application/pgp-signature" skipped
+Martin Prpič / Red Hat Product Security
