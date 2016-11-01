@@ -1,62 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/3
-Message-ID: <20161103042540.GB10528@kcwu.csie.org>
-Date: Thu, 3 Nov 2016 12:25:40 +0800
-From: Kuang-che Wu <kcwu@...e.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: w3m - multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/8
+Message-ID: <a27e61d789df4aff9f1f1f74cc307281@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 14:15:33 -0400
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: OTRS: execution of JavaScript in OTRS context by opening malicious attachment
 Content-Type: text/plain; charset=utf-8
 
-Following are security flaws that I reported to debian's w3m.
-https://github.com/tats/w3m
-(The original w3m project on sf.net https://sourceforge.net/projects/w3m/ is no
- longer maintained for several years. Debian's w3m is the only fork still
- maintained)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-These issues are all fixed in 0.5.3-31 released at Oct 15, 2016.
+> Date: 2016-11-01
+> https://www.otrs.com/security-advisory-2016-02-security-update-otrs/
 
-Please assign CVEs if you think they are suitable for identifiers.
+> An attacker could trick an authenticated agent or customer into
+> opening a malicious attachment which could lead to the execution of
+> JavaScript in OTRS context.
 
-Serious issues
-- https://github.com/tats/w3m/issues/8 stack smashed
-  see analysis in https://github.com/tats/w3m/pull/19
-- https://github.com/tats/w3m/issues/9 some buffer overflow
-- https://github.com/tats/w3m/issues/12 heap write
-- https://github.com/tats/w3m/issues/21 heap write
-- https://github.com/tats/w3m/issues/25 heap corruption
-  itself should be only OOM. But it was affected by
-    https://github.com/ivmai/bdwgc/issues/135
-  which become heap corruption
-- https://github.com/tats/w3m/issues/26 heap write
-- https://github.com/tats/w3m/issues/29 global-buffer-overflow write
-  
+Use CVE-2016-9139.
 
-Moderate issues
-(the crash point looks not-explitable but I am not sure whether 
- they could be reused as exploit gadget)
-- https://github.com/tats/w3m/issues/7 null deref
-- https://github.com/tats/w3m/issues/10 stack overflow
-- https://github.com/tats/w3m/issues/13 bcopy negative size
-- https://github.com/tats/w3m/issues/14 array index out of bound read
-- https://github.com/tats/w3m/issues/15 null deref
-- https://github.com/tats/w3m/issues/16 use uninit value
-- https://github.com/tats/w3m/issues/17 write to rodata
-- https://github.com/tats/w3m/issues/18 null deref
-- https://github.com/tats/w3m/issues/20 stack overflow
-- https://github.com/tats/w3m/issues/22 near-null deref
-- https://github.com/tats/w3m/issues/24 near-null deref
-- https://github.com/tats/w3m/commit/d43527 potential heap buffer corruption
-  I classify this as "moderate" because the allocator do preserve more space
-  than required size due to bucketing. And w3m's allocator is boehmgc, it
-  seems not easy replacible. So the heap won't be corrupted in practice.
-- https://github.com/tats/w3m/issues/28 null deref
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Not security issue, just DoS
-- https://github.com/tats/w3m/issues/11 OOM
-
-
-Regards,
-kcwu
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+iQIcBAEBCAAGBQJYGNtQAAoJEHb/MwWLVhi2/HkP/2RHPdRmkxzC5t2KT2hb9KWK
+Jglp7NldyOvcz8Y2KHoXO77vA6rbzShsZPVY6vOmpQPFv/YKvyzdOICWW9kLObao
+5Q8O2KHBspIfky6NFlX4busIzBda6FXm1kmqyKNlt9iCMPZXyyo+qMP/rycUAso+
+8TXm2+/lAhSlpKncsfekbFD0ueDtSBsxt2SIjeq6VbAxH8j7RVKktIOTatvJM7iE
+ZiE+6OWmk4WcgztGZ+tSuqcsG92tmMWfMA6wjioeyFnfX2ngQ7XVZLYaV8aO/+lS
+aACNhQjPcs1bc0PKJ80p5O9QKmul8dmKZuygZ4GWz/+S5jvA80neNOgAfoGEg2FC
+xDmqgTaUaoaf/XExrx6tILD7icc3bF6cHWiOtQiPEtoQaNMVBFjMO5n/h5OCg4kT
+jOQVo+HTfalLg16BToR/I0BS9pJ/pfaUxxj6HWpxNJXjbDmnU9aptl7PWMVrwwVo
+VCsmf0wwqK46vSbHBK6hYUcEAw1Cir+p3K3oiX32cHP3n2D5xA+cnOTXulEeb86N
+DZUXk7BT4YznYubPuSLPWGtlPWn0hia3JgCCLVNnHyRsWmKsojk1xzxug+L6P1Lt
+xw6LwORGSUJ9bFv8YjtztNx7kJsMpoLFapwhGefhxia/NwcZQxAM1tzIIczG0vKZ
+ZIYWfSRilgv+4xulgEZ+
+=GDId
+-----END PGP SIGNATURE-----
