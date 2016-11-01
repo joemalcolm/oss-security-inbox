@@ -1,24 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/5
-Message-ID: <CAJmbs8iHGMwpVPfhindZrzn1tGjUVPtatDvB-LMx3+7rxAsgwQ@mail.gmail.com>
-Date: Fri, 12 Aug 2016 17:03:51 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Matthew Daley <mattd@...fuzz.com>,  Openmeetings user-list <user@...nmeetings.apache.org>, user-russian@...nmeetings.apache.org,  dev <dev@...nmeetings.apache.org>, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-3089] Apache OpenMeetings XSS in SWF panel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/3
+Message-ID: <2a996479-3555-7830-9f01-62cec52c72cf@redhat.com>
+Date: Tue, 1 Nov 2016 10:19:36 +0100
+From: Andrej Nemec <anemec@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Memcached 1.4.32 and earlier buffer overflow.
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+As per Talos page, there seems to be three issues.
 
-Vendor: The Apache Software Foundation
+CVE-2016-8704 - Memcached server append/prepend remote code execution
+vulnerability
 
-Versions Affected: Apache OpenMeetings 3.1.0
+An integer overflow in the process_bin_append_prepend function which is
+responsible for processing multiple commands of Memcached binary
+protocol can be abused to cause heap overflow and lead to remote code
+execution.
 
-Description: The value of the URL's "swf" query parameter is interpolated
-into the JavaScript tag without being escaped, leading to the reflected XSS.
+http://www.talosintelligence.com/reports/TALOS-2016-0219/
 
-All users are recommended to upgrade to Apache OpenMeetings 3.1.2
+CVE-2016-8705 - Memcached server update remote code execution vulnerability
 
-Credit: This issue was identified by Matthew Daley
+Multiple integer overflows in process_bin_update function which is
+responsible for processing multiple commands of Memcached binary
+protocol can be abused to cause heap overflow and lead to remote code
+execution.
 
-Apache OpenMeetings Team
+http://www.talosintelligence.com/reports/TALOS-2016-0220/
 
+CVE-2016-8706 - Memcached server SASL authentication remote code
+execution vulnerability
+
+An integer overflow in process_bin_sasl_auth function which is
+responsible for authentication commands of Memcached binary protocol can
+be abused to cause heap overflow and lead to remote code execution.
+
+http://www.talosintelligence.com/reports/TALOS-2016-0221/
+
+There is also a talos blog post about these issues:
+
+http://blog.talosintel.com/2016/10/memcached-vulnerabilities.html
+
+Thanks for sharing!
+
+-- 
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+On 10/31/2016 11:35 PM, dormando wrote:
+> Release notes with tarball here:
+> https://github.com/memcached/memcached/wiki/ReleaseNotes1433
+>
+> Copy/paste from the relase notes:
+> Serious remote code execution bugs are fixed in this release.
+>
+> The bugs are related to the binary protocol as well as SASL authentication
+> of the binary protocol.
+>
+> If you do not use the binary protocol at all, a workaround is to start
+> memcached with -B ascii - otherwise you will need the patch in this
+> release.
+>
+> The diff may apply cleanly to older versions as the affected code has not
+> changed in a long time.
+>
+> Full details of the issues may be found here:
+> http://blog.talosintel.com/2016/10/memcached-vulnerabilities.html
+>
+> In summary: two binary protocol parsing errors, and a SASL authentication
+> parsing error allows buffer overflows of keys into arbitrary memory
+> space. With enough work undesireable effects are possible.
+>
+> CVE's were requested and assigned by the reporter. I unfortunately don't
+> have them handy :(
+>
+> -Dormando
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
