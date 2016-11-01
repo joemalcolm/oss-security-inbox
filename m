@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/2
-Message-ID: <20161222005733.GB81339@wopr>
-Date: Wed, 21 Dec 2016 16:57:33 -0800
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/6
+Message-Id: <cd843cd1-250f-46d5-b5ab-afddb8aecfae@googlegroups.com>
+Date: Tue, 1 Nov 2016 07:50:21 -0700 (PDT)
+From: Tim Graham <timograham@...il.com>
+To: django-announce <django-announce@...glegroups.com>
+Cc: django-developers@...glegroups.com, django-users@...glegroups.com, oss-security@...ts.openwall.com
+Subject: [ANNOUNCE] Django security releases issued: 1.10.3, 1.9.11, and 1.8.16
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
-> 
-> In case the distros are ready already, we could release on 23rd, but I
-> need feedbeck from the distros and ack from the other developers.
-> 
+Today the Django team issued 1.10.3, 1.9.11, and 1.8.16 as part of our 
+security process. These releases address two security issues, and we 
+encourage all users to upgrade as soon as possible.
 
-Please pursue this possibility.
+Details are available on the Django project weblog:
 
-Thanks,
-khm
+https://www.djangoproject.com/weblog/2016/nov/01/security-releases/
+
+As a reminder, we ask that potential security issues be reported via 
+private email to security@...ngoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
+
+Content of type "text/html" skipped
