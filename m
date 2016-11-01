@@ -1,131 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/27/7
-Message-Id: <E1bSRMD-0006Jd-Sq@xenbits.xenproject.org>
-Date: Wed, 27 Jul 2016 16:06:53 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 184 (CVE-2016-5403) - virtio: unbounded memory allocation issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/10
+Message-ID: <4d0087966bdd45da8a8802eacdcfa7b2@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 14:18:40 -0400
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Handful of libass issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-            Xen Security Advisory CVE-2016-5403 / XSA-184
-                              version 2
+>>> The third is a huge memory allocation leading to a crash that wasn't
+>>> fixed because a good solution is unavailable at the moment.
 
-               virtio: unbounded memory allocation issue
+>>> https://github.com/libass/libass/pull/240
 
-UPDATES IN VERSION 2
-====================
+>> Use CVE-2016-7971.
 
-Public release.
+The vendor's comment was:
 
-ISSUE DESCRIPTION
-=================
+> grigorig commented Oct 5, 2016
+> I don't have a strong opinion about the CVE.
 
-A guest can submit virtio requests without bothering to wait for
-completion and is therefore not bound by virtqueue size.  (This
-requires reusing vring descriptors in more than one request, which is
-incorrect but possible.)  Processing a request allocates a
-VirtQueueElement and therefore causes unbounded memory allocation
-controlled by the guest.
+The MITRE CVE team has no current plans to reject this CVE. Someone
+may want to use the CVE ID to track something. For example, there may
+be people who need to track that libass is not suitable for their own
+use case because they require exactly the "the best you can do is to
+make sure [rendering] gracefully fails with an appropriate error
+report (error code or exception or whatever you use) if memory can't
+be allocated or if a library-user-specified limit is exceeded - then
+the library user can handle that however they want to, for example by
+exiting (appropriate for a command-line tool) or by reporting an error
+but continuing to accept new requests (appropriate for a daemon)."
+behavior suggested in the
+http://www.openwall.com/lists/oss-security/2016/10/26/4 post.
 
-IMPACT
-======
+Even if neither the upstream vendor nor any Linux distribution will
+ever make any code change for CVE-2016-7971, discussion of the issue
+can help with understanding the product's behavior. For example,
+pull/240 also has a vendor comment of "Normally we should handle
+memory allocation failures gracefully, but there's probably still a
+lot of code which just crashes" that may be very relevant to planning
+other research.
 
-A malicious guest administrator can cause unbounded memory allocation
-in QEMU, which can cause an Out-of-Memory condition in the domain
-running qemu.
+The MITRE CVE team is willing to mark a CVE with "DISPUTED" if someone
+believes that it's based solely on an "AddressSanitizer failed to
+allocate ... bytes of LargeMmapAllocator" misinterpretation, and
+believes that it cannot have any relevance to risk management.
 
-Thus, a malicious guest administrator can cause a denial of service
-affecting the whole host.
+Also, of course, if a finding (such as "AddressSanitizer failed to
+allocate ... bytes of LargeMmapAllocator" without follow-on research)
+has no known audience, then sending a CVE ID request may not be the
+best approach.
 
-VULNERABLE SYSTEMS
-==================
-
-ARM systems are not vulnerable.
-
-PV domains are not vulnerable.
-
-Only HVM domains where virtio-net devices are provided to the guest
-are vulnerable.  Note that NO such devices are provided by default,
-so the default configuration is not vulnerable.
-
-HVM domains run with QEMU stub domains are not vulnerable.
-
-(Note that all virtio subsystems are affected; but only virtio-net is
-a supported configuration.  See docs/misc/qemu-xen-security.)
-
-MITIGATION
-==========
-
-Running PV only will avoid the issue.
-
-Running HVM domains with Xen PV drivers instead of virtio-net will
-avoid the issue.
-
-Running HVM domains with with stubdomains will mitigate the issue.
-
-CREDITS
-=======
-
-This issue was discovered by Zhenhao Hong of the 360 Marvel Team.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa184-qemuu-master.patch  qemu-upstream, Xen unstable, 4.7.x, 4.6.x, 4.5.x, 4.4.x
-xsa184-qemut-master.patch  qemu-traditional, Xen unstable, 4.7.x, 4.6.x, 4.5.x, 4.4.x
-
-$ sha256sum xsa184*
-ea41a25dac82cc5c0ef8e599feb6ed400e99414110d4dba8017d6bd048bc3de4  xsa184-qemut-master.patch
-2d675e5e08d9443cf2e5f3aa37521241d6ed898a602b5111d6969023e67b9b6b  xsa184-qemuu-master.patch
-$
-
-NOTES ON THE EMBARGO PERIOD
-===========================
-
-Note that the embargo period is shorter than normal as the Xen
-Security team were only notified of the issue on 25 July.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJXmNwVAAoJEIP+FMlX6CvZUUQIAMMpYEr4wyoPEWe1w/4TrtQt
-eTaDbBFFblfuHOTQcXZephlWBtSZ1bHbdEiTsQnflBYWLLiZZP1tud0f3MvN03uN
-M9kTv1LsAb29NC19Oy1w02AOVXm0XklA3JbFG5OoidWVYra0UQSFKeZvi8Tlqr5C
-ry2+jdErRGHsQFkjecBU0zSqXmz0+rcTlpzHtfJw3We3J9J4A1WPfAjXN3dL81yx
-Tdl3P2heokhR2jsZgi7ZgIBo/s4rD4wbRD5gL4pf6eokyJIib7NFhctMi8hLDkTL
-RbJh7sb+U9G5B2arMhRE7e00v7PgSfh+ossBQljszWhbHHCctggmGGIqWF0AvuQ=
-=+1d1
+iQIcBAEBCAAGBQJYGNtgAAoJEHb/MwWLVhi2NHMP+gNg7Xht/CNWHsVdWq4xXt94
+dt3eBEmYAI08dewav8dTrZ60S+Q0H/j7U4wvwO0xbnrpmnoq1ZjSEKZdXWUZyFnC
+Q5mGmmffyImnHYOyBUfpuNs+6rpo9ymuARgMBOxj1nZlVXz9n53O6jzcGVaPJ6Op
+EzqWoDHRDTkZ7rzDrsFrnrWPaDDusxgHhlIjTQyY0PuXvQEWgG01xDCAZl2x49Cf
+nDtGhA3Ox8K5tTw811CRNb8x57nXAu5OHCZTwr6rB4QFk+Oc/5Lm6SQP5XX8nY0o
+18YNacM1B5pYv999CofBwy4RthFm/J1tQzbATKUlTLBx4Li2+5PiFuomvpEfAJv4
+OhQlYQiUToRBiPBFGrihJB3f9iIW87V4ouX3sTPfBe9UcSjAZsd+VpGIf+SvWJFT
+TTkE/woWvUprfIKXlJLNxfUdFRBlagK6OZgvRYlVixDY96uAYergHFlyDsdPP6eN
+Je847yrnBkSB/KC1GVV/X8B6xNmeTz8JOW60pJ2TV8XvppOWxF+g9OVpQAnFMOYV
+soWxwSrSI5Vim+AfcrWEnHz+WPPPMpSc8xw0djFSOKzh4RJRs8y25hg5+B/UVo5W
+ZGFiLN26U9caRLjWoKK/K+9RL1HNbNA8wZSXb6vsCiNjtSVPQUNxsnbUZTN+SL/x
+sRvikrhVVxQ+YrFPTT+c
+=aMyc
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa184-qemut-master.patch" of type "application/octet-stream" (1492 bytes)
-
-Download attachment "xsa184-qemuu-master.patch" of type "application/octet-stream" (1521 bytes)
