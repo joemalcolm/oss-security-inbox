@@ -1,77 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/6
-Message-ID: <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
-Date: Mon, 9 May 2016 18:20:46 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: GraphicsMagick Response To "ImageTragick"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/7
+Message-ID: <dc9efac7984445ffb65b2a86012f7255@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 12:44:27 -0400
+From: <cve-assign@...re.org>
+To: <kaplanlior@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
-> 1. CVE-2016-3714 - Insufficient shell characters filtering
-> 
->    GraphicsMagick is not susceptible to remote code execution except
->    if gnuplot is installed (because gnuplot executes shell commands).
->    Gnuplot-shell based shell exploits are possible without a gnuplot
->    file being involved although gnuplot invokes the shell.  To fix
->    this, the "gplt" entry in the delegates.mgk file must be removed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I think this should perhaps have a separate CVE ID assigned: it's the
-same impact (arbitrary code execution) and was discovered at around
-the same time, but the mechanism is not similar to the
-missing/insufficient quoting/escaping for ImageMagick's %M placeholder,
-which was the root cause of (the original incarnation of) CVE-2016-3714.
+>> Bug #73147    Use After Free in unserialize()
+>> https://bugs.php.net/bug.php?id=73147
+>> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
 
-In GraphicsMagick this was the "GPLT" format, removed in hg commit
-"Gnuplot files are inherently insecure. Remove delegates support for
-reading them."
-https://sourceforge.net/p/graphicsmagick/code/ci/45998a25992d1142df201d8cf024b6c948b40748/
+> The
+> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
+> zend_unset_property for PHP 7.0.12, and arranges for
+> zend_unset_property to be called only from
+> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
 
-In ImageMagick this was the "PLT" format, removed in this git commit with
-the misleading commit message "Update to the latest autoconf/automake":
-https://github.com/ImageMagick/ImageMagick/commit/e87116ab2bd070c47943d4118a18c8f3a47461e2
+> 73147 discusses other concerns such as "The
+> similar bug can be also triggered via Exception::__toString with
+> DateInterval::__wakeup" and "The problem is that every __wakeup that
+> modifies any property would produce the same problem."
 
-MITRE, do you consider this to be:
+> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
+> implementation. The "other concerns" mentioned above are
+> vulnerabilities that still exist in 7.0.12.
 
-* part of CVE-2016-3714,
-* a single separate vulnerability to which both GraphicsMagick and ImageMagick
-  were vulnerable, or
-* two separate vulnerabilities, one in each package?
+Use CVE-2016-9137 for the ext/curl/curl_file.c vulnerability that was
+fixed in 5.6.27 and 7.0.12.
 
-> 2. CVE-2016-3718 - SSRF
-> 
->    GraphicsMagick has always supported HTTP and FTP URL requests from
->    the context of the executing process if it is linked with libxml2.
->    There is no sandboxing or policy to determine which HTTP and FTP
->    URLs should be allowed/denied because they should only be available
->    from outside the system, or in the public space outside
->    a "firewall".
+Use CVE-2016-9138 for the remaining security problem associated with
+__wakeup that is still present in 5.6.27 and 7.0.12.
 
-I'm not sure whether I'm understanding "because they should..."
-correctly.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-To be clear, are you saying that running GraphicsMagick code on a host
-that is whitelisted in someone's IP address ACL, has access to a LAN
-where the wider Internet does not, or has private services on the
-loopback interface is not a supported situation?
-
-Is there a subset of "safe" image formats that is known not to induce
-these requests, and where they *would* be considered to be a bug?  I would
-be surprised if this happened when resizing or manipulating common bitmap
-formats like JPEG, PNG, GIF, BMP, and one of the mitigations recommended
-on imagetragick.com has been to limit the formats that will be accepted.
-
-> 4. CVE-2016-3716 - File moving
-> 
->     This is a two-factor attack and is actually file copying.  It is
->     not successful using GraphicsMagick.  MSL is an XML-based "script"
->     format which should never be allowed to be submitted and invoked
->     by an untrusted party.
-
-Is there any situation where GraphicsMagick will interpret a file of
-unspecified format as MSL, for instance recognizing it by extension or
-magic number?
-
-Thanks,
-    S
+iQIcBAEBCAAGBQJYGMYQAAoJEHb/MwWLVhi20TAP/jruOGY2MR5CzDVn+bNzZ+bv
+0U3pkkcesWCma0H+BC7xq0uxQWT4hXf8gqYfA7cKE55DLBQ3ANbYqeAPZsUVqHSC
+36t0wtxVc0kHB+yfmUKVgTyqmrNa63LYpjeVd11Q74RDfinGve664U7ZPhOdpHeE
+hgXpiR2SBLFIwVl2ZJ4SjHIe6Z6TDL3BIZQROVcxbFBP8MKJhcP1gMPlIActwjiS
+B3ZpB9QTUVIeuDHB9ZX2GiD9cWLiPx6i+ToYW+oPF3pPItdcOI7G0hWiJszHu32t
+egpC/YcQR8s22chiARcPWJLBmWYeV7RO0Z0BuWX5QKLC9YfbPSMXHtInpqUGl5Ce
+s4zbF22EAT4wAI11qOpALcoKW1jvlFVnK3KEdRKmKjD17P73fKNIRg9NeMdmUHf5
+CPh7Lbq6HvdKK1wQwp3NUbwiFjMtSACN+NX2F+DR2LzhltqGj+MX1grOh558Zzfq
+9Gyo8ufsxhqPFcSf6+kjMEVcjU2lloF6HLaij7Vk6+VuA+adUCpJiaFN4VshCwXA
+7sJm9bJVmaJS4w2GaZZ+HDam3FEehmVVBjyuf/MYuwHd5RLjH3Ccqs73yDDumiB9
+h4tiu4UTpBl3F2N/TN3+Xk2L2FhDLvAfo3FbtZSQHWBCIXPP94zCLAkQ31IesbaO
+vvned9Twm3WPJYV1HiGA
+=WLXc
+-----END PGP SIGNATURE-----
