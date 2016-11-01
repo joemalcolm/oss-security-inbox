@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3137" "Tuesday" "23" "April" "2019" "09:41:02" "+0900" "Seong-Joong Kim" "sungjungk@gmail.com" "<CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com>" "76" "[oss-security] fprintd: found storing user fingerprints without encryption" nil nil nil "4" "2019042300:41:02" "[oss-security] fprintd: found storing user fingerprints without encryption" (number mark "U       sungjungk@gm Apr 23   76/3137  " thread-indent "\"[oss-security] fprintd: found storing user fingerprints without encryption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] fprintd: found storing user fingerprints without encryption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1642" "Tuesday" "1" "November" "2016" "07:50:21" "-0700" "Tim Graham" "timograham@gmail.com" "<cd843cd1-250f-46d5-b5ab-afddb8aecfae@googlegroups.com>" "29" "[oss-security] [ANNOUNCE] Django security releases issued: 1.10.3, 1.9.11, and 1.8.16" nil nil nil "11" "2016110114:50:21" "[oss-security] [ANNOUNCE] Django security releases issued: 1.10.3, 1.9.11, and 1.8.16" (number mark "U       timograham@g Nov  1   29/1642  " thread-indent "\"[oss-security] [ANNOUNCE] Django security releases issued: 1.10.3, 1.9.11, and 1.8.16\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15413 invoked by uid 550); 23 Apr 2019 09:50:51 -0000
+Received: (qmail 18066 invoked by uid 550); 1 Nov 2016 14:50:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,113 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31769 invoked from network); 23 Apr 2019 00:41:25 -0000
+Received: (qmail 18039 invoked from network); 1 Nov 2016 14:50:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=OjrNTPYfb9iQAS75Y7By6eHED0b78jy2G7ROzwz5l6A=;
-        b=PoJP4myxwBmfAu6wIRpgSHxUPJ/5PRMUiGM2szeErMiV8wNSY+OzYiIDytlD4aifbU
-         XvIEVo0zzK6htXQ8ZXjDGUWVKUVS98V8JkUlMvsPWl1w8F12jpCVzvGy2Qyp7cb6WFoH
-         /gpS8b+hO3oL5GMdeKSG7u7mezaQwYs89nhbDqJY8V13dhzi6ytjLVUzCBMG4gyRUKUj
-         cxO7EdWfs8a6tXaXgcO9sCkbkY6u8OsjRwJQuvZQpNBoevdk0TAHVF1GWw1c8j0PhL3p
-         8/Xq7DgWVZEnR5dnzdl7eizwsw+TLoL6UN/m3qp5L/fWlQXX52QrPr2ghVKNOUa1pBpR
-         RDKg==
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:subject:mime-version;
+        bh=esFnyd/092HyTBY+E5Jagc5NIwJLNpDV4nmQ48FxzGc=;
+        b=bR2XZpVaiw46CstNDwy3v3pdforA2dAa2lI8mvidLEYaQltuWwOtdYlz7JMpGCrlBt
+         rq9wIGs9nd2xri4M9UwO85cuI4nnTRYUgfeFHCtA7G5QfXh7wGAdNpGxOvN0ZDOu+ArZ
+         EJx4ESxRgP4YAHjngK1u+wbknJWEt2m/FkrI6E/qazKaYW6P/9rFIaXashxiTn8oynuf
+         rpyNXaQLEnOS3rujxzQgDd9vUuLp6viSZ4LZPMXyrjku6lZav9a/9rFQBdeipjGKbQiN
+         uHx+56m0RLgX0TxZZcbvHJPAJyeTCXDExx5LeWeokz1sIp2KFP1lTflHe41iZn3S9U02
+         9Pvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=OjrNTPYfb9iQAS75Y7By6eHED0b78jy2G7ROzwz5l6A=;
-        b=sYGiEwcz317dSUx9d10VMfNtI/ins3aaWgo66QXjRC+mpH/lSQ0Hbotpn2IMHJam+p
-         du9l4YSJ4eUn3trEnzHPDsxEjN8yUDRz8JbdjTdoTf56eT5STUZsThLl62TrGCsl10bR
-         kG6oMqESEsoQhbEQGXP0OuCPp2pL+jjXaswmJOcwIkN8SIkEKovmAhuZ406JfDf6zvq8
-         US1gn7P4HmQD6XK/37l3qB2/xRl43W3JkrFtCynWYo27M/I9uOn/HiQ8F9+NrJ1M6Bl+
-         b5vB9CcnWGColgNxbiQoxcYYAzD3qXbJwXGlA2Se2PTdF1Rc08fBlAbCp9xg5zxrjUHb
-         GoAA==
-X-Gm-Message-State: APjAAAUy7X8GVy9LjFN+B5Ddt/CcdpWqddKQ8mtE9fPcqY3PpUqyb8ma
-	4sqTVJUE5NbFvipBkhAhC1Bdzfi9yfgCVcUn+ykTNsjkaOs=
-X-Google-Smtp-Source: APXvYqy5wZsHHEnlqLZDwil4a2npSq02G+Q6wt0vqhK9dFMxSFfD/1yHzcLjzhOiBFg2JSVWn3Kk8zOhGYlvpVA0Ohw=
-X-Received: by 2002:a05:6402:1853:: with SMTP id v19mr13455932edy.247.1555980073458;
- Mon, 22 Apr 2019 17:41:13 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:message-id:subject:mime-version;
+        bh=esFnyd/092HyTBY+E5Jagc5NIwJLNpDV4nmQ48FxzGc=;
+        b=Iz9J4vGpgEPIEoCWAShciUHHfRilvK1Wyl7gyjMnt6PesloDNpv0XQ+A9za77phBmQ
+         HK2ifjUIzdfp1DesTlCmJCpYFIFlpV0h/k8MgMPC1cUI5s/V0+ZBQZIxNjT6TDiBh2Hg
+         Zto5GhGLpb4w6cLMtmgAvM8UW6OjVN/5qXDVi2n/7PgcRNiYNONMKnL/+c1XwyD+rvCg
+         60K4bcnE728HtDUHBVLBsjDIovwbr+TcUDy9I/NzG28QMsm5y6zvKlktn9+WqNPk+yiv
+         fBeJL81/vSAnDqC3e0o+WjIGVv5ROGTPjlHIxYfbTLqoKhBOAytpIZx3dOVpTNySIbMQ
+         AreA==
+X-Gm-Message-State: ABUngvcqweiyBG49ASAXbq3o7qID5Z7gkR8kAeOAt8qgQLmOlU14Nobl6B/bWGhz3hxJQu4OIJFG
+X-Received: by 10.157.44.39 with SMTP id f36mr1384937otb.16.1478011822239;
+        Tue, 01 Nov 2016 07:50:22 -0700 (PDT)
+X-Google-Already-Archived: Yes
+X-Google-Already-Archived-Group-Id: 5f8633310a
+X-Google-Doc-Id: 8b63eb0a084e0
+X-Google-Thread-Id: 52049bb992b835d2
+X-Google-Message-Url: http://groups.google.com/group/django-announce/msg/8b63eb0a084e0
+X-Google-Thread-Url: http://groups.google.com/group/django-announce/t/52049bb992b835d2
+X-Google-Web-Client: true
+Date: Tue, 1 Nov 2016 07:50:21 -0700 (PDT)
+From: Tim Graham <timograham@gmail.com>
+To: django-announce <django-announce@googlegroups.com>
+Cc: django-developers@googlegroups.com, django-users@googlegroups.com,
+	oss-security@lists.openwall.com
+Message-Id: <cd843cd1-250f-46d5-b5ab-afddb8aecfae@googlegroups.com>
 MIME-Version: 1.0
-From: Seong-Joong Kim <sungjungk@gmail.com>
-Date: Tue, 23 Apr 2019 09:41:02 +0900
-Message-ID: <CAPZbWnf64OLnNjuJuzmmsVNSi8tOPX+Kaiy0Evd47dw+NQP3NQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000008e5fd5058727d731"
-Subject: [oss-security] fprintd: found storing user fingerprints without encryption
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_929_1939741259.1478011821841"
+X-Google-Token: EK3X4sAF8NbwZEbTNfg0
+X-Google-IP: 71.175.65.78
+Subject: [oss-security] [ANNOUNCE] Django security releases issued: 1.10.3, 1.9.11, and
+ 1.8.16
 
---0000000000008e5fd5058727d731
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+------=_Part_929_1939741259.1478011821841
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_930_1539521571.1478011821841"
 
-Dear all,
+------=_Part_930_1539521571.1478011821841
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-I would like to report a vulnerability of 'fprintd'.
+Today the Django team issued 1.10.3, 1.9.11, and 1.8.16 as part of our 
+security process. These releases address two security issues, and we 
+encourage all users to upgrade as soon as possible.
 
-'fprintd' does not encrypt sensitive information before storage.
-*CWE-311: Missing Encryption of Sensitive Data*
+Details are available on the Django project weblog:
 
-*Description:*
-=E2=80=98fprintd=E2=80=99 saves fingerprint template and without any encryp=
-tion, to a file
-on the host.
-This could allow a process to access the stored fingerprint and then create
-natural-looking original fingerprint image.
-The stolen template can be replayed to the fingerprint authentication to
-gain unauthorized access.
-FYI, most commercial software products for fingerprint authentication
-provide fingerprint data (template) encryption.
+https://www.djangoproject.com/weblog/2016/nov/01/security-releases/
 
-*Additional information:*
-It was found that 'fprintd' saves fingerprint template and without any
-encryption, to a file on the host.
-This could allow a process to access the stored fingerprint.
-In 'fprintd', MINDTCT feature extractor from the NIST Biometric Image
-Software (NBIS) extracts fingerprint minutiae that are compliant to ANSI
-INCITS 378-2004 and ISO/IEC 197942-2.
-The generated template file can be easily converted to ISO/IEC 19794-2
-format since it is a minor modification of the earlier ANSI-INCITS 378-2004.
-Currently, it is well known threat model that the standard fingerprint
-template can be reverted to original fingerprint image.
-[1-5] are presented to create sophisticated and natural-looking
-fingerprints only from the numerical template data format as defined in
-standard format.
-They also successfully evaluated these approaches against a number of
-undisclosed state-of-the-art algorithms and the NBIS.
+As a reminder, we ask that potential security issues be reported via 
+private email to security@djangoproject.com and not via Django's Trac 
+instance or the django-developers list. Please see 
+https://www.djangoproject.com/security for further information.
 
-*Resolve the vulnerability:*
-As per upstream, the only way to safeguard the fingerprint data is to run
-with SELinux, AppArmor or another LSM enabled one.
-(link:
-https://gitlab.freedesktop.org/libfprint/fprintd/issues/16#note_141207)
-Currently, Fedora and Red Hat Enterprise Linux have a safeguard the
-fingerprint data since they uses SELinux by default while Ubuntu and Debian
-did not.
+------=_Part_930_1539521571.1478011821841
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-*Final remark:*
-Once fingerprint has been leaked, victims are leaked for the rest of life
-since it lasts for a life.
-It is necessary to prepare for the problem.
+<div dir="ltr">Today the Django team issued 1.10.3, 1.9.11, and 1.8.16 as part of our security process. These releases address two security issues, and we encourage all users to upgrade as soon as possible.<br><br>Details are available on the Django project weblog:<br><br>https://www.djangoproject.com/weblog/2016/nov/01/security-releases/<br><br>As a reminder, we ask that potential security issues be reported via private email to security@djangoproject.com and not via Django&#39;s Trac instance or the django-developers list. Please see https://www.djangoproject.com/security for further information.<br></div>
+------=_Part_930_1539521571.1478011821841--
 
-[1] R. Cappelli et al., =E2=80=9CFingerprint Image Reconstruction from Stan=
-dard
-Templates=E2=80=9D, IEEE Trans. on Pattern Analysis and Machine Intelligenc=
-e,
-vol.29, no.9, pp.1489-1503, 2007.
-[2] A. Ross et al., =E2=80=9CFrom template to image: Reconstructing fingerp=
-rints
-from minutiae points=E2=80=9D, IEEE Trans on Pattern Analysis and Machine
-Intelligence, vol.29, no.4, pp.544-560, 2007.
-[3] R. Cappelli et al., =E2=80=9CCan Fingerprints be reconstructed from ISO
-Templates?=E2=80=9D, IEEE ICARCV 2006.
-[4] J. Feng et al., =E2=80=9CFingerprint Reconstruction: From Minutiae to P=
-hase=E2=80=9D,
-IEEE Trans on Pattern Analysis and Machine Intelligence, vol.33, no.2,
-pp.209-223, 2011.
-[5] A. Rozsa et al., "Genetic Algorithm Attack on Minutiae-Based
-Fingerprint Authentication and Protected Template Fingerprint Systems",
-CVPR 2015.
-
-Sincerely,
-Seong-Joong Kim
-
---0000000000008e5fd5058727d731--
+------=_Part_929_1939741259.1478011821841--
