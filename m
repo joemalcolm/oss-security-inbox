@@ -1,4 +1,9 @@
-Received: (qmail 15633 invoked by uid 550); 31 Jul 2024 07:19:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2092" "Tuesday" "1" "November" "2016" "12:44:27" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<dc9efac7984445ffb65b2a86012f7255@imshyb02.MITRE.ORG>" "50" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "11" "2016110116:44:27" "[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       cve-assign@m Nov  1   50/2092  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12\"\n") "<CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>" ("<CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28402 invoked by uid 550); 1 Nov 2016 16:44:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,122 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15615 invoked from network); 31 Jul 2024 07:19:57 -0000
-Date: Wed, 31 Jul 2024 09:19:47 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <p721n399-8rq8-rs03-1084-3np038sr9032@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 28351 invoked from network); 1 Nov 2016 16:44:39 -0000
+From: <cve-assign@mitre.org>
+To: <kaplanlior@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CAEsznC4-QChSbpYPR8cDCdjOyGpiseTv0VYwSra2+ttkiBNm=A@mail.gmail.com>
+Message-ID: <dc9efac7984445ffb65b2a86012f7255@imshyb02.MITRE.ORG>
+Date: Tue, 1 Nov 2016 12:44:27 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2024-7264 ASN.1 date parser overread
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE assignment for PHP 5.6.27 and 7.0.12
 
-ASN.1 date parser overread
-==========================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, July 31st 2024 -
-[Permalink](https://curl.se/docs/CVE-2024-7264.html)
+>> Bug #73147    Use After Free in unserialize()
+>> https://bugs.php.net/bug.php?id=73147
+>> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
 
-VULNERABILITY
--------------
+> The
+> 0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
+> zend_unset_property for PHP 7.0.12, and arranges for
+> zend_unset_property to be called only from
+> "ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
 
-libcurl's ASN1 parser code has the `GTime2str()` function, used for parsing an
-ASN.1 Generalized Time field. If given an syntactically incorrect field, the
-parser might end up using -1 for the length of the *time fraction*, leading to
-a `strlen()` getting performed on a pointer to a heap buffer area that is not
-(purposely) null terminated.
+> 73147 discusses other concerns such as "The
+> similar bug can be also triggered via Exception::__toString with
+> DateInterval::__wakeup" and "The problem is that every __wakeup that
+> modifies any property would produce the same problem."
 
-This flaw most likely leads to a crash, but can also lead to heap contents
-getting returned to the application when
-[CURLINFO_CERTINFO](https://curl.se/libcurl/c/CURLINFO_CERTINFO.html) is used.
+> 2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
+> implementation. The "other concerns" mentioned above are
+> vulnerabilities that still exist in 7.0.12.
 
-INFO
-----
+Use CVE-2016-9137 for the ext/curl/curl_file.c vulnerability that was
+fixed in 5.6.27 and 7.0.12.
 
-The ANS.1 parsing is done *after* a successful TLS handshake, which then also
-means that the used TLS library has parsed the certificate. If the TLS library
-rejects the bad date string, then it cannot reach and trigger libcurl's bug.
-We can however not be sure that there are not circumstances in which the bad
-data still gets parsed by libcurl.
+Use CVE-2016-9138 for the remaining security problem associated with
+__wakeup that is still present in 5.6.27 and 7.0.12.
 
-This bug is considered a *C mistake* (likely to have been avoided had we not
-been using C).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2024-7264 to this issue.
-
-CWE-125: Out-of-bounds Read
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-The vulnerable code can only be reached when curl is built to use GnuTLS,
-Schannel, Secure Transport or mbedTLS. Builds using other TLS backends are not
-vulnerable.
-
-- Affected versions: curl 7.32.0 to and including 8.9.0
-- Not affected versions: curl < 7.32.0 and >= 8.9.1
-- Introduced-in: https://github.com/curl/curl/commit/3a24cb7bc45
-
-libcurl is used by many applications, but not always advertised as such!
-
-This parser bug was actually introduced in curl 7.32.0 but was then used only
-by the GSKit TLS backend which is no longer supported. The functionality was
-later brought to other TLS backends in different versions, so this bug affects
-curl built with different backends starting in different versions:
-
-- GnuTLS since 7.42.0
-- Schannel since 7.50.0
-- Secure Transport since 7.79.0
-- mbedTLS since 8.9.0
-
-SOLUTION
-------------
-
-- Fixed-in: https://github.com/curl/curl/commit/27959ecce75cdb2
-
-Note that this fixing commit was a follow-up to this previous incomplete fix:
-https://github.com/curl/curl/commit/3c914bc680155b321
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 8.9.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Build your libcurl with an unaffected TLS backend
-
-TIMELINE
----------
-
-This issue was reported to the curl project on July 30, 2024. We contacted
-distros@openwall on July 30, 2024.
-
-curl 8.9.1 was released on July 31 2024 around 06:00 UTC, coordinated with
-the publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Dov Murik (Transmit Security)
-- Patched-by: Daniel Stenberg
-- Patched-by: Stefan Eissing
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+iQIcBAEBCAAGBQJYGMYQAAoJEHb/MwWLVhi20TAP/jruOGY2MR5CzDVn+bNzZ+bv
+0U3pkkcesWCma0H+BC7xq0uxQWT4hXf8gqYfA7cKE55DLBQ3ANbYqeAPZsUVqHSC
+36t0wtxVc0kHB+yfmUKVgTyqmrNa63LYpjeVd11Q74RDfinGve664U7ZPhOdpHeE
+hgXpiR2SBLFIwVl2ZJ4SjHIe6Z6TDL3BIZQROVcxbFBP8MKJhcP1gMPlIActwjiS
+B3ZpB9QTUVIeuDHB9ZX2GiD9cWLiPx6i+ToYW+oPF3pPItdcOI7G0hWiJszHu32t
+egpC/YcQR8s22chiARcPWJLBmWYeV7RO0Z0BuWX5QKLC9YfbPSMXHtInpqUGl5Ce
+s4zbF22EAT4wAI11qOpALcoKW1jvlFVnK3KEdRKmKjD17P73fKNIRg9NeMdmUHf5
+CPh7Lbq6HvdKK1wQwp3NUbwiFjMtSACN+NX2F+DR2LzhltqGj+MX1grOh558Zzfq
+9Gyo8ufsxhqPFcSf6+kjMEVcjU2lloF6HLaij7Vk6+VuA+adUCpJiaFN4VshCwXA
+7sJm9bJVmaJS4w2GaZZ+HDam3FEehmVVBjyuf/MYuwHd5RLjH3Ccqs73yDDumiB9
+h4tiu4UTpBl3F2N/TN3+Xk2L2FhDLvAfo3FbtZSQHWBCIXPP94zCLAkQ31IesbaO
+vvned9Twm3WPJYV1HiGA
+=WLXc
+-----END PGP SIGNATURE-----
