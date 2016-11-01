@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/07/6
-Message-Id: <20160507151935.2B6DA332055@smtpvbsrv1.mitre.org>
-Date: Sat,  7 May 2016 11:19:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dledford@...hat.com, secalert@...hat.com, benh@...ian.org
-Subject: Re: CVE Request: Linux: IB/security: Restrict use of the write() interface'
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/11
+Message-ID: <e441740a-f96e-6034-f0d4-bf0bcd72ad19@isc.org>
+Date: Tue, 1 Nov 2016 15:06:29 -0500
+From: ISC Security Officer <security-officer@....org>
+To: oss-security@...ts.openwall.com
+Cc: ISC Security Officer <security-officer@....org>
+Subject: BIND9 CVE-2016-8864: A problem handling responses containing a DNAME,answer can lead to an assertion failure
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please be advised that ISC publicly announced a vulnerability in the
+BIND 9 software.
 
-> https://git.kernel.org/linus/e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3
+CVE-2016-8864 is a denial-of-service vector which can potentially be
+exploited against BIND 9 servers.  All versions prior to the current
+releases are vulnerable.
 
-> The drivers/infiniband stack uses write() as a replacement for
-> bi-directional ioctl().  This is not safe. There are ways to
-> trigger write calls that result in the return structure that
-> is normally written to user space being shunted off to user
-> specified kernel memory instead.
+Our full CVE text can be found at https://kb.isc.org/article/AA-01434/0
 
-Use CVE-2016-4565.
+New releases of BIND, including security fixes for this vulnerability,
+are available at: www.isc.org/downloads/
+
+Release notes can be obtained using the following links:
+
+ftp://ftp.isc.org/isc/bind9/9.9.9-P4/
+ftp://ftp.isc.org/isc/bind9/9.10.4-P4/
+ftp://ftp.isc.org/isc/bind9/9.11.0-P1/
+
+-- 
+Brian Conry
+ISC Support
+Acting Security Officer
 
 
-> For long term, update the user space libraries and the kernel API
-> to something that doesn't present the same security vulnerabilities
-> (likely a structured ioctl() interface).
 
-As far as we can tell, this statement does not imply that there is a
-remaining known vulnerability after
-e6bd18f57aad1a2d1ef40e646d03ed0f2515c9e3 - instead, this statement
-only suggests a possible functionality problem, e.g., there might be
-third-party code or in-development code that was attempting to rely on
-write calls for a legitimate purpose, and this code has now stopped
-working without an immediate workaround.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXLgZZAAoJEHb/MwWLVhi29cEP/0J4S+2R9nVMJlexim783uu+
-YdU/ivYcTS6jxj3KuUPRZnmWWJbE4h/73/sa9H2pdu0CzR0LmqICeeP94zGO2Jn7
-8zoEBst07RqisgNgZFu+TCgvmwemoPEEE9OkTmurQBh3r5lcmR9I6wJulXJ8n1l2
-rXOw796aR5KoYYyl9cjDU9hU1ufvrMi6hDThEb8+THFpoTus/kyOFhnZ74B4kUux
-EjqTdrSZIqneCi5EIY5xxCZYo4LlsXx5rlZF6Yqhcg1jC5G/6jtzIZSjws0ZVPY7
-Ueen2yV37Ms3d1YdTSo4QBCzMon2sMC0j1Jj0Ov+g2jWbHZh6zU+V5z6Xjf8nH0B
-TgKWdG/wYOpcY1si+lfZbtKQwHvM2i1RZP5mH6v/lggCYivA72Q+KPmDSdpIq395
-YOFKWRfA8xarcfmeENhFLKjgp/QlZn26TAuMdzSvrcbkqqMUk/XHHcifR4J46gjI
-vCu47kmL0hJV6Q0GhX9cZ2A2/8cXSjpxfgQTG3ifjtuxdugXHxXSOoEx9o36NVWH
-1dt0L+YISIkh0yUx7lF5qQ1NoTMLnY2RHuKOeJFoRz8xyrbH5c4cizuyXYeFbKRC
-C7uxW98W0OxbORLWpjrgcjFBCnIDWIrgGh9fJAECQS3gV6A5k1EmZDtSmMAhjzE+
-LY6zu+JLlIGbCDdCOL/o
-=Zjzu
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
