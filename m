@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/17/2
-Message-ID: <CABtfiZbb8y9uuQT8=zrAaTi8znTjXXBqGPZBdDa4yxiaw3OO-g@mail.gmail.com>
-Date: Thu, 17 Mar 2016 11:25:28 -0400
-From: Derek Mahar <derek.mahar@...il.com>
-To: users@...ivemq.apache.org
-Cc: dev@...ivemq.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: Re: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/01/5
+Message-ID: <20161101135601.GA990@lorien.valinor.li>
+Date: Tue, 1 Nov 2016 14:56:01 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: OTRS: execution of JavaScript in OTRS context by opening malicious attachment
 Content-Type: text/plain; charset=utf-8
 
-The security advisory announcement claims that ActiveMQ 5.13.1 and
-older versions are affected and that ActiveMQ 5.13.2 fixes the issues.
+Hi
 
-On 10 March 2016 at 07:45, Christopher Shannon
-<christopher.l.shannon@...il.com> wrote:
-> There following security vulnerability was reported against Apache
-> ActiveMQ 5.13.0 and older versions.
->
-> Please check the following document and see if you’re affected by the issue.
->
-> http://activemq.apache.org/security-advisories.data/CVE-2016-0782-announcement.txt
->
-> Apache ActiveMQ 5.13.1 and newer with appropriate fixes was released and
-> available for upgrade.
+>From the OTRS advisory at [1]:
 
+> An attacker could trick an authenticated agent or customer into
+> opening a malicious attachment which could lead to the execution of
+> JavaScript in OTRS context.
 
+which is fixed in upstream versions OTRS 3.3.16 4.0.19 and 5.0.14.
 
--- 
-Derek Mahar
-1.514.316.6736 Home
-1.514.316.7348 Mobile
-1.514.461.3650 x230 Work
-102-1365 boulevard René-Lévesque Est
-Montréal QC H2L 2M1
-Canada
+ [1]  https://www.otrs.com/security-advisory-2016-02-security-update-otrs/
+
+Could you please assign a CVE for this issue?
+
+Regards,
+Salvatore
