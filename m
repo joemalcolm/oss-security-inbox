@@ -1,47 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/18/6
-Message-Id: <20160918144006.CDF1F33200B@smtpvbsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 10:40:06 -0400 (EDT)
-From: cve-assign@...re.org
-To: vul@...safe.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - openjpeg null ptr dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/7
+Message-ID: <alpine.DEB.2.20.1611020810030.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:10:38 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl glob parser write/read out of bounds
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+glob parser write/read out of bounds
+====================================
 
-> AddressSanitizer: SEGV on unknown address
-> 
-> https://github.com/uclouvain/openjpeg/issues/843
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102F.html)
 
-Use CVE-2016-7445.
+VULNERABILITY
+-------------
 
-(A NULL pointer dereference is within the scope of CVE when it affects
-a library that can realistically be used to build a multiple-input
-application. For example, openjpeg-nullptr-github-issue-842.ppm
-crashes the application, and the application was supposed to have
-remained running to display other images in other windows.)
+The curl tool's "globbing" feature allows a user to specify a numerical range
+through which curl will iterate. It is typically specified as [1-5],
+specifying the first and the last numbers in the range. Or with [a-z], using
+letters.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+1. The curl code for parsing the second *unsigned* number did not check for a
+leading minus character, which allowed a user to specify `[1--1]` with no
+complaints and have the latter `-1` number get turned into the largest
+unsigned long value the system can handle. This would ultimately cause curl to
+write outside the dedicated malloced buffer after no less than 100,000
+iterations, since it would have room for 5 digits but not 6.
 
-iQIcBAEBCAAGBQJX3qbJAAoJEHb/MwWLVhi2dMIP/1Gynw4G1wvocXs2eT0FqQrA
-WpR15GQzvHzMbVoeKcG9dLx+kGU/VbZXqxPv1EAFFPa6/Tv9ZOnbD2Kj6nmO1W1k
-tF/jLpeViTxqnvZEVJ9HSFBC5sVj/SEj1QV4/C31Uv1WRyu2XeTJfxWfjzsT4ts5
-nxbwqZAFJFCnXTjPMh2a1LIp+NBd1J8v/ohsHfZsPYQMO8FeXtJ6zuOKeO2hDiFo
-krPkMMELB/0HSHd4LQ7KLgAWyUeVyfcpWliVUyAMzXRm0XkDeEwec/7LAVAXeD3y
-CA7w6CVy8dPa3cA8sGcphSWKCdt0iq+DJBAT2VvpGC5XSzD+c32cwB4ME5wxr/tB
-KIi3Wg9iuv7jZLykPz4Ir5HlDNO+6FJ9hAZYHSQVHoq+Z3d1TX84Msk8EkuFZsNi
-tEutJ7/Tg8Yfwn5QnVtaKIq9vMBSeyEdN8CChQyS/iuS+LNtIxTMdiSXT6Z2B9cL
-MJ56Vz35ArTpil3jF4SlKyeTE2tikdOmg0rjr8jbhpIeCXDTjM/HJ60ekkjdQids
-L5erXn3RfYKKequqNVLIhejzHir1DXa+cfplvPRTDD8FIXOZyjw+0yCfyI64rY8V
-4ucN0O5dzpMNzO+KNErIxX8E5Sea0ERPhnp97sYDwIpEtcn0Lu2odsjVtnIzOdAq
-5BdJZ0sBPI/EM7bXZJDc
-=EcEl
------END PGP SIGNATURE-----
+2. When the range is specified with letters, and the ending letter is left out
+`[L-]`, the code would still advance its read pointer 5 bytes even if the
+string was just 4 bytes and end up reading outside the given buffer.
+
+This flaw exists only in the curl tool, not in the libcurl library.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8620 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.34.0 to and including 7.50.3
+- Not affected versions: curl < 7.34.0 and curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, the function reading data will consider reading a zero size
+to be an error and bail out.
+
+A [patch for CVE-2016-8620](https://curl.haxx.se/CVE-2016-8620.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Switch off globbing or make sure you have all ranges in use verified!
+
+TIME LINE
+---------
+
+It was first reported to the curl project on October 2 by Lu�t Nguy�n.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Thanks to Lu�t Nguy�n.
+
+-- 
+
+  / daniel.haxx.se
