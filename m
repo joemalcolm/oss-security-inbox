@@ -1,62 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/1
-Message-ID: <76fe8eab-0a51-792e-b8d1-c566717f1e66@gmail.com>
-Date: Wed, 1 Jun 2016 17:25:02 -0700
-From: morgan fainberg <morgan.fainberg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2016-008] Incorrect Audit IDs in Keystone Fernet Tokens can result in revocation bypass (CVE-2016-4911)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/5
+Message-ID: <alpine.DEB.2.20.1611020808080.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:09:01 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl double-free in curl_maprintf
 Content-Type: text/plain; charset=utf-8
 
-============================================================================================
-OSSA-2016-008: Incorrect Audit IDs in Keystone Fernet Tokens can result in revocation bypass
-============================================================================================
+double-free in curl_maprintf
+============================
 
-:Date: May 23, 2016
-:CVE: CVE-2016-4911
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102D.html)
 
+VULNERABILITY
+-------------
 
-Affects
-~~~~~~~
-- Keystone: ==9.0.0
+The libcurl API function called `curl_maprintf()` can be tricked into doing a
+double-free due to an unsafe `size_t` multiplication, on systems using 32 bit
+`size_t` variables. The function is also used internallty in numerous
+situations.
 
+The function doubles an allocated memory area with realloc() and allows the
+size to wrap and become zero and when doing so realloc() returns NULL *and*
+frees the memory - in contrary to normal realloc() fails where it only returns
+NULL - causing libcurl to free the memory *again* in the error path.
 
-Description
-~~~~~~~~~~~
-Lance Bragstad (Rackspace) reported a vulnerability in the Keystone
-Fernet Token Provider. By rescoping a token a user will receive a new
-token without correct audit_ids, these incorrect audit_ids will
-prevent the entire chain of tokens from being revoked properly. This
-vulnerability does not impact revoking a token by its individual
-audit_id. Only deployments with Keystone configured to use Fernet
-tokens are impacted.
+Systems with 64 bit versions of the `size_t` type are not affected by this
+issue.
 
+This behavior is triggable using the publicly exposed function.
 
-Patches
-~~~~~~~
-- https://review.openstack.org/#/c/312582/ (Mitaka)
-- https://review.openstack.org/#/c/311886/ (Newton)
+We are not aware of any exploit of this flaw.
 
+INFO
+----
 
-Credits
-~~~~~~~
-- Lance Bragstad from Rackspace (CVE-2016-4911)
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8618 to this issue.
 
+AFFECTED VERSIONS
+-----------------
 
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1577558
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4911
+This flaw exists in the following curl versions (and again, only on 32bit
+versions).
 
+- Affected versions: curl 7.1 to and including 7.50.3
+- Not affected versions: curl >= 7.51.0
 
-Notes
-~~~~~
-- This fix was included in the openstack/keystone 9.0.1 (mitaka) release.
+libcurl is used by many applications, but not always advertised as such!
 
+THE SOLUTION
+------------
+
+In version 7.51.0, the memory growing functions will fail instead of letting
+the size wrap.
+
+A [patch for CVE-2016-8618](https://curl.haxx.se/CVE-2016-8618.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Make really sure you never send strings larger than 1GB into this funciton
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This vulnerability was found during a Secure Open Source audit performed by
+Cure53.
 
 -- 
-Morgan Fainberg
-OpenStack Vulnerability Management Team
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+  / daniel.haxx.se
