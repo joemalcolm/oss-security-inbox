@@ -1,4 +1,9 @@
-Received: (qmail 11826 invoked by uid 550); 22 Dec 2023 16:39:59 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2223" "Wednesday" "2" "November" "2016" "08:06:35" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020805310.375@tvnag.unkk.fr>" "80" "[oss-security] [SECURITY ADVISORY] curl cookie injection for other servers" nil nil nil "11" "2016110207:06:35" "[oss-security] [SECURITY ADVISORY] curl cookie injection for other servers" (number mark "U       daniel@haxx. Nov  2   80/2223  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl cookie injection for other servers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17992 invoked by uid 550); 2 Nov 2016 07:06:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11806 invoked from network); 22 Dec 2023 16:39:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703263233; x=1703868033; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iaOx5+3jO1cL91DS569gIXUpVx3LqZ/T5J+XcMzuDDc=;
-        b=cC/tA3sXu+dslC46i4TuWLYNw0fCYTleiMEUWj2BV1d8vOYyrQE26wD1galtqGx3oG
-         zTbeHfPF8EQ1IbMoVd2H3suBERMOXek0jOVOg13j7UABsBbJFH61ij9DnH4DH4NpFCVd
-         LBDQYubw44Yn78b7hk2hGr3oe10MVf43TxmbDto9EKEimGKbi7yVxn6Y9497O2mJNdgA
-         /0Eh3UbZoUE3JYflS4mtCPOXqRu2J0pqgUWjrRqkOb3jUPT76WMrDKRMDHXow/kyBL+Y
-         TxXZ2m3Bjd5I3itn3xc2Vfpl6Nd9GnY6eXYbJTCsuqhDw1DVgXOwhrMiw/vZ8os9jhC4
-         RoPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703263233; x=1703868033;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iaOx5+3jO1cL91DS569gIXUpVx3LqZ/T5J+XcMzuDDc=;
-        b=gNCpH84mz2Kk4t8vD//t7jREBFqFLLxU4KBJhmwub0LcKu+scoJNbKLxxUrF+MDrVg
-         6OI2Y194LI6ucgOLyRgQ//1U3uxgq7GgyZ7AMxyCvwtULN1xxb1taMwpyL/xPckbYYl1
-         4w4w7xBrxZyFr3exw/sPUd6121hgW/Pg7AF5AiuCk35lJOr65+Ev7aJguNsYTMt32i9P
-         peIm8GllEjWPJU3b0uTylNjOXwePq/2CDVdgg8+b090WFzX2Mzpd/0sIFdzLQiVBHOno
-         tJOzHkkVHOW/OLgPrnLCZCc0MB3JdR4s6lnQRWULJrxPI9QI97HaUSav4ZLvD1EPTc9V
-         Cx4g==
-X-Gm-Message-State: AOJu0YxMjaoT7KvUEyx0YRwVrW2HXGtnpXwxKHJoxydA9MGobxMQemJl
-	P+9n9TFI7MIeNEpDE4RAcku59Dz4TfOuQyP1PXCugMld
-X-Google-Smtp-Source: AGHT+IFwnRo7Nab1eo9wFL7qqJvmLPgO0TUCN34s+Kbw3hvzwtgDhfJQlEO+wPTlkmmlyg1vfkc8vuVrNZNdUB+zUdI=
-X-Received: by 2002:a05:6214:2485:b0:67a:a721:7849 with SMTP id
- gi5-20020a056214248500b0067aa7217849mr1996298qvb.110.1703263232791; Fri, 22
- Dec 2023 08:40:32 -0800 (PST)
+Received: (qmail 17951 invoked from network); 2 Nov 2016 07:06:49 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 2 Nov 2016 08:06:35 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1611020805310.375@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-References: <20231221143630.GD14101@suse.de> <20231221144656.GA40693@veps.esmtp.org>
- <20231222104647.GH14101@suse.de> <ZYVufT0sq16Z-M43@symphytum.spacehopper.org>
- <20231222121134.GI14101@suse.de> <20231222150438.GA13989@unix-ag.uni-kl.de> <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com>
-In-Reply-To: <CAHjsZGbiZYGug2L04iZ+VEmMg-pdfKyKOGdcSeCLnsZYd0Vm2Q@mail.gmail.com>
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
-Date: Sat, 23 Dec 2023 00:40:06 +0800
-Message-ID: <CAN_LGv2BhL40uhEk0TdYaYmd9zodSS-UJjWH5xSdLZWSoDFUMw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Re: New SMTP smuggling attack
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl cookie injection for other servers
 
-On Fri, Dec 22, 2023 at 11:57=E2=80=AFPM Rodrigo Freire <rfreire@redhat.com=
-> wrote:
->
-> On Fri, Dec 22, 2023 at 12:10=E2=80=AFPM Erik Auerswald
-> <auerswal@unix-ag.uni-kl.de> wrote:
-> >   * The CERT/CC and VINCE involvement resulted in "there is no
-> >     vulnerability".
->
-> I'm trying to make sense of it - where's the compromise of the
-> Confidentiality, Integrity or Availability of the affected mail
-> servers?
->
+cookie injection for other servers
+==================================
 
-The integrity of the sender's identity, as a minimum, is compromised
-here. Normally, when relaying mail, servers add a "Received:" header
-that specifies where they received the connection from. This allows
-tracking down the true origin of the message. The smuggled message
-does not have such a header and thus misrepresents the vulnerable
-relay as the ultimate sender. Additionally, if the relay has
-destination-based deny lists that deny some but not all addresses on
-the destination domain, they are sidestepped.
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102A.html)
 
---=20
-Alexander E. Patrakov
+VULNERABILITY
+-------------
+
+If cookie state is written into a cookie jar file that is later read back and
+used for subsequent requests, a malicious HTTP server can inject new cookies
+for arbitrary domains into said cookie jar.
+
+The issue pertains to the function that loads cookies into memory, which reads
+the specified file into a fixed-size buffer in a line-by-line manner using the
+`fgets()` function. If an invocation of fgets() cannot read the whole line
+into the destination buffer due to it being too small, it truncates the
+output. This way, a very long cookie (name + value) sent by a malicious server
+would be stored in the file and subsequently that cookie could be read
+partially and crafted correctly, it could be treated as a different cookie for
+another server.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8615 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.1 to and including 7.50.3
+- Not affected versions: curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, these functions will deny negative string lengths from
+being used.
+
+A [patch for CVE-2016-8615](https://curl.haxx.se/CVE-2016-8615.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use the `CURLOPT_COOKIEFILE` (or `-b`) option.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@openwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
