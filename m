@@ -1,15 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/09/4
-Message-ID: <4879177.l6fT5WhknG@xps>
-Date: Tue, 09 Feb 2016 23:26:32 +0100
-From: Albert Astals Cid <aacid@....org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, security@....org
-Subject: KDE Plasma vulnerability: need CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/4
+Message-ID: <alpine.DEB.2.20.1611020807250.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:08:01 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl OOB write via unchecked multiplication
 Content-Type: text/plain; charset=utf-8
 
-Hi, Albert from KDE, can we get a CVEs assigned for 
-https://www.kde.org/info/security/advisory-20160209-1.txt
+OOB write via unchecked multiplication
+======================================
 
-Thanks,
-  Albert
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102C.html)
+
+VULNERABILITY
+-------------
+
+In libcurl's base64 encode function, the output buffer is allocated as follows
+without any checks on insize:
+
+     malloc( insize * 4 / 3 + 4 )
+
+On systems with 32-bit addresses in userspace (e.g. x86, ARM, x32), the
+multiplication in the expression wraps around if insize is at least 1GB of
+data. If this happens, an undersized output buffer will be allocated, but the
+full result will be written, thus causing the memory behind the output buffer
+to be overwritten.
+
+If a username is set directly via `CURLOPT_USERNAME` (or curl's `-u, --user`
+option), this vulnerability can be triggered. The name has to be at least
+512MB big in a 32bit system.
+
+Systems with 64 bit versions of the `size_t` type are not affected by this
+issue.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8617 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.1 to and including 7.50.3
+- Not affected versions: curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, these functions will deny negative string lengths from
+being used.
+
+A [patch for CVE-2016-8617](https://curl.haxx.se/CVE-2016-8617.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use the `CURLOPT_USERNAME` option.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
