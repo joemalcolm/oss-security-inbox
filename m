@@ -1,79 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/4
-Message-Id: <20160625125442.479FD13B627@smtpvmsrv1.mitre.org>
-Date: Sat, 25 Jun 2016 08:54:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: bperry.volatile@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libical 0.47 SEGV on unknown address
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/6
+Message-ID: <alpine.DEB.2.20.1611020809190.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:09:59 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl double-free in krb5 code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+double-free in krb5 code
+========================
 
-> filename=segv.ics.bug
-> This bug attached had not been reported yet.
-> 
-> AddressSanitizer: SEGV on unknown address
-> 0x4fbb7f in icalproperty_new_clone
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102E.html)
 
-Use CVE-2016-5823.
+VULNERABILITY
+-------------
 
+In curl's implementation of the Kerberos authentication mechanism, the
+function `read_data()` in security.c is used to fill the necessary krb5
+structures. When reading one of the length fields from the socket, it fails to
+ensure that the length parameter passed to realloc() is not set to 0.
 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 (Opened a month
-> ago. After Tyson reproed the bug in libical, no responses).
+This would lead to realloc() getting called with a zero size and when doing so
+realloc() returns NULL *and* frees the memory - in contrary to normal
+realloc() fails where it only returns NULL - causing libcurl to free the
+memory *again* in the error path.
 
-Use CVE-2016-5824.
+This flaw could be triggered by a malicious or just otherwise ill-behaving
+server.
 
+We are not aware of any exploit of this flaw.
 
-> The following three bugs are distinct heap over-reads in libical
-> (tested against libical 0.47 and 1.0) which have had little to no
-> reception by Mozilla.
+INFO
+----
 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1280832
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8619 to this issue.
 
-Use CVE-2016-5825.
+AFFECTED VERSIONS
+-----------------
 
+This flaw exists in the following curl versions
 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1281041
+- Affected versions: curl 7.3 to and including 7.50.3
+- Not affected versions: curl < 7.3 and curl >= 7.51.0
 
-Use CVE-2016-5826.
+libcurl is used by many applications, but not always advertised as such!
 
+THE SOLUTION
+------------
 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1281043
+In version 7.51.0, the function reading data will consider reading a zero size
+to be an error and bail out.
 
-Use CVE-2016-5827.
+A [patch for CVE-2016-8619](https://curl.haxx.se/CVE-2016-8619.patch) is
+available.
 
+RECOMMENDATIONS
+---------------
 
-MITRE has no role in determining the list charter, but
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
-"List Content Guidelines ... Any security issues that you post to
-oss-security should be either already public or to be made public by
-your posting." Because you apparently are publishing both the
-research methodology (i.e., AddressSanitizer) and the types of
-findings, this is close to a public disclosure but may be outside
-the spirit of the list. (We definitely would not have responded here
-if the one fully described case, segv.ics.bug, had been omitted.)
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  A - Upgrade curl and libcurl to version 7.51.0
 
-iQIcBAEBCAAGBQJXbn6tAAoJEHb/MwWLVhi2c7kQAKkdy6WSLV6WAmDF8uJWmJWE
-phCI6blik9Gts60jWous3yGJwtKGCapxAiOKPSK4Cwoftx6fgzCjrdZpmrb9PCdK
-4eBAByZhThVoFXRWQexWHJgbDG+JD+eMmNGfYMAEbCuVShqrvBeTi7jmB8BcbAzS
-XbMfP8d9cjMD+P6Hq9HRXWytRqkdvQ7J54sr0oNmefdKtjbwR5M5mcCacYKomTVf
-c0ejV1BuLWnQ/qxoz8eB+3tXUXZWtUbssXI+WnyAV88IuRc8SlSZtl/Y/dbBb68V
-XBV+nlgWRyN66gbcMufV/1Uo2/E+xfqjKuj2VXdI+oWnsjjvAo7oIMVwN8hoJE7G
-imX6srWFpfJ12qeFcD2b6Lp6KvI3wvDX3uirZ3RAzR0m0sOw/ZMR+uKx5QH4m06s
-npqpfYLx/GqtCCjkBSirHqC4KKnFwG1GDDjHPIionZLQYSNOGWsZ3AEog/6a5lma
-6k5cy+weP1HYdEnJdri01nH9xFk/A7KWbLo3q/ncQmJZiAO3fK45I/IJxjDlKgZ2
-4LUdackzFqHDUYjy7mXciRRSgaHJwWWPs5WOV3I0W4P6nYd2iyBFTtJF1/U+cD22
-GEfALIX1q2qq8BJhncP20cYLI7H8WWawVHYSpF2eyFPbfroY0zcfEiiH/54KiYrY
-7FyUt5hF3MaNWaUx3Su5
-=O5An
------END PGP SIGNATURE-----
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use KRB5
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
