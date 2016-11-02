@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2143" "Wednesday" "25" "November" "2015" "14:49:16" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>" "53" "Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" "^Date:" nil nil "11" "2015112521:49:16" "[oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" (number mark "U       kseifried@re Nov 25   53/2143  " thread-indent "\"Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/\"\n") "<5656263F.80101@gmail.com>" ("<CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>" "<20151125180702.6d3d075d@pc1>" "<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>" "<5656263F.80101@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1806" "Wednesday" "2" "November" "2016" "08:07:22" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020806410.375@tvnag.unkk.fr>" "73" "[oss-security] [SECURITY ADVISORY] curl case insensitive password comparison" nil nil nil "11" "2016110207:07:22" "[oss-security] [SECURITY ADVISORY] curl case insensitive password comparison" (number mark "U       daniel@haxx. Nov  2   73/1806  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl case insensitive password comparison\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30156 invoked by uid 550); 25 Nov 2015 21:49:29 -0000
+Received: (qmail 23755 invoked by uid 550); 2 Nov 2016 07:07:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30133 invoked from network); 25 Nov 2015 21:49:28 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=BOnY5vXrdcntuCEO2OihVky36XD9q9XtzWN+T//WjYU=;
-        b=V8hw4hy559Gy9xRUvB4tDow3f41IxJcYW7cSOlyTMw1+BOjgvOfeCJ9to80HhEhZwc
-         1B7NugoKDU74IebVocG/3o1Cpgz/LWYdDlLSp1zmXKjqTlUqll3xEhPTBG6A/Nh8/xuC
-         OzplzNFVr4ya6XEU8waw4xMKlwl+itMCRdUy0bU21evGABfmK4/hvrs8vGYDnTB9nPjo
-         o9xFJQqV2jRVW2lr8u5mvFnF9ecZPYlcrFYm0cJiz3ZG/0S6yMOsvmaEcqdGGCyPO69V
-         jmmsB5ijq8RB/Z/Hv8LEVijAJfMWtZURFwYnyYNyy2ST674g5rsG3roD+a7YAugTAlcL
-         92Ag==
-X-Gm-Message-State: ALoCoQkb/BMGLN+9jJwy6Wg0WbsWwQfIjCtuMwRihbX/WhQ5Mz/FG9CwbMt99Sq29h53BEaGc4AJ
-MIME-Version: 1.0
-X-Received: by 10.129.98.130 with SMTP id w124mr2207834ywb.97.1448488156917;
- Wed, 25 Nov 2015 13:49:16 -0800 (PST)
-In-Reply-To: <5656263F.80101@gmail.com>
-References: <CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>
-	<20151125180702.6d3d075d@pc1>
-	<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>
-	<5656263F.80101@gmail.com>
-Message-ID: <CANO=Ty2KagFAAbV02zSEgm_TrXg5b2ckHqLXbz2BG_dWZoH8ww@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114707f80e34320525646ec0
-Date: Wed, 25 Nov 2015 14:49:16 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 23621 invoked from network); 2 Nov 2016 07:07:35 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 2 Nov 2016 08:07:22 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1611020806410.375@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl case insensitive password comparison
 
---001a114707f80e34320525646ec0
-Content-Type: text/plain; charset=UTF-8
+case insensitive password comparison
+====================================
 
-On Wed, Nov 25, 2015 at 2:21 PM, Gsunde Orangen <gsunde.orangen@gmail.com>
-wrote:
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102B.html)
 
-> Totally reasonable, Kurt.
-> Where would you actually see the border between what's in and what's
-> out? Actually there are lots of (proprietary source) vendor products out
-> there that are heavily built on open source (e.g. virtually all linux
-> kernel based embedded devices)
-> Not saying someone should go through the hassles to chase for it - but
-> if the info is brought to you/to the repository...
->
->
-So in short: only stuff that is Open Source licensed. Definitely things
-that are fully Open Sourced (e.g. upstream project, or distributions like
-Red Hat or Debian). If a proprietary vendor uses some OpenSource bits then
-I'd be interested if the upstream project also ships it, so it would go
-under that upstream listing. If it's stuff the proprietary vendors are
-adding I'm not really interested, for two reasons:
+VULNERABILITY
+-------------
 
-1) proprietary/closed source vendors have a long history of doing silly
-things, so it's a given they'll have problems here
-2) the chances of getting them to fix it are low, so I'm simply not
-interested in spending any time/resources on it.
+When re-using a connection, curl was doing case insensitive comparisons of
+user name and password with the existing connections.
 
-If you want to create a project in GitHub that covers OpenSource bits used
-in mostly proprietary vendors (e.g. Mac OS X) then feel free to, but again
-for  a multitude of reasons I'm not interested in that side of the problem.
+This means that if an unused connection with proper credentials exists for a
+protocol that has connection-scoped credentials, an attacker can cause that
+connection to be reused if s/he knows the case-insensitive version of the
+correct password.
 
+We are not aware of any exploit of this flaw.
 
+INFO
+----
 
-> Gsunde
->
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8616 to this issue.
 
+AFFECTED VERSIONS
+-----------------
 
-Also as an example of what I am looking for I did an initial dump of Fedora
-23 (all of it) we end up with about 83 packages containing certs/keys/etc.
-Some are obvious (archlinux-keyring, debian-keyring, ca-certificates,
-bind), some are embedded (mostly copies of the Mozilla CA cert stuff) and
-some need more research. If anyone wants to add notes/data to them please
-feel free.
+This flaw exists in the following curl versions.
 
-https://github.com/RedHatProductSecurity/Certificates-Shipped/tree/master/distributions/Fedora/23
+- Affected versions: curl 7.7 to and including 7.50.3
+- Not affected versions: curl < 7.7 and curl >= 7.51.0
 
+libcurl is used by many applications, but not always advertised as such!
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+THE SOLUTION
+------------
 
---001a114707f80e34320525646ec0--
+In version 7.51.0, these functions will deny negative string lengths from
+being used.
+
+A [patch for CVE-2016-8616](https://curl.haxx.se/CVE-2016-8616.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@openwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
