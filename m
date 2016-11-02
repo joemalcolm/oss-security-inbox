@@ -1,4 +1,9 @@
-Received: (qmail 25824 invoked by uid 550); 21 Nov 2022 21:00:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2122" "Wednesday" "2" "November" "2016" "08:12:49" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020812160.375@tvnag.unkk.fr>" "82" "[oss-security] [SECURITY ADVISORY] curl invalid URL parsing with '#'" nil nil nil "11" "2016110207:12:49" "[oss-security] [SECURITY ADVISORY] curl invalid URL parsing with '#'" (number mark "U       daniel@haxx. Nov  2   82/2122  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl invalid URL parsing with '#'\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25823 invoked by uid 550); 2 Nov 2016 07:13:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +12,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11300 invoked from network); 21 Nov 2022 20:41:37 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jarek Potiuk <potiuk@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <f62db289-55b5-0163-ab99-783c23f2185b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 21 Nov 2022 20:41:11 +0000
+Received: (qmail 24567 invoked from network); 2 Nov 2016 07:13:02 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 2 Nov 2016 08:12:49 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1611020812160.375@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-40954: Apache Airflow Spark Provider, Apache Airflow:
- Airflow 2.3.4 spark provider RCE that bypass restrictions to read
- arbitrary files 
+Content-Type: multipart/mixed; BOUNDARY="1129329158-1792574968-1478070769=:375"
+Subject: [oss-security] [SECURITY ADVISORY] curl invalid URL parsing with '#'
 
-Description:
+--1129329158-1792574968-1478070769=:375
+Content-Type: text/plain; format=flowed; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-Improper Neutralization of Special Elements used in an OS Command ('OS Comm=
-and Injection') vulnerability in Apache Airflow Spark Provider, Apache Airf=
-low allows an attacker to read arbtrary files in the task execution context=
-, without write access to DAG files. This issue affects Spark Provider vers=
-ions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2=
-.3.0 in case Spark Provider is installed (Spark Provider 4.0.0 can only be =
-installed for Airflow 2.3.0+). Note that you need to manually install the S=
-park Provider version 4.0.0 in order to get rid of the vulnerability on top=
- of Airflow 2.3.0+ version that has lower version of the Spark Provider ins=
-talled).
+invalid URL parsing with '#'
+============================
 
-Credit:
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102J.html)
 
-Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for repo=
-rting the issue.
+VULNERABILITY
+-------------
 
-References:
+curl doesn't parse the authority component of the URL correctly when the host
+name part ends with a '#' character, and could instead be tricked into
+connecting to a different host. This may have security implications if you for
+example use a URL parser that follows the RFC to check for allowed domains
+before using curl to request them.
 
-https://github.com/apache/airflow/pull/27646
+Passing in `http://example.com#@evil.com/x.txt` would wrongly make curl send a
+request to evil.com while your browser would connect to example.com given the
+same URL.
 
+The problem exists for most protocol schemes.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8624 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.1 to and including 7.50.3
+- Not affected versions: curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, the parser function is fixed.
+
+A [patch for CVE-2016-8624](https://curl.haxx.se/CVE-2016-8624.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Strip out the parts of the URLs containing '#' before passing them to curl
+
+TIME LINE
+---------
+
+It was first reported to the curl project on October 10 by Fernando Muñoz.
+
+We contacted distros@openwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Thanks to Fernando Muñoz!
+
+-- 
+
+  / daniel.haxx.se
+--1129329158-1792574968-1478070769=:375--
