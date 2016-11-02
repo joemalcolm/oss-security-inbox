@@ -1,50 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/2
-Message-ID: <20161015173558.657276ad@pc1>
-Date: Sat, 15 Oct 2016 17:35:58 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/15
+Message-ID: <20161102135241.20a8c3c4@pc1>
+Date: Wed, 2 Nov 2016 13:52:41 +0100
 From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Update on MatrixSSL miscalculation (incomplete fix for CVE-2016-6887)
+Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/54-Update-on-MatrixSSL-miscalculation-incomplete-fix-for-CVE-2016-6887.html
+On Wed, 2 Nov 2016 12:53:04 +0100
+Robert Scheck <robert@...oraproject.org> wrote:
 
-CVE-assigners: I think this could get a CVE as an incomplete fix for
-CVE-2016-6887
+> On the other hand, I am wondering if this should be really classified
+> as a security related issue.
 
-----------
+Ambiguitiy in character encodings can often be a source of security
+issues.
 
-I recently [1] reported how I found various bugs in the bignum
-implementation of MatrixSSL, some of them leading to remotely
-exploitable vulnerabilities.
+Just think of the following:
+* A Certificate Authority is using different pieces of software that
+  mix different IDNA encodings.
+* I request a certificate for strasse.de, but the verification mail
+  goes to xn--strae-oqa.de.
+* I am the owner of xn--strae-oqa.de and now have a valid certificate
+  for strasse.de.
 
-One of the bugs was that the modular exponentiation function -
-pstm_exptmod() - produced wrong results for some inputs . This wasn't
-really fixed, but only worked around by restricting the allowed size of
-the modulus. Not surprisingly it is still possible to find inputs that
-cause miscalculations (code). I reported this to MatrixSSL on August
-1st.
-
-Recently MatrixSSL released another update (3.8.6) fixing several
-vulnerabilities reported by Craig Young from Tripwire [2]. However the
-pstm_exptmod() bug is still there.
-
-It is unclear how exploitable such bugs are, but given that it's used
-in the context of cryptographic functions handling secret key material
-this is clearly a reason for concern.
-
-MatrixSSL has long advertised itself as a safer alternative to OpenSSL,
-because it didn't suffer from the same kind of high severity bugs. I
-think it has been sufficiently shown that this was due to the fact that
-nobody was looking. But what's more worrying is that bugs they knew
-about for several months now don't get fixed properly.
-
-[1]
-https://blog.fuzzing-project.org/51-Fun-with-Bignums-Crashing-MatrixSSL-and-more.html
-[2]
-http://www.tripwire.com/state-of-security/security-data-protection/cyber-security/flawed-matrixssl-code-highlights-need-for-better-iot-update-practices/
-
+IMHO the whole idea of suddenly changing how international domain names
+are encoded is a very problematic security violation.
 
 -- 
 Hanno Böck
@@ -52,7 +33,5 @@ https://hboeck.de/
 
 mail/jabber: hanno@...eck.de
 GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-View attachment "matrixssl-exptmod-bug-variant2.c" of type "text/x-c++src" (4564 bytes)
 
 Content of type "application/pgp-signature" skipped
