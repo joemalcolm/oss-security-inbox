@@ -1,50 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/14
-Message-Id: <20161010175332.3A7F46C074E@smtpvmsrv1.mitre.org>
-Date: Mon, 10 Oct 2016 13:53:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/16
+Message-ID: <alpine.DEB.2.20.1611021349520.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 13:57:35 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: Robert Scheck <robert@...oraproject.org>
+cc: oss-security@...ts.openwall.com
+Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, 2 Nov 2016, Robert Scheck wrote:
 
-> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
-> to a null pointer dereference issue. It could occur while doing an I/O vector
-> unmarshalling operation in v9fs_iov_vunmarshal() routine.
-> 
-> A privileged user/process inside guest could use this flaw to crash the Qemu
-> process instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
+>> curl is not alone with this problem, as there's currently a big flux in the
+>> world of network user-agents about which IDNA version to support and use.
+>
+> From my point of view, this especially affects GNU libc for example.
+>
+> On the other hand, I am wondering if this should be really classified as a 
+> security related issue.
 
-Use CVE-2016-8578.
+Can this be used to trick users or give malicious actors an advantage? I think 
+yes. I think it has a security impact. To what extent can be debated, but then 
+I don't grade our security vulnerabilites.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=fsdev/9p-iov-marshal.c but
-that may be an expected place for a later update.
+> I guess many upstreams should be explicitly made aware of that soon. Maybe 
+> MITRE (or somebody else) could share their thoughts about this, too?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I would say so. Since IDNA2003 and IDNA2008 make clients end up on different 
+target machines, there's no doubt in my mind that this *can* be abused. I'm 
+confident that many other tools and libraries in addition to curl have the 
+same problem.
 
-iQIcBAEBCAAGBQJX+9Q5AAoJEHb/MwWLVhi2mwMP/0jl7A1btTRICOrx2gAEjWOR
-+q8XeDpGWNXOKf1+XKpVPwrwLZ7jDuvuR3VfBgwOtpA7hMoLAcIX8G6m+FlLHwlX
-dJafKAaunKt0L4LFV0l8Qbe2vSITJHF8yY8ftfEkRjx+yozwh4waJYPsmU4M1Akr
-atzlUD24VsiW7UFfITEFC6N428ms2ReYL5P6o0uRgoXWVo8/3uBpaj7daH6BaCzb
-1MBBcbV5Zn/qSDSM115WcN2rO3W3jBL2chUPAd/rJlr0JqiVFCVxodFvrW0Tl0Jp
-K5InpRCqpBrPZrWMRFDaZj8Saf+6IWI5Q0WI15DqJXQtnJMgndEksAIJWT7SboIL
-FVROFUlO7XkICK0riBgJVAV+ZII7u8IJ0dchxV555dErvsVneJllpQag9iisN9Hj
-PAXg2I+kbPAb1DWoXhUDbzg/HcNgvHUk+6GYZUHAMVbp6ENggCrHmEj9R5zxRatD
-vmpgv+OVhlRTCBsvDNDILSALk6TRWM5Ol6/iLHC+qBXbcRNi5kYdGAXZk5bvT1IW
-BnQeRLlotkFFmY3BWVvj9r4phLfjS4AHDIslI+oRYRroe4Dm+sSYky3N6+yZVMuH
-Cyh1g1X7sI7fiBA9lCJzMCYBsmnsE6Fk6tA+NqHmk3zU3lR8tSXtVpbNv15vL4XO
-AgAKlVBqomng0+P1MIeh
-=L1Fq
------END PGP SIGNATURE-----
+> I reported the "ß" issue and the lack of IDNA 2008 support in cURL on Sun, 
+> 18 May 2014 17:17:03 +0200 directly to you, but I didn't classify it as a 
+> security related issue though... ;-)
+
+Then I appologize for having dropped the ball and not having seen the problem 
+correctly back then. I don't remember that occasion, but I believe you.
+
+NOTE: the IDNA 2008 fix seems to be incomplete [1] so right now it is probably 
+better to just disable IDN support in curl, at least if libidn2 powered.
+
+[1] = https://curl.haxx.se/mail/lib-2016-11/0033.html
+
+-- 
+
+  / daniel.haxx.se
