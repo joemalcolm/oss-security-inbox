@@ -1,50 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/5
-Message-Id: <20161016025034.CDBBE6C0D4B@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:50:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/9
+Message-ID: <alpine.DEB.2.20.1611020811110.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:11:41 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl URL unescape heap overflow via integer truncation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+URL unescape heap overflow via integer truncation
+=================================================
 
-> https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c-2/
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102H.html)
 
-> AddressSanitizer: heap-buffer-overflow ... READ of size 1
-> libdwarf/dwarf_util.c:590:9 in _dwarf_get_abbrev_for_code
+VULNERABILITY
+-------------
 
-> Commit fix:
-> https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13
-> and then
-> https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2
-> (because of a mistake)
+The URL percent-encoding decode function in libcurl is called
+`curl_easy_unescape`. Internally, even if this function would be made to
+allocate a unscape destination buffer larger than 2GB, it would return that
+new length in a signed 32 bit integer variable, thus the length would get
+either just truncated or both truncated and turned negative. That could then
+lead to libcurl writing outside of its heap based buffer.
 
-Use CVE-2016-8681.
+This can be triggered by a user on a 64bit system if the user can send in a
+custom (very large) URL to a libcurl using program.
 
-(This has the same fix as CVE-2016-8679 but seems distinct.)
+We are not aware of any exploit of this flaw.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+INFO
+----
 
-iQIcBAEBCAAGBQJYAuddAAoJEHb/MwWLVhi2l7EP/1T9zeweglEA9u8ZOy49fD+0
-7dTVP84wg1PDV20ox6rFpO8cULGEkBdpeCKbmhloMDV8A1B1S0a/FkKzSuzJ8ib2
-s770i5d1tLYHMoavotL94ta7rnoh65ePtbCSIyH4FWD74IUu+pVxvNrsEfXG2jiJ
-I5DdWRIJAOEpws0XNVSsoOogyQiJ5FEwRsUFeZwN5q5sdjtGXDqit0YMmDjrBJYu
-6xMUh3LouC1S2kJ3R5LOMcPg/hzMcConeiRM3DYyn/30KiFxWwiTnrFBOkfwEBLs
-F+UIfrYbGi21bywCmVb0pdRZzcdOuQQDaHDfBxjmJg9jFk/Jf8WXvJM0ArMFBWzN
-05FqkcCBYAdXMmPoPykVEtOKNMvnxQKll3L5WnizKY500oafNiFoR5+CmqQCr958
-gBMCQQnZqP0BSLZb4GDFwdXKl0dWYbvnyw7VJ7xV4an05hJ2U1xDPDDiltZ4irxQ
-MNjxnG57ByTv8zV5s5HuxHdm59Ud29vQU3fDVvDOkBIajxlLQ/Da/PzRk0uREpTu
-vwcSkyfda0FZsLhV/xjVghHVexbIBGxQ8+7De/myAM6PHcf970dyTMDKtToVDzB2
-3/I9DmTr6wSnAPjPXCQL+93HC5dytjjqg4JTCAthKGvS82iPlNZ7+b57mosxgXow
-9GmBfxF8pSb6AJ0AxCnD
-=RxUq
------END PGP SIGNATURE-----
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8622 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions
+
+- Affected versions: curl 7.24.0 to and including 7.50.3
+- Not affected versions: curl < 7.24.0 and curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, the parser function is fixed.
+
+A [patch for CVE-2016-8622](https://curl.haxx.se/CVE-2016-8622.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+his vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
