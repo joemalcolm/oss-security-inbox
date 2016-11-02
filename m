@@ -1,33 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/11
-Message-ID: <CALJHwhQrWQ-TZ2cO=L3v8AVt-OOXGRvdXgtMxABKz6XFnXg9Aw@mail.gmail.com>
-Date: Wed, 15 Jun 2016 16:29:50 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-4470: Linux kernel Uninitialized variable in request_key handling user controlled kfree().
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/2
+Message-ID: <alpine.DEB.2.20.1611020805310.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:06:35 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl cookie injection for other servers
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+cookie injection for other servers
+==================================
 
-A flaw was found in the Linux kernels keyring handling code, where in
-key_reject_and_link() there's an uninitialised variable that isn't set
-by __key_link_begin() on the destination keyring if that function
-fails.
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102A.html)
 
-If a destination keyring was supplied, then __key_link_end() is called
-whether or not __key_link_begin() succeeded, with the result that the
-edit pointers contains members which end up being freed.   These are
-the user controlled addresses that can exist from previous memory
-contents.
+VULNERABILITY
+-------------
 
-Thanks,
+If cookie state is written into a cookie jar file that is later read back and
+used for subsequent requests, a malicious HTTP server can inject new cookies
+for arbitrary domains into said cookie jar.
 
-Wade Mealing
-Product Security Team
+The issue pertains to the function that loads cookies into memory, which reads
+the specified file into a fixed-size buffer in a line-by-line manner using the
+`fgets()` function. If an invocation of fgets() cannot read the whole line
+into the destination buffer due to it being too small, it truncates the
+output. This way, a very long cookie (name + value) sent by a malicious server
+would be stored in the file and subsequently that cookie could be read
+partially and crafted correctly, it could be treated as a different cookie for
+another server.
 
-Resources:
+We are not aware of any exploit of this flaw.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1341716
+INFO
+----
 
-Patch:
-https://www.spinics.net/lists/linux-kernel-janitors/msg26069.html
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8615 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.1 to and including 7.50.3
+- Not affected versions: curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, these functions will deny negative string lengths from
+being used.
+
+A [patch for CVE-2016-8615](https://curl.haxx.se/CVE-2016-8615.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use the `CURLOPT_COOKIEFILE` (or `-b`) option.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
