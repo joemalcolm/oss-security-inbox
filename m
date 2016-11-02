@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3193" "Saturday" "10" "December" "2016" "01:49:34" "+0100" "Mathieu Pasquet" "mathieui@mathieui.net" "<20161210004933.GB25012@Kelewan.lan>" "83" "Re: [oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" nil nil nil "12" "2016121000:49:34" "[oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" (number mark "U       mathieui@mat Dec 10   83/3193  " thread-indent "\"Re: [oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza\"\n") "<20161209201906.ltauap7fydkc62f6@eldamar.local>" ("<20161209201906.ltauap7fydkc62f6@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2369" "Wednesday" "2" "November" "2016" "15:37:58" "+1030" "Doran Moppert" "dmoppert@redhat.com" "<20161102050757.GG14890@sin.redhat.com>" "73" "[oss-security] CVE request:  XXE in perl Image::Info and XML::Twig" nil nil nil "11" "2016110205:07:58" "[oss-security] CVE request: XXE in perl Image::Info and XML::Twig" (number mark "U       dmoppert@red Nov  2   73/2369  " thread-indent "\"[oss-security] CVE request:  XXE in perl Image::Info and XML::Twig\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28377 invoked by uid 550); 10 Dec 2016 01:10:12 -0000
+Received: (qmail 3208 invoked by uid 550); 2 Nov 2016 05:08:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,103 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20023 invoked from network); 10 Dec 2016 00:49:58 -0000
-X-Virus-Scanned: Debian amavisd-new at mfilter29-d.gandi.net
-X-Originating-IP: 5.51.204.241
-Date: Sat, 10 Dec 2016 01:49:34 +0100
-From: Mathieu Pasquet <mathieui@mathieui.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20161210004933.GB25012@Kelewan.lan>
-References: <20161209201906.ltauap7fydkc62f6@eldamar.local>
+Received: (qmail 3184 invoked from network); 2 Nov 2016 05:08:15 -0000
+Date: Wed, 2 Nov 2016 15:37:58 +1030
+From: Doran Moppert <dmoppert@redhat.com>
+To: oss-security <oss-security@lists.openwall.com>
+Message-ID: <20161102050757.GG14890@sin.redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IS0zKkzwUGydFO0o"
+	protocol="application/pgp-signature"; boundary="H1spWtNR+x+ondvy"
 Content-Disposition: inline
-In-Reply-To: <20161209201906.ltauap7fydkc62f6@eldamar.local>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] CVE Request: MCabber: remote attackers can modify
- the roster and intercept messages via a crafted roster-push IQ stanza
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Wed, 02 Nov 2016 05:08:03 +0000 (UTC)
+Subject: [oss-security] CVE request:  XXE in perl Image::Info and XML::Twig
 
---IS0zKkzwUGydFO0o
+--H1spWtNR+x+ondvy
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 09, 2016 at 09:19:06PM +0100, Salvatore Bonaccorso wrote:
-> Hi
->=20
-> Sam Whited discovered that MCabber versions 1.0.3 and before, was
-> vulnerable to an attack identical to Gajim's CVE-2015-8688 [1] which
-> can lead to a malicious actor MITMing a conversation, or adding
-> themselves as an entity on a third parties roster (thereby granting
-> themselves the associated priviledges such as observing when the user
-> is online).
->=20
-> The issue was fixed in the 1.0.4 release, with patch found at [2].
->=20
-> Can a CVE be assigned for this issue?
->=20
-> Regards,
-> Salvatore
->=20
->  [1] https://gultsch.de/gajim_roster_push_and_message_interception.html
->  [2] https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a5=
-20ad17c720ae4908429033/raw
+Starting with this bug in XML::LibXML:
 
->  [3] https://bugs.debian.org/845258
+> XML-LibXML: External entities are parsed by default
 
-Hello,
+https://rt.cpan.org/Public/Bug/Display.html?id=3D118032
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D838097
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1377996
 
-I would like to mention that when Sam mentioned it to the MCabber team,
-I investigated the slixmpp [1] codebase to see if we we were equally
-vulnerable. It appeared that the default roster mechanism already has a
-check in place, but it creates a general event before then, which could
-be received by another handler to re-implement a Roster differently
-(like we do in poezio [2]).
+.. which is an insecure default setting, probably not worthy of a CVE in
+itself.
 
-This specific bug has been corrected in [3] and [4], which are available
-in slixmpp 1.2.3 (all previous versions are affected).
 
-I=E2=80=99m not sure if this specific part warrants a CVE, as it is quite a
-specific case (but people could send arbitrary roster pushes to poezio
-before then), but I thought it would be good to mention. If it is
-considered a real security flaw, I have to say that SleekXMPP [5] [6] is
-also affected, and I will patch it if needed.
+I did a brief audit of other CPAN modules in Fedora that may suffer from
+XXE, which uncovered these two:
 
-Regards,
-Mathieu
+> XML-Twig: expand_external_ents fails to work as documented
 
- [1] https://github.com/poezio/slixmpp
- [2] https://github.com/poezio/poezio / https://poez.io
- [3] https://git.louiz.org/slixmpp/commit/?id=3Dffdb6ffd69522bb14760eca1965=
-11ac69a158831
- [4] https://git.louiz.org/slixmpp/commit/?id=3Dffd9436e5cca9f92ed11683173a=
-696972da2360b
- [5] https://github.com/fritzy/SleekXMPP
- [5] https://github.com/fritzy/SleekXMPP/blob/develop/sleekxmpp/clientxmpp.=
-py#L112-L115
+https://rt.cpan.org/Public/Bug/Display.html?id=3D118097
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1379553
 
+This option (which defaults to 0) is supposed to control XXE parsing
+documents with XML::Twig, but it has no effect and XXE always takes
+place.
+
+No fix is available yet, and my perl isn't up to proposing a sensible
+patch.
+
+XML::Twig 1.49 does feature an undocumented option 'NoXxe' which can be
+used to prevent entity expansion, but that option isn't present in 1.50
+(current development branch) or in earlier versions (up to 1.44) I have
+checked.
+
+
+> Image-Info: XXE in SVG files
+
+https://rt.cpan.org/Public/Bug/Display.html?id=3D118099
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1379556
+
+This was promptly fixed in 1.38_50 / 1.39.
+
+
+Thanks,
 --=20
-Mathieu Pasquet (mathieui)
+Doran Moppert
+Red Hat Product Security
 
---IS0zKkzwUGydFO0o
-Content-Type: application/pgp-signature; name="signature.asc"
+--H1spWtNR+x+ondvy
+Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIzBAEBCgAdFiEEqNX3CaXe9Dnz12IoxZ+Ezu/WFuMFAlhLURkACgkQxZ+Ezu/W
-FuMG1g/+Omt58zoIM/WIoLFtUjjuVqoOx1oIywxIz0dlHNCO7gozcVlWIzbJe1fO
-oeGfUiehLHcwuWjF8a+I7VoLf8N4o7v5ITmSF+wa2LHOKq8RvUWs82AMo7H+iHpx
-5snibBuZSVuM8Ysp14Ex/G3ni9ZoaqcHBKF6UrfNuTntCwID8Cl50qKrdOqXJABS
-Ug5rvp7en5sN4YfO2Olk2zR799TiWSpPoHGswvzQSp9R1uyelqOTE1wi4dP7sQx8
-lnugrfKRoAAPfDojoLH34jnRZS6gR2MgvSgwl8LRv92DkgFBS8yUhFZ8hugz1hPh
-B3GnuVKCi+bMTuqTlMtn91Y+mPoApd3j2FZaaeHcQTX/VKRiMZdjd7Eb3825Mo/n
-YhHD9ST6+fOkO2vvprLeVaXSe8ZG93SaVNGSrB5wjZzKMqgYf5Miqm1caIDAtQdn
-jIDwKUgwqt9Vb0MaWi+gx9jjw3vypCaQf9BbxcbiPt7dQQK0Pv8WqgUn/y2QYUwq
-hExJ+DLnASOiOnDOvcbkYG/dUAaNWhVlXSSAKDYvQYh5FTvDEjA2UxFR54isuNPF
-seclvwM4qLNEWUgoxMgvnrwka+p32FjtSaqqngk0ZWN8HUlAd9qB6Gn2EgZ4OeaT
-+uf9funazCIc81k7PgHHIy9Hw+37d2wMFfUrGmz84wqwFKPrluU=
-=vUDN
+iQIcBAEBCgAGBQJYGXStAAoJEGohqWcZR7qpEREP/3eZmIFy+zC0HJeKmeVSjrYB
+Y/tdIqRWyjHoPLPesW/BVmRw7sLe0iXM1t3gaIzNx8Cw0oAeokgAj1GCUlmL4I9W
+ZzhlPy5M8ub3gwk0/VcWs/HvZPe3PWrCpTSMZ3WREZAlsFjc9aivCRtELXQjRG1t
+gLqWHKS2pMl2kdCn6UA00jDkqf6wIiQs1kVKTJSKoZycaBFFCVVA6Fv1vDQrYwCN
+UuqaG5qEsqXD+He4yUQGhNbtOWrDngs506Dqxt36NWLieS6CYvoO6B2P5uwALMz+
+97HkdMjyBdQ4pF1z+m22jYl1Iz6yha/bE71taECW7nJp071SWrho5Vyt2mziRUSa
+PjHE6PRCP0AdFVqG01NAAWdKCs04RsoHMxoLd+AMoJiZd6oQ3CHEbxhog1I4lrM3
+G4dYp0ePFbrsUhX38Re6b3XkrDjEmjaSeqWWpqiOp8SKkq+SuHK5oXG27DVcioYU
+BMuvbyL5KPjJ2f/VNrzcB9SBnNs0UVZ4sq1fDCC56zKDDm+qwOj+fW0I+TIw6Uud
+zEqraA0yECeexad/eZni9ZxiuGVaQgMFtAFSLijlbldANdoZRG3msIA8RPiq185r
+QpZnfVYvsC6EWTMgf0fUK05qF2uw+SUtpwPjpcRh4k/EmyQFAa4ZvW7sJ0gW5OMr
++HG4B07eUMWC6/uiCHo6
+=1aKy
 -----END PGP SIGNATURE-----
 
---IS0zKkzwUGydFO0o--
+--H1spWtNR+x+ondvy--
