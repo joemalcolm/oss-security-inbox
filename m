@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/10
-Message-ID: <20160913215303.56ec6504@hboeck.de>
-Date: Tue, 13 Sep 2016 21:53:03 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Seth Arnold <seth.arnold@...onical.com>
-Cc: "vul@...safe" <vul@...safe.com>, oss-security@...ts.openwall.com
-Subject: Re: Heapoverflow in giflib5.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/18
+Message-ID: <20161102225209.GG7908@hunt>
+Date: Wed, 2 Nov 2016 16:52:09 -0600
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Stack guard canary massaging
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 13 Sep 2016 12:24:23 -0700
-Seth Arnold <seth.arnold@...onical.com> wrote:
+[keeping only oss-security]
 
-> Hanno, can you still reproduce this issue? I followed your excellent
-> reproducer script and I don't get any ASAN warnings. If you still get
-> ASAN warnings this may indicate the source of the confusion.
+On Mon, Oct 31, 2016 at 11:48:45AM +0100, Florian Weimer wrote:
+> This is an elaborate way of setting ret.bytes[0] = '\0'.
+> 
+> The intent (determined from an old commit message) is to make it harder to
+> obtain the canary value through a read buffer overflow of a NUL-terminated
+> string: The read overflow will stop at the NUL byte and not include the
+> random canary value, reducing the risk of inappropriate disclosure.
 
-Ok, interesting:
-I can't reproduce it any more with my poc or the poc from bug 102 with
-the git code.
+StackGuard used a fixed canary value: CR LF 0x00 0xFF. This was based on
+the observation that most unsafe stack buffer manipulations were from
+string operations, and most string-handling functions would trip up on at
+least one of these values, making it difficult to write the canary with
+the functions that were used.
 
-I can however easily generate another sample that causes the same bug.
-See attachment.
+ftp://gcc.gnu.org/pub/gcc/summit/2003/Stackguard.pdf
 
--- 
-Hanno Böck
-https://hboeck.de/
+I suspect the leading 0x00 here is for much the same reason, to trip up
+string writing operations more than string reading.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Thanks
 
-Download attachment "gif2rgb-oob-new.gif" of type "image/gif" (42 bytes)
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
