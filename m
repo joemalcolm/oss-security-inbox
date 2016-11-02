@@ -1,60 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/3
-Message-Id: <512ACAF7-7491-4805-84E5-7EB9E2727EAF@apache.org>
-Date: Fri, 16 Sep 2016 20:57:21 +0100
-From: Flavio Junqueira <fpj@...che.org>
-To: lyon.yang.s@...il.com
-Cc: DevZooKeeper <dev@...keeper.apache.org>, security@...keeper.apache.org, bugtraq@...urityfocus.com, oss-security@...ts.openwall.com, security@...che.org
-Subject: [SECURITY] CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/14
+Message-ID: <20161102115304.GA11945@hurricane.linuxnetz.de>
+Date: Wed, 2 Nov 2016 12:53:04 +0100
+From: Robert Scheck <robert@...oraproject.org>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Stenberg <daniel@...x.se>
+Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
-Apologies for the duplicate, this report has a correction over the previous version sent earlier.
+On Wed, 02 Nov 2016, Daniel Stenberg wrote:
+> For example, `straße.de` is translated into `strasse.de` using IDNA 2003 but
+> is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, those
+> host names could very well resolve to different addresses and be two
+> completely independent servers. IDNA 2008 is mandatory for .de domains.
+> 
+> curl is not alone with this problem, as there's currently a big flux in the
+> world of network user-agents about which IDNA version to support and use.
 
-#######################################################
-CVE-2016-5017: Buffer overflow vulnerability in ZooKeeper C cli shell
+From my point of view, this especially affects GNU libc for example.
 
-Severity: moderate
+On the other hand, I am wondering if this should be really classified as a
+security related issue. Being interested in IDNA 2008 support myself, I did
+some IDNA 2008 patches in the past, but practically IDNA 2008 support is
+still not that widespread as I would wish. Does using an older standard (as
+in IDNA 2003) really classify this issue as a security related one? If so,
+I guess many upstreams should be explicitly made aware of that soon. Maybe
+MITRE (or somebody else) could share their thoughts about this, too?
 
-Vendor:
-The Apache Software Foundation
+> It was first reported to the curl project on October 11 by Christian Heimes.
 
-Versions Affected:
-ZooKeeper 3.4.0 to 3.4.8
-ZooKeeper 3.5.0 to 3.5.2
-The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
+I reported the "ß" issue and the lack of IDNA 2008 support in cURL on Sun,
+18 May 2014 17:17:03 +0200 directly to you, but I didn't classify it as a
+security related issue though... ;-)
 
-Note: The 3.5 branch is still alpha at this time.
 
-Description:
-The ZooKeeper C client shells "cli_st" and "cli_mt" have a buffer
-overflow vulnerability associated with parsing of the input command
-when using the "cmd:<cmd>" batch mode syntax. If the command string
-exceeds 1024 characters a buffer overflow will occur. There is no
-known compromise which takes advantage of this vulnerability, and if
-security is enabled the attacker would be limited by client level
-security constraints. The C cli shell is intended as a sample/example
-of how to use the C client interface, not as a production tool - the
-documentation has also been clarified on this point.
+Greetings,
+  Robert
 
-Mitigation:
-It is important to use the fully featured/supported Java cli shell rather
-than the C cli shell independent of version.
-
-- ZooKeeper 3.4.x users should upgrade to 3.4.9 or apply this patch:
-https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=27ecf981a15554dc8e64a28630af7a5c9e2bdf4f
-
-- ZooKeeper 3.5.x users should upgrade to 3.5.3 when released or apply
-this patch:
-https://git-wip-us.apache.org/repos/asf?p=zookeeper.git;a=commitdiff;h=f09154d6648eeb4ec5e1ac8a2bacbd2f8c87c14a
-
-The patch solves the problem reported here, but it does not make the
-client ready for production use. The community has no plan to make
-this client production ready at this time, and strongly recommends that
-users move to the Java cli and use the C cli for illustration purposes only.
-
-Credit:
-This issue was discovered by Lyon Yang (@l0Op3r)
-
-References:
-https://zookeeper.apache.org/security.html
-#######################################################
+Content of type "application/pgp-signature" skipped
