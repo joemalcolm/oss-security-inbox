@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2210" "Tuesday" "13" "April" "2021" "16:04:32" "+0200" "Matthieu Herrb" "matthieu@herrb.eu" nil "68" "[oss-security] X.Org server security advisory: April 13, 2021" nil nil nil "4" nil nil (number mark "U       matthieu@her Apr 13   68/2210  " thread-indent "\"[oss-security] X.Org server security advisory: April 13, 2021\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] X.Org server security advisory: April 13, 2021" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2608" "Wednesday" "2" "November" "2016" "08:10:38" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020810030.375@tvnag.unkk.fr>" "89" "[oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds" nil nil nil "11" "2016110207:10:38" "[oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds" (number mark "U       daniel@haxx. Nov  2   89/2608  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7581 invoked by uid 550); 13 Apr 2021 14:11:23 -0000
+Received: (qmail 11568 invoked by uid 550); 2 Nov 2016 07:10:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +12,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5335 invoked from network); 13 Apr 2021 14:04:52 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; s=20180121; bh=Fx
-	U4VuDLYy7v4YHmJKg6k66kS50=; b=sgMUMfnCijcxvenflKtMyJUxYYP8Z3EJjw
-	IpKaLprZuQJ+o52lt0L8qHQCcf87XoZYiV8cEm+x/pbrJp6KqetaPdfA8Ae4ihSl
-	XsrTQzr0/fmaDxfsKCNFn02JTFFEhuU5WazM0MG6euO3a78KJ03ot8dyvYV3SIrz
-	dr07a6NWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=herrb.eu; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=20180121; b=
-	wG3Gv5bAjVk8RkLLDYEwQeCsvGWRTlymOLyVwJ/5KB36klk13xL9YFL5R4DY/4JD
-	2rWf4x48QnWhYAp6MEPw9pO1dIDS8Bq35x1oREuy7nQC9yjcBZ8NFTDhm3NTdEvF
-	OCuS/7KFzUcooPgs1Ze1gMUfe/F8zJ+wy2VbeHJqfLE=
-Date: Tue, 13 Apr 2021 16:04:32 +0200
-From: Matthieu Herrb <matthieu@herrb.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <YHWk8MteMZ+3ScCn@zuma.herrb.net>
+Received: (qmail 11453 invoked from network); 2 Nov 2016 07:10:51 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 2 Nov 2016 08:10:38 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1611020810030.375@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="4qAhsEUpy1bXk/FU"
-Content-Disposition: inline
-Subject: [oss-security] X.Org server security advisory: April 13, 2021
+Content-Type: multipart/mixed; BOUNDARY="1129329158-1500688241-1478070638=:375"
+Subject: [oss-security] [SECURITY ADVISORY] curl glob parser write/read out of bounds
 
---4qAhsEUpy1bXk/FU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--1129329158-1500688241-1478070638=:375
+Content-Type: text/plain; format=flowed; charset=VISCII
+Content-Transfer-Encoding: 8BIT
 
-X.Org server security advisory: April 13, 2021
+glob parser write/read out of bounds
+====================================
 
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102F.html)
 
-Input validation failures in X server XInput extension
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
+VULNERABILITY
+-------------
 
+The curl tool's "globbing" feature allows a user to specify a numerical range
+through which curl will iterate. It is typically specified as [1-5],
+specifying the first and the last numbers in the range. Or with [a-z], using
+letters.
 
-Insufficient checks on the lengths of the XInput extension
-ChangeFeedbackControl request can lead to out of bounds memory
-accesses in the X server.
+1. The curl code for parsing the second *unsigned* number did not check for a
+leading minus character, which allowed a user to specify `[1--1]` with no
+complaints and have the latter `-1` number get turned into the largest
+unsigned long value the system can handle. This would ultimately cause curl to
+write outside the dedicated malloced buffer after no less than 100,000
+iterations, since it would have room for 5 digits but not 6.
 
-These issues can lead to privilege escalation for authorized clients
-on systems where the X server is running privileged.
+2. When the range is specified with letters, and the ending letter is left out
+`[L-]`, the code would still advance its read pointer 5 bytes even if the
+string was just 4 bytes and end up reading outside the given buffer.
 
-* CVE-2021-3472 / ZDI CAN 12549 XChangeFeedbackControl Integer Underflow
+This flaw exists only in the curl tool, not in the libcurl library.
 
-Patch
------
+We are not aware of any exploit of this flaw.
 
-A patch for this issue has been committed to the xorg server git
-repository. xorg-server 1.20.11 and xwayland 21.1.1 will be released
-shortly and will include this patch.
+INFO
+----
 
-https://gitlab.freedesktop.org/xorg/xserver.git
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8620 to this issue.
 
-commit 7aaf54a1884f71dc363f0b884e57bcb67407a6cd
+AFFECTED VERSIONS
+-----------------
 
-Fix XChangeFeedbackControl() request underflow
+This flaw exists in the following curl versions.
 
-CVE-2021-3472 / ZDI-CAN-1259
+- Affected versions: curl 7.34.0 to and including 7.50.3
+- Not affected versions: curl < 7.34.0 and curl >= 7.51.0
 
-Thanks
-=3D=3D=3D=3D=3D=3D
+libcurl is used by many applications, but not always advertised as such!
 
-These vulnerabilities have been discovered by Jan-Niklas Sohn working
-with Trend Micro Zero Day Initiative.
+THE SOLUTION
+------------
 
---=20
-Matthieu Herrb
+In version 7.51.0, the function reading data will consider reading a zero size
+to be an error and bail out.
 
---4qAhsEUpy1bXk/FU
-Content-Type: application/pgp-signature; name="signature.asc"
+A [patch for CVE-2016-8620](https://curl.haxx.se/CVE-2016-8620.patch) is
+available.
 
------BEGIN PGP SIGNATURE-----
+RECOMMENDATIONS
+---------------
 
-iQIzBAEBCAAdFiEExByYX9zx5TZFdmOLaHOT7jfRKPgFAmB1pPAACgkQaHOT7jfR
-KPjUZg/+JvIZdPY9TQJk3LtFr0eywiF4RA+NEtO4/hjv1nuxbNuZ2Xxp4zi4i3Qf
-ldm3FWc55Hm+FPrmR5e+B8qn9AQwj/RvxOCazulALWxPZ7uOUhMZ0Jh8gH3GE7TY
-5zTS9jh+Cge6aHjRqYp+ilX1300TJBd2hcoWaD9pse5GAvQChxZFYAo4lX2X5I1r
-jjrB7OhSE3kMIZZ2I3H0Oh6zzc1n19vNAgLhLIh78QRnhN24dDDPv545dcxRZVcf
-TbNaP8/bTru9v9ZmP5nyv64igruGnLuFMesxbYrA9MgsNh/a+yfUVzdLPJeuCKJ1
-3GVi6/lwjUq3WymiiacAXrG3i2oMm8H2cwRoWw0eyPW2v6n8A0gmW/ad8isKltju
-CkT3Vp+COA/GDfua6B3DzRCyNaFSPk0g2EIt45ItQ2GDaJi/3qsQE+Xx6SEa8dY5
-17dBAzHiIDYIlTnFOmdcgS8+7m7QISVRfYIlKxLXyRmIdVLr69TD7YRoaXPEb9pe
-+PNGpjPuUTBJoR3JVkWg66ih/MZRF727vL5pGyRAOCr5LY/QeXmta07R7vwsG0h7
-zxS72rY7v/kcgPVAaxNVM/LIn6TkFtHBf1juUfx1NyDvicS9jTcFGZorP+EVpDpp
-pkA20mRR6ICqODTE9CTbvO3H0AfUC45/bLL+eEqMG3ULP/+UnWw=
-=HyIp
------END PGP SIGNATURE-----
+We suggest you take one of the following actions immediately, in order of
+preference:
 
---4qAhsEUpy1bXk/FU--
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Switch off globbing or make sure you have all ranges in use verified!
+
+TIME LINE
+---------
+
+It was first reported to the curl project on October 2 by Lu§t Nguy­n.
+
+We contacted distros@openwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Thanks to Lu§t Nguy­n.
+
+-- 
+
+  / daniel.haxx.se
+--1129329158-1500688241-1478070638=:375--
