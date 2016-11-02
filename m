@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1324" "Sunday" "10" "April" "2016" "10:23:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160410142311.A459F336036@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE request: cronic - predictable temporary files" nil nil nil "4" "2016041014:23:11" "[oss-security] Re: CVE request: cronic - predictable temporary files" (number mark "U       cve-assign@m Apr 10   38/1324  " thread-indent "\"[oss-security] Re: CVE request: cronic - predictable temporary files\"\n") "<570986F2.5020308@vorlons.info>" ("<570986F2.5020308@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["758" "Wednesday" "2" "November" "2016" "11:07:45" "+0000" "Stuart Henderson" "stu@spacehopper.org" "<20161102110745.o3la3xffk4xh6rgr@symphytum.spacehopper.org>" "19" "[oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^Date:" nil nil "11" "2016110211:07:45" "[oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        stu@spacehop Nov  2   19/758   " thread-indent "\"[oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") "<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32264 invoked by uid 550); 10 Apr 2016 14:23:23 -0000
+Received: (qmail 26246 invoked by uid 550); 2 Nov 2016 11:19:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 14291 invoked from network); 2 Nov 2016 11:08:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spacehopper.org;
+	 h=user-agent:in-reply-to:content-disposition:content-type
+	:content-type:mime-version:references:message-id:subject:subject
+	:from:from:date:date:received:received; s=spacehop2; t=
+	1478084865; bh=RwJq8dTMYta9igpOWGyKlN2bV+gwL+jGLsCAzkO35P0=; b=M
+	hV9pQCCRUNQh18qQrckOG6KG6bcHD5r/BV+DSS027YCEWbhmXvwSARXC6EFm88Lk
+	JRAmyhKditRC4H15IatMs2DMFuxBdCRdCrq9HifS23HkLFt4/r569c/lN/JQjFy4
+	AdpqNEb7+wlM3et93LUnK1DVPukHtyUFSmWQv1yS3qXuF8BofW/a9x2UuPvCuH7d
+	3d0lpJYmA5XemZYW/WdMaaLjswYK2MAjygyLVYMEe04cUuGKrhfWQK+zrZvVgJzi
+	z3+/S+rPRMu2u0z3j3hJRQXG2AQ1Yzh0VEA5AfiLqetoZ20tc0ghXpwW56yc32ab
+	S4iwzAkhUYu57x7dEKP6g==
+X-Virus-Scanned: amavisd-new at spacehopper.org
+Message-ID: <20161102110745.o3la3xffk4xh6rgr@symphytum.spacehopper.org>
+References: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
+User-Agent: NeoMutt/20161028 (1.7.1)
+Date: Wed, 2 Nov 2016 11:07:45 +0000
+From: Stuart Henderson <stu@spacehopper.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32212 invoked from network); 10 Apr 2016 14:23:23 -0000
-From: cve-assign@mitre.org
-To: matthias@vorlons.info
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <570986F2.5020308@vorlons.info>
-Message-Id: <20160410142311.A459F336036@smtpvbsrv1.mitre.org>
-Date: Sun, 10 Apr 2016 10:23:11 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: cronic - predictable temporary files
+Subject: [oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=820331
+On 2016/11/02 08:13, Daniel Stenberg wrote:
+> In version 7.51.0, the parser function is fixed.
 > 
-> very predictable temporary files (like
-> /tmp/cronic.out.$$) that depends only on PID:
+> A [patch for CVE-2016-8625](https://curl.haxx.se/CVE-2016-8625.patch) is
+> available.
 
-> OUT=/tmp/cronic.out.$$
-> ERR=/tmp/cronic.err.$$
-> TRACE=/tmp/cronic.trace.$$
+This switches to using libidn2, which hasn't had a substantial commit
+in around 5 years (https://gitlab.com/jas/libidn2/commits/master), and
+currently doesn't even show up in the file listing for the https
+version of alpha.gnu.org/gnu/libidn/. (Somehow http and https are
+different; the https version has HSTS headers which you might need to
+take into account if comparing).
 
-> "$@" >$OUT 2>$TRACE
+Moving something as widely used as curl to this makes me feel a little
+uneasy (and I'm a bit surprised it wasn't called out specifically in the
+release notes).
 
-Use CVE-2016-3992.
+Has anyone poked at it much yet?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXCl6/AAoJEL54rhJi8gl5nCsP/RzD+Emxt2vl9hJ9ihPhOKuV
-w3phB2guMZvZWQ0UFLQVzR7KfGQM84FLET9Fce0bW2Lb614U2XMjV+JXxQ/qklsg
-y6ZlJh+tSkQyuJWdIzmWt4kJWpPFqF3S3Lu06+yc7iTg/clIX9trjwDTGMTNDewJ
-F5qhrWDpAflz1KH6nmlbcRNsQC4fbJ0SUUCKOJEvAwIfn0x8fr9Z/iQGZ8odQ7rW
-uqE8NXh6ERPZkzu3hKLLGdbachECDMK5NPACUnKbjrUZu+rAjhupFuFS12vQyAA8
-oMAUZUApw7HT/34u2Wq+qijVnNjRKieOpuTdlksats9RB/smtm3JC4BTJVnpdm2E
-4LiuoEm8sQOP4kaaxOduC9+CQlqU9Z9ZFfq92w55KPqAYL/8lEbeES2OFSPZxUOC
-wGEaElcvbJQgATsm7P7tKknvCrl4onj4clI9ekbhf2ZRbLpM/VqH4Pp115cEH1ot
-CKAAiWOWSZwiSREyxSymyLbWhjm+8F2R83j1ArF6HGSBa1A/2WH4zJKXpa9QLPQ0
-7B3rO9SVQReg91FDwmIzOk5Ej6kKnBM7n5pi4EoIbLTOawQSWXPSdp+wy+VFN7qu
-NsfFrK28Q22TtatkR6KgjwIztC/fXVNiFomObYy0v2orIUesX3BPtKQzfEr5wlOD
-ZxbxbhEU0G3owq9goQo8
-=NKUf
------END PGP SIGNATURE-----
