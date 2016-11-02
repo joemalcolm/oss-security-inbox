@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1703" "Tuesday" "2" "October" "2018" "13:07:14" "+0300" "Henri Salo" "henri@nerv.fi" "<20181002100714.vjc6guekvqkcp3j3@tunkki.bugs.fi>" "46" "Re: [oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)" "^Cc:" nil nil "10" "2018100210:07:14" "[oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)" (number mark "        henri@nerv.f Oct  2   46/1703  " thread-indent "\"Re: [oss-security] CVE Request - Information Exposure Vulnerability in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of v2.1.3 - prior to June 3, 2015)\"\n") "<CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>" ("<CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1983" "Wednesday" "2" "November" "2016" "13:52:41" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161102135241.20a8c3c4@pc1>" "54" "Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^Date:" nil nil "11" "2016110212:52:41" "[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        hanno@hboeck Nov  2   54/1983  " thread-indent "\"Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") "<20161102115304.GA11945@hurricane.linuxnetz.de>" ("<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>" "<20161102115304.GA11945@hurricane.linuxnetz.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30487 invoked by uid 550); 2 Oct 2018 10:07:29 -0000
+Received: (qmail 22232 invoked by uid 550); 2 Nov 2016 12:52:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30468 invoked from network); 2 Oct 2018 10:07:29 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Message-ID: <20181002100714.vjc6guekvqkcp3j3@tunkki.bugs.fi>
-References: <CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="6mzmrsws3udunlzc"
-Content-Disposition: inline
-In-Reply-To: <CAARZ5vrpA1sgTmi_g=A520FkKsb19BX9eKHM8vvox-5MpY-1jA@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Cc: oss-security@lists.openwall.com
-Date: Tue, 2 Oct 2018 13:07:14 +0300
-From: Henri Salo <henri@nerv.fi>
+Received: (qmail 22212 invoked from network); 2 Nov 2016 12:52:59 -0000
+Message-ID: <20161102135241.20a8c3c4@pc1>
+In-Reply-To: <20161102115304.GA11945@hurricane.linuxnetz.de>
+References: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
+	<20161102115304.GA11945@hurricane.linuxnetz.de>
+X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-20101-1478091169-0001-2"
+Date: Wed, 2 Nov 2016 13:52:41 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request - Information Exposure Vulnerability
- in WordPress Mobile Pack Wordpress Plugin v2.1.2 (and certain versions of
- v2.1.3 - prior to June 3, 2015)
-To: Nitin Venkatesh <venkatesh.nitin@gmail.com>
+Subject: Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use
+ wrong host
+To: oss-security@lists.openwall.com
 
---6mzmrsws3udunlzc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=_zucker.schokokeks.org-20101-1478091169-0001-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 19, 2015 at 11:19:08AM +0000, Nitin Venkatesh wrote:
-> I discovered Information Exposure Vulnerability in WordPress Mobile Pack
-> Wordpress Plugin v2.1.2 which was responsibly disclosed to the vendor who
-> fixed the issues in v2.1.3. The vulnerability is also present in certain
-> versions of v2.1.3 (prior to June 3, 2015), hence users who have those
-> versions also need to upgrade/reinstall.
->=20
-> I request a CVE for the same.
->=20
-> References:
-> http://seclists.org/fulldisclosure/2015/Jul/97
->=20
-> Thanks & regards,
-> Nitin Venkatesh
+On Wed, 2 Nov 2016 12:53:04 +0100
+Robert Scheck <robert@fedoraproject.org> wrote:
 
-CVE-2015-9269 has been assigned for this vulnerability.
+> On the other hand, I am wondering if this should be really classified
+> as a security related issue.
+
+Ambiguitiy in character encodings can often be a source of security
+issues.
+
+Just think of the following:
+* A Certificate Authority is using different pieces of software that
+  mix different IDNA encodings.
+* I request a certificate for strasse.de, but the verification mail
+  goes to xn--strae-oqa.de.
+* I am the owner of xn--strae-oqa.de and now have a valid certificate
+  for strasse.de.
+
+IMHO the whole idea of suddenly changing how international domain names
+are encoded is a very problematic security violation.
 
 --=20
-Henri Salo
+Hanno B=C3=B6ck
+https://hboeck.de/
 
---6mzmrsws3udunlzc
-Content-Type: application/pgp-signature; name="signature.asc"
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+--=_zucker.schokokeks.org-20101-1478091169-0001-2
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAluzQ1IACgkQJ633pE6q
-dXQw8w//VrmWMsBXzHdv2pgWw0fkuU9jCn64QDmR9W4XAMlgQiCgQ5Sj+d4xlHdI
-r9HAptxPrRyVujGzy+o+CIrq9EHr0iKvhYZ2WI0niEnqqifwd45cVOx3Bi9DtRAX
-Pt3aVuXgXdkYl3EREZuuPhgz0Z8dr4pkCn/cBECXU+6X9NRtAMF4/JdcwVyu+756
-ysdUMjLBj61FXz6mRuGDYdHCwupd6Jxrx8HzkQRv8hWpBg+yRD4rFSRPLV5ZRK7/
-lQXtaeaDuyuBP8O0NCpB7qOsuO5C6lG/j3xEAgPGJMljyBTROYeyPicFdlTEYa7L
-EqoXwC1QwSN7A/lb8+BEvrULlDIuYpdtZ8MKFvDJG0412hEb4DfDkv9Y1UJAe7u/
-RuO32ddcDkaf8aQ7xPsE0JVVTJB5NfWdt5UX/U3CFyiK8woPrglcRo0l3l6sILY4
-Ir4OZDVCaPXQ+kU9FVm5ulrmjPsXHolrNeKtwWfavq9qkXFtkd36xNcJ9Iu9sTQK
-kywrfMx/83NwxG9x0qjnE8k/V33Xz4XJ31fkOvsJKqsDEWf9LtebUuWTj7VGQ5cm
-1BX3PhxwD6PETISEmSfvXnnpiRZuT9MrbirhzEkOBKnjsPqTIzNh/ZBAa9dwQIQK
-ePIM+VlTxNNxkNyQXPLr9AVs6rUZ25cW5gL3pEmqtbq3/yaFV/U=
-=0koV
+iQIcBAEBCAAGBQJYGeGZAAoJEKWIAHK7tR5CP0QP/3knhVXwzGNA0kAJSXZvItpG
+bJNbZwoV9lpSmFDxD+zBM1+QUMbaOkF7b6SXD4Xc3IocZneET8OgzBETfUDE/Hyc
+FyYxwLk1nxkfGCdtyL6lxi3M+7TII2i/xmsXOKqJr63ZDNqzIULXAgfsBFhIe4c0
+4kkei6i+xVNCupd8V3yoVVo+zJS/wnAFKWZWIp9B5Y25Tl9/Dh6dEcskA4CnVtxq
+1156WmitP114OK6rp5XBT4JuzTezWIDDEvCAl7uRoSMBEd21su5ASOjJYXftNp95
+T/vsNM+nhrxhGK4kMwv1kyMmmERPiqPtInvcurmde8LySbFEUy1hmJwNkBSjDhN0
+S1PDZK+Yj0PYok5nag5ciQow2xYCDu3VXZF/vhiaCcIQOffzA9p3YmsRsooMslWJ
+zN9GPhqVs30ucC4FM6rEQ3Y8G5aBo+AUWW8UeIHVLYryEmJvh3kVpQ/J0T4oFkse
+0AOcE5OxoLxRM82cc7TREndmgCe9/Lv8k4+C3JTKy7gNyyLIEvbjnDImN/HWv2Ag
+xGDV0ii9YmYdRDSvX/qlJ9dR/xe2W7CwyDrUYTEpPp4Q2s6+y8QR9P5k+CzKIF60
+7cvNk4KRjbXgbdKSfCRYyq0KM0AxOo2fcSSrEevCdF87sPVaNXgT/dbJwVs4C/3e
+aIJy7l8qXA9kZFPatj9h
+=kFRb
 -----END PGP SIGNATURE-----
 
---6mzmrsws3udunlzc--
+--=_zucker.schokokeks.org-20101-1478091169-0001-2--
