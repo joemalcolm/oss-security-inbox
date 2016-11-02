@@ -1,63 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/01/2
-Message-Id: <20160701194235.46558EBC4E6@smtpvmsrv1.mitre.org>
-Date: Fri,  1 Jul 2016 15:42:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: astieger@...e.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: SQLite Tempdir Selection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/1
+Message-ID: <20161102050757.GG14890@sin.redhat.com>
+Date: Wed, 2 Nov 2016 15:37:58 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request:  XXE in perl Image::Info and XML::Twig
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Starting with this bug in XML::LibXML:
 
->> Title: SQLite Tempdir Selection Vulnerability
->> Publication URL: https://www.korelogic.com/Resources/Advisories/KL-001-2016-003.txt
+> XML-LibXML: External entities are parsed by default
 
->>      Affected Vendor: SQLite/Hwaci
->>      Affected Product: SQLite
->>      Affected Version: All versions prior to 3.13.0
->>      Platform: UNIX, GNU/Linux
->>      CWE Classification: CWE-379: Creation of Temporary File in Directory
->>                          with Incorrect Permissions
->>      Impact: Data Leakage
->>      Attack vector: Local
+https://rt.cpan.org/Public/Bug/Display.html?id=118032
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=838097
+https://bugzilla.redhat.com/show_bug.cgi?id=1377996
 
-> Release notes say:
->> Change the temporary directory search algorithm
->> <http://www.sqlite.org/tempfiles.html#tempdir> on Unix to allow
->> directories with write and execute permission, but without read
->> permission, to serve as temporary directories. Apply this same
->> standard to the "." fallback directory. 
+.. which is an insecure default setting, probably not worthy of a CVE in
+itself.
 
-> The covering commits seem to be:
-> 
-> http://www.sqlite.org/cgi/src/info/67985761aa93fb61
-> Change the temporary directory search algorithm on unix so that
-> directories with only -wx permission are allowed. And do not allow "."
-> to be returned if it lacks -wx permission.
 
-Use CVE-2016-6153.
+I did a brief audit of other CPAN modules in Fedora that may suffer from
+XXE, which uncovered these two:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> XML-Twig: expand_external_ents fails to work as documented
 
-iQIcBAEBCAAGBQJXdsdXAAoJEHb/MwWLVhi2gRgP/3Lnd1cuFzM/pI4UqE3SfxPC
-oOPgYhaU4zcAxlmiKVhUdm5CEw5xbW3yvkpALQ5hOByNHCaVzCMmO0uDyQA5AHFF
-J/juDtFoVYBOMODFL0eGqnUGLmoWrpFkCpNHxIUVXHsroGvDACGsTUHVKx6gBrq/
-cWx82JFiCvt0syb2K7bvYdIjsq6QQvWN4J312kjL99D0zvVz+i3S54+8rO/GHS7Q
-//wTcHw7VAbs5mmeAdd77+qfvG57PfrT3bVs3JEYAh5hplHM9u3D4fWfE+dT3lE2
-Uc1kmPtIz3bQO4kpf2JhE0DArMQ3oQK0LdTSD9/Or2SRuY/nICWl2veYTiEP18bb
-oNvnA91s7Lcw9RGYhIDIDb+zcqkD7I6KwUcQkKOybknMyqKNRcKOBvK0lchME/tz
-aRUSTwv9YhorY1+Bfx3JlHBqmBlPBT9t1vPMtBCc0SlDswMat9xWcmBHFSuQfVLP
-y7HYntpVem4U86bKH2+VDkJZq9wkHbXGrWaFa3gSjvXsJibStY6P4ok9Gnz8n1DJ
-+3LKycpYvQNUFi7Sh3w9hx5P2Qp74W9V41/ZeY/gNVgclPBO+41M8mGoSsSHs2jj
-DXrFyZcvxCKOY9HH1kICReYG6riyBfinWD/vSOFg6mZdDbgVc/CAh7ja69KkOqSM
-zC6vryife0xRFz+bpu3K
-=InVu
------END PGP SIGNATURE-----
+https://rt.cpan.org/Public/Bug/Display.html?id=118097
+https://bugzilla.redhat.com/show_bug.cgi?id=1379553
+
+This option (which defaults to 0) is supposed to control XXE parsing
+documents with XML::Twig, but it has no effect and XXE always takes
+place.
+
+No fix is available yet, and my perl isn't up to proposing a sensible
+patch.
+
+XML::Twig 1.49 does feature an undocumented option 'NoXxe' which can be
+used to prevent entity expansion, but that option isn't present in 1.50
+(current development branch) or in earlier versions (up to 1.44) I have
+checked.
+
+
+> Image-Info: XXE in SVG files
+
+https://rt.cpan.org/Public/Bug/Display.html?id=118099
+https://bugzilla.redhat.com/show_bug.cgi?id=1379556
+
+This was promptly fixed in 1.38_50 / 1.39.
+
+
+Thanks,
+-- 
+Doran Moppert
+Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
