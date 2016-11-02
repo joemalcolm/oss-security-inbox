@@ -1,29 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/28/4
-Message-ID: <CACn5sdQuKknmR6bZHKM2-G0Yb+P7hnJe7NkdRQkFthMpN5thpw@mail.gmail.com>
-Date: Thu, 28 Apr 2016 10:33:02 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests: DoS in librsvg parsing SVGs with circular definitions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/10
+Message-ID: <alpine.DEB.2.20.1611020811430.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:12:14 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl use-after-free via shared cookies
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Use-after-free via shared cookies
+=================================
 
-Two DoS in librsvg 2.40.2 parsing SVGs with circular definitions were found
-(they will produce stack exhaustion). Other versions can be vulnerable too.
-They affect the following functions:
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102I.html)
 
-* rsvg_cairo_pop_discrete_layer - rsvg_cairo_pop_render_stack -
-rsvg_cairo_generate_mask: reproducible using circular-1.svg
-* _rsvg_css_normalize_font_size: reproducible using circular-2.svg
+VULNERABILITY
+-------------
 
-Both reproducers are attached in a tar.gz to avoid a crash in my own
-browser.  Fortunately, these issues are solved in the last git revision of
-librsvg2.
+libcurl explicitly allows users to share cookies between multiple easy handles
+that are concurrently employed by different threads.
 
-Regards,
-Gustavo.
+When cookies to be sent to a server are collected, the matching function
+collects all cookies to send and the cookie lock is released immediately
+afterwards. That funcion however only returns a list with *references* back to
+the original strings for name, value, path and so on. Therefore, if another
+thread quickly takes the lock and frees one of the original cookie structs
+together with its strings, a use-after-free can occur and lead to information
+disclosure. Another thread can also replace the contents of the cookies from
+separate HTTP responses or API calls.
 
-Content of type "text/html" skipped
+We are not aware of any exploit of this flaw.
 
-Download attachment "circulars.tar.gz" of type "application/x-gzip" (1511 bytes)
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8623 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions:
+
+- Affected versions: curl 7.10.7 to and including 7.50.3
+- Not affected versions: curl < 7.10.7 and curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, the function returning the cookies make deep copies.
+
+A [patch for CVE-2016-8623](https://curl.haxx.se/CVE-2016-8623.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not share cookies between threads
+
+TIME LINE
+---------
+
+It was first reported to the curl project on September 23 by Cure53.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+his vulnerability was found during a Secure Open Source audit performed by
+Cure53.
+
+-- 
+
+  / daniel.haxx.se
