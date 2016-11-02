@@ -1,82 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/2
-Message-Id: <20160825140932.642D96C458D@smtpvmsrv1.mitre.org>
-Date: Thu, 25 Aug 2016 10:09:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: dmoppert@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/12
+Message-ID: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:13:26 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+IDNA 2003 makes curl use wrong host
+===================================
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1339935
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102K.html)
 
-> The inclusion of "INPUTRC" in env_keep in /etc/sudoers allowed
-> information disclosure through readline-enabled programs parsing the
-> named file with elevated privileges. Local users with sudo access could
-> read (portions of) specially-formatted files with elevated privileges.
+VULNERABILITY
+-------------
 
-> This flaw is distribution-specific - upstream sudo does not include
-> INPUTRC
+When curl is built with libidn to handle International Domain Names (IDNA), it
+translates them to puny code for DNS resolving using the IDNA 2003 standard,
+while IDNA 2008 is the modern and up-to-date IDNA standard.
 
->> RHEL and Fedora by default include INPUTRC in /etc/sudoers, exposing
->> this issue to users of the default sudo configuration. INPUTRC should
->> not be included in "env_keep" at all, or else somehow restricted to
->> non-restricted shells (ie /bin/sh, /bin/bash).
->> 
->> It is also possible to cause segmentation fault through stack
->> exhaustion in the target application by having INPUTRC specify a file
->> with an $include directive for itself.
+This misalignment causes problems with for example domains using the German ß
+character (known as the Unicode Character 'LATIN SMALL LETTER SHARP S') which
+is used at times in the .de TLD and is translated differently in the two IDNA
+standards, leading to users potentially and unknowingly issuing network
+transfer requests to the wrong host.
 
-Use CVE-2016-7091. The scope of this CVE is the entire 'INPUTRC should
-not be included in "env_keep" at all, or else somehow restricted'
-problem, which has both the information disclosure and segmentation
-fault outcomes.
+For example, `straße.de` is translated into `strasse.de` using IDNA 2003 but
+is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, those
+host names could very well resolve to different addresses and be two
+completely independent servers. IDNA 2008 is mandatory for .de domains.
 
+curl is not alone with this problem, as there's currently a big flux in the
+world of network user-agents about which IDNA version to support and use.
 
->>>> https://lists.gnu.org/archive/html/bug-readline/2016-05/msg00012.html
+This name problem exists for DNS-using protocols in curl, but only when built
+to use libidn.
 
->>>> Since there is already current_readline_init_include_level, maybe
->>>> implementing a max level for $include's would be worthwhile.
+We are not aware of any exploit of this flaw.
 
->>> I'll consider it for the next version.
+INFO
+----
 
-If there is a reason that this must also be considered a vulnerability
-in readline, please let us know. For example, maybe there are other
-common programs that accept an INPUTRC environment variable over the
-network during a login session for an authenticated attacker who is
-only supposed to be able to execute a single command. Suppose that
-this attacker can also create files beginning with $include (e.g., by
-writing to a shared filesystem or using FTP upload). The unlimited
-include level might allow much more resource consumption than
-intended. Another possibility is that the INPUTRC environment variable
-could specify a file that should not be read by this type of
-restricted account, e.g., the /dev/zero file. However, we do not know
-of a realistic attack scenario in which readline would be considered
-the vulnerable software. There are no other CVE IDs -- either for
-readline or for any other software -- at this time.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8625 to this issue.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+AFFECTED VERSIONS
+-----------------
 
-iQIcBAEBCAAGBQJXvvuFAAoJEHb/MwWLVhi2ucMQAKsQXvK2gNQ6/9pOTw4h8S/o
-9W2+DM+LsA2SgVI5IpsACmQqMTWN2mCPuSL/+Ba6PD7Tcda0TA7wsqfgw0kIJUEr
-etlI9ifWlCwWjpO9mwhPmJAPLPj2AX65JcbdTZpEK472zJNdeF8R4+QA+FJ9y4+G
-/UCkSRiH826E96shfmqadYaztcNLRtIfCgmXSiHsaRrkTyGKYIyQMynqxoqrG8Qg
-tztX0rIs9oMG+1BqHdJU+aV2vHnGMTRnqoVW7oPObsfTrgBzJrMNOyoY33ZpNDMQ
-GWzySg09zPt0qayktjA/tuqdkNEswq1Qirmr7Ai8rODuHBdK9+oJGMTuqC1NmaAr
-ZSilLQl1mnwgPMXD9THK2Dui7th4WCPEB+pp+zQ0uDogpuknzzwuftZLuYrHPFsp
-WsGiE7bEy4Uh1LK0ROLsd23bXuoYaIBj/iiQNUoEDckQYBuZRn0ZCYXyVjL7guLh
-ApQ4j5zYt++h0TzolF1t+2fw3SrCVuV4OE0gdmkcaDWCVgwvc/s/+ADZJUlongG3
-VTFzG8iy4gJ8F+JOrJS7qX0g+wykDtDSqPfuDAhzgkQyS6MHwOJMM8g6UtsUlyYE
-LY8CaZJpLMNSf1+NbLzoHpaMt0Vys+cHOiBvwDfvwlseR9Wd91xDAOFcgxEAr8Av
-GulJIV7CVPniP8lUCUhY
-=B2yA
------END PGP SIGNATURE-----
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.12.0 to and including 7.50.3
+- Not affected versions: curl < 7.12.0 and curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, the parser function is fixed.
+
+A [patch for CVE-2016-8625](https://curl.haxx.se/CVE-2016-8625.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was first reported to the curl project on October 11 by Christian Heimes.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Thanks to Christian Heimes
+
+-- 
+
+  / daniel.haxx.se
