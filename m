@@ -1,25 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/08/1
-Message-ID: <20160208071914.GB6074@sghpc.golosunov.pp.ru>
-Date: Mon, 8 Feb 2016 11:19:14 +0400
-From: Stepan Golosunov <stepan@...osunov.pp.ru>
-To: oss-security@...ts.openwall.com
-Cc: security@...ian.org, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: CVE request - buffer overflow in xdelta3 before 3.0.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/17
+Message-ID: <8E90271B3EACFB2BE086ABB1EA940D41467CBC5805@EXMB2EU25.za.if.atcsg.net>
+Date: Wed, 02 Nov 2016 18:26:51 +0600
+From: "ZJ, do-not-reply" <do-not-reply@...y.at>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: ZJ Invoice 384418
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Buffer overflow was found and fixed in xdelta3 binary diff tool that
-allows arbitrary code execution from input files at least on some
-systems.
-
-08.02.2016 в 06:57:12 +0100 Salvatore Bonaccorso написал:
-> On Sun, Feb 07, 2016 at 07:05:12PM +0400, Stepan Golosunov wrote:
-> > This appears to be fixed in xdelta3 3.0.9 and later via
-> > https://github.com/jmacd/xdelta-devel/commit/ef93ff74203e030073b898c05e8b4860b5d09ef2
-> 
-> Can you request a CVE as well on the oss-security mailinglist or from
-> MITRE directly? (You can keep us in the loop).
-
-Doing so.
+Content removed
