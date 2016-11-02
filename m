@@ -1,22 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/19
-Message-ID: <1548626.3D51OlM7GE@blackgate>
-Date: Wed, 09 Nov 2016 18:05:25 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Henri Salo <henri@...v.fi>
-Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/8
+Message-ID: <alpine.DEB.2.20.1611020810390.375@tvnag.unkk.fr>
+Date: Wed, 2 Nov 2016 08:11:10 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl_getdate read out of bounds
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 09 November 2016 19:02:59 Henri 
-Salo wrote:
-> On Wed, Nov 09, 2016 at 03:48:27PM +0100, 
-Agostino Sarubbo wrote:
-> > 2016-08-13: bug discovered
-> > 2016-10-20: bug reported to upstream
-> > 2016-11-07: blog post about the issue
-> 
-> Did upstream respond anything related to these 
-cases?
-No.
+curl_getdate read out of bounds
+===============================
 
+Project cURL Security Advisory, November 2, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161102G.html)
+
+VULNERABILITY
+-------------
+
+The `curl_getdate` converts a given date string into a numerical timestamp and
+it supports a range of different formats and possibilites to express a date
+and time. The underlying date parsing function is also used internally when
+parsing for example HTTP cookies (possibly received from remote servers) and
+it can be used when doing conditional HTTP requests.
+
+The date parser function uses the libc sscanf() function at two places, with
+the parsing strings "%02d:%02d" and ""%02d:%02d:%02d". The intent being that
+it would parse either a string with HH:MM (two digits colon two digits) or
+HH:MM:SS (two digits colon two digits colon two digits). If instead the piece
+of time that was sent in had the final digit cut off, thus ending with a
+single-digit, the date parser code would advance its read pointer one byte too
+much and end up reading out of bounds.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-8621 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+This flaw exists in the following curl versions.
+
+- Affected versions: curl 7.12.2 to and including 7.50.3
+- Not affected versions: curl < 7.12.2 and curl >= 7.51.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.51.0, the parser function is fixed.
+
+A [patch for CVE-2016-8621](https://curl.haxx.se/CVE-2016-8621.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.51.0
+
+  B - Apply the patch to your version and rebuild
+
+TIME LINE
+---------
+
+It was first reported to the curl project on October 3 by Lu�t Nguy�n.
+
+We contacted distros@...nwall on October 19.
+
+curl 7.51.0 was released on November 2 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Thanks to Lu�t Nguy�n.
+
+-- 
+
+  / daniel.haxx.se
