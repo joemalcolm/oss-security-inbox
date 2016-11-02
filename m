@@ -1,56 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/7
-Message-ID: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
-Date: Wed, 5 Oct 2016 09:13:03 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/1
+Message-Id: <1478131133.3496639.775671145.5782B090@webmail.messagingengine.com>
+Date: Wed, 02 Nov 2016 16:58:53 -0700
+From: Cedric Staub <css@....bio>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Subject: CVE request: multiple issues in go-jose package
 Content-Type: text/plain; charset=utf-8
 
-Hi, just an update and CVE request for various ghostscript issues. In
-general, the security properties of -dSAFER are not well tested and
-it's probably not wise to rely on it. The issues below were found just
-by browsing the commands available, I haven't tried fuzzing it.
+Hello,
 
-These are all possible to exploit via PDF or PS (or the various
-similar formats, like XPS).
+I'd like to request CVE numbers for three issues in go-jose
+(https://github.com/square/go-jose):
 
-If you're using ImageMagick, I would recommend disabling the PS, EPS,
-PDF and XPS coders in policy.xml. Applications like gimp, evince,
-claws, and most other applications that generate thumbnails of PDF/PS
-documents should probably not do so without a prompt (NOTE: A lot of
-packages do this
-https://codesearch.debian.net/search?q=-dSAFER+&perpkg=1 )
 
-bug: various userparams allow %pipe% in paths, allowing remote shell
-command execution.
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697178
-repro: http://www.openwall.com/lists/oss-security/2016/09/30/8
-patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=71ac874
-cve: please assign
+1. Invalid curve attack for ECDH-ES algorithm
 
-bug: .libfile doesn't check PermitFileReading array, allowing remote
-file disclosure.
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697169
-repro: http://www.openwall.com/lists/oss-security/2016/09/29/28
-patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=cf046d2
-cve: please assign
+When deriving a shared key using ECDH-ES for an encrypted message, go-
+jose neglected to check that the received public key on a message is on
+the same curve as the static private key of the receiver, thus making it
+vulnerable to an invalid curve attack.
 
-bug: reference leak in .setdevice allows use-after-free and remote
-code execution
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697179
-repro: http://bugs.ghostscript.com/show_bug.cgi?id=697179#c0
-patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=d5ad1e02
-cve: please assign
+Upstream patch:
+https://github.com/square/go-jose/commit/c7581939a3656bb65e89d64da0a52364a33d2507
 
-bug: type confusion in .initialize_dsc_parser allows remote code execution
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
-repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
-patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
-cve: please assign
 
-There are a few other minor issues and leaks, but these are the
-important ones if you're not going to disable using gs. Please also
-check that you're shipping the patch for CVE-2013-5653.
+2. Exploiting multiple signatures
 
-Tavis.
+The go-jose library supports messages with multiple signatures. However,
+when validating a signed message the API did not indicate which
+signature was valid, which could potentially lead to confusion. For
+example, users of the library might mistakenly read protected header
+values from an attached signature that was different from the one
+originally validated.
+
+Upstream patch:
+https://github.com/square/go-jose/commit/2c5656adca9909843c4ff50acf1d2cf8f32da7e6
+
+
+3. CBC-HMAC integer overflow on 32-bit architectures
+
+An integer overflow could lead to authentication bypass for CBC-HMAC
+encrypted ciphertexts on 32-bit architectures.
+
+Upstream patch:
+https://github.com/square/go-jose/commit/789a4c4bd4c118f7564954f441b29c153ccd6a96
+
+
+All of the above issues were reported by Quan Nguyen from Google's
+Information Security Engineering Team.
+ 
+Thanks,
+Cedric
+
