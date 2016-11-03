@@ -1,4 +1,9 @@
-Received: (qmail 12101 invoked by uid 550); 16 Aug 2024 13:57:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3216" "Thursday" "3" "November" "2016" "12:25:40" "+0800" "Kuang-che Wu" "kcwu@csie.org" "<20161103042540.GB10528@kcwu.csie.org>" "79" "[oss-security] CVE request: w3m - multiple vulnerabilities" nil nil nil "11" "2016110304:25:40" "[oss-security] CVE request: w3m - multiple vulnerabilities" (number mark "U       kcwu@csie.or Nov  3   79/3216  " thread-indent "\"[oss-security] CVE request: w3m - multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20185 invoked by uid 550); 3 Nov 2016 07:38:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,84 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24039 invoked from network); 16 Aug 2024 04:04:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723781042; x=1724385842; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BkTBXQkUHM6JzF0frSGUBXP65j0KI4e70rVB7QkFjpw=;
-        b=T4YEThXFhiq3JeM77ToE85nGTBOm0mfGujiSdt+nxsNXU2I8NXOVNk4qIecB18xhOi
-         78X37/vCn+rimG4YnMbTtMPAjZdT7IV/bbW/ZxoNTBG1g5ErwuUOo5Dmza1mXQlU2IaM
-         oGt+janRle9/fb2Rakg6Dm432+LU4dVGnaQ/1iiQQpEpZ1wrJVxws+c7uGT+bvL9Pr8m
-         Xu1cL4TYaAmVbbjdqRV5MdW1gQeuTZ59XPmfwOrF3FR1B1EbrDPO//ewQus15L17uR1J
-         u4S7ZC28b9gqBpe7QxlL6lFM8xKoHJiaTSiY/VRGnFGPjJWI4PrvjPjFHesVmqKEHcjK
-         xvzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723781042; x=1724385842;
-        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BkTBXQkUHM6JzF0frSGUBXP65j0KI4e70rVB7QkFjpw=;
-        b=urNJ9Q6vmGXiBmNNp19NxyiMLr3nbQooPtpR/bTi1K2yZx2bsZ9Sd3DE9r+IMUypC3
-         L2U1pyE4DpL1jKgSgXEFYv2X3GsiXv4OSb+eATaw9ogtHy2I414C9Z/c94xK1glP1sJU
-         v5AzkwCRc6mke2Lsq6zwRjtbbyaKkymL9nvwzz1oxO8Eg4t9vGPGkK7HKW+mt6VrgB+H
-         lKvy2zbphuz59hDQB3H8mqnkhFb/xMg7pmG2lrcWcEFYeitxv4CoYBig3tfiI4piEqY/
-         Q/mmWXn5i3MaEKoMBQkdjleX4TavR3jYj2HdsmV3yYwmEDY/nswZVnyi6rtv34mIDToD
-         oCyQ==
-X-Gm-Message-State: AOJu0YwNmOJBN3khdpKGYbRqy21byiYOPU6s6hxFDr7ZLCDEoO3Ixkm6
-	aZyp3MFGHvgsWSYf0DA3pIW2K5NabC2RIqk4MEH+oDARQZOKeN57u6M76Q==
-X-Google-Smtp-Source: AGHT+IHOcez6Z/0NPVIoZ/iyfnue8KHNbL0CiCidHHU3an8St7ShuX+9CKVKD64rsnpc8V36XZPKCg==
-X-Received: by 2002:a05:6808:180e:b0:3da:a721:283 with SMTP id 5614622812f47-3dd3ad19d79mr1678092b6e.7.1723781042097;
-        Thu, 15 Aug 2024 21:04:02 -0700 (PDT)
-Message-ID: <66BECFB0.3080704@gmail.com>
-Date: Thu, 15 Aug 2024 23:04:00 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+Received: (qmail 26450 invoked from network); 3 Nov 2016 04:25:58 -0000
+Message-ID: <20161103042540.GB10528@kcwu.csie.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
+Content-Disposition: inline
+User-Agent: Mutt/1.6.1 (2016-04-27)
+Date: Thu, 3 Nov 2016 12:25:40 +0800
+From: Kuang-che Wu <kcwu@csie.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: w3m - multiple vulnerabilities
 To: oss-security@lists.openwall.com
-CC: Neil Horman <nhorman@openssl.org>
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com> <20240815111847.406cf6c1@computer>
-In-Reply-To: <20240815111847.406cf6c1@computer>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS
- 1.0/1.1
 
-Hanno Böck wrote:
-> Hello,
->
-> I have no particular insight on the prevalence of TLS 1.0/1.1 these
-> days, but I want to make a more general comment.
-> My impression of OpenSSL is that it has a strong tendency to ship
-> "bloat", i.e., features that either barely anyone needs, but that still
-> get added (remember Heartbeat extension?), or that should've been
-> deprecated long ago.
->
-> If this effort to deprecate old protocols is a sign that this is
-> changing, I welcome this. I'd recommend to have a look at other things
-> in the OpenSSL codebase that should be trimmed.
->   
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That actually raises another question:  what is actually to be gained 
-from deprecating TLS1.0/1.1?  Did the protocol significantly change or 
-is the only major difference new cipher suites?
+Following are security flaws that I reported to debian's w3m.
+https://github.com/tats/w3m
+(The original w3m project on sf.net https://sourceforge.net/projects/w3m/ i=
+s no
+ longer maintained for several years. Debian's w3m is the only fork still
+ maintained)
 
-In other words, what non-trivial code paths would dropping TLS1.0/1.1 
-entirely allow removing?  (Concatenating SHA1+MD5 is trivial.)
+These issues are all fixed in 0.5.3-31 released at Oct 15, 2016.
 
-> I also think there's probably potential to remove some obsolete
-> ciphers (DSA?).
+Please assign CVEs if you think they are suitable for identifiers.
 
-While DSA is definitely obsolete (advances in conventional computing 
-have begun to approach the ability to plausibly solve 1024-bit keys, and 
-DSA keys *MUST* be 1024-bit, supposedly to facilitate smartcard 
-implementations), OpenSSL is also a general cryptographic library and 
-applications can use its primitives for other purposes.  In particular, 
-this means that dropping TLS1.0/1.1 cipher suites does *not* mean you 
-can drop the ciphers that were used in those suites.
+Serious issues
+- https://github.com/tats/w3m/issues/8 stack smashed
+  see analysis in https://github.com/tats/w3m/pull/19
+- https://github.com/tats/w3m/issues/9 some buffer overflow
+- https://github.com/tats/w3m/issues/12 heap write
+- https://github.com/tats/w3m/issues/21 heap write
+- https://github.com/tats/w3m/issues/25 heap corruption
+  itself should be only OOM. But it was affected by
+    https://github.com/ivmai/bdwgc/issues/135
+  which become heap corruption
+- https://github.com/tats/w3m/issues/26 heap write
+- https://github.com/tats/w3m/issues/29 global-buffer-overflow write
+=20=20
+
+Moderate issues
+(the crash point looks not-explitable but I am not sure whether=20
+ they could be reused as exploit gadget)
+- https://github.com/tats/w3m/issues/7 null deref
+- https://github.com/tats/w3m/issues/10 stack overflow
+- https://github.com/tats/w3m/issues/13 bcopy negative size
+- https://github.com/tats/w3m/issues/14 array index out of bound read
+- https://github.com/tats/w3m/issues/15 null deref
+- https://github.com/tats/w3m/issues/16 use uninit value
+- https://github.com/tats/w3m/issues/17 write to rodata
+- https://github.com/tats/w3m/issues/18 null deref
+- https://github.com/tats/w3m/issues/20 stack overflow
+- https://github.com/tats/w3m/issues/22 near-null deref
+- https://github.com/tats/w3m/issues/24 near-null deref
+- https://github.com/tats/w3m/commit/d43527 potential heap buffer corruption
+  I classify this as "moderate" because the allocator do preserve more space
+  than required size due to bucketing. And w3m's allocator is boehmgc, it
+  seems not easy replacible. So the heap won't be corrupted in practice.
+- https://github.com/tats/w3m/issues/28 null deref
 
 
+Not security issue, just DoS
+- https://github.com/tats/w3m/issues/11 OOM
 
--- Jacob
+
+Regards,
+kcwu
+
+--gKMricLos+KVdGMg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJYGrxEAAoJEG1XW8ld0mmX/CMQAKBjzRR34MFEIStZ8X/MWawV
+/KamukVi/pCK2+mhEbuCC8Y27wpMLZD/crG2L00wzh6jFy7W8excT7YncYzf8h2y
+YbNY8oPRPfRArw2WjIEGA3c4WdIvhBjIWA7WDziKsoGg3PGJqok2fBAf63cjRuz9
+0Ul7jbZvGxnzNu/ahdikgmxp65Ii+02sCbSwKZQ+UC8R9psgQDm10MhJ5QNkgNFE
+Kk9IRxdhYBA/bMZPDyL/tqoS4eYHHgkO4Fg/TBFQ2BY1CfDDkwAm0+rDZMuVSLeO
+nB+W503t/G+AV5k3KtNiuZtxhvykQNijxk2lz3apOusPbwx6yLJpu7pR075ZGLE9
+lwBZJYcQv3K1gI2lPvWTidkeEb5GGl4jsQDKgxlvUxafRnMsL+9BuPFDLrCFE5WN
+Ypt4QXvUrp8ciPtUvgy5/zRPsC+2JQMNfOTdrRtCswUJU3imime+T7KVlKgtiyc6
+Vb7kLOBl1nfjujCpJ+NUnEOruzfZ5a7G52HAASx23G+JhFm+MkF+FRCO92h3px8k
+fRu3E4c5FuF9EklBb7Rm1smkxR+NMTmVVV48TFre6qv6+nC8GWCCY353ouaym8Zi
+Qz/YlwV65mwayZCZRmoBNeGKvrtGjmz2PG3ivfDSrc7nTWZ4pijN/X6mi1HLKaON
+LiY1Z7GmIOuaY/77KKYT
+=axdu
+-----END PGP SIGNATURE-----
+
+--gKMricLos+KVdGMg--
