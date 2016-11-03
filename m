@@ -1,4 +1,9 @@
-Received: (qmail 30568 invoked by uid 550); 19 Nov 2023 13:42:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["784" "Thursday" "3" "November" "2016" "11:15:49" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<1614761186.10592613.1478186149176.JavaMail.zimbra@redhat.com>" "20" "[oss-security] CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by null-deref" "^Date:" nil nil "11" "2016110315:15:49" "[oss-security] CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by null-deref" (number mark "U       vdronov@redh Nov  3   20/784   " thread-indent "\"[oss-security] CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by null-deref\"\n") "<18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>" ("<183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com>" "<18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25708 invoked by uid 550); 3 Nov 2016 15:16:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,58 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28671 invoked from network); 19 Nov 2023 08:00:23 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Xiang Chen <cdmikechen@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <9d46de17-2d89-2795-3096-6e2e46687e9a@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 19 Nov 2023 07:59:35 +0000
+Received: (qmail 25678 invoked from network); 3 Nov 2016 15:16:02 -0000
+Message-ID: <1614761186.10592613.1478186149176.JavaMail.zimbra@redhat.com>
+In-Reply-To: <18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>
+References: <183593889.43262406.1459342377531.JavaMail.zimbra@redhat.com> <18071790.5699934.1472202311154.JavaMail.zimbra@redhat.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-46302: Apache Submarine: Fix CVE-2022-1471 SnakeYaml
- unsafe deserialization 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.0.183]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF49 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE request -- linux kernel: crash on invalid USB device descriptors (ims-pcu driver)
+Thread-Index: AYotnA1cUYB0pFH9275OKy1/eLxrytn6hq7ByIRo+lw=
+Date: Thu, 3 Nov 2016 11:15:49 -0400 (EDT)
+From: Vladis Dronov <vdronov@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by
+ null-deref
+To: oss-security@lists.openwall.com
 
-Severity: critical
+Hello,
 
-Affected versions:
+We would like to ask for a CVE-ID for the following security flaw.
 
-- Apache Submarine 0.7.0 before 0.8.0
+The lrw_crypt() function in 'crypto/lrw.c' in the Linux kernel
+before 4.5 allows local users to cause a system crash and a denial
+of service by the NULL pointer dereference via accept(2) system call
+for AF_ALG socket without calling setkey() first to set a cipher key.
 
-Description:
+Initial discussion:
+https://groups.google.com/forum/#!msg/syzkaller/frb2XrB5aWk/xCXzkIBcDAAJ
 
-Apache Software Foundation Apache Submarine has a bug when serializing agai=
-nst yaml. The bug is caused by snakeyaml  https://nvd.nist.gov/vuln/detail/=
-CVE-2022-1471 .
+Red Hat Product Security Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1386286
 
-Apache Submarine uses JAXRS to define REST endpoints.  In order to
-handle YAML requests (using application/yaml content-type), it defines
-a YamlEntityProvider entity provider that will process all incoming
-YAML requests.  In order to unmarshal the request, the readFrom method
-is invoked, passing the entityStream containing the user-supplied data in `=
-submarine-server/server-core/src/main/java/org/apache/submarine/server/util=
-s/YamlUtils.java`.
-=20
-We have now fixed this issue in the new version by replacing to `jackson-da=
-taformat-yaml`.
-This issue affects Apache Submarine: from 0.7.0 before 0.8.0.=C2=A0Users ar=
-e recommended to upgrade to version 0.8.0, which fixes this issue.
-If using the version smaller than 0.8.0  and not want to upgrade, you can t=
-ry cherry-pick PR  https://github.com/apache/submarine/pull/1054  and rebui=
-ld the submart-server image to fix this.
+Initial upstream patch (followed by a set of the related patches):
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dd504589577d8e8e70f51f997ad487a4cb6c026f
 
-This issue is being tracked as SUBMARINE-1371=20
-
-Credit:
-
-GHSL team member @jorgectf (Jorge Rosillo) (reporter)
-
-References:
-
-https://issues.apache.org/jira/browse/SUBMARINE-1371
-https://github.com/apache/submarine/pull/1054
-https://submarine.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-46302
-https://issues.apache.org/jira/browse/SUBMARINE-1371
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
