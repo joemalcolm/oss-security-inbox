@@ -1,102 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/05/5
-Message-Id: <20160905215759.E575734E018@smtpvbsrv1.mitre.org>
-Date: Mon,  5 Sep 2016 17:57:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: nathan.van.gheem@...ne.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Plone multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/9
+Message-ID: <20161103225435.GA3298@jasmine>
+Date: Thu, 3 Nov 2016 18:54:35 -0400
+From: Leo Famulari <leo@...ulari.name>
+To: oss-security@...ts.openwall.com
+Cc: dickey@...isible-island.net, fulldisclosure@...lists.org, cve-assign@...re.org
+Subject: Re: CVE request:Lynx invalid URL parsing with '?'
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> All of these vulnerabilities have been patched with the hotfix release
-> package https://plone.org/security/hotfix/20160830 and are being
-> incorporated upstream.
-
-> 1. *filesystem information leak*: https://plone.org/security/hotfix/20160830/filesystem-information-leak
+On Thu, Nov 03, 2016 at 05:58:14PM +0800, redrain root wrote:
+> I can't find any bugtracker in lynx ,so i will disclose by this mail and
+> sent to the author dickey@...isible-island.net.
 > 
-> Managers had the ability to find read files from the file system that the
-> system user running the plone process had access to
+> redrain (rootredrain@...il.com)
+> Date:2016-11-03
+> Version: 2.8.8pre.4、2.8.9dev.8 and earlier
 
->> By using relative paths and guessing locations on a server Plone is
->> installed on, an attacker can read data from a target server that the
->> process running plone has permission to read. The attacker needs
->> administrator privileges on the Plone site to perform this attack.
+FYI, as far as I can tell, this bug is present in 2.8.9dev.9 as well.
 
-Use CVE-2016-7135.
-
-
-> 2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
-> 
-> z3c.form will currently accept data from GET requests when the form is
-> supposed to be POST. This allows a user to inject a potential XSS attack
-> into a form. With certain widgets in Plone admin forms, the input is
-> expected to be safe and can cause a reflexive XSS attack. Additionally,
-> there is potential for an attack that will trick a user into saving a
-> persistent XSS.
-
-Use CVE-2016-7136 for the entire "accept data from GET requests when
-the form is supposed to be POST" issue, which apparently has security
-relevance for two different reasons ("reflexive XSS" and "saving a
-persistent XSS").
-
-
-> 3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-redirection-in-plone
-> 
-> In multiple places, Plone blindly uses the referer header to redirect a
-> user to the next page after a particular action. An attacker could utilize
-> this to draw a user into a redirection attack.
-
-Use CVE-2016-7137.
-
-
-> 4. *Non-Persistent XSS in Plone*: https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
-> 
-> Plone's URL checking infrastructure includes a method for checking if URLs
-> valid and located in the Plone site. By passing javascript into this
-> specially crafted url, XSS can be achieved.
-
-Use CVE-2016-7138.
-
-
-> 5. *Non-persistent XSS in Plone*:
-> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
-> 
-> Plone has unescaped user input in a page template that is open to XSS.
-
-Use CVE-2016-7139. (There were two issues numbered "5" in the
-http://openwall.com/lists/oss-security/2016/09/05/4 post.)
-
-
-> 5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
-> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
-> 
-> In multiple places, Zope2's ZMI pages do not properly escape user input
-
-Use CVE-2016-7140. (There were two issues numbered "5" in the
-http://openwall.com/lists/oss-security/2016/09/05/4 post.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXzen4AAoJEHb/MwWLVhi2ikwP/RabVzndqLmnRSGFkekMvJoT
-svRXT3P+gz9rIRa8vG2JLljYOQz4E5IyXYIljoQhGn840uf8UBZcVvtC1P1IeHJc
-noAhNDXg7I13tWyaIc/h2eVCOjnRC2P/qj5fuw+9TyPBiEPZ/CIs5emDNzrRwyp1
-TbBDzhyWUXHYQmtYMzJt2XzYJxHFsC4O8wx7VDx7pvGgKzqHWW50CnOi69aw6AbI
-FN5InkQAUM/7ttDUcOnHG2MNMqwoTtPFLxzGBLURi3B86lhnVwEXe5vl+nCgjdCX
-r42ANgFPx+xNcIuuToTHtY/pguzCTG2NUFsU8I3Zn5U7jXLs95kkDBsUr7zwWWNi
-ftOwUQ79zIKaZL9eQq5cjLdB+gZqWIYaquj4d9lM04nFc7RjYYynhFzQWQmOVxeh
-8+JTJ230pfnK8jpdxDACQmRZyuAh1Lo3YjLLMd2BnvgtVdWHfe4bXfb7dQiGhCsV
-x0+mIgrIxEMrPuOTEGG8WmSPyqJyJpU90QxYQvjPcqKIAF9vqpFdJtiaXv977jfN
-+38Tb1GvvBfSWjDFk6F+DX3isS0qwIQXhuWyVCqOCQYA7/NUVLPCvhNli9dG1Vf4
-gPvBLIvmbYNF73uT/A7aZ96+3hBLuUTnhfReTqO7T7HUsf+DtrMh1P4OI13GCzA3
-MHGqeXXgdxru82us5feg
-=UxLJ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
