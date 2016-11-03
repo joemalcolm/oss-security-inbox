@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/9
-Message-Id: <20160818034131.1773BB2E013@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:41:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Default password in openstack / crowbar trove
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/5
+Message-ID: <20161103103435.GF17110@redhat.com>
+Date: Thu, 3 Nov 2016 11:34:35 +0100
+From: Jan Pokorný <jpokorny@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-7035 - pacemaker - improper IPC guarding
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Following issue is being publicly disclosed today:
 
-> In crowbar-openstack / trove , the trove service user has a default password.
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=991729
-> 
-> https://github.com/crowbar/crowbar-openstack/pull/485
+A vulnerability has been found in pacemaker, a software package for
+high-availability clustering.
 
-> https://github.com/crowbar/crowbar-openstack/pull/485/commits/869663d94daafe424dbf4f809a9ca68ab1b21873
+It was discovered that at some not so uncommon circumstances, some
+pacemaker daemons could be talked to, via libqb-facilitated IPC, by
+unprivileged clients due to flawed authorization decision.  Depending
+on the capabilities of affected daemons, this might equip unauthorized
+user with local privilege escalation or up to cluster-wide remote
+execution of possibly arbitrary commands when such user happens to
+reside at standard or remote/guest cluster node, respectively.
 
->> Force the trove service password to be random_password in the
->> model, to match other services.
+The original vulnerability was introduced in an attempt to allow
+unprivileged IPC clients to clean up the file system materialized
+leftovers in case the server (otherwise responsible for the lifecycle
+of these files) crashes.  While the intended part of such behavior is
+now effectively voided (along with the unintended one), a best-effort
+fix to address this corner case systemically at libqb is coming along
+(https://github.com/ClusterLabs/libqb/pull/231).
 
-Use CVE-2016-6829.
+Affected versions:  1.1.10-rc1 (2013-04-17) - 1.1.15 (2016-06-21)
+Impact:             Important
+CVSSv3 ranking:     8.8 : AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Credits for independent findings, in chronological order:
+  Jan "poki" Pokorný, of Red Hat
+  Alain Moulle, of ATOS/BULL
 
-iQIcBAEBCAAGBQJXtSP/AAoJEHb/MwWLVhi2JGwQALK7eHbxUE3d/0pJEZT3Dh2W
-IvR9Q/LzSl+hyPSi/p3hYMV7//trwQHOkfJCIu/vCFXfPTXB67CyqBJNDP5HPBbb
-Te6iFpvOx1DbjDNI3gVnuEavz0/qrkmFtQ2ckAA2Fm+fbgu+osYrFB9H4HXl9FB6
-UXJLAQjl0PUqED+YWgcUWRE790y0Dy8Tec6yoHMYMbO9kd2vAaiB+pTHxi7Rj7NO
-JtiUif88dvAPvf9BPHdpZ1CWXrn5JMsmAzBEUfB2Agl+oQmvN1u7pjeq3WbflhkH
-Lxu30L3wUwA18KzHLO0Vu1JAG2hxZpntoTlFkJQON62b+YGrRnRiv6OG/+C1jsZ3
-I4nM/JlZCveWYivqmL33Yt0LTT78OvnpYr/rkxKX4iJvSFhoNaF6RPIIDMbwpKo6
-ARXS0oZfj81OLgv1l2n1SSUgs2PA0ak+FkKf4qN5/BYhcvHstIrB0Qtd7iMxoeXD
-1HkjdNIKO+RaOTUsU639awR5qNRax4R6XIUdixEvqC3dnw+FneSv1k8zGrXev1L1
-HbJWrc1Vcm08r8eh2B9RJcoDb/FmzYOslWF5XLWDAZ116w4TFzVDnqBLuas1HNoB
-AsDdtZFBl5uFYs0xBvWeoqp2mx+r0YIA4qaLItjEjg17W+kNnBYiKPos8jyjb8UF
-Kmk6i62iKxL5nMgFXXWt
-=2ckM
------END PGP SIGNATURE-----
+
+Patch for the issue, which is applicable on all affected versions:
+https://github.com/ClusterLabs/pacemaker/pull/1166/commits/5a20855d6054ebaae590c09262b328d957cc1fc2
+
+-- 
+Jan (Poki)
+
+Content of type "application/pgp-signature" skipped
