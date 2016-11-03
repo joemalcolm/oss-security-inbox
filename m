@@ -1,71 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/01/2
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BEBCDB@EX02.corp.qihoo.net>
-Date: Thu, 1 Sep 2016 03:42:43 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request: docker swarm node Dos occurs when join a cluster failed using local CA certificate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/3
+Message-ID: <20161103042540.GB10528@kcwu.csie.org>
+Date: Thu, 3 Nov 2016 12:25:40 +0800
+From: Kuang-che Wu <kcwu@...e.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: w3m - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Docker swarm mode is used to form a swarm, coordinating tasks. Once a machine joins, it becomes a Swarm Node. Nodes can either be worker nodes or manager nodes.
-I found a vulnerability in docker of the latest version which could cause a Denial of Service, I created a CA certificate as the same way with docker, loading it when
-execute the command "docker swarm join --token SWMTKN-1-xx ip:port", however , distrust certificate results the swarm manger failed to authenticate during
-TLS handshake, trapping into infinite loop of session rebuilding , thus a remote node could not join the swarm cluster and even force to leave is in vain, this issue persists
-after restarts docker daemon on the remote node.
+Following are security flaws that I reported to debian's w3m.
+https://github.com/tats/w3m
+(The original w3m project on sf.net https://sourceforge.net/projects/w3m/ is no
+ longer maintained for several years. Debian's w3m is the only fork still
+ maintained)
 
-# docker version
-Client:
-Version:      1.12.0-dev
-API version:  1.25
-Go version:   go1.6.3
-Git commit:   9c1be54-unsupported
-Built:        Fri Jul 29 15:40:52 2016
-OS/Arch:      linux/amd64
+These issues are all fixed in 0.5.3-31 released at Oct 15, 2016.
 
-Server:
-Version:      1.12.0-dev
-API version:  1.25
-Go version:   go1.6.3
-Git commit:   9c1be54-unsupported
-Built:        Fri Jul 29 15:40:52 2016
-OS/Arch:      linux/amd64
+Please assign CVEs if you think they are suitable for identifiers.
 
-# docker swarm init
-Swarm initialized: current node (23m6ksr96whsvuo8lzokenju3) is now a manager.
+Serious issues
+- https://github.com/tats/w3m/issues/8 stack smashed
+  see analysis in https://github.com/tats/w3m/pull/19
+- https://github.com/tats/w3m/issues/9 some buffer overflow
+- https://github.com/tats/w3m/issues/12 heap write
+- https://github.com/tats/w3m/issues/21 heap write
+- https://github.com/tats/w3m/issues/25 heap corruption
+  itself should be only OOM. But it was affected by
+    https://github.com/ivmai/bdwgc/issues/135
+  which become heap corruption
+- https://github.com/tats/w3m/issues/26 heap write
+- https://github.com/tats/w3m/issues/29 global-buffer-overflow write
+  
 
-To add a worker to this swarm, run the following command:
-    docker swarm join \
-    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 \
-    xx.xx.xx.xx:2377
+Moderate issues
+(the crash point looks not-explitable but I am not sure whether 
+ they could be reused as exploit gadget)
+- https://github.com/tats/w3m/issues/7 null deref
+- https://github.com/tats/w3m/issues/10 stack overflow
+- https://github.com/tats/w3m/issues/13 bcopy negative size
+- https://github.com/tats/w3m/issues/14 array index out of bound read
+- https://github.com/tats/w3m/issues/15 null deref
+- https://github.com/tats/w3m/issues/16 use uninit value
+- https://github.com/tats/w3m/issues/17 write to rodata
+- https://github.com/tats/w3m/issues/18 null deref
+- https://github.com/tats/w3m/issues/20 stack overflow
+- https://github.com/tats/w3m/issues/22 near-null deref
+- https://github.com/tats/w3m/issues/24 near-null deref
+- https://github.com/tats/w3m/commit/d43527 potential heap buffer corruption
+  I classify this as "moderate" because the allocator do preserve more space
+  than required size due to bucketing. And w3m's allocator is boehmgc, it
+  seems not easy replacible. So the heap won't be corrupted in practice.
+- https://github.com/tats/w3m/issues/28 null deref
 
-To add a manager to this swarm, run the following command:
-    docker swarm join \
-    --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-0p086z2sdbnpvognjmu76gpi6 \
-    xx.xx.xx.xx :2377
 
-Login in remote node ,create a CA certificate and private key as the docker’s way, then puts them to /var/lib/docker/swarm/certificate
-and named with “docker-swarm-ca.xxx”, execute the following commands:
------------------------------------------------------
-# docker swarm join --token SWMTKN-1-30f6ibzpscqh05qqdog85ktr8ptcw7ttn4wy5cwixy1wfchhb9-aljewtdn5727g1pldxnevjh51 xx.xx.xx.xx:2377
-Error response from daemon: Timeout was reached before node was joined. Attempt to join the cluster will continue in the background. Use "docker info" command to see the current swarm status of your node
+Not security issue, just DoS
+- https://github.com/tats/w3m/issues/11 OOM
 
-Some debugging information of docker daemon.
-        ---------------------------------------------------------
-time="2016-09-01T11:07:21.033209029+08:00" level=debug msg="(*session).start" module=agent
-time="2016-09-01T11:07:26.043671399+08:00" level=error msg="agent: session failed" error="session initiation timed out" module=agent
-time="2016-09-01T11:07:26.043717264+08:00" level=debug msg="agent: rebuild session" module=agent
-time="2016-09-01T11:07:28.931724333+08:00" level=debug msg="(*session).start" module=agent
-time="2016-09-01T11:07:33.943026665+08:00" level=error msg="agent: session failed" error="session initiation timed out" module=agent
-time="2016-09-01T11:07:33.943474051+08:00" level=debug msg="agent: rebuild session" module=agent
-… …
-  now that we can’t join the swarm cluster, so just leave it,  but…
-# docker swarm leave --force
-Error response from daemon: context deadline exceeded
 
-  Ok, nothing can be done with swarm mode, neither joining nor quiting
+Regards,
+kcwu
 
-Please assign CVE IDs for the security issue ?
-
-  Best regards&
-  Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
