@@ -1,43 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/6
-Message-ID: <569364EE.6010709@census-labs.com>
-Date: Mon, 11 Jan 2016 10:16:46 +0200
-From: Stelios Tsampas <stelios@...sus-labs.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: CVE-2015-8397: GDCM out-of-bounds read in JPEGLSCodec::DecodeExtent
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/4
+Message-ID: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
+Date: Thu, 3 Nov 2016 17:58:14 +0800
+From: redrain root <rootredrain@...il.com>
+To: dickey@...isible-island.net, oss-security@...ts.openwall.com,  fulldisclosure@...lists.org
+Cc: cve-assign@...re.org
+Subject: CVE request:Lynx invalid URL parsing with '?'
 Content-Type: text/plain; charset=utf-8
 
-Grassroots DICOM (GDCM) is a C++ library for processing DICOM medical
-images.
-It provides routines to view and manipulate a wide range of image formats
-and can be accessed through many popular programming languages like Python,
-C#, Java and PHP.
+I can't find any bugtracker in lynx ,so i will disclose by this mail and
+sent to the author dickey@...isible-island.net.
 
-GDCM versions 2.6.0 and 2.6.1 (and possibly previous versions) are prone to
-an out-of-bounds read vulnerability due to missing checks. The vulnerability
-occurs during the decoding of JPEG-LS images when the dimensions of the
-embedded JPEG-LS image (as specified in the JPEG headers) are smaller than
-the ones of the selected region (set by gdcm::ImageRegionReader::SetRegion
-and usually based on DICOM header values).
+redrain (rootredrain@...il.com)
+Date:2016-11-03
+Version: 2.8.8pre.4、2.8.9dev.8 and earlier
+Platform: Linux and Windows
+Vendor: http://lynx.browser.org/
+Vendor Notified: 2016-11-03
 
-More information about this vulnerability can be found at
-http://census-labs.com/news/2016/01/11/gdcm-out-bounds-read-jpeglscodec-decodeextent/
 
-The GDCM project has released version 2.6.2 that addresses this issue.
-It is advised to upgrade all GDCM installations to the latest stable
-release.
+VULNERABILITY
+-------------------------
 
-Disclosure Timeline
--------------------
-CVE assignment:    December 2nd, 2015
-Vendor Contact:    December 4th, 2015
-Vendor Patch Release: December 23rd, 2015
-Public Disclosure: January 11th, 2016
+Lynx doesn't parse the authority component of the URL correctly when the
+host
+name part ends with '?', and could instead be tricked into
+connecting to a different host.
+
+Passing in `*http://google.com?@...kdog.me/
+<http://google.com?@...kdog.me/>*` <http://example.com/#@evil.com/x.txt> would
+wrongly make lynx send a
+request to hackdog.me while your browser would connect to google.com given
+the same URL.
+
+PoC
+------------------------
+lynx  "http://google.com?@...kdog.me/"
+
+
+SOLUTION
+-------------------------
+follow the RFC and check for domains before send request.
+
+
 
 Regards,
+redrain
 
-Stelios Tsampas
-
-IT Security Researcher
-CENSUS S.A.   
