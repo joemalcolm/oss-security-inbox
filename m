@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["915" "Monday" "24" "June" "2019" "10:42:40" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>" "21" "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" "^Date:" nil nil "6" "2019062415:42:40" "[oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" (number mark "        bfriesen@sim Jun 24   21/915   " thread-indent "\"Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz\"\n") "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>" ("<CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com>" "<20190617113203.GH15432@suse.de>" "<CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Thousands of vulnerabilities, almost no CVEs: OSS-Fuzz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5429" "Thursday" "3" "November" "2016" "15:26:54" "+0000" "Steve Grubb" "sgrubb@redhat.com" "<20161103152654.6200bbfd@ivy-bridge>" "114" "Re: [oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability" nil nil nil "11" "2016110315:26:54" "[oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability" (number mark "U       sgrubb@redha Nov  3  114/5429  " thread-indent "\"Re: [oss-security] CVE-2016-5195 \"Dirty COW\" Linux kernel privilege escalation vulnerability\"\n") "<20161026191357.GA22705@openwall.com>" ("<20161021003104.GA16605@openwall.com>" "<20161026191357.GA22705@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22312 invoked by uid 550); 24 Jun 2019 15:42:54 -0000
+Received: (qmail 32472 invoked by uid 550); 3 Nov 2016 15:55:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,136 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22288 invoked from network); 24 Jun 2019 15:42:53 -0000
-X-X-Sender: bfriesen@scrappy.simplesystems.org
-In-Reply-To: <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1906241038470.23351@scrappy.simplesystems.org>
-References: <CAFRnB2UmyOiRV9fnMffcAtF4ruuJZwx=fg5X=hLbQjeFN=t3Bg@mail.gmail.com> <20190617113203.GH15432@suse.de> <CACT4Y+Zu1r10wKxjAbJqZ5rXc8eq5NRWjuNVPLHbwZGAem1OTg@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 24 Jun 2019 10:42:40 -0500 (CDT)
-Date: Mon, 24 Jun 2019 10:42:40 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Thousands of vulnerabilities, almost no CVEs:
- OSS-Fuzz
-To: oss-security@lists.openwall.com
+Received: (qmail 11283 invoked from network); 3 Nov 2016 15:26:31 -0000
+Date: Thu, 3 Nov 2016 15:26:54 +0000
+From: Steve Grubb <sgrubb@redhat.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20161103152654.6200bbfd@ivy-bridge>
+In-Reply-To: <20161026191357.GA22705@openwall.com>
+References: <20161021003104.GA16605@openwall.com>
+	<20161026191357.GA22705@openwall.com>
+Organization: Red Hat
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Thu, 03 Nov 2016 15:26:20 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2016-5195 "Dirty COW" Linux kernel privilege
+ escalation vulnerability
 
-On Mon, 24 Jun 2019, Dmitry Vyukov wrote:
->
-> So what are community thoughts on automatic CVE assignment?
-> That would definitely get some attention to these bugs by vendors
-> (because that's open CVEs in their products then). And this should be
-> implementable because both OSS-Fuzz and syzbot are automated enough
-> already. However I afraid that these CVEs may be as automatically
-> sorted into a trashcan then :)
+On Wed, 26 Oct 2016 21:13:57 +0200
+Solar Designer <solar@openwall.com> wrote:
 
-An excess of CVEs would cause CVEs to be not very meaningful any more.
+> On Fri, Oct 21, 2016 at 02:31:04AM +0200, Solar Designer wrote:
+> > This was brought to the linux-distros list (and briefly
+> > inadvertently to the distros list, although discussion continued on
+> > linux-distros only) on October 13 and it was made public yesterday,
+> > so it must be in here as well.  Unfortunately, no one posted about
+> > it in here so far (the person who brought this to [linux-]distros
+> > must have done so!), and I don't have time to make a proper posting
+> > (with full detail in the message itself, as per oss-security list
+> > content guidelines), but I figured it's better for me to post
+> > something than nothing at all.
+> > 
+> > Red Hat's description:
+> > 
+> > "A race condition was found in the way the Linux kernel's memory
+> > subsystem handled the copy-on-write (COW) breakage of private
+> > read-only memory mappings.  An unprivileged local user could use
+> > this flaw to gain write access to otherwise read-only memory
+> > mappings and thus increase their privileges on the system."  
+> 
+> A lot was said about this vulnerability in lots of places, so I won't
+> dare to try and repeat all or post it in here (sorry!)  Many exploits
+> exist now, as summarized at:
+> 
+> https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
+> 
+> The exploits vary in whether they use /proc/self/mem (newer kernels
+> only)
 
-Most oss-fuzz issue detections are not CVE worthy.  For example, a 
-one-byte read "heap overflow" is not likely to cause any actual harm 
-but oss-fuzz would classify it as "heap overflow".
+I am curious. Can anyone think of a good reason why /proc/self/mem
+_should_ be writable? I can understand the needs of debuggers to access
+other processes. But writing to yourself just doesn't seem like a
+normal use. PTRACE_POKEDATA should be covered by yama
+security controls. I wonder if /proc/self/mem should also be under the
+yama security control. Thoughts?
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
+-Steve
+
+> or PTRACE_POKEDATA (both newer and older kernels) and in what
+> they target: generic read-only write, SUID root program, libc, or
+> vDSO. All of them (that I've seen) also use MADV_DONTNEED.
+> 
+> vDSO appears to be the scariest target in that it allows for sandbox
+> or container escape without requiring any other sharing with the
+> outside world (no shared files, no KSM).  Some kernels have sysctl's
+> (varying across kernel versions and architectures) that allow to
+> disable vDSO on a live system, but keep in mind that already-started
+> processes retain their vDSOs and may in many scenarios be used for
+> the attack.  Also, disabling vDSO does nothing to prevent attacks
+> targeting something else (same sandbox/container or other page
+> sharing with the outside).
+> 
+> Luckily, many sandboxes exclude /proc and ptrace, which so far
+> prevents all of these exploits from working.
+> 
+> Surprisingly (to me), the published exploits appear to work as-is even
+> on systems with only one logical CPU (except on RHEL5 and alikes,
+> where 2+ CPUs appear to be needed, but don't count on this).
+> 
+> Here are a couple of challenges by me (and whoever is behind the
+> DirtyCow website kindly backed these with prizes of t-shirts priced at
+> thousands of dollars each):
+> 
+> 1. Exploit DirtyCow without MADV_DONTNEED.
+> 
+> 2. Exploit DirtyCow on RHEL5 with only 1 logical CPU.
+> 
+> and here's a new obvious one I add just now:
+> 
+> 3. Exploit DirtyCow without /proc/self/mem _and_ without PTRACE_POKE*.
+> 
+> Bonus points if you achieve several of these in one exploit.
+> 
+> Many distros have released updates by now.  This includes RHEL7 &
+> RHEL6, but (as far as I can tell) not yet RHEL5.  Since these legacy
+> kernels still matter to me and possibly to others, attached are two
+> patches for RHEL5'ish OpenVZ kernels, which should be reusable on
+> other RHEL5-alikes.
+> 
+> rhel5-owl-dirtycow.diff is what went into the kernel updates we
+> released for Owl a couple of days ago - it is a mitigation for
+> MADV_DONTNEED and PTRACE_POKE*, protecting both through write-locking
+> mmap_sem (thus, against each other as well as against other code
+> paths that read-lock mmap_sem).
+> 
+> rhel5-openvz-dirtycow.diff is interdiff between OpenVZ's older
+> "-408.el5.028stab120.2" kernels and "-408.el5.028stab120.3" they just
+> released today.  Unlike the mitigation in Owl, this is a backport of
+> the fix from newer kernels.  I have yet to test this one myself.  (I
+> briefly tried to produce a backport as well, but gave up after my
+> half-baked attempts failed testing.  I see this patch does at least
+> one thing that I missed in my backport attempts.  Kudos to OpenVZ
+> project, who had also released updates for their newer kernels.)
+> 
+> These two patches can also be reasonably used together.  (I think
+> we'll do just that in Owl, assuming that OpenVZ's fix passes our
+> testing. And yes, Owl is essentially a legacy system now, arguably
+> having served its purpose years ago, but we still maintain it for
+> some deployments.)
+> 
+> > https://access.redhat.com/security/cve/cve-2016-5195
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1384344
+> > https://security-tracker.debian.org/tracker/CVE-2016-5195
+> > http://www.v3.co.uk/v3-uk/news/2474845/linux-users-urged-to-protect-against-dirty-cow-security-flaw
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619
+> > https://lkml.org/lkml/2016/10/19/860
+> > https://dirtycow.ninja
+> > https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
+> > https://twitter.com/DirtyCOWVuln  
+> 
+> Alexander
+
