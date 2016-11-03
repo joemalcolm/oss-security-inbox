@@ -1,21 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/4
-Message-ID: <20160310092549.GB4470@suse.de>
-Date: Thu, 10 Mar 2016 10:25:49 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/8
+Message-ID: <87ins4bkcs.fsf@mid.deneb.enyo.de>
+Date: Thu, 03 Nov 2016 17:26:27 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Daniel Stenberg:
 
->From the P0 team at Google:
+> When curl is built with libidn to handle International Domain Names
+> (IDNA), it translates them to puny code for DNS resolving using the
+> IDNA 2003 standard, while IDNA 2008 is the modern and up-to-date
+> IDNA standard.
 
-https://code.google.com/p/google-security-research/issues/detail?id=758
+I think everyone in the software space assumes that all DNS registries
+block registrations which would allocate names colliding under the
+IDNA 2003 and 2008 standards to different owners.  There were even
+attempts at the registry level to automatically alias different
+encodings (something which is difficult because it interferes with the
+goal to make the whole thing application-centric).
 
-A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE ioctl in the netfilter code for iptables support. This ioctl is can be triggered by an unprivileged user on PF_INET sockets when unprivileged user namespaces are available (CONFIG_USER_NS=y). Android does not enable this option, but desktop/server distributions and Chrome OS will commonly enable this to allow for containers support or sandboxing.
-...
+> For example, `straße.de` is translated into `strasse.de` using IDNA
+> 2003 but is translated into `xn--strae-oqa.de` using IDNA
+> 2008. Needless to say, those host names could very well resolve to
+> different addresses and be two completely independent servers. IDNA
+> 2008 is mandatory for .de domains.
 
-I think this needs a CVE.
-
-Ciao, Marcus
+What does DENIC say about this matter?  It looks like their
+implementation of IDNA is just very broken.
