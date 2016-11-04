@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2698" "Monday" "22" "August" "2016" "14:15:06" "+0300" "Solar Designer" "solar@openwall.com" "<20160822111506.GA4403@openwall.com>" "69" "Re: [oss-security] memory issues in libksba 1.3.4 and git" nil nil nil "8" "2016082211:15:06" "[oss-security] memory issues in libksba 1.3.4 and git" (number mark "U       solar@openwa Aug 22   69/2698  " thread-indent "\"Re: [oss-security] memory issues in libksba 1.3.4 and git\"\n") "<8760qtaza4.fsf@wheatstone.g10code.de>" ("<E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>" "<8760qtaza4.fsf@wheatstone.g10code.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1745" "Friday" "4" "November" "2016" "03:05:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<2647eeea4a76427993d6495bb8c17943@imshyb02.MITRE.ORG>" "49" "[oss-security] Re: CVE request:  XXE in perl Image::Info and XML::Twig" nil nil nil "11" "2016110407:05:16" "[oss-security] Re: CVE request: XXE in perl Image::Info and XML::Twig" (number mark "U       cve-assign@m Nov  4   49/1745  " thread-indent "\"[oss-security] Re: CVE request:  XXE in perl Image::Info and XML::Twig\"\n") "<20161102050757.GG14890@sin.redhat.com>" ("<20161102050757.GG14890@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23956 invoked by uid 550); 22 Aug 2016 11:15:42 -0000
+Received: (qmail 7324 invoked by uid 550); 4 Nov 2016 07:05:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23806 invoked from network); 22 Aug 2016 11:15:11 -0000
-Date: Mon, 22 Aug 2016 14:15:06 +0300
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Werner Koch <wk@gnupg.org>, Pascal Cuoq <cuoq@trust-in-soft.com>,
-	Rapha??l Rieu-Helft <raphael.rieu-helft@trust-in-soft.com>
-Message-ID: <20160822111506.GA4403@openwall.com>
-References: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com> <8760qtaza4.fsf@wheatstone.g10code.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8760qtaza4.fsf@wheatstone.g10code.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] memory issues in libksba 1.3.4 and git
+Received: (qmail 7268 invoked from network); 4 Nov 2016 07:05:28 -0000
+From: <cve-assign@mitre.org>
+To: <dmoppert@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161102050757.GG14890@sin.redhat.com>
+Message-ID: <2647eeea4a76427993d6495bb8c17943@imshyb02.MITRE.ORG>
+Date: Fri, 4 Nov 2016 03:05:16 -0400
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request:  XXE in perl Image::Info and XML::Twig
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I thought I had fixed that ezmlm-idx incompatibility with Werner's setup
-of Gnus, but it seems not - perhaps it's not exactly that same old bug,
-even if very similar:
+>> XML-Twig: expand_external_ents fails to work as documented
 
-http://www.openwall.com/lists/oss-security/2016/08/18/20
+> https://rt.cpan.org/Public/Bug/Display.html?id=118097
+> https://bugzilla.redhat.com/show_bug.cgi?id=1379553
 
-In those old bug reports, it was about MIME sections completely lacking
-headers.  In Werner's messages, the MIME section has only the
-Content-Transfer-Encoding header, but not a Content-Type header.
+> This option (which defaults to 0) is supposed to control XXE parsing
+> documents with XML::Twig, but it has no effect and XXE always takes
+> place.
 
-Also, Werner's latest message appears to have an invalid boundary
-string.  (The previous message for which corruption occurred had a
-valid boundary string, even if unusual.  These unusual boundary strings
-might or might not be relevant to the problem.)  Specifically:
+Use CVE-2016-9180.
 
---=SRI-target-ANDVT-Freeh-anthrax-[Hello-to-all-my-friends-and-fans-in=
 
-The "[" character isn't in the allowed set per RFC 2046:
+>> Image-Info: XXE in SVG files
 
-     boundary := 0*69<bchars> bcharsnospace
-
-     bchars := bcharsnospace / " "
-
-     bcharsnospace := DIGIT / ALPHA / "'" / "(" / ")" /
-                      "+" / "_" / "," / "-" / "." /
-                      "/" / ":" / "=" / "?"
-
-Unfortunately, the message corruption occurs post moderator approval, so
-I couldn't easily see whether it occurred this time or not without
-approving the message first.  I guess I'd need to debug it on a test
-list, re-injecting Werner's message on my own, but I don't currently
-have time for that.  I'll include Werner's original message below.
-
-Werner, maybe you could try this old workaround for next time you post? -
-
-  (setq mml-insert-mime-headers-always t)
-
-Thanks, and sorry, and yes this is pretty ridiculous.
-
-Alexander
-
-On Mon, Aug 22, 2016 at 12:11:47PM +0200, Werner Koch wrote:
-> On Sat, 20 Aug 2016 16:06, cuoq@trust-in-soft.com said:
+> https://rt.cpan.org/Public/Bug/Display.html?id=118099
+> https://bugzilla.redhat.com/show_bug.cgi?id=1379556
 > 
-> > These inputs have been set to Werner Koch, privately as per his
-> > request, on May 25, June 11 and July 11. I am publishing them now so
-> 
-> I am sorry about the delays.  I asked Pascal to discuss this privately
-> for the simple matter that I would anyway be the one to fix the things.
-> In the future I will take care to CC my co-hackers on such private mails
-> so they can jump in or remind me of such delays.
-> 
-> > that anyone who uses or might want to use libksba to parse messages
-> > (received pre-authentification by definition) can make an informed
-> > choice considering the risks of denial of service and information
-> 
-> I just release libksba 1.3.5 which limits the allocation to a 16 MiB
-> which is the best solution I could come up with.  Note that this parser
-> is only used for smallish ASN.1 objects like certificates or small parts
-> of of larger ASN.1 objects (like CRLs).
-> 
-> Thanks to Pascal for looking at Libksba.
-> 
-> 
-> Shalom-Salam,
-> 
->    Werner
+> This was promptly fixed in 1.38_50 / 1.39.
+
+Use CVE-2016-9181.
+
+118099 suggests that this was exploitable only when XML::LibXML was installed,
+but the CVE is for Image::Info::SVG, not for XML::LibXML.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYHDIEAAoJEHb/MwWLVhi2cowP/3KQY1byhquXjsu4Nem8qz4H
+Tb7YWpeCUxIKbrqA60DEVfPKY0ges1vQ1JCzYlElU3/VAMe7ZWrTAnuxwangQCZI
+RZcVMDOcdJJGSjOyPUhdr2MLbCwl0U8U6z2ZeLGJh1aN6DqcE4XZtmNbjPNU7ea/
+uvEzHZEh5SL0tyM30fCrSsPARqYtlbMt0o6uPbfg9wi71Pkcmz+451CF8BhM8bdl
+mLd7EWQHxHnF4Y3kSCYkLsAULDTgGEzu97i+m68nkwPII8EpwjKF1wXbRKgU2fjA
+bgTYC7j/em9VYHAjVzPKTwIJ0MiAsqS+HDywyoqc6uCgV0OQ8qaKvBu4v3d28tbt
+HyBKWK/cMwYSGg6hiOsfrGU8mSk3mKD9NFgdHjllnS12Xo6QHln9BXfUnhZDRzMt
+PuOtBeq7jWsSCp1C0dbwMpPD2zCHlaHmSwBabk2s1F7GQtgZogM5bZZxO1099b1D
+Lq+BOpDRwezSOKcu1ITRO1qUJ63ECtvUK1K/9Lv/AWFkXVANoBEv0tlABmsj2WUB
+zIy0bOQo7a8n8lRY/ECJvK/C3HLQU2RPdE0lXw2bldr+MSNhV1zNoQypJgzxwxtT
+5TFsQXMwrJ91vJmRH2gjNykX74ItPcOppL+ws2yAv1ZVTaxDbUk5yhSj7JFbkuUQ
+rpHTnlXvLA8UmaYREUnj
+=M28z
+-----END PGP SIGNATURE-----
