@@ -1,92 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/5
-Message-ID: <alpine.DEB.2.20.1611020808080.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:09:01 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl double-free in curl_maprintf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/11
+Message-ID: <6451341.vFYbS6xerg@blackgate>
+Date: Fri, 04 Nov 2016 15:43:31 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)
 Content-Type: text/plain; charset=utf-8
 
-double-free in curl_maprintf
-============================
+If suitable for a CVE please assign one. Thanks.
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102D.html)
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-VULNERABILITY
--------------
+I decided to try another round of fuzzing with the Memory Sanitizer enabled, 
+and I discovered that there is an use-of-uninitialized-value in 
+jpc_pi_nextcprl
 
-The libcurl API function called `curl_maprintf()` can be tricked into doing a
-double-free due to an unsafe `size_t` multiplication, on systems using 32 bit
-`size_t` variables. The function is also used internallty in numerous
-situations.
+The complete MSan output:
 
-The function doubles an allocated memory area with realloc() and allows the
-size to wrap and become zero and when doing so realloc() returns NULL *and*
-frees the memory - in contrary to normal realloc() fails where it only returns
-NULL - causing libcurl to free the memory *again* in the error path.
+# imginfo -f $FILE
+warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
+warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
+warning: ignoring unknown marker segment                                                                                                                                                                                                                                       
+type = 0xff41 (UNKNOWN); len = 20;01 87 01 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 warning: trailing garbage in marker segment (14 bytes)                                                                                                                                 
+==7937==WARNING: MemorySanitizer: use-of-uninitialized-value                                                                                                                                                                                                                   
+    #0 0x7fc562323907 in jpc_pi_nextcprl /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12                                                                                                                                     
+    #1 0x7fc562323907 in jpc_pi_next /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:125                                                                                                                                            
+    #2 0x7fc56232aadc in jpc_dec_decodepkts /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:441:14                                                                                                                                  
+    #3 0x7fc5621fa9f1 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:594:6                                                                                                                                    
+    #4 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
+    #5 0x7fc56220c574 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
+    #6 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
+    #7 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
+    #8 0x557bb7618831 in main /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                           
+    #9 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #10 0x557bb7599a28 in _init (/usr/bin/imginfo+0x1aa28)                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+  Uninitialized value was created by a heap allocation                                                                                                                                                                                                                         
+    #0 0x557bb75bf639 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/msan/msan_interceptors.cc:1002                                                                                                                           
+    #1 0x7fc5621507d4 in jas_malloc /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:148:13                                                                                                                                        
+    #2 0x7fc562152520 in jas_alloc2 /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:275:9                                                                                                                                         
+    #3 0x7fc56233360c in jpc_dec_pi_create /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:506:30                                                                                                                                   
+    #4 0x7fc5621f2c71 in jpc_dec_tileinit /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:911:19                                                                                                                                      
+    #5 0x7fc5621f2c71 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:560                                                                                                                                      
+    #6 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
+    #7 0x7fc56220c574 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
+    #8 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
+    #9 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
+    #10 0x557bb7618831 in main /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                          
+    #11 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
+                                                                                                                                                                                                                                                                               
+SUMMARY: MemorySanitizer: use-of-uninitialized-value /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12 
+in jpc_pi_nextcprl                                                                                                      
+Exiting
 
-Systems with 64 bit versions of the `size_t` type are not affected by this
-issue.
+Affected version:
+1.900.17
 
-This behavior is triggable using the publicly exposed function.
+Fixed version:
+1.900.20
 
-We are not aware of any exploit of this flaw.
+Commit fix:
+https://github.com/mdadams/jasper/commit/1f0dfe5a42911b6880a1445f13f6d615ddb55387
 
-INFO
-----
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8618 to this issue.
+CVE:
+N/A
 
-AFFECTED VERSIONS
------------------
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00029-jasper-uninitvalue-jpc_pi_nextcprl
 
-This flaw exists in the following curl versions (and again, only on 32bit
-versions).
+Timeline:
+2016-11-03: bug discovered and reported to upstream
+2016-11-04: upstream released a patch
+2016-11-04: blog post about the issue
 
-- Affected versions: curl 7.1 to and including 7.50.3
-- Not affected versions: curl >= 7.51.0
+Note:
+This bug was found with American Fuzzy Lop.
 
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the memory growing functions will fail instead of letting
-the size wrap.
-
-A [patch for CVE-2016-8618](https://curl.haxx.se/CVE-2016-8618.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Make really sure you never send strings larger than 1GB into this funciton
-
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@...nwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/04/jasper-use-of-uninitialized-value-in-jpc_pi_nextcprl-jpc_t2cod-c
