@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/2
-Message-ID: <20160608085431.GA4278@openwall.com>
-Date: Wed, 8 Jun 2016 11:54:31 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/9
+Message-ID: <20161104114855.GA13029@hurricane.linuxnetz.de>
+Date: Fri, 4 Nov 2016 12:48:55 +0100
+From: Robert Scheck <robert@...oraproject.org>
+To: Daniel Stenberg <daniel@...x.se>
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, 04 Nov 2016, Daniel Stenberg wrote:
+> DENIC alledgedly has rules that should prevent separate registrations like
+> in the straße.de case. Still it seems that this particular host name is
+> registered by two different entities unless there's some background juggling
+> that we can't easily see from the outside.
 
-Just off Twitter:
+It is possible (and also allowed by the DENIC), that e.g. "straße.de" and
+"strasse.de" have two different domain owners. I performed at least one
+registration for a customer for a "ß"-domain after the "ß" sunrise period
+was over, where the "ß"-domain owner is not the owner of the corresponding
+"ss"-domain. Not sure which rules you refer to, but except the "ß"-sunrise
+period in 2010, I'm able to register "ß"-domains on first come, first serve
+basis at DENIC.
 
-<mjos_crypto> Out today: This is the OpenSSL side-channel vulnerability I mentioned last week; now on ePrint. Also CVE-2016-2178. http://eprint.iacr.org/2016/594
-<@mjos_crypto> @mjos_crypto Currently unfixed in essentially all distros.
-<mjos_crypto> Note that CVE-2016-2178 / http://eprint.iacr.org/2016/594.pdf most severely actually impacts OpenSSH, which uses the OpenSSL library.
-<mjos_crypto> Cesar's CVE-2016-2178 patch for the OpenSSL library from Monday. https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+The DENIC FAQ (https://www.denic.de/en/faqs/faqs-about-idns-ss/) mentions
+also that e.g. "mueller.de" and "müller.de" are two completely different
+domain names (even "ue" is the German transcription of "ü") - and here the
+argumentation is, that "bauer.de" is not the same like "baür.de" (which is
+from the non-technical perspective of a German native speaker obviously
+true). From my understanding, the argumentation here is non-IDNA mueller.de
+vs. IDNA2003 müller.de, while now it is IDNA2003 strasse.de vs. IDNA2008
+straße.de - which might be slightly different, because it's a switch of the
+IDNA version rather the introduction.
 
-http://eprint.iacr.org/2016/594
+For those who didn't notice, Florian also started a German thread on the
+public DENIC mailing list (https://www.denic.de/en/service/mailing-lists/)
+about exactly this topic (I'm not sure if there is a public archive).
 
-| "Make Sure DSA Signing Exponentiations Really are Constant-Time''
-| 
-| Cesar Pereida Garca and Billy Bob Brumley and Yuval Yarom
-| 
-| Abstract: TLS and SSH are two of the most commonly used protocols for securing Internet traffic. Many of the implementations of these protocols rely on the cryptographic primitives provided in the OpenSSL library. In this work we disclose a vulnerability in OpenSSL, affecting all versions and forks (e.g. LibreSSL and BoringSSL) since roughly October 2005, which renders the implementation of the DSA signature scheme vulnerable to cache-based side-channel attacks. Exploiting the software defect, we demonstrate the first published cache-based key-recovery attack on these protocols: 260 SSH-2 handshakes to extract a 1024/160-bit DSA host key from an OpenSSH server, and 580 TLS 1.2 handshakes to extract a 2048/256-bit DSA key from an stunnel server. 
-| 
-| Category / Keywords: applied cryptography; digital signatures; side-channel analysis; timing attacks; cache-timing attacks; DSA; OpenSSL; CVE-2016-2178
-| 
-| Date: received 6 Jun 2016, last revised 7 Jun 2016
 
-https://git.openssl.org/?p=openssl.git;a=commit;h=399944622df7bd81af62e67ea967c470534090e2
+Greetings,
+  Robert
 
-| author	Cesar Pereida
-| 	Mon, 23 May 2016 12:45:25 +0300 (12:45 +0300)
-| committer	Matt Caswell
-| 	Mon, 6 Jun 2016 13:08:15 +0300 (11:08 +0100)
-
-| Fix DSA, preserve BN_FLG_CONSTTIME
-| 
-| Operations in the DSA signing algorithm should run in constant time in
-| order to avoid side channel attacks. A flaw in the OpenSSL DSA
-| implementation means that a non-constant time codepath is followed for
-| certain operations. This has been demonstrated through a cache-timing
-| attack to be sufficient for an attacker to recover the private DSA key.
-| 
-| CVE-2016-2178
-
-Alexander
+Content of type "application/pgp-signature" skipped
