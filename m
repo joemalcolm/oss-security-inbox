@@ -1,84 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/18/10
-Message-Id: <20161018163436.85A436C4EC1@smtpvmsrv1.mitre.org>
-Date: Tue, 18 Oct 2016 12:34:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: kaplanlior@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for PHP 5.6.27 and 7.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/10
+Message-ID: <16a1c14b-1402-3eab-4e2c-44aa75192d8b@sumptuouscapital.com>
+Date: Fri, 4 Nov 2016 14:59:46 +0100
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+To: Robert Scheck <robert@...oraproject.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 11/04/2016 12:48 PM, Robert Scheck wrote:
+> For those who didn't notice, Florian also started a German thread on the
+> public DENIC mailing list (https://www.denic.de/en/service/mailing-lists/)
+> about exactly this topic (I'm not sure if there is a public archive).
 
-> Please assign a CVE for the following issue:
-> 
-> Bug #73147    Use After Free in unserialize()
-> https://bugs.php.net/bug.php?id=73147
-> http://git.php.net/?p=php-src.git;a=commit;h=0e6fe3a4c96be2d3e88389a5776f878021b4c59f
+I believe the archive should be at
+https://www.denic.de/service/mailinglisten/public-l/ , although it
+doesn't seem updated since april (although if low volume and the
+discussion was started today it might only be updated infrequently)
 
-Can you clarify what should be the scope of this CVE?
-zend_unset_property doesn't exist at all in PHP 7.0.11. The
-0e6fe3a4c96be2d3e88389a5776f878021b4c59f commit adds
-zend_unset_property for PHP 7.0.12, and arranges for
-zend_unset_property to be called only from
-"ZEND_METHOD(CURLFile, __wakeup)" in ext/curl/curl_file.c.
+-- 
+----------------------------
+Kristian Fiskerstrand
+Blog: https://blog.sumptuouscapital.com
+Twitter: @krifisk
+----------------------------
+Public OpenPGP keyblock at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+----------------------------
+Nil desperandum
+Never give up
 
-We're not sure whether that affects anything outside of the CURLFile
-implementation. However, 73147 discusses other concerns such as "The
-similar bug can be also triggered via Exception::__toString with
-DateInterval::__wakeup" and "The problem is that every __wakeup that
-modifies any property would produce the same problem."
 
-There seems to be a related code change between 7.0.11 and 7.0.12 that
-arranges for additional calls to zend_unset_property:
 
-  http://git.php.net/?p=php-src.git;a=blobdiff;f=Zend/zend_exceptions.c;h=f21968733581a3cb672d039bec16ce6f17a93db9;hp=95d18f45fbea8808c00975b5df4619d5d6745ab0;hb=689a9b8def07875641b3132a82c701fb7acb676c;hpb=4165d976066129000d947ffa3be73f91e9867635
-
-So, some of the options include:
-
-1. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f is a complete security
-patch that fixes everything discussed in 73147, including the "other
-concerns" mentioned above.
-
-2. 0e6fe3a4c96be2d3e88389a5776f878021b4c59f fixes only the CURLFile
-implementation. The "other concerns" mentioned above are
-vulnerabilities that still exist in 7.0.12.
-
-3. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
-above Zend/zend_exceptions.c diff is a complete security patch that
-fixes everything discussed in 73147, including the "other concerns"
-mentioned above. There only needs to be one CVE ID associated with
-this complete security patch.
-
-4. The combination of 0e6fe3a4c96be2d3e88389a5776f878021b4c59f and the
-above Zend/zend_exceptions.c diff is a complete security patch that
-fixes everything discussed in 73147, including the "other concerns"
-mentioned above. There should be one CVE ID for the security fix to
-the CURLFile implementation, and a separate CVE ID for the security
-fix found in Zend/zend_exceptions.c.
-
-Which of the above (1 through 4) is correct and/or preferred?
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYBk6wAAoJEHb/MwWLVhi2Yo8QAKuttCiRlpUzKx0qxM5tOGyb
-NkmqUkuN00zgavqyeBrPPM0WnzaF0VKdGS/0rW6ExBog6gbhgl1hUSIzug4PcnlX
-Nk2acUlS21JmMFXroeKFQh5IvEvsvjEWwmpogopyoNv7c+Asal+F8BFP1DiVKR3a
-g3Iv/tqjpIqh87qVESZSce/u6u44v4wd6V4ouTFe9mYiUQSPMkssTjRMjMwulVlp
-A17ddOUZ06qubRpu3S6eBzDLtLkOuEMpFKxxYssEl+zoa0ac1Aq9HqkNoo632wSR
-mHeB9yZ5tpQ+cbOwPZ30GoQW2JkrtRcj2UpdnTAl9JoFgpGa8xVl7DR9bQCe2XMB
-OFfRx9+x1TTJZGQ+EppmmNA/kpskHSZE1AeoeZj4lD7gvQjHUJcmjtkrSik9Dt86
-dinb2KiiNeedyTH3TfBcmbIKU9ub6ztsf3Rl1ODcsOb//5ru0vTihLPGw6icoBcG
-jYN61oXHyNRLfwQRdXoSEciLpDkiPVYf50B83XXOQGUMA68oNV+Ns/lSInxh33zU
-FKR1ePK/cBjr6D+/sV32tre1IPvHATh/uB1ECP8H4NvRixFqtvy64a0xCsd5WJB7
-sOq9wAH5Q6ebiShuncSS35F+47ILMdiIu7hT8F6gVQvGccnPMS6DgldGeb0RS56I
-5haHYZHlQuvZEF8ZtfhR
-=o6SF
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
