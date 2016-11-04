@@ -1,52 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/9
-Message-ID: <1a39cb5556d74c7e989d1b728b6c7eaa@imshyb02.MITRE.ORG>
-Date: Thu, 15 Dec 2016 12:44:23 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/8
+Message-ID: <20161104010735.GA25615@vmw-debian7-64.jexium-island.net>
+Date: Thu, 3 Nov 2016 21:07:35 -0400
+From: Thomas Dickey <dickey@....com>
+To: redrain root <rootredrain@...il.com>
+Cc: dickey@....com, oss-security@...ts.openwall.com, fulldisclosure@...lists.org, cve-assign@...re.org
+Subject: Re: CVE request:Lynx invalid URL parsing with '?'
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Nov 03, 2016 at 05:58:14PM +0800, redrain root wrote:
+> I can't find any bugtracker in lynx ,so i will disclose by this mail and
+> sent to the author dickey@...isible-island.net.
 
-> SimpleSAMLphp has released (another) update fixing an incorrect
-> signature verification issue (different from SSPSA 201612-01 /
-> CVE-2016-9814). It affects versions of SimpeSAMLphp before 1.14.11.
-> 
-> https://simplesamlphp.org/security/201612-02
-> https://github.com/simplesamlphp/simplesamlphp/commit/a2326d75dd14accaac162dd2cb30aaefcc1f9205
+thanks (I'll put together a fix)
 
-> -1 in case an error occurs. PHP allows translating numerical values to
-> boolean implicitly
-> 
->     Non-zero equals true.
+-- 
+Thomas E. Dickey <dickey@...isible-island.net>
+http://invisible-island.net
+ftp://invisible-island.net
 
-> - if (! $objXMLSecDSig->verify($objKey)) {
-> + if ($objXMLSecDSig->verify($objKey) !== 1) {
-
-Use CVE-2016-9955.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYUtTlAAoJEHb/MwWLVhi27IwP/jG+Zl6XCV9GayTZO3AmZIdC
-hP3AI4irrLKNtUGifIYuAs7PRrxvqlolx6Frm9u5W7KUTtHZLnVN06lpLdhi5RdZ
-7YWrdjEe3Oay5QfE4W6jy+OaTWui8J7w3/nAwUg/O30GqKdY1YTwcWFmDHfR29fG
-jI5SlZV6CQAzODqlm1dvmJxzvWGwItzKgV6JHK12rs3ODo/qiS0w3Z8lnOlEZyEb
-c00d9S7y6iYIp1yIXEb2CWnn+CS0tb9JEqKCtwXvlF9/vzfMGCSv2HIXlOUYesPn
-b8BqdFJn7zSTjaDTIGv2GqEdTZE0gnWkQDuikYg7EF+Eux58wDbCz8eS1dhf8WHq
-07vJ5259VJb2JV5Fxlmz9wZpyhWptD6oHMCJZtmS4vk0/WwcLQCoJ0RaMtiW+i1p
-f7eo+tC3JjFmMmMmsUSXhUGnja9nHs7RtTDRR+S1LdZP2T09otsj53HpuqAgNUyk
-N68ym2WDCgp6qBmZGZFRbx31Kqtp3IXnfXrgAKOTciRilDI3SEqb1M/jJbX8rw47
-qdZomwgSFr1DRX6SZFxbQpxhcTHIT+XxT4m3B9g6b0FF22e6e3IEmotnEYqV0KFi
-m6UEaYWWfEnKuu/Tz8nHt0Gh2ab8PLvd9aJPNCl3mmULSwVPcrTSnvWRYu3YrCmy
-hPphYVM98RRx+cSFwh8h
-=W5cm
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
