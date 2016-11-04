@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2118" "Wednesday" "17" "August" "2016" "19:05:06" "+0200" "Remi Gacogne" "rgacogne@archlinux.org" "<13b97dfc-e27f-ed00-3017-e7dd169d199b@archlinux.org>" "56" "Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction" "^Cc:" nil nil "8" "2016081717:05:06" "[oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction" (number mark "        rgacogne@arc Aug 17   56/2118  " thread-indent "\"Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction\"\n") "<20160817165819.GA24935@openwall.com>" ("<20160817165819.GA24935@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9786" "Friday" "4" "November" "2016" "15:43:31" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<6451341.vFYbS6xerg@blackgate>" "100" "[oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)" "^Cc:" nil nil "11" "2016110414:43:31" "[oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)" (number mark "U       ago@gentoo.o Nov  4  100/9786  " thread-indent "\"[oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28553 invoked by uid 550); 17 Aug 2016 17:05:52 -0000
+Received: (qmail 1966 invoked by uid 550); 4 Nov 2016 14:43:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28398 invoked from network); 17 Aug 2016 17:05:20 -0000
-References: <20160817165819.GA24935@openwall.com>
-Message-ID: <13b97dfc-e27f-ed00-3017-e7dd169d199b@archlinux.org>
+Received: (qmail 1924 invoked from network); 4 Nov 2016 14:43:48 -0000
+Message-ID: <6451341.vFYbS6xerg@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-In-Reply-To: <20160817165819.GA24935@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="jJiI7TrV8JUe6ElRTkOV1ABfEWqP2DhhR"
-Cc: Werner Koch <wk@gnupg.org>
-Date: Wed, 17 Aug 2016 19:05:06 +0200
-From: Remi Gacogne <rgacogne@archlinux.org>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Cc: cve-assign@mitre.org
+Date: Fri, 04 Nov 2016 15:43:31 +0100
+From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction
+Subject: [oss-security] jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)
 To: oss-security@lists.openwall.com
 
---jJiI7TrV8JUe6ElRTkOV1ABfEWqP2DhhR
-Content-Type: multipart/mixed; boundary="iFLd9jccMN9xE35RCHn5F99AFfU7tEoB4"
-From: Remi Gacogne <rgacogne@archlinux.org>
-To: oss-security@lists.openwall.com
-Cc: Werner Koch <wk@gnupg.org>
-Message-ID: <13b97dfc-e27f-ed00-3017-e7dd169d199b@archlinux.org>
-Subject: Re: [oss-security] Libgcrypt and GnuPG 1.4 RNG output prediction
-References: <20160817165819.GA24935@openwall.com>
-In-Reply-To: <20160817165819.GA24935@openwall.com>
+If suitable for a CVE please assign one. Thanks.
 
---iFLd9jccMN9xE35RCHn5F99AFfU7tEoB4
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Hi,
+I decided to try another round of fuzzing with the Memory Sanitizer enabled, 
+and I discovered that there is an use-of-uninitialized-value in 
+jpc_pi_nextcprl
 
-On 08/17/2016 06:58 PM, Solar Designer wrote:
-> <@rgacogne> @gnupg @solardiz The CVE number (CVE-2016-6316) seems to have=
- been used to track another security issue rubygem-actionview, is that corr=
-ect?
->=20
-> There does in fact appear to be a CVE ID clash, with:
->=20
-> http://www.openwall.com/lists/oss-security/2016/08/11/6
+The complete MSan output:
 
-Apparently the correct CVE number is CVE-2016-6313:
-https://twitter.com/gnupg/status/765956493720055808
+# imginfo -f $FILE
+warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
+warning: trailing garbage in marker segment (14 bytes)                                                                                                                                                                                                                         
+warning: ignoring unknown marker segment                                                                                                                                                                                                                                       
+type = 0xff41 (UNKNOWN); len = 20;01 87 01 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 warning: trailing garbage in marker segment (14 bytes)                                                                                                                                 
+==7937==WARNING: MemorySanitizer: use-of-uninitialized-value                                                                                                                                                                                                                   
+    #0 0x7fc562323907 in jpc_pi_nextcprl /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12                                                                                                                                     
+    #1 0x7fc562323907 in jpc_pi_next /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:125                                                                                                                                            
+    #2 0x7fc56232aadc in jpc_dec_decodepkts /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:441:14                                                                                                                                  
+    #3 0x7fc5621fa9f1 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:594:6                                                                                                                                    
+    #4 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
+    #5 0x7fc56220c574 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
+    #6 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
+    #7 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
+    #8 0x557bb7618831 in main /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                           
+    #9 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #10 0x557bb7599a28 in _init (/usr/bin/imginfo+0x1aa28)                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+  Uninitialized value was created by a heap allocation                                                                                                                                                                                                                         
+    #0 0x557bb75bf639 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/msan/msan_interceptors.cc:1002                                                                                                                           
+    #1 0x7fc5621507d4 in jas_malloc /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:148:13                                                                                                                                        
+    #2 0x7fc562152520 in jas_alloc2 /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_malloc.c:275:9                                                                                                                                         
+    #3 0x7fc56233360c in jpc_dec_pi_create /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2dec.c:506:30                                                                                                                                   
+    #4 0x7fc5621f2c71 in jpc_dec_tileinit /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:911:19                                                                                                                                      
+    #5 0x7fc5621f2c71 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:560                                                                                                                                      
+    #6 0x7fc56220c574 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:391:10                                                                                                                                        
+    #7 0x7fc56220c574 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:255                                                                                                                                               
+    #8 0x7fc5621ac5a4 in jp2_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:215:21                                                                                                                                            
+    #9 0x7fc5620d69d1 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:396:16                                                                                                                                   
+    #10 0x557bb7618831 in main /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/appl/imginfo.c:203:16                                                                                                                                                          
+    #11 0x7fc5611e961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
+                                                                                                                                                                                                                                                                               
+SUMMARY: MemorySanitizer: use-of-uninitialized-value /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_t2cod.c:482:12 
+in jpc_pi_nextcprl                                                                                                      
+Exiting
 
+Affected version:
+1.900.17
 
+Fixed version:
+1.900.20
 
+Commit fix:
+https://github.com/mdadams/jasper/commit/1f0dfe5a42911b6880a1445f13f6d615ddb55387
 
---iFLd9jccMN9xE35RCHn5F99AFfU7tEoB4--
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
---jJiI7TrV8JUe6ElRTkOV1ABfEWqP2DhhR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+CVE:
+N/A
 
------BEGIN PGP SIGNATURE-----
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00029-jasper-uninitvalue-jpc_pi_nextcprl
 
-iQIcBAEBCgAGBQJXtJlCAAoJEEbsRvOfPi7xE3QQAIiiZe5Ox0OHl/+WyrsrKm6S
-U5x2Q8nh71g8msfEfdNVrRCh8c1JIbvE/DcX5yXK7lFVjSsv55Q9/LcZxHLa9bog
-33dK0F3x1VU3yl8Ps2Y0oMOnfK/HGzQeeytxDu0RCtdgI8R/IjytgumM7aA5rg0c
-emxlTq5Y8eRdjjoNfVs1U1B26tWOtQIW+Rl5ClwKSmRTcd77zTnN2wHLkzHZ4XJQ
-Bm1iWEnB+uT/lYtkJ73+pvACRS0Ui2S1d207LgQWkvOaDKJmdNAsgir6jjEIJjaB
-a3Uj/QnzDeXCVjCIIdZj+xO0mrLzg7nVJjHPm9eTP1evnqVzdkI6n0oxpNz2scIH
-bY6hKy1JciwKGVEioVJw2SXlp7P7/7Slm1/TBwynvRXk+fsQH7x9Ko7vDk6Sf08e
-BfdBdEltI4lYI98Tb55z+vFCrYzL7bGei1Si6i9Fzgi/r/xogPhLooFcRazqmOpY
-KisNbk59gwCLYzOEKNOa4EqsM2CU382/D6zBt4r6WdcUX5nVVW40fFypCEUfgy1a
-qm6oiUFcAG5RFg4xOL64+krzsQoyCLATpREk58mq/AoK54ebotuBIhne5FAmuj8l
-b17ZdNh1mVo5Ny0COtLbBwVDsUrZUeiaZSDRDRr5n/yc3SrXiOJOt6D/UycMTgeQ
-NcFJ982UCkEMrM4OvO7l
-=pIFi
------END PGP SIGNATURE-----
+Timeline:
+2016-11-03: bug discovered and reported to upstream
+2016-11-04: upstream released a patch
+2016-11-04: blog post about the issue
 
---jJiI7TrV8JUe6ElRTkOV1ABfEWqP2DhhR--
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/04/jasper-use-of-uninitialized-value-in-jpc_pi_nextcprl-jpc_t2cod-c
