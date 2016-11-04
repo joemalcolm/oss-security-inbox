@@ -1,85 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/08/7
-Message-Id: <20160108195517.AE8F26C00A6@smtpvmsrv1.mitre.org>
-Date: Fri,  8 Jan 2016 14:55:17 -0500 (EST)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jmm@...ian.org
-Subject: Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/15
+Message-ID: <20161104185753.ooimqlixnllmxwdd@harbard.iaik.tugraz.at>
+Date: Fri, 4 Nov 2016 19:57:53 +0100
+From: Nicolas Braud-Santoni <nicolas@...ud-santoni.eu>
+To: oss-security@...ts.openwall.com
+Cc: johannes.winter@...k.tugraz.at
+Subject: Re: CVE request: Escape Sequence Command Execution vulnerability in Terminology 0.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+PS: Ascii-art lovers might prefer the enclosed exploit,
+    which we wrote for our infosec lecture in Winter 2015
+    at Graz University of Technology.
 
-> The FreeRADIUS project has reported a flaw that affects the EAP-PWD
-> module of the freeradius package versions 3.0 up to 3.0.8. This module
-> is not enabled by default, so administrators must have manually enabled
-> it for their servers to be vulnerable.
+On Fri, Nov 04, 2016 at 05:59:59PM +0100, Nicolas Braud-Santoni wrote:
+> Hi,
 > 
-> http://freeradius.org/security.html#eap-pwd-2015
-
-We have revisited this and decided that it needs unique CVE IDs. As
-mentioned on that security.html page, "These issues were found by
-Jouni Malinen as part of investigating
-http://w1.fi/security/2015-4/" - this suggested a possibility that the
-CVE IDs listed in
-http://www.openwall.com/lists/oss-security/2015/05/31/6 would be
-applicable. However, FreeRADIUS apparently has an independent
-implementation of EAP-pwd. This led to a somewhat unusual situation in
-which most of the vulnerability findings were, at a high level, the
-same -- but resulted from a different set of mistakes within a
-different codebase. The applicable FreeRADIUS changes can be found in
-the "Commits on May 4, 2015" section of:
-
-  https://github.com/FreeRADIUS/freeradius-server/commits/v3.0.x/src/modules/rlm_eap/types/rlm_eap_pwd
-
-and are distinct from the changes in the http://w1.fi/security/2015-4/
-patches.
-
-We are associating the three CVE IDs below with the items on the
-security.html list, not with the specific FreeRADIUS commits.
-
-
->> The EAP-PWD packet length is not checked before the first byte is
->> dereferenced. A zero-length EAP-PWD packet will cause the module to
->> dereference a NULL pointer, and will cause the server to crash.
-
-Use CVE-2015-8762.
-
-
->> The commit message payload length is not validated before the packet
->> is decoded. This can result in a read overflow in the server.
->> 
->> The confirm message payload length is not validated before the packet
-> is decoded. This can result in a read overflow in the server.
-
-Use CVE-2015-8763 for both of these issues.
+> Terminology 0.7.0 suffers from a bug similar to CVE-2003-0063, where an
+> attacker able to print character escape sequences can modify the window
+> title and then insert it back in the terminal's input buffer, resulting
+> in arbitrary terminal input, including code execution as a local user.
+> 
+> A concrete attack scenario can work as follows: the attacker gets a
+> string triggering the vulnerability into a log file (or any other thing
+> that eventually gets displayed to the user).  When it is, at some later
+> point, displayed to the user, "echo 'evil'\n" gets written to the user's
+> terminal's input buffer, resulting in that command being executed by the
+> user's shell.
+> 
+> For example:
+> 
+> > printf "\e]2;echo 'evil'\n\a\e]2;?\a"
+> 
+> 
+> The issue was fixed in Terminology by
+> commit b80bedc7c21ecffe99d8d142930db696eebdd6a5 :
+> 
+>   https://git.enlightenment.org/apps/terminology.git/commit/?id=b80bedc7c21ecffe99d8d142930db696eebdd6a5
+> 
+> I would like to apply for a CVE number for this issue,
+> on behalf of the Debian security team.
+> 
+> 
+> Best regards,
+> 
+>   Nicolas Braud-Santoni
 
 
->> A strcpy() was used to pack a C string into an EAP-PWD packet. This
->> would result in an over-run of the destination buffer by one byte.
 
-Use CVE-2015-8764.
+View attachment "Makefile" of type "text/plain" (776 bytes)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+View attachment "marvin.txt" of type "text/plain" (13802 bytes)
 
-iQIcBAEBCAAGBQJWkBOHAAoJEL54rhJi8gl5Od0P/1Y8DafilHgNgmQP4D5DfdfB
-x9yuBDJt/rr8NnrbXsIjkuQMIB+UolyAcgEB4CDqiwh4SyYeZSbO1rj3zP0/1uS1
-TyjLGLLiKHc3B53vEK/m3tAZ1M5GEsp3rIH+McCsbip+WlDpkuKexJ8E0kBleWiH
-Mg5UslARv6b7yS5QIoH93MiiZSl+w0V0UtWIkEP1BfCskJhj9DvVd161hyRDcT7m
-ZG52NdBYzCUYP4BC58qEPYtGwM1+OMjaHa6MjkpzqvubMwtdzGK15zcljy/yvN6k
-oY7euhV55PbPsajuzHihBWWp0oejl5gBEiGX6fqCUS8BIoadaOFI9hKkWEBVKnav
-wrE7+f03C2GO/rs46jp1737qtNzIrBklyTblDItLDA1QDqpc5q/Sb9xlLycZ9o8H
-v++vSz3ZQILfi72T7BhhdMl5SQlfNuxdDw0BJBA6tC2+1thZWZBpIg/lXajHo9r9
-E3qszBo0cmh5MSAEdWOMGEInt9DvHymPTcXEtZYFQph54Xb1YS/YYpItX9w5e7e+
-nciRvLRFQwWzC0XJKv9klliStJygxW0g27StoMXncnDchRiIiBV4ypgPJITawi0L
-9LWMSpAhS2VYAAJQjchLaUHFAHgmXwsIKEJJ2k7iuUXF6Qytee3k2uRieRQ3Rvx0
-XhrlBiLeO/vhmZJ8trch
-=16O5
------END PGP SIGNATURE-----
+View attachment "terminalbug.S" of type "text/plain" (17474 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
