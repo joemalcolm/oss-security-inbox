@@ -1,50 +1,237 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/3
-Message-Id: <20161008152944.DC87242E058@smtpvbsrv1.mitre.org>
-Date: Sat,  8 Oct 2016 11:29:44 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu virtio-gpu: memory leak in virtio_gpu_resource_create_2d
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/14
+Message-ID: <e6956736-b884-6a5d-3e37-0fd46a52cc6e@igalia.com>
+Date: Fri, 4 Nov 2016 20:11:26 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2016-0006
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0006
+------------------------------------------------------------------------
 
-> Quick Emulator(Qemu) built with the Virtio GPU Device support is vulnerable to
-> a memory leakage issue. It could occur while processing virtio GPU command
-> VIRTIO_GPU_CMD_RESOURCE_CREATE_2D.
-> 
-> A privileged user/process inside guest could use this flaw to exhaust host
-> memory resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg04129.html
+Date reported      : November 04, 2016
+Advisory ID        : WSA-2016-0006
+Advisory URL       : https://webkitgtk.org/security/WSA-2016-0006.html
+CVE identifiers    : CVE-2016-4611, CVE-2016-4613, CVE-2016-4657,
+                     CVE-2016-4666, CVE-2016-4707, CVE-2016-4728,
+                     CVE-2016-4729, CVE-2016-4730, CVE-2016-4731,
+                     CVE-2016-4733, CVE-2016-4734, CVE-2016-4735,
+                     CVE-2016-4758, CVE-2016-4759, CVE-2016-4760,
+                     CVE-2016-4761, CVE-2016-4762, CVE-2016-4764,
+                     CVE-2016-4765, CVE-2016-4766, CVE-2016-4767,
+                     CVE-2016-4768, CVE-2016-4769, CVE-2016-7578.
 
-Use CVE-2016-7994.
+Several vulnerabilities were discovered in WebKitGTK+.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu.c but
-that may be an expected place for a later update.
+CVE-2016-4611
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4730, CVE-2016-4733, CVE-2016-4734, and
+    CVE-2016-4735.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2016-4613
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Chris Palmer.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of user information. Description: An input validation
+    issue was addressed through improved state management.
 
-iQIcBAEBCAAGBQJX+RAeAAoJEHb/MwWLVhi2gn8P/2WXoxRXiXfBxIc5Yt2YZjoZ
-+zqKhswXFESnQY3JC+qlkFVvg2sSoakc4gxkGHEx/2TOCVay4jQpw8hOU7njwEcA
-kLgOLYeSjQ0OhsSQ/sC3PPTe81GFVbYx7oWr9DcL/gcwj+/Yu1FIuIzt/PbsAiUz
-3l9j+TbNt98rhFgzmtFHzBRBhBgxQQZSFyFjpPTk4C9OJoiwygEifKAsdxOrA/WS
-ZQciImoinC5tAFbAJws8CcXy2vO6evxeEynULX0KeoMneh5opMAZmnZmaTpccTb2
-niLYlsPJivoDW1RxcXC2Bag29258PKq5A3j7Oo9GVvbGpa5EqAIVQOQGSuwg/Y+G
-PAQ0KxWwdPDlY3Kl6kz0Pz7qGUzQrtNdGzy5IKdCB+INfh4zmDTiGwyNFprIH/dN
-nSGbun+Xqi36K53a0quCxRzbudYGpiLzspWZmFml+Gn8Nx5O/6nCJCfQg0vRGBhD
-FE80+vo06KR5RGqDUgyBvvqloRtc/S+RoWEuLeXJoRG53MgD6yFKY6hqYIvNePLX
-yduwq534m0nR077H7r16z/oQJlcRid+nRjtHLATvUj2FSJ60OeP4YyorMGg04MLn
-clotlx8GYkbBVBgNGuqxg6mKvb2Aks2wKRYU81R4gE9v/8BfIEErsQn4617iNu5T
-VgECwvU7fbVvd5W1mQ3a
-=9OnQ
------END PGP SIGNATURE-----
+CVE-2016-4657
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Citizen Lab and Lookout.
+    WebKit in Apple iOS before 9.3.5 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site.
+
+CVE-2016-4666
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
+
+CVE-2016-4707
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Anonymous Researcher.
+    CFNetwork in Apple iOS before 10 and OS X before 10.12 mishandles
+    Local Storage deletion, which allows local users to discover the
+    visited web sites of arbitrary users via unspecified vectors.
+
+CVE-2016-4728
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Daniel Divricean.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 mishandles error prototypes, which
+    allows remote attackers to execute arbitrary code via a crafted web
+    site.
+
+CVE-2016-4729
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10 and Safari before 10 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4731.
+
+CVE-2016-4730
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4733, CVE-2016-4734, and
+    CVE-2016-4735.
+
+CVE-2016-4731
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10 and Safari before 10 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4729.
+
+CVE-2016-4733
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4730, CVE-2016-4734, and
+    CVE-2016-4735.
+
+CVE-2016-4734
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4730, CVE-2016-4733, and
+    CVE-2016-4735.
+
+CVE-2016-4735
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to André Bargull.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4730, CVE-2016-4733, and
+    CVE-2016-4734.
+
+CVE-2016-4758
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to Masato Kinugawa of Cure53.
+    WebKit in Apple iOS before 10, iTunes before 12.5.1 on Windows, and
+    Safari before 10 does not properly restrict access to the location
+    variable, which allows remote attackers to obtain sensitive
+    information via a crafted web site.
+
+CVE-2016-4759
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Tongbo Luo of Palo Alto Networks.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4765,
+    CVE-2016-4766, CVE-2016-4767, and CVE-2016-4768.
+
+CVE-2016-4760
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Jordan Milne.
+    WebKit in Apple iOS before 10, iTunes before 12.5.1 on Windows, and
+    Safari before 10 allows remote attackers to conduct DNS rebinding
+    attacks against non-HTTP Safari sessions by leveraging HTTP/0.9
+    support.
+
+CVE-2016-4761
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    An use-after-free vulnerability allows remote attackers to cause a
+    denial of service or possibly have unspecified other impact via
+    unknown vectors.
+
+CVE-2016-4762
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Zheng Huang of Baidu Security Lab.
+    WebKit in Apple iOS before 10, iTunes before 12.5.1 on Windows,
+    iCloud before 6.0 on Windows, and Safari before 10 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site.
+
+CVE-2016-4764
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-4765
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4766, CVE-2016-4767, and CVE-2016-4768.
+
+CVE-2016-4766
+    Versions affected: WebKitGTK+ before 2.12.4.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4765, CVE-2016-4767, and CVE-2016-4768.
+
+CVE-2016-4767
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4765, CVE-2016-4766, and CVE-2016-4768.
+
+CVE-2016-4768
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Anonymous working with Trend Micro's Zero Day Initiative.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4765, CVE-2016-4766, and CVE-2016-4767.
+
+CVE-2016-4769
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Tongbo Luo of Palo Alto Networks.
+    WebKit in Apple iTunes before 12.5.1 on Windows and Safari before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption and application crash) via a crafted
+    web site.
+
+CVE-2016-7578
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+November 04, 2016
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
