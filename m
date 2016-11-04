@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/6
-Message-ID: <e53a33b2e1e14b4ebe7f85cec7f4f631@imshyb02.MITRE.ORG>
-Date: Mon, 19 Dec 2016 11:34:56 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/4
+Message-ID: <b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>
+Date: Fri, 4 Nov 2016 03:08:48 -0400
 From: <cve-assign@...re.org>
-To: <security@....org>
+To: <citypw@...il.com>
 CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Xen Security Advisory 204 - x86: Mishandling of SYSCALL singlestep during emulation
+Subject: Re: kernel: fix minor infoleak in get_user_ex()
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
->                     Xen Security Advisory XSA-204
+> get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
+> (at most we are leaking uninitialized 64bit value off the kernel
+> stack, and in a fairly constrained situation
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
+> https://lwn.net/Articles/705264/
 
-> Xen wrongly raised the exception based on the flags at the start of
-> the instruction.
-
-> Guest userspace which can invoke the instruction emulator can use this
-> flaw to escalate its privilege to that of the guest kernel.
-
-> A 64-bit guest kernel which uses an IST for #DB handling will most likely
-> mitigate the issue, but will have a single unexpected #DB exception
-> frame to deal with. This in practice means that Linux is not
-> vulnerable.
-
-Use CVE-2016-10013.
+Use CVE-2016-9178.
 
 - -- 
 CVE Assignment Team
@@ -34,17 +28,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYWAvbAAoJEHb/MwWLVhi2rVQP/jbDygsBkkatt/w7GbxvpCjr
-IoSo+krkGda29Dgi4pMAcP8zG3KgRso4tJ48z+Jn30+EpO3zgQSLcCfEaB6Vfbcp
-zZ1wrer8KTvm5ZcV01vncEO/FVvyXX2KZ6h7XuVakOXCRE1+YEPuvdqdc6UyH7aD
-mctdIVrR6jDzpsLDT6uZM6ahcCwRp6VDmxz0r4195RygOWqkmsVPmM9Q6F/VyG4A
-KxBAUFIHUYHdu9Hy/s6U3+M8ugzvpeKKkkBuUcDrFvKu/gfeyFisDlG7GgUtFvp0
-DRKHzxrE20UQjU7VJBXpfvkSaorWp9IlhsnrXyIJNyTxb1N3UtkYrDJpxXRlar7y
-Jj/cVdPT7apIWDIRmRxLWqWrvB2dlx+j3NP3z+wETaKBrLNKj8Aq2h/013VR4CZm
-QMvNQEYhKr+/AdGiVTDeUBsyqAlpp1aXhrvka4Bz1Ws9BAfTdjivGuOn6ab+Zm2U
-foecT2t7ktS927yD4uAtE/dFqNrGHORFt4Kr6A+akqYMwxmuaItpctsqMTecB09p
-vXFAnYk4leKzqd5QkDmqqIilTDAhdN9M0K0SJUebiJgRmhxqU0fhrA4I5jzofggh
-yoKuStjvt0mM3+UQngv56ohPpCjvMxsbPwl8nN8yhwJUx/ncmpWRm74+wece5SuD
-agwy+ENLZv0fk0rv5BKv
-=KJsh
+iQIcBAEBCAAGBQJYHDIZAAoJEHb/MwWLVhi2IVYP/R24MqfqIc1TDy62xNPR8gcu
+AagimLd3Vuuqyjf63QNercHvGfDoYnwg/94OsLR/mX+jzd2M4tfXxb4Jr5Rfiul6
+9rkwX+/Fd8E5gRu6N494xtbgPOsUApgMAspLOc7iUJ8pUcxe7A1k47F+xJovTeKx
+ode5Atqdzgp1yN0QEPcxLG+6fyhDpBG4wwxKaYxDT5CLjkG7PWlNbGmsKhJjCpcA
+Dlj/mLNI9nQL0qXIG3tLJfZ+sNOn0Ptq3VPz4osrEVZpGkr0+xQWHpmNYZg0pc80
+gmJVIkPH1DnnMeGh88amjMSk3sCGvSiUZKOU8fLPHwYZOBC7Ka44GEBq4yX1CjhD
+L5wrMxJAZQVavRbTK4FEsj2agNkBoTSYwiZvMrQioW8CPwJN3WAaVLZiGx6f62Kc
+OmFXfltVjFHmMfxyEi4hcyVVNAD0XeIz+gxV9vAFebtbwnjvdRd0uQ7pnwpiYP9N
+E+PoZWZMyzhVciI0+UFhxABhA8rPX3ceWH0LiNKzCj2CwZJTwJVbLdLbLih5/7rZ
+WNZf/oaV67rAVF5fVwIFhO7+ihyiOIlgduphxgshAgZSBl3UTTuDqQKpaCld6Zhv
+G2RUyZy7LPCQysCYhzmFfXoc2mnI1xSgRTtUwhjAHdrIMnFt9FshiADMXcSxdd4G
+OxELxPZCTGX4qVO3xmty
+=RnaX
 -----END PGP SIGNATURE-----
