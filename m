@@ -1,4 +1,9 @@
-Received: (qmail 21945 invoked by uid 550); 30 Mar 2024 14:30:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1413" "Friday" "4" "November" "2016" "03:08:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>" "34" "[oss-security] Re: kernel: fix minor infoleak in get_user_ex()" nil nil nil "11" "2016110407:08:48" "[oss-security] Re: kernel: fix minor infoleak in get_user_ex()" (number mark "U       cve-assign@m Nov  4   34/1413  " thread-indent "\"[oss-security] Re: kernel: fix minor infoleak in get_user_ex()\"\n") "<CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>" ("<CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28251 invoked by uid 550); 4 Nov 2016 07:09:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26270 invoked from network); 30 Mar 2024 14:12:06 -0000
-Date: Sat, 30 Mar 2024 15:11:56 +0100
-From: Marcin Wolcendorf <antymat@chelmska.waw.pl>
-To: oss-security@lists.openwall.com
-Message-ID: <20240330141156.jjmihsyutrha4e53@chelmska.waw.pl>
-References: <20240329211052.GA2470@openwall.com>
- <uu7da3$87n$1@ciao.gmane.io>
- <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
- <uu7g5q$8hl$1@ciao.gmane.io>
- <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
- <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
- <uu7k2m$61a$1@ciao.gmane.io>
- <4f2d978b-e94d-44c1-b6d1-d4c18c9d9eb0@canonical.com>
- <uu7uid$4ig$1@ciao.gmane.io>
- <f5595730-197f-41ed-9c72-d92bd6eddd36@canonical.com>
+Received: (qmail 28219 invoked from network); 4 Nov 2016 07:08:59 -0000
+From: <cve-assign@mitre.org>
+To: <citypw@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>
+Message-ID: <b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>
+Date: Fri, 4 Nov 2016 03:08:48 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <f5595730-197f-41ed-9c72-d92bd6eddd36@canonical.com>
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
- ssh server compromise
+Content-Type: text/plain
+Subject: [oss-security] Re: kernel: fix minor infoleak in get_user_ex()
 
-On Sat, Mar 30, 2024 at 09:34:45AM -0400, Marc Deslauriers wrote:
-> On 2024-03-29 22:48, Tavis Ormandy wrote:
-> > On 2024-03-30, Marc Deslauriers wrote:
-> >=20
-> > Sure - but why do you have to do that in private? You can get everyone
-> > to help get those answers and converge on the correct solution
-> > quickly.
-> >=20
-> > The attackers already knew about this issue, so you were just keeping it
-> > from defenders... that doesn't make sense to me.
->=20
-> I'll let you in on a little secret: malicious entities also read this lis=
-t.
->=20
-> There is no way to discuss this in public without turning a single malici=
-ous
-> entity into 10 000 malicious entities once the information is widely know=
-n.
->=20
-> Making sure the impact and mitigations are known before posting this
-> publicly so that everyone knows what to do before the 10 000 malicious
-> entities start attacking is just common sense.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'll let you in on a little secret, too: bad actors talk to each other! They
-exchange information about the exploits. So you already *potentially have*=
-=20
-10000 of them trying to exploit the vulnerability, with the most of the
-affected people being none-the-wiser.=20
+> get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
+> (at most we are leaking uninitialized 64bit value off the kernel
+> stack, and in a fairly constrained situation
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
+> https://lwn.net/Articles/705264/
 
-I'd rather know, so I can do something to avoid or repair the damage, inste=
-ad
-of figuring out my systems might have been compromised for weeks. If you wa=
-nt
-to sit in the dark - feel free, just don't take me with you.=20
-=20
-M.
+Use CVE-2016-9178.
 
---=20
-=07=07=07=07	*** System shutdown message from root ***
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-System going down in 60 seconds
-
-
+iQIcBAEBCAAGBQJYHDIZAAoJEHb/MwWLVhi2IVYP/R24MqfqIc1TDy62xNPR8gcu
+AagimLd3Vuuqyjf63QNercHvGfDoYnwg/94OsLR/mX+jzd2M4tfXxb4Jr5Rfiul6
+9rkwX+/Fd8E5gRu6N494xtbgPOsUApgMAspLOc7iUJ8pUcxe7A1k47F+xJovTeKx
+ode5Atqdzgp1yN0QEPcxLG+6fyhDpBG4wwxKaYxDT5CLjkG7PWlNbGmsKhJjCpcA
+Dlj/mLNI9nQL0qXIG3tLJfZ+sNOn0Ptq3VPz4osrEVZpGkr0+xQWHpmNYZg0pc80
+gmJVIkPH1DnnMeGh88amjMSk3sCGvSiUZKOU8fLPHwYZOBC7Ka44GEBq4yX1CjhD
+L5wrMxJAZQVavRbTK4FEsj2agNkBoTSYwiZvMrQioW8CPwJN3WAaVLZiGx6f62Kc
+OmFXfltVjFHmMfxyEi4hcyVVNAD0XeIz+gxV9vAFebtbwnjvdRd0uQ7pnwpiYP9N
+E+PoZWZMyzhVciI0+UFhxABhA8rPX3ceWH0LiNKzCj2CwZJTwJVbLdLbLih5/7rZ
+WNZf/oaV67rAVF5fVwIFhO7+ihyiOIlgduphxgshAgZSBl3UTTuDqQKpaCld6Zhv
+G2RUyZy7LPCQysCYhzmFfXoc2mnI1xSgRTtUwhjAHdrIMnFt9FshiADMXcSxdd4G
+OxELxPZCTGX4qVO3xmty
+=RnaX
+-----END PGP SIGNATURE-----
