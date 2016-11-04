@@ -1,87 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/20/7
-Message-ID: <20160720214852.GA23823@nekral.nekral.homelinux.net>
-Date: Wed, 20 Jul 2016 23:48:52 +0200
-From: Nicolas François <nicolas.francois@...traliens.net>
-To: "Eric W. Biederman" <ebiederm@...ssion.com>
-Cc: Sebastian Krahmer <krahmer@...e.com>, oss-security@...ts.openwall.com, pkg-shadow-devel@...ts.alioth.debian.org
-Subject: Re: [Pkg-shadow-devel] subuid security patches for shadow package
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/12
+Message-ID: <20161104165959.zifap46bmaxapmda@harbard.iaik.tugraz.at>
+Date: Fri, 4 Nov 2016 17:59:59 +0100
+From: Nicolas Braud-Santoni <nicolas@...ud-santoni.eu>
+To: oss-security@...ts.openwall.com
+Cc: security@...ian.org, ross@...listi.us
+Subject: CVE request: Escape Sequence Command Execution vulnerability in Terminology 0.7
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-The first point looks like a non issue to me.
+Terminology 0.7.0 suffers from a bug similar to CVE-2003-0063, where an
+attacker able to print character escape sequences can modify the window
+title and then insert it back in the terminal's input buffer, resulting
+in arbitrary terminal input, including code execution as a local user.
 
-getlogin() is used to differentiate users with the same UID.
-The result of getlogin() is checked: if it returns a username that do not
-have the UID returned by getuid(), it will be ignored.
+A concrete attack scenario can work as follows: the attacker gets a
+string triggering the vulnerability into a log file (or any other thing
+that eventually gets displayed to the user).  When it is, at some later
+point, displayed to the user, "echo 'evil'\n" gets written to the user's
+terminal's input buffer, resulting in that command being executed by the
+user's shell.
+
+For example:
+
+> printf "\e]2;echo 'evil'\n\a\e]2;?\a"
 
 
-Best Regards,
--- 
-Nekral
+The issue was fixed in Terminology by
+commit b80bedc7c21ecffe99d8d142930db696eebdd6a5 :
+
+  https://git.enlightenment.org/apps/terminology.git/commit/?id=b80bedc7c21ecffe99d8d142930db696eebdd6a5
+
+I would like to apply for a CVE number for this issue,
+on behalf of the Debian security team.
 
 
+Best regards,
 
-On Tue, Jul 19, 2016 at 08:32:38AM -0500, Eric W. Biederman wrote:
-> 
-> Adding the shadow-development list, so there is a chance other people
-> familiar with the code can comment as well.
-> 
-> Sebastian Krahmer <krahmer@...e.com> writes:
-> 
-> > On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
-> >> Hi
-> >> 
-> >> The shadow package contains newuidmap and newgidmap suid
-> >> binaries in order to allow users to take advantage of the
-> >> userns feature of uid-mappings.
-> >> 
-> >> I added patches here:
-> >> 
-> >> https://bugzilla.suse.com/show_bug.cgi?id=979282
-> >> 
-> >> they consist of:
-> >> 
-> >> 1) Removing getlogin() to find out about users.
-> >>    It relies on utmp, which is not a trusted base of info (group writable).
-> >> 
-> >> 2) Cleaning up UID retrieval and computation. The 'long long' code was
-> >>    totally unclear to me, as the numbers are converted to ulong right
-> >>    afterwards anyway. Additionally there was a *int overflow*, which can be
-> >>    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
-> >>    which produces no error but tries to write large "count" values to the uid_map
-> >>    file. Kernel may check for overflows itself, but it should not be allowed
-> >>    by a suid binary to be written in the first place.
-> >
-> > After checking some kernels, it looks like this int wrap is exploitable as a LPE,
-> > as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
-> > as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
-> > different view on the upper and lower bounds, making newuidmap overflow (and pass)
-> > and still being in bounds inside the kernel.
-> >
-> > Maybe it would be wise to align integer widths of kernel and the userspace
-> > tools.
-> >
-> > So everyone shipping newuidmap as mode 04755 should fix it. :)
-> 
-> Thank you for the review and looking at this.  I agree that the integer
-> size issues should all be locked down and handled more clearly.
-> 
-> I think it should be code in have_sub_uids and have_sub_gids that should
-> be catching overflows and the like.  Limiting things to what is actually
-> allowed by the subuid file.
-> 
-> I also agree that the kernel is permitting more than it needs to which
-> in case like this is not helpful.
-> 
-> The issues with the library functions get_my_pwent and getulong I will
-> have to come up to speed on before I comment knowledgably, but they
-> definitely appear to be worth looking at.
-> 
-> Eric
-> 
-> _______________________________________________
-> Pkg-shadow-devel mailing list
-> Pkg-shadow-devel@...ts.alioth.debian.org
-> http://lists.alioth.debian.org/cgi-bin/mailman/listinfo/pkg-shadow-devel
+  Nicolas Braud-Santoni
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
