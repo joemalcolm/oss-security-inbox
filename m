@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/19/4
-Message-ID: <CALJHwhQEOavmdQ_dqNS2k5b1SFuvKUBTuQtOySi6zUfgSQ3-1Q@mail.gmail.com>
-Date: Fri, 19 Aug 2016 17:10:30 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/7
+Message-ID: <20161104095232.010c9d40@pc1>
+Date: Fri, 4 Nov 2016 09:52:32 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-6327 | Linux kernel crash in infiniband subsystem.
+Subject: Re: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
-System using the infiniband support module ib_srpt were vulnerable to
-a denial of service by system crash by a local attacker who is able to
-abort writes to a device using this initiator.
+On Wed, 2 Nov 2016 11:07:45 +0000
+Stuart Henderson <stu@...cehopper.org> wrote:
 
-There were multiple areas in which aborting a scsi command are able to
-be handled, moving this to the correct location in the state machine
-ensured that this condition was never triggered through this code
-path.
+> This switches to using libidn2,
+[...]
+> Has anyone poked at it much yet?
 
-The null pointer situation was enabled via a non attacker controlled
-meset() call, and this is not a use after free.  From my undestanding
-it is a denial of service only.
+I poked a bit.
+Nothing spectacular, a stac underread (accesses -1 of array), but only
+in the command line tool:
+https://gitlab.com/jas/libidn2/commit/3e3742321e7a280874903a7f7ae9bae7852c3415
 
-Thanks,
+And a memleak (not committed yet, sent to the maintianer).
 
-Wade Mealing
+It's only one function, so it's not too much to test.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1354525
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=51093254bf87
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
