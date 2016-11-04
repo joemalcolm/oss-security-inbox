@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["697" "Wednesday" "13" "June" "2018" "23:07:18" "+0400" "Loganaden Velvindron" "loganaden@gmail.com" "<CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>" "22" "[oss-security] Re: Intel FP security issue" "^Cc:" nil nil "6" "2018061319:07:18" "[oss-security] Re: Intel FP security issue" (number mark "        loganaden@gm Jun 13   22/697   " thread-indent "\"[oss-security] Re: Intel FP security issue\"\n") "<CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>" ("<CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11111" "Friday" "4" "November" "2016" "20:11:26" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<e6956736-b884-6a5d-3e37-0fd46a52cc6e@igalia.com>" "255" "[oss-security] WebKitGTK+ Security Advisory WSA-2016-0006" nil nil nil "11" "2016110419:11:26" "[oss-security] WebKitGTK+ Security Advisory WSA-2016-0006" (number mark "U       clopez@igali Nov  4  255/11111 " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2016-0006\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15558 invoked by uid 550); 13 Jun 2018 19:10:07 -0000
+Received: (qmail 11496 invoked by uid 550); 4 Nov 2016 19:11:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,282 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11382 invoked from network); 13 Jun 2018 19:07:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7NUKPCc1AzYNtiyo7Sh23RBX31HT9kBxF0czfS6QPzY=;
-        b=BJFYKKjob+mgY61jm0IkKEVSwczAIbUwYay5uWMfHx12AycX+qcswBuLisua7/E4i8
-         VPfsBpuLpgBrt4bpAz2VIZiEWW34Wb/s1wBx8M8o+bhxPkBJft50ovxR9Nr//46iTMvR
-         lCAn8B9OFDe1Z10zHABsNrndAuPd0nrgKlb65KutCFaFJP3pzN0DZXgspuAkRWuGVsGR
-         fmcnuxxh8VDWC2MwVSxQoLDlqsViL3xapNHGclX29bE6TF6HUfjsNHwxqe5vObxqa8jd
-         Legdj82fzyfQMmvuNC+THDPyeMs7A5infwBSamtISkN3fVEbJNdwArwG8confH5oPh5P
-         sV+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7NUKPCc1AzYNtiyo7Sh23RBX31HT9kBxF0czfS6QPzY=;
-        b=ONeKQqjsXMhy1V3g449sG2k0UuXtaaOaKaqn0zFNtUxbpYmcs6lWGck/iSJZqz/WND
-         5izPylYJhL4NbscGOGUdlSD2IXj8yOff2fL5CMJXdrdOpmFKYxhoPD6g+mQjunStP9JA
-         dZHnOGM4v+7MDl5QmbWGn7juejmsLsqpLzUXM1cwBINrnqtfONk8ByxFLI5DbKSi/6Ye
-         ADpaKiS/0t/47EZLghL7V82Zal1HK3tWzuC7SToKp2Dj2SF+rWx9n4mrefdFAQm2VKKd
-         EMEB5APW05Ov/vbwBG9M8IRPMctKpYQqAXf/0UtKQTWwhu5ux1UvHb647bTxRl3hzPKM
-         Cefg==
-X-Gm-Message-State: APt69E1uG6kbfNQhz3U3MK9fhr6asy9Ix3sxhYzk8q0fN8r3HSMItKsk
-	C6wyqAPE+LvZHA8Zte5isyr+4zh1QhBO4WaPOSUZcBGc
-X-Google-Smtp-Source: ADUXVKIQkWuSG+SqheMlwes5C5kQ2jreq2mRjBIHu8U3WfhDWt/x6r/FqyD+L78rSjTdvU0oBwWtKeAtkGaKuXH2S0E=
-X-Received: by 2002:a24:2bc1:: with SMTP id h184-v6mr5780455ita.84.1528916839079;
- Wed, 13 Jun 2018 12:07:19 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
-References: <CAOp4FwSfmC=vLLSTxZYFbAbkh_j3eJJGqvwTg5R_bgzh9vyuEA@mail.gmail.com>
-Message-ID: <CAOp4FwSb4wWUGL57msLTj1yNjzCtQP3zqKfLba8RME0L+4VWkg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: secure@intel.com
-Date: Wed, 13 Jun 2018 23:07:18 +0400
-From: Loganaden Velvindron <loganaden@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Intel FP security issue
-To: oss-security@lists.openwall.com
+Received: (qmail 11453 invoked from network); 4 Nov 2016 19:11:50 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: A2CMAgBd3BxY/5tjdVtdGwEBAQMBAQEJAQEBgy4BAQEBAR9YKlKNOKtGgggYEIV7gho/FAECAQEBAQEBAWIdC4ULVl0CSwETDQgCiFgBCa8yjHMBAQgCFwkFgi+EEIF9hBSCWxyCYAstglwFiEuRWINKgXlxigyBboRviASBKY0hhAQeNzApCgmDNYFtcYUIAQEkB4IPAQEB
+X-IPAS-Result: A2CMAgBd3BxY/5tjdVtdGwEBAQMBAQEJAQEBgy4BAQEBAR9YKlKNOKtGgggYEIV7gho/FAECAQEBAQEBAWIdC4ULVl0CSwETDQgCiFgBCa8yjHMBAQgCFwkFgi+EEIF9hBSCWxyCYAstglwFiEuRWINKgXlxigyBboRviASBKY0hhAQeNzApCgmDNYFtcYUIAQEkB4IPAQEB
+X-IronPort-AV: E=Sophos;i="5.31,444,1473112800"; 
+   d="asc'?scan'208";a="190791322"
+To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
+ url=http://key.neutrino.es
+Organization: Igalia S.L.
+Message-ID: <e6956736-b884-6a5d-3e37-0fd46a52cc6e@igalia.com>
+Date: Fri, 4 Nov 2016 20:11:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.4.0
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="s62dBqe82QvIAiFfb7nnIEAnVvwuDG5cL"
+Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2016-0006
 
-On Wed, Jun 13, 2018 at 7:34 PM, Loganaden Velvindron
-<loganaden@gmail.com> wrote:
-> Hi All,
->
-> Both OpenBSD and DragonflyBSD have gone ahead and committed fixes for
-> the rumored Intel FP issue:
->
-> OpenBSD: https://marc.info/?l=openbsd-cvs&m=152818076013158&w=2
-> DragonflyBSD: http://lists.dragonflybsd.org/pipermail/commits/2018-June/672324.html
->
-> I think that the cat is already out of the bag, and releasing details
-> of this security problem makes sense. Since this has gone public, Is
-> there a reason to keep this under embargo ?
->
+--s62dBqe82QvIAiFfb7nnIEAnVvwuDG5cL
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-FreeBSD appears to be moving in this direction too:
-https://svnweb.freebsd.org/base?view=revision&revision=335072
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2016-0006
+------------------------------------------------------------------------
+
+Date reported      : November 04, 2016
+Advisory ID        : WSA-2016-0006
+Advisory URL       : https://webkitgtk.org/security/WSA-2016-0006.html
+CVE identifiers    : CVE-2016-4611, CVE-2016-4613, CVE-2016-4657,
+                     CVE-2016-4666, CVE-2016-4707, CVE-2016-4728,
+                     CVE-2016-4729, CVE-2016-4730, CVE-2016-4731,
+                     CVE-2016-4733, CVE-2016-4734, CVE-2016-4735,
+                     CVE-2016-4758, CVE-2016-4759, CVE-2016-4760,
+                     CVE-2016-4761, CVE-2016-4762, CVE-2016-4764,
+                     CVE-2016-4765, CVE-2016-4766, CVE-2016-4767,
+                     CVE-2016-4768, CVE-2016-4769, CVE-2016-7578.
+
+Several vulnerabilities were discovered in WebKitGTK+.
+
+CVE-2016-4611
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4730, CVE-2016-4733, CVE-2016-4734, and
+    CVE-2016-4735.
+
+CVE-2016-4613
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Chris Palmer.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of user information. Description: An input validation
+    issue was addressed through improved state management.
+
+CVE-2016-4657
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Citizen Lab and Lookout.
+    WebKit in Apple iOS before 9.3.5 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site.
+
+CVE-2016-4666
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
+
+CVE-2016-4707
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Anonymous Researcher.
+    CFNetwork in Apple iOS before 10 and OS X before 10.12 mishandles
+    Local Storage deletion, which allows local users to discover the
+    visited web sites of arbitrary users via unspecified vectors.
+
+CVE-2016-4728
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Daniel Divricean.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 mishandles error prototypes, which
+    allows remote attackers to execute arbitrary code via a crafted web
+    site.
+
+CVE-2016-4729
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10 and Safari before 10 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4731.
+
+CVE-2016-4730
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4733, CVE-2016-4734, and
+    CVE-2016-4735.
+
+CVE-2016-4731
+    Versions affected: WebKitGTK+ before 2.12.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10 and Safari before 10 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4729.
+
+CVE-2016-4733
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4730, CVE-2016-4734, and
+    CVE-2016-4735.
+
+CVE-2016-4734
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Natalie Silvanovich of Google Project Zero.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4730, CVE-2016-4733, and
+    CVE-2016-4735.
+
+CVE-2016-4735
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Andr=C3=A9 Bargull.
+    WebKit in Apple iOS before 10, Safari before 10, and tvOS before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption) via a crafted web site, a different
+    vulnerability than CVE-2016-4611, CVE-2016-4730, CVE-2016-4733, and
+    CVE-2016-4734.
+
+CVE-2016-4758
+    Versions affected: WebKitGTK+ before 2.12.1.
+    Credit to Masato Kinugawa of Cure53.
+    WebKit in Apple iOS before 10, iTunes before 12.5.1 on Windows, and
+    Safari before 10 does not properly restrict access to the location
+    variable, which allows remote attackers to obtain sensitive
+    information via a crafted web site.
+
+CVE-2016-4759
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Tongbo Luo of Palo Alto Networks.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4765,
+    CVE-2016-4766, CVE-2016-4767, and CVE-2016-4768.
+
+CVE-2016-4760
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Jordan Milne.
+    WebKit in Apple iOS before 10, iTunes before 12.5.1 on Windows, and
+    Safari before 10 allows remote attackers to conduct DNS rebinding
+    attacks against non-HTTP Safari sessions by leveraging HTTP/0.9
+    support.
+
+CVE-2016-4761
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    An use-after-free vulnerability allows remote attackers to cause a
+    denial of service or possibly have unspecified other impact via
+    unknown vectors.
+
+CVE-2016-4762
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Zheng Huang of Baidu Security Lab.
+    WebKit in Apple iOS before 10, iTunes before 12.5.1 on Windows,
+    iCloud before 6.0 on Windows, and Safari before 10 allows remote
+    attackers to execute arbitrary code or cause a denial of service
+    (memory corruption) via a crafted web site.
+
+CVE-2016-4764
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-4765
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4766, CVE-2016-4767, and CVE-2016-4768.
+
+CVE-2016-4766
+    Versions affected: WebKitGTK+ before 2.12.4.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4765, CVE-2016-4767, and CVE-2016-4768.
+
+CVE-2016-4767
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4765, CVE-2016-4766, and CVE-2016-4768.
+
+CVE-2016-4768
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Anonymous working with Trend Micro's Zero Day Initiative.
+    WebKit in Apple iOS before 10, tvOS before 10, iTunes before 12.5.1
+    on Windows, and Safari before 10 allows remote attackers to execute
+    arbitrary code or cause a denial of service (memory corruption) via
+    a crafted web site, a different vulnerability than CVE-2016-4759,
+    CVE-2016-4765, CVE-2016-4766, and CVE-2016-4767.
+
+CVE-2016-4769
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Tongbo Luo of Palo Alto Networks.
+    WebKit in Apple iTunes before 12.5.1 on Windows and Safari before 10
+    allows remote attackers to execute arbitrary code or cause a denial
+    of service (memory corruption and application crash) via a crafted
+    web site.
+
+CVE-2016-7578
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
 
 
-> Kind regards,
-> //Logan
-> C-x-C-c
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+November 04, 2016
+
+
+--s62dBqe82QvIAiFfb7nnIEAnVvwuDG5cL
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: You can fetch my GnuPG key from http://key.neutrino.es
+
+iQIcBAEBCgAGBQJYHN1eAAoJEJZQic5rlfiCTAkP/jUx4pceDJyFFxzkCP69gXsw
++PVD2Hn9gcwuLNyr5YgTArhpCLWGiggH1IvI4IriZZgmwoqt1YU2ek7T0F84mkrG
+ai8lXoRRrdAwnshI2wwURG5vWrchFZqJr5OXL7A6sV4ul8yge+pm/O3Bfk2626Mc
+HCTkdlki61AoyDi2H7DFO1kp4GK3v5h6YyAwbnbu51IyzWJGDio2e9tupGTn1/9N
+cf5N/TZHJaBNijpptBNkCl1GiYENYAk0AOuQG7bPKKXHxlX2eIjXcFCyFDdjk4YV
+dQ8orsAJAC6vz4wfpudSsjtkojBvea0VECvMgh8/8HkJEyMjLJp2S8mIIOSybiNI
+033H37dJEVoNejpWrLTRJAfEhNuZu+7ONDEVZHWMPaLu+Bw0+WS1uXXpSca2fvNA
+VnXnocjGqldgKkppKtBz8Dvf48N2QmHeGliQOutTYUlFRHr3Pw98YGE7MQMjUAAJ
+QcZ4DaPb2ViV4/HrOZux1uD5f+9tmvuFt/i7R6x9Zh0Hwo/6w3DDe9CtkJtNSlr1
+VrOO2QFxl6T/Akket/8XfAgJ2e4hf0ywkM4S2JTKFFfMVEjz76p8ZHopi2iqZewW
+l1Yg7WG0/A6AdxPIWfnnobUG9Gre9f8wesF7F7vMQZ6TFSSv2NMdUAAOck+egPAP
+yqpdpuaO3+gQ1I7hv+C3
+=tzNv
+-----END PGP SIGNATURE-----
+
+--s62dBqe82QvIAiFfb7nnIEAnVvwuDG5cL--
