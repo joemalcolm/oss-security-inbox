@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7798" "Monday" "26" "June" "2017" "06:40:36" "-0400" "Brad Spengler" "spender@grsecurity.net" "<20170626104036.GA21186@grsecurity.net>" "174" "Re: [oss-security] Can someone explain all the CONFIG_VMAP_STACK CVEs lately?" "^Date:" nil nil "6" "2017062610:40:36" "[oss-security] Can someone explain all the CONFIG_VMAP_STACK CVEs lately?" (number mark "        spender@grse Jun 26  174/7798  " thread-indent "\"Re: [oss-security] Can someone explain all the CONFIG_VMAP_STACK CVEs lately?\"\n") "<CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>" ("<CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2335" "Friday" "4" "November" "2016" "14:59:46" "+0100" "Kristian Fiskerstrand" "kristian.fiskerstrand@sumptuouscapital.com" "<16a1c14b-1402-3eab-4e2c-44aa75192d8b@sumptuouscapital.com>" "59" "Re: [oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^Cc:" nil nil "11" "2016110413:59:46" "[oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        kristian.fis Nov  4   59/2335  " thread-indent "\"Re: [oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") "<20161104114855.GA13029@hurricane.linuxnetz.de>" ("<40eb0cc31307456c8bd21fa16e044f90@imshyb02.MITRE.ORG>" "<alpine.DEB.2.20.1611040816000.375@tvnag.unkk.fr>" "<20161104114855.GA13029@hurricane.linuxnetz.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 18282 invoked by uid 550); 26 Jun 2017 10:52:18 -0000
+Received: (qmail 32147 invoked by uid 550); 4 Nov 2016 14:04:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,193 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13508 invoked from network); 26 Jun 2017 10:40:49 -0000
-Message-ID: <20170626104036.GA21186@grsecurity.net>
-References: <CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>
+Received: (qmail 28460 invoked from network); 4 Nov 2016 14:00:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sumptuouscapital-com.20150623.gappssmtp.com; s=20150623;
+        h=subject:to:references:from:cc:message-id:date:user-agent
+         :mime-version:in-reply-to;
+        bh=yLqKZQQkxHtaReM3pQOrr6iNeYMRNxQ8BymNCBPLUNY=;
+        b=Hk4Xm/biCRbigzYPxUw3HKxnAkBC5G89kzFqwuAI23hha9wwQQUxGhaUd2QcTbF1M5
+         w5h6fjn2AnAFtku3H3OVrUb8RFqBG4NQJMf9h2ilPs5H7c6RTlcNpRn8Cu5QAtTtUmKX
+         eY7sH30a0GOzKvnSTL96AipGzqUFgAOamAPUshxORyVOJYPHajZ6wzbHHkB4mePQfjQF
+         bYh6p7j+7kqr01M30S+tj6ZIF6Q8Iws/BtYOpMOtDe5xEVSexUoyg0aTqbYYR4dOY/mG
+         eULAPnTW/a92BVLpQ7v49HowQI+feArJ6eDYQYxuPYQIQ5x7YEjsmQgck7UozS3ffJLZ
+         DNPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:from:cc:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=yLqKZQQkxHtaReM3pQOrr6iNeYMRNxQ8BymNCBPLUNY=;
+        b=eOcFh1/MzB/AJ74EM0cQdXr9upVIG4kFAbxTn6g4VwXkR2SjSnMYxyyHc1Qw82SVej
+         teqczaJlLZdLSRDLvBDggs+TiyE0EOGMZFMnT7itOLHGOBbDzaGyWSZCs6U1OeZcJiZU
+         GNEKC+IjTgPQp4SzxH0856bjq1aN5ZbYHz1Qu8oAuaxjsLdqJnW5Yhk25+iWhnlwXl1P
+         5ShcRHHYCWMiLlGXfNDwPxXZdk+o0PEeB6uFSEAWCR1TwC9cWtvlqCnYa/T1rf1rP2Xb
+         7vopNWBqV4eNuyNpQ4bolbv6SBrbc6kU6j2iSwpJnhBw6AxCliA6vx3DBzlz0gYVoT3A
+         5W+Q==
+X-Gm-Message-State: ABUngvf9cVOubyC5TGDVVVDkhtyHi6wWgyfCU/7kAmwXmNn0/jrFSpLCNlSC+z2tVqUMFg==
+X-Received: by 10.25.215.208 with SMTP id q77mr4432400lfi.126.1478267989460;
+        Fri, 04 Nov 2016 06:59:49 -0700 (PDT)
+References: <40eb0cc31307456c8bd21fa16e044f90@imshyb02.MITRE.ORG>
+ <alpine.DEB.2.20.1611040816000.375@tvnag.unkk.fr>
+ <20161104114855.GA13029@hurricane.linuxnetz.de>
+Message-ID: <16a1c14b-1402-3eab-4e2c-44aa75192d8b@sumptuouscapital.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
+In-Reply-To: <20161104114855.GA13029@hurricane.linuxnetz.de>
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LZvS9be/3tNcYl/X"
-Content-Disposition: inline
-In-Reply-To: <CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Mon, 26 Jun 2017 06:40:36 -0400
-From: Brad Spengler <spender@grsecurity.net>
+ protocol="application/pgp-signature";
+ boundary="BDgp1EI5WuOgv6cA4uFkIoMSaDX7PGaX9"
+Cc: oss-security@lists.openwall.com
+Date: Fri, 4 Nov 2016 14:59:46 +0100
+From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Can someone explain all the CONFIG_VMAP_STACK
- CVEs lately?
-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use
+ wrong host
+To: Robert Scheck <robert@fedoraproject.org>
 
---LZvS9be/3tNcYl/X
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--BDgp1EI5WuOgv6cA4uFkIoMSaDX7PGaX9
+Content-Type: multipart/mixed; boundary="pPvPwKoE5iae1ip2mnu2sMAcNhXL51AQG"
+From: Kristian Fiskerstrand <kristian.fiskerstrand@sumptuouscapital.com>
+To: Robert Scheck <robert@fedoraproject.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <16a1c14b-1402-3eab-4e2c-44aa75192d8b@sumptuouscapital.com>
+Subject: Re: [oss-security] Re: [SECURITY ADVISORY] IDNA 2003 makes curl use
+ wrong host
+References: <40eb0cc31307456c8bd21fa16e044f90@imshyb02.MITRE.ORG>
+ <alpine.DEB.2.20.1611040816000.375@tvnag.unkk.fr>
+ <20161104114855.GA13029@hurricane.linuxnetz.de>
+In-Reply-To: <20161104114855.GA13029@hurricane.linuxnetz.de>
+
+--pPvPwKoE5iae1ip2mnu2sMAcNhXL51AQG
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Andy,
+On 11/04/2016 12:48 PM, Robert Scheck wrote:
+> For those who didn't notice, Florian also started a German thread on the
+> public DENIC mailing list (https://www.denic.de/en/service/mailing-lists/)
+> about exactly this topic (I'm not sure if there is a public archive).
 
-As I recently learned, you'll have to go through the CVE
-dispute/reject process for each one of them.  Since I'm the reporter
-I believe I would have to reject them (you could only dispute them),
-however I'm not willing to reject any but the USB ones given the
-information I found below, since the vulnerability (for the crypto
-etc cases) is also the BUG() when CONFIG_DEBUG_VIRTUAL is enabled
-(aka the thing you seem to depend on to find these bugs in the first
-place since no static analysis is apparently being done), which will
-panic the system when panic_on_oops is on.
+I believe the archive should be at
+https://www.denic.de/service/mailinglisten/public-l/ , although it
+doesn't seem updated since april (although if low volume and the
+discussion was started today it might only be updated infrequently)
 
-#ifdef CONFIG_DEBUG_VIRTUAL
-unsigned long __phys_addr(unsigned long x)
-{
-        unsigned long y =3D x - __START_KERNEL_map;
+--=20
+----------------------------
+Kristian Fiskerstrand
+Blog: https://blog.sumptuouscapital.com
+Twitter: @krifisk
+----------------------------
+Public OpenPGP keyblock at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+----------------------------
+Nil desperandum
+Never give up
 
-        /* use the carry flag to determine if x was < __START_KERNEL_map */
-        if (unlikely(x > y)) {
-                x =3D y + phys_base;
 
-                VIRTUAL_BUG_ON(y >=3D KERNEL_IMAGE_SIZE);
-        } else {
-                x =3D y + (__START_KERNEL_map - PAGE_OFFSET);
+--pPvPwKoE5iae1ip2mnu2sMAcNhXL51AQG--
 
-                /* carry flag will be set if starting x was >=3D PAGE_OFFSE=
-T */
-                VIRTUAL_BUG_ON((x > y) || !phys_addr_valid(x));
-        }
-
-        return x;
-}
-EXPORT_SYMBOL(__phys_addr);
-
-These are well-established denial of service issues that CVEs have been
-assigned for in the past.
-
-I've dug into the USB case a bit more since reading your mail and Greg's.
-It has changed apparently since I originally wrote KSTACKOVERFLOW in
-2014.  Here's what seems to be the relevant commit:
-
-commit 29d2fef8be1165a26984a94fbcf81d68c1442fc5
-Author: Dan Williams <dan.j.williams@intel.com>
-Date:   Thu May 8 19:25:56 2014 +0300
-
-    usb: catch attempts to submit urbs with a vmalloc'd transfer buffer
-=20=20=20=20
-    Save someone else the debug cycles of figuring out why a driver's
-    transfer request is failing or causing undefined system behavior.
-    Buffers submitted for dma must come from GFP allocated / DMA-able
-    memory.
-=20=20=20=20
-    Return -EAGAIN matching the return value for dma_mapping_error() cases.
-=20=20=20=20
-    Acked-by: Alan Stern <stern@rowland.harvard.edu>
-    Cc: Sarah Sharp <sarah.a.sharp@linux.intel.com>
-    Cc: Mathias Nyman <mathias.nyman@linux.intel.com>
-    Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-    Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-    Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 9c4e292..adddc66 100644
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -1502,6 +1502,9 @@ int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, stru=
-ct urb *urb,
-                                        ret =3D -EAGAIN;
-                                else
-                                        urb->transfer_flags |=3D URB_DMA_MA=
-P_PAGE;
-+                       } else if (is_vmalloc_addr(urb->transfer_buffer)) {
-+                               WARN_ONCE(1, "transfer buffer not dma capab=
-le\n");
-+                               ret =3D -EAGAIN;
-                        } else {
-                                urb->transfer_dma =3D dma_map_single(
-                                                hcd->self.controller,
-
-So it wasn't at all the case that the transfer would simply be rejected,=20
-certainly not since the 2.2 days.  Prior to this patch (assuming=20
-CONFIG_VMAP_STACK existed back then, which it didn't) you can see it=20
-would have hit the dma_map_single call, which would call virt_to_page=20
-which will end up in __phys_addr() and hit the BUG() on=20
-CONFIG_DEBUG_VIRTUAL. My first version of KSTACKOVERFLOW seems to have=20
-been for 3.14 which didn't carry this patch.  When I ported to 3.15, I=20
-had already redesigned KSTACKOVERFLOW to avoid triggering DoS conditions=20
-in buggy drivers/crypto code since it was clear the long-held no DMA on=20
-stack policy was never enforced across the board, so we would have never=20
-seen any USB-related issues again to have ever seen that WARN().
-
-For the CVE dispute/reject process, Kurt Seifried can tell you all
-about it.  Give him a couple weeks, since
-https://twitter.com/kurtseifried/status/876818809079816193
-is still up, the CVE still apparently is not rejected, and he is
-very busy taking pictures of his dinner.  I am certain he will
-treat a member of upstream Linux the same as I've been treated,
-as he is a very professional and equitable person.
-
-That said, I'm happy to be wrong about the USB case (and to clear
-up Greg's misconception about it), and I hope the above info/history
-makes clear where my assumption went wrong.  I'll gladly work with you
-to get the USB-related CVEs rejected that you were saved from via
-the above commit.
-
--Brad
-
-On Sun, Jun 25, 2017 at 08:49:43PM -0700, Andy Lutomirski wrote:
-> As the author of the CONFIG_VMAP_STACK patches, I'm a bit confused
-> here.  There have been quite a few bugs in which some code passes a
-> stack buffer to either sg_set_buf(), etc. or to the usb core.  The
-> former seem to all be crypto users.
->=20
-> As I understand it, the supposed vulnerability is that, if you can
-> force the buffer to span a page boundary, the kernel or device will
-> instead hit the physical page following the the first page of the
-> buffer, which is likely to be the wrong page.  This causes corruption
-> and maybe code execution.
->=20
-> Naively, this failure mode occurs because __pa (or virt_to_phys() or
-> virt_to_page() or whatever interface gets used) will return the PA of
-> the *beginning* of the buffer, but the next virtual page may not be
-> the next physical page.  But this makes no sense -- __pa and friends
-> don't have that effect when called on addresses in vmap space.
->=20
-> So I tried to refresh my memory of what actually happened.  (I looked
-> into this when I wrote CONFIG_VMAP_STACK.)  __pa() and friends return
-> garbage when called on a vmap address.  (I think it's likely to be a
-> totally bogus PA that won't even correspond to a real physical page of
-> memory.)  The tricky but is that it's *invertable* garbage.  When
-> these buffers are passed to synchronous crypto APIs, the crypto core
-> calls sg_virt(), which inverts the transformation and returns a valid
-> virtual address of the page.  But this is the original VA and points
-> to the vmap space where the buffer is genuinely contiguous.
->=20
-> IOW, for most synchronous crypto, using sg_set_buf() on a stack
-> address is utterly bogus, but it works correctly.  Ick.
->=20
-> I haven't checked what USB does, but I suspect it's a wildly
-> out-of-bounds DMA transfer that's more likely to result in a
-> straight-up abort than easily exploitable corruption.
->=20
-> So could someone all these CVEs, please?
->=20
-> --Andy
-
---LZvS9be/3tNcYl/X
+--BDgp1EI5WuOgv6cA4uFkIoMSaDX7PGaX9
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBCgAGBQJZUOSdAAoJEETRwPglJf5Jh6YP/3gmgrjm8MYjs2kPrGbezS4B
-u4nfFInO3avY3/m1vmC6i23i3SqvQWVcbGFaGwfIK/ON/qqCHyF8U7VuxVdpCgKS
-3v2vO72tmf0UER7ObSgD2QvUusWa3Y0uojgHZz4vhcP5kG5D25wAAsbeOBWWwwY0
-H7MfoSTeP83ksvXs3n45s/w5GY6cm3sDLp1rmXr1m3sABLYTNR+UF2t6d+vRfwSJ
-ghz49A5Ok1QW/bQtwmpaJZPgKyZp1xxm1Zuy5bIJtdp3AFiCvxPvdUy+HHKwkaOJ
-aYYhwPaRB3U6D2FVe5ULptck7d1QMpf2k2VqmTZn9c47H3lWIMuEOYzzQvtWIO6C
-5HfVAugqcz15g60pmzdzxa4KrXVpZTpmFutXImlHvR7nVln3dJ/d5R7mhzna21fR
-3oIEAtzkYWSLZmfh0b6/lApq/GcgJGEPaqrFMRZNveTYudL89BQ7+wTHqSFjJBCM
-IWOYDo59l+MuZLUF8MEFG2xX/gv+NEjGsZZz5W9UTNa47Y/zfmIjLgftTxGtz325
-kUyfZD6Vi5YVLV5sVGhMLMpxILEpziD5/O0ZTh94flAh8eJgdKnKqaAodESMnp5e
-4R8eKc4mSyUxP89Z60BWLjJL7CbzhknN6NB14iyPVh5T8LyjUHsv77IOhG8CRQCU
-rl51fbrSUwnbaNJ35Rb1
-=LRVD
+iQEcBAEBCgAGBQJYHJRSAAoJECULev7WN52F3EwH/093TTmfos9vjEDTueMkTwcz
+VfKeYIy3SiAl3r0nCQDVNjF7D912rJl9Fj3IWB8DrH1pQCiPCnIjOLt+dl8vTwA4
+mHB3ia9qop+3bffKy4I8/tTov0blq9jNJzgKmJ/EdsyAWlbEe5zUmybPA0JPfuDG
+jUHVuuKE6IYElzDAmpUBPyZgaI06pExvT1/3Hj0/sRu9fdCJFjYxHsHrRJRxstKr
+IiQmJ6im1z6lcDci6QtWw5nIioEWeJ9Hx0Q3SjYB0d0+eZmZG/ekDSnAzB0qBTLg
+vpHKIcoxp1k2Wq3LAAVuHC455Z9KaWi00pRt5ZX4ptXQfpYy1ZSz3t6pD+AHX84=
+=CEDC
 -----END PGP SIGNATURE-----
 
---LZvS9be/3tNcYl/X--
+--BDgp1EI5WuOgv6cA4uFkIoMSaDX7PGaX9--
