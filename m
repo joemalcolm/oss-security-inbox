@@ -1,56 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/22/2
-Message-Id: <20160222130922.7E3A252E0AB@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Feb 2016 08:09:22 -0500 (EST)
-From: cve-assign@...re.org
-To: eric@...oos.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Buffer overflow in Python-Pillow and PIL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/2
+Message-ID: <2647eeea4a76427993d6495bb8c17943@imshyb02.MITRE.ORG>
+Date: Fri, 4 Nov 2016 03:05:16 -0400
+From: <cve-assign@...re.org>
+To: <dmoppert@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request:  XXE in perl Image::Info and XML::Twig
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> There is a buffer overflow in PcdDecode.c, where the decoder writes
-> assuming 4 bytes per pixel into a 3 byte per pixel wide buffer,
-> allowing writing 768 bytes off the end of the buffer. This overwrites
-> objects in Python's stack, leading to a crash.
+>> XML-Twig: expand_external_ents fails to work as documented
+
+> https://rt.cpan.org/Public/Bug/Display.html?id=118097
+> https://bugzilla.redhat.com/show_bug.cgi?id=1379553
+
+> This option (which defaults to 0) is supposed to control XXE parsing
+> documents with XML::Twig, but it has no effect and XXE always takes
+> place.
+
+Use CVE-2016-9180.
+
+
+>> Image-Info: XXE in SVG files
+
+> https://rt.cpan.org/Public/Bug/Display.html?id=118099
+> https://bugzilla.redhat.com/show_bug.cgi?id=1379556
 > 
-> https://github.com/python-pillow/Pillow/pull/1706
+> This was promptly fixed in 1.38_50 / 1.39.
 
->> The shuffle buffer is initialized to 24bpp, and the pcd decoder offsets 32bpp. 
->> 
->> https://github.com/python-pillow/Pillow/commits/master/libImaging/PcdDecode.c
->> https://github.com/python-pillow/Pillow/commit/ae453aa18b66af54e7ff716f4ccb33adca60afd4
->> 
->> https://github.com/python-pillow/Pillow/commits/3.1.x/libImaging/PcdDecode.c
->> https://github.com/python-pillow/Pillow/commit/5bdf54b5a76b54fb00bd05f2d733e0a4173eefc9
->> 
->> http://www.pythonware.com/products/pil/
->> http://effbot.org/downloads/Imaging-1.1.7.tar.gz
+Use CVE-2016-9181.
 
-Use CVE-2016-2533 for the issue in Python-Pillow before 3.1.1, and in
-PIL 1.1.7 and earlier.
+118099 suggests that this was exploitable only when XML::LibXML was installed,
+but the CVE is for Image::Info::SVG, not for XML::LibXML.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWywf+AAoJEL54rhJi8gl5j6cP/iiw4DS9vVwXkNhF3pUswbPd
-yZiMUUwHpVIj+v1ezok6HOc/bRVZzndnhDbQq1i41XbQuY7372t0lntXodsurJeW
-SIPaOYc8EG3U8MZecjtOlE/c1RHX6F7dfC0xRa/Pw5fl8NW1uaLqt3H/CAJaZjdO
-BEN9z6n8G7SGEg1pQz2y2eDO5Aj5mxhj36MudmaOfiGeH+QVzU/Zbaab6OwC/+QI
-topn6yVN2xrCE7mdZEzCSYtomMBD4V6LF3dWqNX9W9VA5epBzdi08erIiANPYQmY
-H7IuSiXD8slJg3rlqYJpGzB1rH/O1eQLKc2l+tWxdaSqPeHAce0EXLz/ToH27NWa
-aJCUOHcyjKXmQZjtAGH6WzubMWXYxYa0SJ7Eu1N+mrV410SxrA1H/R7+nfXmtaDB
-PaffvhOVo0bYcZQHdW4tUxgVASu/ug1euDR2joWhTMQiUXpNOcmRr7Q7CKx5phXa
-dI63MhmozSkQAI6oex1Fc5DQ5a/hdcn+SKNlefk5DMh0q3soNwfrWw3UZuGcy4fW
-G0slb1Z4Bpa1YoLwVnv3WFiYOPX4LHj/sgfe26pV9lbSG/ZlilSuSsfMUiD2Jqmt
-rBxLVNj0yk3lMFw71Map8c18UTgj0VFzLtptfilvTdRuY2PMZUzR6qeX6uJVEFqn
-erSrFhvQDHOx5YtXBj8p
-=bQgu
+iQIcBAEBCAAGBQJYHDIEAAoJEHb/MwWLVhi2cowP/3KQY1byhquXjsu4Nem8qz4H
+Tb7YWpeCUxIKbrqA60DEVfPKY0ges1vQ1JCzYlElU3/VAMe7ZWrTAnuxwangQCZI
+RZcVMDOcdJJGSjOyPUhdr2MLbCwl0U8U6z2ZeLGJh1aN6DqcE4XZtmNbjPNU7ea/
+uvEzHZEh5SL0tyM30fCrSsPARqYtlbMt0o6uPbfg9wi71Pkcmz+451CF8BhM8bdl
+mLd7EWQHxHnF4Y3kSCYkLsAULDTgGEzu97i+m68nkwPII8EpwjKF1wXbRKgU2fjA
+bgTYC7j/em9VYHAjVzPKTwIJ0MiAsqS+HDywyoqc6uCgV0OQ8qaKvBu4v3d28tbt
+HyBKWK/cMwYSGg6hiOsfrGU8mSk3mKD9NFgdHjllnS12Xo6QHln9BXfUnhZDRzMt
+PuOtBeq7jWsSCp1C0dbwMpPD2zCHlaHmSwBabk2s1F7GQtgZogM5bZZxO1099b1D
+Lq+BOpDRwezSOKcu1ITRO1qUJ63ECtvUK1K/9Lv/AWFkXVANoBEv0tlABmsj2WUB
+zIy0bOQo7a8n8lRY/ECJvK/C3HLQU2RPdE0lXw2bldr+MSNhV1zNoQypJgzxwxtT
+5TFsQXMwrJ91vJmRH2gjNykX74ItPcOppL+ws2yAv1ZVTaxDbUk5yhSj7JFbkuUQ
+rpHTnlXvLA8UmaYREUnj
+=M28z
 -----END PGP SIGNATURE-----
