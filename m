@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/27/1
-Message-ID: <20160327113443.GA4418@eldamar.local>
-Date: Sun, 27 Mar 2016 13:34:43 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org >> Assign a CVE Identifier" <cve-assign@...re.org>
-Subject: Re: older fuseiso stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/04/6
+Message-ID: <alpine.DEB.2.20.1611040816000.375@tvnag.unkk.fr>
+Date: Fri, 4 Nov 2016 08:27:43 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: cve-assign@...re.org
+cc: robert@...oraproject.org, oss-security@...ts.openwall.com
+Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, 4 Nov 2016, cve-assign@...re.org wrote:
 
-On Mon, Feb 23, 2015 at 10:24:14AM +0100, Florian Weimer wrote:
-> On 02/07/2015 12:17 AM, Kurt Seifried wrote:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=863102 
-> > https://bugzilla.redhat.com/show_bug.cgi?id=863091
-> > 
-> > may warrant a CVE
-> 
-> I opened up the dependent bugs which have more information:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=861358
-> https://bugzilla.redhat.com/show_bug.cgi?id=862211
-> 
-> Note that fuseiso is fairly broken and does not even support UDF, so
-> its usefulness is limited.  Newer systems have the unprivileged image
-> mounting functionality provided by udisks2, so a userspace
-> implementation of the ISO 9660 and UDF file systems is no longer needed.
+> In some situations, this would be a site-specific problem at a registry. 
+> Although domain names can have a variety of uses of '-' characters, the 
+> presence of a '-' as both the third character and the fourth character is 
+> often recognized as a special case. Trying to specify xn--strae-oqa.de 
+> directly when seeking a registration is very different from trying to 
+> specify (for example) x--strae-oqa.de or xn-strae-oqa.de.
 
-Can two CVEs still be assigned for this issue to have an identifier
-for the issues?
+DENIC alledgedly has rules that should prevent separate registrations like in 
+the straße.de case. Still it seems that this particular host name is 
+registered by two different entities unless there's some background juggling 
+that we can't easily see from the outside.
 
-Regards,
-Salvatore
+Those policies are obviously not flawless and now we end up in a sutiation 
+where cients implementing different IDNA standards will end up on different 
+servers. I suppose both can also get separate HTTPS certificates by simply 
+using the puny encoded versions of their domain names when asking for them.
+
+In addition to the IDNA confusion, I also learned that libidn2 doesn't do the 
+necessary checks so just switching to that as we did in the curl patch for the 
+advisory we're discussing here, is an insuffucient and inferior fix for this 
+problem. We need to a bigger take.
+
+One. Big. Mess.
+
+I've suggested curl users to simply *disable* IDN completely in their builds 
+now until we get something better done. To reduce the risk. There's no 
+schedule or plan yet for when "something better" might be ready. I'll admit my 
+energy level for this crap is very low.
+
+-- 
+
+  / daniel.haxx.se
