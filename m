@@ -1,56 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/09/2
-Message-ID: <CAGoY5PJNgV2TXuX7pPFJu37aHQX_RFcx2PgvBx+WWQmFRndccw@mail.gmail.com>
-Date: Fri, 9 Sep 2016 10:45:38 +0300
-From: Vahagn Vardanyan <vvvaagn@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/05/3
+Message-ID: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
+Date: Sat, 5 Nov 2016 10:04:30 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: multiple crashes in radare2/radiff2
+Subject: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: Vahagn Vardanyan <vvvaagn@...il.com>
-Date: 2016-09-09 10:45 GMT+03:00
-Subject: Re: [oss-security] multiple crashes in radare2/radiff2
-To: Solar Designer <solar@...nwall.com>
+Hi,
+
+We found a null pointer dereference when parsing a xml file using recover
+mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
+
+$ xmllint --recover crash-libxml2-recover.xml
+
+==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+(pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
+    #0 0x4fbd87 in xmlDumpElementContent
+/home/g/Work/Code/libxml2-2.9.4/valid.c:1181
+    #1 0x4fbcd5 in xmlDumpElementContent
+/home/g/Work/Code/libxml2-2.9.4/valid.c:1177
+    #2 0x4fe5ff in xmlDumpElementDecl
+/home/g/Work/Code/libxml2-2.9.4/valid.c:1706
+    #3 0x72e714 in xmlBufDumpElementDecl
+/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
+    #4 0x73048f in xmlNodeDumpOutputInternal
+/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
+    #5 0x72fc47 in xmlNodeListDumpOutput
+/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
+    #6 0x72f6d5 in xmlDtdDumpOutput
+/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
+    #7 0x73038f in xmlNodeDumpOutputInternal
+/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
+    #8 0x732412 in xmlDocContentDumpOutput
+/home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
+    #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1936
+    #10 0x40ba0f in parseAndPrintFile
+/home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
+    #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
+    #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
+    #13 0x4032b9 in _start
+(/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
 
 
-I send small testcase, who I found
+A reproducer is attached. It is interesting to note that the developers of
+libxml2 strongly recommend not to use recover mode to parse untrusted
+inputs. Please assign a CVE if suitable.
 
-[image: Встроенное изображение 1]
-
-[image: Встроенное изображение 2]
-
-2016-09-09 2:08 GMT+03:00 Solar Designer <solar@...nwall.com>:
-
-> Hi,
->
-> On Thu, Sep 08, 2016 at 05:34:09PM +0300, Vahagn Vardanyan wrote:
-> > I created report
-> > https://bugs.chromium.org/p/project-zero/issues/detail?id=93
-> 3&can=1&q=&sort=-id
->
-> Going to this URL, I am asked to login to a Google account (which I
-> didn't).  Can you please post the contents of your report and Tavis'
-> reply (as well as any other relevant replies) as a reply to this same
-> thread here on oss-security?
->
-> > Please tell how I can send crashes archive, thank you
->
-> If your entire message including the 4/3 MIME overhead would be below
-> 200 KB, then please just attach this archive to the message.  Otherwise
-> please come up with a smaller testcase (and attach it) or use an
-> external URL for the file (but accessible to everyone without having to
-> log in).  The former is strongly preferred.
->
-> Thanks,
->
-> Alexander
->
+Regards,
+Gustavo.
 
 Content of type "text/html" skipped
 
-Download attachment "image.png" of type "image/png" (58892 bytes)
-
-Download attachment "image.png" of type "image/png" (75028 bytes)
-
-Download attachment "rad_quit_crash.out" of type "application/octet-stream" (10513 bytes)
+View attachment "crash-libxml2-recover.xml" of type "text/xml" (803 bytes)
