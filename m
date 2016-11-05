@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6142" "Saturday" "23" "July" "2016" "14:59:16" "+0000" "Larry W. Cashdollar" "larry0@me.com" "<5b1698b9-7904-43ba-9fda-c2d5569f8028@me.com>" "123" "[oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla" nil nil nil "7" "2016072314:59:16" "[oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla" (number mark "U       larry0@me.co Jul 23  123/6142  " thread-indent "\"[oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4245" "Saturday" "5" "November" "2016" "03:30:41" "-0500" "php-dev@coydogsoftware.net" "php-dev@coydogsoftware.net" "<6f4bda10919c68d47fdfd9bbd9a36366@coydogsoftware.net>" "124" "[oss-security] CVE Request: PHP with Zend OPCache  code permission/sensitive data protection vulnerabilities" nil nil nil "11" "2016110508:30:41" "[oss-security] CVE Request: PHP with Zend OPCache code permission/sensitive data protection vulnerabilities" (number mark "U       php-dev@coyd Nov  5  124/4245  " thread-indent "\"[oss-security] CVE Request: PHP with Zend OPCache  code permission/sensitive data protection vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1487 invoked by uid 550); 23 Jul 2016 15:00:15 -0000
+Received: (qmail 25644 invoked by uid 550); 5 Nov 2016 09:50:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,154 +12,160 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32754 invoked from network); 23 Jul 2016 14:59:30 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-07-23_12:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1607230182
-MIME-version: 1.0
-Content-type: multipart/alternative;
- boundary="Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)"
-To: Open Source Security <oss-security@lists.openwall.com>
-From: "Larry W. Cashdollar" <larry0@me.com>
-Date: Sat, 23 Jul 2016 14:59:16 +0000 (GMT)
-X-Mailer: iCloud MailClient16EProject70
- MailServer16E78.25278-16A-1132-e21ea0a6a8b6
-X-Originating-IP: [108.176.228.3]
-Message-id: <5b1698b9-7904-43ba-9fda-c2d5569f8028@me.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1469285957; bh=Ogt+Six38xlEPUaJyyhbX2ErOWIoxBB4EQ+Ro0Yc+ro=;
-	h=MIME-version:Content-type:To:From:Subject:Date:Message-id;
-	b=iYiD77D64nkB7bw4tD8G5k0AfpdQpd3mIgyZ9Na/gvegbBPGRPrPAUPp/6OmkH6xS
- zEC1QJxePsFmatCT3qG3WQpsN+04P0txXhvoN/IEEx1Gnsp96eirtB4TCKV+TwVYLP
- 8EDBBmFfWqVn2PpUPIH1SmyJHKZLG7G92LzwhkSdr+Fi7Zd0iOeW9wKvM00IvjDz02
- moM7G8bHiXd1r/nobqc8sow9luXGvq79I76qGJNMh1fPJTGgUbrVxQnpkMmwrx+7pt
- lUkRHZvIistu05bNCl7GZTWfrbcmYonFO8NH68ToRJeRHMOSfyR1gGON/CleedpZCN
- CG//HCppHNcvw==
-Subject: [oss-security] XSS and SQLi in huge IT gallery v1.1.5 for Joomla
+Received: (qmail 10157 invoked from network); 5 Nov 2016 08:30:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=coydogsoftware.net; s=default; h=Message-ID:Subject:To:From:Date:
+	Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	 bh=ZXrgIoygPoxDgYb9O/fWuwVdCHcquXtaTarDtEboylQ=; b=WWIRYiN2/O0zlQshS/OGv/NU0
+	u/uQnctsTxyvMLgMqeZ1zObxx7TtClr4RFwBz/tukAQWYKAxC+PB5Ph90FM8DNunjBqiv2B3XG94O
+	b7NgJrqwTZHF5H3U2H6Vt5M8gn1lzrzaJIZy7wLToZgOnYZoxWKSdE0UUj7hzGAXw/OEg=;
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Sat, 05 Nov 2016 03:30:41 -0500
+From: php-dev@coydogsoftware.net
+To: oss-security@lists.openwall.com
+Message-ID: <6f4bda10919c68d47fdfd9bbd9a36366@coydogsoftware.net>
+X-Sender: php-dev@coydogsoftware.net
+User-Agent: Roundcube Webmail/1.1.4
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - sliver.coydogsoftware.net
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - coydogsoftware.net
+X-Get-Message-Sender-Via: sliver.coydogsoftware.net: authenticated_id: php-dev@coydogsoftware.net
+X-Authenticated-Sender: sliver.coydogsoftware.net: php-dev@coydogsoftware.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Subject: [oss-security] CVE Request: PHP with Zend OPCache  code permission/sensitive data
+ protection vulnerabilities
 
---Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)
-Content-type: text/plain; charset=utf-8; format=flowed
-Content-transfer-encoding: quoted-printable
+Hello,
 
-Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla
-Fixed: v1.1.7
-Author: Larry W. Cashdollar, @_larry0 and Elitza Neytcheva, @ElitzaNeytcheva
-Date: 2016-07-14
-Download Site: http://extensions.joomla.org/extensions/extension/photos-a-i=
-mages/galleries/gallery-pro
-Vendor: huge-it.com
-Vendor Notified: 2016-07-15, fixed 2016-07-23
-Vendor Contact: info@huge-it.com
-Description: The plugin allows you to add multiple images to the gallery, c=
-reate countless galleries, add a description to each of them, as well as ma=
-ke the same things with video links.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access=
- to the administrative panel to exploit this vulnerability:
+I did not discover this, but to my knowledge no CVE has been requested 
+to date.
+The PHP project was informed of this vulnerability over 2 years ago and 
+has not
+fixed it. I am hoping more public discussion with a CVE will help to 
+motivate
+them.
 
-SQL in code via id parameter:
-./administrator/components/com_gallery/models/gallery.php
-51 public function getPropertie() {
-52 $db =3D JFactory::getDBO();
-53 $id_cat =3D JRequest::getVar('id');
-54 $query =3D $db->getQuery(true);
-55 $query->select('#__huge_itgallery_images.name as name,'
-56 . '#__huge_itgallery_images.id ,'
-57 . '#__huge_itgallery_gallerys.name as portName,'
-58 . 'gallery_id, #__huge_itgallery_images.description as description,image=
-_url,sl_url,sl_type,link_target,#__huge_itg allery_images.ordering,#__huge_=
-itgallery_images.published,published_in_sl_width');
-59 $query->from(array('#__huge_itgallery_gallerys' =3D> '#__huge_itgallery_=
-gallerys', '#__huge_itgallery_images' =3D> '#__huge_itg allery_images'));
-60 $query->where('#__huge_itgallery_gallerys.id =3D gallery_id')->where('ga=
-llery_id=3D' . $id_cat);
-61 $query->order('ordering desc');
-62=20
-64 $db->setQuery($query);
-65 $results =3D $db->loadObjectList();
-66 return $results;
-67 }
+SUMMARY:
 
+Affects PHP with Zend OPCache enabled, PHP5 <= 5.6.27 and PHP7 <= 7.0.12
+(http://php.net)
 
+Zend OPCache has code permission and sensitive data protection 
+vulnerabilities
+when deployed on shared hosting web servers.
 
-XSS is here:
+BACKGROUND:
 
-root@Joomla:/var/www/html# find . -name "*.php" -exec grep -l "echo \$_GET"=
- {} \;
-./administrator/components/com_gallery/views/gallery/tmpl/default.php
-root@Joomla:/var/www/html# find . -name "*.php" -exec grep -n "echo \$_GET"=
- {} \;
-256: <a class=3D"modal" rel=3D"{handler: 'iframe', size: {x: 800, y: 500}}"=
- href=3D"index.php?option=3Dcom_gallery&view=3Dvideo&tmpl=3Dcomponent&pid=
-=3D<?php echo $_GET['id']; ?>" title=3D"Image" >
-CVE-2016-1000113 2016-1000114
-JSON: Export
-Exploit Code:
-XSS PoC
-http://192.168.0.125/administrator/index.php?option=3Dcom_gallery&view=3Dga=
-llery&id=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+OPCache uses shared memory to cache compiled PHP "opcode" between HTTP 
+requests
+for reuse. A single shared memory object is opened and initialized in a 
+parent
+process, and child processes inherit its file descriptor. Due to this 
+design,
+OPCache is intended for use with a SAPI with a peristent parent process, 
+for
+example php-fpm with its master process, or apache2handler where 
+initialization
+occurs in the Apache parent process.
 
-SQLi PoC
-http://192.168.0.125/administrator/index.php?option=3Dcom_gallery&view=3Dga=
-llery&id=3DSQLiHERE
+Cache keys for compiled scripts have two modes of operation, simple
+filenames and a "use_cwd" mode which includes additional information 
+such as
+parent script and working directory in cache keys. The "use_cwd" 
+behavior only
+occurs when scripts are invoked via relative paths, rare in practice in 
+a web
+server environment with common web applications. In most circumstances 
+the
+cache uses a simple filesystem path as a cache key for a cached script's
+compiled form.
 
-$ sqlmap --load-cookies=3Dcookies.txt -u "http://192.168.0.125/administrato=
-r/index.php?option=3Dcom_gallery&view=3Dgallery&id=3D*" --dbms mysql
-Screen Shots:
-Advisory:=C2=A0http://www.vapidlabs.com/advisory.php?v=3D164=
+On shared servers PHP is often deployed so that it will switch to a 
+local user
+account before running a script, for example using mod_ruid2 if deployed 
+as an
+Apache module, or using "pools" if deployed as php-fpm. In these
+configurations, users expect that they can protect sensitive information 
+in PHP
+scripts with filesystem permissions.
 
---Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)
-Content-type: multipart/related;
- boundary="Boundary_(ID_70JWip5QYKy/+4ep/e7oLA)"; type="text/html"
+VULNERABILITY DESCRIPTION:
 
+The single shared OPCache circumvents filesystem permissions. For 
+example, when
+user alice's WordPress site is requested, PHP runs as user alice and
+wp-config.php is read, compiled, and cached, including constants for 
+database
+credentials, API auth keys, and hash salts.  User bob can then include 
+alice's
+wp-config.php script via the persistent OPCache, regardless of the 
+original
+script's file permissions. User bob only has to know the filesystem path 
+of the
+script.
 
---Boundary_(ID_70JWip5QYKy/+4ep/e7oLA)
-Content-type: text/html; CHARSET=US-ASCII
-Content-transfer-encoding: quoted-printable
+PHP's open_basedir setting is also circumvented; with a restrictive
+open_basedir, a nonfatal error occurs, but a cached script outside of
+open_basedir will still load and run.
 
-<html><body><div>Title: XSS and SQLi in huge IT gallery v1.1.5 for Joomla <=
-/div><div>Fixed: v1.1.7<br>Author: Larry W. Cashdollar, @_larry0 and Elitza=
- Neytcheva, @ElitzaNeytcheva<br>Date: 2016-07-14<br>Download Site: http://e=
-xtensions.joomla.org/extensions/extension/photos-a-images/galleries/gallery=
--pro<br>Vendor: huge-it.com<br>Vendor Notified: 2016-07-15, fixed 2016-07-2=
-3<br>Vendor Contact: info@huge-it.com<br>Description: The plugin allows you=
- to add multiple images to the gallery, create countless galleries, add a d=
-escription to each of them, as well as make the same things with video link=
-s.<br>Vulnerability:<br>The attacker must be logged in with at least manage=
-r level access or access to the administrative panel to exploit this vulner=
-ability:<br><br>SQL in code via id parameter:<br>./administrator/components=
-/com_gallery/models/gallery.php<br>51 public function getPropertie() {<br>5=
-2 $db =3D JFactory::getDBO();<br>53 $id_cat =3D JRequest::getVar('id');<br>=
-54 $query =3D $db-&gt;getQuery(true);<br>55 $query-&gt;select('#__huge_itga=
-llery_images.name as name,'<br>56 . '#__huge_itgallery_images.id ,'<br>57 .=
- '#__huge_itgallery_gallerys.name as portName,'<br>58 . 'gallery_id, #__hug=
-e_itgallery_images.description as description,image_url,sl_url,sl_type,link=
-_target,#__huge_itg allery_images.ordering,#__huge_itgallery_images.publish=
-ed,published_in_sl_width');<br>59 $query-&gt;from(array('#__huge_itgallery_=
-gallerys' =3D&gt; '#__huge_itgallery_gallerys', '#__huge_itgallery_images' =
-=3D&gt; '#__huge_itg allery_images'));<br>60 $query-&gt;where('#__huge_itga=
-llery_gallerys.id =3D gallery_id')-&gt;where('gallery_id=3D' . $id_cat);<br=
->61 $query-&gt;order('ordering desc');<br>62 <br>64 $db-&gt;setQuery($query=
-);<br>65 $results =3D $db-&gt;loadObjectList();<br>66 return $results;<br>6=
-7 }<br><br><br><br>XSS is here:<br><br>root@Joomla:/var/www/html# find . -n=
-ame "*.php" -exec grep -l "echo \$_GET" {} \;<br>./administrator/components=
-/com_gallery/views/gallery/tmpl/default.php<br>root@Joomla:/var/www/html# f=
-ind . -name "*.php" -exec grep -n "echo \$_GET" {} \;<br>256: &lt;a class=
-=3D"modal" rel=3D"{handler: 'iframe', size: {x: 800, y: 500}}" href=3D"inde=
-x.php?option=3Dcom_gallery&amp;view=3Dvideo&amp;tmpl=3Dcomponent&amp;pid=3D=
-&lt;?php echo $_GET['id']; ?&gt;" title=3D"Image" &gt;<br>CVE-2016-1000113 =
-2016-1000114<br>JSON: Export<br>Exploit Code:<br>XSS PoC<br>http://192.168.=
-0.125/administrator/index.php?option=3Dcom_gallery&amp;view=3Dgallery&amp;i=
-d=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E<br> <br>SQLi PoC<br>http=
-://192.168.0.125/administrator/index.php?option=3Dcom_gallery&amp;view=3Dga=
-llery&amp;id=3DSQLiHERE<br> <br>$ sqlmap --load-cookies=3Dcookies.txt -u "h=
-ttp://192.168.0.125/administrator/index.php?option=3Dcom_gallery&amp;view=
-=3Dgallery&amp;id=3D*" --dbms mysql<br>Screen Shots:<br>Advisory:&nbsp;http=
-://www.vapidlabs.com/advisory.php?v=3D164</div></body></html>=
+If PHP is running in chroots, unintentional cross-user script execution 
+can
+occur due to filename hash key collisions. This might be considered a 
+separate
+bug, but both stem from the simplistic design of opcache keys.
 
---Boundary_(ID_70JWip5QYKy/+4ep/e7oLA)--
+With a default configuration (other than the zend_extension directive to 
+load
+OPCache, which is not loaded by default) opcache_get_status() can be 
+used to
+enumerate cached scripts, making exploitation even easier.
 
---Boundary_(ID_D4iF2YRamzmojCo0GymG7Q)--
+The software's documentation does not mention the issue, so most users 
+would
+see no reason not to enable OPCache on a shared server:
+http://php.net/manual/en/book.opcache.php
+
+Original reporter in bug #67481 closed his bug report stating "It turns 
+out
+this is not a bug, it is the behaviour that is expected when 
+opcache.use_cwd is
+set to zero," but the same behavior occurs when opcache.use_cwd is 
+enabled
+unless scripts are invoked with relative paths. Absolute paths are 
+typically
+used by web servers and web applications.
+
+I've proposed a fix in bug #69090 with patch linked below.
+
+I have point-and-click proof of concept exploit scripts but I plan to 
+give
+the PHP project a few more days to patch the issue.
+
+REFERENCES:
+
+https://bugs.php.net/bug.php?id=67481
+https://bugs.php.net/bug.php?id=69090
+https://bugs.php.net/patch-display.php?bug_id=69090&patch=opcache_bug69090_user_id_keys&revision=latest
+http://marc.info/?l=php-internals&m=147825816026557&w=2
+
+In PHP 5.6, the problem is in cache key construction in
+accel_make_persistent_key_ex():
+https://raw.githubusercontent.com/php/php-src/php-5.6.27/ext/opcache/ZendAccelerator.c
+
+In PHP 7.0, equivalent code is in accel_make_persistent_key():
+https://raw.githubusercontent.com/php/php-src/php-7.0.12/ext/opcache/ZendAccelerator.c
+
+Please let me know if more details are needed.
+
+-- 
+- php-dev@coydogsoftware.net
