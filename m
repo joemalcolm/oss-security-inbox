@@ -1,4 +1,9 @@
-Received: (qmail 30565 invoked by uid 550); 10 Mar 2025 23:13:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1920" "Saturday" "5" "November" "2016" "11:59:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3355e013913e410fb611ac9aa61e8d5f@imshyb02.MITRE.ORG>" "47" "[oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code" nil nil nil "11" "2016110515:59:56" "[oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code" (number mark "U       cve-assign@m Nov  5   47/1920  " thread-indent "\"[oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code\"\n") "<1679169912.3935010.1478283449963.JavaMail.zimbra@redhat.com>" ("<1679169912.3935010.1478283449963.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5362 invoked by uid 550); 5 Nov 2016 16:00:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,65 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5320 invoked from network); 10 Mar 2025 23:07:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741648019; x=1742252819; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UzCDVr8PfvLREJWx93DYQhQKgMuYFnzGXWkziAH4p9Q=;
-        b=mKjHN1bItuNfprO8+CsPDuqV46lydfdUq0/P7rF7eWnP/6+0FBiIu06zoJujEMaPQz
-         kTaV3jRiz49uoQQc0SLtir7BoNiYAXyFh3kuAVghmcMvhcEUqGTFM1zpLURpEOv6ns1v
-         T+YtsvUdAVBhykoH/MUvHHc1o+jVUoq5ebF1MkRLZMR8Q6iaUkVF+Td+6UNm0uZCOQCr
-         Y6FoBrKe9qwXG4RSLpOE8CzC6k0AZP9sSLdssEbno9ub4weas6/arsiSNJk1Ryp0Yoh5
-         eCUBLAve8h3FnjHEBb3gKoKL8yM0cE2q2Nb7HRG56Z3AhL2/jlLw8Gw2HxtRHLU6eE/H
-         iWVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741648019; x=1742252819;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UzCDVr8PfvLREJWx93DYQhQKgMuYFnzGXWkziAH4p9Q=;
-        b=gGfBGCBXtQaYR94CCrtT2y0QkwSPi5ky73gO0eijJTaD/YEkRbpT7u+g4wT9x1N8ik
-         KosUrc5thtYFKJlDGPOp+kLtmAqg9mk3f8Oj5DuXTLCQT4ugCl6wG6wHMchB1ZN1+dbk
-         Fb2ouQ4rRFUMfoAGDdphz0OuLbmVOHxOf0+JDEodlshLGTuR/q9WIqGFvzaEgNmxBxd3
-         W+3ozZika0MtrC6CoJB/yV06LPALGoHD144aa6sly40+wjBHO6o6zZmGJfjhoAaDNi8W
-         l1fahUPRBYd2kpPD5hNzFshRkBI1UOcKlNxDAmLIvSKJlPbzqGQsaGlm/jrpKa87KTEf
-         n66Q==
-X-Gm-Message-State: AOJu0YykY8+3yoqILMekk8JRUbrp7i7z7LuPZb1vOwbSBP5qSMXKU4pg
-	4wnQj2RSv+mBUX5Fden7ucBXQo9+Vz7PcnLCU1/pCnKCh+qcSK4ZXXTHQg==
-X-Gm-Gg: ASbGncupoonwrr2ymbCqY/gtuCUwEoEUO6uD5vTE6ENvYoNEY4bavcAngxu1yyQVHat
-	RXVFITrLoFv9jWRQvH79rNOwcSm8Bh/xpK7RLxMoCqUK5QqIsDZ2U/ts1lih43KDW5hTHTVI8F0
-	0AxFBYvAX/qW6qYOVYnuH+nlQTutBMc6qjfYR986NWUJQGOoX1k+ARiKbGFvnieGIwZIIq63rc6
-	pKNlJipHs69ABjJrno+xHFtJxFy9Qjcp4vJpNylb5FAQci4aqOmMwA1dTINUQkBHUPiZ1WFlvQH
-	NMTqtsOqH8QfUeDxveuzeUuUCPKskWWoiIONqDJPyQ==
-X-Google-Smtp-Source: AGHT+IH6Np+yf7fNB2PosumyK9j3Cj1Gen/D/6i53vSibU+hodDKvn4TKaQSXUYRphxhEY5MmI+lVw==
-X-Received: by 2002:a05:6808:1a15:b0:3f8:b73b:682b with SMTP id 5614622812f47-3fa298c0161mr982169b6e.7.1741648018990;
-        Mon, 10 Mar 2025 16:06:58 -0700 (PDT)
-Message-ID: <30c9d060-2a43-48e9-b0c5-31e4a7d05349@gmail.com>
-Date: Mon, 10 Mar 2025 18:06:55 -0500
+Received: (qmail 5341 invoked from network); 5 Nov 2016 16:00:08 -0000
+From: <cve-assign@mitre.org>
+To: <caiqian@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <1679169912.3935010.1478283449963.JavaMail.zimbra@redhat.com>
+Message-ID: <3355e013913e410fb611ac9aa61e8d5f@imshyb02.MITRE.ORG>
+Date: Sat, 5 Nov 2016 11:59:56 -0400
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <ovqbvdsvupbr2dse76qem7ukiyidoqdynmm4rn7ah5kqiagugg@xbgvxewonj4p>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <ovqbvdsvupbr2dse76qem7ukiyidoqdynmm4rn7ah5kqiagugg@xbgvxewonj4p>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2025-1937+more: Numerous memory-safety issues
- in Firefox & Thunderbird
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: linux kernel - local DoS with cgroup offline code
 
-On 3/10/25 08:30, Valtteri Vuorikoski wrote:
-> [...] However the only issue ranked
-> critical only affects Android, looks like desktop versions top out at high.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-My understanding is that the issue was *reported* by the Android 
-project, but it affects *ALL* builds, including desktop.
+> A malicious user who can run an arbitrary image with a non-privileged user
+> in a Container-as-a-service cloud environment could use the exploit to
+> deadlock the container nodes to deny the service for other users.
 
+> container> $ trinity -D --disable-fds=memfd --disable-fds=timerfd \
+>              --disable-fds=pipes --disable-fds=testfile \
+>              --disable-fds=sockets --disable-fds=perf \
+>              --disable-fds=epoll --disable-fds=eventfd \
+>              --disable-fds=drm
 
--- Jacob
+> # systemctl status docker
+> <hang...>
 
+> task kworker/45:4:146035 blocked for more than 120 seconds.
 
+> "cgroup is trying to offline a cpuset css, which
+> takes place under cgroup_mutex. The offlining ends up trying to drain
+> active usages of a sysctl table which apparently is not happening." There is
+> no fix at this time as far as I can tell.
+
+Use CVE-2016-9191.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYHgGZAAoJEHb/MwWLVhi2lQsP/1q0DTwdkQ5NOL3xfeD48Lye
+JiAOHPKs+X9iAfnpB/3rNiq6RvBPLXr12LPfKGcxiBasPf5mAq4sa1xzNhcXGerD
+678Ch0m+sMKjTfLLTusSeu2WFDKG07Fs7yoiQs4juIfbjJ178nh7RJDz/V7lao0+
+pBv1SUYrIgrZ5dRNNzUp380eOdVNmi5fWPiHvXxIR6PwXZsCu5GZNjowMAIOFgBB
+XedYPtBhG+lbbrvQm9kyj/IoSsw8cKfyhCcDy+T5JE4UcOYWrYpixmgwNZTUXn0l
+BUM8uMWeI2DgMEFDjzjdVL4KY3ktkcXUTbBh7EGYg5zpDiMm3oNbqsS1kv+m+/BQ
+/BHikPAkC+x2W35fzWp/lIJZojBUkkeDCNHU+tc+lVBVVZpo+zEq6puv61GwSTEE
+G2GgnHEeA33XW3AixqFpe2rGY9PIKw92kSIRfAH1aPg1i77Y34m1uqrpJ+HifuK/
+qxowp64tKzwiDgzJqZmTdEYX22EVWqhb1DbukY1cgVM9BkEuI0+ZwrVeAmvy7k/7
+Scp2LmwwN2AdLRagOhzKUSwORKeg6xd5gHDm5F9rhI/GhX/+soNMXKcYKBbq0jDh
++jBAl2oGnhELCnf026nVtrqmqMLS9SquwBXmtHTjdUV88co2NqstBR+oAlAeKrnd
+W1Lyt8V0wHy00wNFmEJs
+=jJL2
+-----END PGP SIGNATURE-----
