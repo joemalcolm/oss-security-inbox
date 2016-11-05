@@ -1,86 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/10
-Message-Id: <20160216222342.CCC126FC01D@smtpvmsrv1.mitre.org>
-Date: Tue, 16 Feb 2016 17:23:42 -0500 (EST)
-From: cve-assign@...re.org
-To: sandeepk.l337@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/05/4
+Message-ID: <3355e013913e410fb611ac9aa61e8d5f@imshyb02.MITRE.ORG>
+Date: Sat, 5 Nov 2016 11:59:56 -0400
+From: <cve-assign@...re.org>
+To: <caiqian@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: linux kernel - local DoS with cgroup offline code
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://issues.umbraco.org/issue/U4-7457
-> SSRF
+> A malicious user who can run an arbitrary image with a non-privileged user
+> in a Container-as-a-service cloud environment could use the exploit to
+> deadlock the container nodes to deny the service for other users.
 
-> the feedproxy.aspx is used to access the external resources using
-> the URL GET parameter.
+> container> $ trinity -D --disable-fds=memfd --disable-fds=timerfd \
+>              --disable-fds=pipes --disable-fds=testfile \
+>              --disable-fds=sockets --disable-fds=perf \
+>              --disable-fds=epoll --disable-fds=eventfd \
+>              --disable-fds=drm
 
-> http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
-> 
-> once you change the URL to the
-> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, you able
-> to access the localhost application of the server.
-> 
-> Using this payload change the port number to perform port scanning of the
-> server. It will be helpful to find the more details of the server.
-> For example:
-> 
-> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
-> http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
-> 
-> If the port number is closed, you will find the error message on the
-> feedproxy.aspx page.
+> # systemctl status docker
+> <hang...>
 
-Use CVE-2015-8813.
+> task kworker/45:4:146035 blocked for more than 120 seconds.
 
+> "cgroup is trying to offline a cpuset css, which
+> takes place under cgroup_mutex. The offlining ends up trying to drain
+> active usages of a sysctl table which apparently is not happening." There is
+> no fix at this time as far as I can tell.
 
-> http://issues.umbraco.org/issue/U4-7459
-> https://github.com/umbraco/Umbraco-CMS/commit/18c3345e47663a358a042652e697b988d6a380eb
-> 
-> enabled sensitive actions, such as editing a user account information was
-> vulnerable to CSRF vulnerability.
-> The vulnerable code in templates.asmx.cs on the line number 75, it is
-> executing save operation without verifying the actual CSRF token.
-> In the file SetAngularAntiForgeryTokensAttributes.cs, on line number 25,
-> function allowing empty CSRF value, the CSRF vulnerability is triggering.
-
-Use CVE-2015-8814.
-
-
-> http://issues.umbraco.org/issue/U4-7461
-> 
-> It is found that Umbraco is also vulnerable to Persistent XSS in content
-> type editor.
-> 
-> name field of the media page, the developer data edit page,
-> and the form page.
-
-Use CVE-2015-8815. The MITRE CVE team did not separately assess
-whether each of these pages is exploitable in a way that crosses a
-privilege boundary. The vendor assigned "Category Security" to
-U4-7461.
+Use CVE-2016-9191.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWw6BZAAoJEL54rhJi8gl5OwkQAJOUaiKrak34v5F9QnGj9We7
-S/Wx5m2wioCLGOFFkHfhQf2YRJ65rUiTVyhlkmDaVy2RLLfeYrKPUob/nvC3y2Ii
-laEftMrC5B20O5awUwvVX8eMg2fmei6ZHW1RU9wozbHsUw/Hnr3JvzAD2PFuAE42
-jAOsdzr49dnimQNSpGEctYCt/PIq0oz5DDpIDKQQZI3LPJMI6oCThVY8Ve4I1fUC
-uN0EGff/nMGgf67xQlM3CnqIRY46yI8R4Rsjbt83l5GTk1vCiBIjipJve3R8nXju
-1Lrlw4C2w1tDj/6JOfKyFgQfoUZeQ8eAcGoEf3oYe0aeDbqyuw9unB9qyb6suM9F
-E2gnlmNRjZmhvZponsnl5wm0DDaDz7ZTq5TNaduNHVk2hZE7j563S+WJQoR6SI/X
-+dmUmr1pwChcl5cSwVo8+uGHKbRtcQw8hg6cc2pi70JQVa0Ok3DYEeWKDbVfEScg
-t5BN2r5KxYowWhkk3MWbQ/KnCMrda+40R5b2ukyXTE+WNJ4/dwj5VcciCMe93N8A
-PMr2FkgbleY1IPA2txB8Bl1p1evmIZHn6F9xLppi8jsTKULN8dcngqDvYS1MmDfv
-hOLshZrWyqmkwWDb6iCVGugXauHzy4eZ39F1Mrn4FL5S1efNYYKPZsJjGv0kObq5
-X9y0OPq94oGSHgY7aScR
-=7Nnm
+iQIcBAEBCAAGBQJYHgGZAAoJEHb/MwWLVhi2lQsP/1q0DTwdkQ5NOL3xfeD48Lye
+JiAOHPKs+X9iAfnpB/3rNiq6RvBPLXr12LPfKGcxiBasPf5mAq4sa1xzNhcXGerD
+678Ch0m+sMKjTfLLTusSeu2WFDKG07Fs7yoiQs4juIfbjJ178nh7RJDz/V7lao0+
+pBv1SUYrIgrZ5dRNNzUp380eOdVNmi5fWPiHvXxIR6PwXZsCu5GZNjowMAIOFgBB
+XedYPtBhG+lbbrvQm9kyj/IoSsw8cKfyhCcDy+T5JE4UcOYWrYpixmgwNZTUXn0l
+BUM8uMWeI2DgMEFDjzjdVL4KY3ktkcXUTbBh7EGYg5zpDiMm3oNbqsS1kv+m+/BQ
+/BHikPAkC+x2W35fzWp/lIJZojBUkkeDCNHU+tc+lVBVVZpo+zEq6puv61GwSTEE
+G2GgnHEeA33XW3AixqFpe2rGY9PIKw92kSIRfAH1aPg1i77Y34m1uqrpJ+HifuK/
+qxowp64tKzwiDgzJqZmTdEYX22EVWqhb1DbukY1cgVM9BkEuI0+ZwrVeAmvy7k/7
+Scp2LmwwN2AdLRagOhzKUSwORKeg6xd5gHDm5F9rhI/GhX/+soNMXKcYKBbq0jDh
++jBAl2oGnhELCnf026nVtrqmqMLS9SquwBXmtHTjdUV88co2NqstBR+oAlAeKrnd
+W1Lyt8V0wHy00wNFmEJs
+=jJL2
 -----END PGP SIGNATURE-----
