@@ -1,41 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/4
-Message-ID: <CAH4rwTLQx21iUP5HSxwCRVRdOYMHjDH9roxhgWjJghHujr9toA@mail.gmail.com>
-Date: Tue, 27 Sep 2016 17:29:42 +0530
-From: Reno Robert <renorobert@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request - OpenSLP 2.0 Memory Corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/05/2
+Message-ID: <CALx_OUD7KH_ZyfsCePr7YXd-VR2OjrZySLM0Wx-g34eD2q41JQ@mail.gmail.com>
+Date: Sat, 5 Nov 2016 00:05:35 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: dickey@....com
+Cc: redrain root <rootredrain@...il.com>, oss-security <oss-security@...ts.openwall.com>,  Assign a CVE Identifier <cve-assign@...re.org>,  "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
+Subject: Re: [FD] CVE request:Lynx invalid URL parsing with '?'
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> Actually, it does parse correctly.  Go read RFC 1738.
 
-The following commit fixes a memory corruption bug that I reported in OpenSLP:
+IIRC, RFC 3986 "fixes" that, and so does https://url.spec.whatwg.org/.
 
-https://sourceforge.net/p/openslp/mercurial/ci/34fb3aa5e6b4997fa21cb614e480de36da5dbc9a/
-
-Below are the details of the issue:
-
-static int SLPFoldWhiteSpace(size_t len, char * str)
-{
-      char * p = str, * ep = str + len;
-      while (p < ep)
-      {
-            if (isspace(*p))
-            {
-                char * ws2p = ++p;
-                while (isspace(*p))
-                     p++;
-                len -= p - ws2p;
-                memmove(ws2p, p, ep - p);
-
-The outer while loop checks for p < ep, but lack of bound check in
-inner while loop could result in p > ep. This will result in passing a
-very large 'size_t len' (ep - p) parameter for memmove().
-
-Could you assign a CVE for this?
-
--- 
-Regards,
-Reno Robert
-http://v0ids3curity.blogspot.in/
+/mz
