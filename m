@@ -1,120 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/9
-Message-Id: <E1bhy0g-0000t7-JQ@xenbits.xenproject.org>
-Date: Thu, 08 Sep 2016 12:00:50 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 185 (CVE-2016-7092) - x86: Disallow L3 recursive pagetable for 32-bit PV guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/06/1
+Message-ID: <CAA=iMUKJ2gz4iAWTSGqmi4Smai+PH7GEG6zaYzFvDSiLyRZE+w@mail.gmail.com>
+Date: Sun, 6 Nov 2016 21:50:35 +0200
+From: Eyal Itkin <eyal.itkin@...il.com>
+To: secalert@...hat.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [engineering.redhat.com #426293] CVE Request - firewire driver RCE - linux 4.8
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-            Xen Security Advisory CVE-2016-7092 / XSA-185
-                              version 3
+The security patch was deployed yesterday in the official git repository of
+linux, after the fix was reviewed and approved by me.
+Therefore, CVE 2016-8633 can now be publicly disclosed.
 
-        x86: Disallow L3 recursive pagetable for 32-bit PV guests
+Commit id of the fix:
+    667121ace9dbafb368618dbabcf07901c962ddac
+    https://git.kernel.org/linus/667121ace9db
 
-UPDATES IN VERSION 3
-====================
+Commit id of the mainline merge:
+    03daa36f089f31002a2d0fb22088d3ebe3e28d98
+    https://git.kernel.org/linus/03daa36f089f
 
-Public release.
+Public disclosure details in my security blog:
+    https://eyalitkin.wordpress.com/2016/11/06/cve-
+publication-cve-2016-8633/
 
-ISSUE DESCRIPTION
-=================
+P.S. I CCed oss-security since in a second CVE (not public yet) I was told
+by your colleague to send the publication request to oss-security.
 
-On real hardware, a 32-bit PAE guest must leave the USER and RW bit
-clear in L3 pagetable entries, but the pagetable walk behaves as if
-they were set.  (The L3 entries are cached in processor registers, and
-don't actually form part of the pagewalk.)
+Thanks for your help,
+Eyal Itkin.
 
-When running a 32-bit PV guest on a 64-bit Xen, Xen must always OR in
-the USER and RW bits for L3 updates for the guest to observe
-architectural behaviour.  This is unsafe in combination with recursive
-pagetables.
+On Thu, Nov 3, 2016 at 1:03 PM, Red Hat Product Security <
+secalert@...hat.com> wrote:
 
-As there is no way to construct an L3 recursive pagetable in native
-32-bit PAE mode, disallow this option in 32-bit PV guests.
+> On Wed Nov 02 22:41:25 2016, eyal.itkin@...il.com wrote:
+> > Hello,
+> >
+> > In a short security audit i made to the firewire driver in the linux
+> > kernel, version 4.8, I found severe security vulnerabilities.
+> >
+> > After contacting security@...nel.org, the driver's contributors have
+> > confirmed my findings and have written a patch that fixes the
+> > vulnerability:
+> >
+> > http://git.kernel.org/cgit/linux/kernel/git/ieee1394/
+> > linux1394.git/commit/?h=testing&id=ff89027279ec57d69797cbae7c6816
+> 72f1dbea71
+> >
+> > [...]
+>
+> Hello Eyal,
+>
+> Thank you for reporting this issue and for your extensive analysis.
+> Please, use
+> CVE-2016-8633 for this issue. We'll treat this issue as embargoed for now.
+>
+> Best Regards,
+>
+> --
+> Adam Mariš / Red Hat Product Security
+>
+>
 
-IMPACT
-======
-
-A malicious 32-bit PV guest administrator can escalate their privilege
-to that of the host.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are vulnerable.
-
-Only 64-bit builds of the hypervisor are vulnerable.  For Xen 4.3 and
-earlier, 32-bit builds of the hypervisor are not vulnerable.
-
-The vulnerability is only exposed to 32-bit PV guests on x86 hardware.
-
-The vulnerability is not exposed to 64-bit PV guests, x86 HVM guests,
-or ARM guests.
-
-MITIGATION
-==========
-
-Running only 64-bit PV or HVM guests will avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was found in parallel by multiple discoverers, who each
-disclosed it to the Xen Project Security Team.
-
-The first report to us was made by Jérémie Boutoille of Quarkslab.
-The second report, one working day later, by Shangcong Luan of Alibaba
-Cloud.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa185.patch           xen-unstable - Xen 4.4
-
-$ sha256sum xsa185*
-3328a1953ecdf4de35462ea8396b0927171d718e95f73a87a7f651427bd8f8b4  xsa185.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJX0VLpAAoJEIP+FMlX6CvZ/koH/0hN8oXOpBPVgsr5d+ylYFBU
-We948VVN/0uthy9IgI1DBnjM2tjoGgy0w7c7dKWUD3ACTvdIq4hWZywA+6uMIwb5
-aneB7hgZZ1i/ie1kAwMl96hdWgPGaXjL1r19WxslgOnr2TkH/9zlAaBvhFkbL+/c
-cw2lI+AOmhB/VOtNfXYd81qxdSUBUPz2DfiOEjgVx8e8E+q/S5dJO1L41kqRt1bM
-ENG8NtaxBrXAtZzilxOPVPmQmvSSegTjZMshGhx29wIgUy4R/HnsoYW7OklZQDhU
-6DV7WUSlrUU5vlIhwQVIZidXpyhzLBLnR5GS0R4CKcYSb6pRQ8FO3TG81TmO/6Q=
-=NDX0
------END PGP SIGNATURE-----
-
-Download attachment "xsa185.patch" of type "application/octet-stream" (1312 bytes)
