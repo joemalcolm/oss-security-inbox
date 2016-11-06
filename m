@@ -1,59 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/21/2
-Message-Id: <20160121075655.E2AEC6C0066@smtpvmsrv1.mitre.org>
-Date: Thu, 21 Jan 2016 02:56:55 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE for node.js websockets (ws)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/06/3
+Message-ID: <1232346907.5838823.1478472751323.JavaMail.zimbra@redhat.com>
+Date: Sun, 6 Nov 2016 17:52:31 -0500 (EST)
+From: Siddharth Sharma <siddharth@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: matt@...uxbox.com, philippe deniel <philippe.deniel@....fr>
+Subject: Re: nfsd-ganesha allows anyone to call into DBUS?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://nodesecurity.io/advisories/67
+Which version of nfs-ganesha did you use ? Can you be more specific
+I tried to reproduce this quite a lot of times in my testing environment
+But I always get 
 
-We currently feel that a CVE ID should not exist (unless an affected
-application is identified) because any related instances of
-security-relevant behavior would be site-specific, and therefore
-outside the scope of CVE.
+~]$  dbus-send --print-reply --system --dest=org.ganesha.nfsd  /org/ganesha/nfsd/ExportMgr org.ganesha.nfsd.exportmgr.AddExport  string:$GANESHA_DIR/exports/export.$VOL.conf string:"EXPORT(Path=/$SERV_MALICIOUS_CONTENT)"
+Error org.freedesktop.DBus.Error.AccessDenied: Rejected send message, 1 matched rules; type="method_call", sender=":1.159" (uid=1000 pid=3852 comm="dbus-send --print-reply --system --dest=org.ganesh") 
 
-For example:
+anything you did differently ?
+-----------------------------------------------------------------
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A      
+Fingerprint  :  6F04 C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
 
-  https://gist.github.com/c0nrad/e92005446c480707a74a#gistcomment-1664152
-  https://nodejs.org/api/dgram.html#dgram_socket_send_buf_offset_length_port_address_callback
 
-suggests that the problem is that Node.js allows people to write
-incorrect server-side code in which there is a call to socket.send,
-socket.ping, or socket.pong with a numerical argument. However, the
-documentation states that the argument must be a Buffer object or
-string. Behavior in the case of a numerical argument seems to be
-undefined. The change seems to be a hardening measure in which
-numerical arguments are automatically converted to strings, thereby
-making it safer to execute a specific type of incorrect code.
+----- Original Message -----
+From: "Sebastian Krahmer" <krahmer@...e.com>
+To: oss-security@...ts.openwall.com
+Cc: matt@...uxbox.com, "philippe deniel" <philippe.deniel@....fr>
+Sent: Monday, September 12, 2016 3:23:53 PM
+Subject: [oss-security] nfsd-ganesha allows anyone to call into DBUS?
 
-If incorrect server-side code actually exists in a product, then a CVE
-ID can be assigned.
+Hi
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The nfs-ganesha (userspace nfsd) offers a dbus API to control/admin
+the nfsd via cmdline tools and some qt+python code.
 
-iQIcBAEBCAAGBQJWoI5eAAoJEL54rhJi8gl5JsAQAKBciZvNRlApccHSGlmNWMHR
-FTnjGchK1LxzJ9dyJ1Ap/kR3ZoYGj1HxeiajsCVu+gqkB71/N1V6kEKWfZtZBUI/
-fQTEv1Ydadp8E5apigN5+bGf2mX+ahRZjfr2mJn/uoI/3tXcX8JUlduR1r162xmJ
-4641oTYzh5UkNYJPBFeCPwjsCqqVHsSeBoftifMXhdSMP06qJYQE4Bxu8kuMRNQj
-ZwonpjKXAK86+qiM67Ic+ndxB3u/KNITqp++wsWVZBefmaDzsSsAf0K3kxSckX02
-ngQi7/8MeHCZyTU3lLGsr7EUzb69RHHhPlE5bRRfE12mZi07htRu4IR4jzJNcNYg
-wEPzLp+irLY4oF/RplysEj0jf2j952xTQGD0HfoqGPsgK9EY2Z+O6s+GEJJF94hS
-b53sAtwSSZolXT7sSRSAbN7YAB1me+PN8AUaCKY8VXwJD3O4dYxsee1jTrx9BEqc
-hyst7ADv2fhqL5nXdUdOXunUmwTqy4oNQXNTVyRIGsfu3Kllk6AO9bdX73JHHSAl
-zmY2ruUKyGG2HCMLvBwCZ7YEM5oTF5UrGSvBcyWiLMA/55okt+a2TxMGR2Ne8/S3
-pNV97DHNb38NQhhwSMbWKcezh2FK1lAnQnM4xxe5MAR+al3TOfSQoS39lmxLuIdg
-dBrwTilumCdT13FjYkhf
-=hyHR
------END PGP SIGNATURE-----
+The default dbus config seems to allow anyone to connect to
+it and invoke methods. The code at least does not check any polkit
+authorizations or dbus sender (at a first look). Am I missing something? If I dont,
+the DBUS API should be declared experimental and disabled by default,
+since there are some methods which would allow users to gain root.
+
+https://github.com/nfs-ganesha/nfs-ganesha/
+https://github.com/nfs-ganesha/nfs-ganesha/wiki/Dbusinterface
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
+
