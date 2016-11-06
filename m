@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1773" "Wednesday" "30" "September" "2015" "16:23:31" "+0200" "Alessandro Ghedini" "alessandro@ghedini.me" "<20150930142331.GA18445@kronk.local>" "49" "Re: [oss-security] CVE Request: zendframework SQL injections" nil nil nil "9" "2015093014:23:31" "[oss-security] CVE Request: zendframework SQL injections" (number mark "        alessandro@g Sep 30   49/1773  " thread-indent "\"Re: [oss-security] CVE Request: zendframework SQL injections\"\n") "<20150930105545.GC8507@kronk.local>" ("<20150930105545.GC8507@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1768" "Sunday" "6" "November" "2016" "21:50:35" "+0200" "Eyal Itkin" "eyal.itkin@gmail.com" "<CAA=iMUKJ2gz4iAWTSGqmi4Smai+PH7GEG6zaYzFvDSiLyRZE+w@mail.gmail.com>" "61" "[oss-security] Re: [engineering.redhat.com #426293] CVE Request - firewire driver RCE - linux 4.8" nil nil nil "11" "2016110619:50:35" "[oss-security] Re: [engineering.redhat.com #426293] CVE Request - firewire driver RCE - linux 4.8" (number mark "U       eyal.itkin@g Nov  6   61/1768  " thread-indent "\"[oss-security] Re: [engineering.redhat.com #426293] CVE Request - firewire driver RCE - linux 4.8\"\n") "<rt-4.0.13-10592-1478170987-1523.426293-5-0@engineering.redhat.com>" ("<RT-Ticket-426293@engineering.redhat.com>" "<CAA=iMUKO8wUKDPcnYD3HS3eB3r7bLd5Mca-dDwOVGrXjT8jjMQ@mail.gmail.com>" "<rt-4.0.13-10592-1478170987-1523.426293-5-0@engineering.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15619 invoked by uid 550); 30 Sep 2015 14:23:44 -0000
+Received: (qmail 5692 invoked by uid 550); 6 Nov 2016 20:02:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15601 invoked from network); 30 Sep 2015 14:23:43 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 31964 invoked from network); 6 Nov 2016 19:50:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rbTeP2c1Rd+dSROVKinKByGzlB1aiY7ZsLeh87QUtyg=;
+        b=TBnduaPJAzJDZin++CA+ch+xtFQ+XUht9ymglcNugFGVcSmhRLdxKc5sh1AzQQJvLN
+         oxFd8NbguWJdJqCC7gmVTFWLOicHBu/5CPiloz8h4KyF9+p6NK9gj9HO9TSwLKNWXAmX
+         W39tqKUUewB+Qc5toZXpL7T4cGJ6+xSoAY0vm7kvRIJMOa672TacO63brSaH5SFZ4t7Y
+         ZzeNL0dcOUM9waVThaAX8VzDETdIeO/uqZlR0IUyBExMupeYnXD7ZU8lMi3XripTeVBl
+         75R8uQe8ERzuI/pMc+LfsARm39zIYJ+0FNzcyX0K5b/5xszjW+7HdbG/cRKFUr/ZZcPH
+         DwtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Ct+guaElUr7iVjmJzg+2MNgDxoKxVfGHcJ50kvOKt8U=;
-        b=FxFEc1JY0fC5MQmXRHzG8JbT7hSRRf2UOs2HEytHMztRBKW2IvgWuV/CDRtejnpSgA
-         TlSjGYDgMVyDE7Jrrmj4psUN227bGQgSvdrAQM6WtUViV7hpvLdc/SGVPiW4hn0uloKs
-         +2o02R1xuuQ9KA+bgBxipydDn1RuiOSUbDGMpX5Oxlm6if580rI3cEvmRPTeA4eJhy9P
-         q/qTlD6OEvT/7L08XorLW1gNSIrDChGsUQ0h/15mivBB6ijHFaLtHAyYnQ+wZ2ZEiZ81
-         vj74p5WJImUFQodCocfuP8z+jPJ3GKbPjCiG4zHyJ2UH/8aIOA5Vd4F34nU0vQvmp6cu
-         W63w==
-X-Received: by 10.194.5.135 with SMTP id s7mr5347217wjs.153.1443623012248;
-        Wed, 30 Sep 2015 07:23:32 -0700 (PDT)
-Message-ID: <20150930142331.GA18445@kronk.local>
-Mail-Followup-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-References: <20150930105545.GC8507@kronk.local>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rbTeP2c1Rd+dSROVKinKByGzlB1aiY7ZsLeh87QUtyg=;
+        b=Yo9bpnQo0Wr4aBrrRe6QiGeE2LiumR3fxF7Omb0gzXMmxf6XQHKqZlUoqFI32X0quL
+         xIp3hBjuzcvdHP/TwCww/vBp2THHUIbdLF5AOih6onH9N5DQXwrLq39jUIi3YSiHI9zh
+         ZwD2wPDdo0+5pq+4w0cJ7b+2kUFABlM/bkeXzFw9XmdoHaFYJAq8pAhOAFcVuz4deEJY
+         OlXG+2KJvPp/QfMErsqFXF+F2muOI6O7GeGhBJlvMS0VTTnsZBAQvmNdM1KKt40e0aYZ
+         gU6CPBoP9MpddMGyR6xClLeCRsw1uRNRiigqFhzczUiImcvcDN7O96ojjMZSSzSwTet0
+         IBWA==
+X-Gm-Message-State: ABUngveBYfuzzznirxeQryfemeuIBaER4758ybpzK0i8Rr9KyGjm7vxqDfAAM87jxSeoclDydBP86E2MUscnIA==
+X-Received: by 10.25.154.142 with SMTP id c136mr1613754lfe.71.1478461835840;
+ Sun, 06 Nov 2016 11:50:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FL5UXtIhxfXey3p5"
-Content-Disposition: inline
-In-Reply-To: <20150930105545.GC8507@kronk.local>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: cve-assign@mitre.org
-Date: Wed, 30 Sep 2015 16:23:31 +0200
-From: Alessandro Ghedini <alessandro@ghedini.me>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: zendframework SQL injections
-To: oss-security@lists.openwall.com
+In-Reply-To: <rt-4.0.13-10592-1478170987-1523.426293-5-0@engineering.redhat.com>
+References: <RT-Ticket-426293@engineering.redhat.com> <CAA=iMUKO8wUKDPcnYD3HS3eB3r7bLd5Mca-dDwOVGrXjT8jjMQ@mail.gmail.com>
+ <rt-4.0.13-10592-1478170987-1523.426293-5-0@engineering.redhat.com>
+From: Eyal Itkin <eyal.itkin@gmail.com>
+Date: Sun, 6 Nov 2016 21:50:35 +0200
+Message-ID: <CAA=iMUKJ2gz4iAWTSGqmi4Smai+PH7GEG6zaYzFvDSiLyRZE+w@mail.gmail.com>
+To: secalert@redhat.com
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a11401be08a11e30540a73818
+Subject: [oss-security] Re: [engineering.redhat.com #426293] CVE Request - firewire driver
+ RCE - linux 4.8
 
---FL5UXtIhxfXey3p5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--001a11401be08a11e30540a73818
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 30, 2015 at 12:55:45PM +0200, Alessandro Ghedini wrote:
-> Hello,
->=20
-> the Zendframework project released the following advisory:
->=20
-> > ZF2015-08: Potential SQL injection vector using null byte for PDO (MsSq=
-l, SQLite)
-> http://framework.zend.com/security/advisory/ZF2015-08
->=20
-> The patch for the MS SQL backend seems to be:
-> https://github.com/zendframework/zf1/commit/2ac9c30f73ec2e6235c602bed7457=
-49a551b4fe2
->=20
-> but I couldn't find the fix for the mentioned SQLite backend.
+Hello,
 
-It was pointed out to me that that patch also includes changes for the file
-library/Zend/Db/Adapter/Pdo/Abstract.php, which is used by the SQLite backe=
-nd.
-So it should cover both MS SQL *and* SQLite.
+The security patch was deployed yesterday in the official git repository of
+linux, after the fix was reviewed and approved by me.
+Therefore, CVE 2016-8633 can now be publicly disclosed.
 
-Cheers
+Commit id of the fix:
+    667121ace9dbafb368618dbabcf07901c962ddac
+    https://git.kernel.org/linus/667121ace9db
 
---FL5UXtIhxfXey3p5
-Content-Type: application/pgp-signature; name="signature.asc"
+Commit id of the mainline merge:
+    03daa36f089f31002a2d0fb22088d3ebe3e28d98
+    https://git.kernel.org/linus/03daa36f089f
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Public disclosure details in my security blog:
+    https://eyalitkin.wordpress.com/2016/11/06/cve-
+publication-cve-2016-8633/
 
-iQIcBAEBCgAGBQJWC/BjAAoJEK+lG9bN5XPLGMQQAJLlcTXFSJpyLG7F6xlvLNK+
-3rxJghMpQY06SxH5epvBYLoxDGUIOVGscVFZwS0UnHaMK9ZcZ4qEW2hIU4/JS8w4
-dZgeth9Ni1EcBrgy472+R46ZeLy/Dzhjcf2lLHoNjAF9agrIRbraE2uKlPMnzC/H
-JtVLjYKgiIjAkgrvsv5E43gFyrBI65YtbubOnuEuZ1YsPrJzsHmMG1YZlAwEXWij
-tlKFdKzM3Pbz0r1GC8SQCN3XVqVXhjkSN4fTXgBQvL4qF6vWHzqN6GsFbXDTW/wD
-2dmv6H10bwzsizXI0MjmWWIeZkFtR8ehMD19m0nhID93pJEkjEENPotIzU3AIxGq
-4/ax3n8VezuS3WEBXv5s+VmpQUFZJqgh/OdAcQO6iGZIi6z95On514UeeMDZ/af8
-I29Obkjqd1lNRqJrBlMRN6MuSdV7rQG0VQLqltu76vlJJUT0O0WDGE80LpAOD6vQ
-QZgoitcv79VCYZMJ+FEkUFXI/nObqfhEIQo5wjsOGjvjmuQr8jrEU8MWeBuGMBki
-j1PlDmZ37VF4WAsSabFmNVxr7z44/ZXaF8gLpGzKlfDOHMXe3IelxeIYiODIwbya
-mSgOPK3Aa3CIQH6Y9TU0XZ9e6VgUTwkjyR1Tq/EnfxzxO0PuF7FOn0OnVSdBYznF
-yNXsfoC9GGevuorKanDa
-=wZkT
------END PGP SIGNATURE-----
+P.S. I CCed oss-security since in a second CVE (not public yet) I was told
+by your colleague to send the publication request to oss-security.
 
---FL5UXtIhxfXey3p5--
+Thanks for your help,
+Eyal Itkin.
+
+On Thu, Nov 3, 2016 at 1:03 PM, Red Hat Product Security <
+secalert@redhat.com> wrote:
+
+> On Wed Nov 02 22:41:25 2016, eyal.itkin@gmail.com wrote:
+> > Hello,
+> >
+> > In a short security audit i made to the firewire driver in the linux
+> > kernel, version 4.8, I found severe security vulnerabilities.
+> >
+> > After contacting security@kernel.org, the driver's contributors have
+> > confirmed my findings and have written a patch that fixes the
+> > vulnerability:
+> >
+> > http://git.kernel.org/cgit/linux/kernel/git/ieee1394/
+> > linux1394.git/commit/?h=3Dtesting&id=3Dff89027279ec57d69797cbae7c6816
+> 72f1dbea71
+> >
+> > [...]
+>
+> Hello Eyal,
+>
+> Thank you for reporting this issue and for your extensive analysis.
+> Please, use
+> CVE-2016-8633 for this issue. We'll treat this issue as embargoed for now.
+>
+> Best Regards,
+>
+> --
+> Adam Mari=C5=A1 / Red Hat Product Security
+>
+>
+
+--001a11401be08a11e30540a73818--
