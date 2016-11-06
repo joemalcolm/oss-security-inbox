@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/18
-Message-ID: <CAAeHK+znVzS6vZ00rm8bBzu6q=NgDgB4b8G8Eggyoa3xwrs1FQ@mail.gmail.com>
-Date: Tue, 22 Nov 2016 10:52:44 +0100
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: CVE Request: Linux: net/sctp: slab-out-of-bounds in sctp_sf_ootb
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/06/2
+Message-ID: <20161106203524.hkl2ketyczothiuk@eldamar.local>
+Date: Sun, 6 Nov 2016 21:35:24 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Clarification about CVE-2016-1841 for libxslt
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-There's a bug in the Linux kernel sctp implementation which allows a
-remote attacker to trigger a slab-out-of-bounds access with an offset
-up to 64K bytes.
+CVE-2016-1841 is assigned for libxslt, and the CVE description from
+MITRE states:
 
-The bug was fixed upstream:
-https://github.com/torvalds/linux/commit/bf911e985d6bbaa328c20c3e05f4eb03de11fdd6
+> libxslt, as used in Apple iOS before 9.3.2, OS X before 10.11.5,
+> tvOS before 9.2.1, and watchOS before 2.2.1, allows remote attackers
+> to execute arbitrary code or cause a denial of service (memory
+> corruption) via a crafted web site. 
 
-More details are here:
-https://groups.google.com/forum/#!topic/syzkaller/pAUcHsUJbjk
+Following the references from Apple, this seems to be related to an
+issue reported by Sebastian Apelt. Recent bug reports and commits
+related to issues reported by SEbastian Apelt seem to be:
 
-Could you assign a CVE for this?
+https://bugzilla.gnome.org/show_bug.cgi?id=758291
 
-Thanks!
+with corresponding upstream commit:
+
+https://git.gnome.org/browse/libxslt/commit/?id=fc1ff481fd01e9a65a921c542fed68d8c965e8a3
+
+Is this CVE association correct?
+
+Regards,
+Salvatore
