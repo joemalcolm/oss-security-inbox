@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/13
-Message-ID: <20160926192444.505135sm4ivhte4g@webmail.alunos.dcc.fc.up.pt>
-Date: Mon, 26 Sep 2016 19:24:44 +0200
-From: up201407890@...nos.dcc.fc.up.pt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/4
+Message-ID: <20161107124854.GA7492@inutil.org>
+Date: Mon, 7 Nov 2016 13:48:54 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
+Cc: citypw@...il.com, cve-assign@...re.org
+Subject: Re: Re: kernel: fix minor infoleak in get_user_ex()
 Content-Type: text/plain; charset=utf-8
 
-Quoting "Jakub Wilk" <jwilk@...lk.net>:
+Hi,
 
-> * up201407890@...nos.dcc.fc.up.pt, 2016-09-25, 13:49:
->> When executing a program via the SELinux sandbox, the nonpriv  
->> session can escape to the parent session by using the TIOCSTI ioctl  
->> to push characters into the terminal's input buffer, allowing an  
->> attacker to escape the sandbox.
->
-> Apparently every single program that tries to run stuff with reduced  
-> privileges falls through this trap.
->
-> Are there any use cases for TIOCSTI other than producing exploits?
+> > get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
+> > (at most we are leaking uninitialized 64bit value off the kernel
+> > stack, and in a fairly constrained situation
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
+> > https://lwn.net/Articles/705264/
+> 
+> Use CVE-2016-9178.
 
-I had this discussion with Stanislav Brabec, from SUSE, a while ago.
+Can you please clarify on the scope of CVE-2016-9178?
 
-http://marc.info/?l=util-linux-ng&m=145702209921574&w=2
+I assume this is for the leak fixed with 1c109fabbd51863475cd12ac206bdd249aee35af,
+but the LWN comment by Brad Spengler referenced above refers to a new issue
+which affected some Linux stable lines, which backported 
+1c109fabbd51863475cd12ac206bdd249aee35af without also backporting
+548acf19234dbda5a52d5a8e7e205af46e9da840.
 
-"Just for curiosity, I just ran grep for TIOCSTI ioctl() over all
-openSUSE sources. I got about 60 matches.
+So please assign a second CVE ID for the latter.
 
-I analyzed use of some cases:
-
-util-linux: used in agetty in wait_for_term_input()
-kbd: contrib utility sti equal to tiocsti utility.
-irda: Used by handle_scancode() to emulate input.
-tcsh: Used in ed mode and in pushback().
-emacs: Used in stuff_char() (putting char to be read from terminal)
-...
-
-It seems that TIOCSTI is used for:
-- Read character, and if it does not match, put it back.
-- Wait for character, than put it back for processing.
-- Implementing a simple line editing."
-
-So yes.
-
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
-
+Cheers,
+        Moritz
