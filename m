@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/10
-Message-ID: <CAAeHK+yya7cNPsY97wiss_G9ZCS3sOVbrTSZwxjqXPg7FzyF1A@mail.gmail.com>
-Date: Thu, 1 Dec 2016 17:23:31 +0100
-From: Andrey Konovalov <andreyknvl@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/5
+Message-ID: <CACn5sdSHFna-46qCeffARuWeYqxtfhsaKLMwJ0zMu7Gz-i9hnw@mail.gmail.com>
+Date: Mon, 7 Nov 2016 15:29:37 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hopefully, CVE-2016-9109 should be fixed in this commit:
 
-There is a bug in the Linux kernel ipv6 implementation, which leads to
-an out-of-bounds write on ipv6 packet defragmentation.
+http://git.ghostscript.com/?p=mujs.git;h=a0ceaf5050faf419401fe1b83acfa950ec8a8a89
 
-A fix was sent upstream:
-https://www.spinics.net/lists/netdev/msg407525.html
+2016-10-30 16:49 GMT-03:00 <cve-assign@...re.org>:
 
-More details here:
-https://groups.google.com/forum/#!topic/syzkaller/GFbGpX7nTEo
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+> > Despite CVE-2016-7563 looks fixed in the mujs bug tracker, it was not
+> > properly patched:
+> >
+> > http://bugs.ghostscript.com/show_bug.cgi?id=697136#c4
+>
+> >> AddressSanitizer: heap-buffer-overflow
+> >> READ of size 1
+>
+> Use CVE-2016-9109 for the issue of an incomplete fix for
+> CVE-2016-7563.
+>
+> - --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+>
+> iQIcBAEBCAAGBQJYFkuiAAoJEHb/MwWLVhi2RYQP/RUxITs9d7YwygKvsonPO6KY
+> G0w5aAZSoJQq5SuQHFpU5B6CBfMfGB4iSWTrdLhu71hSBHlFMoca8Q4Rlirnnefh
+> mrK2dUlB4ZeY9iAu/WAsi7svdMhbsaNWD4FchYdm8PTBP10Q0pHCilPAmJI4/fev
+> vZIeSeHl0KcYD104MtYD2ek6bOUm56Dxuf2nBTRfVJNBZa/q1FRS62cg+Nkwo4Hx
+> sfvepzy26nE0PzCFn1GcPu3H0SuWe1nkgfSwgZjFSDAg+OwueJLAFnm/Y+xloUWv
+> lD3WiHU1cESxY4SyH3UgUa2QgNTI0zauLxLzcwLOYMF2rh8UlACG2DqOckgI9Bkk
+> GYetbtkGbnZOmwBTEFPdKfFISEo5dBBPRWTxFXnepCnwjU/Gl1gLt07s4/90UM/7
+> +w+kXl0boDt7W7PUYxyn6lkYUbT6Irodxvk1QDe5LcI5eyU8+QN2yNW1t8sp7qAi
+> 578PKtcezerFo0L9WHSvNcV3+CM9mO00LdI6ZxCEy8qmc5s5yrnbtIElaNdJfOek
+> 1riKd3yPvz3T/2EGbpVXE/9gkpz4My37e+bhhkBhzScp6pcM6tOcycBvSzM1LKls
+> HNh0uzMpzadWQA474KQsCoXAZ+M3N1ViBmUs0KUCGs9NAqxjYV/pKtONiKUqTHbJ
+> 4cNzu7H/SxrQp0e6nt3h
+> =vKjs
+> -----END PGP SIGNATURE-----
+>
 
-Could you assign a CVE for this?
-
-Thanks!
