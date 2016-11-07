@@ -1,58 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/25/3
-Message-Id: <20160825174910.2A2096C0BE4@smtpvmsrv1.mitre.org>
-Date: Thu, 25 Aug 2016 13:49:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: caiqian@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: cve request: overlayfs: Fix dentry reference leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/1
+Message-ID: <edbc8c359e6b42ed80792307cbb00430@imshyb02.MITRE.ORG>
+Date: Mon, 7 Nov 2016 01:25:23 -0500
+From: <cve-assign@...re.org>
+To: <nicolas@...ud-santoni.eu>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@...ian.org>, <ross@...listi.us>
+Subject: Re: CVE request: Escape Sequence Command Execution vulnerability in Terminology 0.7
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ab79efab0a0ba01a74df782eb7fa44b044dae8b5
-> 
-> In ovl_copy_up_locked(), newdentry is leaked if the function exits through
-> out_cleanup as this just to out after calling ovl_cleanup() - which doesn't
-> actually release the ref on newdentry.
-> 
-> The out_cleanup segment should instead exit through out2 as certainly
-> newdentry leaks - and possibly upper does also, though this isn't caught
-> given the catch of newdentry.
-> 
-> Without this fix, something like the following is seen:
-> 
->         BUG: Dentry ffff880023e9eb20{i=f861,n=#ffff880023e82d90} still in use (1) [unmount of tmpfs tmpfs]
->         BUG: Dentry ffff880023ece640{i=0,n=bigfile}  still in use (1) [unmount of tmpfs tmpfs]
-> 
-> when unmounting the upper layer after an error occurred in copyup.
-> 
-> An error can be induced by creating a big file in a lower layer with
-> something like:
-> 
->         dd if=/dev/zero of=/lower/a/bigfile bs=65536 count=1 seek=$((0xf000))
-> 
-> to create a large file (4.1G). Overlay an upper layer that is too small
-> (on tmpfs might do) and then induce a copy up by opening it writably.
-> 
-> === POC Exploit ===
-> This can be reproduced in a DevOps environment when the docker runtime storage is on overlayfs over
-> xfs as a local DoS. An attacker access to a developer account could run a crafted image from elsewhere
-> like docker by creating a big file in the container filesystem and try to read it running by any
-> user like below by forcing xfs_file_open() returns -EFBIG,
-> 
-> $ cat Dockerfile
-> FROM fedora
-> USER nobody
-> RUN dd if=/dev/zero of=/home/nobody/bigfile bs=1024k seek=2046 count=1
-> ADD open /home/nobody
-> CMD ["/home/nobody/open", "/home/nobody/bigfile"]
-> 
-> and possibly trigger kernel dentry leaks inside the container that will eventually running out of
-> kernel resources for other developers. Hence, a local DoS.
+> Terminology 0.7.0 suffers from a bug similar to CVE-2003-0063, where an
+> attacker able to print character escape sequences can modify the window
+> title and then insert it back in the terminal's input buffer, resulting
+> in arbitrary terminal input, including code execution as a local user.
 
-Use CVE-2015-8953.
+> https://git.enlightenment.org/apps/terminology.git/commit/?id=b80bedc7c21ecffe99d8d142930db696eebdd6a5
+>> src/bin/termptyesc.c
+
+Use CVE-2015-8971.
 
 - -- 
 CVE Assignment Team
@@ -62,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXvy6KAAoJEHb/MwWLVhi2I/0P/jwsVy+oxasVqe6Y/+Qnp//b
-+Q/nqSAIG3+pEPx4YRFC48zHudluUk8unvFh+c2OeleZhVpUeDyVxvWNfU/iwcoq
-a0wo6yb742u7xK/LE1NzQMk50cvs9+RTpaF4bEWzGWYCCXPT84BhlXOdTWgfa0W6
-ctqhuyU0ZB8ugHq0wAwmoHzrOHpOz0Sz8ZaOJF/PXDy7OV/T/z+L8+I6A+NUDj9O
-zlnj51ibXJswO6JQnuc1ZRn9vKZnVau5I0JxA7xNBFpCHpVxMieM7lfVuWtt5pzs
-/tf4llYHc/OHL01Xexm+BD9BsTMVbW0+8MccIOty0w+oBgiwImTnJY8na1tKx0GY
-qnRYRL8LdaIRSgP+MlxO3lZ1dFnbS4tQnKvmXhBFmJ5/gyYBX5XYZeMSl+BeqyXR
-7j30GWdO7TYmtkfiUgyT4Rux9pbXIvdS70rBeFoShKdGW04bX4HZH1jy6rwqacA8
-MAA4C5rPC72TzFM5VXY41tKtCZkwTf/4w/oOAcVHi4V5H9OA3R7rAr68IP198MRS
-+4UaUlHfFO17+fuxxF6gOBfdC8/gzLaH5j+8ixmpg6X1RVd+FX8FMU9COeodhbbi
-8GfFBxdtFklLDwgTmG60kDwXSAWjVS+qyS7sFCnUGYt613meRFQWzH+aMsskAHbj
-A0Wu0scFPJ8bSi12EaSZ
-=Cr9c
+iQIcBAEBCAAGBQJYIB3DAAoJEHb/MwWLVhi2sDAP/2SGtSh3lURdWJgTg5e/iTrr
+ts+KS9Gvi4Kzlmz2THht82pnyDyR92ViseaDUYMQRjcFjt2F/blpb3PinUq/O+er
+RUGSgRJBsySNqSt8kDTNL1Xp8Zfld8nVsbH4Ok+pYzDgkj1FozCFv33hlGIOmNrU
+8alWastFxk/1URgDDfHLkvtZe2OPLJhwbLCon4XMOB3KJITvsSbUMhRbVyViub0k
+NUdpKSBrR+gr1NXaExELEWl2zQX2lHUpxw+SPRs8xkUaL4Zkwe5Ofd5Jac6tI+Ei
+T6WynJbtxlxBHCoLrD4r0/dLP3VEdVcyK+BvypTlZwyISYlkqKNusvWRiVZdXdTT
+LyHOl/TQQ60VIBvCEcFhZ15l1tvkzos+qxYUDEqIiJLorciyxsLkPLVHM6rEaJ3a
+zpTKra57+CoWOJr68fwvC9rASc4TdYGEAvIBbld4u5tOSmk6mxOqz4nmv11HxAYk
+oVnjXoGmZ9agErDd9eZN636IT/XWVfaPdCtf54gzfYqC04mb4onc5KU+lasX53hP
+AOJgiUtwM/GbN/ffiCLCWyU5Aar9iPSFLZIc12B5xA/FxK/RktD2FEJ6TDT36vcw
+pEoP1aqgFyTkVqQzxjClLYNnPjkcTsoVZGMM/VQ35zuzmy0M9Q07cFCHHTPj1PQG
+io6f65LmgGjmEq+hvBEW
+=HUD/
 -----END PGP SIGNATURE-----
