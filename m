@@ -1,4 +1,9 @@
-Received: (qmail 9472 invoked by uid 550); 18 Feb 2026 00:15:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["839" "Monday" "7" "November" "2016" "13:48:54" "+0100" "Moritz Muehlenhoff" "jmm@debian.org" "<20161107124854.GA7492@inutil.org>" "23" "Re: [oss-security] Re: kernel: fix minor infoleak in get_user_ex()" nil nil nil "11" "2016110712:48:54" "[oss-security] Re: kernel: fix minor infoleak in get_user_ex()" (number mark "U       jmm@debian.o Nov  7   23/839   " thread-indent "\"Re: [oss-security] Re: kernel: fix minor infoleak in get_user_ex()\"\n") "<b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>" ("<CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>" "<b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9617 invoked by uid 550); 7 Nov 2016 12:49:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,77 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7422 invoked from network); 17 Feb 2026 23:58:03 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=geeklan;
-	 bh=mL5xG5iqtYlUjGXHAl95T77LzSw=; b=BV/s/j3i+QsPRuPoqMOpDPxx1Kpk
-	LINaRPY3eYA3L+uku4qklhQPpyBCQq/loQLQ9B/iZXnKfpTtoX10HKS9FdgdAvXW
-	rUKIalthKAyPoT4LZdnLYp1aJ3LhgJp69gyPtJ/leJ1vhapEFdjhC63oxAVRXXOH
-	rGWNyvJVgifBkX6U0Mfo9uJmpSbwW7+mm9RII80lPrpKrQjpni1GnnqMcjfg8IkB
-	an2m+E8VXXYF5UsAkT7lnj32+6uiymyhkhTfzZxCvhVT/46sr8CqAjtb31XUHTlV
-	/6BZVaebJ50nQW1fPyBMXgf0aMxie0VZZ216C5aUazGq9J/L4NP55ozKJg==
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
-	:date:mime-version:subject:to:references:from:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=geeklan; b=NCl
-	PMAkufcdvFsTWwWV7cLg+/eMwcKI+ul4+1P5y0AAHe6V/dQI0WjRBq+sIc5EAeaF
-	DzEaQGIx29lvq479hPpon07DOaBVh/lLIG04EXuikgRts6Zrk7mwW7pm8q3E9oNP
-	x6nCEVNHGX8oUk+DRDRH/TWIhO7IDvO/u6r4B/YZHY2rAi8rajOAHcqrwxOpbsgV
-	ePb/f4uBcF8AfQ5o9XM9NfE1jKRlG8BGPMtJ9lrh6wn+Wp48xat9vtl/3r6VeQIn
-	fH/VbaHJ2eKeSrietLGMBX8DzhgPYXDR1MGqR0mxgocDki53ap72alTYI8uZcY//
-	K5eFcLFjZrvxHYOLxwQ==
-Message-ID: <515f855d-cb54-4eb4-912f-a88454e6a26b@geeklan.co.uk>
-Date: Tue, 17 Feb 2026 23:57:49 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 9593 invoked from network); 7 Nov 2016 12:49:07 -0000
+Date: Mon, 7 Nov 2016 13:48:54 +0100
+From: Moritz Muehlenhoff <jmm@debian.org>
 To: oss-security@lists.openwall.com
-References: <87seazqslh.fsf@gentoo.org> <87a4x7awxe.fsf@josefsson.org>
-Content-Language: en-GB
-From: Sevan Janiyan <venture37@geeklan.co.uk>
-In-Reply-To: <87a4x7awxe.fsf@josefsson.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Re: zlib security audit by 7asecurity
+Cc: citypw@gmail.com, cve-assign@mitre.org
+Message-ID: <20161107124854.GA7492@inutil.org>
+References: <CABniQZMPWz9XaVm4fjsYC8SZXksNm-63-gzeRkz8Eertv3j-SQ@mail.gmail.com>
+ <b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b2c66d90c93144128adf042665999c21@imshyb02.MITRE.ORG>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Re: kernel: fix minor infoleak in get_user_ex()
 
-On 17/02/2026 21:21, Simon Josefsson wrote:
-> Great to see audits of widely used code!  Gzip next?
+Hi,
+
+> > get_user_ex(x, ptr) should zero x on failure. It's not a lot of a leak
+> > (at most we are leaking uninitialized 64bit value off the kernel
+> > stack, and in a fairly constrained situation
+> > 
+> > https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1c109fabbd51863475cd12ac206bdd249aee35af
+> > https://lwn.net/Articles/705264/
 > 
-> Sam James<sam@gentoo.org> writes:
-> 
->> * ZLB-01-001 WP2: Heap Buffer Overflow via Legacy gzprintf Implementation (High)
-> That vulnerability seems to require that zlib was built with
-> -DNO_vsnprintf -DNO_snprintf, targetting a system lacking 'snprintf'.
-> 
-> Does anyone know of a real-world environment using that configuration?
+> Use CVE-2016-9178.
 
-Greetings from 2005, packaging for OS X 10.4 with GCC 4.0 which defaults 
-to C89.
+Can you please clarify on the scope of CVE-2016-9178?
 
- From gzguts.h:
-#  elif !defined(__STDC_VERSION__) || __STDC_VERSION__-0 < 199901L
-/* Otherwise if C89/90, assume no C99 snprintf() or vsnprintf() */
-#    ifndef NO_snprintf
-#      define NO_snprintf
-#    endif
-#    ifndef NO_vsnprintf
-#      define NO_vsnprintf
-#    endif
-#  endif
-#endif
+I assume this is for the leak fixed with 1c109fabbd51863475cd12ac206bdd249aee35af,
+but the LWN comment by Brad Spengler referenced above refers to a new issue
+which affected some Linux stable lines, which backported 
+1c109fabbd51863475cd12ac206bdd249aee35af without also backporting
+548acf19234dbda5a52d5a8e7e205af46e9da840.
 
-https://github.com/madler/zlib/blob/da607da739fa6047df13e66a2af6b8bec7c2a498/gzguts.h#L95C1-L104C7
+So please assign a second CVE ID for the latter.
 
-I could set -std=gnu99 but then it's not going to be a quiet drop-in 
-upgrade for all the exist packages built.
-Was actually thinking that what happens during configure and the build 
-are completely different. configure "detects" the presence of 
-vsnprintf() by the compiler not making any noise, but things are handled 
-separately in gzguts.h which until you dig in are left wondering why is 
-it complaining about the lack of vsnprintf() when the configure stage 
-was happy). Will raise a ticket for that.
-
-Sincerely,
-
-
-Sevan
+Cheers,
+        Moritz
