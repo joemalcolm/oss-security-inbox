@@ -1,66 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/23/9
-Message-Id: <20161023165101.0AA6E6C4F04@smtpvmsrv1.mitre.org>
-Date: Sun, 23 Oct 2016 12:51:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/3
+Message-ID: <3c64dbd2-0216-88f5-d2d1-b2445c7b63f1@suse.com>
+Date: Mon, 7 Nov 2016 06:35:31 -0500
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-8637: dracut creates world readble initramfs when early cpio is used
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> the previous assignment on this issue was about only one CVE ( see
-> http://www.openwall.com/lists/oss-security/2016/10/16/18 )
-> 
-> We sayd that the cause of the two null pointer access was the same.
-> 
-> Now for completeness I posted the stacktrace of both locations in bmp_dec.c
-> but I guess that the root cause remains the same.
-> 
-> Do you need to reject one of these two or it is fine as is?
+An openSUSE community user reported a permissions oddity with his
+initramfs. Upon further analysis this issued turns out to be a local
+information disclosure issue in dracut.
 
-We believe it is fine as is. The two issues could be fixed
-independently, although it is unlikely that anyone would do that:
+SUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=1008340
 
-                        if (numcmpts == 3) {
-                                jas_matrix_setv(cmpts[0], j, red);
-                                jas_matrix_setv(cmpts[1], j, grn);
-                                jas_matrix_setv(cmpts[2], j, blu);
-                        } else {
-                                jas_matrix_setv(cmpts[0], j, red);
+Dracut generates initramfs images with world-readable permissions when
+using "early cpio", such as when including microcode updates. Local
+users may use this to obtain information from these files, typically
+encryption keys and network storage credentials.
 
-394 is the first "red" line; 398 is the second.
+E.g. in dracut 037 https://github.com/dracutdevs/dracut/blob/037/dracut.sh
 
-In future cases, if you have additional analysis suggesting that two
-findings are best represented with one CVE ID, then please include
-that additional analysis in your first posting about the issue.
-Otherwise, we often won't know, and there could be a perception that
-the number of assigned IDs is inconsistent. Here, neither
-https://blogs.gentoo.org/ago/2016/10/18/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c-incomplete-fix-for-cve-2016-8690
-nor http://www.openwall.com/lists/oss-security/2016/10/18/5 explicitly
-says that "two NULL pointer dereference" ought to have one CVE ID.
+if [[ $create_early_cpio = yes ]]; then
+    echo 1 > "$early_cpio_dir/d/early_cpio"
+    # The microcode blob is _before_ the initramfs blob, not after
+    (cd "$early_cpio_dir/d";     find . -print0 | cpio --null
+$cpio_owner_root -H newc -o --quiet > $outfile)
+fi
+if ! ( umask 077; cd "$initdir"; find . -print0 | cpio --null
+$cpio_owner_root -H newc -o --quiet | \
+    $compress >> "$outfile"; ); then
+    dfatal "dracut: creation of $outfile failed"
+    exit 1
+fi
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The permissions of the output file depend on umask at creation time, and
+appending to an existing file does not change them. create_early_cpio is
+set to on when microcode updates are being used.
 
-iQIcBAEBCAAGBQJYDOoQAAoJEHb/MwWLVhi2lD8P/iNGYbRzanD6MBGinuytNLub
-LtFCRYCGRIGOWM8a9jFZlDTuqxGLVekgUp7oil9VT8hYd1q9E8nJyWCZALjA0HHD
-cq8ZvKIF43dKn9Ohp33UXWN5icBgsiLBg1bV8wf3gN8PtRINoR+y07K5aZJc5aCN
-4fG67UNUVD/OZ0NnW171dcJpwx9JD2D92ogU18U99Oy195eO4DrSZFFNQHgFeAGh
-jSFDm3r/0HfjEHI54FVGVKAH85RHOkRvDMpjI4J8O12biabUO0S8s/m13N7EYtmD
-9bGalKIdIv/ArK75zfqNrJY+zJ5hddeL2hw5iDTICagR27a7lgVdpid3q0WAnWVE
-5dq86+4fu4K+KWvZZAgT/P7DOt0alnwLsL3LEJEH/uWdscPnCNPmE1NtW4JCTdrR
-3RhkEbgJIozC50yxqw1hHyZP0DDLR/oAS+Fg5gEgY42eurVW9NInXGdl+8bPut81
-g3oGMtggaiZhJ5o6OSRPrNNfc39Jqs/E6on9LfQj3w0krZ7px4sztsWCOC+DCqBU
-/QRPbTt/AbC5bGYfkUUcdgBAIXyvzihAwYrhEnmXlfmcZKKze8+29UumzALEw1Tp
-VTi4fNv3LFOJAUS4NUjItMJ0ivtNtFIogiruXnVRkV4KdU7lu1coCoCfKHaD4wzN
-2XLFOaL8yZZu5tmRhbNK
-=z2oX
------END PGP SIGNATURE-----
+The very similar vulnerability CVE-2012-4453 was reported and fixed in 024:
+http://git.kernel.org/cgit/boot/dracut/dracut.git/commit/?id=e1b48995c26c4f06d1a718539cb1bd5b0179af91
+
+However the addition of microcode update support in 030 re-introduced
+the issue:
+http://git.kernel.org/cgit/boot/dracut/dracut.git/commit/?id=5f2c30d9bcd614d546d5c55c6897e33f88b9ab90
+
+The vulnerability remains in current git master, which does something
+along the lines of:
+
+if [early_cpio]
+   cpio [...] > ${DRACUT_TMPDIR}/initramfs.img
+umask 0077
+cpio [...] >> ${DRACUT_TMPDIR}/initramfs.img
+cp --reflink=auto "${DRACUT_TMPDIR}/initramfs.img" "$outfile"
+
+Our fix in upstream master:
+http://git.kernel.org/cgit/boot/dracut/dracut.git/commit/?id=0db98910a11c12a454eac4c8e86dc7a7bbc764a4
+
+CVE-2016-8637 was assigned to this issue.
+
+The local workaround is to adjust the permissions of the initramfs files
+manually, and all back-ported patches will set umask to a suitable value
+such as 077 prior to first writing the file.
+
+For the SUSE Security Team,
+Andreas Stieger
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
