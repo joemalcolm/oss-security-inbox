@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/7
-Message-ID: <20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>
-Date: Tue, 20 Dec 2016 21:49:10 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: ikiwiki: authorization bypass when reverting changes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/1
+Message-ID: <CAJmbs8i2AFb9ddx2HDSea-XLkR7rRFeM05epxtQzDzSa6ZST3A@mail.gmail.com>
+Date: Tue, 8 Nov 2016 08:49:09 +0700
+From: Maxim Solodovnik <solomax@...che.org>
+To: security@...nmeetings.apache.org, Brian Martin <bmartin@...able.com>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  dev <dev@...nmeetings.apache.org>,  Openmeetings user-list <user@...nmeetings.apache.org>, user-russian@...nmeetings.apache.org,  announce@...che.org
+Subject: [CVE-2016-8736] Apache Openmeetings RMI Registry Java Deserialization RCE
 Content-Type: text/plain; charset=utf-8
 
-Reference: http://ikiwiki.info/bugs/rcs_revert_can_bypass_authorization_if_affected_files_were_renamed/
-Vulnerable versions: < 3.20161219
-Fixed versions: >= 3.20161219
-Fix: http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=9cada49ed6ad24556dbe9861ad5b0a9f526167f9
+Severity: Moderate
 
-ikiwiki is a static site generator with some dynamic features,
-used for wikis, blogs and other websites.
+Vendor: The Apache Software Foundation
 
-intrigeri discovered that on sites with the git and recentchanges
-plugins and the CGI interface enabled, the revert links on the
-RecentChanges page could revert changes on a page the logged-in user
-cannot legitimately edit, if the change being reverted was made before
-the page was renamed from a location that the logged-in user *could*
-legitimately edit.
+Versions Affected: Apache OpenMeetings 3.1.0
 
-Please allocate a CVE ID for this vulnerability.
+Description: Apache Openmeetings is vulnerable to Remote Code
+Execution via RMI deserialization attack
 
-Thanks,
-    S
+The issue was fixed in 3.1.2
+All users are recommended to upgrade to Apache OpenMeetings 3.1.3
+
+Credit: This issue was identified by Jacob Baines, Tenable Network Security
+
+
+Apache OpenMeetings Team
