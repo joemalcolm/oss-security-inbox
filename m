@@ -1,61 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/28/1
-Message-ID: <CAP145pjL_=W0C_3NvHxkJ2girfx3wS-7i-epRxwcmDmd7J3E1Q@mail.gmail.com>
-Date: Sun, 28 Feb 2016 05:28:32 +0100
-From: Robert Święcki <robert@...ecki.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/6
+Message-ID: <58beef31-d838-42a0-cafc-85221417785c@redhat.com>
+Date: Tue, 8 Nov 2016 14:06:14 +0100
+From: Andrej Nemec <anemec@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: AMD newest ucode 0x06000832 for Piledriver-based CPUs seems to behave in a problematic way
+Cc: cve-assign@...re.org
+Subject: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string
 Content-Type: text/plain; charset=utf-8
 
-Since this was re-discovered on LKML, and as this might be important
-for some Linux users, especially those who do malware analysis under
-kvm or run server farms with VPSes, I decided to re-post it here.
+Hello all,
 
-AMD newest public ucode 0x06000832 for Piledriver-based CPUs (newer
-AMD FX, and Opteron 3300/4300/6300 series) seems to be broken. Under
-certain conditions it allows unprivileged users running under qemu VMs
-to affect the host Linux kernel in a problematic manner: the CPU
-starts to behave in an erratic way, and it leads to CPU execution flow
-of the host kernel (the one running on bare metal) to be changed.
-Visible effects vary: kernel trying to execute its own heap/bss,
-crashing on stack-protector code, or jumping into random addresses,
-including those addresses mapped in in the qemu guest system
-(potential vm escape, although this case is so rare, as it depends on
-timing, that I wasn't able to create a reliable exploit for this
-scenario).
+A security issue was fixed in Cryptography 1.5.3 and disclosed publicly
+in the changelog, posted below:
 
-My poc works only under qemu-kvm. Xen and kvmtools seem not to be
-affected by it because there's some missing functionality in them my
-poc make use of. But, there was recently another thread started on
-LKML, which make me think those hypervisors can also be affected
-(although it's just a speculation), because those crashes were not
-likely induced by the technique I used in my poc, and the initial
-cause seem identical (i.e. very specific CPU microcode version
-required).
+1.5.3 - 2016-11-05
 
-In any case, here's my LKML post with some more details:
-https://lkml.org/lkml/2016/2/26/876 - and here's the whole thread in
-which the problem was re-discovered by Jiri Slaby -
-https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg1085821.html
+* Security issue: Fixed a bug where HKDF would return an empty
+byte-string if used with a length less than algorithm.digest_size.
+Credit to Markus Döring for reporting the issue.
 
-Last communication I got from AMD (I contacted them couple of week
-back with details) was "We are working on the final testing of a new
-microcode patch to replace 0x06000832.", but got no ETA for it yet.
+Changelog:
 
-I recommend not updating your CPU microcode to 0x06000832 if possible
-(with amd-ucode-like packages), i.e. if your BIOS delivers some
-earlier version. Unfortunately there's nothing I can reasonably
-recommend to those whose machines run with BIOS which delivers
-0x06000832, except maybe for not running any potentially malicious
-payloads in your kvm VMs or downgrading your BIOS if possible.
+https://cryptography.io/en/latest/changelog/#id1
 
-PS. There's a very similar bug report which can be found on vmware kb
-pages - https://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=2061211
-- which might or might not be related to this problem (and points to a
-specific errata #). From its description, it seems the bug was somehow
-patched in their OS kernel. That's just a speculation, but if it's the
-same problem, then maybe there's some way of preventing this in the
-Linux kernel as well.
+Upstream bug:
+
+https://github.com/pyca/cryptography/issues/3211
+
+Upstream patch:
+
+https://github.com/pyca/cryptography/commit/b924696b2e8731f39696584d12cceeb3aeb2d874
+
+Mitre, would you mind assigning a CVE number for this issue? Thanks!
+
+Best Regards,
 
 -- 
-Robert Święcki
+Andrej Nemec, Red Hat Product Security
+3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
