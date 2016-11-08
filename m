@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/1
-Message-Id: <20160502124647.5F221332073@smtpvbsrv1.mitre.org>
-Date: Mon,  2 May 2016 08:46:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Jansson: stack exhaustion parsing a JSON file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/2
+Message-ID: <20161108094831.GA22910@lorien.valinor.li>
+Date: Tue, 8 Nov 2016 10:48:31 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: mat doesn't remove metadata in embedded images in PDFs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://github.com/akheron/jansson/issues/282
+On Thu, Jun 02, 2016 at 06:02:40PM +0000, Holger Levsen wrote:
+> On Thu, Jun 02, 2016 at 12:21:34PM -0400, cve-assign@...re.org wrote:
+> > We think you mean that a CVE ID can exist with the rationale of:
+> > 
+> >   - as of version 0.7, there will be a required security update in
+> >     which the embedded-in-a-PDF security problem is resolved
+> > 
+> >   - the CVE ID is needed to tag that required security update
+> > 
+> >   - as of version 0.7, the https://mat.boum.org/ text may be changed
+> >     from "images embedded inside PDF may not be cleaned" to something
+> >     like "images embedded inside complex documents may not be cleaned,
+> >     but users can rely on cleaning in the specific case of PDF
+> >     documents"
+> > 
+> > Does that match your intention for the CVE ID?
+> 
+> yes.
+> 
+> Though I disagree with the 3rd paragraph a bit, I don't think it's that
+> hard to recursivly process files, eg both
+> https://tracker.debian.org/pkg/strip-nondeterminism (in perl) and
+> https://tracker.debian.org/pkg/diffoscope (in python) do that.
 
-> It takes a less than 100kb json file to crash the library, which is
-> bad if you are receiving untrusted inputs.
+FTR, in Debian for both Debian wheezy and Debian jessie the support
+for PDF was disabled entirely:
 
->> https://github.com/akheron/jansson/blob/master/README.rst
->> Jansson is a C library for encoding, decoding and manipulating JSON data.
+https://lists.debian.org/debian-lts-announce/2016/10/msg00006.html
+https://lists.debian.org/debian-security-announce/2016/msg00291.html
 
-Use CVE-2016-4425.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXJ0ufAAoJEHb/MwWLVhi24okQALgjTPVfcfIDXtenPzhzNHRx
-ypUyAed3CIVkfJC+R+ehuFEmpyAKEgO1woqy1TjIqi9U+lDGXFVa4FX98ENwFE22
-ap3EpKq0ZwzeacPhm/XYOyIqmeA96nonf9NNFAhCvtpSjLxaWcrs7JbnqhCrsf1/
-qBM819kLXwuO8GUtdJYVkOVWQX3e5QadqwOiU5J6b7pe8FiJBlsW32b9tANXJg7I
-G1W3lYXG/nULkXGEjyj8fFlLM0icync8T4revmBXNN9AWQOxjOx7zoODy54snzSU
-7vIkd79NLG623aosZp7h2bcmJdP9l1WO7SPvF8qSzLP+fq5qrBaAuR++pOvzHp7Q
-Whnfdg3uP//UiIcM/bh9jLCMXDJKsFgr/Qr5DItwsltdYteN31g6m+4nYmARtOE5
-HjSnU5tYzzRzc7+kWtxYZxAeRFGQ8VNIv5j/85QFoIKGrkuGs2nGfW2T44ObZfyF
-Nwd/k2Pa9k3sqwTAQp3lEI0nTSUn7vlzRzAr2/QhtPqbDdeERWZWsQDlEJ5L2n0f
-m+b0iQIGBXFo9Q4wBdS91Vx6NEkhWxrgWbyIExgVCnUFh/LCo4BFjI3qq+GPsnoP
-hmxD/9LXa8B2tefKtjzlPBnw4rqKyCFmfzVi+LkrZqNCxid+2DEpUBr2r+CsA7wv
-jQNgK1C0S/wmuJclLq4+
-=4UUQ
------END PGP SIGNATURE-----
+Regards,
+Salvatore
