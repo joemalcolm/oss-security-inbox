@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/11
-Message-ID: <20160309203420.GJ1250@sentinelchicken.org>
-Date: Wed, 9 Mar 2016 12:34:20 -0800
-From: "Timothy D. Morgan" <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/08/7
+Message-ID: <20161108131240.GA19683@cassiel.pault.ag>
+Date: Tue, 8 Nov 2016 08:12:40 -0500
+From: Paul Tagliamonte <paultag@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried <kseifried@...hat.com>
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Subject: CVE request: netcat-traditional nc buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+The following invocation of nc:
+
+$ nc pault.ag 2124124124
+
+Results in a buffer overflow:
+
+*** buffer overflow detected ***: nc terminated
+======= Backtrace: =========
+/lib/x86_64-linux-gnu/libc.so.6(+0x70bcb)[0x7fc8eecaebcb]
+/lib/x86_64-linux-gnu/libc.so.6(__fortify_fail+0x37)[0x7fc8eed370e7]
+/lib/x86_64-linux-gnu/libc.so.6(+0xf7220)[0x7fc8eed35220]
+/lib/x86_64-linux-gnu/libc.so.6(+0xf67d9)[0x7fc8eed347d9]
+/lib/x86_64-linux-gnu/libc.so.6(_IO_default_xsputn+0xac)[0x7fc8eecb2bec]
+/lib/x86_64-linux-gnu/libc.so.6(_IO_vfprintf+0xcd3)[0x7fc8eec859f3]
+/lib/x86_64-linux-gnu/libc.so.6(__vsprintf_chk+0x8c)[0x7fc8eed3486c]
+/lib/x86_64-linux-gnu/libc.so.6(__sprintf_chk+0x7d)[0x7fc8eed347bd]
+nc[0x402b20]
+nc[0x402112]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf1)[0x7fc8eec5e2b1]
+nc[0x402341]
 
 
-> All - I've chatted with some of the people who fund the CVE work at MITRE.
-> I've learned that CVEs *are* being issued, but obviously that is happening too slowly.
-> 
-> They're having a meeting tomorrow (March 10) to try to figure out what
-> the problems are and how to fix it.  I don't know what they'll do.
-> However, I'm hopeful that  this will mean that the CVE work will get
-> back on track soon.
+This appears to not happen with other versions of netcat, such as the
+one on OSX.
 
+I'm unsure of the security implications of this, but it's not out of the
+question to use this as a DOS, at least.
 
-Thanks David for finding the right people and raising the issue with
-them.  I'm sure media coverage is probably helping as well:
-  http://www.theregister.co.uk/2016/03/09/hackers_spin_up_alternative_cve_system_as_bugs_go_unchecked/
+Cheers,
+   Paul
 
-Suppose MITRE fixes their issues tomorrow and the CVE goes back to the
-way it was.  Is that really want we need going forward?  A system
-that's based on sending emails between humans and posting only
-one-line descriptions with a series of links (half of which are broken
-after a short time)?  A system which tries to distribute the load by
-using "big" software vendors, many of whom have a vested interest in
-limiting what vulnerabilities get published in their software?
-
-It seems like we can do better than this.  Infosec hasn't been
-"working" for some time.  Perhaps we need better tools to help us get
-ahead of the game.
-
---
-tim
-@ecbftw
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
