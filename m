@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2790" "Thursday" "2" "April" "2020" "15:39:33" "+1100" "Ulisses Albuquerque" "ulisses.montenegro@gmail.com" nil "64" nil "^Date:" nil nil "4" nil nil (number mark "        ulisses.mont Apr  2   64/2790  " thread-indent "\"Re: [oss-security] Deficient engineering processes\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Deficient engineering processes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3873" "Wednesday" "9" "November" "2016" "15:44:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<5253979.W8Yu5ZOxEb@blackgate>" "103" "[oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)" nil nil nil "11" "2016110914:44:26" "[oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)" (number mark "U       ago@gentoo.o Nov  9  103/3873  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1269 invoked by uid 550); 2 Apr 2020 12:54:15 -0000
+Received: (qmail 10017 invoked by uid 550); 9 Nov 2016 14:44:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19820 invoked from network); 2 Apr 2020 04:40:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=1p8TMyN+WjM8azDcuyE1B8FR6O21Xl6T9/gfoj8JYQ0=;
-        b=HsuDkAW9xW6/fdNk2wxP3+0x2AkA+sHfBSx8cLtYvTb4sDYkOORd9B3+5syFYjyRwr
-         DtePFxQUnZm5ZS0M7zRDHp1NwGPcKiGTWfyfxa2yYE7He7aflgCrGgWhevx2Vs3JfIEF
-         nOtxOmxjg/XfFvsMq3zEj7Vq78yUCEATich8P1x3ecoHZ1sYeoNK/4Q38YrrpaKENOv8
-         xVlKEqfCiXiihwKOPoxBiT+SuSKHif29LjHeOpxTOkLS5AF4onYfEFjovmZ+ghlOqap6
-         Ou7Vz428fYdqZA4REg/v8CeWknEvoh33sR70XIFwx9zFUw+/6+9j2UOX60QknP/GQuyH
-         GAKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=1p8TMyN+WjM8azDcuyE1B8FR6O21Xl6T9/gfoj8JYQ0=;
-        b=JtCm1RORS3uNJ8D5Unmko0myZFa2Jn2Z8kEKy7a1E3wa9n6ZY4tVwkmXcaqOWhHgRo
-         798XrPC5sUDOijO+uphJvaSEC8vV8/Cxg4NFBSUnO4H1v/vlrbajbNy1HTNuYHikj+10
-         PiVoEgCgTJ7Lx2Jt0YWiKPmkWNbrBiXlYhz5+MWsHH0plSw+YdAikC5Z9ezjtbVBi3zV
-         t7OmBDZB3SRxTn/3z5ApNUUPjwkLU5YEYG6XUWhDyNJdUn0Z8x0qDwos/Pay5vrocQ9T
-         gkgXD93S0NFipXvwzfWQ8JEW0uqUkKN9XnZWMtvb7L2G42kd0Bt+Si1UDzjPRW3zg7NT
-         p5cw==
-X-Gm-Message-State: AGi0PuZhTZPLiiDDxCQKQSNtxM6iBcCKXaPcm4HwXtvJwByLqNXZw5Aq
-	/iHmWzi0kpuDZSZSXhYU1DkvIlHiXLNt131dfsYvNQPWqdI=
-X-Google-Smtp-Source: APiQypLkWGHbxXtBuUpP6kXy6T6ws9q5YxGR8M4vBfqS8IW7kftbq71CZnhq3kZb52DkSKfGTm32+UupUutf3LJcS20=
-X-Received: by 2002:ab0:1158:: with SMTP id g24mr1160947uac.55.1585802409243;
- Wed, 01 Apr 2020 21:40:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAH8yC8=P-5i_0WT-AWSJ65JeY1C3BrB7p9e+4SCtH938H5ZqVA@mail.gmail.com>
- <20200402024611.GA251781@millbarge>
-In-Reply-To: <20200402024611.GA251781@millbarge>
-Message-ID: <CAA24+d7yK7cEB3P-sQTEAvE30D3ULoraorxZJHACDaH+SbhL_A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000004977b505a2476599"
-Date: Thu, 2 Apr 2020 15:39:33 +1100
-From: Ulisses Albuquerque <ulisses.montenegro@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Deficient engineering processes
-To: oss-security@lists.openwall.com, Jeffrey Walton <noloader@gmail.com>
+Received: (qmail 9953 invoked from network); 9 Nov 2016 14:44:44 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Wed, 09 Nov 2016 15:44:26 +0100
+Message-ID: <5253979.W8Yu5ZOxEb@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)
 
---0000000000004977b505a2476599
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+If it is suitable for a CVE please assign one. Thanks.
 
-In my experience, specific advice and recommendations trump generic advice
-every single time. If your teams are failing to meet quality standards,
-identify those individually, document what failed and how it could be
-addressed, and *only then* show how a more structured approach would solve
-the issues. This can also be an interesting exercise for you, as going
-through specific problems and correlating those to the proposed
-"engineering best practices" might make you realise that those would not
-actually solve the problems.
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-More than anything, though, be empathetic. Approach teams with a "can you
-talk me through your process" rather than with a "you are doing it wrong"
-angle. People are far more likely to accept input when you hear them first,
-and they might even be upfront about known shortcomings of their current
-approach.
+A fuzz on an updated version revealed a buffer overflow.
 
-Regards
+The complete ASan output:
 
-On Thu, 2 Apr 2020 at 13:47, Seth Arnold <seth.arnold@canonical.com> wrote:
+# dwarfdump $FILE
+==27460==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60600000eff4 at pc 0x00000047349b bp 0x7ffd9feadaf0 sp 0x7ffd9fead2a0
+READ of size 2 at 0x60600000eff4 thread T0
+    #0 0x47349a in memcpy /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438
+    #1 0x56cbe0 in dwarf_get_aranges_list 
+/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:118:9
+    #2 0x56c0dc in dwarf_get_aranges 
+/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:318:11
+    #3 0x50f103 in print_aranges 
+/tmp/dwarf-20161021/dwarfdump/print_aranges.c:145:12
+    #4 0x4fb2bf in process_one_file 
+/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1420:9
+    #5 0x4fb2bf in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
+    #6 0x7f2b42a4461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #7 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-> On Wed, Apr 01, 2020 at 07:42:38PM -0400, Jeffrey Walton wrote:
-> > My question is, how to convince someone that following standard
-> > project management procedures is a good thing? How do we get them
->
-> I've heard variations on the phrase "we don't have time to fix these bugs
-> before release" or "this new feature is our top priority" from dozens of
-> projects over the years.
->
-> The impression is that fixing bugs won't win new customers, or finding
-> bugs proactively means you might spend time fixing bugs your users might
-> not encounter in practice (thus that time is wasted).
->
-> But we have all seen software that's too buggy to be enjoyable, or even so
-> buggy it is not fit for use. We've all got horror stories of a known, but
-> ignored, bug, that cost thousands or millions of dollars. (I imagine a
-> handful of people even know of billion-dollar errors. The usual example is
-> https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions
-> but this is probably far from the only case.)
->
-> The costs of unknown or unfixed bugs is largely hidden from view, until
-> the cost is large and impossible to ignore.
->
-> We all also have examples of bugs that we're very glad to have caught
-> before release: the bugs that would have cost thousands, or millions, of
-> dollars to repair after release, if it's possible at all. These are much
-> less known.
->
-> Perhaps we need to talk more about our successes, too? Not just the cases
-> where we went wrong, but also the cases where we went right, and thus
-> saved a fortune?
->
-> Thanks
->
+0x60600000eff4 is located 0 bytes to the right of 52-byte region 
+[0x60600000efc0,0x60600000eff4)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f2b43b1e206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438 
+in memcpy
+Shadow bytes around the buggy address:
+  0x0c0c7fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9de0: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
+=>0x0c0c7fff9df0: 00 00 00 00 fa fa fa fa 00 00 00 00 00 00[04]fa
+  0x0c0c7fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27460==ABORTING
 
---=20
-=E2=80=9CIf debugging is the process of removing software bugs, then progra=
-mming
-must be the process of putting them in.=E2=80=9D - *Edsger Dijkstra*
+Affected version:
+20161021
 
---0000000000004977b505a2476599--
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00026-libdwarf-heapoverflow-dwarf_get_aranges_list
+
+Timeline:
+2016-11-02: bug discovered and reported to upstream
+2016-11-05: upstream released a patch
+2016-11-07: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-dwarf_get_aranges_list-dwarf_arange-c
