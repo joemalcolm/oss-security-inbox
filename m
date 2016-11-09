@@ -1,31 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/2
-Message-ID: <alpine.LFD.2.20.1610031659410.30046@wniryva>
-Date: Mon, 3 Oct 2016 17:01:03 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: net: Infinite loop in mcf_fec_do_tx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/9
+Message-ID: <2803183.JXljhHXDl4@blackgate>
+Date: Wed, 09 Nov 2016 15:42:22 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+If it is suitable for a CVE please assign one. Thanks.
 
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator 
-support is vulnerable to an infinite loop issue. It could occur while 
-processing packets on the transmit queue in 'mcf_fec_do_tx'.
+A fuzz on an updated version revealed a buffer overflow.
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
+The complete ASan output:
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05557.html
+# dwarfdump $FILE
+==2437==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x62000000fe5b at pc 0x000000462c7c bp 0x7ffea0d4b690 sp 0x7ffea0d4ae40
+READ of size 29 at 0x62000000fe5b thread T0
+    #0 0x462c7b in __interceptor_strlen /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:581
+    #1 0x5edea2 in _dwarf_skim_forms 
+/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:185:17
+    #2 0x5edea2 in _dwarf_get_macro_ops_count_internal 
+/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:346
+    #3 0x5eb886 in _dwarf_internal_macro_context_by_offset 
+/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1338:11
+    #4 0x5eb886 in _dwarf_internal_macro_context 
+/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1201
+    #5 0x5ed10e in dwarf_get_macro_context_by_offset 
+/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1467:11
+    #6 0x54f7be in print_macros_5style_this_cu 
+/tmp/dwarf-20161021/dwarfdump/print_macro.c:288:16
+    #7 0x514d0f in print_one_die_section 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:869:21
+    #8 0x512262 in print_infos 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16
+    #9 0x4faafa in process_one_file 
+/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9
+    #10 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
+    #11 0x7f74b22e761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #12 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-This issue was reported by Li Qiang of 360.cn Inc.
+0x62000000fe5b is located 0 bytes to the right of 3547-byte region 
+[0x62000000f080,0x62000000fe5b)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f74b33c1206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
+SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:581 in __interceptor_strlen
+Shadow bytes around the buggy address:
+  0x0c407fff9f70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c407fff9f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c407fff9f90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c407fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c407fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c407fff9fc0: 00 00 00 00 00 00 00 00 00 00 00[03]fa fa fa fa
+  0x0c407fff9fd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c407fff9fe0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c407fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c407fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c407fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2437==ABORTING
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Affected version:
+20161021
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00027-libdwarf-heapoverflow-_dwarf_skim_forms
+
+Timeline:
+2016-11-02: bug discovered and reported to upstream
+2016-11-05: upstream released a patch
+2016-11-07: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-_dwarf_skim_forms-dwarf_macro5-c
