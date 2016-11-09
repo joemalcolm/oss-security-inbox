@@ -1,78 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/5
-Message-ID: <CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>
-Date: Mon, 12 Sep 2016 07:58:16 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/10
+Message-ID: <2342970.3XqcyZiG6N@blackgate>
+Date: Wed, 09 Nov 2016 15:43:22 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
+Cc: cve-assign@...re.org
+Subject: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+If it is suitable for a CVE please assign one. Thanks.
 
-I was just going to reply to your email you sent earlier.
-Thanks for the feedback. I actually updated the introduction after your email.
-The advisory focuses on CVE-2016-6662 vulnerability which lets users
-to modify/create my.cnf files. A fix would prevent users from writing
-to my.cnf config.
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-And yes there's a typo in the last paragraph made after a few
-sleepless nights ;) I've fixed it now.
+A fuzz on an updated version revealed a buffer overflow.
 
-The CVE-2016-6663 is not public yet. I refer to it in the advisory to
-give some heads up in case someone wanted to discard this issue based
-on reasoning that FILE privs are not common and that they will never
-be pwned etc. It'll soon be published then it'll be clear what this
-CVEID is about ;)
+The complete ASan output:
 
-Cheers.
+# dwarfdump $FILE
+==27395==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x61300000de1c at pc 0x000000528cd3 bp 0x7ffd980a63b0 sp 0x7ffd980a63a8
+READ of size 1 at 0x61300000de1c thread T0
+    #0 0x528cd2 in get_attr_value 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:4978:21
+    #1 0x51e4a4 in print_attribute 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:3357:13
+    #2 0x51a651 in print_one_die 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:1458:38
+    #3 0x51710c in print_die_and_children_internal 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:1047:36
+    #4 0x517c6b in print_die_and_children_internal 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:1142:13
+    #5 0x5147cc in print_die_and_children 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:921:5
+    #6 0x5147cc in print_one_die_section 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:831
+    #7 0x512262 in print_infos 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16
+    #8 0x4faafa in process_one_file 
+/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9
+    #9 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
+    #10 0x7f883beec61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #11 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
+0x61300000de1c is located 0 bytes to the right of 348-byte region 
+[0x61300000dcc0,0x61300000de1c)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f883cfc6206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:4978:21 in get_attr_value
+Shadow bytes around the buggy address:
+  0x0c267fff9b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9b80: 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa fa
+  0x0c267fff9b90: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c267fff9ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c267fff9bc0: 00 00 00[04]fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9bf0: 00 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa
+  0x0c267fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27395==ABORTING
 
-On Mon, Sep 12, 2016 at 7:35 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Mon, Sep 12, 2016 at 06:09:10AM -0300, Dawid Golunski wrote:
->> Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
->> CVE: CVE-2016-6662
->> Severity: Critical
->> Affected MySQL versions (including the latest):
->> <= 5.7.15
->> <= 5.6.33
->> <= 5.5.52
->
->> http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
->
-> Thank you for posting this.  For archival, and to comply with
-> oss-security content guidelines, I am attaching a text/plain version of
-> the above advisory (which includes a lot of detail not in your posting).
->
-> Also, to add detail on the disclosure timeline: Dawid brought this to
-> the distros list yesterday (Sunday).
->
-> As I had pointed out in a reply on distros, it is not entirely clear
-> what exact issue the CVE-2016-6662 identifier is for.  The advisory
-> talks about multiple sysadmin practices, packaging issues, dangerous
-> features of MySQL, and finally of safe_mysqld including the data
-> directory in its search path for my.cnf.  I guess it would be most
-> reasonable to have the CVE ID refer only to the latter aspect, but
-> confirmation/clarification is needed.  As it is, it's unclear from the
-> advisory what exact "vulnerabilities were patched by PerconaDB and
-> MariaDB vendors" (the advisory says so), and it is unclear what Oracle
-> and distros "fixing" CVE-2016-6662 would mean.
->
-> Also, in this paragraph I guess the advisory wanted to refer to the
-> upcoming CVE-2016-6663 (I have no idea what that issue is, beyond what
-> the advisory says), like it does in a few other places:
->
-> "It is worth to note that attackers could use one of the other vulnerabilities discovered
-> by the author of this advisory which has been assigned a CVEID of CVE-2016-6662 and is
-> pending disclosure. The undisclosed vulnerability makes it easy for certain attackers to
-> create /var/lib/mysql/my.cnf file with arbitrary contents without the FILE privilege
-> requirement."
->
-> Alexander
+Affected version:
+20161021
 
+Fixed version:
+N/A
 
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
 
--- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00025-libdwarf-heapoverflow-get_attr_value
+
+Timeline:
+2016-11-02: bug discovered and reported to upstream
+2016-11-05: upstream released a patch
+2016-11-07: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-get_attr_value-print_die-c
