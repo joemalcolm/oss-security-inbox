@@ -1,79 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/24/9
-Message-Id: <20160524233429.36792B2E006@smtpvbsrv1.mitre.org>
-Date: Tue, 24 May 2016 19:34:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: misc@...b.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: /tmp usage race condition in onionshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/15
+Message-ID: <4314977.YHaczL6dzr@blackgate>
+Date: Wed, 09 Nov 2016 15:49:31 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: libming: listmp3: divide-by-zero in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If it is suitable for a CVE please assign one. Thanks.
 
-> So onionshare use /tmp/onionshare to create a temporary directory
-> $HS that is then used for the creation of a tor hidden service, as
-> HiddenServiceDir configuration.  Then, the tor daemon create 2 files
-> in $HS
-> 
-> But onionshare doesn't verify the owner or the exact permission of
-> /tmp/onionshare.  So if a attacker pre-create a directory
-> /tmp/onionshare with 777 permissions and him as a owner, he can use
-> a race condition to inject his own files in the share.
-> 
-> I suspect that using setgid on /tmp/onionshare might also give
-> interesting potential attacks.  For example, if umask is not properly
-> set, the attacker could steal the private key and hostname
+Description:
+libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
+Python, C, C++, Java, and probably more on the way..
 
-As far as we can tell, there is only one primary problem: the product
-accepts the existence of a pre-created /tmp/onionshare for which
-ownership and all permission bits are controlled by the attacker.
-(Control over the setgid bit isn't really an independent problem with
-a realistically independent solution.)
+A fuzzing revealed a divide by zero in listmp3. The bug does not reside in any 
+shared object but if you have a web application that calls directly the 
+listmp3 binary to parse untrusted mp3, then you are affected.
 
-Use CVE-2016-5026.
+The complete ASan output:
 
+# listmp3 $FILE
+ASAN:DEADLYSIGNAL
+=================================================================
+==29561==ERROR: AddressSanitizer: FPE on unknown address 0x0000004f19e8 (pc 
+0x0000004f19e8 bp 0x000000000000 sp 0x7ffdf0ab6340 T0)
+    #0 0x4f19e7 in printMP3Headers /var/tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:172:54
+    #1 0x4f1bee in main /var/tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:191:3
+    #2 0x7f49407a361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x418ae8 in getenv (/usr/bin/listmp3+0x418ae8)
 
-> I am also not 100% sure that
-> https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L217
-> and
-> https://github.com/micahflee/onionshare/blob/master/onionshare/hs.py#L116
-> are safe if a attacker control the directory that will be used for
-> shutil.rmtree.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:172:54 in printMP3Headers
+==29561==ABORTING
 
-Nobody has commented on this today, so we are not going to assign a
-separate CVE ID related to an shutil.rmtree impact unless there is
-further research by someone.
+Affected version:
+0.4.7
 
-The code has "self.cleanup_filenames.append(self.hidserv_dir)" and the
-product should have been designed so that self.hidserv_dir is never
-something controlled by an arbitrary unauthorized local user. Possibly
-you are envisioning a threat model in which the attacker controls the
-process running tor but not the process running onionshare. In that
-situation, it might be important to understand whether there's any
-symlink following in shutil.rmtree, because this might allow the tor
-process to trigger unlink actions with the privileges of the
-onionshare process.
+Fixed version:
+N/A
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Commit fix:
+N/A
 
-iQIcBAEBCAAGBQJXRORnAAoJEHb/MwWLVhi2AjAP/213PqKqOX4HRjUx4vU2Y4gd
-PUqAk17+LR9BgsIbWJTCl1kcXGSlpHHqsgq/8W3OP+Aumsr6iLy5ksZmw7D9xgyW
-wYOslFWUA6z9Drt/P24OxiDrHfpqRAxyPclAQJbSgNwmBk9iQK9Tpb+ACLDr3yOU
-XBcbnBr1QKT2kOFogdB8bx+Qz/uhR9wAJ0f37nJ+iI3Y6pzeKzMDEHl/je9/Pa+X
-iHjUPuKYHU/A+X+2mN3nBmuXJerijn/MBKjgxW3L4DCNOr5NUC1UQ2WULE9WIds1
-DS6CvpaVsZXSA5Q094HFvo0M2AoyfePpQuVuGgPZ3tens//In3pr3xkKPT316HW4
-eKNH7I9L6Xc604a64TzFmSQnWui7ZlOwFy/0aR8p2mZCBYEKqMkV1OvFx78EE0pw
-QpZMRuoz3EcnwNfIhKYpzVzCf1UOKw7srdIfuxnLO6dAPQhMnios26mU7BnxxlLR
-4UiZQWeDMZVBqwd+NJnL1NupgAs/4H1mQ+vKIn/obpYnTxGb8q1+x61eyk1Ueh/O
-JFBj4gfMnO7v/zA0wtlDK/otE9j/XxWHTw9gKH7BAr3wdbJFPoYnng2CMRFjBva3
-Kq4j/ml0BclQDxmk4/3PVc19rO56h0EgMKccArJSVANjMrj3YDmKlTcS2YcaJIVa
-zFC5SNEvmY0EdRR6f2gX
-=RzaD
------END PGP SIGNATURE-----
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00045-libming-fpe-printMP3Headers
+
+Timeline:
+2016-08-13: bug discovered
+2016-10-20: bug reported to upstream
+2016-11-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-divide-by-zero-in-printmp3headers-listmp3-c
