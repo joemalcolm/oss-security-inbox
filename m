@@ -1,38 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/27/11
-Message-ID: <alpine.GSO.2.20.1604271646030.9720@freddy.simplesystems.org>
-Date: Wed, 27 Apr 2016 16:54:41 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/16
+Message-ID: <2147367.62QfxKV9DH@blackgate>
+Date: Wed, 09 Nov 2016 15:50:38 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: 3 bugs refer to buffer overflow in in libtiff 4.0.6
+Cc: cve-assign@...re.org
+Subject: libming: listmp3: left shift in listmp3.c
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 26 Apr 2016, Jodie Cunningham wrote:
->>
->> Running each poc file crashes thumbnail and bmp2tiff made with
->> AddressSanitizer in tiff-4.0.6. I have attached poc and log files .
->> ------------------
->> From Debug_Orz
->>
-> Is there a patch upstream?
+If it is suitable for a CVE please assign one. Thanks.
 
-To my knowledge, none of the issues recently posted on this list have 
-been addressed yet in libtiff.
+Description:
+libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
+Python, C, C++, Java, and probably more on the way..
 
-It is always our priority to fix issues occuring in libtiff itself 
-before addressing issues in the libtiff utilities.  Some of the 
-libtiff maintainers care about only a few of the utilities.  We are 
-all volunteers and available time is limited.
+A fuzzing revealed a left shift in listmp3. The bug does not reside in any 
+shared object but if you have a web application that calls directly the 
+listmp3 binary to parse untrusted mp3, then you are affected.
 
-It is my intention to spend time addressing the libtiff utility issues 
-(some of which might be due to issues in core libtiff) once I have 
-addressed the remaining CVEs in GraphicsMagick.  Issues appearing to 
-be due to problems in libtiff itself will get attention first.
+The complete UBSan output:
 
-Well-formulated source patches are welcomed for the issues.
+# listmp3 $FILE
+listmp3.c:94:23: runtime error: left shift of negative value -1
+listmp3.c:95:23: runtime error: left shift of negative value -1
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Affected version:
+0.4.7
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00046-libming-leftshift-listmp3_c
+
+Timeline:
+2016-08-13: bug discovered
+2016-10-20: bug reported to upstream
+2016-11-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-left-shift-in-listmp3-c
