@@ -1,23 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/21/4
-Message-ID: <20161021015524.GB23643@buzz.coreos.systems>
-Date: Thu, 20 Oct 2016 18:55:24 -0700
-From: Alex Crawford <alex.crawford@...eos.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/4
+Message-ID: <3759921.lnTCqWLM8G@tony>
+Date: Wed, 09 Nov 2016 13:20:55 +0100
+From: Marek Hulán <mhulan@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Requesting membership to linux-distros
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-7077: information disclosure from association lists shown without authorization
 Content-Type: text/plain; charset=utf-8
 
-On 10/20, Kurt Seifried wrote:
-> On Thu, Oct 20, 2016 at 7:36 PM, Alex Crawford <alex.crawford@...eos.com>
-> wrote:
-> I found a security page: https://coreos.com/security/ but it only mentions
-> some upstream security. I can't find any security advisories, the closest I
-> can find is a few blog postings. Do you have an advisory page?
+CVE-2016-7077: information disclosure from association lists shown without 
+authorization
 
-Not at the moment (though, it's been on my mind for a while). The
-closest thing we have is the release notes which will call out CVEs.
-e.g. https://coreos.com/releases/#1122.3.0
+Lists of associated resources, such as operating systems associated to a new 
+architecture, are not restricted to listing resources that the user is 
+authorized to view, when rendering with fewer than six items. The list will 
+show all possible associated resources, disclosing their names.
 
--Alex
+Affects Foreman 1.1 and higher, but was first mitigated against in Foreman 
+1.9.0 for some cases
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Patch available at https://github.com/theforeman/foreman/pull/3955
+Fix will be released in Foreman 1.14 (to be released)
+For more information please see Redmine issue 
+http://projects.theforeman.org/issues/16971
+
+--
+Marek
+
+
