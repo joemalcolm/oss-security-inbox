@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/4
-Message-Id: <20160307030233.A4BCC52E014@smtpvbsrv1.mitre.org>
-Date: Sun,  6 Mar 2016 22:02:33 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Qemu: rng-random: arbitrary stack based allocation leading to corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/20
+Message-ID: <CANMVOuwRRcEG2Vs0DTck_kbUjiNBQwGD6G24kj5mb0wGDUEGgw@mail.gmail.com>
+Date: Wed, 9 Nov 2016 17:32:09 -0600
+From: "Brian 'geeknik' Carpenter" <brian.carpenter@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: libtiff: heap buffer overflow/read outside of array
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi, could you assign a CVE to the following issue in libtiff?
 
-> Qemu emulator built with the Pseudo Random Number Generator(PRNG) back-end
-> support is vulnerable to an arbitrary stack based allocation and memory
-> corruption via random bytes issue. It could occur when a guest requests for
-> entropy for random number generation.
-> 
-> A user/process inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=60253ed1e6ec6d8e5ef2efe7bf755f475dce9956
-> https://bugzilla.redhat.com/show_bug.cgi?id=1314676
+http://bugzilla.maptools.org/show_bug.cgi?id=2587
 
-Use CVE-2016-2858.
+Fixed per
+>> 2016-11-10 Even Rouault <even.rouault at spatialys.com>
+>> * libtiff/tif_strip.c: make TIFFNumberOfStrips() return the
+>>   td->td_nstrips value when it is non-zero, instead of recomputing it.
+>>   This is needed in TIFF_STRIPCHOP mode where td_nstrips is modified.
+>>   Fixes a read outside of array in tiffsplit
+>>   (or other utilities using TIFFNumberOfStrips()).
+>>
+>>  /cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
+>>  new revision: 1.1151; previous revision: 1.1150
+>>  /cvs/maptools/cvsroot/libtiff/libtiff/tif_strip.c,v  <--
+ libtiff/tif_strip.c
+>>  new revision: 1.37; previous revision: 1.36
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Regards,
 
-iQIcBAEBCAAGBQJW3O35AAoJEL54rhJi8gl5acsQAMefBsEuYvfXohM+VMnzH9/9
-qzD/KVyihYS9iqwifB/oETNIBWV/A4ltyC4nMBy//ImoJCEzZJIvr7hB17vQj19e
-V2DuIu2/nV9UZssqcZnZegWaaVE65/gNcT7h7rHu7EUXWChgB0ZowLTRUlq37QWs
-Sx5lAc131dWrxeioz9QY7e3DFYCquNGHvE/sYmNgtIZcr7mROkTeHk83p33DVgbG
-dqB6Hu5wyXoiD8+jBNrwgaSYwhg7C6/qNEisWyZmLODSN/8J8+di+9zcgT8KFpX8
-TEvj/NvansVZcR3bJfm6QYeFiDi/r7lSPJNO3siPO6HgD6yR/qYhIDILqb2o7/MI
-lmd5toI6FGC4ZZgumXsIrTjkvDt1yHrgmJZFYQs2dMVdNdsWMB9jXNmC9wqV2Oq7
-1gltAcv1WxlgC7OqZYwFUbux3FvFWKuJXwtLP9OnkA/ki8r7SQAE5en7to8y5SLZ
-dMA6CsymQi3Sz4y6M8k0bckKBDmPbFHOQfrSI6MWbgWYv0ye5+9d/3dRzVUZivNO
-pLV8VAUtIJ5oKFR5hGKrRLCqKBpRHnns26/M8eqw31vURCtTJ8NogVspYWW44xPL
-hdeUJg/OBwvHi1XxKzLbMW6+PFdq4iXtYlagu/oaAGG3uFwJXp0S1vobpXtbhKBu
-MiU4kIAeWzk3hS1cb2GM
-=qXaI
------END PGP SIGNATURE-----
+Brian 'geeknik' Carpenter
+https://twitter.com/geeknik
+
