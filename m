@@ -1,80 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/8
-Message-Id: <20160928191539.9875452E01B@smtpvbsrv1.mitre.org>
-Date: Wed, 28 Sep 2016 15:15:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: zhangkaixiang@....cn
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: docker2aci: Path traversals present in image converting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/3
+Message-ID: <CACCOJE2A=1ruGLYkTe5n=nUKRJo6jaLH_-Q6e=F2vHFiUQg=vg@mail.gmail.com>
+Date: Wed, 9 Nov 2016 15:41:47 +0800
+From: Idler <idler1984@...il.com>
+To: oss-security@...ts.openwall.com, Anarcheuz Fritz <anarcheuz@...il.com>,  cve-assign@...re.org
+Subject: CVE Request - Samsung Exynos fimg2d Multiple Issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> https://github.com/appc/docker2aci/issues/201
-> 
-> tmpLayerPath := path.Join(tmpDir, layerIDs[i])
-> 
->          tmpLayerPath += ".tar"
-> 
->          layerFile, err := extractEmbeddedLayer(lb.file, layerIDs[i], tmpLayerPath)// without essential check
->                                                                                    // for layerpath, may breakout
->                                                                                    // tmpDir.
-> 
-> Build or downloading a malicious image as an archive file, containing
-> some layer files with relative names, like "../../../etc/ filename",
-> as well modifying the content of some corresponding json file related
-> to it. then running docker2aci to convert the docker's image to aci.
-> Overview of the content of malicious image:
-> 
-> ../../../etc
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/json
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/VERSION
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/layer.tar
-> 
-> 
-> and logs:
->          tmpDir:  /tmp/docker2aci-878549369
-> tmpLayerPath:  /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
-> Extracting ../../../etc
-> 
-> then check the results:  ls /etc/*.tar
-> /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
+I'd like to request for CVEs for the following two vulnearbilities
+fixed in Samsung Exynos fimg2d driver for Android:
 
->> From: Alex Crawford
->> 
->> Our initial analysis confirms there is a path traversal bug in the
->> docker layer conversion library. However, due to the specific nature
->> of how a malicious image must be crafted to exploit this bug (i.e.,
->> invalid format), the attack vector is largely mitigated ... the bug
->> has limited impact and will not affect typical usage of docker2aci.
+Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-NOV-2016
 
-Use CVE-2016-7569.
+SVE-2016-6736: Kernel Crash on /dev/fimg2d ioctl command
+Severity: Medium
+Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
+Reported on: June 11, 2016
+Disclosure status: Privately disclosed.
+The fimg2d which is one of the graphic devices for Exynos chipsets
+doesn’t have exception control routines to handle unexpected commands
+and it can lead to kernel panic.
+The patch prevents kernel panic by ignoring inappropriate commands at the state.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+SVE-2016-6853: Use After Free in /dev/fimg2d
+Severity: Medium
+Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
+Reported on: August 5, 2016
+Disclosure status: Privately disclosed.
+A use-after-free vulnerability in fimg2d allows attackers to gain
+access to unauthorized data.
+The patch with error handling was applied.
 
-iQIcBAEBCAAGBQJX7BZQAAoJEHb/MwWLVhi2j48QAJMAr2JXCS3f8oYQ0pClZyyv
-giFGlitDkJiq0ieJWq8YGeS/5319DiGYSuDftn/eQMMgTdTAO5pNDQMi6B/SO/e0
-g5Wjl3clShOTT8uYdLrsSA3MzG8XENseOsjWBJRrXifPdEPQWCP1iTsyKewIEa1O
-LRe04oGRW7snRbhsAsf4cgY2F4MW4yrlx0Gyi+6uZg4YQS4/FUaGcWtlM6+ax0Up
-+S5QSrX8SMRSczLsPod+gD9x/x+SufrmmXGVU9iyFt55SYV1ZIVVG5IPsijU7uvT
-YHEV/1kX4cLQ0QY7LByd7Pcaoz+njMV7XRYi3HuYyKg85TRxITfw8cXXaHEUDimi
-c7hPSyKZ3vttWC70v+ACaKk22IGP5LoRLsNUUngWJgY+TEpNgFIAKOVVnJZyWzGB
-ROvmEYA+9cO6Niyfs/nh2G+ASDbnlyaHUDya5Ps85kw5n782eKTUe+aWXZPuYpqa
-DwT5tqLmp3UpEQTfjKRvOQG5KYvBKWPV3kPz2yBVybEFUSZgRIiaSXqazqpjNIyZ
-ZW4TXEVGANjtuSrSUHe59AKChShEC4ZSop1WtKcDwQBg45YLsuudrZ3vtV6YybJR
-Ndd4sEU0H3CWAKcaytnbu6IDcCucCfHwkXeel3LdX2MVLw10yRNvOwBA1mCBdBs3
-isEgR9ts2t3oSQlVYbB2
-=oBJi
------END PGP SIGNATURE-----
+
+Thank you,
+James
