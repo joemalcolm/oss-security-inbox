@@ -1,139 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/24/1
-Message-Id: <20160424035525.34E9472E09B@smtpvbsrv1.mitre.org>
-Date: Sat, 23 Apr 2016 23:55:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: matthias@...lons.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/11
+Message-ID: <5253979.W8Yu5ZOxEb@blackgate>
+Date: Wed, 09 Nov 2016 15:44:26 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If it is suitable for a CVE please assign one. Thanks.
 
->> http://www.ubuntu.com/usn/usn-2952-1/
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-> - -  Buffer over-write in finfo_open with malformed magic file
-> https://bugs.php.net/bug.php?id=71527
-> http://bugs.gw.com/view.php?id=522
-> https://github.com/file/file/commit/6713ca45e7757297381f4b4cdb9cf5e624a9ad36
-> http://git.php.net/?p=php-src.git;a=commit;h=fe13566c93f118a15a96320a546c7878fd0cfc5e
+A fuzz on an updated version revealed a buffer overflow.
 
->> It was discovered that the PHP Fileinfo component incorrectly handled
->> certain magic files. An attacker could use this issue to cause PHP to
->> crash, resulting in a denial of service, or possibly execute arbitrary
->> code.
+The complete ASan output:
 
-Use CVE-2015-8865 for this issue affecting file before 5.23 (see the
-http://bugs.gw.com/view.php?id=522#c1237 comment). The security
-relevance depends, in part, on "If a compiled magic file is found
-alongside a file or directory, it will be used instead" in the
-https://github.com/file/file/blob/master/doc/file.man man page.
+# dwarfdump $FILE
+==27460==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60600000eff4 at pc 0x00000047349b bp 0x7ffd9feadaf0 sp 0x7ffd9fead2a0
+READ of size 2 at 0x60600000eff4 thread T0
+    #0 0x47349a in memcpy /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438
+    #1 0x56cbe0 in dwarf_get_aranges_list 
+/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:118:9
+    #2 0x56c0dc in dwarf_get_aranges 
+/tmp/dwarf-20161021/libdwarf/dwarf_arange.c:318:11
+    #3 0x50f103 in print_aranges 
+/tmp/dwarf-20161021/dwarfdump/print_aranges.c:145:12
+    #4 0x4fb2bf in process_one_file 
+/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1420:9
+    #5 0x4fb2bf in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
+    #6 0x7f2b42a4461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #7 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
+0x60600000eff4 is located 0 bytes to the right of 52-byte region 
+[0x60600000efc0,0x60600000eff4)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f2b43b1e206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
 
-> - - Integer overflow in php_raw_url_encode
-> https://bugs.php.net/bug.php?id=71798
-> https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c1661db6ba2c451
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:438 
+in memcpy
+Shadow bytes around the buggy address:
+  0x0c0c7fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9de0: 00 00 00 00 00 00 00 00 fa fa fa fa 00 00 00 00
+=>0x0c0c7fff9df0: 00 00 00 00 fa fa fa fa 00 00 00 00 00 00[04]fa
+  0x0c0c7fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c0c7fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27460==ABORTING
 
->> It was discovered that the PHP rawurlencode() function incorrectly handled
->> large strings. A remote attacker could use this issue to cause PHP to
->> crash, resulting in a denial of service.
+Affected version:
+20161021
 
-Use CVE-2016-4070.
+Fixed version:
+N/A
 
-Note that the 71798 [2016-03-27 21:25 UTC] comment says "Not sure if
-this qualifies as security issue (probably not)."
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-> - - php_snmp_error() Format String Vulnerability
-> https://bugs.php.net/bug.php?id=71704
-> https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060ce9c9269bbdcf8
+CVE:
+N/A
 
->> It was discovered that the PHP php_snmp_error() function incorrectly
->> handled string formatting. A remote attacker could use this issue to cause
->> PHP to crash, resulting in a denial of service, or possibly execute
->> arbitrary code.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00026-libdwarf-heapoverflow-dwarf_get_aranges_list
 
-Use CVE-2016-4071.
+Timeline:
+2016-11-02: bug discovered and reported to upstream
+2016-11-05: upstream released a patch
+2016-11-07: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
 
-> - - Invalid memory write in phar on filename containing \0 inside name
-> https://bugs.php.net/bug.php?id=71860
-> https://gist.github.com/smalyshev/80b5c2909832872f2ba2
-> https://git.php.net/?p=php-src.git;a=commit;h=1e9b175204e3286d64dfd6c9f09151c31b5e099a
-
->> It was discovered that the PHP phar extension incorrectly handled certain
->> filenames in archives. A remote attacker could use this issue to cause PHP
->> to crash, resulting in a denial of service, or possibly execute arbitrary
->> code.
-
-Use CVE-2016-4072.
-
-
-> - - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
-> https://bugs.php.net/bug.php?id=71906
-> https://gist.github.com/smalyshev/d8355c96a657cc5dba70
-> https://git.php.net/?p=php-src.git;a=commit;h=64f42c73efc58e88671ad76b6b6bc8e2b62713e1
-
->> It was discovered that the PHP mb_strcut() function incorrectly handled
->> string formatting. A remote attacker could use this issue to cause PHP to
->> crash, resulting in a denial of service, or possibly execute arbitrary
->> code.
-
-Use CVE-2016-4073.
-
-
->> http://www.openwall.com/lists/oss-security/2016/04/21/8
-
-> 1- libxml_disable_entity_loader setting is shared between threads
-> 
-> https://bugs.php.net/bug.php?id=64938
-> https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1509817
-> http://git.php.net/?p=php-src.git;a=commit;h=de31324c221c1791b26350ba106cc26bad23ace9
-
->> It was discovered that the PHP libxml_disable_entity_loader() setting was
->> shared between threads. When running under PHP-FPM, this could result in
->> XML external entity injection and entity expansion issues.
-
-Use CVE-2015-8866.
-
-Note that the related
-http://framework.zend.com/security/advisory/ZF2015-06 issue was
-already assigned CVE-2015-5161.
-
-
-> 2- openssl_random_pseudo_bytes() is not cryptographically secure
-> 
-> https://bugs.php.net/bug.php?id=70014
-> https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1534203
-> http://git.php.net/?p=php-src.git;a=commit;h=16023f3e3b9c06cf677c3c980e8d574e4c162827
-
->> It was discovered that the PHP openssl_random_pseudo_bytes() function did
->> not return cryptographically strong pseudo-random bytes.
-
->>> Fix bug #70014 - use RAND_bytes instead of deprecated RAND_pseudo_bytes
-
-Use CVE-2015-8867.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXHEKSAAoJEHb/MwWLVhi2HHwP/RHXiG+18j0extiWJbw2cWTx
-nWe5+2WsBPJlpmuUpe/P62KGmbpIIzsrceYtm6GGam8Az4XH2R9JGK6oFBOPoVzl
-t40kRgQWHB2yROHUylS8hbdspsUU4gKqZxzphqqAS7LHfOEfX2nNgbYuHYBtI1WF
-g5yY0RimAkKqe7mPsamms7eKlk0+jKVkE6tgxA/I3RmeuEzwEtJ9uJwpWze3HZTa
-aMGFt0bCuPdlVMEGtE+son4NDP8D2V7CFarJMEl1U6OLpxGjQATVn550YOcy50Lf
-MCjOpJ2LPkLA80ZLVn+fKkkAPQG99U5axPnMWcTxCiC1I374WHqKY0vjqrpKivrq
-VXsqPixF/jUxghFMYKKb/xg+GCr4oId13KrWVXpKDAwoxwYNHC/c9UgNwgPRdjeg
-sNSpJP46UH1vvC8GD3wBnd6IE8rPc3Zc/zEHSCe0F4Za2w5HmaT5cxkz97mPVzF6
-jEQemPGfZjQDgNQyGtHhMCqxUUJ7bTXo3vg9NkpUHl1Wpg8C+YFIb8lwtBRR/5qc
-Rf0/+ho7fPYi4u1IClYMp+zBA9SJHD+XzK6gFTHjTq/XFYJEJkxDZQGQ9JmroABg
-GIK+zQDyn7SSRblpZyBmkzBUjToa/zvYwh0n9GfXPEWZc/px9eDPJsu0v+d7j1Tt
-vmqTwo44mo+NdkNIyBTA
-=bA5Y
------END PGP SIGNATURE-----
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-dwarf_get_aranges_list-dwarf_arange-c
