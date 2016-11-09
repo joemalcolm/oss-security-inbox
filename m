@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/4
-Message-Id: <20160315142331.8664E6C0B8D@smtpvmsrv1.mitre.org>
-Date: Tue, 15 Mar 2016 10:23:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: seb@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - SPIP: 2 vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/5
+Message-ID: <e83aa49b-8c7d-e662-55bd-8f5a415e38b8@cleal.org>
+Date: Wed, 9 Nov 2016 13:28:53 +0000
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2016-8634: Foreman organization/location wizard may run stored XSS
+in name
 
-> SPIP. Both are present in 3.x before 3.0.22 and 2.x before 2.1.19:
+When creating an organization or location in Foreman, if the name
+contains HTML then the second step of the wizard will render the HTML.
+This occurs in the alert box on the page.
 
->   * PHP code injection when handling content. This is fixed in
->     https://core.spip.net/projects/spip/repository/revisions/22911
->     (defining the function itself is enoug, as the global mechanism for
->     filters in SPIP automatically tries to lookup and filtre_foo_dist if
->     it exists)
+This may permit a stored XSS attack if an organization/location with
+HTML in the name is created, then a user is linked directly to this URL.
 
-Use CVE-2016-3153.
+Mitigation: restrict permissions to organization and location creation,
+don't follow untrusted links to Foreman.
+
+This issue was reported by Sanket Jagtap.
+
+Affects Foreman 1.1 and higher
+Fix due to be released in Foreman 1.14.0
+
+Patch:
+https://github.com/theforeman/foreman/commit/5a573456b5ecb3ba0d24e057722704f9afeda8f7
+
+More information:
+https://theforeman.org/security.html#2016-8634
+http://projects.theforeman.org/issues/17195
+https://theforeman.org
+
+-- 
+Dominic Cleal
+dominic@...al.org
 
 
->   * Objects injection when deserializing untrusted input. This is fixed
->     in https://core.spip.net/projects/spip/repository/revisions/22903
 
-Use CVE-2016-3154.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6BpiAAoJEL54rhJi8gl5khAP+wfeb29voowCOZSZYznOyuAm
-mZd1AEHj4y+TJYzyFyqrf0MfQj7WmnJ6OO0icPz2bUol1V2LAL0MItkO4iNhqBJ5
-X/vIOC1xjEG9VN+q+IFrT9+SkBC/NI8VhFUAO1NdgsGeIfu9EX2NanIEHWgR1aFE
-yKddPKTz7a8YCRrvLXBIawC8sOuQM4TTiyOx4FozZWO9YMP5uQ/8zXX9JlzOBylh
-rW2ZPNYNCh5H4B8w8WFfNPwcFhX9LF2vFh6PXbAuIxJNjyyDrn6tt0Ukznrdzn75
-tvA3MtdhIHdIIbwk8cEQvov1+8dndFhzCCDVX1SIP97XQ9G9A+9O/ukWslOij9HK
-zcxaTTegDO5tXBHhJnTbUrh042tSH1yhHR11PSNN/BGmZjQamDWOP0z7dHKPCIDa
-Qx6VbY/jXriAoZRBdz2L5+10wtBwFkH3AWTPn0jmZCZOO0dNBECTZD703bPfWxVG
-HnGaiOFknxV+nW5LfaxYYLmqdz/pqaaYGg+3k7QgsuUkD4Y73YXLoMgGq8TB+M88
-zFzxVzIpKbcoJaoyDthvu2EfwpgIQxWDTQ2nytA35E5O8hfL0naLXEySY88QFSZ7
-HGX0+E4vakm2UAW5CrpC1/d8AFgyOwiS5Pe3u5BaX4sV6rHlwD10tIlnG5tvY+LT
-/N0GgEWADL0Zf1kown/g
-=D4wB
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
