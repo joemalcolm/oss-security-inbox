@@ -1,80 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/10
-Message-ID: <568D9DEC.7030306@halfdog.net>
-Date: Wed, 6 Jan 2016 23:06:20 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...ts.openwall.com
-Subject: Discuss: Daily/weekly cron jobs best practices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/2
+Message-ID: <fc81166c6bd64f25b3de82878a578fba@imshyb02.MITRE.ORG>
+Date: Wed, 9 Nov 2016 00:44:42 -0500
+From: <cve-assign@...re.org>
+To: <anemec@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-Hello List,
+> 1.5.3 - 2016-11-05
+> 
+> * Security issue: Fixed a bug where HKDF would return an empty
+> byte-string if used with a length less than algorithm.digest_size.
+> Credit to Markus Doering for reporting the issue.
+> 
+> https://cryptography.io/en/latest/changelog/#id1
+> https://github.com/pyca/cryptography/issues/3211
+> https://github.com/pyca/cryptography/commit/b924696b2e8731f39696584d12cceeb3aeb2d874
 
-Different Linux software packages use cron jobs for basic maintenance
-activities, e.g.
+>> hazmat/primitives/kdf/hkdf.py
+>> 
+>> -  while (self._algorithm.digest_size // 8) * len(output) < self._length:
+>> +  while self._algorithm.digest_size * (len(output) - 1) < self._length:
 
-* rotating/compressing/deleting logs (syslog, ntp)
-* cleanup of caches (man, php)
-* notifications (calender, SMART disk check)
-
-Especially interesting are those cron job scripts run as user root but
-processing files owned by dedicated service users. But shell scripts
-often have their problems processing untrusted input:
-
-* the tools invoked in shell scripts often have no or little
-protection against file system modification races
-
-* data processing with multiple separate processes, as usually
-employed when using pipes in shell scripts, are inherently racy.
-
-* the tools do not protect against symlink attacks
-
-Due to that risks, what would be best practices, e.g. for a script
-cleaning up log files for a daemon.
-
-a) run shell script as daemon user. Ignore script security: a
-malicious daemon user can already perform all those actions by
-himself, not relying on insecure scripts. Pro: no need to perform
-security audits on scripts. Con: below
-
-b) run shell script as daemon user and also try to get it secured.
-Pro: attackers without code execution possibilities but ability to
-make daemon e.g. to create problematic files via the daemon are also
-blocked.
-
-c) try to make shell script secure, but still run as root. Pro: no
-overhead due to uid-switch (pam/audit logging with su in scripts), no
-risk to leak privileged resources, e.g. open FDs, to lower-priv daemon
-context. Con: any script coding mistake or change in tool behaviour
-(gzip, find, tar, ls, ....) might create privilege escalation hole.
-
-d) do not use shell scripts for that kind of task, use OS-near
-programming language, e.g. C, python, to write specialized helper.
-Pro: Perfect protection possible (openat/fstat/O_NOFOLLOW...). Con:
-higher maintenance effort.
-
-Are there more variants, arguments? In my opinion, b) is a good
-trade-off between maintainability and security.
-
-Currently the cron scripts seem to be a weak point. I looked at the 8
-daily scripts on my machine, 2 of them belonged to the "daemon"
-example class from above and both were vulnerable to daemon to root
-privilege escalation, see e.g. [1].
-
-hd
-
-[1]
-http://www.halfdog.net/Security/2015/MandbSymlinkLocalRootPrivilegeEscalation/
+Use CVE-2016-9243.
 
 - -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iEYEARECAAYFAlaNneMACgkQxFmThv7tq+5K8ACgk4cZa5OftLi1uIZ0LQkXH+Qw
-EfsAmwbrYKeQGSkPULQ/NvHroMOhaJ+g
-=tCPm
+iQIcBAEBCAAGBQJYIrdLAAoJEHb/MwWLVhi20v8P/12FFKS4lmHBohPiqZfVYIVf
+FVVBabdQeQKkm/T/zs+Dn0itq4FZX/jo3GYiJfC9zX7EPtmOq6QQQmKZImDeD72m
+Tt3eMzUCdN5ofWm9+QHzi4Bg9Gh5ZtTQU1VppMslSxKCl5bB5kliEr+KH5iBndCw
+ElvNUpqsODuqiajKwY5F+jTu7wazdxbG8vGds2dTy19SsBx+xOTP4wFt5vIKc4TN
+s06d5AV7qJ9fZkXQgR62T2+huElM0yCYf7qx7B36YyT8Sj4pKrLAm/QdMx8e5azn
+gEmvp6afOtXv+o+lqXQcsExQtHEz3W0ezVCsAZqA4ckGxSxcNZ2JwfQQizO/kHVK
++TMkYnMchlr80ev61VTV7AbXTnn/RHbHkHQA3nRRKXbR+umqzpcrpB4wFELwLqw9
+hchlE5DebRoYGVSiFPTKsTmYca2OelbmEQcz7fRbaha1g2G6BoR9/bRPfZTj7PBk
+J1yHdJqfF15EQUamOUpzSAzNubHly0jdOKNSE2kUMWZFCsDcvbsC/Hsvn2YXn7We
+KlMWBZ7z1BdC7UEuNpDozVG9Dc62gX187+czppqmAaw9BD9cGH92QVghTsZ5Zxj3
+UXrP0nt96ImQC/OlDVcdpUvqKE77K2Zb5OVFWLgU69VyaUc/oRMch6TgJ4VpCm6/
+elSR/llcBZcHjvKLrYwP
+=4CW6
 -----END PGP SIGNATURE-----
