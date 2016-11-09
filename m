@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["796" "Monday" "10" "July" "2017" "11:25:37" "-0700" "Sailesh Mukil" "sailesh@apache.org" "<CA+LM4Mtfo75gm=L8D2Qjre2eTbbCqJG6b4F7Tia+6gBi8V4nQg@mail.gmail.com>" "25" "[oss-security] CVE-2017-5640 Apache Impala (incubating) Information Disclosure" "^Date:" nil nil "7" "2017071018:25:37" "[oss-security] CVE-2017-5640 Apache Impala (incubating) Information Disclosure" (number mark "        sailesh@apac Jul 10   25/796   " thread-indent "\"[oss-security] CVE-2017-5640 Apache Impala (incubating) Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7168" "Wednesday" "9" "November" "2016" "15:48:27" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2777400.XtlcyMQHst@blackgate>" "94" "[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" nil nil nil "11" "2016110914:48:27" "[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" (number mark "U       ago@gentoo.o Nov  9   94/7168  " thread-indent "\"[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24420 invoked by uid 550); 10 Jul 2017 18:29:05 -0000
+Received: (qmail 1725 invoked by uid 550); 9 Nov 2016 14:48:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22437 invoked from network); 10 Jul 2017 18:25:51 -0000
-X-Gm-Message-State: AIVw1133aq85OxAI2I5xUJk66LMFi9SOX73dKZ3vK26P12MGbspHlbJP
-	6EPXshYrK9N9lq+Vc3o4KqGMCLA+VA==
-X-Received: by 10.55.104.195 with SMTP id d186mr6222351qkc.176.1499711138132;
- Mon, 10 Jul 2017 11:25:38 -0700 (PDT)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CA+LM4Mtfo75gm=L8D2Qjre2eTbbCqJG6b4F7Tia+6gBi8V4nQg@mail.gmail.com>
-Message-ID: <CA+LM4Mtfo75gm=L8D2Qjre2eTbbCqJG6b4F7Tia+6gBi8V4nQg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Jul 2017 11:25:37 -0700
-From: Sailesh Mukil <sailesh@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-5640 Apache Impala (incubating) Information Disclosure
+Received: (qmail 1641 invoked from network); 9 Nov 2016 14:48:43 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Wed, 09 Nov 2016 15:48:27 +0100
+Message-ID: <2777400.XtlcyMQHst@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 
-CVE-2017-5640 Apache Impala (incubating) Information Disclosure
-
-Severity: High
-
-Versions Affected:
-Apache Impala (incubating) 2.7.0 to 2.8.0
+If it is suitable for a CVE please assign one. Thanks.
 
 Description:
-It was noticed that a malicious process impersonating an Impala daemon
-could cause Impala daemons to skip authentication checks when Kerberos
-is enabled (but TLS is not). If the malicious server responds with
-=E2=80=98COMPLETE=E2=80=99 before the SASL handshake has completed, the cli=
-ent will
-consider the handshake as completed even though no exchange of
-credentials has happened.
+libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
+Python, C, C++, Java, and probably more on the way..
 
-Mitigation:
-Users of the affected versions should apply the following mitigation:
-Upgrade to Apache Impala (incubating) 2.9.0
+A fuzzing revealed a global buffer overflow in listmp3. The bug does not 
+reside in any shared object but if you have a web application that calls 
+directly the listmp3 binary to parse untrusted mp3, then you are affected.
+
+The complete ASan output:
+
+# listmp3 $FILE
+==29519==ERROR: AddressSanitizer: global-buffer-overflow on address 
+0x000000722e0c at pc 0x0000004f1a99 bp 0x7ffe42b1d7f0 sp 0x7ffe42b1d7e8
+READ of size 4 at 0x000000722e0c thread T0
+    #0 0x4f1a98 in printMP3Headers /var/tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:128:20
+    #1 0x4f1bee in main /var/tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:191:3
+    #2 0x7fe262a4761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x418ae8 in getenv (/usr/bin/listmp3+0x418ae8)
+
+0x000000722e0c is located 52 bytes to the left of global variable 
+'mp2_samplerate_table' defined in 'listmp3.c:44:5' (0x722e40) of size 12
+0x000000722e0c is located 0 bytes to the right of global variable 
+'mp1_samplerate_table' defined in 'listmp3.c:43:5' (0x722e00) of size 12
+SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/listmp3.c:128:20 in printMP3Headers
+Shadow bytes around the buggy address:
+  0x0000800dc570: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000800dc580: 00 00 00 00 00 00 00 00 00 00 00 04 f9 f9 f9 f9
+  0x0000800dc590: 00 00 00 00 00 00 00 04 f9 f9 f9 f9 00 00 00 00
+  0x0000800dc5a0: 00 00 00 04 f9 f9 f9 f9 00 00 00 00 00 00 00 04
+  0x0000800dc5b0: f9 f9 f9 f9 00 00 00 00 00 00 00 04 f9 f9 f9 f9
+=>0x0000800dc5c0: 00[04]f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
+  0x0000800dc5d0: 00 04 f9 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x0000800dc5e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000800dc5f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000800dc600: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0000800dc610: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
+  Stack right redzone:     f3                                                                                                                                                                                                                                                  
+  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
+  Stack after return:      f5                                                                                                                                                                                                                                                  
+  Stack use after scope:   f8                                                                                                                                                                                                                                                  
+  Global redzone:          f9                                                                                                                                                                                                                                                  
+  Global init order:       f6                                                                                                                                                                                                                                                  
+  Poisoned by user:        f7                                                                                                                                                                                                                                                  
+  Container overflow:      fc                                                                                                                                                                                                                                                  
+  Array cookie:            ac                                                                                                                                                                                                                                                  
+  Intra object redzone:    bb                                                                                                                                                                                                                                                  
+  ASan internal:           fe                                                                                                                                                                                                                                                  
+  Left alloca redzone:     ca                                                                                                                                                                                                                                                  
+  Right alloca redzone:    cb                                                                                                                                                                                                                                                  
+==29519==ABORTING                                                                                                                                                                                                                                                              
+frame 1: MP25 layer 1, 8000 Hz, 0kbps, mono, length=0, protect off
+
+Affected version:
+0.4.7
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
 
 Credit:
-This issue was identified by the Cloudera Security team.
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-References:
-https://issues.apache.org/jira/browse/IMPALA-5005
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00034-libming-globaloverflow-printMP3Headers
+
+Timeline:
+2016-08-13: bug discovered
+2016-10-20: bug reported to upstream
+2016-11-07: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libming-listmp3-global-buffer-overflow-in-printmp3headers-listmp3-c
