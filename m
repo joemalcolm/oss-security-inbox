@@ -1,56 +1,214 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/8
-Message-Id: <20160216181617.3A8856C0774@smtpvmsrv1.mitre.org>
-Date: Tue, 16 Feb 2016 13:16:17 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, luodalongde@...il.com
-Subject: Re: CVE request Qemu: usb: null pointer dereference in remote NDIS control message handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/6
+Message-ID: <3155102.1YCGyAV9D0@blackgate>
+Date: Wed, 09 Nov 2016 15:38:04 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: elfutils: memory allocation failure in __libelf_set_rawdata_wrlock (elf_getdata.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If it is suitable for a CVE please assign one. Thanks.
 
-> Qemu emulator built with the USB Net device emulation support is vulnerable to
-> a NULL pointer dereference issue. It could occur while processing remote NDIS
-> control message packets, when the USB configuration descriptor object is null.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg02553.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1302299
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in 
+replacement for libelf).
 
->> When processing remote NDIS control message packets, the USB Net
->> device emulator checks to see if the USB configuration descriptor
->> object is of RNDIS type(2). But it does not check if it is null,
->> which leads to a null dereference error. Add check to avoid it.
+During the fuzz of libdwarf, I noticed a memory allocation failure which 
+involves elfutils.
+To have a double-check, the bug was first reported to the libdwarf maintainer 
+and then to the elfutils maintainer. Actually there is a proposed patch on the 
+elfutils mailing list, but nobody commented.
 
-Use CVE-2016-2392.
+The complete ASan output:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/dev-network.c but
-that may be an expected place for a later update.
+# dwarfdump $FILE
+==30083==ERROR: AddressSanitizer failed to allocate 0x8000003000 
+(549755826176) bytes of LargeMmapAllocator (error code: 12)
+==30083==Process memory map follows:
+	0x000000400000-0x0000006bb000	/usr/bin/dwarfdump-asan
+	0x0000008ba000-0x0000008c2000	/usr/bin/dwarfdump-asan
+	0x0000008c2000-0x0000008ff000	/usr/bin/dwarfdump-asan
+	0x0000008ff000-0x0000015a3000	
+	0x00007fff7000-0x00008fff7000	
+	0x00008fff7000-0x02008fff7000	
+	0x02008fff7000-0x10007fff8000	
+	0x600000000000-0x602000000000	
+	0x602000000000-0x602000010000	
+	0x602000010000-0x603000000000	
+	0x603000000000-0x603000010000	
+	0x603000010000-0x604000000000	
+	0x604000000000-0x604000010000	
+	0x604000010000-0x607000000000	
+	0x607000000000-0x607000010000	
+	0x607000010000-0x611000000000	
+	0x611000000000-0x611000010000	
+	0x611000010000-0x612000000000	
+	0x612000000000-0x612000010000	
+	0x612000010000-0x613000000000	
+	0x613000000000-0x613000010000	
+	0x613000010000-0x614000000000	
+	0x614000000000-0x614000020000	
+	0x614000020000-0x619000000000	
+	0x619000000000-0x619000020000	
+	0x619000020000-0x61c000000000	
+	0x61c000000000-0x61c000020000	
+	0x61c000020000-0x61d000000000	
+	0x61d000000000-0x61d000020000	
+	0x61d000020000-0x624000000000	
+	0x624000000000-0x624000020000	
+	0x624000020000-0x625000000000	
+	0x625000000000-0x625000020000	
+	0x625000020000-0x640000000000	
+	0x640000000000-0x640000003000	
+	0x7f0afdc00000-0x7f0afdd00000	
+	0x7f0afde00000-0x7f0afdf00000	
+	0x7f0afdff0000-0x7f0b00342000	
+	0x7f0b00342000-0x7f0b004d5000	/lib64/libc-2.22.so
+	0x7f0b004d5000-0x7f0b006d5000	/lib64/libc-2.22.so
+	0x7f0b006d5000-0x7f0b006d9000	/lib64/libc-2.22.so
+	0x7f0b006d9000-0x7f0b006db000	/lib64/libc-2.22.so
+	0x7f0b006db000-0x7f0b006df000	
+	0x7f0b006df000-0x7f0b006f5000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7f0b006f5000-0x7f0b008f4000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7f0b008f4000-0x7f0b008f5000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7f0b008f5000-0x7f0b008f6000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7f0b008f6000-0x7f0b008f8000	/lib64/libdl-2.22.so
+	0x7f0b008f8000-0x7f0b00af8000	/lib64/libdl-2.22.so
+	0x7f0b00af8000-0x7f0b00af9000	/lib64/libdl-2.22.so
+	0x7f0b00af9000-0x7f0b00afa000	/lib64/libdl-2.22.so
+	0x7f0b00afa000-0x7f0b00bf7000	/lib64/libm-2.22.so
+	0x7f0b00bf7000-0x7f0b00df6000	/lib64/libm-2.22.so
+	0x7f0b00df6000-0x7f0b00df7000	/lib64/libm-2.22.so
+	0x7f0b00df7000-0x7f0b00df8000	/lib64/libm-2.22.so
+	0x7f0b00df8000-0x7f0b00dfe000	/lib64/librt-2.22.so
+	0x7f0b00dfe000-0x7f0b00ffe000	/lib64/librt-2.22.so
+	0x7f0b00ffe000-0x7f0b00fff000	/lib64/librt-2.22.so
+	0x7f0b00fff000-0x7f0b01000000	/lib64/librt-2.22.so
+	0x7f0b01000000-0x7f0b01017000	/lib64/libpthread-2.22.so
+	0x7f0b01017000-0x7f0b01216000	/lib64/libpthread-2.22.so
+	0x7f0b01216000-0x7f0b01217000	/lib64/libpthread-2.22.so
+	0x7f0b01217000-0x7f0b01218000	/lib64/libpthread-2.22.so
+	0x7f0b01218000-0x7f0b0121c000	
+	0x7f0b0121c000-0x7f0b01231000	/lib64/libz.so.1.2.8
+	0x7f0b01231000-0x7f0b01430000	/lib64/libz.so.1.2.8
+	0x7f0b01430000-0x7f0b01431000	/lib64/libz.so.1.2.8
+	0x7f0b01431000-0x7f0b01432000	/lib64/libz.so.1.2.8
+	0x7f0b01432000-0x7f0b01449000	/usr/lib64/libelf-0.166.so
+	0x7f0b01449000-0x7f0b01649000	/usr/lib64/libelf-0.166.so
+	0x7f0b01649000-0x7f0b0164a000	/usr/lib64/libelf-0.166.so
+	0x7f0b0164a000-0x7f0b0164b000	/usr/lib64/libelf-0.166.so
+	0x7f0b0164b000-0x7f0b0166d000	/lib64/ld-2.22.so
+	0x7f0b017f7000-0x7f0b01860000	
+	0x7f0b01860000-0x7f0b0186c000	
+	0x7f0b0186c000-0x7f0b0186d000	/lib64/ld-2.22.so
+	0x7f0b0186d000-0x7f0b0186e000	/lib64/ld-2.22.so
+	0x7f0b0186e000-0x7f0b0186f000	
+	0x7ffff2f19000-0x7ffff2f3a000	[stack]
+	0x7ffff2f3d000-0x7ffff2f3f000	[vvar]
+	0x7ffff2f3f000-0x7ffff2f41000	[vdso]
+	0xffffffffff600000-0xffffffffff601000	[vsyscall]
+==30083==End of process memory map.
+==30083==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+(0)" (0x0, 0x0)
+    #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+    #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159
+    #2 0x4d1111 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
+const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183
+    #3 0x4da14a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_posix.cc:122
+    #4 0x4224df in 
+__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
+unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+    #5 0x4224df in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator 
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+    #6 0x4224df in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+    #7 0x4224df in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
+    #8 0x4c0ab1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
+    #9 0x7f0b0143c206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+    #10 0x7f0b0143c5db in __elf_getdata_rdlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:521
+    #11 0x580659 in dwarf_elf_object_access_load_section 
+/tmp/dwarf-20161001/libdwarf/dwarf_elf_access.c:1312:16
+    #12 0x5b5142 in _dwarf_load_section 
+/tmp/dwarf-20161001/libdwarf/dwarf_init_finish.c:1139:11
+    #13 0x6082ae in _dwarf_load_debug_info 
+/tmp/dwarf-20161001/libdwarf/dwarf_util.c:855:11
+    #14 0x57043f in _dwarf_next_cu_header_internal 
+/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:819:32
+    #15 0x572fcd in dwarf_next_cu_header_d 
+/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:629:15
+    #16 0x512f4f in print_one_die_section 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:660:16
+    #17 0x512262 in print_infos 
+/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
+    #18 0x4faaea in process_one_file 
+/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
+    #19 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
+    #20 0x7f0b0036261f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #21 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Affected version:
+0.166
 
-iQIcBAEBCAAGBQJWw2azAAoJEL54rhJi8gl5P9kP/Rs4ZAE8ZXhvH4ToA3otZhpg
-wAh8ottOV8upMXJbpvsAorv3GNZ8mhV54fda4PUACFFO7sBt6vC8TU+9jy8r9Ey2
-4anpNmRyEh7Dhb5DayV5SAIst5scurFfjM6xRiLq2TYkYTDsgV/hwG3a5h1gQ9yn
-VyrmPpSkQi5RFU74HWn0ZAfFa+/ohsClTEy6pWORNtznzd2Ie5Pzwunjda3Wofxc
-cGr+xfh+pFUTIFhyWL1E6N1aoRaj7eYjB/b+23qKo6uAjgYYg9KB4WkbblUSMvOM
-J5Tin3cbQI8E5EAe5N0oR5KKDYrmsSL6LxUnl+kctnxg19M35jSAWm6Mb9z7X/wn
-b1q6PZ1/P1PegIheyaI8SwmJGJpB7s1uaanPPQEWuF9IdmDUoacBKcuSHZgHfBaJ
-R4EQ7gpomp7+pEva4HxRuRPHFyrY8Cc9fZaPig8Oz3SwlhkcJEcREqgxzWEUE/K4
-6gMdIPWQ3x/trX+Q+FbG0sdcPJ3kEXVVqdxcNAFk8A3oiWYptNAWVUWzKZQlk4tY
-SbaMcp3T6ZBdv5d3v2jI6Au3ReZrJsfpslcYZ+57QXvaxGdkfa/eIe6irPWHUt7c
-F2qVi29w7MN9KLzs4VYsu11Yu4dWFlfui4/BGJF0uFGn3V++nXnmA/5fPzmKcn2G
-FJMS80TAffgwEurUNih2
-=XXSy
------END PGP SIGNATURE-----
+Fixed version:
+N/A
+
+Proposed patch:
+https://lists.fedorahosted.org/archives/list/elfutils-devel@lists.fedorahosted.org/thread/Q4LE47FPEVRZANMV6JE2NMHYO4H5MHGJ/
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00031-elfutils-memalloc-__libelf_set_rawdata_wrlock
+
+Timeline:
+2016-10-03: bug discovered
+2016-10-21: bug reported to upstream
+2016-11-04: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-in-__libelf_set_rawdata_wrlock-elf_getdata-c
+
