@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/22/2
-Message-ID: <1145026931.4188822.1469215093907.JavaMail.yahoo@mail.yahoo.com>
-Date: Fri, 22 Jul 2016 19:18:13 +0000 (UTC)
-From: Tim Allison <tallison@...che.org>
-To: "security@...che.org" <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "dev@....apache.org" <dev@....apache.org>,  "user@....apache.org" <user@....apache.org>
-Subject: [CVE-2016-5000] XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/1
+Message-Id: <4468058A-9BC7-4EBE-91B0-2B1CD450693A@apache.org>
+Date: Wed, 9 Nov 2016 00:29:14 -0500
+From: Velmurugan Periasamy <vel@...che.org>
+To: security <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: private <private@...ger.incubator.apache.org>, "<dev@...ger.incubator.apache.org>" <dev@...ger.incubator.apache.org>, user@...ger.incubator.apache.org, Velmurugan Periasamy <vel@...che.org>
+Subject: CVE update (CVE-2016-6815) - Fixed in Ranger 0.6.2
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-5000: XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example 
+Hello:
 
-Severity: Important 
+Here’s a CVE update for Ranger 0.6.2 release. Please see below details.
 
-Vendor: The Apache Software Foundation 
+Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/0.6.2+Release+-+Apache+Ranger <https://cwiki.apache.org/confluence/display/RANGER/0.6.2+Release+-+Apache+Ranger>
 
-Versions Affected: POI 3.5-3.13 
+Thank you,
+Velmurugan Periasamy
 
-Description: 
+-------------------------------------------------------------------------------------------------------
+CVE-2016-6815: Apache Ranger user privilege vulnerability
+-------------------------------------------------------------------------------------------------------
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: All 0.5.x versions or 0.6.0/0.6.1 versions of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Users with "keyadmin" role should not be allowed to change 
+password for users with "admin" role.
+Fix detail: Added logic to validate the user privilege in the backend.
+Mitigation: Users should upgrade to 0.6.2 or later version of Apache Ranger 
+with the fix.
+-------------------------------------------------------------------------------------------------------
 
-Apache POI's XLSX2CSV example uses Java's XML components to parse OpenXML files. Applications and users that use XLSX2CSV and accept such files from end-users are vulnerable to XML External Entity (XXE) attacks, which allow remote attackers to bypass security restrictions and read arbitrary files via a crafted OpenXML document that provides an XML external entity declaration in conjunction with an entity reference.
-
-Mitigation: Upgrade to 3.14 or higher 
 
 
-Credit: This issue was discovered by Mauro Gentile of Minded Security.
