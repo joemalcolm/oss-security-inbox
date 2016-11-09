@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4679" "Friday" "2" "September" "2016" "14:06:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160902180635.8B84534E010@smtpvbsrv1.mitre.org>" "127" "[oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl" nil nil nil "9" "2016090218:06:35" "[oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl" (number mark "U       cve-assign@m Sep  2  127/4679  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl\"\n") "<CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>" ("<CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3948" "Wednesday" "9" "November" "2016" "15:45:30" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4429782.ZdpFBnFWqz@blackgate>" "91" "[oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)" nil nil nil "11" "2016110914:45:30" "[oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)" (number mark "U       ago@gentoo.o Nov  9   91/3948  " thread-indent "\"[oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10041 invoked by uid 550); 2 Sep 2016 18:06:50 -0000
+Received: (qmail 20054 invoked by uid 550); 9 Nov 2016 14:46:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,139 +12,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9992 invoked from network); 2 Sep 2016 18:06:47 -0000
-From: cve-assign@mitre.org
-To: kaplanlior@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@php.net
-In-Reply-To: <CAEsznC6_Aeq_2HZNQdF=Z-daGkiR8GmHozqy+ZZfDLicHqZqww@mail.gmail.com>
-Message-Id: <20160902180635.8B84534E010@smtpvbsrv1.mitre.org>
-Date: Fri,  2 Sep 2016 14:06:35 -0400 (EDT)
-Subject: [oss-security] Re: CVE assignment for PHP 5.6.25 and 7.0.10 - and libcurl
+Received: (qmail 16016 invoked from network); 9 Nov 2016 14:45:46 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Wed, 09 Nov 2016 15:45:30 +0100
+Message-ID: <4429782.ZdpFBnFWqz@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libdwarf: memory allocation failure in do_decompress_zlib (dwarf_init_finish.c)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If it is suitable for a CVE please assign one. Thanks.
 
-> Bug #72663 <https://bugs.php.net/bug.php?id=72663> Create an Unexpected
-> Object and Don't Invoke __wakeup() in Deserialization
-> https://github.com/php/php-src/commit/20ce2fe8e3c211a42fee05a461a5881be9a8790e?w=1
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-Use CVE-2016-7124 for this one issue, regardless of the subsequent
-behavior (i.e., either "i) The unexpected object was destroyed, invoke
-__destruct()" or "ii) The unexpected object wasn't destroyed, invoke
-more magic methods.").
+A fuzz on an updated version revealed a memory allocation failure.
 
+The complete ASan output:
 
-> Bug #72681 <https://bugs.php.net/bug.php?id=72681> PHP Session Data
-> Injection Vulnerability
-> https://github.com/php/php-src/commit/8763c6090d627d8bb0ee1d030c30e58f406be9ce?w=1
+# dwarfdump $FILE
+==27994==WARNING: AddressSanitizer failed to allocate 0x62696c2f7273752f bytes 
+==27994==AddressSanitizer's allocator is terminating the process instead of 
+returning 0 
+==27994==If you don't like this behavior set allocator_may_return_null=1 
+==27994==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_allocator.cc:147 "((0)) != (0)" (0x0, 0x0) 
+   #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67 
+   #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159 
+   #2 0x4cec76 in __sanitizer::ReportAllocatorCannotReturnNull() 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_allocator.cc:147 
+   #3 0x42204c in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator >::ReturnNullOrDie() /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1317 
+   #4 0x42204c in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:359 
+   #5 0x42204c in __asan::asan_malloc(unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718 
+   #6 0x4c0ab1 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53 
+   #7 0x5b582e in do_decompress_zlib 
+/tmp/dwarf-20161021/libdwarf/dwarf_init_finish.c:1085:12 
+   #8 0x5b582e in _dwarf_load_section 
+/tmp/dwarf-20161021/libdwarf/dwarf_init_finish.c:1159 
+   #9 0x5bb479 in dwarf_srcfiles 
+/tmp/dwarf-20161021/libdwarf/./dwarf_line.c:336:11 
+   #10 0x5145cd in print_one_die_section 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:812:28 
+   #11 0x512262 in print_infos 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16 
+   #12 0x4faafa in process_one_file 
+/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9 
+   #13 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654 
+   #14 0x7f578f45a61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289 
+   #15 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-Use CVE-2016-7125.
+Affected version:
+20161021
 
-The scope of this CVE also includes the "The similar issue also exist
-in session php_binary handler" part of 72681.
+Fixed version:
+N/A
 
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
 
-> Bug #72697 <https://bugs.php.net/bug.php?id=72697> select_colors write
-> out-of-bounds
-> https://github.com/php/php-src/commit/b6f13a5ef9d6280cf984826a5de012a32c396cd4?w=1
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Use CVE-2016-7126.
+CVE:
+N/A
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00024-libdwarf-memalloc-do_decompress_zlib
 
-> Bug #72730 <https://bugs.php.net/bug.php?id=72730> imagegammacorrect allows
-> arbitrary write access
-> https://github.com/php/php-src/commit/1bd103df00f49cf4d4ade2cfe3f456ac058a4eae?w=1
+Timeline:
+2016-11-02: bug discovered and reported to upstream
+2016-11-05: upstream released a patch
+2016-11-07: blog post about the issue
 
-Use CVE-2016-7127.
+Note:
+This bug was found with American Fuzzy Lop.
 
-
-> Bug #72627 <https://bugs.php.net/bug.php?id=72627> Memory Leakage In
-> exif_process_IFD_in_TIFF
-> https://github.com/php/php-src/commit/6dbb1ee46b5f4725cc6519abf91e512a2a10dfed?w=1
-
-Use CVE-2016-7128.
-
-
-> Bug #72749 <https://bugs.php.net/bug.php?id=72749> wddx_deserialize allows
-> illegal memory access
-> https://github.com/php/php-src/commit/426aeb2808955ee3d3f52e0cfb102834cdb836a5?w=1
-
-Use CVE-2016-7129.
-
-
-> Bug #72750 <https://bugs.php.net/bug.php?id=72750> wddx_deserialize null
-> dereference
-> https://github.com/php/php-src/commit/698a691724c0a949295991e5df091ce16f899e02?w=1
-
-Use CVE-2016-7130.
-
-
-> Bug #72790 <https://bugs.php.net/bug.php?id=72790> wddx_deserialize null
-> dereference with invalid xml
-> https://github.com/php/php-src/commit/a14fdb9746262549bbbb96abb87338bacd147e1b?w=1
-
-Use CVE-2016-7131.
-
-(72790 and 72799 are associated with the same commit. Not all of the
-commit is about the pop issue in 72799.)
-
-
-> Bug #72799 <https://bugs.php.net/bug.php?id=72799> wddx_deserialize null
-> dereference in php_wddx_pop_element
-> https://github.com/php/php-src/commit/a14fdb9746262549bbbb96abb87338bacd147e1b?w=1
-
-Use CVE-2016-7132.
-
-(72790 and 72799 are associated with the same commit. Not all of the
-commit is about the pop issue in 72799.)
-
-
-> Bug #72742 <https://bugs.php.net/bug.php?id=72742> memory allocator fails
-> to realloc small block to large one
-> https://github.com/php/php-src/commit/c2a13ced4272f2e65d2773e2ea6ca11c1ce4a911?w=1
-
-Use CVE-2016-7133.
-
-
-> Bug #72674 <https://bugs.php.net/bug.php?id=72674> Heap overflow in
-> curl_escape
-> https://github.com/php/php-src/commit/72dbb7f416160f490c4e9987040989a10ad431c7?w=1
-
-Use CVE-2016-7134 for the PHP vulnerability. In other words, PHP is
-intended to operate safely even with an unpatched copy of libcurl.
-
-This is associated with the
-https://curl.haxx.se/libcurl/c/curl_easy_escape.html and
-http://php.net/manual/en/function.curl-escape.php relationship. We
-feel that this may be a (minor) vulnerability in libcurl. It seems
-plausible that a libcurl application could accept arbitrary length URI
-components from an untrusted user, for use in GET requests to
-(probably) a hardcoded server name. However, it is possible that CVE
-ID assignment is already in progress for libcurl. If nobody knows,
-then we will contact curl-security@haxx.se directly to ask.
-
-(As far as we can tell, it is not yet fixed on the
-https://github.com/curl/curl/commits/master/lib/escape.c page.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXyb7tAAoJEHb/MwWLVhi2AaEQAKw2gJTWFh28/4amAkRFK5KF
-tnP6xJLeyOlFdzrty/EWzzCsWHX/30uc2KulranEUaC/89LIrl4QqsFHmDPdG7am
-Ai5zvsdW1NVz1fISzV1zYFX6FQBZTfr3VinQVY4Uacg743mn8Ewp+RvRAHelwBB3
-EvoBI5AkQlmWdSRamTiy+ionzNge9TlmgdCSdTfWGERYAfyaWRENNqOX/ocmb0p1
-M2YUbV7Hi2F1fRWiNyjdk+F+GLgEyercCDDwdnkc0L8mluH447ULDk2756Ww0+yZ
-yy1Jj+zgDmH62ps3lobik7dhuIEdIIUPCkY2W0WQXbLWFZusrBG9SkEQk2P99g65
-1Ajcuml+W2LyotgzIa+OOhlLb/+hw9+qsuyuXtYnhlBZ85wjeqNsLy+KduFQdX70
-jK82NAW4ZTujrbn/cBxn4ad0YDZCMQ8BkwtJEz722wruidAXFnfesqwTgBz+MoLA
-ukUKk4gkB/JEMDoVwZGeyEUKoy6Q3xllQHnP4l3nQC9FgZy/qXLShjhMk1N215ib
-1v0Ofk9QL3XRpww4JxepfbzCJe4NJaYPRC1vAvRHUYS+zvBny8PcE1NNKih6cCSt
-v0sXl7jOIEs1haHxU3kfCbjij8wCWdqFgSyL4FYD0WM6Xu3Jwa+zevkJ+hKKe37w
-BaxLqvFCiflOsCUKeMJU
-=3zTJ
------END PGP SIGNATURE-----
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libdwarf-memory-allocation-failure-in-do_decompress_zlib-dwarf_init_finish-c
