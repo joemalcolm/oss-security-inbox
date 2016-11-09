@@ -1,4 +1,9 @@
-Received: (qmail 22201 invoked by uid 550); 7 Apr 2025 20:59:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1663" "Wednesday" "9" "November" "2016" "00:44:42" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<fc81166c6bd64f25b3de82878a578fba@imshyb02.MITRE.ORG>" "42" "[oss-security] Re: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string" nil nil nil "11" "2016110905:44:42" "[oss-security] Re: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string" (number mark "U       cve-assign@m Nov  9   42/1663  " thread-indent "\"[oss-security] Re: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string\"\n") "<58beef31-d838-42a0-cafc-85221417785c@redhat.com>" ("<58beef31-d838-42a0-cafc-85221417785c@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10082 invoked by uid 550); 9 Nov 2016 05:44:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28027 invoked from network); 7 Apr 2025 19:50:43 -0000
-Authentication-Results: mail.eu-relay.fedcom.net; dmarc=pass (p=quarantine dis=none) header.from=lindev.ch
-Authentication-Results: mail.eu-relay.fedcom.net;
-	dkim=pass (1024-bit key; unprotected) header.d=lindev.ch header.i=@lindev.ch header.a=rsa-sha256 header.s=default header.b=HV/VWw5P;
-	dkim-atps=neutral
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lindev.ch; s=default;
-	t=1744055430; bh=LoFvPvM69WErVkI6Q8+SellQ9+Ewr3vNupGmxuWg8G4=;
-	h=From:In-Reply-To:References:Date:To:Subject;
-	b=HV/VWw5P9XiMBMSUkwr7vUCahu3xYnZyK/PwQ/5fkcb7Be2MviwTEiwjlTSD3D9Y8
-	 vs2ox+sD696sqAI7SJPx5nHhwnpWvB9i1AWW9cVy4UQuYBfSiB/pRq2log4TPutqX7
-	 zKVDymsTwjF9Xm2QGB5suFzlGWtd0SNyTXWHv0zU=
-From: =?utf-8?q?Bernhard_Rosenkr=C3=A4nzer?= <bero@lindev.ch>
-In-Reply-To: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-References: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
-Date: Mon, 07 Apr 2025 21:50:30 +0200
-To: oss-security@lists.openwall.com
+Received: (qmail 10064 invoked from network); 9 Nov 2016 05:44:54 -0000
+From: <cve-assign@mitre.org>
+To: <anemec@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <58beef31-d838-42a0-cafc-85221417785c@redhat.com>
+Message-ID: <fc81166c6bd64f25b3de82878a578fba@imshyb02.MITRE.ORG>
+Date: Wed, 9 Nov 2016 00:44:42 -0500
 MIME-Version: 1.0
-Message-ID: <543-67f42c80-17-5396a400@98757176>
-Content-Transfer-Encoding: quoted-printable
-Subject: =?utf-8?q?Re=3A?= [oss-security] =?utf-8?q?CVE-2025-31344=3A?=
- =?utf-8?q?_giflib=3A?= The giflib open-source component has a buffer 
- overflow =?utf-8?q?vulnerability=2E?=
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: Cryptography 1.5.3: HKDF might return an empty byte-string
 
-On Monday, April 07, 2025 15:15 CEST, =E6=9D=8E=E4=BA=9A=E6=9D=B0 <liyajie@=
-openeuler.sh> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Affected Versions:
-> - giflib 5.2.2 and below
->=20
-> Description:
-> In the function DumpScreen2RGB of the giflib software, an attempt is made=
- to access the color map through ColorMapEntry.
-> The size of ColorMap is 6 bytes (from 0x602000000030 to 0x602000000036). =
-However, when accessing
-> ColorMap->Colors[GifRow[j]], the value of GifRow[j] exceeds the actual nu=
-mber of colors stored.
+> 1.5.3 - 2016-11-05
+> 
+> * Security issue: Fixed a bug where HKDF would return an empty
+> byte-string if used with a length less than algorithm.digest_size.
+> Credit to Markus Doering for reporting the issue.
+> 
+> https://cryptography.io/en/latest/changelog/#id1
+> https://github.com/pyca/cryptography/issues/3211
+> https://github.com/pyca/cryptography/commit/b924696b2e8731f39696584d12cceeb3aeb2d874
 
-Thanks for the disclosure. Since there doesn't seem to be a proposed patch =
-yet, here's mine:
-https://github.com/OpenMandrivaAssociation/giflib/blob/master/giflib-5.2.2-=
-cve-2025-31344.patch
+>> hazmat/primitives/kdf/hkdf.py
+>> 
+>> -  while (self._algorithm.digest_size // 8) * len(output) < self._length:
+>> +  while self._algorithm.digest_size * (len(output) - 1) < self._length:
 
-ttyl
-bero
+Use CVE-2016-9243.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYIrdLAAoJEHb/MwWLVhi20v8P/12FFKS4lmHBohPiqZfVYIVf
+FVVBabdQeQKkm/T/zs+Dn0itq4FZX/jo3GYiJfC9zX7EPtmOq6QQQmKZImDeD72m
+Tt3eMzUCdN5ofWm9+QHzi4Bg9Gh5ZtTQU1VppMslSxKCl5bB5kliEr+KH5iBndCw
+ElvNUpqsODuqiajKwY5F+jTu7wazdxbG8vGds2dTy19SsBx+xOTP4wFt5vIKc4TN
+s06d5AV7qJ9fZkXQgR62T2+huElM0yCYf7qx7B36YyT8Sj4pKrLAm/QdMx8e5azn
+gEmvp6afOtXv+o+lqXQcsExQtHEz3W0ezVCsAZqA4ckGxSxcNZ2JwfQQizO/kHVK
++TMkYnMchlr80ev61VTV7AbXTnn/RHbHkHQA3nRRKXbR+umqzpcrpB4wFELwLqw9
+hchlE5DebRoYGVSiFPTKsTmYca2OelbmEQcz7fRbaha1g2G6BoR9/bRPfZTj7PBk
+J1yHdJqfF15EQUamOUpzSAzNubHly0jdOKNSE2kUMWZFCsDcvbsC/Hsvn2YXn7We
+KlMWBZ7z1BdC7UEuNpDozVG9Dc62gX187+czppqmAaw9BD9cGH92QVghTsZ5Zxj3
+UXrP0nt96ImQC/OlDVcdpUvqKE77K2Zb5OVFWLgU69VyaUc/oRMch6TgJ4VpCm6/
+elSR/llcBZcHjvKLrYwP
+=4CW6
+-----END PGP SIGNATURE-----
