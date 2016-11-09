@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["723" "Monday" "25" "July" "2016" "12:16:54" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQrJUeWwJ6u=kQ_=LU5AGMgQoN_rEE4rGieMwe+JspG2A@mail.gmail.com>" "28" "Re: [oss-security] Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver." "^Date:" nil nil "7" "2016072502:16:54" "[oss-security] Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver." (number mark "        wmealing@red Jul 25   28/723   " thread-indent "\"Re: [oss-security] Re: CVE-2016-5400 - linux kernel: denial of service in airspy USB driver.\"\n") "<20160725011319.GA17899@kroah.com>" ("<CALJHwhS5Qin0-snXT458ARcXDPTHAdpsS3ax1CCPFdWSeLeLAQ@mail.gmail.com>" "<CALJHwhSoHKvrNxFbYL4HJk4GtxHxaetQWBZQQf8ROVYqm+N=dg@mail.gmail.com>" "<20160725011319.GA17899@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["442" "Wednesday" "9" "November" "2016" "18:05:16" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4390861.xVIGMPyf1X@blackgate>" "18" "Re: [oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" nil nil nil "11" "2016110917:05:16" "[oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" (number mark "U       ago@gentoo.o Nov  9   18/442   " thread-indent "\"Re: [oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)\"\n") "<20161109170259.GA23082@tunkki>" ("<2777400.XtlcyMQHst@blackgate>" "<20161109170259.GA23082@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8069 invoked by uid 550); 25 Jul 2016 02:17:07 -0000
+Received: (qmail 5485 invoked by uid 550); 9 Nov 2016 17:05:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,36 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8047 invoked from network); 25 Jul 2016 02:17:06 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=EodJvolLdBzJb23M1qQuK+hbTFT6Q/lUDTysGfEtOzY=;
-        b=UMbsFFXQrPIccebpOdAcRE+Wts8acPMiRLOfaYAKs0cICEY9hYDyO9RyrX2w2v+5ji
-         t5LWaPK5qbMAT8yeNLYZmiU7L2OTq3M5/Q0UGu6sYurcxxmFHWd1uKtWNOearA7th12h
-         nGinFIVcwsA+KZD3PXaVKJR/aCH88HQq0f9W4Py9F6C+LyANjBAuyr4J1CLK6XMDOYdu
-         9ZJUuwZWKZZy/OhyAkpFguDaXOTo/yG3O7wpbztzuFyRI+eoL/6sfVuFY1tGFHrFdsol
-         gm+DMCZuM53hGEnbwWxxSoVOjVPkgg7KLtbVwsKRRr6/IsU0L2PGwoVqZJWVSqu+KX8i
-         otRg==
-X-Gm-Message-State: AEkoout6eUpoG1O3Pkd3cO+lL/wLBzr8RD9c0t3OxQHSo1qj6tVrRi7ooplcWefMjguQf5qxLX5pmcZjHx6JWuB6
-X-Received: by 10.107.53.34 with SMTP id c34mr19032797ioa.60.1469413014857;
- Sun, 24 Jul 2016 19:16:54 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20160725011319.GA17899@kroah.com>
-References: <CALJHwhS5Qin0-snXT458ARcXDPTHAdpsS3ax1CCPFdWSeLeLAQ@mail.gmail.com>
- <CALJHwhSoHKvrNxFbYL4HJk4GtxHxaetQWBZQQf8ROVYqm+N=dg@mail.gmail.com> <20160725011319.GA17899@kroah.com>
-Message-ID: <CALJHwhQrJUeWwJ6u=kQ_=LU5AGMgQoN_rEE4rGieMwe+JspG2A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 25 Jul 2016 12:16:54 +1000
-From: Wade Mealing <wmealing@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE-2016-5400 - linux kernel: denial of
- service in airspy USB driver.
-To: oss-security@lists.openwall.com
+Received: (qmail 5463 invoked from network); 9 Nov 2016 17:05:33 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: Henri Salo <henri@nerv.fi>
+Cc: oss-security@lists.openwall.com
+Date: Wed, 09 Nov 2016 18:05:16 +0100
+Message-ID: <4390861.xVIGMPyf1X@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <20161109170259.GA23082@tunkki>
+References: <2777400.XtlcyMQHst@blackgate> <20161109170259.GA23082@tunkki>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="nextPart4708347.Xo0Q7YbfLi"
+Content-Transfer-Encoding: 7Bit
+Subject: Re: [oss-security] libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 
-> Any reason why this isn't tagged for a stable kernel release?
+--nextPart4708347.Xo0Q7YbfLi
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-Patch was sent to airspy maintainer by James Patrick-Evans (The flaw
-submitter) on July 17th.  I have no control over maintainers.
+On Wednesday 09 November 2016 19:02:59 Henri 
+Salo wrote:
+> On Wed, Nov 09, 2016 at 03:48:27PM +0100, 
+Agostino Sarubbo wrote:
+> > 2016-08-13: bug discovered
+> > 2016-10-20: bug reported to upstream
+> > 2016-11-07: blog post about the issue
+> 
+> Did upstream respond anything related to these 
+cases?
+No.
 
-LKML process is likely best kept off list.
+--nextPart4708347.Xo0Q7YbfLi--
 
-Thanks,
-
-Wade Mealing
-
-On Mon, Jul 25, 2016 at 11:13 AM, Greg KH <greg@kroah.com> wrote:
-> On Mon, Jul 25, 2016 at 10:51:16AM +1000, Wade Mealing wrote:
->> Hit send too early,
->>
->>
->> Upstream patch:
->> https://git.linuxtv.org/media_tree.git/commit/?id=eca2d34b9d2ce70165a50510659838e28ca22742
->>
->> Maintainer has yet to send to LKML.
->
-> If it's in the media tree, it doesn't go to lkml.
->
-> Any reason why this isn't tagged for a stable kernel release?
->
-> thanks,
->
-> greg k-h
