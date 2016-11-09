@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["707" "Monday" "21" "January" "2019" "09:23:22" "+0100" "Florian Weimer" "fweimer@redhat.com" "<87sgxmiflx.fsf@oldenburg2.str.redhat.com>" "22" "Re: [oss-security] Apache web server use after free bugs (unfixed)" "^Cc:" nil nil "1" "2019012108:23:22" "[oss-security] Apache web server use after free bugs (unfixed)" (number mark "        fweimer@redh Jan 21   22/707   " thread-indent "\"Re: [oss-security] Apache web server use after free bugs (unfixed)\"\n") "<20190121090535.227a1db9@computer>" ("<20190121090535.227a1db9@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4104" "Wednesday" "9" "November" "2016" "15:43:22" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2342970.3XqcyZiG6N@blackgate>" "109" "[oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)" nil nil nil "11" "2016110914:43:22" "[oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)" (number mark "U       ago@gentoo.o Nov  9  109/4104  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3457 invoked by uid 550); 21 Jan 2019 08:23:38 -0000
+Received: (qmail 3828 invoked by uid 550); 9 Nov 2016 14:43:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,125 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3431 invoked from network); 21 Jan 2019 08:23:37 -0000
-References: <20190121090535.227a1db9@computer>
-In-Reply-To: <20190121090535.227a1db9@computer> ("Hanno \=\?utf-8\?Q\?B\=C3\=B6c\?\=
- \=\?utf-8\?Q\?k\=22's\?\= message of
-	"Mon, 21 Jan 2019 09:05:35 +0100")
-Message-ID: <87sgxmiflx.fsf@oldenburg2.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Mon, 21 Jan 2019 08:23:25 +0000 (UTC)
-Cc: oss-security@lists.openwall.com
-Date: Mon, 21 Jan 2019 09:23:22 +0100
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Apache web server use after free bugs (unfixed)
-To: Hanno =?utf-8?Q?B=C3=B6ck?= <hanno@hboeck.de>
+Received: (qmail 3759 invoked from network); 9 Nov 2016 14:43:38 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Wed, 09 Nov 2016 15:43:22 +0100
+Message-ID: <2342970.3XqcyZiG6N@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)
 
-* Hanno B=C3=B6ck:
+If it is suitable for a CVE please assign one. Thanks.
 
-> threading related error
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> In addition to the ASAN use after free reports, httpd logs threading
-> related errors:
->
-> AH00052: child pid [pid] exit signal Aborted (6)
-> apache2: tpp.c:84: __pthread_tpp_change_priority: Assertion `new_prio
-> =3D=3D -1 || (new_prio >=3D fifo_min_prio && new_prio <=3D fifo_max_prio)'
-> failed.
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-This can happen if the mutex data is corrupted, so it's possible this
-also caused by a use-after-free issue (if the memory is reallocated and
-overwritten before the mutex operation that causes the assertion
-failure).
+A fuzz on an updated version revealed a buffer overflow.
 
-Did you observe this with the pool debugger only?
+The complete ASan output:
 
-Thanks,
-Florian
+# dwarfdump $FILE
+==27395==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x61300000de1c at pc 0x000000528cd3 bp 0x7ffd980a63b0 sp 0x7ffd980a63a8
+READ of size 1 at 0x61300000de1c thread T0
+    #0 0x528cd2 in get_attr_value 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:4978:21
+    #1 0x51e4a4 in print_attribute 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:3357:13
+    #2 0x51a651 in print_one_die 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:1458:38
+    #3 0x51710c in print_die_and_children_internal 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:1047:36
+    #4 0x517c6b in print_die_and_children_internal 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:1142:13
+    #5 0x5147cc in print_die_and_children 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:921:5
+    #6 0x5147cc in print_one_die_section 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:831
+    #7 0x512262 in print_infos 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16
+    #8 0x4faafa in process_one_file 
+/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9
+    #9 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
+    #10 0x7f883beec61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #11 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+
+0x61300000de1c is located 0 bytes to the right of 348-byte region 
+[0x61300000dcc0,0x61300000de1c)
+allocated by thread T0 here:
+    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
+    #1 0x7f883cfc6206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/dwarf-20161021/dwarfdump/print_die.c:4978:21 in get_attr_value
+Shadow bytes around the buggy address:
+  0x0c267fff9b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9b80: 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa fa
+  0x0c267fff9b90: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c267fff9ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c267fff9bc0: 00 00 00[04]fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9be0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c267fff9bf0: 00 00 00 00 00 00 00 00 00 00 00 03 fa fa fa fa
+  0x0c267fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c267fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==27395==ABORTING
+
+Affected version:
+20161021
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00025-libdwarf-heapoverflow-get_attr_value
+
+Timeline:
+2016-11-02: bug discovered and reported to upstream
+2016-11-05: upstream released a patch
+2016-11-07: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-get_attr_value-print_die-c
