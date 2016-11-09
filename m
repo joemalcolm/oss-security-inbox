@@ -1,39 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/9
-Message-ID: <20161124233908.GA20286@sin.redhat.com>
-Date: Fri, 25 Nov 2016 10:09:09 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/17
+Message-ID: <20161109170259.GA23082@tunkki>
+Date: Wed, 9 Nov 2016 19:02:59 +0200
+From: Henri Salo <henri@...v.fi>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Nov 09, 2016 at 03:48:27PM +0100, Agostino Sarubbo wrote:
+> 2016-08-13: bug discovered
+> 2016-10-20: bug reported to upstream
+> 2016-11-07: blog post about the issue
 
-A stack overflow in ICU4C (http://icu-project.org/), fixed some 3 years
-ago in 54.1 but affecting versions back to (at least) 3.6, has just been
-made public on the ICU tracker.
-
-Upstream bug:
-
-http://bugs.icu-project.org/trac/ticket/10891
-
-Patch:
-
-http://bugs.icu-project.org/trac/changeset/35699
-
-The bug was originally discovered in PHP and a workaround applied there:
-
-https://bugs.php.net/bug.php?id=67397
-
-Note that the PHP bug is exactly the same flaw, but they worked around
-it by limiting the length of strings passed to icu.  I don't believe
-this needs a separate CVE even though it was "fixed" independently.
-
-While code execution is theoretically possible, bypassing the stack
-canary looks extremely difficult.  Most likely impact on platforms
-building with SSP is only a crash.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1383569
+Did upstream respond anything related to these cases?
 
 -- 
-Doran Moppert
-Red Hat Product Security
+Henri Salo
