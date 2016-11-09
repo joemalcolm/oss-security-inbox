@@ -1,72 +1,184 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/06/2
-Message-ID: <20161006011255.GB5763@sin.redhat.com>
-Date: Thu, 6 Oct 2016 11:42:56 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: Raphael Geissert <geissert@...ian.org>
-Cc: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/7
+Message-ID: <3336940.KQUNr6ohDW@blackgate>
+Date: Wed, 09 Nov 2016 15:39:17 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: elfutils: memory allocation failure in allocate_elf (common.h)
 Content-Type: text/plain; charset=utf-8
 
-Subject amended to reflect the need for a new CVE.
+If it is suitable for a CVE please assign one. Thanks.
 
-On Oct 05 2016, Raphael Geissert wrote:
-> > http://seclists.org/oss-sec/2013/q4/412
-> >
-> > segfault-1.patch uses:
-> >
-> > +               tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
-> >
-> > which should have used compcsize instead of comp0size.
-> 
-> Yes, indeed. This patch also introduced a regression in the processing
-> of some images.
-> Cf. https://bugs.debian.org/734238
+Description:
+elfutils is a set of libraries/utilities to handle ELF objects (drop in 
+replacement for libelf).
 
-Thanks for the reference.  The corrected patch attached to
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734238#53 agrees with
-my analysis.
+During the fuzz of libdwarf, I noticed a memory allocation failure which 
+involves elfutils.
+Actually there is a proposed patch on the elfutils mailing list, but nobody 
+commented.
 
-> Do you specifically know of a distribution that still has that patch?
+The complete ASan output:
 
-Red Hat Enterprise Linux and Ubuntu LTS seem to be still carrying the
-original patch.  Possibly others, but these are the only ones I've
-identified.
+# dwarfdump $FILE
+==21982==ERROR: AddressSanitizer failed to allocate 0x3401fb3000 
+(223371538432) bytes of LargeMmapAllocator (error code: 12)
+==21982==Process memory map follows:
+        0x000000400000-0x0000006bc000   /usr/bin/dwarfdump-asan
+        0x0000008bb000-0x0000008c3000   /usr/bin/dwarfdump-asan
+        0x0000008c3000-0x000000900000   /usr/bin/dwarfdump-asan
+        0x000000900000-0x0000015a4000
+        0x00007fff7000-0x00008fff7000
+        0x00008fff7000-0x02008fff7000
+        0x02008fff7000-0x10007fff8000
+        0x600000000000-0x603000000000
+        0x603000000000-0x603000010000
+        0x603000010000-0x604000000000
+        0x604000000000-0x604000010000
+        0x604000010000-0x619000000000
+        0x619000000000-0x619000020000
+        0x619000020000-0x624000000000
+        0x624000000000-0x624000020000
+        0x624000020000-0x640000000000
+        0x640000000000-0x640000003000
+        0x7f9f19d00000-0x7f9f19e00000
+        0x7f9f19f00000-0x7f9f1a000000
+        0x7f9f1a0a9000-0x7f9f1c3fb000
+        0x7f9f1c3fb000-0x7f9f1c58e000   /lib64/libc-2.22.so
+        0x7f9f1c58e000-0x7f9f1c78e000   /lib64/libc-2.22.so
+        0x7f9f1c78e000-0x7f9f1c792000   /lib64/libc-2.22.so
+        0x7f9f1c792000-0x7f9f1c794000   /lib64/libc-2.22.so
+        0x7f9f1c794000-0x7f9f1c798000
+        0x7f9f1c798000-0x7f9f1c7ae000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f9f1c7ae000-0x7f9f1c9ad000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f9f1c9ad000-0x7f9f1c9ae000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f9f1c9ae000-0x7f9f1c9af000   /usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+        0x7f9f1c9af000-0x7f9f1c9b1000   /lib64/libdl-2.22.so
+        0x7f9f1c9b1000-0x7f9f1cbb1000   /lib64/libdl-2.22.so
+        0x7f9f1cbb1000-0x7f9f1cbb2000   /lib64/libdl-2.22.so
+        0x7f9f1cbb2000-0x7f9f1cbb3000   /lib64/libdl-2.22.so
+        0x7f9f1cbb3000-0x7f9f1ccb0000   /lib64/libm-2.22.so
+        0x7f9f1ccb0000-0x7f9f1ceaf000   /lib64/libm-2.22.so
+        0x7f9f1ceaf000-0x7f9f1ceb0000   /lib64/libm-2.22.so
+        0x7f9f1ceb0000-0x7f9f1ceb1000   /lib64/libm-2.22.so
+        0x7f9f1ceb1000-0x7f9f1ceb7000   /lib64/librt-2.22.so
+        0x7f9f1ceb7000-0x7f9f1d0b7000   /lib64/librt-2.22.so
+        0x7f9f1d0b7000-0x7f9f1d0b8000   /lib64/librt-2.22.so
+        0x7f9f1d0b8000-0x7f9f1d0b9000   /lib64/librt-2.22.so
+        0x7f9f1d0b9000-0x7f9f1d0d0000   /lib64/libpthread-2.22.so
+        0x7f9f1d0d0000-0x7f9f1d2cf000   /lib64/libpthread-2.22.so
+        0x7f9f1d2cf000-0x7f9f1d2d0000   /lib64/libpthread-2.22.so
+        0x7f9f1d2d0000-0x7f9f1d2d1000   /lib64/libpthread-2.22.so
+        0x7f9f1d2d1000-0x7f9f1d2d5000
+        0x7f9f1d2d5000-0x7f9f1d2ea000   /lib64/libz.so.1.2.8
+        0x7f9f1d2ea000-0x7f9f1d4e9000   /lib64/libz.so.1.2.8
+        0x7f9f1d4e9000-0x7f9f1d4ea000   /lib64/libz.so.1.2.8
+        0x7f9f1d4ea000-0x7f9f1d4eb000   /lib64/libz.so.1.2.8
+        0x7f9f1d4eb000-0x7f9f1d502000   /usr/lib64/libelf-0.166.so
+        0x7f9f1d502000-0x7f9f1d702000   /usr/lib64/libelf-0.166.so
+        0x7f9f1d702000-0x7f9f1d703000   /usr/lib64/libelf-0.166.so
+        0x7f9f1d703000-0x7f9f1d704000   /usr/lib64/libelf-0.166.so
+        0x7f9f1d704000-0x7f9f1d726000   /lib64/ld-2.22.so
+        0x7f9f1d8b2000-0x7f9f1d91a000
+        0x7f9f1d91a000-0x7f9f1d925000
+        0x7f9f1d925000-0x7f9f1d926000   /lib64/ld-2.22.so
+        0x7f9f1d926000-0x7f9f1d927000   /lib64/ld-2.22.so
+        0x7f9f1d927000-0x7f9f1d928000
+        0x7ffc7e844000-0x7ffc7e865000   [stack]
+        0x7ffc7e905000-0x7ffc7e907000   [vvar]
+        0x7ffc7e907000-0x7ffc7e909000   [vdso]
+        0xffffffffff600000-0xffffffffff601000   [vsyscall]
+==21982==End of process memory map.
+==21982==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
+(0)" (0x0, 0x0)
+    #0 0x4ca3ed in __asan::AsanCheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+    #1 0x4d0f23 in __sanitizer::CheckFailed(char const*, int, char const*, 
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159
+    #2 0x4d1111 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
+const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183
+    #3 0x4da14a in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_posix.cc:122
+    #4 0x42493a in 
+__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
+unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+    #5 0x42493a in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator 
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+    #6 0x42493a in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+    #7 0x420003 in __asan::Allocator::Calloc(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:557
+    #8 0x420003 in __asan::asan_calloc(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:722
+    #9 0x4c0c3a in calloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:67
+    #10 0x7f9f1d4ee5e0 in allocate_elf /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/common.h:74
+    #11 0x7f9f1d4ee5e0 in file_read_elf /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_begin.c:282
+    #12 0x7f9f1d4ef2b8 in read_unmmaped_file /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_begin.c:584
+    #13 0x7f9f1d4ef2b8 in read_file /tmp/portage/dev-
+libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_begin.c:670
+    #14 0x4f9676 in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:585:11
+    #15 0x7f9f1c41b61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #16 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
 
-> If I remember the context correctly, the use of comp0size could then
-> lead to a heap buffer overflow later on. Was that what you noticed?
+Affected version:
+0.166
 
-Yes:  the use of comp0size under-allocates buffers for components 1..N,
-which are then overflowed in later processing.
+Fixed version:
+N/A
 
-using issue725.jp2 from
-https://github.com/uclouvain/openjpeg-data/tree/master/input/nonregression/
+Proposed patch:
+https://lists.fedorahosted.org/archives/list/elfutils-devel@lists.fedorahosted.org/message/EJWVY7TMRDEMWPAPNVU3V4MZYG5HANF2/
 
-$ valgrind j2k_to_image -i issue725.jp2 -o o.ppm
-[INFO] tile 1 of 1
-==13969== Invalid write of size 4
-==13969==    at 0x4E52B3A: t1_decode_cblks (t1.c:1560)
-==13969==    by 0x4E5BD53: tcd_decode_tile (tcd.c:1424)
-==13969==    by 0x4E42749: j2k_read_eoc (j2k.c:1670)
-==13969==    by 0x4E42EB7: j2k_decode (j2k.c:1998)
-==13969==    by 0x4E468C4: opj_jp2_decode (jp2.c:778)
-==13969==    by 0x4E49A2F: opj_decode_with_info (openjpeg.c:168)
-==13969==    by 0x4E4999F: opj_decode (openjpeg.c:157)
-==13969==    by 0x404294: main (j2k_to_image.c:674)
-==13969==  Address 0x64b7a1c is 0 bytes after a block of size 396 alloc'd
-==13969==    at 0x4C29BFD: malloc (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
-==13969==    by 0x4E5BCD0: tcd_decode_tile (tcd.c:1418)
-==13969==    by 0x4E42749: j2k_read_eoc (j2k.c:1670)
-==13969==    by 0x4E42EB7: j2k_decode (j2k.c:1998)
-==13969==    by 0x4E468C4: opj_jp2_decode (jp2.c:778)
-==13969==    by 0x4E49A2F: opj_decode_with_info (openjpeg.c:168)
-==13969==    by 0x4E4999F: opj_decode (openjpeg.c:157)
-==13969==    by 0x404294: main (j2k_to_image.c:674)
-==13969== 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
--- 
-Doran Moppert
-Red Hat Product Security
+Reproducer:
+https://github.com/asarubbo/poc/raw/master/00011-elfutils-memalloc-allocate_elf
 
-Content of type "application/pgp-signature" skipped
+Timeline:
+2016-10-24: bug discovered and reported to upstream
+2016-11-04: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/04/elfutils-memory-allocation-failure-in-allocate_elf-common-h
