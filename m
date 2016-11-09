@@ -1,53 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/2
-Message-Id: <20160506024039.D27F78BC1B1@smtpvmsrv1.mitre.org>
-Date: Thu,  5 May 2016 22:40:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: pengdawei521@....com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - samsumg android phone TvoutService_C binder service DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/19
+Message-ID: <1548626.3D51OlM7GE@blackgate>
+Date: Wed, 09 Nov 2016 18:05:25 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Henri Salo <henri@...v.fi>
+Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wednesday 09 November 2016 19:02:59 Henri 
+Salo wrote:
+> On Wed, Nov 09, 2016 at 03:48:27PM +0100, 
+Agostino Sarubbo wrote:
+> > 2016-08-13: bug discovered
+> > 2016-10-20: bug reported to upstream
+> > 2016-11-07: blog post about the issue
+> 
+> Did upstream respond anything related to these 
+cases?
+No.
 
-> When a app send a evil data to com. TvoutService_C service by service
-> command (Android system command) , can cause to TvoutService_C service
-> crash.
-
-> adb shell;
-
-> service call TvoutService_C 22 i32 1090056453 i32 1428574234 i32
-> 836766018 i32 779588542
-
-> Fix:
-> http://security.samsungmobile.com/smrupdate.html#SMR-FEB-2016
-> SVE-2016-5134: TvoutService_C service DoS
-
->> A vulnerability without appropriate exception handling allows
->> attackers to make a system crash easily through such as a DoS attack.
-
-Use CVE-2016-4547.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXLAAhAAoJEHb/MwWLVhi2qBsQAKkQv8L6AdrgxVNJGTdN5nLI
-kiR1mtMcKmUb4IBnjH3D2O7TlDTzMf57bnyfIIVB/qeae9nZRZEwqTgBrXBq4ouu
-/o77fWmcuxa4F5uF8O9cG7zFoTljoLF4kUD0WhSA5lFn0BUqig2vWia4trKIdflT
-4C3QhVVwvLeR4kZiwiMwn8sA44NnXZMhCfOHdqxNRaXZNdVDiAPn9uxQhOhME6fy
-z4uwSJoc+CckCPY3HviYy65FJ4lRESU2sK9vfuXm41x1sBtXJSg/IUkwO6x7aJBs
-t0+9rE0xOXacscEP/WMhwuquBUGvK6HglmXMogW7kL6WLAc2BetrckPbWqu71K2J
-O4N6iqJ3tv+fgVC1ATW2KjmjotABavZ/rR5I9uCN5J7fLTi6u9G5Dy5oJwZTY7wq
-fIHwk9Ku8l89jt8h5yr+X+ab6UcBOuzIU8Qh3m8ssY66tbge+ZAzcVDhHBrjW7XA
-EstiyR5GKkxGS0g/oyd7GbH+2FBlUTMETu2KQh2xQNt0v8tjT4exLeMgqtgk1plz
-q4ToF7uB32prXLFFkrX5ooS9RkEL4oSuKqr9n7c9rdofr2jy5Ob8PO6VJAuZ2MOZ
-LfgvDQWOHZlmBTFwqCSQnaou5FT+yTLXWIHOuR0n0r0ZDTNsGmsPd2dv85x1/gHJ
-V1JOoJChFUcX4gdluv83
-=tNLr
------END PGP SIGNATURE-----
