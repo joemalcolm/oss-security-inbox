@@ -1,56 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/06/6
-Message-ID: <CACn5sdS+8Hc+VOm3zX7k2dE2UYj6kuCH4ZmZqtc-WbXca=n9vQ@mail.gmail.com>
-Date: Fri, 6 May 2016 17:07:01 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/13
+Message-ID: <6cee47b1-cbd8-e209-4537-c30fde328b64@securify.nl>
+Date: Thu, 10 Nov 2016 19:18:56 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: an invalid pointer read in mini-xml 2.7
+Subject: Multiple vulnerabilities affecting three WordPress Plugins (XSS, info disclosure & DoS)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-An invalid pointer read located in a vsnprintf call in mini-xml 2.7 (
-https://www.msweet.org/projects.php?Z3) was found:
 
-$ gdb --args ./testmxml jezrijgasv.xml.-5377691366552468283
-...
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@...ry=0x7fffffff9970,
-format=<optimized out>,
-    format@...ry=0x40d900 "<%s> cannot be a second root node after <%s>",
-ap=ap@...ry=0x7fffffff9b10) at vfprintf.c:1661
-1661    vfprintf.c: No such file or directory.
-(gdb) bt
-#0  0x00007ffff48b3a03 in _IO_vfprintf_internal (s=s@...ry=0x7fffffff9970,
-format=<optimized out>,
-    format@...ry=0x40d900 "<%s> cannot be a second root node after <%s>",
-ap=ap@...ry=0x7fffffff9b10) at vfprintf.c:1661
-#1  0x00007ffff4971235 in ___vsnprintf_chk (s=s@...ry=0x7fffffff9b50 "<b>
-cannot be a second root node after <\002", maxlen=<optimized out>,
-    maxlen@...ry=1024, flags=flags@...ry=1, slen=slen@...ry=1024,
-format=format@...ry=0x40d900 "<%s> cannot be a second root node after
-<%s>",
-    args=args@...ry=0x7fffffff9b10) at vsnprintf_chk.c:63
-#2  0x000000000040a3c0 in vsnprintf (__ap=0x7fffffff9b10, __fmt=0x40d900
-"<%s> cannot be a second root node after <%s>", __n=1024,
-    __s=0x7fffffff9b50 "<b> cannot be a second root node after <\002") at
-/usr/include/x86_64-linux-gnu/bits/stdio2.h:77
-#3  mxml_error (format=0x40d900 "<%s> cannot be a second root node after
-<%s>") at mxml-private.c:86
-#4  0x0000000000405a74 in mxml_load_data (top=top@...ry=0x0,
-p=p@...ry=0x60360000fd80,
-cb=cb@...ry=0x402863 <type_cb>,
-    getc_cb=getc_cb@...ry=0x404c78 <mxml_file_getc>, sax_cb=sax_cb@...ry=0x0,
-sax_data=sax_data@...ry=0x0) at mxml-file.c:1662
-#5  0x00000000004079d0 in mxmlLoadFile (top=top@...ry=0x0,
-fp=fp@...ry=0x60360000fd80,
-cb=cb@...ry=0x402863 <type_cb>) at mxml-file.c:199
-#6  0x0000000000402166 in main (argc=<optimized out>, argv=0x7fffffffe4f8)
-at testmxml.c:473
 
-Fortunately, this issue is fixed in mini-xml 2.9. A reproducer is available
-upon request. Please assign a CVE if necesary.
 
-Regards,
-Gustavo.
 
+
+View attachment "information_disclosure_race_condition_in_w3_total_cache_wordpress_plugin.txt" of type "text/plain" (4933 bytes)
+
+View attachment "persistent_cross_site_scripting_in_wp_google_maps_plugin_via_csrf.txt" of type "text/plain" (6025 bytes)
+
+View attachment "reflected_cross_site_scripting_vulnerability_in_w3_total_cache_plugin.txt" of type "text/plain" (3514 bytes)
+
+View attachment "stored_cross_site_scripting_vulnerability_in_404_to_301_wordpress_plugin.txt" of type "text/plain" (3173 bytes)
+
+View attachment "weak_validation_of_amazon_sns_push_messages_in_w3_total_cache_wordpress_plugin.txt" of type "text/plain" (5525 bytes)
