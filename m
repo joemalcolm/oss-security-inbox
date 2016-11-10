@@ -1,108 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/12/3
-Message-ID: <CANO=Ty2f=cqmd14DeZkqW4FZeeh0w0RFKHZnCPa7471rsapVkQ@mail.gmail.com>
-Date: Thu, 11 Aug 2016 21:34:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: "dawid@...alhackers.com" <dawid@...alhackers.com>, "bug-wget@....org" <bug-wget@....org>
-Subject: Re: CVE Request - Gnu Wget 1.17 - Design Error Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/9
+Message-ID: <064f9484fc644cd8b748db5f0810ae75@imshyb02.MITRE.ORG>
+Date: Thu, 10 Nov 2016 12:28:52 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 11, 2016 at 3:11 PM, Misra, Deapesh <dmisra@...isign.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi,
->
-> ------------------
-> - Background -
-> ------------------
->
-> Here at iDefense, Verisign Inc, we have a Vulnerability Contributor
-> Program (VCP) where we buy vulnerabilities.
->
-> Recently, security researcher Dawid Golunski sold us an interesting
-> vulnerability within Wget. We asked Red Hat (secalert at redhat dot com) if
-> they would help us with the co-ordination (patching, disclosure, etc) of
-> this vulnerability. Once they graciously accepted, we discussed the
-> vulnerability with them. After their initial triage, Red Hat recommended
-> that we publicly post the details of this vulnerability to this mailing
-> list for further discussion and hence this email.
->
->
-That would have been me =).
+> https://blogs.gentoo.org/ago/2016/11/07/libming-listmp3-global-buffer-overflow-in-printmp3headers-listmp3-c
+> 
+> if you have a web application that calls
+> directly the listmp3 binary to parse untrusted mp3, then you are affected.
+> 
+> AddressSanitizer: global-buffer-overflow
+> READ of size 4
 
+Use CVE-2016-9264 for this buffer over-read.
 
-> It is very easy for an attacker to win this race as the file only gets
-> deleted after the HTTP connection is terminated. He can therefore keep the
-> connection open as long as necessary to make use of the uploaded file.
-> Below is proof of concept exploit that demonstrates this technique.
->
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Please note that the attacker would also have to have access to the local
-file system, either shell access or by some additional exploit,
-additionally they would have to have read access to the file wget is
-downloading (so same security context, or really poor permissions).
-
-
-> it is evident that the accept/reject rule is applied only after the
-> download. This seems to be a design decision which has a security aspect to
-> it. As discussed above,
->
-
-It has to be. a PHP script can serve any file type for example. To filter
-on the URI is not what is being asked, the downloaded file is what is being
-filtered.
-
-
->    - an attacker can ensure that the files which were not meant to be
-> downloaded are downloaded to the location on the victim server (which
-> should be a publicly accessible location)
->    - the attacker can keep the connection open, even if the file/s have
-> been downloaded on the victim server
->    - the attacker can then access these files OR use them in a separate
-> attack
->    - the victim server's security is impacted since the
-> developer/administrator was never warned explicitly that 'rejected files'
-> can have a transient life on the victim server
->
->
-> It looks like the design for wget needs to be changed so that the file it
-> downloads to 'recursively search' through is not saved in a location which
-> is accessible by the attacker. Additionally the documentation needs to be
-> enhanced with the explicit mention of the 'transient nature' of the files
-> which are to be rejected.
->
-
-This is easily accomplished using a safe umask for the file.
-
-Please note again that to exploit this you would need a situation where the
-attacker can control what wget is fetching, or execute a man in the middle
-attack, AND has local access to the system downloading the file AND has
-permissions to read the file AND some sort of additional vulnerability that
-requires being able to read a file in order to escalate privileges.
-
-Wget is simply doing exactly what is asked of it, downloading files, and
-once downloaded checking if you wanted to keep them or not. Same as any
-HTTP(S) library that has a mirror function and filter function.
-
-We welcome your comments/suggestions.
->
-> thanks,
->
-> Deapesh.
-> iDefense Labs, Verisign Inc.
-> http://www.verisign.com/en_US/security-services/security-
-> intelligence/vulnerability-reports/index.xhtml
->
-> PS: I hope the maintainer Giuseppe Scrivano gets to see this via the
-> bug-wget list I have CC-ed.
->
->
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJYJK0uAAoJEHb/MwWLVhi2AH0QALid3jJto+PIZZFy5SeUF38m
+YPTuN2gkmj/+xlSpC1wtRNlu40Ny+u6yixQsltfR8c5A52jeyx333xj8yzB4DmB1
+rTwfl5AqJR9GXslCdisocTEurfD8W5x7LIHcU4Xl+RBIUG0hc7gXo/QzNCqGYdxC
+KsSVvXHsd6YYIVv8NpCDhTv2bVpD0hmywyAYNcMJOckiPYzmnef1Mdj/Yo5irUO/
+9hCCt/nUloadqpvu9HST6Kb7oj7B36H7AtV7k3uWVhaCPmJIxu1btwaAd2i+y99R
+Nj5DUF4N1HrRemNEXEwlWQv/YQhc11hOvGlq1svkW/EO1qsVMUweiTgd/c/70xDE
+oEVXpBWJCaQLpUec8YYP5r4+3/1Ewk5ZqPLwM7uExGcAGew8QQX59QLdASOiKAJL
+H2W2ended2QV40IvMKkUwJWXqY+PYp6tX6rNs43vTdVM8StexBMPoGzyTbWuvDKq
+p25SKbBFgYSp7bg/p1AHVTODM0brcS6bOidzyoUpKYxm98jIn7RqN1y+jqw4SogJ
+EiVUZzfFOkM/nTn/wu8A0FzThtGZrjSLduYsYRi9hLVg++/U3gV4so4tEFDDblS6
+sjlMTDJ31ZbStX6AHK0UuArpWmJGD/GAUT0ZNL7LS6t+mxJxaMuL1mEECW1HJmUR
+B+SZwspusWrzIvf9p0yB
+=3Pz5
+-----END PGP SIGNATURE-----
