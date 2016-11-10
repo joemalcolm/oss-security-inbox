@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/2
-Message-Id: <20161001033217.088D733202F@smtpvbsrv1.mitre.org>
-Date: Fri, 30 Sep 2016 23:32:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: michael.santillana@...ork.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, infosec@...ork.com
-Subject: Re: CVE Request - Ruby OpenSSL Library - IV Reuse in GCM Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/3
+Message-ID: <alpine.GSO.2.20.1611092039190.23214@freddy.simplesystems.org>
+Date: Wed, 9 Nov 2016 20:41:09 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: libtiff: heap buffer overflow/read outside of array
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, 9 Nov 2016, Ian Zimmerman wrote:
 
-> https://github.com/ruby/openssl/issues/49
-> https://github.com/ruby/openssl/commit/8108e0a6db133f3375608303fdd2083eb5115062
-> http://stackoverflow.com/questions/35991551
-> https://github.com/attr-encrypted/attr_encrypted/issues/203
-> https://github.com/attr-encrypted/encryptor/pull/22
+> On 2016-11-09 17:32, Brian 'geeknik' Carpenter wrote:
+>
+>> http://bugzilla.maptools.org/show_bug.cgi?id=2587
+>> Fixed per
+>>>> 2016-11-10 Even Rouault <even.rouault at spatialys.com>
+>
+> I tried to check out the sources to patch this for myself, following the
+> recipe from the webpage:
 
-> A developer that uses the code above may incorrectly assume that their code
-> is secure from the pitfalls associated with IV reuse in aes-*-gcm, since
-> the 'cipher.random_iv' method is used. According to the documentation, this
-> should generate a random IV each time the encryption method is called.
+At the moment, "the web page" should be one of:
 
-> even though the random_iv method is called, the code is defaulting to
-> a static IV.
+  	http://www.simplesystems.org/libtiff/
+  	http://libtiff.maptools.org/
 
->> Cipher#iv= does not preserve the IV in gctx->iv because gctx->key_set
->> is already set by the pre-initialization in Cipher#initialize, and the
->> subsequent call of Cipher#key= resets the IV to uninitialized (zeroed
->> by OPENSSL_zalloc() in EVP_CipherInit_ex()) gctx->iv.
+And this is the description of how to obtain files from CVS:
 
-Use CVE-2016-7798 for this issue in the openssl gem for Ruby. (Note
-that https://github.com/ruby/openssl/blob/master/History.md describes
-this as "openssl gem, formerly a standard library of Ruby,
-ext/openssl.") The same CVE ID applies to the effects of this
-vulnerability on the encryptor gem and the attr_encrypted gem.
+export CVSROOT=:pserver:cvsanon@....maptools.org:/cvs/maptools/cvsroot
+cvs login
+(use empty password)
+cvs checkout libtiff
+to get the stable libtiff code
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX7y3BAAoJEHb/MwWLVhi2y+AP/2aiU7pR293xXNVq9qmU0Rzi
-9DuMjQ4w9XA97ngKxzqt+ehdfcQDI/ZkDf/bH24d3VF5wQWjW6VmQ7xFIcnGADj1
-tPrl8RiiPP2d9vzNjihalCUDoQ5GpTsAM3GFylZa81mAFAQ76ZmoxHPCzd9yzWbc
-u+r71UfcawiU67LTggIZP4ods8elCHMWFUPriWOML8uXDjYYlaUwWdip0jIsgqNC
-S74Txv4GwhBtA+Pj/3Tsv9eXZ1OzcwoOa0c9rJYwlNRWUEQB5IX9sZSLN2SlTxcO
-yf8VSXBCKqx+4/zJHTeeIVZvSt/4p9uGhJiHpLHaNyZicD7sYbKYDJuY+zaMYc5e
-6r3QE1X5JT9zxjIVKYny0BcXnrSPBhp3is7orTDr0Uc26Hnn6jxraHwLlEBkF19f
-GofQxRj3cLPrS7tChacYp7qYTvmahNaQZWC6ei76+ulZDkL28xkto0QWf8CNo2eX
-x1nS0B1hDXwH314APoxY1+pKoHGFbXqAFE6yqhWB77SLZWYVlT4ixqvv7w/fIM7N
-Me8bbpeC9e3o31tE4qv2fqvytOZw9h/LdTwoGBToWhfOkK7jGwOti8SE24pb2hOC
-hx+G4eswZOiwkqJiU4gmN+eljOQwdUD92BzklwCxLA0V1D8KxSyILkWgEHgJMuL/
-LkjwXsTybnRdUMr+IAVC
-=FWLM
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
