@@ -1,54 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/18
-Message-ID: <2504156.RvxX7vydSL@arcadia>
-Date: Sat, 08 Oct 2016 22:30:54 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/7
+Message-ID: <20161110155654.GL1555@oevtugenva.nrevsny.pk>
+Date: Thu, 10 Nov 2016 10:56:54 -0500
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: potrace: memory allocation failure
+Subject: Re: Vlany: A Linux (LD_PRELOAD) rootkit
 Content-Type: text/plain; charset=utf-8
 
-Description:
-potrace is a utility that transforms bitmaps into vector graphics.
+On Thu, Nov 10, 2016 at 01:18:44PM +0200, eov eov wrote:
+> Features:
+> 
+> Process hiding
+> User hiding
+> Network hiding
+> LXC container
+> Anti-Debug
+> Anti-Forensics
+> Persistent (re)installation & Anti-Detection
+> Dynamic linker modifications
+> Backdoors
+> accept() backdoor (derived from Jynx2)
+> PAM backdoor
+> PAM auth logger
+> vlany-exclusive commands
+> 
+> Download: https://github.com/mempodippy/vlany
 
-A crafted image, through a fuzz testing, causes the memory allocation to fail.
+At a quick glance, this would be trivially noticed by using strace. It
+also badly breaks thread-safety and AS-safety of lots of the
+interfaces it overrides, so you would expect deadlocks and crashes and
+other weird behavior in multithreaded processes and processes which
+make significant use of signal handlers, which would suggest to the
+user that something is badly wrong (and probably trigger them to try
+strace or gdb) without them actively scanning for anything.
 
-This is the first case where my ASan symbolyzer didn’t start up correctly. I’m 
-reporting only what it prints at the end (not useful at all but demostrates a 
-bit that the issue exist)
-
-# potrace $FILE
-potrace: warning: 2.hangs: premature end of file
-==13660==ERROR: AddressSanitizer failed to allocate 0x200003000 (8589946880) 
-bytes of LargeMmapAllocator (error code: 12)
-==13660==AddressSanitizer CHECK failed: /var/tmp/portage/sys-
-devel/llvm-3.8.1/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-(0)" (0x0, 0x0)
-
-Affected version:
-1.13
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-26: bug discovered
-2016-08-27: bug reported privately to upstream
-2016-08-29: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/08/29/potrace-memory-allocation-failure/
-
-
+Rich
