@@ -1,65 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/10
-Message-Id: <20160112173542.66C5A34E014@smtpvbsrv1.mitre.org>
-Date: Tue, 12 Jan 2016 12:35:42 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, donghai.zdh@...baba-inc.com
-Subject: Re: CVE request Qemu: nvram: OOB r/w access in processing firmware configurations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/2
+Message-ID: <20161110015757.20558.28D1CED1@matica.foolinux.mooo.com>
+Date: Wed, 9 Nov 2016 18:01:51 -0800
+From: Ian Zimmerman <itz@...mate.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libtiff: heap buffer overflow/read outside of array
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2016-11-09 17:32, Brian 'geeknik' Carpenter wrote:
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg00428.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1296060
+> http://bugzilla.maptools.org/show_bug.cgi?id=2587
+> Fixed per
+> >> 2016-11-10 Even Rouault <even.rouault at spatialys.com>
 
-> Qemu emulator built with the Firmware Configuration device emulation support
-> is vulnerable to an OOB r/w access issue. It could occur while processing
-> firmware configurations, if the current configuration entry value was set to
-> be invalid(FW_CFG_INVALID=0xffff).
-> 
-> A privileged(CAP_SYS_RAWIO) user/process inside guest could use this flaw to
-> crash the Qemu process instance resulting in DoS OR potentially execute
-> arbitrary code with privileges of the Qemu process on the host.
+I tried to check out the sources to patch this for myself, following the
+recipe from the webpage:
 
->> if 's->cur_entry' is set to be invalid(FW_CFG_INVALID=0xffff)
+ [2+0]Downloads$ export CVSROOT=:pserver:anonymous@...otesensing.org:/cvsroot
+ [3+0]Downloads$ cvs login
+Logging in to :pserver:anonymous@...otesensing.org:2401/cvsroot
+CVS password: # use password "anonymous" 
+cvs [login aborted]: connect to remotesensing.org(23.236.62.147):
+2401 failed: Connection timed out
 
-Use CVE-2016-1714.
+Is there another/better way?
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/nvram/fw_cfg.c;hb=stable-2.3
-but that may be an expected place for a later update.
-
-Note that http://git.qemu.org/?p=qemu.git;a=blob;f=hw/nvram/fw_cfg.c
-has:
-
-  static void fw_cfg_write(FWCfgState *s, uint8_t value)
-  {
-      /* nothing, write support removed in QEMU v2.4+ */
-  }
-
-and has no fw_cfg_read function.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWlTjSAAoJEL54rhJi8gl5roYP/AzQYLE2xxnFP0kaeW6eDY6R
-vXeoENyOmZeaB7MTYEAYEzt5Pm9bPaAzwpJAudIGkwHNymtrrO8qCTI4xMsWvoyq
-yq5zgUBvC/2ZX+8spL4J3wCnX40iBTEtJTcxFtQhbyVwkEdSrsi8Y9NwvtB/4sVa
-LiCqOv9c6qK0QDx5SDSpbhg0tyBdFRDY4SgPBkADT5XA8FuT9AtqHcZC2ICY4G/Q
-RVAvfhQii151fs3lYHufc2X6gTzqQLYNRqcfbhxH72g3K/ca0UXyj7E4fm1OrpU/
-9Wdyp2MXgthjL8XiWs6mHxrlTnfLvVdt07fe2/6MGx76g6nFFNL4UBJueHVojOZC
-HYsSuLSj3LmaCaJOya4aKCko0l7ZKsqfsNvpBDuXWE6dduVNf6HjC7yNUxp00Jty
-M0z3Sf3GAUfOEuPtbxQpPqslmYPHxK30Tf9I3tjM4BZUQ/je+Xk/Z/XcIO1otWL/
-OwVhZiN+zQETUoxzW0vZ33wg3sO++Wo1GWdPF+3zLa6Ucl8KBF3C4Cyk96ySk3rr
-+JND3rWFMoYjVkgDyiQXvnFaeK3BFkYAtGjpGah6grNL80LcEffWyisX61LL9+Ym
-KSAQqb2eBWYDOEXbCprMVkB0rLG694HQKxPxzdCsu0VG7lVMHmYueGfNuVT0c6Tg
-9gTsazAsV5w3iSZp36bM
-=tsnL
------END PGP SIGNATURE-----
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
