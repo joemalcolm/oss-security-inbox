@@ -1,56 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/13
-Message-Id: <20160331230016.AB0636FC041@smtpvmsrv1.mitre.org>
-Date: Thu, 31 Mar 2016 19:00:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: seth.arnold@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Clarification: Mysqlnd / CVE-2015-3152
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/10
+Message-ID: <15299dfb124a4dd3b82a88f7137f2a7a@imshyb02.MITRE.ORG>
+Date: Thu, 10 Nov 2016 12:29:55 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listmp3: divide-by-zero in printMP3Headers (listmp3.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Tomas Hoger asked if CVE-2015-3152 is appropriate for re-use with the php
-> mysqlnd interface:
+> https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-divide-by-zero-in-printmp3headers-list
+> 
+> if you have a web application that calls directly the
+> listmp3 binary to parse untrusted mp3, then you are affected.
+> 
+> AddressSanitizer: FPE on unknown address
+> a divide by zero
 
-No, the PHP ext/mysqlnd/mysqlnd.c code seems to be completely
-unrelated to the code shown in the
-https://github.com/mysql/mysql-server/commit/3bd5589e1a5a93f9c224badf983cd65c45215390
-commit (and the code available from the
-http://downloads.mysql.com/archives/c-c/?version=6.1.2&os=src web
-page), and thus the CVE ID should be different. Use CVE-2015-8838 for
-this https://bugs.php.net/bug.php?id=69669 issue.
-
-Incidentally, there typically aren't CVE IDs for reports such as
-"MySQL clients have long had a --ssl option. Casual users may think
-specifying this option will cause clients to secure connections using
-SSL. That is not the case ... This behavior is clearly explained in
-the manual ... this option is not sufficient in itself to cause an SSL
-connection to be used" in the
-http://mysqlblog.fivefarmers.com/2014/04/02/redefining-ssl-option/
-post. In other words, if the only problem were that the product
-documented behavior that hardly anyone wants, and omitted behavior
-that would be much more useful, then a CVE ID generally shouldn't
-exist. This case was different because, as mentioned in the
-https://duo.com/blog/backronym-mysql-vulnerability post, other
-documentation stated "MYSQL_OPT_SSL_VERIFY_SERVER_CERT ... This
-feature can be used to prevent man-in-the-middle attacks." This was
-misleading because enabling the certificate-verification code didn't
-prevent the man-in-the-middle attacker from using a
-cleartext-downgrade attack. Also,
-http://mysqlblog.fivefarmers.com/2015/04/29/ssltls-in-5-6-and-5-5-ocert-advisory/
-is arguably a vendor confirmation that the behavior was a MySQL
-vulnerability, even though it was not on an official vendor web site.
-https://access.redhat.com/security/cve/cve-2015-3152 was posted by
-the CNA for this CVE.
-
-http://php.net/ChangeLog-5.php has the three vendor confirmations of
-CVE-2015-8838 (the entries that mention bug #69669). We don't know
-whether the unpatched mysqlnd.c code ever included misleading
-documentation about the relationship between certificate verification
-and man-in-the-middle protection, but that's not needed for a CVE
-because of the obvious confirmation on the vendor's official site.
+Use CVE-2016-9265.
 
 - -- 
 CVE Assignment Team
@@ -60,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW/atfAAoJEL54rhJi8gl5ByUQAM/xz719Q1AkdIdd/XOn4AVL
-E3iePMjQLfVVU2HHZBBWAb5EWM7vxS52f4K7FOFmbfZ9+813qLh7S8dRpM61eqZZ
-S9qXHmeUZazoWtN8D4j9nhGqKRHAc9k9Cl1g4+d1urV6aVtdSG+R4NsrEFGTKomu
-Qoq2akYMFqBGVlb1kyPVYZS0Yy/WMntYTmQ0MXJQxwzFfXNtDCDMn8swOg5CkKzP
-p/lj3f1EkUtJjdSytZhyCnzs9B5awCx3JkH/yBSdqo2ApfCaranjsia965pSv2Yd
-xKyIwr3jeO3BfatV1cGgaHHrrSobMNVJ5os4TPw4ziif6UBx+36HsaHEgKLP++sW
-Jx9j/565GbF1WH4iy0IV20qgPrSIGRx9h6AgmAWirw6iRrT9JM+5KEvFSDetNk/5
-ctCSeWVLb9gT4ASW6EOGEzCLU2Zy3AXZWHhPcOqNmq+iKcEWoUOowIAL8XtHyMlZ
-r6WwM+7Q5qsjP2hI+lI10qmCUPBw4KVsXurvKCasWC+BRSS8bkjJh2nnRfkELJwj
-lN5bTnQ0gdmr7nxr2IcQfB2F4nXfBa2kW0mSXSCT26wVSlt/ycTd8M64p0WLeIpE
-6xhpVxV7N9Pn6rhCqKjnqWGKWrOYPuD949DNqY6kQv6gd6eFWrHcikaKGtBfOjhY
-wb6fxrb9zEfAcWpd+07+
-=xHPT
+iQIcBAEBCAAGBQJYJK00AAoJEHb/MwWLVhi2PBcP/1yhSanzSSFcosnQDR6SBgGL
+3PAxiDKEweFRzhDjXy2KhO1lF4c6sLqjaGOKwyBaqh2QI0kmEuU0rzTLxv3e+XST
+NSsBK6/WyrevX2RxbBDK7kTTPjlEI6VPWFBbooB74oChUbeMVndiKAciz2vod5NX
+EUaAvRDG2O8rF+RKcUFmiNQeTQKqn/AVUVOquA+/JniVY/+xyPkXQ+7wyfQhYojd
+SuVDxRRIfzFYBSFhCdtLYY5WrMWdKEVVRBgPDqTtxjuXa7Xga0GALapE1S9zfY1w
+Da7oct44Ns/xuMQIhWo/Q+ilxWZ0T9nQ0ShmWUMnGFxWWXc9iRPqbvfRNHZ7Nrlr
+tm9vnhck9hUZEgYPpoyka8sOmk0DGIrXc2OUWj3IcBSX6R0lXaglh62UD/lri5lM
+MzTaAPR0nzysvgqo3fweZKFJJqB3dw5yEtr8FW8Hhxys3Q/h1gTdRY268LVhePma
+ANtkDMsfQPAtShLrSEbKgIsPV9rjxEV53qi8JnK4t59mf5Z5ziVJ+S6FT44qMUhp
+YLQYnHSAJwT43q96KTVm6ok28hHvKzPCSPUkXE6BNyuXZGDRUDneqDkrvCly94mx
+OxexVIi4z5r/srLJ5O0vpXjK//tZFFKWDUrrwo6dIrwn/BbPp4s6Qng/aPe0jylD
+9c3RUlO53BDm0PJHS/ZC
+=RSl5
 -----END PGP SIGNATURE-----
