@@ -1,66 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/1
-Message-ID: <56C27FE3.5030104@treenet.co.nz>
-Date: Tue, 16 Feb 2016 14:48:19 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/12
+Message-ID: <CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>
+Date: Thu, 10 Nov 2016 15:07:51 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: Squid HTTP Caching Proxy 3.5.13, 4.0.4, 4.0.5 denial of service
+Subject: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core
 Content-Type: text/plain; charset=utf-8
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
 Hi,
 
-A remotely triggerable denial of service has been found in Squid
-proxy. The proxy incorrectly handles server TLS failure which almost
-always results in crashing the entire proxy. Denying service for all
-other clients using it.
+We recently found a read out-of-bounds parsing JavaScript code in the last
+revision of WebKit (
+https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e50377a474c8f4).
+I tested this issue in ArchLinux (x86_64) but other configurations could be
+affected. To reproduce:
 
-Our Advisory will be at:
-<http://www.squid-cache.org/Advisories/SQUID-2016_1.txt>
-"
- This problem allows any trusted client to perform a denial of
- service attack on the Squid service regardless of whether TLS or
- SSL is configured for use in the proxy.
+1. Recompile jsc with ASAN support.
+2. Execute:
 
- Misconfigured client or server software may trigger this issue
- to perform a denial of service unintentionally.
+$ ./jsc red.-4050783292692436029.nkpzevdpie.js
+...
+=================================================================
+==24637==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x603000014fc8 at pc 0x7ffff67f04b0 bp 0x7fffaccf8820 sp 0x7fffaccf8810
+READ of size 16 at 0x603000014fc8 thread T2
+==24637==AddressSanitizer: while reporting a bug found another one.
+Ignoring.
+    #0 0x7ffff67f04af in WTF::(anonymous namespace)::lockHashtable()
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
+    #1 0x7ffff67f1b6c in WTF::ParkingLot::parkConditionallyImpl(void
+const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()>
+const&, std::chrono::time_point<std::chrono::_V2::steady_clock,
+std::chrono::duration<long, std::ratio<1l, 1000000000l> > >)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cdb6c)
+    #2 0x7ffff67cc1cb in std::_Function_handler<void (),
+WTF::AutomaticThread::start(WTF::Locker<WTF::LockBase>
+const&)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20a81cb)
+    #3 0x7ffff67f7da5 in WTF::threadEntryPoint(void*)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20d3da5)
+    #4 0x7ffff685a530 in WTF::wtfThreadEntryPoint(void*)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2136530)
+    #5 0x7ffff1df1453 in start_thread (/usr/lib/libpthread.so.0+0x7453)
+    #6 0x7ffff0c017de in __GI___clone (/usr/lib/libc.so.6+0xe87de)
 
- However, the bug is exploitable only if Squid is built using the
- --with-openssl option.
-"
+0x603000014fd0 is located 0 bytes to the right of 32-byte region
+[0x603000014fb0,0x603000014fd0)
+allocated by thread T2 here:
+    #0 0x7ffff6efee60 in __interceptor_malloc
+/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_malloc_linux.cc:62
+    #1 0x7ffff686792f in bmalloc::Allocator::allocateSlowCase(unsigned
+long)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x214392f)
 
-Versions 3.5.13, 4.0.4 and 4.0.5 are affected.
+Thread T2 created by T0 here:
+    #0 0x7ffff6e69498 in __interceptor_pthread_create
+/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_interceptors.cc:236
+    #1 0x7ffff685b983 in WTF::createThreadInternal(void (*)(void*), void*,
+char const*)
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2137983)
 
-Patch for 3.5 is
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.p
-atch>.
+SUMMARY: AddressSanitizer: heap-buffer-overflow
+(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
+in WTF::(anonymous namespace)::lockHashtable()
+Shadow bytes around the buggy address:
+  0x0c067fffa9a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffa9e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c067fffa9f0: fa fa fa fa fa fa 00 00 00[00]fa fa fd fd fd fd
+  0x0c067fffaa00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c067fffaa40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24637==ABORTING
 
-Patch for 4.0 is
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13981.p
-atch>.
-Though as a beta release we would prefer people update straight to the
-new package.
+I'm forwarding this issue since i receive no answer from the Webkit
+developers in more than 3 weeks. The original bug report (private) is here:
 
+https://bugs.webkit.org/show_bug.cgi?id=164000
 
-Amos Jeffries
-Squid Software Foundation
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+The reproducer are available upon request. Please assign a CVE if
+necessary.
 
-iQIcBAEBAgAGBQJWwn/jAAoJEGvSOzfXE+nLJS8QAKK0bSpcXZspbBIwbxSFsI2p
-17XwSshlT9KkN1fp044iQJ53+DoIOggQQjtZ09ed9jiwSnt0rEOuuUG7Ebk9h3eM
-SK59Yxzf44uJzRiRS51ayjfWjI1xeV12HW/fV9jdPEo5Z1aaqKxOXf1ZA9IU3qQr
-rGht9HUapR0D6cB9EM2T65Td6Ea5ZPx8rMVuIVAhCKIWzC6tiK9bfDF/Ul+YJ6SF
-W56gPQpqCI37Aua+ALL79JHjO6DdYZGVnmvzDvwSlhumxMPDPUzx0FHrcHuuRDDc
-ADQ69n7TYaOikxaHCoBH0QZg8uYYezHQcw+S/+vwtLU3mFB8ue0POIScG9uLmH5t
-mAaiHGnrk6D4yrxEO8DH6b0kFUr9JaqxjAdr4dwa6/Vsw4Ba/PuelEZJTGDQizRZ
-hFWQgRsGSX7fP1CnujtCa1k1urNP5aE+weVYlR/jkSYFZIx9PwjwS5ppo2mOq3Si
-aQoRGly8/5tklO1HsQ1wGoz3nB4bi/gQS1usHuQdqwdVnrerApCyQnFinkh/EH5G
-g8EsDPBwMvypKnwu8853qQD+XV7MQ9eh4blR4FIsj9fzllJ+iLQsdd9I5FqPaD7e
-5HJ+NiAFAwvfnHY5SIo6KAbINLEzEHLn3lTiJugBhElf7JawczMaYOqI8QF0+MEd
-s0AMJfVT0EFiDXZ56g7M
-=p6ME
------END PGP SIGNATURE-----
+This issue was found using QuickFuzz.
+
+Regards,
+Gustavo.
+
