@@ -1,61 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/25/3
-Message-Id: <20160625094538.ADFB7332009@smtpvbsrv1.mitre.org>
-Date: Sat, 25 Jun 2016 05:45:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: i.elsayed92@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: out-of-bounds read in MagickCore/property.c:1396 could lead to memory leak/ Integer overflow read to RCE - ImageMagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/5
+Message-ID: <CAPbtD9nNvN19NGdM+NqiBarBVDU2qP+e3j9XoNXs9mEjd+yqjQ@mail.gmail.com>
+Date: Thu, 10 Nov 2016 13:18:44 +0200
+From: eov eov <seclist45@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Vlany: A Linux (LD_PRELOAD) rootkit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Features:
 
-> two bugs to ImageMagick
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/d8ab7f046587f2e9f734b687ba7e6e10147c294b
+Process hiding
+User hiding
+Network hiding
+LXC container
+Anti-Debug
+Anti-Forensics
+Persistent (re)installation & Anti-Detection
+Dynamic linker modifications
+Backdoors
+accept() backdoor (derived from Jynx2)
+PAM backdoor
+PAM auth logger
+vlany-exclusive commands
 
-> an integer overflow that might lead to remote code execution.
-> 
-> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/profile.c#L2025
-> 
-> An integer overflow occurs in this comparison because number_bytes is a
-> very large number like (0xFFFFFFFFFFFFFF87) and when we add offset to
-> it which we control we can overflow and the result is < length so we
-> pass this if condition.
+Download: https://github.com/mempodippy/vlany
 
-Use CVE-2016-5841.
-
-
-> MagickCore/property.c:1401 format=(size_t) ReadPropertyUnsignedShort(endian,q+2);
-> MagickCore/property.c:1404 components=(ssize_t) ReadPropertySignedLong(endian,q+4);
-> MagickCore/property.c:1382 number_entries=(size_t) ReadPropertyUnsignedShort(endian,directory);
-> MagickCore/property.c:1396 q=(unsigned char *) (directory+(12*entry)+2);
-> 
-> we can partially control q which can be used later to read arbitrary
-> data from the process of ImageMagick.
-
-Use CVE-2016-5842.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXblIFAAoJEHb/MwWLVhi21FkP/14gsNPlpEBDcB2cDTXpbiS4
-EAtByZpxwno+HY0u4DzSWDDlZbhvOofI6fEXGk6gzP0ykI6EUXMv0Ji5SBUcFZWD
-N86nrfJF7in5DSbUq2So1d2Iyn/nBi8NU0eOyX5hf5Ec2yMTuDdL+IJVJNRNC7EJ
-AkPfNsZcb5zAb6MqM23m9MZeKbg3ohrm0KxC8eeW5wnfpH03pYCHI9AJcuvRx0EX
-kCilDdlXkKBov75dTK0X9FMW2fFqggIoWIcPqB5P37goi0oEgIEdbowoHA8qZeBX
-LzKLdxVFn2DDQgMOCdgvVE08XoblpQZz/QfJY4joopzzP/4C1+ol8O4DJu12CnO4
-ZrkekMyVbmMMvniRcYAzAKelccK3l8HHbyMx/o4Wqc4H52e1cnBwbqApxiyUpAJ7
-PJORtlwtn8n12J0zgZDRFQRr9rpIvvdgGaggwhGckTaL+bad1etd2//2DC+2MSyQ
-IDegwMBQ0UWBvcj94yMSP07umbBLmNppZKV6X5Zpjic7/UAHbg2erDiKx1nAsoz+
-AWEm8PuETTDEKpEfwjgP7d32zMei8PMdx+toOSjcJG1EHh/l8u+dJeLfUB3m2/gT
-fOzCRa+g0ds93GYaXIjV97wQOcvtNI/d4kmIk94eRVfq0KaViFqWKEUTHQw7VBtL
-Anv/k4HPoJ5rjKGTt7g0
-=EYAb
------END PGP SIGNATURE-----
