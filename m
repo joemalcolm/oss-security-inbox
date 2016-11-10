@@ -1,54 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/07/5
-Message-ID: <CACn5sdSHFna-46qCeffARuWeYqxtfhsaKLMwJ0zMu7Gz-i9hnw@mail.gmail.com>
-Date: Mon, 7 Nov 2016 15:29:37 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request - mujs Heap-Buffer-Overflow write and OOB Read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/4
+Message-ID: <17fb8fbcd0f649ae912cfbb78670eb5e@imshyb02.MITRE.ORG>
+Date: Thu, 10 Nov 2016 01:03:26 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: use after free in jas_realloc (jas_malloc.c)
 Content-Type: text/plain; charset=utf-8
 
-Hopefully, CVE-2016-9109 should be fixed in this commit:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-http://git.ghostscript.com/?p=mujs.git;h=a0ceaf5050faf419401fe1b83acfa950ec8a8a89
+> https://blogs.gentoo.org/ago/2016/11/07/jasper-use-after-free-in-jas_realloc-jas_malloc-c
+> 
+> A crafted image, maybe posted in the past as testcase for another bug, causes
+> in the 1.900.18 version a use-after-free.
+> 
+> AddressSanitizer: heap-use-after-free
+> READ of size 8
+> 
+>     #0 0x7fce4229d29c in jas_realloc ... jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21
+>     #1 0x7fce422a5e38 in mem_resize ... jasper-1.900.18/src/libjasper/base/jas_stream.c:1001:14
 
-2016-10-30 16:49 GMT-03:00 <cve-assign@...re.org>:
+> https://github.com/mdadams/jasper/commit/634ce8e8a5accc0fa05dd2c20d42b4749d4b2735
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > Despite CVE-2016-7563 looks fixed in the mujs bug tracker, it was not
-> > properly patched:
-> >
-> > http://bugs.ghostscript.com/show_bug.cgi?id=697136#c4
->
-> >> AddressSanitizer: heap-buffer-overflow
-> >> READ of size 1
->
-> Use CVE-2016-9109 for the issue of an incomplete fix for
-> CVE-2016-7563.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJYFkuiAAoJEHb/MwWLVhi2RYQP/RUxITs9d7YwygKvsonPO6KY
-> G0w5aAZSoJQq5SuQHFpU5B6CBfMfGB4iSWTrdLhu71hSBHlFMoca8Q4Rlirnnefh
-> mrK2dUlB4ZeY9iAu/WAsi7svdMhbsaNWD4FchYdm8PTBP10Q0pHCilPAmJI4/fev
-> vZIeSeHl0KcYD104MtYD2ek6bOUm56Dxuf2nBTRfVJNBZa/q1FRS62cg+Nkwo4Hx
-> sfvepzy26nE0PzCFn1GcPu3H0SuWe1nkgfSwgZjFSDAg+OwueJLAFnm/Y+xloUWv
-> lD3WiHU1cESxY4SyH3UgUa2QgNTI0zauLxLzcwLOYMF2rh8UlACG2DqOckgI9Bkk
-> GYetbtkGbnZOmwBTEFPdKfFISEo5dBBPRWTxFXnepCnwjU/Gl1gLt07s4/90UM/7
-> +w+kXl0boDt7W7PUYxyn6lkYUbT6Irodxvk1QDe5LcI5eyU8+QN2yNW1t8sp7qAi
-> 578PKtcezerFo0L9WHSvNcV3+CM9mO00LdI6ZxCEy8qmc5s5yrnbtIElaNdJfOek
-> 1riKd3yPvz3T/2EGbpVXE/9gkpz4My37e+bhhkBhzScp6pcM6tOcycBvSzM1LKls
-> HNh0uzMpzadWQA474KQsCoXAZ+M3N1ViBmUs0KUCGs9NAqxjYV/pKtONiKUqTHbJ
-> 4cNzu7H/SxrQp0e6nt3h
-> =vKjs
-> -----END PGP SIGNATURE-----
->
+>> There were a number of potential problems due to the possibility
+>> of integer overflow.
+>> Changed some integral types to the larger types size_t or ssize_t.
+>> For example, the function mem_resize now takes the buffer size parameter
+>> as a size_t.
+>> Added a new function jas_stream_memopen2, which takes a
+>> buffer size specified as a size_t instead of an int.
 
+Use CVE-2016-9262 for everything fixed by
+634ce8e8a5accc0fa05dd2c20d42b4749d4b2735.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYJA0ZAAoJEHb/MwWLVhi2Cx0P/jXkv48yuOWoFzruQ3Lnx4BY
+20iq9b2hapEg0DnX7tQteIxmW82S5ZIvxbfATQAB+4st71nu9JK2pI0K7Jaskbke
+CHz4JmoMJM8FYEAEvLvAivzG9rlOHSVSt6Cu3cVAqKpwhZrb3WaRhivCXjXVXqVY
+SQoXbma5pxLN8EfpjNlHKEGxwgwtBE8Tnx2+d0dO5V889qOMi7Yo4KJ52Jdpm4we
+l6o535FKnEocZMOH6ewaAuMUiRrY79thYAhfxfRx3eLPZTNeIRp7WwSDhnMCtnyt
+C18ikqc+psPMkXlzl1kRPoLTXi+E+D9Eb7QM/XnMJL4262dcUOtlFUXxrhgKbbjU
+oNO+91i0zWV3jeUUqkV9DFRs1C8KoXNY+1Fz7bmC93/D7xWlXDr+L7PEiorwmEx0
+ExnxZNtO/CpjsgddGg5VKYwi9RAy8S+08HDgStSk/GSnUC+dRTv4jBmNm+59bbDH
+cYHEPcCY6mp0g1iIjceuz9NY9cblRIK55VvfGQ4toY32kUAwAcxvqnpEm1NJkOPC
+Rhzpu8viodwUUSKGa9KzYsKCJW7Ux+aiquDK0sD5tU5/WSgHzIbz6LwspGo1pyhv
+k5ldUcjA6GWrdTBoqDkFEpEMFR7vEFth0rfnke1N7r7XtyrUbIdFfskox67MFh2U
+xQEuzd1WU+k/MSvv7fh4
+=7lP7
+-----END PGP SIGNATURE-----
