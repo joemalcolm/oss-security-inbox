@@ -1,4 +1,9 @@
-Received: (qmail 25668 invoked by uid 550); 3 May 2026 11:00:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1392" "Thursday" "10" "November" "2016" "12:28:52" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<064f9484fc644cd8b748db5f0810ae75@imshyb02.MITRE.ORG>" "35" "[oss-security] Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" nil nil nil "11" "2016111017:28:52" "[oss-security] Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)" (number mark "U       cve-assign@m Nov 10   35/1392  " thread-indent "\"[oss-security] Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)\"\n") "<2777400.XtlcyMQHst@blackgate>" ("<2777400.XtlcyMQHst@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5521 invoked by uid 550); 10 Nov 2016 17:29:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,74 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25647 invoked from network); 3 May 2026 11:00:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=zPddSZGvbFoMFStLdNAu472JvUYbGLAnyi59Os+eF2I=; b=ioFIaxXcrp1/JIE/K6qaU0doi5
-	29MgT3G9JcnreS+JAPZGZnnI/LT5OCvIMJJzJIXdubIYOxBds3FX+nrue/Ovd+/5mSq4ZERojejQZ
-	o+xpAn15itqhuHcPjO8v0m1oF8le3oIIiWw+pQ1mveVUBiO7K2+z9hHFeRYra+xgeCkWXK7GbHESj
-	R+KGdj0Yfrvkp7pC5OtjijaRJDD8BUb4acvsVA2hyt96mxBOVmdJ2hjfYqf6AHXMmGaAs5ETv7xTP
-	v8UJDzIH1QYVcEw7WpzWTVBhHzszvuqgJi9U5u0NwSWjkA1nPgzKcJjb5AkYon+dOkgD8eipB3Grx
-	IEvCm6Pw==;
-Date: Sun, 3 May 2026 12:00:20 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <afcqxCv58YrhbtVr@definition.pseudorandom.co.uk>
-References: <20260430071917.GB54208@sol>
- <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
- <20260501180028.GA2260@sol>
- <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
- <20260501201841.GA2540@quark>
- <c13dd3c5-ddc1-431e-bc7d-2de39c551f8e@gmail.com>
- <20260502033556.GA3872267@google.com>
- <20260502035402.GB3872267@google.com>
- <378c2ca2-417a-4969-bda5-b7d3f3e8b6fd@gmail.com>
- <CAM=PXV4q2i13W8Z_AZGDfdxbqWANJ=U4Sw3FTcv5mH_QUrrSfA@mail.gmail.com>
+Received: (qmail 5503 invoked from network); 10 Nov 2016 17:29:04 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <2777400.XtlcyMQHst@blackgate>
+Message-ID: <064f9484fc644cd8b748db5f0810ae75@imshyb02.MITRE.ORG>
+Date: Thu, 10 Nov 2016 12:28:52 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAM=PXV4q2i13W8Z_AZGDfdxbqWANJ=U4Sw3FTcv5mH_QUrrSfA@mail.gmail.com>
-X-Debian-User: smcv
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+Content-Type: text/plain
+Subject: [oss-security] Re: libming: listmp3: global-buffer-overflow in printMP3Headers (listmp3.c)
 
-On Sat, 02 May 2026 at 14:21:57 -0600, Greg Dahlman wrote:
->LD_PRELOAD and capabilities
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-These seem orthogonal, rather than being part of the same idea.
+> https://blogs.gentoo.org/ago/2016/11/07/libming-listmp3-global-buffer-overflow-in-printmp3headers-listmp3-c
+> 
+> if you have a web application that calls
+> directly the listmp3 binary to parse untrusted mp3, then you are affected.
+> 
+> AddressSanitizer: global-buffer-overflow
+> READ of size 4
 
-LD_PRELOAD is discretionary (cooperative) so it would only be useful if 
-used in a design something like this:
+Use CVE-2016-9264 for this buffer over-read.
 
-- at the kernel level, AF_ALG just doesn't work (fails with a
-   permission-related error), at least for unprivileged processes
-- but in user-space, an opt-in LD_PRELOAD module intercepts the socket(),
-   etc. calls for AF_ALG, and emulates the behaviour of current kernels
-   by calling into a user-space crypto library
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-It can't be a security boundary, but it can be a mitigation for the 
-regressions that a new security boundary (or complete feature removal) 
-would otherwise cause, similar to the way LD_PRELOADs like aoss and 
-padsp mitigated the regressions for older binaries when distro kernels 
-disabled OSS audio.
-
-Meanwhile capabilities are a way to let trusted, privileged processes 
-have access to things that unprivileged processes do not, for example 
-making AF_ALG available to a few system services that need it but not 
-available to all of user-space.
-
->You should expect any UID (even nobody) to be able to gain the
->privileges in their bounding set
-
-The kernel can distinguish between "CAP_FOO in the init namespace" and 
-"CAP_FOO in any other userns" if it wants to, and some kernel features 
-are already gated by having a capability in the init namespace 
-specifically. For example CAP_SYS_ADMIN in the init namespace allows 
-mounting block-device-backed filesystems like ext4, but CAP_SYS_ADMIN in 
-a different userns only allows a few "safe" mount operations 
-(bind-mounts, overlayfs, FUSE).
-
-     smcv
+iQIcBAEBCAAGBQJYJK0uAAoJEHb/MwWLVhi2AH0QALid3jJto+PIZZFy5SeUF38m
+YPTuN2gkmj/+xlSpC1wtRNlu40Ny+u6yixQsltfR8c5A52jeyx333xj8yzB4DmB1
+rTwfl5AqJR9GXslCdisocTEurfD8W5x7LIHcU4Xl+RBIUG0hc7gXo/QzNCqGYdxC
+KsSVvXHsd6YYIVv8NpCDhTv2bVpD0hmywyAYNcMJOckiPYzmnef1Mdj/Yo5irUO/
+9hCCt/nUloadqpvu9HST6Kb7oj7B36H7AtV7k3uWVhaCPmJIxu1btwaAd2i+y99R
+Nj5DUF4N1HrRemNEXEwlWQv/YQhc11hOvGlq1svkW/EO1qsVMUweiTgd/c/70xDE
+oEVXpBWJCaQLpUec8YYP5r4+3/1Ewk5ZqPLwM7uExGcAGew8QQX59QLdASOiKAJL
+H2W2ended2QV40IvMKkUwJWXqY+PYp6tX6rNs43vTdVM8StexBMPoGzyTbWuvDKq
+p25SKbBFgYSp7bg/p1AHVTODM0brcS6bOidzyoUpKYxm98jIn7RqN1y+jqw4SogJ
+EiVUZzfFOkM/nTn/wu8A0FzThtGZrjSLduYsYRi9hLVg++/U3gV4so4tEFDDblS6
+sjlMTDJ31ZbStX6AHK0UuArpWmJGD/GAUT0ZNL7LS6t+mxJxaMuL1mEECW1HJmUR
+B+SZwspusWrzIvf9p0yB
+=3Pz5
+-----END PGP SIGNATURE-----
