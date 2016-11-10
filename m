@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["925" "Thursday" "19" "January" "2017" "16:42:09" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701191634580.5307@wniryva>" "28" "[oss-security] CVE-2017-2583 Kernel: Kvm: vmx/svm potential privilege escalation inside guest" nil nil nil "1" "2017011911:12:09" "[oss-security] CVE-2017-2583 Kernel: Kvm: vmx/svm potential privilege escalation inside guest" (number mark "U       ppandit@redh Jan 19   28/925   " thread-indent "\"[oss-security] CVE-2017-2583 Kernel: Kvm: vmx/svm potential privilege escalation inside guest\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4492" "Thursday" "10" "November" "2016" "16:54:24" "+0200" "Henri Salo" "henri@nerv.fi" "<20161110145424.GA18402@tunkki>" "132" "[oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability" nil nil nil "11" "2016111014:54:24" "[oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability" (number mark "U       henri@nerv.f Nov 10  132/4492  " thread-indent "\"[oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5778 invoked by uid 550); 19 Jan 2017 11:12:28 -0000
+Received: (qmail 15877 invoked by uid 550); 10 Nov 2016 14:54:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +12,148 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5755 invoked from network); 19 Jan 2017 11:12:27 -0000
-Date: Thu, 19 Jan 2017 16:42:09 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Xiaohan Zhang <zhangxiaohan1@huawei.com>
-Message-ID: <alpine.LFD.2.20.1701191634580.5307@wniryva>
+Received: (qmail 15857 invoked from network); 10 Nov 2016 14:54:43 -0000
+X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
+Date: Thu, 10 Nov 2016 16:54:24 +0200
+From: Henri Salo <henri@nerv.fi>
+To: cve-request@mitre.org
+Cc: oss-security@lists.openwall.com, Egidio Romano <n0b0d13s@gmail.com>
+Message-ID: <20161110145424.GA18402@tunkki>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Thu, 19 Jan 2017 11:12:16 +0000 (UTC)
-Subject: [oss-security] CVE-2017-2583 Kernel: Kvm: vmx/svm potential privilege escalation
- inside guest
+Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection
+ vulnerability
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable an incorrect segment selector(SS) value error. It could occur 
-loading values into SS register in long mode.
+Please assign CVE identifier for Piwik <= 2.16.0 (saveLayout) PHP Object
+Injection vulnerability, thanks. For the previous request MITRE responded that
+Piwik is out of scope, but there has been lots of CVEs assigned for Piwik so
+could you please clarify for the oss-security mailing list why this one didn't
+get assigned. At least following CVEs has been assigned before:
 
-A user/process inside guest could use this flaw to crash the guest resulting 
-in DoS or potentially escalate their privileges inside guest.
+CVE-2011-0004, CVE-2011-0398, CVE-2011-0399, CVE-2011-0400, CVE-2011-0401
+CVE-2011-4941, CVE-2012-4541, CVE-2013-0193, CVE-2013-0195, CVE-2013-1844
+CVE-2013-2633, CVE-2015-7815, CVE-2015-7816
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/33ab91103b3415e12457e3104f0e4517ce12d0f3
+In case you are changing the policy for some software products about CVE
+assignment what are the reasoning for this and where are these cases listed
+publicly?
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1414735
+Details of the vulnerability below.
 
-Note: On Intel CPUs it'd corrupt the guest state resulting in DoS; Whereas on
-       AMD CPUs it could potentially escalate privileges inside guest.
+http://karmainsecurity.com/KIS-2016-13
+http://lists.openwall.net/full-disclosure/2016/11/07/13
 
-This issue was discovered by Xiaohan Zhang of Huawei Inc.
+"""
+- ---------------------------------------------------------------
+Piwik <= 2.16.0 (saveLayout) PHP Object Injection Vulnerability
+- ---------------------------------------------------------------
 
-'CVE-2017-2583' was assigned to this issue by Red Hat Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+[-] Software Link:
+
+https://piwik.org/
+
+
+[-] Affected Versions:
+
+Version 2.16.0 and prior versions.
+
+
+[-] Vulnerability Description:
+
+The vulnerability can be triggered through the saveLayout() method 
+defined in /plugins/Dashboard/Controller.php:
+
+210.    public function saveLayout()
+211.    {
+212.        $this->checkTokenInUrl();
+213.
+214.        $layout      = 
+Common::unsanitizeInputValue(Common::getRequestVar('layout'));
+215.        $layout      = strip_tags($layout);
+216.        $idDashboard = Common::getRequestVar('idDashboard', 1, 'int');
+217.        $name        = Common::getRequestVar('name', '', 'string');
+218.
+219.        if (Piwik::isUserIsAnonymous()) {
+220.            $session = new SessionNamespace("Dashboard");
+221.            $session->dashboardLayout = $layout;
+222.            $session->setExpirationSeconds(1800);
+
+User input passed by anonymous users through the "layout" request 
+parameter is being stored into
+a session variable at line 221, and this is possible by invoking an URL 
+like this:
+
+http://[piwik]/index.php?module=Dashboard&action=saveLayout&token_auth=anonymous&layout=[injection]%26%2365536;
+
+Since Piwik is not using "utf8mb4" collations for its database, this can 
+be exploited in combination with a MySQL
+UTF8 truncation issue in order to corrupt the session array, allowing 
+unauthenticated attackers to inject arbitrary
+PHP objects into the application scope and carry out Server-Side Request 
+Forgery (SSRF) attacks, delete arbitrary
+files, execute arbitrary PHP code, and possibly other attacks. 
+Successful exploitation of this vulnerability
+requires Piwik to use the database to store session data (dbtable 
+option) and the application running on
+PHP before version 5.4.45, 5.5.29, or 5.6.13.
+
+
+[-] Solution:
+
+Update to version 2.16.1 or later.
+
+
+[-] Disclosure Timeline:
+
+[08/02/2016] - Vendor notified
+[09/02/2016] - Vendor replied not to be able to reproduce the issue
+[11/02/2016] - Proof of concept tested on demo.piwik.org sent to the vendor
+[11/02/2016] - Vendor response stating the issue will be fixed in 2.16.1 
+release
+[17/02/2016] - Bug bounty received
+[11/04/2016] - Version 2.16.1 released: 
+http://piwik.org/changelog/piwik-2-16-1/
+[16/06/2016] - CVE number requested
+[07/11/2016] - Public disclosure
+
+
+[-] CVE Reference:
+
+The Common Vulnerabilities and Exposures project (cve.mitre.org)
+has not assigned a CVE identifier for this vulnerability.
+
+
+[-] Credits:
+
+Vulnerability discovered by Egidio Romano.
+
+
+[-] Original Advisory:
+
+http://karmainsecurity.com/KIS-2016-13
+"""
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJYJIogAAoJECet96ROqnV0K/gP+gNrSA0+itbFsvOmcHfVr2Xx
+XUPEMtPZ6OH9BgVP7Qhegb6UyeaMoCKjcHe6kw1zY8EpPE5hdZHKdb570OMFFECj
+2lIOtcDauOwIy4K+2Vop2LyEdxXvyAPDR/piJda3rZyMITA4cBJ9Y3gQVlhpd349
+T9/MYYhnZxNQCOmHd1Tg+jvekOKcFB+icOGNxVFMuc2skNMqsk0H8F/IXbX+36MF
+MDiM2oRINgsed6gEz1q6Ev3MvLYf9d0EECPYymmm0A0aYq02RIxg+vOtXEqzIsqC
+OASMOn1vrhdsBskpz3wUHnV/urCLI+h7H+p5QjggMAhUoby+EajN0LPXAKf+t+TC
+ihFlIxobJ/ztl/wWKrTDMVSLXoqZLTh2+skcuQWiuv3XyUlnnrpIFXw6B7JfxlJJ
+n7j4UJTO8CTjEDrp4wF9P2neJYaS3OdasmQumuod5CPPu2uTrenw03F+T5rDbT/b
+u/zr1/nfiq53oMC55GiZvuPHcQtsFAas8nW60vlG25fhOGBi4MRmxrkRigFdS2PD
+Gynli9EL8y3Nx7FUbkRPYrOpM0Ipr4On3v2pc75YGrBDh+FYQD8JqJvBB8LNXmdW
+cVMJG6c4Du7rteih0aBIfEXFIQYqQwnPA519Sm47Jr4ayjTv0LmfMyQVLMSthWcl
+BxXgPUr79nFXoAGV3TKj
+=7SR1
+-----END PGP SIGNATURE-----
