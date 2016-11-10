@@ -1,55 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/16/5
-Message-Id: <20160216144628.DD5EE34E018@smtpvbsrv1.mitre.org>
-Date: Tue, 16 Feb 2016 09:46:28 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zuozhi.fzz@...baba-inc.com
-Subject: Re: CVE request Qemu: usb: multiple eof_timers in ohci leads to null pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/6
+Message-ID: <20161110145424.GA18402@tunkki>
+Date: Thu, 10 Nov 2016 16:54:24 +0200
+From: Henri Salo <henri@...v.fi>
+To: cve-request@...re.org
+Cc: oss-security@...ts.openwall.com, Egidio Romano <n0b0d13s@...il.com>
+Subject: CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Qemu emulator built with the USB OHCI emulation support is vulnerable to a
-> null pointer dereference issue. It could occur when OHCI transitions to a
-> OHCI_USB_OPERATIONAL state, leading to creation of multiple eof timers. A
-> privileged user inside guest could use this flaw to crash the Qemu process on
-> the host, resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg03374.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1304794
+Please assign CVE identifier for Piwik <= 2.16.0 (saveLayout) PHP Object
+Injection vulnerability, thanks. For the previous request MITRE responded that
+Piwik is out of scope, but there has been lots of CVEs assigned for Piwik so
+could you please clarify for the oss-security mailing list why this one didn't
+get assigned. At least following CVEs has been assigned before:
 
->> When transitioning an OHCI controller to the OHCI_USB_OPERATIONAL
->> state, it creates an eof timer object in 'ohci_bus_start'.
->> It does not check if one already exists. This results in memory
->> leakage and null dereference issue. Add a check to avoid it.
+CVE-2011-0004, CVE-2011-0398, CVE-2011-0399, CVE-2011-0400, CVE-2011-0401
+CVE-2011-4941, CVE-2012-4541, CVE-2013-0193, CVE-2013-0195, CVE-2013-1844
+CVE-2013-2633, CVE-2015-7815, CVE-2015-7816
 
-Use CVE-2016-2391.
+In case you are changing the policy for some software products about CVE
+assignment what are the reasoning for this and where are these cases listed
+publicly?
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/usb/hcd-ohci.c but
-that may be an expected place for a later update.
+Details of the vulnerability below.
+
+http://karmainsecurity.com/KIS-2016-13
+http://lists.openwall.net/full-disclosure/2016/11/07/13
+
+"""
+- ---------------------------------------------------------------
+Piwik <= 2.16.0 (saveLayout) PHP Object Injection Vulnerability
+- ---------------------------------------------------------------
+
+
+[-] Software Link:
+
+https://piwik.org/
+
+
+[-] Affected Versions:
+
+Version 2.16.0 and prior versions.
+
+
+[-] Vulnerability Description:
+
+The vulnerability can be triggered through the saveLayout() method 
+defined in /plugins/Dashboard/Controller.php:
+
+210.    public function saveLayout()
+211.    {
+212.        $this->checkTokenInUrl();
+213.
+214.        $layout      = 
+Common::unsanitizeInputValue(Common::getRequestVar('layout'));
+215.        $layout      = strip_tags($layout);
+216.        $idDashboard = Common::getRequestVar('idDashboard', 1, 'int');
+217.        $name        = Common::getRequestVar('name', '', 'string');
+218.
+219.        if (Piwik::isUserIsAnonymous()) {
+220.            $session = new SessionNamespace("Dashboard");
+221.            $session->dashboardLayout = $layout;
+222.            $session->setExpirationSeconds(1800);
+
+User input passed by anonymous users through the "layout" request 
+parameter is being stored into
+a session variable at line 221, and this is possible by invoking an URL 
+like this:
+
+http://[piwik]/index.php?module=Dashboard&action=saveLayout&token_auth=anonymous&layout=[injection]%26%2365536;
+
+Since Piwik is not using "utf8mb4" collations for its database, this can 
+be exploited in combination with a MySQL
+UTF8 truncation issue in order to corrupt the session array, allowing 
+unauthenticated attackers to inject arbitrary
+PHP objects into the application scope and carry out Server-Side Request 
+Forgery (SSRF) attacks, delete arbitrary
+files, execute arbitrary PHP code, and possibly other attacks. 
+Successful exploitation of this vulnerability
+requires Piwik to use the database to store session data (dbtable 
+option) and the application running on
+PHP before version 5.4.45, 5.5.29, or 5.6.13.
+
+
+[-] Solution:
+
+Update to version 2.16.1 or later.
+
+
+[-] Disclosure Timeline:
+
+[08/02/2016] - Vendor notified
+[09/02/2016] - Vendor replied not to be able to reproduce the issue
+[11/02/2016] - Proof of concept tested on demo.piwik.org sent to the vendor
+[11/02/2016] - Vendor response stating the issue will be fixed in 2.16.1 
+release
+[17/02/2016] - Bug bounty received
+[11/04/2016] - Version 2.16.1 released: 
+http://piwik.org/changelog/piwik-2-16-1/
+[16/06/2016] - CVE number requested
+[07/11/2016] - Public disclosure
+
+
+[-] CVE Reference:
+
+The Common Vulnerabilities and Exposures project (cve.mitre.org)
+has not assigned a CVE identifier for this vulnerability.
+
+
+[-] Credits:
+
+Vulnerability discovered by Egidio Romano.
+
+
+[-] Original Advisory:
+
+http://karmainsecurity.com/KIS-2016-13
+"""
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWwzU6AAoJEL54rhJi8gl5lwgP/A9qJ0XBRrulTbKeVQ/An+Vd
-rgu6xMleEk4DlX/V7WP28GYsrMcsL1Eqr6PBozcC2oEDQRuBeHCmym1A2uu8UEcP
-FAukVUGglNSa7tv7lCJFSHDfiaEAS3BUfQhkVf5FIF7HbTfV+pqtIJXB4QvzrFkJ
-Y8mrW58rEXWxcTnZANNVhU24i5abvxZACa79wHnhiashR+teQC8JCb4orgMk/1ZQ
-uni2BFgpLD1ZVsVw/ZGwfK+fhHqMPN0fmjGtyGhxvmooIEreolH5wjcPZMe2zUjv
-KtcFJ9eK1HocWSso3NYj4EpbInF9KQzENv/cgtKxRhe0Jz5SYk/i2kFN+aV3l/T0
-4vwShU644Y44c8wR8yAq17DQXDRA2h5BrBRuSfntTMGdnkF1Zg9m6fqMGu+HFZJs
-go6+dSDPmVrW8pfcLlW7vtiDK8+iKLHhPMlR//AfrYt+n3Q2wbAc6U+xtjDN6Cwk
-bb4jIurHR21E/jmvql1fbS4tVwALCZ5cMNk62QMQjBHgWtj6sFRqMPu9DbdE0u4x
-CNKbhbKsUlpuBBTAjw2h3V96DGZmIqn1V5BlFc6WktwLEAICIQ6Wm97S1pA5nK+2
-KT0kPeQDmw4QL9AsuOFWqqJjsT1kxcv45+mD6WVc3GdGE8l3Rb3qpU2ipsG2osui
-oUKlYtWgzaNVBADmTzbr
-=9tAj
+iQIcBAEBAgAGBQJYJIogAAoJECet96ROqnV0K/gP+gNrSA0+itbFsvOmcHfVr2Xx
+XUPEMtPZ6OH9BgVP7Qhegb6UyeaMoCKjcHe6kw1zY8EpPE5hdZHKdb570OMFFECj
+2lIOtcDauOwIy4K+2Vop2LyEdxXvyAPDR/piJda3rZyMITA4cBJ9Y3gQVlhpd349
+T9/MYYhnZxNQCOmHd1Tg+jvekOKcFB+icOGNxVFMuc2skNMqsk0H8F/IXbX+36MF
+MDiM2oRINgsed6gEz1q6Ev3MvLYf9d0EECPYymmm0A0aYq02RIxg+vOtXEqzIsqC
+OASMOn1vrhdsBskpz3wUHnV/urCLI+h7H+p5QjggMAhUoby+EajN0LPXAKf+t+TC
+ihFlIxobJ/ztl/wWKrTDMVSLXoqZLTh2+skcuQWiuv3XyUlnnrpIFXw6B7JfxlJJ
+n7j4UJTO8CTjEDrp4wF9P2neJYaS3OdasmQumuod5CPPu2uTrenw03F+T5rDbT/b
+u/zr1/nfiq53oMC55GiZvuPHcQtsFAas8nW60vlG25fhOGBi4MRmxrkRigFdS2PD
+Gynli9EL8y3Nx7FUbkRPYrOpM0Ipr4On3v2pc75YGrBDh+FYQD8JqJvBB8LNXmdW
+cVMJG6c4Du7rteih0aBIfEXFIQYqQwnPA519Sm47Jr4ayjTv0LmfMyQVLMSthWcl
+BxXgPUr79nFXoAGV3TKj
+=7SR1
 -----END PGP SIGNATURE-----
