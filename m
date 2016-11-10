@@ -1,4 +1,9 @@
-Received: (qmail 1439 invoked by uid 550); 14 Oct 2023 07:40:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["423" "Thursday" "10" "November" "2016" "13:18:44" "+0200" "eov eov" "seclist45@gmail.com" "<CAPbtD9nNvN19NGdM+NqiBarBVDU2qP+e3j9XoNXs9mEjd+yqjQ@mail.gmail.com>" "22" "[oss-security] Vlany: A Linux (LD_PRELOAD) rootkit" nil nil nil "11" "2016111011:18:44" "[oss-security] Vlany: A Linux (LD_PRELOAD) rootkit" (number mark "U       seclist45@gm Nov 10   22/423   " thread-indent "\"[oss-security] Vlany: A Linux (LD_PRELOAD) rootkit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28601 invoked by uid 550); 10 Nov 2016 11:45:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1397 invoked from network); 14 Oct 2023 07:40:05 -0000
+Received: (qmail 11313 invoked from network); 10 Nov 2016 11:18:56 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697269193; x=1697873993; darn=lists.openwall.com;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/T+mqY0YyCdsBnqkUGefb0Qt7ybMEE7XE6wXA9RF76c=;
-        b=h+LThh806SnXgaC+/ryYK8oyUvxv9W75WelhrvKRTjrnX5QOkm5INWDuHxb1K3oYCF
-         DDeMxqxgilNUlK0wLrqaDfvB9nTp64UDPujOmYooo4hxlkbV/vwSwOOV73e2C1iFdcYX
-         H1rGBfcra+tif5e/u2ay/JqNjBCmLqBd9P3EgDrUSnc6B5BRL5ElcZ4LbW80RUkI7Dek
-         rNHwk3m0IIKdVUQVM6oFaCRbNVDQ0I5krkQNF2KSZElSEdjtII8X1BpG2I2DbqCTzfXI
-         TIPVGDa1Gw0cAIX8acTp2vvKQhM3BnYJqKZ/+XVi9AsnEX04SnKx2DMojRctQqgpkWiC
-         m1Sw==
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=yVPYJ1Itzo/7vd6h88i7p5hQubJpDdQz2duSm+sslik=;
+        b=GDJXXBbR/dNN7X+nn2q82pRunuUrqDaXwodpe1tEWnIlPotLk6a2hjcLD/j3wYW9im
+         jKUUXvB3BOw+N9qmrKMQxkYSOXpUePyZPdVTJxglXR20cB8NdcPbXebepNC3KjYKYAwK
+         PeuRiqj5IntXqeCu0sJH8P1mcH8pElJYmnVK/3qZQ1wv/JD6DOKEFQtCyi8gtQZ5npCP
+         l7AZC25ReMg8q0nihxVfUKS6tL4XCVJAQMmJktsu8SH+DWNpKrynyjPBrQnpqTtyaQV0
+         feyeXtp/84xkUscCLlBP4kW2QYfzmwr25SI3vzTTKsOhoVVyy2Sy55CK2YO+GhPnDuLs
+         5t8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697269193; x=1697873993;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/T+mqY0YyCdsBnqkUGefb0Qt7ybMEE7XE6wXA9RF76c=;
-        b=amG6u75/LEsMN5ngd1iyt/fVe4ni052Pe2zIbHxxmN66uZWqEmMT60bx9ctWr3dsAU
-         YD0GLFXyHqO7HmxJm42cQsgMcamW8MMlxx/+74TC+QmERcIjQ7rBJC3Mff8MqmvSn73R
-         I/vRpGplyyNNc9yxrYfNgSnf/bjs8WY9V0EUXvYDDq+PoIQcbX70esbOPqW2uB36ZoFh
-         ekxHI7uxpnDCTADiXjrs2l5uoUBFi1H+/wX6jxliPlGvQLPbAhAMhbuTH8nmY6noSqRH
-         fzlEcu11vZemS+l/5WmEbzRC2RKiYPa5eLUsj03KrSpygj4yLiniT1hTLqjRkwHzmGAm
-         Kv9w==
-X-Gm-Message-State: AOJu0YxrWXfuDn85zF07Ofz+zMl5s2v0ZyBPXua6ml0y7vq0a4D5xUKo
-	C77crITfeHUuzNau8pbIHzz040Vjh93CGw==
-X-Google-Smtp-Source: AGHT+IESxirTgvv6m3zV692Q9pQ5hTaN8BZ/Eywq0YLrZp6cuJTYzSnev3Bs01hzmkNmfRTWkWXVzw==
-X-Received: by 2002:a17:902:e811:b0:1b8:8af0:416f with SMTP id u17-20020a170902e81100b001b88af0416fmr38018942plg.1.1697269192349;
-        Sat, 14 Oct 2023 00:39:52 -0700 (PDT)
-Message-ID: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
-Date: Sat, 14 Oct 2023 18:39:49 +1100
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=yVPYJ1Itzo/7vd6h88i7p5hQubJpDdQz2duSm+sslik=;
+        b=KvS2IXGYW9s/9um1YdwhetSx6/9rbWEJqHZlGchxEOs4vJGiiYNe8MwncENe87usnx
+         QZ1rr8CPIpicNSM556aNWjoj8Maq0zcNQpzYTi253/c1rCbaXiK3jdD1U+b7cIBwERpX
+         FUGJjEjOaYbgQhZXxOSD4GtPNXsLpwx10IkgtvEN4+kZh+puNT2BGyXxIlL4RLuPz+fp
+         lYpIpmPgqkWtj4iAPhQAavpdbw1R8S+Y3RiW6WKFoEIWZo6KgIQymnGzN7RobDyRozVk
+         14Cr89QDvFytyqlrqF4fziqYxCkV38d23jfzclohPbw9lV+f3f11nfHcRJJN1JWIS+5X
+         l62w==
+X-Gm-Message-State: ABUngveQmjoVcBCye0si7IP5Dgw+lMqM18lR6iH6tfyCPfnkwNG8i0kALHEBW6Xux8BA+QwobtKr3K54pfel1A==
+X-Received: by 10.36.110.78 with SMTP id w75mr3557125itc.8.1478776724671; Thu,
+ 10 Nov 2016 03:18:44 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Content-Language: en-US
+From: eov eov <seclist45@gmail.com>
+Date: Thu, 10 Nov 2016 13:18:44 +0200
+Message-ID: <CAPbtD9nNvN19NGdM+NqiBarBVDU2qP+e3j9XoNXs9mEjd+yqjQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] sandboxing,of upstream programs by distros
+Content-Type: multipart/alternative; boundary=001a114aa32a6052790540f0894c
+Subject: [oss-security] Vlany: A Linux (LD_PRELOAD) rootkit
 
-Hi all,
+--001a114aa32a6052790540f0894c
+Content-Type: text/plain; charset=UTF-8
 
-I asked Alexander about this off-list in relation to his thread 
-“linux-distros list membership application - CIQ Rocky Linux Security 
-Team” but he suggested I bring it on-list instead.
+Features:
 
-Is there interest/solutions within the Rock Security SIG or other 
-distro’s security teams for sandboxing that package upstreams can opt into?
+Process hiding
+User hiding
+Network hiding
+LXC container
+Anti-Debug
+Anti-Forensics
+Persistent (re)installation & Anti-Detection
+Dynamic linker modifications
+Backdoors
+accept() backdoor (derived from Jynx2)
+PAM backdoor
+PAM auth logger
+vlany-exclusive commands
 
-To step this out a bit… we have a large, old code base that was written 
-decades prior to current best practices. It has numerous known memory 
-safety issues and ever-dwindling maintainer capacity. It is also a 
-dependency, either directly or indirectly, of a significant fraction of 
-the world’s software. I am guessing this scenario sounds uncomfortably 
-familiar/common to many on this list.
+Download: https://github.com/mempodippy/vlany
 
-We (the maintainers) have discussed sandboxing as a way of mitigating 
-the risk of known bugs. However, one of the problems is that we don’t 
-know the complete set of required privileges of our dependencies. The 
-software can be configured with or without various libraries and also 
-has a plugin mechanism for dynamic code loading. Basically if a 
-sandboxing solution like seccomp wants to know our full set of system 
-calls, we ourselves don’t know it.
-
-The downstream maintainer packaging the software for, e.g. Rocky, does 
-though. They have a complete picture of which libraries/features are 
-enabled and how locked down the plugin stuff is.
-
-So, where I’m going with this, is that if the various packaging 
-ecosystems could (or do) offer sandboxing to upstream, people like us 
-would gladly opt in to it. Of course, these downstream maintainers can 
-already seccomp our software today. But expecting them to reverse 
-engineer our exact needs seems a bit much.
-
-I’d be interested to hear any thoughts on this.
-
-Thanks,
-Matt
+--001a114aa32a6052790540f0894c--
