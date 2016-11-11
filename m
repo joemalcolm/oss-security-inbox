@@ -1,4 +1,9 @@
-Received: (qmail 22027 invoked by uid 550); 16 May 2022 19:12:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2138" "Friday" "11" "November" "2016" "12:56:55" "+0000" "Dominic Cleal" "dominic@cleal.org" "<b9c127bf-b3c2-c143-b432-f0574481484c@cleal.org>" "67" "[oss-security] CVE-2016-8639: Foreman stored XSS in orgs/locations in settings" nil nil nil "11" "2016111112:56:55" "[oss-security] CVE-2016-8639: Foreman stored XSS in orgs/locations in settings" (number mark "U       dominic@clea Nov 11   67/2138  " thread-indent "\"[oss-security] CVE-2016-8639: Foreman stored XSS in orgs/locations in settings\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26220 invoked by uid 550); 11 Nov 2016 12:57:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,153 +12,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21999 invoked from network); 16 May 2022 19:12:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1652728348; x=1652814748; bh=bPBS+zi48E
-	Hr5xr3IHVYYKn91lGT3XZaVR0vVCqXhoI=; b=BIaGyJUbhSQwDDvBLMRumMl7DP
-	JzobYhCDx7izN1yiOyBBUhDXCbtbVYgd3AujtLnqv4l9PrS1C9jetxPm35fJIJy9
-	F2YwQoLCPZ8kYoE0ECK/zJ1Iy+qniVvnW5cC7zrDJmyihSMNqgSeYRRc1YbQBIFd
-	6fBBJLJNC8uMHbRG6y9yKFH1PYcsFv99MY09YH5Gbhth0fz9IlNZCslPlZFmf8L2
-	HQxExnQ4GBuoJ5/Yex1E7YXN8fYsYa9lf9GvvTzSDFPr3PsWux9gD77esqBpLPUi
-	vR+fKf2MxnqXiStyMgmkfGIkRn4QQaQt5/LFS2G7QVPGbz8akKrscrMGjSoQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1652728348; x=
-	1652814748; bh=bPBS+zi48EHr5xr3IHVYYKn91lGT3XZaVR0vVCqXhoI=; b=E
-	rtOacbEpYyZ730/hWGiZLkB20/olaG1+m0Ny6rWS4R8Nt+wvmyC8u4rrb72zNaTt
-	WTUUStalPXdWg5lz/bfbdGhPey8vJRdG8uHDZGj0v3gSck63FQtCRS/sLuA0nE0o
-	c6wZ5HSdRLw9Mwv7mW8c0fvGYlSe+uQf/J5fi4pjUKdcvM8WEWoMAtFlksZGS/VR
-	oJHX4fgVhQ7VOwf7VwBKIlK+S97oKAZGEazEymVjwbUY1Us/dEYb4XAvqDwPVp3R
-	0fEoQXjGJ3wpc9lLna5+nAZtxHV+l7pTbKq9ClMWBOobGCGCov2EdYyn7kqkTZam
-	eHAaTHhbageA9aXDmgMLg==
-X-ME-Sender: <xms:HKKCYtr_WUrXTCwrAMdrT1vuvv7ioNAc30-QKPD7kF4zmLDKBNt_Cw>
-    <xme:HKKCYvrnHbUrR2_aLUl-GlSG0T9RnCJwRkGJ8wGspmnimhyyuU4-n_OJyLckpiQdb
-    NN_ps5kRX-_HQ>
-X-ME-Received: <xmr:HKKCYqO5_pmvajJIde4hhVloxCs3aWBwWfbP5Xl2P72qExyqdxAfPR-4SvwnZswrsb3Aiq0hdxtD_wdiObdhUM5JOB-gfaEt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrheehgddufeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
-    eggeevueduudekvdetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
-X-ME-Proxy: <xmx:HKKCYo7oZC3edxvtw5dJ3mVc_0RmUA4u1qVdDs8Rrf2ecE-cLZSv9A>
-    <xmx:HKKCYs5cEsAefVu_S3niYeFPPo4rBO3d5g33LiQCFHmau03llc3CUQ>
-    <xmx:HKKCYgg0Afqi4BaQGjm7nfW_SihA-gfQkDBL0TEY60VAd9WqKGV6xA>
-    <xmx:HKKCYhhI_kgB_n0w7cExdi2bj9oYxHD9gDk3uBW5hVnSEL8mKo-bdA>
-Date: Mon, 16 May 2022 21:12:25 +0200
-From: Greg KH <greg@kroah.com>
+Received: (qmail 26201 invoked from network); 11 Nov 2016 12:57:07 -0000
+From: Dominic Cleal <dominic@cleal.org>
 To: oss-security@lists.openwall.com
-Message-ID: <YoKiGWAX4E/mbGWB@kroah.com>
-References: <20220515162740.GA20526@openwall.com>
+Cc: foreman-security@googlegroups.com
+Message-ID: <b9c127bf-b3c2-c143-b432-f0574481484c@cleal.org>
+Date: Fri, 11 Nov 2016 12:56:55 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220515162740.GA20526@openwall.com>
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="M6139h9t95m8LPopljTQRe39HxfuRH8xg"
+Subject: [oss-security] CVE-2016-8639: Foreman stored XSS in orgs/locations in settings
 
-On Sun, May 15, 2022 at 06:27:40PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> This is a lengthy and belated message, yet I think is something we need
-> to discuss in here.
+--M6139h9t95m8LPopljTQRe39HxfuRH8xg
+Content-Type: multipart/mixed; boundary="t4PfBQ3sCogutrPuwFh7HTG8bAmfCaWJE";
+ protected-headers="v1"
+From: Dominic Cleal <dominic@cleal.org>
+To: oss-security@lists.openwall.com
+Cc: foreman-security@googlegroups.com
+Message-ID: <b9c127bf-b3c2-c143-b432-f0574481484c@cleal.org>
+Subject: CVE-2016-8639: Foreman stored XSS in orgs/locations in settings
 
-Thank you for bringing it up, I appreciate it as the issues involved
-here have provided a lot of friction lately between the kernel security
-team and the linux-distros list.
+--t4PfBQ3sCogutrPuwFh7HTG8bAmfCaWJE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-As I'm not a member of linux-distros, I can't dictate their requirements
-and rules, but I can state what I would like to see change based on my
-work on the kernel team.
+CVE-2016-8639: Foreman settings dropdown menus may run stored XSS in
+organization/location name
 
-Some comments:
+If an organization or location is created with a name containing HTML,
+then the administrator-only Settings page will render the HTML as part
+of a dropdown menu.
 
-> Options:
-> 
-> Off the top of my head, we can do one of:
-> 
-> 0. Do nothing specific - let things work or fail on their own.
+This may permit a stored XSS attack if an organization/location with
+HTML in the name is created, then an administrator attempts to change
+the default organization/location settings.
 
-While Jason votes for this one, I really don't like this as I feel there
-are problems today that I get stuck in the middle of many times (as
-someone who helps shepard a number of kernel security issues.)  It
-would be great if linux-distros could change their rules a bit to help
-make projects like the kernel, and others, work together easier.
+Mitigation: restrict permissions to organization and location creation,
+use the API or CLI instead to change the default organization/location
+settings.
 
-But if no changes happen, I can still live with it, we have worse groups
-we deal with more often :)
+Note: this CVE identifier has been assigned retrospectively, to describe
+a vulnerability that was fixed during a refactoring of the affected code.
 
-> 1. Adjust linux-distros policy to allow "embargoes" on publicly fixed
-> Linux kernel issues.  (Only for Linux kernel, not for other projects.)
+This issue was reported by Sanket Jagtap.
 
-Note, the issue isn't always "fixed" issues, the issue is "we want to
-post a patch in public to get people to review it and to introduce it to
-the much wider range of CI testing systems out there.  Right now if a
-patch is sent to the public, linux-distros treats this like an "embargo
-break" and will instantly post about it to oss-security, which helps no
-one.
+Affects Foreman 1.11.0 to 1.12.4
+Fix released in Foreman 1.13.0
 
-So if you all could just modify the rules to be something like,
-"embargos are not broken when changes are posted in public, or accepted
-into public trees, unless the changes or discussions around them turn
-out to disclose the security related issue."
+Patch (a refactoring):
+https://github.com/theforeman/foreman/commit/d163507797c5d9c20249aa4d858465=
+cbb74be229
 
-That would allow us to still get changes merged into Linus's tree, and
-the stable trees, and the distro trees before the oss-security
-announcement goes out to the world.
+More information:
+https://theforeman.org/security.html#2016-8639
+http://projects.theforeman.org/issues/15037
+https://theforeman.org
 
-If this happens, I will be much happier as I think it would remove all
-of the current friction we have today.
+--=20
+Dominic Cleal
+dominic@cleal.org
 
-Taking this a bit further, why is the kernel "special" for something
-like this?  Why wouldn't this also apply to any other project with a
-reasonable number of developers where you want additional review and
-acceptance of changes before the world is notified that an issue was
-fixed?  That allows issues to be fixed, and to be in place on users
-systems before the issue is made public.
 
-I would imagine that projects like Kubernetes, or Jenkins, or Docker or
-Mozilla or Chrome or other large systems would also fall into this
-category.  Heck, smaller projects too, the size shouldn't matter, what
-matters is that users have the ability to upgrade before security issues
-are told to the world, ensuring that user's systems are safe.
 
-I think we can all agree that this is our overall goal anyway, to make
-software more secure and keep user's systems safe.  Disclosing problems
-before the fixes even have the ability to make it to a user's systems
-goes directly against that goal.
+--t4PfBQ3sCogutrPuwFh7HTG8bAmfCaWJE--
 
-> 2. Strictly enforce the policy as it is - and be in conflict with Linux
-> kernel security team, and handle fewer issues via linux-distros.
+--M6139h9t95m8LPopljTQRe39HxfuRH8xg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-That's the same as 0 today, right?  Or do you mean "enforce it more
-strictly than we have so far today"?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-> 3. Ask that Linux kernel issues not be reported to linux-distros at all.
-> This is unnecessarily limiting compared to option 2 above, but maybe not
-> so conflicting (just not using this specific medium for communication).
-> However, I think it won't work consistently - it would be too
-> unexpected by many (indeed, out of context it sounds plain ridiculous),
-> and linux-distros is referenced in older Linux kernel release trees.
-> More importantly, both teams actually want to communicate on issues
-> somewhere, and there isn't a good alternative currently.
+iFkEARECABkFAlglwBcSHGRvbWluaWNAY2xlYWwub3JnAAoJEHx9Mm8sK3LMutUA
+n2/JMUCD2Ag8tcnRe4u4JG9jcNUlAJ91/gsWlFDdPe31chYUAob4Yk60zA==
+=RzFL
+-----END PGP SIGNATURE-----
 
-This one would not go very well as we don't control where reporters send
-their information.
-
-> 4. Shut down the list.  (What about the non-Linux distros list, then?)
-> I need to migrate the setup soon and ideally also update it later, so
-> shutting it down is as simple as not putting more effort into it.  It's
-> been around for 11 years.
-
-I wouldn't like to see this happen as I think the distros get a lot of
-value out of the current situation.  But it's your list, not mine, if
-you are tired of running it, I totally understand.
-
-thanks again for being willing to discuss this,
-
-greg k-h
+--M6139h9t95m8LPopljTQRe39HxfuRH8xg--
