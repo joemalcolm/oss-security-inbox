@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["955" "Monday" "24" "August" "2015" "09:36:52" "+0800" "Guanxing Wen" "wengx522@gmail.com" "<CAOSkqBVzdK-qB-hWiQz+od4M1h5=HskE-MGfYx6CyiiXYZv-6g@mail.gmail.com>" "32" "[oss-security] CVE Request: PCRE Library Heap Overflow in compile_regex()" nil nil nil "8" "2015082401:36:52" "[oss-security] CVE Request: PCRE Library Heap Overflow in compile_regex()" (number mark "        wengx522@gma Aug 24   32/955   " thread-indent "\"[oss-security] CVE Request: PCRE Library Heap Overflow in compile_regex()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1522" "Friday" "11" "November" "2016" "08:26:36" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0dcff8c6bc2044eaba39e0ce01a96f1c@imshyb02.MITRE.ORG>" "38" "[oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array" nil nil nil "11" "2016111113:26:36" "[oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array" (number mark "U       cve-assign@m Nov 11   38/1522  " thread-indent "\"[oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array\"\n") "<CANMVOuwRRcEG2Vs0DTck_kbUjiNBQwGD6G24kj5mb0wGDUEGgw@mail.gmail.com>" ("<CANMVOuwRRcEG2Vs0DTck_kbUjiNBQwGD6G24kj5mb0wGDUEGgw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30566 invoked by uid 550); 24 Aug 2015 01:37:05 -0000
+Received: (qmail 27985 invoked by uid 550); 11 Nov 2016 13:26:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30545 invoked from network); 24 Aug 2015 01:37:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=mZSCOkjIlKEj8OlvZpc2Ay73STrh6wE9feaTv5LgI3E=;
-        b=0BUp2qlhmxfO1QPiv9uNNHaZ9o3WdBLr2kYZXVCXOekAcsMMAzbH92f068vTXOesc1
-         x04t3RnpykkDNrZGm+EBFje0nND/7WpPZtMSVfI8rwvqGcOa9+3FM6rQdTgqtKmAyJTY
-         5+WdgnWFmzm/q/FnTjwOyIglRLe8VjjU/yEKZ39XB8B8R9048U0pJ6qri1aR4FCsp+ba
-         cpoEQKDT1nOVUu5RKl0wv9dGP4ekIKXsGRhzHEEKp/nm8s0udAvW9wvdCfUyfHGPBeMd
-         poASuOvv5gv7wB17r28tvF5ObDNXvk2sNGDKagVOLDy1hhz+s9Ya4W1wMXtDOp3Ab+JX
-         qGFw==
-MIME-Version: 1.0
-X-Received: by 10.50.30.197 with SMTP id u5mr13506219igh.9.1440380212448; Sun,
- 23 Aug 2015 18:36:52 -0700 (PDT)
-Message-ID: <CAOSkqBVzdK-qB-hWiQz+od4M1h5=HskE-MGfYx6CyiiXYZv-6g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=047d7bdc11bee79568051e04a6a1
-Date: Mon, 24 Aug 2015 09:36:52 +0800
-From: Guanxing Wen <wengx522@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: PCRE Library Heap Overflow in compile_regex()
-To: oss-security@lists.openwall.com
+Received: (qmail 27963 invoked from network); 11 Nov 2016 13:26:48 -0000
+From: <cve-assign@mitre.org>
+To: <brian.carpenter@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CANMVOuwRRcEG2Vs0DTck_kbUjiNBQwGD6G24kj5mb0wGDUEGgw@mail.gmail.com>
+Message-ID: <0dcff8c6bc2044eaba39e0ce01a96f1c@imshyb02.MITRE.ORG>
+Date: Fri, 11 Nov 2016 08:26:36 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array
 
---047d7bdc11bee79568051e04a6a1
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi, MITRE
+> http://bugzilla.maptools.org/show_bug.cgi?id=2587
 
-PCRE library is prone to a vulnerability which leads to Heap Overflow.
-During the compilation of a malformed regular expression, more data is
-written on the malloced block than the expected size output by
-compile_regex().
-The Heap Overflow vulnerability is caused by the following regular
-expression.
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 8
 
-/(?J:(?|(:(?|(?'R')(\z(?|(?'R')(\k'R')|((?'R')))k'R')|((?'R')))H'Ak'Rf)|s(?'R')))/
+>> * libtiff/tif_strip.c: make TIFFNumberOfStrips() return the
+>>   td->td_nstrips value when it is non-zero, instead of recomputing it.
+>>   This is needed in TIFF_STRIPCHOP mode where td_nstrips is modified.
+>>   Fixes a read outside of array in tiffsplit
+>>   (or other utilities using TIFFNumberOfStrips()).
 
-A dry run of this particular regular expression with pcretest will reports
-"double free or corruption (!prev)".
-But it is actually a heap overflow problem.
-The overflow only affects pcre 8.x branch, pcre2 branch is not affected.
+Use CVE-2016-9273 for this buffer over-read.
 
-This is a different issue from
-http://www.openwall.com/lists/oss-security/2015/08/05/3
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-https://bugs.exim.org/show_bug.cgi?id=1672
-
-Please allocate a CVE-ID for this.
-
-Thanks.
-
-Wen Guanxing from Venustech ADLAB
-
---047d7bdc11bee79568051e04a6a1--
+iQIcBAEBCAAGBQJYJcZ7AAoJEHb/MwWLVhi2mP0P/0XMEbn4EhOPpKIfmdMrL8kx
+sekTNRxIvZ8oy4MzDghg+CdeZu54XCWA6BlWWFRu5yoBmarcfTaYu4DfPA+xvCV8
+CC1Nv9y6oJ08wBDMG2uPROig7/yDxPBhcbsGWrTOJ0zvxnU1FpmPDPOEMKmLX539
+ByenyTqcZ/NXNm3D7C/Z5JNgT4ZIFcdvlYyvHGTLga8DK67wszbFR3QUS2Pq6WgD
+bYjDT2mAn+KZEaMvsPpO/2r1jv52Dl9q577yjfIygMR/hqM81I/PgX5virIx8RWq
+s1G3y217v0qSycFX0nMxllw3XLwzOEVcYaRD7ei+vvQH3noWm+i7fVaHI635ypaF
+kqWxNt6pL09sVXlCeE/K1D64vIwpeYob/sUxNGJzpg1ZtHunFvS6P2/MjKuKSxq/
+2NOB5JpC3PKepNNYO2YEeLrdBqBl/k2vj0j7AkQi8tH1gh75EZvDAVs/IWPu8so6
+L7z5d39umgn51tjvw7za06vVGi+Raf9CcpXLTIwbllPTo1rsA7nzDk5I8xXNQuPz
+VQG+CK12j1szR7r2Mv9h0A4BJVvmQr8SLbXrNTljxLlcjKNwgsjPtWjLcYKPo1Sn
+n+QgTY0MnMj7/sKb75nKzBEN1rwwjZqpvEWgVpcpYd9dvarIt6kAzk02UhPc9E4l
+IJSYMwtncLobdcF7IPNw
+=jHbm
+-----END PGP SIGNATURE-----
