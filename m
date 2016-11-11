@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/2
-Message-ID: <67442b1d219447cc8a6dfce7f08a43b1@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 02:07:06 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/8
+Message-ID: <5b255e157f6640988ff729ba46e4896d@imshyb02.MITRE.ORG>
+Date: Fri, 11 Nov 2016 12:43:58 -0500
 From: <cve-assign@...re.org>
-To: <gustavo.grieco@...il.com>
+To: <ago@...too.org>
 CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core
+Subject: Re: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> We recently found a read out-of-bounds parsing JavaScript code in the last
-> revision of WebKit
+> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-get_attr_value-print_die-c
+> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+> 
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-> WTF::ParkingLot::parkConditionallyImpl
-
-CVE IDs for WebKit are typically assigned by Google. Perhaps you are
-testing WebKit code that is too new to affect Chrome. Possibly
-applicable references are:
-
-  https://webkit.org/blog/6161/locking-in-webkit/
-  https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/wtf/
-  https://www.google.com/about/appsecurity/chrome-rewards/
-
-If you can confirm that Chrome is unaffected or that your report
-wasn't accepted at
-https://code.google.com/p/chromium/issues/entry?template=Security%20Bug
-then we can send a CVE ID here.
+We would need more impact analysis before assigning a CVE ID for this.
+It seems to affect only the dwarfdump command-line program, not
+library code that is used in arbitrary applications.
 
 - -- 
 CVE Assignment Team
@@ -37,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYJW0PAAoJEHb/MwWLVhi2tAAP/0YPJtWUwAUpo9ei5DxUQpVF
-nKNQjnUR3lCVGwTGDqD3F9nnoWsyrAePbAYvRyodh/KFBLbdoN9EN6N7l8HaRqgy
-gbpetQ1WEJECggmarKk1HveIK82g5yfIKsAfk8ybkPl7FvObd60oQiB6TEZaZRZp
-WqT1eNuJM7fB9f+8GkDhuwMNkq3Q09BMhnM4GOJP8i6afaeh6R9Ih1cVOYwmNxsF
-c/+6ba2QQbCfN3G1P4Sy/0qt0Iuuh/6iN8aXu+c1Ghajx86/w5sPH5hy9BFusJ1i
-e3rSYLDVknDY87gKertfHnK1fkRBvlsABVvEdCiY0a0f8e5wCHB/aTx8fgE9RvCn
-M9767qljP3ea/8GAtSPwwskOx+yMNUJPYBlo6C5NDHW98sCHOlWS4yB3k8zvNWMz
-vS+skFo/GrqnX3RsuNoOdvpUpwt/mBoTr6sVK/oA9xY9U+lvdGiWCRri5ugSjgSK
-Dv1VpxzsQHE7fQBy8RJg5AtFS6VTKGAsTy68hAFkSTZV3aEZNJNsoRmdmCRImQs+
-jKM7cT4MbSrEUEtEFysPt5AWbe5C8E8dwbhg/FNtZV7Zz+B8n7aRBfdcHMCkG0O9
-NsVs9dJkv7w1mOdibownVMvTV/UqzMRr+lzzmUPbeWGetaxmCr3mn6+kx4uKYabH
-aqWJRCKdup0fmNUs/xSW
-=2oQn
+iQIcBAEBCAAGBQJYJgKVAAoJEHb/MwWLVhi2IdUP/2OaC1OfaPFR++3Jzepg9MNl
+4gPc8ehCElI+uhC6eq9d2CJZHM+a608/IlA5jDTxuSTuzS2aQjNZ2OgNWYl7dPjy
+K63lDfs7Xs25ChrVlynW5pcPXYcJ2f8GZpqZgaRB35nBUtjjQcQweQvW5lga3zLl
+225z8m2EOId3KME5Vklr2gxbdH9fNeIqRUqdCa7gpyG/PzwZWnUg/blStSyw+S4i
+yDCxL8iP7AlH/d0vdinT9rK9Ez0A/13IKLbcTU0Rk7YLFv8X5sbFYETnszU6pWBO
+1RlglJh7xNEY204ibV17+6OawS/DyC8KvrLAAXEwtwBaWgj2IfgsmVtO4aNv9hdr
+6eDQqIgCO90I8+aNQGQsAZZeNeeYE6ydfx+8+SVGHcbTc4uEqryynfCRNmy6eSET
+qniAB3s2fl8872starbxjFfQFmashOzEWxDRLsIEHcfgw+y7mcZSHZOcPuzWb0+Y
+tEVrJQWGRtpZL5paeqG/ML4zJNaTZ6Ypn52hafUoCFECVc3CZTRVVF6l+5Ac/pM0
+sCtElvwhZ92HHGsa96salFE/B0ebcNmElKOanQ4C1pIOM4k9UJcbkmmXNgkLjIpk
+c4Pum2dsIqiBgDEGMUTZKDCBcoEj/ivghYM2F7KslH0O5Ei/FIdkOuiraNU15YEg
+6vwiWK7F7KAvl2XJdJvU
+=Ts69
 -----END PGP SIGNATURE-----
