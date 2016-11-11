@@ -1,46 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/26/2
-Message-Id: <20160626094357.1CE236C0717@smtpvmsrv1.mitre.org>
-Date: Sun, 26 Jun 2016 05:43:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: sbauer@...donthack.me
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel HID: hiddev buffer overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/14
+Message-ID: <20161111205756.GC26873@tunkki>
+Date: Fri, 11 Nov 2016 22:57:56 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: LibTIFF tiffcrop: Heap buffer overflow via writeBufferToSeparateStrips
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Please assign CVE identifier for LibTIFF tiffcrop heap buffer overflow via
+writeBufferToSeparateStrips, thanks.
 
-> There is a small buffer overflow in the hiddev driver code which seems to have come due
-> to a re-factor of the driver in 2008-ish.
-> 
-> If a user-land process calls the hiddev ioctl with the HIDIOCGUSAGES or HIDIOCSUSAGES command,
-> and passes a report id of HID_REPORT_ID_UNKNOWN it bypasses a series of bounds checks. Later in
-> the code the attacker can loop on some controlled value and overwrite
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=93a2001bdfd5376c3dc2158653034c20392d15c5
+Reported in: http://bugzilla.maptools.org/show_bug.cgi?id=2592
 
-Use CVE-2016-5829.
+Fixed per:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+2016-11-11 Even Rouault <even.rouault at spatialys.com>
 
-iQIcBAEBCAAGBQJXb6MwAAoJEHb/MwWLVhi2J5wP/0/8awKnFGpO7tqUTuEQvdfW
-+MpW320Q2/GvJD+vzr/QqwOTMfuGa4CTkJi1OeZPdET+zxrxdUJd2e6JGmtvWKBM
-4aXeecyvqQYvfs51xvLYYqk6oCPCnlii1QhBgm9AI2lwttfjD9y/h/ek9Fj14CJo
-6nNKcZJJub5yUI5YmeXWC+Wu6AfcIndoJoEq1+gsLE63pdLwEOF6iIgCWyj6PDey
-oQ87iIkUozv9CjamuMUlw+xB4zfXlOw/ewbMrngV0ii6Hgcau28qBdxxDko9g4nV
-SIau0Nhh3LCAfPdo18VAYNs+2wlUI5BGcZ4EDPv97LmVcaRUuFZTLWsZYP8coFvt
-VQLXphUOZCIEKmo2aIPYVCQ6QG+1ghjfnfH4AJdpDoYSIq5aEzh2q+UnVRIrOGsy
-5NqtJCEgHA+Lv7M1IK9DNUfDEBTA1vOfeT3wCHPtqp+iuZ67J6vG428t/utTV+zc
-ymLZ5I1YmAIvpeFDWkYuv/spI67HQ740ySFt2xbw9dF3JZUYqLGU9iN6vOd83Pe4
-YxCT99JdejDQeJBYcSR4JdcLCnWMquI44ocNMZmM42LyS9XEUr996ebE6sKhcDNR
-HSrAr7bPdeUq4CpmB+cl8/BMXIKK/e/0CgGo26vgmkm7qm2aNUIMHOvD0cjRGB4p
-9QjX4Our+cZXGF6a2gIv
-=Vb9B
------END PGP SIGNATURE-----
+        * tools/tiffcrop.c: fix multiple uint32 overflows in
+        writeBufferToSeparateStrips(), writeBufferToContigTiles() and
+        writeBufferToSeparateTiles() that could cause heap buffer overflows.
+        Reported by Henri Salo from Nixu Corporation.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2592
+
+
+/cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
+new revision: 1.1152; previous revision: 1.1151
+/cvs/maptools/cvsroot/libtiff/tools/tiffcrop.c,v  <--  tools/tiffcrop.c
+new revision: 1.43; previous revision: 1.42
+
+-- 
+Henri Salo
