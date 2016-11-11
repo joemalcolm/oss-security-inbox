@@ -1,4 +1,9 @@
-Received: (qmail 15890 invoked by uid 550); 18 Apr 2023 15:18:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["522" "Friday" "11" "November" "2016" "21:43:27" "+0200" "Henri Salo" "henri@nerv.fi" "<20161111194327.GA26873@tunkki>" "14" "[oss-security] CVE request: BigTree CMS SQL injection and reflected cross-site scripting vulnerabilities fixed in 4.2.12 / 4.1.16" nil nil nil "11" "2016111119:43:27" "[oss-security] CVE request: BigTree CMS SQL injection and reflected cross-site scripting vulnerabilities fixed in 4.2.12 / 4.1.16" (number mark "U       henri@nerv.f Nov 11   14/522   " thread-indent "\"[oss-security] CVE request: BigTree CMS SQL injection and reflected cross-site scripting vulnerabilities fixed in 4.2.12 / 4.1.16\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16287 invoked by uid 550); 11 Nov 2016 19:43:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,45 +12,32 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24056 invoked from network); 18 Apr 2023 14:27:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudo.ws; s=selector2;
-	t=1681828036; h=from:from:reply-to:subject:subject:date:date:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=it077tnDf1bJ3LAyuHVsBbzdau5eWag02Ge4Mcv9DDU=;
-	b=arJqoCt2uGhfDZPEXj1szyVCDljo3u5HJNlhx7m+MGDZJRHscH1xtaA7kwhpOqn8LC2NCG
-	LBGcmZPoHBuTH/YU9zahoD+AW56LL6ZF0SGum/w5rmTd89De2V/IiCn39iGVQ4ljz32QnK
-	LJKV/asA6fzI50NaoUiCCkIqECLwWaxdsB3vFNEvyfGQJ8XaS76FA39Ms9TeFErZj4nL6e
-	6ISftLjvqKiV/ZHkXGCF85w/YqkfRvrliTmQANVVX7y4LvlLWIMTalRyDLBTb2nx5B596s
-	qirem7rGh4CvyJfJiHv+3xmCdGtY0DWXr2o2LLxYa3L1TJR/xvdrVlrHNHaIWQ==
-From: "Todd C. Miller" <Todd.Miller@sudo.ws>
-To: Ruihan Li <lrh2000@pku.edu.cn>
-cc: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
-In-reply-to: Your message of "Tue, 18 Apr 2023 20:41:35 +0800."
-             <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv> <20230416205727.0XQJ2%steffen@sdaoden.eu> <20230418005741.GA25557@openwall.com> <np5pdxoq5ymnbm53vmsjsuxkvh72buihwbqpsaruzm4mcmz3tq@zyz7o5ey2xzt>
+Received: (qmail 16269 invoked from network); 11 Nov 2016 19:43:43 -0000
+X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
+Date: Fri, 11 Nov 2016 21:43:27 +0200
+From: Henri Salo <henri@nerv.fi>
+To: oss-security@lists.openwall.com
+Cc: mehmet@mehmetince.net, mr@timbuckingham.com
+Message-ID: <20161111194327.GA26873@tunkki>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <73049.1681828036.1@xerxes.sudo.ws>
-Date: Tue, 18 Apr 2023 08:27:16 -0600
-Message-ID: <043b82cc304acacf@millert.dev>
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE request: BigTree CMS SQL injection and reflected cross-site
+ scripting vulnerabilities fixed in 4.2.12 / 4.1.16
 
-On Tue, 18 Apr 2023 20:41:35 +0800, Ruihan Li wrote:
+Please assign CVE identifier for BigTree CMS SQL injection and reflected
+cross-site scripting vulnerabilities, thanks.
 
-> I just noticed that sudo added the isatty check a day ago (April 17th)
-> [1]. I think this change was inspired by this vulnerability, wasn't it?
-> However, as Jakub Wilk pointed out, isatty is still implemented by an
-> ioctl call, so the addition of this check has nothing to do with this
-> vulnerability. Nevertheless, it is still a good idea to make sure isatty
-> succeeds before using ioctl calls with other (perhaps more complex and
-> arbitrary) tty commands.
->
-> [1]: https://github.com/sudo-project/sudo/commit/5650b436e6ba20807758a4154e70
-> 9c10c1c87be8 
+Fixed in 4.2.12 / 4.1.16
+Reported by Mehmet İnce in https://github.com/bigtreecms/BigTree-CMS/pull/256
 
-That is correct.  There are further changes to use TIOCGWINSZ on
-/dev/tty instead of stderr.  Using an open fd of /dev/tty makes the
-isatty() call superfluous but it doesn't hurt to have it.
+Fixed in:
 
- - todd
+https://github.com/bigtreecms/BigTree-CMS/commit/7e4b03f89dcf8dc3b0500347e877ddb7a766f23e
+https://github.com/bigtreecms/BigTree-CMS/commit/7260b84371c99e29576e8ee22eda7b36fc5da741
+https://github.com/bigtreecms/BigTree-CMS/commit/50bfa22c5861657470803669a0283053d8b67338
+
+-- 
+Henri Salo
