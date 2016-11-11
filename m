@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/11
-Message-Id: <20160916172601.892E23AE010@smtpvbsrv1.mitre.org>
-Date: Fri, 16 Sep 2016 13:26:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: scsi: mptsas: OOB access when freeing MPTSASRequest object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/7
+Message-ID: <86556a717f404fcda780ced608b05693@imshyb02.MITRE.ORG>
+Date: Fri, 11 Nov 2016 12:42:40 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is
-> vulnerable to an invalid memory access issue. It could occur while processing
-> scsi io requests in mptsas_process_scsi_io_request.
+> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-_dwarf_skim_forms-dwarf_macro5-c
+> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
 > 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> instance on the host resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg03604.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1376776
-> http://git.qemu.org/?p=qemu.git;a=commit;h=670e56d3ed2918b3861d9216f2c0540d9e9ae0d5
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 29
 
->> scsi: mptsas: use g_new0 to allocate MPTSASRequest object
->> 
->> When processing IO request in mptsas, it uses g_new to allocate
->> a 'req' object. If an error occurs before 'req->sreq' is
->> allocated, It could lead to an OOB write in mptsas_free_request
->> function. Use g_new0 to avoid it.
-
-Use CVE-2016-7423.
+Use CVE-2016-9275 for this buffer over-read. Although the commit is
+the same as for CVE-2016-9276, fixing CVE-2016-9275 apparently
+requires the dwarf_macro5.c part of the commit.
 
 - -- 
 CVE Assignment Team
@@ -39,17 +29,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX3CoQAAoJEHb/MwWLVhi2jDcP+wbIpI1ey0NwiBCdBhQhtIcM
-OinhQ7vBTP7wqOZqMEnJoWRdK3A56/JxfXs5chnHEUxiiC5sy59sMoDa/wJ9M2yL
-WDCzYZLVpTevTW/fbeMnXel3Xc5IFB80yaAuDqXP48f3s1H6bo2ai0giyWdcbdXY
-UebsZpm9MHxeqN6DYEGnsYe8audTizfe9swwLeWSUXyttzFLGOrL3pJQE6WBORbu
-cbpazz4ylYJcDyY+Th3CNZpFAZGqIcw++DMZKZG00nlgXJ4gWn9raLmfWYVKRumd
-JHczsDj36PqKC5kXsrwyd62YV7TCZFzDHGEQN3ZeGIhIbLaKhc9OSif48V3Xu5pH
-4SzvmEFiSiRCD5HGgikkzyt+lbNy7rbvry8NWYek/pgeXIYkYdywgKB54fs0jNjv
-wVf82M/8QDqFmegkRiEIyF8WsTe6WpwBgRQm7PdNJlyR54gH38/uTCefhPZj9elT
-RdgGkqtinff92C12s+A8nH4GIe8uQnGUt2cv39m02htT5NaSZBTAXPQuoVUJTIjM
-+xsymnuJSSMzyy351XG+8T+Cc2er7G+dYdf2aZUMItFlPSaK3Ewp5rFkgAYNClJz
-D6MWKJeXonSrx4j/+z5tTHma64FEgNfKSupEaf5en0od7lR7zB215xFbv6g6P/3d
-8arhpqQkwLxtRAm2n/Ad
-=7sOJ
+iQIcBAEBCAAGBQJYJgKQAAoJEHb/MwWLVhi24wcP/ArXrxDuL31zWyp2eGSZzbs3
+OK084kv5ln3zjGErGzoOch57mF2Eh8YRTKR0BofC0sJJATYs3PTl5LdRLl7tiy6m
+9y8Z6aWRZfu3AyahJWoeEZmxOdHvRUgiQ2SMBf9jJBowRkbM8/omCIvfsLU7owyp
+z1gauiGtLXzkGMMBREGqW5rdsFBBfHWqXo9fv8J7gUWOtNmYBiZ8lgc5Vsl6WTwl
++B7FFUBncj0oJGva807YmrrhHd0oKYv6Czrlfb3mdNYgVy2DaB+sIAkNpbmxg1Bc
++79RJ3Hir1j8An9M59qij0HNyWfvlk6mv99p6ELBcZ0xisYcFaeSKtS9XZbbYeAG
+ROojMlSprq5uaKrEoFodUDuNrmC05X8A5sanVWyOPIkUaEw+7wcKPe78LYRpCUbn
+0AQLBeG4YOkaPxA2VluU4+s5wMHJDtQvmK/yaGTf2+S3AlQf5JWVN054sBa2Boi7
+i+m8XhW9gPurKrcjgLD7qN7q6rXWNo3U36I05bvsCObc4fgPr6CY/xEGM5QHYh/k
+ApEZU4ZAvgcjew7R7HaaxgxBk5+90bEq4bzWNhExB0MCMpNrf4xg/L/PhzKSa+fF
+HE+TQk5aIQqfGjI8eowdw/JZvEtDApNxqtKw/FcLuQe2DmJ55QJ/D9bijNwgpeB+
+6VCWZuLyUbFPqM9sghS9
+=FIB3
 -----END PGP SIGNATURE-----
