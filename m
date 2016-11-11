@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1758" "Wednesday" "27" "May" "2020" "15:03:05" "-0400" "Vincent Batts" "vbatts@kinvolk.io" "<CAHp2X_SKNRYB8PdBHr8Zrcs76MQ+0RCgOLg7r9vDb9JgYvjWSQ@mail.gmail.com>" "58" "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil "5" "2020052719:03:05" "[oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" (number mark "U       vbatts@kinvo May 27   58/1758  " thread-indent "\"Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities\"\n") "<20200527180652.GA3675595@trogon.sfo.coreos.systems>" ("<CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>" "<20200505192458.GA8312@openwall.com>" "<20200507230420.GA2011454@trogon.sfo.coreos.systems>" "<20200527180652.GA3675595@trogon.sfo.coreos.systems>") nil nil nil nil nil nil nil "Re: [oss-security] CoreOS leaving distros/linux-distros on May 26, handing off responsibilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1077" "Friday" "11" "November" "2016" "20:45:22" "+0200" "Angelos Tzotsos" "gcpp.kalxas@gmail.com" "<22f74020-dc61-9920-fb9c-e059c0567585@gmail.com>" "31" "[oss-security] CVE-2016-8640 pycsw SQL injection issue" nil nil nil "11" "2016111118:45:22" "[oss-security] CVE-2016-8640 pycsw SQL injection issue" (number mark "U       gcpp.kalxas@ Nov 11   31/1077  " thread-indent "\"[oss-security] CVE-2016-8640 pycsw SQL injection issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7839 invoked by uid 550); 27 May 2020 19:08:50 -0000
+Received: (qmail 5440 invoked by uid 550); 11 Nov 2016 18:50:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5493 invoked from network); 27 May 2020 19:03:28 -0000
+Received: (qmail 24453 invoked from network); 11 Nov 2016 18:45:36 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kinvolk.io; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=+wEJXLovoEsnlSWT4pNSZCKwf/cq4ftMnJfcahVdRLs=;
-        b=KJDw33swGuHRz5wZ/B3QPndOSjUq2OqbBlmx0WmqDMXSSTGcwt9uLG7dvRUcjfWPom
-         KOTZwiDsRrxJOcNHOa5Au0jY7ja05XhUsXbJaCKdDS2uAqY3o4u/g4G6xNEZpAlf0zCA
-         NcHfoS327McvUBAoxP1rdLD0r1VjPflBXNXQk=
+        d=gmail.com; s=20120113;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=mvmPRD80OTF7WXT0bMIB9BUQ2oYfGUTloZ6tBgQ2cVA=;
+        b=Ec4YWcp13R0nd8FHRA8BJvR1q/Zq+2rt2JAo9OQ4YvhJVp/GnXTcEXG9u5jjFS5v1t
+         DtVPQzAJpK4CUVlZhTT/efPXq5yf4x77G9XamNohyO7x/jsRG0il28iWnspFpdO2xfl8
+         em3XSt62EaIpAQqKUzagsTB3QdjMS2tU18exCA9A9H9gyrWUvRJirdNkzX39zmux4tfk
+         YbD4WhiMFd5fPFOohbEdkGxVkVz+1eeNP81YqZUIirW0fVnPc93dup18QWUuxjwl5rdg
+         iLYdC4j9PgFnWoTy24zdAcMKGGulXOaO1oTdNgL6jRF+JD5Ml4yr1b4dQxj2148E8kc7
+         FjuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=+wEJXLovoEsnlSWT4pNSZCKwf/cq4ftMnJfcahVdRLs=;
-        b=TIvliVRLCkEOFQrAtdB1Qi3OT1LeaxXLerfAVKVYCZ2TyDEPie+vWlbV30JFYRkCKy
-         HX6lOOxij2NMYa4ZN6IFuZCBIZBImqhR7DTGsDmqHlVqNRR0hsrdrkBMm8LJa0TBBVu8
-         vp1BGaxY2Ym9aWak6t9qxiALArGxbMnrf0wFt292ldIiEwSxjHqHESPHKvCaHYMy4aeW
-         ++CnNu4zXM8X5TKMBg44tMG14Wwdv3/dhoFyu2U+Q1BuXMoZ/G7D29qkDqfqZkrgmulI
-         Uv1PdpJLahFP7gvfaX5BNE8pFOoqxxBJvtPfLww981ovB1a8dQfiRpiyvZXngKv97tMM
-         aBIw==
-X-Gm-Message-State: AOAM530vV+509OWduJFa/KDocwze7eVVHFJsOHk8ZWwTDPU0VaSTVwfO
-	WYiQs5Ta5G0yl0UAh9fEC4cFAAP0I9CoVNGk69Q4IEIGv4g=
-X-Google-Smtp-Source: ABdhPJwcR7jnX8AnlEh2k1UuT25dMVYxsamsbUBgLwiDUUdZ74dDi8Wn8QvQ7/KMBFQexFwcyVNP0oDqLOP3Ko32aY4=
-X-Received: by 2002:a05:6402:c8f:: with SMTP id cm15mr24800080edb.117.1590606196449;
- Wed, 27 May 2020 12:03:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAF=P+=6oF_93xq7VwdiDXu-K19NkVTx7B5c0pwr8-q14jQ2UTg@mail.gmail.com>
- <20200505192458.GA8312@openwall.com> <20200507230420.GA2011454@trogon.sfo.coreos.systems>
- <20200527180652.GA3675595@trogon.sfo.coreos.systems>
-In-Reply-To: <20200527180652.GA3675595@trogon.sfo.coreos.systems>
-From: Vincent Batts <vbatts@kinvolk.io>
-Date: Wed, 27 May 2020 15:03:05 -0400
-Message-ID: <CAHp2X_SKNRYB8PdBHr8Zrcs76MQ+0RCgOLg7r9vDb9JgYvjWSQ@mail.gmail.com>
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=mvmPRD80OTF7WXT0bMIB9BUQ2oYfGUTloZ6tBgQ2cVA=;
+        b=bV2XQG+4o92kwFl4A8589C3u25eI6cbVkDGhiEFAKBrsd5DIBwdbIEx62Gc74FKzH3
+         dOYUhKWhDzm6fA8VNPxjzxx0pKWNdkUaDM53dQWTC7vao59XRqJaxtaNNrB5GiBESySY
+         30gL/E/obrtj143lubBUT8M50qsIJB8I8omPos4/Yj5mF30agLWUQScgx9MySXmoZ5Ex
+         szip7KVjbWUOw4wCgxyVK3hOLrrW73UwVT3pBH2oV6rOeIdLTWU5Qcly6GA+BjfGdWoS
+         SEIgxhPXlsR6g20AIMBdKgiVr9NQHLYudzPEKdujdxI2bPV8LVWJEihJE4I4ECGWwWXB
+         JcOg==
+X-Gm-Message-State: ABUngvfU0JQN8Cru/wd1bzYfIfWT5dhERTCmAoisJ9FmZ5ZVB8zim3Gm09dwLl5nsYNUyQ==
+X-Received: by 10.194.71.228 with SMTP id y4mr11878431wju.136.1478889924938;
+        Fri, 11 Nov 2016 10:45:24 -0800 (PST)
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000051366c05a6a5dd7f"
-Subject: Re: [oss-security] CoreOS leaving distros/linux-distros on May 26,
- handing off responsibilities
+From: Angelos Tzotsos <gcpp.kalxas@gmail.com>
+Message-ID: <22f74020-dc61-9920-fb9c-e059c0567585@gmail.com>
+Date: Fri, 11 Nov 2016 20:45:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2016-8640 pycsw SQL injection issue
 
---00000000000051366c05a6a5dd7f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Thanks bgilbert for your efforts.
+Some days ago, the pycsw team received a security notice from the 
+company Koordinates (thank you) regarding an SQL injection vulnerability 
+in pycsw. An exploit of this vulnerability was demonstrated, which is 
+able to read and extract any data from any table in the pycsw database 
+that the database user has access to. On PostgreSQL (at least) it is 
+possible to perform updates/inserts/deletes, and database modifications 
+to any table the database user has access to.
 
-This has been a recent task of mine, as I'm new to the Flatcar Container
-Linux team. I'm readying the request for inclusion on the
-distros/linux-distro list.
+The vulnerability affects all previously released pycsw versions except 
+2.0.2, 1.10.5 and 1.8.6 (those have been released after fixing this 
+security issue).
 
-vb
+The security patch can be seen in this git commit:
+https://github.com/geopython/pycsw/pull/474/files
+https://patch-diff.githubusercontent.com/raw/geopython/pycsw/pull/474.patch
 
-On Wed, May 27, 2020 at 2:55 PM Benjamin Gilbert <
-benjamin.gilbert@coreos.com> wrote:
+The CVE ID assigned is CVE-2016-8640. Many thanks to the Koordinates 
+team for picking this issue up and to RedHat security team for their 
+help with the CVE.
 
-> On Thu, May 07, 2020 at 07:04:20PM -0400, Benjamin Gilbert wrote:
-> > On Tue, May 05, 2020 at 09:24:58PM +0200, Solar Designer wrote:
-> > > On Tue, Mar 03, 2020 at 12:07:29AM -0500, Benjamin Gilbert wrote:
-> > > > Red Hat recently announced [1] that CoreOS Container Linux will rea=
-ch
-> > > > end-of-life on May 26.  The Container Linux team will be leaving the
-> > > > distros lists on that date,
-> > >
-> > > I assume you'll remind me about that on that date.
-> > >
-> > > > We plan to continue executing our current responsibilities until May
-> > > > 26, but if other distros want to take over our roles sooner for ease
-> > > > of bookkeeping, we're open to that.
-> > >
-> > > I suggest that Oracle and CloudLinux already start to act as primary
-> for
-> > > their respective tasks, and CoreOS as backup until you leave on May 2=
-6.
-> >
-> > That all sounds good to us.
->
-> CoreOS has now unsubscribed from distros/linux-distros.  Thanks, all.
->
-> --Benjamin Gilbert
->
+Best regards,
+Angelos
 
 
---=20
+-- 
+Angelos Tzotsos, PhD
+OSGeo Charter Member
+http://users.ntua.gr/tzotsos
 
-Vincent Batts
-
-CTO
-
-
----
-Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
-Gesch=C3=A4ftsf=C3=BChrer/Directors: Alban Crequy, Chris K=C3=BChl, Iago L=
-=C3=B3pez Galeiras
-Registergericht/Court of registration: Amtsgericht Charlottenburg
-Registernummer/Registration number: HRB 171414 B
-Ust-ID-Nummer/VAT ID number: DE302207000
-
---00000000000051366c05a6a5dd7f--
