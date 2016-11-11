@@ -1,37 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/18/3
-Message-ID: <alpine.LFD.2.20.1604181740160.24870@wniryva>
-Date: Mon, 18 Apr 2016 17:44:21 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: dushaobo@....cn
-Subject: Qemu: usb: Infinite loop vulnerability in usb_ehci using siTD process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/4
+Message-ID: <b9c127bf-b3c2-c143-b432-f0574481484c@cleal.org>
+Date: Fri, 11 Nov 2016 12:56:55 +0000
+From: Dominic Cleal <dominic@...al.org>
+To: oss-security@...ts.openwall.com
+Cc: foreman-security@...glegroups.com
+Subject: CVE-2016-8639: Foreman stored XSS in orgs/locations in settings
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+CVE-2016-8639: Foreman settings dropdown menus may run stored XSS in
+organization/location name
 
-Qemu emulator built with the USB EHCI emulation support is vulnerable to an 
-infinite loop issue. It occurs during communication between host controller 
-interface(EHCI) and a respective device driver. These two communicate via a 
-split isochronous transfer descriptor list(siTD) and an infinite loop unfolds 
-if there is a closed loop in this list.
+If an organization or location is created with a name containing HTML,
+then the administrator-only Settings page will render the HTML as part
+of a dropdown menu.
 
-A privileges used inside guest could use this flaw to consume excessive CPU 
-cycles & resources on the host.
+This may permit a stored XSS attack if an organization/location with
+HTML in the name is created, then an administrator attempts to change
+the default organization/location settings.
 
-This issue is similar to CVE-2015-8558, but using siTD instead of iTD.
+Mitigation: restrict permissions to organization and location creation,
+use the API or CLI instead to change the default organization/location
+settings.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg02691.html
+Note: this CVE identifier has been assigned retrospectively, to describe
+a vulnerability that was fixed during a refactoring of the affected code.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1325129
+This issue was reported by Sanket Jagtap.
 
-This issue are discovered by Du Shaobo of Qihoo 360 Inc.
+Affects Foreman 1.11.0 to 1.12.4
+Fix released in Foreman 1.13.0
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Patch (a refactoring):
+https://github.com/theforeman/foreman/commit/d163507797c5d9c20249aa4d858465cbb74be229
+
+More information:
+https://theforeman.org/security.html#2016-8639
+http://projects.theforeman.org/issues/15037
+https://theforeman.org
+
+-- 
+Dominic Cleal
+dominic@...al.org
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
