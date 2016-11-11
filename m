@@ -1,82 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/1
-Message-ID: <19v6ql8000000000g7bogu006eqhjow6gmj6e1g64o30c1g64o38e1g@mail.gmail.com>
-Date: Tue, 23 Feb 2016 23:57:13 +0000
-From: security@...roid.com
-To: Carlos Santana <csantana23@...il.com>
-Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com,  "private@...dova.apache.org" <private@...dova.apache.org>, ASF Security Team <security@...che.org>
-Subject: RE: [4-3801000010480] [Update 2/20/16 CVE-2015-5256] Apache Cordova vulnerable to improper application of whitelist restrictions on Android
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/5
+Message-ID: <590204934.12153620.1478870673670.JavaMail.zimbra@redhat.com>
+Date: Fri, 11 Nov 2016 08:24:33 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-Hi,
+> I'm not aware of any fix as of now.
 
-Our engineering team reviewed this issue and realized this was reported to
-us back in Sept 2015 by JP Cert.
+Actiually, not. There is a patch being developed now, thanks, Eric:
 
-Thank you,
-Quan
+http://marc.info/?l=linux-netdev&m=147881188232264&w=2
 
+http://marc.info/?t=147881111500001&r=1&w=2&n=2 # the whole thread
 
-On 02/22/16 15:54:11 security@...roid.com wrote:
+http://marc.info/?l=linux-netdev&m=147881236332369&w=2 # patch v2
 
-Hi
-Thank you for the notification.
-We will assign this to our dev team to review.
-It will be tracked as AndroidID-27299922.
+http://www.spinics.net/lists/netdev/msg403787.html
 
-Thanks,
-Quan
+http://www.spinics.net/lists/netdev/msg403789.html # patch v2
 
-
-On 02/21/16 11:56:58 csantana23@...il.com wrote:
-
-
-*Updated 02/20/2016*
-
-Apache Cordova has re-visited CVE-2015-5256 "Apache Cordova vulnerable to
-improper application of whitelist restrictions on Android”. Upon further
-investigation we found that the vulnerability is more limited than was
-previously understood.
-We are lowering the severity to Low, and updating the description, affected
-versions, and upgrade path.
-
-The updated text of the CVE is included below:
-
-Apache Cordova PMC
---------------------------
-private@...dova.apache.org
-
-____
-
-*Updated 02/20/2016*
-
-CVE-2015-5256: Apache Cordova vulnerable to improper application of
-whitelist restrictions on Android
-
-Severity: Low
-
-Versions Affected:
-Cordova Android with whitelist functionality
-
-Description:
-
-Android applications created using Apache Cordova that use a remote server
-contain a vulnerability where whitelist restrictions for urls using
-protocols http and https are not properly applied.  Whitelist cannot block
-network redirects from a whitelisted remote website to a non-whitelisted
-website.
-
-Upgrade path:
-
-There is no specific software patch for this vulnerability. Developers that
-are concerned about this should make sure to only whitelist trusted
-websites, and make sure that whitelisted websites don’t redirect to a
-malicious website.
-Developers using should also use SSL, as well as Content Security
-Policy(CSP) to further mitigate this issue. It’s always recommended for
-developers to upgrade to the latest version of Cordova Android.
-
-
-Credit: Muneaki Nishimura of Sony Digital Network Applications, Inc
-
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
