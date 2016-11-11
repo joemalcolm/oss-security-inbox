@@ -1,44 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/2
-Message-ID: <5785E1FC.8090907@canonical.com>
-Date: Wed, 13 Jul 2016 01:38:52 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/10
+Message-ID: <20161111183744.nwribaatdctrb3kv@jwilk.net>
+Date: Fri, 11 Nov 2016 19:37:44 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures
+Subject: Pipelight: broken validation of dependency installer signature
 Content-Type: text/plain; charset=utf-8
 
-Hello - I'd like to request two CVEs. The flaws are in the
-ecryptfs-setup-swap script that is provided by the upstream
-ecryptfs-utils project. The script can be used to convert an existing,
-unencrypted swap partition into a swap partition that is encrypted.
-System admins may use this tool and the Ubuntu installer uses it when
-the user opts into home directory encryption.
+Pipelight <http://pipelight.net/cms/about.html> is a wrapper for using Windows 
+plugins in Linux browsers. The software comes with an option to update the 
+install-dependency script, which contains the plugin database. The downloaded 
+code was supposed to be verified against a GPG key, but the verification code 
+was broken.
 
-On systems using systemd 211 or newer and GPT partitioning, the
-unencrypted swap partition was being automatically activated during boot
-and the encrypted swap was not used. This was due to ecryptfs-setup-swap
-not marking the swap partition as "no-auto", as defined by the
-Discoverable Partitions Spec:
+Bug report: https://bugs.launchpad.net/pipelight/+bug/1632502
+Committed fix: https://bitbucket.org/mmueller2012/pipelight/commits/c9fc745d46be
 
-
-https://www.freedesktop.org/wiki/Specifications/DiscoverablePartitionsSpec/
-
-Details of the two issues needing CVEs:
-
-ecryptfs-setup-swap improperly configures encrypted swap when using GPT
-partitioning
-Bug: https://launchpad.net/bugs/1447282
-Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/857
-(Please ignore the inaccurate commit message for commit 857)
-
-ecryptfs-setup-swap improperly configures encrypted swap when using GPT
-partitioning on a NVMe or MMC drive. This bug is due to an incomplete
-fix for bug 1447282.
-Bug: https://launchpad.net/bugs/1597154
-Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/882
-
-Tyler
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+-- 
+Jakub Wilk
