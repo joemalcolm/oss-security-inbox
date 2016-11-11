@@ -1,154 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/14
-Message-Id: <E1c99mf-0008E2-TQ@xenbits.xenproject.org>
-Date: Tue, 22 Nov 2016 12:02:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 198 (CVE-2016-9379,CVE-2016-9380) - delimiter injection vulnerabilities in pygrub
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/2
+Message-ID: <67442b1d219447cc8a6dfce7f08a43b1@imshyb02.MITRE.ORG>
+Date: Fri, 11 Nov 2016 02:07:06 -0500
+From: <cve-assign@...re.org>
+To: <gustavo.grieco@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-     Xen Security Advisory CVE-2016-9379,CVE-2016-9380 / XSA-198
-                              version 3
+> We recently found a read out-of-bounds parsing JavaScript code in the last
+> revision of WebKit
 
-             delimiter injection vulnerabilities in pygrub
+> WTF::ParkingLot::parkConditionallyImpl
 
-UPDATES IN VERSION 3
-====================
+CVE IDs for WebKit are typically assigned by Google. Perhaps you are
+testing WebKit code that is too new to affect Chrome. Possibly
+applicable references are:
 
-Public release.
+  https://webkit.org/blog/6161/locking-in-webkit/
+  https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/wtf/
+  https://www.google.com/about/appsecurity/chrome-rewards/
 
-ISSUE DESCRIPTION
-=================
+If you can confirm that Chrome is unaffected or that your report
+wasn't accepted at
+https://code.google.com/p/chromium/issues/entry?template=Security%20Bug
+then we can send a CVE ID here.
 
-pygrub, the boot loader emulator, fails to quote (or sanity check) its
-results when reporting them to its caller.
-
-pygrub supports a number of output formats.  When the S-expression
-output format is requested, putting string quotes and S-expressions in
-the bootloader configuration file can produce incorrect output.
-(CVE-2016-9379)
-
-When the nul-delimited output format is requested, nul bytes in the
-bootloader configuration file can produce an ambiguous or confusing
-output file, which is interpreted by libxl in a vulnerable way.
-(CVE-2016-9380)
-
-The existing bootloader config interpreters all read input in a
-line-based way from their bootloaders, and none of them support any
-kind of escaping.  So the newline-delimited output format is safe.
-
-The attacker can use this to cause the toolstack to treat any file
-accessible to the toolstack as if it were the guest's initial ramdisk
-file.  The file contents are provided to the guest kernel; also,
-normally, these files are deleted by the toolstack as the guest starts
-to boot; alternatively they may be deleted later.
-
-IMPACT
-======
-
-A malicious guest administrator can obtain the contents of sensitive
-host files (an information leak).
-
-Additionally, a malicious guest administrator can cause files on the
-host to be removed, causing a denial of service.  In some unusual host
-configurations, ability to remove certain files may be useable for
-privilege escalation.
-
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 2.0 and later are vulnerable.
-
-The vulnerability is only exposed to guests configured by the host
-administrator to boot using pygrub.  In the xl and xm domain
-configuration file, this is typically achieved with
-   bootloader="pygrub"
-On x86 this would typically apply only to PV domains.
-
-All systems using xl, libxl, or libvirt are vulnerable to pygrub-using
-guests.
-
-Systems using other (third-party) toolstacks may or may not be
-vulnerable, depending on whether pygrub is configured, and what pygrub
-output format they use.  Please consult your toolstack provider.
-
-
-MITIGATION
-==========
-
-Configuring guests not to use pygrub will avoid the vulnerability.
-
-For x86 PV guests currently using pygrub, booting the guest as HVM
-is often a practical option to avoid pygrub.
-
-
-CREDITS
-=======
-
-This issue was discovered by Daniel Richman and Gábor Szarka of
-the Cambridge University Student-Run Computing Facility.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa198.patch           All Xen versions (at least Xen 4.4 and later)
-
-$ sha256sum xsa198*
-0e4533ad2157c03ab309bd12a54f5ff325f03edbe97f23c60a16a3f378c75eae  xsa198.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patch described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-Deployment of the mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because switching away from the use of pygrub would reveal
-where the vulnerability lies.
-
-Deployment of mitigations is permitted only AFTER the embargo ends.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYNDN4AAoJEIP+FMlX6CvZX8AH/1FL3pw4RbbuFd/b23Qmo25U
-F7qELx001C4C+uXtlxaIg6MT467pRphihSkLcLQ2vgIp57iVTXhufc4TVqhdADgp
-bL3h1zd7Ot4f+iA5RYlGIJ4is3I2A6lNvLwydi2PIGgmalSad5B3Ed0vrvRwfLKY
-qpsVm0LrM24aFX2IaygmmziQIQVeXSYpmKmVebOEAFL0uj9g8D3VhgWIMtZxW+9K
-A6c2NTrt01ZbsVRx2wTcRdRhEJLeFbBZOPS9RrbjJzbuFcAzsGR8m/pS4hJBhik/
-9MG4b7FBMYZTaBd4wcbbHM81py1KkcoreC2jL1qb1JMG7BQVP1USdz21rJ05DY8=
-=P2XT
+iQIcBAEBCAAGBQJYJW0PAAoJEHb/MwWLVhi2tAAP/0YPJtWUwAUpo9ei5DxUQpVF
+nKNQjnUR3lCVGwTGDqD3F9nnoWsyrAePbAYvRyodh/KFBLbdoN9EN6N7l8HaRqgy
+gbpetQ1WEJECggmarKk1HveIK82g5yfIKsAfk8ybkPl7FvObd60oQiB6TEZaZRZp
+WqT1eNuJM7fB9f+8GkDhuwMNkq3Q09BMhnM4GOJP8i6afaeh6R9Ih1cVOYwmNxsF
+c/+6ba2QQbCfN3G1P4Sy/0qt0Iuuh/6iN8aXu+c1Ghajx86/w5sPH5hy9BFusJ1i
+e3rSYLDVknDY87gKertfHnK1fkRBvlsABVvEdCiY0a0f8e5wCHB/aTx8fgE9RvCn
+M9767qljP3ea/8GAtSPwwskOx+yMNUJPYBlo6C5NDHW98sCHOlWS4yB3k8zvNWMz
+vS+skFo/GrqnX3RsuNoOdvpUpwt/mBoTr6sVK/oA9xY9U+lvdGiWCRri5ugSjgSK
+Dv1VpxzsQHE7fQBy8RJg5AtFS6VTKGAsTy68hAFkSTZV3aEZNJNsoRmdmCRImQs+
+jKM7cT4MbSrEUEtEFysPt5AWbe5C8E8dwbhg/FNtZV7Zz+B8n7aRBfdcHMCkG0O9
+NsVs9dJkv7w1mOdibownVMvTV/UqzMRr+lzzmUPbeWGetaxmCr3mn6+kx4uKYabH
+aqWJRCKdup0fmNUs/xSW
+=2oQn
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa198.patch" of type "application/octet-stream" (2189 bytes)
