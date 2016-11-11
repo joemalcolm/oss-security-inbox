@@ -1,4 +1,9 @@
-Received: (qmail 24300 invoked by uid 550); 31 Mar 2023 12:06:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1495" "Friday" "11" "November" "2016" "12:43:58" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5b255e157f6640988ff729ba46e4896d@imshyb02.MITRE.ORG>" "35" "[oss-security] Re: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)" nil nil nil "11" "2016111117:43:58" "[oss-security] Re: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)" (number mark "U       cve-assign@m Nov 11   35/1495  " thread-indent "\"[oss-security] Re: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)\"\n") "<2342970.3XqcyZiG6N@blackgate>" ("<2342970.3XqcyZiG6N@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23625 invoked by uid 550); 11 Nov 2016 17:44:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9625 invoked from network); 31 Mar 2023 07:02:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1680246155; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=FsutdRu1+7Oa90kENYkOY7DYwo4GZnCGgsrULMMAY8M=;
-	b=rt9dYWebxJ87WduaBOV70/xf01BzXQkpMDvI6VwKMO1xdtpHGe8BA2OfZRugQmg3Tv+oFX
-	t0k/nG5lsfdUy0LtgNm32QZz1OdyfBpqZs4YmT7gPGG/w93dzRRtUbVPSSY9MNOT8Ff827
-	N1CNvTeyr70kCk7+BSK01b6cmVbBTJ0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1680246155;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=FsutdRu1+7Oa90kENYkOY7DYwo4GZnCGgsrULMMAY8M=;
-	b=qR24x8honzC0h7xjclxFk5t3LzkfWo93twIbvIrQIC3zfa4VNJNfWG+I9J4FfNaT5+caYK
-	MY43ThqqlPfQyEBA==
-Date: Fri, 31 Mar 2023 09:02:34 +0200
-From: Johannes Segitz <jsegitz@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20230331070234.GP21675@suse.com>
-References: <20230329133450.GK21675@suse.com>
- <ZCSQiSn/4nRls/e+@tautology.pseudorandom.co.uk>
- <jwJLRnVfw9qn5wsHzRxO4mCtkAMJs9l7didEzdt2C9UBuFA7Td4ERwLG_9ZVtCy2SyomGMnZAgYJfJAjXhubHz07SaIQwTLmJemznO-W4CM=@protonmail.ch>
+Received: (qmail 23573 invoked from network); 11 Nov 2016 17:44:10 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <2342970.3XqcyZiG6N@blackgate>
+Message-ID: <5b255e157f6640988ff729ba46e4896d@imshyb02.MITRE.ORG>
+Date: Fri, 11 Nov 2016 12:43:58 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PEWkPmBCIbC5Tcj0"
-Content-Disposition: inline
-In-Reply-To: <jwJLRnVfw9qn5wsHzRxO4mCtkAMJs9l7didEzdt2C9UBuFA7Td4ERwLG_9ZVtCy2SyomGMnZAgYJfJAjXhubHz07SaIQwTLmJemznO-W4CM=@protonmail.ch>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] polkitd service user privilege separation
+Content-Type: text/plain
+Subject: [oss-security] Re: libdwarf: heap-based buffer overflow in get_attr_value (print_die.c)
 
---PEWkPmBCIbC5Tcj0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Mar 30, 2023 at 02:08:10PM +0000, Jordan Glover wrote:
-> Is it valid conclusion that polkitd would be better of just running as
-> root? That would clear any possible confusion. Or are there advantages of
-> running it as separate "trusted" user?
+> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-get_attr_value-print_die-c
+> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+> 
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 1
 
-It adds an additional step an attacker needs to take before having root
-privileges. Also it is not just about security, it also helps to limit the
-impact of non-security bugs. So I would keep the service user, but add
-clear language that explains that this isn't a meaningful security boundary
-and that this account needs to be considered to have root privileges.
+We would need more impact analysis before assigning a CVE ID for this.
+It seems to affect only the dwarfdump command-line program, not
+library code that is used in arbitrary applications.
 
-Johannes
---=20
-GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Frankenstra=DFe 146, 90461 N=FCrnberg=
-, Germany
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moer=
-man
-(HRB 36809, AG N=FCrnberg)
-
---PEWkPmBCIbC5Tcj0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAmQmhYoACgkQvCfdnSzE
-/WaIpA//e0oEXadfGewqfozbX7sL2YmhZLnYvioNpccNE4LKbKo/wCpKMGGUke38
-fRWMUTtif4sqCVFO3Ow9iDubuF0fU9aBU1Q572vOkE3wtT4SDc2IJ/6Tp5XalrUv
-DXxds/fB/eP1MfEvhG8I48W3XtgvFVgD88XEMQNEgwPyqkg0cNSHi9PSC+FUf+Xk
-wNDpHy3H45cKniZK+/KyF6Z60idFqgE1Rot9fBAjMmSvp0Jq7ELR1lLM5rM6NPr/
-5/6YBxlDg5XfQj/hjZcCCEhuBwHQWHrG2u9qhq/ngKitJ1R0oGNntH4nnKvb2y1O
-574Q417k9lQs2QKkmAbjTwu2SyFmg9pfNI/+k4ocoxthut5OFTp0Ays1489tDjjL
-rXxCi8KV3QntFM69WYx30XuSUGdNS+RazmEAr0YbI2tuxP9++vCs+SXuctVn1cHG
-4k4BkEa/WPFt2vrFBsBJ4VCmw4fBoqBhzFx+wZrnRivAV3r+hmcHOoLkHo/nz5tM
-9EmeyWMzhuhcWts5RPRZgxr/g/XsFRVtqMIPgubRpvY9jH43SIQVJ08DRPseRSFP
-o6ReKnpZz0viQQS0RDxX4fwXIQZ72+iqxscL5nSZFB0416Pqa1Gdjobue9iqocRx
-QWPn0W7FMb2PxCqNGS8vVUb9I9syOJzGeEvPhjPHu0+GhuVAsto=
-=qRaP
+iQIcBAEBCAAGBQJYJgKVAAoJEHb/MwWLVhi2IdUP/2OaC1OfaPFR++3Jzepg9MNl
+4gPc8ehCElI+uhC6eq9d2CJZHM+a608/IlA5jDTxuSTuzS2aQjNZ2OgNWYl7dPjy
+K63lDfs7Xs25ChrVlynW5pcPXYcJ2f8GZpqZgaRB35nBUtjjQcQweQvW5lga3zLl
+225z8m2EOId3KME5Vklr2gxbdH9fNeIqRUqdCa7gpyG/PzwZWnUg/blStSyw+S4i
+yDCxL8iP7AlH/d0vdinT9rK9Ez0A/13IKLbcTU0Rk7YLFv8X5sbFYETnszU6pWBO
+1RlglJh7xNEY204ibV17+6OawS/DyC8KvrLAAXEwtwBaWgj2IfgsmVtO4aNv9hdr
+6eDQqIgCO90I8+aNQGQsAZZeNeeYE6ydfx+8+SVGHcbTc4uEqryynfCRNmy6eSET
+qniAB3s2fl8872starbxjFfQFmashOzEWxDRLsIEHcfgw+y7mcZSHZOcPuzWb0+Y
+tEVrJQWGRtpZL5paeqG/ML4zJNaTZ6Ypn52hafUoCFECVc3CZTRVVF6l+5Ac/pM0
+sCtElvwhZ92HHGsa96salFE/B0ebcNmElKOanQ4C1pIOM4k9UJcbkmmXNgkLjIpk
+c4Pum2dsIqiBgDEGMUTZKDCBcoEj/ivghYM2F7KslH0O5Ei/FIdkOuiraNU15YEg
+6vwiWK7F7KAvl2XJdJvU
+=Ts69
 -----END PGP SIGNATURE-----
-
---PEWkPmBCIbC5Tcj0--
