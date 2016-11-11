@@ -1,116 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/1
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>
-Date: Mon, 19 Sep 2016 02:00:55 +0000
-From: winsonliu(刘科) <winsonliu@...cent.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: cve-assign <cve-assign@...re.org>
-Subject: CVE Request: Multiple security issues in OpenJPEG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/12
+Message-ID: <22f74020-dc61-9920-fb9c-e059c0567585@gmail.com>
+Date: Fri, 11 Nov 2016 20:45:22 +0200
+From: Angelos Tzotsos <gcpp.kalxas@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-8640 pycsw SQL injection issue
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-This is Ke Liu of Tencent's Xuanwu LAB. I reported some security issues to OpenJPEG some months ago. Could you please assign some CVE numbers for them? Thanks.
+Some days ago, the pycsw team received a security notice from the 
+company Koordinates (thank you) regarding an SQL injection vulnerability 
+in pycsw. An exploit of this vulnerability was demonstrated, which is 
+able to read and extract any data from any table in the pycsw database 
+that the database user has access to. On PostgreSQL (at least) it is 
+possible to perform updates/inserts/deletes, and database modifications 
+to any table the database user has access to.
 
-The memory issues may lead to code execution, other issues may simply lead to DoS problems.
+The vulnerability affects all previously released pycsw versions except 
+2.0.2, 1.10.5 and 1.8.6 (those have been released after fixing this 
+security issue).
 
-BTW, proof-of-concept files for all issues were supplied. For more details, please click the issue links below.
+The security patch can be seen in this git commit:
+https://github.com/geopython/pycsw/pull/474/files
+https://patch-diff.githubusercontent.com/raw/geopython/pycsw/pull/474.patch
 
-1. Out-of-Bounds Write in opj_mqc_byteout of mqc.c
+The CVE ID assigned is CVE-2016-8640. Many thanks to the Koordinates 
+team for picking this issue up and to RedHat security team for their 
+help with the CVE.
 
-An Out-of-Bounds Write issue can be triggered in function opj_mqc_byteout of mqc.c during executing opj_compress. This issue was caused by a malformed BMP file.
+Best regards,
+Angelos
 
-AddressSanitizer: heap-buffer-overflow, WRITE of size 1
-Report date: 2016/09/12
-Status: Not fixed
-Url: https://github.com/uclouvain/openjpeg/issues/835
-Root cause: not clear
-Patch: no patch supplied
 
-2. Out-of-Bounds Read in function bmp24toimage of convertbmp.c
+-- 
+Angelos Tzotsos, PhD
+OSGeo Charter Member
+http://users.ntua.gr/tzotsos
 
-An Out-of-Bounds Read issue was found in function bmp24toimage of convertbmp.c during executing opj_compress. The root cause of this issue was an Integer Overflow issue. This issue was caused by a malformed BMP file.
-
-AddressSanitizer: heap-buffer-overflow, READ of size 1
-Report date: 2016/09/12
-Status: Not fixed
-Url: https://github.com/uclouvain/openjpeg/issues/833
-Root cause: integer overflow
-Patch: https://github.com/uclouvain/openjpeg/pull/834
-
-3. Null Pointer Access in function sycc422_to_rgb of color.c
-A null pointer access issue was found in function sycc422_to_rgb of color.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-
-AddressSanitizer: SEGV on unknown address 0x00000000
-Report date: 2016/06/28
-Status: Not fixed
-Url: https://github.com/uclouvain/openjpeg/issues/792
-Root cause: null pointer dereference
-Patch: easy to fix, check before accessing
-
-4. Null Pointer Access in function color_esycc_to_rgb of color.c
-A null pointer access issue was found in function color_esycc_to_rgb of color.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-
-AddressSanitizer: SEGV on unknown address 0x00000000
-Report date: 2016/05/25
-Status: Not fixed
-Url: https://github.com/uclouvain/openjpeg/issues/785
-Root cause: null pointer dereference
-Patch: easy to fix, check before accessing
-
-5. Null Pointer Access in function sycc444_to_rgb of color.c
-A null pointer access issue was found in function sycc444_to_rgb of color.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-
-AddressSanitizer: SEGV on unknown address 0x00000000
-Report date: 2016/05/25
-Status: Not fixed
-Url: https://github.com/uclouvain/openjpeg/issues/784
-Root cause: null pointer dereference
-Patch: easy to fix, check before accessing
-
-6. Null Pointer Access in function imagetopnm of convert.c
-A null pointer access issue was found in function imagetopnm of convert.c during executing opj_decompress. This issue was caused by a malformed J2K file.
-
-AddressSanitizer: SEGV on unknown address 0x00000000
-Report date: 2016/05/06
-Status: Not fixed
-Url: https://github.com/uclouvain/openjpeg/issues/776
-Root cause: null pointer dereference
-Patch: easy to fix, check before accessing
-
-7. Multiple division-by-zero issues in function opj_pi_next_rpcl of pi.c
-Multiple division-by-zero issues were found in function opj_pi_next_rpcl of pi.c during executing opj_decompress. The issues were caused by malformed J2K files.
-
-AddressSanitizer: SIGFPE, Arithmetic exception
-Report date: 2016/05/06
-Status: Not fixed
-Url1: https://github.com/uclouvain/openjpeg/issues/780
-Url2: https://github.com/uclouvain/openjpeg/issues/779
-Root cause: division-by-zero
-Patch: easy to fix, check before dividing
-
-8. Multiple division-by-zero issues in function opj_pi_next_pcrl of pi.c
-Multiple division-by-zero issues were found in function opj_pi_next_pcrl of pi.c during executing opj_decompress. The issues were caused by malformed J2K files.
-
-AddressSanitizer: SIGFPE, Arithmetic exception
-Report date: 2016/05/06
-Status: Not fixed
-Url1: https://github.com/uclouvain/openjpeg/issues/777
-Url2: https://github.com/uclouvain/openjpeg/issues/778
-Root cause: division-by-zero
-Patch: easy to fix, check before dividing
-
-9. Multiple division-by-zero issues in function opj_pi_next_cprl of pi.c
-Multiple division-by-zero issues were found in function opj_pi_next_cprl of pi.c during executing opj_decompress. The issues were caused by malformed J2K files.
-
-AddressSanitizer: SIGFPE, Arithmetic exception
-Report date: 2016/03/28
-Status: Not fixed
-Url1: https://github.com/uclouvain/openjpeg/issues/731
-Url2: https://github.com/uclouvain/openjpeg/issues/732
-Root cause: division-by-zero
-Patch: easy to fix, check before dividing
-
-Regards,
-Ke
-Tencent's Xuanwu LAB
