@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/04/3
-Message-ID: <CAMYtjArgn4pT2z2gVpwvQh7L40d11Q-A47fJtPboi27b+4BX-A@mail.gmail.com>
-Date: Fri, 4 Mar 2016 19:02:51 +0100
-From: Pere Orga <pere@...a.cat>
-To: oss-security@...ts.openwall.com
-Cc: Drupal Security Team <security@...pal.org>
-Subject: CVE requests for Drupal contributed modules (from 2016-009 to 2016-014)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/11/6
+Message-ID: <0dcff8c6bc2044eaba39e0ce01a96f1c@imshyb02.MITRE.ORG>
+Date: Fri, 11 Nov 2016 08:26:36 -0500
+From: <cve-assign@...re.org>
+To: <brian.carpenter@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: libtiff: heap buffer overflow/read outside of array
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+> http://bugzilla.maptools.org/show_bug.cgi?id=2587
 
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 8
 
-Prepopulate - Access Bypass - SA-CONTRIB-2016-009
-https://www.drupal.org/node/2679503
+>> * libtiff/tif_strip.c: make TIFFNumberOfStrips() return the
+>>   td->td_nstrips value when it is non-zero, instead of recomputing it.
+>>   This is needed in TIFF_STRIPCHOP mode where td_nstrips is modified.
+>>   Fixes a read outside of array in tiffsplit
+>>   (or other utilities using TIFFNumberOfStrips()).
 
-USASearch - Access Bypass - SA-CONTRIB-2016-010
-https://www.drupal.org/node/2679509
+Use CVE-2016-9273 for this buffer over-read.
 
-Google Analytics Counter - CSRF - SA-CONTRIB-2016-011
-https://www.drupal.org/node/2679515
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Hubspot CTA - Cross Site Scripting (XSS) - SA-CONTRIB-2016-012
-https://www.drupal.org/node/2679539
-
-Node Notify - Cross Site Scripting (XSS) - SA-CONTRIB-2016-013
-Node Notify - CSRF - SA-CONTRIB-2016-013
-https://www.drupal.org/node/2679541
-
-Fieldable Panels Panes - Access Bypass - SA-CONTRIB-2016-014
-https://www.drupal.org/node/2679589
-
-
-Thanks
-
-Regards
--- 
-Pere Orga on behalf of the Drupal Security team
+iQIcBAEBCAAGBQJYJcZ7AAoJEHb/MwWLVhi2mP0P/0XMEbn4EhOPpKIfmdMrL8kx
+sekTNRxIvZ8oy4MzDghg+CdeZu54XCWA6BlWWFRu5yoBmarcfTaYu4DfPA+xvCV8
+CC1Nv9y6oJ08wBDMG2uPROig7/yDxPBhcbsGWrTOJ0zvxnU1FpmPDPOEMKmLX539
+ByenyTqcZ/NXNm3D7C/Z5JNgT4ZIFcdvlYyvHGTLga8DK67wszbFR3QUS2Pq6WgD
+bYjDT2mAn+KZEaMvsPpO/2r1jv52Dl9q577yjfIygMR/hqM81I/PgX5virIx8RWq
+s1G3y217v0qSycFX0nMxllw3XLwzOEVcYaRD7ei+vvQH3noWm+i7fVaHI635ypaF
+kqWxNt6pL09sVXlCeE/K1D64vIwpeYob/sUxNGJzpg1ZtHunFvS6P2/MjKuKSxq/
+2NOB5JpC3PKepNNYO2YEeLrdBqBl/k2vj0j7AkQi8tH1gh75EZvDAVs/IWPu8so6
+L7z5d39umgn51tjvw7za06vVGi+Raf9CcpXLTIwbllPTo1rsA7nzDk5I8xXNQuPz
+VQG+CK12j1szR7r2Mv9h0A4BJVvmQr8SLbXrNTljxLlcjKNwgsjPtWjLcYKPo1Sn
+n+QgTY0MnMj7/sKb75nKzBEN1rwwjZqpvEWgVpcpYd9dvarIt6kAzk02UhPc9E4l
+IJSYMwtncLobdcF7IPNw
+=jHbm
+-----END PGP SIGNATURE-----
