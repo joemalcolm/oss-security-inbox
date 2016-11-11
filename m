@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1942" "Tuesday" "5" "January" "2016" "10:20:23" "+0100" "Andreas Stieger" "astieger@suse.com" "<568B8AD7.3000905@suse.com>" "56" "Re: [oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php" nil nil nil "1" "2016010509:20:23" "[oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php" (number mark "U       astieger@sus Jan  5   56/1942  " thread-indent "\"Re: [oss-security] Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php\"\n") "<20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>" ("<20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6522" "Friday" "11" "November" "2016" "10:49:23" "+0800" "Qian Zhang" "tyrande000@gmail.com" "<2016111110491564662310@gmail.com>" "113" "[oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow" nil nil nil "11" "2016111102:49:23" "[oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow" (number mark "U       tyrande000@g Nov 11  113/6522  " thread-indent "\"[oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5633 invoked by uid 550); 5 Jan 2016 09:21:00 -0000
+Received: (qmail 26022 invoked by uid 550); 11 Nov 2016 04:07:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,156 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5615 invoked from network); 5 Jan 2016 09:20:59 -0000
-To: oss-security@lists.openwall.com, carnil@debian.org
-References: <20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, elbrus@debian.org
-From: Andreas Stieger <astieger@suse.com>
-Organization: SUSE Linux GmbH
-Message-ID: <568B8AD7.3000905@suse.com>
-Date: Tue, 5 Jan 2016 10:20:23 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.4.0
-MIME-Version: 1.0
-In-Reply-To: <20160104235855.D96FB52E01B@smtpvbsrv1.mitre.org>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="Kgu8lWetUUr5Q4s4jXUp1xmA1oAR5XmDQ"
-Subject: Re: [oss-security] Re: CVE Request: cacti: SQL injection
- vulnerability in graphs_new.php
+Received: (qmail 17564 invoked from network); 11 Nov 2016 02:49:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:mime-version:message-id;
+        bh=NhOmmpZOGnopbZZdl/16H3f2iUJdeWzySSepVOlaFTo=;
+        b=HzcqUVtQ3DlOWdCphJBCcEiXucZ3LdY3LnW03HPlAGmoOZ81BRBG9mr7+f4yubtzNW
+         2gQzlJjRXR6YMTnZ+aGelmF8m3t9iav6fFMlIxTZq6dkSdHEbtqOVPW6UUWTQjwWeu73
+         PoHYmhqlIc2c0UFSDsSqNuOPDp5lsOCTUqcd8DCLABZ3rK5dCGwSTDu73clohed6rPjW
+         5zMZVAGsFj0Yssfur/PNBCepxW7+CnqQad77qwxlE0UVPv0MQVVWknfXuUwSjhSdFs4f
+         Ax7eGcun4hgHtjC1Es0bEh1Oj5750Ff2/oy12nS5kX/b8wdfqhI7yF/ob2UijcVce4JE
+         EPZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:cc:subject:mime-version:message-id;
+        bh=NhOmmpZOGnopbZZdl/16H3f2iUJdeWzySSepVOlaFTo=;
+        b=UO0tASny0QqT8b/qLTxiCwsBN3u+OR6cclFuBK2uPahhrTNWYslAr2qdnuCkybB5p1
+         egD0MYx1Fcpr7z38PB85OuDSZRdrLcmr1M6HGCuwbVLQTqcoWRZ1KV5M/SALQyh0m7pi
+         ERCRhARoZBhFgpLuJNNSjP6pPkXZ7CYzhGqiMc7qHbC4Fw38n2FynUOr9rXSmtjbICiZ
+         gApyiKzu6k0k8XXZBY8WCIE6ktortYaqvbEsyHNgjHSgFwGJlQq1ZkpwV9gyC+MvYPuw
+         oY15yQ3egpsknQfsSbg6X2qQ2wEPm5o0gJquQFTV8zKahZmupyb5MokhxzZl8OKVziSm
+         e+rw==
+X-Gm-Message-State: ABUngvc3RwsbEqXoBPDElCC6C2UmL9tKv+9WgLMhJLOER83LGO1yavCcC/FJKcpkFCFrWw==
+X-Received: by 10.98.198.85 with SMTP id m82mr1986952pfg.69.1478832570149;
+        Thu, 10 Nov 2016 18:49:30 -0800 (PST)
+Date: Fri, 11 Nov 2016 10:49:23 +0800
+From: "Qian Zhang" <tyrande000@gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: secalert <secalert@redhat.com>, 
+	zhangqian-c <zhangqian-c@360.cn>, 
+	cve-assign <cve-assign@mitre.org>
+X-Priority: 3
+X-GUID: 5DA8EB95-E0CF-4B30-BACF-5059331CF4AA
+X-Has-Attach: no
+X-Mailer: Foxmail 7, 2, 7, 174[en]
+Mime-Version: 1.0
+Message-ID: <2016111110491564662310@gmail.com>
+Content-Type: multipart/alternative;
+	boundary="----=_001_NextPart758088625745_=----"
+Subject: [oss-security] CVE-2016-8632 -- Linux kernel: tipc_msg_build() doesn't validate MTU that can trigger heap overflow
 
---Kgu8lWetUUr5Q4s4jXUp1xmA1oAR5XmDQ
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+------=_001_NextPart758088625745_=----
+Content-Type: text/plain;
+	charset="GB2312"
+Content-Transfer-Encoding: base64
 
-Hello,
+SGkgYWxsLA0KIA0KUmVjZW50bHkgSSBmb3VuZCBhIGZsYXcgaW4gdGhlIFRJ
+UEMgbmV0d29ya2luZyBzdWJzeXN0ZW0gd2hpY2ggY291bGQgYWxsb3cgZm9y
+IG1lbW9yeSBjb3JydXB0aW9uIGFuZCBwb3NzaWJsZSBwcml2aWxlZ2UgZXNj
+YWxhdGlvbiAoQ1ZFLTIwMTYtODYzMikuDQpJIG1hZGUgdGhpcyBwb3N0IHRv
+IG9zcy1zZWMgZm9yIG91dGxpbmluZyB0aGUgZmxhdyBhbmQgbGV0dGluZyBw
+ZW9wbGUga25vdyB0aGUgQ1ZFLg0KIA0KRmlyc3QgdXBzdHJlYW0gcGF0Y2go
+aXQgaGFzbid0IGJlZW4gcHVzaGVkIHVwc3RyZWFtIHlldCk6DQpodHRwczov
+L3d3dy5tYWlsLWFyY2hpdmUuY29tL25ldGRldkB2Z2VyLmtlcm5lbC5vcmcv
+bXNnMTMzMjA1Lmh0bWwNCiANCg0KVVBEQVRFDQotLS0tLS0tLS0tLQ0KRm9y
+Z290IHRvIGFkZCBDVkUgQXNzaWdubWVudCBUZWFtIHRvIENDIGxpc3QgaW4g
+dGhlIGxhc3QgbWFpbC4NCg0KDQpWVUxORVJBQklMSVRZDQotLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KUmVjZW50bHkgaSB0b29rIGEgZ2xhbmNlIGZvciBm
+dW5jdGlvbiB0aXBjX21zZ19idWlsZCgpIGF0IG5ldC90aXBjL21zZy5jOjI0
+NCBvbiBsaW51eCBrZXJuZWwgNC44LjEuDQpJdCBzZWVtcyBsaWtlIHRpcGNf
+bXNnX2J1aWxkKCkgZG9lc24ndCB2YWxpZGF0ZSB0aGUgcGFyYW1ldGVyIHBr
+dG1heChNVFUpIHBhc3NlZCBmcm9tIHRpcGNfc2VuZG1jYXN0KCksIGFuZCBp
+ZiBJIGNvdWxkIGNoYW5nZSB0aGlzIHZhbHVlIGxvd2VyIHRoYW4gKElOVF9I
+X1NJWkUgKyBtaHN6KSwgSXQgbWF5YmUgY2FuIHRyaWdnZXIgaGVhcCBvdmVy
+ZmxvdyBpbiBza2ItPmRhdGEuDQogDQpzdGF0aWMgaW50IHRpcGNfc2VuZG1j
+YXN0KHN0cnVjdCAgc29ja2V0ICpzb2NrLCBzdHJ1Y3QgdGlwY19uYW1lX3Nl
+cSAqc2VxLA0KICAgICAgICAgICAgICAgICAgc3RydWN0IG1zZ2hkciAqbXNn
+LCBzaXplX3QgZHN6LCBsb25nIHRpbWVvKSANCnsNCiAgICAgICAgIC4gLiAu
+DQogDQpuZXdfbXR1Og0KICAgICAgICAgbXR1ID0gdGlwY19iY2FzdF9nZXRf
+bXR1KG5ldCk7DQogICAgICAgICByYyA9IHRpcGNfbXNnX2J1aWxkKG1oZHIs
+IG1zZywgMCwgZHN6LCBtdHUsICZwa3RjaGFpbik7DQogDQogICAgICAgICAu
+IC4gLg0KfQ0KIA0KaW50IHRpcGNfbXNnX2J1aWxkKHN0cnVjdCB0aXBjX21z
+ZyAqbWhkciwgc3RydWN0IG1zZ2hkciAqbSwNCiAgICAgICAgICAgICAgICAg
+ICAgICBpbnQgb2Zmc2V0LCBpbnQgZHN6LCBpbnQgcGt0bWF4LCBzdHJ1Y3Qg
+c2tfYnVmZl9oZWFkICpsaXN0KQ0Kew0KICAgICAgICAgaW50IG1oc3ogPSBt
+c2dfaGRyX3N6KG1oZHIpOw0KICAgICAgICAgaW50IG1zeiA9IG1oc3ogKyBk
+c3o7DQogICAgICAgICBpbnQgcGt0bm8gPSAxOw0KICAgICAgICAgaW50IHBr
+dHN6Ow0KICAgICAgICAgaW50IHBrdHJlbSA9IHBrdG1heDsNCiAgICAgICAg
+IGludCBkcmVtID0gZHN6Ow0KICAgICAgICAgc3RydWN0IHRpcGNfbXNnIHBr
+dGhkcjsNCiAgICAgICAgIHN0cnVjdCBza19idWZmICpza2I7DQogICAgICAg
+ICBjaGFyICpwa3Rwb3M7DQogICAgICAgICBpbnQgcmM7DQogDQogICAgICAg
+ICBtc2dfc2V0X3NpemUobWhkciwgbXN6KTsNCiANCiAgICAgICAgIC4gLiAu
+DQogDQogICAgICAgICAvKiBQcmVwYXJlIGZpcnN0IGZyYWdtZW50ICovDQog
+ICAgICAgICBza2IgPSB0aXBjX2J1Zl9hY3F1aXJlKHBrdG1heCk7DQogICAg
+ICAgICBpZiAoIXNrYikNCiAgICAgICAgICAgICAgICAgICByZXR1cm4gLUVO
+T01FTTsNCiAgICAgICAgIHNrYl9vcnBoYW4oc2tiKTsNCiAgICAgICAgIF9f
+c2tiX3F1ZXVlX3RhaWwobGlzdCwgc2tiKTsNCiAgICAgICAgIHBrdHBvcyA9
+IHNrYi0+ZGF0YTsNCiAgICAgICAgIHNrYl9jb3B5X3RvX2xpbmVhcl9kYXRh
+KHNrYiwgJnBrdGhkciwgSU5UX0hfU0laRSk7DQogICAgICAgICBwa3Rwb3Mg
+Kz0gSU5UX0hfU0laRTsNCiAgICAgICAgIHBrdHJlbSAtPSBJTlRfSF9TSVpF
+Ow0KICAgICAgICAgc2tiX2NvcHlfdG9fbGluZWFyX2RhdGFfb2Zmc2V0KHNr
+YiwgSU5UX0hfU0laRSwgbWhkciwgbWhzeik7DQogICAgICAgICBwa3Rwb3Mg
+Kz0gbWhzejsNCiAgICAgICAgIHBrdHJlbSAtPSBtaHN6Ow0KIA0KICAgICAg
+ICAgLiAuIC4NCn0NCiANClRoZSBNVFUgdmFsdWUgY2FuIG9idGFpbmVkIGZy
+b20gdGlwY19iY2FzdF9nZXRfbXR1KCksIGFuZCB0aGlzIHZhbHVlIGNhbiBi
+ZSBzZXR0bGVkIGJ5IHRpcGNfbGlua19zZXRfbXR1KCksIEkgc2VhcmNoIGFy
+b3VuZCB3aXRoaW5nIHRoZSBzb3VyY2UgY29kZSBvZiA0LjguMSwgZm91bmRl
+ZCB0aGF0IG9ubHkgdGlwY19iY2Jhc2Vfc2VsZWN0X3ByaW1hcnkoKSBpbnZv
+a2VzIHRpcGNfbGlua19zZXRfbXR1KCkuDQogDQpzdGF0aWMgdm9pZCB0aXBj
+X2JjYmFzZV9zZWxlY3RfcHJpbWFyeShzdHJ1Y3QgbmV0ICpuZXQpDQp7DQog
+ICAgICAgICAuIC4gLg0KIA0KICAgICAgICAgZm9yIChpID0gMDsgaSA8IE1B
+WF9CRUFSRVJTOyBpKyspIHsNCiAgICAgICAgICAgICAgICAgICBpZiAoIWJi
+LT5kZXN0c1tpXSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb250
+aW51ZTsNCiANCiAgICAgICAgICAgICAgICAgICBtdHUgPSB0aXBjX2JlYXJl
+cl9tdHUobmV0LCBpKTsNCiAgICAgICAgICAgICAgICAgICBpZiAobXR1IDwg
+dGlwY19saW5rX210dShiYi0+bGluaykpDQogICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgdGlwY19saW5rX3NldF9tdHUoYmItPmxpbmssIG10dSk7DQog
+DQogICAgICAgICAgICAgICAgICAgLiAuIC4NCiAgICAgICAgIH0NCn0NCiAN
+CmludCB0aXBjX2JlYXJlcl9tdHUoc3RydWN0IG5ldCAqbmV0LCB1MzIgYmVh
+cmVyX2lkKQ0Kew0KICAgICAgICAgaW50IG10dSA9IDA7DQogICAgICAgICBz
+dHJ1Y3QgdGlwY19iZWFyZXIgKmI7DQogDQogICAgICAgICByY3VfcmVhZF9s
+b2NrKCk7DQogICAgICAgICBiID0gcmN1X2RlcmVmZXJlbmNlX3J0bmwodGlw
+Y19uZXQobmV0KS0+YmVhcmVyX2xpc3RbYmVhcmVyX2lkXSk7DQogICAgICAg
+ICBpZiAoYikNCiAgICAgICAgICAgICAgICAgICBtdHUgPSBiLT5tdHU7DQog
+ICAgICAgICByY3VfcmVhZF91bmxvY2soKTsNCiAgICAgICAgIHJldHVybiBt
+dHU7DQp9DQogDQpPYnZpb3VzbHkgdGlwY19iZWFyZXJfbXR1KCkgcmV0dXJu
+IE1UVSB2YWx1ZSBieSBvYmplY3QgdGlwY19iZWFyZXIgd2hpY2ggZGlyZWN0
+bHkgaW5oZXJpdGVkIGZyb20gbmV0IGRldmljZSBNVFUuKGV0aDAgTVRVIG9u
+IG15IHNpdHVhdGlvbikNCiANCiANCklORk8NCi0tLS0tLS0NClJlZCBIYXQg
+UHJvZHVjdCBTZWN1cml0eSBoYXMgYXNzaWduZWQgQ1ZFLTIwMTYtODYzMiB0
+byB0aGlzIHZ1bG5lcmFiaWxpdHkuDQpUaGlzIGlzc3VlIG1heSBjYXVzZSBt
+ZW1vcnkgY29ycnVwdGlvbiBhbmQgZXZlbiBlc2NhbGF0ZSBwcml2aWxlZ2Ug
+aWYgd2UgbGF5b3V0IHRoZSBhcHByb3ByaWF0ZSBoZWFwIHNwYWNlIGJ5IGFu
+eSB1c2VyIHdpdGggQ0FQX05FVF9BRE1JTi4NCiANCiANCkFGRkVDVEVEIFZF
+UlNJT04NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KSSB1c2Uga2Vy
+bmVsIDQuNi4yIHg4Nl82NCB0byByZXByb2R1Y2UgdGhlIGlzc3VlLCBidXQg
+aXQgYWxzbyBzZWVtcyBsaWtlIHZ1bG5lcmFibGUgaW4gdGhlIGxhdGVzdCBr
+ZXJuZWwgdmVyc2lvbig0LjktcmM0KS4NCg0KDQpTT0xVVElPTg0KLS0tLS0t
+LS0tLS0tLS0tDQpGaXJzdCB1cHN0cmVhbSBwYXRjaDoNCmh0dHBzOi8vd3d3
+Lm1haWwtYXJjaGl2ZS5jb20vbmV0ZGV2QHZnZXIua2VybmVsLm9yZy9tc2cx
+MzMyMDUuaHRtbA0KIA0KIA0KQ1JFRElUUw0KLS0tLS0tLS0tLS0tDQpUaGlz
+IHZ1bG5lcmFiaWxpdHkgd2FzIGZvdW5kIGJ5IFFpYW4gWmhhbmcgZnJvbSBN
+YXJ2ZWxUZWFtIFFpaG9vIDM2MC4NCiANCiANCk9uIE1vbiwgTm92IDcsIDIw
+MTYgYXQgOToyOSBBTSwgUmVkIEhhdCBQcm9kdWN0IFNlY3VyaXR5IDxzZWNh
+bGVydEByZWRoYXQuY29tPiB3cm90ZToNCiANCj5HZGF5LA0KIA0KPkkndmUg
+YXNrZWQgb3VyIHRlYW0gdG8gYXNzaWduIHlvdSBvbmUgZnJvbSB0aGUgaW50
+ZXJuYWwgcG9vbC4gUGxlYXNlLCB1c2UgQ1ZFLTIwMTYtODYzMi4NCj5UaGUg
+bmV4dCBzdGVwIGlzIHVzdWFsbHkgbWFraW5nIGEgcG9zdCBleHBsYWluaW5n
+IHRoaXMgaXNzdWUgdG8gT1NTLXNlYyBsaXN0LiBCZW4gKHVwc3RyZWFtKSBt
+ZW50aW9ucyB0aGF0IHRoaXMgcGF0Y2ggaXMgYWxyZWFkeSBwdWJsaWMgKCBo
+dHRwczovL3d3dy5tYWlsLWFyY2hpdmUuY29tL25ldGRldkB2Z2VyLmtlcm5l
+bC5vcmcvbXNnMTMzMjA1Lmh0bWwgKSBJIHdhcyBwbGFubmluZyB0byB1bmVt
+YmFyZ28gdGhpcyBmbGF3Lg0KIA0KPlRoZSBuZXh0IHN0ZXAgYXMgd2UgZGlz
+Y3Vzc2VkIHdvdWxkIGJlIGZvciB5b3UgdG8gbWFrZSBhIHBvc3QgdG8gb3Nz
+LXNlYyBvdXRsaW5pbmcgdGhlIGZsYXcgYW5kIGxldHRpbmcgcGVvcGxlIGtu
+b3cgdGhlIENWRS4gUGxlYXNlIG1ha2UgdGhlIHBvc3QgdG8gb3NzLXNlYyBl
+eHBsYWluaW5nIHRoZSBmbGF3IGFuZCByZWZlcmVuY2luZyB0aGUgZmlyc3Qg
+dXBzdHJlYW0gcGF0Y2guDQo+aHR0cHM6Ly93d3cubWFpbC1hcmNoaXZlLmNv
+bS9uZXRkZXZAdmdlci5rZXJuZWwub3JnL21zZzEzMzIwNS5odG1sDQogDQo+
+VGhhbmtzLCBsZXQgbWUga25vdyBpZiBJIGNhbiBoZWxwLg0KIA0KPldhZGUg
+TWVhbGluZw0KIA0K
 
-On 01/05/2016 12:58 AM, cve-assign@mitre.org wrote:
-> > Another SQL injection vulnerability via graphs_new.php in cacti was
-> > found, reported to the bug http://bugs.cacti.net/view.php?id=3D2652
->
-> http://bugs.cacti.net/view.php?id=3D2652 is CVE-2015-8604.
+------=_001_NextPart758088625745_=------
 
-Check against a possible duplicate assignment with CVE-2015-8377?
-
-http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
-
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1291222
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=3DCVE-2015-8377
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-8377
-
-
-Andreas
-
-
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=FCrnberg)
-
-
-
-
---Kgu8lWetUUr5Q4s4jXUp1xmA1oAR5XmDQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJWi4rXAAoJECzWqVXhWUVGvcYQAK3sO1bwA/+F1n71Xi1HsGR0
-IfKaaing1ZIUBIdp6WOTHbcf5hGbyVuWjHeoW6yNvIJQaZnThPuJvVy/kVipEsvD
-ZbcU+2glLn9/ii3HKcOyKgU//wG1Bptcn5zOScfw8MSZIoRQuT6wYqU3MqSAvQ+X
-U123OYsW47yRJ8Yzn66cXh5C+tX9DDWz4nBy4TN+UmkMQ1noIDat6JGwlHIID8jh
-qVn+fMy7Ahoj/9A7ZpfaYZVMKodiorlv3mlSE3xv4t7yRILBuryX7mb6K5IpKK/G
-CgvxQTg06lDPjETdQJjsxxT+VpmzMM29MHp9xXmbrSFEermhf5F7JaoX25wrfiDY
-/VhooZ73c9ONvtEDEs8ijz0hXFmjI8Nm/wywmumXSDggyFAlBDkpi1b1HN69nbyN
-/JqxVkoOYsBFWXBJOWBROMaMKKV4g3Eq33Nu0J4b+WFesQy+pdMKaEQEDSD0fxKN
-1zYQTb87eADgrr3D+6urReatnjoGK/inAsLkRM2+uO1FsMFGJgk+bqBuxbfJ7uv3
-V24HY6zr9rhwLyEKvIdGJmKEjgo1OKXhffZLXsvgIKyiPPzJQGWlMOhq/PZDjlJn
-CNROUjO/1FMQ6cu7ACOim2R5KYWuf0dnF1SWl5BJKA4pTiWPx1Cq/4enpWb4/UqE
-klKSxJ2qdJi10eldg5jT
-=xuqO
------END PGP SIGNATURE-----
-
---Kgu8lWetUUr5Q4s4jXUp1xmA1oAR5XmDQ--
