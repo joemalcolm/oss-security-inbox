@@ -1,74 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/8
-Message-ID: <CAAsmaPbQvEhYDc8bznLoi2TBbfKk_7uNSGHtHZLpbzUCX5RCsw@mail.gmail.com>
-Date: Tue, 15 Mar 2016 15:27:05 -0500
-From: Tim Zingelman <tez@...src.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/12/2
+Message-ID: <CANMVOuzgr=caMRG=US40q-yfmA5mGH7OakJMvrj4r1g_B3yGiQ@mail.gmail.com>
+Date: Fri, 11 Nov 2016 22:13:40 -0600
+From: "Brian 'geeknik' Carpenter" <brian.carpenter@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: please assign CVE for cacti bug 2667: SQL Injection Vulnerability
+Subject: CVE Request: libtiff: read outside buffer in _TIFFPrintField()
 Content-Type: text/plain; charset=utf-8
 
-This seems to fix it...
+Hi, could you assign a CVE to the following issue in libtiff?
 
-diff -u tree.php.orig tree.php
---- tree.php.orig       2016-03-15 15:15:37.646641203 -0500
-+++ tree.php    2016-03-15 15:19:45.966120414 -0500
-@@ -153,6 +153,7 @@
-        /* ================= input validation ================= */
-        input_validate_input_number(get_request_var("id"));
-        input_validate_input_number(get_request_var("tree_id"));
-+       input_validate_input_number(get_request_var("parent_id"));
-        /* ==================================================== */
+http://bugzilla.maptools.org/show_bug.cgi?id=2590
 
-        if (!empty($_GET["id"])) {
+Fixed per
+>> 2016-11-11 Even Rouault <even.rouault at spatialys.com>
+>> * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), make sure that
+>> values of tags with TIFF_SETGET_C16_ASCII / TIFF_SETGET_C32_ASCII
+>> access are null terminated, to avoid potential read outside buffer
+>> in _TIFFPrintField().
+>>
+>> /cvs/maptools/cvsroot/libtiff/ChangeLog,v <-- ChangeLog
+>> new revision: 1.1154; previous revision: 1.1153
+>> /cvs/maptools/cvsroot/libtiff/libtiff/tif_dirread.c,v <--
+>> libtiff/tif_dirread.c
+>> new revision: 1.203; previous revision: 1.202
 
+Regards,
 
+Brian 'geeknik' Carpenter
+https://twitter.com/geeknik
 
-On Thu, Mar 10, 2016 at 10:06 AM, Paul Gevers <elbrus@...ian.org> wrote:
-> Hi
->
-> I just found the description below about an sql vulnerability in the
-> cacti bug tracker: http://bugs.cacti.net/view.php?id=2667
->
-> Can a CVE be assigned for this issue?
-> Thanks
->
-> ==========================
-> Advisory: Cacti SQL Injection Vulnerability
-> Author: Do9gy of Tencent Security Platform Department
-> Affected Version: 0.8.8.g(the latest version & the older versions)
-> ==========================
-> Vulnerability Description
-> ==========================
->
-> Recetly, I found a SQL Injection Vulnerability in ‘Cacti-0.8.8g'
-> program, Cacti is widely used in many companies.
-> Vulnerable file: /cacti/tree.php:
-> line 208:
-> ==========================================================================================================================================
->     switch ($current_type) {
->     case TREE_ITEM_TYPE_HEADER:
->         $i = 0;
->         /* it's nice to default to the parent sorting style for new items */
->         if (empty($_GET["id"])) {
->             $default_sorting_type = db_fetch_cell("select
-> sort_children_type from graph_tree_items where id=" . $_GET["parent_id"]);
->         }else{
->             $default_sorting_type = TREE_ORDERING_NONE;
->         }
->
-> ==========================================================================================================================================
->
-> The parameter parent_id is used without any validation.
-> ==========================
-> POC && EXP
-> ==========================
-> 1. Login
->
-> 2.
-> http://target/cacti-0.8.8g/tree.php?action=item_edit&tree_id=2&parent_id=8%20and%20sleep(1)
-> [^]
->
-> 3. mysql log: select sort_children_type from graph_tree_items where id=8
-> and sleep(1)
->
->
