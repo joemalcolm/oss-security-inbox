@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/15
-Message-ID: <5fba1477d08e4f3481f6f65080897a24@imshyb02.MITRE.ORG>
-Date: Fri, 18 Nov 2016 18:57:21 -0500
-From: <cve-assign@...re.org>
-To: <henri@...v.fi>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2016-9297 LibTIFF regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/12/3
+Message-Id: <1478939985.2087788.785402465.36AF3B93@webmail.messagingengine.com>
+Date: Sat, 12 Nov 2016 09:39:45 +0100
+From: Ondřej Surý <ondrej@...y.org>
+To: oss-security@...ts.openwall.com, Debian Security Team <team@...urity.debian.org>, Dariusz Dwornikowski <dariusz.dwornikowski@...put.poznan.pl>, Sam Trenholme <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
+Subject: Remote crash in MaraDNS 2.0.13 and git master
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> CVE-2016-9297 vulnerability reported in http://bugzilla.maptools.org/show_bug.cgi?id=2590 had a
-> regression, which is fixed in http://bugzilla.maptools.org/show_bug.cgi?id=2593
-> 
->         * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), do not dereference
->         NULL pointer when values of tags with TIFF_SETGET_C16_ASCII /
->         TIFF_SETGET_C32_ASCII access are 0-byte arrays.
->         Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2593 (regression
->         introduced by previous fix done on 2016-11-11 for CVE-2016-9297).
+while playing with fuzzing the DNS servers with AFL (2.35b) I found a
+remote crash bug in MaraDNS 2.0.13 js_readuint16. It can be also
+reproduced using https://github.com/samboy/MaraDNS/ master branch.
 
-Use CVE-2016-9448 for the vulnerability fixed in 2593.
+Attached is patch to allow the fuzzing (it overrides getudp() with
+read(0, ..)), the input data that crashes MaraDNS, and the bt full
+output.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Please assign CVE, I would provide a patch, but MaraDNS code is
+extremely hard to navigate for me, so I'll leave the fix for the code
+author.
 
-iQIcBAEBCAAGBQJYL5SIAAoJEHb/MwWLVhi2AzYP/2SarSYSo50EUpN0P21HbPSO
-IEulwCp/UJ8S4Uu+0SlXs3vhBzi9OMJGjAAT73dqekzmvuWzXwwmXdTVdPhXYRQN
-YrqK3K1QIn/gbFzAAbV6uzntktABhReJi0Rx57/kkfWbRHsIclD+nAJfY+yQWmkK
-h1NS3DgBPcIffswM2EtbRU6hWWkdEHoxeiezIrk5o/hSHFt9AFP5yVNmcid63Hgp
-rSgFfGIghkOrWQ3YSh9+bqCGC0dxHoBpvGR+yu0VEFFaLsh/EIjcy7kj1RBBAZWT
-MpiSu0gTq2UMn8r/6H6Citxq79Iva+pafL8afCTsaAl8fMJ5aNsTj5JKEzcm83Hr
-6riZMZv3AjizN+8x1lDFWcL1uN7Z+wilUU22/n7Qi1RGjzq74Vrs9Dabj0YoRZFV
-9ukCOGqhpfGGwUrsVkwva26LvFei8nbP+P7f46AN8752HEugxt+uQhKixgco/ijf
-25AYLDdBR3gIVMjJ44bSxKdHPBrFPMLMhU21huPD0w0upWTj220Sz7phvlF5oE8R
-eogTOcNdDjMODtO8LHgSNviHQxc2Am03G0B6H/xm2NV7V2UQgvYHUOyQGU6jmJyY
-BMwT6zaSALNs+g2WbKY6a/AuPnpUoKaabRtWNabAdd36o+lHsw7bliMyfDr9K4Lr
-J6Cf8vBaL2h6W4whAQR7
-=Jmyq
------END PGP SIGNATURE-----
+AFL has finished only 1 cycle (and found the 1 unique crash), so I'll
+keep it running for a while.
+
+Cheers,
+-- 
+Ondřej Surý <ondrej@...y.org>
+Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
+Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
+fast DNS(SEC) resolver
+Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
+pečení chleba všeho druhu
+
+Download attachment "maradns.btfull" of type "application/octet-stream" (3678 bytes)
+
+View attachment "allow-fuzzing.patch" of type "text/x-patch" (1799 bytes)
+
+Download attachment "id:000000,sig:11,src:007564,op:havoc,rep:32" of type "application/octet-stream" (23 bytes)
