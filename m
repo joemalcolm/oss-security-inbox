@@ -1,4 +1,9 @@
-Received: (qmail 12005 invoked by uid 550); 15 Dec 2023 08:21:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["822" "Sunday" "13" "November" "2016" "00:13:40" "+0100" "Daniel Beck" "ml@beckweb.net" "<041433EB-C484-41D5-8589-A5CE9F8BA0E7@beckweb.net>" "25" "[oss-security] CVE request: Jenkins remote code execution vulnerability" nil nil nil "11" "2016111223:13:40" "[oss-security] CVE request: Jenkins remote code execution vulnerability" (number mark "U       ml@beckweb.n Nov 13   25/822   " thread-indent "\"[oss-security] CVE request: Jenkins remote code execution vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29858 invoked by uid 550); 12 Nov 2016 23:13:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,187 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19756 invoked from network); 15 Dec 2023 00:45:19 -0000
-Date: Thu, 14 Dec 2023 23:15:02 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+Received: (qmail 29840 invoked from network); 12 Nov 2016 23:13:53 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-Id: <041433EB-C484-41D5-8589-A5CE9F8BA0E7@beckweb.net>
+Date: Sun, 13 Nov 2016 00:13:40 +0100
 To: oss-security@lists.openwall.com
-Message-ID: <20231214221502.aXOhm-Sw@steffen%sdaoden.eu>
-In-Reply-To: <ZXr2P6zT-PLtWShn@kasco.suse.de>
-References: <ZXr2P6zT-PLtWShn@kasco.suse.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-576-gadc6aa6ab3
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: [oss-security] XDG_RUNTIME_DIR "misuse" as $TMPDIR (was: Re: [oss-security]
- budgie-extras: multiple predictable /tmp path issues in various applications)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1478992433;5649334e;
+Subject: [oss-security] CVE request: Jenkins remote code execution vulnerability
 
-Hello.
-Matthias Gerstner wrote in
- <ZXr2P6zT-PLtWShn@kasco.suse.de>:
- ...
- |this report is about a range of predictable /tmp path issues in various
- ...
- |Without the Linux kernel's symlink protection many of these findings
- |where files are created look like they might allow symlink attacks to
- |have files created in arbitrary locations. The Vala file creation calls
- |I looked into are mostly translated into the following system call,
- |though:
- |
- |    openat(AT_FDCWD, <path>, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, 0666)
- |
- |Even tough this is missing the `O_NOFOLLOW` flag, symlinks would not be
- |followed, due to the combination of O_CREAT and O_EXCL. I will point
- |out cases where symlink attacks might still be possible in spite of
- |this.
- |
- |As a quick fix for all of these issues I suggested to use
- |`$XDG_RUNTIME_DIR` instead of /tmp. This directory is private to the
- |logged in user and cannot be manipulated by other users in the system.
- ...
+Hello,
 
-This sprang into my eyes as this directory is defined (XDG Base
-Directory Specification, Version 0.8, 08th May 2021) (further
-indented are "secondaries"):
+An unauthenticated remote code execution vulnerability was discovered in the
+Jenkins continuous integration and continuous delivery automation server.
+A serialized Java object transferred to the Jenkins CLI can make Jenkins
+connect to an attacker-controlled LDAP server, which in turn can send a
+serialized payload leading to code execution, bypassing existing protection
+mechanisms.
 
-     $XDG_RUNTIME_DIR defines the base directory relative to which
-     user-specific non-essential runtime files and other file
-     objects (such as sockets, named pipes, ...) should be stored.
-     The directory MUST be owned by the user, and he MUST be the
-     only one having read and write access to it. Its Unix access
-     mode MUST be 0700.
+The Jenkins project tracks this as SECURITY-360. Releases with the fix are
+planned for Wednesday, November 16.
 
-   The lifetime of the directory MUST be bound to the user being
-   logged in. It MUST be created when the user first logs in and
-   if the user fully logs out the directory MUST be removed.  If
+Please assign a CVE to this issue.
 
-Here i want to point out that on a "normal" UNIX/POSIX system (as
-i understand it: without systemd and without kernel "reaper"
-support) this is impossible to achieve because any user can leave
-login sessions simply by doing for example
+References:
 
-  (sleep 10 </dev/null >/dev/null 2>&1 &)
+Jenkins website:
+https://jenkins.io/
 
-in which case that sleep(1) is reparented to init(8).
+Publication of the vulnerability in this talk:
+https://www.deepsec.net/speaker.html#PSLOT250
 
-Unfortunately even the largest wealth inside the Linux community
-has not managed to update any non-systemd infrastructure to newer
-kernels which feature PR_SET_CHILD_SUBREAPER (since Linux 3.4),
-ie, the PAM subsystem, or, on my box, for example, inittab-started
-agetty then calls /bin/login:
+Notification and workaround by the Jenkins project here:
+https://groups.google.com/d/msg/jenkinsci-advisories/-fc-w9tNEJE/GRvEzWoJBgAJ
 
-  $ pkginfo -o /bin/login
-  Package  File
-  shadow   bin/login
-  $ prt-get info shadow|grep URL
-  URL:          https://github.com/shadow-maint/shadow/
-
-Shadow tools anyone else has forgotten, but anyway not upgraded.
-
-Ie even "normal UNIX" tools should optionally make use of the
-REAPER technique, which is also present on FreeBSD, at least.
-I wanted to point this out again.  (Without having looked whether
-any such effort was undertaken.  I think not.  Not on FreeBSD,
-which' source changes i superficially track.)
-
-So *this requirement alone* cannot be satisfied for real, which is
-why my pam_xdg has this is in its manual:
-
-  CAVEATS
-  On Unix systems any "daemonized" program or script is reparented to the
-  program running with PID 1, most likely leaving the PAM user session
-  without PAM recognizing this.  Yet careless such code may hold or expect
-  availability of resources of the session it just left, truly performing
-  cleanup when sessions end seems thus unwise.  Since so many PAM modules
-  do support session tracking and cleanup pam_xdg.so readded optional sup-
-  port for this.
-
-Ie this is for
-
- track_sessions will enable session tracking: once the last session ends,
- the user's XDG_RUNTIME_DIR will be recursively removed
-
-but is not by default enabled --- because of the below, and
-therefore back to XDG as such:
-
-    the user logs in more than once he should get pointed to the
-    same directory, and it is mandatory that the directory
-    continues to exist from his first login to his last logout on
-    the system, and not removed in between. Files in the directory
-    MUST not survive reboot or a full logout/login cycle.  The
-    directory MUST be on a local file system and not shared with
-    any other system. The directory MUST by fully-featured by the
-    standards of the operating system. More specifically, on
-    Unix-like operating systems AF_UNIX sockets, symbolic links,
-    hard links, proper permissions, file locking, sparse files,
-    memory mapping, file change notifications, a reliable hard link
-    count must be supported, and no restrictions on the file name
-    character set should be imposed. Files in this directory MAY be
-    subjected to periodic clean-up. To ensure that your files are
-    not removed, they should have their access time timestamp
-    modified at least once every 6 hours of monotonic time or the
-    'sticky' bit should be set on the file.
-
-   If $XDG_RUNTIME_DIR is not set applications should fall back to
-   a replacement directory with similar capabilities and print
-   a warning message. Applications should use this directory for
-   communication and synchronization purposes and should not place
-   larger files in it, since it might reside in runtime memory and
-   cannot necessarily be swapped out to disk.
-
-This!  "Should not place larger files"!
-In fact it can be expected that /run/user/UID lives in a tmpfs
-environment, especially so on Linux, from my point of view at
-least.
-Quite the opposite i for myself would expect further restrictions
-to apply to avoid misuse.  (Like using small tmpfs filesystems.
-I am thinking to implement an "exec hook" for pam_xdg to let
-people for example mount a specific tmpfs on top of that user dir
-once it is created.  Like this
-
-  mount -t tmpfs -o size=1% tmpfs ${rundir} || exit 11
-
-for my personal box-web.sh which creates an overlay environment.
-This 1% is still 80 MB!  (It has "meat" in other directories, but
-also space constrained, of course.))
-
-I mean Linux or MacOS are not OpenBSD which threw away any $TMPDIR
-in favour of a fixed "/tmp".  One can easily create per-user /tmp
-via tmpfs mounts as above, for example, even if programs like
-OpenSSH's can then not easily be controlled except via "pkill
--TERM" or such upon LID close or other such "shall loose keys"
-events, like my
-
-  if command -v ssh-add >/dev/null 2>&1; then
-    for a in /tmp/ssh-*/agent.*; do
-      [ -e "$a" ] || continue
-      act "SSH_AUTH_SOCK=\"$a\" ssh-add -D </dev/null >/dev/null 2>&1 &"
-      inc 1 2
-    done
-  fi
-
-which then does not work as easily, or i had to use GnuPG's agent,
-which can do this via a simple "pkill -SIG".
-
-All that makes me think whether XDG_RUNTIME_DIR is such a good
-target for temporary files, generally speaking.
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
-|
-| Only in December: lightful Dubai COP28 Narendra Modi quote:
-|  A small part of humanity has ruthlessly exploited nature.
-|  But the entire humanity is bearing the cost of it,
-|  especially the inhabitants of the Global South.
-|  The selfishness of a few will lead the world into darkness,
-|  not just for themselves but for the entire world.
-|  [Christians might think of Revelation 11:18
-|    The nations were angry, and your wrath has come[.]
-|    [.]for destroying those who destroy the earth.
-|   But i find the above more kind, and much friendlier]
