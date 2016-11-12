@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/2
-Message-ID: <628131663.11879492.1453704093304.JavaMail.zimbra@redhat.com>
-Date: Mon, 25 Jan 2016 01:41:33 -0500 (EST)
-From: Wade Mealing <wmealing@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: Linux kernel : Denial of service with specially crafted key file.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/12/4
+Message-Id: <041433EB-C484-41D5-8589-A5CE9F8BA0E7@beckweb.net>
+Date: Sun, 13 Nov 2016 00:13:40 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Jenkins remote code execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+Hello,
 
-I would like a CVE for the following issue:
+An unauthenticated remote code execution vulnerability was discovered in the
+Jenkins continuous integration and continuous delivery automation server.
+A serialized Java object transferred to the Jenkins CLI can make Jenkins
+connect to an attacker-controlled LDAP server, which in turn can send a
+serialized payload leading to code execution, bypassing existing protection
+mechanisms.
 
-An issue with ASN1.1 DER decoder was reported that a specially created key can lead to a kernel panic via x509 certificate DER signature parsing.
+The Jenkins project tracks this as SECURITY-360. Releases with the fix are
+planned for Wednesday, November 16.
 
-Vulnerable code:
+Please assign a CVE to this issue.
 
-...
-int public_key_verify_signature(const struct public_key *pk,
-                                const struct public_key_signature *sig)
-{
-        const struct public_key_algorithm *algo;
+References:
 
-        BUG_ON(!pk);
-        BUG_ON(!pk->mpi[0]);
+Jenkins website:
+https://jenkins.io/
 
+Publication of the vulnerability in this talk:
+https://www.deepsec.net/speaker.html#PSLOT250
 
-
-An attacker could craft a BER file without a public key and panic the system.  
-
-There is no patch upstream at the time of writing.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1300237
+Notification and workaround by the Jenkins project here:
+https://groups.google.com/d/msg/jenkinsci-advisories/-fc-w9tNEJE/GRvEzWoJBgAJ
 
