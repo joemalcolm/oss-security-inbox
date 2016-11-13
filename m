@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/17/4
-Message-ID: <3200281.PYQmTlBBlq@arcadia>
-Date: Sat, 17 Sep 2016 12:50:41 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/13/2
+Message-ID: <22143afd-005a-6fff-2c75-f5e74c2b92fe@pipping.org>
+Date: Sun, 13 Nov 2016 16:28:19 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
+Cc: Antonio Ceballos <aceballos@...il.com>
+Subject: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Friday 16 September 2016 21:49:19 cve-assign@...re.org wrote:
-> >> mpegvideo_motion: Handle edge emulation even without unrestricted_mv
-> >> 
-> >> Fix out of bounds read.
-> >> 
-> >> libavcodec/mpegvideo_motion.c
-> 
-> Use CVE-2016-7424.
+Hi there!
 
-I would like to mention that the upstream git commit is wrong.
-This issue is a NULL pointer access and not an out-of-bounds
 
-I already pinged an upstream developer to notify the discrepancy but I guess 
-that their git does not allow to edit the message for the commit already 
-pushed.
+gnuchess 6.2.4 fixed a stack buffer overflow related to user move input,
+i.e. 160 characters input can crash unpatched gnuchess 6.2.3.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+I am unsure if this can be used to execute arbitrary code and if it
+needs a CVE or not: gnuchess itself does not seem to accept input from a
+file so it may need some other application in front (e.g. a website
+using gnuchess for a backend or some mobile/desktop application
+forwarding evil input to gnuchess with improper validation) to attack.
+
+The patch in 6.2.4 is this, content from s goes into mvstr later:
+
+
+# diff -u4 gnuchess-6.2.3/src/frontend/move.cc
+gnuchess-6.2.4/src/frontend/move.cc
+--- gnuchess-6.2.3/src/frontend/move.cc        2015-01-01
+23:57:25.000000000 +0100
++++ gnuchess-6.2.4/src/frontend/move.cc        2016-09-20
+01:12:35.000000000 +0200
+@@ -541,8 +541,13 @@
+    char mvstr[MAXSTR], *p;
+    BitBoard b, b2;
+    leaf *n1, *n2;
+
++   /* User input could be longer than MAXSTR */
++   if ( strlen(s) >= MAXSTR ) {
++      s[MAXSTR-1] = '\0';
++   }
++
+    TreePtr[2] = TreePtr[1];
+    GenMoves (1);
+    FilterIllegalMoves (1);
+    side = board.side;
+
+
+Thanks and best
+
+
+
+Sebastian
