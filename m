@@ -1,4 +1,9 @@
-Received: (qmail 32406 invoked by uid 550); 11 Apr 2026 13:31:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1145" "Sunday" "13" "November" "2016" "16:28:19" "+0100" "Sebastian Pipping" "sebastian@pipping.org" "<22143afd-005a-6fff-2c75-f5e74c2b92fe@pipping.org>" "42" "[oss-security] CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow" nil nil nil "11" "2016111315:28:19" "[oss-security] CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow" (number mark "U       sebastian@pi Nov 13   42/1145  " thread-indent "\"[oss-security] CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13511 invoked by uid 550); 13 Nov 2016 15:28:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32367 invoked from network); 11 Apr 2026 13:31:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-ID:
-	Content-Description; bh=j2LndgQrzkLEMh6Ofeo2XavDqI8f6mesQERC7jAsczc=;
-	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1775914309;
-	x=1776562309; b=RyQWl7hoXkZawGXBfpqYe2XW14fEkVLxx/Z9zC2WYDyM1bPb+Nks0ch/QzX3b
-	BdNV0URFBi+HLBfWWoWXHz3Aik2KVTiz/dPq1kDZSACjgLAr+u5hcBImMSP+osvoIGfd2eduX2GsD
-	+XapfDsdjdQQNs4wL96yc29R3kVomX7K5nIuLWpOgAEJd5qFjnM+VEIROStk5Ep6bzpik8W9zkTo9
-	EoCO/ehdqeokSmqn+DwHbPuaRme0GesmcHA8fuVV/7tJXaGAHCbQsulfKHcTdFcnZDwuSTkxBSzLh
-	7516ATTlcvRalUwfXF34sIzjOJpYjgUd/F+crnA45SaPBdcOmQ==;
-Date: Sat, 11 Apr 2026 16:31:34 +0300
-From: Valtteri Vuorikoski <vuori@notcom.org>
+Received: (qmail 13493 invoked from network); 13 Nov 2016 15:28:32 -0000
+From: Sebastian Pipping <sebastian@pipping.org>
 To: oss-security@lists.openwall.com
-Message-ID: <adpLiEEu1l6h8ecF@donburi.himad.notcom.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <ado-k2ivxft6BukD@donburi.himad.notcom.org>
+Cc: Antonio Ceballos <aceballos@gmail.com>
+Message-ID: <22143afd-005a-6fff-2c75-f5e74c2b92fe@pipping.org>
+Date: Sun, 13 Nov 2016 16:28:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ado-k2ivxft6BukD@donburi.himad.notcom.org>
-User-Agent: NeoMutt/20251211-3-1d6324
-Subject: Re: [oss-security] CVE-2026-35537+more: Roundcube arbitrary write +
- ID/XSS/etc. prior to 1.6.14
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
+Subject: [oss-security] CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
 
-Addendum: versions 1.5.15/1.6.15 were released March 29 that correct regressions introduced
-in 1.5.14/1.6.14 and fix one more cross-site issue:
+Hi there!
 
-  * SVG Animate FUNCIRI Attribute Bypass — Remote Image Loading via
-  fill/filter/stroke, reported by class_nzm.
 
-Announcement is at
-<https://roundcube.net/news/2026/03/29/security-updates-1.7-rc6-1.6.15-1.5.15>. This
-appears to be CVE-2026-35545.
+gnuchess 6.2.4 fixed a stack buffer overflow related to user move input,
+i.e. 160 characters input can crash unpatched gnuchess 6.2.3.
 
- -Valtteri
- 
+I am unsure if this can be used to execute arbitrary code and if it
+needs a CVE or not: gnuchess itself does not seem to accept input from a
+file so it may need some other application in front (e.g. a website
+using gnuchess for a backend or some mobile/desktop application
+forwarding evil input to gnuchess with improper validation) to attack.
+
+The patch in 6.2.4 is this, content from s goes into mvstr later:
+
+
+# diff -u4 gnuchess-6.2.3/src/frontend/move.cc
+gnuchess-6.2.4/src/frontend/move.cc
+--- gnuchess-6.2.3/src/frontend/move.cc        2015-01-01
+23:57:25.000000000 +0100
++++ gnuchess-6.2.4/src/frontend/move.cc        2016-09-20
+01:12:35.000000000 +0200
+@@ -541,8 +541,13 @@
+    char mvstr[MAXSTR], *p;
+    BitBoard b, b2;
+    leaf *n1, *n2;
+
++   /* User input could be longer than MAXSTR */
++   if ( strlen(s) >= MAXSTR ) {
++      s[MAXSTR-1] = '\0';
++   }
++
+    TreePtr[2] = TreePtr[1];
+    GenMoves (1);
+    FilterIllegalMoves (1);
+    side = board.side;
+
+
+Thanks and best
+
+
+
+Sebastian
