@@ -1,62 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/2
-Message-ID: <2733178.4axvx009n6@sarpedon>
-Date: Wed, 09 Mar 2016 15:59:25 +0000
-From: Tim Brown <tmb@...35.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/12
+Message-ID: <5f7c61458c5f4f3d9c95c80a8da2521e@imshyb02.MITRE.ORG>
+Date: Mon, 14 Nov 2016 14:46:55 -0500
+From: <cve-assign@...re.org>
+To: <sebastian@...ping.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <aceballos@...il.com>
+Subject: Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 06 March 2016 21:39:54 Gsunde Orangen wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> I totally agree.
-> The concern addressed by Kurt initially is fully valid (for both
-> researchers and for companies that are not on Mitre's product/sources
-> list), so a new (better: additional) solution is required.
-> However, creating a new standard independently of CVE would be too
-> disruptive and be a disservice to the software industry.
+> http://lists.gnu.org/archive/html/bug-gnu-chess/2015-10/msg00002.html
+> http://svn.savannah.gnu.org/viewvc?view=rev&root=chess&revision=134
 
-Quite, as much as I appreciate the options presented over the last few days, I 
-don't think any of them are the winning horse.
+> frontend/move.cc
 
-(To paraphase) if MITRE does not exist then it must be reinvented however the 
-days of multiple competing indexes of vulns should be avoided if possible. We 
-only have to look at the AV community to see how that degenerates. This one of 
-the main reasons that when we open sourced out disclosure tool kit, we 
-explicitly mandated the use of CVEs for tracking.
+>> ValidateMove function that is expecting 128
 
-> I'd propose to work out a new solution together with Mitre, whilst
-> keeping the CVE IDs as today.
+Use CVE-2015-8972.
 
-As would I however, even with pointers from SC about who to poke within MITRE 
-we came up short tracking a warm body down for (~7) months (even one that was 
-willing to say no). That being said, we have now located a new warm body at 
-MITRE who has made themselves known to us, I am more than happy to approach 
-them about the following:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> Since 2014, virtually unlimited number of CVE IDs can be assigned per
-> year [1], so a solution could be that
->  - Mitre continues to assign 4 and 5 digit IDs as today
->  - 6 digit IDs are reserved for the new process (hosted outside Mitre)
-> If more than one million vulnerabilities need to be addressed in one
-> year, we could follow the rule (odd digits -> Mitre, even digits ->
-> "other process")
-> 
-> >From Mitre's POC, this "other process" would become a "CNA", just with
-> 
-> its own policy and process definition, not prescribed by Mitre.
-> It would soon become clear to everyone (and all tools and products that
-> rely on CVE) where to look at for the authoritative vulnerability
-> information.
-> 
-> And yes: OWASP.org could certainly be a perfect host for that new "CNA"
-> - as Mark offered earlier ;-)
-
-Indeed, such a project requires a vendor neutral host. If OWASP are up for it, 
-then I would gladly support them running with the above proposal, if not then 
-a good faith alternative ought to be sought.
-
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+iQIcBAEBCAAGBQJYKhRRAAoJEHb/MwWLVhi2DwcP/1juLQPRJva94HfwKmS+gZhL
+yhKtVh9QtPrmwwBENu+m7q/DICQbzLMkm55OIxCqI/0IpH6UrSwV3ga1r1n8q6na
++6Z3hWSsl6AlIZ7ACWSsQikoc9xSRibIG4DIFR9yX6KpRcFX6SxvzZ2gxM5riU4m
+sxreTblY5nqczyW7PT2gIOB93SBzsMnZDXf6eVJkNixuNb2zo0AAA32ccXjPCJJl
+u2dU9q6z6PfuyMWymhXjY31NXzZlm8upMdyrvx/xqdy8Crpw/RYY67AEa1k2l15X
+7C7v466fKnMmR3XYUVRLqnFjFdT2XAc11ITyl9HbXKPpsEbfTnUxiUgmpzIFU9y8
+jrRNdRtsY469RPTxDjZTnfnu8blcTK9CfhzeSWva0SEc0phVtjjyPR6xrNuhUmKh
+6714CVSSKtzbti2m2i/Aio6xfHef7RH7S8TcoEx5xnNHCJ77PPXEWPr2wkeSDeUc
+NEZpw6IV3rhtyOrGNhEWxtU+NOYgK1qGCkpPWfZX3loNVihNETODLD1VsH6YYS0l
+E5/wCzZ9Bu3k9qWgd9VTJQKZ/Jkfg/q4MCFcTqeqDNmEOrg+I8uJegsikwGnLij3
+i79vBgnNt2nVmKIbNsX59zRlfgRS81Ok+zoLrjHEitGsfGYBh26vn7x2l/oFGEgU
+l93Rb5Wp7wStDB4bzHHo
+=Gg4P
+-----END PGP SIGNATURE-----
