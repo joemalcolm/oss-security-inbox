@@ -1,24 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/31/1
-Message-ID: <CAHfSU62kxO42fsxm+toHhu99aWpDerxkUea2jv-zpXxZcbCnsQ@mail.gmail.com>
-Date: Sun, 31 Jan 2016 01:30:16 +0100
-From: Andrea Di Pasquale <spikey.it@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: ArpON (ARP handler inspection) 3.0-ng release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/3
+Message-Id: <1479103384.3374846.786740337.305C3E3C@webmail.messagingengine.com>
+Date: Mon, 14 Nov 2016 07:03:04 +0100
+From: Ondřej Surý <ondrej@...y.org>
+To: oss-security@...ts.openwall.com, Sam Trenholme <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
+Subject: Re: Remote crash in MaraDNS 2.0.13 and git master
 Content-Type: text/plain; charset=utf-8
 
-Hello guys,
+And attachments.
 
-we have released the next generation 3.0 version.
+O.
+-- 
+Ondřej Surý <ondrej@...y.org>
+Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
+Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
+fast DNS(SEC) resolver
+Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
+pečení chleba všeho druhu
 
-ArpON is a Host-based solution that make the ARP standardized protocol
-secure in order to avoid the Man In The Middle (MITM) attack through the
-ARP spoofing, ARP cache poisoning or ARP poison routing attack.
+On Mon, Nov 14, 2016, at 06:53, Ondřej Surý wrote:
+> Hi all,
+> 
+> AFL found another 5 crashes totaling to 6 unique crashes. Looking at the
+> backtraces it
+> looks like, it's just 3 unique crashes:
+> 
+> - js_readuint16
+> - js_substr
+> 
+> - process_query -> this in fact looks like stack smashing, since it
+> crashes on htons in an unrelated place
+> 
+> id:000000
+> id:000002
+> Program received signal SIGSEGV, Segmentation fault.
+> js_readuint16 (js=js@...ry=0x6de290, offset=offset@...ry=4) at
+> JsStr.c:1064
+> 1064               (*(js->string + offset + 1) & 0xff);
+> 
+> 
+> id:000001
+> id:000005
+> Program received signal SIGSEGV, Segmentation fault.
+> js_substr (source=source@...ry=0x6de290, dest=dest@...ry=0x6e37f0,
+> start=start@...ry=99, count=count@...ry=63743) at JsStr.c:731
+> 731               *(source->string + counter + start *
+> source->unit_size);
+> 
+> NOTE: id000001 cannot be reproduced on git master, but id000005 still
+> crashes it, so they probably are separate issues after all.
+> 
+> id:000003
+> id:000004
+> Program received signal SIGSEGV, Segmentation fault.
+> proc_query (raw=0x6de5d0, ect=0x7fffffffd940, sock=0) at MaraDNS.c:2615
+> 2615        ip = htonl((z->sin_addr).s_addr);
+> 
+> This is after 58 AFL cycles.
+> 
+> It will be worth retesting with ASAN enabled.
+> 
+> Cheers,
+> -- 
+> Ondřej Surý <ondrej@...y.org>
+> Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
+> Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
+> fast DNS(SEC) resolver
+> Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
+> pečení chleba všeho druhu
+> 
+> On Sat, Nov 12, 2016, at 09:39, Ondřej Surý wrote:
+> > Hi,
+> > 
+> > while playing with fuzzing the DNS servers with AFL (2.35b) I found a
+> > remote crash bug in MaraDNS 2.0.13 js_readuint16. It can be also
+> > reproduced using https://github.com/samboy/MaraDNS/ master branch.
+> > 
+> > Attached is patch to allow the fuzzing (it overrides getudp() with
+> > read(0, ..)), the input data that crashes MaraDNS, and the bt full
+> > output.
+> > 
+> > Please assign CVE, I would provide a patch, but MaraDNS code is
+> > extremely hard to navigate for me, so I'll leave the fix for the code
+> > author.
+> > 
+> > AFL has finished only 1 cycle (and found the 1 unique crash), so I'll
+> > keep it running for a while.
+> > 
+> > Cheers,
+> > -- 
+> > Ondřej Surý <ondrej@...y.org>
+> > Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
+> > Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
+> > fast DNS(SEC) resolver
+> > Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
+> > pečení chleba všeho druhu
+> > Email had 3 attachments:
+> > + maradns.btfull
+> >   5k (application/octet-stream)
+> > + allow-fuzzing.patch
+> >   2k (text/x-patch)
+> > + id:000000,sig:11,src:007564,op:havoc,rep:32
+> >   1k (application/octet-stream)
 
-For further information please visit:
+Download attachment "id:000000,sig:11,src:007564,op:havoc,rep:32" of type "application/octet-stream" (23 bytes)
 
-http://arpon.sourceforge.net
+Download attachment "id:000001,sig:11,src:009775,op:arith8,pos:2,val:+6" of type "application/octet-stream" (20 bytes)
 
+Download attachment "id:000002,sig:11,src:009794+007532,op:splice,rep:2" of type "application/octet-stream" (21 bytes)
 
-Thank you in advance.
+Download attachment "id:000003,sig:11,src:009819,op:flip1,pos:0" of type "application/octet-stream" (20 bytes)
 
+Download attachment "id:000004,sig:11,src:009854,op:arith8,pos:0,val:-29" of type "application/octet-stream" (21 bytes)
+
+Download attachment "id:000005,sig:11,src:009792,op:flip2,pos:2" of type "application/octet-stream" (20 bytes)
