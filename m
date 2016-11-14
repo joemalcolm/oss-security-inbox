@@ -1,86 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/16
-Message-ID: <CALPTtNVfowfZmQxBUjhGvC8b7quqnXLWQZL=2xBO7uD-MGvewg@mail.gmail.com>
-Date: Wed, 20 Jan 2016 12:05:02 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
-Cc: report@...esecurity.io
-Subject: CVE request: Two vulnerabilities in mapbox.js node module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/4
+Message-ID: <CAE8hE=qj7XjN16XP67ij-1J4L6da=O6=ByYPORJCG27d131Rjg@mail.gmail.com>
+Date: Mon, 14 Nov 2016 09:42:23 -0500
+From: Chaim Sanders <chaim@...imsanders.com>
+To: oss-security@...ts.openwall.com
+Subject: OWASP Core Rule Set v3.0.0 (final) Released.
 Content-Type: text/plain; charset=utf-8
 
-Noticed these via the Node Security Project.
+Happy Monday fellow Open Source Security aficionados,
 
-mapbox.js is "Mapbox JavaScript API, a Leaflet Plugin".
-http://mapbox.com/mapbox.js/
+I am pleased to share with you the release of the OWASP Core Rule Set (CRS)
+Version 3.0.0 (stable). For those who are unaware, the OWASP CRS is a set
+of generic rules designed to protect users against threats to web
+applications. The rule set is most often deployed in conjunction with an
+existing Web Application Firewall like ModSecurity
+<https://modsecurity.org/>.
 
-Homepage: https://github.com/mapbox/mapbox.js
+This latest version features many changes that help make CRS a valuable
+part of a Defense in Depth strategy for protecting you web application.
+Some of these include:
 
-Download: https://www.npmjs.com/package/mapbox.js
+·  Improved and More Precise Detection Coverage
 
-* Content Injection via TileJSON attribute
+·  Reduced False Positives and the Introduction of Paranoia Levels
 
-  https://nodesecurity.io/advisories/49
+·  Anomaly Scoring Mode by Default
 
-  Overview:
+·  Simplified User Experience
 
-  Mapbox.js versions 1.x prior to 1.6.5 and 2.x prior to 2.1.7 are vulnerable
-  to a cross-site-scripting attack in certain uncommon usage scenarios.
+·  New Remote Code Execution Rules
 
-  If you use L.mapbox.map or L.mapbox.tileLayer to load untrusted TileJSON
-  content from a non-Mapbox URL, it is possible for a malicious user with
-  control over the TileJSON content to inject script content into the
-  "attribution" value of the TileJSON which will be executed in the context of
-  the page using Mapbox.js.
+·  Improved Layout, Documentation, and Testing
 
-  Such usage is uncommon. The following usage scenarios are not vulnerable:
-
-  * only trusted TileJSON content is loaded
-  * TileJSON content comes only from mapbox.com URLs
-  * a Mapbox map ID is supplied, rather than a TileJSON URL
-
-  Remediation:
-
-  Upgrade to Mapbox.js version 2.1.7. If you are still using a 1.x version and
-  unable to upgrade to 2.1.7, upgrade to 1.6.5.
-
-  Credit: John Firebaugh
+With this new release we are seeing on the order of 90-95% fewer false
+positives in production environments. This is a large improvement that
+should make CRS more accessible to the masses and we hope you all find it
+useful as well. We are always looking for feedback, feel free to test and
+report any issues to us.
 
 
-* Content Injection via TileJSON Name
 
-  https://nodesecurity.io/advisories/74
-
-  Overview:
-
-  Mapbox.js versions 1.x prior to 1.6.6 and 2.x prior to 2.2.4 are vulnerable
-  to a cross-site-scripting attack in certain uncommon usage scenarios.
-
-  If you use L.mapbox.map and L.mapbox.shareControl it is possible for a
-  malicious user with control over the TileJSON content to inject script
-  content into the name value of the TileJSON. After clicking on the share
-  control, the malicious code will execute in the context of the page using
-  Mapbox.js.
-
-  Such usage is uncommon. L.mapbox.shareControl is not automatically added to
-  mapbox.js maps and must be explicitly added. The following usage scenarios
-  are not vulnerable:
-
-  * the map does not use a share control (L.mapbox.sharecontrol)
-  * only trusted TileJSON content is loaded
-
-  Remediation:
-
-  Upgrade to Mapbox.js version 2.2.4. If you are still using a 1.x version and
-  unable to upgrade to 2.2.4, upgrade to 1.6.6.
-
-  If you are unable to upgrade to either 2.2.4 or 1.6.6, you can also remove
-  instances of L.mapbox.shareControl from your maps.
-
-  Credit: Alexandra Ulsh
+To download a copy or to submit any issue, please visit our Github
+<https://github.com/SpiderLabs/owasp-modsecurity-crs> (
+https://github.com/SpiderLabs/owasp-modsecurity-crs/releases/tag/v3.0.0).
+If you are seeking additional information about the release, please check
+out this accompanying blog post <http://goo.gl/f4uxlq>. The OWASP CRS team
+is truly excited and pleased with this release, there are even rumors this
+new rule set is being made into a movie <https://modsecurity.org/crs/poster>
 
 
-The advisories state that a CVE has been requested, but I haven't seen any
-assignments yet. Please assign CVEs as appropriate.
 
-Thanks,
-~reed
+
+Chaim Sanders, on behalf of the Core Rules Set development team.
+
+-- 
+-- 
+Chaim Sanders
+http://www.ChaimSanders.com
+
