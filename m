@@ -1,48 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/15/3
-Message-Id: <20160515142022.4BFE7332008@smtpvbsrv1.mitre.org>
-Date: Sun, 15 May 2016 10:20:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: sploving1@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, g.nault@...halink.fr
-Subject: Re: CVE Requests: Linux: use-after-free issue for ppp channel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/13
+Message-ID: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
+Date: Mon, 14 Nov 2016 20:45:51 +0000
+From: Hector Marco <hmarco@...rco.org>
+To: fulldisclosure@...lists.org, oss security list <oss-security@...ts.openwall.com>, bugtraq@...urityfocus.com
+Subject: CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello All,
 
->    The ppp channel did not take reference on its network namespace
-> when it was registered and unregistered, which causes a use-after-free
-> issue. Details:
-> https://lkml.org/lkml/2016/3/17/569
-> Fixed via:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89
 
->> ppp: take reference on channels netns
+Affected package
+----------------
+Cryptsetup <= 2:1
 
-> Fixed in linux-stable 4.5.4
 
-Use CVE-2016-4805.
+CVE-ID
+------
+CVE-2016-4484
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXOISqAAoJEHb/MwWLVhi2pt0P/RXsGFFEKEkonzo9IdSJ/tZZ
-MTsM+l8dZzpHFh44HTbI+GnzilwX5TdtZADLR8a4mfLvnF+qxoMMf/rZBrmokkAI
-I0b5UfM+37twvWDnj7pKDYHn5LdsGsZW+z6WeXddhwdry9scB04xnVCgXni0SOJ4
-Fhmu72ykxgoZ4nT9gqT62nGbFHsLlS3mhF3lobmJwaFp3kiP1AL/NaaAzVdYX1T0
-bcIjRoJoRpKzIXURSIyQ+WnmtoMB5KvnQQgDZvsmqk9dLe0iWiZamAV8reKiIaHN
-ZbKiDsDSQzqHJ1IsY/CT08Uj+WFyn3bbikrbo2WmxVZd1kuvJCzB/uD1zLny5vLG
-GWWml1isPA8jTMH5AT8ZcTED+vPgN+a55JpOkUKSUq/thlwhdv+5smE/ZqUQaTZK
-6M910FY9AA+75AdA6RR+PKzbB6UnwaJS71oEGXELzwJw7UtdooUHHqJK9Y5mPH5J
-ysYb3vrEUiPvRuZyuWSXi1jk/MMHGmG/lInXhWFirvwh1jt5XYKJP5uJN+qfMwCg
-WBBvUOinqUwDu0C42wrpM5NkCfFE/o854+EurHuJ7nXOQjrX+Zzd5eAZkhFNJeej
-iCX4C/FV5QLpQnahtsbZeYrtl8FKJ/4yJty5KxnE+S/V4ic4H06zA00j3XPZD4jz
-U6E7HOPcRqdPhitNBIHt
-=RgAh
------END PGP SIGNATURE-----
+Description
+-----------
+A vulnerability in Cryptsetup, concretely in the scripts that unlock the
+system partition when the partition is ciphered using LUKS (Linux
+Unified Key Setup).
+
+This vulnerability allows to obtain a root initramfs shell on affected
+systems. The vulnerability is very reliable because it doesn't depend on
+specific systems or configurations. Attackers can copy, modify or
+destroy the hard disc as well as set up the network to exflitrate data.
+
+In cloud environments it is also possible to remotely exploit this
+vulnerability without having "physical access."
+
+
+Full description:
+-----------------
+http://hmarco.org/bugs/CVE-2016-4484/CVE-2016-4484_cryptsetup_initrd_shell.html
+
+
+Regards,
+Hector Marco & Ismael Ripoll.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
