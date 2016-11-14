@@ -1,88 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/3
-Message-Id: <20160709152733.28D676C1D52@smtpvmsrv1.mitre.org>
-Date: Sat,  9 Jul 2016 11:27:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: jens.erat@...-konstanz.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: several SOGo issues (DOS, XSS, information leakage)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/7
+Message-ID: <bc666ad7d07148c9989b5e2b083442fc@imshyb02.MITRE.ORG>
+Date: Mon, 14 Nov 2016 13:34:55 -0500
+From: <cve-assign@...re.org>
+To: <brian.carpenter@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: libtiff: read outside buffer in _TIFFPrintField()
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> SOGo #3510:  DOS attack through uploading malicious attachments
-> Fix:         http://github.com/inverse-inc/sogo/commit/32bb1456e23a32c7f45079c3985bf732dd0d276d
-> Issue:       https://sogo.nu/bugs/view.php?id=3510
+> http://bugzilla.maptools.org/show_bug.cgi?id=2590
 
->> 1. Create a large file, for example `dd if=/dev/zero of=/tmp/1GB bs=1M count=1000`
->> 2. Open new mail in SOGo, try to attach large file
->> 3. If attachment fails, some memory gets freed, but not all of it
->> 4. Repeat 1-3 until server crashes
- 
-> The issues was resolved by limiting the upload size ...
-> 
-> Further investigation showed that not memcached was the issue but
-> temporary files kept around
+> AddressSanitizer: SEGV on unknown address 0x7faf9b2d2000
 
-Use CVE-2016-6188.
+>> * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), make sure that
+>> values of tags with TIFF_SETGET_C16_ASCII / TIFF_SETGET_C32_ASCII
+>> access are null terminated, to avoid potential read outside buffer
+>> in _TIFFPrintField().
 
-
-> SOGo #3695:  Private information leakage through ics/XML feeds when restricted to "View the Date & Time" 
-> Fix SOGo v2: https://github.com/inverse-inc/sogo/commit/717f45f640a2866b76a8984139391fae64339225
-> Fix SOGo v3: https://github.com/inverse-inc/sogo/commit/875a4aca3218340fd4d3141950c82c2ff45b343d
-> Issue:       https://sogo.nu/bugs/view.php?id=3695
-
-> 1. Not all private information removed for the public free/busy view
-
->> I was able to observe following fields containing critical information:
->> 
->> - ORGANIZER (who invited the calendar owner?)
->> - X-ALT-DESC (Outlook-specific extended copy of the description?) 
-
-Use CVE-2016-6189.
-
-
-> SOGo #3696:  Meta information can be derived from UID/DTSTAMP attributes though
-> "View the Date & Time" restricted access Backend Calendar
-> Fix SOGo v2: https://github.com/inverse-inc/sogo/commit/717f45f640a2866b76a8984139391fae64339225
-> Fix SOGo v3: https://github.com/inverse-inc/sogo/commit/875a4aca3218340fd4d3141950c82c2ff45b343d
-> Issue:       https://sogo.nu/bugs/view.php?id=3696
-
-> 2. It was possible to join appointments based on the UID of the
->    public free/busy view from different users, to know who has
->    appointments with whom
-
->> one can derive common appointments between other people
-
-Use CVE-2016-6190.
-
-
-> SOGo #3718:  Persistent Cross-Site Scripting in calendar
-> Issue:       https://sogo.nu/bugs/view.php?id=3718
-> Fix:         http://github.com/inverse-inc/sogo/commit/64ce3c9c22fd9a28caabf11e76216cd53d0245aa
-
->> When creating a calendar entry containing script code
-
-Use CVE-2016-6191.
-
-
-> SOGo #2598:  Script injection in calendar title
-> Fixes:       - https://github.com/inverse-inc/sogo/commit/1a7fc2a0e90a19dfb1fce292ae5ff53aa513ade9
->              - https://github.com/inverse-inc/sogo/commit/80a09407652ec04e8c9fb6cb48e1029e69a15765
->              - https://github.com/inverse-inc/sogo/commit/3a5e44e7eb8b390b67a8f8a83030b49606956501
->              - https://github.com/inverse-inc/sogo/commit/c94595ea7f0f843c2d7abf25df039b2bbe707625
-> Issue:       https://sogo.nu/bugs/view.php?id=2598
-> 
-> The (now public) issue log says I realized the issue also exists with contacts
-
->> Add injection code, for example in the "Display" name field
-
-Use CVE-2014-9905 for the XSS issues in both the calendar title and
-the contacts module.
-
-
-We cannot yet send a CVE ID here for the non-public issue #3670.
+Use CVE-2016-9297.
 
 - -- 
 CVE Assignment Team
@@ -92,17 +30,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXgRd2AAoJEHb/MwWLVhi2A5wP/j6sHW/jtA04EIw4E0KiQRFt
-wI9QOZ1BdyptWssGcq0r5FV8p1sdVsjiFn607Dj8uVXjf1Txpai7/Z7Dpl3Ssejh
-LXdABo+TDnCM49n0CKyQUzSF+HfaUoU2HRar+48pB1KqYx+hahE4TVZ+14L9etvg
-UMJzkeu/cEzS8vh6G9VFp0vEOAhWuhcfKqBVrMjU2hFSCHLJVrvduO05uvMlJ0fJ
-B5nLcAR6OCiFcqZ+ttHtxOCSZD96bpogBAkxCMsl7rz6iZpwqMdhJrh+8wf5cIfn
-T2v+5fPRiM0/rm0NCjI8bWd87pI7ZWr+FNbuqwkPeGwHtYpwrMryfMaiMmqdSf+V
-rxaKOsYwh5vr6IddVBQAQF+OmVBj71wfsydl71HvZdp4vLCZcr8EgpaQPFjltC//
-2EEsQ7dsfJIGY9GfarYPVuwLN2psqiUkf1x1KvEPzcSFJn+w0LLx2qxeGwFc3X0m
-11MYp+v0C1LVmYwaf+vNrnMf537sN+K8s6pN80Hf+t7lB3hEmilyeaPoXWxOyF8s
-t3hAJ6isrhTZ10xqX6nFz1I69piNp4IEJQ7SgbXJoI8BJEDucYC99G/VBaB2j3WA
-JdXI5I1fZZ/rTPT3EcBrM8psMWJmOGNUBnZmJfFpalIfkrD9OqKkvtovNm+EF/we
-XHadO9HsP5kU7/eTgBEf
-=Uq/q
+iQIcBAEBCAAGBQJYKgMmAAoJEHb/MwWLVhi2PioP/jm0R6nmT1TNWfIenph7XvVp
+rrxXbx0spg1BFsDDvP44kzFYvn4EAH+mCW8HyKpV3dGGLL6PO22cOivt15K0EKKc
+ImyY2E3j8PKR5lzdHcLYGjiBTOT+psZhZtEhaVkELjpgPq4mJqbmbdMyjYMdseav
++x9r2vptrj6zf875gY23FsEEXEWyF+wML15jViClSmrUYcTZQtR52Sr6IZrUIlDR
+rw4sr7l6M2H92CIrFqGl1ltF23BIjR75vMlxabze244XFoOIWo8cBcI04ncKJ404
+3hDzdeBHLzJFltoKygb8dhGdWF0xfonAG4P6Mt04yFLDBsI1M0Sial6kcrWj2XSh
+Br27MgPKH9gIOLAdUmaUFkO+gu92DEZGUMOtvBJHjRrZ2M1USrIH+bVBAJubdZGb
+L2Y6rVLHhC0pfIA21It4f1JjTsb3PODlSO/mNd6ZF/E37/MDEWoel7BCGBvBnuLg
+NmcxWKDw3kPsxnHhujrHoNHemnOP9lGsCbT8mMX+yCYphUc2+OO4inwAWO2N+gGT
+wFIJRl7TkQUzKNsvUdU0L1+sHjA5T1SKWjrEABfuEAlcUNmLm9AnSfkVMZDbIphm
+765VnjGxzU9dQCcC2L3ZrjbLVEwDMgdXPzJ5ncV9+kmklmFSkQSTBsOD2vgggq5p
+rkvWKAOzbWcHI90QV0lL
+=9TM7
 -----END PGP SIGNATURE-----
