@@ -1,34 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/25/7
-Message-ID: <alpine.LFD.2.20.1605251802140.15974@wniryva>
-Date: Wed, 25 May 2016 18:04:14 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE Request Qemu: scsi: megasas: out-of-bounds read in megasas_lookup_frame() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/1
+Message-ID: <035e3ddda98d4ac9aea967809fd37fd9@imshyb02.MITRE.ORG>
+Date: Mon, 14 Nov 2016 04:42:34 -0500
+From: <cve-assign@...re.org>
+To: <sebastian@...ping.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <aceballos@...il.com>
+Subject: Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to an out-of-bounds read access issue. It 
-could occur while looking up MegaRAID Firmware Interface(MFI) command frames 
-in 'megasas_lookup_frame' routine.
+The reference for this bug is:
 
-A privileged user inside guest could use this flaw to read invalid memory 
-leading to crash the Qemu process on the host.
+  http://svn.savannah.gnu.org/viewvc?view=rev&root=chess&revision=134
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg04424.html
+> may need some other application in front (e.g. a website
+> using gnuchess for a backend or some mobile/desktop application
+> forwarding evil input to gnuchess with improper validation) to attack.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336461
+Is it vulnerable without such an application if launched as
+"gnuchess -u" (UCI mode)? For example, is it taking untrusted input of
+4096 characters and sending it to the ValidateMove function that is
+expecting 128?
 
-This issue was discovered by Li Qiang of 360.cn Inc.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+  #define BUF_SIZE 4096
+
+  #define MAXSTR 128
+
+
+  if ( flags & UCI )
+  ...
+  NextEngineCmd();
+  ...
+  ReadFromEngine();
+
+
+  static char engineinputbuf[BUF_SIZE]="";
+
+
+  nread = read( pipefd_a2f[0], engineinputaux, BUF_SIZE );
+  strcat( engineinputbuf, engineinputaux );
+
+
+  char enginemovestr[BUF_SIZE]="";
+  enginemove = ValidateMove( enginemovestr );
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYKYadAAoJEHb/MwWLVhi2mH4P/joQRzioJrkPSlThGwhDOT7u
++vA3ceM8z+7u8Kf25lQNVgq4o+5YWARUJZBXHSRcC1rqCPuuWqw/aHUf8ijd9ryT
+QyzZ21wceInfp1EtjqjmtzBh++i00QqoKoLeNAeRilC7DL6T+OsxPEAt0ehtzRNJ
+ZgM7r1i25CcAxsnhQWNIzv5zRTo6v9DXaSabhiHT+OkP9m2C/oJQJYO3nRt3kAaC
+mt8sXppmdMj7YNZ9uxKWVVwA0vIVP6+Ds3ZonKM/O80zLFXfu1hxKLG/lJ77qzLc
+pdG5ntFpHZ0TrvR1yPezwyn3Wi8Up+3PY0vkTP1npvlrcmhB9HnpUUzvPMyEK2KF
+ctiMpAtg5PxoETjPGy6YKs9NxSjIiduJBJiQaYbQwfKHWITVB3Rt1gEBS7WgxJ8P
+P7z8SX7kcsV3cMJJoaInHpnI3f51hp8+mr6HcWksDIspl6B4msU0nbq6kXrUmEWW
+N7hfON3zWZrl+5iulvWKU7XRstG9jfKBKrgjCVNZWU1bA82dSRJou5L/EbGUCIhX
+poJP5l+htbCdy8nmJ0abdcq0e8YdWNxpGZRgvh84WBHV5O4FATlpD7anrO9Vcdzw
+NWnLqtMyKgx++AKV0YQSmoHZSUIvelcdmoL5tpe6XANZn25LBIiAI5YUdfTmOHFi
+QGhs9frDuvyfcE38oKMQ
+=9OQP
+-----END PGP SIGNATURE-----
