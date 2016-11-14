@@ -1,132 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/8
-Message-ID: <CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>
-Date: Tue, 13 Sep 2016 22:11:42 +0300
-From: watashiwaher <watashiwaher@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: libxml with CGI fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/10
+Message-ID: <7871016480124167bb36dc8681d1e8bd@imshyb02.MITRE.ORG>
+Date: Mon, 14 Nov 2016 13:40:34 -0500
+From: <cve-assign@...re.org>
+To: <roucaries.bastien@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <team@...urity.debian.org>
+Subject: Re: Imagemagick heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi, huys! There is a known httpoxy vulnerability ( https://httpoxy.org/ ).
-There is a problem with CGI usage in all application which use libxml2
-library. Attacker can make requests via attacker proxy from target server
-using this vulnerability. I reported this problem in the 5th august, but
-developers didn't reply me at all, and I don't know if they want to
-response.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-So here is my original report to libxml2 team (with patch):
+> https://github.com/ImageMagick/ImageMagick/issues/296
+> 
+> Imagemagick before 3cbfb163cff9e5b8cdeace8312e9bfee810ed02b
+> suffer from a heap overflow in WaveletDenoiseImage()
+> 
+> https://github.com/ImageMagick/ImageMagick/commit/3cbfb163cff9e5b8cdeace8312e9bfee810ed02b
+> 
+> -  kernel=(float *) AcquireQuantumMemory(MagickMax(image->rows,image->columns),
+> +  kernel=(float *) AcquireQuantumMemory(MagickMax(image->rows,image->columns)+1,
 
-There is a security problem in libxml2.
->
-> Problem:
-> There is a httpoxy vulnerability in libxml2 ( http://libpoxy.org )
-> It affects the usage of libxml2 inside CGI applications.
->
-> libxml2 is used in many popular products. So if someone of these popular products will be used inside CGI script, attacker will be able to override HTTP_PROXY environment variable by placing Proxy header with desired proxy name. It will affect the usage of xmlNanoHTTPInit function inside nanohttp.c. Requests will go through proxies of the attacker.
->
-> Possible solutions:
-> I found 2 possible solutions.
-> 1) Use HTTP_PROXY variable in lower case
->    (Curl style)
->    It works because CGI variables are sent only in upper case.
->    But doesn't work on windows because getenv is not case
->    sensitive in the Windows operating system.
-> 2) Do not accept HTTP_PROXY variable when REQUEST_METHOD environment variable defined.
->    (Python style)
->    It works because REQUEST_METHOD variable indicates that CGI is used.
->    But there is a problem with windows (we can't use HTTP_PROXY in CGI at all)
->    and with other operation systems (where HTTP_PROXY is already used in uppercase )
->
-> I made a mall patch that uses both solutions in the same time. It doesn't accept HTTP_PROXY when REQUEST_METHOD defined. In non windows OS it accepts it in lower case anyway, in windows it doesn't accept it.
->
-> Example of vulnerability (what I found):
+Use CVE-2016-9298.
 
-First time I found httpoxy vulnerability in perlmagick
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-( http://www.imagemagick.org/script/perl-magick.php )
-
-
-
-Code like this was used inside CGI script:
-> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-> Image::Magick->New()->Get('http://somesite.com/somefile.txt');
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-Actually this code called ImageMagick to download this file.
-> Inside Imagemagick code was like this:
-> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-> char
-> buffer[MaxBufferExtent],
-> *type; int
-> bytes; void
-> *context; type=(char *) NULL;
-> context=xmlNanoHTTPMethod(filename,(const char *) NULL,
-> (const char *) NULL,&type,(const char *) NULL,0);
-> if (context != (void *) NULL)
-> {
-> ssize_t
-> count; while ((bytes=xmlNanoHTTPRead(context,buffer,MaxBufferExtent)) > 0)
-> count=(ssize_t) fwrite(buffer,bytes,1,file);
-> (void) count;
-> xmlNanoHTTPClose(context);
-> xmlFree(type);
-> xmlNanoHTTPCleanup();
-> }
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-
-
-And finally xmlNanoHTTPInit inside libxml2 function used environment
-> variable HTTP_PROXY. I want to say that developers of any software which
-> uses libxml2 may not know about httpoxy vulnerability and about the
-> possibility of usage HTTP_PROXY variable with libxml2 library.
-
-
-> Example of vulnerability (what I found):
->
-> First time I found httpoxy vulnerability in perlmagick
-> ( http://www.imagemagick.org/script/perl-magick.php )
->
-> Code like this was used inside CGI script:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-> Image::Magick->New()->Get('http://somesite.com/somefile.txt');
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->
-> Actually this code called ImageMagick to download this file.
-> Inside Imagemagick code was like this:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-> char
->   buffer[MaxBufferExtent],
->   *type;
->
-> int
->   bytes;
->
-> void
->   *context;
->
-> type=(char *) NULL;
-> context=xmlNanoHTTPMethod(filename,(const char *) NULL,
->   (const char *) NULL,&type,(const char *) NULL,0);
-> if (context != (void *) NULL)
->   {
->     ssize_t
->       count;
->
->     while ((bytes=xmlNanoHTTPRead(context,buffer,MaxBufferExtent)) > 0)
->       count=(ssize_t) fwrite(buffer,bytes,1,file);
->     (void) count;
->     xmlNanoHTTPClose(context);
->     xmlFree(type);
->     xmlNanoHTTPCleanup();
->   }
-> <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->
-> And finally xmlNanoHTTPInit inside libxml2 function used environment variable HTTP_PROXY.
->
-> I want to say that developers of any software which uses libxml2 may not know about httpoxy vulnerability and about the possibility of usage HTTP_PROXY variable with libxml2 library.
-> The easiest way to fix possible vulnerability everywhere is just to fix it inside libxml2.
->
->
-Patch address: https://bugzilla.gnome.org/attachment.cgi?id=332806
-
+iQIcBAEBCAAGBQJYKgM4AAoJEHb/MwWLVhi2MewP+QFOJsQiiDfwNhdN+UKAPde4
+6Lr26VhijhZvwDFrYM+YGcAdajnTmOXe1JnRHKuFwThVwHfnmKq36INM3urKH+pS
+Vr6+xaG1ITbFsA9xNojUSFeK98LOYs+1EEipTW+PsPpkvL7LAwjTEdBIvbc5rKhF
+gCcV9IScnAGPMyQvi6rnlKU7BbBMkEh7H7b/1B/ytaNVPy9adG18h9M7dY7+bXEN
+FsBO7stN/Mvz0UtnMyCsFeP14RwUSRmwDhsfxv9K8YCiogI70B1rjWMHvG0ZoBhP
+omZENbWh+ZJyKCOnyEN1o331NINkbYS0NWVvjrOU5Opre+Jo6yPHoG9lp+kScLQ3
+1u509BUE3415Ny8xPqITP/duAzQoNNoSR6y3ZCuDEtSn+jH0rufkie2N6wI0FK49
+c4nxspUMBm5UlMVjGfKBZXa1OX7GthFXu22sEm/uc8Zmf/ALVR48vHHKs3Bz3t5S
+fIw7R9mAhp5CM/ieu3X0g0WlrVQbqbQqfDSOokHWDOhi79n7hEGkNjAMWh1oBWah
+SY52vuWRTDla9k6mJuXENej2Cj01B9J5PbqY6lNUXSh+gExCLx7ZC0RVoXRiJ/AS
+WIstWjng16SMIVrT88koD9JD3nHQ/QpBIEONBqBfVosEzvqVkO3/ijPuNQ4eAjAb
+6AmnkYtJ1wfbZgjiYqCe
+=gHC9
+-----END PGP SIGNATURE-----
