@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/2
-Message-ID: <alpine.LFD.2.20.1601291203340.22140@wniryva>
-Date: Fri, 29 Jan 2016 12:06:55 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: zuozhi.fzz@...baba-inc.com
-Subject: CVE request Qemu: ide: ahci null pointer dereference when using FIS CLB engines
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/8
+Message-ID: <eacf0ad3886d4928905ca3e10c529e80@imshyb02.MITRE.ORG>
+Date: Mon, 14 Nov 2016 13:36:58 -0500
+From: <cve-assign@...re.org>
+To: <ondrej@...y.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <team@...urity.debian.org>, <dariusz.dwornikowski@...put.poznan.pl>, <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
+Subject: Re: Remote crash in MaraDNS 2.0.13 and git master
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Qemu emulator built with an IDE AHCI emulation support is vulnerable to a null 
-pointer dereference flaw. It occurs while unmapping the Frame Information 
-Structure(FIS) & Command List Block(CLB) entries.
+> remote crash bug in MaraDNS 2.0.13 js_readuint16
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-instance resulting in DoS.
-
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg05742.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1302057
-
-This issue was discovered by Mr Zuozhi Fzz of Alibaba Inc.
+Use CVE-2016-9300.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> remote crash bug in MaraDNS 2.0.13 js_substr
+
+Use CVE-2016-9301.
+
+
+> remote crash bug in MaraDNS 2.0.13 process_query -> this in fact
+> looks like stack smashing, since it crashes on htons in an unrelated
+> place
+
+Use CVE-2016-9302.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYKgMsAAoJEHb/MwWLVhi21GoP/3HGz6OGmr6WDKg+2+IUaD8h
+Rwgsw78MVxqrnq/gXwg0or2yYXXHxKyR12LlDmWADnqi7WtW7mM+4r3WSGb71Vqk
+jfCptES4/UqpCKdEV4+HQ5nVKFRhQo1zpEam+kHbS5OiB93GlhS3UByyaSyeRsnf
+ZnfdVl61NjCJHerb8lBEtYf0e5rA1SvspwfIiior6o9967X9Yrs9e2S0EidCl7dq
+WFwh1lXZCMgGw38WzeblKgm000ScDplTgAmu6yWMIoRgZeAIdy1605/iSoBPJfgD
+NS0wecALHmUqhYYeouBS/1l2FDg7pIpWWAo5s7fkiajxF8hvbUR1tTd2v1hOY8Xc
++w4Hiao2j4BXd9ZoKCUGumV3d0eSksNx52ZgzN8oJxa+mX74iDG6abbTYSfzlAWG
+lmRFi94/0oeufIqD1aMaZ5jrMoWjjyPoum2L2Y31tUiJdFUktKJ9/6dW02wydNme
+UjZjkIwjL44DCz4WLfXqV/rIMyx/ZztVgneAAqUFn1ssHf51HyzQPSpgbRLgj9Gc
+ohRUn34JyZGbACYXm63pMjA01Z6FOCjlE+/kgGoNe56u+1i9UFPdaQs0OY4g9POF
+DXl6kHqYNxqxASk1Ms70epXt4b/pBHdGXzqFF5QmPPW5xXiubCswn13hZhM/lZRF
+tTzTS1vprIT3fYUXhjZn
+=B4JU
+-----END PGP SIGNATURE-----
