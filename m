@@ -1,41 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/07/6
-Message-ID: <99de9e1d-0488-31f2-5045-9d1bd11be781@redhat.com>
-Date: Tue, 7 Jun 2016 11:27:00 +0200
-From: Adam Maris <amaris@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/11
+Message-ID: <5147e375-7b26-a93d-b052-85cd8222c9fa@pipping.org>
+Date: Mon, 14 Nov 2016 19:58:01 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: GnuTLS: GNUTLS-SA-2016-1: File overwrite by setuid programs
+Cc: Antonio Ceballos <aceballos@...il.com>
+Subject: Re: Re: CVE needed? / gnuchess 6.2.4 fixed user input buffer overflow
 Content-Type: text/plain; charset=utf-8
 
+Thanks for pointing to -u / UCI mode.
+
+I guess it does make sense to request/assign a CVE then.
+
+The initial report seems to be by Antti Karjalainen at
+http://lists.gnu.org/archive/html/bug-gnu-chess/2015-10/msg00002.html .
+
+Best, Sebastian
 
 
-On 07/06/16 08:45, Salvatore Bonaccorso wrote:
-> Hi
->
-> GnuTLS 3.4.13 was released addressing GNUTLS-SA-2016-1,
-> http://gnutls.org/security.html#GNUTLS-SA-2016-1 :
->
->> Setuid programs using GnuTLS 3.4.12 could potentially allow an
->> attacker to overwrite and corrupt arbitrary files in the filesystem.
->> This issue was introduced in GnuTLS 3.4.12 and fixed in GnuTLS 3.4.13.
->> Recommendation: Upgrade to GnuTLS 3.4.13, or later versions.
-> The relevant upstream commits seem to be:
->
-> https://gitlab.com/gnutls/gnutls/compare/fb2a6baef79f4aadfd95e657fe5a18da20a1410e...86076c9b17b9a32b348cafb8b724f57f7da64d58
->
-> Can you assign a CVE for this issue?
->
-> Regards,
-> Salvatore
-
-We already assigned CVE-2016-4456 for using insecure getenv() on
-GNUTLS_KEYLOGFILE when we got a report for this issue. Not sure why it's
-not included in the advisory. I'm dealing with that now.
-
-Regards,
-
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2
-
+On 14.11.2016 10:42, cve-assign@...re.org wrote:
+> The reference for this bug is:
+> 
+>   http://svn.savannah.gnu.org/viewvc?view=rev&root=chess&revision=134
+> 
+>> may need some other application in front (e.g. a website
+>> using gnuchess for a backend or some mobile/desktop application
+>> forwarding evil input to gnuchess with improper validation) to attack.
+> 
+> Is it vulnerable without such an application if launched as
+> "gnuchess -u" (UCI mode)? For example, is it taking untrusted input of
+> 4096 characters and sending it to the ValidateMove function that is
+> expecting 128?
+> 
+> 
+>   #define BUF_SIZE 4096
+> 
+>   #define MAXSTR 128
+> 
+> 
+>   if ( flags & UCI )
+>   ...
+>   NextEngineCmd();
+>   ...
+>   ReadFromEngine();
+> 
+> 
+>   static char engineinputbuf[BUF_SIZE]="";
+> 
+> 
+>   nread = read( pipefd_a2f[0], engineinputaux, BUF_SIZE );
+>   strcat( engineinputbuf, engineinputaux );
+> 
+> 
+>   char enginemovestr[BUF_SIZE]="";
+>   enginemove = ValidateMove( enginemovestr );
+> 
+> 
 
