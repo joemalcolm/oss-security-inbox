@@ -1,40 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/14
-Message-ID: <20161102115304.GA11945@hurricane.linuxnetz.de>
-Date: Wed, 2 Nov 2016 12:53:04 +0100
-From: Robert Scheck <robert@...oraproject.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/5
+Message-ID: <CADSYzsu8-t0irpYmdcGrwDnzBNeYwp2Y8rs6yhDAL-a0OF+_xw@mail.gmail.com>
+Date: Mon, 14 Nov 2016 14:27:36 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Stenberg <daniel@...x.se>
-Subject: Re: [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host
+Subject: MySQL / MariaDB / Percona - Privilege Escalation / Race Condition Exploit [CVE-2016-6663 / CVE-2016-5616]
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 02 Nov 2016, Daniel Stenberg wrote:
-> For example, `straße.de` is translated into `strasse.de` using IDNA 2003 but
-> is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, those
-> host names could very well resolve to different addresses and be two
-> completely independent servers. IDNA 2008 is mandatory for .de domains.
-> 
-> curl is not alone with this problem, as there's currently a big flux in the
-> world of network user-agents about which IDNA version to support and use.
+Vulnerability: MySQL / MariaDB / Percona - Privilege Escalation / Race Condition
+CVE-2016-6663 / (Oracle) CVE-2016-5616
 
-From my point of view, this especially affects GNU libc for example.
+Discovered by:
+Dawid Golunski / https://legalhackers.com
+@dawid_golunski
 
-On the other hand, I am wondering if this should be really classified as a
-security related issue. Being interested in IDNA 2008 support myself, I did
-some IDNA 2008 patches in the past, but practically IDNA 2008 support is
-still not that widespread as I would wish. Does using an older standard (as
-in IDNA 2003) really classify this issue as a security related one? If so,
-I guess many upstreams should be explicitly made aware of that soon. Maybe
-MITRE (or somebody else) could share their thoughts about this, too?
+Affected versions:
 
-> It was first reported to the curl project on October 11 by Christian Heimes.
+MariaDB
+< 5.5.52
+< 10.1.18
+< 10.0.28
 
-I reported the "ß" issue and the lack of IDNA 2008 support in cURL on Sun,
-18 May 2014 17:17:03 +0200 directly to you, but I didn't classify it as a
-security related issue though... ;-)
+MySQL
+<= 5.5.51
+<= 5.6.32
+<= 5.7.14
+
+Percona Server
+< 5.5.51-38.2
+< 5.6.32-78-1
+< 5.7.14-8
+
+Percona XtraDB Cluster
+< 5.6.32-25.17
+< 5.7.14-26.17
+< 5.5.41-37.0
 
 
-Greetings,
-  Robert
+An independent research has revealed a race condition vulnerability which
+affects MySQl, MariaDB and PerconaDB databases.
+The vulnerability can allow a local system user with access to the affected
+database in the context of a low-privileged account
+(CREATE/INSERT/SELECT grants)
+to escalate their privileges and execute arbitrary code as the database system
+user (typically 'mysql').
+Successful exploitation would allow an attacker to gain full read/write access
+to all of the files (including configuration files) and databases belonging
+to the affected database server.
+The obtained level of access upon the exploitation, could be chained with
+the other privilege escalation vulnerabilities discovered by the author of
+this advisory (CVE-2016-6662 and CVE-2016-6664) to further escalate privileges
+from mysql user to root user and thus allow attackers to fully compromise the
+target server.
 
-Content of type "application/pgp-signature" skipped
+For the latest / up-to-date advisory visit:
+
+https://legalhackers.com/advisories/MySQL-Maria-Percona-PrivEscRace-CVE-2016-6663-5616-Exploit.html
+
+A copy of the full advisory is also attached to this message as per
+the oss-sec guidelines (for those who still use dial-up I guess... :)
+
+PoC Video showing the exploitation of the race in a matter of seconds
+to get mysql shell and gaining a rootshell from there:
+http://legalhackers.com/videos/MySQL-MariaDB-PerconaDB-PrivEsc-Race-CVE-2016-6663-5616-6664-5617-Exploits.html
+
+More updates on the feed:
+https://twitter.com/dawid_golunski
+
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
+
+View attachment "MySQL-Maria-Percona-PrivEscRace-CVE-2016-6663-5616-Exploit.txt" of type "text/plain" (26525 bytes)
