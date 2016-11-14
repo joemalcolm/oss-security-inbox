@@ -1,59 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/11
-Message-ID: <578D14C1.1010407@mvista.com>
-Date: Mon, 18 Jul 2016 10:41:21 -0700
-From: akuster <akuster@...sta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/6
+Message-ID: <CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>
+Date: Mon, 14 Nov 2016 14:36:16 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero
+Subject: MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
 Content-Type: text/plain; charset=utf-8
 
-Is this the fix for this CVE?
+Vulnerability: MySQL / MariaDB / PerconaDB - Root Privilege Escalation
+CVE-2016-6664 / (Oracle)CVE-2016-5617
 
-https://github.com/vadz/libtiff/commit/2f79856097f423eb33796a15fcf700d2ea41bf31
+Discovered by:
+Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
-Appears to mention CVE-2016-5321 and CVE-2016-5323 so not sure if commit
-https://github.com/vadz/libtiff/commit/d9783e4a1476b6787a51c5ae9e9b3156527589f0
+MySQL-based databases including MySQL, MariaDB and PerconaDB are affected
+by a privilege escalation vulnerability which can let attackers who have
+gained access to mysql system user (for example through CVE-2016-6663)
+to further escalate their privileges to root user allowing them to
+fully compromise the system.
+The vulnerability stems from unsafe file handling of error logs and other files.
 
-is a partial fix for CVE-2016-5321
+Affected versions:
 
-regards,
-Armin
+MySQL
+<= 5.5.51
+<= 5.6.32
+<= 5.7.14
 
-On 06/14/2016 07:37 PM, 张开翔 wrote:
-> Details
-> =======
-> 
-> Product: libtiff
-> Affected Versions: <= 4.0.6
-> Vulnerability Type: divide by zero
-> Vendor URL: http://www.remotesensing.org/libtiff/
-> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-> CVE ID: CVE-2016-5323
-> Tested system version:
->        fedora23 32bit
->        fedora23 64bit
->        CentOS Linux release 7.1.1503 64bit
-> 
-> Introduction
-> =======
-> 
-> t was always corrupted when I use tiffcrop command followed by a crafted TIFF image in function _TIFFFax3fillruns () without checking the value of divisor, it causes a divide by zero flaw. Attackers cound exploit this issue to cause denial-of-service.
-> 
-> Here is the stack info:
-> gdb –args ./tiffcrop _TIFFFax3fillruns.tif tmpout.tif
-> --- ---
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
-> 407                              ZERO(n, cp);
-> (gdb) bt
-> #0  0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
-> #1  0x00007ffff7ae087c in Fax3DecodeRLE (tif=0x662010, buf=0x0, occ=8192, s=<optimized out>) at tif_fax3.c:1527
-> #2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=8192, size@...ry=-1) at tif_read.c:668
-> #3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
-> #4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=1, spp=129, tl=1024, tw=64, imagewidth=32, imagelength=32, obuf=0x7ffff7ee5010 "", in=0x662010) at tiffcrop.c:994
-> #5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
-> #6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
-> (gdb) p cp
-> $2 = (unsigned char *) 0x0
-> 
-> 
+MariaDB
+All current
+
+Percona Server
+< 5.5.51-38.2
+< 5.6.32-78-1
+< 5.7.14-8
+
+Percona XtraDB Cluster
+< 5.6.32-25.17
+< 5.7.14-26.17
+< 5.5.41-37.0
+
+
+The latest / up-to-date advisory and a PoC exploit can be found at:
+
+https://legalhackers.com/advisories/MySQL-Maria-Percona-RootPrivEsc-CVE-2016-6664-5617-Exploit.html
+
+A copy of the advisory/exploit is also attached to this message.
+
+PoC Video (showing the rootshell part towards the end) is at:
+http://legalhackers.com/videos/MySQL-MariaDB-PerconaDB-PrivEsc-Race-CVE-2016-6663-5616-6664-5617-Exploits.html
+
+Attacker will need to obtain mysql account first which could be gained
+with the other exploit (CVE-2016-6663) I discovered:
+http://legalhackers.com/advisories/MySQL-Maria-Percona-PrivEscRace-CVE-2016-6663-5616-Exploit.html
+
+More updates on the feed:
+https://twitter.com/dawid_golunski
+
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
+
+View attachment "MySQL-Maria-Percona-RootPrivEsc-CVE-2016-6664-5617-Exploit.txt" of type "text/plain" (17665 bytes)
