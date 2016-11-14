@@ -1,97 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/14
-Message-ID: <20160125193757.GG14069@TC.local>
-Date: Mon, 25 Jan 2016 11:37:57 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2016-0753] Possible Input Validation Circumvention in Active Model
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/14/2
+Message-Id: <1479102804.3372667.786730489.054A352E@webmail.messagingengine.com>
+Date: Mon, 14 Nov 2016 06:53:24 +0100
+From: Ondřej Surý <ondrej@...y.org>
+To: oss-security@...ts.openwall.com, Sam Trenholme <sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org>
+Subject: Re: Remote crash in MaraDNS 2.0.13 and git master
 Content-Type: text/plain; charset=utf-8
 
-Possible Input Validation Circumvention in Active Model
+Hi all,
 
-There is a possible input validation circumvention vulnerability in Active
-Model. This vulnerability has been assigned the CVE identifier CVE-2016-0753.
+AFL found another 5 crashes totaling to 6 unique crashes. Looking at the
+backtraces it
+looks like, it's just 3 unique crashes:
 
-Versions Affected:  4.1.0 and newer
-Not affected:       4.0.13 and older
-Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1
+- js_readuint16
+- js_substr
 
-Impact
-------
-Code that uses Active Model based models (including Active Record models) and
-does not validate user input before passing it to the model can be subject to
-an attack where specially crafted input will cause the model to skip
-validations.
+- process_query -> this in fact looks like stack smashing, since it
+crashes on htons in an unrelated place
 
-Vulnerable code will look something like this:
+id:000000
+id:000002
+Program received signal SIGSEGV, Segmentation fault.
+js_readuint16 (js=js@...ry=0x6de290, offset=offset@...ry=4) at
+JsStr.c:1064
+1064               (*(js->string + offset + 1) & 0xff);
 
-```ruby
-SomeModel.new(unverified_user_input)
-```
 
-Rails users using Strong Parameters are generally not impacted by this issue
-as they are encouraged to whitelist parameters and must specifically opt-out
-of input verification using the `permit!` method to allow mass assignment.
+id:000001
+id:000005
+Program received signal SIGSEGV, Segmentation fault.
+js_substr (source=source@...ry=0x6de290, dest=dest@...ry=0x6e37f0,
+start=start@...ry=99, count=count@...ry=63743) at JsStr.c:731
+731               *(source->string + counter + start *
+source->unit_size);
 
-For example, a vulnerable Rails application will have code that looks like
-this:
+NOTE: id000001 cannot be reproduced on git master, but id000005 still
+crashes it, so they probably are separate issues after all.
 
-```ruby
-def create
-  params.permit! # allow all parameters
-  @user = User.new params[:users]
-end
-```
+id:000003
+id:000004
+Program received signal SIGSEGV, Segmentation fault.
+proc_query (raw=0x6de5d0, ect=0x7fffffffd940, sock=0) at MaraDNS.c:2615
+2615        ip = htonl((z->sin_addr).s_addr);
 
-Active Model and Active Record objects are not equipped to handle arbitrary
-user input.  It is up to the application to verify input before passing it to
-Active Model models.  Rails users already have Strong Parameters in place to
-handle white listing, but applications using Active Model and Active Record
-outside of a Rails environment may be impacted.
+This is after 58 AFL cycles.
 
-All users running an affected release should either upgrade or use one of the
-workarounds immediately.
+It will be worth retesting with ASAN enabled.
 
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-There are several workarounds depending on the application.  Inside a Rails
-application, stop using `permit!`.  Outside a Rails application, either use
-Hash#slice to select the parameters you need, or integrate Strong Parameters
-with your application.
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 4-1-validation_skip.patch - Patch for 4.1 series
-* 4-2-validation_skip.patch - Patch for 4.2 series
-* 5-0-validation_skip.patch - Patch for 5.0 series
-
-Please note that only the 4.1.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-Thanks to:
-
-[John Backus](https://github.com/backus) from BlockScore for reporting this!
-
+Cheers,
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
+Ondřej Surý <ondrej@...y.org>
+Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
+Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
+fast DNS(SEC) resolver
+Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
+pečení chleba všeho druhu
 
-View attachment "4-1-validation_skip.patch" of type "text/plain" (3781 bytes)
-
-View attachment "4-2-validation_skip.patch" of type "text/plain" (3843 bytes)
-
-View attachment "5-0-validation_skip.patch" of type "text/plain" (4872 bytes)
-
-Content of type "application/pgp-signature" skipped
+On Sat, Nov 12, 2016, at 09:39, Ondřej Surý wrote:
+> Hi,
+> 
+> while playing with fuzzing the DNS servers with AFL (2.35b) I found a
+> remote crash bug in MaraDNS 2.0.13 js_readuint16. It can be also
+> reproduced using https://github.com/samboy/MaraDNS/ master branch.
+> 
+> Attached is patch to allow the fuzzing (it overrides getudp() with
+> read(0, ..)), the input data that crashes MaraDNS, and the bt full
+> output.
+> 
+> Please assign CVE, I would provide a patch, but MaraDNS code is
+> extremely hard to navigate for me, so I'll leave the fix for the code
+> author.
+> 
+> AFL has finished only 1 cycle (and found the 1 unique crash), so I'll
+> keep it running for a while.
+> 
+> Cheers,
+> -- 
+> Ondřej Surý <ondrej@...y.org>
+> Knot DNS (https://www.knot-dns.cz/) – a high-performance DNS server
+> Knot Resolver (https://www.knot-resolver.cz/) – secure, privacy-aware,
+> fast DNS(SEC) resolver
+> Vše pro chleba (https://vseprochleba.cz) – Mouky ze mlýna a potřeby pro
+> pečení chleba všeho druhu
+> Email had 3 attachments:
+> + maradns.btfull
+>   5k (application/octet-stream)
+> + allow-fuzzing.patch
+>   2k (text/x-patch)
+> + id:000000,sig:11,src:007564,op:havoc,rep:32
+>   1k (application/octet-stream)
