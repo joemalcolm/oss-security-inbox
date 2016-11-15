@@ -1,4 +1,9 @@
-Received: (qmail 9274 invoked by uid 550); 5 Jan 2026 16:49:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1354" "Monday" "14" "November" "2016" "22:27:07" "-0500" "Leo Famulari" "leo@famulari.name" "<20161115032707.GA5104@jasmine>" "43" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" nil nil nil "11" "2016111503:27:07" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "U       leo@famulari Nov 14   43/1354  " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15420 invoked by uid 550); 15 Nov 2016 04:07:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7729 invoked from network); 5 Jan 2026 16:17:50 -0000
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on velox
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
-	autolearn_force=no version=3.4.6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linderud.pw;
-	s=linderud; t=1767629859;
-	bh=Sp0+vs+p0YJ1YCcFrIW3NgyiZzgNMJB3sU+MEhYxrmg=;
-	h=Date:From:To:Subject:References:In-Reply-To;
-	b=lJDjzi06oyvgyanHYAYpakT/4Mwly4z+USVkGQQFKk63jWprKpXHf+AT0f+5Lop2M
-	 mhOvvKIwdiVhJLtQ32E9e7lmG4L9mBD8Z3CcBpeseeXA+UiK/JRTubO0CUMzcgUr1w
-	 Ju/iRoxJG+bvmUpuCZyjeE5AaLVzjZURKRvPuRrfB46WjjaxBFysg3MMjfDB8fsbMT
-	 CBa4quBLEuVG2pptNBAWlGjnDHbWDiTnfZBus2tHYUThV+CO2Z0pknG84XFHiNwSSp
-	 OqAYJsNiSG8wVDrXA+X8h0HZH1mppe+ZlHqQXji39j/lWehzWb0BpDj003CwyBrlSY
-	 kdcj9mIWzEePYXV5vC6g3mn3MNCmpyw/M8MBNEi92ZW0swCS+oWeLdVipUaZFXvxxA
-	 0ODZikWRwNpIFs1axSbFzOe1EYaCQuNYqsQiFdCb2nD9CfgCMGm1evzAUBkSrnjflc
-	 XeGyx/TeLk9zik5XGLGUgfLTkDztYl/Z2xR/hr+fy48hIc6R8Ov1QuNiugoNXyzAJ/
-	 c98JrjImAHY/WUOXbCybc+MkAAx9Ofphhf4slrh8UwlYfZ+5DcHJEQLbrwuUspN36S
-	 PKZyvMiX1dj/JUjTZNPmHw46T1og4fL/uLThi/nhteOnpYVOsug78o+nfZlnt+12rf
-	 bfs7Bl8gYPCw1R4ut2gR4YgM=
-Date: Mon, 5 Jan 2026 17:17:31 +0100
-From: Morten Linderud <morten@linderud.pw>
+Received: (qmail 24246 invoked from network); 15 Nov 2016 03:27:21 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=x/43VSc8RmLqHmX6FLN6/8O6Scs=; b=uaeWQ+
+	fbbdcAdmSE8Nde/2PNaEufMOo3K3I24td1wvqcmm/bypCP9j8iK6h0pTcnxMQSnk
+	K9WTuRih+CKptNlC2l115UKeMoEh7AkcPv6QKkXj+VEJEB3YEyiz6RVELciNkde1
+	TDzP9gvQpWI9Se4K1x1NCsvHzHBATXnlbDEMs=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=x/43VSc8RmLqHm
+	X6FLN6/8O6Scs=; b=UlXR5T2SMx0MiIiZiVL/5pZrCcrLGtTFtQVNtXM2ksZJ26
+	08FXROwzVMvBmCLVRawg0te7wtrbX1hyV/4PFrYE+xUq/P2i5jYe1RJrGuVhFRuv
+	exAtOxRck8HKojKGxhr1A+D4icQeEdRoq+Inzgeb9E/ErshFg1JaatgnaFYsE=
+X-ME-Sender: <xms:joAqWHo_OUtPG3m9QziNtpDz_PmNPFNDnWTBoRXHJOjaBYzY3qlwtQ>
+X-Sasl-enc: jy5zBb8nLL+S1Vt3Jk/73Fz8ssALOZvuDvWq9stH7kSw 1479180430
+Date: Mon, 14 Nov 2016 22:27:07 -0500
+From: Leo Famulari <leo@famulari.name>
 To: oss-security@lists.openwall.com
-Message-ID: <aVvj1GESJIik6puj@framework>
-References: <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
- <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
- <878qei6bq7.fsf@josefsson.org>
- <87ms2y1d2m.fsf@gmail.com>
- <87eco91kzi.fsf@josefsson.org>
- <SYCPR01MB3661379F4E31EE1A57A2F310EEBBA@SYCPR01MB3661.ausprd01.prod.outlook.com>
- <7002eb83-6227-4de9-aa3a-bfe5cad62320@gmail.com>
- <ME2PR01MB36500CA1987170A857BCF637EEB9A@ME2PR01MB3650.ausprd01.prod.outlook.com>
- <aVuxyNKwrPhbE0SH@donburi.himad.notcom.org>
- <CAH8yC8mLpb6Gr63cQR2EmCfERvCjZ4qkcVgOtamki3cMFC1bnQ@mail.gmail.com>
+Cc: fulldisclosure@seclists.org, bugtraq@securityfocus.com
+Message-ID: <20161115032707.GA5104@jasmine>
+References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cevsnimuegsx3pa4"
+	protocol="application/pgp-signature"; boundary="J/dobhs11T7y2rNN"
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8mLpb6Gr63cQR2EmCfERvCjZ4qkcVgOtamki3cMFC1bnQ@mail.gmail.com>
-Subject: Re: [oss-security] Re: Best practices for signature verifcation
+In-Reply-To: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
+User-Agent: Mutt/1.7.1 (2016-10-04)
+Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
 
---cevsnimuegsx3pa4
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
+--J/dobhs11T7y2rNN
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Re: Best practices for signature verifcation
-MIME-Version: 1.0
 
-On Mon, Jan 05, 2026 at 08:01:40AM -0500, Jeffrey Walton wrote:
-> On Mon, Jan 5, 2026 at 7:54=E2=80=AFAM Valtteri Vuorikoski <vuori@notcom.=
-org> wrote:
-> >
-> > On Sun, Jan 04, 2026 at 11:56:06AM +0000, Peter Gutmann wrote:
-> > > As an aside, is anyone aware of a single-source design document for w=
-hat
-> > > Authenticode does?   There's a million web pages related to the busin=
-ess of
-> > > selling signing certs, and less than a million on using it, but I can=
-'t find a
-> > > single-source design doc, just lots of stuff in various places that I=
-'ve
-> > > picked up over the years.  By "single-source doc" I mean something th=
-at
-> > > addresses all of the above issues and related ones in one place.
-> >
-> > Are you looking for something more detailed than the Microsoft document=
- titled
-> > "Windows Authenticode Portable Executable Signature Format" from 2008?
-> >
-> > Download from the horse's mouth:
-> > <https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-=
-d599bac8184a/authenticode_pe.docx>)
+On Mon, Nov 14, 2016 at 08:45:51PM +0000, Hector Marco wrote:
+> Hello All,
 >=20
-> Nice find.  I remember the document, but I could not find it in my
-> collection of old documents.
->=20
-> Also of interest may be some entries from the Wayback machine of
-> Microsoft's site at
-> <https://web.archive.org/web/20030210220956/http://msdn.microsoft.com/wor=
-kshop/security/authcode/authenticode_ovw_entry.asp>.
-> The original page was titled "Authenticode Overviews and Tutorials".
->=20
-> Jeff
+> Affected package
+> ----------------
+> Cryptsetup <=3D 2:1
 
-This is the latest edition of Microsoft Authenticode specification.
+Hi,
 
-https://aka.ms/AuthenticodeSpec
+Can you clarify which versions are affected?
 
---=20
-Morten Linderud
-PGP: 9C02FF419FECBE16
+The latest upstream version is 1.7.3:
 
---cevsnimuegsx3pa4
+https://gitlab.com/cryptsetup/cryptsetup/commits/master
+
+What is the 2:1 version?
+
+--J/dobhs11T7y2rNN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEwQA0ZnZjToDJQPuenAL/QZ/svhYFAmlb5BAACgkQnAL/QZ/s
-vha2Ow/+KE4hbntmKwqLcFSG6f4QbPFL3yzbAZxX+a25gARpxgz0nbvmiU9g2vSu
-aD9oDG2GHSbW6f9Uby0+vniVgN+piOOEjy168zSsdc/6IQU5GgO/7mt5qCP7qprU
-JFg7ch09PWKnkhVNiuAjF2lNqopNazYiEZFkGuE6l0SSDjof1LXU8ECWxCL9ZUbX
-0MSdsz2t2cx/+gAQJdb1gJAbrJsS5WY0zQI3Pa1uzgHExFYSnhhPJM8h2fBVrpfj
-7Y5a2Vsi9WH6+8z66YNm2Cy6Z8QM6yJVIVjSuy0YrBThtINNgHlo4RKeLjksN+eZ
-PifbBdpfwPyqxSe+ajiu9LUO4QuxCiWE4jBTH0JyWpuBf4FLfm1wQWOGqiZB7AYd
-T33wEIMCFLVDU7i/YxES/qChgvnpocK0tO/dPE/e3uidTvfXEUl4rjPKakctAlsQ
-Y4s1djqX2/uheH5FfJR0SSNV518ftxJoKaFYUqyp1xXPQLTaTc0MuEK9i0ZsH6oQ
-x9Ar/NdLuxIsTFhItcMNrfdrG0BWAoB79+hxFAxa6rLsWz10Vh8jLe45CnumiqHT
-J6j/0rGrAJLgAK08JEWnAaEuOOux2edVUFXPMm2YJQaPtBY9P7Ctf4bWs98TBYG+
-bvuj8kLQ5ok8cJu+1SC6W55Qn8YS2uhlusjvI1WfAhRB/7utf+k=
-=mLMc
+iQIcBAEBCAAGBQJYKoCIAAoJECZG+jC6yn8Ih20P/1K0ETdOCLovkNsYMAPxUeNF
+KEEbuAHPN3aU24aa/D9MVRLSV423KuoQUOTDgetYzSh0cf0SyZzoa+RM7dPPdOU4
+jPF6ka4vThGNl/KnyYH8tynGEjDFG6ZDa+TXc2ySRGnT1vU2iVbzEdhRAyDwPVuY
+lwa1n1eZGBXDMO3SVNNZjIwzUzRhZSER7knDmCUV3/313NeOtBK3xQu0quOcZdEv
+OPsJxJatbW+yUJ2CqdNo+fKIzdV8+xT2u/5eV3VKp6MELbsrGOVgcNkMS5m1EUih
+hUZ3sqotj/T6ua39P7BA0FOpT8Oc8C9v6A/yA3F89IXQWXKOboq/yzppTjlBHXZ8
+icCan3Ml0fjoqfWIShwHKq1LBwEI3Bhjh4bp+WxRE3/O2P6iIid4f/NiJKN7iDRp
+UbjqWL39zDgbnUaHzhzLxTLfI9lUqdZ2gOf1Pkj9l+4R2gtpHe56b1PxFIQGreTF
+K6fUqOqrqofuvpOxojczWmzPhNnQFLgZpfUpx/Ku83Z46Ydpn374aQI7UsrzJDQa
+Y36G48PMlNVLpZoDMExTbX3Mle6IcqSXayQSUi28RwdzNXQreoWWsJerx0qDbWQw
+D/VNhO0LcoGj1Z1wxXPr6UepnpEKVvfBA+vcVbez3g7xUWha9OQQSRMOfjvUOLMc
+0PHNQ8qGFZyHIuY6vv3K
+=AA7L
 -----END PGP SIGNATURE-----
 
---cevsnimuegsx3pa4--
+--J/dobhs11T7y2rNN--
