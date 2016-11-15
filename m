@@ -1,60 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/3
-Message-ID: <569CADC1.7000407@gmail.com>
-Date: Mon, 18 Jan 2016 11:17:53 +0200
-From: Paris Zoumpouloglou <pariszoump@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/5
+Message-ID: <20161115211458.GK2344@openstack.org>
+Date: Tue, 15 Nov 2016 21:15:00 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: Buffer Overflow in lha compression utility
+Subject: Re: Re: [FD] CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
-== Overview ==
-LHA for UNIX (https://osdn.jp/projects/lha/) is an open source
-implementation of the LHA compression utility and associated file format.
+On 2016-11-15 20:11:11 +0000 (+0000), Hector Marco wrote:
+> It would be more precise to say "2:1.7.3-2" rather than "2:1".
+> This number refers to the Debian package. It seems that Debian is using
+> different version numbers for the "cryptsetup" package:
+> 
+> https://security-tracker.debian.org/tracker/CVE-2016-4484
+> 
+> We are not sure whether the last part of the version number (2:1.7.3-2)
+> of the Debian package (1.7.3-2) is used to match with the cryptsetup
+> version.
+[...]
 
-== Version ==
-All tests were performed using the latest 20b6ba8 commit of the master
-branch from https://osdn.jp/projects/lha/scm/git/lha/
-
-== Details ==
-Using the afl fuzzer, two cases which triggered a buffer overflow where
-discovered. The problem existed in header.c:797-800 and header.c:913-916
-while parsing level0 and level1 headers accordingly.
-
-=797-800=
-
-    hdr->header_size = header_size = get_byte();
-    checksum = get_byte();
-
-    if (fread(data + COMMON_HEADER_SIZE,
-              header_size + 2 - COMMON_HEADER_SIZE, 1, fp) == 0) {
-        error("Invalid header (LHarc file ?)");
-        return FALSE;   /* finish */
-    }
-
-=913-916=
-
-    hdr->header_size = header_size = get_byte();
-    checksum = get_byte();
-
-    if (fread(data + COMMON_HEADER_SIZE,
-              header_size + 2 - COMMON_HEADER_SIZE, 1, fp) == 0) {
-        error("Invalid header (LHarc file ?)");
-        return FALSE;   /* finish */
-    }
-
-
-The header_size variable is determined from the first byte of the lha
-archive header, which is read by the get_byte function. The returned
-value is used in:
-
-header_size + 2 - COMMON_HEADER_SIZE
-
-to determine the elements' size used in fread() .
-
-If the header_size is less than abs(2 - COMMON_HEADER_SIZE) = abs(2 -
-21) = 19 then the size parameter is overflowed and a buffer overflow
-occurs in fread.
-
-== Timeline ==
-2016-01-13 - Bug report submitted
-2016-01-16 - Bug fix pushed to master (commit bf2471f)
+The "2:" prefix is called an "epoch" and was introduced around the
+time the package was renamed from "cryptsetup-luks" to "cryptsetup"
+(for reasons not entirely clear to me from reading the package
+changelog, but is usually employed to work around version numbers
+going in reverse or mistakes in version numbers for a package). The
+-2 suffix is a package revision, which makes updated packages
+containing non-updated upstream releases possible (necessary to, for
+example, be able to fix bugs in the packaging itself). So in the
+case of a 2:1.7.3-2 package version, 1.7.3 is the corresponding
+upstream source version number.
+-- 
+Jeremy Stanley
