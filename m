@@ -1,19 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/10
-Message-ID: <CACHnxzxB4hfLVfGMgjDMQ3VLfOvmQyK=rX3fskxfy2RF=u2yVw@mail.gmail.com>
-Date: Thu, 10 Mar 2016 07:45:33 -0500
-From: Christopher Shannon <christopher.l.shannon@...il.com>
-To: dev@...ivemq.apache.org, users@...ivemq.apache.org, security@...che.org,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [ANNOUNCE] CVE-2016-0782: ActiveMQ Web Console - Cross-Site Scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/15/2
+Message-ID: <CALJHwhRq0gS+0H-iFUm9kr2kDGoGXa01=ZakM=FwraBdAZoSCQ@mail.gmail.com>
+Date: Tue, 15 Nov 2016 12:25:35 +1000
+From: Wade Mealing <wmealing@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-8646: linux kernel - oops in shash_async_export()
 Content-Type: text/plain; charset=utf-8
 
-There following security vulnerability was reported against Apache
-ActiveMQ 5.13.0 and older versions.
+Gday,
 
-Please check the following document and see if you’re affected by the issue.
+Igor Redko from Virtuozzo found a vulnerability was found in the Linux
+kernel. An unprivileged local user could triger oops in
+shash_async_export() by attempting to force the in-kernel hashing
+algorithms into decrypting an empty data set.  Not all in kernel algorithms
+are affected.
 
-http://activemq.apache.org/security-advisories.data/CVE-2016-0782-announcement.txt
+Upstream has already fixed this issue (See upstream patch) in 4.4rc1.
 
-Apache ActiveMQ 5.13.1 and newer with appropriate fixes was released and
-available for upgrade.
+Thanks,
+
+Wade Mealing
+Red Hat Product Security
+
+
+Upstream discussion:
+
+https://lkml.org/lkml/2016/10/12/198
+
+Upstream patch:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4afa5f9617927453ac04b24b584f6c718dfb4f45
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1388821
 
