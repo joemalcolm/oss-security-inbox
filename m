@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/30/7
-Message-ID: <CAKG8Do7TtAE4D4u3YrHdhh44QmgvxyP4PwA1dOwD79pVRwqU8g@mail.gmail.com>
-Date: Fri, 30 Sep 2016 17:57:28 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/7
+Message-ID: <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
+Date: Wed, 16 Nov 2016 16:11:57 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: pacemaker DoS when pacemaker remote is in use
+Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On 16/11/16 15:55, Jason Cooper wrote:
+> How does this differ from an attacker setting 'init=/bin/sh' on the
+> kernel command line?  Or, booting from attacker provided media?  Or, in
+> OS X, booting in single user mode?
+> 
+> Your Discussion section at the end mentions facilities (GRUB passwords,
+> BIOS passwords, etc) for preventing this "Developer friendliness".  How
+> do you envision the installer enabling these while providing a failsafe
+> that an attacker can't exploit?
 
-Last February was reported a vulnerability against pacemaker when pacemaker
-remote is in use, allowing a remote, unauthenticated, attacker to launch a
-DoS attack.
-I have not found a CVE request for it, so here is one :
+If you set a grub password then the attacker cannot set init=/bin/sh on
+the kernel command line without knowing the grub password.   However,
+when the boot process prompts you for the encrypted volume password you
+can just hit enter until you eventually get a shell prompt.  Of course,
+the attacker needs to be able to see the console where the password is
+typed in ...
 
-If a corosync node is connected to a pacemaker_remote node, the
-connection can be trivially killed simply by connecting to the remote on its
-standard TCP port (typically 3121):
-
-2016-02-18T18:06:45.258661+00:00 d52-54-77-77-77-01 crmd[2637]:    error:
-Unexpected pacemaker_remote client takeover. Disconnecting
-
-Takeover is allowed in order to support migration of the remote primitive
-from
-one corosync node to another, but since this is a trivial denial of service
-attack, it should only be allowed once a valid authkey is provided.
-
-The flaw has been fixed in Pacemaker-1.1.15
-
-=> Upstream bug :
- - Bug 5269 - DoS: valid authkey should be required for takeover of a
-Pacemaker remote
-http://bugs.clusterlabs.org/show_bug.cgi?id=5269
-
-=> Upstream fix :
- - Fix: remote: cl#5269 - Notify other clients of a new connection only if
-the handshake has completed (bsc#967388)
-https://github.com/ClusterLabs/pacemaker/commit/5ec24a26
-
-Thanks!
-
--- 
-Cedric Buissart,
-Product Security
-
+jch
