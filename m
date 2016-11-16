@@ -1,85 +1,271 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/05/9
-Message-Id: <20160705224122.7C5C242E012@smtpvbsrv1.mitre.org>
-Date: Tue,  5 Jul 2016 18:41:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Browsing and attaching images considered harmful in Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/4
+Message-ID: <3304410.S0cpkzc54u@arcadia>
+Date: Wed, 16 Nov 2016 15:06:10 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: jasper: multiple assertion failures
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If it is suitable for a CVE please assign one. Thanks.
 
-> I would like to bring the attention of the oss-security list to the
-> existence of many security issues in the gdk-pixbuf library and its
-> dependencies causing a that attaching a corrupted image file in Linux
-> has become a risky business. For instance, there is a read
-> out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
-> svg images), which can be easily triggered if you try to attach a svg
-> in Firefox.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-> librsvg2 (2.40.2-1 with debug symbols)
+A fuzzing revealed multiple assertion failures.
+Since the jasper’s maintainer releases frequently, the fuzzing was done across 
+multiple versions. The “affected version” tag means that it was tested and 
+discovered on that version, so previously versions may be affected too.
+The latest failures are unfixed. I will update the post when upstream will 
+work on them.
 
-> 1. Download and unpack boom.tar.gz somewhere.
-> 2. gdb --args /usr/lib/firefox/firefox
-> 3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
-> directory in Firefox.
-> 
-> Result:
-> 
-> Program received signal SIGSEGV, Segmentation fault.
+Affected version:
+1.900.12
+Output/failure:
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.12/work/jasper-1.900.12/src/libjasper/base/jas_seq.c:90: 
+jas_matrix<= yend' failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/d91198abd00fc435a397fe6bad906a4c1748e9cf
+Fixed version:
+1.900.13
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00003-jasper-assert-jas_matrix_t
 
-> 0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
-> (pattern=pattern@...ry=0x7ffffffea110) at rsvg-paint-server.c:645
+######################################################
 
-> It is interesting to note that rcx looks controllable:
-> 
-> (gdb) x/i $rip
-> => 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
-> (gdb) info registers
-> ...
-> rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
-> ...
-> 
-> Fortunately, this issue is already solved in the last revision of
-> librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
-> suitable). Nevertheless, I reported such vulnerability to Mozilla more
-> than a month ago hoping that they will disable the svg support in the
-> open/attach widget. After some discussion, it was marked as WONTFIX.
-> While i understand why, i still feel it can be productive to discuss
-> this here.
-> 
-> (the same trick can be used to crash Chrome/Chromium, since the code
-> to open/attach an image is almost the same, so this is not a Firefox
-> specific issue)
+Affected version:
+1.900.13
+Output/failure:
+/tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/ras/ras_dec.c:330: int 
+ras_getcmap(jas_stream_t *, ras_hdr_t *, ras_cmap_t *): Assertion `numcolors 
+<= 256' failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/411a4068f8c464e883358bf403a3e25158863823
+Fixed version:
+1.900.14
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00005-jasper-assert-ras_getcmap
 
-Use CVE-2016-6163 for this specific "read out-of-bounds in librsvg2 (a
-dependency of gdk-pixbuf used to render svg images)."
+######################################################
 
-(We cannot assign CVE IDs for the more general topic of "many security
-issues in the gdk-pixbuf library and its dependencies" without
-additional information.)
+Affected version:
+1.900.13
+Output/failure:
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_mct.c:146: 
+void jpc_irct(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion 
+`((c1)->numrows_) == numrows && ((c1)->numcols_) == numcols && ((c2)-
+>numrows_) == numrows && ((c2)->numcols_) == numcols’ failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
+Fixed version:
+1.900.14
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00006-jasper-assert-jpc_irct
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+######################################################
 
-iQIcBAEBCAAGBQJXfDX+AAoJEHb/MwWLVhi2UEAP/1iLYtrHAOrC5eEye9BjJJS3
-8aZCZiBarS2FJIUWDs/W7H/8KkKNluhZJuKTQcWFcbMKzhNVNXoi2jLqD9p7O1NO
-c4/SDM8eSPLzSPHpk6m1ZU2N9WO/qA4xI4JW8Aq6AkeCSQMjsSbSraU/xXwhRHj0
-Ho4JCtlBi7YgDfzt1fOApf4lW9/0A0bVk877JdkOozXIq1nn5qHsiplqkHhw6QpN
-1Yo32YH6QMHP5ZLMrhtUorZ9BaGbFIHrrowOD9TGS35sEjO9rXmo4H+auuHQRbup
-kkPBiU8EoEy23+lxIN8twdRMpICDAAqSFr4ZmVjCywZ7I2cGAh0wzO4rwPA268aj
-9esSjut6wxZmpejy1YvJgrgkj0SYWn5jH5Obc8QYZoEBlT3l5DtDYRjN4JUsWm9n
-ben8vr+7d10F4ROkauebqop7TCexuAs50FTvrkhxDqHLeCI4yuXTRZCMBnaqf6eG
-1pqj7h0E0Wf7Zhp53J5zMGCRgn0UhG3onEauT/Ge95FisuAkAZFwz5jQBJT3iFzD
-bLraASJNVVS28xrgyLfXL/1TrIs2fkMYF0bo/RVGQlqz1vMm0VFgjU3vVgSVlgZ8
-hLdH4FFDsj6Rx2v30CHRWkdt7ILB0aVSaIUUwt+VhmBagchg1bWCjoGw/YKNpvOx
-Bcb0TMBIqWVr/5eNilJr
-=iGCG
------END PGP SIGNATURE-----
+Affected version:
+1.900.13
+Output/failure:
+type = 0xff76 (UNKNOWN); len = 20;10 40 40 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_mct.c:233: 
+void jpc_iict(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion 
+`((c1)->numcols_) == numcols && ((c2)->numcols_) == numcols’ failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
+Fixed version:
+1.900.14
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00008-jasper-assert-jpc_iict
+
+######################################################
+
+Affected version:
+1.900.13
+Output/failure:
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/base/jas_seq.c:90: 
+jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend 
+&& ystart <= yend' failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/ba2b9d000660313af7b692542afbd374c5685865
+Fixed version:
+1.900.14
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00007-jasper-assert-jas_matrix_t
+
+######################################################
+
+Affected version:
+1.900.13
+Output/failure:
+type = 0xff05 (UNKNOWN); len = 20;01 40 40 00 f0 00 00 00 00 00 00 00 00 00 00 
+00 00 00 imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_bs.c:197: long 
+jpc_bitstream_getbits(jpc_bitstream_t *, int): Assertion `n >= 0 && n < 32' 
+failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/1e84674d95353c64e5c4c0e7232ae86fd6ea813b
+Fixed version:
+1.900.14
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00014-jasper-assert-jpc_bitstream_getbits
+
+######################################################
+
+Affected version:
+1.900.13
+Output/failure:
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_dec.c:1637: 
+void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion `!((expn + 
+(numrlvls – 1) – (numrlvls – 1 – ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & 
+(~0x1f))’ failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+Fixed version:
+1.900.17
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00012-jasper-assert-calcstepsizes
+
+######################################################
+
+Affected version:
+1.900.13
+Output/failure:
+type = 0xff41 (UNKNOWN); len = 20;02 40 40 00 00 00 00 ee ff 00 00 00 00 24 00 
+00 00 00 imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_t2cod.c:297: 
+int jpc_pi_nextrpcl(jpc_pi_t *): Assertion `pi->prcno pirlvl->numprcs’ failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+Fixed version:
+1.900.17
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00013-jasper-assert-jpc_pi_nextrpcl
+
+######################################################
+
+Affected version:
+1.900.15
+Output/failure:
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.15/work/jasper-1.900.15/src/libjasper/base/jas_seq.c:90: 
+jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend 
+&& ystart <= yend' failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+Fixed version:
+1.900.17
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00016-jasper-assert-jas_matrix_t
+
+######################################################
+
+Affected version:
+1.900.22
+Output/failure:
+warning: trailing garbage in marker segment (9 bytes)
+warning: trailing garbage in marker segment (40 bytes)
+warning: ignoring unknown marker segment (0xffee)
+type = 0xffee (UNKNOWN); len = 23;1f 32 ff ff ff 00 10 00 3d 4d 00 01 32 ff 00 
+e4 00 10 00 00 4f warning: trailing garbage in marker segment (34 bytes)
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/base/jas_seq.c:90: 
+jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend 
+&& ystart <= yend' failed.
+Commit fix:
+https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
+Fixed version:
+1.900.25
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00043-jasper-assert-jas_matrix_t
+
+######################################################
+
+Affected version:
+1.900.13
+Output/failure:
+/tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_t1cod.c:144: 
+int JPC_NOMINALGAIN(int, int, int, int): Assertion `qmfbid == 0x01′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00004-jasper-assert-JPC_NOMINALGAIN
+
+######################################################
+
+Affected version:
+1.900.13
+Output/failure:
+type = 0xff76 (UNKNOWN); len = 20;00 40 40 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 imginfo: /tmp/portage/media-
+libs/jasper-1.900.13/work/jasper-1.900.13/src/libjasper/jpc/jpc_dec.c:1817: 
+void jpc_dequantize(jas_matrix_t *, jpc_fix_t): Assertion `absstepsize >= 0′ 
+failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00010-jasper-assert-jpc_dequantize
+
+######################################################
+
+Affected version:
+1.900.17
+Output/failure:
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_math.c:94: int 
+jpc_floorlog2(int): Assertion `x > 0′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00023-jasper-assert-jpc_floorlog2
+
+######################################################
+
+Affected version:
+1.900.22
+Output/failure:
+warning: trailing garbage in marker segment (9 bytes)
+warning: trailing garbage in marker segment (28 bytes)
+warning: trailing garbage in marker segment (40 bytes)
+warning: ignoring unknown marker segment (0xffee)
+type = 0xffee (UNKNOWN); len = 23;1f 32 ff ff ff 00 10 00 3d 4d 00 01 32 40 e4 
+e4 00 10 00 00 4f warning: trailing garbage in marker segment (12 bytes)
+imginfo: /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:1650: 
+void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion `!((expn + 
+(numrlvls – 1) – (numrlvls – 1 – ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & 
+(~0x1f))’ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00044-jasper-assert-calcstepsizes
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-10-23: start to report to upstream the issues
+2016-11-16: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/16/jasper-multiple-assertion-failure
