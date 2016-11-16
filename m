@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2527" "Tuesday" "28" "July" "2015" "20:13:13" "+0100" "Kiall Mac Innes" "kiall@macinnes.ie" "<55B7D449.6060602@macinnes.ie>" "69" "[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" nil nil nil "7" "2015072819:13:13" "[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets" (number mark "        kiall@macinn Jul 28   69/2527  " thread-indent "\"[oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect handling of large RecordSets\"\n") "<20150728185746.BE8E46C0099@smtpvmsrv1.mitre.org>" ("<20150728185746.BE8E46C0099@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2604" "Wednesday" "16" "November" "2016" "15:55:29" "+0000" "Jason Cooper" "osssecurity@lakedaemon.net" "<20161116155529.GJ5329@io.lakedaemon.net>" "70" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" "^Cc:" nil nil "11" "2016111615:55:29" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "        osssecurity@ Nov 16   70/2604  " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13478 invoked by uid 550); 28 Jul 2015 19:14:12 -0000
+Received: (qmail 1844 invoked by uid 550); 16 Nov 2016 16:00:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12053 invoked from network); 28 Jul 2015 19:13:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=macinnes.ie;
-	s=default; t=1438110796;
-	bh=cP7qyWxntTheAlpNHzdHG5b/lEGJ9fMkquh+dJ/w5Zs=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=aaBM3aFZmhVZcD0kRKLUy05HWRh6fNL609z/5oqKIDLsjcBX3aifbyt0YkFecujKn
-	 hmfFhyBlGl+L40xxCDuniOv3rtGHA59HbuQOyquWMDA8SanpZgbHL5TH7BdnRA0/NC
-	 V3a+O4v1VZ4v1Iv6vxKvfwFdvJeMqEkHKh9irmT4=
-Message-ID: <55B7D449.6060602@macinnes.ie>
+Received: (qmail 30392 invoked from network); 16 Nov 2016 15:55:45 -0000
+X-MHO-User: 153b4e25-ac15-11e6-a7af-b587c64a4c62
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Originating-IP: 173.50.81.193
+X-Mail-Handler: DuoCircle Outbound SMTP
+X-DKIM: OpenDKIM Filter v2.6.8 io AEB7C80035
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
+	s=mail; t=1479311729;
+	bh=8Qvd2piCAiFG/Ehz2NeTT+eVvGPvo/MiVkVq4Ly1GJY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=HiSDlHrNzGaZGK9DIkc6rzJAubZxPPX2ES5azoiRuvaxHY1nEnEzWqEV+1veWV12O
+	 qY0o7Uk4K3uYSFfg2Z7FYFcASxuxfEAT3Z3iDBLnbmqPZcMqz+YNMyQsYYE0n1Ya6k
+	 Rk9/t7ZsD5NyoX9gsxxQ8VAfkUJrMNnZ3STPmYMJm1WY57ULRfhSA2JxrVqhOcgeFW
+	 H8cSTjr2ym/e4mUr0KHjL7N2Vc26HOfzwGhyoQEA/+QOJeY9sLevH4uapP34VNVyPk
+	 iLIHfr3exAZDumMl5+5IDQcFO0b7Zbn/BQDJQSBdq+SB6PVEWMTNjjD11TNvMMmK51
+	 7iMCAsU9aixyA==
+Message-ID: <20161116155529.GJ5329@io.lakedaemon.net>
+References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
 MIME-Version: 1.0
-References: <20150728185746.BE8E46C0099@smtpvmsrv1.mitre.org>
-In-Reply-To: <20150728185746.BE8E46C0099@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-CC: oss-security@lists.openwall.com
-Date: Tue, 28 Jul 2015 20:13:13 +0100
-From: Kiall Mac Innes <kiall@macinnes.ie>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Cc: fulldisclosure@seclists.org, bugtraq@securityfocus.com
+Date: Wed, 16 Nov 2016 15:55:29 +0000
+From: Jason Cooper <osssecurity@lakedaemon.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request - OpenStack Designate mDNS DoS through incorrect
- handling of large RecordSets
-To: cve-assign@mitre.org
+Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Hector,
 
-On 28/07/15 19:57, cve-assign@mitre.org wrote:
->> https://launchpad.net/bugs/1471161
+On Mon, Nov 14, 2016 at 08:45:51PM +0000, Hector Marco wrote:
+> Affected package
+> ----------------
+> Cryptsetup <= 2:1
 > 
->> Designate does not enforce the DNS protocol limit concerning
->> record set sizes
 > 
->> As a result, the rendering loop in desginate-mdns can does not
->> make progress
+> CVE-ID
+> ------
+> CVE-2016-4484
 > 
->> Because it keeps receiving data, it does not seem it will ever
->> run into a timeout (and if it does, it will try again).
 > 
->> https://bugs.launchpad.net/designate/+bug/1471161/comments/5
-> 
->> I think there is 2 parts to this bug:
-> 
->> 1: Quotas were being bypassed as part of the v1 API. 2. If there
->> was enough RRs in a RRSet MiniDNS went into a loop. 3. MiniDNS
->> does not have a timeout.
-> 
-> Our current feeling is that it is best to have two CVE IDs: one
-> for the original "does not enforce the DNS protocol limit
-> concerning record set sizes" issue and one for the "Quotas were
-> being bypassed" issue. Is that OK?
+> Description
+> -----------
+> A vulnerability in Cryptsetup, concretely in the scripts that unlock the
+> system partition when the partition is ciphered using LUKS (Linux
+> Unified Key Setup).
 
-Yes, this is OK.
+This wording appears to have caused a lot of misunderstanding.  afaict,
+the binary executable 'cryptsetup' has nothing to do with this bug.
+Rather, it is completely in the initrd's script for decrypting a
+partition containing the rootfs.
 
-> [SNIP]
-> 
-> We feel that item 3, adding a timeout, can be considered a
-> security enhancement opportunity that should not have its own CVE
-> ID, i.e., there is no report of a vulnerability that can be fixed
-> only with a timeout.
+On Debian based systems, the initrd script is in the cryptsetup package,
+but if one looks at the upstream repository for cryptsetup:
 
-Agreed.
+  https://gitlab.com/cryptsetup/cryptsetup.git
 
-> Finally, our understanding is that multiple names are being used to
-> refer to the general 
-> https://wiki.openstack.org/wiki/Designate/Blueprints/MiniDNS
-> concept, i.e., we think "MiniDNS does not have a timeout" is an
-> observation about the Designate codebase, not a third-party DNS
-> server such as from the https://code.google.com/p/minidns/ site.
-> Also, we think this part of the Designate codebase is also called
-> designate-mdns (misspelled as desginate-mdns) and mDNS -- these are
-> essentially alternative names for Designate MiniDNS.
-> 
+There are no initrd scripts provided.  So, this is in distro-provided
+scripting.  *Not* in cryptsetup [0].
 
-Interesting, https://code.google.com/p/minidns/ is project I've not
-seen before. Within OpenStack Designate, we typically refer to the
-`designate-mdns` service as either MiniDNS or mDNS, we will need to
-ensure we're clearer in our wording in future to avoid any possible
-confusion.
+We could argue that those scripts should be in a 'cryptsetup-initramfs'
+package by itself, but Debian has their way of doing things, and I'm not
+volunteering, so... :-P
 
-Thanks,
-Kiall
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+> This vulnerability allows to obtain a root initramfs shell on affected
+> systems. The vulnerability is very reliable because it doesn't depend on
+> specific systems or configurations. Attackers can copy, modify or
+> destroy the hard disc as well as set up the network to exflitrate data.
 
-iQEcBAEBCAAGBQJVt9RIAAoJEHuWgzsGpgIa4igIAL4eiWoGF9ca5Cw4nlmQqZoe
-ZNnDJCI9JnAj87FOj7wVep8mM1RvD6dSmyfKeixp6ounAMCtaVoOtQa2oF+Gxqk0
-A3nAgRCKWMKr6awmlN5FClLoX8oHg88iIOv8hE45RqjUaXat1dHvPog1YBxN6Ud0
-Sx/IOaCWKHJIi/wJdwmNLbIP573tFhL0Hfw+m6AIiuRL495F7Umvqdb1nMHR/wfl
-/bwiTwfX3yD0q/kZAEZux23zBCOZEv24C9ups6LEP5un2G0w8P97VQdGDRhzddls
-EQstl/2gxR6yOPWV9f4MFxeVlEohHT5MZ5gvNio+7zzCJC5T9kSHGHDoe00LV5c=
-=BHnN
------END PGP SIGNATURE-----
+How does this differ from an attacker setting 'init=/bin/sh' on the
+kernel command line?  Or, booting from attacker provided media?  Or, in
+OS X, booting in single user mode?
+
+Your Discussion section at the end mentions facilities (GRUB passwords,
+BIOS passwords, etc) for preventing this "Developer friendliness".  How
+do you envision the installer enabling these while providing a failsafe
+that an attacker can't exploit?
+
+> In cloud environments it is also possible to remotely exploit this
+> vulnerability without having "physical access."
+
+This is straining to add 'cloud' and 'remotely exploit' into this
+summary.  I presume all cloud providers who also provide console access
+to VM bootup also protect that access behind user credentials or ssh
+keys...
+
+On a side note, I recommend encrypting the *entire* internal hard disk,
+and configuring the BIOS/UEFI to boot from USB.  Then, put grub, /boot,
+and the LUKS header on the USB drive.  Which you keep on your physical
+keychain.  After boot is complete, you should be able to remove the USB
+drive.  Just make sure to plug it back in during system updates. ;-)
+
+thx,
+
+Jason.
+
+[0] note: the authors of cryptsetup have since updated their readme to
+clarify the situation around this CVE.
