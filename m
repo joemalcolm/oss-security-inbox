@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/1
-Message-ID: <20161215233645.GJ29010@jumper.schlittermann.de>
-Date: Fri, 16 Dec 2016 00:36:45 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request - Exim 4.69-4.87 - disclosure of private information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/5
+Message-id:  <CY1PR06MB1753D7850C83CBF197C4F308F7BF0@CY1PR06MB1753.namprd06.prod.outlook.com>
+Date: Wed, 16 Nov 2016 14:19:42 +0000
+From: Andrew W Petro <andrew.petro@...c.edu>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request - Webproxy Portlet - cross-user cache over-hits
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-please assign a CVE ID
+Apereo (previously, Jasig) Webproxy Portlet v2 prior to v2.2.2 is bugged such that it uses too little information in computing cache keys. In some circumstances this results in users seeing cached content intended for and personalized to other users. Apereo tracks this issue as WPP-101 .
 
-Product:    Exim
-Versions:   4.69 -> 4.87
-Impact:     Possible leak of private information to a remote attacker
-Reference:  https://bugs.exim.org/show_bug.cgi?id=1996 (placeholder currently)
-Requester:  Heiko Schlittermann <hs@...littermann.de> (Exim Developer)
-Credits:    Bjoern Jacke <bjoern@....de>
+Adopters should immediately upgrade to v2.2.2, which simply removes the inappropriate caching behavior while otherwise remaining backwards-compatible.
 
-If several conditions are met, Exim leaks private information to
-a remote attacker.
+Please assign a CVE-ID to this issue.
 
-A patch exists and is under testing already.
-Backports to older versions are under development.
+More information:
 
-As soon as the tests are passed we'll send an announcement
-to the "Operating system distribution security contacts list" and
-ask for packaging fixed versions.
++ https://apereo.github.io/2016/11/14/web-proxy-overcaching/
++ https://issues.jasig.org/browse/WPP-101
++ https://groups.google.com/a/apereo.org/d/topic/uportal-dev/0XpSvhjmgDo/discussion
++ https://groups.google.com/a/apereo.org/d/topic/uportal-user/uGvdHC97AS0/discussion
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann              - Exim developer
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Kind regards,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Andrew
