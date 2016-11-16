@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/7
-Message-Id: <20160527171903.64AA8332023@smtpvbsrv1.mitre.org>
-Date: Fri, 27 May 2016 13:19:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: blinken@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: VLC - crash and potential code execution when processing QuickTime IMA files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/2
+Message-ID: <CADSYzsvQ2ZZA6kKd3NWv5CFEu8RxrL=+q7zgtnoZa-x_fL9BeA@mail.gmail.com>
+Date: Wed, 16 Nov 2016 01:15:02 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Nginx (Debian-based distros) - Root Privilege Escalation Vulnerability (CVE-2016-1247)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Vulnerability: Nginx (Debian-based distros) - Root Privilege
+Escalation Exploit (CVE-2016-1247)
 
-> it does not check
-> that the number of channels in the input stream is less than or equal
-> to the size of the buffer, resulting in an out-of-bounds write
-> 
-> potential for remote code execution via a malicious media file.
+Discovered by: Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
-Use CVE-2016-5108.
+Nginx web server packaging on Debian-based distributions such as Debian or
+Ubuntu was found to create log directories with insecure permissions which
+can be exploited by malicious local attackers to escalate their privileges
+from nginx/web user (www-data) to root.
+The vulnerability could be easily exploited by attackers who have managed to
+compromise a web application hosted on Nginx server and gained access to
+www-data account to escalate their privileges to root without any
+admin interaction thanks to cron.daily.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Vulnerability fixed in the following packages:
+Nginx 1.6.2-5+deb8u3 package on Debian
+Nginx 1.10.0-0ubuntu0.16.04.3 on Ubuntu (16.04 LTS)
 
-iQIcBAEBCAAGBQJXSIEeAAoJEHb/MwWLVhi2ER4QAK5kLAexK+KFPLs35LdTwYvu
-YCcFcWZylzAhEXB8ukMGCrEikoXgZe5frYun/wRwmkKOauwyzGfH7kqzTEMq9cgs
-ky43QVe7iSyVcsmi+jr+B2KUOq7vtTBaEhe2RR5PYG8vvseUYRO1rXiwMy7BTsSM
-SwskbnIQ8IHg6RdIQ+XTnI0zOWqXmU+YT3H0P3QyqXa/2katuUAADN5/orDQSvfn
-gmoh82VJc1tIJKckbEl2ivURfVPdVzb86Ng7ReJChR+YDx+MfZ9kcLZYH3982+9s
-OrpGCR0NJlMurP7FWBwekrd/bgnYXXZJpiEg6Ygg39X+8TSbRNHrycfSnHj5D2At
-GBcm6wdHWPROYHlQeeFng/wyxZC8qEP9LKIEQr8ypcEQT4UhJ9rQej0TTSHfXNiG
-UXG3jhIHCJJEBhQQX92XrR9CYwbn3MCmrT4CE4OCKO+088w3uHPxiVMUc6T6U2Pq
-ZElZ9kOLQposZe6ItuhHmPa9hOVzWpReeBZduPOdzW1PMDhfanUah7AEvp1eKn2d
-waA9CBhNH/4cxwMSlZUYGjx6SB9jaTkmYYk8HmcEW40nlDlfn8RrPiSrsMZfQZHT
-kO1ohrVDquQhoMycRu3GVaB9nGs+RGGfYD/XzsFSC+jb0PPuFKozdlHHonT5CP66
-vq0r06z1IrJDK0Nye6Re
-=ky5Z
------END PGP SIGNATURE-----
+
+The up-to-date advisory can be found at:
+
+https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html
+
+For updates, follow:
+
+https://twitter.com/dawid_golunski
+
+Copy of the exploit is also attached to this message.
+
+Download attachment "nginxed-root.sh" of type "application/x-sh" (7235 bytes)
