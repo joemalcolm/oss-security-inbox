@@ -1,86 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/11/10
-Message-ID: <56E2D563.2070106@igalia.com>
-Date: Fri, 11 Mar 2016 15:25:39 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: bugtraq@...urityfocus.com, oss-security@...ts.openwall.com
-Subject: WebKitGTK+ Security Advisory WSA-2016-0002
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/8
+Message-ID: <20161116193356.jmopa3xpg6yeg3eq@eldamar.local>
+Date: Wed, 16 Nov 2016 20:33:56 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: teeworlds: possible remote code execution on teeworlds client
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0002
-------------------------------------------------------------------------
+Hi
 
-Date reported      : March 11, 2016
-Advisory ID        : WSA-2016-0002
-Advisory URL       : http://webkitgtk.org/security/WSA-2016-0002.html
-CVE identifiers    : CVE-2016-1723, CVE-2016-1724, CVE-2016-1725,
-                     CVE-2016-1726, CVE-2016-1727, CVE-2016-1728.
+teeworlds, a online multi-player platform 2D shooter, released a new
+upstream version 0.6.4 stating the following in the news:
 
-Several vulnerabilities were discovered on WebKitGTK+.
+> 0.6.4 released - another security fix
+> (posted by: heinrich5991) | 2016-11-13
+> As with the 0.6.3 release, a reported security vulnerability motivated
+> this release: This time, the security vulnerability is worse, attacker
+> controlled memory-writes and possibly arbitrary code execution on the
+> client, abusable by any server the client joins.
 
-CVE-2016-1723
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Apple.
-    WebKit, as used in Apple iOS before 9.2.1 and Safari before 9.0.3,
-    allows remote attackers to execute arbitrary code or cause a denial
-    of service (memory corruption) via a crafted web site, a different
-    vulnerability than CVE-2016-1725 and CVE-2016-1726.
+https://www.teeworlds.com/?page=news&id=12086
 
-CVE-2016-1724
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Apple.
-    WebKit, as used in Apple iOS before 9.2.1, Safari before 9.0.3, and
-    tvOS before 9.1.1, allows remote attackers to execute arbitrary code
-    or cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-1727.
+Upstream fix:
+https://github.com/teeworlds/teeworlds/commit/ff254722a2683867fcb3e67569ffd36226c4bc62
 
-CVE-2016-1725
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Apple.
-    WebKit, as used in Apple iOS before 9.2.1 and Safari before 9.0.3,
-    allows remote attackers to execute arbitrary code or cause a denial
-    of service (memory corruption) via a crafted web site, a different
-    vulnerability than CVE-2016-1723 and CVE-2016-1726.
+Bug report in Debian: https://bugs.debian.org/844546
 
-CVE-2016-1726
-    Versions affected: WebKitGTK+ before 2.10.8.
-    Credit to Apple.
-    WebKit, as used in Apple iOS before 9.2.1 and Safari before 9.0.3,
-    allows remote attackers to execute arbitrary code or cause a denial
-    of service (memory corruption) via a crafted web site, a different
-    vulnerability than CVE-2016-1723 and CVE-2016-1725.
+Could you assign a CVE for this issue?
 
-CVE-2016-1727
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Apple.
-    WebKit, as used in Apple iOS before 9.2.1, Safari before 9.0.3, and
-    tvOS before 9.1.1, allows remote attackers to execute arbitrary code
-    or cause a denial of service (memory corruption) via a crafted web
-    site, a different vulnerability than CVE-2016-1724.
-
-CVE-2016-1728
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to an anonymous researcher coordinated via Joe Vennix.
-    The Cascading Style Sheets (CSS) implementation in Apple iOS before
-    9.2.1 and Safari before 9.0.3 mishandles the "a:visited button"
-    selector during height processing, which makes it easier for remote
-    attackers to obtain sensitive browser-history information via a
-    crafted web site.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: http://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-March 11, 2016
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Regards,
+Salvatore
