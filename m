@@ -1,101 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/07/1
-Message-ID: <865AFA5E-6CB2-4631-99E2-70C321F2FF9D@360.cn>
-Date: Thu, 7 Apr 2016 07:32:48 +0000
-From: 王梅 <wangmei@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-3619 libtiff: Out-of-bounds Read in the bmp2tiff tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/1
+Message-Id: <D1821A56-55CB-44C2-93AD-B2A42DF71DCD@patg.net>
+Date: Tue, 15 Nov 2016 23:11:46 -0500
+From: Patrick Galbraith <patg@...g.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-1249: Out-of-bounds read by DBD::mysql >= version 2.9003
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: Out-of-bounds Read
-Vendor URL: http://www.libtiff.org/
-CVE ID: CVE-2016-3619
-Credit: Mei Wang of the Cloud Security Team, Qihoo 360
+======
 
-Introduction
-============
+SECURITY ADVISORY - Out-of-bounds read by DBD::mysql
 
- When bmp2tiff function DumpModeEncode handle malicious bmp file with param -c none will cause Out-of-bounds Read. An attacker could exploit this issue to cause a denial of service.
+Out-of-bounds read by DBD::mysql
 
+A vulnerability was discovered that can lead to an out-of-bounds read
+when using server side prepared statements with an unaligned number of
+placeholders in WHERE condition and output fields in SELECT expression.
 
- libtiff-master/libtiff/tif_dumpmode.c:62
+Project name and URL — DBD::mysql Perl MySQL client driver, http://search.cpan.org/~capttofu/DBD-mysql/lib/DBD/mysql.pm <http://search.cpan.org/~capttofu/DBD-mysql/lib/DBD/mysql.pm>
+Versions known to be affected — 2.9004 and later (2005 and later)
+Versions known to be not affected — 2.9003 and earlier (before 2005)
+Version containing Fix — 4.039 and later (current)
+Link to fix: https://github.com/perl5-dbi/DBD-mysql/commit/793b72b1a0baa5070adacaac0e12fd995a6fbabe <https://github.com/perl5-dbi/DBD-mysql/commit/793b72b1a0baa5070adacaac0e12fd995a6fbabe>
 
-59                  * data buffer to avoid extra copy.
- 60                  */
- 61                 if (tif->tif_rawcp != pp)
- 62                         _TIFFmemcpy(tif->tif_rawcp, pp, n);
- 63                 tif->tif_rawcp += n;
- 64                 tif->tif_rawcc += n;
- 65                 pp += n;
- 66                 cc -= n;
- 67                 if (tif->tif_rawcc >= tif->tif_rawdatasize &&
- 68                     !TIFFFlushData1(tif))
- 69                         return (0);
+Type of vulnerability and its impact — could lead to out-of-bounds read when using server-side prepared statement support in the driver
 
-./bmp2tiff  -c none  ./sample/bmp2tiff_none.bmp 1.tif
+CVE identifier — CVE-2016-1249
 
-=================================================================
-==16644== ERROR: AddressSanitizer: unknown-crash on address 0x7f6f7dbde800 at pc 0x7f6f7ab77b3f bp 0x7ffc82264d60 sp 0x7ffc82264508
-READ of size 3342336 at 0x7f6f7dbde800 thread T0
-    #0 0x7f6f7ab77b3e (/lib64/libasan.so.0+0xeb3e)
-    #1 0x45b96c in _TIFFmemcpy /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:340
-    #2 0x4614c1 in DumpModeEncode /home/dazhuang/asan/libtiff-master/libtiff/tif_dumpmode.c:62
-    #3 0x45665e in TIFFWriteScanline /home/dazhuang/asan/libtiff-master/libtiff/tif_write.c:173
-    #4 0x40450f in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:775
-    #5 0x7f6f7a2aeaf4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
-    #6 0x4019a8 in _start (/home/dazhuang/asan/libtiff-master/tools/bmp2tiff+0x4019a8)
-0x7f6f7dcee800 is located 0 bytes to the right of 1114112-byte region [0x7f6f7dbde800,0x7f6f7dcee800)
-allocated by thread T0 here:
-    #0 0x7f6f7ab7f129 (/lib64/libasan.so.0+0x16129)
-    #1 0x45b761 in _TIFFmalloc /home/dazhuang/asan/libtiff-master/libtiff/tif_unix.c:316
-    #2 0x4037c3 in main /home/dazhuang/asan/libtiff-master/tools/bmp2tiff.c:678
-    #3 0x7f6f7a2aeaf4 in __libc_start_main (/lib64/libc.so.6+0x21af4)
-SUMMARY: AddressSanitizer: unknown-crash ??:0 ??
-Shadow bytes around the buggy address:
-  0x0fee6fb73cb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fee6fb73cc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fee6fb73cd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fee6fb73ce0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fee6fb73cf0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0fee6fb73d00:[00]00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fee6fb73d10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fee6fb73d20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fee6fb73d30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fee6fb73d40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fee6fb73d50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:     fa
-  Heap righ redzone:     fb
-  Freed Heap region:     fd
-  Stack left redzone:    f1
-  Stack mid redzone:     f2
-  Stack right redzone:   f3
-  Stack partial redzone: f4
-  Stack after return:    f5
-  Stack use after scope: f8
-  Global redzone:        f9
-  Global init order:     f6
-  Poisoned by user:      f7
-  ASan internal:         fe
-==16644== ABORTING
+Planned release — availability: immediately
 
-References:
-[1] http://www.remotesensing.org/libtiff/
-[2] http://bugzilla.maptools.org/buglist.cgi?product=libtiff
+Mitigating factors — This problem is only exposed when the user uses server-side prepared statement support, which is NOT default behavior and was turned off back for all drivers per MySQL AB decision in 2006 due to issues with server-side prepared statements in the server. The behavior of the driver is normally emulated.
 
+Work-arounds — Use the default driver setting which is using emulated prepared statements
 
-Thank you!
-Best Regards,
+Credit — Many thanks to Pali Rohár for discovering and fixing the vulnerability.
 
+======
 
-Mei
+Content of type "text/html" skipped
 
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (188 bytes)
