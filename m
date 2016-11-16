@@ -1,41 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/8
-Message-ID: <CAFeDd5ZMz=HYaBsFHf5kOkH99krDzFLqisDb2fztO40jNVG1Pw@mail.gmail.com>
-Date: Thu, 9 Jun 2016 23:19:38 +0300
-From: Billy Brumley <bbrumley@...il.com>
-To: Roman Drahtmueller <draht@...altsekun.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/3
+Message-ID: <1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>
+Date: Wed, 16 Nov 2016 03:32:14 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
 Content-Type: text/plain; charset=utf-8
 
-> The paper very resourceful, and thank you for sharing your thoughts
-> even beyond it!
+Hello,
 
-My pleasure :)
+A patch was developed by Eric Dumazet and accepted in the upstream:
 
-> Control over CPU utilization (and thereby cache eviction) can be achieved
-> by a remote attacker: Web applications are influenced remotely by
-> definition, and they are far from slim or localized these days.
-> Keepalives allow to keep the system in a sling with predictable resource
-> utilization including cache fills, as there is not only just data stuffed
-> through some buffers.
->
-> The question remains if the deterioration of the SNR (*) leaves enough
-> resolution to be useful. This would no longer constitute a cache-based
-> attack with the terrifyingly clear signal, but the sharp edges in the
-> latency that you have demonstrated may contribute to filtering the effect
-> from the noise.
-> While the cause - non-constant-time implementation - remains.
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ac6e780070e30e4c35bd395acfe9191e6268bdd3
 
-What you are saying is all valid on paper. But when you move to the
-uarch level, the techniques we are using are very specific --- rdtsc
-and clflush instructions, paired with targeted malicious performance
-degradation techniques. When you take away these tools, it really
-complicates things for an attacker.
-
-> Are the orders of magnitude in range?
-
-This is more of an interesting research question that would take maybe
-six months to definitively answer.
-
-BBB
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
