@@ -1,67 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/7
-Message-ID: <56BF5EF8.7070203@openwall.com>
-Date: Sat, 13 Feb 2016 19:51:04 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/4
+Message-ID: <6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>
+Date: Thu, 17 Nov 2016 16:56:06 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: snprintf return value misuse in a lot of projects
+Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
-On 2016-02-13 17:11, Yuriy M. Kaminskiy wrote:
-> I noticed dangerous pattern in a lot of projects, where snprintf(3)
-> return value is used without checking, with potentially disasterous
-> consequences:
+On 17/11/16 16:39, Jason Cooper wrote:
+> However, the golden rule still applies.  Physical access trumps all
+> defensive measures.  The absolute best you can do is detect that
+> physical access occurred.  From there, you're hoping there are no
+> hardware implants or other devices outside the scope of software
+> security.
 
-It's kinda a known. E.g., some such patterns are listed in 
-https://sourceware.org/ml/libc-alpha/2013-10/msg00686.html .
+I agree.  However, it ought be to be harder than leaning on the enter
+key to break into a system.  You lock your doors even though it doesn't
+stop a determined burglar?
 
-The same problem is with strlcpy.
+(I note that if you set a grub password at installation time on Fedora
+you also get rd.shell=0 which stops this particular attack dead.)
 
-> And there are yet another very common pattern:
->
->    p += snprintf(p, end-p,[....]);
->    p += snprintf(p, end-p,[....]);
->    p += snprintf(p, end-p,[....]);
->    ...
->
-> which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
-> you'd expect 2nd line is [somewhat] safe (end-p is negative, then
-> casted to size_t and produce value larger than (size_t)INT_MAX, that
-> should result in error EOVERFLOW), and third and following will dance
-> around last byte, likely remaining safe), but it is TOTALLY
-> broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
-> *any* size.
-
-For a glibc discussion please see 
-https://sourceware.org/bugzilla/show_bug.cgi?id=14771 .
-
-As for POSIX, the requirement of EOVERFLOW for a big second parameter is 
-a (rejected) bug in POSIX -- http://austingroupbugs.net/view.php?id=761 
-. A closely related bug -- http://austingroupbugs.net/view.php?id=1020 .
-
-ISO C describes the size parameter of snprintf as a limit to the number 
-of output characters written, without any connections to the size of the 
-buffer. Thus, the following examples are valid in ISO C:
-
-   char s[10];
-   snprintf(s, 20, "abc");
-   snprintf(s, SIZE_MAX, "%s", "abc");
-
-OTOH POSIX describes the size parameter as the actual size of the buffer 
-(bug 1020) and requires to reject buffers of size larger than INT_MAX 
-(bug 761).
-
-Even though POSIX contradicts ISO C in this question (while formally 
-deferring to ISO C) there is a sentiment that the POSIX approach is 
-better for safety/security. (E.g., it was expressed during the recent 
-discussion about strlcpy/strlcat in the glibc mailing list.)
-
-As it turned out, the same problem affects the fread function, with the 
-Linux kernel instead of POSIX contradicting ISO C. See 
-https://sourceware.org/bugzilla/show_bug.cgi?id=19165 and 
-https://sourceware.org/ml/libc-alpha/2016-02/msg00274.html .
-
-Perhaps this is a topic that will benefit from input from a wider community.
-
--- 
-Alexander Cherepanov
+jch
