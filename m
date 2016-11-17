@@ -1,4 +1,9 @@
-Received: (qmail 21731 invoked by uid 550); 12 Apr 2024 15:46:00 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["636" "Thursday" "17" "November" "2016" "16:56:06" "+0000" "John Haxby" "john.haxby@oracle.com" "<6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>" "15" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" "^Date:" nil nil "11" "2016111716:56:06" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "        john.haxby@o Nov 17   15/636   " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<20161117163922.GL5329@io.lakedaemon.net>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" "<20161116155529.GJ5329@io.lakedaemon.net>" "<c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>" "<20161117163922.GL5329@io.lakedaemon.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 3563 invoked by uid 550); 17 Nov 2016 16:56:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,68 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23562 invoked from network); 12 Apr 2024 14:32:39 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jason Gerlowski <gerlowskija@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ab17648d-ea77-7471-8e7e-9a682664d329@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 12 Apr 2024 14:32:28 +0000
+Received: (qmail 3535 invoked from network); 17 Nov 2016 16:56:21 -0000
+References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
+ <20161116155529.GJ5329@io.lakedaemon.net>
+ <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
+ <20161117163922.GL5329@io.lakedaemon.net>
+Message-ID: <6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-31391: Apache Solr Operator: Solr-Operator liveness and
- readiness probes may leak basic auth credentials 
+In-Reply-To: <20161117163922.GL5329@io.lakedaemon.net>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Source-IP: userv0021.oracle.com [156.151.31.71]
+Date: Thu, 17 Nov 2016 16:56:06 +0000
+From: John Haxby <john.haxby@oracle.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
+To: oss-security@lists.openwall.com
 
-Severity: moderate
+On 17/11/16 16:39, Jason Cooper wrote:
+> However, the golden rule still applies.  Physical access trumps all
+> defensive measures.  The absolute best you can do is detect that
+> physical access occurred.  From there, you're hoping there are no
+> hardware implants or other devices outside the scope of software
+> security.
 
-Affected versions:
+I agree.  However, it ought be to be harder than leaning on the enter
+key to break into a system.  You lock your doors even though it doesn't
+stop a determined burglar?
 
-- Apache Solr Operator 0.3.0 through 0.8.0
+(I note that if you set a grub password at installation time on Fedora
+you also get rd.shell=0 which stops this particular attack dead.)
 
-Description:
-
-Insertion of Sensitive Information into Log File vulnerability in the Apach=
-e Solr Operator.
-
-This issue affects all versions of the Apache Solr Operator from 0.3.0 thro=
-ugh 0.8.0.
-
-When asked to bootstrap Solr security, the operator will enable basic authe=
-ntication and create several accounts for accessing Solr: including the "so=
-lr" and "admin" accounts for use by end-users, and a "k8s-oper" account whi=
-ch the operator uses for its own requests to Solr.
-One common source of these operator requests is healthchecks: liveness, rea=
-diness, and startup probes are all used to determine Solr's health and abil=
-ity to receive traffic.
-By default, the operator configures the Solr APIs used for these probes to =
-be exempt from authentication, but=C2=A0users may specifically request that=
- authentication be required on probe endpoints as well.
-Whenever one of these probes would fail, if authentication was in use, the =
-Solr Operator would create a Kubernetes "event" containing the username and=
- password of the "k8s-oper" account.
-
-Within the affected version range, this vulnerability affects any solrcloud=
- resource which (1) bootstrapped security through use of the `.solrOptions.=
-security.authenticationType=3Dbasic` option, and (2) required authenticatio=
-n be used on probes by setting `.solrOptions.security.probesRequireAuth=3Dt=
-rue`.
-
-Users are recommended to upgrade to Solr Operator version 0.8.1, which fixe=
-s this issue by ensuring that probes no longer print the credentials used f=
-or Solr requests.=C2=A0 Users may also mitigate the vulnerability by disabl=
-ing authentication on their healthcheck probes using the setting `.solrOpti=
-ons.security.probesRequireAuth=3Dfalse`.
-
-This issue is being tracked as SOLR-17216=20
-
-Credit:
-
-Flip Hess (finder)
-
-References:
-
-https://solr.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-31391
-https://issues.apache.org/jira/browse/SOLR-17216
-
+jch
