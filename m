@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1599" "Saturday" "15" "October" "2016" "22:47:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161016024753.8DF2E6C0D4B@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)" nil nil nil "10" "2016101602:47:53" "[oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)" (number mark "U       cve-assign@m Oct 15   39/1599  " thread-indent "\"[oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)\"\n") "<2582876.eMMFeVNJGl@arcadia>" ("<2582876.eMMFeVNJGl@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2049" "Thursday" "17" "November" "2016" "18:25:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<c8eb591fa67d43db9f8d7543008a59c2@imshyb02.MITRE.ORG>" "46" "[oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client" nil nil nil "11" "2016111723:25:03" "[oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client" (number mark "U       cve-assign@m Nov 17   46/2049  " thread-indent "\"[oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client\"\n") "<20161116193356.jmopa3xpg6yeg3eq@eldamar.local>" ("<20161116193356.jmopa3xpg6yeg3eq@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26032 invoked by uid 550); 16 Oct 2016 02:48:05 -0000
+Received: (qmail 7634 invoked by uid 550); 17 Nov 2016 23:25:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,31 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26014 invoked from network); 16 Oct 2016 02:48:05 -0000
-From: cve-assign@mitre.org
-To: ago@gentoo.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <2582876.eMMFeVNJGl@arcadia>
-Message-Id: <20161016024753.8DF2E6C0D4B@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:47:53 -0400 (EDT)
-Subject: [oss-security] Re: libdwarf: heap-based buffer overflow in _dwarf_get_size_of_val (dwarf_util.c)
+Received: (qmail 7610 invoked from network); 17 Nov 2016 23:25:15 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161116193356.jmopa3xpg6yeg3eq@eldamar.local>
+Message-ID: <c8eb591fa67d43db9f8d7543008a59c2@imshyb02.MITRE.ORG>
+Date: Thu, 17 Nov 2016 18:25:03 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: teeworlds: possible remote code execution on teeworlds client
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_size_of_val-dwarf_util-c
-> 
-> AddressSanitizer: heap-buffer-overflow ... READ of size 1
-> 0x60489f in _dwarf_get_size_of_val ... libdwarf/dwarf_util.c:267:21
-> 
-> Commit fix:
-> https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13
-> and then
-> https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2
+> https://github.com/teeworlds/teeworlds/commit/ff254722a2683867fcb3e67569ffd36226c4bc62
+> https://anonscm.debian.org/cgit/pkg-games/teeworlds.git/commit/?id=bf5e8e2c457013571b02dc97f9ed9f409efdd947
+> https://bugs.debian.org/844546
+> https://www.teeworlds.com/?page=news&id=12086
 
-Use CVE-2016-8679.
+> 0.6.4 released ...
+> the security vulnerability is worse, attacker
+> controlled memory-writes and possibly arbitrary code execution on the
+> client, abusable by any server the client joins.
 
-(This has the same fix as CVE-2016-8681 but seems distinct.)
+> - if(Unpacker.Error())
+> + if(Unpacker.Error() || NumParts < 1 || NumParts > CSnapshot::MAX_PARTS || Part < 0 | Part >= NumParts || PartSize < 0 || PartSize > MAX_SNAPSHOT_PACKSIZE)
+
+Use CVE-2016-9400.
+
+Our guess is that neither github.com/teeworlds nor anonscm.debian.org
+intended to commit this with a bitwise OR between "Part < 0" and
+"Part >= NumParts" above. On first glance, though, the code seems to have
+the same effect regardless of whether "Part < 0 | Part >= NumParts" or
+"Part < 0 || Part >= NumParts" is used.
 
 - -- 
 CVE Assignment Team
@@ -46,17 +55,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAudSAAoJEHb/MwWLVhi21csQAIhNJ/W+Q4efpfHddoeY6wTi
-KZyamuq4W+Fska+8pzKInu0oiIUYm2HeoFiDqSOr8BI77tR6G8PQvm7H9V7WCATq
-qSXkMNFJ3KUHIkH/DN5ZI55InyftiAb1fTuI6GfnyeLiF7oD2k2Lysg/xyw62nAA
-tJmT0cbCYd42u6PoNlRcsoZZF74Wrmkdqk2+2ec/n36/kkwIbPULXcL/bOA0IUuF
-3RP9qDk757WQNHmm2buGM5n/ygKCUuV9AejoUM6UWIzwETW+DUE85PTX9rH7TH+h
-dDgmUjAhvq4nSULg6g+7kELKlhGnCq62/XAdzqIkDT6OvSqel6HfmL93y2JSb7je
-Owl27JhKzEKQiGULp4HpVIlH+CG/edIcSZDxY114vGLe+pzJCiQir3aQ0r7GYcvk
-zAyBf9JJOR2cyiUxfDJEn/7Rhlt1wMiJ/R01jl96Gno0iv1Es4fXzMXc17HU7pLk
-ikhJwFOit1vEyxxWOnwfvISPPHbNNfY9TSsKsB0qGmWUzxICG3doaCII5P/HK/hP
-jF/I/uQk4Dtp6X0U70m0hz58XxqBHT8CfGoXJnOZ8DT01sVO2lDU66ygFQYTET1k
-3fMXBpFNR73dhMfsPJz+MIbisQCgDx9+2jacGB7w2YojTpTvs09A47mxoCNWfzsb
-QHxcDWF3zOBmzf22yYWn
-=nGbM
+iQIcBAEBCAAGBQJYLjvOAAoJEHb/MwWLVhi2PcEQAJxCENetx/MZu5IHhvHMrk8k
+Bh4sKUbbV5OkxA2k/AY0uEG68f/WqPEsk1q/IDCow//eh56xlgYiEnAxkdYa29vv
+CheoWqqiQJfrKCPIruhxahDVfE6hNRzK3pCMo15SMKfddTHH8hyViYxKVhwKvaYr
+LGWondROY8hCOli8btfNJlxVqaX24LI8OoEjvvKPZxvBkcehgHKFTibsEIi9evHj
+y9XsSoeTxAefRYmkv18q5w3WWKv8TUeFTW9mcRgRueqNVW7aFsysmG/cbz4BBDtm
+5Q+/ipLwx+AazZS8FHZKFvVJtYkwno6C7AzyCezzCCG+UOc1gv8ojqCYLF7r+c+V
+RaT0TkDQkjam3J2IZXewPo7wQUuqMMQI92N0fhHwVXKiKsolyUeAJPUgaF13ZOt8
+EPy5MuvTT9wca42EKWwyLdp8Wz2I0JSk26hmUQ3XrQD8Desoc0/yUmsQR6NDtIr+
+ZR9wT6ChD5hS6gMbPJ6AcPyY3juCXOZVNYrWPc8TzxTn3LfcVgHlscGNB4HW/tc6
+Cq7BJNTGvbbRSgFo0lrL1y9pFPKuZiflfo4HuYmdh7hN/PW67H1DAyMOpEDzTE0F
+/l0NpMnKmFytfDM3ysm4DXSdEaGh+/JATbdxMmHKdxwcfBipmz7msDIf+ACGJwQI
+UN89aY0tNp011ztELlBR
+=HGX3
 -----END PGP SIGNATURE-----
