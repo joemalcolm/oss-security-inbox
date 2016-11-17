@@ -1,56 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/08/17
-Message-ID: <CANO=Ty1b8mrUZQQuxwiVykKg1C-_qxbfuczbQxEL=8cBYfG9Nw@mail.gmail.com>
-Date: Thu, 8 Sep 2016 09:02:24 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, security@...stis.co
-Subject: CVEs for public Kibana / logstash issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/1
+Message-ID: <dd1ccac7efd14056a7e709c020b52639@imshyb02.MITRE.ORG>
+Date: Thu, 17 Nov 2016 02:56:39 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: multiple assertion failures
 Content-Type: text/plain; charset=utf-8
 
-I just checked https://www.elastic.co/community/security and the Kibana
-issues do not have CVEs, can you please assign CVEs for:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Kibana:
+> jas_seq.c:90: jas_matrix<= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/d91198abd00fc435a397fe6bad906a4c1748e9cf
 
-ESA-2016-05 2016-09-06
-Version 2.4.0 of the Reporting plugin is vulnerable to a CSRF vulnerability
-that could allow an attacker to generate superfluous reports whenever an
-authenticated Kibana user navigates to a specially-crafted page. Users of
-the Reporting plugin should upgrade Kibana to 4.6.1 and Reporting to 2.4.1.
+Use CVE-2016-9387.
 
-ESA-2016-04 2016-08-03
-When a custom output is configured for logging in versions of Kibana before
-4.5.4 and 4.1.11, cookies and authorization headers could be written to the
-log files. This information could be used to hijack sessions of other users
-when using Kibana behind some form of authentication such as Shield. Users
-should upgrade to 4.5.4 or 4.1.11.
 
-ESA-2016-03 2016-08-03
-Versions of Kibana before 4.5.4 and 4.1.11 are vulnerable to an XSS attack
-that would allow an attacker to execute arbitrary JavaScript in users'
-browsers. Users should upgrade to 4.5.4 or 4.1.11.
+> ras_dec.c:330: int ras_getcmap(jas_stream_t *, ras_hdr_t *, ras_cmap_t *): Assertion `numcolors <= 256' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/411a4068f8c464e883358bf403a3e25158863823
 
-Logstash:
+Use CVE-2016-9388.
 
-ESA-2016-02 2016-07-07
-Prior to version 2.3.4, Elasticsearch Output plugin would log to file HTTP
-authorization headers which could contain sensitive information. Users who
-secure communication from Logstash to Elasticsearch via Basic Authorization
-using Elastic Shield or other systems are advised to upgrade to this
-version.
 
-ESA-2016-01 2016-02-02
-Prior to version 2.1.2, the CSV output can be attacked via engineered input
-that will create malicious formulas in the CSV data. Users that currently
-use Logstash CSV output plugin or may want to use it in the future should
-upgrade to 2.2.0 or 2.1.2.
+> jpc_mct.c:146: void jpc_irct(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion `((c1)->numrows_) ==
+> numrows && ((c1)->numcols_) == numcols && ((c2)->numrows_) == numrows && ((c2)->numcols_) == numcols' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
+> 
+> jpc_mct.c:233: void jpc_iict(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion `((c1)->numcols_) ==
+> numcols && ((c2)->numcols_) == numcols' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
 
-Thanks
+Use CVE-2016-9389 for both of these reports.
 
--- 
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/ba2b9d000660313af7b692542afbd374c5685865
 
+Use CVE-2016-9390.
+
+
+> jpc_bs.c:197: long jpc_bitstream_getbits(jpc_bitstream_t *, int): Assertion `n >= 0 && n < 32' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/1e84674d95353c64e5c4c0e7232ae86fd6ea813b
+
+Use CVE-2016-9391.
+
+
+> jpc_dec.c:1637: void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion `!((expn + (numrlvls - 1) -
+> (numrlvls - 1 - ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & (~0x1f))' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+
+Use CVE-2016-9392.
+
+
+> jpc_t2cod.c:297: int jpc_pi_nextrpcl(jpc_pi_t *): Assertion `pi->prcno pirlvl->numprcs' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+
+Use CVE-2016-9393.
+
+
+> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+
+Use CVE-2016-9394.
+
+
+> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
+
+Use CVE-2016-9395.
+
+
+> jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int): Assertion `qmfbid == 0x01' failed.
+
+Use CVE-2016-9396.
+
+
+> jpc_dec.c:1817: void jpc_dequantize(jas_matrix_t *, jpc_fix_t): Assertion `absstepsize >= 0' failed.
+
+Use CVE-2016-9397.
+
+
+> jpc_math.c:94: int jpc_floorlog2(int): Assertion `x > 0' failed.
+
+Use CVE-2016-9398.
+
+
+> jpc_dec.c:1650: void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion
+> `!((expn + (numrlvls - 1) - (numrlvls - 1 - ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & (~0x1f))' failed.
+
+Use CVE-2016-9399.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYLWJmAAoJEHb/MwWLVhi2/X4P/0FXYPvmgjnEkMsevaZ4e4WN
+p5xJtxvFqt64h2P1HMfUxq2/Hk155+Rxa8lEStWAk7vqlxaQbnID5fAAb1l0WmZb
+drM1wSytNCj+yNp8KairjOdGW7IZ7/dQF6mhhKpbGTLUBamWQ25oaFiBiQDQETGU
+ffSKcEz6Y6s0ORFsPx7zYkoPK7yPHn6bxrKoEH8ME0unC7G4X/5tXGVuTgo1vbbn
+lnoB03LeISRNt98Gz+drDmapOTM9XQrPZr+yelFOhPnjiPYbc/5loPUZjwWFiBdz
+zngADPcRVu/Xdd1hsst0vcMHQiDxPL2vwr42sNhPZGVINNcfLVHyxx/hqD1y9xBR
+Pbb1FXDqx+mi6gikgv4xLdvd9fpIMC7KW/+1eXfygYrdSIXG6viIUdx3Wy57bo/K
+NEAuzmMKvAcRYXnvHCeCJ/LChfFMeo9rHfnKEw/BObq2zMB4GZf/2lrquNBvwhag
+QqX28F681ylaQRdig9IJPF4vfOAUehic3m7JqsH41PLd6gXNlcqUVJs30iRg4QW7
+LaD07osrsqwvgAwLXxew259wOpqIWlNxOmSdkajoI1J711XZGwr76iDRoRIkGeMz
+l1HMrGsEylhNMRp+b7STQXsc6+tSM7Yk1ROhAzXWd8GIYk9djHAIJLf3FOGihYKK
+X09TP2040sTZwQA1EKB0
+=1nmb
+-----END PGP SIGNATURE-----
