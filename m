@@ -1,41 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/2
-Message-ID: <CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>
-Date: Mon, 12 Dec 2016 12:13:45 +0200
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: "security@....net" <security@....net>, oss-security@...ts.openwall.com
-Subject: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/8
+Message-ID: <c8eb591fa67d43db9f8d7543008a59c2@imshyb02.MITRE.ORG>
+Date: Thu, 17 Nov 2016 18:25:03 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: teeworlds: possible remote code execution on teeworlds client
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Please assign a CVE for the following issues:
+> https://github.com/teeworlds/teeworlds/commit/ff254722a2683867fcb3e67569ffd36226c4bc62
+> https://anonscm.debian.org/cgit/pkg-games/teeworlds.git/commit/?id=bf5e8e2c457013571b02dc97f9ed9f409efdd947
+> https://bugs.debian.org/844546
+> https://www.teeworlds.com/?page=news&id=12086
 
-Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
-Bug #72696    imagefilltoborder stackoverflow on truecolor images
-https://bugs.php.net/bug.php?id=72696
-https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
+> 0.6.4 released ...
+> the security vulnerability is worse, attacker
+> controlled memory-writes and possibly arbitrary code execution on the
+> client, abusable by any server the client joins.
 
+> - if(Unpacker.Error())
+> + if(Unpacker.Error() || NumParts < 1 || NumParts > CSnapshot::MAX_PARTS || Part < 0 | Part >= NumParts || PartSize < 0 || PartSize > MAX_SNAPSHOT_PACKSIZE)
 
-Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
-Bug #73331    NULL Pointer Dereference in WDDX Packet Deserialization with
-PDORow
-https://bugs.php.net/bug.php?id=73331
-https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d
+Use CVE-2016-9400.
 
+Our guess is that neither github.com/teeworlds nor anonscm.debian.org
+intended to commit this with a bitwise OR between "Part < 0" and
+"Part >= NumParts" above. On first glance, though, the code seems to have
+the same effect regardless of whether "Part < 0 | Part >= NumParts" or
+"Part < 0 || Part >= NumParts" is used.
 
-Fixed in PHP 5.6.29 and 7.0.14:
-Bug #73631    Invalid read when wddx decodes empty boolean element
-https://bugs.php.net/bug.php?id=73631
-https://github.com/php/php-src/commit/66fd44209d5ffcb9b3d1bc1b9fd8e35b485040c0
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Fixed in PHP 7.0.14 and 7.1.0:
-Bug #72978    Use After Free in PHP7 unserialize()
-https://bugs.php.net/bug.php?id=72978
-https://github.com/php/php-src/commit/b2af4e8868726a040234de113436c6e4f6372d17
-
-
-Kaplan
-
+iQIcBAEBCAAGBQJYLjvOAAoJEHb/MwWLVhi2PcEQAJxCENetx/MZu5IHhvHMrk8k
+Bh4sKUbbV5OkxA2k/AY0uEG68f/WqPEsk1q/IDCow//eh56xlgYiEnAxkdYa29vv
+CheoWqqiQJfrKCPIruhxahDVfE6hNRzK3pCMo15SMKfddTHH8hyViYxKVhwKvaYr
+LGWondROY8hCOli8btfNJlxVqaX24LI8OoEjvvKPZxvBkcehgHKFTibsEIi9evHj
+y9XsSoeTxAefRYmkv18q5w3WWKv8TUeFTW9mcRgRueqNVW7aFsysmG/cbz4BBDtm
+5Q+/ipLwx+AazZS8FHZKFvVJtYkwno6C7AzyCezzCCG+UOc1gv8ojqCYLF7r+c+V
+RaT0TkDQkjam3J2IZXewPo7wQUuqMMQI92N0fhHwVXKiKsolyUeAJPUgaF13ZOt8
+EPy5MuvTT9wca42EKWwyLdp8Wz2I0JSk26hmUQ3XrQD8Desoc0/yUmsQR6NDtIr+
+ZR9wT6ChD5hS6gMbPJ6AcPyY3juCXOZVNYrWPc8TzxTn3LfcVgHlscGNB4HW/tc6
+Cq7BJNTGvbbRSgFo0lrL1y9pFPKuZiflfo4HuYmdh7hN/PW67H1DAyMOpEDzTE0F
+/l0NpMnKmFytfDM3ysm4DXSdEaGh+/JATbdxMmHKdxwcfBipmz7msDIf+ACGJwQI
+UN89aY0tNp011ztELlBR
+=HGX3
+-----END PGP SIGNATURE-----
