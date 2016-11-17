@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/7
-Message-ID: <56C4B3B5.3010701@gmail.com>
-Date: Wed, 17 Feb 2016 18:53:57 +0100
-From: Manuel Mancera <sinkmanu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/3
+Message-ID: <20161117163922.GL5329@io.lakedaemon.net>
+Date: Thu, 17 Nov 2016 16:39:22 +0000
+From: Jason Cooper <osssecurity@...edaemon.net>
 To: oss-security@...ts.openwall.com
-Cc: security@...ian.org
-Subject: CVE Request: graphite-web: open redirect
+Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi John,
 
-I found and reported an open redirect vulnerability in graphite-web. 
-Through this vulnerability an attacker could redirect to a legitimate user to a malicious website. 
+On Wed, Nov 16, 2016 at 04:11:57PM +0000, John Haxby wrote:
+> On 16/11/16 15:55, Jason Cooper wrote:
+> > How does this differ from an attacker setting 'init=/bin/sh' on the
+> > kernel command line?  Or, booting from attacker provided media?  Or, in
+> > OS X, booting in single user mode?
+> > 
+> > Your Discussion section at the end mentions facilities (GRUB passwords,
+> > BIOS passwords, etc) for preventing this "Developer friendliness".  How
+> > do you envision the installer enabling these while providing a failsafe
+> > that an attacker can't exploit?
+> 
+> If you set a grub password then the attacker cannot set init=/bin/sh on
+> the kernel command line without knowing the grub password.   However,
+> when the boot process prompts you for the encrypted volume password you
+> can just hit enter until you eventually get a shell prompt.  Of course,
+> the attacker needs to be able to see the console where the password is
+> typed in ...
 
-https://github.com/graphite-project/graphite-web/issues/1441
-<https://blog.filippo.io/bleichenbacher-06-signature-forgery-in-python-rsa/>
+First, I'll clarify that I agree there is a bug in the initrd scripts
+for decrypting a system volume.  Anything that doesn't fail in a
+deterministic fashion is asking for trouble.
 
-Can you assign a CVE for this issue?
+As for your scenario, as usual, it comes down to threat models.  If you
+don't want fellow students getting in to your laptop while you're gone
+for the weekend, the above is fine.
 
+If you're a journalist in a foreign country who needs to leave her
+laptop in her hotel room while meeting a source, that's not sufficient.
+My recommendation from my original reply would be more fitting.  It
+should work with Secure Boot as well.
 
-Regards,
+However, the golden rule still applies.  Physical access trumps all
+defensive measures.  The absolute best you can do is detect that
+physical access occurred.  From there, you're hoping there are no
+hardware implants or other devices outside the scope of software
+security.
 
-Manuel Mancera
+thx,
 
-
+Jason.
