@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1151" "Monday" "8" "June" "2015" "17:44:45" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1433803485.16305.3.camel@igalia.com>" "30" "[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured" nil nil nil "6" "2015060822:44:45" "[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured" (number mark "        mcatanzaro@i Jun  8   30/1151  " thread-indent "\"[oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is configured\"\n") "<20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>" ("<20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4105" "Thursday" "17" "November" "2016" "02:56:39" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<dd1ccac7efd14056a7e709c020b52639@imshyb02.MITRE.ORG>" "115" "[oss-security] Re: jasper: multiple assertion failures" nil nil nil "11" "2016111707:56:39" "[oss-security] Re: jasper: multiple assertion failures" (number mark "U       cve-assign@m Nov 17  115/4105  " thread-indent "\"[oss-security] Re: jasper: multiple assertion failures\"\n") "<3304410.S0cpkzc54u@arcadia>" ("<3304410.S0cpkzc54u@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30028 invoked by uid 550); 8 Jun 2015 22:45:23 -0000
+Received: (qmail 5970 invoked by uid 550); 17 Nov 2016 07:56:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,130 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30010 invoked from network); 8 Jun 2015 22:45:22 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AkoFALgadlVbdWOb/2dsb2JhbABcgxCBMoMewzgCgTFMAQEBAQEBgQuEIgEBAQECASNWBQsLGAICJgICVxmIJQgEAaoEpAABAQEBBgIBH4EhgSyIdoUGBxaCUoFFBYxNjXSEF41LihIkYYM0UYJHAQEB
-X-IPAS-Result: AkoFALgadlVbdWOb/2dsb2JhbABcgxCBMoMewzgCgTFMAQEBAQEBgQuEIgEBAQECASNWBQsLGAICJgICVxmIJQgEAaoEpAABAQEBBgIBH4EhgSyIdoUGBxaCUoFFBYxNjXSEF41LihIkYYM0UYJHAQEB
-X-IronPort-AV: E=Sophos;i="5.13,576,1427752800"; 
-   d="scan'208";a="366037676"
-Message-ID: <1433803485.16305.3.camel@igalia.com>
-In-Reply-To: <20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>
-References: <20150608213455.CB1E7B2E059@smtpvbsrv1.mitre.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.16.2.1 (3.16.2.1-1.fc22) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Cc: oss-security@lists.openwall.com
-Date: Mon, 08 Jun 2015 17:44:45 -0500
-From: Michael Catanzaro <mcatanzaro@igalia.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: WebKitGTK+ performs DNS prefetch when a proxy is
- configured
-To: cve-assign@mitre.org
+Received: (qmail 5938 invoked from network); 17 Nov 2016 07:56:51 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <3304410.S0cpkzc54u@arcadia>
+Message-ID: <dd1ccac7efd14056a7e709c020b52639@imshyb02.MITRE.ORG>
+Date: Thu, 17 Nov 2016 02:56:39 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: jasper: multiple assertion failures
 
-On Mon, 2015-06-08 at 17:34 -0400, cve-assign@mitre.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> jas_seq.c:90: jas_matrix<= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/d91198abd00fc435a397fe6bad906a4c1748e9cf
+
+Use CVE-2016-9387.
+
+
+> ras_dec.c:330: int ras_getcmap(jas_stream_t *, ras_hdr_t *, ras_cmap_t *): Assertion `numcolors <= 256' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/411a4068f8c464e883358bf403a3e25158863823
+
+Use CVE-2016-9388.
+
+
+> jpc_mct.c:146: void jpc_irct(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion `((c1)->numrows_) ==
+> numrows && ((c1)->numcols_) == numcols && ((c2)->numrows_) == numrows && ((c2)->numcols_) == numcols' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
 > 
-> We're not sure that this can be considered a vulnerability fix; it
-> seems more like a feature addition. The
-> platformProxyIsEnabledInSystemPreferences "return false" code seems 
-> to
-> mean that the the product's development status was that ascertaining 
-> a
-> proxy setting was an unimplemented capability, and therefore any
-> proxy-specific DNS behavior was an unimplemented feature.
+> jpc_mct.c:233: void jpc_iict(jas_matrix_t *, jas_matrix_t *, jas_matrix_t *): Assertion `((c1)->numcols_) ==
+> numcols && ((c2)->numcols_) == numcols' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/dee11ec440d7908d1daf69f40a3324b27cf213ba
 
-Yes, but it should have been a "return true" to fail-safe instead.
+Use CVE-2016-9389 for both of these reports.
 
-> Admittedly, never making direct DNS queries during proxy use may be
-> the new preferred behavior in this product. However, sometimes people
-> want to make direct DNS queries during proxy use.
 
-I don't think we intend to support this level of configurability.
+> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/ba2b9d000660313af7b692542afbd374c5685865
 
-> There could be a CVE ID if a product were specifically trying to
-> detect a proxy setting (in order to avoid direct DNS in that case) 
-> but
-> failing because of a coding error. There typically can't be a CVE ID
-> for addition of new code to satisfy a requested behavior change.
+Use CVE-2016-9390.
 
-OK, no need for a CVE then.
 
-Thanks for the good response and the links,
+> jpc_bs.c:197: long jpc_bitstream_getbits(jpc_bitstream_t *, int): Assertion `n >= 0 && n < 32' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/1e84674d95353c64e5c4c0e7232ae86fd6ea813b
 
-Michael
+Use CVE-2016-9391.
+
+
+> jpc_dec.c:1637: void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion `!((expn + (numrlvls - 1) -
+> (numrlvls - 1 - ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & (~0x1f))' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+
+Use CVE-2016-9392.
+
+
+> jpc_t2cod.c:297: int jpc_pi_nextrpcl(jpc_pi_t *): Assertion `pi->prcno pirlvl->numprcs' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+
+Use CVE-2016-9393.
+
+
+> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/f7038068550fba0e41e1d0c355787f1dcd5bf330
+
+Use CVE-2016-9394.
+
+
+> jas_seq.c:90: jas_matrix_t *jas_seq2d_create(int, int, int, int): Assertion `xstart <= xend && ystart <= yend' failed.
+> Commit fix:
+> https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
+
+Use CVE-2016-9395.
+
+
+> jpc_t1cod.c:144: int JPC_NOMINALGAIN(int, int, int, int): Assertion `qmfbid == 0x01' failed.
+
+Use CVE-2016-9396.
+
+
+> jpc_dec.c:1817: void jpc_dequantize(jas_matrix_t *, jpc_fix_t): Assertion `absstepsize >= 0' failed.
+
+Use CVE-2016-9397.
+
+
+> jpc_math.c:94: int jpc_floorlog2(int): Assertion `x > 0' failed.
+
+Use CVE-2016-9398.
+
+
+> jpc_dec.c:1650: void calcstepsizes(uint_fast16_t, int, uint_fast16_t *): Assertion
+> `!((expn + (numrlvls - 1) - (numrlvls - 1 - ((bandno > 0) ? ((bandno + 2) / 3) : (0)))) & (~0x1f))' failed.
+
+Use CVE-2016-9399.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYLWJmAAoJEHb/MwWLVhi2/X4P/0FXYPvmgjnEkMsevaZ4e4WN
+p5xJtxvFqt64h2P1HMfUxq2/Hk155+Rxa8lEStWAk7vqlxaQbnID5fAAb1l0WmZb
+drM1wSytNCj+yNp8KairjOdGW7IZ7/dQF6mhhKpbGTLUBamWQ25oaFiBiQDQETGU
+ffSKcEz6Y6s0ORFsPx7zYkoPK7yPHn6bxrKoEH8ME0unC7G4X/5tXGVuTgo1vbbn
+lnoB03LeISRNt98Gz+drDmapOTM9XQrPZr+yelFOhPnjiPYbc/5loPUZjwWFiBdz
+zngADPcRVu/Xdd1hsst0vcMHQiDxPL2vwr42sNhPZGVINNcfLVHyxx/hqD1y9xBR
+Pbb1FXDqx+mi6gikgv4xLdvd9fpIMC7KW/+1eXfygYrdSIXG6viIUdx3Wy57bo/K
+NEAuzmMKvAcRYXnvHCeCJ/LChfFMeo9rHfnKEw/BObq2zMB4GZf/2lrquNBvwhag
+QqX28F681ylaQRdig9IJPF4vfOAUehic3m7JqsH41PLd6gXNlcqUVJs30iRg4QW7
+LaD07osrsqwvgAwLXxew259wOpqIWlNxOmSdkajoI1J711XZGwr76iDRoRIkGeMz
+l1HMrGsEylhNMRp+b7STQXsc6+tSM7Yk1ROhAzXWd8GIYk9djHAIJLf3FOGihYKK
+X09TP2040sTZwQA1EKB0
+=1nmb
+-----END PGP SIGNATURE-----
