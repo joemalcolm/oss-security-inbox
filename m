@@ -1,35 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/9
-Message-ID: <20161214152757.trz2hsav4mpjyoph@eldamar.local>
-Date: Wed, 14 Dec 2016 16:27:57 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/7
+Message-ID: <2016111816551064884867@gmail.com>
+Date: Fri, 18 Nov 2016 16:55:12 +0800
+From: "wykcomputer@...il.com" <wykcomputer@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [Bug report] Vulnerability In libbpg-2
 Content-Type: text/plain; charset=utf-8
 
-Hi Sam,
+Hello,
+I find a out-of-bounds write issue in libbpg(0.9.7, maybe other early versions), which can lead to memory corruption or even remote code execution.
+I have reported it to the author of libbpg, but no responding, so I report it to you.
 
-On Mon, Dec 12, 2016 at 10:40:16AM -0600, Sam Whited wrote:
-> Oops, I got the autoreply about not using this list to request CVEs
-> after sending that message; now I'm a bit more confused about the
-> current procedure; please advise.
+Run ./bpgenc PoC.jpg out.bpg, get the crash as follows.
+Crash Log:
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000004069ce in gray8_to_gray (s=0x7fffffffd320, y_ptr=0x0, 
+    src=0x7ffff0000df0 "\233\264\237\255\257\252\256\253", '\254' <repeats 56 times>, 'Y' <repeats 24 times>, "\020\342T]P\023\233q\377\377\377\377\377\377\377\377", 'w' <repeats 64 times>, "vwx{uw~m\221", '\377' <repeats 23 times>..., n=65260, incr=1) at bpgenc.c:255
+255         y_ptr[i] = (c * g + rnd) >> shift;
+(gdb) bt
+#0  0x00000000004069ce in gray8_to_gray (s=0x7fffffffd320, y_ptr=0x0, 
+    src=0x7ffff0000df0 "\233\264\237\255\257\252\256\253", '\254' <repeats 56 times>, 'Y' <repeats 24 times>, "\020\342T]P\023\233q\377\377\377\377\377\377\377\377", 'w' <repeats 64 times>, "vwx{uw~m\221", '\377' <repeats 23 times>..., n=65260, incr=1) at bpgenc.c:255
+#1  0x000000000040a0d3 in read_jpeg (pmd=0x7fffffffd8f8, f=0x11ca730, out_bit_depth=8) at bpgenc.c:1368
+#2  0x000000000040a496 in load_image (pmd=0x7fffffffd978, infilename=0x7fffffffe28a "../libbpg-0.9.7/out_enc_jpg/crashes/0.jpg", color_space=BPG_CS_YCbCr, bit_depth=8, limited_range=0, 
+    premultiplied_alpha=0) at bpgenc.c:1451
+#3  0x000000000040e0e1 in main (argc=4, argv=0x7fffffffdeb8) at bpgenc.c:2942
 
-Almost sure the autoreply came not from oss-security, but from the
-cve-assign@...re.org. But the autoreply should contain a note like:
+read_jpeg function in bpgenc.c, img->data[i] = malloc(linesize * h1), linesize * h1 maybe integer over-flow(larger than 0xffffffff), this lead to malloc a smaller memory than expected, when execute to gray8_to_gray, maybe cause out-of-bounds write.
 
-> [...]
-> In the special case of communications involving a publicly known
-> vulnerability on the oss-security mailing list, please do not use
-> the https://cveform.mitre.org web site at this time, and instead
-> send new or followup messages directly to that mailing list. (If
-> your message pertains to a topic on the oss-security mailing list,
-> and you are receiving an auto-response from the cve-assign@...re.org
-> address, then you can ignore that auto-response.)
+Image *read_jpeg(BPGMetaData **pmd, FILE *f, int out_bit_depth)
+//...
+img = image_alloc(w, h, format, has_alpha, color_space, out_bit_depth);
+|
+|->for(i = 0; i < c_count; i++) {
+get_plane_res(img, &w1, &h1, i);
+/* multiple of 16 pixels to add borders */
+w1 = (w1 + (W_PAD - 1)) & ~(W_PAD - 1);
+h1 = (h1 + (W_PAD - 1)) & ~(W_PAD - 1);
 
-Was this the case?
+linesize = w1 << img->pixel_shift;
+img->data[i] = malloc(linesize * h1);//maybe integer overflow
 
-HTH,
+//...
+ptr = (PIXEL *)(img->data[idx] + 
+                                    img->linesize[idx] * (y1 + i));
+        gray8_to_gray(cvt, ptr, rows[c_idx][i], w1, 1);
+|
+|->y_ptr[i] = (c * g + rnd) >> shift;
 
-Regards,
-Salvatore
+Fix:
+To check the integer overflow issue. Such as,
+linesize = w1 << img->pixel_shift;
++ uint64_t tmp = (uint64_t)linesize * h1;
++ if(tmp > 0xffffffff)
+return NULL;
+img->data[i] = malloc(linesize * h1);
+
+Thank you for your reading!
+
+
+wykcomputer@...il.com
+
+Content of type "text/html" skipped
+
+Download attachment "PoC.jpg" of type "application/octet-stream" (10400 bytes)
