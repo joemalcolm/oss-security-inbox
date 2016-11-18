@@ -1,47 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/7
-Message-Id: <20161011162833.2F1006C1338@smtpvmsrv1.mitre.org>
-Date: Tue, 11 Oct 2016 12:28:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: taviso@...gle.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/2
+Message-ID: <cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>
+Date: Thu, 17 Nov 2016 19:54:20 -0500
+From: Jacobo Avariento <spinfoo.vuln@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: john.haxby@...cle.com, osssecurity@...edaemon.net
+Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Good debate.
 
-> Here is a different type confusion bug, originally I thought it was
-> just a NULL dereference, but after seeing the patch it does look
-> exploitable.
-> 
-> id: http://bugs.ghostscript.com/show_bug.cgi?id=697203
-> patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=f5c7555c30393e64ec1f5ab0dfae5b55b3b3fc78
-> repro: clear 16#41414141 .sethalftone5
-> 
-> Please assign a CVE for this one.
+Actually when using full disk encryption, to lock the BIOS and GRUB must
+be mandatory, otherwise you are protecting your confidentiality but not
+your integrity. Even with a password in GRUB with an unprotected BIOS
+you can also boot from a USB device and access encrypted partitions,
+delete them, etc.
 
-Use CVE-2016-8602.
+Just to mention another method complimentary to the "rd.shell=0" a
+similar behaviour to this "flaw" can be achieved using at the boot
+sequence "rd.break=pre-udev", this also gives you a root shell with
+access to the hard disk.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Regards
 
-iQIcBAEBCAAGBQJX/RJMAAoJEHb/MwWLVhi2eRAP/0pY2yag9OtfjcTBqJ30efgV
-pdWeaaGnY/V793JA8TuygA4GfWlutx7wEHaIsO+FR4Ur3YD63r4Ru3dkMk5w6nHR
-GAKfKseZDGPx4vYHqmvMULmwmh97WkBZXgwSFmIP2Z7qBnXzTb0LphhvQLymZTDu
-gc/B8hlTRbjVKZk2nwq5VajG5I6zY776Ok0fN6TSkVkrN6QWTdzOHr7XsNw33fks
-a01IqHrb3kMeaOOTyyrnm1nCehz3yF7uqBJb7PzY28FFqeX6rKqB3hulkB+7Ulnn
-7txIzxqdeHJHJjAG3Z0drfu0yoDcXXFl6aVSy/+2mxPs5H+CyTHzzmCkWdWDlw4y
-6sJahKu+A/Q0yxsfqmFqc0wXQXv0/Db8hbaP5ZPa1Io9Hp3VqM/ZmGt0elsFWFq1
-QcKV3TF35PfNJeR/5EuVBUCQLH017pA4ozT90qPYDTFAcbUZMH1PBlcNheLz10M4
-XXFsaocBYbKDxcr22/cWiUWOTefDgkBdFTWzg5RxVLAEcY2/ov1KdwRmRF9O1X+h
-z/bwoD/HHbt3xTwoZ7zZuj8qK1hli2aoiIk4sGekwD0lmmbECyL1kSYpZORAXLG9
-3adzKdoIQ+31rrubIoJbOrZVtv0O+/7ZfIAcJVMytz3seQH7QYP6BEgVGlH34v7d
-YgyQlr15jLLG5YrXRhQN
-=YVnm
------END PGP SIGNATURE-----
+
+On 11/17/2016 02:15 PM, John Haxby wrote:
+> On 17/11/16 17:50, Jason Cooper wrote:
+>> Hi John,
+>>
+>> On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
+>>>> On 17/11/16 16:39, Jason Cooper wrote:
+>>>>>> However, the golden rule still applies.  Physical access trumps all
+>>>>>> defensive measures.  The absolute best you can do is detect that
+>>>>>> physical access occurred.  From there, you're hoping there are no
+>>>>>> hardware implants or other devices outside the scope of software
+>>>>>> security.
+>>>> I agree.  However, it ought be to be harder than leaning on the enter
+>>>> key to break into a system.  You lock your doors even though it doesn't
+>>>> stop a determined burglar?
+>> Yes, as I said before, non-deterministic failure modes are bad.  This
+>> CVE is a bug in the initrd script and needs to be fixed.  What I
+>> disagree with, and still do, is the "sky is falling!" nature of the
+>> alert.
+> Yup.  I agree there, but that's down to the publicity its received.  We
+> can't do much but grin and bear that.   Red Hat have given this a CVSS2
+> score of 7.2 which reflects the _potential_ severity but marked it as
+> "moderate" which reflects the actual effect.   It's most serious for
+> people like me who have an encrypted root but no grub password (and no
+> rd.shell=0) but, no, the sky is not falling.
+>
+> jch
+>
+
+-- 
+https://github.com/spinfoo
+https://pa.linkedin.com/in/jacoboavariento
+
