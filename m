@@ -1,106 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/3
-Message-Id: <E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>
-Date: Tue, 29 Nov 2016 14:48:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/1
+Message-ID: <10d2a3813cbd44d29450eed87119277b@imshyb02.MITRE.ORG>
+Date: Thu, 17 Nov 2016 19:21:07 -0500
+From: <cve-assign@...re.org>
+To: <henri@...v.fi>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: MyBB multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-                    Xen Security Advisory XSA-201
+> Fixed in 1.8.6
+> https://blog.mybb.com/2015/09/07/mybb-1-8-6-1-6-18-merge-system-1-8-6-release/
 
-             ARM guests may induce host asynchronous abort
+CVE-2015-8973 Medium Risk: Forum password bypass in xmlhttp.php
+CVE-2015-8974 Low Risk: SQL Injection in Grouppromotions module (ACP)
+CVE-2015-8975 Low Risk: Possible XSS Injection in the error handler
+CVE-2015-8976 Low Risk: Possible XSS issues in old upgrade files
+CVE-2015-8977 Low Risk: Possible Full Path Disclosure in publicly accessible error log files
 
-ISSUE DESCRIPTION
-=================
 
-Depending on how the hardware and firmware have been integrated,
-guest-triggered asynchronous aborts (SError on ARMv8) may be received
-by the hypervisor.  The current action is to crash the host.
+> Fixed in 1.8.7
+> https://blog.mybb.com/2016/03/11/mybb-1-8-7-merge-system-1-8-7-release/
 
-A guest might trigger an asynchronous abort when accessing memory
-mapped hardware in a non-conventional way.  Even if device
-pass-through has not been configured, the hypervisor may give the
-guest access to memory mapped hardware in order to take advantage of
-hardware virtualization.
+CVE-2016-9402 Medium risk: Possible SQL Injection in moderation tool
+CVE-2016-9403 Low risk: Missing permission check in newreply.php
+CVE-2016-9404 Low risk: Possible XSS Injection on login
+CVE-2016-9405 Low risk: Possible XSS Injection in member validation
+CVE-2016-9406 Low risk: Possible XSS Injection in User CP
+CVE-2016-9407 Low risk: Possible XSS Injection in Mod CP logs
+CVE-2016-9408 Low risk: Possible XSS Injection when editing users in Mod CP
+CVE-2016-9409 Low risk: Possible XSS Injection when pruning logs in ACP
+CVE-2016-9410 Low risk: Possibility of retrieving database details through templates
+CVE-2016-9411 Low risk: Disclosure of ACP path when sending mails from ACP
+CVE-2016-9412 Low risk: Low adminsid & sid entropy
+CVE-2016-9413 Low risk: Clickjacking in ACP
+CVE-2016-9414 Low risk: Missing directory listing protection in upload directories
 
-IMPACT
-======
 
-A malicious guest may be able to crash the host.
+> Fixed in 1.8.8
+> https://blog.mybb.com/2016/10/17/mybb-1-8-8-merge-system-1-8-8-release/
 
-VULNERABLE SYSTEMS
-==================
+CVE-2016-9415 Medium risk: Style import CSS overwrite on Windows servers
+CVE-2016-9416 Medium risk: SQL Injection in the users data handler
+CVE-2016-9417 Medium risk: SSRF attack in fetch_remote_file()
+CVE-2016-9418 Medium risk: Possible short name access to ACP backups on Windows servers
+CVE-2016-9419 Low risk: Stored XSS in the ACP
+CVE-2016-9420 Low risk: Loose comparison false positives
+CVE-2016-9421 Low risk: Possible XSS injection in ACP users module
 
-All Xen versions which support ARM are potentially affected.
-
-Whether a particular ARM systems is affected depends on technical
-details of the hardware and/or firmware.
-
-x86 systems are not affected.
-
-MITIGATION
-==========
-
-On systems where the guest kernel is controlled by the host rather than
-guest administrator, running only kernels which do not expose MMIO to
-userspace will prevent untrusted guest users from exploiting this issue.
-However untrusted guest administrators can still trigger it unless
-further steps are taken to prevent them from loading code into the
-kernel (e.g by disabling loadable modules etc) or from using other
-mechanisms which allow them to run code at kernel privilege.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-The issue was discussed publicly (and has been fixed already in KVM in
-public trees).
-
-CREDITS
-=======
-
-This issue was discovered by ARM engineering personnel.
-
-RESOLUTION
-==========
-
-Applying the appropriate set of attached patched resolves this issue.
-
-xsa201-[1234].patch       Xen-unstable
-
-xsa201-[12].patch         }
-xsa201-3-4.7.patch        } Xen 4.7.x, Xen 4.6.x
-xsa201-4.patch            }
-
-$ sha256sum xsa201*
-ffdefdaa67748df7fccbc82011202724c622ca432cd121853ecab45ff4657406  xsa201-1.patch
-0665eb575b056f98d5330ef23f497b2b3de1a15319e2012005890a17df32a7ed  xsa201-2.patch
-4486d5efb59c1f1fff04a3cb697f948d5bf680e2a1c0d76cd44382ad8fa9095e  xsa201-3.patch
-ca82c82acd51bf3cb8114d1843519c28e3df26243bd45eb712ff10ba11061b93  xsa201-3-4.7.patch
-1de6ddb4b5b46ae390ec4587e588c00a706f4a68365d379db7ad54234f770d48  xsa201-4.patch
-$
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYPZSoAAoJEIP+FMlX6CvZ2zoH/ivzE70xsLHYJUxveoBiFuiU
-KHFzF0X63G681FjLyU4SY2GkH5K9YutJ1uaakp+peD96fQqCXBHxWUMPAfblnd7t
-YueMYuFqcz3mE2ypJjBh/fdI8a4UrKHHg3z6Hw6X91p+SRmPsnt9v7OzytoYOiE4
-fDeaATwl1LxB+Z/yJETlo/JMgwrtuYZ9EZM9gIzxdOVw+QbQyEYHmuIyni8BNRvZ
-+biRRQo37K5+jLY3f/RoXKcpqnHqjKOOmfjkxJJAsxqpdTSw5fRJqSZE4G5oUVs2
-AAvSKhLObFahMlPqtoNXSC6lG5Gbd3e/h+6N2N/96TXs6Wr+d0VuC+lkYUjwcJk=
-=KEYF
+iQIcBAEBCAAGBQJYLkkZAAoJEHb/MwWLVhi2lXYP/30k+COm7wVbzUrRw6eEQ780
+osNfSo7+y6m8Xq/wn9NsdaAkPfq8ReAFm+fJXyPFH3Go/PWgzF/JNDmS5F58IMyT
+JtkbLLDvZTjaIHMnMD5gWUVhxPX6CgxY5ISgTjraTKqGULlYALv08DRKbsLKVaCp
+LOVO7mE46wIGk4BIhhOaLOGrn5a+zDsLy24EHzFAUkqm98RscOoGLSf4j4IHiZ5/
+pREAbb1xDBibBEFG9d/9jXMOLYPQVwhBhANAISmBd0wePYQFitto17ZjIA4bWoEN
+OuK/CG3o+wZr6p+wdfpKZ10Rep5C37Hts6T0leXYqVecerF5KkKwhPyGsF5jp6My
+TgyLB84jepVWRwtSHvgpbL1Z6uCy38f16u6rhXdOMAcOKTrJDu8jnJzzb8RCs0oW
+IUTGIIFeO7RGbTKqNcz1ALNYpmmrEJvF3BYQw+l5d/Xko0k2pYrjFwJU9EMk0kyk
+Z0QrAOfXIkPDfDtGrrgwgMdZ7u3QpipadnZqsRRXSf2x5xOCxMMe+Ys5JUiHvfW2
+d9VftjQeCiWcn5m5Tx8KzvkEKZjDq2rr6Zq3kplva4mHWGXV1UJlX6lTwbLIHjd7
+H9WTdklCNLe3H95dTgoO41vlV6hDruGHAq3TwZgfYJHUE4vikFO7eroS8XyYzuOP
+WPLCAtP/smMfqPIgmSPh
+=RfoI
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa201-1.patch" of type "application/octet-stream" (3078 bytes)
-
-Download attachment "xsa201-2.patch" of type "application/octet-stream" (6453 bytes)
-
-Download attachment "xsa201-3.patch" of type "application/octet-stream" (1658 bytes)
-
-Download attachment "xsa201-3-4.7.patch" of type "application/octet-stream" (1635 bytes)
-
-Download attachment "xsa201-4.patch" of type "application/octet-stream" (4469 bytes)
