@@ -1,51 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/13
-Message-ID: <56C60726.8080802@gmail.com>
-Date: Thu, 18 Feb 2016 19:02:14 +0100
-From: Manuel Mancera <sinkmanu@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: CVE Request: graphite-web: open redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/16
+Message-ID: <60807621cefd437d963b2700b2a0823b@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 18:59:06 -0500
+From: <cve-assign@...re.org>
+To: <pere@...a.cat>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE requests for Drupal core (SA-CORE-2016-005)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> > https://github.com/graphite-project/graphite-web/issues/1441 > > > two OpenRedirects in /webapp/graphite/account/views.py > > >
-Proof of Concept: > > >    
-http://graphiteSite/account/logout?nextPage=https://www.google.com > >
-Is there a response from the author of the code indicating that this >
-is a vulnerability? Open redirects to http/https are not universally >
-considered vulnerabilities for all vendors and products, e.g., > >  
-https://sites.google.com/site/bughunteruniversity/nonvuln/open-redirect
-> > is probably the most well-known counterargument. >
+> https://www.drupal.org/SA-CORE-2016-005
 
-The authors did not answer.
+> Inconsistent name for term access query (Drupal 7 and Drupal 8)
+>> information on taxonomy terms might have been disclosed to unprivileged users.
 
-> > >     http://graphiteSite/account/update > >         POST:
-nextPage=https://www.google.com > > What is the threat model for this
-open redirect issue that requires a > POST request? Often, an attacker's
-ability to make a client submit a > POST request with an
-attacker-controlled parameter means that the > client is executing
-JavaScript code from an attacker-controlled site, > and in that case the
-JavaScript can send the browser to an arbitrary > http/https URL without
-any realistic ability of the client user to > predict that that might
-occur. Is there a way in which the existence > of
-http://graphiteSite/account/update helps the attacker to accomplish >
-the redirect? >
-
-Yes, exist multiple XSS vulnerabilities described in the CVE-2013-5943
-[1]. Some XSS were fixed but other not (I found a persistent XSS [2]).
-Any user identified in the application could inject javascript code that
-could be executed in the victim. Is not possible get the cookie in
-javascript because has the "HTTPOnly" flag.
-
-> > Also, inside the logout and update functions, the session should be checked. > > What vulnerability are you reporting here? Are /account/logout and
-> /account/update vulnerable to CSRF? >
-
-Yes, both are vulnerable to CSRF (and all the edit graphs are vulnerable
-too, deleted included).
+Use CVE-2016-9449.
 
 
-[1] https://www.cvedetails.com/cve/CVE-2013-5943/
-[2] https://github.com/graphite-project/graphite-web/pull/1470
+> Incorrect cache context on password reset page (Drupal 8)
+>> can lead to cache poisoning and unwanted content on the page.
+
+Use CVE-2016-9450.
 
 
+> Confirmation forms allow external URLs to be injected (Drupal 7)
+
+Use CVE-2016-9451.
+
+
+> Denial of service via transliterate mechanism (Drupal 8)
+
+Use CVE-2016-9452.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYL5R2AAoJEHb/MwWLVhi2eHMP/187U/8tTObfz9ZRePwupSLe
+lHzn32XSQia2CFMhow4H/E+w9LSjWZ9ngcRIsqgU2mwxmFCd0EPebrglnh1fpEe0
+KfpO8DeA4BFo4M0L8IAcPspqkDlCm+l8RgOWJlZLCRXwN6qWaIapJMiWx4R9ZmQf
+NOhsCnsJAGHzJGWSpttu9BJexQYrqgO4WOLmWeugyeh+iBwPRzM/Z9K1AEquwU5f
++xsaoMn8r6nptBNu26VpirhEbtjwv0MAnChj9z4dA5JPq5LI+iRXS6ISIb2rgIH1
+IwpMefql0wZbRaCBldgRb6NPrWvyLQO8tS3de7INIhdyAuS/ekSXxM/udguUyXAN
+bPe5XaMVQdUJZl+lk+4Z0U8L04F8jwVHgo6aMnbXZ20WYgljcN247rShTtnM/2LV
+HgnGdbn69XtcoscfBgKcdJJi9BhgHhLWbG/6on0adrQyE5pgsizr6GIJ8QhMY4r1
+AbEyfFoRhNmCNLZN6goK2UBgPygId0Xy42XnACJBNPmhGMfb4VA40s/mfMiXQauN
+HbxSMrQetr0oXEkHc5KeHtzbL+x/PNhgk9D6+sZo4chI6DJ89/kpu04SMByVzASL
+g1BIaCCbYkGnxmW/XuC1TVMzHjzT6pFiHlxFH76nb0XzLraB5hw9bGK27oVtU3TE
+BhEpOnqCHmiD6Bg30S/5
+=TWzZ
+-----END PGP SIGNATURE-----
