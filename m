@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1340" "Saturday" "22" "August" "2015" "06:48:19" "-0400" "Larry W Cashdollar" "larry0@me.com" "<55D85373.7010101@me.com>" "37" "[oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9" nil nil nil "8" "2015082210:48:19" "[oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9" (number mark "        larry0@me.co Aug 22   37/1340  " thread-indent "\"[oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["898" "Friday" "18" "November" "2016" "17:05:24" "+0200" "Henri Salo" "henri@nerv.fi" "<20161118150524.GA16744@tunkki>" "25" "[oss-security] CVE-2016-9297 LibTIFF regression" nil nil nil "11" "2016111815:05:24" "[oss-security] CVE-2016-9297 LibTIFF regression" (number mark "U       henri@nerv.f Nov 18   25/898   " thread-indent "\"[oss-security] CVE-2016-9297 LibTIFF regression\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23668 invoked by uid 550); 22 Aug 2015 10:48:35 -0000
+Received: (qmail 32184 invoked by uid 550); 18 Nov 2016 15:05:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23644 invoked from network); 22 Aug 2015 10:48:34 -0000
-MIME-version: 1.0
-Content-type: multipart/alternative;
- boundary="Boundary_(ID_Ae/Yd8xLx2B5XVd8YcVFqA)"
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-08-22_02:2015-08-21,2015-08-22,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=1 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1508220177
-Message-id: <55D85373.7010101@me.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
- Thunderbird/31.8.0
-Date: Sat, 22 Aug 2015 06:48:19 -0400
-From: Larry W Cashdollar <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request Blind SQL Injection in wordpress plugin dukapress v2.5.9
+Received: (qmail 32158 invoked from network); 18 Nov 2016 15:05:39 -0000
+X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
+Date: Fri, 18 Nov 2016 17:05:24 +0200
+From: Henri Salo <henri@nerv.fi>
 To: oss-security@lists.openwall.com
+Message-ID: <20161118150524.GA16744@tunkki>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE-2016-9297 LibTIFF regression
 
---Boundary_(ID_Ae/Yd8xLx2B5XVd8YcVFqA)
-Content-type: text/plain; CHARSET=US-ASCII; format=flowed
-Content-transfer-encoding: 7BIT
+CVE-2016-9297 vulnerability reported in http://bugzilla.maptools.org/show_bug.cgi?id=2590 had a
+regression, which is fixed in http://bugzilla.maptools.org/show_bug.cgi?id=2593
+by Even Rouault.
 
-Hello,
-May I have a CVE for this vulnerability?
+Fixed per
 
-Title: Blind SQL Injection in wordpress plugin dukapress v2.5.9
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-08-04
-Download Site: http://wordpress.org/plugins/dukapress/
-Vendor: dukapress.org
-Vendor Notified: 2015-08-07, fixed in v2.5.9.1
-Vendor Contact: https://twitter.com/moshthepitt
-Description: DukaPress is open source software that can be used to build 
-online shops quickly and easily. DukaPress is built on top of WordPress, 
-a world class content management system. DukaPress is built to be both 
-simple and elegant yet powerful and scalable.
-Vulnerability:
-The code in dukapress/download.php does not sanitize user input before 
-passing it to query() allowing SQL to be injected.  The user is not 
-required to be logged into wordpress in order to exploit this vulnerability.
+2016-11-16 Even Rouault <even.rouault at spatialys.com>
 
+        * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), do not dereference
+        NULL pointer when values of tags with TIFF_SETGET_C16_ASCII /
+TIFF_SETGET_C32_ASCII
+        access are 0-byte arrays.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2593 (regression
+introduced
+        by previous fix done on 2016-11-11 for CVE-2016-9297).
+        Reported by Henri Salo.
 
-9:$sql = "SELECT saved_name, real_name, count, 
-TIMESTAMPDIFF(SECOND,sent_time,NOW()) as time_diff FROM `{$table_name2}` 
-WHERE saved_name='{$_GET['id']}'";
-.
-.
-.
+/cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
+new revision: 1.1163; previous revision: 1.1162
+/cvs/maptools/cvsroot/libtiff/libtiff/tif_dirread.c,v  <-- 
+libtiff/tif_dirread.c
+new revision: 1.204; previous revision: 1.203
 
-26:    $wpdb->query("UPDATE {$table_name2} SET count={$download_count} 
-WHERE saved_name='{$_GET['id']}'");
-
-Advisory: http://www.vapid.dhs.org/advisory.php?v=152
-
---Boundary_(ID_Ae/Yd8xLx2B5XVd8YcVFqA)--
+-- 
+Henri Salo
