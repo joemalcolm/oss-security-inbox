@@ -1,73 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/05/1
-Message-ID: <CAG0ev15p0b8Jd5paQn0VDcU0KKdLHhwTKXiSJJr9ysxAZC=fgg@mail.gmail.com>
-Date: Fri, 5 Aug 2016 11:39:40 +0800
-From: 0xr0ot <0xr0ot.sec@...il.com>
-To: oss-security@...ts.openwall.com, mobile.security@...sung.com
-Subject: Fwd: CVE request - samsumg android phone SVE-2016-6244 Possible Privilege Escalation in telecom
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/5
+Message-ID: <2016111816520848294763@gmail.com>
+Date: Fri, 18 Nov 2016 16:52:10 +0800
+From: "wykcomputer@...il.com" <wykcomputer@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [Bug Report] Vulnerability in libbpg
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ----------
-From: <cve-assign@...re.org>
-Date: 2016-08-03 20:50 GMT+08:00
-Subject: Re: CVE request - samsumg android phone SVE-2016-6244 Possible
-Privilege Escalation in telecom
-To: 0xr0ot.sec@...il.com
-Cc: cve-assign@...re.org
+Hello,
+    I'm a security researcher. And I find one vulnerability in libbpg, this is a double-free issue, which can lead to remote-code-execution.
+    I have reported it to the author of libbpg, but no responding, so I report it to you.
+    The PoC file is the attachment.
+    
+    Run the command ./bpgdec PoC.bpg, we wil get the crash log as follows.    
+
+    Crash Log：
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000042a158 in av_buffer_unref (buf=0x64bcb0) at libavutil/buffer.c:111
+111     b = (*buf)->buffer;
+(gdb) bt
+#0  0x000000000042a158 in av_buffer_unref (buf=0x64bcb0) at libavutil/buffer.c:111
+#1  0x000000000042a8fa in av_frame_unref (frame=0x64bb30) at libavutil/frame.c:101
+#2  0x000000000042a8b3 in av_frame_free (frame=0x638020) at libavutil/frame.c:92
+#3  0x0000000000406ec7 in bpg_decoder_decode (img=0x638010, buf=0x638250 "BPG\373\026\t\201\026\201\026", buf_len=2412) at libbpg.c:1890
 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+    After reading the libbpg source code, I think it's a double-free issue.
+    Double Free:
+int bpg_decoder_decode(BPGDecoderContext *img, const uint8_t *buf, int buf_len)
+//...
+ret = hevc_decode_start(img, buf + idx, buf_len - idx,
+width, height, img->format, bit_depth, has_alpha); 
+|
+|->ret = hevc_decode_frame_internal(s, abuf, cbuf, buf, buf_len, 1);
+|
+|->ret = hevc_write_frame(s->dec_ctx, s->frame, cbuf->buf, cbuf->len);
+|
+|->len = avcodec_decode_video2(avctx, frame, &got_frame, &avpkt);
+|
+|->av_frame_unref(picture); //the first free
 
-> http://security.samsungmobile.com/smrupdate.html#SMR-AUG-2016
+av_frame_free(&img->frame); //the second free in int bpg_decoder_decode(BPGDecoderContext *img, const uint8_t *buf, int buf_len)
 
-> SVE-2016-6242: Possible Privilege Escalation in telecom
->
-> Severity: Medium
-> Affected versions: L(5.0/5.1), M(6.0)
-> Reported on: May 11, 2016
-> Disclosure status: Privately disclosed.
-> A vulnerability in SpamCall Activity components of Telecom application
-> can make crash and reboot a device when the malformed serializable
-> object is passed.
-> The patch complements the exception handling routine to prevent crash.
-
-Use CVE-2016-6526.
+    Fix:
+Avoid double free, choose one of the first and second free. Maybe remove the second one. 
 
 
-> SVE-2016-6244: Possible Privilege Escalation in telecom
->
-> Severity: Medium
-> Affected versions: L(5.0/5.1), M(6.0)
-> Reported on: May 11, 2016
-> Disclosure status: Privately disclosed.
-> The vulnerability in SmartCall Activity components of Telecom
-> application can make crash and reboot a device when the malformed
-> serializable object is passed.
-> The patch complements the exception handling routine to prevent crash.
 
-Use CVE-2016-6527.
+wykcomputer@...il.com
 
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Content of type "text/html" skipped
 
-iQIcBAEBCAAGBQJXoefoAAoJEHb/MwWLVhi2vr0QAJ693LUFVlPVq2YI5Qp7Yeeb
-3MF/kN4Xa9IZGoxNtNomEKfewInUU3jec9nEVyobchIdsJzYzzeL2OMwVjh2CvXU
-UjCJylCCdzgXsOqCN2ULgLJlJP1zRHrptMkZsfYuJDIn5LFPtP//sBQuQe8Vmx7+
-UsRXCY6eOT+icS7puohFEaUs6eD96Hs/Zob+h5UOozmGQosdZMfLJHyPV30Nr4h9
-n/tqxVzWF/cnAZz6byui4y9zRrG7CtxsQ2VQvvVYR63iCJxziTFmBMqtkWnZrhvH
-CLKi8M5E5SN9hQvfKDobYUThoDrife5JcPftQr3tOVJSjYA0W6ZqcLP8Aclsko2X
-Fnw0SwVXUU80s2rFgZgVRgPHcrcA0EIiEXfrjxbIAU+ht8ACzQaSgF5Csc9/Jld3
-hkNEg3JSr5gJsdQNDNuhJA6ysyaPwh8p0X7+9nb84CYmpsMwKAi1BnWyl/FNrGR4
-NewVzNbLJmYZUBKjd1sMvn2Q+uvm+iRX9K+muikSXdj5vz5txXkQDU6Vy8Xwyja8
-O2gDMrGTzX9DqXpPKCrm8z93EJI+/PT/9DHmLCJwJahtl+u/yN+nagGLl2gtfMAw
-5nuE89pMAoZZ/sqBFQ3ir82mVJh/bm2T2sHO+R8ljvkHB3ERQrz3Hs7JIf4mCG1b
-cx4bYNZHgZIF+KP1I5oF
-=1SXm
------END PGP SIGNATURE-----
-
+Download attachment "PoC.bpg" of type "application/octet-stream" (2412 bytes)
