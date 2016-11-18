@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["861" "Sunday" "18" "September" "2016" "14:31:24" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160918123124.poc7x5skdijl2j3m@eldamar.local>" "24" "[oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" nil nil nil "9" "2016091812:31:24" "[oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)" (number mark "U       carnil@debia Sep 18   24/861   " thread-indent "\"[oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1578" "Friday" "18" "November" "2016" "18:59:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<60807621cefd437d963b2700b2a0823b@imshyb02.MITRE.ORG>" "48" "[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)" nil nil nil "11" "2016111823:59:06" "[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)" (number mark "U       cve-assign@m Nov 18   48/1578  " thread-indent "\"[oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)\"\n") "<CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>" ("<CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12066 invoked by uid 550); 18 Sep 2016 12:31:38 -0000
+Received: (qmail 1995 invoked by uid 550); 18 Nov 2016 23:59:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12045 invoked from network); 18 Sep 2016 12:31:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:content-transfer-encoding:user-agent;
-        bh=BhkuYjA8VdsUw5Rfk1Bqg8qhxD3Aa18eJJZvr9uGh+g=;
-        b=oMW3JyLVShCqYI50w0YsL+eK7uJdA0MGBwqq/yO1eQHuKTRHMJ1Nt7PqmSWBww86R4
-         rU0dzGTZQPVlRNyy3tSlK9lDbw/s/gNe+JWTCdtTTG0W4YQQmHEJPmWmAEl2QmfTtcMg
-         1cOCaykZJOYdLxGAWCfvr/y6kJhV9JgExnjzYm5FANkbT49/ySB7tkv7OHxxJoc0s0Rh
-         /DAvRgPtKOSqlwfqspxqUijcnzXUC7bjkvrPJovOC1YkkQZ4/cOzeghLrm9Re0VnkvMD
-         aoFtHkrQ6Vu9FCgycrOWWOlRRtwCDdYVrYfTrii8IUlBxZvP8Y57sOS7dOmOAeAJgcyq
-         /yGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:content-transfer-encoding
-         :user-agent;
-        bh=BhkuYjA8VdsUw5Rfk1Bqg8qhxD3Aa18eJJZvr9uGh+g=;
-        b=O/Kh8hUAojA1/AFHA15856P72649nxA2InCaDUfIa8MpNpxcmatQJb51Bw9X4NVFe1
-         J/MHbG2KRXjakKwljlRnlGef83Vcy9TqX6nQqZ8ZBaUVE5vBw9rz6052DIo2CtI0xvzP
-         dm4Ki5qOeQh8m+fHCNXYml3TbLXskNFx65aes2/lAgNp4pkpnr/p4uHJUcOgChMVatL4
-         ahSKht4EPgr0BicU7FpU1T1dUFPVjgHe0Ihq1yRq40zEk7V5IgXCO8xjq6qDAnaTwUgK
-         ifYM1CD9TIGegiHEzVyMa1ToCKcCdreeN9qwx5Ex01Qp3YaTaEL34JOPtgTubl9hgdug
-         MAmQ==
-X-Gm-Message-State: AE9vXwOQgXt5eiPH15HMIP9/mbeISSRUJf0DgKd18aIJkip8xtndscCIgIMSlxgxO5Qypg==
-X-Received: by 10.194.5.230 with SMTP id v6mr22810277wjv.92.1474201885919;
-        Sun, 18 Sep 2016 05:31:25 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 18 Sep 2016 14:31:24 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160918123124.poc7x5skdijl2j3m@eldamar.local>
+Received: (qmail 1977 invoked from network); 18 Nov 2016 23:59:31 -0000
+From: <cve-assign@mitre.org>
+To: <pere@orga.cat>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CAMYtjAo+ggV_RBCd7LsRBVwjv10+yqv838J7DSyGDfnvZpR-xw@mail.gmail.com>
+Message-ID: <60807621cefd437d963b2700b2a0823b@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 18:59:06 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-User-Agent: NeoMutt/20160910 (1.7.0)
-Subject: [oss-security] CVE Request: GnuTLS: OCSP validation issue (GNUTLS-SA-2016-3)
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE requests for Drupal core (SA-CORE-2016-005)
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Some days ago new GnuTLS version were released for GNUTLS-SA-2016-3
-(OCSP validation issue):
+> https://www.drupal.org/SA-CORE-2016-005
 
-> Stefan Bühler discovered an issue that affects validation of
-> certificates using OCSP responses, which can falsely report a
-> certificate as valid under certain circumstances. That issue affects
-> gnutls 3.3.24, 3.4.14, 3.5.3 and previous versions. Write-up[0] by
-> Stefan Bühler
-> Recommendation: Upgrade to GnuTLS versions 3.4.15, 3.5.4 or apply the
-> patch referenced in the mail above.
+> Inconsistent name for term access query (Drupal 7 and Drupal 8)
+>> information on taxonomy terms might have been disclosed to unprivileged users.
 
-Upstream fix is at [1]. This is as well tracked in Red Hat's bugzilla
-at [2].
+Use CVE-2016-9449.
 
-Could you please assign a CVE for this issue?
 
-Regards,
-Salvatore
+> Incorrect cache context on password reset page (Drupal 8)
+>> can lead to cache poisoning and unwanted content on the page.
 
- [0] https://lists.gnupg.org/pipermail/gnutls-devel/2016-September/008146.html
- [1] https://gitlab.com/gnutls/gnutls/commit/964632f37dfdfb914ebc5e49db4fa29af35b1de9 
- [2] https://bugzilla.redhat.com/show_bug.cgi?id=1374266
+Use CVE-2016-9450.
+
+
+> Confirmation forms allow external URLs to be injected (Drupal 7)
+
+Use CVE-2016-9451.
+
+
+> Denial of service via transliterate mechanism (Drupal 8)
+
+Use CVE-2016-9452.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYL5R2AAoJEHb/MwWLVhi2eHMP/187U/8tTObfz9ZRePwupSLe
+lHzn32XSQia2CFMhow4H/E+w9LSjWZ9ngcRIsqgU2mwxmFCd0EPebrglnh1fpEe0
+KfpO8DeA4BFo4M0L8IAcPspqkDlCm+l8RgOWJlZLCRXwN6qWaIapJMiWx4R9ZmQf
+NOhsCnsJAGHzJGWSpttu9BJexQYrqgO4WOLmWeugyeh+iBwPRzM/Z9K1AEquwU5f
++xsaoMn8r6nptBNu26VpirhEbtjwv0MAnChj9z4dA5JPq5LI+iRXS6ISIb2rgIH1
+IwpMefql0wZbRaCBldgRb6NPrWvyLQO8tS3de7INIhdyAuS/ekSXxM/udguUyXAN
+bPe5XaMVQdUJZl+lk+4Z0U8L04F8jwVHgo6aMnbXZ20WYgljcN247rShTtnM/2LV
+HgnGdbn69XtcoscfBgKcdJJi9BhgHhLWbG/6on0adrQyE5pgsizr6GIJ8QhMY4r1
+AbEyfFoRhNmCNLZN6goK2UBgPygId0Xy42XnACJBNPmhGMfb4VA40s/mfMiXQauN
+HbxSMrQetr0oXEkHc5KeHtzbL+x/PNhgk9D6+sZo4chI6DJ89/kpu04SMByVzASL
+g1BIaCCbYkGnxmW/XuC1TVMzHjzT6pFiHlxFH76nb0XzLraB5hw9bGK27oVtU3TE
+BhEpOnqCHmiD6Bg30S/5
+=TWzZ
+-----END PGP SIGNATURE-----
