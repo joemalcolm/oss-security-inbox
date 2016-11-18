@@ -1,64 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/5
-Message-ID: <CAMqf4yDbXfYqFYHbMnMbrhcYfmjC56ok5+3VvNYfKndtsuECgA@mail.gmail.com>
-Date: Tue, 19 Jul 2016 02:00:53 +1200
-From: Richard Rowe <arch.richard@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/10
+Message-ID: <20161118145826.GA2799@io.lakedaemon.net>
+Date: Fri, 18 Nov 2016 14:58:26 +0000
+From: Jason Cooper <osssecurity@...edaemon.net>
 To: oss-security@...ts.openwall.com
-Subject: A CGI application vulnerability for PHP, Go, Python and others
+Cc: john.haxby@...cle.com
+Subject: Linux encrypted boot security, was: CVE-2016-4484: - Cryptsetup Initrd root Shell
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Jacobo,
 
-The Vend security team would like to publicly disclose a vulnerability
-we've (re)discovered in CGI and PHP web applications. Here's a two line
-summary:
+On Thu, Nov 17, 2016 at 07:54:20PM -0500, Jacobo Avariento wrote:
+> Actually when using full disk encryption, to lock the BIOS and GRUB must
+> be mandatory, otherwise you are protecting your confidentiality but not
+> your integrity. Even with a password in GRUB with an unprotected BIOS
+> you can also boot from a USB device and access encrypted partitions,
+> delete them, etc.
 
+As long as the user in conscious of the threat model and makes the
+deliberate decision, this is fine.  But please always advise folks,
+"Physical access trumps everything.  Period."
 
-   -
+I can't count the number of hard drives I've pulled and cmos' I've
+reset.  That why I always advise moving all of the unencrypted boot
+material (bootloader, /boot, LUKS header) to a separate thumbdrive and
+to boot via USB.
 
-   RFC 3875 (CGI) puts the HTTP Proxy header from a request into the
-   environment variables as HTTP_PROXY
+Maintaining physical custody of the boot material keeps it more secure
+and is easier for the user because there are fewer passwords involved.
+And, with UEFI, you can update/configure it from within the OS, which
+means the password for that can be kept in a password manager on the
+encrypted volume.
 
+thx,
 
-   -
-
-   HTTP_PROXY is a popular environment variable used to configure an
-   outgoing proxy
-
-
-The consequence is that an attacker can force a proxy of their choice to be
-used. This proxy receives the full request for anything sent over HTTP
-using a vulnerable client. It can also act in a malicious way to tie up
-server resources (a "reverse slowloris").
-
-For the purposes of general disclosure to the wider ecosystem, we've
-prepared a website that describes the issue and collects common
-mitigations: https://httpoxy.org/ - but I'll continue with some notes below.
-
-Particularly affected is anything using the Guzzle HTTP library for PHP,
-but also many other languages and frameworks when deployed under 'real' CGI
-(PHP's userspace is basically emulated CGI), including Go's net/http and
-Python's requests. This bug appears to be more than 15 years old, and was
-fixed in a piecemeal fashion in other software (e.g. curl, libwww-perl,
-Ruby).
-
-The good news, however, is that stripping any Proxy request header is easy
-(because it is undefined by IETF and not listed in IANA's registry of
-message headers) - there should be no standard use for the header at all.
-
-Over the past two weeks, we've disclosed to the language teams affected
-(PHP, Python, Go, HHVM), as well as common CGI implementation vendors
-(Nginx, Apache). CERT have been involved in this process, and we’ve had the
-help of the Red Hat Product Security team. All these teams will probably
-have good advisories for their own specific affected software.
-
-The Apache Software Foundation have an advisory available at
-https://www.apache.org/security/asf-httpoxy-response.txt
-
-The original discovery in 2001 seems to have been by Randal L. Schwartz.
-2016 discovery was made by Scott Geary, research and disclosure
-co-ordinated by Dominic Scheirlinck, colleagues of mine.
-
-Regards,
-Richard
-
+Jason.
