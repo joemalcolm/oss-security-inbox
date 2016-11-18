@@ -1,44 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/5
-Message-ID: <e83aa49b-8c7d-e662-55bd-8f5a415e38b8@cleal.org>
-Date: Wed, 9 Nov 2016 13:28:53 +0000
-From: Dominic Cleal <dominic@...al.org>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/15
+Message-ID: <5fba1477d08e4f3481f6f65080897a24@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 18:57:21 -0500
+From: <cve-assign@...re.org>
+To: <henri@...v.fi>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2016-9297 LibTIFF regression
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-8634: Foreman organization/location wizard may run stored XSS
-in name
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-When creating an organization or location in Foreman, if the name
-contains HTML then the second step of the wizard will render the HTML.
-This occurs in the alert box on the page.
+> CVE-2016-9297 vulnerability reported in http://bugzilla.maptools.org/show_bug.cgi?id=2590 had a
+> regression, which is fixed in http://bugzilla.maptools.org/show_bug.cgi?id=2593
+> 
+>         * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), do not dereference
+>         NULL pointer when values of tags with TIFF_SETGET_C16_ASCII /
+>         TIFF_SETGET_C32_ASCII access are 0-byte arrays.
+>         Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2593 (regression
+>         introduced by previous fix done on 2016-11-11 for CVE-2016-9297).
 
-This may permit a stored XSS attack if an organization/location with
-HTML in the name is created, then a user is linked directly to this URL.
+Use CVE-2016-9448 for the vulnerability fixed in 2593.
 
-Mitigation: restrict permissions to organization and location creation,
-don't follow untrusted links to Foreman.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This issue was reported by Sanket Jagtap.
-
-Affects Foreman 1.1 and higher
-Fix due to be released in Foreman 1.14.0
-
-Patch:
-https://github.com/theforeman/foreman/commit/5a573456b5ecb3ba0d24e057722704f9afeda8f7
-
-More information:
-https://theforeman.org/security.html#2016-8634
-http://projects.theforeman.org/issues/17195
-https://theforeman.org
-
--- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (210 bytes)
+iQIcBAEBCAAGBQJYL5SIAAoJEHb/MwWLVhi2AzYP/2SarSYSo50EUpN0P21HbPSO
+IEulwCp/UJ8S4Uu+0SlXs3vhBzi9OMJGjAAT73dqekzmvuWzXwwmXdTVdPhXYRQN
+YrqK3K1QIn/gbFzAAbV6uzntktABhReJi0Rx57/kkfWbRHsIclD+nAJfY+yQWmkK
+h1NS3DgBPcIffswM2EtbRU6hWWkdEHoxeiezIrk5o/hSHFt9AFP5yVNmcid63Hgp
+rSgFfGIghkOrWQ3YSh9+bqCGC0dxHoBpvGR+yu0VEFFaLsh/EIjcy7kj1RBBAZWT
+MpiSu0gTq2UMn8r/6H6Citxq79Iva+pafL8afCTsaAl8fMJ5aNsTj5JKEzcm83Hr
+6riZMZv3AjizN+8x1lDFWcL1uN7Z+wilUU22/n7Qi1RGjzq74Vrs9Dabj0YoRZFV
+9ukCOGqhpfGGwUrsVkwva26LvFei8nbP+P7f46AN8752HEugxt+uQhKixgco/ijf
+25AYLDdBR3gIVMjJ44bSxKdHPBrFPMLMhU21huPD0w0upWTj220Sz7phvlF5oE8R
+eogTOcNdDjMODtO8LHgSNviHQxc2Am03G0B6H/xm2NV7V2UQgvYHUOyQGU6jmJyY
+BMwT6zaSALNs+g2WbKY6a/AuPnpUoKaabRtWNabAdd36o+lHsw7bliMyfDr9K4Lr
+J6Cf8vBaL2h6W4whAQR7
+=Jmyq
+-----END PGP SIGNATURE-----
