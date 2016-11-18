@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/22/9
-Message-ID: <20160822125802.GA3826@ee.oulu.fi>
-Date: Mon, 22 Aug 2016 15:58:02 +0300
-From: Jani Kenttala <jkenttal@...oulu.fi>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, ouspg@...oulu.fi
-Subject: Re: TLS testing results - OS distro vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/11
+Message-ID: <20161118150524.GA16744@tunkki>
+Date: Fri, 18 Nov 2016 17:05:24 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-9297 LibTIFF regression
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 22, 2016 at 02:19:11PM +0300, Solar Designer wrote:
-> On Mon, Aug 22, 2016 at 10:46:24AM +0200, Jakub Wilk wrote:
-> > * Mauri Miettinen <Mauri.Miettinen@...dent.oulu.fi>, 2016-08-20, 16:50:
--snip-
-> > >Results are available from:
-> > >
-> > >https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
-> > 
-> > How did you manage to run tests against Debian 7 (wheezy)? Your setup.py 
-> > requires Python 2.7.9 or 3.4.0, but wheezy has only 2.7.3/3.2.3.
-> 
-> I think Mauri isn't subscribed - CC'ing.
-> 
-> Alexander
+CVE-2016-9297 vulnerability reported in http://bugzilla.maptools.org/show_bug.cgi?id=2590 had a
+regression, which is fixed in http://bugzilla.maptools.org/show_bug.cgi?id=2593
+by Even Rouault.
 
-Hi!
+Fixed per
 
-We used self-compiled python to run the tests against the older python bundled with the OS 
-(see Dockerfile at https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/debian-7/Dockerfile).
+2016-11-16 Even Rouault <even.rouault at spatialys.com>
 
-To elaborate a bit, we are actually looking two different set of requirements.
+        * libtiff/tif_dirread.c: in TIFFFetchNormalTag(), do not dereference
+        NULL pointer when values of tags with TIFF_SETGET_C16_ASCII /
+TIFF_SETGET_C32_ASCII
+        access are 0-byte arrays.
+        Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2593 (regression
+introduced
+        by previous fix done on 2016-11-11 for CVE-2016-9297).
+        Reported by Henri Salo.
 
-1) TryTLS runner itself requires 2.7.9 or 3.4.0
-2) However, it can call older python version (or what ever command) when executing the tests.
-
-That being said, python2-urllib2 did not execute cleanly with 2.7.3. 
-There is a pull request about that <https://github.com/ouspg/trytls/pull/237>, 
-and the corresponding result has been marked as N/A in the summary table.
+/cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
+new revision: 1.1163; previous revision: 1.1162
+/cvs/maptools/cvsroot/libtiff/libtiff/tif_dirread.c,v  <-- 
+libtiff/tif_dirread.c
+new revision: 1.204; previous revision: 1.203
 
 -- 
--Jani
-
+Henri Salo
