@@ -1,41 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/7
-Message-ID: <CAOc73CA3jpn3V=m0js8=n0jrLZ9=-bUmjVn3+D=ab2tzQBYyhQ@mail.gmail.com>
-Date: Sun, 16 Oct 2016 00:50:36 +0800
-From: Ben Woods <woodsb02@...il.com>
-To: dcoffin@...ercom.net, oss-security@...ts.openwall.com
-Subject: dcraw and CVE-2015-8366 + CVE-2015-8367
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/9
+Message-ID: <8bccaa90-c192-4f98-673c-26816137e513@redhat.com>
+Date: Fri, 18 Nov 2016 14:01:05 +0000
+From: Tristan Cacqueray <tdecacqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2016-013] Network information disclosure through Heat template source URL (CVE-2016-9185)
 Content-Type: text/plain; charset=utf-8
 
-Hi Dave,
+==============================================================================
+OSSA-2016-013: Network information disclosure through Heat template
+source URL
+==============================================================================
 
-I was wondering if you could comment on whether dcraw is affected by these
-2 CVEs and whether new versions have been released which remove the
-vulnerability?
-
-I noticed you mentioned in the mailing list post below that "CVE-2015-8366
-will be fixed in v9.27" - did that end up getting fixed in 9.27? How about
-CVE-2015-83667?
-http://seclists.org/oss-sec/2016/q1/526
-
-CVE-2015-8366
-Index overflow in smal_decode_segment
-Fixed in LibRaw by:
-https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+:Date: November 18, 2016
+:CVE: CVE-2016-9185
 
 
-CVE-2015-8367
-Memory objects are not intialized properly
-Fixed in LibRaw by:
-https://github.com/LibRaw/LibRaw/commit/490ef94d1796f730180039e80997efe5c58db780
+Affects
+~~~~~~~
+- Heat: <=5.0.3, >=6.0.0 <=6.1.0 and ==7.0.0
 
 
-Thanks for your help.
+Description
+~~~~~~~~~~~
+Tom Patzig from SAP reported a vulnerability in Heat. By launching a
+new Heat stack with a local URL an authenticated user may conduct
+network discovery revealing internal network configuration. All Heat
+setup are affected.
 
-Regards,
-Ben
+
+Patches
+~~~~~~~
+- https://review.openstack.org/393149 (Liberty)
+- https://review.openstack.org/393148 (Mitaka)
+- https://review.openstack.org/393147 (Newton)
+- https://review.openstack.org/393146 (Ocata)
+
+
+Credits
+~~~~~~~
+- Tom Patzig from SAP (CVE-2015-9185)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1606500
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-9185
 
 --
-From: Benjamin Woods
-woodsb02@...il.com
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
