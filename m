@@ -1,33 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/3
-Message-ID: <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
-Date: Mon, 10 Oct 2016 08:01:15 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Leo Famulari" <leo@...ulari.name>
-CC: "john.haxby@...cle.com" <john.haxby@...cle.com>
-Subject: RE: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/13
+Message-ID: <c71a10a149c442c08d120a2c9a02de95@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 17:59:40 -0500
+From: <cve-assign@...re.org>
+To: <meissner@...e.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: gstreamer plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi Chet,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> > Thanks for the patch! Do you plan to add it to the bash-4.3-patches
-> > series [0]?
-> 
-> This went out as bash-4.3 patch 47.
+> Bufferoverflow in VMNC decoder in gstreamer plugins
+> https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-risky-design-decisions-in.html
+> https://cgit.freedesktop.org/gstreamer/gst-plugins-bad/commit/gst/vmnc/vmncdec.c?id=4cb1bcf1422bbcd79c0f683edb7ee85e3f7a31fe
+> https://bugzilla.gnome.org/show_bug.cgi?id=774533
 
-Where can we find patch 47 for bash-4.3? 
+>> The vmnc decoder in the gstreamer code base contains a fairly obvious
+>> and simple width * height * depth integer overflow in the allocation
+>> of the render buffer. From gst-plugins-bad1.0/gst/vmnc/vmncdec.c
+>> 
+>> vmnc_handle_wmvi_rectangle
 
-commit a0c0a00fc419b7bc08202a79134fcd5bc0427071
-Author: Chet Ramey <chet.ramey@...e.edu>
-Date:   Thu Sep 15 16:59:08 2016 -0400
+Use CVE-2016-9445 for the integer overflow.
 
-    Bash-4.4 distribution sources and documentation
 
-commit 30a978b7d808c067219c95be88c4979b6a7aa251
-Author: Chet Ramey <chet.ramey@...e.edu>
-Date:   Mon Jun 20 15:14:49 2016 -0400
+>> The render canvas, as allocated in the code snippet quoted way above,
+>> is not black filled or otherwise initialized. The call to g_malloc()
+>> is just a thin wrapper around malloc(), which does not initialize any
+>> returned heap area. Therefore, there's an easy information leak in
+>> thumbnailing a simple 1 frame vmnc movie that does not draw to the
+>> allocated render canvas at all. This could be a problem for anyone
+>> using gstreamer in a server environment to provide thumbnailing
+>> services.
 
-    Bash-4.3 patch 46
+Use CVE-2016-9446 for the lack of initialization.
 
-Thanks
-//Sona
+
+> Missing bounds check in NSF decoder in gstreamer plugins
+> http://scarybeastsecurity.blogspot.de/2016/11/0day-exploit-compromising-linux-desktop.html
+
+>> The vulnerability is in libgstnsf.so, an audio decoder present in the gstreamer-0.10 distribution.
+
+>> 1: Lack of checking ROM size when mapping into 6502 memory and bank switching
+
+>> an out of bounds read
+
+>> [or] read and write control over the host emulator heap [when combined with]
+>> 2: Ability to load or bank switch ROM to writable memory locations
+
+Use CVE-2016-9447 for the entire libgstnsf.so report. The "2" issue is
+not independently relevant.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYL4d2AAoJEHb/MwWLVhi2MSsP/0H0am8yTwfPZ5wbztUSwgjZ
+vyCTMEZaqx1s4sOKn5JJt5XNb4YEjVNCU7W5yrSGsdeO4kxxIerCvPTVQd6Y252Q
+GLD9v6EPFT7CxK7fTTLjzBs6y30iEdbsZyPzHAqWqLma2epM4k9ubrMRuipUnPEW
+TlEh7Qo0NigqWJSYdtBOLpBCAWfbDjxLVz8qbPs1C5aQ0tqJ/ZG8ArzVs3X1lVZg
+BqdXGNcLk7kaJRRGXDDBL8uoFViR+QXidfJIJMHALc7sPu1TJ9mSPuxIQZ0OEODj
+5Vygr5i1QA8RkWq67oI8JXVxPHDeBJVfC/p9p6Edg1bB7GH4kQDwwsneXA1kl0pu
+f350Ukjkihqg22S+mMSVwKljlthX5bCjLs1kIwzO956KMGdxUb28PeRJQrrkkxmV
+4aNYm0+VYM3Z6OVQOL5KWoftg+d/ivdIlQUrZbbnXrHYgH7nZQZABOx+K16rABui
+fBr+3FSCs0l21NndFfWLAijCtaNO/AAzuXlVandCnI6tsY1Zlgt+YvqIr242aoQx
+ogmK8/Tmtv3eO4YN7LoMTm7QHTP8C+23EA07bblDelaodk1UNY8dPMDoRcBnh3Pp
+PwD55mZnyR/wpdclfc+iQWvOiMWhSbvuifxrpQF6BmjgExeQQX0dPsfloLXSLgy9
+C4I8UNpl/tvSEY8uszPu
+=fjKF
+-----END PGP SIGNATURE-----
