@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["833" "Tuesday" "13" "August" "2019" "09:49:19" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do7Eqdq8HpAqyBSBrAHUCrXnwWrhb3e8seQJZDYjNKeszw@mail.gmail.com>" "25" "Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" "^Date:" nil nil "8" "2019081307:49:19" "[oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" (number mark "        cbuissar@red Aug 13   25/833   " thread-indent "\"Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1\"\n") "<alpine.GSO.2.20.1908120945250.19899@scrappy.simplesystems.org>" ("<20190807065737.GA3930@cbuissar-ltop.localdomain>" "<20190812132515.GA4647@cbuissar-ltop.localdomain>" "<alpine.GSO.2.20.1908120945250.19899@scrappy.simplesystems.org>") nil nil nil nil nil nil nil "Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1972" "Thursday" "17" "November" "2016" "19:54:20" "-0500" "Jacobo Avariento" "spinfoo.vuln@gmail.com" "<cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>" "48" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" "^Cc:" nil nil "11" "2016111800:54:20" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "        spinfoo.vuln Nov 17   48/1972  " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" "<20161116155529.GJ5329@io.lakedaemon.net>" "<c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>" "<20161117163922.GL5329@io.lakedaemon.net>" "<6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>" "<20161117175017.GM5329@io.lakedaemon.net>" "<8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32635 invoked by uid 550); 13 Aug 2019 07:49:42 -0000
+Received: (qmail 19490 invoked by uid 550); 18 Nov 2016 01:16:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32617 invoked from network); 13 Aug 2019 07:49:42 -0000
+Received: (qmail 9240 invoked from network); 18 Nov 2016 00:54:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=2FX6wvvluqw22Oy7o6rhRHAbvJTZnuAjCE+9uf8dh4k=;
+        b=nFSbb7cVSZrk9kemQz36IT4rwITGclz1CtuRC8AbJxd2DYdR4v/u/E3uHHG2scyIlw
+         rwyQn+hAzwF6QivDyDIm4e1YKI64r7VxdABDXN+vb6qHMByMid20cpSacduduM8hv2BM
+         KvkDuiUt0p4MXGq50BGLSmsZe+0R7mcQNzNwaO9jswRYGD3Fe5NO6XpXGSJBiqujsMvQ
+         uAWAd3FBp39GMVG4x35H9vSUSuhr0gU0HT8DGXZ4bH7WjwnMWatbGkXJgLRXOq07VwSq
+         NXJVnxelNDMgEDG8REL2GMM8eiJHFeiun5iCw+6rgwlPN1QBnQ99Fqut3ju7DyCROIHP
+         wwNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=PHBtdtGoHaoOt0BIRBK2fsFgzO/AC+veUjI2GzRLzf0=;
-        b=d6V5+rEFHVu3j8aZe5v10qp384rmR++GXgHPLZDRLqUAqX+yEJBHfrxXDEHraS2u1X
-         hAgBcEkvFgSHc/rKnMJlniuWXsaYwIIeAHPa3HgGAK29PRS8PHtOlBLj6dUp0/VNRLWc
-         VO1d3Xf3wRhHp3mC4uIRhXaa4z9QOiAY2b7d8XMG6lpemsDfaNBOIcse6Q1hBlJN9bDe
-         k+ckablp3dru0fSlGrcVfnqbxwgPWbH21EaxHrkMn2O2YEYoWPC8YEuQTYmPo0CBzTV7
-         LBhW5NtlvZAyghMjbubgRH/XFDeoA2pppEtWlvGe/JYFqstmiSHwBU/wZlO2Igfk4Mgo
-         j4uw==
-X-Gm-Message-State: APjAAAUFSxZguHSdUEhcQfzVJ+bNunErhiS+4Q/LqFTyY2Excil6bnZh
-	oSv9ZbXmHDMGa1knB3L6v5rRcpTYuugPonD6wrkO4w58
-X-Google-Smtp-Source: APXvYqxHDkm4SwZXvJ1lfemOLZUhg9tocgednLnpZ99EhpMo3+3qqhjP0aMvRYBn3XIUJCEgFJLcbN5SwHYiXv8tnIc=
-X-Received: by 2002:a50:f4c3:: with SMTP id v3mr28725808edm.115.1565682570433;
- Tue, 13 Aug 2019 00:49:30 -0700 (PDT)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=2FX6wvvluqw22Oy7o6rhRHAbvJTZnuAjCE+9uf8dh4k=;
+        b=JOfnXODjg+mgSw3chicLGZnBeQzHfcq8ZAxHWmUiGS7ZJ699846D1x0LcyQb09a316
+         6Q25jgualtkH+wlSJMJAGIXQBofetBijUXyQE4fcf4q9cwDbn3moNiDxkG2lbfUX9WxQ
+         iuUvv1KhQWRoIPCTIaaiu0kRi+GsBOZFxnxuzg9WYATmtpHQFNLF2vERUvHs09KvYb+p
+         4IOZAA822RRgHOfeHNI6nnAYRHL8vU/UpJTm26jUnHFDzQDGwq3/0E+MZ6HGI4SEOLfk
+         aAM0SR6g9RFfOfe7774vfMyqAkiM9qRjmzV5YHjnBm3cMXd7h0xMaOfBqOPs1wYKRXtL
+         shCg==
+X-Gm-Message-State: ABUngvfKIpjm+yGyABfmak0PCU1LuCGjl4dKxg1JX+XW88J8fcAWN323lb1X3l1shuGQnw==
+X-Received: by 10.176.2.110 with SMTP id 101mr4384331uas.8.1479430462729;
+        Thu, 17 Nov 2016 16:54:22 -0800 (PST)
+References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
+ <20161116155529.GJ5329@io.lakedaemon.net>
+ <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
+ <20161117163922.GL5329@io.lakedaemon.net>
+ <6bb2134c-5df5-7728-bec7-6d6a80e71476@oracle.com>
+ <20161117175017.GM5329@io.lakedaemon.net>
+ <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
+Message-ID: <cf096ccb-33de-6288-f5fc-cd62afcfeeac@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.4.0
 MIME-Version: 1.0
-References: <20190807065737.GA3930@cbuissar-ltop.localdomain>
- <20190812132515.GA4647@cbuissar-ltop.localdomain> <alpine.GSO.2.20.1908120945250.19899@scrappy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1908120945250.19899@scrappy.simplesystems.org>
-Message-ID: <CAKG8Do7Eqdq8HpAqyBSBrAHUCrXnwWrhb3e8seQJZDYjNKeszw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Tue, 13 Aug 2019 09:49:19 +0200
-From: Cedric Buissart <cbuissar@redhat.com>
+In-Reply-To: <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: john.haxby@oracle.com, osssecurity@lakedaemon.net
+Date: Thu, 17 Nov 2016 19:54:20 -0500
+From: Jacobo Avariento <spinfoo.vuln@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript CVE-2019-10216: -dSAFER escape via .buildfont1
+Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
 To: oss-security@lists.openwall.com
 
-On Mon, Aug 12, 2019 at 4:48 PM Bob Friesenhahn
-<bfriesen@simple.dallas.tx.us> wrote:
+Good debate.
+
+Actually when using full disk encryption, to lock the BIOS and GRUB must
+be mandatory, otherwise you are protecting your confidentiality but not
+your integrity. Even with a password in GRUB with an unprotected BIOS
+you can also boot from a USB device and access encrypted partitions,
+delete them, etc.
+
+Just to mention another method complimentary to the "rd.shell=0" a
+similar behaviour to this "flaw" can be achieved using at the boot
+sequence "rd.break=pre-udev", this also gives you a root shell with
+access to the hard disk.
+
+Regards
+
+
+On 11/17/2016 02:15 PM, John Haxby wrote:
+> On 17/11/16 17:50, Jason Cooper wrote:
+>> Hi John,
+>>
+>> On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
+>>>> On 17/11/16 16:39, Jason Cooper wrote:
+>>>>>> However, the golden rule still applies.  Physical access trumps all
+>>>>>> defensive measures.  The absolute best you can do is detect that
+>>>>>> physical access occurred.  From there, you're hoping there are no
+>>>>>> hardware implants or other devices outside the scope of software
+>>>>>> security.
+>>>> I agree.  However, it ought be to be harder than leaning on the enter
+>>>> key to break into a system.  You lock your doors even though it doesn't
+>>>> stop a determined burglar?
+>> Yes, as I said before, non-deterministic failure modes are bad.  This
+>> CVE is a bug in the initrd script and needs to be fixed.  What I
+>> disagree with, and still do, is the "sky is falling!" nature of the
+>> alert.
+> Yup.  I agree there, but that's down to the publicity its received.  We
+> can't do much but grin and bear that.   Red Hat have given this a CVSS2
+> score of 7.2 which reflects the _potential_ severity but marked it as
+> "moderate" which reflects the actual effect.   It's most serious for
+> people like me who have an encrypted root but no grub password (and no
+> rd.shell=0) but, no, the sky is not falling.
 >
-> Is it known if this issue also impacts the PDF reader?  I see that the
-> involved code is Resource/Init/gs_type1.ps which is presumably related
-> to Postscript Type 1 fonts, which might be included in a PDF file.
-
-My personal experience so far is that vulnerabilities requiring to
-modify error handlers do not work when embedded in a PDF.
-That being said, maybe I do it wrong and there might be other ways.
-I didn't have an attempt with that one so far.
-
+> jch
 >
-> Bob
-> --
-> Bob Friesenhahn
-> bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-> GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
-> Public Key,     http://www.simplesystems.org/users/bfriesen/public-key.txt
 
+-- 
+https://github.com/spinfoo
+https://pa.linkedin.com/in/jacoboavariento
 
-
---
-Cedric Buissart,
-Product Security
