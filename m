@@ -1,98 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/03/4
-Message-ID: <alpine.DEB.2.20.1608030901400.2418@tvnag.unkk.fr>
-Date: Wed, 3 Aug 2016 09:05:26 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY VULNERABILITY] curl: Re-using connections with wrong client cert
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/18/6
+Message-ID: <2016111816532262596165@gmail.com>
+Date: Fri, 18 Nov 2016 16:53:24 +0800
+From: "wykcomputer@...il.com" <wykcomputer@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: [Bug report] Vulnerability In libbpg-1
 Content-Type: text/plain; charset=utf-8
 
-Re-using connections with wrong client cert
-===========================================
+I find a out-of-bounds read issue in libbpg(0.9.7, maybe other early versions), which can lead to memory corruption.
+I have reported it to the author of libbpg, but no responding, so I report it to you.
 
-Project cURL Security Advisory, August 3rd 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160803B.html)
+Run ./bpgdec PoC.bpg, get the crash as follows.
+Crash Log：
+Program received signal SIGBUS, Bus error.
+0x000000000041a34e in sao_band_filter_0_var () at libavcodec/hevcdsp_template.c:351
+351             dst[x] = av_clip_pixel(src[x] + offset_table[src[x] >> shift]);
+(gdb) bt
+#0  0x000000000041a34e in sao_band_filter_0_var () at libavcodec/hevcdsp_template.c:351
+#1  0x0000000000430ae2 in sao_filter_CTB () at libavcodec/hevc_filter.c:323
+#2  0x0000000000433cff in ff_hevc_hls_filter () at libavcodec/hevc_filter.c:894
+#3  0x00000000004109e9 in hls_decode_entry () at libavcodec/hevc.c:2400
+#4  0x0000000000428025 in avcodec_default_execute () at libavcodec/utils.c:121
+#5  0x0000000000410a41 in hls_slice_data () at libavcodec/hevc.c:2413
+#6  0x00000000004111d8 in decode_nal_unit () at libavcodec/hevc.c:2826
+#7  0x0000000000411c9f in decode_nal_units () at libavcodec/hevc.c:3063
+#8  0x0000000000411dc3 in hevc_decode_frame () at libavcodec/hevc.c:3193
+#9  0x00000000004285f3 in avcodec_decode_video2 () at libavcodec/utils.c:242
+#10 0x00000000004025ec in hevc_write_frame () at libbpg.c:401
+#11 0x00000000004029d8 in hevc_decode_frame_internal () at libbpg.c:486
+#12 0x0000000000402b5a in hevc_decode_start () at libbpg.c:528
+#13 0x0000000000406d4d in bpg_decoder_decode () at libbpg.c:1860
+#14 0x0000000000401abf in main () at bpgdec.c:332
 
-VULNERABILITY
--------------
+The function in libavcodec/hevcdsp_template.c, the offset_table is an array which size is 32.
+dst[x] = av_clip_pixel(src[x] + offset_table[src[x] >> shift]);
+(src[x] >> shift) maybe larger than 31, lead to out-of-bounds read.
 
-libcurl did not consider client certificates when reusing TLS connections.
+static void FUNC(sao_band_filter_0)(uint8_t *_dst, uint8_t *_src,
+                                  ptrdiff_t stride_dst, ptrdiff_t stride_src, SAOParams *sao,
+                                  int *borders, int width, int height,
+                                  int c_idx BIT_DEPTH_PARAM)
+{
+    pixel *dst = (pixel *)_dst;
+    pixel *src = (pixel *)_src;
+    int offset_table[32] = { 0 };
+    int k, y, x;
+    int shift  = BIT_DEPTH - 5;
+    int16_t *sao_offset_val = sao->offset_val[c_idx];
+    int sao_left_class  = sao->band_position[c_idx];
 
-libcurl supports reuse of established connections for subsequent requests. It
-does this by keeping a few previous connections "alive" in a connection pool
-so that a subsequent request that can use one of them instead of creating a
-new connection will do so.
+    stride_dst /= sizeof(pixel);
+    stride_src /= sizeof(pixel);
 
-When using a client certificate for a connection that was then put into the
-connection pool, that connection could then wrongly get reused in a subsequent
-request to that same server that either didn't use a client certificate at all
-or that asked to use a different client certificate thus trying to tell the
-user that it is a different entity.
+    for (k = 0; k < 4; k++)
+        offset_table[(k + sao_left_class) & 31] = sao_offset_val[k + 1];
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width; x++)
+            dst[x] = av_clip_pixel(src[x] + offset_table[src[x] >> shift]); 
+        dst += stride_dst;
+        src += stride_src;
+    }
+}
 
-This mistakenly using the wrong connection could of course lead to
-applications sending requests to the wrong realms of the server using
-authentication that it wasn't supposed to have for those operations.
+Fix:
+for (y = 0; y < height; y++) {
+        for (x = 0; x < width; x++)
+            - dst[x] = av_clip_pixel(src[x] + offset_table[src[x] >> shift]); 
++ dst[x] = av_clip_pixel(src[x] + offset_table[(src[x] >> shift) & 31]); 
+        dst += stride_dst;
+        src += stride_src;
+    }
 
-We are not aware of any exploit of this flaw.
+Thank you!
 
-INFO
-----
 
-This flaw also affects the curl command line tool.
+wykcomputer@...il.com
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-5420 to this issue.
+Content of type "text/html" skipped
 
-AFFECTED VERSIONS
------------------
-
-This flaw is relevant for all versions of curl and libcurl that support
-SSL/TLS and client certificates.
-
-- Affected versions: libcurl 7.1 to and including 7.50.0
-- Not affected versions: libcurl >= 7.50.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.50.1, curl will check that re-used connections have the correct
-client certificate (file name) before used.
-
-A [patch for CVE-2016-5420](https://curl.haxx.se/CVE-2016-5420.patch) is
-available. This patch relies on the
-[CVE-2016-5419](https://curl.haxx.se/docs/adv_20160803A.html) patch already
-having been applied.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.50.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use client certificates
-
-TIME LINE
----------
-
-This was figured out by curl security team members during our work with the
-20160803A flaw during June 2016. We contacted distros@...nwall on July 31.
-
-libcurl 7.50.1 was released on August 3 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Found by the curl security team. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Download attachment "PoC.bpg" of type "application/octet-stream" (2516 bytes)
