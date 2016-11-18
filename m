@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6969" "Tuesday" "14" "July" "2015" "17:08:08" "+0200" "Markus Vervier" "markus.vervier@lsexperts.de" "<55A525D8.5060303@lsexperts.de>" "134" "[oss-security] CVE Request: AWS s2n" nil nil nil "7" "2015071415:08:08" "[oss-security] CVE Request: AWS s2n" (number mark "        markus.vervi Jul 14  134/6969  " thread-indent "\"[oss-security] CVE Request: AWS s2n\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3021" "Thursday" "17" "November" "2016" "19:21:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<10d2a3813cbd44d29450eed87119277b@imshyb02.MITRE.ORG>" "64" "[oss-security] Re: CVE request: MyBB multiple vulnerabilities" nil nil nil "11" "2016111800:21:07" "[oss-security] Re: CVE request: MyBB multiple vulnerabilities" (number mark "U       cve-assign@m Nov 17   64/3021  " thread-indent "\"[oss-security] Re: CVE request: MyBB multiple vulnerabilities\"\n") "<20161110171551.GB22569@tunkki>" ("<20161110171551.GB22569@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28526 invoked by uid 550); 14 Jul 2015 15:28:20 -0000
+Received: (qmail 13959 invoked by uid 550); 18 Nov 2016 00:21:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,148 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17568 invoked from network); 14 Jul 2015 15:08:20 -0000
-Message-ID: <55A525D8.5060303@lsexperts.de>
-User-Agent: foomail 3.1337
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha1; boundary="------------ms040606040304050300060806"
-Date: Tue, 14 Jul 2015 17:08:08 +0200
-From: Markus Vervier <markus.vervier@lsexperts.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: AWS s2n
-To: oss-security@lists.openwall.com
+Received: (qmail 13932 invoked from network); 18 Nov 2016 00:21:19 -0000
+From: <cve-assign@mitre.org>
+To: <henri@nerv.fi>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161110171551.GB22569@tunkki>
+Message-ID: <10d2a3813cbd44d29450eed87119277b@imshyb02.MITRE.ORG>
+Date: Thu, 17 Nov 2016 19:21:07 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: MyBB multiple vulnerabilities
 
---------------ms040606040304050300060806
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> Fixed in 1.8.6
+> https://blog.mybb.com/2015/09/07/mybb-1-8-6-1-6-18-merge-system-1-8-6-release/
 
-Hi,
-
-I would like to request a CVE for s2n.
-
-When a server is sending invalid DH values during a handshake a BIGNUM
-value is not properly initialized. This causes a null pointer
-dereference in a s2n based client leading to a crash or possible worse
-on old systems (e.g. on Debian kernels lower than 2.6.26).
-
-Technical details and a patch are available here:
-
-https://github.com/awslabs/s2n/pull/124
-
-The fix was merged and is in commit
-9af6ba1815dfd5c00361cc3bd45cee1d64e0c3bf.
-
-Markus
---=20
-Markus Vervier (IT Security Consultant and Software Developer),
-http://www.lsexperts.de
-LSE Leading Security Experts GmbH, Postfach 100121, 64201 Darmstadt
-Tel.: +49 (0) 6151 86086-261, Fax: -299,
-Unternehmenssitz: Weiterstadt, Amtsgericht Darmstadt: HRB8649
-Gesch=C3=A4ftsf=C3=BChrer: Oliver Michel, Sven Walther
+CVE-2015-8973 Medium Risk: Forum password bypass in xmlhttp.php
+CVE-2015-8974 Low Risk: SQL Injection in Grouppromotions module (ACP)
+CVE-2015-8975 Low Risk: Possible XSS Injection in the error handler
+CVE-2015-8976 Low Risk: Possible XSS issues in old upgrade files
+CVE-2015-8977 Low Risk: Possible Full Path Disclosure in publicly accessible error log files
 
 
---------------ms040606040304050300060806
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+> Fixed in 1.8.7
+> https://blog.mybb.com/2016/03/11/mybb-1-8-7-merge-system-1-8-7-release/
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEH
-AQAAoIIMKDCCBeYwggPOoAMCAQICEGqb4Tg7/ytrnwHV2binUlYwDQYJKoZI
-hvcNAQEMBQAwgYUxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1h
-bmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBD
-QSBMaW1pdGVkMSswKQYDVQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRpb24g
-QXV0aG9yaXR5MB4XDTEzMDExMDAwMDAwMFoXDTI4MDEwOTIzNTk1OVowgZcx
-CzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAO
-BgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0w
-OwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQg
-U2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAvrOeV6wodnVAFsc4A5jTxhh2IVDzJXkLTLWg0X06WD6cpzEup/Y0dtmE
-atrQPTRI5Or1u6zf+bGBSyD9aH95dDSmeny1nxdlYCeXIoymMv6pQHJGNcID
-pFDIMypVpVSRsivlJTRENf+RKwrB6vcfWlP8dSsE3Rfywq09N0ZfxcBa39V0
-wsGtkGWC+eQKiz4pBZYKjrc5NOpG9qrxpZxyb4o4yNNwTqzaaPpGRqXB7IMj
-tf7tTmU2jqPMLxFNe1VXj9XB1rHvbRikw8lBoNoSWY66nJN/VCJv5ym6Q0md
-CbDKCMPybTjoNCQuelc0IAaO4nLUXk0BOSxSxt8kCvsUtQIDAQABo4IBPDCC
-ATgwHwYDVR0jBBgwFoAUu69+Aj36pvE8hI6t7jiY7NkyMtQwHQYDVR0OBBYE
-FIKvbIz4xf6WYXzoHz0rcUhexIvAMA4GA1UdDwEB/wQEAwIBhjASBgNVHRMB
-Af8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBMBgNVHR8ERTBDMEGg
-P6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDZXJ0aWZp
-Y2F0aW9uQXV0aG9yaXR5LmNybDBxBggrBgEFBQcBAQRlMGMwOwYIKwYBBQUH
-MAKGL2h0dHA6Ly9jcnQuY29tb2RvY2EuY29tL0NPTU9ET1JTQUFkZFRydXN0
-Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20w
-DQYJKoZIhvcNAQEMBQADggIBAHhcsoEoNE887l9Wzp+XVuyPomsX9vP2SQgG
-1NgvNc3fQP7TcePo7EIMERoh42awGGsma65u/ITse2hKZHzT0CBxhuhb6txM
-1n/y78e/4ZOs0j8CGpfb+SJA3GaBQ+394k+z3ZByWPQedXLL1OdK8aRINTsj
-k/H5Ns77zwbjOKkDamxlpZ4TKSDMKVmU/PUWNMKSTvtlenlxBhh7ETrN543j
-/Q6qqgCWgWuMAXijnRglp9fyadqGOncjZjaaSOGTTFB+E2pvOUtY+hPebuPt
-Tbq7vODqzCM6ryEhNhzf+enm0zlpXK7q332nXttNtjv7VFNYG+I31gnMrwfH
-M5tdhYF/8v5UY5g2xANPECTQdu9vWPoqNSGDt87b3gXb1AiGGaI06vzgkejL
-580ul+9hz9D0S0U4jkhJiA7EuTecP/CFtR72uYRBcunwwH3fciPjviDDAI9S
-nC/2aPY8ydehzuZutLbZdRJ5PDEJM/1tyZR2niOYihZ+FCbtf3D9mB12D4ln
-9icgc7CwaxpNSCPt8i/GqK2HsOgkL3VYnwtx7cJUmpvVdZ4ognzgXtgtdk3S
-hrtOS1iAN2ZBXFiRmjVzmehoMof06r1xub+85hFQzVxZx5/bRaTKTlL8YXLI
-8nAbR9HWdFqzcOoB/hxfEyIQpx9/s81rgzdEZOofSlZHynoSMIIGOjCCBSKg
-AwIBAgIRANaGS7MtBRiiGjwpoUGdwqEwDQYJKoZIhvcNAQELBQAwgZcxCzAJ
-BgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNV
-BAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYD
-VQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2Vj
-dXJlIEVtYWlsIENBMB4XDTE0MTAwMjAwMDAwMFoXDTE1MTAwMjIzNTk1OVow
-ggE4MQswCQYDVQQGEwJERTEOMAwGA1UEERMFNjQzMzExCzAJBgNVBAgTAkhF
-MRQwEgYDVQQHEwtXZWl0ZXJzdGFkdDEbMBkGA1UECRMSUm9iZXJ0LUtvY2gt
-U3RyLiA5MSowKAYDVQQKEyFMU0UgTGVhZGluZyBTZWN1cml0eSBFeHBlcnRz
-IEdtYkgxRzBFBgNVBAsTPklzc3VlZCB0aHJvdWdoIExTRSBMZWFkaW5nIFNl
-Y3VyaXR5IEV4cGVydHMgR21iSCBFLVBLSSBNYW5hZ2VyMR8wHQYDVQQLExZD
-b3Jwb3JhdGUgU2VjdXJlIEVtYWlsMRcwFQYDVQQDEw5NYXJrdXMgVmVydmll
-cjEqMCgGCSqGSIb3DQEJARYbbWFya3VzLnZlcnZpZXJAbHNleHBlcnRzLmRl
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1cMUv4bsiShnQniZ
-ZMlO9d/hn0jwcXA8pF6gVrPmQXx4bImAYL94kH40AXxLJKBbw6GGLaOl62kC
-7CBvBQbMRNmmpvGEuZtYP3VE/TWbvmik+ZPldbhlHeD+eJztsgB7QA9pZP54
-kLZLY7qSrVP1UbRSOQTXYS5EVYMrb2dK99THNYsh5/fIbP1FYEMc54HB4jWf
-y4GRPJqHsWjJfyI4jDanWVFdmoQVHjPGfnGOvJAoIR+d0/+Y4OSYXLf3nJTJ
-R/wx5qeLxkR32mrRTK5NaOcMtgt4XYJkeba0FXtf8tlpW9uic/FLxYAqqLyd
-1CICK2GIjtZxa8jx0cFSUKbtfQIDAQABo4IB2zCCAdcwHwYDVR0jBBgwFoAU
-gq9sjPjF/pZhfOgfPStxSF7Ei8AwHQYDVR0OBBYEFJ6ipe3pG1TywvSNrHrv
-H4x66BKEMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQW
-MBQGCCsGAQUFBwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEB
-AgEDBTArMCkGCCsGAQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0
-L0NQUzBaBgNVHR8EUzBRME+gTaBLhklodHRwOi8vY3JsLmNvbW9kb2NhLmNv
-bS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWls
-Q0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9j
-cnQuY29tb2RvY2EuY29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9u
-YW5kU2VjdXJlRW1haWxDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3Nw
-LmNvbW9kb2NhLmNvbTAmBgNVHREEHzAdgRttYXJrdXMudmVydmllckBsc2V4
-cGVydHMuZGUwDQYJKoZIhvcNAQELBQADggEBADVXQ/CWKkyw+r7QuNEd2n9E
-H9YamLBODm/3BtZsbJLq6ZjNGi8SLvd3ogkKEgVGl8W7XCg//OxUrSOhyJ1v
-LexSeNPlBoDEmspRGQijvNftRrlOapOGarxuLXAnJJcFagww/tarcPcT8PnG
-2ELQRPvwyP1WFDiP46EdzdteDHBP/m7L6VPyHDGuBrwdSuYu779kSIEC3hFt
-bIHC1iffCpV1dRgdTY85EOTGu8/Iv6jz8UVCAPouzklQ5aAQPDDeUuorgJda
-OUnDExozXRIgyMHDR17DeCLnpWSZMCE67S/Bfq9BLzMCnhmt0rsPDzUgATDw
-zhL7n+wxiUSwnC2OKOMxggQoMIIEJAIBATCBrTCBlzELMAkGA1UEBhMCR0Ix
-GzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9y
-ZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9E
-TyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwg
-Q0ECEQDWhkuzLQUYoho8KaFBncKhMAkGBSsOAwIaBQCgggJPMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE1MDcxNDE1MDgw
-OFowIwYJKoZIhvcNAQkEMRYEFOS0/SljoaGEl4fGzR1mImH8273IMGwGCSqG
-SIb3DQEJDzFfMF0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG
-9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcw
-DQYIKoZIhvcNAwICASgwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMH
-U2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMT
-NENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUg
-RW1haWwgQ0ECEQDWhkuzLQUYoho8KaFBncKhMIHABgsqhkiG9w0BCRACCzGB
-sKCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hl
-c3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExp
-bWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0
-aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDWhkuzLQUYoho8KaFBncKhMA0G
-CSqGSIb3DQEBAQUABIIBAK7IUOp0AYrmS4DR/cbW+DotMHIYw1w9vWeBIYvC
-sxaIZzFbjmfcqJXOfnWtSfuzxcXZteRgIA/dGiQeYkgFzxn/KzzQRo4sLt2U
-L1c5U1vtVf4GSeRP79XSxiNxRCyyHX4fWEC/e5lc7N8BpvZ76dB4y2DULE5/
-L5EgyIpi6VIzhnt0LfIv80atJ+YQ+U7kf0yk01IVxHHSuz4czbhld3P54IML
-3uQYKSCelHf8hppd1CWCQs2F77pKE8lVALBtJaMbno0SxQLTmPD+3lt+K9Xs
-UT+Ha2NKa5+5KkMw11aPIqiaYYXq1YK4/UDr/txUSddj4rqdCqyYWkc4I1Tx
-IgEAAAAAAAA=
+CVE-2016-9402 Medium risk: Possible SQL Injection in moderation tool
+CVE-2016-9403 Low risk: Missing permission check in newreply.php
+CVE-2016-9404 Low risk: Possible XSS Injection on login
+CVE-2016-9405 Low risk: Possible XSS Injection in member validation
+CVE-2016-9406 Low risk: Possible XSS Injection in User CP
+CVE-2016-9407 Low risk: Possible XSS Injection in Mod CP logs
+CVE-2016-9408 Low risk: Possible XSS Injection when editing users in Mod CP
+CVE-2016-9409 Low risk: Possible XSS Injection when pruning logs in ACP
+CVE-2016-9410 Low risk: Possibility of retrieving database details through templates
+CVE-2016-9411 Low risk: Disclosure of ACP path when sending mails from ACP
+CVE-2016-9412 Low risk: Low adminsid & sid entropy
+CVE-2016-9413 Low risk: Clickjacking in ACP
+CVE-2016-9414 Low risk: Missing directory listing protection in upload directories
 
---------------ms040606040304050300060806--
+
+> Fixed in 1.8.8
+> https://blog.mybb.com/2016/10/17/mybb-1-8-8-merge-system-1-8-8-release/
+
+CVE-2016-9415 Medium risk: Style import CSS overwrite on Windows servers
+CVE-2016-9416 Medium risk: SQL Injection in the users data handler
+CVE-2016-9417 Medium risk: SSRF attack in fetch_remote_file()
+CVE-2016-9418 Medium risk: Possible short name access to ACP backups on Windows servers
+CVE-2016-9419 Low risk: Stored XSS in the ACP
+CVE-2016-9420 Low risk: Loose comparison false positives
+CVE-2016-9421 Low risk: Possible XSS injection in ACP users module
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYLkkZAAoJEHb/MwWLVhi2lXYP/30k+COm7wVbzUrRw6eEQ780
+osNfSo7+y6m8Xq/wn9NsdaAkPfq8ReAFm+fJXyPFH3Go/PWgzF/JNDmS5F58IMyT
+JtkbLLDvZTjaIHMnMD5gWUVhxPX6CgxY5ISgTjraTKqGULlYALv08DRKbsLKVaCp
+LOVO7mE46wIGk4BIhhOaLOGrn5a+zDsLy24EHzFAUkqm98RscOoGLSf4j4IHiZ5/
+pREAbb1xDBibBEFG9d/9jXMOLYPQVwhBhANAISmBd0wePYQFitto17ZjIA4bWoEN
+OuK/CG3o+wZr6p+wdfpKZ10Rep5C37Hts6T0leXYqVecerF5KkKwhPyGsF5jp6My
+TgyLB84jepVWRwtSHvgpbL1Z6uCy38f16u6rhXdOMAcOKTrJDu8jnJzzb8RCs0oW
+IUTGIIFeO7RGbTKqNcz1ALNYpmmrEJvF3BYQw+l5d/Xko0k2pYrjFwJU9EMk0kyk
+Z0QrAOfXIkPDfDtGrrgwgMdZ7u3QpipadnZqsRRXSf2x5xOCxMMe+Ys5JUiHvfW2
+d9VftjQeCiWcn5m5Tx8KzvkEKZjDq2rr6Zq3kplva4mHWGXV1UJlX6lTwbLIHjd7
+H9WTdklCNLe3H95dTgoO41vlV6hDruGHAq3TwZgfYJHUE4vikFO7eroS8XyYzuOP
+WPLCAtP/smMfqPIgmSPh
+=RfoI
+-----END PGP SIGNATURE-----
