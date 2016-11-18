@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3691" "Monday" "14" "September" "2015" "10:49:47" "+0300" "=?UTF-8?B?QW50aSBSw6Rpcw==?=" "antirais@gmail.com" "<55F67C1B.2020503@gmail.com>" "105" "[oss-security] CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 - 2.8.4" nil nil nil "9" "2015091407:49:47" "[oss-security] CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 - 2.8.4" (number mark "        antirais@gma Sep 14  105/3691  " thread-indent "\"[oss-security] CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 - 2.8.4\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3678" "Friday" "18" "November" "2016" "03:13:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<662dea313e09433f99b121899afaf087@imshyb02.MITRE.ORG>" "97" "[oss-security] Re: CVE request: w3m - multiple vulnerabilities" nil nil nil "11" "2016111808:13:48" "[oss-security] Re: CVE request: w3m - multiple vulnerabilities" (number mark "U       cve-assign@m Nov 18   97/3678  " thread-indent "\"[oss-security] Re: CVE request: w3m - multiple vulnerabilities\"\n") "<20161103042540.GB10528@kcwu.csie.org>" ("<20161103042540.GB10528@kcwu.csie.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3533 invoked by uid 550); 14 Sep 2015 11:39:29 -0000
+Received: (qmail 16123 invoked by uid 550); 18 Nov 2016 08:14:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,137 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27740 invoked from network); 14 Sep 2015 07:50:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:subject:to:openpgp:message-id:date:user-agent:mime-version
-         :content-type;
-        bh=5v3XV+Klf0XjG3aRXMUlURTKzqh2xk56WynYQTYK1r0=;
-        b=R5g0B/uKjomJtZVo9zTDfG4sW2BX19YM4U1WNzhZLWdPVQEPv8W66ocTN/KylenRMw
-         PlygS5MTaF+lSqo+QyRlhU6pX0U3z+jYY1+W0kWsHh03PidO6dUzDck9FhCmAL+EFnGE
-         z3Dak9vq5N0RuzJL7j4KEfB+EgmlkJ5mBe3RyDhl3k0zT/lUUkr9qJQRHWZzefwwVGM4
-         zaapoPqU4SH85vsReyOJvYIMiBHZnrJOcq0pUvOsmZj8FEf8FdRYfByOkJzrBBidS9cY
-         r4CGeHLzWV1MtmRfqwlnOY6N235LVghBIiV5xvrEYGTYzkB7Rly8gjllmvSmmgPEHgTv
-         pg+Q==
-X-Received: by 10.112.162.70 with SMTP id xy6mr12412849lbb.122.1442216988952;
-        Mon, 14 Sep 2015 00:49:48 -0700 (PDT)
-Openpgp: id=E8D3A8C7ED2559150861B5ECA260F49A8F6A0C73
-Message-ID: <55F67C1B.2020503@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.2.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="E0DTKF2ErcOa8dP9fGS7NFa8l53xDm7QT"
-Date: Mon, 14 Sep 2015 10:49:47 +0300
-From: =?UTF-8?Q?Anti_R=c3=a4is?= <antirais@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-Request for stored WCI (a.k.a XSS) in Visual Form Builder 2.7.5 -
- 2.8.4
-To: oss-security@lists.openwall.com
+Received: (qmail 16101 invoked from network); 18 Nov 2016 08:14:00 -0000
+From: <cve-assign@mitre.org>
+To: <kcwu@csie.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161103042540.GB10528@kcwu.csie.org>
+Message-ID: <662dea313e09433f99b121899afaf087@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 03:13:48 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: w3m - multiple vulnerabilities
 
---E0DTKF2ErcOa8dP9fGS7NFa8l53xDm7QT
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Greetings,
+CVE-2016-9422 - https://github.com/tats/w3m/issues/8 stack smashed
+  see analysis in https://github.com/tats/w3m/pull/19
 
-I've discovered a vulnerability in the following component and would
-like to request CVE-ID for it:
+CVE-2016-9423 - https://github.com/tats/w3m/issues/9 some buffer overflow
 
-Product:       Visual Form Builder
-(https://wordpress.org/plugins/visual-form-builder/)
-Version:       2.7.5 - 2.8.4 (according to the source code), fixed in 2.8.5
-Product-type:  Wordpress plugin
-Vendor:        http://vfbpro.com/
-Fixed:         2015-09-09, reported 2015-09-06
-Changelog:=20=20=20=20
-https://plugins.trac.wordpress.org/changeset?old_path=3D%2Fvisual-form-buil=
-der%2Ftags%2F2.8.4&old=3D1244830&new_path=3D%2Fvisual-form-builder%2Ftags%2=
-F2.8.5&new=3D1244830&sfp_email=3D&sfph_mail=3D
-
-Description:
-This plugin is used to create feedback forms. Unauthenticated user can subm=
-it=20
-malicious code and it is shown to the authenticated administrator in the en=
-tries=20
-page. Upon viewing the submitted entry, the attackers code executes resulti=
-ng in=20
-web content injection attack (WCI, a.k.a XSS).
+Note that both issues/9 and issues/10 are fixed by
+9f0bdcfdf061db3520bd1f112bdc5e83acdec4be; however, they are different
+vulnerabilities.
 
 
-Vulnerability:
+CVE-2016-9424 - https://github.com/tats/w3m/issues/12 heap write
 
---- start visual-form-builder/includes/class-entries-detail.php ---
-160 case 'textarea' :
-161 case 'html' :
-162         ?>
-163         <tr valign=3D"top">
-164                 <th scope=3D"row"><label for=3D"field[<?php echo $obj->=
-id; ?>]"><?php echo stripslashes( $obj->name ); ?></label></th>
-165                 <td style=3D"background:#eee;border:1px solid #ddd"><?p=
-hp echo wpautop( stripslashes( wp_specialchars_decode( esc_html( $obj->valu=
-e ) ) ) ); ?></td>
-166         </tr>
-167 <?php
-168         break;
-169 default :
-171         ?>
-172         <tr valign=3D"top">
-173                 <th scope=3D"row"><label for=3D"field[<?php echo $obj->=
-id; ?>]"><?php echo stripslashes( $obj->name ); ?></label></th>
-174                 <td style=3D"background:#eee;border:1px solid #ddd"><?p=
-hp echo stripslashes( wp_specialchars_decode( esc_html( $obj->value ) ) ); =
-?></td>
-175         </tr>
-176 <?php
-177         break;
---- end visual-form-builder/includes/class-entries-detail.php ---
+CVE-2016-9425 - https://github.com/tats/w3m/issues/21 heap write
 
-The vulnerability lies in the following PHP code:
-<?php echo stripslashes( wp_specialchars_decode( esc_html( $obj->value ) ) =
-); ?>
-
-The $obj->value contains user supplied data and is escaped using the esc_ht=
-ml()=20
-and then HTML special characters are decoded using wp_specialchars_decode()=
-=20
-which essentially neuters the esc_html(). Finally, the stripslashes() is=20
-applied, which removes '\' from the given argument.
-
-Poc:
-    * Submit the following value in the form's text field:
-        \<svg/onload=3Dalert(1)  ;
-
-    * authenticated administrator views the entry and executes the code
-        Visual Form Builder -> Entries -> (attacker's entry) -> View
-
-Disclosure timeline:
-    2015-09-06 - discovery, contacted the developers
-    2015-09-08 - sent further details and requested feedback
-    2015-09-09 - new release with the fix was released
-
-All the best,
-
-Anti R=C3=A4is
+Note that both issues/21 and issues/26 are fixed by
+4e464819dd360ffd3d58fa2a89216fe413cfcc74; however, they are different
+vulnerabilities.
 
 
+> https://github.com/tats/w3m/issues/25 heap corruption
+>   itself should be only OOM. But it was affected by
+>     https://github.com/ivmai/bdwgc/issues/135
+>   which become heap corruption
 
---E0DTKF2ErcOa8dP9fGS7NFa8l53xDm7QT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Use CVE-2016-9426 for the issues/25 vulnerability in w3m. Use
+CVE-2016-9427 for the issues/135 vulnerability in libgc (aka bdwgc or
+boehmgc).
 
+
+CVE-2016-9428 - https://github.com/tats/w3m/issues/26 heap write
+
+CVE-2016-9429 - https://github.com/tats/w3m/issues/29 global-buffer-overflow write
+
+CVE-2016-9430 - https://github.com/tats/w3m/issues/7 null deref
+
+CVE-2016-9431 - https://github.com/tats/w3m/issues/10 stack overflow
+
+CVE-2016-9432 - https://github.com/tats/w3m/issues/13 bcopy negative size
+
+CVE-2016-9433 - https://github.com/tats/w3m/issues/14 array index out of bound read
+
+CVE-2016-9434 - https://github.com/tats/w3m/issues/15 null deref
+
+
+> https://github.com/tats/w3m/issues/16 use uninit value
+
+Use CVE-2016-9435 for the problem fixed by the new conditional
+PUSH_ENV(HTML_DL) call in file.c in
+https://github.com/tats/w3m/commit/33509cc81ec5f2ba44eb6fd98bd5c1b5873e46bd
+
+Use CVE-2016-9436 for the problem fixed by the new "tagname[0] = '\0'"
+line in parsetagx.c in
+https://github.com/tats/w3m/commit/33509cc81ec5f2ba44eb6fd98bd5c1b5873e46bd
+
+
+CVE-2016-9437 - https://github.com/tats/w3m/issues/17 write to rodata
+
+CVE-2016-9438 - https://github.com/tats/w3m/issues/18 null deref
+
+CVE-2016-9439 - https://github.com/tats/w3m/issues/20 stack overflow
+
+CVE-2016-9440 - https://github.com/tats/w3m/issues/22 near-null deref
+
+CVE-2016-9441 - https://github.com/tats/w3m/issues/24 near-null deref
+
+CVE-2016-9442 - https://github.com/tats/w3m/commit/d43527cfa0dbb3ccefec4a6f7b32c1434739aa29 potential heap buffer corruption
+  I classify this as "moderate" because the allocator do preserve more space
+  than required size due to bucketing. And w3m's allocator is boehmgc, it
+  seems not easy replaceable. So the heap won't be corrupted in practice
+
+CVE-2016-9443 - https://github.com/tats/w3m/issues/28 null deref
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJV9nwbAAoJEKJg9JqPagxzTfUIAIeksb83Fj8nj8QE5p3M5OSr
-NwW4Y5Va2g+O5993l1ONmzxoSPRXUsHxnvH0y/sY/BFtpyEJzYiqoJ8lBOpPh7U+
-hZP61VcWW3wEZTYrOuQjziqmmlxaHjv/ShMX9kNZDUHFayq0Aa3J/Sjw0Tc4mH2j
-L638rfkjqt05d8GfN4FN9KQTeHJ7ThoeoRlRGgTswQA+NP18obe9xzreiZfSbRo5
-YW3rrkMgF/39AmDwemwbL1ww7NxftfoOtioLJAcJnM3zYjngQ9yC6s+pnFDKc6bl
-6t7XRw5FwqDIWNnbaZhveHxXTuAR7zt4tsWSGocPR+UsYCyExp4qhFwggtOIAC8=
-=w9F0
+iQIcBAEBCAAGBQJYLrfFAAoJEHb/MwWLVhi2oVkP/37BjwMtl3eBG7iJMhMJ+CM2
+q6MswxfueNx+xJFoEKY6bcFY7Es4S2iVMLVnGVPwWXRhQPLOww2jGNv8kSrrQ5S/
+TJ5aHU1pbnmCg3Cz/SQDRpNAAr6pQiqXqRC0zvXEBhLWqfyZH4qfWu2WPVfBvuKz
+6JC53YrHUPrHzbD97+FhBGBuIXWUv2hUKQ4pLa7ikzQ/WfsOkQn70GIT6cEVSkef
+wFu4H+3Umq0EufW/ScTfCkDoWeNyk5/kg44Q5jsOiKbco/bEMrlKOt4hSjt5dZNB
+/RKnNkGri3vJA3d50wIjIq6vlDgbCTEOhJx1Q+9CAYwXlWytgmYTUHl4Mb0z1rqm
+4ljlkTVIW3MQl0l3bIDdL8WYEJ6eUvj+nL8WeiszwpZneZr+eStD67T/tKJipJla
+yeG9bnVfWtDytobHO7s8EN8KJhGPanmzj6vPoqiXt52S/Tcp3oe24EGa+CtfnDnG
+i4BDm9yAnRuZ7ZkeynnnRBxA+kOU9gTlfx23PL7N8slRpZeNONrNVsgl83Trp1Q1
+UdUxLv3qleJJFWA1F2MQPMaiHYICF4aWh02Tf5Dmp42tHU58Ezhv5LFD7CpEoKj2
+Nws7sati4M5CmOkLjkFSFcg8fPkPiGR0kqBt8Ck+3QVDeln+zD3+LQBg/4dU6qnJ
+VkeNyH+PpwPAk5+CyOr3
+=QSeZ
 -----END PGP SIGNATURE-----
-
---E0DTKF2ErcOa8dP9fGS7NFa8l53xDm7QT--
