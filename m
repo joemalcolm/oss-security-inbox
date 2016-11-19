@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/11
-Message-ID: <97431190-9abf-9096-1212-14685649ed8c@apache.org>
-Date: Thu, 27 Oct 2016 13:31:30 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/2
+Message-ID: <d5b78405-740d-9ad8-3468-ebf402ed9237@securify.nl>
+Date: Sat, 19 Nov 2016 11:50:40 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-6796 Apache Tomcat Security Manager Bypass
+Subject: Multiple XSS vulnerabilities affecting five WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6796 Apache Tomcat Security Manager Bypass
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Severity: Low
 
-Vendor: The Apache Software Foundation
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M9
-Apache Tomcat 8.5.0 to 8.5.4
-Apache Tomcat 8.0.0.RC1 to 8.0.36
-Apache Tomcat 7.0.0 to 7.0.70
-Apache Tomcat 6.0.0 to 6.0.45
-Earlier, unsupported versions may also be affected.
 
-Description
-A malicious web application was able to bypass a configured
-SecurityManager via manipulation of the configuration parameters for the
-JSP Servlet.
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M10 or later
-- Upgrade to Apache Tomcat 8.5.5 or later
-- Upgrade to Apache Tomcat 8.0.37 or later
-- Upgrade to Apache Tomcat 7.0.72 or later
-  (Apache Tomcat 7.0.71 has the fix but was not released)
-- Upgrade to Apache Tomcat 6.0.47 or later
-  (Apache Tomcat 6.0.46 has the fix but was not released)
 
-Credit:
-This issue was discovered by the Apache Tomcat Security Team.
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+View attachment "cross_site_scripting_in_all_in_one_wp_security___firewall_wordpress_plugin.txt" of type "text/plain" (4183 bytes)
+
+View attachment "cross_site_scripting_in_check_email_wordpress_plugin.txt" of type "text/plain" (4608 bytes)
+
+View attachment "cross_site_scripting_in_huge_it_portfolio_gallery_wordpress_plugin.txt" of type "text/plain" (3864 bytes)
+
+View attachment "persistent_cross_site_scripting_in_instagram_feed_plugin_via_csrf.txt" of type "text/plain" (6473 bytes)
+
+View attachment "stored_cross_site_scripting_in_wp_canvas___shortcodes_wordpress_plugin.txt" of type "text/plain" (3329 bytes)
