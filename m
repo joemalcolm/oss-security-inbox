@@ -1,73 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/28/1
-Message-ID: <ea35113c-d493-4bf7-ca47-9df7891dde67@mantisbt.org>
-Date: Sat, 27 Aug 2016 23:16:56 +0200
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/7
+Message-ID: <1975740.FIEDfIgEBD@arcadia>
+Date: Sat, 19 Nov 2016 17:18:26 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: MantisBT weakened CSP when using bundled Gravatar plugin
+Cc: cve-assign@...re.org
+Subject: imagemagick: null pointer must never be null (tiff.c)
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+If suitable for a CVE please assign one. Thanks.
 
-Please assign a CVE ID for the following issue.
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-Description
------------
-MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
-users' avatars using Gravatar.
+A fuzz on an updated version with the undefined behavior sanitizer enabled, 
+revealed a null pointer which is declared to never be null.
 
-Instead of adding the Gravatar web site to the list of allowed image
-sources in MantisBT's Content Security Policy, the plugin was replacing
-the whole policy by:
+The complete UBSan output:
 
-   img-src 'self' http://www.gravatar.com/
+# identify $FILE
+coders/tiff.c:655:39: runtime error: null pointer passed as argument 2, which 
+is declared to never be null
+MagickCore/string_.h:76:23: note: nonnull attribute specified here
 
-instead of the more strict default one of:
+Affected version:
+7.0.3.6
 
-   default-src 'self'; frame-ancestors 'none'; style-src 'self';
-   script-src 'self'
+Fixed version:
+7.0.3.7
 
-Relaxed policy allows execution of remote and inline scripts, e.g.
-potentially enabling XSS attacks.
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/b61d35eaccc0a7ddeff8a1c3abfcd0a43ccf210b
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Affected versions
------------------
-- >= 1.3.0-rc.2
-- >= 2.0.0-beta.1
+CVE:
+N/A
 
-Fixed in versions:
-------------------
-- 1.3.1
-- 2.0.0-beta.2
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00049-imagemagick-pointernerverbenull
 
-As of this writing, these have not been released yet, but both should be
-available in the coming days. Until then, installations should be
-patched manually.
+Timeline:
+2016-11-09: bug discovered and reported to upstream
+2016-11-09: upstream released a patch
+2016-11-15: upstream released 7.0.3.7
+2016-11-19: blog post about the issue
 
-As a workaround, disabling the Gravatar plugin restores the safer
-default policy.
+Note:
+This bug was found with American Fuzzy Lop.
 
-Patch
------
-See Github [1]
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/19/imagemagick-null-pointer-must-never-be-null-tiff-c
 
-Credits
--------
-The issue was discovered by Johannes Schultz, and fixed by Victor Boctor
-(MantisBT Developer).
-
-References
-----------
-Further details available in our issue tracker [2]
-
-
-Best regards,
-D. Regad
-MantisBT Developer
-http://mantisbt.org
-
-
-[1] https://github.com/mantisbt/mantisbt/commit/b3511d2f
-[2] https://mantisbt.org/bugs/view.php?id=21263
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
