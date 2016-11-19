@@ -1,50 +1,149 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/13
-Message-Id: <20161010175145.900E46C0754@smtpvmsrv1.mitre.org>
-Date: Mon, 10 Oct 2016 13:51:45 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request: Qemu: 9pfs: host memory leakage in v9fs_read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/4
+Message-ID: <17230619.a7QXZHqGJY@arcadia>
+Date: Sat, 19 Nov 2016 15:24:08 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+If suitable for a CVE please assign one. Thanks.
 
-> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
-> to a memory leakage issue. It could occur while doing a I/O read operation in
-> v9fs_read() routine.
-> 
-> A privileged user/process inside guest could use this flaw to crash the Qemu
-> process instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07127.html
+Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-Use CVE-2016-8577.
+A fuzz on an updated version revealed another overflow.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/9pfs/9p.c but
-that may be an expected place for a later update.
+The complete ASan output:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+# identify $FILE
+=================================================================
+==696==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009700 
+at pc 0x7f300036c9a3 bp 0x7fff6e225970 sp 0x7fff6e225968
+READ of size 4 at 0x611000009700 thread T0
+    #0 0x7f300036c9a2 in IsPixelGray /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/./MagickCore/pixel-
+accessor.h:507:30
+    #1 0x7f300036c9a2 in IdentifyImageGray /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:677
+    #2 0x7f300036f0dd in IdentifyImageType /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:821:7
+    #3 0x7f300090c1da in IdentifyImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/identify.c:527:8
+    #4 0x7f2fff364075 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/identify.c:336:22
+    #5 0x7f2fff4afeca in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/mogrify.c:183:14
+    #6 0x50a339 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:145:10
+    #7 0x50a339 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:176
+    #8 0x7f2ffd99c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #9 0x419d28 in _init (/usr/bin/magick+0x419d28)
 
-iQIcBAEBCAAGBQJX+9Q0AAoJEHb/MwWLVhi25+sQAIvJVq0jkV+yHeVKA95GPwuC
-u1Khmdz9uLRHxSriWfHRM8P/lHHFaJ6YIS8Dn1BvcWh6b/96xkjML9uKl2O2Zmb/
-EIJu2RZk4vKJV7+XGv2uKxxd+ysfMTCwSB5ktJh9id5fKSbLrMNsIRmrAty3CA98
-+pW2HRSUFUdygfBB8Ubd2OAIdWL5Ggfd3zKC5CV0q77+qYTFiupXXZGgOr0Yxaky
-7tsf/aviEJPraro5vWwC3Qtg12CEn+wz/WimFFi4P4ejDFUWPQOcIjMScvfIEwOT
-0n+lzysBA0pU3okv0CVkq1WeG5eCuC5+sN40zWp3tlEGNRXQAsyY27uoMMT4qgAw
-0lvLe77ZgXRsM3HbS8TfxhJy75dHyJTNymyWjfTRkdC1Gii3FyK2bpQuOeq8fnr3
-v1FEqnhoPGSgzWSdjlu367gEZ78KuaLgD2qqmxyvUmum127dhiBkGmhSqSSCbmNd
-NVWAzXeKWUbZv0jT4qigZ/68zXCoRdXUBCe4hsknjevAUA+h/wI/L8KB1rQC4gw9
-ZZAtUotefB67bfMSdMsVLT6e2aR6laBrwOTttqf6dDStTgVeeSfpmUezaD7nXv92
-1gihMM+4S7HM8wJVjd1c415Q25Vtk72S/1hpuEQse24tbcs5bfXLWrvhHjWXUCBJ
-LY2WgmOMb06yZp0j8SJs
-=8uAy
------END PGP SIGNATURE-----
+0x611000009700 is located 0 bytes to the right of 192-byte region 
+[0x611000009640,0x611000009700)
+allocated by thread T0 here:
+    #0 0x4d3685 in posix_memalign /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:130
+    #1 0x7f3000a466b0 in AcquireAlignedMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/memory.c:258:7
+    #2 0x7f300043addf in AcquireCacheNexusPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:4636:33
+    #3 0x7f3000402030 in SetPixelCacheNexusPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:4748:14
+    #4 0x7f30003e7d2d in GetVirtualPixelsFromNexus /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:2629:10
+    #5 0x7f3000444e53 in GetCacheViewVirtualPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache-
+view.c:664:10
+    #6 0x7f300036b27c in IdentifyImageGray /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:672:7
+    #7 0x7f300036f0dd in IdentifyImageType /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:821:7
+    #8 0x7f300090c1da in IdentifyImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/identify.c:527:8
+    #9 0x7f2fff364075 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/identify.c:336:22
+    #10 0x7f2fff4afeca in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/mogrify.c:183:14
+    #11 0x50a339 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:145:10
+    #12 0x50a339 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:176
+    #13 0x7f2ffd99c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/./MagickCore/pixel-
+accessor.h:507:30 in IsPixelGray
+Shadow bytes around the buggy address:
+  0x0c227fff9290: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92c0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff92d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff92e0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92f0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c227fff9300: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x0c227fff9310: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff9320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff9330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==696==ABORTING
+
+Affected version:
+7.0.3.6
+
+Fixed version:
+7.0.3.8 (not yet released)
+
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/ce98a7acbcfca7f0a178f4b1e7b957e419e0cc99
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00051-imagemagick-heapoverflow-IsPixelGray
+
+Timeline:
+2016-11-16: bug discovered and reported to upstream
+2016-11-17: upstream released a patch
+2016-11-19: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/19/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
