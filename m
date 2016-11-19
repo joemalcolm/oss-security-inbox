@@ -1,31 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/8
-Message-ID: <alpine.LFD.2.20.1603022054390.31146@wniryva>
-Date: Wed, 2 Mar 2016 20:57:44 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Yang Hongke <yanghongke@...wei.com>
-Subject: CVE request Qemu: net: ne2000: infinite loop in ne2000_receive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/5
+Message-ID: <2140036.SkJE16ZSb9@arcadia>
+Date: Sat, 19 Nov 2016 15:47:14 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: jasper: signed integer overflow in jas_image.c
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+If suitable for a CVE please assign one. Thanks.
 
-Qemu emulator built with the NE2000 NIC emulation support is vulnerable to an 
-infinite loop issue. It could occur when receiving packets over the network. A 
-privileged user inside guest could use this flaw to crash the Qemu instance 
-resulting in DoS.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-02/msg06126.html
+The undefined behavior sanitizer shows a signed integer overflow in 
+jas_image.c
+As you can see, the commit which fixes the issue is not a fix itself for the 
+signed integer overflow, but changed a bit how, in jasper, the things work.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1303106
+The complete UBSan output:
 
-This issue was discovered by Hongke Yang of Huawei Technologies Co. Ltd.
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:162:49: 
+runtime error: signed integer overflow: 8543608947741818625 * 15 cannot be 
+represented in type 'long'
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Affected version:
+1.900.17
+
+Fixed version:
+1.900.25
+
+Commit fix:
+https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00020-jasper-signedintoverflow-jas_image_c
+
+Timeline:
+2016-10-29: bug discovered and reported to upstream
+2016-11-12: upstream released a patch and 1.900.25
+2016-11-19: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/19/jasper-signed-integer-overflow-in-jas_image-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
