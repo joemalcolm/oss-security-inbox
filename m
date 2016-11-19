@@ -1,25 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/4
-Message-ID: <20160712130848.GA27890@lorien.valinor.li>
-Date: Tue, 12 Jul 2016 15:08:48 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: ondrej@...y.org
-Subject: CVE Request: libgd: Out-Of-Bounds Read in function read_image_tga of gd_tga.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/6
+Message-ID: <1681368.mmIYxGAJKb@arcadia>
+Date: Sat, 19 Nov 2016 16:14:27 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: libdwarf: negation overflow in dwarf_leb.c
 Content-Type: text/plain; charset=utf-8
 
-Hi
+If suitable for a CVE please assign one. Thanks.
 
-Another issue was reported in the libgd issue tracker, an
-out-of-bounds reads in read_image_tga in gd_tga.c:
+Description:
+libdwarf is a library to consume and produce DWARF debug information.
 
-https://github.com/libgd/libgd/issues/248
+A fuzz with the Undefined Behavior Sanitizer shows a negation that cannot be 
+represented as long long.
 
-Pull request: https://github.com/libgd/libgd/pull/251
+The complete UBSan output:
 
-Upstream issue contains a reproducer for the issue and Ondřej Surý
-confirmed that this is not a duplicate of issue #247. Could you assign
-a CVE for this issue?
+# dwarfdump $FILE
+dwarf_leb.c:306:19: runtime error: negation of -9223372036854775808 cannot be 
+represented in type 'Dwarf_Signed' (aka 'long long'); cast to an unsigned type 
+to negate this value to itself
 
-Regards,
-Salvatore
+Affected version:
+20161021
+
+Fixed version:
+N/A
+
+Commit fix:
+https://sourceforge.net/p/libdwarf/code/ci/4f19e1050cd8e9ddf2cb6caa061ff2fec4c9b5f9/#diff-5
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00050-libdwarf-negate-itself
+
+Timeline:
+2016-11-11: bug discovered and reported to upstream
+2016-11-11: upstream released a patch
+2016-11-19: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/19/libdwarf-negation-overflow-in-dwarf_leb-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
