@@ -1,47 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/9
-Message-ID: <bbd5381b-ede3-6278-c442-820c74a0d259@apache.org>
-Date: Thu, 27 Oct 2016 13:30:50 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-5018 Apache Tomcat Security Manager Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/1
+Message-ID: <5ec374c5124440d5ae0dea13583cddab@imshyb02.MITRE.ORG>
+Date: Fri, 18 Nov 2016 19:00:55 -0500
+From: <cve-assign@...re.org>
+To: <chenqin@...sec.com.cn>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: libtiff: Out-of-bounds Write memcpy and less bound check in tiff2pdf
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-5018 Apache Tomcat Security Manager Bypass
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Low
+> http://bugzilla.maptools.org/show_bug.cgi?id=2579
+> 
+> tools/tiff2pdf.c: fix read -largely- outsize of buffer in
+>        t2p_readwrite_pdf_image_tile(), causing crash, when reading a
+>        JPEG compressed image with TIFFTAG_JPEGTABLES length being one.
+>        Reported as MSVR 35101 by Axel Souchet and Vishal Chauhan from
+>        the MSRC Vulnerabilities & Mitigations team.
 
-Vendor: The Apache Software Foundation
+>> Out-of-bounds Write Caused by memcpy and no bound check.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M9
-Apache Tomcat 8.5.0 to 8.5.4
-Apache Tomcat 8.0.0.RC1 to 8.0.36
-Apache Tomcat 7.0.0 to 7.0.70
-Apache Tomcat 6.0.0 to 6.0.45
-Earlier, unsupported versions may also be affected.
+>> will cause illegal write. An attacker may control the write address and/or
+>> value
+>> to result in denial-of-service or command execution.
 
-Description
-A malicious web application was able to bypass a configured
-SecurityManager via a Tomcat utility method that was accessible to web
-applications.
+Use CVE-2016-9453.
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M10 or later
-- Upgrade to Apache Tomcat 8.5.5 or later
-- Upgrade to Apache Tomcat 8.0.37 or later
-- Upgrade to Apache Tomcat 7.0.72 or later
-  (Apache Tomcat 7.0.71 has the fix but was not released)
-- Upgrade to Apache Tomcat 6.0.47 or later
-  (Apache Tomcat 6.0.46 has the fix but was not released)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit:
-This issue was discovered by Alvaro Munoz of the HP Enterprise Security
-Team and reported responsibly to the Apache Tomcat Security Team.
-
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+iQIcBAEBCAAGBQJYL5R+AAoJEHb/MwWLVhi2Za4P/ioEFjcWkhT7AqaXUZ+G5dZ3
+M9grgWYnmkBsGwqWD56LCNLjDcD4OexKOeogFMBbJkVFaMnyX4eq/uddNlIq2dne
+9TiSm2+X4HKlbw4qiruUx3HbKsgUvQmMrowfGVA97KanT5bCIa/bt94G3/e1lLwl
+FZJ+qlooyFf8VBpR+3UWROPNSbD/m6DgRLDK0yDBxg0J2pKUJHJAu75Ql5BGXkC3
+70yiP9r5Rz9MkrIrTjzRGBidG/aSlrzaPhDk88bNv7edFwUT2EJfndtLLINV3CNl
+0eLCNX3MDb7jwCzw3DtRUPEmuqcBiAUdY/mU0V1IuO9+ipWJl959ELzdgpsFcJ9C
+4SHCOYS3XHNJeJOaQJ9nJJUmWF6DgK2xhYfwTXeifQgaBdN2h0S8DByTQU14oqVw
+5wJCXbGhWvbPq4NGDVG8ATIkgh+K1zoKn/06C/W4lyEgEc8w17xE2GDFyOglrTYt
+EYQZg5qeES940DU+khUOeSp+YOb/m3UCaUmJd/DKOcOofdoUZUVakLXfBMyKZ9rp
+VRYS8k80wwhM5KZWuiGpCOAVVW+BHFCBYgSmXZ+mA6fVP8fqooUy5G+7mjiMidzl
+uyip79HBywTkawVnAEQS5RHgdNOvVIwS6j8rbQN+M5dTseTPdoifRsbJmKLlWEfl
+u/1E3rv67yYtw4XU/Rr7
+=Np2d
+-----END PGP SIGNATURE-----
