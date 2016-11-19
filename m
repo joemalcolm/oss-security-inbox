@@ -1,4 +1,9 @@
-Received: (qmail 1463 invoked by uid 550); 31 May 2026 12:35:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1285" "Saturday" "19" "November" "2016" "11:59:32" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161119115932.1854beff@pc1>" "36" "Re: [oss-security] CVE Request: gstreamer plugins" nil nil nil "11" "2016111910:59:32" "[oss-security] CVE Request: gstreamer plugins" (number mark "U       hanno@hboeck Nov 19   36/1285  " thread-indent "\"Re: [oss-security] CVE Request: gstreamer plugins\"\n") "<20161118163119.GQ11402@suse.de>" ("<20161118163119.GQ11402@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25918 invoked by uid 550); 19 Nov 2016 10:59:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5865 invoked from network); 31 May 2026 12:04:15 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Rahul Vats <rahulvats@apache.org>
+Received: (qmail 25900 invoked from network); 19 Nov 2016 10:59:45 -0000
+Date: Sat, 19 Nov 2016 11:59:32 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-Message-ID: <1c31af07-53b4-0003-f6e1-4a3960cbf2ba@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 31 May 2026 12:03:06 +0000
+Message-ID: <20161119115932.1854beff@pc1>
+In-Reply-To: <20161118163119.GQ11402@suse.de>
+References: <20161118163119.GQ11402@suse.de>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Subject: [oss-security] =?UTF-8?Q?CVE-2026-42359=3A_Apache_Airflow=3A_Auth?=
- =?UTF-8?Q?enticated_RCE_via_XCom_PATCH_endpoint_?=
- =?UTF-8?Q?=E2=80=94_XComUpdateBody_missing_FORBIDD?=
- =?UTF-8?Q?EN=5FXCOM=5FKEYS_validator=20?=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE Request: gstreamer plugins
 
-Severity: medium=20
+Hi,
 
-Affected versions:
 
-- Apache Airflow (apache-airflow) 3.2.0 before 3.2.2
+On Fri, 18 Nov 2016 17:31:19 +0100
+Marcus Meissner <meissner@suse.de> wrote:
 
-Description:
+> 1. Bufferoverflow in VMNC decoder in gstreamer plugins:
+> 	https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-risky-design-dec=
+isions-in.html
 
-A bug in Apache Airflow's XCom PATCH endpoint `PATCH /api/v2/xcomEntries/{k=
-ey}` allowed an authenticated UI/API user with XCom write permission on a D=
-ag to set XCom entries under reserved key names (e.g. `return_value`) that =
-the matching POST endpoint already validated against `FORBIDDEN_XCOM_KEYS`.=
- The endpoint also accepted serialized payload shapes the triggerer's deser=
-ializer treats as code; combined, this allowed RCE on the triggerer when th=
-e affected task next deferred. Affects deployments where untrusted users ha=
-ve XCom write permission on Dags that defer to the triggerer. This is a fix=
--bypass of CVE-2026-33858: PR #64148 added the `FORBIDDEN_XCOM_KEYS` valida=
-tor only on the POST/set path; the PATCH path was not covered. Users who al=
-ready upgraded for CVE-2026-33858 should additionally upgrade to `apache-ai=
-rflow` 3.2.2 or later to cover the PATCH-path bypass.
+I wanted to point out that while it's good the buffer overflow gets
+fixed, that's by far not the major issue here.
 
-Credit:
+This is a very problematic design decision with the functionality of
+tracker/GNOME that exposes all files on a system to who knows how many
+decoders of probably overall very low quality.
+Almost certainly there are countless other vulnerabilities of similar
+kind in all kinds of gstreamer codecs. (and I haven't checked, but I
+assume tracker also exposes other files to other equally problematic
+decoders)
 
-Jeff Vier (`@boinger`); Izat (Anisto Mejin) =E2=80=94 placeholders; receipt=
--of-confirmation replies ask each reporter to confirm preferred credit form=
- (finder)
-Venkatraman Kumar (r3dw0lfsec), Securin (finder)
-Jarek Potiuk (remediation developer)
+I think this is kinda a symptom of two goals clashing: We have projects
+like gstreamer that attempt to parse every file format ever seen in
+their are - which of course has some value, especially in terms of
+preserving digital culture. But on the other hand exposing this code to
+untrusted inputs is a security disaster.
 
-References:
+I'm wondering if there is any statement or reaction from either gnome
+or fedora on this.
 
-https://github.com/apache/airflow/pull/65915
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-42359
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
