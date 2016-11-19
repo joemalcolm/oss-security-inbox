@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["536" "Thursday" "3" "September" "2015" "01:03:17" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1509030058080.6240@wniryva>" "18" "[oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" nil nil nil "9" "2015090219:33:17" "[oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" (number mark "        ppandit@redh Sep  3   18/536   " thread-indent "\"[oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1372" "Saturday" "19" "November" "2016" "15:47:14" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2140036.SkJE16ZSb9@arcadia>" "51" "[oss-security] jasper: signed integer overflow in jas_image.c" nil nil nil "11" "2016111914:47:14" "[oss-security] jasper: signed integer overflow in jas_image.c" (number mark "U       ago@gentoo.o Nov 19   51/1372  " thread-indent "\"[oss-security] jasper: signed integer overflow in jas_image.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32236 invoked by uid 550); 2 Sep 2015 19:33:38 -0000
+Received: (qmail 7237 invoked by uid 550); 19 Nov 2016 14:46:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32218 invoked from network); 2 Sep 2015 19:33:37 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1509030058080.6240@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-cc: lianyihan@360.cn
-Date: Thu, 3 Sep 2015 01:03:17 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 7217 invoked from network); 19 Nov 2016 14:46:13 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Sat, 19 Nov 2016 15:47:14 +0100
+Message-ID: <2140036.SkJE16ZSb9@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] jasper: signed integer overflow in jas_image.c
 
-   Hello,
+If suitable for a CVE please assign one. Thanks.
 
-Qemu emulator built with the VNC display driver is vulnerable to an infinite 
-loop issue. It could occur while processing a CLIENT_CUT_TEXT message with 
-specially crafted payload message.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-A privileged guest user could use this flaw to crash the Qemu process on the 
-host, resulting in DoS.
+The undefined behavior sanitizer shows a signed integer overflow in 
+jas_image.c
+As you can see, the commit which fixes the issue is not a fix itself for the 
+signed integer overflow, but changed a bit how, in jasper, the things work.
 
-Upstream fix:
--------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=f9a70e79391f6d7c2a912d785239ee8effc1922d
+The complete UBSan output:
 
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/base/jas_image.c:162:49: 
+runtime error: signed integer overflow: 8543608947741818625 * 15 cannot be 
+represented in type 'long'
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Affected version:
+1.900.17
+
+Fixed version:
+1.900.25
+
+Commit fix:
+https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00020-jasper-signedintoverflow-jas_image_c
+
+Timeline:
+2016-10-29: bug discovered and reported to upstream
+2016-11-12: upstream released a patch and 1.900.25
+2016-11-19: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/19/jasper-signed-integer-overflow-in-jas_image-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
