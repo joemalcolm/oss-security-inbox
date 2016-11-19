@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["746" "Monday" "23" "August" "2021" "09:35:34" "+0000" "Joe Orton" "jorton@apache.org" nil "20" "[oss-security] CVE-2021-35940: Apache Portable Runtime (APR): Regression of CVE-2017-12613 " nil nil nil "8" nil nil (number mark "U       jorton@apach Aug 23   20/746   " thread-indent "\"[oss-security] CVE-2021-35940: Apache Portable Runtime (APR): Regression of CVE-2017-12613 \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-35940: Apache Portable Runtime (APR): Regression of CVE-2017-12613 " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6177" "Saturday" "19" "November" "2016" "15:24:08" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<17230619.a7QXZHqGJY@arcadia>" "139" "[oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)" nil nil nil "11" "2016111914:24:08" "[oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)" (number mark "U       ago@gentoo.o Nov 19  139/6177  " thread-indent "\"[oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9574 invoked by uid 550); 23 Aug 2021 10:25:04 -0000
+Received: (qmail 17944 invoked by uid 550); 19 Nov 2016 14:23:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +12,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15680 invoked from network); 23 Aug 2021 09:36:28 -0000
-Content-Type: text/plain; charset=utf-8
-From: Joe Orton <jorton@apache.org>
+Received: (qmail 17920 invoked from network); 19 Nov 2016 14:23:09 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <798669d5-4ba0-a023-3002-d351f72ced5f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 23 Aug 2021 09:35:34 +0000
+Cc: cve-assign@mitre.org
+Date: Sat, 19 Nov 2016 15:24:08 +0100
+Message-ID: <17230619.a7QXZHqGJY@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-35940: Apache Portable Runtime (APR): Regression of
- CVE-2017-12613 
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)
+
+If suitable for a CVE please assign one. Thanks.
 
 Description:
+imagemagick is a software suite to create, edit, compose, or convert bitmap 
+images.
 
-An out-of-bounds array read in the apr_time_exp*() functions was fixed in t=
-he Apache Portable Runtime 1.6.3 release (CVE-2017-12613).  The fix for thi=
-s issue was not carried forward to the APR 1.7.x branch, and hence version =
-1.7.0 regressed compared to 1.6.3 and is vulnerable to the same issue.
+A fuzz on an updated version revealed another overflow.
+
+The complete ASan output:
+
+# identify $FILE
+=================================================================
+==696==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009700 
+at pc 0x7f300036c9a3 bp 0x7fff6e225970 sp 0x7fff6e225968
+READ of size 4 at 0x611000009700 thread T0
+    #0 0x7f300036c9a2 in IsPixelGray /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/./MagickCore/pixel-
+accessor.h:507:30
+    #1 0x7f300036c9a2 in IdentifyImageGray /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:677
+    #2 0x7f300036f0dd in IdentifyImageType /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:821:7
+    #3 0x7f300090c1da in IdentifyImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/identify.c:527:8
+    #4 0x7f2fff364075 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/identify.c:336:22
+    #5 0x7f2fff4afeca in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/mogrify.c:183:14
+    #6 0x50a339 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:145:10
+    #7 0x50a339 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:176
+    #8 0x7f2ffd99c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #9 0x419d28 in _init (/usr/bin/magick+0x419d28)
+
+0x611000009700 is located 0 bytes to the right of 192-byte region 
+[0x611000009640,0x611000009700)
+allocated by thread T0 here:
+    #0 0x4d3685 in posix_memalign /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:130
+    #1 0x7f3000a466b0 in AcquireAlignedMemory /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/memory.c:258:7
+    #2 0x7f300043addf in AcquireCacheNexusPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:4636:33
+    #3 0x7f3000402030 in SetPixelCacheNexusPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:4748:14
+    #4 0x7f30003e7d2d in GetVirtualPixelsFromNexus /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:2629:10
+    #5 0x7f3000444e53 in GetCacheViewVirtualPixels /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache-
+view.c:664:10
+    #6 0x7f300036b27c in IdentifyImageGray /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:672:7
+    #7 0x7f300036f0dd in IdentifyImageType /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:821:7
+    #8 0x7f300090c1da in IdentifyImage /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/identify.c:527:8
+    #9 0x7f2fff364075 in IdentifyImageCommand /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/identify.c:336:22
+    #10 0x7f2fff4afeca in MagickCommandGenesis /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/mogrify.c:183:14
+    #11 0x50a339 in MagickMain /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:145:10
+    #12 0x50a339 in main /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:176
+    #13 0x7f2ffd99c61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/./MagickCore/pixel-
+accessor.h:507:30 in IsPixelGray
+Shadow bytes around the buggy address:
+  0x0c227fff9290: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92c0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff92d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c227fff92e0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c227fff92f0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c227fff9300: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x0c227fff9310: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x0c227fff9320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c227fff9330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==696==ABORTING
+
+Affected version:
+7.0.3.6
+
+Fixed version:
+7.0.3.8 (not yet released)
+
+Commit fix:
+https://github.com/ImageMagick/ImageMagick/commit/ce98a7acbcfca7f0a178f4b1e7b957e419e0cc99
 
 Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-The Apache Portable Runtime project would like to thank Iveta Cesalova (Red=
- Hat) for reporting this issue.
+CVE:
+N/A
 
-References:
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00051-imagemagick-heapoverflow-IsPixelGray
 
-http://svn.apache.org/viewvc?view=3Drevision&revision=3D1891198=20
-http://mail-archives.apache.org/mod_mbox/www-announce/201710.mbox/%3CCACsi2=
-51B8UaLvM-rrH9fv57-zWi0zhyF3275_jPg1a9VEVVoxw@mail.gmail.com%3E
-https://dist.apache.org/repos/dist/release/apr/patches/apr-1.7.0-CVE-2021-3=
-5940.patch
+Timeline:
+2016-11-16: bug discovered and reported to upstream
+2016-11-17: upstream released a patch
+2016-11-19: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/19/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
