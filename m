@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/26/4
-Message-ID: <1705136517.1175366.1464278135251.JavaMail.yahoo@mail.yahoo.com>
-Date: Thu, 26 May 2016 15:55:35 +0000 (UTC)
-From: Tim Allison <tallison@...che.org>
-To: "security@...che.org" <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>,  "dev@...a.apache.org" <dev@...a.apache.org>,  "user@...a.apache.org" <user@...a.apache.org>
-Subject: [CVE-2016-4434] Apache Tika XML External Entity vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/19/3
+Message-ID: <20161119115932.1854beff@pc1>
+Date: Sat, 19 Nov 2016 11:59:32 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: gstreamer plugins
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-4434: Apache Tika XML External Entity vulnerability
-
-Severity: Important
+Hi,
 
 
-Vendor: 
-The Apache Software Foundation
+On Fri, 18 Nov 2016 17:31:19 +0100
+Marcus Meissner <meissner@...e.de> wrote:
 
-Versions Affected: 
-Apache Tika 0.10 to 1.12
+> 1. Bufferoverflow in VMNC decoder in gstreamer plugins:
+> 	https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-risky-design-decisions-in.html
 
-Description: 
-Apache Tika parses XML within numerous file formats.  In some instances[1], the initialization ofthe XML parser or the choice of handlers did not protect against XML External Entity (XXE)
-vulnerabilities.  According to www.owasp.org [2]: "This attack may lead to the disclosure of confidential data, denial of service, server side request forgery, port scanning from the perspective of the machine where the parser is located, and other system impacts." 
+I wanted to point out that while it's good the buffer overflow gets
+fixed, that's by far not the major issue here.
 
+This is a very problematic design decision with the functionality of
+tracker/GNOME that exposes all files on a system to who knows how many
+decoders of probably overall very low quality.
+Almost certainly there are countless other vulnerabilities of similar
+kind in all kinds of gstreamer codecs. (and I haven't checked, but I
+assume tracker also exposes other files to other equally problematic
+decoders)
 
-Mitigation: 
-Upgrade to Apache Tika 1.13.
+I think this is kinda a symptom of two goals clashing: We have projects
+like gstreamer that attempt to parse every file format ever seen in
+their are - which of course has some value, especially in terms of
+preserving digital culture. But on the other hand exposing this code to
+untrusted inputs is a security disaster.
 
-Credit: 
-This issue was discovered by Arthur Khashaev (https://khashaev.ru), Seulgi Kim, Mesut Timur,and Microsoft Vulnerability Research.
+I'm wondering if there is any statement or reaction from either gnome
+or fedora on this.
 
-[1] Spreadsheets in OOXML files and XMP in PDF and other file formats.
-[2] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
