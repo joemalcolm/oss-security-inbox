@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2155" "Thursday" "16" "April" "2020" "15:28:36" "+0200" "Daniel Beck" "ml@beckweb.net" "<D2F192EF-F7B6-4FF4-8FC5-8EDD4DFC83F0@beckweb.net>" "55" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "4" "2020041613:28:36" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Apr 16   55/2155  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4422" "Sunday" "20" "November" "2016" "15:23:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1775367.VDhM2sPmdu@arcadia>" "112" "[oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)" nil nil nil "11" "2016112014:23:26" "[oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)" (number mark "U       ago@gentoo.o Nov 20  112/4422  " thread-indent "\"[oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5212 invoked by uid 550); 16 Apr 2020 13:28:50 -0000
+Received: (qmail 1908 invoked by uid 550); 20 Nov 2016 14:23:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +12,127 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5187 invoked from network); 16 Apr 2020 13:28:49 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.14\))
-Message-Id: <D2F192EF-F7B6-4FF4-8FC5-8EDD4DFC83F0@beckweb.net>
-Date: Thu, 16 Apr 2020 15:28:36 +0200
+Received: (qmail 1887 invoked from network); 20 Nov 2016 14:23:44 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.14)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1587043729;189e6762;
-X-HE-SMSGID: 1jP4ZK-0004Zc-7Q
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Cc: cve-assign@mitre.org
+Date: Sun, 20 Nov 2016 15:23:26 +0100
+Message-ID: <1775367.VDhM2sPmdu@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+If suitable for a CVE please assign one. Thanks.
 
-The following releases contain fixes for security vulnerabilities:
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-* AWS SAM Plugin 1.2.3
-* Copr Plugin 0.6.1
-* Parasoft Findings Plugin 10.4.4
-* Yaml Axis Plugin 0.2.1
+A crafted image, through an intensive fuzz on the 1.900.22 version revealed a 
+stack overflow.
 
+The complete ASan output:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-04-16/
+# imginfo -f $FILE
+warning: trailing garbage in marker segment (9 bytes)
+warning: trailing garbage in marker segment (28 bytes)
+warning: trailing garbage in marker segment (40 bytes)
+warning: ignoring unknown marker segment (0xffee)
+type = 0xffee (UNKNOWN); len = 23;1f 32 ff ff ff 00 10 00 3d 4d 00 01 32 ff 00 
+e4 00 10 00 00 4f warning: trailing garbage in marker segment (14 bytes)
+=================================================================
+==9166==ERROR: AddressSanitizer: stack-buffer-overflow on address 
+0x7faf2e200c20 at pc 0x7faf320a985a bp 0x7ffd397b9b10 sp 0x7ffd397b9b08
+WRITE of size 4 at 0x7faf2e200c20 thread T0
+    #0 0x7faf320a9859 in jpc_tsfb_getbands2 /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:227:16
+    #1 0x7faf320a9009 in jpc_tsfb_getbands2 /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:223:3
+    #2 0x7faf320a8b9f in jpc_tsfb_getbands /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:187:3
+    #3 0x7faf3200eaa6 in jpc_dec_tileinit /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:714:4
+    #4 0x7faf3200eaa6 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:560
+    #5 0x7faf3201c1c3 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:391:10
+    #6 0x7faf3201c1c3 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:255
+    #7 0x7faf31f7e684 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/base/jas_image.c:406:16
+    #8 0x509c9a in main /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/appl/imginfo.c:203:16
+    #9 0x7faf3108761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419988 in _init (/usr/bin/imginfo+0x419988)
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Address 0x7faf2e200c20 is located in stack of thread T0 at offset 3104 in 
+frame
+    #0 0x7faf3200dbbf in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:544
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+  This frame has 1 object(s):
+    [32, 3104) 'bnds.i' 0x0ff665c38180: 00 00 00 00[f3]f3 f3 f3 f3 f3 f3 f3 f3 
+f3 f3 f3
+  0x0ff665c38190: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==9166==ABORTING
 
----
+Affected version:
+1.900.22
 
-SECURITY-1556 / CVE-2020-2177
-Copr Plugin 0.3 and earlier stores credentials unencrypted in job
-`config.xml` files as part of its configuration. These credentials can be
-viewed by users with Extended Read permission or access to the master file
-system.
+Fixed version:
+1.900.30
 
+Commit fix:
+https://github.com/mdadams/jasper/commit/1abc2e5a401a4bf1d5ca4df91358ce5df111f495
 
-SECURITY-1753 / CVE-2020-2178
-Parasoft Findings Plugin 10.4.3 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks. This allows a user
-able to control the input files for the Parasoft Findings parser to have
-Jenkins parse a crafted file that uses external entities for extraction of
-secrets from the Jenkins master or server-side request forgery.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
-SECURITY-1825 / CVE-2020-2179
-Yaml Axis Plugin 0.2.0 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution (RCE) vulnerability exploitable by users able to configure a
-multi-configuration (Matrix) job, or control the contents of a previously
-configured job's SCM repository.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00047-jasper-stackoverflow-jpc_tsfb_getbands2
 
+Timeline:
+2016-11-09: bug discovered and reported to upstream
+2016-11-20: upstream released a patch
+2016-11-20: blog post about the issue
 
-SECURITY-1736 / CVE-2020-2180
-AWS SAM Plugin 1.2.2 and earlier does not configure its YAML parser to
-prevent the instantiation of arbitrary types. This results in a remote code
-execution (RCE) vulnerability exploitable by users able to configure a job
-or control the contents of a previously configured "AWS SAM deploy
-application" build step's YAML SAM template file (`template.yaml` or
-equivalent) file.
+Note:
+This bug was found with American Fuzzy Lop.
 
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/20/jasper-stack-based-buffer-overflow-in-jpc_tsfb_getbands2-jpc_tsfb-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
