@@ -1,75 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/12
-Message-ID: <20160913202458.GB13420@hunt>
-Date: Tue, 13 Sep 2016 13:24:58 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: "vul@...safe" <vul@...safe.com>, oss-security@...ts.openwall.com
-Subject: Re: Heapoverflow in giflib5.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/20/3
+Message-ID: <000201d24368$92624820$b726d860$@apache.org>
+Date: Sun, 20 Nov 2016 11:59:15 -0800
+From: "Apache OpenOffice Security" <orcmid@...che.org>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE-2016-6803: Apache OpenOffice unquoted search path vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 13, 2016 at 09:53:03PM +0200, Hanno Böck wrote:
-> I can however easily generate another sample that causes the same bug.
-> See attachment.
-
-This attachment does indeed trigger ASAN here, too:
-
-ubuntu@x1:~/giflib-code$ util/gif2rgb gif2rgb-oob-new.gif 
-=================================================================
-==5394==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efdc at pc 0x000000402b8b bp 0x7ffdafbd60f0 sp 0x7ffdafbd60e0
-READ of size 1 at 0x60200000efdc thread T0
-    #0 0x402b8a in DumpScreen2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:294
-    #1 0x4045a8 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:480
-    #2 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
-    #3 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
-    #4 0x4015c8 in _start (/home/ubuntu/giflib-code/util/.libs/lt-gif2rgb+0x4015c8)
-
-0x60200000efdc is located 0 bytes to the right of 12-byte region [0x60200000efd0,0x60200000efdc)
-allocated by thread T0 here:
-    #0 0x7f2a76f9179a in __interceptor_calloc (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x9879a)
-    #1 0x7f2a76cf0e55 in GifMakeMapObject /home/ubuntu/giflib-code/lib/gifalloc.c:55
-    #2 0x7f2a76ce3179 in DGifGetScreenDesc /home/ubuntu/giflib-code/lib/dgif_lib.c:268
-    #3 0x7f2a76ce2412 in DGifOpenFileHandle /home/ubuntu/giflib-code/lib/dgif_lib.c:140
-    #4 0x7f2a76ce1dde in DGifOpenFileName /home/ubuntu/giflib-code/lib/dgif_lib.c:61
-    #5 0x4034f3 in GIF2RGB /home/ubuntu/giflib-code/util/gif2rgb.c:356
-    #6 0x404af0 in main /home/ubuntu/giflib-code/util/gif2rgb.c:531
-    #7 0x7f2a7693682f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /home/ubuntu/giflib-code/util/gif2rgb.c:294 DumpScreen2RGB
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa 06 fa fa fa 02 fa
-=>0x0c047fff9df0: fa fa 02 fa fa fa 00 00 fa fa 00[04]fa fa 03 fa
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-==5394==ABORTING
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
 
-Thanks Hanno
+CVE-2016-6803
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-6803>
+Apache OpenOffice Advisory
+<https://www.openoffice.org/security/cves/CVE-2016-6803.html>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Title: Windows Installer Can Enable Privileged Trojan Execution
+
+Version 1.0
+Announced October 11, 2016
+
+Description
+
+The Apache OpenOffice installer for Windows contained a defective
+operation that could trigger execution of unwanted software
+installed by a Trojan Horse application.  The installer defect 
+is known as an "unquoted Windows search path vulnerability."
+
+In the case of Apache OpenOffice installers for Windows, the PC must
+have previously been infected by a Trojan Horse application (or user) 
+running with administrator privilege.  Any installer with the unquoted 
+search path vulnerability becomes a delayed trigger for the exploit.  
+The exploit may already have operated on the user's PC.
+
+Severity: Medium
+
+    There are no known exploits of this vulnerability.
+    A proof-of-concept demonstration exists.
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+
+    All Apache OpenOffice versions 4.1.2 and older 
+    are affected.  Old OpenOffice.org versions are also
+    affected.
+
+    
+Mitigation:
+
+Install Apache OpenOffice 4.1.3 for the latest maintenance and 
+cumulative security fixes.  Use <https://www.openoffice.org/download/>.
+
+If instead of a typical installation you use a custom-installation
+option to change the location where Apache OpenOffice is installed,
+use a location that has no spaces in its full-path name.
+
+
+Defenses and Work-Arounds:
+
+If you are unable to update to 4.1.3, there are other 
+precautions that can be taken.  These precautions are also 
+recommended as protection against other software that may 
+have the unquoted search path vulnerability.
+
+Ensure that there are no programs installed at the
+top-level folder (usually C:\) where Windows is installed.  
+All are dangerous, especially ones named "Program", whether
+"Program.exe" or some other variation.    
+
+If such programs are found, install or update to current 
+anti-virus/-malware software.  Perform a complete system scan.  
+The scan may provide for removal of programs where there should 
+not be any.  If that does not happen, it is necessary to remove
+any Program.exe and others manually using administrator privilege.
+
+
+Further Information:
+
+For additional information and assistance, consult the Apache
+OpenOffice Community Forums, <https://forum.openoffice.org/> or 
+make requests to the <mailto:users@...noffice.apache.org> public
+mailing list.  Defects not involving suspected security
+vulnerabilities can be reported via
+<http://www.openoffice.org/qa/issue_handling/pre_submission.html>.
+
+      
+The latest information on Apache OpenOffice security bulletins 
+can be found at the Bulletin Archive page 
+<http://www.openoffice.org/security/bulletin.html>.
+
+Credits: 
+
+The Apache OpenOffice project acknowledges the reporting and
+analysis for CVE-2016-6803 by Cyril Vallicari.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJX/C+GAAoJEPluif/UVmKK0VkH/0+K2SNXK1e9ccRjo71/Ns3/
+KRK8w/7MqpnSoFIRXD7tn8eB/GY/RwuqlMCkf0zAvif6uzhe/OPgf9JYt22k4eIS
+trR61K4SBicyZFpe9HmUrIH9Ucvdgy9Vu6VgOBFger7C39fcyUfnI/1S9wAXjb6y
+Yab0/woIVuJxVX7u33kYOS+G52NVzxV4+qm2dhjwISYwxkNCEGh10zpTIIk1VnB3
+p3JCGQ4k/tG2Fu30/qap1OmfvgHVP6qBl7b47ZCekc6JErSlGoJ8ZE6PJnNXq92A
+0/YjlAUCGguaAg5ec18Qnkm2Ef6anmViBxoPgtxt38cCHV63tuWn7uZnCVKn1qk=
+=aKVN
+-----END PGP SIGNATURE-----
+
+
+
