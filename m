@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1171" "Tuesday" "6" "October" "2015" "11:20:57" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<56136141.2040503@redhat.com>" "37" "[oss-security] Fwd: [vs-plain] CVE-2015-5261" nil nil nil "10" "2015100605:50:57" "[oss-security] Fwd: [vs-plain] CVE-2015-5261" (number mark "U       huzaifas@red Oct  6   37/1171  " thread-indent "\"[oss-security] Fwd: [vs-plain] CVE-2015-5261\"\n") "<560A2023.7010200@redhat.com>" ("<560A2023.7010200@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3163" "Sunday" "20" "November" "2016" "11:28:27" "-0800" "Apache OpenOffice Security" "orcmid@apache.org" "<001201d24364$45662b80$d0328280$@apache.org>" "101" "[oss-security] CVE-2016-6804 Apache OpenOfice Advisory" nil nil nil "11" "2016112019:28:27" "[oss-security] CVE-2016-6804 Apache OpenOfice Advisory" (number mark "U       orcmid@apach Nov 20  101/3163  " thread-indent "\"[oss-security] CVE-2016-6804 Apache OpenOfice Advisory\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8183 invoked by uid 550); 6 Oct 2015 05:37:16 -0000
+Received: (qmail 26391 invoked by uid 550); 20 Nov 2016 19:55:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8160 invoked from network); 6 Oct 2015 05:37:15 -0000
-References: <560A2023.7010200@redhat.com>
-To: oss-security@lists.openwall.com
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-X-Forwarded-Message-Id: <560A2023.7010200@redhat.com>
-Message-ID: <56136141.2040503@redhat.com>
-Date: Tue, 6 Oct 2015 11:20:57 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+Received: (qmail 12166 invoked from network); 20 Nov 2016 19:28:40 -0000
+From: "Apache OpenOffice Security" <orcmid@apache.org>
+To: <oss-security@lists.openwall.com>
+Date: Sun, 20 Nov 2016 11:28:27 -0800
+Organization: Apache OpenOffice
+Message-ID: <001201d24364$45662b80$d0328280$@apache.org>
 MIME-Version: 1.0
-In-Reply-To: <560A2023.7010200@redhat.com>
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: [oss-security] Fwd: [vs-plain] CVE-2015-5261
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdJDZEA+O3eJzxUSQmevwBrc8YC33A==
+Content-Language: en-us
+Subject: [oss-security] CVE-2016-6804 Apache OpenOfice Advisory
 
-Making this public as promised on distros list!
-
-
--------- Forwarded Message --------
-Subject: [vs-plain] CVE-2015-5261
-Date: Tue, 29 Sep 2015 10:52:43 +0530
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-To: distros@vs.openwall.org
-
-Hello Vendors,
-
-Frediano Ziglio of Red Hat has found a security flaw in spice related
-to, host memory access from guest using crafted images. Details as follows:
-
-It is possible for a guest issuing QXL commands to host to allow reading
-and writing host memory in a range of about 16-20gb.
-The guest can create a surface very large (say 1000000 x 1000000). If
-width * height overflow the 32 bit and became a small number the host
-will accept the command and will create the surface. Now guest can copy
-areas of surfaces to access any area of memory covered by the image.
-Considering overflows, pixman implementation and image formats (32 bit,
-top-down or down-top) the range (the guest pass an offset into video
-memory for the start) the range if about +/- 8gb.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
 
-We have assigned CVE-2015-5261  to this issue.
+
+CVE-2016-6804
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-6804>
+Apache OpenOffice Advisory
+<https://www.openoffice.org/security/cves/CVE-2016-6804.html>
+
+Title: Windows Installer Execution of Arbitrary Code with Elevated Privileges
+
+Version 1.0
+Announced October 11, 2016
+
+Description
+
+The Apache OpenOffice installer for Windows contained a defective
+operation that allows execution of arbitrary code with elevated 
+privileges.
+
+The location in which the installer is run may have been previously
+poisoned by a file that impersonates a dynamic-link library that 
+the installer depends upon.  The counterfeit is operated instead 
+because of a search-path defect in the installer.  The counterfeit 
+will be operated under the administrative privileges of the OpenOffice
+installer, compromising the user's PC.
+
+Severity: Medium
+
+    There are no known exploits of this vulnerability.
+    Proof-of-concept demonstrations exist.
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+
+    All Apache OpenOffice versions 4.1.2 and older 
+    are affected.  OpenOffice.org versions are also
+    affected.
+
+    
+Mitigation:
+
+Install Apache OpenOffice 4.1.3 for the latest maintenance and 
+cumulative security fixes.  Use <https://www.openoffice.org/download/>.
 
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1261889
+Defenses and Work-Arounds:
+
+If you are unable to update to 4.1.3, there are other 
+precautions that can be taken.  These precautions are also 
+recommended as protection against other software that may 
+have the vulnerability.
+
+When executing .exe installers, ensure that the installer
+is in a file folder that has no files but the installer 
+.exe file.
+
+If an installer proposes a folder to extract the setup
+files into before the actual install, choose the name of 
+a folder that is not in use.  Delete such a folder of setup 
+files after the installation completes successfully.  To 
+reinstall without downloading again, preserve the installer 
+.exe on private removable storage.
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Further Information:
+
+For additional information and assistance, consult the Apache
+OpenOffice Community Forums, <https://forum.openoffice.org/> or 
+make requests to the <mailto:users@openoffice.apache.org> public
+mailing list.  Defects not involving suspected security
+vulnerabilities can be reported via
+<http://www.openoffice.org/qa/issue_handling/pre_submission.html>.
+
+      
+The latest information on Apache OpenOffice security bulletins 
+can be found at the Bulletin Archive page 
+<http://www.openoffice.org/security/bulletin.html>.
+
+Credits: 
+
+The Apache OpenOffice project acknowledges the reporting and
+analysis for CVE-2016-6804 by Stefan Kanthak and by Himanshu Mehta.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJYD4CxAAoJEPluif/UVmKKwJ0IAIp5Z5WGus5iaDcOYanVS+QN
+ng1SCb+0jitCiqmVy9Xv5/diVEgogRxOu0tryV5flAaChepsRehpuJmRRftxYTS0
+aNkQiKDSkd9d3XswAa0xfcQWaojANgYwV6aMGx1MstfRo3aIdRtHvNqjygU1ANyR
+z3UipEyRYmrRgeeHq5cBNBQQv+gGfKXMHr2nvfaOD5FSqvwa/3jEWbpagYHwXfyV
+18QqITRw5qG6sP/sQXw1I3CPez4+SbZebJZ2cuBSnnSmoojOQ3EJi69hESLOM2S5
+I4xiraQSYygTeybU3u2OARtsXejb8qa7d9pYB+JwboPVKam03s32X+0ZnBnv3Y4=
+=nKLP
+-----END PGP SIGNATURE-----
+
 
 
 
