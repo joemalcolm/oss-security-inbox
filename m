@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8100" "Friday" "19" "July" "2019" "13:53:34" "+0000" "Xen.org security team" "security@xen.org" "<E1hoTKI-0000dF-Ng@xenbits.xenproject.org>" "195" "[oss-security] Xen Security Advisory 300 v2 - Linux: No grant table and foreign mapping limits" nil nil nil "7" "2019071913:53:34" "[oss-security] Xen Security Advisory 300 v2 - Linux: No grant table and foreign mapping limits" (number mark "U       security@xen Jul 19  195/8100  " thread-indent "\"[oss-security] Xen Security Advisory 300 v2 - Linux: No grant table and foreign mapping limits\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 300 v2 - Linux: No grant table and foreign mapping limits" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3495" "Sunday" "20" "November" "2016" "11:59:15" "-0800" "Apache OpenOffice Security" "orcmid@apache.org" "<000201d24368$92624820$b726d860$@apache.org>" "103" "[oss-security] CVE-2016-6803: Apache OpenOffice unquoted search path vulnerability" nil nil nil "11" "2016112019:59:15" "[oss-security] CVE-2016-6803: Apache OpenOffice unquoted search path vulnerability" (number mark "U       orcmid@apach Nov 20  103/3495  " thread-indent "\"[oss-security] CVE-2016-6803: Apache OpenOffice unquoted search path vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29895 invoked by uid 550); 19 Jul 2019 13:53:54 -0000
+Received: (qmail 7385 invoked by uid 550); 20 Nov 2016 20:00:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,212 +12,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29862 invoked from network); 19 Jul 2019 13:53:53 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 6089 invoked from network); 20 Nov 2016 19:59:28 -0000
+From: "Apache OpenOffice Security" <orcmid@apache.org>
+To: <oss-security@lists.openwall.com>
+Date: Sun, 20 Nov 2016 11:59:15 -0800
+Organization: Apache OpenOffice
+Message-ID: <000201d24368$92624820$b726d860$@apache.org>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1hoTKI-0000dF-Ng@xenbits.xenproject.org>
-Date: Fri, 19 Jul 2019 13:53:34 +0000
-Subject: [oss-security] Xen Security Advisory 300 v2 - Linux: No grant table and foreign
- mapping limits
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+Content-Type: text/plain;
+	charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdJDaH4wlSOU2nk8R8ueWRLOm5rr7w==
+Content-Language: en-us
+Subject: [oss-security] CVE-2016-6803: Apache OpenOffice unquoted search path vulnerability
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-300
-                              version 2
 
-             Linux: No grant table and foreign mapping limits
+CVE-2016-6803
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-6803>
+Apache OpenOffice Advisory
+<https://www.openoffice.org/security/cves/CVE-2016-6803.html>
 
-UPDATES IN VERSION 2
-====================
+Title: Windows Installer Can Enable Privileged Trojan Execution
 
-Drop inapplicable "Deployment during embargo" section.
+Version 1.0
+Announced October 11, 2016
 
-Rewrite for clarity, and to remove most references to dom0.  The issue
-is equally applicable to domU's providing backend services.
+Description
 
-Add information about the arbitrary limit for userspace backends.
+The Apache OpenOffice installer for Windows contained a defective
+operation that could trigger execution of unwanted software
+installed by a Trojan Horse application.  The installer defect 
+is known as an "unquoted Windows search path vulnerability."
 
-ISSUE DESCRIPTION
-=================
+In the case of Apache OpenOffice installers for Windows, the PC must
+have previously been infected by a Trojan Horse application (or user) 
+running with administrator privilege.  Any installer with the unquoted 
+search path vulnerability becomes a delayed trigger for the exploit.  
+The exploit may already have operated on the user's PC.
 
-Virtual device backends and device models running in domain 0, or
-other backend driver domains, need to be able to map guest memory
-(either via grant mappings, or via the foreign mapping interface).
+Severity: Medium
 
-Inside Xen, mapped grants are tracked by the maptrack structure.  The
-size of this structure is chosen during domain creation, and has a
-fixed upper bound for the lifetime of the domain.
+    There are no known exploits of this vulnerability.
+    A proof-of-concept demonstration exists.
 
-For Linux to keep track of these mappings, it needs to have a page
-structure for each one.  In practice the number of page structures is
-usually limited.  In PV guests, a range of pfns are typically set
-aside at boot ("pre-ballooned") for this purpose.  For HVM/PVH and Arm
-guests, no memory is set aside to begin with.  In either case, when
-more of this "foreign / grant map pfn space" is needed, Linux will
-balloon out extra pages to use for this purpose.
+Vendor: The Apache Software Foundation
 
-Unfortunately, in Linux, there are no limits, either on the total
-amount of memory which the domain will attempt to balloon out, nor on
-the amount of "foreign / grant map" memory which any individual guest
-can consume.
+Versions Affected:
 
-For Linux userspace backends (e.g. QEMU) which use /dev/xen/gnttab or
-/proc/xen/gnttab, there is an arbitrary mapping limit which, if hit,
-will prevent further mappings from being established.
+    All Apache OpenOffice versions 4.1.2 and older 
+    are affected.  Old OpenOffice.org versions are also
+    affected.
 
-As a result, a malicious guest may be able to, with crafted requests,
-cause a backend Linux domain to either:
+    
+Mitigation:
 
- 1) Fill the maptrack table in Xen and/or hit the userspace limit.
-    This will starve I/O from other guests served by the same backend.
+Install Apache OpenOffice 4.1.3 for the latest maintenance and 
+cumulative security fixes.  Use <https://www.openoffice.org/download/>.
 
- 2) Balloon out sufficient RAM to cause it to swap excessively, or run
-    completely out of memory.  This may starve all operations from the
-    domain, including I/O from other guests, or may cause a crash of
-    the domain.
+If instead of a typical installation you use a custom-installation
+option to change the location where Apache OpenOffice is installed,
+use a location that has no spaces in its full-path name.
 
-IMPACT
-======
 
-Guest may be able to crash backend Linux domains, or starve operations
-inside the domain, including the processing of guest I/O requests
-(Guest Denial-of-Service).
+Defenses and Work-Arounds:
 
-If the backend is domain 0, which is the most common configuration,
-then host-wide operations may be starved, or the host may crash (Host
-Denial-of-Service).
+If you are unable to update to 4.1.3, there are other 
+precautions that can be taken.  These precautions are also 
+recommended as protection against other software that may 
+have the unquoted search path vulnerability.
 
-VULNERABLE SYSTEMS
-==================
+Ensure that there are no programs installed at the
+top-level folder (usually C:\) where Windows is installed.  
+All are dangerous, especially ones named "Program", whether
+"Program.exe" or some other variation.    
 
-All versions of Linux are vulnerable.  Only Linux guests acting as
-backend domains for other guests may be exploited.
+If such programs are found, install or update to current 
+anti-virus/-malware software.  Perform a complete system scan.  
+The scan may provide for removal of programs where there should 
+not be any.  If that does not happen, it is necessary to remove
+any Program.exe and others manually using administrator privilege.
 
-All Arm domains are vulnerable, as are x86 PVH/HVM guests.  The
-vulnerability of x86 PV guests depends on how they were configured at
-boot.
 
-MITIGATION
-==========
+Further Information:
 
-PV guests can be constructed with "pre-ballooned" memory, by building
-it with maxmem > memory.  See `man 5 xl.cfg` for full details of these
-two parameters.
+For additional information and assistance, consult the Apache
+OpenOffice Community Forums, <https://forum.openoffice.org/> or 
+make requests to the <mailto:users@openoffice.apache.org> public
+mailing list.  Defects not involving suspected security
+vulnerabilities can be reported via
+<http://www.openoffice.org/qa/issue_handling/pre_submission.html>.
 
-For PV dom0, these are controlled by Xen's "dom0_mem=$X,max:$Y"
-command line parameter.
+      
+The latest information on Apache OpenOffice security bulletins 
+can be found at the Bulletin Archive page 
+<http://www.openoffice.org/security/bulletin.html>.
 
-The larger the difference between memory and maxmem, the more space
-Linux has to fill with grant/foreign mappings before it will start
-ballooning out real memory to satisfy further mapping requests.  This
-makes the attack more difficult to accomplish.
+Credits: 
 
-CREDITS
-=======
+The Apache OpenOffice project acknowledges the reporting and
+analysis for CVE-2016-6803 by Cyril Vallicari.
 
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves the backend memory
-exhaustion issue.
-
-NOTE: This does NOT fix the guest starvation issue.  Fixing fixing
-this issue is more complex, and it was determined that it was better
-to work on a robust fix for the issue in public.  This advisory will
-be updated when fixes are available.
-
-xsa300-linux-5.2.patch     Linux 4.4 ... 5.2
-
-$ sha256sum xsa300*
-9c8a9aec52b147f8e8ef41444e1dd11803bacf3bd4d0f6efa863b16f7a9621ac  xsa300-linux-5.2.patch
-$
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The lack of predisclosure is due to a short schedule set by the
-discoverer, and efforts to resolve the advisory wording.
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl0xyy0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZyzUH/3hhOLPLuiTnKQd3idx0iIrpRkQfcdl9pxWWARWx
-xiVKyyMIajokrq5besT01Ztizz6B80DN+m4W14yi+j8nDyR3W4v/JriZQY48Tj1i
-nd+jvBGfvQcjNc5WaVjBtU/x9j0HDCUrBP+uJMGdt9jl6fppvMwnBcv/OeEvl/eE
-TjwEMs/RQ69LcjpwGGPSAh8AR2i1+oL3LiHtwO31hdkw0Ritqa32Uw4c+ENuo/OE
-PApIX8O8TMgRX0/LriGy6dtlb/L4SljTPa592EHH1cPfDelHmzpWEeIx77nbq8v/
-/Ex6Gjd/19ArWvofxQkQk1+aNfvBPnPCaboc7JrlCuFEDP4=
-=OcOD
+iQEcBAEBCAAGBQJX/C+GAAoJEPluif/UVmKK0VkH/0+K2SNXK1e9ccRjo71/Ns3/
+KRK8w/7MqpnSoFIRXD7tn8eB/GY/RwuqlMCkf0zAvif6uzhe/OPgf9JYt22k4eIS
+trR61K4SBicyZFpe9HmUrIH9Ucvdgy9Vu6VgOBFger7C39fcyUfnI/1S9wAXjb6y
+Yab0/woIVuJxVX7u33kYOS+G52NVzxV4+qm2dhjwISYwxkNCEGh10zpTIIk1VnB3
+p3JCGQ4k/tG2Fu30/qap1OmfvgHVP6qBl7b47ZCekc6JErSlGoJ8ZE6PJnNXq92A
+0/YjlAUCGguaAg5ec18Qnkm2Ef6anmViBxoPgtxt38cCHV63tuWn7uZnCVKn1qk=
+=aKVN
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa300-linux-5.2.patch"
-Content-Disposition: attachment; filename="xsa300-linux-5.2.patch"
-Content-Transfer-Encoding: base64
 
-RnJvbSBlYTQ5NDUwZGVkNTc1ZmFjYzBlNjRlMGQ2YWRjYjFjYThhYWFkMGJh
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IFdlZCwgMTkgSnVuIDIwMTkgMTE6
-MDA6NTYgKzAyMDAKU3ViamVjdDogW1BBVENIXSB4ZW46IGxldCBhbGxvY194
-ZW5iYWxsb29uZWRfcGFnZXMoKSBmYWlsIGlmIG5vdCBlbm91Z2ggbWVtb3J5
-CiBmcmVlCgpJbnN0ZWFkIG9mIHRyeWluZyB0byBhbGxvY2F0ZSBwYWdlcyB3
-aXRoIEdGUF9VU0VSIGluCmFkZF9iYWxsb29uZWRfcGFnZXMoKSBjaGVjayB0
-aGUgYXZhaWxhYmxlIGZyZWUgbWVtb3J5IHZpYQpzaV9tZW1fYXZhaWxhYmxl
-KCkuIEdGUF9VU0VSIGlzIGZhciBsZXNzIGxpbWl0aW5nIG1lbW9yeSBleGhh
-dXN0aW9uCnRoYW4gdGhlIHRlc3QgdmlhIHNpX21lbV9hdmFpbGFibGUoKS4K
-ClRoaXMgd2lsbCBhdm9pZCBkb20wIHJ1bm5pbmcgb3V0IG9mIG1lbW9yeSBk
-dWUgdG8gZXhjZXNzaXZlIGZvcmVpZ24KcGFnZSBtYXBwaW5ncyBlc3BlY2lh
-bGx5IG9uIEFSTSBhbmQgb24geDg2IGluIFBWSCBtb2RlLCBhcyB0aG9zZSBk
-b24ndApoYXZlIGEgcHJlLWJhbGxvb25lZCBhcmVhIHdoaWNoIGNhbiBiZSB1
-c2VkIGZvciBmb3JlaWduIG1hcHBpbmdzLgoKQXMgdGhlIG5vcm1hbCBiYWxs
-b29uaW5nIHN1ZmZlcnMgZnJvbSB0aGUgc2FtZSBwcm9ibGVtIGRvbid0IGJh
-bGxvb24KZG93biBtb3JlIHRoYW4gc2lfbWVtX2F2YWlsYWJsZSgpIHBhZ2Vz
-IGluIG9uZSBpdGVyYXRpb24uIEF0IHRoZSBzYW1lCnRpbWUgbGltaXQgdGhl
-IGRlZmF1bHQgbWF4aW11bSBudW1iZXIgb2YgcmV0cmllcy4KClJlcG9ydGVk
-LWJ5OiBKdWxpZW4gR3JhbGwgPGp1bGllbi5ncmFsbEBhcm0uY29tPgpTaWdu
-ZWQtb2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+Ci0t
-LQogZHJpdmVycy94ZW4vYmFsbG9vbi5jIHwgMTYgKysrKysrKysrKysrKy0t
-LQogMSBmaWxlIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyksIDMgZGVsZXRp
-b25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94ZW4vYmFsbG9vbi5jIGIv
-ZHJpdmVycy94ZW4vYmFsbG9vbi5jCmluZGV4IGQzN2RkNWJiN2E4Zi4uNTU5
-NzY4ZGMyNTY3IDEwMDY0NAotLS0gYS9kcml2ZXJzL3hlbi9iYWxsb29uLmMK
-KysrIGIvZHJpdmVycy94ZW4vYmFsbG9vbi5jCkBAIC01MzgsOCArNTM4LDE1
-IEBAIHN0YXRpYyB2b2lkIGJhbGxvb25fcHJvY2VzcyhzdHJ1Y3Qgd29ya19z
-dHJ1Y3QgKndvcmspCiAJCQkJc3RhdGUgPSByZXNlcnZlX2FkZGl0aW9uYWxf
-bWVtb3J5KCk7CiAJCX0KIAotCQlpZiAoY3JlZGl0IDwgMCkKLQkJCXN0YXRl
-ID0gZGVjcmVhc2VfcmVzZXJ2YXRpb24oLWNyZWRpdCwgR0ZQX0JBTExPT04p
-OworCQlpZiAoY3JlZGl0IDwgMCkgeworCQkJbG9uZyBuX3BhZ2VzOworCisJ
-CQluX3BhZ2VzID0gbWluKC1jcmVkaXQsIHNpX21lbV9hdmFpbGFibGUoKSk7
-CisJCQlzdGF0ZSA9IGRlY3JlYXNlX3Jlc2VydmF0aW9uKG5fcGFnZXMsIEdG
-UF9CQUxMT09OKTsKKwkJCWlmIChzdGF0ZSA9PSBCUF9ET05FICYmIG5fcGFn
-ZXMgIT0gLWNyZWRpdCAmJgorCQkJICAgIG5fcGFnZXMgPCB0b3RhbHJlc2Vy
-dmVfcGFnZXMpCisJCQkJc3RhdGUgPSBCUF9FQUdBSU47CisJCX0KIAogCQlz
-dGF0ZSA9IHVwZGF0ZV9zY2hlZHVsZShzdGF0ZSk7CiAKQEAgLTU3OCw2ICs1
-ODUsOSBAQCBzdGF0aWMgaW50IGFkZF9iYWxsb29uZWRfcGFnZXMoaW50IG5y
-X3BhZ2VzKQogCQl9CiAJfQogCisJaWYgKHNpX21lbV9hdmFpbGFibGUoKSA8
-IG5yX3BhZ2VzKQorCQlyZXR1cm4gLUVOT01FTTsKKwogCXN0ID0gZGVjcmVh
-c2VfcmVzZXJ2YXRpb24obnJfcGFnZXMsIEdGUF9VU0VSKTsKIAlpZiAoc3Qg
-IT0gQlBfRE9ORSkKIAkJcmV0dXJuIC1FTk9NRU07CkBAIC03MTAsNyArNzIw
-LDcgQEAgc3RhdGljIGludCBfX2luaXQgYmFsbG9vbl9pbml0KHZvaWQpCiAJ
-YmFsbG9vbl9zdGF0cy5zY2hlZHVsZV9kZWxheSA9IDE7CiAJYmFsbG9vbl9z
-dGF0cy5tYXhfc2NoZWR1bGVfZGVsYXkgPSAzMjsKIAliYWxsb29uX3N0YXRz
-LnJldHJ5X2NvdW50ID0gMTsKLQliYWxsb29uX3N0YXRzLm1heF9yZXRyeV9j
-b3VudCA9IFJFVFJZX1VOTElNSVRFRDsKKwliYWxsb29uX3N0YXRzLm1heF9y
-ZXRyeV9jb3VudCA9IDQ7CiAKICNpZmRlZiBDT05GSUdfWEVOX0JBTExPT05f
-TUVNT1JZX0hPVFBMVUcKIAlzZXRfb25saW5lX3BhZ2VfY2FsbGJhY2soJnhl
-bl9vbmxpbmVfcGFnZSk7Ci0tIAoyLjE2LjQKCg==
 
---=separator--
