@@ -1,87 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/3
-Message-ID: <CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>
-Date: Thu, 14 Jan 2016 15:21:36 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: "cgit@...ts.zx2c4.com" <cgit@...ts.zx2c4.com>, oss-security <oss-security@...ts.openwall.com>
-Cc: Daniel Chromek <chromek@...t.sk>,  Krzysztof Katowicz-Kowalewski <krzysztof.kowalewski@...t.pl>, Erik Cabetas <erik@...ludesecurity.com>,  Konstantin Ryabitsev <mricon@...nel.org>
-Subject: CVE Request: CGit - Multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/20/2
+Message-ID: <001201d24364$45662b80$d0328280$@apache.org>
+Date: Sun, 20 Nov 2016 11:28:27 -0800
+From: "Apache OpenOffice Security" <orcmid@...che.org>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE-2016-6804 Apache OpenOfice Advisory
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
-
-Krzysztof Katowicz-Kowalewski from ESET, Erik Cabetas from Include
-Security, and myself (Jason Donenfeld) from Edge Security, have found
-a few vulnerabilities in CGit:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
 
-1. Reflected Cross Site Scripting & Header Injection in Mimetype Query
-String [Katowicz-Kowalewski]
 
-The ui-blob handler accepted a mimetype as a query string and then
-echoed this string verbatim back. A malicious user could provide a
-string like:
+CVE-2016-6804
+<http://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-6804>
+Apache OpenOffice Advisory
+<https://www.openoffice.org/security/cves/CVE-2016-6804.html>
 
-  http://git.zx2c4.com/cgit/blob/cgit.c?mimetype=text/html%0d%0a%0d%0a<script>xss</script>
+Title: Windows Installer Execution of Arbitrary Code with Elevated Privileges
 
-This has been fixed by removing support for the mimetype query string parameter:
-http://git.zx2c4.com/cgit/commit/?id=1c581a072651524f3b0d91f33e22a42c4166dd96
-And then restricting to only generic mimetypes:
-http://git.zx2c4.com/cgit/commit/?id=92996ac2a6fc4e944c3d723e12d5ab244a43508e
-And finally, just in case, setting the IE anti-sniffing header as well
-as a restrictive CSP header:
-http://git.zx2c4.com/cgit/commit/?id=9ca2566972db968df4479108b29bb92551138b57
+Version 1.0
+Announced October 11, 2016
 
+Description
 
-2. Stored Cross Site Scripting & Header Injection in Filename
-Parameter [Donenfeld]
+The Apache OpenOffice installer for Windows contained a defective
+operation that allows execution of arbitrary code with elevated 
+privileges.
 
-A user who has write access to the git repository could create
-filenames containing new lines that would result in that filename,
-including the newlines, being included in a header, resulting in
-header injection and eventually XSS.
+The location in which the installer is run may have been previously
+poisoned by a file that impersonates a dynamic-link library that 
+the installer depends upon.  The counterfeit is operated instead 
+because of a search-path defect in the installer.  The counterfeit 
+will be operated under the administrative privileges of the OpenOffice
+installer, compromising the user's PC.
 
-This has been fixed by properly escaping filenames in headers:
-http://git.zx2c4.com/cgit/commit/?id=513b3863d999f91b47d7e9f26710390db55f9463
-Additionally, while the redirect for the /about -> /about/ page does
-*not* appear to be vulnerable due to mitigating conditions, the
-following commit was made to similarly harden potential injections
-here:
-http://git.zx2c4.com/cgit/commit/?id=4291453ec30656c2f59645d8a74cf295ce0253a9
+Severity: Medium
 
-3. Stored Cross Site Scripting in Git Repo Files [Katowicz-Kowalewski]
+    There are no known exploits of this vulnerability.
+    Proof-of-concept demonstrations exist.
 
-A user who has write access to the git repository can add HTML pages
-and then serve them with an HTML mimetype. A user could therefore
-upload pages with malicious javascript executing in the same origin as
-the cgit web site. While this is ordinarily not a problem for
-single-use users - and indeed some users rather like being able to
-serve html from cgit - sites that allow potentially malicious third
-party users may not find this behavior desirable.
+Vendor: The Apache Software Foundation
 
-This has been fixed by adding a configuration option,
-"enable-html-serving", which is by default off:
-http://git.zx2c4.com/cgit/commit/?id=aaba5f8b925f44f7d5ffb0a45fe349642d478513
-This flag sets anti-sniffing, CSP, and restricts mimetypes to
-non-"application/" (except for application/pdf and
-application/octet-stream) and non-"text/" (except for text/plain). If
-you have a better idea of what sort of white/black list to use for
-this, I am open to suggestions.
+Versions Affected:
 
-4. Integer Overflow resulting in Buffer Overflow [Cabetas]
+    All Apache OpenOffice versions 4.1.2 and older 
+    are affected.  OpenOffice.org versions are also
+    affected.
 
-ctx.env.content_length is an unsigned int, coming from the
-CONTENT_LENGTH environment variable, which is parsed by strtoul. The
-HTTP/1.1 spec says that "any Content-Length greater than or equal to
-zero is a valid value." By storing this unsigned int into an int, we
-potentially overflow it, resulting in the following bounding check
-failing, leading to a buffer overflow.
+    
+Mitigation:
 
-This has been fixed by this commit:
-http://git.zx2c4.com/cgit/commit/?id=4458abf64172a62b92810c2293450106e6dfc763
+Install Apache OpenOffice 4.1.3 for the latest maintenance and 
+cumulative security fixes.  Use <https://www.openoffice.org/download/>.
 
 
-A new version containing these security fixes will be published shortly.
+Defenses and Work-Arounds:
 
-Thanks,
-Jason
+If you are unable to update to 4.1.3, there are other 
+precautions that can be taken.  These precautions are also 
+recommended as protection against other software that may 
+have the vulnerability.
+
+When executing .exe installers, ensure that the installer
+is in a file folder that has no files but the installer 
+.exe file.
+
+If an installer proposes a folder to extract the setup
+files into before the actual install, choose the name of 
+a folder that is not in use.  Delete such a folder of setup 
+files after the installation completes successfully.  To 
+reinstall without downloading again, preserve the installer 
+.exe on private removable storage.
+
+
+Further Information:
+
+For additional information and assistance, consult the Apache
+OpenOffice Community Forums, <https://forum.openoffice.org/> or 
+make requests to the <mailto:users@...noffice.apache.org> public
+mailing list.  Defects not involving suspected security
+vulnerabilities can be reported via
+<http://www.openoffice.org/qa/issue_handling/pre_submission.html>.
+
+      
+The latest information on Apache OpenOffice security bulletins 
+can be found at the Bulletin Archive page 
+<http://www.openoffice.org/security/bulletin.html>.
+
+Credits: 
+
+The Apache OpenOffice project acknowledges the reporting and
+analysis for CVE-2016-6804 by Stefan Kanthak and by Himanshu Mehta.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJYD4CxAAoJEPluif/UVmKKwJ0IAIp5Z5WGus5iaDcOYanVS+QN
+ng1SCb+0jitCiqmVy9Xv5/diVEgogRxOu0tryV5flAaChepsRehpuJmRRftxYTS0
+aNkQiKDSkd9d3XswAa0xfcQWaojANgYwV6aMGx1MstfRo3aIdRtHvNqjygU1ANyR
+z3UipEyRYmrRgeeHq5cBNBQQv+gGfKXMHr2nvfaOD5FSqvwa/3jEWbpagYHwXfyV
+18QqITRw5qG6sP/sQXw1I3CPez4+SbZebJZ2cuBSnnSmoojOQ3EJi69hESLOM2S5
+I4xiraQSYygTeybU3u2OARtsXejb8qa7d9pYB+JwboPVKam03s32X+0ZnBnv3Y4=
+=nKLP
+-----END PGP SIGNATURE-----
+
+
+
+
