@@ -1,114 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/2
-Message-ID: <CAHfGB06cYfRQ2_he=Y8ijX9pezEF9KyaGyJKpE5okX-MWOgn8g@mail.gmail.com>
-Date: Thu, 31 Mar 2016 17:02:05 -0700
-From: Brian Wallace <bwall9809@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/20/1
+Message-ID: <1775367.VDhM2sPmdu@arcadia>
+Date: Sun, 20 Nov 2016 15:23:26 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Christopher Truncer <ctruncer@...l-framework.com>
-Subject: CVE Request - Multiple remote command injection vulnerabilities in Veil-Evasion RPC
+Cc: cve-assign@...re.org
+Subject: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+If suitable for a CVE please assign one. Thanks.
 
-Three remote code execution vulnerabilities have been discovered in
-Veil-Evasion's RPC, which is instantiated with `veil-evasion --rpc` or
-`python Veil-Evasion --rpc`.  Additionally, previous to version 2.25, this
-RPC allowed connections from any IP address instead of only "localhost",
-increasing the severity of the command injection vulnerabilities and
-allowing for remote exploitation.  This RPC public availability may also be
-considered a vulnerability itself, as it was unintended.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-All issues have been reported to the developers of the Veil-Evasion
-project, and patches have been applied for version 2.25.  Issues are
-believed to affect versions of Veil-Evasion from 2.5.2 through 2.24.
+A crafted image, through an intensive fuzz on the 1.900.22 version revealed a 
+stack overflow.
 
+The complete ASan output:
 
-Remote command injection in "native/hyperion" module:
-This module allows for injection into a command line call to the hyperion
-utility.  A vulnerable version of the command line call can be found here:
-https://github.com/Veil-Framework/Veil-Evasion/blob/c30d2f085a1a1644395b64a6d151cb0ea5a19dfb/modules/payloads/native/hyperion.py#L42
-An attacker can control input to this field through the ORIGINAL_EXE
-field.  A sample RPC call exploiting this vulnerability is as follows (will
-create the file /tmp/victory):
-{"method": "generate", "params": ["payload=native/hyperion",
-"outputbase=base", "pwnstaller=N", "ORIGINAL_EXE=/tmp $(touch
-/tmp/victory)"],"id": 1}
-An attacker could use this vulnerability to execute any desired commands on
-the victim host.
+# imginfo -f $FILE
+warning: trailing garbage in marker segment (9 bytes)
+warning: trailing garbage in marker segment (28 bytes)
+warning: trailing garbage in marker segment (40 bytes)
+warning: ignoring unknown marker segment (0xffee)
+type = 0xffee (UNKNOWN); len = 23;1f 32 ff ff ff 00 10 00 3d 4d 00 01 32 ff 00 
+e4 00 10 00 00 4f warning: trailing garbage in marker segment (14 bytes)
+=================================================================
+==9166==ERROR: AddressSanitizer: stack-buffer-overflow on address 
+0x7faf2e200c20 at pc 0x7faf320a985a bp 0x7ffd397b9b10 sp 0x7ffd397b9b08
+WRITE of size 4 at 0x7faf2e200c20 thread T0
+    #0 0x7faf320a9859 in jpc_tsfb_getbands2 /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:227:16
+    #1 0x7faf320a9009 in jpc_tsfb_getbands2 /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:223:3
+    #2 0x7faf320a8b9f in jpc_tsfb_getbands /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:187:3
+    #3 0x7faf3200eaa6 in jpc_dec_tileinit /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:714:4
+    #4 0x7faf3200eaa6 in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:560
+    #5 0x7faf3201c1c3 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:391:10
+    #6 0x7faf3201c1c3 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:255
+    #7 0x7faf31f7e684 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/base/jas_image.c:406:16
+    #8 0x509c9a in main /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/appl/imginfo.c:203:16
+    #9 0x7faf3108761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419988 in _init (/usr/bin/imginfo+0x419988)
 
-This issue is resolved in the following commit (version 2.25):
-https://github.com/Veil-Framework/Veil-Evasion/commit/cd9d95ad368959d1eee03a250ec61206a046829a
+Address 0x7faf2e200c20 is located in stack of thread T0 at offset 3104 in 
+frame
+    #0 0x7faf3200dbbf in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:544
 
+  This frame has 1 object(s):
+    [32, 3104) 'bnds.i' 0x0ff665c38180: 00 00 00 00[f3]f3 f3 f3 f3 f3 f3 f3 f3 
+f3 f3 f3
+  0x0ff665c38190: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0ff665c381d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==9166==ABORTING
 
-Remote command injection in "native/pescrambler" module:
-This module allows for injection into a command line call to the
-pescrambler utility. A vulnerable version of the command line call can be
-found here:
-https://github.com/Veil-Framework/Veil-Evasion/blob/c30d2f085a1a1644395b64a6d151cb0ea5a19dfb/modules/payloads/native/pe_scrambler.py#L42
-An attacker can control input to this field through the ORIGINAL_EXE
-field.  A sample RPC call exploiting this vulnerability is as follows (will
-create the file /tmp/victory):
-{"method": "generate", "params": ["payload=native/pe_scrambler",
-"outputbase=base", "pwnstaller=N", "ORIGINAL_EXE=/tmp $(touch
-/tmp/victory)"],"id": 1}
-An attacker could use this vulnerability to execute any desired commands on
-the victim host.
+Affected version:
+1.900.22
 
-This issue is resolved in the following commit (version 2.25):
-https://github.com/Veil-Framework/Veil-Evasion/commit/cd9d95ad368959d1eee03a250ec61206a046829a
+Fixed version:
+1.900.30
 
+Commit fix:
+https://github.com/mdadams/jasper/commit/1abc2e5a401a4bf1d5ca4df91358ce5df111f495
 
-Remote command injection into "msfvenom" parameter:
-When msfvenom is used to generate shellcode, a user may supply options to
-the msfvenom command line call.  An attacker may use this to insert other
-commands to be executed.  The command line execution of msfvenom can be
-found here:
-https://github.com/Veil-Framework/Veil-Evasion/blob/c30d2f085a1a1644395b64a6d151cb0ea5a19dfb/modules/common/shellcode.py#L498
-Based on the functionality provided, the selected solution to the problem
-was to parse input as a shell script, and deny any input which appeared to
-include attempts at command injection.  An attacker can abuse this with the
-following RPC call in version 2.24 (different versions may require
-different modules depending on msfvenom support):
-{"method": "generate", "params": ["payload=c/shellcode_inject/flatc",
-"msfvenom=$(touch /tmp/victory)", "outputbase=base", "pwnstaller=N",
-"COMPILE_TO_EXE=Y", "INJECT_METHOD=Virtual", ], "id": 1}
-An attacker could use this vulnerability to execute any desired commands on
-the victim host.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-This issue was resolved in the following commit (version 2.25):
-https://github.com/Veil-Framework/Veil-Evasion/commit/be10ddddaeacf232cec9dca5e49461454237ee8a
+CVE:
+N/A
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00047-jasper-stackoverflow-jpc_tsfb_getbands2
 
-RPC unauthenticated public access:
-The RPC provided on port 4242 for Veil-Evasion is exposed to external IP
-addresses instead of only to localhost from its initial implementation up
-until 2.25 patched this issue.  Aside from the issues noted above, this
-would allow for an attacker to send commands to the Veil-Evasion RPC,
-generating payloads, and other available functionality which may not be
-desirable to unauthorized users.  The code causing the issue can be
-observed here:
-https://github.com/Veil-Framework/Veil-Evasion/commit/533d58721cef3f9d68303d628999d34d9ba3482b#diff-406918d36f7373d0d7e29279ceff3c8bR201
+Timeline:
+2016-11-09: bug discovered and reported to upstream
+2016-11-20: upstream released a patch
+2016-11-20: blog post about the issue
 
-This issue was resolved in the following commit (version 2.25):
-https://github.com/Veil-Framework/Veil-Evasion/commit/3cffe14ee5f9361697496ea045a95d62b38d52d4
+Note:
+This bug was found with American Fuzzy Lop.
 
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/20/jasper-stack-based-buffer-overflow-in-jpc_tsfb_getbands2-jpc_tsfb-c
 
-Vulnerabilities were discovered and reported by Brian Wallace
-bwall9809@...il.com.
-
-Chis Truncer (cc'd) is the primary developer for Veil-Evasion, and showed
-an exemplary response to the vulnerability reporting.
-
-CVEs for these issues have not been previously requested.
-
-A combined proof of concept in Python 2.7 is attached.
-
-This is my first request to this mailing list, so I apologize in advance
-for any misinterpretations of protocol.
-
-Thank you,
-Brian Wallace
-
-Content of type "text/html" skipped
-
-View attachment "poc.py" of type "text/x-python" (1118 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
