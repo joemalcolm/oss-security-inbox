@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/30/2
-Message-ID: <alpine.LFD.2.20.1608302353500.6066@wniryva>
-Date: Tue, 30 Aug 2016 23:55:22 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Felix Wilhelm <fwilhelm@...w.de>
-Subject: Re: CVE request: Qemu: 9p: directory traversal flaw in 9p virtio backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/2
+Message-ID: <1935548.nJNUl5RvF6@cbuissar-ltop>
+Date: Mon, 21 Nov 2016 11:58:29 +0100
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 30 Aug 2016, P J P wrote --+
-|   Hello,
-| 
-| Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
-| File System(9pfs) support, is vulnerable to a directory/path traversal issue.
-| It could occur while creating or accessing files on a shared host directory.
-| 
-| A privileged user inside guest could use this flaw to access undue files on
-| the host.
-| 
-| Upstream patches:
-| -----------------
-|   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg03917.html
+Hi,
 
-Few revised patches:
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04231.html
+This is to inform you of the following CVE:
 
-Thank you.
+CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
+
+Description :
+A vulnerability in ipsilon was found that allows attacker to log out active
+sessions of other users. This issue is related to how it tracks sessions, and
+allows an unauthenticated attacker to view and terminate active sessions from
+other users.
+
+Note: this bug can also be triggered accidentally.
+
+Upstream patch : 
+https://pagure.io/ipsilon/c/511fa8b7001c2f9a42301aa1d4b85aaf170a461c
+
+Vulnerable versions: 
+All versions of Ipsilon 2.0 before 2.0.2 are vulnerable.
+All versions of Ipsilon 1.2 before 1.2.1 are vulnerable.
+All versions of Ipsilon 1.1 before 1.1.2 are vulnerable.
+All versions of Ipsilon 1.0 before 1.0.3 are vulnerable.
+
+Impact: Important
+CVSS3 scoring : 8.2 AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H
+
+Reported by: Patrick Uiterwijk (Red Hat) and Howard Johnson
+
+Reference :
+https://ipsilon-project.org/advisory/CVE-2016-8638.txt
+
+Best Regards,
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Cedric Buissart
+Red Hat Product Security
+-----------------------------------------
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
