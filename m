@@ -1,79 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/10
-Message-Id: <20160301182222.6CE67ABC04B@smtpvmsrv1.mitre.org>
-Date: Tue,  1 Mar 2016 13:22:22 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, donghai.zdh@...baba-inc.com
-Subject: Re: CVE request Qemu: OOB access in address_space_rw leads to segmentation fault
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/3
+Message-ID: <CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>
+Date: Mon, 21 Nov 2016 11:54:33 -0500
+From: Scott Arciszewski <scott@...agonie.com>
+To: oss-security@...ts.openwall.com
+Subject: WordPress (all versions): SPOF, RCE, and Negligence
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is the function that fetches downloads from the WordPress update
+servers: https://github.com/WordPress/WordPress/blob/f5b6731777bbd1dfe290867d2240a2a68e2f0cf1/wp-admin/includes/class-wp-upgrader.php#L252-L283
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1300771
+The only verification it offers is an MD5 checksum, which is sent by
+the server that also serves the file:
+https://github.com/WordPress/WordPress/blob/eeefec932f3d4f3b50369f6523c2cd8fad3d467f/wp-admin/includes/file.php#L482-L525
 
-We understand that the listed patches are to be used together, but the
-changes were announced at different times and thus multiple CVE IDs
-are needed.
+At no point lower in the automatic update process is a cryptographic
+signature verified. The update server is trusted explicitly and
+implicitly by every WordPress website online.
 
+WordPress powers an estimated 26% of websites on the Internet.
 
-> Qemu emulator built to use 'address_space_translate' to map an address to a
-> MemoryRegionSection is vulnerable to an OOB r/w access issue. It could occur
-> while doing pci_dma_read/write calls. Affects Qemu versions >= 1.6.0 and <=
-> 2.3.1.
-> 
-> A privileged user inside guest could use this flaw to crash the guest instance
-> resulting in DoS.
+Consequently, the WordPress update server is one of the largest single
+points of failure (SPOF) on the Internet. If you manage to hack their
+infrastructure, you can push a false update to millions of WordPress
+blogs and get reliable remote code execution everywhere.
 
+They are aware of this issue, and have been for years:
+https://core.trac.wordpress.org/ticket/25052
 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=c3c1bb99d1c11978d9ce94d1bdcf0705378c1459
-> https://lists.gnu.org/archive/html/qemu-stable/2016-01/msg00060.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=23820dbfc79d1c9dce090b4c555994f2bb6a69b3
+Additionally, PHP before 5.6.0 had terrible SSL/TLS support. It may
+also be possible to get targeted RCE out of a MitM condition due to
+their stubborn insistence on supporting PHP 5.2.4. I need to do more
+research here.
 
-There are all about the same code changes, originally written in March
-2015. The issue appears to have security relevance on its own. Use
-CVE-2015-8817.
+The WordPress culture, for those who are not aware, prioritizes higher
+adoption rates over better security. They see backwards compatibility
+as a usability problem more than a liability.
 
+The WordPress team also promotes the use of the misnomer "responsible
+disclosure" over the more accurate "coordinated disclosure", and
+refuse to entertain suggestions to improve their vernacular.
 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=e4a511f8cc6f4a46d409fb5c9f72c38ba45f8d83
+In short, WordPress is semi-toxic towards improving their own
+security-- mostly out of negligence and stubbornness rather than
+outright hostility (see: OpenCart).
 
-As far as we can tell, this is a functionality fix, not a security
-fix. It doesn't have a CVE ID. (We understand that it does belong in
-the listed set of upstream commits anyway.)
+I don't believe there's much chance of fixing this, due to political
+problems rather than technological problems. The first step towards a
+reliable solution would look like this:
 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=965eb2fcdfe919ecced6c34803535ad32dc1249c
+1. Up the minimum PHP version to at least 5.6.0.
+2. Use openssl_sign() and openssl_verify() with an RSA keypair
+maintained by their team.
 
-As far as we can tell, this one isn't really a security fix and may
-have introduced new bugs that were addressed later. It also doesn't
-have a CVE ID. (We understand that it does belong in the listed set of
-upstream commits anyway.)
+A total solution would incorporate all of the elements listed here for
+both core updates and theme/plugin updates:
+https://paragonie.com/blog/2016/10/guide-automatic-security-updates-for-php-developers#elements-automatic-updates
 
+Should anyone wish to endure the steep uphill battle to try to get
+WordPress to fix this problem _before_ we see headlines titled
+"WormPress: How your blog was hacked" in the news, godspeed.
 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=b242e0e0e2969c044a318e56f7988bbd84de1f63
-
-This one is from July 2015 and has security relevance on its own. Use
-CVE-2015-8818.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW1dx+AAoJEL54rhJi8gl5kRYP+gPGf5B/RxtIMXDz9rDXSzKI
-NjjHaDbMTwQKlQkQ1qsJnpYUHRrJNoXM2xiRxZxhQv19d8EHKELIJMQ5gfzxMtIn
-2NGfWRUQLdBl50Zz8A87xCq7bHsFfFqBffnSMmyjK0ATurQqqrvlJFuH4cAXWrlK
-/nTtNHPrSm8yt7GEs2lxYd99A4z0RJyd5gufnGNpvKNkEfeAXA9uS7/oZ5WzUjfX
-oS+V+YiEKXJQwmbYJoabYbSF630EWXm7q+QSAD59S31UJFzbM5CV3Da+/2dY9ylB
-wna90ypywVCvcDqaOLbT1hWJ6ivMIdTty5MyuHr9mMee0VlbBeEnbFh4uP29H3Vf
-yJLFAg5NxvdF4sh/qqs2xdMnEZkx2VcC3R406mxyEMPQRLwiideLZh7oMltwCK0+
-RT3P6Rco4ENiiqgknuh3IfeRq8J7OYt7hr0hK8y/ym8U+ndGXgfcQAS7WGJWRMBL
-pI7qyJjuSD4LC1EpS9u/CVm+NRR8Xkp0gC6aEIqM/raSD0zI3SU2pAaXosCR4JBp
-gRSLtodPrVkiV87tEwUasTLkIkELxQE4m6hJEAnmYChmZDwtxthFNo6u4mQQFzqd
-nuh8vvHAPexzlBKaWQkA1e/4VZL7jU0scDioW477y0+eTIADCRYHntfAocE/6rGW
-zFZH4qIgz5hD2SjXLxiR
-=EOgU
------END PGP SIGNATURE-----
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
