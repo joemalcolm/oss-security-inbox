@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3330" "Tuesday" "26" "May" "2015" "10:41:11" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<5564A227.3030608@redhat.com>" "87" "[oss-security] Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)" nil nil nil "5" "2015052616:41:11" "[oss-security] Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)" (number mark "        kseifried@re May 26   87/3330  " thread-indent "\"[oss-security] Question about tmp flaws in non-default build options (e.g. Kerberos DEBUG_ASN1)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1873" "Monday" "21" "November" "2016" "11:58:29" "+0100" "Cedric Buissart" "cbuissar@redhat.com" "<1935548.nJNUl5RvF6@cbuissar-ltop>" "60" "[oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions" "^Date:" nil nil "11" "2016112110:58:29" "[oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions" (number mark "U       cbuissar@red Nov 21   60/1873  " thread-indent "\"[oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6058 invoked by uid 550); 26 May 2015 16:41:26 -0000
+Received: (qmail 26016 invoked by uid 550); 21 Nov 2016 10:59:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6024 invoked from network); 26 May 2015 16:41:25 -0000
-Message-ID: <5564A227.3030608@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
+Received: (qmail 25998 invoked from network); 21 Nov 2016 10:59:05 -0000
+Message-ID: <1935548.nJNUl5RvF6@cbuissar-ltop>
+Organization: Red Hat
+User-Agent: KMail/5.3.2 (Linux/4.7.9-200.fc24.x86_64; KDE/5.27.0; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="jfV7UpvLhNJ71AFKnTlLgRWb4FQ4bSTSB"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Tue, 26 May 2015 10:41:11 -0600
-From: Kurt Seifried <kseifried@redhat.com>
+Content-Type: multipart/signed; boundary="nextPart1780561.xZePTIi76E"; micalg="pgp-sha512"; protocol="application/pgp-signature"
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Mon, 21 Nov 2016 10:58:54 +0000 (UTC)
+Date: Mon, 21 Nov 2016 11:58:29 +0100
+From: Cedric Buissart <cbuissar@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Question about tmp flaws in non-default build options (e.g. Kerberos
- DEBUG_ASN1)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-        CVE ID Change <cve-id-change@mitre.org>
+Subject: [oss-security] CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
+To: oss-security@lists.openwall.com
 
---jfV7UpvLhNJ71AFKnTlLgRWb4FQ4bSTSB
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+--nextPart1780561.xZePTIi76E
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-So I found some obvious tmp vulns in Kerberos, but they only exist if
-you build with DEBUG_ASN1 on (and if you're in that situation you got
-some not fun problems).
+Hi,
 
-However based on the fact that CVE-2014-1692 (the OpenSSH J-PAKE
-protocol) it seems that even if the code is not enabled by default, the
-fact that it exists is enough to qualify it for a CVE. So with this in
-mind I'm sending a CVE request in.
+This is to inform you of the following CVE:
 
-First example from each of the 3 files affected by the DEBUG_ASN1 tmp
-file issues (note: print_buffer_bin doesn't do anything clever to be safe):
+CVE-2016-8638 ipsilon: DoS via logging out all open SAML2 sessions
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-./src/plugins/preauth/pkinit/pkinit_crypto_openssl.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-#ifdef DEBUG_ASN1
-    if (cms_msg_type =3D=3D CMS_SIGN_CLIENT) {
-        print_buffer_bin(*signed_data, *signed_data_len,
-                         "/tmp/client_pkcs7_signeddata");
-    } else {
+Description :
+A vulnerability in ipsilon was found that allows attacker to log out active
+sessions of other users. This issue is related to how it tracks sessions, and
+allows an unauthenticated attacker to view and terminate active sessions from
+other users.
+
+Note: this bug can also be triggered accidentally.
+
+Upstream patch : 
+https://pagure.io/ipsilon/c/511fa8b7001c2f9a42301aa1d4b85aaf170a461c
+
+Vulnerable versions: 
+All versions of Ipsilon 2.0 before 2.0.2 are vulnerable.
+All versions of Ipsilon 1.2 before 1.2.1 are vulnerable.
+All versions of Ipsilon 1.1 before 1.1.2 are vulnerable.
+All versions of Ipsilon 1.0 before 1.0.3 are vulnerable.
+
+Impact: Important
+CVSS3 scoring : 8.2 AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H
+
+Reported by: Patrick Uiterwijk (Red Hat) and Howard Johnson
+
+Reference :
+https://ipsilon-project.org/advisory/CVE-2016-8638.txt
+
+Best Regards,
+
 --
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-./src/plugins/preauth/pkinit/pkinit_srv.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-#ifdef DEBUG_ASN1
-    print_buffer_bin(data->contents, data->length, "/tmp/kdc_as_req");
-#endif
---
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-./src/plugins/preauth/pkinit/pkinit_clnt.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-#ifdef DEBUG_ASN1
-    print_buffer_bin((unsigned char *)coded_auth_pack->data,
-                     coded_auth_pack->length,
-                     "/tmp/client_auth_pack");
-#endif
---
-
-
-
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
---jfV7UpvLhNJ71AFKnTlLgRWb4FQ4bSTSB
+Cedric Buissart
+Red Hat Product Security
+-----------------------------------------
+--nextPart1780561.xZePTIi76E
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v2
 
-iQIcBAEBAgAGBQJVZKInAAoJEBYNRVNeJnmTy6YP/Rp5Y0n2djrHezchKs1be2FZ
-GyNAsvxIZoGgd0kYZSDeGdV8lqEzBYDr8fUKrDRVPrkbPsuEYdlkhEjHfqTW45gc
-eDsB04t6HeKB4USdgkD0BOobpLVjP1kqbT5Poncf2wzVkrE09cuj+Mi2vjukvRfY
-vDfAnLlOJKEDCffOrrgKwMT0uvOUGDcI7wWYPWWzZ4sfQoD9vbyegacspIb9eJgA
-UuWaNuJEnuqXXyxUla1x0uwkwRrlmjwJ5qpTgFmqD0HejFtmFHYJuq87Dg8eUUJp
-gM/98GpxBLQtPigusvL567mYgNa46pfa4+PwJHPWRoOcjZOSitQyq6IjQHl/Bjn8
-1cgjoDi+KDgd/9MGl8mZwMXsZ5rUvkgcfM+/w2jbWn+SJX8jG3DI+M7nZLtdHRFN
-7CONfs/+pbw7+W+8Ppd3rEiczEG3cNBeeA6rJ2vm1v9ONHSnqmF9E436MbXH5iMJ
-R2yJFvNJ9h3TH/xYMYFqVtaFlkt0V1/53KDSs7zDi46kKTOsDAWMOAMkZvmR76Sa
-hR34jVfkDJPNQIIgM3pycYOJaiU66IgXFCbTqMOG3ZAYq4AgGVrDq2txZlAI/N7D
-RlyEsVLzB+RIJHswLCojog0ZeDB/x+rSX1ce8sfHftWRH/Hq47RkWzr9Z7DUtioV
-DITlsDKbX5zNt6WpXRjK
-=YEsr
+iQEcBAABCgAGBQJYMtNVAAoJECISsYvaK7kIhMwH/AxrS4mQeHGeAb3bvBgqEfNH
+ok+nWHvAJwDVaNZdj9woMFBBYCOr5QwZXhYldy7jY03BrbuF/YSljnBhCRjJMi70
+5YQIFy7Jy7iB5yL2UPlewQPYy+jGUj8VLUzBXq6vMt9/K58qNJFqgyZ87wp9c1vC
+GkW+bdE7jh+OO7wPuKHJURC6gXIO4MXsgrU9UJasnxTXKITh2e9cLz3d1BbjMJY3
+PBzqPjPtot8DLE7bkNkW4tHKV/fAo0Om50jKKQMLVZanNypI+U4+/XaG2He9lkXf
+KOzI1Tt68ilGPSVG66oop6h5sLtdp8miUoW5qbN27xUKWgJk1wEmktAwdkdaLWA=
+=6sfK
 -----END PGP SIGNATURE-----
 
---jfV7UpvLhNJ71AFKnTlLgRWb4FQ4bSTSB--
+--nextPart1780561.xZePTIi76E--
+
