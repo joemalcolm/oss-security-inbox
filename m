@@ -1,4 +1,9 @@
-Received: (qmail 26105 invoked by uid 550); 9 Dec 2022 17:02:44 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2668" "Monday" "21" "November" "2016" "11:54:33" "-0500" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>" "57" "[oss-security] WordPress (all versions): SPOF, RCE, and Negligence" "^Date:" nil nil "11" "2016112116:54:33" "[oss-security] WordPress (all versions): SPOF, RCE, and Negligence" (number mark "        scott@parago Nov 21   57/2668  " thread-indent "\"[oss-security] WordPress (all versions): SPOF, RCE, and Negligence\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 10161 invoked by uid 550); 21 Nov 2016 16:54:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,171 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17895 invoked from network); 9 Dec 2022 16:55:04 -0000
+Received: (qmail 10126 invoked from network); 21 Nov 2016 16:54:47 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloud.com; s=cloud;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hiNiRveniIWTlNkwBA6N2LNiLksGBI1cCad1zUOeWnE=;
-        b=WOsgh38z6j7gFDAceqkxkSW6O6ZuyNPfjglT8VR1hJKCMHp2iR9rJ36L5TD2uKpCDz
-         UbJeJDRfLK/Tff/ADrBnRbDwXXNgHd+4aHGp7Cu1gjpfR51lnPqqPfxjuZ/vdXQJLtxq
-         zgzRr8DDnEPqDZ4sgH6SR7Y4HeZqh3IAz45Hg=
+        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=tIyP5qj/CACTjvQyBIo1byORDg1K/XUp+SyNtBl7ZxA=;
+        b=Ut40F17zoYxgTeEClA7aLxYZLO6CXu6AfhfBGNdYYW2CSnXMPDhri32vHTUZ40pirQ
+         hPGBNaeQnSXOfv8bs4BVVAnk3u56ato/Avbo7s1dam5Fg0a/HXNZuDzHFPPojgRRiPB3
+         TR0XtNikUimNhj1ZyHYfExSpuDd4TXeMkAi1kE4Mv1WOxbJbaxdgiRRQY+fmCy0rPZs4
+         erwCuQ31Xr+53Igo3MyrnLXi+4CKFbrk7u29vFMpqLcGCTYKKha39w65fqOvFeSVnEPj
+         aK9zvauTtwkIDIjiSuMr9rmDIR//5eSQiuOnKlD7Jlr6OCg+X1NEaJ2vuX3bpZ6mAyr5
+         C4mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hiNiRveniIWTlNkwBA6N2LNiLksGBI1cCad1zUOeWnE=;
-        b=lnSr9NsT/gunOADl+ek0zCeg3flhszocLl3sedA0TDuT4FwP+7T1yAQEL+xsefnXZ7
-         jEDUH0pXTn6LdcV8PD9siH4Tii225g61mf0fTOuf41A8BQ26uk8+0YPVVE+FXoYI8JOm
-         oNBRwpYsOzESWY5Ff6n80oc0rwZDdmtK6rK2YYNO/Fc1NzG9QfCt/scunOstDq8phujQ
-         SJ/TkxPr2aSMhXmvwttiYaEIXS/rVCuV6aYwHpa5dqlWFpLFCmYS6bio3f2MIsw1C9vQ
-         vCa1xn/N+7exxqW8Bwq7H2A6Rh0Lfun+aw04fifS20ngDB2vd3cZZYE0LXgUQk8eldq8
-         +eeQ==
-X-Gm-Message-State: ANoB5pl2Xo42by0Dt/4Uy6jeKGB8gY+5Vh68gYpXUbgfziqW1L0JAdfL
-	2CDKTN/Heh/C1W+BrPgJOOY5ZhIfJkvTh627mRHX
-X-Google-Smtp-Source: AA0mqf7C3IMgsXlgkMbT3SaqvkqMqsDa3dsKnjbCPyBzbfny337eZqsvVJkqMH6sfdgXpakEtCYPD6Azh09KKf1ozkk=
-X-Received: by 2002:a5d:6243:0:b0:236:6b05:a8be with SMTP id
- m3-20020a5d6243000000b002366b05a8bemr55657657wrv.346.1670604892899; Fri, 09
- Dec 2022 08:54:52 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=tIyP5qj/CACTjvQyBIo1byORDg1K/XUp+SyNtBl7ZxA=;
+        b=YW9+PdfOELTWv/VnqNcwVUlyT6kwkMZoVduVb6eYAuzOJ1cosjgBoboni8lAvedO1K
+         Mcysf3op8UswHqOBY7HeAFPjDpY/1HFe6LGaHieQx9FkqJvUYfkbh5yp2W84Ziwvl5Ht
+         8+sLA4hof6Ozc5z4eNS0ffQGws34awk41/LiP9zahviXmjAc9KCMVzfMJ62VdmLW60no
+         AYGbMHzeZNI5Cp5rvFUtlyOzKRtd6a3pgDOr1p1dnmOyfXX3av5jg4Uapu4/e8tQ70Yq
+         YRLZmLj6T6oF8MbV9ldsHoam0Zg5CPcIFnEEIIXpZfCnsDxu6Yixv3CKGP5IxOJN3eKJ
+         C1Yg==
+X-Gm-Message-State: AKaTC03v6YWMl/JeQb8tCXVW6uI7PRnVLYGRKiFlxDyZAUyVYAgzPaZJNMwwBYeSsFRbkDgHy2Qp162HxY0vOg==
+X-Received: by 10.157.10.197 with SMTP id 63mr8760488otq.99.1479747274310;
+ Mon, 21 Nov 2016 08:54:34 -0800 (PST)
 MIME-Version: 1.0
-References: <E1p2ZhW-0005Xe-FG@xenbits.xenproject.org> <mafs0lenhlwcv.fsf@dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com>
- <e22fcdce-f029-de46-81a6-60f5ffc9c9a2@suse.com>
-In-Reply-To: <e22fcdce-f029-de46-81a6-60f5ffc9c9a2@suse.com>
-From: Ross Lagerwall <ross.lagerwall@cloud.com>
-Date: Fri, 9 Dec 2022 16:54:41 +0000
-Message-ID: <CAG7k0EpOz=X8AFw-wE-0OEA98_w77PNmVg_AE-R8mc7sBcsr9w@mail.gmail.com>
-To: Juergen Gross <jgross@suse.com>
-Cc: Pratyush Yadav <ptyadav@amazon.de>, "Xen.org security team" <security@xen.org>, xen-announce@lists.xen.org, 
-	xen-devel@lists.xen.org, xen-users@lists.xen.org, 
-	oss-security@lists.openwall.com, 
-	"Xen.org security team" <security-team-members@xen.org>
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) -
- Guests can trigger deadlock in Linux netback driver
+Message-ID: <CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 21 Nov 2016 11:54:33 -0500
+From: Scott Arciszewski <scott@paragonie.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence
+To: oss-security@lists.openwall.com
 
-On Thu, Dec 8, 2022 at 4:13 PM Juergen Gross <jgross@suse.com> wrote:
->
-> On 08.12.22 16:59, Pratyush Yadav wrote:
-> >
-> > Hi,
-> >
-> > I noticed one interesting thing about this patch but I'm not familiar
-> > enough with the driver to say for sure what the right thing is.
-> >
-> > On Tue, Dec 06 2022, Xen.org security team wrote:
-> >
-> > [...]
-> >>
-> >>  From cfdf8fd81845734b6152b4617746c1127ec52228 Mon Sep 17 00:00:00 2001
-> >> From: Juergen Gross <jgross@suse.com>
-> >> Date: Tue, 6 Dec 2022 08:54:24 +0100
-> >> Subject: [PATCH] xen/netback: don't call kfree_skb() with interrupts disabled
-> >>
-> >> It is not allowed to call kfree_skb() from hardware interrupt
-> >> context or with interrupts being disabled. So remove kfree_skb()
-> >> from the spin_lock_irqsave() section and use the already existing
-> >> "drop" label in xenvif_start_xmit() for dropping the SKB. At the
-> >> same time replace the dev_kfree_skb() call there with a call of
-> >> dev_kfree_skb_any(), as xenvif_start_xmit() can be called with
-> >> disabled interrupts.
-> >>
-> >> This is XSA-424 / CVE-2022-42328 / CVE-2022-42329.
-> >>
-> >> Fixes: be81992f9086 ("xen/netback: don't queue unlimited number of packages")
-> >> Reported-by: Yang Yingliang <yangyingliang@huawei.com>
-> >> Signed-off-by: Juergen Gross <jgross@suse.com>
-> >> Reviewed-by: Jan Beulich <jbeulich@suse.com>
-> >> ---
-> >>   drivers/net/xen-netback/common.h    | 2 +-
-> >>   drivers/net/xen-netback/interface.c | 6 ++++--
-> >>   drivers/net/xen-netback/rx.c        | 8 +++++---
-> >>   3 files changed, 10 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
-> >> index 1545cbee77a4..3dbfc8a6924e 100644
-> >> --- a/drivers/net/xen-netback/common.h
-> >> +++ b/drivers/net/xen-netback/common.h
-> >> @@ -386,7 +386,7 @@ int xenvif_dealloc_kthread(void *data);
-> >>   irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
-> >>
-> >>   bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
-> >> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
-> >> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
-> >>
-> >>   void xenvif_carrier_on(struct xenvif *vif);
-> >>
-> >> diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
-> >> index 650fa180220f..f3f2c07423a6 100644
-> >> --- a/drivers/net/xen-netback/interface.c
-> >> +++ b/drivers/net/xen-netback/interface.c
-> >> @@ -254,14 +254,16 @@ xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
-> >>      if (vif->hash.alg == XEN_NETIF_CTRL_HASH_ALGORITHM_NONE)
-> >>              skb_clear_hash(skb);
-> >>
-> >> -    xenvif_rx_queue_tail(queue, skb);
-> >> +    if (!xenvif_rx_queue_tail(queue, skb))
-> >> +            goto drop;
-> >> +
-> >>      xenvif_kick_thread(queue);
-> >>
-> >>      return NETDEV_TX_OK;
-> >>
-> >>    drop:
-> >>      vif->dev->stats.tx_dropped++;
-> >
-> > Now tx_dropped is incremented on packet drop...
-> >
-> >> -    dev_kfree_skb(skb);
-> >> +    dev_kfree_skb_any(skb);
-> >>      return NETDEV_TX_OK;
-> >>   }
-> >>
-> >> diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
-> >> index 932762177110..0ba754ebc5ba 100644
-> >> --- a/drivers/net/xen-netback/rx.c
-> >> +++ b/drivers/net/xen-netback/rx.c
-> >> @@ -82,9 +82,10 @@ static bool xenvif_rx_ring_slots_available(struct xenvif_queue *queue)
-> >>      return false;
-> >>   }
-> >>
-> >> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> >> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> >>   {
-> >>      unsigned long flags;
-> >> +    bool ret = true;
-> >>
-> >>      spin_lock_irqsave(&queue->rx_queue.lock, flags);
-> >>
-> >> @@ -92,8 +93,7 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> >>              struct net_device *dev = queue->vif->dev;
-> >>
-> >>              netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
-> >> -            kfree_skb(skb);
-> >> -            queue->vif->dev->stats.rx_dropped++;
-> >
-> > ... but earlier rx_dropped was incremented.
-> >
-> > Which one is actually correct? This line was added by be81992f9086b
-> > ("xen/netback: don't queue unlimited number of packages"), which was the
-> > fix for XSA-392. I think incrementing tx_dropped is the right thing to
-> > do, as was done before XSA-392 but it would be nice if someone else
-> > takes a look at this as well.
->
-> Yes, I think the XSA-392 patch was wrong in this regard.
->
+This is the function that fetches downloads from the WordPress update
+servers: https://github.com/WordPress/WordPress/blob/f5b6731777bbd1dfe290867d2240a2a68e2f0cf1/wp-admin/includes/class-wp-upgrader.php#L252-L283
 
-Netback calls this rx (to-guest) traffic so rx_dropped seems better. On the
-other hand, the networking stack thinks of this as tx since the packet is going
-from the networking stack to the NIC driver...
+The only verification it offers is an MD5 checksum, which is sent by
+the server that also serves the file:
+https://github.com/WordPress/WordPress/blob/eeefec932f3d4f3b50369f6523c2cd8fad3d467f/wp-admin/includes/file.php#L482-L525
 
-Regardless, it is currently inconsistent since to-guest traffic increments
-tx_dropped if it is dropped because the rx queue len is too long but it
-increments rx_dropped if those same packets are dropped when they expire in the
-rx queue.
+At no point lower in the automatic update process is a cryptographic
+signature verified. The update server is trusted explicitly and
+implicitly by every WordPress website online.
 
-I also see that the tx path (from-guest) doesn't increment any dropped counters
-when it drops a packet.
+WordPress powers an estimated 26% of websites on the Internet.
 
-Ross
+Consequently, the WordPress update server is one of the largest single
+points of failure (SPOF) on the Internet. If you manage to hack their
+infrastructure, you can push a false update to millions of WordPress
+blogs and get reliable remote code execution everywhere.
+
+They are aware of this issue, and have been for years:
+https://core.trac.wordpress.org/ticket/25052
+
+Additionally, PHP before 5.6.0 had terrible SSL/TLS support. It may
+also be possible to get targeted RCE out of a MitM condition due to
+their stubborn insistence on supporting PHP 5.2.4. I need to do more
+research here.
+
+The WordPress culture, for those who are not aware, prioritizes higher
+adoption rates over better security. They see backwards compatibility
+as a usability problem more than a liability.
+
+The WordPress team also promotes the use of the misnomer "responsible
+disclosure" over the more accurate "coordinated disclosure", and
+refuse to entertain suggestions to improve their vernacular.
+
+In short, WordPress is semi-toxic towards improving their own
+security-- mostly out of negligence and stubbornness rather than
+outright hostility (see: OpenCart).
+
+I don't believe there's much chance of fixing this, due to political
+problems rather than technological problems. The first step towards a
+reliable solution would look like this:
+
+1. Up the minimum PHP version to at least 5.6.0.
+2. Use openssl_sign() and openssl_verify() with an RSA keypair
+maintained by their team.
+
+A total solution would incorporate all of the elements listed here for
+both core updates and theme/plugin updates:
+https://paragonie.com/blog/2016/10/guide-automatic-security-updates-for-php-developers#elements-automatic-updates
+
+Should anyone wish to endure the steep uphill battle to try to get
+WordPress to fix this problem _before_ we see headlines titled
+"WormPress: How your blog was hacked" in the news, godspeed.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
