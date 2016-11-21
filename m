@@ -1,30 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/29/2
-Message-ID: <700c370f-9fc4-7913-9d26-01574b218dba@redhat.com>
-Date: Fri, 29 Jul 2016 14:19:38 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/10
+Message-ID: <CANO=Ty3-BtPv8QhWdvMDhW_mp0=xd+ysGC=GeoSsr-bR79BwGQ@mail.gmail.com>
+Date: Mon, 21 Nov 2016 14:00:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Scott Gravelle <scottg@...rezzio.com>
+Subject: Re: Multiple XSS vulnerabilities affecting five WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+One aspect of this is the quality of CVE requests. Well formed requests are
+easy and fast to process. Poorly formed requests take more time (I'm not
+speaking about these WordPress issues in specific, but more in general
+terms).
 
-The following whitepaper talks about libgcrypt's RSA code being
-vulnerable to a cache timing attack, which the paper claims is fixed in
-1.6.3.
+We (MITRE and the CVE board as well as efforts like the DWF) are also
+making significant changes to CVE, how they are assigned, CNAs, federation,
+the technology and more that should result in much easier and faster
+assignments.
 
-It seems nettle is also vulnerable to this flaw. Which was confirmed by
-upstream via:
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
+Also there are problems with OVE, for example what counting rules does it
+use? Where is the database of data? To be honest OVE is a nice idea, but
+falls very short of what people need from a vulnerability identifier.
 
-The above link also contains a proposed patch, will be committed soon.
+On Mon, Nov 21, 2016 at 1:28 PM, Henri Salo <henri@...v.fi> wrote:
 
-I would like to request a CVE id for the flaw in nettle.
+> On Mon, Nov 21, 2016 at 04:56:13PM +0000, Scott Gravelle wrote:
+> > Any plans to get CVEs assigned to these vulnerabilities you guys found?
+> Our
+> > vulnerability scanner does not have a feature to filter off OVE
+>
+> Maybe you should start handling OVE and other IDs too. Two reasons:
+>
+> 1) MITRE is not always assigning CVEs for WordPress plugin and theme
+> vulnerabilities for unknown reason. It's not like the CVEs are running out
+> 2) MITRE is not assigning CVEs to all software that has previously
+> received a
+> CVE, silently dropping the software to out-of-scope area. Example case:
+> http://www.openwall.com/lists/oss-security/2016/11/10/6
+>
+> --
+> Henri Salo
+>
 
-Note: libgcrypt-1.6.3. release notes talk about 2 cves being fixed, but
-they dont mention this paper at all. (I am going to talk to the
-researchers to figure this out)
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
