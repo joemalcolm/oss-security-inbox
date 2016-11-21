@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/01/8
-Message-ID: <20160301175939.GA8873@gremlin.ru>
-Date: Tue, 1 Mar 2016 20:59:39 +0300
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/5
+Message-ID: <5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>
+Date: Mon, 21 Nov 2016 16:56:13 +0000
+From: Scott Gravelle <scottg@...rezzio.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Multiple XSS vulnerabilities affecting five WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-On 2016-03-01 10:33:17 -0700, Kurt Seifried wrote:
+Any plans to get CVEs assigned to these vulnerabilities you guys found?  Our vulnerability scanner does not have a feature to filter off OVE.
 
- > https://tools.ietf.org/html/rfc6176
- > TL;DR: SSLv2 needs to be shot.
+Scott Gravelle
+Infrastructure and Security
 
-Yes, with SSLv3 and TLS 1.0 being the next.
-
- > Now we have yet another significant SSLv2 problem, DROWN, bad
- > enough in fact that Red Hat has now disabled SSLv2 in OpenSSL
- > by default (already done in NSS/GnuTLS), so from my vendor
- > perspective, we're treating SSLv2 support as a security problem,
- > the solution of which is to remove said support.
-
-The problem is more wide, as it's in the use of insecure algorithms.
-
- > But more generally, should we look at assigning CVE's for
- > support of SSLv2, much like we would for products supporting
- > DES or other known insecure cryptographic algorithms, hashes,
- > digests and protocols? My personal vote is for yes.
-
-Yes. Including, but not limited to:
-1. RSA keys of less than 4096 bits (a minimum of 8192 should be
-recommended).
-2. Non-EC discrete logarithm based algos (DSA, old GOST 34.10-94).
-2. EC-based algos with keys of less than 256 bits (as for me, I'd
-consider 1024 bits to be an absolute minimum: chips are cheap, but
-the energy is still expensive).
-3. Symmetric ciphers in any mode other than CFB or counter-based.
-4. Symmetric ciphers with key size of less than 256 bits.
-5. Hash functions of less than 256 bits.
+scottg@...rezzio.com
+866-847-4515 x1217
+imprezzio.com
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+-----Original Message-----
+From: Summer of Pwnage [mailto:lists@...urify.nl]
+Sent: Saturday, November 19, 2016 2:51 AM
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins
 
-Content of type "application/pgp-signature" skipped
+Please see attached advisories for more information. These issues were found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community project. Its goal is to contribute to the security of popular, widely used OSS projects in a fun and educational way.
+
+
+
+
+
+
+This message may be subject to nondisclosure, copyright and privacy policy. If you have received this message in error, please notify the sender
