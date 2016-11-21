@@ -1,59 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/2
-Message-ID: <569F4FF2.2090806@redhat.com>
-Date: Wed, 20 Jan 2016 10:14:26 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/9
+Message-ID: <20161121202816.GA26926@tunkki>
+Date: Mon, 21 Nov 2016 22:28:16 +0200
+From: Henri Salo <henri@...v.fi>
+To: Scott Gravelle <scottg@...rezzio.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment request for security bugs fixed in glibc 2.23
+Subject: Re: Multiple XSS vulnerabilities affecting five WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-On 01/20/2016 03:51 AM, cve-assign@...re.org wrote:
-> The MITRE CVE team generally can assign IDs for security-fix releases
-> of products where a notable upstream vendor has already made a final
-> determination of what issues are, from their perspective,
-> vulnerabilities that require customers to perform a product update.
+On Mon, Nov 21, 2016 at 04:56:13PM +0000, Scott Gravelle wrote:
+> Any plans to get CVEs assigned to these vulnerabilities you guys found?  Our
+> vulnerability scanner does not have a feature to filter off OVE
 
-In glibc's case, it's more about changes which may deserve backports to
-distribution releases.
+Maybe you should start handling OVE and other IDs too. Two reasons:
 
-> Based on the set of issues mentioned, however, we probably don't have
-> a shared understanding of what glibc bugs should be considered
-> vulnerabilities and what ones should be considered ordinary bugs.
+1) MITRE is not always assigning CVEs for WordPress plugin and theme
+vulnerabilities for unknown reason. It's not like the CVEs are running out
+2) MITRE is not assigning CVEs to all software that has previously received a
+CVE, silently dropping the software to out-of-scope area. Example case:
+http://www.openwall.com/lists/oss-security/2016/11/10/6
 
-My understanding is shaped in part by your previous assignments.
-CVE-2015-1473 is a good example, where the stack usage accounting is off
-by a factor of four.
-
-We try to approach this differently on the glibc side, as explained here:
-
-  <https://sourceware.org/glibc/wiki/Security%20Process>
-
-But this policy, requiring actual application impact for (say)
-denial-of-service vulnerabilities, does not match your past assignment
-practice, or indeed general industry expectations.
-
-Approaching this from a completely different angle: If glibc upstream
-marks certain bugs as potential backport material due to their security
-impact, without arranging for CVE assignment, how can we make such
-assignments happen in time for downstream security updates?
-
-I expected that you do not want Red Hat, Debian &c to assign CVE IDs for
-already public issues.  Yet you have failed to provide such assignments
-when they were requested, leading to CVE-less security updates such as
-this one:
-
-  <https://lists.debian.org/debian-lts-announce/2015/09/msg00011.html>
-
-> None of this is going to be resolved today, so here are the five CVE
-> IDs for the listed issues.
-
-Thanks, I will incorporate the assignments into the glibc bug tracker.
-
-We still have a backlog of a few dozen issues fixed in previous releases
-which are clearly vulnerabilities or have been referenced in downstream
-security advisories.  We really should have a discussion about how to
-handle them.  We can have it here, or in response to the multiple
-messages I sent last fall.
-
-Florian
+-- 
+Henri Salo
