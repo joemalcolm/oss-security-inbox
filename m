@@ -1,62 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/5
-Message-ID: <CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>
-Date: Tue, 22 Nov 2016 07:31:29 -0500
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: gstreamer plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/4
+Message-ID: <CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>
+Date: Mon, 21 Nov 2016 17:32:32 +0000
+From: Ben Tasker <ben@...tasker.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: WordPress (all versions): SPOF, RCE, and Negligence
 Content-Type: text/plain; charset=utf-8
 
-Another exploit chain here:
-https://scarybeastsecurity.blogspot.de/2016/11/0day-exploit-advancing-exploitation.html
+> Up the minimum PHP version to at least 5.6.0.
 
-Alex
+I assume you're talking about the PHP versions that Wordpress supports (as
+opposed to on their update server?).
 
-On Sat, Nov 19, 2016 at 5:59 AM, Hanno Böck <hanno@...eck.de> wrote:
+Such sweeping version checks do not work well with Stable distributions.
+Given that most web hosts use stable distros, implementing such a
+requirement would lock Wordpress out of a substantial proportion of their
+target market:
 
-> Hi,
+
+CentOS 6 will continue to be supported until Q2 2017, with maintenance
+releases until 2020. The version in the repos is 5.3.3 with security
+backports
+
+Debian Wheezy 5.4.45 (again with security backports) and will be supported
+until 2018.
+
+
+An important question, of course, is whether the issues fixed in PHP 5.6.0
+were correctly marked as security fixes (and as a result backported by the
+distro maintainers)
+
+There was a similar issue a while back where Joomla! decided to run a
+version check to ensure PHP version was >= 5.3.10. It broke a number of
+sites, and the most common fix seems to have been a core-hack to disable
+that check. The logic for inserting that check was reasonable, but lacked
+consideration of who the market actually is.
+
+The alternative is that hosters move onto more bleeding edge distro's, and
+I'm not convinced that's good in the long term.
+
+On Mon, Nov 21, 2016 at 4:54 PM, Scott Arciszewski <scott@...agonie.com>
+wrote:
+
+> This is the function that fetches downloads from the WordPress update
+> servers: https://github.com/WordPress/WordPress/blob/
+> f5b6731777bbd1dfe290867d2240a2a68e2f0cf1/wp-admin/includes/
+> class-wp-upgrader.php#L252-L283
 >
+> The only verification it offers is an MD5 checksum, which is sent by
+> the server that also serves the file:
+> https://github.com/WordPress/WordPress/blob/eeefec932f3d4f3b50369f6523c2cd
+> 8fad3d467f/wp-admin/includes/file.php#L482-L525
 >
-> On Fri, 18 Nov 2016 17:31:19 +0100
-> Marcus Meissner <meissner@...e.de> wrote:
+> At no point lower in the automatic update process is a cryptographic
+> signature verified. The update server is trusted explicitly and
+> implicitly by every WordPress website online.
 >
-> > 1. Bufferoverflow in VMNC decoder in gstreamer plugins:
-> >       https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-
-> risky-design-decisions-in.html
+> WordPress powers an estimated 26% of websites on the Internet.
 >
-> I wanted to point out that while it's good the buffer overflow gets
-> fixed, that's by far not the major issue here.
+> Consequently, the WordPress update server is one of the largest single
+> points of failure (SPOF) on the Internet. If you manage to hack their
+> infrastructure, you can push a false update to millions of WordPress
+> blogs and get reliable remote code execution everywhere.
 >
-> This is a very problematic design decision with the functionality of
-> tracker/GNOME that exposes all files on a system to who knows how many
-> decoders of probably overall very low quality.
-> Almost certainly there are countless other vulnerabilities of similar
-> kind in all kinds of gstreamer codecs. (and I haven't checked, but I
-> assume tracker also exposes other files to other equally problematic
-> decoders)
+> They are aware of this issue, and have been for years:
+> https://core.trac.wordpress.org/ticket/25052
 >
-> I think this is kinda a symptom of two goals clashing: We have projects
-> like gstreamer that attempt to parse every file format ever seen in
-> their are - which of course has some value, especially in terms of
-> preserving digital culture. But on the other hand exposing this code to
-> untrusted inputs is a security disaster.
+> Additionally, PHP before 5.6.0 had terrible SSL/TLS support. It may
+> also be possible to get targeted RCE out of a MitM condition due to
+> their stubborn insistence on supporting PHP 5.2.4. I need to do more
+> research here.
 >
-> I'm wondering if there is any statement or reaction from either gnome
-> or fedora on this.
+> The WordPress culture, for those who are not aware, prioritizes higher
+> adoption rates over better security. They see backwards compatibility
+> as a usability problem more than a liability.
 >
-> --
-> Hanno Böck
-> https://hboeck.de/
+> The WordPress team also promotes the use of the misnomer "responsible
+> disclosure" over the more accurate "coordinated disclosure", and
+> refuse to entertain suggestions to improve their vernacular.
 >
-> mail/jabber: hanno@...eck.de
-> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+> In short, WordPress is semi-toxic towards improving their own
+> security-- mostly out of negligence and stubbornness rather than
+> outright hostility (see: OpenCart).
+>
+> I don't believe there's much chance of fixing this, due to political
+> problems rather than technological problems. The first step towards a
+> reliable solution would look like this:
+>
+> 1. Up the minimum PHP version to at least 5.6.0.
+> 2. Use openssl_sign() and openssl_verify() with an RSA keypair
+> maintained by their team.
+>
+> A total solution would incorporate all of the elements listed here for
+> both core updates and theme/plugin updates:
+> https://paragonie.com/blog/2016/10/guide-automatic-
+> security-updates-for-php-developers#elements-automatic-updates
+>
+> Should anyone wish to endure the steep uphill battle to try to get
+> WordPress to fix this problem _before_ we see headlines titled
+> "WormPress: How your blog was hacked" in the news, godspeed.
+>
+> Scott Arciszewski
+> Chief Development Officer
+> Paragon Initiative Enterprises <https://paragonie.com>
 >
 
 
 
 -- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: D1B3 ADC0 E023 8CA6
+Ben Tasker
+https://www.bentasker.co.uk
 
