@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/2
-Message-ID: <569CADA7.8070701@mivargroup.nl>
-Date: Mon, 18 Jan 2016 10:17:27 +0100
-From: Bart van Tuil <bvantuil@...argroup.nl>
-To: Scott Arciszewski <scott@...agonie.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>
-Subject: Re: [FD] It essentially wins crypto vulnerability bingo! gilfether/phpcrypt
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/1
+Message-ID: <20161121054348.GA632@lorien.valinor.li>
+Date: Mon, 21 Nov 2016 06:43:48 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: LibTIFF tiffcrop: Heap buffer overflow via writeBufferToSeparateStrips
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-I don't get something:
+On Fri, Nov 11, 2016 at 10:57:56PM +0200, Henri Salo wrote:
+> Please assign CVE identifier for LibTIFF tiffcrop heap buffer overflow via
+> writeBufferToSeparateStrips, thanks.
+> 
+> Reported in: http://bugzilla.maptools.org/show_bug.cgi?id=2592
+> 
+> Fixed per:
+> 
+> 2016-11-11 Even Rouault <even.rouault at spatialys.com>
+> 
+>         * tools/tiffcrop.c: fix multiple uint32 overflows in
+>         writeBufferToSeparateStrips(), writeBufferToContigTiles() and
+>         writeBufferToSeparateTiles() that could cause heap buffer overflows.
+>         Reported by Henri Salo from Nixu Corporation.
+>         Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2592
+> 
+> 
+> /cvs/maptools/cvsroot/libtiff/ChangeLog,v  <--  ChangeLog
+> new revision: 1.1152; previous revision: 1.1151
+> /cvs/maptools/cvsroot/libtiff/tools/tiffcrop.c,v  <--  tools/tiffcrop.c
+> new revision: 1.43; previous revision: 1.42
 
-> 4. https://github.com/paragonie/EasyRSA (reluctantly included for
-> people that really believe they need RSA)
+FTR, this was included in the 4.0.7 release of LibTIFF.
 
-...What's, in your opinion ofcourse, the wrong thing about
-implementing RSA in a decent web application? PHP is used for much,
-much more than building simple frontpages without a backend (where
-this might be a senseless complication). RSA is still the way to go
-about implementing accessible asymmetrical crypography...
+Although it is only in the tools part, this might still need a CVE if
+appropriate to identify the issue.
 
-I do agree, wholeheartedly, that building your own cryptographic
-primitives is just an expensive way of ultimately fooling yourself.
-
-Just wondering...
-
-
-All the best,
-
-
-Bart
-
-
-<rant>
-PS:
-All this bashing on PHP really tires me - it's getting old and
-redundant. And no - im not a PHP developer.
-</rant>
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQEcBAEBAgAGBQJWnK2nAAoJEEnUI2SRQ818biYH/1uKMFgwvkj2iBax/0NJlNTH
-2Tfd6HLjesvaHUUpQGnvlOILszBoULOlzSsbIXkeLAob/nRyMll7MNI1UExzxub2
-3tJzmzXenMCT+3en9vCr1eBkEZBCGKWudTLYoEYSanzK1aKr2N4aZEFxYzKWq+fX
-v3hZQuqbISnUvk5UzSdpKW8ZHEMdjhdqt9h7q2BH7m/z5o72jHDBkOFpflCRzIu3
-xlH0ctxFT1F0C071Dk+I5zdAOnERqM/68wDvJ0fHYmobtKPfMDgu8nSqYyB5LpUK
-U1R4zAe/Jpuxkx9DWZb2f0BK7SrZwX9jDs+BPkDZ1tpN6rV2z3toaXtrWjMbwWM=
-=o7rc
------END PGP SIGNATURE-----
-
-
-This email and any attached files are confidential and intended solely for the intended recipient(s). If you are not the named recipient you should not read, distribute, copy or alter this email. Any views or opinions expressed in this email are those of the author and do not represent those of the   company. Warning: Although precautions have been taken to make sure no viruses are present in this email, the company cannot accept responsibility for any loss or damage that arise from the use of this email or attachments.
-
+Regards,
+Salvatore
