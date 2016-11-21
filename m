@@ -1,53 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/21/8
-Message-ID: <20160721184148.GO26276@scully.more-magic.net>
-Date: Thu, 21 Jul 2016 20:41:48 +0200
-From: Peter Bex <peter@...e-magic.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/21/7
+Message-ID: <CAKws9z2UE3koezOFsRzauDtsAC1aOm_kfkJYDc=P8wXJxRggRA@mail.gmail.com>
+Date: Mon, 21 Nov 2016 14:24:40 -0500
+From: Scott Arciszewski <scott@...agonie.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: A CGI application vulnerability for PHP, Go, Python and others
+Subject: Re: WordPress (all versions): SPOF, RCE, and Negligence
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 18, 2016 at 08:17:03AM -0600, Kurt Seifried wrote:
-> Essentially there are two main cases where a CVE is assigned for the
-> httpoxy issue:
-> 
->    1.
-> 
->    A web server, programming language or framework (and in some limited
->    situations the application itself) sets the environmental variable
->    HTTP_PROXY from the user supplied Proxy header in the web request, or sets
->    a similarly used variable (essentially when the request header turns from
->    harmless data into a potentially harmful environmental variable)
+On Mon, Nov 21, 2016 at 11:32 AM, Ben Tasker <ben@...tasker.co.uk> wrote:
+> I assume you're talking about the PHP versions that Wordpress supports (as
+> opposed to on their update server?).
 
-This isuee affects the CHICKEN egg "spiffy-cgi-handlers", which is an
-optional add-on to add CGI and FastCGI support to the Spiffy web server.
-Could I have a CVE for this issue?
+Yes. Raise the minimum PHP version supported by WordPress and get
+everyone onto non-EOL'd
+versions of PHP. Among other benefits, you can then move every
+WordPress blog to use
+password_hash() and password_verify() instead of their current
+situation (i.e. 8192 rounds of
+salted MD5 for password storage).
 
-All versions before 0.5 are affected.  An announcement was made to
-http://lists.gnu.org/archive/html/chicken-announce/2016-07/msg00000.html
+I'm not kidding.
+https://paragonie.com/blog/2016/08/on-insecurity-popular-open-source-php-cms-platforms#wordpress-password-storage
 
-The spiffy-cgi-handlers code was part of the spiffy web server before
-version 5.0, so earlier versions of that egg were also affected.  Strictly
-speaking, I think this deserves another CVE because it's a different
-piece of software.
+On Mon, Nov 21, 2016 at 1:26 PM, Michael Babker
+<michael.babker@...il.com> wrote:
+> On Mon, Nov 21, 2016 at 11:32 AM, Ben Tasker <ben@...tasker.co.uk> wrote:
+>
+>> There was a similar issue a while back where Joomla! decided to run a
+>> version check to ensure PHP version was >= 5.3.10. It broke a number of
+>> sites, and the most common fix seems to have been a core-hack to disable
+>> that check. The logic for inserting that check was reasonable, but lacked
+>> consideration of who the market actually is.
+>
+>
+> While I can somewhat understand why the Linux distributions choose the
+> model they use for their "long term support" packages, it honestly does a
+> disservice to those of us who now have to defensively code around it.  We
+> can no longer rely on a package's version to accurately represent the state
+> of the code base.
+>
+> I was Joomla's release lead at the time this decision was made.  We did not
+> arbitrarily choose a PHP version number, arbitrarily locking out vendor
+> modified PHP builds distributed with the LTS distros, just because we
+> wanted to.  We first attempted to implement bcrypt password hashing using
+> feature detection, after hacking the polyfill library to lower its PHP
+> minimum from 5.3.7 (which blocked some of its checks) to be able to try and
+> support the PHP 5.3.3 build the distros have elected to stabilize on and
+> modify.  This effort failed catastrophically, and our project collectively
+> decided we could not revert support for bcrypt hashed passwords and could
+> not try to support this feature using feature detection mechanisms; it was
+> too unreliable and we elected therefore to lock on a version number which
+> we knew would satisfy all of our requirements natively.  We could have
+> locked to 5.3.7 but elected to bump to 5.3.10 due to the security issues
+> fixed between those releases and at that point Ubuntu's LTS was at that
+> version so it helped us to make a logical choice.
+>
+> While I understand where you are coming from, to be quite frank, I don't
+> believe the PHP ecosystem and its major players can continue to cater to
+> these modified PHP builds as might have been expected in years past.
 
->    2.
-> 
->    A web application makes use of HTTP_PROXY or similar variable unsafely
->    (e.g. fails to check the request type) resulting in an attacker controlled
->    proxy being used (essentially when HTTP_PROXY is actually used unsafely)
+There is a similar problem with Linux distributions shipping stale
+versions of libsodium:
+http://stackoverflow.com/questions/40684596/libsodium-for-php-is-not-working
 
-I believe this affects the CHICKEN egg "http-client", when used in a CGI
-context when the calling server unsafely passes "Proxy" as "HTTP_PROXY".
-Could I have a CVE for this issue as well?
+The only reliable workaround involves **installing gcc to production
+then compiling libsodium from source**. And then uninstalling gcc
+because you probably shouldn't have that installed in a production
+environment. Naturally, a lot of people don't feel comfortable with
+that.
 
-It affects http-client versions before 0.10 (the very first version, 0.1,
-is not affected because it had no proxy support).
+Linux distros that provide PHP 5.3, 5.4, or 5.5 are a problem, but
+they really shouldn't pin the patch number. Just pin the major and
+minor versions. Offer 5.6.x, not 5.6.28.
 
-An announcement for this is included in the message at the
-aforementioned URL.
+For Debian users, Guillaume Pleissis does it right. Follow his
+example, please:
+https://www.dotdeb.org/2016/11/10/php-7-0-13-for-jessie/
 
-Cheers,
-Peter Bex
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
