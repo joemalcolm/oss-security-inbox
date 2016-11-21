@@ -1,4 +1,9 @@
-Received: (qmail 11468 invoked by uid 550); 25 Sep 2023 19:24:36 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2133" "Monday" "21" "November" "2016" "12:26:02" "-0600" "Michael Babker" "michael.babker@gmail.com" "<CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com>" "39" "Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence" "^Date:" nil nil "11" "2016112118:26:02" "[oss-security] WordPress (all versions): SPOF, RCE, and Negligence" (number mark "        michael.babk Nov 21   39/2133  " thread-indent "\"Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence\"\n") "<CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>" ("<CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>" "<CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 28450 invoked by uid 550); 21 Nov 2016 18:44:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,106 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 19863 invoked from network); 21 Nov 2016 18:26:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=8I2K8YeVkketPjOPJNe5uZ6eaAZOaJTpw4Tg2u7017o=;
+        b=bG+Bql/d8vOu64UZ6R5kNWbxhDRDoIPvGwo9v2d2xHxXrWebohHywX7/1m+lqjX660
+         riFQgNN39gHJc8twJoCghxy60CL3T69sUm9hObsZleUEkKtyb1JXVtDcvDjauHufRkyw
+         Own4FHBgSy6zuaoHgUqoDDbTGx8sNt10v+Go4jO6u1HC+yl/1LW+RpJgPthqorVEzP7z
+         8dbp7mm6lehWCm58ZZB17GJ3RsMkiCpWQTd2iJ4B+EhsqtgyZVrAs0osyjR++9rSef7x
+         cXaI82nrQaIlHuzZi/vohaMJZck74nv699Rc7dklp4WfmYNN+qJroGOTrbbUkbMWMZuj
+         aOBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=8I2K8YeVkketPjOPJNe5uZ6eaAZOaJTpw4Tg2u7017o=;
+        b=WuH1egFATjA93H/EK+ymYUd+9gAR2yflZ38odLMKeAlR1h8uu6FuwHIM8Vfhay042Q
+         vsDuq/EtNr8lvbcGrnkP0POXcsJS2Z17OYypn86+PT2MVHtwcKGb7LjDUvesSQfLQfqi
+         P0kEYtyTaAaOn3MkipBPj8noPCnvWaKMweb8dkjE3FDOWyfBrn1hGoqNM1DZAL/WWqZu
+         cXsAWfiqkG37bRofEJaWmAPVciOG2uhpYMtDLPSdOEmfv4Z5WN+jo1o5p436l68sy9lp
+         8keTJshmEvnCAU82raFx5NKeFriWXPK9CUV/SIBRYzWiaMYUT5ALO+gaaqbdcR4T+pVg
+         /KUg==
+X-Gm-Message-State: AKaTC03C8JSXb46HYUXYs1zyAApnhtpwEQ1GgOAHoxq77Y6/9cWIY4SaX/5pFbvm+RsNmV1ulncSwSnU0ZMN3A==
+X-Received: by 10.129.85.9 with SMTP id j9mr14573922ywb.283.1479752763151;
+ Mon, 21 Nov 2016 10:26:03 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>
+References: <CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>
+ <CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>
+Message-ID: <CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113f16d6cd9ec70541d3c9bc
+Date: Mon, 21 Nov 2016 12:26:02 -0600
+From: Michael Babker <michael.babker@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9921 invoked from network); 25 Sep 2023 19:23:54 -0000
-Date: Mon, 25 Sep 2023 21:23:34 +0200
-From: Solar Designer <solar@openwall.com>
+Subject: Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence
 To: oss-security@lists.openwall.com
-Message-ID: <20230925192334.GA8663@openwall.com>
-References: <6EBBC128-36D2-4262-88F4-6889E9E6DE1E@mnx.io> <20230915210906.GA22532@openwall.com> <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io> <20230922172755.GA18909@openwall.com> <20230922214006.GA20989@openwall.com> <03F95D3B-FB70-46AC-AC19-9709599B8318@mnx.io>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <03F95D3B-FB70-46AC-AC19-9709599B8318@mnx.io>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] illumos (or at least danmcd) membership in the distros list
 
-On Mon, Sep 25, 2023 at 02:48:45PM +0000, Dan McDonald wrote:
-> On Sep 22, 2023, at 5:40 PM, Solar Designer <solar@openwall.com> wrote:
-> > 
-> > So I think we can accept OmniOS as new distros list member, if that's
-> > desired and Dan would represent OmniOS on the list.  This subscription
-> > on its own would not allow sharing of info with other illumos distros.
-> 
-> I've just consulted with one of the OmniOS leaders, and OmniOS is okay with me
-> being able to join the list on their behalf.
-> 
-> > In special cases, Dan would be able to ask the issue reporters their
-> > explicit permission to share with other illumos distros.
-> 
-> I will be judicious here.
-> 
-> > If those distros do typically need the info, they may request direct
-> > list membership.
-> > 
-> > How does this sound to you, Dan?
-> 
-> I accept.
+--001a113f16d6cd9ec70541d3c9bc
+Content-Type: text/plain; charset=UTF-8
 
-Great.  I've just subscribed Dan to the distros list (Dan provided the
-key to me off-list).
+On Mon, Nov 21, 2016 at 11:32 AM, Ben Tasker <ben@bentasker.co.uk> wrote:
 
-Dan, although not strictly required, are there any contributing-back
-task(s) you'd help with? -
+> There was a similar issue a while back where Joomla! decided to run a
+> version check to ensure PHP version was >= 5.3.10. It broke a number of
+> sites, and the most common fix seems to have been a core-hack to disable
+> that check. The logic for inserting that check was reasonable, but lacked
+> consideration of who the market actually is.
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-Most tasks requiring list membership are best handled by someone on
-linux-distros (so that the member distro sees all issues, including
-Linux-only ones), but I've recently added some to:
+While I can somewhat understand why the Linux distributions choose the
+model they use for their "long term support" packages, it honestly does a
+disservice to those of us who now have to defensively code around it.  We
+can no longer rely on a package's version to accurately represent the state
+of the code base.
 
-Administrative tasks mostly unrelated to (linux-)distros lists (but
-relevant to the wider community)
+I was Joomla's release lead at the time this decision was made.  We did not
+arbitrarily choose a PHP version number, arbitrarily locking out vendor
+modified PHP builds distributed with the LTS distros, just because we
+wanted to.  We first attempted to implement bcrypt password hashing using
+feature detection, after hacking the polyfill library to lower its PHP
+minimum from 5.3.7 (which blocked some of its checks) to be able to try and
+support the PHP 5.3.3 build the distros have elected to stabilize on and
+modify.  This effort failed catastrophically, and our project collectively
+decided we could not revert support for bcrypt hashed passwords and could
+not try to support this feature using feature detection mechanisms; it was
+too unreliable and we elected therefore to lock on a version number which
+we knew would satisfy all of our requirements natively.  We could have
+locked to 5.3.7 but elected to bump to 5.3.10 due to the security issues
+fixed between those releases and at that point Ubuntu's LTS was at that
+version so it helped us to make a logical choice.
 
-1. Help ensure that each message posted to oss-security contains the
-most essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or by
-creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a "reply" posting when necessary
-- primary: Oracle Solaris, backup: Container-Optimized OS
+While I understand where you are coming from, to be quite frank, I don't
+believe the PHP ecosystem and its major players can continue to cater to
+these modified PHP builds as might have been expected in years past.
 
-2. Develop tools to help with the above (crawl URLs in messages and
-produce draft follow-ups for manual editing+posting)
-
-3. Monitor for Open Source security issues/topics published elsewhere,
-identify which of these would fit, and bring them to oss-security
-
-4. Develop tools to help with the above (automatically monitor Open
-Source projects' and other relevant third-party mailing lists, websites,
-social media, source code repositories, releases for likely Open Source
-security issues/topics)
-
-5. Directly encourage upstreams, researchers, umbrella organizations,
-packagers, distros, etc. to report to the lists
-
-6. Suggest and provide examples of quality improvements for such reports
-(beyond them containing the most essential information)
-
-7. Set up and maintain more reliable oss-security Twitter/Mastodon
-feed(s) (the existing Twitter feed occasionally misses messages)
-
-8. Set up and maintain new curated "best of oss-security"
-Twitter/Mastodon feed(s)
-
-Out of these, items 1 and 3 existed before, and I see Alan Coopersmith
-from Oracle Solaris help with item 3 (thank you, Alan!), e.g.:
-
-https://www.openwall.com/lists/oss-security/2023/07/27/1
-https://www.openwall.com/lists/oss-security/2023/06/20/6
-https://www.openwall.com/lists/oss-security/2023/04/12/4
-
-but somehow not with item 1 - maybe it's some confusion, which we should
-correct?  I don't recall Container-Optimized OS actually doing anything
-on item 1, where they're backup.  Please correct me if I'm wrong (just
-didn't notice/recall something).  Maybe we should free item 1 up for new
-volunteers now.
-
-For many of these, the primary/backup notion doesn't fully apply -
-there's simply enough work for more than one volunteer person/team.
-
-If anyone wants to help with any of these, please reply.
-
-Alexander
+--001a113f16d6cd9ec70541d3c9bc--
