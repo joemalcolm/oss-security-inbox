@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1418" "Wednesday" "1" "April" "2020" "10:57:20" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGDCati--2zruoauZNU0Lta66Y3VmYX6EzGyznvRu0irhg@mail.gmail.com>" "46" "[oss-security] CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack" nil nil nil "4" "2020040109:57:20" "[oss-security] CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack" (number mark "U       coheigea@apa Apr  1   46/1418  " thread-indent "\"[oss-security] CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["645" "Monday" "21" "November" "2016" "22:28:16" "+0200" "Henri Salo" "henri@nerv.fi" "<20161121202816.GA26926@tunkki>" "14" "Re: [oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins" nil nil nil "11" "2016112120:28:16" "[oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins" (number mark "U       henri@nerv.f Nov 21   14/645   " thread-indent "\"Re: [oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins\"\n") "<5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>" ("<d5b78405-740d-9ad8-3468-ebf402ed9237@securify.nl>" "<5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32692 invoked by uid 550); 1 Apr 2020 11:02:58 -0000
+Received: (qmail 31845 invoked by uid 550); 21 Nov 2016 20:28:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9746 invoked from network); 1 Apr 2020 09:57:44 -0000
-X-Gm-Message-State: ANhLgQ32E6FIDMCP+acJ82ap3DmbiNTNnwuvpvjC9uJTtZqXIPthB4iR
-	4sColRTWY6BJ1PwLpR1peEWT6SfZ3mVShPzYwJQ=
-X-Google-Smtp-Source: ADFU+vu41654TvX4iNlwtXt4W4ODtBGg753QlJvL/zHZ8xCVIaTss2QAX6BvUnQOuQBf3xRbyIULIbQo4DysxkGIkVo=
-X-Received: by 2002:a05:6638:11c5:: with SMTP id g5mr17236500jas.53.1585735051413;
- Wed, 01 Apr 2020 02:57:31 -0700 (PDT)
+Received: (qmail 31826 invoked from network); 21 Nov 2016 20:28:30 -0000
+X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
+Date: Mon, 21 Nov 2016 22:28:16 +0200
+From: Henri Salo <henri@nerv.fi>
+To: Scott Gravelle <scottg@imprezzio.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20161121202816.GA26926@tunkki>
+References: <d5b78405-740d-9ad8-3468-ebf402ed9237@securify.nl>
+ <5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>
 MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Wed, 1 Apr 2020 10:57:20 +0100
-X-Gmail-Original-Message-ID: <CAB8XdGDCati--2zruoauZNU0Lta66Y3VmYX6EzGyznvRu0irhg@mail.gmail.com>
-Message-ID: <CAB8XdGDCati--2zruoauZNU0Lta66Y3VmYX6EzGyznvRu0irhg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000072928105a237b679"
-Subject: [oss-security] CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] Multiple XSS vulnerabilities affecting five
+ WordPress Plugins
 
---00000000000072928105a237b679
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Nov 21, 2016 at 04:56:13PM +0000, Scott Gravelle wrote:
+> Any plans to get CVEs assigned to these vulnerabilities you guys found?  Our
+> vulnerability scanner does not have a feature to filter off OVE
 
-CVE-2020-1954: Apache CXF JMX Integration is vulnerable to a MITM attack
+Maybe you should start handling OVE and other IDs too. Two reasons:
 
-Severity: Moderate
+1) MITRE is not always assigning CVEs for WordPress plugin and theme
+vulnerabilities for unknown reason. It's not like the CVEs are running out
+2) MITRE is not assigning CVEs to all software that has previously received a
+CVE, silently dropping the software to out-of-scope area. Example case:
+http://www.openwall.com/lists/oss-security/2016/11/10/6
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-
-This vulnerability affects all versions of Apache CXF prior to 3.3.6 and
-3.2.13.
-
-Description:
-
-Apache CXF has the ability to integrate with JMX by registering an
-InstrumentationManager extension with the CXF bus. If the
-"createMBServerConnectorFactory" property of the default
-InstrumentationManagerImpl is not disabled, then it is vulnerable to a
-man-in-the-middle (MITM) style attack.
-
-An attacker on the same host can connect to the registry and rebind the
-entry
-to another server, thus acting as a proxy to the original. They are then
-able
-to gain access to all of the information that is sent and received over JMX.
-
-Mitigation:
-
-Users of Apache CXF that use the InstrumentationManagerImpl should update to
-either 3.3.6 or 3.2.13. Alternatively, set the
-createMBServerConnectorFactory
-property to false and use the default JVM JMX remote capabilities instead.
-From
-CXF 3.4.0, the createMBServerConnectorFactory property will be removed
-altogether.
-
-Credit:
-
-Jonathan Gallimore, Tomitribe and Colm O hEigeartaigh, Talend.
-
-Reference:
-http://cxf.apache.org/security-advisories.data/CVE-2020-1954.txt.asc?version=1&modificationDate=1585730169000&api=v2
-
---00000000000072928105a237b679--
+-- 
+Henri Salo
