@@ -1,59 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/3
-Message-ID: <CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>
-Date: Mon, 12 Sep 2016 06:09:10 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/6
+Message-ID: <alpine.GSO.2.20.1611220833280.19696@freddy.simplesystems.org>
+Date: Tue, 22 Nov 2016 08:40:15 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
+Subject: Libtiff 4.0.7 release fixes many security issues
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
-CVE: CVE-2016-6662
-Severity: Critical
-Affected MySQL versions (including the latest):
-<= 5.7.15
-<= 5.6.33
-<= 5.5.52
+It is perhaps not broadly known that libtiff 4.0.7 was released on 
+November 20th, and it addresses a great many security issues.
 
-Discovered by:
-Dawid Golunski
-http://legalhackers.com
+The release notes may be read at 
+"http://www.simplesystems.org/libtiff/v4.0.7.html".
 
-An independent research has revealed multiple severe MySQL vulnerabilities.
-This advisory focuses on a critical vulnerability with a CVEID of CVE-2016-6662.
-The vulnerability affects MySQL servers in all version branches
-(5.7, 5.6, and 5.5) including the latest versions, and could be exploited by
-both local and remote attackers.
-Both the authenticated access to MySQL database (via network
-connection or web interfaces such as phpMyAdmin) and SQL Injection
-could be used as exploitation vectors.
+The release notes are based on information which was available when 
+the bug was reported or the commit made.  If there was a CVE number, 
+it was made note of.  If there was a vendor issue number, that was 
+made note of.  Many issues may have had CVEs assigned later and (due 
+to lack of resources and incomplete information) we did not attempt to 
+investigate and back-annotate the change logs with CVE numbers.
 
-Successful exploitation could allow attackers to execute arbitrary code with
-root privileges which would then allow them to fully compromise the server on
-which an affected version of MySQL is running.
-
-This advisory provides a (limited) Proof-Of-Concept MySQL exploit
-which demonstrates how Remote Root Code Execution could be achieved by
-attackers.
-Full PoC (which works on default installations without the need for
-the attacker to find writable config files) will be provided later on
-to give users a chance to react to this advisory as the issue has not
-been patched by all the
-affected vendors yet despite efforts.
-
-The exploitation is interesting in the way that it involves an
-oldschool LD_PRELOAD environment variable and that it targets a
-service that doesn't
-serve requests as root but could still be tricked to get root RCE when
-restarted.
-Might give you strange feelings when restarting mysql service the next time ;)
-
-The advisory is available at:
-
-http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
-
-
+Bob
 -- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
