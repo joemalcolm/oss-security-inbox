@@ -1,47 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/18/1
-Message-Id: <20160618195224.BFA2A33201D@smtpvbsrv1.mitre.org>
-Date: Sat, 18 Jun 2016 15:52:24 -0400 (EDT)
-From: cve-assign@...re.org
-To: scott@...agonie.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Simple Machines Forums - PHP Object Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/4
+Message-ID: <20161122111332.4a850849@pc1>
+Date: Tue, 22 Nov 2016 11:13:32 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: WordPress (all versions): SPOF, RCE, and Negligence
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> The first one appears to have been fixed in the release-2.1 branch, but the
-> other one still exists.
+Sorry, but I find a lot of your statements very questionable.
 
-> https://github.com/SimpleMachines/SMF2.1/blob/404fd5347951652624dfb72304ee38fcab98378f/Sources/Packages.php#L863-L873
+On Mon, 21 Nov 2016 11:54:33 -0500
+Scott Arciszewski <scott@...agonie.com> wrote:
 
-Use CVE-2016-5726.
+> Consequently, the WordPress update server is one of the largest single
+> points of failure (SPOF) on the Internet.
+
+Yeah, just like the update servers from Microsoft (which are definitely
+a bigger POF). Or Apple. Or Google. Or Samsung. Or Mozilla.
+
+Granted, having signatures as an additional protection on top of TLS
+improves security, but it's an unfortunate fact that update
+infrastructure is a big attack surface and a complicated problem.
+Signatures can only change a single point of failure to two points of
+failure.
+The solution is probably something along the lines of transparency logs
+and for binary software reproducible builds, but nobody has anything in
+that space that works today.
+
+Wordpress could do better in terms of security with some issues, e.g. I
+find it disappointing that they don't seem to show any interest in
+deploying CSP.
+But the fact that Wordpress has auto updates at all imho puts it
+in front of every other CMS out there in terms of security.
+For all the others they basically expect their users to manually
+install updates, sometimes within hours as could've been seen with
+every RCE in joomla or drupal that was discovered in the past.
+Wordpress having an auto update has probably protected millions of
+webpages from being compromised.
 
 
-> https://github.com/SimpleMachines/SMF2.1/blob/19ee85ff8761b792ea3e9ed630a947f45f93ee68/Sources/LogInOut.php#L125-L129
 
-Use CVE-2016-5727.
+-- 
+Hanno Böck
+https://hboeck.de/
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXZaYTAAoJEHb/MwWLVhi2/+YP+wc2CtBwbz9Qs67YW8t1UXuS
-wxH2Dw7r3VLuGmD5UJAZBYt4+7kGd8FdMijD4ZNT3EdfraEkD45u8sXmbx0P0y7E
-qX178dTVoi3h7sJHlTOa5agRmGqS1uLbzWWxXSolAU8X6/FFO/7/cTOJBCVW0z02
-R1GNIVuf8mJA0mgGZ3DDJy0RV/dnco3VO4LoRKy2uQHnz3XHWaKnZkrmkBmt+eGK
-ZevSmz4OVVf6B/w8rx4BcAajdlGWS89epGZSeAPnZeTPeixQE7E6uOhRaGPif0h4
-0JP4GsDbKNUjod7DnVEKkDV0bHxc2Z+SEQyBihahtvdSxwe2W0N5ZdMejHbw2f8f
-kN+0EYIGbOdPJYAP0c35PKLyfhlDrUwF/iPNx2k+tTls1T8qX//gb8PuZoF0k2Ro
-zO9MYrZTlM819fN1Y4oqpUsB1dhDgcPstQx8ptqI6KDVJP61KUgRv/ADga9cLulo
-nYPDfcqd+swJUZxRnUgeJuwmsYDF8BZTUQJmR48wTiBCQEqrQN4PSyD11RZLcJUv
-lUrKhv6zINxknlNMPyb72NMIcSfW1iMwc0SiuYNElY+pSliBrPyZ0jC8+Bhpt0QL
-eFvKwmGRTnoWp6Ly7iK2nI8uwp5zS0bCKrjw7ZpVmh97vslA2iA+7yxohqNV7po5
-mGc8to+TR4jrcCoFZy2E
-=SRzi
------END PGP SIGNATURE-----
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
