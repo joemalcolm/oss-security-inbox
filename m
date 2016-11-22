@@ -1,57 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/1
-Message-Id: <20161005020829.767928BC2DD@smtpvmsrv1.mitre.org>
-Date: Tue,  4 Oct 2016 22:08:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: aacid@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@....org
-Subject: Re: KMail vulnerabilites: need 3 CVE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/11
+Message-Id: <E1c99mV-00089H-W1@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:35 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 195 (CVE-2016-9383) - x86 64-bit bit test instruction emulation broken
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> KMail: HTML injection in plain text viewer
+            Xen Security Advisory CVE-2016-9383 / XSA-195
+                              version 3
 
-Use CVE-2016-7966.
+           x86 64-bit bit test instruction emulation broken
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The x86 instructions BT, BTC, BTR, and BTS, when used with a
+destination memory operand and a source register rather than an
+immediate operand, access a memory location offset from that specified
+by the memory operand as specified by the high bits of the register
+source.
+
+When Xen needs to emulate such an instruction, to efficiently handle
+the emulation, the memory address and register operand are
+recalculated internally to Xen.  In this process, the high bits of an
+intermediate expression were discarded, leading to both the memory
+location and the register operand being wrong.
+
+The wrong memory location would have only a guest local effect (either
+access to an unintended location, or a fault delivered to the guest),
+whereas the wrong register value could lead to either a host crash or
+an unintended host memory access.
+
+IMPACT
+======
+
+A malicious guest can modify arbitrary memory, allowing for arbitrary
+code execution (and therefore privilege escalation affecting the whole
+host), a crash of the host (leading to a DoS), or information leaks.
+
+The vulnerability is sometimes exploitable by unprivileged guest user
+processes.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+The vulnerability is only exposed to x86 guests running in 64-bit mode.
+
+On Xen 4.6 and earlier the vulnerability is exposed to all guest user
+processes, including unprivileged processes, in such guests.
+
+On Xen 4.7 and later, the vulnerability is exposed only to guest user
+processes granted a degree of privilege (such as direct hardware
+access) by the guest administrator; or, to all user processes when the
+when the VM has been explicitly configured with a non-default cpu
+vendor string (in xm/xl, this would be done with a `cpuid=' domain
+config option).
+
+The vulnerability is not exposed to 32-bit PV guests.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by George Dunlap of Citrix, using American
+Fuzzy Lop v2.35b.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa195.patch       xen-unstable, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa195*
+6ab5f13b81e3bbf6096020f4c3beeffaff67a075cab67e033ba27d199b41cec1  xsa195.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-> KMail: JavaScript access to local and remote URLs
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Use CVE-2016-7967.
-
-
-> KMail: JavaScript execution in HTML Mails
-
-Use CVE-2016-7968.
-
-
-> Fixes for them are already in our various of our repos
-
-We think you mean that this includes fixes within the past week or so,
-such as (among others) the
-https://quickgit.kde.org/?p=messagelib.git&a=shortlog remove/disable
-commits related to JavaScript.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX9GBAAAoJEHb/MwWLVhi290AP/37+M4O8X5a1ssxCzi6s59GL
-rJbpY3mLpWZ31r44TcgjvIVj29oP8FbjCyMzJvl7TpnjxNQt4B3sISzsXpmnuXXT
-Lgc6xxRlqA2vOk0GU7FRb9l75pYj7o1AOATP8ARwfyX2bnEWf/308HbTfv8oT1ox
-y9o/4as4qJtssNR87IORwvcUmaHsMajLTy2N4tmMZE7eAWDNoJaQRpzvi7WYwZvo
-YYXDID7JichQcvSH11hJ1dcchEdsQLscixgq4mUosxU62uDTvkfRjCrgdsOtZndN
-p+WJ/S+DwMVTFej8R4btEdth6KYaSIfTNMbl1iMPdNVyOOJKO1UMLQPXYKgSw7fK
-5RZN1j98KCGec0hP9msukF+/8/8W2Arp3AxWX2TP+4YcuNTuCWjwctxqrSSVdfju
-GANZqCcTLBXcDxdfrzyOOSWASMH0ud5zQvGrfASIwPn6D/EJj4JUQgp9Qae1c2hp
-2/IIUlnlyY3Dcy0ho5AediKu3Aa1kH2Qascn8HdFbF8BRrj/3iND3tD4uOWL5NSu
-FeezAOYcdiUKFOjU0lGoOjBdPYsFZN1VZTViixQ0+r3LUs0n/ufN3hSxCC8mDfNU
-vsWN77/ahR0AYimNp1zxjTdvjmNrYuaoUIuKFgC9uRehyEbvLxd2Z9c8fJb6x+A/
-lFkx5UJwcRVWmU2ELitN
-=EKKi
+iQEcBAEBAgAGBQJYNDL4AAoJEIP+FMlX6CvZnzYH/RtmqS8kpqLKShvrQx5Ueh+M
+LaHBWJiU0z1m9FaF9RvEgfvWpUCcD/qyC4rLHmkwhkyS6aIToh2XVXzQyebIqw/7
+CCDXaY8TkYlLPYRdNseX5X5blpu1EnqW5yQMJz6QkgDK+Qu4F1jDimSd5JffrFkJ
+WkpWwsoppNHwYyaENq59lg7R1WxNq0uSLxMPTnk/RpMmizKyU8gK7RrQWHJNoy6n
+l3vSTKx9sCDo+AgMQgbDMdpvv1l1It+QcRXXBrBp7qAdz+0H7VRkUFOnBUFMQQo3
+OjmjStKxnE9E7Uh6+373xj2Z6Nts+wkD72vRHHg/1KTZ5FN5XnS2CvPDNuGZD50=
+=AtOu
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa195.patch" of type "application/octet-stream" (1734 bytes)
