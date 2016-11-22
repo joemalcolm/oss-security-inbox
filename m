@@ -1,148 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/4
-Message-ID: <61694157.NErDMq1P2B@arcadia>
-Date: Thu, 01 Dec 2016 14:39:38 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/14
+Message-Id: <E1c99mf-0008E2-TQ@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 198 (CVE-2016-9379,CVE-2016-9380) - delimiter injection vulnerabilities in pygrub
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one. Thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+     Xen Security Advisory CVE-2016-9379,CVE-2016-9380 / XSA-198
+                              version 3
 
-A fuzz on an updated version which includes the fix for CVE-2016-9556, 
-revealed that the issue is still present.
+             delimiter injection vulnerabilities in pygrub
 
-The complete ASan output:
+UPDATES IN VERSION 3
+====================
 
-# identify $FILE
-==30875==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x610000007cc0 at pc 0x7f897b123267 bp 0x7fff44a4ba70 sp 0x7fff44a4ba68
-READ of size 4 at 0x610000007cc0 thread T0
-    #0 0x7f897b123266 in IsPixelGray /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/./MagickCore/pixel-
-accessor.h:507:30
-    #1 0x7f897b123266 in IdentifyImageGray /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/attribute.c:677
-    #2 0x7f897b123e2d in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/attribute.c:820:7
-    #3 0x7f897b3ca308 in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/identify.c:527:8
-    #4 0x7f897ab0e591 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickWand/identify.c:336:22
-    #5 0x7f897ab85ee6 in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickWand/mogrify.c:183:14
-    #6 0x50a495 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/utilities/magick.c:145:10
-    #7 0x50a495 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/utilities/magick.c:176
-    #8 0x7f89797c061f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #9 0x419d28 in _init (/usr/bin/magick+0x419d28)
+Public release.
 
-0x610000007cc0 is located 0 bytes to the right of 128-byte region 
-[0x610000007c40,0x610000007cc0)
-allocated by thread T0 here:
-    #0 0x4d3685 in posix_memalign /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:130
-    #1 0x7f897b44a619 in AcquireAlignedMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/memory.c:258:7
-    #2 0x7f897b15840e in AcquireCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/cache.c:4636:33
-    #3 0x7f897b15840e in SetPixelCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/cache.c:4748
-    #4 0x7f897b14e891 in GetVirtualPixelsFromNexus /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/cache.c:2629:10
-    #5 0x7f897b16d90e in GetCacheViewVirtualPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/cache-
-view.c:664:10
-    #6 0x7f897b122878 in IdentifyImageGray /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/attribute.c:672:7
-    #7 0x7f897b123e2d in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/attribute.c:820:7
-    #8 0x7f897b3ca308 in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickCore/identify.c:527:8
-    #9 0x7f897ab0e591 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickWand/identify.c:336:22
-    #10 0x7f897ab85ee6 in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/MagickWand/mogrify.c:183:14
-    #11 0x50a495 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/utilities/magick.c:145:10
-    #12 0x50a495 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/utilities/magick.c:176
-    #13 0x7f89797c061f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+ISSUE DESCRIPTION
+=================
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-gfx/imagemagick-7.0.3.8/work/ImageMagick-7.0.3-8/./MagickCore/pixel-
-accessor.h:507:30 in IsPixelGray
-Shadow bytes around the buggy address:
-  0x0c207fff8f40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c207fff8f50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c207fff8f60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c207fff8f70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c207fff8f80: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-=>0x0c207fff8f90: 00 00 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa
-  0x0c207fff8fa0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c207fff8fb0: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
-  0x0c207fff8fc0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c207fff8fd0: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-  0x0c207fff8fe0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30875==ABORTING
+pygrub, the boot loader emulator, fails to quote (or sanity check) its
+results when reporting them to its caller.
 
-Affected version:
-7.0.3.8
+pygrub supports a number of output formats.  When the S-expression
+output format is requested, putting string quotes and S-expressions in
+the bootloader configuration file can produce incorrect output.
+(CVE-2016-9379)
 
-Fixed version:
-N/A
+When the nul-delimited output format is requested, nul bytes in the
+bootloader configuration file can produce an ambiguous or confusing
+output file, which is interpreted by libxl in a vulnerable way.
+(CVE-2016-9380)
 
-Commit fix:
-N/A
+The existing bootloader config interpreters all read input in a
+line-based way from their bootloaders, and none of them support any
+kind of escaping.  So the newline-delimited output format is safe.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+The attacker can use this to cause the toolstack to treat any file
+accessible to the toolstack as if it were the guest's initial ramdisk
+file.  The file contents are provided to the guest kernel; also,
+normally, these files are deleted by the toolstack as the guest starts
+to boot; alternatively they may be deleted later.
 
-CVE:
-N/A
+IMPACT
+======
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00090-imagemagick-heapoverflow-IsPixelGray
+A malicious guest administrator can obtain the contents of sensitive
+host files (an information leak).
 
-Timeline:
-2016-12-01: bug re-discovered and reported to upstream
-2016-12-01: blog post about the issue
+Additionally, a malicious guest administrator can cause files on the
+host to be removed, causing a denial of service.  In some unusual host
+configurations, ability to remove certain files may be useable for
+privilege escalation.
 
-Note:
-This bug was found with American Fuzzy Lop.
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/12/01/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h-incomplete-fix-for-cve-2016-9556
+VULNERABLE SYSTEMS
+==================
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Xen versions 2.0 and later are vulnerable.
+
+The vulnerability is only exposed to guests configured by the host
+administrator to boot using pygrub.  In the xl and xm domain
+configuration file, this is typically achieved with
+   bootloader="pygrub"
+On x86 this would typically apply only to PV domains.
+
+All systems using xl, libxl, or libvirt are vulnerable to pygrub-using
+guests.
+
+Systems using other (third-party) toolstacks may or may not be
+vulnerable, depending on whether pygrub is configured, and what pygrub
+output format they use.  Please consult your toolstack provider.
+
+
+MITIGATION
+==========
+
+Configuring guests not to use pygrub will avoid the vulnerability.
+
+For x86 PV guests currently using pygrub, booting the guest as HVM
+is often a practical option to avoid pygrub.
+
+
+CREDITS
+=======
+
+This issue was discovered by Daniel Richman and Gábor Szarka of
+the Cambridge University Student-Run Computing Facility.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa198.patch           All Xen versions (at least Xen 4.4 and later)
+
+$ sha256sum xsa198*
+0e4533ad2157c03ab309bd12a54f5ff325f03edbe97f23c60a16a3f378c75eae  xsa198.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+Deployment of the mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because switching away from the use of pygrub would reveal
+where the vulnerability lies.
+
+Deployment of mitigations is permitted only AFTER the embargo ends.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYNDN4AAoJEIP+FMlX6CvZX8AH/1FL3pw4RbbuFd/b23Qmo25U
+F7qELx001C4C+uXtlxaIg6MT467pRphihSkLcLQ2vgIp57iVTXhufc4TVqhdADgp
+bL3h1zd7Ot4f+iA5RYlGIJ4is3I2A6lNvLwydi2PIGgmalSad5B3Ed0vrvRwfLKY
+qpsVm0LrM24aFX2IaygmmziQIQVeXSYpmKmVebOEAFL0uj9g8D3VhgWIMtZxW+9K
+A6c2NTrt01ZbsVRx2wTcRdRhEJLeFbBZOPS9RrbjJzbuFcAzsGR8m/pS4hJBhik/
+9MG4b7FBMYZTaBd4wcbbHM81py1KkcoreC2jL1qb1JMG7BQVP1USdz21rJ05DY8=
+=P2XT
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa198.patch" of type "application/octet-stream" (2189 bytes)
