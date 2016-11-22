@@ -1,58 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/16
-Message-Id: <20160728210138.B68BC42E01D@smtpvbsrv1.mitre.org>
-Date: Thu, 28 Jul 2016 17:01:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: paps: heap overflow when processing crafted file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/20
+Message-ID: <20161122161915.wut6macbvu4ggdpn@freya.jamessan.com>
+Date: Tue, 22 Nov 2016 11:19:15 -0500
+From: James McCoy <jamessan@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: vim/neovim: Arbitrary command execution (CVE-2016-1248)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-> it was discovered during fuzzing that a crafted file causes an heap overflow
-> in paps ( https://sourceforge.net/projects/paps/ ).
+CVE-2016-1248 was assigned for a vulnerability in Vim which would allow
+arbitrary shell commands to be run if a user opened a file with a
+malicious modeline.  This is due to lack of validation of values for a
+few options.  Those options' values are then used in Vim's scripts to
+build a command string that's evaluated by :execute, which is what
+allows the shell commands to be run.
 
-We would need someone to contribute additional risk analysis before we
-would assign a CVE ID. We realize that
-https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
-says "It provides both a stand alone command line tool as well as a
-library." The https://sourceforge.net/p/paps/code/ci/master/tree/src/
-code has the library (in libpaps.c) whereas the
-https://github.com/dov/paps code does not. In any case,
-https://blogs.gentoo.org/ago/2016/07/28/paps-heap-based-buffer-overflow-in-read_file-paps-c/
-is about a buffer under-read in the read_file function, which is only
-called from main (not called from any library code). Also, the patch
-is apparently only about handling empty files, not about handling any
-other type of crafted file. If the user runs the command-line program
-on an empty file, a "heap-buffer-overflow ... READ of size 1" occurs
-when trying to read the last character of the file to determine if
-it's a \n character. To avoid this impact, the user can simply stop
-running paps on empty files.
+This has been fixed in Vim by patch 8.0.0056[0], and new Windows builds
+of Vim have been published with the fix, however the implications have
+not yet been disclosed.
 
-Because we don't see any other risk, we are not providing a CVE ID at
-this time.
+Since Neovim shares this code, it is also vulnerable.  It is fixed by
+commit 4fad66f[1], but has not yet had a release.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This affects Vim at least as far back as 7.0.  I didn't check any older
+versions.
 
-iQIcBAEBCAAGBQJXmnJYAAoJEHb/MwWLVhi2bCMP/i+FA2Xil4NRi7Qwn+2v+F11
-o3Hl5Ef1Xooj3qPBCpK+Y5bUHRHhAUGD/kwe7DUx4RO96VyBAwKULSnhPz6BvZ87
-8LWGqh0cY6p8+kCZE8yFiSgwOi9MwHz4RMkjsYtsWlVVBtBsqakf7hZ2FZ5x3rRi
-xcjy6AEWpuhFDqFVXzaZm+BaNyn5ZwxuodxM7KPKkp0NM3hWn4Rp+vL2K/d/GI3a
-AvKLOEVZAbJpfXSt5Po86mX0n0Cn5gMFGmCumxsvZoygZLsASgE6F9pPWsg9wOrh
-GwCwL4S2Zk56x9w9j7RK1lX8jwkTW7tqw8YqUePihUDrhkbKhWG7DtOW+7WKi2yP
-MOAl23ODkf71WT9LC7gxtOHSKhN14rr26VpawhLI4YEMXHIcJFTqBaprVUPLcbAb
-m+bR2hFqXmSpYj4CcjIzFp6WvlpTKRJPQWb6+cZtOJmqCpyuG23Uf3tjYqyktYSV
-HXTdmU1s5vmaUGzjh/5OOLXs8CprrmwWTMWvR7x48D+ZW+P+0XVOZ9Hr6NmoJhfp
-XQjUUhLwcNy9RAeiX9wp5o73XoGi+AtkXR9ZvZGjQmsK+e5h52IMZi8eMCqUHkMw
-rlYSQ3eynlNbQEcbi19m2XS40mfyApkIiqylbTDD2WZ6JgqcfUOUAHoAo6DwVeFt
-YhpgVbqRajNuWJco7FBh
-=Q5EF
------END PGP SIGNATURE-----
+This affects all released versions of Neovim.
+
+Thanks to Florian Larysch for discovering this issue.
+
+[0]: https://github.com/vim/vim/releases/tag/v8.0.0056
+[1]: https://github.com/neovim/neovim/commit/4fad66fbe637818b6b3d6bc5d21923ba72795040
+
+Cheers,
+-- 
+James
+GPG Key: 4096R/91BF BF4D 6956 BD5D F7B7  2D23 DFE6 91AE 331B A3DB
+
+View attachment "vim_CVE-2016-1248.patch" of type "text/x-diff" (3946 bytes)
+
+View attachment "neovim_CVE-2016-1248.patch" of type "text/x-diff" (4088 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
