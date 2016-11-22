@@ -1,83 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/11/4
-Message-ID: <20160811175317.GB39068@TC.local>
-Date: Thu, 11 Aug 2016 10:53:17 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2016-6317] Unsafe Query Generation Risk in Active Record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/15
+Message-ID: <7a32e817-529e-e7f6-491a-f990f378ec45@apache.org>
+Date: Tue, 22 Nov 2016 09:58:12 +0000
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2016-6817 Apache Tomcat Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-# Unsafe Query Generation Risk in Active Record
+CVE-2016-6817 Apache Tomcat Information Disclosure
 
-There is a vulnerability when Active Record is used in conjunction with JSON
-parameter parsing. This vulnerability has been assigned the CVE identifier
-CVE-2016-6317.  This vulnerability is similar to CVE-2012-2660, CVE-2012-2694
-and CVE-2013-0155.
+Severity: Important
 
-Versions Affected:  >= 4.2.0
-Not affected:       < 4.2.0, >= 5.0.0
-Fixed Versions:     4.2.7.1
+Vendor: The Apache Software Foundation
 
-Impact
-------
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M11
+Apache Tomcat 8.5.0 to 8.5.6
+Earlier versions are not affected.
 
-Due to the way Active Record interprets parameters in combination with the way that JSON parameters are parsed, it is possible for an attacker to issue unexpected database queries with "IS NULL" or empty where clauses.  This issue does *not* let an attacker insert arbitrary values into an SQL query, however they can cause the query to check for NULL or eliminate a WHERE clause when most users wouldn't expect it. 
+Description
+The HTTP/2 header parser entered an infinite loop if a header was
+received that was larger than the available buffer. This made a denial
+of service attack possible.
 
-For example, a system has password reset with token functionality: 
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M13 or later
+  (Apache Tomcat 9.0.0.M12 has the fix but was not released)
+- Upgrade to Apache Tomcat 8.5.8 or later
+  (Apache Tomcat 8.5.7 has the fix but was not released)
 
-    unless params[:token].nil? 
-      user = User.find_by_token(params[:token]) 
-      user.reset_password! 
-    end 
+Credit:
+This issue was reported as a bug and the security implications
+identified by the Apache Tomcat Security Team.
 
-An attacker can craft a request such that `params[:token]` will return `[nil]`.  The `[nil]` value will bypass the test for nil, but will still add an "IN ('xyz', NULL)" clause to the SQL query. 
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
 
-Similarly, an attacker can craft a request such that `params[:token]` will return an empty hash.  An empty hash will eliminate the WHERE clause of the query, but can bypass the `nil?` check. 
-
-Note that this impacts not only dynamic finders (`find_by_*`) but also relations (`User.where(:name => params[:name])`). 
-
-All users running an affected release should either upgrade or use one of the work arounds immediately. All users running an affected release should upgrade immediately. Please note, this vulnerability is a variant of CVE-2012-2660, CVE-2012-2694, and CVE-2013-0155.  Even if you upgraded to address those issues, you must take action again. 
-
-If this chance in behavior impacts your application, you can manually decode the original values from the request like so: 
-
-    ActiveSupport::JSON.decode(request.body) 
-
-Releases
---------
-The FIXED releases are available at the normal locations. 
-
-Workarounds
------------
-This problem can be mitigated by casting the parameter to a string before passing it to Active Record.  For example: 
-
-    unless params[:token].nil? || params[:token].to_s.empty? 
-      user = User.find_by_token(params[:token].to_s) 
-      user.reset_password! 
-    end 
-
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 4-2-unsafe-query-generation.patch - Patch for 4.2 series
-
-Please note that only the 5.0.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-
-Thanks to joernchen of Phenoelit for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "4-2-unsafe-query-generation.patch" of type "text/plain" (2877 bytes)
-
-Content of type "application/pgp-signature" skipped
