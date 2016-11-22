@@ -1,55 +1,152 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/14/3
-Message-Id: <20160414151642.2DD166C0020@smtpvmsrv1.mitre.org>
-Date: Thu, 14 Apr 2016 11:16:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, donghai.zdh@...baba-inc.com
-Subject: Re: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/13
+Message-Id: <E1c99mc-0008Ck-Ee@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:42 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 197 (CVE-2016-9381) - qemu incautious about shared ring processing
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> Qemu emulator built with the Task Priority Register(TPR) optimizations for
-> 32-bit Windows guests, is vulnerable to a information leakage issue. It could
-> occur while accessing Task Priority Register(TPR).
-> 
-> A privileged user/process inside guest could use this issue to leak host
-> memory bytes.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1313686
-> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01118.html
+            Xen Security Advisory CVE-2016-9381 / XSA-197
+                              version 3
 
->> When processing Task Priorty Register(TPR) access, it could leak
->> automatic stack variable 'imm32' in patch_instruction().
->> Initialise the variable to avoid it.
+             qemu incautious about shared ring processing
 
-Use CVE-2016-4020.
+UPDATES IN VERSION 3
+====================
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/i386/kvmvapic.c but
-that may be an expected place for a later update.
+Added email header syntax to patches, for e.g. git-am.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The compiler can emit optimizations in qemu which can lead to double
+fetch vulnerabilities.  Specifically data on the rings shared between
+qemu and the hypervisor (which the guest under control can obtain
+mappings of) can be fetched twice (during which time the guest can
+alter the contents) possibly leading to arbitrary code execution in
+qemu.
+
+IMPACT
+======
+
+Malicious administrators can exploit this vulnerability to take over
+the qemu process, elevating its privilege to that of the qemu process.
+
+In a system not using a device model stub domain (or other techniques
+for deprivileging qemu), malicious guest administrators can thus
+elevate their privilege to that of the host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions with all flavors of qemu are affected.
+
+Only x86 HVM guests expose the vulnerability.  x86 PV guests do not
+expose the vulnerability.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid the vulnerability.
+
+Enabling stubdomains will mitigate this issue, by reducing the
+escalation to only those privileges accorded to the service domain.
+In a usual configuration, a service domain has only the privilege of
+the guest, so this eliminates the vulnerability.
+
+The vulnerability can be avoided if the guest kernel is controlled by
+the host rather than guest administrator, provided that further steps
+are taken to prevent the guest administrator from loading code into
+the kernel (e.g. by disabling loadable modules etc) or from using
+other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by yanghongke of Huawei Security Test Team.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa197-qemuu.patch         qemu-upstream    xen-unstable, Xen 4.7.x
+xsa197-qemut.patch         qemu-traditional xen-unstable, Xen 4.7.x, Xen 4.6.x
+xsa197-4.6-qemuu.patch     qemu-upstream    Xen 4.6.x
+xsa197-4.5-qemuu.patch     qemu-upstream    Xen 4.5.x
+xsa197-4.5-qemut.patch     qemu-traditional Xen 4.5.x, Xen 4.4.x
+xsa197-4.4-qemuu.patch     qemu-upstream    Xen 4.4.x
+
+$ sha256sum xsa197*
+a7d63958e3d3afc21c0585ec4690886a3191f01127583b4a29766c45fe4dd611  xsa197-4.4-qemuu.patch
+56d037b3eaa0c3f5a7c474ad5087d8a41c2769d0d8b39c8f64699215a33e17a6  xsa197-4.5-qemut.patch
+902836f0e5c6c46193c06f7c133a3bdd59f902ee490b962857640a6cd73e4be7  xsa197-4.5-qemuu.patch
+20a418606f5536ac4fb009f21548a28b1b32dfb08fc97a259c40240d37a2abe8  xsa197-4.6-qemuu.patch
+266996b2b5ac65ded76af63b3d57d4972ab95522b517e7bc9c5ff554d8c2d5e0  xsa197-qemut.patch
+cd08b149c97b3f94dcda14b1f280dbb92911d93ffcd5dbcf5ee5ab2bebdc7878  xsa197-qemuu.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch described above (or others which are
+substantially similar) and the PV guest mitigation are permitted during
+the embargo, even on public-facing systems with untrusted guest users
+and administrators.
+
+HOWEVER deployment of the stubdomain mitigation described above is NOT
+permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+This is because in that case the configuration change may be visible
+to the guest which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXD7OfAAoJEL54rhJi8gl5NBYQAKBSeM2gEBAxQGcp0H36CMHx
-rLWnSGdlLDaM5bv0wnVZcLCu11AB2IXbNuAhYbqVRQXUVVNMjSdqGPLKA6wh2J0D
-jPf7ur2NZ+IkhYMQBbISQo+8OuHq/64BITfw+uIyEpwn/TpemTst0msVE9gTJ307
-0Rv96p7Fr4JhndHp270OdxysYnXl886pBSuh1aQOg0QSdZb1Ij1j85Q5+N6b8VbU
-mVyjRnAMTiVSFVqnED3qxZTJ9ZGrKVXbr470569D7PepR+L5kdG2lN/eeSiBSXKk
-iihqYwmlL21+7dCrJNWDe82UAkk6D1qjXibvpcT4+K890Fw1RSlLQiNNpbX/cVaY
-Tg4dA8txzW7IuU9dHuI8/x1Usg/XLf0YYUghtQ93wjVZqk+AkkZdh4kCwSA7q6QW
-wDWNagwX0FTmRmGPKvHLy5IRGOKhqmQ8IMSOG3/sWG0hbbTBK7xJxh/8hudjk66J
-NaeBosQw7AkUj9QTw/YZk6+yIPlbpEMiiJENMsmkq+cocp2qtu1XPNVf7yODe2Ap
-3B7OheWRaGq9SJZjAbK9PSnDGcZUmmjEHrpJn6m4CpjUWHTw4A1cfCiTgKQRibTO
-TMlR9QoYDL/GEzdm6hi8QrO1gjhIFahtU3jZyek27DF7pSd+UZ0MoizxpCLb5+5X
-kw7IG5V5vr0N+jlmOj64
-=9E7h
+iQEcBAEBAgAGBQJYNDNLAAoJEIP+FMlX6CvZTvUIALi45XVEJv4ZqNsB1kX3mXIF
+5ocmSFCrSDDIcKEg2xQ49PKwqE/ZwMLhKuX0dFi/inidqx7FynYknziaR3svIeir
+ALTDP6Emsk/OB7T4epjGnuFW05RTfkQmwzEyY/XCAJVrJlkzKGh3WYVtwk+/PELT
+3ab9dMEcziaUM+Ax3phJ4PHi315If2rLS4gNfqGO5jv/gnMyXk4DHQ8QZUHIGs4F
+8tA/ATPaZxNK8OIwGEIz32PlLxwWHsQQz6JEAtvNwGDTNMDwlx3RzHSvjJSLOIKB
+Aap6qw4c9olK172LQbvBqvP09Eupi3YSevx3AD0gmqKVwj8ql/lNUSNBf9CSfPc=
+=SBVo
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa197-4.4-qemuu.patch" of type "application/octet-stream" (1853 bytes)
+
+Download attachment "xsa197-4.5-qemut.patch" of type "application/octet-stream" (1938 bytes)
+
+Download attachment "xsa197-4.5-qemuu.patch" of type "application/octet-stream" (1853 bytes)
+
+Download attachment "xsa197-4.6-qemuu.patch" of type "application/octet-stream" (1856 bytes)
+
+Download attachment "xsa197-qemut.patch" of type "application/octet-stream" (1949 bytes)
+
+Download attachment "xsa197-qemuu.patch" of type "application/octet-stream" (2096 bytes)
