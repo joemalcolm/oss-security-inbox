@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["841" "Thursday" "15" "June" "2017" "17:33:48" "-0400" "Alexandre Rebert" "alex@forallsecure.com" "<CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>" "25" "[oss-security] CVE request: sthttpd remote heap buffer overflow" "^Date:" nil nil "6" "2017061521:33:48" "[oss-security] CVE request: sthttpd remote heap buffer overflow" (number mark "        alex@foralls Jun 15   25/841   " thread-indent "\"[oss-security] CVE request: sthttpd remote heap buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2199" "Tuesday" "22" "November" "2016" "13:16:48" "+0800" "Kuang-che Wu" "kcwu@csie.org" "<20161122051648.GI10528@kcwu.csie.org>" "59" "[oss-security] CVE request: w3m - multiple vulnerabilities" nil nil nil "11" "2016112205:16:48" "[oss-security] CVE request: w3m - multiple vulnerabilities" (number mark "U       kcwu@csie.or Nov 22   59/2199  " thread-indent "\"[oss-security] CVE request: w3m - multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30033 invoked by uid 550); 15 Jun 2017 21:41:22 -0000
+Received: (qmail 7478 invoked by uid 550); 22 Nov 2016 05:50:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13581 invoked from network); 15 Jun 2017 21:34:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:sender:from:date:message-id:subject:to;
-        bh=7JXsfdbyBJh4oeDiFPp1HWICVGKF2qeljjjt0IZLcVM=;
-        b=ryGQjNKaW4+2ku7CjJ2fmWKcYkjH6oG/7rp80sUwSOyc0tGpHjRinJRBTLskSW01tB
-         ffCRMJ0kWYDUwScQg3LnvVcqyfeUPJhvS099LiDyYebIhZ5sWRYE3dbwat3QyQQ/SIBa
-         /b3Ju3keAU6utkrHyH4sHQGmdhlW9BCZFSdnhoYphBuDLFDmDglpu4k37JI5hvv6Hyak
-         ZxRk/aX+hGrOUihtQfzyYC3VEvO4ViNfekxGsA3XBtVEDjlMfL/O6JQbILhLowriwKHR
-         SX2zdUMnZESm6n94Y8G7aY3n7b28bBsFMd0V07EwDqRL+zxXKo3WbbJ+icRk+4x78Gbt
-         y/4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:sender:from:date
-         :message-id:subject:to;
-        bh=7JXsfdbyBJh4oeDiFPp1HWICVGKF2qeljjjt0IZLcVM=;
-        b=JpK1pzxuLQKx4JEclS/Exf9cvWgPbOjpxQ0v9goJAoUr/OSeiWsf192wKeMayw5qIx
-         bxz61QfbaldgZwJz9xAAOUVYXply3WSgiaDxpOZ8DywSQ2OCFlil7Uq5+s7be3JkHEmH
-         /lqUQOKt7ratjTGR/Fq3Rsz/bgz/PpXVSZOYYDrTH/ZOklspi2laCuzeNIf7taCbMf/H
-         eTxaIwA0OFbA3am4pc7SRWTVbdvAdj87DrtJHoRKFHwmh67DkMvyQ4sXYndRy5fsarXS
-         6ERe0romk8Qzms5/SXHmHkpMe/vTuZGZ8TaG4ehBmIxW3wz39kbVuTxgreOx64wZDEUE
-         rZ1Q==
-X-Gm-Message-State: AKS2vOzyYamuO4TWh+GYZtnLsftuOKuOq60Qbbk736X3Y6G3tmI82Hv6
-	GJskds8SD//uFA1f2GwspUOXuKEdb4kK0U4=
-X-Received: by 10.202.192.193 with SMTP id q184mr3572300oif.179.1497562449347;
- Thu, 15 Jun 2017 14:34:09 -0700 (PDT)
-MIME-Version: 1.0
-X-Google-Sender-Auth: 3_ItY-7b-jjWLuDWtQJncutf8FA
-Message-ID: <CAF1AS2h9QxW2Gj67_Oo6HYgWrLR9zsv9meT2CVSaf6dqQq-VfA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a113dd09ad28ee00552066d21"
-Date: Thu, 15 Jun 2017 17:33:48 -0400
-From: Alexandre Rebert <alex@forallsecure.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: alexandre.rebert@gmail.com
-Subject: [oss-security] CVE request: sthttpd remote heap buffer overflow
+Received: (qmail 23883 invoked from network); 22 Nov 2016 05:17:05 -0000
+Date: Tue, 22 Nov 2016 13:16:48 +0800
+From: Kuang-che Wu <kcwu@csie.org>
 To: oss-security@lists.openwall.com
+Message-ID: <20161122051648.GI10528@kcwu.csie.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1LKvkjL3sHcu1TtY"
+Content-Disposition: inline
+User-Agent: Mutt/1.6.1 (2016-04-27)
+Subject: [oss-security] CVE request: w3m - multiple vulnerabilities
 
---001a113dd09ad28ee00552066d21
-Content-Type: text/plain; charset="UTF-8"
+--1LKvkjL3sHcu1TtY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hello,
+Following are security flaws that I reported to debian's w3m.
+https://github.com/tats/w3m
 
-sthttpd [1], is a fork of thttpd, a small, fast, multiplexing webserver.
-Our fuzzing tools recently found a heap buffer overflow in the request
-parsing code that can be triggered remotely. The patch was recently fixed
-[2], and the bug was introduced in [3].  It seems that it's also affecting
-thttpd 2.25b present in OpenSUSE [4].
+These issues are all fixed in 0.5.3-33 (v0.5.3+git20161120) released
+at Nov 20, 2016.
 
-Let us know if you need more information.
+Please assign CVEs if you think they are suitable for identifiers.
 
-Thanks
-Alex from ForAllSecure
+Serious issues
+- https://github.com/tats/w3m/issues/29 global-buffer-overflow write
 
-[1] https://github.com/blueness/sthttpd
-[2]
-https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b468b0bff660
-[3]
-https://github.com/blueness/sthttpd/commit/aa3f36c0bf2aef1ffb17f5188ccf5e8afc13d3dc
-[4]
-https://build.opensuse.org/package/view_file/server:http/thttpd/thttpd-2.25b-strcpy.patch?expand=1
+Moderate issues
+(the crash point looks not-explitable but I am not sure whether the root cause
+ of them could be reused as exploit gadget)
+- https://github.com/tats/w3m/issues/32 null deref
+- https://github.com/tats/w3m/issues/33 null deref
+- https://github.com/tats/w3m/issues/35 near-null deref
+- https://github.com/tats/w3m/issues/36 stack overflow
+- https://github.com/tats/w3m/issues/37 stack overflow
+- https://github.com/tats/w3m/issues/38 heap overflow read + deref
+- https://github.com/tats/w3m/issues/39 null deref
+- https://github.com/tats/w3m/issues/40 null deref
+- https://github.com/tats/w3m/issues/41 global-buffer-overflow read
+- https://github.com/tats/w3m/issues/42 null deref
+- https://github.com/tats/w3m/issues/43 global-buffer-overflow read
 
---001a113dd09ad28ee00552066d21--
+Low severity
+- https://github.com/tats/w3m/issues/23 OOM
+
+All issues are found by afl-fuzz.
+
+Regards,
+kcwu
+
+--1LKvkjL3sHcu1TtY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJYM9TAAAoJEG1XW8ld0mmXyf8QAJFHLW4t4gpii7VDD9cgdgeu
+GEGR1Oroyrv8SJS4uGbQEkclFy+1rbxRDFaFBAMhsx0IUvAyuvI8T3ONdBwiqF3w
+ugSxgZQ9cuLE1cJTVhPL3VRMtFAdtH14/pI5KXd+/zGsRAiNkY41VU5MXCw1kPrI
+X3MlE/hhagGH48eW6WCxTvqRE2BAFtNQuAy73FqQTaXQ+cwI+EP9Dzz6PMBkwnLJ
+zYihZxkc98+ijnjd39VzCagrJ0lBY+2jk/pAC3akR0bAoDNcE4pTHhapBrZZsxRY
+AOW3HQF3lwI6oR7LI8aufjwPGZfNN/HzqfF3x6SIDpT62a03JDBqJCqy+l41LwXK
++r58VrLNlKlo4DoXK/OqkepK4QythumxUaqc4yJGgEHuq9hls4hdSvFFjufsaOeT
+R48uTBFIpe2ch0STt//uyQ1dpbvBjW+FPqL/Z5YBsGWAm1dMhMnMLYFP1nbk85fr
+AomIj0dbsio7t1WL0EpiT9R74anFp3/M3EOSEqqxNT/2+QPbF6Oz2B1yZzpTDRZH
+0DPuexJI8e3J4HMXhN267ystjkN9aEMhArcSmiNlLdQdqKU8IZQnHxyesUzpb7wZ
+A5mPEBjGajCS5gwsKfQrlxioeNvAJsLwC+e0Vx159+WIKVbpbg1zHK31gtrNNPTf
+L+NBBIC7ER+K5PUoKTy6
+=f2Mn
+-----END PGP SIGNATURE-----
+
+--1LKvkjL3sHcu1TtY--
