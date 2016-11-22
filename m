@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/8
-Message-ID: <d3cf7807-67e5-d4cf-66f5-e90eb0fbabd2@apache.org>
-Date: Thu, 27 Oct 2016 13:30:37 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/2
+Message-ID: <20161122051648.GI10528@kcwu.csie.org>
+Date: Tue, 22 Nov 2016 13:16:48 +0800
+From: Kuang-che Wu <kcwu@...e.org>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-0762 Apache Tomcat Realm Timing Attack
+Subject: CVE request: w3m - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-0762 Apache Tomcat Realm Timing Attack
+Following are security flaws that I reported to debian's w3m.
+https://github.com/tats/w3m
 
-Severity: Low
+These issues are all fixed in 0.5.3-33 (v0.5.3+git20161120) released
+at Nov 20, 2016.
 
-Vendor: The Apache Software Foundation
+Please assign CVEs if you think they are suitable for identifiers.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M9
-Apache Tomcat 8.5.0 to 8.5.4
-Apache Tomcat 8.0.0.RC1 to 8.0.36
-Apache Tomcat 7.0.0 to 7.0.70
-Apache Tomcat 6.0.0 to 6.0.45
-Earlier, unsupported versions may also be affected.
+Serious issues
+- https://github.com/tats/w3m/issues/29 global-buffer-overflow write
 
-Description
-The Realm implementations did not process the supplied password if the
-supplied user name did not exist. This made a timing attack possible to
-determine valid user names. Note that the default configuration includes
-the LockOutRealm which makes exploitation of this vulnerability harder.
+Moderate issues
+(the crash point looks not-explitable but I am not sure whether the root cause
+ of them could be reused as exploit gadget)
+- https://github.com/tats/w3m/issues/32 null deref
+- https://github.com/tats/w3m/issues/33 null deref
+- https://github.com/tats/w3m/issues/35 near-null deref
+- https://github.com/tats/w3m/issues/36 stack overflow
+- https://github.com/tats/w3m/issues/37 stack overflow
+- https://github.com/tats/w3m/issues/38 heap overflow read + deref
+- https://github.com/tats/w3m/issues/39 null deref
+- https://github.com/tats/w3m/issues/40 null deref
+- https://github.com/tats/w3m/issues/41 global-buffer-overflow read
+- https://github.com/tats/w3m/issues/42 null deref
+- https://github.com/tats/w3m/issues/43 global-buffer-overflow read
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M10 or later
-- Upgrade to Apache Tomcat 8.5.5 or later
-- Upgrade to Apache Tomcat 8.0.37 or later
-- Upgrade to Apache Tomcat 7.0.72 or later
-  (Apache Tomcat 7.0.71 has the fix but was not released)
-- Upgrade to Apache Tomcat 6.0.47 or later
-  (Apache Tomcat 6.0.46 has the fix but was not released)
+Low severity
+- https://github.com/tats/w3m/issues/23 OOM
 
-Credit:
-This issue was discovered by The Apache Tomcat Security Team.
+All issues are found by afl-fuzz.
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+Regards,
+kcwu
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
