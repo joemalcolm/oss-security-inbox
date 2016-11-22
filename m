@@ -1,35 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/6
-Message-ID: <bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>
-Date: Wed, 14 Dec 2016 14:36:15 +0000
-From: Sevan Janiyan <venture37@...klan.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: Re: why many CVEs are ** RESERVED ** on Mitre
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/12
+Message-Id: <E1c99mY-0008BI-Mf@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:38 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 196 (CVE-2016-9377,CVE-2016-9378) - x86 software interrupt injection mis-handled
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 14/12/2016 14:24, Kurt Seifried wrote:
-> ** RESERVED ** This candidate has been reserved by an organization
-> or individual that will use it when announcing a new security problem.
-> When the candidate has been publicized, the details for this
-> candidate will be provided.
-> 
-> This means that the entry number has been reserved by Mitre for an issue or
-> a CNA has reserved the number. So in the case where a CNA requests a block
-> of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
-> of 500), the CVE number will be marked as reserved even though the CVE
-> itself may not be assigned by the CNA for some time. Until the CVE is
-> assigned AND Mitre is made aware of it (e.g. the embargo passes and the
-> issue is made public), AND Mitre has researched the issue and written a
-> description of it, entries will show up as "** RESERVED **".
+     Xen Security Advisory CVE-2016-9377,CVE-2016-9378 / XSA-196
+                              version 3
 
-This creates a situation where the Mitre site dose not provide any
-information despite, marking the CVE as reserved despite an official
-advisory for effected software referencing the CVE.
+             x86 software interrupt injection mis-handled
 
-Somewhat frustrating when performing vulnerability management as the
-mitre URL is self documenting but useless to reference as a source.
+UPDATES IN VERSION 3
+====================
 
+Public release.
 
-Sevan
+ISSUE DESCRIPTION
+=================
+
+There are two closely-related bugs.
+
+When Xen emulates instructions which generate software interrupts it
+needs to perform a privilege check involving an IDT lookup.  This
+check is sometimes erroneously conducted as if the IDT had the format
+for a 32-bit guest, when in fact it is in the 64-bit format.  Xen will
+then read the wrong part of the IDT and interpret it in an unintended
+manner.  (CVE-2016-9377)
+
+When Xen emulates instructions which generate software interrupts, and
+chooses to deliver the software interrupt, it may try to use the
+method intended for injecting exceptions.  This is incorrect, and
+results in a guest crash.  (CVE-2016-9378)
+
+These instructions are not ususally handled by the emulator.
+Exploiting the bug requires ability to force use of the emulator.
+
+IMPACT
+======
+
+An unprivileged guest user program may be able to crash the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.5 and newer are vulnerable.  Older versions are not
+vulnerable.
+
+The vulnerability is only exposed on AMD hardware lacking the NRip
+feature.  AMD hardware with the NRip feature, and all Intel hardware,
+is not vulnerable.
+
+Xen prints information about CPU features on boot.  If you see this:
+    (XEN) SVM: Supported advanced features:
+    ...
+    (XEN)  - Next-RIP Saved on #VMEXIT
+then you are not vulnerable because you have an AMD CPU with NRip.
+If you see this:
+    (XEN) VMX: Supported advanced features:
+then you are not vulnerable because you have an Intel CPU.
+
+The vulnerability is only exposed on HVM guests.
+
+ARM systems are NOT vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patches resolves this issue.
+
+xsa196-000*.patch      xen-unstable, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+
+$ sha256sum xsa196*
+c4122280f3786416231ae5f0660123446d29e9ac5cd3ffb92784ed36edeec8b7  xsa196-0001-x86-emul-Correct-the-IDT-entry-calculation-in-inject.patch
+25671c44c746d4d0e8f7e2b109926c013b440e0bf225156282052ec38536e347  xsa196-0002-x86-svm-Fix-injection-of-software-interrupts.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYNDMVAAoJEIP+FMlX6CvZZ7MH/36KnwbAxmRHtUDIpQF/Syoh
+Lc8s6gNV1oOzcCpFgz+gSyIOMzp7KWieKQiVX1HbI0lnLYK/sRa77VNV/Y9bUt+Y
+y9b9QOZRDHoO92dZ4Ym/hzdtaNkdOQX/JAfy+E5pCGuqPtH/Jy5NuwVL8W7V8PNM
+QTHmvbgB4/Y2U6QqWpIP+S7oC0A9iuIf9eekd6ZTpqTadPFylTe2WX22mns1TEtN
+3Z0NX737AjQLyUVnUoJ32sITCBk6tGutvvEmOc2Y+4eMrUvKSoafVy+5IZcTGwLp
+3ke5sDNN1tOpzmqbXgWXBsVkpjWf2i0NW0dl5jh8/tN5FtrTuByd193dJGSKzEE=
+=IE45
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa196-0001-x86-emul-Correct-the-IDT-entry-calculation-in-inject.patch" of type "application/octet-stream" (2812 bytes)
+
+Download attachment "xsa196-0002-x86-svm-Fix-injection-of-software-interrupts.patch" of type "application/octet-stream" (3476 bytes)
