@@ -1,52 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/10
-Message-ID: <CY1PR09MB0873F6FEB038FFA58DC4C7D7C7B30@CY1PR09MB0873.namprd09.prod.outlook.com>
-Date: Wed, 9 Mar 2016 20:28:18 +0000
-From: "Boyle, Stephen V." <sboyle@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "David A. Wheeler" <dwheeler@...eeler.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/8
+Message-Id: <E1c99m8-00085A-U9@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:12 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 192 (CVE-2016-9382) - x86 task switch to VM86 mode mis-handled
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt and David,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The CVE team is holding a series of internal meetings related to the referenced issues, including one tomorrow. There is not a meeting with the Editorial Board (or a subset of Editorial Board members) scheduled for or being held tomorrow. 
+            Xen Security Advisory CVE-2016-9382 / XSA-192
+                              version 3
 
-We would like to propose an Editorial Board meeting to address issues related to CVE operations, scalability, and community feedback, as was first suggested by Kent Landfield on January 5, 2016. (Full discussion thread available at: http://common-vulnerabilities-and-exposures-cve-editorial-board.1128451.n5.nabble.com/CVE-Advancements-tt81.html)
+               x86 task switch to VM86 mode mis-handled
 
- The internal meetings referenced above will enable us to come to that Editorial Board meeting with specific recommendations and proposed next steps.  
+UPDATES IN VERSION 3
+====================
 
-Best Regards,
-The MITRE CVE Team
+Public release.
 
------Original Message-----
-From: Kurt Seifried [mailto:kseifried@...hat.com] 
-Sent: Wednesday, March 09, 2016 2:06 PM
-To: David A. Wheeler <dwheeler@...eeler.com>; cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
+ISSUE DESCRIPTION
+=================
 
-On Wed, Mar 9, 2016 at 12:04 PM, David A. Wheeler <dwheeler@...eeler.com>
-wrote:
+LDTR, just like TR, is purely a protected mode facility.  Hence even
+when switching to a VM86 mode task, LDTR loading needs to follow
+protected mode semantics.  This was violated by the code.
 
-> All - I've chatted with some of the people who fund the CVE work at MITRE.
-> I've learned that CVEs *are* being issued, but obviously that is happening
-> too slowly.
->
-> They're having a meeting tomorrow (March 10) to try to figure out what
-> the problems are and how to fix it.  I don't know what they'll do.
-> However, I'm hopeful that  this will mean that the CVE work will get
-> back on track soon.
->
-> --- David A. Wheeler
->
+IMPACT
+======
 
-This is literally the first I'm hearing of this, will any board members be
-present?
+On SVM (AMD hardware): a malicious unprivileged guest process can
+escalate its privilege to that of the guest operating system.
 
+On both SVM and VMX (Intel hardware): a malicious unprivileged guest
+process can crash the guest.
 
--- 
+VULNERABLE SYSTEMS
+==================
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Only 32-bit x86 HVM guests are vulnerable.  Furthermore, only guest
+operating systems which actually make use of hardware task switching,
+and allow a new task to start in VM86 mode, are vulnerable.  We are
+not aware of any such operating systems.
+
+The vulnerability is NOT exposed on any PV guests.
+The vulnerability is NOT exposed on any 64-bit guests,
+
+ARM systems are NOT vulnerable.
+
+Xen versions from 4.0 onwards are affected.  Xen versions 3.4 and
+earlier are not affected.
+
+MITIGATION
+==========
+
+For guests which are affected, the vulnerability could possibly be
+mitigated by disabling access to VM86 mode by unprivileged guest
+programs.  Details would depend on the (so far hypothetical)
+vulnerable guest kernel.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa192.patch           xen-unstable, Xen 4.7.x, Xen 4.6.x
+xsa192-4.5.patch       Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa192*
+687b0216eefd5ecef8a3135cc6f542cb3d9ff35e8e9696a157703e84656c35e8  xsa192.patch
+bb0c6622c6f5c5eb9a680020d865802069446830b4a170bcb82336f6c3b77f55  xsa192-4.5.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYNDJ9AAoJEIP+FMlX6CvZy5gIALU7weBZNJeQzBUMoQn6fAG/
+KNP3Br3BDYHC/MMbyIAkkEyHTfsR1xFNAHHb2Tb/Wl7v081owV7JwO3bkf0FJ88w
+K8RXFeUbt1z5rAdt1B088CbZA4/KkGRBd32vicUIE7+9EnkgSOlLc8abjind+yQ9
+2CtOHwDL0LVbjjGF6VdME9pooDZf2ZT1fHfClUbwPFsfTMKjUeJcfoVFqenifmYR
+wTYPtw6z+cCrjBlPyleglh/2uAc6ncTIQAC8Ee2dJyKv4wMqP60u97ANylnN3DpZ
+DTl+VUYdNsy78R9/xbqF7dT5gCeDV9y1rDoqHQwwtSGL/lvjU0ujbEtG7XS2/7M=
+=chON
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa192.patch" of type "application/octet-stream" (2335 bytes)
+
+Download attachment "xsa192-4.5.patch" of type "application/octet-stream" (2310 bytes)
