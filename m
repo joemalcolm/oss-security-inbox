@@ -1,39 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/24/21
-Message-ID: <CAEr-gPHxfhxNZu0eGuZLvDWmjQjTw3d1BsTZyFKES=Zm6d+LUQ@mail.gmail.com>
-Date: Wed, 24 Feb 2016 16:56:09 -0500
-From: Fernando Muñoz <fernando@...l-life.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/22
+Message-ID: <7982464.2MyO2TlKBG@arcadia>
+Date: Tue, 22 Nov 2016 17:53:52 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: bash-completion: dequote command injection
+Subject: metapixel: multiple assertion failures
 Content-Type: text/plain; charset=utf-8
 
-Hello Eric,
+Description:
+metapixel is a program for generating photomosaics.
 
-I never mentioned privilege escalation.
+A fuzzing on metapixel-imagesize revealed multiple assertion failures. The 
+latest upstream release was about ten years ago, so I didn’t made any report. 
+The bugs do not reside in any shared object which aren’t provided by the 
+package. If you have a web application which relies on the metapixel-imagesize 
+binary, then you are affected. Since the crashes reside in the command line 
+tool, they may don’t warrant a CVE at all, but some distros and packagers 
+would have the bugs fixed in their repository, so I’m sharing them.
 
-This issue how ever could appear when a different application uses
-user input and calls "dequote" function that not only dequotes, but
-also executes it as a command. If mitre doesn't consider it CVE worth,
-that's OK!
+Affected version:
+1.0.2
+Output/failure:
+metapixel-imagesize: rwgif.c:59: void *open_gif_file(const char *, int *, int 
+*): Assertion `data->file !=0′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00059-metapixel-assert-open_gif_file-1
 
-Regards.
+##########################################
 
+Affected version:
+1.0.2
+Output/failure:
+metapixel-imagesize: rwgif.c:63: void *open_gif_file(const char *, int *, int 
+*): Assertion `DGifGetRecordType(data->file, &record_type) != 0′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00060-metapixel-assert-open_gif_file-2
 
+##########################################
 
-On Wed, Feb 24, 2016 at 3:58 PM, Eric Blake <eblake@...hat.com> wrote:
-> On 02/24/2016 12:08 PM, Fernando Muñoz wrote:
->> Marcelo Echeverria and Fernando Muñoz discovered that the dequote
->> function included in bash-completion allows to execute arbitrary
->> commands since it uses the eval function to call printf and perform
->> the actual dequoting. bash-completion is included on Debian, Ubuntu
->> OpenSuse [1] and probably other distros.
->
-> But what is the privilege escalation?  This is no different than
-> incorrectly using 'eval' in a shell script - you may have buggy code,
-> and have an easy-to-trigger bug, but if you can't escalate privileges,
-> how it is a CVE?
->
-> --
-> Eric Blake   eblake redhat com    +1-919-301-3266
-> Libvirt virtualization library http://libvirt.org
->
+Affected version:
+1.0.2
+Output/failure:
+metapixel-imagesize: rwgif.c:68: void *open_gif_file(const char *, int *, int 
+*): Assertion `DGifGetImageDesc(data->file) != 0′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00061-metapixel-assert-open_gif_file-3
+
+##########################################
+
+Affected version:
+1.0.2
+Output/failure:
+metapixel-imagesize: rwgif.c:102: void *open_gif_file(const char *, int *, int 
+*): Assertion `DGifGetExtension(data->file, &ext_code, &ext) != 0′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00062-metapixel-assert-open_gif_file-4
+
+##########################################
+
+Affected version:
+1.0.2
+Output/failure:
+metapixel-imagesize: rwgif.c:106: void *open_gif_file(const char *, int *, int 
+*): Assertion `DGifGetExtensionNext(data->file, &ext) != 0′ failed.
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00063-metapixel-assert-open_gif_file-5
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-11-22: bugs discovered
+2016-11-22: blog post about the issues
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/22/metapixel-multiple-assertion-failures
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
