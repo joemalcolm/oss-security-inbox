@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/3
-Message-Id: <20160125075152.2BE1073C278@smtpvmsrv1.mitre.org>
-Date: Mon, 25 Jan 2016 02:51:52 -0500 (EST)
-From: cve-assign@...re.org
-To: s2exqx@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: out of bound write in libdwarf -20151114
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/23
+Message-ID: <33388c8f297f402d8aecd5805573e409@imshyb02.MITRE.ORG>
+Date: Tue, 22 Nov 2016 16:59:43 -0500
+From: <cve-assign@...re.org>
+To: <andreyknvl@...gle.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <dvyukov@...gle.com>, <kcc@...gle.com>
+Subject: Re: CVE Request: Linux: net/sctp: slab-out-of-bounds in sctp_sf_ootb
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Invalid write of size 8
-> get_abbrev_array_info
+> There's a bug in the Linux kernel sctp implementation which allows a
+> remote attacker to trigger a slab-out-of-bounds access with an offset
+> up to 64K bytes.
+> 
+> https://groups.google.com/forum/#!topic/syzkaller/pAUcHsUJbjk
+> https://github.com/torvalds/linux/commit/bf911e985d6bbaa328c20c3e05f4eb03de11fdd6
+> net/sctp/sm_statefuns.c
 
-Use CVE-2016-2050.
+Use CVE-2016-9555.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWpdOTAAoJEL54rhJi8gl5aDEP/iXryPStPNjfgnhIvytmvfXO
-/Y/Wo5RtiypUcjFiZj0PYPe8lXHcPEqPA2HKjvahGVphNpAt0uUs+RfMlzCG1hZh
-OnumAXKA4vCWpIFNZB29v0Z4cD0MEbJKD1v9ElUoyGGSmlWBCgSDIb5Jgu2dc1OG
-WrMbKqGvxXtaetmbDGrIjM5HKj+JBz4CtWeQtNobudf4U482SuIPLc2UnqT/ZQ6O
-wkGphEkwn8a7n3/QNieqm1DcyeKDaVGSbDeXFVd+mH4teIoVBddXV288iCw/89Z2
-CXCciwZqiKTKduiYzOfxFQ3OfbTSlH75M4AxMWP8IBhqwGuTsWbdFj74R+V46aby
-aYwNHPpXX6scCWH+wxeLdrzCSnjfBVmBRaJDBcnh8qzkkfuKW/t3TrNBaiNfuvYN
-XfyjCEc4qICIMQV2UlUWS0KCZG8xjygqSL9/82Yw4p4VzY8EGsAluZiLffpCU1Wj
-xqS8m5zaN+CZP28n/eJuniVg3F5wdV+tijuuirzA25HihBI00DW7BGrGoWdClzE8
-kJ3qLn0xDrR/O93UQfektBU+6un/7kBTfxyB1vi9i4D9ckn+73is9STdq5VazC82
-CVSLE8UJKWp2Io1XCUtG2MacO9q3rof/81G3IlCEi8IklnPpbMjJinrBDlCpkJwR
-lBhVB0OVaUVPvtS9u7Ud
-=uTC+
+iQIcBAEBCAAGBQJYNL8aAAoJEHb/MwWLVhi2cu8P/R47S5O4YTuIR+YcW8hiCkto
+OGnhhbOWHa7Ts1nl7cXwRhhq2/D8uzjX/5LZsl+ziqrZcWNr9MM0KAXrL79aS79D
+mGr559SbkLiI0Z66mQy6dZyDx8H/ZuobxMbMc0FJ4vuJUAleiJPpyP+Gf8tFjrkX
+597yeMGSKX09+xDeIHIrVUoKvHRP4XhB3/ix4HJ3BiKeQCx3GMHxjJ/mCtVTYS01
+KTczF+cof/QJnwq5NdXFPA6zkNNRql9+KJPcJvNBNYUKURGTdDhASBEsqTrOJqrx
+cu4+plaZh/+9mynU3dEUH5swyFVW80yuHm8aLOjMQTk6N7PQmii8qcCxs+AXXF3v
+YgJ+EQR2Z7jA7yZtbSiiCnxxX730bHHPTKQhdRcfU5WRtOakdqFw4o/gwPT87+fM
+gTN4aGTRL7bD2/hlFrGlbF4G3y/sO95iD090TF5R7nu8PLOaiFgMWfhGqh4FX7Zr
+K28gExzc2LxdMwf2K2yEiGTehouqibWpF3Kos9OeagIqdVsfMUl4Jh1hhn3wKSwn
+kPi9RIdv0YZlXZZEcPH0UGg9HhpySE+5sXODal/KxmYbYskofSjmeCJRvl4/LbnY
+ymv3A7+mJ6vCuBQMOtLeQU7UuONKxh90qdNXJvbjyynO1rbOJUPlfqGQ9Dj5xaTT
+0ItazodRS8D9fpKt0PAh
+=u07t
 -----END PGP SIGNATURE-----
