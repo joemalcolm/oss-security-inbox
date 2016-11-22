@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/02/4
-Message-ID: <alpine.LFD.2.20.1605022258410.3059@wniryva>
-Date: Mon, 2 May 2016 23:04:47 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-cc: "cve-assign@...re.org" <cve-assign@...re.org>, Peter Maydell <peter.maydell@...aro.org>
-Subject: Re: CVE Request: Out-of-bands write issue found in qemu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/18
+Message-ID: <CAAeHK+znVzS6vZ00rm8bBzu6q=NgDgB4b8G8Eggyoa3xwrs1FQ@mail.gmail.com>
+Date: Tue, 22 Nov 2016 10:52:44 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: CVE Request: Linux: net/sctp: slab-out-of-bounds in sctp_sf_ootb
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 27 Apr 2016, P J P wrote --+
-| +-- On Wed, 27 Apr 2016, 李强 wrote --+
-| | The qemu has an out-of-bands bug in uart_write() function.
-| |
-| | The patch is here:
-| | https://lists.nongnu.org/archive/html/qemu-devel/2016-04/msg02711.html
-| 
-|   Not sure if this should need a CVE, awaiting upstream confirmation on the 
-| same.
+Hi,
 
-  Received confirmation from Qemu upstream, it could not consider this issue 
-to be security relevant[*], to require CVE assignment.
+There's a bug in the Linux kernel sctp implementation which allows a
+remote attacker to trigger a slab-out-of-bounds access with an offset
+up to 64K bytes.
 
-[*] http://wiki.qemu.org/SecurityProcess#How_impact_and_severity_of_a_bug_is_decided
+The bug was fixed upstream:
+https://github.com/torvalds/linux/commit/bf911e985d6bbaa328c20c3e05f4eb03de11fdd6
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+More details are here:
+https://groups.google.com/forum/#!topic/syzkaller/pAUcHsUJbjk
+
+Could you assign a CVE for this?
+
+Thanks!
