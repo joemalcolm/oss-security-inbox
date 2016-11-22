@@ -1,25 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/05/8
-Message-ID: <20160505103405.GA25044@openwall.com>
-Date: Thu, 5 May 2016 13:34:05 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/1
+Message-ID: <520fe7bf505c433392c547157534c5f6@imshyb02.MITRE.ORG>
+Date: Mon, 21 Nov 2016 22:05:37 -0500
+From: <cve-assign@...re.org>
+To: <henri@...v.fi>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: LibTIFF tiffcrop: Heap buffer overflow via writeBufferToSeparateStrips
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 04, 2016 at 09:18:26PM -0400, Stanislav Datskovskiy wrote:
-> older versions of GPG
-> will regard the bottom 32 bits of a modulus as the 'fingerprint',
-> rather than performing a hash.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Are you sure?  Got an example?
+> http://bugzilla.maptools.org/show_bug.cgi?id=2592
+> 
+>         * tools/tiffcrop.c: fix multiple uint32 overflows in
+>         writeBufferToSeparateStrips(), writeBufferToContigTiles() and
+>         writeBufferToSeparateTiles() that could cause heap buffer overflows.
 
-I think the fingerprint was always a hash, with key id being last 32+
-bits from it.  I think it is compatible with PGP 2.x's from 1990s.
+>> Bug 2592 -
+>> Summary:  Heap buffer overflow via writeBufferToSeparateStrips tiffcrop.c:1170
 
-Did I possibly miss some very early versions of GPG where this was not
-true, transitioning from PGP 2.x to later GPG (which I did) and thus not
-noticing this aspect?  (Just trying to see how your statement could
-possibly be correct and consistent with my experience using PGP/GPG.)
+>> AddressSanitizer: heap-buffer-overflow
+>> READ of size 223
 
-Alexander
+Use CVE-2016-9532 for this integer overflow report with resultant
+buffer over-read.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYM7WhAAoJEHb/MwWLVhi2CxIP/iBsAzZXlwVnlKsgeCs0sjc3
+qG3xsKjFnuGmgOYwcFKcIUGVNT7B+Y6ilrAs5fXmS403ezZwmCNCXIRALITJKoTK
+KVaUWTq0VEh5ntAHezJwMviREfl0+g3gX22yRJU6jsuW5l2xXvZWFKNMfAJvCnz/
+x54Flhv2SawR1bKt7zlbxg40IivcQZuwIsL8ZestE00vBT/lMoEv2Z/xoDJGpbJM
+V7fbvoR7UBcR6hqSoDi4D94y9Hsa6NC7PIfkL1ffGaIRyCIwegTwwyEB6WR/76I0
+J/e0fDMicsTR4iTVrzGQNHGnj/cAmeTPGErQpIu5ndXKFbMQJfLjxyoUuWTFu2aN
+GalgWMeVNv6crJH23eEjfPqqCSO9cU/9z2qQc6P5WYleKtRLlxRdoWllSJVZzeSw
++uy+1hdIseX18Y2pb14iG4iNSWPpbxUCPgsSS+izzqPc82rnKnTYGqJaDmsGN8oL
+yquVr8ainyRe2s5fuPqAydsfBvfikuC88QYeTU6CjhNBYVj9yG0SgXSu3fb/d3KP
+BKSvWHmKEAREkiu3M0e8Cby1x8E4sM3jCRTCUOcSuAU1tNB+o2CyR6+GLjpthBtH
+XufZ1CLcjZNJzsdgH9urWZnH064SRvQ6qF9JJ6Ri/luTMz47IwjiuDv3NUxcafX8
+6bGDLHQIyR2Tax1nHY7B
+=pC5y
+-----END PGP SIGNATURE-----
