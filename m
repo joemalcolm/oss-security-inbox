@@ -1,93 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/06/2
-Message-ID: <20160106030759.GB512@ubuntumail>
-Date: Wed, 6 Jan 2016 03:07:59 +0000
-From: Serge Hallyn <serge.hallyn@...ntu.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/21
+Message-ID: <2093176.kk87qeuY9I@arcadia>
+Date: Tue, 22 Nov 2016 17:52:54 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, john.johansen@...onical.com
-Subject: Re: Re: CVE Request: Linux kernel: privilege escalation in user namespaces
+Subject: metapixel: heap-based buffer overflow in open_gif_file (rwgif.c)
 Content-Type: text/plain; charset=utf-8
 
-Quoting Eric W. Biederman (ebiederm@...ssion.com):
-> cve-assign@...re.org writes:
-> 
-> > Use CVE-2015-8709 for the issue fixed in the
-> > https://lkml.org/lkml/2015/12/25/71 post.
-> >
-> > (This is not yet available at
-> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/kernel/ptrace.c
-> > and http://marc.info/?l=linux-kernel&m=145118185526359 might be the
-> > current end of the earlier discussion.)
-> >
-> > This issue has been covered in security advisories from one or more
-> > Linux distributions, e.g.,
-> >
-> >>> http://www.ubuntu.com/usn/usn-2847-1
-> >>> 
-> >>> Jann Horn discovered a ptrace issue with user namespaces in the Linux
-> >>> kernel. The namespace owner could potentially exploit this flaw by ptracing
-> >>> a root owned process entering the user namespace to elevate its privileges
-> >>> and potentially gain access outside of the namespace.
-> >>> (http://bugs.launchpad.net/bugs/1527374)
-> >
-> >
-> > There has been some discussion of whether the finding was a
-> > vulnerability discovery, e.g.,
-> >
-> >>>> Date: Fri, 18 Dec 2015 00:07:19 +0100
-> >>>> From: Jann Horn <jann@...jh.net>
-> >>>> 
-> >>>> I'm not sure whether this is CVE-worthy - the user_namespaces
-> >>>> manpage says "the process has full privileges for operations
-> >>>> inside the user namespace, but is unprivileged for operations
-> >>>> outside the namespace". ptrace()ing a process in the
-> >>>> namespace can reasonably be considered an "operation inside
-> >>>> the user namespace" ...
-> >>>> 
-> >>>> In my opinion, this patch is somewhere between hardening and
-> >>>> a security feature, but I wouldn't really call it a vuln fix.
-> >
-> >
-> >>>>> Date: Thu, 17 Dec 2015 23:54:03 +0000
-> >>>>> From: Serge Hallyn <serge.hallyn@...ntu.com>
-> >>>>> 
-> >>>>>> ptrace()ing a process in the
-> >>>>>> namespace can reasonably be considered an "operation inside
-> >>>>>> the user namespace"
-> >>>>> 
-> >>>>> Except by creating a file in the host namespace, you were, as
-> >>>>> root in the container, able to escape your namespace, right?
-> >
-> > We feel that, more generally, the usn-2847-1 mention of "and
-> > potentially gain access outside of the namespace" is a realistic
-> > concern.
-> 
-> My mind is boggling at some of the logic involved here.
-> 
-> There is no potentially gaining access outside of the namespace when it
-> is access to things that were put inside the namespace.
-> 
-> The discussion was about how to make it easier for userspace not to do
-> stupid things, not how to fix a bug in the kernel.
-> 
-> The code we have been discussing most definitely does not make it safe
-> for a arbitrary root owned processes to call setns and enter a user
-> namespace with a hostile user namespace root.  You have to close file
-> descriptors, unmap files and do I don't know what else.  Properly
-> and safely dropping privileges is a challenging problem.
-> 
-> Calling bug because it is possible to use a kernel feature wrong feels
-> completely inappropriate.
+Description:
+metapixel is a program for generating photomosaics.
 
-I could be wrong but think you are misunderstanding the cve.
+A fuzzing on metapixel-imagesize revealed an overflow. The latest upstream 
+release was about ten years ago, so I didn’t made any report. The bug does not 
+resides in any shared object which aren’t provided by the package. If you have 
+a web application which relies on the metapixel-imagesize binary, then you are 
+affected. Since the “READ of size 1” it may don’t warrant a CVE at all, but 
+some distros and packagers would have the bug fixed in their repository, so 
+I’m sharing it.
 
-IIRC the situation was:  if you setns(some-userns); setresgid(0,0);
-setresuid(0,0); then between the setns and the setuids the container
-can ptrace your task and do things using the host uids.  That's bad.
+The complete ASan output:
 
-You can't stop the container from messing with you in general (by
-ptracing later - though as you say we could set nodump, but I don't
-think people would want htat), but it shouldn't be able to mess with the
-host root uid.
+# metapixel-imagesize $FILE
+==24883==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60200000eff9 at pc 0x00000050edcf bp 0x7ffce3891f90 sp 0x7ffce3891f88
+READ of size 1 at 0x60200000eff9 thread T0
+    #0 0x50edce in open_gif_file /tmp/portage/media-gfx/metapixel-1.0.2-
+r1/work/metapixel-1.0.2/rwimg/rwgif.c:132:60
+    #1 0x50a4cd in open_image_reading /tmp/portage/media-gfx/metapixel-1.0.2-
+r1/work/metapixel-1.0.2/rwimg/readimage.c:88:9
+    #2 0x50a18b in main /tmp/portage/media-gfx/metapixel-1.0.2-
+r1/work/metapixel-1.0.2/imagesize.c:37:14
+    #3 0x7fcc5c3a861f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x41a1d8 in _init (/usr/bin/metapixel-imagesize+0x41a1d8)
 
--serge
+0x60200000eff9 is located 3 bytes to the right of 6-byte region 
+[0x60200000eff0,0x60200000eff6)
+allocated by thread T0 here:
+    #0 0x4d3195 in calloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:72
+    #1 0x7fcc5d267392 in GifMakeMapObject /tmp/portage/media-
+libs/giflib-5.1.4/work/giflib-5.1.4/lib/gifalloc.c:55
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+gfx/metapixel-1.0.2-r1/work/metapixel-1.0.2/rwimg/rwgif.c:132:60 in 
+open_gif_file
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa 00 fa fa fa 06[fa]
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==24883==ABORTING
+
+Affected version:
+1.0.2
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00058-metapipxel-heapoverflow-open_gif_file
+
+Timeline:
+2016-11-22: bug discovered
+2016-11-22: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/11/22/metapixel-heap-based-buffer-overflow-in-open_gif_file-rwgif-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
