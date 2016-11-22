@@ -1,4 +1,9 @@
-Received: (qmail 25928 invoked by uid 550); 28 Sep 2023 16:28:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1933" "Tuesday" "22" "November" "2016" "07:31:29" "-0500" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>" "59" "Re: [oss-security] CVE Request: gstreamer plugins" nil nil nil "11" "2016112212:31:29" "[oss-security] CVE Request: gstreamer plugins" (number mark "U       alex.gaynor@ Nov 22   59/1933  " thread-indent "\"Re: [oss-security] CVE Request: gstreamer plugins\"\n") "<20161119115932.1854beff@pc1>" ("<20161118163119.GQ11402@suse.de>" "<20161119115932.1854beff@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18252 invoked by uid 550); 22 Nov 2016 12:31:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,104 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30366 invoked from network); 28 Sep 2023 15:49:22 -0000
+Received: (qmail 18231 invoked from network); 22 Nov 2016 12:31:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695916150; x=1696520950; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DElzw9imit4g3/16J/Xnru0iQn054OKmkIYkOkmw1lE=;
-        b=DL2HSS3t2OM1Ayikrj7RQ0GNYVTMA0j7QX7vh4EYiCJdGHMtOkKbhlR4qr2/jBYvw2
-         V/xDdA1KDbFeShCGY4JEHdnNipkqKgGqNzO8zuTr+a5g1SGPD8Hk/wELmLJqb8lxcNIg
-         ndSN4dwUhs5/8phZeGnrhwanO2PbfPzbNvfDQIMtet2vloe+ViQd0DDByL4vk9CQerKH
-         XKA1/YQJpxAOe17PvO/7RStI3kx9797/OkrAoW/Zvk+j9nq6ZLb6gnV+snc+GRWwATyf
-         lI825m3lUDokPi6zP7QywMeNR4WUCLP0d+WfnAuvrbRxEa8mPBNg1o4+E+3HmM9cKVVG
-         R98A==
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=IfKLU/tAsSxrRK4BozBQ5sjJ1NmxU7yJnEviDKZD+0k=;
+        b=eSxqG/4nWLa6H8fM26aqA4av1WgwjQvCQnY8HDv6I4ZSWbXUMbtk/K4t7yGGODxT5a
+         iFMqvqrQF2vG6uglgm9tUcCzVsGhnG6/e+EW63k07f/EDNLQMuoFe0hGGVTex5GOPVr5
+         xEXys0SNhV8nc6CYee58jOoEGaIiOLryoWWWs/ULO39bfN8wi2ZoygCnaSgRkkzFmVnc
+         9uTjUwRSgrMFxQ8LUwzw+Nl/0+5gza98o1GTf9ZzMhOLlebq1uDh8hLFR3M6SNiX0vY7
+         8dqy60/mw2j345Y0+0xaWmcxYrr0/u3Ox3J0tQBlP3rbKLg5pq6avvVrvxfC2p35gEXh
+         KUHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695916150; x=1696520950;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DElzw9imit4g3/16J/Xnru0iQn054OKmkIYkOkmw1lE=;
-        b=NsWJxrdLzCJpXFABHFwPHwaREnmk7rCe3BFgLbOATNiYM4+C6Z5bqj36Dg1AfygZ2b
-         hFPaYHh9U2nGddyiOWqGz3tdRGi5w3MniGGfQa5Y8uL9A6Rd+TW+Bd3ZJ+swDeMXuRjY
-         bsyUhj7L6h6jYeFrABX+gC7cdvbLupwVXaMNSg8i7wrWgWojLe/Veitx+6ZcggBsXbrj
-         5PjUJpSTE3Zi4gb6guLPwXBQxGk2BJ2EnzrlRTCD35uuZz13ZsjQG/Ub+ftBozYvrffF
-         aZZODS3j4+/w353oQyAZwjCOyS4704bhTG6UgbGNwtvfWjiFkwgoDGwOS2Azsu5iaidW
-         o95Q==
-X-Gm-Message-State: AOJu0Yx/QfnrZJ3AhrG3xUNgCt6Plp5B4s3wSi3ya60jRhhHyY3fNfcX
-	Lx2rJ1f3tqWjNstWlJMZ95xZQ2cMvuT+Bg==
-X-Google-Smtp-Source: AGHT+IF/4BANQX/+Ffa00sGJz+sj/kTvAl8LmFdE3y+ITvPwnMvHXFP0kL2gMjxC2fuAkKx+P0omEg==
-X-Received: by 2002:a5d:6643:0:b0:31a:e73f:3fe7 with SMTP id f3-20020a5d6643000000b0031ae73f3fe7mr1755255wrw.3.1695916150387;
-        Thu, 28 Sep 2023 08:49:10 -0700 (PDT)
-Message-ID: <2cccd54e-6a8e-8b79-3913-7b13817a0b72@gmail.com>
-Date: Thu, 28 Sep 2023 17:49:08 +0200
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=IfKLU/tAsSxrRK4BozBQ5sjJ1NmxU7yJnEviDKZD+0k=;
+        b=lsrKHHRG2J67cquBRhPuorL2qkOCEprszUUwwuKxADI71QkFV2kIYTIP7Piuyo668A
+         mJrva/zT25T+F8eu31gaEyCtYzdcjBX4eycXuD1xZFhbjjxYN7HsvwcTOwdcRs38FVgd
+         JC1QFrIh0liYe5CU6JadOaBsbLOmmDJ6Mzyjtee86eNKiGPkVPkt89Z46w/Nd1IDX7KQ
+         jLB/09pS9RMZQm4DsON542Y9zRS2fxsGxsZGlKnwqzesVW0JWE1vD7z5Xo4Hf3VyJRSU
+         34kT7nqAb8xSWgnAV3GMWCa6RHPWW0zEkzkeaEIjWtWForu+X7TJKdYCnZlM212EkAqW
+         P9Gw==
+X-Gm-Message-State: AKaTC02qHQvhQbeMMBcOjYSo6BjUF7xWFPu1RrlwA1RmXH9s57IVARQ/kiPCPsIvO4LQFsGudAjHTZh8EU5roQ==
+X-Received: by 10.194.101.97 with SMTP id ff1mr16215873wjb.67.1479817889637;
+ Tue, 22 Nov 2016 04:31:29 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.1
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-References: <20230921205250.GA13106@openwall.com>
- <ZRKn0bQVe4MBMYiC@eldamar.lan> <20230926153454.GA12511@openwall.com>
- <CAH8yC8nQVki00kqwheM9n0tvJ5o=apNS-tnNcALy7Tvx4TC2Pg@mail.gmail.com>
-From: Emilio Pozuelo Monfort <pochu27@gmail.com>
-In-Reply-To: <CAH8yC8nQVki00kqwheM9n0tvJ5o=apNS-tnNcALy7Tvx4TC2Pg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
- WebP Codec
+In-Reply-To: <20161119115932.1854beff@pc1>
+References: <20161118163119.GQ11402@suse.de> <20161119115932.1854beff@pc1>
+From: Alex Gaynor <alex.gaynor@gmail.com>
+Date: Tue, 22 Nov 2016 07:31:29 -0500
+Message-ID: <CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=e89a8f83a761a5109b0541e2f3be
+Subject: Re: [oss-security] CVE Request: gstreamer plugins
 
-On 28/09/2023 14:36, Jeffrey Walton wrote:
-> On Tue, Sep 26, 2023 at 11:37 AM Solar Designer <solar@openwall.com> wrote:
->>
->> It was great to hear from Vincent that the newer libwebp changes are
->> just "Clean-ups, no security issues there."  Yet I think it would also
->> be great if someone in here double-checks that.
->>
->> Regarding the assert failure detected by oss-fuzz, "A release build
->> would not be negatively affected."  libwebp does specify -DNDEBUG by
->> default in:
->>
->> $ fgrep -rl DNDEBUG .
->> ./Makefile.vc
->> ./xcframeworkbuild.sh
->> ./iosbuild.sh
->> ./configure.ac
->> ./makefile.unix
->>
->> and there's also cmake support, but apparently cmake sets -DNDEBUG for
->> release builds by default.  So at least this statement does appear to be
->> true for libwebp itself as built via the above means.
->>
->> However, there's also Gradle support, and the gradle* files do not
->> mention NDEBUG.
->>
->> Also, I wonder if there are other projects building code from libwebp
->> via different build environments.
->>
->> So there might be (a small minority of) uses of libwebp where the assert
->> exists in a release build of some project.
-> 
-> Crypto++ caught a CVE because use of -DNDEBUG was not documented. The
-> library's build system used -DNDEBUG (like libwebp), but folks who
-> ported to other build systems did not use it. In my mind's eye, others
-> who did not use the -DNDEBUG flag should have caught a CVE, not
-> Crypto++. Also see CVE-2016-7420 and
-> <http://seclists.org/oss-sec/2016/q3/520>.
-> 
-> Crypto++ eventually took away the footgun by supplying its own
-> CRYPTOPP_ASSERT that required a user to supply a switch to engage
-> asserts. Asserts were no longer enabled by default when someone
-> omitted -DNDEBUG. Also see
-> <https://github.com/weidai11/cryptopp/blob/master/trap.h>.
-> 
-> I've never seen a CVE for documentation before or since.
+--e89a8f83a761a5109b0541e2f3be
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Here's a recent one:
+Another exploit chain here:
+https://scarybeastsecurity.blogspot.de/2016/11/0day-exploit-advancing-explo=
+itation.html
 
-https://www.cve.org/CVERecord?id=CVE-2023-0466
+Alex
 
-https://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=51e8a84ce742db0f6c70510d0159dad8f7825908
+On Sat, Nov 19, 2016 at 5:59 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
 
-Cheers,
-Emilio
+> Hi,
+>
+>
+> On Fri, 18 Nov 2016 17:31:19 +0100
+> Marcus Meissner <meissner@suse.de> wrote:
+>
+> > 1. Bufferoverflow in VMNC decoder in gstreamer plugins:
+> >       https://scarybeastsecurity.blogspot.de/2016/11/0day-poc-
+> risky-design-decisions-in.html
+>
+> I wanted to point out that while it's good the buffer overflow gets
+> fixed, that's by far not the major issue here.
+>
+> This is a very problematic design decision with the functionality of
+> tracker/GNOME that exposes all files on a system to who knows how many
+> decoders of probably overall very low quality.
+> Almost certainly there are countless other vulnerabilities of similar
+> kind in all kinds of gstreamer codecs. (and I haven't checked, but I
+> assume tracker also exposes other files to other equally problematic
+> decoders)
+>
+> I think this is kinda a symptom of two goals clashing: We have projects
+> like gstreamer that attempt to parse every file format ever seen in
+> their are - which of course has some value, especially in terms of
+> preserving digital culture. But on the other hand exposing this code to
+> untrusted inputs is a security disaster.
+>
+> I'm wondering if there is any statement or reaction from either gnome
+> or fedora on this.
+>
+> --
+> Hanno B=C3=B6ck
+> https://hboeck.de/
+>
+> mail/jabber: hanno@hboeck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+>
+
+
+
+--=20
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: D1B3 ADC0 E023 8CA6
+
+--e89a8f83a761a5109b0541e2f3be--
