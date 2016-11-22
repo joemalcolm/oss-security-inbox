@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6392" "Wednesday" "15" "June" "2016" "02:38:54" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB62D8@EX02.corp.qihoo.net>" "108" "[oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image " "^Date:" nil nil "6" "2016061502:38:54" "[oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image" (number mark "U       zhangkaixian Jun 15  108/6392  " thread-indent "\"[oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a thumbnail for a crafted TIFF image \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6661" "Tuesday" "22" "November" "2016" "12:02:35" "+0000" "Xen.org security team" "security@xen.org" "<E1c99mV-00089H-W1@xenbits.xenproject.org>" "173" "[oss-security] Xen Security Advisory 195 (CVE-2016-9383) - x86 64-bit bit test instruction emulation broken" nil nil nil "11" "2016112212:02:35" "[oss-security] Xen Security Advisory 195 (CVE-2016-9383) - x86 64-bit bit test instruction emulation broken" (number mark "U       security@xen Nov 22  173/6661  " thread-indent "\"[oss-security] Xen Security Advisory 195 (CVE-2016-9383) - x86 64-bit bit test instruction emulation broken\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17787 invoked by uid 550); 15 Jun 2016 02:44:01 -0000
+Received: (qmail 32288 invoked by uid 550); 22 Nov 2016 14:50:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,131 +11,191 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5585 invoked from network); 15 Jun 2016 02:39:06 -0000
-Thread-Topic: CVE-2016-5317: GNOME nautilus: crash occurs when generating a
- thumbnail for a crafted TIFF image 
-Thread-Index: AdHGruIWtZb4VJRjT4Gzd/0aMxsT7g==
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62D8@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB62D8EX02corpqihoonet_"
-MIME-Version: 1.0
-Date: Wed, 15 Jun 2016 02:38:54 +0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-5317: GNOME nautilus: crash occurs when generating a
- thumbnail for a crafted TIFF image 
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 32291 invoked from network); 22 Nov 2016 12:02:59 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Message-Id: <E1c99mV-00089H-W1@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:35 +0000
+Subject: [oss-security] Xen Security Advisory 195 (CVE-2016-9383) - x86 64-bit bit test
+ instruction emulation broken
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB62D8EX02corpqihoonet_
+--=separator
 Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+            Xen Security Advisory CVE-2016-9383 / XSA-195
+                              version 3
+
+           x86 64-bit bit test instruction emulation broken
+
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The x86 instructions BT, BTC, BTR, and BTS, when used with a
+destination memory operand and a source register rather than an
+immediate operand, access a memory location offset from that specified
+by the memory operand as specified by the high bits of the register
+source.
+
+When Xen needs to emulate such an instruction, to efficiently handle
+the emulation, the memory address and register operand are
+recalculated internally to Xen.  In this process, the high bits of an
+intermediate expression were discarded, leading to both the memory
+location and the register operand being wrong.
+
+The wrong memory location would have only a guest local effect (either
+access to an unintended location, or a fault delivered to the guest),
+whereas the wrong register value could lead to either a host crash or
+an unintended host memory access.
+
+IMPACT
+======
+
+A malicious guest can modify arbitrary memory, allowing for arbitrary
+code execution (and therefore privilege escalation affecting the whole
+host), a crash of the host (leading to a DoS), or information leaks.
+
+The vulnerability is sometimes exploitable by unprivileged guest user
+processes.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+The vulnerability is only exposed to x86 guests running in 64-bit mode.
+
+On Xen 4.6 and earlier the vulnerability is exposed to all guest user
+processes, including unprivileged processes, in such guests.
+
+On Xen 4.7 and later, the vulnerability is exposed only to guest user
+processes granted a degree of privilege (such as direct hardware
+access) by the guest administrator; or, to all user processes when the
+when the VM has been explicitly configured with a non-default cpu
+vendor string (in xm/xl, this would be done with a `cpuid=' domain
+config option).
+
+The vulnerability is not exposed to 32-bit PV guests.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by George Dunlap of Citrix, using American
+Fuzzy Lop v2.35b.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa195.patch       xen-unstable, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa195*
+6ab5f13b81e3bbf6096020f4c3beeffaff67a075cab67e033ba27d199b41cec1  xsa195.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYNDL4AAoJEIP+FMlX6CvZnzYH/RtmqS8kpqLKShvrQx5Ueh+M
+LaHBWJiU0z1m9FaF9RvEgfvWpUCcD/qyC4rLHmkwhkyS6aIToh2XVXzQyebIqw/7
+CCDXaY8TkYlLPYRdNseX5X5blpu1EnqW5yQMJz6QkgDK+Qu4F1jDimSd5JffrFkJ
+WkpWwsoppNHwYyaENq59lg7R1WxNq0uSLxMPTnk/RpMmizKyU8gK7RrQWHJNoy6n
+l3vSTKx9sCDo+AgMQgbDMdpvv1l1It+QcRXXBrBp7qAdz+0H7VRkUFOnBUFMQQo3
+OjmjStKxnE9E7Uh6+373xj2Z6Nts+wkD72vRHHg/1KTZ5FN5XnS2CvPDNuGZD50=
+=AtOu
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa195.patch"
+Content-Disposition: attachment; filename="xsa195.patch"
 Content-Transfer-Encoding: base64
 
-DQpEZXRhaWxzDQo9PT09PT09PT09PT0NClByb2R1Y3Q6IG5hdXRpbHVzDQpB
-ZmZlY3RlZCBWZXJzaW9uczogPD0gR05PTUUgbmF1dGlsdXMgMy4xOC41LCA8
-PWxpYnRpZmYuc28gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogb3V0LW9m
-LWJvdW5kcyB3cml0ZQ0KVGVzdGVkIHN5c3RlbTogZmVkb3JhMjMgMzJiaXQs
-IGZlZG9yYTIzIDY0Yml0DQpWZW5kb3IgVVJMOiBodHRwczovL3d3dy5nbm9t
-ZS5vcmcvDQpDVkUgSUQ6IENWRS0yMDE2LTUzMTcNCkNyZWRpdDogS2FpeGlh
-bmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRlYW0sIFFpaG9vIDM2
-MA0KDQpJbnRyb2R1Y3Rpb24NCj09PT09PT09PT09PQ0KSXQgd2FzIGFsd2F5
-cyBjb3JydXB0ZWQgd2hlbiBJIHVzZSBuYXV0aWx1cyBjb21tYW5kIGZvbGxv
-d2VkIGEgc3BlY2lmaWMgZGlyZWN0b3J5IGNvbnRhaW5pbmcgYSBjcmFmdGVk
-IFRJRkYgaW1hZ2UuIFRoZSB2dWxuZXJhYmlsaXR5IG9mIG91dC1vZi1ib3Vu
-ZCB3cml0ZXMgaXMgaW4gUGl4YXJMb2dEZWNvZGUoKSBpbiBsaWJ0aWZmLnNv
-IHdpdGhvdXQgY2hlY2tpbmcgdGhlIGJ1ZmZlciBsZW5ndGgsIHdoaWNoIGNh
-dXNlIHRoZSBoZWFkIGRhdGEgb2YgbmV4dCBoZWFwIGNvdWxkIGJlIGZpbGxl
-ZCB3aXRoIGFueSBkYXRhLCBjcmFzaCBvY2N1cnMgd2hlbiB0aGUgbmV4dCBo
-ZWFwIGlzIGFsbG9jYXRlZCBvciBmcmVlZC4gQXR0YWNrZXJzIGNvdWxkIGV4
-cGxvaXQgdGhpcyBpc3N1ZSB0byBjcmFzaCBuYXV0aWx1cyB0byByZXN1bHQg
-aW4gRG9TLg0KDQpTb3VyY2UgaW5mbw0KPT09PT09PT09PT09DQoxMDgyICAg
-ICAgICAgICB3cCArPSBuICsgc3RyaWRlIC0gMTsgICAgIC8qIHBvaW50IHRv
-IGxhc3Qgb25lICovDQoxMDgzICAgICAgICAgICBpcCArPSBuICsgc3RyaWRl
-IC0gMTsgICAgICAgLyogcG9pbnQgdG8gbGFzdCBvbmUgKi8NCjEwODQgICAg
-ICAgICAgIG4gLT0gc3RyaWRlOw0KMTA4NSAgICAgICAgICAgd2hpbGUgKG4g
-PiAwKSB7DQoxMDg2ICAgICAgICAgICAgICBSRVBFQVQoc3RyaWRlLCB3cFsw
-XSA9IENMQU1QKGlwWzBdKTsNCjEwODcgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgd3Bbc3RyaWRlXSAtPSB3cFswXTsNCjEwODggICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgd3Bbc3RyaWRlXSAmPSBtYXNrOw0KMTA4OSAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICB3cC0tOyBpcC0tKQ0KMTA5MCAgICAg
-ICAgICAgICAgbiAtPSBzdHJpZGU7DQoxMDkxICAgICAgICAgICB9DQoxMDky
-ICAgICAgICAgICBSRVBFQVQoc3RyaWRlLCB3cFswXSA9IENMQU1QKGlwWzBd
-KTsgd3AtLTsgaXAtLSkNCg0KRGVidWcgaW5mbw0KPT09PT09PT09PT09DQpn
-ZGIg4oCTYXJncyBuYXV0aWx1cyAuDQoNCihnZGIpIGIgdGlmX3BpeGFybG9n
-LmM6Nzg3DQpCcmVha3BvaW50IDEgYXQgMHhhZWJhMDE2YzogZmlsZSB0aWZf
-cGl4YXJsb2cuYywgbGluZSA3ODcuDQooZ2RiKSBjDQpDb250aW51aW5nLg0K
-DQpCcmVha3BvaW50IDEsIFBpeGFyTG9nRGVjb2RlICh0aWY9MHhhZWMwMzdh
-OCwNCiAgICBvcD0weGFlYzAzYmQwICJcMzc3XDM3N1wzNzdcMzc3XDM3N1wz
-NzdcMzA0QlwyNzBcMDE2XDM2N1wwMDJcMzc3XDM3N1wzNzdcMzc3XDIzNH1c
-MjYxXDAzM1wwMzNcMDA2XDM3N1wzNzdcMzc3XDM3N1BcMzU0XDAzMlwwNjR9
-XHZcMzE1XDAwMVwzNzdcMzc3XDM3N1wzNzdcMDA1YlwyMzRcMDI1XDMwNFww
-MDRcMzc3XDM3N1wzNzdcMzc3aVwyNzBcMjUwKFwzNjdcYlwyNDMiLCBvY2M9
-PG9wdGltaXplZCBvdXQ+LCBzPTApIGF0IHRpZl9waXhhcmxvZy5jOjc4Nw0K
-Nzg3ICAgICAgICAgICAgICAgIGludCBzdGF0ZSA9IGluZmxhdGUoJnNwLT5z
-dHJlYW0sIFpfUEFSVElBTF9GTFVTSCk7DQooZ2RiKSB4LzMyeHcgc3AtPnN0
-cmVhbS0+bmV4dF9vdXQtOA0KMHhhZWMwM2M1ODogICAgMHg4YjhhODk4OCAg
-ICAweDAwMDAwMDU1ICAgIDB4YWVjMDAwYjAgICAgMHhhZWMwMDBiMA0KMHhh
-ZWMwM2M2ODogICAgMHg5YjlhOTk5OCAgICAweDlmOWU5ZDljICAgICAweGEz
-YTJhMWEwICAgICAweGE3YTZhNWE0DQooZ2RiKSB4LzMyeHcgc3AtPnN0cmVh
-bS0+bmV4dF9vdXQtOCsweDUwDQoweGFlYzAzY2E4OiAgICAweGRiZGFkOWQ4
-ICAgIDB4MDAwMDAwMjkgICAgMHhhZWMwMDA2MCAgICAweGFlYzAwMDYwDQow
-eGFlYzAzY2I4OiAgICAweGViZWFlOWU4ICAgICAweGVmZWVlZGVjICAgICAg
-MHhmM2YyZjFmMCAgICAgIDB4ZjdmNmY1ZjQNCg0KKGdkYikgZmluaXNoDQoo
-Z2RiKSB4LzMyeHcgc3AtPnN0cmVhbS0+bmV4dF9vdXQtOA0KMHhhZWMwM2M1
-ODogICAgMHg4YjhhODk4OCAgICAweDAwMDAwMDU1ICAgIDB4ODY4Njg2ODYg
-ICAgMHg5MzkyMGQwYw0KMHhhZWMwM2M2ODogICAgMHhhMDllMWExOCAgICAw
-eGFkYWEyNzI0ICAgIDB4YmFiNjM0MzAgICAgMHhjN2MyNDEzYw0KKGdkYikg
-eC8zMnh3IHNwLT5zdHJlYW0tPm5leHRfb3V0LTgrMHg1MA0KMHhhZWMwM2Nh
-ODogICAgMHg5MzkyMGQwYyAgICAweDQwOWQxYTE4ICAgIDB4NGRhOWM3MjMg
-ICAgMHg1YWI1ZDQyZg0KMHhhZWMwM2NiODogICAgMHg2N2MxZTEzYiAgICAw
-eDc0Y2RlZTQ3ICAgIDB4ODFkOWZiNTMgICAgMHg4ZWU1MDg1Zg0KDQooZ2Ri
-KSBjDQpDb250aW51aW5nLg0KW1RocmVhZCAweGIwNzIzYjQwIChMV1AgMjQ5
-NDgpIGV4aXRlZF0NCg0KUHJvZ3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VH
-ViwgU2VnbWVudGF0aW9uIGZhdWx0Lg0KMHhiNmJlNGQzOCBpbiBfaW50X2Zy
-ZWUgKGF2PTB4YWVjMDAwMTAsIHA9PG9wdGltaXplZCBvdXQ+LCBoYXZlX2xv
-Y2s9MCkgYXQgbWFsbG9jLmM6NDAxNQ0KNDAxNSAgICAgICAgICAgICAgdW5s
-aW5rKGF2LCBuZXh0Y2h1bmssIGJjaywgZndkKTsNCihnZGIpIHAgYXYNCiQ0
-MiA9IChtc3RhdGUpIDB4YWVjMDAwMTANCihnZGIpIHAgbmV4dGNodW5rDQok
-NDMgPSAobWNodW5rcHRyKSAweGFlYzAzYzU4DQooZ2RiKSB4Lzh4dyBuZXh0
-Y2h1bmsNCihnZGIpIHAgYmNrDQokNDQgPSAobWNodW5rcHRyKSAweDkzOTIw
-ZDBjDQooZ2RiKSBwIGZ3ZA0KJDQ1ID0gKG1jaHVua3B0cikgMHg4Njg2ODY4
-Ng0KMHhhZWMwM2M1ODogICAgMHg4YjhhODk4OCAgICAweDAwMDAwMDU1ICAg
-IDB4ODY4Njg2ODYgICAgMHg5MzkyMGQwYw0KMHhhZWMwM2M2ODogICAgMHhh
-MDllMWExOCAgICAweGFkYWEyNzI0ICAgIDB4YmFiNjM0MzAgICAgMHhjN2My
-NDEzYw0KDQooZ2RiKSBidA0KIzAgIDB4YjZiZTRkMzggaW4gX2ludF9mcmVl
-IChhdj0weGFlYzAwMDEwLCBwPTxvcHRpbWl6ZWQgb3V0PiwgaGF2ZV9sb2Nr
-PTApIGF0IG1hbGxvYy5jOjQwMTUNCiMxICAweGI2YmU4NmUwIGluIF9fR0lf
-X19saWJjX2ZyZWUgKG1lbT0weGFlYzAwMDEwKSBhdCBtYWxsb2MuYzoyOTY5
-DQojMiAgMHhhZDM0MzhmOCBpbiBfVElGRmZyZWUgKHA9MHhhZWMwMDAxMCkg
-YXQgdGlmX3VuaXguYzozMjINCiMzICAweGFkMmMyMDUwIGluIGd0VGlsZUNv
-bnRpZyAoaW1nPTB4YWRiNzA5ZDQsIHJhc3Rlcj0weGFlNTFmNTYwLCB3PTM0
-LCBoPTQpIGF0IHRpZl9nZXRpbWFnZS5jOjY5MQ0KIzQgIDB4YWQyY2E1MTcg
-aW4gVElGRlJHQkFJbWFnZUdldCAoaW1nPTB4YWRiNzA5ZDQsIHJhc3Rlcj0w
-eGFlNTFmNTYwLCB3PTM0LCBoPTQpIGF0IHRpZl9nZXRpbWFnZS5jOjUwMA0K
-IzUgIDB4YWQyY2E3M2MgaW4gVElGRlJlYWRSR0JBSW1hZ2VPcmllbnRlZCAo
-dGlmPTB4YWU1MDViZTgsIHJ3aWR0aD0zNCwgcmhlaWdodD00LCByYXN0ZXI9
-MHhhZTUxZjU2MCwgb3JpZW50YXRpb249MSwgc3RvcD0xKSBhdCB0aWZfZ2V0
-aW1hZ2UuYzo1MTkNCiM2ICAweGFlNzFiMzdmIGluIHRpZmZfaW1hZ2VfcGFy
-c2UgKCkgZnJvbSAvdXNyL2xpYi9nZGstcGl4YnVmLTIuMC8yLjEwLjAvbG9h
-ZGVycy9saWJwaXhidWZsb2FkZXItdGlmZi5zbw0KIzcgIDB4YWU3MWI5NGUg
-aW4gZ2RrX3BpeGJ1Zi50aWZmX2ltYWdlX3N0b3BfbG9hZCAoKSBmcm9tIC91
-c3IvbGliL2dkay1waXhidWYtMi4wLzIuMTAuMC9sb2FkZXJzL2xpYnBpeGJ1
-ZmxvYWRlci10aWZmLnNvDQojOCAgMHhiNzUyODNlMyBpbiBnZGtfcGl4YnVm
-X2xvYWRlcl9jbG9zZSAoKSBmcm9tIC91c3IvbGliL2xpYmdka19waXhidWYt
-Mi4wLnNvLjANCiM5ICAweGI3ZjVlZGI1IGluIF9nZGtfcGl4YnVmX25ld19m
-cm9tX3VyaV9hdF9zY2FsZS5jb25zdHByb3AuNyAoKSBmcm9tIC91c3IvbGli
-L2xpYmdub21lLWRlc2t0b3AtMy5zby4xMg0KIzEwIDB4YjdmNWY0MWIgaW4g
-Z25vbWVfZGVza3RvcF90aHVtYm5haWxfZmFjdG9yeV9nZW5lcmF0ZV90aHVt
-Ym5haWwgKCkgZnJvbSAvdXNyL2xpYi9saWJnbm9tZS1kZXNrdG9wLTMuc28u
-MTINCiMxMSAweDgwMGUwZWY5IGluIHRodW1ibmFpbF90aHJlYWRfc3RhcnQg
-KCkNCiMxMiAweGI2ZDQ1NDUyIGluIHN0YXJ0X3RocmVhZCAoYXJnPTB4YWRi
-NzJiNDApIGF0IHB0aHJlYWRfY3JlYXRlLmM6MzM0DQojMTMgMHhiNmM2OTI1
-ZSBpbiBjbG9uZSAoKSBhdCAuLi9zeXNkZXBzL3VuaXgvc3lzdi9saW51eC9p
-Mzg2L2Nsb25lLlM6MTIyDQoNCg0KQmVzdCByZWdhcmRzLA0KS2FpeGlhbmcg
-WmhhbmcNCi0tLS0tLQ0KDQo=
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODZlbXVsOiBmaXggaHVnZSBiaXQgb2Zmc2V0IGhhbmRsaW5nCgpXZSBt
+dXN0IG5ldmVyIGNob3Agb2ZmIHRoZSBoaWdoIDMyIGJpdHMuCgpUaGlzIGlz
+IFhTQS0xOTUuCgpSZXBvcnRlZC1ieTogR2VvcmdlIER1bmxhcCA8Z2Vvcmdl
+LmR1bmxhcEBjaXRyaXguY29tPgpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGlj
+aCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBBbmRyZXcgQ29v
+cGVyIDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgoKLS0tIGEveGVuL2Fy
+Y2gveDg2L3g4Nl9lbXVsYXRlL3g4Nl9lbXVsYXRlLmMKKysrIGIveGVuL2Fy
+Y2gveDg2L3g4Nl9lbXVsYXRlL3g4Nl9lbXVsYXRlLmMKQEAgLTI1NDksNiAr
+MjU0OSwxMiBAQCB4ODZfZW11bGF0ZSgKICAgICAgICAgZWxzZQogICAgICAg
+ICB7CiAgICAgICAgICAgICAvKgorICAgICAgICAgICAgICogSW5zdHJ1Y3Rp
+b25zIHN1Y2ggYXMgYnQgY2FuIHJlZmVyZW5jZSBhbiBhcmJpdHJhcnkgb2Zm
+c2V0IGZyb20KKyAgICAgICAgICAgICAqIHRoZWlyIG1lbW9yeSBvcGVyYW5k
+LCBidXQgdGhlIGluc3RydWN0aW9uIGRvaW5nIHRoZSBhY3R1YWwKKyAgICAg
+ICAgICAgICAqIGVtdWxhdGlvbiBuZWVkcyB0aGUgYXBwcm9wcmlhdGUgb3Bf
+Ynl0ZXMgcmVhZCBmcm9tIG1lbW9yeS4KKyAgICAgICAgICAgICAqIEFkanVz
+dCBib3RoIHRoZSBzb3VyY2UgcmVnaXN0ZXIgYW5kIG1lbW9yeSBvcGVyYW5k
+IHRvIG1ha2UgYW4KKyAgICAgICAgICAgICAqIGVxdWl2YWxlbnQgaW5zdHJ1
+Y3Rpb24uCisgICAgICAgICAgICAgKgogICAgICAgICAgICAgICogRUEgICAg
+ICAgKz0gQml0T2Zmc2V0IERJViBvcF9ieXRlcyo4CiAgICAgICAgICAgICAg
+KiBCaXRPZmZzZXQgPSBCaXRPZmZzZXQgTU9EIG9wX2J5dGVzKjgKICAgICAg
+ICAgICAgICAqIERJViB0cnVuY2F0ZXMgdG93YXJkcyBuZWdhdGl2ZSBpbmZp
+bml0eS4KQEAgLTI1NjAsMTQgKzI1NjYsMTUgQEAgeDg2X2VtdWxhdGUoCiAg
+ICAgICAgICAgICAgICAgc3JjLnZhbCA9IChpbnQzMl90KXNyYy52YWw7CiAg
+ICAgICAgICAgICBpZiAoIChsb25nKXNyYy52YWwgPCAwICkKICAgICAgICAg
+ICAgIHsKLSAgICAgICAgICAgICAgICB1bnNpZ25lZCBsb25nIGJ5dGVfb2Zm
+c2V0OwotICAgICAgICAgICAgICAgIGJ5dGVfb2Zmc2V0ID0gb3BfYnl0ZXMg
+KyAoKCgtc3JjLnZhbC0xKSA+PiAzKSAmIH4ob3BfYnl0ZXMtMSkpOworICAg
+ICAgICAgICAgICAgIHVuc2lnbmVkIGxvbmcgYnl0ZV9vZmZzZXQgPQorICAg
+ICAgICAgICAgICAgICAgICBvcF9ieXRlcyArICgoKC1zcmMudmFsIC0gMSkg
+Pj4gMykgJiB+KG9wX2J5dGVzIC0gMUwpKTsKKwogICAgICAgICAgICAgICAg
+IGVhLm1lbS5vZmYgLT0gYnl0ZV9vZmZzZXQ7CiAgICAgICAgICAgICAgICAg
+c3JjLnZhbCA9IChieXRlX29mZnNldCA8PCAzKSArIHNyYy52YWw7CiAgICAg
+ICAgICAgICB9CiAgICAgICAgICAgICBlbHNlCiAgICAgICAgICAgICB7Ci0g
+ICAgICAgICAgICAgICAgZWEubWVtLm9mZiArPSAoc3JjLnZhbCA+PiAzKSAm
+IH4ob3BfYnl0ZXMgLSAxKTsKKyAgICAgICAgICAgICAgICBlYS5tZW0ub2Zm
+ICs9IChzcmMudmFsID4+IDMpICYgfihvcF9ieXRlcyAtIDFMKTsKICAgICAg
+ICAgICAgICAgICBzcmMudmFsICY9IChvcF9ieXRlcyA8PCAzKSAtIDE7CiAg
+ICAgICAgICAgICB9CiAgICAgICAgIH0K
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB62D8EX02corpqihoonet_--
+--=separator--
