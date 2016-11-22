@@ -1,46 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/18/3
-Message-ID: <20161218175925.GE31981@jumper.schlittermann.de>
-Date: Sun, 18 Dec 2016 18:59:25 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-9963 Exim private information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/10
+Message-Id: <E1c99mQ-00087x-6f@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 194 (CVE-2016-9384) - guest 32-bit ELF symbol table load leaking host data
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-cve-assign@...re.org <cve-assign@...re.org> (Fr 16 Dez 2016 06:33:41 CET):
-> 
-> Use CVE-2016-9963.
+            Xen Security Advisory CVE-2016-9384 / XSA-194
+                              version 3
 
-Today we released Exim 4.87.1 (security fix for 4.87)
-              and Exim 4.88   (new release)
-into a protected repository.
+           guest 32-bit ELF symbol table load leaking host data
 
-This, and the details of the CVE-2016-9963, where announced to
-distro@...openwall.org and to a limited set of known maintainers,
-contributors and friends of the Exim project.
+UPDATES IN VERSION 3
+====================
 
-On Dec, 25th we will make the details and the above mentioned releases
-available to the public.
+Public release.
 
-If you feel that we missed you, please contact me via GPG signed mail,
-send me your public SSH key and explain, why we should grant to access
-already now.
+ISSUE DESCRIPTION
+=================
 
-Thank you for your understanding.
+Along with their main kernel binary, unprivileged guests may arrange
+to have their Xen environment load (kernel) symbol tables for their
+use.  The ELF image metadata created for this purpose has a few unused
+bytes when the symbol table binary is in 32-bit ELF format.  These
+unused bytes were not properly cleared during symbol table loading.
 
-PS: My GPG key expires in January, an updated version should be available
-through the keyservers and on
-https://schlittermann.de/keys/gpg/hs@schlittermann.de/F69376CE.asc
+IMPACT
+======
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+A malicious unprivileged guest may be able to obtain sensitive
+information from the host.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+The information leak is small and not under the control of the guest,
+so effectively exploiting this vulnerability is probably difficult.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen version 4.7 is affected.  Xen versions 4.6 and earlier are not
+affected.
+
+The vulnerability is not exposed to x86 HVM guests, unless the host
+toolstack has configured to load the guest with a non-default loader,
+rather than hvmloader.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa194.patch           xen-unstable, Xen 4.7.x
+
+$ sha256sum xsa194*
+4dad65417d9ff3c86e763d3c88cf8de79b58a9981d531f641ae0dd0dcedce911  xsa194.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYNDLYAAoJEIP+FMlX6CvZqAoH/39GSWwDpYnflz3TcFyQUViM
+j36XzzStWya71ewaXiguUbTHHg6mK47pK4EA/3zFwerczz/5yQzhlToitPkP/8WE
+5Qbg9Wyg4STylzeKaiTvLzqUK6XSiJ4oKZwLsnU7tFPLcb6FBMm9t3bzg9NECaft
+/6zYj1SVCvoLJB/gtgbwrz2MCjVZQZ9Q2+mpirvu0ePQRD73M0cwfj1ncqjUkFd9
+ZNdk14gmxOk1/wWAm/oD1QKUWmjpzByT5dbGcMV3OxGs1V2Px+o4c1u1t/agldr0
+wC2LvCK9IED9JcBaH/M85TTAGR7GqfU8l9x3ep97GkrUpquX4OGFt7na28M1YUQ=
+=Gc8O
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa194.patch" of type "application/octet-stream" (5732 bytes)
