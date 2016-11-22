@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4183" "Sunday" "28" "March" "2021" "18:35:29" "+0000" "Mark J Cox" "mark@openssl.org" nil "85" "Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing" nil nil nil "3" nil nil (number mark "U       mark@openssl Mar 28   85/4183  " thread-indent "\"Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["15803" "Tuesday" "22" "November" "2016" "12:02:22" "+0000" "Xen.org security team" "security@xen.org" "<E1c99mI-00086a-9W@xenbits.xenproject.org>" "323" "[oss-security] Xen Security Advisory 193 (CVE-2016-9385) - x86 segment base write emulation lacking canonical address checks" nil nil nil "11" "2016112212:02:22" "[oss-security] Xen Security Advisory 193 (CVE-2016-9385) - x86 segment base write emulation lacking canonical address checks" (number mark "U       security@xen Nov 22  323/15803 " thread-indent "\"[oss-security] Xen Security Advisory 193 (CVE-2016-9385) - x86 segment base write emulation lacking canonical address checks\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6093 invoked by uid 550); 28 Mar 2021 18:51:28 -0000
+Received: (qmail 28409 invoked by uid 550); 22 Nov 2016 14:50:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,120 +12,340 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22241 invoked from network); 28 Mar 2021 18:35:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1616956541;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vsJftsxLuOjoy8uP/pBV5bEfnLzsytIh9OpFAht1jzU=;
-	b=lDQYtYzNc5M7bEwN7RBhJ6RoCwaVZdGTgjy0ip7HKza86TGr71jQMpu0urvM4JJcMTOWx0
-	1pbMvZrV4yb1AShK42Vl5WngGg8NQvZ1oQUYrWxmH2BxXE2zEJoPxNt4x/moRkmK3CrQxj
-	IeJ86wjUrgBgS9Bxd/JMidcQ4WwteQuU4zwzWl0tcvFAKO2dsLyEc7vT7WtIBpUprkj7Fk
-	xwepnkHJ8l2BMysvC5RZhJgbgy6uhj3NEOjqxrJazfjuUsCsNxyKRR5+1SQIzirq7QjiI2
-	/BZfvuuXpOqZT+qJU+xsXENFlzAKBbY+W8pnTlILB0Up0Oq2ODg27yuSmvb9Qw==
-X-Gm-Message-State: AOAM532euGKDgRK4OL2J/YRO4akA31TFspPg/pb5ZnBrzAN7CLLKirzT
-	wooIVVCwvvoTckQxxG2SlnkiUcjmZbtpPaLExf8=
-X-Google-Smtp-Source: ABdhPJyC+Ls4EAbFpzYtbG2958IAaFMJU0tOs6cuhwTmcScwyCQpMhahKnC9TwpY7aGfKXQaelHGgXGFVy0Eo/KL200=
-X-Received: by 2002:a92:3003:: with SMTP id x3mr17852584ile.124.1616956539929;
- Sun, 28 Mar 2021 11:35:39 -0700 (PDT)
+Received: (qmail 32163 invoked from network); 22 Nov 2016 12:02:42 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-References: <20210327180255.GA12647@openwall.com> <CANnUo4LFUr3Ou8ofA8saEn9TASDvASQvk8-grg3gQSuwqYaFoA@mail.gmail.com>
-In-Reply-To: <CANnUo4LFUr3Ou8ofA8saEn9TASDvASQvk8-grg3gQSuwqYaFoA@mail.gmail.com>
-From: Mark J Cox <mark@openssl.org>
-Date: Sun, 28 Mar 2021 18:35:29 +0000
-X-Gmail-Original-Message-ID: <CABU6YOakUYGG7UAbUe0kZ5j5QfM2x9NytNzri8m4Ei0LaJRXeg@mail.gmail.com>
-Message-ID: <CABU6YOakUYGG7UAbUe0kZ5j5QfM2x9NytNzri8m4Ei0LaJRXeg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000002e097405be9d0828"
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=mark smtp.mailfrom=mark@openssl.org
-Subject: Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check
- bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in
- signature_algorithms processing
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Message-Id: <E1c99mI-00086a-9W@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:22 +0000
+Subject: [oss-security] Xen Security Advisory 193 (CVE-2016-9385) - x86 segment base
+ write emulation lacking canonical address checks
 
---0000000000002e097405be9d0828
-Content-Type: text/plain; charset="UTF-8"
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-The usual process for OpenSSL pre-notifications (as per our security policy
-at https://www.openssl.org/policies/secpolicy.html ) is to give a heads up
-message to the private distros list and ask vendors who want details to
-reconfirm they will abide by the embargo guidelines.  For those that do, we
-then add to a private github fork where they can view the advisory and
-patches and also comment (since the comments and testing from such
-packagers are very valuable in making sure we get the right fix the first
-time).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-However this time we faced a little bit of a time crunch, we want to get
-fixes for High issues out as soon as we can, but with the Easter public
-holidays looming for several of our team, and some already pre-planned
-OpenSSL team holidays, we decided to give less than our usual one-full-week
-prenotification.  Usually that process of waiting for responses takes an
-extra trip around the sun due to timezones, so I decided to skip it and
-added all the same folks who had access to the last issue to this issue,
-and the mail to distros@ asked the members to let me know if I needed to
-make any add/remove changes to that list.  Those who accessed the link were
-reminded of the embargo and guidelines in a few places.
+            Xen Security Advisory CVE-2016-9385 / XSA-193
+                              version 3
 
-We were alerted to the Wind River security advisory being public by a
-vendor after they saw a tweet about it.  The page stated there were two
-issues, gave the CVE names for the two issues, and gave the one line
-description of each issue.  It also, as you stated, listed the commit
-hashes and the URL to the private github advisory and fork.  However those
-commits and the URLs were part of the private github branch therefore
-protected and only accessible to the specific github ids for the vendors
-we'd added.
+   x86 segment base write emulation lacking canonical address checks
 
-At that point we were only 24 hours away from the scheduled release date,
-and the extra details on the page were not sufficient for us to call the
-embargo broken nor to bring forward the release date.  We did however ask
-Wind River to remove the page and provide an explanation, which they did.
-We continued to monitor to see if the CVE names were being discussed in
-case we had to change the plan.  The final publication and hence end of the
-embargo happened to the planned schedule.
+UPDATES IN VERSION 3
+====================
 
-Mark
+Public release.
 
+ISSUE DESCRIPTION
+=================
 
-> On Sat, Mar 27, 2021 at 6:05 PM Solar Designer <solar@openwall.com> wrote:
->
-...
+Both writes to the FS and GS register base MSRs as well as the
+WRFSBASE and WRGSBASE instructions require their input values to be
+canonical, or a #GP fault will be raised.  When the use of those
+instructions by the hypervisor was enabled, the previous guard against
+#GP faults (having recovery code attached) was accidentally removed.
 
-> So I'd appreciate an explanation/statement from Wind River on what
->> happened and what measures, if any, are being taken to prevent this from
->> happening again.  I'd also appreciate a comment from OpenSSL.
->>
->> The leak was on a web page archived here:
->>
->>
->> https://web.archive.org/web/20210324105700/https://support2.windriver.com/index.php?page=security-notices&on=view&id=7055
->>
->> As I recall, the private GitHub links in there gave me "404 Not Found"
->> soon after the windriver.com link (which was live at the time, not
->> needing archive.org) was sent to the distros list by a concerned fellow
->> distro.  This means that either OpenSSL promptly brought them down or
->> they were only ever accessible under appropriately privileged GitHub
->> accounts.  In the latter case, the existence of that web page with its
->> content might not have been that much of a leak, as in addition to the
->> public pre-notification the web page only contained CVE IDs and one-line
->> vulnerability titles and commit hashes and those GitHub links.  If the
->> actual commits and the links were never publicly accessible, then it
->> wasn't that much of an issue and reasonably didn't require considering
->> the embargo broken.
->>
->> Another concern I have is that I have to write this to ever hear from
->> Wind River.  I'd have expected them to comment on the distros list the
->> moment this was brought up in there - but they kept silent.  Did they
->> even see the message?  (Of course, I could ask privately, but the
->> concerns are already public and we need to discuss this in public.)
->>
->> To summarize, this is probably not a big deal, but let's figure out what
->> happened and what can be done better next time.
->>
->> Thanks,
->>
->> Alexander
->>
->
+IMPACT
+======
 
---0000000000002e097405be9d0828--
+A malicious guest administrator can crash the host, leading to a DoS.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.4 and onwards are affected.  Xen versions 4.3 and
+earlier are not affected.
+
+The vulnerability is only exposed to x86 PV guests.
+
+The vulnerability is NOT exposed to x86 HVM guests.
+
+ARM systems are NOT vulnerable.
+
+MITIGATION
+==========
+
+Running only HVM guests will avoid this vulnerability.
+
+For PV guests the vulnerability can be avoided if the guest kernel is
+controlled by the host rather than guest administrator, provided that
+further steps are taken to prevent the guest administrator from loading
+code into the kernel (e.g. by disabling loadable modules etc) or from
+using other mechanisms which allow them to run code at kernel privilege.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa193.patch           xen-unstable
+xsa193-4.7.patch       Xen 4.7.x, Xen 4.6.x
+xsa193-4.5.patch       Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa193*
+401df29b462a3430403a4f5bb36fd7824e692c9b5bac650e1a9d70bd440a55a1  xsa193.patch
+b3494b1fe5fefc0d032bd603340e364c880ec0d3ae3fb8aa3a773038e956f955  xsa193-4.5.patch
+f1b0092c585ebffe83d6ed7df94885ec5dfcb4227bdb33f421bad9febb8135a1  xsa193-4.7.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYNDK2AAoJEIP+FMlX6CvZswsIAI17sWqaGeP8GvtddxR08G2J
+3Nb7Lnb/4cq8Hdc5XmUnX/zuDqobT5AGJEgKAuhRc9zs2TOv8FwcABc+/odKG6ak
+tcMAaLThMcKbB0b0ZYEkcrU+jaCDDVE3rYVGjKv0hHKZNRY/SmWOdl180xcHksXG
+pj5OQn6/+db6nqMlhyOcOyjM3w1/1AUe/O0EDsdUSNrY1mZi4/MjUXlDaJTZbDCc
+KW9XUeRSq66iZELawBaosViTenOm/R+8DJGiR8fmJlXx+gzpEywtsEUCrxeKlTDo
+tT68gwy0aHdlqKbIthkKr5qaT5FtKPyX0UpIXu7qtldbdEZG61iIlNOEG8tyPhU=
+=fjbt
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa193.patch"
+Content-Disposition: attachment; filename="xsa193.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvUFY6IHdyaXRlcyBvZiAlZnMgYW5kICVncyBiYXNlIE1TUnMgcmVx
+dWlyZSBjYW5vbmljYWwgYWRkcmVzc2VzCgpDb21taXQgYzQyNDk0YWNiMiAo
+Ing4NjogZml4IEZTL0dTIGJhc2UgaGFuZGxpbmcgd2hlbiB1c2luZyB0aGUK
+ZnNnc2Jhc2UgZmVhdHVyZSIpIHJlcGxhY2VkIHRoZSB1c2Ugb2Ygd3Jtc3Jf
+c2FmZSgpIG9uIHRoZXNlIHBhdGhzCndpdGhvdXQgcmVjb2duaXppbmcgdGhh
+dCB3cntmLGd9c2Jhc2UoKSB1c2UganVzdCB3cm1zcmwoKSBhbmQgdGhhdCB0
+aGUKV1J7RixHfVNCQVNFIGluc3RydWN0aW9ucyBhbHNvIHJhaXNlICNHUCBm
+b3Igbm9uLWNhbm9uaWNhbCBpbnB1dC4KClNpbWlsYXJseSBhcmNoX3NldF9p
+bmZvX2d1ZXN0KCkgbmVlZHMgdG8gcHJldmVudCBub24tY2Fub25pY2FsCmFk
+ZHJlc3NlcyBmcm9tIGdldHRpbmcgc3RvcmVkIGludG8gc3RhdGUgbGF0ZXIg
+dG8gYmUgbG9hZGVkIGJ5IGNvbnRleHQKc3dpdGNoIGNvZGUuIEZvciBjb25z
+aXN0ZW5jeSBhbHNvIGNoZWNrIHN0YWNrIHBvaW50ZXJzIGFuZCBMRFQgYmFz
+ZS4KRFIwLi4zLCBvdG9oLCBhbHJlYWR5IGdldCBwcm9wZXJseSBjaGVja2Vk
+IGluIHNldF9kZWJ1Z3JlZygpIChhbGJlaXQKd2UgZGlzY2FyZCB0aGUgZXJy
+b3IgdGhlcmUpLgoKVGhlIFNIQURPV19HU19CQVNFIGNoZWNrIGlzbid0IHN0
+cmljdGx5IG5lY2Vzc2FyeSwgYnV0IEkgdGhpbmsgd2UKYmV0dGVyIGF2b2lk
+IHRyeWluZyB0aGUgV1JNU1IgaWYgd2Uga25vdyBpdCdzIGdvaW5nIHRvIGZh
+aWwuCgpUaGlzIGlzIFhTQS0xOTMuCgpSZXBvcnRlZC1ieTogQW5kcmV3IENv
+b3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU2lnbmVkLW9mZi1i
+eTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1i
+eTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4K
+Ci0tLSBhL3hlbi9hcmNoL3g4Ni9kb21haW4uYworKysgYi94ZW4vYXJjaC94
+ODYvZG9tYWluLmMKQEAgLTg5Nyw3ICs4OTcsMTMgQEAgaW50IGFyY2hfc2V0
+X2luZm9fZ3Vlc3QoCiAgICAgewogICAgICAgICBpZiAoICFjb21wYXQgKQog
+ICAgICAgICB7Ci0gICAgICAgICAgICBpZiAoICFpc19jYW5vbmljYWxfYWRk
+cmVzcyhjLm5hdC0+dXNlcl9yZWdzLmVpcCkgfHwKKyAgICAgICAgICAgIGlm
+ICggIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKGMubmF0LT51c2VyX3JlZ3Mucmlw
+KSB8fAorICAgICAgICAgICAgICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3Mo
+Yy5uYXQtPnVzZXJfcmVncy5yc3ApIHx8CisgICAgICAgICAgICAgICAgICFp
+c19jYW5vbmljYWxfYWRkcmVzcyhjLm5hdC0+a2VybmVsX3NwKSB8fAorICAg
+ICAgICAgICAgICAgICAoYy5uYXQtPmxkdF9lbnRzICYmICFpc19jYW5vbmlj
+YWxfYWRkcmVzcyhjLm5hdC0+bGR0X2Jhc2UpKSB8fAorICAgICAgICAgICAg
+ICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3MoYy5uYXQtPmZzX2Jhc2UpIHx8
+CisgICAgICAgICAgICAgICAgICFpc19jYW5vbmljYWxfYWRkcmVzcyhjLm5h
+dC0+Z3NfYmFzZV9rZXJuZWwpIHx8CisgICAgICAgICAgICAgICAgICFpc19j
+YW5vbmljYWxfYWRkcmVzcyhjLm5hdC0+Z3NfYmFzZV91c2VyKSB8fAogICAg
+ICAgICAgICAgICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3MoYy5uYXQtPmV2
+ZW50X2NhbGxiYWNrX2VpcCkgfHwKICAgICAgICAgICAgICAgICAgIWlzX2Nh
+bm9uaWNhbF9hZGRyZXNzKGMubmF0LT5zeXNjYWxsX2NhbGxiYWNrX2VpcCkg
+fHwKICAgICAgICAgICAgICAgICAgIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKGMu
+bmF0LT5mYWlsc2FmZV9jYWxsYmFja19laXApICkKLS0tIGEveGVuL2FyY2gv
+eDg2L3RyYXBzLmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTI1
+NjAsMjEgKzI1NjAsMjEgQEAgc3RhdGljIGludCBwcml2X29wX3dyaXRlX21z
+cih1bnNpZ25lZCBpbgogICAgICAgICBpbnQgcmM7CiAKICAgICBjYXNlIE1T
+Ul9GU19CQVNFOgotICAgICAgICBpZiAoIGlzX3B2XzMyYml0X2RvbWFpbihj
+dXJyZCkgKQorICAgICAgICBpZiAoIGlzX3B2XzMyYml0X2RvbWFpbihjdXJy
+ZCkgfHwgIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKHZhbCkgKQogICAgICAgICAg
+ICAgYnJlYWs7CiAgICAgICAgIHdyZnNiYXNlKHZhbCk7CiAgICAgICAgIGN1
+cnItPmFyY2gucHZfdmNwdS5mc19iYXNlID0gdmFsOwogICAgICAgICByZXR1
+cm4gWDg2RU1VTF9PS0FZOwogCiAgICAgY2FzZSBNU1JfR1NfQkFTRToKLSAg
+ICAgICAgaWYgKCBpc19wdl8zMmJpdF9kb21haW4oY3VycmQpICkKKyAgICAg
+ICAgaWYgKCBpc19wdl8zMmJpdF9kb21haW4oY3VycmQpIHx8ICFpc19jYW5v
+bmljYWxfYWRkcmVzcyh2YWwpICkKICAgICAgICAgICAgIGJyZWFrOwogICAg
+ICAgICB3cmdzYmFzZSh2YWwpOwogICAgICAgICBjdXJyLT5hcmNoLnB2X3Zj
+cHUuZ3NfYmFzZV9rZXJuZWwgPSB2YWw7CiAgICAgICAgIHJldHVybiBYODZF
+TVVMX09LQVk7CiAKICAgICBjYXNlIE1TUl9TSEFET1dfR1NfQkFTRToKLSAg
+ICAgICAgaWYgKCBpc19wdl8zMmJpdF9kb21haW4oY3VycmQpIHx8CisgICAg
+ICAgIGlmICggaXNfcHZfMzJiaXRfZG9tYWluKGN1cnJkKSB8fCAhaXNfY2Fu
+b25pY2FsX2FkZHJlc3ModmFsKSB8fAogICAgICAgICAgICAgIHdybXNyX3Nh
+ZmUoTVNSX1NIQURPV19HU19CQVNFLCB2YWwpICkKICAgICAgICAgICAgIGJy
+ZWFrOwogICAgICAgICBjdXJyLT5hcmNoLnB2X3ZjcHUuZ3NfYmFzZV91c2Vy
+ID0gdmFsOwo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa193-4.5.patch"
+Content-Disposition: attachment; filename="xsa193-4.5.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvUFY6IHdyaXRlcyBvZiAlZnMgYW5kICVncyBiYXNlIE1TUnMgcmVx
+dWlyZSBjYW5vbmljYWwgYWRkcmVzc2VzCgpDb21taXQgYzQyNDk0YWNiMiAo
+Ing4NjogZml4IEZTL0dTIGJhc2UgaGFuZGxpbmcgd2hlbiB1c2luZyB0aGUK
+ZnNnc2Jhc2UgZmVhdHVyZSIpIHJlcGxhY2VkIHRoZSB1c2Ugb2Ygd3Jtc3Jf
+c2FmZSgpIG9uIHRoZXNlIHBhdGhzCndpdGhvdXQgcmVjb2duaXppbmcgdGhh
+dCB3cntmLGd9c2Jhc2UoKSB1c2UganVzdCB3cm1zcmwoKSBhbmQgdGhhdCB0
+aGUKV1J7RixHfVNCQVNFIGluc3RydWN0aW9ucyBhbHNvIHJhaXNlICNHUCBm
+b3Igbm9uLWNhbm9uaWNhbCBpbnB1dC4KClNpbWlsYXJseSBhcmNoX3NldF9p
+bmZvX2d1ZXN0KCkgbmVlZHMgdG8gcHJldmVudCBub24tY2Fub25pY2FsCmFk
+ZHJlc3NlcyBmcm9tIGdldHRpbmcgc3RvcmVkIGludG8gc3RhdGUgbGF0ZXIg
+dG8gYmUgbG9hZGVkIGJ5IGNvbnRleHQKc3dpdGNoIGNvZGUuIEZvciBjb25z
+aXN0ZW5jeSBhbHNvIGNoZWNrIHN0YWNrIHBvaW50ZXJzIGFuZCBMRFQgYmFz
+ZS4KRFIwLi4zLCBvdG9oLCBhbHJlYWR5IGdldCBwcm9wZXJseSBjaGVja2Vk
+IGluIHNldF9kZWJ1Z3JlZygpIChhbGJlaXQKd2UgZGlzY2FyZCB0aGUgZXJy
+b3IgdGhlcmUpLgoKVGhlIFNIQURPV19HU19CQVNFIGNoZWNrIGlzbid0IHN0
+cmljdGx5IG5lY2Vzc2FyeSwgYnV0IEkgdGhpbmsgd2UKYmV0dGVyIGF2b2lk
+IHRyeWluZyB0aGUgV1JNU1IgaWYgd2Uga25vdyBpdCdzIGdvaW5nIHRvIGZh
+aWwuCgpUaGlzIGlzIFhTQS0xOTMuCgpSZXBvcnRlZC1ieTogQW5kcmV3IENv
+b3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU2lnbmVkLW9mZi1i
+eTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1i
+eTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4K
+Ci0tLSBhL3hlbi9hcmNoL3g4Ni9kb21haW4uYworKysgYi94ZW4vYXJjaC94
+ODYvZG9tYWluLmMKQEAgLTc0MSw3ICs3NDEsMTMgQEAgaW50IGFyY2hfc2V0
+X2luZm9fZ3Vlc3QoCiAgICAgewogICAgICAgICBpZiAoICFjb21wYXQgKQog
+ICAgICAgICB7Ci0gICAgICAgICAgICBpZiAoICFpc19jYW5vbmljYWxfYWRk
+cmVzcyhjLm5hdC0+dXNlcl9yZWdzLmVpcCkgfHwKKyAgICAgICAgICAgIGlm
+ICggIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKGMubmF0LT51c2VyX3JlZ3Mucmlw
+KSB8fAorICAgICAgICAgICAgICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3Mo
+Yy5uYXQtPnVzZXJfcmVncy5yc3ApIHx8CisgICAgICAgICAgICAgICAgICFp
+c19jYW5vbmljYWxfYWRkcmVzcyhjLm5hdC0+a2VybmVsX3NwKSB8fAorICAg
+ICAgICAgICAgICAgICAoYy5uYXQtPmxkdF9lbnRzICYmICFpc19jYW5vbmlj
+YWxfYWRkcmVzcyhjLm5hdC0+bGR0X2Jhc2UpKSB8fAorICAgICAgICAgICAg
+ICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3MoYy5uYXQtPmZzX2Jhc2UpIHx8
+CisgICAgICAgICAgICAgICAgICFpc19jYW5vbmljYWxfYWRkcmVzcyhjLm5h
+dC0+Z3NfYmFzZV9rZXJuZWwpIHx8CisgICAgICAgICAgICAgICAgICFpc19j
+YW5vbmljYWxfYWRkcmVzcyhjLm5hdC0+Z3NfYmFzZV91c2VyKSB8fAogICAg
+ICAgICAgICAgICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3MoYy5uYXQtPmV2
+ZW50X2NhbGxiYWNrX2VpcCkgfHwKICAgICAgICAgICAgICAgICAgIWlzX2Nh
+bm9uaWNhbF9hZGRyZXNzKGMubmF0LT5zeXNjYWxsX2NhbGxiYWNrX2VpcCkg
+fHwKICAgICAgICAgICAgICAgICAgIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKGMu
+bmF0LT5mYWlsc2FmZV9jYWxsYmFja19laXApICkKLS0tIGEveGVuL2FyY2gv
+eDg2L3RyYXBzLmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTI0
+MzksMTkgKzI0MzksMTkgQEAgc3RhdGljIGludCBlbXVsYXRlX3ByaXZpbGVn
+ZWRfb3Aoc3RydWN0CiAgICAgICAgIHN3aXRjaCAoICh1MzIpcmVncy0+ZWN4
+ICkKICAgICAgICAgewogICAgICAgICBjYXNlIE1TUl9GU19CQVNFOgotICAg
+ICAgICAgICAgaWYgKCBpc19wdl8zMm9uNjRfdmNwdSh2KSApCisgICAgICAg
+ICAgICBpZiAoIGlzX3B2XzMyb242NF92Y3B1KHYpIHx8ICFpc19jYW5vbmlj
+YWxfYWRkcmVzcyhtc3JfY29udGVudCkgKQogICAgICAgICAgICAgICAgIGdv
+dG8gZmFpbDsKICAgICAgICAgICAgIHdyZnNiYXNlKG1zcl9jb250ZW50KTsK
+ICAgICAgICAgICAgIHYtPmFyY2gucHZfdmNwdS5mc19iYXNlID0gbXNyX2Nv
+bnRlbnQ7CiAgICAgICAgICAgICBicmVhazsKICAgICAgICAgY2FzZSBNU1Jf
+R1NfQkFTRToKLSAgICAgICAgICAgIGlmICggaXNfcHZfMzJvbjY0X3ZjcHUo
+dikgKQorICAgICAgICAgICAgaWYgKCBpc19wdl8zMm9uNjRfdmNwdSh2KSB8
+fCAhaXNfY2Fub25pY2FsX2FkZHJlc3MobXNyX2NvbnRlbnQpICkKICAgICAg
+ICAgICAgICAgICBnb3RvIGZhaWw7CiAgICAgICAgICAgICB3cmdzYmFzZSht
+c3JfY29udGVudCk7CiAgICAgICAgICAgICB2LT5hcmNoLnB2X3ZjcHUuZ3Nf
+YmFzZV9rZXJuZWwgPSBtc3JfY29udGVudDsKICAgICAgICAgICAgIGJyZWFr
+OwogICAgICAgICBjYXNlIE1TUl9TSEFET1dfR1NfQkFTRToKLSAgICAgICAg
+ICAgIGlmICggaXNfcHZfMzJvbjY0X3ZjcHUodikgKQorICAgICAgICAgICAg
+aWYgKCBpc19wdl8zMm9uNjRfdmNwdSh2KSB8fCAhaXNfY2Fub25pY2FsX2Fk
+ZHJlc3MobXNyX2NvbnRlbnQpICkKICAgICAgICAgICAgICAgICBnb3RvIGZh
+aWw7CiAgICAgICAgICAgICBpZiAoIHdybXNyX3NhZmUoTVNSX1NIQURPV19H
+U19CQVNFLCBtc3JfY29udGVudCkgKQogICAgICAgICAgICAgICAgIGdvdG8g
+ZmFpbDsK
+
+--=separator
+Content-Type: application/octet-stream; name="xsa193-4.7.patch"
+Content-Disposition: attachment; filename="xsa193-4.7.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvUFY6IHdyaXRlcyBvZiAlZnMgYW5kICVncyBiYXNlIE1TUnMgcmVx
+dWlyZSBjYW5vbmljYWwgYWRkcmVzc2VzCgpDb21taXQgYzQyNDk0YWNiMiAo
+Ing4NjogZml4IEZTL0dTIGJhc2UgaGFuZGxpbmcgd2hlbiB1c2luZyB0aGUK
+ZnNnc2Jhc2UgZmVhdHVyZSIpIHJlcGxhY2VkIHRoZSB1c2Ugb2Ygd3Jtc3Jf
+c2FmZSgpIG9uIHRoZXNlIHBhdGhzCndpdGhvdXQgcmVjb2duaXppbmcgdGhh
+dCB3cntmLGd9c2Jhc2UoKSB1c2UganVzdCB3cm1zcmwoKSBhbmQgdGhhdCB0
+aGUKV1J7RixHfVNCQVNFIGluc3RydWN0aW9ucyBhbHNvIHJhaXNlICNHUCBm
+b3Igbm9uLWNhbm9uaWNhbCBpbnB1dC4KClNpbWlsYXJseSBhcmNoX3NldF9p
+bmZvX2d1ZXN0KCkgbmVlZHMgdG8gcHJldmVudCBub24tY2Fub25pY2FsCmFk
+ZHJlc3NlcyBmcm9tIGdldHRpbmcgc3RvcmVkIGludG8gc3RhdGUgbGF0ZXIg
+dG8gYmUgbG9hZGVkIGJ5IGNvbnRleHQKc3dpdGNoIGNvZGUuIEZvciBjb25z
+aXN0ZW5jeSBhbHNvIGNoZWNrIHN0YWNrIHBvaW50ZXJzIGFuZCBMRFQgYmFz
+ZS4KRFIwLi4zLCBvdG9oLCBhbHJlYWR5IGdldCBwcm9wZXJseSBjaGVja2Vk
+IGluIHNldF9kZWJ1Z3JlZygpIChhbGJlaXQKd2UgZGlzY2FyZCB0aGUgZXJy
+b3IgdGhlcmUpLgoKVGhlIFNIQURPV19HU19CQVNFIGNoZWNrIGlzbid0IHN0
+cmljdGx5IG5lY2Vzc2FyeSwgYnV0IEkgdGhpbmsgd2UKYmV0dGVyIGF2b2lk
+IHRyeWluZyB0aGUgV1JNU1IgaWYgd2Uga25vdyBpdCdzIGdvaW5nIHRvIGZh
+aWwuCgpUaGlzIGlzIFhTQS0xOTMuCgpSZXBvcnRlZC1ieTogQW5kcmV3IENv
+b3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU2lnbmVkLW9mZi1i
+eTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1i
+eTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4K
+Ci0tLSBhL3hlbi9hcmNoL3g4Ni9kb21haW4uYworKysgYi94ZW4vYXJjaC94
+ODYvZG9tYWluLmMKQEAgLTg5MCw3ICs4OTAsMTMgQEAgaW50IGFyY2hfc2V0
+X2luZm9fZ3Vlc3QoCiAgICAgewogICAgICAgICBpZiAoICFjb21wYXQgKQog
+ICAgICAgICB7Ci0gICAgICAgICAgICBpZiAoICFpc19jYW5vbmljYWxfYWRk
+cmVzcyhjLm5hdC0+dXNlcl9yZWdzLmVpcCkgfHwKKyAgICAgICAgICAgIGlm
+ICggIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKGMubmF0LT51c2VyX3JlZ3Mucmlw
+KSB8fAorICAgICAgICAgICAgICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3Mo
+Yy5uYXQtPnVzZXJfcmVncy5yc3ApIHx8CisgICAgICAgICAgICAgICAgICFp
+c19jYW5vbmljYWxfYWRkcmVzcyhjLm5hdC0+a2VybmVsX3NwKSB8fAorICAg
+ICAgICAgICAgICAgICAoYy5uYXQtPmxkdF9lbnRzICYmICFpc19jYW5vbmlj
+YWxfYWRkcmVzcyhjLm5hdC0+bGR0X2Jhc2UpKSB8fAorICAgICAgICAgICAg
+ICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3MoYy5uYXQtPmZzX2Jhc2UpIHx8
+CisgICAgICAgICAgICAgICAgICFpc19jYW5vbmljYWxfYWRkcmVzcyhjLm5h
+dC0+Z3NfYmFzZV9rZXJuZWwpIHx8CisgICAgICAgICAgICAgICAgICFpc19j
+YW5vbmljYWxfYWRkcmVzcyhjLm5hdC0+Z3NfYmFzZV91c2VyKSB8fAogICAg
+ICAgICAgICAgICAgICAhaXNfY2Fub25pY2FsX2FkZHJlc3MoYy5uYXQtPmV2
+ZW50X2NhbGxiYWNrX2VpcCkgfHwKICAgICAgICAgICAgICAgICAgIWlzX2Nh
+bm9uaWNhbF9hZGRyZXNzKGMubmF0LT5zeXNjYWxsX2NhbGxiYWNrX2VpcCkg
+fHwKICAgICAgICAgICAgICAgICAgIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKGMu
+bmF0LT5mYWlsc2FmZV9jYWxsYmFja19laXApICkKLS0tIGEveGVuL2FyY2gv
+eDg2L3RyYXBzLmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTI3
+MjMsMTkgKzI3MjMsMjIgQEAgc3RhdGljIGludCBlbXVsYXRlX3ByaXZpbGVn
+ZWRfb3Aoc3RydWN0CiAgICAgICAgIHN3aXRjaCAoIHJlZ3MtPl9lY3ggKQog
+ICAgICAgICB7CiAgICAgICAgIGNhc2UgTVNSX0ZTX0JBU0U6Ci0gICAgICAg
+ICAgICBpZiAoIGlzX3B2XzMyYml0X2RvbWFpbihjdXJyZCkgKQorICAgICAg
+ICAgICAgaWYgKCBpc19wdl8zMmJpdF9kb21haW4oY3VycmQpIHx8CisgICAg
+ICAgICAgICAgICAgICFpc19jYW5vbmljYWxfYWRkcmVzcyhtc3JfY29udGVu
+dCkgKQogICAgICAgICAgICAgICAgIGdvdG8gZmFpbDsKICAgICAgICAgICAg
+IHdyZnNiYXNlKG1zcl9jb250ZW50KTsKICAgICAgICAgICAgIHYtPmFyY2gu
+cHZfdmNwdS5mc19iYXNlID0gbXNyX2NvbnRlbnQ7CiAgICAgICAgICAgICBi
+cmVhazsKICAgICAgICAgY2FzZSBNU1JfR1NfQkFTRToKLSAgICAgICAgICAg
+IGlmICggaXNfcHZfMzJiaXRfZG9tYWluKGN1cnJkKSApCisgICAgICAgICAg
+ICBpZiAoIGlzX3B2XzMyYml0X2RvbWFpbihjdXJyZCkgfHwKKyAgICAgICAg
+ICAgICAgICAgIWlzX2Nhbm9uaWNhbF9hZGRyZXNzKG1zcl9jb250ZW50KSAp
+CiAgICAgICAgICAgICAgICAgZ290byBmYWlsOwogICAgICAgICAgICAgd3Jn
+c2Jhc2UobXNyX2NvbnRlbnQpOwogICAgICAgICAgICAgdi0+YXJjaC5wdl92
+Y3B1LmdzX2Jhc2Vfa2VybmVsID0gbXNyX2NvbnRlbnQ7CiAgICAgICAgICAg
+ICBicmVhazsKICAgICAgICAgY2FzZSBNU1JfU0hBRE9XX0dTX0JBU0U6Ci0g
+ICAgICAgICAgICBpZiAoIGlzX3B2XzMyYml0X2RvbWFpbihjdXJyZCkgKQor
+ICAgICAgICAgICAgaWYgKCBpc19wdl8zMmJpdF9kb21haW4oY3VycmQpIHx8
+CisgICAgICAgICAgICAgICAgICFpc19jYW5vbmljYWxfYWRkcmVzcyhtc3Jf
+Y29udGVudCkgKQogICAgICAgICAgICAgICAgIGdvdG8gZmFpbDsKICAgICAg
+ICAgICAgIGlmICggd3Jtc3Jfc2FmZShNU1JfU0hBRE9XX0dTX0JBU0UsIG1z
+cl9jb250ZW50KSApCiAgICAgICAgICAgICAgICAgZ290byBmYWlsOwo=
+
+--=separator--
