@@ -1,90 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/15
-Message-Id: <000E6874-A0FB-46E7-91D9-52598837EBAC@beckweb.net>
-Date: Thu, 12 May 2016 00:30:08 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/16
+Message-ID: <10bd295d-3a8f-a08a-4c60-9af84d78ef25@apache.org>
+Date: Tue, 22 Nov 2016 09:57:59 +0000
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Jenkins - multiple fixes
+Subject: [SECURITY] CVE-2016-8735 Apache Tomcat Remote Code Execution
 Content-Type: text/plain; charset=utf-8
 
-The Jenkins project published new releases today with fixes for multiple
-vulnerabilities. Users should upgrade to Jenkins 2.3 or Jenkins 1.651.2:
-https://jenkins.io/download/
+CVE-2016-8735 Apache Tomcat Remote Code Execution
 
-Summary and description of the vulnerabilities are below. Some more 
-details, severity, and attribution can be found here:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016-05-11
+Severity: Important
 
-We provide advance notification for security updates on this mailing
-list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Vendor: The Apache Software Foundation
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M11
+Apache Tomcat 8.5.0 to 8.5.6
+Apache Tomcat 8.0.0.RC1 to 8.0.38
+Apache Tomcat 7.0.0 to 7.0.72
+Apache Tomcat 6.0.0 to 6.0.47
+Earlier, unsupported versions may also be affected.
 
----
+Description
+The JmxRemoteLifecycleListener was not updated to take account of
+Oracle's fix for CVE-2016-3427. Therefore, Tomcat installations using
+this listener remained vulnerable to a similar remote code execution
+vulnerability. This issue has been rated as important rather than
+critical due to the small number of installations using this listener
+and that it would be highly unusual for the JMX ports to be accessible
+to an attacker even when the listener is used.
 
-1)
-SECURITY-170 / CVE-2016-3721: Arbitrary build parameters are passed to 
-build scripts as environment variables
+Mitigation
+Users of affected versions should apply one of the following mitigations
+- Upgrade to Apache Tomcat 9.0.0.M13 or later
+  (Apache Tomcat 9.0.0.M12 has the fix but was not released)
+- Upgrade to Apache Tomcat 8.5.8 or later
+  (Apache Tomcat 8.5.7 has the fix but was not released)
+- Upgrade to Apache Tomcat 8.0.39 or later
+- Upgrade to Apache Tomcat 7.0.73 or later
+- Upgrade to Apache Tomcat 6.0.48 or later
 
-Build parameters in Jenkins typically are passed to build scripts as 
-environment variables. Some plugins allow passing arbitrary (undeclared)
-parameters. Depending on access permissions and installed plugins, 
-malicious users were able to trigger builds, passing arbitrary 
-environment variables (e.g. PATH) to modify the behavior of those builds.
+Credit:
+This issue was discovered by Pierre Ernst and reported responsibly to
+the Apache Tomcat Security Team.
 
-
-2)
-SECURITY-243 / CVE-2016-3722: Malicious users with multiple user 
-accounts can prevent other users from logging in
-
-By changing the freely editable 'full name', malicious users with
-multiple user accounts could prevent other users from logging in, as 
-'full name' was resolved before actual user name to determine which 
-account is currently trying to log in.
-
-
-3)
-SECURITY-250 / CVE-2016-3723: Information on installed plugins exposed 
-via API
-
-The XML/JSON API endpoints providing information about installed plugins
-were missing permissions checks, allowing any user with read access to
-Jenkins to determine which plugins and versions were installed.
-
-
-4)
-SECURITY-266 / CVE-2016-3724: Encrypted secrets (e.g. passwords) were
-leaked to users with permission to read configuration
-
-Users with extended read access could access encrypted secrets stored
-directly in the configuration of those items.
-
-
-5)
-SECURITY-273 / CVE-2016-3725: Regular users can trigger download of
-update site metadata
-
-A missing permissions check allowed any user with access to Jenkins 
-to trigger an update of update site metadata. This could be combined
-with DNS cache poisoning to disrupt Jenkins service.
-
-
-6)
-SECURITY-276 / CVE-2016-3726: Open redirect to scheme-relative URLs
-
-Some Jenkins URLs did not properly validate the redirect URLs, which
-allowed malicious users to create URLs that redirect users to arbitrary
-scheme-relative URLs.
-
-
-7)
-SECURITY-281 / CVE-2016-3727: Granting the permission to read node
-configurations allows access to overall system configuration
-
-The API URL /computer/(master)/api/xml allowed users with the 'extended
-read' permission for the master node to see some global Jenkins
-configuration, including the configuration of the security realm.
-
+References:
+[1] http://tomcat.apache.org/security-9.html
+[2] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[4] http://tomcat.apache.org/security-6.html
