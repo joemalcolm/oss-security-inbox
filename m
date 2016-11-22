@@ -1,57 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/3
-Message-Id: <20161013070308.6FFD713A870@smtpvmsrv1.mitre.org>
-Date: Thu, 13 Oct 2016 03:03:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: freener.gdx@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/22/7
+Message-Id: <E1c99m1-00083i-DF@xenbits.xenproject.org>
+Date: Tue, 22 Nov 2016 12:02:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 191 (CVE-2016-9386) - x86 null segments not always treated as unusable
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=ded89912156b1a47d940a0c954c43afbabd0c42c
+            Xen Security Advisory CVE-2016-9386 / XSA-191
+                              version 3
 
-> I found a stack buffer overflow vulnerability in Broadcom wifi driver
-> brcmfmac, this issue has been fixed,
+           x86 null segments not always treated as unusable
 
-> To trigger the bug the exploit should send a NL80211_CMD_START_AP or
-> NL80211_CMD_NEW_BEACON command to nl80211 socket in kernel.
+UPDATES IN VERSION 3
+====================
 
-> NL80211_ATTR_SSID is optional, user can send a netlink packet which
-> does not contain information about NL80211_ATTR_SSID, so params.ssid
-> and params.ssid_len will be 0. It's the key point in the exploit.
+Public release.
 
-> It does not
-> check the length of data before calling memcpy to copy the data to
-> stack buffer.
+ISSUE DESCRIPTION
+=================
 
->> brcmfmac: avoid potential stack overflow in brcmf_cfg80211_start_ap()
+The Xen x86 emulator erroneously failed to consider the unusability of
+segments when performing memory accesses.
 
->> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+The intended behaviour is as follows: The user data segment (%ds, %es,
+%fs and %gs) selectors may be NULL in 32-bit to prevent access.  In
+64-bit, NULL has a special meaning for user segments, and there is no
+way of preventing access.  However, in both 32-bit and 64-bit, a NULL
+LDT system segment is intended to prevent access.
 
-Use CVE-2016-8658.
+On Intel hardware, loading a NULL selector zeros the base as well as most
+attributes, but sets the limit field to its largest possible value.  On AMD
+hardware, loading a NULL selector zeros the attributes, leaving the stale base
+and limit intact.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+Xen may erroneously permit the access using unexpected base/limit values.
+
+Ability to exploit this vulnerability on Intel is easy, but on AMD depends in
+a complicated way on how the guest kernel manages LDTs.
+
+IMPACT
+======
+
+An unprivileged guest user program may be able to elevate its privilege
+to that of the guest operating system.
+
+VULNERABLE SYSTEMS
+==================
+
+The vulnerability is only exposed to HVM guests.
+
+ARM systems are NOT vulnerable.
+
+All versions of Xen are affected.
+
+However, we believe that the vulnerability cannot be exploited on Xen
+4.7 by completely unprivileged guest processes, unless the VM has been
+explicitly configured with a non-default cpu vendor string (in xm/xl,
+this would be done with a `cpuid=' domain config option).
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa191.patch           xen-unstable, Xen 4.7.x
+xsa191-4.6.patch       Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa191*
+dca534cf4d3711ea8797846a18238ca16cc9e7a24a887300db22c3ba3d95c199  xsa191.patch
+d95a1f0dd5c45497ca56e2e1390fc688bf0a4a7a7fd10c65ae25b4bbb3353b69  xsa191-4.6.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX/zAMAAoJEHb/MwWLVhi25+oQAKs2qjaGbVngpPWsnbCsPONI
-6NjXoz9otsl0g1RrLuKHYB7S7fIY2D5JqKh+dNFuFwUkcTIo7nojVgcZSTp1FEnH
-V/LHG3uPo2rmul/65vo1a3H90C6ZSJlHsOE1DaUbLIDNUr6fReAWWinP2Mv7IPft
-2BSXXriH544MBkwL5GEMVtfKEcLvzWrOK/poxN1dFyCUGCtD7vNFs0CEhT/eqhZZ
-YZVcV1wvIHnbPbpBc0riuzZcej4ofcfcyIoLFqHWuV4R4VnPzXjWVB2Zm9O+DJkh
-y1/xHDGo4Yasfx3V3hX03ylHe4BrJaA6rz6ptBLuBQUU976r8Hu7UAZ1deR0beSe
-WkEbKaXPl/kIBpyjCM4XHhc4L6CXM9W6QUy03j1ueWIRj7C4ImNUIR6ti87uDVG1
-WqMcOtdsG0N7mXd7y2e4T2slW9BYa/+FdT/rcdVtSVPis7FWH+N3DiG76/0BTcCj
-iuUBZHF81CnrkJQZo/pLmAPy2GC7iaaqTT8J6P0f52+CnbFPHBPaYYOaAb3zy3Vk
-F7SJM1sbPEan2Wyb6CW0wJVDGKXjvFgNj4QYm0etoVMsQiz0puhBWC1GXVbzhsCS
-DxXRW58QtkN5ODLSXYGMO3H4kQwuUv6P0nKYrrpv7nCIkS4uXZWydpQcN3+zVvuP
-5l5c5X60MnOYzYVMOH4P
-=kCpv
+iQEcBAEBAgAGBQJYNDIWAAoJEIP+FMlX6CvZ4qQH/jlfd6BV63CSggCQVd0sB3a4
+j7MgRZ8h0aFrCLl+0tj3QwsiW0TRDsKiTNy2xY1kxkLsQdIAeYjBddyYiJ2nbCr9
+kCR2WLcWB3csf4So/85q8OMfsob7H+8PR/OsT3iY6Fo/5PzNy5wvWtU/+TRaoZIy
+t9OvybZ0HYhtvQ/YHv5njKZ3nyHo6MRwGpPOrzSn8UN7p+sr3DDGiuw9LNjtnepb
+dijO0c9artbWCjVkRlbe1w5514FH1vPleopGmXjTz/Wy5zNHWZL1RaVzh4N36ahP
+V1joPxt+C75iRArp6y0ncloyKjgx8pMfOzCcLp9VS6dwF3zwZ5rxxtFynlRjg94=
+=pUW4
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa191.patch" of type "application/octet-stream" (5957 bytes)
+
+Download attachment "xsa191-4.6.patch" of type "application/octet-stream" (5155 bytes)
