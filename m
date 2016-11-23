@@ -1,25 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/02/4
-Message-ID: <20160802082351.560@usenet.piggo.com>
-Date: Tue, 2 Aug 2016 06:26:37 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: mongodb-user@...glegroups.com
-Subject: Re: CVE request: mongodb: world-readable .dbshell history file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/1
+Message-ID: <34405e1f08734a7fb48464fb06a54bc6@imshyb02.MITRE.ORG>
+Date: Tue, 22 Nov 2016 19:14:03 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)
 Content-Type: text/plain; charset=utf-8
 
-On 2016-08-01, Grant Ridder <shortdudey123@...il.com> wrote:
-> FWIW, the vendor has closed
-> https://jira.mongodb.org/browse/SERVER-25335 with "Works as
-> Designed"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Whatever the umask value is, an application should apply proper
-permissions on files deemed sensitive. For instance, ssh-keygen(1)
-will never create a world-readable private key, regardless of what the
-umask is.
+> https://blogs.gentoo.org/ago/2016/11/19/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h
 
-Cheers,
+> ImageMagick-7.0.3-6/./MagickCore/pixel-accessor.h:507:30
+> imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:677
 
---Seb
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 4
 
+> https://github.com/ImageMagick/ImageMagick/commit/ce98a7acbcfca7f0a178f4b1e7b957e419e0cc99
+> 
+> coders/sgi.c
 
+Use CVE-2016-9556 for this buffer over-read.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYNN5eAAoJEHb/MwWLVhi2c/EP/iCKNHI2pUBD95pymlj+Fkt2
+JJOJzfWG2KSFsFT0jjfIfEg0DCyD+0gjlUe/QEboA57lKMHx1Bu/xKvyGrpoaI86
+T3utbgSUF3ZwYaNGySIMpVG96Fdtp8dfJWEMSBSw3deOVCjAFHqExRbOiIQwkaDD
+rvS2SzFNa3H/tmhPyrTiTUwmjV+pnG81YvwKJhkxapLyPbROBuI0QuGmm7hv7kzF
+ADJI3WVzW3d2N5xU+HFg5sQgmH0dwybwWD/KkzpYJ1daTq53mdOaOW2c/qjhWbk7
+wukuNqT8PhNxLLpNRMaZCNKIHdBD+RCh9Oi/zQwXHpSkJ7EgfW/LRCx1OIuXrGBD
+gWMbm6KqI13DvbV6ct9elpr54/dZ8zklNrar++PsDRksmwFLiz1mBbzdAPJiTVKT
+gNEjqSkM1wqPlFQO/pWAwJU0Ja7bLQg5XUE5gfrl1pFNMqBJ54IzdJUnKXNw64lc
+u72Aa3tZ+XKN902zpbqaVb+9PHqL/FFVYCfd64l0CRkEToPP9OIg10sCL9VEVeEw
+eyDDYR8jIEVu3ilvm/ieQsb5ZVkhPvkWlGwhaJRzG89U9D5j9S4qrOIk5CXPnJ82
+Z8bXCzxAX7ebnRstDbz5lOJ1Lb6ahvmboHuxs4VoEryN+9fdmWCKVYTVRNRi8oAd
+ER7izj3MLcjre+i4Oifq
+=irqB
+-----END PGP SIGNATURE-----
