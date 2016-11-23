@@ -1,62 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/22
-Message-ID: <CAM1yOjZBQC8v0TAyi95b=1G11j-8wTrhZG4kJWG=Y8K8W5mYPw@mail.gmail.com>
-Date: Thu, 29 Sep 2016 11:50:02 -0400
-From: Mike Kienenberger <mkienenb@...il.com>
-To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
-Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/6
+Message-ID: <c96b9b40-d80a-828e-0019-1ebc7aeddfb8@canonical.com>
+Date: Wed, 23 Nov 2016 10:53:20 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Roman Fiedler <roman.fiedler@....ac.at>, Stéphane Graber <stgraber@...ntu.com>, "Eric W. Biederman" <ebiederm@...ssion.com>
+Subject: Security issue in LXC (CVE-2016-8649) with additional Linux kernel implications
 Content-Type: text/plain; charset=utf-8
 
-The Apache MyFaces team is pleased to announce the release of Apache
-MyFaces Trinidad 2.1.2.
-.
-MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
-that provides an extendibles framework and extensive skinning support.
-This version is designed to be used with the JSF 2.1 specification.
+Roman Fiedler from AIT discovered that a malicious root user in an LXC
+container can ptrace the connecting lxc-attach process and then
+manipulate it.
 
-CVE-2016-5019:
-Trinidad’s CoreResponseStateManager both reads and writes view state
-strings using
-ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
-bypasses the
-view state security features provided by the JSF implementations - ie. the view
-state is not encrypted and is not MAC’ed.  Trinidad’s
-CoreResponseStateManager will
-blindly deserialize untrusted view state strings, which makes Trinidad-based
-applications vulnerable to deserialization attacks.
+CVE-2016-8649
+https://github.com/lxc/lxc/commit/81f466d05f2a89cb4f122ef7f593ff3f279b165c
+https://launchpad.net/bugs/1639345
 
-Apache MyFaces Trinidad is available in both binary and source
-distributions, and there are examples available as well:
+CVE-2016-8649 was assigned to the issue that allows an attacker inside
+of an unprivileged container to use an inherited file descriptor, of the
+host's /proc, to access the rest of the host's filesystem via the
+openat() family of syscalls. The file descriptor is needed to write to
+/proc/<PID>/attr/current or /proc/<PID>/attr/exec to set the
+AppArmor/SELinux label of the attached process. The LXC upstream
+developers have developed a patch to protect against this attack by only
+passing a file descriptor of either the current or exec file itself.
 
-    * http://myfaces.apache.org/trinidad/download.html
 
-Apache MyFaces Trinidad is available in the central Maven repository
-under Group ID "org.apache.myfaces.trinidad"
+There's also an additional attack where a malicious root user in an
+unprivileged container can ptrace the connecting lxc-attach process and
+bypass the AppArmor/SELinux confinement completely and/or prevent
+lxc-attach from dropping privileges (privileges equal to the user that
+initial ran lxc-attach). To fix that issue, a kernel patch is needed to
+prevent such a ptrace operation. The LXC upstream developers report that
+the following patch from Eric Biederman prevents this attack:
 
-Release Notes - MyFaces Trinidad - Version 2.1.2
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-next&id=2e41414828bb0b066bde2f156cfa848c38531edf
 
-Bug
-    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
-deserialization security vulnerability
+The kernel patch has not yet been merged and, as far as I know, is not
+associated with any CVE. The Ubuntu Kernel team reports that it fixes
+the disputed CVE-2015-8709, in addition to the issue described above,
+but I do not believe that they are the same issue.
 
-    [TRINIDAD-2228] - java.lang.UnsupportedOperationException
-    [TRINIDAD-2282] - In validateLength, a default hintRange message
-is displayed instead of hintMaximum even when minimum value is not set
-    [TRINIDAD-2436] - We should update Table's selection state during
-invoke application phase
-    [TRINIDAD-2445] - Prevent exceptions from propagating out of the
-ServletFilter
-    [TRINIDAD-2541] - Check UTF-8 encoding in example files
+I'm not sure if a CVE should be assigned for this kernel issue. At
+this point, I don't understand the full impact of that kernel change
+well enough to put together a meaningful CVE request. Suggestions/ideas
+are welcome.
 
-Improvement
+The LXC fix for CVE-2016-8649 that withholds the /proc fd from the
+connecting lxc-attach process mitigates the kernel issue in that it,
+even though the malicious root user in the container can bypass MAC
+confinement and/or prevent privilege dropping, there's no obvious way to
+access or modify the host filesystem.
 
-    [TRINIDAD-2239] - Improve the ancestor based change filtering
-mechanism by introducing a formal ComponentChangeFilter
-    [TRINIDAD-2441] - URLUtil to escape a URL and remove invalid characters
-    [TRINIDAD-2540] - Align Trinidad 2.1.x so it can be editable using
-Netbeans 8
+Tyler
 
-regards,
 
-Mike Kienenberger
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
