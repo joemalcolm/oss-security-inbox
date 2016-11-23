@@ -1,124 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/17/6
-Message-Id: <E1b2dqK-0008FL-IE@xenbits.xenproject.org>
-Date: Tue, 17 May 2016 12:11:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 176 (CVE-2016-4480) - x86 software guest page walk PS bit handling flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/3
+Message-ID: <3fc75fac762f4dc8acc9a7911df31e5b@imshyb02.MITRE.ORG>
+Date: Tue, 22 Nov 2016 19:17:13 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libdwarf: negation overflow in dwarf_leb.c
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-             Xen Security Advisory CVE-2016-4480 / XSA-176
-                               version 3
+> https://blogs.gentoo.org/ago/2016/11/19/libdwarf-negation-overflow-in-dwarf_leb-c
 
-           x86 software guest page walk PS bit handling flaw
+> dwarf_leb.c:306:19: runtime error: negation of -9223372036854775808 cannot be
+> represented in type 'Dwarf_Signed' (aka 'long long')
 
-UPDATES IN VERSION 3
-====================
+> https://sourceforge.net/p/libdwarf/code/ci/4f19e1050cd8e9ddf2cb6caa061ff2fec4c9b5f9/#diff-5
 
-Public release.
+> libdwarf/dwarf_leb.c 
+> dwarfdump/print_frames.c 
 
-ISSUE DESCRIPTION
-=================
+Use CVE-2016-9558.
 
-The Page Size (PS) page table entry bit exists at all page table levels
-other than L1.  Its meaning is reserved in L4, and conditionally
-reserved in L3 and L2 (depending on hardware capabilities).  The
-software page table walker in the hypervisor, however, so far ignored
-that bit in L4 and (on respective hardware) L3 entries, resulting in
-pages to be treated as page tables which the guest OS may not have
-designated as such.  If the page in question is writable by an
-unprivileged user, then that user will be able to map arbitrary guest
-memory.
-
-IMPACT
-======
-
-On vulnerable OSes, guest user mode code may be able to establish
-mappings of arbitrary memory inside the guest, allowing it to elevate
-its privileges inside the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions expose the vulnerability.
-
-ARM systems are not vulnerable.  x86 PV guests are not vulnerable.
-
-To be vulnerable, a system must have both a vulnerable hypervisor, and
-a vulnerable guest operating system, i.e. ones which make non-standard
-use of the PS bit.  We are not aware of any vulnerable guest operating
-systems, but we cannot rule it out.  We have checked with maintainers
-of the following operating systems, all of whom have said that to the
-best of their knowledge their operating system is not vulnerable:
-Linux, FreeBSD, NetBSD, OpenBSD, and Solaris.  Nor has it been observed
-in common proprietary operating systems.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich from SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note, however, that on hosts supporting 1Gb page mappings, for guests
-which get this capability hidden via CPUID override in their config
-file, fully correct behavior cannot be provided when using HAP paging.
-This is a result of hardware behavior, which software cannot mitigate.
-If that is a concern, such guests would need to be run in shadow paging
-mode.
-
-xsa176.patch      xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x, Xen 4.3.x
-
-$ sha256sum xsa176*
-e61c52477a8d8aa79111d686b103202ff8a558d8b3356635288c1290789b7eb3  xsa176.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJXOvhuAAoJEIP+FMlX6CvZ8JgH/A7YU+62hV5ayIx77AEwHeIJ
-6nqf6B1k+Y0aEtiSbupHDIMwSw13FoR+LluaZjTXpBd251Ut1cwXkDvC6yiPHxq0
-rWlb1/ka0rnOT3/rx0SgUjx02HbBzOFyyhZgR6W/gXV/S5fQhE26KbhEWvVaYCXO
-QeryIsi9WBV/AWbx4fis4ecREhyEWPYkJ/bQq867P6YJLXQ1btc/CyZ7ahBjna68
-VB9WE8czSs2x5QjJfKad5ksRAixdvaLFtVNOhnqJuJBickO3dd/IZPRxcSmazjdl
-sIiSMfKU9nPb56MIgZxTWCLpvYLe8yarnvjiVOivaHl2cBT01UOjVJv/dSQEyrw=
-=uQdJ
+iQIcBAEBCAAGBQJYNN5vAAoJEHb/MwWLVhi2GfkP/jgNLEYfq0Q32Eo1nHbEkMUz
+w2mmoTJn9AUDZMrcBvO8ir4o8NXFrQBx2VbDgwWKH2ba8fXq2hlVGc3n3TDaLxp3
+QfqMowvu0dZw78L6sPWBEwsVh5wzmAQOV5ORoLJhe4vT+UQgTeze8uRtpiM8TxmQ
+09oSpDfZtlY1YCreHb5wgkZoBUxwu/wmFSFWw7LNh20fPfaVtfzn/wUbjnhfF6Et
+5yYhY6pcMnOmZoXqpbXvCNi3iLJHaWAVbbME3lL4shmG4ZnnYq/DmIGBqtu9t0zu
+gqvfT9ZqFkenxdTBAWKtwFY+4His6ORl3xwYUgxkNaINPDTew9lx49XvpYi20wB7
+SQSbc0pfY3vv+Xe3Svu8JtcFK/0QL1dBWns79OafFnF6Th721o1FNsz6vSWTp0TW
+01voipBiOq8tv3eF/oAGO9ENJv6l/GQXAy1vy0vfS4HXDechPxTNgG3jm1DrM/WH
+X2oezB+KKQdxGc03N48oewPy+GHcaZm48XdLkrCARBLaP2scTIeW62Xx1LrclaGX
+Frn8w5JDYe2CHuk6+h7XsY/WVdMDO9akjZiImuey/LJJ5Hja+VCYqeG3cLlLK72A
+drA2E9FBuphjZEy6qjYroy6X+vxQhFxuEQVC07yaygT/2ySSNP4ujRAQvQZKszSt
+kyslnffeY07X+QLx5GNi
+=00TY
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa176.patch" of type "application/octet-stream" (1501 bytes)
