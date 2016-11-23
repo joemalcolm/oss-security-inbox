@@ -1,47 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/23/2
-Message-ID: <20161223105906.GO5082@jumper.schlittermann.de>
-Date: Fri, 23 Dec 2016 11:59:06 +0100
-From: Heiko Schlittermann <hs@...littermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-9963 (Was: CVE Request - Exim 4.69-4.87 - disclosure of private information)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/2
+Message-ID: <d2bf58cac9ea4f93b050e6779b105caa@imshyb02.MITRE.ORG>
+Date: Tue, 22 Nov 2016 19:15:59 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: signed integer overflow in jas_image.c
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Heiko Schlittermann <hs@...littermann.de> (Fr 16 Dez 2016 00:36:45 CET):
-…
-> Product:    Exim
-> Versions:   4.69 -> 4.87
-> Impact:     Possible leak of private information to a remote attacker
-> Reference:  https://bugs.exim.org/show_bug.cgi?id=1996 (placeholder currently)
-> Requester:  Heiko Schlittermann <hs@...littermann.de> (Exim Developer)
-> Credits:    Bjoern Jacke <bjoern@....de>
-> 
-> If several conditions are met, Exim leaks private information to
-> a remote attacker.
-…
+> https://blogs.gentoo.org/ago/2016/11/19/jasper-signed-integer-overflow-in-jas_image-c
 
-As at least one major distro isn't ready yet, we'll keep our initial schedule
-and release the fixed versions on Dec, 25th, 10:00 UTC.
+> the commit which fixes the issue is not a fix itself for the
+> signed integer overflow, but changed a bit how, in jasper, the things work.
 
-You'll find the versions in the usual places
+> jasper-1.900.17/src/libjasper/base/jas_image.c:162:49:
+> runtime error: signed integer overflow: 8543608947741818625 * 15 cannot be
+> represented in type 'long'
 
-    git://git.exim.org/exim.git         Tags exim-4_88, exim-4_87_1
-    ftp://ftp.exim.org/pub/exim/exim4/          4.88
-    ftp://ftp.exim.org/pub/exim/exim4/old/      4.87.1
+> https://github.com/mdadams/jasper/commit/d42b2388f7f8e0332c846675133acea151fc557a
 
-If you have older versions running, you should to at least 4.87.1.
+Use CVE-2016-9557 for the issues addressed by these
+d42b2388f7f8e0332c846675133acea151fc557a changes:
 
-We're sorry for the release date.
+  Some problematic types like uchar, ulong, and friends have been replaced
+  with names with a jas_ prefix.
+  ...
+  An option max_samples has been added to the BMP and JPEG decoders to
+  restrict the maximum size of image that they can decode.  This change
+  was made as a (possibly temporary) fix to address security concerns.
+  ...
+  Some new integer overflow checks were added.
+  ...
+  Some new safe integer add/multiply functions were added.
 
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
--- 
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+(max_samples has a default of 64 Mb or 128 Mb in different parts of
+the code.)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYNN5mAAoJEHb/MwWLVhi2PqwP/RE8yNmQrXTrAhA7RpB9MxLv
+AoBQfv6ap9aaF/K4UgMSLxny6eojVBkz6Ju0nlIfD8KGXQX3DvGCHdjPRFfi8vfe
+5S63tmUz0me6PPfkoHnd8uro1z12St46TvMZQv4XeTi0U+FQWzQFtjBn7A7YLKdo
+DAzZn/FXbB9s7RGXSY1A0O+0u0sxLN1pJeVODBDfcSyZarruYMQD1cAYtLGJsmD2
+D61l6Xk9GcZabxAzhL6rHtQR2ZSxbjtDWfHrgui/retHALcIxSFlr5tLVC6h+4Av
+NDfwOQuTlMh0aXb9AyCoGaXUt4N7dMLEO+uFoDNWoprPabA4QChaTUizr0QG2lIh
+w8wnJ83veuhnp3FUNwtBjjwS4Cy8x0rqrWSFggFBKUzbvieQlOa8zbzhzM5ldMgy
+ULzJ9eg+xNeVlAwp19YfNfEFif4LnkdHiybUIkwk8ErV49EgVeXKIc+XPYdgrjsK
+CxdO783e4Putc1jjNNI869bbO2P2eOBUwTIcA2c55UceKsSTlMg/NLEbQsKXnMMF
+liXpxyLf65Kc5lZBEzSCONBoz8h6Hb7Oq1kp2ekaUCjA8RJpunOobA2DGe5FIksh
+4xXe/xan+GTLkOLbqoPg5tWSI0uSYvDV57bmQZPopqFbyKP4//3NZsHcS9NUWYFh
+orerLmhz6lsZ4Ri5Q+8P
+=Za2r
+-----END PGP SIGNATURE-----
