@@ -1,106 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/18/15
-Message-ID: <56C649A7.7080105@gmail.com>
-Date: Thu, 18 Feb 2016 16:45:59 -0600
-From: Austin English <austinenglish@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request for wget
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/5
+Message-ID: <62bd88e18535467990b8b87c1503444c@imshyb02.MITRE.ORG>
+Date: Tue, 22 Nov 2016 19:19:59 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-On 12/24/2015 12:05 PM, Austin English wrote:
-> On Tue, Nov 3, 2015 at 10:19 PM, Austin English
-> <austinenglish@...il.com> wrote:
->> And 1.7 is now out as well: 
->> https://tails.boum.org/news/version_1.7/index.en.html
->> 
->> With the fix included and documented
->> 
->> On Mon, Nov 2, 2015 at 2:37 AM, Austin English
->> <austinenglish@...il.com> wrote:
->>> 
->>> The fix has been released in 1.7-rc1, 
->>> https://tails.boum.org/news/test_1.7-rc1/index.en.html
->>> 
->>> On Mon, Oct 26, 2015 at 3:21 PM, Austin English
->>> <austinenglish@...il.com> wrote:
->>>> 
->>>> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold
->>>> <seth.arnold@...onical.com> wrote:
->>>>> On Thu, Oct 01, 2015 at 06:57:26PM -0400,
->>>>> cve-assign@...re.org wrote:
->>>>>> If there is any additional Tails vulnerability related to
->>>>>> this, another CVE ID may be needed. For example,
->>>>>> 
->>>>>> https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
->>>>>>
->>>>>>
->>>>>> 
-says
->>>>>> 
->>>>>> to be 100% sure, you should add --passive-ftp to your
->>>>>> command line. If you don't do that, your /etc/wgetrc or
->>>>>> ~/.wgetrc could include --no-passive-ftp (or passiveftp =
->>>>>> off).
->>>>>> 
->>>>>> If Tails is supposed to try to ensure that, perhaps
->>>>>> there's a requirement to have something like:
->>>>>> 
->>>>>> alias wget="wget --passive-ftp"
->>>>>> 
->>>>>> in a system-wide location (possibly /etc/bash.bashrc).
->>>>>> The concept of CVE IDs for "failure of a torify step"
->>>>>> issues is new, and we aren't sure of the best approach.
->>>>> 
->>>>> I suspect using a bash alias in a site-wide config might
->>>>> then qualify for another CVE in the future, along the lines
->>>>> of "programs that spawn wget via system(3), popen(3), or
->>>>> exec family of functions can use unsafe active mode by
->>>>> accident". If Tails is in the business of fixing these
->>>>> things for safety, removing active ftp support from tools
->>>>> seems like better fix.
->>>>> 
->>>>> Thanks
->>>> 
->>>> A fix has been applied to Tails git:
->>>> 
->>>> https://labs.riseup.net/code/projects/tails/repository/revisions/b9
-fd6312435d55dd0bc0b6abdb7994da4d66e2b2
->>>>
->>>>
->>>> 
-In short, the wget binary is moved to /usr/lib/wget/wget, and a
->>>> wrapper script is put in place in /usr/bin/wget. The wrapper
->>>> ensures that wget is called via torsocks, and additionally,
->>>> also forces --passive-ftp.
->>>> 
->>>> Moving wget to /usr/lib/wget/wget gets the potentially
->>>> dangerous wget binary out of $PATH. A dedicated attacker
->>>> could check if /usr/bin/wget is a script and then parse it to
->>>> find the actual binary, but that would need to be a very
->>>> dedicated attacker and at that point, there are more feasible
->>>> attacks available.
-> 
-> This CVE has been fixed in a released version for quite some time, 
-> what is needed to get this published/resolved?
+> https://blogs.gentoo.org/ago/2016/11/20/jasper-stack-based-buffer-overflow-in-jpc_tsfb_getbands2-jpc_tsfb-c
 
-Ping.
+> AddressSanitizer: stack-buffer-overflow
+> WRITE of size 4
+
+> https://github.com/mdadams/jasper/commit/1abc2e5a401a4bf1d5ca4df91358ce5df111f495
+
+> jpc/jpc_dec.c
+
+Use CVE-2016-9560.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWxkmbAAoJEBT71+qgQZN7RpsP/1awlNnGYkiY5EZtywc+6zYV
-/dIyEtmuQI41Yk2eVCImgXgHK4ZDd8YjOxI9Ad7SOoCVp83qEfHJmshWbihREefA
-8ScXQ8LXs/F1265ylx26kOyWptqt2UbRaHUSadFGolE/B5im8D574kI1VBxTT7Uh
-Qr/aoCRDysIloEAo354mzn8kxDQeyMcG1+UaLXPMRKvuSy4btYszY4dQpC9HYQiK
-2UWqJda5r8AN38u0xtr1W6W+lYrO0HXqA5PRyHXlCEmdTpnhm+boUaBt+0XMQf/s
-58nUjDEnt3l4R0U2U7Mph9Wv9zFVezIPyFavh9tdUi+Z9wDAvB0MGeSg3nub7DEw
-2blC9tmy+FLooZ6DONYupLsrtE66Ugpj330ZLgZP2M/PXsEWd28U/lZs0SPN7WdB
-UMKCrAjhmpJiVISae0/OABj+Ht2seeJC9a0z8PucrcFdQrc2nVaq3Rl0D9NDi4//
-Rfj1jG1OdZpeBsHtApMRoNJ1EcWDddokjachvQgIWWM2H/G4XPfq9Y1SCvQ8W8NQ
-9ek1m5XyRvkoAFngR30hfSpBEToRqS1CYMWcKnu03Ab+D56Mi78fFmbV99LmxIYX
-I6uzb6BvAFDcEzn4x3xe9VJWIw4nc7obB+zgnMiWpMRlQz5TYjxIbb7+tBvJWDoK
-HhSjXSFqiDRWRl8swuoN
-=m327
+iQIcBAEBCAAGBQJYNN57AAoJEHb/MwWLVhi28acP/3hSYAIq1eaWbaNey2wlw+nX
+MAyAYntbtqAmEiH20z4UYPx3z1PFkC47rkTEuXqCuGlf0eCRWckKs1/v83EXMDoX
+yIzsX9tlXMDvYGrJt9Z7bz4AB3H8g2aEuGgq6CdtHt6IuVzNugqwtiXKSNPsclfl
+bZ0mKlwICSoCSeKZ4lpxdsmkI06MKAqP3/DW0CPH15BJJ1yNXIvtE69+T5+TkdPR
+DZbno/EnnBGkrnJpuMDD1yErFyVzeZcqTMaEnfS7+dmglu5PlrrbG4+/BVKNnIRU
+J8BNYcaZbCCL/9L75aXWKtVLiXGF7+yeNDMFpKFPSVxlcXOmHcVmomplFCnv6z5b
+ecMLx3gg/Jn1fiZJDjVS31UtaqMSnlYzxPkRNkOBJzacniWWsieMgYGfW8wR2XPY
+bxCFFec0YAbck+Im0+QbNM9iTUpL3h462SIoN983AmCscF7hj7UGMcrfS+uIxNDo
+7sbTAPHwNk+/5Rqn0Z+ZJLPfc2STDFfKBKH2vViq1wTjmfO+CsGwyknVoKzx7KJq
+/NYhRKuMMnPTFscBgPe+wB2CpCRGD9NbrirL+uW+i+dnocHUldHLhenJuSvUdNIO
+Y/TOXveXXJmP//iRPcOpACJpCcFHd3DVF61G0R6UPc01gprTzUAmy+FliqXAfFuw
+b3ZoLRfyAny0Vg2BQaOG
+=H8km
 -----END PGP SIGNATURE-----
