@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/12
-Message-ID: <5729B432.3070503@gmail.com>
-Date: Wed, 4 May 2016 10:34:58 +0200
-From: Albert Veli <albert.veli@...il.com>
-To: "Alan J. Wylie" <iwnwi1owfl@...ie.me.uk>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL Security Advisory [3rd May 2016]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/23/4
+Message-ID: <fe5751f9e5494448b7b92dce806bcf49@imshyb02.MITRE.ORG>
+Date: Tue, 22 Nov 2016 19:18:36 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: imagemagick: null pointer must never be null (tiff.c)
 Content-Type: text/plain; charset=utf-8
 
-On 2016-05-04 10:21, Alan J. Wylie wrote:
-> https://twitter.com/bob_beck/status/727478594591543296
->
-> Bob Beck @bob_beck 
->
-> LibreSSL is vulnerable to the same issues as OpenSSL CVE-2016-2105
-> through 2019 - fixes are forthcoming today as well.
->
-Ok, then I guess the patches are these ones:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-http://marc.info/?l=openbsd-announce&m=146228598930416&w=2
+> https://blogs.gentoo.org/ago/2016/11/19/imagemagick-null-pointer-must-never-be-null-tiff-c
+
+> coders/tiff.c:655:39: runtime error: null pointer passed as argument 2, which
+> is declared to never be null
+> MagickCore/string_.h:76:23: note: nonnull attribute specified here
+
+> https://github.com/ImageMagick/ImageMagick/commit/b61d35eaccc0a7ddeff8a1c3abfcd0a43ccf210b
+
+> coders/tiff.c
+
+Use CVE-2016-9559.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYNN51AAoJEHb/MwWLVhi2ZScP/3pbrqd7rGuodBIYCs3g/wPt
+8vUfmVszGR1XLLyp6pZ4rWCsndukXim4ZLCDNa/Pru6KzVZiwhwv09/veXn7mD78
+DVYe9Br+bO1h8nP+y3pd1uIOzuDXpIdJYZrNXPkYAE6o4CNEUG6vgL/eC4dHjvtq
+6s8usKsLFULmTlUvQNJoM56mXDn1w3VnOBadMAF6dMlbbn4gyGmW9wwL9d4ebzS+
+tvcWFaU5hUv5qztFNc/vNyNTkziPGU1jRiTkJu2N608ftMGHbMVaMZ90ZuZgOWrA
+234HQE0horOikxFmRDZ/CBCTiV0PO2PzGfPkTFsBChTRzvDa05cF+e5xFhZly5R6
+YiaEFZiGoqrfbwkiIpjAQCKK81YzmRt388GVY7sTxhT+swmoXs5xK2ZhC4tbwad3
+OdCT8ZKvclDRsRJ9aMZDgQrqBPTh/IcwVbq/T0Y5m7r3gw5qbopNwZFlxhLV0X2t
+uWowOUDGHyoRtY1/XjBuuWwNyb7EoNbRWI1bov08UMvfiv47A7mjatsr+qceM7Zo
+shUMkSjsOygvmhd8zgeI7Eubq5BHrsGP1jRLmaaomRQr93CcB+/Wx8VLKxiG0vXw
+lZlfj/tb7r2f48P/h3++VOIm9ew6nbqYD34RL94OJhkxuqwl/2DWD7gIcbfRoMGM
+qbRlEBSoO/ByBIBnigXK
+=CmvN
+-----END PGP SIGNATURE-----
