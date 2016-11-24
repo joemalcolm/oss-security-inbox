@@ -1,31 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/5
-Message-ID: <CAJ_zFkJ5Dc6JwjZsb9EbhbYKDJe4vwXmpe9usRHepZp7GQF5MQ@mail.gmail.com>
-Date: Tue, 11 Oct 2016 09:03:36 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/6
+Message-Id: <92067071-434D-4B7B-BF05-39E1BD7FE449@gmail.com>
+Date: Thu, 24 Nov 2016 15:24:04 +0800
+From: haojun hou <haojunhou@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Subject: CVE request - itdb 1.23  Cross-Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 5, 2016 at 1:12 PM, Tavis Ormandy <taviso@...gle.com> wrote:
-> On Wed, Oct 5, 2016 at 9:13 AM, Tavis Ormandy <taviso@...gle.com> wrote:
->> bug: type confusion in .initialize_dsc_parser allows remote code execution
->> id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
->> repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
->> patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
->
-> It was pointed out to me that my testcase doesn't work on the 9.0x
-> versions, because it doesn't allow encoding 64-bit integers, but it's
-> still exploitable.
->
+Hi:
+itdb 1.23 - Cross-Site Scripting (XSS) 
 
-Here is a different type confusion bug, originally I thought it was
-just a NULL dereference, but after seeing the patch it does look
-exploitable.
+Procuct: IT Items DataBase
 
-patch: http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=f5c7555c303
-repro: clear 16#41414141 .sethalftone5
+Vendor: ITDB http://www.sivann.gr/software/itdb/
 
-Please assign a CVE for this one.
+Vunlerable Version: 1.23 and probably prior
 
-Tavis.
+Tested Version: 1.23
+
+Author: Haojun Hou in ADLab of Venustech
+
+
+Advisory Details:
+
+Haojun Hou in ADLab of Venustech discovered a Cross-Site Scripting (XSS) in itdb <>, which can be exploited to add,modify or delete information in application`s database and gain complete control over the application.
+
+
+
+The vulnerability exists due to insufficientfiltration of user-supplied data in “value” HTTP POST parameter passed to “itdb-1.23/js/DataTables-1.8.2/examples/examples_support/editable_ajax.php” url. An attacker could execute arbitrary HTML and script code in browser in context of the vulnerable website.
+
+The exploitation example below uses the "alert()" JavaScript function to see a  pop-up messagebox:
+
+POST value="><script>alert(1);</script><"
+
+http://localhost/itdb-1.23/js/DataTables-1.8.2/examples/examples_support/editable_ajax.php <http://localhost/itdb-1.23/js/DataTables-1.8.2/examples/examples_support/editable_ajax.php>
+
+Could you please help me assign a  CVE for this issue?
+
+ 
