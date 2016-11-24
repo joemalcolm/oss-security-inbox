@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2110" "Thursday" "4" "June" "2015" "16:52:06" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150604205206.753EF8BC034@smtpvmsrv1.mitre.org>" "46" "[oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" nil nil nil "6" "2015060420:52:06" "[oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS" (number mark "        cve-assign@m Jun  4   46/2110  " thread-indent "\"[oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS\"\n") "<CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>" ("<CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1383" "Thursday" "24" "November" "2016" "15:18:02" "+0800" "haojun hou" "haojunhou@gmail.com" "<F0516C22-C2D6-4C52-8AD1-86F33F6A2513@gmail.com>" "45" "[oss-security] CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)" nil nil nil "11" "2016112407:18:02" "[oss-security] CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)" (number mark "U       haojunhou@gm Nov 24   45/1383  " thread-indent "\"[oss-security] CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15642 invoked by uid 550); 4 Jun 2015 20:52:18 -0000
+Received: (qmail 21882 invoked by uid 550); 24 Nov 2016 10:38:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15620 invoked from network); 4 Jun 2015 20:52:17 -0000
-In-Reply-To: <CAD3CanenHhNaYu6koiNheG0w=n31ybLFw0hZt+bZar1nkkBgfA@mail.gmail.com>
-Message-Id: <20150604205206.753EF8BC034@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  4 Jun 2015 16:52:06 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE requests / Advisory: Codestyling Localization (Wordpress plugin) - multiple RCE via CSRF, multiple XSS
-To: mattd@bugfuzz.com
+Received: (qmail 10177 invoked from network); 24 Nov 2016 07:19:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:mime-version:subject:message-id:date:to;
+        bh=4ojm23mEPpZ30/CMnHMLYqUr0+WU0SL6EKo6jCQOqmQ=;
+        b=B6SBy3JPEpKEoCDOzPt1EltNkN7wdp4oIN5u7BdHvB8xqg6i5NgoEDL3DdJ86uGga/
+         hyCEA+lZexwnggr7oxNuGO9yPrXOHnS6ByH86XdAEr0E3YmEg/yPPJsynNrjtg6OQSaS
+         ZzQWSPO2d+ymXQDnyafZO7qhTNxLbM/gpMImIiE/8gzYQJQWx7x8zkVxwwgE35pDmN6J
+         cN3YMvohcORqGl0OFBOp7kEEAC7AMaIyZXAJ1Mez6ZJwSgcn0v9MzqvPBfpl/LBvx/mi
+         rduV/GDjit63whLM8A8jDyhESPZGoFcjMvVdtjR1vXQmbbrpvEycqX91Y2d7yLaHJmfd
+         nPZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
+        bh=4ojm23mEPpZ30/CMnHMLYqUr0+WU0SL6EKo6jCQOqmQ=;
+        b=jEEATcFVEfqBcxEwKErmmw9urrutM13a7D5Q33jn1D6Qwmn2hn+DhA3aRjW+lyklm3
+         TP16gcp3cHY+02XQZcomwtthz/kYmN17cXvDmF2NO+8zuqJEAPxkQi/qwHI1rJzrFQsQ
+         vL91xEopG3Dj4sN8ci5WA5Gv02vReHkHCeorSqAvIXIvR/2CS1GzPJCSC2Tq0E6ZE0OA
+         tolhy1sCaWJHqtebIJjj6fmSIISCYyefFlyNhA1dHxBm8Bd//UMLRkqsgtGdMbOjNHi7
+         Z47Zjc0QXS6iQMqjm3wrvx/PdGPG/MjmbTbF4+gj1n71pi7++gHtIRupYJbUpJ7ybK7S
+         OtNg==
+X-Gm-Message-State: AKaTC009BXOCDAHdo055utzjAnXEZRsC1JM0rrGHs+MbFYY5QDAyNsYy9lNzfqZhdb0kFg==
+X-Received: by 10.98.69.133 with SMTP id n5mr945091pfi.160.1479971947791;
+        Wed, 23 Nov 2016 23:19:07 -0800 (PST)
+From: haojun hou <haojunhou@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_029D2FF3-3E87-4150-8609-0F7BB5DB6C4A"
+Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
+Message-Id: <F0516C22-C2D6-4C52-8AD1-86F33F6A2513@gmail.com>
+Date: Thu, 24 Nov 2016 15:18:02 +0800
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3251)
+Subject: [oss-security] CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--Apple-Mail=_029D2FF3-3E87-4150-8609-0F7BB5DB6C4A
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=gb2312
 
-> The plugin contains multiple AJAX actions that, while having the
-> necessary permission checks, do not have anti-CSRF protection
+Hi:
+BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)=20
 
-It appears that the main vulnerability you are reporting is the
-multiple CSRF. Use CVE-2015-4179.
+Procuct: BigTree CMS
 
-In reading your advisory, we weren't able to determine if there are
-any realistic scenarios in which an authenticated user would
-intentionally use csp_po_scan_source_file or csp_po_save_catalog_entry
-for RCE (i.e., scenarios that do not involve CSRF) and thereby obtain
-additional access to the server machine. We think you may mean
-scenarios in which the authenticated user has the manage_options
-capability but not the edit_plugins capability.
+Vendor: BigTree CMS (https://www.bigtreecms.org/)
 
-(As always, to obtain multiple CVE IDs for a report, it is useful to
-describe all of the substantially distinct scenarios, not only the
-scenarios in which risk is greatest.)
+Vunlerable Version: 4.2.13 and probably prior
 
-Also, we did not understand whether the "Multiple XSS in various AJAX
-actions ... reflected unescaped POST parameters in certain AJAX
-actions' responses" issue is independently relevant. Do you mean that
-there is unescaped reflection regardless of whether the AJAX action is
-authorized? More specifically, if all of the CSRF issues in the plugin
-were fixed in a normal way, would unauthenticated attackers be able to
-conduct XSS attacks by hosting JavaScript code that forces an
-administrator's browser to make a POST request without a nonce?
+Tested Version: 4.2.13
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Author: Haojun Hou in ADLab of Venustech
 
-iQEcBAEBAgAGBQJVcLnjAAoJEKllVAevmvmsH/EH+gJtzMpmfDSZvNRUMm+FvmwE
-iKxnRF2dgbNddMflDOSs7PopaJNVqkrSCvRdU+0Aa1WTpzw53rGUMQaWE4B0G4yl
-zhT7AdqrKwdyHPgPZRlB6eWHP0BYrMUxxnGCFUqNrbAxLoo56li7qvh/chngdK/P
-bHwsqzH99SuwcAxkkIt5tKR6b0nuE9H4Y8VTCo6Ixtdwv+R9Rv+pc8vfBpfYR2WD
-zJnzln93P00jjGeuzl2U4pfuAI0gWztvPPc9HxwuQ+mMLUjrsQiLE709wyz6+hL8
-T5ihleND805qmlIMKPRWcEyDJKY4aWPdiasVTupWGDtUKhNzhVlBh0WPvo6GofM=
-=yWSh
------END PGP SIGNATURE-----
+=20
+
+Advisory Details:
+
+Haojun Hou in ADLab of Venustech discovered a Cross-Site Scripting (XSS) in=
+ BigTree CMS, which can be exploited to add,modify or delete information in=
+ application`s database and gain complete control over the application.
+
+=20
+
+The vulnerability exists due to insufficientfiltration of user-supplied dat=
+a in =A1=B0id=A1=B1 HTTP GET parameter passed to =A1=B0core/admin/adjax/das=
+hboard/check-module-integrity.php=A1=B1 url. An attacker could execute arbi=
+trary HTML and script code in browser in context of the vulnerable website.
+
+The exploitation example below uses the "alert()" JavaScript function to se=
+e a  pop-up messagebox:
+
+http://localhost/BigTreeCMS/core/admin/adjax/dashboard/check-module-integri=
+ty.php?id=3D=A1=B0><script>alert(1);</script>< <http://localhost/BigTreeCMS=
+/core/admin/adjax/dashboard/check-module-integrity.php?id=3D>=A1=B1
+
+=20
+
+Could you please help me assign a CVE for this issue?=
+
+--Apple-Mail=_029D2FF3-3E87-4150-8609-0F7BB5DB6C4A--
