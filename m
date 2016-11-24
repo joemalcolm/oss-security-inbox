@@ -1,48 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/22
-Message-ID: <20161017010245.267aae32@pc1>
-Date: Mon, 17 Oct 2016 01:02:45 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Graham Christensen <graham@...hamc.com>
-Cc: oss-security@...ts.openwall.com, ago@...too.org, cve-assign@...re.org
-Subject: Re: Re: Fuzzing jasper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/1
+Message-ID: <ad660c2632fa4e6790fb12dc654b6769@imshyb02.MITRE.ORG>
+Date: Wed, 23 Nov 2016 20:29:24 -0500
+From: <cve-assign@...re.org>
+To: <kcwu@...e.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: w3m - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sun, 16 Oct 2016 10:23:43 +0000
-Graham Christensen <graham@...hamc.com> wrote:
+CVE-2016-9621 - https://github.com/tats/w3m/issues/29 global-buffer-overflow write
 
-> For what it is worth, Jasper has recently issued a release fixing many
-> CVEs, and would likely appreciate these fussing results as bug
-> reports on their github project: https://github.com/mdadams/jasper/
+CVE-2016-9622 - https://github.com/tats/w3m/issues/32 null deref
 
-I tested the code again with afl (after the fixes for the stuff
-Agostino reported) and it immediately found multiple issues:
+CVE-2016-9623 - https://github.com/tats/w3m/issues/33 null deref
 
-https://github.com/mdadams/jasper/issues/28
-Heap overflow in jpc_dec_cp_setfromcox()
+CVE-2016-9624 - https://github.com/tats/w3m/issues/35 near-null deref
 
-https://github.com/mdadams/jasper/issues/29
-Heap overflow in jpc_getuint16()
+CVE-2016-9625 - https://github.com/tats/w3m/issues/36 stack overflow
 
-https://github.com/mdadams/jasper/issues/30
-segfault / null pointer access in jpc_pi_destroy
-
-https://github.com/mdadams/jasper/issues/31
-double free on jpeg parsing
-
-https://github.com/mdadams/jasper/issues/32
-assert in jpc_dec_tiledecode()
+CVE-2016-9626 - https://github.com/tats/w3m/issues/37 stack overflow
 
 
-This will need some work till it's fuzzing resistant.
+>  https://github.com/tats/w3m/issues/38 heap overflow read + deref
 
--- 
-Hanno Böck
-https://hboeck.de/
+This is a single issue described as "Prevent array index out of bounds for symbol"
+in https://github.com/tats/w3m/commit/0c3f5d0e0d9269ad47b8f4b061d7818993913189
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Use CVE-2016-9627.
 
-Content of type "application/pgp-signature" skipped
+
+CVE-2016-9628 - https://github.com/tats/w3m/issues/39 null deref
+
+CVE-2016-9629 - https://github.com/tats/w3m/issues/40 null deref
+
+CVE-2016-9630 - https://github.com/tats/w3m/issues/41 global-buffer-overflow read
+
+CVE-2016-9631 - https://github.com/tats/w3m/issues/42 null deref
+
+CVE-2016-9632 - https://github.com/tats/w3m/issues/43 global-buffer-overflow read
+
+CVE-2016-9633 - https://github.com/tats/w3m/issues/23 OOM
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYNkGwAAoJEHb/MwWLVhi2OBoP/2hAgLEX4dNUdROa3s7mzq3P
+2WL7yqZUisyAmTfJT9D9clv6hI8tgu2vjpNDz3Cilq2Q0OyzvuJ1LnQ9jBXuENo7
+8YjvaeS4ZtJJR5OnMTNf6chYFm5x2pw7dfGYWoUtZR0IalxXIWzXJMw0u8INf2BF
+hh0agXsmgjlf1xqE+UPxPPNFuyfqcpNqt0P1wyLUv+oT5IFVIqKYdu3jt1TpjnSr
+swvJphIAdvxanEztk+3y9vsm9oXVLE3bWbYlrtvMnIkqq7IJRgN1HnXOG3Szv8Wq
+/o2caFc+d1PQEY8csaISbuRQKkJ+ah8bBtU1WSprnjIKvXo523VJ6MDwUvFbpOMw
+9IJXTLbCwpayIKlyDlZ8hywEWhqEM8BMjSqsVTTNcX+OLVGYQrGTr9J4Nelb2tNr
+QqFUjtJbKXyvC+k7YU6gxIhIrPuzJmznMCKlvjPEI1U5epFXpAU/j/SL5Y02kGJA
+E2X+moIuddy/eCm2XCVrV48+JQ5ogkurvsjqYNLey5q3AY/abMT0Y0/db2iLx//2
+Erjgbh9y4AeCu12EkezM+x8VPWXlOaRPRq7fWCAnX5FNPB1zWPc0XvHkhohUNYfS
+3iWnh66BF9mkwhozZdUqhIiRmeLkPG9dvdEq5Vp8/anU2RLHfzE1jew1vcSaXRXk
+fxLX2vS3cGtCddByKBMN
+=9Mxk
+-----END PGP SIGNATURE-----
