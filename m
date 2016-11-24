@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/7
-Message-ID: <150590619.3922934.1468259391266.JavaMail.zimbra@redhat.com>
-Date: Mon, 11 Jul 2016 13:49:51 -0400 (EDT)
-From: CAI Qian <caiqian@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/4
+Message-Id: <F0516C22-C2D6-4C52-8AD1-86F33F6A2513@gmail.com>
+Date: Thu, 24 Nov 2016 15:18:02 +0800
+From: haojun hou <haojunhou@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel
+Subject: CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-I am requesting a CVE for this flaw.
+Hi:
+BigTree CMS 4.2.13 - Cross-Site Scripting (XSS) 
 
-An unprivileged user could run an exploit using rename syscall on
-overlayfs on top of xfs to crash the kernel caused a denial of
-service.
+Procuct: BigTree CMS
 
-Exploit:
-https://github.com/linux-test-project/ltp/blob/master/testcases/kernel/syscalls/rename/rename13.c
+Vendor: BigTree CMS (https://www.bigtreecms.org/)
 
-Patch can be found here with more in depth description,
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=11f3710417d026ea2f4fcf362d866342c5274185
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=54d5ca871e72f2bb172ec9323497f01cd5091ec7
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9409e22acdfc9153f88d9b1ed2bd2a5b34d2d3ca
-   CAI Qian
+Vunlerable Version: 4.2.13 and probably prior
+
+Tested Version: 4.2.13
+
+Author: Haojun Hou in ADLab of Venustech
+
+ 
+
+Advisory Details:
+
+Haojun Hou in ADLab of Venustech discovered a Cross-Site Scripting (XSS) in BigTree CMS, which can be exploited to add,modify or delete information in application`s database and gain complete control over the application.
+
+ 
+
+The vulnerability exists due to insufficientfiltration of user-supplied data in “id” HTTP GET parameter passed to “core/admin/adjax/dashboard/check-module-integrity.php” url. An attacker could execute arbitrary HTML and script code in browser in context of the vulnerable website.
+
+The exploitation example below uses the "alert()" JavaScript function to see a  pop-up messagebox:
+
+http://localhost/BigTreeCMS/core/admin/adjax/dashboard/check-module-integrity.php?id=“><script>alert(1);</script>< <http://localhost/BigTreeCMS/core/admin/adjax/dashboard/check-module-integrity.php?id=>”
+
+ 
+
+Could you please help me assign a CVE for this issue?
