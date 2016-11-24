@@ -1,121 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/28/3
-Message-ID: <02218f3b-90ba-87cb-f0f9-2e576eae6917@suse.com>
-Date: Thu, 28 Jul 2016 13:34:27 +0200
-From: Andreas Stieger <astieger@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/9
+Message-ID: <20161124233908.GA20286@sin.redhat.com>
+Date: Fri, 25 Nov 2016 10:09:09 +1030
+From: Doran Moppert <dmoppert@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: Wireshark 2.0.5 and 1.12.13 security releases
+Subject: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName
 Content-Type: text/plain; charset=utf-8
 
-Hello
 
-Wireshark 2.0.5 and 1.12.13 were announced to contain fixes of the usual
-dissector crash / endless loop read from wire or capture file type:
+A stack overflow in ICU4C (http://icu-project.org/), fixed some 3 years
+ago in 54.1 but affecting versions back to (at least) 3.6, has just been
+made public on the ICU tracker.
 
-https://www.wireshark.org/lists/wireshark-announce/201607/msg00001.html
+Upstream bug:
 
+http://bugs.icu-project.org/trac/ticket/10891
 
-CORBA IDL dissector crash on 64-bit Windows (wnpa-sec-2016-39)
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5
-https://www.wireshark.org/security/wnpa-sec-2016-39.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12495
+Patch:
 
-NDS dissector crash (wnpa-sec-2016-40)
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 1.12.0 to 1.12.12, fixed in 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-40.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12576
+http://bugs.icu-project.org/trac/changeset/35699
 
-PacketBB dissector could divide by zero (wnpa-sec-2016-41)
-The PacketBB dissector could divide by zero. It may be possible to make
-Wireshark crash by injecting a malformed packet onto the wire or by
-convincing someone to read a malformed packet trace file. Affects 2.0.0
-to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-41.html
-\https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12577
+The bug was originally discovered in PHP and a workaround applied there:
 
-wnpa-sec-2016-42
-WSP infinite loop (wnpa-sec-2016-42)
-The WSP dissector could go into an infinite loop. It may be possible to
-make Wireshark consume excessive CPU resources by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to 1.12.12 , fixed in 2.0.5,
-1.12.13
-https://www.wireshark.org/security/wnpa-sec-2016-42.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12594
+https://bugs.php.net/bug.php?id=67397
 
-MMSE infinite loop (wnpa-sec-2016-43)
-The MMSE dissector could go into an infinite loop. It may be possible to
-make Wireshark consume excessive CPU resources by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 1.12.0 to 1.12.12, fixed 1.12.13
-https://www.wireshark.org/security/wnpa-sec-2016-43.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+Note that the PHP bug is exactly the same flaw, but they worked around
+it by limiting the length of strings passed to icu.  I don't believe
+this needs a separate CVE even though it was "fixed" independently.
 
-RLC long loop (wnpa-sec-2016-44)
-The RLC dissector could go into a long loop. It may be possible to make
-Wireshark consume excessive CPU resources by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects  2.0.0 to 2.0.4, 1.12.0 to 1.12.12, fixed in 2.0.5,
-1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-44.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12624
+While code execution is theoretically possible, bypassing the stack
+canary looks extremely difficult.  Most likely impact on platforms
+building with SSP is only a crash.
 
-LDSS dissector crash (wnpa-sec-2016-45)
-The LDSS dissector could crash. It may be possible to make Wireshark
-crash by injecting a malformed packet onto the wire or by convincing
-someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
-1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-45.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12662
-
-RLC dissector crash (wnpa-sec-2016-46)
-The RLC dissector could crash. It may be possible to make Wireshark
-crash by injecting a malformed packet onto the wire or by convincing
-someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
-1.12.0 to 1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-46.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12664
-
-OpenFlow long loop (wnpa-sec-2016-47)
-The OpenFlow dissector (and possibly others) could go into a long loop.
-It may be possible to make Wireshark consume excessive CPU resources by
-injecting a malformed packet onto the wire or by convincing someone to
-read a malformed packet trace file. Affects 2.0.0 to 2.0.4, 1.12.0 to
-1.12.12, fixed in 2.0.5, 1.12.13.
-https://www.wireshark.org/security/wnpa-sec-2016-47.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12659
-
-MMSE, WAP, WBXML, and WSP infinite loop (wnpa-sec-2016-48)
-The MMSE, WAP, WBXML, and WSP dissectors could go into an infinite loop.
-It may be possible to make Wireshark crash by injecting a malformed
-packet onto the wire or by convincing someone to read a malformed packet
-trace file. Affects 2.0.0 to 2.0.4, fixed in 2.0.5.
-https://www.wireshark.org/security/wnpa-sec-2016-48.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12661
-
-WBXML crash (wnpa-sec-2016-49)
-The WBXML dissector could crash. It may be possible to make Wireshark
-crash by injecting a malformed packet onto the wire or by convincing
-someone to read a malformed packet trace file. Affects 2.0.0 to 2.0.4,
-fixed in 2.0.5
-https://www.wireshark.org/security/wnpa-sec-2016-49.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12663
-
-
-Could CVE please be assigned?
-
-With kind regards,
-Andreas Stieger
+https://bugzilla.redhat.com/show_bug.cgi?id=1383569
 
 -- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
+Doran Moppert
+Red Hat Product Security
