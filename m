@@ -1,56 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/26/2
-Message-ID: <602dadcb-a30f-30ff-d0e6-08d6936ab60a@integrity.pt>
-Date: Tue, 26 Apr 2016 11:32:45 +0100
-From: Fábio Pires <fp@...egrity.pt>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Insecure Direct Object Reference in OSTicket (last versions availablle)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/3
+Message-ID: <58bfcc2f68c14d9794d8bdd65e9d6266@imshyb02.MITRE.ORG>
+Date: Wed, 23 Nov 2016 22:49:22 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: Linux kernel net/ipv4/ip_tunnel.c issue mentioned on netdev
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Can i have a CVE ID assigned to this: "Insecure Direct Object Reference
-in OSTicket attachments" ?
+In case anyone wants to be aware of CVE ID requests that appeared
+on other public mailing lists:
 
-https://labs.integrity.pt/advisories/insecure-direct-object-reference-in-osticket-attachments/
+  http://marc.info/?l=linux-netdev&m=147995726821221&w=2
 
-References:
+wanted an ID for an integer overflow in this:
 
-https://github.com/osTicket/osTicket-1.8/issues/2615
-https://github.com/osTicket/osTicket-1.8/pull/2618
+  https://github.com/torvalds/linux/blob/cfc7381b3002756b1dcada32979e942aa3126e31/net/ipv4/ip_tunnel.c#L396-L404
 
-Regards
+Because the report was simultaneously sent to security@...nel.org and
+may have other people contributing analysis, we may be waiting a short
+time before assigning a CVE ID.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-
-Fabio Pires
-Pentesting Team
-
-*INTEGRITY Portugal*
-
-Av. João Crisóstomo, 30 5º
-1050-127 | Lisboa* -* Portugal
-Tel. +351 21 33 03 740 . Mob (+351) 93 65 50 016
-
-www.integrity.pt <http://www.integrity.pt/> – www.keepitsecure24.com
-<http://www.keepitsecure24.com/>
-
-
-	
-
-*INTEGRITY United Kingdom*
-
-Suite 4B | 43 Berkeley Square
-
-Mayfair, Westminster | London W1J 5FJ - UK
-
-
-
-
-
-Content of type "text/html" skipped
-
-Download attachment "logo_integrity.png" of type "image/png" (11151 bytes)
-
-Download attachment "logos.png" of type "image/png" (28623 bytes)
+iQIcBAEBCAAGBQJYNmLPAAoJEHb/MwWLVhi2nVYQALYW1yBzHzv/hVdWIsUHKLQC
+5gNQoTyazj6zw4fTiXfkg8MESzeTHPEY3IygWE0UhvdnZG6SjfS5HVBONsZtLPMu
+MBzgJ8nLefUeonhqAKaMYzbi4Ntt1Cf/AWGoiA5Dd8+MTmwc4hOCvkyhQwZsKjJh
+DyIIsNGgFd0glItqicNhNCEwXcdmPeeWGHqi9vN4n6ZjVkra1rEUlZ44dnPkTxNa
+9Y9m0+ETP4CrufvWnPv2E4rAEuqqRzHiEX1gPWNT/Rabf/VCMVPZHXyiXxdCYlnR
+vOyY9DzpO3NeI5yxGqME8/A5H0RkgvWsnrFOxqgaHOV1odTaseA8s6K3FAQY2Z9Z
+tQfM3lHRq80TkfAp7SelwjWk9kH+gWOYGdcDER2vjv45WO9ETdRcrfIV4X07fWJ7
+YDU1T+qc/0647OP6un/lEnVBQX2AoFfY25IhloYUpKHGxNxxUFJIurVpTIN+qksf
+2gAJcMTF4MDfNmAaENi97tL4CwkJmvGswncPG4Cy3V+hsvRNqgp0VWuYFVfv/MtT
+SIb80ErscC1+ltKJBUka4Pi9C3Q0fx4f51/gf0XLrjQBUhtwUwl889yr5lM1Cf4X
+e1Wja9saMPGcYWZudIvTameli18G+5Z1Hh/Iu9NR5HxYUHOIEVoGWaRCt2LxkRR6
+9sos50TA6UaxylJ3PdAn
+=5/Wi
+-----END PGP SIGNATURE-----
