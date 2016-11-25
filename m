@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5420" "Friday" "29" "July" "2016" "09:47:31" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>" "92" "[oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" nil nil nil "7" "2016072909:47:31" "[oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" (number mark "U       zhangkaixian Jul 29   92/5420  " thread-indent "\"[oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5333" "Friday" "25" "November" "2016" "09:02:28" "+0100" "Johannes Segitz" "jsegitz@suse.com" "<20161125080228.GE31181@suse.com>" "173" "[oss-security] CVE Request: salt confidentiality issue" nil nil nil "11" "2016112508:02:28" "[oss-security] CVE Request: salt confidentiality issue" (number mark "U       jsegitz@suse Nov 25  173/5333  " thread-indent "\"[oss-security] CVE Request: salt confidentiality issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9380 invoked by uid 550); 29 Jul 2016 09:54:04 -0000
+Received: (qmail 22344 invoked by uid 550); 25 Nov 2016 13:29:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,115 +12,190 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5864 invoked from network); 29 Jul 2016 09:47:43 -0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Thread-Topic: cve request: docker swarmkit Dos occurs by repeatly joining
- and quitting swam cluster as a node
-Thread-Index: AdHpfi2HU0Jb8SliQ/WmwYWnaJkSWQ==
-Date: Fri, 29 Jul 2016 09:47:31 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BD067AEX02corpqihoonet_"
+Received: (qmail 7418 invoked from network); 25 Nov 2016 08:02:42 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Fri, 25 Nov 2016 09:02:28 +0100
+From: Johannes Segitz <jsegitz@suse.com>
+To: OSS Security List <oss-security@lists.openwall.com>,
+	cve-assign@mitre.org
+Message-ID: <20161125080228.GE31181@suse.com>
 MIME-Version: 1.0
-Subject: [oss-security] cve request: docker swarmkit Dos occurs by repeatly joining and
- quitting swam cluster as a node
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="MIdTMoZhcV1D07fI"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] CVE Request: salt confidentiality issue
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BD067AEX02corpqihoonet_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--MIdTMoZhcV1D07fI
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-RG9ja2VyIHN3YXJta2l0IGlzIHVzZWQgdG8gZm9ybSBhIHN3YXJtLCBjb29y
-ZGluYXRpbmcgdGFza3MuIE9uY2UgYSBtYWNoaW5lIGpvaW5zLCBpdCBiZWNv
-bWVzIGEgU3dhcm0gTm9kZS4gTm9kZXMgY2FuIGVpdGhlciBiZSB3b3JrZXIg
-bm9kZXMgb3IgbWFuYWdlciBub2Rlcy4NCiBJIGZvdW5kIGEgdnVsbmVyYWJp
-bGl0eSBpbiBkb2NrZXIgb2YgdGhlIGxhdGVzdCB2ZXJzaW9uIHdoaWNoIGNv
-dWxkIGNhdXNlIGEgRGVuaWFsIG9mIFNlcnZpY2UsIGl0IHJlc3VsdHMgaW4g
-YSBtYWNoaW5lIGNvdWxkIG5vdCBqb2luIHRoZSBzd2FybSBjbHVzdGVyIGFm
-dGVyIGFub3RoZXIgbm9kZeKAmXMgcmVwZWF0ZWRseQ0Kam9pbmluZyBhbmQg
-cXVpdHRpbmcgdGhlIHN3YXJtIGZvciBtYW55IHRpbWVzKHRha2luZyBteSB0
-ZXN0aW5nIGFzIGV4YW1wbGUgLCBpdCBzaG91bGQgbmVlZCBhdCBsZWFzdCBv
-bmUgdGhvdXNhbmQgdGltZXMuIClNb3Jlb3ZlciwgdGhlIGRvY2tlciBkZWJ1
-Z2dpbmcgaW5mbyBpbmRpY2F0ZXMNCnRoZSBEaXNwYXRjaGVyIGlzIHN0b3Bw
-ZWQgYW5kIGNhIHNlcnZlciBtYXkgZXhpdGVkIHNvbWV0aW1lcy4NCg0KDQoj
-IGRvY2tlciB2ZXJzaW9uDQpDbGllbnQ6DQpWZXJzaW9uOiAgICAgIDEuMTIu
-MC1kZXYNCkFQSSB2ZXJzaW9uOiAgMS4yNQ0KR28gdmVyc2lvbjogICBnbzEu
-Ni4zDQpHaXQgY29tbWl0OiAgIDljMWJlNTQtdW5zdXBwb3J0ZWQNCkJ1aWx0
-OiAgICAgICAgRnJpIEp1bCAyOSAxNTo0MDo1MiAyMDE2DQpPUy9BcmNoOiAg
-ICAgIGxpbnV4L2FtZDY0DQoNClNlcnZlcjoNClZlcnNpb246ICAgICAgMS4x
-Mi4wLWRldg0KQVBJIHZlcnNpb246ICAxLjI1DQpHbyB2ZXJzaW9uOiAgIGdv
-MS42LjMNCkdpdCBjb21taXQ6ICAgOWMxYmU1NC11bnN1cHBvcnRlZA0KQnVp
-bHQ6ICAgICAgICBGcmkgSnVsIDI5IDE1OjQwOjUyIDIwMTYNCk9TL0FyY2g6
-ICAgICAgbGludXgvYW1kNjQNCg0KIyBkb2NrZXIgc3dhcm0gaW5pdA0KU3dh
-cm0gaW5pdGlhbGl6ZWQ6IGN1cnJlbnQgbm9kZSAoMjNtNmtzcjk2d2hzdnVv
-OGx6b2tlbmp1MykgaXMgbm93IGEgbWFuYWdlci4NCg0KVG8gYWRkIGEgd29y
-a2VyIHRvIHRoaXMgc3dhcm0sIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQ6
-DQogICAgZG9ja2VyIHN3YXJtIGpvaW4gXA0KICAgIC0tdG9rZW4gU1dNVEtO
-LTEtMzBmNmlienBzY3FoMDVxcWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5
-MXdmY2hoYjktYWxqZXd0ZG41NzI3ZzFwbGR4bmV2amg1MSBcDQogICAgeHgu
-eHgueHgueHg6MjM3Nw0KDQpUbyBhZGQgYSBtYW5hZ2VyIHRvIHRoaXMgc3dh
-cm0sIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQ6DQogICAgZG9ja2VyIHN3
-YXJtIGpvaW4gXA0KICAgIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3Fo
-MDVxcWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktMHAwODZ6
-MnNkYm5wdm9nbmptdTc2Z3BpNiBcDQogICAgeHgueHgueHgueHggOjIzNzcN
-Cg0KTG9naW4gbWFjaGluZSBBMSBhbmQgam9pbiB0aGUgc3dhcm0gLGFuZCB0
-aGVuIHF1aXR0ZWQgdGhlIHN3YXJtLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiMgZG9ja2VyIHN3
-YXJtIGpvaW4gLS10b2tlbiBTV01US04tMS0zMGY2aWJ6cHNjcWgwNXFxZG9n
-ODVrdHI4cHRjdzd0dG40d3k1Y3dpeHkxd2ZjaGhiOS1hbGpld3RkbjU3Mjdn
-MXBsZHhuZXZqaDUxIHh4Lnh4Lnh4Lnh4OjIzNzcNClRoaXMgbm9kZSBqb2lu
-ZWQgYSBzd2FybSBhcyBhIHdvcmtlci4NCiMgZG9ja2VyIHN3YXJtIGxlYXZl
-IC0tZm9yY2UNCk5vZGUgbGVmdCB0aGUgc3dhcm0uDQoNCkxvZ2luIG1hY2hp
-bmUgQTIgLCByZXBlYXRlZGx5IGpvaW4gYW5kIHF1aXQgdGhlIHN3YXJtIGZv
-ciAxMDAwIHRpbWVzLg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiMgZm9yIGkgaW4gezEuLjEwMDB9
-OyBkbyBkb2NrZXIgc3dhcm0gbGVhdmUgLS1mb3JjZSA7IGRvY2tlciBzd2Fy
-bSBqb2luIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3FoMDVxcWRvZzg1
-a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktYWxqZXd0ZG41NzI3ZzFw
-bGR4bmV2amg1MSB4eC54eC54eC54eDoyMzc3IDtkb25lDQpUaGlzIG5vZGUg
-am9pbmVkIGEgc3dhcm0gYXMgYSB3b3JrZXIuDQpOb2RlIGxlZnQgdGhlIHN3
-YXJtLg0KVGhpcyBub2RlIGpvaW5lZCBhIHN3YXJtIGFzIGEgd29ya2VyLg0K
-Tm9kZSBsZWZ0IHRoZSBzd2FybS4NClRoaXMgbm9kZSBqb2luZWQgYSBzd2Fy
-bSBhcyBhIHdvcmtlci4NCk5vZGUgbGVmdCB0aGUgc3dhcm0uDQpUaGlzIG5v
-ZGUgam9pbmVkIGEgc3dhcm0gYXMgYSB3b3JrZXIuDQpOb2RlIGxlZnQgdGhl
-IHN3YXJtLg0KVGhpcyBub2RlIGpvaW5lZCBhIHN3YXJtIGFzIGEgd29ya2Vy
-Lg0KTm9kZSBsZWZ0IHRoZSBzd2FybS4NCg0KQWZ0ZXIgZmluaXNoaW5nIHRo
-YXQsIExvZ2luIG1hY2hpbmUgQTEgYWdhaW4gYW5kIGF0dGVtcHQgdG8gam9p
-biB0aGUgc3dhcm0sIGl0IGZhaWxlZC4NCi0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQojIGRvY2tl
-ciBzd2FybSBqb2luIC0tdG9rZW4gU1dNVEtOLTEtMzBmNmlienBzY3FoMDVx
-cWRvZzg1a3RyOHB0Y3c3dHRuNHd5NWN3aXh5MXdmY2hoYjktYWxqZXd0ZG41
-NzI3ZzFwbGR4bmV2amg1MSB4eC54eC54eC54eDoyMzc3DQpFcnJvciByZXNw
-b25zZSBmcm9tIGRhZW1vbjogVGltZW91dCB3YXMgcmVhY2hlZCBiZWZvcmUg
-bm9kZSB3YXMgam9pbmVkLiBBdHRlbXB0IHRvIGpvaW4gdGhlIGNsdXN0ZXIg
-d2lsbCBjb250aW51ZSBpbiB0aGUgYmFja2dyb3VuZC4gVXNlICJkb2NrZXIg
-aW5mbyIgY29tbWFuZCB0byBzZWUgdGhlIGN1cnJlbnQgc3dhcm0gc3RhdHVz
-IG9mIHlvdXIgbm9kZS4NCg0KICBTb21lIGRlYnVnZ2luZyBpbmZvcm1hdGlv
-biBvZiBkb2NrZXIgZGFlbW9uLg0KICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCnRpbWU9IjIw
-MTYtMDctMjlUMTU6MjQ6MDIuMzc0NTYwODE1KzA4OjAwIiBsZXZlbD1lcnJv
-ciBtc2c9ImZhaWxlZCB0byByZW1vdmUgbm9kZSIgZXJyb3I9InJwYyBlcnJv
-cjogY29kZSA9IDEwIGRlc2MgPSBkaXNwYXRjaGVyIGlzIHN0b3BwZWQiIG1l
-dGhvZD0iKCpEaXNwYXRjaGVyKS5TZXNzaW9uIiBub2RlLmlkPWIxMXRhNXA4
-ZzJ3Z3kxMHZ5emdzaTZvY20gbm9kZS5zZXNzaW9uPTFhcGg4c2NzZXduODlq
-M2g1bzNlbWdkcWwNCnRpbWU9IjIwMTYtMDctMjlUMTU6MjQ6MDIuMzc0NjA0
-ODk4KzA4OjAwIiBsZXZlbD1lcnJvciBtc2c9IiBzZXNzaW9uIGZhaWxlZCIg
-ZXJyb3I9InJwYyBlcnJvcjogY29kZSA9IDEgZGVzYyA9IGNvbnRleHQgY2Fu
-Y2VsZWQiIG1vZHVsZT1hZ2VudA0KICAgICAgICAgdGltZT0iMjAxNi0wNy0y
-OVQxNToyNDoxNC4wNjkzNDcwNzQrMDg6MDAiIGxldmVsPWRlYnVnIG1zZz0i
-aGVhcnRiZWF0IGV4cGlyYXRpb24iDQp0aW1lPSIyMDE2LTA3LTI5VDE1OjI0
-OjE0LjA2OTQyODgzNCswODowMCIgbGV2ZWw9ZXJyb3IgbXNnPSJmYWlsZWQg
-ZGVyZWdpc3RlcmluZyBub2RlIGFmdGVyIGhlYXJ0YmVhdCBleHBpcmF0aW9u
-IiBlcnJvcj0icnBjIGVycm9yOiBjb2RlID0gMTAgZGVzYyA9IGRpc3BhdGNo
-ZXIgaXMgc3RvcHBlZCINCuKApiDigKYNCg0KUGxlYXNlIGFzc2lnbiBDVkUg
-SURzIGZvciB0aGUgc2VjdXJpdHkgaXNzdWUgPw0KDQogIEJlc3QgcmVnYXJk
-cyYNCiAgS2FpeGlhbmcgWmhhbmcgb2YgdGhlIENsb3VkIFNlY3VyaXR5IFRl
-YW0sIFFpaG9vIDM2MA0KDQoNCg==
+Hello,
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BD067AEX02corpqihoonet_--
+Dario Leidi from the SUSE Manager Team identified an issue in Salt. Please
+issue a CVE for this.
+
+We contacted the salt security team, according to their (very quick and
+friendly) reply this is fixed by the 'rotate_aes_key' parameter=20
+https://docs.saltstack.com/en/2015.8/ref/configuration/master.html#rotate-a=
+es-key.
+that was introduced in 2015.8.11 to correct this issue. It is on by
+default, so the user would have to change that to be vulnerable.
+
+Darios detailed writeup:
+
+- Overview
+
+Salt minions (clients), come with a descriptive id and a crypto key
+each. Attaching a minion to a master (server) boils down to "accepting
+its key" with a command on the master.
+
+Now it can happen that after one minion is fully accepted, a second one
+presents itself to the master with the same id but different key. In
+that case, Salt will figure out that the key is different and reject the
+second minion, assuming it is an impostor.
+
+Due to Salt's caching mechanisms, I found out that under certain
+circumstances Salt commands can reach, read data from and write data to,
+both minions ("original" and "impostor"). That includes pillar data,
+which is supposed to be secret to a certain minion.
+
+- Reproducer
+
+# run 1 salt-master machine [master]
+# run 2 salt-minion machine [minion1, minion2]
+
+## 1. start the salt-master
+rcsalt-master start
+
+## 2. on both minions give to the minion_id the same value, like
+'minion-test'
+vim /etc/salt/minion_id
+
+## 3. start the salt-minion on the minion1
+rcsalt-minion start
+
+## 4. accept the key on the master
+salt-key -a minion-test
+
+## 5. try a simple test command from the master
+salt 'minion-test' cmd.run 'cat /etc/machine-id'
+
+## 6. delete the key from the master
+salt-key -d minion-test
+
+## 7. start the salt-minion on the minion2
+
+## 8. accept the key on the master
+salt-key -a minion-test
+
+## 9. try a simple test command from the master
+salt 'minion-test' cmd.run 'cat /etc/machine-id'
+
+## 10. Here it is the bug: the minion1 is still accepted and responding.
+We could run any command for the minion2, but the minion1 will listen,
+execute and respond to them too, not only the accepted minion2.
+## real output
+/------------------------------------------------
+suma3pg:~ # salt 'minion-test' cmd.run 'cat /etc/machine-id'
+minion-test:
+    52c69eb9c1da2a459375571a9b81e400
+minion-test:
+    a44f29fe2e8feb459fb021c259d5485f
+------------------------------------------------/
+## expected output
+/------------------------------------------------
+suma3pg:~ # salt 'minion-test' cmd.run 'cat /etc/machine-id'
+minion-test:
+    a44f29fe2e8feb459fb021c259d5485f
+------------------------------------------------/
+
+## 11. in the end it get solved on its own, but ONLY IF the salt-master
+is restarted
+rcsalt-master restart
+
+- Reproducer Part2 for pillar_data
+
+## set a custom pillar on the server, valid only for 'minion-test'
+vim /usr/share/susemanager/pillar/top.sls
+/------------------------
+base:
+ 'minion-test':
+   - data
+------------------------/
+
+mkdir /usr/share/susemanager/pillar/data
+vim /usr/share/susemanager/pillar/data/init.sls
+/------------------------
+data:
+  secret:
+    - value: 123456
+------------------------/
+
+## refresh pillar
+salt '*' saltutil.refresh_pillar
+
+## redo steps as described above
+
+## ask for pillar
+salt '*' pillar.items data
+
+## real output
+/------------------------------------------------
+suma3pg:~ # salt 'minion-test' pillar.items data
+minion-test:
+    data:
+        secret:
+              value:
+                  123456
+minion-test:
+    data:
+        secret:
+              value:
+                  123456
+------------------------------------------------/
+## expected output
+/------------------------------------------------
+suma3pg:~ # salt 'minion-test' pillar.items data
+minion-test:
+    data:
+        secret:
+              value:
+                  123456
+------------------------------------------------/
+
+The result will be that private pillar_data are exposed to the old and
+rejected minion1 too.
+
+-------
+
+Johannes
+--=20
+GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
+HRB 21284 (AG N=FCrnberg)
+
+--MIdTMoZhcV1D07fI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJYN/AUAAoJELwn3Z0sxP1mSrsQAKuzDE5eug5LTxcB7RxK8G9+
+WgQsGf8di8lSqeRUGb6dNzA2M6ZMGfncgO8bute56FHmzEZDrAh7T7sFpkDXxlyA
+qjK8kQ3pWTz33maqTHCFXtZVOso8Tlpv/B4acAC6m7KQwoCI0cIXdECHl3+Cu5VC
+NTSKoXNfApzVZETpb6Ba6BS2YumgUI3Xc+BeJoCiCLfPiElzyE4KHRjfcF/tf+GX
+R18x4mROhrDDigrmMviWvtOzDRLOY9rcRCLdN+QsAZtd55r5otiNx02et3muRjl8
+ZequHLWseFT+QqRawCwHlGFwA+dZLu74ZYvnvZRS2brwPvUF5zxryjOxSaRnzkLG
+DAoMaKEE3tsDcNRW0KD2yMZXJHuzlOzC2jAVHRDKfH4S21/xcBf3DWV7jvSb5far
+c9H5t/d7bWllckcPEWoj7B0ShjOgIG9yWuXI/2j5vXTQmWHXg+6odLRBVNO/Fsd8
+fp/LEmXryTWZ7/qf6+zGKaARFTvrvaTJwQC+LA979e85O4KNbI9dGpywmefcDK/N
+h5BVqz2QsbaPHWHArdeehtZHwvFUDLFpbGgLF7R8bEsrhoWNy7/XVqp1Gzmx/J3g
+n4kAyqPLmU72IVXxP5LyigSWi1goTeFarCMwZzLRzfgFJ4nWX/pwuLOIcloiOogS
+YAn9rgU6tywbMsJlq8LV
+=r7SD
+-----END PGP SIGNATURE-----
+
+--MIdTMoZhcV1D07fI--
