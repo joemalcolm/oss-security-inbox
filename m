@@ -1,32 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/1
-Message-ID: <20161026000430.GA18890@openwall.com>
-Date: Wed, 26 Oct 2016 02:04:30 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Allan McRae <allan@...hlinux.org>
-Cc: oss-security@...ts.openwall.com, Levente Polyak <anthraxx@...hlinux.org>
-Subject: Re: Addition to linux-distros for Arch Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/25/3
+Message-ID: <eefb4c78ba324c2788fe59b4fd5582d4@imshyb02.MITRE.ORG>
+Date: Fri, 25 Nov 2016 09:17:48 -0500
+From: <cve-assign@...re.org>
+To: <jsegitz@...e.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: salt confidentiality issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sat, Oct 22, 2016 at 09:18:11PM +1000, Allan McRae wrote:
-> Can Levente Polyak (CCed) please be added to the linux-distros list
-> representing Arch Linux [1]?  He leads the Arch Linux Security team,
-> which monitors and fixes all security issues in our packages [2].
-> 
-> His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
-> 
-> Thanks,
-> Allan
-> 
-> [1] https://www.archlinux.org/people/developers/#anthraxx
-> [2] https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.html
+> under certain
+> circumstances Salt commands can reach, read data from and write data to,
+> both minions ("original" and "impostor").
 
-Added.  Note that Levente's key expires 2016-12-31.
+> ## 10. Here it is the bug: the minion1 is still accepted and responding.
+> We could run any command for the minion2, but the minion1 will listen,
+> execute and respond to them too, not only the accepted minion2.
 
-To others requesting membership: it's still frozen for now.  Allan's
-request was much simpler since it's about changes in who's subscribed
-for a distro that is already subscribed.
+> this is fixed by the 'rotate_aes_key' parameter
+> that was introduced in 2015.8.11 to correct this issue
 
-Alexander
+Use CVE-2016-9639 for the vulnerability fixed in 2015.8.11.
+
+> the user would have to change that to be vulnerable
+
+There is no CVE ID for the behavior (in current versions) of accepting
+impostors in a "rotate_aes_key: False" configuration. The documentation
+fully explains the impostor risk in that configuration.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYOEd1AAoJEHb/MwWLVhi2QdkP/3SEMFkzKwGZvwvUrqZ/wB6U
+7xOuKbfKcTTHa4Fg4luHyQESeSXigrcHf4P8LqTEQIlxdGYcpIft7NRvDvKR77P/
+UuWKIm5neHQjhKveYRm03QqZr43TXZW5K8V91kU7JM98Hak8gJZSgQezm0W8fzOv
+Eog2xlV/Yw7vgTckUKw/0E/IugAeV6gJU4LP/cgI47vXxJHm5L4xSE2ueEMF6v2W
+LH/hv+ywAemjhkg3Tu2DsZ0K+Wxe13tycSgVMVAO9GUA2HQVhShH8f9xhxMseg3m
+BUUq+GpL1PLMLlhR5YoEH3mFvnBzL2BYMtBGrdwIxymgsC4OLieI1ETkHffOs+IJ
+NMtC4YqHSZsE6zWP2sWpwnGD1bj6ErsrfrSOc+bsfpwhCwB0pSRaebXfjrqVwA55
+fmlbCNDMAOgfYvcjDm2FWnDFVapKi5NHMuUuISHXjzQXeLtPoGuvdZQKSWcdkDVI
+V/rBy0+0BtuA3aFMQTTtcevoFALyN+PIhwJwJ1xFdqJTtkY2S5TP8RAKEPfpTcU1
+H+zQPWDT5CArOY+jFDgcpHKDhBi+gsJ9alJLDPA5taaCDcP/7hDQ4GSJlz5bLpzy
+LZZIfhXKBdWl6r2Lk9Ct4L05agWIgPlMOPxe1RG4rv68uCdVJoKqtYu4yWp/wAlj
+bJ+rXv6yW0GRshGrszMC
+=vAVo
+-----END PGP SIGNATURE-----
