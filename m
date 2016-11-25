@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["309" "Thursday" "18" "April" "2019" "21:32:10" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiSOsXJCh_hbgzD+=EVys-N=HK_h0kZ2GU=p+G2Y1daTSQ@mail.gmail.com>" "10" "[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space" nil nil nil "4" "2019041813:32:10" "[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   10/309   " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1948" "Thursday" "24" "November" "2016" "19:51:34" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0e925c8eb72143eaa942d7abbd5ddd70@imshyb02.MITRE.ORG>" "45" "[oss-security] Re: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName" nil nil nil "11" "2016112500:51:34" "[oss-security] Re: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName" (number mark "U       cve-assign@m Nov 24   45/1948  " thread-indent "\"[oss-security] Re: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName\"\n") "<20161124233908.GA20286@sin.redhat.com>" ("<20161124233908.GA20286@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10137 invoked by uid 550); 18 Apr 2019 16:36:43 -0000
+Received: (qmail 11842 invoked by uid 550); 25 Nov 2016 00:51:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21740 invoked from network); 18 Apr 2019 13:32:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=YgQafOQ93IbRU8e2Iwv93PUSSni04J5eC6zUrfQUM9I=;
-        b=LgRU6rCcTH5ezKbkZGx0AVZqbthcC42fvZDQmk5Mi+34j1AjpwCpIV+Q2XZ8K3wOok
-         nojTuJgbLYO2XLj21a92rbkTwHvi5FI43orGxm9SHOOnFWHwpiRBTnAJRK8BiAhNutuT
-         X9GfeCz4wTL/kEK/P5er59X3sTzWddX4yO8s/zANb9SGaNxzFXXQVO+R/zqsaWGlAaIt
-         zz+YpQx59goNMr5Tz6H1lCJmbn/h+zaaozrQPcTcKaFJgIjvh5qyR8NHK49wasu9nkiR
-         NXngVhLotCuSQiQteGLjmEVE9Ro8FbHRauasGhmt+USWt2yr5+dDG5WWYgSVyR8Hq/Q6
-         Dw8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=YgQafOQ93IbRU8e2Iwv93PUSSni04J5eC6zUrfQUM9I=;
-        b=AC/IsNh2fHlt5DxrEC2P6nnKqD5N0+JeaT1tZixy/0Ch+Af4I9GEgRJWF/6rhJWnQZ
-         WwEcxtXWeGGSPCvtHAFGOQQvGieGrVwMz39nP32kpGooArmc+djxN5TGBnCHiUjuuLMn
-         YyBvAr+kOdDaXZi0Ki5tIjQuc8+kH4EFQwc0+Y8N4TNrwGlYwgcMXbU5yAaCN+IuvdGR
-         Acu8S8dgs4DKmejLvvMSE2LaOs7EWv0dlZcmsFnXHz2XYpcD6+V05DeynnUIg13a+EG9
-         8DruGSIA1xRgJKMlE4BEXBnRblXsjXanEorwQ5LhS5BxfUXLoN7fZqu/tVXU0PdbbLol
-         ojUg==
-X-Gm-Message-State: APjAAAX1bU5eQzd/47cGvrBe09gHhciBxO4vvZwWHWiqqD/x+LoYaJcw
-	4fbzyUEpp7rYYTru2QBUCLWMVaKNdQ4ouMYOOGVnoKd1cVg=
-X-Google-Smtp-Source: APXvYqz4CQTjZC7lia8/SnSB/a/53Wfn5pzsyrnl2Ye4smAE8drImw6bGoyjwC9Witqveh8Q7qsGrDl3bM9Q+2qVzMQ=
-X-Received: by 2002:a0d:e3c7:: with SMTP id m190mr74537197ywe.324.1555594340880;
- Thu, 18 Apr 2019 06:32:20 -0700 (PDT)
+Received: (qmail 11824 invoked from network); 25 Nov 2016 00:51:46 -0000
+From: <cve-assign@mitre.org>
+To: <dmoppert@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161124233908.GA20286@sin.redhat.com>
+Message-ID: <0e925c8eb72143eaa942d7abbd5ddd70@imshyb02.MITRE.ORG>
+Date: Thu, 24 Nov 2016 19:51:34 -0500
 MIME-Version: 1.0
-From: Fuqian Huang <huangfq.daxian@gmail.com>
-Date: Thu, 18 Apr 2019 21:32:10 +0800
-Message-ID: <CABXRUiSOsXJCh_hbgzD+=EVys-N=HK_h0kZ2GU=p+G2Y1daTSQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux kernel < 4.14.111 drivers/media/pci/saa7164/saa7164-core.c
- kernel address dumps to user space
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: icu: stack-based buffer overflow in uloc_getDisplayName
 
-In drivers/media/pci/saa7164/saa7164-core.c:1059,
-saa7164_proc_show will dump the address of dev into procfs,
-local user could read kernel address information via /proc/saa7164.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-static int saa7164_proc_show(struct seq_file *m, void *v)
-{
-    ...
-        seq_printf(m, "%s = %p\n", dev->name, dev);
-    ...
-}
+> https://bugzilla.redhat.com/show_bug.cgi?id=1383569
+
+> http://bugs.icu-project.org/trac/ticket/10891
+> http://bugs.icu-project.org/trac/changeset/35699
+
+> https://bugs.php.net/bug.php?id=67397
+
+> Note that the PHP bug is exactly the same flaw, but they worked around
+> it by limiting the length of strings passed to icu.  I don't believe
+> this needs a separate CVE even though it was "fixed" independently.
+
+Use CVE-2014-9911 for the ICU vulnerability, and use CVE-2014-9912 for
+the PHP vulnerability. Admittedly, the code changes in ICU and PHP had
+the same motivation. However, the code is not shared between
+ures_getByKeyWithFallback in ICU and get_icu_disp_value_src_php in
+PHP. Thus, two CVE IDs exist. This is also consistent with similar
+ICU/PHP situations in the
+http://www.openwall.com/lists/oss-security/2016/07/24/2 and
+http://www.openwall.com/lists/oss-security/2016/09/15/10 posts.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYN4pmAAoJEHb/MwWLVhi2iXQP/0p5ye6sA3p3BNLXi1HvLKN3
+kTljswgWfZxD5/GINLjMGzf0Gr94weE6GfbxmrYbenjmghKTPU+tRgfpOd6TwteU
+kai0Vuluk020bYb9d769qyYc47rzKZ0h5FJCc/Ef+kQNWPMOHS+ogF8D11p575W0
+gFZyiw9h5HNHT7A5VV1NisFN607Q3IwJncNZfI1PLwZJ/t1dtNI8HGsKZCo5tlKq
+ZdWIibAuVThj9k4OKmZfdxe3SHInFv2dfDoLXwQH+hwnLLs7xkN3X5Tu/PXpkqtV
+cc/eqZTRW1TSxou4p0S8T7d410z3WArVecVNfFZxv58xua+Goj/bXwPRuAUQTY8q
+SpuR3NDwFoM23IURqTStQ/+NXbhGtjJpUltQjZ776hBEm/S/rljYMA5sJs4sBtjI
+VsiA8jqjeewOheQQnEOA/VVH8JvQQ8AATOKD6gRkDCuxTYwhemabzR9jUOpVP/Cv
+9f/4e/KIYug2wHcfTtEoqZEGtgIEQRdcGpEjOq7y7X9ETMWnTRNh1iIzKVOilFyv
+uCcNE1m0JJPALb0p72AqDb5rEL8cWynrvNQrcLifONF5/65uEa+5Hi4rXhayaQN1
+MDo0OTwKJUw90vhEeLP+hTx3bQJtp6bRTfz1avIhEmG0DmoErm9opAj/pK7o8uWV
+1EQnxE97WQjHimhYejXd
+=jGfq
+-----END PGP SIGNATURE-----
