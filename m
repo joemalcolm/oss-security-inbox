@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/16
-Message-ID: <47ec68bee7cc4c0d873931a344c85e74@imshyb02.MITRE.ORG>
-Date: Thu, 8 Dec 2016 12:19:17 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/26/5
+Message-ID: <8a0125dd564a421ea358674b196666b5@imshyb02.MITRE.ORG>
+Date: Sat, 26 Nov 2016 17:50:48 -0500
 From: <cve-assign@...re.org>
-To: <bluewind@...u.at>
+To: <gustavo.grieco@...il.com>
 CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
+Subject: Re: CVE Request: resource exhaustion in regex expression handling in WebKit
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> The linux kernel contains a bug where a fragmented IPv6 packet causes a
-> panic after a timeout (seems to be roughly 60 seconds). This can be
-> triggered remotely via the internet and results in a DoS (kernel panic).
+> Trying to parse and execute this regex code in WebKit:
+> 
+> [ about 170 instances of "($" and then "{-2,16}" and then about
+>   170 instances of "+)" ]
+> 
+> will consume large amounts of memory (8GB or more), after a few seconds.
+> This seems to be a case of CWE-400 (uncontrolled resource consumption).
+> 
+> Chrome and Firefox based browsers are *not* affected.
 
-> https://bugzilla.kernel.org/show_bug.cgi?id=189851
+Use CVE-2016-9643.
 
->> unable to handle kernel NULL pointer dereference
 
->> Seems I can reliably crash said machines running 4.8.12-2 by sending
->> them incomplete fragmented IPv6 packets. The kernel indeed has
->> NET_L3_MASTER_DEV.
+> asked to MITRE about another issue related with uncontrolled resource
+> consumption in Firefox loading a SVG but receive no response.
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
-
->> the dst->dev should be preferred for determining the L3 domain
->> if the dst has been set on the skb. Fallback to the skb->dev if it has
->> not. This covers the case reported here where icmp6_send is invoked on
->> Rx before the route lookup.
-
-Use CVE-2016-9919.
+We have just answered that on its own thread.
 
 - -- 
 CVE Assignment Team
@@ -40,17 +37,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYSZWMAAoJEHb/MwWLVhi2UAAQAKUTqLnsjpwqlBAxNh9rEexe
-ljitZUtj0WSTrYAY+EdPm6n5mDocVCw5IlB2wd8Fa/8z2kPigG/9oDafnWXJFKK1
-hlqNZAep/GBGX9ISVxbLPFJ5jel8BWsZ3kwiAdj5t4GcuTDbwOkujvknHyhxBS6T
-kKBE/TVtafKcLUd+D6qzWyt0BaOz+ATKKrekrkRKkm7yEBaGIUHIekWZnK0tJ+sS
-08sFKUxzfDCud//OepxNgxRDlecqlcK0PKNp9NNRgD/+D99JgLaxItMVVMkQrh5s
-854jFifEhObQKeJLAUotfvSJjIoASXHrndyhwCw2C636vqsASE9KVItzmXV4MzSW
-4+8Yqi/jLExwSe1z3Z4R6+zpQopok/ZmGJ9BPBODrU8bsCm/eFvA2eXRvXD/v2Oh
-/lFbDJf34P8FM8wvzFTc0tDJB5Lf2xZ2pjEUfEdM0hlryfKWIoaGDzcpKPGfewiN
-M3yHp3CcuKCX6pVxrmonA1goJTpddBqALUavwWtRRnF6ozUhKpWG6G2zhkVn9ZaT
-vwSSlsYw6BTYpMz1ZPF6rqeCowtdQDI/J6gM8OuQAq/aV/i0jmFv5ToB158dy5yc
-rq2wKEdUv6y0ZM7lWX5aleGlEfyMyIB/ZtTWy5wAvyfpwlv6X3/OSc/9eXxFB27M
-R2CpnZwv2wLfC6/R9czc
-=DVJY
+iQIcBAEBCAAGBQJYOg/tAAoJEHb/MwWLVhi2jXMP+wXfT6g+wyocbXiiIbflNo9x
+Aj8TQ9PP7ZTO2akx4xOdep+Jpulg2K5ACWG/PDqy+oPV3ouJDyT0xzUTYK0MLFWa
+oDe460NUGm92UkG9VSkzSe5RYN7tawxzYfoaSulJf4gd6bDUSRPxB+rDEWeX6mCT
+q/VKySkcs7wAtZd6N9W/NPg0+Jeo/qgCeU0wf1Uz8c+1WvF7c2ooqyYTq36Z434F
+gT4GshSEqGmi3PCKomzSEmaRYeGhREy7J82/b7JHYgmMDnwDJWNqg/MXhzE6VjP4
+uRSEAYaKksVsWI+CtxLNeiBSZAyEV2Gd2hSthd/xSAQfJ9lAK+rxJN38cIl0NIL5
+4tgyNHGYtOYIjiFKtil0T3DE3IlLlWFJAa2ICkpqDoFjPDBQXxbKcwG4TM5DTMBe
+Fqe7WK3SXZNd5imt296L0lBry50v7/xjyIstUR8QoPJBJ0AGHJw8uCRjps0zZK6k
+nzbKM0LZdgTmf7zdxjGIEjhLIkGCxXJdGGVQMFb80EHgwM+LfTDD1KTAodB+1oRd
+UJeaRv0EqndpAOKlxHhMDGxk7n4Tz34luKaav9abaJ4mo8F1Sho4UgRVZtlik+EQ
+Wm3g/BeTqjj2JkBvQwrQNVn5VA75tE+Xp5ZnjnQTPSuqwBNvQjPU+EoeStadSP57
+ALKxkr8D5RHlAGNzIVoQ
+=eJl5
 -----END PGP SIGNATURE-----
