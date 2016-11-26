@@ -1,52 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/20/14
-Message-ID: <CALPTtNX+xVz+Uf=tTUMp7a+NKdUp=CYGip8a5+YcFGwZsXhJ-A@mail.gmail.com>
-Date: Wed, 20 Jan 2016 11:18:39 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>
-Cc: Blake Burkhart <bburky@...rky.com>
-Subject: CVE request: Two vulnerabilities in git-fastclone ruby gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/26/3
+Message-ID: <b8ef09d1fc2845acb5d7e96c733d82f6@imshyb02.MITRE.ORG>
+Date: Sat, 26 Nov 2016 17:47:59 -0500
+From: <cve-assign@...re.org>
+To: <gustavo.grieco@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: DoS loading a SVG in Firefox
 Content-Type: text/plain; charset=utf-8
 
-Blake Burkhart (@bburky) recently reported two issues to Square via their
-open source bug bounty program (https://hackerone.com/square-open-source)
-concerning their `git-fastclone` ruby gem.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-git-fastclone is "A git command that uses reference repositories and threading
-to quickly and recursively clone repositories with many nested submodules."
+> cause Firefox to consume all your memory. Once you click, you
+> cannot stop the memory constant memory leak. It can take a few minutes
+> (we tested in a desktop computer with 16GB). At the end, Firefox will
+> abort or it will be terminated by the OS.
 
-Homepage: https://github.com/square/git-fastclone
+> This issue was recently minimized and isolated to the circular use of
+> xlink:hrefs:
+> 
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1297206#c5
+> 
+> Is a CVE suitable for this DoS?
 
-Download: https://rubygems.org/gems/git-fastclone
+At present, it is not. The MITRE CVE team relies on Mozilla to assign
+CVE IDs for Firefox, on the basis of Mozilla's knowledge about their
+customers' needs for tracking bugs. This does not mean that Mozilla
+can have any arbitrary policy about what bugs are suitable for CVEs;
+however, we want to defer to them to the greatest reasonable extent.
+For example, there is a vast amount of public information about parts
+of the Firefox code that are associated with crashes, e.g., see
 
-* git-fastclone permits arbitrary shell command execution from .gitmodules
+  https://crash-stats.mozilla.com/topcrashers/?product=Firefox&version=50.0&_facets_size=300
 
-  https://github.com/square/git-fastclone/pull/2
+where someone could conceivably request thousands of CVE IDs.
 
-  git-fastclone before 1.0.1 uses the git URL provided without validating
-  the protocol being requested, which allows for executing arbitrary code
-  found in the URL (such as with the 'ext' protocol).
+In this specific xlink:href situation, apparently it is known that the
+process termination is solely the result of excessive memory
+consumption. From Mozilla's perspective, visiting any untrusted URL
+(such as a URL with an SVG document) has an expected outcome (or
+"impact") that Firefox MIGHT attempt to use an extremely large amount
+of memory. They are not tracking these cases with CVE IDs, and it
+seems reasonable that they would not want to. For Firefox, their
+customers expect to have CVE IDs that correspond to Mozilla Foundation
+Security Advisory documents. A general-purpose web browser has a huge
+attack surface, and (compared to other products) may have a different
+decision point about what behavior is within the range of expected
+impacts, versus what behavior is a vulnerability.
 
-  This is basically the same issue as CVE-2015-7545, just in a different
-  client implementation. What's policy here? Should a new CVE be assigned?
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-  Fixed in v1.0.1. Affects all previous versions.
-
-* git-fastclone permits arbitrary shell command execution via shell
-  metacharacter injection into variables/parameters
-
-  https://github.com/square/git-fastclone/pull/5
-
-  git-fastclone before 1.0.5 passes user modifiable strings directly to a shell
-  command. An attacker can execute malicious commands by modifying the
-  strings that are passed as arguments to "cd " and "git clone " commands in
-  the library.
-
-  No CVE has been assigned.
-
-  Fixed in v1.0.5. Affects all previous versions.
-
-Can CVE(s) be assigned, as needed?
-
-Thanks,
-~reed
+iQIbBAEBCAAGBQJYOg/aAAoJEHb/MwWLVhi22MoP92yMH3wBweWZf+Wem3KJuw1h
+2IFhNnwwjmZci4TSNFA+OqBoOKBzc5bdyUT+SdxV9va6Bo559UphPtx6wdWpho79
+cSyvtEnzNdvZS7N+fL+HY1cjHco8lk7LHCqjGIiSCkwIPpciEfG7gyIqgr12bq+A
+ONTDliKkZXJNxY7uYgUvf673Lm45VhTGRxdSWUUsdGa3n+NhO7IfZom1Pd/UdOGQ
+Lc/Ds8sY2jLGUT0qHO23KE80XBELhn/iUc5/xJATZh2VrmkFZtm2xWudEnrmi+fU
+k3fOU8MCeCFKySSMp4VhAyAg1/2AexxXSKxPkyms7nnr38tiRBeTSz7KX5Vzz1iV
+9pfiOfNSmx22ZmnZTq8Ei6R5WxVtpZasBD+VyqtP4gUeP56h7DxVpmYEpjTcFKNm
+oiYkh7mXn1jDw52n6FsCMPC19UmsUiVkpzSZoVjOH7ul/KbInn8HMJe6miB/3EWR
+iWwB/X9w2ZaOMrbfvkW0a+EYAZ8IpDKTRU/j9E7SA0ME9sfdJ2ocaYBbYLxivoTP
+0IiK2OuRltf4Wmwxadn29FAdecxqm0BXxcPInaGuvgLa8VNlevv4Ib3h75UcuKws
+vtMlbK5vF0oJl3aWG5XmkUEh01N7JrqAwjxi1J0L29MymKS6zg/u2MG5EgLOhL1D
+VLnRzNDzJWpCh4aX0NU=
+=IKs3
+-----END PGP SIGNATURE-----
