@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1653" "Wednesday" "28" "August" "2019" "18:17:22" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "45" nil "^Cc:" nil nil "8" nil nil (number mark "        hanno@hboeck Aug 28   45/1653  " thread-indent "\"Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2921" "Saturday" "26" "November" "2016" "17:47:59" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b8ef09d1fc2845acb5d7e96c733d82f6@imshyb02.MITRE.ORG>" "62" "[oss-security] Re: CVE request: DoS loading a SVG in Firefox" nil nil nil "11" "2016112622:47:59" "[oss-security] Re: CVE request: DoS loading a SVG in Firefox" (number mark "U       cve-assign@m Nov 26   62/2921  " thread-indent "\"[oss-security] Re: CVE request: DoS loading a SVG in Firefox\"\n") "<CACn5sdRcbLd97UmcuPWptce=EC=cJseGoCw0NaxXZaT+Q7g8bw@mail.gmail.com>" ("<CACn5sdRcbLd97UmcuPWptce=EC=cJseGoCw0NaxXZaT+Q7g8bw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19715 invoked by uid 550); 28 Aug 2019 16:17:42 -0000
+Received: (qmail 21978 invoked by uid 550); 26 Nov 2016 22:48:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19694 invoked from network); 28 Aug 2019 16:17:42 -0000
-Message-ID: <20190828181722.7f0d04aa@computer>
-In-Reply-To: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
-References: <e2153c6f-a5a1-b8d5-93cb-f0af0c94fb2a@dovecot.fi>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="=_zucker.schokokeks.org-21220-1567009050-0001-2"
-Cc: oss-security@lists.openwall.com
-Date: Wed, 28 Aug 2019 18:17:22 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Critical Dovecot and Pigeonhole vulnerability
-To: Aki Tuomi <aki.tuomi@dovecot.fi>
+Received: (qmail 21951 invoked from network); 26 Nov 2016 22:48:11 -0000
+From: <cve-assign@mitre.org>
+To: <gustavo.grieco@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CACn5sdRcbLd97UmcuPWptce=EC=cJseGoCw0NaxXZaT+Q7g8bw@mail.gmail.com>
+Message-ID: <b8ef09d1fc2845acb5d7e96c733d82f6@imshyb02.MITRE.ORG>
+Date: Sat, 26 Nov 2016 17:47:59 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: DoS loading a SVG in Firefox
 
---=_zucker.schokokeks.org-21220-1567009050-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, 28 Aug 2019 15:06:23 +0300
-Aki Tuomi <aki.tuomi@dovecot.fi> wrote:
+> cause Firefox to consume all your memory. Once you click, you
+> cannot stop the memory constant memory leak. It can take a few minutes
+> (we tested in a desktop computer with 16GB). At the end, Firefox will
+> abort or it will be terminated by the OS.
 
-> Please find patches attached for dovecot 2.3.7 and pigeonhole 0.5.7
+> This issue was recently minimized and isolated to the circular use of
+> xlink:hrefs:
+> 
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1297206#c5
+> 
+> Is a CVE suitable for this DoS?
 
-It seems Pigeonhole doesn't have a new release yet as far as I can see:
-https://pigeonhole.dovecot.org/download.html
+At present, it is not. The MITRE CVE team relies on Mozilla to assign
+CVE IDs for Firefox, on the basis of Mozilla's knowledge about their
+customers' needs for tracking bugs. This does not mean that Mozilla
+can have any arbitrary policy about what bugs are suitable for CVEs;
+however, we want to defer to them to the greatest reasonable extent.
+For example, there is a vast amount of public information about parts
+of the Firefox code that are associated with crashes, e.g., see
 
-So this needs to be manually patched for now? Any ETA for a new release
-here?
+  https://crash-stats.mozilla.com/topcrashers/?product=Firefox&version=50.0&_facets_size=300
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+where someone could conceivably request thousands of CVE IDs.
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+In this specific xlink:href situation, apparently it is known that the
+process termination is solely the result of excessive memory
+consumption. From Mozilla's perspective, visiting any untrusted URL
+(such as a URL with an SVG document) has an expected outcome (or
+"impact") that Firefox MIGHT attempt to use an extremely large amount
+of memory. They are not tracking these cases with CVE IDs, and it
+seems reasonable that they would not want to. For Firefox, their
+customers expect to have CVE IDs that correspond to Mozilla Foundation
+Security Advisory documents. A general-purpose web browser has a huge
+attack surface, and (compared to other products) may have a different
+decision point about what behavior is within the range of expected
+impacts, versus what behavior is a vulnerability.
 
---=_zucker.schokokeks.org-21220-1567009050-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQIzBAEBCAAdFiEEn3wfQCCb9MicJwD8dkhfABMwL8oFAl1mqRIACgkQdkhfABMw
-L8o4HRAApZBRyGbCI2A1mVSfSGHNgwv55aAaNiLxx48dShlOSQBi3IBsxmsRvnsP
-X49rEmoDTVH9ZWc3gGStUkbLpiH4n/oQIKVAoCvd7Phx/DHVPQgsgEbx/NwljxP/
-DUfCFHReArjFCJ5xCMzCyVTX/4raSCmizDMdOXd/wNeKiaDn04xt4VcLY0iS9ciD
-KTlzi31BmtZfKbRFd3Ln5XNJWj6A4EIbb4xU81C5jNWU7OMYw7vwOT5/g3ccvZgX
-cyxK0gPHexaCwSATOP1Okki9mRIBbygDMoOqzp1dOyp9DU3y2i6ZZKxN1lfL/VEt
-5jEhnSx+mHqIeuwkqBjYp3x6EgDcFqr9X12vlDipRUxrzpyhb3GBaPTltn618XLC
-LUSiBmwdju2jfaq3tqJ34FoBPK0vo9qKNTLtHgWoAs6NiZ76pRgmMpZs3WwghN//
-BB0L5zYEwFPBLdJZDhb/YjVl9juC0aSMsWKxSTursx1yidp7D4LCgeJqzzdi2UpD
-JU2vu1axSkInR7Mx3c5/RCx/6jjG7sEexmXGVZv/34JNu7XCmH9eM7RRX3xOhuHD
-1HCHGVmiY8PS+vpxMkKqncT1HlLoPCaeJZ6Ck6H5Wqa3WLtXe/rOAF2a0RhZNAzd
-ga1s8cNXyq6AsWluVwjMJbCEzlu4HQWCW7Nq0POGpL7iXyocK+M=
-=DJOi
+iQIbBAEBCAAGBQJYOg/aAAoJEHb/MwWLVhi22MoP92yMH3wBweWZf+Wem3KJuw1h
+2IFhNnwwjmZci4TSNFA+OqBoOKBzc5bdyUT+SdxV9va6Bo559UphPtx6wdWpho79
+cSyvtEnzNdvZS7N+fL+HY1cjHco8lk7LHCqjGIiSCkwIPpciEfG7gyIqgr12bq+A
+ONTDliKkZXJNxY7uYgUvf673Lm45VhTGRxdSWUUsdGa3n+NhO7IfZom1Pd/UdOGQ
+Lc/Ds8sY2jLGUT0qHO23KE80XBELhn/iUc5/xJATZh2VrmkFZtm2xWudEnrmi+fU
+k3fOU8MCeCFKySSMp4VhAyAg1/2AexxXSKxPkyms7nnr38tiRBeTSz7KX5Vzz1iV
+9pfiOfNSmx22ZmnZTq8Ei6R5WxVtpZasBD+VyqtP4gUeP56h7DxVpmYEpjTcFKNm
+oiYkh7mXn1jDw52n6FsCMPC19UmsUiVkpzSZoVjOH7ul/KbInn8HMJe6miB/3EWR
+iWwB/X9w2ZaOMrbfvkW0a+EYAZ8IpDKTRU/j9E7SA0ME9sfdJ2ocaYBbYLxivoTP
+0IiK2OuRltf4Wmwxadn29FAdecxqm0BXxcPInaGuvgLa8VNlevv4Ib3h75UcuKws
+vtMlbK5vF0oJl3aWG5XmkUEh01N7JrqAwjxi1J0L29MymKS6zg/u2MG5EgLOhL1D
+VLnRzNDzJWpCh4aX0NU=
+=IKs3
 -----END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-21220-1567009050-0001-2--
