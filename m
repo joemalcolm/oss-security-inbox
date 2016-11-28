@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/17/5
-Message-ID: <578B3BBF.9010203@securify.nl>
-Date: Sun, 17 Jul 2016 10:03:11 +0200
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/28/2
+Message-ID: <CABD0r11CUY3FvC0S+At_ApCKoEAGC2CLWQ_N0c1dzQ4VRgndQA@mail.gmail.com>
+Date: Mon, 28 Nov 2016 22:49:58 +0100
+From: Michiel Beijen <michiel.beijen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple Local File Inclusion vulnerabilities affecting three WordPress Plugins
+Subject: CVE-2016-1251 - use after free in DBD::mysql when using prepared statements - medium
 Content-Type: text/plain; charset=utf-8
 
-Please see attached advisories for more information. These issues were 
-found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
-project. Its goal is to contribute to the security of popular, widely 
-used OSS projects in a fun and educational way.
+DBD::mysql is the perl DBI driver for MySQL and the primary way Perl
+applications and scripts access MySQL and MariaDB databases. The
+source repository is at https://github.com/perl5-dbi/DBD-mysql.
 
+A vulnerability was discovered that can lead to a use after free when
+using prepared statements. This vulnerability is present in all
+releases at least back to versions 3.0 of the driver, which were
+released in 2005.
 
+The CVE identifier for this vulnerability is CVE-2016-1251.
 
+Version 4.041, including the fix for this vulnerability, is available
+on CPAN at https://metacpan.org/pod/DBD::mysql
 
-View attachment "easy_forms_for_mailchimp_local_file_inclusion_vulnerability.txt" of type "text/plain" (3739 bytes)
+The fix itself is available at
+https://github.com/perl5-dbi/DBD-mysql/commit/3619c170461a3107a258d1fd2d00ed4832adb1b1
 
-View attachment "ultimate_member_local_file_inclusion_vulnerability.txt" of type "text/plain" (3961 bytes)
+Users of DBD::mysql using prepared statements are advised to patch
+their installations as soon as possible. Distributors of DBD::mysql
+are requested to make this fix available to their end users.
 
-View attachment "wp_fastest_cache_member_local_file_inclusion_vulnerability.txt" of type "text/plain" (3699 bytes)
+Many thanks to Pali Rohár for discovering and fixing the vulnerability.
+
+--
+The DBD::mysql maintainers,
+
+Patrick Galbraith
+Michiel Beijen
