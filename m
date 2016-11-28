@@ -1,64 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/03/3
-Message-ID: <CANO=Ty1YVJf505LzrJ7UtG5YpBys1gabo4Bd0e5h95PUP62Wxg@mail.gmail.com>
-Date: Wed, 2 Mar 2016 21:55:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>,  cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Cc: cve@...re.org
-Subject: Re: Mitre, reserved CVEs and oss-security?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/28/1
+Message-ID: <90cda9c173e44ef5a56478ba116836fb@imshyb02.MITRE.ORG>
+Date: Mon, 28 Nov 2016 03:49:09 -0500
+From: <cve-assign@...re.org>
+To: <jmm@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: kernel: fix minor infoleak in get_user_ex()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 2, 2016 at 6:25 PM, Paul Wise <pabs3@...edaddy.net> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi all,
->
-> I think it would be a good idea for Mitre to remove the RESERVED mark
-> from CVEs that have been released for use by people mailing issues to
-> the oss-security to get CVE numbers. The CVE database could then point
-> at the oss-security mailing list archives as a reference for the issue.
->
-> Any thoughts?
->
-> For example CVE-2016-2515 could refer to one of these posts:
->
-> http://www.openwall.com/lists/oss-security/2016/02/20/1
-> http://www.openwall.com/lists/oss-security/2016/02/20/2
+> the LWN comment by Brad Spengler referenced above refers to a new issue
+> which affected some Linux stable lines, which backported
+> 1c109fabbd51863475cd12ac206bdd249aee35af without also backporting
+> 548acf19234dbda5a52d5a8e7e205af46e9da840.
+> 
+> So please assign a second CVE ID for the latter.
 
+https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-9644
 
-I had suggested this in past (several years ago to the original Steven),
-and again in this email last November:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://cve.mitre.org/data/board/archives/2015-11/msg00018.html
-
-my understanding is it's a no go due to two main factors:
-
-1) CVE database lacks a good update mechanism to inform people of updated
-entries
-2) CVE entries must be "complete" before being added (e.g. researched/full
-write up/etc.).
-
-I could of course be wrong, we never actually got a response from Mitre on
-my November email about this.
-
-I'd be happy to bring it up on the board list again (CC'ed). Mitre can you
-enlighten us please?
-
-
->
->
-> --
-> bye,
-> pabs
->
-> http://bonedaddy.net/pabs3/
->
->
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJYO+8OAAoJEHb/MwWLVhi2VwkQALNPfR4xU0r/4dKHpFtFppMX
+aKkVEdoR/rYXp84ph/QSRnrBisv5s4z8uaCSAEhL3eMUSzqPFkkvDR8jPOWYVMw4
+tHp42FztwVEZl43CNQojS3oRQ5VpX3IRQOlq3Ojcsq9Lcovze8hnGyEE7ZWuHqbd
+xKF6SbTiLsmlzI6UFsVfwC9+GEEPwoBG4WWOxQr5Ryn8x+EWwp/YMZpGHhkvwcTC
+Whi43J5uyvQOP5WuDv4IwvjsuOIxrpXW+uvuxflasf9QuYV0dEk3ZPPhr+TkQ9PN
+mSA9gwqmIh+bShrmy8T+ir0YTZppx3grEJQplxUGIFXqYxBJS8iykoln0XWLnhih
+XGfWKBx44UuoARuGfU7cJ7+KWycsWNWx0LuaK54PM+tPCcAwJtbP+AtZndYH9gLY
+5CG8rlQwBQkIZbPXo2a/CYx55s5CAevClaJwPTNduwbA5+8Umy1qtAKYaSoK6auL
+dDvwEuQtDo5PPOB/TlDdgv+/wsbe5HerI6yltL9l18zjomG6Qpyw3RVnbI/m4QGB
+90Nw6QUw13tGnQZIGQq9BqQQlwH1uSRg2I6vSA4yidJAzX1R6b28N0ZZ84TLBf2W
+fiH8mNoKR/nolU5RRvt7sE8bIVAkOxLI6zbevx4hE7aiHa6y7ASU2i9Ur+yQidjk
+eFPK2b2Ws14fGAsEbAsQ
+=xE31
+-----END PGP SIGNATURE-----
