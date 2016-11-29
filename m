@@ -1,50 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/02/3
-Message-Id: <20160102224914.20BD9332307@smtpvbsrv1.mitre.org>
-Date: Sat,  2 Jan 2016 17:49:14 -0500 (EST)
-From: cve-assign@...re.org
-To: wengx522@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PCRE Library Heap Overflow Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/4
+Message-ID: <CAA0W1bQ9jnVcNYZK8i-fGYtc=VUiYm_H+TxqkjY3Tfuwb1kwMQ@mail.gmail.com>
+Date: Tue, 29 Nov 2016 07:15:36 -0800
+From: Yongjun Zhang <yzhang@...udera.com>
+To: Zhe Zhang <zhe.zhang.research@...il.com>
+Cc: security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, general@...oop.apache.org
+Subject: Re: CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Zhe,
 
-> PCRE library is prone to a vulnerability which leads to Heap Overflow.
-> During the compilation of a malformed regular expression, more data is
-> written on the malloced block than the expected size output by
-> compile_regex. Carefully crafted my lead to code execution in the context
-> of affected applications.
+Please refer to  https://www.apache.org/security/ for details.
 
-> https://bugs.exim.org/show_bug.cgi?id=1767
+Thanks.
 
->> 5 more bytes are written on the heap in this case.
->> This overflow can be used to modify adjacent length field of array/vector/string
+--Yongjun
 
->> PCRE version 8.38 are confirmed to be vulnerable.
+On Mon, Nov 28, 2016 at 10:26 PM, Zhe Zhang <zhe.zhang.research@...il.com>
+wrote:
 
-Use CVE-2016-1283.
+> Thanks for the note Yongjun! Does HADOOP-13434
+> <https://issues.apache.org/jira/browse/HADOOP-13434> fix the problem?
+>
+> On Mon, Nov 28, 2016 at 4:04 PM Yongjun Zhang <yjzhangal@...che.org>
+> wrote:
+>
+> > Hi,
+> >
+> > Please see below the official announcement of a critical security
+> > vulnerability that's discovered and subsequently fixed in Apache Hadoop
+> > releases.
+> >
+> > Thanks and best regards,
+> >
+> > --Yongjun
+> >
+> > ----------
+> >
+> > CVE-2016-5393: Apache Hadoop Privilege escalation vulnerability
+> >
+> > Severity: Critical
+> >
+> >
+> >
+> > Vendor:
+> >
+> > The Apache Software Foundation
+> >
+> >
+> >
+> > Versions Affected:
+> >
+> > Hadoop 2.6.x, 2.7.x
+> >
+> >
+> >
+> > Description:
+> >
+> > A remote user who can authenticate with the HDFS NameNode can possibly
+> run
+> > arbitrary commands as the hdfs user.
+> >
+> >
+> >
+> > Mitigation:
+> >
+> > 2.7.x users should upgrade to 2.7.3
+> >
+> > 2.6.x users should upgrade to 2.6.5
+> >
+> >
+> >
+> > Impact:
+> >
+> > A remote user who can authenticate with the HDFS NameNode can possibly
+> run
+> > arbitrary commands with the same privileges as HDFS service.
+> >
+> >
+> >
+> > Credit:
+> >
+> > This issue was discovered by Freddie Rice.
+> >
+> > ----------
+> >
+> --
+> Zhe Zhang
+> Apache Hadoop Committer
+> http://zhe-thoughts.github.io/about/ | @oldcap
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWiFNmAAoJEL54rhJi8gl5DxYP+QG19qjSea0lHZ+Knn1XYKfH
-Nns/bUDLZdU2w8CfcDR+DZub7q1l6jO/Ab6ZFMf9WwgnY1Nr6kwotmImTAzehWwh
-U4nrl1a/ip5v2Etjvs9Etye64qPN6swtEIn/afqmq9/1FU/ezAWOERGbS9o149j9
-0ROvCnzNOqvtFCVKaj/aszNFLk0//PWCHup7BYklUsP5OcKObvlawtdemUtF+QOy
-hf5sa2MyBkZkSk8B7HgyB5C9KkoQ8EF1Jos7uQwfEhr0+YU5l2fSz4+ntASaha4b
-W5T9d6ukZEzxpBdIWvGbLrXfDwHnf0vF+Pi1XuTrcfKRzyYngdXzodgwy9/7Muyd
-fH/niuu4lgMBBQ1ARNaVPcV025unxjesnx8Xt/fcBx6WZsR230A1Yylx0QBl578t
-5ezyNAxng8taaCbkwcqoogOXqEP3hPQwHN22guF+RiJJaw54wK+s02zJFgmQlJQT
-drJtpkHyHCnmwAwIE/wibm6ettm4u/HKUN1+ficouWIgYHVCcghtP805BFFKYwGg
-PxEc8UnRzWDq6nd4BfVL7HwDw4PHO+XIQf/rfBoGYNQTEAFhqzxKbGzWJFlcSD/4
-kx16tNsZIQPyQD+Y0CvAveAJqdY/Miby9/c9d+AgqVrojsp7xYyxAUZqt1Sq2sJA
-ln+0g6gYiUgyNVG1aNwH
-=dcc/
------END PGP SIGNATURE-----
