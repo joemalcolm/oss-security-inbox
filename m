@@ -1,65 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/11
-Message-Id: <20160331203125.94DE28BC0A1@smtpvmsrv1.mitre.org>
-Date: Thu, 31 Mar 2016 16:31:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Partial SMAP bypass on 64-bit Linux kernels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/3
+Message-Id: <E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>
+Date: Tue, 29 Nov 2016 14:48:20 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
-> https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urgent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
->
-> That patch fixes a bug that exposed a fairly large kernel code surface
-> to a straightforward SMAP bypass.
+                    Xen Security Advisory XSA-201
 
->> From: Salvatore Bonaccorso <carnil@...ian.org>
->> Date: Tue, 29 Mar 2016 17:00:03 +0200
+             ARM guests may induce host asynchronous abort
 
->> @MITRE CVE assignment team: Would it make sense to have a CVE id
->> assigned for this issue for better trackability?
+ISSUE DESCRIPTION
+=================
 
-We're going to approach this one in the same way as the issue that was
-later assigned CVE-2016-2847.
+Depending on how the hardware and firmware have been integrated,
+guest-triggered asynchronous aborts (SError on ARMv8) may be received
+by the hypervisor.  The current action is to crash the host.
 
-Specifically, is there anyone who believes
-3d44d51bd339766f0178f0cf2e8d048b4a4872aa must not have a CVE ID?
+A guest might trigger an asynchronous abort when accessing memory
+mapped hardware in a non-conventional way.  Even if device
+pass-through has not been configured, the hypervisor may give the
+guest access to memory mapped hardware in order to take advantage of
+hardware virtualization.
 
-The situation, very roughly, seems to be that the upstream vendor has
-announced that the behavior is a bug. CLAC occurs at a correct place
-for some types of entries, but accidentally did not occur at a correct
-place in the case of entries through the int80 gate. Consequently,
-exploits of kernel vulnerabilities can cause more damage in some
-cases.
+IMPACT
+======
 
-However, it seems to be a bug in how the kernel responds to a
-post-exploitation attack pattern. This is not a topic area that
-commonly has CVE ID assignments. Access by the kernel to a user space
-page is not an action that "crosses a privilege boundary" in a
-traditional sense.
+A malicious guest may be able to crash the host.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions which support ARM are potentially affected.
+
+Whether a particular ARM systems is affected depends on technical
+details of the hardware and/or firmware.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which do not expose MMIO to
+userspace will prevent untrusted guest users from exploiting this issue.
+However untrusted guest administrators can still trigger it unless
+further steps are taken to prevent them from loading code into the
+kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The issue was discussed publicly (and has been fixed already in KVM in
+public trees).
+
+CREDITS
+=======
+
+This issue was discovered by ARM engineering personnel.
+
+RESOLUTION
+==========
+
+Applying the appropriate set of attached patched resolves this issue.
+
+xsa201-[1234].patch       Xen-unstable
+
+xsa201-[12].patch         }
+xsa201-3-4.7.patch        } Xen 4.7.x, Xen 4.6.x
+xsa201-4.patch            }
+
+$ sha256sum xsa201*
+ffdefdaa67748df7fccbc82011202724c622ca432cd121853ecab45ff4657406  xsa201-1.patch
+0665eb575b056f98d5330ef23f497b2b3de1a15319e2012005890a17df32a7ed  xsa201-2.patch
+4486d5efb59c1f1fff04a3cb697f948d5bf680e2a1c0d76cd44382ad8fa9095e  xsa201-3.patch
+ca82c82acd51bf3cb8114d1843519c28e3df26243bd45eb712ff10ba11061b93  xsa201-3-4.7.patch
+1de6ddb4b5b46ae390ec4587e588c00a706f4a68365d379db7ad54234f770d48  xsa201-4.patch
+$
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW/YinAAoJEL54rhJi8gl5LXcQAJ71fH0G8ucsjSEuUOhrxA27
-4cklfaLGWRTExNNHVbHLKKt2kl2QakS5U37z3phkAoji3X7fhK2qBZNL5TLnVae6
-7wZ8j+oMZaQTob7mf5AN/WYA/C30MnjqpABPb8iiBdM+7utiVrZW5aOFiKdXyFfM
-sg1gmYuGzPdcxc0yYjfX4CLvaljUbnzB0ZQNqO8OuCyj8eKR94pbhXBhw1sIWmje
-07Km2qy3NzIZuZj0QC51yy05fPRf1kQUgsDLWGknnLNDGKc5iXA+o7yufDYF1468
-MFDYcMz7kOoDefxtakZRXfq430Bs6wzt0dvPMVo27fHTXwTqIV609rX76mXoJEoM
-7v+i5b9u+IWIpkOJyorB0pIP10Sd501uIjlfNUMVu1pGzF7iGmbkDWdyXVGx2RHZ
-JFD4VRK5KTMAFrb1CeO7JCNkNHoQp55Dj1qeZZUHoPFI7CpCkeIWU+m3NC2IiYTe
-F+eTeedFkPb7HPJ04QPY2821ETZfjVsii0ocMACQa5lQD5NwS3DIEy8dYmam3P90
-EIRqafs94Bc02u4gvskIqDHTPjep9x/x2ODtbE/fPfpjUwpIE2H4ymR2WD6Cvj7E
-EP0zmvip5Ec3kBx62r4yUFp6TQmf1EY7l2w+CdkotPFuuh+/L8Px8thg+hKV39Jo
-QxUGU9yWdo2caoenKZi2
-=ADv/
+iQEcBAEBAgAGBQJYPZSoAAoJEIP+FMlX6CvZ2zoH/ivzE70xsLHYJUxveoBiFuiU
+KHFzF0X63G681FjLyU4SY2GkH5K9YutJ1uaakp+peD96fQqCXBHxWUMPAfblnd7t
+YueMYuFqcz3mE2ypJjBh/fdI8a4UrKHHg3z6Hw6X91p+SRmPsnt9v7OzytoYOiE4
+fDeaATwl1LxB+Z/yJETlo/JMgwrtuYZ9EZM9gIzxdOVw+QbQyEYHmuIyni8BNRvZ
++biRRQo37K5+jLY3f/RoXKcpqnHqjKOOmfjkxJJAsxqpdTSw5fRJqSZE4G5oUVs2
+AAvSKhLObFahMlPqtoNXSC6lG5Gbd3e/h+6N2N/96TXs6Wr+d0VuC+lkYUjwcJk=
+=KEYF
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa201-1.patch" of type "application/octet-stream" (3078 bytes)
+
+Download attachment "xsa201-2.patch" of type "application/octet-stream" (6453 bytes)
+
+Download attachment "xsa201-3.patch" of type "application/octet-stream" (1658 bytes)
+
+Download attachment "xsa201-3-4.7.patch" of type "application/octet-stream" (1635 bytes)
+
+Download attachment "xsa201-4.patch" of type "application/octet-stream" (4469 bytes)
