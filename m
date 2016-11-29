@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/04/6
-Message-Id: <20160204211631.71FEE6FC0E9@smtpvmsrv1.mitre.org>
-Date: Thu,  4 Feb 2016 16:16:31 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: WordPress: New 4.4.2 security and maintenance release: SSRF and open redirect vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/5
+Message-ID: <CAA7hUgEX6mxX-4L7i5Qjq=u+b8iPrbSqZmtjXo0X6pG-+TY3hQ@mail.gmail.com>
+Date: Tue, 29 Nov 2016 17:22:22 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Mitre,
 
-> https://wordpress.org/news/2016/02/wordpress-4-4-2-security-and-maintenance-release/
-> https://core.trac.wordpress.org/changeset/36444
-> an open redirection attack
+On 6 October 2016 at 03:16, Doran Moppert <dmoppert@...hat.com> wrote:
+>> > Do you specifically know of a distribution that still has that patch?
+>>
+>> Red Hat Enterprise Linux and Ubuntu LTS seem to be still carrying the
+>> original patch.  Possibly others, but these are the only ones I've
+>> identified.
+>
+> I should have included this reference:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1382202
 
-Use CVE-2016-2221.
+It appears that this request fell through the cracks?
 
-
-> https://wordpress.org/news/2016/02/wordpress-4-4-2-security-and-maintenance-release/
-> https://core.trac.wordpress.org/changeset/36435
-> a possible SSRF for certain local URIs
-
-Use CVE-2016-2222.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWs761AAoJEL54rhJi8gl5+a8P/2r4EIHLn4GLBvy0o8J0Q9LF
-tz7lvj9j2naZt0eArwCW2wj0hBaNJWfxfN8Hww/RX6AVKsp6YlUw0PfQKH3smDiF
-oG1wyYLvhbn2FmISpuvLfNdki+i9DSv3ZuYi5x2eS39ZeC4WzDZYSEmTRfJF1rP9
-D5kcN4nxFZsroswPQCDy/GVHCs8+ONUAUFflLPcgiQtWbuB2BBnfBuBy2MFKwiaw
-405spJhDn6ol5F8Y0BQLbZUIlbFMhJxuuiZae2CviNgO1gTEvAJqBCT6g9HaUaW+
-R/XQsGBX2TZC+RZBvhNdBvMdv7iv/imahfObfaGgadmdgRCwq4vegDqqk8pIfNS1
-B4O0Oh2ClL2mg8zAVVPm4z+StG3OjA5IRixBeJje27iPFp2qFNO0DANr42xkANJd
-WReaqq++uwKwEI4Gkp9o0uJTMhFzPcotu8p4fxBikqp0M6KnaM5O667G2l+oz6E7
-kHejuDazRW90RMEtmSlejyNcJLeNXoWMjugGYsJtD89izHODCAgZtIZl0BGfOsbk
-MiEFSaGWqIBPkv2FRx6bowLoEkFnIXaurCXT+x2+3GPpcITFXNDQa0gb/hQHSwQ7
-iufOeraxVFl/bMZmeioZXrhgynWA0kPxWSl5Hd5Yb2P+GpqkC92CTiqo6aKWXZnC
-Hsh1G31WLW/lrVfH1yFc
-=18yk
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
