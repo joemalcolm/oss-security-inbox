@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/09/3
-Message-ID: <CACCOJE2A=1ruGLYkTe5n=nUKRJo6jaLH_-Q6e=F2vHFiUQg=vg@mail.gmail.com>
-Date: Wed, 9 Nov 2016 15:41:47 +0800
-From: Idler <idler1984@...il.com>
-To: oss-security@...ts.openwall.com, Anarcheuz Fritz <anarcheuz@...il.com>,  cve-assign@...re.org
-Subject: CVE Request - Samsung Exynos fimg2d Multiple Issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/7
+Message-ID: <d2199a0a0afa4844b7add509b108329c@imshyb02.MITRE.ORG>
+Date: Tue, 29 Nov 2016 17:29:39 -0500
+From: <cve-assign@...re.org>
+To: <dmoppert@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'd like to request for CVEs for the following two vulnearbilities
-fixed in Samsung Exynos fimg2d driver for Android:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1382202
 
-Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-NOV-2016
+> The reproducer [of https://github.com/uclouvain/openjpeg/issues/725] happens to tickle
+> a flaw in a patch for CVE-2013-6045 that was posted here back when:
+> 
+> http://seclists.org/oss-sec/2013/q4/412
+> 
+> segfault-1.patch uses:
+> 
+> +                     tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
+> 
+> which should have used compcsize instead of comp0size.
+> 
+> Upstream never included this patch - deeper work went into eliminating this and
+> other issues in openjpeg-1.5.2.  The patch that addresses this particular issue
+> seems to be 69cd4f92 (hunk starting /* testcase 1336.pdf.asan.47.376 */).
+> 
+> https://github.com/uclouvain/openjpeg/commit/69cd4f92
+> https://github.com/uclouvain/openjpeg/issues/297
+> 
+> This hasn't been an issue in upstream openjpeg releases for a long time ...
+> but there are LTS distributions around still shipping 1.5.1 (or 1.3) with the
+> patches from here applied.  Those should preferably upgrade to 1.5.2:  changing
+> comp0size to compcsize eliminates this particular crash ...
 
-SVE-2016-6736: Kernel Crash on /dev/fimg2d ioctl command
-Severity: Medium
-Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
-Reported on: June 11, 2016
-Disclosure status: Privately disclosed.
-The fimg2d which is one of the graphic devices for Exynos chipsets
-doesn’t have exception control routines to handle unexpected commands
-and it can lead to kernel panic.
-The patch prevents kernel panic by ignoring inappropriate commands at the state.
+Use CVE-2016-9675 for this vulnerability, stated to have a "crash or
+possible code execution" impact, that results from mistakenly using
+the comp0size variable (instead of compcsize).
 
-SVE-2016-6853: Use After Free in /dev/fimg2d
-Severity: Medium
-Affected versions: All devices with Exynos 5433/54xx/7420 chipsets
-Reported on: August 5, 2016
-Disclosure status: Privately disclosed.
-A use-after-free vulnerability in fimg2d allows attackers to gain
-access to unauthorized data.
-The patch with error handling was applied.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Thank you,
-James
+iQIcBAEBCAAGBQJYPgC5AAoJEHb/MwWLVhi2hbcP/1RHpatrKyMXBx7glnwHES3y
+RzIKPd/DHgpd4DoXVjHCv9EFnkLbcGT1r9efX1GZKxi5SKDRtdPr8X6430mYk5Pu
+VilIA+8npB3rfaOncVLGJ24jrlcxrp2UF+w+5soWa442PEtd45UtY2WxLcXsIdtq
+z3cmoVcYcCyWan5aQjFBJEssNk7c5vglt/6nxW2jrmZpOqMYcPt9XlcfbZRk8T19
+501bqoURLLhy5YL9+jKQdUtPhbaf+JSVqyHxOqOg+xrVd1AqIaWvJ7evVRaVYlWB
++agVEVb2uviA6UB9OQKPK0UkHRRYWW4uvCnQS6zOvCs4U6PdEcHZMXtdp8LrRQI4
+F28az8rxpfnU9aHE3Syu6zlqy27ZbwLorLEL43FjeduhMxbxaPiatU6lubVawZf3
+UV0YyEx7hSMQ/xFTG8HtJ1cwZf4hLqDK0idABBEW6PNR1eyFoHbMG/tMOUX439fy
+qyvSAJ69YS4ftXTihKWMNOA7Z0kOgN87rZMU3A7Uh9Boy7y3IobmrRMaD2VdE3aW
+OF4Sa2dLyHV+/LKmC3n/o60dGVJDyNALhdGNtnG8MoQVwFhhr7Db4LPpLSWPKc2I
+3LgTaLbxdjctvZLU/aWjF/YEaGDeWHtsWfP0XnBEceaGIxl5tddhIhfjTN14Rb89
+Y6Lf6hQUSq1ZoR8Rpkc+
+=riCJ
+-----END PGP SIGNATURE-----
