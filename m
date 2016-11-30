@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/10
-Message-ID: <20160331201936.GA25397@hunt>
-Date: Thu, 31 Mar 2016 13:19:36 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: CVE Clarification: Mysqlnd / CVE-2015-3152
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/30/2
+Message-ID: <d0a531106d1d42538bf7ef4f0a967999@imshyb02.MITRE.ORG>
+Date: Wed, 30 Nov 2016 03:32:02 -0500
+From: <cve-assign@...re.org>
+To: <wmealing@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: cve-request: linux kernel - memory leak in xfs attribute mechanism.
 Content-Type: text/plain; charset=utf-8
 
-Hello MITRE, all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Tomas Hoger asked if CVE-2015-3152 is appropriate for re-use with the php
-mysqlnd interface:
-https://marc.info/?l=oss-security&m=143750829604598
-http://www.openwall.com/lists/oss-security/2015/07/21/7
-Message-ID: <20150721215101.5b7c0a96@...hat.com>
+> I'd like to request a CVE for the following flaw found in the XFS
+> attribute management code where over-eager error handling could create
+> a memory leak (not in information leak) and perhaps with enough
+> dedication and patience a local attacker could eventually leak
+> available system memory, creating a DOS attack.
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2e83b79b2d6c78bf1b4aa227938a214dcbddc83f
 
-This association is already made at e.g.:
-https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1564388
+>> xfs_attr_list.c error paths
 
-I never saw a response to his question.
+Use CVE-2016-9685.
 
-Can we re-use this CVE for the different codbase? If not, can one please
-be assigned?
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJYPo4nAAoJEHb/MwWLVhi28zQP+gNf6cDnL0kfFhu2r+F4hgOp
+mqETw6UhqoMyu9dpzbVbspbpNApm7obx/0iDeSw9/sK56os+SfeABQs9iFL1hhFf
+3m2MftWhlysDsudg7532n7DU10hOW873Y8v5lKF9Qaoaxy4RUs/XIHaWMZ2P/Q1l
+Madkq8XS9+k2pzXkYpY9o9w0vAHXE0WhdGvvlP3v4imxkncT/HdRPxmWv+j+s0/7
+ZWoW/5OoiIT/aVfgk8e8NagOrr0CMwkZ4WiE+xrVjC2SfpWKmpv9bPo/kCrkqo3O
+0oja1LcvAH/cK7HfldfotR+/Jh7zDKPTeQRlmJ4Aty/4Mmd+Uxb++fanMd+EHboJ
+aBExW7FWIzahaBKdRUuW4uvKFq5ZyFoYYgX9TuxCy0/ulMMyo7nlCFb95Y39z9QJ
+RcJ9hg3M2uL1ZEOdQsMAuwR6Yjn4SrwNvRGO4F6wvY+iG3PAt4DoETgeOp5ps26j
+yLIL7rhjDT6MTQTEDD+x7AZ0/+WpxUg1rdoqnh+Ycbea1cTkEhTIU1Qy75Lyzku2
+UEjHMPT0iaxw3X57N0L2saJFqoETPJqVSznCp+wErq8wrZneLLDOyaYMjQ4czN9f
+wKXqWwOtJERpUuH/Nfl6USjE3zO8l/C/2gxYDjGSl29x/HmhZzrXCSCk/u0uvIfX
+IDSrtpNfMwhIrRbEE9aY
+=TBNQ
+-----END PGP SIGNATURE-----
