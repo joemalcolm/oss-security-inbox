@@ -1,4 +1,9 @@
-Received: (qmail 1236 invoked by uid 550); 4 Mar 2024 13:45:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4654" "Wednesday" "30" "November" "2016" "11:50:44" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<1694510907.826086.1480524644407.JavaMail.zimbra@redhat.com>" "83" "[oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c" nil nil nil "11" "2016113016:50:44" "[oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c" (number mark "U       vdronov@redh Nov 30   83/4654  " thread-indent "\"[oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c\"\n") "<1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>" ("<865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com>" "<590204934.12153620.1478870673670.JavaMail.zimbra@redhat.com>" "<1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14188 invoked by uid 550); 30 Nov 2016 16:50:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,118 +12,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32191 invoked from network); 4 Mar 2024 09:03:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709543211; x=1710148011; darn=lists.openwall.com;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lJpvv/3id3nFjckL4+IPgwBlfH7jUF1cK08WQKkyiLY=;
-        b=OSvQoZgySOaKWPhCUqSSPm2W4ND2Hvc6/kMeBFwspPsc83FekmQIX45VhOqL/FQPVn
-         RREkPWfVtvSFfSV3dIGzDaaMk6jVUrJ6NgSzHjpyXi295ImTRlSnBli+0/1D/94zM0iP
-         d2p82Tt7YPYQs+xbtdaU3EDVtORvTCszDrrxbSsExbtSKG87CeJ37AFZ4IQfyoh4/GKQ
-         3g0qLFUTCMKJEI3/ZWWTBl7TNMLnW5oxbfQxupOH75FdY8wOA72ioCNKB+OmPd6u2bso
-         h+9ETafcYn3l+tLELiwcfCXpLzh75tQ5TQf7ppT7vRRgR8obGe+1WrzLE7LU53BSzm7w
-         QP/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709543211; x=1710148011;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=lJpvv/3id3nFjckL4+IPgwBlfH7jUF1cK08WQKkyiLY=;
-        b=qclLkzW1GmiHndjb1ur6D8cCsPteSEEsFWrJdjXoQtp0z4l/lZtb6qVnZDQPNTL60R
-         InIdNzNDhh20pAXzhewV0YhlEt8cNwCGUbVIul4+/wC2cUxpdC5tSyyeBqGhxVjadAAb
-         M5hd+Vbx9mIR9MidZa1PerRm9y/fplE21u5i/Jb5tWwKrOkOdnDhgibEucyX/hdi/u3W
-         /1NOVFADvH0EFFuKy5oAWBU2TWYls9lmFPUv8kmWQLFRQZNZ6bSVRvBdJlg9jkPJWQ+h
-         KhiB+vJhdePqpW2b3C0kU24rpqDVKF+kakqNurs2eAmP9KSxMUz9H59yhKNP89cPYfYH
-         LnWA==
-X-Gm-Message-State: AOJu0Yy4Rh/IK5qLf1ROzai3LW3kYpjUsgX4ZJ5T3fstzj0isqpWm6uo
-	HekmbIk324SDrj9MilLD8D6SJ32LWtHTdfyhlC9363uJE1zFBMSMSIoLHpXb
-X-Google-Smtp-Source: AGHT+IEmkEqY7APjWBj0uM2VKdhOOXojBznoz71v7DTVSCVECaZmrqm9RhMAdj/IKO68BBrPl2wUeQ==
-X-Received: by 2002:a05:6512:3e09:b0:513:4afa:a719 with SMTP id i9-20020a0565123e0900b005134afaa719mr746210lfv.59.1709543211237;
-        Mon, 04 Mar 2024 01:06:51 -0800 (PST)
-Message-ID: <d05ab8bd-fb2e-45de-9bfd-88ae2e373701@gmail.com>
-Date: Mon, 4 Mar 2024 10:06:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Received: (qmail 14164 invoked from network); 30 Nov 2016 16:50:57 -0000
+Date: Wed, 30 Nov 2016 11:50:44 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
 To: oss-security@lists.openwall.com
-From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Message-ID: <1694510907.826086.1480524644407.JavaMail.zimbra@redhat.com>
+In-Reply-To: <1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>
+References: <865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com> <590204934.12153620.1478870673670.JavaMail.zimbra@redhat.com> <1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Django: CVE-2024-27351: Potential regular expression
- denial-of-service in django.utils.text.Truncator.words()
+X-Originating-IP: [10.40.0.222]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF50 (Linux)/8.0.6_GA_5922)
+Thread-Topic: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
+Thread-Index: a2o3R48ijNWqeyo+GpNHc3juzljDmlEJgVsLelzgPMlNrIhU2A==
+Subject: [oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit
+ in net/ipv4/tcp_input.c
 
-https://www.djangoproject.com/weblog/2024/mar/04/security-releases/
+Hello,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 5.0.3 <https://docs.djangoproject.com/en/dev/releases/5.0.3/>`_,
-`Django 4.2.11 
-<https://docs.djangoproject.com/en/dev/releases/4.2.11/>`_, and
-`Django 3.2.25 <https://docs.djangoproject.com/en/dev/releases/3.2.25/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+A further investigation was made to find out the Linux kernel commit which has
+introduced the flaw. It appeared that previous Linux kernel versions are vulnerable,
+down to v3.6-rc1. This fact was hidden by 'net.ipv4.tcp_fastopen' set to 0 by default,
+and now it is easier to notice since kernel v3.12 due to commit 0d41cca490 where the
+default was changed to 1. With 'net.ipv4.tcp_fastopen' set to 1, previous Linux
+kernels including RHEL-7 ones are also vulnerable (see [0] below).
 
-CVE-2024-27351: Potential regular expression denial-of-service in 
-``django.utils.text.Truncator.words()``
-=========================================================================================================
+The bug is here since tcp-fastopen feature was introduced in kernel v3.6-rc1, the first
+commit when the reproducer starts to panic the kernel with net.ipv4.tcp_fastopen=1 is
+cf60af03ca, which is a part of commit serie 2100c8d2d9..67da22d23f introducing
+net-tcp-fastopen feature:
 
-``django.utils.text.Truncator.words()`` method (with ``html=True``) and
-``truncatewords_html`` template filter were subject to a potential
-regular expression denial-of-service attack using a suitably crafted string
-(follow up to CVE-2019-14232 and CVE-2023-43665).
+$ git bisect bad cf60af03ca4e71134206809ea892e49b92a88896
+cf60af03ca4e71134206809ea892e49b92a88896 is the first bad commit
+commit cf60af03ca4e71134206809ea892e49b92a88896
+Author: Yuchung Cheng <ycheng@google.com>
+Date:   Thu Jul 19 06:43:09 2012 +0000
 
-Thanks Seokchan Yoon for the report.
+So, formally, the Linux kernel upstream commit ac6e780070 fixing the bug should have
+"Fixes: cf60af03ca" statement, unfortunately, this investigation was not completed at
+the time the patch was accepted upstream.
 
-This issue has severity "moderate" according to the Django security policy.
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
 
-Affected supported versions
-===========================
+=== [0] =====
 
-* Django 5.0
-* Django 4.2
-* Django 3.2
+$ uname -r
+3.10.0-123.el7.x86_64
 
-Resolution
-==========
+$ sysctl net.ipv4.tcp_fastopen
+net.ipv4.tcp_fastopen = 1
 
-Patches to resolve the issue have been applied to the 5.0, 4.2, and 3.2
-release branches. The patches may be obtained from the following changesets:
-
-* On the `5.0 release branch 
-<https://github.com/django/django/commit/3394fc6132436eca89e997083bae9985fb7e761e>`__
-* On the `4.2 release branch 
-<https://github.com/django/django/commit/3c9a2771cc80821e041b16eb36c1c37af5349d4a>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/072963e4c4d0b3a7a8c5412bc0c7d27d1a9c3521>`__
-
-The following releases have been issued:
-
-* Django 5.0.3 (`download Django 5.0.3 
-<https://www.djangoproject.com/m/releases/5.0/Django-5.0.3.tar.gz>`_ | 
-`5.0.3 checksums 
-<https://www.djangoproject.com/m/pgp/Django-5.0.3.checksum.txt>`_)
-* Django 4.2.11 (`download Django 4.2.11 
-<https://www.djangoproject.com/m/releases/4.2/Django-4.2.11.tar.gz>`_ | 
-`4.2.11 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.2.11.checksum.txt>`_)
-* Django 3.2.25 (`download Django 3.2.25 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.25.tar.gz>`_ | 
-`3.2.25 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.25.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+$ ./poc
+[   67.356749] ------------[ cut here ]------------
+[   67.357016] kernel BUG at net/ipv4/tcp_input.c:4563!
+[   67.357016] invalid opcode: 0000 [#1] SMP 
+[   67.357016] CPU: 2 PID: 1317 Comm: poc Not tainted 3.10.0-123.el7.x86_64 #1
+[   67.357016] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.8.2-20150714_191134- 04/01/2014
+[   67.357016] task: ffff880135cc4440 ti: ffff8800b8552000 task.ti: ffff8800b8552000
+[   67.357016] RIP: 0010:[<ffffffff8151f493>]  [<ffffffff8151f493>] tcp_collapse+0x433/0x440
+[   67.357016] RSP: 0018:ffff8800b8553a20  EFLAGS: 00010282
+[   67.357016] RAX: 00000000fffffff2 RBX: ffff880135d550f8 RCX: 0000000000000db0
+[   67.357016] RDX: ffff8800b84cb110 RSI: 0000000000000000 RDI: ffff880135d550f8
+[   67.357016] RBP: ffff8800b8553a70 R08: 0000000000000ec0 R09: 0000000000000db0
+[   67.357016] R10: ffff8800b140be00 R11: 0000000000000000 R12: 00000000606804a0
+[   67.357016] R13: ffff8800b16e0090 R14: 0000000000000000 R15: 0000000000000db0
+[   67.357016] FS:  00007fd1e51a6800(0000) GS:ffff88013fc80000(0000) knlGS:0000000000000000
+[   67.357016] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   67.357016] CR2: 000000002002a000 CR3: 00000000b14fd000 CR4: 00000000001406e0
+[   67.357016] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[   67.357016] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+[   67.357016] Stack:
+[   67.357016]  606814a000000004 ffff8800b16e0000 ffff8800b140be00 ffffffff00000db0
+[   67.357016]  ffff880000000000 ffff8800b16e0680 0000000000000900 ffff880135d55af8
+[   67.357016]  ffff8800b16e0000 ffff8800b16e0680 ffff8800b8553aa8 ffffffff8151f66b
+[   67.357016] Call Trace:
+[   67.357016]  [<ffffffff8151f66b>] tcp_try_rmem_schedule+0x1cb/0x410
+[   67.357016]  [<ffffffff8151fe41>] tcp_data_queue+0x291/0xcf0
+[   67.357016]  [<ffffffff81523014>] tcp_rcv_established+0x1e4/0x8d0
+[   67.357016]  [<ffffffff815a11a6>] tcp_v6_do_rcv+0x2e6/0x6b0
+[   67.357016]  [<ffffffff81525f8a>] ? tcp_schedule_loss_probe+0x13a/0x1d0
+[   67.357016]  [<ffffffff81526c95>] ? tcp_write_xmit+0x215/0xb80
+[   67.357016]  [<ffffffff814c0b11>] ? __alloc_skb+0xa1/0x2d0
+[   67.357016]  [<ffffffff814bbfd1>] release_sock+0xa1/0x170
+[   67.357016]  [<ffffffff81518652>] tcp_sendmsg+0x132/0xdb0
+[   67.357016]  [<ffffffff81542a24>] inet_sendmsg+0x64/0xb0
+[   67.357016]  [<ffffffff814b79b0>] sock_sendmsg+0xb0/0xf0
+[   67.357016]  [<ffffffff8114fd1e>] ? lru_cache_add+0xe/0x10
+[   67.357016]  [<ffffffff81176ad1>] ? page_add_new_anon_rmap+0x91/0x130
+[   67.357016]  [<ffffffff814b7f21>] SYSC_sendto+0x121/0x1c0
+[   67.357016]  [<ffffffff815ed58a>] ? do_page_fault+0x1a/0x70
+[   67.357016]  [<ffffffff814b89ae>] SyS_sendto+0xe/0x10
+[   67.357016]  [<ffffffff815f2119>] system_call_fastpath+0x16/0x1b
+[   67.357016] Code: 00 48 89 42 08 48 89 10 e8 cb 1c fa ff 48 8b 45 b8 48 8b 40 30
+48 8b 80 30 01 00 00 65 48 ff 80 b0 01 00 00 e9 af fc ff ff 0f 0b <0f> 0b 66 66 2e
+0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 55 48 89 
+[   67.357016] RIP  [<ffffffff8151f493>] tcp_collapse+0x433/0x440
+[   67.357016]  RSP <ffff8800b8553a20>
+[   67.390450] ---[ end trace c5a1da3f9a89016e ]---
+[   67.390741] Kernel panic - not syncing: Fatal exception in interrupt
