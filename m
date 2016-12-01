@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/27/10
-Message-ID: <e1000c38-4d7c-9067-7f54-363845f89823@apache.org>
-Date: Thu, 27 Oct 2016 13:31:14 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2016-6794 Apache Tomcat Security System Property Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/1
+Message-ID: <alpine.LFD.2.20.1612011545500.26855@wniryva>
+Date: Thu, 1 Dec 2016 15:48:05 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Kernel: kvm: stack memory information leakage
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6794 Apache Tomcat System Property Disclosure
+   Hello,
 
-Severity: Low
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable to an information leakage issue. It could occur on x86 platform, 
+in 32bit mode, while emulating instructions.
 
-Vendor: The Apache Software Foundation
+A user/process could use this flaw to leak host kernel memory bytes.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M9
-Apache Tomcat 8.5.0 to 8.5.4
-Apache Tomcat 8.0.0.RC1 to 8.0.36
-Apache Tomcat 7.0.0 to 7.0.70
-Apache Tomcat 6.0.0 to 6.0.45
-Earlier, unsupported versions may also be affected.
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/2117d5398c81554fbf803f5fd1dc55eb78216c0c
 
-Description
-When a SecurityManager is configured, a web application's ability to
-read system properties should be controlled by the SecurityManager.
-Tomcat's system property replacement feature for configuration files
-could be used by a malicious web application to bypass the
-SecurityManager and read system properties that should not be visible.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1400468
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M10 or later
-- Upgrade to Apache Tomcat 8.5.5 or later
-- Upgrade to Apache Tomcat 8.0.37 or later
-- Upgrade to Apache Tomcat 7.0.72 or later
-  (Apache Tomcat 7.0.71 has the fix but was not released)
-- Upgrade to Apache Tomcat 6.0.47 or later
-  (Apache Tomcat 6.0.46 has the fix but was not released)
-
-Credit:
-This issue was discovered by the Apache Tomcat Security Team.
-
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
