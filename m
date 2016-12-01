@@ -1,98 +1,184 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/23/1
-Message-ID: <alpine.DEB.2.20.1612222316360.31189@tvnag.unkk.fr>
-Date: Fri, 23 Dec 2016 08:38:15 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: uninitialized random
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/8
+Message-ID: <2637042.StuLhmWT5T@arcadia>
+Date: Thu, 01 Dec 2016 17:04:26 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)
 Content-Type: text/plain; charset=utf-8
 
-uninitialized random
-====================
+If suitable for a CVE please assign one. Thanks.
 
-Project curl Security Advisory, December 23, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161223.html)
+Description:
+libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
+Python, C, C++, Java, and probably more on the way..
 
-VULNERABILITY
--------------
+A fuzzing revealed a null pointer access in listswf. The bug does not reside 
+in any shared object but if you have a web application that calls directly the 
+listswf binary to parse untrusted swf, then you are affected.
 
-libcurl's (new) internal function that returns a good 32bit random value was
-implemented poorly and overwrote the pointer instead of writing the value into
-the buffer the pointer pointed to.
+The complete ASan output:
 
-This random value is used to generate nonces for Digest and NTLM
-authentication, for generating boundary strings in HTTP formposts and
-more. Having a weak or virtually non-existent random there makes these
-operations vulnerable.
+# listswf $FILE
+header indicates a filesize of 7917 but filesize is 187
+File version: 100
+File size: 187
+Frame size: (8452,8981)x(-4096,0)
+Frame rate: 67.851562 / sec.
+Total frames: 16387
+ Stream out of sync after parse of blocktype 2 (SWF_DEFINESHAPE). 166 but 
+expecting 23.
 
-This function is brand new in 7.52.0 and is the result of an overhaul to make
-sure libcurl uses strong random as much as possible - provided by the backend
-TLS crypto libraries when present. The faulty function was introduced in [this
-commit](https://github.com/curl/curl/commit/f682156a4fc6c43fb).
+Offset: 21 (0x0015)
+Block type: 2 (SWF_DEFINESHAPE)
+Block length: 0
 
-We are not aware of any exploit of this flaw.
+ CharacterID: 55319
+ RECT:  (-2048,140)x(0,-1548):12
+ FillStyleArray:  FillStyleCount:     18  FillStyleCountExtended:      0
+ FillStyle:  FillStyleType: 0
+ RGBA: ( 0, 1,9a,ff)
+ FillStyle:  FillStyleType: 7f
+ FillStyle:  FillStyleType: b
+ FillStyle:  FillStyleType: fb
+ FillStyle:  FillStyleType: 82                                                                                                                                                                 
+ FillStyle:  FillStyleType: 24                                                                                                                                                                 
+ FillStyle:  FillStyleType: 67                                                                                                                                                                 
+ FillStyle:  FillStyleType: 67                                                                                                                                                                 
+ FillStyle:  FillStyleType: 18                                                                                                                                                                 
+ FillStyle:  FillStyleType: 9d                                                                                                                                                                 
+ FillStyle:  FillStyleType: 6d                                                                                                                                                                 
+ FillStyle:  FillStyleType: d7                                                                                                                                                                 
+ FillStyle:  FillStyleType: 97                                                                                                                                                                 
+ FillStyle:  FillStyleType: 1                                                                                                                                                                  
+ FillStyle:  FillStyleType: 26                                                                                                                                                                 
+ FillStyle:  FillStyleType: 1a                                                                                                                                                                 
+ FillStyle:  FillStyleType: 17                                                                                                                                                                 
+ FillStyle:  FillStyleType: 9a                                                                                                                                                                 
+ LineStyleArray:  LineStyleCount: 19                                                                                                                                                           
+ LineStyle:  Width: 1722                                                                                                                                                                       
+ RGBA: (7a,38,df,ff)                                                                                                                                                                           
+ LineStyle:  Width: 42742                                                                                                                                                                      
+ RGBA: ( 0, 0, 0,ff)                                                                                                                                                                           
+ LineStyle:  Width: 70                                                                                                                                                                         
+ RGBA: (10,91,64,ff)                                                                                                                                                                           
+ LineStyle:  Width: 37031                                                                                                                                                                      
+ RGBA: (e7,c7,15,ff)                                                                                                                                                                           
+ LineStyle:  Width: 9591                                                                                                                                                                       
+ RGBA: (dc,ee,81,ff)                                                                                                                                                                           
+ LineStyle:  Width: 4249                                                                                                                                                                       
+ RGBA: ( 0,ee,ed,ff)                                                                                                                                                                           
+ LineStyle:  Width: 60909                                                                                                                                                                      
+ RGBA: (ed,ed,ed,ff)                                                                                                                                                                           
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,a7,ff)
+ LineStyle:  Width: 42919
+ RGBA: (a7,a7,9c,ff)
+ LineStyle:  Width: 40092
+ RGBA: (9c,9c,9c,ff)
+ LineStyle:  Width: 32156
+ RGBA: (9c,bc,9c,ff)
+ LineStyle:  Width: 33948
+ RGBA: (9c,9c,9c,ff)
+ LineStyle:  Width: 26404
+ RGBA: ( 0, c,80,ff)
+ LineStyle:  Width: 42752
+ RGBA: (a7, 2, 2,ff)
+ LineStyle:  Width: 514
+ RGBA: (c6, 2, 0,ff)
+ NumFillBits: 11
+ NumLineBits: 13
+ Curved EdgeRecord: 9 Control(-145,637) Anchor(-735,-1010)
+ Curved EdgeRecord: 7 Control(-177,156) Anchor(16,32)
+ StyleChangeRecord:
+  StateNewStyles: 0 StateLineStyle: 1  StateFillStyle1: 0
+  StateFillStyle0: 0 StateMoveTo: 0
+   LineStyle: 257
+  ENDSHAPE
 
-INFO
-----
+Offset: 23 (0x0017)
+Block type: 864 (Unknown Block Type)
+Block length: 23
 
-This mistake managed to slip in because:
 
-  1. It wasn't detected by manual code reviews
+0000: 64 00 00 00 46 4f a3 12  00 00 01 9a 7f 0b fb 82    d...FO.. .......
+0010: 24 67 67 18 9d 6d d7                               $gg..m.
 
-  2. When libcurl is built debug-enabled (which is often the case when libcurl
-     developers build it), the bug doesn't trigger.
 
-  3. When built without -g, the test suite's "valgrind output parser" wrongly
-     ignored the valgrind output and with libcurl's standard build it is
-     typically built without -g. Thus hiding this problem to most users.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-9594 to this issue.
+Offset: 48 (0x0030)
+Block type: 6 (SWF_DEFINEBITS)
+Block length: 23
 
-AFFECTED VERSIONS
------------------
+ CharacterID: 6694
 
-This flaw exists in the following libcurl versions.
+Offset: 73 (0x0049)
+Block type: 87 (SWF_DEFINEBINARYDATA)
+Block length: 7
 
-- Affected versions: libcurl 7.52.0 only
-- Not affected versions: libcurl < 7.52.0 and libcurl >= 7.52.1
 
-libcurl is used by many applications, but not always advertised as such!
+0000: ASAN:DEADLYSIGNAL
+=================================================================
+==27703==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000059d2ff bp 0x7ffe859e6fc0 sp 0x7ffe859e6f50 T0)
+==27703==The signal is caused by a READ memory access.
+==27703==Hint: address points to the zero page.
+    #0 0x59d2fe in dumpBuffer /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/read.c:441:23
+    #1 0x51c305 in outputSWF_UNKNOWNBLOCK /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:2870:3
+    #2 0x51c305 in outputBlock /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:2937
+    #3 0x527e83 in readMovie /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:277:4
+    #4 0x527e83 in main /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350
+    #5 0x7f0186c4461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x419b38 in _init (/usr/bin/listswf+0x419b38)
 
-THE SOLUTION
-------------
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/read.c:441:23 in dumpBuffer
+==27703==ABORTING
 
-In version 7.52.1, we fixed the function and we fixed the valgrind parser in
-the test suite.
+Affected version:
+0.4.7
 
-A [patch for CVE-2016-9594](https://curl.haxx.se/CVE-2016-9594.patch) is
-available.
+Fixed version:
+N/A
 
-RECOMMENDATIONS
----------------
+Commit fix:
+N/A
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-  A - Upgrade curl and libcurl to version 7.52.1
+CVE:
+N/A
 
-  B - Apply the patch to 7.52.0 and rebuild
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00078-libming-nullptr-dumpBuffer
 
-TIME LINE
----------
+Timeline:
+2016-11-24: bug discovered and reported to upstream
+2016-12-01: blog post about the issue
 
-It was first reported to the curl project on December 21 by Kamil Dudka.
+Note:
+This bug was found with American Fuzzy Lop.
 
-We contacted distros@...nwall on December 21.
-
-curl 7.52.1 was released on December 23 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Kamil Dudka.
+Permalink:
+https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-null-pointer-dereference-in-dumpbuffer-read-c
 
 -- 
-
-  / daniel.haxx.se
+Agostino Sarubbo
+Gentoo Linux Developer
