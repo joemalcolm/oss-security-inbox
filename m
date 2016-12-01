@@ -1,47 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/12
-Message-ID: <b6628b3b2ff14e43aaac2bb6cdcb915d@imshyb02.MITRE.ORG>
-Date: Sun, 30 Oct 2016 15:48:27 -0400
-From: <cve-assign@...re.org>
-To: <gustavo.grieco@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request - integer overflow and crash parsing regex in mujs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/12
+Message-ID: <20161201190542.hbicm7xfeflknmuu@eldamar.local>
+Date: Thu, 1 Dec 2016 20:05:42 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: OpenAFS: directory information leaks (OPENAFS-SA-2016-003)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> an integer overflow somewhere affecting function
-> js_regcomp (line 843 in regexp.c) in mujs
+The OpenAFS project has released a security advisory:
 
-> Argument 'size' of function malloc has a fishy (possibly
-> negative) value: -5152
+https://www.openafs.org/pages/security/OPENAFS-SA-2016-003.txt
 
-> js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
+OpenAFS Security Advisory 2016-003
 
-> Invalid write of size 2
+> Topic: directory information leakage
+>                                                                                                   
+> Issued: 30 November, 2016
+> Affected: OpenAFS client versions 1.0 through 1.6.19
+>           OpenAFS servers versions 1.0 through 1.6.19
+> 
+> The contents of OpenAFS directories may be leaked in client cache partitions,
+> in fileserver vice partitions, and on the wire for certain RPCs.
+> 
+> SUMMARY
+> =======
+> 
+> Due to incomplete initialization or clearing of reused memory, OpenAFS
+> directory objects are likely to contain "dead" directory entry information.
+> This extraneous information is not active - that is, it is logically invisible
+> to the fileserver and client. However, the leaked information is physically
+> visible on the fileserver vice partition, on the wire in FetchData replies and
+> other RPCs, and on the client cache partition. This constitutes a leak of
+> directory information.
 
-Use CVE-2016-9108.
+I'm attaching the full advisory for reference (and to have it int the
+list archives).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Patches:
 
-iQIcBAEBCAAGBQJYFkudAAoJEHb/MwWLVhi2RBgP/RF0bMlb+4D26ZDZ2QWwajjj
-3QerG0bwV1cKaE+emQXe2T0fMeeSNm0B8+SSkLEtbfFSFnQhJgP3cn2xoYOdl0+j
-J72oJMrTay+NRMiSyCoHQ0lXy2K3z1BhvXDTMDCrRtov4curUVQ8Zk35rNDr+DGP
-tUpumfoguit3TrcrlQT19AiKUUJYiXBgD7k6CsGVdZ2ReY3Bi3MwhyHfZ+cNvx71
-hwxAwtvYIU+h/+kUX0fjLQ5w8VadUr4pwYtQNvo6x52QiOFyw5iw2JsJX7q0K72X
-bteIFYG8byQqMJXyYzLwxN4FpWzEW7uPusRjE7I0X62y0rl/RV0AdpFL5+QBLYdC
-5bIDcVbRpcjoQimDk6nP3iVTvaetOvyJHDQxv2UP13pkwW1Y1t4rlI45F/8FVsUz
-jILRhjiW1ITLew+zCmQtirdAsh+pkPRlZCdWKzDdlY/Pxeb0Nqp3kyIZ0kQSpogr
-xjNpJJV9ss7aXjzwYSDR3R9U/91QnPqJ2wagxds6AsnZB6zKG6V01edmgKpMTYue
-vmIFeSY/nul7xAUMl0BYrLoJkwag+aitbQ5FVjU1UaO442W9iraM8Sp5afecXjWD
-kU2CHD7BPP41K1e6Cw/HI2HfNBkhJVdz96SaNq4jA3uwtjkuWaeZ1HnqTxX5yE5V
-niwZyF8JncAPwN2NX7CQ
-=GE43
------END PGP SIGNATURE-----
+https://www.openafs.org/pages/security/openafs-sa-2016-003.patch
+https://www.openafs.org/pages/security/openafs-sa-2016-003-master.patch
+
+Could you please assign a CVE for the directory information leak issue
+in OpenAFS?
+
+Regards,
+Salvatore
+
+View attachment "OPENAFS-SA-2016-003.txt" of type "text/plain" (4779 bytes)
