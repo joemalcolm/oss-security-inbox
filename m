@@ -1,56 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/17/4
-Message-ID: <576407E6.6000706@redhat.com>
-Date: Fri, 17 Jun 2016 14:23:34 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2016-010] XSS in Horizon client side template (CVE-2016-4428)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/10
+Message-ID: <CAAeHK+yya7cNPsY97wiss_G9ZCS3sOVbrTSZwxjqXPg7FzyF1A@mail.gmail.com>
+Date: Thu, 1 Dec 2016 17:23:31 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
+Subject: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6
 Content-Type: text/plain; charset=utf-8
 
-==================================================
-OSSA-2016-010: XSS in Horizon client side template
-==================================================
+Hi,
 
-:Date: June 15, 2016
-:CVE: CVE-2016-4428
+There is a bug in the Linux kernel ipv6 implementation, which leads to
+an out-of-bounds write on ipv6 packet defragmentation.
 
+A fix was sent upstream:
+https://www.spinics.net/lists/netdev/msg407525.html
 
-Affects
-~~~~~~~
-- Horizon: <=8.0.1, >=9.0.0 <=9.0.1
+More details here:
+https://groups.google.com/forum/#!topic/syzkaller/GFbGpX7nTEo
 
+Could you assign a CVE for this?
 
-Description
-~~~~~~~~~~~
-Beth Lancaster and Brandon Sawyers from Virginia Tech reported a
-vulnerability in Horizon. By injecting Angularjs template in dashboard
-forms, such as image's description, an authenticated user may trigger
-a cross-site-scripting vulnerability when another user browses the
-affected pages. It may result in potential assets theft like user
-access credentials. All Horizon setups are affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/329997 (Liberty)
-- https://review.openstack.org/329996 (Mitaka)
-- https://review.openstack.org/329998 (Newton)
-
-
-Credits
-~~~~~~~
-- Beth Lancaster from Virginia Tech (CVE-2016-4428)
-- Brandon Sawyers from Virginia Tech (CVE-2016-4428)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1567673
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4428
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Thanks!
