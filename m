@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6184" "Saturday" "26" "October" "2019" "22:44:16" "+0000" "Stiepan" "stie@protonmail.ch" "<NdwFuQOPjKC52xswSya1RvTkfft8C51AgZmmfCHmCTam-k3vqW8IlM0Gqm-Q2jCXB_uH4YWL4MAOjSiGOCaaHVR4jmlNu7r1so9j4Yi40bU=@protonmail.ch>" "133" "Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?" "^Date:" nil nil "10" "2019102622:44:16" "[oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?" (number mark "        stie@protonm Oct 26  133/6184  " thread-indent "\"Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?\"\n") "<20191025212309.GA18967@pisco.westfalen.local>" ("<20191025212309.GA18967@pisco.westfalen.local>") nil nil nil nil nil nil nil "Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5865" "Thursday" "1" "December" "2016" "17:01" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1862568.R95AFAyhIW@arcadia>" "173" "[oss-security] libming: listswf: heap-based buffer overflow in parseSWF_DEFINEFONT (parser.c)" nil nil nil "12" "2016120116:01:00" "[oss-security] libming: listswf: heap-based buffer overflow in parseSWF_DEFINEFONT (parser.c)" (number mark "U       ago@gentoo.o Dec  1  173/5865  " thread-indent "\"[oss-security] libming: listswf: heap-based buffer overflow in parseSWF_DEFINEFONT (parser.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24243 invoked by uid 550); 27 Oct 2019 10:33:01 -0000
+Received: (qmail 27796 invoked by uid 550); 1 Dec 2016 15:59:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,157 +11,189 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23725 invoked from network); 26 Oct 2019 22:44:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=default; t=1572129858;
-	bh=fn1xeP3W9RwccFk2FlleBhZCFLTfCDsN3noeWVtZ9UU=;
-	h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
-	 From;
-	b=Hx+sArH3S6eYLMSZeUuk1/IEq2LBEDaWnVsxSDFEBrH7KUrr1t6x1bbj/w3P8ncPY
-	 UrAJwJjH2Dhucyjdh+ExTKAlM4LYMIPnsERskHA0V6CqhvkDe2DBw0i0NtYlpt5PRo
-	 90iA76DqRSCe6TkqGRwESlCfyAoQ/QjUcX6Eo4jY=
-Message-ID: <NdwFuQOPjKC52xswSya1RvTkfft8C51AgZmmfCHmCTam-k3vqW8IlM0Gqm-Q2jCXB_uH4YWL4MAOjSiGOCaaHVR4jmlNu7r1so9j4Yi40bU=@protonmail.ch>
-In-Reply-To: <20191025212309.GA18967@pisco.westfalen.local>
-References: <20191025212309.GA18967@pisco.westfalen.local>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="---------------------ff0ed50b2c58fe81ac23b633bfb2e363"; charset=UTF-8
-Date: Sat, 26 Oct 2019 22:44:16 +0000
-From: Stiepan <stie@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Security fixes from Android 10 release which are relevant outside the Android ecosystem?
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 27773 invoked from network); 1 Dec 2016 15:59:58 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Thu, 01 Dec 2016 17:01 +0100
+Message-ID: <1862568.R95AFAyhIW@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libming: listswf: heap-based buffer overflow in parseSWF_DEFINEFONT (parser.c)
 
------------------------ff0ed50b2c58fe81ac23b633bfb2e363
-Content-Type: multipart/mixed;boundary=---------------------7f5294274cb5d49fe0244abc5671eeeb
+If suitable for a CVE please assign one. Thanks.
 
------------------------7f5294274cb5d49fe0244abc5671eeeb
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Description:
+libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
+Python, C, C++, Java, and probably more on the way..
 
-As someone who used Android & did my studies on how to secure it and what w=
-as missing for that, I can say that Androids still dream of electric blowfi=
-shes - or rather threefish-512 ;) - and will do so for a while, especially =
-now that the only part that was open seems is no more. By that virtue, it l=
-ost the biggest  advantage it had versus the better polished iOS. And doing=
- that helps red-scarfed black-hats, who can hack into most of the open-sour=
-ce Android variants, which would not be the case if the latter had access t=
-o up to date, well-vetted security infos (unlike that late 2018 fix that ma=
-de it even more vulnerable), and that extends to linux-distros by the by. E=
-mbargoes are bad.
-Sure, that made me buy an iPhone, which is good commercially for Apple and =
-I salute their privacy makeup*, but being forced to do so as the collateral=
- victim of a trade war is less cool.
-*as in definition 6 of the wordreference entry for that word, "A special ex=
-amination for a student who has been absent ...".
+A fuzzing revealed an overflow in listswf. The bug does not reside in any 
+shared object but if you have a web application that calls directly the 
+listswf binary to parse untrusted swf, then you are affected.
 
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Friday, October 25, 2019 11:23 PM, Moritz M=C3=BChlenhoff <jmm@inutil.or=
-g> wrote:
+The complete ASan output:
 
-> Android advisories used to contain commit references to AOSP change sets,=
- but
-> that's not the case for https://source.android.com/security/bulletin/andr=
-oid-10.
->=20
+# listswf $FILE
+header indicates a filesize of 237 but filesize is 272
+File version: 6
+File size: 272
+Frame size: (-4926252,-2829100)x(-2829100,-2829100)
+Frame rate: 166.648438 / sec.
+Total frames: 42662
 
-> Typically most of these issues are specific to Android, but there are a f=
-ew which
-> per the CVE description are possibly affecting software packaged/used by =
-Linux
-> distros as well, one example:
->=20
-
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2019-9325:
-> "In libvpx, there is a possible out of bounds read due to a missing bound=
-s check.
-> This could lead to remote information disclosure with no additional execu=
-tion
-> privileges needed. "
->=20
-
-> Similar for CVE-2019-9232, CVE-2019-9278, CVE-2019-9325, CVE-2019-9371, C=
-VE-2019-9433,
-> CVE-2019-9423 (also libexif and opencv)
->=20
-
-> Is there anyone from Android/Google on the list, who can comment on this?=
- Can these
-> references be added again for the benefit of non-Android distros?
->=20
-
-> Cheers,
-> Moritz
+Offset: 25 (0x0019)
+Block type: 666 (Unknown Block Type)
+Block length: 38
 
 
------------------------7f5294274cb5d49fe0244abc5671eeeb
-Content-Type: application/pgp-keys; filename="publickey - stie@protonmail.ch - 0xADF18750.asc"; name="publickey - stie@protonmail.ch - 0xADF18750.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - stie@protonmail.ch - 0xADF18750.asc"; name="publickey - stie@protonmail.ch - 0xADF18750.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tDQpWZXJzaW9u
-OiBPcGVuUEdQLmpzIHY0LjYuMg0KQ29tbWVudDogaHR0cHM6Ly9vcGVucGdw
-anMub3JnDQoNCnhzQk5CRmZxZEg0QkNBREQyeFhCMVFUUG5CMk40V3ZwZDAy
-WjdXbnZQSFpFTVBvRUtyNGRVOUQ4aG1LQw0KbUk1a2ZyR1JLUkhqV1hFbExn
-KzlnbVRubUhla3prMW5xVyswYW8xTG4rN3JrdXl2UTJJOGNvWldnTmNBDQpC
-b01EUjZmbjMya3BsTitIa3RvVHRNb3J1dE13SE1Tdk5yYnRIeGhIaXJ1MVYr
-aFRqS2krTDRvckkwYmYNCnQ3VklCRUpuSkxqTmZ6Q0lQS09jWTBZZHZhSFMv
-SlZGclA0Qi9MSlFQNkZ6ajE3WnB3QzROK3k0TEV2SQ0KL3ZaYUtxbGhxMjJX
-NEc4TjVwRFFxbW04MjJRdjdUM0orMk0yNTNPRjBXOC94eEs2bU9DcWFuZFI3
-RTFuDQpzS09hTmgyNW1zbHZpS0hSelRXdzB5OE9heXNhd0liTFBNOTZkaWt1
-a3JOaU15K3VsRTl2MmMyRkFCRUINCkFBSE5KM04wYVdWQWNISnZkRzl1YldG
-cGJDNWphQ0E4YzNScFpVQndjbTkwYjI1dFlXbHNMbU5vUHNMQQ0KZndRUUFR
-Z0FLUVVDV04vcGV3WUxDUWNJQXdJSkVEOFNEZi9tcEtBdkJCVUlDZ0lERmdJ
-QkFoa0JBaHNEDQpBaDRCQUFvSkVEOFNEZi9tcEtBdkpXTUlBS0MrSllJMytF
-OUlHZnJoMEVFOHlqTnlMNnpMOTFuM1VJcGkNCnFwNFRkeXRqSVJET0RXWERp
-S25DUUFpc3FhY21oUVRGUkZ5YUE2eFZJNzhKZm1NM2RsRzRkZ2tQR3p4aw0K
-bHVKck5qSENOam54bGx1RXQ5dlU2aGJSUUhoaWdjTVExZEs3SHZjMjNFZ3No
-UTZRNTVjZ1RTZG14NEc0DQpoN1RHVXpSVUpjazI0L2U5eHN6dDcrbmpwdHdZ
-M2pvbUlCWUJDRGwyTkhDM05ZZzFYSklVL0lTYUZyMDcNCmJTRkZvOXE3QkM0
-Nmx6VnlNWXZNYXdzOU13MFYyQ3luVVJHT1NaVGYxNmNEekJKeDN5bmoxaVRM
-MERPMg0KWUQzQVpNaXR3KzRnT201NEl0NDIrZkNIMktFKzQ0NThITGE3NmZj
-b251WjlycUtoQ1I3U3FLbVNjTFNkDQpQRk40OXpyT3dFMEVWK3AwZmdFSUFL
-ZGJPSTdHQlJlMC9MMVR4Wi9YaGRucSs5bW1ZRjlkOVVkaGxucGkNCmNUZUMv
-djk3TWJWRlR2NEFSK3VQMjdGQlN0MVQvZ0wrM1AyODdJNFpyd0dpNy81V3Ji
-ZVlIVWhmZEp0dA0KeUpvalBzd1lwUkphbTV6amo2b3RETXVWV2w0UU1CQmdE
-YjQ0cWw2WXA5RmlxNzAxbWIrSlJMU0JmYVpFDQpHOTlEaCtXTStoTVpBUDJL
-cWwwcUN4M09tQ25XU0ZDVUU0STZhc1VndXhOMEw1eXkvRlJsY2JVYUdLZFEN
-CnArbjhkMitOTExxVk1TRExJbUVIdHJPWGtKVDRFRjFKdlJnVGI1c2pOTGdh
-aW9jcGFkVHNVMCtJY1BvZw0KN2lReWtmRVZPU3FXZVQrUGV0aTJudzlVMUZR
-aEhKRnR2WWpXQldXNHR1eVV1cElTdkx5QTMwZGlSbmtjDQo5NmtBRVFFQUFj
-TEFhUVFZQVFnQUV3VUNXTi9wZXdrUVB4SU4vK2Frb0M4Q0d3d0FDZ2tRUHhJ
-Ti8rYWsNCm9DK1M0QWYvVjZXS3NDMHMzN0Zwc1ZvLzNvTnpJWExMdWhsOFpu
-aFZhQ1AxRDZlRDNBZXFOamxUaEdaTg0KWDRtZmx0ZHhjVUd4b3NsVDNIcC9E
-a2s2NXlaSjZaZ3BIT21uNlpla2lTVFdYb3pxREpUdm95V3VjaVBoDQp1Uytv
-Q2tNemhFaHdjdys2TDZTNGxiOEJuMHAyU3I1ZnNjWWJFcGh3c0UybGFRMzlx
-N1gxNVpxZkluanYNCjNvajlaZkZ2Y0paRVkwN3RsUHA5akRBVlJocU1PNmZ2
-VkNabzdISnp3WkgzSzFTREhXbXlsWitXanMyZw0KK215bjkzK0NWbVBWSVpS
-WE91NTJKdHlSWkgraWdwOHdXc3ljejZrRm9UYlN2V0U0UVp4U1hJTFFjQndX
-DQpDZmF5dTlCYTZkL3FTWSs5bGw3WlNYVkRMVVBwamd4Y2NoeVhrTWZ5c1cv
-eG91Vjlkdz09DQo9aFhxTQ0KLS0tLS1FTkQgUEdQIFBVQkxJQyBLRVkgQkxP
-Q0stLS0tLQ0K
-
------------------------7f5294274cb5d49fe0244abc5671eeeb--
-
------------------------ff0ed50b2c58fe81ac23b633bfb2e363
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBcBAEBCAAGBQJdtMvxAAoJED8SDf/mpKAvarcIAI/tKGxruadPBSIT4Nc7
-cc+szu2piuj2penULtD1voJ6dSggTVwmPlbsktVmHjabWds523PNZhM6ry7l
-3LivJiK2U1t6cUH7xyXaJyypgswd6o3O+7Cs3tZJXPKJPkdImyOiHtajclpX
-PhnSR7Hv4Jc4GxFT77qB7HezBLvOdC2l3K0GuogmqITcvOkhmKLZv1lQHpYQ
-ZyDL5AnvH0V+rEEg1ByZyH8Ij+9ja2LGnhIJDJ9x8sT/OYSyD93KtVtvqrUu
-OO7s57N02ffeOsPZQ+GbZQZ3V61AFz3+9nfQCO+Xoeov2ZkP0QXOIVwFPH9n
-iXjxpFOeakc5oALTmGmhoBI=
-=J89m
------END PGP SIGNATURE-----
+0000: a6 a6 a6 a6 a6 a6 a6 a6  a6 a6 a6 a6 a6 c5 c5 c5    ........ ........
+0010: c5 c5 00 02 00 00 19 9a  02 ba 06 80 00 00 fe 38    ........ .......8
+0020: 01 00 a6 e3 80 29                                  .....)
 
 
------------------------ff0ed50b2c58fe81ac23b633bfb2e363--
 
+Offset: 65 (0x0041)
+Block type: 149 (Unknown Block Type)
+Block length: 55
+
+
+0000: dc 20 1c db 31 89 c7 ff  7f 0a d8 97 c5 c5 c5 c5    . ..1... .......
+0010: cb c5 ea fc 77 da c5 c5  c5 c5 c5 d3 d3 1a 19 9a    ....w... ........
+0020: 7a 38 df f6 a6 e3 80 40  77 a5 e3 00 ba f5 90 6f    z8.....@ w......o
+0030: d3 1a 5d f0 59 0e c2                               ..].Y..
+
+
+
+Offset: 122 (0x007a)
+Block type: 896 (Unknown Block Type)
+Block length: 47
+
+
+0000: 7f 41 41 41 67 67 18 9d  6d ea 3b 3f ff ff ba 06    AAAgg.. m.;?....
+0010: 80 00 00 fe 38 01 00 a6  e3 80 29 77 25 dc 20 1c    ....8... ..)w%. .
+0020: db 31 89 c7 ff 7f 0a d8  97 c5 c5 c5 c5 a6 2f       .1..... ....../
+
+
+
+Offset: 171 (0x00ab)
+Block type: 919 (Unknown Block Type)
+Block length: 48
+
+
+0000: ab d2 20 65 ff fe 7f 7f  0b 1c 62 24 67 89 18 79    .. e.. ..b$g..y
+0010: a2 e3 2c 61 2a 2d c1 2c  37 a6 2f f0 e5 ab d2 20    ..,a*-., 7./.... 
+0020: 65 65 65 65 65 c7 8e cb  0a d8 1b 75 85 c5 c5 03    eeeee... ...u....
+
+
+
+Offset: 221 (0x00dd)
+Block type: 791 (Unknown Block Type)
+Block length: 7
+
+
+0000: c5 b7 c5 d3 d3 1a 19                               .......
+
+
+=================================================================
+==634==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efb0 
+at pc 0x00000058582e bp 0x7fff1ed6df60 sp 0x7fff1ed6df58
+WRITE of size 2 at 0x60200000efb0 thread T0
+    #0 0x58582d in parseSWF_DEFINEFONT /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:1656:29
+    #1 0x5302cb in blockParse /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/blocktypes.c:145:14
+    #2 0x527d4f in readMovie /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:265:11
+    #3 0x527d4f in main /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350
+    #4 0x7fad6007961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #5 0x419b38 in _init (/usr/bin/listswf+0x419b38)
+
+0x60200000efb1 is located 0 bytes to the right of 1-byte region 
+[0x60200000efb0,0x60200000efb1)
+allocated by thread T0 here:
+    #0 0x4d28f8 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x58532d in parseSWF_DEFINEFONT /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:1655:36
+    #2 0x5302cb in blockParse /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/blocktypes.c:145:14
+    #3 0x527d4f in readMovie /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:265:11
+    #4 0x527d4f in main /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350
+    #5 0x7fad6007961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:1656:29 in parseSWF_DEFINEFONT
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa[01]fa fa fa 00 fa fa fa 07 fa
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==634==ABORTING
+
+Affected version:
+0.4.7
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00075-libming-heapoverflow-parseSWF_DEFINEFONT
+
+Timeline:
+2016-11-24: bug discovered and reported to upstream
+2016-12-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-parseswf_definefont-parser-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
