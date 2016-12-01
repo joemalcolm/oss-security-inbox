@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/05/6
-Message-ID: <20160105111246.GA4592@eldamar.local>
-Date: Tue, 5 Jan 2016 12:12:46 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Andreas Stieger <astieger@...e.com>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org, elbrus@...ian.org
-Subject: Re: Re: CVE Request: cacti: SQL injection vulnerability in graphs_new.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/13
+Message-ID: <82df59c6546c4fa695c9c1cf6988d15c@imshyb02.MITRE.ORG>
+Date: Thu, 1 Dec 2016 14:13:14 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Kernel: kvm: stack memory information leakage
 Content-Type: text/plain; charset=utf-8
 
-Hi Andreas,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Jan 05, 2016 at 10:20:23AM +0100, Andreas Stieger wrote:
-> Hello,
+> Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support
+> is vulnerable to an information leakage issue. It could occur on x86 platform,
+> in 32bit mode, while emulating instructions.
 > 
-> On 01/05/2016 12:58 AM, cve-assign@...re.org wrote:
-> > > Another SQL injection vulnerability via graphs_new.php in cacti was
-> > > found, reported to the bug http://bugs.cacti.net/view.php?id=2652
-> >
-> > http://bugs.cacti.net/view.php?id=2652 is CVE-2015-8604.
-> 
-> Check against a possible duplicate assignment with CVE-2015-8377?
-> 
-> http://seclists.org/fulldisclosure/2015/Dec/att-57/cacti_sqli%281%29.txt
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1291222
-> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-8377
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8377
+> A user/process could use this flaw to leak host kernel memory bytes.
 
-Theree are two different vulnerabilities here, see second comment in
-http://bugs.cacti.net/view.php?id=2652 which describe both, the
-CVE-2015-8377 and the new assigned one (CVE-2015-8604).
+> https://bugzilla.redhat.com/show_bug.cgi?id=1400468
+> https://git.kernel.org/linus/2117d5398c81554fbf803f5fd1dc55eb78216c0c
 
-Does this helps?
+>> KVM: x86: drop error recovery in em_jmp_far and em_ret_far
 
-Regards,
-Salvatore
+>> was left uninitialized outside of long mode
+
+Use CVE-2016-9756.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYQHXsAAoJEHb/MwWLVhi2TgcQAIG2Ktz53lW9raKviMre4rfZ
+X2KyP4Z3K5IKcpMhKZRIFbwTE9VdN7T+w6avgh896X/b+qOyL4iAyXSumVMVsAzZ
+I5tr0qxJvL1wybm5v/+w+dwWySE9rETa6kYxhjt/SPqvNiO2MluysS2zt1IjG2IT
+oN+NnXWOk5rgfl4lp3Ei2sbLOU/0dWd0XgVRVmA332toD+w+AcsHCQBPy0Bba11B
+CHE8pzNqQr5R0237OuCEXd5aAQVw7YJKz6oQVii1HjK523m7Cf/C1NH6k/lAQby4
+mJcuC41yApyiPB/Ch2iUg1IKg6b2b1himL12kDEgTvgejE/4x0BNTaMw5bYCPSAe
+RhCNNMLmhKy6VBB3aUTKIGoFa0q/DplL9jGG5Jy2LQ9tg1rC68MWqrSdlHDDscxu
+svTUMiPpboh83D5BYhVTXajQzVEgFktbGyycOgfT2cos5imbF9RPXYtu/QD5e+Pp
+T/9ziafUnQ1YrU3X2wpV/v0P8mFoxsDVrEu8AMvvB/Q+tKyB62rSV/Fc952M52K3
+eeJPGEC83G7O51ZAuEXGaJGqSTQ90UrPM38fOJIYOmX18HwaBIyEdBFvhXshpjYE
+UfCjLblQYcnV3Ba02CjbA9MSkzfuClGXwHVBTPkIi8aV+BDKlR958wNrjO+HWQl/
+44D1okf1EQ/QqrejB32l
+=YB5I
+-----END PGP SIGNATURE-----
