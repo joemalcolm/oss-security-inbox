@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2054" "Thursday" "5" "May" "2016" "22:39:11" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160506023911.7A4638BC1B1@smtpvmsrv1.mitre.org>" "52" "[oss-security] Re: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS" nil nil nil "5" "2016050602:39:11" "[oss-security] Re: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS" (number mark "U       cve-assign@m May  5   52/2054  " thread-indent "\"[oss-security] Re: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS\"\n") "<6aa8b189.1329d.1548107c1d2.Coremail.pengdawei521@163.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["587" "Thursday" "1" "December" "2016" "15:48:05" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1612011545500.26855@wniryva>" "20" "[oss-security] CVE request: Kernel: kvm: stack memory information leakage" nil nil nil "12" "2016120110:18:05" "[oss-security] CVE request: Kernel: kvm: stack memory information leakage" (number mark "U       ppandit@redh Dec  1   20/587   " thread-indent "\"[oss-security] CVE request: Kernel: kvm: stack memory information leakage\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31903 invoked by uid 550); 6 May 2016 02:39:23 -0000
+Received: (qmail 3850 invoked by uid 550); 1 Dec 2016 10:18:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31879 invoked from network); 6 May 2016 02:39:23 -0000
-From: cve-assign@mitre.org
-To: pengdawei521@163.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <6aa8b189.1329d.1548107c1d2.Coremail.pengdawei521@163.com>
-Message-Id: <20160506023911.7A4638BC1B1@smtpvmsrv1.mitre.org>
-Date: Thu,  5 May 2016 22:39:11 -0400 (EDT)
-Subject: [oss-security] Re: CVE request - samsumg android phone com.samsung.android.jam.IAndroidShm binder service DoS
+Received: (qmail 3820 invoked from network); 1 Dec 2016 10:18:21 -0000
+Date: Thu, 1 Dec 2016 15:48:05 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1612011545500.26855@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Thu, 01 Dec 2016 10:18:09 +0000 (UTC)
+Subject: [oss-security] CVE request: Kernel: kvm: stack memory information leakage
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> When a app send a evil data to com.samsung.android.jam.IAndroidShm
-> service by service command (Android system command) , can cause to
-> IAndroidShm service crash.
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable to an information leakage issue. It could occur on x86 platform, 
+in 32bit mode, while emulating instructions.
 
-> adb shell;
+A user/process could use this flaw to leak host kernel memory bytes.
 
-> service call com.samsung.android.jam.IAndroidShm 5 i32 917154658 i32
-> 998369275 i32 1652062893 i32 2113420870 i32 1380178743 i32 47342718
-> i32 543810222 i32 1481030271
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/2117d5398c81554fbf803f5fd1dc55eb78216c0c
 
-> Fix:
-> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2016
-> SVE-2015-5133: IAndroidShm IAPAService service DoS
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1400468
 
->> A vulnerability without proper exception handling in system services
->> can lead to crash by calling malicious service commands.
-
-Use CVE-2016-4546.
-
-If you have additional reports about Samsung software, then
-oss-security readers might find it useful if you include a reference
-establishing that the software is open source. For example, we
-selected an arbitrary Samsung repository of
-git://opensource.samsung.com/SM-N900P and found a
-vendor/samsung/common/external/jack/android/AndroidShm.cpp file
-that may be related.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXLANMAAoJEHb/MwWLVhi2150P/Rz+lyS2h7ZVm90d3Y1V2sSp
-8M+zy6rN8YhjOizW2VhAWpf1U0ekDahXV9qDVmjOVxqiP5l3UXPVTb62Ee6zgYjd
-fGPkYxQDMroqps42ryIg7K5eNsKGO0iZ+tsi8wfdH1wzk+opa6ta45CTqPHUl9vS
-STi5sZoX2txMXCbfdcGsuudylkVG7y3FbjGw//cT7DcoHHQbWmSF7SmQwcdBzq/c
-0Xl67OUOWBKFnNgrLdqifeS6Msa0YW52omLmSMOiLm9/+1jN5bCpfVrwWI78ALeG
-FxfHi6HiVWZAyHPt894kCnNeynKa8uw2bWAEgy7RiHf42OBNp+15Crzdg2FvpBCa
-8WXRgij1+ML7YtPbG0PfBt66rtlSpznlxp7jCeyriiKqsvSyKcS0rxVWNDbinn8g
-vmApz6CqDAotB/PS4/dAv9EyvPlK/bSPiqmbYE0jDw2UmTKVrjc6DnlD0iSPgE4L
-y4D6wmFLqSIljFadZVnnHqIGrdqJZQU14yWbw31Fjpp+NdKrMfG2VP/F7ZPPF1Qo
-Dk+JYGurrooQwbDsEZ/6TTRXNEMfEtQRLHm7xCXzaxTFjwn12rA6jRlje0MoIPqQ
-7Qtersx91679csj9cqAXlBbxgTwpFlIv5XqEcZRPiFKYK02NH/y2vyRE/2yCWkjW
-pU6S7ZescwAX+GAeFsur
-=GdhJ
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
