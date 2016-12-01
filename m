@@ -1,4 +1,9 @@
-Received: (qmail 24076 invoked by uid 550); 19 Sep 2023 17:31:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["13946" "Thursday" "1" "December" "2016" "17:23:43" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<54839894.ARmt1DTBun@arcadia>" "331" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" "^Cc:" nil nil "12" "2016120116:23:43" "[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" (number mark "        ago@gentoo.o Dec  1  331/13946 " thread-indent "\"[oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11817 invoked by uid 550); 1 Dec 2016 16:22:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,136 +11,347 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9507 invoked from network); 19 Sep 2023 07:48:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1695109678; x=1695714478; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rbvvNBq/hqgUc6CEmcDYMKHy+jEIkC7vBwiLWdwBQdQ=;
-        b=iRsuLaM5nyUgq8Wm1yEjezMU2fupD1dp1d57ohEiFBntGJoJLXtdN486h6QcdeC8BD
-         rbC3qmQW4ZI1tPTcduKbZiryjgdfcG8FRADsKReRY2reCV6rYcKnbR8JYnIM7K5fjCVK
-         b9JXKJpVV+ioVfk8T+1jLlo0mem6w/NKMNtRFITw//uYyLX2SQPFhjp6zdQmdFblYIrj
-         nXP1qRNsDtfEzbWd2cWorZEW0Cn2+9RW9lBnk+ni8Rb4eYjtScFnEygfT6wCJiZXluAK
-         x5/+bidDP3KstUFtShZMAToeyT0gwdkST0DPH1gbcNID7mbxNekeIk4tHeZcLGHvzXM2
-         IGmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695109678; x=1695714478;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rbvvNBq/hqgUc6CEmcDYMKHy+jEIkC7vBwiLWdwBQdQ=;
-        b=lbw7e6XTYcHCk0lBl9IXwoAl5R466LkQu+XuuYiTbItbJ3ufyyUozYp7jjIuEPPNQZ
-         k31zEgrPPucKqqaIjytIvaispY7AbAKgpNhKoVgy9Jgt8C9jMxeWjv3S56ETrZ/YB2pS
-         chrJqEHLykBy3+DtRMK2q1nI4y5Odo+bPs1MnWa/aLJ+fG/FVV6wSR3ZVKeu8ZQuVFh3
-         /PFLpRO12kjFE/kgGQ46K/1B/TQrcWxBrfPrGPqhzlhSSp6e4zje+j29GkB6+SjvkLlT
-         CbEfbZNPzPqOdvMC1txgWJ4rjQABLB7HOaA0/65a9Nv0W9eRv2bhZxsiodgPdU74n3H7
-         /wAA==
-X-Gm-Message-State: AOJu0YxmPuSJE0dr9eU5UeCk26R04ygVqVG9L5GjYcHe9ahvePUchjRV
-	pNpR7d3s7W8n4ef1UPewRYs=
-X-Google-Smtp-Source: AGHT+IEhlodweatAg0+bmPrhcoKt8oGIz9gqDRpWkcFrqNZuSb3kv4Zs4s7Q3qV14srqhc2f6DTNSw==
-X-Received: by 2002:a05:651c:19ab:b0:2bf:f6b6:6c31 with SMTP id bx43-20020a05651c19ab00b002bff6b66c31mr7441521ljb.41.1695109677369;
-        Tue, 19 Sep 2023 00:47:57 -0700 (PDT)
-Message-ID: <4de172a2-afc4-24b8-572a-24390fc1a74c@googlemail.com>
-Date: Tue, 19 Sep 2023 09:47:55 +0200
+Received: (qmail 11788 invoked from network); 1 Dec 2016 16:22:37 -0000
+Message-ID: <54839894.ARmt1DTBun@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Content-Language: en-US, de-DE
-To: Steve Thompson <susurrus.of.qualia@gmail.com>
-References: <CAA0MYJUHngYsTR0miEO31PpMp+TyCgj6ebt9F4b2289SFwy5TQ@mail.gmail.com>
-Cc: oss-security@lists.openwall.com
-From: Mathias Krause <minipli@googlemail.com>
-In-Reply-To: <CAA0MYJUHngYsTR0miEO31PpMp+TyCgj6ebt9F4b2289SFwy5TQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Possible AMD Zen2 CVE
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Cc: cve-assign@mitre.org
+Date: Thu, 01 Dec 2016 17:23:43 +0100
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
+To: oss-security@lists.openwall.com
 
-Hi Steve,
+If suitable for a CVE please assign one. Thanks.
 
-On 18.09.23 22:37, Steve Thompson wrote:
-> [snip]  In a loop, the following code is found:
-> 
->           nr_spin = t1lock_acquire(&obj.lock);
->     #if defined BROKEN
->           temp = ++obj.value;
->     #else
->           ++obj.value;
->     #endif
->           t1lock_release(&obj.lock);
-> 
-> If "BROKEN" is defined, you can see that an additional cache-line write
-> is made with the assignment to 'temp'.  When this code path is enabled,
-> the underlying cmpxchg operation in t1lock_acquire() occasionally
-> succeeds when it shouldn't...
+Description:
+Graphicsmagick is an Image Processing System.
 
-I think you're misinterpreting the generated binary. Looking only at the
-difference in the core loop give us the following diff between good and bad:
+This is an old memory failure, discovered time ago. The maintainer, Mr. Bob=
+=20
+Friesenhahn was able to reproduce the issue; I=E2=80=99m quoting his feedba=
+ck about:
 
-$ objdump -wdr --no-show-raw-insn good
-[...]
-0000000000001580 <wr_thread>:
-     ::
-    1653:       incq   0x2a4e(%rip)        # 40a8 <obj+0x8>
-    165a:       incw   (%rbx)
+The problem is that the embedded JPEG data claims to have dimensions=20
+59395=C3=9756833 and
+this is only learned after we are in the JPEG reader.
 
-In 'good' the increment of obj.value at 1653 is followed by the
-increment of obj.lock.ticket. Everything looking good so far.
+But for some reasons (maybe not easy to fix) it is still not fixed.
 
-$ objdump -wdr --no-show-raw-insn bad
-[...]
-0000000000001580 <wr_thread>:
-     ::
-    1653:       mov    0x2a4e(%rip),%rax        # 40a8 <obj+0x8>
-    165a:       incw   (%rbx)
-    165d:       inc    %rax
-    1660:       mov    %rax,0x2a41(%rip)        # 40a8 <obj+0x8>
-    1667:       mov    %rax,0x2a5a(%rip)        # 40c8 <temp>
+The complete ASan output:
 
-In 'bad', however, obj.value is incremented only *after* obj.lock.ticket
-was incremented and the lock thereby released, allowing further threads
-to take it. This allows the data race between the read of obj.value in
-1653, its increment in 165d (after the lock was released again) and
-writing back the possibly out-of-date value to obj.value at 1660.
+# gm identify $FILE
+=3D=3D12404=3D=3DERROR: AddressSanitizer failed to allocate 0xfb8065000 (67=
+511930880)=20
+bytes of LargeMmapAllocator (error code: 12)
+=3D=3D12404=3D=3DProcess memory map follows:
+	0x000000400000-0x000000522000	/usr/bin/gm
+	0x000000722000-0x000000723000	/usr/bin/gm
+	0x000000723000-0x000000726000	/usr/bin/gm
+	0x000000726000-0x0000013a9000=09
+	0x00007fff7000-0x00008fff7000=09
+	0x00008fff7000-0x02008fff7000=09
+	0x02008fff7000-0x10007fff8000=09
+	0x600000000000-0x602000000000=09
+	0x602000000000-0x602000010000=09
+	0x602000010000-0x603000000000=09
+	0x603000000000-0x603000010000=09
+	0x603000010000-0x604000000000=09
+	0x604000000000-0x604000010000=09
+	0x604000010000-0x606000000000=09
+	0x606000000000-0x606000010000=09
+	0x606000010000-0x607000000000=09
+	0x607000000000-0x607000010000=09
+	0x607000010000-0x608000000000=09
+	0x608000000000-0x608000010000=09
+	0x608000010000-0x60a000000000=09
+	0x60a000000000-0x60a000010000=09
+	0x60a000010000-0x60b000000000=09
+	0x60b000000000-0x60b000010000=09
+	0x60b000010000-0x60c000000000=09
+	0x60c000000000-0x60c000010000=09
+	0x60c000010000-0x60d000000000=09
+	0x60d000000000-0x60d000010000=09
+	0x60d000010000-0x60e000000000=09
+	0x60e000000000-0x60e000010000=09
+	0x60e000010000-0x60f000000000=09
+	0x60f000000000-0x60f000010000=09
+	0x60f000010000-0x610000000000=09
+	0x610000000000-0x610000010000=09
+	0x610000010000-0x611000000000=09
+	0x611000000000-0x611000010000=09
+	0x611000010000-0x612000000000=09
+	0x612000000000-0x612000010000=09
+	0x612000010000-0x614000000000=09
+	0x614000000000-0x614000020000=09
+	0x614000020000-0x616000000000=09
+	0x616000000000-0x616000020000=09
+	0x616000020000-0x618000000000=09
+	0x618000000000-0x618000020000=09
+	0x618000020000-0x619000000000=09
+	0x619000000000-0x619000020000=09
+	0x619000020000-0x61a000000000=09
+	0x61a000000000-0x61a000020000=09
+	0x61a000020000-0x61b000000000=09
+	0x61b000000000-0x61b000020000=09
+	0x61b000020000-0x61c000000000=09
+	0x61c000000000-0x61c000020000=09
+	0x61c000020000-0x61d000000000=09
+	0x61d000000000-0x61d000020000=09
+	0x61d000020000-0x61e000000000=09
+	0x61e000000000-0x61e000020000=09
+	0x61e000020000-0x621000000000=09
+	0x621000000000-0x621000020000=09
+	0x621000020000-0x623000000000=09
+	0x623000000000-0x623000020000=09
+	0x623000020000-0x624000000000=09
+	0x624000000000-0x624000020000=09
+	0x624000020000-0x625000000000=09
+	0x625000000000-0x625000030000=09
+	0x625000030000-0x628000000000=09
+	0x628000000000-0x628000010000=09
+	0x628000010000-0x62a000000000=09
+	0x62a000000000-0x62a000010000=09
+	0x62a000010000-0x630000000000=09
+	0x630000000000-0x630000020000=09
+	0x630000020000-0x640000000000=09
+	0x640000000000-0x640000003000=09
+	0x7fcc55fbe000-0x7fcc56027000	/usr/lib64/libjpeg.so.62.2.0
+	0x7fcc56027000-0x7fcc56226000	/usr/lib64/libjpeg.so.62.2.0
+	0x7fcc56226000-0x7fcc56227000	/usr/lib64/libjpeg.so.62.2.0
+	0x7fcc56227000-0x7fcc56228000	/usr/lib64/libjpeg.so.62.2.0
+	0x7fcc56228000-0x7fcc56254000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/jpeg.so
+	0x7fcc56254000-0x7fcc56453000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/jpeg.so
+	0x7fcc56453000-0x7fcc56454000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/jpeg.so
+	0x7fcc56454000-0x7fcc56457000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/jpeg.so
+	0x7fcc56457000-0x7fcc5645b000=09
+	0x7fcc5645b000-0x7fcc5648c000	/usr/lib64/libpng16.so.16.21.0
+	0x7fcc5648c000-0x7fcc5668b000	/usr/lib64/libpng16.so.16.21.0
+	0x7fcc5668b000-0x7fcc5668c000	/usr/lib64/libpng16.so.16.21.0
+	0x7fcc5668c000-0x7fcc5668d000	/usr/lib64/libpng16.so.16.21.0
+	0x7fcc5668d000-0x7fcc5671d000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/png.so
+	0x7fcc5671d000-0x7fcc5691d000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/png.so
+	0x7fcc5691d000-0x7fcc5691f000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/png.so
+	0x7fcc5691f000-0x7fcc56927000	/usr/lib64/GraphicsMagick-1.3.24/modules-
+Q32/coders/png.so
+	0x7fcc56927000-0x7fcc56932000=09
+	0x7fcc56932000-0x7fcc5cfa4000	/usr/lib64/locale/locale-archive
+	0x7fcc5cfa4000-0x7fcc5fdff000=09
+	0x7fcc5fdff000-0x7fcc5fe08000	/usr/lib64/libltdl.so.7.3.1
+	0x7fcc5fe08000-0x7fcc60007000	/usr/lib64/libltdl.so.7.3.1
+	0x7fcc60007000-0x7fcc60008000	/usr/lib64/libltdl.so.7.3.1
+	0x7fcc60008000-0x7fcc60009000	/usr/lib64/libltdl.so.7.3.1
+	0x7fcc60009000-0x7fcc6001e000	/lib64/libz.so.1.2.8
+	0x7fcc6001e000-0x7fcc6021d000	/lib64/libz.so.1.2.8
+	0x7fcc6021d000-0x7fcc6021e000	/lib64/libz.so.1.2.8
+	0x7fcc6021e000-0x7fcc6021f000	/lib64/libz.so.1.2.8
+	0x7fcc6021f000-0x7fcc6022e000	/lib64/libbz2.so.1.0.6
+	0x7fcc6022e000-0x7fcc6042d000	/lib64/libbz2.so.1.0.6
+	0x7fcc6042d000-0x7fcc6042e000	/lib64/libbz2.so.1.0.6
+	0x7fcc6042e000-0x7fcc6042f000	/lib64/libbz2.so.1.0.6
+	0x7fcc6042f000-0x7fcc604d6000	/usr/lib64/libfreetype.so.6.12.3
+	0x7fcc604d6000-0x7fcc606d6000	/usr/lib64/libfreetype.so.6.12.3
+	0x7fcc606d6000-0x7fcc606dc000	/usr/lib64/libfreetype.so.6.12.3
+	0x7fcc606dc000-0x7fcc606dd000	/usr/lib64/libfreetype.so.6.12.3
+	0x7fcc606dd000-0x7fcc60730000	/usr/lib64/liblcms2.so.2.0.6
+	0x7fcc60730000-0x7fcc60930000	/usr/lib64/liblcms2.so.2.0.6
+	0x7fcc60930000-0x7fcc60931000	/usr/lib64/liblcms2.so.2.0.6
+	0x7fcc60931000-0x7fcc60936000	/usr/lib64/liblcms2.so.2.0.6
+	0x7fcc60936000-0x7fcc60ac9000	/lib64/libc-2.22.so
+	0x7fcc60ac9000-0x7fcc60cc9000	/lib64/libc-2.22.so
+	0x7fcc60cc9000-0x7fcc60ccd000	/lib64/libc-2.22.so
+	0x7fcc60ccd000-0x7fcc60ccf000	/lib64/libc-2.22.so
+	0x7fcc60ccf000-0x7fcc60cd3000=09
+	0x7fcc60cd3000-0x7fcc60ce9000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7fcc60ce9000-0x7fcc60ee8000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7fcc60ee8000-0x7fcc60ee9000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7fcc60ee9000-0x7fcc60eea000	/usr/lib64/gcc/x86_64-pc-linux-
+gnu/4.9.3/libgcc_s.so.1
+	0x7fcc60eea000-0x7fcc60ef0000	/lib64/librt-2.22.so
+	0x7fcc60ef0000-0x7fcc610f0000	/lib64/librt-2.22.so
+	0x7fcc610f0000-0x7fcc610f1000	/lib64/librt-2.22.so
+	0x7fcc610f1000-0x7fcc610f2000	/lib64/librt-2.22.so
+	0x7fcc610f2000-0x7fcc61109000	/lib64/libpthread-2.22.so
+	0x7fcc61109000-0x7fcc61308000	/lib64/libpthread-2.22.so
+	0x7fcc61308000-0x7fcc61309000	/lib64/libpthread-2.22.so
+	0x7fcc61309000-0x7fcc6130a000	/lib64/libpthread-2.22.so
+	0x7fcc6130a000-0x7fcc6130e000=09
+	0x7fcc6130e000-0x7fcc6140b000	/lib64/libm-2.22.so
+	0x7fcc6140b000-0x7fcc6160a000	/lib64/libm-2.22.so
+	0x7fcc6160a000-0x7fcc6160b000	/lib64/libm-2.22.so
+	0x7fcc6160b000-0x7fcc6160c000	/lib64/libm-2.22.so
+	0x7fcc6160c000-0x7fcc6160e000	/lib64/libdl-2.22.so
+	0x7fcc6160e000-0x7fcc6180e000	/lib64/libdl-2.22.so
+	0x7fcc6180e000-0x7fcc6180f000	/lib64/libdl-2.22.so
+	0x7fcc6180f000-0x7fcc61810000	/lib64/libdl-2.22.so
+	0x7fcc61810000-0x7fcc61e6e000	/usr/lib64/libGraphicsMagick.so.3.15.0
+	0x7fcc61e6e000-0x7fcc6206e000	/usr/lib64/libGraphicsMagick.so.3.15.0
+	0x7fcc6206e000-0x7fcc6209f000	/usr/lib64/libGraphicsMagick.so.3.15.0
+	0x7fcc6209f000-0x7fcc62125000	/usr/lib64/libGraphicsMagick.so.3.15.0
+	0x7fcc62125000-0x7fcc621a0000=09
+	0x7fcc621a0000-0x7fcc621c2000	/lib64/ld-2.22.so
+	0x7fcc6228e000-0x7fcc62317000=09
+	0x7fcc6231b000-0x7fcc62322000=09
+	0x7fcc62322000-0x7fcc62329000	/usr/lib64/gconv/gconv-modules.cache
+	0x7fcc62329000-0x7fcc6234c000	/usr/share/locale/it/LC_MESSAGES/libc.mo
+	0x7fcc6234c000-0x7fcc623b6000=09
+	0x7fcc623b6000-0x7fcc623c1000=09
+	0x7fcc623c1000-0x7fcc623c2000	/lib64/ld-2.22.so
+	0x7fcc623c2000-0x7fcc623c3000	/lib64/ld-2.22.so
+	0x7fcc623c3000-0x7fcc623c4000=09
+	0x7ffcfee34000-0x7ffcfee55000	[stack]
+	0x7ffcfef4c000-0x7ffcfef4e000	[vvar]
+	0x7ffcfef4e000-0x7ffcfef50000	[vdso]
+	0xffffffffff600000-0xffffffffff601000	[vsyscall]
+=3D=3D12404=3D=3DEnd of process memory map.
+=3D=3D12404=3D=3DAddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/=
+llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) =
+!=3D=20
+(0)" (0x0, 0x0)
+    #0 0x4c9b3d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
+    #1 0x4d0673 in __sanitizer::CheckFailed(char const*, int, char const*,=
+=20
+unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8=
+.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:159
+    #2 0x4d0861 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char=
+=20
+const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_common.cc:183
+    #3 0x4d989a in __sanitizer::MmapOrDie(unsigned long, char const*, bool)=
+=20
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/sanitizer_common/sanitizer_posix.cc:122
+    #4 0x421c2f in=20
+__sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*,=20
+unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
+    #5 0x421c2f in=20
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<1055531162=
+66496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>,=20
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
+<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>, __sanitizer::LargeMmapAllocator=20
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClas=
+sAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
+devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
+    #6 0x421c2f in __asan::Allocator::Allocate(unsigned long, unsigned long=
+,=20
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool)=20
+/var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
+    #7 0x421c2f in __asan::asan_malloc(unsigned long,=20
+__sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
+    #8 0x4c0201 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
+r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
+    #9 0x7fcc61c6a3f2 in MagickRealloc /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/memory.c:471:18
+    #10 0x7fcc61cbb2b0 in OpenCache /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:3=
+155:7
+    #11 0x7fcc61cb98fd in ModifyCache /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:2=
+955:18
+    #12 0x7fcc61cbee4c in SetCacheNexus /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:3=
+878:7
+    #13 0x7fcc61cbf5e1 in SetCacheViewPixels /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:3=
+957:10
+    #14 0x7fcc61cbf5e1 in SetImagePixels /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/pixel_cache.c:4=
+023
+    #15 0x7fcc56235483 in ReadJPEGImage /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/coders/jpeg.c:1344:9
+    #16 0x7fcc61ad3a8a in ReadImage /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/constitute.c:16=
+07:13
+    #17 0x7fcc566ed13e in ReadOneJNGImage /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/coders/png.c:3308:17
+    #18 0x7fcc566d6f72 in ReadJNGImage /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/coders/png.c:3516:9
+    #19 0x7fcc61ad3a8a in ReadImage /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/constitute.c:16=
+07:13
+    #20 0x7fcc61ad1a4b in PingImage /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/constitute.c:13=
+70:9
+    #21 0x7fcc61a23240 in IdentifyImageCommand /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:8372:=
+17
+    #22 0x7fcc61a27786 in MagickCommand /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:8862:=
+17
+    #23 0x7fcc61a81740 in GMCommandSingle /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:17370=
+:10
+    #24 0x7fcc61a7fce3 in GMCommand /tmp/portage/media-
+gfx/graphicsmagick-1.3.24/work/GraphicsMagick-1.3.24/magick/command.c:17423=
+:16
+    #25 0x7fcc6095661f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #26 0x418cd8 in _init (/usr/bin/gm+0x418cd8)
 
-What's clear from the above code dump that the code is missing a memory
-barrier. Adding it, like the patch at the end of the email does, gives
-me the following:
+/usr/bin/gm identify: abort due to signal 6 (SIGABRT) "Abort"...
 
-$ objdump -wdr --no-show-raw-insn not_bad
-[...]
-0000000000001580 <wr_thread>:
-     ::
-    1653:       mov    0x2a4e(%rip),%rax        # 40a8 <obj+0x8>
-    165a:       inc    %rax
-    165d:       mov    %rax,0x2a44(%rip)        # 40a8 <obj+0x8>
-    1664:       mov    %rax,0x2a5d(%rip)        # 40c8 <temp>
-    166b:       incw   (%rbx)
+Affected version:
+1.3.25
 
-It's basically the same instructions as for 'bad' but the lock release,
-i.e. obj.lock.ticket++, was moved after the write operations to 166b,
-preventing the data race of 'bad'.
+Fixed version:
+N/A
 
-Here's the fix:
+Commit fix:
+N/A
 
---- a/bug_src.c
-+++ b/bug_src.c
-@@ -91,6 +91,7 @@ typedef struct {
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
- __inline__ void   t1lock_release(t1lock * oo)
- {
-+   __asm__ ("" ::: "memory");
-    oo->ticket++;
+CVE:
+N/A
 
-    return;
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00096-graphicsmagick-memalloc-M=
+agickRealloc
 
-The code probably needs more memory barriers to prevent making the
-compiler moving reads and writes outside of the critical section. But, I
-guess, there are good online resources to read up the requirements, e.g.
-what's written for the Linux kernel should be a good start:
+Timeline:
+2016-10-19: bug discovered and reported privately to upstream
+2016-12-01: blog post about the issue
 
- https://www.kernel.org/doc/Documentation/memory-barriers.txt
+Note:
+This bug was found with American Fuzzy Lop.
 
-Cheers,
-Mathias
+Permalink:
+https://blogs.gentoo.org/ago/2016/12/01/graphicsmagick-memory-allocation-fa=
+ilure-in-magickrealloc-memory-c
+
+--=20
+Agostino Sarubbo
+Gentoo Linux Developer
