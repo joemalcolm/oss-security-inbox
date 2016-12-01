@@ -1,4 +1,9 @@
-Received: (qmail 15805 invoked by uid 550); 3 May 2023 20:15:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1849" "Thursday" "1" "December" "2016" "11:24:59" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161201112459.78cbf764@pc1>" "61" "[oss-security] gstreamer multiple issues" nil nil nil "12" "2016120110:24:59" "[oss-security] gstreamer multiple issues" (number mark "U       hanno@hboeck Dec  1   61/1849  " thread-indent "\"[oss-security] gstreamer multiple issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17989 invoked by uid 550); 1 Dec 2016 10:25:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,47 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1702 invoked from network); 3 May 2023 19:58:13 -0000
-Message-ID: <8038fdf3-2532-9a54-caf9-7c0d40262f52@thirddimension.net>
-Date: Wed, 3 May 2023 15:57:59 -0400
+Received: (qmail 17957 invoked from network); 1 Dec 2016 10:25:13 -0000
+Date: Thu, 1 Dec 2016 11:24:59 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Message-ID: <20161201112459.78cbf764@pc1>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Content-Language: en-US
-To: oss-security@lists.openwall.com, "David A. Wheeler"
- <dwheeler@dwheeler.com>
-References: <20230418154630.eoheygqyom3c7ovw@stig.io>
- <20230429100407.3yqdy2vtzokv3t5l@stig.io>
- <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
- <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
-From: Reid Sutherland <reid@thirddimension.net>
-In-Reply-To: <30B5E64A-3EEE-4676-979C-A5A39373F46B@dwheeler.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
- affecting CPAN.pm and other modules
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] gstreamer multiple issues
 
-On 5/3/23 15:54, David A. Wheeler wrote:
-> 
-> 
->> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@thirddimension.net> wrote:
->>
->> Who actually decides when something receives a CVE?
-> 
-> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that is, to become a CVE Numbering Authority (CNA) - has to follow various processes. I'm sure it can be improved, like all things. I'm not directly involved in this. You might find more information here:
-> https://www.cve.org/ProgramOrganization/CNAs
-> 
->>   This can be used to defame projects and products as in this case.
-> 
-> 
-> Identifying a vulnerability does not defame a project. If a library has the functionality to retrieve an https URLs, and fails to verify the server certificates by default, then I (and many others) would call that a vulnerability. After all, the default is what happens. If you request data from <https://google.com>, you wouldn't expect it to use the data from <https://godzilla.com>. There's a general expectation that https://FPP provides a secure connection to FOO (with confidentiality, integrity, and server authentication), unless you specially disable it.
-> 
-> --- David A. Wheeler
-> 
+Hi,
+
+After the blogposts from Chris Evans about gstreamer insecurities I had
+a look.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D774859
+Invalid memory read in flx_decode_chunks (gst-plugins-good)
+The fix is a larger rewrite of the affected code paths and probably
+fixed a bunch of other issues on the way. It also fixes the second flic
+bug reported by Chris Evans described here:
+https://scarybeastsecurity.blogspot.dk/2016/11/0day-poc-incorrect-fix-for-g=
+streamer.html
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D774896
+h264: one byte heap off by one read in gst_h264_parse_set_caps
+(gst-plugins-bad)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D774897
+Invalid memory read in glib caused by one invalid unref call in the
+flxdec decoder. (gst-plugins-good)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D774902
+4 byte heap out of bounds read in windows_icon_typefind
+(gst-plugins-base)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D775048
+2 byte heap out of bounds read in gst_mpegts_section_new
+(gst-plugins-bad).
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D775120
+null pointer deref (segfault) in mpegts decoder / _parse_pat
+(gst-plugins-bad)
+
+A note about the memory access bugs: glib's slice allocator can hide
+them, so finding them with asan sometimes only works if one sets
+G_SLICE=3Dalways-malloc
 
 
-A default is not a vulnerability.  There are reasons why defaults cannot 
-be changed in libraries once they are stable.  This is also why 
-documentation exists.
+Stuff that's probably not security relevant:
 
-Revoke these CVEs, it's a stain on the process.
+Asserts / traps only:
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D775130
+h264 decoder assert (gst-plugins-bad)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D775219
+avidemux trap on invalid utf-8
+
+
+
+The gstreamer devs were very quick in fixing all issues. The release
+1.10.2 should contain all the fixes.
+https://gstreamer.freedesktop.org/releases/gstreamer/1.10.2.html
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
