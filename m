@@ -1,39 +1,201 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/27/1
-Message-ID: <83a03bcf-f86b-4688-37b5-615c080291d8@apache.org>
-Date: Fri, 27 May 2016 08:03:05 +0200
-From: Andreas Lehmkuehler <lehmi@...che.org>
-To: announce@...che.org, dev@...box.apache.org, "users@...box.apache.org" <users@...box.apache.org>, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-2175] Apache PDFBox XML External Entity vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/3
+Message-ID: <2421787.A5MWpBLn5b@arcadia>
+Date: Thu, 01 Dec 2016 14:30:33 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: libav: multiple crashes from the Undefined Behavior Sanitizer
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-2175: Apache PDFBox XML External Entity vulnerability
-
-Severity: Important
-
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Apache PDFBox 1.8.0 to 1.8.11
-Apache PDFBox 2.0.0
-Earlier, unsupported Apache PDFBox versions may be affected as well
+If suitable for a CVE please assign one. Thanks.
 
 Description:
-Apache PDFBox parses different XML data within PDF files such as XMP and the 
-initialization of the XML parsers did not protect against XML External Entity 
-(XXE) vulnerabilities. According to www.owasp.org [1]: "This attack may lead to 
-the disclosure of confidential data, denial of service, server side request 
-forgery, port scanning from the perspective of the machine where the parser is 
-located, and other system impacts."
+Libav is an open source set of tools for audio and video processing.
 
+A fuzzing on an updated stable releases with the Undefined Behavior Sanitizer 
+enabled, revealed multiple crashes. At the date I’m releasing this post, 
+upstream didn’t give a response/feedback about.
 
-Mitigation:
-Upgrade to Apache PDFBox 1.8.12 respectively 2.0.1
+All issues are reproducible with:
+
+avconv -i $FILE -f null -
+
+More details about:
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo.c:2381:65: runtime 
+error: left shift of negative value -1
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo.c:2382:65: runtime 
+error: left shift of negative value -1
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo.c:2383:65: runtime 
+error: left shift of negative value -1
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00036-libav-leftshift-mpegvideo
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_motion.c:323:47: runtime 
+error: left shift of negative value -1
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_motion.c:331:55: runtime 
+error: left shift of negative value -1
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_motion.c:336:55: runtime 
+error: left shift of negative value -1
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00036-libav-leftshift-mpegvideo
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_parser.c:91:65: runtime 
+error: signed integer overflow: 28573696 * 400 cannot be represented in type 
+‘int’
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00037-libav-signedintoverflow-mpegvideo_parser
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/mpeg12dec.c:1401:41: runtime 
+error: signed integer overflow: 28573696 * 400 cannot be represented in type 
+‘int’
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00037-libav-signedintoverflow-mpegvideo_parser
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/x86/mpegvideo.c:53:18: runtime 
+error: index -1 out of bounds for type ‘uint8_t [64]’
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00038-libav-uint8_t64-outofbounds-mpegvideo
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libswscale/x86/swscale.c:189:64: runtime 
+error: signed integer overflow: 65463 * 65537 cannot be represented in type 
+‘int’
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00039-libav-signedintoverflow-swscale_c
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-video/libav-11.8/work/libav-11.8/libswscale/utils.c:340:30: 
+runtime error: left shift of negative value -1
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00040-libav-leftshift-utils_c
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00041-libav-leftshift-ituh263dec_c
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/ituh263dec.c:645:34: runtime 
+error: left shift of negative value -16
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00041-libav-leftshift-ituh263dec_c
+
+######################################
+
+Affected version / Tested on:
+11.8
+Output/failure:
+/tmp/portage/media-
+video/libav-11.8/work/libav-11.8/libavcodec/get_bits.h:530:5: runtime error: 
+load of null pointer of type ‘int16_t’ (aka ‘short’)
+Commit fix:
+N/A
+Fixed version:
+N/A
+Testcase:
+https://github.com/asarubbo/poc/blob/master/00042-libav-loadnullptr-get_bits_h
 
 Credit:
-This issue was discovered by Arthur Khashaev (https://khashaev.ru), Seulgi Kim, 
-Mesut Timur and Microsoft Vulnerability Research.
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-[1] https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+Timeline:
+2016-11-08: bug discovered and reported to upstream
+2016-12-01: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/12/01/libav-multiple-crashes-from-the-undefined-behavior-sanitizer
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
