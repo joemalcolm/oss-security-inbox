@@ -1,24 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/6
-Message-ID: <20160927142500.3x26pcrhw5x4nt6s@jwilk.net>
-Date: Tue, 27 Sep 2016 16:25:00 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/2
+Message-ID: <20161201112459.78cbf764@pc1>
+Date: Thu, 1 Dec 2016 11:24:59 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: gstreamer multiple issues
 Content-Type: text/plain; charset=utf-8
 
-* Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>, 2016-09-27, 08:48:
->>From my own investigations, I used
->
->  identify -debug all "d:"
->
->and see that a temporary file is reported to be created and then the 
->program hangs which no apparent CPU usage.
+Hi,
 
-strace tells me that it waits for input on stdin.
-This is a simpler way to make it "hang":
+After the blogposts from Chris Evans about gstreamer insecurities I had
+a look.
 
-   identify -
+https://bugzilla.gnome.org/show_bug.cgi?id=774859
+Invalid memory read in flx_decode_chunks (gst-plugins-good)
+The fix is a larger rewrite of the affected code paths and probably
+fixed a bunch of other issues on the way. It also fixes the second flic
+bug reported by Chris Evans described here:
+https://scarybeastsecurity.blogspot.dk/2016/11/0day-poc-incorrect-fix-for-gstreamer.html
+
+https://bugzilla.gnome.org/show_bug.cgi?id=774896
+h264: one byte heap off by one read in gst_h264_parse_set_caps
+(gst-plugins-bad)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=774897
+Invalid memory read in glib caused by one invalid unref call in the
+flxdec decoder. (gst-plugins-good)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=774902
+4 byte heap out of bounds read in windows_icon_typefind
+(gst-plugins-base)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=775048
+2 byte heap out of bounds read in gst_mpegts_section_new
+(gst-plugins-bad).
+
+https://bugzilla.gnome.org/show_bug.cgi?id=775120
+null pointer deref (segfault) in mpegts decoder / _parse_pat
+(gst-plugins-bad)
+
+A note about the memory access bugs: glib's slice allocator can hide
+them, so finding them with asan sometimes only works if one sets
+G_SLICE=always-malloc
+
+
+Stuff that's probably not security relevant:
+
+Asserts / traps only:
+
+https://bugzilla.gnome.org/show_bug.cgi?id=775130
+h264 decoder assert (gst-plugins-bad)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=775219
+avidemux trap on invalid utf-8
+
+
+
+The gstreamer devs were very quick in fixing all issues. The release
+1.10.2 should contain all the fixes.
+https://gstreamer.freedesktop.org/releases/gstreamer/1.10.2.html
+
 
 -- 
-Jakub Wilk
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
