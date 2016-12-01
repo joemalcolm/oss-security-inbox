@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/6
-Message-ID: <s5htwi4ek94.wl-tiwai@suse.de>
-Date: Wed, 11 May 2016 16:34:31 +0200
-From: Takashi Iwai <tiwai@...e.de>
-To: cve-assign@...re.org
-Cc: kangjielu@...il.com, oss-security@...ts.openwall.com, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
-Subject: Re: CVE Request: alsa: kernel information leak vulnerability in Linux sound/core/timer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/14
+Message-ID: <7f592892df564803a9af7dea4b4ece8a@imshyb02.MITRE.ORG>
+Date: Thu, 1 Dec 2016 14:15:46 -0500
+From: <cve-assign@...re.org>
+To: <andreyknvl@...gle.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <dvyukov@...gle.com>, <kcc@...gle.com>
+Subject: Re: CVE Request: Linux: net: out-of-bounds due do a signedness issue when defragging ipv6
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 11 May 2016 16:26:55 +0200,
-cve-assign@...re.org wrote:
-> 
-> > https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
-> >   ALSA: timer: Fix leak in SNDRV_TIMER_IOCTL_PARAMS
-> > 
-> > https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-> >   ALSA: timer: Fix leak in events via snd_timer_user_ccallback
-> > 
-> > https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
-> >   ALSA: timer: Fix leak in events via snd_timer_user_tinterrupt
-> 
-> 
-> > Maybe we can fold
-> 
-> That is not what we are going to do. Because the meaning of
-> CVE-2016-4569 was already established to be the
-> http://comments.gmane.org/gmane.linux.kernel/2214250 issue with the
-> "tread" object, which is only
-> cec8f96e49d9be372fdb0c3836dcf31ec71e457e, we are keeping that
-> ID assignment the same.
-> 
-> Use CVE-2016-4578 for both 9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-> and e4ec8cc8039a7063e24204299b462bd1383184a5.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Fair enough.
+> A fix was sent upstream:
+> https://www.spinics.net/lists/netdev/msg407525.html
+> 
+> More details here:
+> https://groups.google.com/forum/#!topic/syzkaller/GFbGpX7nTEo
 
-(And, at the next time, please put the maintainer into Cc from the
- beginning.  This would have saved lots of time in both sides.)
+>> Problem is that all network headers before fragment header are pulled.
+>> Normal ipv6 reassembly will drop the skb when errors occur further down
+>> the line.
+>> 
+>> netfilter doesn't do this
 
+Use CVE-2016-9755.
 
-thanks,
+The scope of this CVE does not include the GFbGpX7nTEo discussion of
 
-Takashi
+  https://groups.google.com/forum/#!original/syzkaller/GFbGpX7nTEo/XIKCs1NwAwAJ
+
+  "A quick grep shows that the same issue can potentially happen in
+  multiple places across the kernel"
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYQHVxAAoJEHb/MwWLVhi2ivwQAK972EbLLzsDaSmHZyK/hlEG
+08kbLjW7Fmvs4GjSEb3XWMYI7IZzuZOURbCwyZQ9jcXDdAk371trf7OIX/aImXxM
+L6vFWqU2KZE+p/BkK9BbEJvkExUDPEO2mF10kHVrGBFvmM5u6zGPKynwaWWHZXwo
+j52JVuGvJUxvFOSUVJBKwxhjEgEx4TYnc5M7r0aO9mfAs9/ZbJZmJ33ZXHwS+UAu
+feIwdIZk2dEzY6CUg8vJ+IGxh5O6m/9KECend3yA47GQRprYqIWMkfqg2RUcPjsH
+BX78nJQmZWpahDbbst3PD+VUvLh617hOlipZnBLujoe3ts4dyFbv6QRvVfCMQy/8
+ua1s0su0PpnJNFXuS+MydirJB2VhpLFka7fIjYrmwLdIMHWw90GW7rpTRvrUAW/A
+tKcTL9zPeU75M2VIT4/zonUXK9Gb5nDvdsvSQxWDe4fptlJe8OfmzXbf3KpSaHRd
+8RxqX4VeHiHA/rQCxpMlnq1RK5IIth9YusbK52LBqf5q14WBQsUTIMkUlo0lJ1Qa
+x5Pr3AkVRcOlqCeMmg6IILPHdNfOgoEVYgtlDzh0OZNXk6T6PvK6c3GnMCo8JcFt
+HNuCdLMG4NMr7iX4W0Ptu31IwQC5bBmL7dn07OwJkVDJ5OLYe2QYUBKfofjMgEKg
+GvcQC04f5qGYKWPU14/C
+=YbPe
+-----END PGP SIGNATURE-----
