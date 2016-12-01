@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1620" "Saturday" "4" "June" "2016" "03:07:56" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1465024076.32327.17.camel@gmail.com>" "38" "Re: [oss-security] Re: expat hash collision fix too predictable?" "^Date:" nil nil "6" "2016060407:07:56" "[oss-security] Re: expat hash collision fix too predictable?" (number mark "        danielmicay@ Jun  4   38/1620  " thread-indent "\"Re: [oss-security] Re: expat hash collision fix too predictable?\"\n") "<20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>" ("<20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9603" "Thursday" "1" "December" "2016" "17:04:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2637042.StuLhmWT5T@arcadia>" "174" "[oss-security] libming: listswf: NULL pointer dereference in dumpBuffer (read.c)" nil nil nil "12" "2016120116:04:26" "[oss-security] libming: listswf: NULL pointer dereference in dumpBuffer (read.c)" (number mark "U       ago@gentoo.o Dec  1  174/9603  " thread-indent "\"[oss-security] libming: listswf: NULL pointer dereference in dumpBuffer (read.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1764 invoked by uid 550); 4 Jun 2016 07:08:17 -0000
+Received: (qmail 18349 invoked by uid 550); 1 Dec 2016 16:03:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,190 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1742 invoked from network); 4 Jun 2016 07:08:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version;
-        bh=+Wo3BO/oFJxVjvkzTCVk+GZYL2qKV3omiYYZWZTY69g=;
-        b=tYgt2LVvQuc8lHp5bLRQNHZkwL4Dg6U5tQoc413hRU+3kO4pbgYrfpUHQZywElkY7Q
-         tZCC1KS/ZBUg97FTQJDLDHuY+gmMDeh3uINN65gEM+B/iTKFMdWNfptSfRK/vN44AfEN
-         R5+GV4oQlJY6LVJXa+G+Z7ibbmlMve4XTD2nEaLsiwzjJK5C1g6rRCwpDPAINLs9JN5p
-         5C+ila6CdyorhnbnJIwcGBEgrRO2uaz7168hD+BL82/+CyHuKut7DTsN4amw0peuJYbG
-         mpZQxZ4/hnzMj8XykBivwjlw4wXC3nT+brqnMMdIqbUMezFlob+jpV1M3dYQYbzCuHvs
-         oHJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version;
-        bh=+Wo3BO/oFJxVjvkzTCVk+GZYL2qKV3omiYYZWZTY69g=;
-        b=RoTftaELahBVu1pvFz1tsM2QsNRuApxZHqLfhiQV2akLeZE6zGnPIROPqwfQtCjFjd
-         HCfjB/BknUQ4Q2Rk+efNx2Pc+Qxaj86D2ya1J4g6Zo/rcs/nZGQh33Ep+8VPcKkcWMyf
-         2taPq8evdDr78p/DBYUyg1qwsRzR0mLi47BV5U+/2OVNrjWFyUERoHyTxR/cl74jC7v/
-         zpLRvu37WMYXLuilDXTq12xeG1fejv8UI1Dx41PBjLQYlCImnsDtfCqXRqipfv/e8yQb
-         s1gDjPCkRDUOfn7REiBdcA92h4mw4dtdqo+UqJ64qmJY1E5QEb86HkGGCC26v5btfNsK
-         hYNw==
-X-Gm-Message-State: ALyK8tKOVhmES8KSp3JSGiRlaoGu4qGn6+fvJX8v3eMi7aLVfmd1cq4ETMjK1xPK9L2gVg==
-X-Received: by 10.36.112.199 with SMTP id f190mr4322800itc.6.1465024085060;
-        Sat, 04 Jun 2016 00:08:05 -0700 (PDT)
-Message-ID: <1465024076.32327.17.camel@gmail.com>
-In-Reply-To: <20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>
-References: <20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-vPgYa2lFj0j9NN9y6WmW"
-X-Mailer: Evolution 3.20.2 
-Mime-Version: 1.0
-Date: Sat, 04 Jun 2016 03:07:56 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: expat hash collision fix too predictable?
+Received: (qmail 18043 invoked from network); 1 Dec 2016 16:03:20 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Thu, 01 Dec 2016 17:04:26 +0100
+Message-ID: <2637042.StuLhmWT5T@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libming: listswf: NULL pointer dereference in dumpBuffer (read.c)
 
---=-vPgYa2lFj0j9NN9y6WmW
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+If suitable for a CVE please assign one. Thanks.
 
-It's quite questionable for libraries to be calling thread-unsafe
-functions like rand or strtok at all. AFAIK, expat is supposed to be
-thread safe and is used in many multi-threaded applications.
+Description:
+libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
+Python, C, C++, Java, and probably more on the way..
 
-A proper hash DoS fix is using a CSPRNG to generate keys for a keyed
-hash with meaningful security properties, like SipHash. It's usually
-done very poorly, and the quality of the RNG doesn't matter much if key
-independent collisions can be generated for the hash function anyway.=
+A fuzzing revealed a null pointer access in listswf. The bug does not reside 
+in any shared object but if you have a web application that calls directly the 
+listswf binary to parse untrusted swf, then you are affected.
 
---=-vPgYa2lFj0j9NN9y6WmW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+The complete ASan output:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+# listswf $FILE
+header indicates a filesize of 7917 but filesize is 187
+File version: 100
+File size: 187
+Frame size: (8452,8981)x(-4096,0)
+Frame rate: 67.851562 / sec.
+Total frames: 16387
+ Stream out of sync after parse of blocktype 2 (SWF_DEFINESHAPE). 166 but 
+expecting 23.
 
-iQIcBAABCAAGBQJXUn5MAAoJEPnnEuWa9fIq0qUQAJUISqcfAKM+veZrT78UxuDS
-d16c7bOyuA08hlL+9AE7mcAtt7REjGQR5G5UA6pmHXxTes7WzDJnxb4S+VMG5vJy
-LsXeioAbpHN4VkNTHVJ7wTqd57/nDC+7vFpQe8vsPsASyWUbjOEQV9enGnYmEWyV
-YVZEVPnfKThQTLiibQioTroAHFljjWFUZWei4Ddg6DdR4uipM72isKJZBqMNm0MH
-LU+3z0xfaWM0vihV+YyjcIa4OESsGp9y+HNA39Vg+s5ErMjlaEZpKM7Zg0DtIPmc
-0LLz40oX1ItXFCem5xKgkmbN5t3sJVCNAfha+7TyLoKgWdz0u5VA96ktxL/N79eu
-P0BJ6HECyZD+XKOuP0zhJsdj47qOCt6o2N7t4VVkz76bpW4kpoMyJ99sb4E8ODYh
-nh1H2PvPrKCjyDBw6GNOXveN9F7KI+781Y6V5SmtlC6oo/ET2VG476EZCRYeNwqu
-ZYLIU1MfsehtQ0E5nO2WLmCjY1TYcVlf32EzUZ063WV/X4FmawwD3w7ZuUszbtaa
-5qTMp3ubv2JLCJUCoJucoLLUldVoxg4JLD+ZVQlySmILrTHWyXbpY79slx04ZnMK
-jy5e8y71DxUbaQ+pF1mHzDz6A9gOdxKNNiMsehLFzTP7Lk54B0/UBL7mxlsloTNF
-a1rFJfTlRy5BU7xnvHSX
-=FZfl
------END PGP SIGNATURE-----
+Offset: 21 (0x0015)
+Block type: 2 (SWF_DEFINESHAPE)
+Block length: 0
 
---=-vPgYa2lFj0j9NN9y6WmW--
+ CharacterID: 55319
+ RECT:  (-2048,140)x(0,-1548):12
+ FillStyleArray:  FillStyleCount:     18  FillStyleCountExtended:      0
+ FillStyle:  FillStyleType: 0
+ RGBA: ( 0, 1,9a,ff)
+ FillStyle:  FillStyleType: 7f
+ FillStyle:  FillStyleType: b
+ FillStyle:  FillStyleType: fb
+ FillStyle:  FillStyleType: 82                                                                                                                                                                 
+ FillStyle:  FillStyleType: 24                                                                                                                                                                 
+ FillStyle:  FillStyleType: 67                                                                                                                                                                 
+ FillStyle:  FillStyleType: 67                                                                                                                                                                 
+ FillStyle:  FillStyleType: 18                                                                                                                                                                 
+ FillStyle:  FillStyleType: 9d                                                                                                                                                                 
+ FillStyle:  FillStyleType: 6d                                                                                                                                                                 
+ FillStyle:  FillStyleType: d7                                                                                                                                                                 
+ FillStyle:  FillStyleType: 97                                                                                                                                                                 
+ FillStyle:  FillStyleType: 1                                                                                                                                                                  
+ FillStyle:  FillStyleType: 26                                                                                                                                                                 
+ FillStyle:  FillStyleType: 1a                                                                                                                                                                 
+ FillStyle:  FillStyleType: 17                                                                                                                                                                 
+ FillStyle:  FillStyleType: 9a                                                                                                                                                                 
+ LineStyleArray:  LineStyleCount: 19                                                                                                                                                           
+ LineStyle:  Width: 1722                                                                                                                                                                       
+ RGBA: (7a,38,df,ff)                                                                                                                                                                           
+ LineStyle:  Width: 42742                                                                                                                                                                      
+ RGBA: ( 0, 0, 0,ff)                                                                                                                                                                           
+ LineStyle:  Width: 70                                                                                                                                                                         
+ RGBA: (10,91,64,ff)                                                                                                                                                                           
+ LineStyle:  Width: 37031                                                                                                                                                                      
+ RGBA: (e7,c7,15,ff)                                                                                                                                                                           
+ LineStyle:  Width: 9591                                                                                                                                                                       
+ RGBA: (dc,ee,81,ff)                                                                                                                                                                           
+ LineStyle:  Width: 4249                                                                                                                                                                       
+ RGBA: ( 0,ee,ed,ff)                                                                                                                                                                           
+ LineStyle:  Width: 60909                                                                                                                                                                      
+ RGBA: (ed,ed,ed,ff)                                                                                                                                                                           
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,ed,ff)
+ LineStyle:  Width: 60909
+ RGBA: (ed,ed,a7,ff)
+ LineStyle:  Width: 42919
+ RGBA: (a7,a7,9c,ff)
+ LineStyle:  Width: 40092
+ RGBA: (9c,9c,9c,ff)
+ LineStyle:  Width: 32156
+ RGBA: (9c,bc,9c,ff)
+ LineStyle:  Width: 33948
+ RGBA: (9c,9c,9c,ff)
+ LineStyle:  Width: 26404
+ RGBA: ( 0, c,80,ff)
+ LineStyle:  Width: 42752
+ RGBA: (a7, 2, 2,ff)
+ LineStyle:  Width: 514
+ RGBA: (c6, 2, 0,ff)
+ NumFillBits: 11
+ NumLineBits: 13
+ Curved EdgeRecord: 9 Control(-145,637) Anchor(-735,-1010)
+ Curved EdgeRecord: 7 Control(-177,156) Anchor(16,32)
+ StyleChangeRecord:
+  StateNewStyles: 0 StateLineStyle: 1  StateFillStyle1: 0
+  StateFillStyle0: 0 StateMoveTo: 0
+   LineStyle: 257
+  ENDSHAPE
 
+Offset: 23 (0x0017)
+Block type: 864 (Unknown Block Type)
+Block length: 23
+
+
+0000: 64 00 00 00 46 4f a3 12  00 00 01 9a 7f 0b fb 82    d...FO.. .......
+0010: 24 67 67 18 9d 6d d7                               $gg..m.
+
+
+
+Offset: 48 (0x0030)
+Block type: 6 (SWF_DEFINEBITS)
+Block length: 23
+
+ CharacterID: 6694
+
+Offset: 73 (0x0049)
+Block type: 87 (SWF_DEFINEBINARYDATA)
+Block length: 7
+
+
+0000: ASAN:DEADLYSIGNAL
+=================================================================
+==27703==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000059d2ff bp 0x7ffe859e6fc0 sp 0x7ffe859e6f50 T0)
+==27703==The signal is caused by a READ memory access.
+==27703==Hint: address points to the zero page.
+    #0 0x59d2fe in dumpBuffer /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/read.c:441:23
+    #1 0x51c305 in outputSWF_UNKNOWNBLOCK /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:2870:3
+    #2 0x51c305 in outputBlock /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/outputtxt.c:2937
+    #3 0x527e83 in readMovie /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:277:4
+    #4 0x527e83 in main /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350
+    #5 0x7f0186c4461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x419b38 in _init (/usr/bin/listswf+0x419b38)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/ming-0.4.7/work/ming-0_4_7/util/read.c:441:23 in dumpBuffer
+==27703==ABORTING
+
+Affected version:
+0.4.7
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00078-libming-nullptr-dumpBuffer
+
+Timeline:
+2016-11-24: bug discovered and reported to upstream
+2016-12-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-null-pointer-dereference-in-dumpbuffer-read-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
