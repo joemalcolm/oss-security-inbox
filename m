@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/12
-Message-ID: <20160916173838.GL8683@netmeister.org>
-Date: Fri, 16 Sep 2016 13:38:38 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/11
+Message-ID: <20161201171236.4754.235004A2@matica.foolinux.mooo.com>
+Date: Thu, 1 Dec 2016 09:15:35 -0800
+From: Ian Zimmerman <itz@...mate.net>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+Subject: Re: dcraw and CVE-2015-8366 + CVE-2015-8367
 Content-Type: text/plain; charset=utf-8
 
-John Haxby <john.haxby@...cle.com> wrote:
- 
-> A little while ago, one of our users discovered that by setting the
-> hostname to $(something unpleasant), bash would run "something
-> unpleasant" when it expanded \h in the prompt string.
+On 2016-10-16 00:50, Ben Woods wrote:
 
-To clarify: this is only triggered if the hostname has been set, not the
-$HOSTNAME variable, right?
+> I noticed you mentioned in the mailing list post below that "CVE-2015-8366
+> will be fixed in v9.27" - did that end up getting fixed in 9.27? How about
+> CVE-2015-83667?
 
-Your subject line suggests setting $HOSTNAME would lead to command
-execution, which would be a vulnerability reminiscent of shellshock, but
-quickly glancing at the code, it looks like $HOSTNAME is only used if
-gethostname(3) returned an empty string?
+> CVE-2015-8366
+> Index overflow in smal_decode_segment
+> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
 
--Jan
+> CVE-2015-8367
+> Memory objects are not intialized properly
+> https://github.com/LibRaw/LibRaw/commit/490ef94d1796f730180039e80997efe5c58db780
+
+Since there has been no reply here, I examined the source for dcraw
+9.27, and as far as I can see neither of these issues is addressed by
+it.  Of course, the author has the final word.
+
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
