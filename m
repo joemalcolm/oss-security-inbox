@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1070" "Wednesday" "10" "February" "2021" "01:12:21" "+0530" "Utkarsh Gupta" "utkarsh@debian.org" "<CAPP0f97oRuLdWwc7hMA1Fv3ymOkwptS3rks9D7FTFjhJLFvvZw@mail.gmail.com>" "42" "Re: [oss-security] screen crash processing combining characters" "^Date:" nil nil "2" "2021020919:42:21" "[oss-security] screen crash processing combining characters" (number mark "        utkarsh@debi Feb 10   42/1070  " thread-indent "\"Re: [oss-security] screen crash processing combining characters\"\n") "<rvubtf$lnv$1@ciao.gmane.io>" ("<rvubtf$lnv$1@ciao.gmane.io>") nil nil nil nil nil nil nil "Re: [oss-security] screen crash processing combining characters" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2174" "Friday" "2" "December" "2016" "11:43:08" "+0100" "=?utf-8?B?U8OpYmFzdGllbg==?= Delafond" "seb@debian.org" "<20161202104308.GE4706@hz1>" "63" "[oss-security] CVE request: 2 issues in tomcat8 Debian packaging" nil nil nil "12" "2016120210:43:08" "[oss-security] CVE request: 2 issues in tomcat8 Debian packaging" (number mark "U       seb@debian.o Dec  2   63/2174  " thread-indent "\"[oss-security] CVE request: 2 issues in tomcat8 Debian packaging\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4091 invoked by uid 550); 9 Feb 2021 20:38:04 -0000
+Received: (qmail 9723 invoked by uid 550); 2 Dec 2016 13:37:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5927 invoked from network); 9 Feb 2021 19:42:46 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=XO1TS3KpurrCvVBOHDY0uJKLrJps6VWea+YUOpo0jD0=;
-        b=gHYgVeGSNe3VxKicD0HOq8UBZLXEaoTIxZf2Bk+KV+NoIczrzVBptb8OEyvT2SJdUm
-         ZrlvcUOosC0looBqLmLqmR2m0Nk8ImZaJHI5QGyhUZWKabWoKoKbW9PHvSM3S/ZQS2aU
-         ekbIECgK5nPvZVVHkNNd/1MX3R301U23pUOT4LIdvtDDgtGY6wTew3VracgxP1NYf23D
-         K+e22w4hzbru/FwBxBls+7azBZ+Yu8Fi100FrvV3AgW6IMb9tPi8DLbPk9TjU2EfMSiw
-         QN/d5jKMmz52ZpICJHkhbt8pSox6b0L9MuYTdvEgdlkQxb+RIhclT2jUhho3tgJ3JOIW
-         UMOg==
-X-Gm-Message-State: AOAM5315lAH4Z7iNCuP6RBATUAdRf73z9LYQKwYRgbbzsolbkgVYD9Af
-	JYCd53hRK1udi2W5y5uQe/os5BqKPs9P0Q==
-X-Google-Smtp-Source: ABdhPJxSii/GuFAgmMtoj42d5U1k8bK2HjrYxIoALOU1u+SGFrsGCRNRzVT+gOBV7NprmWacbDI3WQ==
-X-Received: by 2002:a6b:6409:: with SMTP id t9mr20521053iog.139.1612899754551;
-        Tue, 09 Feb 2021 11:42:34 -0800 (PST)
-X-Received: by 2002:a05:6e02:c9:: with SMTP id r9mr23397569ilq.304.1612899754050;
- Tue, 09 Feb 2021 11:42:34 -0800 (PST)
-MIME-Version: 1.0
-References: <rvubtf$lnv$1@ciao.gmane.io>
-In-Reply-To: <rvubtf$lnv$1@ciao.gmane.io>
-X-Gmail-Original-Message-ID: <CAPP0f97oRuLdWwc7hMA1Fv3ymOkwptS3rks9D7FTFjhJLFvvZw@mail.gmail.com>
-Message-ID: <CAPP0f97oRuLdWwc7hMA1Fv3ymOkwptS3rks9D7FTFjhJLFvvZw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000e60c2005baec7cfe"
-Date: Wed, 10 Feb 2021 01:12:21 +0530
-From: Utkarsh Gupta <utkarsh@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] screen crash processing combining characters
+Received: (qmail 14026 invoked from network); 2 Dec 2016 10:43:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=AiSQaeHb/6E3sp6b18W3wRRq9BjOB5mp8jISO/y+fs4=;
+        b=dI1D6FWSO2Z1GlCPKgiUwij+rJWgGsi5Npgria9iEOJfVYf/iWZg7OfUaPMHmP+hGc
+         3ZLSrmelyE6fkDsVjWDYXLOspLsvEHeyctHG35W1iM5vCibCg+mmJS66hLMhk59Vg+y4
+         p34o4MU1zzeTD4dMxGVUoA+DRUNRajXqsZyI3dvSRjiEfXD9KG7OghO+2VGVHtQhLhzh
+         Cvej0N3AS96o2MX/uXewzypTyBfFT61ChCfImTSrLv6iYRHJxzohhMEJI1T6v/TwE+/V
+         OaAKJDr13WYdonMfjzEvH/4et5NlBCNDSJSYqrwv8A4/v8eDZVRUgWjBeqqWzjFvhQHX
+         ESiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=AiSQaeHb/6E3sp6b18W3wRRq9BjOB5mp8jISO/y+fs4=;
+        b=YXS9v2jm/eTAJzHz5Vt5uOoOc4cRId5yYPX326UmzTY8nscMXNfMDe5TmB4EJ0ky/+
+         /szXEPW1IKvc/fZ2lmKnP1Ny9mdMoO3JqSGAC0XlRrVS8P5WskIh1Qecw4jHNN02fiXd
+         KI7QTPxK18PMc4rfC7RLdDsaW/7tmfqIMUQ7gfBuyktk2BzAGfkMJDFsidrt5bk90yK3
+         pTGpNSRLr+tMATjb/dpXoedAumGFveRDH3uL6HiJ5IsPq1JTsx8ykzW3CIueC325g9yD
+         nGrbJATDpuVGap+lkcpuVjZs5mRgy7MZvp40KvHUFhznjufIEHKpEdDHGO1UefIGrb6H
+         xFEQ==
+X-Gm-Message-State: AKaTC00YNv7jqcitwkWskQ2kzJAjD61o17ZRBapN2UPpMGlpaiBLnejCQG+7SfZX1F1E4w==
+X-Received: by 10.28.29.86 with SMTP id d83mr2123591wmd.75.1480675390942;
+        Fri, 02 Dec 2016 02:43:10 -0800 (PST)
+Sender: =?UTF-8?Q?S=C3=A9bastien_Delafond?= <sdelafond@gmail.com>
+Date: Fri, 2 Dec 2016 11:43:08 +0100
+From: =?utf-8?Q?S=C3=A9bastien?= Delafond <seb@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <20161202104308.GE4706@hz1>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE request: 2 issues in tomcat8 Debian packaging
 
---000000000000e60c2005baec7cfe
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Hi,
+the Debian security team would like to requests 2 CVEs, for issues
+discovered by Paul Szabo in the tomcat8 Debian packaging.
 
-On Tue, 9 Feb, 2021, 9:39 pm Tavis Ormandy, <taviso@gmail.com> wrote:
+  * Privilege escalation when upgrading tomcat8 package
+    https://bugs.debian.org/845393
 
-> Hello, I noticed someone posted this to the screen-devel list. I can
-> reproduce it here, just catting the testcase does crash my screen
-> session.
->
-> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
->
-> (I think it wasn't supposed to be public, but it is, so better it's
-> visible to security teams)
->
-> It looks like it might be exploitable at first glance, I see a crash
-> here in encoding.c, because i is out of range.
->
-> 1411   else if (!combchars[i])
-> 1412     {
-> 1413       combchars[i] = (struct combchar *)malloc(sizeof(struct
-> combchar));
-> 1414       if (!combchars[i])
-> 1415            return;
-> 1416       combchars[i]->prev = i;
-> 1417       combchars[i]->next = i;
-> 1418     }
->
-> Exploitable or not, it would be annoying if someone stuffed this into
-> logfiles
-> being tailed, or whatever.
->
+    > Having installed tomcat8, the directory /etc/tomcat8/Catalina is
+    > set writable by group tomcat8, as per the postinst script. Then
+    > the tomcat8 user, in the situation envisaged in DSA-3670 and
+    > DSA-3720, see also http://seclists.org/fulldisclosure/2016/Oct/4
+    > could use something like commands
+    > 
+    >   mv /etc/tomcat8/Catalina/localhost /tmp/
+    >   ln -s /etc/shadow /etc/tomcat8/Catalina/localhost
+    > 
+    > to create a symlink.
+    > 
+    > Then when the tomcat8 package is upgraded (e.g. for the next DSA),
+    > the postinst script runs
+    > 
+    >   chmod 775 /etc/tomcat8/Catalina /etc/tomcat8/Catalina/localhost
+    > 
+    > and that will make the /etc/shadow file world-readable (and
+    > group-writable). Other useful attacks might be to make the
+    > objects:
+    > 
+    >   /root/.Xauthority
+    >   /etc/ssh/ssh_host_dsa_key
+    > 
+    > world-readable; or make something (already owned by group tomcat8)
+    > group-writable (some "policy" setting maybe?).
 
-Got CVE-2021-26937 assigned for this.
+  * Privilege escalation when removing tomcat8 package
+    https://bugs.debian.org/845395    
 
+    > Having installed tomcat8, the directory
+    > /etc/tomcat8/Catalina is set writable by group tomcat8, as
+    > per the postinst script. Then the tomcat8 user, in the
+    > situation envisaged in DSA-3670 and DSA-3720, see also
+    > http://seclists.org/fulldisclosure/2016/Oct/4
+    > 
+    > could use something like commands
+    > 
+    >   touch /etc/tomcat8/Catalina/attack
+    >   chmod 2747 /etc/tomcat8/Catalina/attack
+    > 
+    > Then if the tomcat8 package is removed (purged?), the
+    > postrm script runs
+    > 
+    >   chown -Rhf root:root /etc/tomcat8/
+    > 
+    > and that will leave the file world-writable, setgid root:
+    > 
+    >   # ls -l /etc/tomcat8/Catalina/attack
+    >   -rwxr-Srwx 1 root root 0 Nov 23 09:00 /etc/tomcat8/Catalina/attack
+    > 
+    > allowing "group root" access to the world.
 
-- u
+Cheers,
 
->
-
---000000000000e60c2005baec7cfe--
+--Seb
