@@ -1,89 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/26/12
-Message-Id: <20160726235219.33E1C72E003@smtpvbsrv1.mitre.org>
-Date: Tue, 26 Jul 2016 19:52:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: asulfrian@...AT.FU-Berlin.DE
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: flex: Buffer overflow in generated code (yy_get_next_buffer)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/6
+Message-ID: <20161202104308.GE4706@hz1>
+Date: Fri, 2 Dec 2016 11:43:08 +0100
+From: Sébastien Delafond <seb@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: 2 issues in tomcat8 Debian packaging
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> flex upstream change some integer type in 2.5.36[1] to unsigned integer
-> types (size_t). Especially the num_to_read variable in
-> yy_get_next_buffer is critical, because the buffer is resized if this
-> value is _less_ or equal to zero.
-> 
-> With special crafted input it is possible, that the buffer is not
-> resized if the input is larger than the default buffer size of 16k. This
-> allows a heap buffer overflow.
-> 
-> It may be also remote usable, it depends on the software that is build
-> using flex. We noticed for example, that bogofilter segfaults sometimes
-> depending on the incoming mail.
-> 
-> Upstream already noticed that this may be a problem[2] but did not
-> escalate it as a security issue.
+the Debian security team would like to requests 2 CVEs, for issues
+discovered by Paul Szabo in the tomcat8 Debian packaging.
 
-Use CVE-2016-6354 for this num_to_read issue.
+  * Privilege escalation when upgrading tomcat8 package
+    https://bugs.debian.org/845393
 
+    > Having installed tomcat8, the directory /etc/tomcat8/Catalina is
+    > set writable by group tomcat8, as per the postinst script. Then
+    > the tomcat8 user, in the situation envisaged in DSA-3670 and
+    > DSA-3720, see also http://seclists.org/fulldisclosure/2016/Oct/4
+    > could use something like commands
+    > 
+    >   mv /etc/tomcat8/Catalina/localhost /tmp/
+    >   ln -s /etc/shadow /etc/tomcat8/Catalina/localhost
+    > 
+    > to create a symlink.
+    > 
+    > Then when the tomcat8 package is upgraded (e.g. for the next DSA),
+    > the postinst script runs
+    > 
+    >   chmod 775 /etc/tomcat8/Catalina /etc/tomcat8/Catalina/localhost
+    > 
+    > and that will make the /etc/shadow file world-readable (and
+    > group-writable). Other useful attacks might be to make the
+    > objects:
+    > 
+    >   /root/.Xauthority
+    >   /etc/ssh/ssh_host_dsa_key
+    > 
+    > world-readable; or make something (already owned by group tomcat8)
+    > group-writable (some "policy" setting maybe?).
 
-> Upstream also changed some other type
-> back from size_t to int (for example in [3]) so maybe it is not
-> sufficient to only change num_to_read back to int.
-> 
-> The upstream fix is contained in 2.6.1, but there are more integer type
-> fixes in the master branch of flex (currently not in a released
-> version).
-> 
-> As the issue is in the generated code during compile time, it is not
-> sufficient to fix flex, but all binaries using flex as build-dependency
-> may need a rebuild after fixing flex. Additionally there may be packages,
-> that supply the generated source in the release-tar and do not use flex
-> during building.
+  * Privilege escalation when removing tomcat8 package
+    https://bugs.debian.org/845395    
 
-> 1: https://github.com/westes/flex/commit/9ba3187a537d6a58d345f2874d06087fd4050399
-> 2: https://github.com/westes/flex/commit/a5cbe929ac3255d371e698f62dc256afe7006466
-> 3: https://github.com/westes/flex/commit/7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457
+    > Having installed tomcat8, the directory
+    > /etc/tomcat8/Catalina is set writable by group tomcat8, as
+    > per the postinst script. Then the tomcat8 user, in the
+    > situation envisaged in DSA-3670 and DSA-3720, see also
+    > http://seclists.org/fulldisclosure/2016/Oct/4
+    > 
+    > could use something like commands
+    > 
+    >   touch /etc/tomcat8/Catalina/attack
+    >   chmod 2747 /etc/tomcat8/Catalina/attack
+    > 
+    > Then if the tomcat8 package is removed (purged?), the
+    > postrm script runs
+    > 
+    >   chown -Rhf root:root /etc/tomcat8/
+    > 
+    > and that will leave the file world-writable, setgid root:
+    > 
+    >   # ls -l /etc/tomcat8/Catalina/attack
+    >   -rwxr-Srwx 1 root root 0 Nov 23 09:00 /etc/tomcat8/Catalina/attack
+    > 
+    > allowing "group root" access to the world.
 
-As far as we know, there has not been any discussion specifically
-showing that there is a security issue associated with any of the
-changes other than the num_to_read change. Accordingly, there are no
-other CVE IDs at this time.
+Cheers,
 
-7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457 refers to "sf 184, 187" - in other words,
-
-  https://sourceforge.net/p/flex/bugs/184/
-  https://sourceforge.net/p/flex/bugs/187/
-
-Among the concerns cited is "POSIX mandates that yyleng has type int,
-but flex defines it as yy_size_t. This breaks programs that use the
-POSIX-compatible declaration." The MITRE CVE team has not been
-studying 7a7c3dfe1bcb8230447ba1656f926b4b4cdfc457 or the mentioned
-master-branch commits - the only point is that integer types sometimes
-need to be changed without a security-related motivation.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXl/dBAAoJEHb/MwWLVhi2lpAP/RsWLefTG5FJUYhTUPpjU8pZ
-lcbXV25XxNM3WMUoiVLMUnXAd+ZfVUQGWVgU4ZgXSXfuxLz5gdfoePPUJZ/d44py
-nWcCfrXMBN7a4I1/YYzFmH2pA1i/QGY36XqJlxFRwDneCYJ9wDRpzAjqaEJMIe21
-NJjTVd//X+nmcGRRbFlvBwMGp84Ajjuxotia1Fymqcsdv5KMF2btOiw5jgWPd4mo
-sFj4nR594LEfJn5lCU39vNcVzWQtRzxewQwamesED6EId3VhuOCcm70JJ+lez4n4
-gYdeew1MZw6P+Lc6nLqE7Fjtwl6mkKT8JrAkQCtLq2EtkmQn4MppOm2gf7XDyzOF
-Vkoc/r0Bw7wlL0DrRWOEV2LUlMjO2MR7WIc/PTalGje3RVZRSFVY0hEJZ9e3zWkG
-YoTqrLn3i48t4/1hAS5FddHlDrH95/xreubKqcolE5WNLAOdCiEWGj1pgqZGA17J
-PHQ2jxi34hyAK9Ob4BaB8rPrBe4iP9GytBsyrtQ2o2rRCu6g4CLzrUil7IDZOkWW
-LtXPDaY/+ZDgq8luebVxrkmcDnWJO7yCu2OgT0NPvoQlCnqFpUQ8jrv/T6MgBucd
-7HaIydewUc96qmx1eSsnICcoXbelJt36n5ipiPLOaDikXMVKznpgeSBagHWVpVSj
-5Nz46batU7sC/BdPWUos
-=YRxV
------END PGP SIGNATURE-----
+--Seb
