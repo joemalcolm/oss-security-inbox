@@ -1,42 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/15/14
-Message-ID: <20160115203249.3acb4153@redhat.com>
-Date: Fri, 15 Jan 2016 20:32:49 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: cve-assign@...re.org
-Cc: corsac@...ian.org, oss-security@...ts.openwall.com
-Subject: Re: Re: Qualys Security Advisory - Roaming through the OpenSSH client: CVE-2016-0777 and CVE-2016-0778
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/8
+Message-ID: <719af3cbbf8c4f269e61de4a0cbf6ac5@imshyb02.MITRE.ORG>
+Date: Fri, 2 Dec 2016 13:02:57 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <wjjzhang@...cent.com>
+Subject: Re: CVE request Qemu: net: mcf_fec: infinite loop while receiving data in mcf_fec_receive
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 15 Jan 2016 12:10:16 -0500 (EST) cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> > There's also a fix related to X11 forwarding which seems different than
-> > the fix which went into OpenSSH 6.9. I'm not sure if it deserves a CVE
-> > or not.  
+> Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator
+> support is vulnerable to an infinite loop issue. It could occur while
+> receiving packets in 'mcf_fec_receive'.
 > 
-> > https://anongit.mindrot.org/openssh.git/commit/?id=ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c  
+> A privileged user/process inside guest could use this issue to crash the Qemu
+> process on the host leading to DoS.
 > 
-> >> eliminate fallback from untrusted X11 forwarding to trusted forwarding
-> >> when the X server disables the SECURITY extension; Reported by Thomas
-> >> Hoger  
-> 
-> MITRE is not assigning a CVE ID for
-> ed4ce82dbfa8a3a3c8ea6fa0db113c71e234416c at this time. First, the
-> (misspelled) reporter name suggests that the issue might have already
-> had a CVE ID assigned by Red Hat before the issue became public. Also,
-> http://www.openssh.com/txt/release-7.1p2 does not announce this as a
-> security fix. Finally, the wording suggests that it could possibly be
-> an interoperability fix, not a security fix.
+> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg05324.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1400829
 
-FYI, this issue was announced as a security fix in 7.1p2 release notes:
+Use CVE-2016-9776.
 
-https://lists.mindrot.org/pipermail/openssh-unix-dev/2016-January/034680.html
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/mcf_fec.c but
+that may be an expected place for a later update.
 
-However, as the fix was not actually included in 7.1p2, the
-release-7.1p2 announcement as available on the url listed above was
-modified to remove mention of that issue.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://lists.mindrot.org/pipermail/openssh-unix-dev/2016-January/034684.html
-
--- 
-Tomas Hoger / Red Hat Product Security
+iQIcBAEBCAAGBQJYQbZDAAoJEHb/MwWLVhi2FGEP/jcbuXN9KtIlf6ff6wzQYoLv
++Vtqvl6S1/VSnjDKKm0ikKlnnN/jZtoh8dzO3inGFDruTxom+pJKAKcp+G30qaIy
+G10mDBVeq0VzHvfJaFm63moPTkjvVGkapQKbpzuO+4xA3NESAhXc8TcAGyrm6CwB
+RbjjFomICR1dwoLIlASTxxJDmh37BjAmI3zXJ14QcHER8TDb8NIQ0V8ROGD+inHp
+yiRIt/3bQC/rEdkJETPCPFrogLFx/vjo9NKmxechzELPGTJ4CsvQumeAcwV3eEzO
+CIgKY24n93PJFBZww/Y6NWK7JxVclQjMz78saBMaKOPmtf6JHyDf5he4mUJB7zwN
+bpydPJFVLbgH/vd07APXgdoeoYY3uwxS3rE5vFDHjiJX8J6StvziUqLBZ+4RVo7V
+4ZKNVyQ1sWIERTgSZoTxxj2Vauvl53ETI7cmSqV+dVHWshPAOP3Bsm9x6jbNDma8
+hLkxiU+VhKqLZvfj9luyEdVCUnRDAqwPknnngjVPlZl67rD4o5ZKSyYx+fDV6Kqa
+98TgAH0oC6SeyZ9I+YbSnCqmADX/xUDC3rmo9Ghux/1E9m3kApuW9geBwhcryOd3
+RLljnzk3by19XCD10osVi0WplkvOCHvwHWzClzgbA/L6WMnrTSV8lNzipXD8rm/7
+rAVDMdwKS6qXIq7RSrBE
+=hUvr
+-----END PGP SIGNATURE-----
