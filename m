@@ -1,40 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/9
-Message-ID: <5783F915.1010104@canonical.com>
-Date: Mon, 11 Jul 2016 14:52:53 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: John Johansen <john.johansen@...onical.com>
-Subject: Re: CVE request: apparmor: oops in apparmor_setprocattr()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/13
+Message-ID: <CAAeHK+yMo_kYnhJf_rJX7tNkBefWXuKMsXTF1aB6-RqsLZn4ZQ@mail.gmail.com>
+Date: Sat, 3 Dec 2016 00:29:12 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, Kostya Serebryany <kcc@...gle.com>,  Dmitry Vyukov <dvyukov@...gle.com>, syzkaller <syzkaller@...glegroups.com>,  Eric Dumazet <edumazet@...gle.com>
+Subject: CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE
 Content-Type: text/plain; charset=utf-8
 
-On 07/11/2016 10:08 AM, Ben Laurie wrote:
-> On 9 July 2016 at 07:41, John Johansen <john.johansen@...onical.com> wrote:
->> There is a potential privilege escalation in apparmor's setprocattr() interface.
->>
->> https://lkml.org/lkml/2016/7/7/906
->>
->> introduced by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
->> fixed by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
-> 
-> I assume its not actually introduced and fix by the same commit. :-)
+Hi!
 
-The correct hashes are:
+There's a bug in SO_{SND|RCV}BUFFORCE setsockopt() implementation,
+which allows CAP_NET_ADMIN users to cause memory corruption.
 
-introduced by: bb646cdb12e75d82258c2f2e7746d5952d3e321a
-fixed by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
+The fix is upstream:
+https://github.com/torvalds/linux/commit/b98b0bc8c431e3ceb4b26b0dfc8db509518fb290
 
-Tyler
+Could you assign a CVE for this?
 
-> 
->>
->> Could you assign a CVE for this issue?
->>
->> thanks
->> John
->>
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thanks!
