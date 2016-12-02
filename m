@@ -1,42 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/15
-Message-ID: <alpine.GSO.2.20.1605091454420.27960@freddy.simplesystems.org>
-Date: Mon, 9 May 2016 15:03:40 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/5
+Message-ID: <20161202104846.435@usenet.piggo.com>
+Date: Fri, 2 Dec 2016 10:07:43 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick Response To "ImageTragick"
+Subject: CVE request: tomcat privilege escalations in Debian packaging
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 9 May 2016, Simon McVittie wrote:
->
-> Great. Is there an API that can be used to say "load this arbitrary file,
-> but only if it is in a format that is considered entirely safe"?
+Hello,
 
-In GraphicsMagick, defining the environment variable 
-MAGICK_CODER_STABILITY=PRIMARY before running the will block out quite 
-a lot of functionality (including SVG/MVG/MSL) but nothing can be 
-considered entirely safe.
+the Debian security team would like to request 2 CVEs for issues in
+Tomcat packaging. Both were discovered by Paul Szabo.
 
-> I think the reason people are surprised and concerned to read about the
-> MVG and MSL scripting languages is that they enter *Magick through the
-> same APIs that open "safe" image files, blurring the boundary between
-> "open a file" and "execute a script". If the entry point into executing
-> MVG/MSL scripts was named more like ExecuteScript(), as opposed to
-> ReadImage(), then I don't think anyone would object to MVG and MSL
-> files having arbitrary code execution capabilities.
+  * Privilege escalation when upgrading tomcat8 package
+    https://bugs.debian.org/845393
 
-It is likely that the *Magick name was coined from the header of XPM 
-files which playfully use the word "magick" as part of the header that 
-programs would use for header magic testing.  This sets the stage for 
-the automatic things that the software is doing.
+    > Having installed tomcat8, the directory /etc/tomcat8/Catalina is
+    > set writable by group tomcat8, as per the postinst script. Then
+    > the tomcat8 user, in the situation envisaged in DSA-3670 and
+    > DSA-3720, see also http://seclists.org/fulldisclosure/2016/Oct/4
+    > could use something like commands
+    > 
+    >   mv -i /etc/tomcat8/Catalina/localhost /tmp
+    >   ln -s /etc/shadow /etc/tomcat8/Catalina/localhost
+    > 
+    > to create a symlink.
+    > 
+    > Then when the tomcat8 package is upgraded (e.g. for the next DSA),
+    > the postinst script runs
+    > 
+    >   chmod 775 /etc/tomcat8/Catalina /etc/tomcat8/Catalina/localhost
+    > 
+    > and that will make the /etc/shadow file world-readable (and
+    > group-writable). Other useful attacks might be to make the
+    > objects:
+    > 
+    >   /root/.Xauthority
+    >   /etc/ssh/ssh_host_dsa_key
+    > 
+    > world-readable; or make something (already owned by group tomcat8)
+    > group-writable (some "policy" setting maybe?).
 
-In GraphicsMagick, the automatic scary stuff is all done within one 
-function so it is reasonable to develop a less magical mode which is 
-less likely to dispatch to a file reader for an archaic file format 
-which stopped being used in 1993.
+  * Privilege escalation when removing tomcat8 package
+    https://bugs.debian.org/845385
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+    > Having installed tomcat8, the directory /etc/tomcat8/Catalina is
+    > set writable by group tomcat8, as per the postinst script. Then
+    > the tomcat8 user, in the situation envisaged in DSA-3670 and
+    > DSA-3720, see also http://seclists.org/fulldisclosure/2016/Oct/4
+    > could use something like commands
+    >
+    >  # touch /etc/tomcat8/Catalina/attack
+    >  # chmod 2747 /etc/tomcat8/Catalina/attack
+    >
+    > to create a file.
+    >
+    > Then if the tomcat8 package is removed (purged?), the postrm
+    > script runs 
+    > 
+    >  chown -Rhf root:root /etc/tomcat8/
+    >
+    > and that will leave the file world-writable, setgid root: 
+    >
+    > # ls -l /etc/tomcat8/Catalina/attack
+    > -rwxr-Srwx 1 root root 0 Nov 23 09:00 /etc/tomcat8/Catalina/attack
+    >
+    > allowing "group root" access to the world.
+
+Cheers,
+
+--Seb
+
