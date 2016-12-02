@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/14/5
-Message-ID: <CANO=Ty11oyui5QSb_O5-86ajFxn-3uqhDiaLke8arTLRXvSM6Q@mail.gmail.com>
-Date: Thu, 14 Jan 2016 09:28:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: nodejs Buffer(number) is unsafe #4660
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/12
+Message-ID: <3454029.yBeZ0OJpNZ@arcadia>
+Date: Fri, 02 Dec 2016 19:16:04 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)
 Content-Type: text/plain; charset=utf-8
 
-From:
+On Friday 02 December 2016 13:07:34 cve-assign@...re.org wrote:
+> > https://blogs.gentoo.org/ago/2016/12/01/imagemagick-heap-based-buffer-over
+> > flow-in-ispixelgray-pixel-accessor-h-incomplete-fix-for-cve-2016-9556
+> > 
+> > AddressSanitizer: heap-buffer-overflow
+> > READ of size 4
+> >
+> >     #0 0x7f897b123266 in IsPixelGray
+> >     ImageMagick-7.0.3-8/./MagickCore/pixel-accessor.h:507:30
+> 
+> Use CVE-2016-9773 for the vulnerability present in "an updated version
+> which includes the fix for CVE-2016-9556."
 
-https://github.com/nodejs/node/issues/4660
+The updated version which includes the fix for CVE-2016-9556 is 7.0.3.8 ( as 
+stated under the affected version 'field'.
 
-tl;dr
-
-This issue proposes:
-
-Change new Buffer(number) to return safe, zeroed-out memory
-
-Create a new API for creating uninitialized Buffers, Buffer.alloc(number)
-
-====
-
-it then goes into more detail at the URL. Can a CVE be assigned for this
-please?
+Anyway, upstream added a patch for this issue:
+https://github.com/ImageMagick/ImageMagick/commit/4e8c2ed53fcb54a34b3a6185b2584f26cf6874a3
 
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Agostino Sarubbo
+Gentoo Linux Developer
