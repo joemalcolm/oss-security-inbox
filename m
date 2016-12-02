@@ -1,103 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/1
-Message-ID: <CALCETrV-MJzSXBJMAULepDBS46Q-JNVzMjngmoP9WuFnBhXrEA@mail.gmail.com>
-Date: Sun, 24 Jan 2016 20:36:48 -0800
-From: Andy Lutomirski <luto@...nel.org>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE Request: x86 Linux TLB flush bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/11
+Message-ID: <5002229f1c1145cab231c07a2e1d43a2@imshyb02.MITRE.ORG>
+Date: Fri, 2 Dec 2016 13:07:34 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)
 Content-Type: text/plain; charset=utf-8
 
-Linux on x86 and x86_64 had a race condition in the TLB flush logic.
-I don't know how exploitable it is.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On x86, when changing a paging structure [1], the OS needs to ensure
-that the processor's TLB is flushed to evict any stale cached copies
-of the old paging data.  On SMP systems, the TLB flush needs to be
-propagated to other CPUs that share the paging structures.
+> https://blogs.gentoo.org/ago/2016/12/01/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h-incomplete-fix-for-cve-2016-9556
 
-x86 has no hardware cross-core TLB flush mechanism.  Instead, Linux
-does the following dance:
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 4
+> 
+>     #0 0x7f897b123266 in IsPixelGray 
+>     ImageMagick-7.0.3-8/./MagickCore/pixel-accessor.h:507:30
 
-CPU A:
-A1. Change the paging structure.
-A2. Flush local TLB, if applicable.
-A3. Check if other CPUs are sharing the paging structures; if so, send
-them IPIs to flush them.
+Use CVE-2016-9773 for the vulnerability present in "an updated version
+which includes the fix for CVE-2016-9556."
 
-At this point, if a physical page was unmapped, it can be safely reused.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The check in step 3 interacts with context switches on remote cpus.
-When CPU B starts to use the paging structure that A is modifying, it
-does:
-
-CPU B:
-
-B1. Set a bit indicating that CPU B is using the paging structures
-(LOCK-prefixed atomic insn).
-B2. Load the paging hierarchy root into CR3.
-B3. (implicit) Start filling the TLB.
-
-For this whole dance to work, Linux needs to avoid any outcome in
-which CPU B fills a TLB entry that CPU A modified if CPU A does not
-send an IPI to CPU B.  In a sequential consistency model, we're fine.
-CPU A will only fail to send the IPI if it sees the bit that CPU B
-sets being clear after modifying the paging structures and, if that
-happens, then CPU B hasn't filled its TLB yet.
-
-Real CPUs aren't sequentially consistent.  The work done by CPU B is
-well behaved.  B3 is a TLB fill, and it therefore does not follow the
-usual x86 memory ordering rules.  Fortunately, B2 is "serializing" and
-therefore orders everything.
-
-Unfortunately, the work done by CPU A may have been incorrect.  A1 is
-an ordinary store and A3 is an ordinary load.  Therefore, x86 CPUs are
-permitted to reverse their order such that CPU A checks whether the
-paging structures are shared prior to modifying them.
-
-As a mitigating factor, A2, *if it occurs*, is serializing and
-prevents this problem.
-
-The upshot is that, in principle, when Linux invalidates a paging
-structure that is not in use locally, it could, in principle, race
-against another CPU that is switching to a process that uses the
-paging structure in question.
-
-I have not tried to exploit this.  Doing so would involve finding a
-code path that unmaps a page *no in use by the current task* and
-requests a TLB flush without any intervening memory barriers, implied
-or otherwise.
-
-A successful exploit would result in a user thread running with a
-stale cached virtual -> physical translation.  If the translation in
-question were writable and the physical page got reused for something
-critical (e.g. a page table), then this would permit privilege
-escalation without any syscalls whatsoever.
-
-There are some mitigating factors.  Code paths that would do this are
-not that common.  Actually triggering the race would involve the CPU
-speculating a load before a prior store in a different function, and
-that load would have to be speculated across a branch for which the
-not-taken side lead to a serializing instruction.  I have no idea
-whether actual microarchitectures do this.
-
-
-
-commit 4eaffdd5a5fe6ff9f95e1ab4de1ac904d5e0fa8b
-Author: Andy Lutomirski <luto@...nel.org>
-Date:   Tue Jan 12 12:47:40 2016 -0800
-
-    x86/mm: Improve switch_mm() barrier comments
-
-commit 71b3c126e61177eb693423f2e18a1914205b165e
-Author: Andy Lutomirski <luto@...nel.org>
-Date:   Wed Jan 6 12:21:01 2016 -0800
-
-    x86/mm: Add barriers and document switch_mm()-vs-flush synchronization
-
-
-If any of you try analyze this further, please let me know.
-
---Andy
-
-[1] There are some exceptions when adding entries for previously
-non-present pages.
+iQIcBAEBCAAGBQJYQbZTAAoJEHb/MwWLVhi23/0P/jjSc66cYiN9RO+COylm6tXV
+eTJyErBTaBEPif0I/0OYuYrXP40EIgUGFjCBYuCWpTkMabqw1/aOaSSSIc5fXfAg
+fuRpgddBCSmSsncTcivJGJw8mfRC7kRb9pxkmxcxRbC9JibW42OzFTo9Yzc0cpuE
+HENOhxL7n26ZJw3dc+y+tGZUXynLARe/93DFkpw03twLFE8pqSffRdPTSveQb6j/
+6GTuHdLYFmmqTFXVk3TGntbgQmKSFhodi6T5te9pTXdwSl336yAswbL7XSECXJeZ
+mr2RWFxCP3r9pGFPIfSGuuO4N5dkOOM/x94G5JgqYO+BBxMMdTSqwuLKZYLnmPju
+xYalu2woeXhb6I9LRiKVw6+kAGJTo3tTnhLk3P1p8gnYug5gcr6k1TP2RAvq8ydj
+0S12k2FJDiTFFQob3HCf5fYXDxgLc955pFhA1oE8ojblBG8LMaLAiPNUYUfWaAae
+VZ5v3awgaAltFCh8VwJfW7NOUWaDnd1eQfTnkYH0Wt0NDHcY5gjnRNyQePQKL9nU
+WyBACf4E8s/nPcpQJaZvgv0eiv0ncNGt2+ooXFo20BU72xu9xzXDq/HMMu2LIIL7
+X5Gh8NtWwRuT0Bsrs61cfL3oFoK91AexniJQQPyfzrSEfT81yi1YtmBkSoVZ8Zvw
+j9xoQMSMPUgvGv2afIGM
+=oclT
+-----END PGP SIGNATURE-----
