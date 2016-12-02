@@ -1,13 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/4
-Message-ID: <e21515e4-86af-f35e-b03c-071bf423c0e2@laposte.net>
-Date: Wed, 16 Mar 2016 03:10:28 +0100
-From: Laël Cellier <lael.cellier@...oste.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: server and client side remote code execution through a buffer overflow in all git versions before 2.7.1 (unpublished ᴄᴠᴇ-2016-2324 and ᴄᴠᴇ‑2016‑2315)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/10
+Message-ID: <2bc979517e9049968c78e77c115c6ad9@imshyb02.MITRE.ORG>
+Date: Fri, 2 Dec 2016 13:05:50 -0500
+From: <cve-assign@...re.org>
+To: <seb@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: tomcat privilege escalations in Debian packaging
 Content-Type: text/plain; charset=utf-8
 
-In addition to 
-http://thread.gmane.org/gmane.comp.version-control.git/286253 I also 
-forgot a part of the patches were here 
-http://thread.gmane.org/gmane.comp.version-control.git/286008
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+>   * Privilege escalation when upgrading tomcat8 package
+>     https://bugs.debian.org/845393
+> 
+>     create a symlink
+
+Use CVE-2016-9774.
+
+
+>   * Privilege escalation when removing tomcat8 package
+>     https://bugs.debian.org/845385
+> 
+>     leave the file world-writable, setgid root
+
+Use CVE-2016-9775.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYQbZLAAoJEHb/MwWLVhi26aEP/ivGNYnCc7vu3VwntDka67ma
+DDy626ySFxqZ42rsqODKp+sUDTcvpSl3zrdjMgD2RsFcozm/Wxw3UrfwsCA2hyJe
+7777Ho0aXuncTFtj+X/iWWbe0lgua1txSHukKmHrj8OUGdFrLZ++V0cKvo/UB2YC
+rrezzxvjTs5MyB7hfJTIq7adB2NU02Zoq5SZG6hwZ7KJvL7BwR6S2zJcqEyE9lNB
+mH9ELOcAJVEDkLp08TO+Gsjzttn5+VgV2d2Z/FZ88QlvET/pUDnq2lFE9VLwK7LH
+bQ2/DXlr7L3ysQowFW8wKfVmRrIGfBf6ghSJB14HLsISpUan09M/Hxia2gnBDrqG
+cFZxuqk8rB82+Wv/8d0MpYHY7wraLn1xtya0uEosq77zANLFYAUagH2U0tbKmy6x
+Ynw5XlJSSfdrz99YNvUYSo9stdc0tl1fh+U+TVdceSymX05vBixrn1/6mG9U2rMO
+NovO4Vw4ZlhGXhNbIfIBUC9zFeOuWMopv7TYK+koOZyMlDVRHFpCzg/uJWgM9GhX
+8SmBKTu/30JFYQMXQxEr+FeK3HH4ypkuHh4ypipC3X1SSh/a/+b47HTKA4Zq3MCb
+Cq+ujDVuJTHjxBrfJjdYj5pdV8L5UKPCYCwVbTq4zYKDpvNwkymk6sNitx8rl+4z
+zfAuJp63CxW2QXE2CgKx
+=xpEE
+-----END PGP SIGNATURE-----
