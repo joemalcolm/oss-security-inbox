@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/16
-Message-ID: <CACXSKC8AZevw7LatqKf8RdVWR9srfkEQ49RQABHbQeK38Ono+w@mail.gmail.com>
-Date: Fri, 30 Sep 2016 00:14:04 +1000
-From: Vitaly Nikolenko <vnik5287@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/9
+Message-ID: <9d50e9bb03ad40c1aa9547b96436ce27@imshyb02.MITRE.ORG>
+Date: Fri, 2 Dec 2016 13:04:21 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: OpenAFS: directory information leaks (OPENAFS-SA-2016-003)
 Content-Type: text/plain; charset=utf-8
 
-Wasn't this already covered by CVE-2016-4997? There's a public exploit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://www.exploit-db.com/exploits/40049/
+> https://www.openafs.org/pages/security/OPENAFS-SA-2016-003.txt
+> https://www.openafs.org/pages/security/openafs-sa-2016-003.patch
+> https://www.openafs.org/pages/security/openafs-sa-2016-003-master.patch
 
-I'm assuming for IPv6 this would be exactly the same except for
-changing the setsockopt optname from IPT_SO_SET_REPLACE to
-IP6T_SO_SET_REPLACE. The code path for IPv6 looks almost identical
-unless I'm missing something?
+Use CVE-2016-9772.
 
-Commit ce683e5f9d045e5d67d1312a42b359cb2ab2a13c included fixes for
-ARP, IP and IPv6 and my assumption was that CVE-2016-4997 covered all
-of them.
+(There may have been a reason to have multiple CVE IDs; however, we
+were unable to determine a multiple ID mapping in a reasonable amount
+of time. We will be staying with the single CVE ID.)
 
---
-Vitaly
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On 29 September 2016 at 23:45, Greg KH <greg@...ah.com> wrote:
-> On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
->> Hi there,
->>
->> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I
->> have a working exploit to escalade privileges which requires the ip6_tables
->> module to be loaded, that it is properly blocked on all up-to-date versions.
->>
->> Due to the number of users running vulnerable code(not update to 4.7 or
->> higher), and that this exploit is only available to security researchers and
->> kernel packagers upon request but that I don't want it to spread.
->>
->>
->>
->> I have reported this issue to Linux kernel official and they have already fixed
->> this.
->
-> Note, this was fixed many months ago, in May of 2016, and went into the
-> stable kernel updates in June, 2016.  Any distro that updated to the
-> stable kernel updates received this fix then.
->
-> Any distro that hasn't updated their kernel since then, well, you need
-> to revaluate your trust of such a distro :)
->
-> thanks,
->
-> greg k-h
+iQIcBAEBCAAGBQJYQbY0AAoJEHb/MwWLVhi2rCYP/R06PGsESKbHs4M06OIodwOn
+OQpxBbMkwNUzXj//H6VZT67nwKG2AvOracpXA4ZBn7T7CqfCEc0sVFZFqztAz1NF
+racpIH5B01hRSXkz60wVbyUuAsoz4+lhf1+PpVg9y715nPDXwE52tD6DRnOCX4dl
+GK6gzoP1ALPXZMYjpMEjfhI/VsmLVOrKj5muLEdnidg2eRo82E0uEA4i35LcQsIk
+uKVwTcx4ExTrZg1BaeD3988A7nqX8dU+VBNEr9GW7FKnYwULYg8Fy4Df7M4FOJxH
+zQ+4FG54WbN6cziWEZ95r6yQMK9FhgLAsLZ/QkdrFtCDhple3mmwKCoPHJuo7yEC
+V2qPicsHeXamira2k6YOuUm0BQhQIQGDt6q92XyvEEJTJgjjT5Nrlk8Ynd27hv3e
+8INrtJU548dZ7rV9epvhAjO90AVk6QxZ1wyXgLe/9MKRRglkxeFOXrKibvHzGamX
+PkXRh+s1kjrfwG7Il0JxXyRI9Mr+BLKU9406qZoni8ZW2Li2nvAtk8vyKl+zaorL
+jYvMLtyv+65Q9lcFFrEVT4HcSz5PcRNbZUpYvffj8XAbt/EbH+GtihI3ITAp3U6w
+NTVr60XmYfd0LktB/K08j3E8hFWQokqd16nBM6xwepSTYDQyQQtPV6/g52bNXv7Q
+LkhL31PKC9peRd39a3Ve
+=j/50
+-----END PGP SIGNATURE-----
