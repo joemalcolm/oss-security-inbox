@@ -1,46 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/6
-Message-ID: <2f4f7f26fcb04b228aed45fd4052dcc0@imshyb02.MITRE.ORG>
-Date: Fri, 30 Dec 2016 16:33:24 -0500
-From: <cve-assign@...re.org>
-To: <michael@...itzky.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Nagios: Incomplete fix for CVE-2016-8641
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/1
+Message-ID: <alpine.GSO.2.20.1612012111420.19696@freddy.simplesystems.org>
+Date: Thu, 1 Dec 2016 21:20:13 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 1 Dec 2016, Agostino Sarubbo wrote:
 
-> CVE-2016-8641 describes an attack
-> wherein that restricted user replaces the aforementioned path with a
-> symlink. The root user (via the init script) will -- the next time
-> Nagios is started -- give ownership of the symlink's target to Nagios's
-> user
+> If suitable for a CVE please assign one. Thanks.
+>
+> Description:
+> Graphicsmagick is an Image Processing System.
+>
+> This is an old memory failure, discovered time ago. The maintainer, Mr. Bob
+> Friesenhahn was able to reproduce the issue; I’m quoting his feedback about:
+>
+> The problem is that the embedded JPEG data claims to have dimensions
+> 59395×56833 and
+> this is only learned after we are in the JPEG reader.
+>
+> But for some reasons (maybe not easy to fix) it is still not fixed.
 
-> An identical attack not addressed by CVE-2016-8641 works with hard
-> links
+We did make an unreleased fix (Mercurial changeset 14953:38d0f281e8c8, 
+and earlier changeset 14831:28c0bb8bf89a), but perhaps not the way you 
+like.  The fix which was made was to require that the embedded JPEG 
+data has the same dimensions as the containing JNG file.  The existing 
+resource limit mechanism would then allow the user to constrain the 
+size of the JNG image.  The default constraints in a 64-bit build are 
+larger than what the JPEG format supports.
 
-Use CVE-2016-10089.
+It does not seem correct to change the default limits of the software 
+in order to make fuzzing easier.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYZtIlAAoJEHb/MwWLVhi2uusP/0aReE472/YzkPBswLATf8cU
-0/mhc9HGu4CeDy/nORI3TOoh9XC8NSg9Cbs2r7m83/EkK8D2YZpF5swyb4uLhwL7
-5wLLodraBig20Ps53GQSHfKA7/LqXiPxCZH+qdTKiZ12nv2iZm9FwP8Rlp34g4e5
-7ltvnFAAXvq2P7WgF5F1+l6obSe9+Vq/Twsj6Nr+8mfeolQKEBfOWJlYThWAv572
-EcXN6vDUGOzt/epWh5EM7c4CMkA/lzryylbX0Q1f6MAQ1PwavwMzrUi7iB8oBGsa
-xUxgXQsQfjT4QGIJ+xHJ6MFZDmNj3QQQKdzw5sU30qopeHanJkX/dNSBmnk/ZGEW
-rF7EUVNpald/KnADGGNsQGo+NkXddKt1OUfSAvNRgk7z/Dbe+0mUGM0jTz5myDi5
-W6i/SbDcfPywwovORY3+Y7qltucbvawbfWaTjnoUfEPkyNc22YxaHtEnns8/o3uL
-QvqSGMy+j0Ih7+VJBiQ8AobfAn4BpxYUUcaVDnK/sx0CrT9Msy8PdxRjA7ZgXR2w
-rANNhtkclladIBn6ciihkr1gHQybm5qpLb0LLpdM02VHrePA5UmarFK+NjzsSPaM
-sO0u8+Doed/kdKQnHHYGAr5gg+wuN58+X5Iyi/28QtVDbKYAN1SUgNDYpKJLradR
-/+fzONrCZAyHkySd0TjW
-=L1tp
------END PGP SIGNATURE-----
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
