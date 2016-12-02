@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/08/3
-Message-ID: <56DE8CD3.9010004@gmail.com>
-Date: Tue, 8 Mar 2016 09:26:59 +0100
-From: FEIST Josselin <josselin.feist@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/02/4
+Message-ID: <f77747a7-7882-0be4-06ff-0db15495f742@dovecot.fi>
+Date: Fri, 2 Dec 2016 09:02:33 +0200
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request : Use-after-free in accel-ppp
+Subject: Important vulnerability in Dovecot (CVE-2016-8652)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Important vulnerability in Dovecot (CVE-2016-8652)
+CVSS score: 7.4 (CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H)
+Affected version(s): 2.2.25.1 up to 2.2.26.1
+Fixed in: 2.2.27.1rc1
 
-For information, the vuln was fixed on release 1.10.1
-The fix:
-https://sourceforge.net/p/accel-ppp/code/ci/74c8c4a91551fe91e224c29882fac55250fc94e3/
+Short summary: Dovecot auth component can be crashed by remote user when
+auth-policy component is activated.
 
-Best regards,
-Josselin Feist
+If auth-policy component has been activated in Dovecot, then remote user
+can use SASL authentication to crash auth component.
 
-#### timeline ####
-- 18/01/2016: Vuln reported (affect 1.10.0)
-- 04/03/2016: Vuln fixed (release 1.10.1)
+Workaround is to disable auth-policy component until fix is in place.
+This can be done by commenting out all auth_policy_* settings.
 
-
-
-On 10/02/2016 22:23, FEIST Josselin wrote:
-> Hi,
->
-> A use-after-free in accel-ppp was reported one month ago. accel-ppp is a
-> VPN server (https://accel-ppp.org)
-> Since I got no news from the dev (neither by email or through the
-> forum), I would suggest to use this service carefully.
->
-> More details about the vuln here :
-> http://accel-ppp.org/forum/viewtopic.php?f=18&t=581
->
-> The vuln was found with the help of the analyzer GUEB.
->
-> Best regards,
-> Josselin Feist
->
+Aki Tuomi
+Dovecot oy
 
