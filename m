@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2026" "Thursday" "30" "July" "2015" "06:29:28" "+0300" "Solar Designer" "solar@openwall.com" "<20150730032928.GA16502@openwall.com>" "42" "Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" nil nil nil "7" "2015073003:29:28" "[oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser" (number mark "        solar@openwa Jul 30   42/2026  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser\"\n") "<20150723170954.GA17931@localhost.localdomain>" ("<20150723170954.GA17931@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["821" "Friday" "2" "December" "2016" "19:16:04" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3454029.yBeZ0OJpNZ@arcadia>" "22" "Re: [oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)" nil nil nil "12" "2016120218:16:04" "[oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)" (number mark "U       ago@gentoo.o Dec  2   22/821   " thread-indent "\"Re: [oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)\"\n") "<5002229f1c1145cab231c07a2e1d43a2@imshyb02.MITRE.ORG>" ("<5002229f1c1145cab231c07a2e1d43a2@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24057 invoked by uid 550); 30 Jul 2015 03:29:33 -0000
+Received: (qmail 30529 invoked by uid 550); 2 Dec 2016 18:14:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24039 invoked from network); 30 Jul 2015 03:29:33 -0000
-Message-ID: <20150730032928.GA16502@openwall.com>
-References: <20150723170954.GA17931@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150723170954.GA17931@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 30 Jul 2015 06:29:28 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - CVE-2015-3245 userhelper - CVE-2015-3246 libuser
+Received: (qmail 30511 invoked from network); 2 Dec 2016 18:14:53 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Date: Fri, 02 Dec 2016 19:16:04 +0100
+Message-ID: <3454029.yBeZ0OJpNZ@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <5002229f1c1145cab231c07a2e1d43a2@imshyb02.MITRE.ORG>
+References: <5002229f1c1145cab231c07a2e1d43a2@imshyb02.MITRE.ORG>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h) (Incomplete fix for CVE-2016-9556)
 
-On Thu, Jul 23, 2015 at 10:09:54AM -0700, Qualys Security Advisory wrote:
-> Qualys Security Advisory
+On Friday 02 December 2016 13:07:34 cve-assign@mitre.org wrote:
+> > https://blogs.gentoo.org/ago/2016/12/01/imagemagick-heap-based-buffer-over
+> > flow-in-ispixelgray-pixel-accessor-h-incomplete-fix-for-cve-2016-9556
+> > 
+> > AddressSanitizer: heap-buffer-overflow
+> > READ of size 4
+> >
+> >     #0 0x7f897b123266 in IsPixelGray
+> >     ImageMagick-7.0.3-8/./MagickCore/pixel-accessor.h:507:30
 > 
-> CVE-2015-3245 userhelper chfn() newline filtering
-> 
-> CVE-2015-3246 libuser passwd file handling
-> 
-> 
-> --[ Summary ]-----------------------------------------------------------------
-> 
-> The libuser library implements a standardized interface for manipulating
-> and administering user and group accounts, and is installed by default
-> on Linux distributions derived from Red Hat's codebase. During an
-> internal code audit at Qualys, we discovered multiple libuser-related
-> vulnerabilities that allow local users to perform denial-of-service and
-> privilege-escalation attacks. As a proof of concept, we developed an
-> unusual local root exploit against one of libuser's applications.
+> Use CVE-2016-9773 for the vulnerability present in "an updated version
+> which includes the fix for CVE-2016-9556."
 
-Excellent work, Qualys!
+The updated version which includes the fix for CVE-2016-9556 is 7.0.3.8 ( as 
+stated under the affected version 'field'.
 
-However, this brings up the question: why didn't Red Hat do a security
-audit of this software they developed before putting it into their
-distros?  I think Red Hat's own security team would have spotted these
-issues if it were tasked with proactive security audits of internally
-developed software (or of small yet critical components like this)
-rather than only(?) with security response.  (I am writing this without
-knowledge of how Red Hat's security team operates internally.  I am
-merely guessing.)  These are not some subtle bugs that one could easily
-overlook in a large codebase.  These are clear design flaws, of the kind
-we used to see found and fixed in 1990s, in small and obviously
-security-critical components.
+Anyway, upstream added a patch for this issue:
+https://github.com/ImageMagick/ImageMagick/commit/4e8c2ed53fcb54a34b3a6185b2584f26cf6874a3
 
-I understand there's probably more than enough security response work to
-keep the existing security team 100% busy, so maybe another sub-team is
-needed for this - or it can be outsourced, e.g. to Qualys or Openwall. ;-)
-
-The recent ABRT and apport findings by Tavis Ormandy and these userhelper
-and libuser findings by Qualys suggest that what's now known as Secure
-Software Development Life Cycle (S-SDLC) is missing at both Red Hat and
-Canonical.  Will this change?
-
-Alexander
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
