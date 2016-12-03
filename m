@@ -1,80 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/12
-Message-Id: <20161016030402.059446C0D7D@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 23:04:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: potrace: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/03/3
+Message-ID: <0301c866a24643c1a4f15ace461d6aaf@imshyb02.MITRE.ORG>
+Date: Fri, 2 Dec 2016 22:20:08 -0500
+From: <cve-assign@...re.org>
+To: <sploving1@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <tiwai@...e.de>
+Subject: Re: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/08/08/potrace-multiple-three-null-pointer-dereference-in-bm_readbody_bmp-bitmap_io-c/
+> https://github.com/torvalds/linux/commit/3aa02cb664c5fb1042958c8d1aa8c35055a2ebc4
+> https://patchwork.kernel.org/patch/8752621/
 
-> AddressSanitizer: SEGV on unknown address
-> 0x4f027b in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:717:4
+>> Currently kill_fasync() is called outside the stream lock in
+>> snd_pcm_period_elapsed(). This is potentially racy, since the stream
+>> may get released even during the irq handler is running.
 
-Use CVE-2016-8694.
+>>> BUG: KASAN: use-after-free in kill_fasync
 
-
-> AddressSanitizer: SEGV on unknown address
-> 0x4f0957 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:744:4
-
-Use CVE-2016-8695.
-
-
-> AddressSanitizer: SEGV on unknown address
-> 0x4f10b7 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:651:11
-
-Use CVE-2016-8696.
-
-
-> https://blogs.gentoo.org/ago/2016/08/08/potrace-divide-by-zero-in-bm_new-bitmap-h/
-
-> AddressSanitizer: FPE on unknown address
-> 0x508d51 in bm_new /tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap.h:63:24
-
-Use CVE-2016-8697.
-
-
-> https://blogs.gentoo.org/ago/2016/08/08/potrace-multiplesix-heap-based-buffer-overflow-in-bm_readbody_bmp-bitmap_io-c/
-
-> AddressSanitizer: heap-buffer-overflow ... READ of size 4
-> 0x4f3709 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:717:4
-
-Use CVE-2016-8698.
-
-
-> AddressSanitizer: heap-buffer-overflow ... READ of size 4
-> 0x4f3728 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:651:11
-
-Use CVE-2016-8699.
-
-
-> AddressSanitizer: heap-buffer-overflow ... READ of size 4
-> 0x4f37a8 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:652:11
-
-Use CVE-2016-8700.
-
-
-> AddressSanitizer: heap-buffer-overflow ... READ of size 4
-> 0x4f3829 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:690:4
-
-Use CVE-2016-8701.
-
-
-> AddressSanitizer: heap-buffer-overflow ... READ of size 4
-> 0x4f38d4 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:744:4
-
-Use CVE-2016-8702.
-
-
-> AddressSanitizer: heap-buffer-overflow ... READ of size 4
-> 0x4f3947 in bm_readbody_bmp /var/tmp/portage/media-gfx/potrace-1.12/work/potrace-1.12/src/bitmap_io.c:601:2
-
-Use CVE-2016-8703.
+Use CVE-2016-9794.
 
 - -- 
 CVE Assignment Team
@@ -84,17 +30,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAueMAAoJEHb/MwWLVhi2FLUQAIQfsa5xZPZvWE5y4yTcOu3U
-m03UQx9odWYGvpUgdADOSKwQ1+GFPSJpi+OvaLQmDfss/BdWUKHg+3U69gz5xw7t
-QQ2DeV/Ei80uQr86hV212NHXHRd3e0debRecETnZQfZTBIuCfU9AMKo7NhPmFX6x
-0nnhfoDh1mFA4OYnoBachWW3LtxI2wyELYXEQsL+wEKNXZCzlcuPdbahcg7dY/G2
-pqdd44JsNZvTlGOD1izHWrHCLprr2pvxNkgHKyJO9BnA+1n1aSXGsydO8P9xjdyB
-p01Ro73so2ThiTq98R6KkPD1aPSdZK1pm0ivj4BiXk2Qn4ay1HifwyV5F+0rJwv6
-xRcfLbcFErELio36DocC7F+8mot1cVIliNUgzOrW9+PBu7q+ns9cBmvDhgaszRp+
-1IF5J4HyCJzDg5Db9qUQbk9+XindKjDSPlWYCh4sYFryHZBAz5YG+YaDzYTSxqzq
-YUWeCjNFnmOqc0IBeoE15DDB4mWLdqGTxfWdFIP5jy9ivZH38V+G2s/TMrxqDRy4
-xt0JCLAK1UAPWIrTVgXzKSm0QUJJRh/5pd5/oJbHtLPy+Bhmc+AcbfMsMbbvYWML
-STn0lvtUfFXfRQUambTGirq2/4Z0sdcUD6RzR8mFVKjSVLdgo3Q0zymyUbGovX7Q
-JL23K3iztdYCJxzUs4fS
-=zR6v
+iQIcBAEBCAAGBQJYQjl+AAoJEHb/MwWLVhi20bIP/2YwMe+WkpAO/h+tumPCmFmh
+hdZr5j+sGBqm+QajpvcMyRaSGr+5Jxby33NZVYiI7xOQsfRh7unL4+JqaDNvA0gU
+HrCin7BtFCKYS8LqUW0y1T3/PkjBr69PJJoBADwhn7MyFQ8VqlBCUMaILVUygk5M
+eSlyp3pl1KZblySC6KWEH+Lw+sfq+CaLH3Y1EPKcBqCwDPnib2cW7T9K6fYVBLnR
+1uzPX54A+bdXAWpU3Qb9wz0QrzLwtsFRp0ue/FjJLJWNCPwGuU4q8QcSUsZ4IVgo
+mYgZvWQs2sz5FJpL2TBFZ1Nx2ijx9WJrS26U02gUO3lhAc+8EkaW3TfvUFszWGsG
+5CI1FExd5j/oxmUISP8YXcQoy1B5V9pzzXkiz1HKLxSu5hdGplpuvRm5z7OZ9x5I
+hLwEH87wVhKYMofKFf90zJhOZYnQzmUe2Zs1Z4D1a1cKu7YT//lkQZytKmDKEceZ
+Fj36LwBwnI8MhV8T7F1a/ejdkBw0h32VazVF3hRPHqTeF3FREvu137MHA/vOTVzh
++XsM+SJbKHkfzXEkxCisiuAluSkfOuWiyFuBAFiDHZYMMQAF7ZuOTwG+Zwu3BWUT
+ex3w0SJ1mkcCjw2EKJFaUT6/oQ0FF0e7vkgauwP5wI9owxdc14qKuD1JGbANHUGs
+8xXWBJWlploCCTgiYz7v
+=XKyZ
 -----END PGP SIGNATURE-----
