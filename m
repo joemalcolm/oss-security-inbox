@@ -1,4 +1,9 @@
-Received: (qmail 3748 invoked by uid 550); 16 Nov 2024 02:05:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["461" "Saturday" "3" "December" "2016" "09:20:09" "+0800" "Baozeng Ding" "sploving1@gmail.com" "<ed9a84ac-7e62-55d5-afa2-4afaab0c1613@gmail.com>" "14" "[oss-security] CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync" nil nil nil "12" "2016120301:20:09" "[oss-security] CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync" (number mark "U       sploving1@gm Dec  3   14/461   " thread-indent "\"[oss-security] CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24457 invoked by uid 550); 3 Dec 2016 01:20:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,156 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 18125 invoked from network); 16 Nov 2024 01:15:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1731719714; x=1732386380; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=XyIAOe4VwD8EmuFDvATaioli08O0MW0648dXcOB/Zec=;
- b=h+E3QfVX6fjfpNB3TIUhQsl06kco3lQTsBDBfcLcNWi5XATAeNVLbsuqm8vUNAX4gxyErmqy
-  2UYmGwo2PFbeTPXgMn5k2Jzt5vOvFDIgxqhTcA/K9aPtTUvSV/H2NZhtZpBGWIE2uyaJqXk9O1
-  Sw3nl6EPPOl5ozOUYSdy1wJdiUKUSkCJ7T0kPx8L4p56jlIk4K9C8ChSEfbODOlABRpgExXpo4
-  bTWomtOZkt3iWLb6+04FMTdLdxo/FKlo5f2mfL7LYkmqyXXpbmKe+5vLyvC3gkRuh/hYq+0HCX
-  4SQKHo1OzSYcr2A+7FBJ9B+nTwJ9jJxQ+3tCY8cokjjurVxg==
-DKIM-Signature: v=1; a=adaed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1731719714; x=1732386380; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=XyIAOe4VwD8EmuFDvATaioli08O0MW0648dXcOB/Zec=;
- b=/HAdGrvFBnACOKsyuCfpE/H07YfdrUPXDuSRNG8MTWcZY9ImpI58L/DmBOlT7Efde7wSaRO6
-  0I5Pa9DIC4ILBQ==
-Date: Sat, 16 Nov 2024 02:15:13 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20241116011513.kWB_ovDv@steffen%sdaoden.eu>
-In-Reply-To: <20241108001759.GA15331@openwall.com>
-References: <20241106041215.GA4432@openwall.com>
- <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
- <20241107000819.z6Ygg103@steffen%sdaoden.eu>
- <20241107041658.GA10363@openwall.com>
- <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>
- <20241107214159.XFJ1n5cL@steffen%sdaoden.eu>
- <20241108001759.GA15331@openwall.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-623-g805238bd9b
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Received: (qmail 24432 invoked from network); 3 Dec 2016 01:20:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=to:from:subject:cc:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=EeSEBVYr0pICN18OR+UbWrQbK+/duqgzyRaCPKisOgU=;
+        b=vQA0LFTvamLEsKQ3LAJv/mOTU35GdTwkzd68UBKrdZjEXV8vaItl0wW0gGoW+Q+2pv
+         nhJHomj2z6uXkieC5b5Nju9xAjqWfDYaa0oQTeayewes1tTi77aeZkmRcyQNZaMVm9F+
+         CAX1Gxzqne6+SSWsEj4cGbK3FOCrR6+43DvsS+A2ovbRFtbTJxfJHH/thnX2jx1CNbhy
+         E8f5zSoFMSB7Ur82ba8vklX85nnmrIEPkGfgZZcHFwdULUC4Ez3VGld0XQWzF1PtWjyZ
+         irLT9VH0JMCAOUxjL6vGqvzwKwpV++DoASBCChvVllzffLYQ6iy4XYqeAOEjLS/+RYUV
+         3w8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:to:from:subject:cc:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=EeSEBVYr0pICN18OR+UbWrQbK+/duqgzyRaCPKisOgU=;
+        b=XK1eHRCp3rxYUTyD8y98QBDhTmdYVUyvjUEbDsI68hLbEx5BI0s7ko7ov+QNTSxK+d
+         BkiILDXVFIelx4o+lWijdIpKis5uriSOzMZmLmZp/JDFS44kJciQgFLgWylKa0mijW7a
+         uPZV/OY4waGmN2AK59cGUE8F98wG42kIkhffxH5Y0UOTmYlKGJGu1Fn64wE6VVxpKQmd
+         L4fOxUSQT49YSg+ZvPM00ycGc7jVDQpKOlFz1Y6NfbudfA1yfA3GNYL1T//FOBOnYfx1
+         /M6GJ52q37+QzPC2ojExXY1SLrWJnY90i+kb3pC322moaoMgLwP/lOpXQFja3zHv7vv+
+         nvsw==
+X-Gm-Message-State: AKaTC00zza5NbxH5F6qDoHNAh9Qi/s1wfhXiyykUcjtCT4PIeSG55KA3IzjvmQEf6vJs/g==
+X-Received: by 10.157.37.195 with SMTP id q61mr27286501ota.195.1480728042054;
+        Fri, 02 Dec 2016 17:20:42 -0800 (PST)
+To: cve-assign@mitre.org, oss-security@lists.openwall.com
+From: Baozeng Ding <sploving1@gmail.com>
+Cc: tiwai@suse.de
+Message-ID: <ed9a84ac-7e62-55d5-afa2-4afaab0c1613@gmail.com>
+Date: Sat, 3 Dec 2016 09:20:09 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync
 
-Solar Designer wrote in
- <20241108001759.GA15331@openwall.com>:
- |On Thu, Nov 07, 2024 at 10:41:59PM +0100, Steffen Nurpmeso wrote:
- |> Steffen Nurpmeso wrote in
- |>  <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>:
- |>|Solar Designer wrote in
- |>| <20241107041658.GA10363@openwall.com>:
- |>||On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
- |>||> To add that the POSIX core developers mention (APPLICATION USAGE):
- |>||> 
- |>||>   It should be noted that using find with -print0 to pipe input to
- |>||>   xargs -r0 is less safe than using find with -exec because if
- |>||>   find -print0 is terminated after it has written a partial
- |>||>   pathname, the partial pathname may be processed as if it was
- |>||>   a complete pathname.
- |>||
- |>||Shouldn't that behavior be treated as an xargs implementation bug or at
- |>||least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
- |> 
- |> POSIX.1-2024 says, for xargs, on page 3600, lines 123174 ff.:
- |> 
- |>   If the -0 option is specified, the application shall ensure that
- |>   arguments in the standard input are delimited by null bytes.
- |>   If multiple adjacent null bytes occur in the input, each null
- |>   byte shall be treated as a delimiter.
- |>   If the standard input is not empty and does not end with a null
- |>   byte, xargs should ignore the trailing non-null bytes (as this
- |>   can signal incomplete data) but may use them as the last
- |>   argument passed to utility.
- |> 
- |> So it standardizes behaviour as it exists in real life
- |> applications.
- |> (This is pretty unfortunate.)
- |
- |Actually, to me the above reads like it merely allows the current
- |behavior ("may"), but encourages change ("should").  That's good.
- |
- |My only complaint is that "ignore" doesn't suggest this resulting in a
- |non-zero exit status from xargs.  POSIX allows exit status in the range
- |of 1 to 125 if, among other possibilities, "some other error occurred".
- |So I think a non-zero exit status in that range on this condition isn't
- |too far from being compliant.
- ...
+Hello all,
+A use-after-free vulnerability was found in ALSA pcm layer, which allows local users to cause a denial of service, memory corruption or possibly other unspecified impact. 
 
-In the meantime the POSIX core developers have "done something
-about it":
+Reference:
+------------------
+  --> https://patchwork.kernel.org/patch/8752621/
 
-  This was discussed when those words were added to Issue 8. There
-  is a danger in allowing partial input records to be treated as
-  complete. As an example, if find is used to generate a list of
-  directories to be recursively removed and a partial pathname is
-  accepted by xargs, it could result in the accidental removal of
-  a much larger subtree in a filesystem than was intended. The
-  current standard allows this behavior due to existing practice,
-  but we hope to be able to disallow processing of partial input
-  in a future revision of the standard.
+Fixed in upstream:
+--------------------
+  --> https://github.com/torvalds/linux/commit/3aa02cb664c5fb1042958c8d1aa8c35055a2ebc4
 
-  At page 3600 line 123176 section xargs, change:
+Could you please assign a CVE for this vulnerability? 
 
-      If the standard input is not empty and does not end with
-      a null byte, xargs should ignore the trailing non-null bytes
-      (as this can signal incomplete data) but may use them as the
-      last argument passed to utility.
-
-  to:
-
-      If the standard input is not empty and does not end with
-      a null byte, xargs should treat the trailing non-null bytes
-      (which can signal incomplete data) as an error but may use
-      them as the last argument passed to utility.
-
-
-  Add to RATIONALE after page 3605 line 123412:
-
-      When the -0 option is not specified, if the standard input
-      is not empty and does not end with a <newline>, then the
-      input is not a text file, and therefore the behavior is
-      undefined. However, it is recommended that xargs diagnoses
-      the trailing non-<newline> characters (for consistency with
-      the recommendation for -0 and trailing non-null bytes).
-
-  On page 3606 line 123415 section xargs, change:
-
-      xargs ignores the trailing non-null bytes.
-
-  to:
-
-      xargs treats the trailing non-null bytes as an error.
-
-Ciao,
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
-|
-|And in Fall, feel "The Dropbear Bard"s ball(s).
-|
-|The banded bear
-|without a care,
-|Banged on himself fore'er and e'er
-|
-|Farewell, dear collar bear
+Thank you.
