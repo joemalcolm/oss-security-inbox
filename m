@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/3
-Message-ID: <CAOTQaXEMKvWRH4Aexf3bXzsdx0488TkWmVq2-7+v4Ak7dar7jw@mail.gmail.com>
-Date: Wed, 17 Aug 2016 17:01:45 +0200
-From: Gsunde Orangen <gsunde.orangen@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5696: linux kernel - challange ack information leak.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/03/5
+Message-ID: <20161203094405.udrlvszru3jxezia@eldamar.local>
+Date: Sat, 3 Dec 2016 10:44:05 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification
 Content-Type: text/plain; charset=utf-8
 
-> > Heh, fair enough.  This fix is now in the kernels that were released
-today
-> > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-It seems that Greg keeps on being bothered with questions ;-)
-Here's one more: the relevant Upstream commit
-75ff39ccc1bd5d3c455b6822ab09e533c551f758
-is referenced in all change logs of yesterday's kernel releases...
-... Except for: 4.7.1 (https://cdn.kernel.org/pub/
-linux/kernel/v4.x/ChangeLog-4.7.1)
-Did 4.7.1 miss the fix?
+Hi
 
-Thanks again,
-Gsunde
+SimpleSAMLphp has released an update fixing an incorrect signature
+verification issue. Affected versions are all SimpeSAMLphp before
+1.14.10, and the SimpleSAMLphp SAML2 library, prior to 1.9.1, 1.10.3
+and 2.3.3.
 
-2016-08-17 14:16 GMT+02:00 Greg KH <greg@...ah.com>:
+Upstream advisory: https://simplesamlphp.org/security/201612-01
 
-> On Wed, Aug 17, 2016 at 11:54:56AM +0000, Sona Sarmadi wrote:
-> >
-> > > > > You can _always_ just apply the patch to your local tree, there's
-> > > > > never a need to wait for me to get a kernel out.  That's the
-> > > > > advantage of having the source for your systems :)
-> > > > Yes, we can do that but sometimes the patches for newer kernels don't
-> > > > apply cleanly on older versions.
-> > > > There is always a risk that our home grown patches have undesired
-> side
-> > > > effects. We prefer your sign of approval on patches for older kernels
-> > > > :)
-> > >
-> > > Heh, fair enough.  This fix is now in the kernels that were released
-> today
-> > > (4.7.1, 4.6.7, 4.4.18, and 3.14.76), hope that helps.
-> > >
-> > > greg k-h
-> >
-> > Thanks a lot Greg, yes this helps :) I could apply  patch from
-> linux-3.14.y branch
-> > to linux-3.12.y as well (the code looks similar).
->
-> Note, I got the patch a bit wrong, it's not as fast as it could be,
-> here's an update to put on top of the one you took from 3.14.y:
->         https://git.kernel.org/cgit/linux/kernel/git/stable/
-> stable-queue.git/commit/?id=e09bea58ec0552dbbf71fb22bf7a46da9a288fc8
->
-> thanks,
->
-> greg k-h
->
+Refrences: https://github.com/simplesamlphp/saml2/pull/81
+https://github.com/simplesamlphp/saml2/commit/7008b0916426212c1cc2fc238b38ab9ebff0748c
 
+Could you assign a CVE for this issue?
+
+Regards,
+Salvatore
