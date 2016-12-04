@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4162" "Tuesday" "10" "March" "2020" "17:02:21" "+0000" "Xen.org security team" "security@xen.org" "<E1jBiGr-0008Uj-Ds@xenbits.xenproject.org>" "118" "[oss-security] Xen Security Advisory 315 v1 (CVE-2020-0551) - Load Value Injection (LVI) speculative side channel" nil nil nil "3" "2020031017:02:21" "[oss-security] Xen Security Advisory 315 v1 (CVE-2020-0551) - Load Value Injection (LVI) speculative side channel" (number mark "U       security@xen Mar 10  118/4162  " thread-indent "\"[oss-security] Xen Security Advisory 315 v1 (CVE-2020-0551) - Load Value Injection (LVI) speculative side channel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 315 v1 (CVE-2020-0551) - Load Value Injection (LVI) speculative side channel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1671" "Sunday" "4" "December" "2016" "14:45:58" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d6489feaae484961a1302537b90f6bf7@imshyb02.MITRE.ORG>" "42" "[oss-security] Re: CVE Request: -- Linux kernel: double free in netlink_dump" nil nil nil "12" "2016120419:45:58" "[oss-security] Re: CVE Request: -- Linux kernel: double free in netlink_dump" (number mark "U       cve-assign@m Dec  4   42/1671  " thread-indent "\"[oss-security] Re: CVE Request: -- Linux kernel: double free in netlink_dump\"\n") "<a4156d1d-7f4c-d5ea-0687-3dd6d9ace541@gmail.com>" ("<a4156d1d-7f4c-d5ea-0687-3dd6d9ace541@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1402 invoked by uid 550); 10 Mar 2020 17:02:43 -0000
+Received: (qmail 32738 invoked by uid 550); 4 Dec 2016 19:46:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,135 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1384 invoked from network); 10 Mar 2020 17:02:42 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 32720 invoked from network); 4 Dec 2016 19:46:10 -0000
+From: <cve-assign@mitre.org>
+To: <sploving1@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<herbert@gondor.apana.org.au>
+In-Reply-To: <a4156d1d-7f4c-d5ea-0687-3dd6d9ace541@gmail.com>
+Message-ID: <d6489feaae484961a1302537b90f6bf7@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 14:45:58 -0500
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1jBiGr-0008Uj-Ds@xenbits.xenproject.org>
-Date: Tue, 10 Mar 2020 17:02:21 +0000
-Subject: [oss-security] Xen Security Advisory 315 v1 (CVE-2020-0551) - Load Value
- Injection (LVI) speculative side channel
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: -- Linux kernel: double free in netlink_dump
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2020-0551 / XSA-315
+> A double free vulnerability was found in netlink_dump, which could
+> cause a denial of service or possibly other unspecified impact.
 
-           Load Value Injection (LVI) speculative side channel
+> http://lists.openwall.net/netdev/2016/05/15/69
+> https://github.com/torvalds/linux/commit/92964c79b357efd980812c4de5c1fd2ec8bb5520
 
-ISSUE DESCRIPTION
-=================
+>> netlink: Fix dump skb leak/double free
 
-This is very closely related to the Microarchitectural Data Sampling
-vulnerabilities from May 2019.
+>> When we free cb->skb after a dump, we do it after releasing the
+>> lock.  This means that a new dump could have started in the time
+>> being and we'll end up freeing their skb instead of ours.
+>> 
+>> This patch saves the skb and module before we unlock so we free
+>> the right memory.
 
-Please see https://xenbits.xen.org/xsa/advisory-297.html for details
-about MDS.
+Use CVE-2016-9806.
 
-A new way of using the micro-architectural details behind MDS has been
-identified.  Instead of simply trying to sample data from a different
-privilege context, an attacker can arrange for poisoned data to be
-consumed (speculatively) in a victim context.
-
-This expands the range of tools by which an attacker can manipulate
-speculation in the victim context to leak data via a side channel.
-
-For more details, see:
-  https://software.intel.com/security-software-guidance/insights/deep-dive-load-value-injection
-
-IMPACT
-======
-
-An attacker, which could include a malicious untrusted user process on a
-trusted guest, or an untrusted guest, can potentially cause a victim
-context (process, or guest, or guest kernel, or hypervisor) to leak
-secrets available to it.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-Only x86 processors are vulnerable.
-ARM processors are not believed to be vulnerable.
-
-Only Intel based processors are potentially affected.  Processors from
-other manufacturers (e.g. AMD) are not believed to be vulnerable.
-
-Please consult the Intel Security Advisory for details on the affected
-processors.
-
-MITIGATION
-==========
-
-Xen does not support the use of SGX (Software Guard Extensions).
-Outside of the SGX enclave case, the attacker has a limited ability to
-control the paging behaviour in the victim context.
-
-Therefore, it is not believed that there is a practical way to attack a
-victim context which is not an SGX enclave.
-
-Furthermore, preexisting work (including fixes for MDS, SMAP hardening
-for user pointers) and in-progress work (core scheduling for SMT
-systems) all raise the bar further for an attacker.
-
-There are no known LVI gadgets within Xen.  As a result, we have
-decided not to make any changes to default configurations of Xen.
-
-Systems with untrusted PV guests, and whose host administrators are
-worried about potential LVI gadgets, might wish to consider changing
-the VM to be HVM instead, or make use of PV-Shim, to limit the scope
-of a potential attack.
-
-NOTE REGARDING PAGE MODIFICATION LOGGING
-========================================
-
-Included for completeness, rather than due to being a realistic concern:
-
-On Intel Broadwell and later systems, Xen uses Page Modification Logging
-to accelerate logdirty tracking on migration.  The use of this does put
-the guest kernel at a higher risk of being attacked, due to the use of
-EPT Access/Dirty bits used behind the scenes.  Userspace shouldn't be
-able to influence when a migration occurs, but booting Xen with
-`ept=no-ad` will mitigate this concern by causing Xen to fall back to
-software logdirty tracking.
-
-RESOLUTION
-==========
-
-There is no complete resolution available.
-
-In general, administrators of Xen systems are recommended to take no
-action in response to this vulnerability.
-
-If potential LVI gadgets are discovered in Xen, they will be addressed
-on a case by case basis, in the same way as Spectre v1 hardening.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-Despite an attempt to organise predisclosure, the discoverers ultimately
-did not authorise a predisclosure.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl5nyAsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZposH/0ZH/AXAFND2aBRdxKoWZtWyAaxrI0NPRz/H+AEZ
-CKtoV7E0HmwCSucxJOCe95yv/shKYSqoG4mMkxT+6v1gH7Hv/2dbl12G0Nlo5lyq
-LSkbvyLwCa1ceL6xa5qanx0GkJL+tiOP3EPDBKpO5Lqok5WS/uXQRwIequArPLNi
-S4xmE0oKv/yOXRRe2BhnAp6+lY/U6kuMxVNEXF5/6p3/31tnZhabkLJp5N2yl5Ts
-OEVjwnzEYRgi5npes1TW6PkPA5p0L4rq/oiVPvTqJsNWRkCmHvR2uRXDc1cI/9gs
-wnam4wTVF2tOXZ8/+n+XvUVUPeLAqzncv2D8+RWkX8pKu18=
-=DFQP
+iQIcBAEBCAAGBQJYRHFwAAoJEHb/MwWLVhi2hsAP/3lgM/3+LJHUfJISIWERrGgO
+U3X5tyJ7F/HE85fmpMTq1mJxS0pgfswpozEBTwMT/oVOjWNRh0lppMlZegR+yAdr
+Whz/xJToSf0I/QRz2AviGtHkGDs3+SeJcVsWQbIh/WGbUpwyy8IdF3WVni+8fNUY
+zIhNzdZ8XZCAEl8ZLcvFl7v1SH+t4zfiTMZX9Qalpp6fJ4oNjJlQjY/jrojQ527k
+NbM7JGV3UHb+rLLaPBnykTYQ1Kip3KYEZTD26kyI1XbUlTYfjzGQ8Tfx9x+EzDnE
+22Fa5aib+I/AkAW0JbPihPBlDEcXGQWMbFTIvPkfqiCjVCO2QWb+WdSJ5F/QBy1F
+kPoXsJy++XNjcrtg436KR5jH3wQdUC1zwzmd9SC8QonA7ZQazxDU/vs740o5hray
+DQq1Ca/ZqQp5iO8phPhEiVCOGsqwArhaQ0LuR0ZcpaFKXRP/oa5s4xxgUDsq41JZ
+4W3K28o5nS3nlMaz/ekolxIhbtJYu7e6xey+YDpno6xYfTbx2mdpl3U1ICB+fSrt
+i+H2NKmv4/sEpXQLEh5byJKx0RPCfU+alRfWBeyEU6lcHtmwtvks/V5ttK6OMVRQ
+FSZwcRrv2QmEwTqM104umTdUFp+0+3pY4iHwtCLZ5EARp/04UhVtIH3mNScnYn9S
+UPX/llj6prAyQ63BQEKg
+=Yz/R
 -----END PGP SIGNATURE-----
-
---=separator--
