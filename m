@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/12/2
-Message-ID: <20160912095353.GB17469@suse.de>
-Date: Mon, 12 Sep 2016 11:53:53 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/04/1
+Message-ID: <20161204151827.w6cvq2enbqdg4ido@eldamar.local>
+Date: Sun, 4 Dec 2016 16:18:27 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: matt@...uxbox.com, philippe.deniel@....fr
-Subject: nfsd-ganesha allows anyone to call into DBUS?
+Cc: mprpic@...hat.com, cve-assign@...re.org, James Cowgill <jcowgill@...ian.org>
+Subject: Re: Re: RCE in Zabbix 2.2 to 3.0.3
 Content-Type: text/plain; charset=utf-8
 
 Hi
 
-The nfs-ganesha (userspace nfsd) offers a dbus API to control/admin
-the nfsd via cmdline tools and some qt+python code.
+On Tue, Nov 01, 2016 at 02:17:05PM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > https://www.exploit-db.com/exploits/39937/
+> > Zabbix 2.2 < 3.0.3 - API JSON-RPC Remote Code Execution
+> 
+> > /api_jsonrpc.php
+> 
+> > "method": "script.update",
+> 
+> > "command": ""+cmd+""
+> 
+> Use CVE-2016-9140.
 
-The default dbus config seems to allow anyone to connect to
-it and invoke methods. The code at least does not check any polkit
-authorizations or dbus sender (at a first look). Am I missing something? If I dont,
-the DBUS API should be declared experimental and disabled by default,
-since there are some methods which would allow users to gain root.
+This has later on been reported upstream, as
+https://support.zabbix.com/browse/ZBX-11483 . Upstream believes that
+this is not a vulnerability, but a superadmin able to use a feature as
+intended. Cf. 
 
-https://github.com/nfs-ganesha/nfs-ganesha/
-https://github.com/nfs-ganesha/nfs-ganesha/wiki/Dbusinterface
+https://support.zabbix.com/browse/ZBX-11483?focusedCommentId=202709&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-202709
+and
+https://support.zabbix.com/browse/ZBX-11483?focusedCommentId=202789&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-202789
 
-Sebastian
+As such this might be actually be REJECTed. Martin and CVE assigning
+team from MITRE, does this look correct? Should the CVE be rejected
+instead?
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
-
+Regards,
+Salvatore
