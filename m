@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/17/11
-Message-ID: <CAE8hE=qv3Gbb2iyZyQ9Vfk0GiqXJPAdruQ3y9ucdVRzfBb2Aag@mail.gmail.com>
-Date: Wed, 17 Aug 2016 15:28:05 -0400
-From: Chaim Sanders <chaim@...imsanders.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/12
+Message-ID: <1ddea9c3-3475-8f6a-95db-099c055076e6@dovecot.fi>
+Date: Mon, 5 Dec 2016 09:00:13 +0200
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
 To: oss-security@...ts.openwall.com
-Subject: ModSecurity's OWASP CRS v3.0.0-rc1 Released.
+Subject: Re: Important vulnerability in Dovecot (CVE-2016-8652)
 Content-Type: text/plain; charset=utf-8
 
-The OWASP Core Rule Set team is proud to announce the first of two
-planned release candidates for the upcoming OWASP ModSecurity Core
-Rule Set v3.0.0.
-
-This new release represents a huge step forward in terms of both
-capabilities and protections including:
-
-- A 95% reduction in false positives for a typical CRS deployment
-using the default configuration.
-- Extended effectiveness and detection capabilities in numerous areas;
-namely Remote Command Execution and PHP injections (Walter Hop).
-- A simple to use, adjustable paranoia level that allows users to
-tailor their ruleset experience.
-- The capability to allow existing sites to try out the Core Rules by
-enabling the rules for only limited percentage of requests (Christian
-Folini).
-
-Please see the CHANGES document for a detailed list of new features
-and improvements.
-(https://github.com/SpiderLabs/owasp-modsecurity-crs/blob/v3.0.0-rc1/CHANGES)
-
-Our desire is to see the Core Rules project used as part of a defense
-in depth strategy to help effectively fight web application weaknesses
-with few side effects. As such we attempt to cut down on false
-positives as much as possible in the default install. This RC1
-therefore offers an opportunity for individuals to provide feedback
-and to report any other issues they may face. This is no longer aimed
-at ModSecurity experts. This is the Core Rules for the rest of us.
-
-Please use the CRS GitHub
-(https://github.com/SpiderLabs/owasp-modsecurity-crs/releases/tag/v3.0.0-rc1)
-or the Core Rules mailing list to tell us about your experiences,
-including false positives or other issues with this release candidate.
-Our current timeline is to seek public feedback on RC1 for the next
-month, followed by an RC2 and subsequently a release.
-
- For more information, please see the following blog post accompanying
-this release:
-
-https://www.trustwave.com/Resources/SpiderLabs-Blog/OWASP-ModSecurity-CRS-Version-3-0-RC1-Released/
 
 
-Sincerely Chaim Sanders, on behalf of the Core Rules Set development team.
+On 02.12.2016 09:02, Aki Tuomi wrote:
+> Important vulnerability in Dovecot (CVE-2016-8652)
+> CVSS score: 7.4 (CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H)
+> Affected version(s): 2.2.25.1 up to 2.2.26.1
+> Fixed in: 2.2.27.1rc1
+>
+> Short summary: Dovecot auth component can be crashed by remote user when
+> auth-policy component is activated.
+>
+> If auth-policy component has been activated in Dovecot, then remote user
+> can use SASL authentication to crash auth component.
+>
+> Workaround is to disable auth-policy component until fix is in place.
+> This can be done by commenting out all auth_policy_* settings.
+>
+> Aki Tuomi
+> Dovecot oy
+>
+
+The affected versions are from 2.2.25 to 2.2.26.1.
+
+Aki Tuomi
+Dovecot oy
