@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/23
-Message-ID: <8accbcde112d4796bdfff54c6e587908@imshyb02.MITRE.ORG>
-Date: Mon, 5 Dec 2016 17:17:20 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/5
+Message-ID: <3fd03cb43fae4c9f8d4744e04038bcac@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:17:35 -0500
 From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
-> to a memory leakage issue. It could occur while updating the cursor data in
-> update_cursor_data_virgl.
+> https://blogs.gentoo.org/ago/2016/12/01/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c
 > 
-> A guest user/process could use this flaw to leak host memory bytes, resulting
-> in DoS for a host.
+> The problem is that the embedded JPEG data claims to have dimensions 
+> 5939556833 and
+> this is only learned after we are in the JPEG reader.
 > 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00029.html
+> AddressSanitizer failed to allocate 0xfb8065000 bytes of LargeMmapAllocator
+> 
+> MagickRealloc ... GraphicsMagick-1.3.24/magick/memory.c:471:18
+> OpenCache ... GraphicsMagick-1.3.24/magick/pixel_cache.c:3155:7
 
->> if the 'width'/ 'height'
->> is not equal to current cursor's width/height it will return
->> without free the 'data' allocated previously
 
-Use CVE-2016-9846.
+>> From: Bob Friesenhahn
+>> Date: Thu, 1 Dec 2016 21:20:13 -0600 (CST)
+>> ...
+>> We did make an unreleased fix (Mercurial changeset 14953:38d0f281e8c8,
+>> and earlier changeset 14831:28c0bb8bf89a), but perhaps not the way you
+>> like. The fix which was made was to require that the embedded JPEG
+>> data has the same dimensions as the containing JNG file. The existing
+>> resource limit mechanism would then allow the user to constrain the
+>> size of the JNG image. The default constraints in a 64-bit build are
+>> larger than what the JPEG format supports.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu.c but
-that may be an expected place for a later update.
+Use CVE-2016-9830.
 
 - -- 
 CVE Assignment Team
@@ -38,17 +44,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYReVlAAoJEHb/MwWLVhi26K4QAIEOb2gsY0jWd9UGFd7PT27w
-03JwlZZKo8DxKTVE/YV2uVCNRG6kplIIZeAAJe64MytSFL2hnAzd3Mm7uamZUTKZ
-Q0GxRK6ruTrziVeHWgg+xAy4KWiD3KBoAbxVbgW7qmnXAw4ML3IKJ9R7SJFmGhzH
-MUMIMJlhvXy8ngYsRwtcgfpiahKTN4YeYxk0MxqNIDZmROsnbrMsuASpg8jLKcXh
-hyygf17M7Wd42Go3C/BDaVn91numOlgJxPVnPv6VhD7oXrM+1iNIbw29UMqVUH5I
-yMkLB6Dd2iM/hiQIirohtn7B4mX7OgiP2j5eiu38MRP6ZaVblTfFsb3M2XJkl3/v
-ukhw4zaPbnzB7ANBG8Q0aABCnnDAtJSR7hDd0emvu8WxgT6ub37iDY4oz0Xlxxqr
-QeE0QCC33I932WGdWBjAf77bZ7QficjL6HXevMFiiPQYAiXb4CV400N2lLLr2dJY
-SVYuFCtEvBk2yrc5kyPMmo0s8kMSfPj/0GwR03960iNlQD9dHYl7N5QMuv3AqnDF
-AlK+zO/bgGuKy9/tdNH/io03rx9PnxOn5NjX2/TYWEaOV3z9hhpfSfjPAn5vsHNR
-slC1L7YwPehS66LRc5uUqJNUtIeKqV0E5OWvR0pUDvXpLZim0trm9AbVStgSkA6u
-JsxYW7rXQSTapsyPSGTr
-=HX47
+iQIcBAEBCAAGBQJYRNjcAAoJEHb/MwWLVhi2unEP/026aCl/yFoWW+oA6eBTE90K
+crzLOqQvjd0xCLXZtZJzRYn1WD1YUm+2ViYpAWScUzazeqqQbdrESua2oHBUt9wJ
+9MB0fHmxrt/X4FYeudBB98Jvm5d+fUs7OYNg6nlEUeeOVLyU8hSTbn6s0FVGp7TT
+ewBIlJTixW76jKB63DNDZ6lVc/UvYgCzaYiR5SfjXRWjfddQZjtgbsxDb3B+iQ4s
+kAbtvPDknfia5B0dewSogp7A0e5I2wfanhTWQRCYO7hTJFH7BhRd4u/Sj6bHn8WB
+mxm9kq/ghCzG3vHRelZLIXp6rQ0LR5x9BfjCfFMU5PwEbWGpH/z0Omie5XsSH5hk
+YR0Erj9BUBthPAeRCFYbkl9yhUfIn14d6Oj8SyMHto6FZ7kutFeWp1M/zQStXN2w
+U/zKpHE1aOknMW0mGqenRI5BS5bhbR+KHimPfQVdTG/1DcbhPblsrpisChP4R4Nl
+zwS2C5AYusq0jhAlJM+dFOIXyDM5t5tkP/Iqb+Xhks5SNnu67vl4t47JSY4nONgF
+0MP2myZ0GtvkTI2AUDKFxapC2+LWNfOIqNAiIRino5ydLsvEke5jiglesTnEsI5S
+/k65wgNAGUNHRi3+unBMeeOBxuPRFliLi+zj/GOvWPz1voZ4oMPFdrY2AG1jOJvx
+HpRkWF3tQVXvCyW5QUgX
+=ES9U
 -----END PGP SIGNATURE-----
