@@ -1,57 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/15/9
-Message-Id: <20161015164603.2A9F752E4DF@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 12:46:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, psirt@...wei.com
-Subject: Re: CVE request Qemu: net: OOB buffer access in rocker switch emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/10
+Message-ID: <20161205071509.GB26169@suse.de>
+Date: Mon, 5 Dec 2016 08:15:09 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: CVE Request: zlib security issues found during audit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> Quick Emulator(Qemu) built with the Rocker switch emulation support is
-> vulnerable to an OOB read access issue. It could occur while performing a DMA
-> access 'TEST_DMA_CTRL_INVERT' test.
-> 
-> A privileged guest user could use this issue to crash the Qemu process
-> instance on the host resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02501.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1384896
+Mozilla has asked Trail of Bits / TrustInSoft to audit zlib 
+https://wiki.mozilla.org/MOSS/Secure_Open_Source/Completed#zlib
 
->> While testing host DMA access, a buffer address
->> is written to register 'TEST_DMA_ADDR' and its size is written to
->> register 'TEST_DMA_SIZE'. When performing TEST_DMA_CTRL_INVERT
->> test, if DMA buffer size was greater than 'INT_MAX', it leads to
->> an invalid buffer access. Limit the DMA buffer size to avoid it.
+which had some findings (1 medium, 4 low):
 
-Use CVE-2016-8668.
+https://wiki.mozilla.org/images/0/09/Zlib-report.pdf
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/rocker/rocker.c but
-that may be an expected place for a later update.
+extracting from the referenced document:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://docs.google.com/document/d/10i1KZS5so8xDqH2rplRa2xet0tyTvvJlLbQQmZIUIKE/edit
 
-iQIcBAEBCAAGBQJYAlsOAAoJEHb/MwWLVhi2+IoP/0i4fPGczDVTahpTjfF2hwho
-7LuBxbaC/CN9Jkr9MUTgtda45X4NT3K6XbR6xrZA3Nv8Mtcbo7ZO/c91LmIhib8n
-QpV8DixIv+KTXj0NFZ2jWPThjb65wSUDIVHMSt9e8pbk6zmqmUVAy2K85FV+rHXq
-fhX89bgXPoT0WqK2ukxhZz/3pBiVoCRPlxQx4TuTYppB7O8K3XOPEktmqOvamtfo
-uSZLbPZlPSbmQ5w2GFLSAl22yeiRMznRzXQK5GT33Pu1109gY5kWfP5tLmDn8vS0
-bD6m7jXKQqplrS48YbbwGlFGwcn7hXxH81kj2JrQImtK6i7o0o/ONhhlnu5cuq/K
-nuboysIih7EGoY3vax0pbyisB5wOmp7pGc9e4b+AQP/kgbE2L+iHOlZigw1cUO2n
-uc1vRl5mr4Z60ubIQTBUPceVMa2LHydj5/WjoryidKxqpFGY/Bu4YGkYnApEOhQY
-iAR1Q82CMCzUVB6L7GszkS96+7DVfBWblBxVf23cJNwFq/xylUvtkUfj3rEOAsgA
-OC1/LoqcCNyPQSek2hIaGZrUYoEKKetDtV1mNLn3JnUpCw0K42F6yEWxAtwXgYRj
-ezqVXUq8JDiGXHvnN6k31Yixu8RsKCO1bvmiC10FMJtYZVsOr6rvnIIOGBC2ChfM
-wJ+NxzkQZ4MdGyqPJdvA
-=+r3h
------END PGP SIGNATURE-----
+zlib SOS Fund Audit Fix Log
+Identified Issues
+
+Finding 1: Incompatible declarations for external linkage function deflate (Medium)
+Fix: https://github.com/madler/zlib/commit/3fb251b363866417122fe54a158a1ac5a7837101
+VERIFIED
+
+
+Finding 2: Accessing a buffer of char via a pointer to unsigned int (Low)
+Mark Adler (zlib): [This] will remain as is. Yes, speed matters a great deal. The comment in
+the report: "In the longer term, platform specific micro-optimizations should be deprecated.
+These optimizations may no longer be necessary: modern compilers are much better at
+optimizing and vectorizing code than they used to be." does not apply. This is not a
+micro-optimization, and unless the compiler has the intelligence and creativity of a good
+mathematician well-versed in discrete mathematics, can detect the application of Galois
+Fields in the code, know somehow to postulate a theorem for an equivalent calculation over
+GF(2) that will, in the end, improve the speed, prove that theorem, and then generate on its
+own the additional tables to apply that theorem, then no, there is no way that a compiler is
+coming up with that one.
+UNRESOLVED:This issue remains under discussion to determine whether there is a way
+which removes the mismatched pointer without affecting performance.
+
+
+Finding 3: Out-of-bounds pointer arithmetic in inftrees.c (Low)
+Fix: https://github.com/madler/zlib/commit/6a043145ca6e9c55184013841a67b2fef87e44c0
+     https://github.com/madler/zlib/commit/9aaec95e82117c1cb0f9624264c3618fc380cecb
+VERIFIED
+
+Finding 4: Undefined left shift of negative number (Low)
+Fix: https://github.com/madler/zlib/commit/e54e1299404101a5a9d0cf5e45512b543967f958
+(This was already fixed on the development branch before being discovered.)
+VERIFIED
+
+Finding 5: Big-endian out-of-bounds pointer (Low)
+Fix: https://github.com/madler/zlib/commit/d1d577490c15a0c6862473d7576352a9f18ef811
+VERIFIED
+
+Ciao, Marcus
