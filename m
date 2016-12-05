@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/10
-Message-ID: <CACn5sdRcbLd97UmcuPWptce=EC=cJseGoCw0NaxXZaT+Q7g8bw@mail.gmail.com>
-Date: Wed, 26 Oct 2016 19:32:03 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: DoS loading a SVG in Firefox
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/2
+Message-ID: <4fd7625ebd8d44e5a39e6cf241e12421@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:12:18 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listswf: heap-based buffer overflow in _iprintf (outputtxt.c)
 Content-Type: text/plain; charset=utf-8
 
-This issue was recently minimized and isolated to the circular use of
-xlink:hrefs:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1297206#c5
+> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-_iprintf-outputtxt-c
 
-Is a CVE suitable for this DoS?
+> AddressSanitizer: heap-buffer-overflow
+> READ of size 2
 
-Regards,
-Gustavo.
+Use CVE-2016-9827 for this buffer over-read.
 
-2016-10-06 12:09 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> Hello,
->
-> Some months ago, we found that just loading this image:
->
-> https://dcc.fceia.unr.edu.ar/~ggrieco/oom.svg (518K)
->
-> will cause Firefox to consume all your memory. Once you click, you
-> cannot stop the memory constant memory leak. It can take a few minutes
-> (we tested in a desktop computer with 16GB). At the end, Firefox will
-> abort or it will be terminated by the OS.
->
-> At least Firefox 49 and 51 in several platforms are affected. A report
-> in the Mozilla bug tracker was filled:
->
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1297206
->
-> Please assign a CVE if suitable.
->
-> Regards,
-> Gustavo.
->
-
+iQIcBAEBCAAGBQJYRNjHAAoJEHb/MwWLVhi2szoP/2HNdfDuYTk2tUOma5Uavxkg
+fXUl7wnGcKLBJCAtJNw5Qnl4l1AE2Hirrpmfsvbid9hHNCJ8njCtdDwqHXL6IT+H
+ft+XV1aqETr7IkVgC2Wg6x2ZptrFDT5Lab7iNJylDek2iSdT4oscAthjlVCJZcR5
+b9MjXSih+vrsY7MxPkrcn7ZXQwWgM6nBReCpf1gZBc81l7K4ejzGBK0Xc2c6v4/Q
+JxBaY2VxsxX52w842CckemTQvM5Yy7BUCdmXFqfw2dy5stTvM/OouFgqSwBqiR3Q
+/AGXqZ2rIK1XoRVLtohlWUuIeIvVv9OkXNp1qM7L/QKFqURkzieOqzlo4Do97a6e
+13iK8psRtMphfjjCpenjC+gujgAssqdXRDQ7cskcIB+sYwjmGoF97tJZ2OJtgQk0
+TJlW0b/GokrKaeyJdYr2LSlqx+WKcrawOXDbiHAnNpZrswjKCjEbkIsGWMnGt391
+aYVYegERbjlh+KpxurB5Gyocn/EVi9TczWn8TVBZYWyBSmK/ABpv7s5guZHalhH7
+kAOHNI+iMaOcFvDeAG8K0oGNfNoY/oCAJa3USh3Qq/O+S9KUa+2k4sVHLyL6cCMa
+Q0bCcVs5PmYATknEgTOBX9QzRqkQyhpnFB6wgEXeZPZmLf+8f29jWnOk8zQYm+M1
+20ErSFbyOcSIXrnF+S4q
+=6lQs
+-----END PGP SIGNATURE-----
