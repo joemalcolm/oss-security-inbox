@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5043" "Sunday" "6" "September" "2020" "19:28:55" "-0400" "Robert Watson" "robertcwatson1@gmail.com" "<CAOfWR+F8DVJeFDeUzfShBnyH_ovPEH3GMUmCXC8BtDBq1qx3_Q@mail.gmail.com>" "114" "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Date:" nil nil "9" "2020090623:28:55" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "        robertcwatso Sep  6  114/5043  " thread-indent "\"Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") "<cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>" ("<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" "<20200905054704.1d90da6a@jabberwock.cb.piermont.com>" "<CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>" "<cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>") nil nil nil nil nil nil nil "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2102" "Sunday" "4" "December" "2016" "22:17:35" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3fd03cb43fae4c9f8d4744e04038bcac@imshyb02.MITRE.ORG>" "50" "[oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" "^CC:" nil nil "12" "2016120503:17:35" "[oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)" (number mark "        cve-assign@m Dec  4   50/2102  " thread-indent "\"[oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)\"\n") "<54839894.ARmt1DTBun@arcadia>" ("<54839894.ARmt1DTBun@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26181 invoked by uid 550); 7 Sep 2020 06:58:40 -0000
+Received: (qmail 21876 invoked by uid 550); 5 Dec 2016 03:17:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,158 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3240 invoked from network); 6 Sep 2020 23:29:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=u6LUV9GVi6yqwuEuLoM5+qcV7upT/Xa7wUj1QebM6i8=;
-        b=fesk523mfPWuxqeI99WHryW7q304hxxfiDRxdDaOhN/baJVxzxxQR0WO7QE1ybHZKu
-         5NXmjzLzCoTAjLa7fYPdvMiC4MPBvxHqAbVpTWg0SULhXxdinphWdioAu0wTlhCRPRoU
-         VX+sTAx9Wd4QALY5koyMwKpr5Vel7A4tUW6nbOnbnGpS5nRry4caRDjyqvHH8Z0x1tjo
-         UfgBgOyLioRTwFFTFRbe5nfjyjlNKOLbydyLXy6ZAv4Tu/N3Soo1zWz1bWaz7FqQIvWk
-         AInkuvRnZdLc9cLe1/E7m3gxEF5mxnuEkFcMB5MOL4r0yzHmgOaXXuUX5VlQjsMchcJi
-         5jaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=u6LUV9GVi6yqwuEuLoM5+qcV7upT/Xa7wUj1QebM6i8=;
-        b=haXP6UjeRE/JB2n4U2+V1bHBzVf4/kL+sVgLtX4vWZy0YNFVFftUyS/L+nXM2sQElM
-         Kd5bVygxxtpI11yIzI3v51Ql07aTBYO+J7qkGM/raoC9GIjYhZaiqFXE9UL7vAMX+q+g
-         mK/cflDTYv5tH0iDjwuB+lkStk/sik8xlrKIDHdga7Y8o/XsFq0Mk9U7SI9UIvo1ku5D
-         wII0hF8IVXBFmLm8GsLy1D2Fb+x05Bcv1hOLsaZLDP61w1PavvqM3qdNMVzVxx8Ujmzj
-         Ck15jNXTrnt9Za8gUneciYZ18GeZlrcg7wUP/lZXjeJh4TeXBwmKdOa+tsmAfTUDRD7x
-         AoLQ==
-X-Gm-Message-State: AOAM532zyb0VOi5DruL/Npe+kdMbIeQCvx4FP8zBa2a73i3FP/XETh48
-	LiZPPzPImUxuJNqvZeMO0n0eMWwk7Ohjgb8agyU5KvD3
-X-Google-Smtp-Source: ABdhPJwtglTwcdq+REp+fHD4HeUdPk/oq2vEP2WpOQONruA5Whdvj6btkilZ5JtCiH1+6ODQqDezuupMJCO16c9lNyo=
-X-Received: by 2002:ac8:7a96:: with SMTP id x22mr19016416qtr.245.1599434950031;
- Sun, 06 Sep 2020 16:29:10 -0700 (PDT)
+Received: (qmail 21837 invoked from network); 5 Dec 2016 03:17:47 -0000
+In-Reply-To: <54839894.ARmt1DTBun@arcadia>
+Message-ID: <3fd03cb43fae4c9f8d4744e04038bcac@imshyb02.MITRE.ORG>
 MIME-Version: 1.0
-References: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
- <20200905054704.1d90da6a@jabberwock.cb.piermont.com> <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
- <cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>
-In-Reply-To: <cc307ff9-e850-1d33-9fdb-fc34739dd2c0@treenet.co.nz>
-Message-ID: <CAOfWR+F8DVJeFDeUzfShBnyH_ovPEH3GMUmCXC8BtDBq1qx3_Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000009c13905aead7885"
-Date: Sun, 6 Sep 2020 19:28:55 -0400
-From: Robert Watson <robertcwatson1@gmail.com>
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+Date: Sun, 4 Dec 2016 22:17:35 -0500
+From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Open Source Tool | vPrioritization | Risk
- Prioritization Framework
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: graphicsmagick: memory allocation failure in MagickRealloc (memory.c)
+To: <ago@gentoo.org>
 
---00000000000009c13905aead7885
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Since moderators are letting this discussion continue, I'll throw in a
-perspective from my experience with a large dedicated data center providing
-life and death related services (downtime not an option).
+> https://blogs.gentoo.org/ago/2016/12/01/graphicsmagick-memory-allocation-failure-in-magickrealloc-memory-c
+> 
+> The problem is that the embedded JPEG data claims to have dimensions 
+> 5939556833 and
+> this is only learned after we are in the JPEG reader.
+> 
+> AddressSanitizer failed to allocate 0xfb8065000 bytes of LargeMmapAllocator
+> 
+> MagickRealloc ... GraphicsMagick-1.3.24/magick/memory.c:471:18
+> OpenCache ... GraphicsMagick-1.3.24/magick/pixel_cache.c:3155:7
 
-Patches and upgrades frequently break applications. The only way to prevent
-downtime from most patches and upgrades is to go through the whole process
-of applying it first to an identical test system and doing full QA on it.
-That takes tremendous resources that most management balks at.
 
-On Sun, Sep 6, 2020, 16:22 Amos Jeffries <squid3@treenet.co.nz> wrote:
+>> From: Bob Friesenhahn
+>> Date: Thu, 1 Dec 2016 21:20:13 -0600 (CST)
+>> ...
+>> We did make an unreleased fix (Mercurial changeset 14953:38d0f281e8c8,
+>> and earlier changeset 14831:28c0bb8bf89a), but perhaps not the way you
+>> like. The fix which was made was to require that the embedded JPEG
+>> data has the same dimensions as the containing JNG file. The existing
+>> resource limit mechanism would then allow the user to constrain the
+>> size of the JNG image. The default constraints in a 64-bit build are
+>> larger than what the JPEG format supports.
 
-> On 6/09/20 7:48 pm, Pramod Rana wrote:
-> > Appreciate your comments.
-> >
-> > My two cents - Patch everything is far from reality to most (read all)
-> > organizations and I would argue that it's not a solution per se. To me it
-> > looks like buying every type of vehicle for commuting in every city of
-> the
-> > world but we don't do that, rather we decide what will work best
-> depending
-> > on factors like traffic, distance, roads, weather etc.
-> >
->
-> My experience with corporate systems is more like they hire a vehicle on
-> lease. Insisting that it be the oldest most run-down and error-prone
-> model the lease company has to offer. Then complaining about downtime
-> costs of fixing problems when things to wrong.
->
-> As a software maintainer myself I have actually had a corporate client
-> try to get me to backport several *thousand* patches. The plan being to
-> port every single bug fix and feature change from version N to version N-2.
->  Installing the new version with a patch changing the version number to
-> N-2 would have been identical binary result.
->
->
-> > I believe prioritization is an integral part of everything we do and it
-> > works as reasoning to what we do (or don't).
-> >
->
-> Imagine that your network is facing a highly organized prepared attacker
-> who has done their research and knows your network structure. How fast
-> can you apply every patch and security update you put off for later?
->
->
-> The point of the counter argument is that *not* doing anything is bad.
-> Possibly really, really bad. So don't bother wasting time on figuring
-> out priority/severity per-patch. Just work through the list of things
-> needing patching each day as fast stability testing allows.
->
->  Don't forget to report to appropriate management any resourcing lack or
-> process limitations that prevent each days patching list being finished
-> completely/easily. Those limitations are likely the worst security
-> problems you have - they are forcing security holes to remain open.
->
-> When the systemic limits are gone you should only need to prioritize
-> *which* things to patch based on each ones importance to your
-> organization. Not any rating associated to the flaw itself.
->
-> AYJ
->
->
-> > On Sat, Sep 5, 2020 at 3:17 PM Perry E. Metzger wrote:
-> >
-> >> [Perhaps somewhat off topic, but the original announcement felt a bit
-> >> tangental as well.]
-> >>
-> >> On Thu, 3 Sep 2020 20:13:34 +0530 Pramod Rana <varchashva@gmail.com>
-> >> wrote:
-> >>> It is no secret that today we have more vulnerabilities than we can
-> >>> assess and remediate, timely and comprehensively. Risk
-> >>> prioritization is a key component for any vulnerability management
-> >>> program.
-> >>
-> >> I'm not sure I agree with this premise.
-> >>
-> >> 1. It is entirely feasible to keep even a very large organization
-> >> comprehensively patched. There are organizations that do that.
-> >> 2. It is not feasible to calculate a probability of exploitation of a
-> >> given vulnerability, and it is not feasible to determine how bad the
-> >> damage from exploitation will be. This is a classic example of "tail
-> >> risk" where probability distributions are simply not calculable by
-> >> normal methods.
-> >>
-> >> I keep hearing people in the security industry speak about scientific
-> >> risk assessment as though it were possible. I don't think it's
-> >> possible, and it seems cheaper to simply patch than to do some sort
-> >> of scientific assessment and prioritization of patches.
-> >>
-> >> My gut reaction is that the growth of this idea is attributable
-> >> to the large number of large, well-funded organizations that are
-> >> none the less not capable of properly maintaining their own
-> >> infrastructure and thus not capable of patching in a timely manner.
-> >> (I have consulted to many such organizations.)
-> >>
-> >> The notion that some sort of "risk analytics" could therefore justify
-> >> failing to patch quickly and give a rationale for maintaining an
-> >> incapable systems management team is thus attractive. However, the
-> >> real solution is simply to patch; a capable systems management team is
-> >> better than the illusion of a risk calculation system, and provides
-> >> far more benefits than simply maintaining infrastructure in a fully
-> >> patched state.
-> >>
-> >> Perry
-> >> --
-> >> Perry E. Metzger                perry@piermont.com
-> >>
-> >
->
->
+Use CVE-2016-9830.
 
---00000000000009c13905aead7885--
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYRNjcAAoJEHb/MwWLVhi2unEP/026aCl/yFoWW+oA6eBTE90K
+crzLOqQvjd0xCLXZtZJzRYn1WD1YUm+2ViYpAWScUzazeqqQbdrESua2oHBUt9wJ
+9MB0fHmxrt/X4FYeudBB98Jvm5d+fUs7OYNg6nlEUeeOVLyU8hSTbn6s0FVGp7TT
+ewBIlJTixW76jKB63DNDZ6lVc/UvYgCzaYiR5SfjXRWjfddQZjtgbsxDb3B+iQ4s
+kAbtvPDknfia5B0dewSogp7A0e5I2wfanhTWQRCYO7hTJFH7BhRd4u/Sj6bHn8WB
+mxm9kq/ghCzG3vHRelZLIXp6rQ0LR5x9BfjCfFMU5PwEbWGpH/z0Omie5XsSH5hk
+YR0Erj9BUBthPAeRCFYbkl9yhUfIn14d6Oj8SyMHto6FZ7kutFeWp1M/zQStXN2w
+U/zKpHE1aOknMW0mGqenRI5BS5bhbR+KHimPfQVdTG/1DcbhPblsrpisChP4R4Nl
+zwS2C5AYusq0jhAlJM+dFOIXyDM5t5tkP/Iqb+Xhks5SNnu67vl4t47JSY4nONgF
+0MP2myZ0GtvkTI2AUDKFxapC2+LWNfOIqNAiIRino5ydLsvEke5jiglesTnEsI5S
+/k65wgNAGUNHRi3+unBMeeOBxuPRFliLi+zj/GOvWPz1voZ4oMPFdrY2AG1jOJvx
+HpRkWF3tQVXvCyW5QUgX
+=ES9U
+-----END PGP SIGNATURE-----
