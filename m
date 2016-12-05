@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/09/1
-Message-ID: <20160609080613.GA3694@suse.de>
-Date: Thu, 9 Jun 2016 10:06:13 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: CVE Request: ruby openssl hostname verification issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/11
+Message-ID: <20161205154725.n4erh7wnftmlptz7@eldamar.local>
+Date: Mon, 5 Dec 2016 16:47:25 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: ondrej@...y.org, cve-assign@...re.org, team@...urity.debian.org, dariusz.dwornikowski@...put.poznan.pl, sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@...iam.org
+Subject: Re: Re: Remote crash in MaraDNS 2.0.13 and git master
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi MITRE CVE assigning team,
 
-This probably warrants a CVE:
+On Mon, Nov 14, 2016 at 01:36:58PM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > remote crash bug in MaraDNS 2.0.13 js_readuint16
+> 
+> Use CVE-2016-9300.
+> 
+> 
+> > remote crash bug in MaraDNS 2.0.13 js_substr
+> 
+> Use CVE-2016-9301.
+> 
+> 
+> > remote crash bug in MaraDNS 2.0.13 process_query -> this in fact
+> > looks like stack smashing, since it crashes on htons in an unrelated
+> > place
+> 
+> Use CVE-2016-9302.
 
-https://github.com/ruby/openssl/issues/8
+According to the analysis of Sam Trenholme in
+https://bugs.debian.org/844121#32, and confirmed by Ondrej, afaics,
+those above would not be vulnerabilities in MaraDNS. Can you please
+reject those three CVEs?
 
-quoting:
-
-Even if OpenSSL::SSL::VERIFY_PEER is configured, I/O is allowed with a
-remote server before the subject has been verified. VERIFY_PEER only
-checks the cert chain is rooted in the local truststore. It does not
-check if the subject is valid in and of itself.
-
-My understanding is the ssl_socket.post_connection_check(hostname) method
-must be called to ensure the subject is correctly verified. However,
-communication is allowed to remote services without verifying the subject.
-
-I would suggest throwing an exception if VERIFY_PEER is configured and
-I/O is attempted without first calling post_connection_check
-
-It would also be nice if this all happened automatically simply by
-passing hostname into OpenSSL::SSL::SSLSocket (which AFAICT only affects
-SNI presently, and not subject verification)
-
-----
-
-Ciao, Marcus
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Regards,
+Salvatore
