@@ -1,44 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/07/3
-Message-Id: <20160907005628.1FE726C547C@smtpvmsrv1.mitre.org>
-Date: Tue,  6 Sep 2016 20:56:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, vv474172261@...il.com
-Subject: Re: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/8
+Message-ID: <02ce68e5bcd74bd18aa952eb5cc10432@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:22:50 -0500
+From: <cve-assign@...re.org>
+To: <hanno@...eck.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: gstreamer multiple issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is
-> vulnerable to an invalid memory access issue. It could occur while building
-> configuration page headers in 'mptsas_config_manufacturing_1'.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> on the host, resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04295.html
+> https://bugzilla.gnome.org/show_bug.cgi?id=774859
+> https://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=153a8ae752c90d07190ef45803422a4f71ea8bff 
 
->> When LSI SAS1068 Host Bus emulator builds configuration page
->> headers, the format string used in 'mptsas_config_manufacturing_1'
->> was wrong. It could lead to an invalid memory access.
+> Invalid memory read in flx_decode_chunks (gst-plugins-good)
+>> AddressSanitizer: SEGV on unknown address
+>> flx_decode_chunks ... gstreamer/gst-plugins-good/gst/flx/gstflxdec.c:255:9
 
-Use CVE-2016-7157.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/mptconfig.c but
-that may be an expected place for a later update.
+Use CVE-2016-9807.
 
 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04296.html
+> It also fixes the second flic
+> bug reported by Chris Evans described here:
+> https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-incorrect-fix-for-gstreamer.html
 
->> When LSI SAS1068 Host Bus emulator builds configuration page
->> headers, mptsas_config_pack() asserts to check returned size
->> value is within limit of 256 bytes. Fix that assert expression.
+>> the format permits multiple skip and count pairs per canvas line. And
+>> the skip counts are considered individually rather than cumulatively.
+>> Therefore, it.s possible to get the skip + count check to pass while
+>> still writing off the end of the line.
 
-Our interpretation is that this assert issue is not an independently
-relevant security problem, and does not need its own unique CVE ID.
+Use CVE-2016-9808 for this Chris Evans discovery. (As far as we can
+tell, this "second flic bug" exists because of an incomplete fix for
+CVE-2016-9635.)
+
+
+> The fix is a larger rewrite of the affected code paths and probably
+> fixed a bunch of other issues on the way.
+
+There isn't a CVE ID that applies to the entirety of
+153a8ae752c90d07190ef45803422a4f71ea8bff. If anyone has discovered
+other vulnerabilities that were already fixed in
+153a8ae752c90d07190ef45803422a4f71ea8bff, and requires additional CVE
+IDs for them, please let us know specifically what was found.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=774896
+> h264: one byte heap off by one read in gst_h264_parse_set_caps
+> (gst-plugins-bad)
+>> This doesn't crash gstreamer
+
+Use CVE-2016-9809.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=774897
+> Invalid memory read in glib caused by one invalid unref call in the
+> flxdec decoder. (gst-plugins-good)
+>> Don't unref() parent in the chain function
+>> ... We don't own the reference here, it is owned by the caller
+
+Use CVE-2016-9810.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=774902
+> 4 byte heap out of bounds read in windows_icon_typefind
+> (gst-plugins-base)
+
+Use CVE-2016-9811.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=775048
+> 2 byte heap out of bounds read in gst_mpegts_section_new
+> (gst-plugins-bad).
+>> The smallest section ever needs to be at least 3 bytes (i.e. just the short
+>> header).
+>> Non-short headers need to be at least 11 bytes long
+
+Use CVE-2016-9812.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=775120
+> null pointer deref (segfault) in mpegts decoder / _parse_pat
+> (gst-plugins-bad)
+
+Use CVE-2016-9813.
 
 - -- 
 CVE Assignment Team
@@ -48,17 +93,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXz2PsAAoJEHb/MwWLVhi2XXcP/1ZIu5eguJjtVoGHYTsE8IrY
-+4CzVNeYbdHFzIunDooQkT062zPsRzzBGIVYng2cSrAw5segRhmt6cQ/jbG6UNPe
-TPvsRpwlhm9qTpc0FSGpNW/lr4sWF8eIfJIvOmUcYp+j/MhlUlFFQbSL79AtABkr
-vnKTyqbVf6iwRM2UB+ywbzoD004eeZaefuVN13vk5GTjhRkxoeSyd4Erpe/E1IzP
-37Vsx0b1LdeNimkDJC0QfTxIHesRTcd9UkZq4No9Ztj4bBh0WIyhBZGS0W5FonUB
-H1tRHi/zSJlZKHhqhfoszM4xQOst0yfcOqOhUueX92zThAvt8FIPZJq9v23tg9ib
-9lYaX+1GzupRhqjbB+yDnUh8NLYhAQqpLAi/ryva1J3dsaVrbZyZwpwBZNjvUfG8
-2Vgf0s+4WTcLvaanYKh+T/tSwtHIeaHEh+O65vvPKVDbox9FSjgOlHzr9ANUks0v
-eoRz9telzBkKUOZMALOxIFRmB4z18a5il+MLsmV0cKM3jFSKrkx83d/L/t/3n7ub
-oBD3dAEHri+nH/MiIGZUBKrN6r1cD6tylySTvLerMQpH7C7ovxOIpTEWv1CW8FYg
-7OH6ZBGiH0QpjWI45vIVk1nrZ/H5krpPnmEnBJZIJ9v/H6nIVWoosP134GMAKjlL
-xQG3c8wAuTo62bt7kHsQ
-=yZzK
+iQIcBAEBCAAGBQJYRNj9AAoJEHb/MwWLVhi2zFoP/05dkTQfY310j9qyhOcY4sh9
+MjZxlRg24s+vJLMIf5+c9u6FCkCKtlu3Su8e2eli+HKMIEGhY9uTihI/L+yDpJ7J
+SJitxtmWgdq4BpiMi0HUxZE2j8aMbwKUk8rSBqH7ykAulmnDKiE40OE57uh1cl3k
+srPYvHzMxJJJ75Z4XE2URpJ9xQ6Qs1DtcW9CbKGA8vx6iTRvDVwW1//QJ9mTTwXl
+GhXXr8rewljBujD8WewQ00PppODsuqaCpnLEDYHYESxj/59g+shdyTL6mBbhhPN4
+81DNXDj0X3QI3l+x0I5VWJb9VSb1QIsfVRQxFIzu20FS4boMX4kHozESFTs1yM5U
+d2MgUdE3BGmVvqhHE23GtITlOQuk26DCUJ0XbbfiFMwjklIjSWIm85jmCX9vRn3w
+XQjExsxo3q4vrdNKyWIMusYAiIK9JhksZFv+pM2JjaQ748aBbIIiN42bHTXFbs01
+Bg3r2s4LhEAMaLxLKN2N0MqP3zEbVJB+qrSqKIbx/tc7RWQmXmY/Lz66bxzedqoo
+nPhZc1VVQ5wgKVRp8XEpFyt3/Eoia/71baWD+woGweEqLx2SKf+TUGgJi1ITNMdH
+KNVz12t1BX4aF4WkJLK5n4IQ7VnXUOfkcdNxlz62FMafRFGpJVHo/iDxAQRwsNuS
+oSlUKYsfGeUSG/DejAQk
+=1SLG
 -----END PGP SIGNATURE-----
