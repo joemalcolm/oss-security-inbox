@@ -1,72 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/18/1
-Message-ID: <a8863765bf6848cba87939df890af51d@imshyb02.MITRE.ORG>
-Date: Sat, 17 Dec 2016 20:06:22 -0500
-From: <cve-assign@...re.org>
-To: <squid3@...enet.co.nz>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request - squid HTTP proxy multiple Information Disclosure issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/24
+Message-ID: <0c4d4271-436b-044a-0023-a5131e6b5978@canonical.com>
+Date: Mon, 5 Dec 2016 16:18:37 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
+To: "Steven M. Schweda" <sms@...inode.info>, oss-security@...ts.openwall.com
+Cc: security@...ntu.com, Info-ZIP-Dev@...tley.com
+Subject: Re: CVE Request: Info-Zip zipinfo buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> http://www.squid-cache.org/Advisories/SQUID-2016_11.txt
-
-> Incorrect processing of responses to If-None-Modified HTTP conditional
-> requests leads to client-specific Cookie data being leaked to other
-> clients. Attack requests can easily be crafted by a client to probe a
-> cache for this information.
-
-> the CVE critical leak was due to these lines in
-> src/client_side_reply.cc:
+On 12/05/2016 03:50 PM, Steven M. Schweda wrote:
+> From: Tyler Hicks <tyhicks@...onical.com>
 > 
->      bool matchedIfNoneMatch = false;
->      if (r.header.has(HDR_IF_NONE_MATCH)) {
->         if (!e->hasIfNoneMatchEtag(r)) {
-> ...
-> -            http->logType = LOG_TCP_MISS;
-> -            sendMoreData(result);
+>    Thanks for the (thorough, helpful) report.
+
+I appreciate it but Alexis deserves most of the credit.
+
 > 
-> This last line should have called "  processMiss(result); "
+>> Alexis Vanden Eijnde has discovered a zipinfo buffer overflow and
+>> reported it here:
+>>
+>>   https://launchpad.net/bugs/1643750
+>>
+>> It is very similar to, but different than, this `unzip -l` crasher:
+>>
+>>   http://www.openwall.com/lists/oss-security/2014/11/03/5
+> 
+>    It is.  And the easy fix is also very similar (and should appear in
+> the next UnZip release, version 6.1e beta):
 
-Use CVE-2016-10002.
+Thanks for the quick fix. Is there a public code repository available so
+that we can reference a specific commit that fixes this issue?
+
+> 
+> ALP $ gdiff zipinfo.c;39 zipinfo.c
+> 2568c2568,2579
+> <         sprintf(&methbuf[1], "%03u", G.crec.compression_method);
+> ---
+>>         /* 2016-12-05 SMS.
+>>          * https://launchpad.net/bugs/1643750
+>>          * Unexpectedly large compression methods overflow
+>>          * &methbuf[].  Use the old, three-digit decimal format
+>>          * for values which fit.  Otherwise, sacrifice the "u",
+>>          * and use four-digit hexadecimal.
+>>          */
+>>         if (G.crec.compression_method <= 999) {
+>>             sprintf( &methbuf[ 1], "%03u", G.crec.compression_method);
+>>         } else {
+>>             sprintf( &methbuf[ 0], "%04X", G.crec.compression_method);
+>>         }
+> 
+>    Typical output (pre-release UnZip 6.1e beta, with some minor,
+> unrelated report format changes from UnZip 6.0):
+> 
+>    Old:
+> 
+> ALP $ unzip6l -Z PoZ.zip
+> Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
+> Zip file size: 154 bytes, number of entries: 1
+> -rw-rw-r--  3.0 unx        2 tx u65535 16-Nov-21 19:07 a
+>                                 ^^^^^^
+> 1 file, 2 bytes uncompressed, 2 bytes compressed:  0.0%
+> 
+>    New/next:
+> 
+> ALP $ unzipx -Z PoZ.zip
+> Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
+> Archive size: 154 bytes; Members: 1
+> -rw-rw-r--  3.0 unx        2 tx FFFF 16-Nov-21 19:07 a
+>                                 ^^^^
+> Members: 1; Bytes uncompressed: 2, compressed: 2, 0.0%
+> Directories: 0, Files: 1, Links: 0
+> 
+>> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
+>> zi_short() function:
+>> [...]
+> 
+>    Yeah.  We should have noticed this whan the "unzip -l" complaint was
+> made.
+> 
+>> Please assign a CVE. Also, consider assigning a CVE to the related
+>> `unzip -l` issue from 2014. Thank you!
+> 
+>    Is that something I should do?  (I normally get reports with CVEs; I
+> have never created one.)
+
+Nope. As you probably noticed, MITRE just assigned a CVE. It likely
+helped that you confirmed the issue. Thanks again!
+
+Tyler
+
+> 
+> ------------------------------------------------------------------------
+> 
+>    Steven M. Schweda               sms@...inode-info
+> 
 
 
-> http://www.squid-cache.org/Advisories/SQUID-2016_10.txt
-
-> Incorrect HTTP Request header comparison results in Collapsed
-> Forwarding feature mistakenly identifying some private responses as
-> being suitable for delivery to multiple clients.
-
-Use CVE-2016-10003.
 
 
-> The current fix is not quite complete. However we believe the remaining
-> headers leaked are not a serious security issue.
-
-If anyone needs a CVE ID for this issue (involving other headers) that
-was not fixed in 3.5.23 and 4.0.17, please let us know.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYVdwRAAoJEHb/MwWLVhi2sBwP/33e42WWt+2xK8LMWIt2opxE
-F8YSXBoIMKVh8V9i9dYeFrTcXPNMSOsNLawZgUaPIIdIzMy3ipKxfJ0dHlWjIUrk
-3QIPAlri8tEOJiy0gR3x1xzdYaZUq5hLpBxWvUJz/GS4OPpvlMPO8VvSYzfKVYUi
-Mxw9izK9E41WCUYFTCpzWhI+M248W4CCKYul8gHbDIaV1ED+3pRLkmfgaozP1TxW
-ozAB8REzpOyG+Erl5rxZ3e8Zgpf3ox6Rmv260Ue4mhZLCsK2AWR72PJs9zXRK+LQ
-1cwTROdWg78iMuoB4E77L77L98OEj5sSLlo6fc5mew8lyteq7QwbfaWjuCk3ga79
-BVisJvqXW7dyzLxyZ5yiMGLmHJQd4C6FaKBM6D9xSlaUaicEPvLUU+zwNHtWi0dT
-3KKI4GzvBk3x62c4bjjjGpNWoK0sNiDFK465MfA343XfeEjnA+URgrzNJO8ocvMI
-booClyeDs7VKwv+yGVMI+3v+YQ/kUKjERdRr4StzSEWF45GPtXnWj7F7bj/JCR4m
-/mwZ9237ED5Yhq81e5/OPfJ/dnduJYoI5vjcZmVekTxh3+3AUcLXH1JxfV7Rk6z4
-+Tk+X443j3cuB//zMDR8oN7RCl64R2Cx29HwCFukU6nA+wL2hVLHBrVsR+mw6fQX
-7LGySLYqm7FhLtuSKhQa
-=GwOM
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
