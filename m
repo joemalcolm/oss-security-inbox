@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1284" "Monday" "1" "May" "2017" "11:39:43" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<700843.693778978-sendEmail@localhost>" "53" "[oss-security] libmad: assertion failure in layer3.c" nil nil nil "5" "2017050111:39:43" "[oss-security] libmad: assertion failure in layer3.c" (number mark "U       ago@gentoo.o May  1   53/1284  " thread-indent "\"[oss-security] libmad: assertion failure in layer3.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["513" "Tuesday" "6" "December" "2016" "00:54:17" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1612060051070.20462@wniryva>" "17" "[oss-security] CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor" nil nil nil "12" "2016120519:24:17" "[oss-security] CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor" (number mark "U       ppandit@redh Dec  6   17/513   " thread-indent "\"[oss-security] CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22361 invoked by uid 550); 1 May 2017 11:40:04 -0000
+Received: (qmail 9860 invoked by uid 550); 5 Dec 2016 19:24:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22323 invoked from network); 1 May 2017 11:40:02 -0000
-Message-ID: <700843.693778978-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:39:43 +0000
+Received: (qmail 9842 invoked from network); 5 Dec 2016 19:24:34 -0000
+Date: Tue, 6 Dec 2016 00:54:17 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liq3ea@gmail.com>
+Message-ID: <alpine.LFD.2.20.1612060051070.20462@wniryva>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-557570.405145274"
-Subject: [oss-security] libmad: assertion failure in layer3.c
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 05 Dec 2016 19:24:22 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: display: virtio-gpu: memory leakage while updating
+ cursor
 
-------MIME delimiter for sendEmail-557570.405145274
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+   Hello,
 
-Description:
-libmad stays for “M”peg “A”udio “D”ecoder library.
+Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
+to a memory leakage issue. It could occur while updating the cursor data in 
+update_cursor_data_virgl.
 
-The same testcase provided in the article: libmad: heap-based buffer overflow in mad_layer_III (layer3.c) is able to show an assertion failure if libmad was compiled with debug 
-(–enable-debugging).
+A guest user/process could use this flaw to leak host memory bytes, resulting 
+in DoS for a host.
 
-The complete output of the failure:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00029.html
 
-# madplay -v -i -o raw:out $FILE
-madplay: /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2633: mad_layer_III: Assertion `stream->md_len + md_len - si.main_data_begin <= MAD_BUFFER_MDLEN' 
-failed.
-
-Affected version:
-0.15.1b
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8372
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00213-libmad-heapoverflow-mad_layer_III
-
-Timeline:
-2017-01-01: bug discovered and reported to upstream
-2017-04-30: blog post about the issue
-2017-05-01: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/30/libmad-assertion-failure-in-layer3-c/
-
+Thank you.
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-557570.405145274--
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
