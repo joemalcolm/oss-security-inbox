@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["696" "Friday" "26" "February" "2016" "12:28:23" "-0800" "Andy Lutomirski" "luto@kernel.org" "<CALCETrWner1C6Niczzx-mRay_YVb4fxS7xXLx66v1p+7tkU73g@mail.gmail.com>" "19" "[oss-security] Partial SMAP bypass on 64-bit Linux kernels" "^Date:" nil nil "2" "2016022620:28:23" "[oss-security] Partial SMAP bypass on 64-bit Linux kernels" (number mark "        luto@kernel. Feb 26   19/696   " thread-indent "\"[oss-security] Partial SMAP bypass on 64-bit Linux kernels\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1478" "Sunday" "4" "December" "2016" "22:24:21" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<86dc641af9b1454bb9cb64f523c87a60@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification" nil nil nil "12" "2016120503:24:21" "[oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification" (number mark "U       cve-assign@m Dec  4   37/1478  " thread-indent "\"[oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification\"\n") "<20161203094405.udrlvszru3jxezia@eldamar.local>" ("<20161203094405.udrlvszru3jxezia@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26582 invoked by uid 550); 26 Feb 2016 20:29:02 -0000
+Received: (qmail 30466 invoked by uid 550); 5 Dec 2016 03:24:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26499 invoked from network); 26 Feb 2016 20:28:56 -0000
-X-Gm-Message-State: AD7BkJLM+3Fn8Bw6bnwOr0E9ZCWuV3M79jmaUO3SyCiBNgK4rDoUJgCc5vb+4l5Guk0S8PqEWmrxJJy/UNpnIjfr
-X-Received: by 10.60.57.193 with SMTP id k1mr2739916oeq.66.1456518522655; Fri,
- 26 Feb 2016 12:28:42 -0800 (PST)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CALCETrWner1C6Niczzx-mRay_YVb4fxS7xXLx66v1p+7tkU73g@mail.gmail.com>
-Message-ID: <CALCETrWner1C6Niczzx-mRay_YVb4fxS7xXLx66v1p+7tkU73g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-X-Virus-Scanned: ClamAV using ClamSMTP
-Date: Fri, 26 Feb 2016 12:28:23 -0800
-From: Andy Lutomirski <luto@kernel.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Partial SMAP bypass on 64-bit Linux kernels
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 30444 invoked from network); 5 Dec 2016 03:24:33 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161203094405.udrlvszru3jxezia@eldamar.local>
+Message-ID: <86dc641af9b1454bb9cb64f523c87a60@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:24:21 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification
 
-Hi all-
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Those of you using 64-bit Linux kernels on SMAP-capable systems (which
-are still very rare in the server space) with ia32 emulation enabled
-will want to backport:
+> https://simplesamlphp.org/security/201612-01
+> https://github.com/simplesamlphp/saml2/pull/81
+> https://github.com/simplesamlphp/saml2/commit/7008b0916426212c1cc2fc238b38ab9ebff0748c
 
-https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git/commit/?h=x86/urgent&id=3d44d51bd339766f0178f0cf2e8d048b4a4872aa
+>> convert an error state, signaled by the value -1, to a successful
+>> verification of the signature (represented by the boolean true)
 
-That patch fixes a bug that exposed a fairly large kernel code surface
-to a straightforward SMAP bypass.
+>> an error during signature verification is treated as a successful
+>> verification
 
-Credit to Brian Gerst who noticed the bug.
+Use CVE-2016-9814.
 
-This bug is present in all kernels from 3.10 on AFAICT.  Kernels
-before 3.10 don't support SMAP in the first place.  32-bit kernels are
-not affected (but why would you be running a 32-bit kernel on
-SMAP-capable hardware in the first place?).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
---Andy
+iQIcBAEBCAAGBQJYRNj2AAoJEHb/MwWLVhi2LPoQAIka//ctCZOUgkIQaf0t5UYI
+hgd2XPcl6LHfOzJA+hvmERO4uxgceqNQ8nhZxkIsWs8tA/eibpHBpz2UebkcKt6r
+3IRwP3Xo3NBVpHXYcL6snoDJ6eYipeQeVwEVnoudxIFrzXcHL7YJNpXbRDUA/n44
+hoDlc2OZyeMzPWU+fvLXuyi/ylm2AOUJIbb9icONyhdKKyQiI61oInhbGCG47qi0
+lhUUQMyTHgTlRtYGSUyJWzRo0u5OIJaS+XAgUPhWK670kTJ8ZEhVcKJNRrLiRxu6
+1SHna5o26O6LHTIyJMhKcOfMYpWCUnHhqBTn+IwBalumYJucBW3k9MIBn3M0Odtp
+s8mcPQ4NX70uLCEh7+alOF4Pi7tUI6N+KvFX5IUsbBhVW0afpSgl9B5BsLmEmDKT
+M+szOjUQ1AaNfptqpDTWSSpusK9assQ+2g5warmw6ndPvhcjx4/1KmpInI0kCMQ3
+9nZ/blvuMPd9QkiuD9YKG1qOnAO1qK7IdWKDwmVvZqweuawfJgoUknHd4a5tduaJ
+REMTO+CPkk2th2dEAi9/yZywzCExOw2Am5qOIwiv6tei0GFmwRHrauglQQDE4NP8
+rU49wxNYW1UOP6Yd4d2rZHiJQBhvkByhPSIWJWxggnl4cTLL5sKxSdFLech1bWuv
+6ZF1/SgEqZUECFXhsUlY
+=NZRo
+-----END PGP SIGNATURE-----
