@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2462" "Tuesday" "24" "March" "2015" "16:53:30" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<55116C5A.4000803@openwall.com>" "57" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032413:53:30" "[oss-security] CVE for Kali Linux" (number mark "        ch3root@open Mar 24   57/2462  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150324105121.GF23630@suse.de>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F2754.5060704@openwall.com>" "<20150323103854.GA28211@suse.de>" "<551081E2.8000607@openwall.com>" "<20150323214101.GA23630@suse.de>" "<20150324105121.GF23630@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["721" "Monday" "5" "December" "2016" "16:47:25" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161205154725.n4erh7wnftmlptz7@eldamar.local>" "29" "Re: [oss-security] Re: Remote crash in MaraDNS 2.0.13 and git master" nil nil nil "12" "2016120515:47:25" "[oss-security] Re: Remote crash in MaraDNS 2.0.13 and git master" (number mark "U       carnil@debia Dec  5   29/721   " thread-indent "\"Re: [oss-security] Re: Remote crash in MaraDNS 2.0.13 and git master\"\n") "<eacf0ad3886d4928905ca3e10c529e80@imshyb02.MITRE.ORG>" ("<1478939985.2087788.785402465.36AF3B93@webmail.messagingengine.com>" "<eacf0ad3886d4928905ca3e10c529e80@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19508 invoked by uid 550); 24 Mar 2015 13:53:50 -0000
+Received: (qmail 11916 invoked by uid 550); 5 Dec 2016 15:47:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19478 invoked from network); 24 Mar 2015 13:53:50 -0000
-Message-ID: <55116C5A.4000803@openwall.com>
-MIME-Version: 1.0
-References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com> <550F2754.5060704@openwall.com> <20150323103854.GA28211@suse.de> <551081E2.8000607@openwall.com> <20150323214101.GA23630@suse.de> <20150324105121.GF23630@suse.de>
-In-Reply-To: <20150324105121.GF23630@suse.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Tue, 24 Mar 2015 16:53:30 +0300
-From: Alexander Cherepanov <ch3root@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
+Received: (qmail 11895 invoked from network); 5 Dec 2016 15:47:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JXR79kko+7WueufUFyAouVns6pbES9rDEJni0o+nbN0=;
+        b=cciCL5To7xGr3NGPyptOZjCFPC/z8RAOXtDL3yWcvTza5RI2lpH8YSGRCMGn+p7dgq
+         eGEFoQaqCJt1mFCkdG9R6XmntHvgOF0x1wHocaI64iaTqdzpMQZXM3oQFu54Er64+PRs
+         CZ9/aGUfSBgUsoDwbzgscfN6TUrQndeE7Mz5hqfDnV4/HbbTj0ymv41aVy93pdrNWtJq
+         lKxCG9vEaVuVIHtCU4ye6k97yRc0/hQVB/S9mdpHFQE8t84REYy3GvoJ369rFGY4kkom
+         7TNraigdtH4CWiUW69ZyuUXnjeGJ1+5vvraf3FwTZmUy96vSeAbqfctJIWtd4ARDQldh
+         /qSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JXR79kko+7WueufUFyAouVns6pbES9rDEJni0o+nbN0=;
+        b=FDfKNbdxqHO7C5E//TEcXivF+Gjb9sPhj4777MuOvIUcuNiFU7GQhKbA5JUiVlQwg1
+         Pfkn+GdVkv+5ZF8AFAKICZZbmNZR8P/w0bMQEk6fcpPbiSXuDmVORgYp0XVjKtodvKGk
+         O+qv8u8sUhdY4p+eW+HxW7tyWCKauQtyHjCicsYrvpsrdKl/wTeiXTMGhI8ekr2wwZRX
+         WzlnvxPeXeD+mRkY5UizpU5F6ccXqwFM9zC56UtqF0sOhiVzNIdkPnkwmU2gZ/ZIFOMB
+         JbQ9MfwSNQpgxkEhlcJV9wULts0+G2Uzce/ZbC1tnxqUdW8LiZdi0VKLLcO0X0pSXaQi
+         C2sA==
+X-Gm-Message-State: AKaTC00ATrudI7WyavWhYsXJMO8of5APHm4X/+LyqKB/ByB4B/YXsIrvlelLpaHKEflmPg==
+X-Received: by 10.28.130.137 with SMTP id e131mr9547387wmd.21.1480952847038;
+        Mon, 05 Dec 2016 07:47:27 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 5 Dec 2016 16:47:25 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
+Cc: ondrej@sury.org, cve-assign@mitre.org, team@security.debian.org,
+	dariusz.dwornikowski@cs.put.poznan.pl,
+	sam-k6mymjcnjpz3fmkieotlt7rbgvqt98qy@samiam.org
+Message-ID: <20161205154725.n4erh7wnftmlptz7@eldamar.local>
+References: <1478939985.2087788.785402465.36AF3B93@webmail.messagingengine.com>
+ <eacf0ad3886d4928905ca3e10c529e80@imshyb02.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eacf0ad3886d4928905ca3e10c529e80@imshyb02.MITRE.ORG>
+User-Agent: NeoMutt/20161126 (1.7.1)
+Subject: Re: [oss-security] Re: Remote crash in MaraDNS 2.0.13 and git master
 
-On 2015-03-24 13:51, Marcus Meissner wrote:
-> On Mon, Mar 23, 2015 at 10:41:01PM +0100, Marcus Meissner wrote:
->> On Tue, Mar 24, 2015 at 12:13:06AM +0300, Alexander Cherepanov wrote:
->>> On 2015-03-23 13:38, Marcus Meissner wrote:
->>>>> There are some attacks even if you verify signatures, e.g. serving
->>>>> old, known-vulnerable versions. HTTPS can help here (until
->>>>> signatures start to be widely accompanied by expiring timestamps or
->>>>> something).
->>>>
->>>> SUSE has added an expiry tag in the YUM metadata for such cases.
->>>
->>> It's nice to see progress in this area. Does SUSE guard against
->>> other attacks from [1] too?
->>>
->>> [1] https://isis.poly.edu/~jcappos/papers/cappos_pmsec_tr08-02.pdf
->>
->> Our statements from 2008 (7 years ago) still stand and our package
->> manager does the full repository signing since 2006 already.
->>
->> https://lizards.opensuse.org/2008/07/16/package-management-security-on-opensuse/
+Hi MITRE CVE assigning team,
 
-Judging only from this text, it seems that one of the crucial points of 
-your system is "[t]he openSUSE download redirector [that] serves the 
-metadata from a known and trusted source". And it lives at... 
-http://download.opensuse.org and is not available over HTTPS at all?
+On Mon, Nov 14, 2016 at 01:36:58PM -0500, cve-assign@mitre.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > remote crash bug in MaraDNS 2.0.13 js_readuint16
+> 
+> Use CVE-2016-9300.
+> 
+> 
+> > remote crash bug in MaraDNS 2.0.13 js_substr
+> 
+> Use CVE-2016-9301.
+> 
+> 
+> > remote crash bug in MaraDNS 2.0.13 process_query -> this in fact
+> > looks like stack smashing, since it crashes on htons in an unrelated
+> > place
+> 
+> Use CVE-2016-9302.
 
->> "Endless Data Attack" is open, as it is hard to solve for openSUSE with
->> its public mirror system.
+According to the analysis of Sam Trenholme in
+https://bugs.debian.org/844121#32, and confirmed by Ondrej, afaics,
+those above would not be vulnerabilities in MaraDNS. Can you please
+reject those three CVEs?
 
-If you have signed metadata it should be easy to counter this attack for 
-packages, right? If you serve you metadata from a trusted source then 
-it's also solved for metadata. Even if you serve metadata over 
-non-trusted channel it should be easy to bound the size of "root" 
-metadata file and record sizes of the next level files in it, etc. Am I 
-missing any complications?
-
->> The expiry was something added a bit later after the paper to address
->> the downgrade and replay attacks.
->
-> Some more notes.
->
-> While the "Update Scenario" is well covered, we are of course facing issues of "bringing up a system".
->
-> Like discussed in the thread, how does the customer find a known good ISO image
-> for download.
->
-> While our installer is protecting itself with GPG signatures, but there is need for
-> the root of trust of the CD medium itself.
->
-> So for SUSE we publish SHA256 checksums on the https://download.suse.com/ website at least.
-> For openSUSE the GPG/SHA and MD5 are on http://software.opensuse.org/132/de .
-
-Hm, it's HTTP and a big part of this thread is about dangers of exactly 
-this situation.
-
--- 
-Alexander Cherepanov
+Regards,
+Salvatore
