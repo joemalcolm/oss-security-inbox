@@ -1,48 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/14/7
-Message-ID: <20160914115904.GD17345@ucc.gu.uwa.edu.au>
-Date: Wed, 14 Sep 2016 19:59:04 +0800
-From: Matt Johnston <matt@....asn.au>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for Dropbear SSH <2016.74
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/20
+Message-ID: <1d75d139d90f46fba7f6a0d40d662274@imshyb02.MITRE.ORG>
+Date: Mon, 5 Dec 2016 17:12:17 -0500
+From: <cve-assign@...re.org>
+To: <tyhicks@...onical.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@...ntu.com>, <sms@...inode.info>
+Subject: Re: CVE Request: Info-Zip zipinfo buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Dropbear 2016.74 fixed security issues, can I please have 5
-CVEs assigned. The first one has different exposure for
-client/server parts so I assume it should have separate
-CVEs?
+> https://launchpad.net/bugs/1643750
 
-Cheers,
-Matt
-(please CC replies)
+> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
+> zi_short() function:
 
-2016.74 - 21 July 2016
+> #11 zi_short () at zipinfo.c:1986
+> #12 zipinfo () at zipinfo.c:919
+> #13 0x000000000041144a in do_seekable (lastchance=lastchance@...ry=0) at
+> process.c:974
+> #14 0x0000000000411bdf in process_zipfiles () at process.c:401
+> #15 0x0000000000404191 in unzip (argc=0, argv=0x7fffffffe628) at
+> unzip.c:1278
 
-- Security: Message printout was vulnerable to format string injection.
+> The overflow occurs when the two-byte compression method field in the
+> central directory file header is greater then 999.
 
-  If specific usernames including "%" symbols can be created on a system
-  (validated by getpwnam()) then an attacker could run arbitrary code as root
-  when connecting to Dropbear server.
+Use CVE-2016-9844.
 
-  A dbclient user who can control username or host arguments could potentially
-  run arbitrary code as the dbclient user. This could be a problem if scripts
-  or webpages pass untrusted input to the dbclient program.
-  https://secure.ucc.asn.au/hg/dropbear/rev/b66a483f3dcb
 
-- Security: dropbearconvert import of OpenSSH keys could run arbitrary code as
-  the local dropbearconvert user when parsing malicious key files
-  https://secure.ucc.asn.au/hg/dropbear/rev/34e6127ef02e
+> consider assigning a CVE to the related
+> `unzip -l` issue from 2014.
 
-- Security: dbclient could run arbitrary code as the local dbclient user if
-  particular -m or -c arguments are provided. This could be an issue where
-  dbclient is used in scripts.
-  https://secure.ucc.asn.au/hg/dropbear/rev/eed9376a4ad6
+>> http://www.openwall.com/lists/oss-security/2014/11/03/5
+>> 
+>> list_files() in list.c
+>> 
+>> sprintf(&methbuf[4], "%03u"
+>> 
+>> *printf() field-width format specifiers don't restrict the length of the
+>> output
 
-- Security: dbclient or dropbear server could expose process memory to the
-  running user if compiled with DEBUG_TRACE and running with -v
-  https://secure.ucc.asn.au/hg/dropbear/rev/6a14b1f6dc04
+Use CVE-2014-9913.
 
-  The security issues were reported by an anonymous researcher working with
-  Beyond Security's SecuriTeam Secure Disclosure www.beyondsecurity.com/ssd.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYReVRAAoJEHb/MwWLVhi2sDQP+wZ1soybVzOtLc5BTXlHE6fD
+48H0AW+qIG6eKrzxUWfi+Boo3xs3mwSqLnqTBrLiqGqbxLk4ssJjFVYvRkEKPAHn
+Y6OeAgO6scW7m9EtP/bZiOuDionz8uS04hZmLq4RgJu/VXjj7SDP1MSHBRHYECZI
+wWpL5NZyBpv8Z2ZAs2Cn92piP4rvAXzVXt5Qxi1ay5O4II+PXYtDkBMlh88r4GVt
+j6+9fjcpuG2S9lG3t7/O4oU99vaCRfDqFgwMZE62J8N3l9Fs+Z6zngr+rGu2m4xr
+kx6Ox5QWsuNVWLGULs6gy7ZI7845dc3HppZEBG+jjN8rhPTtwRWaAgwftsDYIRUW
+ZuUMLWyoTjinvqeAJE6PRhzmYXNfZ4ghMe82+QnF5ssMdJQP/S89EFyJGok7e0Ei
+Ie8qNpOtkm+TByyc161pEYyP3v3oMoMMZMi7znVEg2cR8tupeu7SeX8EvczEtxkI
+4p5wQcZvIFq0ugIaTJ0tHqru5Iw60xCYmitNyd+91PEiO7hT6/5DShXJ90XLt9E5
+ozYURyrOsu5JmAsE7P34vGHQpqAXzU4DJQ3Y8136T798t3o4qUU5zMPV3T7StC5z
+R8yU9YOFetQwToSoEfzulELaYES+GT8jHjf/5q1JFzFBZWQvd8lqBvf/rm7yF3Tm
+qUheoN1jfmydELo6uwea
+=sfNe
+-----END PGP SIGNATURE-----
