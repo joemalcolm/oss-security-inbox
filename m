@@ -1,23 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/12/2
-Message-ID: <20160512073520.GA9651@inutil.org>
-Date: Thu, 12 May 2016 09:35:20 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign <cve-assign@...re.org>
-Subject: Re: CVE Request - OpenJPEG: Security Fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/25
+Message-Id: <16120516273894_2020046C@antinode.info>
+Date: Mon, 5 Dec 2016 16:27:38 -0600 (CST)
+From: "Steven M. Schweda" <sms@...inode.info>
+To: tyhicks@...onical.com, oss-security@...ts.openwall.com
+Cc: security@...ntu.com, Info-ZIP-Dev@...tley.com
+Subject: Re: CVE Request: Info-Zip zipinfo buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, May 12, 2016 at 06:45:37AM +0000, winsonliu(刘科) wrote:
-> Hi,
-> 
-> Some security issues of OpenJPEG have been fixed. Please consider assigning CVE numbers to them.
-> 
-> 2. Issue 775
-> OpenJPEG Out-of-Bounds Access in function opj_tgt_reset of tgt.c
-> Fixed via https://github.com/uclouvain/openjpeg/commit/1a8318f6c24623189ecb65e049267c6f2e005c0e
+From: Tyler Hicks <tyhicks@...onical.com>
 
-Is that a different issue than CVE-2016-1924?
+> >    Thanks for the (thorough, helpful) report.
+> 
+> I appreciate it but Alexis deserves most of the credit.
 
-Cheers,
-        Moritz
+   The item in the next History.610 file should resemble:
+
+ - In ZipInfo ("-Z", /ZIPINFO) short-format ("-s", /SHORT, default)
+   reports, an unexpectedly large compression method value (>999) caused
+   a (mostly harmless) buffer overflow, and spoiled the report format.
+   Now, values less than 1000 are displayed as before, using a
+   three-digit decimal format, "uDDD", but larger values are displayed
+   using a four-digit (unlabled) hexadecimal format, "XXXX".
+   https://launchpad.net/bugs/1643750
+   (zipinfo.c) [Alexis Vanden Eijnde, Tyler Hicks, SMS]
+
+(Credit is cheap.)
+
+> Thanks for the quick fix. Is there a public code repository available so
+> that we can reference a specific commit that fixes this issue?
+
+   No.  We've been thinking about it, though.
+
+> Nope. As you probably noticed, MITRE just assigned a CVE. It likely
+> helped that you confirmed the issue.
+
+   Swell.  (One fewer thing I need to know.)
+
+>  Thanks again!
+
+   Same to you (plural).
+
+------------------------------------------------------------------------
+
+   Steven M. Schweda               sms@...inode-info
