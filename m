@@ -1,4 +1,9 @@
-Received: (qmail 32156 invoked by uid 550); 22 Oct 2023 10:06:44 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1241" "Sunday" "4" "December" "2016" "22:19:29" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<f118f87456a441edb44e9c04e713eb64@imshyb02.MITRE.ORG>" "32" "[oss-security] Re: libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)" nil nil nil "12" "2016120503:19:29" "[oss-security] Re: libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)" (number mark "U       cve-assign@m Dec  4   32/1241  " thread-indent "\"[oss-security] Re: libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)\"\n") "<2120688.Q6lq1CWMpO@arcadia>" ("<2120688.Q6lq1CWMpO@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32138 invoked by uid 550); 5 Dec 2016 03:19:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,164 +12,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22098 invoked from network); 22 Oct 2023 09:50:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=digikod.net;
-	s=20191114; t=1697968218;
-	bh=p0ISwSS3udRsXDiEDdapPSNOWPY0tuIOsGsZzlKc82s=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=llHTFLzktxfsHCqjhDSrCIt+ZAyY6m1nZQQM7A7vEV2hKOKhBKNVHLIPfN2DSoUrY
-	 7XPtNfJEep84dzL9tR6rCXY+ukCUmmVgIjpeXtGP1/oMhqwDdCLr/ikpzTc28WqsuF
-	 FRv62huarG+RwcB1Mxck+SEohExUBSys9RPRffpE=
-Date: Sun, 22 Oct 2023 11:50:12 +0200
-From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20231022.bahM3beighah@digikod.net>
-References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
- <20231022000649.GA14340@openwall.com>
+Received: (qmail 32117 invoked from network); 5 Dec 2016 03:19:41 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <2120688.Q6lq1CWMpO@arcadia>
+Message-ID: <f118f87456a441edb44e9c04e713eb64@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:19:29 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231022000649.GA14340@openwall.com>
-X-Infomaniak-Routing: alpha
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
+Content-Type: text/plain
+Subject: [oss-security] Re: libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)
 
-On Sun, Oct 22, 2023 at 02:06:49AM +0200, Solar Designer wrote:
-> Hi Matt,
-> 
-> I'm sorry I didn't follow up on this sooner.
-> 
-> On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
-> > Is there interest/solutions within the Rock Security SIG or other 
-> > distro's security teams for sandboxing that package upstreams can opt 
-> > into?
-> 
-> For Rocky Linux Security SIG, the only relevant thing mentioned so far
-> was possibly offering an OpenBSD pledge()-alike that other packages
-> could use.  However, I am skeptical any actually would, unless we also
-> introduce such uses ourselves and maintain own "override" packages
-> (replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
-> software.  Initially, we are going to only create "override' packages
-> for core or very commonly used/exposed components, and to do so only for
-> specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
-> coming from EPEL and with most of its dependency libraries coming from
-> AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
-> make the cut, at least not initially.
-> 
-> Also, continuing these examples, it's probably more realistic to sandbox
-> their command-line tools, whereas the underlying libraries are probably
-> more exposed via language bindings.  Would we be introducing creation of
-> child processes into the libraries?  That's tricky as it could violate
-> expectations of programs using such libraries.  (Yet at Openwall we did
-> a similar thing in pam_tcb, albeit limiting this maybe-unexpected
-> behavior to setups that opted-in to it with the "fork" option in the PAM
-> configuration file.  So it's not completely out of consideration.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Sandboxed API may be used to transform libraries into sandboxed
-services, but this might not be the best choice because it would indeed
-change the set of processes (with the related additional complexity),
-and it might not be as fine-grained as a CLI sandboxing (because CLI
-gets the full semantic).
-See https://github.com/google/sandboxed-api
+> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-parseswf_rgba-parser-c
 
-> 
-> Speaking of pledge() for Linux, there's this project by Justine Tunney:
-> 
-> https://justine.lol/pledge/
-> https://github.com/jart/cosmopolitan/blob/master/libc/calls/pledge-linux.c
-> 
-> This is part of Justine's libc implementation, but a comment says:
-> 
->  * This file contains only the minimum amount of Linux-specific code
->  * that's necessary to get a pledge() policy installed. This file is
->  * designed to not use static or tls memory or libc depnedencies, so
->  * it can be transplanted into codebases and injected into programs.
-> 
-> Are there already other projects using this?  Any distros offering it?
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
 
-This Pledge implementation is useful to quickly leverage OpenBSD's
-patched software, but for a Linux fine-grained sandboxing it would be
-wiser to use the underlying kernel sandboxing feature: Landlock
-See https://landlock.io/
+Use CVE-2016-9831.
 
-AFAIK one of the most widely used sandboxing C library leveraging
-Landlock is Minijail:
-https://chromium.googlesource.com/chromiumos/platform/minijail
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Libraries are available for other languages as well:
-* Rust: https://crates.io/crates/landlock
-* Go: https://pkg.go.dev/github.com/landlock-lsm/go-landlock/landlock
-* Haskell: https://hackage.haskell.org/package/landlock
-* Python: https://github.com/Edward-Knight/landlock
-
-> 
-> > To step this out a bit... we have a large, old code base that was written 
-> > decades prior to current best practices. It has numerous known memory 
-> > safety issues and ever-dwindling maintainer capacity. It is also a 
-> > dependency, either directly or indirectly, of a significant fraction of 
-> > the world's software. I am guessing this scenario sounds uncomfortably 
-> > familiar/common to many on this list.
-> > 
-> > We (the maintainers) have discussed sandboxing as a way of mitigating 
-> > the risk of known bugs. However, one of the problems is that we don't 
-> > know the complete set of required privileges of our dependencies. The 
-> > software can be configured with or without various libraries and also 
-> > has a plugin mechanism for dynamic code loading. Basically if a 
-> > sandboxing solution like seccomp wants to know our full set of system 
-> > calls, we ourselves don't know it.
-> 
-> With pledge(), you could provide coarse-grained "promises" rather than
-> constrain yourself to individual syscalls.  Maybe that would work for
-> you?  However, it'd only be reliably used by packages if those introduce
-> a build-time dependency on whatever package provides pledge().  So e.g.
-> if we add a package providing pledge() in Rocky Linux Security SIG repo,
-> that won't be picked up by my example packages above built as part of
-> EPEL (not part of Rocky Linux project) or AppStream (part of the
-> project, but currently unlikely to be overridden in the SIG).
-> 
-> OTOH, you could even integrate the pledge-linux.c file in your project,
-> in which case it could become a standard feature used by many Linux
-> distros and extra package repos once they update to your newer version.
-
-FYI, Landlock is gaining new sandboxing features with new kernel
-versions, so we should be careful to make it easy to update to new
-features and then avoid (too much) harcoded constants/files but rely on
-a library instead.
-
-> 
-> > The downstream maintainer packaging the software for, e.g. Rocky, does 
-> > though. They have a complete picture of which libraries/features are 
-> > enabled and how locked down the plugin stuff is.
-> > 
-> > So, where I'm going with this, is that if the various packaging 
-> > ecosystems could (or do) offer sandboxing to upstream, people like us 
-> > would gladly opt in to it. Of course, these downstream maintainers can 
-> > already seccomp our software today. But expecting them to reverse 
-> > engineer our exact needs seems a bit much.
-> 
-> I find the above two paragraphs somewhat contradictory - the downstream
-> maintainer packaging the software does have technical ability to figure
-> out the exact set of syscalls the software will use on their distro with
-> current versions of other packages, but OTOH "expecting them to reverse
-> engineer our exact needs seems a bit much."  I'd say that figuring out
-> that exact set _is_ this kind of reverse-engineering, and is too much to
-> expect from a typical package maintainer, who is not focusing on just
-> this one package.  Besides, the exact set of syscalls may also change as
-> other packages get updated; this is not something guaranteed to stay
-> stable within what's normally considered a stable ABI.  So that person
-> would also need to identify and introduce extra explicit package version
-> dependencies, and to do extra package rebuilds to keep those satisfied.
-
-Proper sandboxing features such as Landlock are not tied to syscalls
-(which might change with library and dependency updates).
-
-Being able to integrate some security policy with the packaging would
-definitely help to widespread sandboxing (but cannot be as fine-grained
-as built-in sandboxing).
-
-> 
-> Maybe a coarse-grained pledge() would make this more realistic, or not.
-
-Pledge, and especially the Linux implementation, is already coarse-grained.
-
- Mickaël
+iQIcBAEBCAAGBQJYRNjhAAoJEHb/MwWLVhi2dhUQALeGIrOTW5OKs4VJBWqDtrQD
+NfNa39M/wFkBbw840ipCJ3X2QCcUjfHrYFTRxewTYDLGKsZ47vMVMviAJ0dKEkeY
+cNx6H3RoAj23YcEtDW8kNGru2Yzt/Kn5edMzSJ+AX9vBiS3vn03gA9GRP6nCyqmL
+dnyt0pLeORVTx5S8X21fzgVEwOJVOJ7cJdQwDluGq6AHlUb71tCUqKkaXFUEhKDr
+yKBryzrMTfdOhqtAZ+yhzWm2nhhXUN1si86CX7XfSKoHDWm+bJnqgUWo+Yfa28EZ
+FcMHLTl1rZX1883N98wMgPiZWi4Jbqcx/He6Q2bc2tOMh/QIIPUSV9E8V64R1fxI
+3LKb2V/0NU54QcY3UCXwoPGsufxFf0Nixl3vW0oXVdlpvBz2sw576Zd/yQ1KUOm1
+LqqpjTOoArB4w6CVn8ScfM2AxguTvslZxASGpfDg/oErjm9pZKYHrg8F+qM101cD
+cHJEGddHsdVLLowSQO+378pLqD20fhrx2ZZf41bKiea0fQ9SOOAVy0oVhO3gjlUH
+E5vzkPH6YmzHCU4tLtmacon42OWDGPONS8aNrF2/aKLmsZ0J7lSMDpgYjU4g8jhj
+UOL5nhT+Ikj5ghMsRgmD5JzZ8VJtTGnQtnT2vpIp1H10P+jC6xxUbDx/G/Ij/r/t
+V2VmydnzAYmtT/E/Nrhn
+=GVTw
+-----END PGP SIGNATURE-----
