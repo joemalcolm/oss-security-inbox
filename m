@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/2
-Message-ID: <CADSYzss90v5o_p40F5+_PHhS+EwP3K=FLsB-ak9xazRj9gtm6w@mail.gmail.com>
-Date: Wed, 26 Oct 2016 02:05:11 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  bugs@...uritytracker.com, oss-security@...ts.openwall.com
-Subject: CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/15
+Message-ID: <alpine.LFD.2.20.1612060030210.20462@wniryva>
+Date: Tue, 6 Dec 2016 00:39:16 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info
 Content-Type: text/plain; charset=utf-8
 
-I added a simple PoC video for the CVE-2016-1240 vulnerability.
+   Hello,
 
-In the PoC I used Ubuntu 16.04 with the latest tomcat7 package
-(version: 7.0.68-ubuntu-0.1) installed from the default ubuntu repos
-which appears vulnerable still.
+Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
+to an information leakage issue. It could occur while processing 
+'VIRTIO_GPU_CMD_GET_CAPSET_INFO' command.
 
-The video poc can be found at:
+A guest user/process could use this flaw to leak contents of the host memory 
+bytes.
 
-http://legalhackers.com/videos/Apache-Tomcat-DebPkg-Root-PrivEsc-Exploit.html
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2016-11/msg00019.html
 
--- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
