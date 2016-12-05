@@ -1,100 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/23
-Message-ID: <CAM1yOjbkx_c4D4_HY3ovdFLDiRirWrnKa0OUwra=ZitrLbrSKw@mail.gmail.com>
-Date: Thu, 29 Sep 2016 11:50:11 -0400
-From: Mike Kienenberger <mkienenb@...il.com>
-To: announce@...aces.apache.org, MyFaces Development <dev@...aces.apache.org>,  MyFaces Discussion <users@...aces.apache.org>
-Cc: "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 1.2.15 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/23
+Message-ID: <8accbcde112d4796bdfff54c6e587908@imshyb02.MITRE.ORG>
+Date: Mon, 5 Dec 2016 17:17:20 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor
 Content-Type: text/plain; charset=utf-8
 
-The Apache MyFaces team is pleased to announce the release of Apache
-MyFaces Trinidad 1.2.15.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
-that provides an extendibles framework and extensive skinning support.
-This version is designed to be used with the JSF 1.2 specification and
-works with either Mojarra or MyFaces.
+> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
+> to a memory leakage issue. It could occur while updating the cursor data in
+> update_cursor_data_virgl.
+> 
+> A guest user/process could use this flaw to leak host memory bytes, resulting
+> in DoS for a host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00029.html
 
-CVE-2016-5019:
-Trinidad’s CoreResponseStateManager both reads and writes view state
-strings using
-ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
-bypasses the
-view state security features provided by the JSF implementations - ie. the view
-state is not encrypted and is not MAC’ed.  Trinidad’s
-CoreResponseStateManager will
-blindly deserialize untrusted view state strings, which makes Trinidad-based
-applications vulnerable to deserialization attacks.
+>> if the 'width'/ 'height'
+>> is not equal to current cursor's width/height it will return
+>> without free the 'data' allocated previously
 
-Apache MyFaces Trinidad is available in both binary and source
-distributions, and there are examples available as well:
+Use CVE-2016-9846.
 
-    * http://myfaces.apache.org/trinidad/download.html
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu.c but
+that may be an expected place for a later update.
 
-Apache MyFaces Trinidad is available in the central Maven repository
-under Group ID "org.apache.myfaces.trinidad"
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Release Notes - MyFaces Trinidad - Version 1.2.15
-
-Bug
-    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
-deserialization security vulnerability
-
-    [TRINIDAD-195] - Two requests at the same time throw an exception
-when the server just started
-    [TRINIDAD-943] - handle session timeout
-    [TRINIDAD-1683] - client-side convertNumber causes loss of precision
-    [TRINIDAD-1804] - Resources not found(404) errors
-    [TRINIDAD-1960] - NullPointerException in
-LocaleInfoScriptlet.getSupportedLocaleVariant
-    [TRINIDAD-2009] - tr:table selectAll also selects disabled chekcboxes
-    [TRINIDAD-2017] - Trinidad statemananger needs to store everything
-on the client, when HTML_Basic is used, in combination with standard
-client-side state-saving
-    [TRINIDAD-2021] - Wrong behavior in TrNumberFormat
-    [TRINIDAD-2023] - CheckSerializationConfigurator should use the
-Trinidad specific ObjectInputStream (ObjectInputStreamResolveClass)
-class
-    [TRINIDAD-2024] - UIXCollection holding only to application data
-    [TRINIDAD-2028] - Should reset value on component at the beginning of decode
-    [TRINIDAD-2033] - trh:tableLayout tag doc should call out
-table-layout:fixed as desirable for programmatically-resizable cell
-contents
-    [TRINIDAD-2036] - While ResourceServlet references files of type
-"ico", they won't load because CoreRenderKitResourceLoader doesn't
-register them
-    [TRINIDAD-2039] - Icons are created if the string for the resource
-is an empty string in Trinidad 1.2
-    [TRINIDAD-2045] - UIXCollection should release the reference to
-the model at the very end of processSaveState
-    [TRINIDAD-2047] - UIXCollection saves the stamp state when there is no stamp
-    [TRINIDAD-2048] - ComponentUtils.getScopedIdForComponent() is not
-producing consistent scoped IDs for components relocated during tag
-execution
-    [TRINIDAD-2051] - NPE in BAseChangeManager
-    [TRINIDAD-2057] - UIXTree/UIXTreeTable/UIXTable RowKeySets require
-that their attributes are only fetched when the component is in
-context
-    [TRINIDAD-2061] - add a utility method in PartialPageUtils to send
-a <noop/> ppr response
-    [TRINIDAD-2097] - tr:selectOneListBox - item not selected - wrong
-item of selected item returned by SimpleSelectOneRenderer.resolveIndex
-    [TRINIDAD-2110] - workaround for jsf portlet bridge 2.0 nullviewstatetoken
-    [TRINIDAD-2173] - tr:table component renders navigation bar
-wrongly for unknown row count
-
-Improvement
-
-    [TRINIDAD-1729] - provide a hook for for an external decorator of
-Skin InputStreamProvider
-
-New Feature
-
-    [TRINIDAD-1457] - Need the ability to bypass the Cache on ResourceServlet
-    [TRINIDAD-2062] - Need to add a utility method to
-ExternalContextUtils to get the writer from the ExternalContext
-
-regards,
-
-Mike Kienenberger
+iQIcBAEBCAAGBQJYReVlAAoJEHb/MwWLVhi26K4QAIEOb2gsY0jWd9UGFd7PT27w
+03JwlZZKo8DxKTVE/YV2uVCNRG6kplIIZeAAJe64MytSFL2hnAzd3Mm7uamZUTKZ
+Q0GxRK6ruTrziVeHWgg+xAy4KWiD3KBoAbxVbgW7qmnXAw4ML3IKJ9R7SJFmGhzH
+MUMIMJlhvXy8ngYsRwtcgfpiahKTN4YeYxk0MxqNIDZmROsnbrMsuASpg8jLKcXh
+hyygf17M7Wd42Go3C/BDaVn91numOlgJxPVnPv6VhD7oXrM+1iNIbw29UMqVUH5I
+yMkLB6Dd2iM/hiQIirohtn7B4mX7OgiP2j5eiu38MRP6ZaVblTfFsb3M2XJkl3/v
+ukhw4zaPbnzB7ANBG8Q0aABCnnDAtJSR7hDd0emvu8WxgT6ub37iDY4oz0Xlxxqr
+QeE0QCC33I932WGdWBjAf77bZ7QficjL6HXevMFiiPQYAiXb4CV400N2lLLr2dJY
+SVYuFCtEvBk2yrc5kyPMmo0s8kMSfPj/0GwR03960iNlQD9dHYl7N5QMuv3AqnDF
+AlK+zO/bgGuKy9/tdNH/io03rx9PnxOn5NjX2/TYWEaOV3z9hhpfSfjPAn5vsHNR
+slC1L7YwPehS66LRc5uUqJNUtIeKqV0E5OWvR0pUDvXpLZim0trm9AbVStgSkA6u
+JsxYW7rXQSTapsyPSGTr
+=HX47
+-----END PGP SIGNATURE-----
