@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/30/3
-Message-ID: <CACn5sdTySquYm3M=mk+oVhiYUR+_np3=atHDMryVu6znwJ_0EQ@mail.gmail.com>
-Date: Sun, 30 Oct 2016 14:29:17 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - integer overflow and crash parsing regex in mujs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/4
+Message-ID: <fdc137ebd36d405496f7ef135146d86b@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:16:15 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listswf: heap-based buffer overflow in parseSWF_DEFINEFONT (parser.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It seems there is an integer overflow somewhere affecting function
-js_regcomp (line 843 in regexp.c) in mujs. To reproduce (tested in revision
-5c337af4b3df80cf967e4f9f6a21522de84b392a):
+> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-parseswf_definefont-parser-c
 
-$ echo '(/.{135303839468541,43}/);' | valgrind --quiet ./build/mujs
-==29376== Argument 'size' of function malloc has a fishy (possibly
-negative) value: -5152
-==29376==    at 0x4C2AB8D: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==29376==    by 0x415FCC: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x41D127: js_newregexp (in
-/home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
-==29376==
-==29376== Invalid write of size 2
-==29376==    at 0x415FE1: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x41D127: js_newregexp (in
-/home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
-==29376==  Address 0x2 is not stack'd, malloc'd or (recently) free'd
-==29376==
-==29376==
-==29376== Process terminating with default action of signal 11 (SIGSEGV)
-==29376==  Access not within mapped region at address 0x2
-==29376==    at 0x415FE1: js_regcomp (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x41D127: js_newregexp (in
-/home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A0C1: jsR_run (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40A8C6: js_call (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40B9BB: js_pcall (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x401D63: eval_print (in /home/g/Work/Code/mujs/build/mujs)
-==29376==    by 0x40183A: main (in /home/g/Work/Code/mujs/build/mujs)
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 2
 
-This test case was found using QuickFuzz. Please assign CVE is suitable.
+Use CVE-2016-9829.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYRNjVAAoJEHb/MwWLVhi2d0YP+wcOS+S9vSCcY76UvnIOJkAo
+vIyF0ZwUuYqNT0iWRgTlBNVVwFylyT45t+NX7kIOrrMh1gZ5OitoeQLv0aTte2nG
+fhkcMJGAQLAlq+3zeT+Zb6Gm5KIW2hZjZPrJLfhltMmYq5VQ9JO6mRYitvn4xqeW
+nUUy/upc/4fE5LoxnA9PnVwoeV2R3e5huS5FcFQUe2ZvKcYfm5itd8QmSu60t0Jg
+gcEH038p71InHVXOEwcGBpfq1lk+uoLJct+Ipj4uEsQQ924pfOml2+P9UQ/KNtKn
+deQrCfL3qepypJVrD1BO2I6EEsUkI1csJFqHLKR3V1CVKZ5/oLisl56/+wwletv0
+3pnoJ7G6bUb027BgTAn4TJYoFTcDDvyZstOagEqlYi2gpbdjlpgzXd+2IJhe2q4C
+v/3/hefJN7OwoGs0outsCexxbFX31TlzhW4IT0XYnx4kPbdXsNiqJCZUWxU+VMWk
+qAGSZSdq3Ok1F6mTyuMwTSRw0bbk9u+Hb74s7Q0RyqJWjFqFRmpsC70Qlpj2QzGR
+0SCecFC4RMGhDqBqAdCO7phloHqvcFHFcJuzhWxtSHDyLlSaNldy9ucw3a5UdVnQ
+op2wZ5J0uPDfys7h+1Ld5pTYazNQiZZPHPDf3YBbJ4+ru45pyIVsjfcZ/XGNejDA
+ACXv1ZczHVgTagzYE+c6
+=+k3D
+-----END PGP SIGNATURE-----
