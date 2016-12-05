@@ -1,45 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/11/14
-Message-ID: <CACn5sdR-N=-+o7L_eCkd9b4Sv05woTVLh6_r7JekMEJFPBQmNw@mail.gmail.com>
-Date: Wed, 11 May 2016 22:44:13 +0200
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requested: two stack exhaustation parsing xml files using mxml
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/22
+Message-ID: <8aa9957b29ca4fc4a2502885a96db887@imshyb02.MITRE.ORG>
+Date: Mon, 5 Dec 2016 17:15:50 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info
 Content-Type: text/plain; charset=utf-8
 
-2016-05-10 1:25 GMT+02:00  <cve-assign@...re.org>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> We found two stack exhaustion conditions that can easily crash mxml
->> when parsing an xml.
->
-> (The two example XML documents seem dissimilar. For example,
-> stack-exhaustion-2.xml starts with "<?xml" whereas
-> stack-exhaustion-1.xml does not.)
->
->
->> Recursion using mxmlDelete at mxml-node.c:217 (stack-exhaustion-1.xml)
->
-> Use CVE-2016-4570.
->
->
->> Recursion using mxml_write_node at mxml-file.c:2739 (stack-exhaustion-2.xml)
->
-> Use CVE-2016-4571.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks!
+> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
+> to an information leakage issue. It could occur while processing
+> 'VIRTIO_GPU_CMD_GET_CAPSET_INFO' command.
+> 
+> A guest user/process could use this flaw to leak contents of the host memory
+> bytes.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2016-11/msg00019.html
 
-The report of these stack exhaustions is here:
+>> In virgl_cmd_get_capset_info dispatch function, the 'resp' hasn't
+>> been full initialized before writing to the guest. This will leak
+>> the 'resp.padding' and 'resp.hdr.padding' fieds to the guest.
 
-http://www.msweet.org/bugs.php?U549 (but you need to register)
+Use CVE-2016-9845.
 
-Just to clarify, since we compiled testmxml with ASAN, in order to
-reproduce  using the attached files in the original binary it is
-necessary to reduce a little the stack size, for instance:
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
+that may be an expected place for a later update.
 
-$ ulimit -s 4000
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The stack exhaustations are still possible with the original testmxml
-binary, but it requires slightly bigger files.
+iQIcBAEBCAAGBQJYReVgAAoJEHb/MwWLVhi24FUP/2ilkbP1yXJnQcYM4TMeEG2x
+rzsLbOdftyTIQmSs0o71LKngtkAtCQaq4F9fW2N0/ujJyOyIGA/frcFwbky9x1Ch
+mOSH8eZcKPT7rENJ0E8IRYcRlaXtyLe8p1nR/SWCerw4fCZORHAKxffSJX8H64Y0
+qJyDwpJ1ws2YJ6eoU892mPygvh7QT6fphBAyiz4bTNCk5yGRTjYDrkoeGfz6fjjP
+BWy5P+8Pv0937Gl3z1h9Fqbo87ab3nQ5b0VdWSmNDuheam0/gBLZkRiDmGy6mxca
+niUv/7kv8xKV0IafzBwW+X8LY+kbcsA/oPWUkKdhGMyUTLb8WGO4iUpgT3HaD3Om
+9M0kZzBGYSIuhmZj1EW0PXxXQAdaDk1Y2IHqLrY1DSM3t78yfAPRKbIDAI9hPVW9
+RUuHtIVH7FSpckejg+UEBlheOM3k4z5pv03m3gkKk2IjUnSo5hDVGgVMjGQheKvV
+1S4q9zr57+DAq8ugIv0vfRWv7ty3yRgqEfJv8ijXAg4cLQqzS8DyXZMvuD9GKnMl
+UWroxU8MoE4MC2wbpGUfMnXpsCxltha80tW3VYj10XiHRHYp1HqambvlEfEBB6wc
+X4jX/HNnbcQqdKRn7MUHg2B+Kn5HXFCaVPWxPJKV4bk6FFX4S3VpKd1j9fe9O71o
+lLdrMfpXM7v/fBTScHVo
+=Boh/
+-----END PGP SIGNATURE-----
