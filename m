@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/7
-Message-Id: <20160928185409.5FF6C36E015@smtpvbsrv1.mitre.org>
-Date: Wed, 28 Sep 2016 14:54:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: winsonliu@...cent.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/9
+Message-ID: <86dc641af9b1454bb9cb64f523c87a60@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:24:21 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: SimpleSAMLphp: SSPSA 201612-01: Incorrect signature verification
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> An integer overflow vulnerability was found in function gdImageWebpCtx
-> of file gd_webp.c in libgd. It could lead to heap buffer overflow
-> circumstance. Both PHP 7.0.10 and libgd 2.2.3 were affected
-> 
-> PHP reported via https://bugs.php.net/bug.php?id=73003
-> PHP fixed via https://github.com/php/php-src/commit/c18263e0e0769faee96a5d0ee04b750c442783c6
-> libgd reported via https://github.com/libgd/libgd/issues/308
-> libgd fixed via https://github.com/libgd/libgd/commit/40bec0f38f50e8510f5bb71a82f516d46facde03
-> 
-> argb = (uint8_t *)gdMalloc(gdImageSX(im) * 4 * gdImageSY(im));  /* integer overflow!!! */
-> 
-> There is no overflow check before calling the gdMalloc function.
-> 
-> POC
->     ini_set('memory_limit', -1);
->     $im = imagecreatetruecolor(0x8000, 0x8001);
->     imagewebp($im, 'php.webp');
->     imagedestroy($im);
-> 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 1
-> 
-> PATCH
-> if (overflow2(gdImageSX(im), 4)) {
->     return;
-> }
-> 
-> if (overflow2(gdImageSX(im) * 4, gdImageSY(im))) {
->     return;
-> }
+> https://simplesamlphp.org/security/201612-01
+> https://github.com/simplesamlphp/saml2/pull/81
+> https://github.com/simplesamlphp/saml2/commit/7008b0916426212c1cc2fc238b38ab9ebff0748c
 
-Use CVE-2016-7568.
+>> convert an error state, signaled by the value -1, to a successful
+>> verification of the signature (represented by the boolean true)
+
+>> an error during signature verification is treated as a successful
+>> verification
+
+Use CVE-2016-9814.
 
 - -- 
 CVE Assignment Team
@@ -52,17 +31,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX7BFqAAoJEHb/MwWLVhi2kfoP/1owiTLiVQs33ewsVmLqdrmq
-L20K6eMWkt15djVUcpGtBvH4ebcbnXZdXUIsqKOuQoiwWMYWpC0FTCD9tOK3SKLI
-uKcaIcuPKgXfUM3KDgJww1tBZ8t+AKwjRf18A23KAFmJ63LO+QgrZT5nwmW0lff1
-QOZ/7F80hBQJa2rOqOCWRg0BWZvPJ5djKfgQ4+3pwEl++4CRoKP2ABsdqwL6SCNe
-kw7OvYITxfx9BGEGPh6/NCZoLvTVXEHZjHQVhWlobpGpO75DPC5eEyxCXEO3KBxK
-4mKQADERR1yIafLLtlkWYg2awsHg2JOahcjL2vK2/32OOG2gkXe6ihsgUWKWZp/V
-HcFBK6l9xo4R5eVm11sr0t9F0H/IYSfqOd7wijfDZbwNELqLi8gO0vWcvj2HNfLs
-KzosUgCtz74JVz3vAXdk5e83EJv/9DTXbC5kyA+yfIXaGjm97jSkrXsfktNsnQ4N
-5cSWbuxg9W/I5qGuXmhNhqE1EJVRWBkc/3DaCQoS6/XRV9PiUqg0EhZFAtHCcrOg
-xO55mA4m1ZjIHUaox4RBEeLIHpIeSNBywAsfFtOmCMTfupNTM1xWft4Nsg3be/p+
-4yKY3wr8YZ70fWopenDixR9OKMcUINTCFNB0HGPAsUhBuu4849yExTanXfAdaTa3
-EQl2ePo/sn4HttO+tXO2
-=3man
+iQIcBAEBCAAGBQJYRNj2AAoJEHb/MwWLVhi2LPoQAIka//ctCZOUgkIQaf0t5UYI
+hgd2XPcl6LHfOzJA+hvmERO4uxgceqNQ8nhZxkIsWs8tA/eibpHBpz2UebkcKt6r
+3IRwP3Xo3NBVpHXYcL6snoDJ6eYipeQeVwEVnoudxIFrzXcHL7YJNpXbRDUA/n44
+hoDlc2OZyeMzPWU+fvLXuyi/ylm2AOUJIbb9icONyhdKKyQiI61oInhbGCG47qi0
+lhUUQMyTHgTlRtYGSUyJWzRo0u5OIJaS+XAgUPhWK670kTJ8ZEhVcKJNRrLiRxu6
+1SHna5o26O6LHTIyJMhKcOfMYpWCUnHhqBTn+IwBalumYJucBW3k9MIBn3M0Odtp
+s8mcPQ4NX70uLCEh7+alOF4Pi7tUI6N+KvFX5IUsbBhVW0afpSgl9B5BsLmEmDKT
+M+szOjUQ1AaNfptqpDTWSSpusK9assQ+2g5warmw6ndPvhcjx4/1KmpInI0kCMQ3
+9nZ/blvuMPd9QkiuD9YKG1qOnAO1qK7IdWKDwmVvZqweuawfJgoUknHd4a5tduaJ
+REMTO+CPkk2th2dEAi9/yZywzCExOw2Am5qOIwiv6tei0GFmwRHrauglQQDE4NP8
+rU49wxNYW1UOP6Yd4d2rZHiJQBhvkByhPSIWJWxggnl4cTLL5sKxSdFLech1bWuv
+6ZF1/SgEqZUECFXhsUlY
+=NZRo
 -----END PGP SIGNATURE-----
