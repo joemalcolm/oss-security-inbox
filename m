@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1161" "Tuesday" "5" "May" "2015" "19:27:42" "+0200" "Michael Scherer" "misc@zarb.org" "<20150505172741.GE17491@sisay.ephaone.org>" "23" "[oss-security] Local privileges escalation in rubygem open-uri-cached " nil nil nil "5" "2015050517:27:42" "[oss-security] Local privileges escalation in rubygem open-uri-cached" (number mark "        misc@zarb.or May  5   23/1161  " thread-indent "\"[oss-security] Local privileges escalation in rubygem open-uri-cached \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1788" "Monday" "5" "December" "2016" "17:15:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8aa9957b29ca4fc4a2502885a96db887@imshyb02.MITRE.ORG>" "44" "[oss-security] Re: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info" nil nil nil "12" "2016120522:15:50" "[oss-security] Re: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info" (number mark "U       cve-assign@m Dec  5   44/1788  " thread-indent "\"[oss-security] Re: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info\"\n") "<alpine.LFD.2.20.1612060030210.20462@wniryva>" ("<alpine.LFD.2.20.1612060030210.20462@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32355 invoked by uid 550); 5 May 2015 17:28:03 -0000
+Received: (qmail 17892 invoked by uid 550); 5 Dec 2016 22:16:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32281 invoked from network); 5 May 2015 17:27:54 -0000
-Message-ID: <20150505172741.GE17491@sisay.ephaone.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Cc: oss-security@lists.openwall.com
-Date: Tue, 5 May 2015 19:27:42 +0200
-From: Michael Scherer <misc@zarb.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Local privileges escalation in rubygem open-uri-cached 
-To: cve-assign@mitre.org
+Received: (qmail 17874 invoked from network); 5 Dec 2016 22:16:02 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liq3ea@gmail.com>
+In-Reply-To: <alpine.LFD.2.20.1612060030210.20462@wniryva>
+Message-ID: <8aa9957b29ca4fc4a2502885a96db887@imshyb02.MITRE.ORG>
+Date: Mon, 5 Dec 2016 17:15:50 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset_info
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-open-uri-cached, a rubygem that will cache downloaded data when using open-uri, is 
-suceptible to a local attack due to usage of YAML in a insecure way, and using
-a predictable directory name in /tmp for getting that data without verification, see
-https://github.com/tigris/open-uri-cached/blob/master/lib/open-uri/cached.rb#L39
-https://github.com/tigris/open-uri-cached/blob/master/lib/open-uri/cached.rb#L25
-and https://github.com/tigris/open-uri-cached/blob/master/lib/open-uri/cached.rb#L115
+> Quick Emulator built with the Virtio GPU Device emulator support is vulnerable
+> to an information leakage issue. It could occur while processing
+> 'VIRTIO_GPU_CMD_GET_CAPSET_INFO' command.
+> 
+> A guest user/process could use this flaw to leak contents of the host memory
+> bytes.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2016-11/msg00019.html
 
-So someone could create ahead of time a directory /tmp/openuri-$someuid/, precreate directory
-for the host to contact and with proper permissions, wait until a meta file is created, and
-replace it with one containing ruby code to be executed, as it doesn't use safe loader for yaml
-( http://www.benjaminfleischer.com/2013/03/20/yaml-and-security-in-ruby/ ).
+>> In virgl_cmd_get_capset_info dispatch function, the 'resp' hasn't
+>> been full initialized before writing to the guest. This will leak
+>> the 'resp.padding' and 'resp.hdr.padding' fieds to the guest.
 
-The gem is pulled by various projects on github, the likely most important being
-a redmine plugin : https://github.com/backlogs/redmine_backlogs 
+Use CVE-2016-9845.
 
-Could a CVE be assigned ? I will take care of opening a issue on github  for that
-after :
-https://github.com/tigris/open-uri-cached
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
+that may be an expected place for a later update.
 
--- 
-Michael Scherer
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYReVgAAoJEHb/MwWLVhi24FUP/2ilkbP1yXJnQcYM4TMeEG2x
+rzsLbOdftyTIQmSs0o71LKngtkAtCQaq4F9fW2N0/ujJyOyIGA/frcFwbky9x1Ch
+mOSH8eZcKPT7rENJ0E8IRYcRlaXtyLe8p1nR/SWCerw4fCZORHAKxffSJX8H64Y0
+qJyDwpJ1ws2YJ6eoU892mPygvh7QT6fphBAyiz4bTNCk5yGRTjYDrkoeGfz6fjjP
+BWy5P+8Pv0937Gl3z1h9Fqbo87ab3nQ5b0VdWSmNDuheam0/gBLZkRiDmGy6mxca
+niUv/7kv8xKV0IafzBwW+X8LY+kbcsA/oPWUkKdhGMyUTLb8WGO4iUpgT3HaD3Om
+9M0kZzBGYSIuhmZj1EW0PXxXQAdaDk1Y2IHqLrY1DSM3t78yfAPRKbIDAI9hPVW9
+RUuHtIVH7FSpckejg+UEBlheOM3k4z5pv03m3gkKk2IjUnSo5hDVGgVMjGQheKvV
+1S4q9zr57+DAq8ugIv0vfRWv7ty3yRgqEfJv8ijXAg4cLQqzS8DyXZMvuD9GKnMl
+UWroxU8MoE4MC2wbpGUfMnXpsCxltha80tW3VYj10XiHRHYp1HqambvlEfEBB6wc
+X4jX/HNnbcQqdKRn7MUHg2B+Kn5HXFCaVPWxPJKV4bk6FFX4S3VpKd1j9fe9O71o
+lLdrMfpXM7v/fBTScHVo
+=Boh/
+-----END PGP SIGNATURE-----
