@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["845" "Wednesday" "17" "August" "2016" "19:30:10" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do5ebwd1h2XAEYntLh0k4oes5pLRR0UOw2nEVwNFLhk3dg@mail.gmail.com>" "33" "[oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation" nil nil nil "8" "2016081717:30:10" "[oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation" (number mark "U       cbuissar@red Aug 17   33/845   " thread-indent "\"[oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1640" "Sunday" "4" "December" "2016" "22:21:05" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e510445958b0452499da785a4d64ab4b@imshyb02.MITRE.ORG>" "49" "[oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort" nil nil nil "12" "2016120503:21:05" "[oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort" (number mark "U       cve-assign@m Dec  4   49/1640  " thread-indent "\"[oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort\"\n") "<E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>" ("<E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18107 invoked by uid 550); 17 Aug 2016 17:30:23 -0000
+Received: (qmail 9933 invoked by uid 550); 5 Dec 2016 03:21:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18086 invoked from network); 17 Aug 2016 17:30:22 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=xrwH1HbjNjzyQCPErcGbsaL1YKqGadpu5bKGLv/18Nk=;
-        b=jJMAlO02sHvfiFZqZOcvt2aACHJ7kBxl9xcJSYYVKcE5IChxNf++hQ7DAEYTrsFvRh
-         YDJvS3dcwGz7K9Xrfy70eTr9wFXx3LIFNwgbP2eBwrGt6xUFayQpRu3WmTFDFqiysFGK
-         1Oy8rRVeXS86GQAWCCEqTXVAyzIiJ/hO/MH+SAv1OvxGgHDCCKgr8OPStWSM+hckbs5l
-         vP/rhLzvVn5psgRzfUazNmazRTsva/te3p8gwm4fjkbN6HbSkBIPV2EMYR+eXbAdmcm6
-         VWI+3eTqZ6+u7oR5LQX5ItzeRLViFiV3O2GWdyZ0WGHsGchOwarvVBfSKZlEZncOFbwm
-         61YA==
-X-Gm-Message-State: AEkoouvDkGCyDREU5laL3iPwk/LD4HWtm0F5poLLYoL73r3jbxMCu88kt93YzQ7xhMA2dUy09Vc9YbprP//YOZhF
-X-Received: by 10.98.33.72 with SMTP id h69mr76076523pfh.28.1471455011056;
- Wed, 17 Aug 2016 10:30:11 -0700 (PDT)
+Received: (qmail 9902 invoked from network); 5 Dec 2016 03:21:17 -0000
+From: <cve-assign@mitre.org>
+To: <security@xen.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <E1cBjhk-0000Fg-Ct@xenbits.xenproject.org>
+Message-ID: <e510445958b0452499da785a4d64ab4b@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:21:05 -0500
 MIME-Version: 1.0
-From: Cedric Buissart <cbuissar@redhat.com>
-Date: Wed, 17 Aug 2016 19:30:10 +0200
-Message-ID: <CAKG8Do5ebwd1h2XAEYntLh0k4oes5pLRR0UOw2nEVwNFLhk3dg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a113efdde3cd323053a47d1c7
-Subject: [oss-security] CVE-2016-5404 freeipa: Insufficient privileges check in certificate revocation
+Content-Type: text/plain
+Subject: [oss-security] Re: Xen Security Advisory 201 - ARM guests may induce host asynchronous abort
 
---001a113efdde3cd323053a47d1c7
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi,
+> A malicious guest may be able to crash the host.
 
-This is to disclose the following CVE:
+> x86 systems are not affected.
 
-CVE-2016-5404 freeipa: Insufficient privileges check in certificate
-revocation
+> ffdefdaa67748df7fccbc82011202724c622ca432cd121853ecab45ff4657406  xsa201-1.patch
 
-Description :
-An insufficient permission check issue was found in the way IPA server
-treats certificate revocation requests. An attacker logged in with the
-'retrieve certificate' permission enabled could use this flaw to revoke
-certificates, possibly triggering a denial of service attack.
+Use CVE-2016-9815.
 
-All versions are affected.
 
-Patches can be found on the corresponding Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-5404
+> 0665eb575b056f98d5330ef23f497b2b3de1a15319e2012005890a17df32a7ed  xsa201-2.patch
 
-Impact: Moderate
-CVSS3 scoring : 4.3 CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
+Use CVE-2016-9816.
 
-Reported by: Fraser Tweedale (Red Hat)
 
-Best Regards,
+> 4486d5efb59c1f1fff04a3cb697f948d5bf680e2a1c0d76cd44382ad8fa9095e  xsa201-3.patch
+> ca82c82acd51bf3cb8114d1843519c28e3df26243bd45eb712ff10ba11061b93  xsa201-3-4.7.patch
 
--- 
-Cedric Buissart,
-Product Security
+Use CVE-2016-9817.
 
---001a113efdde3cd323053a47d1c7--
+
+> 1de6ddb4b5b46ae390ec4587e588c00a706f4a68365d379db7ad54234f770d48  xsa201-4.patch
+
+Use CVE-2016-9818.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYRNkEAAoJEHb/MwWLVhi2qkoP+gPLRp8bs5dFIQelz0NUnFgh
+TVuE883HifFhNiWgAk+L7D7+COlgqJcK+SChwjdCtfMTMfLUv6KRUJGExd3lXmqF
+AZ9cJr1Qfp0xGStwdyeOTXi6mHnQAdr4zw8em2rQQE72quJSesxhm9I2LOLGnWAr
+2zq5TZeAPmu27wdzkT+nakz7XWyD8ecxlypRhCn+Y1aCWi/KMME4blEsjGGW7+vU
+RoXbPyB1eF5bVhq6PQA2mnyZw8X2r02xUux0TACbNvG3SCa2DvlVVMOTitBbmmUv
+rL4ptE71hKfhV5uds7Ptf+hJNJLLBwRemjQ1cd+j7iTRC2Mb4TUOr5kKYAHaZRxi
+C25wKWjpM8957eeS7+EnY3o7XYfI0fVRLgyZNKDinuJUUAqEgtLVMyMu7coUsWCr
+Yl68yJ6je392WmQmW3fffHk4d3Rl/GnVVOQy3qnVTcLZp2McM67IwCnHDFqBMRwb
+6mGN6nc2MPSDPhZgOb5nmR44ho/JjSJoHYktudamJIEhr4WTpZuoKnUIOadQyc91
+x/WFi/IVarv06SN4OEfT/grE0ujZmBnlefdLmee5R247V5E52unS4g/z1CNqTgNm
+X+u7bfvxbxIzZf8GdtJrf98apo9mDcdwfmdRuuPSUOG13ySlKxj8SY/3NSE6o30j
+4XyiforlM4vWauldBk3V
+=OdPm
+-----END PGP SIGNATURE-----
