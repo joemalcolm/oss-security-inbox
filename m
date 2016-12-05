@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/7
-Message-ID: <CANO=Ty0Am2OcAtzS5jH=xsVOP3o6pzCGmwHWm9igWOCpACpBPg@mail.gmail.com>
-Date: Wed, 13 Apr 2016 13:27:34 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: CVE for nodejs node-uuid
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/18
+Message-ID: <alpine.LFD.2.20.1612060051070.20462@wniryva>
+Date: Tue, 6 Dec 2016 00:54:17 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request Qemu: display: virtio-gpu: memory leakage while updating cursor
 Content-Type: text/plain; charset=utf-8
 
-https://nodesecurity.io/advisories/93
+   Hello,
 
-Insecure Entropy Source - Math.random()
+Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
+to a memory leakage issue. It could occur while updating the cursor data in 
+update_cursor_data_virgl.
 
-March 28th, 2016
-CVE-PENDING • Credit: Fedot Praslov
-node-uuid
-Vulnerable: <1.4.4
-Patched: >=1.4.4
-Overview
+A guest user/process could use this flaw to leak host memory bytes, resulting 
+in DoS for a host.
 
-node-uuid prior to 1.4.4 contained a bug that caused it to consistently
-fall back to using Math.random instead of a more cryptographically sound
-source of entropy, the native crypto module.
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00029.html
 
-Remediation
-
-Upgrade to version 1.4.4 or greater
-
-References
-
-https://github.com/broofa/node-uuid/issues/108
-https://github.com/broofa/node-uuid/issues/122
-
-
+Thank you.
 --
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
