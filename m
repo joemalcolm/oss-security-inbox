@@ -1,4 +1,9 @@
-Received: (qmail 16233 invoked by uid 550); 27 Jan 2025 16:13:04 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3007" "Monday" "5" "December" "2016" "10:17:13" "-0600" "Tyler Hicks" "tyhicks@canonical.com" "<93993db8-1bd4-85e5-fe22-06d3a4e44117@canonical.com>" "72" "[oss-security] CVE Request: Info-Zip zipinfo buffer overflow" nil nil nil "12" "2016120516:17:13" "[oss-security] CVE Request: Info-Zip zipinfo buffer overflow" (number mark "U       tyhicks@cano Dec  5   72/3007  " thread-indent "\"[oss-security] CVE Request: Info-Zip zipinfo buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17576 invoked by uid 550); 5 Dec 2016 16:17:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,105 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 4008 invoked from network); 27 Jan 2025 08:13:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737965609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
-	b=QOUv2qx+6pP8JaB757LkH0XQKB7ZtiPGca6VvNzk2CDScgO1HohETPmoM1dZmPXixvnfFv
-	ZDkGeX4bI7dbV0vxDBEM7X+0EnpG+a8B9MoGFMOIQleuZ0OWRigqfDEQnfgSXCulAtQGWR
-	qj63t3QCgQyv16q7+wUTKSHnLpyPAyg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737965609;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
-	b=Dt4gKp1w+bVnnr7PuWJYJm2BaHAkoLLPc7APiVt+YZAHkZT+Oc5vGD85929Hb9BGhgIZY4
-	F0fx7M86q3+kI8CA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737965609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
-	b=QOUv2qx+6pP8JaB757LkH0XQKB7ZtiPGca6VvNzk2CDScgO1HohETPmoM1dZmPXixvnfFv
-	ZDkGeX4bI7dbV0vxDBEM7X+0EnpG+a8B9MoGFMOIQleuZ0OWRigqfDEQnfgSXCulAtQGWR
-	qj63t3QCgQyv16q7+wUTKSHnLpyPAyg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737965609;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pNLw4nrltAVTQrqH03PEGtELzkjLQr1pfHpCULVAmFI=;
-	b=Dt4gKp1w+bVnnr7PuWJYJm2BaHAkoLLPc7APiVt+YZAHkZT+Oc5vGD85929Hb9BGhgIZY4
-	F0fx7M86q3+kI8CA==
-Date: Mon, 27 Jan 2025 09:13:28 +0100
-From: Johannes Segitz <jsegitz@suse.de>
+Received: (qmail 17558 invoked from network); 5 Dec 2016 16:17:27 -0000
+From: Tyler Hicks <tyhicks@canonical.com>
 To: oss-security@lists.openwall.com
-Message-ID: <Z5dAKLJ-Lm6i5LyM@suse.com>
-References: <Z5DF00lM-3Q36mhh@kasco.suse.de>
- <2025012206-remember-glare-da7d@gregkh>
- <Z5D-Io-ch6YXKAAn@imap.suse.de>
- <Z5Q9VKUg_v3MBrmh@aeon>
+Cc: "security@ubuntu.com" <security@ubuntu.com>,
+ "Steven M. Schweda" <sms@antinode.info>
+Message-ID: <93993db8-1bd4-85e5-fe22-06d3a4e44117@canonical.com>
+Date: Mon, 5 Dec 2016 10:17:13 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k4b4r9tlX2+LA7rd"
-Content-Disposition: inline
-In-Reply-To: <Z5Q9VKUg_v3MBrmh@aeon>
-Subject: Re: [oss-security] issue with stuck Mitre CVE requests
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE Request: Info-Zip zipinfo buffer overflow
 
---k4b4r9tlX2+LA7rd
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Alexis Vanden Eijnde has discovered a zipinfo buffer overflow and
+reported it here:
 
-On Sat, Jan 25, 2025 at 01:24:36AM +0000, Mark Esler wrote:
-> On Wed, Jan 22, 2025 at 03:18:10PM +0100, Johannes Segitz wrote:
-> > We're not empowered to do this. We are a CNA for code that we own (e.g.
-> > zypper), but not for arbitrary open source projects.
->=20
-> The text of SUSE's scope [0] is similar to Canonical's [1]. We
-> understand "All Canonical issues (including Ubuntu Linux) only" as
-> including all software we distribute. It does not require us to be the
-> author of that code.
+  https://launchpad.net/bugs/1643750
 
-Interesting. I'll reach out to MITRE to clarify this and will report back
-(might take a while, I'll be away for some weeks starting tomorrow). When I
-was introduced to this > 10 years ago I was told not to allocate for
-anything for which we're not clearly upstream.
+It is very similar to, but different than, this `unzip -l` crasher:
 
-Johannes
---=20
-GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Frankenstra=DFe 146, 90461 N=FCrnberg=
-, Germany
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich (HRB 36809=
-, AG N=FCrnberg)
+  http://www.openwall.com/lists/oss-security/2014/11/03/5
 
---k4b4r9tlX2+LA7rd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
+zi_short() function:
 
------BEGIN PGP SIGNATURE-----
+(gdb) bt
+#0  0x00007ffff7833428 in __GI_raise (sig=sig@entry=6) at
+../sysdeps/unix/sysv/linux/raise.c:54
+#1  0x00007ffff783502a in __GI_abort () at abort.c:89
+#2  0x00007ffff78757ea in __libc_message (do_abort=do_abort@entry=2,
+fmt=fmt@entry=0x7ffff798c8a2 "*** %s ***: %s terminated\n")
+    at ../sysdeps/posix/libc_fatal.c:175
+#3  0x00007ffff791656c in __GI___fortify_fail (msg=<optimized out>,
+msg@entry=0x7ffff798c833 "buffer overflow detected") at fortify_fail.c:37
+#4  0x00007ffff7914570 in __GI___chk_fail () at chk_fail.c:28
+#5  0x00007ffff7913ad9 in _IO_str_chk_overflow (fp=<optimized out>,
+c=<optimized out>) at vsprintf_chk.c:31
+#6  0x00007ffff78796b0 in __GI__IO_default_xsputn (f=0x7fffffffe040,
+data=<optimized out>, n=4) at genops.c:455
+#7  0x00007ffff784be00 in _IO_vfprintf_internal
+(s=s@entry=0x7fffffffe040, format=<optimized out>, format@entry=0x420d93
+"%03u",
+    ap=ap@entry=0x7fffffffe178) at vfprintf.c:1631
+#8  0x00007ffff7913b64 in ___vsprintf_chk (s=0x7fffffffe301 "100",
+flags=1, slen=4, format=0x420d93 "%03u", args=args@entry=0x7fffffffe178)
+    at vsprintf_chk.c:82
+#9  0x00007ffff7913abd in ___sprintf_chk (s=s@entry=0x7fffffffe301
+"100", flags=flags@entry=1, slen=slen@entry=4,
+format=format@entry=0x420d93 "%03u")
+    at sprintf_chk.c:31
+#10 0x000000000041729b in sprintf (__fmt=0x420d93 "%03u",
+__s=0x7fffffffe301 "100") at /usr/include/x86_64-linux-gnu/bits/stdio2.h:33
+#11 zi_short () at zipinfo.c:1986
+#12 zipinfo () at zipinfo.c:919
+#13 0x000000000041144a in do_seekable (lastchance=lastchance@entry=0) at
+process.c:974
+#14 0x0000000000411bdf in process_zipfiles () at process.c:401
+#15 0x0000000000404191 in unzip (argc=0, argv=0x7fffffffe628) at
+unzip.c:1278
+#16 0x00007ffff781e830 in __libc_start_main (main=0x401f60 <main>,
+argc=2, argv=0x7fffffffe618, init=<optimized out>, fini=<optimized out>,
+    rtld_fini=<optimized out>, stack_end=0x7fffffffe608) at
+../csu/libc-start.c:291
+#17 0x0000000000401fa9 in _start ()
 
-iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAmeXQCgACgkQvCfdnSzE
-/Was/xAAiTae2hhXYxT2iPhy2N+7KwtofK6WuOsmmJYvXbrgpZnVPR/7qYJL0niH
-dn4Fgz9M4M+6UxwzyzurnYTpkSPqST8QxQWyG5SFTNORXisQi//zseQsedsNeOTY
-q2Cqk/KfpG7UaF1xTWQR8BtEknbZu/0Ox7EAPPRmQUIy5zS8cMpa9CyzIYw1rskm
-HZm+Z0rRSQVYvxe1dcPwvtcPCSNmEvZMDzDq/0n1ke392PxE8mPUoVZrKRdjUXb8
-7WQK4ng3Ih5h1wF1CGGz5ySi8THe5f97UHqRhZjvdGUipmNgSt3t5MkAZRm5l+il
-zUEkrZ0G+V2r74RloMhxKvLm1l29QB2che5T/lBuou1DmHc+n8u3z+nFp7KS5KRe
-Ms4xKV6dK7zageCQ6S8+80O7swZwLyIWVgVbDMNm0rkpEx4zFVQbkH5RTal5GKjc
-10QJNU2Wnqf0p23nc8k9g96WTtSTJJXQpjBPWnMoggUx/unJPa8WHZf8VLce3Pqk
-bKZcPHxhr0EM5As32pq+Xz9zINwitssQr/RZOfkU+xm541QujVrGOvCyWCLJTP7u
-Ds0AQHyAqcTlfxr1BfnnCmJ7YGWEd/Kscvq7WQj9km7TH27r9c9PVyzBucRtGjUn
-y1cLfCEsNK6vWyfqpvPggPXMN1Q0uFdIFjSjuLVP8TFT4THe0kI=
-=M6Qz
------END PGP SIGNATURE-----
+The overflow occurs when the two-byte compression method field in the
+central directory file header is greater then 999. The sprintf at line
+1986 overflows the methbuf buffer:
 
---k4b4r9tlX2+LA7rd--
+  1937  static int zi_short(__G)   /* return PK-type error code */
+  ...
+  1947      char        methbuf[5];
+  ...
+  1985      } else if (methnum >= NUM_METHODS) {   /* unknown */
+  1986          sprintf(&methbuf[1], "%03u", G.crec.compression_method);
+  1987      }
+
+An offset of 1 byte + "999" + "\0" fills the entire buffer so a
+compression method field of 1000 and greater overwrites bytes outside of
+the buffer.
+
+Please assign a CVE. Also, consider assigning a CVE to the related
+`unzip -l` issue from 2014. Thank you!
+
+Tyler
