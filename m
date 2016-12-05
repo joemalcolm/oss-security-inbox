@@ -1,186 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/01/2
-Message-ID: <alpine.DEB.2.20.1602010816060.21513@tvnag.unkk.fr>
-Date: Mon, 1 Feb 2016 08:16:36 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: oss-security@...ts.openwall.com
-Subject: curl: remote file name path traversal in curl tool for Windows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/19
+Message-Id: <16120515504112_2020046C@antinode.info>
+Date: Mon, 5 Dec 2016 15:50:41 -0600 (CST)
+From: "Steven M. Schweda" <sms@...inode.info>
+To: tyhicks@...onical.com, oss-security@...ts.openwall.com
+Cc: security@...ntu.com, Info-ZIP-Dev@...tley.com
+Subject: CVE Request: Info-Zip zipinfo buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-remote file name path traversal in curl tool for Windows
-========================================================
+From: Tyler Hicks <tyhicks@...onical.com>
 
-Project cURL Security Advisory, January 27th 2016 -
-[Permalink](http://curl.haxx.se/docs/adv_20160127B.html)
+   Thanks for the (thorough, helpful) report.
 
-VULNERABILITY
--------------
+> Alexis Vanden Eijnde has discovered a zipinfo buffer overflow and
+> reported it here:
+> 
+>   https://launchpad.net/bugs/1643750
+> 
+> It is very similar to, but different than, this `unzip -l` crasher:
+> 
+>   http://www.openwall.com/lists/oss-security/2014/11/03/5
 
-curl does not sanitize colons in a remote file name that is used as the local
-file name. This may lead to a vulnerability on systems where the colon is a
-special path character. Currently Windows is the only OS where this
-vulnerability applies.
+   It is.  And the easy fix is also very similar (and should appear in
+the next UnZip release, version 6.1e beta):
 
-curl offers command line options --remote-name (also usable as -O) and
---remote-header-name (also usable as -J). When both of those options are used
-together (-OJ) and the server provides a remote file name for the content,
-curl will write its output to that server-provided file name, as long as that
-file does not already exist. If it does exist curl will fail to write.
-
-If both options are used together (-OJ) but the server does not provide a
-remote file name, or if -O is used without -J, curl will write output to a
-file name based solely on the remote file name in the URL string provided by
-the user, regardless of whether or not that file already exists.
-
-In either case curl does not sanitize colons in the file name. As a result in
-Windows it is possible and unintended behavior for curl to write to a file in
-the working directory of a drive that is not the current drive (ie outside the
-current working directory), and also possible to write to a file's alternate
-data stream.
-
-For example if curl -OJ and the server sends filename=f:foo curl will
-incorrectly write foo to the working directory for drive F even if drive F
-isn't the current drive. For a more detailed explanation see the 'MORE
-BACKGROUND AND EXAMPLE' section at the end of this notice.
-
-Though no known exploit is available for this issue, writing one would be
-undemanding and could be serious depending on the name of the file and where
-it ends up being written.
-
-INFO
-----
-
-This flaw only affects the curl command line tool as this is a feature not
-present or provided by libcurl.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-0754 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-In the case of using a remote file name provided by the user (-O without -J),
-the feature has existed since inception.
-
-- Affected versions (-O): curl <= 7.46.0
-- Not affected versions (-O): curl >= 7.47.0
-
-In the case of using a remote file name provided by the server (-OJ), the
-feature was added in 7.20.0 and didn't exist before then.
-
-- Affected versions (-OJ): curl 7.20.0 to and including 7.46.0
-- Not affected versions (-OJ): curl < 7.20.0 and curl >= 7.47.0
-
-THE SOLUTION
-------------
-
-Starting in curl 7.47.0 the curl tool in Windows will replace all colons in a
-remote file name with underscores. For example if `f:foo::$DATA` is the remote
-file name it will be sanitized as `f_foo__$DATA` .
-
-A patch is available at:
-
-     http://curl.haxx.se/CVE-2016-0754.patch
-
-Exercise judicious use of the -J option. The -J option when combined with -O
-lets the server choose the file name. Do you trust the server you are using
-the -J option on? Is your connection to the server vulnerable to a
-man-in-the-middle attack? Have you enabled location redirects and the server
-may send you somewhere untrustworthy? In any of these cases, even with this
-vulnerability fixed know that if you use the -J option it will still be
-possible for a rogue server to send you the name of a DLL or other file that
-could possibly be loaded automatically by Windows or some third party
-software.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.47.0.
-
-  B - Apply the patch to your version and rebuild.
-
-  C - If you cannot do (A) or (B) it is suggested you do not use -J on Windows.
-      If you choose to continue to use -O without -J it is your responsibility
-      to check that the URL you pass does not have a remote file name that could
-      be exploited.
-
-Regardless of which action you take, exercise judicious use of the -J option as
-described in THE SOLUTION.
-
-TIME LINE
----------
-
-It was first reported to the curl project on November 30 2015. We contacted
-distros@...nwall on January 21 2016.
-
-curl 7.47.0 was released on January 27 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Ray Satiro (Jay).
-
-Thanks a lot!
-
-MORE BACKGROUND AND EXAMPLE
----------------------------
-
-In Windows if a colon is used to specify a drive letter for a path and there
-is a slash or backslash (hereafter path separator) that proceeds the colon it
-means start from the root of the drive, but if that slash is omitted it means
-start from the current working directory of the drive.
-
-  - C:\foo => Windows looks for foo in the root directory of drive C.
-  - C:foo => Windows looks for foo in the working directory of drive C.
-
+ALP $ gdiff zipinfo.c;39 zipinfo.c
+2568c2568,2579
+<         sprintf(&methbuf[1], "%03u", G.crec.compression_method);
 ---
+>         /* 2016-12-05 SMS.
+>          * https://launchpad.net/bugs/1643750
+>          * Unexpectedly large compression methods overflow
+>          * &methbuf[].  Use the old, three-digit decimal format
+>          * for values which fit.  Otherwise, sacrifice the "u",
+>          * and use four-digit hexadecimal.
+>          */
+>         if (G.crec.compression_method <= 999) {
+>             sprintf( &methbuf[ 1], "%03u", G.crec.compression_method);
+>         } else {
+>             sprintf( &methbuf[ 0], "%04X", G.crec.compression_method);
+>         }
 
-A process in Windows on its creation may inherit a list of drives and their
-working directories from its parent, and one of those is the current working
-directory.
+   Typical output (pre-release UnZip 6.1e beta, with some minor,
+unrelated report format changes from UnZip 6.0):
 
-For example a command prompt is open and has these working directories:
+   Old:
 
-  - Drive C, Path \bar\baz\
-  - Drive D, Path \
-  - Drive E, Path \qux\    <-- Current
-  - Drive F, Path \
+ALP $ unzip6l -Z PoZ.zip
+Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
+Zip file size: 154 bytes, number of entries: 1
+-rw-rw-r--  3.0 unx        2 tx u65535 16-Nov-21 19:07 a
+                                ^^^^^^
+1 file, 2 bytes uncompressed, 2 bytes compressed:  0.0%
 
-Assume other drives were not accessed which means they default to their root.
+   New/next:
 
-A user running curl from that command prompt would expect that their file will
-be output to the current working directory, E:\qux\ in this example. However
-that may not happen if there is a colon in the filename.
+ALP $ unzipx -Z PoZ.zip
+Archive:  ALP$DKC0:[UTILITY.SOURCE.ZIP.test_mthd_ovflo]PoZ.zip;1
+Archive size: 154 bytes; Members: 1
+-rw-rw-r--  3.0 unx        2 tx FFFF 16-Nov-21 19:07 a
+                                ^^^^
+Members: 1; Bytes uncompressed: 2, compressed: 2, 0.0%
+Directories: 0, Files: 1, Links: 0
 
-curl has a function which will strip the path to get the file name by removing
-the last path separator and everything that precedes it. In the case of a colon
-without a path separator that comes after it, it is not removed from the file
-name.
+> The zipinfo buffer overflow occurs due to a flaw in zipinfo.c's
+> zi_short() function:
+> [...]
 
-Following this example:
+   Yeah.  We should have noticed this whan the "unzip -l" complaint was
+made.
 
-In the case of -O without -J recall that the filename is parsed from the user-
-supplied URL, and is written regardless of whether the file already exists.
+> Please assign a CVE. Also, consider assigning a CVE to the related
+> `unzip -l` issue from 2014. Thank you!
 
-`curl -O http://somewhere/f:foo` => curl writes output to f:\foo
+   Is that something I should do?  (I normally get reports with CVEs; I
+have never created one.)
 
-`curl -O http://somewhere/c:foo` => curl writes output to c:\bar\baz\foo
+------------------------------------------------------------------------
 
-In the case of -O with -J recall that the file name is parsed from the
-server's "Content-Disposition:" header if one is given (eg
-`Content-Disposition: attachment; filename=abc`) and in that case the file is
-written only if it does not already exist.
-
-`curl -OJ http://somewhere/somefile` => Server sends filename=f:foo
-                                         curl writes output to f:\foo
-
-`curl -OJ http://somewhere/somefile` => Server sends filename=c:foo
-                                         curl writes output to c:\bar\baz\foo
-
--- 
-
-  / daniel.haxx.se
+   Steven M. Schweda               sms@...inode-info
