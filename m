@@ -1,25 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/20/8
-Message-ID: <87shrqafvb.fsf@mid.deneb.enyo.de>
-Date: Thu, 20 Oct 2016 23:07:52 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/16
+Message-ID: <20161205185654.GA13378@jasmine>
+Date: Mon, 5 Dec 2016 13:56:54 -0500
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-2848 has been disclosed.
+Subject: Re: CVE-2016-8740: Apache HTTPD 2.4.17-2.4.23: Server memory can be exhausted and service denied when HTTP/2 is used
 Content-Type: text/plain; charset=utf-8
 
-* Michael McNally:
+On Mon, Dec 05, 2016 at 07:22:10PM +0100, Solar Designer wrote:
+> Patch against 2.4.23 release source:
 
-> Since information concerning the vulnerability, including
-> a reproduction script, exists in a public bug repository
-> we urge you to update vulnerable binary packages as soon
-> as possible.
-
-This is in reference to this Debian bug:
-
-  <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=839051>
-
-I assumed it was a Debian-specific backporting problem, affecting only
-the LTS branch of the previous (non-current) stable release.  It did
-not occur to me that this was an independent bugfix which happened
-upstream some time ago, and that affected software versions are still
-widely deployed.
+I think you forgot to forward the patch.
