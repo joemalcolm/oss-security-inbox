@@ -1,4 +1,9 @@
-Received: (qmail 30312 invoked by uid 550); 26 Jul 2023 13:26:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3518" "Sunday" "4" "December" "2016" "22:22:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<02ce68e5bcd74bd18aa952eb5cc10432@imshyb02.MITRE.ORG>" "99" "[oss-security] Re: gstreamer multiple issues" nil nil nil "12" "2016120503:22:50" "[oss-security] Re: gstreamer multiple issues" (number mark "U       cve-assign@m Dec  4   99/3518  " thread-indent "\"[oss-security] Re: gstreamer multiple issues\"\n") "<20161201112459.78cbf764@pc1>" ("<20161201112459.78cbf764@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20229 invoked by uid 550); 5 Dec 2016 03:23:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,122 +12,113 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30276 invoked from network); 26 Jul 2023 13:25:59 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
-Message-Id: <369A681F-5EC7-4399-A428-66ECAC1BF4F5@beckweb.net>
-Date: Wed, 26 Jul 2023 15:25:47 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3696.120.41.1.3)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1690377959;569df570;
-X-HE-SMSGID: 1qOeWR-0000XP-L0
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+Received: (qmail 20203 invoked from network); 5 Dec 2016 03:23:01 -0000
+From: <cve-assign@mitre.org>
+To: <hanno@hboeck.de>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161201112459.78cbf764@pc1>
+Message-ID: <02ce68e5bcd74bd18aa952eb5cc10432@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:22:50 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: gstreamer multiple issues
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The following releases contain fixes for security vulnerabilities:
+> https://bugzilla.gnome.org/show_bug.cgi?id=774859
+> https://cgit.freedesktop.org/gstreamer/gst-plugins-good/commit/?id=153a8ae752c90d07190ef45803422a4f71ea8bff 
 
-* Jenkins 2.416
-* Jenkins LTS 2.401.3
-* GitLab Authentication Plugin 1.18
-* Gradle Plugin 2.8.1
-* Qualys Web App Scanning Connector Plugin 2.0.11
-* ServiceNow DevOps Plugin 1.38.1
+> Invalid memory read in flx_decode_chunks (gst-plugins-good)
+>> AddressSanitizer: SEGV on unknown address
+>> flx_decode_chunks ... gstreamer/gst-plugins-good/gst/flx/gstflxdec.c:255:9
 
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Bazaar Plugin
-* Chef Identity Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-07-26/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3188 / CVE-2023-39151
-Jenkins applies formatting to the console output of builds, transforming
-plain URLs into hyperlinks.
-
-Jenkins 2.415 and earlier, LTS 2.401.2 and earlier does not sanitize or
-properly encode URLs of these hyperlinks in build logs.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control build log contents.
+Use CVE-2016-9807.
 
 
-SECURITY-3208 / CVE-2023-39152
-Gradle Plugin 2.8 improperly invokes APIs available only on the controller
-from an agent when setting up build log annotations, causing an exception.
+> It also fixes the second flic
+> bug reported by Chris Evans described here:
+> https://scarybeastsecurity.blogspot.com/2016/11/0day-poc-incorrect-fix-for-gstreamer.html
 
-As a result, credentials may not be masked (i.e., replaced with asterisks)
-in the build log in some circumstances.
+>> the format permits multiple skip and count pairs per canvas line. And
+>> the skip counts are considered individually rather than cumulatively.
+>> Therefore, it.s possible to get the skip + count check to pass while
+>> still writing off the end of the line.
 
-
-SECURITY-2696 / CVE-2023-39153
-GitLab Authentication Plugin 1.17.1 and earlier does not implement a state
-parameter in its OAuth flow, a unique and non-guessable value associated
-with each authentication request.
-
-This vulnerability allows attackers to trick users into logging in to the
-attacker's account.
+Use CVE-2016-9808 for this Chris Evans discovery. (As far as we can
+tell, this "second flic bug" exists because of an incomplete fix for
+CVE-2016-9635.)
 
 
-SECURITY-3129 / CVE-2023-3414 (CSRF) & CVE-2023-3442 (missing permission ch=
-eck)
-ServiceNow DevOps Plugin 1.38.0 and earlier does not perform a permission
-check in a method implementing form validation.
+> The fix is a larger rewrite of the affected code paths and probably
+> fixed a bunch of other issues on the way.
 
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
+There isn't a CVE ID that applies to the entirety of
+153a8ae752c90d07190ef45803422a4f71ea8bff. If anyone has discovered
+other vulnerabilities that were already fixed in
+153a8ae752c90d07190ef45803422a4f71ea8bff, and requires additional CVE
+IDs for them, please let us know specifically what was found.
 
 
-SECURITY-3012 / CVE-2023-39154
-Qualys Web App Scanning Connector Plugin 2.0.10 and earlier does not
-correctly perform permission checks in several HTTP endpoints.
+> https://bugzilla.gnome.org/show_bug.cgi?id=774896
+> h264: one byte heap off by one read in gst_h264_parse_set_caps
+> (gst-plugins-bad)
+>> This doesn't crash gstreamer
 
-This allows attackers with global Item/Configure permission to connect to
-an attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-
-SECURITY-3192 / CVE-2023-39155
-Chef Identity Plugin stores the user.pem key in its global configuration
-file `io.chef.jenkins.ChefIdentityBuildWrapper.xml` on the Jenkins
-controller as part of its configuration.
-
-While this key is stored encrypted on disk, in Chef Identity Plugin 2.0.3
-and earlier the global configuration form does not mask the user.pem key
-form field, increasing the potential for attackers to observe and capture
-it.
-
-As of publication of this advisory, there is no fix.
+Use CVE-2016-9809.
 
 
-SECURITY-3095 / CVE-2023-39156
-Bazaar Plugin 1.22 and earlier does not require POST requests for an HTTP
-endpoint, resulting in a cross-site request forgery (CSRF) vulnerability.
+> https://bugzilla.gnome.org/show_bug.cgi?id=774897
+> Invalid memory read in glib caused by one invalid unref call in the
+> flxdec decoder. (gst-plugins-good)
+>> Don't unref() parent in the chain function
+>> ... We don't own the reference here, it is owned by the caller
 
-This vulnerability allows attackers to delete previously created Bazaar SCM
-tags.
-
-As of publication of this advisory, there is no fix.
-
+Use CVE-2016-9810.
 
 
+> https://bugzilla.gnome.org/show_bug.cgi?id=774902
+> 4 byte heap out of bounds read in windows_icon_typefind
+> (gst-plugins-base)
+
+Use CVE-2016-9811.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=775048
+> 2 byte heap out of bounds read in gst_mpegts_section_new
+> (gst-plugins-bad).
+>> The smallest section ever needs to be at least 3 bytes (i.e. just the short
+>> header).
+>> Non-short headers need to be at least 11 bytes long
+
+Use CVE-2016-9812.
+
+
+> https://bugzilla.gnome.org/show_bug.cgi?id=775120
+> null pointer deref (segfault) in mpegts decoder / _parse_pat
+> (gst-plugins-bad)
+
+Use CVE-2016-9813.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYRNj9AAoJEHb/MwWLVhi2zFoP/05dkTQfY310j9qyhOcY4sh9
+MjZxlRg24s+vJLMIf5+c9u6FCkCKtlu3Su8e2eli+HKMIEGhY9uTihI/L+yDpJ7J
+SJitxtmWgdq4BpiMi0HUxZE2j8aMbwKUk8rSBqH7ykAulmnDKiE40OE57uh1cl3k
+srPYvHzMxJJJ75Z4XE2URpJ9xQ6Qs1DtcW9CbKGA8vx6iTRvDVwW1//QJ9mTTwXl
+GhXXr8rewljBujD8WewQ00PppODsuqaCpnLEDYHYESxj/59g+shdyTL6mBbhhPN4
+81DNXDj0X3QI3l+x0I5VWJb9VSb1QIsfVRQxFIzu20FS4boMX4kHozESFTs1yM5U
+d2MgUdE3BGmVvqhHE23GtITlOQuk26DCUJ0XbbfiFMwjklIjSWIm85jmCX9vRn3w
+XQjExsxo3q4vrdNKyWIMusYAiIK9JhksZFv+pM2JjaQ748aBbIIiN42bHTXFbs01
+Bg3r2s4LhEAMaLxLKN2N0MqP3zEbVJB+qrSqKIbx/tc7RWQmXmY/Lz66bxzedqoo
+nPhZc1VVQ5wgKVRp8XEpFyt3/Eoia/71baWD+woGweEqLx2SKf+TUGgJi1ITNMdH
+KNVz12t1BX4aF4WkJLK5n4IQ7VnXUOfkcdNxlz62FMafRFGpJVHo/iDxAQRwsNuS
+oSlUKYsfGeUSG/DejAQk
+=1SLG
+-----END PGP SIGNATURE-----
