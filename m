@@ -1,45 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/30/4
-Message-Id: <20160430190432.D01C142E008@smtpvbsrv1.mitre.org>
-Date: Sat, 30 Apr 2016 15:04:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: baspape@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - Quassel IRC denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/14
+Message-ID: <20161205182210.GA28847@openwall.com>
+Date: Mon, 5 Dec 2016 19:22:10 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-8740: Apache HTTPD 2.4.17-2.4.23: Server memory can be exhausted and service denied when HTTP/2 is used
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This was erroneously(*) posted to the distros list earlier today, so it
+must be on oss-security as well.
 
-> It was found that quasselcore is vulnerable to a denial of service
-> attack by unauthenticated clients. The protocol negotiation did not
-> take into account lack of a match, in which case
-> PeerFactory::createPeer returns a nullptr, which is immediately
-> dereferenced
-> 
-> https://github.com/quassel/quassel/commit/e67887343c433cc35bc26ad6a9392588f427e746
+(*) The distros list is for embargoed issues only, whereas this one was
+being made public at the same time and thus should have been posted to
+public lists only.
 
-Use CVE-2016-4414.
+----- Forwarded message from icing@...che.org -----
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+From: icing@...che.org
+Subject: CVE-2016-8740, Server memory can be exhausted and service denied when HTTP/2 is used
+Date: Mon, 5 Dec 2016 13:43:28 +0100
+To: announce@...pd.apache.org
 
-iQIcBAEBCAAGBQJXJQFQAAoJEHb/MwWLVhi2ZcAP/1LyyMKO4YOzrX0HmWXqANyu
-75tmS0QUrp1EZrMNw3phenr3FdBhpPUDfYNkqXxdR/fqfJG+yMdtW3CCnK7dxqgs
-iZuDqqohyTNLPHl78KJndAtMmmGfmMy8ZRB7NCqPTBomEGrM1unELYSYMTDEF9PE
-SO5m6Y8PlEJmP9c7wJeUagR32uvpeFHlNY3KzYptSYR5gEHVAZp28m912OEn1grg
-nywB0MSld+JdDL1FDHd/WEP8KBTtbLawxhC+/BY20Un5IY/1O1iSLUoz2uxn8pmM
-XrEKiylU+L3ifjgoP1vz00ndg160RQs+RUltJqst4yfWzjdYlWOfSqyPGenaRr0g
-JclOiQzr4PnzVuESYe/1VscGnvviJceew1VmQ9/M1ocR1M3AhCjAP373n9iitCCE
-fKM8PAxU5YD0Cz/XYsmZjfdKRO0WW2PZ8PTTEPtw/Ls9Q7b7tA5+xmL9zlqznhOj
-Oe1IQ8fnOXIi+SGHZZVWA+ViNjHaJ9fZXsAGAcNrUlHHnlijWo6rG/GmRk0oFEAn
-F2KnPoqBrx56sLWEPcpBimaKIDTz9kuU6NTd3qVZTQ23AQxbtc9Ka2X1J+L7fIsD
-TK3L/2vJkVRTLL/kboGApuoHCFGHLfzea+h5EFXvMD+l9XBNS2Q+52PQ3Nh9PvDV
-X+2oUb7pXqhymaQX4Zvc
-=ZaBE
------END PGP SIGNATURE-----
+        Security Advisory - Apache Software Foundation
+              Apache HTTPD WebServer  / httpd.apache.org
+
+
+   Server memory can be exhausted and service denied when HTTP/2 is used
+
+
+                CVE-2016-8740
+
+
+The Apache HTTPD web server (from 2.4.17-2.4.23) did not apply limitations
+on request headers correctly when experimental module for the HTTP/2 
+protocol is used to access a resource. 
+
+
+The net result is that a the server allocates too much memory instead of denying
+the request. This can lead to memory exhaustion of the server by a properly
+crafted request.
+
+
+Background:
+- -----------
+
+
+Apache has limits on the number and length of request header fields. which
+limits the amount of memory a client can allocate on the server for a request.
+
+
+Version 2.4.17 of the Apache HTTP Server introduced an experimental feature:
+mod_http2 for the HTTP/2 protocol (RFC7540, previous versions were known as 
+Google SPDY).
+
+
+This module is NOT compiled in by default -and- is not enabled by default, 
+although some distribution may have chosen to do so.
+
+
+It is generally needs to be enabled in the 'Protocols' line in httpd by 
+
+adding 'h2' and/or 'h2c' to the 'http/1.1' only default. 
+
+
+The default distributions of the Apache Software Foundation do not include 
+this experimental feature. 
+
+
+Details:
+- --------
+
+
+- From version 2.4.17, upto and including version 2.4.23 the server failed
+to take the limitations on request memory use into account when providing 
+access to a resource over HTTP/2. This issue has been fixed 
+in version 2.4.23 (r1772576).
+
+
+As a result - with a request using the HTTP/2 protocol a specially crafted
+request can allocate memory on the server until it reaches its limit. This can
+lead to denial of service for all requests against the server.
+
+
+Impact:
+- -------
+
+
+This can lead to denial of service for all server resources.
+Versions affected: 
+- ------------------
+All versions from  2.4.17 to  2.4.23. 
+
+
+Resolution:
+- -----------
+
+
+For a 2.4.23 version a patch is supplied. This will be included in the
+next release. 
+
+
+Mitigations and work arounds:
+- -----------------------------
+
+
+As a temporary workaround - HTTP/2 can be disabled by changing
+the configuration by removing h2 and h2c from the Protocols
+line(s) in the configuration file. 
+
+
+The resulting line should read:
+
+
+		Protocols http/1.1
+
+
+Credits and timeline
+- --------------------
+
+
+The flaw was found and reported by Naveen Tiwari <naveen.tiwari@....edu> 
+
+and CDF/SEFCOM at Arizona State University on 2016-11-22. The issue was 
+
+resolved by Stefan Eissing and incorporated in the Apache repository,
+ready for inclusion in the next release.
+
+
+Apache would like to thank all involved for their help with this.
+
+
+Patch against 2.4.23 release source:
+
+
+
+----- End forwarded message -----
