@@ -1,45 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/04/6
-Message-ID: <5752F2B8.5000009@pipping.org>
-Date: Sat, 4 Jun 2016 17:24:40 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: expat hash collision fix too predictable?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/3
+Message-ID: <d20fed1084474487a95ace3810a92752@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:13:54 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)
 Content-Type: text/plain; charset=utf-8
 
-On 04.06.2016 16:54, cve-assign@...re.org wrote:
->> Please confirm that using CVE-2012-6702 for consequences of
->> "unanticipated internal calls to srand" is what you intended.
-> 
-> Yes, we confirm that. (They are unanticipated both because of
-> thread-safety concerns, and because it's possible for an application
-> to have an important dependency on srand being called exactly once.)
-> 
-> 
->> The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
->> Expat 2.1.0, commit e3e81a6d
->> ...
->> The next release of Expat will not do internal calls to srand (or rand)
->> any more but extract and use entropy from other sources.
->> ...
->> I suppose hash initialization with (too little /) second-based
->> entropy still is part of the original CVE-2012-0876 (or the same again).
-> 
-> Use CVE-2016-5300 for the separate issue in which the original choices
-> of entropy source and RNG did not properly address the possibility of
-> a successful hash DoS attack. In other words, the code changes (in the
-> next release) to fix CVE-2016-5300 are needed because the original fix
-> for CVE-2012-0876 was insufficient. (We use separate CVE IDs when
-> follow-on work is needed to complete the solution to the same original
-> vulnerability finding.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Excellent, thank you!
+> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-null-pointer-dereference-in-dumpbuffer-read-c
 
-https://sourceforge.net/p/expat/code_git/ci/07cc2fcacf81b32b2e06aa918df51756525240c0/
+> AddressSanitizer: SEGV on unknown address 0x000000000000
 
-Best
+Use CVE-2016-9828.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Sebastian
+iQIcBAEBCAAGBQJYRNjQAAoJEHb/MwWLVhi2cvAP+gPY4EcM+y7VKMOf3XRSMw5A
+vhej56NfW87dxFdi2e0WcqxlVLdGXkKNt0KwcnxWHeBU+qYZEnjhzqjnofGwQGM5
+tlOLkTvuoCGz2es+CeeIONpR2EXo1H/3eg8phW7oOV31eU+GRec21c5WMfIsbt6T
+vnUNvtsM9f8P86HujL3P108io2T0aUC48jDJu1zvlWstoSWzib5xATKq5EeQ5rvB
+67dpp4ss9hE02OhvleENnIWx/Yit4DpuIcqPEykT48z0X9IcArqLto27deQeJZ5e
+mgT/4KmR+V5DkwNtzxWpSNyuN4xXivC1Sy9bntp64Qbz10j4Bi/8jymHvzkaTF44
+vfjO2z816WOTDKR0gmCyAlEKe0Lf+bSe2mL9edEFvlgkZfYAANTNUI9yIPQArd1h
+Y1AfrSi598Dp5TODVb9EK9LU9VL3bL+yts8whhCozcR3DQ9SLzbSmb39E9XLISFt
+hzR7Vd8FFaUZahYfTtiEffqWJT/wKhcRM7HD0zyG93s72G4lYYreJwdqUVbgiAPf
+h44bnPzlxEi4RYUMd6vY80BAH/9AgK48coWIeGurRJ7qa8Fv5+sN704nx3hJGHX8
+0TqSEy+RwlWCJkRqKRgBQMjtkw1XCkmAhkHYNGrKMNBkM4sfhFWjHGrf57goj4kR
+GHYADtxkylXkQsIHgcuM
+=no5m
+-----END PGP SIGNATURE-----
