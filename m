@@ -1,142 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/08/10
-Message-ID: <1975736.yU59nFIvqB@arcadia>
-Date: Sat, 08 Oct 2016 22:07:40 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/6
+Message-ID: <f118f87456a441edb44e9c04e713eb64@imshyb02.MITRE.ORG>
+Date: Sun, 4 Dec 2016 22:19:29 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzzing with the upstream security policy enabled revealed a buffer overflow 
-read.
+> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-parseswf_rgba-parser-c
 
-The complete ASan output:
+> AddressSanitizer: heap-buffer-overflow
+> WRITE of size 1
 
-# identify $FILE
-==13198==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x61400000fbc0 at pc 0x7f7a28f71a91 bp 0x7fff6820aaa0 sp 0x7fff6820aa98                                                                                                                                      
-READ of size 10 at 0x61400000fbc0 thread T0                                                                                                                                                                                                                                    
-    #0 0x7f7a28f71a90 in IsPixelMonochrome /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/./MagickCore/pixel-
-accessor.h:557:24                                                                                                                            
-    #1 0x7f7a28f71a90 in IdentifyImageMonochrome /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:758                                                                                                                                
-    #2 0x7f7a28f71dc6 in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:819:7                                                                                                                                    
-    #3 0x7f7a293216ce in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/identify.c:524:8                                                                                                                                         
-    #4 0x7f7a28924f86 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:336:22                                                                                                                                 
-    #5 0x7f7a289ba26a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14                                                                                                                                  
-    #6 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10                                                                                                                                                    
-    #7 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176                                                                                                                                                             
-    #8 0x7f7a2785e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
-    #9 0x419138 in _init (/usr/bin/magick+0x419138)                                                                                                                                                                                                                            
+Use CVE-2016-9831.
 
-0x61400000fbc0 is located 0 bytes to the right of 384-byte region 
-[0x61400000fa40,0x61400000fbc0)                                                                                                                                                                              
-allocated by thread T0 here:                                                                                                                                                                                                                                                   
-    #0 0x4c1105 in __interceptor_posix_memalign /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/asan_malloc_linux.cc:124                                                                                                            
-    #1 0x7f7a293cac65 in AcquireAlignedMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/memory.c:258:7
-    #2 0x7f7a28fb8e9d in AcquireCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:4634:33
-    #3 0x7f7a28fb8e9d in SetPixelCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:4746
-    #4 0x7f7a28fa9f9e in GetVirtualPixelsFromNexus /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache.c:2629:10
-    #5 0x7f7a28fd2a5e in GetCacheViewVirtualPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/cache-
-view.c:664:10
-    #6 0x7f7a28f70e46 in IdentifyImageMonochrome /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:753:7
-    #7 0x7f7a28f71dc6 in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/attribute.c:819:7
-    #8 0x7f7a293216ce in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/identify.c:524:8
-    #9 0x7f7a28924f86 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:336:22
-    #10 0x7f7a289ba26a in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
-    #11 0x4f1fb5 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
-    #12 0x4f1fb5 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
-    #13 0x7f7a2785e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/./MagickCore/pixel-
-accessor.h:557:24 in IsPixelMonochrome
-Shadow bytes around the buggy address:
-  0x0c287fff9f20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c287fff9f30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c287fff9f40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c287fff9f50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c287fff9f60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c287fff9f70: 00 00 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa
-  0x0c287fff9f80: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c287fff9f90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c287fff9fa0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c287fff9fb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
-  0x0c287fff9fc0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==13198==ABORTING
-
-Affected version:
-Tested on 7.0.3.0 but 7.0.3.1/7.0.3.2 did not include any fix
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-09-14: bug discovered
-2016-09-14: bug reported to upstream
-2016-10-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/07/imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
-
-
+iQIcBAEBCAAGBQJYRNjhAAoJEHb/MwWLVhi2dhUQALeGIrOTW5OKs4VJBWqDtrQD
+NfNa39M/wFkBbw840ipCJ3X2QCcUjfHrYFTRxewTYDLGKsZ47vMVMviAJ0dKEkeY
+cNx6H3RoAj23YcEtDW8kNGru2Yzt/Kn5edMzSJ+AX9vBiS3vn03gA9GRP6nCyqmL
+dnyt0pLeORVTx5S8X21fzgVEwOJVOJ7cJdQwDluGq6AHlUb71tCUqKkaXFUEhKDr
+yKBryzrMTfdOhqtAZ+yhzWm2nhhXUN1si86CX7XfSKoHDWm+bJnqgUWo+Yfa28EZ
+FcMHLTl1rZX1883N98wMgPiZWi4Jbqcx/He6Q2bc2tOMh/QIIPUSV9E8V64R1fxI
+3LKb2V/0NU54QcY3UCXwoPGsufxFf0Nixl3vW0oXVdlpvBz2sw576Zd/yQ1KUOm1
+LqqpjTOoArB4w6CVn8ScfM2AxguTvslZxASGpfDg/oErjm9pZKYHrg8F+qM101cD
+cHJEGddHsdVLLowSQO+378pLqD20fhrx2ZZf41bKiea0fQ9SOOAVy0oVhO3gjlUH
+E5vzkPH6YmzHCU4tLtmacon42OWDGPONS8aNrF2/aKLmsZ0J7lSMDpgYjU4g8jhj
+UOL5nhT+Ikj5ghMsRgmD5JzZ8VJtTGnQtnT2vpIp1H10P+jC6xxUbDx/G/Ij/r/t
+V2VmydnzAYmtT/E/Nrhn
+=GVTw
+-----END PGP SIGNATURE-----
