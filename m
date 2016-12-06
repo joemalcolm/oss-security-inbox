@@ -1,45 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/5
-Message-ID: <20160213141513.06096f21@pc1>
-Date: Sat, 13 Feb 2016 14:15:13 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/9
+Message-ID: <CAHXGaxAS6wW7s9oxeWqC=UNk2t=Lw7fT7=UmozsP5NpeL40Wbw@mail.gmail.com>
+Date: Tue, 6 Dec 2016 10:26:14 -0800
+From: Grant Murphy <grantcmurphy@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts about security of Linux distributor collaboration platforms, bugtrackers for opensource software
+Subject: Re: Opensource Python whitebox code analysis tool recommendations
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 13 Feb 2016 05:52:44 +0000
-halfdog <me@...fdog.net> wrote:
+On Tue, Dec 6, 2016 at 9:02 AM, Fiedler Roman <Roman.Fiedler@....ac.at>
+wrote:
 
-> Hence really critical security material perhaps should not go to such
-> platforms, e.g. Ubuntu Launchpad, or the platform should be modified
-> to send security issues only in encrypted mails without talkative
-> title, members without mail public key registered should get only
-> message "Bug [Number]: Info changed" including the HTTPS link to the
-> issue in the platform.
+> Hello list,
+>
+> I just stubled over effects of following programming error due to unwanted
+> singleton in Python, bypassing intended process restrictions (allowed
+> number
+> of elements in my case) and of course data corruption:
+>
+> class A:
+>   def __init__(self, value=[]):
+>     self.value=value
+>     self.valueCloned=value[:]
+>   def show(self):
+>     print 'IDs value %x, cloned %x' % (id(self.value),
+> id(self.valueCloned))
+>   def append(self, data):
+>     self.value.append(data)
+>
+> # Keep reference to avoid garbage collection interference.
+> objFirst=A()
+> objFirst.show()
+> objNext=A()
+> objNext.show()
+> # Check references to prohibit optimization.
+> if objFirst==objNext: raise Exception('Impossible')
+>
+>
+>
+> As this type of error seems to be more common in code, at least according
+> to
+> grep, are there tool recommendations to do automatic analysis of code?
+>
+> It should trace all non-trivial (not None, int, float, str, ...)
+> constructor
+> arguments assignments and catch at least problematic invocations like
+> "self.value.append". A problem is, that in many cases just existence of
+> constructor like the one before does not automatically lead to
+> corruption/concurrency issues. For example the tool should not trigger on
+> this
+> (older but still in use) version of django_common/http.py or at least, when
+> triggering, only at "json.dumps()".
+>
+> class JsonResponse(HttpResponse):
+>   def __init__(self, data={ }, errors=[ ], success=True):
+>     """
+>     data is a map, errors a list
+>     """
+>     json = json_response(data=data, errors=errors, success=success)
+>     super(JsonResponse, self).__init__(json, content_type='application/
+> json')
+>
+> def json_response(data={ }, errors=[ ], success=True):
+>   data.update({
+>     'errors': errors,
+>     'success': len(errors) == 0 and success,
+>   })
+>   return json.dumps(data)
+>
+> Due to weak typing, it might be too hard to catch all problematic
+> locations,
+> e.g. field modified in subclass. Without source code analysis tools
+> available
+> to do such checks, I would also try out any approaches where the argument
+> value is made immutable thus leading to crash in testbed.
+>
+> It would be great, if the tool would do the whole analysis more from the
+> security than code quality perspective: it is more interesting to audit own
+> code and referenced/redistributed third party stuff for things that "are
+> very
+> likely to be problematic/vulnerable" than have a quality tool recommending
+> to
+> change all those lines, which is not quite realistic.
+>
+> Kind regards,
+> Roman
+>
 
-This is roughly what mozilla does and I like it a lot. They have a bug
-tracker over https and you can add a PGP key. If you don't add a PGP
-key and report a security bug you won't get updates via mail
-unencrypted.
+You could check out Bandit:
+https://security.openstack.org/#bandit-static-analysis-for-python
 
-I think this is definitely an area that could need improvement. A lot
-of projects don't have any reasonable way to securely report bugs. And
-some actively discourage reporting bgus in a secure way (apache has
-some note on their webpage that you may send your reports encrypted to
-some people, but have to expect longer delays if you do so instead of
-using the "normal" unencrypted way).
-One problem is also that e.g. the github bugtracker (and I think many
-other bugtrackers as well) doesn't consider sensitive bug reports.
+I'm not sure it quite fits what you're after could be worth a look.
 
-But I also agree with Florian: Part of the problem can be mitigated by
-not keeping things under the hood for too long. I'm often disappointed
-with slow reaction times.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
