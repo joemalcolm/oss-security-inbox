@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1206" "Saturday" "20" "August" "2016" "16:50:29" "+0000" "Mauri Miettinen" "Mauri.Miettinen@student.oulu.fi" "<DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>" "31" "[oss-security] TLS testing results - OS distro vulnerabilities" "^CC:" nil nil "8" "2016082016:50:29" "[oss-security] TLS testing results - OS distro vulnerabilities" (number mark "        Mauri.Mietti Aug 20   31/1206  " thread-indent "\"[oss-security] TLS testing results - OS distro vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9877" "Tuesday" "6" "December" "2016" "12:11:57" "+0000" "Xen.org security team" "security@xen.org" "<E1cEEbF-0001Jx-UJ@xenbits.xenproject.org>" "241" "[oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array overflow" nil nil nil "12" "2016120612:11:57" "[oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array overflow" (number mark "U       security@xen Dec  6  241/9877  " thread-indent "\"[oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17992 invoked by uid 550); 20 Aug 2016 16:55:42 -0000
+Received: (qmail 17805 invoked by uid 550); 6 Dec 2016 12:12:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,259 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15872 invoked from network); 20 Aug 2016 16:50:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=unioulu.onmicrosoft.com; s=selector1-student-oulu-fi;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=s4nvHQ5CVl0cpvnEb/6HFUuu/oU8+d08VcaKu4YBGXI=;
- b=jFHjzTl7iAo7oDJoo+kHgqb3l5f1BZDWAIHcg9z4l4kCg3/fEZ5vHJPnHqy4mdoQxr709noPqtAf0jSiC3/VsMdL1bkkk9aZc3w2FN3ZgrDeLRY+JLd+u97pG5+qlxyjis3jUhvVvIMdpVuEbCpTHWX+Hot0kX8fxNY1kubxfOQ=
-Thread-Topic: TLS testing results - OS distro vulnerabilities
-Thread-Index: AQHR+vt5tlsWK9sbb022ItIWlhG1yQ==
-Message-ID: <DB3PR05MB217DBB2D4476DFBE907D6D8BE170@DB3PR05MB217.eurprd05.prod.outlook.com>
-Accept-Language: fi-FI, en-US
-Content-Language: fi-FI
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Mauri.Miettinen@student.oulu.fi; 
-x-originating-ip: [188.67.42.225]
-x-ms-office365-filtering-correlation-id: a64c599e-2ce7-4cc5-dd3b-08d3c91a17cf
-x-microsoft-exchange-diagnostics: 1;DB3PR05MB217;6:SH5dFCMbmCE/MTTQh/Vz0kfUEdWYDpl76h4Ff73JG49cLjCIV/xd4Ki+uXPZlrdyOUqDjtq1R/+dfkCFuvdc/3qN7DxOr6+be5Z2pod9/jXG7wjzTg8YHqGlAOLub6vIM3z8Xetk40ZOMGSKih+TJ2PJo57JLZC93NklaoZ737WGSv9BmlEK2RDX7/yZa6iRIoHldQJsUPmB3kYLpJHDwpescSZFjfBcek9d9MFUvSnwrC8nnwNWNj1jIfP/JjmL9RISqv+kycCmFDNupxWt9ZyC2VWHeZJlIwI/137Sum4=;5:OC9bj8KWcftLsBDB3jkSHQABao6yzXHvmW5fOa3lyXtg3vniNvPDMZ28M3A7w9hdKvY3IVVuqe9uxjI0uxQ6HfJHBti01fM6jZrY+IeRk9ocPHoK/XH3XyHo+yTqYX7k2AKg8O1AJYcESMpwV61cZQ==;24:rf3PDN+Vkt2qKb84RsuN3gK4QVY0fGpJzBNevVdZcsxbj6158o2mC7Lo2AzlGmTSdyuu7feP//+YedJMhTElU/N+8EsCLEidhmlsM0YxBR8=;7:WzZNaaHD4qQDN7blPQEQuys/9ECLj56Cy1gotYn5Hme2QxBkOcFsvfDKLydJlQXyzEFHQy3maiZyO7e264K0E16Bx2CmhFFGTHwF4KBDGzYQWafGRocPDTBYybF6u3BrbxCcL4MZSn+zW8qxk2yUEJhHsLSxmJ5f/mAf9HjALaKIc1cScJFfabT08N6ZEY0iHY8r+xngAhzlT5K51veH89YfiK8i4CIbueBxLrg+TBnVTyq6TwX3Q7noSN1p+aZY
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:DB3PR05MB217;
-studentti: joo
-x-microsoft-antispam-prvs: <DB3PR05MB217E6A6ED3B05EF5656644DBE170@DB3PR05MB217.eurprd05.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(18781404527409)(166708455590820)(111885846020525);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040176)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001);SRVR:DB3PR05MB217;BCL:0;PCL:0;RULEID:;SRVR:DB3PR05MB217;
-x-forefront-prvs: 0040126723
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(7916002)(199003)(189002)(19580395003)(74482002)(3660700001)(105586002)(305945005)(5002640100001)(229853001)(8676002)(106356001)(81166006)(68736007)(189998001)(7736002)(7846002)(7696003)(2351001)(74316002)(3280700002)(8936002)(110136002)(102836003)(11100500001)(92566002)(106116001)(50986999)(81156014)(5660300001)(3846002)(4326007)(9686002)(15975445007)(2501003)(97736004)(76576001)(2900100001)(87936001)(86362001)(10400500002)(33656002)(66066001)(586003)(101416001)(6116002)(122556002)(2906002)(54356999);DIR:OUT;SFP:1102;SCL:1;SRVR:DB3PR05MB217;H:DB3PR05MB217.eurprd05.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:0;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: student.oulu.fi does not designate
- permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: student.oulu.fi
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2016 16:50:29.1927
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f9ce49a-5101-4aa3-8c75-0d5935ad6525
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR05MB217
-CC: "ouspg@ee.oulu.fi" <ouspg@ee.oulu.fi>
-Date: Sat, 20 Aug 2016 16:50:29 +0000
-From: Mauri Miettinen <Mauri.Miettinen@student.oulu.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] TLS testing results - OS distro vulnerabilities
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 17787 invoked from network); 6 Dec 2016 12:12:33 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.505 (Entity 5.505)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security@xen.org>
+Message-Id: <E1cEEbF-0001Jx-UJ@xenbits.xenproject.org>
+Date: Tue, 06 Dec 2016 12:11:57 +0000
+Subject: [oss-security] Xen Security Advisory 199 (CVE-2016-9637) - qemu ioport array
+ overflow
 
-To whom it may concern,
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-We developed a tool to check if languages and libraries verify TLS certific=
-ates properly.
-While testing this tool we did a shootout against supported versions of the
-some major Linux distributions.=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Results are available from:
+            Xen Security Advisory CVE-2016-9637 / XSA-199
+                              version 3
 
-https://github.com/ouspg/trytls/blob/shootout-0.3/shootout/README.md
+                      qemu ioport array overflow
 
-It seems it may be unsafe to do TLS in some of the  common distros.
-E.g. the native Python version in the distros varies, and not all fixes have
-been backported. In these cases Python still doesn't always have certificate
-checking enabled by default.
+UPDATES IN VERSION 3
+====================
 
-We have contacted Python developers about the results.=20
+Clarify the IMPACT description, by escalating privilege to that of the
+qemu process, not necesserily the host.
 
-https://mail.python.org/pipermail/python-dev/2016-August/145815.html
+Public release.
 
-They gave us a couple of good pointers on how configuration could be
-used to mitigate the issues in some of the distributions. We are afraid
-this is still a hazard where neither software developers or users realize
-that code that works well for the developer may not be safe for the users.
+ISSUE DESCRIPTION
+=================
 
-Would you have any other resources, advice or pointers we should
-document when communicating about this in the TryTLS project?
+The code in qemu which implements ioport read/write looks up the
+specified ioport address in a dispatch table.  The argument to the
+dispatch function is a uint32_t, and is used without a range check,
+even though the table has entries for only 2^16 ioports.
 
-Mauri Miettinen
+When qemu is used as a standalone emulator, ioport accesses are
+generated only from cpu instructions emulated by qemu, and are
+therefore necessarily 16-bit, so there is no vulnerability.
 
-PS. Results have indications of weak crypto issues as well.=
+When qemu is used as a device model within Xen, io requests are
+generated by the hypervisor and read by qemu from a shared ring.  The
+entries in this ring use a common structure, including a 64-bit
+address field, for various accesses, including ioport addresses.
+
+Xen will write only 16-bit address ioport accesses.  However,
+depending on the Xen and qemu version, the ring may be writeable by
+the guest.  If so, the guest can generate out-of-range ioport
+accesses, resulting in wild pointer accesses within qemu.
+
+
+IMPACT
+======
+
+A malicious guest administrator can escalate their privilege to that
+of the qemu process.
+
+
+VULNERABLE SYSTEMS
+==================
+
+PV guests cannot exploit the vulnerability.
+
+ARM systems are not vulnerable.
+
+HVM domains run with QEMU stub domains cannot exploit the
+vulnerability.  (A QEMU stub domain is used if xl's domain
+configuration file contains "device_model_stubdomain_override=1".)
+
+Guests using the modern "qemu-xen" device model, with a qemu version
+of at least 1.6.0 (for example, as provided by the Xen Project in its
+Xen 4.4.0 and later releases), cannot exploit the vulnerability.
+
+x86 HVM guests, not configured with qemu stub domains, using a version
+of qemu older than qemu upstream 1.6.0, can exploit the vulnerability.
+
+x86 HVM guests using the traditional "qemu-xen-traditional", not
+configured with qemu stub domains, can therefore exploit the
+vulnerability.
+
+In tabular form:
+
+  Guest      Xen       QEMU    QEMU "traditional"            Status
+  type       version   stub      and/or qemu version
+
+  ARM        any       n/a     n/a         any               OK
+  x86 PV     any       n/a     n/a         any               OK
+
+  x86 HVM    any       yes     qemu-xen-traditional          OK
+
+  x86 HVM    any       no      qemu-xen*   >= 1.6.0          OK
+  x86 HVM    >= 4.4    no      qemu-xen*   Xen supplied      OK
+
+  x86 HVM    any       no      qemu-xen*   < 1.6.0           Vulnerable
+  x86 HVM    <= 4.3    no      qemu-xen*   Xen supplied      Vulnerable
+
+  x86 HVM    any       no      qemu-xen-traditional          Vulnerable
+
+[*] qemu-xen is the default when qemu stub domains are not in
+    use, since Xen 4.3.
+
+
+MITIGATION
+==========
+
+Enabling stubdomains will mitigate this issue, by reducing the
+escalation to only those privileges accorded to the service domain.
+In a usual configuration, a service domain has only the privilege of
+the guest, so this eliminates the vulnerability.
+
+Running HVM guests with the default upstream device model, in Xen 4.4
+and later, will also avoid this vulnerability.
+
+
+CREDITS
+=======
+
+This issue was discovered by yanghongke@huawei.com of the Huawei
+Security Test Team.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa199-trad.patch      qemu-xen-traditional, all versions
+
+$ sha256sum xsa199*
+35c6a7d0d51c2347b46a9acf22e034ca328ca62b0ce4ad868a94c190b2e14d36  xsa199-trad.patch
+$
+
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patch described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+However deployment of the mitigations described above is NOT permitted
+(except where all the affected systems and VMs are administered and
+used only by organisations which are members of the Xen Project
+Security Issues Predisclosure List).  Specifically, deployment on
+public cloud systems is NOT permitted.
+
+This is because in all cases the configuration change may be visible
+to the guest which could lead to the rediscovery of the vulnerability.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYRqr8AAoJEIP+FMlX6CvZ3tQIAKrYJRz+GjkoilWBFoUDNqrA
+ruzFuDBa4RSxlQlGo4o1TiuDSCq7Fl46wLqdGmQh8NBtCSjcSTDY3vDwJH6ns8co
+L7tM3DQt4EuP82jCxiNtLmiuzyTPkFUbYtIhciPyd6D4M6DffveD2OEpOYowK4Oo
+9BRxuVb4lq6Xeke2X2S0sU1groFocfvf7Q6lWkpApWHVSx6wWCW+dewJ6x26lzn6
+FmtQiAjWoF/zDox/nOL6uq2FEqa4wAZQGHkdyWR+yLnfEwhedUuLEiMWiUSSCPN3
+erSXtqWnEVfiJevKZXhvV0YHm6WGDCj29nDvatVBDVuwmPF/BOCHBTSzb2lMfE4=
+=FtuL
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa199-trad.patch"
+Content-Disposition: attachment; filename="xsa199-trad.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBiNzNiZDFlZGMwNWQxYmFkNWMwMTgyMjgxNDY5MzBkNzkzMTVhNWRh
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBJYW4gSmFja3NvbiA8
+aWFuLmphY2tzb25AZXUuY2l0cml4LmNvbT4KRGF0ZTogTW9uLCAxNCBOb3Yg
+MjAxNiAxNzoxOTo0NiArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHFlbXU6IGlv
+cG9ydF9yZWFkLCBpb3BvcnRfd3JpdGU6IGJlIGRlZmVuc2l2ZSBhYm91dCAz
+Mi1iaXQKIGFkZHJlc3NlcwoKT24geDg2LCBpb3BvcnQgYWRkcmVzc2VzIGFy
+ZSAxNi1iaXQuICBUaGF0IHRoZXNlIGZ1bmN0aW9ucyB0YWtlIDMyLWJpdAph
+cmd1bWVudHMgaXMgYSBtaXN0YWtlLiAgQ2hhbmdpbmcgdGhlIGFyZ3VtZW50
+IHR5cGUgdG8gMTYtYml0IHdpbGwKZGlzY2FyZCB0aGUgdG9wIGJpdHMgb2Yg
+YW55IGVycm9uZW91cyB2YWx1ZXMgZnJvbSBlbHNld2hlcmUgaW4gcWVtdS4K
+CkFsc28sIGNoZWNrIGp1c3QgYmVmb3JlIHVzZSB0aGF0IHRoZSB2YWx1ZSBp
+cyBpbiByYW5nZS4gIChUaGlzIHR1cm5zCmFuIGlsbC1hZHZpc2VkIGNoYW5n
+ZSB0byBNQVhfSU9QT1JUUyBpbnRvIGEgcG9zc2libGUgZ3Vlc3QgY3Jhc2gK
+cmF0aGVyIHRoYW4gYSBwcml2aWxlZ2UgZXNjYWxhdGlvbiB2dWxuZXJhYmls
+aXR5LikKCkFuZCwgaW4gdGhlIFhlbiBpb3JlcSBwcm9jZXNzb3IsIGNsYW1w
+IGluY29taW5nIGlvcG9ydCBhZGRyZXNzZXMgdG8KMTYtYml0IHZhbHVlcy4g
+IFhlbiB3aWxsIG5ldmVyIHdyaXRlID4xNi1iaXQgdmFsdWVzIGJ1dCB0aGUg
+Z3Vlc3QgbWF5CmhhdmUgYWNjZXNzIHRvIHRoZSBpb3JlcSByaW5nLiAgV2Ug
+d2FudCB0byBkZWZlbmQgdGhlIHJlc3Qgb2YgdGhlIHFlbXUKY29kZSBmcm9t
+IHdyb25nIHZhbHVlcy4KClRoaXMgaXMgWFNBLTE5OS4KClJlcG9ydGVkLWJ5
+OiB5YW5naG9uZ2tlIDx5YW5naG9uZ2tlQGh1YXdlaS5jb20+ClNpZ25lZC1v
+ZmYtYnk6IElhbiBKYWNrc29uIDxJYW4uSmFja3NvbkBldS5jaXRyaXguY29t
+PgotLS0KIGkzODYtZG0vaGVscGVyMi5jIHwgMiArKwogdmwuYyAgICAgICAg
+ICAgICAgfCA5ICsrKysrKystLQogMiBmaWxlcyBjaGFuZ2VkLCA5IGluc2Vy
+dGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvaTM4Ni1k
+bS9oZWxwZXIyLmMgYi9pMzg2LWRtL2hlbHBlcjIuYwppbmRleCAyNzA2ZjJl
+Li41ZDI3NmJiIDEwMDY0NAotLS0gYS9pMzg2LWRtL2hlbHBlcjIuYworKysg
+Yi9pMzg2LWRtL2hlbHBlcjIuYwpAQCAtMzc1LDYgKzM3NSw4IEBAIHN0YXRp
+YyB2b2lkIGNwdV9pb3JlcV9waW8oQ1BVU3RhdGUgKmVudiwgaW9yZXFfdCAq
+cmVxKQogewogICAgIHVpbnQzMl90IGk7CiAKKyAgICByZXEtPmFkZHIgJj0g
+MHgwZmZmZlU7CisKICAgICBpZiAocmVxLT5kaXIgPT0gSU9SRVFfUkVBRCkg
+ewogICAgICAgICBpZiAoIXJlcS0+ZGF0YV9pc19wdHIpIHsKICAgICAgICAg
+ICAgIHJlcS0+ZGF0YSA9IGRvX2lucChlbnYsIHJlcS0+YWRkciwgcmVxLT5z
+aXplKTsKZGlmZiAtLWdpdCBhL3ZsLmMgYi92bC5jCmluZGV4IGY5YzRkN2Uu
+LmMzYzVkNjMgMTAwNjQ0Ci0tLSBhL3ZsLmMKKysrIGIvdmwuYwpAQCAtNTIs
+NiArNTIsNyBAQAogCiAjaW5jbHVkZSA8eGVuL2h2bS9odm1faW5mb190YWJs
+ZS5oPgogCisjaW5jbHVkZSA8YXNzZXJ0Lmg+CiAjaW5jbHVkZSA8dW5pc3Rk
+Lmg+CiAjaW5jbHVkZSA8ZmNudGwuaD4KICNpbmNsdWRlIDxzaWduYWwuaD4K
+QEAgLTI5MCwyNiArMjkxLDMwIEBAIFBpY1N0YXRlMiAqaXNhX3BpYzsKIHN0
+YXRpYyBJT1BvcnRSZWFkRnVuYyBkZWZhdWx0X2lvcG9ydF9yZWFkYiwgZGVm
+YXVsdF9pb3BvcnRfcmVhZHcsIGRlZmF1bHRfaW9wb3J0X3JlYWRsOwogc3Rh
+dGljIElPUG9ydFdyaXRlRnVuYyBkZWZhdWx0X2lvcG9ydF93cml0ZWIsIGRl
+ZmF1bHRfaW9wb3J0X3dyaXRldywgZGVmYXVsdF9pb3BvcnRfd3JpdGVsOwog
+Ci1zdGF0aWMgdWludDMyX3QgaW9wb3J0X3JlYWQoaW50IGluZGV4LCB1aW50
+MzJfdCBhZGRyZXNzKQorc3RhdGljIHVpbnQzMl90IGlvcG9ydF9yZWFkKGlu
+dCBpbmRleCwgdWludDE2X3QgYWRkcmVzcykKIHsKICAgICBzdGF0aWMgSU9Q
+b3J0UmVhZEZ1bmMgKmRlZmF1bHRfZnVuY1szXSA9IHsKICAgICAgICAgZGVm
+YXVsdF9pb3BvcnRfcmVhZGIsCiAgICAgICAgIGRlZmF1bHRfaW9wb3J0X3Jl
+YWR3LAogICAgICAgICBkZWZhdWx0X2lvcG9ydF9yZWFkbAogICAgIH07Cisg
+ICAgaWYgKGFkZHJlc3MgPj0gTUFYX0lPUE9SVFMpCisgICAgICAgIGFib3J0
+KCk7CiAgICAgSU9Qb3J0UmVhZEZ1bmMgKmZ1bmMgPSBpb3BvcnRfcmVhZF90
+YWJsZVtpbmRleF1bYWRkcmVzc107CiAgICAgaWYgKCFmdW5jKQogICAgICAg
+ICBmdW5jID0gZGVmYXVsdF9mdW5jW2luZGV4XTsKICAgICByZXR1cm4gZnVu
+Yyhpb3BvcnRfb3BhcXVlW2FkZHJlc3NdLCBhZGRyZXNzKTsKIH0KIAotc3Rh
+dGljIHZvaWQgaW9wb3J0X3dyaXRlKGludCBpbmRleCwgdWludDMyX3QgYWRk
+cmVzcywgdWludDMyX3QgZGF0YSkKK3N0YXRpYyB2b2lkIGlvcG9ydF93cml0
+ZShpbnQgaW5kZXgsIHVpbnQxNl90IGFkZHJlc3MsIHVpbnQzMl90IGRhdGEp
+CiB7CiAgICAgc3RhdGljIElPUG9ydFdyaXRlRnVuYyAqZGVmYXVsdF9mdW5j
+WzNdID0gewogICAgICAgICBkZWZhdWx0X2lvcG9ydF93cml0ZWIsCiAgICAg
+ICAgIGRlZmF1bHRfaW9wb3J0X3dyaXRldywKICAgICAgICAgZGVmYXVsdF9p
+b3BvcnRfd3JpdGVsCiAgICAgfTsKKyAgICBpZiAoYWRkcmVzcyA+PSBNQVhf
+SU9QT1JUUykKKyAgICAgICAgYWJvcnQoKTsKICAgICBJT1BvcnRXcml0ZUZ1
+bmMgKmZ1bmMgPSBpb3BvcnRfd3JpdGVfdGFibGVbaW5kZXhdW2FkZHJlc3Nd
+OwogICAgIGlmICghZnVuYykKICAgICAgICAgZnVuYyA9IGRlZmF1bHRfZnVu
+Y1tpbmRleF07Ci0tIAoyLjEuNAoK
+
+--=separator--
