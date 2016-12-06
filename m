@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/26/3
-Message-ID: <20160126080546.GA27464@meddwl>
-Date: Tue, 26 Jan 2016 09:05:46 +0100
-From: Sergei Golubchik <serg@...iadb.org>
-To: oss-security@...ts.openwall.com
-Subject: Flaw in mariadb clients SSL certificate validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/5
+Message-ID: <20161206125628.g46mnllue6akwt5p@lorien.valinor.li>
+Date: Tue, 6 Dec 2016 13:56:28 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Scott Kitterman <scott@...terman.com>
+Subject: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-MariaDB (as well as MySQL and Percona Server) has an option to validate
-server certificate, when establishing an SSL connection. It checks that
-the certificate belongs to the host that the client wants to connect to.
-This validation, of course, should normally always be enabled to prevent
-MITM attacks.
+As found in
+https://www.sourceclear.com/registry/security/cross-site-scripting-xss-/python/sid-3068/fix
+html5lib fixed a cross-site scripting vulnerability in upstream
+version 0.99999999 with commit 
 
-Recently (end of November) two security researchers Paul Kehrer and Alex
-Gaynor have found a flaw in this certificate validation code that allows
-to trick it into accepting certificate from other hosts. For example,
-if the host 'foo.com' has a certificate with the "Organizational Unit"
-being, say, "/CN=bar.com", then MariaDB client will see the result as
+https://github.com/html5lib/html5lib-python/commit/9b8d8eb5afbc066b7fac9390f5ec75e5e8a7cab7
 
-   /OU=/CN=bar.com/CN=foo.com
+References:
 
-and will think that this certificate belongs to bar.com. This bugs is in
-15 year old code and is present in all MariaDB/MySQL/Percona Server
-versions. 
+https://github.com/html5lib/html5lib-python/issues/11
+https://github.com/html5lib/html5lib-python/issues/12
 
-This vulnerability got CVE-2016-2047.
+Question about the CVE assignment for html5lib was raised as well in
+https://github.com/mozilla/bleach/issues/229
 
-It is fixed in MariaDB 5.5.47, MariaDB 10.0.23, MariaDB 10.1.10
-(all released in December).
+Could you please assign a CVE to identify this issue?
 
 Regards,
-Sergei
-Chief Architect MariaDB
-and security@...iadb.org
+Salvatore
