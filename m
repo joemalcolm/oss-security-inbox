@@ -1,123 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/5
-Message-Id: <E1cJfaO-00040Q-Jz@xenbits.xenproject.org>
-Date: Wed, 21 Dec 2016 12:01:32 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 203 (CVE-2016-10025) - x86: missing NULL pointer check in VMFUNC emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/7
+Message-id:  <CY1PR06MB17530CDA04DA7EA56D163D03F7820@CY1PR06MB1753.namprd06.prod.outlook.com>
+Date: Tue, 06 Dec 2016 16:02:29 +0000
+From: Andrew W Petro <andrew.petro@...c.edu>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request - Webproxy Portlet - cross-user cache over-hits
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+May I please have a CVE ID for this issue?
 
-            Xen Security Advisory CVE-2016-10025 / XSA-203
-                               version 3
+________________________________
+From: Andrew W Petro
+Sent: Wednesday, November 16, 2016 8:19 AM
+To: oss-security@...ts.openwall.com
+Subject: CVE Request - Webproxy Portlet - cross-user cache over-hits
 
-          x86: missing NULL pointer check in VMFUNC emulation
+Hi,
 
-UPDATES IN VERSION 3
-====================
+Apereo (previously, Jasig) Webproxy Portlet v2 prior to v2.2.2 is bugged such that it uses too little information in computing cache keys. In some circumstances this results in users seeing cached content intended for and personalized to other users. Apereo tracks this issue as WPP-101 .
 
-Public release.
+Adopters should immediately upgrade to v2.2.2, which simply removes the inappropriate caching behavior while otherwise remaining backwards-compatible.
 
-ISSUE DESCRIPTION
-=================
+Please assign a CVE-ID to this issue.
 
-When support for the Intel VMX VMFUNC leaf 0 was added, a new optional
-function pointer hvmemul_vmfunc was added to the hvm_emulate_ops
-table.  As is intended, that new function pointer is NULL on non-VMX
-hardware, including AMD SVM hardware.  However at a call site, the
-necessary NULL check was omitted before the indirect function call.
+More information:
 
-IMPACT
-======
++ https://apereo.github.io/2016/11/14/web-proxy-overcaching/
++ https://issues.jasig.org/browse/WPP-101
++ https://groups.google.com/a/apereo.org/d/topic/uportal-dev/0XpSvhjmgDo/discussion
++ https://groups.google.com/a/apereo.org/d/topic/uportal-user/uGvdHC97AS0/discussion
 
-Malicious guests may cause a hypervisor crash, resulting in a Denial
-of Service (DoS).
+Kind regards,
 
-VULNERABLE SYSTEMS
-==================
+Andrew
 
-Xen versions 4.6 and newer are vulnerable.  Xen versions 4.5 and earlier
-are not vulnerable.
-
-Only HVM guests can exploit the vulnerability.  PV guests cannot exploit
-the vulnerability.
-
-Only x86 systems using SVM (AMD virtualisation extensions) rather than
-VMX (Intel virtualisation extensions) are vulnerable.  This applies to
-HVM guests on AMD x86 CPUs.  Therefore AMD x86 hardware is vulnerable;
-Intel hardware is not vulnerable.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-Running HVM guests on only VMX capable hardware will also avoid this
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa203.patch           xen-unstable
-xsa203-4.8.patch       Xen 4.8.x
-xsa203-4.7.patch       Xen 4.7.x, Xen 4.6.x
-
-$ sha256sum xsa203*
-9af7e862705987a60de1def81ed179931c3f683d05b05c2708cf16bb85d203c9  xsa203.patch
-7cc04278778fe885e4c3ae3f846d099075a38bccfafe6dff018ba525499b4e46  xsa203-4.7.patch
-4218fcfff11ec4788462a3ea9dddecb25b9d9fb1beaad17ca0f723b07b6675e4  xsa203-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYWm8VAAoJEIP+FMlX6CvZid4H/RlcaSaA1qky6vTKjaW4xUiX
-/48Fvz3H8Ioau3Mlqy9WGqoq7HnuhJl2MUuq47vpwChOlYvvNXeRe47sVHsLwz1O
-/yImaOc0cZEYsyECpddsVSOdwFEMnR38WFWirH4xboGx8NjWeQg3Fsmwh1r8iHsm
-HyR2kRktw/Tu2hpc8BaipsYObglvLGQGy06KwwIB0MPycm20MpR4W41a5vc6iE+1
-oKMIag/UD+W1eR7zWkftHnEcG+QNfbpWfU7rKPOrQSX5nuXHCXTcu6JQbzlPD8JS
-h+A5r+/tfyQPLTWxoBkH4wbMwdqDPNo1AuiDaGD8KWD97m/j2pFaZKl7lGk8X9w=
-=TUeg
------END PGP SIGNATURE-----
-
-Download attachment "xsa203.patch" of type "application/octet-stream" (610 bytes)
-
-Download attachment "xsa203-4.7.patch" of type "application/octet-stream" (602 bytes)
-
-Download attachment "xsa203-4.8.patch" of type "application/octet-stream" (619 bytes)
