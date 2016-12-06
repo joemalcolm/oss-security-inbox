@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/5
-Message-ID: <CAA7hUgEX6mxX-4L7i5Qjq=u+b8iPrbSqZmtjXo0X6pG-+TY3hQ@mail.gmail.com>
-Date: Tue, 29 Nov 2016 17:22:22 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: openjpeg: incorrect fix for CVE-2013-6045 (was Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/11
+Message-ID: <alpine.LFD.2.20.1612070140070.9956@wniryva>
+Date: Wed, 7 Dec 2016 01:46:22 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request Qemu: 9pfs: memory leakage via proxy/handle callbacks
 Content-Type: text/plain; charset=utf-8
 
-Mitre,
+   Hello,
 
-On 6 October 2016 at 03:16, Doran Moppert <dmoppert@...hat.com> wrote:
->> > Do you specifically know of a distribution that still has that patch?
->>
->> Red Hat Enterprise Linux and Ubuntu LTS seem to be still carrying the
->> original patch.  Possibly others, but these are the only ones I've
->> identified.
->
-> I should have included this reference:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1382202
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to memory leakage issue. It could 
+occur via its '9p-handle' or '9p-proxy' backend drivers as they do not free 
+their respective allocated data objects.
 
-It appears that this request fell through the cracks?
+A privileged user inside guest could use this flaw to leak host memory, thus 
+affecting other services on the host and/or potentially crash the Qemu process 
+on the host.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Upstream patches:
+-----------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg03278.html
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
