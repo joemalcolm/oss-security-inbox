@@ -1,65 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/2
-Message-ID: <56DA3A44.8030001@trylinux.us>
-Date: Fri, 4 Mar 2016 17:45:40 -0800
-From: "Zach W." <kestrel@...linux.us>
-To: oss-security@...ts.openwall.com
-Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/2
+Message-ID: <alpine.LFD.2.20.1612061653090.2165@wniryva>
+Date: Tue, 6 Dec 2016 16:59:07 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset
 Content-Type: text/plain; charset=utf-8
 
-I agree. I've been in the same boat as Hanno. In one case, I even sent a
-request to both oss-sec and cve-assign about an open source platform
-called OSMC, and got a response off-list that was just like the one seen
-in Kurt's original email. I asked for clarification and for them to
-address both me and the list and I never got a response. That was over a
-month ago.
+   Hello,
 
-I'm sure Hanno and I are not the only ones. Thank you Kurt for bringing
-this up.
+Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
+to an information leakage issue. It could occur while processing 
+'VIRTIO_GPU_CMD_GET_CAPSET' command.
 
-Zach W.
+A guest user/process could use this flaw to leak contents of the host memory 
+bytes.
 
-On 3/4/2016 4:07 PM, Tim wrote:
->> The level of frustration in the research community has been growing,
->> with steady calls for a new CVE-like solution that is designed to
->> address these needs in a more effective way. I greatly appreciate the
->> work that has been done, but at this point CVE is becoming less
->> useful, less relevant - if this isn't addressed, my expectation is
->> that a CVE-like solution will be adopted by the community, and
->> researchers will begin moving away from requesting CVEs.
->
-> The CVE system is clearly breaking down.
->
-> I think we need a system that is less moderated and more content
-> driven.  I imagine a simple site, which looks like a stripped-down bug
-> tracker.  Let's suppose it acts like this:
->
-> * Any researcher can post "claims" about vulnerabilities.  This
->   assigns an identifier immediately.
->
-> * Claims about vulnerabilities may be reviewed, eventually, by an
->   authority whose job it is to be sure the claim is associated
->   properly with a real product/version and that the product owners are
->   notified through an automated process (e.g. "security@...").
->
-> * Product owners can respond to claims, which will appear along side
->   the claim.  Links to patches or refutations can be included.
->
-> * No moderation required.  Let the public decide if they believe the
->   researcher or vendor.  If a moderator does bother to look over the
->   content, they could deduplicate/link issues together and address any
->   confusion, but beyond that, it isn't their job to decide what is a
->   vulnerability and what isn't.
->
-> * All information posted in this system exists publicly forever.
->   Links to external content (that isn't well represented in the
->   posting) are frowned upon, since the Internet Archive clearly can't
->   keep up with everything.  We need an archive that doesn't go away.
->
->
-> Ok, beat it up.
->
-> tim
+Upstream patch:
+---------------
+   -> http://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00059.html
 
 
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
