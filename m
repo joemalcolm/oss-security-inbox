@@ -1,19 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/18/3
-Message-ID: <CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>
-Date: Mon, 18 Jul 2016 14:25:17 +0800
-From: jun3 June <xxjun3@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for webkit js engine javascriptcore
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/8
+Message-ID: <2ECE9D9EEF1F524185270138AE232659550547C3@S0MSMAIL112.arc.local>
+Date: Tue, 6 Dec 2016 17:02:56 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Opensource Python whitebox code analysis tool recommendations
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello list,
 
-Please can I have CVE IDs assigned to the following vulnerabilities:
+I just stubled over effects of following programming error due to unwanted 
+singleton in Python, bypassing intended process restrictions (allowed number 
+of elements in my case) and of course data corruption:
 
-1.javascriptcore vulnerability:
+class A:
+  def __init__(self, value=[]):
+    self.value=value
+    self.valueCloned=value[:]
+  def show(self):
+    print 'IDs value %x, cloned %x' % (id(self.value), id(self.valueCloned))
+  def append(self, data):
+    self.value.append(data)
 
-https://bugs.webkit.org/show_bug.cgi?id=158411
+# Keep reference to avoid garbage collection interference.
+objFirst=A()
+objFirst.show()
+objNext=A()
+objNext.show()
+# Check references to prohibit optimization.
+if objFirst==objNext: raise Exception('Impossible')
 
-2.the fix has landed in r201787: <http://trac.webkit.org/r201787>
 
+
+As this type of error seems to be more common in code, at least according to 
+grep, are there tool recommendations to do automatic analysis of code?
+
+It should trace all non-trivial (not None, int, float, str, ...) constructor 
+arguments assignments and catch at least problematic invocations like 
+"self.value.append". A problem is, that in many cases just existence of 
+constructor like the one before does not automatically lead to 
+corruption/concurrency issues. For example the tool should not trigger on this 
+(older but still in use) version of django_common/http.py or at least, when 
+triggering, only at "json.dumps()".
+
+class JsonResponse(HttpResponse):
+  def __init__(self, data={ }, errors=[ ], success=True):
+    """
+    data is a map, errors a list
+    """
+    json = json_response(data=data, errors=errors, success=success)
+    super(JsonResponse, self).__init__(json, content_type='application/json')
+
+def json_response(data={ }, errors=[ ], success=True):
+  data.update({
+    'errors': errors,
+    'success': len(errors) == 0 and success,
+  })
+  return json.dumps(data)
+
+Due to weak typing, it might be too hard to catch all problematic locations, 
+e.g. field modified in subclass. Without source code analysis tools available 
+to do such checks, I would also try out any approaches where the argument 
+value is made immutable thus leading to crash in testbed.
+
+It would be great, if the tool would do the whole analysis more from the 
+security than code quality perspective: it is more interesting to audit own 
+code and referenced/redistributed third party stuff for things that "are very 
+likely to be problematic/vulnerable" than have a quality tool recommending to 
+change all those lines, which is not quite realistic.
+
+Kind regards,
+Roman
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6372 bytes)
