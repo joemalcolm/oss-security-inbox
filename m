@@ -1,201 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/3
-Message-ID: <2421787.A5MWpBLn5b@arcadia>
-Date: Thu, 01 Dec 2016 14:30:33 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: libav: multiple crashes from the Undefined Behavior Sanitizer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/10
+Message-ID: <alpine.LFD.2.20.1612070035380.7820@wniryva>
+Date: Wed, 7 Dec 2016 00:46:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one. Thanks.
+   Hello,
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable 
+to a memory leakage issue. It could occur while processing packet data in 
+'ehci_init_transfer'.
 
-A fuzzing on an updated stable releases with the Undefined Behavior Sanitizer 
-enabled, revealed multiple crashes. At the date I’m releasing this post, 
-upstream didn’t give a response/feedback about.
+A guest user/process could use this issue to leak host memory, resulting in 
+DoS for a host.
 
-All issues are reproducible with:
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=791f97758e223de3290592d169f
 
-avconv -i $FILE -f null -
-
-More details about:
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo.c:2381:65: runtime 
-error: left shift of negative value -1
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo.c:2382:65: runtime 
-error: left shift of negative value -1
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo.c:2383:65: runtime 
-error: left shift of negative value -1
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00036-libav-leftshift-mpegvideo
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_motion.c:323:47: runtime 
-error: left shift of negative value -1
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_motion.c:331:55: runtime 
-error: left shift of negative value -1
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_motion.c:336:55: runtime 
-error: left shift of negative value -1
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00036-libav-leftshift-mpegvideo
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpegvideo_parser.c:91:65: runtime 
-error: signed integer overflow: 28573696 * 400 cannot be represented in type 
-‘int’
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00037-libav-signedintoverflow-mpegvideo_parser
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/mpeg12dec.c:1401:41: runtime 
-error: signed integer overflow: 28573696 * 400 cannot be represented in type 
-‘int’
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00037-libav-signedintoverflow-mpegvideo_parser
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/x86/mpegvideo.c:53:18: runtime 
-error: index -1 out of bounds for type ‘uint8_t [64]’
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00038-libav-uint8_t64-outofbounds-mpegvideo
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libswscale/x86/swscale.c:189:64: runtime 
-error: signed integer overflow: 65463 * 65537 cannot be represented in type 
-‘int’
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00039-libav-signedintoverflow-swscale_c
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-video/libav-11.8/work/libav-11.8/libswscale/utils.c:340:30: 
-runtime error: left shift of negative value -1
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00040-libav-leftshift-utils_c
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00041-libav-leftshift-ituh263dec_c
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/ituh263dec.c:645:34: runtime 
-error: left shift of negative value -16
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00041-libav-leftshift-ituh263dec_c
-
-######################################
-
-Affected version / Tested on:
-11.8
-Output/failure:
-/tmp/portage/media-
-video/libav-11.8/work/libav-11.8/libavcodec/get_bits.h:530:5: runtime error: 
-load of null pointer of type ‘int16_t’ (aka ‘short’)
-Commit fix:
-N/A
-Fixed version:
-N/A
-Testcase:
-https://github.com/asarubbo/poc/blob/master/00042-libav-loadnullptr-get_bits_h
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2016-11-08: bug discovered and reported to upstream
-2016-12-01: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/12/01/libav-multiple-crashes-from-the-undefined-behavior-sanitizer
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
