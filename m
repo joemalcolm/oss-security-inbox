@@ -1,47 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/28/4
-Message-ID: <20160928155401.GA30528@68-f7-28-d0-dd-36.libcore.so>
-Date: Wed, 28 Sep 2016 08:54:01 -0700
-From: Alex Crawford <alex.crawford@...eos.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/1
+Message-ID: <CAHQ_-nTXwwmno6iu2fFRsH+JJwZ4rRT93kf7_eRFtoi00kJK2g@mail.gmail.com>
+Date: Tue, 6 Dec 2016 11:50:57 +0900
+From: Philip Pettersson <philip.pettersson@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign <cve-assign@...re.org>
-Subject: Re: CVE Request: docker2aci: Path traversals present in image converting
+Subject: CVE-2016-8655 Linux af_packet.c race condition (local root)
 Content-Type: text/plain; charset=utf-8
 
-On 09/28, 张开翔 wrote:
-> This is Kaixiang Zhang of the Cloud Security Team, Qihoo 360. I
-> submitted an path traversal vulnerability to docker2aci
-> <https://github.com/appc/docker2aci/issues/201> recently. The issue
-> exists in image converting, there must be a possibility that it
-> extracts embedded layer data to arbitrary directories or paths since
-> no essential check for the output file path. Could you please assign a
-> CVE number for it? Thanks.
+Hello,
 
-Thanks for the report.
+This is an announcement about CVE-2016-8655 which is a race-condition
+I found in Linux (net/packet/af_packet.c). It can be exploited to gain
+kernel code execution from unprivileged processes.
 
-We are investigating your docker2aci report in order to evaluate the
-total impact and provide a patch.
+The bug was introduced on Aug 19, 2011:
+https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
 
-Our initial analysis confirms there is a path traversal bug in the
-docker layer conversion library. However, due to the specific nature of
-how a malicious image must be crafted to exploit this bug (ie. invalid
-format), the attack vector is largely mitigated by how Docker registries
-are implemented. Therefore, we believe the bug has limited impact and
-will not affect typical usage of docker2aci.
+Fixed on Nov 30, 2016:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=84ac7260236a49c79eede91617700174c2c19b0c
 
-The attacks vector requires crafting layer IDs which are not valid,
-according to current Docker image specifications, and thus remote
-exploitation relies on registries providing non-conformant Docker
-images. Since common registry implementations like the Docker Registry
-and quay.io validate layer IDs when an image is uploaded, this bug
-should not affect the vast majority of usage of the library.
+=*=*=*=*=*=*=*=*=   BUG DETAILS  =*=*=*=*=*=*=*=*=
 
-Just for reference, we typically investigate issues together with
-reporters, evaluating the impact and requesting a CVE whenever needed.
-In your case, this was not possible as we received your initial email at
-02:38 UTC and you subsequently sent a PoC to oss-security at 08:27 UTC,
-without any space for investigation on our side.
+To create AF_PACKET sockets you need CAP_NET_RAW in your network
+namespace, which can be acquired by unprivileged processes on
+systems where unprivileged namespaces are enabled (Ubuntu, Fedora, etc).
+It can be triggered from within containers to compromise the host kernel.
+On Android, processes with gid=3004/AID_NET_RAW are able to create
+AF_PACKET sockets (mediaserver) and can trigger the bug.
 
--Alex
+I found the bug by reading code paths that have been opened up by the
+emergence of unprivileged namespaces, something I think should be
+off by default in all Linux distributions given its history of
+security vulnerabilities.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+The problem is inside packet_set_ring() and packet_setsockopt().
+We can reach packet_set_ring() by calling setsockopt() on the socket
+using the PACKET_RX_RING option.
+
+If the version of the packet socket is TPACKET_V3, a timer_list
+object will be initialized by packet_set_ring() when it calls
+init_prb_bdqc().
+
+...
+                switch (po->tp_version) {
+                case TPACKET_V3:
+                /* Transmit path is not supported. We checked
+                 * it above but just being paranoid
+                 */
+                        if (!tx_ring)
+                                init_prb_bdqc(po, rb, pg_vec, req_u);
+                        break;
+                default:
+                        break;
+                }
+...
+
+The function flow to set up the timer is:
+packet_set_ring()->init_prb_bdqc()->prb_setup_retire_blk_timer()->
+prb_init_blk_timer()->prb_init_blk_timer()->init_timer()
+
+When the socket is closed, packet_set_ring() is called again
+to free the ring buffer and delete the previously initialized
+timer if the packet version is > TPACKET_V2:
+
+...
+        if (closing && (po->tp_version > TPACKET_V2)) {
+                /* Because we don't support block-based V3 on tx-ring */
+                if (!tx_ring)
+                        prb_shutdown_retire_blk_timer(po, rb_queue);
+        }
+...
+
+The issue is that we can change the packet version to TPACKET_V1
+with packet_setsockopt() after init_prb_bdqc() has been executed
+and before packet_set_ring() has returned.
+
+There is an attempt to deny changing socket versions after a ring
+buffer has been initialized, but it is insufficient:
+
+...
+        case PACKET_VERSION:
+        {
+...
+                if (po->rx_ring.pg_vec || po->tx_ring.pg_vec)
+                        return -EBUSY;
+...
+
+There's plenty of room to race this code path between the calls to
+init_prb_bdqc() and swap(rb->pg_vec, pg_vec) in packet_set_ring().
+
+When the socket is closed, packet_set_ring() will not delete the
+timer since the socket version is now TPACKET_V1. The struct
+timer_list that describes the timer object is located inside the
+struct packet_sock for the socket itself however and will be
+freed with a call to kfree().
+
+We then have a use-after-free on a timer object that can be
+exploited by various poisoning attacks on the SLAB allocator (I find
+add_key() to be the most reliable). This will ultimately lead to the
+kernel jumping to a manipulated function pointer when the timer expires.
+
+The bug is fixed by taking lock_sock(sk) in packet_setsockopt() when
+changing the packet version while also taking the lock at the start
+of packet_set_ring().
+
+My exploit defeats SMEP/SMAP and will give a rootshell on Ubuntu 16.04,
+I will hold off a day on publishing it so people have some time to update.
+
+New Ubuntu kernels are out so please update as soon as possible.
+
+=*=*=*=*=*=*=*=*=    TIMELINE    =*=*=*=*=*=*=*=*=
+
+2016-11-28: Bug reported to security@...nel.org
+2016-11-30: Patch submitted to netdev, notification sent to linux-distros
+2016-12-02: Patch committed to mainline kernel
+2016-12-06: Public announcement
+
+=*=*=*=*=*=*=*=*=     LINKS      =*=*=*=*=*=*=*=*=
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-8655
+https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=84ac7260236a49c79eede91617700174c2c19b0c
+https://www.ubuntu.com/usn/usn-3151-1/
+
+=*=*=*=*=*=*=*=*=     CREDIT     =*=*=*=*=*=*=*=*=
+
+Philip Pettersson
