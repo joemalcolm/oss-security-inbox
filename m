@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/9
-Message-Id: <20161016025654.A45A96C0D67@smtpvmsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:56:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: potrace: invalid memory access in findnext (decompose.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/12
+Message-ID: <alpine.LFD.2.20.1612070146350.9956@wniryva>
+Date: Wed, 7 Dec 2016 01:50:53 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request Qemu: display: virtio-gpu: memory leakage when destroying gpu resource
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-findnext-decompose-c/
+Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
+vulnerable to a memory leakage issue. It could occur while destroying gpu 
+resource object in 'virtio_gpu_resource_destroy'
 
-> SEGV on unknown address
+A guest user/process could use this flaw to leak host memory bytes, resulting 
+in DoS for a host.
 
-> 0x7fd7ec5bcbf3 in findnext ... potrace-1.13/src/decompose.c:436:11
-> 0x7fd7ec5bcbf3 in getenv ... potrace-1.13/src/decompose.c:478
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg05043.html
 
-Use CVE-2016-8685.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYAud1AAoJEHb/MwWLVhi2ScEP/3lo1mPD67U4CEoptEWB4GRo
-yalqHOyd5Gs5X+D/lV2upZded+s3W2mRZ8ubu0S8bQdhkSbEHH4tX+ovPzV6LaAb
-GNwYTSr1uCOGZCKRlN1HdU7NzQvjeAUi4w2JJBpV+XpTe21cEAopLH4w41Xwue4X
-Wl3U5rF9dRVaqRng1LX56nC9bvHiVGe+DcbmpY46AosSIdTrXiBMi5KtHLgKTE6S
-iYu5nTeIpK8DNsgDSPa9tqdsqxvihrF+xey5rPn02dHFumKJQOCis04VwOxgFtQG
-8WGYob2bhXlxC1+AZcSox5BgIE5hS3MttouVmeqSviSSq1SO/QRF+Qu34iZZcCuI
-573spEard0RIkqcY+RvVij8W2H6507P1fBZKLMjFxhDz4pR5hj6kjArRRL7X0LA8
-WiS4wGK6l33mmUCwAzTfJTrmWlRO5qbJwaM7pGCo3d4BRwdmmq/sTv4Sov2txMxw
-PFtj0FL44QAkuKEjcNp4lbLCF6XE3MB6cfeTnfjyya1evuSP5URD8SUHRB42Kjb5
-FrCUOs2wYKVBOjtUabLKt9mrciBLqarEzXbbY1BWAqmOh8vBDyHGXLQL9oS4GT9E
-BRhuq6CtPdH9+u5UKKSe3/TCQUcvmWNDowQcEqnnIgT7hxm+HGo/iz+9uIFj9ZgQ
-kWGGXBvz+mQSlqdBJEW8
-=odv0
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
