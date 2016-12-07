@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/10/14
-Message-ID: <20160510191435.GA12598@nxnw.org>
-Date: Tue, 10 May 2016 12:14:35 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/7
+Message-ID: <20161207134835.GA20060@grsecurity.net>
+Date: Wed, 7 Dec 2016 08:48:35 -0500
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Cc: kangjielu@...il.com, cve-assign@...re.org, csong84@...ech.edu, insu@...ech.edu, taesoo@...ech.edu
-Subject: Re: Re: CVE Request: kernel information leak vulnerability in Linux sound module
+Subject: Re: Re: CVE-2016-8655 Linux af_packet.c race condition (local root)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 09, 2016 at 07:29:09PM -0400, cve-assign@...re.org wrote:
-> > http://comments.gmane.org/gmane.linux.kernel/2214250
-> > 
-> > The stack object "tread" has a total size of 32 bytes. Its field
-> > "event" and "val" both contain 4 bytes padding. These 8 bytes
-> > padding bytes are sent to user without being initialized.
+4.8.12 doesn't have the fix included, despite being released on the same
+day the commit was merged into net/ and despite the advance notice in
+private via security@...nel.org.  It's currently in the net/ "stable" queue
+which operates seperately from the rest of the kernel.  It'll be merged
+whenever that process plays itself out.
+
+-Brad
+
+On Wed, Dec 07, 2016 at 02:15:15PM +0100, Hanno B??ck wrote:
+> Hi,
 > 
-> Use CVE-2016-4569.
+> I'm running kernel 4.8.12, which has the fix you pointed out included,
+> however:
 > 
-> This is not yet available at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/sound/core/timer.c
-> but may be there later.
+> > You can also run it with "crash" as the first argument to force a
+> > panic.
+> 
+> running your code with the "crash" parameter reliably panics this
+> kernel.
+> This doesn't seem right. Is this an incomplete or nonworking fix?
+> 
+> -- 
+> Hanno B??ck
+> https://hboeck.de/
+> 
+> mail/jabber: hanno@...eck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-It's staged at:
-
-  https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=cec8f96e49d9be372fdb0c3836dcf31ec71e457e
-
-Looks like there were two more related kernel leak fixes:
-
-  https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-  https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=for-next&id=e4ec8cc8039a7063e24204299b462bd1383184a5
-
-Thanks.
--- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
