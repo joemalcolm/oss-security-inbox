@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/18/1
-Message-ID: <CAB_jSYz34azcO7mmL+fotU58he7e6jKxuojbyS4Q3HFPVPQaCw@mail.gmail.com>
-Date: Mon, 18 Jan 2016 11:56:30 +0800
-From: Marina Glancy <marina@...dle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/5
+Message-ID: <20161207141515.4f21682f@pc1>
+Date: Wed, 7 Dec 2016 14:15:15 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [vs] moodle security release
+Subject: Re: Re: CVE-2016-8655 Linux af_packet.c race condition (local root)
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications have now been made public. Thanks
-to OSS members for their cooperation.
+Hi,
 
-Marina Glancy
-Development Process Manager
-e: marina@...dle.com
-p: +61 8 9467 4167 w: moodle.com
+I'm running kernel 4.8.12, which has the fix you pointed out included,
+however:
 
-==============================================================================
-MSA-16-0001: Two enrolment-related web services don't check course visibility
+> You can also run it with "crash" as the first argument to force a
+> panic.
 
-Description:       Web services core_enrol_get_course_enrolment_methods and
-                   enrol_self_get_instance_info did not check user permission
-                   to access hidden courses
-Issue summary:     External functions core_enrol_get_course_enrolment_methods
-                   and enrol_self_get_instance_info don't check course
-                   visibility
-Severity/Risk:     Minor
-Versions affected: 3.0 to 3.0.1, 2.9 to 2.9.3, 2.8 to 2.8.9, 2.7 to 2.7.11 and
-                   earlier unsupported versions
-Versions fixed:    3.0.2, 2.9.4, 2.8.10 and 2.7.12
-Reported by:       Juan Leyva
-Issue no.:         MDL-52072
-CVE identifier:    CVE-2016-0724
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52072
+running your code with the "crash" parameter reliably panics this
+kernel.
+This doesn't seem right. Is this an incomplete or nonworking fix?
 
-==============================================================================
-MSA-16-0002: XSS Vulnerability in course management search
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Description:       Search string in course management interface was not
-                   escaped when being output creating potential for XSS attack
-Issue summary:     XSS Vulnerability in course management search
-Severity/Risk:     Serious
-Versions affected: 3.0 to 3.0.1, 2.9 to 2.9.3 and 2.8 to 2.8.9
-Versions fixed:    3.0.2, 2.9.4 and 2.8.10
-Reported by:       Oliveira Lima
-Issue no.:         MDL-52552
-CVE identifier:    CVE-2016-0725
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-52552
-
-==============================================================================
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
