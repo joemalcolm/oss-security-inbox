@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/5
-Message-ID: <20161206125628.g46mnllue6akwt5p@lorien.valinor.li>
-Date: Tue, 6 Dec 2016 13:56:28 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/6
+Message-ID: <20161207133758.GA25762@lorien.valinor.li>
+Date: Wed, 7 Dec 2016 14:37:58 +0100
 From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Scott Kitterman <scott@...terman.com>
-Subject: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2016-8655 Linux af_packet.c race condition (local root)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi Hanno,
 
-As found in
-https://www.sourceclear.com/registry/security/cross-site-scripting-xss-/python/sid-3068/fix
-html5lib fixed a cross-site scripting vulnerability in upstream
-version 0.99999999 with commit 
+On Wed, Dec 07, 2016 at 02:15:15PM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> I'm running kernel 4.8.12, which has the fix you pointed out included,
+> however:
+> 
+> > You can also run it with "crash" as the first argument to force a
+> > panic.
+> 
+> running your code with the "crash" parameter reliably panics this
+> kernel.
+> This doesn't seem right. Is this an incomplete or nonworking fix?
 
-https://github.com/html5lib/html5lib-python/commit/9b8d8eb5afbc066b7fac9390f5ec75e5e8a7cab7
+The fix actually should not be included in 4.8.12. It is 
 
-References:
+$ git describe --contains 84ac7260236a49c79eede91617700174c2c19b0c
+v4.9-rc8~5^2~14
 
-https://github.com/html5lib/html5lib-python/issues/11
-https://github.com/html5lib/html5lib-python/issues/12
-
-Question about the CVE assignment for html5lib was raised as well in
-https://github.com/mozilla/bleach/issues/229
-
-Could you please assign a CVE to identify this issue?
-
-Regards,
+Regards, hope this helps,
 Salvatore
