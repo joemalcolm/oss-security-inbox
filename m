@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/07/8
-Message-ID: <20160107192555.GA82350@hpe.com>
-Date: Thu, 7 Jan 2016 11:25:55 -0800
-From: Grant Murphy <grant.murphy@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/1
+Message-ID: <CAF5d3DCBfzbqYAA3y06QX50YRfLJEkXkW_k+agEpverKZSKuGw@mail.gmail.com>
+Date: Wed, 7 Dec 2016 11:16:50 +0800
+From: haojun hou <haojunhou@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request for vulnerability in OpenStack Nova
+Cc: mr@...buckingham.com, cve-assign@...re.org
+Subject: CVE request - BigTree CMS 4.2.13 - Cross-Site Scripting (XSS)
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+If suitable for a CVE please assign one for BigTree CMS reflected
+cross-site scripting vulnerability. Thanks.
 
-Title: Xen connection password leak in logs via StorageError
-Reporter: Matt Riedemann (IBM)
-Products: Nova
-Affects: >= 2014.2 <= 2015.1.2, ==12.0.0
+Affected version: 4.2.13
 
-Description:
-Matt Riedemann from IBM reported an information disclosure vulnerability
-in Nova. If a StorageError occurs when attempting to connect a volume
-using the Xen API, the connection parameters will be logged. These
-parameters may include credentials that are not masked. An attacker
-with read access to Nova logs could use these credentials with the
-Xen API directly. Only Nova deployments using the Xen backend are
-affected by this flaw.
+Reported by Tim Buckingham in
+https://github.com/bigtreecms/BigTree-CMS/issues/264
+<https://github.com/bigtreecms/BigTree-CMS/pull/256>
 
-References:
-https://launchpad.net/bugs/1516765
+Fixed in:
+https://github.com/bigtreecms/BigTree-CMS/commit/59ebef5978f80e2fdc7b4db4a28b668c5a39fbc3
 
-Thanks in advance,
+Thanks & Regards
 
---
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
