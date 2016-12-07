@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2144" "Wednesday" "5" "October" "2016" "09:13:03" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "47" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100516:13:03" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct  5   47/2144  " thread-indent "\"[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1979" "Wednesday" "7" "December" "2016" "08:48:35" "-0500" "Brad Spengler" "spender@grsecurity.net" "<20161207134835.GA20060@grsecurity.net>" "56" "Re: [oss-security] Re: CVE-2016-8655 Linux af_packet.c race condition (local root)" "^Date:" nil nil "12" "2016120713:48:35" "[oss-security] Re: CVE-2016-8655 Linux af_packet.c race condition (local root)" (number mark "        spender@grse Dec  7   56/1979  " thread-indent "\"Re: [oss-security] Re: CVE-2016-8655 Linux af_packet.c race condition (local root)\"\n") "<20161207141515.4f21682f@pc1>" ("<CAHQ_-nTXwwmno6iu2fFRsH+JJwZ4rRT93kf7_eRFtoi00kJK2g@mail.gmail.com>" "<CAHQ_-nTRLMQ21e3DHESbRcJcK3H3DCZGB9yrkx-TeMRi4f5vVQ@mail.gmail.com>" "<20161207141515.4f21682f@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 20383 invoked by uid 550); 5 Oct 2016 16:13:37 -0000
+Received: (qmail 13606 invoked by uid 550); 7 Dec 2016 14:55:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20365 invoked from network); 5 Oct 2016 16:13:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=j+v19/vGOpBvEFRo39A8A+iJCVSm7Hk63JtQUKQHp0A=;
-        b=C2qqbsDSL65YktyQJJryHnW0w+CTIzHQ8z5RLbhbCARe1DlefBpbv1Bb2uXFl/0SGi
-         /v9b0Wk6m28GP/4mmxQMfmFXyFqToDoo6qecZ/BuL6FXF0huZpAg/CEzEy1bvKVH/gdL
-         MueejubMh8q/81M/dIf5SHYWf/lbR/k5GWtKI35MaiuG5o6s3LuCNYnjerJsoJmKCLO8
-         aFX+DypE0+jxL+kG9XQi15icWcWbllHR8ty2dr/MRKbdbZbX8s9bMCrvZkW9+ffKax0R
-         yoEcl35dVd5mQyd72vLbYjmPy5EJU6NNC6FrnOxqHE54aDguk1LeP+EVW1kuziChk+ZM
-         oT5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=j+v19/vGOpBvEFRo39A8A+iJCVSm7Hk63JtQUKQHp0A=;
-        b=NItc4SnCe6vHomeb23Tvr0gLgTnS1RWhpcluv35KdXn6bPxBSxePSMt7EKD2QFxa3o
-         92lWLlUwoM1CxiNjEE1iMGFITRxK45LBaOdIoo81KkT18JPiL5lAmwbhwgd7iTqHc95Y
-         o0TWFZcvxVGuxITEZEGpYEPgPXtZNFaYdFiSfsB+fTuxA9Yx1FPi64qTfsGtECWLrJco
-         hF6tv5NP9nLJelIkvXIqYE7RMC0qsXUFVPkv5+JjL3uAxWSMW8wHEdl9NT/+DPoiBYSA
-         FpWcyhZx+vgzDqshV72HvbUBYzwwpSt1vS+1OxPCDosF+Illq6LypYb4xLAA7OCJRiyH
-         md+g==
-X-Gm-Message-State: AA6/9RnmdQkpbNZDKdQ5xFc4LpW5xeBgAfQKKOXoCurkvxeWKM2QtSMdSgWKbvSdsYCJ8BlkL64qXTg+YKWMoTxt
-X-Received: by 10.159.32.195 with SMTP id 61mr7586317uaa.157.1475684004158;
- Wed, 05 Oct 2016 09:13:24 -0700 (PDT)
+Received: (qmail 13558 invoked from network); 7 Dec 2016 13:48:47 -0000
+Message-ID: <20161207134835.GA20060@grsecurity.net>
+References: <CAHQ_-nTXwwmno6iu2fFRsH+JJwZ4rRT93kf7_eRFtoi00kJK2g@mail.gmail.com>
+ <CAHQ_-nTRLMQ21e3DHESbRcJcK3H3DCZGB9yrkx-TeMRi4f5vVQ@mail.gmail.com>
+ <20161207141515.4f21682f@pc1>
 MIME-Version: 1.0
-Message-ID: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 5 Oct 2016 09:13:03 -0700
-From: Tavis Ormandy <taviso@google.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
+Content-Disposition: inline
+In-Reply-To: <20161207141515.4f21682f@pc1>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 7 Dec 2016 08:48:35 -0500
+From: Brad Spengler <spender@grsecurity.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems
+Subject: Re: [oss-security] Re: CVE-2016-8655 Linux af_packet.c race
+ condition (local root)
 To: oss-security@lists.openwall.com
 
-Hi, just an update and CVE request for various ghostscript issues. In
-general, the security properties of -dSAFER are not well tested and
-it's probably not wise to rely on it. The issues below were found just
-by browsing the commands available, I haven't tried fuzzing it.
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-These are all possible to exploit via PDF or PS (or the various
-similar formats, like XPS).
+4.8.12 doesn't have the fix included, despite being released on the same
+day the commit was merged into net/ and despite the advance notice in
+private via security@kernel.org.  It's currently in the net/ "stable" queue
+which operates seperately from the rest of the kernel.  It'll be merged
+whenever that process plays itself out.
 
-If you're using ImageMagick, I would recommend disabling the PS, EPS,
-PDF and XPS coders in policy.xml. Applications like gimp, evince,
-claws, and most other applications that generate thumbnails of PDF/PS
-documents should probably not do so without a prompt (NOTE: A lot of
-packages do this
-https://codesearch.debian.net/search?q=-dSAFER+&perpkg=1 )
+-Brad
 
-bug: various userparams allow %pipe% in paths, allowing remote shell
-command execution.
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697178
-repro: http://www.openwall.com/lists/oss-security/2016/09/30/8
-patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=71ac874
-cve: please assign
+On Wed, Dec 07, 2016 at 02:15:15PM +0100, Hanno B??ck wrote:
+> Hi,
+>=20
+> I'm running kernel 4.8.12, which has the fix you pointed out included,
+> however:
+>=20
+> > You can also run it with "crash" as the first argument to force a
+> > panic.
+>=20
+> running your code with the "crash" parameter reliably panics this
+> kernel.
+> This doesn't seem right. Is this an incomplete or nonworking fix?
+>=20
+> --=20
+> Hanno B??ck
+> https://hboeck.de/
+>=20
+> mail/jabber: hanno@hboeck.de
+> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
 
-bug: .libfile doesn't check PermitFileReading array, allowing remote
-file disclosure.
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697169
-repro: http://www.openwall.com/lists/oss-security/2016/09/29/28
-patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=cf046d2
-cve: please assign
+--Dxnq1zWXvFF0Q93v
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-bug: reference leak in .setdevice allows use-after-free and remote
-code execution
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697179
-repro: http://bugs.ghostscript.com/show_bug.cgi?id=697179#c0
-patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;a=commitdiff;h=d5ad1e02
-cve: please assign
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-bug: type confusion in .initialize_dsc_parser allows remote code execution
-id: http://bugs.ghostscript.com/show_bug.cgi?id=697190
-repro: http://bugs.ghostscript.com/show_bug.cgi?id=697190#c0
-patch: http://git.ghostscript.com/?p=ghostpdl.git;h=875a0095f37626a721c7ff57d606a0f95af03913
-cve: please assign
+iQIcBAEBCgAGBQJYSBMsAAoJEETRwPglJf5JuNwQAIT7KwM36z9FYllmStG4SJXs
+g5sZBLS5wQmlkvSFFXqxGp5WS4HbPt8IVU0kwLVWgKXPgsyU6T6m80bgyT9xzKK2
+v7Ile/LpIHhT+v9Di/9iguwaaYMjOv11zL7mhe+mHTG05NoxWjn4MWQCsrToUIFy
+6FJmKEHOQ1EwdbI+t2kM1fc2E3fJuOZJqf14N4UAVLk2aOUSwAyfqETBjpM9Vi9j
+WQWwvGpqBnfI1pY4N0YOcWS+56c5y+CPDDGUFBJtWyMRyiTPkTRz1++oY76wTII5
+6GYfyfRsQ/Yfpm8HY097d13fHJtSHkFZrbRoOtn5myZ7lyUpA5KUqqYJQJXMq1oD
+EXysiM1ooRXTvg3/le6FkXqLnd6DMOjb2H3Cd3QpUy3XdxHUmGJLeNT4z1iZFKIV
+OyFfi5185Z31oat/lOeIvoJge82Zgf3h7nVpb+0SoLfqrmwjCC90vxiFwXnt3Rm2
+XuoncHOQo3v/dTta8YF9S5BVT28k0zs5lDXMHVkaM6r2Jdr7Stee/g+2qcCb6b5g
+qRXBLxXYZNvPmovfEV2ZX0w4Z/FKqAgAvdbQYm39DE/ilI6hpMUXQ+f4Dswzgmqa
+xBq6VSpV6pKcnsDJuNpK76bRcH4OhNUshZKXzHt0sYYavrMP2PrIIiYnhjMgy9Kq
+VqlQC8dICxd6ZpbFuYw2
+=XsSX
+-----END PGP SIGNATURE-----
 
-There are a few other minor issues and leaks, but these are the
-important ones if you're not going to disable using gs. Please also
-check that you're shipping the patch for CVE-2013-5653.
-
-Tavis.
+--Dxnq1zWXvFF0Q93v--
