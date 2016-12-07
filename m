@@ -1,50 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/19/6
-Message-ID: <CAKG8Do7EXM-eTWVARz9Mys-jH=WqJs==hJLb5V-_Znw_Cm1fNg@mail.gmail.com>
-Date: Wed, 19 Oct 2016 16:29:43 +0200
-From: Cedric Buissart <cbuissar@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: taviso@...gle.com
-Subject: Re: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/4
+Message-Id: <E1cEZWj-0004yO-QN@xenbits.xenproject.org>
+Date: Wed, 07 Dec 2016 10:32:41 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 201 (CVE-2016-9815,CVE-2016-9816,CVE-2016-9817,CVE-2016-9818) - ARM guests may induce host asynchronous abort
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 5, 2016 at 8:04 PM, <cve-assign@...re.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->
->
-> > bug: various userparams allow %pipe% in paths, allowing remote shell
-> > command execution.
-> > id: http://bugs.ghostscript.com/show_bug.cgi?id=697178
-> > repro: http://www.openwall.com/lists/oss-security/2016/09/30/8
-> > patch: http://git.ghostscript.com/?p=user/chrisl/ghostpdl.git;h=
-> 71ac87493b1e445d6c07554d4246cf7d4f44875c
->
-> Use CVE-2016-7976.
->
-> There currently isn't a separate CVE ID for the earlier impact that
-> occurred when "b" was in the mode argument to popen. The question of
-> whether popen will execute anyway (even with the 'b" character) is,
-> more or less, a reachability concern in this context, and doesn't mean
-> that a second vulnerability needs to be defined.
->
-> The original report for this bug (http://bugs.ghostscript.com/
-show_bug.cgi?id=697178), as described by Florian, was mentioning a
-directory traversal issue.
-The directory traversal does not appear to be resolved after applying the
-given patch :
+ Xen Security Advisory CVE-2016-9815,CVE-2016-9816,CVE-2016-9817,CVE-2016-9818 / XSA-201
+                              version 2
 
-$ cat putdevice-open.ps
-%!PS
-currentdevice null true mark /OutputICCProfile (../../../../../etc/passwd)
-.putdeviceparams
-quit
-$ strace -f -e open gs -dSAFER putdevice-open.ps |& grep passwd
-open("/usr/share/ghostscript/9.20/iccprofiles/../../../../../etc/passwd",
-O_RDONLY) = 6
+             ARM guests may induce host asynchronous abort
 
-Is it expected ?
+UPDATES IN VERSION 2
+====================
 
--- 
-Cedric Buissart,
-Product Security
+CVEs assigned.
 
+ISSUE DESCRIPTION
+=================
+
+Depending on how the hardware and firmware have been integrated,
+guest-triggered asynchronous aborts (SError on ARMv8) may be received
+by the hypervisor.  The current action is to crash the host.
+
+A guest might trigger an asynchronous abort when accessing memory
+mapped hardware in a non-conventional way.  Even if device
+pass-through has not been configured, the hypervisor may give the
+guest access to memory mapped hardware in order to take advantage of
+hardware virtualization.
+
+The CVEs are as follows:
+ xsa201-1.patch     CVE-2016-9815
+ xsa201-2.patch     CVE-2016-9816
+ xsa201-3-*.patch   CVE-2016-9817
+ xsa201-4.patch     CVE-2016-9818
+
+IMPACT
+======
+
+A malicious guest may be able to crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions which support ARM are potentially affected.
+
+Whether a particular ARM systems is affected depends on technical
+details of the hardware and/or firmware.
+
+x86 systems are not affected.
+
+MITIGATION
+==========
+
+On systems where the guest kernel is controlled by the host rather than
+guest administrator, running only kernels which do not expose MMIO to
+userspace will prevent untrusted guest users from exploiting this issue.
+However untrusted guest administrators can still trigger it unless
+further steps are taken to prevent them from loading code into the
+kernel (e.g by disabling loadable modules etc) or from using other
+mechanisms which allow them to run code at kernel privilege.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The issue was discussed publicly (and has been fixed already in KVM in
+public trees).
+
+CREDITS
+=======
+
+This issue was discovered by ARM engineering personnel.
+
+RESOLUTION
+==========
+
+Applying the appropriate set of attached patched resolves this issue.
+
+xsa201-[1234].patch       Xen-unstable
+
+xsa201-[12].patch         }
+xsa201-3-4.7.patch        } Xen 4.7.x, Xen 4.6.x
+xsa201-4.patch            }
+
+$ sha256sum xsa201*
+163aeb9ae3ffce28e0bc95bdfff490d2df6f6f0b85ac1d4f447bea921f0a0dda  xsa201-1.patch
+0ba570ed7df172475bc745e02b89670608251634895e5279edcf534619d6d81b  xsa201-2.patch
+4045e046473f069c51e5fd579f63563862aa497d945b183c768481ef11885744  xsa201-3.patch
+a9cf56564d020675c0f2f1ea15009a712f172be3d53ea8ddf2f48adaac392e76  xsa201-3-4.7.patch
+388d548cd4e30883ae100863d33e792869e7dbd86054299a91b64db6d6599919  xsa201-4.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYR+VFAAoJEIP+FMlX6CvZVZkIAKygymoB/4TYWHSQCDaekqe7
+oqs0SrOZwAiaXDDtNEq5oUmWzw852p6ewHzeHkuFrpXSTg9NZqE3ve/Ygy4z2lwQ
+jlrQblTl1wopoJDKFfvVqnGX4sEQvDqsOKAYpX0LbtjiIOAisKNT5f40J9X3L2Oz
+dzEdMuKDNvCDO6hPbDXprDDP9qETO4+Wopsj14F6rraYICrMl1P1LKabwr12936s
+XuegVU25S777YJ3CXpJVSCGns6zZzJm345l1VdgQ5M+KmMQkb4P+v5do7rMHMZFU
+LvYqxT9M+V6EDylByNp1HuYJWFQU7jgH/oK4k0M3EHAuovN5GZKp7SdGywVEEwY=
+=t4pk
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa201-1.patch" of type "application/octet-stream" (3093 bytes)
+
+Download attachment "xsa201-2.patch" of type "application/octet-stream" (6468 bytes)
+
+Download attachment "xsa201-3.patch" of type "application/octet-stream" (1673 bytes)
+
+Download attachment "xsa201-3-4.7.patch" of type "application/octet-stream" (1650 bytes)
+
+Download attachment "xsa201-4.patch" of type "application/octet-stream" (4484 bytes)
