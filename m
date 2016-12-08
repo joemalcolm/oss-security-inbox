@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["352" "Monday" "10" "October" "2016" "10:12:21" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20161010081221.GA20544@lorien.valinor.li>" "16" "Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" nil nil nil "10" "2016101008:12:21" "[oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME" (number mark "U       carnil@debia Oct 10   16/352   " thread-indent "\"Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME\"\n") "<3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>" ("<ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>" "<a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>" "<160916195601.AA66726.SM@caleb.ins.cwru.edu>" "<20160927205512.GA25156@jasmine>" "<5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>" "<3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["745" "Thursday" "8" "December" "2016" "13:02:04" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1612081258430.26257@wniryva>" "25" "[oss-security] CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" nil nil nil "12" "2016120807:32:04" "[oss-security] CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" (number mark "U       ppandit@redh Dec  8   25/745   " thread-indent "\"[oss-security] CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3835 invoked by uid 550); 10 Oct 2016 08:12:36 -0000
+Received: (qmail 22044 invoked by uid 550); 8 Dec 2016 07:32:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3817 invoked from network); 10 Oct 2016 08:12:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7kCV2iZic4F2ERRRQCJmA8cxnfNN+KJqnx4p3RD4Bj0=;
-        b=CVXdw+0uwTQPPlhxkz/uZqtTUAXZ6yQHKCAhRFBFol7OIf3AmhRYqlRXqI5LU2I4hf
-         wrtlQCb9aXqv+T9BbfGGE6u5+RGs6zsXWVJxUTHKRXYq16Fdgyu0uCpzgUG4OQzMXxtK
-         PE5lwHRX3Y37D4WYYikbAi6s9ZVc8HZt9vkFTokTwRea/TZuZQtONHejuIyGxeMMuQS0
-         ciEjfX/Be/YwErHesQuUdit3Loo1lzpYJLgGa4I+Fi0bxMQ0jsj/fvDafrPn2lH2mTQ6
-         RXOH7itj82RDjjEAz17bhpPzH6puO+I5PLW/8BNZnRCwW+SVK/1xyaM9EJj+wazTKg4W
-         njkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7kCV2iZic4F2ERRRQCJmA8cxnfNN+KJqnx4p3RD4Bj0=;
-        b=kJjeMRxs2cDX1iO9QNavnBY7Eli+UFQNp40j6S5ta3ADZIWjTw/dpAz2oEejU6fuZl
-         SCIs53tPpgm0wW9fB7ysrMLhGcvTYSa7z3E9ZlvATNjPBATxYAZnJAjLTJRjNA8RjDT1
-         A8iIhz3pn5oG8CG/P83cC/M4GIhadMbDnrfF6SS7K7lYet+j+6XKeS6zPouzC3zhIVCL
-         slfU602NdzqIsTfo3r4Sch2/onUPoRzLhQNMBhVVoKJrNeDblNEdtGX817iVG6jRQZuh
-         qZ7oA/LkCfNXY5bUWE92PJj4N3X/q/0Fb7Xn6B3OnhLu5FeWCwbXCO+ZqI0jfYzsejCO
-         oWJg==
-X-Gm-Message-State: AA6/9RkW73SCrfKWbxJ/4XnCf4YhGPdzItqKLMdQni4Q6EQiVs8fz5AJu77CoTsS4XyY2g==
-X-Received: by 10.36.73.23 with SMTP id z23mr9192976ita.32.1476087144375;
-        Mon, 10 Oct 2016 01:12:24 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Mon, 10 Oct 2016 10:12:21 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: Leo Famulari <leo@famulari.name>,
-	"john.haxby@oracle.com" <john.haxby@oracle.com>
-Message-ID: <20161010081221.GA20544@lorien.valinor.li>
-References: <ea2555f7-dac3-948f-eef4-ff0dc624bddd@oracle.com>
- <a5ca9fe1-6a0b-246f-4f22-60470c9f48f2@case.edu>
- <160916195601.AA66726.SM@caleb.ins.cwru.edu>
- <20160927205512.GA25156@jasmine>
- <5d16b9c9-b7e7-eb73-bf90-21162a84d791@case.edu>
- <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
+Received: (qmail 22017 invoked from network); 8 Dec 2016 07:32:22 -0000
+Date: Thu, 8 Dec 2016 13:02:04 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: liq3ea@gmail.com, psirt@huawei.com
+Message-ID: <alpine.LFD.2.20.1612081258430.26257@wniryva>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3230301C09DEF9499B442BBE162C5E48ABE4A610@SESTOEX04.enea.se>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: Re: [oss-security] Re: CVE-2016-0634 -- bash prompt expanding
- $HOSTNAME
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Thu, 08 Dec 2016 07:32:10 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: display: cirrus_vga: a divide by zero in
+ cirrus_do_copy
 
-Hi,
+   Hello,
 
-On Mon, Oct 10, 2016 at 08:01:15AM +0000, Sona Sarmadi wrote:
-> Hi Chet,
-> 
-> > > Thanks for the patch! Do you plan to add it to the bash-4.3-patches
-> > > series [0]?
-> > 
-> > This went out as bash-4.3 patch 47.
-> 
-> Where can we find patch 47 for bash-4.3? 
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to a divide by zero issue. It could occur while copying VGA data 
+when cirrus graphics mode was set to be VGA.
 
-See: https://ftp.gnu.org/pub/gnu/bash/bash-4.3-patches/bash43-047
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance on the host, resulting in DoS.
 
-Regards,
-Salvatore
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
+
+This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo 
+360.cn Inc. and PSIRTeam of Huawei Inc.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
