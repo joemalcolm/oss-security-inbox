@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/29/7
-Message-ID: <d2199a0a0afa4844b7add509b108329c@imshyb02.MITRE.ORG>
-Date: Tue, 29 Nov 2016 17:29:39 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/16
+Message-ID: <47ec68bee7cc4c0d873931a344c85e74@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 12:19:17 -0500
 From: <cve-assign@...re.org>
-To: <dmoppert@...hat.com>
+To: <bluewind@...u.at>
 CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: openjpeg CVE-2016-3181, CVE-2016-3182 .. and CVE-2013-6045
+Subject: Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1382202
+> The linux kernel contains a bug where a fragmented IPv6 packet causes a
+> panic after a timeout (seems to be roughly 60 seconds). This can be
+> triggered remotely via the internet and results in a DoS (kernel panic).
 
-> The reproducer [of https://github.com/uclouvain/openjpeg/issues/725] happens to tickle
-> a flaw in a patch for CVE-2013-6045 that was posted here back when:
-> 
-> http://seclists.org/oss-sec/2013/q4/412
-> 
-> segfault-1.patch uses:
-> 
-> +                     tilec->data = (int*) opj_aligned_malloc((comp0size+3) * sizeof(int));
-> 
-> which should have used compcsize instead of comp0size.
-> 
-> Upstream never included this patch - deeper work went into eliminating this and
-> other issues in openjpeg-1.5.2.  The patch that addresses this particular issue
-> seems to be 69cd4f92 (hunk starting /* testcase 1336.pdf.asan.47.376 */).
-> 
-> https://github.com/uclouvain/openjpeg/commit/69cd4f92
-> https://github.com/uclouvain/openjpeg/issues/297
-> 
-> This hasn't been an issue in upstream openjpeg releases for a long time ...
-> but there are LTS distributions around still shipping 1.5.1 (or 1.3) with the
-> patches from here applied.  Those should preferably upgrade to 1.5.2:  changing
-> comp0size to compcsize eliminates this particular crash ...
+> https://bugzilla.kernel.org/show_bug.cgi?id=189851
 
-Use CVE-2016-9675 for this vulnerability, stated to have a "crash or
-possible code execution" impact, that results from mistakenly using
-the comp0size variable (instead of compcsize).
+>> unable to handle kernel NULL pointer dereference
+
+>> Seems I can reliably crash said machines running 4.8.12-2 by sending
+>> them incomplete fragmented IPv6 packets. The kernel indeed has
+>> NET_L3_MASTER_DEV.
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
+
+>> the dst->dev should be preferred for determining the L3 domain
+>> if the dst has been set on the skb. Fallback to the skb->dev if it has
+>> not. This covers the case reported here where icmp6_send is invoked on
+>> Rx before the route lookup.
+
+Use CVE-2016-9919.
 
 - -- 
 CVE Assignment Team
@@ -48,17 +40,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYPgC5AAoJEHb/MwWLVhi2hbcP/1RHpatrKyMXBx7glnwHES3y
-RzIKPd/DHgpd4DoXVjHCv9EFnkLbcGT1r9efX1GZKxi5SKDRtdPr8X6430mYk5Pu
-VilIA+8npB3rfaOncVLGJ24jrlcxrp2UF+w+5soWa442PEtd45UtY2WxLcXsIdtq
-z3cmoVcYcCyWan5aQjFBJEssNk7c5vglt/6nxW2jrmZpOqMYcPt9XlcfbZRk8T19
-501bqoURLLhy5YL9+jKQdUtPhbaf+JSVqyHxOqOg+xrVd1AqIaWvJ7evVRaVYlWB
-+agVEVb2uviA6UB9OQKPK0UkHRRYWW4uvCnQS6zOvCs4U6PdEcHZMXtdp8LrRQI4
-F28az8rxpfnU9aHE3Syu6zlqy27ZbwLorLEL43FjeduhMxbxaPiatU6lubVawZf3
-UV0YyEx7hSMQ/xFTG8HtJ1cwZf4hLqDK0idABBEW6PNR1eyFoHbMG/tMOUX439fy
-qyvSAJ69YS4ftXTihKWMNOA7Z0kOgN87rZMU3A7Uh9Boy7y3IobmrRMaD2VdE3aW
-OF4Sa2dLyHV+/LKmC3n/o60dGVJDyNALhdGNtnG8MoQVwFhhr7Db4LPpLSWPKc2I
-3LgTaLbxdjctvZLU/aWjF/YEaGDeWHtsWfP0XnBEceaGIxl5tddhIhfjTN14Rb89
-Y6Lf6hQUSq1ZoR8Rpkc+
-=riCJ
+iQIcBAEBCAAGBQJYSZWMAAoJEHb/MwWLVhi2UAAQAKUTqLnsjpwqlBAxNh9rEexe
+ljitZUtj0WSTrYAY+EdPm6n5mDocVCw5IlB2wd8Fa/8z2kPigG/9oDafnWXJFKK1
+hlqNZAep/GBGX9ISVxbLPFJ5jel8BWsZ3kwiAdj5t4GcuTDbwOkujvknHyhxBS6T
+kKBE/TVtafKcLUd+D6qzWyt0BaOz+ATKKrekrkRKkm7yEBaGIUHIekWZnK0tJ+sS
+08sFKUxzfDCud//OepxNgxRDlecqlcK0PKNp9NNRgD/+D99JgLaxItMVVMkQrh5s
+854jFifEhObQKeJLAUotfvSJjIoASXHrndyhwCw2C636vqsASE9KVItzmXV4MzSW
+4+8Yqi/jLExwSe1z3Z4R6+zpQopok/ZmGJ9BPBODrU8bsCm/eFvA2eXRvXD/v2Oh
+/lFbDJf34P8FM8wvzFTc0tDJB5Lf2xZ2pjEUfEdM0hlryfKWIoaGDzcpKPGfewiN
+M3yHp3CcuKCX6pVxrmonA1goJTpddBqALUavwWtRRnF6ozUhKpWG6G2zhkVn9ZaT
+vwSSlsYw6BTYpMz1ZPF6rqeCowtdQDI/J6gM8OuQAq/aV/i0jmFv5ToB158dy5yc
+rq2wKEdUv6y0ZM7lWX5aleGlEfyMyIB/ZtTWy5wAvyfpwlv6X3/OSc/9eXxFB27M
+R2CpnZwv2wLfC6/R9czc
+=DVJY
 -----END PGP SIGNATURE-----
