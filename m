@@ -1,83 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/27/10
-Message-ID: <CAJt9-x6kPqB6N+qT=70uYvF00sFECT8hBhLzJU9SZJ-q7p_F9g@mail.gmail.com>
-Date: Wed, 27 Jan 2016 20:39:35 +0000
-From: Matthew Wild <mwild1@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-0756: Prosody XMPP server: insecure dialback key generation/validation algorithm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/10
+Message-ID: <20161208105040.0f2ae557@pc1>
+Date: Thu, 8 Dec 2016 10:50:40 +0100
+From: Hanno Böck <hanno@...eck.de>
+To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: roundcube code execution via mail()
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability has been found and fixed in the Prosody XMPP server.
+Hi,
 
-CVE-2016-0756
--------------
+This looks rather serious:
+https://blog.ripstech.com/2016/roundcube-command-execution-via-email/
 
-Project
-  ~ Prosody XMPP server
-URL
-  ~ https://prosody.im/
-CVE
-  ~ CVE-2016-0756
-Date
-  ~ 2016-01-27
+Upstream:
+https://roundcube.net/news/2016/11/28/updates-1.2.3-and-1.1.7-released
 
-Affected versions
-  ~ All versions prior to 0.9.10
-Affected Prosody modules
-  ~ mod_dialback
-Fixed versions
-  ~ 0.9.10, 0.10 nightly build 201, trunk nightly build 612
+-- 
+Hanno Böck
+https://hboeck.de/
 
-Description
------------
-
-The flaw allows a malicious XMPP server to impersonate the vulnerable
-domain to any
-XMPP domain whose domain name includes the attacker's domain as a suffix.
-
-For example, 'bber.example' would be able to connect to 'jabber.example' and
-successfully impersonate any vulnerable server on the network.
-
-Affected configurations
------------------------
-
-The default configuration is affected. Servers with mod_dialback
-disabled are not affected.
-
-Servers with s2s_secure_auth enabled will reject incoming
-impersonation attempts (that is,
-servers attempting to impersonate other domains will be rejected), but
-may still be impersonated to other servers on the network.
-
-Temporary mitigation
---------------------
-
-Disable mod_dialback by adding "dialback" to your modules_disabled
-list in the global
-section of your config file, and restart Prosody:
-
-   modules_disabled = { "dialback" }
-
-Note that disabling dialback will affect interoperability with servers
-that do not have trusted
-TLS certificates.
-
-Advice
-------
-
-All users should upgrade to 0.9.10, or check their OS distribution for
-security updates. Users of development branches (0.10, trunk) should
-upgrade to the latest nightly builds.
-
-Credits
--------
-
-The flaw was discovered and responsibly disclosed to us by Thijs Alkemade.
-
-Links
--------
-
- - https://prosody.im/security/advisory_20160127/
- - http://blog.prosody.im/prosody-0-9-10-released/
- - https://prosody.im/issues/issue/596
- - https://hg.prosody.im/0.9/rev/5c6e78dc1864
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
