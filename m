@@ -1,4 +1,9 @@
-Received: (qmail 11783 invoked by uid 550); 1 Oct 2023 12:21:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4153" "Thursday" "8" "December" "2016" "02:28:11" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A32B5343E@EX02.corp.qihoo.net>" "69" "[oss-security] [CVE-2016-8595] ffmpeg crashes with an assert" "^Date:" nil nil "12" "2016120802:28:11" "[oss-security] [CVE-2016-8595] ffmpeg crashes with an assert" (number mark "U       lianyihan@36 Dec  8   69/4153  " thread-indent "\"[oss-security] [CVE-2016-8595] ffmpeg crashes with an assert\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10154 invoked by uid 550); 8 Dec 2016 04:50:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,119 +11,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30106 invoked from network); 1 Oct 2023 05:16:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1696137379; x=1696223779; bh=8Wp1ZWQD7WbQIfF/HQZVIZh8liJjyqOTlcf
-	mBRZDfKY=; b=qB4qWJUJ930zjIV7EV+9NniVJCglCudmm8RrMGGCNl9PaQc6QKM
-	ldA2STDfmScIeZVHzvEFi8I+RVEz8UWRNoX0cHFcGdUx7C/V9w4iUC3KGSWiRZXw
-	cfXkORusbeGuYUXL1ov3cpfEXxea4sZoNs8X9ovMQunRLgC45FsqczNv10ysFoRk
-	NgyZp9Atohw0pZ8RHIP3/zkJeQtMXSAdAoo6Ahjeb2LaIrNWPoYp/kW/M+7JyxNU
-	aYSOxECxfo1f1wM5RIUgVy6xMksqL9YYsjB4wgxykVu9nGhAIdFtFc1HBgxlyDVm
-	Lb8nKRkGYBMFCFI9ARTO4WI93hjrVqcwANg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1696137379; x=1696223779; bh=8Wp1ZWQD7WbQI
-	fF/HQZVIZh8liJjyqOTlcfmBRZDfKY=; b=V+zaPBsLCg4O20eitMSCsimi77DnT
-	HUXQprkVF6yijMmrZvfuPHlcHdhV15fpjOpPNTaIP4z4sbOJamO82FD1uONYIJjQ
-	hVSAor9RSlCiGmpNT+iDVzhedTOah2Sf9cML6crfqnhPrttK+nGqJiEXLJIpC5p7
-	+DtBu8N+Zsa47stTKcjCb/Bj01yDg7vdaw4N2ZJkPyHnN/mCVlZabklHcRYkHh/v
-	pmGeIES/6yMJ5gNO6bEXeJ+cxpZfhjhxGKchTNz9mRK7s+i2Lgalv7xqe4p7ELKW
-	X3wTioFFk9961tH7KpiTW1s4WN2OIXmUCrD/R612qsU3nEIJFfYYI374Q==
-X-ME-Sender: <xms:owAZZTcZO5CtGYpFiebU5bGfemukz2UlRuCdvIX3_zwepFKqQv_UWw>
-    <xme:owAZZZNCe7onw1Wh5d3O5q6-kBPLmW3xeuiYCGKb8s7W5Oog2Q1UacPcNe-Dl36O7
-    8Mob3wq8GKgJx8>
-X-ME-Received: <xmr:owAZZcjCL_VJ_u_pBrvx1D7dPlrbo8TsW1EODEQv0ditYa53au0a_f7ZavRO-PRiPW_qCkPg_RY25fW17NCKfzy7njqRcFT8ww37BjssxSUSMwoX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudejgddugecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttddvnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihes
-    ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    eigfeifedvgfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesih
-    hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:owAZZU8LmZNUb5Tv0kTHB-KuzAzjWX_QKVDjWws5J9md4kW92uMK-Q>
-    <xmx:owAZZfuOaoOHTj8HVl6eIGWnxavSb608LAs5pqcsIJo8Vq_trnVQVw>
-    <xmx:owAZZTH_Hqts_q3XllH0GI1YZIIqi5obB7aSlXhSSehB17JI8qMTPQ>
-    <xmx:owAZZd7TiqbQcpFYeDeEjASLvj9fKqG8bj89uXgJc5fzUffEBLFOhg>
-Feedback-ID: iac594737:Fastmail
-Date: Sun, 1 Oct 2023 01:16:01 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRkAokgUEw9cD7yG@itl-email>
-References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
- <ZRXlPoozp5n+cWv1@itl-email>
- <22398fb96f04bf431b3ed0e4778e1cfcd64046ea.camel@orlitzky.com>
- <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
- <3708d220187cfe4a2f03f53067edfd15f1cbf8b5.camel@orlitzky.com>
- <ZRdyaYEi9YOZUXAg@codewreck.org>
- <ZRhUF9yHctTj5DhO@itl-email>
- <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
+Received: (qmail 1492 invoked from network); 8 Dec 2016 02:28:24 -0000
+Thread-Topic: [CVE-2016-8595] ffmpeg crashes with an assert
+Thread-Index: AdJQ+rArUWde614JTYC3a/pY1lPjZw==
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B5343E@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.15]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pEQ1GQC2q28eXEOb"
-Content-Disposition: inline
-In-Reply-To: <36a25f2467809ee727239db10684e147e7440326.camel@orlitzky.com>
-Subject: Re: [oss-security] Rust programs in distrbutions (Was:
- CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+Date: Thu, 8 Dec 2016 02:28:11 +0000
+From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2016-8595] ffmpeg crashes with an assert
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---pEQ1GQC2q28eXEOb
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 1 Oct 2023 01:16:01 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Rust programs in distrbutions (Was:
- CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
-
-On Sat, Sep 30, 2023 at 07:28:46PM -0400, Michael Orlitzky wrote:
-> On Sat, 2023-09-30 at 13:00 -0400, Demi Marie Obenour wrote:
-> > It is also worth noting that Rust-the-language supports dynamic linking.
-> > Once Cargo supports this and downstreams (like Fedora) obtain sufficient
-> > build capacity, it will be possible to use dynamic linking by performing
-> > automatic cascading rebuilds whenever a package is upgraded.  Arch
-> > already does this for Haskell IIUC.
->=20
-> We do it for Haskell in Gentoo, too, but we have a dark secret: it only
-> works because Haskell became unpopular. There are basically only two
-> Haskell programs, and everything works for n =3D 2.
-
-Why would this not work for a more popular language like Rust?  I know
-that Gentoo is limited by the compute resources of a single machine, but
-cascading rebuilds should not be a problem for modern distributed build
-infrastructure, provided that the build clusters are sufficiently large.
-
-Also, are the two programs GHC and Pandoc?
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
---pEQ1GQC2q28eXEOb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUZAKEACgkQsoi1X/+c
-IsEz2hAAu6NXrMlBnU6A8UaxtU9Hg2BA0u4XIdhHIOyQKrcrJzreHKDjirT5T6Js
-Eeuhazom2ojW9HzOQm1ELPe5gkJIhSEyZt9r/IVPJdmzKmTwSOc1qxEftpvHzPNU
-oGfUcrVv2uU2AAKRNmFtq426EXwtTypB7XLALihRYtFwI+6oboZAcVH5WtVVPrOx
-tZfKcrkqH0EebwKQ6ZDdQzxKkfQaiwGKrQMhK4PTvReoekt0g4Eo5lyogM3llmZj
-APaYb0mgNpbmTvPgiykK4U9vPMuKP/19/dqBt4TSlxcej4f9j61hKnBH0leX3gPH
-HpZIcYRe3oVhEFkSMRQVBaplURvXZt4DJ04pxaViMC61bznXl4v5azhJ3C3H7exn
-a1emkOWqrry7sK5CzeJr2E7JHQTm5p9Nh+MCKpr2qHwjubVgWWjx12K3r9CgMnws
-C+3GAlZ6LTEvnNvp4ApWGEsqbLjKLxhby/xbLAoKnDVGLylPkfdkGlEhd7OhdJ45
-Me/cowj0h4U5E4tNqiADw+/LN08BBZ2FSTZWKxWUO15pwF0i6H6xGzj2IHUBUY9G
-fOiQ3nSfQ6/5y6Blj0jx1pTh19lpTCsPb2yyH6VhY4/f+9Jw3ZgUc0V1vpVDaseP
-qq6OJtKyTx73WJShpSzSQlBfQ9YXSsWnG7zSRLD5D5RdQGoVCnc=
-=9EOl
------END PGP SIGNATURE-----
-
---pEQ1GQC2q28eXEOb--
+SGkgLCBJoa9tIExpYW5ZaWhhbiAsYSBzZWN1cml0eSByZXNlYXJjaGVyIGlu
+IFFpaG9vIDM2MCBHZWFyIFRlYW0uDQoNCj09PT09PT09PT09PT09PT09PT09
+PT09PT09PSB0YXJnZXQgdmVyc2lvbiA9PT09PT09PT09PT09PT09PT09PT09
+PT09PQ0KDQpGZm1wZWcgMy4xLjQNCg0KPT09PT09PT09PT09PT09PT09PT09
+PT09PT09IHRlc3QgY29tbWFuZCA9PT09PT09PT09PT09PT09PT09PT09PT09
+DQoNCmZmbXBlZyAtYzphIGR2YXVkaW8gLWkgaW5wdXQuYXZpIC15IG91dHB1
+dC5tcDQNCg0KPT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gY3Jhc2gg
+aW5mbyA9PT09PT09PT09PT09PT09PT09PT09PT09PT0NCg0KQXNzZXJ0aW9u
+IDAgZmFpbGVkIGF0IGxpYmF2Y29kZWMvZ3NtX3BhcnNlci5jOjU5DQoNClBy
+b2dyYW0gcmVjZWl2ZWQgc2lnbmFsIFNJR0FCUlQsIEFib3J0ZWQuDQoweDAw
+MDA3ZmZmZjcwZjY1ZjcgaW4gcmFpc2UgKCkgZnJvbSAvbGliNjQvbGliYy5z
+by42IE1pc3Npbmcgc2VwYXJhdGUgZGVidWdpbmZvcywgdXNlOiBkZWJ1Z2lu
+Zm8taW5zdGFsbCBnbGliYy0yLjE3LTEwNi5lbDdfMi40Lng4Nl82NCB4ei1s
+aWJzLTUuMS4yLTEyYWxwaGEuZWw3Lng4Nl82NCB6bGliLTEuMi43LTE1LmVs
+Ny54ODZfNjQNCihnZGIpIGJ0DQojMCAgMHgwMDAwN2ZmZmY3MGY2NWY3IGlu
+IHJhaXNlICgpIGZyb20gL2xpYjY0L2xpYmMuc28uNg0KIzEgIDB4MDAwMDdm
+ZmZmNzBmN2NlOCBpbiBhYm9ydCAoKSBmcm9tIC9saWI2NC9saWJjLnNvLjYN
+CiMyICAweDAwMDAwMDAwMDA4Y2U1Y2YgaW4gZ3NtX3BhcnNlIChzMT0weDIx
+MWExNjAsIGF2Y3R4PTB4MjExOTc1MCwgcG91dGJ1Zj0weDdmZmZmZmZmZDcx
+OCwgcG91dGJ1Zl9zaXplPTB4N2ZmZmZmZmZkNzIwLCBidWY9MHg3ZmZmZmZm
+ZmQ2MzAgIiIsDQogICAgYnVmX3NpemU9MHgwKSBhdCBsaWJhdmNvZGVjL2dz
+bV9wYXJzZXIuYzo1OQ0KIzMgIDB4MDAwMDAwMDAwMGMwYmIzYSBpbiBhdl9w
+YXJzZXJfcGFyc2UyIChzPTB4MjExYTE2MCwgYXZjdHg9MHgyMTE5NzUwLCBw
+b3V0YnVmPTB4N2ZmZmZmZmZkNzE4LCBwb3V0YnVmX3NpemU9MHg3ZmZmZmZm
+ZmQ3MjAsIGJ1Zj0weDdmZmZmZmZmZDYzMCAiIiwNCiAgICBidWZfc2l6ZT0w
+eDAsIHB0cz0weDgwMDAwMDAwMDAwMDAwMDAsIGR0cz0weDgwMDAwMDAwMDAw
+MDAwMDAsIHBvcz0weGZmZmZmZmZmZmZmZmZmZmYpIGF0IGxpYmF2Y29kZWMv
+cGFyc2VyLmM6MTgyDQojNCAgMHgwMDAwMDAwMDAwNzdjOGFlIGluIHBhcnNl
+X3BhY2tldCAocz0weDIxMTczMTAsIHBrdD0weDdmZmZmZmZmZDZhMCwgc3Ry
+ZWFtX2luZGV4PTB4MSkgYXQgbGliYXZmb3JtYXQvdXRpbHMuYzoxMzU4DQoj
+NSAgMHgwMDAwMDAwMDAwNzdjZTIzIGluIHJlYWRfZnJhbWVfaW50ZXJuYWwg
+KHM9MHgyMTE3MzEwLCBwa3Q9MHg3ZmZmZmZmZmRiNDApIGF0IGxpYmF2Zm9y
+bWF0L3V0aWxzLmM6MTQ2OA0KIzYgIDB4MDAwMDAwMDAwMDc4M2RkYSBpbiBh
+dmZvcm1hdF9maW5kX3N0cmVhbV9pbmZvIChpYz0weDIxMTczMTAsIG9wdGlv
+bnM9MHgyMTE3Y2IwKSBhdCBsaWJhdmZvcm1hdC91dGlscy5jOjM0NzkNCiM3
+ICAweDAwMDAwMDAwMDA0MGUzYjAgaW4gb3Blbl9pbnB1dF9maWxlIChvPTB4
+N2ZmZmZmZmZkZTUwLCBmaWxlbmFtZT0weDdmZmZmZmZmZTcwZCAiaW5wdXQu
+YXZpIikgYXQgZmZtcGVnX29wdC5jOjEwMDINCiM4ICAweDAwMDAwMDAwMDA0
+MTZjYTcgaW4gb3Blbl9maWxlcyAobD0weDIxMTcwMjgsIGlub3V0PTB4MTMz
+ZTUzNyAiaW5wdXQiLCBvcGVuX2ZpbGU9MHg0MGRhYmIgPG9wZW5faW5wdXRf
+ZmlsZT4pIGF0IGZmbXBlZ19vcHQuYzozMDM2DQojOSAgMHgwMDAwMDAwMDAw
+NDE2ZTAzIGluIGZmbXBlZ19wYXJzZV9vcHRpb25zIChhcmdjPTB4NywgYXJn
+dj0weDdmZmZmZmZmZTQzOCkgYXQgZmZtcGVnX29wdC5jOjMwNzMNCiMxMCAw
+eDAwMDAwMDAwMDA0MmE2NDAgaW4gbWFpbiAoYXJnYz0weDcsIGFyZ3Y9MHg3
+ZmZmZmZmZmU0MzgpIGF0IGZmbXBlZy5jOjQzMzUNCiMxMSAweDAwMDA3ZmZm
+ZjcwZTJiMTUgaW4gX19saWJjX3N0YXJ0X21haW4gKCkgZnJvbSAvbGliNjQv
+bGliYy5zby42DQojMTIgMHgwMDAwMDAwMDAwNDA0NWQ5IGluIF9zdGFydCAo
+KQ0KDQooZ2RiKSBsIGxpYmF2Y29kZWMvZ3NtX3BhcnNlci5jOjU5DQo1NCAg
+ICAgICAgICAgICAgICAgIHMtPmJsb2NrX3NpemUgPSBhdmN0eC0+YmxvY2tf
+YWxpZ24gPyBhdmN0eC0+YmxvY2tfYWxpZ24NCjU1ICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IEdTTV9N
+U19CTE9DS19TSVpFOw0KNTYgICAgICAgICAgICAgICAgICBzLT5kdXJhdGlv
+biAgID0gR1NNX0ZSQU1FX1NJWkUgKiAyOw0KNTcgICAgICAgICAgICAgICAg
+ICBicmVhazsNCjU4ICAgICAgICAgICAgICBkZWZhdWx0Og0KNTkgICAgICAg
+ICAgICAgICAgICBhdl9hc3NlcnQwKDApOw0KNjAgICAgICAgICAgICAgIH0N
+CjYxICAgICAgICAgIH0NCg0KLS0tLS3Tyrz+1K28/i0tLS0tDQq3orz+yMs6
+IGN2ZS1yZXF1ZXN0QG1pdHJlLm9yZyBbbWFpbHRvOmN2ZS1yZXF1ZXN0QG1p
+dHJlLm9yZ10gDQq3osvNyrG85DogMjAxNsTqMTDUwjExyNUgMjI6NTINCsrV
+vP7IyzogwazSu7q6DQqzrcvNOiBjdmUtcmVxdWVzdEBtaXRyZS5vcmcNCtb3
+zOI6IFJlOiBbc2NyMjQ3NzQ2XSBhc3NlcnQgcmVzdWx0IGluIERPUw0KDQo+
+IFtWdWxuZXJhYmlsaXR5VHlwZSBPdGhlcl0NCj4gYXNzZXJ0IHJlc3VsdCBp
+biBET1MNCj4gDQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLQ0KPiANCj4gW0FmZmVjdGVkIFByb2R1Y3QgQ29kZSBCYXNl
+XQ0KPiBmZm1wZWcgLSAzLjEuNA0KDQpVc2UgQ1ZFLTIwMTYtODU5NS4NCg0K
+LS0NCkNWRSBBc3NpZ25tZW50IFRlYW0NCk0vUyBNMzAwLCAyMDIgQnVybGlu
+Z3RvbiBSb2FkLCBCZWRmb3JkLCBNQSAwMTczMCBVU0EgWyBBIFBHUCBrZXkg
+aXMgYXZhaWxhYmxlIGZvciBlbmNyeXB0ZWQgY29tbXVuaWNhdGlvbnMgYXQN
+CiAgaHR0cDovL2N2ZS5taXRyZS5vcmcvY3ZlL3JlcXVlc3RfaWQuaHRtbCBd
+DQo=
