@@ -1,73 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/18/15
-Message-ID: <20160818143957.GI2701@suse.de>
-Date: Thu, 18 Aug 2016 16:39:57 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: Greg KH <greg@...ah.com>
-Cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...nel.org
-Subject: Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/5
+Message-ID: <7d122efe56014dc0a9bda220bf3bda62@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 01:35:37 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request: Qemu: usb: ehci: memory leakage in ehci_init_transfer
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 18, 2016 at 04:30:14PM +0200, Greg KH wrote:
-> On Thu, Aug 18, 2016 at 04:22:16PM +0200, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > I think this does not have a CVE yet, please assign.
-> > 
-> > https://www.spinics.net/lists/linux-usb/msg144177.html
-> > 
-> > Headline:         Linux Kernel Panic Over USB with HID Keyboard wMaxPacketSize
-> > Platforms:        Ubuntu
-> > Versions:         Linux Kernel 4.4.0-22-generic
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable
+> to a memory leakage issue. It could occur while processing packet data in
+> 'ehci_init_transfer'.
 > 
-> Huh?  It's much more pervasive than just that single platform or single
-> version.
-
-That was the quote from the original e-mail. I read further on it affects
-more kernel versions.
- 
-> > CVSS Score:       4.7
-> > CVSS Vector:      AV:L/AC:M/Au:N/C:N/I:N/A:C
-> > Filed Defects:    
-> > Related Defects:  
-> > CWE Tags:         
-> > Cycle:            
-> > Found by:         Jake Lamberson
-> > 
-> > 
-> > Linux Kernel panics when using an OHCI controller if a USB device reports being 
-> > a generic HID keyboard and reports a wMaxPacketSize of over 4095. The OHCI
-> > controller driver fails to reserve bandwidth for the device, causing the 
-> > keyboard handler to fail when attaching to the HID. Later, when the device is 
-> > removed, the system crashes due to a null pointer dereference in a linked list 
-> > of endpoint descriptors. The crash can be re-created using a Facedancer and UMAP 
-> > software. Given an appropriately configured Facedancer and UMAP setup, the crash 
-> > can be re-created with: 
-> > sudo board=facedancer21 python3 umap.py -P /dev/serial_device_here -f 03:00:00:E:0046 -l LOG
-> > 
-> > Note: OHCI is a USB 1.1 controller standard that can be included with devices
-> > that support either USB 1.1 or 2.0 as their highest USB spec. USB 3.0 devices
-> > all use xHCI, which implements USB 1.1, 2.0, and 3.0, making them immune to
-> > this particular bug.
-> > 
-> > -----------------
-> > 
-> > The proposed fixing patch is here:
-> > https://www.spinics.net/lists/linux-usb/msg144269.html
-> > 
-> > 
-> > It has not yet been committed to the USB tree or to Linus Tree as far as I see.
+> A guest user/process could use this issue to leak host memory, resulting in
+> DoS for a host.
 > 
-> Not true, it is commit id aed9d65ac3278d4febd8665bd7db59ef53e825fe in
-> the usb tree and in linux-next and will be sent to Linus tomorrow.
+> http://git.qemu.org/?p=qemu.git;a=commit;h=791f97758e223de3290592d169f8e6339c281714
 
-Ah sorry, only looked briefly.
+>> it doesn't free the 'p->sgl'
 
-> And are we really assigning CVE numbers for when you use an active
-> "hardware test probe"?  If so, how many are people going to be assigning
-> for these same problems on other operating systems?  :)
+Use CVE-2016-9911.
 
-I think attaching malicious USB devices and crashing the kernel should probably get CVE ids,
-or do you think it should not?
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Ciao, Marcus
+iQIcBAEBCAAGBQJYSPv+AAoJEHb/MwWLVhi2zvsP/3xTTHAxpT0SXnVo/5KFX/lC
+ANh7j1y2R9GVOBkwczTqD0MFwNDEM1FVVzhE9XVu4TLaJ7PYgsQzPpT6K+nI+Vhs
+fWq7rHIgclE9X4MP94N/sMYyE4oZZ35uJm0qLnXxItiGoeFKTNkWHtw1SPSzRRIK
+UfJ+PaA14SSts9XJquaxNf/kEYpKFhtGfrU5rsQc1XxSxMHhlBRdwOFLbMqopFhN
+oes/HFAwqmXpdmqxvUmvBhvcH4HR5+8RB4W9wM5wU+EAirYTSA8g2LQQiiFna2B7
+ES0ef9tZ/2PelYnExPj51Xl6xe5xbSML1z4MpxDX7GLyo/3oqM7/bLzFU7vnzsL1
+tA0UM5ipwb0An6TQDX285nGToTQU2KYbVYghz81F9Sro+GkVFPov5rq0s8bH54m0
+4GruXSeGGL7YKlOYPCq03p+stCXjUZS2d53qwPKMBBLmtomuGMK6LaUZnQQSn44V
+h7tphm8Hvapb86rBkixCA5xXBvwSGdX5QZy23Ppr2FBrfkGT4VEpWBdCEkn9Y3q2
+UUs8MdH9XRTlmqdfLf5EJPI53eIhxFVdBQV9VPb+qzuLtDt6ei24p5EPUZACUte7
+69cwfYegHyJnSXfL/FNuWDcdf2qsc0P1vh5Ka2QwUDVyRSl9Ef8qCt899aFRNsy5
+xUILseRrS8HSXuXKTtrR
+=yc/x
+-----END PGP SIGNATURE-----
