@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/1
-Message-ID: <8e6b5a03-cc0f-a4b0-cf47-7aa25aca207b@ipsumj.de>
-Date: Tue, 13 Sep 2016 01:53:00 +0000
-From: HW42 <hw42@...umj.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/12
+Message-ID: <1481193767048.41772@b.360.cn>
+Date: Thu, 8 Dec 2016 10:41:35 +0000
+From: 陈瑞琦 <chenruiqi@...60.cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: file inclusion(traversal/manipulation) in modx revolution 2.5.1
 Content-Type: text/plain; charset=utf-8
 
-From the advisory:
-> on MySQL versions in branches 5.5 and 5.6.
-> The datadir location for my.cnf has only been removed from MySQL starting
-> from 5.7 branch however in many configurations it will still load config
-> from:
-> 
-> /var/lib/mysql/.my.cnf
+I found a file inclusion(traversal/manipulation) vuln in modx revolution 2.5.1
 
-This is only the case if HOME is set to /var/lib/mysql, right? So for
-example not in the Debian config?
 
-> IX. VENDOR RESPONSE / SOLUTION
-> -------------------------
-[...]
-> No official patches or mitigations are available at this time from the vendor.
-> As temporary mitigations, users should ensure that no mysql config files are
-> owned by mysql user, and create root-owned dummy my.cnf files that are not in
-> use.
+Title: Path travel in modx version 2.5.1
+Author: Chen Ruiqi, Chenruiqi@...60.cn, @Codesafe Team
+Download Site: www.modx.com<http://www.modx.com/>
+Vendor: modx
+Vendor Contact: security@...x.com
+--------------------------------------------------------------------------------------------------------
+Discription:
+MODX (originally MODx) is a free, open source content management system and web application framework for publishing content on the world wide web and intranets. MODX is licensed under the GPL, is written in the PHP programming language, and supports MySQL and Microsoft SQL Server as the database. It was awarded Packt Publishing's Most Promising Open Source Content Management System in 2007.[1](wiki)
+-----------------------------------------------------------------------------------------------------------
+Vulnerability:
+By using relative paths and guessing locations on a server modx is installed on, an attacker can get the file system structure and delete any folder from a target server that the process running modx has permission. The attacker needs administrator privileges on the modx site to perform this attack.
 
-Would it not be a better mitigation to not read the conf files from the
-data directory at all? Something like the attached patch.
+--------------------------------------------------------------------------------------------------------
 
-View attachment "mysql.patch" of type "text/x-diff" (1062 bytes)
+Fix:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (826 bytes)
+https://github.com/modxcms/revolution/pull/13177
+
+update to version 2.5.2
+
+
+Could you assign CVE ID for this?
+
+
+Thank you
+
+Chen Ruiqi
+Codesafe Team
+
+
