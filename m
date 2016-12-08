@@ -1,4 +1,9 @@
-Received: (qmail 16149 invoked by uid 550); 24 Apr 2023 14:07:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3595" "Thursday" "8" "December" "2016" "02:33:57" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A32B53451@EX02.corp.qihoo.net>" "59" "[oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file " nil nil nil "12" "2016120802:33:57" "[oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file" (number mark "U       lianyihan@36 Dec  8   59/3595  " thread-indent "\"[oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8165 invoked by uid 550); 8 Dec 2016 04:50:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3791 invoked from network); 24 Apr 2023 13:44:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682343880; x=1684935880;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8JrkEhvvkfXfwtw3roKGtXwCDPH7M6gVBKqP9xSVepo=;
-        b=bDKZbN37nK0uiHtUgqGJAWJbLKoX6olhzfHAx6fdkG685lplrtqMRb/ML2X4RbjxXM
-         fFh+ptV7AvSI30gNlUdzKSR2d9kln3IilR6MSS/JlHVwHcAjBTW5dlH4IH3AAV8CsqSS
-         2isY3fT7AJfVPpMFFtGcM1JsiwTl8pyXbXzp4LyeJPdzVCjYqq+NS+teCHWas2CdAkhO
-         lwLe+TIjNe2lsismy3IGhtidIx/Okyy1d3EWezesGns/SQ2mDjhWu2UjMExcDPba45kW
-         Y9dNd5Zq4JgvVrSs0rmV9wCmU0krkZRqSpab+FdKYX9riXYxMg02EqIyLaAYWvRnAU95
-         RoDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682343880; x=1684935880;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8JrkEhvvkfXfwtw3roKGtXwCDPH7M6gVBKqP9xSVepo=;
-        b=Tfg2vUvFdYe0XsCqCwe7UtolpM/Qolb+xZwGQZpbxub8zsMkWx2yBs1Qv2XxiRXz4U
-         CgrbkCxwDCIYzHED0eQqxzB+Clno5aFlH4OElwcueckjDZWkbjh1+Idn4YoO+/lz8lif
-         QtVsRECKWdiMFidV/hTNONJoGlYBQKOun9AOzuVFZ57c6q1UQsK+ds8A72+fEt78k4+0
-         W+TKh+Ngw9wmpxexYL3dEkTbPVXlDR/ArmKi6h6Bu1i3Jxf1sJLL7KX/PZ2YqEtgqORk
-         zvDttKZvhQ51CTaib2eUnOWcsaZdaJIcvj8vgGj4aI2AV+Wb9or9qPVl1DCgI/jYwINT
-         hx9w==
-X-Gm-Message-State: AAQBX9fLNpyNkShEROYYVJ6GwSOI9DLPsTZYuNlu9J+uayD43VNqbcAo
-	3oLShSoOgzgTLlau+rUxo8vOpjvEgbJdDt6lCw6DWk+FFzCzUg==
-X-Google-Smtp-Source: AKy350YYdgLaevf7PsTzcU7fPjJvqImqIjv3KDrsF6spO/xym9yEUJQa+WjRodCQz6ivO8rSjMLyXMaj0r+c0YaVlFU=
-X-Received: by 2002:a17:90b:19d5:b0:246:bb31:e848 with SMTP id
- nm21-20020a17090b19d500b00246bb31e848mr13702394pjb.36.1682343879505; Mon, 24
- Apr 2023 06:44:39 -0700 (PDT)
+Received: (qmail 5140 invoked from network); 8 Dec 2016 02:34:09 -0000
+From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [CVE-2016-9561] ffmpeg crashes on decoding MOV file 
+Thread-Index: AdJQ+4MlGokhUCcXQ8CZ7/t1wEzSSg==
+Date: Thu, 8 Dec 2016 02:33:57 +0000
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B53451@EX02.corp.qihoo.net>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.15]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Mon, 24 Apr 2023 16:43:29 +0300
-Message-ID: <CAGUWgD8jWfhdA5+o_BJN-Mgh0+4x7yYPDcjb+Bve14b9Hxnp3A@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Real world vulnerabilities of CWE-1077: Floating Point Comparison
- with Incorrect Operator?
+Subject: [oss-security] [CVE-2016-9561] ffmpeg crashes on decoding MOV file 
 
-Are there real world examples of vulnerabilities of this:
-
-https://cwe.mitre.org/data/definitions/1077.html
-CWE-1077: Floating Point Comparison with Incorrect Operator
-
-This issue can prevent the product from running reliably. If the
-relevant code is reachable by an attacker, then this reliability
-problem might introduce a vulnerability.
-
-One simple example in python:
-
->>> A=(0.1+0.2)+0.3;B=0.1+(0.2+0.3);(A==B,A-B,A,B)
-(False, 1.1102230246251565e-16, 0.6000000000000001, 0.6)
+DQpIaSAsIEmhr20gTGlhbiBZaWhhbiAsYSBzZWN1cml0eSByZXNlYXJjaGVy
+IGluIFFpaG9vIDM2MCBHZWFyIFRlYW0uDQoNCkkgZm91bmQgYSB2dWxuZXJh
+YmlsaXR5IGluIGZmbXBlZyA8PSAzLjIuIFdoZW4gZmZtcGVnIGRlY29kZXMg
+YSBzbWFsbCBjcmFmdCBNT1YgZmlsZSB3aGljaCBpcyBqdXN0IGEgZmV3IG1l
+Z2FiaXRzLCBpdCB3aWxsIGFsbG9jYXRlIGEgaHVnZSBtZW1vcnkoYWJvdXQg
+YSBmZXcgZ2lnYWJpdHMpIGFuZCB0aGVuIGJlIGtpbGxlZCBieSBPUyAuDQoN
+Cj09PT09PT09PT09PT09PT09PT09PT09PT0gdGFyZ2V0IHZlcnNpb24gPT09
+PT09PT09PT09PT09PT09PT09PT09PT0NCg0KRmZtcGVnIDMuMg0KDQo9PT09
+PT09PT09PT09PT09PT09PT09PT09IHRhcmdldCBjb21tYW5kID09PT09PT09
+PT09PT09PT09PT09PT09PT0NCg0KRmZtcGVnIC1pIGlucHV0Lm1vdiAteSAx
+LnRzDQoNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09IGtleSBpbmZv
+cm1hdGlvbiA9PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQoweDAwMDAw
+MDAwMDA3YWU3YjYgaW4gYXZmb3JtYXRfZmluZF9zdHJlYW1faW5mbyAoaWM9
+MHgyMTczMjkwLCBvcHRpb25zPTB4N2ZmZmY3Zjc0MDEwKSBhdCBsaWJhdmZv
+cm1hdC91dGlscy5jOjMzNzcNCjMzNzcgICAgICAgICAgICBhdmN0eCA9IHN0
+LT5pbnRlcm5hbC0+YXZjdHg7DQoNCihnZGIpIHAgaWMtPm5iX3N0cmVhbXMN
+CiQzID0gMjY0MTgNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KQnJl
+YWtwb2ludCAzLCBjaGVfY29uZmlndXJlIChhYz0weDE5ZmYxODEwLCBjaGVf
+cG9zPUFBQ19DSEFOTkVMX0ZST05ULCB0eXBlPTEsIGlkPTAsIGNoYW5uZWxz
+PTB4N2ZmZmZmZmZkNDU4KSBhdCBsaWJhdmNvZGVjL2FhY2RlY190ZW1wbGF0
+ZS5jOjEzNQ0KMTM1ICAgICAgICAgICAgICAgICBpZiAoIShhYy0+Y2hlW3R5
+cGVdW2lkXSA9IGF2X21hbGxvY3ooc2l6ZW9mKENoYW5uZWxFbGVtZW50KSkp
+KQkJCQkJCQkJCS8vIG1hbGxvYyBhIGJpZyBtZW1vcnkgb24gZXZlcnkgbG9v
+cC4NCihnZGIpIHAgc2l6ZW9mKENoYW5uZWxFbGVtZW50KQ0KJDQgPSA1NDc3
+NDQNCg0KVGhlIHRvdGFsIG1lbW9yeSBhbGxvY2F0ZWQgaXMgYWJvdXQgMjY0
+MTgqNTQ3NzQ0IGF0IGxhc3QuDQoNCj09PT09PT09PT09PT09PT09PT09PT09
+PT09PT0gbXkgdGVzdCBpbmZvID09PT09PT09PT09PT09PT09PT09PT09PT09
+PSBmZm1wZWcgdmVyc2lvbiAzLjIgQ29weXJpZ2h0IChjKSAyMDAwLTIwMTYg
+dGhlIEZGbXBlZyBkZXZlbG9wZXJzDQogIGJ1aWx0IHdpdGggY2xhbmcgdmVy
+c2lvbiAzLjguMCAodGFncy9SRUxFQVNFXzM4MC9maW5hbCkNCiAgY29uZmln
+dXJhdGlvbjogLS1jYz1hZmwtY2xhbmctZmFzdCAtLWVuYWJsZS1kZWJ1Zz0z
+IC0tZGlzYWJsZS1hc20gLS1kaXNhYmxlLXN0cmlwcGluZyAtLWRpc2FibGUt
+b3B0aW1pemF0aW9ucyAtLWRpc2FibGUtc2hhcmVkDQogIGxpYmF2dXRpbCAg
+ICAgIDU1LiAzNC4xMDAgLyA1NS4gMzQuMTAwDQogIGxpYmF2Y29kZWMgICAg
+IDU3LiA2NC4xMDAgLyA1Ny4gNjQuMTAwDQogIGxpYmF2Zm9ybWF0ICAgIDU3
+LiA1Ni4xMDAgLyA1Ny4gNTYuMTAwDQogIGxpYmF2ZGV2aWNlICAgIDU3LiAg
+MS4xMDAgLyA1Ny4gIDEuMTAwDQogIGxpYmF2ZmlsdGVyICAgICA2LiA2NS4x
+MDAgLyAgNi4gNjUuMTAwDQogIGxpYnN3c2NhbGUgICAgICA0LiAgMi4xMDAg
+LyAgNC4gIDIuMTAwDQogIGxpYnN3cmVzYW1wbGUgICAyLiAgMy4xMDAgLyAg
+Mi4gIDMuMTAwDQpbbW92LG1wNCxtNGEsM2dwLDNnMixtajIgQCAweDJhNTgy
+YjBdIG92ZXJyZWFkIGVuZCBvZiBhdG9tICd0a2hkJyBieSAzMiBieXRlcw0K
+W21vdixtcDQsbTRhLDNncCwzZzIsbWoyIEAgMHgyYTU4MmIwXSBzdHJlYW0g
+MSwgdGltZXNjYWxlIG5vdCBzZXQgS2lsbGVkDQoNCi0tLS0t08q8/tStvP4t
+LS0tLQ0Kt6K8/sjLOiBjdmUtcmVxdWVzdEBtaXRyZS5vcmcgW21haWx0bzpj
+dmUtcmVxdWVzdEBtaXRyZS5vcmddIA0Kt6LLzcqxvOQ6IDIwMTbE6jEx1MIy
+M8jVIDg6NDANCsrVvP7IyzogwazSu7q6DQqzrcvNOiBjdmUtcmVxdWVzdEBt
+aXRyZS5vcmcNCtb3zOI6IFJlOiBbc2NyMjY0ODcxXSBIdWdlIG1lbW9yeSBh
+bGxvY2F0ZWQNCg0KPiBbVnVsbmVyYWJpbGl0eVR5cGUgT3RoZXJdDQo+IEh1
+Z2UgbWVtb3J5IGFsbG9jYXRlZCAsIHJlc3VsdCBpbiBEb1Mgb2YgZmZtcGVn
+Lg0KPiANCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tDQo+IA0KPiBbQWZmZWN0ZWQgUHJvZHVjdCBDb2RlIEJhc2VdDQo+
+IGZmbXBlZyAtIDMuMg0KDQpVc2UgQ1ZFLTIwMTYtOTU2MS4NCg0KLS0NCkNW
+RSBBc3NpZ25tZW50IFRlYW0NCk0vUyBNMzAwLCAyMDIgQnVybGluZ3RvbiBS
+b2FkLCBCZWRmb3JkLCBNQSAwMTczMCBVU0EgWyBBIFBHUCBrZXkgaXMgYXZh
+aWxhYmxlIGZvciBlbmNyeXB0ZWQgY29tbXVuaWNhdGlvbnMgYXQNCiAgaHR0
+cDovL2N2ZS5taXRyZS5vcmcvY3ZlL3JlcXVlc3RfaWQuaHRtbCBdDQo=
