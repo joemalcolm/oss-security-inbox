@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5076" "Wednesday" "2" "March" "2016" "13:16:06" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<315780479.31616770.1456942566400.JavaMail.zimbra@redhat.com>" "117" "Re: [oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes" "^Date:" nil nil "3" "2016030218:16:06" "[oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes" (number mark "        vdronov@redh Mar  2  117/5076  " thread-indent "\"Re: [oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes\"\n") "<20160302170031.C79B634E007@smtpvbsrv1.mitre.org>" ("<20160302170031.C79B634E007@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["544" "Thursday" "8" "December" "2016" "12:14:43" "-0800" "Ian Zimmerman" "itz@primate.net" "<20161208201200.25774.134A28B2@matica.foolinux.mooo.com>" "16" "[oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)" nil nil nil "12" "2016120820:14:43" "[oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)" (number mark "U       itz@primate. Dec  8   16/544   " thread-indent "\"[oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)\"\n") "<20161016024535.717936C0D4B@smtpvmsrv1.mitre.org>" ("<1975736.yU59nFIvqB@arcadia>" "<20161016024535.717936C0D4B@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27715 invoked by uid 550); 2 Mar 2016 18:16:19 -0000
+Received: (qmail 7997 invoked by uid 550); 8 Dec 2016 20:32:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27693 invoked from network); 2 Mar 2016 18:16:18 -0000
-Message-ID: <315780479.31616770.1456942566400.JavaMail.zimbra@redhat.com>
-In-Reply-To: <20160302170031.C79B634E007@smtpvbsrv1.mitre.org>
-References: <20160302170031.C79B634E007@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.112.16]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF44 (Linux)/8.0.6_GA_5922)
-Thread-Topic: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
-Thread-Index: rTq/dqhdPF3yKa4Uchg8cm9XS1y/Ew==
-Date: Wed, 2 Mar 2016 13:16:06 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request -- linux kernel: pipe: limit the
- per-user amount of pages allocated in pipes
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 18141 invoked from network); 8 Dec 2016 20:15:08 -0000
+X-Authentication-Warning: acedia.primate.net: itz set sender to itz@primate.net using -f
+Date: Thu, 8 Dec 2016 12:14:43 -0800
+From: Ian Zimmerman <itz@primate.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20161208201200.25774.134A28B2@matica.foolinux.mooo.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <1975736.yU59nFIvqB@arcadia>
+ <20161016024535.717936C0D4B@smtpvmsrv1.mitre.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20161016024535.717936C0D4B@smtpvmsrv1.mitre.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome
+ (pixel-accessor.h)
 
-Hello,
-Let me try to comment the below: 
+On 2016-10-15 22:45, cve-assign@mitre.org wrote:
 
->> However, the commit indicates that there isn't a mandatory behavior
->> change ("The limit are controlled by two new sysctls :
->> pipe-user-pages-soft, and pipe-user-pages-hard. Both may be disabled
->> by setting them to zero.") -- suggesting a possible interpretation as
->> a design enhancement, not a vulnerability fix.
+> > https://blogs.gentoo.org/ago/2016/10/07/
+> > imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
 
-I believe, there is a behavior change, as the default values of
-pipe-user-pages-soft and pipe-user-pages-hard:
+> Use CVE-2016-8678.
 
-+unsigned long pipe_user_pages_hard;                                   # is 0
-+unsigned long pipe_user_pages_soft = PIPE_DEF_BUFFERS * INR_OPEN_CUR; # is 16k pages == 64MiB
+Since there seems to be at least a bit of controversy about this, I
+think a pointer to the upstream issue may be helpful:
 
-allows only 64MiB of unread data fed into the pipes per user. The previous
-unrestricted behavior is possible if only both pipe-user-pages-soft and
-pipe-user-pages-hard is set to zero.
+https://github.com/ImageMagick/ImageMagick/issues/272
 
->> Also, the discussion
->> doesn't directly comment on whether the "filling large pipes" scenario
->> has a security impact that is otherwise unavailable to the attacker,
->> e.g., it doesn't discuss the difference between the attacker choosing
->> to fill 4000 pipes and the attacker choosing to use mmap.
-
-An attacker using this method consumes a kernel memory, which is not
-directly accounted to any per-user limit. Indirectly an attacker is
-limited by max-open-files and max-processes per-user limits, but their
-defaults on modern distributions allow attacker to consume approx. 4TiB
-or more of the kernel memory.
-
-I believe that in other way (surely, not counting yet-unfixed flaws of
-this type) an attacker cannot unrestrictedly consume the kernel memory.
-For example, mmap()ed memory mentioned is accounted to per-user virtual
-memory limit:
-
-$ uname -r
-4.4.0-0.rc6.git0.1.fc24.x86_64
-
-$ ulimit -v 612000
-$ ./mmaptest            # just mmap()s 512 MiB
-addr=0x7f1142992000
-
-$ ulimit -v 512000
-$ ./mmaptest            # fails to mmap() 512 MiB due to ulimit
-mmap(): Cannot allocate memory
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-
-
------ Original Message -----
-From: cve-assign@mitre.org
-To: vdronov@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Sent: Wednesday, March 2, 2016 6:00:31 PM
-Subject: [oss-security] Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=759c01142a5d0f364a462346168a56de28a80f52
-
-> The result is an OOM condition and oom-killer is not able to help
-> much, as the memory for the pipe data is a kernel memory and a memory
-> footprint of offensive processes is small.
-
-We feel that this should most likely have a CVE ID. The discussion
-outlines a realistic problem "it is possible for a single process to
-cause an OOM condition by filling large pipes with data that are never
-read. A typical process filling 4000 pipes with 1 MB of data will use
-4 GB of memory" and the need for a CVE ID does not depend on the
-details of the solution approach. Also, there doesn't seem to be any
-general opposition to addressing the problem (e.g., see the
-https://lkml.org/lkml/2016/1/19/674 post).
-
-However, the commit indicates that there isn't a mandatory behavior
-change ("The limit are controlled by two new sysctls :
-pipe-user-pages-soft, and pipe-user-pages-hard. Both may be disabled
-by setting them to zero.") -- suggesting a possible interpretation as
-a design enhancement, not a vulnerability fix. Also, the discussion
-doesn't directly comment on whether the "filling large pipes" scenario
-has a security impact that is otherwise unavailable to the attacker,
-e.g., it doesn't discuss the difference between the attacker choosing
-to fill 4000 pipes and the attacker choosing to use mmap.
-
-Is there anyone who believes 759c01142a5d0f364a462346168a56de28a80f52
-must not have a CVE ID?
-
-> The commit says: "Mitigates: CVE-2013-4312 (Linux 2.0+)"
-
-Regardless of any answers to the above question, it is not going to be
-useful to use CVE-2013-4312 to refer to
-759c01142a5d0f364a462346168a56de28a80f52.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW1xqUAAoJEL54rhJi8gl5sFcQAJjoPTO/xZL8sFOwfACRAXWD
-ycctDOyagiKIwnf9qyqSw18CTTskA2bRJTlhGywu3XnEKq/yAyYfj2+bNQ5OdvmT
-sQT+JTASckJIDnjqXefSxHZMbBTPOITyEZ52cZSRF8NvWyos1GUBxZRXE6Y1Nrx3
-VF1pNDpbbjJtPpwQ81atxUInE9TDeG0o7BUcX5wP/Q4yIdjU1nZ2MdrYYK4Sn2H2
-2/DECleX8EG8oUrPGxm64OXxmAOxB3E3Vigc0LC6OBindvU6VhjyeKzuKduu4W+m
-6GkIllgEzkBGlwqXTmLvbeB+TpnHU3w6ZdnAynmJHwV+AmivFOPHsJhOXlrAKz7S
-KRIkAgeSHOjqK6rg3V3+/az33v9yzl3dQGEmZYs3d/bX94A2q8Z/ECNOfMHk0uH3
-BbveT32coxxqOjAT4NrOVfWsQtiz2B2hSQek8URYYNuONKI/Qmc6Dk/lnTK5K4jO
-l3/tAqNM/avKbp6Q5rJ+JBZX/nH7x05bNx2klPVB1yZyBn6F+RbJYauQMerEcMUa
-ChSVYfUi7+k9ogqk/7/b8EhJiLK92CmBfsUFTIvuI+UUq0fQNMKGXvmYYJHHKOi/
-DJcKAIid0FLbXXi1YsCrFJu2NrvS0UiKOUeF/D0rVdm3emYGTIWbQOkvuDAsUs7e
-8mWQWhBXp+LU6fTUHdZi
-=pIDG
------END PGP SIGNATURE-----
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
