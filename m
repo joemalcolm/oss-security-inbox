@@ -1,36 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/12
-Message-ID: <20160929134526.GA24474@kroah.com>
-Date: Thu, 29 Sep 2016 15:45:26 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: CVE request - Linux kernel through 4.6.2 allows escalade privileges via IP6T_SO_SET_REPLACE compat setsockopt call
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/17
+Message-ID: <13b3cbe365324cd9a9d6ba909477fe95@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 13:57:19 -0500
+From: <cve-assign@...re.org>
+To: <hanno@...eck.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: roundcube code execution via mail()
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2016 at 07:43:35AM +0000, 张谦 wrote:
-> Hi there,
-> 
-> I found a memory corruption vulnerabiliry in Linux kernel through 4.6.2, and I
-> have a working exploit to escalade privileges which requires the ip6_tables
-> module to be loaded, that it is properly blocked on all up-to-date versions.
-> 
-> Due to the number of users running vulnerable code(not update to 4.7 or
-> higher), and that this exploit is only available to security researchers and
-> kernel packagers upon request but that I don't want it to spread.
-> 
->  
-> 
-> I have reported this issue to Linux kernel official and they have already fixed
-> this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Note, this was fixed many months ago, in May of 2016, and went into the
-stable kernel updates in June, 2016.  Any distro that updated to the
-stable kernel updates received this fix then.
+> https://roundcube.net/news/2016/11/28/updates-1.2.3-and-1.1.7-released
+> https://blog.ripstech.com/2016/roundcube-command-execution-via-email/
 
-Any distro that hasn't updated their kernel since then, well, you need
-to revaluate your trust of such a distro :)
+> https://github.com/roundcube/roundcubemail/commit/aa6bf38843f51a0fc7205acc98a7b84f3c4c9c4f
+> https://github.com/roundcube/roundcubemail/commit/45a3e81653eb6ad3685d1a9ab817a61df78178eb
 
-thanks,
+> highly critical because all default installations are affected
 
-greg k-h
+> When an email is sent with Roundcube, the HTTP request can be
+> intercepted and altered. Here, the _from parameter can be modified in
+> order to place a malicious PHP file on the file system.
+
+Use CVE-2016-9920.
+
+
+> a logical flaw in the application that causes the sanitization to fail
+
+> the $from parameter is expected to have no whitespaces
+
+> preg_match('/(\S+@\S+)/',
+
+> another regular expression in line 863 which requires that the line
+> ends ($) right after the email match. A payload used by an attacker
+> does not have to match this regex
+
+We do not feel that this regex discussion requires a second CVE. The
+essence of the CVE-2016-9920 issue is that sendmail.inc detects
+certain invalid envelope-from fields but does not do anything (such as
+executing $from = null) about them.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYSayXAAoJEHb/MwWLVhi2nvYP/jiR1J75kiydrXhB8Wr7amTP
+UMqG290QFlhfz+6kCVEtIe6G7gPLPbLiOFWLC/G3lFHCqeAW7jkYf+pqXurOcruM
+5FcasVgBG0rWXQrcJV1Do/ZVz2ECmTnMohKXaYTxSy72V4Nqf+E75T63sksOyb8D
+daaECedrpTtn1LXk/xPOYRzvCytWIqHax4Ak8aGWXKv5hh/jTqV6LiPVO3EJhM7F
+5CxCBGW0ApABWmxMdJcAoDKRnROnSedNyDoMpHVMiOiQzAJypivfcCk00kHeXJzi
+Ny87XnyeO4SsXHgB1eHMpLMNwLpZ7N88hLE8QLh/Eigh1KJlaIIBxGbK7/IgHj1o
+RDnWWHELPBou38Neo/tAuR/8I+z32mGnjDSwbuG0WlUta5toksf2g54c+GPwR615
+6iSwV4PaEwFygYiTkawIidiaVJ3BvL2AhsFtZs159xcwX7AjbG7+kCpv+KixacHx
+1ecpbI8TDCGLLN0DAX7JWwX/BM4XGc56SNG4Bbvfv5GKfNGRecupEse+NT7BOIzu
+odmcrxh4XDuxgeaP8lbbbSUgyJA1W3AtcZrL/8uUeD5Xd1OMbrcc8IIoXITPewJv
+4RXcJDEO2MF7+ghtMSwU5yjyZP3TioDr1aBSpx91LdyGDmhm8S25g01jdmyJFVIz
+bMXdDvcTXsOE5vepGh0h
+=q5Jb
+-----END PGP SIGNATURE-----
