@@ -1,4 +1,9 @@
-Received: (qmail 9707 invoked by uid 550); 15 Apr 2023 12:32:34 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1244" "Thursday" "8" "December" "2016" "16:03:16" "+0800" "Huawei PSIRT" "psirt@huawei.com" "<00fe01d25129$88fc70c0$9af55240$@com>" "42" "[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" nil nil nil "12" "2016120808:03:16" "[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy" (number mark "U       psirt@huawei Dec  8   42/1244  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy\"\n") "<alpine.LFD.2.20.1612081258430.26257@wniryva>" ("<alpine.LFD.2.20.1612081258430.26257@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13522 invoked by uid 550); 8 Dec 2016 14:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9403 invoked from network); 15 Apr 2023 12:31:23 -0000
-Date: Sat, 15 Apr 2023 14:31:18 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20230415123118.GA10525@openwall.com>
-References: <SN6PR00MB044717AE269F0AABB8456C86A89BA@SN6PR00MB0447.namprd00.prod.outlook.com> <87y1mwd1xm.fsf@gentoo.org> <CAGUWgD8297SAEoSS_hXGzk+VKQ_bE_K5CQeGrA26x0P=xouApQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGUWgD8297SAEoSS_hXGzk+VKQ_bE_K5CQeGrA26x0P=xouApQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] ncurses fixes upstream
+Received: (qmail 26600 invoked from network); 8 Dec 2016 08:03:42 -0000
+From: Huawei PSIRT <psirt@huawei.com>
+To: <ppandit@redhat.com>, <oss-security@lists.openwall.com>
+CC: <liq3ea@gmail.com>, <jiangxin1@huawei.com>,
+        Huawei PSIRT
+	<PSIRT@huawei.com>,
+        "Wanglijun (PSIRT)" <wanglijun.wanglijun@huawei.com>
+References: <alpine.LFD.2.20.1612081258430.26257@wniryva>
+In-Reply-To: <alpine.LFD.2.20.1612081258430.26257@wniryva>
+Date: Thu, 8 Dec 2016 16:03:16 +0800
+Message-ID: <00fe01d25129$88fc70c0$9af55240$@com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AdJRJTYSGgbIY/QMTK+84OmKdP0g5AAAvYNg
+Content-Language: zh-cn
+X-Originating-IP: [10.111.192.85]
+X-CFilter-Loop: Reflected
+Subject: [oss-security] Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
 
-On Sat, Apr 15, 2023 at 09:33:24AM +0300, Georgi Guninski wrote:
-> Isn't MicroSoft member of linux distros mailing list [0], which
-> purpose is exactly quietly trading 0days [1]?
-> 
-> Does the OP with m$ email address realize this?
-> 
-> [0] https://oss-security.openwall.org/wiki/mailing-lists/distros
-> [1] https://seclists.org/oss-sec/2019/q3/19
-> Re: linux-distros membership application - Microsoft
+Dear,
 
-The (linux-)distros lists are meant for handling of embargoed issues
-prior to their public disclosure and in cases where such private
-handling is expected to help.  In this case, the issue was already
-semi-public (via the fixes and the NEWS file) and I wouldn't expect
-private handling to help more than public does.  Every distro present on
-(linux-)distros is supposed to also be present on oss-security.  So in
-my opinion Jonathan did the right thing of posting this to oss-security
-right away.
+Could you please change the reporter information from PSIRTeam of Huawei Inc
+to Jiangxin <jiangxin1@huawei.com> of Huawei Inc. Thank you.
 
-Also, in general, choosing whether to post to linux-distros, to distros,
-or to oss-security shouldn't be related to whether one is a member of
-(linux-)distros or not.  Anyone can report an issue to any of these
-lists as appropriate for the given issue and its current status.
+Best regards,
+Huawei PSIRT
 
-Alexander
+-----=D3=CA=BC=FE=D4=AD=BC=FE-----
+=B7=A2=BC=FE=C8=CB: P J P [mailto:ppandit@redhat.com]=20
+=B7=A2=CB=CD=CA=B1=BC=E4: 2016=C4=EA12=D4=C28=C8=D5 15:32
+=CA=D5=BC=FE=C8=CB: oss security list
+=B3=AD=CB=CD: liq3ea@gmail.com; psirt@huawei.com
+=D6=F7=CC=E2: CVE request Qemu: display: cirrus_vga: a divide by zero in
+cirrus_do_copy
+
+   Hello,
+
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
+vulnerable to a divide by zero issue. It could occur while copying VGA data
+when cirrus graphics mode was set to be VGA.
+
+A privileged user inside guest could use this flaw to crash the Qemu process
+instance on the host, resulting in DoS.
+
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=3D1334398
+
+This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo
+360.cn Inc. and PSIRTeam of Huawei Inc.
+
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
