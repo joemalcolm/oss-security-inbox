@@ -1,42 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/12/7
-Message-ID: <e2b42449-584c-9d7f-070e-b65b3150d3bc@redhat.com>
-Date: Tue, 12 Jul 2016 22:46:04 +0300
-From: Paul Wouters <pwouters@...hat.com>
-To: oss-security@...ts.openwall.com, huzaifas@...hat.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: IKEv1 protocol is vulnerable to DoS amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/7
+Message-ID: <283cdffc6e30491c830b633484ad68b2@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 01:38:18 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request Qemu: 9pfs: memory leakage via proxy/handle callbacks
 Content-Type: text/plain; charset=utf-8
 
-On 06/14/2016 05:34 PM, Paul Wouters wrote:
-> On 06/13/2016 10:40 AM, cve-assign@...re.org wrote:
->>> Its not libreswan which is flawed, but its the protocol which they are trying to implement.
->>
->>> which implement IKEv1 are flawed, since they follow this protocol
->>
->> Many protocols could be described as "flawed." The IKEv1 protocol amplification concern does not make it flawed in a way that would lead to a per-protocol
->> CVE ID assignment.
-> 
-> Then you should pull the CVE-2016-5361 which deals with retransmission amplification in IKEv1
-> 
->  We are maintaining the
->> CVE-2016-5361 ID assignment for the upstream announcement of "libreswan 3.16 vulnerable to DDOS attack. Please upgrade to 3.17"
-> 
-> That statement on the libreswan website is clearly referring to CVE-2016-3071 not CVE-2016-5361.
-> 
->  and
->> accompanying upstream patch, as described in the http://www.openwall.com/lists/oss-security/2016/06/10/4 post.
-> 
-> Which again clearly refers to CVE-2016-5361 and not CVE-2016-3071
-> 
-> So again, please fix CVE-2016-5361 or drop it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I have tested openswan and strongswan and confirmed it contains the same amplification that is inherent in being IKEv1 compliant.
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9
+> File System(9pfs) support, is vulnerable to memory leakage issue. It could
+> occur via its '9p-handle' or '9p-proxy' backend drivers as they do not free
+> their respective allocated data objects.
+> 
+> A privileged user inside guest could use this flaw to leak host memory, thus
+> affecting other services on the host and/or potentially crash the Qemu process
+> on the host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg03278.html
 
-Neither implementation has applied the hardening that libreswan has applied for this that was the original information that caused
-CVE-2016-5361 to be issued for libreswan.
+>> 9pfs: adjust the order of resource cleanup in device unrealize
+>> http://git.qemu.org/?p=qemu.git;a=commit;h=4774718e5c194026ba5ee7a28d9be49be3080e42
 
-I believe MITRE needs to fix the inconsistency in the issuance of CVE-2016-5361, expand it to be about the IKEv1 protocol, and gather
-the other vendor information and patches, or issue additional vendor specific CVE's. I believe the first solution is better.
+Use CVE-2016-9913.
 
-Paul
+
+>> 9pfs: add cleanup operation in FileOperations
+>> http://git.qemu.org/?p=qemu.git;a=commit;h=702dbcc274e2ca43be20ba64c758c0ca57dab91d
+
+Use CVE-2016-9914.
+
+
+>> 9pfs: add cleanup operation for handle backend driver
+>> http://git.qemu.org/?p=qemu.git;a=commit;h=971f406b77a6eb84e0ad27dcc416b663765aee30
+
+Use CVE-2016-9915.
+
+
+>> 9pfs: add cleanup operation for proxy backend driver
+>> http://git.qemu.org/?p=qemu.git;a=commit;h=898ae90a44551d25b8e956fd87372d303c82fe68
+
+Use CVE-2016-9916.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYSPwLAAoJEHb/MwWLVhi2DDYP/2J/BVlx1Mb5J7Xm+kF4f2mS
+FAI/6LOEmrlhzq89mOW1sHCcM6ocAFaeW7EDyv8+fo+Dy0c45a/fpAKNNtQNIpGz
+/8gmkXYsFpz52WJ+JAqkLHGSm859+zOUq61JIhJf0KWsuxvqi+OH214qXxkHSxG9
+a/Qd2Q3giiPPVp+3geOlGG4+b9kbyA89utr3dMQ+pNa+66pm3Pu6vuu9SZNq2uMp
+fq6Oc2hRYfj+jVbMVbCfQyJfBXxBdgyX89U6ehpFyaEGmlrfd78WuAyYQ9qEaoDF
+ivyGJt+J4koqx2qwjFyMDR8lKZ9rCffXkCm3mavamNzG9FnV3qpCxI/4DloveAWn
+3cqVFx+b5NcMOpPSiLVNTLchsPoRUsH3jJWGwqBlcShhB5GE7KQ3BJrRfFPyEVtq
+rAOHB42Z16I2y6z0xOxuu8Vafc2egNJegIYXfYZfF+2OOtxmGykjnb0IERgMeptZ
+aahBOwremjQPEyQB9yIFcrovfUVHtx3ofnfqWqW4BoV0AyN5wAQoK+8smq91ZaJn
+fqTtd5rtKBNld4jsbUaX0Udui6Gcy/FQNuT9dBAyuObOoreXEgSWx099h40W+R69
+ZG63UhFFNlb9jtZ88azaA54IMdETf8FLaUwdk7K7lNUCsPLI1cbM+3XNQhYHRjmL
+XWqSVQ6M+yZo0z5gEnN7
+=ezyO
+-----END PGP SIGNATURE-----
