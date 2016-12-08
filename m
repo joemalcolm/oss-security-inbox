@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/01/3
-Message-ID: <CADSYzsv2SWT=HDdeDRXC-CvfFo7g37m-CL0Sd9sONEBGhX2Mrw@mail.gmail.com>
-Date: Fri, 30 Sep 2016 21:15:35 -0300
-From: Dawid Golunski <dawid@...alhackers.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/11
+Message-ID: <alpine.LFD.2.20.1612081659560.28510@wniryva>
+Date: Thu, 8 Dec 2016 17:13:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: liqiang6-s@....cn
+Subject: CVE request Qemu: char: use after free issue in char backend
 Content-Type: text/plain; charset=utf-8
 
-CVE: CVE-2016-1240
-Vulnerability: Tomcat packaging on Debian-based distros - Local Root
-Privilege Escalation
-Affected packages: Tomcat 6/7/8 deb packages (up to 8.0.36-2)
-Systems affected: Debian & Ubuntu & possibly others (using the
-affected deb packages)
+   Hello,
 
-Discovered by:
-Dawid Golunski (http://legalhackers.com)
+Quick Emulator(Qemu) built with the 'chardev' backend support is vulnerable to 
+a use after free issue. It could occur while hotplug and unplugging the device 
+in the guest.
 
-Tomcat (6, 7, 8) packages provided by default repositories on Debian-based
-distributions (including Debian, Ubuntu etc.) provide a vulnerable
-tomcat init script that allows local attackers who have already gained access
-to the tomcat account (for example, by exploiting an RCE vulnerability
-in a java web application hosted on Tomcat, uploading a webshell etc.) to
-escalate their privileges from tomcat user to root and fully compromise the
-target system.
+A guest user/process could use this flaw to crash a Qemu process on the host 
+resulting in DoS.
 
-The full Advisory and a PoC exploit can be found at:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05597.html
 
-http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
-
--- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+Thank you
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
