@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2396" "Wednesday" "5" "July" "2017" "13:27:21" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170705112721.GB28379@suse.de>" "62" "Re: [oss-security] systemd fails to parse user that should run service" "^Cc:" nil nil "7" "2017070511:27:21" "[oss-security] systemd fails to parse user that should run service" (number mark "        meissner@sus Jul  5   62/2396  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170705085034.GA2638@pali>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1921" "Thursday" "8" "December" "2016" "12:19:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<47ec68bee7cc4c0d873931a344c85e74@imshyb02.MITRE.ORG>" "46" "[oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)" nil nil nil "12" "2016120817:19:17" "[oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)" (number mark "U       cve-assign@m Dec  8   46/1921  " thread-indent "\"[oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)\"\n") "<753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>" ("<753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3246 invoked by uid 550); 5 Jul 2017 11:27:34 -0000
+Received: (qmail 5146 invoked by uid 550); 8 Dec 2016 17:19:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3224 invoked from network); 5 Jul 2017 11:27:33 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170705112721.GB28379@suse.de>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170705085034.GA2638@pali>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Daniel =?utf-8?Q?Skowro=C5=84ski?= <daniel@dsinf.net>
-Date: Wed, 5 Jul 2017 13:27:21 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
-To: oss-security@lists.openwall.com
+Received: (qmail 4094 invoked from network); 8 Dec 2016 17:19:29 -0000
+From: <cve-assign@mitre.org>
+To: <bluewind@xinu.at>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>
+Message-ID: <47ec68bee7cc4c0d873931a344c85e74@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 12:19:17 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
 
-On Wed, Jul 05, 2017 at 10:50:34AM +0200, Pali Rohár wrote:
-> On Sunday 02 July 2017 12:02 Daniel Skowroński wrote:
-> > Hi all,
-> > 
-> > Just wanted to bring attention to issue with systemd not doing what is
-> > expected when parsing User that should run service.
-> > When it fails to parse string starting with digit it fails back to root
-> > causing obvious threat to security.
-> > 
-> > See discussion with developer on github:
-> > https://github.com/systemd/systemd/issues/6237
-> > 
-> > Best,
-> > -Daniel Skowronski
-> 
-> Hi!
-> 
-> There are basically two problems:
-> 
-> 1) In more Linux distributions useradd tool allow to create a new user
-> which starts with digit. Also according to POSIX such user name is a
-> valid. This means that valid user name (for some Linux distributions)
-> from /etc/passwd specified in systemd unit file results running service
-> as root user.
-> 
-> 2) If user name specified in systemd unit file is syntactically correct
-> (according to systemd check) but user name does not exist then systemd
-> refuse to start that unit.
-> 
-> Which leads to problem that syntactically invalid user name (for
-> systemd) results in root user and syntactically valid non-existent user
-> name cause error.
-> 
-> Because check if user name is valid is different in systemd as specified
-> in POSIX and also different as in useradd tool supplied by some Linux
-> distributions, I see this as a security problem when processing invalid
-> input from configuration unit file.
-> 
-> Correct behaviour should be to throw error also when garbage (invalid
-> user name), according to internal systemd check, was specified. And not
-> start service under root user with high privileges.
-> 
-> Because of this I would suggest to ask for CVE identifier, so Linux
-> distributions can mitigate or decide how to handle this problem.
-> 
-> Linux distributions which follow POSIX standard when creating new users
-> are affected by this.
-> 
-> Please note that above bug tracker on github is locked for future
-> discussion, which means it is not possible to ask for more details or
-> continue discussion in upstream.
-> 
-> Which is really *bad* for security related problems.
-> 
-> What do you think, how should be this problem handled?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-One of SUSEs systemd developer is developing a patch, that fails the unit
-when parsing the username fails.
+> The linux kernel contains a bug where a fragmented IPv6 packet causes a
+> panic after a timeout (seems to be roughly 60 seconds). This can be
+> triggered remotely via the internet and results in a DoS (kernel panic).
 
-https://bugzilla.suse.com/show_bug.cgi?id=1047023
+> https://bugzilla.kernel.org/show_bug.cgi?id=189851
 
-Ciao, Marcus
+>> unable to handle kernel NULL pointer dereference
+
+>> Seems I can reliably crash said machines running 4.8.12-2 by sending
+>> them incomplete fragmented IPv6 packets. The kernel indeed has
+>> NET_L3_MASTER_DEV.
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
+
+>> the dst->dev should be preferred for determining the L3 domain
+>> if the dst has been set on the skb. Fallback to the skb->dev if it has
+>> not. This covers the case reported here where icmp6_send is invoked on
+>> Rx before the route lookup.
+
+Use CVE-2016-9919.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYSZWMAAoJEHb/MwWLVhi2UAAQAKUTqLnsjpwqlBAxNh9rEexe
+ljitZUtj0WSTrYAY+EdPm6n5mDocVCw5IlB2wd8Fa/8z2kPigG/9oDafnWXJFKK1
+hlqNZAep/GBGX9ISVxbLPFJ5jel8BWsZ3kwiAdj5t4GcuTDbwOkujvknHyhxBS6T
+kKBE/TVtafKcLUd+D6qzWyt0BaOz+ATKKrekrkRKkm7yEBaGIUHIekWZnK0tJ+sS
+08sFKUxzfDCud//OepxNgxRDlecqlcK0PKNp9NNRgD/+D99JgLaxItMVVMkQrh5s
+854jFifEhObQKeJLAUotfvSJjIoASXHrndyhwCw2C636vqsASE9KVItzmXV4MzSW
+4+8Yqi/jLExwSe1z3Z4R6+zpQopok/ZmGJ9BPBODrU8bsCm/eFvA2eXRvXD/v2Oh
+/lFbDJf34P8FM8wvzFTc0tDJB5Lf2xZ2pjEUfEdM0hlryfKWIoaGDzcpKPGfewiN
+M3yHp3CcuKCX6pVxrmonA1goJTpddBqALUavwWtRRnF6ozUhKpWG6G2zhkVn9ZaT
+vwSSlsYw6BTYpMz1ZPF6rqeCowtdQDI/J6gM8OuQAq/aV/i0jmFv5ToB158dy5yc
+rq2wKEdUv6y0ZM7lWX5aleGlEfyMyIB/ZtTWy5wAvyfpwlv6X3/OSc/9eXxFB27M
+R2CpnZwv2wLfC6/R9czc
+=DVJY
+-----END PGP SIGNATURE-----
