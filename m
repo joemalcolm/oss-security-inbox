@@ -1,29 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/1
-Message-ID: <alpine.LFD.2.20.1612011545500.26855@wniryva>
-Date: Thu, 1 Dec 2016 15:48:05 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Kernel: kvm: stack memory information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/8
+Message-ID: <b27c2ab5ac124be9929b4093ac19cd16@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 01:40:01 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <scott@...terman.com>
+Subject: Re: CVE Request: html5lib: potential cross-site scripting vulnerablity: quote attributes that need escaping in legacy browsers
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
-is vulnerable to an information leakage issue. It could occur on x86 platform, 
-in 32bit mode, while emulating instructions.
+> As found in
+> https://www.sourceclear.com/registry/security/cross-site-scripting-xss-/python/sid-3068/fix
+> html5lib fixed a cross-site scripting vulnerability in upstream
+> version 0.99999999 with commit
+> 
+> https://github.com/html5lib/html5lib-python/commit/9b8d8eb5afbc066b7fac9390f5ec75e5e8a7cab7
+> 
+> References:
+> 
+> https://github.com/html5lib/html5lib-python/issues/11
+> https://github.com/html5lib/html5lib-python/issues/12
+> 
+> Question about the CVE assignment for html5lib was raised as well in
+> https://github.com/mozilla/bleach/issues/229
 
-A user/process could use this flaw to leak host kernel memory bytes.
+We are not sure of the optimal way to represent this in CVE. We
+are making this mapping, which we feel is adequate:
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/2117d5398c81554fbf803f5fd1dc55eb78216c0c
+  Use CVE-2016-9909 for the mishandling of the '<' character in
+  attribute values.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1400468
+  Use CVE-2016-9910 for the mishandling of all of the other mentioned
+  characters in attribute values.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYSPwUAAoJEHb/MwWLVhi2HSwP/3e58+AisDyrqaNcdRNrQvPG
+ri5lDi8E9AFA38gx2IEdyavHzmzc+dCFUz/KGrapeHV94MLiAszUJTK1kB9nqesI
+iagSlx9sbYZcwCvbpiKcYex8UvKMR24CX2faoxtzJulycsulrvYzJ9Jskq4aylCQ
+pw7XipGJMs3gHHaSCThGq2t/w5zEiHdYSfKjixKdwk9jczhLihoRSueGkDDyBy5O
+M9q27mSccXHEDa2Xq6Eyio6rsTsckA9DRYh0L36JYn83XhMqBdqK00LnfgfUorzi
+tN4Mrxgci7pAE4JFTqrK9aR+LJht1oLf2Z79foucvIRyiyU5swVEKFz8HekEMbEm
+wAVmV67qV6A/bfR23/86JoQNSv7WjYoqrfue0tAY4Q1EM5fF4qN590lWT3bfDprT
+3wX9o8+3xt+JwSSQZdfw13jqjoJyxX10waJLcM02L72dM57OH7u8vB9c4xIiU14w
+/lhJxfW4DDNl4DNYuNE3Yj/auAPUCXhJfrY4RpjLFmfFSP48i2PNlgHCGXkE5cen
+5OmoaJN58L7Vi2q4cgEtUPdqGCQGawfZ5NXIhOyTrP2dcdAa6r+RqStlMH6MB2Cx
+IEMvqZCxmKtFKOZdx+svgjtvaQ6zs6Csc+z1GBTQc64nJH52ivV+e6Vb446hJNXR
+TsPjDC+UafOQstWKp4Qe
+=ZAOJ
+-----END PGP SIGNATURE-----
