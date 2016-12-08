@@ -1,4 +1,9 @@
-Received: (qmail 5905 invoked by uid 550); 20 Oct 2023 19:45:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2243" "Thursday" "8" "December" "2016" "13:57:19" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<13b3cbe365324cd9a9d6ba909477fe95@imshyb02.MITRE.ORG>" "55" "[oss-security] Re: roundcube code execution via mail()" nil nil nil "12" "2016120818:57:19" "[oss-security] Re: roundcube code execution via mail()" (number mark "U       cve-assign@m Dec  8   55/2243  " thread-indent "\"[oss-security] Re: roundcube code execution via mail()\"\n") "<20161208105040.0f2ae557@pc1>" ("<20161208105040.0f2ae557@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25833 invoked by uid 550); 8 Dec 2016 18:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,39 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13675 invoked from network); 20 Oct 2023 19:27:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aceecat.org
-	; s=rsa; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=xy1xqBoFTpP+yFsmogYrxMZYtht36t7r8zGrjrMKYlw=; b=VXNx4YgNXoSetYqfnWPQawiH2f
-	OEKIK2J/zPji4DO0SjDRbayNYE9WYRPzj0p0+eF0Md8VFM3uqljFHPqVgFngSs36FnUEM3OMlTgV1
-	i0va1PWi8pJc/XyD1gYmwhBVPCiJgCFTaTAtQMTYClP+PbktbZze65qB65L2bvVLObTfmioKAz5db
-	wY4HDTg7757j5X510x10AtknacfReaW+QwvsqJrwC9LmnooIaFhBEVKnbvFj2YQRhGSEi4EQtZE9O
-	BpVWc//7iWpM4cuIH+/CSJIhU4fZbG1oaqbB7tejUv8wy9rDhf03gO2h93AjI3WXXrqk+OtDMtOFF
-	0cAkbdqQ==;
-Date: Fri, 20 Oct 2023 12:27:27 -0700
-From: nightmare.yeah27@aceecat.org
-To: oss-security@lists.openwall.com
-Message-ID: <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@deg2z7j4ztug>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
- <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
- <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
- <20231019165354.kkjoxdbedeodyfik@yuggoth.org>
- <7039466aa03ec8a90e1ce3a2ae983421.a13627b7@limousine.hussar>
- <CAP9KPhDg3kpmsAyL74B5LuMmTq55pYoA+5LpJR0WkH0HO3Xw8g@mail.gmail.com>
- <CAP9KPhBoy-ES2LxZi1Ax7BaAHwF5B2--ZqWtYUVEBbQ4P66XiQ@mail.gmail.com>
+Received: (qmail 25794 invoked from network); 8 Dec 2016 18:57:31 -0000
+From: <cve-assign@mitre.org>
+To: <hanno@hboeck.de>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161208105040.0f2ae557@pc1>
+Message-ID: <13b3cbe365324cd9a9d6ba909477fe95@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 13:57:19 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP9KPhBoy-ES2LxZi1Ax7BaAHwF5B2--ZqWtYUVEBbQ4P66XiQ@mail.gmail.com>
-Subject: [oss-security] Re: with firefox on X11, any page can pastejack you anytime
+Content-Type: text/plain
+Subject: [oss-security] Re: roundcube code execution via mail()
 
-What about people like me who don't use the graphical emulator's
-paste directly at all but interact via a tmux layer in between?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
--- 
-Ian
+> https://roundcube.net/news/2016/11/28/updates-1.2.3-and-1.1.7-released
+> https://blog.ripstech.com/2016/roundcube-command-execution-via-email/
+
+> https://github.com/roundcube/roundcubemail/commit/aa6bf38843f51a0fc7205acc98a7b84f3c4c9c4f
+> https://github.com/roundcube/roundcubemail/commit/45a3e81653eb6ad3685d1a9ab817a61df78178eb
+
+> highly critical because all default installations are affected
+
+> When an email is sent with Roundcube, the HTTP request can be
+> intercepted and altered. Here, the _from parameter can be modified in
+> order to place a malicious PHP file on the file system.
+
+Use CVE-2016-9920.
+
+
+> a logical flaw in the application that causes the sanitization to fail
+
+> the $from parameter is expected to have no whitespaces
+
+> preg_match('/(\S+@\S+)/',
+
+> another regular expression in line 863 which requires that the line
+> ends ($) right after the email match. A payload used by an attacker
+> does not have to match this regex
+
+We do not feel that this regex discussion requires a second CVE. The
+essence of the CVE-2016-9920 issue is that sendmail.inc detects
+certain invalid envelope-from fields but does not do anything (such as
+executing $from = null) about them.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYSayXAAoJEHb/MwWLVhi2nvYP/jiR1J75kiydrXhB8Wr7amTP
+UMqG290QFlhfz+6kCVEtIe6G7gPLPbLiOFWLC/G3lFHCqeAW7jkYf+pqXurOcruM
+5FcasVgBG0rWXQrcJV1Do/ZVz2ECmTnMohKXaYTxSy72V4Nqf+E75T63sksOyb8D
+daaECedrpTtn1LXk/xPOYRzvCytWIqHax4Ak8aGWXKv5hh/jTqV6LiPVO3EJhM7F
+5CxCBGW0ApABWmxMdJcAoDKRnROnSedNyDoMpHVMiOiQzAJypivfcCk00kHeXJzi
+Ny87XnyeO4SsXHgB1eHMpLMNwLpZ7N88hLE8QLh/Eigh1KJlaIIBxGbK7/IgHj1o
+RDnWWHELPBou38Neo/tAuR/8I+z32mGnjDSwbuG0WlUta5toksf2g54c+GPwR615
+6iSwV4PaEwFygYiTkawIidiaVJ3BvL2AhsFtZs159xcwX7AjbG7+kCpv+KixacHx
+1ecpbI8TDCGLLN0DAX7JWwX/BM4XGc56SNG4Bbvfv5GKfNGRecupEse+NT7BOIzu
+odmcrxh4XDuxgeaP8lbbbSUgyJA1W3AtcZrL/8uUeD5Xd1OMbrcc8IIoXITPewJv
+4RXcJDEO2MF7+ghtMSwU5yjyZP3TioDr1aBSpx91LdyGDmhm8S25g01jdmyJFVIz
+bMXdDvcTXsOE5vepGh0h
+=q5Jb
+-----END PGP SIGNATURE-----
