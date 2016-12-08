@@ -1,25 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/26/5
-Message-Id: <20160926054540.231936DCCB9@smtpvmsrv1.mitre.org>
-Date: Mon, 26 Sep 2016 01:45:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: cookieopfer@....net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ffmpeg afl bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/3
+Message-ID: <be20b15c60174c99ac2f0cd46f050826@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 01:32:16 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request Qemu: usb: redirector: memory leakage when destroying
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> ffmpeg version N-81723-g6d9a46e Copyright (c) 2000-2016 the FFmpeg developers
+> Quick Emulator(Qemu) built with the USB redirector usb-guest support is
+> vulnerable to a memory leakage flaw. It could occur while destroying the USB
+> redirector in 'usbredir_handle_destroy'.
 > 
-> /usr/share/doc/afl/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4
+> A guest user/process could use this issue to leak host memory, resulting in
+> DoS for a host.
 > 
-> Input #0, mov,mp4,m4a,3gp,3g2,mj2
-> 
-> overread end of atom 'stsd' by 4294967134 bytes
+> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg01379.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=07b026fd82d6cf11baf7d7c603c4f5f6070b35bf
 
-Use CVE-2016-7554.
+>> it doesn't free the vm change state handler
+
+Use CVE-2016-9907.
 
 - -- 
 CVE Assignment Team
@@ -29,17 +33,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX6LUTAAoJEHb/MwWLVhi2MggP/1SfPxFGyp8gOPQyeKFxcSJl
-g3T8gAdp9OMOj3Qru+dH+qwBIYKomr0T+k6w5qv/ihaihqI2tuDV/lytFJ29asee
-7yuc4TFnQRFHShXqnAnjzgDHSb86pK5QfwQQAAyIp8U3oCkmuLe22JcionfW1gQy
-hDmz/6jz7/k5MzYyTAV3h0jq3y9QQLLnn2IOofUVm915kaa2JiLoRe3U2P+OCaN4
-o1rMsYxlqKgxQg4B5+IyXYTlczeqEioaYeW3lvfploX2ji+scfdN+5Q5y802Hc8b
-HB5Ia3+L1bUeHVbNUTDvXzaTUPl+L68eVvsj4E0FJXcbwdG+07hQBcDOwXo3OhoR
-6707noYWX6v6lNlYObCJRTbrUYbj5YOHDdiHg6spVyehlBQPEnCtZzxXp7GAM+SE
-xOsyArQYWO4f8N12dHyVNvc8sywF5mU0LNwELE2eROjmHURf/i9tVzr5CWzQUaGN
-JPSLLpfQR+ex6D91+gCn+RcNqVXfxOpccjnUe+t9xQhnDPbdkZ+FhV1gP6WKPfwG
-yaMvAoWkZkDE3SlikQaF66giuXPltQX/pMbyRi6SCFD+0VLjbDQU68C0S6nYDhND
-G55sKC8WYZfR2aCiJ/d8ZhvtTaYk6HOfNG/l/dJrM1nXMGxnHPuLwXXO4DAIHc8Y
-yi+xnI3SJRzi3a00kOI0
-=Tla5
+iQIcBAEBCAAGBQJYSPvuAAoJEHb/MwWLVhi2broP/2fJ5v5oVmb9x0tsuXAjZ1Ba
+aXQDcdYBS0GUbME9pWh1rjuHtlYtiwocTpDLRIph38oyyre+ejrTQoqdp8S7pkVL
+oB/ENczkJM94VM88tl+lVs53x+0iZl+a2Xs0K7vFLsc+vYhPeXyzyM0PVm90AjNV
+vlM9sYQDfmZ7LzsQr6CyvOmwe1xfs/1Zo6U62qPkdmjFeBNhUGg/F+NoVv2U2yaQ
+ArsgSON2QE7eyLvpawFqbnWSKITrYKp+3WIEQxRDScWl1dgSY4CPKxBFiKGM7odu
+np7PtDRiJp3S9o9IYAkvJ9B07meSqiy6HLubLDXQsKmV+9S08lXNAhmNo6Esed42
+AIMcasrZNA7S1fCNXM9zykphS/ku3kZKzvdrHxJM7zHtMg9PcKi8fPKybX8ddNju
+suLCPt6HsCNjK/a3duxMJAeUaxo6bgGJa5QdZ7skUzSEKt3ffUPmSDNQG4rjz3N6
+W8RPnbTGCFkNSTmzbIoR6Ho5ttZZ7TTXXTQpQRPuUUiZ5f+p3kII7cQN+z+/Hn61
+UCHkc4NJNnn9tK8M9NBELx6VomVtqWAzMhxw3FcO6eekPW40mMrCuoM+IkQp0a9d
+l9OYJP6Zihlpfa8Nm0kzk26+V+hLR4aXv/zaCzDm9ipe2NRckn6ZIltYzoW7waeI
+Co2uP2bGilgPtZnQhnBK
+=0MJ9
 -----END PGP SIGNATURE-----
