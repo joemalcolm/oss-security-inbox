@@ -1,4 +1,9 @@
-Received: (qmail 3964 invoked by uid 550); 5 May 2026 14:59:40 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["302" "Thursday" "8" "December" "2016" "10:50:40" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161208105040.0f2ae557@pc1>" "14" "[oss-security] roundcube code execution via mail()" nil nil nil "12" "2016120809:50:40" "[oss-security] roundcube code execution via mail()" (number mark "U       hanno@hboeck Dec  8   14/302   " thread-indent "\"[oss-security] roundcube code execution via mail()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20374 invoked by uid 550); 8 Dec 2016 09:50:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +12,30 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22034 invoked from network); 5 May 2026 09:13:26 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <0505c6d1-eea7-f0ed-d3da-d8a8d9286011@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 05 May 2026 09:13:11 +0000
+Received: (qmail 20328 invoked from network); 8 Dec 2016 09:50:54 -0000
+Date: Thu, 8 Dec 2016 10:50:40 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To:
+  "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+  cve-assign@mitre.org
+Message-ID: <20161208105040.0f2ae557@pc1>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-29168: Apache HTTP Server: mod_md unrestricted OCSP
- response 
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] roundcube code execution via mail()
 
-Severity: low=20
+Hi,
 
-Affected versions:
+This looks rather serious:
+https://blog.ripstech.com/2016/roundcube-command-execution-via-email/
 
-- Apache HTTP Server 2.4.30 through 2.4.66
+Upstream:
+https://roundcube.net/news/2016/11/28/updates-1.2.3-and-1.1.7-released
 
-Description:
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-Allocation of Resources Without Limits or Throttling vulnerability in Apach=
-e HTTP Server's=C2=A0 mod_md via OCSP response data.
-
-This issue affects Apache HTTP Server: from 2.4.30 through 2.4.66.
-
-Users are recommended to upgrade to version 2.4.67, which fixes the issue.
-
-Credit:
-
-Pavel Kohout, Aisle Research, Aisle.com (finder)
-
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-29168
-
-Timeline:
-
-2026-03-02: reported
-2026-05-04: fixed in 2.4.x by r1933352
-
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
