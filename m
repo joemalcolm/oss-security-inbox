@@ -1,45 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/25
-Message-ID: <572A4BF8.9010303@openwall.com>
-Date: Wed, 4 May 2016 22:22:32 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/20
+Message-ID: <7ea32dbf-3f22-de92-8922-727d0512d090@prgmr.com>
+Date: Thu, 8 Dec 2016 15:36:48 -0800
+From: Sarah Newman <srn@...mr.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+Subject: Re: Opensource Python whitebox code analysis tool recommendations
 Content-Type: text/plain; charset=utf-8
 
-On 05/04/2016 09:01 PM, Solar Designer wrote:
-> On Wed, May 04, 2016 at 08:28:03PM +0300, Solar Designer wrote:
->> BTW, had I not realized the above, I would now come up with an even more
->> complex conspiracy theory about 149784613473514443594783892995, which is
->> 0x1E3FAEDA6A4F093A7C0F5A603, so:
->>
->> limb[0] = 0xC0F5A603
->> limb[1] = 0xA4F093A7
->> limb[2] = 0xE3FAEDA6
->> limb[3] = 1
->>
->> which satisfies:
->>
->> limb[1] = limb[0] + limb[2] + 2
->>
->> No idea why it's "+ 2" here
->
-> Actually, it's "- 2", not "+ 2".  Sorry.  Not that it matters, but I was
-> uncomfortable leaving the error uncorrected in case someone wants to try
-> and figure out why exactly this artifact manifests itself like it does.
->
-> There's probably an explanation of why the algorithm is likely to hit
-> numbers of this form, but this is beside the point for software bugs,
-> which is what I want us to discuss further in this thread.
+On 12/06/2016 09:02 AM, Fiedler Roman wrote:
+> Hello list,
+> 
+> I just stubled over effects of following programming error due to unwanted 
+> singleton in Python, bypassing intended process restrictions (allowed number 
+> of elements in my case) and of course data corruption:
+> 
+> class A:
+>   def __init__(self, value=[]):
+>     self.value=value
+>     self.valueCloned=value[:]
+>   def show(self):
+>     print 'IDs value %x, cloned %x' % (id(self.value), id(self.valueCloned))
+>   def append(self, data):
+>     self.value.append(data)
+> 
+> # Keep reference to avoid garbage collection interference.
+> objFirst=A()
+> objFirst.show()
+> objNext=A()
+> objNext.show()
+> # Check references to prohibit optimization.
+> if objFirst==objNext: raise Exception('Impossible')
+> 
+> 
+> 
+> As this type of error seems to be more common in code, at least according to 
+> grep, are there tool recommendations to do automatic analysis of code?
+> 
 
-Quoted relationship between limbs holds only mod 2**32 and written 
-without wrapping looks like this:
+It's not exactly the tool you're looking for, but pylint would have warned you:
 
-limb[1] = limb[0] + limb[2] - 2 - 2**32
+W:  2, 2: Dangerous default value [] as argument (dangerous-default-value)
 
-It also means that the original number is a multiple of 2**32 + 1. More 
-precisely, it's a product of 2**32 + 1 and a number with limbs (1, 
-limb[2] - 2, limb[0]).
+--Sarah
 
--- 
-Alexander Cherepanov
