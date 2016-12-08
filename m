@@ -1,58 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/7
-Message-Id: <20160124180526.936F633215E@smtpvbsrv1.mitre.org>
-Date: Sun, 24 Jan 2016 13:05:26 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/18
+Message-ID: <20161208201200.25774.134A28B2@matica.foolinux.mooo.com>
+Date: Thu, 8 Dec 2016 12:14:43 -0800
+From: Ian Zimmerman <itz@...mate.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: imagemagick: heap-based buffer overflow in IsPixelMonochrome (pixel-accessor.h)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2016-10-15 22:45, cve-assign@...re.org wrote:
 
-> http://bugzilla.maptools.org/show_bug.cgi?id=2522
-> 
->> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
->>
->>         * libtiff/tif_luv.c: fix potential out-of-bound writes in decode
->>         functions in non debug builds by replacing assert()s by regular if
->>         checks (bugzilla #2522).
->>         Fix potential out-of-bound reads in case of short input data.
-> 
-> Fixing commit:
-> 
-> https://github.com/vadz/libtiff/commit/aaab5c3c9d2a2c6984f23ccbc79702610439bc65
+> > https://blogs.gentoo.org/ago/2016/10/07/
+> > imagemagick-heap-based-buffer-overflow-in-ispixelmonochrome-pixel-accessor-h/
 
-Use CVE-2015-8781 for the original
-http://bugzilla.maptools.org/show_bug.cgi?id=2522#c0 report of "an out
-of bounds write at tif_luv.c:208" by Clay Wood.
+> Use CVE-2016-8678.
 
-Use CVE-2015-8782 for the other out-of-bounds writes fixed by the vendor in
-aaab5c3c9d2a2c6984f23ccbc79702610439bc65. These seem to have similar causes.
+Since there seems to be at least a bit of controversy about this, I
+think a pointer to the upstream issue may be helpful:
 
-Use CVE-2015-8783 for the out-of-bounds reads fixed by the vendor in
-aaab5c3c9d2a2c6984f23ccbc79702610439bc65. These seem to have similar causes.
+https://github.com/ImageMagick/ImageMagick/issues/272
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWpQ8tAAoJEL54rhJi8gl5vB8QAL/5LosqDnJFuT8/Jk/NjNtJ
-D1FqnqQNfPBzsYabPAnfWUQnm207G7loabLvZ+Kk8EtpWq+sDdC9au9dPi/wCqXN
-jpdeKW1wq7/gozHWT+qVSmEMHWIdz2mlkvOXeiRwPNvNqWa2DpH3ilqpwuK6tfXG
-qkZhBYJD6UQSeZ7XToxPkZpepYstJtuIfW59fyIbKL0myf1lrrFEgp5kC1S0SRG9
-jzH4Ts/bnIy2XKWbV5V3ZLUvCp7QjnPopH3cWXkccv/8tMFYtOSx/eWEGDf9q8Cf
-nRykzi7rQL59M76LoWsLwLiPXClAE4YkdignBqrCkPc1XRPcseFRFSykci4cLFWI
-94PW5ptFU3ureAqmn5aGmodjSkIlbPaYN7KL/ZLYOCmAgqu3UQC/5pi9Rw/I+yjw
-9SHjK173FUF2eBxok1A0ewIdOw9QVxqjLdlE9bMuwxpYO1zaTtd1YNUJH/fuo+v1
-V3Xp6ahyA0dMhC5m9dsNmrUbnDga7tXQJZocqU9/xzbENwN4RX1zwi/3SRMLU9yY
-Z2vCGti3InnIHXIx4H/kn1liUl6eY6VEIfwk5zAyG1KwF9zJfT0XGCfa66aFwe33
-VJIrZ028NoSNvTGDrnWfZOrR/HkvAKCN+tZCNG8WI1mdV+wf2d9JxzGBTTnxgSCu
-+8v5XwQMfkDPCz0TjHRX
-=C/X+
------END PGP SIGNATURE-----
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
