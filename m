@@ -1,58 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/13/12
-Message-Id: <20160713181134.26BA78BC19E@smtpvmsrv1.mitre.org>
-Date: Wed, 13 Jul 2016 14:11:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: gustavo.grieco@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: A read out-of-bands was found in the parsing of TGA files using libgd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/19
+Message-ID: <20161208231415.GA4588@suse.de>
+Date: Fri, 9 Dec 2016 00:14:15 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Linux Kernel use-after-free in SCSI generic device interface
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi folks,
 
-> https://github.com/libgd/libgd/issues/247#issuecomment-232084241
-> 
-> a read out-of-bound
+This is CVE-2016-9576.
 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 4
+This original post from  Dmitry Vyukov <dvyukov @ google . com> has a kasan/syzkaller report:
+https://marc.info/?l=linux-scsi&m=148010092224801&w=2
 
-> The problem is
-> https://github.com/libgd/libgd/blob/gd-2.2.2/src/gd_tga.c#L102. In
-> this case tga->bits == TGA_BPP_8 && tga->alphabits == 1, but the code
-> in the if body assumes tga->bits == TGA_BPP_32. The comment above the
-> respective code block already hints, that this combination is not
-> supported. The condition is supposed to be:
-> 
->    } else if (tga->bits == TGA_BPP_32 && tga->alphabits) {
+https://gist.githubusercontent.com/dvyukov/80cd94b4e4c288f16ee4c787d404118b/raw/10536069562444da51b758bb39655b514ff93b45/gistfile1.txt
 
-> https://github.com/libgd/libgd/commit/10ef1dca63d62433fda13309b4a228782db823f7
+which in turn turned out to be a kernel memory read or
+potentially even a kernel memory write, in using the scatter gather
+write mode of the /dev/sg* scsi generic devices.
 
-> the libgd developers confirmed that this issue is not the
-> same as CVE-2016-6132
+The affected code is in Linux down to 2.6.something (problem might require splice() to be exploitable).
 
-Use CVE-2016-6214.
+Linus has committed a fix for this to mainline:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+commit a0ac402cfcdc904f9772e1762b3fda112dcc56a0
+Author: Linus Torvalds <torvalds@...ux-foundation.org>
+Date:   Tue Dec 6 16:18:14 2016 -0800
 
-iQIcBAEBCAAGBQJXhoP0AAoJEHb/MwWLVhi2CXgP/0BrhP3KJ9rAB74j3KghawYu
-7sVjfO28PWfCd4aEhor1/T4UFWU7u2LWJ2uBfMG+aDbUOn3WHezSo1+6HreoJmRn
-X95QK52iQ7/+9ZcO0+AqbRkiP/ZhkRBq9q5jzfSDSBKwPwgc+wkYj3CvaSD9f1A7
-zqJ2+y65l1jceyc/ytmFM4vA0vfRVKwaNCrYCYTVxfqPUoSZqsOTpp3yoj0l4kZM
-MJs7fVPbkeyWK+5S80VgSMSMoRAezackJq3GiTnonbnNn6Zxy8dX0of0eRxfzBVZ
-o6EhPWcawE49oOdo50GSWAN+CkPj+HMlT427/DWyvNpcuugxKlEx9eEefzSKdLAW
-RqUJde6c3np/tWp0Vl3DMxQEsUojUX1MV294uixvGlh5M4FUmbir/OF8kyEsjRJ1
-6ZfoJRaI/JOGTbaEHOy1qjH4FoOXmDUGnDccUs6fv834UOrPVK9vNXlql++8nPxh
-JPHDkjv2ZO+MEV+m4EZM7FdA03oK5Hum3qWvnsmqbHMSMfCMQgUcfustMVsEreJF
-t5DT04HRFGVfk4DcYMu17bdyPQNPhsfqP9Dx34cHp8FYJ5M/1h9nzjFmKWyf2Tqw
-39ua05QjA7VNx/m3XQBnMwKQAGfhKzoQger0mbMPO+E9fENh3PmzWJO02xtkrQAZ
-iHWVDcQfP5wIpp/QdtCm
-=W+Ut
------END PGP SIGNATURE-----
+    Don't feed anything but regular iovec's to blk_rq_map_user_iov
+
+    In theory we could map other things, but there's a reason that function
+    is called "user_iov".  Using anything else (like splice can do) just
+    confuses it.
+
+    Reported-and-tested-by: Johannes Thumshirn <jthumshirn@...e.de>
+    Cc: Al Viro <viro@...IV.linux.org.uk>
+    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+
+
+Ciao, Marcus
