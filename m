@@ -1,121 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/5
-Message-ID: <53319709-5162-e3c0-e9c0-f50acc148929@724safe.com>
-Date: Wed, 14 Sep 2016 00:22:43 +0800
-From: vul@...safe <vul@...safe.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request -libdwarf 20160613 heap-buffer-overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/15
+Message-ID: <753535c2-d3b4-ffdf-dfbf-03a889c00659@xinu.at>
+Date: Thu, 8 Dec 2016 16:21:26 +0100
+From: Florian Pritz <bluewind@...u.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: CVE request: Linux panic on fragemented IPv6 traffic (icmp6_send)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-A heap-buffer-overflow was found in the latest libdward 20160613  version.
+The linux kernel contains a bug where a fragmented IPv6 packet causes a
+panic after a timeout (seems to be roughly 60 seconds). This can be
+triggered remotely via the internet and results in a DoS (kernel panic).
 
-[Introduction]
-The DWARF Debugging Information Format is of interest to programmers
-working on compilers and debuggers (and anyone interested in reading or
-writing DWARF information). It was developed by a committee (known as
-the PLSIG at the time) starting around 1991. Starting around 1991 SGI
-got involved with the committee and then developed the libdwarf and
-dwarfdump tools for SGI-internal use and as part of SGI IRIX developer
-tools. From around 1993 dwarfdump and libdwarf were shipped (as an
-executable and archive respectively, not source) with every release of
-the SGI MIPS/IRIX C compiler. In 1994 (I think the correct year) SGI
-agreed (at my request) to open-source libdwarf (and in 1999 to
-open-source dwarfdump) so anyone could use them.
+Details: https://bugzilla.kernel.org/show_bug.cgi?id=189851
 
-[Version]
-libdwarf-20160613.tar.gz
+This is fixed by commit 79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
+Author: David Ahern <dsa@...ulusnetworks.com>
+Date:   Sun Nov 27 18:52:53 2016 -0800
 
-[Vulnerability]
-With AddressSanitizer, we found a Heap-Buffer-overflow in the latest
-release version of dwarfdump. The crash output is as follows:
+    net: handle no dst on skb in icmp6_send
 
-==17411==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0xf3808904 at pc 0x80a6f76 bp 0xffb95e78 sp 0xffb95a5c
-READ of size 4 at 0xf3808904 thread T0
-==17411==WARNING: Trying to symbolize code, but external symbolizer is
-not initialized!
-    #0 0x80a6f75 in __interceptor_memcpy ??:?
-    #1 0x8426c3b in _dwarf_read_loc_section
-/home/starlab/fuzzing/dwarf-20160613/libdwarf/./dwarf_loc.c:919
-    #2 0x84250e2 in _dwarf_get_loclist_count
-/home/starlab/fuzzing/dwarf-20160613/libdwarf/./dwarf_loc.c:970
-    #3 0x8438826 in dwarf_get_loclist_c
-/home/starlab/fuzzing/dwarf-20160613/libdwarf/./dwarf_loc2.c:551
-    #4 0x81a1be8 in get_location_list
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:3523
-    #5 0x816e1a2 in print_attribute
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:2456
-    #6 0x81684ac in print_one_die
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1452
-    #7 0x816047c in print_die_and_children_internal
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1041
-    #8 0x8161c86 in print_die_and_children_internal
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1136
-    #9 0x8161c86 in print_die_and_children_internal
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1136
-    #10 0x8161c86 in print_die_and_children_internal
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:1136
-    #11 0x815dd57 in print_die_and_children
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:915
-    #12 0x815b75c in print_one_die_section
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:825
-    #13 0x81564d1 in print_infos
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/print_die.c:371
-    #14 0x80eed18 in process_one_file
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/dwarfdump.c:1352
-    #15 0x80e66fa in main
-/home/starlab/fuzzing/dwarf-20160613/dwarfdump/dwarfdump.c:645
-    #16 0xf7553af2 in __libc_start_main ??:?
-    #17 0x80d23e4 in _start ??:?
+Reference:
+https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit/?id=79dc7e3f1cd323be4c81aa1a94faa1b3ed987fb2
 
-0xf3808904 is located 0 bytes to the right of 34052-byte region
-[0xf3800400,0xf3808904)
-allocated by thread T0 here:
-    #0 0x80bb011 in __interceptor_malloc ??:?
-    #1 0xf7780517 in elf_rawdata ??:?
+Can a CVE be assigned to this issue?
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 ??
-Shadow bytes around the buggy address:
-  0x3e7010d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x3e7010e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x3e7010f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x3e701100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x3e701110: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x3e701120:[04]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x3e701130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x3e701140: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x3e701150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x3e701160: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x3e701170: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:     fa
-  Heap right redzone:    fb
-  Freed heap region:     fd
-  Stack left redzone:    f1
-  Stack mid redzone:     f2
-  Stack right redzone:   f3
-  Stack partial redzone: f4
-  Stack after return:    f5
-  Stack use after scope: f8
-  Global redzone:        f9
-  Global init order:     f6
-  Poisoned by user:      f7
-  ASan internal:         fe
-==17411==ABORTING
+Florian
 
-[Reproduce]
-Reproduce the problem by run "./dwarfdump poc"
 
-[POC]
-poc file is in the attachement
 
-This vulnerability was foud by F4B3CD@...RLAB
-
-Best regards,
-STARLAB
-
-Download attachment "poc" of type "application/octet-stream" (83328 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (859 bytes)
