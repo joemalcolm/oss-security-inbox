@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/3
-Message-ID: <1477380542.4640.11.camel@debian.org>
-Date: Tue, 25 Oct 2016 09:29:02 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com, up201407890@...nos.dcc.fc.up.pt, netblue30 <netblue30@...oo.com>
-Cc: team@...urity.debian.org
-Subject: Re: CVE-2016-7545 -- SELinux sandbox escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/08/9
+Message-ID: <alpine.LFD.2.20.1612081258430.26257@wniryva>
+Date: Thu, 8 Dec 2016 13:02:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: liq3ea@...il.com, psirt@...wei.com
+Subject: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 2016-09-25 at 13:49 +0200, up201407890@...nos.dcc.fc.up.pt wrote:
-> When executing a program via the SELinux sandbox, the nonpriv session
-> can escape to the parent session by using the TIOCSTI ioctl to push
-> characters into the terminal's input buffer, allowing an attacker to
-> escape the sandbox.
+   Hello,
 
-Hi,
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to a divide by zero issue. It could occur while copying VGA data 
+when cirrus graphics mode was set to be VGA.
 
-it seems that firejail was affected by the same vulnerability, which was fixed
-in 0.9.44 with https://github.com/netblue30/firejail/commit/46dc2b34f1fbbc4597
-b4ff9f6a3cb28b2d500d1b
+A privileged user inside guest could use this flaw to crash the Qemu process 
+instance on the host, resulting in DoS.
 
-The commit log reuses the CVE-2016-7545 number, but I guess a new one should
-be assigned since they don't share the same codebase?
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
 
-Regards,
--- 
-Yves-Alexis Perez - Debian Security
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
+
+This issue was independently reported by Qinghao Tang, Li Qiang of Qihoo 
+360.cn Inc. and PSIRTeam of Huawei Inc.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
