@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11832" "Monday" "19" "December" "2016" "06:56:04" "-0700" "Damien Miller" "djm@openbsd.org" "<4ab69cb56675d73a@openbsd.org>" "279" "[oss-security] Announce: OpenSSH 7.4 released" nil nil nil "12" "2016121913:56:04" "[oss-security] Announce: OpenSSH 7.4 released" (number mark "U       djm@openbsd. Dec 19  279/11832 " thread-indent "\"[oss-security] Announce: OpenSSH 7.4 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1572" "Thursday" "8" "December" "2016" "01:32:16" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<be20b15c60174c99ac2f0cd46f050826@imshyb02.MITRE.ORG>" "39" "[oss-security] Re: CVE request Qemu: usb: redirector: memory leakage when destroying" nil nil nil "12" "2016120806:32:16" "[oss-security] Re: CVE request Qemu: usb: redirector: memory leakage when destroying" (number mark "U       cve-assign@m Dec  8   39/1572  " thread-indent "\"[oss-security] Re: CVE request Qemu: usb: redirector: memory leakage when destroying\"\n") "<alpine.LFD.2.20.1612061659200.2165@wniryva>" ("<alpine.LFD.2.20.1612061659200.2165@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11663 invoked by uid 550); 19 Dec 2016 13:56:19 -0000
+Received: (qmail 18049 invoked by uid 550); 8 Dec 2016 06:32:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,289 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11607 invoked from network); 19 Dec 2016 13:56:17 -0000
-From: Damien Miller <djm@openbsd.org>
-Date: Mon, 19 Dec 2016 06:56:04 -0700 (MST)
-To: oss-security@lists.openwall.com
-Message-Id: <4ab69cb56675d73a@openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 7.4 released
+Received: (qmail 18026 invoked from network); 8 Dec 2016 06:32:28 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liq3ea@gmail.com>
+In-Reply-To: <alpine.LFD.2.20.1612061659200.2165@wniryva>
+Message-ID: <be20b15c60174c99ac2f0cd46f050826@imshyb02.MITRE.ORG>
+Date: Thu, 8 Dec 2016 01:32:16 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: usb: redirector: memory leakage when destroying
 
-OpenSSH 7.4 has just been released. It will be available from the
-mirrors listed at http://www.openssh.com/ shortly.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support. OpenSSH also includes
-transitional support for the legacy SSH 1.3 and 1.5 protocols
-that may be enabled at compile-time.
+> Quick Emulator(Qemu) built with the USB redirector usb-guest support is
+> vulnerable to a memory leakage flaw. It could occur while destroying the USB
+> redirector in 'usbredir_handle_destroy'.
+> 
+> A guest user/process could use this issue to leak host memory, resulting in
+> DoS for a host.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg01379.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=07b026fd82d6cf11baf7d7c603c4f5f6070b35bf
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-http://www.openssh.com/donations.html
+>> it doesn't free the vm change state handler
 
-Future deprecation notice
-=========================
+Use CVE-2016-9907.
 
-We plan on retiring more legacy cryptography in future releases,
-specifically:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
- * In approximately August 2017, removing remaining support for the
-   SSH v.1 protocol (client-only and currently compile-time disabled).
-
- * In the same release, removing support for Blowfish and RC4 ciphers
-   and the RIPE-MD160 HMAC. (These are currently run-time disabled).
-
- * Refusing all RSA keys smaller than 1024 bits (the current minimum
-   is 768 bits)
-
- * The next release of OpenSSH will remove support for running sshd(8)
-   with privilege separation disabled.
-
- * The next release of portable OpenSSH will remove support for
-   OpenSSL version prior to 1.0.1.
-
-This list reflects our current intentions, but please check the final
-release notes for future releases.
-
-Potentially-incompatible changes
-================================
-
-This release includes a number of changes that may affect existing
-configurations:
-
- * This release removes server support for the SSH v.1 protocol.
-
- * ssh(1): Remove 3des-cbc from the client's default proposal. 64-bit
-   block ciphers are not safe in 2016 and we don't want to wait until
-   attacks like SWEET32 are extended to SSH. As 3des-cbc was the
-   only mandatory cipher in the SSH RFCs, this may cause problems
-   connecting to older devices using the default configuration,
-   but it's highly likely that such devices already need explicit
-   configuration for key exchange and hostkey algorithms already
-   anyway.
-    
- * sshd(8): Remove support for pre-authentication compression.
-   Doing compression early in the protocol probably seemed reasonable
-   in the 1990s, but today it's clearly a bad idea in terms of both
-   cryptography (cf. multiple compression oracle attacks in TLS) and
-   attack surface. Pre-auth compression support has been disabled by
-   default for >10 years. Support remains in the client.
-    
- * ssh-agent will refuse to load PKCS#11 modules outside a whitelist
-   of trusted paths by default. The path whitelist may be specified
-   at run-time.
-
- * sshd(8): When a forced-command appears in both a certificate and
-   an authorized keys/principals command= restriction, sshd will now
-   refuse to accept the certificate unless they are identical.
-   The previous (documented) behaviour of having the certificate
-   forced-command override the other could be a bit confusing and
-   error-prone.
-    
- * sshd(8): Remove the UseLogin configuration directive and support
-   for having /bin/login manage login sessions.
-    
-Changes since OpenSSH 7.3
-=========================
-
-This is primarily a bugfix release.
-
-Security
---------
-
- * ssh-agent(1): Will now refuse to load PKCS#11 modules from paths
-   outside a trusted whitelist (run-time configurable). Requests to
-   load modules could be passed via agent forwarding and an attacker
-   could attempt to load a hostile PKCS#11 module across the forwarded
-   agent channel: PKCS#11 modules are shared libraries, so this would
-   result in code execution on the system running the ssh-agent if the
-   attacker has control of the forwarded agent-socket (on the host
-   running the sshd server) and the ability to write to the filesystem
-   of the host running ssh-agent (usually the host running the ssh
-   client). Reported by Jann Horn of Project Zero.
-
- * sshd(8): When privilege separation is disabled, forwarded Unix-
-   domain sockets would be created by sshd(8) with the privileges of
-   'root' instead of the authenticated user. This release refuses
-   Unix-domain socket forwarding when privilege separation is disabled
-   (Privilege separation has been enabled by default for 14 years).
-   Reported by Jann Horn of Project Zero.
-
- * sshd(8): Avoid theoretical leak of host private key material to
-   privilege-separated child processes via realloc() when reading
-   keys. No such leak was observed in practice for normal-sized keys,
-   nor does a leak to the child processes directly expose key material
-   to unprivileged users. Reported by Jann Horn of Project Zero.
- 
- * sshd(8): The shared memory manager used by pre-authentication
-   compression support had a bounds checks that could be elided by
-   some optimising compilers. Additionally, this memory manager was
-   incorrectly accessible when pre-authentication compression was
-   disabled. This could potentially allow attacks against the
-   privileged monitor process from the sandboxed privilege-separation
-   process (a compromise of the latter would be required first).
-   This release removes support for pre-authentication compression
-   from sshd(8). Reported by Guido Vranken using the Stack unstable
-   optimisation identification tool (http://css.csail.mit.edu/stack/)
-
- * sshd(8): Fix denial-of-service condition where an attacker who
-   sends multiple KEXINIT messages may consume up to 128MB per
-   connection. Reported by Shi Lei of Gear Team, Qihoo 360.
-
- * sshd(8): Validate address ranges for AllowUser and DenyUsers
-   directives at configuration load time and refuse to accept invalid
-   ones. It was previously possible to specify invalid CIDR address
-   ranges (e.g. user@127.1.2.3/55) and these would always match,
-   possibly resulting in granting access where it was not intended.
-   Reported by Laurence Parry.
-
-New Features
-------------
-
- * ssh(1): Add a proxy multiplexing mode to ssh(1) inspired by the
-   version in PuTTY by Simon Tatham. This allows a multiplexing
-   client to communicate with the master process using a subset of
-   the SSH packet and channels protocol over a Unix-domain socket,
-   with the main process acting as a proxy that translates channel
-   IDs, etc.  This allows multiplexing mode to run on systems that
-   lack file- descriptor passing (used by current multiplexing
-   code) and potentially, in conjunction with Unix-domain socket
-   forwarding, with the client and multiplexing master process on
-   different machines. Multiplexing proxy mode may be invoked using
-   "ssh -O proxy ..."
-
- * sshd(8): Add a sshd_config DisableForwaring option that disables
-   X11, agent, TCP, tunnel and Unix domain socket forwarding, as well
-   as anything else we might implement in the future. Like the
-   'restrict' authorized_keys flag, this is intended to be a simple
-   and future-proof way of restricting an account.
-
- * sshd(8), ssh(1): Support the "curve25519-sha256" key exchange
-   method. This is identical to the currently-supported method named
-   "curve25519-sha256@libssh.org".
-
- * sshd(8): Improve handling of SIGHUP by checking to see if sshd is
-   already daemonised at startup and skipping the call to daemon(3)
-   if it is. This ensures that a SIGHUP restart of sshd(8) will
-   retain the same process-ID as the initial execution. sshd(8) will
-   also now unlink the PidFile prior to SIGHUP restart and re-create
-   it after a successful restart, rather than leaving a stale file in
-   the case of a configuration error. bz#2641
-
- * sshd(8): Allow ClientAliveInterval and ClientAliveCountMax
-   directives to appear in sshd_config Match blocks.
-
- * sshd(8): Add %-escapes to AuthorizedPrincipalsCommand to match
-   those supported by AuthorizedKeysCommand (key, key type,
-   fingerprint, etc.) and a few more to provide access to the
-   contents of the certificate being offered.
-
- * Added regression tests for string matching, address matching and
-   string sanitisation functions.
-
- * Improved the key exchange fuzzer harness.
- 
-Bugfixes
---------
-
- * ssh(1): Allow IdentityFile to successfully load and use
-   certificates that have no corresponding bare public key. bz#2617
-   certificate id_rsa-cert.pub (and no id_rsa.pub).
-
- * ssh(1): Fix public key authentication when multiple
-   authentication is in use and publickey is not just the first
-   method attempted. bz#2642
-
- * regress: Allow the PuTTY interop tests to run unattended. bz#2639
- 
- * ssh-agent(1), ssh(1): improve reporting when attempting to load
-   keys from PKCS#11 tokens with fewer useless log messages and more
-   detail in debug messages. bz#2610
-
- * ssh(1): When tearing down ControlMaster connections, don't
-   pollute stderr when LogLevel=quiet.
-
- * sftp(1): On ^Z wait for underlying ssh(1) to suspend before
-   suspending sftp(1) to ensure that ssh(1) restores the terminal mode
-   correctly if suspended during a password prompt.
-
- * ssh(1): Avoid busy-wait when ssh(1) is suspended during a password
-   prompt.
-
- * ssh(1), sshd(8): Correctly report errors during sending of ext-
-   info messages.
-
- * sshd(8): fix NULL-deref crash if sshd(8) received an out-of-
-   sequence NEWKEYS message.
-
- * sshd(8): Correct list of supported signature algorithms sent in
-   the server-sig-algs extension. bz#2547
-
- * sshd(8): Fix sending ext_info message if privsep is disabled.
-
- * sshd(8): more strictly enforce the expected ordering of privilege
-   separation monitor calls used for authentication and allow them
-   only when their respective authentication methods are enabled
-   in the configuration
-
- * sshd(8): Fix uninitialised optlen in getsockopt() call; harmless
-   on Unix/BSD but potentially crashy on Cygwin.
-
- * Fix false positive reports caused by explicit_bzero(3) not being
-   recognised as a memory initialiser when compiled with
-   -fsanitize-memory.
-    
- * sshd_config(5): Use 2001:db8::/32, the official IPv6 subnet for
-   configuration examples.
-
-Portability
------------
-
- * On environments configured with Turkish locales, fall back to the
-   C/POSIX locale to avoid errors in configuration parsing caused by
-   that locale's unique handling of the letters 'i' and 'I'. bz#2643
-
- * sftp-server(8), ssh-agent(1): Deny ptrace on OS X using
-   ptrace(PT_DENY_ATTACH, ..)
-
- * ssh(1), sshd(8): Unbreak AES-CTR ciphers on old (~0.9.8) OpenSSL.
-
- * Fix compilation for libcrypto compiled without RIPEMD160 support.
-
- * contrib: Add a gnome-ssh-askpass3 with GTK+3 support. bz#2640
-    
- * sshd(8): Improve PRNG reseeding across privilege separation and
-   force libcrypto to obtain a high-quality seed before chroot or
-   sandboxing.
-
- * All: Explicitly test for broken strnvis. NetBSD added an strnvis
-   and unfortunately made it incompatible with the existing one in
-   OpenBSD and Linux's libbsd (the former having existed for over ten
-   years). Try to detect this mess, and assume the only safe option
-   if we're cross compiling.
-
-Checksums:
-==========
-
- - SHA1 (openssh-7.4.tar.gz) = 1e2073f95d5ead8f2814b4b6c0700bcd533c410f
- - SHA1 (openssh-7.4p1.tar.gz) = 2330bbf82ed08cf3ac70e0acf00186ef3eeb97e0
-
- - SHA256 (openssh-7.4.tar.gz) = +GEXh7Xr2J87cq1uA97hF9e+3lfOQ2LKxXGdmFXREf0
- - SHA256 (openssh-7.4p1.tar.gz) = Gx/EoU4gJCkxgZJO0khy5vLgYpPz6JJqN2uK7EgfGdE=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available as RELEASE_KEY.asc from
-the mirror sites.
-
-Reporting Bugs:
-===============
-
-- Please read http://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
-OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
-Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
-Tim Rice and Ben Lindstrom.
-
+iQIcBAEBCAAGBQJYSPvuAAoJEHb/MwWLVhi2broP/2fJ5v5oVmb9x0tsuXAjZ1Ba
+aXQDcdYBS0GUbME9pWh1rjuHtlYtiwocTpDLRIph38oyyre+ejrTQoqdp8S7pkVL
+oB/ENczkJM94VM88tl+lVs53x+0iZl+a2Xs0K7vFLsc+vYhPeXyzyM0PVm90AjNV
+vlM9sYQDfmZ7LzsQr6CyvOmwe1xfs/1Zo6U62qPkdmjFeBNhUGg/F+NoVv2U2yaQ
+ArsgSON2QE7eyLvpawFqbnWSKITrYKp+3WIEQxRDScWl1dgSY4CPKxBFiKGM7odu
+np7PtDRiJp3S9o9IYAkvJ9B07meSqiy6HLubLDXQsKmV+9S08lXNAhmNo6Esed42
+AIMcasrZNA7S1fCNXM9zykphS/ku3kZKzvdrHxJM7zHtMg9PcKi8fPKybX8ddNju
+suLCPt6HsCNjK/a3duxMJAeUaxo6bgGJa5QdZ7skUzSEKt3ffUPmSDNQG4rjz3N6
+W8RPnbTGCFkNSTmzbIoR6Ho5ttZZ7TTXXTQpQRPuUUiZ5f+p3kII7cQN+z+/Hn61
+UCHkc4NJNnn9tK8M9NBELx6VomVtqWAzMhxw3FcO6eekPW40mMrCuoM+IkQp0a9d
+l9OYJP6Zihlpfa8Nm0kzk26+V+hLR4aXv/zaCzDm9ipe2NRckn6ZIltYzoW7waeI
+Co2uP2bGilgPtZnQhnBK
+=0MJ9
+-----END PGP SIGNATURE-----
