@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2113" "Tuesday" "11" "January" "2022" "16:10:06" "-0500" "Ana McTaggart" "amctagga@redhat.com" nil "70" "[oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size" nil nil nil "1" nil nil (number mark "U       amctagga@red Jan 11   70/2113  " thread-indent "\"[oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["689" "Friday" "9" "December" "2016" "21:19:06" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161209201906.ltauap7fydkc62f6@eldamar.local>" "19" "[oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" "^Date:" nil nil "12" "2016120920:19:06" "[oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" (number mark "U       carnil@debia Dec  9   19/689   " thread-indent "\"[oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9506 invoked by uid 550); 11 Jan 2022 21:16:36 -0000
+Received: (qmail 32619 invoked by uid 550); 9 Dec 2016 20:19:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5681 invoked from network); 11 Jan 2022 21:10:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1641935419;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=AedalZeUv8hNovKbgdzpk8AD5CuJk2mNbzMKfgkI/hA=;
-	b=i4ZWHx0ygRzneJtxo2aS31iaetDKDBifFjVCO1Fmi0SRiu7+MhsuIgOtwB/t6UuxbCx12v
-	h2XT2YzRlvVJRVttP9dSOcuEjEQoKzDlmBxVIJeBk2Fk4b4NAY6Gtl6RcRl4HcOFqWyIlI
-	IiPxuh4ZHZhVMKHBatnFxkxjTLxxCCQ=
-X-MC-Unique: -286V7faOTGVCNGRCiMVFg-1
+Received: (qmail 32601 invoked from network); 9 Dec 2016 20:19:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=skq/hfnm6/RSCOkOXVvwAF0PJkjfQ9aqlTFspeVEkUU=;
+        b=Yn0slPsn6ElLWkNplIL+WfmCAZF+OEJbn71lDVvRxGYqnPy6LML1EeNChJW8KePY6g
+         ThMitEcf1DnjHquMyczS3JMBut9+9HF5N+VZ10puYz2u/CGNYUmRrIPYidh3CrNSMyrF
+         Wj7XPilowoXl5Nso+GwaGtYzlyyLtffDVMUPES6o6004gO8QYwEDDlPsskNU54Tg4yUY
+         mGcMWD7ORDUSLxDKLq9kI7971YxmeQLpFNjr3pZJRIrkmYkGC/RMgRwzGXfb2xLErmtD
+         dzZxDLI7rd0/6I7O4CzBH5dhcjtXzorjx7D/gs4L0C5PxMwwmn3L1e8zyfN/QOfaHnOO
+         V0CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=AedalZeUv8hNovKbgdzpk8AD5CuJk2mNbzMKfgkI/hA=;
-        b=gfrMCkM1ZESndVnFgrQt9kY6j+6t7G5L+ZCxqLMiZqk/arF2j0wpADjGUwu2wn/vSP
-         uj0oPrV0Dz/D9whKFy/iBaB40UrBLqPWQxelniliXP/eXELylYgLL1omD6L7+8MtCONj
-         NBRiijHeKzBwjAfIzCcODKmlvAPeEwo+ZA+qvyf/utQ17nnznuiyfYbiAsRPAsgUmOg2
-         /lHRcfVlVkyFZH5AT/6QUMoImDn25d9zLFaZ+gB8lQx19h5BDustYPV+jCVD2fdNVzwj
-         bgo55rlzCmnxrDSbz7dPozS2UATKFoqpQn6Tsc2uRogXCneG5oxjBAe38cyRwIl/GQd9
-         4qnA==
-X-Gm-Message-State: AOAM5326dufsyEwXOzpPXgf6M8o4euh5kZW6eyCd+CXSP8wGyKipboGn
-	WJu1kAReEPPKSwAncLx740XG4h3kcfvJE0tCSrdiz3eqclHrV1DIdU36hgVviqkR9gla6WwPh6M
-	/3cg4Pte35ng8h+e0S4vEsbOr/QPrF3o4xyU9XBBA4yKk
-X-Received: by 2002:a05:622a:1309:: with SMTP id v9mr622307qtk.141.1641935417078;
-        Tue, 11 Jan 2022 13:10:17 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJx9XeRJWIObbj6HbJfOJR6Jt0VI0ClgcBIfCC/ZlVCwYbYjPsA45/4Fbd1u8XftJfcWo3/bmxaXz6Vic1QDols=
-X-Received: by 2002:a05:622a:1309:: with SMTP id v9mr622271qtk.141.1641935416669;
- Tue, 11 Jan 2022 13:10:16 -0800 (PST)
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=skq/hfnm6/RSCOkOXVvwAF0PJkjfQ9aqlTFspeVEkUU=;
+        b=f5wB/194DUGBPiA6umFzl+CJbBhaQOvoQuk8RX32Seyp4oTh4W39DsWCbIcq3zV9/w
+         +uZa78z80bA7JXNe7ceVRTIqochzCasW6TaX7O6U+YvKMQu3kdbWCN9PIR4AGhUoqeEF
+         vrkFXvJsFWTg1zergSD27+KKrJzIMSuXP+VRHxPjTYrj3/KNOaTmBPZw+dM7+BbdKaro
+         Ri9VoljahqllWk7mxRcR5B9xetPXUBqqkearQpb4nKqOK0MH9zAgLoMpNuObYWvVhmf3
+         42D8hq0DaBUZZIZ2SFpnkk6ldvm7N9FnJsi07ZSTVDoMRbWQhTSIfjbB2K+TZx6oTx/W
+         BEcg==
+X-Gm-Message-State: AKaTC03GaGzUsDhIpLo4IOZyB+ck99B9ief+kh0ogHYsdfrYi0T7biaLNRGuGDDxSAt/ng==
+X-Received: by 10.194.59.71 with SMTP id x7mr82965902wjq.74.1481314747931;
+        Fri, 09 Dec 2016 12:19:07 -0800 (PST)
+Message-ID: <20161209201906.ltauap7fydkc62f6@eldamar.local>
 MIME-Version: 1.0
-From: Ana McTaggart <amctagga@redhat.com>
-Date: Tue, 11 Jan 2022 16:10:06 -0500
-Message-ID: <CABBoSthWNAv07LcprhNazDEs_TEcqhzb94aFB7GvwU9HHm8ROw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: Mark Kirkwood <markkirkwood@catalystcloud.nz>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=amctagga@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="00000000000041552905d554e1be"
-Subject: [oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Date: Fri, 9 Dec 2016 21:19:06 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: MCabber: remote attackers can modify the roster and
+ intercept messages via a crafted roster-push IQ stanza
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
---00000000000041552905d554e1be
-Content-Type: text/plain; charset="UTF-8"
+Hi
 
-Hi all,
-The key length for encrypted devices created using ceph-volume is
-incorrect. This is due to a bug in ceph_volume/util/encryption.py, where
-upon writing a key using osd_dmcrypt_key_size it does not pass the key size
-to the format and open operations following. The default key is then
-applied in cryptsetup. All versions since Luminous are assumed affected. At
-Red Hat. we have assigned it  CVE-2021-3979 and proposed a CVSS score of
-6.5/CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
+Sam Whited discovered that MCabber versions 1.0.3 and before, was
+vulnerable to an attack identical to Gajim's CVE-2015-8688 [1] which
+can lead to a malicious actor MITMing a conversation, or adding
+themselves as an entity on a third parties roster (thereby granting
+themselves the associated priviledges such as observing when the user
+is online).
 
-See below for the report, credit of Mark Kirkwood.
+The issue was fixed in the 1.0.4 release, with patch found at [2].
 
-We happened to run 'cryptsetup luksDump' on some of our encrypted
-devices that were created using ceph-volume and noticed the key length
-was wrong:
+Can a CVE be assigned for this issue?
 
-e.g:
+Regards,
+Salvatore
 
-markir@ceph3:~$ cat /etc/ceph/ceph.conf
-...
-[osd]
-osd_dmcrypt_type = luks
-osd_cryptsetup_parameters = --cipher aes-xts-plain64
-osd_dmcrypt_key_size = 512
-
-markir@ceph3:~$ sudo cryptsetup luksDump
-/dev/mapper/ceph--9e3502c0--a991--44cc--a2a1--0e8e8fb45189-osd--block--aaab9851--5951--429d--8e9d--dbc22ea4c1a1
-
-
-Version:           1
-Cipher name:       aes
-Cipher mode:       xts-plain64
-Hash spec:         sha256
-Payload offset:    4096
-MK bits:           256 <=========== should be 512
-
-
-This appears to be due to a bug in ceph_volume/util/encryption.py. While
-it writes a key using osd_dmcrypt_key_size it does not pass the key size
-to the following format and open operations. It looks like that ecause
-the key is being passed to cryptsetup on stdin that the length is not
-being deduced, and so the default key size is being applied.
-
-It is fairly simple to patch (see attached - luks operation only, prob
-needs plain code path altered similarly).
-
-In terms of which versions are impacted, we are running Luminous, but
-the patch I have attached is against current master, so suspect all
-versions since Luminous are in the crosshairs.
-
-Ana McTaggart
-
-Red Hat Product Security
-
-Red Hat Remote <https://www.redhat.com>
-
-
-secalert@redhat.com for urgent response
-
-
-amct@redhat.com
-
-
-
-Pronouns:They/Them/Theirs
-
---00000000000041552905d554e1be--
-
+ [1] https://gultsch.de/gajim_roster_push_and_message_interception.html
+ [2] https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
+ [3] https://bugs.debian.org/845258
