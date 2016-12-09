@@ -1,85 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/30/5
-Message-ID: <56FBD8F1.4060603@redhat.com>
-Date: Wed, 30 Mar 2016 13:47:29 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-007.2] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA #2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/1
+Message-ID: <4c5b757cd61e46109f711186e2474d6d@imshyb02.MITRE.ORG>
+Date: Fri, 9 Dec 2016 00:13:41 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>, <psirt@...wei.com>
+Subject: Re: CVE request Qemu: display: cirrus_vga: a divide by zero in cirrus_do_copy
 Content-Type: text/plain; charset=utf-8
 
-=============================================================
-OSSA-2016-007.2: Nova host data leak through resize/migration
-=============================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-:Date: March 08, 2016
-:CVE: CVE-2016-2140
+> Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
+> vulnerable to a divide by zero issue. It could occur while copying VGA data
+> when cirrus graphics mode was set to be VGA.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> instance on the host, resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00442.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1334398
+> http://git.qemu.org/?p=qemu.git;a=commit;h=4299b90e9ba9ce5ca9024572804ba751aa1a7e70
 
+Use CVE-2016-9921 for the "'cirrus_get_bpp' returns zero(0), which
+could lead to a divide by zero" issue.
 
-Affects
-~~~~~~~
-- Nova: <=2015.1.3, >=12.0.0 <=12.0.2
+Use CVE-2016-9922 for the "blit pitch values" issue.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Description
-~~~~~~~~~~~
-Matthew Booth from Red Hat reported a vulnerability in Nova instance
-resize/migration. By overwriting an ephemeral or root disk with a
-malicious image before requesting a resize, an authenticated user may
-be able to read arbitrary files from the compute host. Only setups
-using libvirt driver with raw storage and setting "use_cow_images =
-False" (not default) are affected.
-
-
-Errata
-~~~~~~
-The former fix did not take into account the usage of non-disk-image
-backends and caused a regression for this use-case. This update
-provides an additional fix for that issue. Moreover, the kilo backport
-caused a regression in live migration where the disk info file is JSON
-encoded. This second update provides an additional fix for
-stable/kilo.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/289960 - original (Kilo)
-- https://review.openstack.org/290847 - errata (Kilo)
-- https://review.openstack.org/294205 - errata#2 (Kilo)
-- https://review.openstack.org/289958 - original (Liberty)
-- https://review.openstack.org/290843 - errata (Liberty)
-- https://review.openstack.org/289957 - original (Mitaka)
-- https://review.openstack.org/290715 - errata (Mitaka)
-
-
-Credits
-~~~~~~~
-- Matthew Booth from Red Hat (CVE-2016-2140)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1548450
-- https://bugs.launchpad.net/bugs/1555287
-- https://bugs.launchpad.net/bugs/1558697
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2140
-
-
-Notes
-~~~~~
-- This fix will be included in future 2015.1.4 (kilo) and 12.0.3
-  (liberty) releases.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2016-03-30 - Errata 2
-- 2016-03-09 - Errata 1
-- 2016-03-08 - Original Version
-
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJYSjxDAAoJEHb/MwWLVhi2KvEP+wd+MdU2D7RZ4WVw/3M+G17C
+1D/KdgtB4D8i+Dx5AkCwFBFY85bZxMPCGe4gGxno/3MyzhxIik6AZ0jPOw2yOeI6
+jCp2S1gwowMs7jFexlG4nEQy3b+rBbjbGEvL0TSDyIKhvFdi8g+izv5u//49NvRi
+U1zNoHOzscgSlswSt+M8kYnKUDsfznisqjrCXc0F5cqksB9fcCf7bXWGjh5iAe4b
+vl0uO+5zQgCafAduS/+EQtDJheW9ussbAoLlJvVAfRQo9Ue7l3iZhyT1ty5gf4AO
+UH4kFYCuYMrQecbfYbKszS2ZZ4pF5hPXF9iXH+758n5ICyhk4h4q5dxwRtrEe7vC
+rT9lww4agFnrV9++TiUtB8UyldibNgxidEAsWxnkHS8mHPOB3ClPlHgr0FOekEkp
+hounmHanE8K/e66J79DESxX2GaFmLi1AbkF4x8ZeYF3I3dyjfEsNFEbPePwYp/1d
+OBjjebavjtJef22GzQsaqWw9OXnkaqRYCKmH8PatX4msjzLCeBJ4jOKXTSExzFxs
+KJiWx/5lXOb86VlrjVbTA/kJNxIjNHl3b1hBGz6rTrfkHeRs+W9OHgMBRNL4GHxP
+04DmwoQrRIG6fuvhTEjHU87vzf527BoqlAn/EgSzIQWKzkfIqUGiiWypvwVIftfQ
+r3ilsSTK4Ga5P42dkDYZ
+=Q5bc
+-----END PGP SIGNATURE-----
