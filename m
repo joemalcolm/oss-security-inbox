@@ -1,12 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/19/4
-Message-ID: <CAOp4FwSKvWciC-4K3ob7kT5-Ytm2SkmgPbPEc0qJKL0NAtEHPA@mail.gmail.com>
-Date: Tue, 19 Apr 2016 18:37:34 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/4
+Message-ID: <1481298257.3173.4.camel@redhat.com>
+Date: Fri, 09 Dec 2016 16:44:17 +0100
+From: Adam Maris <amaris@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: imlib2: integer overflow resulting in insufficient heap allocation
+Subject: CVE-2016-9580 CVE-2016-9581 openjpeg2: heap buffer oevrflows
 Content-Type: text/plain; charset=utf-8
 
-I think that this shows how useful it is for any libc to have a
-function like OpenBSD's reallocarray(), which prevents these.
+Hello,
+
+We've assigned CVEs for following issues:
+
+> https://github.com/uclouvain/openjpeg/issues/871
+
+CVE-2016-9580 integer overflow in tiftoimage resulting into heap buffer
+overflow
+
+> https://github.com/uclouvain/openjpeg/issues/872
+
+CVE-2016-9581 infinite loop in tiftoimage resulting into heap buffer
+overflow in convert_32s_C1P1
+
+Both were fixed by https://github.com/szukw000/openjpeg/commit/cadff5fb
+6e73398de26a92e96d3d7cac893af255
+
+Regards,
+
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+
