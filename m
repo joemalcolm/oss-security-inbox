@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/11/8
-Message-Id: <20160711191842.9D88F42E004@smtpvbsrv1.mitre.org>
-Date: Mon, 11 Jul 2016 15:18:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: caiqian@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: cvs request: local DoS using rename syscall on overlayfs on top of xfs to crash the kernel - Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/09/2
+Message-ID: <0a28087cee8346dba6e874e403ccd471@imshyb02.MITRE.ORG>
+Date: Fri, 9 Dec 2016 00:15:55 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: char: use after free issue in char backend
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I am requesting a CVE for this flaw.
+> Quick Emulator(Qemu) built with the 'chardev' backend support is vulnerable to
+> a use after free issue. It could occur while hotplug and unplugging the device
+> in the guest.
 > 
-> An unprivileged user could run an exploit using rename syscall on
-> overlayfs on top of xfs to crash the kernel caused a denial of
-> service.
+> A guest user/process could use this flaw to crash a Qemu process on the host
+> resulting in DoS.
 > 
-> Exploit:
-> https://github.com/linux-test-project/ltp/blob/master/testcases/kernel/syscalls/rename/rename13.c
-> 
-> Patch can be found here with more in depth description
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg05597.html
+> http://git.qemu.org/?p=qemu.git;a=commit;h=a4afa548fc6dd9842ed86639b4d37d4d1c4ad480
 
-As far as we can tell, there are circumstances in which each of the
-two parts of the patch could be relevant, and thus we are assigning
-two CVE IDs.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=11f3710417d026ea2f4fcf362d866342c5274185
-
-This patch is present in 4.6 but not in 4.5.5.
-
-Use CVE-2016-6197.
-
-
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=54d5ca871e72f2bb172ec9323497f01cd5091ec7
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9409e22acdfc9153f88d9b1ed2bd2a5b34d2d3ca
-
-These patches are present in both 4.6 and 4.5.5.
-(https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.5.5 lists
-them.)
-
-Use CVE-2016-6198.
+Use CVE-2016-9923.
 
 - -- 
 CVE Assignment Team
@@ -51,17 +31,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXg+/uAAoJEHb/MwWLVhi2ixYQAJxC7wXlFmCX+ZuJueWhtsPU
-PxN8mRCizwA4IuOrYO1EwtrdoGUSQAePX0YBl35NZJ8/K2OcV1J+rwLOkeHP67ep
-KXGn3iSjL15B1NeRxztpKwnV3alkuOVljQIM0IRasfYK8oCEX/g+UstyxW0AJNqe
-HBFzdgG+XERbqN0uLd5uBtLzz/nCK37e6xWA43augQU+cI5B+URYpcy2n50wiQVG
-o3WOreou1RSveyJSbVU4csN6xpgn6KFOi5+sdV0vjyR92BxICFCoJ1lIHHmVm+LF
-kT63D7zKFdY3kFqBIKaHhUmnti3a4jddWxnCfAJYcJ7L0+md4DpDJ/uEQTJ1BNXQ
-Yw1a3jev4ji2Ajbvlf2lhQHvC1at3jTiQBEHJBOZjLVsxZ2jl35TU3PmLVyR5JHN
-cdo2oYVsiNpcfHhkDHQNQAugard2aWYRz+IeF2V1dGNT8JyAL0cAO11c5+Hj/nyc
-zGx+NfMq9wPn5RQT1+79IABxbQrJyd1ppfwPiWhyVNwkInkJC3WzZIeXanLaJkLc
-wwXyTNGcx9s+zxXlM2tnlyhLCB66iY798T2oBs6mR5ID8NRkGYzli8sb4ZcoiAuJ
-rYonHjVJnmYW6Tuz3Yc9Jj9i/UtnSYFWfshfHs8HpKwoA4XPUYw6CM2dNO7e4H9/
-xARF3BLpcTyZdqCS/3ao
-=aGT3
+iQIcBAEBCAAGBQJYSjxoAAoJEHb/MwWLVhi2dS4P/ilXRDRPZhWKKopE5w9P5lj9
+4IY209xoJmQ85S891zCZvw3ety9GDpvAH1bi3uk49kqA9jeB9NYgJ+TD6ZyPEOoO
+gItsGg7FX6QK65tnno8I+QUlKgHM91vy/KEi/o2FgQHc7lDP2RBq9Bt9REvYaqh3
+QDh3IjaDieWy6T0Nkxh1I8u6+PeD+oBe6cNIFc8him7Vrb90SkT7Qe9/ZCG53MP8
+vgrkJA3mTc4ShKGbdBix2T1HhjdV/KIEEgQ5BDjlqhW6xFXVxRhBBRbhPMayGXkW
+1ulpwAU6q/i2e2GdydTxNV/RdOiKl1Zi3J3mScR8Lq3xjS0/Bw+cGyHfB9u/4kWm
+4PSeyISGWs992CYHAr+JlzQ5MG7rDg52bcEqixeDzQrUb84EwGED6pU11vU/8fE1
+t/fZaAS05FoS1mE16cDPyq0Floi95rmOn1H3TBHR9nKENvIJvFyhqYQmYXR43Jpl
+k//RBNrF+Hb18AtFOh9azEf0gOnhBrtTnHv2queK2gOc+YkxOx9P8R0BnI+bZV0o
+cWtEImu4CJR8EROlMuCWsI7lZ99Frw7N69oNv6AZo0rwyvxEhSLwp/QWR+scBEOx
+4tJ+300qsapKR+fSQxojA9em6yZ1QpukfD3ACUn7F8WQeA2RyzGpSjLimydUGpp6
+SHLCzbqDbd78s2ztkQam
+=R+2A
 -----END PGP SIGNATURE-----
