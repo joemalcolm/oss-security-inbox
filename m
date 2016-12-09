@@ -1,4 +1,9 @@
-Received: (qmail 21822 invoked by uid 550); 7 Feb 2025 17:42:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["520" "Friday" "9" "December" "2016" "10:01:08" "-0500" "Christopher Shannon" "christopher.l.shannon@gmail.com" "<CACHnxzxPZ8t9HN0uC=BqM-0of1CYdZ+OJYOvOWs=bfnjQgCffw@mail.gmail.com>" "17" "[oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting" nil nil nil "12" "2016120915:01:08" "[oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting" (number mark "U       christopher. Dec  9   17/520   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15520 invoked by uid 550); 9 Dec 2016 15:19:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11665 invoked from network); 7 Feb 2025 04:49:05 -0000
+Received: (qmail 8090 invoked from network); 9 Dec 2016 15:01:50 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738903737; x=1739508537; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FTdQCOGtzpiWZgvyND9/04cXwuR4onGzSNtwzKx5Hqw=;
-        b=lZlCWJ3qhFc+EOGL1XaqDmHs7aP4YaQYRD+KDs4R5fuJO0nYORXULUtx6Vp16wZFJJ
-         Habv8IXjEfuYoFEfkWOVx+raZ+fstaMx8extYvVjMAYaTCvupzZusPO2/AkOmT8kp6ON
-         y5xcdcoQxrscVnHrEXX+QJ3xSrJYgJhq5tt9KKLu8YkidwAcAdm+r/UCxh6GPHALIH8j
-         XSfdMqGdHHSghMUsLQhMW1pdDGpcTjQOD4InTxFuDww460FoxbZkdc8d8FjkT7KYmh1q
-         DTMcnPsOuD5s7pp8cnoKv+qKwFr/G49drIbD9y6hJiAHmMrdZ5SF+RxqUKq684M29DSk
-         QaSw==
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=EcWmjPDf8LY3QmbG223kx5x1fefdQA1nPKcAD2xP0BI=;
+        b=NtVuSA+/14BykaeSHDZhSKveriy6i8q4jLZVpMA0xlBV6lXwKqjYrPeTFaX2EKdvj8
+         B0Czn3kj4l79T+68+w5Bu/bxiM6kFqRkr/DqVjCyPba1KFRVPlkBxSER5seFNUwLP2vc
+         IaUtX7xTdwVZkQJJ85GhnILepIYfOLEPGmhmkq81r1DH4YWRx8dLHyIr9800YUov4sH9
+         ktCfK1QHg/OCNKcBWm4/NgbXAQBYKAV2IiZUIQZWxSRC7b8hrX6BBnbfPNl+lgxRnYzR
+         +AJsx9S41wubwFC4dDsfVAi0TaRsYbeti8H1buRo87ZZ7CMv2G2cky2BkVx895pDdNMa
+         valw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738903737; x=1739508537;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FTdQCOGtzpiWZgvyND9/04cXwuR4onGzSNtwzKx5Hqw=;
-        b=aFbZ8t8/6No146+51gSPu7ABZJcjPb7q0SiRnha+dE2Ik0gMeG6+DuS5B3cR+Fx8Io
-         QC/RPliDva3ThA42jsHJt7pdYpTbGPBdaR+9A8pJrqX6vWmnizSXpG+4eocCWWwUZU+V
-         wStfLJ3HWUzNLxudapyeZ+TmYpd0DwIiYNzflBH7JCVqJPR2kqnDO+bIrgW06ltSucPC
-         ZWz/18fPifqEecVkxr4O+WxhFdqWb5sUcEWf7NOgie2XQM6JWAErRN9SIlpwlLm0+qMZ
-         Dn2ZE86gy/K/G+b5J+eCyRF6xy1Wnn8HYHY8TmX9Bs6W0krmpkVAYhiYNL/lLicJCzeb
-         fhPg==
-X-Gm-Message-State: AOJu0Yy+zxohJYACpqJeeTkSECly+Vqx/AuAVCWG+6rgjw5vGfB9yXP0
-	n0kLczgT83sZ8Dv1u7m3fs3jaNIzFvPGRqdQgPzU5th/UGB1HY+WffHityOx
-X-Gm-Gg: ASbGncvT6PsiNC2WYXuwTDZb53a2HzhLsNdtD4BcvFMIIO7qppIDMXMB97WXydPahD8
-	emSc3V6L4A8yJn7Twrj3oTBJEdqpfESs5sK81zOzRpg0V6QLpJTDSgoO3tFJoVtNMIPX1j+mJsb
-	Qj0DwhRxgm5Yxw41M3jNH2EdKXQ72SAY9SBuJRees3or71pE1Vix8ScnGGZGl7w3X1JQH3w88yQ
-	LlecM1iupT790nGPB9GwqXZh6XoRHGsMQoQLKCIhE5/Ik5kl51EaJAJMasoKfXBXfCEE4Oyy311
-	RqA6dVJsjRTa
-X-Google-Smtp-Source: AGHT+IHdJlBXhUiMucG+mT905guaT/OBIyPQUge3J3zixk2qT+sgaqO93j1kSclClKFO4wr76GR1dQ==
-X-Received: by 2002:a05:6830:3c0f:b0:71d:f97a:7b with SMTP id 46e09a7af769-726b88957acmr1337628a34.20.1738903736981;
-        Thu, 06 Feb 2025 20:48:56 -0800 (PST)
-Message-ID: <643e3e53-6d68-4a16-9933-cdb13aecea42@gmail.com>
-Date: Thu, 6 Feb 2025 22:48:53 -0600
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=EcWmjPDf8LY3QmbG223kx5x1fefdQA1nPKcAD2xP0BI=;
+        b=jfHJ7C5hSBuaUaHPkNJiAW1mIOgiO9sC+xST7OO9Z4GJ39JXC0mn7TEtyqu9cHqYfA
+         oqUCHv2+wjLrG7ErjyFDo7JEv8FjoNN64pW/bgU5BqsA1L8ZH4Nk9zmLvifmQIyAOypO
+         +v1rmQcAd3o51vkiawnVVdp1iUdMU9n3CSbpYzPvc2q+wN76lnR6Ct3J4noDGr9xuiXw
+         9htMcbp7vFfaBjz4NIBuDod0rVxae49kXYnpH0vtsbI6CKdfhjiQQx3oX2sTg1KkCEG9
+         hJHjNvI1AL1ect2TjXclNnCWNX3JW12hMdHUFVE7KSanxSBXlT86ZYzcUYCT3zUllVu9
+         k3RQ==
+X-Gm-Message-State: AKaTC007eCXfHObBXr97zU2Wh3fcMq7t0wHqWPH5Ayf5gBh2UKWjPwl0m8doPF8g/Ld33RGhGtl+jDHdqDi7qA==
+X-Received: by 10.13.247.65 with SMTP id h62mr75815223ywf.56.1481295699380;
+ Fri, 09 Dec 2016 07:01:39 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Matthias Gerstner <mgerstner@suse.de>
-References: <Z6TNVqmdQvyPUnFY@kasco.suse.de>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <Z6TNVqmdQvyPUnFY@kasco.suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: pam_pkcs11: Possible Authentication Bypass in Error Situations
- (CVE-2025-24531)
+From: Christopher Shannon <christopher.l.shannon@gmail.com>
+Date: Fri, 9 Dec 2016 10:01:08 -0500
+Message-ID: <CACHnxzxPZ8t9HN0uC=BqM-0of1CYdZ+OJYOvOWs=bfnjQgCffw@mail.gmail.com>
+To: dev@activemq.apache.org, users@activemq.apache.org, 
+	oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: multipart/alternative; boundary=94eb2c06ae32f82bab05433b0747
+Subject: [oss-security] [ANNOUNCE] CVE-2016-6810: ActiveMQ Web Console - Cross-Site Scripting
 
-On 2/6/25 08:55, Matthias Gerstner wrote:
-> [...]
->
-> On the use of `PAM_SUCCESS`
-> ---------------------------
->
-> PAM modules that only serve utility functions but do not actually
-> authenticate could consider not returning `PAM_SUCCESS` but `PAM_IGNORE`
-> instead. This would avoid unintended successful authentication in a
-> situation like described in this report. It seems natural to PAM module
-> authors to return `PAM_SUCCESS` if nothing in their module failed,
-> however. A lot of modules work this way and changing them all would be a
-> big effort.
+--94eb2c06ae32f82bab05433b0747
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I have pruned the entire quote down to that paragraph because that is 
-the root cause of this and other issues.  A similar issue occurred two 
-weeks ago with pam-u2f (CVE-2025-23013) and the same problem of utility 
-modules returning PAM_SUCCESS despite not actually authenticating anything.
+The following security vulnerability was reported against Apache
+ActiveMQ 5.14.1 and older versions.
 
-These problems are going to keep happening as long as utility modules 
-continue to misuse PAM_SUCCESS.
+Please check the following document and see if you=E2=80=99re affected by t=
+he issue.
 
-There might be a possible workaround of adding a new keyword "utility" 
-or "hook" to PAM that ignores success but fails on actual failure and 
-using that with utility modules.
+http://activemq.apache.org/security-advisories.data/CVE-2016-6810-announcem=
+ent.txt
 
+Apache ActiveMQ 5.14.2 has been released with appropriate fixes and is
+available for upgrade.
 
--- Jacob
-
+--94eb2c06ae32f82bab05433b0747--
