@@ -1,43 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/10/7
-Message-ID: <20160310111636.GA15133@nxnw.org>
-Date: Thu, 10 Mar 2016 03:16:36 -0800
-From: Steve Beattie <steve@...w.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/10/1
+Message-ID: <20161210004933.GB25012@Kelewan.lan>
+Date: Sat, 10 Dec 2016 01:49:34 +0100
+From: Mathieu Pasquet <mathieui@...hieui.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption
+Subject: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Thu, Mar 10, 2016 at 10:25:49AM +0100, Marcus Meissner wrote:
-> >>From the P0 team at Google:
->
-> https://code.google.com/p/google-security-research/issues/detail?id=758
->
-> A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE
-> ioctl in the netfilter code for iptables support. This ioctl is can be
-> triggered by an unprivileged user on PF_INET sockets when unprivileged
-> user namespaces are available (CONFIG_USER_NS=y). Android does not
-> enable this option, but desktop/server distributions and Chrome OS
-> will commonly enable this to allow for containers support or sandboxing.
->
-> ...
+On Fri, Dec 09, 2016 at 09:19:06PM +0100, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> I think this needs a CVE.
+> Sam Whited discovered that MCabber versions 1.0.3 and before, was
+> vulnerable to an attack identical to Gajim's CVE-2015-8688 [1] which
+> can lead to a malicious actor MITMing a conversation, or adding
+> themselves as an entity on a third parties roster (thereby granting
+> themselves the associated priviledges such as observing when the user
+> is online).
+> 
+> The issue was fixed in the 1.0.4 release, with patch found at [2].
+> 
+> Can a CVE be assigned for this issue?
+> 
+> Regards,
+> Salvatore
+> 
+>  [1] https://gultsch.de/gajim_roster_push_and_message_interception.html
+>  [2] https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
 
-It likely needs two, one for the issue above,
-which has been proposed to be addressed by
-http://marc.info/?l=netfilter-devel&m=145757134822741&w=2
+>  [3] https://bugs.debian.org/845258
 
-and one for the unsigned integer overflow on 32bit kernels
-mentioned as an aside at the end of the original report. Proposed
-fix is http://marc.info/?l=netfilter-devel&m=145757136822750&w=2
+Hello,
 
-Thanks.
+I would like to mention that when Sam mentioned it to the MCabber team,
+I investigated the slixmpp [1] codebase to see if we we were equally
+vulnerable. It appeared that the default roster mechanism already has a
+check in place, but it creates a general event before then, which could
+be received by another handler to re-implement a Roster differently
+(like we do in poezio [2]).
+
+This specific bug has been corrected in [3] and [4], which are available
+in slixmpp 1.2.3 (all previous versions are affected).
+
+I’m not sure if this specific part warrants a CVE, as it is quite a
+specific case (but people could send arbitrary roster pushes to poezio
+before then), but I thought it would be good to mention. If it is
+considered a real security flaw, I have to say that SleekXMPP [5] [6] is
+also affected, and I will patch it if needed.
+
+Regards,
+Mathieu
+
+ [1] https://github.com/poezio/slixmpp
+ [2] https://github.com/poezio/poezio / https://poez.io
+ [3] https://git.louiz.org/slixmpp/commit/?id=ffdb6ffd69522bb14760eca196511ac69a158831
+ [4] https://git.louiz.org/slixmpp/commit/?id=ffd9436e5cca9f92ed11683173a696972da2360b
+ [5] https://github.com/fritzy/SleekXMPP
+ [5] https://github.com/fritzy/SleekXMPP/blob/develop/sleekxmpp/clientxmpp.py#L112-L115
+
 -- 
-Steve Beattie
-<sbeattie@...ntu.com>
-http://NxNW.org/~steve/
+Mathieu Pasquet (mathieui)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
