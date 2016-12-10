@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1460" "Thursday" "7" "March" "2019" "13:53:59" "+0100" "=?UTF-8?B?SmVhbi1CYXB0aXN0ZSBPbm9mcsOp?=" "jb@nanthrax.net" "<c7f712c2-8505-31a3-87f4-2ecf3e89d65e@nanthrax.net>" "45" "[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf" "^Date:" nil nil "3" "2019030712:53:59" "[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf" (number mark "U       jb@nanthrax. Mar  7   45/1460  " thread-indent "\"[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for Apache Karaf" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3193" "Saturday" "10" "December" "2016" "01:49:34" "+0100" "Mathieu Pasquet" "mathieui@mathieui.net" "<20161210004933.GB25012@Kelewan.lan>" "83" "Re: [oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" nil nil nil "12" "2016121000:49:34" "[oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" (number mark "U       mathieui@mat Dec 10   83/3193  " thread-indent "\"Re: [oss-security] CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza\"\n") "<20161209201906.ltauap7fydkc62f6@eldamar.local>" ("<20161209201906.ltauap7fydkc62f6@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24535 invoked by uid 550); 7 Mar 2019 13:34:01 -0000
+Received: (qmail 28377 invoked by uid 550); 10 Dec 2016 01:10:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +11,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22125 invoked from network); 7 Mar 2019 12:54:13 -0000
-Message-ID: <c7f712c2-8505-31a3-87f4-2ecf3e89d65e@nanthrax.net>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Thu, 7 Mar 2019 13:53:59 +0100
-From: =?UTF-8?Q?Jean-Baptiste_Onofr=c3=a9?= <jb@nanthrax.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY] New security advisory for CVE-2019-0191 released for
- Apache Karaf
-To: user@karaf.apache.org, Karaf Dev <dev@karaf.apache.org>,
- Apache Security Team <security@apache.org>, oss-security@lists.openwall.com,
- Colm O hEigeartaigh <coheigea@apache.org>
+Received: (qmail 20023 invoked from network); 10 Dec 2016 00:49:58 -0000
+X-Virus-Scanned: Debian amavisd-new at mfilter29-d.gandi.net
+X-Originating-IP: 5.51.204.241
+Date: Sat, 10 Dec 2016 01:49:34 +0100
+From: Mathieu Pasquet <mathieui@mathieui.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20161210004933.GB25012@Kelewan.lan>
+References: <20161209201906.ltauap7fydkc62f6@eldamar.local>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="IS0zKkzwUGydFO0o"
+Content-Disposition: inline
+In-Reply-To: <20161209201906.ltauap7fydkc62f6@eldamar.local>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] CVE Request: MCabber: remote attackers can modify
+ the roster and intercept messages via a crafted roster-push IQ stanza
 
-A new security advisory has been released for Apache Karaf, that is
-fixed in recent 4.2.3 release.
+--IS0zKkzwUGydFO0o
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-CVE-2019-0191: Zip-slip vulnerability in KAR deployer
+On Fri, Dec 09, 2016 at 09:19:06PM +0100, Salvatore Bonaccorso wrote:
+> Hi
+>=20
+> Sam Whited discovered that MCabber versions 1.0.3 and before, was
+> vulnerable to an attack identical to Gajim's CVE-2015-8688 [1] which
+> can lead to a malicious actor MITMing a conversation, or adding
+> themselves as an entity on a third parties roster (thereby granting
+> themselves the associated priviledges such as observing when the user
+> is online).
+>=20
+> The issue was fixed in the 1.0.4 release, with patch found at [2].
+>=20
+> Can a CVE be assigned for this issue?
+>=20
+> Regards,
+> Salvatore
+>=20
+>  [1] https://gultsch.de/gajim_roster_push_and_message_interception.html
+>  [2] https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a5=
+20ad17c720ae4908429033/raw
 
-Severity: Low
+>  [3] https://bugs.debian.org/845258
 
-Vendor: The Apache Software Foundation
+Hello,
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.3
+I would like to mention that when Sam mentioned it to the MCabber team,
+I investigated the slixmpp [1] codebase to see if we we were equally
+vulnerable. It appeared that the default roster mechanism already has a
+check in place, but it creates a general event before then, which could
+be received by another handler to re-implement a Roster differently
+(like we do in poezio [2]).
 
-Description:
+This specific bug has been corrected in [3] and [4], which are available
+in slixmpp 1.2.3 (all previous versions are affected).
 
-Apache Karaf kar deployer reads .kar archives and extracts the paths from
-the "repository/" and "resources/" entries in the zip file.
+I=E2=80=99m not sure if this specific part warrants a CVE, as it is quite a
+specific case (but people could send arbitrary roster pushes to poezio
+before then), but I thought it would be good to mention. If it is
+considered a real security flaw, I have to say that SleekXMPP [5] [6] is
+also affected, and I will patch it if needed.
 
-It then writes out the content of these paths to the Karaf repo and
-resources
-directories. However, it doesn't do any validation on the paths in the zip
-file. This means that a malicious user could craft a .kar file with ".."
-directory names and break out of the directories to write arbitrary content
-to the filesystem. This is the "Zip-slip" vulnerability -
-https://snyk.io/research/zip-slip-vulnerability
+Regards,
+Mathieu
 
-This vulnerability is low if the Karaf process user has limited permission
-on the filesystem.
+ [1] https://github.com/poezio/slixmpp
+ [2] https://github.com/poezio/poezio / https://poez.io
+ [3] https://git.louiz.org/slixmpp/commit/?id=3Dffdb6ffd69522bb14760eca1965=
+11ac69a158831
+ [4] https://git.louiz.org/slixmpp/commit/?id=3Dffd9436e5cca9f92ed11683173a=
+696972da2360b
+ [5] https://github.com/fritzy/SleekXMPP
+ [5] https://github.com/fritzy/SleekXMPP/blob/develop/sleekxmpp/clientxmpp.=
+py#L112-L115
 
-The mitigation is to prevent "Zip-slip" by checking the path used in kar
-zip
-entries and prevent use of ".." path.
+--=20
+Mathieu Pasquet (mathieui)
 
-This has been fixed in revision:
+--IS0zKkzwUGydFO0o
+Content-Type: application/pgp-signature; name="signature.asc"
 
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=fef9a61
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=e36a7a6
+-----BEGIN PGP SIGNATURE-----
 
-Mitigation: Apache Karaf users should upgrade to 4.2.3
-or later as soon as possible, or limit filesystem permission for the Karaf
-process user.
+iQIzBAEBCgAdFiEEqNX3CaXe9Dnz12IoxZ+Ezu/WFuMFAlhLURkACgkQxZ+Ezu/W
+FuMG1g/+Omt58zoIM/WIoLFtUjjuVqoOx1oIywxIz0dlHNCO7gozcVlWIzbJe1fO
+oeGfUiehLHcwuWjF8a+I7VoLf8N4o7v5ITmSF+wa2LHOKq8RvUWs82AMo7H+iHpx
+5snibBuZSVuM8Ysp14Ex/G3ni9ZoaqcHBKF6UrfNuTntCwID8Cl50qKrdOqXJABS
+Ug5rvp7en5sN4YfO2Olk2zR799TiWSpPoHGswvzQSp9R1uyelqOTE1wi4dP7sQx8
+lnugrfKRoAAPfDojoLH34jnRZS6gR2MgvSgwl8LRv92DkgFBS8yUhFZ8hugz1hPh
+B3GnuVKCi+bMTuqTlMtn91Y+mPoApd3j2FZaaeHcQTX/VKRiMZdjd7Eb3825Mo/n
+YhHD9ST6+fOkO2vvprLeVaXSe8ZG93SaVNGSrB5wjZzKMqgYf5Miqm1caIDAtQdn
+jIDwKUgwqt9Vb0MaWi+gx9jjw3vypCaQf9BbxcbiPt7dQQK0Pv8WqgUn/y2QYUwq
+hExJ+DLnASOiOnDOvcbkYG/dUAaNWhVlXSSAKDYvQYh5FTvDEjA2UxFR54isuNPF
+seclvwM4qLNEWUgoxMgvnrwka+p32FjtSaqqngk0ZWN8HUlAd9qB6Gn2EgZ4OeaT
++uf9funazCIc81k7PgHHIy9Hw+37d2wMFfUrGmz84wqwFKPrluU=
+=vUDN
+-----END PGP SIGNATURE-----
 
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-6090
-
-Credit: This issue was reported by Colm O hEigeartaigh
-
-
+--IS0zKkzwUGydFO0o--
