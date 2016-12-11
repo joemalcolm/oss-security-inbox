@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/17/7
-Message-ID: <8acc06b7-9312-adab-17eb-edd95ff98f72@oracle.com>
-Date: Thu, 17 Nov 2016 19:15:16 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/11/1
+Message-ID: <720ca118-0578-190a-8672-d26a3b7bd33b@securify.nl>
+Date: Sun, 11 Dec 2016 10:02:54 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
+Subject: Multiple vulnerabilities affecting three WordPress Plugins (XSS, & PHP object injection)
 Content-Type: text/plain; charset=utf-8
 
-On 17/11/16 17:50, Jason Cooper wrote:
-> Hi John,
-> 
-> On Thu, Nov 17, 2016 at 04:56:06PM +0000, John Haxby wrote:
->> > On 17/11/16 16:39, Jason Cooper wrote:
->>> > > However, the golden rule still applies.  Physical access trumps all
->>> > > defensive measures.  The absolute best you can do is detect that
->>> > > physical access occurred.  From there, you're hoping there are no
->>> > > hardware implants or other devices outside the scope of software
->>> > > security.
->> > 
->> > I agree.  However, it ought be to be harder than leaning on the enter
->> > key to break into a system.  You lock your doors even though it doesn't
->> > stop a determined burglar?
-> Yes, as I said before, non-deterministic failure modes are bad.  This
-> CVE is a bug in the initrd script and needs to be fixed.  What I
-> disagree with, and still do, is the "sky is falling!" nature of the
-> alert.
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Yup.  I agree there, but that's down to the publicity its received.  We
-can't do much but grin and bear that.   Red Hat have given this a CVSS2
-score of 7.2 which reflects the _potential_ severity but marked it as
-"moderate" which reflects the actual effect.   It's most serious for
-people like me who have an encrypted root but no grub password (and no
-rd.shell=0) but, no, the sky is not falling.
 
-jch
+
+
+
+
+
+View attachment "cross_site_request_forgery_in_insert_html_snippet_wordpress_plugin.txt" of type "text/plain" (4697 bytes)
+
+View attachment "google_analytics_counter_tracker_wordpress_plugin_unauthenticed_php_object_injection_vulnerability.txt" of type "text/plain" (3052 bytes)
+
+View attachment "stored_cross_site_scripting_in_gallery___image_gallery_wordpress_plugin.txt" of type "text/plain" (5535 bytes)
