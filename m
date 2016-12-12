@@ -1,15 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/07/7
-Message-ID: <1106552926.34011723.1457343343716.JavaMail.zimbra@redhat.com>
-Date: Mon, 7 Mar 2016 04:35:43 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request -- linux kernel: pipe: limit the per-user amount of pages allocated in pipes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/4
+Message-ID: <CAHbk4RJo3pRnwE=X--b+c=wvp6gPL1AUJm7UacoE+z7TPEXUfQ@mail.gmail.com>
+Date: Mon, 12 Dec 2016 10:36:11 -0600
+From: Sam Whited <sam@...whited.com>
+To: oss-security@...ts.openwall.com
+Cc: Salvatore Bonaccorso <carnil@...ian.org>, cve-assign@...re.org
+Subject: Re: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
 Content-Type: text/plain; charset=utf-8
 
->> Use CVE-2016-2847.
-Thank you, we'll use this.
+On Sun, Dec 11, 2016 at 4:29 PM,  <cve-assign@...re.org> wrote:
+> Use CVE-2016-9928.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thanks;
+
+For my edification: would it be better to send something to this list
+for CVEs in open source software in the future? I've tried the Google
+Docs form linked from the website a few times and never gotten a
+response.
+
+Best,
+Sam
+
+-- 
+Sam Whited
