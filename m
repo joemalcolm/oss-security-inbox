@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2927" "Sunday" "30" "January" "2022" "21:36:15" "+0000" "Sam James" "sam@gentoo.org" nil "74" "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001" nil nil nil "1" nil nil (number mark "U       sam@gentoo.o Jan 30   74/2927  " thread-indent "\"Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1048" "Monday" "12" "December" "2016" "12:13:45" "+0200" "Lior Kaplan" "kaplanlior@gmail.com" "<CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>" "35" "[oss-security] CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0" nil nil nil "12" "2016121210:13:45" "[oss-security] CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0" (number mark "U       kaplanlior@g Dec 12   35/1048  " thread-indent "\"[oss-security] CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14004 invoked by uid 550); 30 Jan 2022 22:12:08 -0000
+Received: (qmail 19628 invoked by uid 550); 12 Dec 2016 10:13:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,96 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30288 invoked from network); 30 Jan 2022 21:36:38 -0000
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_D4B80F4A-5EE5-476D-9005-3E7AED341BF8";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha512
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-From: Sam James <sam@gentoo.org>
-In-Reply-To: <YfWgu/Uv+2r3TpdL@jasmine.lan>
-Date: Sun, 30 Jan 2022 21:36:15 +0000
-Cc: John Helmert III <ajak@gentoo.org>
-Message-Id: <388160F1-1B99-47C8-A904-3C204DA7D3DF@gentoo.org>
-References: <cb8ce1dd-6dee-b6f9-4081-f662887ce835@igalia.com>
- <YezR31IUUe48w7KH@sol.nexus.lan> <Ye2pUrZ81PjFsary@jasmine.lan>
- <Ye6z5G/Dq89PQ9jz@sol.nexus.lan> <YfWgu/Uv+2r3TpdL@jasmine.lan>
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3693.60.0.1.1)
-Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
- WSA-2022-0001
+Received: (qmail 19598 invoked from network); 12 Dec 2016 10:13:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=u6MlpJhLDAtRxt55yX1Z9INsaCIzVgT/gxtdB1Yrv6s=;
+        b=pdTs/8ZXTCoQilbomdwv5j7Vpl9hmI+h0jYW11R9waMToMYdud6SOhM3oKvbPNo764
+         RgseV1yOatb41FA9WFQPatGUTLKZuojAso9kZAPaqkfaiokrbGz4Ih6YY3yQJH5uUimH
+         o4aa4L4vg8nKO9o4mNoG4q0BopIoUAjbejyG8VsllOhha2MpqvuDUKoMQFsVXlOYyak+
+         E9dRgGYjXVGcBr+0WIIFs2CIg+1RzZPg+Nryf5QhiF80v942UINQKR/xXHUMDUEntcuR
+         WI56baVpJkwj35gFLXvCIN5cJ0ydUhNPjVS/VfBq7OqYYz4VKllL+3Fuzlgi/Q5zR/fS
+         wVCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=u6MlpJhLDAtRxt55yX1Z9INsaCIzVgT/gxtdB1Yrv6s=;
+        b=NVlN77/9R7UcRuZL1vko+Vi14wQKQ+0wsZ80hZBfumhUjgIyGspEBEumd9d/d9ziKm
+         41ViHp+KavTsGb2nC3UWVEuEJ29EQ9MTEojlWfOHfLRfEtgRt56CfsO+xAclLmTUrKt6
+         ciPnaU0zhi2uOG7ho7rkjhdoG6hzLPvkYtNf60CDzjsFtwHsA6SaW9JBzbOmGRMxcQ6g
+         w6n6rvsdzfpeVVK2rs7Tfs8sV50EGbtDRwUBZZqw1hCg9uv/UhEbNwTzVptlZT6SxjEd
+         uIkgeTl0pFse41Ytf/mIfft0M7OdYJH93gno7++9L+kRA69GCMR2g4UFLybTC7YGkqJm
+         dgOQ==
+X-Gm-Message-State: AKaTC03pjvoBxg8TLLazohmgwAxWkMaFHirjUhLA2MNG/ALaSFqg1nTbkMPArN7su5jfjFPSDBsvPowRWOgAlg==
+X-Received: by 10.159.53.107 with SMTP id o98mr58616776uao.149.1481537626150;
+ Mon, 12 Dec 2016 02:13:46 -0800 (PST)
+MIME-Version: 1.0
+From: Lior Kaplan <kaplanlior@gmail.com>
+Date: Mon, 12 Dec 2016 12:13:45 +0200
+Message-ID: <CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: "security@php.net" <security@php.net>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c03f4faed9ef00543735b4b
+Subject: [oss-security] CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0
 
---Apple-Mail=_D4B80F4A-5EE5-476D-9005-3E7AED341BF8
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
+--94eb2c03f4faed9ef00543735b4b
+Content-Type: text/plain; charset=UTF-8
+
+Hi,
+
+Please assign a CVE for the following issues:
+
+Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+Bug #72696    imagefilltoborder stackoverflow on truecolor images
+https://bugs.php.net/bug.php?id=72696
+https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
 
 
+Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+Bug #73331    NULL Pointer Dereference in WDDX Packet Deserialization with
+PDORow
+https://bugs.php.net/bug.php?id=73331
+https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d
 
-> On 29 Jan 2022, at 20:16, Leo Famulari <leo@famulari.name> wrote:
-> 
-> On Mon, Jan 24, 2022 at 08:13:15AM -0600, John Helmert III wrote:
->> I don't think it makes much sense for every downstream to make these
->> kinds of assumptions.
-> 
-> Why not? History shows that this assumption will almost always be
-> correct for WebKit.
-> 
->> Besides, this doesn't seem to be what's
->> happening in practice. For example, WSA-2021-0006 was released on
->> October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
->> September 22, but RedHat's bugs for it were only opened in the days
->> after the *security advisory's* release, not the software release. It
->> doesn't help that most most distribution security tooling seems to be
->> oriented around CVEs, which aren't released for WebKit until after the
->> associated advisory.
-> 
-> I'm sure that Red Hat's package maintainers know what a WebKit update
-> means. Presumably they are busy and their KPIs prioritize fixing CVEs,
-> so they don't act as proactively as one might prefer.
-> 
-> In general, it seems that WebKit is handling these issues like Linux.
-> Observers know that important bugs are fixed constantly in software of
-> this size and complexity. Relying only on CVEs is too reactive and
-> limited in scope to provide a meaningful security stance, increasingly
-> so since the CVE assignment system stopped working in the last few
-> years.
 
-This isn't an argument against WebKit Doing The Right Thing (TM).
+Fixed in PHP 5.6.29 and 7.0.14:
+Bug #73631    Invalid read when wddx decodes empty boolean element
+https://bugs.php.net/bug.php?id=73631
+https://github.com/php/php-src/commit/66fd44209d5ffcb9b3d1bc1b9fd8e35b485040c0
 
-There's no need for us to rehash the standard arguments for/against
-bothering with CVEs at all.
 
-The point is that CVE notifications are useful for some of us and
-it _seems_ (obviously I can't know) that they're intentionally not
-published at the same time as release notes, often a week or more later.
+Fixed in PHP 7.0.14 and 7.1.0:
+Bug #72978    Use After Free in PHP7 unserialize()
+https://bugs.php.net/bug.php?id=72978
+https://github.com/php/php-src/commit/b2af4e8868726a040234de113436c6e4f6372d17
 
-I, and John, are just saying that if possible, it'd be a big help for
-them to do so.
 
-Best,
-sam
+Kaplan
 
---Apple-Mail=_D4B80F4A-5EE5-476D-9005-3E7AED341BF8
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQGTBAEBCgB9FiEEYOpPv/uDUzOcqtTy9JIoEO6gSDsFAmH3BM9fFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
-RUE0RkJGRkI4MzUzMzM5Q0FBRDRGMkY0OTIyODEwRUVBMDQ4M0IACgkQ9JIoEO6g
-SDuXxwf+K8h36WGosHTz0ihhDKNnAX6MB7uiTQ/GkGI97C6YSS6ig7VAzRRBVE3/
-1owsivRF6BKCwTWPsk35gNY7pO+QdXOarbLNClrU9Nz535heFuKk9rcIknD1ixsb
-+n4MaH4NnAFXuMy5VzE1AYpb3tm/uirrKhh4Xh+FZ4bD3x2UzI13vXNLwn7xIJ1p
-27rAmc1Drqlg40UatLKIhL3UIcipci6XofBIym7idYJHC40xjslyNVBxKqZd7dkf
-kiRitys9Y3RxgeNv4s/N8piMnpXof2ocrQWx6BI4U+nIq/3f4PKcbtmrr5o3Cv3k
-dTFQlEHguH6jj4S5+P3FBq6V6PZw5g==
-=3cLT
------END PGP SIGNATURE-----
-
---Apple-Mail=_D4B80F4A-5EE5-476D-9005-3E7AED341BF8--
+--94eb2c03f4faed9ef00543735b4b--
