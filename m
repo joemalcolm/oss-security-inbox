@@ -1,4 +1,9 @@
-Received: (qmail 32754 invoked by uid 550); 23 Jan 2025 17:51:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2877" "Monday" "12" "December" "2016" "13:00:09" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6e56a280b1e54957ad767f3bc5284e90@imshyb02.MITRE.ORG>" "69" "[oss-security] Re: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0" nil nil nil "12" "2016121218:00:09" "[oss-security] Re: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0" (number mark "U       cve-assign@m Dec 12   69/2877  " thread-indent "\"[oss-security] Re: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0\"\n") "<CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>" ("<CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3957 invoked by uid 550); 12 Dec 2016 18:00:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,105 +12,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19643 invoked from network); 23 Jan 2025 17:49:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1737654534;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9DI01qEQSZxSj5ftix0M9PYODCEOohmi4yRNswPDu88=;
-	b=cZ0EfbSQixz2ngqi8rQrPViJ8ciNueAPSzQe6Au5tasZegp2Zp09r3WT7N2ixNn/mOcxK+
-	/LJVHk2G07NJbavq+PxuxhwYCgYcCjh52cV8qgxhVEl1l7flXPSmF3a0yn7DeVMf+Y5F5/
-	lLJ7Y9FDPjUjmE+F0WnxZDpTf+xJ2+w=
-X-MC-Unique: W0uZWJkNN_qbDcKLmTc-wQ-1
-X-Mimecast-MFC-AGG-ID: W0uZWJkNN_qbDcKLmTc-wQ
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737654530; x=1738259330;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9DI01qEQSZxSj5ftix0M9PYODCEOohmi4yRNswPDu88=;
-        b=b9N5Zb+Yl98hteP2JQhGjJijMpFZ5tKLQrAEx47O/ypIPnI2pp17FOIZAxRz/FqO2Y
-         7IS55krh/48xXIipfp0WfKjJSCXOCdv6tvRbJGyw2sAIcGoyR51n+997BA1H5ezaw5/V
-         59wuNskvIyZO87FXH3WBz6HC0kX00cibD7m1c2t/UdiTKDTmur6xxaHRkINmcMlqV0Y1
-         yyF1VDJsSdZyisYr68Rc7hSxvzAEnBGGbv8QpIOI9cNH0PcoT/92c3MAzOnJESgh1HEo
-         QrP/uFrQR7O6Kf0E67BbOATBaH4I1nMl/xhZFVzJmRu9/5g948ZZOGv/0IJxSn5bCVYI
-         k9dQ==
-X-Gm-Message-State: AOJu0Ywag3RaZkbvFbz14u4Pu1iWdf03wrIm/64lDxcZqukqOVYLldN2
-	QlnTyPgcSt8Fa+H0tvbsPY29Rju3AZvjfU3lxuFzXzftdIBxg3+2a4Q1ur7t4BwSRQqJbEcWGxn
-	eQ54Ml3stt+9D3Jg2bavPm/Y7pyg+ZrfG7Jp7UxDOgJQrr+7Ednkb6qWpSsDTjjMbB+rYiRpwIF
-	9LSoL5wa/0PmoZ1fbETgPl8QxZFYFAOvjFqlcaEAbstvwTNJY5
-X-Gm-Gg: ASbGncs5qztntArxahIAon4qWNr7WYhFw+YMpSFKHb4JukmY9mSfU8diSJ+Hl6eN71d
-	/cDwlSiHiEs0rj6oXEQQz+anlA7dR6MuET3z6wf169fqtYVn7mi6G
-X-Received: by 2002:a05:6871:6287:b0:29e:4340:b1b with SMTP id 586e51a60fabf-2b1c0a6a928mr15442165fac.9.1737654530719;
-        Thu, 23 Jan 2025 09:48:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXkWLes26qt+l8VxFz4r/Wi6lmD/Ihqqu2p8gEnzdfzrgFSqXqwbEKIM8LpX7eUybfkCf3Ol9VvzyAyH7CF3s=
-X-Received: by 2002:a05:6871:6287:b0:29e:4340:b1b with SMTP id
- 586e51a60fabf-2b1c0a6a928mr15442155fac.9.1737654530285; Thu, 23 Jan 2025
- 09:48:50 -0800 (PST)
+Received: (qmail 3928 invoked from network); 12 Dec 2016 18:00:21 -0000
+From: <cve-assign@mitre.org>
+To: <kaplanlior@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<security@php.net>
+In-Reply-To: <CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>
+Message-ID: <6e56a280b1e54957ad767f3bc5284e90@imshyb02.MITRE.ORG>
+Date: Mon, 12 Dec 2016 13:00:09 -0500
 MIME-Version: 1.0
-References: <Z5DF00lM-3Q36mhh@kasco.suse.de> <Z5I8r_p6IC8A2ttG@kasco.suse.de>
-In-Reply-To: <Z5I8r_p6IC8A2ttG@kasco.suse.de>
-From: Pete Allor <pallor@redhat.com>
-Date: Thu, 23 Jan 2025 12:48:39 -0500
-X-Gm-Features: AbW1kvbHSkuHenwKO7vKxPRgMIzZ7ZEGNWwBZqruL2klgrh5snHygMGKalMjPWc
-Message-ID: <CAEFCzXUSfA3MdvcNHg88dfZZEGLujZG+EG8s9ydA=AWGYDzcqg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: b8as4XMikqwRkrcLVrTrynBwxl8I7zFPxU-OcrUQdUI_1737654531
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000053207062c633976"
-Subject: Re: [oss-security] issue with stuck Mitre CVE requests
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0
 
---000000000000053207062c633976
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A little comment on the inside helps.   Glad to do so.
+> Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+> Bug #72696    imagefilltoborder stackoverflow on truecolor images
+> https://bugs.php.net/bug.php?id=72696
+> https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
+
+Use CVE-2016-9933. The scope of this CVE is only the missing
+"color < 0" test in older versions.
+https://github.com/libgd/libgd/commit/77f619d48259383628c3ec4654b1ad578e9eb40e
+is also about comparisons to "im->colorsTotal - 1" - if that's also a
+libgd vulnerability fix, and someone wants a CVE ID for that, please
+let us know.
 
 
-On Thu, Jan 23, 2025 at 7:57=E2=80=AFAM Matthias Gerstner <mgerstner@suse.d=
-e> wrote:
+> Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+> Bug #73331    NULL Pointer Dereference in WDDX Packet Deserialization with
+> PDORow
+> https://bugs.php.net/bug.php?id=73331
+> https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d
 
-> Hi list,
->
-> thank you all for your input so far.
->
-> It seems this thread somehow reached Mitre and my stuck CVE request got
-> a CVE assignment by now. The reply also contains some additional
-> information which I believe will be interesting to share in this thread
-> as well:
->
-> > On Thu, Jan 23, 2025 at 01:14:13AM -0500, cve-request@mitre.org wrote:
-> >
-> > If you encounter unexpected behavior with CVE ID requests (e.g., one
-> > answered and another not answered), then please report this as a
-> > separate issue by using:
-> >
-> >    https://cveform.mitre.org
-> >
-> >    Request type:  Other
-> >    Type of comment:  Issue
-> >
-> > "Request type: Other" items are read every day.
->
-> Additionally Mitre expressed that they are working on improvements to
-> prevent such situations in the future.
->
-> Best Regards
->
-> Matthias
->
-> --
-> Matthias Gerstner <matthias.gerstner@suse.de>
-> Security Engineer
-> https://www.suse.com/security
-> GPG Key ID: 0x14C405C971923553
->
-> SUSE Software Solutions Germany GmbH
-> HRB 36809, AG N=C3=BCrnberg
-> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
->
+Use CVE-2016-9934. The scope of this CVE is everything fixed by
+6045de69c7dedcba3eadf7c4bba424b19c81d00d. We could not immediately
+determine whether the new "pdo_row_ce->unserialize =
+zend_class_unserialize_deny" line, by itself, could stand as an
+independent fix for a subset of the problem.
 
---000000000000053207062c633976--
 
+> Fixed in PHP 5.6.29 and 7.0.14:
+> Bug #73631    Invalid read when wddx decodes empty boolean element
+> https://bugs.php.net/bug.php?id=73631
+> https://github.com/php/php-src/commit/66fd44209d5ffcb9b3d1bc1b9fd8e35b485040c0
+
+Use CVE-2016-9935.
+
+
+> Fixed in PHP 7.0.14 and 7.1.0:
+> Bug #72978    Use After Free in PHP7 unserialize()
+> https://bugs.php.net/bug.php?id=72978
+> https://github.com/php/php-src/commit/b2af4e8868726a040234de113436c6e4f6372d17
+
+Use CVE-2016-9936. The b2af4e8868726a040234de113436c6e4f6372d17 commit
+message is "Complete the fix of bug #70172 for PHP 7." Because 70172
+is referenced by CVE-2015-6834, it is possible to say that
+CVE-2016-9936 exists because of an incomplete fix for CVE-2015-6834.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYTuTBAAoJEHb/MwWLVhi2tzwQAJNkrZlt5Jz6HNM4QAS4uZgw
+TBOaGJXVjJF3DQDyR2jb+wYDnMkCWWON0lTw4pUj1sL8JgmxI+R0cT/eTVIBqyGZ
+zyUFzmMSXbt0HQ58Er1v2kZYOnjalD6q8UsME66wO0qVNRDDwpiS93j4yqc42RhH
+l1KcO7DjfbOyEIN/ZNzSLKn9L5Sn/bT0paeXdr5TfmqMDzGHwM0V7NgrjmJeJMTt
+OteCcYQz+r9vLmvM8Ol8Jlj4f5GZvbB8ClBjNmvhUANyxwZjVQ56a1hP/a+w6aw7
+VBTJ9Jpj8SvdBNweTrehLD8e7XwePyN/YuJ8tQ6lhrxL+Xtt6TDt/ug7fpGASoVn
+VD93ExsIokXlgHDJ+4Jfqt0h0f7j2F2Ri7yTmpGCxBrBeIYgFJ949Ak+W2u9OJQz
+51IEO8hUfYbtLqgRw30ZfW2pqYZQ5z75amlbgfb9qvgtcdxBI14/B+cehqrRXJhK
+PbebZHfU/EVb+ZFMJLROsKT5NedrTT5T3oWGaYamRTQm/0Zx0f2YeJT5j/5kJJFz
+YfB2IPdU2a/fdg8H3lZuKU8ti4Y/3ySSdzAzRaXK+TIAds7wfkUdKm+C5hgyjGgX
+NK7XO/omrEyUsWdvI/4cKuIWb0yjcoLqB5yZWcIzU/D7/RynAmj92s1G8bAO8rga
+SJV6zg4FuvvBpDH+1rJJ
+=QPcf
+-----END PGP SIGNATURE-----
