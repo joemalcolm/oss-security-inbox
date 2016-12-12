@@ -1,82 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/5
-Message-id: <CF7B4754-5468-4F2C-B60E-E35EA3166BF9@me.com>
-Date: Sat, 05 Mar 2016 11:57:33 -0500
-From: Larry Cashdollar <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/6
+Message-ID: <CAH8yC8n1PaaH0Pby5NGSsXZ41g8=y_1Y_QeKTFcGyAKOh=CumQ@mail.gmail.com>
+Date: Mon, 12 Dec 2016 13:47:56 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Art Manion <amanion@...t.org>, Kurt Seifried <kseifried@...hat.com>, cve-editorial-board-list <cve-editorial-board-list@...ts.mitre.org>
-Subject: Re: RE: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+Cc: Gergely Nagy <ngg@...sorit.com>, Tamás Koczka <koczka@...sorit.com>,  Jean-Pierre Münch <jean-pierre.muench@....de>,  Uri Blumenthal <mouse008@...il.com>
+Subject: CVE Request: Potential DoS in Crypto++ ASN.1 parser
 Content-Type: text/plain; charset=utf-8
 
-I've been using this https://github.com/distributedweaknessfiling/CNA-Registry or asking RedHat for open source CVEs. 
+Gergely Nagy and Tamás Koczka of Tresorit report a potential DoS in
+the Crypto++ ASN.1 parser. A copy of their email with the report can
+be found at https://groups.google.com/d/msg/cryptopp-users/fEQ8jWg_K8g/qOLHGIDICwAJ.
 
-On Mar 4, 2016, at 9:09 PM, mark@...phey.com wrote:
+When Crypto++ library parses an ASN.1 data value, the library
+allocates for the content octets based on the length octets. Later, if
+there's too few or too little content octets, the library throws a
+BERDecodeErr exception. The memory for the content octets will be
+zeroized (even if unused), which could take a long time on a large
+allocation.
 
-Long time listener, first time caller.....
+Please assign a CVE for the potential issue.
 
-I stated OWASP.org in 2002. I am happy to put some skin in the game and setup a 503c with the right open-source governance structure (read: for the right reasons) and financially bootstrap (build a site and pay for one dedicated full time employee for at least the first year) to get this off the ground. Not what will be needed long term but enough to  start the journey .....
-
-Experience with OWASP was you need a few "mavens" so Kurt, Hanno and others would need to step up and be on a 'founders board' to make it successful etc but ..
-
-If that's of interest let me know, if not someone needs to do it....too important not to. 
-
-Sent from my iPhone
-
-> On Mar 4, 2016, at 5:45 PM, Zach W. <kestrel@...linux.us> wrote:
-> 
-> I agree. I've been in the same boat as Hanno. In one case, I even sent a
-> request to both oss-sec and cve-assign about an open source platform
-> called OSMC, and got a response off-list that was just like the one seen
-> in Kurt's original email. I asked for clarification and for them to
-> address both me and the list and I never got a response. That was over a
-> month ago.
-> 
-> I'm sure Hanno and I are not the only ones. Thank you Kurt for bringing
-> this up.
-> 
-> Zach W.
-> 
-> On 3/4/2016 4:07 PM, Tim wrote:
->>> The level of frustration in the research community has been growing,
->>> with steady calls for a new CVE-like solution that is designed to
->>> address these needs in a more effective way. I greatly appreciate the
->>> work that has been done, but at this point CVE is becoming less
->>> useful, less relevant - if this isn't addressed, my expectation is
->>> that a CVE-like solution will be adopted by the community, and
->>> researchers will begin moving away from requesting CVEs.
->> 
->> The CVE system is clearly breaking down.
->> 
->> I think we need a system that is less moderated and more content
->> driven.  I imagine a simple site, which looks like a stripped-down bug
->> tracker.  Let's suppose it acts like this:
->> 
->> * Any researcher can post "claims" about vulnerabilities.  This
->> assigns an identifier immediately.
->> 
->> * Claims about vulnerabilities may be reviewed, eventually, by an
->> authority whose job it is to be sure the claim is associated
->> properly with a real product/version and that the product owners are
->> notified through an automated process (e.g. "security@...").
->> 
->> * Product owners can respond to claims, which will appear along side
->> the claim.  Links to patches or refutations can be included.
->> 
->> * No moderation required.  Let the public decide if they believe the
->> researcher or vendor.  If a moderator does bother to look over the
->> content, they could deduplicate/link issues together and address any
->> confusion, but beyond that, it isn't their job to decide what is a
->> vulnerability and what isn't.
->> 
->> * All information posted in this system exists publicly forever.
->> Links to external content (that isn't well represented in the
->> posting) are frowned upon, since the Internet Archive clearly can't
->> keep up with everything.  We need an archive that doesn't go away.
->> 
->> 
->> Ok, beat it up.
->> 
->> tim
-> 
-> 
-
+Thanks in advance.
