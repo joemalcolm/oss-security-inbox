@@ -1,113 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/12
-Message-ID: <CACn5sdRbBPaw4MCTH7eskU5r1xfM8WGAaLU--=aNjy6x0B6-QQ@mail.gmail.com>
-Date: Thu, 10 Nov 2016 15:07:51 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Heap read out-of-bounds parsing a Javascript file with the last revision of JavaScript Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/7
+Message-ID: <b3d257e8a29d4b1794dce5fb4da89638@imshyb02.MITRE.ORG>
+Date: Mon, 12 Dec 2016 18:34:07 -0500
+From: <cve-assign@...re.org>
+To: <noloader@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <ngg@...sorit.com>, <koczka@...sorit.com>, <jean-pierre.muench@....de>, <mouse008@...il.com>
+Subject: Re: CVE Request: Potential DoS in Crypto++ ASN.1 parser
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We recently found a read out-of-bounds parsing JavaScript code in the last
-revision of WebKit (
-https://github.com/WebKit/webkit/commit/fcf81f3ad83cd910727c7a1824e50377a474c8f4).
-I tested this issue in ArchLinux (x86_64) but other configurations could be
-affected. To reproduce:
+> When Crypto++ library parses an ASN.1 data value, the library
+> allocates for the content octets based on the length octets. Later, if
+> there's too few or too little content octets, the library throws a
+> BERDecodeErr exception. The memory for the content octets will be
+> zeroized (even if unused), which could take a long time on a large
+> allocation.
 
-1. Recompile jsc with ASAN support.
-2. Execute:
+> https://groups.google.com/forum/#!msg/cryptopp-users/fEQ8jWg_K8g/qOLHGIDICwAJ
+> https://github.com/weidai11/cryptopp/issues/346
 
-$ ./jsc red.-4050783292692436029.nkpzevdpie.js
-...
-=================================================================
-==24637==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x603000014fc8 at pc 0x7ffff67f04b0 bp 0x7fffaccf8820 sp 0x7fffaccf8810
-READ of size 16 at 0x603000014fc8 thread T2
-==24637==AddressSanitizer: while reporting a bug found another one.
-Ignoring.
-    #0 0x7ffff67f04af in WTF::(anonymous namespace)::lockHashtable()
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
-    #1 0x7ffff67f1b6c in WTF::ParkingLot::parkConditionallyImpl(void
-const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()>
-const&, std::chrono::time_point<std::chrono::_V2::steady_clock,
-std::chrono::duration<long, std::ratio<1l, 1000000000l> > >)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cdb6c)
-    #2 0x7ffff67cc1cb in std::_Function_handler<void (),
-WTF::AutomaticThread::start(WTF::Locker<WTF::LockBase>
-const&)::{lambda()#1}>::_M_invoke(std::_Any_data const&)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20a81cb)
-    #3 0x7ffff67f7da5 in WTF::threadEntryPoint(void*)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20d3da5)
-    #4 0x7ffff685a530 in WTF::wtfThreadEntryPoint(void*)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2136530)
-    #5 0x7ffff1df1453 in start_thread (/usr/lib/libpthread.so.0+0x7453)
-    #6 0x7ffff0c017de in __GI___clone (/usr/lib/libc.so.6+0xe87de)
+>> several BERDecode* functions
+>> bug was found using "honggfuzz"
 
-0x603000014fd0 is located 0 bytes to the right of 32-byte region
-[0x603000014fb0,0x603000014fd0)
-allocated by thread T2 here:
-    #0 0x7ffff6efee60 in __interceptor_malloc
-/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_malloc_linux.cc:62
-    #1 0x7ffff686792f in bmalloc::Allocator::allocateSlowCase(unsigned
-long)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x214392f)
+Use CVE-2016-9939.
 
-Thread T2 created by T0 here:
-    #0 0x7ffff6e69498 in __interceptor_pthread_create
-/build/gcc-multilib/src/gcc/libsanitizer/asan/asan_interceptors.cc:236
-    #1 0x7ffff685b983 in WTF::createThreadInternal(void (*)(void*), void*,
-char const*)
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x2137983)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-(/home/g/Work/Code/webkit-master/WebKitBuild/Release/lib/libjavascriptcoregtk-4.0.so.18+0x20cc4af)
-in WTF::(anonymous namespace)::lockHashtable()
-Shadow bytes around the buggy address:
-  0x0c067fffa9a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffa9e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c067fffa9f0: fa fa fa fa fa fa 00 00 00[00]fa fa fd fd fd fd
-  0x0c067fffaa00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c067fffaa40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24637==ABORTING
-
-I'm forwarding this issue since i receive no answer from the Webkit
-developers in more than 3 weeks. The original bug report (private) is here:
-
-https://bugs.webkit.org/show_bug.cgi?id=164000
-
-The reproducer are available upon request. Please assign a CVE if
-necessary.
-
-This issue was found using QuickFuzz.
-
-Regards,
-Gustavo.
-
+iQIcBAEBCAAGBQJYTzNzAAoJEHb/MwWLVhi2eccQALN5rY/Oya5G4EuRxjZyZyKt
+IcuPVecHhTCDl4yM4nZ7r1/+6yV8VCI4RglDOKnjSPhm8+Hf/UrinX6E/4uch3Vs
+RHMWCLprB8W0mabXau6y8//C6uiwvZ6cZjn3oth1hF6akLMtdbgZ9Frhadmrh+rl
+ITHbVoZd7fya8VWNNTnDoA2jdQmB8JU+/MjfZ4NqjIAs+rULhlzXFesxKV+Z++Yl
+J38WhIOnQ4gCftHNQKabFosULdM6VuQikoIVfHtbvJIn8Q8nMWuc0yfUMgtpxPpw
+Mmagdht7R7EoWYy4vaqznqdJ40p428Qa1HKhC/XXG+CPqRyDaqPhrHX0UyjdhYFc
+LCrSGaVSs4v4WMkCEk+Bz9/xuclx7YI9Ss+JJMcQW3CgrDV5HIS+ILOTA+A/s+N7
+Izn7jbR3mbsNgJ0PkGQUVZ0GbRcJyUT4bB+Y9ayjDNOpLPstnUpEZFRkSGXGKUmd
+Ig3WTZyovrk8AO3dR5rTmsal66nwKOzstZpNKoGT21a2o8MC+wp1ZCEwu1dK7Vm1
+mltJzfcAyitMOkxIKxURbCqPcK4BcFI7/YUDKW7HMGiPR1s4bDG8PKZ/t4gZsl7X
+3O00PQVOEsfMxs9HcRfrzFLpCiAhmDQ3v6FYgYfm8S72+U2RCGO0ASxs3lLfzDTC
+OHCW0YL4p6J40zb3Why4
+=l+lt
+-----END PGP SIGNATURE-----
