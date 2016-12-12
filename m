@@ -1,98 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/23/6
-Message-ID: <20160223161754.GA23263@openwall.com>
-Date: Tue, 23 Feb 2016 19:17:54 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Access to /dev/pts devices via pt_chown and user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/5
+Message-ID: <6e56a280b1e54957ad767f3bc5284e90@imshyb02.MITRE.ORG>
+Date: Mon, 12 Dec 2016 13:00:09 -0500
+From: <cve-assign@...re.org>
+To: <kaplanlior@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@....net>
+Subject: Re: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
-> Sending content from [0] also to oss-security as requested last time:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you.  This public disclosure is very late, though.  I didn't
-realize you were still holding some of your findings on this.
+> Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+> Bug #72696    imagefilltoborder stackoverflow on truecolor images
+> https://bugs.php.net/bug.php?id=72696
+> https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
 
-> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to change
-> ownership of slave pts devices in /dev/pts to the same uid holding the
-> master file descriptor for the slave.
+Use CVE-2016-9933. The scope of this CVE is only the missing
+"color < 0" test in older versions.
+https://github.com/libgd/libgd/commit/77f619d48259383628c3ec4654b1ad578e9eb40e
+is also about comparisons to "im->colorsTotal - 1" - if that's also a
+libgd vulnerability fix, and someone wants a CVE ID for that, please
+let us know.
 
-I think pt_chown is only needed for legacy BSD pty's, and no longer
-needed for Unix 98 pty's that Linux systems use these days.  Perhaps it
-should be dropped from upstream glibc by now.  e.g. on Owl we haven't
-been installing it SUID ever (as it was already legacy 15 years ago),
-and we haven't been packaging it at all since 2005.
 
-> In my opinion, this security bug should be fixed two-fold: At first,
-> kernel should prevent the TIOCGPTN ioctl when invoked called by a
-> process within one namespace but acting on a filedescriptor from a
-> devpts instance mounted in a different namespace. Additionally
-> pt_chown should check via readlink and stat, that the passed file
-> descriptor really was from the /dev/ptmx or /dev/pts/ptmx device
-> present in the same namespace as the /dev/pts/[num] device is
-> residing. This of course is only relevant if pt_chown is going to
-> survive on recent namespace aware systems.
+> Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+> Bug #73331    NULL Pointer Dereference in WDDX Packet Deserialization with
+> PDORow
+> https://bugs.php.net/bug.php?id=73331
+> https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d
 
-I think the primary fixes should be different: disable unprivileged user
-namespaces by default, and drop pt_chown.
+Use CVE-2016-9934. The scope of this CVE is everything fixed by
+6045de69c7dedcba3eadf7c4bba424b19c81d00d. We could not immediately
+determine whether the new "pdo_row_ce->unserialize =
+zend_class_unserialize_deny" line, by itself, could stand as an
+independent fix for a subset of the problem.
 
-> Timeline:
-> =========
-> 
->     20151220: Discovery
->     20151227: Report at Ubuntu Launchpad1529486
->     20160104: Report to distros list
->     20160122: Patch to disable unprivileged userns due to this and
-> other issues LKML
->     20160222: CRD and publication
 
-Ouch.  As you're aware, everything you report to distros must be made
-public in at most 2 weeks.  Unfortunately, I didn't keep track of this,
-and I don't recall if your report to distros included the detail you're
-disclosing just today.  I thought you had already disclosed whatever was
-on distros here:
+> Fixed in PHP 5.6.29 and 7.0.14:
+> Bug #73631    Invalid read when wddx decodes empty boolean element
+> https://bugs.php.net/bug.php?id=73631
+> https://github.com/php/php-src/commit/66fd44209d5ffcb9b3d1bc1b9fd8e35b485040c0
 
-http://www.openwall.com/lists/oss-security/2016/01/19/17
+Use CVE-2016-9935.
 
-Now I see you were asking for advice on further handling of these issues
-in there, and got no replies. :-(
 
-I think going forward, you shouldn't make any use of the distros list,
-and should post to oss-security right away.
+> Fixed in PHP 7.0.14 and 7.1.0:
+> Bug #72978    Use After Free in PHP7 unserialize()
+> https://bugs.php.net/bug.php?id=72978
+> https://github.com/php/php-src/commit/b2af4e8868726a040234de113436c6e4f6372d17
 
-> References:
-> ===========
-> 
-> [0]
-> http://www.halfdog.net/Security/2015/PtChownArbitraryPtsAccessViaUserNamespace/
-> [1]
-> http://www.halfdog.net/Security/2016/OverlayfsOverFusePrivilegeEscalation/
+Use CVE-2016-9936. The b2af4e8868726a040234de113436c6e4f6372d17 commit
+message is "Complete the fix of bug #70172 for PHP 7." Because 70172
+is referenced by CVE-2015-6834, it is possible to say that
+CVE-2016-9936 exists because of an incomplete fix for CVE-2015-6834.
 
-In [0], "LKML" points to:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://lkml.org/lkml/2016/1/22/7
-
-Unfortunately, that archive of LKML is currently broken (doesn't display
-the actual message to me), so I don't know what exactly this was.
-
-I did, however, watch the discussion CC'ed to kernel-hardening, where
-Kees Cook proposed "sysctl: allow CLONE_NEWUSER to be disabled":
-
-http://www.openwall.com/lists/kernel-hardening/2016/01/22/19
-http://www.openwall.com/lists/kernel-hardening/2016/01/22/20
-http://www.openwall.com/lists/kernel-hardening/2016/01/22/21
-
-Unfortunately, this was NAK'ed by the maintainer, Eric W. Biederman:
-
-http://www.openwall.com/lists/kernel-hardening/2016/01/23/4
-http://www.openwall.com/lists/kernel-hardening/2016/01/25/11
-http://www.openwall.com/lists/kernel-hardening/2016/01/26/7
-
-Eric suggested "a per user limit on the number of user namespaces users
-may create".  There was some further discussion after that point, but no
-clear outcome.  Last message posted on January 28.
-
-If there's no clear decision upstream, distros must do what they must -
-disable unprivileged userns ASAP, in whatever way they can.
-
-Alexander
+iQIcBAEBCAAGBQJYTuTBAAoJEHb/MwWLVhi2tzwQAJNkrZlt5Jz6HNM4QAS4uZgw
+TBOaGJXVjJF3DQDyR2jb+wYDnMkCWWON0lTw4pUj1sL8JgmxI+R0cT/eTVIBqyGZ
+zyUFzmMSXbt0HQ58Er1v2kZYOnjalD6q8UsME66wO0qVNRDDwpiS93j4yqc42RhH
+l1KcO7DjfbOyEIN/ZNzSLKn9L5Sn/bT0paeXdr5TfmqMDzGHwM0V7NgrjmJeJMTt
+OteCcYQz+r9vLmvM8Ol8Jlj4f5GZvbB8ClBjNmvhUANyxwZjVQ56a1hP/a+w6aw7
+VBTJ9Jpj8SvdBNweTrehLD8e7XwePyN/YuJ8tQ6lhrxL+Xtt6TDt/ug7fpGASoVn
+VD93ExsIokXlgHDJ+4Jfqt0h0f7j2F2Ri7yTmpGCxBrBeIYgFJ949Ak+W2u9OJQz
+51IEO8hUfYbtLqgRw30ZfW2pqYZQ5z75amlbgfb9qvgtcdxBI14/B+cehqrRXJhK
+PbebZHfU/EVb+ZFMJLROsKT5NedrTT5T3oWGaYamRTQm/0Zx0f2YeJT5j/5kJJFz
+YfB2IPdU2a/fdg8H3lZuKU8ti4Y/3ySSdzAzRaXK+TIAds7wfkUdKm+C5hgyjGgX
+NK7XO/omrEyUsWdvI/4cKuIWb0yjcoLqB5yZWcIzU/D7/RynAmj92s1G8bAO8rga
+SJV6zg4FuvvBpDH+1rJJ
+=QPcf
+-----END PGP SIGNATURE-----
