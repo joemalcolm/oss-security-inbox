@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5101" "Thursday" "14" "January" "2016" "11:55:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160114165546.103516C019E@smtpvmsrv1.mitre.org>" "117" "[oss-security] Re: CVE Request: CGit - Multiple vulnerabilities" nil nil nil "1" "2016011416:55:46" "[oss-security] Re: CVE Request: CGit - Multiple vulnerabilities" (number mark "U       cve-assign@m Jan 14  117/5101  " thread-indent "\"[oss-security] Re: CVE Request: CGit - Multiple vulnerabilities\"\n") "<CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>" ("<CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["663" "Monday" "12" "December" "2016" "10:40:16" "-0600" "Sam Whited" "sam@samwhited.com" "<CAHbk4RL5S3VMX375NbqUUMmfWaUUM4wP1vNnYTvO4w2QMGE9qQ@mail.gmail.com>" "28" "Re: [oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" "^Cc:" nil nil "12" "2016121216:40:16" "[oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza" (number mark "        sam@samwhite Dec 12   28/663   " thread-indent "\"Re: [oss-security] Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza\"\n") "<CAHbk4RJo3pRnwE=X--b+c=wvp6gPL1AUJm7UacoE+z7TPEXUfQ@mail.gmail.com>" ("<20161209201906.ltauap7fydkc62f6@eldamar.local>" "<7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG>" "<CAHbk4RJo3pRnwE=X--b+c=wvp6gPL1AUJm7UacoE+z7TPEXUfQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27886 invoked by uid 550); 14 Jan 2016 16:55:58 -0000
+Received: (qmail 14046 invoked by uid 550); 12 Dec 2016 16:42:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,130 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 13814 invoked from network); 12 Dec 2016 16:41:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=samwhited.com; s=swgoo;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Uku/suJIB62zCPBzuVNVRDma4UbG2McKcAByhZsw2Zw=;
+        b=rx+Zq1Yv02H9Wv+J0HtMrBQ3e06m4edzJO/F8oBUZwcb0dzDfq9Liu72o/hDV4CKNR
+         7gSVUFNCS1dp00ClSTwl/GzOCiX7+kc4bVPbspXVYJlZCrRfO0xowsg+hMQmVa+5InhW
+         ld+W+4NxSeykzZeOC/75dL4QUp7bprb1ukYF8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Uku/suJIB62zCPBzuVNVRDma4UbG2McKcAByhZsw2Zw=;
+        b=RCxbKTuhLkU1yGbjTVn5aJpxfS+i5VT38vLr5Lau+mSliBMEAhutR/JbZeaTgRSJ7Y
+         2pqrSLu0rzxDiHMUKnGLi56wlnOIsSsDp3bEVb0Sz6kk4M9W1vt+ace1eNWg2IaUWOM+
+         lJ0E7G7qQQGCa5mFb6oqT2xwRZf/dBFjliADrNCHYwjF5rB4Z+yMml1I0wKyDF4q/uor
+         289MaFLcjohEwhgcFqAZ1edLNe/bMhrEmu88sWZ02yd3fPlbFb0tlIh0t6qofVg9/VK2
+         7mjzAcUJlOU0ceqACNKEjrPwWC0oLV6AvtjhjLziQmRB3kkGDFYWMGpOeaVZZJDndGw6
+         420g==
+X-Gm-Message-State: AKaTC0071rO1GtyfCrhhLNqrP+zGySs416ZP4snc/v1Cdm542XDSsV/Y/aLlcjkR0pJ99eywzopgl9dfgeykeQ==
+X-Received: by 10.55.120.195 with SMTP id t186mr79149175qkc.218.1481560857188;
+ Mon, 12 Dec 2016 08:40:57 -0800 (PST)
+MIME-Version: 1.0
+X-Originating-IP: [12.26.56.243]
+In-Reply-To: <CAHbk4RJo3pRnwE=X--b+c=wvp6gPL1AUJm7UacoE+z7TPEXUfQ@mail.gmail.com>
+References: <20161209201906.ltauap7fydkc62f6@eldamar.local>
+ <7b789ec9b990495db739639f907b2366@imshyb02.MITRE.ORG> <CAHbk4RJo3pRnwE=X--b+c=wvp6gPL1AUJm7UacoE+z7TPEXUfQ@mail.gmail.com>
+Message-ID: <CAHbk4RL5S3VMX375NbqUUMmfWaUUM4wP1vNnYTvO4w2QMGE9qQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: Salvatore Bonaccorso <carnil@debian.org>, cve-assign@mitre.org
+Date: Mon, 12 Dec 2016 10:40:16 -0600
+From: Sam Whited <sam@samwhited.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27868 invoked from network); 14 Jan 2016 16:55:57 -0000
-From: cve-assign@mitre.org
-To: Jason@zx2c4.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, krzysztof.kowalewski@eset.pl, erik@includesecurity.com
-In-Reply-To: <CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>
-Message-Id: <20160114165546.103516C019E@smtpvmsrv1.mitre.org>
-Date: Thu, 14 Jan 2016 11:55:46 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: CGit - Multiple vulnerabilities
+Subject: Re: [oss-security] Re: CVE Request: MCabber: remote attackers can
+ modify the roster and intercept messages via a crafted roster-push IQ stanza
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Oops, I got the autoreply about not using this list to request CVEs
+after sending that message; now I'm a bit more confused about the
+current procedure; please advise.
 
-> 1. Reflected Cross Site Scripting & Header Injection in Mimetype Query
-> String [Katowicz-Kowalewski]
-> 
-> The ui-blob handler accepted a mimetype as a query string and then
-> echoed this string verbatim back. A malicious user could provide a
-> string like:
-> 
->   http://git.zx2c4.com/cgit/blob/cgit.c?mimetype=text/html%0d%0a%0d%0a<script>xss</script>
-> 
-> This has been fixed by removing support for the mimetype query string parameter:
-> http://git.zx2c4.com/cgit/commit/?id=1c581a072651524f3b0d91f33e22a42c4166dd96
+=E2=80=94Sam
 
-Use CVE-2016-1899.
-
-
-> And then restricting to only generic mimetypes:
-> http://git.zx2c4.com/cgit/commit/?id=92996ac2a6fc4e944c3d723e12d5ab244a43508e
-> And finally, just in case, setting the IE anti-sniffing header as well
-> as a restrictive CSP header:
-> http://git.zx2c4.com/cgit/commit/?id=9ca2566972db968df4479108b29bb92551138b57
-
-There is no CVE ID associated with either of these other changes,
-which seem to be for defense-in-depth purposes.
+On Mon, Dec 12, 2016 at 10:36 AM, Sam Whited <sam@samwhited.com> wrote:
+> On Sun, Dec 11, 2016 at 4:29 PM,  <cve-assign@mitre.org> wrote:
+>> Use CVE-2016-9928.
+>
+> Thanks;
+>
+> For my edification: would it be better to send something to this list
+> for CVEs in open source software in the future? I've tried the Google
+> Docs form linked from the website a few times and never gotten a
+> response.
+>
+> Best,
+> Sam
+>
+> --
+> Sam Whited
 
 
-> 2. Stored Cross Site Scripting & Header Injection in Filename
-> Parameter [Donenfeld]
-> 
-> A user who has write access to the git repository could create
-> filenames containing new lines that would result in that filename,
-> including the newlines, being included in a header, resulting in
-> header injection and eventually XSS.
-> 
-> This has been fixed by properly escaping filenames in headers:
-> http://git.zx2c4.com/cgit/commit/?id=513b3863d999f91b47d7e9f26710390db55f9463
 
-Use CVE-2016-1900.
-
-
-> Additionally, while the redirect for the /about -> /about/ page does
-> *not* appear to be vulnerable due to mitigating conditions, the
-> following commit was made to similarly harden potential injections
-> here:
-> http://git.zx2c4.com/cgit/commit/?id=4291453ec30656c2f59645d8a74cf295ce0253a9
-
-There is no CVE ID associated with this additional issue.
-
-
-> 3. Stored Cross Site Scripting in Git Repo Files [Katowicz-Kowalewski]
-> 
-> A user who has write access to the git repository can add HTML pages
-> and then serve them with an HTML mimetype. A user could therefore
-> upload pages with malicious javascript executing in the same origin as
-> the cgit web site. While this is ordinarily not a problem for
-> single-use users - and indeed some users rather like being able to
-> serve html from cgit - sites that allow potentially malicious third
-> party users may not find this behavior desirable.
-> 
-> This has been fixed by adding a configuration option,
-> "enable-html-serving", which is by default off:
-> http://git.zx2c4.com/cgit/commit/?id=aaba5f8b925f44f7d5ffb0a45fe349642d478513
-> This flag sets anti-sniffing, CSP, and restricts mimetypes to
-> non-"application/" (except for application/pdf and
-> application/octet-stream) and non-"text/" (except for text/plain).
-
-There is no CVE ID associated with this report, which seems to be
-about adding new security-related functionality. We realize that other
-perspectives may have existed, especially because the attacker for
-both 2 and 3 is "A user who has write access to the git repository."
-However, we typically don't want to have a CVE for a design change
-that probably breaks a number of existing installations unless
-reconfigured. Also, it seems that another possibility may have been
-creation of a framework for segregating the user-uploaded HTML files
-into a different origin (admittedly this may not be worthwhile because
-running a cgit service with two domain names probably isn't what the
-ordinary cgit customer wants).
-
-
-> 4. Integer Overflow resulting in Buffer Overflow [Cabetas]
-> 
-> ctx.env.content_length is an unsigned int, coming from the
-> CONTENT_LENGTH environment variable, which is parsed by strtoul. The
-> HTTP/1.1 spec says that "any Content-Length greater than or equal to
-> zero is a valid value." By storing this unsigned int into an int, we
-> potentially overflow it, resulting in the following bounding check
-> failing, leading to a buffer overflow.
-> 
-> This has been fixed by this commit:
-> http://git.zx2c4.com/cgit/commit/?id=4458abf64172a62b92810c2293450106e6dfc763
-
-Use CVE-2016-1901.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWl9JtAAoJEL54rhJi8gl5lQEP/RNIfyGohJ7Z/SHub/OW/Bl0
-39LctMT9FcOTD6WBIvub4bWE6Q/c2FlWfDjeier2cO+pm3xJnXZEvGDMxZEI2wYI
-ErO9spu++XX6JDak0Il9fdxPTTzjSJj+c+8O8fKI3mJyUVxNhmWYUxIdG83or9zx
-ZUko+9LmXStUliIwG7FKGdqbP9gHvFI+ZLdfwtPomNJs9MEzJPipOEuSh6/Ia822
-4rXxn9Jb+wCVWdIhsaGUkuM4wq2SZsMcpJ13ww4IOOnCErfDKbRrODXvt03MRwyE
-yE0R7aI0RoSzqzUAyiqJZZfgVgrPl1Ofx3n6mnbV3Y93Ypo8MparXUXf7+LDTT7I
-Q9M7CWc5YYOnRBg12XFaUmJY25UQRlc4PjVUpX6DZY2vyzuO8cj3k64Vi4wcQ/Nc
-OtyqNuKUJMPH77mVmMZHy7jfbtq/I20H34B57+jfBkCyLs50tQAP+8EAze0yEFF4
-ZXv87eMrUNJJu/qOoZeJaf57PAzuFaoANtYBQ+p/hUfMwsm8iGoy6Ko0ZXO3ZW3k
-9kACdNt3QX0OfNVLws2r6qr+CFERrHMp+ha6JZbBFGAPNO4QP9ATzaixQzJ76nSU
-pPrqObQ6H58Mmq+ACRtBTNLVnccMNLsMDPgSWeLmlXZpe5DP/EPyQuSduC7gDkB/
-8Td7FtAmzPUi1aORc6OK
-=F6i1
------END PGP SIGNATURE-----
+--=20
+Sam Whited
+pub 4096R/54083AE104EA7AD3
