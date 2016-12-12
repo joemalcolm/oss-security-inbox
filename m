@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2708" "Tuesday" "27" "June" "2017" "01:50:39" "+0200" "PaX Team" "pageexec@freemail.hu" "<59519DCF.16680.8BD89DD3@pageexec.freemail.hu>" "56" "Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth" "^CC:" nil nil "6" "2017062623:50:39" "[oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth" (number mark "        pageexec@fre Jun 27   56/2708  " thread-indent "\"Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth\"\n") "<a7c4a449-27df-1595-5ba5-4c5cd7ba93e0@redhat.com>" ("<20170624005003.GB27479@grsecurity.net>" "<5951818E.21842.8B6A4375@pageexec.freemail.hu>" "<a7c4a449-27df-1595-5ba5-4c5cd7ba93e0@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1368" "Monday" "12" "December" "2016" "09:42:20" "+0000" "Mark Thomas" "markt@apache.org" "<2c7b2749-74fb-8913-8f2a-c33933d2c9c0@apache.org>" "38" "[oss-security] [SECURITY] CVE-2016-8745 Apache Tomcat Information Disclosure" nil nil nil "12" "2016121209:42:20" "[oss-security] [SECURITY] CVE-2016-8745 Apache Tomcat Information Disclosure" (number mark "U       markt@apache Dec 12   38/1368  " thread-indent "\"[oss-security] [SECURITY] CVE-2016-8745 Apache Tomcat Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13415 invoked by uid 550); 27 Jun 2017 12:42:02 -0000
+Received: (qmail 27777 invoked by uid 550); 12 Dec 2016 09:53:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21574 invoked from network); 26 Jun 2017 23:50:58 -0000
-MIME-Version: 1.0
-Message-ID: <59519DCF.16680.8BD89DD3@pageexec.freemail.hu>
-Priority: normal
-In-reply-to: <a7c4a449-27df-1595-5ba5-4c5cd7ba93e0@redhat.com>
-References: <20170624005003.GB27479@grsecurity.net>, <5951818E.21842.8B6A4375@pageexec.freemail.hu>, <a7c4a449-27df-1595-5ba5-4c5cd7ba93e0@redhat.com>
-X-mailer: Pegasus Mail for Windows (4.72.572)
-Content-type: text/plain; charset=US-ASCII
-Content-transfer-encoding: 7BIT
-Content-description: Mail message body
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.1.12 (r00tworld.com [212.85.137.150]); Tue, 27 Jun 2017 01:50:39 +0200 (CEST)
-X-Virus-Scanned: r00tworld Anti-Virus System
-CC: spender@grsecurity.net
-Date: Tue, 27 Jun 2017 01:50:39 +0200
-From: "PaX Team" <pageexec@freemail.hu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth
-To: oss-security <oss-security@lists.openwall.com>, kseifried@redhat.com
+Received: (qmail 20372 invoked from network); 12 Dec 2016 09:42:35 -0000
+From: Mark Thomas <markt@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <2c7b2749-74fb-8913-8f2a-c33933d2c9c0@apache.org>
+Date: Mon, 12 Dec 2016 09:42:20 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [SECURITY] CVE-2016-8745 Apache Tomcat Information Disclosure
 
-On 26 Jun 2017 at 16:59, Kurt Seifried wrote:
-> 
-> On 2017-06-26 3:50 PM, PaX Team wrote:
-> > On 26 Jun 2017 at 13:47, Kurt Seifried wrote:
-> >
-> >> I think we can agree as a community of professionals that insults and name
-> >> calling are unnecessary and also not very effective.
-> > I completely agree with you but then I can't explain why you chose to insult
-> > our projects last week and still have not remedied it (both the CVE and your
-> > insulting tweet are still up). I find it curious how you can preach about
-> > professionalism after being the very instigator of the recent splat (heck,
-> > instead of answering, you called it a conspiracy theory when I asked you in
-> > private why you issued the CVE to begin with which then forced us to take
-> > the issue public).
-> So as per the private email thread we had previously I'm not going to be
-> interacting with you beyond what is strictly neccesary for CVE and other
-> professional purposes.
+CVE-2016-8745 Apache Tomcat Information Disclosure
 
-Since your professional job is to issue CVEs and you did so in our case based
-on an erroneous judgement call, I believe it falls into this category.
+Severity: Important
 
-> One the CVE REJECT side, CVE-2017-1000377 looks legitimate,
+Vendor: The Apache Software Foundation
 
-You have yet to explain why it is so. The Qualys advisory and their explicit
-reject requests state the exact opposite.
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M13
+Apache Tomcat 8.5.0 to 8.5.8
+Earlier versions are not affected.
 
-> although I'm inclined to agree with Qualys and REJECT it so that you stop emailing.
+Description
+The refactoring of the Connector code for 8.5.x onwards introduced a
+regression in the error handling of the send file code for the NIO HTTP
+connector. An error during send file processing resulted in the current
+Processor object being added to the Processor cache multiple times. This
+in turn meant that the same Processor could be used for concurrent
+requests. Sharing a Processor can result in information leakage between
+requests including, not not limited to, session ID and the response body.
 
-I will stop emailing you when you live up to your professional obligation
-and make sure that the CVE you issued in error is rescinded.
+Mitigation
+Users of the NIO HTTP connector with the affected versions should apply
+one of the following mitigations
+- Switch to the NIO2 HTTP or APR HTTP connector
+- Disable send file
+- Upgrade to Apache Tomcat 9.0.0.M15 or later
+  (Apache Tomcat 9.0.0.M14 has the fix but was not released)
+- Upgrade to Apache Tomcat 8.5.9 or later
 
-> I did contact MITRE, I haven't had time to reply to them yet (they are
-> also wondering why the CVE needs REJECT'ing), as such I think it may be
-> best to recuse myself from this specific CVE and let you handle this
-> with MITRE. I have also previously told you how to go about doing this.
+Credit:
+This issue was reported publicly as Bug 60409 [1] and the security
+implications identified by the Tomcat security team.
 
-You said that the requestor has to ask for the rejection. Since you are the
-requestor, only you can do so though you tried to drag Qualys into this.
-They still made the reject request a week ago but you haven't acted on it
-yet despite your promise to do so. Now you're telling us that we have yet
-something else to do? Please elaborate as your past communications didn't
-explain any further.
-
-> I will say that CVE identifiers doesn't just cover full code execution
-> flaws, but also covers situations where for example a security property
-> is claimed but is not as effective as we thought (e.g. the stackguard
-> page size in this case). Many CVE's are not fully exploitable on their
-> own but are part of an exploit chain.
-
-What security property did we claim for the kernel enforced heap-stack
-gap size? Can you recite anything we said anywhere about that supports
-your claim?
-
-cheers,
-  PaX Team
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
 
