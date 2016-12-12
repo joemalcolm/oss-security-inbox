@@ -1,68 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/29/10
-Message-ID: <56ABC23C.3080202@redhat.com>
-Date: Fri, 29 Jan 2016 19:49:16 +0000
-From: Tristan Cacqueray <tdecacqu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/3
+Message-ID: <CAHbk4RL5S3VMX375NbqUUMmfWaUUM4wP1vNnYTvO4w2QMGE9qQ@mail.gmail.com>
+Date: Mon, 12 Dec 2016 10:40:16 -0600
+From: Sam Whited <sam@...whited.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2016-005] Potential reuse of revoked Identity tokens (CVE-2015-7546)
+Cc: Salvatore Bonaccorso <carnil@...ian.org>, cve-assign@...re.org
+Subject: Re: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
 Content-Type: text/plain; charset=utf-8
 
-=========================================================
-OSSA-2016-005: Potential reuse of revoked Identity tokens
-=========================================================
+Oops, I got the autoreply about not using this list to request CVEs
+after sending that message; now I'm a bit more confused about the
+current procedure; please advise.
 
-:Date: January 29, 2016
-:CVE: CVE-2015-7546
+—Sam
 
-
-Affects
-~~~~~~~
-- Keystone: <= 2015.1.2, >= 8.0.0 <= 8.0.1
-- Keystonemiddleware: >= 1.5.0 <= 1.5.3, >= 1.6.0 <= 2.3.2
-
-
-Description
-~~~~~~~~~~~
-Liu Sheng reported a vulnerability in Keystone. By manipulating a
-token content, an authenticated user may prevent its revocation. This
-can allow unauthorized access to cloud resources if a revoked token is
-intercepted by an attacker. Only keystone setups using PKI or PKIZ
-token are affected
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/266045 (keystone) (Kilo)
-- https://review.openstack.org/266607 (keystonemiddleware) (Kilo)
-- https://review.openstack.org/266022 (keystone) (Liberty)
-- https://review.openstack.org/265988 (keystonemiddleware) (Liberty)
-- https://review.openstack.org/258141 (keystone) (Mitaka)
-- https://review.openstack.org/258143 (keystonemiddleware) (Mitaka)
+On Mon, Dec 12, 2016 at 10:36 AM, Sam Whited <sam@...whited.com> wrote:
+> On Sun, Dec 11, 2016 at 4:29 PM,  <cve-assign@...re.org> wrote:
+>> Use CVE-2016-9928.
+>
+> Thanks;
+>
+> For my edification: would it be better to send something to this list
+> for CVEs in open source software in the future? I've tried the Google
+> Docs form linked from the website a few times and never gotten a
+> response.
+>
+> Best,
+> Sam
+>
+> --
+> Sam Whited
 
 
-Credits
-~~~~~~~
-- Liu Sheng from Huawei (CVE-2015-7546)
 
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1490804
-- https://wiki.openstack.org/wiki/OSSN/OSSN-0062
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7546
-
-
-Notes
-~~~~~
-- The keystone fix is included in 2015.1.3 (Kilo) and will be included
-  in a future 8.0.2 (Liberty) releases.
-- The keystonemiddleware fix will be included in future 1.5.4 (Kilo)
-  and 2.3.3 (Liberty) releases.
-- Both keystone and keystonemiddleware needs to be updated
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+-- 
+Sam Whited
+pub 4096R/54083AE104EA7AD3
