@@ -1,46 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/19/1
-Message-ID: <ffaed073-e299-5c01-eb3d-998c8e4e80bb@redhat.com>
-Date: Thu, 19 May 2016 12:17:11 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/2
+Message-ID: <CAEsznC6nVBDmX8wZqqfh1ttXS-OnO9J=uzYa74kY3vVC4dtNhw@mail.gmail.com>
+Date: Mon, 12 Dec 2016 12:13:45 +0200
+From: Lior Kaplan <kaplanlior@...il.com>
 To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: null pointer deref in openslp, can be triggered remotely
+Cc: "security@....net" <security@....net>, oss-security@...ts.openwall.com
+Subject: CVE assignment for PHP 5.6.28, 5.6.29, 7.0.13, 7.0.14 and 7.1.0
 Content-Type: text/plain; charset=utf-8
 
-On 05/18/2016 09:55 PM, cve-assign@...re.org wrote:
+Hi,
 
-> The oss-security message and the rhbz document seem to describe the
-> impact in different ways, i.e., "Basically return value from malloc
-> isn't checked ... This can be triggered remotely by sending a large
-> number of requests, which could possibly lead malloc to fail at one
-> point, causing crash via null pointer deref" versus "A remote attacker
-> could potentially deplete the memory of the server." For purposes of
-> CVE, this type of scenario is often not interpreted as two independent
-> problems. Roughly speaking, it is interpreted as "The unchecked malloc
-> return value is the primary problem. This problem becomes reachable
-> for reasons that aren't fully described, but those reasons might
-> involve a design limitation in which the memory consumption of
-> requests is not strictly controlled."
-> 
-I fixed the description in the bug. The problem basically is unchecked
-return value from malloc inside the realloc function. So when "crafted"
-packets are sent to the server, realloc is triggered to extend the size
-of the data structure which holds the network data. Under memory
-pressure malloc could fail, which will trigger a null pointer deref.
+Please assign a CVE for the following issues:
+
+Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+Bug #72696    imagefilltoborder stackoverflow on truecolor images
+https://bugs.php.net/bug.php?id=72696
+https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
 
 
-
-> Finally, although perhaps not related to the issue of whether a CVE ID
-> should exist, that Security.html page says "If you find a security
-> hole in OpenSLP, please bring it to the attention of the OpenSLP
-> maintainer" and names John Calcote. Possibly Red Hat could do this
-> upstream notification if that hasn't already happened.
-> 
+Fixed in PHP 5.6.28, 7.0.13 and 7.1.0:
+Bug #73331    NULL Pointer Dereference in WDDX Packet Deserialization with
+PDORow
+https://bugs.php.net/bug.php?id=73331
+https://github.com/php/php-src/commit/6045de69c7dedcba3eadf7c4bba424b19c81d00d
 
 
-Yes, we will inform upstream
+Fixed in PHP 5.6.29 and 7.0.14:
+Bug #73631    Invalid read when wddx decodes empty boolean element
+https://bugs.php.net/bug.php?id=73631
+https://github.com/php/php-src/commit/66fd44209d5ffcb9b3d1bc1b9fd8e35b485040c0
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Fixed in PHP 7.0.14 and 7.1.0:
+Bug #72978    Use After Free in PHP7 unserialize()
+https://bugs.php.net/bug.php?id=72978
+https://github.com/php/php-src/commit/b2af4e8868726a040234de113436c6e4f6372d17
+
+
+Kaplan
+
