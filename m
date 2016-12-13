@@ -1,62 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/02/1
-Message-ID: <n69hag$2if$1@ger.gmane.org>
-Date: Sat, 2 Jan 2016 23:00:47 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: MantisBT SOAP API can be used to disclose confidential settings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/13/2
+Message-Id: <E1cGmoP-00020v-Lw@xenbits.xenproject.org>
+Date: Tue, 13 Dec 2016 13:08:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 200 (CVE-2016-9932) - x86 CMPXCHG8B emulation fails to ignore operand size override
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please assign a CVE ID for the following issue.
+            Xen Security Advisory CVE-2016-9932 / XSA-200
+                              version 3
 
+     x86 CMPXCHG8B emulation fails to ignore operand size override
 
-Description:
+UPDATES IN VERSION 3
+====================
 
-Until now, MantisBT sensitive config options were blacklisted to prevent 
-their access via SOAP API (see config_is_private() function).
+CVE assigned.
 
-When a new config is added or an existing one is renamed, the black list 
-must be updated accordingly. If this is not or incorrectly done, the 
-config becomes available via SOAP API.
+Public release.
 
-This was the case with the MantisBT master cryptographic salt 
-(crypto_master_salt): it was incorrectly spelt.
+ISSUE DESCRIPTION
+=================
 
-To fix the problem as well as avoid future occurences, we are switching 
-to a whitelist approach, i.e. listing all configs that *can* be accessed 
-via SOAP.
+The x86 instruction CMPXCHG8B is supposed to ignore legacy operand
+size overrides; it only honors the REX.W override (making it
+CMPXCHG16B).  So, the operand size is always 8 or 16.
 
-Any MantisBT installation with SOAP API enabled should be patched, and 
-immediately generate a new salt.
+When support for CMPXCHG16B emulation was added to the instruction
+emulator, this restriction on the set of possible operand sizes was
+relied on in some parts of the emulation; but a wrong, fully general,
+operand size value was used for other parts of the emulation.
 
+As a result, if a guest uses a supposedly-ignored operand size prefix,
+a small amount of hypervisor stack data is leaked to the guests: a 96
+bit leak to guests running in 64-bit mode; or, a 32 bit leak to other
+guests.
 
-Affected versions:
- >= 1.3.0-beta.1
+IMPACT
+======
 
-Fixed in versions:
-1.3.0 (not yet released), possibly 1.3.0-rc.2 if we decide we need 
-another release candidate before that.
+A malicious unprivileged guest may be able to obtain sensitive
+information from the host.
 
-Patch:
-See Github [1]
+VULNERABLE SYSTEMS
+==================
 
-Credits:
-The issue was discovered by Paul Richards [2] and fixed by Roland Becker
-(MantisBT Developer).
+Xen versions 3.3 through 4.7 are affected.  Xen master and Xen 4.8 as
+well as Xen versions 3.2 and earlier are not affected.
 
-References:
-Further details available in our issue tracker [3]
+Only x86 systems are affected.  ARM systems are not affected.
 
+On Xen 4.6 and earlier the vulnerability is exposed to all HVM guest
+user processes, including unprivileged processes.
 
-Best regards,
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
+On Xen 4.7, the vulnerability is exposed only to HVM guest user
+processes granted a degree of privilege (such as direct hardware
+access) by the guest administrator; or, to all user processes when the
+VM has been explicitly configured with a non-default cpu vendor string
+(in xm/xl, this would be done with a `cpuid=' domain config option).
 
+MITIGATION
+==========
 
-[1] http://github.com/mantisbt/mantisbt/commit/7927c275
-[2] https://sourceforge.net/p/mantisbt/mailman/message/32948048/
-[3] https://mantisbt.org/bugs/view.php?id=20277
+There is no known mitigation.
 
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa200-4.7.patch       Xen 4.7.x
+xsa200-4.6.patch       Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa200*
+820e95e87b838de5eb4158a55c81cf205428f0ed17009dc8d45b2392cf9a0885  xsa200-4.6.patch
+d7113b94f6ef1c2849aedfe33eace85b0713fa83639c8a533fb289aa73e818e8  xsa200-4.7.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYT/KgAAoJEIP+FMlX6CvZR6QH/0eEM2+9ixdfFAiyhFzn0TTq
+mLgbKs4L0ALfPD2JVhkiLlB/thJ7RKXfPAsYVBQhNY+xb58OLykH4Clh0NuOY45W
+wkWxHeunHAfsNo3FIaISr/uG/5fAnarPsfF+bNYpyWCuWLz4Ml+uuflnfL60PmoP
+OGSPLEPKZ56r9lyaIALFVfkXgHkaquM/WXi+FdG23aArbT43cVHeGou8dUNbH/Jd
+FpKdO3AhMT9i+ioPeicSIimxLOEBZnrCaB/7qOAzu7q3nlQ8X/1Q8a8TjjOtYtQA
+/kOkvpexkQuRA98AI6018ajqU/D5VdFW+I2X0kmbTAxj1SyT12X25f9Wsc0PbdE=
+=ERcI
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa200-4.6.patch" of type "application/octet-stream" (1935 bytes)
+
+Download attachment "xsa200-4.7.patch" of type "application/octet-stream" (1943 bytes)
