@@ -1,53 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/11/1
-Message-ID: <CANO=Ty3puYF=K=ZicQvBiVyXVUgt7UM5FBqLF_KZGNk+op42sQ@mail.gmail.com>
-Date: Sat, 10 Sep 2016 21:00:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/13/3
+Message-ID: <1481647175.3250.4.camel@redhat.com>
+Date: Tue, 13 Dec 2016 17:39:35 +0100
+From: Adam Maris <amaris@...hat.com>
 To: oss-security <oss-security@...ts.openwall.com>
-Subject: Possible CVE request for Redis docker container
+Subject: CVE-2016-9583 jasper: Out of bounds heap read in jpc_pi_nextpcrl()
 Content-Type: text/plain; charset=utf-8
 
-So we have this:
+Hello,
 
-https://github.com/dxa4481/Damn-Vulnerable-Redis-Container
+We've assigned CVE-2016-9583 to following vulnerability:
 
-I wanted to run it by the OSS-Security community first to gather other
-points of view/feedback before going to the CVE board.
+https://github.com/mdadams/jasper/issues/103
 
-So:
-
-1) Currently services that don't require auth don't get a CVE for that
-specifically (e/g. memcached), so as long as it is clearly stated as such
-(no auth supported, use something else to control access), however what
-about implementations of these services (e.g. VM appliances, docker
-containers) that don't explicitly warn, and fail to implement any
-protection, should they continue to not get CVEs?
-
-I'm inclined to say "it depends", e.g. if the appliance/container only
-includes a vulnerable service (say a memcached container) and nothing else
-then no CVE, but if a container/appliance is part of a larger composed
-product (e.g. a webserver, web app and memcached), and it can result in a
-security vulnerability then I would expect a CVE to be issued.
-
-
-2) Services that are capable of authentication but do not have it enabled.
-Same reasoning as above. On it's own you're expected to set it up properly.
-If it's part of a larger composed product I would expect it to be setup
-properly.
-
-So in the case of https://github.com/dxa4481/Damn-Vulnerable-Redis-Container
- I'm inclined to say no CVE for the redis only container, but if a product
-uses this container then it may be getting a CVE if it exposes it.
-
-But then practically speaking we end up with N+1 CVEs for "X uses redis
-container in insecure manner" rather then a single blanket CVE for "redis
-container is insecure". So like I said, I'd like to get some community
-feedback before I take this to the CVE board.
+Best Regards,
 
 -- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
 
