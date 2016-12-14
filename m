@@ -1,52 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/24/1
-Message-ID: <CAEsznC7xLCYBp0NBWzQzzBMiYz-shG7NEVvNeLTb2U_xMSpBVQ@mail.gmail.com>
-Date: Sun, 24 Jul 2016 11:06:25 +0300
-From: Lior Kaplan <kaplanlior@...il.com>
-To: cve-assign@...re.org
-Cc: "security@....net" <security@....net>, oss-security@...ts.openwall.com
-Subject: Fwd: CVE for PHP 5.5.38 issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/4
+Message-ID: <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
+Date: Wed, 14 Dec 2016 07:24:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: CVE ID Requests <cve-assign@...re.org>
+Subject: Re: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Dec 14, 2016 at 1:44 AM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
 
-PHP 5.5.38 was released over the weekend, with a few security fixes, see
-list bellow (I removed issues already have CVE assigned to them).
+> Hi again,
+>
+> Does anyone know why Mitre lists many CVEs ** RESERVED ** while they are
+> public (e.g. curl CVEs below)?
+>
 
-Source code is at
-http://git.php.net/?p=php-src.git;a=shortlog;h=refs/tags/php-5.5.38
+As per
+https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
 
-- Core:
-   . Fixed bug #70480 (php_url_parse_ex() buffer overflow read). (Stas)
-   . Fixed bug #72513 (Stack-based buffer overflow vulnerability in
-     virtual_file_ex). (loianhtuan at gmail dot com)
-   . Fixed bug #72562 (Use After Free in unserialize() with Unexpected Session
-     Deserialization). (taoguangchen at icloud dot com)
+Description[edit]
+This is a standardized text description of the issue(s). One common entry
+is:
 
-- EXIF:
-   . Fixed bug #72603 (Out of bound read in exif_process_IFD_in_MAKERNOTE).
-     (Stas)
-   . Fixed bug #72618 (NULL Pointer Dereference in exif_process_user_comment).
-     (Stas)
+** RESERVED ** This candidate has been reserved by an organization
+or individual that will use it when announcing a new security problem.
+When the candidate has been publicized, the details for this
+candidate will be provided.
 
-- Intl:
-   . Fixed bug #72533 (locale_accept_from_http out-of-bounds access). (Stas)
+This means that the entry number has been reserved by Mitre for an issue or
+a CNA has reserved the number. So in the case where a CNA requests a block
+of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
+of 500), the CVE number will be marked as reserved even though the CVE
+itself may not be assigned by the CNA for some time. Until the CVE is
+assigned AND Mitre is made aware of it (e.g. the embargo passes and the
+issue is made public), AND Mitre has researched the issue and written a
+description of it, entries will show up as "** RESERVED **".
+
+The good news is this is changing (MITRE will be able to accept
+descriptions/data from other parties at some point). I don't have an exact
+time frame though.
 
 
-- SNMP:
-   . Fixed bug #72479 (Use After Free Vulnerability in SNMP with GC and
-     unserialize()). (taoguangchen at icloud dot com)
 
-- Xmlrpc:
-   . Fixed bug #72606 (heap-buffer-overflow (write) simplestring_addn
-simplestring.c).
-     (Stas)
 
-- Zip:
-   . Fixed bug #72520 (Stack-based buffer overflow vulnerability in
-     php_stream_zip_opener). (loianhtuan at gmail dot com)
+>
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-8615
+>
+> https://curl.haxx.se/docs/security.html:
+>
+> CVE-2016-8615
+> CVE-2016-8616
+> CVE-2016-8617
+> CVE-2016-8618
+> CVE-2016-8619
+> CVE-2016-8620
+> CVE-2016-8621
+> CVE-2016-8622
+> CVE-2016-8623
+> CVE-2016-8624
+> CVE-2016-8625
+>
+> Shouldn't Mitre follow a process and update the page after CVEs have
+> been made public e.g. by upstream project? Or perhaps there is another
+> reason for these CVEs not to be updated?
+>
+> Best,
+> ---------------------------------------
+> Sona Sarmadi
+> Security Responsible for Enea Linux
+>
+>
 
-Thanks,
 
-Kaplan
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
