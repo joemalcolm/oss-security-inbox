@@ -1,18 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/10/5
-Message-ID: <2129956.DqTODQi6KW@willoughby>
-Date: Mon, 10 Oct 2016 10:16:42 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/10
+Message-ID: <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
+Date: Wed, 14 Dec 2016 15:17:57 +0000
+From: Sevan Janiyan <venture37@...klan.co.uk>
 To: oss-security@...ts.openwall.com
-Cc: Sona Sarmadi <sona.sarmadi@...a.com>
-Subject: Re: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+Subject: Re: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
-On Monday 10 October 2016 08:01:15 Sona Sarmadi wrote:
-> Where can we find patch 47 for bash-4.3? 
-
-http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-047 
 
 
---
-Agostino
+On 14/12/2016 15:09, Kurt Seifried wrote:
+> I would suggest you consider getting involved in helping create CVEs if it
+> is such an important resource, rather then just being a somewhat classic
+> "Free rider"
+> 
+> https://en.wikipedia.org/wiki/Free_rider_problem
+
+Would creating CVEs help with the reservations of already disclosed CVEs?
+
+
+
+Sevan
