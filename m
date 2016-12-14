@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/09/1
-Message-ID: <57809C8C.6070902@canonical.com>
-Date: Fri, 8 Jul 2016 23:41:16 -0700
-From: John Johansen <john.johansen@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/12
+Message-ID: <20161214160649.GH11065@suse.de>
+Date: Wed, 14 Dec 2016 17:06:49 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: apparmor: oops in apparmor_setprocattr()
+Subject: Re: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
-There is a potential privilege escalation in apparmor's setprocattr() interface.
+On Wed, Dec 14, 2016 at 03:17:57PM +0000, Sevan Janiyan wrote:
+> 
+> 
+> On 14/12/2016 15:09, Kurt Seifried wrote:
+> > I would suggest you consider getting involved in helping create CVEs if it
+> > is such an important resource, rather then just being a somewhat classic
+> > "Free rider"
+> > 
+> > https://en.wikipedia.org/wiki/Free_rider_problem
+> 
+> Would creating CVEs help with the reservations of already disclosed CVEs?
 
-https://lkml.org/lkml/2016/7/7/906
+There is a clear allocation strategy for CVEs, using a multi tiered tree
+of CNA (candidate naming authorities)
 
-introduced by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
-fixed by: 30a46a4647fd1df9cf52e43bf467f0d9265096ca
+CVEs are not randomly grabbed but assigned by these CNAs.
 
-Could you assign a CVE for this issue?
-
-thanks
-John
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Ciao, Marcus
