@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2640" "Saturday" "20" "August" "2016" "14:06:42" "+0000" "Pascal Cuoq" "cuoq@trust-in-soft.com" "<E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>" "51" "[oss-security] memory issues in libksba 1.3.4 and git" "^CC:" nil nil "8" "2016082014:06:42" "[oss-security] memory issues in libksba 1.3.4 and git" (number mark "        cuoq@trust-i Aug 20   51/2640  " thread-indent "\"[oss-security] memory issues in libksba 1.3.4 and git\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1738" "Thursday" "15" "December" "2016" "02:28:07" "+0800" "Kuang-che Wu" "kcwu@csie.org" "<20161214182807.GN10528@kcwu.csie.org>" "54" "Re: [oss-security] Re: CVE request: w3m - multiple vulnerabilities" nil nil nil "12" "2016121418:28:07" "[oss-security] Re: CVE request: w3m - multiple vulnerabilities" (number mark "U       kcwu@csie.or Dec 15   54/1738  " thread-indent "\"Re: [oss-security] Re: CVE request: w3m - multiple vulnerabilities\"\n") "<ad660c2632fa4e6790fb12dc654b6769@imshyb02.MITRE.ORG>" ("<20161122051648.GI10528@kcwu.csie.org>" "<ad660c2632fa4e6790fb12dc654b6769@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25655 invoked by uid 550); 20 Aug 2016 14:54:52 -0000
+Received: (qmail 17446 invoked by uid 550); 14 Dec 2016 18:33:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9514 invoked from network); 20 Aug 2016 14:06:38 -0000
-Thread-Topic: memory issues in libksba 1.3.4 and git
-Thread-Index: AQHR+uwTd1mk7uL3p0ul3NaLsG2wLQ==
-Message-ID: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [86.246.37.11]
-Content-Type: text/plain; charset="Windows-1252"
-Content-ID: <CBB68E8E92CE6846A88054D58078999D@EX1688.lan>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-CC: "wk@gnupg.org" <wk@gnupg.org>, =?Windows-1252?Q?Rapha=EBl_Rieu-Helft?=
-	<raphael.rieu-helft@trust-in-soft.com>
-Date: Sat, 20 Aug 2016 14:06:42 +0000
-From: Pascal Cuoq <cuoq@trust-in-soft.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] memory issues in libksba 1.3.4 and git
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 13928 invoked from network); 14 Dec 2016 18:28:26 -0000
+Date: Thu, 15 Dec 2016 02:28:07 +0800
+From: Kuang-che Wu <kcwu@csie.org>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Message-ID: <20161214182807.GN10528@kcwu.csie.org>
+References: <20161122051648.GI10528@kcwu.csie.org>
+ <ad660c2632fa4e6790fb12dc654b6769@imshyb02.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="NtwzykIc2mflq5ck"
+Content-Disposition: inline
+In-Reply-To: <ad660c2632fa4e6790fb12dc654b6769@imshyb02.MITRE.ORG>
+User-Agent: Mutt/1.6.1 (2016-04-27)
+Subject: Re: [oss-security] Re: CVE request: w3m - multiple vulnerabilities
 
-Hello all,
+--NtwzykIc2mflq5ck
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-this GitHub commit illustrates a memory issue present in in libksba 1.3.4 a=
-nd in the current git tree from git://git.gnupg.org/libksba.git :
+FYI, my previous report was for debian's w3m fork. Now I also tested
+original w3m 0.5.3.
+(https://sourceforge.net/projects/w3m/files/w3m/w3m-0.5.3/)
 
-https://github.com/pascal-cuoq/libksba-fork/commit/709642767fbf7f2030d89bca=
-4e4b192d612400ae
+The original w3m 0.5.3 is also affected by at least following CVEs
+CVE-2016-9422
+CVE-2016-9424
+CVE-2016-9425
+CVE-2016-9426
+CVE-2016-9432
+CVE-2016-9439
+CVE-2016-9440
+CVE-2016-9441
+CVE-2016-9622
+CVE-2016-9623
+CVE-2016-9624
+CVE-2016-9625
+CVE-2016-9626
+CVE-2016-9627
 
-In summary:
+But the case of CVE-2016-9422, which made debian's w3m stack smashing,
+can only make original w3m 0.5.3 heap-buffer-overflow write. I haven't
+found cases to smash stack yet.
 
-Executing =93tests/cert-basic long_time.crt=94 allocates a disproportionate=
- 33MB of memory. In the current libksba git snapshot, this memory is initia=
-lized to zero, which takes a couple of milliseconds (probably mostly spent =
-handling pagefaults), which is more than it should take to parse a certific=
-ate of a few hundred bytes on a modern computer. In version 1.3.4, the memo=
-ry is left uninitialized, so no time is wasted. The commit that causes the =
-memory to be initialized is https://github.com/pascal-cuoq/libksba-fork/com=
-mit/2a9fc5654df497b91ab9b64e946c1e19371888e5 and this commit was applied to=
- prevent uninitialized memory from being incorporated into computations.
+For other CVEs, I don't know. Maybe original w3m is not affected. Maybe
+those issues are covered by above issues.
 
-Executing =93tests/cert-basic 90s.crt=94 allocates 60146387817 bytes (60GB)=
-. In the current libksba git snapshot, initializing this memory takes sever=
-al seconds.
+kcwu
 
-Executing =93tests/cert-basic 0.0.0.0.0.crt=94 allocates 3MB of memory, whi=
-ch are either left uninitialized (1.3.4 version) or initialized to zero (gi=
-t version). A large part of this memory is then converted to an =93Authorit=
-yKeyIdentifier=94. In the git version, this produces a long sequence of 0.0=
-.0.0... In version 1.3.4, since it's uninitialized memory that is used, the=
- sequence may look different, and may contain secrets. =93Secrets=94 here i=
-nclude cryptographic secrets that would unhygienically have been left in a =
-freed memory block, but also addresses of variables, of library functions, =
-etc. that might make another vulnerability exploitable.
+--NtwzykIc2mflq5ck
+Content-Type: application/pgp-signature; name="signature.asc"
 
-These inputs have been set to Werner Koch, privately as per his request, on=
- May 25, June 11 and July 11. I am publishing them now so that anyone who u=
-ses or might want to use libksba to parse messages (received pre-authentifi=
-cation by definition) can make an informed choice considering the risks of =
-denial of service and information leak.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAEBCgAdFiEEGQyoIFPi3eHEq0DTbVdbyV3SaZcFAlhRjy4ACgkQbVdbyV3S
+aZfG6A/9GrjgTr93+Oa6Sb8ZrbDcZf9VYet/Q0S8t2VapwWXs0Ib827i8TKozoHF
+zPNMtV6bwqxsKpAUIK/01Ml3Wq7ajnqO8kC8++rDxiEW6MtEiQ3BdwMDLTyseFam
+tTtp7yrlq+lK6jwlurA1leBTk5vNJKbsr6vReT0Ic2OBWLmUoB7/kNVBGXpwsTRc
+40r2mOkc5s29B8drcSo8quHKLM7E667pnJ6N9FioYEeqLDZQ8luxVD3VH6nAUF+B
+RUQXi31cOzhADTrtVv7fxhAxmlvd5WWbTWMboNlQzWqIsjoDgc0F5bnRT3GBNb94
+3EW93L/S68lr3zfsRQCXzJOPKETGzO2gnznTmFrPymaNlF8Lju5AEviYUYv2aO7n
+KtgpORxWYRZQQ4cpzAsDghsYVf0dLrN9HoC/iie73bQuXoj9e3kCF0ry0BTMgjUs
+FjHePrIEAo+/Cek9pMPp6Rgs5YHlOIps0TasN4aa4hqyE3nZM/WaD6Dk3Otqg0QG
+4Bw3P+/yJm5msHZpCmtaTbNIUDu9hMV21hEc2niyG2430R0wwB4EMXKgs0wk9kN7
+c9jAE/I84VdnPgpRMM41fQpKcsX1LXpTNpiapPvMTkS2XW6Chizf4uZv1gZnzid9
+OQdIh5ollR58VibYQnXAEIh7qOpNswH2/C/4p0/leAy4syeJRcE=
+=juaq
+-----END PGP SIGNATURE-----
 
-The inputs were found and kindly placed in the =93hangs=94 result directory=
- by afl-fuzz. The undefined behaviors caused by the inputs were investigate=
-d with tis-interpreter and a dependency analysis prototype developed by Rap=
-ha=EBl Rieu-Helft. The results shown in https://github.com/pascal-cuoq/libk=
-sba-fork/blob/master/log were obtained by running ./autogen.sh, ./configure=
- and make to build an instrumented version of libksba on a 128GiB Linux wor=
-kstation (Ubuntu 16.04).
-
-Pascal
-
+--NtwzykIc2mflq5ck--
