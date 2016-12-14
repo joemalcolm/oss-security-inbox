@@ -1,92 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/9
-Message-ID: <56FD7412.2080905@igalia.com>
-Date: Thu, 31 Mar 2016 21:01:38 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2016-0003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/14
+Message-ID: <20161214182807.GN10528@kcwu.csie.org>
+Date: Thu, 15 Dec 2016 02:28:07 +0800
+From: Kuang-che Wu <kcwu@...e.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: w3m - multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0003
-------------------------------------------------------------------------
+FYI, my previous report was for debian's w3m fork. Now I also tested
+original w3m 0.5.3.
+(https://sourceforge.net/projects/w3m/files/w3m/w3m-0.5.3/)
 
-Date reported      : March 31, 2016
-Advisory ID        : WSA-2016-0003
-Advisory URL       : http://webkitgtk.org/security/WSA-2016-0003.html
-CVE identifiers    : CVE-2016-1778, CVE-2016-1779, CVE-2016-1781,
-                     CVE-2016-1782, CVE-2016-1783, CVE-2016-1785,
-                     CVE-2016-1786.
+The original w3m 0.5.3 is also affected by at least following CVEs
+CVE-2016-9422
+CVE-2016-9424
+CVE-2016-9425
+CVE-2016-9426
+CVE-2016-9432
+CVE-2016-9439
+CVE-2016-9440
+CVE-2016-9441
+CVE-2016-9622
+CVE-2016-9623
+CVE-2016-9624
+CVE-2016-9625
+CVE-2016-9626
+CVE-2016-9627
 
-Several vulnerabilities were discovered in WebKitGTK+.
+But the case of CVE-2016-9422, which made debian's w3m stack smashing,
+can only make original w3m 0.5.3 heap-buffer-overflow write. I haven't
+found cases to smash stack yet.
 
-CVE-2016-1778
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to 0x1byte working with Trend Micro's Zero Day Initiative
-    (ZDI).
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 allows remote
-    attackers to execute arbitrary code or cause a denial of service
-    (memory corruption) via a crafted web site.
+For other CVEs, I don't know. Maybe original w3m is not affected. Maybe
+those issues are covered by above issues.
 
-CVE-2016-1779
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to xisigr of Tencent's Xuanwu Lab (http://www.tencent.com).
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 allows remote
-    attackers to bypass the Same Origin Policy and obtain physical-
-    location data via a crafted geolocation request.
+kcwu
 
-CVE-2016-1781
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Devdatta Akhawe of Dropbox, Inc.
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 mishandles
-    attachment URLs, which makes it easier for remote web servers to
-    track users via unspecified vectors.
-
-CVE-2016-1782
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Muneaki Nishimura (nishimunea) of Recruit Technologies
-    Co.,Ltd.
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 does not
-    properly restrict redirects that specify a TCP port number, which
-    allows remote attackers to bypass intended port restrictions via a
-    crafted web site.
-
-CVE-2016-1783
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Mihai Parparita of Google.
-    WebKit in Apple iOS before 9.3, Safari before 9.1, and tvOS before
-    9.2 allows remote attackers to execute arbitrary code or cause a
-    denial of service (memory corruption) via a crafted web site.
-
-CVE-2016-1785
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to an anonymous researcher.
-    The Page Loading implementation in WebKit in Apple iOS before 9.3
-    and Safari before 9.1 mishandles character encoding during access to
-    cached data, which allows remote attackers to bypass the Same Origin
-    Policy and obtain sensitive information via a crafted web site.
-
-CVE-2016-1786
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to ma.la of LINE Corporation.
-    The Page Loading implementation in WebKit in Apple iOS before 9.3
-    and Safari before 9.1 mishandles HTTP responses with a 3xx (aka
-    redirection) status code, which allows remote attackers to spoof the
-    displayed URL, bypass the Same Origin Policy, and obtain sensitive
-    cached information via a crafted web site.
-
-
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
-
-Further information about WebKitGTK+ Security Advisories can be found
-at: http://webkitgtk.org/security.html
-
-The WebKitGTK+ team,
-March 31, 2016
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
