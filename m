@@ -1,37 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/05/6
-Message-ID: <mpro.o3kthj03q98290o77.taviso@cmpxchg8b.com>
-Date: Sat, 5 Mar 2016 09:20:07 -0800
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/17
+Message-ID: <CANO=Ty1YYz+=Yn9TfCEeinqL+2W3pjpew8m55dWTZts7Yu=FZQ@mail.gmail.com>
+Date: Wed, 14 Dec 2016 12:00:42 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
 Content-Type: text/plain; charset=utf-8
 
-Kurt Seifried <kseifried@...hat.com> wrote:
+At the bottom of ever NVD web page:
 
-> So I've now heard from several security researchers that they are unable
-> to get CVEs for issues that need CVEs (e.g. widely used hardware/software
-> with flaws that have real world impacts and need to be properly tracked.
-> This has definitely resulted in issues being publicized with no CVE that
-> then makes it much harder to track and deal with these issues.
-> 
-> I'm also worryingly hearing about people that may have given up asking for
-> CVEs and publicizing their work at all, but of course cannot easily
-> confirm this as I don't have any access on insight into what
-> cve-assign@...re.org is actually doing/who
-> they are talking to.
-> 
+Send comments or suggestions to nvd@...t.gov
+
+They can fix this, we can't.
+
+On Wed, Dec 14, 2016 at 11:57 AM, Sona Sarmadi <sona.sarmadi@...a.com>
+wrote:
+
+>
+>
+> On 2016-12-14 15:26, Kurt Seifried wrote:
+> > Why are you complaining about a nist.gov website/data on an opensource
+> > security mailing list/to MITRE? (hint: we can't fix it and neither can
+> > MITRE) Please contact NIST.
+> >
+> Thanks for being so helpful.
+>
+> I was just trying to see of there are other people out there who also
+> think this is a problem. This list seemed like a place where I could
+> find such people.
+> Perhaps someone knows a work around, perhaps some post-processing tool.
+> If none exists, I guess we have to try to fix the problem at the source
+> or use another CVE databse.
+>
+> Cheers
+> //Sona
+> > On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com>
+> wrote:
+> >
+> >> Hi all,
+> >>
+> >> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
+> >> vulnerable versions correctly. One example is the following CVE.
+> Vulnerable
+> >>
+>
+>
 
 
-That's also the case for me, I gave up trying to assign CVE's a long time
-ago. It's not that Mitre are not adding value, I can see the benefit of a
-carefully curated list. The problem is that they're a big bottleneck in what
-is an already painful process. I started the process of becoming a CNA once
-to try and alleviate some of the delays, but that process was even more
-painful and I gave up after a few months (this was a long time ago).
+-- 
 
-I'd only start using CVE identifiers again if they're assigned instantly,
-and the curation is non-blocking.
-
-Tavis.
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
