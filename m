@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/06/3
-Message-ID: <20160406205435.GA10611@mail.corp.redhat.com>
-Date: Wed, 6 Apr 2016 16:54:36 -0400
-From: Randy Barlow <rbarlow@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Pulp 2.8.2 release for CVE-2016-3095
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/7
+Message-ID: <20161214144822.cfn2zv4s2bdlbdvi@eldamar.local>
+Date: Wed, 14 Dec 2016 15:48:22 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-3095 was discovered in Pulp's pulp-gen-ca-certificate script.
-This script generates the CA certificate that Pulp uses to sign client
-certificates during the /login call. The private key was created in a
-world-readable folder in /tmp, and was then moved to its final
-destination where a chmod operation would protect it. This created a
-brief window where a local attacker could read the CA key before it
-was put into use.
+Hi
 
-This script is run during the installation of Pulp by the RPM post
-script,
-and can also be run by users any time they wish to regenerate the CA
-certificate.
+SimpleSAMLphp has released (another) update fixing an incorrect
+signature verification issue (different from SSPSA 201612-01 /
+CVE-2016-9814). It affects versions of SimpeSAMLphp before 1.14.11.
 
-The fix was a single line adjustment that sets the mode on the folder
-in /tmp to be 0700 instead of 0755:
+Upstream advisory: https://simplesamlphp.org/security/201612-02
 
-https://github.com/pulp/pulp/commit/
-9f969b94c4b4f310865455d36db207de6cffebca#diff-
-fc698b450b32a4d811f269e108ade790R33
+References:
+https://github.com/simplesamlphp/simplesamlphp/commit/a2326d75dd14accaac162dd2cb30aaefcc1f9205
 
-Users are encouraged to upgrade to the 2.8.2 release, and then re-
-run the pulp-gen-ca-certificate script to generate a new CA. It is
-advised to restart all Pulp processes (and httpd) after the new CA is in
-place. After this is done, any existing client certificates will be
-invalidated, so users will need to use pulp-admin login to generate
-new credentials.
+Could you please assign a CVE for this issue?
 
-Users who do not use Pulp's client certificate authentication system
-are not affected.
-
-Thanks to Adam Mariš for advising the Pulp team through the
-disclosure process, and to Sean Myers for a speedy code review and
-for performing the release process.
-
--- 
-Randy Barlow
-irc:   bowlofeggs
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Regards,
+Salvatore
