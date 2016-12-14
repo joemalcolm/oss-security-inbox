@@ -1,4 +1,9 @@
-Received: (qmail 3185 invoked by uid 550); 20 Apr 2023 22:38:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1058" "Wednesday" "14" "December" "2016" "10:31:58" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>" "41" "Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre" "^Date:" nil nil "12" "2016121417:31:58" "[oss-security] why many CVEs are ** RESERVED ** on Mitre" (number mark "U       kseifried@re Dec 14   41/1058  " thread-indent "\"Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre\"\n") "<73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>" ("<4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>" "<CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>" "<bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>" "<CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>" "<73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23698 invoked by uid 550); 14 Dec 2016 17:32:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,62 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25640 invoked from network); 20 Apr 2023 22:29:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682029761; x=1684621761;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SpgL7AEdLCyOyUlI4pHqkh0blyhjurb4zKvLwCzSLDI=;
-        b=sYm1DeoZ9RfwwynzEeA6myqrYmnJexuKMWpEQQZGvcm8fTMRRQBsrtBgC5GIw4D5D2
-         ke/VzeJ6BLa4cwSe+4BIIMeT7IXTHfzxgTOgf7ddI1dxrwf1UzZ9W55LNidlQoKnE0Xl
-         MkluCeQhI8hR6BVYlBD43OBYRXfcfVv7ROAo3W9ssaq8xfm4E08n2EydnTDU7xgyRhPv
-         0Ollp5tEW6IWoO4eYWsc4LiStDffhEs8ysyb2vXQ5QWnV7Hm0tU49qHA/AyVE5pz2V+s
-         rXNJeuDGY1g9Vp4J8yJh9hUh2ry8NzwEAQARF/yigThWXgOcb/nFOBndbni0M/jymzfO
-         McDw==
+Received: (qmail 23674 invoked from network); 14 Dec 2016 17:32:10 -0000
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682029761; x=1684621761;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SpgL7AEdLCyOyUlI4pHqkh0blyhjurb4zKvLwCzSLDI=;
-        b=ZLcWcSEYZtaeVweHcmVg6dHx4zsxiNmXirw90YyvNPinIHFvLUg1V09qWYJTSkV/go
-         DhXhrknHCgOvAaugzcp5iscMNcq8HfujZF2YAzmgKDjZ4qQ7g5BScpJPn2IwFiGGYxya
-         KFPZeL/DXH8ybdf+XakuOvI8FhIXDeBaH/ZYnHp4D6MMzuANLQfv+8/iHl8L4dMUSzcO
-         2maNbVZD/FWgDdpvuokxSDxR7KB5OtV52l/iWpJ+/su8adpAJumONMvCdqoM3cQs3UGY
-         zFxUw9ilXf2lUlj+THAO3jM5PpuNa6yGKrYWenS9QySGpyV8dWaxt4SKPC9tZVxouaqn
-         y71A==
-X-Gm-Message-State: AAQBX9eCHZgzaDe/onfv2FYT0sEi6ASGor9QQ9JKTOTa6lYly7XbYyCt
-	FWcDIQ1+Bd0gNJz4oF5QxgL6wC0St54PItjB5HuBoPRB
-X-Google-Smtp-Source: AKy350YwdM/x4tMVvdilISs3gdGnZxFBUs3ZeEh41mx3B2WvXlSVCEt8QdHwjQUQlxb9bIidDoy9NzVzHW2MP+eADSE=
-X-Received: by 2002:a9d:6012:0:b0:6a5:f20b:f6e6 with SMTP id
- h18-20020a9d6012000000b006a5f20bf6e6mr832738otj.2.1682029761353; Thu, 20 Apr
- 2023 15:29:21 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=7DnrswIWVdbbZ+eX8P0Hm24xStKOLqwpq4tnJfRVAME=;
+        b=Qc3/J+ujayhSbim/BKu07oCS5ayAUvTyNnRIv5vbT4ShLLzAKZ1FX6K4GGuBC/UCbS
+         ilnO2FbGdQ8/Ki6dd2vJTm4kPhjPl1lKLEmwAngQtAX915TTKGtukFaBfK69qo6ou1q4
+         atlOHnrGxYSGuutSY8GVLvQphpkgTTkq2fvbOuPhS+t8YJi8aBmSfmPdb0B21rwgJjwd
+         lyKii/xuLlwM9/cfmEzyOXx8EwMyetjjlgTkxJIbZxdiG9X/Vfk5V5LGJcynUbPjzYuE
+         ni6iVAGW8HQPFLsO/Q30IgY86RgJZyXRO+ziGNwsv2nNpblugfxd8RvTuPIh5zV691xU
+         AqfQ==
+X-Gm-Message-State: AKaTC00+3i71PLW1B9KUsm2rutD5hfS3ow9QBYF4P322Qd0ULrSuQdvdnGRbhPQBDocYyEuogPxBAz6Lowy2V7FL
+X-Received: by 10.202.51.8 with SMTP id z8mr52840373oiz.79.1481736718492; Wed,
+ 14 Dec 2016 09:31:58 -0800 (PST)
 MIME-Version: 1.0
-References: <CAH8yC8kDjtf1NZpWjtPTTdToj8p9Sy+LHohW9=k8aJUw2G2y2Q@mail.gmail.com>
- <c621d7a710e1a8aa6d989a60a7258c3c92ff06a8.camel@bzed.de>
-In-Reply-To: <c621d7a710e1a8aa6d989a60a7258c3c92ff06a8.camel@bzed.de>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Thu, 20 Apr 2023 18:29:10 -0400
-Message-ID: <CAH8yC8=BkNf7zOWv0Og4Nji7ORyaO_MO+_JnwvbT95NDmH8aTg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] PostgreSQL and CREATEROLE permission
+In-Reply-To: <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
+References: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
+ <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
+ <bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk> <CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>
+ <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
+Message-ID: <CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113cd2b2c1bad10543a1b68c
+Date: Wed, 14 Dec 2016 10:31:58 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre
+To: oss-security <oss-security@lists.openwall.com>
 
-On Thu, Apr 20, 2023 at 3:39=E2=80=AFPM Bernd Zeimetz <bernd@bzed.de> wrote:
+--001a113cd2b2c1bad10543a1b68c
+Content-Type: text/plain; charset=UTF-8
+
+On Wed, Dec 14, 2016 at 8:17 AM, Sevan Janiyan <venture37@geeklan.co.uk>
+wrote:
+
 >
-> > This information showed up on the pgsql-general mailing list at [1].
-> > It appears a user with CREATEROLE can elevate to root through
-> > pg_execute_server_program.[2]
 >
-> really root? As I understand it you gain access to the DB superuser (usua=
-lly
-> the postgres user) only. Although I could imagine that you could trick
-> careless admins into giving you root permissions on that way...
+> On 14/12/2016 15:09, Kurt Seifried wrote:
+> > I would suggest you consider getting involved in helping create CVEs if
+> it
+> > is such an important resource, rather then just being a somewhat classic
+> > "Free rider"
+> >
+> > https://en.wikipedia.org/wiki/Free_rider_problem
+>
+> Would creating CVEs help with the reservations of already disclosed CVEs?
+>
+>
+What would help is getting involved in CVE, something I'm working on, keep
+an eye on #cvementor and https://cvementor.org (just a collection form
+currently). Also if you want to create CVEs you need to request them
+through a CVE Numbering Authority (CNA), for Open Source you can ask here,
+or via https://iwantacve.org/
 
-I hope I did not misparse things when I sent the email. My apologies if I d=
-id.
 
-Jeff
+>
+>
+> Sevan
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113cd2b2c1bad10543a1b68c--
