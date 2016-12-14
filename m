@@ -1,4 +1,9 @@
-Received: (qmail 27943 invoked by uid 550); 23 Jun 2023 07:02:05 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1598" "Wednesday" "14" "December" "2016" "07:26:34" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1yr2POsK=ntTap9dUKRTFQCxcdDza-HxHyPLOS1A2kDA@mail.gmail.com>" "56" "Re: [oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>" "^Date:" nil nil "12" "2016121414:26:34" "[oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>" (number mark "        kseifried@re Dec 14   56/1598  " thread-indent "\"Re: [oss-security] vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12\"/>\"\n") "<3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>" ("<3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 8104 invoked by uid 550); 14 Dec 2016 14:26:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,52 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27916 invoked from network); 23 Jun 2023 07:02:05 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3e; t=1687503713; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to; bh=S7Xy6GN79KoK9D/1yYHyMoEBqUgm6oRrktGiT6DYhDE=;
-	b=ah05EUBBSAVi/m+TjIwdDLOI1nDcgS4q6K2OgftB0wsWOFGmY07m8XlPnWh1cAijgAdleo
-	2AxafAEit0DqCvAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
-	s=s3; t=1687503713; h=from:from:subject:subject:date:date:message-id:message-id:
-	 in-reply-to:in-reply-to; bh=S7Xy6GN79KoK9D/1yYHyMoEBqUgm6oRrktGiT6DYhDE=;
-	b=GrrzQYR2tMSCqNXlUcjV+IRut4LpyblUXYvDIgDf244HUf3WKJXSiMnYxfQPzWTm1E33De
-	LmkWhNJOlqBs2K+d84TZaJ3QwNwhh00VP0WZOqgDLBL961N8BgDKVBIquxueT6MJzTW0/a
-	v+TOEAp5/TMl/BXHu9VbI0oYA8sCoAiahM0IAm372m4Dl18GgXdHnEDh8tXOS1fSz02THz
-	JfE6wB19t4YmApdqCT7kqUMvgYjhBu8A/fe1AGhktnFrsMX2+2vNPHXisV8PoKy1fyZ7Ib
-	V3UIql5YANtoIPmw5cHhQkxiF52kwKEXEA1tKs4LP/9lm3H7HOzIwT0UQyL3Iw==
-Date: Fri, 23 Jun 2023 08:01:53 +0100
-From: Stuart Henderson <stu@spacehopper.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZJVDYZd5Q_cGtMcL@symphytum.spacehopper.org>
+Received: (qmail 8081 invoked from network); 14 Dec 2016 14:26:46 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=KsbzMKDaC2Bj3cjsBP8Ovqe/kMEQQWDe891j7UhA4Eo=;
+        b=h30xG0tIGAD6NOeJPISbIzQnRWhGkj0ihJGI/xS6xf/U9uInJhjfWV4nHY77HTmNG8
+         4z4QWm60WJNkTOXf+o1MsXz39n8ss2NGwd57SWhvvulD9qSBGdAGfBkWCWMAiORs55WE
+         9jwUYX93AnZFwEd2tvO+1IuW6NWv0WiTffhoW4wLLpmLze1ptz10DGu7f4GA0wawHuV7
+         otuLz7g1rt5yR90e+qIMfD8eLNLIxQLOHyBn8YWZEiapvKdrgA/EOxwVcZlQI796cpQd
+         Ox4KOXRV8CdKYvCkujBz39+91Jx+x8n9JL9iOwC54Fi9bnZzWRYz+Q5XF9IBZsrZ62Kf
+         oh/Q==
+X-Gm-Message-State: AKaTC01Q++WlB11w8R++iQ5AFWuIzc1qT6XdvjlWikc/uVKyvsdGO4lVP+6wVJO/hgB7WFMChZpblcpWlhZ/0cjh
+X-Received: by 10.157.5.70 with SMTP id 64mr56533588otw.104.1481725595120;
+ Wed, 14 Dec 2016 06:26:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <72BCBA86-4192-47C9-ACA7-5F1A39994104@amazon.com>
- <CAH8yC8njh+1Q2QHvkN2pwAFWsL+v1HdxFYZYBDjk9h9qZHUcfA@mail.gmail.com>
-Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
+In-Reply-To: <3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>
+References: <3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>
+Message-ID: <CANO=Ty1yr2POsK=ntTap9dUKRTFQCxcdDza-HxHyPLOS1A2kDA@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c04817ac0945605439f1fed
+Date: Wed, 14 Dec 2016 07:26:34 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] vulnerable version: 4.8.12 and previous versions
+ but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
+To: oss-security <oss-security@lists.openwall.com>
 
-On 2023/06/23 01:20, Smith, Stewart wrote:
-> Even if you were doing all the wrong things and running a yasm-as-a-service continually building untrusted source right alongside other processes as the same user, that contain all sorts of things you don’t want exposed, I still don’t see how this would be anything but a 0.0.
+--94eb2c04817ac0945605439f1fed
+Content-Type: text/plain; charset=UTF-8
 
-Some are conflating "doesn't work how we want with our tools to find
-leaks and vulnerabilities without extra work" with a vulnerability itself.
-
-Still, this is just how the CVE system works, it's not imho really
-useful as anything more than a ticket system tracking id to tie
-together information about a particular thing which may/may not be
-an actual problem (and possibly less useful than that).
+Why are you complaining about a nist.gov website/data on an opensource
+security mailing list/to MITRE? (hint: we can't fix it and neither can
+MITRE) Please contact NIST.
 
 
-On 2023/06/21 22:11, Jeffrey Walton wrote:
-> Just ask the OpenJDK developers who had to contend with the OpenSSL
-> memory leaks that exhausted all memory on Android devices. The
 
-not GNU
+On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@enea.com> wrote:
 
-> Another offender from GNU is ncurses. It leaks like a sieve, too.
+> Hi all,
+>
+> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
+> vulnerable versions correctly. One example is the following CVE. Vulnerable
+> versions are according to the link below "linux kernel 4.8.12 and previous
+> versions":
+>
+> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-8655
+>
+>       Race condition in net/packet/af_packet.c in the Linux kernel through
+> 4.8.12 ..
+>
+>
+> Vulnerable software and versions
+> + Configuration 1
+> * OR
+> * cpe:/o:linux:linux_kernel:4.8.12 and previous versions
+>
+> While in the xml file it just mention "cpe:/o:linux:linux_kernel:4.8.12"
+>
+> nvdcve-2.0-2016.xml:
+> ..
+> <entry id="CVE-2016-9919">
+>     <vuln:vulnerable-configuration id="http://nvd.nist.gov/">
+>       <cpe-lang:logical-test operator="OR" negate="false">
+>         <cpe-lang:fact-ref name="cpe:/o:linux:linux_kernel:4.8.12"/>
+>       </cpe-lang:logical-test>
+>     </vuln:vulnerable-configuration>
+>     <vuln:vulnerable-software-list>
+>       <vuln:product>cpe:/o:linux:linux_kernel:4.8.12</vuln:product>
+>
+> Cheers
+> //Sona
+>
 
-also not GNU
 
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--94eb2c04817ac0945605439f1fed--
