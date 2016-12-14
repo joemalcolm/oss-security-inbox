@@ -1,35 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/12/4
-Message-ID: <20160412074937.GA30265@suse.de>
-Date: Tue, 12 Apr 2016 09:49:37 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, dave@...lke.cc
-Subject: CVE-Request for brltty auth bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/5
+Message-ID: <CANO=Ty1yr2POsK=ntTap9dUKRTFQCxcdDza-HxHyPLOS1A2kDA@mail.gmail.com>
+Date: Wed, 14 Dec 2016 07:26:34 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Why are you complaining about a nist.gov website/data on an opensource
+security mailing list/to MITRE? (hint: we can't fix it and neither can
+MITRE) Please contact NIST.
 
-brltty is using polkit to control access to system ressources
-("Write to the braille display").
-It is doing so by using the PID of the process connecting
-to the server socket. This is racy. The unix polkit subject
-is deprecated, but if its used, the UID should be specified
-as well, so it doesnt get looked up in /proc.
 
-I already contacted upstream (Cc) but so far no response.
-You can find my (untested) proposed patch at:
 
-https://bugzilla.suse.com/show_bug.cgi?id=967436
+On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
 
-Its probably not the worst issue, but should be fixed
-nevertheless.
+> Hi all,
+>
+> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
+> vulnerable versions correctly. One example is the following CVE. Vulnerable
+> versions are according to the link below "linux kernel 4.8.12 and previous
+> versions":
+>
+> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-8655
+>
+>       Race condition in net/packet/af_packet.c in the Linux kernel through
+> 4.8.12 ..
+>
+>
+> Vulnerable software and versions
+> + Configuration 1
+> * OR
+> * cpe:/o:linux:linux_kernel:4.8.12 and previous versions
+>
+> While in the xml file it just mention "cpe:/o:linux:linux_kernel:4.8.12"
+>
+> nvdcve-2.0-2016.xml:
+> ..
+> <entry id="CVE-2016-9919">
+>     <vuln:vulnerable-configuration id="http://nvd.nist.gov/">
+>       <cpe-lang:logical-test operator="OR" negate="false">
+>         <cpe-lang:fact-ref name="cpe:/o:linux:linux_kernel:4.8.12"/>
+>       </cpe-lang:logical-test>
+>     </vuln:vulnerable-configuration>
+>     <vuln:vulnerable-software-list>
+>       <vuln:product>cpe:/o:linux:linux_kernel:4.8.12</vuln:product>
+>
+> Cheers
+> //Sona
+>
 
-Sebastian
+
 
 -- 
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
