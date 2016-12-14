@@ -1,116 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/13/6
-Message-ID: <m3k2m8d7k9.fsf@gmail.com>
-Date: Sat, 13 Feb 2016 17:11:02 +0300
-From: yumkam@...il.com (Yuriy M. Kaminskiy)
-To: oss-security@...ts.openwall.com
-Subject: snprintf return value misuse in a lot of projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/2
+Message-ID: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
+Date: Wed, 14 Dec 2016 09:44:52 +0100
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Hi again,
 
-Not sure if this is right place (feel free to forward elsewhere), but
-this may be important:
+Does anyone know why Mitre lists many CVEs ** RESERVED ** while they are
+public (e.g. curl CVEs below)?
 
-I noticed dangerous pattern in a lot of projects, where snprintf(3)
-return value is used without checking, with potentially disasterous
-consequences:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-8615
 
-   p += snprintf(p, end-p,[....]);
-   *p++ = '\n';
+https://curl.haxx.se/docs/security.html:
 
-or
+CVE-2016-8615
+CVE-2016-8616
+CVE-2016-8617
+CVE-2016-8618
+CVE-2016-8619
+CVE-2016-8620
+CVE-2016-8621
+CVE-2016-8622
+CVE-2016-8623
+CVE-2016-8624
+CVE-2016-8625
 
-   len = snprintf(p, [...]);
-   write(fd, p, len);
+Shouldn't Mitre follow a process and update the page after CVEs have
+been made public e.g. by upstream project? Or perhaps there is another
+reason for these CVEs not to be updated?
 
-and alike.
-
-When formatted string will overflow supplied buffer, or some error
-happens, snprintf() returns value *LARGER* (or equal) than buffer size,
-or -1.
-
-Obviously, in above patterns this would end up in disaster - with DoS or
-host memory exposure at minimum (2nd) and buffer overflow with
-possible code execution (1st).
-
-And there are yet another very common pattern:
-
-  p += snprintf(p, end-p,[....]);
-  p += snprintf(p, end-p,[....]);
-  p += snprintf(p, end-p,[....]);
-  ...
-  
-which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
-you'd expect 2nd line is [somewhat] safe (end-p is negative, then
-casted to size_t and produce value larger than (size_t)INT_MAX, that
-should result in error EOVERFLOW), and third and following will dance
-around last byte, likely remaining safe), but it is TOTALLY
-broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
-*any* size.
-
-So, that's again buffer overflow with possible code execution.
-
-BTW, somewhat safer variant of above code:
-     p += snprintf(p, end-p, "%s", str);
-     if(p >=end) {...}
-or
-     p += snprintf(p, min(end-p, 0), "%s", str);
-
-(with check after each snprintf) is not completely safe either: imagine
-32-bit machine,
-
-     p  =(char*)0xfffffff0;
-     end=(char*)0xfffffff5;
-     str="11111111111111111111111";
-
-(that said, I doubt it is practically exploitable in most cases).
-
-Safe variants: (verbose)
-
-     char *p = buf;
-     char *end = buf + sizeof(buf);
-     ...
-     int rc = snprintf(p, end-p,...);
-     if (rc < 0) {
-          /* return -errno; assert(rc >= 0);... handle error, optional */;
-          /* or safely *do nothing*; most importantly: don't advance pointer! */
-     } else if (rc >= end-p) {
-          /* return -EOVERFLOW; assert(rc < end-p);... handle overflow, optional */;
-          p = end; /* move next pointer to end of buffer, mandatory for NDEBUG */
-     } else {
-          /* normal case */
-          p += rc;
-     }
-     ...
-     if (p == end) { /* maybe handle overflow once in the end */ }
-     
-or (minimized):
-
-     int n = 0;
-     ...
-     int rc = snprintf(buf+n, sizeof(buf)-n,...);
-     /* ignores errors and handles overflows in a safe way */
-     n += min(sizeof(buf)-n, max(0, rc));
-     ...
-     if (n == sizeof(buf)) { /* maybe handle overflow once in the end */ }
-
-Quick search on https://codesearch.debian.net/ shows over 500 cases of
-definite misuse ( [-+]=\s*v?snprintf ) and 2 times more of code that
-requires review ( [=]\s*v?snprintf ).
+Best,
+---------------------------------------
+Sona Sarmadi
+Security Responsible for Enea Linux
 
 
-P.S. That said, in most cases, the use of sprintf->snprintf replacement was
-pure cargo cult, buffer size was sufficient to fit any possible string,
-overflow can never happen, and this flaw is not really exploitable. (And
-it makes whole expedition on fixing those bugs rather boring thing).
 
-However, in some cases overflow possible and exploitable (there were
-reason why people tried to replace sprintf with snprintf, right?).
-
-
-P.P.S. I often found similar sequences in formatting logging code
-(vsnprintf); if you can remotely feed oversized log entry (typical limit
-is 1k or 4k), and there are one of above dangerous patterns, then it is
-likely exploitable.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
