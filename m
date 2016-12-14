@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/13/2
-Message-ID: <87r38ohvku.fsf@redhat.com>
-Date: Tue, 13 Sep 2016 13:45:37 +0200
-From: Martin Prpic <mprpic@...hat.com>
-To: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-6299 mock: privilige escalation via mock-scm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/6
+Message-ID: <bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>
+Date: Wed, 14 Dec 2016 14:36:15 +0000
+From: Sevan Janiyan <venture37@...klan.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-It was found that mock's scm plug-in would parse a given spec file with
-root priviliges. This could allow an attacker who is able to start a
-build of an rpm with a specially crafted spec file within mock's
-environment to elevate their priviliges and escape the chroot.
+On 14/12/2016 14:24, Kurt Seifried wrote:
+> ** RESERVED ** This candidate has been reserved by an organization
+> or individual that will use it when announcing a new security problem.
+> When the candidate has been publicized, the details for this
+> candidate will be provided.
+> 
+> This means that the entry number has been reserved by Mitre for an issue or
+> a CNA has reserved the number. So in the case where a CNA requests a block
+> of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
+> of 500), the CVE number will be marked as reserved even though the CVE
+> itself may not be assigned by the CNA for some time. Until the CVE is
+> assigned AND Mitre is made aware of it (e.g. the embargo passes and the
+> issue is made public), AND Mitre has researched the issue and written a
+> description of it, entries will show up as "** RESERVED **".
 
-Red Hat bug:
+This creates a situation where the Mitre site dose not provide any
+information despite, marking the CVE as reserved despite an official
+advisory for effected software referencing the CVE.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1375490
+Somewhat frustrating when performing vulnerability management as the
+mitre URL is self documenting but useless to reference as a source.
 
-Upstream patch:
 
-https://github.com/rpm-software-management/mock/commit/8b02f43beadacf6911200b48d94e39e891a41da9
-
---
-Martin Prpič / Red Hat Product Security
+Sevan
