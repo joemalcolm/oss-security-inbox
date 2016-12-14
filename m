@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2451" "Wednesday" "20" "April" "2016" "00:33:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420043330.E3AA36C0122@smtpvmsrv1.mitre.org>" "65" "[oss-security] Re: CVE request: opam - missing certificate validation" nil nil nil "4" "2016042004:33:30" "[oss-security] Re: CVE request: opam - missing certificate validation" (number mark "U       cve-assign@m Apr 20   65/2451  " thread-indent "\"[oss-security] Re: CVE request: opam - missing certificate validation\"\n") "<571550CC.1080801@vorlons.info>" ("<571550CC.1080801@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["439" "Wednesday" "14" "December" "2016" "15:48:22" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161214144822.cfn2zv4s2bdlbdvi@eldamar.local>" "15" "[oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification" nil nil nil "12" "2016121414:48:22" "[oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification" (number mark "U       carnil@debia Dec 14   15/439   " thread-indent "\"[oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19553 invoked by uid 550); 20 Apr 2016 04:33:43 -0000
+Received: (qmail 10192 invoked by uid 550); 14 Dec 2016 14:48:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19533 invoked from network); 20 Apr 2016 04:33:42 -0000
-From: cve-assign@mitre.org
-To: matthias@vorlons.info
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <571550CC.1080801@vorlons.info>
-Message-Id: <20160420043330.E3AA36C0122@smtpvmsrv1.mitre.org>
-Date: Wed, 20 Apr 2016 00:33:30 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: opam - missing certificate validation
+Received: (qmail 10167 invoked from network); 14 Dec 2016 14:48:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=6VWiP2PRfxv5ZVZ73XsWEi1SRQA5k0mROSHsuppVLM8=;
+        b=GDGjKEqLt8E7S3f1lRx0L5ArZPwoLqmz27TtmGhpt7ogl3PRJUgOh7hIqnZkxeOswt
+         wutI/qfwT9clsRt/PWvYjoOI6Har7iCYqePXh5xj8Te17hDQZY22nZB9Y/ve02Rkyoeh
+         hp4/ZxXixOV8UCuv4c8mfXYVSK7ojb3NwLRkR8OYxerWJvuZi3/Vr0xO52B264PAgO7V
+         +PlBrjjyuE7ZC5zWvbY8khWbk2onOXLFq1s/Yf25CQ3UibySnNLVQ80X8xiZVsMchnoI
+         x6oJTZJyYhsRJALPBRYLONgfbF33EfO6O3gCgmgbkj/XNiOchUKR9uxUv+ATpxg9DBSW
+         tG+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=6VWiP2PRfxv5ZVZ73XsWEi1SRQA5k0mROSHsuppVLM8=;
+        b=ZaJynJe/3uX9DBPM/KTFy6lnr77RMNIr0RWfSRh2ar+SEvwTY3BuxMx2Zwfszvxjtx
+         UeNWD0DnImBDNRPqwK29m19CxtEXXsJazGllz3zfU9csQ4VVqRQOiYA2ghQL517Upq30
+         6WwbOP8HJRJVdssOmb9/ugDWon+DG5vTN/uJXTm4N+CYpOvtxoqiChJc9rr6aCwgKwi5
+         bc6AzeDlw4EoQzU0y6w+kPm19ibpfy4oGZM5NRmRFsL6RTzOl15gKaC4a6vIHSye3Xkk
+         iRb7QIYWkv0YMZD/fLodcfCn1u4xcN88F/Mv9l7wgGJNtyGu72ktEIa0IRVYBuvXbyXr
+         ODew==
+X-Gm-Message-State: AKaTC004tcmd6eRVdIOZLlWjNL1QijYDCpubaE9meA0Dx6v1/UjIHftsAlsKImC50Eo0GA==
+X-Received: by 10.28.157.137 with SMTP id g131mr7232508wme.29.1481726904460;
+        Wed, 14 Dec 2016 06:48:24 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 14 Dec 2016 15:48:22 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20161214144822.cfn2zv4s2bdlbdvi@eldamar.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Subject: [oss-security] CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature
+ verification
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> https://github.com/ocaml/opam/commit/3d43295df3bb9e67e60801d319bf82c2c8a84d24
-> https://github.com/ocaml/opam/commit/5507426030a60c50f7479ac758d116b573fdbd5e
-> https://github.com/ocaml/opam/issues/55
-> https://github.com/ocaml/opam/issues/2006
+SimpleSAMLphp has released (another) update fixing an incorrect
+signature verification issue (different from SSPSA 201612-01 /
+CVE-2016-9814). It affects versions of SimpeSAMLphp before 1.14.11.
 
+Upstream advisory: https://simplesamlphp.org/security/201612-02
 
-> https://github.com/ocaml/opam/issues/2006#issue-57763563
+References:
+https://github.com/simplesamlphp/simplesamlphp/commit/a2326d75dd14accaac162dd2cb30aaefcc1f9205
 
-> This was added because of compatibility issues on many common
-> installations, in which curl didn't have access to a reasonable list
-> of root certificates (in particular for github). I am wondering if
-> this is still an issue now ?
-> 
-> We still double-check md5s of course.
+Could you please assign a CVE for this issue?
 
-
-> src/repository/opamDownload.ml
-> 
-> let curl_args = [
-> 
-> - CString "--insecure", None;
-> 
-> let wget_args = [
-> 
-> - CString "--no-check-certificate", None;
-
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=818081#15
-> 
-> This issue does not warrant a DSA, but may be good to fix it as well
-> in an upcoming jessie point release.
-
-We feel that this should not have a CVE ID because the removed curl
-and wget options had been intentional behavior. In other words, the
-vendor was not particularly interested in ensuring that the client was
-communicating with the correct web site. That required relying on
-third parties (maintainers of curl and wget) to maintain certificate
-data. Instead, the vendor was interested in whether the client was
-downloading the correct file. Achieving that can be independent.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXFwYcAAoJEHb/MwWLVhi2lS4P/3g0tuTBDJFhdPjGYs52WncH
-4oyAXUPboTN/1ED1D9bcmARcBjE1lik2yMoM4JU0nuwiCj9aPwkXofpt8TCp3As8
-haSrupzKzU0bpHeDVnTwXyc4a04CQ9WAaPDqDgPRViZN7AYKoyhF02zVxNN4jyXu
-CCPp3YsJCHLUvx5UFCFf5XevQBikINm1HuJiizoePHqrl5l6g0efsOulIpC4cGLo
-OobJanX3QNYNQe/bVfFS0R/tJysyDErSRLYzN3prhDDgoe/F1q1Unp/BKlEh0Cub
-+y0tw420qnIAhebz2CD3jgO5rAv1RA8zXOETtNl/m93oG/lyJa9YDRTXxetuW3K6
-ulOQUrlM0l05cmsLKAYuqtPzeEyv6umfGhH/cG4NjHiaUlgXqihNdHRMjcQl5Bx8
-XZ6cAn9XHuMqYBDffuSRspsXIkCZYzwlS6CRqy4uyPN+HH33CB5NHfRAhZFiEDY6
-vK3cRgkcjrU6w6yQ43O8ttNiN6YpFocGXfImf/8FM1jcwBjsnl8IKufdZCKS+NJj
-8/2Atu+aCdbhEVV+i3iEeeL806c1fH92JKmZxWvkU4/6W8xVS2uITqmuVRhg++5n
-tjTH4TrCpi1yjOsl3+PfSSqSsmoVrPe+hHRCXRZYmQ86b+eZXGr2oQt3Cic4xx21
-FakLj9DAVjQBfk65+Jud
-=/IEH
------END PGP SIGNATURE-----
+Regards,
+Salvatore
