@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6919" "Sunday" "6" "March" "2016" "11:01:47" "UT" "me@halfdog.net" "me@halfdog.net" "<fake-VM-id.88f967827bedf0520c021bd4277b3df0@talos.iv>" "184" "Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" nil nil nil "3" "2016030611:01:47" "[oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies" (number mark "U       me@halfdog.n Mar  6  184/6919  " thread-indent "\"Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies\"\n") "<20160305224306.GE1250@sentinelchicken.org>" ("<CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com>" "<56D9DD1F.1030302@cert.org>" "<20160305172039.GA20796@openwall.com>" "<CAFJuDmMn+tNjYrcJXQoLokV-sPJphBRE-1OGWn_WYjtRoDfCoA@mail.gmail.com>" "<20160305205322.GA23295@openwall.com>" "<20160305224306.GE1250@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["608" "Wednesday" "14" "December" "2016" "17:06:49" "+0100" "Marcus Meissner" "meissner@suse.de" "<20161214160649.GH11065@suse.de>" "18" "Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre" "^Date:" nil nil "12" "2016121416:06:49" "[oss-security] why many CVEs are ** RESERVED ** on Mitre" (number mark "        meissner@sus Dec 14   18/608   " thread-indent "\"Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre\"\n") "<73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>" ("<4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>" "<CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>" "<bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>" "<CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>" "<73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 10103 invoked by uid 550); 6 Mar 2016 11:07:12 -0000
+Received: (qmail 12051 invoked by uid 550); 14 Dec 2016 16:07:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,197 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 12033 invoked from network); 14 Dec 2016 16:07:01 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20161214160649.GH11065@suse.de>
+References: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
+ <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
+ <bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>
+ <CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>
+ <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Date: Wed, 14 Dec 2016 17:06:49 +0100
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10064 invoked from network); 6 Mar 2016 11:07:11 -0000
-From: me@halfdog.net
+Subject: Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre
 To: oss-security@lists.openwall.com
-Date: Sun Mar  6 11:01:47 UTC 2016
-References: <CANO=Ty3u964Yax4jMPkwDEiWj=S5TBQdGKarKyicVAk2Ec+Hxw@mail.gmail.com> <56D9DD1F.1030302@cert.org> <20160305172039.GA20796@openwall.com> <CAFJuDmMn+tNjYrcJXQoLokV-sPJphBRE-1OGWn_WYjtRoDfCoA@mail.gmail.com> <20160305205322.GA23295@openwall.com> <20160305224306.GE1250@sentinelchicken.org>
-In-Reply-To: <20160305224306.GE1250@sentinelchicken.org>
-Subject: Re: [oss-security] Concerns about CVE coverage shrinking - direct impact to researchers/companies
-Message-ID: <20160306110147.oOWuiJFV5EZ2QAETIrawavnOTbPPA_dq9L5Zb7tNosw@z>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-In my opinion, most of the points brought up in discussion are valid
-topics to be addressed, I just believe, that another method might be
-more suitable.
-
-As an example, I use the topics from Tim's e-mail ....
-
-
-Tim wrote:
+On Wed, Dec 14, 2016 at 03:17:57PM +0000, Sevan Janiyan wrote:
 > 
->> Of course, the information will need to be available to those 
->> third-party databases from somewhere - but this can be the 
->> researcher's or the vendor's disclosure, as you say.  Until such 
->> disclosure, a customer would not even be aware of the ID, let
->> alone want to look it up.
 > 
-> The trouble with third-party databases is that they aren't a reliable
-> archive of information.  I can't tell you how many times I've found a
-> vulnerability scanner detecting an issue, and I go back to get more
-> details to understand the risk, only to find all the technical
-> details have been taken offline.
+> On 14/12/2016 15:09, Kurt Seifried wrote:
+> > I would suggest you consider getting involved in helping create CVEs if it
+> > is such an important resource, rather then just being a somewhat classic
+> > "Free rider"
+> > 
+> > https://en.wikipedia.org/wiki/Free_rider_problem
+> 
+> Would creating CVEs help with the reservations of already disclosed CVEs?
 
-See g)
+There is a clear allocation strategy for CVEs, using a multi tiered tree
+of CNA (candidate naming authorities)
 
-> It is a major gap in the security community's (and IT industry's) 
-> tool set that we don't have a reliable, single archive of 
-> vulnerability information.
+CVEs are not randomly grabbed but assigned by these CNAs.
 
-See RFC
-
-> It is a huge waste of time looking up every bug.
-
-Copy the whole database
-
-> And when I say "reliable" I merely mean the information won't go
-> away tomorrow (like the old FD did so suddenly).
-
-See b)
-
-> I don't mean the information must always be true or validated, just
-> available.
-
-At least the origin and changes should be validated, see c, e.
-
-> Providing something like this is clearly a significant undertaking 
-> and isn't something most security companies can make any real money 
-> at. *Maybe* a well-thought-out non-profit could accomplish this and 
-> still make ends meet by providing bulk feeds for a small
-> subscription fee.
-
-Well, if software would behave as below, I would have no problem hosting
-a mirror, slow lines should not matter. I think quite some researchers
-would contribute a little of their computational resources.
-
-> Obviously a government has the resources to do this, if not always
-> the competence.  Currently my government is just "letting the 
-> Internet burn", as they say, so I'm not optimistic that DHS or 
-> whatever is going to step up.
-
-I do not want to trust a single government to much, see h) how to handle
-sensitive material without central trust.
-
->> A drawback is that such requests become somewhat 
->> security-sensitive, if for yet unpublished issues.  This is
->> already a major concern with CVE, where information may be subject
->> to unjustified risk for the purpose of merely getting an ID
->> assigned.
-
-Also h)
-
-> That's a good point.  As a researcher, I want an ID very early in the
-> process (before going public) so I can refer to it when interacting
-> with a vendor and draft my advisory in advance.  One *could* accept
-> submissions "to be released on date ...", but then any database like
-> that will become a target.
-
-See e, h.
-
-> So instead, this hypothetical web app could require only basic 
-> information about the products affected up front, and then allow 
-> arbitrary additions of content later. (Note I said additions, not 
-> changes).
-
-See e, f. For first round, we could use a simple template for reporting,
-but do not enforce its use. Let k) mark out good contributors, valuable
-information.
-
-> I think it should also allow anonymous submission, perhaps only with
-> validation of email addresses (which could be burners).
-
-Use c), the key does not need to contain any valid mail address or name,
-it has only to be signed properly.
-
-> It's all too easy for researchers to become victim of idiotic libel
-> lawsuits.  (Which then leads one to wonder what legal defenses the
-> hosting org needs...)
-
-Those caring about that, use h+j to give access only to trusted parties.
-With the signed access request, they also sign a "contract" taking away
-the risk from the contributor - e.g. the reader is legally allowed in
-his jurisdiction to read the vulnerability information without any legal
-consequences for him or the creator of the content. Also contributor is
-not responsible for damages caused by leaks via reader. With j) going to
-court would mean going not only against the contributor but all readers
-(usually some major players within them) reducing the risk for the
-contributor.
-
-
-
-
-
-
-... to make following proposal
-
-RFC: "Distributed Cryptoenhanced Vulnerability Enumeration (DCVE)":
-
-To address the points mentioned before, assume we would take the a
-blockchain database [0] approach to handle most of the issues for us.
-
-a) Chain layout: Start a chain every year, so it will not grow arbitrary
-large. The root entry is the PGP key of chain manager (some group, board
-- - does not be the ones running the data systems)
-
-b) Chain hosting: as the information is easy to distribute,
-cryptographically secured, redundant, any number of volunteers can host
-them.
-
-c) Entry: A "permitted contributor" signature is made using one of the
-previous keys already recorded onto the key of the new contributor.
-
-d) Proof of work: To add elements perform calculation (1
-non-parallelizable CPU-h? - this is also the minimal delay for updates),
-thus limiting the amount of garbage to be added by adversaries.
-
-e) Unique IDs: The unique ID for a DCVE entry is the SHA256-hash of the
-first element dealing with that issue.
-
-f) Updates: The entry may be updated by anyone, but usually one may want
-to filter out all entries not from the creator. The creator may later on
-approve foreign entry by adding a linking the record (or the key of the
-contributor) to the chain by himself.
-
-g) Related material: To keep chain entries small (16kb?), they may
-reference external material via http(s)-URLs. If it is a single file,
-checksum information can be added. When important material is found,
-anyone feeling the need to mirror it can create an update to that entry
-and add the reference to the mirrored data.
-
-h) Sensitive information: Each DVCE chain may contain also encrypted
-messages. The key can be added later on to the chain, thus making the
-previously recorded information public.
-
-i) Non-repudiation (create): Each added entry has to be signed with the
-key of the creator)
-
-j) Non-repudiation (read): When important for the creator, giving read
-access to one encrypted DCVE-chain should only happen after receiving a
-signed access-request.
-
-k) Prioritizing: to ease sifting through the important entries, any
-contributor can add a rating entry to DVCE chains to give opinion to
-their risk but also the quality of the chain (thus contributors may
-build a reputation, making it easier to get heard).
-
-Any thoughts on the idea itself?
-How to realize: summer of code?
-
-hd
-
-[0] https://en.wikipedia.org/wiki/Block_chain_(database)
-
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlbb590ACgkQxFmThv7tq+4PTgCfRcFhPC3+BkTdmH46QwkCQDmO
-/xgAmwauaNknTNgZEuSTtMXNEcFXSa9t
-=//Ac
------END PGP SIGNATURE-----
+Ciao, Marcus
