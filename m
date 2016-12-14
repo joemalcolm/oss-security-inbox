@@ -1,32 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/17
-Message-ID: <1457959506.22729.0@ssh.steve.org.uk>
-Date: Mon, 14 Mar 2016 12:45:06 +0000
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request - GNU Awk.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/13
+Message-ID: <CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>
+Date: Wed, 14 Dec 2016 10:31:58 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
-> Why should these get a CVE?  As you state in one of your reports:
-> 
-> > While I appreciate that passing untrusted code to gawk is not a
-> > common thing to do, I do not believe that it should be possible to
-> > trigger a segfault though.
-> 
-> Why should that be considered a valid / safe use case at all?  If
-> something makes awk run untrusted programs, there's code execution
-> problem already:
+On Wed, Dec 14, 2016 at 8:17 AM, Sevan Janiyan <venture37@...klan.co.uk>
+wrote:
 
-  While I suspect there is virtually no situation whereby a service
- would allow the upload/processing of arbitrary awk in the wild, I
- do believe that no (semi)valid program should terminate the intepreter
- with a segfault.
+>
+>
+> On 14/12/2016 15:09, Kurt Seifried wrote:
+> > I would suggest you consider getting involved in helping create CVEs if
+> it
+> > is such an important resource, rather then just being a somewhat classic
+> > "Free rider"
+> >
+> > https://en.wikipedia.org/wiki/Free_rider_problem
+>
+> Would creating CVEs help with the reservations of already disclosed CVEs?
+>
+>
+What would help is getting involved in CVE, something I'm working on, keep
+an eye on #cvementor and https://cvementor.org (just a collection form
+currently). Also if you want to create CVEs you need to request them
+through a CVE Numbering Authority (CNA), for Open Source you can ask here,
+or via https://iwantacve.org/
 
-  That is the reason why I believe that that it is worthy of an
- identifier.  Though I will avoid making future requests for similar
- issues if I'm alone in that belief!
 
-Steve
+>
+>
+> Sevan
+>
+
+
+
 -- 
-http://www.steve.org.uk/
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
