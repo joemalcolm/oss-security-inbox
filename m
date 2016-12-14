@@ -1,43 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/12
-Message-ID: <57962EAC.7050401@cleal.org>
-Date: Mon, 25 Jul 2016 16:22:20 +0100
-From: Dominic Cleal <dominic@...al.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/9
+Message-ID: <20161214152757.trz2hsav4mpjyoph@eldamar.local>
+Date: Wed, 14 Dec 2016 16:27:57 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-5390: Foreman information disclosure in host interfaces/parameters API
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-5390: Foreman information disclosure in host
-interfaces/parameters APIs
+Hi Sam,
 
-Non-admin users with the view_hosts permission containing a filter are
-able to access API routes beneath "hosts" such as GET
-/api/v2/hosts/secrethost/interfaces without the filter being taken into
-account. This allows users to access network interface details
-(including BMC login details) for any host.
+On Mon, Dec 12, 2016 at 10:40:16AM -0600, Sam Whited wrote:
+> Oops, I got the autoreply about not using this list to request CVEs
+> after sending that message; now I'm a bit more confused about the
+> current procedure; please advise.
 
-The filter is only correctly used when accessing the main host details
-(/api/v2/hosts/secrethost). Access to the "nested" routes, which
-includes interfaces, reports, parameters, audits, facts and Puppet
-classes, is not authorized beyond requiring any view_hosts permission.
+Almost sure the autoreply came not from oss-security, but from the
+cve-assign@...re.org. But the autoreply should contain a note like:
 
-Affects Foreman 1.10.0 and higher
-Fix released in Foreman 1.12.1 and 1.11.4
+> [...]
+> In the special case of communications involving a publicly known
+> vulnerability on the oss-security mailing list, please do not use
+> the https://cveform.mitre.org web site at this time, and instead
+> send new or followup messages directly to that mailing list. (If
+> your message pertains to a topic on the oss-security mailing list,
+> and you are receiving an auto-response from the cve-assign@...re.org
+> address, then you can ignore that auto-response.)
 
-Patch:
-https://github.com/theforeman/foreman/commit/7a86dcfe6b36dd43cd6163ce70599e53f09cc217
+Was this the case?
 
-More information:
-https://theforeman.org/security.html#2016-5390
-http://projects.theforeman.org/issues/15653
-https://theforeman.org
+HTH,
 
--- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Regards,
+Salvatore
