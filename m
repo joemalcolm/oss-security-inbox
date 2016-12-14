@@ -1,68 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/02/3
-Message-ID: <CANO=Ty0okTGt0pWufnY4ncChi03Z-xM-MsDO9-=DmJ-dbeJJ0g@mail.gmail.com>
-Date: Tue, 1 Mar 2016 21:16:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Bob Beck <beck@...nbsd.org>
-Cc: oss-security <oss-security@...ts.openwall.com>, CVE ID Requests <cve-assign@...re.org>
-Subject: Re: Re: CVE's for SSLv2 support
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/1
+Message-ID: <3230301C09DEF9499B442BBE162C5E48AC0EAB12@sestoex09.enea.se>
+Date: Wed, 14 Dec 2016 08:19:09 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>
+Subject: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>  
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 1, 2016 at 9:03 PM, Bob Beck <beck@...nbsd.org> wrote:
+Hi all,
 
-> > 1) the SSL/TLS protocols encrypt the and the data cannot be read by an
-> > attacker
-> > 2) the SSL/TLS protocols ensure the data is not altered in transit by an
-> > attacker without detection
->
-> When used correctly..  SSLv2 is not.
+It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list vulnerable versions correctly. One example is the following CVE. Vulnerable versions are according to the link below "linux kernel 4.8.12 and previous versions":
+
+https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-8655 
+
+      Race condition in net/packet/af_packet.c in the Linux kernel through 4.8.12 ..
 
 
-> >
-> > Additionally depending on how you configure the servers there are claims
-> > that you are talking to the correct server/client (e.g. using
-> certificates)
-> > but that is not germane to this discussion.
-> >
-> > SSLv2 is obviously NOT capable of ensuring claim #1 (that data is
-> encrypted
-> > and cannot be read by an attacker), due to a wide variety of issues, and
-> I
-> > have no doubt more will be found if people keep looking. Hence my
-> thinking
-> > is that ANY and ALL use of SSLv2 is CVE worthy, especially when
-> considering
-> > that many devices/manufacturers are less than transparent about their
-> > configurations/security issues.
->
-> While you certainly won't see me defending SSLv2 (I think we were the
-> first to delete it outright)
-> there are many other things that currently fall into that category..
-> I'm agreeing with your sentiment
-> but if you are to consider usage of SSLv2 as CVE worthy, then you will
-> need to do the same for SSH version 1,
-> among other things.   So while I certainly appreciate and even agree
-> with your sentiment, it seems rather timed
-> politically based on a decision made by one implementaiton of SSL/TLS
-> that reflects a decision made by most other
-> implementations long ago.   So far from me to say what CVE's should
-> and shouldn't be used for and issued for, but
-> if this is the road we're going down can I please have permission to
-> use your above quoted paragraph
-> with s/SSLv2/SSH V1/g to request a CVE for *usage or support* of SSH
-> version 1? You said it perfectly.
->
+Vulnerable software and versions
++ Configuration 1
+* OR
+* cpe:/o:linux:linux_kernel:4.8.12 and previous versions
 
-I would be totally fine with that, SSH protocol v1 is long overdue for
-"needs to be taken out back and shot along with whoever enabled it by
-default". From OpenSSH's sshd_config:
+While in the xml file it just mention "cpe:/o:linux:linux_kernel:4.8.12"
 
-# The default requires explicit activation of protocol 1
+nvdcve-2.0-2016.xml:
+..
+<entry id="CVE-2016-9919">
+    <vuln:vulnerable-configuration id="http://nvd.nist.gov/">
+      <cpe-lang:logical-test operator="OR" negate="false">
+        <cpe-lang:fact-ref name="cpe:/o:linux:linux_kernel:4.8.12"/>  
+      </cpe-lang:logical-test>
+    </vuln:vulnerable-configuration>
+    <vuln:vulnerable-software-list>
+      <vuln:product>cpe:/o:linux:linux_kernel:4.8.12</vuln:product>
 
-I think that says it all.
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Cheers
+//Sona
