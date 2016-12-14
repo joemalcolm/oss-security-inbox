@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/28/2
-Message-ID: <alpine.LFD.2.20.1610281440190.16066@wniryva>
-Date: Fri, 28 Oct 2016 14:41:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE request Qemu: 9pfs: integer overflow leading to OOB access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/15
+Message-ID: <665d3544-22f2-f766-383a-fcb406e96085@enea.com>
+Date: Wed, 14 Dec 2016 19:57:11 +0100
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-File System(9pfs) support, is vulnerable to an integer overflow issue. It 
-could occur by accessing xattributes values.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-instance resulting in DoS.
+On 2016-12-14 15:26, Kurt Seifried wrote:
+> Why are you complaining about a nist.gov website/data on an opensource
+> security mailing list/to MITRE? (hint: we can't fix it and neither can
+> MITRE) Please contact NIST.
+>
+Thanks for being so helpful.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02942.html
+I was just trying to see of there are other people out there who also
+think this is a problem. This list seemed like a place where I could
+find such people.
+Perhaps someone knows a work around, perhaps some post-processing tool.
+If none exists, I guess we have to try to fix the problem at the source
+or use another CVE databse.
 
-Reference:
-----------
-   -> http://wiki.qemu.org/Documentation/9psetup
+Cheers
+//Sona
+> On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
+>
+>> Hi all,
+>>
+>> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
+>> vulnerable versions correctly. One example is the following CVE. Vulnerable
+>>
 
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
