@@ -1,4 +1,9 @@
-Received: (qmail 24063 invoked by uid 550); 25 Apr 2024 16:20:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["984" "Wednesday" "14" "December" "2016" "19:59:54" "+0100" "Sona Sarmadi" "sona.sarmadi@enea.com" "<c7376301-38b6-10e9-d234-1e91e5840fb2@enea.com>" "30" "Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre" nil nil nil "12" "2016121418:59:54" "[oss-security] why many CVEs are ** RESERVED ** on Mitre" (number mark "U       sona.sarmadi Dec 14   30/984   " thread-indent "\"Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre\"\n") "<CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>" ("<4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>" "<CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>" "<bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>" "<CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>" "<73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>" "<CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27932 invoked by uid 550); 14 Dec 2016 19:00:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20132 invoked from network); 25 Apr 2024 16:11:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sotecware.net;
-	s=seq2-up1; t=1714061455;
-	bh=iVMQQN2uX2gDT3xUI1R1LGO98AvFdL88y9dVExh3lQk=;
-	h=From:To:Subject:Date;
-	b=dClBRwQ4/bjSFw4Gwf7CGbR2pJ439m5A6+KYHnJhbvB3mxwkEVwVPbQ8NYHchX9N8
-	 5m32p6u9Pq56ruGfzDzmcYX2ztFxnq9lQW9dOevERZXQiR4W0f3WQkJaLdHMZClQer
-	 aii7e2KEOC5IQetIe+4x7U6BfVvUVLsWFd6yC/vNMuH17tSczsWtIpbIJ9I+5P2Lkr
-	 jUhUyrkYsZxXYadObsSzBnMUf5zu3AW5LuLxp6qMcIAUrUkgpKniB2Km9xYWDTbiFr
-	 lXdIvbGmS0tYO2uUK7+4AhL+PhsirbB+18p2ozLnU6lFHHSzyED/foWbdHRjNAURkm
-	 ScHlIPA8ctefQ==
-From: Jonas =?ISO-8859-1?Q?Sch=E4fer?= <j.wielicki@sotecware.net>
-To: oss-sec <oss-security@lists.openwall.com>
-Date: Thu, 25 Apr 2024 18:10:54 +0200
-Message-ID: <5222127.EKZ5pzy0G1@sinistra.local>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart9237794.vijd6lq7cA";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-Clacks-Overhead: GNU Terry Pratchett
-Subject: [oss-security] libksieve (used by kmail/kontact) sent password as username
-
---nextPart9237794.vijd6lq7cA
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
-From: Jonas =?ISO-8859-1?Q?Sch=E4fer?= <j.wielicki@sotecware.net>
-To: oss-sec <oss-security@lists.openwall.com>
-Subject: libksieve (used by kmail/kontact) sent password as username
-Date: Thu, 25 Apr 2024 18:10:54 +0200
-Message-ID: <5222127.EKZ5pzy0G1@sinistra.local>
-Mime-Version: 1.0
-
-Hello list,
-
-Managesieve is a protocol to configure the email filtering system Sieve via 
-TCP/IP. It is typically authenticated just like IMAP is. The managesieve 
-client implementation in KDE (libksieve) had a bug which used the password as 
-username.
-
-That exposed the password in plaintext server logs, as usernames are commonly 
-logged on failed login attempts.
-
-This bug has existed for several years and made it into multiple Debian 
-releases. It has only recently been fixed upstream [1] and even more recently 
-been fixed in Debian [2] (stable package updates still pending). As this bug 
-has been documented in the internet at various places [3] [4] but I haven't 
-seen any mention of it here yet, I thought sharing it here made sense.
-
-As far as I know, no CVE has been allocated for this.
-
-kind regards,
-Jonas
-
-   [1]: https://invent.kde.org/pim/libksieve/-/commit/
-6b460ba93ac4ac503ba039d0b788ac7595120db1
-   [2]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1069163
-   [3]: https://bugs.kde.org/show_bug.cgi?id=437858
-   [4]: https://www.reddit.com/r/kde/comments/151xq9r/comment/jsavmds/
---nextPart9237794.vijd6lq7cA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEG/EPV+Xzd5wEoQQIwGIDJZdiWIoFAmYqgI4ACgkQwGIDJZdi
-WIr9NQ/+LUUgFk9TKTKv3du2PxDkFqCJSIDGYJWdMMl7X6GpwJ+XwtEsT1tBPvzs
-pSI1Kj+Z7J4QZ1UITu2wcuKjkODSATMSsHl+GbaFQ/PgXWHFQYLkNWncW5/9/un8
-5I1XlWSoExjIBQf1Ocs/CM0dt5v/HBN3gl+LO96uX1THsRkwfsM1gbalvbKRBdaX
-uw99qWZEIdbldlqZSBjZzPkGmglSMMJf4JKMyVXRStPEohpo+EFRWjp0NHTHfndt
-e4IHaQac9N7TAULjfNs8JNwq5fOBM7CkdY1n+aKJ88kyX4zbN2ssRP8EBCcoOoMS
-RI+eth50rVkj/NhXrgeLCdSdZjSEd7uqrKxvTvts51x0hfII/nAJ7DiBm+O+Kx80
-YIEnNsqvYj1OCif+EcA+Q2FTW6iRZ46w9frGlmrJksPDcHkXMz+bsN+2cwBGiN/P
-KJ/Syl80oWUxbl2YB3qYt6SvW6tiQxe/HiyjAtLineJSG3HJ6mEj2EItnlud2TnS
-puJUod2hcUrsx7j4Lt+XiOLN6tnbjaSAwXtqfn2vp6pBLK2Sz6Gnk1ew22qKutAa
-CCBosMWiOFt6YTy7ENXcydQXz83Z8sddh9XDf7b+SqnmAFkOrFlk7CPk1INTAuYG
-8ZR6aL7AjAXFwOeHISGiAExndKaq2Ttw7Yy4TScG7xlHjLNMnEE=
-=2FoC
------END PGP SIGNATURE-----
-
---nextPart9237794.vijd6lq7cA--
+Received: (qmail 27911 invoked from network); 14 Dec 2016 19:00:06 -0000
+To: <oss-security@lists.openwall.com>
+References: <4ae03741-1f12-9c3b-6243-35f3aa24e67d@enea.com>
+ <CANO=Ty18ABwOUHJs+U6OYjEJocDY9gg4702aZEyd7BZS6ZYpJg@mail.gmail.com>
+ <bbba28f0-baf1-6eb5-3269-db3dc9c2b8ec@geeklan.co.uk>
+ <CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>
+ <73d6ef38-3520-6229-5701-abc842cfa97f@geeklan.co.uk>
+ <CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>
+From: Sona Sarmadi <sona.sarmadi@enea.com>
+Message-ID: <c7376301-38b6-10e9-d234-1e91e5840fb2@enea.com>
+Date: Wed, 14 Dec 2016 19:59:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
+MIME-Version: 1.0
+In-Reply-To: <CANO=Ty0ctOG9PkjbY6UTeZ8JAcwodHzuC5bLZfbq6yN99TP86g@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [192.168.201.202]
+X-Outbound-IP: 192.36.1.72
+X-Env-From: sona.sarmadi@enea.com
+X-Proto: esmtps
+X-Revdns: mx-3.enea.com
+X-HELO: mx-3.enea.com
+X-TLS: TLSv1:AES128-SHA:128
+X-Authenticated_ID: 
+X-PolicySMART: 6551647
+X-Virus-Status: Scanned by VirusSMART (c)
+X-Virus-Status: Scanned by VirusSMART (s)
+Subject: Re: [oss-security] why many CVEs are ** RESERVED ** on Mitre
 
 
+
+On 2016-12-14 18:31, Kurt Seifried wrote:
+> On Wed, Dec 14, 2016 at 8:17 AM, Sevan Janiyan <venture37@geeklan.co.uk>
+> wrote:
+>
+>>
+>> On 14/12/2016 15:09, Kurt Seifried wrote:
+>>> I would suggest you consider getting involved in helping create CVEs if
+>> it
+>>> is such an important resource, rather then just being a somewhat classic
+>>> "Free rider"
+>>>
+>>> https://en.wikipedia.org/wiki/Free_rider_problem
+>> Would creating CVEs help with the reservations of already disclosed CVEs?
+>>
+>>
+> What would help is getting involved in CVE, something I'm working on, keep
+> an eye on #cvementor and https://cvementor.org (just a collection form
+> currently). Also if you want to create CVEs you need to request them
+> through a CVE Numbering Authority (CNA), for Open Source you can ask here,
+> or via https://iwantacve.org/
+>
+Thanks all for your feedback. I would be glad to help. I tried the
+Mitre's web interface to update Curl CVEs which is listed as Reserved. 
+
+Regards
+//Sona
+>
 
