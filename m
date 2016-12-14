@@ -1,43 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/15
-Message-ID: <CAFkTri+FwSj8n_sMckcY1PZLjAjcaizLmeDiJsRFmcZiDKjD9w@mail.gmail.com>
-Date: Sat, 17 Sep 2016 03:00:10 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: linux kernel SCSI arcmsr driver: buffer overflow in arcmsr_iop_message_xfer()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/11
+Message-ID: <20161214155711.4z2obsdysl4qwzl3@eldamar.local>
+Date: Wed, 14 Dec 2016 16:57:11 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: FlightGear: Allows the route manager to overwrite arbitrary files
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi
 
-inspecting this code you can notice that:
+The FlightGear project fixed a security issue, allowing arbitrary file
+overwrites for files the user running FlightGear has write access to
+and could be taken advantage to for other impact as arbitrary code
+execution.
 
-http://lxr.free-electrons.com/source/drivers/scsi/arcmsr/arcmsr_hba.c#L2399
+References:
+https://bugs.debian.org/848114
+https://sourceforge.net/p/flightgear/flightgear/ci/280cd523686fbdb175d50417266d2487a8ce67d2/
 
-the int32_t user_len is taken from the scsi command
+Can you please assign a CVE for this FlightGear issue.
 
-user_len = pcmdmessagefld->cmdmessage.Length;
-
-and used directly without sanitization in a memcpy to a heap buffer of
-fixed size 1032
-
-memcpy(ptmpuserbuffer, pcmdmessagefld->messagedatabuffer, user_len);
-
-potentially causing kernel heap corruption and arbitrary kernel code execution.
-
-
-The issue has been already acknowledged and patched in a development
-branch, the patch is here:
-
-http://marc.info/?l=linux-scsi&m=147394713328707&w=2
-
-this patch have been applied to a 4.9 scsi branch here
-(4.9/scsi-queue), and at some point it will land in master
-
-http://marc.info/?l=linux-scsi&m=147394796228991&w=2
-
-Thanks
-
-Marco
-
-https://marcograss.github.io
+Regards,
+Salvatore
