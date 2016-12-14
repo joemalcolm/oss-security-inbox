@@ -1,21 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/3
-Message-ID: <1481890807.3874.2.camel@redhat.com>
-Date: Fri, 16 Dec 2016 13:20:07 +0100
-From: Adam Maris <amaris@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE-2016-9591 jasper: Use-after-free on heap in jas_matrix_destroy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/18
+Message-ID: <20161214200545.GT10921@scully.more-magic.net>
+Date: Wed, 14 Dec 2016 21:05:45 +0100
+From: Peter Bex <peter@...e-magic.net>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: CVE Request: resource exhaustion in regex expression handling in WebKit]
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, Nov 26, 2016 at 03:11:44PM -0300, Gustavo Grieco wrote:
+> Hello,
+> 
+> Trying to parse and execute this regex code in WebKit:
+> 
+> /($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($($(${-2,16}+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)+)/
+>
+> will consume large amounts of memory (8GB or more), after a few seconds.
+> This seems to be a case of CWE-400 (uncontrolled resource consumption).
 
-We've assigned CVE-2016-9591 to following vulnerability:
+Hello all,
 
-https://github.com/mdadams/jasper/issues/105
+Compiling the above regex also causes excessive resource consumption in
+the portable Irregex (IrRegular Expressions) Scheme package, which can be
+found at http://synthcode.com/scheme/irregex/.
 
-Best Regards,
+This code is completely unrelated to WebKit's regex implementation, and
+a cursory inspection seems to indicate that the underlying cause is
+different.  So, it might be worthwhile to inspect other regex engines for
+issues similar to this!
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+All versions prior to 0.9.6 are affected.  The fix is at
+https://github.com/ashinn/irregex/commit/a16ffc86eca15fca9e40607d41de3cea9cf868f1
 
+This package comes bundled at least with CHICKEN Scheme, Jazz Scheme and
+Vicare Scheme, and there are "chez-irregex" and "guile-irregex" packages
+available for GuixSD and perhaps other package managers.
+
+Versions of CHICKEN up to and including 4.11.1 are affected.
+
+Cheers,
+Peter Bex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
