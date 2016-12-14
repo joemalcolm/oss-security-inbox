@@ -1,44 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/13/12
-Message-Id: <20161013161227.DCB286C4FDC@smtpvmsrv1.mitre.org>
-Date: Thu, 13 Oct 2016 12:12:27 -0400 (EDT)
-From: cve-assign@...re.org
-To: caiqian@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: kernel - local DoS due to a page lock order bug in the XFS seek hole/data implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/14/8
+Message-ID: <CANO=Ty1NvpX_xySmi_oie0U-jHmQF0iOOYoAQ25fOqZOuep54Q@mail.gmail.com>
+Date: Wed, 14 Dec 2016 08:09:09 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: why many CVEs are ** RESERVED ** on Mitre
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Dec 14, 2016 at 7:36 AM, Sevan Janiyan <venture37@...klan.co.uk>
+wrote:
 
-> trinity syscall fuzzer
+> Hello,
+>
+> On 14/12/2016 14:24, Kurt Seifried wrote:
+> > ** RESERVED ** This candidate has been reserved by an organization
+> > or individual that will use it when announcing a new security problem.
+> > When the candidate has been publicized, the details for this
+> > candidate will be provided.
+> >
+> > This means that the entry number has been reserved by Mitre for an issue
+> or
+> > a CNA has reserved the number. So in the case where a CNA requests a
+> block
+> > of CVE numbers in advance (e.g. Red Hat currently requests CVEs in blocks
+> > of 500), the CVE number will be marked as reserved even though the CVE
+> > itself may not be assigned by the CNA for some time. Until the CVE is
+> > assigned AND Mitre is made aware of it (e.g. the embargo passes and the
+> > issue is made public), AND Mitre has researched the issue and written a
+> > description of it, entries will show up as "** RESERVED **".
+>
+> This creates a situation where the Mitre site dose not provide any
+> information despite, marking the CVE as reserved despite an official
+> advisory for effected software referencing the CVE.
+>
 
-> always trigger a deadlock/hang at the fdatasync() syscall
+So? Also this isn't really the appropriate place for this discussion and
+this will be my last reply to this thread.
 
-> diagnosed as a page lock order bug
-> in the XFS seek hole/data implementation
 
-Use CVE-2016-8660.
+>
+> Somewhat frustrating when performing vulnerability management as the
+> mitre URL is self documenting but useless to reference as a source.
+>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I would suggest you consider getting involved in helping create CVEs if it
+is such an important resource, rather then just being a somewhat classic
+"Free rider"
 
-iQIcBAEBCAAGBQJX/7HXAAoJEHb/MwWLVhi2L14QALYZjH8BXahbcIAhmFqjaZoI
-/OuQXX01GrInM0Oiy0gOAHSicfuEIZciBafpwbvFrYWqEulZaEn8QgfYnpObMPy6
-RTchZX02eqPE12o8jp2C/nL09TW5iAaseduinfmWsq0A4AtEfGMVX6mSpsYUBkvi
-MCkdvo3zceAb3CFpZspF3Irls4yqs6Hcn3doGp0meFc/7ICg1HMqKT/3XPLWYacd
-QIHYL6PrC1jYp2TDWhujQWdDz0I9t2i8d6sasBAONoOoeb7fgxQsExkM988N6USt
-fBXdFO2oFXAnVsYZx/b93GYeJ4UeubB9Bnecm9C1XcunFCAnPXwVOHX6b2vTscmf
-3O9eLwn0jTpF+1Vfl4o9KgoKnZknSBgFiFxZ7/IeCNQOpfFm6XVkl5pL/RomTYEI
-nthYgXwu9yXcM/LWbSgMIIQxeUvGob2+qToL14iKOoCs4BX7dhUHBTL+Ss8x46D6
-Ad4bJOuS0bS0q/PdGbWcMDedZS0NdH5+/pxTkfL36sr6iHqHU8mrrWtXu3Nf6BVu
-SCoQYI8f1YzclBNw4wHuWZcIPkp2g7XPkyF7F5xbQjoNQ1/7eKQbZsAkTWkQT5DZ
-OF7H91Ljf0fnzLBH8NTNleRRiZY8OQOB0H+9wCvWxrmv0TbsXUjn+WTEEnorLTyG
-RiMSBIazOttES1wnrCmd
-=4qj4
------END PGP SIGNATURE-----
+https://en.wikipedia.org/wiki/Free_rider_problem
+
+
+
+>
+>
+> Sevan
+>
+
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
