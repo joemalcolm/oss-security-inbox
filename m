@@ -1,4 +1,9 @@
-Received: (qmail 19955 invoked by uid 550); 16 Mar 2026 23:16:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["515" "Thursday" "15" "December" "2016" "06:33:48" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>" "19" "[oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file" nil nil nil "12" "2016121505:33:48" "[oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file" (number mark "U       carnil@debia Dec 15   19/515   " thread-indent "\"[oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24137 invoked by uid 550); 15 Dec 2016 05:34:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28637 invoked from network); 16 Mar 2026 22:35:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1773700498;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Vg41Cfz4NMYeJ+FsHaAGBBYTJ5X4F08DfHUMVSUjris=;
-	b=hENhskVFyBueaVK1DuZrJLFimBt89aHDDou0TiaeoWJJnfcHYziaMvnEZk0Q4R973RjBvp
-	SPByM3oZdbSvNx/mRe4nFVwN5xSejJ5cxvJwbBdEMVgo+MCp/WrCe/guqyQtSdDkhWJZ3Y
-	fEsJHDQbG3ernYAJ6DVFUau8ap7rXCNr9nbqFZoJ7/BeunPWPeiF5DP1uWRJqR5qt2LtWu
-	V4jtNmfvLnKvR1bKKNZv43p0e7AWL0pEkYGqNpQctiJeN1As52vzCG0C3X4O0rt4O+Cli9
-	p9BsJHIMxzhKZRtcny9MKnVPACKmq1zBNQi/IRgzXiT7Am0+mVW56IOA0Bhh3g==
+Received: (qmail 24119 invoked from network); 15 Dec 2016 05:34:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=1v4J+mjndQjq3RohprWYAZyAvWjuqiBWy/cIb7EQltw=;
+        b=Ul0gU4OIU6qGmoQIYavVB7zEGKMg7T0PWOpglAgDLSjxbb7sBW5vnm4i9/ImwlVIQT
+         6C/qMLuYJsGH0cYGQbqOdWAQcR/ELCAq71SiKr7hT2s58PRKb7LcI58GdxyaGednNDzT
+         jL4Pg+rJKUooLxDuLdUNpxtavHmW/DJ1QpAgkhzENy0KUt6yDS6KxvxZy16As7s49VPt
+         L4Nilnapdbf0oWVjLF7bx8f+9sygeJcRyx8UcTtNvPmtQDlD7/3aqsqw8uwYEs8MQrdq
+         vQkcEjSvykkOn1rOIDrzeDglILEPRjvhyTHh0yVJw6O5DP/YvmHovnbtJd8QItAQY7Gm
+         Zd1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=1v4J+mjndQjq3RohprWYAZyAvWjuqiBWy/cIb7EQltw=;
+        b=i/r89uU8ZDUnG/KYKpaX4VFdGXgKWpJoZsEDI/GIZRaFgwLT6A0x0AMgEVQrp6If5v
+         RNtej7RAcqle+Mzqa90XbJEZuOruvxVIfj3khURnZfQgHxJ/+GtSNYJ5L54IgTAGZdLJ
+         0VaGLBzdVNLJKf2to6uqbSm+75INPGya+SPDCJGTfsFjIyZTd5kjfneWv2C7p4jMvs+m
+         fkH6WgvI1Ql4EJGUyD+6/FFUclBm2vppPgYvWhgqy7+uXNcOE9MnMhLDOGkBT4yBN6fa
+         zleLODivrAHWdLRwuS2g9I31T3lloCYn0xyQipkpRrKc18UmlY1ksrRjNDFFZD8M0MyY
+         TTwg==
+X-Gm-Message-State: AIkVDXKumtyc4RlJN5ZgA/wb2FWslvuNgooj4w6uYgLvUU2CbB9ym/nVacsBpeXzpzY/jw==
+X-Received: by 10.55.135.197 with SMTP id j188mr429015qkd.71.1481780031304;
+        Wed, 14 Dec 2016 21:33:51 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 15 Dec 2016 06:33:48 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>
 MIME-Version: 1.0
-Date: Mon, 16 Mar 2026 19:34:57 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
- <oss-security@lists.openwall.com>
-Message-ID: <a2d5982ea53763b8473e9651c0b0d416@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelheelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggfffhvffukfigtgfgsehtjehjtddttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeejheevfeefhfekjeejvdduhfegvddtjeetffekteetudeivdeuleekheeuhfekveenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhenucfkphepuddtrddvtddtrddvtddurdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddtrddvtddtrddvtddurdejpdhhvghloheprhhouhhnuggtuhgsvgdrghgrnhguihdrnhgvthdpmhgrihhlfhhrohhmpehtihhmlhgvghhgvgestghprghnshgvtgdrohhrghdpqhhiugepffelieegleefgfeuveegpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepvddprhgtphhtthhopegtvhgvqdgrnhhnohhunhgtvgesshgvtghurhhithihrdhmvghtrggtphgrnhdrohhrghdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
-X-GND-State: clean
-Subject: [oss-security] CVE-2026-4177: YAML::Syck versions through 1.36 for Perl has several
- potential security vulnerabilities including a high-severity heap buffer
- overflow in the YAML emitter
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Subject: [oss-security] CVE Request: Game Music Emulators: incorrect emulation of the SPC700
+ audio co-processor of SNES: arbitrary code execution via malformed SPC music
+ file
 
-========================================================================
-CVE-2026-4177                                        CPAN Security Group
-========================================================================
+Hi
 
-         CVE ID:  CVE-2026-4177
-   Distribution:  YAML-Syck
-       Versions:  through 1.36
+As reported by Chris Evans via
 
-       MetaCPAN:  https://metacpan.org/dist/YAML-Syck
-       VCS Repo:  https://github.com/cpan-authors/YAML-Syck
+http://scarybeastsecurity.blogspot.de/2016/12/redux-compromising-linux-using-snes.html
 
+Incorrect emulation of the SPC700 audio co-processor of the Super
+Nintendo Entertainment System allows the execution of arbitrary code
+if a malformed SPC music file is opened.
 
-YAML::Syck versions through 1.36 for Perl has several potential
-security vulnerabilities including a high-severity heap buffer overflow
-in the YAML emitter
+Debian released a DSA for this issue (in the qemu-music-emu source
+package):
 
-Description
------------
-YAML::Syck versions through 1.36 for Perl has several potential
-security vulnerabilities including a high-severity heap buffer overflow
-in the YAML emitter.
+https://lists.debian.org/debian-security-announce/2016/msg00318.html
 
-The heap overflow occurs when class names exceed the initial 512-byte
-allocation.
+Could you please assign a CVE for this issue.
 
-The base64 decoder could read past the buffer end on trailing newlines.
-
-strtok mutated n->type_id in place, corrupting shared node data.
-
-A memory leak occurred in syck_hdlr_add_anchor when a node already had
-an anchor. The incoming anchor string 'a' was leaked on early return.
-
-Problem types
--------------
-- CWE-122 Heap-based Buffer Overflow
-
-Solutions
----------
-Upgrade to version 1.37 or higher when it is available.
-
-
-References
-----------
-https://github.com/cpan-authors/YAML-Syck/commit/e8844a31c8cf0052914b198fc784ed4e6b8ae69e.patch
-https://metacpan.org/release/TODDR/YAML-Syck-1.37_01/changes#L21
-
-Credits
--------
-Todd Rinaldo, finder
+Regards,
+Salvatore
