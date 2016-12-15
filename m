@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/10/4
-Message-ID: <17fb8fbcd0f649ae912cfbb78670eb5e@imshyb02.MITRE.ORG>
-Date: Thu, 10 Nov 2016 01:03:26 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/9
+Message-ID: <1a39cb5556d74c7e989d1b728b6c7eaa@imshyb02.MITRE.ORG>
+Date: Thu, 15 Dec 2016 12:44:23 -0500
 From: <cve-assign@...re.org>
-To: <ago@...too.org>
+To: <carnil@...ian.org>
 CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: jasper: use after free in jas_realloc (jas_malloc.c)
+Subject: Re: CVE Request: SimpleSAMLphp: SSPSA 201612-02: Incorrect signature verification
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/11/07/jasper-use-after-free-in-jas_realloc-jas_malloc-c
+> SimpleSAMLphp has released (another) update fixing an incorrect
+> signature verification issue (different from SSPSA 201612-01 /
+> CVE-2016-9814). It affects versions of SimpeSAMLphp before 1.14.11.
 > 
-> A crafted image, maybe posted in the past as testcase for another bug, causes
-> in the 1.900.18 version a use-after-free.
+> https://simplesamlphp.org/security/201612-02
+> https://github.com/simplesamlphp/simplesamlphp/commit/a2326d75dd14accaac162dd2cb30aaefcc1f9205
+
+> -1 in case an error occurs. PHP allows translating numerical values to
+> boolean implicitly
 > 
-> AddressSanitizer: heap-use-after-free
-> READ of size 8
-> 
->     #0 0x7fce4229d29c in jas_realloc ... jasper-1.900.18/src/libjasper/base/jas_malloc.c:182:21
->     #1 0x7fce422a5e38 in mem_resize ... jasper-1.900.18/src/libjasper/base/jas_stream.c:1001:14
+>     Non-zero equals true.
 
-> https://github.com/mdadams/jasper/commit/634ce8e8a5accc0fa05dd2c20d42b4749d4b2735
+> - if (! $objXMLSecDSig->verify($objKey)) {
+> + if ($objXMLSecDSig->verify($objKey) !== 1) {
 
->> There were a number of potential problems due to the possibility
->> of integer overflow.
->> Changed some integral types to the larger types size_t or ssize_t.
->> For example, the function mem_resize now takes the buffer size parameter
->> as a size_t.
->> Added a new function jas_stream_memopen2, which takes a
->> buffer size specified as a size_t instead of an int.
-
-Use CVE-2016-9262 for everything fixed by
-634ce8e8a5accc0fa05dd2c20d42b4749d4b2735.
+Use CVE-2016-9955.
 
 - -- 
 CVE Assignment Team
@@ -43,17 +36,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYJA0ZAAoJEHb/MwWLVhi2Cx0P/jXkv48yuOWoFzruQ3Lnx4BY
-20iq9b2hapEg0DnX7tQteIxmW82S5ZIvxbfATQAB+4st71nu9JK2pI0K7Jaskbke
-CHz4JmoMJM8FYEAEvLvAivzG9rlOHSVSt6Cu3cVAqKpwhZrb3WaRhivCXjXVXqVY
-SQoXbma5pxLN8EfpjNlHKEGxwgwtBE8Tnx2+d0dO5V889qOMi7Yo4KJ52Jdpm4we
-l6o535FKnEocZMOH6ewaAuMUiRrY79thYAhfxfRx3eLPZTNeIRp7WwSDhnMCtnyt
-C18ikqc+psPMkXlzl1kRPoLTXi+E+D9Eb7QM/XnMJL4262dcUOtlFUXxrhgKbbjU
-oNO+91i0zWV3jeUUqkV9DFRs1C8KoXNY+1Fz7bmC93/D7xWlXDr+L7PEiorwmEx0
-ExnxZNtO/CpjsgddGg5VKYwi9RAy8S+08HDgStSk/GSnUC+dRTv4jBmNm+59bbDH
-cYHEPcCY6mp0g1iIjceuz9NY9cblRIK55VvfGQ4toY32kUAwAcxvqnpEm1NJkOPC
-Rhzpu8viodwUUSKGa9KzYsKCJW7Ux+aiquDK0sD5tU5/WSgHzIbz6LwspGo1pyhv
-k5ldUcjA6GWrdTBoqDkFEpEMFR7vEFth0rfnke1N7r7XtyrUbIdFfskox67MFh2U
-xQEuzd1WU+k/MSvv7fh4
-=7lP7
+iQIcBAEBCAAGBQJYUtTlAAoJEHb/MwWLVhi27IwP/jG+Zl6XCV9GayTZO3AmZIdC
+hP3AI4irrLKNtUGifIYuAs7PRrxvqlolx6Frm9u5W7KUTtHZLnVN06lpLdhi5RdZ
+7YWrdjEe3Oay5QfE4W6jy+OaTWui8J7w3/nAwUg/O30GqKdY1YTwcWFmDHfR29fG
+jI5SlZV6CQAzODqlm1dvmJxzvWGwItzKgV6JHK12rs3ODo/qiS0w3Z8lnOlEZyEb
+c00d9S7y6iYIp1yIXEb2CWnn+CS0tb9JEqKCtwXvlF9/vzfMGCSv2HIXlOUYesPn
+b8BqdFJn7zSTjaDTIGv2GqEdTZE0gnWkQDuikYg7EF+Eux58wDbCz8eS1dhf8WHq
+07vJ5259VJb2JV5Fxlmz9wZpyhWptD6oHMCJZtmS4vk0/WwcLQCoJ0RaMtiW+i1p
+f7eo+tC3JjFmMmMmsUSXhUGnja9nHs7RtTDRR+S1LdZP2T09otsj53HpuqAgNUyk
+N68ym2WDCgp6qBmZGZFRbx31Kqtp3IXnfXrgAKOTciRilDI3SEqb1M/jJbX8rw47
+qdZomwgSFr1DRX6SZFxbQpxhcTHIT+XxT4m3B9g6b0FF22e6e3IEmotnEYqV0KFi
+m6UEaYWWfEnKuu/Tz8nHt0Gh2ab8PLvd9aJPNCl3mmULSwVPcrTSnvWRYu3YrCmy
+hPphYVM98RRx+cSFwh8h
+=W5cm
 -----END PGP SIGNATURE-----
