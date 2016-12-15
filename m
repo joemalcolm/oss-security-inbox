@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/22/3
-Message-ID: <20160322220554.GA4736@boyd>
-Date: Tue, 22 Mar 2016 17:05:54 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: meissner@...e.de, cve-assign@...re.org, security@....net
-Subject: Re: Re: CVE Request: PHP last release security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/1
+Message-ID: <20161215233645.GJ29010@jumper.schlittermann.de>
+Date: Fri, 16 Dec 2016 00:36:45 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request - Exim 4.69-4.87 - disclosure of private information
 Content-Type: text/plain; charset=utf-8
 
-On 2016-03-16 16:42:30, cve-assign@...re.org wrote:
-> > https://bugs.php.net/bug.php?id=71610
-> 
-> >> Type Confusion Vulnerability - SOAP / make_http_soap_request()
-> 
-> >> Due to an insufficient validation of the cookies field when making SOAP http request
-> 
-> >> https://github.com/php/php-src/blob/master/ext/soap/php_http.c
-> 
-> >> There is lack of validation of 2nd/3rd elements in cookies array.
-> >>
-> >> and a type confusion occurs when they are no longer string.
-> 
-> >> [2016-02-22 07:48 UTC] stas@....net
-> >> Fix added to security repo as eaf4e77190d402ea014207e9a7d5da1a4f3727ba
-> 
-> > https://git.php.net/?p=php-src.git;a=commit;h=eaf4e77190d402ea014207e9a7d5da1a4f3727ba
-> 
-> >> + Z_TYPE_P(tmp) != IS_STRING ||
-> 
-> >> + Z_TYPE_P(tmp) != IS_STRING ||
-> 
-> Use CVE-2016-3185.
+Hello,
 
-I see a similar bug and fix in the PHP 5.x branch:
+please assign a CVE ID
 
-  https://bugs.php.net/bug.php?id=70081
-  https://git.php.net/?p=php-src.git;a=commitdiff;h=c96d08b27226193dd51f2b50e84272235c6aaa69
+Product:    Exim
+Versions:   4.69 -> 4.87
+Impact:     Possible leak of private information to a remote attacker
+Reference:  https://bugs.exim.org/show_bug.cgi?id=1996 (placeholder currently)
+Requester:  Heiko Schlittermann <hs@...littermann.de> (Exim Developer)
+Credits:    Bjoern Jacke <bjoern@....de>
 
-Note that the bug was filed in 2015. It was fixed in 5.6.12:
+If several conditions are met, Exim leaks private information to
+a remote attacker.
 
-  https://secure.php.net/ChangeLog-5.php#5.6.12
+A patch exists and is under testing already.
+Backports to older versions are under development.
 
-Does CVE-2016-3185 cover the issue in 5.x, as well?
+As soon as the tests are passed we'll send an announcement
+to the "Operating system distribution security contacts list" and
+ask for packaging fixed versions.
 
-Tyler 
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann              - Exim developer
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
