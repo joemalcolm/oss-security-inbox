@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/16/1
-Message-Id: <20161016024352.0ABDF42E008@smtpvbsrv1.mitre.org>
-Date: Sat, 15 Oct 2016 22:43:52 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: imagemagick: memory allocate failure in AcquireQuantumPixels (quantum.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/8
+Message-ID: <a9385b640cfb4927afadd3cbf4792e81@imshyb02.MITRE.ORG>
+Date: Thu, 15 Dec 2016 12:42:05 -0500
+From: <cve-assign@...re.org>
+To: <peter@...e-magic.net>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: CVE Request: resource exhaustion in regex expression handling in WebKit]
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://blogs.gentoo.org/ago/2016/10/07/imagemagick-memory-allocate-failure-in-acquirequantumpixels-quantum-c/
-> 
-> AddressSanitizer failed to allocate 0x46bf39483ac bytes
-> 0x7f76c7533ff4 in AcquireQuantumPixels ... ImageMagick-7.0.3-0/MagickCore/quantum.c:175:47
-> 
-> https://github.com/ImageMagick/ImageMagick/commit/6e48aa92ff4e6e95424300ecd52a9ea453c19c60
+> Compiling the above regex also causes excessive resource consumption in
+> the portable Irregex (IrRegular Expressions) Scheme package, which can be
+> found at http://synthcode.com/scheme/irregex/
 
-Use CVE-2016-8677.
+Use CVE-2016-9954.
 
 - -- 
 CVE Assignment Team
@@ -28,17 +25,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYAudGAAoJEHb/MwWLVhi2jykP/R5qNgKdkgNnM512wFtsSkAh
-VReHDp0AOkHDZrJI78N2dO0ps+69tpj6N36iYtCZ7V4J9ulDF9m8ejEzqDbdiz1l
-IJi6MPCXrzLrxz//+dzjEJ3BVJRNq0wPX9gvAjRwR4+PJR9JX7aMqr0P3YouI1T4
-BYfEc/8/EWIyXh5nbO3o94+aUs59ckAZZiwYmnzQUOLcKy8Md1Tb1BdZpx4NaSdE
-0EF+jkaowo4vWk4+Z9tDUOPQwJG/HUqSpvUWyMcGSjDjEatxHJ1NmktcH5QcMFAL
-Ku8ppzMK5VbqKpXk+/ZiP5IULLLB6vegIy4f44/WhM1Hku3dfd7O46n3D+2RUhyf
-8Qs5nCMJd64x7Xn/9G07v2eQjuZYgNv8hq5R19WzJP2ZSj83ifvHCgJxiRf83ykD
-ZkBDyLsqQVZyIjIuFhEMjtx2UAMgpK+CPTTBg+OEFb9k6JR209KFPu61e2YWqQBk
-cQFU2pezH6rS32PWo1PxuWEyRLo7I/qSre2llOmrY+6q10CrlYHsugkAAE+YI5ej
-TPLK2rbuRpmMQeFEsDyrQOQdIaj1GdswFS+54wt36H6/L5CNOryyetow8ptZoINU
-XWl3E7jpfIh/Eqoe33uuPYJVlGOBIF/VpIGIUsk3/+p2I2q4jV4XmOFE9tCKgeUa
-JTVD7jnrPudcvjofke4K
-=pzqG
+iQIcBAEBCAAGBQJYUtTtAAoJEHb/MwWLVhi2T9MP/RGyNWSuhs4FoFjAuofBzG0v
+oFn5+4gQlR1DMi8zJ61w6CYWUeTLkxkD4WNORaSJ9gpIp5Qbk2yPN9jAJ6vDd1Q+
+FmVr2Jn7QiDXokJeUCfbEr5WT6MwbUhi5j3MejQr9UC3ufMexz1b/gHcoNb9C4T7
+s2KURQgu8k0Rur8a0Sjim0ZX5DeiLA8Hd3hNRKb5KRCAE7uBFqbw8lHdQwUApIZJ
+16JeGI7xtmbms1I9iwMM9vZvbtHp71NM20NUxb/kk3CM13mHuhWov5PaPQ5INdny
+tOR240tekYbESJFfnaZ1U5obDQqaETWq3C9zXaEbRB/lG6HsBDkBjOvLHqsCTKsr
+DiRL4z4xkX/Ko08QDPhiirLKy04w7qCMXf0IncqjutMBPZEKowrb9wuNdsJF4h8p
+M66PTlmWwPAVL2HyEJyWCwxMmw96oDgQUoP8Ktc9KqwpqxjTAQz8cr+uEa/ld+SC
+ttujAe89KYQXtMJmXTrMqP0ufNJW+PpIY67e4cqnM0ebDPzEMtSwxTCo+38DGR3M
+337DGOc6Q0EPcwJNAvt6BjSgy/dMvHE36BRHf2GW2rM2dvQPpecidmKcK4sW/Ef2
+Er8WTqni+BQ/Xxb1/jngHUwzBxzor+9CcBoJrNiIFw+OA/aRQWJf2FBmrBYIp4Aj
+A40+HIGh8NSxhfIGG/Xm
+=kqkA
 -----END PGP SIGNATURE-----
