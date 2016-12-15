@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2137" "Friday" "10" "June" "2016" "15:07:19" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<575AD7A7.8090302@redhat.com>" "58" "[oss-security] CVE request for vulnerability in OpenStack Neutron" nil nil nil "6" "2016061015:07:19" "[oss-security] CVE request for vulnerability in OpenStack Neutron" (number mark "U       tdecacqu@red Jun 10   58/2137  " thread-indent "\"[oss-security] CVE request for vulnerability in OpenStack Neutron\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1268" "Thursday" "15" "December" "2016" "12:42:05" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<a9385b640cfb4927afadd3cbf4792e81@imshyb02.MITRE.ORG>" "31" "[oss-security] Re: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: [oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit]" nil nil nil "12" "2016121517:42:05" "[oss-security] Re: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: [oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit]" (number mark "U       cve-assign@m Dec 15   31/1268  " thread-indent "\"[oss-security] Re: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: [oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit]\"\n") "<20161214200545.GT10921@scully.more-magic.net>" ("<20161214200545.GT10921@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8091 invoked by uid 550); 10 Jun 2016 15:07:19 -0000
+Received: (qmail 30164 invoked by uid 550); 15 Dec 2016 17:42:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8053 invoked from network); 10 Jun 2016 15:07:18 -0000
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-From: Tristan Cacqueray <tdecacqu@redhat.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <575AD7A7.8090302@redhat.com>
-Date: Fri, 10 Jun 2016 15:07:19 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+Received: (qmail 30146 invoked from network); 15 Dec 2016 17:42:17 -0000
+From: <cve-assign@mitre.org>
+To: <peter@more-magic.net>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161214200545.GT10921@scully.more-magic.net>
+Message-ID: <a9385b640cfb4927afadd3cbf4792e81@imshyb02.MITRE.ORG>
+Date: Thu, 15 Dec 2016 12:42:05 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="bNAGht0FguxH98mrT8acItQ3PsQnHxqQm"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Fri, 10 Jun 2016 15:07:06 +0000 (UTC)
-Subject: [oss-security] CVE request for vulnerability in OpenStack Neutron
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: IrRegular Expressions resource exhaustion in regex compilation [was: Re: [oss-security] CVE Request: resource exhaustion in regex expression handling in WebKit]
 
---bNAGht0FguxH98mrT8acItQ3PsQnHxqQm
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+> Compiling the above regex also causes excessive resource consumption in
+> the portable Irregex (IrRegular Expressions) Scheme package, which can be
+> found at http://synthcode.com/scheme/irregex/
 
-Title: Neutron IPTables firewall anti-spoof protection bypass
-Reporter: Romain Aviolat (Nagravision) and
-          Dustin Lundquist (Blue Box Group, Inc)
-Products: Neutron
-Affects: <=3D7.0.4, >=3D8.0.0 <=3D8.1.0
+Use CVE-2016-9954.
 
-Description:
-Romain Aviolat from Nagravision and Dustin Lundquist from
-Blue Box Group, Inc independently reported vulnerabilities in Neutron
-anti-spoof protection. By forging DHCP discovery messages or non-IP
-traffic, such as ARP or ICMPv6, an instance may spoof IP or MAC source
-addresses on attached networks resulting in denial of services and/or
-traffic interception. Moreover when L2population isn't used, other
-tenants attached to a shared network are also vulnerable. Neutron
-setups using the IPTables firewall driver are affected.
-
-References:
-https://bugs.launchpad.net/bugs/1502933 (icmpv6)
-https://bugs.launchpad.net/bugs/1558658 (mac, dhcp)
-
-Note:
-The dhcp fix has been included in the 8.0.0 release and this
-request probably needs more than one CVE.
-
-Thanks in advance,
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---bNAGht0FguxH98mrT8acItQ3PsQnHxqQm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQEcBAEBCAAGBQJXWtevAAoJECK5oFySXMXYSaYIAK/hqqK4vHwJZOg6mv8HtQgr
-JFujGKb4z9qs6DQHYHlj+s3jlcP+0goo6bDXDXlvLb0kxOgrMQ6uxNKkDQeMB9Kg
-I5+VfS/yt96UQlMX4dihcrUPYEt49M6Lfr7nNFhGXHRk/vEEcL+f4eKrR0B5tuDw
-CnqgdCXyrDZ05o8knNg3wcCgDv8z/alOq3+SnuwlbI9yK8EiNxTIZaTSVRBfokG1
-5fLBkK8a7wxfG3nczX5TXhTU7BCTcUTBLvLHii1TpzRQXjnm/iNzzQg9Dx4fRAWR
-yygzNNBYjWi2IjHC+2yB0bJDSBVoneq4SsbO+M0pDaHRjv2R5JoLEvLildgNfXA=
-=ydtk
+iQIcBAEBCAAGBQJYUtTtAAoJEHb/MwWLVhi2T9MP/RGyNWSuhs4FoFjAuofBzG0v
+oFn5+4gQlR1DMi8zJ61w6CYWUeTLkxkD4WNORaSJ9gpIp5Qbk2yPN9jAJ6vDd1Q+
+FmVr2Jn7QiDXokJeUCfbEr5WT6MwbUhi5j3MejQr9UC3ufMexz1b/gHcoNb9C4T7
+s2KURQgu8k0Rur8a0Sjim0ZX5DeiLA8Hd3hNRKb5KRCAE7uBFqbw8lHdQwUApIZJ
+16JeGI7xtmbms1I9iwMM9vZvbtHp71NM20NUxb/kk3CM13mHuhWov5PaPQ5INdny
+tOR240tekYbESJFfnaZ1U5obDQqaETWq3C9zXaEbRB/lG6HsBDkBjOvLHqsCTKsr
+DiRL4z4xkX/Ko08QDPhiirLKy04w7qCMXf0IncqjutMBPZEKowrb9wuNdsJF4h8p
+M66PTlmWwPAVL2HyEJyWCwxMmw96oDgQUoP8Ktc9KqwpqxjTAQz8cr+uEa/ld+SC
+ttujAe89KYQXtMJmXTrMqP0ufNJW+PpIY67e4cqnM0ebDPzEMtSwxTCo+38DGR3M
+337DGOc6Q0EPcwJNAvt6BjSgy/dMvHE36BRHf2GW2rM2dvQPpecidmKcK4sW/Ef2
+Er8WTqni+BQ/Xxb1/jngHUwzBxzor+9CcBoJrNiIFw+OA/aRQWJf2FBmrBYIp4Aj
+A40+HIGh8NSxhfIGG/Xm
+=kqkA
 -----END PGP SIGNATURE-----
-
---bNAGht0FguxH98mrT8acItQ3PsQnHxqQm--
