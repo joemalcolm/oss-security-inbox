@@ -1,258 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/07/1
-Message-ID: <20160807151215.joaj3nopmi67ghlj@eldamar.local>
-Date: Sun, 7 Aug 2016 17:12:15 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
-Cc: Bastien ROUCARIES <roucaries.bastien@...il.com>, team@...urity.debian.org, luciano@...ian.org
-Subject: CVE Requests: Various ImageMagick issues (as reported in the Debian BTS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/5
+Message-ID: <CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com>
+Date: Thu, 15 Dec 2016 14:38:19 +0000
+From: Agustin Mista <mista.agustin@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-9584: heap use-after-free on libical
 Content-Type: text/plain; charset=utf-8
 
-Hi
+We found a heap use-after-free in a recent revision of libical (
+f3688b444f820cecf51b1539b0856a392c0fdb0f),
+using a specially crafted ics file. This bugs looks particularly dangerous
+since it allows to read a big chunk of the heap memory.
 
-Bastien Roucaries (who is as well one of the Debian maintainers for
-imagemagick), reported recently bugs (of which part are split up from
-the original https://bugs.debian.org/823750) into single ones for
-trackability.
+The address sanitizer report is as follows:
 
-I tried to keep the format, in first referenging the bug in the Debian
-bugtracker, and then giving additional references which were provided
-by Bastien in the corresponding bug.
+==14573==ERROR: AddressSanitizer: heap-use-after-free on address
+0x60700001e394 at pc 0x00000044478e bp 0x7fffffffc4a0 sp 0x7fffffffbc28
+READ of size 62 at 0x60700001e394 thread T0
+#0 0x44478d (/home/agustin/Code/libical/build/src/test/parser+0x44478d)
+#1 0x444eb3 (/home/agustin/Code/libical/build/src/test/parser+0x444eb3)
+#2 0x4461f0 (/home/agustin/Code/libical/build/src/test/parser+0x4461f0)
+#3 0x7ffff7b519e8 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x19a9e8)
+#4 0x7ffff7b5a40f (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x1a340f)
+#5 0x7ffff7add113 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x126113)
+#6 0x7ffff7a978ec (/home/agustin/Code/libical/build/lib/libical.so.2+
+0xe08ec)
+#7 0x7ffff7a97b4a (/home/agustin/Code/libical/build/lib/libical.so.2+
+0xe0b4a)
+#8 0x7ffff7a96f11 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0xdff11)
+#9 0x4b8db7 (/home/agustin/Code/libical/build/src/test/parser+0x4b8db7)
+#10 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
+#11 0x4b829c (/home/agustin/Code/libical/build/src/test/parser+0x4b829c)
 
-Could you assing CVEs for those item, to identify the issues across
-distributions as well?
+0x60700001e394 is located 4 bytes inside of 66-byte region [0x60700001e390,
+0x60700001e3d2)
+freed by thread T0 here:
+#0 0x49a99b (/home/agustin/Code/libical/build/src/test/parser+0x49a99b)
+#1 0x7ffff7abab48 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x103b48)
+#2 0x7ffff7ad0da1 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x119da1)
+#3 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
+#4 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
 
-off-by-one error leading to segfault:
-	Debian Bug: https://bugs.debian.org/832455
-	Additional references:
-	----------------------
-	https://github.com/ImageMagick/ImageMagick/commit/a54fe0e8600eaf3dc6fe717d3c0398001507f723
+previously allocated by thread T0 here:
+#0 0x49ac1b (/home/agustin/Code/libical/build/src/test/parser+0x49ac1b)
+#1 0x7ffff7aba55a (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x10355a)
+#2 0x7ffff7ad7777 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x120777)
+#3 0x7ffff7ad808a (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x12108a)
+#4 0x7ffff7ad0220 (/home/agustin/Code/libical/build/lib/libical.so.2+
+0x119220)
+#5 0x4b8cde (/home/agustin/Code/libical/build/src/test/parser+0x4b8cde)
+#6 0x7ffff61baf44 (/lib/x86_64-linux-gnu/libc.so.6+0x21f44)
 
-out-of-bounds read in coders/psd.c:
-	Debian Bug: https://bugs.debian.org/832457
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1533442
-	https://github.com/ImageMagick/ImageMagick/issues/83
-	https://github.com/ImageMagick/ImageMagick/commit/198fffab4daf8aea88badd9c629350e5b26ec32f
-	https://github.com/ImageMagick/ImageMagick/commit/6f1879d498bcc5cce12fe0c5decb8dbc0f608e5d
-	https://github.com/ImageMagick/ImageMagick/commit/e14fd0a2801f73bdc123baf4fbab97dec55919eb
-	https://github.com/ImageMagick/ImageMagick/commit/280215b9936d145dd5ee91403738ccce1333cab1
+SUMMARY: AddressSanitizer: heap-use-after-free ??:0 ??
+Shadow bytes around the buggy address:
+0x0c0e7fffbc20: fd fd fd fd fd fd fd fd fa fa fa fa fd fd fd fd
+0x0c0e7fffbc30: fd fd fd fd fd fd fa fa fa fa fd fd fd fd fd fd
+0x0c0e7fffbc40: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
+0x0c0e7fffbc50: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
+0x0c0e7fffbc60: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fa fa
+=>0x0c0e7fffbc70: fa fa[fd]fd fd fd fd fd fd fd fd fa fa fa fa fa
+0x0c0e7fffbc80: fd fd fd fd fd fd fd fd fd fd fa fa fa fa 00 00
+0x0c0e7fffbc90: 00 00 00 00 00 00 03 fa fa fa fa fa fd fd fd fd
+0x0c0e7fffbca0: fd fd fd fd fd fa fa fa fa fa fd fd fd fd fd fd
+0x0c0e7fffbcb0: fd fd fd fd fa fa fa fa fd fd fd fd fd fd fd fd
+0x0c0e7fffbcc0: fd fd fa fa fa fa fd fd fd fd fd fd fd fd fd fd
 
-rle file handling for corrupted file:
-	Debian Bug: https://bugs.debian.org/832461
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1533445
-	https://github.com/ImageMagick/ImageMagick/issues/82
-	https://github.com/ImageMagick/ImageMagick/commit/2ad6d33493750a28a5a655d319a8e0b16c392de1
 
-buffer overflow in sun file handling:
-	Debian Bug: https://bugs.debian.org/832464
-	Additional references:
-	----------------------
-	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26838
-	https://github.com/ImageMagick/ImageMagick/commit/78f82d9d1c2944725a279acd573a22168dc6e22a
-	https://github.com/ImageMagick/ImageMagick/commit/bd96074b254c6607a0f7731e59f923ad19d5a46d
-	https://github.com/ImageMagick/ImageMagick/commit/450bd716ed3b9186dd10f9e60f630a3d9eeea2a4
+And the backtrace is available here:
 
-potential DOS in sun file handling due to malformed files:
-	Debian Bug: https://bugs.debian.org/832465
-	Additional references:
-	----------------------
-	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26857
-	https://github.com/ImageMagick/ImageMagick/commit/b8f17d08b7418204bf8a05a5c24e87b2fc395b75
-	https://github.com/ImageMagick/ImageMagick/commit/1aa0c6dab6dcef4d9bc3571866ae1c1ddbec7d8f
-	https://github.com/ImageMagick/ImageMagick/commit/6b4aff0f117b978502ee5bcd6e753c17aec5a961
-	https://github.com/ImageMagick/ImageMagick/commit/8ea44b48a182dd46d018f4b4f09a5e2ee9638105
+#0 0x00007ffff61cfc37 in __GI_raise (sig=sig@...ry=6)
+at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+#1 0x00007ffff61d3028 in __GI_abort () at abort.c:89
+#2 0x00000000004b1356 in __sanitizer::Abort() ()
+#3 0x00000000004a2037 in __asan::AsanDie() ()
+#4 0x00000000004a8a6f in __sanitizer::Die() ()
+#5 0x00000000004a06cb in __asan::ScopedInErrorReport::~ScopedInErrorReport()
+()
+#6 0x00000000004a0211 in __asan_report_error ()
+#7 0x00000000004447a9 in printf_common(void*, char const*, __va_list_tag*)
+()
+#8 0x0000000000444eb4 in vsnprintf ()
+#9 0x00000000004461f1 in snprintf ()
+#10 0x00007ffff7b519e9 in icalreqstattype_as_string_r (stat=...)
+at /home/agustin/Code/libical/src/libical/icaltypes.c:171
+#11 0x00007ffff7b5a410 in icalvalue_as_ical_string_r (value=0x60e0000280c0)
+at /home/agustin/Code/libical/src/libical/icalvalue.c:1208
+#12 0x00007ffff7add114 in icalproperty_as_ical_string_r
+(prop=0x6060000010a0)
+at /home/agustin/Code/libical/src/libical/icalproperty.c:442
+#13 0x00007ffff7a978ed in icalcomponent_as_ical_string_r
+(impl=0x60700001e7f0)
+at /home/agustin/Code/libical/src/libical/icalcomponent.c:291
+#14 0x00007ffff7a97b4b in icalcomponent_as_ical_string_r
+(impl=0x60700000ded0)
+at /home/agustin/Code/libical/src/libical/icalcomponent.c:300
+#15 0x00007ffff7a96f12 in icalcomponent_as_ical_string (impl=0x60700000ded0)
+at /home/agustin/Code/libical/src/libical/icalcomponent.c:247
+#16 0x00000000004b8db8 in main (argc=2, argv=0x7fffffffdf08)
+at /home/agustin/Code/libical/src/test/icaltestparser.c:109
 
-out of bunds problem in rle, pict, viff and sun files:
-	Debian Bug: https://bugs.debian.org/832467
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1533452
-	https://github.com/ImageMagick/ImageMagick/issues/77
-	https://bugs.launchpad.net/bugs/1533449
-	https://github.com/ImageMagick/ImageMagick/issues/80
-	https://bugs.launchpad.net/bugs/1533447
-	https://github.com/ImageMagick/ImageMagick/issues/81
-	https://bugs.launchpad.net/bugs/1533445
-	https://github.com/ImageMagick/ImageMagick/issues/82
+It is worth to mention there is a very similar bug found (CVE-2016-5824) on
+the libical version used by
+Thunderbird but we think is *not* the same as this one. In fact, we've
+tested it on Thunderbird and it does *not* crash.
 
-heap overflow in hdr file handling:
-	Debian Bug: https://bugs.debian.org/832469
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1537213
-	https://github.com/ImageMagick/ImageMagick/issues/90
-	https://github.com/ImageMagick/ImageMagick/commit/14e606db148d6ebcaae20f1e1d6d71903ca4a556
+The reproducer is available upon request.
 
-heap buffer overflow in psd file handling:
-	Debian Bug: https://bugs.debian.org/832474
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1537418
-	https://github.com/ImageMagick/ImageMagick/issues/92
-	https://github.com/ImageMagick/ImageMagick/commit/30eec879c8b446b0ea9a3bb0da1a441cc8482bc4
+Unfortunately, there is no fix yet, but upstream is working on it.
 
-out of bound access for malformed psd file:
-	Debian Bug: https://bugs.debian.org/832475
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1537419
-	https://github.com/ImageMagick/ImageMagick/issues/93
-	https://github.com/ImageMagick/ImageMagick/commit/4b1b9c0522628887195bad3a6723f7000b0c9a58
+Regards.
 
-meta file out of bound access:
-	Debian Bug: https://bugs.debian.org/832478
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1537420
-	https://github.com/ImageMagick/ImageMagick/issues/96
-	https://github.com/ImageMagick/ImageMagick/commit/f8c318d462270b03e77f082e2a3a32867cacd3c6
-	https://github.com/ImageMagick/ImageMagick/commit/5a34d7ac889bd6645f6cfd164636e3efb56dbb2f
-
-heap buffer overflow in psd file coder:
-	Debian Bug: https://bugs.debian.org/832480
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1537424
-	https://github.com/ImageMagick/ImageMagick/issues/98
-	https://github.com/ImageMagick/ImageMagick/commit/5f16640725b1225e6337c62526e6577f0f88edb8
-
-out of bound access in wpg file coder:
-	Debian Bug: https://bugs.debian.org/832482
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1539050
-	https://bugs.launchpad.net/bugs/1542115
-	https://github.com/ImageMagick/ImageMagick/issues/102
-	https://github.com/ImageMagick/ImageMagick/issues/122
-	https://github.com/ImageMagick/ImageMagick/commit/b6ae2f9e0ab13343c0281732d479757a8e8979c7
-	https://github.com/ImageMagick/ImageMagick/commit/d9b2209a69ee90d8df81fb124eb66f593eb9f599
-	https://github.com/ImageMagick/ImageMagick/commit/a251039393f423c7858e63cab6aa98d17b8b7a41
-
-out of bound access for viff file coder:
-	Debian Bug: https://bugs.debian.org/832483
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1537425
-	https://github.com/ImageMagick/ImageMagick/issues/99
-	https://github.com/ImageMagick/ImageMagick/commit/ca0c886abd6d3ef335eb74150cd23b89ebd17135
-
-out of bound access in xcf file coder:
-	Debian Bug: https://bugs.debian.org/832504
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1539051
-	https://bugs.launchpad.net/bugs/1539052
-	https://github.com/ImageMagick/ImageMagick/issues/104
-	https://github.com/ImageMagick/ImageMagick/issues/103
-	https://github.com/ImageMagick/ImageMagick/commit/a2e1064f288a353bc5fef7f79ccb7683759e775c
-
-out of bound in quantum handling:
-	Debian Bug: https://bugs.debian.org/832506
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1539067
-	https://bugs.launchpad.net/bugs/1539053
-	https://github.com/ImageMagick/ImageMagick/issues/105
-	https://github.com/ImageMagick/ImageMagick/commit/63346f34f9d19179599b5b256e5e8d3dda46435c
-	https://github.com/ImageMagick/ImageMagick/commit/c4e63ad30bc42da691f2b5f82a24516dd6b4dc70
-	https://github.com/ImageMagick/ImageMagick/issues/110
-	https://github.com/ImageMagick/ImageMagick/commit/b5ed738f8060266bf4ae521f7e3ed145aa4498a3
-
-pbd file out of bound access:
-	Debian Bug: https://bugs.debian.org/832633
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1539061
-	https://bugs.launchpad.net/bugs/1542112
-	https://github.com/ImageMagick/ImageMagick/issues/107
-
-Fix handling of corrupted psd file:
-	Debian Bug: https://bugs.debian.org/832776
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1539066
-	https://github.com/ImageMagick/ImageMagick/issues/109
-
-wpg file out of bound for corrupted file:
-	Debian Bug: https://bugs.debian.org/832780
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1542114
-	https://github.com/ImageMagick/ImageMagick/issues/120
-	https://github.com/ImageMagick/ImageMagick/commit/bef1e4f637d8f665bc133a9c6d30df08d983bc3a
-
-out of bound access in generic decoder:
-	Debian Bug: https://bugs.debian.org/832785
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1542785
-	https://github.com/ImageMagick/ImageMagick/issues/126
-	https://github.com/ImageMagick/ImageMagick/commit/430403b0029b37decf216d57f810899cab2317dd
-
-out of bound access for corrupted psd file:
-	Debian Bug: https://bugs.debian.org/832787
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1545180
-	https://github.com/ImageMagick/ImageMagick/issues/128
-
-SEGV reported in corrupted profile handling:
-	Debian Bug: https://bugs.debian.org/832789
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1545367
-	https://github.com/ImageMagick/ImageMagick/issues/130
-	https://github.com/ImageMagick/ImageMagick/commit/478cce544fdf1de882d78381768458f397964453
-
-out of bound access for corrupted pdb file:
-	Debian Bug: https://bugs.debian.org/832791
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1553366
-	https://github.com/ImageMagick/ImageMagick/issues/143
-	https://github.com/ImageMagick/ImageMagick/commit/424d40ebfcde48bb872eba75179d3d73704fdf1f
-
-SIGABRT for corrupted pdb file:
-	Debian Bug: https://bugs.debian.org/832793
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1556273
-	https://github.com/ImageMagick/ImageMagick/issues/148
-	https://github.com/ImageMagick/ImageMagick/commit/53c1dcd34bed85181b901bfce1a2322f85a59472
-
-DOS due to corrupted DDS files:
-	Debian Bug: https://bugs.debian.org/832944
-	Additional references:
-	----------------------
-	http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26861
-	https://github.com/ImageMagick/ImageMagick/commit/93ab016764c7f787829d9065440d86f5609765110
-	https://github.com/ImageMagick/ImageMagick/commit/9b428b7af688fe319320aed15f2b94281d1e37b4
-
-DOS due to corrupted DDS files:
-	Debian Bug: https://bugs.debian.org/832942
-	Additional references:
-	----------------------
-	https://github.com/ImageMagick/ImageMagick/commit/21eae25a8db5fdcd112dbcfcd9e5c37e32d32e2f
-	https://github.com/ImageMagick/ImageMagick/commit/d7325bac173492b358417a0ad49fabad44447d52
-	https://github.com/ImageMagick/ImageMagick/commit/504ada82b6fa38a30c846c1c29116af7290decb2
-
-potential DOS by not releasing memory:
-	Debian Bug: https://bugs.debian.org/833101
-	Additional references:
-	----------------------
-	Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4e81ce8b07219c69a9aeccb0f7f7b927ca6db74c
-	http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=28946
-
-writing to rgf format aborts:
-	Debian Bug: https://bugs.debian.org/827643
-	Additional references:
-	----------------------
-	https://bugs.launchpad.net/bugs/1594060
-	https://github.com/ImageMagick/ImageMagick/pull/223
-
-Regards,
-Salvatore
