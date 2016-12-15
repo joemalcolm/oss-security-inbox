@@ -1,4 +1,9 @@
-Received: (qmail 11653 invoked by uid 550); 22 Sep 2023 16:01:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2260" "Thursday" "15" "December" "2016" "12:47:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0ec5e8a9b0de4b66b53020497c808828@imshyb02.MITRE.ORG>" "62" "[oss-security] Re: CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file" nil nil nil "12" "2016121517:47:41" "[oss-security] Re: CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file" (number mark "U       cve-assign@m Dec 15   62/2260  " thread-indent "\"[oss-security] Re: CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file\"\n") "<20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>" ("<20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28650 invoked by uid 550); 15 Dec 2016 17:47:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,116 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32334 invoked from network); 22 Sep 2023 15:50:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695397842; x=1696002642; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMyZxxGrWGRlz7lB8bnq4+q5i2OCEFzjD3Y9A31UsWU=;
-        b=u2Vw//X/9qpuMpeoPXxefhw5oc8+o9IOLCtZZAVgVVBNIE2TaZE2iUwBs6KoyNf5II
-         JDGcpi1xNprnS9WHtkNrtJUUx1eB0L3LH4zp8soKr00cp79ID6MBF+uiSEpbVdinELHj
-         CDn7in8UhIMFYagFOKRDZJQtp8/ONIZSuB8ayzE6gA4ZwGbpG6yw2oMoCsJup5aKJgjR
-         KiSwUY+59bx0BXL8udSjMNUUJxUlQpSgq2EDJ37bZPlNiO2aIo4O2lF+5TiXjXkcwMMO
-         iUzJaei39dCx+V48cGwD+vp8TsT4fUDnb8skq0K+VM7JRiA3giPvl+rx4gpxKEZwjfCJ
-         i1KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695397842; x=1696002642;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uMyZxxGrWGRlz7lB8bnq4+q5i2OCEFzjD3Y9A31UsWU=;
-        b=as6fW6Mf3nxOsFUi4t5/UUStz4qc8mQVttwysdspcVjhS97uvQ4ePYrMsg7CapGmVG
-         yt+N3DYjAI3wdAEI+kM1NzTPUsZX68MBx59wqCYOnuRkzVyzey9uKaEreLd60RUfKgHu
-         yO6f9wraIW3gfNNr6fQicSWTgbJH7pwjCud/j/ZowYnXc76pxBegA0iZkrx3VWt1M8xN
-         cBp7cXj+YxhVjiyPSo9HONIcNxzVNwxZFE4ClJk/pVesjOeVQIaZ7jDmQfyOSSo3INsh
-         xanRebLPEABgIIP/+boFB38I/pXIVu7iZh6E7hcQLQz7j/x2++3X846ixwBqRNu/y0TB
-         3W7A==
-X-Gm-Message-State: AOJu0YzLWS9SQSNdzExljOafB+ZhTNCL9VO4BnAyqtvsEIpikESCFcmk
-	T25XqDKNX3S6sjW3PYdiWdThKIM0QNL/6CK8KXHjP4P0knC9CC2usho=
-X-Google-Smtp-Source: AGHT+IF8uf8/uFXxtuC5xJnuM7CODxiUqIClxD07h/oYPC6x9bnvay97Frs5HJI0xxHmz9fzUgD4YNvff/+UV+aWXPI=
-X-Received: by 2002:ac8:5d07:0:b0:412:16f:c44f with SMTP id
- f7-20020ac85d07000000b00412016fc44fmr285775qtx.6.1695397842295; Fri, 22 Sep
- 2023 08:50:42 -0700 (PDT)
+Received: (qmail 28626 invoked from network); 15 Dec 2016 17:47:53 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161215053348.5sioflbygm3ba3h5@lorien.valinor.li>
+Message-ID: <0ec5e8a9b0de4b66b53020497c808828@imshyb02.MITRE.ORG>
+Date: Thu, 15 Dec 2016 12:47:41 -0500
 MIME-Version: 1.0
-References: <20230921205250.GA13106@openwall.com> <20230922072817.092917d2.hanno@hboeck.de>
- <20230922105410.GA15143@openwall.com> <CAJMnc16px2pgN9qmH6iw=by+DLu4cXBmZZpDGe3Lf_QWPEW0bg@mail.gmail.com>
- <20230922153516.GA17264@openwall.com>
-In-Reply-To: <20230922153516.GA17264@openwall.com>
-From: Vincent Rabaud <vrabaud@google.com>
-Date: Fri, 22 Sep 2023 17:50:33 +0200
-Message-ID: <CAJMnc14+zKq=VOFPcq_1O+spgoGDi1oO1BVbaj4Vi8zNf1CKiQ@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000024e0070605f49294"
-Subject: Re: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in
- WebP Codec
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: Game Music Emulators: incorrect emulation of the SPC700 audio co-processor of SNES: arbitrary code execution via malformed SPC music file
 
---00000000000024e0070605f49294
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Clean-ups, no security issues there.
+> http://scarybeastsecurity.blogspot.de/2016/12/redux-compromising-linux-using-snes.html
 
-Le ven. 22 sept. 2023, 17:35, Solar Designer <solar@openwall.com> a =C3=A9c=
-rit :
+> 1: Missing X register value clamp for the MOV (X)+,A instruction
 
-> On Fri, Sep 22, 2023 at 04:50:44PM +0200, Vincent Rabaud wrote:
-> > Hi, we have commented on that here:
-> > https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=3D62136#c7
->
-> Thank you!  I include the relevant comments below:
->
-> > Comment 6 by t...@ritter.vg on Mon, Sep 18, 2023, 4:58 PM GMT+2
-> >
-> > Can I request a CVE assignment for this issue (so I can note it
-> > correctly in Firefox advisories)?
-> >
-> > Comment 7 by jz...@google.com on Tue, Sep 19, 2023, 3:22 AM GMT+2
-> >
-> > This was an incorrect check in an assert(). A release build would not be
-> > negatively affected. The conditions were updated, but previously the
-> > file would not cause an issue in that mode. Vincent, please correct me
-> > if I'm wrong.
-> >
-> > Comment 8 by vrabaud@google.com on Tue, Sep 19, 2023, 11:08 AM GMT+2
-> >
-> > Exactly. And instead of fixing the assert, the patch uses an early exit
-> > to not reach the assert, which is also an optimization.
->
-> Vincent, what about these commits? -
->
-> commit dce8397fec159c9edfeec7c6388cb81428c87ed8
-> Author: Masahiro Hanada <hanada@atmark-techno.com>
-> Date:   Thu Sep 14 19:37:24 2023 +0900
->
->     Fix next is invalid pointer when WebPSafeMalloc fails
->
->     When WebPSafeMalloc fails on VP8LHuffmanTablesAllocate,
->     next is not initialized to NULL.
->     VP8LHuffmanTablesDeallocate uses next to know the following nodes.
->     A patch fixes this issue.
->
->     Change-Id: I144ae84cd97e5bca227018ef1afa95361267902c
->
-> commit 433c7dca11bb5b001ce5ad36ac1afd2906a2f13e
-> Author: Vincent Rabaud <vrabaud@google.com>
-> Date:   Thu Sep 14 09:31:19 2023 +0200
->
->     Fix static analyzer warnings.
->
->     Change-Id: I45f0db2310b1188809963af93240e3d438f807b8
->
-> The "next is not initialized to NULL" one sounds like it could mean
-> stale memory contents (possibly deliberately sprayed) could be used as a
-> pointer, so it could be a security issue.
->
-> The warnings fixes could be just that, or some of those warnings could
-> have been for real issues (perhaps also something used uninitialized).
->
-> In other words, are the issues fixed there known to be benign, are not
-> sufficiently researched, or researched and known to be vulnerabilities?
->
-> Alexander
->
+Use CVE-2016-9957.
 
---00000000000024e0070605f49294--
+
+> 2: Missing SP register value clamp for the RET1 instruction
+
+Use CVE-2016-9958.
+
+
+> Although most operations on the A, X and Y registers clamp the
+> resulting values carefully, the very interesting new multiply
+> instruction, MUL, does not:
+> 
+> generate 8-bit register values that are out of bounds
+
+Use CVE-2016-9959 for this MUL vulnerability.
+
+
+> the DIV instruction is just as interesting as the MUL one. It also
+> does transforms on the values of incoming registers, leaving the
+> results in the A and Y registers, without any clamping on the Y result
+
+> Even though this code is fairly simple, I don.t claim to understand it
+> 100%, particularly with large input values. What I do know is that I
+> see various integer overflow opportunities, integer underflow
+> opportunities, less useful div-by-zero issues, etc.
+
+There does not seem to be enough information for a detailed CVE
+mapping of the DIV behavior.
+
+Use CVE-2016-9960 for the divide-by-zero errors.
+
+Use CVE-2016-9961 for the other mishandling of integer values.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYUtTVAAoJEHb/MwWLVhi2MM8P/19Vn5IpJepycCBEWK1v+hGy
+AWvrShniZPMU5zF8hZq+mpzw0/m52Sopwd20aYe2jINiHs1+bv+PfbCDkqH3c3Bv
+7rbLKHKeftsB3XRufVpBiSW/c/HguprTinIFoDJhR2752PRGZ8fIKSHM9JRQQlRt
+6TqJE8h3eIvduzsJI8otg4eqtWUji6UkurUuBeYh8oK6VTGYZEQZ2WjMaF1HsYz8
+RJcHHr9auEnS6YJh4mHb/iwW1duSHSw/Q5Z8iwMGrkKnqbat+mA1XcOzTaOYcQat
+yjQMoFLVHmMXmEtWQoYJY9EdYj2xvSo9tpPXgtRS3ozKjeri/g/vNpefErBSdRnS
+FaaELv8BxHg1Yw90BHk4+miXDSOLrNl646ZA7cnIGTzI0Rg9aqPkhTUn/NyoKoQ4
+O66ToS4OE+zufKTiKFQUifX2reL/C8/zJuLIT2QxqUeXzS5XNDnX3GrGGJikqz2v
+OSlMirr6m3zetBvJkx7uTXl+vpQVSHzOFI7efKEp2xuXC3hv0TYiIPXdNfRIM7CL
+ut1qIGdpdJpWiA2dfgKEsArbjvqPRGa31D3+RbDwoeFsrViXg5zwAXsY3TnwyotS
+2FQ3Vh/ozWQgjcf6g0hcWfwxo5W2igPEOG8sYXgsnJ6tMk1C+3Uy/4ocAMxIyZKZ
+NYIBp2AGdYbNm6R7Ck7J
+=m+et
+-----END PGP SIGNATURE-----
