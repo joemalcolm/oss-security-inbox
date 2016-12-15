@@ -1,56 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/02/7
-Message-Id: <20160202193717.ED51C7BC0FE@smtpvmsrv1.mitre.org>
-Date: Tue,  2 Feb 2016 14:37:17 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Socat security advisory 8 - Stack overflow in parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/3
+Message-ID: <alpine.LFD.2.20.1612151224140.6050@wniryva>
+Date: Thu, 15 Dec 2016 12:27:19 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2016-9588 Kernel: kvm: nVMX: uncaught software exceptions in L1 guest lead to DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
->   This vulnerability can only be exploited when an attacker is able to
->   inject data into socat's command line.
->   A vulnerable scenario would be a CGI script that reads data from
->   clients and uses (parts of) this data as hostname for a Socat
->   invocation.
+Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
+nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to an 
+uncaught exceptions issue. It could occur if a L2 guest was to throw an 
+exception which is not handled by L1 guest.
 
-This was sent to the oss-security list as a published advisory, not as
-a CVE ID request. Is there anyone (e.g., a Linux distribution) who is
-planning to re-announce this to a different audience in a way that
-would make a CVE ID especially useful? Note that there will be a
-CVE ID for the simultaneously released "security advisory 7."
+A L1 guest user could use this flaw to crash the guest resulting in DoS.
 
-At this point, the MITRE CVE team does not see a realistic
-exploitation scenario (for security advisory 8) that would be best
-categorized as a socat problem that requires a socat CVE ID. For
-example, "a CGI script that reads data from clients and uses (parts
-of) this data as hostname for a Socat invocation" might be better
-categorized as an SSRF vulnerability in that CGI script (and
-potentially site-specific unless such a CGI script already exists in
-packaged code).
+Upstream patch
+--------------
+   -> https://www.spinics.net/lists/kvm/msg142495.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+'CVE-2016-9588' has been assigned to this issue by Red Hat Inc.
 
-iQIcBAEBCAAGBQJWsQPRAAoJEL54rhJi8gl58g4QAJY2pF4cO5bxQA7rfwlGajZq
-/ZL6f4v59/LZpe9Vpa+HTUwXGe+cRv68Zvgp37K1gWqnmazIwgCmJGIZ3BvVJ019
-v/AizZt7aCOZf8X2VTK82ylQU56bcOdmXCKZ9Xb9OHukIpK918bILOPb+t2HmqCe
-jOHNyzMRou9R/23qan8WQzW78JmK1D8E2DjHZbdHDkKm83j2z+CKI2H2hHkaYOy+
-QHqMiJuo6PMPLObxPmF1HY8cqN+EIl2LPt0VShAr2uYjlyB3eCpY2kdfJQUSQ6FW
-RxBa5bue+X0fv8IenUEtQsEcVJgS5jWwPavE7mrR8fkeyjJM+WGyilf2/iXuofBx
-zasCOaH82xteaIGoXW99OmLhFjMDPCIcN6lD33xu/GtF/Xg9OBbYeMfsjb1FoLsf
-w6lRyW3PyRRDTzZoeLpRhacK759eJvBBDL8JUqeJTsKOhKdnbOD47wHYrVboypbC
-ZAcS8Jnl8wrTslP6iscad32J6plr8pIzoyo8iOks6oKx1BnaZTQn99MOHt7GBBN6
-7Io9JMcjDcael9iDIlM7Gwv+AzAUqDZuKZ6CIPPwbVklVQYM7zTBx4Ch2+7KB8yt
-5r8y5GgzFO29ryA6T+cBwFDFcAFsJf6D0t5qV39mELAi49R6Qw/GI7huLsi54W9B
-0fUfuGVElnJEWu8NEth2
-=FQZ0
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
