@@ -1,25 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/4
-Message-ID: <CAHbk4RJo3pRnwE=X--b+c=wvp6gPL1AUJm7UacoE+z7TPEXUfQ@mail.gmail.com>
-Date: Mon, 12 Dec 2016 10:36:11 -0600
-From: Sam Whited <sam@...whited.com>
-To: oss-security@...ts.openwall.com
-Cc: Salvatore Bonaccorso <carnil@...ian.org>, cve-assign@...re.org
-Subject: Re: Re: CVE Request: MCabber: remote attackers can modify the roster and intercept messages via a crafted roster-push IQ stanza
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/15/4
+Message-ID: <20161215100219.GA32322@tunkki>
+Date: Thu, 15 Dec 2016 12:02:19 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: contact@...ecurity.ru
+Subject: CVE request: PT-2013-46 Local File Include in Nagios Looking Glass
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 11, 2016 at 4:29 PM,  <cve-assign@...re.org> wrote:
-> Use CVE-2016-9928.
+Could you assign 2013 CVE identifier for Local File Include vulnerability in
+Nagios Looking Glass, thanks.
 
-Thanks;
+Advisory below
+==============
 
-For my edification: would it be better to send something to this list
-for CVEs in open source software in the future? I've tried the Google
-Docs form linked from the website a few times and never gotten a
-response.
+-----------------------------------------------------------
+  (PT-2013-46) Positive Technologies Security Advisory
+      Local File Include in Nagios Looking Glass
+-----------------------------------------------------------
 
-Best,
-Sam
+---[ Vulnerable software ]
 
--- 
-Sam Whited
+Nagios Looking Glass
+Version: 1.1.0 beta 2 and earlier
+
+Link:
+http://exchange.nagios.org/directory/Addons/Frontends-(GUIs-and-CLIs)/Web-Interfaces/Nagios-Looking-Glass/details
+
+---[ Severity level ]
+
+Severity level: High
+Impact: Files Reading
+Access Vector:  Remote
+CVSS v2:
+Base Score: 7.8
+Vector: (AV:N/AC:L/Au:N/C:C/I:N/A:N)
+
+CVE: not assigned
+
+---[ Software description ]
+
+Nagios Looking Glass (NLG) is a web-based interface for Nagios that allows you
+to show at-a-glance, real-time server status to 3rd parties without giving them
+direct access to Nagios.
+
+---[ Vulnerability description ]
+
+The specialists of the Positive Research center have detected a Local File
+Include vulnerability in Nagios Looking Glass.
+
+Application don't validates input data. That allows attackers to read config
+file. To exploit this vulnerability remote attacker shouldn't have privileges in
+Nagios Looking Glass.
+Vulnerability exists in server/s3_download.php.
+
+---[ How to fix ]
+
+No solution
+
+---[ Advisory status ]
+
+19.07.2013 - Vendor gets vulnerability details
+13.08.2013 - Vulnerability details were sent to CERT
+28.10.2013 - Public disclosure
+
+---[ Credits ]
+
+The vulnerability was detected by Vyacheslav Egoshin, Positive Research Center
+(Positive Technologies Company)
+
+---[ References ]
+
+http://en.securitylab.ru/lab/PT-2013-46
+Reports on the vulnerabilities previously discovered by Positive Research:
+
+http://www.ptsecurity.com/research/advisory/
+http://en.securitylab.ru/lab/
