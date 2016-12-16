@@ -1,10 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2740" "Monday" "6" "April" "2015" "23:52:09" "-0500" "John Lightsey" "john@nixnuts.net" "<55236279.8060709@nixnuts.net>" "69" "[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities" nil nil nil "4" "2015040704:52:09" "[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities" (number mark "        john@nixnuts Apr  6   69/2740  " thread-indent "\"[oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1894" "Friday" "16" "December" "2016" "00:33:41" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "45" "[oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information" nil nil nil "12" "2016121605:33:41" "[oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information" (number mark "U       cve-assign@m Dec 16   45/1894  " thread-indent "\"[oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information\"\n") "<20161215233645.GJ29010@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-X-Quarantine-ID: <Uw3RrSYrr6KX>
-Received: (qmail 17723 invoked by uid 550); 7 Apr 2015 04:52:38 -0000
+Received: (qmail 29744 invoked by uid 550); 16 Dec 2016 05:33:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +11,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17696 invoked from network); 7 Apr 2015 04:52:37 -0000
-Message-ID: <55236279.8060709@nixnuts.net>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ"
-X-Spam_score: -1.5
-X-Spam_score_int: -14
-X-Spam_bar: -
-X-Spam_report: Spam detection software, running on the system "nixnuts.net", has
- identified this incoming email as possible spam.  The original message
- has been attached to this so you can view it (if it isn't spam) or label
- similar future email.  If you have any questions, see
- the administrator of that system for details.
- Content preview:  Hi there, A new version of Module::Signature, was released
-    to fix multiple vulnerabilities. Module::Signature is used by most CPAN clients
-    to validate PAUSE GPG signature files on the CPAN mirrors and GPG signature
-    files inside individual Perl module tarballs. [...] 
- Content analysis details:   (-1.5 points, 3.0 required)
-  pts rule name              description
- ---- ---------------------- --------------------------------------------------
- -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
- -0.5 BAYES_00               BODY: Bayes spam probability is 0 to 1%
-                             [score: 0.0000]
-  0.0 URIBL_BLOCKED          ADMINISTRATOR NOTICE: The query to URIBL was blocked.
-                             See
-                             http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-                              for more information.
-                             [URIs: metacpan.org]
-Date: Mon, 06 Apr 2015 23:52:09 -0500
-From: John Lightsey <john@nixnuts.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Module::Signature before 0.75 - multiple vulnerabilities
-To: oss-security@lists.openwall.com
+Received: (qmail 29726 invoked from network); 16 Dec 2016 05:33:53 -0000
+From: <cve-assign@mitre.org>
+To: <hs@schlittermann.de>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161215233645.GJ29010@jumper.schlittermann.de>
+Message-ID: <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
+Date: Fri, 16 Dec 2016 00:33:41 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request - Exim 4.69-4.87 - disclosure of private information
 
---wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi there,
+> Heiko Schlittermann              - Exim developer
+> https://bugs.exim.org/show_bug.cgi?id=1996
+> Versions:   4.69 -> 4.87
+> If several conditions are met, Exim leaks private information to
+> a remote attacker.
 
-A new version of Module::Signature, was released to fix multiple
-vulnerabilities. Module::Signature is used by most CPAN clients to
-validate PAUSE GPG signature files on the CPAN mirrors and GPG signature
-files inside individual Perl module tarballs.
+Our guess is that a vendor's disclosure of an impact, product
+name, and affected versions means that this can be interpreted
+as a public security issue.
 
-The changelog for the 0.75 version is here:
+Use CVE-2016-9963.
 
-https://metacpan.org/changes/distribution/Module-Signature
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+"List Content Guidelines ... Any security issues that you post to
+oss-security should be either already public or to be made public by
+your posting." It is uncommon to use oss-security as a CVE request
+channel when the amount of public information is minimal. (For other
+options, see the https://cveform.mitre.org and
+https://cve.mitre.org/cve/data_sources_product_coverage.html pages.)
 
-This commit fixes three flaws:
-
-https://github.com/audreyt/module-signature/commit/8a9164596fa5952d4fbcde5a=
-a1c7d1c7bc85372f
-
-- Module::Signature could be tricked into interpreting the unsigned
-portion of a SIGNATURE file as the signed portion due to faulty parsing
-of the PGP signature boundaries.
-
-- When verifying the contents of a CPAN module, Module::Signature
-ignored some files in the extracted tarball that were not listed in the
-signature file. This included some files in the t/ directory that would
-execute automatically during "make test"
-
-- When generating checksums from the signed manifest, Module::Signature
-used two argument open() calls to read the files. This allowed embedding
-arbitrary shell commands into the SIGNATURE file that would execute
-during the signature verification process.
-
-This commit fixes one more flaw:
-
-https://github.com/audreyt/module-signature/commit/c41e8885b862b9fce2719449=
-bc9336f0bea658ef
-
-- Several modules were loaded at runtime inside the extracted module
-directory. Modules like Text::Diff are not guaranteed to be available on
-all platforms and could be added to a malicious module so that they
-would load from the '.' path in @INC.
-
-
---wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCgAGBQJVI2KFAAoJEORPgBbTYw+JitoQANdYbkl2hrT0fYVJGItK30BY
-I6NpqSPC3ClWXEWol7TrArp6MCK1hTDijEFBUycPtrWLuCUUG9b/KUGUL2LEN+Hm
-Nlb9wGcKP6YCf8aFm4DIZ0nNTDH/TxE9UoJVeCtFQiujGC3mZs19dgmKrVLPL6/Z
-OMoXieZu/jjpBMG0TC5eD80skyXIxORNSM1HQN5YtaFdoh8puGv9ra8mgyw6IUNb
-6WfDf0bY3fqp2HQ51XkwEZIXiZcGTKS7uDu9zY1tlPcWChUljte32j8cqWTEtkCQ
-5AoAZbtCgTzQZRzTnYXKuUQYNlKyont94E35WycWKhq5x/K+t2yPlG/s2hV+mxU/
-8UIafMcD0yh4dNy06taDE5vN7vJ5eYuxZewPsIYvBPysb43eP1Kx7YZmbs52MD4B
-UGvelFMmkikvViSwT0GzOcca4h0aDL+pfb9Ug9uoUYbdOlychR9n6bauL9RYESI4
-H0unmZbhn3wd430vz8os6PQpNTwxCH5Eb0q4yXA7xpU2blzHmc2RWpNpVrnJwtuh
-RFEBUqhINWGCPX0quwrxEQTeAEEFpRLuSjVkArpYB90DBuRup22iMgPp0rzutDbP
-RFxWyeCvo1+rGnomxf3irOGOi3u+ctLG9jHGwjjSwpiA5wRtbhengbCaHa2KnfY2
-zTjCsU4iyKUUkKZsS/uJ
-=mU+0
+iQIcBAEBCAAGBQJYU3xCAAoJEHb/MwWLVhi2qBcP/jPSJbi/fUupYnmT0UOE6bCl
+dcqr+7WdI4cuyBOtZiKtJbB5JsaPhuJlY2j+a1Qj9j/cPr03QjNcFuhX66hLFcvJ
+I7dJtvvSiLFZ49Ozr5r3HJi6FTmPbOaqRYgAZjcL3sMrn45al0dBY19NWUMZIpym
+NtSgkMEhnnABzOsyM3yMEircofLnZv9r3KPYkB1bKt4H3Zgo3/6j6dHZRd5ON+iT
+LN1d0fXLFUZABeanmWi1ccFlm83J0oaTFnU1U7MLuJtDaYxTSN8vYUpiPSVkctDL
+EFdNJokCOfQcn67wtgjW3871EuRqWanYptBgQuQmq4j51i0MKktxQnRzom8qNnKz
+6faWLL6xIxgRsIBM0hVJBjWYyg6SAGb/V5i3b+tAJhyCxse+PHfXg4WHofQip9BN
+ZoM8UcQDhDn01TLHaTvsd5H3pucxlk0jdDoum9CWcZBOfcc5NUnKkYuYntJDQ/rR
+Us+5Aaw8X+B8ZPE47NEwX7hAXHU5PzHU48fg+j6x3yYl3N9nwyhVsSbSxIQjjRd6
+iqAIMXGQGJ2KMZluEBjkhNNGAYSfXrLxi8rx6x0qj4y7RLBIp9B9M4eH5f3H/to4
+4BtIzUA5ZYdP20YE8VtGyRFd2aOGUMFf7BuoPgXgDXzflxGLMs4tmLNeTxxpyhMB
+ooGshm7DABkZ59MHc1ww
+=Q/MO
 -----END PGP SIGNATURE-----
-
---wHHcTL8DWL0GxpxHvRlbON0FEcgtwg5KJ--
