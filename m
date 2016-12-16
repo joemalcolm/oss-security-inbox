@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/12/8
-Message-Id: <20160112165730.931A4332228@smtpvbsrv1.mitre.org>
-Date: Tue, 12 Jan 2016 11:57:30 -0500 (EST)
-From: cve-assign@...re.org
-To: jamie@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: click
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/2
+Message-ID: <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
+Date: Fri, 16 Dec 2016 00:33:41 -0500
+From: <cve-assign@...re.org>
+To: <hs@...littermann.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request - Exim 4.69-4.87 - disclosure of private information
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://launchpad.net/bugs/1506467
-> http://www.ubuntu.com/usn/usn-2771-1/
-> https://code.launchpad.net/~cjwatson/click/audit-missing-dot-slash/+merge/274554
-> 
-> assumed leading paths were always
-> prefixed with './' which, for example, allows a crafted click to ship a '.click'
-> directory to manipulate the click install process.
- 
->> if data_name != "." and not data_name.startswith("./"):
->>     raise ClickInstallerAuditError
+> Heiko Schlittermann              - Exim developer
+> https://bugs.exim.org/show_bug.cgi?id=1996
+> Versions:   4.69 -> 4.87
+> If several conditions are met, Exim leaks private information to
+> a remote attacker.
 
-Use CVE-2015-8768.
+Our guess is that a vendor's disclosure of an impact, product
+name, and affected versions means that this can be interpreted
+as a public security issue.
+
+Use CVE-2016-9963.
+
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+"List Content Guidelines ... Any security issues that you post to
+oss-security should be either already public or to be made public by
+your posting." It is uncommon to use oss-security as a CVE request
+channel when the amount of public information is minimal. (For other
+options, see the https://cveform.mitre.org and
+https://cve.mitre.org/cve/data_sources_product_coverage.html pages.)
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWlS/iAAoJEL54rhJi8gl5tHIQAMyB+enXDpb+lK2WC84HhPLL
-XdlCCbjTSnl9PofiLnvizcJgzy5V7C71mLpFjNT8QMiIr05YjjVW5Wp9uYpcgQPQ
-/+LJ5r88cIt1aTwkrUTZ8wohLw6i6PmGZwSGS/QyZW54TbRKQP4KG4vefvOr2BT5
-9d6upF0reFD+72MJN+oWebNoQg0aIzYraGjf5f/QoBEjVKlCxxZsfOape23jvY5t
-lFpP8uC58PCCVr9r0bUZ+ukiQkTxZM8ccVZjkQhej1lLne1OCXbh7kWabcWGPSUu
-1m+RGADGd3GNEkB6yPzYZP4fxi6TOhdyZM2MzP6q/AAQ9VK3b508EtYY0qgwnIXU
-BoHUNT6o8ZVTaIkjO6VVYipfoY1xR+9aOPHxioKRqfSg76LAfAzVxHwUa9BnMzC8
-h+DuA/LtxWpHzUSgGNy5azTpHX2XDOJ7nFUx90e64GnK6WrSNXbjIqVvmsk8By6b
-UyXu7VnGtQxOgvZyisFYJoSLWCBqtoaxDhXwxi5TItbgxxUbpO2MJHX8JT7E/13J
-LqDFO1P5trolISjUTdLAEaZhdlLOHSpGw0Fifu7BOsiwHbU5XI1o8uz52BfFWJiI
-lvkqu4jBcTbP99HQ2mAjM0IlcJJ+4S5ebEA6VKlECrZKCfIv3hdJAs9G8l+xn+4N
-UQysNOQCezuf9L1x/sjo
-=NCgJ
+iQIcBAEBCAAGBQJYU3xCAAoJEHb/MwWLVhi2qBcP/jPSJbi/fUupYnmT0UOE6bCl
+dcqr+7WdI4cuyBOtZiKtJbB5JsaPhuJlY2j+a1Qj9j/cPr03QjNcFuhX66hLFcvJ
+I7dJtvvSiLFZ49Ozr5r3HJi6FTmPbOaqRYgAZjcL3sMrn45al0dBY19NWUMZIpym
+NtSgkMEhnnABzOsyM3yMEircofLnZv9r3KPYkB1bKt4H3Zgo3/6j6dHZRd5ON+iT
+LN1d0fXLFUZABeanmWi1ccFlm83J0oaTFnU1U7MLuJtDaYxTSN8vYUpiPSVkctDL
+EFdNJokCOfQcn67wtgjW3871EuRqWanYptBgQuQmq4j51i0MKktxQnRzom8qNnKz
+6faWLL6xIxgRsIBM0hVJBjWYyg6SAGb/V5i3b+tAJhyCxse+PHfXg4WHofQip9BN
+ZoM8UcQDhDn01TLHaTvsd5H3pucxlk0jdDoum9CWcZBOfcc5NUnKkYuYntJDQ/rR
+Us+5Aaw8X+B8ZPE47NEwX7hAXHU5PzHU48fg+j6x3yYl3N9nwyhVsSbSxIQjjRd6
+iqAIMXGQGJ2KMZluEBjkhNNGAYSfXrLxi8rx6x0qj4y7RLBIp9B9M4eH5f3H/to4
+4BtIzUA5ZYdP20YE8VtGyRFd2aOGUMFf7BuoPgXgDXzflxGLMs4tmLNeTxxpyhMB
+ooGshm7DABkZ59MHc1ww
+=Q/MO
 -----END PGP SIGNATURE-----
