@@ -1,93 +1,211 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/02/7
-Message-ID: <alpine.DEB.2.20.1611020810030.375@tvnag.unkk.fr>
-Date: Wed, 2 Nov 2016 08:10:38 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl glob parser write/read out of bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/5
+Message-ID: <8737hn92i5.fsf@frougon.crabdance.com>
+Date: Fri, 16 Dec 2016 19:01:54 +0100
+From: Florent Rougon <f.rougon@...e.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: FlightGear: Allows the route manager to overwrite arbitrary files
 Content-Type: text/plain; charset=utf-8
 
-glob parser write/read out of bounds
-====================================
+[ This is in reply to Salvatore Bonaccorso's mail from Wed, 14 Dec 2016
+  16:57:11 +0100, i.e.
+  <http://www.openwall.com/lists/oss-security/2016/12/14/11>,
+  unfortunately I don't have its Message-ID to reply in the same thread
+  (just subscribed a few hours ago). ]
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102F.html)
+Hello,
 
-VULNERABILITY
--------------
+As already written in private to Salvatore and maintainers of a few
+distributions, it is quite unclear to me how to achieve arbitrary code
+execution using this vulnerability. The reason I'm saying this is that
+the bug allows an attacker to choose which user-writable files he wants
+to overwrite, but *not their contents*, at least not freely at all. The
+actual writing is not done by Nasal code but by the Route manager's C++
+code, which doesn't seem to give much freedom as to the contents being
+written (Nasal code can only *trigger* the flightplan writing).
 
-The curl tool's "globbing" feature allows a user to specify a numerical range
-through which curl will iterate. It is typically specified as [1-5],
-specifying the first and the last numbers in the range. Or with [a-z], using
-letters.
+Here is how the flightplan is saved
+(flightgear/src/Autopilot/route_mgr.cxx, code from FlightGear's 'next'
+branch):
 
-1. The curl code for parsing the second *unsigned* number did not check for a
-leading minus character, which allowed a user to specify `[1--1]` with no
-complaints and have the latter `-1` number get turned into the largest
-unsigned long value the system can handle. This would ultimately cause curl to
-write outside the dedicated malloced buffer after no less than 100,000
-iterations, since it would have room for 5 digits but not 6.
+  bool FGRouteMgr::saveRoute(const SGPath& p)
+  {
+    if (!_plan) {
+      return false;
+    }
 
-2. When the range is specified with letters, and the ending letter is left out
-`[L-]`, the code would still advance its read pointer 5 bytes even if the
-string was just 4 bytes and end up reading outside the given buffer.
+    return _plan->save(p);
+  }
 
-This flaw exists only in the curl tool, not in the libcurl library.
+calling (flightgear/src/Navaids/FlightPlan.cxx):
 
-We are not aware of any exploit of this flaw.
+  bool FlightPlan::save(const SGPath& path)
+  {
+    SG_LOG(SG_NAVAID, SG_INFO, "Saving route to " << path);
+    try {
+      SGPropertyNode_ptr d(new SGPropertyNode);
+      d->setIntValue("version", 2);
 
-INFO
-----
+      if (_departure) {
+        d->setStringValue("departure/airport", _departure->ident());
+        if (_sid) {
+          d->setStringValue("departure/sid", _sid->ident());
+        }
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8620 to this issue.
+        if (_departureRunway) {
+          d->setStringValue("departure/runway", _departureRunway->ident());
+        }
+      }
 
-AFFECTED VERSIONS
------------------
+      if (_destination) {
+        d->setStringValue("destination/airport", _destination->ident());
+        if (_star) {
+          d->setStringValue("destination/star", _star->ident());
+        }
 
-This flaw exists in the following curl versions.
+        if (_approach) {
+          d->setStringValue("destination/approach", _approach->ident());
+        }
 
-- Affected versions: curl 7.34.0 to and including 7.50.3
-- Not affected versions: curl < 7.34.0 and curl >= 7.51.0
+        //d->setStringValue("destination/transition", destination->getStringValue("transition"));
 
-libcurl is used by many applications, but not always advertised as such!
+        if (_destinationRunway) {
+          d->setStringValue("destination/runway", _destinationRunway->ident());
+        }
+      }
 
-THE SOLUTION
-------------
+      // route nodes
+      SGPropertyNode* routeNode = d->getChild("route", 0, true);
+      for (unsigned int i=0; i<_legs.size(); ++i) {
+        Waypt* wpt = _legs[i]->waypoint();
+        wpt->saveAsNode(routeNode->getChild("wp", i, true));
+      } // of waypoint iteration
+      writeProperties(path, d, true /* write-all */);
+      return true;
+    } catch (sg_exception& e) {
+      SG_LOG(SG_NAVAID, SG_ALERT, "Failed to save flight-plan '" << path << "'. " << e.getMessage());
+      return false;
+  }
 
-In version 7.51.0, the function reading data will consider reading a zero size
-to be an error and bail out.
+calling [1] and [2] with:
 
-A [patch for CVE-2016-8620](https://curl.haxx.se/CVE-2016-8620.patch) is
-available.
+[1] (flightgear/src/Navaids/route.cxx):
 
-RECOMMENDATIONS
----------------
+  void Waypt::saveAsNode(SGPropertyNode* n) const
+  {
+    n->setStringValue("type", type());
+    writeToProperties(n);
+  }
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+calling (flightgear/src/Navaids/route.cxx):
 
-  A - Upgrade curl and libcurl to version 7.51.0
+  void Waypt::writeToProperties(SGPropertyNode_ptr aProp) const
+  {
+    if (flag(WPT_OVERFLIGHT)) {
+      aProp->setBoolValue("overflight", true);
+    }
 
-  B - Apply the patch to your version and rebuild
+    if (flag(WPT_DEPARTURE)) {
+      aProp->setBoolValue("departure", true);
+    }
 
-  C - Switch off globbing or make sure you have all ranges in use verified!
+    if (flag(WPT_ARRIVAL)) {
+      aProp->setBoolValue("arrival", true);
+    }
 
-TIME LINE
----------
+    if (flag(WPT_APPROACH)) {
+      aProp->setBoolValue("approach", true);
+    }
 
-It was first reported to the curl project on October 2 by Lu�t Nguy�n.
+    if (flag(WPT_MISS)) {
+      aProp->setBoolValue("miss", true);
+    }
 
-We contacted distros@...nwall on October 19.
+    if (flag(WPT_GENERATED)) {
+      aProp->setBoolValue("generated", true);
+    }
 
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
+    if (_altRestrict != RESTRICT_NONE) {
+      aProp->setStringValue("alt-restrict", restrictionToString(_altRestrict));
+      aProp->setDoubleValue("altitude-ft", _altitudeFt);
+    }
 
-CREDITS
--------
+    if (_speedRestrict != RESTRICT_NONE) {
+      aProp->setStringValue("speed-restrict", restrictionToString(_speedRestrict));
+      aProp->setDoubleValue("speed", _speed);
+    }
+  }
 
-Thanks to Lu�t Nguy�n.
+(not very interesting IMHO), the actual writing to file being done
+above in FlightPlan::save() by
+
+[2] (simgear/props/props_io.cxx):
+
+  void
+  writeProperties (const SGPath &path, const SGPropertyNode * start_node,
+                   bool write_all, SGPropertyNode::Attribute archive_flag)
+  {
+    SGPath dpath(path);
+    dpath.create_dir(0755);
+
+    ofstream output(path.local8BitStr().c_str());
+    if (output.good()) {
+      writeProperties(output, start_node, write_all, archive_flag);
+    } else {
+      throw sg_io_exception("Cannot open file", sg_location(path.utf8Str()));
+    }
+  }
+
+which relies on (same file):
+
+  void
+  writeProperties (ostream &output, const SGPropertyNode * start_node,
+                   bool write_all, SGPropertyNode::Attribute archive_flag)
+  {
+    int nChildren = start_node->nChildren();
+
+    output << "<?xml version=\"1.0\"?>" << endl << endl;
+    output << "<PropertyList>" << endl;
+
+    for (int i = 0; i < nChildren; i++) {
+      writeNode(output, start_node->getChild(i), write_all, INDENT_STEP, archive_flag);
+    }
+
+    output << "</PropertyList>" << endl;
+  }
+
+...
+
+All this to say that the *contents* written to an arbitrary file is
+rather constrained, unless I missed something, and that an attacker has
+very little control over it. This contents is a flightplan in
+FlightGear's XML PropertyList format
+(<http://wiki.flightgear.org/PropertyList_XML_files>) and the attacker
+basically only gets to choose the departure, arrival and intermediate
+waypoints... which gives something as the LFPO-EDDF.xml file I am
+attaching to this mail.
+
+So, from my POV, an attacker can:
+  - destroy any user-writable file he wants (not remove it, but
+    overwrite it with a flightplan in XML format)
+    -> data loss
+  - because of this, cause software malfunctions
+    -> “DoS”
+
+But AFAICT, the attacker has *very little control* over the kinds of
+malfunctions he can cause, thus it is unclear to me how to go from the
+vulnerability to arbitrary code execution.
+
+Of course, I might have missed something and am ready to be educated if
+this happens to be the case; though, as Salvatore said in private mail
+inviting me to post this here, the mention of arbitrary code execution
+in his post was rather the result of a misunderstanding (no worries).
+
+Regards
 
 -- 
+Florent
 
-  / daniel.haxx.se
+Download attachment "LFPO-EDDF.xml" of type "application/xml" (2176 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
