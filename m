@@ -1,28 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/11/2
-Message-ID: <CAGoFzNdHoz9cBOoHsN28m6oT+ig=Dt1LRtkYw_+A2-4RpMqe+Q@mail.gmail.com>
-Date: Fri, 10 Jun 2016 17:02:58 -0400
-From: Insu Yun <wuninsu@...il.com>
-To: oss-security@...ts.openwall.com, Yeongjin Jang <Yeongjin.jang@...ech.edu>
-Subject: CVE-Request: heap overflow in Python
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/4
+Message-ID: <CANO=Ty1eVmPTCoVn-x5snXBMTmpDctfO_b+52zaC+km=Xz64Pw@mail.gmail.com>
+Date: Fri, 16 Dec 2016 10:50:00 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: vulnerable version: 4.8.12 and previous versions but xml file says: cpe:/o:linux:linux_kernel:4.8.12"/>
 Content-Type: text/plain; charset=utf-8
 
-Hello.
-In zipimport module,
-if compress != 0, then bytes_size = data_size + 1
-data_size is not sanitized, so if data_size = -1,
-then it overflows and becomes 0.
-In that case bytes_size becomes 1 and python allocates small heap,
-but after that in fread, it overflows heap.
+>
+> On Wed, Dec 14, 2016 at 11:57 AM, Sona Sarmadi <sona.sarmadi@...a.com>
+> wrote:
+>
+>>
+>>
+>> On 2016-12-14 15:26, Kurt Seifried wrote:
+>> > Why are you complaining about a nist.gov website/data on an opensource
+>> > security mailing list/to MITRE? (hint: we can't fix it and neither can
+>> > MITRE) Please contact NIST.
+>> >
+>> Thanks for being so helpful.
+>>
+>> I was just trying to see of there are other people out there who also
+>> think this is a problem. This list seemed like a place where I could
+>> find such people.
+>> Perhaps someone knows a work around, perhaps some post-processing tool.
+>> If none exists, I guess we have to try to fix the problem at the source
+>> or use another CVE databse.
+>>
+>> Cheers
+>> //Sona
+>> > On Wed, Dec 14, 2016 at 1:19 AM, Sona Sarmadi <sona.sarmadi@...a.com>
+>> wrote:
+>> >
+>> >> Hi all,
+>> >>
+>> >> It seems that nvd.xml files (e.g. nvdcve-2.0-2016.xml) does not list
+>> >> vulnerable versions correctly. One example is the following CVE.
+>> Vulnerable
+>> >>
+>>
+>>
+>
+>
+So I've been thinking about the question here (and several other recent
+postings) and my response (less than ideal, and unnecessarily grumpy for
+which I apologize). Here are my assumptions:
 
-Fix info
-https://bugs.python.org/issue26171
+1) We (infosec, technology, basically everyone) needs better context
+sensitive help/guidance. Obviously this won't happen globally so
 
-Please help assign a CVE to this vulnerability.
+2) We (infosec, technology, basically everyone) needs better public
+documentation on things that people ask, for example the CVE
+"***RESERVED*** description question I got so often I updated the CVE
+Wikipedia entry, searchability and SEO ranking is an issue here (what good
+are docs if google/bing/etc don't show them to people asking questions?)
 
-Thank you.
+3) We do have a number of specific sites we should probably target to
+include the information (Wikipedia, StackExchange sites, etc.)
 
--- 
-Regards
-Insu Yun
+4) We definitely have a number of sites where people ask questions (this
+list, Reddit, etc.)
+
+This feeds into my CVE Mentor idea, we need people that can easily be
+discovered and either know the answers, know where to find the answer, or
+know who to ask/further direct people to for help. But we need it more
+generally than just for CVE.
+
+Now, I suspect many of my assumptions are wrong/out dated. So I would
+appreciate if people would give feedback (where do you go for security
+info? instagram?) I would appreciate that.
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
