@@ -1,69 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/2
-Message-ID: <20161201112459.78cbf764@pc1>
-Date: Thu, 1 Dec 2016 11:24:59 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: gstreamer multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/6
+Message-ID: <3614C781-5B82-4968-973E-44E5345973D9@hortonworks.com>
+Date: Fri, 16 Dec 2016 21:31:34 +0000
+From: Arpit Agarwal <aagarwal@...tonworks.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [SECURITY] CVE-2016-5001: Apache Hadoop Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2016-5001: Apache Hadoop Information Disclosure
 
-After the blogposts from Chris Evans about gstreamer insecurities I had
-a look.
+Severity: Critical
 
-https://bugzilla.gnome.org/show_bug.cgi?id=774859
-Invalid memory read in flx_decode_chunks (gst-plugins-good)
-The fix is a larger rewrite of the affected code paths and probably
-fixed a bunch of other issues on the way. It also fixes the second flic
-bug reported by Chris Evans described here:
-https://scarybeastsecurity.blogspot.dk/2016/11/0day-poc-incorrect-fix-for-gstreamer.html
+Vendor: The Apache Software Foundation
 
-https://bugzilla.gnome.org/show_bug.cgi?id=774896
-h264: one byte heap off by one read in gst_h264_parse_set_caps
-(gst-plugins-bad)
+Versions Affected: Apache Hadoop 2.7.1, 2.6.3 and earlier.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=774897
-Invalid memory read in glib caused by one invalid unref call in the
-flxdec decoder. (gst-plugins-good)
+Description:
+This is an information disclosure vulnerability in the short-circuit reads feature of HDFS. A local user on an HDFS DataNode may be able to craft a block token that grants unauthorized read access to random files by guessing certain fields in the token.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=774902
-4 byte heap out of bounds read in windows_icon_typefind
-(gst-plugins-base)
+Mitigation:
+Users on 2.7.x should upgrade to 2.7.2 or later.
+Users on 2.6.x or earlier releases should upgrade to 2.6.4 or later.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=775048
-2 byte heap out of bounds read in gst_mpegts_section_new
-(gst-plugins-bad).
+Impact:
+A local user may be able to gain unauthorized read access to files.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=775120
-null pointer deref (segfault) in mpegts decoder / _parse_pat
-(gst-plugins-bad)
-
-A note about the memory access bugs: glib's slice allocator can hide
-them, so finding them with asan sometimes only works if one sets
-G_SLICE=always-malloc
+Credit:
+This issue was reported by Kihwal Lee of Yahoo Inc.
 
 
-Stuff that's probably not security relevant:
-
-Asserts / traps only:
-
-https://bugzilla.gnome.org/show_bug.cgi?id=775130
-h264 decoder assert (gst-plugins-bad)
-
-https://bugzilla.gnome.org/show_bug.cgi?id=775219
-avidemux trap on invalid utf-8
-
-
-
-The gstreamer devs were very quick in fixing all issues. The release
-1.10.2 should contain all the fixes.
-https://gstreamer.freedesktop.org/releases/gstreamer/1.10.2.html
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
