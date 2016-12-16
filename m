@@ -1,34 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/12
-Message-ID: <1ddea9c3-3475-8f6a-95db-099c055076e6@dovecot.fi>
-Date: Mon, 5 Dec 2016 09:00:13 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: Important vulnerability in Dovecot (CVE-2016-8652)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/3
+Message-ID: <1481890807.3874.2.camel@redhat.com>
+Date: Fri, 16 Dec 2016 13:20:07 +0100
+From: Adam Maris <amaris@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-9591 jasper: Use-after-free on heap in jas_matrix_destroy
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
+We've assigned CVE-2016-9591 to following vulnerability:
 
-On 02.12.2016 09:02, Aki Tuomi wrote:
-> Important vulnerability in Dovecot (CVE-2016-8652)
-> CVSS score: 7.4 (CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H)
-> Affected version(s): 2.2.25.1 up to 2.2.26.1
-> Fixed in: 2.2.27.1rc1
->
-> Short summary: Dovecot auth component can be crashed by remote user when
-> auth-policy component is activated.
->
-> If auth-policy component has been activated in Dovecot, then remote user
-> can use SASL authentication to crash auth component.
->
-> Workaround is to disable auth-policy component until fix is in place.
-> This can be done by commenting out all auth_policy_* settings.
->
-> Aki Tuomi
-> Dovecot oy
->
+https://github.com/mdadams/jasper/issues/105
 
-The affected versions are from 2.2.25 to 2.2.26.1.
+Best Regards,
 
-Aki Tuomi
-Dovecot oy
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
+
