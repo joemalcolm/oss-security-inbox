@@ -1,27 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/7
-Message-ID: <CACn5sdRD=BJLkxwv5AGm+Nod_tNfkND9M0C6n3kr37ZDDywSjg@mail.gmail.com>
-Date: Mon, 25 Jan 2016 10:57:53 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/17/1
+Message-ID: <7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>
+Date: Sun, 18 Dec 2016 03:30:26 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: use-after-free in tidy-html5
+Subject: CVE Request - squid HTTP proxy multiple Information Disclosure issues
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-The tidy-html5 developers are still not sure how to fix this security
-issue. Any feedback is appreciated.
+Two issues have been fixed in the latest Squid HTTP Proxy releases, both
+result in Cookie headers and other client-specific private information
+being delivered on cached responses to the wrong clients. Since Cookie
+often carries security credentials or session keys we consider these
+issues to have a high severity rating.
 
-Thanks!
 
-2016-01-03 20:24 GMT-03:00 Gustavo Grieco <gustavo.grieco@...il.com>:
+Issue #1:
 
-> A use-after-free was discovered in tidy-html5 (5.1.25) using afl.
-> Technical details are available here:
->
-> https://github.com/htacg/tidy-html5/issues/341
->
-> Regards,
-> Gus
->
+ Incorrect processing of responses to If-None-Modified HTTP conditional
+requests leads to client-specific Cookie data being leaked to other
+clients. Attack requests can easily be crafted by a client to probe a
+cache for this information.
 
+Vulnerable Squid Versions:
+ 3.1.10 up to and including 3.1.23
+ 3.2.0.3 up to and including 3.5.22
+ 4.0.1 up to and including 4.0.16
+
+Reference URLs will be:
+ <http://www.squid-cache.org/Advisories/SQUID-2016_11.txt>
+ <http://bugs.squid-cache.org/show_bug.cgi?id=4169>
+ <http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID-2016_11.patch>
+ <http://www.squid-cache.org/Versions/v3/3.2/changesets/SQUID-2016_11.patch>
+ <http://www.squid-cache.org/Versions/v3/3.3/changesets/SQUID-2016_11.patch>
+ <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_11.patch>
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_11.patch>
+ <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2016_11.patch>
+
+
+For Mitre: the CVE critical leak was due to these lines in
+src/client_side_reply.cc:
+
+     bool matchedIfNoneMatch = false;
+     if (r.header.has(HDR_IF_NONE_MATCH)) {
+        if (!e->hasIfNoneMatchEtag(r)) {
+...
+-            http->logType = LOG_TCP_MISS;
+-            sendMoreData(result);
+
+This last line should have called "  processMiss(result); ". The
+remainder of the patch changes are behaviour fixes to ensure other leaks
+can not occur in any related HTTP transaction cases.
+
+
+
+Issue #2:
+
+ Incorrect HTTP Request header comparison results in Collapsed
+Forwarding feature mistakenly identifying some private responses as
+being suitable for delivery to multiple clients.
+
+ The current fix is not quite complete. However we believe the remaining
+headers leaked are not a serious security issue.
+
+Vulnerable Squid Versions:
+ 3.5.0.1 up to and including 3.5.22
+ 4.0.1 up to and including 4.0.16
+
+Reference URLs:
+ <http://www.squid-cache.org/Advisories/SQUID-2016_10.txt>
+ <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14956.patch>
+ for squid-3.5 excluding 3.5.22:
+<http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_10_a.patch>
+ for 3.5.22 only:
+ <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14127.patch>
+
+
+
+Amos Jeffries
+The Squid Software Foundation
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
