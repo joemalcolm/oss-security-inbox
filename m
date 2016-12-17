@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/10/7
-Message-ID: <CAKws9z0qx_7spQTw9Z3vrV1hRa8so=G-1T7eegnLuMzTp0H59Q@mail.gmail.com>
-Date: Fri, 10 Jun 2016 13:56:14 -0400
-From: Scott Arciszewski <scott@...agonie.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/17/2
+Message-ID: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
+Date: Sat, 17 Dec 2016 16:52:06 +0100
+From: Gjoko Krstic <gjoko@...oscience.mk>
 To: oss-security@...ts.openwall.com
-Subject: Simple Machines Forums - PHP Object Injection
+Subject: CVE request - DCMTK remote stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-I reported the following PHP Object Injection vulnerabilities to the SMF
-development team on March 9, 2016:
-
-https://github.com/SimpleMachines/SMF2.1/blob/404fd5347951652624dfb72304ee38fcab98378f/Sources/Packages.php#L863-L873
-
-https://github.com/SimpleMachines/SMF2.1/blob/19ee85ff8761b792ea3e9ed630a947f45f93ee68/Sources/LogInOut.php#L125-L129
-
-In the first case, you can achieve PHP Object Injection by sending
-themechanges[]=serialized+object+here in the POST data of an HTTP request.
-
-It looks like someone had attempted to find+replace all the obvious PHP
-Object Injection issues (i.e. unserialize($_POST['foo'])) at some point,
-but they didn't look for variables directly derived from user input.
-(foreach ($_POST['foo'] as $bar)).
-
-I've sent follow-up emails to the development team but was never notified
-of any progress towards fixing it.
-
-The first one appears to have been fixed in the release-2.1 branch, but the
-other one still exists.
-
-https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/Packages.php#L872-L882
-is fixed
-
-https://github.com/SimpleMachines/SMF2.1/blob/release-2.1/Sources/LogInOut.php#L125-L129
-is unfixed
-
-That's all from me.
-
-Scott Arciszewski
-Chief Development Officer
-Paragon Initiative Enterprises <https://paragonie.com>
+*"At several places in the code a wrong length of ACSE data structures
+received over the network can cause overflows or underflows when processing
+those data structures. Related checks have been added at various places in
+order to prevent such (possible) attacks. Thanks to Kevin Basista for the
+report."The bug will indeed affect all DCMTK-based server applications that
+accept incoming DICOM network connections that are using the dcmtk-3.6.0
+and earlier versions. Developers are advised to apply the
+patched-DCMTK-3.6.1_20160216 fix commit from Dec 14,
+2015.http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php
+<http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php>https://bugs.gentoo.org/show_bug.cgi?id=602918
+<https://bugs.gentoo.org/show_bug.cgi?id=602918>*
 
