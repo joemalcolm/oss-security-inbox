@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1053" "Monday" "21" "December" "2015" "16:07:45" "+0000" "Jason Buberel" "jbuberel@google.com" "<CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>" "26" "[oss-security] CVE request for math/big.Exp" "^Date:" nil nil "12" "2015122116:07:45" "[oss-security] CVE request for math/big.Exp" (number mark "        jbuberel@goo Dec 21   26/1053  " thread-indent "\"[oss-security] CVE request for math/big.Exp\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["883" "Saturday" "17" "December" "2016" "16:52:06" "+0100" "Gjoko Krstic" "gjoko@zeroscience.mk" "<CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>" "16" "[oss-security] CVE request - DCMTK remote stack buffer overflow" nil nil nil "12" "2016121715:52:06" "[oss-security] CVE request - DCMTK remote stack buffer overflow" (number mark "U       gjoko@zerosc Dec 17   16/883   " thread-indent "\"[oss-security] CVE request - DCMTK remote stack buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31804 invoked by uid 550); 21 Dec 2015 16:08:31 -0000
+Received: (qmail 28289 invoked by uid 550); 17 Dec 2016 16:03:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31786 invoked from network); 21 Dec 2015 16:08:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=uiYeK8fS2yHlYC8uu0SC5s7oF3fS2lu+ClB8KtgPD5E=;
-        b=JmnR2B983Ff8KImQ0+TXQ5VQfY+whVWKSN4bwGR7EBi0hwMMWk7xsM3QdrQInbh9Pm
-         c2ycwwA0PMz8+QuwhjrfgMsBpEONavNJ4O5a5/0l6kvNQK380oPuEVJd1wFbQ8la7Yk+
-         VUCctPEUIBoAPzN/NibhXNpzAizwMDxjJliHKAt3GTLX5Z2BSaH7H2ZXEvHNY7cUax3z
-         HZj/I3tTKpSCxm1ytFwQwhif7pz/N0FPgKLtW/jh9063URyc4aGhR3UxLwwiMI05yc7g
-         8UbyCM+kKCMhm25N8HPfOIjH9G6ej3bf9Gd0HthrjaTvvMi9X0rr61Zwujljcux9Vrck
-         zY9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=uiYeK8fS2yHlYC8uu0SC5s7oF3fS2lu+ClB8KtgPD5E=;
-        b=CoI4m7Mmt6qFu/b35DR+Q1gnKK+KC47rygeskyvEhRJ7Y2BovxvNs3R9gS9FwIFdF+
-         RlvfAZDeBpvQKiP5ujJt4hmpnBKup0jlV9qTGtkD4LS7Ierh+y8fZFyObRcGfLXK+NRB
-         Dd52M1q6PQsEcPqSj9mCcYNr3fegoZ7UMF/GRiiVkOVV/zy6s9UkYqRfn6WwWoZqovcu
-         4EuaJGvBehT6PnlYdfJVeLiTn1aYu/rnwOJVc59rhjHsKKfQeuOXc9D6VSB+InnEAQXE
-         TEYhHMaKdzU2HCIQdrI7mhrNJ58Nrru47JCRdREQoVHzCIWfRzTLm2SSJgTXEkC8WDJc
-         LbDw==
-X-Gm-Message-State: ALoCoQneuAcJdjkavWuntzAZMOUdU+2HUL+QdAAT1DJfJkwY6ze44k/6DX6InMJZ2CIelehHBl98elysBMQie/cfM1lKTuTVjazTw7kZidrO9Tqi4+HFWfA=
-X-Received: by 10.129.86.4 with SMTP id k4mr8080063ywb.36.1450714075061; Mon,
- 21 Dec 2015 08:07:55 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CA+s3sfFMSqi3-5b=4-=gx_nXYye=0oWuWtpwsgEe6mdiq8a_Ew@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11432e0a1df08505276ab158
-Date: Mon, 21 Dec 2015 16:07:45 +0000
-From: Jason Buberel <jbuberel@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for math/big.Exp
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 15436 invoked from network); 17 Dec 2016 15:53:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=zeroscience.mk; s=default; h=Content-Type:To:Subject:Message-ID:Date:From:
+	MIME-Version:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=uYj8arL5ackvZ1a0RqvVitSowN5oyixDvH+LM4SWr70=; b=NIMGouRyX6eIWEN7z6iIkVQmfd
+	UWKT263S1BsU1yCERjMlUbs7LCFZqFJJ/Evjq6YbwGnBQtX68ap0LC0oLw8VO64CjGTonVwiCIqaW
+	jMxHzd1oEMzQ7pp7+uWl1Cq6fRKy6wlqD6PepoPmRgvgfovCrs0oouNhHXq+eTspGDiM=;
+X-Gm-Message-State: AIkVDXI7tCACYYyFKMLvu/9auC/SgB+0zwbqQCqGbPsR6TdkWejCfeU5Ly6iNY7pa0y/fBFOHcaw7Bo135WOqg==
+X-Received: by 10.237.61.130 with SMTP id i2mr8715542qtf.293.1481989966647;
+ Sat, 17 Dec 2016 07:52:46 -0800 (PST)
+MIME-Version: 1.0
+From: Gjoko Krstic <gjoko@zeroscience.mk>
+Date: Sat, 17 Dec 2016 16:52:06 +0100
+X-Gmail-Original-Message-ID: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
+Message-ID: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1144542e85dca10543dcad16
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - a1.xocluster.com
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - zeroscience.mk
+X-Get-Message-Sender-Via: a1.xocluster.com: authenticated_id: gjoko@zeroscience.mk
+X-Authenticated-Sender: a1.xocluster.com: gjoko@zeroscience.mk
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Subject: [oss-security] CVE request - DCMTK remote stack buffer overflow
 
---001a11432e0a1df08505276ab158
+--001a1144542e85dca10543dcad16
 Content-Type: text/plain; charset=UTF-8
 
-OSS-Security,
+*"At several places in the code a wrong length of ACSE data structures
+received over the network can cause overflows or underflows when processing
+those data structures. Related checks have been added at various places in
+order to prevent such (possible) attacks. Thanks to Kevin Basista for the
+report."The bug will indeed affect all DCMTK-based server applications that
+accept incoming DICOM network connections that are using the dcmtk-3.6.0
+and earlier versions. Developers are advised to apply the
+patched-DCMTK-3.6.1_20160216 fix commit from Dec 14,
+2015.http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php
+<http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php>https://bugs.gentoo.org/show_bug.cgi?id=602918
+<https://bugs.gentoo.org/show_bug.cgi?id=602918>*
 
-The Go open source project has received notification of an error in the
-math/big library (https://golang.org/pkg/math/big/). The problem that was
-identified is similar to CVE-2015-3193
-<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3193>. The
-vulnerability was introduced in the 1.5 release, and remains present in Go
-1.5.1 and 1.5.2.
-
-A fix for the issue has been applied to the master branch of the Go repo
-under CL 17672 <https://go-review.googlesource.com/#/c/17672/>. We will
-also be releasing Go 1.5.3 to fix this vulnerability.
-
-We are requesting a CVE ID in order to coordinate updates with
-distributions that include binary packages for the Go programming language.
-We will also announce and request that all Go programs using the math/big
-package that were compiled with version 1.5, 1.5.1, or 1.5.2 be recompiled
-with  1.5.3 (when released) due to the static linking nature of the Go
-toolchain.
-
-Regards, jason
-
---001a11432e0a1df08505276ab158--
+--001a1144542e85dca10543dcad16--
