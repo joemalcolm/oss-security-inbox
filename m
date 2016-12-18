@@ -1,108 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/26/7
-Message-ID: <20161026191357.GA22705@openwall.com>
-Date: Wed, 26 Oct 2016 21:13:57 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-5195 "Dirty COW" Linux kernel privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/18/1
+Message-ID: <a8863765bf6848cba87939df890af51d@imshyb02.MITRE.ORG>
+Date: Sat, 17 Dec 2016 20:06:22 -0500
+From: <cve-assign@...re.org>
+To: <squid3@...enet.co.nz>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request - squid HTTP proxy multiple Information Disclosure issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 21, 2016 at 02:31:04AM +0200, Solar Designer wrote:
-> This was brought to the linux-distros list (and briefly inadvertently to
-> the distros list, although discussion continued on linux-distros only)
-> on October 13 and it was made public yesterday, so it must be in here as
-> well.  Unfortunately, no one posted about it in here so far (the person
-> who brought this to [linux-]distros must have done so!), and I don't
-> have time to make a proper posting (with full detail in the message
-> itself, as per oss-security list content guidelines), but I figured it's
-> better for me to post something than nothing at all.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> http://www.squid-cache.org/Advisories/SQUID-2016_11.txt
+
+> Incorrect processing of responses to If-None-Modified HTTP conditional
+> requests leads to client-specific Cookie data being leaked to other
+> clients. Attack requests can easily be crafted by a client to probe a
+> cache for this information.
+
+> the CVE critical leak was due to these lines in
+> src/client_side_reply.cc:
 > 
-> Red Hat's description:
+>      bool matchedIfNoneMatch = false;
+>      if (r.header.has(HDR_IF_NONE_MATCH)) {
+>         if (!e->hasIfNoneMatchEtag(r)) {
+> ...
+> -            http->logType = LOG_TCP_MISS;
+> -            sendMoreData(result);
 > 
-> "A race condition was found in the way the Linux kernel's memory
-> subsystem handled the copy-on-write (COW) breakage of private read-only
-> memory mappings.  An unprivileged local user could use this flaw to gain
-> write access to otherwise read-only memory mappings and thus increase
-> their privileges on the system."
+> This last line should have called "  processMiss(result); "
 
-A lot was said about this vulnerability in lots of places, so I won't
-dare to try and repeat all or post it in here (sorry!)  Many exploits
-exist now, as summarized at:
+Use CVE-2016-10002.
 
-https://github.com/dirtycow/dirtycow.github.io/wiki/PoCs
 
-The exploits vary in whether they use /proc/self/mem (newer kernels
-only) or PTRACE_POKEDATA (both newer and older kernels) and in what they
-target: generic read-only write, SUID root program, libc, or vDSO.
-All of them (that I've seen) also use MADV_DONTNEED.
+> http://www.squid-cache.org/Advisories/SQUID-2016_10.txt
 
-vDSO appears to be the scariest target in that it allows for sandbox or
-container escape without requiring any other sharing with the outside
-world (no shared files, no KSM).  Some kernels have sysctl's (varying
-across kernel versions and architectures) that allow to disable vDSO on
-a live system, but keep in mind that already-started processes retain
-their vDSOs and may in many scenarios be used for the attack.  Also,
-disabling vDSO does nothing to prevent attacks targeting something else
-(same sandbox/container or other page sharing with the outside).
+> Incorrect HTTP Request header comparison results in Collapsed
+> Forwarding feature mistakenly identifying some private responses as
+> being suitable for delivery to multiple clients.
 
-Luckily, many sandboxes exclude /proc and ptrace, which so far prevents
-all of these exploits from working.
+Use CVE-2016-10003.
 
-Surprisingly (to me), the published exploits appear to work as-is even
-on systems with only one logical CPU (except on RHEL5 and alikes, where
-2+ CPUs appear to be needed, but don't count on this).
 
-Here are a couple of challenges by me (and whoever is behind the
-DirtyCow website kindly backed these with prizes of t-shirts priced at
-thousands of dollars each):
+> The current fix is not quite complete. However we believe the remaining
+> headers leaked are not a serious security issue.
 
-1. Exploit DirtyCow without MADV_DONTNEED.
+If anyone needs a CVE ID for this issue (involving other headers) that
+was not fixed in 3.5.23 and 4.0.17, please let us know.
 
-2. Exploit DirtyCow on RHEL5 with only 1 logical CPU.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-and here's a new obvious one I add just now:
-
-3. Exploit DirtyCow without /proc/self/mem _and_ without PTRACE_POKE*.
-
-Bonus points if you achieve several of these in one exploit.
-
-Many distros have released updates by now.  This includes RHEL7 & RHEL6,
-but (as far as I can tell) not yet RHEL5.  Since these legacy kernels
-still matter to me and possibly to others, attached are two patches for
-RHEL5'ish OpenVZ kernels, which should be reusable on other RHEL5-alikes.
-
-rhel5-owl-dirtycow.diff is what went into the kernel updates we released
-for Owl a couple of days ago - it is a mitigation for MADV_DONTNEED and
-PTRACE_POKE*, protecting both through write-locking mmap_sem (thus,
-against each other as well as against other code paths that read-lock
-mmap_sem).
-
-rhel5-openvz-dirtycow.diff is interdiff between OpenVZ's older
-"-408.el5.028stab120.2" kernels and "-408.el5.028stab120.3" they just
-released today.  Unlike the mitigation in Owl, this is a backport of the
-fix from newer kernels.  I have yet to test this one myself.  (I briefly
-tried to produce a backport as well, but gave up after my half-baked
-attempts failed testing.  I see this patch does at least one thing that
-I missed in my backport attempts.  Kudos to OpenVZ project, who had also
-released updates for their newer kernels.)
-
-These two patches can also be reasonably used together.  (I think we'll
-do just that in Owl, assuming that OpenVZ's fix passes our testing.
-And yes, Owl is essentially a legacy system now, arguably having served
-its purpose years ago, but we still maintain it for some deployments.)
-
-> https://access.redhat.com/security/cve/cve-2016-5195
-> https://bugzilla.redhat.com/show_bug.cgi?id=1384344
-> https://security-tracker.debian.org/tracker/CVE-2016-5195
-> http://www.v3.co.uk/v3-uk/news/2474845/linux-users-urged-to-protect-against-dirty-cow-security-flaw
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619
-> https://lkml.org/lkml/2016/10/19/860
-> https://dirtycow.ninja
-> https://github.com/dirtycow/dirtycow.github.io/wiki/VulnerabilityDetails
-> https://twitter.com/DirtyCOWVuln
-
-Alexander
-
-View attachment "rhel5-owl-dirtycow.diff" of type "text/plain" (1009 bytes)
-
-View attachment "rhel5-openvz-dirtycow.diff" of type "text/plain" (2754 bytes)
+iQIcBAEBCAAGBQJYVdwRAAoJEHb/MwWLVhi2sBwP/33e42WWt+2xK8LMWIt2opxE
+F8YSXBoIMKVh8V9i9dYeFrTcXPNMSOsNLawZgUaPIIdIzMy3ipKxfJ0dHlWjIUrk
+3QIPAlri8tEOJiy0gR3x1xzdYaZUq5hLpBxWvUJz/GS4OPpvlMPO8VvSYzfKVYUi
+Mxw9izK9E41WCUYFTCpzWhI+M248W4CCKYul8gHbDIaV1ED+3pRLkmfgaozP1TxW
+ozAB8REzpOyG+Erl5rxZ3e8Zgpf3ox6Rmv260Ue4mhZLCsK2AWR72PJs9zXRK+LQ
+1cwTROdWg78iMuoB4E77L77L98OEj5sSLlo6fc5mew8lyteq7QwbfaWjuCk3ga79
+BVisJvqXW7dyzLxyZ5yiMGLmHJQd4C6FaKBM6D9xSlaUaicEPvLUU+zwNHtWi0dT
+3KKI4GzvBk3x62c4bjjjGpNWoK0sNiDFK465MfA343XfeEjnA+URgrzNJO8ocvMI
+booClyeDs7VKwv+yGVMI+3v+YQ/kUKjERdRr4StzSEWF45GPtXnWj7F7bj/JCR4m
+/mwZ9237ED5Yhq81e5/OPfJ/dnduJYoI5vjcZmVekTxh3+3AUcLXH1JxfV7Rk6z4
++Tk+X443j3cuB//zMDR8oN7RCl64R2Cx29HwCFukU6nA+wL2hVLHBrVsR+mw6fQX
+7LGySLYqm7FhLtuSKhQa
+=GwOM
+-----END PGP SIGNATURE-----
