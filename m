@@ -1,4 +1,9 @@
-Received: (qmail 31760 invoked by uid 550); 18 Nov 2023 14:14:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1678" "Saturday" "17" "December" "2016" "20:13:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<63d294aeacf743cab535163f5212a6c7@imshyb02.MITRE.ORG>" "39" "[oss-security] Re: CVE request - DCMTK remote stack buffer overflow" nil nil nil "12" "2016121801:13:50" "[oss-security] Re: CVE request - DCMTK remote stack buffer overflow" (number mark "U       cve-assign@m Dec 17   39/1678  " thread-indent "\"[oss-security] Re: CVE request - DCMTK remote stack buffer overflow\"\n") "<CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>" ("<CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24255 invoked by uid 550); 18 Dec 2016 01:14:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,185 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17650 invoked from network); 18 Nov 2023 02:09:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1700273358; x=1700878158; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KsfSi4TMT1zaMrEReFU2TFWPtoF+bmH1F5mepWAQAmc=;
-        b=TTWDk/Nam2pB7+OpsVa2dy+n2+DWX8zXthDUJ2idpQyEVyqk6aNU5mwUuNI/i7B9aZ
-         8gTySoZcb5DyQyWTHlURw49nZZNyn8Gbk1xLfaxaJQ3FpsDRyZ4QUhQUsbWAdwFURAQ6
-         RUqqyMOR8s2rNtkBSJEVAkwUArN6QfDDDFd3w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700273358; x=1700878158;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KsfSi4TMT1zaMrEReFU2TFWPtoF+bmH1F5mepWAQAmc=;
-        b=q0FU7ZFtlKszOQxU1ZoUO0yPwMlwiIUwlnMkFUaje+7ZZ5qzgIg5bxwVK8PHPztSzB
-         eDTPQAvrn7xL7O6U9tkFJ6VfsuFWOtZPEQPhNpucVVSAtKCGSamdF9raiCC0dhcTJ2oR
-         d3/8Jz5BBpUeInUzGu1M+RpfawhfDtwHQC2OuS1qURUo9m1g168COK71KfjBeSwZ8v0o
-         omY0IkcKGxGiZ+4BYig4puoYo8J2l9mcOlvo/FLCbdptsslXkBPVF2Lbow/yyEIohFKy
-         APW0krcnqw/9IeVY74nN43CzfKb1Yiq5Vrc+EjgfoRBUvfnXbjVMhQ2+NplR1oXGVE3M
-         /YiA==
-X-Gm-Message-State: AOJu0YxENpq2n74Gmy4u4IDz87Vw68UvCMLPNQTMpZET8yDVU/DfSlBw
-	63gBy1CaIkLGN/9u/sT1qV33/Yj2kWQlN3d8Q8p89ElBQcBTSvzV
-X-Google-Smtp-Source: AGHT+IGMpA5/o74AjNDEKx7CTGTnBAnYkSgb2AeRweCs3Xm+UQFJ4gWnL+qjocz0Kse3tPHMkb2r59dY1kZgtDGRhDA=
-X-Received: by 2002:ac2:457c:0:b0:500:daf6:3898 with SMTP id
- k28-20020ac2457c000000b00500daf63898mr1001507lfm.26.1700273357638; Fri, 17
- Nov 2023 18:09:17 -0800 (PST)
+Received: (qmail 24234 invoked from network); 18 Dec 2016 01:14:02 -0000
+From: <cve-assign@mitre.org>
+To: <gjoko@zeroscience.mk>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CAAmRq0miNRCeRU8CPCmh1jUsmbW2VL4qqFVapKP3VGCSmoUtyQ@mail.gmail.com>
+Message-ID: <63d294aeacf743cab535163f5212a6c7@imshyb02.MITRE.ORG>
+Date: Sat, 17 Dec 2016 20:13:50 -0500
 MIME-Version: 1.0
-References: <ZVc0QDRY04pR81cs@kasco.suse.de>
-In-Reply-To: <ZVc0QDRY04pR81cs@kasco.suse.de>
-From: Roxana Bradescu <roxabee@chromium.org>
-Date: Fri, 17 Nov 2023 18:09:06 -0800
-Message-ID: <CAB=ivF-hcDEN3_tXk+4rUUwXpVAKYcmt+efkUpGgedPiA4CDyg@mail.gmail.com>
-To: oss-security@lists.openwall.com, security@hpe.com
-Content-Type: multipart/alternative; boundary="00000000000080ea5b060a63bdd7"
-Subject: Re: [oss-security] hplip: security issues in `hpps` program due to
- fixed /tmp path usage in prnt/hpps/hppsfilter.c
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request - DCMTK remote stack buffer overflow
 
---00000000000080ea5b060a63bdd7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for making the community aware of this issue.
+> https://github.com/commontk/DCMTK/commit/1b6bb76073a0601b85e90d5b1a5f0c80efe9e7f8
+> https://www.exploit-db.com/exploits/40928/
+> http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php
 
-Perhaps security@hpe.com can help to route internally to get a CVE issued
-and find the appropriate owners to fix.
+We did not see an efficient way to represent
+1b6bb76073a0601b85e90d5b1a5f0c80efe9e7f8 as a set of independent
+exploitable vulnerabilities. Thus, we are assigning one CVE ID for all
+of the vulnerability information in the above three references. The
+information all seems to be related to mishandling of "wrong length of
+ACSE data structures received over the network" (typically a long
+string sent to TCP port 4242).
 
+Use CVE-2015-8979.
 
-On Fri, Nov 17, 2023 at 1:38=E2=80=AFAM Matthias Gerstner <mgerstner@suse.d=
-e> wrote:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> Hello list,
->
-> this report is about the problematic use of fixed temporary paths in the
-> `hpps` program from the hplip [1] project. Hplip is a collection of
-> utilities for HP printer and scanner devices.
->
-> There is currently no upstream fix available for this issue and this
-> publication happens after 90 days of attempted coordinated disclosure,
-> but upstream did not react to my report.
->
-> This report is based on the latest upstream release 3.23.8 [2] of hplip.
->
-> The Issue
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> The program /usr/lib/cups/filter/hpps uses a number of insecure fixed
-> temporary files that can be found in prnt/hpps/hppsfilter.c:
->
->     prnt/hpps/hppsfilter.c:1027:        sprintf(booklet_filename, "/tmp/%
-> s.ps","booklet");
->     prnt/hpps/hppsfilter.c:1028:        sprintf(temp_filename, "/tmp/%s.ps
-> ","temp");
->     prnt/hpps/hppsfilter.c:1029:        sprintf(Nup_filename, "/tmp/%s.ps
-> ","NUP");
->
-> These paths are only used if "booklet printing" is enabled. For testing,
-> the
-> logic can be forced by invoking the program similar to this:
->
->     $ export
-> PPD=3D/usr/share/cups/model/manufacturer-PPDs/hplip-plugin/hp-laserjet_10=
-20.ppd.gz
->     $ /usr/lib/cups/filter/hpps some-job some-user some-title 10
-> HPBookletFilter=3D10,fitplot,Duplex=3DDuplexTumble,number-up=3D1
->
-> The program will expect data to print on stdin this way. Just typing in
-> some random data and pressing Ctrl-d will make it continue. There is a
-> chance that it will crash, tough, since error returns from parsing
-> errors are largely not checked in this program.
->
-> The three paths are created and opened using `fopen()`, so no special
-> open flags are in effect that would prevent following symlinks, also the
-> `O_EXCL` flag is missing to prevent opening existing files. The
-> resulting system calls look like this (for creation / opening for
-> reading):
->
->     openat(AT_FDCWD, "/tmp/temp.ps", O_WRONLY|O_CREAT|O_TRUNC, 0666) =3D 3
->     openat(AT_FDCWD, "/tmp/temp.ps", O_RDONLY)
->
-> Furthermode there is a `chmod()` on the /tmp/temp.ps file:
->
->     hppsfilter.c:110 chmod(temp_filename, S_IRUSR | S_IWUSR | S_IRGRP |
-> S_IROTH);
->
-> The data to print (from stdin) is written to this file, and the file is
-> also made world readable explicitly via this `chmod()`. The issues with
-> these paths are multifold:
->
-> - There is a local information leak, since the print job data will
->   become visible to everybody in the system.
-> - There is violated data integrity, since other users can pre-create these
->   files and manipulate e.g. the data to print.
-> - This may allow to create files in unexpected places, by placing symbolic
->   links, if the Linux kernel's symlink protection is not active.
-> - Similarly it may allow to grant world read privileges to arbitrary
->   files by following symlinks during the `chmod()`.
-> - It may allow further unspecified impact if crafted data is placed into
->   /tmp/temp.ps which is processed by the complex `PS_Booklet()` function.
->
-> I did not research the impact of the issue further to see whether this
-> could lead to local code execution in the context of the user that is
-> invoking `hpps`.
->
-> Suggested Patch
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> To fix this issue all three fixed temporary paths need to be replaced by
-> unpredictably named temporary files that are safely created. Attached to
-> this email is a patch that I authored that accomplishes this. This patch
-> also drops the `chmod()`. The purpose of it is unclear, so it is
-> possible that this breaks something, if other processes with different
-> privileges need to access this file.
->
-> There is no patch or any other information available from upstream.
->
-> Affectedness
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Since, to my knowledge, there is no public version control system for
-> hplip, it is difficult to determine when this issue has been introduced.
-> By taking some samples from older SUSE distributions I found the issue
-> to be present at least since upstream release 3.19.12 from 2019-12-12.
->
-> CVE Assignment
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Since HP is a CVE CNA, it is itself responsible for assigning a CVE.
-> Since there is no reaction from upstream I don't know if or when CVEs
-> will be available.
->
-> Timeline
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> 2023-08-21: I reported the finding privately to upstream via Launchpad [3=
-],
->             offering coordinated disclosure. No other means of contact are
->             documented for hplip.
-> 2023-09-05: Since I did not get any feedback yet I urged upstream via
->             Launchpad to provide a response.
-> 2023-10-04: I shared the suggested patch with upstream, still no response.
-> 2023-11-17: The 90 days maximum embargo time we offer approached and we
->             published the finding.
->
-> References
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> [1]: https://sourceforge.net/projects/hplip
-> [2]: https://sourceforge.net/projects/hplip/files/hplip/3.23.8
-> [3]: https://bugs.launchpad.net/hplip/+bug/2032375
->
-> --
-> Matthias Gerstner <matthias.gerstner@suse.de>
-> Security Engineer
-> https://www.suse.com/security
-> GPG Key ID: 0x14C405C971923553
->
-> SUSE Software Solutions Germany GmbH
-> HRB 36809, AG N=C3=BCrnberg
-> Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
->
-
---00000000000080ea5b060a63bdd7--
+iQIcBAEBCAAGBQJYVeJ4AAoJEHb/MwWLVhi2uoUQAKCfq7V0TdOe15kyeDbsVrOY
+z/o9Mb5p1tsU9gcr90WNafuLVGtj1HLnN0++TVAq9DI8eEg+9cCpGVcEo3yhPvFz
+ldAUi323dMGE5RI4/HaRSQVU2lie80Aa4fhClFcXNSC7P9Ou3ZDxvIDAgDS4Bhfe
+iKz6jEimDSBZ5M9y2A2CDRZsxELiFCXIyHvXhzC1ivrgNoi1yw735ZW2renndZG4
+OzFA/rZgW2gbCyMMnM2bHidYpk1hvdJSBLlnJlGLZ1hvGYqFiOw9rq6InDff8Uym
+s8srNHb2kylODnnUYl39mUlBGId50wRbi4gWR47tUOizOZP0+HShTgGKdeoHWei3
+/jKt6YVsWPnbL4bGZsKCI688uvf57lW3mked6WJWGHRTt/wujzKBYRRfkV0erOy+
+UK7g0y4WQxOxSqWvAwNq6RPQaVs2UFE+a+Yzt4ao3MYb12Y7p5aGVcxasmOCnhbz
+RbaVBPU/m7lgOM4tT6rjwJSrHsm1OIdvAaeT5sAnV1VoBIPua4kqmhL8SE9IEiV9
+RlhXWlg2zfId9E9i603XIoffWlNcVbQ4e6fs9nysTWy5fBtMBsTeAtH4R+ByPLst
+eZeoyldoU/+ujAxLavc1ibNQG60/7iKnlSDtFE/dhb35ziSblECD/3inlEABC4Vk
+K1DJz5YISme9Xbpp6RFS
+=4GGa
+-----END PGP SIGNATURE-----
