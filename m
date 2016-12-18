@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/12/4
-Message-ID: <CAAeBhPeigEx=_NuqYzTJuCe3=xLnvcx7DOe+0fYE66CNy7oeZQ@mail.gmail.com>
-Date: Fri, 12 Feb 2016 09:58:47 -0500
-From: David Leo <httpsonly.github.io@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: bugtraq@...urityfocus.com, fulldisclosure@...lists.org
-Subject: Re: HTTPS Only (Open Source, Python)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/18/2
+Message-ID: <63d294aeacf743cab535163f5212a6c7@imshyb02.MITRE.ORG>
+Date: Sat, 17 Dec 2016 20:13:50 -0500
+From: <cve-assign@...re.org>
+To: <gjoko@...oscience.mk>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request - DCMTK remote stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Yes, Mozilla said, "Gradually phasing out access to browser features
-for non-secure websites", in April 2015. After more than six months,
-they have done nothing useful.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Chrome team wanted the same stuff:
-https://www.chromium.org/Home/chromium-security/marking-http-as-non-secure
-Again, nothing significant has been achieved yet.
+> https://github.com/commontk/DCMTK/commit/1b6bb76073a0601b85e90d5b1a5f0c80efe9e7f8
+> https://www.exploit-db.com/exploits/40928/
+> http://zeroscience.mk/en/vulnerabilities/ZSL-2016-5384.php
 
-And there is HTTPS Everywhere, with SO MANY rules:
-https://www.eff.org/https-everywhere/atlas/
-It's still able to access HTTP by default, but there is "Block all
-HTTP requests". The problem: nothing happens when browser tries HTTP -
-there should be warning(it's incorrect behavior) and options(try
-HTTPS, Google Cache, etc). People complained, months ago:
-https://github.com/EFForg/https-everywhere/issues/1329
+We did not see an efficient way to represent
+1b6bb76073a0601b85e90d5b1a5f0c80efe9e7f8 as a set of independent
+exploitable vulnerabilities. Thus, we are assigning one CVE ID for all
+of the vulnerability information in the above three references. The
+information all seems to be related to mishandling of "wrong length of
+ACSE data structures received over the network" (typically a long
+string sent to TCP port 4242).
 
-So I made this project, because I have lost patience a long time ago.
+Use CVE-2015-8979.
 
-Best Wishes,
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-On Thu, Feb 11, 2016 at 11:56 AM, P J P <ppandit@...hat.com> wrote:
-> +-- On Thu, 11 Feb 2016, David Leo wrote --+
-> | If browser tries to access HTTP address,
-> | you will have three options:
-> | try HTTPS,
-> | Google Cache,
-> | or copy-and-paste the address.
-> |
-> | There is no option to "temporarily bypass HTTPS Only".
-> | You can always do that in another browser.
-> |
-> | Project Home Page:
-> | https://httpsonly.github.io/
->
-> Browsers too are moving there:
->   -> https://blog.mozilla.org/security/2015/04/30/deprecating-non-secure-http/
->
-> (just to note)
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJYVeJ4AAoJEHb/MwWLVhi2uoUQAKCfq7V0TdOe15kyeDbsVrOY
+z/o9Mb5p1tsU9gcr90WNafuLVGtj1HLnN0++TVAq9DI8eEg+9cCpGVcEo3yhPvFz
+ldAUi323dMGE5RI4/HaRSQVU2lie80Aa4fhClFcXNSC7P9Ou3ZDxvIDAgDS4Bhfe
+iKz6jEimDSBZ5M9y2A2CDRZsxELiFCXIyHvXhzC1ivrgNoi1yw735ZW2renndZG4
+OzFA/rZgW2gbCyMMnM2bHidYpk1hvdJSBLlnJlGLZ1hvGYqFiOw9rq6InDff8Uym
+s8srNHb2kylODnnUYl39mUlBGId50wRbi4gWR47tUOizOZP0+HShTgGKdeoHWei3
+/jKt6YVsWPnbL4bGZsKCI688uvf57lW3mked6WJWGHRTt/wujzKBYRRfkV0erOy+
+UK7g0y4WQxOxSqWvAwNq6RPQaVs2UFE+a+Yzt4ao3MYb12Y7p5aGVcxasmOCnhbz
+RbaVBPU/m7lgOM4tT6rjwJSrHsm1OIdvAaeT5sAnV1VoBIPua4kqmhL8SE9IEiV9
+RlhXWlg2zfId9E9i603XIoffWlNcVbQ4e6fs9nysTWy5fBtMBsTeAtH4R+ByPLst
+eZeoyldoU/+ujAxLavc1ibNQG60/7iKnlSDtFE/dhb35ziSblECD/3inlEABC4Vk
+K1DJz5YISme9Xbpp6RFS
+=4GGa
+-----END PGP SIGNATURE-----
