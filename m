@@ -1,46 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/15/6
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62C2@EX02.corp.qihoo.net>
-Date: Wed, 15 Jun 2016 02:37:11 +0000
-From: 张开翔 <zhangkaixiang@....cn>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/4
+Message-Id: <E1cJ00d-0004mG-QD@xenbits.xenproject.org>
+Date: Mon, 19 Dec 2016 15:37:51 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 204 - x86: Mishandling of SYSCALL singlestep during emulation
 Content-Type: text/plain; charset=utf-8
 
-Details
-=======
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Product: libtiff
-Affected Versions: <= 4.0.6
-Vulnerability Type: divide by zero
-Vendor URL: http://www.remotesensing.org/libtiff/
-Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
-CVE ID: CVE-2016-5323
-Tested system version:
-       fedora23 32bit
-       fedora23 64bit
-       CentOS Linux release 7.1.1503 64bit
+                    Xen Security Advisory XSA-204
 
-Introduction
-=======
+        x86: Mishandling of SYSCALL singlestep during emulation
 
-t was always corrupted when I use tiffcrop command followed by a crafted TIFF image in function _TIFFFax3fillruns () without checking the value of divisor, it causes a divide by zero flaw. Attackers cound exploit this issue to cause denial-of-service.
+ISSUE DESCRIPTION
+=================
 
-Here is the stack info:
-gdb –args ./tiffcrop _TIFFFax3fillruns.tif tmpout.tif
---- ---
-Program received signal SIGSEGV, Segmentation fault.
-0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
-407                              ZERO(n, cp);
-(gdb) bt
-#0  0x00007ffff7ad97f0 in _TIFFFax3fillruns (buf=0x0, runs=0x673500, erun=<optimized out>, lastx=64) at tif_fax3.c:407
-#1  0x00007ffff7ae087c in Fax3DecodeRLE (tif=0x662010, buf=0x0, occ=8192, s=<optimized out>) at tif_fax3.c:1527
-#2  0x00007ffff7ba3739 in TIFFReadEncodedTile (tif=tif@...ry=0x662010, tile=8, buf=0x0, size=8192, size@...ry=-1) at tif_read.c:668
-#3  0x00007ffff7ba3a01 in TIFFReadTile (tif=tif@...ry=0x662010, buf=<optimized out>, x=x@...ry=0, y=y@...ry=0, z=z@...ry=0, s=s@...ry=8) at tif_read.c:641
-#4  0x0000000000443e41 in readSeparateTilesIntoBuffer (bps=1, spp=129, tl=1024, tw=64, imagewidth=32, imagelength=32, obuf=0x7ffff7ee5010 "", in=0x662010) at tiffcrop.c:994
-#5  loadImage (in=in@...ry=0x662010, image=image@...ry=0x7fffffff7960, dump=dump@...ry=0x7fffffffc270, read_ptr=read_ptr@...ry=0x7fffffff7920) at tiffcrop.c:6079
-#6  0x0000000000403209 in main (argc=<optimized out>, argv=<optimized out>) at tiffcrop.c:2278
-(gdb) p cp
-$2 = (unsigned char *) 0x0
+The typical behaviour of singlestepping exceptions is determined at the
+start of the instruction, with a #DB trap being raised at the end of the
+instruction.
 
+SYSCALL (and SYSRET, although we don't implement it) behave differently
+because the typical behaviour allows userspace to escalate its
+privilege.  (This difference in behaviour seems to be undocumented.)
 
+Xen wrongly raised the exception based on the flags at the start of
+the instruction.
+
+IMPACT
+======
+
+Guest userspace which can invoke the instruction emulator can use this
+flaw to escalate its privilege to that of the guest kernel.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions are affected.
+
+The vulnerability is only exposed to 64-bit x86 HVM guests.
+
+On Xen 4.6 and earlier the vulnerability is exposed to all guest user
+processes, including unprivileged processes, in such guests.
+
+On Xen 4.7 and later, the vulnerability is exposed only to guest user
+processes granted a degree of privilege (such as direct hardware access)
+by the guest administrator; or, to all user processes when the VM has
+been explicitly configured with a non-default cpu vendor string (in
+xm/xl, this would be done with a `cpuid=' domain config option).
+
+A 64-bit guest kernel which uses an IST for #DB handling will most likely
+mitigate the issue, but will have a single unexpected #DB exception
+frame to deal with.  This in practice means that Linux is not
+vulnerable.
+
+The vulnerability is not exposed to 32-bit HVM guests.  This is because
+the emulation bug also matches real hardware behaviour, and a 32-bit
+guest kernel using SYSCALL will already have to be using a Task Gate for
+handling #DB to avoid being susceptible to an escalation of privilege.
+
+The vulnerability is not exposed to PV guests.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa204.patch           xen-unstable
+xsa204-4.8.patch       Xen 4.8.x
+xsa204-4.7.patch       Xen 4.7.x, Xen 4.6.x
+xsa204-4.5.patch       Xen 4.5.x, Xen 4.4.x
+
+$ sha256sum xsa204*
+251c33905f86d386cc07240041108ec0664e5e9dddb2b88685d9b4b8ca7fdc24  xsa204.patch
+e523b65ba122c8e22d32004d2035facaf06295094fdc8b67c151b6f44799ef0b  xsa204-4.5.patch
+d0359f26e9be783672896200e14d85a3111c29d7da580313b593fca04688fef2  xsa204-4.7.patch
+fa2a69682868104b6263655abbfc6b326f76deebdac3273b4b65da6673f5d977  xsa204-4.8.patch
+$
+
+NOTE REGARDING EMBARGO
+======================
+
+This issue was discussed publicly on qemu-devel before its impact was
+realised.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYV/5uAAoJEIP+FMlX6CvZnxgIAMXcpEN0qejTe50dAP/gSzzP
+edi76o/LNGaQBdFRVLvIasRna2TZSXhBNbHPEcAQLPq6pTfQG/HiqdVtftaaaoaG
+dvNhuDBdZaa1/fmhCV1P+t9vaipp3U3yK2s0eiSJLXp3nGqkgjSSmZloYY0bevDN
+DJ0uZ7uWkvyN6Tkl6R/h3h9PsgIKPIQBIyBuT2zYPf/JAjBD27ZYX11F9JvVMmt3
+JH/AbvJwUsaqNG3teLg+tioQPwHwkZCdxOhG+v2Y3CeqQ1bvNCb5emLtpXFO9h0w
+kZNh88gT1mwbxDWbF3Ek/OhHbOHosfxi9kn8ib5Yu0P8xRmvYhQHMeQDa/rt9Y0=
+=OVcU
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa204.patch" of type "application/octet-stream" (2719 bytes)
+
+Download attachment "xsa204-4.5.patch" of type "application/octet-stream" (2754 bytes)
+
+Download attachment "xsa204-4.7.patch" of type "application/octet-stream" (2754 bytes)
+
+Download attachment "xsa204-4.8.patch" of type "application/octet-stream" (2208 bytes)
