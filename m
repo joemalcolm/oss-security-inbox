@@ -1,71 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/26/5
-Message-Id: <1456504194.3567268.532868234.2EF42CB3@webmail.messagingengine.com>
-Date: Fri, 26 Feb 2016 10:29:54 -0600
-From: Mark Felder <feld@...d.me>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request rtmpdump:  the 6 vulnerabilities have been fixed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/5
+Message-ID: <8d7c2a260df24836a7314c2f412f6537@imshyb02.MITRE.ORG>
+Date: Mon, 19 Dec 2016 11:21:45 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: Re: Announce: OpenSSH 7.4 released
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> ssh-agent(1): Will now refuse to load PKCS#11 modules from paths
+> outside a trusted whitelist
+> ...
+> code execution on the system running the ssh-agent if the
+> attacker has control of the forwarded agent-socket (on the host
+> running the sshd server) and the ability to write to the filesystem
+> of the host running ssh-agent
+
+Use CVE-2016-10009.
 
 
-On Tue, Dec 29, 2015, at 20:28, limingxing wrote:
-> Hello,
-> CVE request rtmpdump:  the 6 vulnerabilities have been fixed by Howard
-> Chu a few days ago!
-> These vulnerabilities affect latest version of ubuntu kylin by the
-> smplayer!
-> 
-> Thank you !
-> 
-> 
-> The git(git://git.ffmpeg.org/rtmpdump)log is:
-> 
-> commit fa8646daeb19dfd12c181f7d19de708d623704c0
-> Author: Howard Chu <hyc@...hlandsun.com>
-> Date:   Wed Dec 23 18:58:50 2015 +0000
-> 
->     Fix issue 6-7/7 from LMX of Qihoo 360 Codesafe Team
->     
->     Additional decode input size checks
-> 
-> commit 07c10ae612bf5c2dbea594dcbd4da85c54dba1e4
-> Author: Howard Chu <hyc@...hlandsun.com>
-> Date:   Wed Dec 23 18:28:13 2015 +0000
-> 
->     Fix issue 5/7 from LMX of Qihoo 360 Codesafe Team
->     
->     Ignore zero-length packets
-> 
-> commit 7c68ad18f4296911114470bb4caaa673d55c8447
-> Author: Howard Chu <hyc@...hlandsun.com>
-> Date:   Wed Dec 23 18:10:15 2015 +0000
-> 
->     Fix issue 4/7 from LMX of Qihoo 360 Codesafe Team
->     
->     Potential integer overflow in RTMPPacket_Alloc().
->     
-> 
-> commit f3042b5bb7dcb42eda32ad9dd88029b24a2c282b
-> Author: Howard Chu <hyc@...hlandsun.com>
-> Date:   Wed Dec 23 17:53:34 2015 +0000
-> 
->     Fix issue 2/7 from LMX of Qihoo 360 Codesafe Team
->     
->     Obsolete RTMPPacket_Free() call left over from original C++ to C
->     rewrite
-> 
-> commit 71fe4f2435beaccca046dad3905840615b76b085
-> Author: Howard Chu <hyc@...hlandsun.com>
-> Date:   Wed Dec 23 17:51:39 2015 +0000
-> 
->     Fix issue 1/7 from LMX of Qihoo 360 Codesafe Team
->     
->     AMFProp_GetObject must make sure the prop is actually an object
+> sshd(8): When privilege separation is disabled, forwarded Unix-
+> domain sockets would be created by sshd(8) with the privileges of
+> 'root'
 
-Did these ever get assigned CVEs?
+Use CVE-2016-10010.
 
 
--- 
-  Mark Felder
-  feld@...d.me
+> sshd(8): Avoid theoretical leak of host private key material to
+> privilege-separated child processes via realloc()
+
+Use CVE-2016-10011.
+
+
+> sshd(8): The shared memory manager used by pre-authentication
+> compression support had a bounds checks that could be elided by
+> some optimising compilers
+> ...
+> potentially allow attacks against the
+> privileged monitor process from the sandboxed privilege-separation
+> process
+
+Use CVE-2016-10012.
+
+
+>  * sshd(8): Validate address ranges for AllowUser and DenyUsers
+>    directives at configuration load time and refuse to accept invalid
+>    ones. It was previously possible to specify invalid CIDR address
+>    ranges (e.g. user@....1.2.3/55) and these would always match,
+>    possibly resulting in granting access where it was not intended.
+
+This currently has no CVE ID. We do not know of common scenarios where
+an untrusted party is able to specify an invalid CIDR block, but is
+unable to specify a valid CIDR block that includes any desired IP
+address. A relevant scenario might exist if privileged third-party
+software relies, in part, on user input to construct an sshd
+configuration file. Even if there were such a scenario, it would
+probably be the responsibility of third-party software to validate the
+meaning of the CIDR block, and not (for example) accept any string
+starting with "10." and ending with "/n" where n is greater than 26.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYWAhyAAoJEHb/MwWLVhi2iicP/iUDlPu9wQq9QSAu4UTMZv+g
+2m8qA2vyUQKvavzuWFaDADfRpKTMW70IOo3jt3WhOmmt56dp06eF8lLtRzucwkMb
+sDFQZQ1PJtbYZjNjgxVBjaZ/4DJOhs0J4QHXumIc617mgGqm1QrCTc0kU3qRBpJ7
+k/mDov8fQYBhHE0w0FUvn3ofC1ywoI12rThzbX+AfmlRcSXQ9h6N6608bF1mi3yJ
+Opcgn72HtLJhWB/ABzCmjEFzskJEWiMSEBGQFD5Ct63r2g9mUe0Q9NuTtzQHdngw
+HdThZ9tfDQ69O33K0R0vG7YQv2KUGTox3nBBjg+Wi4xkEqY0lk0xy1sGUEPyOYcQ
+JtGbyHoc3aQqDC63KvFQuXRV2jMsKefQSTZclK3GZ3DwDzCq5+q16htNvQ71sU1V
+TiqQarip0qvmk+VDiI54lWaS5bgLHBPHbKfHlTOElOrjKbYrNmTniNA8nHLR+cSf
+mniHUcmZEY1fyP3SllLfE/dYhYY/3nc73d43ds23pUWixRHZN+H73iboep/6cHfg
+BZQ+eZzoxfxv6Bo6nN/o74zc4zvU42pkDwAlOPQzoWpmQO8982Z4BV8INTXpTwSM
+lsZ60sHyk/wYIjN9+3vK7dzjpLPf7ZV+ifeVnqxtgE2Pol5c3rnVipDAWwy9ZVZX
+3nNNmJLRnyazekpyflpT
+=kEDT
+-----END PGP SIGNATURE-----
