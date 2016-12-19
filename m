@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2803" "Friday" "19" "March" "2021" "10:16:59" "+0100" "Vardan Torosyan" "vardan.torosyan@grafana.com" nil "78" "[oss-security] Grafana 7.4.5, 7.3.10 and 6.7.6 released with security fixes for Grafana Enterprose" nil nil nil "3" nil nil (number mark "U       vardan.toros Mar 19   78/2803  " thread-indent "\"[oss-security] Grafana 7.4.5, 7.3.10 and 6.7.6 released with security fixes for Grafana Enterprose\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Grafana 7.4.5, 7.3.10 and 6.7.6 released with security fixes for Grafana Enterprose" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11832" "Monday" "19" "December" "2016" "06:56:04" "-0700" "Damien Miller" "djm@openbsd.org" "<4ab69cb56675d73a@openbsd.org>" "279" "[oss-security] Announce: OpenSSH 7.4 released" nil nil nil "12" "2016121913:56:04" "[oss-security] Announce: OpenSSH 7.4 released" (number mark "U       djm@openbsd. Dec 19  279/11832 " thread-indent "\"[oss-security] Announce: OpenSSH 7.4 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24136 invoked by uid 550); 19 Mar 2021 09:19:53 -0000
+Received: (qmail 11663 invoked by uid 550); 19 Dec 2016 13:56:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,116 +12,289 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22489 invoked from network); 19 Mar 2021 09:17:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grafana.com; s=g1;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Z9qFeAhkWGhFhib1z/T8fpNY3YYS6Ajatn4P7qOkiJ4=;
-        b=NXpxcyW3hpsRYgr2R2/3BTAI3QhKD5EeRD2ayAwp8UB3a+91l5g/PDu8rOBqWda3g3
-         sO9E2FnOH/z7Y9ZQBiLBpM+JfW1axFkWGUNUxiOrGvHEGu5Ta6W11s+qc1xj4uD7oVzZ
-         ltKrWfInz/Y7cHNGETi5sktmEIrXYUu7YxJAc1PUCprOnY449JGKfN36+q7F4afa3k6B
-         PdbBWsUG4JfOdlfxSOFwAAMzJhGFwPZkQZacajQFKQDi/FV+cRfuE+dzv2Uh6NSWWNBz
-         bmvo93wNPwd88AzXqMPcR5sA6cG7ECxnDyi6TdpikBy2VOmPnhTWUyvqdvZUhkNHM/S9
-         tDEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Z9qFeAhkWGhFhib1z/T8fpNY3YYS6Ajatn4P7qOkiJ4=;
-        b=FwUWnPUzj6NsGnvY5jB19SucaTSgz9VivCMLYmyuXT9PzbAvU0MxGgSF6N19ZWfcAR
-         bk9yIgw8qxyTKC+hcyg0WCdxWu2lecOV2MBwWzEvliCuFLVWv6hbKtfPPaR0t+XE/t/o
-         MiOBcZH2/S/GqId3a2sEk0KUX2TpL5SK5GKe3NLzw5RyHRb1TxhlRKiKcUflepwkAe1O
-         ybcmlcmOs0TyYvzMxEBMYYRfdi7uFmCUpvGNzQncuH2nCEjb5KE9tAPi36Wym2eyhCA1
-         91g5tgtONm0Fm56egyNBTkVMbjCf3ADBKHzn34wof5nxmpJD2oPp8igj94pBCH/YT7ET
-         7g6Q==
-X-Gm-Message-State: AOAM532H7OJ/Bxejl82ausppAoCqixwmzqgCHWcSVb7uDti/Q1RX3DYf
-	H9u5hm+BMLsz+KyFmZdDEzCePtN7W9SKNk8DHNy4uPadJdnBSg==
-X-Google-Smtp-Source: ABdhPJwt95Njyl9GreW42pBm52uqIGuQEDzc3Pvbbmc4s5F339Jladmtxg6rdM7ZZOWjFQF/D2YTzOUbbRalJzOUr9E=
-X-Received: by 2002:aca:2219:: with SMTP id b25mr273902oic.112.1616145430504;
- Fri, 19 Mar 2021 02:17:10 -0700 (PDT)
-MIME-Version: 1.0
-From: Vardan Torosyan <vardan.torosyan@grafana.com>
-Date: Fri, 19 Mar 2021 10:16:59 +0100
-Message-ID: <CAHvrgmw1HW6Fe_iX0ioM9yrsc2b9Pt0owD=Ygc3gcMMC=d_sQQ@mail.gmail.com>
+Received: (qmail 11607 invoked from network); 19 Dec 2016 13:56:17 -0000
+From: Damien Miller <djm@openbsd.org>
+Date: Mon, 19 Dec 2016 06:56:04 -0700 (MST)
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000004a7e8305bde02ee1"
-Subject: [oss-security] Grafana 7.4.5, 7.3.10 and 6.7.6 released with security fixes for
- Grafana Enterprose
+Message-Id: <4ab69cb56675d73a@openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 7.4 released
 
---0000000000004a7e8305bde02ee1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+OpenSSH 7.4 has just been released. It will be available from the
+mirrors listed at http://www.openssh.com/ shortly.
 
-Dear all,
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support. OpenSSH also includes
+transitional support for the legacy SSH 1.3 and 1.5 protocols
+that may be enabled at compile-time.
 
-We have released Grafana 7.4.5, 7.3.10 and 6.7.6 with important security
-fixes for all Grafana Enterprise versions from 6.1.0-beta1 through 7.4.4.
-Grafana OSS is not affected, as it does not use the features affected by
-vulnerabilities.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+http://www.openssh.com/donations.html
 
-*Remote Escalation of Privileges vulnerability (CVE-2021-27962)*
+Future deprecation notice
+=========================
 
+We plan on retiring more legacy cryptography in future releases,
+specifically:
 
-On the 26th of February during an internal security audit, we discovered
-that Grafana Enterprise 7.2.0 introduced a mechanism which allows users
-with the Editor role to bypass data source permissions on an organization=
-=E2=80=99s
-default data source, if configured. To our knowledge, this has not been
-detected by anyone else.
+ * In approximately August 2017, removing remaining support for the
+   SSH v.1 protocol (client-only and currently compile-time disabled).
 
+ * In the same release, removing support for Blowfish and RC4 ciphers
+   and the RIPE-MD160 HMAC. (These are currently run-time disabled).
 
-Affected versions: Grafana Enterprise releases 7.2.0 through 7.4.3 are
-affected by this vulnerability.
+ * Refusing all RSA keys smaller than 1024 bits (the current minimum
+   is 768 bits)
 
-Patched versions: 7.3.x and 7.4.x
+ * The next release of OpenSSH will remove support for running sshd(8)
+   with privilege separation disabled.
 
+ * The next release of portable OpenSSH will remove support for
+   OpenSSL version prior to 1.0.1.
 
-*Remote Access Control Bypass vulnerabilities (CVE-2021-28146,
-CVE-2021-28147)*
+This list reflects our current intentions, but please check the final
+release notes for future releases.
 
-On the 10th of March during our internal security audit, we discovered that
-on Grafana Enterprise instances using an external authentication service,
-Grafana Enterprise 7.4.0 introduced a mechanism which allows any
-authenticated user to add external groups to existing teams. We have
-reserved CVE-2021-28146 for this issue.
+Potentially-incompatible changes
+================================
 
-As we continued an internal audit, on the 11th of March we discovered that
-Grafana Enterprise 6.1.0 introduced the same vulnerability as above, but
-only for Grafana instances which have editorsCanAdmin feature enabled. We
-have reserved CVE-2021-28147for this issue.
+This release includes a number of changes that may affect existing
+configurations:
 
-Affected versions: Grafana Enterprise 7.4.0-beta1 through 7.4.4 are
-affected by CVE-2021-28146 and 6.1.0-beta1 through 7.4.4 are affected by
-CVE-2021-28147.
+ * This release removes server support for the SSH v.1 protocol.
 
-Patched versions: 6.x, 7.3.x and 7.4.x
+ * ssh(1): Remove 3des-cbc from the client's default proposal. 64-bit
+   block ciphers are not safe in 2016 and we don't want to wait until
+   attacks like SWEET32 are extended to SSH. As 3des-cbc was the
+   only mandatory cipher in the SSH RFCs, this may cause problems
+   connecting to older devices using the default configuration,
+   but it's highly likely that such devices already need explicit
+   configuration for key exchange and hostkey algorithms already
+   anyway.
+    
+ * sshd(8): Remove support for pre-authentication compression.
+   Doing compression early in the protocol probably seemed reasonable
+   in the 1990s, but today it's clearly a bad idea in terms of both
+   cryptography (cf. multiple compression oracle attacks in TLS) and
+   attack surface. Pre-auth compression support has been disabled by
+   default for >10 years. Support remains in the client.
+    
+ * ssh-agent will refuse to load PKCS#11 modules outside a whitelist
+   of trusted paths by default. The path whitelist may be specified
+   at run-time.
 
-*Remote Unauthenticated Denial of Service vulnerability (CVE-2021-28148)*
+ * sshd(8): When a forced-command appears in both a certificate and
+   an authorized keys/principals command= restriction, sshd will now
+   refuse to accept the certificate unless they are identical.
+   The previous (documented) behaviour of having the certificate
+   forced-command override the other could be a bit confusing and
+   error-prone.
+    
+ * sshd(8): Remove the UseLogin configuration directive and support
+   for having /bin/login manage login sessions.
+    
+Changes since OpenSSH 7.3
+=========================
 
-On the 11th of March during our internal security audit, we discovered
-that Grafana
-Enterprise 6.6.0 introduced a new HTTP API endpoint for usage insights
-which allows any unauthenticated user to send an unlimited number of
-requests to the endpoint, leading to a denial of service (DoS) attacks
-against Grafana Enterprise instances.
+This is primarily a bugfix release.
 
-Affected versions: Grafana Enterprise 6.6.0-beta1 to 7.4.4
+Security
+--------
 
-Patched versions: 6.x, 7.3.x and 7.4.x
+ * ssh-agent(1): Will now refuse to load PKCS#11 modules from paths
+   outside a trusted whitelist (run-time configurable). Requests to
+   load modules could be passed via agent forwarding and an attacker
+   could attempt to load a hostile PKCS#11 module across the forwarded
+   agent channel: PKCS#11 modules are shared libraries, so this would
+   result in code execution on the system running the ssh-agent if the
+   attacker has control of the forwarded agent-socket (on the host
+   running the sshd server) and the ability to write to the filesystem
+   of the host running ssh-agent (usually the host running the ssh
+   client). Reported by Jann Horn of Project Zero.
 
-*Solutions and mitigations*
+ * sshd(8): When privilege separation is disabled, forwarded Unix-
+   domain sockets would be created by sshd(8) with the privileges of
+   'root' instead of the authenticated user. This release refuses
+   Unix-domain socket forwarding when privilege separation is disabled
+   (Privilege separation has been enabled by default for 14 years).
+   Reported by Jann Horn of Project Zero.
 
-Download and install the appropriate patch for your version of Grafana.
+ * sshd(8): Avoid theoretical leak of host private key material to
+   privilege-separated child processes via realloc() when reading
+   keys. No such leak was observed in practice for normal-sized keys,
+   nor does a leak to the child processes directly expose key material
+   to unprivileged users. Reported by Jann Horn of Project Zero.
+ 
+ * sshd(8): The shared memory manager used by pre-authentication
+   compression support had a bounds checks that could be elided by
+   some optimising compilers. Additionally, this memory manager was
+   incorrectly accessible when pre-authentication compression was
+   disabled. This could potentially allow attacks against the
+   privileged monitor process from the sandboxed privilege-separation
+   process (a compromise of the latter would be required first).
+   This release removes support for pre-authentication compression
+   from sshd(8). Reported by Guido Vranken using the Stack unstable
+   optimisation identification tool (http://css.csail.mit.edu/stack/)
 
+ * sshd(8): Fix denial-of-service condition where an attacker who
+   sends multiple KEXINIT messages may consume up to 128MB per
+   connection. Reported by Shi Lei of Gear Team, Qihoo 360.
 
-Affected Grafana Cloud instances have been already upgraded to the versions
-with fix. Grafana Enterprise customers have been provided with updated
-binaries ahead of this disclosure.
+ * sshd(8): Validate address ranges for AllowUser and DenyUsers
+   directives at configuration load time and refuse to accept invalid
+   ones. It was previously possible to specify invalid CIDR address
+   ranges (e.g. user@127.1.2.3/55) and these would always match,
+   possibly resulting in granting access where it was not intended.
+   Reported by Laurence Parry.
 
-Further information can be found at
-https://grafana.com/blog/2021/03/18/grafana-6.7.6-7.3.10-and-7.4.5-released=
--with-important-security-fixes-for-grafana-enterprise/
+New Features
+------------
 
-Best Regards,
-Vardan Torosyan
+ * ssh(1): Add a proxy multiplexing mode to ssh(1) inspired by the
+   version in PuTTY by Simon Tatham. This allows a multiplexing
+   client to communicate with the master process using a subset of
+   the SSH packet and channels protocol over a Unix-domain socket,
+   with the main process acting as a proxy that translates channel
+   IDs, etc.  This allows multiplexing mode to run on systems that
+   lack file- descriptor passing (used by current multiplexing
+   code) and potentially, in conjunction with Unix-domain socket
+   forwarding, with the client and multiplexing master process on
+   different machines. Multiplexing proxy mode may be invoked using
+   "ssh -O proxy ..."
 
---0000000000004a7e8305bde02ee1--
+ * sshd(8): Add a sshd_config DisableForwaring option that disables
+   X11, agent, TCP, tunnel and Unix domain socket forwarding, as well
+   as anything else we might implement in the future. Like the
+   'restrict' authorized_keys flag, this is intended to be a simple
+   and future-proof way of restricting an account.
+
+ * sshd(8), ssh(1): Support the "curve25519-sha256" key exchange
+   method. This is identical to the currently-supported method named
+   "curve25519-sha256@libssh.org".
+
+ * sshd(8): Improve handling of SIGHUP by checking to see if sshd is
+   already daemonised at startup and skipping the call to daemon(3)
+   if it is. This ensures that a SIGHUP restart of sshd(8) will
+   retain the same process-ID as the initial execution. sshd(8) will
+   also now unlink the PidFile prior to SIGHUP restart and re-create
+   it after a successful restart, rather than leaving a stale file in
+   the case of a configuration error. bz#2641
+
+ * sshd(8): Allow ClientAliveInterval and ClientAliveCountMax
+   directives to appear in sshd_config Match blocks.
+
+ * sshd(8): Add %-escapes to AuthorizedPrincipalsCommand to match
+   those supported by AuthorizedKeysCommand (key, key type,
+   fingerprint, etc.) and a few more to provide access to the
+   contents of the certificate being offered.
+
+ * Added regression tests for string matching, address matching and
+   string sanitisation functions.
+
+ * Improved the key exchange fuzzer harness.
+ 
+Bugfixes
+--------
+
+ * ssh(1): Allow IdentityFile to successfully load and use
+   certificates that have no corresponding bare public key. bz#2617
+   certificate id_rsa-cert.pub (and no id_rsa.pub).
+
+ * ssh(1): Fix public key authentication when multiple
+   authentication is in use and publickey is not just the first
+   method attempted. bz#2642
+
+ * regress: Allow the PuTTY interop tests to run unattended. bz#2639
+ 
+ * ssh-agent(1), ssh(1): improve reporting when attempting to load
+   keys from PKCS#11 tokens with fewer useless log messages and more
+   detail in debug messages. bz#2610
+
+ * ssh(1): When tearing down ControlMaster connections, don't
+   pollute stderr when LogLevel=quiet.
+
+ * sftp(1): On ^Z wait for underlying ssh(1) to suspend before
+   suspending sftp(1) to ensure that ssh(1) restores the terminal mode
+   correctly if suspended during a password prompt.
+
+ * ssh(1): Avoid busy-wait when ssh(1) is suspended during a password
+   prompt.
+
+ * ssh(1), sshd(8): Correctly report errors during sending of ext-
+   info messages.
+
+ * sshd(8): fix NULL-deref crash if sshd(8) received an out-of-
+   sequence NEWKEYS message.
+
+ * sshd(8): Correct list of supported signature algorithms sent in
+   the server-sig-algs extension. bz#2547
+
+ * sshd(8): Fix sending ext_info message if privsep is disabled.
+
+ * sshd(8): more strictly enforce the expected ordering of privilege
+   separation monitor calls used for authentication and allow them
+   only when their respective authentication methods are enabled
+   in the configuration
+
+ * sshd(8): Fix uninitialised optlen in getsockopt() call; harmless
+   on Unix/BSD but potentially crashy on Cygwin.
+
+ * Fix false positive reports caused by explicit_bzero(3) not being
+   recognised as a memory initialiser when compiled with
+   -fsanitize-memory.
+    
+ * sshd_config(5): Use 2001:db8::/32, the official IPv6 subnet for
+   configuration examples.
+
+Portability
+-----------
+
+ * On environments configured with Turkish locales, fall back to the
+   C/POSIX locale to avoid errors in configuration parsing caused by
+   that locale's unique handling of the letters 'i' and 'I'. bz#2643
+
+ * sftp-server(8), ssh-agent(1): Deny ptrace on OS X using
+   ptrace(PT_DENY_ATTACH, ..)
+
+ * ssh(1), sshd(8): Unbreak AES-CTR ciphers on old (~0.9.8) OpenSSL.
+
+ * Fix compilation for libcrypto compiled without RIPEMD160 support.
+
+ * contrib: Add a gnome-ssh-askpass3 with GTK+3 support. bz#2640
+    
+ * sshd(8): Improve PRNG reseeding across privilege separation and
+   force libcrypto to obtain a high-quality seed before chroot or
+   sandboxing.
+
+ * All: Explicitly test for broken strnvis. NetBSD added an strnvis
+   and unfortunately made it incompatible with the existing one in
+   OpenBSD and Linux's libbsd (the former having existed for over ten
+   years). Try to detect this mess, and assume the only safe option
+   if we're cross compiling.
+
+Checksums:
+==========
+
+ - SHA1 (openssh-7.4.tar.gz) = 1e2073f95d5ead8f2814b4b6c0700bcd533c410f
+ - SHA1 (openssh-7.4p1.tar.gz) = 2330bbf82ed08cf3ac70e0acf00186ef3eeb97e0
+
+ - SHA256 (openssh-7.4.tar.gz) = +GEXh7Xr2J87cq1uA97hF9e+3lfOQ2LKxXGdmFXREf0
+ - SHA256 (openssh-7.4p1.tar.gz) = Gx/EoU4gJCkxgZJO0khy5vLgYpPz6JJqN2uK7EgfGdE=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available as RELEASE_KEY.asc from
+the mirror sites.
+
+Reporting Bugs:
+===============
+
+- Please read http://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
+
+OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
+Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
+Tim Rice and Ben Lindstrom.
+
