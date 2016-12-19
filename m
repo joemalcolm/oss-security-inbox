@@ -1,60 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/9
-Message-ID: <20160608174723.GA14819@openwall.com>
-Date: Wed, 8 Jun 2016 20:47:23 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2016-2177: OpenSSL undefined pointer arithmetic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/19/6
+Message-ID: <e53a33b2e1e14b4ebe7f85cec7f4f631@imshyb02.MITRE.ORG>
+Date: Mon, 19 Dec 2016 11:34:56 -0500
+From: <cve-assign@...re.org>
+To: <security@....org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Xen Security Advisory 204 - x86: Mishandling of SYSCALL singlestep during emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-More off Twitter:
+>                     Xen Security Advisory XSA-204
 
-<guidovranken> @solardiz Here is another very recent OpenSSL CVE that hasnt been released officially yet https://github.com/openssl/openssl/commit/a004e72b95835136d3f1ea90517f706c24c03da7
+> Xen wrongly raised the exception based on the flags at the start of
+> the instruction.
 
-| Avoid some undefined pointer arithmetic
-| 
-| A common idiom in the codebase is:
-| 
-| if (p + len > limit)
-| {
-|     return; /* Too long */
-| }
-| 
-| Where "p" points to some malloc'd data of SIZE bytes and
-| limit == p + SIZE
-| 
-| "len" here could be from some externally supplied data (e.g. from a TLS
-| message).
-| 
-| The rules of C pointer arithmetic are such that "p + len" is only well
-| defined where len <= SIZE. Therefore the above idiom is actually
-| undefined behaviour.
-| 
-| For example this could cause problems if some malloc implementation
-| provides an address for "p" such that "p + len" actually overflows for
-| values of len that are too big and therefore p + len < limit!
-| 
-| Issue reported by Guido Vranken.
-| 
-| CVE-2016-2177
+> Guest userspace which can invoke the instruction emulator can use this
+> flaw to escalate its privilege to that of the guest kernel.
 
-The commit message above gives pointer wraparound as an example of when
-and how this UB could manifest itself, but I think even more likely is
-that an optimizing C compiler would remove the check because it can't
-be reliably true (it can be either false or UB).  A valid pointer is at
-most one element beyond the end of an object, so in the example given
-above "p + len > limit" is never reliably true.  In the actual code
-being patched, there are different instances of the problem, and some of
-the checks look like they're effectively ">= limit" rather than "> limit".
-Those ">=" checks are more lucky, as they can't be completely removed
-(but can still misbehave if the pointer advances further).
+> A 64-bit guest kernel which uses an IST for #DB handling will most likely
+> mitigate the issue, but will have a single unexpected #DB exception
+> frame to deal with. This in practice means that Linux is not
+> vulnerable.
 
-In fact, there are so many instances that someone should re-review the
-patch and possibly look for even more instances of the problem (maybe in
-an automated way different from what might have been used so far).  The
-commit has "Reviewed-by: Rich Salz", which is great, but I think it
-needs more eyes than the committer's and one other person's.
+Use CVE-2016-10013.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYWAvbAAoJEHb/MwWLVhi2rVQP/jbDygsBkkatt/w7GbxvpCjr
+IoSo+krkGda29Dgi4pMAcP8zG3KgRso4tJ48z+Jn30+EpO3zgQSLcCfEaB6Vfbcp
+zZ1wrer8KTvm5ZcV01vncEO/FVvyXX2KZ6h7XuVakOXCRE1+YEPuvdqdc6UyH7aD
+mctdIVrR6jDzpsLDT6uZM6ahcCwRp6VDmxz0r4195RygOWqkmsVPmM9Q6F/VyG4A
+KxBAUFIHUYHdu9Hy/s6U3+M8ugzvpeKKkkBuUcDrFvKu/gfeyFisDlG7GgUtFvp0
+DRKHzxrE20UQjU7VJBXpfvkSaorWp9IlhsnrXyIJNyTxb1N3UtkYrDJpxXRlar7y
+Jj/cVdPT7apIWDIRmRxLWqWrvB2dlx+j3NP3z+wETaKBrLNKj8Aq2h/013VR4CZm
+QMvNQEYhKr+/AdGiVTDeUBsyqAlpp1aXhrvka4Bz1Ws9BAfTdjivGuOn6ab+Zm2U
+foecT2t7ktS927yD4uAtE/dFqNrGHORFt4Kr6A+akqYMwxmuaItpctsqMTecB09p
+vXFAnYk4leKzqd5QkDmqqIilTDAhdN9M0K0SJUebiJgRmhxqU0fhrA4I5jzofggh
+yoKuStjvt0mM3+UQngv56ohPpCjvMxsbPwl8nN8yhwJUx/ncmpWRm74+wece5SuD
+agwy+ENLZv0fk0rv5BKv
+=KJsh
+-----END PGP SIGNATURE-----
