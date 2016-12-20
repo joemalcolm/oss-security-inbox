@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/30/2
-Message-ID: <20160730101658.05bf4020@pc1>
-Date: Sat, 30 Jul 2016 10:16:58 -0400
-From: Hanno Böck <hanno@...eck.de>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-Cc: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/2
+Message-ID: <alpine.LFD.2.20.1612201818230.29699@wniryva>
+Date: Tue, 20 Dec 2016 18:19:47 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Zhenhao Hong <zhenhaohong@...il.com>
+Subject: CVE request Qemu: display: virtio-gpu: out of bounds read in virtio_gpu_set_scanout
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 29 Jul 2016 14:19:38 +0530
-Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
+   Hello,
 
-> The following whitepaper talks about libgcrypt's RSA code being
-> vulnerable to a cache timing attack, which the paper claims is fixed
-> in 1.6.3.
-> 
-> It seems nettle is also vulnerable to this flaw. Which was confirmed
-> by upstream via:
-> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
-> 
-> The above link also contains a proposed patch, will be committed soon.
+Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
+vulnerable to an OOB read issue. It could occur while processing 
+'VIRTIO_GPU_CMD_SET_SCANOUT:' command.
 
-FYI, this patch had some unintended side effects:
-https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003104.html
+A guest user/process could use this flaw to crash the Qemu process instance 
+resulting in Dos.
 
-They replaced GMP's mpz_powm with mpz_powm_sec, however the latter is
-not equivalent. It requires odd moduli and will crash with a floating
-point exception if the modulus is even.
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=acfc4846508a02cc4c83aa27799fd7
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=2fe760554eb3769d70f608a158474f
 
-This is actually a bug class that may turn out to be interesting, I
-recently experienced something very similar (but more severe) in
-matrixssl (writeup on that will follow as soon as I find time for it).
-Bignum libraries have certain conditions on how their input is formed
-and don't behave well if the input isn't what they expect. These
-conditions usually make sense in the average use case, but not
-neccessarily if an attacker can control some of the input.
+This issue was reported by Zhenhao Hong, Marvel team of 360.cn Inc.
 
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
