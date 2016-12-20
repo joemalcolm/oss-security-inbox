@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/04/23
-Message-ID: <20160504180121.GA20669@openwall.com>
-Date: Wed, 4 May 2016 21:01:21 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: broken RSA keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/1
+Message-ID: <alpine.LFD.2.20.1612201815510.29699@wniryva>
+Date: Tue, 20 Dec 2016 18:18:03 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Zhenhao Hong <zhenhaohong@...il.com>
+Subject: CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 04, 2016 at 08:28:03PM +0300, Solar Designer wrote:
-> BTW, had I not realized the above, I would now come up with an even more
-> complex conspiracy theory about 149784613473514443594783892995, which is
-> 0x1E3FAEDA6A4F093A7C0F5A603, so:
-> 
-> limb[0] = 0xC0F5A603
-> limb[1] = 0xA4F093A7
-> limb[2] = 0xE3FAEDA6
-> limb[3] = 1
-> 
-> which satisfies:
-> 
-> limb[1] = limb[0] + limb[2] + 2
-> 
-> No idea why it's "+ 2" here
+   Hello,
 
-Actually, it's "- 2", not "+ 2".  Sorry.  Not that it matters, but I was
-uncomfortable leaving the error uncorrected in case someone wants to try
-and figure out why exactly this artifact manifests itself like it does.
+Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
+vulnerable to an out of bounds memory access issue. It could occur while 
+processing 'VIRTIO_GPU_CMD_GET_CAPSET' command.
 
-There's probably an explanation of why the algorithm is likely to hit
-numbers of this form, but this is beside the point for software bugs,
-which is what I want us to discuss further in this thread.
+A guest user/process could use this flaw to crash the Qemu process instance on 
+a host, resulting in DoS.
 
-Alexander
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg01903.html
+
+This issue was reported by Zhenhao Hong, Marvel Team of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
