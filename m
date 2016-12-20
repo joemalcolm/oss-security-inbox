@@ -1,104 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/18/2
-Message-ID: <alpine.DEB.2.20.1605180816100.8323@tvnag.unkk.fr>
-Date: Wed, 18 May 2016 08:18:11 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: Curl Announce -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: TLS certificate check bypass with mbedTLS/PolarSSL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/6
+Message-ID: <CABQu4+4X=WBhODKjSM1-Pgm-Ujnc2Lxw5rXAUOojbCaDjphbhg@mail.gmail.com>
+Date: Tue, 20 Dec 2016 22:00:12 +0100
+From: Sylvain SARMEJEANNE <sylvain.sarmejeanne.ml@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack
 Content-Type: text/plain; charset=utf-8
 
-TLS certificate check bypass with mbedTLS/PolarSSL
-==================================================
+Hello,
 
-Project cURL Security Advisory, May 18th 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20160518.html)
+I reported a vulnerability in the Smack XMPP library where the security of
+the TLS connection is not always enforced. By stripping the "starttls"
+feature from the server response with a man-in-the-middle tool, an attacker
+can force the client to authenticate in clear text even if the
+"SecurityMode.required" TLS setting has been set. This is a race condition
+issue so the attack will work after a few tries.
 
-VULNERABILITY
--------------
+The vulnerability affects at least all 4.1.x versions and is fixed in Smack
+4.1.9.
 
-libcurl did not check the server certificate of TLS connections done to a host
-specified as an IP address, or when explicitly asked to use SSLv3.
+References:
+https://community.igniterealtime.org/blogs/ignite/2016/11/22/smack-
+security-advisory-2016-11-22
+https://issues.igniterealtime.org/browse/SMACK-739
+https://github.com/igniterealtime/Smack/commit/
+a9d5cd4a611f47123f9561bc5a81a4555fe7cb04
+https://github.com/igniterealtime/Smack/commit/
+059ee99ba0d5ff7758829acf5a9aeede09ec820b
 
-This flaw only exists when libcurl is built to use mbedTLS or PolarSSL as TLS
-backend.
+Could you assign a CVE for this?
+Thanks!
 
-The documentation for mbedTLS and PolarSSL (wrongly) says that the API
-function *ssl_set_hostname() is used only for setting the name for the TLS
-extension SNI. The set string is however even more importantly used by the
-libraries to verify the server certificate, and if no "hostname" is set it
-will just skip the check and successfully continue with the handshake.
+Sylvain
 
-libcurl would wrongly avoid using the function when the specified host name
-was given as an IP address or when SSLv3 is used, as SNI isn't supposed to be
-used then. This then leads to that all uses of TLS oriented protocols (HTTPS,
-FTPS, IMAPS, POPS3, SMTPS, etc) will allow connections to servers with
-unverified server certificates as long as they're specified as IP addresses or
-using SSLv3.
-
-By tricking a libcurl-using client to use a URL with a host specified as IP
-address only, an application could be made to connect to an impostor server or
-Man In The Middle host without noticing.
-
-Note: PolarSSL is the old name and releases of the library that nowadays is
-known and released under the name mbedTLS.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-3739 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This flaw is relevant for all versions of curl and libcurl that support
-PolarSSL or mbedTLS.
-
-- Affected versions: libcurl 7.21.0 to and including 7.48.0
-- Not affected versions: libcurl < 7.21.0 and libcurl >= 7.49.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.49.0, libcurl properly sets the "hostname" even when it is just
-an IP address and even when using SSLv3 that doesn't have SNI.
-
-A [patch for CVE-2016-3739](https://curl.haxx.se/CVE-2016-3739.patch) is available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.49.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Build your libcurl with another TLS backend to work around this flaw.
-
-TIME LINE
----------
-
-It was first reported to the curl project on April 21st 2016. We contacted
-distros@...nwall on May 8th.
-
-libcurl 7.49.0 was released on May 18 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Moti Avrahami. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
