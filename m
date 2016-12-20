@@ -1,63 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/31/4
-Message-ID: <CANO=Ty1OcZ=ukxttq9A9M9ot78jDPzDmq4y1NGUMAQmSiveH_g@mail.gmail.com>
-Date: Thu, 31 Mar 2016 08:53:17 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Andreas Dilger <adilger@...ger.ca>, Yves-Alexis Perez <corsac@...ian.org>,  Theodore Tso <tytso@...gle.com>, linux-ext4@...r.kernel.org
-Subject: Re: CVE Request - Linux kernel (multiple versions) ext2/ext3 filesystem DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/5
+Message-ID: <CADSYzsv6ptE2mLgXJUBDqm5HNbi=qC7BRpGr3mrcmx-zF3trJw@mail.gmail.com>
+Date: Tue, 20 Dec 2016 17:16:39 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 30, 2016 at 2:43 PM, Theodore Ts'o <tytso@....edu> wrote:
->
->
-> You can mount the file system with "mount -o errors=continue" and this
-> will override the default behavior specified in the super block.
->
-> I would argue that a Desktop or server system that had automount
-> should either (a) mount with -o errors=continue, or (b) force an fsck
-> on the file system before mounting it.
->
+Vulnerability:
+Nagios Core < 4.2.4  Root Privilege Escalation CVE-2016-9566
 
-The problem is that:
+Discovered by: Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
-a) means I'll be mounting filesystems with errors that I may want to know
-about (but not have my  system panic about)
+Severity: High
 
-b) fsck takes a long time on large disks (the smallest size of disk I buy
-for USB drives is 1TB, if I fsck every time I plug one in I'll die of old
-age).
+Nagios Core daemon in versions below 4.2.4 was found to perform unsafe
+operations when handling the log file. This could be exploited by
+malicious local attackers to escalate their privileges from 'nagios'
+system user,
+or from a user belonging to 'nagios' group, to root.
+The exploit could enable the attackers to fully compromise the system on which a
+vulnerable Nagios version was installed.
 
-
->
-> So I think this is a particularly meaningless CVE, which is why I have
-> zero respect for people who try to make any kind of conclusion based
-> on CVE counts.   I certainly don't plan to do anything about this.
->
-
-As for your comments on CVE counting even the then head of CVE @mitre told
-people not to rely on CVE counting for vulnerability stats:
-
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-
-As for your comment on not fixing this: I think fundamentally I should be
-able to plug a file system in and try to mount it with default/reasonable
-options and NOT have my system panic. File system handling code, like any
-code that handles user supplied data should be able to handle garbage
-gracefully and securely. At worst it should try to mount and go "derp, it's
-messed up, maybe fsck it?"
+To obtain the necessary level of access (nagios user/group), the
+attackers could potentially use another Nagios vulnerability -
+CVE-2016-9565.
 
 
->
->                                            - Ted
->
+The full up-to-date advisory and a PoC exploit for CVE-2016-9566 can
+be found at:
+
+https://legalhackers.com/advisories/Nagios-Exploit-Root-PrivEsc-CVE-2016-9566.html
+
+A copy has been attached to this message.
+
+Video PoC:
+https://legalhackers.com/videos/Nagios-Exploit-Root-PrivEsc-CVE-2016-9566.html
 
 
+The aforementioned CVE-2016-9565  vuln can be found at:
+
+https://legalhackers.com/advisories/Nagios-Exploit-Command-Injection-CVE-2016-9565-2008-4796.html
+
+For updates, follow:
+
+https://twitter.com/dawid_golunski
 
 -- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+View attachment "Nagios-Root.txt" of type "text/plain" (15324 bytes)
