@@ -1,4 +1,9 @@
-Received: (qmail 29836 invoked by uid 550); 20 Oct 2023 13:04:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["809" "Tuesday" "20" "December" "2016" "21:49:10" "+0000" "Simon McVittie" "smcv@debian.org" "<20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>" "19" "[oss-security] CVE request: ikiwiki: authorization bypass when reverting changes" nil nil nil "12" "2016122021:49:10" "[oss-security] CVE request: ikiwiki: authorization bypass when reverting changes" (number mark "U       smcv@debian. Dec 20   19/809   " thread-indent "\"[oss-security] CVE request: ikiwiki: authorization bypass when reverting changes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12147 invoked by uid 550); 20 Dec 2016 21:49:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +12,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10059 invoked from network); 20 Oct 2023 09:09:58 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0Ywy08Yd6oHIfn1xuwOHmHhiJKucR+jwdBxl5ZNnroqnrVVrLtkE
-	8AG6/kP0amBuasrxe61iR0PjjnHrb+x9Z42aLXE=
-X-Google-Smtp-Source: AGHT+IHLp7myTrzYUnOgVqmF6lf0K31Z5i3LNJtvxkoKMavWk1gNoSO3ePvA9cmcbR1VzUYj8Sc6RyTAgwsM+KWcC+c=
-X-Received: by 2002:a17:907:9808:b0:9bd:f4b8:b0bd with SMTP id
- ji8-20020a170907980800b009bdf4b8b0bdmr819023ejc.6.1697792968707; Fri, 20 Oct
- 2023 02:09:28 -0700 (PDT)
-MIME-Version: 1.0
-From: Colm O hEigeartaigh <coheigea@apache.org>
-Date: Fri, 20 Oct 2023 10:09:16 +0100
-X-Gmail-Original-Message-ID: <CAB8XdGA58wd-CUqd+wW+6V6PVrz2kimSq74TsYJdizDZaT3=hQ@mail.gmail.com>
-Message-ID: <CAB8XdGA58wd-CUqd+wW+6V6PVrz2kimSq74TsYJdizDZaT3=hQ@mail.gmail.com>
+Received: (qmail 12124 invoked from network); 20 Dec 2016 21:49:22 -0000
+Date: Tue, 20 Dec 2016 21:49:10 +0000
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2023-44483: Apache Santuario: Private Key disclosure in debug-log output
+Message-ID: <20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Subject: [oss-security] CVE request: ikiwiki: authorization bypass when reverting changes
 
-Severity: moderate
+Reference: http://ikiwiki.info/bugs/rcs_revert_can_bypass_authorization_if_affected_files_were_renamed/
+Vulnerable versions: < 3.20161219
+Fixed versions: >= 3.20161219
+Fix: http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=9cada49ed6ad24556dbe9861ad5b0a9f526167f9
 
-Affected versions:
+ikiwiki is a static site generator with some dynamic features,
+used for wikis, blogs and other websites.
 
-- Apache Santuario  before < 2.2.6
-- Apache Santuario  before < 2.3.4
-- Apache Santuario  before < 3.0.3
+intrigeri discovered that on sites with the git and recentchanges
+plugins and the CGI interface enabled, the revert links on the
+RecentChanges page could revert changes on a page the logged-in user
+cannot legitimately edit, if the change being reverted was made before
+the page was renamed from a location that the logged-in user *could*
+legitimately edit.
 
-Description:
+Please allocate a CVE ID for this vulnerability.
 
-All versions of Apache Santuario - XML Security for Java prior to
-2.2.6, 2.3.4, and 3.0.3, when using the JSR 105 API, are vulnerable to
-an issue where a private key may be disclosed in log files when
-generating an XML Signature and logging with debug level is enabled.
-Users are recommended to upgrade to version 2.2.6, 2.3.4, or 3.0.3,
-which fixes this issue.
-
-Credit:
-
-Apache Santuario would like to thank Max Fichtelmann for reporting
-this issue. (finder)
-
-References:
-
-https://santuario.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-44483
+Thanks,
+    S
