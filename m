@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5068" "Sunday" "22" "March" "2015" "21:29:24" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150323012924.0F2336C0018@smtpvmsrv1.mitre.org>" "99" "[oss-security] Re: CVE for Kali Linux" nil nil nil "3" "2015032301:29:24" "[oss-security] Re: CVE for Kali Linux" (number mark "        cve-assign@m Mar 22   99/5068  " thread-indent "\"[oss-security] Re: CVE for Kali Linux\"\n") "<550E21FA.6090704@redhat.com>" ("<550E21FA.6090704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1543" "Tuesday" "20" "December" "2016" "23:59:35" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20161220225935.GH19629@jumper.schlittermann.de>" "42" "Re: [oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016122022:59:35" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       hs@schlitter Dec 20   42/1543  " thread-indent "\"Re: [oss-security] CVE-2016-9963 Exim private information leak\"\n") "<20161218175925.GE31981@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "<20161218175925.GE31981@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11496 invoked by uid 550); 23 Mar 2015 01:29:36 -0000
+Received: (qmail 15869 invoked by uid 550); 21 Dec 2016 06:17:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11478 invoked from network); 23 Mar 2015 01:29:35 -0000
-In-Reply-To: <550E21FA.6090704@redhat.com>
-Message-Id: <20150323012924.0F2336C0018@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sun, 22 Mar 2015 21:29:24 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE for Kali Linux
-To: kseifried@redhat.com
+Received: (qmail 1533 invoked from network); 20 Dec 2016 22:59:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-To;
+	bh=MO/2mEK7Dtz6YXriYYHwjPCooSCgXwj7tQgyTqGJhS8=; b=eB0r/xC8ikB0vCcYnUnndJC0zn
+	iqRuEiO7YAoKcQ8lRxPPC0noWs1clkOXjG0q6NAba3QGTAqXDynnf8k+pfSOXIXpwR5vvHU2bVglh
+	Sc8elP+OQ8VyXeSlOnOq4pZHueylNjgF+ViL1gni/EJZjYCm8R8fQMtdM0PoE5ZhucAk=;
+Date: Tue, 20 Dec 2016 23:59:35 +0100
+From: Heiko Schlittermann <hs@schlittermann.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20161220225935.GH19629@jumper.schlittermann.de>
+References: <20161215233645.GJ29010@jumper.schlittermann.de>
+ <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
+ <20161218175925.GE31981@jumper.schlittermann.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ChQOR20MqfxkMJg9"
+Content-Disposition: inline
+In-Reply-To: <20161218175925.GE31981@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] CVE-2016-9963 Exim private information leak
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--ChQOR20MqfxkMJg9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We've read the "CVE for Kali Linux" messages and haven't yet found a
-real case that can have a CVE assignment. We also believe it's
-infeasible to make a comprehensive statement about every hypothetical
-case and whether a CVE assignment would occur.
+Heiko Schlittermann <hs@schlittermann.de> (So 18 Dez 2016 18:59:25 CET):
+=E2=80=A6
+> On Dec, 25th we will make the details and the above mentioned releases
+> available to the public.
 
-A few general comments:
+To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to th=
+e public
+Git repository git://git.exim.org/exim.git and upload the tar balls into th=
+e=20
+FTP area ftp://ftp.exim.org/pub/exim/exim4
 
-1. http://openwall.com/lists/oss-security/2015/03/22/20 says:
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-  it's only recently (e.g. the last 6 months or so?)
-  that we've moved the security bar to:
+--ChQOR20MqfxkMJg9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-  downloads of updates via HTTP with no other protection == CVE
-
-We didn't understand this. The last paragraph of
-http://openwall.com/lists/oss-security/2015/03/03/10 suggests that
-"==" isn't the case. Some issues of this type will receive CVE IDs but
-others will not. For example,
-http://openwall.com/lists/oss-security/2015/03/03/10 is about an
-unusual case where people interested in file integrity had the option
-of paying $10 for https.
-
-2. For Kali Linux, users are apparently supposed to start at
-https://www.kali.org/downloads/ to obtain their initial set of
-software, including the package signing key. Packages apparently are
-later updated using http://security.kali.org with automatic signature
-verification before any installed software is replaced. The
-https://security.kali.org site doesn't exist and therefore there isn't
-an opportunity to "fix" anything with a one-character change. Even if
-there were widespread agreement that https://security.kali.org is
-required to meet their users' reasonable expectations, there still
-would not be a CVE because the issue is site-specific (a missing
-security property on a vendor-controlled server). Somewhat similarly,
-there could not be a CVE for the http://cygwin.com/setup-x86.exe case.
-Finally, if there is a need for extra security properties on
-https://www.kali.org (e.g., HSTS if it doesn't yet have it), there
-would again be no associated CVE or CVEs.
-
-3. We're typically uninterested in assigning CVE IDs based on a
-likelihood that users don't follow instructions. For example, suppose
-a community Linux distribution publishes complete open-source software
-for generating and operating a mirror site. These mirror sites offer
-an ISO with only an http URL, but with clear instructions to verify
-the ISO checksum against a sufficiently reliable checksum listing. One
-might argue that an https .iso URL would be better because many users
-actually won't ever visit that checksum listing. However, a
-counterargument is that the community Linux distribution might be
-trying to emphasize the concept that endpoint security on the mirror
-sites is unknown and unsupported. A person doing a download may not
-realize that the mirror sites are completely untrusted and some might
-be controlled by attackers. There might be persons who would have
-verified the checksum after an http download, but wouldn't bother to
-verify the checksum after an https download. In other words, depending
-on the psychological model of the users, http might be better if https
-provided a false sense of security.
-
-4. The Debian case is perhaps interesting:
-https://www.debian.org/distrib/ explicitly uses the http scheme in a
-link to a .iso file, and
-https://www.debian.org/releases/stable/amd64/ch03s01.html.en perhaps
-has a missing step "3a. Verify (somehow?) the file integrity of the
-installer software." If this actually is a security problem, it is
-site-specific and can't have a CVE ID. At the time that the
-documentation is used, the documentation isn't a file that has been
-distributed to the customer's system.
-
-5. http://openwall.com/lists/oss-security/2015/03/22/22 asks 'if a
-vendor explicitly tells people not to check them ("download over http
-and check sums published over http") is that CVE worthy?' The general
-answer is that there can be a CVE ID for a missing
-integrity-verification step, either a step that is missing in
-distributed documentation or a step that is missing in distributed
-code. As an example, if an integrity-verification step goes to an http
-checksum page but was intended to go to an https checksum page, and
-the root cause is that the author's keyboard had a bad 's' key, then
-that's a vulnerability and can have a CVE ID. If there's a new product
-and the root cause of skipping an integrity-verification step is that
-checksum generation is still being debugged and won't be live until
-the next release, then typically that would not have a CVE ID.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJVD2t7AAoJEKllVAevmvms90QH/09Whael260L0jzRG4psYDOW
-bpk7Y6bLR20/ubWbKBZnkqlbHI/QBLz5IWVYYJk5T8gpFL1XdpgU9wxDvefmVXKE
-qFdE4P0M7kOv0bcROnawrAstHsU0oti5iU3k/KVrMKYuSYSPJ9S6+N2Sv10W7wWr
-m9zXucC1ICLqCaOLcCwWZsmJPz+09ysANVe83VNhs2S3BTv1rBoQZNWf65UcjZ10
-TBEmhbzzwwyCp4Obum3+GWe+3itYWPj61kKCOttPq05aOWo5XriHKVPXWGolUzvm
-agKdLy/zOIio/8LmIrNyhuLzKnz5TS/9bs8Jd9qrWXccpRTqeo4tB9nJ5uTNPGk=
-=c1gK
+iQEcBAEBCgAGBQJYWbfXAAoJEGoXY4qgRQz1YOsH/3SRP1Af49Aiuj+Y4exuqtEm
+bLn7G3abxZs/6BaExl9eG6724Szag77YdUkLKdnrufRWSXUNiQ3BAQ6HvB2x4nC0
+P2qo3EKEWh2wBHYWKqzUGsdthq5Y2Zia0eQRYRQYboki72Ur4Cmq2Oo52UTrjoL2
+rT2t2T38MBQrGziRXOj5nBrKpZh1LoYnVrPzPLxnXyuTEVem1VmtdIX8ugGPBiyj
+B1mLI7B7V++3XlFBoVnvVuRpZAxGPsXt4+P2nB6bcXtqcqL1oJXTrPNh4T1Qod9F
+MEdSmZiRffe3as8NjJE0ZniyT7oOo+ymzQNd6KFiAN8MDyA1Bh7vf+EvgZz61hw=
+=zlhi
 -----END PGP SIGNATURE-----
+
+--ChQOR20MqfxkMJg9--
