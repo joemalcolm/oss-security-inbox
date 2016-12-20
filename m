@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/15/8
-Message-ID: <30086816.X7GymaXB0v@willoughby>
-Date: Thu, 15 Sep 2016 17:52:52 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Libarchive/bsdtar: multiple crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/1
+Message-ID: <20161220225935.GH19629@jumper.schlittermann.de>
+Date: Tue, 20 Dec 2016 23:59:35 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
-Hello all.
+Heiko Schlittermann <hs@...littermann.de> (So 18 Dez 2016 18:59:25 CET):
+…
+> On Dec, 25th we will make the details and the above mentioned releases
+> available to the public.
 
-I'd like to make people aware of the following crashes in libarchive/bsdtar 
-found by fuzzing (all issues are public on github):
+To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
+Git repository git://git.exim.org/exim.git and upload the tar balls into the 
+FTP area ftp://ftp.exim.org/pub/exim/exim4
 
-The most dangerous, an out of bounds stack write (which is also fixed 
-upstream):
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-stack-based-buffer-overflow-in-bsdtar_expand_char-util-c/ 
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-
-The following are buffer over read of 1 (all are unfixed upstream ATM):
-
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-detect_form-archive_read_support_format_mtree-c/ 
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-read_header-archive_read_support_format_7zip-c/
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-memory-corruptionunknown-crash-in-bid_entry-archive_read_support_format_mtree-c/
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-heap-based-buffer-overflow-in-bid_entry-archive_read_support_format_mtree-c/
-
-As stated in the posts, the two latest bug could be the same, but I didn't 
-have an upstream response about, so I posted both stacktrace to better track 
-the issues.
-
-
-The following are use-after-free (all are unfixed upstream ATM):
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-bid_entry-archive_read_support_format_mtree-c/
-https://blogs.gentoo.org/ago/2016/09/11/libarchive-bsdtar-use-after-free-in-detect_form-archive_read_support_format_mtree-c/
-
-As stated in the posts, they could be the same.
-I didn't have an upstream response too for those.
-
-
-Agostino
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
