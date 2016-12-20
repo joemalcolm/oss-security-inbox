@@ -1,31 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/28/10
-Message-Id: <056121F3-6A4C-4962-B3EC-CE294DDF5C5F@ntppool.org>
-Date: Thu, 28 Jan 2016 09:38:33 -0800
-From: Ask Bjørn Hansen <ask@...pool.org>
-To: Luca BRUNO <lucab@...ian.org>
-Cc: pool@...ts.ntp.org, oss-security@...ts.openwall.com, linuxbrad@...il.com, team@...urity.debian.org, secalert@...hat.com
-Subject: Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/20/4
+Message-ID: <CADSYzsucRUuig5_vSn66P_4oYbw2tSKBHbNbfKGxrF5R4k-uAg@mail.gmail.com>
+Date: Tue, 20 Dec 2016 17:12:58 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Nagios Core < 4.2.2 Curl Command Injection leading to Remote Code Execution [CVE-2016-9565]
 Content-Type: text/plain; charset=utf-8
 
-Hi Luca (and everyone),
+Vulnerability:
+Nagios Core < 4.2.2  Curl Command Injection / Remote Code Execution
 
-I removed those servers yesterday. Brad had been helping look to see if others were doing something similar.
+CVE-2016-9565
 
-I think the behavior was falling well outside what's reasonably expected from a server operator participating in the pool.
+Discovered by: Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
-The operator had also been adding the same server multiple times in order to "attract" more traffic which is definitely outside the guidelines.
+Severity: High
 
-It's not something we want to support, though being the "connector" between users and volunteer server operators on an protocol without any encryption or authentication we can't pretend there's more control than there is.
+Nagios Core comes with a PHP/CGI front-end which allows to view status
+of the monitored hosts.
+This front-end contained a Command Injection vulnerability in a RSS feed reader
+class that loads (via insecure clear-text HTTP or HTTPS accepting self-signed
+certificates) the latest Nagios news from a remote RSS feed (located on the
+vendor's server on the Internet) upon log-in to the Nagios front-end.
+The vulnerability could potentially enable remote unauthenticated attackers who
+ managed to impersonate the feed server (via DNS poisoning, domain
+hijacking etc.), to provide a malicious response that injects
+parameters to
+curl command used by the affected RSS client class and effectively
+read/write arbitrary files on the vulnerable Nagios server.
+This could lead to Remote Code Execution in the context of www-data/nagios user
+on default Nagios installs that follow the official setup guidelines.
 
-I might just be too cynical, but it also feels like something we should come to expect. Anyone who's looked at traffic to an Internet facing IPv4 address have seen much worse.
+The full up-to-date advisory and a PoC exploit can be found at:
 
-The NTP pool usage being the source sucks, but in general I am sure we will see more of this as IPv6 usage goes up. Because you can't scan the IPv6 space, there will be some value in "active addresses" so eventually we will see IP addresses traded like other PII data is now. Choose the websites you visit carefully?
+https://legalhackers.com/advisories/Nagios-Exploit-Command-Injection-CVE-2016-9565-2008-4796.html
+
+A copy of the current advisory has also been attached to this message.
+
+Video PoC:
+
+https://legalhackers.com/videos/Nagios-Exploit-Command-Injection-CVE-2016-9565-2008-4796.html
 
 
+Attackers who have successfully exploited this vulnerability and achieved code
+execution with 'nagios' group privileges, could escalate their
+privileges to root system account via another Nagios vulnerability
+(CVE-2016-9566) described at:
 
-Ask
+https://legalhackers.com/advisories/Nagios-Exploit-Root-PrivEsc-CVE-2016-9566.html
+
+For updates, follow:
+
+https://twitter.com/dawid_golunski
 
 
--- 
-http://www.ntppool.org/
+--
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
+
+View attachment "Nagios-Command-Injection.txt" of type "text/plain" (21761 bytes)
