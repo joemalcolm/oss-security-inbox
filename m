@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/16/12
-Message-Id: <20160316164539.43CF5EBC143@smtpvmsrv1.mitre.org>
-Date: Wed, 16 Mar 2016 12:45:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: josselin.feist@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request : Use-after-free in gifcolor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/10
+Message-ID: <20161221205952.GA81339@wopr>
+Date: Wed, 21 Dec 2016 12:59:52 -0800
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Dec 20, 2016 at 11:59:35PM +0100, Heiko Schlittermann wrote:
+> Heiko Schlittermann <hs@...littermann.de> (So 18 Dez 2016 18:59:25 CET):
+> …
+> > On Dec, 25th we will make the details and the above mentioned releases
+> > available to the public.
+> 
+> To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
+> Git repository git://git.exim.org/exim.git and upload the tar balls into the 
+> FTP area ftp://ftp.exim.org/pub/exim/exim4
 
-> Two possible consecutives calls to EGifCloseFile at line 122 and 124,
-> with the same first parameter (GifFile) could lead to two calls to
-> free
+Just so we're absolutely clear:
 
-> this is also a use-after-free
+You are releasing the fix for a currently-undisclosed security
+vulnerability on the day most of the Western world's IT staff is on
+holiday?
 
-> A fix could be simply to remove the second call to EGifCloseFile.
-
-Use CVE-2016-3177.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW6Y0hAAoJEL54rhJi8gl5ghwP/joKr1pUl7IDb/5LAWOMQxeQ
-h00wAoH0AkMb/hI3GXTdbALXzVGSZ8OT6BKQerR9raYTZeUyWi65+xmPdS3yXDQW
-q+y1hsksxX3ugU3drcBNnlTxXqHKVIYRUwyqXYclVbMmd8hwqNBqc6dvpwiqGnEb
-CALN799cMf2wjBFajkN6BWxdj0uULjtdCE6FfwVBkwusaEQrFaQj8qa07VjpyPQy
-cqfnx0w3fraDm9bZ0h7vZtPKT6l8+GOp9ZuEOFacPz7wROyftNalSra9wRmaqEcr
-A7TU6xqu1+FUcwN4mK9IDQvWQup3bxZ7xg9Vu2ckQ0dLJjyrmLBccFcajicGV0wN
-twblpPYjUss53bjgUBNfSLZFvZcEQTuzlyPiXXPxkO35fypS5pZ7bGkkW1JXo37v
-HjYyvwO2kSBg5dXxmMqW4fXdzND/nSPTl9q7PKwL6hb7GpXudaPFAETPuQPpx6RK
-EnXpQkeYIn15lGgjJrYhOywMZajNT0yO597w3jQ0B+z/wkrVp3Nr6k854mApM/cc
-rech7Ff6XGvPTDUARhwV+gR8izkEOsumd397mQMPMdiHDBwEU2i0+kkBqAaWX0/O
-duoNOSJjdrIQYTHh4MXFgynFDU+PocFCv07UcFHAmhns48d5LdOahPQxm9PRLB/H
-buvp1GGX8I2tnLoTbdfX
-=qHvQ
------END PGP SIGNATURE-----
+khm
