@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/25/1
-Message-Id: <20161025052909.84CF1ABC51D@smtpvmsrv1.mitre.org>
-Date: Tue, 25 Oct 2016 01:29:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libwmf: memory allocation failure in wmf_malloc (api.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/7
+Message-ID: <20161221200739.GA5225@hunt>
+Date: Wed, 21 Dec 2016 12:07:39 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: tapper <lancett01@...glemail.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Curious about the security of my router fermwair.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, Dec 21, 2016 at 11:39:26AM +0000, tapper wrote:
+> 	Hi my name is Jonathan. I don't know if this is the write place to ask
+> about this but here gos.
 
-> AddressSanitizer failed to allocate 0xfe769000 bytes of LargeMmapAllocator
+It's not the usual use of this list but I suspect you won't upset many
+people either.
 
-> 0x7f7173b4d337 in wmf_malloc ... libwmf-0.2.8.4/src/api.c:482
-> 0x7f7173b5d2f8 in wmf_scan ... libwmf-0.2.8.4/src/player.c:143
-> 0x7f7173d6dcf7 in ReadWMFImage ... ImageMagick-7.0.3-0/coders/wmf.c:2675:13
+> I would like to know if any one would like to have a poke around at the
+> third party router firmware I use on my router called Gargoyle.
 
-Use CVE-2016-9011.
+The first item I found in about one minute of inspection is that they
+include an utterly ancient version of ffmpeg:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/ericpaulbishop/gargoyle/blob/master/package/ffmpeg/Makefile#L10
 
-iQIcBAEBCAAGBQJYDu1AAAoJEHb/MwWLVhi2VPwP/20e47SxBDB94G3os2r/E/rD
-Us+bIZe+GEusNpuUoKn+Ykh9Y9/OBgUxkSacTLhETbWwInWSZcwv5Tntl/+SYQPU
-e623sugwiN9TrlAAPnBstCD6lx0CndQar4mkdVrvdHqLxnGXz34D/vfdseIKpmLK
-fMnAMpD3mLDF2BuwVqPdqVgoDV7ieD9rSZ8JWIJFsJIHm1qxtjMoAOKcyddBtYo9
-kJa+LEtQGJebL8Dh5r8nEsimINscI17h803D5//U8o57BOLpleztKKDk4wVGKNJe
-7L92xplVIGQ2a84SnjCcOPPAc2p4gSz1C3CQjDKTh3kmnuFzLB/VVOIgzwLtpeBN
-oF6LUK5WLx36/V9RW4Yrk7ilFudIFzW+kg/1cE4P4+zE/LItwPSGF4y5PfvLsEQB
-2deI2cV+pIzNBLIUOtx4M+4d0+vjzXW+NmrVUCKmdoBAKtvXi1OBmDjN/NN8U1A5
-dBugmmfZ95Yzw2Yv96UVQ7YNxzUjjQxcP2I6ufKAOa99oKm/mWUAsb2p8bgrnNZ6
-kUPMfUyKrVmrgkxUSHaT5AldPm9K/JYCsiyuoU7HDCE/HSKHUKYypUK5hwEMK4xV
-N3XK4Ex1wVb3drCRwXniVMpwrpGyPxSNg3T5okHmmHDn01Q600GunzzJorRDkNIV
-MO66uFXEbfDaT3Gz2hd2
-=Xe0u
------END PGP SIGNATURE-----
+PKG_NAME:=ffmpeg
+PKG_VERSION:=2.4.4
+PKG_RELEASE:=1
+
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=http://ffmpeg.org/releases/
+PKG_MD5SUM:=7e2819c71484ffba1ba1a91dd5285643
+
+The 2.4 branch of ffmpeg ended with version 2.4.13 on 2016-02-02. Not
+only are they nine point releases behind, they are also drastically
+behind on shipping newer versions entirely. (The latest version upstream
+is numbered 3.2.2. That's seven minor versions behind, too.) Granted,
+new versions bring new bugs, but picking one point in time two years
+ago and then never updating is trouble.
+
+I didn't spot any security fixes for ffmpeg in the patches-generic or
+patches-old directories, but perhaps they just weren't clearly labeled.
+
+Another concerning point is the use of md5 to validate the download. While
+use of md5 as a 'better crc32' is well established, most cryptographic
+authorities are saying it's time to replace md5's replacement, sha-1.
+They're two hash functions behind the times.
+
+A full review would take far more time than I have to offer but the
+initial impression is that it needs a serious refresh of its dependencies.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
