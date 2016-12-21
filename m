@@ -1,84 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/15
-Message-ID: <569E8400.2090107@gmail.com>
-Date: Wed, 20 Jan 2016 02:44:16 +0800
-From: Pray3r <pray3r.z@...il.com>
-To: Dan Rosenberg <dan.j.rosenberg@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-8088: Heap Overflow Vulnerability in the HIFI Driver of Huawei Smart Phone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/1
+Message-ID: <20161221232409.GN19629@jumper.schlittermann.de>
+Date: Thu, 22 Dec 2016 00:24:09 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Kurt H Maier <khm@...ops.net> (Mi 21 Dez 2016 21:59:52 CET):
+…
+> > To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
+> > Git repository git://git.exim.org/exim.git and upload the tar balls into the 
+> > FTP area ftp://ftp.exim.org/pub/exim/exim4
+> 
+> Just so we're absolutely clear:
+> 
+> You are releasing the fix for a currently-undisclosed security
+> vulnerability on the day most of the Western world's IT staff is on
+> holiday?
 
-I reviewed the code(ioremap()) in kernel[1], found get_vm_area_node()
-called ioremap(), and the function always allocate a guard PAGE_SIZE
-page.You are right. ;-)
+Yes. We're addicted to high quality software. And we can't celebrate
+any holiday while knowing that there are systems outside, that may leak
+private information.
 
-Thanks for your pointing.
+We're very sorry for the unfortunate timeing. We got the vulnerability
+report on Dec 15th, and requested the CVE on 16th. On 18th the patch was
+ready and passed our tests. We added 7 days to give the distros a chance
+to prepare their packages and this made up the 25th.
 
-[1]. http://lxr.free-electrons.com/source/mm/vmalloc.c#L1351
+And yes, we know, it is holiday in many countries, maybe in all
+countries of some of all that many worlds.
 
+The decision wasn't an easy one. Delaying some days more would probably
+hit New Year celebration or Дед Мороз. Delaying it even more?
 
-On 15/12/18 07:06, Dan Rosenberg wrote:
-> Comments inline below.
-> 
-> On 12/12/2015 09:51 AM, Pray3r wrote:
-> 
->> First, with a large value set to para.para_size, the smart phone 
->> will break down because of heap overflow inside kernel space. 
->> Second, this vulnerability could be used as a kernel information 
->> disclosure if para.para_in points to kernel objects and the
->> exploit is wrapped with heap fengshui technique.  Third,
->> sophisticated exploitation methodology such as heap spray of
->> thread_info published by Keen Team, an attacker could build a
->> workable exploit gaining the root privilege of the smart phone.
-> 
-> If para.para_in points to a kernel object, the copy_from_user()
-> call will gracefully fail due to the access_ok() check, so there is
-> no possibility for an information leak like you described. Heap
-> fengshui has nothing to do with it.
-> 
-> The thread_info struct is allocated using the alloc_pages() buddy 
-> allocator, which is different from ioremap(), so this technique
-> does not apply here.
-> 
-> Finally, this bug is most likely not exploitable at all (beyond a
-> local DoS), because ioremap() pages are followed by a guard page,
-> meaning your heap overflow would cause a kernel fault/panic before
-> overwriting anything that could be used to violate kernel
-> integrity.
-> 
->> Security is a bitch!
-> 
-> True.
-> 
->> |=-----------------------------------------------------------------=|
->>
->> 
-|=-----=[ D O   N O T   F U C K   W I T H   A   H A C K E R ]=-----=|
->> |=-----------------------------------------------------------------=|
->
->> 
-> Sorry for fucking with a hacker, Dan
-> 
+As many users will use their distro's packages, the impact of the update
+should be very minimal. Probaly they will not even notice it. And if you
+build your own Exim packages, the effort to rebuild it (4.87.1 is almost
+the same as 4.87, which you should have running already) is minimal.
 
-- -- 
-Security is a bitch!
------BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0
-Comment: GPGTools - https://gpgtools.org
+In case the distros are ready already, we could release on 23rd, but I
+need feedbeck from the distros and ack from the other developers.
 
-iQIcBAEBCgAGBQJWnoQAAAoJEM+cWi9WgY1efBQP/3KwwT+Ap1HoobbGVun6LnHn
-khf0XOhLthXnXIK15iWDihhv+vMNZiXs8htPHBLBtODSTYAmiwBEb2MexQwNGfnW
-ioTzzM1kdhfPyrZiV12gX26/VXWq1vg3gYcRDdGxuGyXJZmsr1QwUXUj5DAdt9X1
-cjWtlw3ZgvSMVBvt0eRomHV+ATkVuPoaGgNpEJMaM0zYH7s5RC9IkevAq64GXsWp
-v2OuuvQK75Qxu13Fvp2tO3+9OemuscnNt7FxYvhh410ExeydFbczACAZvZeD382i
-DGbCq3DwAyTRcY2gqghRNnOnnQyzn3ZrOoDBrCI2pqIj6Gjnvsqli0O27JfeukqS
-juadFPXPnt/kM/BKAkzhn9Z0+98iII2ucnj07evmBiasG7HVw2J/XMX6AOpZ4yjI
-XElX8xW7qOAYUMcb0nPNB5ZdrDHvLf2BMbZszFwra+l+ltyT3AyfSaRmzqfRL492
-eEI1uzdYquKCGqf4RrsqHQ2my7K9t75AyLh0EZYZ2iYTVjJ5A1VFsub/FBWI3fLo
-jzmmweP4sTiIMCT7lcNMtBIslCdiMp3m+ECNCFwWkMVMVw4NzBoov+apBzAwRPVj
-aAR3YZED4G/K5Sanp7NyEagLKH+fmUqca8bsz7sdM1bnMk3z7fxBdslAfCJgk5vt
-/lz/7QCz0b/Z5kNNWWG0
-=BrNh
------END PGP SIGNATURE-----
+I know, it is Christmas Holiday, for me, my kids, and my family too.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
