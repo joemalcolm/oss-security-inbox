@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1578" "Thursday" "9" "June" "2016" "11:32:07" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160609153207.6011C3AE009@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Request: haproxy remote denial of service via reqdeny" nil nil nil "6" "2016060915:32:07" "[oss-security] Re: CVE Request: haproxy remote denial of service via reqdeny" (number mark "U       cve-assign@m Jun  9   38/1578  " thread-indent "\"[oss-security] Re: CVE Request: haproxy remote denial of service via reqdeny\"\n") "<20160609150629.GC7655@suse.de>" ("<20160609150629.GC7655@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1665" "Wednesday" "21" "December" "2016" "02:34:29" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<a5198c929fcc47e99d32935f472d4c15@imshyb02.MITRE.ORG>" "39" "[oss-security] Re: CVE request: ikiwiki: authorization bypass when reverting changes" nil nil nil "12" "2016122107:34:29" "[oss-security] Re: CVE request: ikiwiki: authorization bypass when reverting changes" (number mark "U       cve-assign@m Dec 21   39/1665  " thread-indent "\"[oss-security] Re: CVE request: ikiwiki: authorization bypass when reverting changes\"\n") "<20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>" ("<20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28553 invoked by uid 550); 9 Jun 2016 15:32:19 -0000
+Received: (qmail 30474 invoked by uid 550); 21 Dec 2016 07:34:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +12,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28533 invoked from network); 9 Jun 2016 15:32:19 -0000
-From: cve-assign@mitre.org
-To: meissner@suse.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160609150629.GC7655@suse.de>
-Message-Id: <20160609153207.6011C3AE009@smtpvbsrv1.mitre.org>
-Date: Thu,  9 Jun 2016 11:32:07 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: haproxy remote denial of service via reqdeny
+Received: (qmail 30456 invoked from network); 21 Dec 2016 07:34:41 -0000
+From: <cve-assign@mitre.org>
+To: <smcv@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161220214910.zdn7bixh2i5jjwjb@perpetual.pseudorandom.co.uk>
+Message-ID: <a5198c929fcc47e99d32935f472d4c15@imshyb02.MITRE.ORG>
+Date: Wed, 21 Dec 2016 02:34:29 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: ikiwiki: authorization bypass when reverting changes
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> This is a remote denial of service against haproxy (uncontrollable crash).
+> http://ikiwiki.info/bugs/rcs_revert_can_bypass_authorization_if_affected_files_were_renamed/
+> http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=9cada49ed6ad24556dbe9861ad5b0a9f526167f9
 > 
-> http://git.haproxy.org/?p=haproxy-1.6.git;a=commit;h=60f01f8c89e4fb2723d5a9f2046286e699567e0b
+> on sites with the git and recentchanges
+> plugins and the CGI interface enabled, the revert links on the
+> RecentChanges page could revert changes on a page the logged-in user
+> cannot legitimately edit, if the change being reverted was made before
+> the page was renamed from a location that the logged-in user *could*
+> legitimately edit.
 
->> is filled only
->> by actions "http-request deny" and "http-request tarpit". It's then used
->> in the deny code path to emit the proper error message, but is used
->> uninitialized when the deny comes from a "reqdeny" rule, causing random
->> behaviours ranging from returning a 200, an empty response, or crashing
->> the process.
+>> Tell `git revert` not to follow renames
 
-Use CVE-2016-5360.
+Use CVE-2016-10026.
 
 - -- 
 CVE Assignment Team
@@ -45,17 +48,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXWYtiAAoJEHb/MwWLVhi2jiYP/15CBap1NSe+nJG8HRO/Kxwe
-hIxfrw/B8r0HtM6+nB0rfkXhQGbzIhSe47P0IDHHHyHI97EiX3cOoQcxieMEcOQ1
-UgXb+IOvYnXNxW2vOs4OWCQi1DRLjSwaIPLvAtGdukLFG1BlefehXmuzAW0A+jpB
-gzfgBgqYmvKfnnUScBGb+01SYXf1l3QgIBQ0tcyAADAbK2ogQxjWN+KpD3BGu9yL
-fAQjLk/qpHoz79G/GNb9KDSYYlqipr07mLsmraa0tVzav3yoR2w92avpetlPV1Eq
-dFdomo0zCSO3eZ1yl1wg1uIPE0PVYw2JmWu4LLpAfTSSFbEKorcSANGS9zbLBGJi
-YLSjCqoLctPCF/6jaHBZV593fNGgFlg6DnBTeCGlSImH9ODmGlzOiLwF5rsrffSK
-IH+Odqc6q1iJdagxcgPFbNIx8S/pb7ZfScUd5ubOFKSsIEi3UrWxREsa1PB6NIeb
-7z2J5gcaftc6lUn1+pH3+nrzPLQ6JbvydXONxWPlxt4oztK94nzHOCnbs2cOhGfM
-IwSlr8L1nI5TWvLkvwabKtYPeLxGVECHQ5akG2MTPzez8RBx1Gu6XUrwU0Wlc/xi
-ctj0Tp2FV1/qnk3OEubzZ7p0iva4VPWx1rkZdcX/V0Mg+8UvSu+IklCm+1uJy3yk
-LRnf/DS6Fuq2/DbEK9kC
-=XzKt
+iQIcBAEBCAAGBQJYWjArAAoJEHb/MwWLVhi2dHoQAKYuv3K3dSIYf6WfYkYNZKu3
+DD2MvDMgpjGR+J6dwCPpjSBzrAqW8x9LaFViHCgMtOr61d7Wc53J6XqDkWephYPA
+b3Baarf6Yz1K0gq+nML8wzb2wYJtO7DVXIxM0+rpbNIf67EPUM66ZOGPRtd3rNhG
+sxqtGk2kNVtq2apkzwU4NoqzU2SvNwveaGyB25AqtQd+pBxTuciPzCR2IeXoYsed
+4t2cGeJDzF/briG/IxwFQb4w6Zy5dsqXucT/c3U0y4RwflmjTde6GwEcENvyp/Dv
+fgCBK1LnMP0pTWizNQNA12Xr8yirHFX0CrUGE+cEI60ZNrbQge/QForMTG2cJK5E
+rcP+FaKqrHj1ybFdRtgM3V/As84SjohoUahmKMATI0rVtFEAPPBa8A2b31whfcyR
+Ls2nq0VayB7/2ea2eSQQwXILDA+i5lKEqTW4S1IKIXFmszw1Sq1z6wHBBFZwK7rE
+gMnL+mPIsi7g3Lhzi+TWKw3ClNl7Owk0KebtYJdqikXnBKvlHjcDCuX2DHHQZsrT
+tk5LGOnVAajwySSNeXtTuCkE3BVGN7Q5pNIz8v/XdQwxjxohZVM2RX7B/smcauNW
+6gH2Xo3bSNycUJGTOjFIYw+bcnJ4qP64huw1BK5cIDAfW5Cw42NRhL4EdpkRGu3q
+PNKxWq1cMJz/knQ7PGUu
+=YLyN
 -----END PGP SIGNATURE-----
