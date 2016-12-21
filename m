@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/19/7
-Message-ID: <20160919183201.GA29516@hunt>
-Date: Mon, 19 Sep 2016 11:32:01 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: John Haxby <john.haxby@...cle.com>
-Cc: oss-security@...ts.openwall.com, Jan Schaumann <jschauma@...meister.org>, "chet.ramey" <chet.ramey@...e.edu>
-Subject: Re: CVE-2016-0634 -- bash prompt expanding $HOSTNAME
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/4
+Message-ID: <513503eb-a66d-9999-0cb2-59fa300fbf5f@googlemail.com>
+Date: Wed, 21 Dec 2016 11:39:26 +0000
+From: tapper <lancett01@...glemail.com>
+To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+Subject: Curious about the security of my router fermwair.
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 18, 2016 at 08:06:57PM +0100, John Haxby wrote:
-> >>> A little while ago, one of our users discovered that by setting the
-> >>> hostname to $(something unpleasant), bash would run "something
-> >>> unpleasant" when it expanded \h in the prompt string.
-> > 
-> > This issue has been public since October, 2015 in Ubuntu's bug tracking
-> > system.
-> > 
-> 
-> Yes, the message was more to let people know that CVE-2016-0634  had
-> been assigned for this issue.   Do you have a link to the Ubuntu issue
-> and a different CVE number?
+	Hi my name is Jonathan. I don't know if this is the write place to ask 
+about this but here gos.
 
-Hello John; we did not assign a CVE number for this issue.
+I would like to know if any one would like to have a poke around at the 
+third party router firmware I use on my router called Gargoyle.
+Its a easy to use interface built on top of Openwrt.
 
-Bernd Dietzel reported it at:
-https://bugs.launchpad.net/ubuntu/+source/bash/+bug/1507025
+I use this firmware because it has some grate plug ins and the user 
+interface has grate a11y. I use a screen reader as I am blind and the 
+html5 interface is easy for me to get around in.
 
-Thanks
+It's homepage
+https://www.gargoyle-router.com/index.php
+GitHub
+https://github.com/ericpaulbishop/gargoyle
+forum
+https://www.gargoyle-router.com/phpbb/index.php
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+The devs behind Gargoyle are really nice people and have helped me out 
+with bugs and made me a mod on the forum.
+What I would really like to know is just how secure is this firmware?
+
+I'm not a coder. I am just interested in how safe is my router firmware 
+keeping me?
+
+If any one finds any sacurety bugs I know they will get fix.
+
+Thanks and sorry about my spelling Jonathan				
