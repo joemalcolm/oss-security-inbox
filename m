@@ -1,75 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/14/6
-Message-Id: <20160614121430.54A8F6C0643@smtpvmsrv1.mitre.org>
-Date: Tue, 14 Jun 2016 08:14:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: tobias@...eckmann.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Denial of Service in pacman 5.0.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/9
+Message-ID: <6r72dyrNdwjxo1dgsBt91YejfCOBjVGrLFzleahj0qi34idDnBgHp0vaThERN_YzWF2kfW08Z2xhuNNaY5B2diStx_mPwFrHsNqOMF1SdNw=@pusic.com>
+Date: Wed, 21 Dec 2016 17:10:54 -0500
+From: Luka Pusic <luka@...ic.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request - Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation
+Vendor Homepage: http://vestacp.com/
+Software Link: https://github.com/serghey-rodin/vesta
+Affected Versions: 0.9.7 and up to including 0.9.8-16
 
-> The package manager of Arch Linux, pacman, is vulnerable to a denial of
-> service attack based on signature files. This issue is located in libalpm
-> and therefore affects any other frontend
-> 
-> While an endless loop on itself is no security issue per-se
+Description:
+Vesta CP default install script adds /usr/local/vesta/bin/ directory into /etc/sudoers.d with the NOPASSWD option for the default "admin" user. All programs in /usr/local/vesta/bin/ directory can therefore be run as root. A command injection vulnerability in "v-get-web-domain-value" script can be exploited to run arbitrary commands and escalate from admin user to root.
 
-We assign CVE IDs to infinite loops in libraries, as long as a real or
-plausible library-using application runs unattended, and presents an
-attack surface in which the loop may be triggered by not-fully-trusted
-input.
+Vulnerability:
+Parameter $3 (key) in v-get-web-domain-value is not properly sanitized before being passed to bash eval.
 
-Use CVE-2016-5434 for this libalpm vulnerability.
+GitHub issue: https://github.com/serghey-rodin/vesta/issues/906
+GitHub fix commit: https://github.com/serghey-rodin/vesta/commit/56182cecf414a0dd833ea3db07d589be88ca5e64
 
-(For example, someone may plausibly use libalpm as part of a web
-application that receives packages with signatures from authors and,
-after validity checks, hosts those packages for public download.)
-
-
-> such a
-> crafted file might trick the end-user to disable signature verification
-> to get his updates installed. This, on the other hand, would open up
-> possibilities for malicious packages to be installed.
-
-Maybe, but this would not, by itself, be a reason to assign a CVE ID
-unless the package manager suggested that course of action, e.g., a
-dialog stating "A signature-verification process is running slowly.
-Terminate that process and disable all future verification? [y/N]."
-For example, if there were a signature-verification infinite loop that
-only affected a GUI package manager, without that type of dialog, then
-a CVE ID seems unlikely. First, it's unclear whether there are many
-end users who have the expertise to determine that a loop is related
-to signature verification, but also would jump to the conclusion that
-disabling signature verification was a reasonable solution to their
-immediate problem. More generally, any DoS bug in any package manager
-might trick a non-expert end user into not bothering to install new
-packages, and instead leaving old vulnerable packages installed
-permanently. That is arguably a security impact, but it seems much too
-indirect, so we don't want to assign CVE IDs to 100% of DoS bugs in
-all package managers.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXX/SSAAoJEHb/MwWLVhi2koIP/0JPOJFLF7Fs582+6wD8RvFD
-PsTEcWc5X/80uL0yGREFI8Hvm1n7YBuINexgTWoEMfwHPoxvrwtUY2aNDrhAY77X
-SnBobg5B4mrFDGZh0VcmU0vYhriwCx8KDTWF5AfVyQZ4mjmru2MBxF5KyQEQuBuY
-SqhohAlc856KjO0vns17Kw284Eqs34iwQXIZ3nxSwBkJhfrokRaMunA3jGawdJku
-BjQi8RK0TXir2wdyGA95ySIQP6Z5HlsaCjoUa+miuA8Fu7TITBCo31aKxEHfrIFn
-F3zai0bxXz0jaly1TWz4uyAn2P7WL24V2rLlmFIH0z8+tzEKiIiaXjIlzz3JasKp
-0yTI8uUSvUu61WIcBSQcAwRmTYTZ+Rz8IYVsbAS8pnWysXwySBReEnR/rkaKzLX+
-qbREp2oMEoAiEjDAZMM20ObuXzn7NW2S/sLx9jMTdr8OJW7n567SBCO31IbN5Inu
-lopHPR8d5sA3EYL17MGfgkLH9DdHbeZaxDPw41smmNdA04G//bZFChgab02H8uai
-DLWOeaiS1m1zmGpRWCvcS4xm55G1kEdTfJVvj45w9G63BZZuYqzgun1ejG3eTIfz
-zw4Ot7TzyZ7icGAWbrb68eBCisHmzNM7hVHuhRlj5EUuGsrAVHD5fgUGDaV1wvC/
-6XwLFN7kxp5XkLVuq/V3
-=UySW
------END PGP SIGNATURE-----
+Fix:
+Remove "v-get-web-domain-value" script file, because it is not used anymore.
