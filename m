@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/06/2
-Message-ID: <alpine.LFD.2.20.1612061653090.2165@wniryva>
-Date: Tue, 6 Dec 2016 16:59:07 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liq3ea@...il.com>
-Subject: CVE request Qemu: display: virtio-gpu-3d: information leakage in virgl_cmd_get_capset
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/3
+Message-ID: <a5198c929fcc47e99d32935f472d4c15@imshyb02.MITRE.ORG>
+Date: Wed, 21 Dec 2016 02:34:29 -0500
+From: <cve-assign@...re.org>
+To: <smcv@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: ikiwiki: authorization bypass when reverting changes
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick Emulator built with the Virtio GPU Device emulator support is vulnerable 
-to an information leakage issue. It could occur while processing 
-'VIRTIO_GPU_CMD_GET_CAPSET' command.
+> http://ikiwiki.info/bugs/rcs_revert_can_bypass_authorization_if_affected_files_were_renamed/
+> http://source.ikiwiki.branchable.com/?p=source.git;a=commitdiff;h=9cada49ed6ad24556dbe9861ad5b0a9f526167f9
+> 
+> on sites with the git and recentchanges
+> plugins and the CGI interface enabled, the revert links on the
+> RecentChanges page could revert changes on a page the logged-in user
+> cannot legitimately edit, if the change being reverted was made before
+> the page was renamed from a location that the logged-in user *could*
+> legitimately edit.
 
-A guest user/process could use this flaw to leak contents of the host memory 
-bytes.
+>> Tell `git revert` not to follow renames
 
-Upstream patch:
----------------
-   -> http://lists.gnu.org/archive/html/qemu-devel/2016-11/msg00059.html
+Use CVE-2016-10026.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJYWjArAAoJEHb/MwWLVhi2dHoQAKYuv3K3dSIYf6WfYkYNZKu3
+DD2MvDMgpjGR+J6dwCPpjSBzrAqW8x9LaFViHCgMtOr61d7Wc53J6XqDkWephYPA
+b3Baarf6Yz1K0gq+nML8wzb2wYJtO7DVXIxM0+rpbNIf67EPUM66ZOGPRtd3rNhG
+sxqtGk2kNVtq2apkzwU4NoqzU2SvNwveaGyB25AqtQd+pBxTuciPzCR2IeXoYsed
+4t2cGeJDzF/briG/IxwFQb4w6Zy5dsqXucT/c3U0y4RwflmjTde6GwEcENvyp/Dv
+fgCBK1LnMP0pTWizNQNA12Xr8yirHFX0CrUGE+cEI60ZNrbQge/QForMTG2cJK5E
+rcP+FaKqrHj1ybFdRtgM3V/As84SjohoUahmKMATI0rVtFEAPPBa8A2b31whfcyR
+Ls2nq0VayB7/2ea2eSQQwXILDA+i5lKEqTW4S1IKIXFmszw1Sq1z6wHBBFZwK7rE
+gMnL+mPIsi7g3Lhzi+TWKw3ClNl7Owk0KebtYJdqikXnBKvlHjcDCuX2DHHQZsrT
+tk5LGOnVAajwySSNeXtTuCkE3BVGN7Q5pNIz8v/XdQwxjxohZVM2RX7B/smcauNW
+6gH2Xo3bSNycUJGTOjFIYw+bcnJ4qP64huw1BK5cIDAfW5Cw42NRhL4EdpkRGu3q
+PNKxWq1cMJz/knQ7PGUu
+=YLyN
+-----END PGP SIGNATURE-----
