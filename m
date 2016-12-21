@@ -1,80 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/25/1
-Message-ID: <20160425210010.GA9723@pisco.westfalen.local>
-Date: Mon, 25 Apr 2016 23:00:10 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Cc: security@...eshark.org
-Subject: CVE requests: Multiple Wireshark vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/2
+Message-ID: <alpine.DEB.2.20.1612201640450.22627@tvnag.unkk.fr>
+Date: Wed, 21 Dec 2016 07:59:15 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: printf floating point buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-there's quite a backlog of Wireshark vulnerabilities which don't
-have CVE IDs assigned:
+printf floating point buffer overflow
+=====================================
 
-Ixia IxVeriWave file parser crash :
-https://www.wireshark.org/security/wnpa-sec-2016-12.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11795
+Project curl Security Advisory, December 21, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161221A.html)
 
-IEEE 802.11 dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-13.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11818
+VULNERABILITY
+-------------
 
-GSM A-bis OML dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-14.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11825
+libcurl's implementation of the printf() functions triggers a buffer overflow
+when doing a large floating point output. The bug occurs when the conversion
+outputs more than 255 bytes.
 
-ASN.1 BER dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-15.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12106
+The flaw happens because the floating point conversion is using system
+functions without the correct boundary checks.
 
-SPICE dissector large loop :
-https://www.wireshark.org/security/wnpa-sec-2016-16.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12151
+The functions have been documented as deprecated for a long time and users are
+discouraged from using them in "new programs" as they are planned to get
+removed at a future point. But as the functions are present and there's
+nothing preventing users from using them, we expect there to be a certain
+amount of existing users in the wild.
 
-NFS dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-17.html
+If there are any application that accepts a format string from the outside
+without necessary input filtering, it could allow remote attacks.
 
-ASN.1 BER dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-18.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11822
+This flaw does not exist in the command line tool.
 
-NCP dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-19.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11591
+We are not aware of any exploit of this flaw.
 
-TShark reassembly crash :
-https://www.wireshark.org/security/wnpa-sec-2016-20.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11799
+INFO
+----
 
-IEEE 802.11 dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-21.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=11824
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12187
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-9586 to this issue.
 
-PKTC dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-22.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12206
+AFFECTED VERSIONS
+-----------------
 
-PKTC dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-23.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12242
+This flaw exists in the following libcurl versions.
 
-IAX2 infinite loop :
-https://www.wireshark.org/security/wnpa-sec-2016-24.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12260
+- Affected versions: libcurl 7.1 to and including 7.51.0
+- Not affected versions: libcurl >= 7.52.0
 
-Wireshark and TShark crash :
-https://www.wireshark.org/security/wnpa-sec-2016-25.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12268
+libcurl is used by many applications, but not always advertised as such!
 
-GSM CBCH dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-26.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12278
+THE SOLUTION
+------------
 
-MS-WSP dissector crash :
-https://www.wireshark.org/security/wnpa-sec-2016-27.html
-https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=12341
+In version 7.52.0, the conversion is limited to never generate a larger output
+than what fits in the fixed size buffer.
 
-Cheers,
-        Moritz
+A [patch for CVE-2016-9586](https://curl.haxx.se/CVE-2016-9586.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.52.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use the `curl_mprintf()` functions
+
+TIME LINE
+---------
+
+It was first reported to the curl project on November 8 by Daniel Stenberg.
+
+We contacted distros@...nwall on December 13.
+
+curl 7.52.0 was released on December 21 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Daniel Stenberg.
+
+-- 
+
+  / daniel.haxx.se
