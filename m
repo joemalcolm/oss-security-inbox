@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5585" "Wednesday" "28" "June" "2017" "12:04:54" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<250758.429381193-sendEmail@localhost>" "110" "[oss-security] lame: global-buffer-overflow in II_step_one (layer2.c)" nil nil nil "6" "2017062812:04:54" "[oss-security] lame: global-buffer-overflow in II_step_one (layer2.c)" (number mark "U       ago@gentoo.o Jun 28  110/5585  " thread-indent "\"[oss-security] lame: global-buffer-overflow in II_step_one (layer2.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2311" "Wednesday" "21" "December" "2016" "07:59:15" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1612201640450.22627@tvnag.unkk.fr>" "84" "[oss-security] [SECURITY ADVISORY] curl: printf floating point buffer overflow" nil nil nil "12" "2016122106:59:15" "[oss-security] [SECURITY ADVISORY] curl: printf floating point buffer overflow" (number mark "U       daniel@haxx. Dec 21   84/2311  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: printf floating point buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22073 invoked by uid 550); 28 Jun 2017 12:05:11 -0000
+Received: (qmail 22223 invoked by uid 550); 21 Dec 2016 06:59:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,122 +12,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22007 invoked from network); 28 Jun 2017 12:05:10 -0000
-Message-ID: <250758.429381193-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Wed, 28 Jun 2017 12:04:54 +0000
+Received: (qmail 22200 invoked from network); 21 Dec 2016 06:59:29 -0000
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date: Wed, 21 Dec 2016 07:59:15 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
+        curl-announce@cool.haxx.se,
+        libcurl hacking <curl-library@cool.haxx.se>,
+        oss-security@lists.openwall.com
+Message-ID: <alpine.DEB.2.20.1612201640450.22627@tvnag.unkk.fr>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-314149.051978351"
-Subject: [oss-security] lame: global-buffer-overflow in II_step_one (layer2.c)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: printf floating point buffer overflow
 
-------MIME delimiter for sendEmail-314149.051978351
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+printf floating point buffer overflow
+=====================================
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+Project curl Security Advisory, December 21, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161221A.html)
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+VULNERABILITY
+-------------
 
-The complete ASan output of the issue:
+libcurl's implementation of the printf() functions triggers a buffer overflow
+when doing a large floating point output. The bug occurs when the conversion
+outputs more than 255 bytes.
 
-# lame -f -V 9 $FILE out.wav
-==27479==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f598d317f20 at pc 0x7f598d2b246b bp 0x7ffe780cf310 sp 0x7ffe780cf308
-READ of size 2 at 0x7f598d317f20 thread T0
-    #0 0x7f598d2b246a in II_step_one /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer2.c:144:36
-    #1 0x7f598d2b246a in decode_layer2_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer2.c:375
-    #2 0x7f598d29b377 in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:611:13
-    #3 0x7f598d298c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
-    #4 0x7f598d259092 in decode1_headersB_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
-    #5 0x7f598d25e94a in hip_decode1_headersB /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
-    #6 0x7f598d25e94a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
-    #7 0x51e984 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2089:11
-    #8 0x51e984 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
-    #9 0x51e984 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
-    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
-    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
-    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #16 0x7f598be51680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
+The flaw happens because the floating point conversion is using system
+functions without the correct boundary checks.
 
-0x7f598d317f20 is located 0 bytes to the right of global variable 'alloc_2' defined in 
-'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/l2tables.h:118:24' (0x7f598d317de0) of size 320
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer2.c:144:36 in 
-II_step_one
-Shadow bytes around the buggy address:
-  0x0febb1a5af90: 00 00 00 00 00 00 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0febb1a5afa0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0febb1a5afb0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0febb1a5afc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5afd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0febb1a5afe0: 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0febb1a5aff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5b000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5b010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5b020: 00 00 00 00 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0febb1a5b030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27479==ABORTING
+The functions have been documented as deprecated for a long time and users are
+discouraged from using them in "new programs" as they are planned to get
+removed at a future point. But as the functions are present and there's
+nothing preventing users from using them, we expect there to be a certain
+amount of existing users in the wild.
 
-Affected version:
-3.99.5
+If there are any application that accepts a format string from the outside
+without necessary input filtering, it could allow remote attacks.
 
-Fixed version:
-N/A
+This flaw does not exist in the command line tool.
 
-Commit fix:
-N/A
+We are not aware of any exploit of this flaw.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+INFO
+----
 
-CVE:
-CVE-2017-9869
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-9586 to this issue.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00290-lame-globaloverflow-II_step_one
+AFFECTED VERSIONS
+-----------------
 
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-2017-06-25: CVE assigned
+This flaw exists in the following libcurl versions.
 
-Note:
-This bug was found with American Fuzzy Lop.
+- Affected versions: libcurl 7.1 to and including 7.51.0
+- Not affected versions: libcurl >= 7.52.0
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-global-buffer-overflow-in-ii_step_one-layer2-c/
+libcurl is used by many applications, but not always advertised as such!
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+THE SOLUTION
+------------
 
+In version 7.52.0, the conversion is limited to never generate a larger output
+than what fits in the fixed size buffer.
 
-------MIME delimiter for sendEmail-314149.051978351--
+A [patch for CVE-2016-9586](https://curl.haxx.se/CVE-2016-9586.patch) is
+available.
 
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.52.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use the `curl_mprintf()` functions
+
+TIME LINE
+---------
+
+It was first reported to the curl project on November 8 by Daniel Stenberg.
+
+We contacted distros@openwall on December 13.
+
+curl 7.52.0 was released on December 21 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Daniel Stenberg.
+
+-- 
+
+  / daniel.haxx.se
