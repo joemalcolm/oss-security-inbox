@@ -1,33 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/13/6
-Message-ID: <alpine.LFD.2.20.1604132336250.29012@wniryva>
-Date: Wed, 13 Apr 2016 23:38:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Donghai Zdh <donghai.zdh@...baba-inc.com>
-Subject: CVE request Qemu: i386: leakage of stack memory to guest in kvmvapic.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/5
+Message-Id: <E1cJfaO-00040Q-Jz@xenbits.xenproject.org>
+Date: Wed, 21 Dec 2016 12:01:32 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 203 (CVE-2016-10025) - x86: missing NULL pointer check in VMFUNC emulation
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Qemu emulator built with the Task Priority Register(TPR) optimizations for 
-32-bit Windows guests, is vulnerable to a information leakage issue. It could 
-occur while accessing Task Priority Register(TPR).
+            Xen Security Advisory CVE-2016-10025 / XSA-203
+                               version 3
 
-A privileged user/process inside guest could use this issue to leak host 
-memory bytes.
+          x86: missing NULL pointer check in VMFUNC emulation
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01118.html
+UPDATES IN VERSION 3
+====================
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1313686
+Public release.
 
-This issue was discovered by Donghai Zdh of Alibaba Inc.
+ISSUE DESCRIPTION
+=================
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+When support for the Intel VMX VMFUNC leaf 0 was added, a new optional
+function pointer hvmemul_vmfunc was added to the hvm_emulate_ops
+table.  As is intended, that new function pointer is NULL on non-VMX
+hardware, including AMD SVM hardware.  However at a call site, the
+necessary NULL check was omitted before the indirect function call.
+
+IMPACT
+======
+
+Malicious guests may cause a hypervisor crash, resulting in a Denial
+of Service (DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.6 and newer are vulnerable.  Xen versions 4.5 and earlier
+are not vulnerable.
+
+Only HVM guests can exploit the vulnerability.  PV guests cannot exploit
+the vulnerability.
+
+Only x86 systems using SVM (AMD virtualisation extensions) rather than
+VMX (Intel virtualisation extensions) are vulnerable.  This applies to
+HVM guests on AMD x86 CPUs.  Therefore AMD x86 hardware is vulnerable;
+Intel hardware is not vulnerable.
+
+ARM systems are not vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Running HVM guests on only VMX capable hardware will also avoid this
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa203.patch           xen-unstable
+xsa203-4.8.patch       Xen 4.8.x
+xsa203-4.7.patch       Xen 4.7.x, Xen 4.6.x
+
+$ sha256sum xsa203*
+9af7e862705987a60de1def81ed179931c3f683d05b05c2708cf16bb85d203c9  xsa203.patch
+7cc04278778fe885e4c3ae3f846d099075a38bccfafe6dff018ba525499b4e46  xsa203-4.7.patch
+4218fcfff11ec4788462a3ea9dddecb25b9d9fb1beaad17ca0f723b07b6675e4  xsa203-4.8.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYWm8VAAoJEIP+FMlX6CvZid4H/RlcaSaA1qky6vTKjaW4xUiX
+/48Fvz3H8Ioau3Mlqy9WGqoq7HnuhJl2MUuq47vpwChOlYvvNXeRe47sVHsLwz1O
+/yImaOc0cZEYsyECpddsVSOdwFEMnR38WFWirH4xboGx8NjWeQg3Fsmwh1r8iHsm
+HyR2kRktw/Tu2hpc8BaipsYObglvLGQGy06KwwIB0MPycm20MpR4W41a5vc6iE+1
+oKMIag/UD+W1eR7zWkftHnEcG+QNfbpWfU7rKPOrQSX5nuXHCXTcu6JQbzlPD8JS
+h+A5r+/tfyQPLTWxoBkH4wbMwdqDPNo1AuiDaGD8KWD97m/j2pFaZKl7lGk8X9w=
+=TUeg
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa203.patch" of type "application/octet-stream" (610 bytes)
+
+Download attachment "xsa203-4.7.patch" of type "application/octet-stream" (602 bytes)
+
+Download attachment "xsa203-4.8.patch" of type "application/octet-stream" (619 bytes)
