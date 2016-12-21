@@ -1,86 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/19/17
-Message-ID: <678df6c4-a201-8088-2fc6-737d14905b9d@halfdog.net>
-Date: Tue, 19 Jan 2016 20:10:50 +0000
-From: halfdog <me@...fdog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/3
+Message-ID: <ba7df7a2-3a2f-b861-f4f3-bba12493056d@googlemail.com>
+Date: Wed, 21 Dec 2016 20:46:43 +0000
+From: tapper <lancett01@...glemail.com>
 To: oss-security@...ts.openwall.com
-Subject: Overlayfs and devpts issues in namespaces
+Subject: Re: Curious about the security of my router fermwair.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thanks very much for this I will pass this on to the devs. I don't see 
+this being much of a problem I will make a pr. I scanned my device with 
+nmap and didn't find any thing open that should not be so that makes me 
+happy :)
 
-<Seems that message did not get through, so resending>
 
-Hi,
+On 21/12/2016 20:07, Seth Arnold wrote:
+> On Wed, Dec 21, 2016 at 11:39:26AM +0000, tapper wrote:
+>> 	Hi my name is Jonathan. I don't know if this is the write place to ask
+>> about this but here gos.
+>
+> It's not the usual use of this list but I suspect you won't upset many
+> people either.
+>
+>> I would like to know if any one would like to have a poke around at the
+>> third party router firmware I use on my router called Gargoyle.
+>
+> The first item I found in about one minute of inspection is that they
+> include an utterly ancient version of ffmpeg:
+>
+> https://github.com/ericpaulbishop/gargoyle/blob/master/package/ffmpeg/Makefile#L10
+>
+> PKG_NAME:=ffmpeg
+> PKG_VERSION:=2.4.4
+> PKG_RELEASE:=1
+>
+> PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+> PKG_SOURCE_URL:=http://ffmpeg.org/releases/
+> PKG_MD5SUM:=7e2819c71484ffba1ba1a91dd5285643
+>
+> The 2.4 branch of ffmpeg ended with version 2.4.13 on 2016-02-02. Not
+> only are they nine point releases behind, they are also drastically
+> behind on shipping newer versions entirely. (The latest version upstream
+> is numbered 3.2.2. That's seven minor versions behind, too.) Granted,
+> new versions bring new bugs, but picking one point in time two years
+> ago and then never updating is trouble.
+>
+> I didn't spot any security fixes for ffmpeg in the patches-generic or
+> patches-old directories, but perhaps they just weren't clearly labeled.
+>
+> Another concerning point is the use of md5 to validate the download. While
+> use of md5 as a 'better crc32' is well established, most cryptographic
+> authorities are saying it's time to replace md5's replacement, sha-1.
+> They're two hash functions behind the times.
+>
+> A full review would take far more time than I have to offer but the
+> initial impression is that it needs a serious refresh of its dependencies.
+>
+> Thanks
+>
 
-Solar Designer wrote:
-> On Wed, Jan 13, 2016 at 10:26:18PM +0000, halfdog wrote:
->> About the title of the thread: The second topic mentionend in 
->> initial mail "Overlayfs and devpts issues in namespaces", was
->> the devpts issue. I combined those two in one thread, because one
->>  vulnerability makes discovery of second quite simple - that is 
->> why I discovered both nearly at same time. The later one is
->> still undisclosed. From the Ubuntu bug report notifications I
->> know, that they are at least trying to get rid of the
->> problematic pt_chown SUID binary, but there seem to be other
->> devpts issues they know about.
-> 
-> Since you brought the devpts issue in here on January 4, you must 
-> post about it to oss-security no later than on January 18
-> (Monday), or you may choose to do it today (Thursday).  (Friday and
-> the weekend are worse.)
-
-The writeup is ready since weeks, the first one is out already. The
-user namespaces topic proved more problematic than initially thought:
-two more local root privilege escalation variants were found,
-overlayfs is vulnerable since enabled (e.g. Ubuntu Trusty up to now).
-
-This was the first time, I tried to cooperate with others for fixing
-via Linux distros instead only via Ubuntu and upstream, but even with
-patch available, this did not speed up the process from discovery to
-patching. So embargo time has ended but no patch available yet.
-
-With that in mind, what would be best next steps for all those known
-and also future issues?
-
-As I know about the problems with uncoordinated full disclosure, but
-bearing in mind, that full disclosure is also a method of enabling
-those wanting to protect themselves, I am inclined to try this procedure:
-
-* Send a pre-announce about 3 more userns related issues allowing
-local root gain, thus proofing needs to audit the code more closely.
-
-* Request developers to provide a mitigation workaround as kernel
-module, that, as long as loaded a) disables userns as such or variant
-b) just disables mounting within userns when not being host-uid-0.
-Such a module should mitigate worst effects for production
-environments but may leave other platforms (embedded? phones?)
-unprotected.
-
-* Module should be very simple to develop and perhaps distribute as
-e.g. Ubuntu PPA addon-package to current kernel. So give whole public
-2 days time for mitigation module.
-
-* No matter if module is available or not (if not, that means that the
-issues is irrelevant from security perspective). Hence full disclosure
-cannot do any further harm.
-
-Opinions?
-
-hd
-
-PS: As the number of issues currently in processing are way too large
-for sparetime handling, coordination is getting worse. So quite
-likely, different parties might be out of sync already.
-
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88 2BD8 C459 9386 feed a bee
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlaemC8ACgkQxFmThv7tq+411wCgjLx73cl3pKj/mvhIJC0EcrYb
-8AAAni5TlXemvoPf/xei0tYHpjNhJA6q
-=klHo
------END PGP SIGNATURE-----
