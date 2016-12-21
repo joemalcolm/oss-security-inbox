@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["550" "Tuesday" "2" "August" "2016" "10:14:31" "+0200" "Florian Weimer" "fweimer@redhat.com" "<480c99be-40aa-fb0c-3656-d3cb98c058da@redhat.com>" "12" "[oss-security] glibc: Per-thread memory leak in __res_vinit with IPv6 nameservers (CVE-2016-5417)" nil nil nil "8" "2016080208:14:31" "[oss-security] glibc: Per-thread memory leak in __res_vinit with IPv6 nameservers (CVE-2016-5417)" (number mark "U       fweimer@redh Aug  2   12/550   " thread-indent "\"[oss-security] glibc: Per-thread memory leak in __res_vinit with IPv6 nameservers (CVE-2016-5417)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1473" "Wednesday" "21" "December" "2016" "17:10:54" "-0500" "Luka Pusic" "luka@pusic.com" "<6r72dyrNdwjxo1dgsBt91YejfCOBjVGrLFzleahj0qi34idDnBgHp0vaThERN_YzWF2kfW08Z2xhuNNaY5B2diStx_mPwFrHsNqOMF1SdNw=@pusic.com>" "29" "[oss-security] CVE request - Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation" nil nil nil "12" "2016122122:10:54" "[oss-security] CVE request - Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation" (number mark "U       luka@pusic.c Dec 21   29/1473  " thread-indent "\"[oss-security] CVE request - Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27764 invoked by uid 550); 2 Aug 2016 08:14:47 -0000
+Received: (qmail 16278 invoked by uid 550); 21 Dec 2016 22:36:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,30 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27735 invoked from network); 2 Aug 2016 08:14:46 -0000
-To: oss-security@lists.openwall.com
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <480c99be-40aa-fb0c-3656-d3cb98c058da@redhat.com>
-Date: Tue, 2 Aug 2016 10:14:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.1.1
+Received: (qmail 23744 invoked from network); 21 Dec 2016 22:11:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pusic.com;
+	s=protonmail; t=1482358254;
+	bh=U9eQWpWKrl8OdmeIWToM6Oz34QRO/ubEqBNWpYIzI+s=;
+	h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+	b=pA/zuFkVel8sYX8zyxYrlLyuhhw85H1PUh9GyxrxpQLnjTVBLvira9MAxQ1+wSYyH
+	 Qrqskp6Bf2KKsRejEeV2/yzwf4U4un7haHTAmcUjYaMMPzV+UGZCfYwAwJVxsejnJF
+	 t1f7Z1cnxBOyMI0ffA8zNTGDVNcMjRx+08i8IiIA=
+Date: Wed, 21 Dec 2016 17:10:54 -0500
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+From: Luka Pusic <luka@pusic.com>
+Message-ID: <6r72dyrNdwjxo1dgsBt91YejfCOBjVGrLFzleahj0qi34idDnBgHp0vaThERN_YzWF2kfW08Z2xhuNNaY5B2diStx_mPwFrHsNqOMF1SdNw=@pusic.com>
+Feedback-ID: ZLdx4mbdsLhm26P0bkYUDKQJtpSRiDwmPjpt2mF0rrauU5hWwJA35KEXzWtWj7y5LYvcx-lHoX33tpI41W-Z1w==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 02 Aug 2016 08:14:34 +0000 (UTC)
-Subject: [oss-security] glibc: Per-thread memory leak in __res_vinit with IPv6 nameservers
- (CVE-2016-5417)
+Content-Type: multipart/alternative;
+	boundary="b1_121ed448d6106670d23a7b1e6dac9815"
+Subject: [oss-security] CVE request - Vesta Control Panel 0.9.7 <= 0.9.8-16 Local Privilege Escalation
 
-We have assigned CVE-2016-5417 to a memory leak in glibc.  It was 
-introduced in glibc 2.22, with commit 
-2212c1420c92a33b0e0bd9a34938c9814a56c0f7 (which also caused other 
-regressions, which is why we backed it out in Fedora).
+--b1_121ed448d6106670d23a7b1e6dac9815
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-The leak is triggered if name resolution functions are called in such a 
-way that internal resolver data structures are only initialized 
-partially.  The memory leak was independently reported as occurring 
-during Apache httpd testing, so we found it prudent to treat it as a 
-very minor security vulnerability.
+VmVzdGEgQ29udHJvbCBQYW5lbCAwLjkuNyA8PSAwLjkuOC0xNiBMb2NhbCBQ
+cml2aWxlZ2UgRXNjYWxhdGlvbgpWZW5kb3IgSG9tZXBhZ2U6IGh0dHA6Ly92
+ZXN0YWNwLmNvbS8KU29mdHdhcmUgTGluazogaHR0cHM6Ly9naXRodWIuY29t
+L3NlcmdoZXktcm9kaW4vdmVzdGEKQWZmZWN0ZWQgVmVyc2lvbnM6IDAuOS43
+IGFuZCB1cCB0byBpbmNsdWRpbmcgMC45LjgtMTYKCkRlc2NyaXB0aW9uOgpW
+ZXN0YSBDUCBkZWZhdWx0IGluc3RhbGwgc2NyaXB0IGFkZHMgL3Vzci9sb2Nh
+bC92ZXN0YS9iaW4vIGRpcmVjdG9yeSBpbnRvIC9ldGMvc3Vkb2Vycy5kIHdp
+dGggdGhlIE5PUEFTU1dEIG9wdGlvbiBmb3IgdGhlIGRlZmF1bHQgImFkbWlu
+IiB1c2VyLiBBbGwgcHJvZ3JhbXMgaW4gL3Vzci9sb2NhbC92ZXN0YS9iaW4v
+IGRpcmVjdG9yeSBjYW4gdGhlcmVmb3JlIGJlIHJ1biBhcyByb290LiBBIGNv
+bW1hbmQgaW5qZWN0aW9uIHZ1bG5lcmFiaWxpdHkgaW4gInYtZ2V0LXdlYi1k
+b21haW4tdmFsdWUiIHNjcmlwdCBjYW4gYmUgZXhwbG9pdGVkIHRvIHJ1biBh
+cmJpdHJhcnkgY29tbWFuZHMgYW5kIGVzY2FsYXRlIGZyb20gYWRtaW4gdXNl
+ciB0byByb290LgoKVnVsbmVyYWJpbGl0eToKUGFyYW1ldGVyICQzIChrZXkp
+IGluIHYtZ2V0LXdlYi1kb21haW4tdmFsdWUgaXMgbm90IHByb3Blcmx5IHNh
+bml0aXplZCBiZWZvcmUgYmVpbmcgcGFzc2VkIHRvIGJhc2ggZXZhbC4KCkdp
+dEh1YiBpc3N1ZTogaHR0cHM6Ly9naXRodWIuY29tL3NlcmdoZXktcm9kaW4v
+dmVzdGEvaXNzdWVzLzkwNgpHaXRIdWIgZml4IGNvbW1pdDogaHR0cHM6Ly9n
+aXRodWIuY29tL3NlcmdoZXktcm9kaW4vdmVzdGEvY29tbWl0LzU2MTgyY2Vj
+ZjQxNGEwZGQ4MzNlYTNkYjA3ZDU4OWJlODhjYTVlNjQKCkZpeDoKUmVtb3Zl
+ICJ2LWdldC13ZWItZG9tYWluLXZhbHVlIiBzY3JpcHQgZmlsZSwgYmVjYXVz
+ZSBpdCBpcyBub3QgdXNlZCBhbnltb3JlLg==
 
-Florian
+--b1_121ed448d6106670d23a7b1e6dac9815--
+
