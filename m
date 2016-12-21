@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/17/1
-Message-ID: <1455701432.2704.1.camel@trustmatta.com>
-Date: Wed, 17 Feb 2016 10:30:32 +0100
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
-To: oss-security@...ts.openwall.com, sandeepk.l337@...il.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Umbraco - The open source ASP.NET CMS Multiple Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/21/8
+Message-ID: <20161221233015.27a0038d@redhat.com>
+Date: Wed, 21 Dec 2016 23:30:15 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: Dawid Golunski <dawid@...alhackers.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Nagios Core < 4.2.2 Curl Command Injection leading to Remote Code Execution [CVE-2016-9565]
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2016-02-16 at 17:23 -0500, cve-assign@...re.org wrote:
-> > http://issues.umbraco.org/issue/U4-7457
-> > SSRF
-> 
-> > the feedproxy.aspx is used to access the external resources using
-> > the URL GET parameter.
-> 
-> > http://local/Umbraco/feedproxy.aspx?url=http://bobsite/index
-> > 
-> > once you change the URL to the
-> > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:80/index, 
-> > you able
-> > to access the localhost application of the server.
-> > 
-> > Using this payload change the port number to perform port scanning
-> > of the
-> > server. It will be helpful to find the more details of the server.
-> > For example:
-> > 
-> > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:25/index
-> > http://local/Umbraco/feedproxy.aspx?url=http://127.0.0.1:8080/index
-> > 
-> > If the port number is closed, you will find the error message on
-> > the
-> > feedproxy.aspx page.
-> 
-> Use CVE-2015-8813.
-> 
+On Tue, 20 Dec 2016 17:12:58 -0200 Dawid Golunski wrote:
 
-How different is it from CVE-2012-1301 ? Have they re-introduced it?
+> Vulnerability:
+> Nagios Core < 4.2.2  Curl Command Injection / Remote Code Execution
 
-Florent
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Your report should mention that this issue was in Snoopy:
+
+https://sourceforge.net/projects/snoopy/
+
+which was embedded in MagpieRSS, which was embedded in Nagios.
+
+> CVE-2016-9565
+
+It's the same issue as CVE-2014-5008:
+
+http://seclists.org/oss-sec/2014/q3/176
+
+-- 
+Tomas Hoger / Red Hat Product Security
