@@ -1,40 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/24/6
-Message-Id: <92067071-434D-4B7B-BF05-39E1BD7FE449@gmail.com>
-Date: Thu, 24 Nov 2016 15:24:04 +0800
-From: haojun hou <haojunhou@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request - itdb 1.23  Cross-Site Scripting (XSS)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/12
+Message-ID: <3ffc286c0922469cb1c17303abd6674d@imshyb02.MITRE.ORG>
+Date: Thu, 22 Dec 2016 11:03:01 -0500
+From: <cve-assign@...re.org>
+To: <sylvain.sarmejeanne.ml@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Smack: TLS SecurityMode.required not always enforced, leading to striptls attack
 Content-Type: text/plain; charset=utf-8
 
-Hi:
-itdb 1.23 - Cross-Site Scripting (XSS) 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Procuct: IT Items DataBase
+> I reported a vulnerability in the Smack XMPP library where the security of
+> the TLS connection is not always enforced. By stripping the "starttls"
+> feature from the server response with a man-in-the-middle tool, an attacker
+> can force the client to authenticate in clear text even if the
+> "SecurityMode.required" TLS setting has been set. This is a race condition
+> issue so the attack will work after a few tries.
 
-Vendor: ITDB http://www.sivann.gr/software/itdb/
+> https://community.igniterealtime.org/blogs/ignite/2016/11/22/smack-security-advisory-2016-11-22
+> https://issues.igniterealtime.org/browse/SMACK-739
+> https://github.com/igniterealtime/Smack/commit/a9d5cd4a611f47123f9561bc5a81a4555fe7cb04
+> https://github.com/igniterealtime/Smack/commit/059ee99ba0d5ff7758829acf5a9aeede09ec820b
 
-Vunlerable Version: 1.23 and probably prior
+>> smack-core/src/main/java/org/jivesoftware/smack/AbstractXMPPConnection.java
+>> smack-tcp/src/main/java/org/jivesoftware/smack/tcp/XMPPTCPConnection.java
 
-Tested Version: 1.23
+Use CVE-2016-10027.
 
-Author: Haojun Hou in ADLab of Venustech
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Advisory Details:
-
-Haojun Hou in ADLab of Venustech discovered a Cross-Site Scripting (XSS) in itdb <>, which can be exploited to add,modify or delete information in application`s database and gain complete control over the application.
-
-
-
-The vulnerability exists due to insufficientfiltration of user-supplied data in “value” HTTP POST parameter passed to “itdb-1.23/js/DataTables-1.8.2/examples/examples_support/editable_ajax.php” url. An attacker could execute arbitrary HTML and script code in browser in context of the vulnerable website.
-
-The exploitation example below uses the "alert()" JavaScript function to see a  pop-up messagebox:
-
-POST value="><script>alert(1);</script><"
-
-http://localhost/itdb-1.23/js/DataTables-1.8.2/examples/examples_support/editable_ajax.php <http://localhost/itdb-1.23/js/DataTables-1.8.2/examples/examples_support/editable_ajax.php>
-
-Could you please help me assign a  CVE for this issue?
-
- 
+iQIcBAEBCAAGBQJYW/idAAoJEHb/MwWLVhi2Ti0QAIWkl59R8amXlPpJJjU4Ydbl
+2ADm4yXOsRVnhy8QJ9u44ogteMANPZbuU006Q9ezeE2SIlLX1rcHeEsHy/nR9rNM
+us/Ip79ZIfDU1wuP1XjeIa1lO3Ldf0L2Wo9gX+JRaSyX+w0+WfIvmg40AtEehjfR
+2hAPY3ALuiVw4y3TY6eRk2e03f765ZnvIqbTSO3ayRJ5NYLQlvI15+1WIGTOoH8o
+nputmqaDb2/jIQUoI2bpRVAnbijmN1CCOEDT0n1e/F8MmxYKpuTLnde98KhDriz+
+o6OM5pYv0X1CnIb6RGzb2Brt2FUmqWvEAmnFoRknEy8UQ4iQWXRjoI/QQDMaI5ru
+WNaB2fUtplT4jQ2IeNLinFNwxbMYSaMrCWfNuIpuTANXXyF2PgKuYTA5JmwtJHkR
+pJuTRD+mfO1ybcyf/D678T3hldpC5NlMf9eRQDbB5h9viNLVBGhnulE/OPZpU+2R
+J3hvXAVpaGFHAQllBgSq8Ut7zsI5s7ZFoo2gWuHCA//dT+C6GjUs/h7w6wWK9iiU
+a932syiLLmT5HRCJwucEiwRk2KczVzMgai2FM1jSlDLoonw2nHqHe128rYcwGGQd
+DZeU/1e1ZYje1WLFCJzRuNGTesNwFdFhT/F3WLCrglANm1VfXuWyqtWMDSeInaf3
+MWbq6ZtaZvw40COKoh8r
+=4pVQ
+-----END PGP SIGNATURE-----
