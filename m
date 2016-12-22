@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["715" "Wednesday" "9" "May" "2018" "15:20:03" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhRC-+DmnUY-xvOx0uyynp7T2jfarnAcnJbxNqAFesefjw@mail.gmail.com>" "28" "[oss-security] CVE-2018-1118 linux kernel: vhost: Information disclosure in vhost/vhost.c:vhost_new_msg()" nil nil nil "5" "2018050905:20:03" "[oss-security] CVE-2018-1118 linux kernel: vhost: Information disclosure in vhost/vhost.c:vhost_new_msg()" (number mark "U       wmealing@red May  9   28/715   " thread-indent "\"[oss-security] CVE-2018-1118 linux kernel: vhost: Information disclosure in vhost/vhost.c:vhost_new_msg()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1632" "Thursday" "22" "December" "2016" "11:40:35" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20161222104035.GE5082@jumper.schlittermann.de>" "44" "Re: [oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016122210:40:35" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       hs@schlitter Dec 22   44/1632  " thread-indent "\"Re: [oss-security] CVE-2016-9963 Exim private information leak\"\n") "<20161222005733.GB81339@wopr>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "<20161218175925.GE31981@jumper.schlittermann.de>" "<20161220225935.GH19629@jumper.schlittermann.de>" "<20161221205952.GA81339@wopr>" "<20161221232409.GN19629@jumper.schlittermann.de>" "<20161222005733.GB81339@wopr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30511 invoked by uid 550); 9 May 2018 05:20:16 -0000
+Received: (qmail 5859 invoked by uid 550); 22 Dec 2016 10:51:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30490 invoked from network); 9 May 2018 05:20:15 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=eZXnVu2ixdmceMSMUQ+i9RkR3LQzgLPm8rXAt5RuR1A=;
-        b=tzKFTp62VjZL80SSSdfm0d/rdsa75YBmZs5heHhzzqdQjcLxibOqjbqDrcybe4hR5W
-         yDTE5qizjgE5ifWOAraDjdKkP2Gd/D8vu2DxT+HtPqQwO95wXKMO0fkae1/nifhNezCW
-         V6BZPw5NOxdJ839EG41oHXqm8hKt2PR2QqP8LI/6r9ZDVHnS2tqc749O1tDkc80nx8vm
-         lgOS2A4OtkmUEQxIXWlu+7NE16QscprmGRsebig4QTSCtd1+WnYSKH0zzYfI31O0FF4E
-         uFWQAcXouW3k3U0nBOHwkz11mWLQ1xyyuTFJh7SKQzRaT28uvkLCcIkUmTb0or6ZQGU1
-         v94A==
-X-Gm-Message-State: ALQs6tCMJRI2hxtIonZVO94SwH6bPq8f6rHO5kMaBRLjwNXq2rwGpuLN
-	pI49J5K2gERjWY5mTBbaCdT2f9dPys2q56nrV5kcH7DAdXM=
-X-Google-Smtp-Source: AB8JxZpj8auZI906F5yhJf/ZfJ/G+/5w+Yl5UpJm90YgpJmlHXmyiTlDnumoJ4eOhiYAuDvh7zS8tng/txJBiiWHxzo=
-X-Received: by 2002:a6b:200e:: with SMTP id g14-v6mr50926652iog.161.1525843203626;
- Tue, 08 May 2018 22:20:03 -0700 (PDT)
-MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Wed, 9 May 2018 15:20:03 +1000
-Message-ID: <CALJHwhRC-+DmnUY-xvOx0uyynp7T2jfarnAcnJbxNqAFesefjw@mail.gmail.com>
+Received: (qmail 30470 invoked from network); 22 Dec 2016 10:40:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-To;
+	bh=73HvU4RJ+QZGfE8BgpXzPm/6RMye5Xhd46lro2wozK4=; b=Gi4fjBXakDRrRHJM8UIbHqGVqu
+	NQyBBQ9DZ8laLdHQY9WJSl5pR9xE6XECldCOIQSy8c4auvqL7SXtLKWXbMSP4zNEdad3ddV08bIKc
+	7B+BEQbeMu+i9VO9EoZ2J9ItUIfafYrRKuoVR7Y0mbR6bRjcDl3+7/ZgDzeM4LFOcYn0=;
+Date: Thu, 22 Dec 2016 11:40:35 +0100
+From: Heiko Schlittermann <hs@schlittermann.de>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-1118 linux kernel: vhost: Information disclosure in vhost/vhost.c:vhost_new_msg()
+Message-ID: <20161222104035.GE5082@jumper.schlittermann.de>
+References: <20161215233645.GJ29010@jumper.schlittermann.de>
+ <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
+ <20161218175925.GE31981@jumper.schlittermann.de>
+ <20161220225935.GH19629@jumper.schlittermann.de>
+ <20161221205952.GA81339@wopr>
+ <20161221232409.GN19629@jumper.schlittermann.de>
+ <20161222005733.GB81339@wopr>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vmttodhTwj0NAgWp"
+Content-Disposition: inline
+In-Reply-To: <20161222005733.GB81339@wopr>
+Organization: schlittermann -- internet & unix support
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] CVE-2016-9963 Exim private information leak
 
-Gday,
+--vmttodhTwj0NAgWp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A flaw was found in the vhost_new_msg() function which does not
-properly initialize memory in messages passed between virtual guests
-and the host operating system. This can allow local privileged users
-to read previously set kernel memory contents when reading from the
-/dev/vhost-net device file.  This would be classified as an
-information leak that could be used to defeat other protection
-mechanisms.
+Kurt H Maier <khm@sciops.net> (Do 22 Dez 2016 01:57:33 CET):
+> On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
+> >=20
+> > In case the distros are ready already, we could release on 23rd, but I
+> > need feedbeck from the distros and ack from the other developers.
+> >=20
+> Please pursue this possibility.
 
-As far as I can tell this information doesn't flow to guests, only to
-the parent system which is hosting the virtual machines.
+Ok, I asked the distro@vs=E2=80=A6 list to get clearance. If the major dist=
+ros
+supporting Exim give their ok, we're prepared to release sooner. Stay
+tuned.
 
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
+--vmttodhTwj0NAgWp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Upstream post:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://lkml.org/lkml/2018/4/27/833
+iQEcBAEBCgAGBQJYW62iAAoJEGoXY4qgRQz1KtAH/RXDtAV/DLUTnShr9NWCPT33
+IViU1s91u/JgZ4NQ5uxz0DWfZc5Xso0AoxYkKgcg+xYxLkJpC/oih0zVVF03J6l0
+IF3/FzRv9EYlOrkRQARkJYrjuKGbVz12QrS1XYb4d5FVZco9mssrbH3mgbWYXeev
+12zVsxDIubngplZK/7mjAT7Zs2w+eDSq9gX/JcT5v9lwL+nCtHB6lnSbDKlcPD49
+RiaIkDWBWcnQtrLrWvpXCsyGmlnOryRTWuADTZhioFJfWoeLebdQDVxDFf0KbYSz
+MS/6LtAx5wSgChvdv5AoNAiBX76hZ1fAumik0Ubf0s1LFCQFQ2gDkWWGoFYce3o=
+=LJrk
+-----END PGP SIGNATURE-----
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1573699
-
-Thanks
--- 
-Wade Mealing
-
-Product Security - Kernel, RHCE
-
-Red Hat
+--vmttodhTwj0NAgWp--
