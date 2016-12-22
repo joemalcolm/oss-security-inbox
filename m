@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/02/11/8
-Message-ID: <56BCF924.5020703@familie-kuntze.de>
-Date: Thu, 11 Feb 2016 22:12:04 +0100
-From: Noel Kuntze <noel@...ilie-kuntze.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/5
+Message-ID: <2630257.ZRS1qYvz9N@blackgate>
+Date: Thu, 22 Dec 2016 09:51:41 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS for this list?
+Cc: tapper <lancett01@...glemail.com>
+Subject: Re: Curious about the security of my router fermwair.
 Content-Type: text/plain; charset=utf-8
 
-On 11.02.2016 22:05, Alex Gaynor wrote:
-> Hi all,
->
-> Not sure if anyone saw, but gmail has been rolling out UI indicators for
-> MTAs which don't use TLS:
-> https://gmailblog.blogspot.com/2016/02/making-email-safer-for-you-posted-by.html
->
-> I was surprised to see this indicator on mail from oss-security. Does
-> anyone know who has the keys to `list.openwall.com` so they can turn on
-> STARTTLS for outbound email?
->
-> Alex
-Why bother? The content isn't confidential in any way. It's an open mailing list that anyone can read.
-If you're worried about authenticity, SPF and other technologies take care of that on the server side
-and you can use PGP just fine to sign your messages and ensure it by yourself that way.
+On Wednesday 21 December 2016 11:39:26 tapper wrote:
+> 	Hi my name is Jonathan. I don't know if this is the write place to ask
+> about this but here gos.
+> 
+> I would like to know if any one would like to have a poke around at the
+> third party router firmware I use on my router called Gargoyle.
+> Its a easy to use interface built on top of Openwrt.
+> 
+> I use this firmware because it has some grate plug ins and the user
+> interface has grate a11y. I use a screen reader as I am blind and the
+> html5 interface is easy for me to get around in.
+> 
+> It's homepage
+> https://www.gargoyle-router.com/index.php
+> GitHub
+> https://github.com/ericpaulbishop/gargoyle
+> forum
+> https://www.gargoyle-router.com/phpbb/index.php
+> 
+> The devs behind Gargoyle are really nice people and have helped me out
+> with bugs and made me a mod on the forum.
+> What I would really like to know is just how secure is this firmware?
+> 
+> I'm not a coder. I am just interested in how safe is my router firmware
+> keeping me?
+> 
+> If any one finds any sacurety bugs I know they will get fix.
+> 
+> Thanks and sorry about my spelling Jonathan
 
--- 
+I'm using it too.
 
-Mit freundlichen Grüßen/Kind Regards,
-Noel Kuntze
+Basically is what Seth said, but apart ffmpeg some more important packages are 
+not up to date, for example:
 
-GPG Key ID: 0x63EC6658
-Fingerprint: 23CA BB60 2146 05E7 7278 6592 3839 298F 63EC 6658
+root@...goyle:~# openvpn --version 
+OpenVPN 2.3.6 mips-openwrt-linux-gnu [SSL (OpenSSL)] [LZO] [EPOLL] [MH] [IPv6] 
+built on Nov  7 2015 
+library versions: OpenSSL 1.0.2d 9 Jul 2015, LZO 2.08
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
