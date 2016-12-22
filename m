@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1117" "Friday" "18" "June" "2021" "11:16:07" "+0200" "Daniel Beck" "ml@beckweb.net" nil "31" "[oss-security] Vulnerability in Jenkins Generic Webhook Trigger Plugin" nil nil nil "6" nil nil (number mark "U       ml@beckweb.n Jun 18   31/1117  " thread-indent "\"[oss-security] Vulnerability in Jenkins Generic Webhook Trigger Plugin\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Vulnerability in Jenkins Generic Webhook Trigger Plugin" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1582" "Thursday" "22" "December" "2016" "09:29:37" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1TbCM61zupjejP+GSY_j3nio5HtbukQ-4QTGd2mZs6Aw@mail.gmail.com>" "47" "Re: [oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016122216:29:37" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       kseifried@re Dec 22   47/1582  " thread-indent "\"Re: [oss-security] CVE-2016-9963 Exim private information leak\"\n") "<20161222153621.GL5082@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "<20161218175925.GE31981@jumper.schlittermann.de>" "<20161220225935.GH19629@jumper.schlittermann.de>" "<20161221205952.GA81339@wopr>" "<20161221232409.GN19629@jumper.schlittermann.de>" "<20161222005733.GB81339@wopr>" "<20161222104035.GE5082@jumper.schlittermann.de>" "<20161222153621.GL5082@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29941 invoked by uid 550); 18 Jun 2021 09:16:19 -0000
+Received: (qmail 11923 invoked by uid 550); 22 Dec 2016 16:29:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29911 invoked from network); 18 Jun 2021 09:16:19 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <42A78409-118C-4CF3-B50F-3AB2FC614CCB@beckweb.net>
-Date: Fri, 18 Jun 2021 11:16:07 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1624007779;fe57e312;
-X-HE-SMSGID: 1luAbf-0006SR-O3
-Subject: [oss-security] Vulnerability in Jenkins Generic Webhook Trigger Plugin
+Received: (qmail 11903 invoked from network); 22 Dec 2016 16:29:49 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=g6SvWimTx1a5AXdgui/xjWrU20aQiJVvxKV/KyrtDPI=;
+        b=DwzU0CV3sJVhtDwaAi3Wt7SBD8zoAqbGt5823tBK68S6ROC+8Nm1V56LZ4DAYKUU5X
+         0urc7gnXnfH919YlWy3umGHSL+XqTprdXSC5KFAP+Rw8Dg1MC2TdE8OHAoQVdIBrbSRA
+         rP++RSSJYuhmueihVPbuFANPUb2jlXa1sVEkt2sbRld6apwMBtGqbeLaKXLHCkUcqDS0
+         P6CHAPgPkQS3NbML3JsAhSgio9wGMzTII6G5ILbi9QQi3Y4780zdQyEBrMLee0+HFUn9
+         95w5JhP5uuW0OUUQmdXWKSbr/CRmtS+cI96q3esKEBqsdCt5hACHW00bVxKenRJ60HMw
+         6/eg==
+X-Gm-Message-State: AIkVDXLx4eIC3tbvkFHa4OLTZqWO+VAT+EgGOLhPnPSGaBCWcwbHWXJCV7NEHswxuKY39mRiOFpMrgF8UFd4qoFl
+X-Received: by 10.202.98.139 with SMTP id w133mr3992756oib.44.1482424178189;
+ Thu, 22 Dec 2016 08:29:38 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <20161222153621.GL5082@jumper.schlittermann.de>
+References: <20161215233645.GJ29010@jumper.schlittermann.de>
+ <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG> <20161218175925.GE31981@jumper.schlittermann.de>
+ <20161220225935.GH19629@jumper.schlittermann.de> <20161221205952.GA81339@wopr>
+ <20161221232409.GN19629@jumper.schlittermann.de> <20161222005733.GB81339@wopr>
+ <20161222104035.GE5082@jumper.schlittermann.de> <20161222153621.GL5082@jumper.schlittermann.de>
+From: Kurt Seifried <kseifried@redhat.com>
+Date: Thu, 22 Dec 2016 09:29:37 -0700
+Message-ID: <CANO=Ty1TbCM61zupjejP+GSY_j3nio5HtbukQ-4QTGd2mZs6Aw@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a113d30bc8c4429054441c63d
+Subject: Re: [oss-security] CVE-2016-9963 Exim private information leak
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--001a113d30bc8c4429054441c63d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-The following releases contain fixes for security vulnerabilities:
+Red Hat has no problem with this, Merry Christmas / Happy Holidays / Happy
+New years everyone!
 
-* Generic Webhook Trigger Plugin 1.74
+On Thu, Dec 22, 2016 at 8:36 AM, Heiko Schlittermann <hs@schlittermann.de>
+wrote:
+
+> Heiko Schlittermann <hs@schlittermann.de> (Do 22 Dez 2016 11:40:35 CET):
+> > Kurt H Maier <khm@sciops.net> (Do 22 Dez 2016 01:57:33 CET):
+> > > On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
+> > > >
+> > > > In case the distros are ready already, we could release on 23rd, but
+> I
+> > > > need feedbeck from the distros and ack from the other developers.
+> > > >
+> > > Please pursue this possibility.
+> >
+> > Ok, I asked the distro@vs=E2=80=A6 list to get clearance. If the major =
+distros
+> > supporting Exim give their ok, we're prepared to release sooner. Stay
+> > tuned.
+>
+> Still one major distro is missing from the list of OKs. :-((
+>
+>     Best regards from Dresden/Germany
+>     Viele Gr=C3=BC=C3=9Fe aus Dresden
+>     Heiko Schlittermann
+> --
+>  SCHLITTERMANN.de ---------------------------- internet & unix support -
+>  Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+>  gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+>  ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+>
 
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-06-18/
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+--=20
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
----
-
-SECURITY-2330 / CVE-2021-21669
-Generic Webhook Trigger Plugin 1.72 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers with the ability to call webhooks configured to
-extract parameters using XPath to have Jenkins parse a crafted XML request
-body that uses external entities for extraction of secrets from the Jenkins
-controller or server-side request forgery.
-
-
+--001a113d30bc8c4429054441c63d--
