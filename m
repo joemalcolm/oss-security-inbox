@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1086" "Wednesday" "18" "November" "2015" "11:20:42" "-0700" "Jeff Law" "law@redhat.com" "<564CC17A.3060905@redhat.com>" "29" "[oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111818:20:42" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       law@redhat.c Nov 18   29/1086  " thread-indent "\"[oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<20151118015718.GA31188@openwall.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<20151118015718.GA31188@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1828" "Thursday" "22" "December" "2016" "18:57:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0bd84f88552a45a0a0669d5194dfeb93@imshyb02.MITRE.ORG>" "45" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities" nil nil nil "12" "2016122223:57:06" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities" (number mark "U       cve-assign@m Dec 22   45/1828  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities\"\n") "<alpine.LFD.2.20.1612201815510.29699@wniryva>" ("<alpine.LFD.2.20.1612201815510.29699@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17466 invoked by uid 550); 18 Nov 2015 18:20:55 -0000
+Received: (qmail 7998 invoked by uid 550); 22 Dec 2016 23:57:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17442 invoked from network); 18 Nov 2015 18:20:54 -0000
-To: Solar Designer <solar@openwall.com>, Bernd Schmidt <bschmidt@redhat.com>
-References: <20151117153951.GA28672@openwall.com>
- <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com>
- <20151118015718.GA31188@openwall.com>
-Cc: oss-security@lists.openwall.com, Florian Weimer <fweimer@redhat.com>
-From: Jeff Law <law@redhat.com>
-Message-ID: <564CC17A.3060905@redhat.com>
-Date: Wed, 18 Nov 2015 11:20:42 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 7975 invoked from network); 22 Dec 2016 23:57:20 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<zhenhaohong@gmail.com>
+In-Reply-To: <alpine.LFD.2.20.1612201815510.29699@wniryva>
+Message-ID: <0bd84f88552a45a0a0669d5194dfeb93@imshyb02.MITRE.ORG>
+Date: Thu, 22 Dec 2016 18:57:06 -0500
 MIME-Version: 1.0
-In-Reply-To: <20151118015718.GA31188@openwall.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Subject: [oss-security] Re: Fwd: x86 ROP mitigation
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: OOB access while reading virgl capabilities
 
-On 11/17/2015 06:57 PM, Solar Designer wrote:
->
-> I'd like more detail on the plan of dealing with function epilogues, if
-> there is a plan for that.
-There's not a lot of detail at this point.  For function's that don't 
-escape, the compiler has visibility of both the call and return sites. 
-So for those we can look at indirection, address mangling and the like. 
-  It's something Bernd is just starting to experiment with.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Once something escapes, then we may be looking at something like 
-stack-protector-all or somehow emitting a sequence that's painful to try 
-and exploit while being semantically equivalent.  The concern is that 
-with the cost of stack-protector-all there'll be resistance to using 
-that as the mitigation technique.
+> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
+> vulnerable to an out of bounds memory access issue. It could occur while
+> processing 'VIRTIO_GPU_CMD_GET_CAPSET' command.
+> 
+> A guest user/process could use this flaw to crash the Qemu process instance on
+> a host, resulting in DoS.
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg01903.html
 
+>> retrieves the maximum capabilities size to fill in the
+>> response object. It continues to fill in capabilities even if
+>> retrieved 'max_size' is zero(0), thus resulting in OOB access.
+>> Add check to avoid it.
 
->
-> I'm not sure if this fits under:
->
->>    * Look into an idea Florian had for improving stack-protector
->>      epilogues.
->
-> or if that's (more likely) something entirely different.
-No, it's based on some experiments that show changing the stack 
-protector epilogue can result in an epilogue sequence that is painful to 
-exploit.
+Use CVE-2016-10028.
 
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
+that may be an expected place for a later update.
 
-jeff
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYXGfhAAoJEHb/MwWLVhi2GN4P/0mDg9MtY/9ZEuTj9P0t97Cz
+By4R/z4PK8qeFBGVYo5ftRVNRKit77pkB1rCLNkeaL891RjNya3LcFqb8JBLm6g3
+OP6LXA2GhkNdMNEFTAPg2pmnLqFdauHiRtIm/V9bfbCRbdZ+7Ys2rAcRhfc8N85H
+P+V1dHQIvx7VQXwo4pfRdMWXaJZJvbq6Dvvn4wFgcw32HJ39irsiWLa1x3quNmhL
+t5jBL3zp6lfTOO7fqUGLUOk9Rs/g2N5XrUTZ0Rc7Cw+1xjy/luWObIGF5fmnkW6M
+LbBlVoZmnZBJanoSdPTiwy5fURq1T1IjDC3n1ZRB+poVRsIOvCoFYJAozYHwOYeg
+g/kQwY+DYAUh3QE0SHRZJmO/TILS8ghtqrldZtS4WP87d+CMWi6PzMBumScIH9S3
+zPZSs0KLuXhWnus4yrFcYHrc/sonqZSfCvejw/Un2XxFb6fjc8VkwEzWZcFlZ+y8
+EpyDpSjflZcMsqzTK/ETogYtVcKGjjyg7b4tDRrP5Vjm98HmPSiCC+bLtqTcsF2p
+5oBGCwQX2dSNMTKMltUPTNeIdotZkF/6ym6TKnAs9YGGQI0ioxFHuT/6FhF6GAYA
+S2Y63sZbbTxDthsohCQBv/KPJFlHZyo1ih1dxRiVXGTqRjYWc+QZvz+mOJ0A07oT
+2h/TVl7vPCyM3UTD9Tym
+=GOF0
+-----END PGP SIGNATURE-----
