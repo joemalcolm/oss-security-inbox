@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/14/15
-Message-ID: <20160314132652.4530b528@redhat.com>
-Date: Mon, 14 Mar 2016 13:26:52 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: Steve Kemp <steve@...ve.org.uk>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request - GNU Awk.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/11
+Message-ID: <20161222153621.GL5082@jumper.schlittermann.de>
+Date: Thu, 22 Dec 2016 16:36:21 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 14 Mar 2016 06:32:28 +0000 Steve Kemp wrote:
-
->   I reported two DoS bugs against GNU Awk to the debian
->  bug tracker recently, both of which are denial of service
->  attacks causing NULL-pointer deferences.
+Heiko Schlittermann <hs@...littermann.de> (Do 22 Dez 2016 11:40:35 CET):
+> Kurt H Maier <khm@...ops.net> (Do 22 Dez 2016 01:57:33 CET):
+> > On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
+> > > 
+> > > In case the distros are ready already, we could release on 23rd, but I
+> > > need feedbeck from the distros and ack from the other developers.
+> > > 
+> > Please pursue this possibility.
 > 
->   It would be useful to have a CVE identifiers assigned.
+> Ok, I asked the distro@vs… list to get clearance. If the major distros
+> supporting Exim give their ok, we're prepared to release sooner. Stay
+> tuned.
 
-Why should these get a CVE?  As you state in one of your reports:
+Still one major distro is missing from the list of OKs. :-((
 
-  While I appreciate that passing untrusted code to gawk is not a
-  common thing to do, I do not believe that it should be possible to
-  trigger a segfault though.
-
-Why should that be considered a valid / safe use case at all?  If
-something makes awk run untrusted programs, there's code execution
-problem already:
-
-  echo | awk '{ system("id") }'
-
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
 -- 
-Tomas Hoger / Red Hat Product Security
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
