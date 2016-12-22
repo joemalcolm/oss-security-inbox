@@ -1,125 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/25/8
-Message-ID: <20160125193043.GA14069@TC.local>
-Date: Mon, 25 Jan 2016 11:30:43 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2015-7576] Timing attack vulnerability in basic authentication in Action Controller.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/8
+Message-ID: <1590235068.409323.1482405991070@mail.yahoo.com>
+Date: Thu, 22 Dec 2016 11:26:31 +0000 (UTC)
+From: Nicholas Prowse <nick5990@...oo.co.uk>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Curious about the security of my router fermwair.
 Content-Type: text/plain; charset=utf-8
 
-Timing attack vulnerability in basic authentication in Action Controller.
+Jonathan,
 
-There is a timing attack vulnerability in the basic authentication support
-in Action Controller. This vulnerability has been assigned the CVE
-identifier CVE-2015-7576.
+- My suggestion is to port scan all devices eg routers you own. Then store and analyse the results. Only scan devices you own since scanning other peoples devices / networks may be illegal.
 
-Versions Affected:  All.
-Not affected:       None.
-Fixed Versions:     5.0.0.beta1.1, 4.2.5.1, 4.1.14.1, 3.2.22.1
+- A wide variety of tutorials and information about port scanning is available online.
 
-Impact
-------
-Due to the way that Action Controller compares user names and passwords in
-basic authentication authorization code, it is possible for an attacker to
-analyze the time taken by a response and intuit the password.
+- I found through port scanning some of the devices I own earlier this year, that there were many open and filtered ports and stated services such as telnet, upnp, and ssdp. I found out via research that these services / protocols have had vulnerabilities in the past that are publicly known. There are likely many devices with known and unknown weaknesses in circulation.
 
-For example, this string comparison:
+- shodan.io can tell one how many requests are being sent by specific services / protocols. Some results were quite surprising to me.
 
-  "foo" == "bar"
+Q: Does anyone know if there are databases / listings / websites that have port scan results by device? If yes, some examples would be good.
 
-is possibly faster than this comparison:
+Regards,
+Nick
 
-  "foo" == "fo1"
+--------------------------------------------
+On Wed, 12/21/16, tapper <lancett01@...glemail.com> wrote:
 
-Attackers can use this information to attempt to guess the username and
-password used in the basic authentication system.
-
-You can tell you application is vulnerable to this attack by looking for
-`http_basic_authenticate_with` method calls in your application.
-
-All users running an affected release should either upgrade or use one of
-the workarounds immediately.
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-If you can't upgrade, please use the following monkey patch in an initializer
-that is loaded before your application:
-
-```
-$ cat config/initializers/basic_auth_fix.rb
-module ActiveSupport
-  module SecurityUtils
-    def secure_compare(a, b)
-      return false unless a.bytesize == b.bytesize
-
-      l = a.unpack "C#{a.bytesize}"
-
-      res = 0
-      b.each_byte { |byte| res |= byte ^ l.shift }
-      res == 0
-    end
-    module_function :secure_compare
-
-    def variable_size_secure_compare(a, b)
-      secure_compare(::Digest::SHA256.hexdigest(a), ::Digest::SHA256.hexdigest(b))
-    end
-    module_function :variable_size_secure_compare
-  end
-end
-
-module ActionController
-  class Base
-    def self.http_basic_authenticate_with(options = {})
-      before_action(options.except(:name, :password, :realm)) do
-        authenticate_or_request_with_http_basic(options[:realm] || "Application") do |name, password|
-          # This comparison uses & so that it doesn't short circuit and
-          # uses `variable_size_secure_compare` so that length information
-          # isn't leaked.
-          ActiveSupport::SecurityUtils.variable_size_secure_compare(name, options[:name]) &
-            ActiveSupport::SecurityUtils.variable_size_secure_compare(password, options[:password])
-        end
-      end
-    end
-  end
-end
-```
-
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 4-1-basic_auth.patch - Patch for 4.1 series
-* 4-2-basic_auth.patch - Patch for 4.2 series
-* 5-0-basic_auth.patch - Patch for 5.0 series
-
-Please note that only the 4.1.x and 4.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-
-Thank you to Daniel Waterworth for reporting the problem and working with us to
-fix it.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-2-basic_auth.patch" of type "text/plain" (3133 bytes)
-
-View attachment "4-1-basic_auth.patch" of type "text/plain" (3039 bytes)
-
-View attachment "4-2-basic_auth.patch" of type "text/plain" (2533 bytes)
-
-View attachment "5-0-basic_auth.patch" of type "text/plain" (2534 bytes)
-
-Content of type "application/pgp-signature" skipped
+ Subject: [oss-security] Curious about the security of my router fermwair.
+ To: oss-security@...ts.openwall.com, oss-security@...ts.openwall.com
+ Date: Wednesday, December 21, 2016, 11:39 AM
+ 
+     Hi my name is
+ Jonathan. I don't know if this is the write place to ask 
+ about this but here gos.
+ 
+ I would like to know if any one would like to have a poke
+ around at the 
+ third party router firmware I use on my router called
+ Gargoyle.
+ Its a easy to use interface built on top of Openwrt.
+ 
+ I use this firmware because it has some grate plug ins and
+ the user 
+ interface has grate a11y. I use a screen reader as I am
+ blind and the 
+ html5 interface is easy for me to get around in.
+ 
+ It's homepage
+ https://www.gargoyle-router.com/index.php
+ GitHub
+ https://github.com/ericpaulbishop/gargoyle
+ forum
+ https://www.gargoyle-router.com/phpbb/index.php
+ 
+ The devs behind Gargoyle are really nice people and have
+ helped me out 
+ with bugs and made me a mod on the forum.
+ What I would really like to know is just how secure is this
+ firmware?
+ 
+ I'm not a coder. I am just interested in how safe is my
+ router firmware 
+ keeping me?
+ 
+ If any one finds any sacurety bugs I know they will get
+ fix.
+ 
+ Thanks and sorry about my spelling
+ Jonathan       
+         
+ 
