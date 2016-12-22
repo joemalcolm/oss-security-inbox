@@ -1,4 +1,9 @@
-Received: (qmail 28603 invoked by uid 550); 16 Oct 2023 08:24:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2457" "Thursday" "22" "December" "2016" "11:26:31" "+0000" "Nicholas Prowse" "nick5990@yahoo.co.uk" "<1590235068.409323.1482405991070@mail.yahoo.com>" "71" "Re: [oss-security] Curious about the security of my router fermwair." nil nil nil "12" "2016122211:26:31" "[oss-security] Curious about the security of my router fermwair." (number mark "U       nick5990@yah Dec 22   71/2457  " thread-indent "\"Re: [oss-security] Curious about the security of my router fermwair.\"\n") "<1590235068.409323.1482405991070.ref@mail.yahoo.com>" ("<1590235068.409323.1482405991070.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13709 invoked by uid 550); 22 Dec 2016 11:28:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28579 invoked from network); 16 Oct 2023 08:24:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1697444637; x=1697531037; bh=Zf
-	OnAlUdX9VvvDCUVzGZkk/GZXLpK08Nm3YlyUvtdLc=; b=KAaNTuj1zV0+4lVMO2
-	1JUne/Qe5d8ojgihEYHD2V4y7X5SkB8ZwKZYoHCbuR+qYKkg+gylqZr52bCkzo+y
-	qgGj9lLhtnuC7oHjLNxdcxIdeWZZaEIVUoqstG7u1IQ1jYTRXLuh2YPa+5v3gVSF
-	26QPmblW1qwNcV9aIpPUUfs5CURQNY85kZf4iGoz3EM2rmhA9bHbapW9pK5kGl4p
-	DahcUPCXX7Pmwo/VkY1l+s9NJtbuAy2Ig546kB99GMkUYYD0O6TX6rhA3rvzztFB
-	p/usokG+dSq8q44yHBc+XJtTBYzteZHiuKTK6Jj1uML7HqxsdKmK9ZdWMRIRhgqi
-	WSMw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697444637; x=1697531037; bh=ZfOnAlUdX9Vvv
-	DCUVzGZkk/GZXLpK08Nm3YlyUvtdLc=; b=Fk7Ruz70l21HS4gRp3O/hgjHNJEIr
-	ldCjUgVQycsm4tcz3eO75hnzR/+qgY1SSzldndFg19261xtcghlolxztQypzBHHP
-	vxQxmzOk0YdSstsmWS6S9mUY4e/RMCSKQIqrNQt/SNJgHXmS+qjfS5X3nwcnRJ6L
-	W+6ME8dvShuB5ecP1gnw58Zjg1Iq8MN0ICb2poHvfnd0RdS7XKinlshMZRA0G7Wc
-	4fN/e1pOp6rfFPbI72QoelEhGiomzbPBWA1GG3FNuKxu2j/Olq9HUFEmD+3MmQjX
-	H5+9zZrA7s0Gz4A5b+y/9XZVdXqHhAKL+jcpPuYwnIc4ClNz0IHoILwhA==
-X-ME-Sender: <xms:HfMsZetMvKZ0JTPwnKl3jd7l3r2tiWMN5ORbebUwF3ah7i45pxoUuw>
-    <xme:HfMsZTf-4SVVC7iViAQHbraP0w2B4qJ2GIuH4usO6SVqA6NiF-N9AVzyWjV4Pw_k5
-    QkBHInE7PXnMA>
-X-ME-Received: <xmr:HfMsZZz_si9Ay_Sd-GkQWfpYFd6pnutR8zVDaWbXvTCuxNXqqjhZOCtRcow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjedtgddtudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
-    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
-    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:HfMsZZNpkFGnqAFz8hsX6Mme_5_xqFXhRwgQHGoq-EMOYvE0UsndXg>
-    <xmx:HfMsZe_JHoM1iLwSwjT_nAWaHxbqlomjkb8m5AkLD_GAl9Ps79Q_uA>
-    <xmx:HfMsZRVRw2jdOwhtQPOaYhd0VbYGZAOD7H0BoHdj8k3y9Ged4JjKyA>
-    <xmx:HfMsZTH0rVDD2sCOS41CYqTDtftCny7AXbl1pLAyIBIBXoCIizXgfw>
-Feedback-ID: i787e41f1:Fastmail
-Date: Mon, 16 Oct 2023 10:23:50 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2023101612-snare-dart-c7cf@gregkh>
-References: <ZSyUUSF_-3YbT14k@workstation>
- <20231016080850.GF10758@suse.de>
+Received: (qmail 12167 invoked from network); 22 Dec 2016 11:26:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.uk; s=s2048; t=1482405992; bh=/p0WQXYF4OreSbEbafXcsVBwlq4yxe/DimWqrruWlHU=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=il5kBBKBMOoREqONGmZShxSXBEO6irtI1wyaxw/bhX6C1RGA9cwP1lz0opYdzJ46xz90teFLcrq9Nvluv20PsMVqkVvlKY7V5gktu3zIAym7sHsh7vWOYshhLgScSaZJ7L+3KHgKY7XuwHLEK+gJfwgqG1Wv2uwqqCOYetHJuccZCNOfOkARsGbRBDSW40a1AQIMJcyaK+eY6nbhtVP2b9sfD/fyvpEsS9NH0So6eTAb8DFDjh3A7qJe4+rC6IgKlbmMGdpzXFRkMGDhIEqkPveOwmLVU9izVcLlbZurL2QH2HLaXjSI8HpHHB85Mk4izR8QX3Rs8odDu50vC0VC4w==
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 364866.75845.bm@omp1032.mail.ir2.yahoo.com
+X-YMail-OSG: BsRF2LkVM1mmNnMl27B6115VeA8Ld9TlgY4W1rLl3cJ9GscWa2Wo3ZArpT1jG25
+ r9YiQ8eWx8j.4E.7_9gw3yehT2wHK_1t_CN9vOkTMHw.le7P0FKkr9WoJfjwVmCjayFks8V3jVy2
+ iQvfCAgHV0wgZcMZFHdiVxf9Xl6EoeSGK2uKYHKAGHiScq3sgC82lZjrHrcmXiyb5HLzb7hiJlae
+ VSWiWyiczcB8NXJVWIV3j9msXNZzNon8RYRhjz2jYdaEqALDniDFzilkhBM7S2ZdFERpa9Abnuuh
+ ZGCV3CFVtzBkgSy_rOQJ0.Ce60rZd.nFa8igAtHIQAxVFw3iB1iLc6ScI_KMXADpmkcruqm.COUs
+ ttTAzu1X1waMZnxi6lM.fGrNQS13l59ooXjfNLRVJ7PeN8nCcJBlF7E3OR8rx24mOtVEGjfnS0jr
+ zHXVeHFbdV91LuSK89aobLxT05ZkjyYpOeaNTQV2qXu_6nq_C0z1_kek7JxvmyvdzzTVZ2tHCK4k
+ 5y8qkR74Jcyjg5vRLqqAotXo3iEvSKID7u5NmlSw-
+Date: Thu, 22 Dec 2016 11:26:31 +0000 (UTC)
+From: Nicholas Prowse <nick5990@yahoo.co.uk>
+To:  <oss-security@lists.openwall.com>
+Message-ID: <1590235068.409323.1482405991070@mail.yahoo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231016080850.GF10758@suse.de>
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+References: <1590235068.409323.1482405991070.ref@mail.yahoo.com>
+Subject: Re: [oss-security] Curious about the security of my router
+ fermwair.
 
-On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> Regardless of your viability of subscription status I think we also
-> (sadly) have to consider current geopolitical issues here.
-> 
-> As far as I understand, US companies and US citizens are not permitted
-> to work with Chinese organizations and/or Chinese nationals.
+Jonathan,
 
-They can when working in the open on public projects and other
-open-source-like things.  For "closed" lists and groups, please consult
-a lawyer as the rules there are quite varied and depends on the
-countries and companies involved.
+- My suggestion is to port scan all devices eg routers you own. Then store =
+and analyse the results. Only scan devices you own since scanning other peo=
+ples devices / networks may be illegal.
 
-But to be sure, again, consult your corporate lawyers, they know the
-rules and the issues involved better than I do.
+- A wide variety of tutorials and information about port scanning is availa=
+ble online.
 
-good luck!
+- I found through port scanning some of the devices I own earlier this year=
+, that there were many open and filtered ports and stated services such as =
+telnet, upnp, and ssdp. I found out via research that these services / prot=
+ocols have had vulnerabilities in the past that are publicly known. There a=
+re likely many devices with known and unknown weaknesses in circulation.
 
-greg k-h
+- shodan.io can tell one how many requests are being sent by specific servi=
+ces / protocols. Some results were quite surprising to me.
+
+Q: Does anyone know if there are databases / listings / websites that have =
+port scan results by device? If yes, some examples would be good.
+
+Regards,
+Nick
+
+--------------------------------------------
+On Wed, 12/21/16, tapper <lancett01@googlemail.com> wrote:
+
+ Subject: [oss-security] Curious about the security of my router fermwair.
+ To: oss-security@lists.openwall.com, oss-security@lists.openwall.com
+ Date: Wednesday, December 21, 2016, 11:39 AM
+=20
+ =C2=A0=C2=A0=C2=A0 Hi my name is
+ Jonathan. I don't know if this is the write place to ask=20
+ about this but here gos.
+=20
+ I would like to know if any one would like to have a poke
+ around at the=20
+ third party router firmware I use on my router called
+ Gargoyle.
+ Its a easy to use interface built on top of Openwrt.
+=20
+ I use this firmware because it has some grate plug ins and
+ the user=20
+ interface has grate a11y. I use a screen reader as I am
+ blind and the=20
+ html5 interface is easy for me to get around in.
+=20
+ It's homepage
+ https://www.gargoyle-router.com/index.php
+ GitHub
+ https://github.com/ericpaulbishop/gargoyle
+ forum
+ https://www.gargoyle-router.com/phpbb/index.php
+=20
+ The devs behind Gargoyle are really nice people and have
+ helped me out=20
+ with bugs and made me a mod on the forum.
+ What I would really like to know is just how secure is this
+ firmware?
+=20
+ I'm not a coder. I am just interested in how safe is my
+ router firmware=20
+ keeping me?
+=20
+ If any one finds any sacurety bugs I know they will get
+ fix.
+=20
+ Thanks and sorry about my spelling
+ Jonathan=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0
+ =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=20
+=20
