@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/03/4
-Message-Id: <20161003142203.3996C33203F@smtpvbsrv1.mitre.org>
-Date: Mon,  3 Oct 2016 10:22:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE request Qemu: net: inifinte loop in imx_fec_do_tx() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/7
+Message-ID: <CAH8yC8ne0XPZ5x_Nuazcpjcyc4xKg_fwDydBmMXYDjeADsPYvA@mail.gmail.com>
+Date: Thu, 22 Dec 2016 06:06:41 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Dec 22, 2016 at 5:40 AM, Heiko Schlittermann
+<hs@...littermann.de> wrote:
+> Kurt H Maier <khm@...ops.net> (Do 22 Dez 2016 01:57:33 CET):
+>> On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
+>> >
+>> > In case the distros are ready already, we could release on 23rd, but I
+>> > need feedbeck from the distros and ack from the other developers.
+>> >
+>> Please pursue this possibility.
+>
+> Ok, I asked the distro@vs… list to get clearance. If the major distros
+> supporting Exim give their ok, we're prepared to release sooner. Stay
+> tuned.
 
-> Quick Emulator(Qemu) built with the i.MX Fast Ethernet Controller emulator
-> support is vulnerable to an infinite loop issue. It could occur while
-> processing packets on the transmit queue in 'imx_fec_do_tx'.
-> 
-> A privileged user/process inside guest could use this issue to crash the Qemu
-> process on the host leading to DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg05556.html
+Its probably worth mentioning the only people who are at a
+disadvantage now are the good guys and decision makers.
 
-Use CVE-2016-7907.
+The bad guys already knew about the problem, or the motivated ones
+found it after the partial disclosure.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/imx_fec.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX8mkDAAoJEHb/MwWLVhi23/EP/0buNmOOgcuX1048FYUcg5Rx
-yjhprmvkt95spa/gu5V2FqB8b8b+kWBg4LjPkSW18EIMtHC2lIVH4ZJUgUMrNaWG
-+G/MoAiDwmBFkSIfbc33KFDeUUDjHt8JVhctsFbDGmW5KYt3O6AYb2uppvKJflTs
-YWCbiyqCqh3cKEspos5faD2cXHd0eH1qioDCFNGZVv82a+6ODloSpIv/qu4Ksv6X
-zGvseCSLQm00PobWfmGfV14Vhm4h3oERMtlVLPkbv09vRT8KK+XCzyEYpeB7sXT5
-aBzngcs9iLhkhK+tgdub56GvSg40Dq6CyaMFX8jtxI4hphLdm8dzFjNPNIOAdBlS
-69nAQbtlEql+J1lP1abGGLni/3ElkGQwvAAGBE3WQV5RAggR4/dOzbnAZto8oWOD
-r6wyW5WRqMGfv1OgasTXWEy3+u+k5sNh2NfiwzwIBS/tIFcefUZJwhSyEZuEikzk
-9fZnYIT9yUbGlKMepFXrmCz8W1xOnm9qPcINw9R2meROh0ue1O2+vz9z3cHV5CcL
-xToZYNxm6YUIfEShOQ4ZatREOZwd1YFVwcRf2TvnGlUa/EHabZlgVQmYRAZ4wr/y
-kNuiLTUhAwbpxFe9/ygTgdZfdV4U7mgkmbM7rTD5PyG4N3VI22kpTwvUkshYDHPA
-aRWpeT4tzbzu4ezNdSBN
-=qRTR
------END PGP SIGNATURE-----
+Jeff
