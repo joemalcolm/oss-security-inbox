@@ -1,4 +1,9 @@
-Received: (qmail 10053 invoked by uid 550); 17 Jun 2025 14:11:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1529" "Thursday" "22" "December" "2016" "12:28:45" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20161222112845.GF5082@jumper.schlittermann.de>" "40" "Re: [oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016122211:28:45" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       hs@schlitter Dec 22   40/1529  " thread-indent "\"Re: [oss-security] CVE-2016-9963 Exim private information leak\"\n") "<CAH8yC8ne0XPZ5x_Nuazcpjcyc4xKg_fwDydBmMXYDjeADsPYvA@mail.gmail.com>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "<20161218175925.GE31981@jumper.schlittermann.de>" "<20161220225935.GH19629@jumper.schlittermann.de>" "<20161221205952.GA81339@wopr>" "<20161221232409.GN19629@jumper.schlittermann.de>" "<20161222005733.GB81339@wopr>" "<20161222104035.GE5082@jumper.schlittermann.de>" "<CAH8yC8ne0XPZ5x_Nuazcpjcyc4xKg_fwDydBmMXYDjeADsPYvA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23684 invoked by uid 550); 22 Dec 2016 11:29:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,166 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 22086 invoked from network); 17 Jun 2025 13:50:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1750168191;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Q8N5xIo+F51R0b1QCzlkPxC7ApzsWu34/cC+9H4vCWI=;
-	b=YNhwIo+/m8EqdIkI5t/csUIJKq8Ysh59a38sN7HJYSKJYPuR/uluzS7ZDSLwAzNe1WZvih
-	K2y+SFhgIwk8OXUeok9WdlRx+ZDgMbRBFGTAY0xuz+Z7Xkqbpm46o59kQAZj7+qFgkR8Mc
-	nUYsi2ud8c/VvCTVuOw+r8JTxYksXes=
-X-MC-Unique: NnaDXjFkMaiNmHsn4TV1AA-1
-X-Mimecast-MFC-AGG-ID: NnaDXjFkMaiNmHsn4TV1AA_1750168190
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750168190; x=1750772990;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q8N5xIo+F51R0b1QCzlkPxC7ApzsWu34/cC+9H4vCWI=;
-        b=E6T4kYfCxRtl2ryFXJSV2X2buWBuZMOhvpDQ5N6nnKY308aNJW7Ksrbne/03J4+eyP
-         X2wKPYdY2in/NGeG3gw1ibCYWTAUZaLpVGvHOITf42bEtBkAM1Bwa4uBuCEJDB8k8kDa
-         I66TuEKVQ0ap65R91Ai0IC2U42YP6Il7NhZepCYbcQjyLIUkK+fSd1zD9cmABpnx9mIz
-         cji50qat6KH3fNz3+FDmVjZmKjW8KNjZ+HeSXoQ7ctMyNEV4hxYMXiK0azB4h9EnTJx9
-         rBtzd4TvW8oXJuCafEWA9K83eiE+RdUESGL+yWDlDeul8Wd1eElEj625m7DFtiWSM9jk
-         D/BA==
-X-Gm-Message-State: AOJu0Yzk6lRjNjWzovQlYzENZ5LF69jDOloed8uPECXPm9VSoaJpjJjj
-	thY0sHS0Qxoiv2JcU187Ua0O/ZJUEJV5WRi09QMFMquQ04cUaUHlnV9S5SUB0VN7Bq1FuisCGJe
-	7RiWmyH9jD56vX5Crb4CRcPbTntDpWgp0xmANz2NbGcW6h3EMhbfuSgtXhy89yr6Ep3Ouz7BpH7
-	1ozfwCGms9gHiIkpkaS36k7NuNkRDhekhnTi5xgbJrqIrgs6O7hgjs
-X-Gm-Gg: ASbGncsOwuNyeuU3T0KubRXJ8B4QdIzlwBbpeIkqmqxILVktBsLtlXWuQn8EoVfUo7p
-	z/yxBUKaeICrc2qx58pCYEfpSMM0oSpRpnJiN1+lvqmYAT4SEUY/17+rcX6RxnUNvef/4cvFLHr
-	z7F0I=
-X-Received: by 2002:a05:6870:219e:b0:2e9:42a9:be4a with SMTP id 586e51a60fabf-2eaf070b91emr7427349fac.2.1750168189881;
-        Tue, 17 Jun 2025 06:49:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxBRUyQyDs+cF9FdcoCQxuYiAPCtVB0OQ44LJZplZSn+j1RByFg2cjtChEBv3pFjmBlxzlrPTC0Wkf/86YXpo=
-X-Received: by 2002:a05:6870:219e:b0:2e9:42a9:be4a with SMTP id
- 586e51a60fabf-2eaf070b91emr7427336fac.2.1750168189434; Tue, 17 Jun 2025
- 06:49:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <3663e7ee-4599-4d11-ae62-900477cc48d9@redhat.com>
-In-Reply-To: <3663e7ee-4599-4d11-ae62-900477cc48d9@redhat.com>
-From: Olivier Fourdan <ofourdan@redhat.com>
-Date: Tue, 17 Jun 2025 15:49:13 +0200
-X-Gm-Features: AX0GCFtl5zQCUoKr2VGKk0b_1ZoCWzsDpWKErlgnbAjVz29LQhY9aXQrGkVa_oE
-Message-ID: <CAP=2yyTBW52sNxVMwBsGwKU8HPxr=U4ZfbGdNJcihJks45PLPQ@mail.gmail.com>
+Received: (qmail 17731 invoked from network); 22 Dec 2016 11:28:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:Resent-To;
+	bh=9+LzWVfdurHDAS298nY2jaJaK6osFvW6KpSiRMwwJ5c=; b=BzkKVbbw8+2m1fiaktC+T0hQIp
+	2Ah1w1vJqYQX8Qv9zgIbdZxeAyuasvQdlc6qq3cSErTcXrpXxEb+o3eWFq94USx3v7GQQ/e1kAlS3
+	X6nFB+x7AAe90FM+UKPQ0vBUNLA3ONoHJK6TL0zuM7G7dYIaOixpXVoA6BhUgWGbcB/A=;
+Date: Thu, 22 Dec 2016 12:28:45 +0100
+From: Heiko Schlittermann <hs@schlittermann.de>
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: yULtQ6NH3kga0fLR_jKwoIrxP1SVuHkd_kAS_C9wUJI_1750168190
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Fwd: X.Org Security Advisory: multiple security issues X.Org X server
- and Xwayland
+Message-ID: <20161222112845.GF5082@jumper.schlittermann.de>
+References: <20161215233645.GJ29010@jumper.schlittermann.de>
+ <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
+ <20161218175925.GE31981@jumper.schlittermann.de>
+ <20161220225935.GH19629@jumper.schlittermann.de>
+ <20161221205952.GA81339@wopr>
+ <20161221232409.GN19629@jumper.schlittermann.de>
+ <20161222005733.GB81339@wopr>
+ <20161222104035.GE5082@jumper.schlittermann.de>
+ <CAH8yC8ne0XPZ5x_Nuazcpjcyc4xKg_fwDydBmMXYDjeADsPYvA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TeJTyD9hb8KJN2Jy"
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8ne0XPZ5x_Nuazcpjcyc4xKg_fwDydBmMXYDjeADsPYvA@mail.gmail.com>
+Organization: schlittermann -- internet & unix support
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] CVE-2016-9963 Exim private information leak
 
-======================================================================
-X.Org Security Advisory: June 17, 2025
+--TeJTyD9hb8KJN2Jy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Issues in X.Org X server prior to 21.1.17 and Xwayland prior to 24.1.7
-======================================================================
+Jeffrey Walton <noloader@gmail.com> (Do 22 Dez 2016 12:06:41 CET):
+=E2=80=A6
+> The bad guys already knew about the problem, or the motivated ones
+> found it after the partial disclosure.
 
-Multiple issues have been found in the X server and Xwayland implementations
-published by X.Org for which we are releasing security fixes for in
-xorg-server-21.1.17 and xwayland-24.1.7.
+Partial disclousure? I think, there was no disclosure at all, beside
+requesting a CVE and talking about a possible leak of private
+information. Is this enough to call it "partial disclousure"?
 
-1) CVE-2025-49175: Out-of-bounds access in X Rendering extension
-(Animated cursors)
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
 
-The X Rendering extension allows creating animated cursors providing a
-list of cursors.
+--TeJTyD9hb8KJN2Jy
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-By default, the Xserver assumes at least one cursor is provided while a
-client may actually pass no cursor at all, which causes an out-of-bound
-read creating the animated cursor and a crash of the Xserver.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Introduced in: X11R6.7 (originally from XFree86 4.3.0)
-Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/0885e0b2
-Found by: This issue was discovered by Nils Emmerich and reported by
-           Julian Suleder via ERNW Vulnerability Disclosure.
+iQEcBAEBCgAGBQJYW7jtAAoJEGoXY4qgRQz102UIAJLzq5E+M05OGGDIkyLQKa97
+VMBGjD1QqFJyKyEJNM1yZSh8rb03eC55j0GgFR5cT5A+w90HcaMTyqQt48O8KspE
+vkKWx5UuAVWbdSkWd4dlV1CxRn9xZFjFvsLWiQyVmPN3l4DG/uHjjUYI0MG2LKuY
+PbLwKrP4gBhxB1CPbv2+FJGjN5ld5ofZueQKKXOdLDwRrD/QXtzVzNeXd+3wbBTX
+yprkZ8iDvXz1/TDq59Kw31XjNkNb093/jsN7pGs36zx7Qlzv5gikqtn1iGb4iPmw
+A937iLzFR/l0lWLTPygCoQMhEoRl5fOHxYCqRWPeXr9DORJVK3gjsuBrmf8Gw3Y=
+=tY/X
+-----END PGP SIGNATURE-----
 
-2) CVE-2025-49176: Integer overflow in Big Requests Extension
-
-The Big Requests extension allows requests larger than the 16-bit length
-limit.
-
-It uses integers for the request length and checks for the size not to
-exceed the maxBigRequestSize limit, but does so after translating the
-length to integer by multiplying the given size in bytes by 4.
-
-In doing so, it might overflow the integer size limit before actually
-checking for the overflow, defeating the purpose of the test.
-
-Introduced in: X11R6.0
-Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/03731b32
-Found by: This issue was discovered by Nils Emmerich and reported by
-           Julian Suleder via ERNW Vulnerability Disclosure.
-
-3) CVE-2025-49177: Data leak in XFIXES Extension 6
-(XFixesSetClientDisconnectMode)
-
-The handler of XFixesSetClientDisconnectMode does not check the client
-request length.
-
-A client could send a shorter request and read data from a former
-request.
-
-Introduced in: Xwayland-22.0.99.1 (22.1 RC1)
-                Xorg server 21.0.99.1 (21.1 RC1)
-Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/ab02fb96
-Found by: This issue was discovered by Nils Emmerich and reported by
-           Julian Suleder via ERNW Vulnerability Disclosure.
-
-4) CVE-2025-49178: Unprocessed client request via bytes to ignore
-
-When reading requests from the clients, the input buffer might be shared
-and used between different clients.
-
-If a given client sends a full request with non-zero bytes to ignore,
-the bytes to ignore may still be non-zero even though the request is
-full, in which case the buffer could be shared with another client who's
-request will not be processed because of those bytes to ignore, leading
-to a possible hang of the other client request.
-
-Introduced in: Xorg 1.10.0
-Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/d55c54ce
-Found by: This issue was discovered by Nils Emmerich and reported by
-           Julian Suleder via ERNW Vulnerability Disclosure.
-
-5) CVE-2025-49179: Integer overflow in X Record extension
-
-The RecordSanityCheckRegisterClients() function in the X Record extension
-implementation of the Xserver checks for the request length, but does not
-check for integer overflow.
-
-A client might send a very large value for either the number of clients
-or the number of protocol ranges that will cause an integer overflow in
-the request length computation, defeating the check for request length.
-
-Introduced in: X11R6.1
-Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/2bde9ca4
-Found by: This issue was discovered by Nils Emmerich and reported by
-           Julian Suleder via ERNW Vulnerability Disclosure.
-
-6) CVE-2025-49180: Integer overflow in RandR extension
-(RRChangeProviderProperty)
-
-A client might send a request causing an integer overflow when computing
-the total size to allocate in RRChangeProviderProperty().
-
-Introduced in: Xorg server version 1.12.99.901 (1.13 RC1)
-Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/3c3a4b76
-      https://gitlab.freedesktop.org/xorg/xserver/-/commit/0235121c
-Found by: This issue was discovered by Nils Emmerich and reported by
-           Julian Suleder via ERNW Vulnerability Disclosure.
-
-------------------------------------------------------------------------
-
-X.Org thanks all of those who reported and fixed these issues, and those
-who helped with the review and release of this advisory and these fixes.
-
+--TeJTyD9hb8KJN2Jy--
