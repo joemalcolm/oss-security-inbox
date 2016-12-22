@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/8
-Message-ID: <20160725121351.GA746@openwall.com>
-Date: Mon, 25 Jul 2016 15:13:51 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/22/10
+Message-ID: <CAH8yC8njcSmRZacKR1Gu1cmTxT9xAegB3D_20qusvJD-szTaXg@mail.gmail.com>
+Date: Thu, 22 Dec 2016 06:42:43 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "Eric W. Biederman" <ebiederm@...ssion.com>, pkg-shadow-devel@...ts.alioth.debian.org
-Subject: Re: Re: [Pkg-shadow-devel] subuid security patches for shadow package
+Subject: Re: CVE-2016-9963 Exim private information leak
 Content-Type: text/plain; charset=utf-8
 
-Replying out of context (not related to the specific getlogin() issue):
+On Thu, Dec 22, 2016 at 6:28 AM, Heiko Schlittermann
+<hs@...littermann.de> wrote:
+> Jeffrey Walton <noloader@...il.com> (Do 22 Dez 2016 12:06:41 CET):
+> …
+>> The bad guys already knew about the problem, or the motivated ones
+>> found it after the partial disclosure.
+>
+> Partial disclousure? I think, there was no disclosure at all, beside
+> requesting a CVE and talking about a possible leak of private
+> information. Is this enough to call it "partial disclousure"?
 
-On Mon, Jul 25, 2016 at 10:39:30AM +0200, Sebastian Krahmer wrote:
-> Err, sorry. Shared UID, different name
+All they need is a toehold. When the rumors started circulating about
+CRIME, a number of folks figured out the attack before Duong and Rizzo
+presented it.
 
-As a special case, this is common practice for UID 0 (root) accounts of
-multiple sysadmins, providing poor man's accountability (due to the
-different account names getting in all the usual logs, without having to
-check which specific SSH key, etc. was used for a given login session).
-We even have a tool to support it for single-user mode logins as well:
-
-http://www.openwall.com/msulogin/
-
-The far more common alternative to it is to use su or sudo from the
-multiple sysadmins' non-root accounts.  A problem with it is that if use
-of those non-root accounts is not restricted solely to su/sudo from
-them, but they are also used to run other programs as non-root, then any
-of those other programs may take over the root account (possibly in
-multiple steps, such as by substituting shell aliases and waiting for
-the sysadmin to run su/sudo next time).  To avoid this, we'd arrive at
-the need to have two non-root accounts per sysadmin (and to have su/sudo
-available to only one set of those accounts, so as not to expose those
-programs' vulnerabilities to the other set of accounts, nor to regular
-users of the system, unnecessarily), - or to have per-sysadmin root
-accounts.  The latter is simpler.
-
-Alexander
+Jeff
