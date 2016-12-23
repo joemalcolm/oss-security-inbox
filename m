@@ -1,64 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/29/3
-Message-ID: <20161229202940.ma4dsc7qrj57nghk@perpetual.pseudorandom.co.uk>
-Date: Thu, 29 Dec 2016 20:29:40 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: ikiwiki: CVE-2016-9645 (incomplete fix for CVE-2016-10026), CVE-2016-9646 (commit metadata forgery)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/23/1
+Message-ID: <alpine.DEB.2.20.1612222316360.31189@tvnag.unkk.fr>
+Date: Fri, 23 Dec 2016 08:38:15 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: uninitialized random
 Content-Type: text/plain; charset=utf-8
 
-ikiwiki is a static site generator with some dynamic features,
-used for wikis, blogs and other websites.
+uninitialized random
+====================
 
-Version 3.20161229 fixes two minor vulnerabilities in earlier
-ikiwiki versions:
+Project curl Security Advisory, December 23, 2016 -
+[Permalink](https://curl.haxx.se/docs/adv_20161223.html)
 
+VULNERABILITY
+-------------
+
+libcurl's (new) internal function that returns a good 32bit random value was
+implemented poorly and overwrote the pointer instead of writing the value into
+the buffer the pointer pointed to.
+
+This random value is used to generate nonces for Digest and NTLM
+authentication, for generating boundary strings in HTTP formposts and
+more. Having a weak or virtually non-existent random there makes these
+operations vulnerable.
+
+This function is brand new in 7.52.0 and is the result of an overhaul to make
+sure libcurl uses strong random as much as possible - provided by the backend
+TLS crypto libraries when present. The faulty function was introduced in [this
+commit](https://github.com/curl/curl/commit/f682156a4fc6c43fb).
+
+We are not aware of any exploit of this flaw.
+
+INFO
 ----
 
-CVE-2016-9645: authorization bypass
+This mistake managed to slip in because:
 
-Reference: https://ikiwiki.info/security/#cve-2016-9645
-Vulnerable versions: >= 3.20161219 but < 3.20161229
-Fixed versions: >= 3.20161229
+  1. It wasn't detected by manual code reviews
 
-intrigeri discovered that on sites with the git and recentchanges
-plugins and the CGI interface enabled, the revert links on the
-RecentChanges page could revert changes on a page the logged-in user
-cannot legitimately edit, if the change being reverted was made before
-the page was renamed from a location that the logged-in user *could*
-legitimately edit. CVE-2016-10026 was assigned to this vulnerability,
-and it was intended to be fixed in 3.20161219.
+  2. When libcurl is built debug-enabled (which is often the case when libcurl
+     developers build it), the bug doesn't trigger.
 
-The changes that were intended to address this in 3.20161219 were not
-sufficient when ikiwiki is used with git versions before 2.8.0rc0.
-CVE-2016-9645 was assigned to this incomplete fix. In version
-3.20161229, the incomplete fix has been reverted and replaced with a
-different solution that should work for all git versions.
+  3. When built without -g, the test suite's "valgrind output parser" wrongly
+     ignored the valgrind output and with libcurl's standard build it is
+     typically built without -g. Thus hiding this problem to most users.
 
-----
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2016-9594 to this issue.
 
-CVE-2016-9646: commit metadata forgery
+AFFECTED VERSIONS
+-----------------
 
-Reference: https://ikiwiki.info/security/#cve-2016-9646
-Vulnerable versions: < 3.20161229
-Fixed versions: >= 3.20161229
+This flaw exists in the following libcurl versions.
 
-CGI::FormBuilder->field has a context-dependent API, similar to
-the CGI->param API that led to Bugzilla's CVE-2014-1572. Parts of
-ikiwiki incorrectly called this method in list context when a scalar
-result, which could lead to two relatively minor attacks:
+- Affected versions: libcurl 7.52.0 only
+- Not affected versions: libcurl < 7.52.0 and libcurl >= 7.52.1
 
-* In the comments plugin, an attacker who was able to post a comment
-  could give it a user-specified author and author-URL even if the wiki
-  configuration did not allow for that, by crafting multiple values
-  to other fields.
-* In the editpage plugin, an attacker who was able to edit a page
-  could potentially forge commit authorship by crafting multiple values
-  for the rcsinfo field.
+libcurl is used by many applications, but not always advertised as such!
 
-----
+THE SOLUTION
+------------
 
-Thanks to the Debian security team for allocating CVE IDs for these.
+In version 7.52.1, we fixed the function and we fixed the valgrind parser in
+the test suite.
 
-Regards,
-    smcv
+A [patch for CVE-2016-9594](https://curl.haxx.se/CVE-2016-9594.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.52.1
+
+  B - Apply the patch to 7.52.0 and rebuild
+
+TIME LINE
+---------
+
+It was first reported to the curl project on December 21 by Kamil Dudka.
+
+We contacted distros@...nwall on December 21.
+
+curl 7.52.1 was released on December 23 2016, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Kamil Dudka.
+
+-- 
+
+  / daniel.haxx.se
