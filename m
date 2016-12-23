@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/15/7
-Message-ID: <CAFkTriJ7-kN_KH-pOJCDkZHen=6uiJKhL775PTV17zcX-YMHSQ@mail.gmail.com>
-Date: Mon, 15 Aug 2016 16:37:31 +0800
-From: Marco Grassi <marco.gra@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Linux tcp_xmit_retransmit_queue use after free on 4.8-rc1 / master
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/23/2
+Message-ID: <20161223105906.GO5082@jumper.schlittermann.de>
+Date: Fri, 23 Dec 2016 11:59:06 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-9963 (Was: CVE Request - Exim 4.69-4.87 - disclosure of private information)
 Content-Type: text/plain; charset=utf-8
 
-yes please
+Hello,
 
-On Mon, Aug 15, 2016 at 4:36 PM, Greg KH <greg@...ah.com> wrote:
+Heiko Schlittermann <hs@...littermann.de> (Fr 16 Dez 2016 00:36:45 CET):
+…
+> Product:    Exim
+> Versions:   4.69 -> 4.87
+> Impact:     Possible leak of private information to a remote attacker
+> Reference:  https://bugs.exim.org/show_bug.cgi?id=1996 (placeholder currently)
+> Requester:  Heiko Schlittermann <hs@...littermann.de> (Exim Developer)
+> Credits:    Bjoern Jacke <bjoern@....de>
+> 
+> If several conditions are met, Exim leaks private information to
+> a remote attacker.
+…
 
-> On Mon, Aug 15, 2016 at 04:10:57PM +0800, Marco Grassi wrote:
-> > I just tried several times, but there is some filter that doesn't get
-> along
-> > well with the content or with my gmail.
-> >
-> > The message keeps not getting delivered.
->
-> You can't send html email to the vger.kernel.org lists.  If you want, I
-> can forward this on.
->
-> thanks,
->
-> greg k-h
->
+As at least one major distro isn't ready yet, we'll keep our initial schedule
+and release the fixed versions on Dec, 25th, 10:00 UTC.
 
+You'll find the versions in the usual places
+
+    git://git.exim.org/exim.git         Tags exim-4_88, exim-4_87_1
+    ftp://ftp.exim.org/pub/exim/exim4/          4.88
+    ftp://ftp.exim.org/pub/exim/exim4/old/      4.87.1
+
+If you have older versions running, you should to at least 4.87.1.
+
+We're sorry for the release date.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
