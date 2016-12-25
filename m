@@ -1,70 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/03/2
-Message-Id: <20160103170346.0AA4933213E@smtpvbsrv1.mitre.org>
-Date: Sun,  3 Jan 2016 12:03:46 -0500 (EST)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MantisBT SOAP API can be used to disclose confidential settings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/25/3
+Message-ID: <c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>
+Date: Sun, 25 Dec 2016 17:41:40 -0500
+From: <cve-assign@...re.org>
+To: <jwilk@...lk.net>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: tqdm: insecure use of git
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> This was the case with the MantisBT master cryptographic salt
-> (crypto_master_salt): it was incorrectly spelt.
-> 
-> Affected versions:
->  >= 1.3.0-beta.1
-> 
-> Fixed in versions:
-> 1.3.0 (not yet released), possibly 1.3.0-rc.2 if we decide we need
-> another release candidate before that.
+> But cwd might be a part of an unrelated git repository
 
+Can you clarify the threat model for this? Our understanding is
+that .git/config is not really a part of a repository that is
+controlled by a remote party, e.g., see the second paragraph of the
+https://git-blame.blogspot.com/2014/12/git-1856-195-205-214-and-221-and.html
+post.
 
->> http://sourceforge.net/p/mantisbt/mailman/message/32948048/
->> 2014-10-19
->> - case 'master_crypto_salt':
->> + case 'crypto_master_salt':
+Is either (or both) of these a valid interpretation of your report?
 
-In general, a vendor can choose to request a CVE ID for a
-vulnerability in beta software. This is unusual and (in cases of many
-other products) often not a good idea, but there is no absolute
-restriction on having a CVE ID. In this case, the 1.3 development code
-in question was apparently noted in 2014.
+1. You are suggesting that there is a security problem in git because
+the risks of an attacker-controlled config file are not documented
+carefully enough. In other words, you want documentation such as
+https://www.kernel.org/pub/software/scm/git/docs/git-config.html to
+tell the user that they must not use a "repository specific
+configuration file" that is writable by an untrusted local user.
 
-Use CVE-2014-9759 for the vulnerability caused by the
-master_crypto_salt spelling.
+2. You are suggesting that there is a security problem in tqdm because
+the victim is not explicitly being told that they are executing a git
+command, and thus they do not realize that there is a need to verify
+that they have a safe cwd before proceeding.
 
-There is no CVE ID for the general issue of "Implement a white list of
-options ... This is a safer approach than the previous blacklist
-method," which seems to be a pre-release design change, not
-specifically a vulnerability fix on its own.
+If the latter, then do you mean that:
 
-> Further details available in our issue tracker [3]
-> [3] https://mantisbt.org/bugs/view.php?id=20277
+A. Anyone planning to explicitly enter "git log" from a shell prompt
+is responsible for first verifying that the cwd is safe. It is a known
+property of git that the cwd is critical to security.
 
-It currently gives an "Access Denied." error.
+B. No third-party product should ever be executing "git log" in an
+unexpected context. Either the user must somehow be aware that a "git
+log" may be executed, or else the product must somehow force the use
+of a safe local directory. Otherwise, a CVE is needed for each such
+product.
+
+?
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWiVOFAAoJEL54rhJi8gl58iIQALSkEnUs34DR9JM6DQUfTTS6
-VePVAgUo25rpfQkqL7HpsuWEo/L4nYw7E9PCI7P0yHMmOH5O1uY1cucA5PEsukXK
-FaPjLZU0GHtbSAG1ioaincMVJ8W+YidMJyUNGrxLRnL3W+bjE63HZLNNiswSuUFK
-NTKrzOZtSHRDVRKbdvak3pVvKQ5MXPwM6BRYVZBK5UetaOkKLkQJMH3RjGkyl9AM
-yhtIF3XEKNXrIoVtLRka9/OabS1FG9ULE6oL8jqA2S8jL0D0ABo8QOYC2rH3wR3Z
-8CaJig5h8ximZIvA0Cg5xSiIQMhk3En7W3QSB1kyAAkrviz0H2f1XJenyifXMkM6
-IfXw0d5k9KSglJxpxd/VYBmZhz7rCWwa/0f5vnSpL278u6Sxccfh36EdBmoASs4X
-BAjdaEkGZJpoa+KGFKx7lGfSHMMvVGdM8j0ybaDEzruSL/0C8w4OZZxmE4Abbbu7
-3Nt1Pmq7YDVWNA6RxXwxp8C32hpxMLhNjNYzsgEZ8lBB2Og3vjSydY2FAav0Zsb+
-buyYkSqPqlnUJTMW0nYWnhXRfSOq0H1ndsdpAiSIvRKM28sDjIJnRyIe6QhN+h/u
-bF4wu44H2pOqtT69k6wJ7kW/CznpxBdwGcC+jKZKAQT9dXszQdaBrCv5kOGpDRK1
-v0DW5xesLDZMu/sbqrLk
-=r4cR
+iQIcBAEBCAAGBQJYYEqXAAoJEHb/MwWLVhi2hgYP/1z6ZHZTku8bMw+PFzkNfVtV
+0xBjr9/4d4gvzZQfMgs4fLvKAvmTFf/vc8aTEJWpsCHnwEI+tHsoP6eVOTjW/+Kq
+8OG6O01xjKHClrEAIpGM+aYCiSlk1NQSwE8kb9gANJk25rV0LNLrMF20o529WTIL
+c7MciM5vnWPK8pyw5oQTfONCdjuGk7ATQ8TM8UjgNaW48Kk595rUAroD46Dx5zl5
+S/S7I4AxB8p5xZVJIl0tif3FxRWCsd+Or+NigpyFkCXp09Xz4wNGJjh6DR7q5Ppg
+Aw8Vg6OG1mmGbXl2qt7MDYpRiVoXMQH6wbg9tcOmv8HUabc7WucABADw05WArbHv
+DP/CXIrfYiWD1xKP3anqwGb0zx1v4+2N7bWCIMktIO3RoIm579UTNATA/EH5Gk7r
+XFYnA77DzevJ9ulQX+4Ryx2oiS4Fb0GBrx0tUsGM9gsXvOZtnfdSSXLg3dl5Y0mh
+QrcnnSAgvS13so3nGeKWYrjGVLb/eqEhGFBNrjBGr3F+EbcxGh1+0ES2D2o6WUjj
+dTFdyGsP2Pkdh02OgvLNf+Fj5ELBR+jCg05FQs5hJ7OdBYQA5gmKpELHeDPTOj7A
+i8sYwn61WhuMg1Lg8ClHKCNc7pqMG1C52jDIOUhUBOt3tUfCpOyQY2+s4y2EklIo
+jis4UzxON4HtAOu6x/Ae
+=4l/s
 -----END PGP SIGNATURE-----
