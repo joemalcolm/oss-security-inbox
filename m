@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5213" "Tuesday" "25" "August" "2015" "22:26:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150826022654.C3EC06C0019@smtpvmsrv1.mitre.org>" "114" "[oss-security] Re: CVE request: 2 issues in inspircd" nil nil nil "8" "2015082602:26:54" "[oss-security] Re: CVE request: 2 issues in inspircd" (number mark "        cve-assign@m Aug 25  114/5213  " thread-indent "\"[oss-security] Re: CVE request: 2 issues in inspircd\"\n") "<20150329122044.GX1846@frisco.mine.nu>" ("<20150329122044.GX1846@frisco.mine.nu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2627" "Sunday" "25" "December" "2016" "17:41:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>" "61" "[oss-security] Re: tqdm: insecure use of git" nil nil nil "12" "2016122522:41:40" "[oss-security] Re: tqdm: insecure use of git" (number mark "U       cve-assign@m Dec 25   61/2627  " thread-indent "\"[oss-security] Re: tqdm: insecure use of git\"\n") "<20161225204743.vflt7rkcu55bqqgt@jwilk.net>" ("<20161225204743.vflt7rkcu55bqqgt@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25859 invoked by uid 550); 26 Aug 2015 02:27:07 -0000
+Received: (qmail 18138 invoked by uid 550); 25 Dec 2016 22:41:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,127 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25838 invoked from network); 26 Aug 2015 02:27:07 -0000
-In-Reply-To: <20150329122044.GX1846@frisco.mine.nu>
-Message-Id: <20150826022654.C3EC06C0019@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 25 Aug 2015 22:26:54 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: 2 issues in inspircd
-To: sdelafond@gmail.com
+Received: (qmail 18103 invoked from network); 25 Dec 2016 22:41:53 -0000
+From: <cve-assign@mitre.org>
+To: <jwilk@jwilk.net>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161225204743.vflt7rkcu55bqqgt@jwilk.net>
+Message-ID: <c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>
+Date: Sun, 25 Dec 2016 17:41:40 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: tqdm: insecure use of git
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> the Debian Security Team is requesting 2 CVEs for inspircd.
-> 
->   * the fix that was included in Debian for CVE-2012-1836 is incomplete,
->     and does not solve the original remote code execution problem. See:
-> 
->       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
-> 
->   * a DoS can be triggered by invalid DNS packets. See:
-> 
->       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=780880#5
->       https://github.com/inspircd/inspircd/commit/58c893e834ff20495d007709220881a3ff13f423
+> But cwd might be a part of an unrelated git repository
 
-We think 3 CVE IDs are needed; see below. (Two of them are
-CVE-2012-#### IDs because a 2012 commit message announced the
-vulnerability.)
+Can you clarify the threat model for this? Our understanding is
+that .git/config is not really a part of a repository that is
+controlled by a remote party, e.g., see the second paragraph of the
+https://git-blame.blogspot.com/2014/12/git-1856-195-205-214-and-221-and.html
+post.
 
->> I am an upstream maintainer for InspIRCd. The patch you have for
->> CVE-2012-1836 (patches/03_CVE-2012-1836.diff) is not the same patch we
->> released as part of 2.0.7 (there was no 2.0.6) to address the CVE. It
->> appears to be a a version of this commit:
->> https://github.com/inspircd/inspircd/commit/9aa28f3730fb3dd69c1e06f78bb2bbc43d36c684.
->> However this commit was never in a release, and was only in git for
->> about 6 days (due to someone other than me pulling it in).
+Is either (or both) of these a valid interpretation of your report?
 
-It appears that 9aa28f3730fb3dd69c1e06f78bb2bbc43d36c684 did
-accomplish something. For example, it adds an "if (o +
-header.payload[i] > sizeof(DNSHeader))" test that was not present in
-the 2.0.5 dns.cpp, but is present in the 2.0.7 dns.cpp. Therefore, it
-is necessary to have a new CVE ID associated with the remaining
-original problem.
+1. You are suggesting that there is a security problem in git because
+the risks of an attacker-controlled config file are not documented
+carefully enough. In other words, you want documentation such as
+https://www.kernel.org/pub/software/scm/git/docs/git-config.html to
+tell the user that they must not use a "repository specific
+configuration file" that is writable by an untrusted local user.
 
->> This commit and your patch do not fix the problem. You can still send
->> maliciously crafted packets and cause remote code execution. This was
->> fixed in
->> https://github.com/inspircd/inspircd/commit/ed28c1ba666b39581adb860bf51cdde43c84cc89,
->> prior to the 2.0.7 release.
+2. You are suggesting that there is a security problem in tqdm because
+the victim is not explicitly being told that they are executing a git
+command, and thus they do not realize that there is a need to verify
+that they have a safe cwd before proceeding.
 
-Because the ed28c1ba666b39581adb860bf51cdde43c84cc89 patch is:
+If the latter, then do you mean that:
 
-  -  if (length - i < 10)
-  +  if (static_cast<int>(length - i) < 10)
+A. Anyone planning to explicitly enter "git log" from a shell prompt
+is responsible for first verifying that the cwd is safe. It is a known
+property of git that the cwd is critical to security.
 
-this implies that the original problem was in handling the case where
-i is greater than length, and thus a "length - i < 10" comparison is
-something like a "4000000000 < 10" comparison. The original patch
-attempted to fix this with:
+B. No third-party product should ever be executing "git log" in an
+unexpected context. Either the user must somehow be aware that a "git
+log" may be executed, or else the product must somehow force the use
+of a safe local directory. Otherwise, a CVE is needed for each such
+product.
 
-  -  if (length - i < 10)
-  +  if ((unsigned) length - i < 10)
-
-which doesn't accomplish anything. Use CVE-2012-6696 for this
-vulnerability involving mishandling of unsigned values.
-
-
->> Furthermore, your patch introduces a buffer underflow where it has
->> "i =- 12" and not "i -= 12". This causes it to start reading from
->> before the packet's buffer. It is unclear to me what this can cause.
-
-We disagree with this analysis. The Debian patch in question is in the
-http://anonscm.debian.org/cgit/collab-maint/inspircd.git/commit/?id=c9c6b10b9f1489d3c9fb3929dfe73c26ffec89a4
-commit from 2012-04-09. Here, debian/patches/03_CVE-2012-1836.diff
-adds the problematic "i =- 12" line but also changes the data type of
-i from int to unsigned. Thus, "i =- 12" sets i to a value greater than
-4 billion, the "i < length" test will be false, and the while loop
-will exit. As far as we can tell, nothing is read from outside a
-buffer. We think the general outcome is that decompression for CNAME
-and PTR records results in safely determining the wrong answer. We
-didn't look at what types of wrong answers can occur: possibly the
-result can be either an empty string or a truncated name. Our guess is
-that this is security relevant because IRC daemons can rely on DNS
-lookups for access control, e.g., to support
-
-  /MODE #channel +b *!*@example.com
-
-but we didn't look at the specific role of dns.cpp in InspIRCd. In any
-case, we want to assign a CVE ID for the code problem of "i =- 12"
-where "i -= 12" was intended: use CVE-2015-6674. Again, this has a
-directly resultant issue in which there's misuse of an unsigned
-variable, and (possibly?) an indirectly resultant issue of ban bypass.
-
-
->> Additionally, at the same time I commited
->> 58c893e834ff20495d007709220881a3ff13f423 to prevent malicious packets
->> from causing InspIRCd to infinite loop. This is not a part of the CVE
->> as it does not allow remote code execution, but is still a critical
->> problem due to the potential for denial of service.
-
-Use CVE-2012-6697 for this infinite-loop issue.
+?
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJV3SINAAoJEL54rhJi8gl5mcoQAKVaZtXyEh0zbdf3LeEPvZ6p
-e5ptlLFvcCqcX9eq9WTPA0Bq1n1+SzWafGhIBpr7SW0P6PkWw8NYmAP0rJPL7aD7
-CIFEo2a8GcvPptaB4lzTZlxYogBHvIDiuDIpVi02yJlHCQJSLjN2ckOFWQy5WBD7
-GT7vCgq4VQxC+u6O87Roj13yXaEaDdwBXDJH2v8JTKR1/yyJ8SexHjXDXbsKfyum
-+0SfwUED4BVtPw1gpjgWdtlXyPpTi16/uSofUOWZe6ohCzBE2yB74E1dfbu/wOMK
-YidVNjfiQT7svXdlQEmWSe64dCsEWMKLlCqEZ3LTSwfYadXKfMMzZUFfHGLNGpRV
-qQB6RuZIMc8+tkuQfKL4iIAE7FMgTMQqurbURxJDwoDCEpI5yqeel/HWYKn1kkvq
-Hm5kux9wwU0vsTJiPbJKijy0OejC5esHGMTTQNhQR9Cn6X3dHugD1LoG8nuJ59wb
-glzRlj3yZgntZX8MnoumrdV8hfWwxJ2iH29rJ4KqrtgAq5zQ7auB4fb6Lp3SG6du
-qvQcEXRslXrItgMOo9DYhB2szIhPjopOpD40Q+SmRPeCRVdBUoZ944mnYpi4liWu
-VRORW7Ztg5nOnvxeQGYa543zv4GMQx0ehHVoOhJjZyvAvIphVBncsR2riN4qR2pD
-09GUl6VPwiWtDD8wHt+U
-=cRan
+iQIcBAEBCAAGBQJYYEqXAAoJEHb/MwWLVhi2hgYP/1z6ZHZTku8bMw+PFzkNfVtV
+0xBjr9/4d4gvzZQfMgs4fLvKAvmTFf/vc8aTEJWpsCHnwEI+tHsoP6eVOTjW/+Kq
+8OG6O01xjKHClrEAIpGM+aYCiSlk1NQSwE8kb9gANJk25rV0LNLrMF20o529WTIL
+c7MciM5vnWPK8pyw5oQTfONCdjuGk7ATQ8TM8UjgNaW48Kk595rUAroD46Dx5zl5
+S/S7I4AxB8p5xZVJIl0tif3FxRWCsd+Or+NigpyFkCXp09Xz4wNGJjh6DR7q5Ppg
+Aw8Vg6OG1mmGbXl2qt7MDYpRiVoXMQH6wbg9tcOmv8HUabc7WucABADw05WArbHv
+DP/CXIrfYiWD1xKP3anqwGb0zx1v4+2N7bWCIMktIO3RoIm579UTNATA/EH5Gk7r
+XFYnA77DzevJ9ulQX+4Ryx2oiS4Fb0GBrx0tUsGM9gsXvOZtnfdSSXLg3dl5Y0mh
+QrcnnSAgvS13so3nGeKWYrjGVLb/eqEhGFBNrjBGr3F+EbcxGh1+0ES2D2o6WUjj
+dTFdyGsP2Pkdh02OgvLNf+Fj5ELBR+jCg05FQs5hJ7OdBYQA5gmKpELHeDPTOj7A
+i8sYwn61WhuMg1Lg8ClHKCNc7pqMG1C52jDIOUhUBOt3tUfCpOyQY2+s4y2EklIo
+jis4UzxON4HtAOu6x/Ae
+=4l/s
 -----END PGP SIGNATURE-----
