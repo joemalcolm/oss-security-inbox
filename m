@@ -1,41 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/05/3
-Message-ID: <d20fed1084474487a95ace3810a92752@imshyb02.MITRE.ORG>
-Date: Sun, 4 Dec 2016 22:13:54 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: libming: listswf: NULL pointer dereference in dumpBuffer (read.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/25/1
+Message-ID: <20161225104410.GU5082@jumper.schlittermann.de>
+Date: Sun, 25 Dec 2016 11:44:10 +0100
+From: Heiko Schlittermann <hs@...littermann.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-9963 | Exim 4.87.1 released (Was: CVE Request - Exim 4.69-4.87) - disclosure of private information)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I've uploaded Exim 4.87.1 to:
 
-> https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-null-pointer-dereference-in-dumpbuffer-read-c
+    ftp://ftp.exim.org/pub/exim/exim4/old/
+    git://git.exim.org/exim.git (tag exim-4_87_1)
 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
+Whilst this release is superseeded by 4.88 already, you're urged
+to upgrade to 4.87.1, if 4.88 isn't an option for you yet.
 
-Use CVE-2016-9828.
+No features are added or removed. This release contains
+just a fix for CVE-2016-9963
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+    - Fix CVE-2016-9963 - Info leak from DKIM.  When signing DKIM, if
+      either LMTP or PRDR was used for delivery, the key could appear in
+      logs.  Additionally, if the experimental feature "DSN_INFO" was used,
+      it could appear in DSN messages (and be sent offsite).
 
-iQIcBAEBCAAGBQJYRNjQAAoJEHb/MwWLVhi2cvAP+gPY4EcM+y7VKMOf3XRSMw5A
-vhej56NfW87dxFdi2e0WcqxlVLdGXkKNt0KwcnxWHeBU+qYZEnjhzqjnofGwQGM5
-tlOLkTvuoCGz2es+CeeIONpR2EXo1H/3eg8phW7oOV31eU+GRec21c5WMfIsbt6T
-vnUNvtsM9f8P86HujL3P108io2T0aUC48jDJu1zvlWstoSWzib5xATKq5EeQ5rvB
-67dpp4ss9hE02OhvleENnIWx/Yit4DpuIcqPEykT48z0X9IcArqLto27deQeJZ5e
-mgT/4KmR+V5DkwNtzxWpSNyuN4xXivC1Sy9bntp64Qbz10j4Bi/8jymHvzkaTF44
-vfjO2z816WOTDKR0gmCyAlEKe0Lf+bSe2mL9edEFvlgkZfYAANTNUI9yIPQArd1h
-Y1AfrSi598Dp5TODVb9EK9LU9VL3bL+yts8whhCozcR3DQ9SLzbSmb39E9XLISFt
-hzR7Vd8FFaUZahYfTtiEffqWJT/wKhcRM7HD0zyG93s72G4lYYreJwdqUVbgiAPf
-h44bnPzlxEi4RYUMd6vY80BAH/9AgK48coWIeGurRJ7qa8Fv5+sN704nx3hJGHX8
-0TqSEy+RwlWCJkRqKRgBQMjtkw1XCkmAhkHYNGrKMNBkM4sfhFWjHGrf57goj4kR
-GHYADtxkylXkQsIHgcuM
-=no5m
------END PGP SIGNATURE-----
+For details about the CVE please see
+
+    https://exim.org/static/doc/CVE-2016-9963.txt
+
+The release files for 4.87.1 are signed with the PGP key 0xF69376CE,
+which has a uid "Heiko Schlittermann (HS12-RIPE) <hs@...littermann.de>".
+Please use your own discretion in assessing what trust paths you might
+have to this uid.
+
+In case on any problems please contact us on exim-users@...m.org
+or on the IRC channel #exim at freenode.
+
+Sorry for the release date.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+-- 
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+ ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
