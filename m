@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["807" "Sunday" "10" "April" "2016" "21:39:47" "+0200" "Matthias Geerdsen" "matthias@vorlons.info" "<570AAC03.2030209@vorlons.info>" "27" "[oss-security] CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse()." nil nil nil "4" "2016041019:39:47" "[oss-security] CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse()." (number mark "U       matthias@vor Apr 10   27/807   " thread-indent "\"[oss-security] CVE request: imlib2 - potential divide-by-zero in imlib_image_draw_ellipse().\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1341" "Monday" "26" "December" "2016" "15:46:50" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161226154650.4b40cca8@pc1>" "42" "Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" nil nil nil "12" "2016122614:46:50" "[oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" (number mark "U       hanno@hboeck Dec 26   42/1341  " thread-indent "\"Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]\"\n") "<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>" ("<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17608 invoked by uid 550); 10 Apr 2016 19:40:02 -0000
+Received: (qmail 9605 invoked by uid 550); 26 Dec 2016 14:47:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17583 invoked from network); 10 Apr 2016 19:40:01 -0000
-X-Virus-Scanned: Debian amavisd-new at mail.vorlons.info
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vorlons.info;
-	s=mail; t=1460317189;
-	bh=Wlbf+1EGSYeFi/fm1PUFXX7YAQ0tLuTq+3QOGjMnNso=;
-	h=To:From:Subject:Date:From;
-	b=w2GS/jwwqrvIhmLouPihjoos4v9+HIyYE2iRSwkWulfm8G8vSAamzmRbS2/dYgbSp
-	 MjM6UrNZrF10mg3FAVpnsxJE1RYTizaoPW/+zwWjvjeMJteoYcPrzfh1iVbOQBxn6H
-	 JvL+LWCfFM2dLGrY50vB8Gwe2m0amC5Lru+Lia1M=
+Received: (qmail 9579 invoked from network); 26 Dec 2016 14:47:04 -0000
+Date: Mon, 26 Dec 2016 15:46:50 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-From: Matthias Geerdsen <matthias@vorlons.info>
-Message-ID: <570AAC03.2030209@vorlons.info>
-Date: Sun, 10 Apr 2016 21:39:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
+Message-ID: <20161226154650.4b40cca8@pc1>
+In-Reply-To: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
+References: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE request: imlib2 - potential divide-by-zero in
- imlib_image_draw_ellipse().
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] PHPMailer < 5.2.18 Remote Code Execution
+ [CVE-2016-10033]
 
 Hi,
 
-please provide a CVE ID for this issue in imlib2:
+Given I had plenty of time on the train to 33c3 I did a quick
+lookaround on what contains PHPMailer. As the details of the vuln
+aren't clear yet this doesn't necessarily mean they're vulnerable, just
+that they ship the affected code.
 
-Debian bug report from 2011:
-<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=639414>
+The most popular webapps that directly ship PHPmailer seem to be Joomla
+and Mantis. Both without an update yet.
+Wordpress also ships PHPmailer, but this confused me at first. They
+renamed it and it's called class-phpmailer.php (if you use some
+automatic detection for vulnerable PHPMailer versions - as I do in
+freewvs - you may miss that one). Also no update yet.
 
-upstream commit:
-<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=c94d83ccab15
-d5ef02f88d42dce38ed3f0892882>
+Drupal doesn't contain PHPMailer, although mentioned in the advisory.
+But there are probably plugins and extensions using it. I also saw it
+used in some wordpress themes.
 
-Thank you
-Matthias
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Owncloud and CMS Made Simple don't ship PHPMailer in their current
+versions, but in older versions. This may deserve some
+closer investigation if the files are leftover after updates and pose
+still a risk.
 
-iQEcBAEBCAAGBQJXCqv7AAoJEDVYuxv9Aw7qWuoH/2EkT0g/XwsRVMqCxjWAVsDe
-PCwFFvVJNoBB7HKKTqcmaBEEGWyxntzZfX9Fpn9BluqIUZegEkyZ6agzH87XNpYK
-gVP6CiKGoYdrq1OWZ12Af9sHD8abSFkcR4K3EtRNEa5oxbD7rh52cuMoB3Im/789
-/pCdMfZCiKraD8/ZTEwG/P9LcJUwRAF7vzkXU0kTUwj/RayP5PrwK01aQ0truzge
-1HSjI9Vt1FEiHQk4+Rk4OXNzNA68Vt047pduPglzQV8s0oszK7T1bhpxzEAOJ+kB
-zDBiF7H6He1siPJQz81af2dJwgQ/XjoBh2yroFyonr/oGshnWjEd1sxJo5qgAjQ=
-=mwpU
------END PGP SIGNATURE-----
+Summary:
+
+Affected popular Webapps with plain PHPMailer:
+Joomla
+Mantis
+
+Affected popular webapps with modified / renamed PHPMailer:
+Wordpress
+
+Affected popular webapps which contained PHPMailer in older versions:
+CMS Made Simple
+Owncloud
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
