@@ -1,35 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/30/3
-Message-ID: <alpine.LFD.2.20.1605301422320.26205@wniryva>
-Date: Mon, 30 May 2016 14:24:39 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2016-4454 Qemu: display: vmsvga: out-of-bounds read in vmsvga_fifo_read_raw() routine
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/1
+Message-ID: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
+Date: Mon, 26 Dec 2016 00:21:07 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 
-Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is 
-vulnerable to an information disclosure issue. It could occur while processing 
-VGA commands via its FIFO buffer.
+Severity: CRITICAL
 
-A privileged user inside guest could use this flaw to leak host memory bytes 
-or crash the Qemu process resulting in DoS.
-
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-05/msg05271.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1336429
+Discovered by:
+Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
 
-This issue was discovered and reported by Li Qiang of 360.cn Inc. 
-CVE-2016-4454 was assigned by Red Hat Inc.
+PHPMailer
+"Probably the world's most popular code for sending email from PHP!
+Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
+Joomla! and many more"
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Desc:
+An independent research uncovered a critical vulnerability in PHPMailer that
+could potentially be used by (unauthenticated) remote attackers to achieve
+remote arbitrary code execution in the context of the web server user and
+remotely compromise the target web application.
+To exploit the vulnerability an attacker could target common website
+components such as contact/feedback forms, registration forms, password
+email resets and others that send out emails with the help of a vulnerable
+version of the PHPMailer class.
+
+
+Patching:
+Responsibly disclosed to PHPMailer team.
+They've released a critical security release.
+If you are using an affected release update to the 5.2.18 security
+release as advised at:
+https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
+
+Notes:
+I know this is a bad timing and a short notice (for everyone probably ;)
+I've spent most of my Christmas break working on this issue with
+affected vendors.
+This has been quite a rush as one of the vendors leaked excessive
+information on this vulnerability at one point which could aid
+potential attackers.
+
+I've released a limited advisory at the link below:
+
+https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+
+This is to give people a chance to immediately patch or at least be
+aware of the issue before we get closer to a working day/end of
+holiday for affected users to act on this issue.
+
+I'm planning to release the full advisory and a PoC exploit shortly so
+that everyone is on the same page.
+
+Upcoming video PoC:
+
+https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
+
+
+For updates follow:
+
+https://twitter.com/dawid_golunski
+
+I'll also send another email to the list once it is published.
+
+For now,
+Patch it now before someone else patches it for you (through a reverse shell ;)
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
