@@ -1,100 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/3
-Message-ID: <CANNt_rYFXozkdBu9Euph5ER_b8fEnnGhoT9Z95fod4=rRLRG_Q@mail.gmail.com>
-Date: Mon, 26 Dec 2016 20:32:57 -0500
-From: Michael Hess <mlhess@...ch.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/4
+Message-ID: <20161226145559.GU31189@scully.more-magic.net>
+Date: Mon, 26 Dec 2016 15:55:59 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
+Cc: security@...pal.org, security@...milo.org
 Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/opsxcq/exploit-CVE-2016-10033
+On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> Given I had plenty of time on the train to 33c3 I did a quick
+> lookaround on what contains PHPMailer. As the details of the vuln
+> aren't clear yet this doesn't necessarily mean they're vulnerable, just
+> that they ship the affected code.
 
-FYI,
+It looks like the vulnerability is due to a missing escaping of shell
+arguments in the sender's e-mail address.  This commit seems to be
+the one that fixes the bug:
+https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307cef164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
 
-Michael
+So it depends on whether a web form allows one to control the "from"
+mail address or not.
 
-On Mon, Dec 26, 2016 at 7:10 PM, Tracy Reed <treed@...raviolet.org> wrote:
-> Note that confining the http process using SELinux or similar MAC system
-> can go a long way to constraining and limiting the damage of inevitable
-> vulnerabilities such as this. Particularly since this is command
-> injection which is precisely what SELinux is good at limiting (as
-> opposed to SQL injection).
->
-> My shop has a policy that SELinux will be enabled on all web
-> applications and it has already saved us a few times despite being very
-> good at getting things patched up promptly.
->
-> On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
->> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
->>
->> Severity: CRITICAL
->>
->> Discovered by:
->> Dawid Golunski (@dawid_golunski)
->> https://legalhackers.com
->>
->>
->> PHPMailer
->> "Probably the world's most popular code for sending email from PHP!
->> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
->> Joomla! and many more"
->>
->> Desc:
->> An independent research uncovered a critical vulnerability in PHPMailer that
->> could potentially be used by (unauthenticated) remote attackers to achieve
->> remote arbitrary code execution in the context of the web server user and
->> remotely compromise the target web application.
->> To exploit the vulnerability an attacker could target common website
->> components such as contact/feedback forms, registration forms, password
->> email resets and others that send out emails with the help of a vulnerable
->> version of the PHPMailer class.
->>
->>
->> Patching:
->> Responsibly disclosed to PHPMailer team.
->> They've released a critical security release.
->> If you are using an affected release update to the 5.2.18 security
->> release as advised at:
->> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
->>
->> Notes:
->> I know this is a bad timing and a short notice (for everyone probably ;)
->> I've spent most of my Christmas break working on this issue with
->> affected vendors.
->> This has been quite a rush as one of the vendors leaked excessive
->> information on this vulnerability at one point which could aid
->> potential attackers.
->>
->> I've released a limited advisory at the link below:
->>
->> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
->>
->> This is to give people a chance to immediately patch or at least be
->> aware of the issue before we get closer to a working day/end of
->> holiday for affected users to act on this issue.
->>
->> I'm planning to release the full advisory and a PoC exploit shortly so
->> that everyone is on the same page.
->>
->> Upcoming video PoC:
->>
->> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
->>
->>
->> For updates follow:
->>
->> https://twitter.com/dawid_golunski
->>
->> I'll also send another email to the list once it is published.
->>
->> For now,
->> Patch it now before someone else patches it for you (through a reverse shell ;)
->>
->> --
->> Regards,
->> Dawid Golunski
->> https://legalhackers.com
->> t: @dawid_golunski
->
-> --
-> Tracy Reed
+> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
+> But there are probably plugins and extensions using it. I also saw it
+> used in some wordpress themes.
+
+I noticed this Drupal module: https://www.drupal.org/project/phpmailer
+which has some sort of integration with the widely used mimemail module.
+The linked module http://drupal.org/project/smtp also uses PHPMailer.
+There are undoubtedly more modules that do.
+
+The LCMS system Chamilo also uses PHPMailer for sending mails internally.
+
+Cheers,
+Peter Bex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
