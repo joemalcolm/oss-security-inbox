@@ -1,71 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/21/6
-Message-ID: <20160621222517.GE21113@jimrollenhagen.com>
-Date: Tue, 21 Jun 2016 18:25:17 -0400
-From: Jim Rollenhagen <jim@...rollenhagen.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/8
+Message-ID: <36b82e6f-869b-57c5-366f-f47686dc53bb@orlitzky.com>
+Date: Mon, 26 Dec 2016 14:51:27 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Ironic node information including credentials exposed to unathenticated users
+Subject: Incomplete fix for CVE-2016-8641 (Nagios local root via (sym)links)
 Content-Type: text/plain; charset=utf-8
 
-=============================================================================
-Ironic node information including credentials exposed to unathenticated users
-=============================================================================
+I don't know what I'm doing, and could use some advice.
 
-:Date: June 21, 2016
-:CVE: CVE-2016-4985
+CVE-2016-8641 relates to a symlink attack in the Nagios init script. If
+he wishes, the "nagios" user can replace a specific file with a symlink,
+and then the init script will chown the target of that symlink to the
+"nagios" user the next time it is run.
 
+A fix for this was released:
 
-Affects
-~~~~~~~
-- Ironic: >=2014.2, >=4.0.0 <=4.2.4, >=4.3.0 <=5.1.1
+https://github.com/NagiosEnterprises/nagioscore/commit/f2ed227673d3b2da643eb5cad26b2d87674f28c1
 
+Largely it consists of passing "-h" to chown, preventing chown from
+following symlinks. And yet symlinks are not the only kind of link.
+Chown will follow the other kind, too, meaning that the fix in that
+commit is insufficient. I'm able to pull off the same sort of attack.
 
-Description
-~~~~~~~~~~~
-Devananda van der Veen (IBM) reported the following vulnerability in Ironic.
-
-A client with network access to the ironic-api service can bypass Keystone
-authentication and retrieve all information about any Node registered with
-Ironic, if they know (or are able to guess) the MAC address of a network card
-belonging to that Node, by sending a crafted POST request to the
-/v1/drivers/$DRIVER_NAME/vendor_passthru resource.
-
-The response will include the full Node details, including management
-passwords, even when /etc/ironic/policy.json is configured to hide passwords in
-API responses.
-
-This vulnerability has been verified in all currently supported branches
-(liberty, mitaka, master) and traced back to code introduced in commit
-3e568fbbbcc5748035c1448a0bdb26306470797c during the Juno development cycle.
-Therefore, it is likely that both juno and kilo braches (and their releases)
-are also affected.
-
-
-Patches
-~~~~~~~
-https://review.openstack.org/332195 (Newton)
-https://review.openstack.org/332196 (Mitaka)
-https://review.openstack.org/332197 (Liberty)
-
-
-Credits
-~~~~~~~
-- Devananda van der Veen from IBM (CVE-2016-4985)
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/ironic/+bug/1572796
-- http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-4985
-
-Notes
-~~~~~
-- This fix is included in the upcoming 4.2.5 (Liberty), 5.1.2 (Mitaka), and
-  6.0.0 (Newton) releases of Ironic.
-
-
---
-Jim Rollenhagen
-OpenStack Ironic Project Team Lead
-
-
-Content of type "application/pgp-signature" skipped
+I sent a note to the Nagios maintainer a few minutes ago, but I don't
+know what the best course of action is regarding the CVE. Start a new
+one? Amend the existing one? Pretend it never happened because it's
+Christmas?
