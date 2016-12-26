@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3057" "Friday" "14" "July" "2017" "11:09:39" "-0700" "Anthony Liguori" "anthony@codemonkey.ws" "<CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>" "73" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017071418:09:39" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        anthony@code Jul 14   73/3057  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170714175607.GA19141@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>" "<20170714175607.GA19141@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9528" "Monday" "26" "December" "2016" "16:08:45" "+0700" "Steevee a.k.a Stefanus" "steevee.aka@gmail.com" "<CADr4Fi-gyCkOT_gv_ZoivJ7JWhMRLm=+2g8BSpP9LKNEJ5f=AQ@mail.gmail.com>" "173" "[oss-security] Joomla com_blog_calendar SQL Injection Vulnerability" nil nil nil "12" "2016122609:08:45" "[oss-security] Joomla com_blog_calendar SQL Injection Vulnerability" (number mark "U       steevee.aka@ Dec 26  173/9528  " thread-indent "\"[oss-security] Joomla com_blog_calendar SQL Injection Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26165 invoked by uid 550); 14 Jul 2017 18:12:08 -0000
+Received: (qmail 11792 invoked by uid 550); 26 Dec 2016 09:43:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +11,209 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24347 invoked from network); 14 Jul 2017 18:09:52 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 5566 invoked from network); 26 Dec 2016 09:09:18 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codemonkey-ws.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=z9qi3pPnEHA5HZB65abA33K++kevHq7F1/KMinCSQ+4=;
-        b=TkzR83gSihQaXzoNMW8GRUwByJAuFJ/orFEvl58a5mS8weyMhtIMYoo28cvcCJdDoD
-         Wxep82+3pWVAYrO1pVvn2TDEYd32nz1faoxRV8YORYiHJSscV7QigQguTu2a7rOS62ss
-         C6tt+aKiFLpMWJoeINVGLT/zRJcdJInsTUwGkBStvFrZjyx/pwd58hFagYhAovboXaL5
-         Yi5vHHKDLf3yWFDiuoqP7CEBd6CBUjGsqOhtxursjIum85TTy4pIaYfFpmTBUGM+H1Ts
-         jxIzV5/JONkVyPSifMk3f0mGPl1S7ncu76/E0UWop3k6MSrhk4G/xuMst1oQpCB3uCbI
-         16Jw==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=izVmA7pJlqouhYQQFU1b9A/CtP3zevRV5S9n00DNWGI=;
+        b=bynrFCqmhq9vtKj22TjxmvmTqZyfZ5YU7k54wTonzFzrBJPEVGOmRuWGVDdmYKzeDX
+         09/6FBuSmi6QqM5JH9ZcxMHrawjMTOEuiYJwf+XZ2k7DEdmMBngGo5nUvm/sB1yArbjl
+         MovnDtk4b04OSApQHdAke+Ddl98Au1RotcoOVZl8fOWCc/4QuezDsNcYAhiTKuc6XpXp
+         uXvrULeVJ+SYXmVDx7GPiGJyQtUk660K0gCORIO9psf0HY9RqknksjgldlYW/srkGiai
+         dIgm0TQhVYyiIZsqPXxWp8OFxGeMJ6WIhDOyQeVBX8kpnJPZEBv4wva6iyivlDsfZ3cy
+         iOog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=z9qi3pPnEHA5HZB65abA33K++kevHq7F1/KMinCSQ+4=;
-        b=fYaYJYaYGQvI8veBLyOlpd6GJvBi55tG+lXbvhqTVu8iBF1qjMPv2mNDEExkpXOyMl
-         6Mxl1Hhm/L5acUCk+Dblral1UDTnNScQZPMOUzszhy3/qTNkfiy9AE5CIam5LCcEAZFj
-         GkVQRF9rB8gbHY7FQaDU+2ofwEAnMdainP/V1U5lJuqTd3BHDPQlHRvrGeMfhjfpcxbI
-         IETadA8Qg/aoF8eGidQTsZfc5aKJNPwkIm5oWhUJKDrFs0IMcI+je1fGXz+P7mTZNShv
-         WDuhBUMd8bKamSRRlHrHp9JMKqAofKQj0G3r9FAmHrTqmXotePmffDqlw22IJk+FcHgW
-         BgYw==
-X-Gm-Message-State: AIVw111PpyY4qrtHEJX/aWOxX59JJtKXSyidEMKCfBS7KMa1hIHUmLN5
-	e91WGpMjw3y5TD2kN19q0az98CyeUwgF
-X-Received: by 10.46.33.149 with SMTP id h21mr1360105lji.83.1500055780844;
- Fri, 14 Jul 2017 11:09:40 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=izVmA7pJlqouhYQQFU1b9A/CtP3zevRV5S9n00DNWGI=;
+        b=QSohCL2lfHp76vp1pgNiabRWlI991sNKnW7thPLkBLq1gGvddivqq79p6d1jLjxi3Q
+         LRiHuMA1Kc6RahpcLsCXz0UeHWC14DuKL+hymMmovNTqKcYPZ4s1gcHVYN8yipuNsXpz
+         v0hCDKXW06tE84B8BuI2uuYiKA/TQDI6Qj2vXCIpOnopW9BOSEFHK0HH/7O92BkZy3rk
+         PPslSBOdx9j1BHfjcTi5OmwU3eCZcCzgGwUOsa7Y9qBWrWmM7aCty4PMMT7iu/52qQLg
+         e+hpijGwcvGh1B0dKoB/SnRZ1xNpEbddi7rg6W6a28SUlv+Jln7BNNNGwKTQpgM/v5bI
+         f69A==
+X-Gm-Message-State: AIkVDXIsSTbkHL0XRJ3hjxLzOZWld/XoobFg+MTZZURtdGc2HFNAAa/scRd0Cg/o2Lz2DWA4UGQ3kN32cenMUA==
+X-Received: by 10.200.55.206 with SMTP id e14mr15925933qtc.215.1482743346360;
+ Mon, 26 Dec 2016 01:09:06 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170714175607.GA19141@openwall.com>
-References: <20170628200239.GA25525@openwall.com> <20170708141125.qbk5lsuq6o6bkiwy@eldamar.local>
- <20170714175607.GA19141@openwall.com>
-Message-ID: <CA+aC4ktnyUy1KExK-zi8ptYFa-P1CQrWBRsQutue0vODuwCqVA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 14 Jul 2017 11:09:39 -0700
-From: Anthony Liguori <anthony@codemonkey.ws>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+From: "Steevee a.k.a Stefanus" <steevee.aka@gmail.com>
+Date: Mon, 26 Dec 2016 16:08:45 +0700
+Message-ID: <CADr4Fi-gyCkOT_gv_ZoivJ7JWhMRLm=+2g8BSpP9LKNEJ5f=AQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary=001a113b9a3a74101d05448c169e
+Subject: [oss-security] Joomla com_blog_calendar SQL Injection Vulnerability
 
-On Fri, Jul 14, 2017 at 10:56 AM, Solar Designer <solar@openwall.com> wrote:
-> On Sat, Jul 08, 2017 at 04:11:25PM +0200, Salvatore Bonaccorso wrote:
->> On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
->> > 6. If CVE IDs are requested, the report is valid, and you're a CNA,
->> > assign those (requesting any required information from the reporter
->> > first)
->> >
->> > 7. If the report does not mention CVE IDs (neither requests nor provides
->> > them, and doesn't mention the reporter having requested them elsewhere),
->> > yet the report is valid and it looks like distros will need CVE IDs, and
->> > you're a CNA, ask the reporter whether they have already requested CVE
->> > IDs elsewhere, then assign those if they haven't been requested
->> > elsewhere
->>
->> Speaking for Debian: Debian beeing a CNA can *help* monitoring those
->> explicitly and assign where needed CVEs from the assigned pool.
->
-> I've listed Debian as backup for the two CVE tasks above.  I've also
-> listed Red Hat as primary for these two tasks, based on Red Hat's
-> contributions so far.  And I've listed Cloud Linux and Gentoo beside
-> the tasks they kindly volunteered for in postings in here.
->
-> I see that Gentoo is already active at their tasks, including reminding
-> reporters to post to oss-security and taking care of the SPICE posting
-> (when the reporter wasn't available to make it on time):
->
-> http://www.openwall.com/lists/oss-security/2017/07/14/1
->
-> as well as collecting statistics.  Thanks!
->
->> We are already as well contributing to other tasks, and will continue
->> to do so as time permits.
->
-> Thank you!
->
-> However, many tasks remain vacant, with no distro responsible for them.
-> This doesn't mean they're not getting done - just that no particular
-> distro is responsible - yet that's something I'd like to see change.
->
-> Specifically, all 6 of the technical tasks and 5 of 13 administrative
-> tasks are now fully vacant.  Additionally, 11 of the administrative
-> tasks have no backup.
+--001a113b9a3a74101d05448c169e
+Content-Type: multipart/alternative; boundary=001a113b9a3a74101705448c169c
 
-We (Amazon Linux) are very happy to fill in whatever gaps are needed.
+--001a113b9a3a74101705448c169c
+Content-Type: text/plain; charset=UTF-8
 
-Most of the places where that can be done most effectively already
-have a primary.  I hate to just sign up to be backup but if we did
-that, we would track independently to ensure nothing got missed.
+==========================================================================================
+Joomla com_blog_calendar SQL Injection Vulnerability
+==========================================================================================
 
-So maybe backup for administrative tasks 9-13 and then we can be
-primary for technical task 3?  We already test all of these fixes so
-responding with a report of the testing we've done is straight forward
-enough.
+:-------------------------------------------------------------------------------------------------------------------------:
+: # Exploit Title : Joomla com_blog_calendar SQL Injection Vulnerability
+: # Date : 26th December 2016
+: # Author : X-Cisadane
+: # CMS Name : Joomla
+: # CMS Developer : http://joomlacode.org/gf/project/blog_calendar/
+: # Category : Web Application
+: # Vulnerability : SQL Injection
+: # Tested On : SQLMap 1.0.12.9#dev
+: # Greetz to : X-Code YogyaFree, ExploreCrew, CodeNesia, Bogor Hackers
+Community, Borneo Crew, Depok Cyber, Mantan
+:-------------------------------------------------------------------------------------------------------------------------:
 
-Regards,
+A SQL Injection Vulnerability has been discovered in the Joomla Module
+called com_blog_calendar.
+The Vulnerability is located in the
+index.php?option=com_blog_calendar&modid=xxx Parameter.
+Attackers are able to execute own SQL commands by usage of a GET Method
+Request with manipulated modid Value.
+Attackers are able to read Database information by execution of own SQL
+commands.
 
-Anthony Liguori
+DORKS (How to find the target) :
+================================
+inurl:/index.php?option=com_blog_calendar
+Or use your own Google Dorks :)
 
->
-> These distros have no task assigned: ALT Linux, Amazon Linux AMI, Arch
-> Linux, Chrome OS, Openwall, Oracle, Slackware, SUSE, Ubuntu, Wind River,
-> FreeBSD, NetBSD/pkgsrc.
->
-> Openwall might be exempt for now for us running the lists and being the
-> last resort fallback for most tasks. ;-)  The rest should volunteer for
-> some tasks now!
->
-> Red Hat almost made this list, except that I listed them for the two CVE
-> tasks on my own.
->
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> Alexander
+Proof of Concept
+================
+
+SQL Injection
+PoC :
+http://[Site]/[Path]/index.php?option=com_blog_calendar&modid=['SQLi]
+
+Screenshot (PoC) : http://i64.tinypic.com/2rqhhk4.png
+
+Example of Vuln Sites :
+https://www.zen-road.org/index.php?option=com_blog_calendar&modid=['SQLi]
+http://www3.unitus.it/index.php?option=com_blog_calendar&modid=['SQLi]
+http://chausyleshoz.by/en/index.php?option=com_blog_calendar&modid=['SQLi]
+http://www.foms.kg/index.php?option=com_blog_calendar&modid=['SQLi]
+http://www.iab.com.bd/index.php?option=com_blog_calendar&modid=['SQLi]
+... etc ...
+
+-= Regards =-
+ Steevee A.K.A
+
+--001a113b9a3a74101705448c169c
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=C2=A0=
+</div><div>Joomla com_blog_calendar SQL Injection Vulnerability=C2=A0</div>=
+<div>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=C2=A0</div><div><br></d=
+iv><div>:------------------------------------------------------------------=
+-------------------------------------------------------:=C2=A0</div><div>: =
+# Exploit Title : Joomla com_blog_calendar SQL Injection Vulnerability =C2=
+=A0</div><div>: # Date : 26th December 2016 =C2=A0</div><div>: # Author : X=
+-Cisadane=C2=A0</div><div>: # CMS Name : Joomla=C2=A0</div><div>: # CMS Dev=
+eloper : <a href=3D"http://joomlacode.org/gf/project/blog_calendar/">http:/=
+/joomlacode.org/gf/project/blog_calendar/</a>=C2=A0</div><div>: # Category =
+: Web Application=C2=A0</div><div>: # Vulnerability : SQL Injection=C2=A0</=
+div><div>: # Tested On : SQLMap 1.0.12.9#dev</div><div>: # Greetz to : X-Co=
+de YogyaFree, ExploreCrew, CodeNesia, Bogor Hackers Community, Borneo Crew,=
+ Depok Cyber, Mantan=C2=A0</div><div>:-------------------------------------=
+---------------------------------------------------------------------------=
+---------:=C2=A0</div><div><br></div><div>A SQL Injection Vulnerability has=
+ been discovered in the Joomla Module called com_blog_calendar.=C2=A0</div>=
+<div>The Vulnerability is located in the index.php?option=3Dcom_blog_calend=
+ar&amp;modid=3Dxxx Parameter.=C2=A0</div><div>Attackers are able to execute=
+ own SQL commands by usage of a GET Method Request with manipulated modid V=
+alue.=C2=A0</div><div>Attackers are able to read Database information by ex=
+ecution of own SQL commands.=C2=A0</div><div>=C2=A0=C2=A0</div><div>DORKS (=
+How to find the target) :=C2=A0</div><div>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =C2=A0</div=
+><div>inurl:/index.php?option=3Dcom_blog_calendar=C2=A0</div><div>Or use yo=
+ur own Google Dorks :)=C2=A0</div><div><br></div><div>Proof of Concept =C2=
+=A0</div><div>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =C2=A0</div>=
+<div><br></div><div>SQL Injection=C2=A0</div><div>PoC : =C2=A0</div><div>ht=
+tp://[Site]/[Path]/index.php?option=3Dcom_blog_calendar&amp;modid=3D[&#39;S=
+QLi] =C2=A0</div><div><br></div><div>Screenshot (PoC) : <a href=3D"http://i=
+64.tinypic.com/2rqhhk4.png">http://i64.tinypic.com/2rqhhk4.png</a>=C2=A0</d=
+iv><div><br></div><div>Example of Vuln Sites :=C2=A0</div><div><a href=3D"h=
+ttps://www.zen-road.org/index.php?option=3Dcom_blog_calendar&amp;modid=3D[&=
+#39;SQLi]">https://www.zen-road.org/index.php?option=3Dcom_blog_calendar&am=
+p;modid=3D[&#39;SQLi]</a>=C2=A0</div><div><a href=3D"http://www3.unitus.it/=
+index.php?option=3Dcom_blog_calendar&amp;modid=3D[&#39;SQLi]">http://www3.u=
+nitus.it/index.php?option=3Dcom_blog_calendar&amp;modid=3D[&#39;SQLi]</a>=
+=C2=A0</div><div><a href=3D"http://chausyleshoz.by/en/index.php?option=3Dco=
+m_blog_calendar&amp;modid=3D[&#39;SQLi]">http://chausyleshoz.by/en/index.ph=
+p?option=3Dcom_blog_calendar&amp;modid=3D[&#39;SQLi]</a>=C2=A0</div><div><a=
+ href=3D"http://www.foms.kg/index.php?option=3Dcom_blog_calendar&amp;modid=
+=3D[&#39;SQLi]">http://www.foms.kg/index.php?option=3Dcom_blog_calendar&amp=
+;modid=3D[&#39;SQLi]</a>=C2=A0</div><div><a href=3D"http://www.iab.com.bd/i=
+ndex.php?option=3Dcom_blog_calendar&amp;modid=3D[&#39;SQLi]">http://www.iab=
+.com.bd/index.php?option=3Dcom_blog_calendar&amp;modid=3D[&#39;SQLi]</a>=C2=
+=A0</div><div>... etc ...</div><div><br></div><div><div class=3D"gmail_sign=
+ature">-=3D Regards =3D-<br>=C2=A0Steevee A.K.A</div></div>
+</div>
+
+--001a113b9a3a74101705448c169c--
+
+--001a113b9a3a74101d05448c169e
+Content-Type: text/plain; charset=US-ASCII; name="poc.txt"
+Content-Disposition: attachment; filename="poc.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ix5v30q20
+
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+IA0KSm9vbWxhIGNvbV9ibG9nX2NhbGVuZGFyIFNRTCBJbmplY3Rpb24gVnVs
+bmVyYWJpbGl0eSANCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PSANCg0KOi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS06IA0KOiAjIEV4cGxvaXQgVGl0bGUgOiBKb29tbGEgY29tX2Jsb2df
+Y2FsZW5kYXIgU1FMIEluamVjdGlvbiBWdWxuZXJhYmlsaXR5ICANCjogIyBE
+YXRlIDogMjZ0aCBEZWNlbWJlciAyMDE2ICANCjogIyBBdXRob3IgOiBYLUNp
+c2FkYW5lIA0KOiAjIENNUyBOYW1lIDogSm9vbWxhIA0KOiAjIENNUyBEZXZl
+bG9wZXIgOiBodHRwOi8vam9vbWxhY29kZS5vcmcvZ2YvcHJvamVjdC9ibG9n
+X2NhbGVuZGFyLyANCjogIyBDYXRlZ29yeSA6IFdlYiBBcHBsaWNhdGlvbiAN
+CjogIyBWdWxuZXJhYmlsaXR5IDogU1FMIEluamVjdGlvbiANCjogIyBUZXN0
+ZWQgT24gOiBTUUxNYXAgMS4wLjEyLjkjZGV2DQo6ICMgR3JlZXR6IHRvIDog
+WC1Db2RlIFlvZ3lhRnJlZSwgRXhwbG9yZUNyZXcsIENvZGVOZXNpYSwgQm9n
+b3IgSGFja2VycyBDb21tdW5pdHksIEJvcm5lbyBDcmV3LCBEZXBvayBDeWJl
+ciwgTWFudGFuIA0KOi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS06
+IA0KDQpBIFNRTCBJbmplY3Rpb24gVnVsbmVyYWJpbGl0eSBoYXMgYmVlbiBk
+aXNjb3ZlcmVkIGluIHRoZSBKb29tbGEgTW9kdWxlIGNhbGxlZCBjb21fYmxv
+Z19jYWxlbmRhci4gDQpUaGUgVnVsbmVyYWJpbGl0eSBpcyBsb2NhdGVkIGlu
+IHRoZSBpbmRleC5waHA/b3B0aW9uPWNvbV9ibG9nX2NhbGVuZGFyJm1vZGlk
+PXh4eCBQYXJhbWV0ZXIuIA0KQXR0YWNrZXJzIGFyZSBhYmxlIHRvIGV4ZWN1
+dGUgb3duIFNRTCBjb21tYW5kcyBieSB1c2FnZSBvZiBhIEdFVCBNZXRob2Qg
+UmVxdWVzdCB3aXRoIG1hbmlwdWxhdGVkIG1vZGlkIFZhbHVlLiANCkF0dGFj
+a2VycyBhcmUgYWJsZSB0byByZWFkIERhdGFiYXNlIGluZm9ybWF0aW9uIGJ5
+IGV4ZWN1dGlvbiBvZiBvd24gU1FMIGNvbW1hbmRzLiANCiAgDQpET1JLUyAo
+SG93IHRvIGZpbmQgdGhlIHRhcmdldCkgOiANCj09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09ICANCmludXJsOi9pbmRleC5waHA/b3B0aW9uPWNv
+bV9ibG9nX2NhbGVuZGFyIA0KT3IgdXNlIHlvdXIgb3duIEdvb2dsZSBEb3Jr
+cyA6KSANCg0KUHJvb2Ygb2YgQ29uY2VwdCAgDQo9PT09PT09PT09PT09PT09
+ICANCg0KU1FMIEluamVjdGlvbiANClBvQyA6ICANCmh0dHA6Ly9bU2l0ZV0v
+W1BhdGhdL2luZGV4LnBocD9vcHRpb249Y29tX2Jsb2dfY2FsZW5kYXImbW9k
+aWQ9WydTUUxpXSAgDQoNClNjcmVlbnNob3QgKFBvQykgOiBodHRwOi8vaTY0
+LnRpbnlwaWMuY29tLzJycWhoazQucG5nIA0KDQpFeGFtcGxlIG9mIFZ1bG4g
+U2l0ZXMgOiANCmh0dHBzOi8vd3d3Lnplbi1yb2FkLm9yZy9pbmRleC5waHA/
+b3B0aW9uPWNvbV9ibG9nX2NhbGVuZGFyJm1vZGlkPVsnU1FMaV0gDQpodHRw
+Oi8vd3d3My51bml0dXMuaXQvaW5kZXgucGhwP29wdGlvbj1jb21fYmxvZ19j
+YWxlbmRhciZtb2RpZD1bJ1NRTGldIA0KaHR0cDovL2NoYXVzeWxlc2hvei5i
+eS9lbi9pbmRleC5waHA/b3B0aW9uPWNvbV9ibG9nX2NhbGVuZGFyJm1vZGlk
+PVsnU1FMaV0gDQpodHRwOi8vd3d3LmZvbXMua2cvaW5kZXgucGhwP29wdGlv
+bj1jb21fYmxvZ19jYWxlbmRhciZtb2RpZD1bJ1NRTGldIA0KaHR0cDovL3d3
+dy5pYWIuY29tLmJkL2luZGV4LnBocD9vcHRpb249Y29tX2Jsb2dfY2FsZW5k
+YXImbW9kaWQ9WydTUUxpXSANCi4uLiBldGMgLi4u
+
+--001a113b9a3a74101d05448c169e--
