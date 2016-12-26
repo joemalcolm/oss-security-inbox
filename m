@@ -1,41 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/09/8
-Message-ID: <20160309202145.0273729d@pc1>
-Date: Wed, 9 Mar 2016 20:21:45 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Heap use after free in Pidgin-OTR plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/2
+Message-ID: <CADr4Fi-gyCkOT_gv_ZoivJ7JWhMRLm=+2g8BSpP9LKNEJ5f=AQ@mail.gmail.com>
+Date: Mon, 26 Dec 2016 16:08:45 +0700
+From: "Steevee a.k.a Stefanus" <steevee.aka@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Joomla com_blog_calendar SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/39-Heap-use-after-free-in-Pidgin-OTR-plugin.html
+==========================================================================================
+Joomla com_blog_calendar SQL Injection Vulnerability
+==========================================================================================
 
-The pidgin-otr plugin version 4.0.2 fixes a heap use after free error.
-The bug is triggered when a user tries to authenticate a buddy and
-happens in the function create_smp_dialog.
+:-------------------------------------------------------------------------------------------------------------------------:
+: # Exploit Title : Joomla com_blog_calendar SQL Injection Vulnerability
+: # Date : 26th December 2016
+: # Author : X-Cisadane
+: # CMS Name : Joomla
+: # CMS Developer : http://joomlacode.org/gf/project/blog_calendar/
+: # Category : Web Application
+: # Vulnerability : SQL Injection
+: # Tested On : SQLMap 1.0.12.9#dev
+: # Greetz to : X-Code YogyaFree, ExploreCrew, CodeNesia, Bogor Hackers
+Community, Borneo Crew, Depok Cyber, Mantan
+:-------------------------------------------------------------------------------------------------------------------------:
 
-The bug was discovered with Address Sanitizer. This is yet another
-example why all C/C++ code should be tested with Address Sanitizer
-enabled.
+A SQL Injection Vulnerability has been discovered in the Joomla Module
+called com_blog_calendar.
+The Vulnerability is located in the
+index.php?option=com_blog_calendar&modid=xxx Parameter.
+Attackers are able to execute own SQL commands by usage of a GET Method
+Request with manipulated modid Value.
+Attackers are able to read Database information by execution of own SQL
+commands.
 
-This bug was already independently discovered and reported in the otr
-bug tracker.
-https://bugs.otr.im/issues/88
+DORKS (How to find the target) :
+================================
+inurl:/index.php?option=com_blog_calendar
+Or use your own Google Dorks :)
 
-Independend of this bug another more severe bug in Libotr itself was
-also disclosed today, please make sure you update both libotr (4.1.1)
-and the pidgin-otr plugin (4.0.2).
-https://www.x41-dsec.de/lab/advisories/x41-2016-001-libotr/
+Proof of Concept
+================
 
-Upstream bug report (contains Address Sanitizer stack trace):
-https://bugs.otr.im/issues/128
-Commit / fix:
-https://bugs.otr.im/projects/pidgin-otr/repository/revisions/aaf551b9dd5cbba8c4abaa3d4dc7ead860efef94
+SQL Injection
+PoC :
+http://[Site]/[Path]/index.php?option=com_blog_calendar&modid=['SQLi]
 
--- 
-Hanno Böck
-https://hboeck.de/
+Screenshot (PoC) : http://i64.tinypic.com/2rqhhk4.png
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Example of Vuln Sites :
+https://www.zen-road.org/index.php?option=com_blog_calendar&modid=['SQLi]
+http://www3.unitus.it/index.php?option=com_blog_calendar&modid=['SQLi]
+http://chausyleshoz.by/en/index.php?option=com_blog_calendar&modid=['SQLi]
+http://www.foms.kg/index.php?option=com_blog_calendar&modid=['SQLi]
+http://www.iab.com.bd/index.php?option=com_blog_calendar&modid=['SQLi]
+... etc ...
 
-Content of type "application/pgp-signature" skipped
+-= Regards =-
+ Steevee A.K.A
+
+Content of type "text/html" skipped
+
+View attachment "poc.txt" of type "text/plain" (2100 bytes)
