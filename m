@@ -1,80 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/11/16/6
-Message-ID: <20161116155529.GJ5329@io.lakedaemon.net>
-Date: Wed, 16 Nov 2016 15:55:29 +0000
-From: Jason Cooper <osssecurity@...edaemon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/3
+Message-ID: <20161226154650.4b40cca8@pc1>
+Date: Mon, 26 Dec 2016 15:46:50 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: Re: CVE-2016-4484: - Cryptsetup Initrd root Shell
+Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-Hi Hector,
+Hi,
 
-On Mon, Nov 14, 2016 at 08:45:51PM +0000, Hector Marco wrote:
-> Affected package
-> ----------------
-> Cryptsetup <= 2:1
-> 
-> 
-> CVE-ID
-> ------
-> CVE-2016-4484
-> 
-> 
-> Description
-> -----------
-> A vulnerability in Cryptsetup, concretely in the scripts that unlock the
-> system partition when the partition is ciphered using LUKS (Linux
-> Unified Key Setup).
+Given I had plenty of time on the train to 33c3 I did a quick
+lookaround on what contains PHPMailer. As the details of the vuln
+aren't clear yet this doesn't necessarily mean they're vulnerable, just
+that they ship the affected code.
 
-This wording appears to have caused a lot of misunderstanding.  afaict,
-the binary executable 'cryptsetup' has nothing to do with this bug.
-Rather, it is completely in the initrd's script for decrypting a
-partition containing the rootfs.
+The most popular webapps that directly ship PHPmailer seem to be Joomla
+and Mantis. Both without an update yet.
+Wordpress also ships PHPmailer, but this confused me at first. They
+renamed it and it's called class-phpmailer.php (if you use some
+automatic detection for vulnerable PHPMailer versions - as I do in
+freewvs - you may miss that one). Also no update yet.
 
-On Debian based systems, the initrd script is in the cryptsetup package,
-but if one looks at the upstream repository for cryptsetup:
+Drupal doesn't contain PHPMailer, although mentioned in the advisory.
+But there are probably plugins and extensions using it. I also saw it
+used in some wordpress themes.
 
-  https://gitlab.com/cryptsetup/cryptsetup.git
+Owncloud and CMS Made Simple don't ship PHPMailer in their current
+versions, but in older versions. This may deserve some
+closer investigation if the files are leftover after updates and pose
+still a risk.
 
-There are no initrd scripts provided.  So, this is in distro-provided
-scripting.  *Not* in cryptsetup [0].
+Summary:
 
-We could argue that those scripts should be in a 'cryptsetup-initramfs'
-package by itself, but Debian has their way of doing things, and I'm not
-volunteering, so... :-P
+Affected popular Webapps with plain PHPMailer:
+Joomla
+Mantis
 
-> This vulnerability allows to obtain a root initramfs shell on affected
-> systems. The vulnerability is very reliable because it doesn't depend on
-> specific systems or configurations. Attackers can copy, modify or
-> destroy the hard disc as well as set up the network to exflitrate data.
+Affected popular webapps with modified / renamed PHPMailer:
+Wordpress
 
-How does this differ from an attacker setting 'init=/bin/sh' on the
-kernel command line?  Or, booting from attacker provided media?  Or, in
-OS X, booting in single user mode?
+Affected popular webapps which contained PHPMailer in older versions:
+CMS Made Simple
+Owncloud
 
-Your Discussion section at the end mentions facilities (GRUB passwords,
-BIOS passwords, etc) for preventing this "Developer friendliness".  How
-do you envision the installer enabling these while providing a failsafe
-that an attacker can't exploit?
+-- 
+Hanno Böck
+https://hboeck.de/
 
-> In cloud environments it is also possible to remotely exploit this
-> vulnerability without having "physical access."
-
-This is straining to add 'cloud' and 'remotely exploit' into this
-summary.  I presume all cloud providers who also provide console access
-to VM bootup also protect that access behind user credentials or ssh
-keys...
-
-On a side note, I recommend encrypting the *entire* internal hard disk,
-and configuring the BIOS/UEFI to boot from USB.  Then, put grub, /boot,
-and the LUKS header on the USB drive.  Which you keep on your physical
-keychain.  After boot is complete, you should be able to remove the USB
-drive.  Just make sure to plug it back in during system updates. ;-)
-
-thx,
-
-Jason.
-
-[0] note: the authors of cryptsetup have since updated their readme to
-clarify the situation around this CVE.
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
