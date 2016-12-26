@@ -1,84 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/05/09/12
-Message-ID: <20160509193355.GA11234@perpetual.pseudorandom.co.uk>
-Date: Mon, 9 May 2016 20:33:55 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: GraphicsMagick Response To "ImageTragick"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/6
+Message-ID: <CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>
+Date: Mon, 26 Dec 2016 12:57:26 -0500
+From: Michael Hess <mlhess@...ch.edu>
+To: security@...pal.org, oss-security@...ts.openwall.com, security@...milo.org
+Subject: Re: [security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-For context: I co-maintain ikiwiki, a wiki engine that uses the
-Image::Magick Perl bindings to resize potentially-attacker-supplied images
-(although I'm considering supporting both, and potentially trying to load
-Graphics::Magick first). I suspect that many ImageMagick and GraphicsMagick
-users are in an analogous situation.
+The Drupal Security team is going to release a PSA on this topic, we
+don't normally do it, but given the holiday we will issue PSA-004, in
+about 30 min.
 
-On Mon, 09 May 2016 at 13:53:28 -0500, Bob Friesenhahn wrote:
-> The SVG and MVG formats are able to submit http and ftp URL requests. The
-> allowed URLs are not restricted by policy as they would be if SVG was
-> running in a web browser.  My point is that the URLs are requested from the
-> perspective of the user id and host where the process is running.  If this
-> is on the back-side of a firewall, then it may be possible to access URLs
-> which otherwise could not be accessed.
+The text is below.
 
-Thanks for clarifying!
+Thanks,
+Michael on behalf of the Drupal Security Team.
 
-> Outside of the utilities themselves, or applications based on the libraries,
-> only SVG, MVG, and MSL (Magick Scripting Language) are able to submit URL
-> requests.  MSL should be viewed as a scripting format rather than being a
-> file format.
 
-Great. Is there an API that can be used to say "load this arbitrary file,
-but only if it is in a format that is considered entirely safe"?
-(Safe in the sense that it isn't vulnerable to SSRF, doesn't perform
-arbitrary actions like MSL does, can't recurse into a separate
-resource that might not be safe, and so on, in a way that won't
-become insecure by the addition of another format.)
 
-At the moment my mitigation for these vulnerabilities is refusing to
-resize images that don't end with .jpg .jpeg .png or .gif, refusing
-to resize images that have one of those extensions but don't have the
-matching magic number, and invoking ImageMagick APIs with an argument
-like "jpeg:myfile.jpg" to force the use of the expected coder. This
-doesn't seem like something that every developer is going to get right
-in practice.
+Posted by Drupal Security Team on December 26, 2016 at 12:50pm
 
-> > >     MSL is an XML-based "script"
-> > >     format which should never be allowed to be submitted and invoked
-> > >     by an untrusted party.
-> > 
-> > Is there any situation where GraphicsMagick will interpret a file of
-> > unspecified format as MSL, for instance recognizing it by extension or
-> > magic number?
-> 
-> There is no detection of MSL by its header but the MSL reader will be
-> dispatched to by a .MSL extension.  It requires adding only one line of code
-> to block responding to the MSL extension.
+Advisory ID: DRUPAL-SA-PSA-2016-004
+Project: PHPMailer (third-party library)
+Version: 7.x, 8.x
+Date: 2016-December-26
+Security risk: 23/25 (Highly Critical)
+AC:None/A:User/CI:All/II:All/E:Exploit/TD:All
+Vulnerability: Arbitrary PHP code execution
 
-I think it might be necessary to add that one line of code, if rendering a
-SVG that contains <xi:include> directives can result in interpreting
-an accompanying .msl script. On the other hand, if SVGs are open to SSRF
-by design, many services will need to avoid processing an attacker-supplied
-SVG anyway, so perhaps the set of services that are willing to process SVGs
-from untrusted users is negligible...
+Description
 
-> The focus of https://imagetragick.com/ on MVG has brought attention to it,
-> and tarnished its reputation, but (provided it is not executed by default)
-> the focus should be on assuring that formats assumed to be secure (e.g. SVG
-> and WMF) are read/rendered securely.
+The PHPMailer and SMTP modules (and maybe others) add support for
+sending e-mails using the 3rd party PHPMailer library.
 
-I think the reason people are surprised and concerned to read about the
-MVG and MSL scripting languages is that they enter *Magick through the
-same APIs that open "safe" image files, blurring the boundary between
-"open a file" and "execute a script". If the entry point into executing
-MVG/MSL scripts was named more like ExecuteScript(), as opposed to
-ReadImage(), then I don't think anyone would object to MVG and MSL
-files having arbitrary code execution capabilities.
+In general the Drupal project does not create advisories for 3rd party
+libraries. Drupal site maintainers should pay attention to the
+notifications provided by those 3rd party libraries as outlined in
+PSA-2011-002 - External libraries and plugins. However, given the
+extreme criticality of this issue and the timing of its release we are
+issuing a Public Service Announcement to alert potentially affected
+Drupal site maintainers.
 
-It's the same concern as when office suites' document formats gain support
-for auto-running macros when opened, or when operating systems start
-auto-running scripts and executables when removable media are inserted -
-an action that was previously considered to be mostly safe to perform
-on untrusted content unexpectedly becomes an act of trust.
+CVE identifier(s) issued
 
-    S
+CVE-2016-10033
+
+Versions affected
+
+All versions of the external PHPMailer library < 5.2.18.
+
+Drupal core is not affected. If you do not use the contributed
+PHPMailer third party library, there is nothing you need to do.
+
+Solution
+
+Upgrade to the newest version of the phpmailler library.
+https://github.com/PHPMailer/PHPMailer
+
+Reported by
+
+Dawid Golunski
+
+Contact and More Information
+
+The Drupal security team can be reached at security at drupal.org or
+via the contact form at https://www.drupal.org/contact.
+
+Learn more about the Drupal Security team and their policies, writing
+secure code for Drupal, andsecuring your site.
+
+Follow the Drupal Security Team on Twitter at https://twitter.com/drupalsecurity
+
+
+
+On Mon, Dec 26, 2016 at 9:55 AM, Peter Bex <peter@...e-magic.net> wrote:
+> On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno Böck wrote:
+>> Hi,
+>>
+>> Given I had plenty of time on the train to 33c3 I did a quick
+>> lookaround on what contains PHPMailer. As the details of the vuln
+>> aren't clear yet this doesn't necessarily mean they're vulnerable, just
+>> that they ship the affected code.
+>
+> It looks like the vulnerability is due to a missing escaping of shell
+> arguments in the sender's e-mail address.  This commit seems to be
+> the one that fixes the bug:
+> https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307cef164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
+>
+> So it depends on whether a web form allows one to control the "from"
+> mail address or not.
+>
+>> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
+>> But there are probably plugins and extensions using it. I also saw it
+>> used in some wordpress themes.
+>
+> I noticed this Drupal module: https://www.drupal.org/project/phpmailer
+> which has some sort of integration with the widely used mimemail module.
+> The linked module http://drupal.org/project/smtp also uses PHPMailer.
+> There are undoubtedly more modules that do.
+>
+> The LCMS system Chamilo also uses PHPMailer for sending mails internally.
+>
+> Cheers,
+> Peter Bex
+>
+> --
+> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
+> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
