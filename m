@@ -1,4 +1,10 @@
-Received: (qmail 9894 invoked by uid 550); 12 Mar 2025 21:22:33 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4117" "Monday" "26" "December" "2016" "13:05:49" "-0500" "Yannick Warnier" "ywarnier@chamilo.org" "<e6d59700-2d39-c973-c6b2-c4eaa637ed8f@chamilo.org>" "122" "[oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" nil nil nil "12" "2016122618:05:49" "[oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]" (number mark "U       ywarnier@cha Dec 26  122/4117  " thread-indent "\"[oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]\"\n") "<CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>" ("<CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>" "<20161226154650.4b40cca8@pc1>" "<20161226145559.GU31189@scully.more-magic.net>" "<CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Quarantine-ID: <WZF1bPPojF74>
+Received: (qmail 31786 invoked by uid 550); 26 Dec 2016 19:17:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +13,165 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9855 invoked from network); 12 Mar 2025 21:22:33 -0000
-Date: Wed, 12 Mar 2025 22:22:23 +0100
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 28362 invoked from network); 26 Dec 2016 18:06:24 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <Z9H7D+X11A121Mkg@256bit.org>
+References: <CADSYzsubAm_GzSJ1S3uoskp1JNJe5Jemb0jtt8waA8QMdcbHOw@mail.gmail.com>
+ <20161226154650.4b40cca8@pc1> <20161226145559.GU31189@scully.more-magic.net>
+ <CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>
+Cc: security@chamilo.org, security@drupal.org, peter@more-magic.net
+From: Yannick Warnier <ywarnier@chamilo.org>
+Organization: Chamilo Association
+Message-ID: <e6d59700-2d39-c973-c6b2-c4eaa637ed8f@chamilo.org>
+Date: Mon, 26 Dec 2016 13:05:49 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] potential data loss with zip.vim and special crafted
- zip files in Vim < v9.1.1198
+In-Reply-To: <CANNt_rZQ9ZbmeB3kNGgBafny=TYoGbm7xMJPrzD2KNUt60Ld=Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam_score: -2.9
+X-Spam_score_int: -28
+X-Spam_bar: --
+X-Spam_report: Spam detection software, running on the system "pouet.beeznest.net",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ the administrator of that system for details.
+ Content preview:  Hi Peter, The Chamilo team will be analyzing this in the next
+    2 days and likely provide a patch to our community. Although PHPMailer is
+    indeed not used anymore in recent versions, we still have a large number
+   of portals around using the previous version. [...] 
+ Content analysis details:   (-2.9 points, 5.0 required)
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+ -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [score: 0.0000]
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: ywarnier@chamilo.org
+X-SA-Exim-Scanned: No (on pouet.beeznest.net); SAEximRunCond expanded to false
+Subject: [oss-security] Re: [security] [oss-security] PHPMailer < 5.2.18 Remote Code
+ Execution [CVE-2016-10033]
 
-potential data loss with zip.vim and special crafted zip files
-==============================================================
-Date: 12.03.2025
-Severity: Medium
-CVE: *not-yet-assigned*
-CWE: Improper Neutralization of Argument Delimiters in a Command
-     ('Argument Injection') (CWE-88)
+Hi Peter,
 
-# Summary
-potential data loss with zip.vim and special crafted zip files
+The Chamilo team will be analyzing this in the next 2 days and likely 
+provide a patch to our community. Although PHPMailer is indeed not used 
+anymore in recent versions, we still have a large number of portals 
+around using the previous version.
 
-# Description
-Vim is distributed with the zip.vim plugin, that allows easy editing and
-viewing of zip archives.
+Thanks Drupal team for the PSA text, we'll probably use part of it as 
+inspiration (unless that's not OK - just let me know).
 
-To view and extract zip files, vim uses the unzip(1) command, usually
-provided by Info-ZIP[1], latest version on Debian is 6.0 from April
-2009.
+Thank you for your great effort in looking out for us and letting us 
+know. Most appreciated.
 
-If an attacker creates an archive which contains a file `-d/tmp`, and a
-Vim user views such a file and tries to extract such filename from the
-archive, Vim will essentially run the following unzip command:
-
-unzip -o <archive.zip> member-filename
-
-However, since the member-filename is called `-d/tmp`, this is seen by
-the unzip command as an additional argument and it therefore happily
-extracts the whole archive into the mentioned directory, overwriting
-existing files because of the `-o`.
-
-Unfortunately, the latest released unzip version does not support `--`
-as and end-of-argument marker, so we cannot use this to mark the
-beginning of the member-files for unzip. Well, apparently there exists
-some 6.10 beta release[2], that hasn't made it to an official release
-yet which supports the use of the `--` marker since 2010 (but this isn't
-widely known).
-
-Therefore, Vim will try to work-around it by using the `[-]` glob when a
-filename starts with a `-` to protect unzip from parsing the filename as
-an argument, which is just an ugly work-around.
-
-# Impact
-Impact is **moderate** because a user must be made to view such an 
-archive with Vim and then press 'x' to extract such a strange filename.
-
-The Vim project would like to thank @Ry0taK (GMO Flatt Security Inc) and
-@takumi-san-ai for reporting this issue.
-
-The issue has been fixed as of Vim patch v9.1.1198
-
-[1]: http://www.info-zip.org/pub/infozip/
-[2]: http://antinode.info/ftp/info-zip/unzip610c25c.zip
-
-[Commit](https://github.com/vim/vim/commit/f209dcd3defb95bae21b2740910e6aa7bb940531)
-[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-693p-m996-3rmf)
-
-Thanks,
-Christian
 -- 
-I'm very old-fashioned.  I believe that people should marry for life,
-like pigeons and Catholics.
-		-- Woody Allen
+
+Yannick Warnier
+Project leader
+Chamilo
+
+
+Le 26/12/16 à 12:57, Michael Hess a écrit :
+> The Drupal Security team is going to release a PSA on this topic, we
+> don't normally do it, but given the holiday we will issue PSA-004, in
+> about 30 min.
+>
+> The text is below.
+>
+> Thanks,
+> Michael on behalf of the Drupal Security Team.
+>
+>
+>
+> Posted by Drupal Security Team on December 26, 2016 at 12:50pm
+>
+> Advisory ID: DRUPAL-SA-PSA-2016-004
+> Project: PHPMailer (third-party library)
+> Version: 7.x, 8.x
+> Date: 2016-December-26
+> Security risk: 23/25 (Highly Critical)
+> AC:None/A:User/CI:All/II:All/E:Exploit/TD:All
+> Vulnerability: Arbitrary PHP code execution
+>
+> Description
+>
+> The PHPMailer and SMTP modules (and maybe others) add support for
+> sending e-mails using the 3rd party PHPMailer library.
+>
+> In general the Drupal project does not create advisories for 3rd party
+> libraries. Drupal site maintainers should pay attention to the
+> notifications provided by those 3rd party libraries as outlined in
+> PSA-2011-002 - External libraries and plugins. However, given the
+> extreme criticality of this issue and the timing of its release we are
+> issuing a Public Service Announcement to alert potentially affected
+> Drupal site maintainers.
+>
+> CVE identifier(s) issued
+>
+> CVE-2016-10033
+>
+> Versions affected
+>
+> All versions of the external PHPMailer library < 5.2.18.
+>
+> Drupal core is not affected. If you do not use the contributed
+> PHPMailer third party library, there is nothing you need to do.
+>
+> Solution
+>
+> Upgrade to the newest version of the phpmailler library.
+> https://github.com/PHPMailer/PHPMailer
+>
+> Reported by
+>
+> Dawid Golunski
+>
+> Contact and More Information
+>
+> The Drupal security team can be reached at security at drupal.org or
+> via the contact form at https://www.drupal.org/contact.
+>
+> Learn more about the Drupal Security team and their policies, writing
+> secure code for Drupal, andsecuring your site.
+>
+> Follow the Drupal Security Team on Twitter at https://twitter.com/drupalsecurity
+>
+>
+>
+> On Mon, Dec 26, 2016 at 9:55 AM, Peter Bex <peter@more-magic.net> wrote:
+>> On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno Böck wrote:
+>>> Hi,
+>>>
+>>> Given I had plenty of time on the train to 33c3 I did a quick
+>>> lookaround on what contains PHPMailer. As the details of the vuln
+>>> aren't clear yet this doesn't necessarily mean they're vulnerable, just
+>>> that they ship the affected code.
+>>
+>> It looks like the vulnerability is due to a missing escaping of shell
+>> arguments in the sender's e-mail address.  This commit seems to be
+>> the one that fixes the bug:
+>> https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307cef164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
+>>
+>> So it depends on whether a web form allows one to control the "from"
+>> mail address or not.
+>>
+>>> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
+>>> But there are probably plugins and extensions using it. I also saw it
+>>> used in some wordpress themes.
+>>
+>> I noticed this Drupal module: https://www.drupal.org/project/phpmailer
+>> which has some sort of integration with the widely used mimemail module.
+>> The linked module http://drupal.org/project/smtp also uses PHPMailer.
+>> There are undoubtedly more modules that do.
+>>
+>> The LCMS system Chamilo also uses PHPMailer for sending mails internally.
+>>
+>> Cheers,
+>> Peter Bex
+>>
+>> --
+>> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
+>> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+>
