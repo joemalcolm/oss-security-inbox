@@ -1,51 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/01/5
-Message-ID: <56FEE67B.70507@treenet.co.nz>
-Date: Sat, 2 Apr 2016 10:22:03 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Squid HTTP Proxy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/5
+Message-ID: <20161226145944.GV31189@scully.more-magic.net>
+Date: Mon, 26 Dec 2016 15:59:44 +0100
+From: Peter Bex <peter@...e-magic.net>
+To: oss-security@...ts.openwall.com, security@...milo.org
+Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Dec 26, 2016 at 03:55:59PM +0100, Peter Bex wrote:
+> The LCMS system Chamilo also uses PHPMailer for sending mails internally.
 
-1) A buffer overrun (on write(2)) has been found in Squid proxy 'pinger'
-process that allows an attacker to craft ICMPv6 messages that will
-either crash the child process (if the OS prootects against over-write)
-or alter heap contents allowing the attacker to bypass CVE-2014-7142
-protection and leak arbitrary heap data into the Squid log files. The
-pinger is setuid root (though it does drop those privileges prior to
-this attack being possible).
- This was reported by Yuriy M. Kaminskiy.
+Correction: Older versions of Chamilo (up to and including 1.9) used it.
+The current release (1.11) seems to use Swiftmailer.
 
-Patch for this issue is available at:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14015.patch>
+Cheers,
+Peter Bex
 
-The upstream advisory will be at this URL:
-<http://www.squid-cache.org/Advisories/SQUID-2016_3.txt>
-
-
-2) A secondary issue with the same Denial of Service effects as
-CVE-2016-2569 has been found that is not covered by the existing fix.
-All Squid-3.x versions up to and including 3.5.15, and 4.0.x versions up
-to and including 4.0.7 are vulnerable to this issue independent of the
-fix for CVE-2016-2569.
- This was reported by Santiago R. Rincón of Debian.
-
-Patch for this is available at:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14016.patch>
-
-The upstream advisory will be at this URL:
-<http://www.squid-cache.org/Advisories/SQUID-2016_4.txt>
-
-
-Both of these issues are resolved in the 4.0.8 and 3.5.16 packages which
-will be available within 24hrs.
-
-
-Amos Jeffries
-Squid Software Foundation
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
