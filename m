@@ -1,128 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/16/17
-Message-ID: <1954849.FvxM1m0O36@arcadia>
-Date: Sat, 17 Sep 2016 00:12:09 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/26/7
+Message-ID: <e6d59700-2d39-c973-c6b2-c4eaa637ed8f@chamilo.org>
+Date: Mon, 26 Dec 2016 13:05:49 -0500
+From: Yannick Warnier <ywarnier@...milo.org>
 To: oss-security@...ts.openwall.com
-Subject: libav: NULL pointer dereference in put_no_rnd_pixels8_xy2_mmx (rnd_template.c)
+Cc: security@...milo.org, security@...pal.org, peter@...e-magic.net
+Subject: Re: [security] PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-If suitable for a CVE please assign one. 
-Thanks.
+Hi Peter,
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+The Chamilo team will be analyzing this in the next 2 days and likely 
+provide a patch to our community. Although PHPMailer is indeed not used 
+anymore in recent versions, we still have a large number of portals 
+around using the previous version.
 
-A fuzzing, with an mp3 file as input, discovered a null pointer access in 
-put_no_rnd_pixels8_xy2_mmx.
+Thanks Drupal team for the PSA text, we'll probably use part of it as 
+inspiration (unless that's not OK - just let me know).
 
-The complete ASan output:
-
-# avconv -i $FILE -f null -
-avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
-  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
-(tags/RELEASE_381/final)
-[h263 @ 0x61a00001f280] Format detected only with low score of 25, 
-misdetection possible!
-[IMGUTILS @ 0x7ff589955420] Picture size 0x0 is invalid
-[h263 @ 0x619000000580] header damaged
-[h263 @ 0x619000000580] Syntax-based Arithmetic Coding (SAC) not supported
-[h263 @ 0x619000000580] Independent Segment Decoding not supported
-[h263 @ 0x619000000580] warning: first frame is no keyframe
-[h263 @ 0x619000000580] cbpc damaged at 0 0
-[h263 @ 0x619000000580] Error at MB: 0
-[h263 @ 0x619000000580] concealing 1584 DC, 1584 AC, 1584 MV errors
-[h263 @ 0x61a00001f280] Estimating duration from bitrate, this may be 
-inaccurate
-Input #0, h263, from '9.crashes':
-  Duration: N/A, bitrate: N/A
-    Stream #0.0: Video: h263, yuv420p, 704x576 [PAR 12:11 DAR 4:3], 25 fps, 25 
-tbn, 18.73 tbc
-Output #0, null, to 'pipe:':
-  Metadata:
-    encoder         : Lavf56.1.0
-    Stream #0.0: Video: rawvideo, yuv420p, 704x576 [PAR 12:11 DAR 4:3], 
-q=2-31, 200 kb/s, 25 tbn, 25 tbc
-    Metadata:
-      encoder         : Lavc56.1.0 rawvideo
-Stream mapping:
-  Stream #0:0 -> #0:0 (h263 (native) -> rawvideo (native))
-Press ctrl-c to stop encoding
-[h263 @ 0x61900001ea80] warning: first frame is no keyframe
-ASAN:DEADLYSIGNAL
-=================================================================
-==26790==ERROR: AddressSanitizer: SEGV on unknown address 0x7ff584ddb77f (pc 
-0x7ff5910cdeee bp 0x7ffdc464d7f0 sp 0x7ffdc464d780 T0)
-    #0 0x7ff5910cdeed in put_no_rnd_pixels8_xy2_mmx /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5
-    #1 0x7ff590209de0 in hpel_motion /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:224:5
-    #2 0x7ff590209de0 in apply_8x8 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:798
-    #3 0x7ff590209de0 in mpv_motion_internal /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:877
-    #4 0x7ff590209de0 in ff_mpv_motion /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo_motion.c:981
-    #5 0x7ff59013659b in mpv_decode_mb_internal /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2223:21
-    #6 0x7ff59013659b in ff_mpv_decode_mb /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/mpegvideo.c:2358
-    #7 0x7ff58f048c95 in decode_slice /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:273:13
-    #8 0x7ff58f0442cd in ff_h263_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/h263dec.c:575:11
-    #9 0x7ff5909cf906 in avcodec_decode_video2 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1600:19
-    #10 0x5647eb in decode_video /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:1259:11
-    #11 0x5647eb in process_input_packet /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:1398
-    #12 0x550e63 in process_input /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2440:11
-    #13 0x550e63 in transcode /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2488
-    #14 0x550e63 in main /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2647
-    #15 0x7ff58cd6461f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #16 0x41d098 in _init (/usr/bin/avconv+0x41d098)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/x86/rnd_template.c:37:5 in 
-put_no_rnd_pixels8_xy2_mmx
-==26790==ABORTING
-
-Affected version:
-11.7
-
-Fixed version:
-N/A
-
-Commit fix:
-https://git.libav.org/?p=libav.git;a=commit;h=136f55207521f0b03194ef5b55ba70f1635d6aee
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-15: bug discovered
-2016-08-16: bug reported to upstream
-2016-09-16: upstream released a patch
-2016-09-17: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was reported F4B3CD@...RLAB on 2016-09-12 via libav-security while it 
-was already public since 2016-08-15 on the upstream bugtracker.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/17/libav-null-pointer-dereference-in-put_no_rnd_pixels8_xy2_mmx-rnd_template-c/
-
+Thank you for your great effort in looking out for us and letting us 
+know. Most appreciated.
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+
+Yannick Warnier
+Project leader
+Chamilo
+
+
+Le 26/12/16 à 12:57, Michael Hess a écrit :
+> The Drupal Security team is going to release a PSA on this topic, we
+> don't normally do it, but given the holiday we will issue PSA-004, in
+> about 30 min.
+>
+> The text is below.
+>
+> Thanks,
+> Michael on behalf of the Drupal Security Team.
+>
+>
+>
+> Posted by Drupal Security Team on December 26, 2016 at 12:50pm
+>
+> Advisory ID: DRUPAL-SA-PSA-2016-004
+> Project: PHPMailer (third-party library)
+> Version: 7.x, 8.x
+> Date: 2016-December-26
+> Security risk: 23/25 (Highly Critical)
+> AC:None/A:User/CI:All/II:All/E:Exploit/TD:All
+> Vulnerability: Arbitrary PHP code execution
+>
+> Description
+>
+> The PHPMailer and SMTP modules (and maybe others) add support for
+> sending e-mails using the 3rd party PHPMailer library.
+>
+> In general the Drupal project does not create advisories for 3rd party
+> libraries. Drupal site maintainers should pay attention to the
+> notifications provided by those 3rd party libraries as outlined in
+> PSA-2011-002 - External libraries and plugins. However, given the
+> extreme criticality of this issue and the timing of its release we are
+> issuing a Public Service Announcement to alert potentially affected
+> Drupal site maintainers.
+>
+> CVE identifier(s) issued
+>
+> CVE-2016-10033
+>
+> Versions affected
+>
+> All versions of the external PHPMailer library < 5.2.18.
+>
+> Drupal core is not affected. If you do not use the contributed
+> PHPMailer third party library, there is nothing you need to do.
+>
+> Solution
+>
+> Upgrade to the newest version of the phpmailler library.
+> https://github.com/PHPMailer/PHPMailer
+>
+> Reported by
+>
+> Dawid Golunski
+>
+> Contact and More Information
+>
+> The Drupal security team can be reached at security at drupal.org or
+> via the contact form at https://www.drupal.org/contact.
+>
+> Learn more about the Drupal Security team and their policies, writing
+> secure code for Drupal, andsecuring your site.
+>
+> Follow the Drupal Security Team on Twitter at https://twitter.com/drupalsecurity
+>
+>
+>
+> On Mon, Dec 26, 2016 at 9:55 AM, Peter Bex <peter@...e-magic.net> wrote:
+>> On Mon, Dec 26, 2016 at 03:46:50PM +0100, Hanno Böck wrote:
+>>> Hi,
+>>>
+>>> Given I had plenty of time on the train to 33c3 I did a quick
+>>> lookaround on what contains PHPMailer. As the details of the vuln
+>>> aren't clear yet this doesn't necessarily mean they're vulnerable, just
+>>> that they ship the affected code.
+>>
+>> It looks like the vulnerability is due to a missing escaping of shell
+>> arguments in the sender's e-mail address.  This commit seems to be
+>> the one that fixes the bug:
+>> https://github.com/PHPMailer/PHPMailer/commit/4835657cd639fbd09afd33307cef164edf807cdc#diff-ace81e501931d8763b49f2410cf3094dR1449
+>>
+>> So it depends on whether a web form allows one to control the "from"
+>> mail address or not.
+>>
+>>> Drupal doesn't contain PHPMailer, although mentioned in the advisory.
+>>> But there are probably plugins and extensions using it. I also saw it
+>>> used in some wordpress themes.
+>>
+>> I noticed this Drupal module: https://www.drupal.org/project/phpmailer
+>> which has some sort of integration with the widely used mimemail module.
+>> The linked module http://drupal.org/project/smtp also uses PHPMailer.
+>> There are undoubtedly more modules that do.
+>>
+>> The LCMS system Chamilo also uses PHPMailer for sending mails internally.
+>>
+>> Cheers,
+>> Peter Bex
+>>
+>> --
+>> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
+>> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+>
