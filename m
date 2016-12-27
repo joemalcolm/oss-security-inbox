@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["844" "Friday" "22" "January" "2021" "13:42:27" "+0530" "P J P" "ppandit@redhat.com" "<so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>" "23" "[oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" nil nil nil "1" "2021012208:12:27" "[oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" (number mark "U       ppandit@redh Jan 22   23/844   " thread-indent "\"[oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2124" "Tuesday" "27" "December" "2016" "20:00:01" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20161227190001.efhubtt3lsk33qyq@jwilk.net>" "51" "[oss-security] Re: tqdm: insecure use of git" nil nil nil "12" "2016122719:00:01" "[oss-security] Re: tqdm: insecure use of git" (number mark "U       jwilk@jwilk. Dec 27   51/2124  " thread-indent "\"[oss-security] Re: tqdm: insecure use of git\"\n") "<c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>" ("<20161225204743.vflt7rkcu55bqqgt@jwilk.net>" "<c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17676 invoked by uid 550); 22 Jan 2021 08:12:59 -0000
+Received: (qmail 1424 invoked by uid 550); 27 Dec 2016 19:00:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17655 invoked from network); 22 Jan 2021 08:12:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1611303167;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=qU+7awOs28PDM/okHPHF3GKmHbyuhPTscan6n3xhK8w=;
-	b=iDH3D0CeqPlY2xDqgSwTpiW6Ei7mCsqwTK1jK0W6kkzb3NIyaurtqz1cB8NPhsMDt9Tych
-	mP8F0XraYpnrOHncE3ZegQcWB2ylZptIHjbg85C99LfMtMk1/hubIdUNBdjMzz8plD6Wp1
-	RwjMZ3hbffNxF/TBi4Lg0aZFEjhVC3w=
-X-MC-Unique: WEW0sB0iPmC0r_D2_Hwlxw-1
-Date: Fri, 22 Jan 2021 13:42:27 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-To: oss security list <oss-security@lists.openwall.com>
-cc: Alex Xu <alex@alxu.ca>, Stefan Hajnoczi <shajnocz@redhat.com>
-Message-ID: <so4o1n2-r92q-8sn6-829r-qns5o0qo873@erqung.pbz>
+Received: (qmail 1389 invoked from network); 27 Dec 2016 19:00:19 -0000
+Date: Tue, 27 Dec 2016 20:00:01 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20161227190001.efhubtt3lsk33qyq@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20161225204743.vflt7rkcu55bqqgt@jwilk.net>
+ <c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] CVE-2020-35517 QEMU: virtiofsd: potential privileged host device
- access from guest
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <c057cd5bc2774a72a39e851772c10aed@imshyb02.MITRE.ORG>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-Ovh-Tracer-Id: 13418475092906989478
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeelgedrtddtgddutddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
+Subject: [oss-security] Re: tqdm: insecure use of git
 
-   Hello,
+>Can you clarify the threat model for this? Our understanding is that 
+>.git/config is not really a part of a repository that is controlled by a 
+>remote party, e.g., see the second paragraph of the 
+>https://git-blame.blogspot.com/2014/12/git-1856-195-205-214-and-221-and.html 
+>post.
 
-A potential host privilege escalation issue was found in the virtio-fs shared 
-file system daemon (virtiofsd) of the QEMU. Virtio-fs daemon shares host 
-directory tree with a guest VM. The said privilege escalation scenario may 
-occur if a privileged guest user was to create device special file in the 
-shared directory and use it to r/w access host devices. A privileged guest 
-user may use this flaw to arbitrarily access (r/w) host files resulting in DoS 
-scenario or may potentially escalate privileges on the host.
+Right; the malicious git repository would have to be created by other means 
+than "git clone" alone.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-01/msg05461.html
+The attack scenario I had in mind is:
 
-* This issue was reported by Alex Xu (CC'd).
+Alice and Mallory are local users on the same machine.
+Mallory creates world-readable /tmp/.git such that running "git log" against 
+this repository compromises the user's account.
+Alice chdirs to /tmp (or maybe even to a subdirectory of /tmp accessible only 
+to her), and runs a command that uses the tqdm module under the hood. tqdm 
+executes "git log", which executes Mallory's code.
 
-* 'CVE-2020-35517' assigned by Red Hat Inc.
+>Is either (or both) of these a valid interpretation of your report?
+>
+>1. You are suggesting that there is a security problem in git because the 
+>risks of an attacker-controlled config file are not documented carefully 
+>enough. In other words, you want documentation such as 
+>https://www.kernel.org/pub/software/scm/git/docs/git-config.html to tell the 
+>user that they must not use a "repository specific configuration file" that is 
+>writable by an untrusted local user.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+No, I don't see this as a problem in git.
 
+>2. You are suggesting that there is a security problem in tqdm because the 
+>victim is not explicitly being told that they are executing a git command, and 
+>thus they do not realize that there is a need to verify that they have a safe 
+>cwd before proceeding.
+
+Yes.
+
+>A. Anyone planning to explicitly enter "git log" from a shell prompt is 
+>responsible for first verifying that the cwd is safe. It is a known property 
+>of git that the cwd is critical to security.
+
+Yes.
+
+>B. No third-party product should ever be executing "git log" in an unexpected 
+>context. Either the user must somehow be aware that a "git log" may be 
+>executed, or else the product must somehow force the use of a safe local 
+>directory. Otherwise, a CVE is needed for each such product.
+
+Yes.
+
+-- 
+Jakub Wilk
