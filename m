@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/11/1
-Message-ID: <C6CF5360-68D8-4FFF-864A-D777F1A9740E@idrix.fr>
-Date: Mon, 11 Jan 2016 00:43:00 +0000
-From: VeraCrypt Team <veracrypt@...ix.fr>
-To: oss-security@...ts.openwall.com,cve-assign@...re.org
-Subject: CVE-2016-1281: TrueCrypt and VeraCrypt Windows installers allow arbitrary code execution with elevation of privilege
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/5
+Message-ID: <CADSYzsun=xdfigzGDDjwJf8TKZ73jb8L+jnntP3yQoZRZ--SWA@mail.gmail.com>
+Date: Tue, 27 Dec 2016 09:45:48 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: PHPMailer < 5.2.18 Remote Code Execution [updated advisory] [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+PHPMailer < 5.2.18 Remote Code Execution
+CVE-2016-10033
 
-Hi,
+Attaching an updated version of the advisory with more details + simple PoC.
 
-The Windows installers of TrueCrypt 7.1a (latest version) and its fork VeraCrypt 1.16 (latest version) are vulnerable to Dll Hijacking that allows arbitrary code execution with elevation of privilege.
-This vulnerability affects on all version of Windows.
+Still incomplete. There will be more updates/exploits soon at:
 
-More information can be found at: http://seclists.org/fulldisclosure/2016/Jan/22
+https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
 
-The patches applied to fix this issue in VeraCrypt are:
- - https://github.com/veracrypt/VeraCrypt/commit/5872be28a243acb3b5aafdf13248e07d30471893
- - https://github.com/veracrypt/VeraCrypt/commit/7a15ff2083d75cdfe343de154715442dce635492
+https://twitter.com/dawid_golunski
 
-The fix has been included in VeraCrypt 1.17-BETA (Build 15) which is available at: https://veracrypt.codeplex.com/releases/view/619351.
-
-Many thanks to Stefan Kanthak (http://home.arcor.de/skanthak) for reporting this issue and for his help in verifying the correctness of the fix.
-
+-- 
 Regards,
-- --
-Mounir IDRASSI
-https://veracrypt.codeplex.com
-https://www.idrix.fr
------BEGIN PGP SIGNATURE-----
-Version: APG v1.1.1
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
 
-iQJBBAEBCgArBQJWkvqUJBxWZXJhQ3J5cHQgVGVhbSA8dmVyYWNyeXB0QGlkcml4
-LmZyPgAKCRDrVZx8VN3Tk6yKEAC55GJk9X0hanR7sOwUjLBDoH7tbeGrQhSq0FkQ
-qV9Tws0EnXSvRhCbMCgZcbm/T6x6fcRBOVuUUv5QGWZoRX0QISRnNASbYA0LM82v
-QJ6g11uW0BEBdQ/VK7Gb5l8g3c6cDGT4zvJc8dduqK42Ri+Thl+uB3i8mdDDfNS7
-BJQdvULXZsurqDFZthsQIuHPvyH5EfJkFAJ4Cqc6f/uWDQWd1o/KcMK4dd2VAc0S
-cEEGMhcYUJDFepPcYzRG9RW74bS7zH7bPcA3WnBEEy2cVuLg5BAolLBFL8hSdfDz
-jYsj8B/DHdUP66I0zoMh1Cw9kugYSr1W2CUNKA2YeKb8D41HfdjzpRw9WIf5o/Fb
-ldnvpojwj5g5e4Pn46D+YUlrWmUWqcWaYR962e+cN8pS+jflBBo8VzYKjKn8UaHK
-8tq+86t6y6tqYSHLiD1SgCyjf+Bs9Vr4koL4bvT+/AMGAvKrj0bv/lfQHGhPrerX
-SigYMWoSJ/v1LmKZWBM6YWfOITEPCSSn/Uycr1tAwNsYhcirDgOi/SLel4l0le/2
-OmOkmxOQHzK7usROHaDL5s6P/odtlkjyMTnr4SQ6PRRalLL8AcabOaZIm+5CVkA9
-FrV6/gsYpIW8Oj1lAmDt6Z3OQFyaKxc20YJ+DaK+yOPEomkLzRArMQd0GWvoKhEL
-+wSLGw==
-=uVgl
------END PGP SIGNATURE-----
-
+View attachment "PHPMailer-Exploit.txt" of type "text/plain" (10207 bytes)
