@@ -1,55 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/16/2
-Message-ID: <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
-Date: Fri, 16 Dec 2016 00:33:41 -0500
-From: <cve-assign@...re.org>
-To: <hs@...littermann.de>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request - Exim 4.69-4.87 - disclosure of private information
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/3
+Message-ID: <CANNt_rYFXozkdBu9Euph5ER_b8fEnnGhoT9Z95fod4=rRLRG_Q@mail.gmail.com>
+Date: Mon, 26 Dec 2016 20:32:57 -0500
+From: Michael Hess <mlhess@...ch.edu>
+To: oss-security@...ts.openwall.com
+Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://github.com/opsxcq/exploit-CVE-2016-10033
 
-> Heiko Schlittermann              - Exim developer
-> https://bugs.exim.org/show_bug.cgi?id=1996
-> Versions:   4.69 -> 4.87
-> If several conditions are met, Exim leaks private information to
-> a remote attacker.
+FYI,
 
-Our guess is that a vendor's disclosure of an impact, product
-name, and affected versions means that this can be interpreted
-as a public security issue.
+Michael
 
-Use CVE-2016-9963.
-
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
-"List Content Guidelines ... Any security issues that you post to
-oss-security should be either already public or to be made public by
-your posting." It is uncommon to use oss-security as a CVE request
-channel when the amount of public information is minimal. (For other
-options, see the https://cveform.mitre.org and
-https://cve.mitre.org/cve/data_sources_product_coverage.html pages.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYU3xCAAoJEHb/MwWLVhi2qBcP/jPSJbi/fUupYnmT0UOE6bCl
-dcqr+7WdI4cuyBOtZiKtJbB5JsaPhuJlY2j+a1Qj9j/cPr03QjNcFuhX66hLFcvJ
-I7dJtvvSiLFZ49Ozr5r3HJi6FTmPbOaqRYgAZjcL3sMrn45al0dBY19NWUMZIpym
-NtSgkMEhnnABzOsyM3yMEircofLnZv9r3KPYkB1bKt4H3Zgo3/6j6dHZRd5ON+iT
-LN1d0fXLFUZABeanmWi1ccFlm83J0oaTFnU1U7MLuJtDaYxTSN8vYUpiPSVkctDL
-EFdNJokCOfQcn67wtgjW3871EuRqWanYptBgQuQmq4j51i0MKktxQnRzom8qNnKz
-6faWLL6xIxgRsIBM0hVJBjWYyg6SAGb/V5i3b+tAJhyCxse+PHfXg4WHofQip9BN
-ZoM8UcQDhDn01TLHaTvsd5H3pucxlk0jdDoum9CWcZBOfcc5NUnKkYuYntJDQ/rR
-Us+5Aaw8X+B8ZPE47NEwX7hAXHU5PzHU48fg+j6x3yYl3N9nwyhVsSbSxIQjjRd6
-iqAIMXGQGJ2KMZluEBjkhNNGAYSfXrLxi8rx6x0qj4y7RLBIp9B9M4eH5f3H/to4
-4BtIzUA5ZYdP20YE8VtGyRFd2aOGUMFf7BuoPgXgDXzflxGLMs4tmLNeTxxpyhMB
-ooGshm7DABkZ59MHc1ww
-=Q/MO
------END PGP SIGNATURE-----
+On Mon, Dec 26, 2016 at 7:10 PM, Tracy Reed <treed@...raviolet.org> wrote:
+> Note that confining the http process using SELinux or similar MAC system
+> can go a long way to constraining and limiting the damage of inevitable
+> vulnerabilities such as this. Particularly since this is command
+> injection which is precisely what SELinux is good at limiting (as
+> opposed to SQL injection).
+>
+> My shop has a policy that SELinux will be enabled on all web
+> applications and it has already saved us a few times despite being very
+> good at getting things patched up promptly.
+>
+> On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
+>> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+>>
+>> Severity: CRITICAL
+>>
+>> Discovered by:
+>> Dawid Golunski (@dawid_golunski)
+>> https://legalhackers.com
+>>
+>>
+>> PHPMailer
+>> "Probably the world's most popular code for sending email from PHP!
+>> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
+>> Joomla! and many more"
+>>
+>> Desc:
+>> An independent research uncovered a critical vulnerability in PHPMailer that
+>> could potentially be used by (unauthenticated) remote attackers to achieve
+>> remote arbitrary code execution in the context of the web server user and
+>> remotely compromise the target web application.
+>> To exploit the vulnerability an attacker could target common website
+>> components such as contact/feedback forms, registration forms, password
+>> email resets and others that send out emails with the help of a vulnerable
+>> version of the PHPMailer class.
+>>
+>>
+>> Patching:
+>> Responsibly disclosed to PHPMailer team.
+>> They've released a critical security release.
+>> If you are using an affected release update to the 5.2.18 security
+>> release as advised at:
+>> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
+>>
+>> Notes:
+>> I know this is a bad timing and a short notice (for everyone probably ;)
+>> I've spent most of my Christmas break working on this issue with
+>> affected vendors.
+>> This has been quite a rush as one of the vendors leaked excessive
+>> information on this vulnerability at one point which could aid
+>> potential attackers.
+>>
+>> I've released a limited advisory at the link below:
+>>
+>> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+>>
+>> This is to give people a chance to immediately patch or at least be
+>> aware of the issue before we get closer to a working day/end of
+>> holiday for affected users to act on this issue.
+>>
+>> I'm planning to release the full advisory and a PoC exploit shortly so
+>> that everyone is on the same page.
+>>
+>> Upcoming video PoC:
+>>
+>> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
+>>
+>>
+>> For updates follow:
+>>
+>> https://twitter.com/dawid_golunski
+>>
+>> I'll also send another email to the list once it is published.
+>>
+>> For now,
+>> Patch it now before someone else patches it for you (through a reverse shell ;)
+>>
+>> --
+>> Regards,
+>> Dawid Golunski
+>> https://legalhackers.com
+>> t: @dawid_golunski
+>
+> --
+> Tracy Reed
