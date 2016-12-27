@@ -1,48 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/6
-Message-Id: <20160921134903.ED6E23AE00B@smtpvbsrv1.mitre.org>
-Date: Wed, 21 Sep 2016 09:49:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libav: NULL pointer dereference in ff_put_pixels8_xy2_mmx (rnd_template.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/1
+Message-ID: <20161227001009.GS20382@tracyreed.org>
+Date: Mon, 26 Dec 2016 16:10:09 -0800
+From: Tracy Reed <treed@...raviolet.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Note that confining the http process using SELinux or similar MAC system
+can go a long way to constraining and limiting the damage of inevitable
+vulnerabilities such as this. Particularly since this is command
+injection which is precisely what SELinux is good at limiting (as
+opposed to SQL injection).
 
-> https://blogs.gentoo.org/ago/2016/09/20/libav-null-pointer-dereference-in-ff_put_pixels8_xy2_mmx-rnd_template-c
-> 
-> A fuzzing with an mp3 file as input discovered a null pointer access in
-> ff_put_pixels8_xy2_mmx.
-> 
-> Input #0, h263, from '70.crashes':
-> 
-> AddressSanitizer: SEGV on unknown address
-> 
-> ff_put_pixels8_xy2_mmx libav-11.7/libavcodec/x86/rnd_template.c:37:5
+My shop has a policy that SELinux will be enabled on all web
+applications and it has already saved us a few times despite being very
+good at getting things patched up promptly. 
 
-Use CVE-2016-7477.
+On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
+> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+> 
+> Severity: CRITICAL
+> 
+> Discovered by:
+> Dawid Golunski (@dawid_golunski)
+> https://legalhackers.com
+> 
+> 
+> PHPMailer
+> "Probably the world's most popular code for sending email from PHP!
+> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
+> Joomla! and many more"
+> 
+> Desc:
+> An independent research uncovered a critical vulnerability in PHPMailer that
+> could potentially be used by (unauthenticated) remote attackers to achieve
+> remote arbitrary code execution in the context of the web server user and
+> remotely compromise the target web application.
+> To exploit the vulnerability an attacker could target common website
+> components such as contact/feedback forms, registration forms, password
+> email resets and others that send out emails with the help of a vulnerable
+> version of the PHPMailer class.
+> 
+> 
+> Patching:
+> Responsibly disclosed to PHPMailer team.
+> They've released a critical security release.
+> If you are using an affected release update to the 5.2.18 security
+> release as advised at:
+> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
+> 
+> Notes:
+> I know this is a bad timing and a short notice (for everyone probably ;)
+> I've spent most of my Christmas break working on this issue with
+> affected vendors.
+> This has been quite a rush as one of the vendors leaked excessive
+> information on this vulnerability at one point which could aid
+> potential attackers.
+> 
+> I've released a limited advisory at the link below:
+> 
+> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+> 
+> This is to give people a chance to immediately patch or at least be
+> aware of the issue before we get closer to a working day/end of
+> holiday for affected users to act on this issue.
+> 
+> I'm planning to release the full advisory and a PoC exploit shortly so
+> that everyone is on the same page.
+> 
+> Upcoming video PoC:
+> 
+> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
+> 
+> 
+> For updates follow:
+> 
+> https://twitter.com/dawid_golunski
+> 
+> I'll also send another email to the list once it is published.
+> 
+> For now,
+> Patch it now before someone else patches it for you (through a reverse shell ;)
+> 
+> -- 
+> Regards,
+> Dawid Golunski
+> https://legalhackers.com
+> t: @dawid_golunski
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Tracy Reed
 
-iQIcBAEBCAAGBQJX4o9eAAoJEHb/MwWLVhi2CuIP/jzcaY8iY1lPRtz5CJxLaohL
-pHTRPAeU2XQOLZfZiQWFX/eUSMT/n7e+hCeqpOkCSsF11zw7sy+DNBFLcVPKYllx
-76H/rEMi/MtBuWqRZlL1Qnd6v7zAA6pGWU7gQ4GkCuc9fhxc6RNHvG+YDcGDo/yq
-kNb7IhJo0lpA5085OkpfVc1JPq5JTCXGt6u1bJrj6HcV9xwbzoE4WQcamcDAdlPA
-xsUocCtcYwymWcZE4yybw64r4A+v9epsQ+ogJVwHmbdWYZIp7h9j8Po71O44Iu2h
-20GZYnHC0XKF+IV0kevBbvzHAC61bSWfRXAnRpwlJFeyf2YBjxjXnBqoG+N8mOUJ
-4VYm5JUvOp41sYaTSMlTwnZz9YnZRXKWPmk9EsuN0KGqo6b7sSqPEi/tz528Xx8Z
-t1A4eObAW4Rdl0xFpgYyf4Av/njeDpBmXFKSMi12WxH0YdLdoFDNxzuydmc9Uvht
-Hsy6sll58btw4TKGhu+6nJXTUUL9fo/0rQy45aWfEvIHqjROJujbKD5WCFfZ1TnO
-siayvHWExhP/4STeJH2ieaK8ILvO+9KVyxAnmkq7D7r8pgLVpYLRA/lWxuO0z11c
-99Ut3P6fPoZy879rIZYDepmClHnlMxu+vFKZMOKPTyeCe/L14/dTokjhSY4Tn0Le
-oCjpCbIiqywaUOZu+8qZ
-=FID6
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
