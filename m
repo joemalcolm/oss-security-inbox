@@ -1,30 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/14
-Message-ID: <20161005193331.07a56d5f@pc1>
-Date: Wed, 5 Oct 2016 19:33:31 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/27/7
+Message-ID: <CADSYzst2mG3vRMWdXnCiHd8GLMB2Ttw-MAua2e26G1CQS5ayPw@mail.gmail.com>
+Date: Tue, 27 Dec 2016 13:08:52 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+Subject: Re: PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 5 Oct 2016 12:24:46 -0500 (CDT)
-Bob Friesenhahn <bfriesen@...ple.dallas.tx.us> wrote:
+I attached an updated advisory in a new thread.
 
-> There is only one open-sourced Postscript interpreter (Ghostscript) 
-> that I am aware of.
+For anyone looking for it on this thread, the latest version is at:
 
-That's unfortunate.
+http://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
 
-> There are perhaps two open-sourced PDF interpreters available 
-> (Ghostscript and derivatives of 'xpdf' like 'poppler').
+On Mon, Dec 26, 2016 at 10:10 PM, Tracy Reed <treed@...raviolet.org> wrote:
+> Note that confining the http process using SELinux or similar MAC system
+> can go a long way to constraining and limiting the damage of inevitable
+> vulnerabilities such as this. Particularly since this is command
+> injection which is precisely what SELinux is good at limiting (as
+> opposed to SQL injection).
+>
+> My shop has a policy that SELinux will be enabled on all web
+> applications and it has already saved us a few times despite being very
+> good at getting things patched up promptly.
+>
+> On Sun, Dec 25, 2016 at 06:21:07PM PST, Dawid Golunski spake thusly:
+>> PHPMailer < 5.2.18 Remote Code Execution [CVE-2016-10033]
+>>
+>> Severity: CRITICAL
+>>
+>> Discovered by:
+>> Dawid Golunski (@dawid_golunski)
+>> https://legalhackers.com
+>>
+>>
+>> PHPMailer
+>> "Probably the world's most popular code for sending email from PHP!
+>> Used by many open-source projects: WordPress, Drupal, 1CRM, SugarCRM, Yii,
+>> Joomla! and many more"
+>>
+>> Desc:
+>> An independent research uncovered a critical vulnerability in PHPMailer that
+>> could potentially be used by (unauthenticated) remote attackers to achieve
+>> remote arbitrary code execution in the context of the web server user and
+>> remotely compromise the target web application.
+>> To exploit the vulnerability an attacker could target common website
+>> components such as contact/feedback forms, registration forms, password
+>> email resets and others that send out emails with the help of a vulnerable
+>> version of the PHPMailer class.
+>>
+>>
+>> Patching:
+>> Responsibly disclosed to PHPMailer team.
+>> They've released a critical security release.
+>> If you are using an affected release update to the 5.2.18 security
+>> release as advised at:
+>> https://github.com/PHPMailer/PHPMailer/blob/master/changelog.md
+>>
+>> Notes:
+>> I know this is a bad timing and a short notice (for everyone probably ;)
+>> I've spent most of my Christmas break working on this issue with
+>> affected vendors.
+>> This has been quite a rush as one of the vendors leaked excessive
+>> information on this vulnerability at one point which could aid
+>> potential attackers.
+>>
+>> I've released a limited advisory at the link below:
+>>
+>> https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+>>
+>> This is to give people a chance to immediately patch or at least be
+>> aware of the issue before we get closer to a working day/end of
+>> holiday for affected users to act on this issue.
+>>
+>> I'm planning to release the full advisory and a PoC exploit shortly so
+>> that everyone is on the same page.
+>>
+>> Upcoming video PoC:
+>>
+>> https://legalhackers.com/videos/PHPMailer-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10033-PoC.html
+>>
+>>
+>> For updates follow:
+>>
+>> https://twitter.com/dawid_golunski
+>>
+>> I'll also send another email to the list once it is published.
+>>
+>> For now,
+>> Patch it now before someone else patches it for you (through a reverse shell ;)
+>>
+>> --
+>> Regards,
+>> Dawid Golunski
+>> https://legalhackers.com
+>> t: @dawid_golunski
+>
+> --
+> Tracy Reed
 
-There's two more from the browser world: pdfium and PDF.js.
+
 
 -- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
