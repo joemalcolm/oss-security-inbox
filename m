@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/07/25/13
-Message-ID: <20160725133417.43b97c67@pc1>
-Date: Mon, 25 Jul 2016 13:34:17 -0400
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Use after free in my_login() function of DBD::mysql (Perl module)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/6
+Message-ID: <20161228165828.GA2779@openwall.com>
+Date: Wed, 28 Dec 2016 17:58:28 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Marcus Bointon <marcus@...chromedia.co.uk>
+Subject: Re: PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
 Content-Type: text/plain; charset=utf-8
 
-https://blog.fuzzing-project.org/50-Use-after-free-in-my_login-function-of-DBDmysql-Perl-module.html
+On Wed, Dec 28, 2016 at 03:03:39AM -0200, Dawid Golunski wrote:
+> PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
+> (CVE-2016-10045) (Bypass for the CVE-2016-1033 patch)
 
-DBD::mysql versions 4.033 and earlier have a use after free bug in the
-my_login() function. DBD::mysql is a Perl module providing bindings to
-the mysql database. The issue was fixed in version 4.034.
+Marcus has just released 5.2.21 with a fix for CVE-2016-10045.  The fix
+stops using escapeshellarg()'s result, and instead sanity-checks the
+string's characters:
 
-This issue was discovered with Address Sanitizer.
++            // All other characters have a special meaning in at least one common shell, including = and +.
++            // Full stop (.) has a special meaning in cmd.exe, but its impact should be negligible here.
++            // Note that this does permit non-Latin alphanumeric characters based on the current locale.
++            if (!ctype_alnum($c) && strpos('@...', $c) === false) {
++                return false;
 
-https://github.com/perl5-dbi/DBD-mysql/pull/45
-Pull request / patch
+I think the use current locale is weird (an explicit check for
+[a-zA-Z0-9] would have been more appropriate), but overall hopefully
+this is a working fix now.
 
--- 
-Hanno Böck
-https://hboeck.de/
+I suggest also sanity-checking the string length, for good measure.
+Maybe in another update.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+> This was reported responsibly to the vendor & assigned a CVEID on the
+> 26th of December.
+> The vendor has been working on a new patch which would fix the problem but
+> not break the RFC too badly. The patch should be published very soon.
+> 
+> I'm releasing this as a 0day without the new patch available publicly
+> as a potential bypass was publicly discussed on oss-sec with Solar
+> Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
+> further would serve no purpose.
 
-Content of type "application/pgp-signature" skipped
+Yeah.  I did think for a moment before posting in here yesterday, but
+for a number of reasons chose to go ahead with the public discussion.
+
+Alexander
