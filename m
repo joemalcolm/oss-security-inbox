@@ -1,20 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/05/20
-Message-ID: <87twcq32sb.fsf@mid.deneb.enyo.de>
-Date: Wed, 05 Oct 2016 23:27:00 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - multiple ghostscript -dSAFER sandbox problems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/5
+Message-ID: <CAP3WMuR0Fztm3EMKT_-4+7Avo25Mf2TrYsXEqi9LOFzPAm0hJQ@mail.gmail.com>
+Date: Wed, 28 Dec 2016 11:47:11 +0000
+From: Oleksandr Rudyy <orudyy@...il.com>
+To: "users@...d.apache.org" <users@...d.apache.org>, "dev@...d.apache.org" <dev@...d.apache.org>,  "security@...che.org" <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [CVE-2016-8741] Apache Qpid Broker for Java - Information Leakage
 Content-Type: text/plain; charset=utf-8
 
-* Jakub Wilk:
+[CVE-2016-8741] Apache Qpid Broker for Java - Information Leakage
 
-> * Hanno Böck <hanno@...eck.de>, 2016-10-05, 19:33:
->>> There are perhaps two open-sourced PDF interpreters available
->>> (Ghostscript and derivatives of 'xpdf' like 'poppler').
->>There's two more from the browser world: pdfium and PDF.js.
->
-> There's also mupdf.
+Vendor: The Apache Software Foundation
 
-Do any of these have CUPS integration and can replace Ghostscript
-there?
+Versions Affected: Apache Qpid Broker for Java versions 6.0.1,
+                   6.0.2, 6.0.3, 6.0.4, 6.0.5, and 6.1.0
+
+Description:
+
+The Qpid Broker for Java can be configured to use different so
+called AuthenticationProviders to handle user authentication.
+
+Among the choices are the SCRAM-SHA-1 and SCRAM-SHA-256
+AuthenticationProvider types.
+
+It was discovered that these AuthenticationProviders prematurely
+terminate the SCRAM SASL negotiation if the provided user name
+does not exist thus allowing remote attacker to determine the
+existence of user accounts.
+
+The Vulnerability does not apply to AuthenticationProviders other
+than SCRAM-SHA-1 and SCRAM-SHA-256.
+
+Resolution:
+
+Users should upgrade the Qpid Broker for Java to version 6.0.6,
+6.1.1, or later (recommended).
+
+Mitigation:
+
+If upgrading is not possible, the vulnerability can be mitigated
+by using an AuthenticationProvider other than SCRAM-SHA-1 and
+SCRAM-SHA-256.
+
+References:
+
+https://issues.apache.org/jira/browse/QPID-7599
+
