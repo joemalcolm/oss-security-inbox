@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2528" "Wednesday" "6" "April" "2016" "16:54:36" "-0400" "Randy Barlow" "rbarlow@redhat.com" "<20160406205435.GA10611@mail.corp.redhat.com>" "65" "[oss-security] Pulp 2.8.2 release for CVE-2016-3095" nil nil nil "4" "2016040620:54:36" "[oss-security] Pulp 2.8.2 release for CVE-2016-3095" (number mark "U       rbarlow@redh Apr  6   65/2528  " thread-indent "\"[oss-security] Pulp 2.8.2 release for CVE-2016-3095\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1660" "Wednesday" "28" "December" "2016" "17:58:28" "+0100" "Solar Designer" "solar@openwall.com" "<20161228165828.GA2779@openwall.com>" "35" "Re: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)" nil nil nil "12" "2016122816:58:28" "[oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)" (number mark "U       solar@openwa Dec 28   35/1660  " thread-indent "\"Re: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)\"\n") "<CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>" ("<CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9753 invoked by uid 550); 6 Apr 2016 20:54:50 -0000
+Received: (qmail 3275 invoked by uid 550); 28 Dec 2016 17:04:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +12,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9735 invoked from network); 6 Apr 2016 20:54:49 -0000
-Date: Wed, 6 Apr 2016 16:54:36 -0400
-From: Randy Barlow <rbarlow@redhat.com>
-To: OSS Security <oss-security@lists.openwall.com>
-Message-ID: <20160406205435.GA10611@mail.corp.redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Nq2Wo0NMKNjxTN9z"
+Received: (qmail 32312 invoked from network); 28 Dec 2016 16:59:04 -0000
+Date: Wed, 28 Dec 2016 17:58:28 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Marcus Bointon <marcus@synchromedia.co.uk>
+Message-ID: <20161228165828.GA2779@openwall.com>
+References: <CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Subject: [oss-security] Pulp 2.8.2 release for CVE-2016-3095
+In-Reply-To: <CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
 
---Nq2Wo0NMKNjxTN9z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Dec 28, 2016 at 03:03:39AM -0200, Dawid Golunski wrote:
+> PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
+> (CVE-2016-10045) (Bypass for the CVE-2016-1033 patch)
 
-CVE-2016-3095 was discovered in Pulp's pulp-gen-ca-certificate script.
-This script generates the CA certificate that Pulp uses to sign client
-certificates during the /login call. The private key was created in a
-world-readable folder in /tmp, and was then moved to its final
-destination where a chmod operation would protect it. This created a
-brief window where a local attacker could read the CA key before it
-was put into use.
+Marcus has just released 5.2.21 with a fix for CVE-2016-10045.  The fix
+stops using escapeshellarg()'s result, and instead sanity-checks the
+string's characters:
 
-This script is run during the installation of Pulp by the RPM post
-script,
-and can also be run by users any time they wish to regenerate the CA
-certificate.
++            // All other characters have a special meaning in at least one common shell, including = and +.
++            // Full stop (.) has a special meaning in cmd.exe, but its impact should be negligible here.
++            // Note that this does permit non-Latin alphanumeric characters based on the current locale.
++            if (!ctype_alnum($c) && strpos('@_-.', $c) === false) {
++                return false;
 
-The fix was a single line adjustment that sets the mode on the folder
-in /tmp to be 0700 instead of 0755:
+I think the use current locale is weird (an explicit check for
+[a-zA-Z0-9] would have been more appropriate), but overall hopefully
+this is a working fix now.
 
-https://github.com/pulp/pulp/commit/
-9f969b94c4b4f310865455d36db207de6cffebca#diff-
-fc698b450b32a4d811f269e108ade790R33
+I suggest also sanity-checking the string length, for good measure.
+Maybe in another update.
 
-Users are encouraged to upgrade to the 2.8.2 release, and then re-
-run the pulp-gen-ca-certificate script to generate a new CA. It is
-advised to restart all Pulp processes (and httpd) after the new CA is in
-place. After this is done, any existing client certificates will be
-invalidated, so users will need to use pulp-admin login to generate
-new credentials.
+> This was reported responsibly to the vendor & assigned a CVEID on the
+> 26th of December.
+> The vendor has been working on a new patch which would fix the problem but
+> not break the RFC too badly. The patch should be published very soon.
+> 
+> I'm releasing this as a 0day without the new patch available publicly
+> as a potential bypass was publicly discussed on oss-sec with Solar
+> Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
+> further would serve no purpose.
 
-Users who do not use Pulp's client certificate authentication system
-are not affected.
+Yeah.  I did think for a moment before posting in here yesterday, but
+for a number of reasons chose to go ahead with the public discussion.
 
-Thanks to Adam Mari=C5=A1 for advising the Pulp team through the
-disclosure process, and to Sean Myers for a speedy code review and
-for performing the release process.
-
---=20
-Randy Barlow
-irc:   bowlofeggs
-
---Nq2Wo0NMKNjxTN9z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJXBXeLAAoJEIyFaKUJtmpiPJUP/1HRKW0CDWAkXH9ogWu3zYtH
-pIPRXdPO5YRaATzn75kSTHw1jfW6vMSyBdmg2q6JY2ekH5iznMsw+pl1eJqox+DT
-+gLO6iRPi+WhISasabCizOJ2EH9v7/Tl4vBhaBcth/ufEo/4Ss/r1H7pMnFI9GLp
-JoKG9h5CRCq5KvvvpNQI2h+vTgi9KmP8mvNwTJaSgTHZWUwWVgJez3nbTBAPC0Jz
-IHfbHSad5J1Hl9CzrnXFNScFHCPAjND5neBe3ObWEBTFXWjQxCrROwt/HmTNCOnj
-uxks5kTXf/Mryg2alKSCDnH78fVuPZvS49VLJK1UNwek8RMOTMggS1YnZBIdMge2
-X15UMJOeF1BwF60vkcUXD72yneEPPMaNNF1WDVTfcLPdo5iPUJEDB87kb3VUjCiV
-2AWowI/E1OsWu0uZq0YpaW0rv9VIjcjzShQwDpjGgHwDP3qebHMm6d7qg2nPEtH8
-Ivl11FnmdsDtnM3da7BOTPVqCg5dpIT8tHWUQenbsSn1ILr4SL7PWkPVm1TyJWuB
-XmD1x3Yp0dw9ZcqU4fHEKy5isblBCfjkDakDwn26GW3uEO0P0e8+4SNW98U65vMr
-QPhqkT5nypWE1InZLcOYSc1wQo7cjmT2yubYoihwF0oq0bkRc2gI1+atEezGuLIq
-sipB42k5Axin4Rdp71Rp
-=sQ9N
------END PGP SIGNATURE-----
-
---Nq2Wo0NMKNjxTN9z--
+Alexander
