@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5029" "Friday" "17" "February" "2017" "12:03:44" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsuT8+3N7181RX3-i-c4xyOjjNEPcBLBNTnkTx62hbuPMA@mail.gmail.com>" "131" "Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]" nil nil nil "2" "2017021714:03:44" "[oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]" (number mark "U       dawid@legalh Feb 17  131/5029  " thread-indent "\"Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]\"\n") "<20170217135245.5717fc91@redhat.com>" ("<CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>" "<20170217135245.5717fc91@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9950" "Wednesday" "28" "December" "2016" "03:03:39" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>" "189" "[oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)" nil nil nil "12" "2016122805:03:39" "[oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)" (number mark "U       dawid@legalh Dec 28  189/9950  " thread-indent "\"[oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7360 invoked by uid 550); 17 Feb 2017 14:03:57 -0000
+Received: (qmail 16000 invoked by uid 550); 28 Dec 2016 06:26:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,169 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7336 invoked from network); 17 Feb 2017 14:03:56 -0000
+Received: (qmail 20252 invoked from network); 28 Dec 2016 05:03:51 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Ow4IoWTJGK4DfFvxWWqSkB9yHAXNF9vRXkHVAGKTDuE=;
-        b=ZE9zgq0NlM0qQdRrmdRm56GQ2UyBDXW/TCPdhFD1wSelSvyB5gTdhQot9caShwdlMM
-         YvWSnKboxfIeYLdn3TDlnXp6xQnshxQh+Y3v1Ygb+SAiGrAE+4Tt2kx1ufk7dzezTprc
-         dLJ6DqlR4BO0T/dvN+cSrAaBIu5hZ5AcBkT/xLHUQ0HN2JSvgupToEgJ0+j+PGxqv5Ck
-         jzjR1fz/DRYPV0swu8G7BJw0kBOHAEHHD6e/8qvbNPKoAf1+CXhndQwq99bebJvnWqAz
-         FEaBf7UIYvfdWBqWhm7QsM/+yPFhc6CC7IHyxIi6x346sAb+ZlPA0wsUpGgGVJlsNj+9
-         u3RQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=CmY8jjWmC6JptOjXKnEfceTgMOFC2sR8YmERYxyHH8k=;
+        b=o3Wk/5hAs/vGciJinsgSTwxK97CrVzcIknJjO6FEqBTKL3D8EL6w1w4c/S9z4RhF6U
+         9xDafuj5lnLiwZ+QLjfKFQioaiqz7C+LzIvA3W+Uu47eHpWG1Q+6d9BXHfSN0KmChLSs
+         xPNxhgeseEcR1i/qaCe4NbujVFFYbPiZGTtbA2065SJ/bPTw6dBemiiKeTGd2Lw4vGtE
+         3fep6XUeHA0j0e8++m9RoNv+qGeOOcRRDpDebteALn/2XInWaJLKQf0pCXD2j8i/1TN0
+         rsO2iiQzh3o+6a0xU0tyeGG+Jx0K7qkqkdUOkzvCNctO5kvSU28w1jxhTXXYWUT8pf0i
+         Jl2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Ow4IoWTJGK4DfFvxWWqSkB9yHAXNF9vRXkHVAGKTDuE=;
-        b=e3A12INJ8jBS6ybNRBCJGbGHNUAeWBAnPxHGTGcUpT3eCYaANOoFqTtSi7AbCNkKFW
-         N6efyGpI7Qzd9cH5U92QEWxtEMk0hE9RIFh3CZ5zzmLsOKlO2JcfNV3fd15udTv2V7Oi
-         /dNaEH+1LycCHN7rRfu/IWaLMHrpF1mDRpdcE5/BSO1qGrWmffA53/ihHaewZ5vHs6KK
-         utMBw+hS7NnsTuASPbSh+OiVickFRqj2YrTgV9SSivOmwuzvOg+i2UGEqmsbHPiDgAmK
-         yKZOW2/k+PyqrdcciiQ1FG9g51+0NgNliNuJg9M2QzYcCDjGbluzTLfLz6JeqwQGyBRU
-         tv0Q==
-X-Gm-Message-State: AMke39lnRavyqmYM/paSRACtt+mDJtfZeZpjhIG2a+UPIQgtq/3BSEizdfNuDhfkffaKDZ/L39SHoIuEVeZHhw==
-X-Received: by 10.159.37.193 with SMTP id 59mr4023923uaf.9.1487340224404; Fri,
- 17 Feb 2017 06:03:44 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=CmY8jjWmC6JptOjXKnEfceTgMOFC2sR8YmERYxyHH8k=;
+        b=H3F5yQ428w8z+FU97zPgQncCIOyIJdZQ9J7w4nMIa8P1vuVmDwfPXk1P4gPI4l7M0K
+         jEcBtyeMHXQZYn0N1h8HUcsreK0PUHrGN8e+4ZKdMRiAdWM8DROrmEYuM7N0TGjydDrb
+         asssobsQmZdVi6OHBDOKHF9RGjFDFQelOt1gronHB6EXYNifCQCdMaB2BQhT11XpJxyW
+         YMsSKHqa2Sjw6sdoyxjANs+pF2J/m9acmbBveJNMv/IKp25QEaN88zwCKfA7rDWwfKS9
+         QPw76jqVx4H+0XwxgJjeIPe2tcvmHhvCoS/uAeN5NGKDWjR1IvFPUgTswIxK1jAkQX1i
+         xErg==
+X-Gm-Message-State: AIkVDXK+eC5rR8mULLEbGb5UnG6O84/KfSZGdc2hEFsUaZQTrBzfFLfaRls5u53r3RDqHwpmTcOTZo9HsLzxmw==
+X-Received: by 10.176.75.25 with SMTP id h25mr23512696uaf.106.1482901419635;
+ Tue, 27 Dec 2016 21:03:39 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170217135245.5717fc91@redhat.com>
-References: <CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>
- <20170217135245.5717fc91@redhat.com>
 From: Dawid Golunski <dawid@legalhackers.com>
-Date: Fri, 17 Feb 2017 12:03:44 -0200
-Message-ID: <CADSYzsuT8+3N7181RX3-i-c4xyOjjNEPcBLBNTnkTx62hbuPMA@mail.gmail.com>
-To: Tomas Hoger <thoger@redhat.com>
-Cc: oss-security@lists.openwall.com
+Date: Wed, 28 Dec 2016 03:03:39 -0200
+Message-ID: <CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/mixed; boundary=f403045e40645b27ac0544b0e420
+Subject: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
+ (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
+
+--f403045e40645b27ac0544b0e420
 Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege
- Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
 
-Hi Tomas,
+PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
+(CVE-2016-10045) (Bypass for the CVE-2016-1033 patch)
 
-Yes, I have reported the insufficient fixes to Oracle and related vendors.
+Discovered by Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
-I wanted to allow some more time for patching before making these public.
-I will make my advisories and exploits public soon.
+Desc:
 
-Thanks.
+I discovered that the current PHPMailer versions (< 5.2.20) were still
+vulnerable to RCE as it is possible to bypass the currently available
+patch.
+
+This was reported responsibly to the vendor & assigned a CVEID on the
+26th of December.
+The vendor has been working on a new patch which would fix the problem but
+not break the RFC too badly. The patch should be published very soon.
+
+I'm releasing this as a 0day without the new patch available publicly
+as a potential bypass was publicly discussed on oss-sec with Solar
+Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
+further would serve no purpose.
 
 
-On Fri, Feb 17, 2017 at 10:52 AM, Tomas Hoger <thoger@redhat.com> wrote:
-> On Mon, 14 Nov 2016 14:36:16 -0200 Dawid Golunski wrote:
->
->> Vulnerability: MySQL / MariaDB / PerconaDB - Root Privilege Escalation
->> CVE-2016-6664 / (Oracle)CVE-2016-5617
->
-> The original MySQL fix for this issue was quite incomplete and easy to
-> bypass.  It had the following problems:
->
-> - Symlink check was racy - it was easy to replace log file created by
->   touch by a symlink before chmod and chown was used.
->
-> - You could avoid the symlink check completely by directly setting
->   log-error to the path name of the file you want to corrupt, such as:
->
->   log-error = /etc/ld.so.preload
->
-> - Symlink check did not cover hardlinks (this is a variant of the
->   previous, sort of).
->
-> - Existing symlinks were used even if they were not chmoded / chowned
->   any more, so it was possible to corrupt files with myslqd_safe's log
->   messages.
->
-> I reported these problems to Oracle, and they assigned CVE-2017-3312
-> for the incomplete fix.  They were addressed in the following commit:
->
-> https://github.com/mysql/mysql-server/commit/1f93f4381b60e3a8012ba36a4dec920416073759
->
-> Note that the commit pre-dates Oct 2016 CPU, when Oracle first
-> mentioned CVE-2016-6664 / CVE-2016-5617 as fixed, but it was only
-> included in MySQL 5.5.54, 5.6.35, and 5.7.17 released mid-Dec 2016, and
-> hence listed in Jan 2017 CPU.  The fix also pre-dates my report.
->
-> Dawid, I assume you were aware of these problems and reported them
-> too.  You're acknowledged as a reporter of (at least) one of the issues
-> in the Jan 2017 CPU:
->
-> http://www.oracle.com/technetwork/security-advisory/cpujan2017-2881727.html
->
-> and also in Percona Server release notes:
->
-> https://www.percona.com/doc/percona-server/LATEST/release-notes/Percona-Server-5.7.17-11.html
->
->   mysqld_safe now limits the use of rm and chown to avoid privilege
->   escalation. chown can now be used only for /var/log directory. Bug
->   fixed #1660265. Thanks to Dawid Golunski (https://legalhackers.com).
->
-> Linked Percona bug is not public, but the above text matches MySQL
-> commit linked above.
->
-> As Oracle is refusing to publicly share any information about their
-> CVEs, can you, Dawid, provide information on what CVE or CVEs were
-> given to you by Oracle in response to your reports, and for what
-> issues?  If you've not received that information yet, would you mind
-> asking?  I suspect you may have some info to share on CVE-2017-3317 and
-> CVE-2017-3318.
->
->
-> Besides the above, I also reported the following issues.  CVEs below
-> were assigned by Oracle.
->
->
-> CVE-2017-3265 unsafe chmod/chown use in the init script
->
-> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L97
-> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L73
->
-> These may allow mysql -> root privilege escalation similar to
-> CVE-2016-6664.  Fixed in:
->
-> https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-5fccc3d0e109e8f9ad0653728bd1d975
->
->
-> CVE-2017-3291 was assigned to two independent issues
->
-> - unrestricted mysqld_safe's ledir
->
-> By setting ledir to say /tmp in my.cnf, you could make mysqld_safe
-> execute mysqld from there rather than some expected location
-> under /usr.  Besides mysql -> root escalation, this also could have
-> been used by non-mysql local users in combination with the
-> CVE-2016-6662 issue against MySQL versions that do not support
-> malloc-lib (e.g. MySQL 5.1).  Fixed in:
->
-> https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247ea
->
-> - insecure path use in mysqld_safe
->
-> This code tries to find my_print_defaults command:
->
-> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L466
->
-> It first tries relative to $MY_BASEDIR_VERSION, which could have been
-> set to $PWD:
->
-> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L402
->
-> If root ran mysqld_safe while their $PWD was /tmp, arbitrary code
-> controlled by some unprivileged local (not necessarily mysql) user
-> could have been executed.  This was fixed in:
->
-> https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247eaL397
->
->
-> There are few more related problems fixed in Jan 2017 CPU, but as noted
-> above, Oracle refuses to acknowledge mapping to CVEs publicly.
->
-> https://github.com/mysql/mysql-server/commit/76e9d7e5b30365e8b167e2070ee00f81cb115b8b
-> https://github.com/mysql/mysql-server/commit/7a5145e445ee802241957eb5290a3e65ea4da70c
->
-> --
-> Tomas Hoger / Red Hat Product Security
+Current advisory URL:
 
+https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10045-Vuln-Patch-Bypass.html
+
+More updates soon at:
+
+https://twitter.com/dawid_golunski
 
 
 -- 
@@ -182,3 +85,152 @@ Regards,
 Dawid Golunski
 https://legalhackers.com
 t: @dawid_golunski
+
+--f403045e40645b27ac0544b0e420
+Content-Type: text/plain; charset=US-ASCII; name="PHPMailer-fix-bypass.txt"
+Content-Disposition: attachment; filename="PHPMailer-fix-bypass.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ix8h25kx0
+
+CgogICAgX18gICAgICAgICAgICAgICAgICAgICBfXyAgIF9fICBfXyAgICAg
+ICAgICAgX18gICAgICAgICAgICAgICAgIAogICAvIC8gICBfX18gIF9fX18g
+X19fX18gXy8gLyAgLyAvIC8gL19fXyBfX19fX18vIC9fX19fXyAgX19fX19f
+X19fXwogIC8gLyAgIC8gXyBcLyBfXyBgLyBfXyBgLyAvICAvIC9fLyAvIF9f
+IGAvIF9fXy8gLy9fLyBfIFwvIF9fXy8gX19fLwogLyAvX19fLyAgX18vIC9f
+LyAvIC9fLyAvIC8gIC8gX18gIC8gL18vIC8gL19fLyAsPCAvICBfXy8gLyAg
+KF9fICApIAovX19fX18vXF9fXy9cX18sIC9cX18sXy9fLyAgL18vIC9fL1xf
+XyxfL1xfX18vXy98X3xcX19fL18vICAvX19fXy8gIAogICAgICAgICAgIC9f
+X19fLyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIAoKCgo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT0KLSBEaXNjb3ZlcmVkIGJ5OiBEYXdpZCBHb2x1bnNr
+aQotIGRhd2lkW2F0XWxlZ2FsaGFja2Vycy5jb20KLSBodHRwczovL2xlZ2Fs
+aGFja2Vycy5jb20KCi0gQ1ZFLTIwMTYtMTAwNDUKLSBSZWxlYXNlIGRhdGU6
+IDI3LjEyLjIwMTYKLSBSZXZpc2lvbiAxLjAKLSBTZXZlcml0eTogQ3JpdGlj
+YWwKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09CgoKSS4gVlVMTkVSQUJJTElUWQotLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tCgpQSFBNYWlsZXIgPCA1LjIuMjAgUmVtb3RlIENvZGUgRXhlY3V0aW9u
+IChQYXRjaCBCeXBhc3MpCgoKSUkuIEJBQ0tHUk9VTkQKLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQoKIlBIUE1haWxlciBjb250aW51ZXMgdG8gYmUgdGhl
+IHdvcmxkJ3MgbW9zdCBwb3B1bGFyIHRyYW5zcG9ydCBjbGFzcywgd2l0aCBh
+bgplc3RpbWF0ZWQgOSBtaWxsaW9uIHVzZXJzIHdvcmxkd2lkZS4gRG93bmxv
+YWRzIGNvbnRpbnVlIGF0IGEgc2lnbmlmaWNhbnQKcGFjZSBkYWlseS4iCgpo
+dHRwOi8vcGhwbWFpbGVyLndvcnh3YXJlLmNvbS8KCgoiUHJvYmFibHkgdGhl
+IHdvcmxkJ3MgbW9zdCBwb3B1bGFyIGNvZGUgZm9yIHNlbmRpbmcgZW1haWwg
+ZnJvbSBQSFAhClVzZWQgYnkgbWFueSBvcGVuLXNvdXJjZSBwcm9qZWN0czog
+V29yZFByZXNzLCBEcnVwYWwsIDFDUk0sIFN1Z2FyQ1JNLCBZaWksCkpvb21s
+YSEgYW5kIG1hbnkgbW9yZSIKCmh0dHBzOi8vZ2l0aHViLmNvbS9QSFBNYWls
+ZXIvUEhQTWFpbGVyCgoKSUlJLiBJTlRST0RVQ1RJT04KLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQoKQW4gaW5kZXBlbmRlbnQgcmVzZWFyY2ggdW5jb3Zl
+cmVkIGEgY3JpdGljYWwgdnVsbmVyYWJpbGl0eSBpbiBQSFBNYWlsZXIgdGhh
+dCAKY291bGQgcG90ZW50aWFsbHkgYmUgdXNlZCBieSAodW5hdXRoZW50aWNh
+dGVkKSByZW1vdGUgYXR0YWNrZXJzIHRvIGFjaGlldmUgCnJlbW90ZSBhcmJp
+dHJhcnkgY29kZSBleGVjdXRpb24gaW4gdGhlIGNvbnRleHQgb2YgdGhlIHdl
+YiBzZXJ2ZXIgdXNlciBhbmQgCnJlbW90ZWx5IGNvbXByb21pc2UgdGhlIHRh
+cmdldCB3ZWIgYXBwbGljYXRpb24uCgpUbyBleHBsb2l0IHRoZSB2dWxuZXJh
+YmlsaXR5IGFuIGF0dGFja2VyIGNvdWxkIHRhcmdldCBjb21tb24gd2Vic2l0
+ZQpjb21wb25lbnRzIHN1Y2ggYXMgY29udGFjdC9mZWVkYmFjayBmb3Jtcywg
+cmVnaXN0cmF0aW9uIGZvcm1zLCBwYXNzd29yZAplbWFpbCByZXNldHMgYW5k
+IG90aGVycyB0aGF0IHNlbmQgb3V0IGVtYWlscyB3aXRoIHRoZSBoZWxwIG9m
+IGEgdnVsbmVyYWJsZQp2ZXJzaW9uIG9mIHRoZSBQSFBNYWlsZXIgY2xhc3Mu
+CgpUaGUgZmlyc3QgcGF0Y2ggb2YgdGhlIHZ1bG5lcmFiaWxpdHkgQ1ZFLTIw
+MTYtMTAwMzMgd2FzIGluY29tcGxldGUuClRoaXMgYWR2aXNvcnkgZGVtb25z
+dHJhdGVzIHRoZSBieXBhc3Mgb2YgdGhlIHBhdGNoLgoKSVYuIERFU0NSSVBU
+SU9OCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCgpUaGUgcGF0Y2ggZm9y
+IENWRS0yMDE2LTEwMDMzIHZ1bG5lcmFiaWxpdHkgZG9lcyBub3QgdGFrZSBp
+bnRvIGFjY291bnQKdGhlIGNsYXNoaW5nIG9mIHRoZSBlc2NhcGVzaGVsbGFy
+ZygpIGZ1bmN0aW9uIHdpdGggaW50ZXJuYWwgZXNjYXBpbmcKKGVzY2FwZXNo
+ZWxsY21kKCkgZnVuY3Rpb24pIG9mIG1haWwoKS4KCkFzIGEgcmVzdWx0IGl0
+IGlzIHBvc3NpYmxlIHRvIGluamVjdCBhbiBleHRyYSBxdW90ZSB0aGF0IGRv
+ZXMgbm90IGdldApwcm9wZXJseSBlc2NhcGVkIGFzIGRlbW9uc3RyYXRlZCBi
+eSB0aGUgUG9DIGJlbG93LgoKCgpWLiBQUk9PRiBPRiBDT05DRVBUIEVYUExP
+SVQKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKIyEvdXNyL2Jpbi9weXRo
+b24KCiNQSFBNYWlsZXJfUkNFX2V4cGxvaXQucGwKCmludHJvID0gIiIiClBI
+UE1haWxlciBSQ0UgUG9DIEV4cGxvaXRzCgpQSFBNYWlsZXIgPCA1LjIuMTgg
+UmVtb3RlIENvZGUgRXhlY3V0aW9uIFBvQyBFeHBsb2l0IChDVkUtMjAxNi0x
+MDAzMykKKwpQSFBNYWlsZXIgPCA1LjIuMjAgUmVtb3RlIENvZGUgRXhlY3V0
+aW9uIFBvQyBFeHBsb2l0IChDVkUtMjAxNi0xMDA0NSkKKHRoZSBieXBhc3Mg
+b2YgdGhlIGZpcnN0IHBhdGNoIGZvciBDVkUtMjAxNi0xMDAzMykKCkRpc2Nv
+dmVyZWQgYW5kIENvZGVkIGJ5OgoKIERhd2lkIEdvbHVuc2tpCiBAZGF3aWRf
+Z29sdW5za2kKIGh0dHBzOi8vbGVnYWxoYWNrZXJzLmNvbQoKIiIiCnVzYWdl
+ID0gIiIiClVzYWdlOgoKRnVsbCBBZHZpc29yeToKaHR0cHM6Ly9sZWdhbGhh
+Y2tlcnMuY29tL2Fkdmlzb3JpZXMvUEhQTWFpbGVyLUV4cGxvaXQtUmVtb3Rl
+LUNvZGUtRXhlYy1DVkUtMjAxNi0xMDAzMy1WdWxuLmh0bWwKCmh0dHBzOi8v
+bGVnYWxoYWNrZXJzLmNvbS9hZHZpc29yaWVzL1BIUE1haWxlci1FeHBsb2l0
+LVJlbW90ZS1Db2RlLUV4ZWMtQ1ZFLTIwMTYtMTAwNDUtVnVsbi1QYXRjaC1C
+eXBhc3MudHh0CgpQb0MgVmlkZW86Cmh0dHBzOi8vbGVnYWxoYWNrZXJzLmNv
+bS92aWRlb3MvUEhQTWFpbGVyLUV4cGxvaXQtUmVtb3RlLUNvZGUtRXhlYy1W
+dWxuLUNWRS0yMDE2LTEwMDMzLVBvQy5odG1sCgpEaXNjbGFpbWVyOgpGb3Ig
+dGVzdGluZyBwdXJwb3NlcyBvbmx5LiBEbyBubyBoYXJtLgoKIiIiCgppbXBv
+cnQgdGltZQppbXBvcnQgdXJsbGliCmltcG9ydCB1cmxsaWIyCmltcG9ydCBz
+b2NrZXQKaW1wb3J0IHN5cwoKUldfRElSID0gIi92YXIvd3d3L2h0bWwvdXBs
+b2FkcyIKCnVybCA9ICdodHRwOi8vVmljdGltV2ViU2VydmVyL2NvbnRhY3Rf
+Zm9ybS5waHAnICMgU2V0IGRlc3RpbmF0aW9uIFVSTCBoZXJlCgojIENob29z
+ZS91bmNvbW1lbnQgb25lIG9mIHRoZSBwYXlsb2FkczoKCiMgUEhQTWFpbGVy
+IDwgNS4yLjE4IFJlbW90ZSBDb2RlIEV4ZWN1dGlvbiBQb0MgRXhwbG9pdCAo
+Q1ZFLTIwMTYtMTAwMzMpCiNwYXlsb2FkID0gJyJhdHRhY2tlclxcIiAtb1Ev
+dG1wLyAtWCVzL3BocGNvZGUucGhwICBzb21lIkBlbWFpbC5jb20nICUgUldf
+RElSCgojIEJ5cGFzcyAvIFBIUE1haWxlciA8IDUuMi4yMCBSZW1vdGUgQ29k
+ZSBFeGVjdXRpb24gUG9DIEV4cGxvaXQgKENWRS0yMDE2LTEwMDQ1KQpwYXls
+b2FkID0gIlwiYXR0YWNrZXJcXCcgLW9RL3RtcC8gLVglcy9waHBjb2RlLnBo
+cCAgc29tZVwiQGVtYWlsLmNvbSIgJSBSV19ESVIKCiMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjCgojIFBIUCBjb2RlIHRvIGJlIHNh
+dmVkIGludG8gdGhlIGJhY2tkb29yIHBocCBmaWxlIG9uIHRoZSB0YXJnZXQg
+aW4gUldfRElSClJDRV9QSFBfQ09ERSA9ICI8P3BocCBwaHBpbmZvKCk7ID8+
+IgoKcG9zdF9maWVsZHMgPSB7J2FjdGlvbic6ICdzZW5kJywgJ25hbWUnOiAn
+SmFzIEZhc29sYScsICdlbWFpbCc6IHBheWxvYWQsICdtc2cnOiBSQ0VfUEhQ
+X0NPREV9CgojIEF0dGFjawpkYXRhID0gdXJsbGliLnVybGVuY29kZShwb3N0
+X2ZpZWxkcykKcmVxID0gdXJsbGliMi5SZXF1ZXN0KHVybCwgZGF0YSkKcmVz
+cG9uc2UgPSB1cmxsaWIyLnVybG9wZW4ocmVxKQp0aGVfcGFnZSA9IHJlc3Bv
+bnNlLnJlYWQoKQoKCgp+fn5+fn5+fn5+fgoKVGhlIHJlc2VhcmNoZXIgYWxz
+byBkZXZlbG9wZWQgYW4gVW5hdXRoZW50aWNhdGVkIFJDRSBleHBsb2l0IGZv
+ciBhIHBvcHVsYXIgCm9wZW4tc291cmNlIGFwcGxpY2F0aW9uIChkZXBsb3ll
+ZCBvbiB0aGUgSW50ZXJuZXQgb24gbW9yZSB0aGFuIGEgbWlsbGlvbiBzZXJ2
+ZXJzKQphcyBhIFBvQyBmb3IgcmVhbC13b3JsZCBleHBsb2l0YXRpb24uIEl0
+IG1pZ2h0IGJlIHB1Ymxpc2hlZCBhZnRlciB0aGUgdmVuZG9yIGhhcyAKZml4
+ZWQgdGhlIHZ1bG5lcmFiaWxpdGllcy4KClZpZGVvIFBvQzoKfn5+fn5+fn5+
+fn5+fgoKaHR0cHM6Ly9sZWdhbGhhY2tlcnMuY29tL3ZpZGVvcy9QSFBNYWls
+ZXItRXhwbG9pdC1SZW1vdGUtQ29kZS1FeGVjLVZ1bG4tQ1ZFLTIwMTYtMTAw
+MzMtUG9DLmh0bWwKCgpWSS4gQlVTSU5FU1MgSU1QQUNUCi0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0KCkEgc3VjY2Vzc2Z1bCBleHBsb2l0YXRpb24gY291
+bGQgbGV0IHJlbW90ZSBhdHRhY2tlcnMgdG8gZ2FpbiBhY2Nlc3MgdG8gCnRo
+ZSB0YXJnZXQgc2VydmVyIGluIHRoZSBjb250ZXh0IG9mIHRoZSB3ZWIgc2Vy
+dmVyIGFjY291bnQgd2hpY2ggY291bGQKbGVhZCB0byBhIGZ1bGwgY29tcHJv
+bWlzZSBvZiB0aGUgd2ViIGFwcGxpY2F0aW9uLgoKIApWSUkuIFNZU1RFTVMg
+QUZGRUNURUQKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKQWxsIGN1cnJl
+bnQgdmVyc2lvbnMgb2YgUEhQTWFpbGVyIDw1LjIuMjAgYXJlIGFmZmVjdGVk
+LgoKTm90ZSB0aGF0IGV4cGxvaXRhdGlvbiBpcyBub3QgbGltaXRlZCB0byBz
+eXN0ZW1zIHdpdGggU2VuZG1haWwgTVRBLgoKClZJSUkuIFNPTFVUSU9OCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KClRoZSB2ZW5kb3Igd2lsbCBpc3N1
+ZSB0aGUgbmV3IHZlcnNpb24gc2hvcnRseS4KCiAKSVguIFJFRkVSRU5DRVMK
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKaHR0cHM6Ly9sZWdhbGhhY2tl
+cnMuY29tCgpUaGlzIGFkdmlzb3J5OgpodHRwczovL2xlZ2FsaGFja2Vycy5j
+b20vYWR2aXNvcmllcy9QSFBNYWlsZXItRXhwbG9pdC1SZW1vdGUtQ29kZS1F
+eGVjLUNWRS0yMDE2LTEwMDQ1LVZ1bG4tUGF0Y2gtQnlwYXNzLmh0bWwKClZp
+ZGVvIFBvQzoKaHR0cHM6Ly9sZWdhbGhhY2tlcnMuY29tL3ZpZGVvcy9QSFBN
+YWlsZXItRXhwbG9pdC1SZW1vdGUtQ29kZS1FeGVjLVZ1bG4tQ1ZFLTIwMTYt
+MTAwMzMtUG9DLmh0bWwKCkV4cGxvaXQgY29kZToKU2ltcGxlIFBvQyBzaG93
+biBhYm92ZSBpcyBhdmFpbGFibGUgaGVyZToKaHR0cHM6Ly9sZWdhbGhhY2tl
+cnMuY29tL2V4cGxvaXRzL0NWRS0yMDE2LTEwMDQ1L1BIUE1haWxlcl9SQ0Vf
+ZXhwbG9pdC5wbAoKT3RoZXIgZXhwbG9pdHMgd2l0aCBvdGhlciBhdHRhY2sg
+dmVjdG9ycyB3aWxsIGJlIGRpc2Nsb3NlZCBhdCBhIGxhdGVyIGRhdGUgdG8g
+CmFsbG93IG1vcmUgdGltZSBmb3IgcGF0Y2hpbmcuCgpDVkUtMjAxNi0xMDA0
+NQpodHRwczovL2N2ZS5taXRyZS5vcmcvY2dpLWJpbi9jdmVuYW1lLmNnaT9u
+YW1lPUNWRS0yMDE2LTEwMDQ1CgpQSFBNYWlsZXIgLyBWZW5kb3Igc2VjdXJp
+dHkgdXBkYXRlcyAvIG5vdGljZXM6CgpodHRwczovL2dpdGh1Yi5jb20vUEhQ
+TWFpbGVyL1BIUE1haWxlci9ibG9iL21hc3Rlci9jaGFuZ2Vsb2cubWQKCmh0
+dHBzOi8vZ2l0aHViLmNvbS9QSFBNYWlsZXIvUEhQTWFpbGVyCgpodHRwczov
+L2dpdGh1Yi5jb20vUEhQTWFpbGVyL1BIUE1haWxlci9ibG9iL21hc3Rlci9T
+RUNVUklUWS5tZAoKClguIENSRURJVFMKLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLQoKVGhlIHZ1bG5lcmFiaWxpdHkgaGFzIGJlZW4gZGlzY292ZXJlZCBi
+eSBEYXdpZCBHb2x1bnNraQpkYXdpZCAoYXQpIGxlZ2FsaGFja2VycyAoZG90
+KSBjb20KCmh0dHBzOi8vbGVnYWxoYWNrZXJzLmNvbQogClhJLiBSRVZJU0lP
+TiBISVNUT1JZCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCjI3LjEyLjIw
+MTYgLSBBZHZpc29yeSByZWxlYXNlZAogCgpYSUkuIExFR0FMIE5PVElDRVMK
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKVGhlIGluZm9ybWF0aW9uIGNv
+bnRhaW5lZCB3aXRoaW4gdGhpcyBhZHZpc29yeSBpcyBzdXBwbGllZCAiYXMt
+aXMiIHdpdGgKbm8gd2FycmFudGllcyBvciBndWFyYW50ZWVzIG9mIGZpdG5l
+c3Mgb2YgdXNlIG9yIG90aGVyd2lzZS4gSSBhY2NlcHQgbm8KcmVzcG9uc2li
+aWxpdHkgZm9yIGFueSBkYW1hZ2UgY2F1c2VkIGJ5IHRoZSB1c2Ugb3IgbWlz
+dXNlIG9mIHRoaXMgaW5mb3JtYXRpb24uCgoKCgoKCg==
+
+--f403045e40645b27ac0544b0e420--
