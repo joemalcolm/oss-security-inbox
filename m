@@ -1,35 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/04/11/4
-Message-ID: <alpine.LFD.2.20.1604111754560.8367@wniryva>
-Date: Mon, 11 Apr 2016 17:57:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: "Bazhaniuk, Oleksandr" <oleksandr.bazhaniuk@...el.com>
-Subject: CVE request: Qemu: net: buffer overflow in stellaris_enet emulator
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/7
+Message-ID: <CADSYzst+JoCY41vHZeRGXLGGDmBxSjq2r9CHCDyi4y2JHEewjQ@mail.gmail.com>
+Date: Wed, 28 Dec 2016 16:57:28 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: SwiftMailer <= 5.4.5-DEV Remote Code Execution (CVE-2016-10074)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+SwiftMailer <= 5.4.5-DEV Remote Code Execution
+CVE-2016-10074
 
-Qemu emulator built with the Luminary Micro Stellaris Ethernet Controller is 
-vulnerable to a buffer overflow issue. It could occur while receiving network 
-packets in stellaris_enet_receive(), if the guest NIC is configured to accept 
-large(MTU) packets.
+Discovered by: Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
-A remote user/process could use this flaw to crash the Qemu process on a host, 
-resulting in DoS.
+Desc:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-04/msg01334.html
+An independent research uncovered a critical vulnerability in SwiftMailer that
+could potentially be used by (unauthenticated) remote attackers to achieve
+remote arbitrary code execution in the context of the web server user and
+remotely compromise the target web application.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1325884
+To exploit the vulnerability an attacker could target common website
+components such as contact/feedback forms, registration forms, password
+email resets and others that send out emails with the help of a vulnerable
+version of the SwiftMailer class.
 
-This issue was discovered by Oleksandr Bazhaniuk of Advanced Threat Research 
-team at Intel Inc.
+Despite the significant efforts in responsibly disclosing the vulnerability
+to the vendor (since 2nd December).
+The vulnerability remains unfixed as of 28 December.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+The full current advisory at:
+
+https://legalhackers.com/advisories/SwiftMailer-Exploit-Remote-Code-Exec-CVE-2016-10074-Vuln.html
+
+Copy attached to this msg.
+
+The Video PoC will be very similar to:
+http://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+
+The SwiftMailer PoC exploit:
+https://legalhackers.com/exploits/CVE-2016-10074/SwiftMailer_PoC_RCE_Exploit.txt
+
+Updates:
+https://twitter.com/dawid_golunski
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
+
+View attachment "SwiftMailer-Exploit.txt" of type "text/plain" (8973 bytes)
