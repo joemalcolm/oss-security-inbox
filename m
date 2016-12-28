@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/21/2
-Message-ID: <CAEiFw0UDwyLFxRK0PPVKVGA3+B112scA3M+sskZ6Q8-0K1vAuQ@mail.gmail.com>
-Date: Wed, 21 Sep 2016 08:09:27 +0800
-From: Carl Peng <felixk3y@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/28/4
+Message-ID: <CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>
+Date: Wed, 28 Dec 2016 03:03:39 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request：Exponent CMS 2.3.9 xss vulnerability in worldpay
+Subject: PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
 Content-Type: text/plain; charset=utf-8
 
-Hi, I reported the following Cross Site Scripting vulnerability to the
-ExponentCMS team on Sep 16, 2016:
-vulnerability:
-/external/worldpay/callback.php
-line 7-11:
-```
-<head>
-<meta http-equiv="refresh" content="2;url=<?php echo URL_FULL;
-?>cart/preprocess?transStatus=<?php echo $_POST["transStatus"];
-?>&transId=<?php echo $_POST["transId"]; ?>"> //xss
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<title></title>
-</head>
-```
-"transStatus", "transId" parameters are fail to sufficiently sanitize.
+PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit
+(CVE-2016-10045) (Bypass for the CVE-2016-1033 patch)
 
-Proof of concept:
-http://www.exponentcms.org/external/worldpay/callback.php
-And post:transStatus="/><script>alert(/xss/)</script>
+Discovered by Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
+
+Desc:
+
+I discovered that the current PHPMailer versions (< 5.2.20) were still
+vulnerable to RCE as it is possible to bypass the currently available
+patch.
+
+This was reported responsibly to the vendor & assigned a CVEID on the
+26th of December.
+The vendor has been working on a new patch which would fix the problem but
+not break the RFC too badly. The patch should be published very soon.
+
+I'm releasing this as a 0day without the new patch available publicly
+as a potential bypass was publicly discussed on oss-sec with Solar
+Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
+further would serve no purpose.
 
 
-And Now, Cross Site Scripting vulnerability have been fixed.
-https://exponentcms.lighthouseapp.com/projects/61783/changesets/5e4b749bff4314f2a22c7afef903c67ccb862caf
-https://github.com/exponentcms/exponent-cms/commit/5e4b749bff4314f2a22c7afef903c67ccb862caf
+Current advisory URL:
 
-This issue was reported by Peng Hua of silence.com.cn Inc. and I would like
-to request a CVE for this issue (if not done so).
+https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10045-Vuln-Patch-Bypass.html
 
-Thank you.
----------------------------------http://www.silence.com.cn
-penghua#silence.com.cn
-PKAV Team
+More updates soon at:
 
+https://twitter.com/dawid_golunski
+
+
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
+
+View attachment "PHPMailer-fix-bypass.txt" of type "text/plain" (6286 bytes)
