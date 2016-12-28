@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1455" "Tuesday" "13" "October" "2015" "01:42:52" "+0000" "Yusaku Sako" "yusaku@hortonworks.com" "<E067ECF6-3A2D-4FCF-B66B-93BA1C05DA8A@hortonworks.com>" "27" "[oss-security] [CVE-2015-3270] A non-administrative user can escalate themselves to have administrative privileges remotely" nil nil nil "10" "2015101301:42:52" "[oss-security] [CVE-2015-3270] A non-administrative user can escalate themselves to have administrative privileges remotely" (number mark "U       yusaku@horto Oct 13   27/1455  " thread-indent "\"[oss-security] [CVE-2015-3270] A non-administrative user can escalate themselves to have administrative privileges remotely\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3313" "Wednesday" "28" "December" "2016" "15:16:37" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<2fe4da2ab07f4995bf3b30fe5eab171a@imshyb02.MITRE.ORG>" "75" "[oss-security] Re: tqdm: insecure use of git" nil nil nil "12" "2016122820:16:37" "[oss-security] Re: tqdm: insecure use of git" (number mark "U       cve-assign@m Dec 28   75/3313  " thread-indent "\"[oss-security] Re: tqdm: insecure use of git\"\n") "<20161227190001.efhubtt3lsk33qyq@jwilk.net>" ("<20161227190001.efhubtt3lsk33qyq@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32456 invoked by uid 550); 13 Oct 2015 05:35:27 -0000
+Received: (qmail 17917 invoked by uid 550); 28 Dec 2016 20:16:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32490 invoked from network); 13 Oct 2015 01:43:06 -0000
+Received: (qmail 17891 invoked from network); 28 Dec 2016 20:16:49 -0000
+From: <cve-assign@mitre.org>
+To: <jwilk@jwilk.net>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20161227190001.efhubtt3lsk33qyq@jwilk.net>
+Message-ID: <2fe4da2ab07f4995bf3b30fe5eab171a@imshyb02.MITRE.ORG>
+Date: Wed, 28 Dec 2016 15:16:37 -0500
 MIME-Version: 1.0
-x-echoworx-msg-id: e5f60244-c18e-4825-907d-d4aa44c89398
-x-echoworx-emg-received: Mon, 12 Oct 2015 18:42:54.804 -0700
-x-echoworx-action: delivered
-From: Yusaku Sako <yusaku@hortonworks.com>
-To: Robert Levas <rlevas@hortonworks.com>, "user@ambari.apache.org"
-	<user@ambari.apache.org>, "dev@ambari.apache.org" <dev@ambari.apache.org>,
-	"security@apache.org" <security@apache.org>,
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>
-Thread-Topic: [CVE-2015-3270] A non-administrative user can escalate
- themselves to have administrative privileges remotely
-Thread-Index: AQHRBVh5Gb10+1UVp0qPXmuUOJ5psQ==
-Date: Tue, 13 Oct 2015 01:42:52 +0000
-Message-ID: <E067ECF6-3A2D-4FCF-B66B-93BA1C05DA8A@hortonworks.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [192.175.27.12]
-x-source-routing-agent: Processed
-Content-Type: multipart/alternative;
-	boundary="_000_E067ECF63A2D4FCFB66B93BA1C05DA8Ahortonworkscom_"
-Subject: [oss-security] [CVE-2015-3270] A non-administrative user can escalate themselves
- to have administrative privileges remotely
+Content-Type: text/plain
+Subject: [oss-security] Re: tqdm: insecure use of git
 
---_000_E067ECF63A2D4FCFB66B93BA1C05DA8Ahortonworkscom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Q1ZFLTIwMTUtMzI3MDogQSBub24tYWRtaW5pc3RyYXRpdmUgdXNlciBjYW4g
-ZXNjYWxhdGUgdGhlbXNlbHZlcyB0byBoYXZlIGFkbWluaXN0cmF0aXZlIHBy
-aXZpbGVnZXMgcmVtb3RlbHkNCg0KU2V2ZXJpdHk6IEltcG9ydGFudA0KDQpW
-ZW5kb3I6IFRoZSBBcGFjaGUgU29mdHdhcmUgRm91bmRhdGlvbg0KDQpWZXJz
-aW9ucyBBZmZlY3RlZDogMS43LjAsIDIuMC4wLCAyLjAuMSwgMi4xLjANCg0K
-VmVyc2lvbnMgRml4ZWQ6IDIuMC4yLCAyLjEuMQ0KDQpEZXNjcmlwdGlvbjog
-QW4gYXV0aGVudGljYXRlZCB1c2VyIGNhbiByZW1vdGVseSBlc2NhbGF0ZSBo
-aXMvaGVyIHBlcm1pc3Npb25zIHRvIGFkbWluaXN0cmF0aXZlIGxldmVsLiBU
-aGlzIGNhbiBlc2NhbGF0ZSB0aGVpciBwcml2aWxlZ2VzIGZvciBhY2Nlc3Mg
-dGhyb3VnaCB0aGUgQVBJIGFzIHdlbGwgZnJvbSB0aGUgVUkuDQoNCk1pdGln
-YXRpb246IEFtYmFyaSB1c2VycyBzaG91bGQgdXBncmFkZSB0byB2ZXJzaW9u
-IDIuMS4xIG9yIGFib3ZlICgyLjAuMCBhbmQgMi4wLjEgY2FuIGJlIHVwZ3Jh
-ZGVkIHRvIDIuMC4yKS4NCg0KSW4gZml4ZWQgdmVyc2lvbnMgb2YgQW1iYXJp
-ICgyLjAuMjsgMi4xLjEgYW5kIG9ud2FyZCksIGFjY2VzcyB0byB0aGUgdXNl
-ciByZXNvdXJjZSBlbmRwb2ludCBpcyBwcm90ZWN0ZWQgc3VjaCB0aGF0IG9u
-bHkgYSB1c2VyIHdpdGggYWRtaW5pc3RyYXRvciBwcml2aWxlZ2VzIGNhbiBl
-c2N1bGF0ZSBhIHVzZXIncyBwcml2aWxlZ2VzLiBBIHVzZXIsIGhvd2V2ZXIs
-IG1heSBzdGlsbCBhY2Nlc3MgdGhlIGVuZHBvaW50IGJ1dCBtYXkgb25seSBj
-aGFuZ2UgdGhlaXIgb3duIHBhc3N3b3JkLg0KDQpDcmVkaXQ6IFRoaXMgaXNz
-dWUgd2FzIGRpc2NvdmVyZWQgYnkgc2VjdXJpdHkgYW5hbHlzdHMgYXQgQmx1
-ZSBDcm9zcyBCbHVlIFNoaWVsZCBBc3NvY2lhdGlvbg0K
+>> B. No third-party product should ever be executing "git log" in an unexpected
+>> context. Either the user must somehow be aware that a "git log" may be
+>> executed, or else the product must somehow force the use of a safe local
+>> directory. Otherwise, a CVE is needed for each such product.
 
---_000_E067ECF63A2D4FCFB66B93BA1C05DA8Ahortonworkscom_--
+>> 2. You are suggesting that there is a security problem in tqdm because the
+>> victim is not explicitly being told that they are executing a git command, and
+>> thus they do not realize that there is a need to verify that they have a safe
+>> cwd before proceeding.
+
+No one has disputed your threat model, so we will assign an ID for
+this tqdm issue: CVE-2016-10075
+
+
+>> 1. You are suggesting that there is a security problem in git because the
+>> risks of an attacker-controlled config file are not documented carefully
+>> enough.
+
+> No, I don't see this as a problem in git.
+
+Does anyone know of steps that an operating-system distribution could
+take to prevent this class of problem (i.e., software package A has
+unusual usage expectations that make it risky for software package B
+to have a dependency on A)?
+
+Or is git in a class by itself, because its usage expectation is that
+the cwd determines the location of executable programs, and anyone
+writing any other software package may have to remember this special
+fact?
+
+The issue is that git is specifically designed to allow (with highest
+precedence) a "repository specific configuration file" that is, on
+each local system, stored in the same directory tree as the main
+repository content. The example given for the CVE-2016-10075 attack
+against tqdm was a "[gpg] program = " setting, which is probably not a
+great example because people almost always could use the same version
+of gpg for every repository. A better example is "[diff]" because
+someone may need a specialized diff program if they have unusual types
+of files in one repository. In other words, there is a realistic use
+case for being able to configure different executable programs for
+different repositories. The question is whether cwd-based
+configuration is a reasonable choice.
+
+Are the risks really much different from a hypothetical git behavior
+in which (for any arbitrary cwd) it selected a diff program by doing:
+
+  PATH=.:$PATH
+
+?
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYZB0jAAoJEHb/MwWLVhi2ncAP/i52gkcm/kJO0uM5znKPppXZ
+YOkxjOU4HsKgEMfQLmWDUzH3Ld726/WqXd5rF4ZCRLtH6mGEI9Xo/bY6SjnZZDJl
+6XZa7CcxzTCcZYY2V6rEYadig/F9oInNJez+JVzQXPAQHGsXhgGX3Qiv7Q4ZzSNC
+WOmPT4i8u4I8JbuvBtdxWSeqY9oxgeBujuO+JTB5SGDUGI0CTkbnoSP9Gr9kJgg/
+1fXBOLNdsmpaWJcZI/uq9k86fTN3T/xeL+Cq27KA1INvypwmM5XfSr7qr4t8SwJK
+V9UxaJCUUYs06RAdngRiVsRB/HjpElZgavwnaToy7W7zK1xtIWqutR4lB4k1rBcS
+0m+qxMRSagQ0CeTpNehhKPy+NNsrhdpR0CqdFbE4J6psc/Gj04Y7ZxL94CvtdeCs
+WKsB69O1cBresLoszZXDXWkk/f0s8ci3xFiZDEouse7HEn48BYVTfjARB5g10IXD
+fLjBmN6abvlr/3CajQt4YZ3QvWyEvrWg6yeywHvcgsyzKxcKqhnW47Uq3Jgsmur+
+KyqvgSn3g5T7iBja7UutbCm+k7VyBljSlWEArjwzNqERveGPgUdauLSVbmJ0EcMp
+g/3PPm86nXed/kl77Ezo7hDY5f6v0rioJVhwhGoR53UrZ5aVBc4V8FplcUK/J95c
+BjzMEeGhx6IRdRA87nrR
+=1kMw
+-----END PGP SIGNATURE-----
