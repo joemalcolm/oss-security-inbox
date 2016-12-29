@@ -1,57 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/29/2
-Message-Id: <20160829215135.463377BC071@smtpvmsrv1.mitre.org>
-Date: Mon, 29 Aug 2016 17:51:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: MantisBT weakened CSP when using bundled Gravatar plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/29/2
+Message-ID: <CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>
+Date: Thu, 29 Dec 2016 12:17:16 -0500
+From: Glenn Randers-Pehrson <glennrp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: libpng NULL pointer dereference bugfix
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+libpng-1.6.27 has been released to fix an old NULL pointer dereference
+bug in png_set_text_2() discovered and patched by Patrick  Keshishian.
 
-> MantisBT 1.3.0-rc.2 introduced a new bundled plugin to handle display of
-> users' avatars using Gravatar.
-> 
-> Instead of adding the Gravatar web site to the list of allowed image
-> sources in MantisBT's Content Security Policy, the plugin was replacing
-> the whole policy by:
-> 
->    img-src 'self' http://www.gravatar.com/
-> 
-> instead of the more strict default one of:
-> 
->    default-src 'self'; frame-ancestors 'none'; style-src 'self';
->    script-src 'self'
-> 
-> Relaxed policy allows execution of remote and inline scripts, e.g.
-> potentially enabling XSS attacks.
-> 
-> https://github.com/mantisbt/mantisbt/commit/b3511d2feb47eaee41feb5f69cf3c8a2c9acd229
-> https://mantisbt.org/bugs/view.php?id=21263
+New releases of legacy branches (1.0.67, 1.2.57, 1.4.20, and 1.5.28) have
+also been released.  Other versions can be patched by adding a single
+line
 
-Use CVE-2016-7111.
+      info_ptr->max_text = 0;
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+at the appropriate spot in png.c.
 
-iQIcBAEBCAAGBQJXxK4MAAoJEHb/MwWLVhi2p3EQAKULs3JDc49mBXeyVZ24IUoE
-6iWcUGjwiE5cHXnAxcNKZZp7/xsFo9tgdLbLZ37x48kU1cwp/B/rnQQCWJHfUJxJ
-gR0qIutmEWCAq3nIVC0IR+tBm//0iiJuTuRhH/NjE9W4+EBPPjIHkkHxvnWLqyJo
-SWBP/JJDYbB8sQ366+WLrNHTdxK+keVcu406KrbagWhPaMG1C9QAkTeHRxovI/me
-JkbA3cVjfmO9BjHrAkbEYEJRU6Qxn8XsXUNW8bGoHBUt4WFON8BOGpt6Yyn1iDCs
-APOou4yZqMPM8jSnS8MOCM9POuuK8QNXMTLPgnMkxLcFntz79ogVmzJYfl6jyQ6V
-PW2dNtFU03QTI4nvL2UbVi1+oEbZycQbRnU0If7wHjedXIekFEX2uik0fAnJRwAk
-LDgT/+g6g02RJZPmteQFrT0ZtXav2rFiznHicL93mRLt1sOiE32ULJrQ8DLBP5SA
-EYitfKS09oBLDdSC5k+wogX22UgoFm4xZLrauVbRMKUApZNvKVSAADNewmRopXKR
-Fm2lDPJKmmb+oOWVBj7MDz7J9u1SvnyVieX+53E8Bt0tnr9KD5R61XNfjnKJtvZg
-+2l+S8HEUN3FdDz2WINbs9z1Sd5Fok9jc+TQXeIXR07jPC+MKE26zywhIiMYIfl/
-2Rs4hh+EhmuT20OUq14x
-=U1Gg
------END PGP SIGNATURE-----
+The potential "NULL dereference" bug that has existed in libpng
+since version 0.71 of June 26, 1995.  To be vulnerable, an application
+has to load a text chunk into the png structure, then delete all text, then
+add another text chunk to the same png structure, which seems to be
+an unlikely sequence, but it has happened.
+
+Applications that I have looked at (firefox, imagemagick, graphicsmagick,
+pngcrush) do not appear to be vulnerable.
+
+I reported the bug using CERT's online reporting system several days
+ago but have not received any response.
+
+Glenn Randers-Pehrson
+libpng custodian
+
