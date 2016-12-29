@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1083" "Friday" "24" "April" "2020" "12:19:48" "-0400" "Tim Allison" "tallison@apache.org" "<CAC1dCwUOZpgORGC2uT4PvZ81yv7HNyFggp9NLtNUyB-uX=ThLA@mail.gmail.com>" "35" "[oss-security] [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of Apache Tika's Parsers" nil nil nil "4" "2020042416:19:48" "[oss-security] [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of Apache Tika's Parsers" (number mark "U       tallison@apa Apr 24   35/1083  " thread-indent "\"[oss-security] [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of Apache Tika's Parsers\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of Apache Tika's Parsers" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1175" "Thursday" "29" "December" "2016" "01:04:52" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsuHFEFFySPG18sgpV1i=xekNDpJe+6rDJkYmuOpY7P-LA@mail.gmail.com>" "35" "Re: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)" nil nil nil "12" "2016122903:04:52" "[oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)" (number mark "U       dawid@legalh Dec 29   35/1175  " thread-indent "\"Re: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)\"\n") "<20161228165828.GA2779@openwall.com>" ("<CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>" "<20161228165828.GA2779@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11468 invoked by uid 550); 24 Apr 2020 16:20:13 -0000
+Received: (qmail 10026 invoked by uid 550); 29 Dec 2016 08:13:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11439 invoked from network); 24 Apr 2020 16:20:12 -0000
-X-Gm-Message-State: AGi0PuY1Muh2rF57wDN9pSYjBmBjeSV4bdGqEKi1QTKEH8xPRy5TjWoZ
-	adnn5Dl5pPInfu8RpZE4PNXJCMj82jLMgmP5qTg=
-X-Google-Smtp-Source: APiQypKPBEKSjvTDgFNEc0YLnmAgtxqCtDIN79UHPnHpBXKHo3eEvvnzJ3SHDBVglRwHYHWOTF5hEuWD5Y5eZEBecU0=
-X-Received: by 2002:a17:906:340a:: with SMTP id c10mr8019757ejb.218.1587745198919;
- Fri, 24 Apr 2020 09:19:58 -0700 (PDT)
+Received: (qmail 21566 invoked from network); 29 Dec 2016 03:05:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=tDH0ZuwBRsIFwUihfaBrlqnp3cv3oiIpNWg2PoiSJ6Y=;
+        b=F/+nqKzEZ3K4g5oK0qTJJtdYnbOXR1EDsThcdxtPn73eZIdyJoVuOUlwE9+SYV5vo3
+         zutA8UAKc5+IW5R9z0z5Fh1vwVLrc6+YrPke6vUAsAfml2OH4hz1RwGwvJDaJqxGlsZI
+         db3mrlJi6x0RfNest7ZCEOZTBjO+fTi72SEG5UB5g09MTiQRjnQLy1pJVlsRZRuYvbn7
+         /wnrBNw5hFv9AEQBNWd0h20HyM6UYVF0X8vVxnuUXZHKypHDI/s9ZXd0q/I68slfVP0T
+         ddQKkAM5qG5iQFKoNjA1OAaF1izSQFfrj1tZS1desaniTXTFfv9qglmQFNU1jdGM9INi
+         T4mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=tDH0ZuwBRsIFwUihfaBrlqnp3cv3oiIpNWg2PoiSJ6Y=;
+        b=WQ2mXsXWZoKv8IBK4hMIsBU5rH/+Vmp7xiAborqFVD7S+PjkGcINkpFfYxWa0OFaXo
+         ZKpVpX2wtP1kc6NGrgd3jTLJRpden0s7or5IPqzOlfosS4xA9N6D/iYYPROozIE4hbcn
+         ZTF5dmDcmqM2TwYMcuu/zdCG02hBDDhZ5FZRL9Y3GiectB8GC0kSfu3Qr6JW17mcMcED
+         u5gN8CgGSuzPYy+F8FsVdPdVoN1aHAKymOtkA/d7E0pTH9GKQd6lfU5k6dauSzL6RlJS
+         samRjzgs40WfCe1cQoAuXOcW4hCZ9my0ZUZYZov7Qn8/e4NTMFqqVbocGeIzzpIfN0dx
+         9fZQ==
+X-Gm-Message-State: AIkVDXLdoF82qwqF4v4ZxY6wF7zbBAU8l27lc6TTBbwSBbsiNzrnS+wKho44Y9CiqsFd5RhLXrWYvaby+2dNNA==
+X-Received: by 10.31.14.206 with SMTP id 197mr14129301vko.38.1482980692398;
+ Wed, 28 Dec 2016 19:04:52 -0800 (PST)
 MIME-Version: 1.0
-From: Tim Allison <tallison@apache.org>
-Date: Fri, 24 Apr 2020 12:19:48 -0400
-X-Gmail-Original-Message-ID: <CAC1dCwUOZpgORGC2uT4PvZ81yv7HNyFggp9NLtNUyB-uX=ThLA@mail.gmail.com>
-Message-ID: <CAC1dCwUOZpgORGC2uT4PvZ81yv7HNyFggp9NLtNUyB-uX=ThLA@mail.gmail.com>
-To: announce@apache.org, "<dev@tika.apache.org>" <dev@tika.apache.org>, user@tika.apache.org, 
-	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000093562705a40bbc5f"
-Subject: [oss-security] [CVE-2020-9489] Denial of Service (DOS) Vulnerabilities in Some of
- Apache Tika's Parsers
+In-Reply-To: <20161228165828.GA2779@openwall.com>
+References: <CADSYzsu6L7vk1bbmQeYsc3ov1qufgyPXtsP-oV0RGGOjUAkLHw@mail.gmail.com>
+ <20161228165828.GA2779@openwall.com>
+From: Dawid Golunski <dawid@legalhackers.com>
+Date: Thu, 29 Dec 2016 01:04:52 -0200
+Message-ID: <CADSYzsuHFEFFySPG18sgpV1i=xekNDpJe+6rDJkYmuOpY7P-LA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] PHPMailer < 5.2.20 Remote Code Execution PoC 0day
+ Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
 
---00000000000093562705a40bbc5f
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Dec 28, 2016 at 2:58 PM, Solar Designer <solar@openwall.com> wrote:
+> On Wed, Dec 28, 2016 at 03:03:39AM -0200, Dawid Golunski wrote:
+>> This was reported responsibly to the vendor & assigned a CVEID on the
+>> 26th of December.
+>> The vendor has been working on a new patch which would fix the problem but
+>> not break the RFC too badly. The patch should be published very soon.
+>>
+>> I'm releasing this as a 0day without the new patch available publicly
+>> as a potential bypass was publicly discussed on oss-sec with Solar
+>> Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
+>> further would serve no purpose.
+>
+> Yeah.  I did think for a moment before posting in here yesterday, but
+> for a number of reasons chose to go ahead with the public discussion.
+>
+> Alexander
 
-Severity: Medium
+Hi Alexander,
 
-Vendor: The Apache Software Foundation
+No worries,  good that the patch came in quick so it wasn't too bad I guess.
+Got a bunch of critical comments but most of them are pretty funny
+anyway ;) E.g.
 
-Versions Affected: Apache Tika 1.24
+https://twitter.com/dawid_golunski/status/814253540503908356
 
-Description:
-A carefully crafted or corrupt file may trigger a System.exit in Tika's
-OneNote Parser. Crafted or corrupted files can also cause out of memory
-errors and/or infinite loops in Tika's ICNSParser, MP3Parser, MP4Parser,
-SAS7BDATParser, OneNoteParser and ImageParser.
+;D
 
-
-Mitigation:
-Apache Tika users should upgrade to 1.24.1 or later. The vulnerabilities in
-the MP4Parser were partially fixed by upgrading the
-com.googlecode:isoparser:1.1.22 dependency to
-org.tallison:isoparser:1.9.41.2.
-
-For unrelated security reasons, we upgraded org.apache.cxf to 3.3.6 as part
-of the 1.24.1 release.
-
-We also upgraded openjson to 1.0.10, org.ow2.asm to 8.0.1, zstd-jni to
-1.4.4-9, bouncycastle to 1.65, commons-lang3 to 3.10, lucene to 8.5.0 and
-mockito to 3.3.3 as part of the 1.24.1 release.
+Good work on sensing trouble in that bit of code too though.
 
 
-Credit:
-These vulnerabilities were discovered by Tim Allison on the Apache Tika
-team.
-
---00000000000093562705a40bbc5f--
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
