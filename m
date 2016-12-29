@@ -1,36 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/10/11/9
-Message-ID: <87pon7t2f8.fsf@gnu.org>
-Date: Tue, 11 Oct 2016 15:56:11 +0200
-From: ludo@....org (Ludovic Courtès)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/29/3
+Message-ID: <20161229202940.ma4dsc7qrj57nghk@perpetual.pseudorandom.co.uk>
+Date: Thu, 29 Dec 2016 20:29:40 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Christopher Allan Webber <cwebber@...tycloud.org>, Andy Wingo <wingo@...ox.com>, Mark H Weaver <mhw@...ris.org>
-Subject: CVE request: GNU Guile <= 2.0.12: REPL server vulnerable to HTTP inter-protocol attacks
+Subject: ikiwiki: CVE-2016-9645 (incomplete fix for CVE-2016-10026), CVE-2016-9646 (commit metadata forgery)
 Content-Type: text/plain; charset=utf-8
 
-GNU Guile, an implementation of the Scheme language, provides a “REPL
-server” which is a command prompt that developers can connect to for
-live coding and debugging purposes.  The REPL server is started by the
-‘--listen’ command-line option or equivalent API.
+ikiwiki is a static site generator with some dynamic features,
+used for wikis, blogs and other websites.
 
-Christopher Allan Webber reported that the REPL server is vulnerable to
-the HTTP inter-protocol attack as described at
-<https://en.wikipedia.org/wiki/Inter-protocol_exploitation>, notably the
-HTML form protocol attack described at
-<https://www.jochentopf.com/hfpa/hfpa.pdf>.
+Version 3.20161229 fixes two minor vulnerabilities in earlier
+ikiwiki versions:
 
-This constitutes a remote code execution vulnerability for developers
-running a REPL server that listens on a loopback device or private
-network.  Applications that do not run a REPL server, as is usually the
-case, are unaffected.
+----
 
-Developers can work around this vulnerability by binding the REPL server
-to a Unix-domain socket, for instance by running:
+CVE-2016-9645: authorization bypass
 
-  guile --listen=/some/file
+Reference: https://ikiwiki.info/security/#cve-2016-9645
+Vulnerable versions: >= 3.20161219 but < 3.20161229
+Fixed versions: >= 3.20161229
 
-A modification to the REPL server that detects attempts to exploit this
-vulnerability is available upstream and will be part of Guile 2.0.13, to
-be released shortly.
+intrigeri discovered that on sites with the git and recentchanges
+plugins and the CGI interface enabled, the revert links on the
+RecentChanges page could revert changes on a page the logged-in user
+cannot legitimately edit, if the change being reverted was made before
+the page was renamed from a location that the logged-in user *could*
+legitimately edit. CVE-2016-10026 was assigned to this vulnerability,
+and it was intended to be fixed in 3.20161219.
 
-Patch: http://git.savannah.gnu.org/cgit/guile.git/commit/?h=stable-2.0&id=08c021916dbd3a235a9f9cc33df4c418c0724e03
+The changes that were intended to address this in 3.20161219 were not
+sufficient when ikiwiki is used with git versions before 2.8.0rc0.
+CVE-2016-9645 was assigned to this incomplete fix. In version
+3.20161229, the incomplete fix has been reverted and replaced with a
+different solution that should work for all git versions.
+
+----
+
+CVE-2016-9646: commit metadata forgery
+
+Reference: https://ikiwiki.info/security/#cve-2016-9646
+Vulnerable versions: < 3.20161229
+Fixed versions: >= 3.20161229
+
+CGI::FormBuilder->field has a context-dependent API, similar to
+the CGI->param API that led to Bugzilla's CVE-2014-1572. Parts of
+ikiwiki incorrectly called this method in list context when a scalar
+result, which could lead to two relatively minor attacks:
+
+* In the comments plugin, an attacker who was able to post a comment
+  could give it a user-specified author and author-URL even if the wiki
+  configuration did not allow for that, by crafting multiple values
+  to other fields.
+* In the editpage plugin, an attacker who was able to edit a page
+  could potentially forge commit authorship by crafting multiple values
+  for the rcsinfo field.
+
+----
+
+Thanks to the Debian security team for allocating CVE IDs for these.
+
+Regards,
+    smcv
