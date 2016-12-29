@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/01/24/1
-Message-ID: <20160124064746.GA23949@eldamar.local>
-Date: Sun, 24 Jan 2016 07:47:46 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux: fuse: possible denial of service in fuse_fill_write_pages()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/29/1
+Message-ID: <CADSYzsuHFEFFySPG18sgpV1i=xekNDpJe+6rDJkYmuOpY7P-LA@mail.gmail.com>
+Date: Thu, 29 Dec 2016 01:04:52 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PHPMailer < 5.2.20 Remote Code Execution PoC 0day Exploit (CVE-2016-10045) (Bypass of the CVE-2016-1033 patch)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Wed, Dec 28, 2016 at 2:58 PM, Solar Designer <solar@...nwall.com> wrote:
+> On Wed, Dec 28, 2016 at 03:03:39AM -0200, Dawid Golunski wrote:
+>> This was reported responsibly to the vendor & assigned a CVEID on the
+>> 26th of December.
+>> The vendor has been working on a new patch which would fix the problem but
+>> not break the RFC too badly. The patch should be published very soon.
+>>
+>> I'm releasing this as a 0day without the new patch available publicly
+>> as a potential bypass was publicly discussed on oss-sec with Solar
+>> Designer in the PHPMailer < 5.2.18 thread, so holding the advisory
+>> further would serve no purpose.
+>
+> Yeah.  I did think for a moment before posting in here yesterday, but
+> for a number of reasons chose to go ahead with the public discussion.
+>
+> Alexander
 
-Can you assign a CVE for the following issue found
+Hi Alexander,
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1290642
+No worries,  good that the patch came in quick so it wasn't too bad I guess.
+Got a bunch of critical comments but most of them are pretty funny
+anyway ;) E.g.
 
-> A patch was posted to fix an issue regarding unkillable task eating
-> CPU.
-> 
-> The problem is in the fuse_fill_write_pages() function.  When a user
-> calls the sys_writev syscall with specially crafted sequence of iovs
-> the kernel function may never terminate and continue in a tight loop,
-> the process is unable to be killed.
+https://twitter.com/dawid_golunski/status/814253540503908356
 
-Introduced in:
-https://git.kernel.org/linus/ea9b9907b82a09bd1a708004454f7065de77c5b0
-(v2.6.26-rc1)
+;D
 
-Fixed by:
-https://git.kernel.org/linus/3ca8138f014a913f98e6ef40e939868e1e9ea876
-(v4.4-rc5)
+Good work on sensing trouble in that bit of code too though.
 
+
+-- 
 Regards,
-Salvatore
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
