@@ -1,70 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/02/9
-Message-Id: <20160602161123.78CDA6C028A@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Jun 2016 12:11:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, liqiang6-s@....cn
-Subject: Re: CVE Request Qemu: scsi: esp: OOB write when using non-DMA mode in get_cmd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/2
+Message-ID: <CADSYzssrDfG2UtGBxVEhS=M5AC7jgufh6GeVKQb6xZGBP9DO1Q@mail.gmail.com>
+Date: Fri, 30 Dec 2016 14:02:07 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
+To: oss-security@...ts.openwall.com
+Subject: Zend Framework (zend-mail) < 2.4.11 Remote Code Execution (CVE-2016-10034)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Zend Framework / zend-mail < 2.4.11    Remote Code Execution (CVE-2016-10034)
+zend-mail < 2.7.2
 
-> Quick Emulator(Qemu) built with the ESP/NCR53C9x controller emulation support
-> is vulnerable to an OOB write access issue. The controller uses 16-byte FIFO
-> buffer for command and information transfer. The OOB write occurs while
-> reading from information transfer buffer via non-DMA mode in routine
-> get_cmd().
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1341931
-> https://lists.gnu.org/archive/html/qemu-devel/2016-06/msg00150.html
+Discovered by Dawid Golunski (@dawid_golunski)
+https://legalhackers.com
 
->> Add check to validate command length against buffer size to avoid any
->> overrun.
+Desc:
+An independent research uncovered a critical vulnerability in zend-mail, a
+Zend Framework's component that could potentially be used by (unauthenticated)
+remote attackers to achieve remote arbitrary code execution in the context
+of the web server user and remotely compromise the target web application.
 
-Use CVE-2016-5238.
+To exploit the vulnerability an attacker could target common website
+components such as contact/feedback forms, registration forms, password
+email resets and others that send out emails with the help of a vulnerable
+version of the zend-mail class.
 
-The scope of this CVE is the missing "dmalen > TI_BUFSZ" check in
-the get_cmd function. The scope of this CVE does not include the
-"At least the following patch is needed to ensure that ti_size always
-matches ti_rptr/ti_wptr" discussion.
+The latest full advisory / PoC exploit at:
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/esp.c but
-that may be an expected place for a later update.
+http://legalhackers.com/advisories/ZendFramework-Exploit-ZendMail-Remote-Code-Exec-CVE-2016-10034-Vuln.html
+
+Video / PoC:
+
+https://legalhackers.com/videos/ZendFramework-Exploit-Remote-Code-Exec-Vuln-CVE-2016-10034-PoC.html
+
+For updates, follow:
+
+https://twitter.com/dawid_golunski
 
 
->> In theory this shouldn't happen, but I agree that it is better to be
->> defensive.
+--
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
 
-We typically can still assign a CVE ID with that response. We cannot
-assign a CVE ID with a response of "there is no vulnerability but
-I'm accepting the defense-in-depth code change." Admittedly this is
-sometimes a difficult distinction.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXUFo9AAoJEHb/MwWLVhi2HgcP+wWpJhmbyE55xndbleU5kBUX
-MyF83fzuj/PhM5ShgCI3y+VPQ7GmabZ4ui03qIhQl8NGdO4JW8PD1rRYJJ0gouVW
-UCi6JXQLQt8nlOQ0g4ROKTyONiKt5kc+9y6NoDZO16v7gd8gPFkoF6Z7JGOoizTA
-7Si/nCVB5XPWyRG8eEYNyxEXKxq6bdKvWlSYkwIHNDR9bWjCCy915vg/VyIjG9td
-thbASw7Ocem811eH79h7E5prm1MBb4Dmjlgbw/1TPeAvbVRki+KFqbdG1UVe0nJk
-6DD+TfyNrk4DERuzN97XTaltz7s+lyNWhObLuDHrhmQV8DNYiPz63wP45QVD3vff
-kjw8xnmuGhAyWhBenWBaUJ2HPFTJoXob5+Knvdo6JWH5Y8ES8Ob9gBbaKRnKhs6u
-dM/Kdht9A1DCHG0+QKCYlT8GfERutCPgjejyGxhBauRTnPztxTTr6/3G0BOkU3j9
-s1gUkWjk2SONM2mtnFa0Kd3ZU+qE+9k9EoBf4DZnRY+BnBfd/Nq2j78vTQiIrBOn
-oT42usKfbCKFiixbJKH2pVsreherp+eau4UirjoksIbftCIeCiWA90wfi0Dhoi3P
-ydwB2X0Eh9Jy1IN9Pu/sc5IrA7sMMHTRByomyxYcZmu1oOAoOTH7qmNBYSxrKA1Z
-DB5KI7w/WY+cLrwaUhxv
-=kY8R
------END PGP SIGNATURE-----
+View attachment "zend.txt" of type "text/plain" (8273 bytes)
