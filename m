@@ -1,30 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/06/4
-Message-ID: <alpine.LFD.2.20.1609061818400.23358@wniryva>
-Date: Tue, 6 Sep 2016 18:22:24 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Tom Victor <vv474172261@...il.com>
-Subject: CVE Request Qemu: scsi: mptsas: invalid memory access while building configuration pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/4
+Message-ID: <d636dcedeede4aaba19662fe4d148b08@imshyb02.MITRE.ORG>
+Date: Fri, 30 Dec 2016 13:00:23 -0500
+From: <cve-assign@...re.org>
+To: <glennrp@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libpng NULL pointer dereference bugfix
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick emulator(Qemu) built with the LSI SAS1068 Host Bus emulation support, is 
-vulnerable to an invalid memory access issue. It could occur while building 
-configuration page headers in 'mptsas_config_manufacturing_1'.
+> NULL pointer dereference bug in png_set_text_2()
+> 
+> an application
+> has to load a text chunk into the png structure, then delete all text, then
+> add another text chunk
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-on the host, resulting in DoS.
+Use CVE-2016-10087.
 
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04295.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg04296.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This issue was reported by Victor V of the Marvel Team, 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJYZqBTAAoJEHb/MwWLVhi2wCQP/0MuFVxaThebajC21ogCNkZ+
+W1xIxSwriMBZPbTJmRVj10wdi07UhFH4ut5zAlFmL7nePhuTfZuH9C0BfjA124o9
+IFWlLaABz/yzPGFrWcapbdTkCFiE46xThxvhLoc9ESXtmlesN6tf+2nz7yBre2kS
+ySc20NoQNRCmTikdad9jerh+A9YjNmEZnS9g6ydxAAzuid1VHRZa8JGaq5ShgmBb
+oOmpEcxpsgqZxoSb62PR6NoKXgIkDTCrkcYvDXo3XNwHZ2d2/4eMK+FTvrClB84O
+7x4nFXgWnGlfL6PWOJVzXn51Guij2GHrUOKaC6X8OMR+8crF0jZncOq+yJr0HcNo
+ZEU0TQrIBj7CIOeflynhJS+ABbbABTLyODZJiBXxI5mSv/pWjTttcJ5ClIgesQAP
+/C151FeN05hc1bXQBV8VlXKpN+Ge7MMGZKnbbLO6ld1jEaIjKWfWIL4npceeAkJS
+MhHwg3VwwfcDZGsa6II6iy6Sny5ddEdsQSI0MKned3AI8U6Q7rZ51/NJvnA4t1A0
+7PQDwWd/kiftZD0JDPQI9xFtQXRR9QweHWsS0lNxApBITocMKqQQ0vv1Fo6vbJMs
+aHAkSpBo4IvyPkW5JBmA1WXXuNs8HRGZUDVLjlcErgr5+KpTbs3gt1J2/28kBL/+
+6UOSSsIexpBKzfoJj3tu
+=H34M
+-----END PGP SIGNATURE-----
