@@ -1,4 +1,9 @@
-Received: (qmail 5554 invoked by uid 550); 15 Jul 2022 22:35:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1406" "Friday" "30" "December" "2016" "16:33:24" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<2f4f7f26fcb04b228aed45fd4052dcc0@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: CVE request: Nagios: Incomplete fix for CVE-2016-8641" nil nil nil "12" "2016123021:33:24" "[oss-security] Re: CVE request: Nagios: Incomplete fix for CVE-2016-8641" (number mark "U       cve-assign@m Dec 30   36/1406  " thread-indent "\"[oss-security] Re: CVE request: Nagios: Incomplete fix for CVE-2016-8641\"\n") "<e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>" ("<e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19971 invoked by uid 550); 30 Dec 2016 21:33:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,69 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7438 invoked from network); 15 Jul 2022 21:41:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cloudera.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=52+Id/OBT7yPPU521/hU0aRdNvAnF8+pOPSqBhU3abg=;
-        b=pQ7Stef+wzaSSK+GsnbBxuhTaIMKu420kG6WfaSPKj/WWbI2Wq4/FUreOgQdfUCEgQ
-         5TxfrJ3M8VbvgKlx0/zjvvYyO415OG9oTpfUEUW1yjjZJqQV7QupAYhBjYA4oHs3nApI
-         wMqQ5fNKrDKvAAofP5o4H8HXjYttOTWTapY6NxyAvgoSiVZcI3z8u87uuptX+jpY1eMJ
-         qxCmWoameRvhQEXXlam6U8xjDpXXBnrDnVvpjvudv9G99LdMryCN35ZxBNxmGDp7dsmm
-         a9TqkXcknnnVLcnryptAHuhAkT/6aKhhHnjiU1ylPOYifP8hySIcexHmc5Rv0T5I+WyZ
-         Ne7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=52+Id/OBT7yPPU521/hU0aRdNvAnF8+pOPSqBhU3abg=;
-        b=JsVsFfb49+VP3sqSKzEh7gY45WiJEj/hjpEmH+bNjOIZHQXMReUPIjZDOh/4iUeRXd
-         TlhE0z/UrRVXIboq+dI6INv4cXAQw9fxfXDi/RfOBD052lEbTzbiKFfhbZTTMsRqItbc
-         Y8vDlJ3lsANSLNEdTNUKH2/6TDHjbRuBfZEdOyIjIrVfhEQ49soKpmxyRpbYeViEtJ32
-         yV/VsUIPS3CPb775HRNeteG97qm1vu2ctOds3bk9Vf/t8BByJEMyIQ/jBQfGlE9dY7BG
-         5Kmx72NBIxB0ReG61OcssKQoLJ0qWa8LaI+WxArGHbM3ahk72a32U3t9715dtEhrN95u
-         TDvg==
-X-Gm-Message-State: AJIora+XUEdWMtrCSXLDTQYxYzwNxS1N08HDvgHccjQ0RqcViXzjdvO/
-	BwQBYGsno9eQAsOAKnkXaeXj+te83LnoskcyzWHhVQ==
-X-Google-Smtp-Source: AGRyM1ujOeTxEverBUDbKhR6JADypVPP6BiDdznpJa3DQWzdW1TeAeYpdX33bl9W7++jPWVlvrJUJmK6mjsNJYxFuyM=
-X-Received: by 2002:a17:906:14d:b0:711:ffc4:3932 with SMTP id
- 13-20020a170906014d00b00711ffc43932mr15576191ejh.321.1657921258494; Fri, 15
- Jul 2022 14:40:58 -0700 (PDT)
+Received: (qmail 19950 invoked from network); 30 Dec 2016 21:33:36 -0000
+From: <cve-assign@mitre.org>
+To: <michael@orlitzky.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>
+Message-ID: <2f4f7f26fcb04b228aed45fd4052dcc0@imshyb02.MITRE.ORG>
+Date: Fri, 30 Dec 2016 16:33:24 -0500
 MIME-Version: 1.0
-From: Naveen Gangam <ngangam@cloudera.com>
-Date: Fri, 15 Jul 2022 17:40:36 -0400
-Message-ID: <CADx9buP8OWYN2zjjhHmatNvsVPwpii6ic7Dw437BP7COe8NUKQ@mail.gmail.com>
-To: security <security@hive.apache.org>, dev@hive.apache.org, user@hive.apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000ae256805e3dedf7c"
-Subject: [oss-security] [Security] CVE-2021-34538: Security vulnerability in Hive with UDFs
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: Nagios: Incomplete fix for CVE-2016-8641
 
---000000000000ae256805e3dedf7c
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-*CVE-2021-34538*: Unauthorized access to Hive UDFs
+> CVE-2016-8641 describes an attack
+> wherein that restricted user replaces the aforementioned path with a
+> symlink. The root user (via the init script) will -- the next time
+> Nagios is started -- give ownership of the symlink's target to Nagios's
+> user
 
-*Severity*: Very Important
+> An identical attack not addressed by CVE-2016-8641 works with hard
+> links
 
-*Vendor*: The Apache Software Foundation
+Use CVE-2016-10089.
 
-*Versions Affected*: This vulnerability affects all versions of Hive prior
-to Hive 3.1.3. (3.1.2 or earlier).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-*Version Fixed:* Hive 3.1.3, Hive 4.0 (in Beta)
-
-*Description*: Hive's "CREATE" and "DROP" function operations does not
-check for necessary authorization of involved entities in the query. It was
-found that an unauthorized user can manipulate an existing UDF without
-having the privileges to do so. This allowed unauthorized or
-underprivileged users to drop and recreate UDFs pointing them to new jars
-that could be potentially malicious.
-
-Mitigation: This vulnerability has been addressed vio HIVE-25468 in Hive
-3.1.3 release and will be included in Hive 4.0GA (Already in the beta
-releases). Please upgrade to one of the releases containing the fix or
-apply this patch to an existing release.
-
-Credit: This vulnerability was discovered and reported by Hideyuki Furue.
-THANK YOU !!!
-
---000000000000ae256805e3dedf7c--
+iQIcBAEBCAAGBQJYZtIlAAoJEHb/MwWLVhi2uusP/0aReE472/YzkPBswLATf8cU
+0/mhc9HGu4CeDy/nORI3TOoh9XC8NSg9Cbs2r7m83/EkK8D2YZpF5swyb4uLhwL7
+5wLLodraBig20Ps53GQSHfKA7/LqXiPxCZH+qdTKiZ12nv2iZm9FwP8Rlp34g4e5
+7ltvnFAAXvq2P7WgF5F1+l6obSe9+Vq/Twsj6Nr+8mfeolQKEBfOWJlYThWAv572
+EcXN6vDUGOzt/epWh5EM7c4CMkA/lzryylbX0Q1f6MAQ1PwavwMzrUi7iB8oBGsa
+xUxgXQsQfjT4QGIJ+xHJ6MFZDmNj3QQQKdzw5sU30qopeHanJkX/dNSBmnk/ZGEW
+rF7EUVNpald/KnADGGNsQGo+NkXddKt1OUfSAvNRgk7z/Dbe+0mUGM0jTz5myDi5
+W6i/SbDcfPywwovORY3+Y7qltucbvawbfWaTjnoUfEPkyNc22YxaHtEnns8/o3uL
+QvqSGMy+j0Ih7+VJBiQ8AobfAn4BpxYUUcaVDnK/sx0CrT9Msy8PdxRjA7ZgXR2w
+rANNhtkclladIBn6ciihkr1gHQybm5qpLb0LLpdM02VHrePA5UmarFK+NjzsSPaM
+sO0u8+Doed/kdKQnHHYGAr5gg+wuN58+X5Iyi/28QtVDbKYAN1SUgNDYpKJLradR
+/+fzONrCZAyHkySd0TjW
+=L1tp
+-----END PGP SIGNATURE-----
