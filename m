@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["966" "Wednesday" "18" "October" "2017" "15:33:12" "+0800" "amon" "amon@nandynarwhals.org" "<CAFw=huUjK8X=AEimVPLtg9bGh3rKpJ8CpLujQEqwWQ7kvdxmNQ@mail.gmail.com>" "25" "[oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)" nil nil nil "10" "2017101807:33:12" "[oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)" (number mark "U       amon@nandyna Oct 18   25/966   " thread-indent "\"[oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1245" "Friday" "30" "December" "2016" "13:00:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d636dcedeede4aaba19662fe4d148b08@imshyb02.MITRE.ORG>" "33" "[oss-security] Re: libpng NULL pointer dereference bugfix" nil nil nil "12" "2016123018:00:23" "[oss-security] Re: libpng NULL pointer dereference bugfix" (number mark "U       cve-assign@m Dec 30   33/1245  " thread-indent "\"[oss-security] Re: libpng NULL pointer dereference bugfix\"\n") "<CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>" ("<CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11462 invoked by uid 550); 18 Oct 2017 09:54:21 -0000
+Received: (qmail 10199 invoked by uid 550); 30 Dec 2016 18:00:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3115 invoked from network); 18 Oct 2017 07:33:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=5OcmhQSVMs6h56rO27PtANkD/OnEhpG5yY+/n1ckccg=;
-        b=AmoYSU3WZeZbQkkBbjigFkPsXW9YPlErkUIVW6yQovXMWKp/rxWQUI0Q4PJTOXenxe
-         8brakKZU9FTiHJr/DYagu7IEpijXXW7efJjACScTDFQUIQCDGxGBsjEw7WQxfaoNfdih
-         bahiCIQdrKWdfoONziKhqlQowTaW2zKOxTibtRfKWu0rfDYxjRV+a/odF6zxt13qomoL
-         qjDC6Si0//T2fzQgWIcuKq/n/K/fgm41FSnuiqGIH0caYpZ2S9cguXOo1qjUm2jzpx0P
-         177lm9juIVE7LhyoogJEMzNi7mHMrp6g0VYiqQyYF0cmGSESlg7P4NjitLIvjjb3vJPi
-         HGxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=5OcmhQSVMs6h56rO27PtANkD/OnEhpG5yY+/n1ckccg=;
-        b=cT92Zj0CiCADD9sEG12rWPL9U3cnbZldPiu9mSFReYKHbCRJRVR9H9IHsF15FEAfEa
-         VWEaq2NKOFAZV8lcR/Aobq4mxEsHOOvRq1yCFWjx4DYM5HM4dlIBqygSDDWLUUiWE1eR
-         dX5oPLulc5qPB8cZvX6ivOCP7PIx0RtVdaK04ZHKM4BG5TdYxceBbbpQDO9KzrQOxhCe
-         zGfsUfWaHE7cZFxOIACkfD4KMXAqic+VIVhnAz0ka8tw4zWQqDeDyo/VIVZ6qtcfM3+B
-         S4oOc+w5feq3Alw9PvaYMuSCjwCERdLWySeQ8E8RAI60qpQslPxzAs0kkTz2dlZ+S4l/
-         lyPw==
-X-Gm-Message-State: AMCzsaXL+Rz8THUSvYKYeSkdQIhj4ic2AsUF9JIi7EzkwifgCvw+aDq8
-	GqIhUmxd5ETReW3FiVxBGZ2MMIwYxUDrWNm9+5F9PtOn
-X-Google-Smtp-Source: ABhQp+QBkzIYEwrIBMKu9sHIN6GaOhPOeu3NPySAzhv4FmkwA61Jrhruvdr+q/ysXyhA5uiOAXmJTL3RTpC5WKG92FA=
-X-Received: by 10.13.202.72 with SMTP id m69mr822129ywd.42.1508311992609; Wed,
- 18 Oct 2017 00:33:12 -0700 (PDT)
+Received: (qmail 10171 invoked from network); 30 Dec 2016 18:00:35 -0000
+From: <cve-assign@mitre.org>
+To: <glennrp@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>
+Message-ID: <d636dcedeede4aaba19662fe4d148b08@imshyb02.MITRE.ORG>
+Date: Fri, 30 Dec 2016 13:00:23 -0500
 MIME-Version: 1.0
-Sender: jergorn93@gmail.com
-From: amon <amon@nandynarwhals.org>
-Date: Wed, 18 Oct 2017 15:33:12 +0800
-X-Google-Sender-Auth: ipiAoV7RrOcMPb1vECaZJqZ_6pk
-Message-ID: <CAFw=huUjK8X=AEimVPLtg9bGh3rKpJ8CpLujQEqwWQ7kvdxmNQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a114f275a87b1fe055bcd40ce"
-Subject: [oss-security] MuPDF mutools Out-of-Bounds Write Vulnerability (CVE-2017-15587)
+Content-Type: text/plain
+Subject: [oss-security] Re: libpng NULL pointer dereference bugfix
 
---001a114f275a87b1fe055bcd40ce
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A vulnerability in mutools PDF parsing functionality allows an attacker to
-write controlled data to an arbitrary location in memory due to an integer
-overflow when performing truncated xref checks.
+> NULL pointer dereference bug in png_set_text_2()
+> 
+> an application
+> has to load a text chunk into the png structure, then delete all text, then
+> add another text chunk
 
-Fix:
-http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
-Writeup: https://nandynarwhals.org/CVE-2017-15587/
+Use CVE-2016-10087.
 
-Timeline
-28 Sept 2017 - Discovery of the vulnerability.
-28 Sept 2017 - Disclosure (
-https://bugs.ghostscript.com/show_bug.cgi?id=698605) of vulnerability to
-the vendor and to Debian Security Team.
-16 Oct 2017 - Vendor fixes the issue in git commit (
-http://git.ghostscript.com/?p=mupdf.git;h=82df2631d7d0446b206ea6b434ea609b6c28b0e8
-).
-18 Oct 2017 - CVE-2017-15587 assigned to the issue.
-18 Oct 2017 - Publication of the vulnerability details.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This issue was discovered by Terry Chia (Ayrx) and Jeremy Heng (nn_amon).
-
---001a114f275a87b1fe055bcd40ce--
+iQIcBAEBCAAGBQJYZqBTAAoJEHb/MwWLVhi2wCQP/0MuFVxaThebajC21ogCNkZ+
+W1xIxSwriMBZPbTJmRVj10wdi07UhFH4ut5zAlFmL7nePhuTfZuH9C0BfjA124o9
+IFWlLaABz/yzPGFrWcapbdTkCFiE46xThxvhLoc9ESXtmlesN6tf+2nz7yBre2kS
+ySc20NoQNRCmTikdad9jerh+A9YjNmEZnS9g6ydxAAzuid1VHRZa8JGaq5ShgmBb
+oOmpEcxpsgqZxoSb62PR6NoKXgIkDTCrkcYvDXo3XNwHZ2d2/4eMK+FTvrClB84O
+7x4nFXgWnGlfL6PWOJVzXn51Guij2GHrUOKaC6X8OMR+8crF0jZncOq+yJr0HcNo
+ZEU0TQrIBj7CIOeflynhJS+ABbbABTLyODZJiBXxI5mSv/pWjTttcJ5ClIgesQAP
+/C151FeN05hc1bXQBV8VlXKpN+Ge7MMGZKnbbLO6ld1jEaIjKWfWIL4npceeAkJS
+MhHwg3VwwfcDZGsa6II6iy6Sny5ddEdsQSI0MKned3AI8U6Q7rZ51/NJvnA4t1A0
+7PQDwWd/kiftZD0JDPQI9xFtQXRR9QweHWsS0lNxApBITocMKqQQ0vv1Fo6vbJMs
+aHAkSpBo4IvyPkW5JBmA1WXXuNs8HRGZUDVLjlcErgr5+KpTbs3gt1J2/28kBL/+
+6UOSSsIexpBKzfoJj3tu
+=H34M
+-----END PGP SIGNATURE-----
