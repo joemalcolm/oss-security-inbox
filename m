@@ -1,31 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/01/11
-Message-ID: <20161201171236.4754.235004A2@matica.foolinux.mooo.com>
-Date: Thu, 1 Dec 2016 09:15:35 -0800
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/1
+Message-ID: <20161230134600.vva3eii4zfzm3r3d@eldamar.local>
+Date: Fri, 30 Dec 2016 14:46:00 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: dcraw and CVE-2015-8366 + CVE-2015-8367
+Cc: Ben Hutchings <benh@...ian.org>, Marcus Meissner <meissner@...e.de>
+Subject: Re: Linux Kernel use-after-free in SCSI generic device interface
 Content-Type: text/plain; charset=utf-8
 
-On 2016-10-16 00:50, Ben Woods wrote:
+Hi Marcus, hi List
 
-> I noticed you mentioned in the mailing list post below that "CVE-2015-8366
-> will be fixed in v9.27" - did that end up getting fixed in 9.27? How about
-> CVE-2015-83667?
+On Fri, Dec 09, 2016 at 12:14:15AM +0100, Marcus Meissner wrote:
+> Hi folks,
+>
+> This is CVE-2016-9576.
+>
+> This original post from  Dmitry Vyukov <dvyukov @ google . com> has a kasan/syzkaller report:
+> https://marc.info/?l=linux-scsi&m=148010092224801&w=2
+>
+> https://gist.githubusercontent.com/dvyukov/80cd94b4e4c288f16ee4c787d404118b/raw/10536069562444da51b758bb39655b514ff93b45/gistfile1.txt
+>
+> which in turn turned out to be a kernel memory read or
+> potentially even a kernel memory write, in using the scatter gather
+> write mode of the /dev/sg* scsi generic devices.
+>
+> The affected code is in Linux down to 2.6.something (problem might require splice() to be exploitable).
+>
+> Linus has committed a fix for this to mainline:
+>
+> commit a0ac402cfcdc904f9772e1762b3fda112dcc56a0
+> Author: Linus Torvalds <torvalds@...ux-foundation.org>
+> Date:   Tue Dec 6 16:18:14 2016 -0800
+>
+>     Don't feed anything but regular iovec's to blk_rq_map_user_iov
+>
+>     In theory we could map other things, but there's a reason that function
+>     is called "user_iov".  Using anything else (like splice can do) just
+>     confuses it.
+>
+>     Reported-and-tested-by: Johannes Thumshirn <jthumshirn@...e.de>
+>     Cc: Al Viro <viro@...IV.linux.org.uk>
+>     Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
 
-> CVE-2015-8366
-> Index overflow in smal_decode_segment
-> https://github.com/LibRaw/LibRaw/commit/89d065424f09b788f443734d44857289489ca9e2
+Just a heads up on CVE-2016-9576.
 
-> CVE-2015-8367
-> Memory objects are not intialized properly
-> https://github.com/LibRaw/LibRaw/commit/490ef94d1796f730180039e80997efe5c58db780
+Ben Hutchings (Cc'ed) noticed that whilst the originally identified
+commit does partly address the issue, the completed fix for the sg and
+bsg driver appears to be 128394eff343fc6d2f32172f03e24829539c5835.
 
-Since there has been no reply here, I examined the source for dcraw
-9.27, and as far as I can see neither of these issues is addressed by
-it.  Of course, the author has the final word.
+https://git.kernel.org/linus/128394eff343fc6d2f32172f03e24829539c5835
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+In Debian for the upcoming kernel updates for 3.16.x in Jessie and
+3.2.x in Wheezy, thus the above was used to address CVE-2016-9576.
+
+https://anonscm.debian.org/cgit/kernel/linux.git/commit/?h=jessie&id=160c700612e57b2939fda763430e08dd089b2496
+https://anonscm.debian.org/cgit/kernel/linux.git/commit/?h=wheezy-security&id=d8cef48e69ba67583c1fc2ec8953538218054cfe
+
+This might raise the question if we need two CVE assignments per the
+two commits, or just keeping the one assigned CVE to identify the
+issue?
+
+Regards,
+Salvatore
