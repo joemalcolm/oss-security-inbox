@@ -1,42 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/08/24/3
-Message-ID: <57BD9C57.9030203@cleal.org>
-Date: Wed, 24 Aug 2016 14:08:39 +0100
-From: Dominic Cleal <dominic@...al.org>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2016-6320: Foreman stored XSS in network interface device identifiers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/30/3
+Message-ID: <b45e0575bb6e4d4d820c28b90e946018@imshyb02.MITRE.ORG>
+Date: Fri, 30 Dec 2016 12:57:19 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <benh@...ian.org>, <meissner@...e.de>
+Subject: Re: Linux Kernel use-after-free in SCSI generic device interface
 Content-Type: text/plain; charset=utf-8
 
-CVE-2016-6320: Foreman stored XSS in network interface device identifiers
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Network interface identifiers stored for hosts may contain HTML or
-JavaScript that allows a stored XSS (cross-site scripting) vulnerability
-when later viewing the host edit form, which contains detail on each
-stored network interface.
+>> Linus has committed a fix for this to mainline:
+>>
+>> commit a0ac402cfcdc904f9772e1762b3fda112dcc56a0
 
-This issue was reported by Sanket Jagtap.
+> whilst the originally identified
+> commit does partly address the issue, the completed fix for the sg and
+> bsg driver appears to be 128394eff343fc6d2f32172f03e24829539c5835.
 
-Affects Foreman 1.8.0 and higher
-Fix released in Foreman 1.12.2
+Use CVE-2016-10088 for the vulnerability that remains after
+a0ac402cfcdc904f9772e1762b3fda112dcc56a0.
 
-Patch:
-https://github.com/theforeman/foreman/commit/53081ea14b30d66f0d67b62fe950a2c1463225f5
+The a0ac402cfcdc904f9772e1762b3fda112dcc56a0 code change is in 4.8.14,
+but the 128394eff343fc6d2f32172f03e24829539c5835 code change is not.
 
-More information:
-https://theforeman.org/security.html#2016-6320
-http://projects.theforeman.org/issues/16022
-https://theforeman.org
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Dominic Cleal
-dominic@...al.org
-
-
-
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+iQIcBAEBCAAGBQJYZp9JAAoJEHb/MwWLVhi2fIIP/RHrAePUQrejGdzGBsGEVGEr
+eU0RWwNYthutvvKOV0L96oOdLjbjkptp3Q4CWdcny1F39G7e2r7kgt0isSsnveJu
+TubQ87XWPslY0jzooSGhreGoPB31pmueFZDuVt0f1eYGwXQdWCRH9z59jPyOFQaV
+CLVekCk5ms1pfvhKbNig6YEuuqSD6RSqEcDw3c4SwAuD/rzxwQtElOP7xo3YlH+z
+tho/AngjFq7hVvzpNfOP75rPHWS0TTatMYyr8NqOTZI+6WukwvC3uXGT21lKzD8J
+rzH8sJ7Hv+p/I2gUDCzINcQ9BdzT0uu3la5KbdhCxjZbkMH24sZ1M4IflzxnzwiQ
+HZicaQMG7RY4Q/QRDBnssI7LSFxKhZ/puh7gRsCHtRexEUQy3veGNFfTOyga/TgB
+5ITNA0g6Y0AFIQS2B2eF5+4g+A21LryqZhsBJP4C8knVae9MwaRgnJ0qdAc/MObc
+s1Oxx63jJbd2wqHO0ybTPG41CnUuBNIVB90HGwLPDw0o06IZq1S7vbG/X/IkVfxC
+PtE8fwNCKpR1GW8n7sPTWDMrs7qMHfxKp8ES0u+HXW2cs6jcz4CJigMfDj+uQHO0
+uJJYwROyfO07RV9MS1R4+kpHq/5XrEx7ka/YjSwMulIHdALJjBSpL3sipOTzNrxa
+lxseS32rE8umc+Pgz32C
+=9EjT
+-----END PGP SIGNATURE-----
