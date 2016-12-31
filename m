@@ -1,49 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/03/06/5
-Message-Id: <110FE574-DEEC-4308-90BE-A83A5C53421A@gmail.com>
-Date: Sun, 6 Mar 2016 12:39:46 +0000
-From: "op7ic \\x00" <op7ica@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Concerns about CVE coverage shrinking - direct impact to researchers/companies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/31/1
+Message-ID: <CACvbKQavmHbrxTWnpGKF4XTsmifAa_4hwWavV427P8b4gDb+Sg@mail.gmail.com>
+Date: Sat, 31 Dec 2016 05:38:20 -0200
+From: Pedro Santos <pedrosans@...il.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com,  security <security@...che.org>
+Subject: Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
 Content-Type: text/plain; charset=utf-8
 
-www.freeovi.com  -> it does have big ‘blue’ button. 
+Forwarding the message em plain text mode to:
+
+- be accepted by securityfocus's mail server ( didn't accepted MIME
+Content-Type 'multipart/alternative' )
+- add oss-security@...ts.openwall.com at the open receiver ( openwall
+is not accepting emails if in BCC)
+- adding missing Apache's security team (my bad, missed in the original email)
+
+Pedro Santos
+
+---------- Forwarded message ----------
+From: Pedro Santos <pedro@...che.org>
+Date: Sat, Dec 31, 2016 at 5:21 AM
+Subject: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
+To: announce@...ket.apache.org, "users@...ket.apache.org"
+<users@...ket.apache.org>, dev@...ket.apache.org
 
 
-> On Mar 6, 2016, at 6:27 AM, gremlin@...mlin.ru wrote:
-> 
-> On 2016-03-05 20:20:39 +0300, Solar Designer wrote:
-> 
->>> I think it's been said on this list previously -- these are
->>> two separate activities:
->>> 1. Assigning IDs
-> 
->> Problem solved:
->> http://www.openwall.com/ove
-> 
-> Hmmm... sorry to say, but I've garbaged 21 IDs by simply visiting
-> this page and reloading it twice just to see what would happen :-)
-> 
-> So I'd suggest adding a BRB (Big Red Button) for those who actually
-> need an ID, and displaying some statistics ("1234 IDs were assigned
-> today") for everyone else.
-> 
-> Style suggestion:
-> 
-> [form action='.' method='post']
-> [input style='background:red;color:white;padding:16px;font-size:32px'
-> name='request' value='GET ID' type='submit']
-> [/form]
-> 
-> Looks nice for me.
-> 
->>> 2. Analysis, deconfliction, write-up
->> Having IDs is of some use even without or before all of that.
-> 
-> Yes. So prepare for the above link to become really popular.
-> 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin
-> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+CVE-2016-6793: Apache Wicket deserialization vulnerability
 
+Severity: Low
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Apache Wicket 6.x and 1.5.x
+
+Description: Depending on the ISerializer set in the Wicket
+application, it's possible that a Wicket's object deserialized from an
+untrusted source and utilized by the application to causes the code to
+enter in an infinite loop. Specifically, Wicket's DiskFileItem class,
+serialized by Kryo, allows an attacker to hack its serialized form to
+put a client on an infinite loop if the client attempts to write on
+the DeferredFileOutputStream attribute.
+
+Mitigation: Upgrade to Apache Wicket 6.25.0 or 1.5.17
+
+Credit: This issue was discovered by Jacob Baines, Tenable Network
+Security and Pedro Santos
+
+References: https://wicket.apache.org/news
