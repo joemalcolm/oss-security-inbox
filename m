@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/06/08/10
-Message-ID: <4CC7C148-7BCC-4D6D-88D0-ED2BADD124BF@schaltsekun.de>
-Date: Wed, 08 Jun 2016 21:52:51 +0200
-From: Roman Drahtmueller <draht@...altsekun.de>
-To: oss-security@...ts.openwall.com,Marcus Meissner <meissner@...e.de>
-Subject: Re: CVE-2016-2178: OpenSSL DSA follows a non-constant time codepath for certain operations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/31/2
+Message-ID: <20161231154054.abrg2lwgdfj3354p@eldamar.local>
+Date: Sat, 31 Dec 2016 16:40:54 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: daved@...siol.usyd.edu.au, Jean-Francois Dockes <jf@...kes.org>, Willi Mann <willi@...ian.org>, security@...ian.org
+Subject: CVE Request: UnRTF: stack-based buffer overflows in cmd_* functions
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+Hi
 
-> Hi,
+As reported by "Skylake" in the Debian bugtracker[1], UnRTF is prone
+to stack-based buffer overflows in various cmd_* functions.
+
+> I've found a Stack-based buffer overflow in unrtf 0.21.9, which
+> affects three functions including: cmd_expand, cmd_emboss and
+> cmd_engrave.
 > 
-> the openssl team usually announces those LOW issues together with the
-> other
-> issues during their semi regular advisories.
+> # convert.c
 > 
-> (And usually as soon as these LOW CVE issues are getting added to git,
-> a
-> new advisory is not far away.)
+> static int
+> cmd_expand (Word *w, int align, char has_param, int param) {
+> char str[10];
+> if (has_param) {
+> sprintf(str, "%d", param/4); // Overflow, 9-digit negative value triggers the bug
+> if (!param)
+> attr_pop(ATTR_EXPAND);
+> else
+> attr_push(ATTR_EXPAND, str);
+> }
+> return FALSE;
+> }
 > 
+> Apparently writing a negative integer to the buffer can trigger the
+> overflow (Minus sign needs an extra byte).
+> 
+> * How to trigger the bug *
+> 
+> $ echo "\expnd-400000000" > poc
+> $ unrtf poc
 
-The only low part here appears to be the number of samples needed for a full recovery. 
-Are we sure that a "low" rating is justified?
-DSA is basically dead, until the constant time switch is flicked. The only countermeasure so far is turning it off. 
+A preliminary patch can be found in the Debian bugtracker, but it is
+not yet finalized.
 
-Thx,
-Roman.
+Could you assign (a?) CVE as needed? Does one CVE suffice here, since
+same class of issue in various cmd_* functions from one reporter?
+Whilest, at least in Debian, unrtf is compiled with FORTIFY_SOURCE=2
+and the buffer overflows are detected, at least if any exposed
+application uses unrtf to process untrusted input, this might lead to
+a denial-of-service.
 
--- 
-schaltsekun.de
+ [1] https://bugs.debian.org/849705
+
+Regards,
+Salvatore
