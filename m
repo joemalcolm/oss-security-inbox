@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3630" "Monday" "10" "April" "2017" "07:30:15" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<483530.584347562-sendEmail@localhost>" "74" "[oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)" nil nil nil "4" "2017041007:30:15" "[oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)" (number mark "U       ago@gentoo.o Apr 10   74/3630  " thread-indent "\"[oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1459" "Saturday" "31" "December" "2016" "05:38:20" "-0200" "Pedro Santos" "pedrosans@gmail.com" "<CACvbKQavmHbrxTWnpGKF4XTsmifAa_4hwWavV427P8b4gDb+Sg@mail.gmail.com>" "40" "[oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability" nil nil nil "12" "2016123107:38:20" "[oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability" (number mark "U       pedrosans@gm Dec 31   40/1459  " thread-indent "\"[oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability\"\n") "<CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>" ("<CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22377 invoked by uid 550); 10 Apr 2017 07:30:36 -0000
+Received: (qmail 17813 invoked by uid 550); 31 Dec 2016 12:54:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22017 invoked from network); 10 Apr 2017 07:30:32 -0000
-Message-ID: <483530.584347562-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:30:15 +0000
+Received: (qmail 3389 invoked from network); 31 Dec 2016 07:38:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=7kRmV3B30Izvfj4GNsGFV0lTekS78rA0SkeAqxRYkw8=;
+        b=lRG9e+Yze1rRKls8qbDKVThwmwxYF2PF+zByhUx0mYm9H2CgZy3AUO0Xipxw61JErw
+         YNcNqMFIhjZcOKgjeX5cCsIyktc4RU5EGTjI7QWDwKm47LKU04l+lqj6+qxO3ObeWGe6
+         7pwSoMvWU+HgGO+lQCt8b8146dmPX+0kj0xs8b1DBmtgTQySpeHdUd1GX1u50tUItVSD
+         fhMzM3Q6Vd4uB6xTHB6OkbQGeaIe0oP2RH4OXyMoMq/s581tMY74CbbIxsebaGTcJQp1
+         pqHoCLFa9wYB6TMJuBnQz0V7uZMhmm9fCEHTm+oDY6nGGiw4+LD3rO5eiT17npfucjaX
+         RdgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=7kRmV3B30Izvfj4GNsGFV0lTekS78rA0SkeAqxRYkw8=;
+        b=mMHazQaELw53AuX+c8jWz6Am0EbUxbMkNE4a3+ZwH75zGuXb+MuoR84tKi7fXgY0+r
+         2XJ6UeAUUNSBjbDEGtBzgfaSk+MjpoRmnj+KDMrk7P/lcJ1K4ZQhyYSonC28GsnhgYqT
+         FWb6pqYUmop/UZN+aw0IRZd2yvWCEapqxLnolAXPMTw4Z8eRPfAXZksa7IrN4+14DoHA
+         JeIyVqsV7YDrrjUkaq3gUSVTAwAJP2vda2uiUDN3qkjm+771o8B7pEWEa7AppK9sG2i2
+         2XULiLYu7MliJ0OZ2EajZu0Q9QOgQr1PFeff0U8kZOVc+/NjTU8RBJlNC6HtcmhXhylO
+         8HwQ==
+X-Gm-Message-State: AIkVDXKqiKJoyv3hJsuM/jj5AI8QhGVCPELSCUdGR9DKRURNmOhtDz67GRHa2iqDzkEqsfcU1QpdzFatfu1k3w==
+X-Received: by 10.157.11.67 with SMTP id p3mr17853363otd.215.1483169901162;
+ Fri, 30 Dec 2016 23:38:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-847036.03324397"
-Subject: [oss-security] elfutils: memory allocation failure in __libelf_decompress (elf_compress.c)
+In-Reply-To: <CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>
+References: <CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>
+From: Pedro Santos <pedrosans@gmail.com>
+Date: Sat, 31 Dec 2016 05:38:20 -0200
+Message-ID: <CACvbKQavmHbrxTWnpGKF4XTsmifAa_4hwWavV427P8b4gDb+Sg@mail.gmail.com>
+To: oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
+	security <security@apache.org>
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
 
-------MIME delimiter for sendEmail-847036.03324397
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Forwarding the message em plain text mode to:
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+- be accepted by securityfocus's mail server ( didn't accepted MIME
+Content-Type 'multipart/alternative' )
+- add oss-security@lists.openwall.com at the open receiver ( openwall
+is not accepting emails if in BCC)
+- adding missing Apache's security team (my bad, missed in the original email)
 
-A fuzz on eu-readelf showed a memory allocation failure. Will follow a feedback from upstream:
+Pedro Santos
 
-That is slightly tricky. We do have to trust the input data to give us the expected output size. We won’t know if that was correct till we decompressed the input. We do actually double check the given 
-output size was correct at the end of the decompression. But we could catch some really bogus sizes before trying to allocate a giant amount of memory and decompressing stuff for nothing (like in this 
-case).
-
-The complete ASan output:
-
-# eu-readelf -a $FILE
-==1927==WARNING: AddressSanitizer failed to allocate 0x280065041580 bytes
-==1927==AddressSanitizer's allocator is terminating the process instead of returning 0
-==1927==If you don't like this behavior set allocator_may_return_null=1
-==1927==AddressSanitizer CHECK failed: /tmp/portage/sys-devel/gcc-6.3.0/work/gcc-6.3.0/libsanitizer/sanitizer_common/sanitizer_allocator.cc:145 "((0)) != (0)" (0x0, 0x0)
-    #0 0x7f85fc3a741d  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcb41d)
-    #1 0x7f85fc3ad063 in __sanitizer::CheckFailed(char const*, int, char const*, unsigned long long, unsigned long long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xd1063)
-    #2 0x7f85fc3ab226  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xcf226)
-    #3 0x7f85fc3016a4  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x256a4)
-    #4 0x7f85fc39e265 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2265)
-    #5 0x7f85fb88dd1e in __libelf_decompress /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_compress.c:214
-    #6 0x7f85fb88e359 in __libelf_decompress_elf /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_compress.c:288
-    #7 0x7f85fb89132e in elf_compress /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_compress.c:479
-    #8 0x41f933 in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3327
-    #9 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
-    #10 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #11 0x7f85fbe3a094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #12 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #13 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #14 0x7f85fa45878f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #15 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
-
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00114.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7609
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00227-elfutils-memallocfailure
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-memory-allocation-failure-in-__libelf_decompress-elf_compress-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+---------- Forwarded message ----------
+From: Pedro Santos <pedro@apache.org>
+Date: Sat, Dec 31, 2016 at 5:21 AM
+Subject: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
+To: announce@wicket.apache.org, "users@wicket.apache.org"
+<users@wicket.apache.org>, dev@wicket.apache.org
 
 
-------MIME delimiter for sendEmail-847036.03324397--
+CVE-2016-6793: Apache Wicket deserialization vulnerability
 
+Severity: Low
+
+Vendor: The Apache Software Foundation
+
+Versions Affected: Apache Wicket 6.x and 1.5.x
+
+Description: Depending on the ISerializer set in the Wicket
+application, it's possible that a Wicket's object deserialized from an
+untrusted source and utilized by the application to causes the code to
+enter in an infinite loop. Specifically, Wicket's DiskFileItem class,
+serialized by Kryo, allows an attacker to hack its serialized form to
+put a client on an infinite loop if the client attempts to write on
+the DeferredFileOutputStream attribute.
+
+Mitigation: Upgrade to Apache Wicket 6.25.0 or 1.5.17
+
+Credit: This issue was discovered by Jacob Baines, Tenable Network
+Security and Pedro Santos
+
+References: https://wicket.apache.org/news
