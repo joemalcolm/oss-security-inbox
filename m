@@ -1,4 +1,9 @@
-Received: (qmail 8106 invoked by uid 550); 20 May 2026 20:44:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3643" "Sunday" "1" "January" "2017" "16:46:12" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1875168.fojZKPVITU@arcadia>" "113" "[oss-security] libtiff: multiple divide-by-zero" nil nil nil "1" "2017010115:46:12" "[oss-security] libtiff: multiple divide-by-zero" (number mark "U       ago@gentoo.o Jan  1  113/3643  " thread-indent "\"[oss-security] libtiff: multiple divide-by-zero\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22181 invoked by uid 550); 1 Jan 2017 15:44:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +12,127 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11824 invoked from network); 20 May 2026 20:27:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779308839;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Lu0P8srGSEcDx77OnqQjlRegVZuyeiYVbgqyjF4h+ng=;
-	b=fZuZ1Tcim2NMWxpanmvKfmfcl0jwtfOm8pN9Q32zHFFCTjP8MBX+Cjjpb6vf1c+1UUJJkp
-	mi0b77HzrQQ5ktDiaC5PQux1SXXczsBWF80E7FK6d8UFKkC4UHdfyIb5E123ld9U+LaE/g
-	ZTx/zMgmm3niLtpXi4rsrhxZ3+s+NlQi9qh3PZOiXTZFqtHby5HEUQO7HPK49lmT1gcPZp
-	d1uQ+mVSZGEiYYvYfKRX+FHJM2P8zQkoAX7CUAqq5b3bchJUKoZDWLgEuamn0D1segurDs
-	0ebJBgG4A0iU7OQgy+qujZKVQaGq7vVMQawhYgIb6DUn2qAoGkwt5h0eRsVwbQ==
-Message-ID: <a58262e5-1da1-464c-9ce4-80de1b916bee@cpansec.org>
-Date: Wed, 20 May 2026 21:27:19 +0100
+Received: (qmail 22143 invoked from network); 1 Jan 2017 15:44:42 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Sun, 01 Jan 2017 16:46:12 +0100
+Message-ID: <1875168.fojZKPVITU@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTEx7i6R+vG90GCvC0YalLtKxU8ktSESR+SyH9LWIb5BmEbyTG9tZVip87hfWDHTg910LyT5R7dljkUV1S+1HByFjNhtvDshkIZB0Y+Qbwef6bBya9CxIn75TdA4utFMmiS+v2ykg29lbPy1g8li0oEG+wCIRRP5rWyk/rEwqI6NDcrtew0UqN6smYvfoFHBzquwUZB5o/8iYqb5Li8tyFvMDlguM8UbqJ7fdXmB/EyTzUKicd/3bd6uijzluJfuFm/R/cETL8cuDJMxxIuwe69KA5xpkKg0/NmLKG+Of7fwP24Y0B4hmvRHyIGW9iFMLBaSre7WRYmTny02cEB8x/xYa7UKFq1Fdp372gEerHF7tTer/tKKXbkUv2bc8m22c9wc4B7RrIbGNiCKF4W/Vh9ROyNBC/S/N5XX6GwbdChLEp9wwpD0xzbwevhGcoaHGBeHpnRAF99mLjwJ1rx4OzMEAjac/Pysz/RiFf16n8frZcLXW7oeuf8cIquKmthuJjtIV3EtBqk98hGtcpIMVGAjpTeD8xkkZwhqOdyfu9JTp1qO5JBTFnbfT2V4N9PQ3tlXUD0D9TLWrYkZYIZ+JFNOWmUCXFWsncrDextKIdAJfeCYRcdJDoZ0qtw1V6zJUu5OaDM6npL3vyrPItaH0KuuLNCh6bX/E7PuyhtcaMLibA
-Subject: [oss-security] CVE-2026-47373: Crypt::SaltedHash versions through 0.09 for Perl is
- susceptible to timing attacks
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libtiff: multiple divide-by-zero
 
-========================================================================
-CVE-2026-47373                                       CPAN Security Group
-========================================================================
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-         CVE ID:  CVE-2026-47373
-   Distribution:  Crypt-SaltedHash
-       Versions:  through 0.09
+Some crafted images, through a fuzzing revealed multiple division by zero. 
+Since the number of the issues, I will post the relevant part of the 
+stacktrace.
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-SaltedHash
-       VCS Repo:  https://github.com/robrwo/perl-Crypt-SaltedHash
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/438274f938e046d33cb0e1230b41da32ffe223e1
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00064-libtiff-fpe-TIFFReadEncodedStrip
+Relevant part of the stacktrace:
+
+# tiffcp $FILE /tmp/foo
+==12079==ERROR: AddressSanitizer: FPE on unknown address 0x7fd319436251 (pc 
+0x7fd319436251 bp 0x7fff851e3d80 sp 0x7fff851e3d30 T0)
+    #0 0x7fd319436250 in TIFFReadEncodedStrip /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:351:22
+
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/43bc256d8ae44b92d2734a3c5bc73957a4d7c1ec
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00083-libtiff-fpe-OJPEGDecodeRaw
+Relevant part of the stacktrace:
+
+# tiffmedia $FILE /tmp/foo
+==28106==ERROR: AddressSanitizer: FPE on unknown address 0x7faeae7f744e (pc 
+0x7faeae7f744e bp 0x7ffceab45e40 sp 0x7ffceab45ce0 T0)
+    #0 0x7faeae7f744d in OJPEGDecodeRaw /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_ojpeg.c:816:8
+
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/d3c5426395dc53e3345712ac7246c29db9fed8fa
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00099-libtiff-fpe-readSeparateStripsIntoBuffer
+Relevant part of the stacktrace:
+
+# tiffcrop $FILE /tmp/foo
+==19098==ERROR: AddressSanitizer: FPE on unknown address 0x000000523acf (pc 
+0x000000523acf bp 0x7ffcb22ada30 sp 0x7ffcb22ad780 T0)
+    #0 0x523ace in readSeparateStripsIntoBuffer /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcrop.c:4841:36
+
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/a87eb62049f446204ed62c939f965eb76bd98001
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00065-libtiff-fpe-readSeparateTilesIntoBuffer
+Relevant part of the stacktrace:
+
+# tiffcp $FILE /tmp/foo
+==13262==ERROR: AddressSanitizer: FPE on unknown address 0x00000051c43b (pc 
+0x00000051c43b bp 0x7ffdc8d81d70 sp 0x7ffdc8d81b20 T0)
+    #0 0x51c43a in readSeparateTilesIntoBuffer /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1434:9
+
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/296803e79542f5523be1009d64574507b9acc239
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00073-libtiff-fpe-writeBufferToSeparateTiles
+Relevant part of the stacktrace:
+
+# tiffcp -i $FILE /tmp/foo
+==3614==ERROR: AddressSanitizer: FPE on unknown address 0x00000051650a (pc 
+0x00000051650a bp 0x7fff41587d30 sp 0x7fff41587b00 T0)
+    #0 0x516509 in writeBufferToSeparateTiles /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1591:13
 
 
-Crypt::SaltedHash versions through 0.09 for Perl is susceptible to
-timing attacks
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-Description
------------
-Crypt::SaltedHash versions through 0.09 for Perl is susceptible to
-timing attacks.
+Timeline:
+2016-11-20: started to post the issues to upstream
+2017-01-01: blog post about the issue
 
-These versions use Perl's built-in eq comparison. Discrepencies in
-timing could be used to guess the underlying hash.
+Note:
+These bugs were found with American Fuzzy Lop.
 
-Problem types
--------------
-- CWE-208 Observable Timing Discrepancy
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-divide-by-zero
 
-Solutions
----------
-Upgrade to version 0.10 or later.
-
-
-References
-----------
-https://metacpan.org/release/RRWO/Crypt-SaltedHash-0.10/changes
-https://github.com/robrwo/perl-Crypt-SaltedHash/commit/c07bfc5c23185b0667233d0f2e1252d81f1f027a.patch
-
-
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
