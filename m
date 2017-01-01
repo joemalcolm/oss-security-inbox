@@ -1,4 +1,9 @@
-Received: (qmail 32022 invoked by uid 550); 20 Jan 2025 22:04:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["575" "Sunday" "1" "January" "2017" "16:41:25" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1557139.J15zvKlvWX@arcadia>" "21" "[oss-security] libtiff: multilple crashes" nil nil nil "1" "2017010115:41:25" "[oss-security] libtiff: multilple crashes" (number mark "U       ago@gentoo.o Jan  1   21/575   " thread-indent "\"[oss-security] libtiff: multilple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8136 invoked by uid 550); 1 Jan 2017 15:39:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +12,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31983 invoked from network); 20 Jan 2025 22:04:55 -0000
-Date: Mon, 20 Jan 2025 23:04:45 +0100
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 8101 invoked from network); 1 Jan 2017 15:39:58 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <Z47IfZiDnNqGAmCt@256bit.org>
+Date: Sun, 01 Jan 2017 16:41:25 +0100
+Message-ID: <1557139.J15zvKlvWX@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] Subject: [vim-security] segmentation fault in win_line() in Vim <
- 9.1.1043
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libtiff: multilple crashes
 
-segmentation fault in win_line() in Vim < 9.1.1043
-==================================================
-Date: 20.01.2025
-Severity: Medium
-CVE: CVE-2025-24014
-CWE: Out-of-bounds Write (CWE-787)
+Happy year to everyone.
 
-In silent Ex mode (-s -e), Vim typically doesn't show a screen and just
-operates silently in batch mode. However, it is still possible to
-trigger the function that handles the scrolling of a gui version of Vim
-by feeding some binary characters to Vim. The function that handles the
-scrolling however may be triggering a redraw, which will access the
-ScreenLines pointer, even so this variable hasn't been allocated
-(since there is no screen).
+I discovered several crashes in libtiff. To avoid dozens of posts, I tried =
+to=20
+group them based on the type of issue.
+Summary:
 
-In Patch 9.1.1043 Vim will therefore skip the redraw attempt, by testing
-whether the ScreenLines pointer is NULL.
+1) The majority of the issues were reproducible by upstream and they were=20
+fixed
+2) Few issues were reproducible by upstream and they were NOT fixed
+3) Some issues were NOT reproducible by upstream.
 
-Impact is medium since the user must intentionally and explicitly feed
-some binary data to Vim in ex mode.
+So for now I will not post the issues described at the point N=C2=B03 and t=
+ry in=20
+the near future to make upstream able to reproduce them.
 
-The Vim project would like to thank github user @fizz-is-on-the-way
-for reporting this issue.
+Will follow the details.
 
-The issue has been fixed as of Vim patch v9.1.1003
-
-References:
-https://github.com/vim/vim/commit/9d1bed5eccdbb46a26b8a484f5e9163c40e63919
-https://github.com/vim/vim/security/advisories/GHSA-j3g9-wg22-v955
-
-Thanks,
-Christian
--- 
-Catharsis is something I associate with pornography and crossword puzzles.
-		-- Howard Chaykin
+--=20
+Agostino Sarubbo
+Gentoo Linux Developer
