@@ -1,65 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/3
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955B10190@S0MSMAIL112.arc.local>
-Date: Mon, 13 Nov 2017 15:10:25 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-Subject: AW: Security risk of server side text editing in general and vim.tiny specifically
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/11
+Message-ID: <cb1ae0f8e06e43d180b360cd96d8c69f@imshyb02.MITRE.ORG>
+Date: Sun, 1 Jan 2017 12:52:56 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libtiff: stack-based buffer overflow in _TIFFVGetField (tif_dir.c)
 Content-Type: text/plain; charset=utf-8
 
-Hello Alexander,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Von: Solar Designer [mailto:solar@...nwall.com]
->
-> On Fri, Nov 03, 2017 at 11:07:14AM +0000, Fiedler Roman wrote:
-> > PS: POC for vim.tiny on Ubuntu Xenial to overwrite arbitrary files as user
-> root when editing file in directory owned by other user is available on
-> request, disclosure after one week or if list discussion indicates other 
-> timing.
->
-> Please post this PoC in here ASAP.  Right now, you're in violation of
-> distros list policy for having posted the PoC in there yet not made it
-> public on oss-security within 7 days after posting about the issue
-> itself in here.  Please correct this.  (To me this is also an example of
-> misuse of the distros list, and then of the ability to delay posting the
-> PoC - creating administrative work for all of us out of thin air.)
+> https://blogs.gentoo.org/ago/2017/01/01/libtiff-stack-based-buffer-overflow-in-_tiffvgetfield-tif_dir-c
 
-Thanks for the reminder. here is the text from the original mail to your 
-[vs]-list:
+> tiffsplit
+> AddressSanitizer: stack-buffer-overflow ... WRITE of size 4 at
+> tiff-4.0.7/libtiff/tif_dir.c:1077:29
 
-PS: POC for Ubuntu Xenial to overwrite /bin/mount with custom content by
-creating a x.txt as another user (e.g. www-data) and having root edit it using
-vim.tiny. Of course attacker would restore everything to normal afterwards
-(omitted). On multicore machines, the race is not always won, for testing
-purposes you can strace vim (making it slower) or add other machine load, e.g
-" (cat /dev/zero | md5sum) &" as www-data. With strace, chance is nearly 100%
-to replace /bin/mount with x.txt (including mode, ownership). With 24 md5sum
-on a 4 core machine, chance is > 80% to make /bin/mount world writable,
-otherwise also replacing the content, changing ownership.
+>> http://bugzilla.maptools.org/show_bug.cgi?id=2625
+>> Reported: 2016-12-04
 
-* Create a rogue file of same size as user www-data: In real world attack,
-attack would pad a file writeable by him to same size as a system library,
-essential binary using spaces or newlines at the end of the file. For demo,
-newlines only will do.
+Use CVE-2016-10095.
 
-#!/usr/bin/python3 -BEsStt
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-import os
-
-mountSize = os.stat('/bin/mount').st_size
-targetFileName = 'x.txt'
-targetFile = open(targetFileName, 'wb')
-targetFile.write(b'\n' * mountSize)
-targetFile.close()
-os.chmod(targetFileName, 0o777)
-
-* Use tool from https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=602333 to
-replace with symlink. Start it as www-data after root started "vim.tiny x.txt"
-but before saving file as root.
-
-./DirModifyInotify --Watch x.txt --MovePath x.txt --LinkTarget
-/bin/mount --WatchCount 0
-
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
+iQIcBAEBCAAGBQJYaUD7AAoJEHb/MwWLVhi2MEUP/3BmH0gq++MW96w7r1FJgdmw
++LDl1nEAQfZwiCRVP5G6iL0Egguw8VW2LlYK4YLmnorh8wYWf5mYJQDOI+44f+sK
+oxO1uu2lv/IfePRqgMdWIoJFvuv7QzfplbXSQkH0oW8fCdo7FZ5dbEy3KzWlrFeU
+dGWFx3ypXQ08VvddLssLuG4yLvw4KRI5nYfxkxMNY9N2wFzooVMm64m/bz4T9ZRJ
+DvNMsIU6Yspk2Gv5NLVv4+isqWOTkOgRcuh4Gh8j9Rdni46pnjCEF6Bc1tDI+zmV
+8XnUDURVfRDgXUR2X63/bKbRzTFfkY6lHECAOJ0mAc3fx105Pf6qfy1KvqSSxhi5
+4VV9OaK3Nh/8QAdkalL1MoZZ4qCvmxoevxRIYN3pINx6qlHssYj52tNvaszumq6t
+X7rDfdgKYxQf+uegYFiiEigTu7+UV8tEsRyx/kBfHiZqfkyXMw4eIAEJEJekC6y4
+6RFnaC37VbhCScfHevmrEH8MW2IbVd6zfu3Taayp2WvJmMT0QQ+dXPY3TUgtZXdR
+um0XCOgbrbMTWMVuR7huDzrzMnvkEUMvJtUlNZw+tx0gZerm4hxzrMiyKFhr2Bkj
+8WLRWmgmaDWfeeeMzIZH+cbjI7z/7Mr/5dr2PPc9gXqwVJHpQc1sGjLSO2c4I5pT
+bjm1p3FJdbBJi+DMt82Y
+=2Tt2
+-----END PGP SIGNATURE-----
