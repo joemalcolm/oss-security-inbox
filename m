@@ -1,33 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/16/2
-Message-Id: <5561A290-C77D-4593-B8C7-ECC323C9E3BB@beckweb.net>
-Date: Thu, 16 Nov 2017 16:23:55 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/3
+Message-ID: <1875168.fojZKPVITU@arcadia>
+Date: Sun, 01 Jan 2017 16:46:12 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Reflected Cross-Site Scripting Vulnerability in Jenkins Delivery Pipeline Plugin
+Subject: libtiff: multiple divide-by-zero
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-* Delivery Pipeline Plugin 1.0.8
+Some crafted images, through a fuzzing revealed multiple division by zero. 
+Since the number of the issues, I will post the relevant part of the 
+stacktrace.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-11-16/
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/438274f938e046d33cb0e1230b41da32ffe223e1
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00064-libtiff-fpe-TIFFReadEncodedStrip
+Relevant part of the stacktrace:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+# tiffcp $FILE /tmp/foo
+==12079==ERROR: AddressSanitizer: FPE on unknown address 0x7fd319436251 (pc 
+0x7fd319436251 bp 0x7fff851e3d80 sp 0x7fff851e3d30 T0)
+    #0 0x7fd319436250 in TIFFReadEncodedStrip /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:351:22
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+###############################################
 
----
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/43bc256d8ae44b92d2734a3c5bc73957a4d7c1ec
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00083-libtiff-fpe-OJPEGDecodeRaw
+Relevant part of the stacktrace:
 
-SECURITY-640
-Delivery Pipeline Plugin used the unescaped content of the query parameter 
-`fullscreen` in its JavaScript, resulting in a cross-site scripting 
-vulnerability through specially crafted URLs.
+# tiffmedia $FILE /tmp/foo
+==28106==ERROR: AddressSanitizer: FPE on unknown address 0x7faeae7f744e (pc 
+0x7faeae7f744e bp 0x7ffceab45e40 sp 0x7ffceab45ce0 T0)
+    #0 0x7faeae7f744d in OJPEGDecodeRaw /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_ojpeg.c:816:8
 
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/d3c5426395dc53e3345712ac7246c29db9fed8fa
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00099-libtiff-fpe-readSeparateStripsIntoBuffer
+Relevant part of the stacktrace:
+
+# tiffcrop $FILE /tmp/foo
+==19098==ERROR: AddressSanitizer: FPE on unknown address 0x000000523acf (pc 
+0x000000523acf bp 0x7ffcb22ada30 sp 0x7ffcb22ad780 T0)
+    #0 0x523ace in readSeparateStripsIntoBuffer /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcrop.c:4841:36
+
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/a87eb62049f446204ed62c939f965eb76bd98001
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00065-libtiff-fpe-readSeparateTilesIntoBuffer
+Relevant part of the stacktrace:
+
+# tiffcp $FILE /tmp/foo
+==13262==ERROR: AddressSanitizer: FPE on unknown address 0x00000051c43b (pc 
+0x00000051c43b bp 0x7ffdc8d81d70 sp 0x7ffdc8d81b20 T0)
+    #0 0x51c43a in readSeparateTilesIntoBuffer /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1434:9
+
+###############################################
+
+Affected version / Tested on:
+4.0.7
+Fixed version:
+N/A
+Commit fix:
+https://github.com/vadz/libtiff/commit/296803e79542f5523be1009d64574507b9acc239
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00073-libtiff-fpe-writeBufferToSeparateTiles
+Relevant part of the stacktrace:
+
+# tiffcp -i $FILE /tmp/foo
+==3614==ERROR: AddressSanitizer: FPE on unknown address 0x00000051650a (pc 
+0x00000051650a bp 0x7fff41587d30 sp 0x7fff41587b00 T0)
+    #0 0x516509 in writeBufferToSeparateTiles /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1591:13
+
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-11-20: started to post the issues to upstream
+2017-01-01: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-divide-by-zero
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
