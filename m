@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1617" "Thursday" "6" "April" "2017" "10:39:28" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170406083928.GE32355@suse.de>" "53" "Re: [oss-security] libxslt math.random issue" nil nil nil "4" "2017040608:39:28" "[oss-security] libxslt math.random issue" (number mark "U       meissner@sus Apr  6   53/1617  " thread-indent "\"Re: [oss-security] libxslt math.random issue\"\n") "<20170406103245.67949bfc@pc1>" ("<20170406054400.GC32355@suse.de>" "<20170406103245.67949bfc@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3141" "Sunday" "1" "January" "2017" "16:54:34" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<5243626.fZFJWZMf6g@arcadia>" "89" "[oss-security] libtiff: NULL pointer dereference in TIFFReadRawData (tiffinfo.c)" nil nil nil "1" "2017010115:54:34" "[oss-security] libtiff: NULL pointer dereference in TIFFReadRawData (tiffinfo.c)" (number mark "U       ago@gentoo.o Jan  1   89/3141  " thread-indent "\"[oss-security] libtiff: NULL pointer dereference in TIFFReadRawData (tiffinfo.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28165 invoked by uid 550); 6 Apr 2017 08:39:41 -0000
+Received: (qmail 15968 invoked by uid 550); 1 Jan 2017 15:53:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,75 +12,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28138 invoked from network); 6 Apr 2017 08:39:40 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 6 Apr 2017 10:39:28 +0200
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 15625 invoked from network); 1 Jan 2017 15:53:04 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20170406083928.GE32355@suse.de>
-References: <20170406054400.GC32355@suse.de>
- <20170406103245.67949bfc@pc1>
+Date: Sun, 01 Jan 2017 16:54:34 +0100
+Message-ID: <5243626.fZFJWZMf6g@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170406103245.67949bfc@pc1>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] libxslt math.random issue
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libtiff: NULL pointer dereference in TIFFReadRawData (tiffinfo.c)
 
-On Thu, Apr 06, 2017 at 10:32:45AM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> On Thu, 6 Apr 2017 07:44:00 +0200
-> Marcus Meissner <meissner@suse.de> wrote:
-> 
-> > CVE-2015-9019 has been assigned to use of libexslt (in libxslt) usage
-> > of "math.random" without initializing the randomseed.
-> > 
-> > https://bugzilla.gnome.org/show_bug.cgi?id=758400
-> > https://bugzilla.suse.com/show_bug.cgi?id=934119
-> 
-> I have some questions and comments:
-> 
-> 1. What's the use of the random number and what's the security impact
-> if it's not random? That's not explained
-> In case of the bugreport.
-> In case a cryptographically secure random number is required then using
-> rand()/srand() is a bad idea anyway.
-> (Unfortunately there's no secure random in the standard libc, but at
-> least glibc now has getrandom.).
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
+A crafted tiff file revealed a NULL pointer access.
 
-It is a bit tricky to find out. I googled some use-cases.
+The complete ASan output:
 
-- UUID generation was looked for by 1 stackoverflow user
-- some harmless randomness in XSLT conversion for selection random pictures
+# tiffinfo -Dijr $FILE
 
-> 2. This part of the patch looks a bit strange:
-> 
-> +	seed = time(NULL); /* just in case /dev/urandom is not there */
-> +	if (fd == -1) {
-> +		read (fd, &seed, sizeof(seed));
-> +		close (fd);
-> +	}
-> 
-> You're calling time() unconditionally, although it's kinda just a
-> fallback. Why not
-> +	if (fd == -1) {
-> +		read (fd, &seed, sizeof(seed));
-> +		close (fd);
-> +	} else {
-> +		seed = time(NULL);
-> +	}
-> ?
-> 
-> (obviously using time is not a secure way to do random numbers, if
-> secure numbers are required cross-plattform you need to do this
-> otherwise anyway)
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 384 (0x180) encountered.
+TIFFReadDirectory: Warning, Unknown field with tag 1093 (0x445) encountered.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+TIFFFetchNormalTag: Warning, ASCII value for tag "DocumentName" contains null 
+byte in value; value incorrectly truncated during reading due to 
+implementation limitations.
+TIFFFetchNormalTag: Warning, Incorrect count for "JpegProc"; tag ignored.
+TIFFReadDirectory: Warning, Photometric tag value assumed incorrect, assuming 
+data is YCbCr instead of RGB.
+TIFFReadDirectory: Warning, SamplesPerPixel tag is missing, applying correct 
+SamplesPerPixel value of 3.
+_TIFFVSetField: Warning, SamplesPerPixel tag value is changing, but 
+SMinSampleValue tag was read with a different value. Cancelling it.
+ASAN:DEADLYSIGNAL
+=================================================================
+==15897==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000050d8ad bp 0x7ffc4a3eaf90 sp 0x7ffc4a3eaec0 T0)
+==15897==The signal is caused by a READ memory access.
+==15897==Hint: address points to the zero page.
+    #0 0x50d8ac in TIFFReadRawData /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:421:29
+    #1 0x50b2de in tiffinfo /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:473:4
+    #2 0x50a999 in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:152:6
+    #3 0x7f6258f0961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x419f38 in _init (/usr/bin/tiffinfo+0x419f38)
 
-it should be fd != -1 , my bad :/
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:421:29 in TIFFReadRawData
+==15897==ABORTING
+TIFF Directory at offset 0xc (12)
+  Image Width: 128 Image Length: 1
+  Bits/Sample: 32189
+  Compression Scheme: Old-style JPEG
+  Photometric Interpretation: YCbCr
+  YCbCr Subsampling: 2, 2
+  Samples/Pixel: 3
+  Rows/Strip: 2048
+  Planar Configuration: single image plane
+  DocumentName: 
+  Tag 384: 16779264
 
-Ciaop, Marcus
+Affected version:
+4.0.7
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/vadz/libtiff/commit/c2f931bb558b9db41cb3516a6df3aa600fd85744
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00056-libtiff-nullptr-TIFFReadRawData
+
+Timeline:
+2016-11-22: bug discovered and reported to upstream
+2016-12-03: upstream released a patch
+2017-01-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-null-pointer-dereference-in-tiffreadrawdata-tiffinfo-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
