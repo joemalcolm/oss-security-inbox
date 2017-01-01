@@ -1,90 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/12/8
-Message-ID: <87tw4pere6.fsf@frougon.crabdance.com>
-Date: Fri, 12 May 2017 22:45:05 +0200
-From: Florent Rougon <f.rougon@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/5
+Message-ID: <2034231.emHkJOHN5z@arcadia>
+Date: Sun, 01 Jan 2017 16:50:28 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-8921: directory traversal vulnerability in FlightGear
+Subject: libtiff: invalid memory READ in t2p_writeproc (tiff2pdf.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-Here is the info for CVE-2017-8921:
+A crafted tiff file revealed an invalid memory read.
 
-[Suggested description]
-In FlightGear before 2017.2.1, the FGCommand interface allows
-overwriting any file the user has write access to, but not with
-arbitrary data: only with the contents of a FlightGear flightplan (XML).
-A resource such as a malicious third-party aircraft could exploit this
-to damage files belonging to the user. Both this issue and CVE-2016-9956
-are directory traversal vulnerabilities in Autopilot/route_mgr.cxx -
-this one exists because of an incomplete fix for CVE-2016-9956.
+The complete ASan output:
 
-------------------------------------------
+# tiff2pdf $FILE -o foo
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+111.crashes: Warning, Nonstandard tile length 3, convert file.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
+in value; value incorrectly truncated during reading due to implementation 
+limitations.
+TIFFAdvanceDirectory: Error fetching directory count.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+111.crashes: Warning, Nonstandard tile length 3, convert file.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
+in value; value incorrectly truncated during reading due to implementation 
+limitations.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+111.crashes: Warning, Nonstandard tile length 3, convert file.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
+in value; value incorrectly truncated during reading due to implementation 
+limitations.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+111.crashes: Warning, Nonstandard tile length 3, convert file.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFFetchNormalTag: Warning, ASCII value for tag "Software" contains null byte 
+in value; value incorrectly truncated during reading due to implementation 
+limitations.
+tiff2pdf: Warning, RGB image 111.crashes has 4 samples per pixel, assuming 
+RGBA.
+TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 0; got 0 
+bytes, expected 23297.
+TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 1; got 0 
+bytes, expected 513.
+TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 2; got 512 
+bytes, expected 65285.
+TIFFReadRawTile: Read error at row 4294967295, col 4294967295, tile 3; got 512 
+bytes, expected 1535.
+ASAN:DEADLYSIGNAL
+=================================================================
+==19864==ERROR: AddressSanitizer: SEGV on unknown address 0x61b000020000 (pc 
+0x7fc86d4a320b bp 0x000000000efc sp 0x7fff06650bf8 T0)
+==19864==The signal is caused by a READ memory access.
+    #0 0x7fc86d4a320a  /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/memcpy.S:270
+    #1 0x7fc86d491f79 in _IO_file_xsputn /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/libio/fileops.c:1319
+    #2 0x7fc86d487828 in fwrite /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/libio/iofwrite.c:43
+    #3 0x50cdff in t2p_writeproc /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:405:21
+    #4 0x52baea in t2pWriteFile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:379:10
+    #5 0x52baea in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2924
+    #6 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #7 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #8 0x7fc86d43e61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #9 0x41a298 in _init (/usr/bin/tiff2pdf+0x41a298)
 
-[Additional Information]
-We are not aware of any such malicious resource. The fix will be in
-FlightGear 2017.2.1 (expected in 1 or 2 weeks before the vulnerability
-was found). There may be a stable update too meanwhile (2017.1.4) with
-the fix, but I can't guarantee if so, and when.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/memcpy.S:270 
+==19864==ABORTING
 
-This is not a duplicate of CVE-2016-9956.
+Affected version:
+4.0.7
 
-------------------------------------------
+Fixed version:
+N/A
 
-[Vulnerability Type]
-Incorrect Access Control
+Commit fix:
+https://github.com/vadz/libtiff/commit/891b1b908eb92a0e91e9012a8d32ade7088b5a3f
 
-------------------------------------------
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-[Vendor of Product]
-FlightGear (http://flightgear.org/)
+CVE:
+N/A
 
-------------------------------------------
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00111-libtiff-invalidread-t2p_writeproc
 
-[Affected Product Code Base]
-FlightGear - Affected: releases earlier than 2017.2.1. Fixed in 'next'
-branch (commit faf872e7f71ca14c567ac7080561fc785d8d2fd0), currently
-referred to as FlightGear 2017.2.0 (this is *not* a release).
+Timeline:
+2016-12-20: bug discovered and reported to upstream
+2016-12-20: upstream released a patch
+2017-01-01: blog post about the issue
 
-------------------------------------------
+Note:
+This bug was found with American Fuzzy Lop.
 
-[Affected Component]
-source file: src/Autopilot/route_mgr.cxx in the FlightGear repository,
-executable: fgfs
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-invalid-memory-read-in-t2p_writeproc-tiff2pdf-c
 
-------------------------------------------
-
-[Attack Type]
-Local
-
-------------------------------------------
-
-[CVE Impact Other]
-Allows to overwrite any file the user has write access to, but not
-with arbitrary data: only with the contents of a FlightGear flightplan
-(XML).
-
-------------------------------------------
-
-[Attack Vectors]
-Trick users into installing a resource that, when run, can execute
-arbitrary FGCommands. For instance, a malicious third-party aircraft
-could do that.
-
-------------------------------------------
-
-[Reference]
-https://sourceforge.net/p/flightgear/flightgear/ci/faf872e7f71ca14c567ac7080561fc785d8d2fd0/
-
-------------------------------------------
-
-[Has vendor confirmed or acknowledged the vulnerability?]
-true
-
-------------------------------------------
-
-[Discoverer]
-Rebecca N. Palmer (FlightGear developer)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
