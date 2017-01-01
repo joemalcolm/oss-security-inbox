@@ -1,32 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/07/3
-Message-Id: <B39FC5C0-9AC5-4E84-A450-AFF690B74D9C@apache.org>
-Date: Fri, 7 Apr 2017 12:29:13 -0400
-From: Denis Magda <dmagda@...che.org>
-To: user@...ite.apache.org, dev@...ite.apache.org, announce@...che.org, Pierre Ernst <pernst@...esforce.com>, security <security@...che.org>
-Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/9
+Message-ID: <5243626.fZFJWZMf6g@arcadia>
+Date: Sun, 01 Jan 2017 16:54:34 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: libtiff: NULL pointer dereference in TIFFReadRawData (tiffinfo.c)
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2016-6805] Arbitrary File Read due to eXternal Xml Entity attack in Apache Ignite
-
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: Apache Ignite 1.0.0-RC3 to 1.8
-
 Description:
-Apache Ignite uses an update notifier component to update the users about new project releases that include additional functionality, bug fixes and performance improvements. To do that the component communicates to an external PHP server (http://ignite.run) where it needs to send some system properties like Apache Ignite or Java version. This feature is enabled by default and used to send sensitive data over HTTP by mistake, such as installation folders or environment variables stored in Java system properties. The second issue is because TLS is not used between the application and the PHP server, a Man-in-the-middle attack is possible and a malicious actor could alter the response coming from the ignite.run server. This response is parsed by the Apache ignite component as XML, and a XXE attack can be triggered.
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-Both issues mentioned above were fixed as a part of Apache Ignite 1.9 release. The relevant commits with the changes:
+A crafted tiff file revealed a NULL pointer access.
 
-Mitigation:
-Users must upgrade to Apache Ignite 1.9 or later versions or disable the update notifier.
+The complete ASan output:
+
+# tiffinfo -Dijr $FILE
+
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 384 (0x180) encountered.
+TIFFReadDirectory: Warning, Unknown field with tag 1093 (0x445) encountered.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+TIFFFetchNormalTag: Warning, ASCII value for tag "DocumentName" contains null 
+byte in value; value incorrectly truncated during reading due to 
+implementation limitations.
+TIFFFetchNormalTag: Warning, Incorrect count for "JpegProc"; tag ignored.
+TIFFReadDirectory: Warning, Photometric tag value assumed incorrect, assuming 
+data is YCbCr instead of RGB.
+TIFFReadDirectory: Warning, SamplesPerPixel tag is missing, applying correct 
+SamplesPerPixel value of 3.
+_TIFFVSetField: Warning, SamplesPerPixel tag value is changing, but 
+SMinSampleValue tag was read with a different value. Cancelling it.
+ASAN:DEADLYSIGNAL
+=================================================================
+==15897==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000050d8ad bp 0x7ffc4a3eaf90 sp 0x7ffc4a3eaec0 T0)
+==15897==The signal is caused by a READ memory access.
+==15897==Hint: address points to the zero page.
+    #0 0x50d8ac in TIFFReadRawData /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:421:29
+    #1 0x50b2de in tiffinfo /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:473:4
+    #2 0x50a999 in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:152:6
+    #3 0x7f6258f0961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x419f38 in _init (/usr/bin/tiffinfo+0x419f38)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffinfo.c:421:29 in TIFFReadRawData
+==15897==ABORTING
+TIFF Directory at offset 0xc (12)
+  Image Width: 128 Image Length: 1
+  Bits/Sample: 32189
+  Compression Scheme: Old-style JPEG
+  Photometric Interpretation: YCbCr
+  YCbCr Subsampling: 2, 2
+  Samples/Pixel: 3
+  Rows/Strip: 2048
+  Planar Configuration: single image plane
+  DocumentName: 
+  Tag 384: 16779264
+
+Affected version:
+4.0.7
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/vadz/libtiff/commit/c2f931bb558b9db41cb3516a6df3aa600fd85744
 
 Credit:
-Pierre Ernst, Salesforce
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00056-libtiff-nullptr-TIFFReadRawData
 
+Timeline:
+2016-11-22: bug discovered and reported to upstream
+2016-12-03: upstream released a patch
+2017-01-01: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-null-pointer-dereference-in-tiffreadrawdata-tiffinfo-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
