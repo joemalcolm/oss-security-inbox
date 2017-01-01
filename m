@@ -1,62 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/5
-Message-ID: <cf512b42-ebd9-ec59-e2b1-326368f53f3b@isc.org>
-Date: Mon, 17 Apr 2017 11:41:58 -0800
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/7
+Message-ID: <2609162.lMrVaOLpFB@arcadia>
+Date: Sun, 01 Jan 2017 16:52:34 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Additional information for packagers concerning recent BIND security vulnerabilities
+Subject: libtiff: stack-based buffer overflow in _TIFFVGetField (tif_dir.c)
 Content-Type: text/plain; charset=utf-8
 
-[Apologies to those who receive multiple copies of this message but
-we were asked to notify oss-security after sending details to the
-distros security list.]
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-To all BIND packagers and redistributors:
+A crafted tiff file revealed a stack buffer overflow.
 
-Recently we sent you information about several BIND vulnerabilities,
-including CVE-2017-3137.  After providing that information we
-received feedback from multiple parties concerning a potential pitfall
-for those who are trying to selectively backport the fix for CVE-2017-3137
-to earlier versions of BIND.  Since we do not know which of you may be
-trying to do this we are notifying all parties to whom we sent the
-CVE details.  If you are using the security releases provided by ISC
-without changes or if you are not trying to selectively backport fixes
-to earlier BIND versions you can ignore the rest of this message.
+The complete ASan output:
 
-For those who ARE backporting the security fixes to earlier versions of
-BIND:  several parties have reported to us that backporting to a
-version of BIND that does not have change #4190 can cause an assertion
-failure to appear in name.c in the vicinity of line 2150 (the exact line
-number varies by version) with the error message:
+# tiffsplit $FILE
+TIFFReadDirectory: Warning, Unknown field with tag 317 (0x13d) encountered.
+=================================================================
+==10362==ERROR: AddressSanitizer: stack-buffer-overflow on address 
+0x7f3824f00090 at pc 0x7f3829624fbb bp 0x7fffe0eb1da0 sp 0x7fffe0eb1d98
+WRITE of size 4 at 0x7f3824f00090 thread T0
+    #0 0x7f3829624fba in _TIFFVGetField /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_dir.c:1077:29
+    #1 0x7f382960f202 in TIFFVGetField /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_dir.c:1198:6
+    #2 0x7f382960f202 in TIFFGetField /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_dir.c:1182
+    #3 0x50a719 in tiffcp /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffsplit.c:183:2
+    #4 0x50a719 in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffsplit.c:89
+    #5 0x7f382871561f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x419a78 in _init (/usr/bin/tiffsplit+0x419a78)
 
-  REQUIRE(prefix == ((void *)0) || ((((prefix) != ((void *)0)) &&
-(((const isc__magic_t *)(prefix))->magic == ((('D') << 24 | ('N') << 16
-| ('S') << 8 | ('n'))))) && prefix->buffer != ((void *)0) &&
-((prefix->attributes & (0x00000002|0x00000004)) == 0))) failed
+Address 0x7f3824f00090 is located in stack of thread T0 at offset 144 in frame
+    #0 0x5099cf in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffsplit.c:59
 
-To test whether the version of BIND you have produced is subject to
-this assertion failure, we recommend you run the dname test in the
-provided BIND system tests.  (Actually, we recommend you run that
-in any case.)
+  This frame has 18 object(s):
+    [32, 40) 'bytecounts.i263.i'
+    [64, 72) 'bytecounts.i.i'
+    [96, 98) 'bitspersample.i'
+    [112, 114) 'samplesperpixel.i'
+    [128, 130) 'compression.i'
+    [144, 146) 'shortv.i' 0x0fe7849d8010: 02 f2[02]f2 00 f2 f2 f2 04 f2 04 f2 
+04 f2 00 f2
+  0x0fe7849d8020: f2 f2 04 f2 04 f2 00 f2 f2 f2 00 f2 f2 f2 00 f2
+  0x0fe7849d8030: f2 f2 00 f2 f2 f2 02 f3 00 00 00 00 00 00 00 00
+  0x0fe7849d8040: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0fe7849d8050: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+  0x0fe7849d8060: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==10362==ABORTING
 
-  build named:
-    ./configure && make
+Affected version:
+4.0.7
 
-  then:
-    cd bin/tests/system
-    as root:  sh ./ifconfig.sh up
-    sh ./run.sh dname
+Fixed version:
+N/A
 
-If your named crashes you should correct the problem; see change #4190.
+Commit fix:
+N/A
 
-ISC doesn't officially support selective backporting of changes and we
-cannot
-guarantee that there may not be other issues, depending on which combination
-of changes you have selected.  However this issue has been reported by
-several
-parties and we are providing what info we have on it in the hopes that
-it will
-help those who repackage and redistribute our code.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Michael McNally
-ISC Security Officer
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00104-libtiff-stackoverflow-_TIFFVGetField
+
+Timeline:
+2016-12-04: bug discovered and reported to upstream
+2017-01-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-stack-based-buffer-overflow-in-_tiffvgetfield-tif_dir-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
