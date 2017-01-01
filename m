@@ -1,74 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/11
-Message-ID: <CAOhT-pNuDgsC2a7V=MLSpe_2P46c0ZjM3aDYg7QvuzPFKE55yg@mail.gmail.com>
-Date: Sun, 17 Dec 2017 16:12:55 -0500
-From: Brian Fox <brianf@...atype.com>
-To: Raphael Geissert <atomo64@...il.com>
-Cc: Stefano Brivio <sbrivio@...hat.com>,  Open Source Security <oss-security@...ts.openwall.com>, Security <security@...atype.com>
-Subject: Re: [security] Re: Sonatype Nexus Repository Manager 2.x weak password encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/8
+Message-ID: <7032124.quzkmsXj2i@arcadia>
+Date: Sun, 01 Jan 2017 16:53:34 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: libtiff: assertion failure in readSeparateTilesIntoBuffer (tiffcp.c)
 Content-Type: text/plain; charset=utf-8
 
-I don't think this is very kosher to go and file a public ticket before
-even contacting us.
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-On Sun, Dec 17, 2017 at 3:03 PM, Raphael Geissert <atomo64@...il.com> wrote:
+A crafted tiff file revealed an assertion failure.
 
-> Hi,
->
-> On Sunday, 17 December 2017 15:17:45 CET Stefano Brivio wrote:
-> > On Sun, 17 Dec 2017 13:53:47 +0100
-> >
-> > Raphael Geissert <atomo64@...il.com> wrote:
-> > > Hi,
-> > >
-> > > The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
-> > > the 2.x series), stores the LDAP bind password in an on-disk file
-> > > using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
-> > >
-> > > This is all great except for:
-> > > - it using only 23 iterations[1]
-> > > - it using a hard-coded and weak password[2]
-> > >
-> > > Therefore offering as much protection as a rot13 would.
-> > >
-> > > Given that the same PasswordHelper containing the weak password is
-> > > present elsewhere in the code, it is very likely that this weak crypto
-> > > issue affects other passwords stored by Nexus:
-> > >
-> > > -
-> > > components/nexus-core/src/main/java/org/sonatype/nexus/
-> configuration/Pass
-> > > wordHelper.java[3] -
-> > > components/nexus-security/src/main/java/org/sonatype/
-> security/configurati
-> > > on/source/PasswordHelper.java[4]
-> > >
-> > > It appears that this code is no longer used by the 3.x series.
-> > >
-> > > FWIW, the on-file password is:
-> > >
-> > > base64(SALT_SIZE || SALT || PBE_OUTPUT )
-> > >
-> > > SALT_SIZE always being 8 (hard-coded).
-> > >
-> > > N.b. I'll be filing a CVE request in a moment.
->
-> This is now CVE-2017-17717.
->
-> > > N.b. I have not contacted sonatype. I couldn't find an email address.
-> >
-> > The page at https://www.sonatype.com/contactus says:
-> >
-> > 1. Send urgent or sensitive reports to security@...atype.com.
-> > 2. Use our public key to keep your message safe.
-> > 3. Provide us with a secure way to respond.
-> > 4. We’ll get back to you as soon as we can. Usually within 24 hours.
->
-> Oh, I somehow missed it. Thanks for the pointer and for copying it to
-> sonatype.
->
-> Cheers,
-> --
-> Raphael Geissert
->
+The complete output:
 
+# tiffcp -i $FILE /tmp/foo
+tiffcp: /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1390:
+int readSeparateTilesIntoBuffer(TIFF *, uint8 *, uint32, uint32, tsample_t):
+Assertion `bps % 8 == 0' failed.
+
+Affected version:
+4.0.7
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/vadz/libtiff/commit/7ff9652da2eec4c65279dcbc7e55c0418e87bbc8
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00072-libtiff-assert-readSeparateTilesIntoBuffer
+
+Timeline:
+2016-11-23: bug discovered and reported to upstream
+2016-12-03: upstream released a patch
+2017-01-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-assertion-failure-in-readseparatetilesintobuffer-tiffcp-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
