@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["799" "Friday" "21" "July" "2017" "16:43:30" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1707211639130.27610@wniryva>" "27" "[oss-security] CVE-2017-7539 Qemu: qemu-nbd crashes due to undefined I/O coroutine" nil nil nil "7" "2017072111:13:30" "[oss-security] CVE-2017-7539 Qemu: qemu-nbd crashes due to undefined I/O coroutine" (number mark "U       ppandit@redh Jul 21   27/799   " thread-indent "\"[oss-security] CVE-2017-7539 Qemu: qemu-nbd crashes due to undefined I/O coroutine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6786" "Sunday" "1" "January" "2017" "16:51:29" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1770254.PWeyxy51hj@arcadia>" "149" "[oss-security] libtiff: memcpy-param-overlap in t2p_tile_collapse_left (tiff2pdf.c)" nil nil nil "1" "2017010115:51:29" "[oss-security] libtiff: memcpy-param-overlap in t2p_tile_collapse_left (tiff2pdf.c)" (number mark "U       ago@gentoo.o Jan  1  149/6786  " thread-indent "\"[oss-security] libtiff: memcpy-param-overlap in t2p_tile_collapse_left (tiff2pdf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15660 invoked by uid 550); 21 Jul 2017 11:13:48 -0000
+Received: (qmail 23568 invoked by uid 550); 1 Jan 2017 15:50:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,163 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15636 invoked from network); 21 Jul 2017 11:13:47 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 50564461F9
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx05.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 50564461F9
-Date: Fri, 21 Jul 2017 16:43:30 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-Message-ID: <alpine.LFD.2.20.1707211639130.27610@wniryva>
+Received: (qmail 22388 invoked from network); 1 Jan 2017 15:49:59 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Sun, 01 Jan 2017 16:51:29 +0100
+Message-ID: <1770254.PWeyxy51hj@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Fri, 21 Jul 2017 11:13:36 +0000 (UTC)
-Subject: [oss-security] CVE-2017-7539 Qemu: qemu-nbd crashes due to undefined I/O
- coroutine
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libtiff: memcpy-param-overlap in t2p_tile_collapse_left (tiff2pdf.c)
 
-   Hello,
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-Quick Emulator(Qemu) built with the Network Block Device(NBD) Server support 
-is vulnerable to a crash via assertion failure. It could occur if a client 
-sent undue data during initial connection negotiation.
+A crafted tiff file revealed a memcpy-param-overlap.
 
-A remote user/process could use this flaw to crash the qemu-nbd server 
-resulting in DoS.
+The complete ASan output:
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=2b0bbc4f8809c972bad134bc1a2570dbb01dea0b
+# tiff2pdf $FILE -o foo
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFAdvanceDirectory: Error fetching directory count.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+Fax3Decode2D: Warning, Premature EOL at line 0 of tile 0 (got 768, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 1 of tile 0 (got 35, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 2 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 3 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Uncompressed data (not supported) at line 4 of tile 0 (x 0).
+Fax3Decode2D: Warning, Premature EOL at line 4 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 5 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 7 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 8 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 9 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Line length mismatch at line 10 of tile 0 (got 1792, 
+expected 769).
+Fax3Decode2D: Warning, Premature EOL at line 11 of tile 0 (got 0, expected 
+769).
+=================================================================
+==29687==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges 
+[0x7f2dcce0b85d,0x7f2dcce0b8ba) and [0x7f2dcce0b861, 0x7f2dcce0b8be) overlap
+    #0 0x4bbee1 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x7f2dccb87f0d in _TIFFmemcpy /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
+    #2 0x52ac36 in t2p_tile_collapse_left /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:3596:3
+    #3 0x52ac36 in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:3073
+    #4 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #5 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #6 0x7f2dcbb4361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #7 0x41a298 in _init (/usr/bin/tiff2pdf+0x41a298)
 
-Introduced by:
---------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=ff82911cd3f69f028f2537825c9720ff78bc3f19
+0x7f2dcce0b85d is located 93 bytes inside of 968448-byte region 
+[0x7f2dcce0b800,0x7f2dccef7f00)
+allocated by thread T0 here:
+    #0 0x4d3058 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7f2dccb87d7e in _TIFFmalloc /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:316:10
+    #2 0x5294e8 in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2933:29
+    #3 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #4 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #5 0x7f2dcbb4361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1473622
+0x7f2dcce0b861 is located 97 bytes inside of 968448-byte region 
+[0x7f2dcce0b800,0x7f2dccef7f00)
+allocated by thread T0 here:
+    #0 0x4d3058 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7f2dccb87d7e in _TIFFmalloc /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:316:10
+    #2 0x5294e8 in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2933:29
+    #3 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #4 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #5 0x7f2dcbb4361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
-'CVE-2017-7539' assigned by Red Hat Inc.
+SUMMARY: AddressSanitizer: memcpy-param-overlap /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
+==29687==ABORTING
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Affected version:
+4.0.7
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/vadz/libtiff/commit/ad2fccbf5c23da10c5859114a6018a37fdd05095
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00110-libtiff-memcpy-param-overlap-_TIFFmemcpy
+
+Timeline:
+2016-12-20: bug discovered and reported to upstream
+2016-12-20: upstream released a patch
+2017-01-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-memcpy-param-overlap-in-_tiffmemcpy-tif_unix-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
