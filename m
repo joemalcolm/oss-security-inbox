@@ -1,4 +1,9 @@
-Received: (qmail 28236 invoked by uid 550); 31 Dec 2022 11:45:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1105" "Sunday" "1" "January" "2017" "16:53:34" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<7032124.quzkmsXj2i@arcadia>" "46" "[oss-security] libtiff: assertion failure in readSeparateTilesIntoBuffer (tiffcp.c)" nil nil nil "1" "2017010115:53:34" "[oss-security] libtiff: assertion failure in readSeparateTilesIntoBuffer (tiffcp.c)" (number mark "U       ago@gentoo.o Jan  1   46/1105  " thread-indent "\"[oss-security] libtiff: assertion failure in readSeparateTilesIntoBuffer (tiffcp.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7776 invoked by uid 550); 1 Jan 2017 15:52:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24097 invoked from network); 31 Dec 2022 09:54:26 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AFqh2kowgOJ5YQ8E5JMKLPiC//tRsu6/ONOuhZVKmq4VPGROrAjjbxvf
-	9rCgzj+AYi4hVErgMzo+ZqCw+45/Vpy49dOUNTZ0ZA==
-X-Google-Smtp-Source: AMrXdXuBiZl1sARv8UOc362AfkFE5gSNMJFpMu6Lt/XltUOA3gkd1i+rrte2MLD1GZTFbixFlLU32wfCyVoglNCrKJo=
-X-Received: by 2002:a81:7d03:0:b0:3eb:447b:56cc with SMTP id
- y3-20020a817d03000000b003eb447b56ccmr4782274ywc.296.1672480451270; Sat, 31
- Dec 2022 01:54:11 -0800 (PST)
+Received: (qmail 7541 invoked from network); 1 Jan 2017 15:52:04 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Sun, 01 Jan 2017 16:53:34 +0100
+Message-ID: <7032124.quzkmsXj2i@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-References: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
- <YwjuUy0a6FFdHPVB@gentoo.org> <Y61i4ojYhvXXx7Ap@eldamar.lan> <Y69d7JASugX99avX@gentoo.org>
-In-Reply-To: <Y69d7JASugX99avX@gentoo.org>
-From: Arnout Engelen <engelen@apache.org>
-Date: Sat, 31 Dec 2022 10:54:00 +0100
-X-Gmail-Original-Message-ID: <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
-Message-ID: <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
-To: John Helmert III <ajak@gentoo.org>
-Cc: security@apache.org, jorton@apache.org, carnil@debian.org, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] CVE-2022-22728: libapreq2: libapreq2 multipart
- form parse memory corruption
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] libtiff: assertion failure in readSeparateTilesIntoBuffer (tiffcp.c)
 
-On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@gentoo.org> wrote:
-> On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > > overflow while processing multipart form uploads.
-> > >
-> > > Is there a fixed version or patch or upstream issue?
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-libapreq2 2.17 was released on the same day as the advisory describing
-the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
+A crafted tiff file revealed an assertion failure.
 
+The complete output:
 
-Kind regards,
+# tiffcp -i $FILE /tmp/foo
+tiffcp: /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1390:
+int readSeparateTilesIntoBuffer(TIFF *, uint8 *, uint32, uint32, tsample_t):
+Assertion `bps % 8 == 0' failed.
 
-Arnout
+Affected version:
+4.0.7
+
+Fixed version:
+N/A
+
+Commit fix:
+https://github.com/vadz/libtiff/commit/7ff9652da2eec4c65279dcbc7e55c0418e87bbc8
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00072-libtiff-assert-readSeparateTilesIntoBuffer
+
+Timeline:
+2016-11-23: bug discovered and reported to upstream
+2016-12-03: upstream released a patch
+2017-01-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-assertion-failure-in-readseparatetilesintobuffer-tiffcp-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
