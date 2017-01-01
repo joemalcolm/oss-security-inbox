@@ -1,194 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/01/10
-Message-ID: <CA+oo+DWTpgZREVqKEQZxPy+9FgFw+EVeeZtos2MyTJ+RAsNfwQ@mail.gmail.com>
-Date: Sun, 30 Apr 2017 20:33:54 -0400
-From: Brian Wolff <bawolff@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: SyntaxHighlight MediaWiki extension allows injection of arbitrary Pygments options
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/10
+Message-ID: <a5c8bd5fcbf94dfe83238915b480add2@imshyb02.MITRE.ORG>
+Date: Sun, 1 Jan 2017 12:51:35 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: libtiff: multiple heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Saturday, April 29, 2017, Securify B.V. <lists@...urify.nl> wrote:
-> ------------------------------------------------------------------------
-> SyntaxHighlight MediaWiki extension allows injection of arbitrary
-> Pygments options
-> ------------------------------------------------------------------------
-> Yorick Koster, February 2017
->
-> ------------------------------------------------------------------------
-> Abstract
-> ------------------------------------------------------------------------
-> A vulnerability was found in the SyntaxHighlight MediaWiki extension.
-> Using this vulnerability it is possible for an anonymous attacker to
-> pass arbitrary options to the Pygments library. By specifying specially
-> crafted options, it is possible for an attacker to trigger a (stored)
-> Cross-Site Scripting condition. In addition, it allows the creating of
-> arbitrary files containing user-controllable data. Depending on the
-> server configuration, this can be used by an anonymous attacker to
-> execute arbitrary PHP code.
->
-> ------------------------------------------------------------------------
-> See also
-> ------------------------------------------------------------------------
-> - CVE-2017-0372 [2]
-> - T158689 [3]: Parameters injection in SyntaxHighlight results in
-> multiple vulnerabilities
-> - Fix REL1_28 [4]: SECURITY: Escape start argument before passing to
-> pygments
-> - Fix REL1_27 [5]: SECURITY: Escape start argument before passing to
-> pygments
-> - MediaWiki-announce [6]: Security Release: 1.28.1 / 1.27.2 / 1.23.16
-> (fix not included in this release)
->
-> ------------------------------------------------------------------------
-> Tested versions
-> ------------------------------------------------------------------------
-> This issue was tested on SyntaxHighlight version 2.0 as bundled with
-> MediaWiki version 1.28.0.
->
-> ------------------------------------------------------------------------
-> Fix
-> ------------------------------------------------------------------------
-> This issue was supposed to be fixed in MediaWiki version 1.28.1 and
-> version 1.27.2. It appears that the fix was pushed to the git
-> repository, but for some reason it was not included in the release
-> packages. It is advised to apply the patch committed to Github.
->
->
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
->
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
->
-> ------------------------------------------------------------------------
-> Introduction
-> ------------------------------------------------------------------------
-> The SyntaxHighlight [7] extension for MediaWiki [8] allows formatting of
-> source code using the <syntaxhighlight> tag. Version 2.0 uses the Python
-> Pygments [9] library to format the code. SyntaxHighlight is bundled with
-> MediaWiki version 1.21 and later. Version 2.0 is bundled with MediaWiki
-> 1.26.0 and later (other versions may or may not include this version as
-> well).
->
-> The <syntaxhighlight> tag supports various parameters. It was found that
-> the start parameter is not validated and/or sanitized. This allows an
-> attacker to pass arbitrary options to the Lexer and/or Formatter that is
-> used when Pygments is invoked. By specifying specially crafted options,
-> it is possible for an attacker to trigger a (stored) Cross-Site
-> Scripting condition. In addition, the HTML formatter allows the creating
-> of arbitrary files containing user-controllable data. Depending on the
-> server configuration, this can be used by an attacker to execute
-> arbitrary PHP code.
->
-> ------------------------------------------------------------------------
-> Details
-> ------------------------------------------------------------------------
-> The SyntaxHighlight extension utilizes Pygments to format source code.
-> Pygments is a Python library, a copy is provided with the extension. In
-> order to use Pygments, the extension invokes it using Symfony's [10]
-> ProcessBuilder [11] component. This component performs escaping of
-> command line arguments to prevent command injection.
->
-> SyntaxHighlight_GeSHi.class.php:
->
-> $optionPairs = array();
-> foreach ( $options as $k => $v ) {
->         $optionPairs[] = "{$k}={$v}";
-> }
-> $builder = new ProcessBuilder();
-> $builder->setPrefix( $wgPygmentizePath );
-> $process = $builder
->         ->add( '-l' )->add( $lexer )
->         ->add( '-f' )->add( 'html' )
->         ->add( '-O' )->add( implode( ',', $optionPairs ) )
->         ->getProcess();
->
-> $process->setInput( $code );
-> $process->run();
->
-> The used Lexer is specified through the lang parameter, the Formatter is
-> always set to the HtmlFormatter. Additional options for the Lexer and/or
-> Formatter are provided using the -O command line argument. These options
-> can be controlled by the parameters that are supported by the
-> <syntaxhighlight> tag. Each option is a key value pair, the options are
-> comma separated.
->
-> It was found that no input validation and/or sanitization is done on the
-> start parameter. This parameter is used to define the first line number
-> of a code block. If line numbers are enabled, the numbering will start
-> with the value provided in the start parameter. Normally, this value
-> should only contain numbers. Due to the lack of validation/sanitization,
-> it can be set to any value.
->
-> SyntaxHighlight_GeSHi.class.php:
->
-> // Starting line number
-> if ( isset( $args['start'] ) ) {
->         $options['linenostart'] = $args['start'];
-> }
->
-> Since Lexer/Formatter options are comma separated, it is possible for an
-> attacker to provide arbitrary options when invoking Pygments. Depending
-> on the options supported by the Lexer or Formatter, this allows the
-> attacker to perform various types of attacks. For example it is possible
-> for an attacker to trigger a (stored) Cross-Site Scripting condition by
-> passing a specially crafted prestyles option to the HTML Formatter.
->
-> <syntaxhighlight lang="java"
-start='0,prestyles="&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;'>
->         string foo="bar";
-> </syntaxhighlight>
->
->
-> When the option full is passed to the HTML Formatter, it is possible to
-> specify a local CSS file using the cssfile option. If the CSS file does
-> not exist it will be created - provided that Pygments has write
-> privileges on the provided path. This CSS file contains the styles that
-> are used for formatting the source code. Providing additional options,
-> it is possible to control parts of the CSS. One such option is the
-> classprefix option.
->
-> Combining these options can result in execution of arbitrary PHP code,
-> provided that a writeable folder exists within the webserver's document
-> root that allows the execution of PHP files. The proof of concept below
-> will try to create a PHP file name foo.php in the images folder located
-> within the document root.
->
-> <syntaxhighlight lang='java'
-start='0,full=1,title=,cssfile=images/foo.php,classprefix=&lt;?php
-> phpinfo();exit; ?&gt;'>
-> </syntaxhighlight>
->
-> Unless the Wiki is configured as private, it is possible to exploit this
-> issue without logging into the Wiki. If the Wiki is set to private, an
-> account with read access is required to exploit this vulnerability.
-> ------------------------------------------------------------------------
-> References
-> ------------------------------------------------------------------------
-> [1]
-https://www.securify.nl/advisory/SFY20170201/syntaxhighlight_mediawiki_extension_allows_injection_of_arbitrary_pygments_options.html
-> [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0372
-> [3] https://phabricator.wikimedia.org/T158689
-> [4]
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/2d5a60a89fb3995b73e17df5901d6f023e41df3d
-> [5]
-https://github.com/wikimedia/mediawiki-extensions-SyntaxHighlight_GeSHi/commit/a88c5e1dcbdb3e9940c6f55a6744c62a6d62710f
-> [6]
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2017-April/000207.html
-> [7] https://www.mediawiki.org/wiki/Extension:SyntaxHighlight
-> [8] https://www.mediawiki.org
-> [9] http://pygments.org/
-> [10] https://symfony.com/
-> [11]
-http://api.symfony.com/3.2/Symfony/Component/Process/ProcessBuilder.html
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi oss-security,
+> https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer-overflow
 
-On behalf of MediaWiki, sorry about the screw up with the version of
-SyntaxHighlight in the tarball release of MediaWiki 1.27.2/1.28.1. We have
-rectified this by releasing MediaWiki 1.27.3/1.28.2 which includes a fixed
-version of SyntaxHighlight. For more information see
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2017-April/000209.html
+At the moment, we will assign IDs to the issues listed with a write
+impact. We will later look at the issues listed with a read or
+undefined impact, but this has some complexity. One example is that
+9657bbe3cdce4aaa90e07d50c1c70ae52da0ba6a is a one-symbol code change
+that fixes both a "READ of size 1" outcome and a "WRITE of size 1"
+outcome. Another example is that a "READ of size 1" within the source
+code of a command-line tool (not part of the library code that could
+be used in an arbitrary application) may have no risk. Apparently all
+of the issues were public on github.com and/or bugzilla.maptools.org
+during 2016 and thus they have CVE-2016-##### IDs. It would be useful
+to include the specific bugzilla.maptools.org URL for each issue.
 
-Thanks,
-Brian
+> tiffcrop
+> https://github.com/vadz/libtiff/commit/9657bbe3cdce4aaa90e07d50c1c70ae52da0ba6a
+> AddressSanitizer: heap-buffer-overflow ... WRITE of size 1 at
+> tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
 
+>> 2016-12-03
+>> tools/tiffcrop.c: fix readContigStripsIntoBuffer() in -i (ignore) mode so
+>> that the output buffer is correctly incremented to avoid write outside bounds.
+>> Reported by Agostino Sarubbo.
+>> Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2620
+
+(see also http://bugzilla.maptools.org/show_bug.cgi?id=2622 Comment #1)
+
+Use CVE-2016-10092.
+
+
+> tiffcp
+> https://github.com/vadz/libtiff/commit/787c0ee906430b772f33ca50b97b8b5ca070faec
+> AddressSanitizer: heap-buffer-overflow ... WRITE of size 16 at
+> tiff-4.0.7/tools/tiffcp.c:1171:11
+
+>> 2016-12-03
+>> tools/tiffcp.c: fix uint32 underflow/overflow that can cause heap-based
+>> buffer overflow.
+>> Reported by Agostino Sarubbo.
+>> Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2610
+
+Use CVE-2016-10093.
+
+
+> tiffcrop
+> Upstream said that the previous changes, fixes this too. It needs to be
+> bisected.
+> AddressSanitizer: heap-buffer-overflow ... WRITE of size 2048 at
+> tiff-4.0.7/libtiff/tif_next.c:64:9
+
+>> http://bugzilla.maptools.org/show_bug.cgi?id=2624
+
+The vendor response was "I cannot reproduce with CVS head. But I
+reproduce with 4.0.7 so this has been fixed by recent commits. Could
+you track CVS head for your next fuzzing sessions so as to avoid
+wasting our time to both of us ?"
+
+If there is additional information from bisection, please let us know.
+
+
+> tiff2pdf
+> https://github.com/vadz/libtiff/commit/c7153361a4041260719b340f73f2f76b0969235c
+> AddressSanitizer: heap-buffer-overflow ... WRITE of size 2 at
+> tiff-4.0.7/libtiff/tif_unix.c:340:2
+
+>> 2016-12-20
+>> tools/tiff2pdf.c: avoid potential heap-based overflow in
+>> t2p_readwrite_pdf_image_tile().
+>> Fixes http://bugzilla.maptools.org/show_bug.cgi?id=2640
+
+Use CVE-2016-10094 for this off-by-one error.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYaUCIAAoJEHb/MwWLVhi2FXwQAIrGz699cKKw4thb2xMKcfuV
+P7ZOqAkOVZjx/q9DVODtLym6HLV2X5ZXbaTQRun23rImjbIZ3mVNBEvt3zTXIUUO
+sVAV2kwmITOj8fxf4khCeNWuTd2dYe2I9a6wQxSD6lJcnWVt7GYSrwmnTcR2yxDy
+D5HVn3K0VbMddktBM8W+8503WPamCicHFDXbjF+26oxH5yPAx9CvlUwmbsszzAQP
+XnYxVNmdj5bMxotFJ1yX/VlFKzUaz/q4FAftWVIXQXlsv4Y0eY0ezTkitMIjJnsV
+TA0jCUXKyhHTykwKklx4UNZf3BLqAIp49kbSeCyJoyR0UbqSrVVLj6OwZuJGgWnj
+mPK33fViCG1O2couw9y+sh1F2eK3tQAXyCKMdqMaVGzgPzopagRTvK6N2LWQb5rW
+6rjR8xjXOBnysm/6QJibP4WPRPzRQqGeh3Wfb7mBrxxHC+UiMOpHh2rF04zRtYnu
+P+RQB7jOs5p4ALt3l47aBFozjnHOZk3ROLV1HqVqNP3EU0jOoBNAkt24MKdd6Ixi
+itRg3AqviVXMAcxhJ0lQ7M8CMeFqSYCqa45VRhAtQ08WAQ9Dt4KUiUZFKu4DQHL9
+k6u+DNJLmhLWF17ub+eC79dhu99R05TP8maEo2pMuXjwsbKjdWM+BZqGZac3Y/FS
+4Kx6/mQjvfUlqCRmFWlO
+=WRWR
+-----END PGP SIGNATURE-----
