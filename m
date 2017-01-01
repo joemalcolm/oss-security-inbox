@@ -1,138 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/2
-Message-ID: <CA+-XxSGi7OR3a8bDcgfM9-3-tYqXF+ZnDpw2SQGYTZANjhp5DQ@mail.gmail.com>
-Date: Sun, 2 Jul 2017 17:29:25 +0300
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/6
+Message-ID: <1770254.PWeyxy51hj@arcadia>
+Date: Sun, 01 Jan 2017 16:51:29 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: linux-distros list membership application - CloudLinux
+Subject: libtiff: memcpy-param-overlap in t2p_tile_collapse_left (tiff2pdf.c)
 Content-Type: text/plain; charset=utf-8
 
-Hello Everyone,
+Description:
+Libtiff is a software that provides support for the Tag Image File Format 
+(TIFF), a widely used format for storing image data.
 
-I would like to apply for membership in linux-distros list for CloudLinux
-OS. Please, see application attached.
+A crafted tiff file revealed a memcpy-param-overlap.
 
-1. Be an actively maintained Unix-like operating system distro with
-substantial use of Open Source components
-CloudLinux OS https://www.cloudlinux.com is RPM based distribution launched
-in 2010 based on RedHat EL (most of the packages) and OpenVZ (kernel). We
-customize and add multiple RPMs (like Apache, PHP, python, ruby, MySQL,
-MariaDB and some others) as well as the kernel. Source code available at:
-http://repo.cloudlinux.com/cloudlinux/6/updates/SRPMS/
-http://repo.cloudlinux.com/cloudlinux/7/updates/Sources/SPackages/
+The complete ASan output:
 
-2. Have a userbase not limited to your own organization
-We have around 4,000 companies (mostly hosting providers) using CloudLinux
-OS across ~40,000 servers to host ~20,000,000 domains
+# tiff2pdf $FILE -o foo
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFAdvanceDirectory: Error fetching directory count.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+TIFFReadDirectoryCheckOrder: Warning, Invalid TIFF directory; tags are not 
+sorted in ascending order.
+TIFFReadDirectory: Warning, Unknown field with tag 2 (0x2) encountered.
+1006.crashes: Warning, Nonstandard tile width 769, convert file.
+TIFFReadDirectory: Warning, Unknown field with tag 7710 (0x1e1e) encountered.
+TIFFFetchNormalTag: Warning, Incorrect count for "FillOrder"; tag ignored.
+TIFFFetchNormalTag: Warning, Incorrect count for "XResolution"; tag ignored.
+Fax3Decode2D: Warning, Premature EOL at line 0 of tile 0 (got 768, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 1 of tile 0 (got 35, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 2 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 3 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Uncompressed data (not supported) at line 4 of tile 0 (x 0).
+Fax3Decode2D: Warning, Premature EOL at line 4 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 5 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 7 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 8 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Premature EOL at line 9 of tile 0 (got 0, expected 
+769).
+Fax3Decode2D: Warning, Line length mismatch at line 10 of tile 0 (got 1792, 
+expected 769).
+Fax3Decode2D: Warning, Premature EOL at line 11 of tile 0 (got 0, expected 
+769).
+=================================================================
+==29687==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges 
+[0x7f2dcce0b85d,0x7f2dcce0b8ba) and [0x7f2dcce0b861, 0x7f2dcce0b8be) overlap
+    #0 0x4bbee1 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x7f2dccb87f0d in _TIFFmemcpy /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:340:2
+    #2 0x52ac36 in t2p_tile_collapse_left /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:3596:3
+    #3 0x52ac36 in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:3073
+    #4 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #5 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #6 0x7f2dcbb4361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #7 0x41a298 in _init (/usr/bin/tiff2pdf+0x41a298)
 
-3. Have a publicly verifiable track record, dating back at least 1 year
-and continuing to present day, of fixing security issues (including some
-that had been handled on (linux-)distros, meaning that membership would
-have been relevant to you) and releasing the fixes within 10 days (and
-preferably much less than that) of the issues being made public (if it
-takes you ages to fix an issue, your users wouldn't substantially
-benefit from the additional time, often around 7 days and sometimes up
-to 14 days, that list membership could give you)
-We typically have to patch local privilege escalations in kernel asap as
-our customers are easily rooted using this type of vulnerabilities (anyone
-can buy website or hack old wordpress instance & run any code).
+0x7f2dcce0b85d is located 93 bytes inside of 968448-byte region 
+[0x7f2dcce0b800,0x7f2dccef7f00)
+allocated by thread T0 here:
+    #0 0x4d3058 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7f2dccb87d7e in _TIFFmalloc /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:316:10
+    #2 0x5294e8 in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2933:29
+    #3 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #4 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #5 0x7f2dcbb4361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
-Some records:
-The stack clash (Jun 21, 2016):
-https://www.cloudlinux.com/cloudlinux-os-blog/entry/cve-2017-1000364-fixed-for-cloudlinux-7
-Dirty Cow (Oct 21rd, 2016):
-https://www.cloudlinux.com/cloudlinux-os-blog/entry/cloudlinux-6-kernel-updated-dirty-cow-issue-fixed
-Ghost (Jan 27, 2015):
-https://www.cloudlinux.com/cloudlinux-os-blog/entry/glibc-ghost-remote-vulnerability-cve-2015-0235
+0x7f2dcce0b861 is located 97 bytes inside of 968448-byte region 
+[0x7f2dcce0b800,0x7f2dccef7f00)
+allocated by thread T0 here:
+    #0 0x4d3058 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7f2dccb87d7e in _TIFFmalloc /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_unix.c:316:10
+    #2 0x5294e8 in t2p_readwrite_pdf_image_tile /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:2933:29
+    #3 0x50f1dc in t2p_write_pdf /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:5526:16
+    #4 0x50bfee in main /tmp/portage/media-
+libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiff2pdf.c:808:2
+    #5 0x7f2dcbb4361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
+SUMMARY: AddressSanitizer: memcpy-param-overlap /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
+==29687==ABORTING
 
-4. Not be (only) downstream or a rebuild of another distro (or else we
-need convincing additional justification of how the list membership
-would enable you to release fixes sooner, presumably not relying on the
-upstream distro having released their fixes first?)
-Our kernel has significant amount of changes comparing to OpenVZ kernel
-We also do slight modifications to Apache web server, ship customized
-versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
-are  packaged by us, and not taken from upstream.
+Affected version:
+4.0.7
 
-5. Be a participant and preferably an active contributor in relevant
-public communities (most notably, if you're not watching for issues
-being made public on oss-security, which are a superset of those that
-had been handled on (linux-)distros, then there's no valid reason for
-you to be on (linux-)distros)
-We are actively watching for issues on oss-security, but usually, the
-issues that relevant to us are already fixed by upstream distributions --
-so we didn't feel we can contribute much. I think our kernel developers can
-help with some of the work -- once we have the information in advance.
-Right now they are mostly addopting patches from up-stream, as they are
-already there...
+Fixed version:
+N/A
 
-6. Accept the list policy:
-http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-
-instructions-for-members
-(also quoted below)
-Please consider this note as acceptance of the list policy.
+Commit fix:
+https://github.com/vadz/libtiff/commit/ad2fccbf5c23da10c5859114a6018a37fdd05095
 
-7. Be able and willing to contribute back, preferably in specific ways
-announced in advance (so that you're responsible for a specific area and
-so that we know what to expect from which member), and demonstrate
-actual contributions once you've been a member for a while:
-http://oss-security.openwall.org/wiki/mailing-lists/distros
-#contributing-back
-(also quoted below)
-We would be happy to help with administrative tasks:
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-   1. Promptly review new issue reports for meeting the list's requirements
-   and confirm receipt of the report and, when necessary, inform the reporter
-   of any issues with their report (e.g., obviously not actionable by the
-   distros) and request and/or propose any required yet missing information
-   (most notably, a tentative public disclosure date)
-   2. If the proposed public disclosure date is not within list policy,
-   insist on getting this corrected and propose a suitable earlier date
+CVE:
+N/A
 
-And possibly more in the future, as we have a better understanding of the
-amount of work needed to handle those tasks.
-We will need some handholding at first to make sure we do things correctly.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00110-libtiff-memcpy-param-overlap-_TIFFmemcpy
 
+Timeline:
+2016-12-20: bug discovered and reported to upstream
+2016-12-20: upstream released a patch
+2017-01-01: blog post about the issue
 
-8. Be able and willing to handle PGP-encrypted e-mail
-Please, find PGP related info
+Note:
+This bug was found with American Fuzzy Lop.
 
-Leonid Kanter <lkanter@...udlinux.com>
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/01/libtiff-memcpy-param-overlap-in-_tiffmemcpy-tif_unix-c
 
-GPG Key: 0x400296079AE5954F (download
-<https://cryptup.org/pub/lkanter@cloudlinux.com>)
-GPG Fingerprint: A07D AA47 48B2 C445 6A44  9B38 4002 9607 9AE5 954F
-
-Igor Seletskiy <i@...udlinux.com>
-
-GPG Key: 0xCD7BB36D66B77E0D (download
-<https://cryptup.org/pub/i@cloudlinux.com>)
-
-GPG Fingerprint: 7FE3 681A DCBC C509 A2FF 77A4 CD7B B36D 66B7 7E0D
-
-Konstantin Olshanov <kolshanov@...udlinux.com>
-GPG Key: 0x891E1FDBF34ED0FD (download
-<https://cryptup.org/pub/kolshanov@cloudlinux.com>)
-GPG Fingerprint: B502 0D7C BB2C 674C 6387  FBDC 891E 1FDB F34E D0FD
-
-
-9. Have someone already on the private list, or at least someone else
-who has been active on oss-security for years but is not affiliated with
-your distro nor your organization, vouch for at least one of the people
-requesting membership on behalf of your distro (then that one
-vouched-for person will be able to vouch for others on your team, in
-case you'd like multiple people subscribed)
-Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
-for Leonid Kanter.
-
-Regards,
-Igor Seletskiy |  CEO
-CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
-<https://www.cloudlinux.com/kernelcare>   |   Imunify360
-<http://imunify360.com/>
-
-Get 24/7 free, exceptionally good support at cloudlinux.zendesk.com
-Follow us on twitter for technical updates: @CloudLinuxOS
-<https://twitter.com/cloudlinuxos>
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
