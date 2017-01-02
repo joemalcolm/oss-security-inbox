@@ -1,4 +1,9 @@
-Received: (qmail 3527 invoked by uid 550); 4 May 2026 16:57:23 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1972" "Monday" "2" "January" "2017" "17:43:13" "+0100" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do7hHuzE3=LZv59pv50F5r_1auxPtq+6e0+LbO9tMH_V=w@mail.gmail.com>" "66" "[oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)" nil nil nil "1" "2017010216:43:13" "[oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)" (number mark "U       cbuissar@red Jan  2   66/1972  " thread-indent "\"[oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28461 invoked by uid 550); 2 Jan 2017 16:43:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,139 +12,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30248 invoked from network); 4 May 2026 16:35:51 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-Organization: Gentoo
-References: <4g81Yq4Bj4zJrP1@spike.porcupine.org>
-User-Agent: mu4e 1.14.1; emacs 31.0.50
-Date: Mon, 04 May 2026 17:35:38 +0100
-Message-ID: <87se878751.fsf@gentoo.org>
+Received: (qmail 28434 invoked from network); 2 Jan 2017 16:43:46 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=6uuT+MIAVQrzzpZxZxsjGlDquTsgl32bNPXJJY0YhDY=;
+        b=pmwB1fHV/yjA8v2YqPkBA2Sume3gXdZolBnZl13y0kQ4i4DmGpylkD97Szy4ck8toB
+         9OkVIDBx2QwDvd4rHiRYjxcRvIecVsa0DBG0HkIK/iaYHbqwt4j8Dq15Wlm8wn45EW0D
+         nDqtvBDNYx1MY/MhwXN0sLLvZJCZgnXS69YTXefXDqisiGQc6SzeDDCedD7Cx84sXb7F
+         VSifFvu5ru2VheVRrGun0pRxbjtP6wp/VqK8UHPTzoaEkCGEYlC1HM36oRNIvybqPoph
+         OPCl7KQhmSDcl/tSxjytV1SdYwaJUgG7Onwu+IVuJ9jbVHaKcl+yTVN4MKOdY99YI9ii
+         KrOg==
+X-Gm-Message-State: AIkVDXKBJFcUw1EpQwwboeq+7rdcI3b5SIoHePomsUaohOQTX80T6JMUzzTOYNB1rc8h/QUiE8Rtp/6zBSdtUepp
+X-Received: by 10.107.18.193 with SMTP id 62mr53760880ios.155.1483375414299;
+ Mon, 02 Jan 2017 08:43:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] Fwd: [pfx] Postfix stable release 3.11.2 and legacy releases
- 3.10.9, 3.9.10, 3.8.16
+From: Cedric Buissart <cbuissar@redhat.com>
+Date: Mon, 2 Jan 2017 17:43:13 +0100
+Message-ID: <CAKG8Do7hHuzE3=LZv59pv50F5r_1auxPtq+6e0+LbO9tMH_V=w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a113f581aa364e605451f40df
+Subject: [oss-security] freeIPA CVEs CVE-2016-9575 (insufficient permission check) &
+ CVE-2016-7030 (DoS)
 
---=-=-=
-Content-Type: text/plain
+--001a113f581aa364e605451f40df
+Content-Type: text/plain; charset=UTF-8
 
-The most significant one here seems to be the first entry under "Fixed
-in Postfix 3.8, 3.9, 3.10:".
+Hi,
 
--------------------- Start of forwarded message --------------------
-To: Postfix announce <postfix-announce@postfix.org>
-Date: Sun, 3 May 2026 19:43:27 -0400 (EDT)
-CC: Postfix users <postfix-users@postfix.org>
-Subject: [pfx] Postfix stable release 3.11.2 and legacy releases 3.10.9, 3.9.10, 3.8.16
-From: Wietse Venema via Postfix-users <postfix-users@postfix.org>
+This is to disclose the following 2 freeIPA CVEs.
 
-[An on-line version of this announcement will be available at
-https://www.postfix.org/announcements/postfix-3.11.2.html]
+1) CVE-2016-9575: Insufficient permission check in certprofile-mod
 
-Fixed in Postfix 3.11:
+Due to a missing permission check, certprofile-mod can be used by an
+authenticated but unprivileged user to modify certificate profile
+configuration. This could allow the issuance of certificates with
+fraudulent
+subject naming information (allowing the holder of the private key to
+impersonate another entity), or inappropriate key usage or extended key
+usage
+information (use of certificate for unauthorised purposes e.g. code
+signing).
 
-  * Bugfix (defect introduced: Postfix 3.11): the proxymap(8) daemon
-    dereferenced an uninitialized pointer after a request protocol
-    error. This daemon is not exposed to local or remote users.
-    Found by Claude Opus 4.6.
+Upstream patch :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=fec4c32ff15
 
-  * Bugfix (defect introduced: 20260309) a change, to set the
-    service_name default value to "amnesiac", violated a test that
-    parameter names in postconf output must match 1:1 with parameter
-    names in the postlink script.
+Note: on older freeipa versions (4.3 & 4.2), path to affected file differs
 
-Fixed in Postfix 3.10:
+Impact: moderate
+CVSS3 scoring : 6.3 - AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L
+Reported by: Liam Campbell (Red Hat)
+Affected versions: all versions supporting certificate profiles are
+affected:
+4.2 and above.
 
-  * Bugfix (defect introduced: Postfix 3.10): The RFC 2047 encoder
-    for the sender "full name" could loop when a very long
-    full_name_encoding_charset value was configured in main.cf.
-    Found by Claude Opus 4.6.
 
-Fixed in Postfix 3.8, 3.9, 3.10:
+2) CVE-2016-7030 : DoS attack against kerberized services by abusing
+password
+policy
 
-  * Bugfix (defect introduced: Postfix 2.3, date: 20050323): buffer
-    over-read when Postfix an enhanced status code is not followed
-    by other text. For example, "5.7.2" without text after the
-    three-number code. This CANNOT be triggered with an SMTP or
-    LMTP server response; is confirmed with an access(5) table and
-    likely with a policy server response; can possibly be triggered
-    with pipe-to-command output, header_checks(5), body_checks(5),
-    an error(8) transport in transport_maps, or a milter response;
-    and is confirmed with a DNSBL server TXT response while Postfix
-    is configured with "$rbl_code $rbl_text" in rbl_reply_maps or
-    default_rbl_reply. This could result in process termination.
-    Problem reported by Kamil Frankowicz.
+FreeIPA contains MIT KDC as its main component + FreeIPA is using custom
+database driver for the KDC. As a side-effect of implementation, FreeIPA is
+enforcing password policies for all principals, including services which do
+not use "password" but keytab with randomly-generated/strong key.
 
-  * For older Postfix versions, a buffer over-read patch is included
-    at the end of this text.
+Default password policy locks an account after 5 unsuccessful
+authentication
+attempts for 10 minutes. An attacker can use this to simply lock-out any
+principal, including system services.
 
-  * Code cleanup: log a fatal error instead of dereferencing a null
-    pointer after a first/next cursor initialization failure. Fedor
-    Vorobev. This affected the Berkeley DB client.
+Upstream patch :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=6f1d92746
 
-Fixed in Postfix 3.8, 3.9, 3.10. 3.11:
+Additional dependency :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=73f33569c
 
-  * Portability: support for recent FreeBSD, NetBSD, and OpenBSD
-    versions. Brad Smith.
+Impact: moderate
+CVSS3 scoring : 7.5 - AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+Affected versions: all
 
-  * Bugfix (defect introduced: Postfix 2.2, date 20041207): When
-    truncating a database file, the cdb: database client looked at
-    the file size from before requesting an exclusive lock on a
-    database file, instead of the file size after the exclusive
-    lock was granted. Found by Claude Opus 4.6.
+Reported by: Petr Spacek (Red Hat)
 
-  * Bugfix (defect introduced: Postfix alpha, date 19980309): file
-    descriptor leak after fork() failure. Found by Claude Opus 4.6.
+Best Regards,
 
-  * Mistakes in debug logging. Found by Claude Opus 4.6. This
-    affected two files in Postfix 3.8 and 3.9, three files in Postfix
-    3.10 and 3.11.
 
-  * Unchecked null pointer results after an out-of-memory condition
-    in a library dependency. Found by Claude Opus 4.6. The fix is
-    to return an error status or to log a fatal error. This affected
-    three source files.
+-- 
+Cedric Buissart,
+Product Security
 
-  * Missing or incomplete guards for ssize_t or int overflow, found
-    by Claude Opus 4.6. This affected three source files. These
-    limits are unlikely to be exceeded because the size of in-memory
-    objects is limited by design (the number of in-memory objects
-    is also limited).
-
-You can find the updated Postfix source code at the mirrors listed
-at https://www.postfix.org/.
-
-	Wietse
-
-Buffer over-read patch for Postfix 2.3 .. 3.7:
-
---- /var/tmp/postfix-3.8.15/src/global/dsn_util.c	2006-01-07 20:28:37.000000000 -0500
-+++ src/global/dsn_util.c	2026-05-01 16:59:50.961688175 -0400
-@@ -155,5 +155,5 @@
- 	strncpy(dp->dsn.data, cp, len);
- 	dp->dsn.data[len] = 0;
--	cp += len + 1;
-+	cp += len;
-     } else if ((len = dsn_valid(def_dsn)) > 0) {
- 	strncpy(dp->dsn.data, def_dsn, len);
-_______________________________________________
-Postfix-users mailing list -- postfix-users@postfix.org
-To unsubscribe send an email to postfix-users-leave@postfix.org
--------------------- End of forwarded message --------------------
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn4ytobFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkHbR
-AQDPjeyBtx91054AduhI0YD0/Th1LwISnAx6pFi/sszu3gEAtZXc3cCk81S6xDnU
-JHV5nM6aBJnZ5v1OhMTXXaCRIwU=
-=EhLN
------END PGP SIGNATURE-----
---=-=-=--
+--001a113f581aa364e605451f40df--
