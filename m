@@ -1,71 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/3
-Message-ID: <201613.082873763-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:34:17 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: NULL pointer dereference in ColorChanger::GetColorFromStack (colorchanger.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/5
+Message-ID: <CAKG8Do7hHuzE3=LZv59pv50F5r_1auxPtq+6e0+LbO9tMH_V=w@mail.gmail.com>
+Date: Mon, 2 Jan 2017 17:43:13 +0100
+From: Cedric Buissart <cbuissar@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: freeIPA CVEs CVE-2016-9575 (insufficient permission check) & CVE-2016-7030 (DoS)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+Hi,
 
-A fuzz on it discovered a null pointer access. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+This is to disclose the following 2 freeIPA CVEs.
 
-The complete ASan output:
+1) CVE-2016-9575: Insufficient permission check in certprofile-mod
 
-# podofocolor dummy $FILE foo
-==18954==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000052302d bp 0x7fc24b8e2000 sp 0x7ffcaaf21810 T0)
-==18954==The signal is caused by a READ memory access.
-==18954==Hint: address points to the zero page.
-    #0 0x52302c in getVtablePrefix /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_type_hash_itanium.cc:198
-    #1 0x52302c in __ubsan::checkDynamicType(void*, void*, unsigned long) /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_type_hash_itanium.cc:221
-    #2 0x521082 in HandleDynamicTypeCacheMiss /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_handlers_cxx.cc:37
-    #3 0x521922 in __ubsan_handle_dynamic_type_cache_miss /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_handlers_cxx.cc:87
-    #4 0x538eb2 in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:430:33
-    #5 0x530d50 in ColorChanger::ProcessColor(ColorChanger::EKeywordType, int, std::vector<PoDoFo::PdfVariant, std::allocator >&, GraphicsStack&) 
-/tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:449:28
-    #6 0x52c2a9 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:214:31
-    #7 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
-    #8 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
-    #9 0x7fc2490df78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #10 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
+Due to a missing permission check, certprofile-mod can be used by an
+authenticated but unprivileged user to modify certificate profile
+configuration. This could allow the issuance of certificates with
+fraudulent
+subject naming information (allowing the holder of the private key to
+impersonate another entity), or inappropriate key usage or extended key
+usage
+information (use of certificate for unauthorised purposes e.g. code
+signing).
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_type_hash_itanium.cc:198 in getVtablePrefix
-==18954==ABORTING
+Upstream patch :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=fec4c32ff15
 
-Affected version:
-0.9.5
+Note: on older freeipa versions (4.3 & 4.2), path to affected file differs
 
-Fixed version:
-N/A
+Impact: moderate
+CVSS3 scoring : 6.3 - AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L
+Reported by: Liam Campbell (Red Hat)
+Affected versions: all versions supporting certificate profiles are
+affected:
+4.2 and above.
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+2) CVE-2016-7030 : DoS attack against kerberized services by abusing
+password
+policy
 
-CVE:
-N/A
+FreeIPA contains MIT KDC as its main component + FreeIPA is using custom
+database driver for the KDC. As a side-effect of implementation, FreeIPA is
+enforcing password policies for all principals, including services which do
+not use "password" but keytab with randomly-generated/strong key.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00217-podofo-nullptr-colorchanger-cpp
+Default password policy locks an account after 5 unsuccessful
+authentication
+attempts for 10 minutes. An attacker can use this to simply lock-out any
+principal, including system services.
 
-Timeline:
-2017-03-01: bug discovered
-2017-03-02: bug reported upstream
-2017-03-02: blog post about the issue
+Upstream patch :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=6f1d92746
 
-Note:
-This bug was found with American Fuzzy Lop.
+Additional dependency :
+https://git.fedorahosted.org/cgit/freeipa.git/commit/?id=73f33569c
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-colorchangergetcolorfromstack-colorchanger-cpp
+Impact: moderate
+CVSS3 scoring : 7.5 - AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+Affected versions: all
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Reported by: Petr Spacek (Red Hat)
 
+Best Regards,
+
+
+-- 
+Cedric Buissart,
+Product Security
 
