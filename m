@@ -1,99 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/04/5
-Message-ID: <alpine.DEB.2.20.1704041708210.28052@tvnag.unkk.fr>
-Date: Tue, 4 Apr 2017 17:09:25 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: --write-out out of buffer read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/4
+Message-ID: <20170102154146.GA27807@tunkki>
+Date: Mon, 2 Jan 2017 17:41:46 +0200
+From: Henri Salo <henri@...v.fi>
+To: Leo Famulari <leo@...ulari.name>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libtiff: multiple divide-by-zero
 Content-Type: text/plain; charset=utf-8
 
---write-out out of buffer read
-==============================
+On Sun, Jan 01, 2017 at 07:20:54PM -0500, Leo Famulari wrote:
+> Do you know if this repository has any relationship to the libtiff project?
 
-Project curl Security Advisory, April 3, 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20170403.html)
+No.
 
-VULNERABILITY
--------------
+> It describes itself like this:
+> 
+> "Unofficial mirror of libtiff cvs repository at cvs.maptools.org created
+> and updated using "git cvsimport"?
 
-There were two bugs in curl's parser for the command line option `--write-out`
-(or `-w` for short) that would skip the end of string zero byte if the string
-ended in a `%` (percent) or `\` (backslash), and it would read beyond that
-buffer in the heap memory and it could then potentially output pieces of that
-memory to the terminal or the target file etc.
-
-The curl security team did not report this as a security vulnerability due to
-the minimal risk: the memory this would output comes from the process the user
-itself invokes and that runs with the same privileges as the user. We could
-not come up with a likely scenario where this could leak other users' data or
-memory contents.
-
-An external party registered this as a [CVE with
-mitre.org](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7407) and
-we feel a responsibility to clarify what this flaw is about. The CVE-2017-7407
-issue is specifically only about the `%` part of this flaw.
-
-This flaw only exists in the command line tool.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-7407 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-curl has supported this option since version 6.5 (released March 13, 2000).
-
-This flaw exists in the following curl versions.
-
-- Affected versions: 6.5 to and including 7.53.1
-- Not affected versions: < 6.5 and >= 7.54.0
-
-THE SOLUTION
-------------
-
-In version 7.54.0, the end of the buffer is properly acknowledged and we have
-added tests that verify this functionality.
-
-The curl project has (as of this writing) not yet released a version with this
-problem fixed. It is however already fixed in curl's git repository, commits
-[1890d59905414ab](https://github.com/curl/curl/commit/1890d59905414ab84a) and
-[8e65877870c1](https://github.com/curl/curl/commit/8e65877870c1). The fix is
-also available as a [stand-alone
-patch](https://curl.haxx.se/CVE-2017-7407.patch).
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.54.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use the `--write-out` feature with unchecked input
-
-TIME LINE
----------
-
-It was first reported to the curl project on March 10. The Mitre CVE
-registration was [brought to our
-attention](https://github.com/curl/curl/commit/1890d59905414ab84a35892b2e45833654aa5c13#commitc
-omment-21618166) on April 4, 2017. The first commit to fix this was made
-public on March 11.
-
-curl 7.54.0 is to be released on April 19 2017
-
-CREDITS
--------
-
-Reported to the curl project by Brian Carpenter
+It's exactly that. LibTIFF is considering moving to Git repository. You can
+contact them via their mailing list in case you need more information or want to
+help in the migration.
 
 -- 
-
-  / daniel.haxx.se
+Henri Salo
