@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/5
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB0414@S0MSMAIL112.arc.local>
-Date: Tue, 13 Jun 2017 12:32:10 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/2
+Message-Id: <4F81C4B3-94D3-4F62-9B83-7564BDF36B6D@gmail.com>
+Date: Sun, 1 Jan 2017 19:39:38 -0600
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple issues in OpenH264 1.5.1
 Content-Type: text/plain; charset=utf-8
 
-> From: Jakub Wilk [mailto:jwilk@...lk.net]
->
-> * Fiedler Roman <Roman.Fiedler@....ac.at>, 2017-06-13, 07:45:
-> >>>Thanks, perhaps a comment in the code can't hurt...
-> >>>Or even O_NODEV which does not exist, or O_PATH (linux only)..
-> >>
-> >>As there is a O_DIRECTORY it would be more orthogonal to have
-> O_REGULAR (open
-> >>only a regular file). But that becomes more and more icky as we're
-> running
-> >>out of 32 bits of O_*)
-> >
-> >Why not stop that at all and have an O_POLICY,
->
-> With help of O_PATH, you can implement almost any sanity check in
-> userspace.
-> No need to reinvent this particular wheel.
 
-Well, partially: what O_PATH can do, you could also do before O_PATH using 
-repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do all the 
-verification by yourself. fts [1] does that the same in a secure manner. But 
-often implementation was too complex using syscalls or not easy to do using 
-the library, so not many programmers did it. The resulting programs were more 
-prone to be vulnerable.
+> On Jan 1, 2017, at 7:32 PM, Brandon Perry <bperry.volatile@...il.com> wrote:
+> 
+> Recently, Firefox updated their OpenH264 plugin to 1.6. Earlier this year, I reported multiple crashes I had found while fuzzing version 1.5.1 of the decoder (which was what was shipped at the time).
+> 
+> While these issues have been resolved on the 1.6 branch of the openh264 codebase for some time (a year?), it doesn’t seem like Firefox got the update until recently (correct me if I’m wrong), which is why I am releasing my fuzz results. I initially reported these to Mozilla, but collided with Tyler Smith, one of their security engineers who had also been fuzzing the decoder. I am not sure if these issues got CVEs or not, but I don’t see any.
+> 
+> https://raw.githubusercontent.com/brandonprry/openh264-fuzz/ <https://raw.githubusercontent.com/brandonprry/openh264-fuzz/>
+Whoops, mislinked.
 
-With O_PATH/fts und own fstat calls, you can also do all the things mentioned 
-above, but again, I fear, not many will use them, there for convenience 
-syscalls/libraries should help out.
+https://github.com/brandonprry/openh264-fuzz <https://github.com/brandonprry/openh264-fuzz>
+> 
+> Attached is the README for the linked GitHub repo, which shows the three distinct bugs and their stack traces. There might be another bug or two that I missed during triage. None of the crashes work on 1.6, which is now shipped with up-to-date Firefox installs.
+> 
+> Happy New Year!
+> 
+> <README.md>
 
-So decision could be a) do nothing, b) blow up libc or c) blow up syscall 
-interface. Specific libraries or programming best practices might not be easy 
-enough to be applied.
 
-LG Roman
-
-[1] https://www.freebsd.org/cgi/man.cgi?query=fts&sektion=3
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
