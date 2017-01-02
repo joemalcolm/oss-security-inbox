@@ -1,4 +1,9 @@
-Received: (qmail 3506 invoked by uid 550); 27 Nov 2024 13:42:22 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1538" "Sunday" "1" "January" "2017" "19:39:38" "-0600" "Brandon Perry" "bperry.volatile@gmail.com" "<4F81C4B3-94D3-4F62-9B83-7564BDF36B6D@gmail.com>" "39" "[oss-security] Re: Multiple issues in OpenH264 1.5.1" nil nil nil "1" "2017010201:39:38" "[oss-security] Re: Multiple issues in OpenH264 1.5.1" (number mark "U       bperry.volat Jan  1   39/1538  " thread-indent "\"[oss-security] Re: Multiple issues in OpenH264 1.5.1\"\n") "<68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>" ("<68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22468 invoked by uid 550); 2 Jan 2017 01:39:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,229 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3470 invoked from network); 27 Nov 2024 13:42:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732714933; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=OLA2VkczzsgtQL8mewi25/xWvbgM3A7TtPM+elvY+rA=;
-	b=0MX+U4gcHRqJujeeB8CwUF+Y3nmCwH9HM8FE27OZBHKf8NEjm7nygRiYFJRugWaOA9cQlS
-	IPkQ0hWDg8xPm2MlrWcyXt32HKPQDw8sy9XN0Z3RMbGjtuC8hlOzic/25l/OUDehtjgQSb
-	S7Lx9uB9GUwPJ6jDS2OPUTK9625CEl4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732714933;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=OLA2VkczzsgtQL8mewi25/xWvbgM3A7TtPM+elvY+rA=;
-	b=uJL7NA5FGnweQElQtJMD+aqwFK3T8mPHvsw/oHUxVRUr4hSqdlX5VEJ5/FioEXDQv6e7k2
-	o1WsLkQc0rqHP8AA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732714933; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=OLA2VkczzsgtQL8mewi25/xWvbgM3A7TtPM+elvY+rA=;
-	b=0MX+U4gcHRqJujeeB8CwUF+Y3nmCwH9HM8FE27OZBHKf8NEjm7nygRiYFJRugWaOA9cQlS
-	IPkQ0hWDg8xPm2MlrWcyXt32HKPQDw8sy9XN0Z3RMbGjtuC8hlOzic/25l/OUDehtjgQSb
-	S7Lx9uB9GUwPJ6jDS2OPUTK9625CEl4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732714933;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=OLA2VkczzsgtQL8mewi25/xWvbgM3A7TtPM+elvY+rA=;
-	b=uJL7NA5FGnweQElQtJMD+aqwFK3T8mPHvsw/oHUxVRUr4hSqdlX5VEJ5/FioEXDQv6e7k2
-	o1WsLkQc0rqHP8AA==
-Date: Wed, 27 Nov 2024 14:42:09 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 22438 invoked from network); 2 Jan 2017 01:39:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:mime-version:subject:date:references:to:in-reply-to:message-id;
+        bh=zOFkK97O8jweTT1bOAw65sZ4EgGnr5SNEDZxTqc9efI=;
+        b=s6hIVdBBpFGHz7VuzfWVP/+tfne/vVEqIxWDqXgSm0l3OW3QE6MygZId7aoH4PAR7m
+         SIHuwYUzOE8YVt4Jh/RBWuBjLwRcWlrlt3Mz+tQYh81Jw03lXQlnz/FRBZkAZ4hPMSZC
+         9kocmGyXuEZv6Vp4Q0hcZt7S6vY2EDXuQE3nrrO8fCGDsmGUHkfUHKrmhPPmVadBIghC
+         t4/iH2nbjBt7L/PfBll7TpLNdlHwn42OnEJ/GivFIH+AXOelI8ZhppmFv5NyGmmrEnE7
+         9rFMEHcyTgzzDEUJLIaVC5OnqiNC1L3nZgFW1ACZdl2ZmwIlp7F6DFojNzclZtRUSqh3
+         uTPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:date:references:to
+         :in-reply-to:message-id;
+        bh=zOFkK97O8jweTT1bOAw65sZ4EgGnr5SNEDZxTqc9efI=;
+        b=NmKrM1s6X9C1PzzFZaU0zY7HjU2yEnegS+/aNXp7zIsPBZJOPrhp/j9mMsoZd5wzdC
+         5UE4iXBZqxgvAY6kfbZONt6PaPXEgG7CuZH4pewdp5k3lbX4B8QpiIc38BHJFZFElEed
+         cfvOA6owPNrcfgAD8vA6BgIVW9q2lIkHxHWZ9g8XCRssm0S0/6eCu0UvCOGTnNt1NaDH
+         KBEc9jJwz5fs3dG2fxexsGHQSQMPfpyNLyqqStUV2wCPcvHXXTUSkvMBYVrDw/82wRCd
+         8h37WN+Mc8huZU6BqIXG40kZkzyeDGLMrq5O1ALqLycUux/BnpQfRhC0P89UhtOhbc44
+         q1MA==
+X-Gm-Message-State: AIkVDXITfL6ABR0z//qlYe0RReJShGLzMOGjTYQtBkCB4sC/sfGu9z3jSdZx3L1hSpKUzw==
+X-Received: by 10.157.9.208 with SMTP id 16mr23844626otz.12.1483321180637;
+        Sun, 01 Jan 2017 17:39:40 -0800 (PST)
+From: Brandon Perry <bperry.volatile@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_943C1FDD-40E9-4B7A-8313-1FC8BC93611D"
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Date: Sun, 1 Jan 2017 19:39:38 -0600
+References: <68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <Z0chtLMDRnrhmwTt@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="RZzKumh2MJ6aQIOd"
-Content-Disposition: inline
-Subject: [oss-security] authentik: remote timing attack in MetricsView HTTP Basic Auth
- (CVE-2024-52307)
+In-Reply-To: <68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>
+Message-Id: <4F81C4B3-94D3-4F62-9B83-7564BDF36B6D@gmail.com>
+X-Mailer: Apple Mail (2.3259)
+Subject: [oss-security] Re: Multiple issues in OpenH264 1.5.1
 
---RZzKumh2MJ6aQIOd
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+--Apple-Mail=_943C1FDD-40E9-4B7A-8313-1FC8BC93611D
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 Nov 2024 14:42:09 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: authentik: remote timing attack in MetricsView HTTP Basic Auth
- (CVE-2024-52307)
+Content-Type: text/plain;
+	charset=utf-8
 
-Hello list,
 
-this report is about a remote timing attack in Authentik [1]. Authentik is a
-popular open source identity provider that can be self-hosted. SUSE IT is
-considering to use this software internally in the future and thus we have
-been asked to have a look at its security.
+> On Jan 1, 2017, at 7:32 PM, Brandon Perry <bperry.volatile@gmail.com> wro=
+te:
+>=20
+> Recently, Firefox updated their OpenH264 plugin to 1.6. Earlier this year=
+, I reported multiple crashes I had found while fuzzing version 1.5.1 of th=
+e decoder (which was what was shipped at the time).
+>=20
+> While these issues have been resolved on the 1.6 branch of the openh264 c=
+odebase for some time (a year?), it doesn=E2=80=99t seem like Firefox got t=
+he update until recently (correct me if I=E2=80=99m wrong), which is why I =
+am releasing my fuzz results. I initially reported these to Mozilla, but co=
+llided with Tyler Smith, one of their security engineers who had also been =
+fuzzing the decoder. I am not sure if these issues got CVEs or not, but I d=
+on=E2=80=99t see any.
+>=20
+> https://raw.githubusercontent.com/brandonprry/openh264-fuzz/ <https://raw=
+.githubusercontent.com/brandonprry/openh264-fuzz/>
+Whoops, mislinked.
 
-The Authentik version we examined was 2024.8.3. Beyond the finding in this
-report, we also discovered the possibility to access SSL private keys witho=
-ut
-authentication, but this was independently discovered and fixed in
-parallel [2] by upstream before we had a chance to report it. The only
-CVE-worthy finding that was left is discussed in the next section. Some
-general insights into the security of Authentik are given in section 2).
+https://github.com/brandonprry/openh264-fuzz <https://github.com/brandonprr=
+y/openh264-fuzz>
+>=20
+> Attached is the README for the linked GitHub repo, which shows the three =
+distinct bugs and their stack traces. There might be another bug or two tha=
+t I missed during triage. None of the crashes work on 1.6, which is now shi=
+pped with up-to-date Firefox installs.
+>=20
+> Happy New Year!
+>=20
+> <README.md>
 
-We also offer a rendered version of this report on our blog in [3].
 
-1) Vulnerability Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-The MetricsView, reachable via URL "/-/metrics/", implements HTTP basic auth
-in "authentik/root/monitoring.py:27" [4]. The expected username is hard-cod=
-ed
-to be `monitor`. The expected password is the constant `settings.SECRET_KEY=
-`,
-which is the same as the `AUTHENTIK_SECRET_KEY`, generated when setting up
-Authentik. According to documentation it is used for cookie signing and in
-older versions also for "unique user IDs".
-
-To verify the password, the implementation uses the regular Python "=3D=3D"
-string comparison operator. This operator will optimize the string comparis=
-on,
-making it likely possible to employ timing attacks to guess the correct
-`SECRET_KEY`. Security research has repeatedly shown that timing attacks
-are a realistic danger, even over the network.
-
-Exploiting this vulnerability is likely complex, but a determined
-attacker might be able to develop a successful approach. We did not look in
-more detail into how to exploit the issue.
-
-Upstream published a security advisory [5] and provides fixes for this issue
-in versions 2024.10.3 and 2024.8.5. It is also possible to employ a workaro=
-und
-by making the affected API endpoint inaccessible for remote users.
-
-2) Review Summary
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Authentik is a big project consisting of about 10,000 lines of Golang code =
-and
-nearly 100,000 lines of Python code. It uses various web frameworks and a
-rather complex set of abstractions. Reviewing this in full with our limited
-resources is impossible. Thus we concentrated on inspecting the accessible
-REST API endpoints and tried to get a general feel for the robustness of the
-software.
-
-The web frameworks and development style used in Authentik result in pretty
-robust REST API endpoints. Even when issues are found, the upstream project
-shows that it is well organized and manages to fix them quickly and
-transparently.
-
-The sheer amount of features supported by Authentik in terms of network
-protocols, authentication mechanisms etc. is big and results in a level of
-complexity that is hard to manage. Keeping track of the interactions of all
-these features with client and third party systems is a challenge. Authentik
-also implements a complex permission framework of over 500 different
-privileges for controlling access to the system. We suggest to train
-administrators of such systems well to avoid that issues are introduced
-through bad configuration of the system.
-
-A bit of a problematic area that we identified in Authentik is its
-deployment. It only offers Docker-Compose or Kubernetes based installation.
-No official bare-metal installation support exists. The minimum setup requi=
-res
-four containers that are connected via an isolated network. One container is
-running the Postgres database, one is running the Redis in-memory key/value
-store, another one is running the actual Authentik server components and an
-"Authentik Worker" container is running the celeryd task scheduler. We look=
-ed
-into the containers and noted the following aspects:
-
-* Two of the containers (Postgres and Redis) are based on Alpine Linux and =
-the
-  other two (Authentik Server and Worker) are based on Debian Linux.
-* The local security within some of these containers is not fully maintaine=
-d,
-  e.g. in the Authentik Server container there exist globally accessible
-  IPC sockets and unsafe temporary file permissions in /dev/shm. This means
-  that the local security is only based on the container isolation. As soon=
- as
-  an attacker is able to run code in this container, there is little
-  defense-in-depth.
-* The file system hierarchy standard is violated in some of the containers,
-  the / directory is cluttered with proprietary Authentik directories. A
-  custom Python installation is placed there, for example.
-
-Consequently, one must not only consider the security of Authentik itself, =
-but
-also the security of at least four different Linux containers running two
-different Linux distributions and the customized Python stacks involved etc.
-Users have to rely on Authentik upstream to properly maintain the security =
-of
-these components.
-
-Offering a bare-metal installation could address the concerns in this area.
-Individual services on modern Linux can still benefit from isolation featur=
-es
-(e.g. via protection settings in systemd service units [6]), while the syst=
-em
-packages and distribution security are transparent and under full control of
-the Admin. Of course this likely makes things more complex for the upstream
-developers, when they no longer have full control of the Linux environment
-that Authentik is running in.
-
-3) Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-2024-10-25: We reported the finding to <security@goauthentik.io>, offering =
-coordinated disclosure.
-2024-10-28: Upstream replied and confirmed the issue.
-2024-11-13: Upstream obtained a CVE and informed us they would publish the =
-issue within a week.
-2024-11-21: Upstream published fixes and a security advisory [5].
-
-4) References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[1]: https://github.com/goauthentik/authentik
-[2]: https://github.com/goauthentik/authentik/security/advisories/GHSA-qxqc=
--27pr-wgc8
-[3]: https://security.opensuse.org/2024/11/26/authentik-timing-attack.html
-[4]: https://github.com/goauthentik/authentik/blob/fd1d252d44a010fad558bed2=
-d315577a9d8d1f2b/authentik/root/monitoring.py#L27
-[5]: https://github.com/goauthentik/authentik/security/advisories/GHSA-2xrw=
--5f2x-m56j
-[6]: https://documentation.suse.com/smart/security/html/systemd-securing/in=
-dex.html
-
-Regards
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
-
---RZzKumh2MJ6aQIOd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmdHIbEACgkQFMQFyXGS
-NVMaxg/+KLY8QkzomPsuaorTb4lik9BCsWveExJWi/XHFdCa24jKnX+ahtUkTIWL
-mvBmWcKhLURgy5VMCzS4gTpzJ5yV9dEWru2sIfU7DqoxK2jr803FMNEfxj5stKN+
-Aq8dUS3Qb2ZiToSmHw3EPa72uC1xAVgnYqZxNR4oMdeamFASW4N6KrWAYi64BOgm
-KivI569ornQW3cT3c2BK0d60KNtbO+Wb7GbVlQLFTnMUh/77BaJq4vIZ/TMvzuHz
-GTJT4ynQMJcyVt9Q3lCrRtfNB0JQm8VUSxUz5K4pmnWyW1zNnTORizfbFyaT9vCN
-ciHf2PLV3P3OIkoxWjNO4BuATitD1b3ySauiPa1/h+yj62i6GfGysopzH41Vsuy0
-PXqxMxoREMo7Exey6Q7iHXL56ebFCpMvIWE0A3+8BVTjB5OWCX+uwvkKLxB6IHe5
-NYPSG7M5v3pTNKYteHTcLS/65n0MELabRzBzjT0uKemwhYXOfi4gR9UnVAa+ETm/
-H3FmjWRK2+pVqUAkMRlsRsGGrrEaKELQzPCy8bJID0pPm+UMgOi6m892EmSgqiiq
-SUsHL0IW11LkFg82x2Ip5VnFs2mZYJs6KWCRpFQOdcLonSS6zs2a4LrBAWwTMaED
-JNQNkq7vQeRqPgPBaApeYHjzZ09EOjJXEZiplqT/hgbPPQUTabI=
-=IRkQ
------END PGP SIGNATURE-----
-
---RZzKumh2MJ6aQIOd--
+--Apple-Mail=_943C1FDD-40E9-4B7A-8313-1FC8BC93611D--
