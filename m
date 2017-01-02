@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/15
-Message-ID: <20171106211432.pfwrhchhbrncqggo@jwilk.net>
-Date: Mon, 6 Nov 2017 22:14:32 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/3
+Message-ID: <20170102002054.GA21309@jasmine>
+Date: Sun, 1 Jan 2017 19:20:54 -0500
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of vim swap files
+Subject: Re: libtiff: multiple divide-by-zero
 Content-Type: text/plain; charset=utf-8
 
-* Solar Designer <solar@...nwall.com>, 2017-11-06, 21:00:
->I don't know what state glibc was in with regard to honoring, ignoring, 
->or unsetting TMPDIR in SUID programs in 1998-1999.
+On Sun, Jan 01, 2017 at 04:46:12PM +0100, Agostino Sarubbo wrote:
+> Description:
+> Libtiff is a software that provides support for the Tag Image File Format 
+> (TIFF), a widely used format for storing image data.
+> 
+> Some crafted images, through a fuzzing revealed multiple division by zero. 
+> Since the number of the issues, I will post the relevant part of the 
+> stacktrace.
+> 
+> Affected version / Tested on:
+> 4.0.7
+> Fixed version:
+> N/A
+> Commit fix:
+> https://github.com/vadz/libtiff/commit/438274f938e046d33cb0e1230b41da32ffe223e1
 
-glibc's tempnam() did inadvertently honor TMPDIR in setuid/setgid 
-programs, but the bug was fixed in 1996:
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=d68171edce96cb59b5cb869f6a82afcc50db00be
+Do you know if this repository has any relationship to the libtiff project?
 
-In 2000, glibc started unsetting TMPDIR in such programs:
-https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=74955460c5b9f23d7783395ce2478f5b7c5fd876
+It describes itself like this:
 
-Curiously, Hurd implementation of tmpfile() seems to honor TMPDIR:
-https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/mach/hurd/tmpfile.c;h=8bcfb81a104f37f271b18fe2eea3d40f7d101634;hb=HEAD#l40
+"Unofficial mirror of libtiff cvs repository at cvs.maptools.org created
+and updated using "git cvsimport"?
 
--- 
-Jakub Wilk
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
