@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/2
-Message-ID: <640892254.31427608.1510585620318.JavaMail.zimbra@redhat.com>
-Date: Mon, 13 Nov 2017 10:07:00 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/02/1
+Message-Id: <68CFC008-17E9-46A4-BF96-19FD7F7DC056@gmail.com>
+Date: Sun, 1 Jan 2017 19:32:45 -0600
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Multiple issues in OpenH264 1.5.1
 Content-Type: text/plain; charset=utf-8
 
-Hello, Greg, all,
+Recently, Firefox updated their OpenH264 plugin to 1.6. Earlier this year, I reported multiple crashes I had found while fuzzing version 1.5.1 of the decoder (which was what was shipped at the time).
 
-My fault here was indeed not stating that a Red Hat's product is
-vulnerable (thus, a CVE was assigned), but stating that only Linux
-kernel is vulnerable (while indeed it was fixed a long ago). Please,
-accept my apologies.
+While these issues have been resolved on the 1.6 branch of the openh264 codebase for some time (a year?), it doesn’t seem like Firefox got the update until recently (correct me if I’m wrong), which is why I am releasing my fuzz results. I initially reported these to Mozilla, but collided with Tyler Smith, one of their security engineers who had also been fuzzing the decoder. I am not sure if these issues got CVEs or not, but I don’t see any.
 
-> I hate to ask, but why are you getting CVEs for bugs fixed over a year
-> ago, and are already in all stable kernel releases a year ago?  Why does
-> it matter?
+https://raw.githubusercontent.com/brandonprry/openh264-fuzz/ <https://raw.githubusercontent.com/brandonprry/openh264-fuzz/>
 
-I'm afraid, you won't like the answer, but in a short word, the Red Hat
-is a CNA (CVE Numbering Authority) for Red Hat's products and the Linux
-kernel and we've decided to assign this CVE.
+Attached is the README for the linked GitHub repo, which shows the three distinct bugs and their stack traces. There might be another bug or two that I missed during triage. None of the crashes work on 1.6, which is now shipped with up-to-date Firefox installs.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Happy New Year!
+
+
+Content of type "text/html" skipped
+
+View attachment "README.md" of type "text/markdown" (9348 bytes)
+
+Content of type "text/html" skipped
