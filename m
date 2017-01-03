@@ -1,35 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/28/5
-Message-ID: <CAOGJi+7UWmxUZercz+_TObWWwGz9NpZGSYL6Muy+hHDO-MW0Pw@mail.gmail.com>
-Date: Fri, 28 Apr 2017 14:34:38 +0800
-From: 李琪 <pjqruc@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/03/1
+Message-ID: <20170103110615.GA22538@suse.de>
+Date: Tue, 3 Jan 2017 12:06:15 +0100
+From: Sebastian Krahmer <krahmer@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7475 Cairo-1.15.4 Denial-of-Service Attack due to Logical Problem in Program
+Cc: jfrickson@...ios.com
+Subject: Re: Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi
 
-## Overview
-I and my colleague have found a vulnerability of Cairo-1.15.4 when fuzzing
-HarfBuzz with AFL.
-Cairo is a 2d graphics library, and HarBuzz is an OpenType text shaping
-engine which contains a tool named *hb-view* to give a graphical view of
-text using Cairo with a font provided by user.
-Owing to logical problem in program, the crash happens during null pointer
-deference and the vulnerability will cause a denial-of-service attack with
-a crafted font file.
+On Tue, Dec 20, 2016 at 05:16:39PM -0200, Dawid Golunski wrote:
+> Vulnerability:
+> Nagios Core < 4.2.4  Root Privilege Escalation CVE-2016-9566
+> 
+> Discovered by: Dawid Golunski (@dawid_golunski)
+> https://legalhackers.com
+> 
+> Severity: High
 
-## Note
-I have reported this issue to cairo and here is the link:
-https://bugs.freedesktop.org/show_bug.cgi?id=100763.
+[...]
 
-When I disclosure to Red Hat Product Security, they suggest me to use
-CVE-2017-7475 for this issue and I have communicated this number to
-upstream.
+> 
+> Nagios daemon was found to open the log file before dropping its root 
+> privileges on startup:
+> 
+> 8148  open("/usr/local/nagios/var/nagios.log",
+> O_RDWR|O_CREAT|O_APPEND, 0666) = 4
+> 8148  fcntl(4, F_SETFD, FD_CLOEXEC)     = 0
+> 8148  fchown(4, 1001, 1001)             = 0
+> 8148  getegid()                         = 0
+> 8148  setgid(1001)                      = 0
+> 8148  geteuid()                         = 0
+> [...]
+
+I have had a look at the upstream patch:
+
+https://github.com/NagiosEnterprises/nagioscore/commit/c29557dec91eba2306f5fb11b8da4474ba63f8c4
+
+I think the patch is insufficient in many ways.
 
 
-Best Regards,
+Basically the patch is introducing a O_NOFOLLOW and an fstat()
+afterwards. O_NOFOLLOW only works for symlinks, but attackers
+may also create hardlinks (on the same FS, lets put
+Linux link restrictions aside since it may affects other OS's too).
 
---
-Jiaqi Peng, Bingchang Liu @ VARAS of IIE
+The fstat() check comes too late, the open() already happened
+and may caused side-effects (driver files etc.). OTOH, a stat()
+before open would be racy. Then, any of the path components
+of the logdir may be nagios owned and flipped with symlinks inside subdirs,
+since O_NOFOLLOW only fails on the last component being a symlink.
+
+Then, IMHO its not a good idea to have the fix_log_file_owner(uid, gid)
+call inside drop_privileges(), since when drop_privileges() fails,
+for example because nagios attacker is spawning many zombies,
+making setuid() fail, the following logit() call may be invoked as root, ending again in
+open_log_file():
+
+597 if(drop_privileges(nagios_user, nagios_group) == ERROR) {
+598      logit(NSLOG_PROCESS_INFO | NSLOG_RUNTIME_ERROR,...  Aborting.");
+
+Also, the fix_log_file_owner(uid, gid); call may fail and no error
+is checked on return. The call may fail because its calling
+open_log_file(). IMHO, dropping privs and setting up the logfiles
+should really be separated.
+ 
+There is also this prctl(PR_SET_DUMPABLE, 1) call which may
+be dangerous as its a potential attack vector for ptrace injections.
+
+TL;DR: there is no safe way of creating/chowning files inside user owned
+directories when running as root. Theres almost in all cases a race, since you
+have no fix point. Or at least making some fix point creates a lot
+of effort and headache. Its much cleaner to drop to user and then doing
+the file-related work. Since the logdir is nagios owned anyway,
+I dont see why there is this root/chown approach.
+
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
