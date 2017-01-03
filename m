@@ -1,117 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/15
-Message-ID: <CANO=Ty3-SjDC5=Dq3s19GxY4fwjJEah2-fbNAEp4bpGDUXOGfg@mail.gmail.com>
-Date: Tue, 31 Oct 2017 12:48:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/03/3
+Message-ID: <4b60f1b1e20142f484425629f4fef86b@imshyb02.MITRE.ORG>
+Date: Tue, 3 Jan 2017 10:39:40 -0500
+From: <cve-assign@...re.org>
+To: <peter@...ensteyn.nl>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <ludovic.rousseau@...e.fr>
+Subject: Re: CVE Request: pcsc-lite use-after-free and double-free
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 31, 2017 at 6:23 AM, Hanno Böck <hanno@...eck.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> I just sent this to the vim dev list, but I guess it's interesting for
-> oss-security, too.
->
-> Begin forwarded message:
->
-> Date: Tue, 31 Oct 2017 11:30:50 +0100
-> Subject: Security risk of vim swap files
->
->
-> Hi,
->
-> I wanted to point out an issue here with vim swap files that make them
-> a security problem.
->
-> By default vim creates a file with the name .filename.swp in the same
-> directory while editing. They contain the full content of the edited
-> file. This usually gets deleted upon exit, but not if vim crashes or
-> gets killed (e.g. due to a reboot).
->
+> The SCardReleaseContext function normally releases resources associated with the
+> given handle (including "cardsList") and clients should cease using this handle.
+> A malicious client can however make the daemon invoke SCardReleaseContext and
+> continue issuing other commands that use "cardsList", resulting in a
+> use-after-free.  When SCardReleaseContext is invoked multiple times, it
+> additionally results in a double-free of "cardsList".
+> 
+> http://lists.alioth.debian.org/pipermail/pcsclite-muscle/Week-of-Mon-20161226/000779.html
+> https://anonscm.debian.org/cgit/pcsclite/PCSC.git/commit/?id=697fe05967af7ea215bcd5d5774be587780c9e22
 
-The challenge is that the filename MUST be deterministic otherwise how do
-you find it post reboot/crash/etc.
+>> 2016-12-30
+>> To avoid this problem, destroy the list only when the client connection is terminated.
 
-There is a flaw here, it appears on some distros that vim (and emacs) will
-ignore a user's umask and go with less restrictive file permissions
-(ideally you think vi would use the files existing perms, plus any umask
-limitations as expected), for example vim failing:
+Use CVE-2016-10109.
 
-[kseifrie@...alhost vi]$ umask
-0007
-[kseifrie@...alhost vi]$ touch foo
-[kseifrie@...alhost vi]$ ls -la
-total 8
-drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
-drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
--rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
-[kseifrie@...alhost vi]$ chmod o+r foo
-[kseifrie@...alhost vi]$ ls -la
-total 8
-drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
-drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
--rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
-[kseifrie@...alhost vi]$ vi foo
+(The double-free is not sufficiently independent of the use-after-free to
+require two CVE IDs.)
 
-in another terminal:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[kseifrie@...alhost vi]$ ls -la
-total 12
-drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:50 .
-drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
--rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:50 foo
--rw-r--r--.  1 kseifrie kseifrie 4096 Oct 31 10:50 .foo.swp
-
-So vim ignores the umask of the user =(.
-
-For example cat (and cpo and tar) work as expected:
-
-[kseifrie@...alhost vi]$ umask
-0007
-[kseifrie@...alhost vi]$ rm -rf *
-[kseifrie@...alhost vi]$ touch foo
-[kseifrie@...alhost vi]$ ls -la
-total 8
-drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:49 .
-drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
--rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:49 foo
-[kseifrie@...alhost vi]$ chmod o+r foo
-[kseifrie@...alhost vi]$ ls -la
-total 8
-drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:49 .
-drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
--rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:49 foo
-[kseifrie@...alhost vi]$ cat foo > bar
-[kseifrie@...alhost vi]$ ls -la
-total 8
-drwxrwxr-x.  2 kseifrie kseifrie 4096 Oct 31 10:49 .
-drwx--x---. 27 kseifrie kseifrie 4096 Oct 31 10:42 ..
--rw-rw----.  1 kseifrie kseifrie    0 Oct 31 10:49 bar
--rw-rw-r--.  1 kseifrie kseifrie    0 Oct 31 10:49 foo
-
-So from a CVE perspective we have a situation where a user has explicitly
-set a umask (of say 0007) which is to say they've made a security assertion
-of "any file I create I want the rwx permissions for "other" removed" which
-vim and emacs (and possibly others) are violating when they create swap
-files/backups/whatever. To add insult to injury most other utilities that
-create a file (e.g. cp, cat, dd) seem to respect umask.
-
-Please use CVE-2017-1000382 for VIM version 8.0.1187 (and other versions
-most likely) ignores umask when creating a swap file
-(\"[ORIGINAL_FILENAME].swp\") resulting in files that may be world readable
-or otherwise accessible in ways not intended by the user running the vi
-binary.
-
-Please use CVE-2017-1000383 for GNU Emacs version 25.3.1 (and other
-versions most likely) ignores umask when creating a backup save file
-(\"[ORIGINAL_FILENAME]~\") resulting in files that may be world readable or
-otherwise accessible in ways not intended by the user running the emacs
-binary.
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJYa8TbAAoJEHb/MwWLVhi2T6gP/jW4DFCfQJPZLhy5ydgqwOqC
+XdrMCVUAVJ+sil8+Tx+v5ylnEDg9WitiUpbuRLILSD/h5XD0I9hYbGjeuNR1DGk/
+ZhHRyzLMK+njgmemtMCLS+mAjnu3WVvXs97hL1V4UE/9IVw2jW5fms3zL/DoEBHm
+XBXu0rnTRs/0LCM+uIwh7xTOXnnfATROi/eDZCsM32ufSFVfrqeha4uH42MIJa7H
+umBp7Gp4iRRMUOdH9mn7AvRni8E9U1JqMpnriz/BZkY9LBy7iCuIqlIV+s4Pnfz4
+bFv4QkGrI0MIa//Qe2hkXQ4qkK6kD3PdAZRp75t+o7QJcTiwZT3MdDhRsReuu+bu
+qqf2QHa/cnUd7jutDo+CB7rZbdZCt/zi2Vhubo4DwWoOA0InGzXH3UpYs0nd2EBL
+cyVclqmTelo3ylMZUwJvZ5WSSjI2dORoe5f4WmvC6AC5Hdgoj8pPpY5E+lXQDTLN
+hB2thbSgeMqhCchdVVn1ydqC4YuyrHfaVY9pA2lfJ4NwWy0/ggVKIGZ/qm1A9GCH
+IBXolytm4Va9GZ1hi0/R06lpwwsqJrPQpmDjgt7FIsEyleDAA1kf0Y+wcQGszTg6
+5CVxbci9e83OjFxdvZv+ITliarobUOHvnu/7AX04ZbIuiSoi7ce2HR6MwmhEy+YI
+GWjm/aDGodtMWYtZzI+Q
+=9VvD
+-----END PGP SIGNATURE-----
