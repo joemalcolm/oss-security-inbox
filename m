@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2760" "Thursday" "16" "April" "2015" "04:11:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150416081149.F14586C0016@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041608:11:49" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        cve-assign@m Apr 16   62/2760  " thread-indent "\"[oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<552F4B55.2010404@redhat.com>" ("<552F4B55.2010404@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["608" "Wednesday" "4" "January" "2017" "23:42:21" "+0000" "KellerFuchs" "KellerFuchs@hashbang.sh" "<20170104234221.GA25962@hashbang.sh>" "23" "Re: [oss-security] Firejail local root exploit" "^Cc:" nil nil "1" "2017010423:42:21" "[oss-security] Firejail local root exploit" (number mark "        KellerFuchs@ Jan  4   23/608   " thread-indent "\"Re: [oss-security] Firejail local root exploit\"\n") "<20170104131248.GA28596@suse.de>" ("<20170104131248.GA28596@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9806 invoked by uid 550); 16 Apr 2015 08:12:02 -0000
+Received: (qmail 8134 invoked by uid 550); 5 Jan 2017 09:15:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9770 invoked from network); 16 Apr 2015 08:12:01 -0000
-In-Reply-To: <552F4B55.2010404@redhat.com>
-Message-Id: <20150416081149.F14586C0016@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 16 Apr 2015 04:11:49 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 25992 invoked from network); 4 Jan 2017 23:44:40 -0000
+Message-ID: <20170104234221.GA25962@hashbang.sh>
+References: <20170104131248.GA28596@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170104131248.GA28596@suse.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: netblue30@yahoo.com, team@hashbang.sh
+Date: Wed, 4 Jan 2017 23:42:21 +0000
+From: KellerFuchs <KellerFuchs@hashbang.sh>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: huzaifas@redhat.com
+Subject: Re: [oss-security] Firejail local root exploit
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> My previous email, was based on general observation, i really dont have
-> a preference. Please feel free to assign a CVE, if other issues are
-> discovered we will let MITRE know.
-
-OK, use CVE-2015-3315 for all of the Symlink Following vulnerabilities
-disclosed in either the main body of
-http://openwall.com/lists/oss-security/2015/04/14/4 or the raceabrt.c
-attachment. (The attachment is visible in other archives such as the
-http://seclists.org/oss-sec/2015/q2/130 one.)
-
-The scope of CVE-2015-1318 and CVE-2015-1862 is limited to what is
-stated in the http://openwall.com/lists/oss-security/2015/04/14/6
-post.
+On Wed, Jan 04, 2017 at 02:12:48PM +0100, Sebastian Krahmer wrote:
+> Hi
+> 
+> Please find attached PoC for firejail, which seems to be quite
+> popular sandboxing tool.
+> 
+> Sebastian
 
 
->> If an unprivileged user can cause the maps file to be missing, then
->> that's a (minor) denial of service.
+Hi Sebastian,
 
-> If the only goal of an attacker were to delete the maps file in order
-> to cause data loss, then we think that attacker does not need to win a
-> race. That attacker can delete the maps file either before or after
-> the chown. (It's also conceivable that file deletion, by itself, was
-> considered an acceptable risk, and not a valid attack goal.)
+Thanks a lot for discovering this issue.
 
-This currently has no CVE ID because we aren't sure that ABRT has a
-design goal of preventing a user from interfering with crash data
-collection. The ABRT documentation mentions
+For information:
+- this specific issue can be mitigated by setting `x11 no` in `/etc/firejail/firejail.config`, as in
+  https://github.com/hashbang/shell-etc/pull/133
+- the initial fix commited by netblues (firejail's dev) is racy:
+  https://github.com/netblue30/firejail/commit/60d4b478f65c60bcc825bb56f85fd6c4fd48b250#commitcomment-20366636
 
-   MaxCrashReportsSize = <size_in_megabytes> 
-   This option sets the amount of storage space, in megabytes,
-   used by ABRT to store all problem information from all users.
-   The default setting is 1000 MB. Once the quota specified here
-   has been met, ABRT will continue catching problems, and in
-   order to make room for the new crash dumps, it will delete
-   the oldest and largest ones.
 
-In other words, if a user did not want one of their application
-crashes to be properly reported, they could apparently trigger many
-more crashes of a different application, and thereby cause the first
-crash's data to be permanently lost. The user would have no specific
-need to rely on standard filesystem access (e.g., rm), or unlink calls
-in special-purpose C code, to cause this data loss.
+Best,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVL25fAAoJEKllVAevmvmsyBIH/18bxIuXDPFYePlLJxY3YrBq
-6vY0VTytRhXRU0kAmmpgTF+2gHmL3YZnRHD8W3q2M/b55NM1k4JYQrwW8B6cPueD
-xoTNKqFosWsGdxLNO/L4R4AB1kdVDh0L5B0B0ZPHgSk1/Dd16UrGwKndplG6zVRn
-kAlnNkzUs3frSNAKT/x6//h4GOEMajoB+s12iORfvcmHPDOyuKbDpCX9NHf6AXIk
-ISqpUVUogyFPzXUZ2Wa5kBt02P5qzS6lCeF6iQiJyurz9qhHcK36d0nGPn91jH3j
-Gwcb9GU5yCvrH524UfRjnQdEM8zXSfYaAMUGYURtJ9LRYdQAYNRfXFPHHUA9K08=
-=dirs
------END PGP SIGNATURE-----
+  Keller Fuchs
