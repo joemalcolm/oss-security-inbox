@@ -1,100 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/5
-Message-ID: <55203.9275384857-sendEmail@localhost>
-Date: Wed, 7 Jun 2017 12:53:43 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ytnef: heap-based-buffer overflow in SwapWord (ytnef.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/04/2
+Message-ID: <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
+Date: Wed, 4 Jan 2017 12:16:49 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The complete ASan output of the issue:
+>  * Firejail has too broad attack surface that allows users
+>  * to specify a lot of options, where one of them eventually
+>  * broke by accessing user-files while running with euid 0.
 
-# ytnefprint $FILE
-==22220==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000038 at pc 0x7ff75139d8eb bp 0x7ffeed684ad0 sp 0x7ffeed684ac8
-READ of size 1 at 0x602000000038 thread T0
-    #0 0x7ff75139d8ea in SwapWord /tmp/ytnef-1.9.2/lib/ytnef.c:153:28
-    #1 0x7ff75139d8ea in TNEFDateHandler /tmp/ytnef-1.9.2/lib/ytnef.c:682
-    #2 0x7ff7513b4b47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
-    #3 0x7ff7513b39d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #4 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #5 0x7ff7504c978f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+> const char *const ldso = "/etc/ld.so.preload";
+> ...
+> snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
+> ...
+> symlink(ldso, path)
 
-0x602000000038 is located 0 bytes to the right of 8-byte region [0x602000000030,0x602000000038)
-allocated by thread T0 here:
-    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
-    #1 0x7ff7513b472a in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1154:12
-    #2 0x7ff7513b39d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #3 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #4 0x7ff7504c978f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/ytnef-1.9.2/lib/ytnef.c:153:28 in SwapWord
-Shadow bytes around the buggy address:
-  0x0c047fff7fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c047fff8000: fa fa fd fa fa fa 00[fa]fa fa fa fa fa fa fa fa
-  0x0c047fff8010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==22220==ABORTING
-Affected version:
-1.9.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9471
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00243-ytnef-heapoverflow-SwapWord
-
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-swapword-ytnef-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Use CVE-2017-5180.
 
 
+>  * There are some other similar races.
+
+We feel that other races, when they are announced, should have different
+CVE IDs.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYbS2sAAoJEHb/MwWLVhi2h4sP/0ZdfLYZ5VQz6wINwE6Uqz9v
+T9fJj9BSxOmB2fupa+zaWEPUgdYsDLqlDo58l7SuskkWey6mPKWwghXm7c8ixWTR
+/WWrpso7BQBw8HMKs9hn3Z8Ftx4c1pJ6K2ofMwURQ8lFG31u2pxb2SMzKyOgXIAe
+KTlHgWMUuKl8QfrZVB2DZFiMdtbg/Q08+UaRWFtN5A9PYyhXH+ACLUWO6zjnxvYx
+fRPzwrYTRYQuJwGDypRct6kjW5otH1CEzrcxtHQXyMd+1/OvtxRtLbXoUwnK5u6p
+Ja5XkbQ399ll0k1fjJ9Cnd1ZF9hfHvNHS8a/kCNYyyh/jzEATwb0lVbdvpvb4684
+ZA8kKiwRyaGNK5z3AdIP5CLr8tG+JXAQomGOMJS/plCh/6h+wSi08zFVygJhyVFC
+sMPpxWS7x19HxsKY2ftPA3WkZ6EtSg9B/PpSE2N160AvADaSjZbtkhKfSAw31Mh3
+VuSXWQb55ZhX04Tfjpn5ulTFRk1+723CJ8c/C4GZRDh4u1Uq5UF67v42AGciX49j
+05bxf2Hchr+ObJ8teNn+hb2EzAksNBWq5o/AOPUSSC4A4oHJazvf50t9jm3Umebp
+7XcvgYWyaYNJPeR8ukH/776oQOip7jJDNjgNnobGE1dhgTOmKFTPQzO0bXn/p5bG
+oWyUz0UzdkSOBT1UvgIR
+=kDOG
+-----END PGP SIGNATURE-----
