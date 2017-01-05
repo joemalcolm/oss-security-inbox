@@ -1,23 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/20
-Message-ID: <a3d7002d-782c-b9ab-2d4e-173607e3796c@gentoo.org>
-Date: Fri, 14 Jul 2017 21:50:55 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/05/3
+Message-ID: <a842988f-6778-03e2-0b74-c2922eb46bf4@apache.org>
+Date: Thu, 5 Jan 2017 15:12:56 +0000
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On 07/14/2017 08:54 PM, Solar Designer wrote:
-> What's #1 and #2 - do you mean the technical or the administrative tasks?
+CVE-2016-8745 Apache Tomcat Information Disclosure
 
-To avoid confusion while discussing, would it make sense to designate
-letters to the various sections, so it can be referred to as e.g A1, B3?
+Severity: Important
 
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+Vendor: The Apache Software Foundation
 
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M13
+Apache Tomcat 8.5.0 to 8.5.8
+Apache Tomcat 8.0.0.RC1 to 8.0.39 (new)
+Apache Tomcat 7.0.0 to 7.0.73 (new)
+Apache Tomcat 6.0.16 to 6.0.48 (new)
 
+Description
+A bug in the error handling of the send file code for the NIO HTTP
+connector resulted in the current Processor object being added to the
+Processor cache multiple times. This in turn meant that the same
+Processor could be used for concurrent requests. Sharing a Processor can
+result in information leakage between requests including, not not
+limited to, session ID and the response body.
+The bug was first noticed in 8.5.x onwards where it appears the
+refactoring of the Connector code for 8.5.x onwards made it more likely
+that the bug was observed. Initially it was thought that the 8.5.x
+refactoring introduced the bug but further investigation has shown that
+the bug is present in all currently supported Tomcat versions.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Mitigation:
+Users of the NIO HTTP connector with the affected versions should apply
+one of the following mitigations
+- Switch to the BIO HTTP, NIO2 HTTP or APR HTTP connector
+- Disable send file
+- Upgrade to Apache Tomcat 9.0.0.M15 or later
+  (Apache Tomcat 9.0.0.M14 has the fix but was not released)
+- Upgrade to Apache Tomcat 8.5.9 or later
+- Upgrade to Apache Tomcat 8.0.40 or later when released
+- Upgrade to Apache Tomcat 7.0.74 or later when released
+- Upgrade to Apache Tomcat 6.0.49 or later when released
+
+Credit:
+This issue was reported publicly as Bug 60409 [1] and the security
+implications identified by the Tomcat security team.
+
+History:
+2016-12-12 Original advisory
+2017-01-04 Updated information on affected versions
+
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[3] http://tomcat.apache.org/security-6.html
+
