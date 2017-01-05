@@ -1,4 +1,9 @@
-Received: (qmail 20426 invoked by uid 550); 15 May 2026 19:31:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2035" "Thursday" "5" "January" "2017" "15:12:56" "+0000" "Mark Thomas" "markt@apache.org" "<a842988f-6778-03e2-0b74-c2922eb46bf4@apache.org>" "53" "[oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure" nil nil nil "1" "2017010515:12:56" "[oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure" (number mark "U       markt@apache Jan  5   53/2035  " thread-indent "\"[oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 15705 invoked by uid 550); 5 Jan 2017 16:18:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,92 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7954 invoked from network); 15 May 2026 11:15:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1778843690;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=y82dDwSAWC6S2ZmrZugyboBqs22TRwCte2ulHCUc+zc=;
-	b=BIdM7VMFJjFJEOp8mMBCdefWUIDqFFl/MwN59oAnLKDBuJRI75urevtwOoy11qE4pYkDWd
-	uumsFoPILxWHrjJgt/X1BIjgkV8+jZ9JbErzq+84QvzKzZVWbB9KPZJsu0gOZYpPigTuAI
-	kRx4r+W4g7VqJyi9JHIbUeQl2lA6lTO5sbEd2xYBQQX9dxHV0/+aMI6erEXM4vENEKcce/
-	V9P/dXXV924sO0XxOtHPT2XaOC7kRoYvLu9j8IuRUjT1lT7IkkvTsZi3ihLuVDAIPAFZfB
-	nacu5KZssT/2xU1ON4k+ojaYbDbEGmu0bfyzhOs5GYyDw9PtegWod4kD9u0haw==
-Message-ID: <f7c83c54-96ec-4ba5-8b9c-01a663dc5bdd@cpansec.org>
-Date: Fri, 15 May 2026 12:14:48 +0100
+Received: (qmail 20084 invoked from network); 5 Jan 2017 15:13:14 -0000
+From: Mark Thomas <markt@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <a842988f-6778-03e2-0b74-c2922eb46bf4@apache.org>
+Date: Thu, 5 Jan 2017 15:12:56 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTG3lcfgGXQ5mljF8mGDpUKSF4kOW4gwf0TVTXqeG0j3WKzFuHShikqspc1rz0VoEKtFTIhoKsBY3fJqzg9VNZ3bKt4/kAvO78CW50bArCIZbI442H3Ww7eAXs7Udt0DeYBqtw/ClaOVAEXEUe+av7vn7hzQG0v90YoT4ZU2ET3y9XiTi7yrDPKH7h03s9OaBvpqv2O7Yq0HP2tD50G3Rzfv5RYbrXWlYphe/RqqaWCDArRynEKxibM4cClQ7ILXxR+TF3aKx4i8PC9hgwpFxz3rj9jhGFXb9uCoggLedr5JflPc9XsVTJ1ITC1Cu1UAZASxd+d2VLMSJPMjQSbHhyDrXcvt7swwjmliuR7aISmMLCnncSTqNuVxE6cxRZlas1RyxtsVKMdDluc/sHUTynTLrQoMNkT5QnBxQxPyltAj7BjB5UYkfkx0alWVtHuq0mgJsSvcWnBpGwK0TqQ6co2gzjR8gA76xXGJ6nPUNQxgPtUOaS6LhFGDaqmB+PldzQVV96AFkx+dJD+727Wd+n/ZHmkJfFQIKYsyDcYCBVlPcKqgUcaNX33REOs3aoYPlnhM9mqxPMHxweRb8FgdOVdHVKTTnL/kjPOFZacs7oqgN3TQG9emEpbtoRVDofB9Yj9q65tZZ8V5KNHXOQZyJ2A0OweQ//iIb2UZvI/GHXuBgw
-Subject: [oss-security] CVE-2026-8503: Apache::Session::Generate::SHA256 versions before
- 1.3.19 for Perl create insecure session ids
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [SECURITY][UPDATE] CVE-2016-8745 Apache Tomcat Information Disclosure
 
-========================================================================
-CVE-2026-8503                                        CPAN Security Group
-========================================================================
+CVE-2016-8745 Apache Tomcat Information Disclosure
 
-         CVE ID:  CVE-2026-8503
-   Distribution:  Apache-Session-Browsable
-       Versions:  before 1.3.19
+Severity: Important
 
-       MetaCPAN: https://metacpan.org/dist/Apache-Session-Browsable
-       VCS Repo: https://github.com/LemonLDAPNG/Apache-Session-Browseable
+Vendor: The Apache Software Foundation
 
-
-Apache::Session::Generate::SHA256 versions before 1.3.19 for Perl
-create insecure session ids
+Versions Affected:
+Apache Tomcat 9.0.0.M1 to 9.0.0.M13
+Apache Tomcat 8.5.0 to 8.5.8
+Apache Tomcat 8.0.0.RC1 to 8.0.39 (new)
+Apache Tomcat 7.0.0 to 7.0.73 (new)
+Apache Tomcat 6.0.16 to 6.0.48 (new)
 
 Description
------------
-Apache::Session::Generate::SHA256 versions before 1.3.19 for Perl
-create insecure session ids.
+A bug in the error handling of the send file code for the NIO HTTP
+connector resulted in the current Processor object being added to the
+Processor cache multiple times. This in turn meant that the same
+Processor could be used for concurrent requests. Sharing a Processor can
+result in information leakage between requests including, not not
+limited to, session ID and the response body.
+The bug was first noticed in 8.5.x onwards where it appears the
+refactoring of the Connector code for 8.5.x onwards made it more likely
+that the bug was observed. Initially it was thought that the 8.5.x
+refactoring introduced the bug but further investigation has shown that
+the bug is present in all currently supported Tomcat versions.
 
-Apache::Session::Generate::SHA256 generated session ids insecurely. The
-default session id generator returns a SHA-256 hash of the built-in
-rand() function, the epoch time, and the PID, that is hashed again.
-These are predictable, low-entropy sources. Predicable session ids
-could allow an attacker to gain access to systems.
+Mitigation:
+Users of the NIO HTTP connector with the affected versions should apply
+one of the following mitigations
+- Switch to the BIO HTTP, NIO2 HTTP or APR HTTP connector
+- Disable send file
+- Upgrade to Apache Tomcat 9.0.0.M15 or later
+  (Apache Tomcat 9.0.0.M14 has the fix but was not released)
+- Upgrade to Apache Tomcat 8.5.9 or later
+- Upgrade to Apache Tomcat 8.0.40 or later when released
+- Upgrade to Apache Tomcat 7.0.74 or later when released
+- Upgrade to Apache Tomcat 6.0.49 or later when released
 
-Note that version 1.3.19 has a fallback without warning to use insecure
-session generation method if the call to Crypt::URandom::urandom fails.
-However, this is unlikely as Crypt::URandom is a hardcoded requirement
-of the module.
+Credit:
+This issue was reported publicly as Bug 60409 [1] and the security
+implications identified by the Tomcat security team.
 
-This issue is similar to CVE-2025-40931 for
-Apache::Session::Generate::MD5.
+History:
+2016-12-12 Original advisory
+2017-01-04 Updated information on affected versions
 
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Workarounds
------------
-Upgrade to version 1.3.19 or later.
-
-
-References
-----------
-https://metacpan.org/release/GUIMARD/Apache-Session-Browseable-1.3.19/changes
-https://metacpan.org/release/GUIMARD/Apache-Session-Browseable-1.3.19/diff/GUIMARD/Apache-Session-Browseable-1.3.18#lib/Apache/Session/Generate/SHA256.pm
-https://github.com/LemonLDAPNG/Apache-Session-Browseable/commit/cc915cbbd266776eec3dd8bf4748b15fa827dbd0.patch
-https://www.cve.org/CVERecord?id=CVE-2025-40931
-https://www.cve.org/CVERecord?id=CVE-2025-40932
-
-Timeline
---------
-- 2026-05-13: Issue identified by CPANSec
-- 2026-05-13: Issue reported to author
-- 2026-05-14: Version 1.3.19 released
-
-
+References:
+[1] https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
+[2] http://tomcat.apache.org/security-9.html
+[3] http://tomcat.apache.org/security-8.html
+[3] http://tomcat.apache.org/security-7.html
+[3] http://tomcat.apache.org/security-6.html
 
