@@ -1,22 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/3
-Message-ID: <1769785.C3oWb3WdBS@blackgate>
-Date: Mon, 06 Mar 2017 09:48:12 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/2
+Message-ID: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
+Date: Fri, 6 Jan 2017 03:23:30 -0500
+From: <cve-assign@...re.org>
+To: <mcarpenter@...e.fr>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 25 January 2017 10:10:35 Agostino Sarubbo 
-wrote:
-> https://blogs.gentoo.org/ago/2017/01/25/jasper-null-pointer-dereference-in-j
-> p2_cdef_destroy-jp2_cod-c
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is fixed in the following commit:
-https://github.com/mdadams/jasper/commit/e96fc4fdd525fa
-0ede28074a7e2b1caf94b58b0d
+> 1. --tmpfs
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Use CVE-2016-10117.
 
+
+> 2. Nuke /etc/resolv.conf
+
+Use CVE-2016-10118.
+
+
+> /tmp was mounted tmpfs 0777 prior to:
+> 
+>   commit aa28ac9e09557b833f194f594e2940919d940d1f
+
+Use CVE-2016-10119.
+
+
+> /dev, /dev/shm, /var/tmp, /var/lock were mounted 0777 prior to:
+> 
+>   commit cd0ecfc7a7b30abde20db6dea505cd8c58e7c046
+
+Use CVE-2016-10120.
+
+
+> There are other weak perms fixed around here eg /dev/shm/firejail was
+> 0777 prior to:
+> 
+>   commit 1cab02f5ae3c90c01fae4d1c16381820b757a3a6
+
+Use CVE-2016-10121.
+
+
+> 4. Environment not cleaned before root exec()
+
+Use CVE-2016-10122.
+
+
+> don't allow --chroot as user without seccomp support
+
+Use CVE-2016-10123.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYb1OiAAoJEHb/MwWLVhi2N9kP/0AHycN7Au+PTq/bHoxXVi4l
+74YrEI8PcE1UHIkL2m1kOLbZGTWWc8E0uMEJFTfKrVoIPAINN3iYtU9dYukSACxu
+4gyQK8xWuzpbqBeF/PIBaZsp9THvTy7sfz2dKYDh/n5i0AFRv34/cs8BUIcl9BDE
+4D/1FgdwLqarh0SJvclJRBmi4zmftqub3xbt1dJItSfc/5u5SxWMHqHbmW5vESIf
+y3LU27S7E2qnSARfHxk1HfdqViDQO/76yYLQqlfGRc23wyj7ydFWQpRC28x0jjOL
+SCiC91a2gG7nGyV1l/uFIF8QAQMACNl3uJT/5Hgp8ugUOVAko81u/o0liNJMthRK
+NGWhENcFRuHqlqqxvOME/DfErfa7gn2cgFi+udl2BMfllCJb2ICH+Ddg9joaFLfu
+33iPga5J0MB5YSPQYoCSERjz2Q/i65P9kzgeTjGRLOhHsfY4p6yxUr/YmqTJ9E+W
+DXiTCbpxNJXEsopKwHODBD4ausPQ83A8LGPine7eGaJKoW3q8UdphDqOqitCRFEL
+d/XkVjtt44N0wgjB/ABDezrRAYbRPSudcCDPYh7WVl6V/6D0YRuaqYJ/Q8LlT+Nl
+/17KzyEunx/+0lBjvdtyGz2UQN8F7+9XKl/S0ZRBJS9i+Hrb4ShctP53h2aNbTQT
+nC4OrYY4JBuW90DY4Ef2
+=DJ5s
+-----END PGP SIGNATURE-----
