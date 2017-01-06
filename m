@@ -1,4 +1,9 @@
-Received: (qmail 17746 invoked by uid 550); 19 Oct 2023 16:15:25 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1712" "Friday" "6" "January" "2017" "03:23:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>" "66" "[oss-security] Re: Firejail local root exploit" "^CC:" nil nil "1" "2017010608:23:30" "[oss-security] Re: Firejail local root exploit" (number mark "        cve-assign@m Jan  6   66/1712  " thread-indent "\"[oss-security] Re: Firejail local root exploit\"\n") "<1483655866.8979.68.camel@juliet.mcarpenter.org>" ("<1483655866.8979.68.camel@juliet.mcarpenter.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17425 invoked by uid 550); 6 Jan 2017 08:23:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,86 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7904 invoked from network); 19 Oct 2023 16:04:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sambull.org; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1697731461; x=1697817861; bh=W6
-	Gb3+1gLyGzYnAzxROQCQhHc4n8CGuqC6pBrhKBWRc=; b=VhmKDbv97iOJk8F89v
-	wsTC87v347wGAHflPEQskM0WHwNVU9QZqwRFssOKIXu27d8r5zJtr4BQ6ckbLrS6
-	1bcxAWiJnzvbP220OvmumOCvtWGQf6COOauC2LrVZFB4v3uW6BRgyfzb8sUVPlbi
-	yMCyxwxCTlXit3P8ahDrTOpn1Wj3fMHwEfWReb/pQehcfOWF/mxKO92WVEOyYaRY
-	tc/ZfjH4hl8uabHpamzsEbk0KaLzaSY3NdDZ6IvxjcZfvgWE8ZR+QVBL9G0Msj48
-	cWglRL/OvUZDidzAJuJPF+eWv3ihLOML2icTKtetjP3tyJD0Ne5zXx1N0yluzbnO
-	PAeA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697731461; x=1697817861; bh=W6Gb3+1gLyGzY
-	nAzxROQCQhHc4n8CGuqC6pBrhKBWRc=; b=FwplmrOpSA+TykhLHQYd+m6UPO/KJ
-	kVELYgS+YcoMRRKYYN2ysclsZcWqrUA2jKlV8SyzJva2yay81CWfDvK52tDpqN1b
-	fLHYhj/+sspXhr0sT/Vxp9ez6leCm78e9yPa27wNPXhXKU/bKU+nHx6yBEvO+9a6
-	P70jzFMUOWsgLqtZwOzrziM3EALlZ2Iz+fPeF/1yApnw5b0vqG+yichKhB67S/G/
-	kWLyp13NaG00gN69uaPNhcW60HdhmuwXUT6UP6A+15ahqXPZVhZVbyRGVNlWgjAL
-	nA2/LW2qoqjz2jAEeVu1L2t3ubnAjYVB5EYbOrt/nKvfE4Ufk18znYTYw==
-X-ME-Sender: <xms:hFMxZcVbt21Sjk2MRP9mY2em2EwVQeRCd5f7QYNBVNjZ5j5rm6ueGg>
-    <xme:hFMxZQktFyvzM7-8-lV04M1KOGrDNgx2aOCq9SG8QSKIKMaLsHjxY3uCZNDvDHS8U
-    aGnOrYXdeEXJA>
-X-ME-Received: <xmr:hFMxZQabAHVse2e77nvgwzzGWZhjdTVgHT2Q8y5SwP35BaCm2OPHWx-_j18k39BmWV5KGuGJPnKNH92Bs4kpvuB0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeeigdeliecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfgggsehgtderre
-    dtreejnecuhfhrohhmpefurghmuceuuhhllhcuoeelmhduleelihesshgrmhgsuhhllhdr
-    ohhrgheqnecuggftrfgrthhtvghrnhepkeeftefhjeeghefhgeeifffgudfgvdfgudejtd
-    ehfefhgfduieevjeejhefguddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomheplehmudellehisehsrghmsghulhhlrdhorhhg
-X-ME-Proxy: <xmx:hFMxZbXR9L4Ku763cz62Q4iCuvN4dSswgqetxiPTQIO0ipdgkQBf4A>
-    <xmx:hFMxZWmsxceh84k3VBAhUKqHSocglYtIZrm-4-ODIk93_P49tZ09mQ>
-    <xmx:hFMxZQdbwyceN16E4hzVhIu2BXyA_DI-s80wS6_pw9F2CcqOLhco3g>
-    <xmx:hVMxZdvSh78lbRSl-cpHbWX9tbiV9uXD6nd7gU7NiigkO61josLHSQ>
-Feedback-ID: ie6294588:Fastmail
-Message-ID: <d85658c838a1338c829cee30fb9c344688a2a470.camel@sambull.org>
-From: Sam Bull <9m199i@sambull.org>
-To: oss-security@lists.openwall.com
-Date: Thu, 19 Oct 2023 17:04:10 +0100
-In-Reply-To: <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
-	 <bb8d7948-912c-0c96-6a7e-2f05a4cabfd0@tnetconsulting.net>
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-NzY2J6fZk1SJGTq3vEsX"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+Received: (qmail 16363 invoked from network); 6 Jan 2017 08:23:42 -0000
+In-Reply-To: <1483655866.8979.68.camel@juliet.mcarpenter.org>
+Message-ID: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
 MIME-Version: 1.0
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
- anytime
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+Date: Fri, 6 Jan 2017 03:23:30 -0500
+From: <cve-assign@mitre.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Firejail local root exploit
+To: <mcarpenter@free.fr>
 
---=-NzY2J6fZk1SJGTq3vEsX
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
-> I think that this is more a problem with X11 security than it is a=20
-> problem specific to Mozilla / Firefox.
+> 1. --tmpfs
 
-Also a problem with shell security. If you paste something with line breaks=
- into bash, it
-executes them. If you paste the same into fish, it doesn't (it'll display t=
-he multi-line
-input and expect you to hit the enter key to execute it as a command).
+Use CVE-2016-10117.
 
---=-NzY2J6fZk1SJGTq3vEsX
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
 
+> 2. Nuke /etc/resolv.conf
+
+Use CVE-2016-10118.
+
+
+> /tmp was mounted tmpfs 0777 prior to:
+> 
+>   commit aa28ac9e09557b833f194f594e2940919d940d1f
+
+Use CVE-2016-10119.
+
+
+> /dev, /dev/shm, /var/tmp, /var/lock were mounted 0777 prior to:
+> 
+>   commit cd0ecfc7a7b30abde20db6dea505cd8c58e7c046
+
+Use CVE-2016-10120.
+
+
+> There are other weak perms fixed around here eg /dev/shm/firejail was
+> 0777 prior to:
+> 
+>   commit 1cab02f5ae3c90c01fae4d1c16381820b757a3a6
+
+Use CVE-2016-10121.
+
+
+> 4. Environment not cleaned before root exec()
+
+Use CVE-2016-10122.
+
+
+> don't allow --chroot as user without seccomp support
+
+Use CVE-2016-10123.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iF0EABECAB0WIQS7LDpjuw7VQ6ct5tdf6SjNlibOKwUCZTFTegAKCRBf6SjNlibO
-K1QmAKCd4fNF24gRvWJK2x2/rOh4eKsKhgCgiIBctmweL45E10MUhpdLzFg7tdQ=
-=mUC0
+iQIcBAEBCAAGBQJYb1OiAAoJEHb/MwWLVhi2N9kP/0AHycN7Au+PTq/bHoxXVi4l
+74YrEI8PcE1UHIkL2m1kOLbZGTWWc8E0uMEJFTfKrVoIPAINN3iYtU9dYukSACxu
+4gyQK8xWuzpbqBeF/PIBaZsp9THvTy7sfz2dKYDh/n5i0AFRv34/cs8BUIcl9BDE
+4D/1FgdwLqarh0SJvclJRBmi4zmftqub3xbt1dJItSfc/5u5SxWMHqHbmW5vESIf
+y3LU27S7E2qnSARfHxk1HfdqViDQO/76yYLQqlfGRc23wyj7ydFWQpRC28x0jjOL
+SCiC91a2gG7nGyV1l/uFIF8QAQMACNl3uJT/5Hgp8ugUOVAko81u/o0liNJMthRK
+NGWhENcFRuHqlqqxvOME/DfErfa7gn2cgFi+udl2BMfllCJb2ICH+Ddg9joaFLfu
+33iPga5J0MB5YSPQYoCSERjz2Q/i65P9kzgeTjGRLOhHsfY4p6yxUr/YmqTJ9E+W
+DXiTCbpxNJXEsopKwHODBD4ausPQ83A8LGPine7eGaJKoW3q8UdphDqOqitCRFEL
+d/XkVjtt44N0wgjB/ABDezrRAYbRPSudcCDPYh7WVl6V/6D0YRuaqYJ/Q8LlT+Nl
+/17KzyEunx/+0lBjvdtyGz2UQN8F7+9XKl/S0ZRBJS9i+Hrb4ShctP53h2aNbTQT
+nC4OrYY4JBuW90DY4Ef2
+=DJ5s
 -----END PGP SIGNATURE-----
-
---=-NzY2J6fZk1SJGTq3vEsX--
-
