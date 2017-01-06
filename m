@@ -1,70 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/14
-Message-ID: <267855.691348331-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:56:31 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: multiple ubsan crashes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/3
+Message-ID: <20170106101153.GB9517@suse.de>
+Date: Fri, 6 Jan 2017 11:11:53 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+Hi Mitre,
 
-A fuzz on it discovered multiple crashes because of undefined behavior.
+On Wed, Jan 04, 2017 at 12:16:49PM -0500, cve-assign@...re.org wrote:
+> >  * Firejail has too broad attack surface that allows users
+> >  * to specify a lot of options, where one of them eventually
+> >  * broke by accessing user-files while running with euid 0.
+> 
+> > const char *const ldso = "/etc/ld.so.preload";
+> > ...
+> > snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
+> > ...
+> > symlink(ldso, path)
+> 
+> Use CVE-2017-5180.
 
-The complete UBsan output:
+Is this correct? It starts quite far into the 2017 namespace?
 
-# sfconvert @@ out.mp3 format aiff
-/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:14: runtime error: index 256 out of bounds for type 'int16_t [256][2]'
-/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:290:14: runtime error: index 256 out of bounds for type 'int16_t [256][2]'
+Or have other CNAs allocated the previous 5000 ?
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00191-audiofile-indexoob
-
-##########################################
-
-# sfconvert @@ out.mp3 format aiff
-/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfconvert.c:327:42: runtime error: signed integer overflow: 65536 * 252936 cannot be represented in type 
-'int'
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00192-audiofile-signintoverflow-sfconvert
-
-##########################################
-
-# sfconvert @@ out.mp3 format aiff
-/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:115:27: runtime error: signed integer overflow: 5512570 * 409 cannot be represented in 
-type 'int'
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00193-audiofile-signintoverflow-MSADPCM
-
-##########################################
-
-Affected version:
-0.3.6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-multiple-ubsan-crashes
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Ciao, Marcus
