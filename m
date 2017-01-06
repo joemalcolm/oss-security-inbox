@@ -1,41 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/10
-Message-ID: <3d6e79c054e549a9962c037935bdb1b0@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 01:02:48 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/6
+Message-ID: <20170106215110.GB6771@lizzie.io>
+Date: Fri, 6 Jan 2017 22:51:10 +0100
+From: Lizzie Dixon <_@...zie.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello oss-security,
 
-> https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp
-> AddressSanitizer: stack-overflow
-> podofo-0.9.4/src/base/PdfVariant.cpp:151:20
+I was inspired by this thread so I took a look as well. I noticed that
+firejail allows ptrace with --allow-debuggers, which allows a
+sandboxed program to escape the seccomp profile by rewriting permitted
+system calls into unpermitted ones pre-Linux-4.8. This is documented
+in the seccomp manpage:
 
-Use CVE-2017-5852.
+http://man7.org/linux/man-pages/man2/seccomp.2.html
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Before kernel 4.8, the seccomp check will not be run again
+> after the tracer is notified.  (This means that, on older
+> kernels, seccomp-based sandboxes must not allow use of
+> ptrace(2)—even of other sandboxed processes—without extreme
+> care; ptracers can use this mechanism to escape from the
+> seccomp sandbox.)
 
-iQIcBAEBCAAGBQJYkscVAAoJEHb/MwWLVhi2hy4P/1YzMOcoVFBE7j0E1WraZt9p
-WZmGqpJMH/5IPc+cFMn/wGnMPssMn3G+mMOp9u1/f6+dqhSaShM7kBE2U3tYuLsX
-trcvaH3cxQy39uAxje2JUZ32de4s4fYoAJnydN4fCDLVtLK7DgRRwmB0LN8xbB9r
-D8eC16ISD2WBbqWshkW+w8cjIqZ6B+hOl4Z7iJDgYvm5YF/oXt3h8p8pjnnvlbd+
-BGKbukI59xcqamyxQmftO+14BcrjJBGgOHN8V8Xu8uf7JppS50FS4IAYk5ikV4eZ
-WEDuZNIey9vuxIAFY29yPc4ZfQYu7ngCGeSgXSAqKLYyUlcrTnLBDRxxuCyhd65V
-ul03poDIG/6kAF7zjFA6sKSVNhpRPOoRNTTqvrEXSKZK7GxqYNlHXQM/gtXjF2rY
-ZpWaXeaGBnHKOOxCWjdErZfriIB91Cd2UBiSSUw1kmF46uthFcuhUhQCVhSA2MVa
-jX9LkI6gKrdAZjDu8IND9sDHxZiiUtL/QX4zeIh80ZtDVD7HfDp+ukZRKRz3d1Me
-rdHOcQWkEGiZFwi4ErJ3LBr2oSag1DDR89jgCo3euu4LqCZ9ighv1WQkc8sGVnO1
-qsboBNp+eXYf9aCzMl/tNA5qp6qmefowOCFxqE1476QP6PRuDG10F/XisQRjeGJq
-hzk+CuS03nK65fnN+Vu8
-=2dWy
------END PGP SIGNATURE-----
+(I wrote a little program demonstrating this behavior last year at
+https://blog.lizzie.io/linux-containers-in-500-loc.html#fn.51 ).
+
+I emailed the author and they commited a fix (within 45 minutes!):
+https://github.com/netblue30/firejail/commit/6b8dba29d73257311564ee7f27b9b14758cc693e#diff-18143ef0a33f3f378f310a976725f141R80
+
+Should this have a CVE id as well?
+
+Best,
+
+Lizzie.
+
+On 01/06, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+> > 1. --tmpfs
+> 
+> Use CVE-2016-10117.
+> 
+> 
+> > 2. Nuke /etc/resolv.conf
+> 
+> Use CVE-2016-10118.
+> 
+> 
+> > /tmp was mounted tmpfs 0777 prior to:
+> > 
+> >   commit aa28ac9e09557b833f194f594e2940919d940d1f
+> 
+> Use CVE-2016-10119.
+> 
+> 
+> > /dev, /dev/shm, /var/tmp, /var/lock were mounted 0777 prior to:
+> > 
+> >   commit cd0ecfc7a7b30abde20db6dea505cd8c58e7c046
+> 
+> Use CVE-2016-10120.
+> 
+> 
+> > There are other weak perms fixed around here eg /dev/shm/firejail was
+> > 0777 prior to:
+> > 
+> >   commit 1cab02f5ae3c90c01fae4d1c16381820b757a3a6
+> 
+> Use CVE-2016-10121.
+> 
+> 
+> > 4. Environment not cleaned before root exec()
+> 
+> Use CVE-2016-10122.
+> 
+> 
+> > don't allow --chroot as user without seccomp support
+> 
+> Use CVE-2016-10123.
+> 
+> - -- 
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iQIcBAEBCAAGBQJYb1OiAAoJEHb/MwWLVhi2N9kP/0AHycN7Au+PTq/bHoxXVi4l
+> 74YrEI8PcE1UHIkL2m1kOLbZGTWWc8E0uMEJFTfKrVoIPAINN3iYtU9dYukSACxu
+> 4gyQK8xWuzpbqBeF/PIBaZsp9THvTy7sfz2dKYDh/n5i0AFRv34/cs8BUIcl9BDE
+> 4D/1FgdwLqarh0SJvclJRBmi4zmftqub3xbt1dJItSfc/5u5SxWMHqHbmW5vESIf
+> y3LU27S7E2qnSARfHxk1HfdqViDQO/76yYLQqlfGRc23wyj7ydFWQpRC28x0jjOL
+> SCiC91a2gG7nGyV1l/uFIF8QAQMACNl3uJT/5Hgp8ugUOVAko81u/o0liNJMthRK
+> NGWhENcFRuHqlqqxvOME/DfErfa7gn2cgFi+udl2BMfllCJb2ICH+Ddg9joaFLfu
+> 33iPga5J0MB5YSPQYoCSERjz2Q/i65P9kzgeTjGRLOhHsfY4p6yxUr/YmqTJ9E+W
+> DXiTCbpxNJXEsopKwHODBD4ausPQ83A8LGPine7eGaJKoW3q8UdphDqOqitCRFEL
+> d/XkVjtt44N0wgjB/ABDezrRAYbRPSudcCDPYh7WVl6V/6D0YRuaqYJ/Q8LlT+Nl
+> /17KzyEunx/+0lBjvdtyGz2UQN8F7+9XKl/S0ZRBJS9i+Hrb4ShctP53h2aNbTQT
+> nC4OrYY4JBuW90DY4Ef2
+> =DJ5s
+> -----END PGP SIGNATURE-----
