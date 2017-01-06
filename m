@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2124" "Friday" "19" "November" "2021" "10:18:20" "-0500" "Vincent Batts" "vbatts@hashbangbash.com" nil "59" "[oss-security] CVE-2021-41190 OCI distribution and image spec: \"content-type\" confusion" nil nil nil "11" nil nil (number mark "U       vbatts@hashb Nov 19   59/2124  " thread-indent "\"[oss-security] CVE-2021-41190 OCI distribution and image spec: \"content-type\" confusion\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-41190 OCI distribution and image spec: \"content-type\" confusion" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1546" "Friday" "6" "January" "2017" "03:16:14" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<7f4109defadd49dbb7668f463db5516e@imshyb02.MITRE.ORG>" "47" "[oss-security] Re: CVE Request: Irssi Multiple Vulnerabilities (2017/01)" nil nil nil "1" "2017010608:16:14" "[oss-security] Re: CVE Request: Irssi Multiple Vulnerabilities (2017/01)" (number mark "U       cve-assign@m Jan  6   47/1546  " thread-indent "\"[oss-security] Re: CVE Request: Irssi Multiple Vulnerabilities (2017/01)\"\n") "<1483627520.30912.1.camel@gmail.com>" ("<1483627520.30912.1.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15548 invoked by uid 550); 19 Nov 2021 15:27:01 -0000
+Received: (qmail 3187 invoked by uid 550); 6 Jan 2017 08:16:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +12,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12161 invoked from network); 19 Nov 2021 15:18:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hashbangbash.com;
-	s=mail; t=1637335104;
-	bh=9nVpqXz2mcPIsDoZ1YVdummi/C3IKo7bZQSJTtWQRT0=;
-	h=Date:From:To:Subject:From;
-	b=mtnzoAa52jZoYBxQIn1sKDRrr2ee48dZre3YIYHQ685FDWgm5MXo0nGpdPj+pSU/r
-	 s4yQMAaYmBkZyqKKbDGvJSSmVruFATWOUWFQrHGU8/9ZKva0AFfHwVi9ngsNDBmbp6
-	 NKBw12XB8GkJkareN1MghOsg/YJ0Yz0gs5/LwJSbbEHEeYzndoAIXrlowE/MIUnPA/
-	 9XBhkA3QZMk80cUwcW2u8/CNuWj/Jf8MiMCOZcL1MPIcY5DJKSyYmlhDo3o9nMoPDQ
-	 +eZqZhY0o2XGX+4KjHNIFXIPBRCw8hr8/c9Ndinnf553OhIBuyNboJxvUbmxehgYFs
-	 cCY9M6kpe/aeQ==
-Date: Fri, 19 Nov 2021 10:18:20 -0500
-From: Vincent Batts <vbatts@hashbangbash.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20211119151820.cge3zrsfcsh4y4go@sshbastion>
+Received: (qmail 3162 invoked from network); 6 Jan 2017 08:16:26 -0000
+From: <cve-assign@mitre.org>
+To: <ailin.nemui@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <1483627520.30912.1.camel@gmail.com>
+Message-ID: <7f4109defadd49dbb7668f463db5516e@imshyb02.MITRE.ORG>
+Date: Fri, 6 Jan 2017 03:16:14 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="o2ekuehn664ykabb"
-Content-Disposition: inline
-Subject: [oss-security] CVE-2021-41190 OCI distribution and image spec: "content-type"
- confusion
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: Irssi Multiple Vulnerabilities (2017/01)
 
---o2ekuehn664ykabb
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: MEDIUM (moderate in Github GHSA)
+> (a) A NULL pointer dereference in the nickcmp function found by Joseph
+>     Bisch. (CWE-690)
 
-Description:
-
-The specifications themselves needed additional clarification so that
-implementations of container registries, and the clients that parse data
-received from registries can have more securely defined behavior.
-
-The undefined behavior this advisory addresses is a "type confusion"
-where a JSON document for a container's manifest could masquerade as
-both an image-index or a manifest without modification to the digest,
-relying only on the HTTP `Content-type` header provided by the registry.
-
-This behavior would have been mitigated by the presence of the
-`mediaType` field in these JSON documents. As such a notable, but
-non-breaking change introduced in these releases is un-reserving the
-`mediaType` field for use, and actively encouraging it's use.
-
-Advisory links:
-- https://github.com/opencontainers/distribution-spec/security/advisories/G=
-HSA-mc8v-mgrf-8f4m
-- https://github.com/opencontainers/image-spec/security/advisories/GHSA-77v=
-h-xpmg-72qh
-- https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-41190
-- https://groups.google.com/a/opencontainers.org/g/dev/c/ugWJ5ujnqV8/m/Yot9=
-yHkGAAAJ
-
-Release links:
-- https://github.com/opencontainers/distribution-spec/releases/tag/v1.0.1
-- https://github.com/opencontainers/image-spec/releases/tag/v1.0.2
-
-Workarounds:
-
-Software attempting to deserialize an ambiguous document may reject the
-document if it contains both =E2=80=9Cmanifests=E2=80=9D and =E2=80=9Clayer=
-s=E2=80=9D fields or
-=E2=80=9Cmanifests=E2=80=9D and =E2=80=9Cconfig=E2=80=9D fields.
-
-Expect releases of container clients that can fetch from registries, as
-well as registries themselves.
+Use CVE-2017-5193.
 
 
+> (b) Use after free when receiving invalid nick message (Issue #466, CWE-146)
 
---o2ekuehn664ykabb
-Content-Type: application/pgp-signature; name="signature.asc"
+Use CVE-2017-5194.
 
+
+> (c) Out of bounds read in certain incomplete control codes found by
+>     Joseph Bisch. (CWE-126)
+
+Use CVE-2017-5195.
+
+
+> (d) Out of bounds read in certain incomplete character sequences found
+>     by Hanno Boeck and independently by J. Bisch. (CWE-126)
+
+Use CVE-2017-5196.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iF0EABECAB0WIQRbFnXOFDoIi66S7f4Qk35Xcz8TYgUCYZfANwAKCRAQk35Xcz8T
-YqJEAJ0aBOs5o2fcp3R7DqR1n5Ajege/1wCgrYSxHsaKnI/vds82ZrIDX/Jf55U=
-=Xi7N
+iQIcBAEBCAAGBQJYb1HsAAoJEHb/MwWLVhi2oxsP/jjLY6oz9mByhAkhID79sf2N
+E0n/K0n0t228gqe515xPe3+IKnNETQql8dkGbiyDZSh0XJk1VMstJV/wfy6kqPG/
+pP+zb8cfpOi3Y8ept5NowUauadzbWvMkxewXmtjsPinTJKPqYxg21Sg1itx6/3gL
+cLpxertHOzFZc7GG1mDhvlisQy0jsZNi/NznCJunYhqrOfjtEDSUiDClWLpO5qx2
+OAEXlxJqeNGmZ670NLs37oGH2AYqKbQMwOw+KyNoUHufIDkwyC+7nd69Y6b2a9Oc
+FpLUheRRzO6lQ8XrakNqdrWx+V47hhCwx4Fd7zshCalat91bCA3bhHNVvIIz7Jb0
+la+rFjHNhHbPtxj/BowDp374MbbUT+RJyi51HYPjghb7w89ztOUWoikWAJAGL9pz
+HWsO25KxxBL6fZowWLm0gUTAgmuULpxmHC9csaszZZQVTKQ1UVMFdhzihFRdS8hF
+sveMm3Td0bo0EuZ804sUxaYDFg48tyolld3BmPUscMfQ5BBQHypRzXnpc/jblxat
+52z5xVHpWwcfwB+GeGOVygeOGfRzckzm22L/I4hveJe7wtWn4QpB0IbYeSYr7RgN
+HnSxMmPx/f1FPPvD7/Z1RNCi2AhUIVCe9NONLLnHdSqCr+sD0h3899++BWbmV/xn
+Swdkrn3C9vrjcoAglyPY
+=udlU
 -----END PGP SIGNATURE-----
-
---o2ekuehn664ykabb--
