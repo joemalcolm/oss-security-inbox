@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9058" "Friday" "7" "June" "2019" "23:31:51" "+0000" "Tim Pepper" "tpepper@vmware.com" nil "152" nil "^Date:" nil nil "6" nil nil (number mark "        tpepper@vmwa Jun  7  152/9058  " thread-indent "\"[oss-security] Re: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and v1.14.2 only - CVE-2019-11245" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["590" "Friday" "6" "January" "2017" "11:11:53" "+0100" "Marcus Meissner" "meissner@suse.de" "<20170106101153.GB9517@suse.de>" "20" "Re: [oss-security] Re: Firejail local root exploit" "^Cc:" nil nil "1" "2017010610:11:53" "[oss-security] Re: Firejail local root exploit" (number mark "        meissner@sus Jan  6   20/590   " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>" ("<20170104131248.GA28596@suse.de>" "<a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28013 invoked by uid 550); 8 Jun 2019 12:45:34 -0000
+Received: (qmail 12090 invoked by uid 550); 6 Jan 2017 10:12:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,220 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17657 invoked from network); 7 Jun 2019 23:32:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmware.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q3mzdEqAAscxsnop6rwXhejNlozvOXfKuJW6VusWf80=;
- b=i2XNX9z+Pft0bK/kuKC+fRWkI7vgzxsI4ME4WK+IE6w2knAsMKdc1Qj59y0qEJ7vdE56azKoPFoNdEpTpzt+5zpfdmNvBOIeFFn14m91jV7aTdugS2e4l1LtmElgrXNIBKVB07lmT0e0kxzGZ5HUD6fVWD64BgYeoDjOnXKsyKY=
-Thread-Topic: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and
- v1.14.2 only - CVE-2019-11245
-Thread-Index: AQHVFzK1+2r+QYQm60uTOU9aD5uiRqaQbp4A
-Message-ID: <BC038B71-E3D7-437A-820E-2987B01D5B54@vmware.com>
-References: 
- <CAHHNuYcXG6rqgA+y3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg@mail.gmail.com>
-In-Reply-To: 
- <CAHHNuYcXG6rqgA+y3efW8yb5Kbd9CgJq_MfgKz8cUgp4AqbXRg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/10.19.0.190512
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=tpepper@vmware.com; 
-x-originating-ip: [50.38.56.130]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 62a63082-cd13-439e-9142-08d6eba051a8
-x-microsoft-antispam: 
- BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);SRVR:DM6PR05MB3962;
-x-ms-traffictypediagnostic: DM6PR05MB3962:
-x-ms-exchange-purlcount: 9
-x-microsoft-antispam-prvs: 
- <DM6PR05MB39627E371FE0B41E596BC62ED9100@DM6PR05MB3962.namprd05.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 0061C35778
-x-forefront-antispam-report: 
- SFV:NSPM;SFS:(10009020)(136003)(346002)(39860400002)(376002)(366004)(396003)(189003)(199004)(606006)(186003)(86362001)(966005)(2906002)(7110500001)(8936002)(7736002)(66946007)(64756008)(11346002)(2201001)(68736007)(73956011)(6116002)(3846002)(478600001)(446003)(476003)(66476007)(15650500001)(2616005)(790700001)(91956017)(53546011)(6506007)(76116006)(66446008)(76176011)(486006)(26005)(71200400001)(99286004)(71190400001)(5660300002)(66556008)(58126008)(2420400007)(236005)(36756003)(14454004)(81166006)(54896002)(6512007)(6246003)(6306002)(102836004)(82746002)(25786009)(229853002)(316002)(14444005)(6486002)(8676002)(81156014)(33656002)(6436002)(66066001)(2501003)(53936002)(256004)(110136005)(83716004);DIR:OUT;SFP:1101;SCL:1;SRVR:DM6PR05MB3962;H:DM6PR05MB4700.namprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: vmware.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 
- QvQYx5WH3cNo8vA7prGwDhCgWZ1/hBH6lmCX3HlOGvEKieRPt83Mpdh6MBlFhM+20awbaraEdwr6U9N22bAkSeT0XHNW3IrPgheQ0+hh9SynZQJ8+WGOyzm8LNfK9P3HETQaQhS8Uv5041ntdGcbHi5Mja+VXGckHdsdMdRuNj/uDZ8h23pl5TyxoICuOLbH+1tYGgfuhIF+2qWfWqAPdl79WyuWj3jA9uZ4D9Tdj8BwlvJ9EX2sJU0mEj9xDza5xBilQ9XDhV2/f1Aki9jg70CDoAbGF2rlhcJabShnXSqs+UEykT+mGtQphwQWGLrKzwpo9T5awu2Mc9BgrMzH04xcGESJ+eQb+6+D+YRI8VKGp/qd8xHDjmeTR4hvfZqwkqSThPqERm5iVIqdyKYvKygZj/eSdMKBtAA+QeOrYhU=
-Content-Type: multipart/alternative;
-	boundary="_000_BC038B71E3D7437A820E2987B01D5B54vmwarecom_"
+Received: (qmail 12069 invoked from network); 6 Jan 2017 10:12:05 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Message-ID: <20170106101153.GB9517@suse.de>
+References: <20170104131248.GA28596@suse.de>
+ <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
 MIME-Version: 1.0
-X-OriginatorOrg: vmware.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 62a63082-cd13-439e-9142-08d6eba051a8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jun 2019 23:31:51.6330
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b39138ca-3cee-4b4a-a4d6-cd83d9dd62f0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: tpepper@vmware.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR05MB3962
-Date: Fri, 7 Jun 2019 23:31:51 +0000
-From: Tim Pepper <tpepper@vmware.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: cve-assign@mitre.org
+Date: Fri, 6 Jan 2017 11:11:53 +0100
+From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: [ANNOUNCE] Security regression in Kubernetes kubelet v1.13.6 and
- v1.14.2 only - CVE-2019-11245
-To: Brandon Philips <bphilips@redhat.com>, Kubernetes developer/contributor
- discussion <kubernetes-dev@googlegroups.com>,
-	"kubernetes-security-announce@googlegroups.com"
-	<kubernetes-security-announce@googlegroups.com>, kubernetes-security-discuss
-	<kubernetes-security-discuss@googlegroups.com>,
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"kubernetes-distributors-announce@googlegroups.com"
-	<kubernetes-distributors-announce@googlegroups.com>
+Subject: Re: [oss-security] Re: Firejail local root exploit
+To: oss-security@lists.openwall.com
 
---_000_BC038B71E3D7437A820E2987B01D5B54vmwarecom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi Mitre,
 
-SnVzdCBpbiBjYXNlIGFueWJvZHkgbWlzc2VkIGl0IGV4cGxpY2l0bHnigKZ2
-MS4xMy43IGFuZCB2MS4xNC4zIHdlcmUgcmVsZWFzZWQgeWVzdGVyZGF5LCBp
-bmNsdWRpbmcgdGhlIGNoYW5nZSBmb3IgdGhpcyBDVkUuDQoNCi0tDQpUaW0g
-UGVwcGVyDQpPcmNoZXN0cmF0aW9uICYgQ29udGFpbmVycyBMZWFkDQpWTXdh
-cmUgT3BlbiBTb3VyY2UgVGVjaG5vbG9neSBDZW50ZXINCg0KRnJvbTogPGt1
-YmVybmV0ZXMtZGV2QGdvb2dsZWdyb3Vwcy5jb20+IG9uIGJlaGFsZiBvZiBC
-cmFuZG9uIFBoaWxpcHMgPGJwaGlsaXBzQHJlZGhhdC5jb20+DQpEYXRlOiBU
-aHVyc2RheSwgTWF5IDMwLCAyMDE5IGF0IDI6NTcgUE0NClRvOiBLdWJlcm5l
-dGVzIGRldmVsb3Blci9jb250cmlidXRvciBkaXNjdXNzaW9uIDxrdWJlcm5l
-dGVzLWRldkBnb29nbGVncm91cHMuY29tPiwgImt1YmVybmV0ZXMtc2VjdXJp
-dHktYW5ub3VuY2VAZ29vZ2xlZ3JvdXBzLmNvbSIgPGt1YmVybmV0ZXMtc2Vj
-dXJpdHktYW5ub3VuY2VAZ29vZ2xlZ3JvdXBzLmNvbT4sIGt1YmVybmV0ZXMt
-c2VjdXJpdHktZGlzY3VzcyA8a3ViZXJuZXRlcy1zZWN1cml0eS1kaXNjdXNz
-QGdvb2dsZWdyb3Vwcy5jb20+LCAib3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53
-YWxsLmNvbSIgPG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20+LCAi
-a3ViZXJuZXRlcy1kaXN0cmlidXRvcnMtYW5ub3VuY2VAZ29vZ2xlZ3JvdXBz
-LmNvbSIgPGt1YmVybmV0ZXMtZGlzdHJpYnV0b3JzLWFubm91bmNlQGdvb2ds
-ZWdyb3Vwcy5jb20+DQpTdWJqZWN0OiBbQU5OT1VOQ0VdIFNlY3VyaXR5IHJl
-Z3Jlc3Npb24gaW4gS3ViZXJuZXRlcyBrdWJlbGV0IHYxLjEzLjYgYW5kIHYx
-LjE0LjIgb25seSAtIENWRS0yMDE5LTExMjQ1DQoNCg0KSGVsbG8gS3ViZXJu
-ZXRlcyBDb21tdW5pdHktDQoNCg0KQSBzZWN1cml0eS1yZWxhdGVkIGlzc3Vl
-IHdhcyBkaXNjb3ZlcmVkIGluIGt1YmVsZXQgdmVyc2lvbnMgdjEuMTMuNiBh
-bmQgdjEuMTQuMi4gVGhlIGlzc3VlIGlzIG1lZGl1bSBzZXZlcml0eSBhbmQg
-Y2FuIGJlIG1pdGlnYXRlZCB3aXRoIGEgcG9kIHNwZWMgY29uZmlndXJhdGlv
-biBjaGFuZ2UgT1IgYnkgKipkb3duZ3JhZGluZyoqIGt1YmVsZXRzIHRvIHYx
-LjEzLjUgb3IgdjEuMTQuMS4NCg0KDQoqKlZ1bG5lcmFiaWxpdHkgRGV0YWls
-cyoqDQoNCg0KV2hlbiBhIGNvbnRhaW5lciBydW5zIGZvciB0aGUgZmlyc3Qg
-dGltZSBvbiBhIG5vZGUsIGl0IGNvcnJlY3RseSByZXNwZWN0cyB0aGUgVUlE
-IHNldCBieSB0aGUgY29udGFpbmVyIGltYWdlIChlLmcuIFVTRVIgaW4gYSBE
-b2NrZXJmaWxlKS4gSG93ZXZlciwgb24gdGhlIHNlY29uZCBydW4sIHRoZSBj
-b250YWluZXIgd2lsbCBydW4gYXMgVUlEIDAgKGFrYSByb290KSB3aGljaCBj
-YW4gYmUgYW4gdW5kZXNpcmVkIGVzY2FsYXRlZCBwcml2aWxlZ2UuDQoNCg0K
-UG9kcyB0aGF0IHNwZWNpZnkgYW4gZXhwbGljaXQgcnVuQXNVc2VyIGFyZSB1
-bmFmZmVjdGVkIGFuZCBjb250aW51ZSB0byB3b3JrIHByb3Blcmx5Lg0KDQpQ
-b2RTZWN1cml0eVBvbGljaWVzIHRoYXQgZm9yY2UgYSBydW5Bc1VzZXIgc2V0
-dGluZyBhcmUgYWxzbyB1bmFmZmVjdGVkIGFuZCBjb250aW51ZSB0byB3b3Jr
-IHByb3Blcmx5Lg0KDQpQb2RzIHRoYXQgc3BlY2lmeSBtdXN0UnVuQXNOb25S
-b290OnRydWUgd2lsbCByZWZ1c2UgdG8gc3RhcnQgdGhlIGNvbnRhaW5lciBh
-cyB1aWQgMCwgd2hpY2ggY2FuIGFmZmVjdCBhdmFpbGFiaWxpdHkuDQoNClRo
-aXMgaXNzdWUgaXMgZmlsZWQgYXMgQ1ZFLTIwMTktMTEyNDUuIFNlZSBodHRw
-czovL2dpdGh1Yi5jb20va3ViZXJuZXRlcy9rdWJlcm5ldGVzL2lzc3Vlcy83
-ODMwODxodHRwczovL25hbTA0LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxv
-b2suY29tLz91cmw9aHR0cHMlM0ElMkYlMkZnaXRodWIuY29tJTJGa3ViZXJu
-ZXRlcyUyRmt1YmVybmV0ZXMlMkZpc3N1ZXMlMkY3ODMwOCZkYXRhPTAyJTdD
-MDElN0N0cGVwcGVyJTQwdm13YXJlLmNvbSU3QzQ2NTZhYmZkM2M0ZDQ5MmJi
-NjAxMDhkNmU1NDlkNjQzJTdDYjM5MTM4Y2EzY2VlNGI0YWE0ZDZjZDgzZDlk
-ZDYyZjAlN0MwJTdDMCU3QzYzNjk0ODUwMjYzNDQwNzMwNiZzZGF0YT1taUIz
-eGUwVnRsZm5tWCUyQnNYNyUyQmZQU0gzZHRtUGlObkZNR3RURDlNTXZ1WSUz
-RCZyZXNlcnZlZD0wPiBmb3IgbW9yZSBkZXRhaWxzLg0KDQoNCioqQW0gSSB2
-dWxuZXJhYmxlPyoqDQoNCg0KUnVuIHRoaXMgdG8gcHJpbnQgb3V0IGFsbCBu
-b2RlcyBhbmQgdGhlaXIga3ViZWxldCB2ZXJzaW9uOg0KDQoNCg0Ka3ViZWN0
-bCBnZXQgbm9kZXMgLW89anNvbnBhdGg9J3tyYW5nZSAuaXRlbXNbKl19ey5z
-dGF0dXMubm9kZUluZm8ubWFjaGluZUlEfXsiXHQifXsuc3RhdHVzLm5vZGVJ
-bmZvLmt1YmVsZXRWZXJzaW9ufXsiXG4ifXtlbmR9Jw0KDQoNCklmIHRoZSBv
-dXRwdXQgbGlzdHMgS3ViZWxldCB2ZXJzaW9ucyBsaXN0ZWQgYmVsb3cgeW91
-IGFyZSBydW5uaW5nIGEgdnVsbmVyYWJsZSB2ZXJzaW9uOg0KDQogICoNCiAg
-KiAgIHYxLjEzLjYNCiAgKg0KICAqDQogICoNCiAgKiAgIHYxLjE0LjINCiAg
-Kg0KDQoNCioqSG93IGRvIEkgbWl0aWdhdGUgdGhlIHZ1bG5lcmFiaWxpdHk/
-KioNCg0KDQpUaGVyZSBhcmUgdHdvIHBvdGVudGlhbCBtaXRpZ2F0aW9ucyB0
-byB0aGlzIGlzc3VlOg0KDQoNCiAgKg0KICAqICAgRG93bmdyYWRlIHRvIGt1
-YmVsZXQgdjEuMTMuNSBvciB2MS4xNC4xDQogICogICBhcyBpbnN0cnVjdGVk
-IGJ5IHlvdXIgS3ViZXJuZXRlcyBkaXN0cmlidXRpb24uDQogICoNCiAgKg0K
-ICAqICAgU2V0IFJ1bkFzVXNlciBvbiBhbGwgcG9kcyBpbiB0aGUgY2x1c3Rl
-cg0KICAqICAgdGhhdCBzaG91bGQgbm90IHJ1biBhcyByb290LiBUaGlzIGlz
-IGEgU2VjdXJpdHkgQ29udGV4dCBmZWF0dXJlOyB0aGUgZG9jcyBhcmUgYXQN
-CiAgKiAgIGh0dHBzOi8va3ViZXJuZXRlcy5pby9kb2NzL3Rhc2tzL2NvbmZp
-Z3VyZS1wb2QtY29udGFpbmVyL3NlY3VyaXR5LWNvbnRleHQvI3NldC10aGUt
-c2VjdXJpdHktY29udGV4dC1mb3ItYS1wb2Q8aHR0cHM6Ly9uYW0wNC5zYWZl
-bGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJG
-JTJGa3ViZXJuZXRlcy5pbyUyRmRvY3MlMkZ0YXNrcyUyRmNvbmZpZ3VyZS1w
-b2QtY29udGFpbmVyJTJGc2VjdXJpdHktY29udGV4dCUyRiUyM3NldC10aGUt
-c2VjdXJpdHktY29udGV4dC1mb3ItYS1wb2QmZGF0YT0wMiU3QzAxJTdDdHBl
-cHBlciU0MHZtd2FyZS5jb20lN0M0NjU2YWJmZDNjNGQ0OTJiYjYwMTA4ZDZl
-NTQ5ZDY0MyU3Q2IzOTEzOGNhM2NlZTRiNGFhNGQ2Y2Q4M2Q5ZGQ2MmYwJTdD
-MCU3QzAlN0M2MzY5NDg1MDI2MzQ0MDczMDYmc2RhdGE9MDFBNWY1TnprZjFk
-SlZxSkR2aDRTWlBBJTJCJTJGc0Y0TXhZRFFzSmFpZkY1cEElM0QmcmVzZXJ2
-ZWQ9MD4NCiAgKg0KDQoNCioqSG93IGRvIEkgdXBncmFkZT8qKg0KDQoNCkFu
-IHVwZ3JhZGUgYWRkcmVzc2luZyB0aGlzIGlzc3VlIGlzIG5vdCB5ZXQgYXZh
-aWxhYmxlLiBCdXQsIHdpbGwgYXBwZWFyIGluIHYxLjEzLjcgYW5kIHYxLjE0
-LjMgQVNBUCBhbmQgd2lsbCBiZSBhbm5vdW5jZWQgaGVyZS4NCg0KDQoqKlRo
-YW5rIHlvdSoqDQoNCg0KVGhhbmsgeW91IHRvIHRoZTxodHRwczovL25hbTA0
-LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMl
-M0ElMkYlMkZnaXRodWIuY29tJTJGa3ViZXJuZXRlcyUyRmt1YmVybmV0ZXMl
-MkZwdWxsJTJGNzgxNzgmZGF0YT0wMiU3QzAxJTdDdHBlcHBlciU0MHZtd2Fy
-ZS5jb20lN0M0NjU2YWJmZDNjNGQ0OTJiYjYwMTA4ZDZlNTQ5ZDY0MyU3Q2Iz
-OTEzOGNhM2NlZTRiNGFhNGQ2Y2Q4M2Q5ZGQ2MmYwJTdDMCU3QzAlN0M2MzY5
-NDg1MDI2MzQ0MTczMDMmc2RhdGE9cSUyRkVodFhqaUNZRTZrWWElMkZqeSUy
-QjgzTXZlemZCUFIzOFAlMkJyd01aUk5FRVpBJTNEJnJlc2VydmVkPTA+IG1h
-bnk8aHR0cHM6Ly9uYW0wNC5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29r
-LmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRmt1YmVybmV0
-ZXMlMkZrdWJlcm5ldGVzJTJGaXNzdWVzJTJGNzgzMDgmZGF0YT0wMiU3QzAx
-JTdDdHBlcHBlciU0MHZtd2FyZS5jb20lN0M0NjU2YWJmZDNjNGQ0OTJiYjYw
-MTA4ZDZlNTQ5ZDY0MyU3Q2IzOTEzOGNhM2NlZTRiNGFhNGQ2Y2Q4M2Q5ZGQ2
-MmYwJTdDMCU3QzAlN0M2MzY5NDg1MDI2MzQ0MTczMDMmc2RhdGE9YktLQm02
-Zzh0WTlWJTJGUVpPSHZkMWN0dVVDUmclMkIwa1FvNjViNDJGZmpiRkElM0Qm
-cmVzZXJ2ZWQ9MD4gcmVwb3J0ZXJzPGh0dHBzOi8vbmFtMDQuc2FmZWxpbmtz
-LnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmdp
-dGh1Yi5jb20lMkZyYW5jaGVyJTJGazNzJTJGaXNzdWVzJTJGNTExJmRhdGE9
-MDIlN0MwMSU3Q3RwZXBwZXIlNDB2bXdhcmUuY29tJTdDNDY1NmFiZmQzYzRk
-NDkyYmI2MDEwOGQ2ZTU0OWQ2NDMlN0NiMzkxMzhjYTNjZWU0YjRhYTRkNmNk
-ODNkOWRkNjJmMCU3QzAlN0MwJTdDNjM2OTQ4NTAyNjM0NDI3Mjk0JnNkYXRh
-PVNDMSUyRnZxck5QaTJIUUVIQ2Z3UmRKaWNVUWxLREFtd3Y3VzQxUjkyMUZs
-SSUzRCZyZXNlcnZlZD0wPiwgYW5kIFRpbSBQZXBwZXIgYXMgcmVsZWFzZSBt
-YW5hZ2VyIGZvciB0aGUgY29vcmRpbmF0aW9uIGluIG1ha2luZyB0aGlzIGFu
-bm91bmNlbWVudC4NCg0KDQpUaGFuayBZb3UsDQoNCkJyYW5kb24gb24gYmVo
-YWxmIG9mIHRoZSBLdWJlcm5ldGVzIFByb2R1Y3QgU2VjdXJpdHkgQ29tbWl0
-dGVlDQotLQ0KWW91IHJlY2VpdmVkIHRoaXMgbWVzc2FnZSBiZWNhdXNlIHlv
-dSBhcmUgc3Vic2NyaWJlZCB0byB0aGUgR29vZ2xlIEdyb3VwcyAiS3ViZXJu
-ZXRlcyBkZXZlbG9wZXIvY29udHJpYnV0b3IgZGlzY3Vzc2lvbiIgZ3JvdXAu
-DQpUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgZ3JvdXAgYW5kIHN0b3AgcmVj
-ZWl2aW5nIGVtYWlscyBmcm9tIGl0LCBzZW5kIGFuIGVtYWlsIHRvIGt1YmVy
-bmV0ZXMtZGV2K3Vuc3Vic2NyaWJlQGdvb2dsZWdyb3Vwcy5jb208bWFpbHRv
-Omt1YmVybmV0ZXMtZGV2K3Vuc3Vic2NyaWJlQGdvb2dsZWdyb3Vwcy5jb20+
-Lg0KVG8gcG9zdCB0byB0aGlzIGdyb3VwLCBzZW5kIGVtYWlsIHRvIGt1YmVy
-bmV0ZXMtZGV2QGdvb2dsZWdyb3Vwcy5jb208bWFpbHRvOmt1YmVybmV0ZXMt
-ZGV2QGdvb2dsZWdyb3Vwcy5jb20+Lg0KVmlzaXQgdGhpcyBncm91cCBhdCBo
-dHRwczovL2dyb3Vwcy5nb29nbGUuY29tL2dyb3VwL2t1YmVybmV0ZXMtZGV2
-PGh0dHBzOi8vbmFtMDQuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5j
-b20vP3VybD1odHRwcyUzQSUyRiUyRmdyb3Vwcy5nb29nbGUuY29tJTJGZ3Jv
-dXAlMkZrdWJlcm5ldGVzLWRldiZkYXRhPTAyJTdDMDElN0N0cGVwcGVyJTQw
-dm13YXJlLmNvbSU3QzQ2NTZhYmZkM2M0ZDQ5MmJiNjAxMDhkNmU1NDlkNjQz
-JTdDYjM5MTM4Y2EzY2VlNGI0YWE0ZDZjZDgzZDlkZDYyZjAlN0MwJTdDMCU3
-QzYzNjk0ODUwMjYzNDQyNzI5NCZzZGF0YT1TbFpCQ1dhSDZpeWtEblV0a2gl
-MkJSU0ZrNjhHNSUyQkRRTEolMkJkcW9kemJlJTJCcm8lM0QmcmVzZXJ2ZWQ9
-MD4uDQpUbyB2aWV3IHRoaXMgZGlzY3Vzc2lvbiBvbiB0aGUgd2ViIHZpc2l0
-IGh0dHBzOi8vZ3JvdXBzLmdvb2dsZS5jb20vZC9tc2dpZC9rdWJlcm5ldGVz
-LWRldi9DQUhITnVZY1hHNnJxZ0ElMkJ5M2VmVzh5YjVLYmQ5Q2dKcV9NZmdL
-ejhjVWdwNEFxYlhSZyU0MG1haWwuZ21haWwuY29tPGh0dHBzOi8vbmFtMDQu
-c2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUz
-QSUyRiUyRmdyb3Vwcy5nb29nbGUuY29tJTJGZCUyRm1zZ2lkJTJGa3ViZXJu
-ZXRlcy1kZXYlMkZDQUhITnVZY1hHNnJxZ0ElMjUyQnkzZWZXOHliNUtiZDlD
-Z0pxX01mZ0t6OGNVZ3A0QXFiWFJnJTI1NDBtYWlsLmdtYWlsLmNvbSUzRnV0
-bV9tZWRpdW0lM0RlbWFpbCUyNnV0bV9zb3VyY2UlM0Rmb290ZXImZGF0YT0w
-MiU3QzAxJTdDdHBlcHBlciU0MHZtd2FyZS5jb20lN0M0NjU2YWJmZDNjNGQ0
-OTJiYjYwMTA4ZDZlNTQ5ZDY0MyU3Q2IzOTEzOGNhM2NlZTRiNGFhNGQ2Y2Q4
-M2Q5ZGQ2MmYwJTdDMCU3QzAlN0M2MzY5NDg1MDI2MzQ0MzcyODkmc2RhdGE9
-Mlo2alFZeDMyRWwlMkJmZXpaRjFIU01FeHBndSUyRkoxYjRVaUpNanJ5U2ZT
-Nm8lM0QmcmVzZXJ2ZWQ9MD4uDQpGb3IgbW9yZSBvcHRpb25zLCB2aXNpdCBo
-dHRwczovL2dyb3Vwcy5nb29nbGUuY29tL2Qvb3B0b3V0PGh0dHBzOi8vbmFt
-MDQuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRw
-cyUzQSUyRiUyRmdyb3Vwcy5nb29nbGUuY29tJTJGZCUyRm9wdG91dCZkYXRh
-PTAyJTdDMDElN0N0cGVwcGVyJTQwdm13YXJlLmNvbSU3QzQ2NTZhYmZkM2M0
-ZDQ5MmJiNjAxMDhkNmU1NDlkNjQzJTdDYjM5MTM4Y2EzY2VlNGI0YWE0ZDZj
-ZDgzZDlkZDYyZjAlN0MwJTdDMCU3QzYzNjk0ODUwMjYzNDQzNzI4OSZzZGF0
-YT1RdTAlMkY0N0JCUmRDY2pOYVQxdjVIS01uSUkxUjN4cXhRWE5IN0xsdGRs
-azAlM0QmcmVzZXJ2ZWQ9MD4uDQoNCg==
+On Wed, Jan 04, 2017 at 12:16:49PM -0500, cve-assign@mitre.org wrote:
+> >  * Firejail has too broad attack surface that allows users
+> >  * to specify a lot of options, where one of them eventually
+> >  * broke by accessing user-files while running with euid 0.
+> 
+> > const char *const ldso = "/etc/ld.so.preload";
+> > ...
+> > snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
+> > ...
+> > symlink(ldso, path)
+> 
+> Use CVE-2017-5180.
 
---_000_BC038B71E3D7437A820E2987B01D5B54vmwarecom_--
+Is this correct? It starts quite far into the 2017 namespace?
+
+Or have other CNAs allocated the previous 5000 ?
+
+Ciao, Marcus
