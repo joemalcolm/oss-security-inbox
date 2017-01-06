@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/23/1
-Message-ID: <af227933-a69f-6a1f-5ab1-00a1031e8819@redhat.com>
-Date: Fri, 23 Jun 2017 07:37:54 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
-Subject: Re: CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/4
+Message-ID: <60600e52b80c4606872f0dedbd22139a@imshyb02.MITRE.ORG>
+Date: Fri, 6 Jan 2017 13:33:25 -0500
+From: <cve-assign@...re.org>
+To: <meissner@...e.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-On 06/22/2017 11:01 PM, Simon McVittie wrote:
-> * If you are using Flatpak to install apps from a third-party vendor,
->   then there is already a trust relationship: the app is sandboxed, but
->   the third-party vendor chooses what parameters are used for the sandbox.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Doesn't this qualify as a vulnerability in its own right?  Flatpak
-advertises countermeasures against malicious applications:
+>> Use CVE-2017-5180.
 
-“
-Secure, sandboxed applications
+> have other CNAs allocated the previous 5000 ?
 
-Flatpak's sandboxing technology prevents exploits and hinders malicious
-applications.
-”
+Yes, CVE-2017-5xxx is a current range this week.
 
-But maybe it's like selling a VPN which isn't encrypted.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks,
-Florian
+iQIcBAEBCAAGBQJYb+H/AAoJEHb/MwWLVhi2xSQQAKJAxadRh82eMl9/5jmnHCYq
+3h5yibyJnCyusqftMbBUgSluWZNhYDOeQJYzd5GftcQ6OmBRNU04hsrn9o8VlK/f
+2411sTXRKicdr8aqqFRqhhuYfJsuZpE8T+afT7cKTZ0/TYKe4VKx6s3H9iJmGDSd
+PoSLcMYUZrB0YY/CeaK+McxlIv43jKBiOz6TJX/tqg9nJkpAst1J2AcNsKalTxCR
+dZ9NT6eEXy/2bfYIL4ed+z9wZN1ykh9KlsRMmfMPKiPvdHikcfsCMhfH5BVLsE2a
+w2bfOFf7jD1t4n8wdUzEuGL+IqrxXYyJIjvTHENbWZCaLhauO/NCmCyGgEc85dqo
+Nic7NeUcE7zyz8rVq5NYfJTod5AtsBmUv3wIlRu7s/ONLD6m89EIJl+pg0DxPwVh
+WDaeALspOkB5MZqeMV1UOOmEPTGhPMkti17QjRCQNm9iYB9pVxlH3B9cfp5tBgU4
+ssEmCJj0z+LIRyEO3vX7ENz9SwCdsEtBHGE2vJDdW6SYXwiNKXclwq0nUUV9Gr56
+xv61Qth580tC4qPjAV6rNFA6k4Lc6EJQGW/L1ayAAiANhtQB89/oXhGz2QH0rNrG
+ikZg1upwnCZwJju0owR6OGthGrOkxBcmlZaVleJ0JNuK/XObq3rXa1Rb7vYbGclZ
+kx2YviC6QSLbx5ZNLecf
+=WJc2
+-----END PGP SIGNATURE-----
