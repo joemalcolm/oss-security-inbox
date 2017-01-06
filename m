@@ -1,12 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/3
-Message-ID: <1108967946.11738827.1505747893076.JavaMail.zimbra@redhat.com>
-Date: Mon, 18 Sep 2017 11:18:13 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/06/5
+Message-ID: <f47526d9-157e-1600-8f64-d737db07753c@web.de>
+Date: Fri, 6 Jan 2017 18:08:36 +0100
+From: sivmu <sivmu@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-14497: Linux kernel: packet: buffer overflow in tpacket_rcv()
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-also:
+Am 05.01.2017 um 23:37 schrieb Martin Carpenter:
+> Setuid-root makes me sad, copy_file() worries me still and the ability
+> for a non-priv user to run any seccomp filter on anything feels like an
+> accident waiting to happen (assuming it cannot already be exploited).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1492593
+Non-priv users can run seccomp filter on anything anyway.
+Seccomp does not rewuire any privileges and as far as I know it onl
+restricts permissions (to use syscalls) and never expands them.
+
+
+Also the question is how many of these issues are specific to firejail
+and how many of them also applied to (user)namespaces in general or
+wrapper tool lke bubblewrap that utilise namespaces as firejail does.
+
+Meaning some of these issues could applie to a lot more programms.
