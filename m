@@ -1,66 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/8
-Message-ID: <910426.377874927-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:36:23 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/1
+Message-ID: <CAL8hw9H02w_B8XYr_zFxCdfLPD5mUG_Fbfd07GNAxgWwDyhpbA@mail.gmail.com>
+Date: Sat, 7 Jan 2017 06:26:27 -0600
+From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Plone Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+Well, okay.
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+Turns out CVEs were indeed already issued for these disclosures.
 
-The complete ASan output:
+I was pointed to https://vuldb.com/?id.92694 and so was told to get CVEs
+quickly.
 
-# podofocolor dummy $FILE foo
-==5768==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000018 (pc 0x7f6504f1742c bp 0x7fffc41a0df0 sp 0x7fffc41a0d00 T0)
-==5768==The signal is caused by a READ memory access.
-==5768==Hint: address points to the zero page.
-    #0 0x7f6504f1742b in PoDoFo::PdfVariant::DelayedLoad() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10
-    #1 0x7f6504f1742b in PoDoFo::PdfVariant::GetArray() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:795
-    #2 0x7f6504f1742b in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfXObject.cpp:264
-    #3 0x51ff55 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:137:28
-    #4 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #5 0x7f650358c61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x428718 in _start (/usr/bin/podofocolor+0x428718)
+https://vuldb.com/?id.92694 -- seems like the reporter also requested his
+own CVEs under different groupings and now we have duplication
+disclosures/cves with classification conflicts.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10 in PoDoFo::PdfVariant::DelayedLoad() const
-==5768==ABORTING
+Not sure what to do about the duplicates but you can ignore this request.
 
-Affected version:
-0.9.4
+On Sat, Jan 7, 2017 at 5:54 AM, Nathan Van Gheem <nathan.van.gheem@...ne.org
+> wrote:
 
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00174-podofo-nullptr-PoDoFo-PdfVariant-DelayedLoad
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfvariantdelayedload-pdfvariant-h
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+> Dear oss-security List,
+>
+> Please provide CVEs for the following 6 issues:
+>
+> 1) Filesystem information leak
+> A vulnerability that allows remote attackers to obtain information on
+> files on the server
+> Credit: Sebastian Perez
+> Impact: By using relative paths and guessing locations on a server Plone
+> is installed on, an attacker can read data from a target server that the
+> process running plone has permission to read. The attacker needs
+> administrator privileges on the Plone site to perform this attack.
+> Reference: https://plone.org/security/hotfix/20160830/filesystem-
+> information-leak
+>
+> 2) Non-Persistent XSS in Plone forms
+> z3c.form will currently accept data from GET requests when the form is
+> supposed to be POST. This allows a user to inject a potential XSS attack
+> into a form. With certain widgets in Plone admin forms, the input is
+> expected to be safe and can cause a reflexive XSS attack. Additionally,
+> there is potential for an attack that will trick a user into saving a
+> persistent XSS.
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-plone-forms
+>
+>
+> 3) Open Redirection
+> In multiple places, Plone blindly uses the referer header to redirect a
+> user to the next page after a particular action. An attacker could utilize
+> this to draw a user into a redirection attack.
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/open-
+> redirection-in-plone
+>
+>
+> 4) Non-Persistent XSS
+> Plone's URL checking infrastructure includes a method for checking if URLs
+> valid and located in the Plone site. By passing javascript into this
+> specially crafted url, XSS can be achieved.
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-plone-1
+>
+>
+> 5) Non-Persistent XSS on user form
+> Plone has unescaped user input in a page template that is open to XSS
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-plone
+>
+>
+> 6) Non-Persistent XSS in Zope2
+> In multiple places, Zope2's ZMI pages do not properly escape user input
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-zope2
+>
+>
+>
+> Versions Affected:
+> 4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+>
+> Code fixes:
+> https://pypi.python.org/pypi/Products.PloneHotfix20160830
+>
+> Recommended action:
+> Install the https://pypi.python.org/pypi/Products.PloneHotfix20160830
+> package.
+>
 
