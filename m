@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/12
-Message-ID: <850ff904-b998-0710-d3c9-39adc6a22fbb@chbi.eu>
-Date: Thu, 28 Sep 2017 20:24:58 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Stored XSS vulnerability in eGroupware Community Edition <= 16.1.20170703
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/6
+Message-ID: <6c33ffd08b9d43af97e2de8c4e70c464@imshyb02.MITRE.ORG>
+Date: Sat, 7 Jan 2017 12:57:10 -0500
+From: <cve-assign@...re.org>
+To: <mcarpenter@...e.fr>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-there is a security issue in eGroupware Community Edition <=
-16.1.20170703 (https://github.com/EGroupware/egroupware)
+> 6. Root shell via --bandwidth and --shell
+> 
+> Reported at:
+> https://github.com/netblue30/firejail/issues/1023
+> 
+> Fixed at:
+>   https://github.com/netblue30/firejail/commit/5d43fdcd215203868d440ffc42036f5f5ffc89fc
 
+Use CVE-2017-5207.
 
-Stored XSS vulnerability allows an unauthenticated remote attacker to
-inject JavaScript via Browser User-Agent which is triggered by the
-application administrator.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Fix:
-https://github.com/EGroupware/egroupware/commit/0ececf8c78f1c3f9ba15465f53a682dd7d89529f
-
-
-The issue is fixed in eGroupware Community Edition 16.1.20170922.
-
-
-Until now vendor has not marked the new version as security update and
-also not mentioned the security issue.
-(https://github.com/EGroupware/egroupware/releases/tag/16.1.20170922)
-
-
-I've requested a CVE ID (MITRE) but I have not received any yet.
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+iQIcBAEBCAAGBQJYcSqgAAoJEHb/MwWLVhi2/v4QAJK4oISptZjq0MUeAnSnOtAT
+DypS2YyDgmfXARVnW9Mo6h50XJFBStzBXF4bZMovBLXDNyoVnUNcJ3mGZVWvKAFj
+cWSHH7oLv+9FBNQNpSW1C+HOdDUr1TVNaXY9h8qPl0jxP2qMKqRS2E9eOJ9OTMzX
+v9bgKyJGECbv8njzju7EKzbjDgGgrB5X2Y1cTSZnNXwSAc1OZ2cXZDx4Q8Ai/G0f
+8OqI5yO74iEEHjSwL0SljhjGX2/YZyOMJZASlI6zzNe15HLcqS4ewZQAWr25NsBz
+7Pf5sxHCUBSEi10kDlZrL9PAZRuZtD/aRMG51robZg0abTrIp+WM7oI5HVPh65Ep
+SOYLMi/ZyaBEDAc0S+mktCv7AmGiiyWDFyYkX9y7adZedURCNzbaGzi9RGXtj7nA
+9tFmC48kiCdo7RYV/fQCZt+aYiEKZUmsJr6NTOvodIEJVoGBILefLCn8BGMBJer9
+SCilgTO8XNQrR+jpampIX4txM9Ne4xgASz3do31Drzlkt4Uxcf/aG2NckOoKNrAl
+jan/zdDnoDXyedp+DIjn9r9P0OJwic+kq1aLfXs2SlRmaqXsEMVi2IzE45SYbsBZ
+SxDG7EwslqEnEA0s7us4I71M3r7NeDyhCV+NzIOoY/0PF5VbU8q5wQA7zPRis5Jz
+OCu6RFZSA6OjdSLAe5fy
+=5Uph
+-----END PGP SIGNATURE-----
