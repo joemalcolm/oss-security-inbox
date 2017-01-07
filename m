@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/20
-Message-ID: <CA++9HO8FVAQw-oPFzqQUdOX6MnyP0s681grArPSPusGHAmChQA@mail.gmail.com>
-Date: Thu, 14 Sep 2017 20:14:03 +0000
-From: Armis Security <security@...is.com>
-To: Petr Matousek <pmatouse@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/4
+Message-ID: <1483795275.8979.125.camel@juliet.mcarpenter.org>
+Date: Sat, 07 Jan 2017 14:21:15 +0100
+From: Martin Carpenter <mcarpenter@...e.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi Petr.
+On Fri, 2017-01-06 at 18:08 +0100, sivmu wrote:
+> Non-priv users can run seccomp filter on anything anyway.
 
-On August 15th we have contacted one of the senior maintiners of BlueZ and
-attempted to establish a longer embargo period with him. Unfortunatelly his
-suggestion was to post our findings to linux-bluetooth@...r.kernel.org,
-which is a public mailing list.
-
-So we decided to disclose our findings to the secure mailing list that
-unfortunatelly only have a maximum of 7 days embargo periods.
-
-I am happy to hear the red hat security team allows for longer embargo
-periods, and we will contact you directly in the future.
+prctl(PR_CAPBSET_DROP, ...) (see caps.c) requires CAP_SETPCAP. 
 
 
-Thank you,
+> Seccomp does not rewuire any privileges and as far as I know it onl
+> restricts permissions (to use syscalls) and never expands them.
 
-Armis Labs.
+To be clear I was pondering the SECCOMP_RET_ERRNO case (not the more
+typical case where uncatchable SIGKILL zaps the caller) and I don't
+think this is feasible with current firejail. "waiting to happen", as I
+said in my throwaway comment.
+
+But if a non-privileged user can make the OS lie to a privileged (eg
+setuid) program then there is clearly potential for shenanigans. There
+is some similarity with FUSE -- make the OS lie about the state of the
+file system -- but the barrier to entry is significantly higher for FUSE
+(fuse group, allow_root, etc).
+
+Maybe you could even persuade a seccomp-SIGKILLed process to leave the
+system in some weird exploitable state. Eg rather than racing a chmod,
+just have seccomp kill the process at that point. (That's a bit
+hand-wavy -- the race is the problem in that example -- but hopefully
+you can see what I'm trying to say).
+
+The fact that I can't easily reason about this, that I can't say "this
+strategy is safe", makes me uneasy.
 
 
->
->
+> Also the question is how many of these issues are specific to firejail
+> and how many of them also applied to (user)namespaces in general or
+> wrapper tool lke bubblewrap that utilise namespaces as firejail does.
+> 
+> Meaning some of these issues could applie to a lot more programms.
+
+Potentially, yes. Though bubblewrap is both more conservative and has a
+cleaner approach to privilege management. Nice cat, too.
+
+
+Martin.
+
 
