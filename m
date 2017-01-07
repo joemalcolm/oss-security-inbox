@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["590" "Thursday" "16" "March" "2017" "13:17:13" "+0100" "Peter Korsgaard" "peter@korsgaard.com" "<877f3p8lh2.fsf@dell.be.48ers.dk>" "18" "Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" nil nil nil "3" "2017031612:17:13" "[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" (number mark "U       peter@korsga Mar 16   18/590   " thread-indent "\"Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme\"\n") "<20170316100821.GH759@scully.more-magic.net>" ("<20170315224749.GG759@scully.more-magic.net>" "<1489656677.3059.3.camel@redhat.com>" "<20170316100821.GH759@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3173" "Saturday" "7" "January" "2017" "06:26:27" "-0600" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9H02w_B8XYr_zFxCdfLPD5mUG_Fbfd07GNAxgWwDyhpbA@mail.gmail.com>" "91" "[oss-security] Re: CVE Request: Plone Multiple Vulnerabilities" nil nil nil "1" "2017010712:26:27" "[oss-security] Re: CVE Request: Plone Multiple Vulnerabilities" (number mark "U       nathan.van.g Jan  7   91/3173  " thread-indent "\"[oss-security] Re: CVE Request: Plone Multiple Vulnerabilities\"\n") "<CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>" ("<CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9628 invoked by uid 550); 16 Mar 2017 12:42:03 -0000
+Received: (qmail 22034 invoked by uid 550); 7 Jan 2017 13:14:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,132 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21506 invoked from network); 16 Mar 2017 12:17:27 -0000
+Received: (qmail 20446 invoked from network); 7 Jan 2017 12:26:39 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=hua3luea5aqcEjlFJ0th50IIQHCXeF0tAwzLj5kscVk=;
-        b=RLraZjPbPCgDaiFx1+rb2fjdPN/aCre3g2+BuE1lR1VpKr0ubgc4S7WjEYiWdqI0K4
-         SkG27zK83jaoM1KbVrEV/mX1IxmcaJr1Sd0WkqSPYOYd0AOA1UN1MWrLcmMuHC19FiRu
-         lPS4k0PhzGYY0wJpDzWuQ/O0A3FQCHfbfuWtA35qOsVcoYTsw6zQfGZ93KMhHmsztopV
-         AsylEuPhBf7GT/LLSitYuSeRubMmGz1VjvmVyIP8d/UhHKxxxLIo1JpnLJmbR16//fMu
-         xa1PLaTeVcjn9aniUfD+8G/zfC9j66/Vpi7FJWA4WJFagmrtuewk2tjJYrTlKDucM+nu
-         +7EQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=kF8mCfAG8uC38rRM1GVjGayWmI6//kTOuqTyPOztRIA=;
+        b=eHks2tSp3ZnvO6tB6PH6L5xZND9sbdT862TtGMN2vSJada4fYr+LBL+HHObrYtYSgF
+         hRyvdOwOk8OE29eYMQ34ApAYIYUG3YGoQbcNjSa9U4uck6S9RUUgUsJTFrSBpnGlRnkn
+         yvCvZbTADMGuGz/jk0ItAJNLjsHRBE81/2Cet9lvmw56R/KCrDXptMxdkXFW9f5yS8jR
+         Yn2PHGFkAb/086+uubekXapncEVUodxsMa8rxv3/he+IdCG5wY9VSD+YepDulvW1tw5V
+         dr2hIFR42XY6GML9S8anIHPQ7d889osUML5OxKTG/KyycRBqQ8YlEld2wpNuZWDBoyHN
+         esgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=hua3luea5aqcEjlFJ0th50IIQHCXeF0tAwzLj5kscVk=;
-        b=bQXNc1AwlSIqMPlnotblhocOGXOooqQHV4ne8zQJlzkSh2+EI6D/9nDfbYkFEzrbSG
-         Ty+nixPlvsZ1x/ez/THzeGWHZDE5KSTGwhDg0NfTpFc13uKK47fvmF5lqklQ4Nf0B5UL
-         RZ9oqFi0+GKxSQBBav4PpjnOWnNGdq+6UoqVluSwNoKQFXzt5OD/6xA2Y+/pyKY76fhp
-         GMqJEUUpzv5WsPzWESuDRSMZRtsfVF12IkYYRlmmgINrbn7J9iYGo3usy4QUudiwI87o
-         Cta0DhpjEH+kK/PAt2+UzfDRcQH5UtlEgyAktoN1ILSw8wsBYTvJzxthOB8wVlrBH2II
-         1flw==
-X-Gm-Message-State: AFeK/H0/W8ieznI/HpSb/etjm4ZD2PBzR1SI7/3vEvyfQs9Se3zIs+bMRyrl8rvfQ2Xonw==
-X-Received: by 10.28.24.6 with SMTP id 6mr7948794wmy.142.1489666635919;
-        Thu, 16 Mar 2017 05:17:15 -0700 (PDT)
-Sender: Peter Korsgaard <jacmet@gmail.com>
-From: Peter Korsgaard <peter@korsgaard.com>
-To: Adam Maris <amaris@redhat.com>
-Cc: oss-security@lists.openwall.com
-References: <20170315224749.GG759@scully.more-magic.net>
-	<1489656677.3059.3.camel@redhat.com>
-	<20170316100821.GH759@scully.more-magic.net>
-Date: Thu, 16 Mar 2017 13:17:13 +0100
-In-Reply-To: <20170316100821.GH759@scully.more-magic.net> (Peter Bex's message
-	of "Thu, 16 Mar 2017 11:08:21 +0100")
-Message-ID: <877f3p8lh2.fsf@dell.be.48ers.dk>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.5 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to;
+        bh=kF8mCfAG8uC38rRM1GVjGayWmI6//kTOuqTyPOztRIA=;
+        b=LwZT8VswUveXTFE8hU2oH/n9GVJ1aWs/Ba+oSwazMe+0rra6DkAfIGD/A2tBRAReO8
+         /yfKw6jHclt8qz+Mzdwb5jMuq+nd7Ih1tA97U68G4xkpuinOt6pK8WS0CzjI2Zj5E3/7
+         irvaRF06zlmilSBsnMRI+OzjXKDxpRDvkY3zmJmI9QG+SWZYFLS6fDh1y6zmxPp3cb/9
+         G7ZKuBYDLiMKmScKSgk1lC+5CtTS3XWhBg7CtzV2yzW3iS6+d9Zm01croxXUQO35Dlrs
+         w2vJOT/L4gBeU7MEHJ5IIALrRUSt473iKavKZ/QDCFHturZK0ZB4hpOaD45AdkGDEn2z
+         r/bg==
+X-Gm-Message-State: AIkVDXLy5I/pp+kQcUlpQD95QbYbKH4oocC94Z6zJPiDXwk+JOwoU7hqQm4h/9FIvUwj6omLirAp6cBm6HZpPw==
+X-Received: by 10.159.39.72 with SMTP id a66mr1763644uaa.150.1483791987873;
+ Sat, 07 Jan 2017 04:26:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+Sender: vangheem@gmail.com
+In-Reply-To: <CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>
+References: <CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>
+From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+Date: Sat, 7 Jan 2017 06:26:27 -0600
+X-Google-Sender-Auth: x06blezFy-VpNIFarj45gS0baE0
+Message-ID: <CAL8hw9H02w_B8XYr_zFxCdfLPD5mUG_Fbfd07GNAxgWwDyhpbA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c122a025b9ed00545803e6d
+Subject: [oss-security] Re: CVE Request: Plone Multiple Vulnerabilities
 
->>>>> "Peter" =3D=3D Peter Bex <peter@more-magic.net> writes:
+--94eb2c122a025b9ed00545803e6d
+Content-Type: text/plain; charset=UTF-8
 
- > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
- >> Hi Peter,
- >>=20
- >> oss-security mailing is no longer a place for requesting CVEs. Please,
- >> request CVE from MITRE via=C2=A0https://cveform.mitre.org/=C2=A0or also=
- possibly
- >> from DWF project via=C2=A0http://iwantacve.org/
+Well, okay.
 
- > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
- > done this correctly.
+Turns out CVEs were indeed already issued for these disclosures.
 
-Please don't forget to forward the form details to this list once a CVE
-has been assigned. Thanks.
+I was pointed to https://vuldb.com/?id.92694 and so was told to get CVEs
+quickly.
 
---=20
-Bye, Peter Korsgaard
+https://vuldb.com/?id.92694 -- seems like the reporter also requested his
+own CVEs under different groupings and now we have duplication
+disclosures/cves with classification conflicts.
+
+Not sure what to do about the duplicates but you can ignore this request.
+
+On Sat, Jan 7, 2017 at 5:54 AM, Nathan Van Gheem <nathan.van.gheem@plone.org
+> wrote:
+
+> Dear oss-security List,
+>
+> Please provide CVEs for the following 6 issues:
+>
+> 1) Filesystem information leak
+> A vulnerability that allows remote attackers to obtain information on
+> files on the server
+> Credit: Sebastian Perez
+> Impact: By using relative paths and guessing locations on a server Plone
+> is installed on, an attacker can read data from a target server that the
+> process running plone has permission to read. The attacker needs
+> administrator privileges on the Plone site to perform this attack.
+> Reference: https://plone.org/security/hotfix/20160830/filesystem-
+> information-leak
+>
+> 2) Non-Persistent XSS in Plone forms
+> z3c.form will currently accept data from GET requests when the form is
+> supposed to be POST. This allows a user to inject a potential XSS attack
+> into a form. With certain widgets in Plone admin forms, the input is
+> expected to be safe and can cause a reflexive XSS attack. Additionally,
+> there is potential for an attack that will trick a user into saving a
+> persistent XSS.
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-plone-forms
+>
+>
+> 3) Open Redirection
+> In multiple places, Plone blindly uses the referer header to redirect a
+> user to the next page after a particular action. An attacker could utilize
+> this to draw a user into a redirection attack.
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/open-
+> redirection-in-plone
+>
+>
+> 4) Non-Persistent XSS
+> Plone's URL checking infrastructure includes a method for checking if URLs
+> valid and located in the Plone site. By passing javascript into this
+> specially crafted url, XSS can be achieved.
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-plone-1
+>
+>
+> 5) Non-Persistent XSS on user form
+> Plone has unescaped user input in a page template that is open to XSS
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-plone
+>
+>
+> 6) Non-Persistent XSS in Zope2
+> In multiple places, Zope2's ZMI pages do not properly escape user input
+> Credit: Sebastian Perez
+> Reference: https://plone.org/security/hotfix/20160830/non-
+> persistent-xss-in-zope2
+>
+>
+>
+> Versions Affected:
+> 4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+>
+> Code fixes:
+> https://pypi.python.org/pypi/Products.PloneHotfix20160830
+>
+> Recommended action:
+> Install the https://pypi.python.org/pypi/Products.PloneHotfix20160830
+> package.
+>
+
+--94eb2c122a025b9ed00545803e6d--
