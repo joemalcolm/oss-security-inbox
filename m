@@ -1,4 +1,9 @@
-Received: (qmail 13896 invoked by uid 550); 27 Jan 2026 20:10:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2533" "Saturday" "7" "January" "2017" "05:54:01" "-0600" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>" "74" "[oss-security] CVE Request: Plone Multiple Vulnerabilities" nil nil nil "1" "2017010711:54:01" "[oss-security] CVE Request: Plone Multiple Vulnerabilities" (number mark "U       nathan.van.g Jan  7   74/2533  " thread-indent "\"[oss-security] CVE Request: Plone Multiple Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23887 invoked by uid 550); 7 Jan 2017 13:15:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13835 invoked from network); 27 Jan 2026 20:10:07 -0000
+Received: (qmail 28632 invoked from network); 7 Jan 2017 11:54:14 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769544599; x=1770149399; darn=lists.openwall.com;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:sender:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hHzj+OkTGLfDUYqFdra+02u4DSE3MXJu7R5+tmCYvHw=;
-        b=h5JWtKnDkgRR5Vjzjptb4LmzWCd9shADaRIM87dfuyB0O0SlAo+RVXjEfNOkCXaYbo
-         nNeQAEM8HadxORGsvhWbWXSs2lPZBtrk7btRaPXsTpK4Ili8VlDz0LyTC9Wtka5xpeMS
-         3YJXaaBla202klY9OFH1PikN6HJU9PbNHJjL1KazUvpVCT71t2TWOjblzvRnzOycE4Y+
-         3/REYAIxMubZ/Qb/oXIt6ZgQ411pip8VhdzMWbiEWfkQVMW++kvaj7aD8IfGF9QHDy5G
-         XSRgtREOMlzjljn24wxifXfnVEE2Z8hvL9jrx5Ytbe0UATMpqvqtJrhMBZ7QYvaFtRVP
-         Cgeg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=wU77Hwi1yRLk4cixiWSZhE8qyWeCPdozbryWOqMD/RU=;
+        b=C9wr0DnRZrLE+e2raOEKNbamhccMszu3Yjld3qbQqwkFk9eP70YqLxaLh0OMALrDe+
+         5AK75BpJNBFBpofcfnNkpqYUY0tdgNqwzz3rAOfc+h4qLssNvyZPTTrElNvWMv1n9hZU
+         76sbHJ0hRrw+8LYS3u7YUCRBNwkfneyPlb2ioVcUJwMO3y/B6M2QQGF+I1LGxDF40S4d
+         +iWMlQhTTV1mNM+YHtI9t0rl4Bj34hmsjKUEYEzhpeXktqrr41sfJrJVanFe2xT6cE6G
+         B4mA877FT1b7oKDmAGynyrcH3qyv6trYlU3erilJSo5R47+IcROhZrXG7p6XU4K0Nn1N
+         vEAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769544599; x=1770149399;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:sender
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hHzj+OkTGLfDUYqFdra+02u4DSE3MXJu7R5+tmCYvHw=;
-        b=VkeXwE+YZmyqK2J14AUbsjbnEjZI24ne+/VkXRWs629VefpKyJ1xG67uZE8yGo35e3
-         6nOk1AxmtnNsBH9vtbo9cw8b2Vn3ahwBQhxOSAbbVo5KOILQXgZOAT1axD4bhx/SRKZX
-         M+mdYMyZ/fusz2OicIdMtSxCAWmqPIB0TOQ9xUjjNd0XCLC8yX+EJikICFNXRO3PIEri
-         HrcFv/HSX38s+8PkkwbErT+IleUeMI9g8EkAw3Sgzslt2oQ6NZ0oM95LTCbZgWI1XYmu
-         EKHlgZdJ21BJ33dGJQNIQ1lc/doMAPIar2jLQcOuv4+Do5LNLxEzh2U39hBjTmyOZOEk
-         85Uw==
-X-Gm-Message-State: AOJu0YxnfFgs0TzsK2frMwS4iW81Gw+wWyutvYB/lTaTxMluOPSSNa5L
-	1DydDAxDBayBFiytiNS/XyXtwdCPixnbEpgaCUUJA2Y9f/PSFe+DNOsoQwVruXKX
-X-Gm-Gg: AZuq6aJYSjwWx4L5pVgxG+z2rDMqsg4VCB3fG86i1tNZEYV0deipy2kB/nh4pfmvJWw
-	M8B+MlZpncrf43YYcJXS6pCIAX3PHsWixyul6jgGyHOo/GfmxkjFemA2dEIT2OKr8Y8dPISBXDF
-	3180fWDeimy2lLnsztQGvxdn0gI9zu+z2zLsNheiD4A48NZZy90IIzV9ddWvxdvIBQ1BilF+eHI
-	rzJhEDSoKJjh40lGW8ODDaMsyHTcFYajrVwekzzAJk48FTA7h+zYN+zYlYMqP4m4uuKMLEDXml3
-	9uWbrxEjK19YWjLzgK8D6rCUqvXjdLaSDjmPH+yrU6lwltfXvpVHMCjJ1vdzc3EtepDAhr4amrl
-	dudOY1n4fyYKdKKBRfZ+RbttXWHLEq88/LGxNjHnJjUkxb5a7HwaV37D1YX5V43QGJaNdiS5CbJ
-	Hv5Bg98QEV5oyr8xvkHY9isazfbapxuhCTzGPUtJRhjkXI
-X-Received: by 2002:a05:6000:4305:b0:430:f742:fbc3 with SMTP id ffacd0b85a97d-435dd1ccbccmr3987409f8f.48.1769544598479;
-        Tue, 27 Jan 2026 12:09:58 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 27 Jan 2026 21:09:56 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aXkblElCH4uYloI_@eldamar.lan>
-References: <87343rqa3o.fsf@gentoo.org>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=wU77Hwi1yRLk4cixiWSZhE8qyWeCPdozbryWOqMD/RU=;
+        b=nXI1Wm+r6zi1JrcGTWcbvmOmZkXypr48Qdie9jt+bN2vzq4AG5z4eUvE5ho/FxKyc6
+         bxfjzrEIkFtkjOlmiD8AXCo1Rr+B+No6lt++sSz/x+mcCcfh9ZKQEJHcTbILiDF2dtVj
+         B7/hzHOwLT/nBGzvGpjNSpdd8uFEFfXX7TasVOjTW/ggBAYjtU64hxElBYg+BwpbQW3k
+         jRuUDqtVi/tRdmewrR6U+IA/w5iFTeMVVAYhepFdhrkuxRwt3WkkVdTx3faQB63XE0rK
+         9rly6g+Vszi3y77L3rdaSpcitUt9zRHud2aWIqn4YfaHUPr8rGHd5N7sLcXI38TJvhL/
+         aDuA==
+X-Gm-Message-State: AIkVDXKN68g6DNLXu1Rgd9Ge1D9fGO5bFbvKb6SEdfZ94Uw55xjz/RZag1Kb0jI8FQMaBVEuz/+3FmGkHeSdNQ==
+X-Received: by 10.31.153.195 with SMTP id b186mr28894359vke.140.1483790042254;
+ Sat, 07 Jan 2017 03:54:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87343rqa3o.fsf@gentoo.org>
-Subject: Re: [oss-security] GnuPG security release
+Sender: vangheem@gmail.com
+From: Nathan Van Gheem <nathan.van.gheem@plone.org>
+Date: Sat, 7 Jan 2017 05:54:01 -0600
+X-Google-Sender-Auth: 2PS9AYjO_EJobt9dP9Q6PIwQ4TY
+Message-ID: <CAL8hw9EG0ktd-WybU-HhRHEsRho96pdhhiDwvCFYdXJAUrUdmg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1141d5b863d1a705457fca93
+Subject: [oss-security] CVE Request: Plone Multiple Vulnerabilities
 
-Hi,
+--001a1141d5b863d1a705457fca93
+Content-Type: text/plain; charset=UTF-8
 
-CVEs seems to have been assigned as follows:
+Dear oss-security List,
 
-On Tue, Jan 27, 2026 at 04:44:11PM +0000, Sam James wrote:
-> GnuPG 2.5.17 has been released to fix a possible RCE:
-> * https://dev.gnupg.org/T8044 ("gpg-agent stack buffer overflow in pkdecrypt using KEM")
-> 
-> [Description for this one at the end, for the full quoted advisory.]
+Please provide CVEs for the following 6 issues:
 
-This is https://www.cve.org/CVERecord?id=CVE-2026-24881
+1) Filesystem information leak
+A vulnerability that allows remote attackers to obtain information on files
+on the server
+Credit: Sebastian Perez
+Impact: By using relative paths and guessing locations on a server Plone is
+installed on, an attacker can read data from a target server that the
+process running plone has permission to read. The attacker needs
+administrator privileges on the Plone site to perform this attack.
+Reference:
+https://plone.org/security/hotfix/20160830/filesystem-information-leak
 
-> There's two other security-relevant bugs too:
-> * https://dev.gnupg.org/T8045 ("Stack-based buffer overflow in TPM2 `PKDECRYPT`")
-> 
-> > A stack-based buffer overflow exists in GnuPG’s tpm2daemon when handling
-> > the PKDECRYPT command for TPM-backed RSA and ECC keys. A local attacker
-> > who can access the daemon’s Assuan socket can send an oversized ciphertext
-> > and trigger memory corruption, resulting in a crash and potentially
-> > arbitrary code execution. When a user stores private keys inside a TPM,
-> > GnuPG runs a helper process called tpm2daemon to perform cryptographic
-> > operations on their behalf. Other GnuPG components communicate with this
-> > daemon over Assuan, a local IPC protocol. During a PKDECRYPT request,
-> > tpm2daemon copies the attacker-supplied ciphertext into fixed-size TPM
-> > work buffers without validating that the ciphertext fits. If the supplied
-> > ciphertext is larger than the TPM buffer, the copy operation writes past
-> > the end of the stack buffer and corrupts adjacent stack memory. This
-> > affects both supported TPM decrypt paths: RSA (tpm2_rsa_decrypt) and ECC
-> > (tpm2_ecc_decrypt). Because the overflow occurs on the stack and is
-> > attacker-controlled, it is potentially exploitable for code execution
-> > inside the tpm2daemon process.
+2) Non-Persistent XSS in Plone forms
+z3c.form will currently accept data from GET requests when the form is
+supposed to be POST. This allows a user to inject a potential XSS attack
+into a form. With certain widgets in Plone admin forms, the input is
+expected to be safe and can cause a reflexive XSS attack. Additionally,
+there is potential for an attack that will trick a user into saving a
+persistent XSS.
+Credit: Sebastian Perez
+Reference:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-forms
 
-This is https://www.cve.org/CVERecord?id=CVE-2026-24882
-> 
-> * https://dev.gnupg.org/T8049 ("Null pointer dereference with overlong
-> signature packet")
-> 
-> > Overlong signature packet length causes parse_signature to return
-> > success with sig->data[] left NULL, leading to a crash in later
-> > consumers.
 
-This is https://www.cve.org/CVERecord?id=CVE-2026-24883
+3) Open Redirection
+In multiple places, Plone blindly uses the referer header to redirect a
+user to the next page after a particular action. An attacker could utilize
+this to draw a user into a redirection attack.
+Credit: Sebastian Perez
+Reference:
+https://plone.org/security/hotfix/20160830/open-redirection-in-plone
 
-Regards,
-Salvatore
+
+4) Non-Persistent XSS
+Plone's URL checking infrastructure includes a method for checking if URLs
+valid and located in the Plone site. By passing javascript into this
+specially crafted url, XSS can be achieved.
+Credit: Sebastian Perez
+Reference:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone-1
+
+
+5) Non-Persistent XSS on user form
+Plone has unescaped user input in a page template that is open to XSS
+Credit: Sebastian Perez
+Reference:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
+
+
+6) Non-Persistent XSS in Zope2
+In multiple places, Zope2's ZMI pages do not properly escape user input
+Credit: Sebastian Perez
+Reference:
+https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
+
+
+
+Versions Affected:
+4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+
+Code fixes:
+https://pypi.python.org/pypi/Products.PloneHotfix20160830
+
+Recommended action:
+Install the https://pypi.python.org/pypi/Products.PloneHotfix20160830
+package.
+
+--001a1141d5b863d1a705457fca93--
