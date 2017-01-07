@@ -1,42 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/08/4
-Message-ID: <87r2s5xz3x.fsf@gnu.org>
-Date: Fri, 08 Dec 2017 12:01:22 +0100
-From: ludo@....org (Ludovic Courtès)
-To: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/07/5
+Message-ID: <1d5f6a4116104bdd8da6527c64bfd588@imshyb02.MITRE.ORG>
+Date: Sat, 7 Jan 2017 12:53:23 -0500
+From: <cve-assign@...re.org>
+To: <_@...zie.io>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi Marcus,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de> skribis:
+> allows ptrace with --allow-debuggers, which allows a
+> sandboxed program to escape the seccomp profile by rewriting permitted
+> system calls into unpermitted ones pre-Linux-4.8.
+> 
+> https://github.com/netblue30/firejail/commit/6b8dba29d73257311564ee7f27b9b14758cc693e
 
-> I started neopg.io two months ago to provide a modern replacement for
-> GnuPG.  It will go back to a single-binary architecture like gpg1 was,
-> but move forward on just about every other issue:
->
-> * Written in C++
-> * based on the Botan crypto library instead of libgcrypt
-> * typical library + CLI (with subcommands) architecture
-> * better testing (CI, static analysis)
+Use CVE-2017-5206.
 
-Given that you worked on GnuPG, can you give some background?  It isn’t
-clear to me why using C++/Botan/CMake to give a “modern” feel (what does
-it mean?) will lead to “better” software (under which criteria?).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The multiple-process design in GnuPG had clear justifications
-AFAIK—e.g., having ‘dirmngr’ and ‘gnupg-agent’ in separate address
-spaces makes sense from a security standpoint.  Do you think these
-justifications no longer hold, or that the decisions were misguided?
-
-I’m also skeptical about “better testing” bit: GnuPG and libgcrypt are
-among the first pieces of software that crypto and security researchers
-look at, and they’re also the first ones to get fixes when new attack
-scenarios are devised.
-
-I’m sure you have a clear view on this but neopg.io doesn’t reflect
-that.
-
-Thanks,
-Ludo’.
+iQIcBAEBCAAGBQJYcSqVAAoJEHb/MwWLVhi2NzwP/0z1VLyt3ZjtWZJ/LO4/9eFK
+Y3r7DhndVjzW0ly7NN3IJSYdtLplmxl8j5oJsOhviUClRrbAos2LBHmOTUM/vfFj
+nyun6Lil9yuoktXnqTTRDGV+bhqABxi8HJ0I8iC6XMFOS+HrHNMZxcPUbNROFKxM
+CcmFClQ8/EY4ZqJKdglwdEDFzKO9xUzoFdSVMfVRGjCQz6WSnEtG/Ab/6v+e3VLZ
+ZSKJarpbnQ0M3IXALpu+jQ5/pfg9bZu4GyL6rTK46GCHnC//Rjw0E1yF7ryebVBC
+TSrp9j8AggY+ZH90AYDFS5Z9ya58QRUeTm0zuLTPiqFhZakFp0ZhHmFB6wW+/VDY
+yEJM0akAzMTiljFhePJRNrA0BuCYAJSDD15vV52IrYNBO9U+bCugLDTC3Nmt5OrJ
+V8lUM2uYlTg3q/8y3sWeVW+7O2khsDdt4Pan6c0QXs9Nstr70iGsRKzg/q9rE45s
+2IaE54OkYN8znmLpSVmPUSc5uHOIkyLky/7EKN5jgoIdbmAVwKgCOIQwBkCP25if
+OZesiYfVCnca+rArzCR3GbPZhqDPYQcyj6iRt1Z7lUEvrRPKPwdyHCZZpQUklBYc
+jUlabDWSPYZNEpmefnuKRK91m3CRDmgWGXdSaHOxeaq0Ip+H6DR36tIT8lQnGZHv
+ZkitBU93h9QWYAMHXjmd
+=SPiX
+-----END PGP SIGNATURE-----
