@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["544" "Monday" "14" "May" "2018" "10:29:52" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180514082952.nf64klmaqvjjqyt6@jwilk.net>" "13" "Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" "^Date:" nil nil "5" "2018051408:29:52" "[oss-security] PGP/MIME and S/MIME mail clients vulnerabilities" (number mark "        jwilk@jwilk. May 14   13/544   " thread-indent "\"Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities\"\n") "<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>" ("<6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["522" "Sunday" "8" "January" "2017" "09:45:01" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170108084501.ncsnqkhyytpawpbh@eldamar.local>" "16" "[oss-security] CVE Request: icoutils: exploitable crash in wrestool programm" nil nil nil "1" "2017010808:45:01" "[oss-security] CVE Request: icoutils: exploitable crash in wrestool programm" (number mark "U       carnil@debia Jan  8   16/522   " thread-indent "\"[oss-security] CVE Request: icoutils: exploitable crash in wrestool programm\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32205 invoked by uid 550); 14 May 2018 08:30:09 -0000
+Received: (qmail 16348 invoked by uid 550); 8 Jan 2017 08:45:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32187 invoked from network); 14 May 2018 08:30:08 -0000
-Message-ID: <20180514082952.nf64klmaqvjjqyt6@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <6770b401c944860c2288ebf7738f40010d938b33.camel@debian.org>
-User-Agent: NeoMutt/20180323
-X-Ovh-Tracer-Id: 5261330268242237350
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedthedrvdehgddtfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
-Date: Mon, 14 May 2018 10:29:52 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] PGP/MIME and S/MIME mail clients vulnerabilities
-To: oss-security@lists.openwall.com
+Received: (qmail 16324 invoked from network); 8 Jan 2017 08:45:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=nhVJIkJx7L3kCxS0M4QkJ1CfnqJP3MhtbC8PM+X5Hb8=;
+        b=o+CnnCZM7GwoHoi7Dk5nRrWkOjJH3od+WgNADXmEJvhaD1VhvsW+11wfC1YBnd8l/v
+         Q/Jh8UJDdgMMPYbPsd6MH8TDF8QyokoEo79nhG9C8TPgeLrU/TgE8TgcxNfqYTW6JyeV
+         1pz1qfaTi56N1K1VJ2v2VUKgPemxJK/ySm84GM5+aiCzdMdI3+OJBUZv43PfTOIdyNjg
+         s9H9BA4Yoo2XGJF4drEWb6VdlAez0qazWawo+n5+mSFr5MMtJgFyrCPZCDaKKNNzwjaE
+         +PXPAWJ7ZJxaToSfc7T3c2k2p4ioasOFjEjHAfjRd+eyWTJMXVBPbFQ2JgW1NmZr1C6o
+         EiBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=nhVJIkJx7L3kCxS0M4QkJ1CfnqJP3MhtbC8PM+X5Hb8=;
+        b=NA8yRMs3uF37FdZc3kyKTix6/QWQ81TQ9yeSwrr0N9I+GcBcG06wI6triop3R+YEGe
+         kz6hfLEmKY1evjUKjc3B2bWLFL0oPeNcc4zPJJrr8VwHTEd/BhrcMaXM44ufGxGgNcNp
+         B2VgkY/6oqhqlqAEJARjgfNPTka7ZckW6NFpXU6zQanj6JdOVDgoo3SCRD5lgVD4qm95
+         qNibEldmDFgYkOzrMDO4G135FMIdUsEOw8CXA2zXXoqNWwPpzLJ449bc5oeNBQ2oQ9M9
+         RkXfTTmMgp/ynMXEsFlU9X7bNtICE9vb/eRZxQl15hE7lhfOcGvEdMoK/wDp7IrpdB7C
+         JxOA==
+X-Gm-Message-State: AIkVDXKF6xMIwqy+QVKZA567wDwpP7uSWmP5czkBkrqnOVB/TxDc85b4gsNQIY35fCokVA==
+X-Received: by 10.194.200.228 with SMTP id jv4mr60443310wjc.217.1483865102821;
+        Sun, 08 Jan 2017 00:45:02 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 8 Jan 2017 09:45:01 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170108084501.ncsnqkhyytpawpbh@eldamar.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Subject: [oss-security] CVE Request: icoutils: exploitable crash in wrestool programm
 
-https://lists.gnupg.org/pipermail/gnupg-users/2018-May/060315.html has 
-more details:
+Hi
 
-"[...] HTML is used as a back channel to create an oracle for modified 
-encrypted mails.  It is long known that HTML mails and in particular 
-external links like <img href="tla.org/TAG"/> are evil if the MUA 
-actually honors them (which many meanwhile seem to do again; see all 
-these newsletters).  Due to broken MIME parsers a bunch of MUAs seem to 
-concatenate decrypted HTML mime parts which makes it easy to plant such 
-HTML snippets."
+Choongwoo Han reported[0] an exploitable crash in wrestool from the
+icoutils[1]. The command line tools is e.g. used in KDE's
+metadataparsing, c.f. [2]. A patch is available in the Debian
+packaging[3].
 
--- 
-Jakub Wilk
+Could you please assign a CVE for this issue?
+
+Regards,
+Salvatore
+
+ [0] https://bugs.debian.org/850017
+ [1] http://www.nongnu.org/icoutils/
+ [2] https://codesearch.debian.net/search?q=wrestool&perpkg=1
+ [3] https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
