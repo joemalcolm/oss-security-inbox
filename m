@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/14
-Message-ID: <20170117133351.12825381@bahia.lan>
-Date: Tue, 17 Jan 2017 13:33:51 +0100
-From: Greg Kurz <groug@...d.org>
-To: P J P <ppandit@...hat.com>
-Cc: oss security list <oss-security@...ts.openwall.com>, Jann Horn <jannh@...gle.com>
-Subject: Re: CVE-2016-9602 Qemu: 9p: virtfs allows guest to access host filesystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/6
+Message-ID: <1483897960.5179.72.camel@juliet.mcarpenter.org>
+Date: Sun, 08 Jan 2017 18:52:40 +0100
+From: Martin Carpenter <martin.carpenter@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 17 Jan 2017 17:48:59 +0530 (IST)
-P J P <ppandit@...hat.com> wrote:
+On Sun, 2017-01-08 at 10:23 -0500, Brad Spengler wrote:
+> You're missing an important part here: checking to see whether your binary is running
+> with privilege in the first place. 
 
->    Hello,
-> 
-> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
-> File System(9pfs) support, is vulnerable to an improper link following issue. 
-> It could occur while accessing symbolic link files on a shared host directory.
-> 
-> A privileged user inside guest could use this flaw to access host file system 
-> beyond the shared folder and potentially escalating their privileges on a 
-> host.
-> 
-> Reference:
-> ----------
->    -> http://wiki.qemu.org/Documentation/9psetup
->    -> https://bugzilla.redhat.com/show_bug.cgi?id=1413929  
-> 
-> 
-> Please see a proposed patch to fix this issue attached herein.
-> 
+Aha. Good. The more I thought it over the more awful it seemed, so
+that's a relief. Thanks!
 
-The proposed patch DOES NOT fix the vulnerability because of a TOCTTOU
-issue. Please ignore it. I'm working on another fix I hope to complete
-this week.
 
-> This issue was discovered by Jann Horn of Google Project Zero.
-> 
-> 'CVE-2016-9602' has been assigned to this issue by Red Hat Inc.
-> 
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> Nothing to see here, but thanks for scaring everyone on a Sunday morning.
+
+Heh, my pleasure :) An epiphany on Epiphany, ha.
+
+
 
