@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/3
-Message-ID: <1497890780.6892.2.camel@gmail.com>
-Date: Mon, 19 Jun 2017 12:46:20 -0400
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/4
+Message-ID: <20170108152351.GA25328@grsecurity.net>
+Date: Sun, 8 Jan 2017 10:23:51 -0500
+From: Brad Spengler <spender@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2017-06-19 at 09:40 -0600, kseifried@...hat.com wrote:
-> On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
-> > 
-> > Qualys Security Advisory
-> > 
-> > The Stack Clash
-> 
-> I just want to publicly thank Qualys for working with the Open Source
-> community so we (Linux and *BSD) could all get this fixed properly.
-> There was a lot of work from everyone involved and it all went pretty
-> smoothly.
+> $ ./foo 
+> exit code 2
 
-Fixing it properly would really also include fixing these:
+You're missing an important part here: checking to see whether your binary is running
+with privilege in the first place.  If you had done that, you would see that it's
+not running suid at all, but rather with your own privilege.  This is enforced at the
+kernel level with the following code in kernel/seccomp.c present since the introduction
+of seccomp-bpf in 2012:
 
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68065
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66479
+        /*
+         * Installing a seccomp filter requires that the task has
+         * CAP_SYS_ADMIN in its namespace or be running with no_new_privs.
+         * This avoids scenarios where unprivileged tasks can affect the
+         * behavior of privileged children.
+         */
+        if (!task_no_new_privs(current) &&
+            security_capable_noaudit(current_cred(), current_user_ns(),
+                                     CAP_SYS_ADMIN) != 0)
+                return ERR_PTR(-EACCES);
 
-and actually implementing -fstack-check as not just a no-op in Clang.
 
-Windows has working stack probes, even in Windows XP and perhaps even
-earlier. LLVM has working stack probes there (not sure if GCC deals with
-it properly) yet doesn't make them available elsewhere.
+libseccomp by default enables NNP when creating a filter, as otherwise the code allows
+you to skip syscalls while still setting the return value to 0, which no suid binary
+would be able to protect iself against.
 
-Rust is 'memory safe' but has this same stack exhaustion issue. It
-didn't used to have the issue, since it kept around the LLVM segmented
-stack code generation after it dropped segmented stacks to check for
-stack overflow in function preludes. That got dropped for a 1-3%
-performance win from using stack probes instead... which was a good
-idea, but without implementing stack probes... making it a terrible
-idea. It was deferred to some later date. That was in July 2015, and 2
-years later it's not done.
+Prior discussion of this can be found here:
+https://sourceforge.net/p/libseccomp/mailman/message/29127662/
+https://sourceforge.net/p/libseccomp/mailman/message/29136181/
+
+Nothing to see here, but thanks for scaring everyone on a Sunday morning.
+
+-Brad
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
