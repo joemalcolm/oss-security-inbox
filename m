@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1051" "Tuesday" "19" "May" "2015" "11:25:02" "+0200" "Stefan Cornelius" "scorneli@redhat.com" "<20150519112502.211e3f39@redhat.com>" "32" "Re: [oss-security] [oCERT-2015-006] dcraw input sanitization errors" nil nil nil "5" "2015051909:25:02" "[oss-security] [oCERT-2015-006] dcraw input sanitization errors" (number mark "        scorneli@red May 19   32/1051  " thread-indent "\"Re: [oss-security] [oCERT-2015-006] dcraw input sanitization errors\"\n") "<20150511135955.GJ6507@core.inversepath.com>" ("<20150511135955.GJ6507@core.inversepath.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1380" "Sunday" "8" "January" "2017" "14:47:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<328b2aec213f4e34b3cbc4c6b4707b37@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm" nil nil nil "1" "2017010819:47:40" "[oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm" (number mark "U       cve-assign@m Jan  8   37/1380  " thread-indent "\"[oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm\"\n") "<20170108084501.ncsnqkhyytpawpbh@eldamar.local>" ("<20170108084501.ncsnqkhyytpawpbh@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13419 invoked by uid 550); 19 May 2015 09:25:21 -0000
+Received: (qmail 28622 invoked by uid 550); 8 Jan 2017 19:47:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13397 invoked from network); 19 May 2015 09:25:21 -0000
-Message-ID: <20150519112502.211e3f39@redhat.com>
-In-Reply-To: <20150511135955.GJ6507@core.inversepath.com>
-References: <20150511135955.GJ6507@core.inversepath.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Date: Tue, 19 May 2015 11:25:02 +0200
-From: Stefan Cornelius <scorneli@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [oCERT-2015-006] dcraw input sanitization errors
-To: oss-security@lists.openwall.com
+Received: (qmail 28590 invoked from network); 8 Jan 2017 19:47:52 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170108084501.ncsnqkhyytpawpbh@eldamar.local>
+Message-ID: <328b2aec213f4e34b3cbc4c6b4707b37@imshyb02.MITRE.ORG>
+Date: Sun, 8 Jan 2017 14:47:40 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm
 
-On Mon, 11 May 2015 15:59:55 +0200
-Andrea Barisani <lcars@ocert.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> 
-> #2015-006 dcraw input sanitization errors
-> 
-> Description:
-> 
-> The dcraw photo decoder is an open source project for raw image
-> parsing.
-> 
-> The dcraw tool, as well as several other projects re-using its code,
-> suffers from an integer overflow condition which lead to a buffer
-> overflow. The vulnerability concerns the 'len' variable, parsed
-> without validation from opened images, used in the ljpeg_start()
-> function.
-> 
-> A maliciously crafted raw image file can be used to trigger the
-> vulnerability, causing a Denial of Service condition.
-> 
+> an exploitable crash in wrestool from the icoutils
 
-Just as a heads-up: This should affect netpbm, too.
-https://sourceforge.net/p/netpbm/code/HEAD/tree/advanced/converter/other/cameratopam/ljpeg.c
+> https://bugs.debian.org/850017
+> https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
 
-Although there's a check for "len" in line #37, it shouldn't trigger, as
-"len" will be negative at that point.
+>> wrestool/fileread.c
 
--- 
-Stefan Cornelius / Red Hat Product Security
+>> On 64-bit systems, the result of subtracting two pointers exceeds the
+>> size of int
 
-Come talk to Red Hat Product Security at the Summit!
-Red Hat Summit 2015 - https://www.redhat.com/summit/
+Use CVE-2017-5208.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYcpb7AAoJEHb/MwWLVhi2kLwP/A+G4NM3R2Ad/IKIDemtxNpC
+qKNMumJCh3kS2tiUcWZgfChZiED2lpQIQRwE6z/DQznt8iXbIxEolipRBj8PlEIe
+Z8L7A10OxVQLKf9pYZmN4JmomcAFcI1Nzt3sgMsS+7leClf606kXAdPiVlxjgH3E
+LFaQRqatsD1UA7eftvul8MZeBFQUtQttH6fIvqj9/L3HifNQ6xYkBdT/8C8MbEku
+KzRNOFk803YBrfbgvsZhk65N8KXpX+fBXiXS8gu7TyUxnS1UxqaT8F7NkoPiHCqk
+M2t+l5M152nD/Gjf0/2y+Nfb+fi3sNDvLgE2ElmnRmC2InGI1JBITEtuflM5znYn
+z6Wz5ts1rvQenqEzAxPLYBFdUTMFyyheqLKRYo2I+tQ5LM69HlHZnsTclGHGCUyx
+tD+MPLz54kuPXaXj6HUG+eK49QxWLoDTlRS/TOrCUC1YsXIRfleo1QO00BcpBVHw
+jcdEvebEXzCMG0+Av6pcBKmBwlGOy+y7ckJHUnQ7c8PvbKlk5nunlSmrLqHvDBSL
+V4V4rE5WmFu/GSuGcr+pz/IhFZViwDgydz7dagTv8CJsMAvJGean93r0AO+WXhA9
+jdFg5tbrvzH3nHh1v5GZ/SZaWi34de1/9rG3cxLmlMStyOGMTxpOeO/Scb9Bkqp2
+6d2/HyseA0dKnDgxtrIi
+=vxi7
+-----END PGP SIGNATURE-----
