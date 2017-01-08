@@ -1,54 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/2
-Message-ID: <20170214102635.329@usenet.piggo.com>
-Date: Tue, 14 Feb 2017 09:29:48 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XXE in Openpyxl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/08/5
+Message-ID: <328b2aec213f4e34b3cbc4c6b4707b37@imshyb02.MITRE.ORG>
+Date: Sun, 8 Jan 2017 14:47:40 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: icoutils: exploitable crash in wrestool programm
 Content-Type: text/plain; charset=utf-8
 
-On 2017-02-14, Doran Moppert <dmoppert@...hat.com> wrote:
-> My mistake - thanks for bringing this up!
->
-> It appears that resolve_entities=False (ie. options &=
-> ~XML_PARSE_NOENT) does *not* affect the expansion of predefined
-> entities or character entities.  See [1], [2] and parser.c +
-> HTMLparser.c in libxml source.
->
-> 1: https://www.xml.com/pub/a/98/08/xmlqna1.html
-> 2: https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
->
-> These flags *do* control the expansion of internal entities, but I
-> expect that most common protocols and file formats should not rely on
-> those - including Excel.  As long as openpyxl has no need to resolve
-> internal entities, nor perform DTD validation, CVE-2016-9318 is not
-> relevant and the proposed patch looks correct.
->
->
-> So yes, the original CVE request was valid and should go ahead:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-@MITRE, can you assign one directly, since this request pre-dates the
-requirement of going through the web form, or should I resubmit there
-anyway ?
+> an exploitable crash in wrestool from the icoutils
 
->> the Debian Security Team would like to request a CVE for an XML XEE
->> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
->> resolves external entities by default:
->> 
->>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
->>   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
->
-> Also: https://bitbucket.org/openpyxl/openpyxl/issues/749
+> https://bugs.debian.org/850017
+> https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
 
-> Sorry about muddying the water with misunderstanding(s).  The tricky
-> part of CVE-2016-9318 seems to be particular requirements of
-> components like xmlsec that want internal entity resolution without
-> XXE, or DTD validation without exposing the whole filesystem.
+>> wrestool/fileread.c
 
-No problem at all, the overall implications of CVE-2016-9318 and entity
-resolution are indeed pretty complex.
+>> On 64-bit systems, the result of subtracting two pointers exceeds the
+>> size of int
 
-Cheers,
+Use CVE-2017-5208.
 
---Seb
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
+iQIcBAEBCAAGBQJYcpb7AAoJEHb/MwWLVhi2kLwP/A+G4NM3R2Ad/IKIDemtxNpC
+qKNMumJCh3kS2tiUcWZgfChZiED2lpQIQRwE6z/DQznt8iXbIxEolipRBj8PlEIe
+Z8L7A10OxVQLKf9pYZmN4JmomcAFcI1Nzt3sgMsS+7leClf606kXAdPiVlxjgH3E
+LFaQRqatsD1UA7eftvul8MZeBFQUtQttH6fIvqj9/L3HifNQ6xYkBdT/8C8MbEku
+KzRNOFk803YBrfbgvsZhk65N8KXpX+fBXiXS8gu7TyUxnS1UxqaT8F7NkoPiHCqk
+M2t+l5M152nD/Gjf0/2y+Nfb+fi3sNDvLgE2ElmnRmC2InGI1JBITEtuflM5znYn
+z6Wz5ts1rvQenqEzAxPLYBFdUTMFyyheqLKRYo2I+tQ5LM69HlHZnsTclGHGCUyx
+tD+MPLz54kuPXaXj6HUG+eK49QxWLoDTlRS/TOrCUC1YsXIRfleo1QO00BcpBVHw
+jcdEvebEXzCMG0+Av6pcBKmBwlGOy+y7ckJHUnQ7c8PvbKlk5nunlSmrLqHvDBSL
+V4V4rE5WmFu/GSuGcr+pz/IhFZViwDgydz7dagTv8CJsMAvJGean93r0AO+WXhA9
+jdFg5tbrvzH3nHh1v5GZ/SZaWi34de1/9rG3cxLmlMStyOGMTxpOeO/Scb9Bkqp2
+6d2/HyseA0dKnDgxtrIi
+=vxi7
+-----END PGP SIGNATURE-----
