@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/04/1
-Message-ID: <CAAYZd=nAiDbUuRuxz1tbeE6pnx7Tow7uedDxYJNDMgh2UE2c2g@mail.gmail.com>
-Date: Mon, 4 Dec 2017 08:32:55 +0530
-From: Himanshu Mehta <mehta.himanshu21@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/1
+Message-ID: <1493422.koq1c4PBay@xps>
+Date: Mon, 09 Jan 2017 23:52:08 +0100
+From: Albert Astals Cid <aacid@....org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>, security@....org
+Subject: ark vulnerability: need CVE
 Content-Type: text/plain; charset=utf-8
 
-*1. Introduction*
+Hi, Albert from KDE, can we get a CVE assigned for ark (archive handling 
+tool)?
 
-Vendor:                ZKTeco
-Affected Product:      ZKTime Web - 2.0.1.12280
-Fixed in:
-Vendor Website:        https://www.zkteco.com/product/ZKTime_Web_2.0_435.html
-Vulnerability Type:    Reflected XSS
-Remote Exploitable:    Yes
-CVE:                   CVE-2017-17057
-*2. Overview*
+The problem is that the "Open" functionality of ark would run shell scripts, 
+this is quite unexpected.
 
-There is a reflected XSS vulnerability in ZKTime Web. The
-vulnerability exists due to insufficient filtration of user-supplied data.
-A remote attacker can execute arbitrary HTML and script code in browser in
-context of the vulnerable application.
+The title for the advisory we're preparing is
+  Ark: unintended execution of scripts and executable files
 
-*3. Affected Modules*
+The fix is already available at
+https://cgit.kde.org/ark.git/commit/?
+id=82fdfd24d46966a117fa625b68784735a40f9065
 
-Go to
-Personnel -> Personnel -> Advanced Query ->
-
-Select Search Field as 'Department' and in 'Range' field mention
-'<script>alert('XSS')</script>
-
-*4. Payload*
-<script>alert('XSS')</script>
-
-
-*5. Credit*
-Himanshu Mehta (@LionHeartRoxx)
-
+Thanks,
+  Albert
