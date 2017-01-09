@@ -1,56 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/7
-Message-ID: <CANO=Ty1f8yEyvBy_ZR9xU3MxSjjxKUk5q1S_VRsmJAHy7z2KhQ@mail.gmail.com>
-Date: Mon, 26 Jun 2017 13:47:16 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Pax Team <pageexec@...email.hu>
-Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/09/1
+Message-ID: <3373460.x0yP8h7b03@tjmaciei-mobl1>
+Date: Mon, 09 Jan 2017 09:24:51 -0800
+From: Thiago Macieira <thiago@...ieira.org>
+To: security@...project.org
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: [Security] Qt QXmlSimpleReader
 Content-Type: text/plain; charset=utf-8
 
-I think we can agree as a community of professionals that insults and name
-calling are unnecessary and also not very effective. And before I get
-accused of censorship I would point out I'm not wanting to stop anyone from
-talking, I'm only wanting to stop people from talking in a way that is so
-rude and insulting that it poisons the community and scares people away. I
-assume Solar also supports this (if not... ergh. that's gonna be an awkward
-conversation).
+On sábado, 24 de dezembro de 2016 16:18:33 PST Solar Designer wrote:
+> Hi,
+> 
+> To what extent has Qt's QXmlSimpleReader class been reviewed for
+> vulnerabilities?  I found only Florian Weimer's CVE-2013-4549
+> "XML entity expansion denial of service", which Red Hat somehow chose
+> not to fix (no intent to parse untrusted XML?) even though they got
+> upstream to fix it.
 
-On Mon, Jun 26, 2017 at 1:16 PM, Mansour Moufid <mansourmoufid@...il.com>
-wrote:
+It has not been at all reviewed. That class is deprecated and we have zero 
+resources paying attention to it.
 
-> Hello.
->
-> On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@...ecurity.net>
-> wrote:
->
-> > How could they know that calling people clowns and their work garbage
-> wasn't
-> > payment enough?
-> >
-> > With no technical content coming from your end, there's no need to
-> discuss
-> > anything further -- don't waste your time because I won't reply.
-> >
-> > Good luck to you and anyone else stupid enough to do any work at all for
-> > you and your multi-billion dollar sponsors for free.
-> >
-> > -Brad
->
-> Is there another mailing list for discussions of Linux security? Or forum?
->
-> I have been thinking of sharing a few patches for the last couple months.
-> I don't think this is the right place after the kind of insults I saw this
-> week.
->
-> Apologies if off topic.
->
+> https://bugzilla.redhat.com/show_bug.cgi?id=955375
+> http://lists.qt-project.org/pipermail/announce/2013-December/000036.html
+> https://codereview.qt-project.org/#/c/71010/
+> http://blog.qt.io/blog/2014/04/24/qt-4-8-6-released/
+> 
+> Is high memory consumption for large XML files/inputs expected by users
+> of this library, or is there an expectation that there would be some
+> safety limits in place in the library?  In my testing, for very long tag
+> names or element contents, memory consumption is 4x their size - e.g.,
+> about 8 GB for an almost 2 GB tag or element.
 
+Unknown. We don't have anyone who knows the source code anymore, so we simply 
+can't tell you how much it may or may not cache.
 
+The only recommended class for reading XML is QXmlStreamReader. Using any of 
+the classes from the QtXml library should only happen with trusted sources.
+
+> I guess CVE-2013-4549 was worse than that?  Did it result in recursive
+> expansion, meaning that even a tiny input would exhaust all memory?
+> (I didn't try triggering it specifically.)
+
+Yes, exponential increase in memory usage was caused by recursive expansion.
+
+> Then there's value.resize(), which also accepts a signed int (so the
+> above code's use of signed int may have been justified, after all):
+> 
+> http://doc.qt.io/qt-4.8/qstring.html#resize
+> 
+> "If size is greater than the current size, the string is extended to
+> make it size characters long with the extra characters added to the end.
+> The new characters are uninitialized.
+> 
+> If size is less than the current size, characters are removed from the end."
+> 
+> No clear explanation on what will happen on a negative size, and besides
+> it might also be possible to exceed 4 GB and get to positive values again.
+
+Negative sizes are the same as zero. You can't exceed 4 GB with a signed int 
+in QString.
+
+> Is there anything at higher layers, yet applicable to all published Qt's
+> APIs, consistenly limiting XML inputs to below 2 GB?  If so, this may be
+> OK (but a comment would be nice).  If not, we have a problem.
+
+No, there's no such limitation, but many classes will impose 2 GB limits due 
+to array sizes. The only problem is that getting close to that limit will 
+already run into code we don't usually test. There are also some problems with 
+UB on signed overflow on Qt 4.8 and in early Qt 5 versions (I think I fixed it 
+in 5.4 or 5.5). 
+
+> I'd appreciate any comments, especially from Florian and from upstream.
+> 
+> I am Bcc'ing this to the address given at
+> https://wiki.qt.io/Qt_Project_Security_Policy so that they have this
+> message with the Message-ID for replies to the same thread, and I will
+> also notify them separately.
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Thiago Macieira - thiago (AT) macieira.info - thiago (AT) kde.org
+   Software Architect - Intel Open Source Technology Center
 
