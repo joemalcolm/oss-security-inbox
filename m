@@ -1,75 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/2
-Message-ID: <d4c6f05d1ba0416597c2d4e0a901091a@imshyb01.MITRE.ORG>
-Date: Thu, 19 Jan 2017 20:17:47 -0500
-From: <cve-assign@...re.org>
-To: <idler1984@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <anarcheuz@...il.com>
-Subject: Re: CVE Request - Samsung Exynos GPU driver OOB read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/6
+Message-ID: <20170110072939.GC18447@centurion.befour.org>
+Date: Tue, 10 Jan 2017 08:29:39 +0100
+From: Sébastien Delafond <seb@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: python-pysaml2 XML external entity attack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
-> SVE-2016-6362: out of bound read in gpu driver
-> 
-> Vulnerability in gpu driver does not properly check the boundary of
-> buffers leading to a possible memory corruption.
+the Debian security team would like to request a CVE for an XML XEE
+discovered in python-pysaml2 by Matias P. Brutti; python-pysaml2 does
+not sanitize SAML XML requests or responses:
 
-> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
->> there is no official git for tracking from Samsung
+  https://github.com/rohe/pysaml2/issues/366
+  https://github.com/rohe/pysaml2/pull/379
+  https://bugs.debian.org/850716
 
->> The bug itself resides in
->> <root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
->> function kbase_dispatch which is the main ioctl dispatcher of the driver:
->> 
->> static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
->> args, u32 args_size)
->> {
->> ...
->>     /* setup complete, perform normal operation */
->> 
->>     switch (id) {
->> ...
->>         case KBASE_FUNC_TMU_SKIP:
->>                 {
->> /* MALI_SEC_INTEGRATION */
->> #ifdef CONFIG_SENSORS_SEC_THERMISTOR
->> #ifdef CONFIG_USE_VSYNC_SKIP
->>                         struct kbase_uk_tmu_skip *tskip = args;
->>                         int thermistor = sec_therm_get_ap_temperature();
->>                         u32 i, t_index = tskip->num_ratiometer;
->> 
->>                         for (i = 0; i < tskip->num_ratiometer; i++) <== missing boundary check
->>                                 if (thermistor >= tskip->temperature[i])
->>                                         t_index = i;
->> 
->> tskip->temperature is a uint32 array of static size(10 elements) and
->> tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
->> check is missing, OOB read may happen leading to possible memory corruption.
+Cheers,
 
-Use CVE-2017-5538.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYgWRyAAoJEHb/MwWLVhi2PZMP/1ehua8X9WteUieeSsh1ppVl
-qpofa9xWnyAikurp7B7Yg4WNnYWrR5+pxMw7yuwtGJfBr49mmaE9WN+vEOYMAL49
-sCCWudmieEYv8ZW+cKMawkWFGbRxdwBxGnWqeVCyBB9ktIKGC3t7PIeUadLwn6kr
-Hi8lKdczXK9Na59jct/HDQoFKmfETKyuWiFhe+c6cbcmowLrEMFP9z83LgTCP0/M
-a4lLwGo9quR7qyJK78wws7vyVE8R56OWKanKzIa7ok3pPk+c1lqwveyg0M23uD8A
-KO+tkplmt1FNuQ2yjjHo3KYMq7fUchIBi4zo1AAUp56oPrzUbbEJDab+A+DZl3hy
-5vVjYcZtjYigZroWX8Cqu9nYEsMNx/u2yclDFdwzlmdLa/gDcdEPIBOzlHVtAlog
-y6T1vTCBKRE7S2bmKqROnij2u+8d7D/0Mm77+9ra50VVVbVJEzXkT3fkuKrBhUBA
-gwSvWmOXTK7E0ZfPTzX1Tc5aqcQebwmPadW/MHazuWS1evmzdRUN6w75ZZ/eDlRw
-RJvvp4eRRIXvh5UxQ+a5QlzFhP5mlGtVDnQ1WpuO02lo5el3MpRWxKbXOssqoBQg
-vrTkiBMo0rES5OurfiX4Pn5IGIP4ykNke0cGuX4lldiQvMRBHtUNTJPAMTAHMowI
-j+zyr2GFgnVpaWgBEGow
-=UjQq
------END PGP SIGNATURE-----
+--Seb
