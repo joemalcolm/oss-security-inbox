@@ -1,58 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/23/2
-Message-ID: <20171123095313.ecfh63vqfwwmbzjp@home.ouaza.com>
-Date: Thu, 23 Nov 2017 10:53:13 +0100
-From: Raphael Hertzog <hertzog@...ian.org>
-To: Hanno Böck <hanno@...eck.de>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: exiv2: multiple memory safety issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/3
+Message-ID: <4a9345f4-a141-3c80-c157-232699b604a1@apache.org>
+Date: Tue, 10 Jan 2017 10:44:23 +0900
+From: Akira Ajisaka <aajisaka@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2016-3086: Apache Hadoop YARN NodeManager vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Hanno,
+CVE-2016-3086: Apache Hadoop YARN NodeManager vulnerability
 
-On Fri, 30 Jun 2017, Hanno Böck wrote:
-> I have not reported thoses issues upstream. When I previously tried to
-> report bugs in exiv2 found via fuzzing the upstream author made it
-> clear to me that he has little interest in fixing those issues and
-> doesn't consider his software suitable to parse defect files (which
-> basically means it's unsuitable for untrusted input). The discussion
-> can be read here [1]. (the page is sometimes not available, searching
-> for it in the google cache usually works though)
-> 
-> exiv2 is to my knowledge used by the major Linux Desktops GNOME and
-> KDE. I'll also inform their security teams. I leave it up to Linux
-> distros how to handle this, but it certainly is problematic that a
-> crucial parser used by major desktop applications is not interested in
-> fixing potential security issues.
-> 
-> [1] http://dev.exiv2.org/issues/1248
+Severity: Important
 
-FWIW, Robin Mills is moving away from exiv2, it is being handed over to
-new developers and they have been rather responsive to the various
-security issues that have been reported in the last months.
+Vendor: The Apache Software Foundation
 
-Search for CVE in https://github.com/Exiv2/exiv2/issues
+Versions Affected:
+Hadoop 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4
+Hadoop 2.7.0, 2.7.1, 2.7.2
 
-So please file bugs on github, thank you.
+Description:
+The YARN NodeManager in Apache Hadoop 2.6.x before 2.6.5 and 2.7.x  
+before 2.7.3 can leak the password for credential store provider used by  
+the NodeManager to YARN Applications.
 
-I just add the CVE assigned through the Distributed Weakness Filing
-Project.
+If you use the CredentialProvider feature to encrypt passwords used in  
+NodeManager configs, it may be possible for any Container launched by  
+that NodeManager to gain access to the encryption password. The other  
+passwords themselves are not directly exposed.
 
-> Heap overflow (write) in tiff parser
+Mitigation:
+2.7.x users should upgrade to 2.7.3.
+2.6.x users should upgrade to 2.6.5
+If you cannot upgrade to the latest version, set the permission of the  
+jceks file appropriately to restrict access from unauthorized users.
 
-CVE-2017-1000127
-	
-> Heap out of bounds read in jp2 / JPEG2000 parser
-
-CVE-2017-1000128
-
-> Stack out of bounds read in webp parser
-
-CVE-2017-1000126
-
-Cheers,
--- 
-Raphaël Hertzog ◈ Debian Developer
-
-Support Debian LTS: https://www.freexian.com/services/debian-lts.html
-Learn to master Debian: https://debian-handbook.info/get/
+Credit:
+This issue was discovered by Robert Kanter.
