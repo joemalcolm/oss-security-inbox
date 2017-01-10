@@ -1,28 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/2
-Message-ID: <20170203071134.GB5666@suse.de>
-Date: Fri, 3 Feb 2017 08:11:35 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/7
+Message-ID: <8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>
+Date: Tue, 10 Jan 2017 15:56:57 +0100
+From: Andreas Stieger <astieger@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: curiosity for CVE-2016-10000
+Subject: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-This might just be a blocked empty CVE as it is a prefix for the DWF(?) range.
+GnuTLS 3.3.26 and 3.5.8 were released, with the following:
 
-Ciao Marcus
-On Thu, Feb 02, 2017 at 05:18:06AM -0500, Vladis Dronov wrote:
-> hello, MITRE, all,
-> 
-> i'm asking just out of curiosity about CVE-2016-10000. afaiu, it is in
-> a range allocated to some CNA, but it is not yet(?) allocated. can you
-> please, tell what CNA CVE-2016-10000 is allocated to (i was not able to
-> find this info at mirte.org) so i can ask them directly about this CVE status?
-> 
-> best regards,
-> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
-> 
+https://gnutls.org/security.html#GNUTLS-SA-2017-1
+
+It was found using the OSS-FUZZ fuzzer infrastructure that decoding a
+specially crafted X.509 certificate with Proxy Certificate Information
+extension present could lead to a double free. This issue was fixed in
+GnuTLS 3.3.26 and 3.5.8.
+
+https://gitlab.com/gnutls/gnutls/commit/c5aaa488a3d6df712dc8dff23a049133cab5ec1b
+
+
+
+https://gnutls.org/security.html#GNUTLS-SA-2017-2
+
+It was found using the OSS-FUZZ fuzzer infrastructure that decoding a specially crafted OpenPGP certificate could lead to heap and stack overflows. 
+
+The support of OpenPGP certificates in GnuTLS is considered obsolete. As
+such, it is not recommended to use OpenPGP certificates with GnuTLS.
+
+https://gitlab.com/gnutls/gnutls/commit/49be4f7b82eba2363bb8d4090950dad976a77a3a
+https://gitlab.com/gnutls/gnutls/commit/5140422e0d7319a8e2fe07f02cbcafc4d6538732
+https://gitlab.com/gnutls/gnutls/commit/94fcf1645ea17223237aaf8d19132e004afddc1a
+
+
+
+Could CVEs please be assigned for these issues?
+
+Thanks,
+Andreas
+
 
 -- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
