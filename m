@@ -1,4 +1,9 @@
-Received: (qmail 30693 invoked by uid 550); 4 Nov 2022 17:37:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1283" "Tuesday" "10" "January" "2017" "15:56:57" "+0100" "Andreas Stieger" "astieger@suse.com" "<8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>" "46" "[oss-security] CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8" nil nil nil "1" "2017011014:56:57" "[oss-security] CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8" (number mark "U       astieger@sus Jan 10   46/1283  " thread-indent "\"[oss-security] CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3926 invoked by uid 550); 10 Jan 2017 14:57:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,34 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30337 invoked from network); 4 Nov 2022 17:36:05 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: "Gary D. Gregory" <ggregory@apache.org>
+Received: (qmail 3896 invoked from network); 10 Jan 2017 14:57:37 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <0a509ab5-7397-d6ac-e841-ef4d9bf00d58@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 04 Nov 2022 17:35:34 +0000
+From: Andreas Stieger <astieger@suse.com>
+Organization: SUSE Linux GmbH
+Message-ID: <8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>
+Date: Tue, 10 Jan 2017 15:56:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows
- producing arbitrary bytecode via out-of-bounds writing 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1,
+ GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8
 
-Description:
+Hello,
 
-Apache Commons BCEL has a number of APIs that would normally only allow cha=
-nging specific class characteristics. However, due to an out-of-bounds writ=
-ing issue, these APIs can be used to produce arbitrary bytecode. This could=
- be abused in applications that pass attacker-controllable data to those AP=
-Is, giving the attacker more control over the resulting bytecode than other=
-wise expected. Update to Apache Commons BCEL 6.6.0.
+GnuTLS 3.3.26 and 3.5.8 were released, with the following:
 
-This issue is being tracked as BCEL-363
+https://gnutls.org/security.html#GNUTLS-SA-2017-1
 
-Credit:
+It was found using the OSS-FUZZ fuzzer infrastructure that decoding a
+specially crafted X.509 certificate with Proxy Certificate Information
+extension present could lead to a double free. This issue was fixed in
+GnuTLS 3.3.26 and 3.5.8.
 
-Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons B=
-CEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from O=
-penJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb7=
-7a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer http=
-s://github.com/RealCLanger)
+https://gitlab.com/gnutls/gnutls/commit/c5aaa488a3d6df712dc8dff23a049133cab=
+5ec1b
+
+
+
+https://gnutls.org/security.html#GNUTLS-SA-2017-2
+
+It was found using the OSS-FUZZ fuzzer infrastructure that decoding a speci=
+ally crafted OpenPGP certificate could lead to heap and stack overflows.=20
+
+The support of OpenPGP certificates in GnuTLS is considered obsolete. As
+such, it is not recommended to use OpenPGP certificates with GnuTLS.
+
+https://gitlab.com/gnutls/gnutls/commit/49be4f7b82eba2363bb8d4090950dad976a=
+77a3a
+https://gitlab.com/gnutls/gnutls/commit/5140422e0d7319a8e2fe07f02cbcafc4d65=
+38732
+https://gitlab.com/gnutls/gnutls/commit/94fcf1645ea17223237aaf8d19132e004af=
+ddc1a
+
+
+
+Could CVEs please be assigned for these issues?
+
+Thanks,
+Andreas
+
+
+--=20
+Andreas Stieger <astieger@suse.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG N=C3=BCrnberg)
+
 
