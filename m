@@ -1,96 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/16
-Message-ID: <efcc5a85-2d36-7659-9c98-18945a4f70f9@oracle.com>
-Date: Wed, 5 Jul 2017 16:37:04 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/8
+Message-ID: <D159A2841943CE409CC23D3F12A4633A516569@mb2010-3.intra.tut.fi>
+Date: Tue, 10 Jan 2017 15:50:28 +0000
+From: Cesar Pereida Garcia <cesar.pereidagarcia@....fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)
 Content-Type: text/plain; charset=utf-8
 
-On 05/07/17 16:06, Daniel Micay wrote:
-> On Wed, 2017-07-05 at 15:50 +0100, John Haxby wrote:
->> On 05/07/17 14:53, Simon McVittie wrote:
->>> On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@...cle.com wrote:
->>>>> 2) If user name specified in systemd unit file is syntactically
->>>>> correct
->>>>> (according to systemd check) but user name does not exist then
->>>>> systemd
->>>>> refuse to start that unit.
->>>>
->>>> Should systemd really valid usernames?  I would think that you
->>>> would 
->>>> either use getpwnam(username) and if that fails you may then parse
->>>> it as a 
->>>> numeric value.  If "0day" isn't a valid username according to
->>>> getpwnam(), 
->>>> when converting it to a numeric uid should *also* fail because
->>>> "0day" 
->>>> isn't a properly numeric value.
->>>
->>> It *does* fail. The problem is in the handling of that failure.
->>> systemd
->>> interprets that failure as "this line is nonsense, so behave as
->>> though the
->>> line didn't exist" rather than "this line can be positively
->>> identified as
->>> an attempt to name a nonexistent or unacceptable user, so fail to
->>> load
->>> the unit". So User=7up does the same thing as User=0day - it doesn't
->>> run as uid 7, which is 'lp' on my Debian system.
->>
->>
->> And therein lies the problem.  "0day" and "7up" are valid user names
->> according to Posix[1], they may or may not exist, but they are valid.
->> You may think Posix is wrong to allow an initial digit, but that isn't
->> the issue.  The problem is that systemd treats an "invalid" username
->> as
->> either an integer or not specified and in either case this results in
->> a
->> program running as the wrong user, probably as root.
->>
->> Having systemd balk at what Posix considers to be a valid username is
->> a
->> bug that systemd is free to say "this is stupid, we're not allowing
->> that".   If, as appears to be the case, systemd says "that username is
->> stupid, we're going to interpret it differently" then that's when we
->> need a CVE because, to my mind on this hot and sunny say, that's
->> systemd
->> apparently doing something for security that it is not.
->>
->> jch
->>
->>
->> [1]
->> http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.htm
->> l#tag_03_431
-> 
-> https://github.com/shadow-maint/shadow/blob/master/libmisc/chkname.c#L49
-> 
-> POSIX also says "." is a portable character, which isn't allowed by
-> shadow either. What are distributions using to provide useradd if not
-> shadow?
+Attack Vector: Local
 
-Interesting.  "useradd a.b" works on Fedora so I wonder what's different
-there?
+Vendor: OpenSSL, LibreSSL, BoringSSL
 
-> 
-> systemd's On Error Resume Next error handling seems like the main issue.
-> If a unit has invalid values, it should reject it. It shouldn't ever be
-> ignoring a User field because it considers it invalid. It's unfortunate
-> that it enables invalid field names like Usre=validusername too, but it
-> probably does that so they can introduce new fields that can be adopted
-> by projects for their units without breaking compatibility with older
-> versions of systemd.
-> 
-> I don't think it makes much sense for programs that are only consuming
-> the password database to enforce their own checks, but they're free to
-> do silly things like that if they feel like it and it doesn't make it a
-> vulnerability. If it rejected the unit as a whole when it considers the
-> username invalid, it would only be an annoyance for people that actually
-> want to have a shadow / systemd incompatible username, not a potential
-> security gotcha.
-> 
+Versions Affected:
+OpenSSL 1.0.1u and previous versions
+LibreSSL (pre 6.0 errata 16, pre 5.9 errata 33)
+BoringSSL pre November 2015
 
-I agree completely.
+Description:
+The signing function in crypto/ecdsa/ecdsa_ossl.c in certain OpenSSL versions and forks
+is vulnerable to timing attacks when signing with the standardized elliptic
+curve P-256 despite featuring constant-time curve operations and modular inversion.
+A software defect omits setting the BN_FLG_CONSTTIME flag for nonces, failing
+to take a secure code path in the BN_mod_inverse method and therefore resulting
+in a cache-timing attack vulnerability.
+A malicious user with local access can recover ECDSA P-256 private keys.
 
-jch
+Mitigation:
+Users of OpenSSL with the affected versions should apply
+the patch available in the manuscript at [1].
+
+Users of LibreSSL should apply the official patch from OpenBSD [2,3].
+
+Users of BoringSSL should upgrade to a more recent version.
+
+Credit:
+This issue was reported by Cesar Pereida García and Billy Brumley
+(Tampere University of Technology).
+
+Timeline:
+19 Dec 2016 Disclosure to OpenSSL, LibreSSL, BoringSSL security teams
+29 Dec 2016 Embargo lifted
+
+References:
+[1] http://ia.cr/2016/1195
+[2] https://ftp.openbsd.org/pub/OpenBSD/patches/5.9/common/033_libcrypto.patch.sig
+[3] https://ftp.openbsd.org/pub/OpenBSD/patches/6.0/common/016_libcrypto.patch.sig
+
+- Cesar
