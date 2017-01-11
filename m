@@ -1,24 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/25
-Message-ID: <CAAeHK+wzhV4PBENUzD5SeCp_vjtT84B-ER+cWU9=FvZxfavJhw@mail.gmail.com>
-Date: Tue, 30 May 2017 21:12:40 +0200
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: idaifish@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: Linux kernel: CVE-2017-9242: out-of-bounds write in __ip6_append_data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/6
+Message-ID: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
+Date: Tue, 10 Jan 2017 22:41:20 -0500
+From: <cve-assign@...re.org>
+To: <astieger@...e.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <cmn@...m.me>
+Subject: Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
 Content-Type: text/plain; charset=utf-8
 
-The following CVE was assigned for an out-of-bounds write in IPv6
-socket buffers.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The bug was found with syzkaller.
+> https://github.com/libgit2/libgit2/commit/66e3774d279672ee51c3b54545a79d20d1ada834
 
-* CVE-2017-9242
+Use CVE-2016-10128.
 
-The __ip6_append_data function in net/ipv6/ip6_output.c in the Linux
-kernel through 4.11.3 is too late in checking whether an overwrite of
-an skb data structure may occur, which allows local users to cause a
-denial of service (system crash) via crafted system calls.
 
-CVE: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-9242
-Fix: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=232cd35d0804cc241eb887bb8d4d9b3b9881c64a
+> https://github.com/libgit2/libgit2/commit/2fdef641fd0dd2828bd948234ae86de75221a11a
+
+Use CVE-2016-10129.
+
+
+> https://github.com/libgit2/libgit2/commit/9a64e62f0f20c9cf9b2e1609f037060eb2d8eb22
+
+Use CVE-2016-10130.
+
+
+> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
+
+Use CVE-2017-5338.
+
+
+> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
+
+Use CVE-2017-5339.
+
+
+> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
+
+This has no CVE ID; it does not seem to be a vulnerability fix.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYdacwAAoJEHb/MwWLVhi2/EEP/jH+BS08ezRAbMvZW5v27rQp
+L3cbsZDrrydTfV65nR7CoKtT+IVNt6ZBgK7S2npMwv+LFcWwe/1U3kOEb3bwduRD
+LSZCIX0b3437Q+wS83Ohz3U88R3LUECzaU9YP+sW+hRGxi9Lu1hfGkaOThxMKznE
+5wxqr7/85G42J+yWQRQx46mHyvS0h5Ogj7FqkeDenpp7qucfW/CqfWggtzQw2/Sm
+SDLVVF0l3/rKDGicyO0+451wbhoWKL3CFE3q11FHgU6Isn2HQ9qu3litcSAtCXN1
+q37xCAyMuPrVYLVvEgBgT43icxAg0rDwNh521XN0aHIy+NVdhaknOSLLWkntCG42
+yRExjFOYSReYIiFnAGDsn+ujPlUe1a/GbZ/WlOOZw0abY1T9OTiuqDBywEVk5WxJ
+26fKFUHPoBhN21En9V4/0d5tIdpUV8jYscritWJhxcoMNMBpnVfuTANPy9GNXaGU
+w+FjXC2S+OYNxirBlRQlw3aECAsvkLk6PKLZZnoMkM8x+HIBimk8/1+HvNOrTiwX
+GtYGJroUYspNmFLfDixpfZlSO5RO9MqQZKKCDYkfqmVGeLCcGilOd084CwlrLXvG
+jYkjJvyw6E0kzLTM3x1Q3Fp3rkBkSl8pyR3Xmts/0seY9EMnDy00aqEIug/xczz1
+okCatyYGVFaf+kJltyv3
+=tboo
+-----END PGP SIGNATURE-----
