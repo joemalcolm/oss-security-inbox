@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2871" "Wednesday" "3" "June" "2015" "14:43:35" "-0400" "Joshua Smith" "jsmith@mail.wvnet.edu" "<20150603184335.GM1154@jsmith.wvn.wvnet.edu>" "71" "Re: [oss-security] Re: Stack out of bounds read access in uudecode / sharutils" nil nil nil "6" "2015060318:43:35" "[oss-security] Re: Stack out of bounds read access in uudecode / sharutils" (number mark "        jsmith@mail. Jun  3   71/2871  " thread-indent "\"Re: [oss-security] Re: Stack out of bounds read access in uudecode / sharutils\"\n") "<20150603202537.44409561@pc1>" ("<20150603010028.2c166570@pc1>" "<20150603023502.B967F72E055@smtpvbsrv1.mitre.org>" "<20150603202537.44409561@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2294" "Tuesday" "10" "January" "2017" "22:38:08" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<13140680db674bd8a5edb9761ee23a6f@imshyb02.MITRE.ORG>" "65" "[oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8" nil nil nil "1" "2017011103:38:08" "[oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8" (number mark "U       cve-assign@m Jan 10   65/2294  " thread-indent "\"[oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8\"\n") "<8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>" ("<8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9445 invoked by uid 550); 3 Jun 2015 22:03:13 -0000
+Received: (qmail 1973 invoked by uid 550); 11 Jan 2017 03:38:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28621 invoked from network); 3 Jun 2015 18:43:47 -0000
-Message-ID: <20150603184335.GM1154@jsmith.wvn.wvnet.edu>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20150603010028.2c166570@pc1>
- <20150603023502.B967F72E055@smtpvbsrv1.mitre.org>
- <20150603202537.44409561@pc1>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20150603202537.44409561@pc1>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Virus-Scanned: clamav-milter 0.97.8 at clara.wvnet.edu
-X-Virus-Status: Clean
-Date: Wed, 3 Jun 2015 14:43:35 -0400
-From: Joshua Smith <jsmith@mail.wvnet.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Stack out of bounds read access in uudecode /
- sharutils
-To: oss-security@lists.openwall.com
+Received: (qmail 1953 invoked from network); 11 Jan 2017 03:38:19 -0000
+From: <cve-assign@mitre.org>
+To: <astieger@suse.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>
+Message-ID: <13140680db674bd8a5edb9761ee23a6f@imshyb02.MITRE.ORG>
+Date: Tue, 10 Jan 2017 22:38:08 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8
 
-On Wed, Jun 03, 2015 at 08:25:37PM +0200, Hanno Böck wrote:
-> Hi CVE-team,
-> 
-> On Tue,  2 Jun 2015 22:35:02 -0400 (EDT)
-> cve-assign@mitre.org wrote:
-> 
-> > What are the realistic scenarios in which this has a security impact?
-> > 
-> > For example, can any of these occur on actual systems?
-> > 
-> > 1. The attacker e-mails a uuencoded file to their own mailbox on a
-> > web-based mail service. This service has a feature in which decoded
-> > data is presented to the recipient. (The server operates on the data
-> > with the uudecode program, not with any other implementation of the
-> > uudecode algorithm. The attacker gains read access to unintended parts
-> > of the server's memory.)
-> > 
-> > 2. A web site allows users to do HTTP uploads of data in uuencoded
-> > format, and supports requests for decoded versions of the data. Same
-> > parenthesized description as above.
-> > 
-> > 3. The attacker composes a news article with crafted uuencoded data
-> > and posts it to the alt.sources Usenet newsgroup. The attacker is
-> > subscribed to this newsgroup in their own account on a web-based
-> > Usenet news reading service. Same parenthesized description as above.
-> 
-> To answer these questions to the best of my knowledge: I don't know.
-> 
-> This is a question I think I can answer in a very general fashion. I
-> find and report these out of bounds vulns very often. I can
-> confirm that in your described scenarios an attacker could trigger an
-> out of bounds read. If that can in anyway be used to exfiltrate data or
-> other attacks: I don't know. In this case it's probably unlikely,
-> because as you can see the oob read is just one byte.
-> 
-> Analyzing the impact of these kinds of vulns would require digging and
-> understanding the code in detail by someone skilled in memory
-> corruption exploitation (that means: not me).
-> 
-> What I can say is that many very similar issues I reported in the past
-> got CVEs (lately e.g. in wireshark and curl). And there'll probably be
-> a lot more in the near future. I started trying to write up reports for
-> all issues of these kinds I reported once they got fixed.
-> 
-> If you prefere not to be bothered about out of bounds issues with
-> unknown impact any more I am fine with that and will stop cc-ing. Also
-> - if the people on oss-security feel that my reports on these
-> minor issues are too frequently please tell me and I'll stop sending
-> them. But in the past I had the impression it's apprechiated and solar
-> designer wants as much info as possible in the oss-security archives
-> in case external sources vanish.
-> 
-> 
-> cu,
-> -- 
-> Hanno Böck
-> http://hboeck.de/
-> 
-> mail/jabber: hanno@hboeck.de
-> GPG: BBB51E42
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Not that my opinion matters but I enjoy reading your posts on this and
-similar vulnerabilities you have discovered.
+> https://gnutls.org/security.html#GNUTLS-SA-2017-1
+> 
+> It was found using the OSS-FUZZ fuzzer infrastructure that decoding a
+> specially crafted X.509 certificate with Proxy Certificate Information
+> extension present could lead to a double free. This issue was fixed in
+> GnuTLS 3.3.26 and 3.5.8.
+> 
+> https://gitlab.com/gnutls/gnutls/commit/c5aaa488a3d6df712dc8dff23a049133cab5ec1b
+
+>> gnutls_x509_ext_import_proxy: fix issue reading the policy language
+>> 
+>> If the language was set but the policy wasn't, that could lead to
+>> a double free
+
+Use CVE-2017-5334.
 
 
+> https://gnutls.org/security.html#GNUTLS-SA-2017-2
+> 
+> It was found using the OSS-FUZZ fuzzer infrastructure that decoding
+>  a specially crafted OpenPGP certificate could lead to heap and stack
+>  overflows.
+> 
+> The support of OpenPGP certificates in GnuTLS is considered obsolete. As
+> such, it is not recommended to use OpenPGP certificates with GnuTLS.
 
--- 
-Joshua Smith
-Lead Systems Administrator WVNET
+> https://gitlab.com/gnutls/gnutls/commit/49be4f7b82eba2363bb8d4090950dad976a77a3a
 
-Montani Semper Liberi
+Use CVE-2017-5335.
+
+
+> https://gitlab.com/gnutls/gnutls/commit/5140422e0d7319a8e2fe07f02cbcafc4d6538732
+
+Use CVE-2017-5336.
+
+
+> https://gitlab.com/gnutls/gnutls/commit/94fcf1645ea17223237aaf8d19132e004afddc1a
+
+Use CVE-2017-5337.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYdaciAAoJEHb/MwWLVhi2qzwP+wYLuGHW+TN2khSxseT9Y72w
+qsnw9dgHq2dGZDjbmIDonOXPyH0+K26QurJQr9mrZGzlR4uaz3bqQsG+JMfSJAaQ
+EfVpwpbDxqorSE5+NFy7KYZoY0teC1QZ2/9lBY0+zqtIWEEIZh0JplTqLssOm5PI
+3p/bJp2oJd2qgSiIAg5fCWvzhshEy7v545+hV3hIZG8K1q2ikdxaC+UM3dcy8xU2
+3ZT3eiJidqVHbf+skqcazgQ1/03XOo7HhybL83O3FK1T84ASnu3XpH5qQcX8Ojkz
+ELky55ReLVKl31jJf4zyxhEadSSpEJ5yUqep/q4zGXZDtWEOM23DZ90GX9evCLKL
+zSGKa1KSNEPUBTCQG1P8vbmnN+/61ZISF3Y6DUqCGGVftdXIkuCBl3DRmXQ+gxf0
+qHMFqf435S5HtGVYBQmE3+AGeHpIq5EKshCRCAcz3oPj1NgO9CiEoJfozDiC1+ou
+ldziOAe2YpZ6Ir32mRl2//ZobevSf/4YDhAbmfeysVE/6Mno5JN6zNersrmwi7Mm
+3ba6Ii7rXRHKATFqi9siDMQPE2eiHl/UzVir+uvoPoNGzHf/dkCqn3/3FE/Ae5F+
+shNAA43Rd8ynOV10pmtX6NGmsoaQKO5wudbgCP/25S1T9PR84WZnMJtZuE7wJtqF
+uqputud32DdwKJfPhstT
+=EtoE
+-----END PGP SIGNATURE-----
