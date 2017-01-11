@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["762" "Saturday" "11" "February" "2017" "11:50:40" "+0200" "Eyal Itkin" "eyal.itkin@gmail.com" "<CAA=iMULG2UP6XV7voESqSE3gVOxvb4z+uYL_GoqLdETyVFpWcg@mail.gmail.com>" "25" "[oss-security] CVE publication request - CVE 2016-8636" nil nil nil "2" "2017021109:50:40" "[oss-security] CVE publication request - CVE 2016-8636" (number mark "U       eyal.itkin@g Feb 11   25/762   " thread-indent "\"[oss-security] CVE publication request - CVE 2016-8636\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["712" "Wednesday" "11" "January" "2017" "15:54:29" "-0500" "Scott Arciszewski" "scott@paragonie.com" "<CAKws9z20vYG_enKh4H9cUZ6dYXF7nPT5U_GHb6EkCjMn6rdptA@mail.gmail.com>" "22" "[oss-security] Introducing sodium_compat, a PHP polyfill for libsodium" nil nil nil "1" "2017011120:54:29" "[oss-security] Introducing sodium_compat, a PHP polyfill for libsodium" (number mark "U       scott@parago Jan 11   22/712   " thread-indent "\"[oss-security] Introducing sodium_compat, a PHP polyfill for libsodium\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23717 invoked by uid 550); 11 Feb 2017 09:51:36 -0000
+Received: (qmail 19875 invoked by uid 550); 11 Jan 2017 20:54:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22437 invoked from network); 11 Feb 2017 09:50:51 -0000
+Received: (qmail 19835 invoked from network); 11 Jan 2017 20:54:41 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:from:date:message-id:subject:to;
-        bh=IdVFSOFeCGTbJFRInckzfOpVHI4YiSimlB5Abs5wCI4=;
-        b=nhwmRoOID45pcaRHyv0T8CucBn12n9x3hfJAGrvSJJafVuCTWUjLaCep5YThlDjtlF
-         cMcljn6Ku08L59cHKJahkboMMtWBvCK2tWPw7JIiS33+YUszvDDNPRbITgSxErFDav3Y
-         sbFkKunYu6bjpT7qHhFQJ5LOHjneQbTibpA8e0WqY+ONsX45sXWUNWv52nSdXngru17m
-         t6aa7+BOGr5JDQi+gLYiAKTeurMzDKLFT9pTO2Bq87Z+MjAxygxGckOtQ+unculB96Pi
-         6/Bys1YSS/7EjPoYYuRGjJa8Kzcxi1HT6AGS44peyLNTqIPQ/fIG5Hm6kVNpmFuurxB4
-         4Vbg==
+        bh=zVGNy0FD0+3xtjc1G9r5CpEEyWDjMNDguvuZnGmZ3Eo=;
+        b=Js2iPUSI5bm97yA7SNYIm714Em73oYJVfFYUMBVUb/wbjfr38UiX09g+0I+gHWzH6a
+         6vAgYX2BZkfmI/cikLs8PquljTQItyk3weMiRLocqejtpCwL7dqpuJ/oU1dG05CH28Jz
+         6Ma+0B++Ta0TNFYDuupr6z/ykwHPpflxvxQNVJ1nMEd0yc3Rdi4zeY7GIVGvZc1hPeV5
+         0yKeXR4UOHxkuJwobizbowuy97DFlqpNMFE4A44Leg2+HzAuArof396nhHi1leAeHcPd
+         bsXFF/fD1ft74zzbH6FM0+A4hwCxMM8qF8/FPvkHftNdolGD8LsMU8smO35XE61FQH68
+         z9Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=IdVFSOFeCGTbJFRInckzfOpVHI4YiSimlB5Abs5wCI4=;
-        b=cesZbZFc6MR5LwvRGzNnHp0W0mgN3RcO9Q852E2OyCExgjdKWgcAf7iojbC+xRii/f
-         iND2yzGYKlqzkAMUk19vNzARW69MbOFeQT1xXbPXrAvGmMxyzwPGQ7hvlw22FsTucBZB
-         L+k4vDzrojvB6Uhq5HjvdbCBBVmZ6U9iufmJexu8zSV28eyQLNrArESjPsm4McVMwtek
-         QYbhg7WwqzSHFfjZd2DwS11t3y5uTGpDqYb+ydjUe3D/Y16ag8IlroqTwSuNJflwdOkb
-         qZdCtdJZ+JS0fimsiiYoitmbhc17qWXqM5Lfzq/Dha2KkNxF3HaLpIOfvLI/7bxbMviL
-         h8Kg==
-X-Gm-Message-State: AMke39mgWqxw1iGnGbSuRvfS9op1m7MKX3FcJboDT3MOr1q81GxHD6CplhGEcv9zUB255UISUsYLYaAEYRDVXw==
-X-Received: by 10.25.154.2 with SMTP id c2mr4182735lfe.71.1486806640422; Sat,
- 11 Feb 2017 01:50:40 -0800 (PST)
+        bh=zVGNy0FD0+3xtjc1G9r5CpEEyWDjMNDguvuZnGmZ3Eo=;
+        b=L1wXCMc9ny0U0sDOz+l+nked/G1Er9cLCREz2WFggY1JnOZUDBlbfcArrvCg8ErkHp
+         cqdemyCtIKzK+uwjBRfIBdf9hvyRjxvkk+/Vx6t9Z6A9+9ueyAN3y7CXMkfvFOhQqp/c
+         mDr5CGXej9UAvmJUFu+GHbWP4vnGpqpeJ5JoHQN+EnJQJwA4zUFq1LuGRF7CW7huIHK2
+         tdyBMX/5ZryrZ+M/x7NQUVhZYiIyjyR+/uVnMPyN9N8zhzuvrhbxYguF3EVtZYfMoLeb
+         ZSISaDvnV0MBh4c2WRIQ0VN/AkRF8GwvH60Q74ZuOStNmYK4ZR0M5TJfsfJEsvEUh3Qm
+         X9Kg==
+X-Gm-Message-State: AIkVDXLlwuv142KGEzpOwf0jx5IkblU9PmN8w0wdfMm3g1GEJU/voVnVS/RDq93zsRpDIZ+xp9B266X8BDeuUQ==
+X-Received: by 10.157.46.114 with SMTP id c47mr5118811otd.176.1484168069459;
+ Wed, 11 Jan 2017 12:54:29 -0800 (PST)
 MIME-Version: 1.0
-From: Eyal Itkin <eyal.itkin@gmail.com>
-Date: Sat, 11 Feb 2017 11:50:40 +0200
-Message-ID: <CAA=iMULG2UP6XV7voESqSE3gVOxvb4z+uYL_GoqLdETyVFpWcg@mail.gmail.com>
+From: Scott Arciszewski <scott@paragonie.com>
+Date: Wed, 11 Jan 2017 15:54:29 -0500
+Message-ID: <CAKws9z20vYG_enKh4H9cUZ6dYXF7nPT5U_GHb6EkCjMn6rdptA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11401d6ca6f95e05483e25a3
-Subject: [oss-security] CVE publication request - CVE 2016-8636
+Content-Type: multipart/alternative; boundary=001a113e3e529149b40545d7ce7e
+Subject: [oss-security] Introducing sodium_compat, a PHP polyfill for libsodium
 
---001a11401d6ca6f95e05483e25a3
+--001a113e3e529149b40545d7ce7e
 Content-Type: text/plain; charset=UTF-8
 
 Hello,
 
-The security patch was deployed 3 days ago in the official git repository
-of linux, after the fix was reviewed and approved by me.
-Therefore, CVE 2016-8636 can now be publicly disclosed.
+I've been working on this for a while. I was originally going to include a
+PHP implementation of Argon2, but it turned out to be really slow (and I
+didn't feel confident in my implementation, to boot).
 
-Commit id of the mainline merge:
-   647bf3d8a8e5777319da92af672289b2a6c4dc66
+Source code: https://github.com/paragonie/sodium_compat
 
-https://github.com/torvalds/linux/commit/647bf3d8a8e5777319da92af672289b2a6c4dc66
+Announcement post:
+https://paragonie.com/blog/2017/01/let-s-make-2017-year-simply-secure-php-cryptography
 
-Public disclosure details in my security blog:
+It's ISC licensed, just like libsodium, so once it's been audited you
+should be able to use it in any PHP projects without hassle.
 
-https://eyalitkin.wordpress.com/2017/02/11/cve-publication-cve-2016-8636/
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
 
-P.S. The CVE id was received from the security team of ubuntu, which
-directed me to publicly disclose it with the oss-security mailing list.
-
-Thanks for your help,
-Eyal Itkin.
-
---001a11401d6ca6f95e05483e25a3--
+--001a113e3e529149b40545d7ce7e--
