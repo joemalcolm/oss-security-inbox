@@ -1,94 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/10
-Message-ID: <aff42e56-9413-1081-8589-3de127931a2e@orlitzky.com>
-Date: Wed, 8 Nov 2017 14:49:00 -0500
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/7
+Message-ID: <20170111045354.GA9514@sin.redhat.com>
+Date: Wed, 11 Jan 2017 15:23:55 +1030
+From: Doran Moppert <dmoppert@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2017-14604] .desktop vulnerability again
+Subject: Re: Re: CVE request: python-pysaml2 XML external entity attack
 Content-Type: text/plain; charset=utf-8
 
-On 10/05/2017 04:37 PM, Yves-Alexis Perez wrote:
-> Hi list,
+On Jan 10 2017, cve-assign@...re.org wrote:
+> > python-pysaml2 does
+> > not sanitize SAML XML requests or responses:
+> > 
+> >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
 > 
-> I'm currently in the process of uploading a nautilus package fixing CVE-2017-
-> 14604 which is again a vulnerability in the handling of desktop file. As I
-> don't think it's been discussed here, it might be a good idea to do a wrap-up, 
-> and maybe start a discussion if people are interested and have good ideas.
-...
+> Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
+> parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
 
-> Scanning through the various bugs, not everyone agree on how to fix this:
+> The scope of this CVE does not include the various other issues that
+> may be found in the above references:
 > 
-> - Nautilus doesn't use the executable bit anymore but store a trusted
-> attribute in a gio/gvfs metadata, which is stored on the filesystem in
-> XDG_DATA_DIR/.gvfs-metada (usually ~/.local/share/gvfs-metadata) which I guess
-> should not be reachable from a tarball unless the extraction process has a
-> directory traversal vulnerability
+>  - it does not include any aspect of
+>    https://bugzilla.gnome.org/show_bug.cgi?id=772726
 
-Using the executable bit was wrong (in my opinion) for one main reason:
-the .desktop files aren't actually executable. By marking them +x, you
-screw up programs (like bash) that care about the executable bit. There
-is now also the issue that you've reported, where the executable bit is
-preserved by tar -- we have to assume that the GUI will do something
-stupid like hide the file extension.
+This (libxml2 XXE) has already been assigned CVE-2016-9318.
 
-The last time I thought about this, I came up with something that sounds
-spiritually similar to what Nautilus has done. Using Thunar as my file
-manager -- suppose I download a file called /home/mjo/malware.desktop
-that contains (from your bug report),
+I have proposed a(n incomplete) patch on that ticket, but do not have
+sufficient familiarity with libxml2 to be sure it is sound (and thus
+worth completing with proper tests and docs).  If it is, it's possible
+that downstream projects could apply a similar patch in client code
+while remaining compatible with current (unpatched) libxml2.
 
-  [Desktop Entry]
-  Name=CV.pdf
-  Exec=sh -c 'touch ./MALWARE_WAS_HERE'
-  Terminal=false
-  Icon=x-office-document
-  Type=Application
-  Categories=Office
+Even if this gets into libxml2, client code will need to enable a new
+option explicitly to prevent XXE.  There's an argument to make NOXXE
+default behaviour, but this could potentially impact a lot of projects
+that silently rely on some form of external entity resolution.
 
-I don't want to rely on the executable bit, and I don't want to use any
-gvfs magic. Instead, when I click on malware.desktop, Thunar should
-check for the existence of
 
-  /home/mjo/.local/share/Thunar/home/mjo/malware.desktop           (1)
+>  - it does not include any vulnerabilities in the XML Security Library
+>    (xmlsec), such as ones that are now, or previously were, listed at
+>    https://github.com/lsh123/xmlsec/issues
 
-and then handle two cases,
+xmlsec is exposed to CVE-2016-9318, but considers this a bug in libxml2
+and at present has no plans to provide a workaround.  I expect a CVE
+assignment for xmlsec will only be needed if it is fixed/worked around
+in that project.
 
-  i) if the file does exist, and if it's executable, execute it.
 
-  ii) otherwise, prompt me for whether or not I want to run the thing
+-- 
+Doran Moppert
+Red Hat Product Security
 
-      ii.a) if I say "no", then do nothing
-
-      ii.b) if I say yes, then create the file at (1) containing
-
-              #!/bin/sh
-              sh -c 'touch ./MALWARE_WAS_HERE'
-
-            and mark it executable before running it.
-
-That way, the only thing that gets +x is *actually* executable. The
-"metadata" is still associated with the file path, but needs no magic
-beyond the ability to execute a shell script.
-
-This idea is probably full of holes, but nobody who's qualified to fix
-this clicks on pictures to run programs =P
-
-Obvious caveats:
-
-  1) The file manager would have to substitute "%f" and friends into the
-     shell script and get the quoting right.
-
-  2) The path in (1) doesn't change when the file's contents do; a real
-     implementation would want to include a hash or something, like
-
-       /home/mjo/.local/share/Thunar/home/mjo/malware.desktop/<sha512>
-
-     The Nautilus implementation might be vulnerable to swapping the
-     contents of the file.. the gvfs metadata is supposedly path-based,
-     but I know nothing about it.
-
-  3) This will prompt every user the first time he runs a system
-     executable that has a .desktop entry. That should be easy to
-     solve, though, by using a system location such as
-     /var/lib/Thunar/<path>/<sha512> and by having the file manager look
-     there first. Distros would simply install the shell script and mark
-     it executable.
+Content of type "application/pgp-signature" skipped
