@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/12/2
-Message-ID: <CANO=Ty0PmeERNq+=vPhL=UM-LWVarr_Ry06NPc_OhpzXztZLbg@mail.gmail.com>
-Date: Sun, 12 Feb 2017 11:23:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/9
+Message-ID: <20170111042820.GA147@8012b52aa127>
+Date: Wed, 11 Jan 2017 04:28:20 +0000
+From: Trevor Jay <tjay@...hat.com>
+To: docker-user@...glegroups.com
+Cc: docker-dev@...glegroups.com, oss-security@...ts.openwall.com
+Subject: Re: Docker 1.12.6 - Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Daily update stuff already exists:
+A FYI for Red Hat and Fedora users: we have rated this CVE as having moderate impact to our users and are currently testing backports of this patch for 1.12.5. More info:
 
-https://cve.mitre.org/cve/data_updates.html
+    https://access.redhat.com/ringwraith
+    https://bugzilla.redhat.com/show_bug.cgi?id=1409531
+    https://access.redhat.com/security/cve/CVE-2016-9962
 
-We could also have the MITRE CVE ID feed new stuff into oss-security but it
-would include non open source stuff.
+To mitigate this even without the patch, you can remove `ptrace` from your seccomp whitelist. ACS such as SELinux (not sure about AppArmor) will keep container processes from accessing external file descriptors. Of course, you can prevent these kind of attacks completely (modulo kernel bugs) by never running privileged containers or giving them CAP_SYS_PTRACE in the first place.
 
-As for the DWF it's simple: we're using git, so I guess if people really
-want up to the minute updates they can simply subscribe to the repos in
-GitHub, or pull and do it on their own end. I don't have plans for a
-notification service yet, on of my main goals it to make the data more
-easily available and then see what people need/do with it (and of course
-co-opt the useful ideas and use them!).
+Great work on the flaw and patch. An extremely interesting vulnerability.
+
+_Trevor
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Sent from my Casio Loopy.
+(Trevor Jay) Red Hat Product Security
+gpg-key: https://ssl.montrose.is/chat/gpg-key
