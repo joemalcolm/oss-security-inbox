@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1370" "Tuesday" "12" "January" "2016" "03:39:10" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160112083910.313881BE690@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE for node.js websockets (ws)" "^Cc:" nil nil "1" "2016011208:39:10" "[oss-security] Re: CVE for node.js websockets (ws)" (number mark "        cve-assign@m Jan 12   35/1370  " thread-indent "\"[oss-security] Re: CVE for node.js websockets (ws)\"\n") "<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>" ("<CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1384" "Tuesday" "10" "January" "2017" "17:58:56" "-0800" "Nathan McCauley" "nathan.mccauley@docker.com" "<CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>" "35" "[oss-security] Docker 1.12.6 - Security Advisory" "^Date:" nil nil "1" "2017011101:58:56" "[oss-security] Docker 1.12.6 - Security Advisory" (number mark "        nathan.mccau Jan 10   35/1384  " thread-indent "\"[oss-security] Docker 1.12.6 - Security Advisory\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32034 invoked by uid 550); 12 Jan 2016 08:39:22 -0000
+Received: (qmail 9651 invoked by uid 550); 11 Jan 2017 02:21:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32016 invoked from network); 12 Jan 2016 08:39:21 -0000
-In-Reply-To: <CANO=Ty2__zBT=MeY=6mQaepEM1vr=igkrmeZkX3XM5pwttEbEg@mail.gmail.com>
-Message-Id: <20160112083910.313881BE690@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 12 Jan 2016 03:39:10 -0500 (EST)
-From: cve-assign@mitre.org
+Received: (qmail 1565 invoked from network); 11 Jan 2017 01:59:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=docker.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=je6r9LRwhHnLa4x9xzbvfJsq3BcWnfn/4QxDjh8pcrQ=;
+        b=b3hVo2Fxw9Rbf2zwBtpII7lgtUfBoFKhti2IzTb8BS1u7f8i7URsakiSwwz1fANSi7
+         0J0c/SYWXg6rhYvIGDWgLrqWEQK1gelspBa8QxQNCq4rk+SzOhwkR3yZ85EzZ3ZrgiUg
+         R26j8pBFn0ZDLz9JvTEsbDEjACMZHBXARjJB4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=je6r9LRwhHnLa4x9xzbvfJsq3BcWnfn/4QxDjh8pcrQ=;
+        b=W2YuzIXF8be+C1ToMdH0WRGtsJWzVyJCGBP40TLDUv30bMu0hbxVspmOSodcN9OEXS
+         5QLF8kOX/PADkxPGdCbSf7gs0Y5ziHu0HD4QErg5+wNYF0igtxbOxFF+4ei3yZyMbqJr
+         3PfeWHXWeVS5HTJB7DzVnW97wv+OkG8Dmw70uCKVeMDHotP95vQuqIwSEOSwNIDKF3tu
+         8Lufubjp2ZXQMWP0fAmKx/GqWy5brTGQmR4g3ocC/NI+8DLjCNHM+rXa5QsdY5snSfyS
+         Q20Nivf2q/6fXc6lNZnZW6pmBHkKGgA3P8iPBmiD2sFOEN5WvJinCyVyWFiI2LJdugww
+         o4eQ==
+X-Gm-Message-State: AIkVDXJQpZ/VDsqKFcKYuwvMlH4WPIQCpWVwZwUgr5KAJ3f9Rmv7lVJy6z1yoPhUlKKj8Krc0/+7gmbww3XhjKWw
+X-Received: by 10.107.195.204 with SMTP id t195mr5860231iof.46.1484099956381;
+ Tue, 10 Jan 2017 17:59:16 -0800 (PST)
+MIME-Version: 1.0
+Message-ID: <CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=94eb2c189ceeb62dbe0545c7f223
+Date: Tue, 10 Jan 2017 17:58:56 -0800
+From: Nathan McCauley <nathan.mccauley@docker.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE for node.js websockets (ws)
-To: kseifried@redhat.com
+Subject: [oss-security] Docker 1.12.6 - Security Advisory
+To: docker-user@googlegroups.com, docker-dev@googlegroups.com, 
+	fulldisclosure@seclists.org, oss-security@lists.openwall.com, 
+	vuln@secunia.com, bugtraq@securityfocus.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--94eb2c189ceeb62dbe0545c7f223
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> CVE-PENDING - Credit: Feross Aboukhadijeh / Mathias Buss
+Docker Engine version 1.12.6 has been released to address a vulnerability
+and is immediately available for all supported platforms. Users are advised
+to upgrade existing installations of the Docker Engine and use 1.12.6 for
+new installations.
 
-> If not who is sitting on it?
+Please send any questions to security@docker.com.
 
-In our experience, the string "CVE-PENDING" has little or no
-correlation with whether anyone has done any type of CVE request.
 
-We'll interpret it as a new request to MITRE unless someone else
-happens to have received a request.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+[CVE-2016-9962] Insecure opening of file-descriptor allows privilege
+escalation
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-iQIcBAEBCAAGBQJWlLsuAAoJEL54rhJi8gl5i4EQAKA7AGwYRYJDipd7vpWlnaqb
-Wv7BkC2i1oDLUbb9xQX9AMTGyQD90Q0XP72EUeSqDUHNRAXobcAavVRmbk14Hib3
-TqL/ckDnwWpXMgRyyyhVTLkr4ajl/T0B+QgAN4UhE5ts0YPqeJnWK2ZTxl+yfYny
-KYhOH3bIQEEuH77XjzsN9dZAI/UnupQRAGFzwGVI4HngxUz2RQdCDrIe0Vk5L/+V
-bL34Gm0h4Ij4/K15FS4DGeuYHTKtBM1uPHt9DKDdqkjy9YxYm3gX4ALh3dtKesnf
-vScCIXXs1M5XGM4oREinaDLwN1ZqV29xzpQ6NWfVPZ/eADLHwRVLCtk/nK/IDeUp
-SAqgWYpCXZluq3KNJLbIwlk9Cw4NpBdzqq3QC2ey5Hy4Dznix+Qq0hXjAzRq/3KB
-ZXqXgQhtcpnWTaOF9j4823UzZtDHY+UbpIkGv/BstWxtaFOwWCLA9pcuhj2VoUal
-voHIJiObb9ji325bD2jsQadmAMGG2tDVU8HkvVXmyCmz28b3jyw0/BoAWcUWfyRa
-qy17X1WGUkWVR3UbW69qMgv5zD+dwv2cZHbP1urylgxVO15mPqwuhSwRjP1DuJU2
-HXZNp3F3oU6y3Zf+9dwaC1vThDlrM/qq731sh/b3A7DAftpXAjkbHzCOwziM/rcs
-8dm8oDFJmGuW1J/mkWaI
-=mvzn
------END PGP SIGNATURE-----
+RunC allowed additional container processes via `runc exec` to be ptraced
+by the pid 1 of the container.  This allows the main processes of the
+container, if running as root, to gain access to file-descriptors of these
+new processes during the initialization and can lead to container escapes
+or modification of runC state before the process is fully placed inside the
+container
+
+
+Credit for this discovery goes to Aleksa Sarai from SUSE and T=C3=B5nis Tii=
+gi
+from Docker.
+
+--94eb2c189ceeb62dbe0545c7f223--
