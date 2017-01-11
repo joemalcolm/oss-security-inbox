@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/12
-Message-ID: <3ac016b6-74ce-5aad-927c-e9c014cdd52c@redhat.com>
-Date: Wed, 5 Jul 2017 09:37:32 -0500
-From: Eric Blake <eblake@...hat.com>
-To: oss-security@...ts.openwall.com, Pali Rohár <pali.rohar@...il.com>
-Cc: Daniel Skowroński <daniel@...nf.net>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/5
+Message-ID: <4375de127e2d48fd8cba3125c00de83c@imshyb02.MITRE.ORG>
+Date: Tue, 10 Jan 2017 22:39:40 -0500
+From: <cve-assign@...re.org>
+To: <seb@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: python-pysaml2 XML external entity attack
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2017 03:50 AM, Pali Rohár wrote:
-> There are basically two problems:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> python-pysaml2 does
+> not sanitize SAML XML requests or responses:
 > 
-> 1) In more Linux distributions useradd tool allow to create a new user
-> which starts with digit. Also according to POSIX such user name is a
-> valid. This means that valid user name (for some Linux distributions)
-> from /etc/passwd specified in systemd unit file results running service
-> as root user.
+>   https://github.com/rohe/pysaml2/issues/366
+>   https://github.com/rohe/pysaml2/pull/379
+>   https://bugs.debian.org/850716
+>   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
 
-In fact, it is possible to create a username of '0' which is a non-root
-user.  GNU Coreutils has several tools that support a lookup of '+0' to
-force a numeric uid interpretation (get information related to uid 0,
-regardless of whether there is also a username "0"), while omitting the
-leading + does a username lookup first then falls back to a uid, since
-leading + is not a valid POSIX username start character.
+Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
+parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
+The scope of this CVE does not include the various other issues that
+may be found in the above references:
 
+ - it does not include any aspect of
+   https://bugzilla.gnome.org/show_bug.cgi?id=772726
 
+ - it does not include any vulnerabilities in the XML Security Library
+   (xmlsec), such as ones that are now, or previously were, listed at
+   https://github.com/lsh123/xmlsec/issues
 
-Download attachment "signature.asc" of type "application/pgp-signature" (605 bytes)
+ - it does not include any CWE-776 (Entity Expansion) issues that may
+   have been fixed as a side effect of
+   6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
+   test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
+
+If the references need more CVE IDs related to any of these other
+topics, please let us know.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYdacpAAoJEHb/MwWLVhi2dU4QAJC8fNO+tSEsFjLxhpwerqp2
+dqGm/ZfdGZ717A9BROlsycopbF9nVuuTp22PMEaNgJtO+sESnVdSJomVA6XvbGsk
+kd7iq+r3opeplMuyuYkuqQaw585N6MRc27WBh21Cpis8ExlU/bYH3qapTkfV1G88
+h6BqmhBJ2Yzae/FfOfG/kMCbh9Nbwem7gxB1tIHmWBxvKm/TXknH/tO4hOUsZlyt
+sb9SSwYLmqZHbqdv3rBvdoHHS7LwBSL0niKSCpPmyYKwI3P3lrEn+C6DmqqfZpsS
+0wmMse7ILe7/u28IutqCNjA5aDzaiclEE+P7KLgl/xyyGt80icM+tzBSXXwYbzMB
+YTxOiBhCiXKVlkgkNFPpq9wXBU/L5eNqsntKiuqGhFeLZIOGIpE8dSXss1ERVifG
+KL1TOLCj9jPnburB0g7f6FpDB4pSiWvhL47uMdNOSDKFBCT/SP+JiqzfH0PycspT
+v1OrRvQXA08xGX/2kD94os/6yrZwbFe65AdKHui/rHgbAjXLwiKSe9R86ppGJ5OV
+4mAG3qgh3ZJOqX6kPPOMCM7XCxN6/KpQsnLi17Va7fIhr4nq1zAjGTPJw1PhusnZ
+98NJtjIpkXLk5dCxJY3w9RWAykY26HI2k8HPsAPMPClGtJU0EeOUTkbt4Nv4Q0cF
+XZiw9PXbEwe75koEvajV
+=s3t6
+-----END PGP SIGNATURE-----
