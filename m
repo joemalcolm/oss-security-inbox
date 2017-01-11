@@ -1,34 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/5
-Message-ID: <alpine.LFD.2.20.1702250026160.1436@wniryva>
-Date: Sat, 25 Feb 2017 00:28:21 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-6317 Virglrenderer: memory leakage issue in add_shader_program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/4
+Message-ID: <13140680db674bd8a5edb9761ee23a6f@imshyb02.MITRE.ORG>
+Date: Tue, 10 Jan 2017 22:38:08 -0500
+From: <cve-assign@...re.org>
+To: <astieger@...e.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to a memory leakage issue. It could occur 
-in case of an error in add_shader_program().
+> https://gnutls.org/security.html#GNUTLS-SA-2017-1
+> 
+> It was found using the OSS-FUZZ fuzzer infrastructure that decoding a
+> specially crafted X.509 certificate with Proxy Certificate Information
+> extension present could lead to a double free. This issue was fixed in
+> GnuTLS 3.3.26 and 3.5.8.
+> 
+> https://gitlab.com/gnutls/gnutls/commit/c5aaa488a3d6df712dc8dff23a049133cab5ec1b
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+>> gnutls_x509_ext_import_proxy: fix issue reading the policy language
+>> 
+>> If the language was set but the policy wasn't, that could lead to
+>> a double free
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=a2f12a1b0f95b13b6f8dc3d05d7b74b4386394e4
+Use CVE-2017-5334.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1426756
 
-This issue was reported by Li Qiang of 360.cn Inc.
+> https://gnutls.org/security.html#GNUTLS-SA-2017-2
+> 
+> It was found using the OSS-FUZZ fuzzer infrastructure that decoding
+>  a specially crafted OpenPGP certificate could lead to heap and stack
+>  overflows.
+> 
+> The support of OpenPGP certificates in GnuTLS is considered obsolete. As
+> such, it is not recommended to use OpenPGP certificates with GnuTLS.
 
-'CVE-2017-6317' assigned via -> http://cveform.mitre.org/
+> https://gitlab.com/gnutls/gnutls/commit/49be4f7b82eba2363bb8d4090950dad976a77a3a
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Use CVE-2017-5335.
+
+
+> https://gitlab.com/gnutls/gnutls/commit/5140422e0d7319a8e2fe07f02cbcafc4d6538732
+
+Use CVE-2017-5336.
+
+
+> https://gitlab.com/gnutls/gnutls/commit/94fcf1645ea17223237aaf8d19132e004afddc1a
+
+Use CVE-2017-5337.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYdaciAAoJEHb/MwWLVhi2qzwP+wYLuGHW+TN2khSxseT9Y72w
+qsnw9dgHq2dGZDjbmIDonOXPyH0+K26QurJQr9mrZGzlR4uaz3bqQsG+JMfSJAaQ
+EfVpwpbDxqorSE5+NFy7KYZoY0teC1QZ2/9lBY0+zqtIWEEIZh0JplTqLssOm5PI
+3p/bJp2oJd2qgSiIAg5fCWvzhshEy7v545+hV3hIZG8K1q2ikdxaC+UM3dcy8xU2
+3ZT3eiJidqVHbf+skqcazgQ1/03XOo7HhybL83O3FK1T84ASnu3XpH5qQcX8Ojkz
+ELky55ReLVKl31jJf4zyxhEadSSpEJ5yUqep/q4zGXZDtWEOM23DZ90GX9evCLKL
+zSGKa1KSNEPUBTCQG1P8vbmnN+/61ZISF3Y6DUqCGGVftdXIkuCBl3DRmXQ+gxf0
+qHMFqf435S5HtGVYBQmE3+AGeHpIq5EKshCRCAcz3oPj1NgO9CiEoJfozDiC1+ou
+ldziOAe2YpZ6Ir32mRl2//ZobevSf/4YDhAbmfeysVE/6Mno5JN6zNersrmwi7Mm
+3ba6Ii7rXRHKATFqi9siDMQPE2eiHl/UzVir+uvoPoNGzHf/dkCqn3/3FE/Ae5F+
+shNAA43Rd8ynOV10pmtX6NGmsoaQKO5wudbgCP/25S1T9PR84WZnMJtZuE7wJtqF
+uqputud32DdwKJfPhstT
+=EtoE
+-----END PGP SIGNATURE-----
