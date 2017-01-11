@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4422" "Sunday" "20" "November" "2016" "15:23:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1775367.VDhM2sPmdu@arcadia>" "112" "[oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)" nil nil nil "11" "2016112014:23:26" "[oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)" (number mark "U       ago@gentoo.o Nov 20  112/4422  " thread-indent "\"[oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1827" "Tuesday" "10" "January" "2017" "19:29:40" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3C4kfhp=A6zQksNzmNRgUBpUk4M__mhkcez=_RA8_Dew@mail.gmail.com>" "53" "Re: [oss-security] Docker 1.12.6 - Security Advisory" "^Cc:" nil nil "1" "2017011102:29:40" "[oss-security] Docker 1.12.6 - Security Advisory" (number mark "        kseifried@re Jan 10   53/1827  " thread-indent "\"Re: [oss-security] Docker 1.12.6 - Security Advisory\"\n") "<CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>" ("<CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1908 invoked by uid 550); 20 Nov 2016 14:23:45 -0000
+Received: (qmail 22097 invoked by uid 550); 11 Jan 2017 02:29:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,128 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1887 invoked from network); 20 Nov 2016 14:23:44 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sun, 20 Nov 2016 15:23:26 +0100
-Message-ID: <1775367.VDhM2sPmdu@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Received: (qmail 22076 invoked from network); 11 Jan 2017 02:29:52 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=jI/jiR7x2t0R4wbkqw9Ueen+wnG5OItLX67kUKeUaDU=;
+        b=iIYYdd0KOxPByc6V+VltOlKmnx8yUo+VvXNfv5zq5vP25CLPYEyfb+f3H1Epq4Ttmn
+         nlfRWQPI0I42L5rGg5op8xfgbldjDIpSJOIwI8ADxEHvkLc0AKg3lOhrogM5rHireOkU
+         3w3r+ZJxT2PhczYIGQmi4uoB2Sohyc3bl8GP21yN2OCny+EiMYuaLzDpoC2zWrEH9wMW
+         wyssBRHSJXWrvgdTuXtD6yd/rsUonNzaxiDWqe/dnJHEk1p5t5wUodAUFGCRxCbizVfF
+         2or4yBz1/RynXWAQEiPJ1ccejGJKw1MRZyfbXl8M3INFWLesbqGS+Fec8ss/qvQ/c0GS
+         RjLA==
+X-Gm-Message-State: AIkVDXIzX3V1ubn/wIyXZkDe4cTX8Qy3PcGIl3Os3vSEa7C/ZIAl7rO9K2ZoQb1BmgejLSygpvTbs7z7rKtaNloV
+X-Received: by 10.202.75.76 with SMTP id y73mr2967073oia.16.1484101781159;
+ Tue, 10 Jan 2017 18:29:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] jasper: stack-based buffer overflow in jpc_tsfb_getbands2 (jpc_tsfb.c)
+In-Reply-To: <CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>
+References: <CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>
+Message-ID: <CANO=Ty3C4kfhp=A6zQksNzmNRgUBpUk4M__mhkcez=_RA8_Dew@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a11c183b27a1cc80545c85fc7
+Cc: docker-user@googlegroups.com, docker-dev@googlegroups.com, 
+	fulldisclosure@seclists.org, vuln@secunia.com, bugtraq@securityfocus.com
+Date: Tue, 10 Jan 2017 19:29:40 -0700
+From: Kurt Seifried <kseifried@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Docker 1.12.6 - Security Advisory
+To: oss-security <oss-security@lists.openwall.com>
 
-If suitable for a CVE please assign one. Thanks.
+--001a11c183b27a1cc80545c85fc7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-jasper is an open-source initiative to provide a free software-based reference 
-implementation of the codec specified in the JPEG-2000 Part-1 standard.
+Can you post a link to a patch for this issue, or to a bug entry with
+additional details, or the download site at a minimum? Thanks!
 
-A crafted image, through an intensive fuzz on the 1.900.22 version revealed a 
-stack overflow.
+On Tue, Jan 10, 2017 at 6:58 PM, Nathan McCauley <nathan.mccauley@docker.com
+> wrote:
 
-The complete ASan output:
+> Docker Engine version 1.12.6 has been released to address a vulnerability
+> and is immediately available for all supported platforms. Users are advis=
+ed
+> to upgrade existing installations of the Docker Engine and use 1.12.6 for
+> new installations.
+>
+> Please send any questions to security@docker.com.
+>
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> [CVE-2016-9962] Insecure opening of file-descriptor allows privilege
+> escalation
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> RunC allowed additional container processes via `runc exec` to be ptraced
+> by the pid 1 of the container.  This allows the main processes of the
+> container, if running as root, to gain access to file-descriptors of these
+> new processes during the initialization and can lead to container escapes
+> or modification of runC state before the process is fully placed inside t=
+he
+> container
+>
+>
+> Credit for this discovery goes to Aleksa Sarai from SUSE and T=C3=B5nis T=
+iigi
+> from Docker.
+>
 
-# imginfo -f $FILE
-warning: trailing garbage in marker segment (9 bytes)
-warning: trailing garbage in marker segment (28 bytes)
-warning: trailing garbage in marker segment (40 bytes)
-warning: ignoring unknown marker segment (0xffee)
-type = 0xffee (UNKNOWN); len = 23;1f 32 ff ff ff 00 10 00 3d 4d 00 01 32 ff 00 
-e4 00 10 00 00 4f warning: trailing garbage in marker segment (14 bytes)
-=================================================================
-==9166==ERROR: AddressSanitizer: stack-buffer-overflow on address 
-0x7faf2e200c20 at pc 0x7faf320a985a bp 0x7ffd397b9b10 sp 0x7ffd397b9b08
-WRITE of size 4 at 0x7faf2e200c20 thread T0
-    #0 0x7faf320a9859 in jpc_tsfb_getbands2 /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:227:16
-    #1 0x7faf320a9009 in jpc_tsfb_getbands2 /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:223:3
-    #2 0x7faf320a8b9f in jpc_tsfb_getbands /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_tsfb.c:187:3
-    #3 0x7faf3200eaa6 in jpc_dec_tileinit /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:714:4
-    #4 0x7faf3200eaa6 in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:560
-    #5 0x7faf3201c1c3 in jpc_dec_decode /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:391:10
-    #6 0x7faf3201c1c3 in jpc_decode /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:255
-    #7 0x7faf31f7e684 in jas_image_decode /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/base/jas_image.c:406:16
-    #8 0x509c9a in main /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/appl/imginfo.c:203:16
-    #9 0x7faf3108761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419988 in _init (/usr/bin/imginfo+0x419988)
 
-Address 0x7faf2e200c20 is located in stack of thread T0 at offset 3104 in 
-frame
-    #0 0x7faf3200dbbf in jpc_dec_process_sod /tmp/portage/media-
-libs/jasper-1.900.22/work/jasper-1.900.22/src/libjasper/jpc/jpc_dec.c:544
 
-  This frame has 1 object(s):
-    [32, 3104) 'bnds.i' 0x0ff665c38180: 00 00 00 00[f3]f3 f3 f3 f3 f3 f3 f3 f3 
-f3 f3 f3
-  0x0ff665c38190: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff665c381a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff665c381b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff665c381c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0ff665c381d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==9166==ABORTING
+--=20
 
-Affected version:
-1.900.22
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
 
-Fixed version:
-1.900.30
-
-Commit fix:
-https://github.com/mdadams/jasper/commit/1abc2e5a401a4bf1d5ca4df91358ce5df111f495
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00047-jasper-stackoverflow-jpc_tsfb_getbands2
-
-Timeline:
-2016-11-09: bug discovered and reported to upstream
-2016-11-20: upstream released a patch
-2016-11-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/20/jasper-stack-based-buffer-overflow-in-jpc_tsfb_getbands2-jpc_tsfb-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--001a11c183b27a1cc80545c85fc7--
