@@ -1,53 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/8
-Message-ID: <FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>
-Date: Mon, 13 Feb 2017 16:40:29 +0000
-From: "Priedhorsky, Reid" <reidpr@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/2
+Message-ID: <CANO=Ty3C4kfhp=A6zQksNzmNRgUBpUk4M__mhkcez=_RA8_Dew@mail.gmail.com>
+Date: Tue, 10 Jan 2017 19:29:40 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: docker-user@...glegroups.com, docker-dev@...glegroups.com,  fulldisclosure@...lists.org, vuln@...unia.com, bugtraq@...urityfocus.com
+Subject: Re: Docker 1.12.6 - Security Advisory
 Content-Type: text/plain; charset=utf-8
 
+Can you post a link to a patch for this issue, or to a bug entry with
+additional details, or the download site at a minimum? Thanks!
 
-On Feb 10, 2017, at 8:59 PM, cve-assign@...re.org<mailto:cve-assign@...re.org> wrote:
+On Tue, Jan 10, 2017 at 6:58 PM, Nathan McCauley <nathan.mccauley@...ker.com
+> wrote:
 
-C5. I want MITRE to send the https://cveform.mitre.org<https://cveform.mitre.org/> form data, and
-the CVE ID, to the oss-security list at the same time that these are
-sent to the requester.
+> Docker Engine version 1.12.6 has been released to address a vulnerability
+> and is immediately available for all supported platforms. Users are advised
+> to upgrade existing installations of the Docker Engine and use 1.12.6 for
+> new installations.
+>
+> Please send any questions to security@...ker.com.
+>
+>
+> ==============================================================
+> [CVE-2016-9962] Insecure opening of file-descriptor allows privilege
+> escalation
+>
+> ==============================================================
+>
+> RunC allowed additional container processes via `runc exec` to be ptraced
+> by the pid 1 of the container.  This allows the main processes of the
+> container, if running as root, to gain access to file-descriptors of these
+> new processes during the initialization and can lead to container escapes
+> or modification of runC state before the process is fully placed inside the
+> container
+>
+>
+> Credit for this discovery goes to Aleksa Sarai from SUSE and Tõnis Tiigi
+> from Docker.
+>
 
-R5. We have had internal discussions within MITRE about this. We are
-able to implement this easily if the community requires this approach.
-At the moment, we are expecting the requester to resend this
-information to oss-security once they accept their CVE ID assignment.
-Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
-for an example.
 
 
-C6. I want MITRE to send the https://cveform.mitre.org<https://cveform.mitre.org/> form data to
-the oss-security list as soon as that data is entered (i.e., before a
-CVE ID exists).
+-- 
 
-R6. We have had internal discussions within MITRE about this. We are
-not yet able to implement this easily. We may work on this if the
-community requires this approach. However, our understanding of CVE
-consumers is that they look to MITRE as a source of vulnerability
-information after a CVE ID number exists, not before.
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-I’m glad to see the feedback taken seriously as well.
-
-Recall that my oss-security use case was to maintain a reasonably comprehensive list of vulnerabilities for specific products. This workflow looked like:
-
-1. See a notification (whether CVE request or not) on oss-security regarding products I’m interested in.
-2. Add the vulnerability to my list.
-3. Monitor the thread for additional information (patch, CVE assignment, etc.)
-
-Like others, timely notification is more important for me than the CVE itself, but the CVE does help because it means list entries eventually get a unique ID.
-
-I would like to see both C5 and C6 implemented as soon as practical.
-
-As for whether it’s appropriate to send form data to oss-security immediately, I believe the right approach is to simply add the send/not send choice to the web form, required, with no default, so people must make a deliberate choice.
-
-The alternatives I’ve seen raised would not be adequate for me. Specifically, depending on people to forward their stuff to the list is too brittle (people won’t do it reliably), and watching an XML feed requires setting up and maintaining software for a new data feed.
-
-Thanks,
-Reid
