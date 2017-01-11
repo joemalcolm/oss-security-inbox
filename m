@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1973" "Wednesday" "2" "November" "2016" "08:11:41" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020811110.375@tvnag.unkk.fr>" "74" "[oss-security] [SECURITY ADVISORY] curl URL unescape heap overflow via integer truncation" nil nil nil "11" "2016110207:11:41" "[oss-security] [SECURITY ADVISORY] curl URL unescape heap overflow via integer truncation" (number mark "U       daniel@haxx. Nov  2   74/1973  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl URL unescape heap overflow via integer truncation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1738" "Tuesday" "10" "January" "2017" "22:41:20" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>" "54" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" "^CC:" nil nil "1" "2017011103:41:20" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" (number mark "        cve-assign@m Jan 10   54/1738  " thread-indent "\"[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6\"\n") "<8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>" ("<8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17844 invoked by uid 550); 2 Nov 2016 07:11:55 -0000
+Received: (qmail 22336 invoked by uid 550); 11 Jan 2017 03:41:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +11,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17809 invoked from network); 2 Nov 2016 07:11:54 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:11:41 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020811110.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 22318 invoked from network); 11 Jan 2017 03:41:32 -0000
+In-Reply-To: <8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>
+Message-ID: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl URL unescape heap overflow via integer
- truncation
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>, <cmn@dwim.me>
+Date: Tue, 10 Jan 2017 22:41:20 -0500
+From: <cve-assign@mitre.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
+To: <astieger@suse.com>
 
-URL unescape heap overflow via integer truncation
-=================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102H.html)
+> https://github.com/libgit2/libgit2/commit/66e3774d279672ee51c3b54545a79d20d1ada834
 
-VULNERABILITY
--------------
+Use CVE-2016-10128.
 
-The URL percent-encoding decode function in libcurl is called
-`curl_easy_unescape`. Internally, even if this function would be made to
-allocate a unscape destination buffer larger than 2GB, it would return that
-new length in a signed 32 bit integer variable, thus the length would get
-either just truncated or both truncated and turned negative. That could then
-lead to libcurl writing outside of its heap based buffer.
 
-This can be triggered by a user on a 64bit system if the user can send in a
-custom (very large) URL to a libcurl using program.
+> https://github.com/libgit2/libgit2/commit/2fdef641fd0dd2828bd948234ae86de75221a11a
 
-We are not aware of any exploit of this flaw.
+Use CVE-2016-10129.
 
-INFO
-----
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8622 to this issue.
+> https://github.com/libgit2/libgit2/commit/9a64e62f0f20c9cf9b2e1609f037060eb2d8eb22
 
-AFFECTED VERSIONS
------------------
+Use CVE-2016-10130.
 
-This flaw exists in the following curl versions
 
-- Affected versions: curl 7.24.0 to and including 7.50.3
-- Not affected versions: curl < 7.24.0 and curl >= 7.51.0
+> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
 
-libcurl is used by many applications, but not always advertised as such!
+Use CVE-2017-5338.
 
-THE SOLUTION
-------------
 
-In version 7.51.0, the parser function is fixed.
+> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
 
-A [patch for CVE-2016-8622](https://curl.haxx.se/CVE-2016-8622.patch) is
-available.
+Use CVE-2017-5339.
 
-RECOMMENDATIONS
----------------
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
 
-  A - Upgrade curl and libcurl to version 7.51.0
+This has no CVE ID; it does not seem to be a vulnerability fix.
 
-  B - Apply the patch to your version and rebuild
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-TIME LINE
----------
-
-It was first reported to the curl project on September 23 by Cure53.
-
-We contacted distros@openwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-his vulnerability was found during a Secure Open Source audit performed by
-Cure53.
-
--- 
-
-  / daniel.haxx.se
+iQIcBAEBCAAGBQJYdacwAAoJEHb/MwWLVhi2/EEP/jH+BS08ezRAbMvZW5v27rQp
+L3cbsZDrrydTfV65nR7CoKtT+IVNt6ZBgK7S2npMwv+LFcWwe/1U3kOEb3bwduRD
+LSZCIX0b3437Q+wS83Ohz3U88R3LUECzaU9YP+sW+hRGxi9Lu1hfGkaOThxMKznE
+5wxqr7/85G42J+yWQRQx46mHyvS0h5Ogj7FqkeDenpp7qucfW/CqfWggtzQw2/Sm
+SDLVVF0l3/rKDGicyO0+451wbhoWKL3CFE3q11FHgU6Isn2HQ9qu3litcSAtCXN1
+q37xCAyMuPrVYLVvEgBgT43icxAg0rDwNh521XN0aHIy+NVdhaknOSLLWkntCG42
+yRExjFOYSReYIiFnAGDsn+ujPlUe1a/GbZ/WlOOZw0abY1T9OTiuqDBywEVk5WxJ
+26fKFUHPoBhN21En9V4/0d5tIdpUV8jYscritWJhxcoMNMBpnVfuTANPy9GNXaGU
+w+FjXC2S+OYNxirBlRQlw3aECAsvkLk6PKLZZnoMkM8x+HIBimk8/1+HvNOrTiwX
+GtYGJroUYspNmFLfDixpfZlSO5RO9MqQZKKCDYkfqmVGeLCcGilOd084CwlrLXvG
+jYkjJvyw6E0kzLTM3x1Q3Fp3rkBkSl8pyR3Xmts/0seY9EMnDy00aqEIug/xczz1
+okCatyYGVFaf+kJltyv3
+=tboo
+-----END PGP SIGNATURE-----
