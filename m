@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2036" "Tuesday" "29" "September" "2020" "14:35:01" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.78.906.2009291216520.10832@xnncv>" "55" "[oss-security] QEMU: NULL pointer derefrence issues" nil nil nil "9" "2020092909:05:01" "[oss-security] QEMU: NULL pointer derefrence issues" (number mark "U       ppandit@redh Sep 29   55/2036  " thread-indent "\"[oss-security] QEMU: NULL pointer derefrence issues\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] QEMU: NULL pointer derefrence issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2186" "Tuesday" "10" "January" "2017" "22:39:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<4375de127e2d48fd8cba3125c00de83c@imshyb02.MITRE.ORG>" "54" "[oss-security] Re: CVE request: python-pysaml2 XML external entity attack" nil nil nil "1" "2017011103:39:40" "[oss-security] Re: CVE request: python-pysaml2 XML external entity attack" (number mark "U       cve-assign@m Jan 10   54/2186  " thread-indent "\"[oss-security] Re: CVE request: python-pysaml2 XML external entity attack\"\n") "<20170110072939.GC18447@centurion.befour.org>" ("<20170110072939.GC18447@centurion.befour.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16240 invoked by uid 550); 29 Sep 2020 09:05:23 -0000
+Received: (qmail 12182 invoked by uid 550); 11 Jan 2017 03:39:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16222 invoked from network); 29 Sep 2020 09:05:23 -0000
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1601370311;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=Ny6rPqet5431ir0vN/vB2GQVoUIwRhcL8osqeThqvUE=;
-	b=HxrrfGy8lj5nl0LGSgkHxjM4onUiQdRZucuW+yifElX809IzFhvOWkblM1fXBIdMzVCy92
-	SclhVi9WxT+FokM+x7Ve4twV58DS2/qmQUgNgxGWQwZ6WWaYRen2CMRfoacL8sUV5xTwKJ
-	ngIHBk7dMvnoaz5QrIQ72VmZwTWyT5s=
-X-MC-Unique: KpsBRGjKPXmWDZuiN7O2bQ-1
-Date: Tue, 29 Sep 2020 14:35:01 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-cc: bugs-syssec@rub.de
-Message-ID: <nycvar.YSQ.7.78.906.2009291216520.10832@xnncv>
+Received: (qmail 12164 invoked from network); 11 Jan 2017 03:39:52 -0000
+From: <cve-assign@mitre.org>
+To: <seb@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170110072939.GC18447@centurion.befour.org>
+Message-ID: <4375de127e2d48fd8cba3125c00de83c@imshyb02.MITRE.ORG>
+Date: Tue, 10 Jan 2017 22:39:40 -0500
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=ppandit@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] QEMU: NULL pointer derefrence issues
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: python-pysaml2 XML external entity attack
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-1. CVE-2020-25741 QEMU: fdc: null pointer dereference during r/w data transfer
+> python-pysaml2 does
+> not sanitize SAML XML requests or responses:
+> 
+>   https://github.com/rohe/pysaml2/issues/366
+>   https://github.com/rohe/pysaml2/pull/379
+>   https://bugs.debian.org/850716
+>   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
 
-A null pointer dereference issue was found in the Floppy disk emulator of 
-QEMU. It could occur while transferring data via fdctrl_read_data(), 
-fdctrl_write_data() routines, if current drive has a null block pointer. A 
-guest may use this flaw to crash the QEMU process on the host resulting in DoS 
-scenario.
+Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
+parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
 
-References:
------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg07779.html
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Ffdc_nullptr1
-===
+The scope of this CVE does not include the various other issues that
+may be found in the above references:
 
-2. CVE-2020-25742 QEMU: scsi: lsi: null pointer dereference during memory move
+ - it does not include any aspect of
+   https://bugzilla.gnome.org/show_bug.cgi?id=772726
 
-A null pointer dereference issue was found in the LSI53C895A SCSI Host Bus 
-Adapter emulator of QEMU. It could occur while processing 'Memory Move' 
-instructions to move data between dma memory and i/o address space via 
-lsi_memcpy(). A guest user/process may use this flaw to crash the QEMU process 
-resulting in DoS scenario.
+ - it does not include any vulnerabilities in the XML Security Library
+   (xmlsec), such as ones that are now, or previously were, listed at
+   https://github.com/lsh123/xmlsec/issues
 
-References:
------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg05294.html
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Flsi_nullptr1
-===
+ - it does not include any CWE-776 (Entity Expansion) issues that may
+   have been fixed as a side effect of
+   6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
+   test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
 
+If the references need more CVE IDs related to any of these other
+topics, please let us know.
 
-3. CVE-2020-25743 QEMU: ide: null pointer dereference while cancelling i/o operation
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-A null pointer dereference issue was found in the IDE disk emulator of QEMU. 
-It could occur while cancelling an i/o operation via ide_cancel_dma_sync() 
-routine, if a block drive pointer is null. A guest may use this flaw to crash 
-the QEMU process on the host resulting in DoS scenario.
-
-References:
------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2020-09/msg01568.html
-   -> https://ruhr-uni-bochum.sciebo.de/s/NNWP2GfwzYKeKwE?path=%2Fide_nullptr1b
-
-
-* These issues were reported by Sergej Schumilo, Cornelius Aschermann, Simon
-   Wrner of Ruhr-University Bochum.
-
-* CVE-2020-2574[123]? assigned via -> https://cveform.mitre.org/
-
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+iQIcBAEBCAAGBQJYdacpAAoJEHb/MwWLVhi2dU4QAJC8fNO+tSEsFjLxhpwerqp2
+dqGm/ZfdGZ717A9BROlsycopbF9nVuuTp22PMEaNgJtO+sESnVdSJomVA6XvbGsk
+kd7iq+r3opeplMuyuYkuqQaw585N6MRc27WBh21Cpis8ExlU/bYH3qapTkfV1G88
+h6BqmhBJ2Yzae/FfOfG/kMCbh9Nbwem7gxB1tIHmWBxvKm/TXknH/tO4hOUsZlyt
+sb9SSwYLmqZHbqdv3rBvdoHHS7LwBSL0niKSCpPmyYKwI3P3lrEn+C6DmqqfZpsS
+0wmMse7ILe7/u28IutqCNjA5aDzaiclEE+P7KLgl/xyyGt80icM+tzBSXXwYbzMB
+YTxOiBhCiXKVlkgkNFPpq9wXBU/L5eNqsntKiuqGhFeLZIOGIpE8dSXss1ERVifG
+KL1TOLCj9jPnburB0g7f6FpDB4pSiWvhL47uMdNOSDKFBCT/SP+JiqzfH0PycspT
+v1OrRvQXA08xGX/2kD94os/6yrZwbFe65AdKHui/rHgbAjXLwiKSe9R86ppGJ5OV
+4mAG3qgh3ZJOqX6kPPOMCM7XCxN6/KpQsnLi17Va7fIhr4nq1zAjGTPJw1PhusnZ
+98NJtjIpkXLk5dCxJY3w9RWAykY26HI2k8HPsAPMPClGtJU0EeOUTkbt4Nv4Q0cF
+XZiw9PXbEwe75koEvajV
+=s3t6
+-----END PGP SIGNATURE-----
