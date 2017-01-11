@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/9
-Message-ID: <20170503131655.GA1397@notk.org>
-Date: Wed, 3 May 2017 15:16:55 +0200
-From: Adrien Nader <adrien@...k.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Sourcetree arbitrary command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/10
+Message-Id: <A6967F04-154F-41FF-A7A3-1D227B4BF6D7@dwim.me>
+Date: Wed, 11 Jan 2017 11:36:27 +0000
+From: Carlos Martín Nieto <cmn@...m.me>
+To: cve-assign@...re.org
+Cc: Andreas Stieger <astieger@...e.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Wed, May 03, 2017, redrain root wrote:
-> Hi there,
+> On 11 Jan 2017, at 03:41, cve-assign@...re.org wrote:
 > 
-> I would report a sourcetree arbitrary command execution
 > 
-> Sourcetree is a popular git gui client,and I found a command execution two
-> month ago,
-> and I report to the official atlassian but the told me they have known this
-> vulnerability internal tracker and they will fix it in next version but
-> sourcetree has upgrade several version, this vulnerability still alive.
-> So I want to disclose this vulnerability and make a copy for atlassian
-> again.
+> 
+>> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
+> 
+> Use CVE-2017-5338.
+> 
+> 
+>> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
+> 
+> Use CVE-2017-5339.
+> 
+> 
+>> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
+> 
+> This has no CVE ID; it does not seem to be a vulnerability fix.
 
-Unless I'm mistaken, the source for it isn't available.
+CVE-2017-5338 and CVE-2017-5339 were also assigned to commits which are not fixing a vulnerability but adding tests to prevent a regression in this area. They’re different commits mostly as an artefact of the timing of the flaw being detected and when we were able to deal with it.
 
-I see you've Cc'ed fulldisclosure@...lists.org and
-security@...assian.com too and it sounds more applicable to them.
 
-> SourceTree v2.5c and prior are affected by a command injection in the
-> handling of sourcetree:// scheme.
-> The cloneRepo action with ‘ext’ is base on git-remote-ext, The git team’s
-> description of the bug was:
-> Some protocols (like git-remote-ext) can execute arbitrary code found in
-> the URL.
+   cmn
 
-You make it sound like there might be something related to
-"git-remote-ext" or its (typicala) usage but you're not giving details
-except that it's difficult to tell if it happens in othe software too
-and the following seems to indicate it is very specific to Sourcetree:
-
-> PoC:
-> sourcetree://cloneRepo/ext::[command injection]
-> Even attacker can exploit it through the browser
-
-Best regards,
-
--- 
-Adrien Nader
