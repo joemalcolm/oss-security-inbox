@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2701" "Thursday" "28" "July" "2016" "16:17:23" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160728201723.046E4332028@smtpvbsrv1.mitre.org>" "66" "[oss-security] Re: CVE-Request Buffer overflow ImageMagick" nil nil nil "7" "2016072820:17:23" "[oss-security] Re: CVE-Request Buffer overflow ImageMagick" (number mark "U       cve-assign@m Jul 28   66/2701  " thread-indent "\"[oss-security] Re: CVE-Request Buffer overflow ImageMagick\"\n") "<5FE87C7D-93F9-45CE-91F4-4C29BEB1A8E2@gmail.com>" ("<5FE87C7D-93F9-45CE-91F4-4C29BEB1A8E2@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["786" "Wednesday" "11" "January" "2017" "11:36:27" "+0000" "=?utf-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?=" "cmn@dwim.me" "<A6967F04-154F-41FF-A7A3-1D227B4BF6D7@dwim.me>" "30" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" nil nil nil "1" "2017011111:36:27" "[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6" (number mark "U       cmn@dwim.me  Jan 11   30/786   " thread-indent "\"[oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6\"\n") "<f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>" ("<f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13391 invoked by uid 550); 28 Jul 2016 20:17:35 -0000
+Received: (qmail 5393 invoked by uid 550); 11 Jan 2017 14:01:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13370 invoked from network); 28 Jul 2016 20:17:35 -0000
-From: cve-assign@mitre.org
-To: i.elsayed92@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5FE87C7D-93F9-45CE-91F4-4C29BEB1A8E2@gmail.com>
-Message-Id: <20160728201723.046E4332028@smtpvbsrv1.mitre.org>
-Date: Thu, 28 Jul 2016 16:17:23 -0400 (EDT)
-Subject: [oss-security] Re: CVE-Request Buffer overflow ImageMagick
+Received: (qmail 24247 invoked from network); 11 Jan 2017 11:36:44 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=dwim.me; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=Nkb0XliBydRcp4g
+	js69p7dPLnH4=; b=Z52CScbUW0Eh3zU8D7FFlfYJAeLjCN2KvhHKSHlN4+95tDX
+	gBD2KIe8Sh9wzodttoW6deHsxRJ8o/FUnzBrQsTg2QT+OPZD8Tbb3ODy2Su6+hsh
+	vIpploAULHtE6e3ofEvpAd7IFq0Z/fg22JInYlK+4f3680+Ivb3ybo1yQlag=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:from:in-reply-to:message-id:mime-version:references
+	:subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
+	smtpout; bh=Nkb0XliBydRcp4gjs69p7dPLnH4=; b=mWVK3cVfX70+yreqGYlN
+	TYoSUFqgr5BiiUyjLfLr2bcFTiKGiKLpRu3/buioDX7/WysOc/IXbOYfL3c2cyEn
+	WfcbwgibArh11B/HHccBB4QlYFvZYCohxc6k00gibvhbCg9ti9oNnWbR9lnBC7bP
+	SGdVA0skh+OG+Ef2WemICIg=
+X-ME-Sender: <xms:vhh2WPxytxZnY35yO6wz-JUjY0HyNzEXnKj_dc6KHFr18gUf6YnawQ>
+X-Sasl-enc: SiVM3X/EXgH9nStERnVtsgoEVOlJAy5D//HeWAB6wtiQ 1484134589
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+From: =?utf-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@dwim.me>
+In-Reply-To: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
+Date: Wed, 11 Jan 2017 11:36:27 +0000
+Cc: Andreas Stieger <astieger@suse.com>,
+ oss-security@lists.openwall.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A6967F04-154F-41FF-A7A3-1D227B4BF6D7@dwim.me>
+References: <f361a068cd454d81a00f00b0ed6bbd1b@imshyb02.MITRE.ORG>
+To: cve-assign@mitre.org
+X-Mailer: Apple Mail (2.3259)
+Subject: [oss-security] Re: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> I would like to request a CVE for a buffer overflow in ImageMagick
-> that was fixed in the following commit:
-> https://github.com/ImageMagick/ImageMagick/commit/dd84447b63a71fa8c3f47071b09454efc667767b
-> 
-> to run the PoC try:
-> magick convert -clip PoC1  <<<-- This will run the first PoC
-> 
-> The vulnerability gets triggered at 
-> 
-> https://github.com/ImageMagick/ImageMagick/blob/master/MagickCore/property.c#L697
-> 
-> (void) CopyMagickMemory(attribute,(char *) info,(size_t) count);
-> 
-> The info ptr points at the end of the PoC image. The out-of-bound read
-> occurs when info+count is > image_size. The attribute ptr then points
-> to data that is read from the memory.
-> 
-> backtrace
-> #9  0x000000000043a5f8 in CopyMagickMemory ... at MagickCore/memory.c:696
-> #10 0x000000000046f0ff in Get8BIMProperty ... at MagickCore/property.c:698
-> 
-> PoC1: reads 0xff5f extra bytes from the memory
-> 
-> PoC2: reads 0xb0ff5f bytes of the memory (it is likely that this PoC
-> causes a crash because the memory segment isn't mapped or doesn't have
-> the correct permissions)
-> 
-> The read out-of-bound could lead to memory leak because the data read
-> is then written into the output image using SetImageProperty which is
-> called after the read
-> 
-> The PoC has been tested on 
-> version: ImageMagick 7.0.2-1 Q16 x86_64 2016-06-19 http://www.imagemagick.org
+> On 11 Jan 2017, at 03:41, cve-assign@mitre.org wrote:
+>=20
+>=20
+>=20
+>> https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75=
+c92ccc90fe
+>=20
+> Use CVE-2017-5338.
+>=20
+>=20
+>> https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f=
+3fc17a293e
+>=20
+> Use CVE-2017-5339.
+>=20
+>=20
+>> https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd1534303=
+69deec64c0
+>=20
+> This has no CVE ID; it does not seem to be a vulnerability fix.
 
->> We can reproduce it and will have a patch to fix it in GIT master
->> branch @ https://github.com/ImageMagick/ImageMagick later today. The
->> patch will be available in the beta releases of ImageMagick @
->> http://www.imagemagick.org/download/beta/ by sometime tomorrow.
+CVE-2017-5338 and CVE-2017-5339 were also assigned to commits which are not=
+ fixing a vulnerability but adding tests to prevent a regression in this ar=
+ea. They=E2=80=99re different commits mostly as an artefact of the timing o=
+f the flaw being detected and when we were able to deal with it.
 
-Use CVE-2016-6491.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+   cmn
 
-iQIcBAEBCAAGBQJXmmfOAAoJEHb/MwWLVhi2IfMP/11wKvLq+QNlKEQhhkEjqtHo
-TKeWjJoiuLQnZENiE1QXQ5JC2tZFaDHyqcun9Kf9CIAUaskSxQM7iEmsPvfyqYaA
-4Q/Rzj7ECKyvBR5DUszKgpiOzA8UFBzNUaRijNQfSttefTBhOm76l4jGLFCiSyTU
-h3/QrvvaYJBOcYnyFcvRW+p7XxCR/ZFeoqo9HExMYLZDIt2XaBS2/+Baea7gDPsZ
-SUhG701l7W5RGoQYLszoUm0Bz54AH9253fzl0TKlC/XQqSQ33eUi5gWgzXCNr4dx
-Vuaf1oaPRh3khNQi04/HGnQY3dMrOUPWz2LXb5IDJAxSoGBDLShwhdmGaTqLOgJq
-MwQVItboa+pP8FwXeHQdn3ILYux1LXTZwNrQrDwpM5OBR5OyGYNa9XhcAZAMb7l2
-sawjvOG0SvGU4FGaiELy1E9B6QxOOY7ZlOHXUY1Wrqaa1hFKU/30btWcprAj23jc
-vnvxKMq2FHJRDGCKFSgtOVtdush551sPWKkdlsb7mENT9Xu0cuCZAYkrwjgiNb7K
-87uWrfyIIsWkNBm/V58hhP5qwx1LsX13Fq7uv40snnGPjGBhxjdWeinbnsEemxYr
-vPNMq7eOhRTAyLJ2k+DE6jsV89I6vMkNl6/JblZjrG9HNyFVCl1LGCJ3ZtUib/pK
-VtsKTtJ1QXnPAwVPaNnf
-=mi15
------END PGP SIGNATURE-----
