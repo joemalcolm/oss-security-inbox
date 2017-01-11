@@ -1,28 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/17/1
-Message-ID: <20171017105424.GG3302@suse.de>
-Date: Tue, 17 Oct 2017 12:54:24 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel: alsa: use-after-free in /dev/snd/seq CVE-2017-15265
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/12
+Message-ID: <CAKws9z20vYG_enKh4H9cUZ6dYXF7nPT5U_GHb6EkCjMn6rdptA@mail.gmail.com>
+Date: Wed, 11 Jan 2017 15:54:29 -0500
+From: Scott Arciszewski <scott@...agonie.com>
+To: oss-security@...ts.openwall.com
+Subject: Introducing sodium_compat, a PHP polyfill for libsodium
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 11, 2017 at 03:03:53PM +0200, Marcus Meissner wrote:
-> Hi folks,
-> 
-> This kernel issue is being published without embargoe.
-> (came via security@...nel.org to Takashi@...E);
-> 
-> Reported by Michael23 Yu.
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=1062520
-> 
-> Proposed Patch:
-> http://mailman.alsa-project.org/pipermail/alsa-devel/2017-October/126292.html
-> 
-> A use-after-free window in /dev/snd/seq, Mitre has assigned CVE-2017-15265 to it.
+Hello,
 
-The reporter asked to add that this bug was found by ADLab of venustech.
-(I was not able to associate him directly before, sorry.)
+I've been working on this for a while. I was originally going to include a
+PHP implementation of Argon2, but it turned out to be really slow (and I
+didn't feel confident in my implementation, to boot).
 
-Ciao, Marcus
+Source code: https://github.com/paragonie/sodium_compat
+
+Announcement post:
+https://paragonie.com/blog/2017/01/let-s-make-2017-year-simply-secure-php-cryptography
+
+It's ISC licensed, just like libsodium, so once it's been audited you
+should be able to use it in any PHP projects without hassle.
+
+Scott Arciszewski
+Chief Development Officer
+Paragon Initiative Enterprises <https://paragonie.com>
+
