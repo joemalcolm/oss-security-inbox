@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/7
-Message-ID: <20171128145524.GI6762@timmy.laas.fr>
-Date: Tue, 28 Nov 2017 15:55:24 +0100
-From: Matthieu Herrb <matthieu.herrb@...s.fr>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-16611 libXfont Open files with O_NOFOLLOW
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/1
+Message-ID: <CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>
+Date: Tue, 10 Jan 2017 17:58:56 -0800
+From: Nathan McCauley <nathan.mccauley@...ker.com>
+To: docker-user@...glegroups.com, docker-dev@...glegroups.com,  fulldisclosure@...lists.org, oss-security@...ts.openwall.com,  vuln@...unia.com, bugtraq@...urityfocus.com
+Subject: Docker 1.12.6 - Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Docker Engine version 1.12.6 has been released to address a vulnerability
+and is immediately available for all supported platforms. Users are advised
+to upgrade existing installations of the Docker Engine and use 1.12.6 for
+new installations.
 
-X.Org has just release libXfont 1.5.4 and libXfont2 2.0.3 which
-contain the following security fix:
+Please send any questions to security@...ker.com.
 
-Author:     Michal Srb <msrb@...e.com>
-AuthorDate: Thu Oct 26 09:48:13 2017 +0200
-Commit:     Matthieu Herrb <matthieu@...rb.eu>
-CommitDate: Sat Nov 25 11:46:50 2017 +0100
 
-    Open files with O_NOFOLLOW. (CVE-2017-16611)
+==============================================================
+[CVE-2016-9962] Insecure opening of file-descriptor allows privilege
+escalation
 
-    A non-privileged X client can instruct X server running under root
-    to open any file by creating own directory with "fonts.dir",
-    "fonts.alias" or any font file being a symbolic link to any other
-    file in the system. X server will then open it. This can be issue
-    with special files such as /dev/watchdog.
+==============================================================
 
-https://marc.info/?l=freedesktop-xorg-announce&m=151188049718337&w=2
-https://marc.info/?l=freedesktop-xorg-announce&m=151188044218304&w=2
--- 
-Matthieu Herrb
+RunC allowed additional container processes via `runc exec` to be ptraced
+by the pid 1 of the container.  This allows the main processes of the
+container, if running as root, to gain access to file-descriptors of these
+new processes during the initialization and can lead to container escapes
+or modification of runC state before the process is fully placed inside the
+container
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+Credit for this discovery goes to Aleksa Sarai from SUSE and Tõnis Tiigi
+from Docker.
+
