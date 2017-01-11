@@ -1,53 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/04/2
-Message-ID: <a607fa163dc245808d66c3f1b4af06ba@imshyb02.MITRE.ORG>
-Date: Wed, 4 Jan 2017 12:16:49 -0500
-From: <cve-assign@...re.org>
-To: <oss-security@...ts.openwall.com>
-CC: <cve-assign@...re.org>
-Subject: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/8
+Message-ID: <7ff4a100-60f7-1772-f552-511af05970e5@suse.com>
+Date: Wed, 11 Jan 2017 11:54:13 +0100
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Cc: docker-user@...glegroups.com, docker-dev@...glegroups.com, fulldisclosure@...lists.org, vuln@...unia.com, bugtraq@...urityfocus.com
+Subject: Re: Docker 1.12.6 - Security Advisory
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
->  * Firejail has too broad attack surface that allows users
->  * to specify a lot of options, where one of them eventually
->  * broke by accessing user-files while running with euid 0.
+On 01/11/2017 03:29 AM, Kurt Seifried wrote:
+> On Tue, Jan 10, 2017 at 6:58 PM, Nathan McCauley <nathan.mccauley@...ker.com
+>> [CVE-2016-9962] Insecure opening of file-descriptor allows privilege
+>> escalation
+>>
+>> [...]
+>> Credit for this discovery goes to Aleksa Sarai from SUSE and Tõnis Tiigi
+>> from Docker.
+> Can you post a link to a patch for this issue, or to a bug entry with
+> additional details, or the download site at a minimum? Thanks!
 
-> const char *const ldso = "/etc/ld.so.preload";
-> ...
-> snprintf(path, sizeof(path) - 1, "%s/.firenail/.Xauthority", home);
-> ...
-> symlink(ldso, path)
+https://bugzilla.suse.com/show_bug.cgi?id=1012568
+https://github.com/docker/docker/compare/v1.12.5...v1.12.6
+https://github.com/opencontainers/runc/commit/50a19c6ff828c58e5dab13830bd3dacde268afe5
 
-Use CVE-2017-5180.
+Andreas
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
 
->  * There are some other similar races.
 
-We feel that other races, when they are announced, should have different
-CVE IDs.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYbS2sAAoJEHb/MwWLVhi2h4sP/0ZdfLYZ5VQz6wINwE6Uqz9v
-T9fJj9BSxOmB2fupa+zaWEPUgdYsDLqlDo58l7SuskkWey6mPKWwghXm7c8ixWTR
-/WWrpso7BQBw8HMKs9hn3Z8Ftx4c1pJ6K2ofMwURQ8lFG31u2pxb2SMzKyOgXIAe
-KTlHgWMUuKl8QfrZVB2DZFiMdtbg/Q08+UaRWFtN5A9PYyhXH+ACLUWO6zjnxvYx
-fRPzwrYTRYQuJwGDypRct6kjW5otH1CEzrcxtHQXyMd+1/OvtxRtLbXoUwnK5u6p
-Ja5XkbQ399ll0k1fjJ9Cnd1ZF9hfHvNHS8a/kCNYyyh/jzEATwb0lVbdvpvb4684
-ZA8kKiwRyaGNK5z3AdIP5CLr8tG+JXAQomGOMJS/plCh/6h+wSi08zFVygJhyVFC
-sMPpxWS7x19HxsKY2ftPA3WkZ6EtSg9B/PpSE2N160AvADaSjZbtkhKfSAw31Mh3
-VuSXWQb55ZhX04Tfjpn5ulTFRk1+723CJ8c/C4GZRDh4u1Uq5UF67v42AGciX49j
-05bxf2Hchr+ObJ8teNn+hb2EzAksNBWq5o/AOPUSSC4A4oHJazvf50t9jm3Umebp
-7XcvgYWyaYNJPeR8ukH/776oQOip7jJDNjgNnobGE1dhgTOmKFTPQzO0bXn/p5bG
-oWyUz0UzdkSOBT1UvgIR
-=kDOG
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
