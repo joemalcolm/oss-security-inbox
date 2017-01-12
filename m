@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2116" "Wednesday" "9" "August" "2017" "08:05:51" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>" "81" "[oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds" nil nil nil "8" "2017080906:05:51" "[oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds" (number mark "U       daniel@haxx. Aug  9   81/2116  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["846" "Thursday" "12" "January" "2017" "06:42:38" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170112054238.GA8011@lorien.valinor.li>" "23" "[oss-security] CVE Request: Zabbix: SQL injection vulnerabilities in \"Latest data\"" "^Date:" nil nil "1" "2017011205:42:38" "[oss-security] CVE Request: Zabbix: SQL injection vulnerabilities in \"Latest data\"" (number mark "        carnil@debia Jan 12   23/846   " thread-indent "\"[oss-security] CVE Request: Zabbix: SQL injection vulnerabilities in \"Latest data\"\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12176 invoked by uid 550); 9 Aug 2017 06:06:08 -0000
+Received: (qmail 9951 invoked by uid 550); 12 Jan 2017 05:42:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11966 invoked from network); 9 Aug 2017 06:06:04 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 9 Aug 2017 08:05:51 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1708090803380.7715@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+Received: (qmail 9921 invoked from network); 12 Jan 2017 05:42:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=w8vCsNFuQZImK5ec3U3TA9ZMR7Y4KWxDX9UIp3gakjY=;
+        b=l9bfixPAZSeTD4N1T0FGAQVahroEc0Exl9vpbE9rM41FyyEh858+u4LVuD4SZqVu9m
+         mlHAPynO3q1RuaCcCZBxSh5594vU6fCDHlvf/lbYMOcxFN7SD3XIlsUBlOG46vBa2Kw/
+         Al0nt7QbxG7MOphwYLOlCe+d17+5TBh3Vc1VYo/ZIb3p6YjN5MmG1SC/jmKsMZGB3Eev
+         k4bBbuMaEFPwZjosoJfcGpXBeyxT+Nb30qwmHn0pLOSqrXKz0qSgyq/6L4PBw0PRRcGe
+         Ea8SElxcqc1JrGClDOUqU6E6MIccR+PeJ6cVly9ukyjHVvofibCRqn3CnFXZQOiwj0Li
+         MvIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:content-transfer-encoding
+         :user-agent;
+        bh=w8vCsNFuQZImK5ec3U3TA9ZMR7Y4KWxDX9UIp3gakjY=;
+        b=sSOxq6KqZzhvVIx2lVOPu1TW8j767jcpqdTzzSjcRJMUq3FC8ux5TSreYl4AkDDcUA
+         SyDVfQWdvtm02r3WdLrqQlFRcHPNPu2nni4OHl1ygd741LJoEk9CHVKXOTfc2nt2xuQH
+         PQyI5cWSxLn9Of61Em65iaYy9uOMo2bzUYrDjOIWkf/vJpS4UWcKCbE/uOIYbMgO4jCC
+         HEUlu5v2yylvAvZ1sPvvbYLdDewZrZZELYLfjVg7AAJnexaENqf/+EfxNickA6jTgHY3
+         J3A7w0aP7bKetUFoq/dYfQrsKvI9VnV2Hwbd/glndh5sU3QSiPnhYrgkzHrqiuxLhtPI
+         MSZA==
+X-Gm-Message-State: AIkVDXJYddf8Ajxjq53+sEa06M/ah0X9b4NU2Np0W1o+x69/oP6lgQzRkDaN6VU5FHAiUg==
+X-Received: by 10.36.238.133 with SMTP id b127mr8597531iti.20.1484199762908;
+        Wed, 11 Jan 2017 21:42:42 -0800 (PST)
+Message-ID: <20170112054238.GA8011@lorien.valinor.li>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: FILE buffer read out of bounds
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Date: Thu, 12 Jan 2017 06:42:38 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: Zabbix: SQL injection vulnerabilities in "Latest data"
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
-FILE buffer read out of bounds
-==============================
+Hi
 
-Project curl Security Advisory, August 9th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20170809C.html)
+>From [1].
+> Zabbix 2.2.x, 3.0.x and trunk suffers from a remote SQL injection
+> vulnerability due to a failure to sanitize input in the toggle_ids
+> array in the latest.php page.
+> 
+> For example:
+> latest.php?output=ajax&sid=&favobj=toggle&toggle_open_state=1&toggle_ids[]=15385); select * from users where (1=1
+> 
+> Result
+> 
+> SQL (0.000361): INSERT INTO profiles (profileid, userid, idx, value_int, type, idx2) VALUES (88, 1, 'web.latest.toggle', '1', 2, 15385); select * from users where (1=1)
+> latest.php:746 → require_once() → CProfile::flush() → CProfile::insertDB() → DBexecute() in /home/sasha/zabbix-svn/branches/2.2/frontends/php/include/profiles.inc.php:185
 
-VULNERABILITY
--------------
 
-When asking to get a file from a file:// URL, libcurl provides a feature that
-outputs meta-data about the file using HTTP-like headers.
+ [1] https://support.zabbix.com/browse/ZBX-11023
+ [2] https://bugs.debian.org/850936
 
-The code doing this would send the wrong buffer to the user (stdout or the
-application's provide callback), which could lead to other private data from
-the heap to get inadvertently displayed.
+Could you please assign a CVE for this zabbix issue.
 
-The wrong buffer was an uninitialized memory area allocated on the heap and if
-it turned out to not contain any zero byte, it would continue and display the
-data following that buffer in memory.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw also affects the curl command line tool.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-1000099 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This bug has been was pushed to curl in commit
-[7c312f84ea930d8](https://github.com/curl/curl/commit/7c312f84ea930d8), April
-2017.
-
-- Affected versions: libcurl 7.54.1
-- Not affected versions: libcurl < 7.54.1 and >= 7.55.0
-
-libcurl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-The function now sends the correct buffer to the application.
-
-A [patch for CVE-2017-1000099](https://curl.haxx.se/CVE-2017-1000099.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.55.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use `CURLOPT_NOBODY` *and* `CURLOPT_HEADER` with file:// URLs
-
-TIME LINE
----------
-
-It was reported to the curl project on July 15, 2017. We contacted
-distros@openwall on August 1.
-
-libcurl 7.55.0 was released on August 9 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Even Rouault. Discovery: credit to OSS-Fuzz. Patch by Even Rouault.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Regards,
+Salvatore
