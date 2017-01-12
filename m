@@ -1,76 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/25/1
-Message-ID: <CA+1ewKZdtF6+ZsXznZP43Tw0ERCV8dHOKd6oTODx2wG7OcLc7w@mail.gmail.com>
-Date: Wed, 25 Oct 2017 09:29:09 +0100
-From: Thomas Calderon <calderon.thomas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/10
+Message-ID: <CAHzNyaDjaD5kp0Xe5CSUNGoPbiRg1r=wphfBL6n1=ow00CTV5A@mail.gmail.com>
+Date: Thu, 12 Jan 2017 11:15:44 +0100
+From: Casper Thomsen <ct@...arhaus.com>
 To: oss-security@...ts.openwall.com
-Subject: [ oss-security ] CVE-2016-10517: CSRF in redis < 3.2.7
+Subject: Re: CVE-2016-7056 ECDSA P-256 timing attack key recovery (OpenSSL, LibreSSL, BoringSSL)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Jan 10, 2017 at 4:50 PM, Cesar Pereida Garcia
+<cesar.pereidagarcia@....fi> wrote:
+> Vendor: OpenSSL, LibreSSL, BoringSSL
 
-I have requested a CVE from MITRE for an issue that was present in Redis <
-3.2.7.
+Noticed on https://nacl.cr.yp.to/features.html:
 
-They have assigned CVE-2016-10517 for the following:
+> Support for standard primitives
+> Whenever NaCl includes (...) a newly proposed signature system, etc., it also includes (...) [TO DO:] an older standard signature system (e.g., ECDSA using the NIST P-256 elliptic curve)
 
-[Suggested description]
-Redis before 3.2.7 allows "Cross Protocol Scripting" because it lacks a
-check for POST and Host: strings, which are not valid in the Redis protocol
-(but commonly occur when an attack triggers an HTTP request to the Redis
-TCP port).
+I couldn't find traces of ECDSA in NaCl and the "[TO DO]" suggest that
+there are in fact none.
 
-------------------------------------------
+Anyone able to reject the "non-findings"?
 
-[Additional Information]
-Before Redis 3.2.7 the Host: and POST could be used to process the
-remaining pipeline if there are pending commands. Therefore it is possible
-to perform a "Cross Scripting" attack, that usually involves trying to feed
-Redis with HTTP in order to execute commands. Example: a developer is
-running a local copy of Redis for development purposes.  She also runs a
-web browser in the same computer. The web browser could send an HTTP
-request to http://127.0.0.1:6379 in order to access the Redis instance,
-since a specially crafted HTTP request may also be partially valid Redis
-protocol. However if POST and Host: break the connection, this problem
-should be avoided. IMPORTANT: It is important to realise that it is not
-impossible that another way will be found to talk with a localhost Redis
-using a Cross Protocol attack not involving sending POST or Host: so this
-is only a layer of protection but not a definitive fix for this class of
-issues.
-
-------------------------------------------
-
-[Vulnerability Type]
-Cross Site Request Forgery (CSRF)
-
-------------------------------------------
-
-[Vendor of Product]
-Pivotal Software
-
-------------------------------------------
-
-[Affected Product Code Base]
-Redis - <3.2.7
-
-------------------------------------------
-
-[Affected Component]
-redis_server
-
-[Attack Vectors]
-Have a user that has a local redis instance running browse an attacker
-controlled website and perform a DNS rebinding attack in order to POST data
-to http://127.0.0.1:6379.
-
-
-------------------------------------------
-
-[Reference]
-https://github.com/antirez/redis/commit/874804da0c014a7d704b3d285aa500098a931f50
-https://raw.githubusercontent.com/antirez/redis/3.2/00-RELEASENOTES
-https://blog.bugreplay.com/2017/05/for-users-of-redis-running-locally-can-be-dangerous.html
-https://www.reddit.com/r/redis/comments/5r8wxn/redis_327_is_out_important_security_fixes_inside/
-
-------------------------------------------
-
+Kindly,
+-- 
+Casper Thomsen
