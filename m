@@ -1,53 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/6
-Message-ID: <06780369-357d-1413-cec6-f8befecd2566@redhat.com>
-Date: Fri, 16 Jun 2017 08:29:38 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/2
+Message-ID: <20170112005153.hxfvrwwyywq2szvq@perpetual.pseudorandom.co.uk>
+Date: Thu, 12 Jan 2017 00:51:53 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sthttpd remote heap buffer overflow
+Subject: ikiwiki: CVE-2017-0356: Authentication bypass via repeated parameters
 Content-Type: text/plain; charset=utf-8
 
-Hello Alexandre,
+Reference: https://ikiwiki.info/security/#cve-2017-0356
+Affected versions: >= 2.11
+Fixed versions: >= 3.20170111
+Fixed versions (3.20141016.x branch): >= 3.20141016.4
 
-Unfortunately, CVE assignments are not done through this list anymore.
-You need to visit [1] and request the CVE by filing out the form. Could
-you please look at it and let the list know about the assigned CVE?
+ikiwiki is a static site generator with some dynamic features,
+used for wikis, blogs and other websites.
 
-Thanks!
+The ikiwiki maintainers discovered two related flaws in the
+passwordauth plugin's use of CGI::FormBuilder, involving API design
+issues similar to those that led to CVE-2014-1572. Impact:
 
-[1] https://cveform.mitre.org/
+* An attacker who can log in to a site with a password can log in
+  as a different and potentially more privileged user.
+* An attacker who can create a new account can set arbitrary fields
+  in the user database for that account.
 
-Best Regards,
+Sites that enable the CGI script (cgi_wrapper) and do not disable the
+simple password authentication plugin (passwordauth, enabled by default)
+are affected.
 
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+For current releases, this is fixed in ikiwiki >= 3.20170111.
+For the Debian 8 branch, it is fixed in ikiwiki 3.20141016.4.
 
-
-On 06/15/2017 11:33 PM, Alexandre Rebert wrote:
-> Hello,
->
-> sthttpd [1], is a fork of thttpd, a small, fast, multiplexing webserver.
-> Our fuzzing tools recently found a heap buffer overflow in the request
-> parsing code that can be triggered remotely. The patch was recently fixed
-> [2], and the bug was introduced in [3].  It seems that it's also affecting
-> thttpd 2.25b present in OpenSUSE [4].
->
-> Let us know if you need more information.
->
-> Thanks
-> Alex from ForAllSecure
->
-> [1] https://github.com/blueness/sthttpd
-> [2]
-> https://github.com/blueness/sthttpd/commit/c0dc63a49d8605649f1d8e4a96c9b468b0bff660
-> [3]
-> https://github.com/blueness/sthttpd/commit/aa3f36c0bf2aef1ffb17f5188ccf5e8afc13d3dc
-> [4]
-> https://build.opensuse.org/package/view_file/server:http/thttpd/thttpd-2.25b-strcpy.patch?expand=1
->
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Regards,
+    S
