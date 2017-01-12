@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/18/6
-Message-ID: <20170418153218.2599.042D7EFA@matica.foolinux.mooo.com>
-Date: Tue, 18 Apr 2017 08:34:14 -0700
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/1
+Message-ID: <088406a2-6476-a79d-f148-f63e31b4c974@isc.org>
+Date: Wed, 11 Jan 2017 15:06:00 -0900
+From: ISC Security Officer <security-officer@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache XML Graphics FOP information disclosure vulnerability
+Subject: Four BIND vulnerabilities have been disclosed today (11 January) that are fixed in new security releases
 Content-Type: text/plain; charset=utf-8
 
-On 2017-04-18 09:18, Simon Steiner wrote:
+ISC has issued new security releases of BIND today, which correct
+three exploitable vulnerabilities discovered in the course of our
+internal fuzz-testing and an additional exploitable vulnerability
+reported to us by a contributor.
 
-> CVE-2017-5661:
->  Apache XML Graphics FOP information disclosure vulnerability
+The issues are:
 
-[...]
+   CVE-2016-9131
+   CVE-2016-9147
+   CVE-2016-9444
+   CVE-2016-9778
 
-> Description:
+and details about each can be found in the BIND Security Advisories
+section of the ISC Knowledge Base:
 
->  Files lying on the filesystem of the server which uses batik can be
->  revealed to arbitrary users who send maliciously formed SVG
->  files. The file types that can be shown depend on the user context in
->  which the exploitable application is running. If the user is root a
->  full compromise of the server--including confidential or sensitive
->  files--would be possible.
-> 
->  XXE can also be used to attack the availability of the server via
->  denial of service as the references within a xml document can
->  trivially trigger an amplification attack.
 
-Was this a copy and paste accident?
+https://kb.isc.org/category/74/0/10/Software-Products/BIND9/Security-Advisories/
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+New security releases have been issued which correct the vulnerabilities.
+These are available via the http://www.isc.org/downloads web page:
+
+   BIND 9.9.9-P5
+   BIND 9.10.4-P5
+   BIND 9.11.0-P2
+
+We encourage all parties using or distributing BIND to upgrade to these
+versions as soon as possible so that they may be protected from the
+vulnerabilities now that they have been publicly disclosed.
+
+
+Michael McNally
+ISC Security Officer
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (496 bytes)
