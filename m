@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/3
-Message-ID: <20170323144253.GF12842@openstack.org>
-Date: Thu, 23 Mar 2017 14:42:53 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2017-002] Nova logs sensitive context from notification exceptions (CVE-2017-7214)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/5
+Message-ID: <20170112121405.563ee9ee@pc1>
+Date: Thu, 12 Jan 2017 12:14:05 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: invalid free in GNU ed before 1.14.1
 Content-Type: text/plain; charset=utf-8
 
-=======================================================================
-OSSA-2017-002: Nova logs sensitive context from notification exceptions
-=======================================================================
+Hi,
 
-:Date: March 23, 2017
-:CVE: CVE-2017-7214
+ed 1.14.1 fixes an invalid free, reported here:
+https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
 
+Reproducer:
+echo -e "H\n?\{" | ed
 
-Affects
-~~~~~~~
-- Nova: >=13.0.0 <=13.1.3, >=14.0.0 <=14.0.4, >=15.0.0 <=15.0.1
+Found with afl. ed 1.14.1 didn't show any more issues with afl/asan
+fuzzing.
 
+Not sure if there's any scenario where ed is used with untrusted input.
 
-Description
-~~~~~~~~~~~
-Matt Riedemann with Huawei reported a vulnerability in Nova. Legacy
-notification exception contexts appearing in ERROR level logs may
-include sensitive information such as account passwords and
-authorization tokens. All Nova setups are affected.
+ed isn't developed in a version control system, therefore I can't link
+to a commit, but the patch to fix it is this:
 
-
-Patches
-~~~~~~~
-- https://review.openstack.org/447075 (Mitaka)
-- https://review.openstack.org/447072 (Newton)
-- https://review.openstack.org/447071 (Ocata)
-- https://review.openstack.org/446948 (Pike)
-
-
-Credits
-~~~~~~~
-- Matt Riedemann from Huawei (CVE-2017-7214)
+--- a/regex.c	2017-01-06 02:06:04.000000000 +0100
++++ b/regex.c	2017-01-09 17:09:51.000000000 +0100
+@@ -135,7 +135,6 @@ static regex_t * get_compiled_regex( con
+     char buf[80];
+     regerror( n, exp, buf, sizeof buf );
+     set_error_msg( buf );
+-    free( exp );
+     exp = 0;
+     }
+   return exp;
 
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1673569
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7214
+
 
 -- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+Hanno Böck
+https://hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
