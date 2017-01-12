@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1900" "Wednesday" "18" "January" "2017" "00:54:21" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<339fe63d242a449eafb9b435b3557137@imshyb01.MITRE.ORG>" "51" "[oss-security] Re: jasper: multiple crashes with UBSAN" nil nil nil "1" "2017011805:54:21" "[oss-security] Re: jasper: multiple crashes with UBSAN" (number mark "U       cve-assign@m Jan 18   51/1900  " thread-indent "\"[oss-security] Re: jasper: multiple crashes with UBSAN\"\n") "<2831124.Ha61dFcUh2@blackgate>" ("<2831124.Ha61dFcUh2@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["848" "Thursday" "12" "January" "2017" "12:14:05" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170112121405.563ee9ee@pc1>" "36" "[oss-security] invalid free in GNU ed before 1.14.1" "^Date:" nil nil "1" "2017011211:14:05" "[oss-security] invalid free in GNU ed before 1.14.1" (number mark "        hanno@hboeck Jan 12   36/848   " thread-indent "\"[oss-security] invalid free in GNU ed before 1.14.1\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 12131 invoked by uid 550); 18 Jan 2017 05:54:35 -0000
+Received: (qmail 28313 invoked by uid 550); 12 Jan 2017 11:14:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12094 invoked from network); 18 Jan 2017 05:54:33 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <2831124.Ha61dFcUh2@blackgate>
-Message-ID: <339fe63d242a449eafb9b435b3557137@imshyb01.MITRE.ORG>
-Date: Wed, 18 Jan 2017 00:54:21 -0500
+Received: (qmail 28272 invoked from network); 12 Jan 2017 11:14:18 -0000
+Message-ID: <20170112121405.563ee9ee@pc1>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: jasper: multiple crashes with UBSAN
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 12 Jan 2017 12:14:05 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] invalid free in GNU ed before 1.14.1
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> The previous mail clearly state:
->> Timeline:
->> 2016-10-28: bug discovered and reported to upstream
+ed 1.14.1 fixes an invalid free, reported here:
+https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
 
-> Why CVE-2017-* ?
+Reproducer:
+echo -e "H\n?\{" | ed
 
-The year portion of a CVE ID does not necessarily correspond to a
-vulnerability discovery date. To obtain a CVE-2016-* ID, at least one
-of the following must be true:
+Found with afl. ed 1.14.1 didn't show any more issues with afl/asan
+fuzzing.
 
-  - the original CVE ID request occurred during 2016
+Not sure if there's any scenario where ed is used with untrusted input.
 
-or
+ed isn't developed in a version control system, therefore I can't link
+to a commit, but the patch to fix it is this:
 
-  - the original CVE ID request mentioned a specific vulnerability
-    reference URL that was a publicly accessible URL before the end of
-    2016 (although a Reproducer URL is very useful, we do not consider
-    it a vulnerability reference URL)
+--- a/regex.c	2017-01-06 02:06:04.000000000 +0100
++++ b/regex.c	2017-01-09 17:09:51.000000000 +0100
+@@ -135,7 +135,6 @@ static regex_t * get_compiled_regex( con
+     char buf[80];
+     regerror( n, exp, buf, sizeof buf );
+     set_error_msg( buf );
+-    free( exp );
+     exp =3D 0;
+     }
+   return exp;
 
-These criteria were not met, and therefore a CVE-2017-* ID was
-assigned, and remains the correct ID.
 
-For the other CVE-2017-* numbers associated with similar timelines,
-the CVE-2017-* number remains valid. We do not change them to
-CVE-2016-* numbers.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYfwJ+AAoJEHb/MwWLVhi2SroQAKl5y+adO9sOb86mXQIznunB
-lxZusAsBZ4UzKDw8hzzF+pxPcJoQujEa1Dbr+0TJhJ+LMHvIF9fdqFVTfUk3HizH
-yIRWiQtKDLkt3971DzpSPIZOg4af2BhPLwUMW7hToGB94tUKvtdSHEquaRSMZFLF
-WDs+hAuLgeF5SzhjC49MDNbUt9Xbn+m79rTBayxvCD3p1CpePJ5cuvPscdLmhvuS
-qXNzYdtjRIVf9puO2kEcr+5vt8gSKggWmgUt6hSWsVMCj16wrliGfaUYwvhFqybN
-qnNW83aC28xIUpHSrpFQ1LEc5vosOmQJ9Q5uvHfWplbw5BZR0YwZaN7gKyVmS7NB
-cpTFGktRwwl0bHEMY+q13Z2Mc/vc67GGw4sBy/A2gGvvn505pWyaCgKK90Wu+93u
-ztPYKHguUR/47C6XwMCmJXCLXvZU5zTil7nemw/DZqQ5/fy2v44gef0Fad23lCL0
-JU9qw2CJ/1Xh6H6zSlVbeGcoFAanrq4ePOs9yINWl8GpCMJCBgX+WGU7mKbp3L7d
-8kWO90F/JkSLDrb52EyTkyqI8npeKSMRybG2tpcyyKzgkAJK9WvcHNvtrVIAro0f
-89oxDrNmPv9PIth0Gvr0pyTRlaWN6V40x+GGeIu17gTCoSb0zpJIueydhnJuIhaE
-V8c9BHJtVjtdd1LHa9vM
-=pEew
------END PGP SIGNATURE-----
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
