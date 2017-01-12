@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/29/2
-Message-ID: <f7bff499-47e8-c5f2-e867-eb7f7bf329d8@canonical.com>
-Date: Wed, 29 Mar 2017 16:43:28 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/9
+Message-ID: <CAPjdKBx8U9iX5WfSyPG5AAnODMdJGfKuS713kok3RpFCM1f6kw@mail.gmail.com>
+Date: Thu, 12 Jan 2017 20:44:12 +0530
+From: Dileep Kumar <dileep.chinu@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "security@...ntu.com" <security@...ntu.com>
-Subject: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
+Subject: CVE Request: MUJS null pointer dereference and Heap buffer overflow write
 Content-Type: text/plain; charset=utf-8
 
-A security issue was reported by ZDI, on behalf of Chaitin Security
-Research Lab, against the Linux kernel in Ubuntu. It also affected the
-upstream kernel.
+Hi,
 
-Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
-as called by xfrm_new_ae(), did not verify that the user-specified
-replay_window was within the replay state buffer.
+The details of the two bugs found in MUJS (https://github.com/ccxvii/mujs)
+are as follows :
 
-This allowed for out-of-bounds reads and writes of kernel memory.
-Chaitin Security showed that this can lead to local privilege escalation
-by using user namespaces in order to configure XFRM. XFRM configuration
-requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
-not enable user namespaces by default.
+1. Null pointer dereference in regexp.c
 
-Fixes:
-- https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
-- https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
+    The return value from malloc is not properly checked before
+dereferencing it which can result in a crash.
 
-Tyler
+     More details on the bug in the bug report at:
+     https://bugs.ghostscript.com/show_bug.cgi?id=697381
 
+     This has been fixed by the MUJS team in the commit:
+http://git.ghostscript.com/?p=mujs.git;h=fd003eceda531e13fbdd1aeb6e9c73
+156496e569
 
+2. Heap buffer overflow write in jsrun.c: js_stackoverflow()
 
+    There was a logical error in the code which can be used to trigger a
+heap overflow write.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+    More details on the bug in the bug report at:
+    https://bugs.ghostscript.com/show_bug.cgi?id=697401
+
+    The same has been fixed by the MUJS team in the commit:
+http://git.ghostscript.com/?p=mujs.git;a=commit;h=
+77ab465f1c394bb77f00966cd950650f3f53cb24
+
+Both bugs are found by Dileep Kumar Jallepalli using AFL. Please kindly
+assign CVEs if suitable.
+
+Thanks,
+Dileep Kumar Jallepalli
+
