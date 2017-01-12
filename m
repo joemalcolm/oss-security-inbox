@@ -1,61 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/24
-Message-ID: <CANO=Ty2hVv4AFK01wwMiKGNP6g5YrjucWqMp_G+FcTn9c-aauQ@mail.gmail.com>
-Date: Fri, 14 Jul 2017 15:04:19 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/4
+Message-ID: <20170112054238.GA8011@lorien.valinor.li>
+Date: Thu, 12 Jan 2017 06:42:38 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Zabbix: SQL injection vulnerabilities in "Latest data"
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 2:57 PM, Solar Designer <solar@...nwall.com> wrote:
+Hi
 
-> On Fri, Jul 14, 2017 at 01:52:37PM -0600, Kurt Seifried wrote:
-> > Ah I misunderstood the backup, I thought it meant people within a
-> distro, not actual distros, I'm fine with a backup distro. As for the tasks
-> I meant 1 and 2 technical,
->
-> Great.  I've just listed Red Hat for those.
->
-> > we generally do this work anyways.
->
-> I didn't collect statistics, but my impression is that Red Hat generally
-> works on fixes for issues that Red Hat itself brings to distros, which
-> is a great contribution (doubly so).  Red Hat also worked on glibc fixes
-> for Stack Clash.  Other than that, for issues brought to distros by
-> third-parties I think Red Hat's contributions of fixes do not stand out
-> compared to some other distros'.  Maybe that will now improve. :-)
->
-
-To be clear we won't be working on random third party stuff that has
-minimal value and we have no expertise in. It's the things like StackGuard
-or OpenSSL issues that matter and where a major amount of work is needed
-that we tend to work on (we're not going to work on random php apps, we're
-going to work on the stuff that matters, not all security issues are
-equal).  I would argue if people can't be bothered to care about committing
-resources to fixing  a security issue than that security issue doesn't
-really matter (in other words, the market has spoken).
+>From [1].
+> Zabbix 2.2.x, 3.0.x and trunk suffers from a remote SQL injection
+> vulnerability due to a failure to sanitize input in the toggle_ids
+> array in the latest.php page.
+> 
+> For example:
+> latest.php?output=ajax&sid=&favobj=toggle&toggle_open_state=1&toggle_ids[]=15385); select * from users where (1=1
+> 
+> Result
+> 
+> SQL (0.000361): INSERT INTO profiles (profileid, userid, idx, value_int, type, idx2) VALUES (88, 1, 'web.latest.toggle', '1', 2, 15385); select * from users where (1=1)
+> latest.php:746 → require_once() → CProfile::flush() → CProfile::insertDB() → DBexecute() in /home/sasha/zabbix-svn/branches/2.2/frontends/php/include/profiles.inc.php:185
 
 
+ [1] https://support.zabbix.com/browse/ZBX-11023
+ [2] https://bugs.debian.org/850936
 
-> And I am not complaining.  Maybe this means those other distros are
-> doing their part too, which is great.
->
-> > On Jul 14, 2017, at 12:54, Solar Designer <solar@...nwall.com> wrote:
-> > > Technical are:
-> > >
-> > > 1. Propose (other) ways to fix, work around, or mitigate the reported
-> issues
-> > >
-> > > 2. Develop and share fixes, workarounds, or mitigations
->
-> Alexander
->
+Could you please assign a CVE for this zabbix issue.
 
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Regards,
+Salvatore
