@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/24/1
-Message-ID: <874lrr3lbn.fsf@gnu.org>
-Date: Sun, 24 Sep 2017 22:15:08 +0200
-From: ludo@....org (Ludovic Courtès)
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/3
+Message-ID: <8a06802e079a484ab1e93eba1be86b9c@imshyb02.MITRE.ORG>
+Date: Thu, 12 Jan 2017 21:51:26 -0500
+From: <cve-assign@...re.org>
+To: <hanno@...eck.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: invalid free in GNU ed before 1.14.1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hanno Böck <hanno@...eck.de> skribis:
+> Reproducer:
+> echo -e "H\n?\{" | ed
 
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
+> regex.c
 
-FWIW, for GNU Guix (which doesn’t have anyone yet on the distros list),
-we pushed the patch less than 30 minutes after the public disclosure on
-oss-sec¹.
+> https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
 
-The fact that your message to oss-sec was very clear on the issue and
-its consequences, and contained a link to the (small) patch surely made
-it easier to prepare the fix.
+>> AddressSanitizer: attempting free on address which was not malloc()-ed
 
-Ludo’.
+Use CVE-2017-5357.
 
-¹ https://git.savannah.gnu.org/cgit/guix.git/commit/?id=e14ab0ad070b4eafa19fc1df81b7b5c3de1dc1b2
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYeEBbAAoJEHb/MwWLVhi2hdIP/2rMN3IGuLZtCtyVTrzgrBpp
+sl4OhNcEXzUGurEXVVKEnPrfVmxYN5oh9wSStmEVYJihVnSqM+QjnogbcIEAv/HO
+YvhnDcED/PiQUf++YftLw3phrRetGxYcnYowIsqLQKYjV7pzmog8KvEb/SesKmb3
+tjcyyGRoproc/GHSAsoxR7Ogl0KUHUrlS4f74cUGK+eBj//n5j9vzpsz3IvklrCZ
+xkmMShar9OnnIV6ctmHf9wgRUoJGudn3IJflOWa+jkkGaoTBeqFgeD1ik8zgXTFi
+NDMILwwUTQ+gt2r8UWHqh3oNekbOMCKTP247KEMsZNIj3yWoqAO30z1vvNAFSDF3
+rCmnrizLIRX7eKtpzuLNaoAOV7XNCw5HZrmXnRUMbOyFi/WxK1Ukzk8MyoILr56Z
+LED/+N0CNHy9Ah8dDh+m7k0PwDREoPPSC/L+pSqqk2B8OfJzACrilJZb6oygkdpR
+ijFgki262csSSoiRMxjRU0YOs+rG0NW/QTPxo2MJpot9DhX3Nx9VRplH43k42H2m
+d4dGz6p5VyqxylnIUnRmErd7GhIbsiCc3ANxxuNz3YruNe+lcVtjhTzO3wsO242i
+wmajPlqv6uuOgYMDJY9viWJdzERA+kAJHrnpi1fUNDpOsjkH+80MigQ4dSfNBSEn
+nLRgu4i8m2hr6YWi29Sm
+=m+vX
+-----END PGP SIGNATURE-----
