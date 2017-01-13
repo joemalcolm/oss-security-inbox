@@ -1,44 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/11
-Message-Id: <1509468802.3617.0@smtp.gmail.com>
-Date: Tue, 31 Oct 2017 12:53:22 -0400
-From: Gordo Lowrey <gordo@...eval.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/12
+Message-ID: <20170113172640.GB18334@khazad-dum.debian.net>
+Date: Fri, 13 Jan 2017 15:26:40 -0200
+From: Henrique de Moraes Holschuh <hmh@....eng.br>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: CVE-2017-0357: iucode-tool (v1.4 to v2.1): heap buffer overflow on -tr loader
 Content-Type: text/plain; charset=utf-8
 
-It's not the fault of the program if an end-user insists upon use of a 
-stupid configuration. There's no problem with VIM here IMO.
 
-As others have said, your version control should ignore swap files, 
-first of all, so they are not deployed.
+CVE-2017-0357: iucode-tool: heap buffer overflow on -tr loader
 
-If you do edit a file on the server, directly, then you should ensure 
-proper configuration, which brings to the second point: you should put 
-your swap/temp files into a directory that only you can control, like 
-~/.vim/{backup/tmp} or ~/.local/tmp, etc...
+Project URL:
+https://gitlab.com/iucode-tool/iucode-tool
 
-On Tue, Oct 31, 2017 at 9:50 AM, Solar Designer <solar@...nwall.com> 
-wrote:
-> On Tue, Oct 31, 2017 at 02:35:59PM +0100, Jakub Wilk wrote:
->>  There's another problem with vim swapfiles.
->> 
->>  If you edit a file directly in /tmp, vim will happily read a 
->> swapfile
->>  that were planted there by somebody else. Local users could exploit 
->> this
->>  for denial of service (or maybe worse if there are any swapfile 
->> parsing
->>  bugs...).
->> 
->>  Is that a bug in vim? Or is it a user error to edit file directly in
->>  /tmp?
-> 
-> Almost all manual uses of /tmp are user errors, yet we could want to
-> harden programs to make such misuses less risky.
-> 
->>  In the latter case, we should fix at least vipe(1) and vidir(1) from
->>  moreutils; and run-mailcap(1).
-> 
-> Alexander
+Tracker for this Issue:
+https://gitlab.com/iucode-tool/iucode-tool/issues/3
 
+Versions affected:
+iucode_tool 1.4, up to and including 2.1
+
+
+iucode_tool is a program to manipulate microcode update collections for
+Intel(R) i686 and X86-64 system processors, and prepare them for use by
+the Linux kernel.
+
+This bug affects a somewhat obscure feature of iucode_tool, the
+microcode recovery loader, accessed through the "-tr" command line
+switch.  The microcode recovery loader is typically used to inspect or
+extract microcodes directly from kernel images, initramfs images, etc.
+
+This loader works by reading the entire datafile in memory (it imposes a
+hard limit of 1GiB worth of data), then scanning that memory forwards
+for microcode regions (a region is one or more microcodes adjacent to
+each other), and packing any it finds at the beginning of the memory
+buffer to create a single microcode region.  When it finishes, it
+realloc()s the memory buffer to its new (likely smaller) size.
+
+When a valid microcode is present at the end of the data file and there
+is no extra data after it, intel_ucode_scan_for_microcode() would fail
+to detect the end-of-buffer situation, and read data past the end of the
+memory buffer looking for an *adjacent* valid microcode.
+
+This is usually harmless, as typically there will not be a valid
+microcode update exactly right past the end of the memory buffer.
+
+Unfortunately, should there be a valid microcode exactly after the
+memory buffer, iucode_tool will misbehave.  A SIGSEGV is the best result
+one could expect.  Heap corruption can happen if further, non-adjacent
+microcodes are found in memory as iucode_tool will use memmove() to
+compact them into a single region, possibly overwiting the heap memory
+past the end of the buffer.
+
+The heap buffer overflow (but not the heap corruption) is trivially
+triggered by using the -tr (recovery) loader on proper binary microcode
+data files:
+
+"iucode_tool -tr /lib/firmware/intel-ucode"
+
+The heap buffer overflow can be detected by Valgrind's memcheck, or by
+instrumenting iucode_tool using -fsanitize=address under gcc or clang.
+
+
+Exploiting the bug:
+-------------------
+
+It might be possible for an attacker to force a heap corruption with
+attacker-supplied data by using a number of specially crafted data
+files.  This might also require tricking the user into using a specially
+crafted command line.
+
+The number of specially crafted data files required is a minimum of two,
+but it depends on how unpredictable the data written by glibc's heap
+implementation is.  It could be quite large, or quite small.
+
+If iucode_tool is linked to a libc that won't change data in the free'd
+or realloc'd heap chunks the way modern glibc typically does by default,
+triggering the attacker-controlled heap corruption might be trivial.
+Tuning glibc's malloc() behavior might also change things.
+
+I am no expert in exploiting glibc heap corruption.  I have assumed it
+is possible to leverage it into shellcode execution in the name of
+caution.
+
+-- 
+  Henrique Holschuh
+
+View attachment "iucode-tool_fix-cve-2017-0357.patch" of type "text/x-diff" (1270 bytes)
