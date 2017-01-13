@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/22
-Message-ID: <8c9758b3-34d8-4126-bade-df93a26256bb@apache.org>
-Date: Mon, 10 Apr 2017 20:14:37 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/14
+Message-ID: <32e68d18-01e4-ff5f-c386-9aae4569205b@gentoo.org>
+Date: Fri, 13 Jan 2017 20:55:42 +0100
+From: Thomas Deutschmann <whissi@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-5650 Apache Tomcat Denial of Service
+Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5650 Apache Tomcat Denial of Service
+On 2017-01-13 19:26, Carlos Alberto Lopez Perez wrote:
+> /me happy to know that logrotate has a sane behaviour and avoids 
+> trying to rotate symlinks.
 
-Severity: Important
+But don't forget hardlinks ...
 
-Vendor: The Apache Software Foundation
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M18
-Apache Tomcat 8.5.0 to 8.5.12
-Apache Tomcat 8.0.x and earlier are not affected
+> So the issue is than when in var/log/nginx/ there are standard logs
+> (non symlinked) that need to be rotated (appart from the malicious
+> symlinked one), then logrotate will rotate those ones, finally
+> running the post-rotate script that send SIGURSR1 to the nginx pid.
 
-Description
-The handling of an HTTP/2 GOAWAY frame for a connection did not close
-streams associated with that connection that were currently waiting for
-a WINDOW_UPDATE before allowing the application to write more data.
-These waiting streams each consumed a thread. A malicious client could
-therefore construct a series of HTTP/2 requests that would consume all
-available processing threads.
+Just to be sure that we don't misunderstand each other:
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 9.0.0.M19 or later
-- Upgrade to Apache Tomcat 8.5.13 or later
+Dawid's advisory only uses logrotate because this is present on most
+servers and guarantees privilege escalation on a given time which makes
+it easier to understand.
 
-Credit:
-This issue was identified by Chun Han Hsiao and reported responsibly to
-the Tomcat security team.
+But escalation happens via nginx master process which is running as root
+and changes owner of existing files.
 
-History:
-2017-04-10 Original advisory
+Without logrotate you can still exploit any system when you can write to
+the directory used by nginx for storing log files (and don't forget your
+vhosts!). The attacker only have to wait an undefined amount of time,
+i.e. for anyone causing nginx to chown files again. On systems running
+nginx it is not the question *if* it will happen but only *when*.
 
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
 
+-- 
+Regards,
+Thomas Deutschmann
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
