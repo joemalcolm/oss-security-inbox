@@ -1,48 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/4
-Message-Id: <6877F1AC-352C-49C9-BA3D-1D3944CC03F0@beckweb.net>
-Date: Wed, 8 Nov 2017 11:56:57 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/1
+Message-ID: <CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>
+Date: Fri, 13 Jan 2017 21:47:02 +0000
+From: Craig Small <csmall@...ian.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Wordpress: 8 security issues in 4.7
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-releases contain fixes for security vulnerabilities:
+Hi,
+  I couldn't find any CVE for the 8 issues wordpress 4.7 (including some
+earlier versions) have.
+The announcement is at [1] but it is often better to look at [2] to work
+out what is what, though their announcement for 4.7.1 is one of the more
+better ones.
 
-* Jenkins (weekly) 2.89
-* Jenkins (LTS) 2.73.3
+Remote code execution (RCE) in PHPMailer – No specific issue appears to
+affect WordPress or any of the major plugins we investigated but, out of an
+abundance of caution, we updated PHPMailer in this release. This issue was
+reported to PHPMailer by Dawid Golunski and Paul Buonopane.
+(this is an extra  fix for the CVE-2016-10066 and CVE-2016-10045, I'll
+leave it to you to decide if it is same ID or new)
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-11-08/
+The REST API exposed user data for all users who had authored a post of a
+public post type. WordPress 4.7.1 limits this to only post types which have
+specified that they should be shown within the REST API. Reported by
+Krogsgard and Chris Jean.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Cross-site scripting (XSS) via the plugin name or version header on
+update-core.php. Reported by Dominik Schilling of the WordPress Security
+Team.
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Cross-site request forgery (CSRF) bypass via uploading a Flash file.
+Reported by Abdullah Hussam.
 
----
+Cross-site scripting (XSS) via theme name fallback. Reported by Mehmet Ince.
 
-SECURITY-499
-Jenkins stores metadata related to "people", which encompasses actual user 
-accounts, as well as users appearing in SCM, in directories corresponding 
-to the user ID on disk. These directories used the user ID for their name 
-without additional escaping. This potentially resulted in a number of 
-problems, such as the following:
-1. User names consisting of a single forward slash would have their user 
-record stored in the parent directory; deleting this user deleted all user 
-records.
-2. User names containing character sequences such as .. could be used to 
-clobber other configuration files in Jenkins.
-3. User names could consist of reserved names such as COM (on Windows).
+Post via email checks mail.example.com if default settings aren’t changed.
+Reported by John Blackbourn of the WordPress Security Team.
 
-SECURITY-641
-Autocompletion suggestions for text fields were not escaped, resulting in a 
-persisted cross-site scripting vulnerability if the source for the 
-suggestions allowed specifying text that includes HTML metacharacters like 
-less-than and greater-than characters.
+A cross-site request forgery (CSRF) was discovered in the accessibility
+mode of widget editing. Reported by Ronnie Skansing.
+
+Weak cryptographic security for multisite activation key. Reported by Jack.
+
+ - Craig
+
+1:
+https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+2: https://wpvulndb.com/wordpresses/47
+
+
+-- 
+Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
+Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
+GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
 
