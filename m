@@ -1,29 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/11/2
-Message-ID: <eea09ad4-34aa-5702-774a-9c6ad22e61a7@powerdns.com>
-Date: Mon, 11 Dec 2017 14:05:03 +0100
-From: Remi Gacogne <remi.gacogne@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/11
+Message-ID: <d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>
+Date: Fri, 13 Jan 2017 16:02:22 +0100
+From: Thomas Deutschmann <whissi@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: PowerDNS Security Advisory 2017-08
+Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
 Content-Type: text/plain; charset=utf-8
 
-On 12/11/2017 01:34 PM, Remi Gacogne wrote:
-> We just released PowerDNS Recursor 4.0.8, fixing a security issue
-> (CVE-2017-15120) affecting PowerDNS Recursor from 4.0.0 up to and
-> including 4.0.7. PowerDNS Recursor 3.7.4 and 4.1.0 are not affected. The
-> full security advisory can be found below and at
-> https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2017-08.html
+Hi,
 
-The correct link is:
+Carlos Alberto Lopez Perez wrote:
+>> --------[ /etc/logrotate.d/nginx ]--------
+>>
+>> /var/log/nginx/*.log {
+>> 	daily
+>> 	missingok
+>> 	rotate 52
+>> 	compress
+>> 	delaycompress
+>> 	notifempty
+>> 	create 0640 www-data adm
+>> 	sharedscripts
+>> 	prerotate
+>> 		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+>> 			run-parts /etc/logrotate.d/httpd-prerotate; \
+>> 		fi \
+>> 	endscript
+>> 	postrotate
+>> 		invoke-rc.d nginx rotate >/dev/null 2>&1
+>> 	endscript
+>> }
+>>
+>> ------------------------------------------
+> 
+> This looks to me like an issue on the logrotate side rather than on the nginx one..
+> 
+> If I have:
+> 
+> /var/log/nginx/error.log -> /etc/ld.so.preload
+> 
+> Why does logrotate "create 0640 www-data adm" over /var/log/nginx/error.log
+> removes and creates /etc/ld.so.preload ??? That is shocking!
+> 
+> It should do that on /var/log/nginx/error.log, by removing that symlink
+> and creating a new empty standard file on /var/log/nginx/error.log !!
+> 
+> Dont you agree??
 
-https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2017-08.html
+No, please read the advisory again.
 
-Sorry!
+Please notice that logrotate doesn't do some magic. The config tells
+logrotate to do that (logrotate itself BTW ignores symlinked files since
+v3.8.2 [1]).
+
+It is important to understand that logrotate is only used in that
+example to trigger nginx behavior. And attacker could also just wait for
+the system administrator to do similar actions with nginx (just a
+question of time).
+
+So the real "problem" is that the nginx master process runs as root and
+will change ACLs of existing files which allows an user to escalate
+privileges if that user can create files nginx will touch.
+
+See https://trac.nginx.org/nginx/ticket/376 for more details.
+
+Now, given that multiple maintainers created the same problem, one could
+argue that such a change in permissions is unexpected. Nevertheless it
+is documented, so I don't blame upstream.
+
+
+See also:
+=========
+[1]
+https://github.com/logrotate/logrotate/commit/9f19aba75079a61a913eb06748cf9aa83802c24c
+
 
 -- 
-Remi Gacogne
-PowerDNS.COM BV - https://www.powerdns.com/
+Regards,
+Thomas Deutschmann
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
