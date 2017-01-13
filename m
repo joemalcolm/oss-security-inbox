@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1109" "Monday" "20" "May" "2019" "19:15:24" "+0200" "Andor Molnar" "andor@apache.org" nil "26" nil nil nil nil "5" nil nil (number mark "U       andor@apache May 20   26/1109  " thread-indent "\"[oss-security] [CVE-2019-0201] Information disclosure vulnerability in Apache ZooKeeper \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0201] Information disclosure vulnerability in Apache ZooKeeper " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["638" "Friday" "13" "January" "2017" "17:09:40" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701131706000.25713@wniryva>" "22" "[oss-security] CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio" nil nil nil "1" "2017011311:39:40" "[oss-security] CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio" (number mark "U       ppandit@redh Jan 13   22/638   " thread-indent "\"[oss-security] CVE-2017-2584 Kernel: kvm: use after free in complete_emulated_mmio\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3943 invoked by uid 550); 20 May 2019 17:20:12 -0000
+Received: (qmail 13445 invoked by uid 550); 13 Jan 2017 11:39:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32726 invoked from network); 20 May 2019 17:15:38 -0000
-From: Andor Molnar <andor@apache.org>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
-Message-Id: <52C7AFA8-8CAB-4613-95E9-3EED492B9693@apache.org>
-Date: Mon, 20 May 2019 19:15:24 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.8)
-Subject: [oss-security] [CVE-2019-0201] Information disclosure vulnerability in Apache
- ZooKeeper 
+Received: (qmail 13416 invoked from network); 13 Jan 2017 11:39:55 -0000
+Date: Fri, 13 Jan 2017 17:09:40 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1701131706000.25713@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Fri, 13 Jan 2017 11:39:44 +0000 (UTC)
+Subject: [oss-security] CVE-2017-2584 Kernel: kvm: use after free in
+ complete_emulated_mmio
 
-CVE-2019-0201: Information disclosure vulnerability in Apache ZooKeeper
+   Hello,
 
-Severity: Critical
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable to a use after free flaw. It could occur on x86 platform, when 
+emulating instructions fxsave, fxrstor, sgdt, etc.
 
-Vendor: The Apache Software Foundation
+A user/process could use this flaw to crash the host kernel resulting in DoS.
 
-Versions Affected: ZooKeeper prior to 3.4.14, ZooKeeper 3.5.0-alpha through=
- 3.5.4-beta. The unsupported ZooKeeper 1.x through 3.3.x versions may be al=
-so affected.
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kvm/msg143571.html
 
-Description: ZooKeeper=E2=80=99s getACL() command doesn=E2=80=99t check any=
- permission when retrieves the ACLs of the requested node and returns all i=
-nformation contained in the ACL Id field as plaintext string. DigestAuthent=
-icationProvider overloads the Id field with the hash value that is used for=
- user authentication. As a consequence, if Digest Authentication is in use,=
- the unsalted hash value will be disclosed by getACL() request for unauthen=
-ticated or unprivileged users.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1413001
 
-Mitigation: Use an authentication method other than Digest (e.g. Kerberos) =
-or upgrade to 3.4.14 or later (3.5.5 or later if on the 3.5 branch).
+'CVE-2017-2584' is assigned to this issue by Red Hat Inc.
 
-Credit: This issue was identified by Harrison Neal <harrison@patchadvisor.c=
-om> PatchAdvisor, Inc.
-
-References: https://issues.apache.org/jira/browse/ZOOKEEPER-1392
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
