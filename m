@@ -1,26 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/9
-Message-ID: <20170111042820.GA147@8012b52aa127>
-Date: Wed, 11 Jan 2017 04:28:20 +0000
-From: Trevor Jay <tjay@...hat.com>
-To: docker-user@...glegroups.com
-Cc: docker-dev@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Re: Docker 1.12.6 - Security Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/6
+Message-ID: <20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>
+Date: Fri, 13 Jan 2017 10:36:11 +0100
+From: Michal Hrusecky <Michal.Hrusecky@....cz>
+To: oss-security@...ts.openwall.com
+Subject: linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-A FYI for Red Hat and Fedora users: we have rated this CVE as having moderate impact to our users and are currently testing backports of this patch for 1.12.5. More info:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-    https://access.redhat.com/ringwraith
-    https://bugzilla.redhat.com/show_bug.cgi?id=1409531
-    https://access.redhat.com/security/cve/CVE-2016-9962
+Hi,
 
-To mitigate this even without the patch, you can remove `ptrace` from your seccomp whitelist. ACS such as SELinux (not sure about AppArmor) will keep container processes from accessing external file descriptors. Of course, you can prevent these kind of attacks completely (modulo kernel bugs) by never running privileged containers or giving them CAP_SYS_PTRACE in the first place.
+I would like to request subscription to linux-distros mailing list. I'm one of
+the maintainers of Turris OS - OpenWRT fork used on Turris and Turris Omnia
+routers[1].
 
-Great work on the flaw and patch. An extremely interesting vulnerability.
+Not sure what has to be part of application, on wiki[2] I found only that I
+should request it here.
 
-_Trevor
+Probably you will need some proof that I'm who I claim to be. You can see bunch
+of commits on our gitlab[3] (signed by the same key I'm using to sign this
+mail) and you can reach me and some of my colleagues on security@...ris.cz
+e-mail alias that is also listed as security contact on our web[4].
 
--- 
-Sent from my Casio Loopy.
-(Trevor Jay) Red Hat Product Security
-gpg-key: https://ssl.montrose.is/chat/gpg-key
+We have infrastructure in place to work on embargoed issues without disclosing
+them to public. Not sure whether there are any other requirements to meet. If
+so, please let me know.
+
+[1] https://omnia.turris.cz/en/
+[2] http://oss-security.openwall.org/wiki/mailing-lists/distros
+[3] https://gitlab.labs.nic.cz/turris/openwrt/commits/test
+[4] https://www.turris.cz/en/contacts
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEo5WdE9VMgau/ozp2sqowqJRyn7MFAlh4n38ACgkQsqowqJRy
+n7PfZw/8DHrybIB8/m4i/NIc6lKcjgv5gmCfuccOgr45wQv6sDgqXop9at9SpkDu
+vjrzno4++VhzjpgDkIVJhofWkuMGQBdPn6ytmtvTuk9ha8C9buUQzgO9fQgpssRB
+nME8egS0tLS/fE/bJqONF9lN7RNukND5/fR0lrxUlJ0HcdT5ACY9vx+D6vlsQmFO
+MxFgBxTeVEaV0cUnsDqVOa1plfS2uSLFO+Sr6AIh4FfO37Gild5KHZmFYHEEITZa
+qutAy82LyqcMGyjaJ+fP5zb6iMZ2MasIhXpQlJ73hyburN6+mSMmOddDxYOcrsvo
+DHt1VzfK4lYd97Y8m5+8HuM8gL8EKrJYEeecdT3bJ+dM73cIdFLDNF2y34UwU1rr
+fIH9JmC/c2EKlJr0Ibiw5T5e8wDPvJHRUPjMcBoMxuWpPphTFQO9k+wpSl2z4VX8
+CLioyI3AD5xPvPboJD7DLuYw375GwchU4yb0MQEr58vT23Xh7aLffCSKwnRt+ZzI
+wvsaqfmTvH6tpjVzes4wL+ZFycVeZwTmsBNCyrjGS79MJoEGQda75QLikhY7un/t
+XHApVt61dwBzQN+mVCucFyRJIDXY28LwOL6ozYtO0mK3/U+jotkbletYovs2IZh8
+o6L4V5l63agTmxOGS3TdTMKnBFo3UkQEqSZJgD/NOqdCiAy5lY4=
+=FSaN
+-----END PGP SIGNATURE-----
