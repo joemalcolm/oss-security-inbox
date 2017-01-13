@@ -1,67 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/6
-Message-ID: <696458.548397885-sendEmail@localhost>
-Date: Thu, 14 Sep 2017 07:02:46 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mp3gain: invalid memory write in copy_mp (mpglibDBL/interface.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/4
+Message-ID: <1480d3e5f57745ad9aa55870d4dfecaa@imshyb02.MITRE.ORG>
+Date: Thu, 12 Jan 2017 21:55:40 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Zabbix: SQL injection vulnerabilities in "Latest data"
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+> failure to sanitize input in the toggle_ids
+> array in the latest.php page.
 
-The complete ASan output of the issue:
+> https://support.zabbix.com/browse/ZBX-11023
+> https://bugs.debian.org/850936
 
-# aacgain -f $FILE
-ASAN:DEADLYSIGNAL
-=================================================================
-==15053==ERROR: AddressSanitizer: SEGV on unknown address 0x104db559357d (pc 0x7f06b1457af7 bp 0x7ffed0c702a0 sp 0x7ffed0c6fa30 T0)
-    #0 0x7f06b1457af6  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5caf6)
-    #1 0x8a8ad0 in copy_mp /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:188
-    #2 0x8ad77e in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:538
-    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #4 0x7f06b0770680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+Use CVE-2016-10134.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5caf6) 
-==15053==ABORTING
+The scope of this CVE does not include the "2016 Sep 07 18:41" comment
+of "could it be that jsrpc.php was affected, too ? if so, the
+changelog entry should probably be changed to either include all
+affected endpoints, or at least not exclusively mention latest data."
+If there is an exploitable problem other than with the
+latest.php?toggle_ids[]= attack vector, then it should have a separate
+CVE ID.
 
-Affected version:
-1.5.2
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-14412
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00352-aacgain-invalidwrite-copy_mp
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-invalid-memory-write-in-copy_mp-mpglibdblinterface-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+iQIcBAEBCAAGBQJYeEEHAAoJEHb/MwWLVhi2wiQQAIoA6FoGK0U52GblRjFJb0qJ
+soeC2NSeZjhWpg+Dani9mXeU1gN0RoGC1W07vw0J/NFlAqlFU0CzqwUnP1mZEYjQ
+u/aRgtwg4w4m1RgBb6amqFPSzsr5J1QzXy8F5siG8mEjjECNWBIpnILZxmW0dB+3
+1NJIBlFVLahL8XFvT2RO4FD0EwORoB7gOrjF2Xu9kmVdHcMRk+QLHV/rnrbsDvUu
+pqaYZF5qfbkZe4rsoPNFtjAOXroLJZu8GDoqVIORZykrVtD15ZVHpLBi9UCKEX9s
+/98rfaOg5QAhqgPz+jGQhjegHb8xGOiy92ABfSSzF+9QMxIC/Jpuh88NIJQz4MUZ
+Te0GIzoh+LFhlqyEc+eVPfZPvwlfM3XI//lPUZ+C4A0ottLFqYrBN0MGZWHLpYuF
+kUugUMSg4Y5oHt8jeA0EH/rGQjryAr7knOr8y9p9w6j8cveE9ccFpCWFUnL0hH1k
+QGJTEJmmEpBZMk2we0XMsw3HpCCeezo6j2mnjiExNhSnkKm+t2ggw5w5EEc01zH7
+wAQnJnfyND8axxGGLFXJfYhwGV1jGnqxz4aIoLBsfrCPjbtCWLv47FZEZ8A1LxIr
+Zj88Js9+iWOEWpOGK1ZkUVkW081cANaVjJQRFx6drTQD55hOZm3PqhSW2pfzA5K5
+nf24yUXhAvv/RNu+Cgwc
+=zHnG
+-----END PGP SIGNATURE-----
