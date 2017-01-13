@@ -1,57 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/6
-Message-ID: <b825d561daf34e27a0d6cc601350cc89@imshyb01.MITRE.ORG>
-Date: Sat, 28 Jan 2017 16:11:08 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/9
+Message-ID: <20170113150447.6abc7f30@redhat.com>
+Date: Fri, 13 Jan 2017 15:04:47 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, hanno@...eck.de
+Subject: Re: Re: Fuzzing jasper
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, 22 Oct 2016 21:00:23 -0400 (EDT) cve-assign@...re.org wrote:
 
-> [] 1/ Fix potential unsigned underflow
-> https://github.com/libgd/libgd/commit/60bfb401ad5a4a8ae995dcd36372fe15c71e1a35
+> > https://github.com/mdadams/jasper/issues/28
+> > Heap overflow in jpc_dec_cp_setfromcox()  
+> 
+> > AddressSanitizer: heap-buffer-overflow
+> > WRITE of size 1  
+> 
+> > malformed jpeg2000 file  
+> 
+> > jpc_dec_cp_setfromcox ... libjasper/jpc/jpc_dec.c:1668:32  
+> 
+> Use CVE-2016-8880.
+> 
+> 
+> > https://github.com/mdadams/jasper/issues/29
+> > Heap overflow in jpc_getuint16()  
+> 
+> > AddressSanitizer: heap-buffer-overflow
+> > WRITE of size 8  
+> 
+> > jpc_getuint16 ... libjasper/jpc/jpc_cs.c:1572:8  
+> 
+> Use CVE-2016-8881.
 
-Use CVE-2016-10166.
+Can the above two CVEs be rejected as duplicates of CVE-2011-4516 and
+CVE-2011-4517 respectively?
 
+https://github.com/mdadams/jasper/issues/28#issuecomment-267053875
+https://github.com/mdadams/jasper/issues/29#issuecomment-267322934
 
-> [] 2/ Fix DOS vulnerability in gdImageCreateFromGd2Ctx()
-> https://github.com/libgd/libgd/commit/fe9ed49dafa993e3af96b6a5a589efeea9bfb36f
+Thank you!
 
-Use CVE-2016-10167.
-
-
-> [] 3/ Fix #354: Signed Integer Overflow gd_io.c
-> https://github.com/libgd/libgd/commit/69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6
-> https://github.com/libgd/libgd/issues/354
-
-Use CVE-2016-10168.
-
-(This CVE is for all of 69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6.
-In other words, "make sure that either chunk count is actually greater
-than zero" does not have a separate CVE.)
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYjQh9AAoJEHb/MwWLVhi28DkP/1UJZHspmA032vVka4pObsGo
-lLM852CBs8cY/sL3MYmi0DIQTdxK70D1qVuwo/xtCBZYI6DK8+cwc8iNGg8/Fl9x
-RwHvmIG20uO61xkLtQt2un9eBqnJ/KRafiIOgReTHywIUnZ3b5QfqZuFppJZtSUg
-vUsg8Y/0e1IwU3iuNg5OGCnS8nC3z7rTfJcxXq6Kt6jbIhv4nQqCcNXsS9POMYBl
-Su8G5+0Qumc+hd3jC1yGie9oy3UvbgxoeOPkkhB6SqQ2qeWj5qdYDyq/AwQk3klF
-43CidiXqcAQRT3bx4Li2W9q/zaomzXv/1VaRQKQ0OHfY/z/JYFK6aLmu6LylDOW9
-WDwJHJBnX7D/keRdJYUlGTsxU8c+Ou7gju7X+Vjvn+OIedNp8GXqnge8btJxSt7H
-BmODX5XKsT81WCJMZNFsph3z6wO1NNbMqyP4Nx4do3fS8FVg+FILy8Yyh2hIm4pT
-YVkz9b7HVJdhfX01ARzLqCYVx47mFcwqztxxKBoYrKQueCNJ0cOmCrt5llvU0VoO
-QSXT4xk8zROLfHtjGR9cxLxO9DdZLEAifcCrXR4AqBinUO4gg+FfY/Tgjp61ijM+
-dIbi4PqdxaWOJu3rsyxXRth0+LQxIV9DChi1cIugckc50Uq50vXBKioUeAIhgjGn
-gOIdogXwdM1ye+bHKUD6
-=3sHC
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Product Security
