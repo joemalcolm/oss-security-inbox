@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3823" "Sunday" "2" "August" "2015" "12:39:50" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150802163950.D99A03321B4@smtpvbsrv1.mitre.org>" "94" "[oss-security] Re: CVE-2015-1416: vulnerability in patch(1)" nil nil nil "8" "2015080216:39:50" "[oss-security] Re: CVE-2015-1416: vulnerability in patch(1)" (number mark "        cve-assign@m Aug  2   94/3823  " thread-indent "\"[oss-security] Re: CVE-2015-1416: vulnerability in patch(1)\"\n") "<1438474147.2191174.345323673.28F8B482@webmail.messagingengine.com>" ("<1438474147.2191174.345323673.28F8B482@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1261" "Thursday" "12" "January" "2017" "21:51:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8a06802e079a484ab1e93eba1be86b9c@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: invalid free in GNU ed before 1.14.1" "^CC:" nil nil "1" "2017011302:51:26" "[oss-security] Re: invalid free in GNU ed before 1.14.1" (number mark "        cve-assign@m Jan 12   36/1261  " thread-indent "\"[oss-security] Re: invalid free in GNU ed before 1.14.1\"\n") "<20170112121405.563ee9ee@pc1>" ("<20170112121405.563ee9ee@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26517 invoked by uid 550); 2 Aug 2015 16:40:16 -0000
+Received: (qmail 14082 invoked by uid 550); 13 Jan 2017 02:51:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,107 +11,51 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26371 invoked from network); 2 Aug 2015 16:40:02 -0000
-In-Reply-To: <1438474147.2191174.345323673.28F8B482@webmail.messagingengine.com>
-Message-Id: <20150802163950.D99A03321B4@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Sun,  2 Aug 2015 12:39:50 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 14053 invoked from network); 13 Jan 2017 02:51:37 -0000
+In-Reply-To: <20170112121405.563ee9ee@pc1>
+Message-ID: <8a06802e079a484ab1e93eba1be86b9c@imshyb02.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+Date: Thu, 12 Jan 2017 21:51:26 -0500
+From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2015-1416: vulnerability in patch(1)
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: invalid free in GNU ed before 1.14.1
+To: <hanno@hboeck.de>
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> This fix in FreeBSD seems to have been sourced from Bitrig, the OpenBSD
-> fork:
-> 
-> https://svnweb.freebsd.org/base?view=revision&revision=285974
+> Reproducer:
+> echo -e "H\n?\{" | ed
 
-> As for GNU patch, looking in src/inp.c shows it has diverged a lot, but
-> I couldn't say if that makes it invulnerable.
+> regex.c
 
-Our feeling is that these before-the-fix shell-metacharacter mistakes:
+> https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
 
-  snprintf(buf, sizeof buf, CHECKOUT, filename);
-  snprintf(lbuf, sizeof lbuf, RCSDIFF, filename);
-  system(lbuf)
-  system(buf)
+>> AddressSanitizer: attempting free on address which was not malloc()-ed
 
-found in
-https://raw.githubusercontent.com/bitrig/bitrig/fca5402bc19431b22238f684a78757e989b8b6e7/usr.bin/patch/inp.c
-are equivalent to these shell-metacharacter mistakes:
-
-  sprintf (buf, elsewhere ? CHECKOUT : CHECKOUT_LOCKED,
-           dotslash, filename);
-  sprintf (lbuf, RCSDIFF, dotslash, filename);
-  system (lbuf)
-  system (buf)
-
-in
-http://git.savannah.gnu.org/cgit/patch.git/snapshot/patch-2.2.tar.gz
-
-(In other words, the same mistakes occurred when providing the same
-functionality with the same code structure, and three of the variable
-names are identical.)
-
-In
-http://git.savannah.gnu.org/cgit/patch.git/snapshot/patch-2.3.tar.gz
-is modified code in which the quote_system_arg function (i.e., not
-sprintf) is used to add a filename to getbuf and diffbuf, and the
-calls to system have been changed to use diffbuf and getbuf. (It is
-actually "systemic" rather than "system" but this is largely
-irrelevant.) We didn't find a copy of anything in between 2.2 and 2.3.
-The quote_system_arg change might have been added in 2.2.5.
-
-In other words, our current understanding is that CVE-2015-1416
-applies to the vulnerability identified in all of the previously
-mentioned BSD-related code, and also applies to something like "GNU
-patch before 2.3" or "GNU patch before 2.2.5." The vulnerability (and
-the CVE ID) can, of course, be the same even if the solution approach
-is entirely different.
-
-(There is also a somewhat similar issue addressed between 2.5 and
-2.5.2/2.5.3, in which some instances of "filename" have a "quotearg
-(filename)" replacement. We don't think that the established meaning
-of CVE-2015-1416 is associated with those later changes.)
-
-If there is (or ever was) an implementation error in the
-quote_system_arg function, then that would have its own CVE ID,
-different from CVE-2015-1416. In other words, that error would be
-associated with an "incomplete fix for CVE-2015-1416." We have not yet
-seen any actual report of this type of an error.
-
-This changelog entry may be of interest:
-
-  2010-04-20  Andreas Gruenbacher  <agruen@suse.de>
-
-         * src/util.c (quote_system_arg): Add a replacement for
-         quote_system_arg() which uses quotearg's shell quoting style.
-
-In other words, there is a possibility that the 1997 implementation of
-quote_system_arg was replaced in 2010 because it was unsafe.
-
-The CVE project hasn't researched (and doesn't plan to research)
-whether related types of shell-metacharacter mistakes affected any
-version of GNU patch after 2.2.x. We are just clarifying that, for the
-specific CVE ID of CVE-2015-1416, the affected GNU patch versions are
-defined to be only 2.2.x and earlier.
+Use CVE-2017-5357.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJVvkZlAAoJEKllVAevmvmsWS0H/i8An70reChmoc47vDWFydnr
-VEEg2MfW/W4OusWTyuDcrj/BAUF/9skCohuIFmQTF/yD8i4ogCrmHlXoXk0/dy9h
-jUVM3SKSUIrp6iPnAE9EAv6MhYChkb6mNkd2fhxIFRbjH/Eq6MEaR0DlvkNkVGlZ
-tmdmNLwOdbL4xJ7cM7VTLPsfcFAId4FSlscKEndn6pFRaN7i37ToYrd51DN92tCq
-jVuYdAu1qZ0ZUeI5jKdUz0TEjZEm8j66m+AJFa/wtD3FhCgW88zHo3Wlc2WHbIng
-qH3IhlgNN6yyAm9YDusOA6gnY7bBjXOMXY05vHC2OCkWKEdbeUDImuiGYP0Ij4k=
-=pjF4
+iQIcBAEBCAAGBQJYeEBbAAoJEHb/MwWLVhi2hdIP/2rMN3IGuLZtCtyVTrzgrBpp
+sl4OhNcEXzUGurEXVVKEnPrfVmxYN5oh9wSStmEVYJihVnSqM+QjnogbcIEAv/HO
+YvhnDcED/PiQUf++YftLw3phrRetGxYcnYowIsqLQKYjV7pzmog8KvEb/SesKmb3
+tjcyyGRoproc/GHSAsoxR7Ogl0KUHUrlS4f74cUGK+eBj//n5j9vzpsz3IvklrCZ
+xkmMShar9OnnIV6ctmHf9wgRUoJGudn3IJflOWa+jkkGaoTBeqFgeD1ik8zgXTFi
+NDMILwwUTQ+gt2r8UWHqh3oNekbOMCKTP247KEMsZNIj3yWoqAO30z1vvNAFSDF3
+rCmnrizLIRX7eKtpzuLNaoAOV7XNCw5HZrmXnRUMbOyFi/WxK1Ukzk8MyoILr56Z
+LED/+N0CNHy9Ah8dDh+m7k0PwDREoPPSC/L+pSqqk2B8OfJzACrilJZb6oygkdpR
+ijFgki262csSSoiRMxjRU0YOs+rG0NW/QTPxo2MJpot9DhX3Nx9VRplH43k42H2m
+d4dGz6p5VyqxylnIUnRmErd7GhIbsiCc3ANxxuNz3YruNe+lcVtjhTzO3wsO242i
+wmajPlqv6uuOgYMDJY9viWJdzERA+kAJHrnpi1fUNDpOsjkH+80MigQ4dSfNBSEn
+nLRgu4i8m2hr6YWi29Sm
+=m+vX
 -----END PGP SIGNATURE-----
