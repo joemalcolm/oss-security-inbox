@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/09/3
-Message-ID: <5bfa81a8-4b7b-5f87-2d5d-6278ec70d721@suse.com>
-Date: Fri, 9 Jun 2017 15:50:07 +0200
-From: Andreas Stieger <astieger@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/5
+Message-ID: <CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>
+Date: Fri, 13 Jan 2017 07:35:25 -0200
+From: Dawid Golunski <dawid@...alhackers.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security bug report read-protected
+Subject: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
 Content-Type: text/plain; charset=utf-8
 
-Hello
+Updated CVE-2016-1247 advisory
+
+Nginx packages on Gentoo distros were also found vulnerable to Root
+Privilege Escalation (CVE-2016-1247) exploit I discovered last year.
+
+Updated advisory URL:
+https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html
+
+Gentoo notice:
+https://security.gentoo.org/glsa/201701-22
 
 
-On 06/09/2017 01:49 AM, Qhdwns123 wrote:
-> If you are reporting bugs to the bugzilla site,
-> When an anonymous user accesses the page, the following message is displayed and access is blocked.
-> "You are not authorized to access bug #632521. To see this bug, you must first log in to an account with the appropriate permissions"
-> As far as I know, when you request a CVE, you need to create an accessible reference address for anonymous users.
+Copy of my updated advisory attached below.
 
-I do not think this is correct. The CVE request needs to only contain
-the minimum information required to identify the issue and assign a CVE.
-A bug tracker reference needs to be unique and a permanent identifier,
-not necessarily publicly readable at the time of the report.
+Follow:
+https://twitter.com/dawid_golunski
+for more vulns.
 
-Andreas
 
--- 
 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
 
+View attachment "gentoo.txt" of type "text/plain" (17529 bytes)
