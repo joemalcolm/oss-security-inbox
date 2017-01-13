@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/5
-Message-ID: <d18ca7c8134b41a4806e395b18ffa346@imshyb02.MITRE.ORG>
-Date: Wed, 8 Feb 2017 23:58:39 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/2
+Message-ID: <234ac7fe83fb46f8b571574565bd4e36@imshyb02.MITRE.ORG>
+Date: Thu, 12 Jan 2017 21:47:13 -0500
 From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request virglrenderer: host memory leak issue in virgl_resource_attach_backing
+To: <ailin.nemui@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Irssi out of bounds read in format string
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
-> for the virtio GPU, is vulnerable to memory leakage issue. It could occur when
-> a guest invokes a 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
-> 
-> A guest user/process could use this flaw to leak host memory leading to DoS.
-> 
-> https://cgit.freedesktop.org/virglrenderer/commit/?id=40b0e7813325b08077b6f541b3989edb2d86d837
-> https://bugzilla.redhat.com/show_bug.cgi?id=1420266
+> - Printing the value %[ leads to oob read
+> https://blog.fuzzing-project.org/55-Fuzzing-Irssi-with-Perl-Scripts.html
 
-Use CVE-2016-10214.
-
-This is not exactly the same as CVE-2017-5578 (from the
-http://www.openwall.com/lists/oss-security/2017/01/25/2 post).
+Use CVE-2017-5356.
 
 - -- 
 CVE Assignment Team
@@ -33,17 +24,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYm/MvAAoJEHb/MwWLVhi2A+gP/0kbCwh8jpQOSzRwlB24UF/2
-NgP17KXlmr/hfHEjilX4w+0z0TvJMUpd58otvLFJiu+ZruJtveoY6qcZ65vc4j2W
-bSRqmSvpwLRRYCVgsgXpCXItyjuxcGtpGUTEDsUeam6N6aOw1UCeBS472C0/j4cO
-QRqlQWfxJpccUlwGKV4BcvlqE6Dw+NonJq3HXuVdw4M8fJHz4DMEtjKqIT+M8ied
-n8bYgEl1czHCdkopD5IxbFuOPZRKBVIVvnIFN9+F9bb6IuyQfHr1staZzTa49Nub
-+J4PjLFSeWDkDxSKKVMvCfkxTQ+WV+uXWxL7X2/KaNfJSS5oxNw4pSvuUj8kSe9f
-qRQDamEdpSDZD8jW2ziKLjNTe2rRXKOl7i+Uzq0UU4hSteVlsSXSWynN5Hav5oae
-GJZKQb4mbAmiVZ3uStERpWfR6xCNhgbuh0P7pb4hI91fGyelMNK693a2YbC0F0k8
-dnHhVNxrKzwNeMBxvqlfkeK37y1VgawVivdMJY6SbVWo+2C0Wwo1+FiUMug+mnYH
-uY0GNcgRJ+FfpwG8L8odEAjXD4YsrR7KY9q53kMCQ8ZBt/pTEuIaDPV9lmB87RGU
-3iy32pnus/u/bmIM48UUU0OQ1H4uVJatiqssjoGGgtAehFFx9wNjRaMFXZusPU7K
-o/ARln99V0GyjXav57Y9
-=nWDl
+iQIcBAEBCAAGBQJYeD88AAoJEHb/MwWLVhi2li0P/2G3s2BZ1aKfD6AE6RL9S1nz
+DGFt6rX1OpYLBLsq0+C/6a4w8WN1Rih6LmlADwzDb6E93TY8eyfaF2jCPg5VUL1I
+ZMLsAFL7WkrfJKiMItoYPDr6eKzXH1SCsuukaNFmuVCpxJS+cWuaQJKI0/Y+wrEo
+zFRLTLWkx02EvicjwgdJ5+oWtp9PEpgjiAFD5fYkMG/PHWUyQIt1CYo4vTh3uvY3
+m/z1ur0Eh35WSPFpxHMbUmMIi1fzVohcJTGvbXmR+EWwfRmudENrVPSFdUgCZAmh
+0uQa+5it6eYPaorz67Hv9zUtEcNUzcibk/cepfNpY/rWWqJb7M2Wtg88J0YBysSS
+C39Dnd6v06/2RkyZGWga8N9TF5UIty2Oljhyjrmfkw9p/ko7DJoS+F8SmDR32qtO
+fB1YrhVXoXvZRj108vdtipl46w2xWL5+yP8fHTqZjRnEMRUrI308MrfjWW4UGyMi
+ebLCN0uWtTXMC0TQCbXIhVNnDFhQlBRTpcxlWtuc6GDjvVCCBIWjFVB8jHUUIVBO
+B+L+CQtcVoFmxz1470iodzHVjWIR7lagJp6KxaaSKQcMU+5Q2djHLw6nVuxsHC6y
+o1t8u8SHXiLQSqyGImTuy/Ntvj4+yXABy5jzT2Y7XlS7dXhoSG9hu7PPsxGxIA6w
+qNa+XrGe0DuQj87/bXYO
+=ARuT
 -----END PGP SIGNATURE-----
