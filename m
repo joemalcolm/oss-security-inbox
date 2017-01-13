@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2027" "Monday" "10" "August" "2015" "00:14:38" "+0300" "Solar Designer" "solar@openwall.com" "<20150809211438.GA20681@openwall.com>" "38" "Re: [oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability" nil nil nil "8" "2015080921:14:38" "[oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability" (number mark "        solar@openwa Aug 10   38/2027  " thread-indent "\"Re: [oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability\"\n") "<55C7AEF2.1070908@gmail.com>" ("<55C7AEF2.1070908@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1760" "Thursday" "12" "January" "2017" "21:42:49" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d1d789fa6c75489784f8f39aa33558b3@imshyb02.MITRE.ORG>" "47" "[oss-security] Re: CVE Request: MUJS null pointer dereference and Heap buffer overflow write" nil nil nil "1" "2017011302:42:49" "[oss-security] Re: CVE Request: MUJS null pointer dereference and Heap buffer overflow write" (number mark "U       cve-assign@m Jan 12   47/1760  " thread-indent "\"[oss-security] Re: CVE Request: MUJS null pointer dereference and Heap buffer overflow write\"\n") "<CAPjdKBx8U9iX5WfSyPG5AAnODMdJGfKuS713kok3RpFCM1f6kw@mail.gmail.com>" ("<CAPjdKBx8U9iX5WfSyPG5AAnODMdJGfKuS713kok3RpFCM1f6kw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3712 invoked by uid 550); 9 Aug 2015 21:14:43 -0000
+Received: (qmail 21748 invoked by uid 550); 13 Jan 2017 02:43:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3686 invoked from network); 9 Aug 2015 21:14:42 -0000
-Message-ID: <20150809211438.GA20681@openwall.com>
-References: <55C7AEF2.1070908@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55C7AEF2.1070908@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com,
-	Olivier Bilodeau <olivier@bottomlesspit.org>
-Date: Mon, 10 Aug 2015 00:14:38 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - simple-php-captcha - captcha bypass vulnerability
-To: Fran??ois Labr??che <f.labreche@gmail.com>
+Received: (qmail 21722 invoked from network); 13 Jan 2017 02:43:02 -0000
+From: <cve-assign@mitre.org>
+To: <dileep.chinu@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CAPjdKBx8U9iX5WfSyPG5AAnODMdJGfKuS713kok3RpFCM1f6kw@mail.gmail.com>
+Message-ID: <d1d789fa6c75489784f8f39aa33558b3@imshyb02.MITRE.ORG>
+Date: Thu, 12 Jan 2017 21:42:49 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: MUJS null pointer dereference and Heap buffer overflow write
 
-On Sun, Aug 09, 2015 at 03:50:10PM -0400, Fran??ois Labr??che wrote:
-> We found a captcha bypass vulnerability in an open source captcha 
-> software, made by Cory LaViska for A Beautiful Site. Here is the github 
-> repository: https://github.com/claviska/simple-php-captcha.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> 1. Null pointer dereference in regexp.c
 > 
-> We opened an issue on github 
-> <https://github.com/claviska/simple-php-captcha/issues/16>, and the 
-> vulnerability has been fixed. They never did any release so we don't 
-> think the fix will be released in any form. Simply advising users to 
-> update to git master's should suffice.
+>     The return value from malloc is not properly checked before
+> dereferencing it which can result in a crash.
 > 
-> The simple-php-captcha.php file had a vulnerability enabling a client to 
-> generate the captcha response automatically, effectively bypassing the 
-> captcha.
+> https://bugs.ghostscript.com/show_bug.cgi?id=697381
+> http://git.ghostscript.com/?p=mujs.git;h=fd003eceda531e13fbdd1aeb6e9c73156496e569
+
+Use CVE-2016-10132 for all of
+fd003eceda531e13fbdd1aeb6e9c73156496e569.
+
+
+> 2. Heap buffer overflow write in jsrun.c: js_stackoverflow()
 > 
-> Since the microtime() function was used both in the initial seed for the 
-> captcha and in the captcha url path sent to the client, it was possible 
-> to generate the captcha result automatically by running the same code 
-> client-side.
+>     There was a logical error in the code which can be used to trigger a
+> heap overflow write.
+> 
+> https://bugs.ghostscript.com/show_bug.cgi?id=697401
+> http://git.ghostscript.com/?p=mujs.git;a=commit;h=77ab465f1c394bb77f00966cd950650f3f53cb24
 
-And you think removing the srand(microtime() * 100) fixes this?  Well,
-it does appear to fix the most straightforward and easiest attack, and
-captchas are bypassable in general, but does this raise the bar high
-enough for the "fixed" version not to be CVE-worthy?  Or are you going
-to be requesting a second CVE ID for it then?
+Use CVE-2016-10133.
 
-The "fixed" code relies on PHP's automatic seeding for rand() (which is
-typically dependent on system time anyway, adding only a process id to
-the mix), and, what's probably worse, it uses rand() so many times that
-it leaks its tiny internal state via properties of the captcha that are
-easy for a computer to analyze.  While figuring out the captcha text
-might require OCR, figuring out the text length, font size, x and y
-position, and colors is easier.  OCR isn't rocket science, but it's the
-intended level of "security" of this captcha, while being able to infer
-the text through even easier analysis of "metadata" is a captcha bypass,
-somewhat similar to (but moderately trickier than) your initial finding.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Alexander
+iQIcBAEBCAAGBQJYeD4KAAoJEHb/MwWLVhi2tNQP+gO/jAYeCK8O03qGyZW4HR9K
+LeI+GjI0nU1ZD6VY5ynAl+4bXTGSNjpL7sh6nPdI3RKtEFpCpiQBlfiUfAB93Cae
+YlINFDpjEH24fFSlmVrIGoisR3SodhuUjOqwTkhtw9SnxbnkpXtJzyJnwLgjic6f
+c0BsAAirhQ0WiEMG0XJPgbdhNixH8xj5JP8iEbB3nGAiIkQb5CjCW74iuXNsZjOW
+ZcYM67PyEGs1CoXYlaWMYSLZSHu5U6eAqQ7oE8HYZQgBMEpCKgkhH54ex0otWk9Y
+Xt/8RIzY3WR10kQa7aisGydnfz0eAcRR91KOsSr3wcZ23Tihvg+O+kuMA+VjChG1
+UnB2mroYPlFEEghSY8kqECWQ0nvGnKDZ4RvsEZzaMBms4K/4thDtnfBo3TVVJvAl
+otYqNIeIMelKOi8Fev4bipAJmGn3JNbaTgOeBSp+TgetI+wCZmBsUZoVn9nxD/Dt
+A3XgmZBguPRTrMUl1TYys0Vl8iIHZdn/NJiplKy3utFmGuTeL5vwVg5tN4b6zqvY
+5Em05T0+o+vL8H0/qV9oGLKeEUvrj2sGVZe6UcWvc8Q3BLmeKcXLt+9f+0wUIxf3
+35d5soiyf1OCaxBx5C3vXFabVMeK1vA4xQ/mDaAVoDd8TgXz1vZx69xIVqPTg/g0
+Df8IDTbCR7C260PXUsv6
+=g88C
+-----END PGP SIGNATURE-----
