@@ -1,43 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/14
-Message-ID: <20170601211134.GA10587@openwall.com>
-Date: Thu, 1 Jun 2017 23:11:34 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: unresponsive distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/10
+Message-ID: <87mvevovcb.fsf@alice.fifthhorseman.net>
+Date: Fri, 13 Jan 2017 10:03:48 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Carlos Alberto Lopez Perez <clopez@...lia.com>, dawid@...alhackers.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 01, 2017 at 08:00:53PM +0200, Solar Designer wrote:
-> As far as I can tell, MontaVista never posted to the list.
+On Fri 2017-01-13 09:00:36 -0500, Carlos Alberto Lopez Perez wrote:
+> On 13/01/17 10:35, Dawid Golunski wrote:
+>> Attackers who have managed to replace the log file with a symlink would
+>> have to wait for nginx daemon to re-open the log files. 
+>> For this to happen nginx service needs to be restarted, or the daemon needs
+>> to receive a USR1 process signal. 
+>> 
+>> However, the USR1 is sent automatically on default installations of 
+>> Debian-based systems through logrotate script which calls do_rotate() 
+>> function as can be seen in the files quoted below:
+>> 
+>> 
+>> --------[ /etc/logrotate.d/nginx ]--------
+>> 
+>> /var/log/nginx/*.log {
+>> 	daily
+>> 	missingok
+>> 	rotate 52
+>> 	compress
+>> 	delaycompress
+>> 	notifempty
+>> 	create 0640 www-data adm
+>> 	sharedscripts
+>> 	prerotate
+>> 		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+>> 			run-parts /etc/logrotate.d/httpd-prerotate; \
+>> 		fi \
+>> 	endscript
+>> 	postrotate
+>> 		invoke-rc.d nginx rotate >/dev/null 2>&1
+>> 	endscript
+>> }
+>> 
+>> ------------------------------------------
+>
+> This looks to me like an issue on the logrotate side rather than on the nginx one..
 
-I was wrong.  I now found that they posted two messages in January 2012
-and August 2012, but that's all.  There was also some participation here
-on oss-security, and IIRC previously on vendor-sec.
+I agree that this looks like a flaw in logrotate, but there may also be
+flaws in nginx.  The only part of nginx that's being used is the
+"rotate" subcommand of /etc/init.d/nginx , which just sends USR1 to the
+running daemon.
 
-> Being a user of the info
-> only, without participation in discussions, is not strictly disallowed,
-> but this time it's coupled with lack of response when specifically asked
-> to respond, and on an issue that is at least potentially relevant to the
-> distros (not just a responsiveness test).
+the nginx master process is running still running as the root user
+(presumably to do things like bind to ports 443 and 80), and that's the
+process that gets USR1, so it could potentially be at risk here too.
 
-On a related note, I think we should continue to allow distros with just
-one representative subscribed.  Some projects are genuinely small (which
-doesn't mean their userbase is proportionally small) - e.g., Slackware.
-Some have tiny security teams (even one-person) or few people who
-actually do stuff.  This does mean they will miss tests if that person
-is e.g. on vacation.  This also means they will occasionally miss real
-issues (non-tests), and not only on the distros list.  But this doesn't
-fully disqualify them.
+> If I have:
+>
+> /var/log/nginx/error.log -> /etc/ld.so.preload
+>
+> Why does logrotate "create 0640 www-data adm" over /var/log/nginx/error.log
+> removes and creates /etc/ld.so.preload ??? That is shocking!
+>
+> It should do that on /var/log/nginx/error.log, by removing that symlink
+> and creating a new empty standard file on /var/log/nginx/error.log !!
+>
+> Dont you agree??
 
-In fact, currently I am a single point of failure for many aspects of
-running the distros list.  Maybe I need to address that, but it's tricky
-to do without adding risks.
+I'm not sure whether this is the right thing to do -- perhaps the right
+thing for logrotate to do is to notice that this is a weird case and
+fail with an error.
 
-Maybe it's more reasonable to require some participation - e.g., if you
-commented during the embargo period negotiation, that would have
-demonstrated you care.  Even if you said e.g. that you defer to others.
-Noise?  Not exactly.  Not when such feedback was explicitly requested by
-the reporter, and they got very few responses.  (Here "you" can refer to
-any distro, especially one with otherwise little observable activity.)
+This is more evidence that having an entirely separate daemon manage
+logfiles (e.g. svlogd from the runit suite, or journald from systemd) is
+a better system design than trying to teach every daemon how to manage
+its own logfiles sanely.  If the main nginx daemon did not retain root
+privs, then it *couldn't* mount the attack described here.
 
-Alexander
+So the other question left is why nginx needs root privs in the first
+place.  If the only reason is "privileged ports", that's a terrible
+reason.  One amelioration would be to ship the binary with
+CAP_NET_BIND_SERVICE and make it only executable by the www-data user.
+
+Another approach would be to use socket activation, where the service
+supervisor opens the privileged ports and hands them off to the running
+child process which has no special privileges at all.
+
+This would result in less code for the daemon: no socket opening, no
+logfile management; and less ways that it could break.
+
+   --dkg
+
+Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
