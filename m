@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8052" "Tuesday" "20" "June" "2017" "12:00:06" "+0000" "Xen.org security team" "security@xen.org" "<E1dNHpG-00060f-KG@xenbits.xenproject.org>" "193" "[oss-security] Xen Security Advisory 217 - page transfer may allow PV guest to elevate privilege" nil nil nil "6" "2017062012:00:06" "[oss-security] Xen Security Advisory 217 - page transfer may allow PV guest to elevate privilege" (number mark "U       security@xen Jun 20  193/8052  " thread-indent "\"[oss-security] Xen Security Advisory 217 - page transfer may allow PV guest to elevate privilege\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4003" "Friday" "13" "January" "2017" "16:02:22" "+0100" "Thomas Deutschmann" "whissi@gentoo.org" "<d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>" "121" "Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]" "^Date:" nil nil "1" "2017011315:02:22" "[oss-security] Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]" (number mark "        whissi@gento Jan 13  121/4003  " thread-indent "\"Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]\"\n") "<3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>" ("<CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>" "<3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1898 invoked by uid 550); 20 Jun 2017 12:00:37 -0000
+Received: (qmail 25646 invoked by uid 550); 13 Jan 2017 15:47:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,211 +11,142 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1658 invoked from network); 20 Jun 2017 12:00:27 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 3205 invoked from network); 13 Jan 2017 15:02:49 -0000
+References: <CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>
+ <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
+Message-ID: <d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.505 (Entity 5.505)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1dNHpG-00060f-KG@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:00:06 +0000
-Subject: [oss-security] Xen Security Advisory 217 - page transfer may allow PV guest to
- elevate privilege
+In-Reply-To: <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="nSkUNK2VMB8Emc2VheRBWThrw8rrnD4ap"
+Date: Fri, 13 Jan 2017 16:02:22 +0100
+From: Thomas Deutschmann <whissi@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root
+ Privilege Escalation [CVE-2016-1247 UPDATE]
+To: oss-security@lists.openwall.com
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--nSkUNK2VMB8Emc2VheRBWThrw8rrnD4ap
+Content-Type: multipart/mixed; boundary="pRtvWrW7RspAHgdpjfJ4rL60TGmikAWV6";
+ protected-headers="v1"
+From: Thomas Deutschmann <whissi@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>
+Subject: Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root
+ Privilege Escalation [CVE-2016-1247 UPDATE]
+References: <CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>
+ <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
+In-Reply-To: <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--pRtvWrW7RspAHgdpjfJ4rL60TGmikAWV6
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-                    Xen Security Advisory XSA-217
-                              version 2
+Hi,
 
-         page transfer may allow PV guest to elevate privilege
+Carlos Alberto Lopez Perez wrote:
+>> --------[ /etc/logrotate.d/nginx ]--------
+>>
+>> /var/log/nginx/*.log {
+>> 	daily
+>> 	missingok
+>> 	rotate 52
+>> 	compress
+>> 	delaycompress
+>> 	notifempty
+>> 	create 0640 www-data adm
+>> 	sharedscripts
+>> 	prerotate
+>> 		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+>> 			run-parts /etc/logrotate.d/httpd-prerotate; \
+>> 		fi \
+>> 	endscript
+>> 	postrotate
+>> 		invoke-rc.d nginx rotate >/dev/null 2>&1
+>> 	endscript
+>> }
+>>
+>> ------------------------------------------
+>=20
+> This looks to me like an issue on the logrotate side rather than on the n=
+ginx one..
+>=20
+> If I have:
+>=20
+> /var/log/nginx/error.log -> /etc/ld.so.preload
+>=20
+> Why does logrotate "create 0640 www-data adm" over /var/log/nginx/error.l=
+og
+> removes and creates /etc/ld.so.preload ??? That is shocking!
+>=20
+> It should do that on /var/log/nginx/error.log, by removing that symlink
+> and creating a new empty standard file on /var/log/nginx/error.log !!
+>=20
+> Dont you agree??
 
-UPDATES IN VERSION 2
-====================
+No, please read the advisory again.
 
-Public release.
+Please notice that logrotate doesn't do some magic. The config tells
+logrotate to do that (logrotate itself BTW ignores symlinked files since
+v3.8.2 [1]).
 
-ISSUE DESCRIPTION
-=================
+It is important to understand that logrotate is only used in that
+example to trigger nginx behavior. And attacker could also just wait for
+the system administrator to do similar actions with nginx (just a
+question of time).
 
-Domains controlling other domains are permitted to map pages owned by
-the domain being controlled.  If the controlling domain unmaps such a
-page without flushing the TLB, and if soon after the domain being
-controlled transfers this page to another PV domain (via
-GNTTABOP_transfer or, indirectly, XENMEM_exchange), and that third
-domain uses the page as a page table, the controlling domain will have
-write access to a live page table until the applicable TLB entry is
-flushed or evicted.  Note that the domain being controlled is
-necessarily HVM, while the controlling domain is PV.
+So the real "problem" is that the nginx master process runs as root and
+will change ACLs of existing files which allows an user to escalate
+privileges if that user can create files nginx will touch.
 
-IMPACT
-======
+See https://trac.nginx.org/nginx/ticket/376 for more details.
 
-A malicious pair of guests may be able to access all of system memory,
-allowing for all of privilege escalation, host crashes, and
-information leaks.
+Now, given that multiple maintainers created the same problem, one could
+argue that such a change in permissions is unexpected. Nevertheless it
+is documented, so I don't blame upstream.
 
-VULNERABLE SYSTEMS
-==================
 
-All Xen versions are vulnerable.
+See also:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+[1]
+https://github.com/logrotate/logrotate/commit/9f19aba75079a61a913eb06748cf9=
+aa83802c24c
 
-Only x86 systems are affected.  ARM systems are not vulnerable.
 
-Only systems where an attacker can control both a PV and an HVM guest
-are vulnerable.  This must be presumed to include systems containing
-HVM domains with service domains such as stub domain device models.
+--=20
+Regards,
+Thomas Deutschmann
 
-Systems containing only PV guests are not vulnerable.
 
-Systems containing only HVM domains serviced by dom0 device model
-processes are not vulnerable.  Note that with libxl, xl, and libvirt,
-HVM domains use dom0 device model processes by default.
 
-MITIGATION
-==========
+--pRtvWrW7RspAHgdpjfJ4rL60TGmikAWV6--
 
-There is no mitigation for this vulnerability.
+--nSkUNK2VMB8Emc2VheRBWThrw8rrnD4ap
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Switching from stub device models to dom0 process device models is not
-recommended as a mitigation, as in practice the vulnerability is
-likely to be hard to exploit through this route; whereas dom0 process
-device models may have unknown vulnerabilities.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa217.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-xsa217-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa217*
-3e896412389d8e59e417ea7bb3d5b47a20de27b8eae0420c98071ce4b17d219c  xsa217.patch
-4e555cf47faf5e8d2bba4ff8a31fbe72fb11a6c0e3b286f23b26e684a1809705  xsa217-4.5.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v2.0
 
-iQEbBAEBCAAGBQJZSQ3LAAoJEIP+FMlX6CvZe2MH90dkMpagV2W3Q0uzwo3GT4tv
-VmrsM5O5oSCvJBpgRk397Nr6jbPfUOdH8LqHSuNjoU4vYThNqM8mTT0mqW0MKniK
-didfWFyXIjHuBIBaye2r+mFWQ5AFH9B4vp3XT65k+vgq6GTIlRmV8H/bGdeCE4kT
-6ht+ZLzc9XAvOy46pxAw0nz51QkknX4DXC0JTJW77aqKFz3H9+LKS015MLPxBvwj
-JFgmGIgLHR9lsMIGHScLLFibzTE1cDGF9u0I2DLHpWsDMaZN6kJfq8xblEtq58EE
-goth3SydPXPq4UuLfRMQMHX+pCxCdh9bwz82qThSmMFY7h/kPbw340D9+bBZIw==
-=/qch
+iQJ8BAEBCgBmBQJYeOwCXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
+NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/I7xgP/0R/TBtvBYWOJx5w9HyO2/gI
+7Fr5s8VCu5tyOtJ81+CvsyRrTrqtBFl7DMp7CIBxBfQgPErrDd5KwIEiDcI1shKw
+Yt3T4cJb+2JkmXKqocyIgE/GsFwOl+5blibvKVmiMpdAgeYnPIzJG4s5KrJZwLpY
+i0ZKrExIYiQ1xapvK38Nyr1uoEpy9tyi2aFBzxF0LRNvERb5roET4LqyZ54HTidj
+75Ly6hEUpOKn5iO5E3EQrag9dm2FS8j9yLdGlcUp4bQ+p8MNXweVgzFSQDCbBa0l
+CuJ6FJDj5V8pgbsAKmdRwK0UCC1nyGKoVdbazXgRyBokDCBdy5/sH4Sif64Sa34O
+LL/RtjFOrGdC/bGW6sLqCv9OlZOlhiF4iNTNnyiiszgX1ZagJtfyCNQfyGakIQVs
+Y+VleSg7K5GKaRf7l63CERe4D9i3bCLebxhZYseJMIdCVLO2sYJKnLt/wzomS26w
+mEeCD+Jqelt3k93lURisW1/EMDwtgGAwzVk3dhQ7G4V+KG9nRGzDm5jA44UgaAca
+RW+e6ODk9T09MSTH4H4mcin+1IrZ26L9tHJMt8+l7aw6IkV/E23UqcLP9CJx8I2+
+3VQFp3gWuhJ0DC5cYhB42h7r81cehCTIaL4kajiVB/CnyH9UPeEq0NZbQ7FGle9n
+FkWtn6ctAju1JWRvs2dE
+=c/t/
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa217.patch"
-Content-Disposition: attachment; filename="xsa217.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ODYvbW06IGRpc2FsbG93IHBhZ2Ugc3RlYWxpbmcgZnJvbSBIVk0gZG9t
-YWlucwoKVGhlIG9wZXJhdGlvbidzIHN1Y2Nlc3MgY2FuJ3QgYmUgY29udHJv
-bGxlZCBieSB0aGUgZ3Vlc3QsIGFzIHRoZSBkZXZpY2UKbW9kZWwgbWF5IGhh
-dmUgYW4gYWN0aXZlIG1hcHBpbmcgb2YgdGhlIHBhZ2UuIElmIHdlIG5ldmVy
-dGhlbGVzcwpwZXJtaXR0ZWQgdGhpcyBvcGVyYXRpb24sIHdlJ2QgaGF2ZSB0
-byBhZGQgZnVydGhlciBUTEIgZmx1c2hpbmcgdG8KcHJldmVudCBzY2VuYXJp
-b3MgbGlrZQoKIkRvbWFpbnMgQSAoSFZNKSwgQiAoUFYpLCBDIChQVik7IEIt
-PnRhcmdldD09QQogU3RlcHM6CiAxLiBCIG1hcHMgcGFnZSBYIGZyb20gQSBh
-cyB3cml0YWJsZQogMi4gQiB1bm1hcHMgcGFnZSBYIHdpdGhvdXQgYSBUTEIg
-Zmx1c2gKIDMuIEEgc2VuZHMgcGFnZSBYIHRvIEMgdmlhIEdOVFRBQk9QX3Ry
-YW5zZmVyCiA0LiBDIG1hcHMgcGFnZSBYIGFzIHBhZ2V0YWJsZSAocG90ZW50
-aWFsbHkgY2F1c2luZyBhIFRMQiBmbHVzaCBpbiBDLAogYnV0IG5vdCBpbiBC
-KQoKIEF0IHRoaXMgcG9pbnQsIFggd291bGQgYmUgbWFwcGVkIGFzIGEgcGFn
-ZXRhYmxlIGluIEMgd2hpbGUgYmVpbmcKIHdyaXRhYmxlIHRocm91Z2ggYSBz
-dGFsZSBUTEIgZW50cnkgaW4gQi4iCgpBIHNpbWlsYXIgc2NlbmFyaW8gY291
-bGQgYmUgY29uc3RydWN0ZWQgZm9yIEEgdXNpbmcgWEVOTUVNX2V4Y2hhbmdl
-IGFuZApzb21lIGFyYml0cmFyeSBQViBkb21haW4gQyB0aGVuIGhhdmluZyB0
-aGlzIHBhZ2UgYWxsb2NhdGVkLgoKVGhpcyBpcyBYU0EtMjE3LgoKUmVwb3J0
-ZWQtYnk6IEphbm4gSG9ybiA8amFubmhAZ29vZ2xlLmNvbT4KU2lnbmVkLW9m
-Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpBY2tlZC1i
-eTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpS
-ZXZpZXdlZC1ieTogS29ucmFkIFJ6ZXN6dXRlayBXaWxrIDxrb25yYWQud2ls
-a0BvcmFjbGUuY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIv
-eGVuL2FyY2gveDg2L21tLmMKQEAgLTQ0NDksNiArNDQ0OSw5IEBAIGludCBz
-dGVhbF9wYWdlKAogICAgIGJvb2xfdCBkcm9wX2RvbV9yZWYgPSAwOwogICAg
-IGNvbnN0IHN0cnVjdCBkb21haW4gKm93bmVyID0gZG9tX3hlbjsKIAorICAg
-IGlmICggcGFnaW5nX21vZGVfZXh0ZXJuYWwoZCkgKQorICAgICAgICByZXR1
-cm4gLTE7CisKICAgICBzcGluX2xvY2soJmQtPnBhZ2VfYWxsb2NfbG9jayk7
-CiAKICAgICBpZiAoIGlzX3hlbl9oZWFwX3BhZ2UocGFnZSkgfHwgKChvd25l
-ciA9IHBhZ2VfZ2V0X293bmVyKHBhZ2UpKSAhPSBkKSApCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa217-4.5.patch"
-Content-Disposition: attachment; filename="xsa217-4.5.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiB4ODYvbW06IGRpc2FsbG93IHBhZ2Ugc3RlYWxpbmcgZnJvbSBIVk0gZG9t
-YWlucwoKVGhlIG9wZXJhdGlvbidzIHN1Y2Nlc3MgY2FuJ3QgYmUgY29udHJv
-bGxlZCBieSB0aGUgZ3Vlc3QsIGFzIHRoZSBkZXZpY2UKbW9kZWwgbWF5IGhh
-dmUgYW4gYWN0aXZlIG1hcHBpbmcgb2YgdGhlIHBhZ2UuIElmIHdlIG5ldmVy
-dGhlbGVzcwpwZXJtaXR0ZWQgdGhpcyBvcGVyYXRpb24sIHdlJ2QgaGF2ZSB0
-byBhZGQgZnVydGhlciBUTEIgZmx1c2hpbmcgdG8KcHJldmVudCBzY2VuYXJp
-b3MgbGlrZQoKIkRvbWFpbnMgQSAoSFZNKSwgQiAoUFYpLCBDIChQVik7IEIt
-PnRhcmdldD09QQogU3RlcHM6CiAxLiBCIG1hcHMgcGFnZSBYIGZyb20gQSBh
-cyB3cml0YWJsZQogMi4gQiB1bm1hcHMgcGFnZSBYIHdpdGhvdXQgYSBUTEIg
-Zmx1c2gKIDMuIEEgc2VuZHMgcGFnZSBYIHRvIEMgdmlhIEdOVFRBQk9QX3Ry
-YW5zZmVyCiA0LiBDIG1hcHMgcGFnZSBYIGFzIHBhZ2V0YWJsZSAocG90ZW50
-aWFsbHkgY2F1c2luZyBhIFRMQiBmbHVzaCBpbiBDLAogYnV0IG5vdCBpbiBC
-KQoKIEF0IHRoaXMgcG9pbnQsIFggd291bGQgYmUgbWFwcGVkIGFzIGEgcGFn
-ZXRhYmxlIGluIEMgd2hpbGUgYmVpbmcKIHdyaXRhYmxlIHRocm91Z2ggYSBz
-dGFsZSBUTEIgZW50cnkgaW4gQi4iCgpBIHNpbWlsYXIgc2NlbmFyaW8gY291
-bGQgYmUgY29uc3RydWN0ZWQgZm9yIEEgdXNpbmcgWEVOTUVNX2V4Y2hhbmdl
-IGFuZApzb21lIGFyYml0cmFyeSBQViBkb21haW4gQyB0aGVuIGhhdmluZyB0
-aGlzIHBhZ2UgYWxsb2NhdGVkLgoKVGhpcyBpcyBYU0EtMjE3LgoKUmVwb3J0
-ZWQtYnk6IEphbm4gSG9ybiA8amFubmhAZ29vZ2xlLmNvbT4KU2lnbmVkLW9m
-Zi1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpBY2tlZC1i
-eTogR2VvcmdlIER1bmxhcCA8Z2VvcmdlLmR1bmxhcEBjaXRyaXguY29tPgpS
-ZXZpZXdlZC1ieTogS29ucmFkIFJ6ZXN6dXRlayBXaWxrIDxrb25yYWQud2ls
-a0BvcmFjbGUuY29tPgoKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysrIGIv
-eGVuL2FyY2gveDg2L21tLmMKQEAgLTQyMTcsNiArNDIxNyw5IEBAIGludCBz
-dGVhbF9wYWdlKAogICAgIHVuc2lnbmVkIGxvbmcgeCwgeTsKICAgICBib29s
-X3QgZHJvcF9kb21fcmVmID0gMDsKIAorICAgIGlmICggcGFnaW5nX21vZGVf
-ZXh0ZXJuYWwoZCkgKQorICAgICAgICByZXR1cm4gLTE7CisKICAgICBzcGlu
-X2xvY2soJmQtPnBhZ2VfYWxsb2NfbG9jayk7CiAKICAgICBpZiAoIGlzX3hl
-bl9oZWFwX3BhZ2UocGFnZSkgfHwgKHBhZ2VfZ2V0X293bmVyKHBhZ2UpICE9
-IGQpICkK
-
---=separator--
+--nSkUNK2VMB8Emc2VheRBWThrw8rrnD4ap--
