@@ -1,4 +1,9 @@
-Received: (qmail 21685 invoked by uid 550); 4 Dec 2025 15:10:49 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4785" "Saturday" "14" "January" "2017" "17:42:11" "+0100" "Solar Designer" "solar@openwall.com" "<20170114164211.GA17377@openwall.com>" "117" "[oss-security] Re: [Security] Qt QXmlSimpleReader" "^Cc:" nil nil "1" "2017011416:42:11" "[oss-security] Re: [Security] Qt QXmlSimpleReader" (number mark "        solar@openwa Jan 14  117/4785  " thread-indent "\"[oss-security] Re: [Security] Qt QXmlSimpleReader\"\n") "<3373460.x0yP8h7b03@tjmaciei-mobl1>" ("<20161224151833.GA6612@openwall.com>" "<3373460.x0yP8h7b03@tjmaciei-mobl1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 15463 invoked by uid 550); 14 Jan 2017 16:43:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,50 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 14095 invoked from network); 14 Jan 2017 16:42:22 -0000
+Message-ID: <20170114164211.GA17377@openwall.com>
+References: <20161224151833.GA6612@openwall.com> <3373460.x0yP8h7b03@tjmaciei-mobl1>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3373460.x0yP8h7b03@tjmaciei-mobl1>
+User-Agent: Mutt/1.4.2.3i
+Cc: security@qt-project.org, oss-security@lists.openwall.com
+Date: Sat, 14 Jan 2017 17:42:11 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30400 invoked from network); 4 Dec 2025 14:40:49 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <2d695126-80fb-9e45-4555-bf91c2fb9ffe@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 04 Dec 2025 14:40:39 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-55753: Apache HTTP Server: mod_md (ACME), unintended
- retry intervals 
+Subject: [oss-security] Re: [Security] Qt QXmlSimpleReader
+To: Thiago Macieira <thiago@macieira.org>
 
-Severity: low=20
+Hi Thiago,
 
-Affected versions:
+Thank you for your helpful response.
 
-- Apache HTTP Server 2.4.30 before 2.4.66
+On Mon, Jan 09, 2017 at 09:24:51AM -0800, Thiago Macieira wrote:
+> On s?bado, 24 de dezembro de 2016 16:18:33 PST Solar Designer wrote:
+> > To what extent has Qt's QXmlSimpleReader class been reviewed for
+> > vulnerabilities?  I found only Florian Weimer's CVE-2013-4549
+> > "XML entity expansion denial of service", which Red Hat somehow chose
+> > not to fix (no intent to parse untrusted XML?) even though they got
+> > upstream to fix it.
+> 
+> It has not been at all reviewed. That class is deprecated and we have zero 
+> resources paying attention to it.
+[...]
+> We don't have anyone who knows the source code anymore, so we simply 
+> can't tell you how much it may or may not cache.
+> 
+> The only recommended class for reading XML is QXmlStreamReader. Using any of 
+> the classes from the QtXml library should only happen with trusted sources.
 
-Description:
+Oh.  Is this stated somewhere in the documentation for QXmlSimpleReader,
+along with the suggestion to use QXmlStreamReader instead?  Perhaps it
+should be.
 
-An integer overflow in the case of failed ACME certificate renewal leads, a=
-fter a number of failures (~30 days in default configurations), to the back=
-off timer becoming 0. Attempts to renew the certificate then are repeated w=
-ithout delays until it succeeds.
+Right now, I see this:
 
-This issue affects Apache HTTP Server: from 2.4.30 before 2.4.66.
+http://doc.qt.io/qt-5/qxmlsimplereader.html#details
 
+"The QXmlSimpleReader class provides an implementation of a simple XML
+parser.
 
-Users are recommended to upgrade to version 2.4.66, which fixes the issue.
+This XML reader is suitable for a wide range of applications.  It is
+able to parse well-formed XML and can report the namespaces of elements
+to a content handler; however, it does not parse any external entities."
 
-Credit:
+http://doc.qt.io/qt-5/qxmlstreamreader.html#details
 
-Aisle Research (finder)
+"The QXmlStreamReader class provides a fast parser for reading
+well-formed XML via a simple streaming API.
 
-References:
+QXmlStreamReader is a faster and more convenient replacement for Qt's
+own SAX parser (see QXmlSimpleReader).  In some cases it might also be a
+faster and more convenient alternative for use in applications that
+would otherwise use a DOM tree"
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-55753
+This doesn't give the impression that either one is deprecated.  Also,
+both say they're only for "well-formed" XML, suggesting they might be
+unsuitable for use on untrusted input, but not explicitly stating so.
+In fact, QXmlStreamReader has this "well-formed" requirement in the
+one-sentence summary seen at top of page, whereas for QXmlSimpleReader
+this requirement is only included in the details (second paragraph).
 
-Timeline:
+FYI, the stack overflow from recursive calls between parseElement() and
+parseContent() got assigned CVE-2016-10040 here:
 
-2025-08-15: reported
-2025-11-20: fixed by r1929884 in 2.4.x
+http://www.openwall.com/lists/oss-security/2016/12/24/2
 
+> > Then there's value.resize(), which also accepts a signed int (so the
+> > above code's use of signed int may have been justified, after all):
+> > 
+> > http://doc.qt.io/qt-4.8/qstring.html#resize
+> > 
+> > "If size is greater than the current size, the string is extended to
+> > make it size characters long with the extra characters added to the end.
+> > The new characters are uninitialized.
+> > 
+> > If size is less than the current size, characters are removed from the end."
+> > 
+> > No clear explanation on what will happen on a negative size, and besides
+> > it might also be possible to exceed 4 GB and get to positive values again.
+> 
+> Negative sizes are the same as zero. You can't exceed 4 GB with a signed int 
+> in QString.
+
+I see this is now documented:
+
+http://doc.qt.io/qt-4.8/qstring.html#resize
+
+"If size is negative, it is equivalent to passing zero."
+
+Either I overlooked this detail before, or you improved the
+documentation since.
+
+If I understand correctly, this means that in this piece I quoted before:
+
+ 8187 inline static void updateValue(QString &value, const QChar *array, int &arrayPos, int &valueLen)
+ 8188 {
+ 8189     value.resize(valueLen + arrayPos);
+ 8190     memcpy(value.data() + valueLen, array, arrayPos * sizeof(QChar));
+ 8191     valueLen += arrayPos;
+ 8192     arrayPos = 0;
+ 8193 }
+
+it will be an up to 256 bytes write with the memcpy() at about 2 GiB
+beyond the allocation, which value.resize() would reduce to 0 bytes.
+(And if this somehow succeeds, then the second time it may be a similar
+write at about 2 GiB below that allocation.)
+
+Is this right?  Is it really that bad?
+
+> > Is there anything at higher layers, yet applicable to all published Qt's
+> > APIs, consistenly limiting XML inputs to below 2 GB?  If so, this may be
+> > OK (but a comment would be nice).  If not, we have a problem.
+> 
+> No, there's no such limitation, but many classes will impose 2 GB limits due 
+> to array sizes. The only problem is that getting close to that limit will 
+> already run into code we don't usually test. There are also some problems with 
+> UB on signed overflow on Qt 4.8 and in early Qt 5 versions (I think I fixed it 
+> in 5.4 or 5.5). 
+
+In general, are applications using Qt supposed to sanity-check the sizes
+to be significantly below 2 GiB before passing such data on to Qt?
+
+Thanks again,
+
+Alexander
