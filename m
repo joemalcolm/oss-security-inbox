@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["455" "Tuesday" "2" "August" "2016" "10:39:49" "+0100" "Ibrahim el-sayed" "i.elsayed92@gmail.com" "<CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>" "16" "[oss-security] CVE Request ImageMagick buffer overflow" nil nil nil "8" "2016080209:39:49" "[oss-security] CVE Request ImageMagick buffer overflow" (number mark "U       i.elsayed92@ Aug  2   16/455   " thread-indent "\"[oss-security] CVE Request ImageMagick buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1481" "Saturday" "14" "January" "2017" "09:39:24" "-0800" "Thiago Macieira" "thiago@macieira.org" "<4157335.rtgyRqVO9G@tjmaciei-mobl1>" "36" "[oss-security] Re: [Security] Qt QXmlSimpleReader" "^Cc:" nil nil "1" "2017011417:39:24" "[oss-security] Re: [Security] Qt QXmlSimpleReader" (number mark "        thiago@macie Jan 14   36/1481  " thread-indent "\"[oss-security] Re: [Security] Qt QXmlSimpleReader\"\n") "<20170114164211.GA17377@openwall.com>" ("<20161224151833.GA6612@openwall.com>" "<3373460.x0yP8h7b03@tjmaciei-mobl1>" "<20170114164211.GA17377@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 27790 invoked by uid 550); 2 Aug 2016 09:40:42 -0000
+Received: (qmail 26444 invoked by uid 550); 14 Jan 2017 17:41:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27770 invoked from network); 2 Aug 2016 09:40:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=VPjvW3MBVnFzb+7FODrVk3zqj3fljAUB4S5swvxhp9U=;
-        b=abRNxTwBKXBgeI1/TSGHufWXO6cELPFV9BaRilocxUju0d7Ki8UllMaQ0QCAeFBXSW
-         CCv3nzkF59q0Nj5pVQo4D4B7++40ByYlP8tJz9T+oXbsKddiCBLZz21KS2e9HaivTyhn
-         cBhZ2Y60J9D5l+kzTXF2lDxreuq6wF3vvKAoxGGCNO8nqyTxp7GjvzkZguy7ae3lhaRi
-         BHTCul9ZA6mvxjCbnh7WKXj+AWCjsBBCelYnHh7OKxXrH1B7Kx5eBEjxQlW1BYsL41ig
-         V3lJQp7SD91YuUHK4nq389zlGnckW5/J5k4GFrmyPWblJtAkTpA6bkY43kIFKEuRmnWX
-         P8fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=VPjvW3MBVnFzb+7FODrVk3zqj3fljAUB4S5swvxhp9U=;
-        b=VyvzYH+LbX8HnQ3Uj0mnpkNWMynVcEj7QR/lcUcPsgqmAYbi2WT7MRee+IX4JT1FQP
-         E9IWteRx+IOgTs893DTtOXkccZ8pN6Qd9C9b1FFn6MPuvrtgSMMGle7/qZf2DKH87EYH
-         GNnLc0uOQmNMyg7WtbCyHWMaNX/40PvO/sGzL3viwuDeA9FJBzyD/t/hac7hw+ZRaIeB
-         y2fwQAyqJq72GHOU89vnC2aoQORqU00fwTiJC0D77KCQ1POifNM2b2vKHGYYorMJbTvt
-         C67+bUji/ij6kyfPQkt33zY8NcCU6jnDEl2KtWeRwB3Jn/v8kZ5kdFa9sB87nfdNFdwd
-         lJSQ==
-X-Gm-Message-State: AEkoouuLhCv5+LCk5qTr+9DbBFd5GviRQcE048HVX+wGgnwTygVSNNchXiMm1WPQl3RXKxzlsd/brcvCFV3eeA==
-X-Received: by 10.194.127.163 with SMTP id nh3mr55019859wjb.74.1470130830177;
- Tue, 02 Aug 2016 02:40:30 -0700 (PDT)
+Received: (qmail 25905 invoked from network); 14 Jan 2017 17:39:38 -0000
+Message-ID: <4157335.rtgyRqVO9G@tjmaciei-mobl1>
+In-Reply-To: <20170114164211.GA17377@openwall.com>
+References: <20161224151833.GA6612@openwall.com> <3373460.x0yP8h7b03@tjmaciei-mobl1> <20170114164211.GA17377@openwall.com>
 MIME-Version: 1.0
-From: Ibrahim el-sayed <i.elsayed92@gmail.com>
-Date: Tue, 2 Aug 2016 10:39:49 +0100
-Message-ID: <CAJvHH_QoBJyo_qyOdgE-G=pMhZCfD0pt2f3WHhGjnw9KZMC5qA@mail.gmail.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=e89a8f83aa29e7fedb053913813f
-Subject: [oss-security] CVE Request ImageMagick buffer overflow
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+Cc: security@qt-project.org, oss-security@lists.openwall.com
+Date: Sat, 14 Jan 2017 09:39:24 -0800
+From: Thiago Macieira <thiago@macieira.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: [Security] Qt QXmlSimpleReader
+To: Solar Designer <solar@openwall.com>
 
---e89a8f83aa29e7fedb053913813f
-Content-Type: text/plain; charset=UTF-8
+On s=E1bado, 14 de janeiro de 2017 17:42:11 PST Solar Designer wrote:
+> > No, there's no such limitation, but many classes will impose 2 GB limits
+> > due to array sizes. The only problem is that getting close to that limit
+> > will already run into code we don't usually test. There are also some
+> > problems with UB on signed overflow on Qt 4.8 and in early Qt 5 versions
+> > (I think I fixed it in 5.4 or 5.5).
+>=20
+> In general, are applications using Qt supposed to sanity-check the sizes
+> to be significantly below 2 GiB before passing such data on to Qt?
 
-Hi CVE assignemnt team,
-I would like to request a CVE for a buffer overflow that was found in
-ImageMagick. You can find the fix in the following commit:
-https://github.com/ImageMagick/ImageMagick/commit/76401e172ea3a55182be2b8e2aca4d07270f6da6
+Normal applications are supposed to be designed to use the Qt containers wi=
+th,=20
+in the extreme, a couple hundred thousand items. If you're using them with=
+=20
+upwards of a billion elements, you should redesign.
 
+If you're dealing with untrusted data, then you're supposed to sanity check=
+ it=20
+before passing to any container. That's true for even the Standard Library=
+=20
+containers: you don't ask it to allocate 6 GB just because you got that siz=
+e=20
+from the network or some file, because it may succeed and that would still =
+be a=20
+DoS due to high swap usage.
 
-Cheers,
-Ibrahim M. El-Sayed
-Security Engineer
-Website: https://www.ibrahim-elsayed.com
-@ibrahim_mosaad
+As for QXmlSimpleReader and for the whole QtXml module, it is in Done state=
+.=20
+We're not working on it. We will fix security issues, though, so we need to=
+=20
+analyse the details that you've supplied.
 
---e89a8f83aa29e7fedb053913813f--
+--=20
+Thiago Macieira - thiago (AT) macieira.info - thiago (AT) kde.org
+   Software Architect - Intel Open Source Technology Center
+
