@@ -1,114 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/20/6
-Message-ID: <CABMkiz6X3N8X7nq8eCnNGVUEx8jzd7hNLk3W_8OdW0Pg+UvSYQ@mail.gmail.com>
-Date: Fri, 20 Oct 2017 14:40:50 +0100
-From: Ben Tasker <ben@...tasker.co.uk>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/3
+Message-ID: <CADRx3PMtBZ2Tf8mOdeFd6JbBFah6HVFV-x0L1+4eHdLP66nApA@mail.gmail.com>
+Date: Sat, 14 Jan 2017 22:36:28 +1000
+From: Paul King <paulk@...che.org>
+To: paulk@...che.org
+Cc: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [CVE-2016-6814] Apache Groovy Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 19, 2017 at 9:32 PM, Robert Watson <robertcwatson1@...il.com>
-wrote:
+Severity: Important
 
-> Scripts depend on the underlying functionality of the various utilities
-> like rsync that they call. I'm having trouble understanding how a script
-> could ever be deserving of a CVE. Maybe I'm wrong. I wish to be educated.
->
+Vendor: The Apache Software Foundation
 
-Whether you think it applies to the current example is obviously a
-different debate, but the simple principle is that the script is (arguably)
-using the underlying tool unsafely. The tool (rsync in this case) provides
-an argument to prevent the "risky" behaviour, but the calling script isn't
-using it, potentially opening a vector for misuse.
+Versions Affected:
 
-So if there should be a CVE, it shouldn't be against rsync (as it provides
-the means to avoid, and in other cases you may even find the calling script
-is overriding the "safe" behaviour) but against the calling script.
+* Unsupported Codehaus versions of Groovy from 1.7.0 to 2.4.3
+* Apache Groovy 2.4.4 to 2.4.7
+* Fixed in version 2.4.8
 
-To give a fairly limited example, both of these scripts rely on the same
-functionality, but one is riskier (albeit not from a security perspective)
-- in neither case is the tool at risk
+Impact:
 
-fname=$1
-rm -rf "/$1"
+Remote execution of untrusted code, DoS
 
-...
+Description:
 
-fname=$1
-rm -rf --no-preserve-root "/$1"
+When an application with Groovy on classpath uses standard
+Java serialization mechanisms, e.g. to communicate between servers
+or to store local data, it is possible for an attacker to bake a special
+serialized object that will execute code directly when deserialized.
+All applications which rely on serialization and do not isolate the
+code which deserializes objects are subject to this vulnerability.
+This is similar to CVE-2015-3253 but this exploit involves extra
+wrapping of objects and catching of exceptions which are now safe
+guarded against.
 
+Mitigation:
 
-Obviously it's quite easy for there to be more severe connotations to other
-scripts (for example, think about some of the things you might pass
-adduser) which may well be worthy of a CVE by nature of them effectively
-misusing a tool.
+Users of Groovy relying on (de)serialization with the affected versions
+should apply one of the following mitigations:
 
-Back on topic, I can see potential for abuse, though I'm also not convinced
-whether it's CVE worthy.
+* Isolate the code doing the (de)serialization
+* Upgrade to Apache Groovy 2.4.8 or later
+* Users of older versions of Groovy can apply the following patch to the
+`MethodClosure` class
+(`src/main/org/codehaus/groovy/runtime/MethodClosure.java`):
 
+```
+public class MethodClosure extends Closure {
++    private void readObject(java.io.ObjectInputStream stream) throws
+IOException, ClassNotFoundException {
++        if (ALLOW_RESOLVE) {
++            stream.defaultReadObject();
++        }
++        throw new UnsupportedOperationException();
++    }
+```
 
+Credit:
 
->
-> We are overwhelmed with more vulnerabilities than can be fixed quickly
-> already.
->
-> Are "just to be safer" type things really a wise use of our resources?
->
->
-The problem there is setting the threshold. It's not unheard of for a "just
-in case" fix to later have proved to have mitigated a more severe (and at
-the time, unknown) issue. But gain, whether it needs a CVE is something
-else.
+This vulnerability was discovered by:
 
+* Sam Thomas of Pentest Limited working with Trend Micro's Zero Day Initiative
 
+History:
 
+* 2016-09-20 Original advisory
+* 2017-01-12 Updated information on affected versions
 
-> Does a proliferation of a large number of low-caliber problems make
-> monitoring these lists more trouble than it's worth? Does it cause
-> high-impact problems to be lost amongst low-impact ones?
+References:
 
-
-> On Thu, Oct 19, 2017, 15:46 Seth Arnold <seth.arnold@...onical.com> wrote:
->
-> > On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> > > Removing the ability for rsync to copy symlinks pointing to targets
-> > outside
-> > > the mirror tree would greatly cripple it. I need to understand how the
-> > > danger is worth the loss of this functionality.
-> >
-> > Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
-> > script that calls rsync:
-> >
-> > +    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links
-> --timeout
-> > 3600 --stats --no-human-readable"}
-> >
-> >
-> > https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=
-> d1ca2ab2210990b6dfb664cd6776a41b71c48016
-> >
-> > Of course for people who run this mirroring tool as a specific user
-> > account and set file permissions appropriately this is more or less a
-> > no-op. But this is a useful hardening for people who run the ftpsync
-> > command as a user with too many privileges. (I wouldn't have bothered
-> > filing for a CVE for this change; I see it as a simple hardening change.)
-> >
-> > This option shouldn't cripple ftpsync as a well-run repository is highly
-> > unlikely to have symlinks pointing out of the tree. A repository with
-> > symlinks pointing out of the tree is already not a suitable rsync source.
-> >
-> > Thanks
-> >
-> --
->
-> Robert "DocSalvager" Watson
-> ... trust in truth keeps hope alive
-> www.DocSalvage.info
->
-
-
-
--- 
-Ben Tasker
-https://www.bentasker.co.uk
-
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6814
+* http://groovy-lang.org/security.html
