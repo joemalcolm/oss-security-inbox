@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1579" "Friday" "29" "January" "2016" "14:40:33" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<1454096433.25967.0.camel@gmail.com>" "38" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Date:" nil nil "1" "2016012919:40:33" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        danielmicay@ Jan 29   38/1579  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>" "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>" "<1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>" "<CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3409" "Saturday" "14" "January" "2017" "14:24:15" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<041947d7a15240b8b67cd44bbb198a8f@imshyb01.MITRE.ORG>" "88" "[oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7" nil nil nil "1" "2017011419:24:15" "[oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7" (number mark "U       cve-assign@m Jan 14   88/3409  " thread-indent "\"[oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7\"\n") "<CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>" ("<CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31910 invoked by uid 550); 29 Jan 2016 19:40:48 -0000
+Received: (qmail 29721 invoked by uid 550); 14 Jan 2017 19:24:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,103 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31892 invoked from network); 29 Jan 2016 19:40:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:date:in-reply-to:references:content-type
-         :mime-version;
-        bh=Jf0wl9WenCVHW6LGUV/lIYZQ8CYsnuXr29Z+qWKNBB8=;
-        b=iBvmBVyMRiBNztkIiY1W9fVn9jKZMSa/LmgxMCgdoOuP6NwqpKVP/4OfERqa6LFUzg
-         eR+vxmTY9+YFS1n6kW3tgXI/+kBOYb1gLIZuRlZ1fZT06WeS/5g075C0QjFaH2WaWRc2
-         7nLQk8uicenqS8oYKfwsHVUWE7Nx5GIUYMkoI/xncLlr/RQ6rOjslZPWFneqIwThx4uC
-         RfkTsd/hA0YbIr5FwASsid+4vVmnZgYstyt/6Lsyu8kPPBRMOvq/DP9Jb+2ey+HaeNUv
-         tOmkAb1Fc3jdVCM82R8364zAVFftDzprXpmrP8853Q7rjddoCf/yKsixRYjg5Es3uj6a
-         omGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:content-type:mime-version;
-        bh=Jf0wl9WenCVHW6LGUV/lIYZQ8CYsnuXr29Z+qWKNBB8=;
-        b=THbce1v8wW5P/QmuebEAqb34v+93r9Mhejj/6nI04/ElNzioaC0WZrRSY5KsQ2lwzA
-         QsHfnZCyfciyIUM8ka/eK+UWDk4wrXb+7INdo4JdkXmfFf3rIjeyQo238b3tDSbtu3+n
-         gMipklY/33h5Z2Y0L2j3Vz3uNYc/6IUgTx8/Ca7ygJTmG2Go6w520Nq6Sf0+nyhjlRSn
-         l67f+9vwedqdqD6lm4JmXynflN+PG0sIB9G0aE91vzRUVItCx5Pec+S1zQ8134PZ4Zqe
-         UaEWjaI0gs1x2/NyZGZhhRyamK/7h1t06YIOywN+pRde4ALx5NvLMJuG2ZXQA6CGv4Om
-         DAKA==
-X-Gm-Message-State: AG10YOSxUtXcWU8b4vKKuPMUJ61ypEHwhPOL9BuXyMbYBXQxEKLDqCp+1YdYjy8rHVIf3g==
-X-Received: by 10.140.151.4 with SMTP id 4mr13337186qhx.16.1454096435681;
-        Fri, 29 Jan 2016 11:40:35 -0800 (PST)
-Message-ID: <1454096433.25967.0.camel@gmail.com>
-In-Reply-To: <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
-References: <2413003.GtkKFizscD@chimera>
-	 <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>
-	 <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
-	 <1528e110c5f.11ff2dddc43704.3865822946264713459@fsck.pl>
-	 <CAEmCSgmmuLYpNLdz_vg3-NH_f8Psfj7PxgN7b5S9UCLbKzvO9A@mail.gmail.com>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-UZUNo13u+eCy2ArDJGin"
-X-Mailer: Evolution 3.18.4 
-Mime-Version: 1.0
-Date: Fri, 29 Jan 2016 14:40:33 -0500
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6
- pools for scanning purposes
-To: oss-security@lists.openwall.com
+Received: (qmail 29697 invoked from network); 14 Jan 2017 19:24:27 -0000
+From: <cve-assign@mitre.org>
+To: <csmall@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CALy8Cw5KNydTryiDytu=AC88w06VpkEawB3ohsa8SOj0=1miZA@mail.gmail.com>
+Message-ID: <041947d7a15240b8b67cd44bbb198a8f@imshyb01.MITRE.ORG>
+Date: Sat, 14 Jan 2017 14:24:15 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: Wordpress: 8 security issues in 4.7
 
---=-UZUNo13u+eCy2ArDJGin
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, 2016-01-29 at 17:45 +0000, Scott Herbert wrote:
-> That would be nice sure, but given that IoT vendors are rushing so
-> fast to market that their doing things like sending login credentials
-> via http, I think we're a long way from having them secure their
-> products from scanning let alone anything else.
+> https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+> https://codex.wordpress.org/Version_4.7.1
 
-Many of them are going to be using the Android-based Brillo so there's a
-central point to make changes like this (AOSP).=
+> Remote code execution (RCE) in PHPMailer - No specific issue appears to
+> affect WordPress or any of the major plugins we investigated but, out of an
+> abundance of caution, we updated PHPMailer in this release. This issue was
+> reported to PHPMailer by Dawid Golunski and Paul Buonopane.
+> (this is an extra fix for the CVE-2016-10066 and CVE-2016-10045, I'll
+> leave it to you to decide if it is same ID or new)
 
---=-UZUNo13u+eCy2ArDJGin
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+There is no new CVE ID for this.
 
+
+> The REST API exposed user data for all users who had authored a post of a
+> public post type. WordPress 4.7.1 limits this to only post types which have
+> specified that they should be shown within the REST API. Reported by
+> Krogsgard and Chris Jean.
+> https://github.com/WordPress/WordPress/commit/daf358983cc1ce0c77bf6d2de2ebbb43df2add60
+> https://www.wordfence.com/blog/2016/12/wordfence-blocks-username-harvesting-via-new-rest-api-wp-4-7/
+
+Use CVE-2017-5487.
+
+
+> Cross-site scripting (XSS) via the plugin name or version header on
+> update-core.php. Reported by Dominik Schilling of the WordPress Security
+> Team.
+> https://github.com/WordPress/WordPress/commit/c9ea1de1441bb3bda133bf72d513ca9de66566c2
+
+Use CVE-2017-5488.
+
+
+> Cross-site request forgery (CSRF) bypass via uploading a Flash file.
+> Reported by Abdullah Hussam.
+
+Use CVE-2017-5489.
+
+
+> Cross-site scripting (XSS) via theme name fallback. Reported by Mehmet Ince.
+> https://github.com/WordPress/WordPress/commit/ce7fb2934dd111e6353784852de8aea2a938b359
+> https://www.mehmetince.net/low-severity-wordpress/
+
+Use CVE-2017-5490.
+
+
+> Post via email checks mail.example.com if default settings aren't changed.
+> Reported by John Blackbourn of the WordPress Security Team.
+> https://github.com/WordPress/WordPress/commit/061e8788814ac87706d8b95688df276fe3c8596a
+
+Use CVE-2017-5491.
+
+
+> A cross-site request forgery (CSRF) was discovered in the accessibility
+> mode of widget editing. Reported by Ronnie Skansing.
+> https://github.com/WordPress/WordPress/commit/03e5c0314aeffe6b27f4b98fef842bf0fb00c733
+
+Use CVE-2017-5492.
+
+
+> Weak cryptographic security for multisite activation key. Reported by Jack.
+> https://github.com/WordPress/WordPress/commit/cea9e2dc62abf777e06b12ec4ad9d1aaa49b29f4
+
+Use CVE-2017-5493.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAABCAAGBQJWq8AxAAoJEPnnEuWa9fIqKbAP/1YMi6H7c1v3aKJSfqdif3Hr
-UOCa1twyxLFoJE4oEB+yBBFv0SEEJsx/QrS+Ksd2ANVIMdMrk24VSnG3dgESBygm
-RPFcX80x3sGp/XT/v/gsbAAy23qd3Y2nil6H/S7TOC6KBPdMyOGRiI9pdlJxGIm3
-zV5RGgTHxOU79OMrnW+cq13wj8R/pE3R2m8SyeTsyBxB87eS9aKp7pcLLxUcrUxo
-YWl6ph1nBgA+uurVyfpzKyOs87x0UKKAngCEbRkrenJqBsFioS4UsYFGEVHuDn+V
-bKOtzdJiA0AqfQT7juH1uDuwOm4w39lGGMpUKJ10PdN1N2mysxo30dODRuBORk5J
-+JwpTZy7e/2hyzRzEDSAGcC+tBVxz9gFZYWwJdxkRb/CdwtWFu0qYbPkNgiBNXXs
-EitrNsBIPU1EhfgwRG4EhhW4WvAtDfLjML37usZtBP4DKmg6YU5DPv/EFgKoNxLf
-q/tHxfCwADsxg8GOanBnMnLej8IvUfSIXoSvGc2oGpMla5EtdJ8gTljXXOmxBYY1
-Q5lpgjOpzDN4o/MO1ywFxsCMFgWDsd7Z4i3X9gsLEHP7AGiPp5jq2DPni6dXIohs
-7eJU+CRoKJ2spwMqheVxwIjuDyZAH6J/xt9raITPz8ta/rHJfn47jAjYD6miv+F1
-GIU5+8JQCYJqcS1db83W
-=g5VR
+iQIcBAEBCAAGBQJYenqIAAoJEHb/MwWLVhi2jUYQAIwBRRej7/Aye/tZr4L3hUuR
+Bz3Ynlle4j/dUj9LUKuhpZtN/q0LdOOzQsA/fefiSR4TYEyzDMFDGknG8O8kUNwq
+7ZKuLQD6npviVux7BbenXGWSmX4MVG9HFhlhLw8g+qljt172tumo79IO24M1PPeU
+H2G8QSb/pMbzVG1l0Aa6ASMBeL44eTdPuuAO7piPIepQXWKRe1e8HIiVti7ThLG3
+m/OjwGfelhrXZIGTzJRfD/ikiwaGawdH1MRD8u6y/2Hktcfo46kIeEt6FZdlJHEh
+mtxY51eKbLO0QZ9yx4956NO5q6zRsWMRb1yR617rJFfNfY56FdBUf+edk4bykewn
+ZqDQycScyXLrrPFR/SGbeCDJ90Bmis4MCby/tTfEy8hRIqWBL/Q0bRdBvcxKNikR
+Grtoz/3nhwyU87NMo9ClG8VnihS3Gk0NBxSXN8imzhUqIGZ+FqQMm1842KlgceE6
+w//N7ddXYkBOHmooNRFfMwma2YiygxGl0rFP/2f6Y9Px1mSnMo5WQStE7H8b+gDd
+Y4YxmhmAwMAd8zLn6WF9Zanw0n1cCNxRQRQtdWYn9x12Gmzl9TCwiOkgwHxmtxMT
+oPgLK21quQLwesauJ47ySTKnE4DV6x1yTqlFyt2F1vmFlwl9/fjIgdSAJ/1tNEAN
+1uM8IBDty3Mods/JZ9TA
+=0oyu
 -----END PGP SIGNATURE-----
-
---=-UZUNo13u+eCy2ArDJGin--
-
