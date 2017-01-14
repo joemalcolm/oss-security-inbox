@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/9
-Message-ID: <20170427153101.GA2561@openwall.com>
-Date: Thu, 27 Apr 2017 17:31:01 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/2
+Message-ID: <20170114071900.lxx3d4qoibwvgru7@eldamar.local>
+Date: Sat, 14 Jan 2017 08:19:00 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Duplicates of CVE-2015-8789 CVE-2015-8790 for libebml from TALOS reports?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 27, 2017 at 08:37:51AM -0600, Kurt Seifried wrote:
-> longer term the DWF will be taking this on, but like most things in tech
-> there have been unexpected delays and issues. I'll keep the list appraised
-> as things improve (we should start seeing progress in the next month or
-> two).
+Hi
 
-Meanwhile, why don't you simply proceed to assign CVEs per requests made
-in here like you do on (linux-)distros?  I think this would help.
+CVE-2015-8789: following some downstream reports, this leads to commit
+https://github.com/Matroska-Org/libebml/commit/88409e2a94dd3b40ff81d08bf6d92f486d036b24
+which mentions Cisco TALOS-CAN-0037 report. Looking at
+http://www.talosintelligence.com/reports/TALOS-2016-0037/ . That
+mentions CVE-2016-1515. So I guess CVE-2016-1515 is a duplicate of the
+CVE-2015-8789 assignment.
 
-As you're aware, personally I'm not into CVEs, but I liked the
-side-effect that people's desire to have CVEs brought more vulnerability
-information in here.  I am a bit concerned that MITRE's change may
-result in us getting notified in fewer cases, especially if we continue
-to redirect to MITRE those CVE requests that still arrive in here.  This
-is going to result in not only fewer CVE requests sent in here, but also
-in fewer vulnerabilities being disclosed in here - or at least in them
-being brought in here with an extra delay (after MITRE has assigned a
-CVE ID and reminded the person that they should notify oss-security,
-which thankfully they do).
+Similarly:
 
-Alexander
+CVE-2015-8790: leads to
+https://github.com/Matroska-Org/libebml/commit/ababb64e0c792ad2a314245233db0833ba12036b
+referring to Cisco TALOS-CAN-0036,
+http://www.talosintelligence.com/reports/TALOS-2016-0036/ which in
+turns has the CVE-2016-1514 mentioned. 
+
+Regards,
+Salvatore
