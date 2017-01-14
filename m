@@ -1,4 +1,9 @@
-Received: (qmail 24469 invoked by uid 550); 25 Jul 2022 22:27:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1836" "Saturday" "14" "January" "2017" "22:36:28" "+1000" "Paul King" "paulk@apache.org" "<CADRx3PMtBZ2Tf8mOdeFd6JbBFah6HVFV-x0L1+4eHdLP66nApA@mail.gmail.com>" "63" "[oss-security] [CVE-2016-6814] Apache Groovy Information Disclosure" "^Cc:" nil nil "1" "2017011412:36:28" "[oss-security] [CVE-2016-6814] Apache Groovy Information Disclosure" (number mark "U       paulk@apache Jan 14   63/1836  " thread-indent "\"[oss-security] [CVE-2016-6814] Apache Groovy Information Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8052 invoked by uid 550); 14 Jan 2017 13:46:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,71 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24437 invoked from network); 25 Jul 2022 22:27:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1658788053;
-	bh=TEP62eV8f5zvIPmACO27gCuujxjqxe8jVGXPowuPpOg=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=Yo7Prw101xzRxjzqfReJCOq6aw8+HtVUUY6JsESDIosQ0b7AAEe+xBhrZCzoJByxW
-	 h+M9M7l8CPybrWVX/gO2wlS59YFLRoNNlU5h9GqLlIpg5m1/zRgAE+MQbjPdeslGfg
-	 H8/mgYVI5W0QOWgD0V6DAShDKFLUePuC6HcPW6rpziR1/yrB/KkYFD0XBkDDE8/Ctg
-	 RTlV7O4BU5lT368UVToTwAKpvF07VWWcS/Z4gnQdNJZDXc3jZOPMrlAgqysh83Ge2i
-	 EOuJJT7GTqn4AbIM8iQoc1f62ZMym8L7kOvYbJz7tlv0fV6XFTTY8rMlXGp7pok7tj
-	 cp0o4/SEXItjA==
-Date: Mon, 25 Jul 2022 22:27:31 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20220725222731.GB2583985@millbarge>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20220719001848.GA1516019@millbarge>
- <EEF3C292-40F0-4EF5-A4D8-3731FA2FE428@chromium.org>
+Received: (qmail 31951 invoked from network); 14 Jan 2017 12:36:42 -0000
+X-Gm-Message-State: AIkVDXKdoLWYrHPS2mQEB6r/mju7wql50rJAsLiihUxAHuoUrK55qqjO6itBY+VKhACkSp7GrETCmH/WfwTEBw==
+X-Received: by 10.36.204.138 with SMTP id x132mr7276949itf.77.1484397389089;
+ Sat, 14 Jan 2017 04:36:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CblX+4bnyfN0pR09"
-Content-Disposition: inline
-In-Reply-To: <EEF3C292-40F0-4EF5-A4D8-3731FA2FE428@chromium.org>
-Subject: Re: [oss-security] snowflakedb security contacts
+X-Gmail-Original-Message-ID: <CADRx3PMtBZ2Tf8mOdeFd6JbBFah6HVFV-x0L1+4eHdLP66nApA@mail.gmail.com>
+Message-ID: <CADRx3PMtBZ2Tf8mOdeFd6JbBFah6HVFV-x0L1+4eHdLP66nApA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Date: Sat, 14 Jan 2017 22:36:28 +1000
+From: Paul King <paulk@apache.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [CVE-2016-6814] Apache Groovy Information Disclosure
+To: paulk@apache.org
 
---CblX+4bnyfN0pR09
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Severity: Important
 
-On Sun, Jul 24, 2022 at 11:10:35AM -0700, Roxana Bradescu wrote:
-> Just in case you didn=E2=80=99t, Snowflake uses HackerOne for their vuln =
-mgmt
-> program so issues get reported to HackerOne directly (and this
-> information belongs in a Security.md file)
+Vendor: The Apache Software Foundation
 
-Hello Roxana, thank you, yes, I did hear from Snowflake, perhaps via the
-efforts of list readers who helped make connections.
+Versions Affected:
 
-Snowflake has their HackerOne relationship published on:
-https://www.snowflake.com/product/security-and-trust-center/
-(which I swear I looked for, but was unable to find when looking for it
-myself).
+* Unsupported Codehaus versions of Groovy from 1.7.0 to 2.4.3
+* Apache Groovy 2.4.4 to 2.4.7
+* Fixed in version 2.4.8
 
-HackerOne feels a bit formal for me: not everyone reporting issues is out
-for bug bounties and so on -- but having seen more than my fair share of
-"all your source code is public" reports, I'm also sympathetic.
+Impact:
 
-Thanks
+Remote execution of untrusted code, DoS
 
---CblX+4bnyfN0pR09
-Content-Type: application/pgp-signature; name="signature.asc"
+Description:
 
------BEGIN PGP SIGNATURE-----
+When an application with Groovy on classpath uses standard
+Java serialization mechanisms, e.g. to communicate between servers
+or to store local data, it is possible for an attacker to bake a special
+serialized object that will execute code directly when deserialized.
+All applications which rely on serialization and do not isolate the
+code which deserializes objects are subject to this vulnerability.
+This is similar to CVE-2015-3253 but this exploit involves extra
+wrapping of objects and catching of exceptions which are now safe
+guarded against.
 
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmLfGM8ACgkQ8yFyWZ2N
-LpcYZAgAjV9F78BH6rOIUHteR+TKufsLIujQ55mWSTXjxfItsMzn9f21Hfd4mwiE
-jyLtvUJ0uvj4vyD74yIgQH5xL2gO9ZaWAQTVS0/2KLExWMi+ZyVEo4YLqczR7Jiv
-WdVmyA/Q1M+W5CKXkeMP9MiQzLaKFKlcrgqzUnlOz0LLQ7WikVnpbE+CR0gqAuUy
-Y9dZoqg3UtIS9cr6mbiyldnjp9ufLvIXWEUIzbSEAjdYNyyMB3LLdLZAznrUjOIG
-q+AR285XjELf8aoETRfZZTvF7CuV4Un7fuI790zBGHnxFSXmR/DMn6Rvfh5aq/uW
-epJLN39C5/s32vuGzWozvNAVRI5cgA==
-=sp8V
------END PGP SIGNATURE-----
+Mitigation:
 
---CblX+4bnyfN0pR09--
+Users of Groovy relying on (de)serialization with the affected versions
+should apply one of the following mitigations:
+
+* Isolate the code doing the (de)serialization
+* Upgrade to Apache Groovy 2.4.8 or later
+* Users of older versions of Groovy can apply the following patch to the
+`MethodClosure` class
+(`src/main/org/codehaus/groovy/runtime/MethodClosure.java`):
+
+```
+public class MethodClosure extends Closure {
++    private void readObject(java.io.ObjectInputStream stream) throws
+IOException, ClassNotFoundException {
++        if (ALLOW_RESOLVE) {
++            stream.defaultReadObject();
++        }
++        throw new UnsupportedOperationException();
++    }
+```
+
+Credit:
+
+This vulnerability was discovered by:
+
+* Sam Thomas of Pentest Limited working with Trend Micro's Zero Day Initiative
+
+History:
+
+* 2016-09-20 Original advisory
+* 2017-01-12 Updated information on affected versions
+
+References:
+
+* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6814
+* http://groovy-lang.org/security.html
