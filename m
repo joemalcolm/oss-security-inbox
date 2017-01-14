@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/3
-Message-ID: <20170703080007.GD2102@pali>
-Date: Mon, 3 Jul 2017 10:00:07 +0200
-From: Pali Rohár <pali.rohar@...il.com>
-To: Adam Maris <amaris@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2017-10788 for DBD::mysql (Re: Re: MySQL - use-after-free after mysql_stmt_close())
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/5
+Message-ID: <4157335.rtgyRqVO9G@tjmaciei-mobl1>
+Date: Sat, 14 Jan 2017 09:39:24 -0800
+From: Thiago Macieira <thiago@...ieira.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: security@...project.org, oss-security@...ts.openwall.com
+Subject: Re: [Security] Qt QXmlSimpleReader
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 15 June 2017 15:50:42 Adam Maris wrote:
-> On Mon, 2017-06-12 at 23:47 +0200, Pali Rohár wrote:
-> > Hello!
-> > 
-> > Any idea how to handle this particular problem?
-> > 
-> > 
+On sábado, 14 de janeiro de 2017 17:42:11 PST Solar Designer wrote:
+> > No, there's no such limitation, but many classes will impose 2 GB limits
+> > due to array sizes. The only problem is that getting close to that limit
+> > will already run into code we don't usually test. There are also some
+> > problems with UB on signed overflow on Qt 4.8 and in early Qt 5 versions
+> > (I think I fixed it in 5.4 or 5.5).
 > 
-> Hi!
-> 
-> Given that Oracle (silently) updated the vulnerable example in their
-> documentation, this likely indicates the way to handle this -
-> applications that copied the vulnerable example needs to be fixed and
-> CVEs will be assigned per application.
-> 
-> Best Regards,
-> 
+> In general, are applications using Qt supposed to sanity-check the sizes
+> to be significantly below 2 GiB before passing such data on to Qt?
 
-Hi! Just to note that Mitre now assigned CVE-2017-10788 for DBD::mysql:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-10788
+Normal applications are supposed to be designed to use the Qt containers with, 
+in the extreme, a couple hundred thousand items. If you're using them with 
+upwards of a billion elements, you should redesign.
+
+If you're dealing with untrusted data, then you're supposed to sanity check it 
+before passing to any container. That's true for even the Standard Library 
+containers: you don't ask it to allocate 6 GB just because you got that size 
+from the network or some file, because it may succeed and that would still be a 
+DoS due to high swap usage.
+
+As for QXmlSimpleReader and for the whole QtXml module, it is in Done state. 
+We're not working on it. We will fix security issues, though, so we need to 
+analyse the details that you've supplied.
 
 -- 
-Pali Rohár
-pali.rohar@...il.com
+Thiago Macieira - thiago (AT) macieira.info - thiago (AT) kde.org
+   Software Architect - Intel Open Source Technology Center
+
