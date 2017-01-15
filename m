@@ -1,71 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/30/3
-Message-ID: <991074.005930813-sendEmail@localhost>
-Date: Sat, 30 Sep 2017 17:02:40 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: NULL pointer dereference in scan_unit_for_symbols (dwarf2.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/15/3
+Message-ID: <CANO=Ty3Wks6Jm0m13myBnuRMnDDipRc0A7ZgjU5R+j3EUtLLHQ@mail.gmail.com>
+Date: Sun, 15 Jan 2017 11:48:46 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-Description:
-binutils is a set of tools necessary to build programs.
+On Sat, Jan 14, 2017 at 7:37 PM, Solar Designer <solar@...nwall.com> wrote:
 
-The complete ASan output of the issue:
+> Hi Michal,
+>
+> On Fri, Jan 13, 2017 at 10:36:11AM +0100, Michal Hrusecky wrote:
+> > I would like to request subscription to linux-distros mailing list. I'm
+> one of
+> > the maintainers of Turris OS - OpenWRT fork used on Turris and Turris
+> Omnia
+> > routers[1].
+> >
+> > Not sure what has to be part of application, on wiki[2] I found only
+> that I
+> > should request it here.
+>
+> Right.  This basically tells us there's interest, and from whom and for
+> what reasons.  That's useful, so thanks for posting your request.
+>
+>
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==491==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f6e3316d573 bp 0x7ffda2ee9e50 sp 0x7ffda2ee9c60 T0)
-==491==The signal is caused by a READ memory access.
-==491==Hint: address points to the zero page.
-    #0 0x7f6e3316d572 in scan_unit_for_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3213:13
-    #1 0x7f6e331769e4 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3617:9
-    #2 0x7f6e331769e4 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3643
-    #3 0x7f6e331707c8 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4601:11
-    #4 0x7f6e330b120b in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8694:10
-    #5 0x517c83 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #6 0x51542d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #7 0x51542d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #8 0x510f56 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #9 0x50faae in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #10 0x7f6e31ff6680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x41ac18 in _init (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41ac18)
+> I also notice you've been on oss-security for half a year.  That's good.
+> However, I wasn't able to find any record of your past participation in
+> this specific community.  You might want to get more involved first.
+>
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3213:13 in scan_unit_for_symbols
-==491==ABORTING
+The problem is how do they do that? There are very few meaningful on ramps
+to information security, especially at the distribution level. If anyone
+has good answers for this please post here.
 
-Affected version:
-2.29.51.20170921 and maybe past releases
 
-Fixed version:
-N/A
+>
+> And if/when we do re-open the list for additional distros, you'll be
+> able to re-request membership.
+>
+> Alexander
+>
 
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=0d76029f92182c3682d8be2c833d45bc9a2068fe
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-CVE-2017-14940
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00369-binutils-NULLptr-scan_unit_for_symbols
-
-Timeline:
-2017-09-21: bug discovered and reported to upstream
-2017-09-24: upstream released a patch
-2017-09-26: blog post about the issue
-2017-09-29: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/26/binutils-null-pointer-dereference-in-scan_unit_for_symbols-dwarf2-c
+-- 
 
 --
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
