@@ -1,85 +1,180 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/31/4
-Message-Id: <1490987389.392790.930214152.29A71F3D@webmail.messagingengine.com>
-Date: Fri, 31 Mar 2017 14:09:49 -0500
-From: Mark Felder <feld@...d.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/15/2
+Message-ID: <f18ebf42-d205-3d4a-4740-5d65d0dcac41@powerdns.com>
+Date: Sun, 15 Jan 2017 13:26:43 +0100
+From: Remi Gacogne <remi.gacogne@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- mapr: information disclosure vulnerability
+Subject: PowerDNS Security Advisories 2016-02, 2016-03, 2016-04 and 2016-05
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi all,
 
-The mapr web frontend component creates an information disclosure
-vulnerability.  During the setup of mapr the configure.sh script calls a
-function ConfigureWSRole:
+Several security issues of medium severity have been recently reported
+to us, and we just released new versions of PowerDNS Authoritative
+Server and PowerDNS Recursor addressing them:
+- 2016-02: Crafted queries can cause abnormal CPU usage: CVE-2016-7068
+- 2016-03: Denial of service via the web server: CVE-2016-7072
+- 2016-04: Insufficient validation of TSIG signatures: CVE-2016-7073
+CVE-2016-7074
+- 2016-05: Crafted zone record can cause a denial of service: CVE-2016-2120
 
-function ConfigureWSRole() {
-  if [ $clientOnly -eq 0 -a $dontChangeSecurityPermissionsOn -eq 0 ];
-  then
-    ConfigureRunUserForWS
-  fi
+This matrix shows the versions affected by these issues:
 
-This calls ConfigureRunUserForWS from configure-common.sh:
+|                   | 2016-02 | 2016-03 | 2016-04 | 2016-05 |
+| ---               | ---     | ---     | ---     | ---     |
+| Recursor 3.6      | Yes     |         |         |         |
+| Recursor 3.7      | Yes     |         |         |         |
+| Recursor 4.0      | Yes     |         | Yes     |         |
+| Authoritative 3.3 | Yes     | Yes     | Yes     | Yes     |
+| Authoritative 3.4 | Yes     | Yes     | Yes     | Yes     |
+| Authoritative 4.0 | Yes     | Yes     | Yes     | Yes     |
 
-function ConfigureRunUserForWS() {
-  local val=`getent group shadow 2>/dev/null`
-  if [ "$?" != "0" -o "$val" = "" ]; then
-    # Create a group named shadow
-    groupadd shadow  >> $logFile 2>&1
-  fi
-  # Add CURR_USER to the group wheel
-  if [ -f /etc/SuSE-release ]; then
-      # Add CURR_USER to the group wheel for SUSE
-      usermod -A shadow $MAPR_USER >> $logFile 2>&1
-      STATUS=$?
-      #
-      # The '-A' option has been removed from SuSE 12 
-      #
-      if [ $STATUS -ne 0 ]; then
-          usermod -a -G shadow $MAPR_USER  >> $logFile 2>&1
-      fi
-  else
-      usermod -a -G $MAPR_GROUP,shadow $MAPR_USER  >> $logFile 2>&1
-  fi
-  # Change group-owner of /etc/shadow
-  chgrp shadow /etc/shadow  >> $logFile 2>&1
-  # Allow read permissions for user shadow
-  chmod ug+r /etc/shadow >> $logFile 2>&1
-}
+The full security advisories are provided below, and can also be
+found at:
+- https://doc.powerdns.com/md/security/powerdns-advisory-2016-02/
+- https://doc.powerdns.com/md/security/powerdns-advisory-2016-03/
+- https://doc.powerdns.com/md/security/powerdns-advisory-2016-04/
+- https://doc.powerdns.com/md/security/powerdns-advisory-2016-05/
 
-This results in a shadow file that is now readable to the application:
+Minimal patches are available for those unable to fully upgrade:
+- https://downloads.powerdns.com/patches/2016-02/
+- https://downloads.powerdns.com/patches/2016-03/
+- https://downloads.powerdns.com/patches/2016-04/
+- https://downloads.powerdns.com/patches/2016-05/
 
-# ls -la /etc/shadow
--r--r-----. 1 root shadow 657 Mar 30 16:09 /etc/shadow
-# grep shadow /etc/group
-shadow:x:1000:mapr
+Please note that for the Authoritative Server 3.3 and the Recursor 3.6
+series, we will only publish these patches. We also urge all users of
+these versions to migrate to the 4.X release trains.
 
-The option to disable this codepath, -no-auto-permission-update,  is not
-recommended by Mapr and comes with a warning in the script as it will
-break the webserver's ability to authenticate the local mapr user, which
-is used to administer the cluster:
+Please feel free to contact me directly if you have any question.
 
-        echo "    -no-auto-permission-update - do not update the system
-        security permissions automatically"
-        echo "                             Warn: Features like WebServer
-        might not work properly"
-        echo "                             default: disabled"
+- PowerDNS Security Advisory 2016-02: Crafted queries can cause abnormal
+CPU usage
+CVE: CVE-2016-7068
+Date: December 15th 2016
+Credit: Florian Heinz and Martin Kluge
+Affects: PowerDNS Authoritative Server up to and including 3.4.10,
+4.0.1, PowerDNS Recursor up to and including 3.7.3, 4.0.3
+Not affected: PowerDNS Authoritative Server 3.4.11, 4.0.2 and PowerDNS
+Recursor 3.7.4, 4.0.4
+Severity: Medium
+Impact: Degraded service or Denial of service
+Exploit: This issue can be triggered by sending specially crafted query
+packets
+Risk of system compromise: No
+Solution: Upgrade to a non-affected version
+Workaround: Run dnsdist with the rules provided below in front of
+potentially affected servers.
+An issue has been found in PowerDNS allowing a remote, unauthenticated
+attacker to cause an abnormal CPU usage load on the PowerDNS server by
+sending crafted DNS queries, which might result in a partial denial of
+service if the system becomes overloaded. This issue is based on the
+fact that the PowerDNS server parses all records present in a query
+regardless of whether they are needed or even legitimate. A specially
+crafted query containing a large number of records can be used to take
+advantage of that behaviour. This issue has been assigned CVE-2016-7068.
 
-The website docs[1] casually describe the option, "Pass this option to
-prevent MapR from silently altering permissions in /etc/shadow."
+PowerDNS Authoritative Server up to and including 3.4.10 and 4.0.1 are
+affected. PowerDNS Recursor up to and including 3.7.3 and 4.0.3 are
+affected.
 
-These files are part of the mapr-core-internal package:
+dnsdist can be used to block crafted queries, using RecordsCountRule()
+and RecordsTypeCountRule() to block queries with crafted records.
 
-# rpm -fq /opt/mapr/server/configure.sh
-mapr-core-internal-5.2.0.39122.GA-1.x86_64
-# rpm -fq /opt/mapr/server/configure-common.sh
-mapr-core-internal-5.2.0.39122.GA-1.x86_64
+We would like to thank Florian Heinz and Martin Kluge for finding and
+subsequently reporting this issue.
 
+- PowerDNS Security Advisory 2016-03: Denial of service via the web server
+CVE: CVE-2016-7072
+Date: December 15th 2016
+Credit: Mongo
+Affects: PowerDNS Authoritative Server up to and including 3.4.10, 4.0.1
+Not affected: PowerDNS Authoritative Server 3.4.11, 4.0.2
+Severity: Medium
+Impact: Degraded service or Denial of service
+Exploit: This issue can be triggered by opening a large number of
+simultaneous connections to the web server
+Risk of system compromise: No
+Solution: Upgrade to a non-affected version
+Workaround: Disable the web server, or restrict access to it via a firewall.
+An issue has been found in PowerDNS Authoritative Server allowing a
+remote, unauthenticated attacker to cause a denial of service by opening
+a large number of TCP connections to the web server. If the web server
+runs out of file descriptors, it triggers an exception and terminates
+the whole PowerDNS process. While it's more complicated for an
+unauthorized attacker to make the web server run out of file descriptors
+since its connection will be closed just after being accepted, it might
+still be possible. This issue has been assigned CVE-2016-7072.
 
-Thanks
+PowerDNS Authoritative Server up to and including 3.4.10 and 4.0.1 are
+affected. The PowerDNS Recursor is not affected.
 
-[1] http://maprdocs.mapr.com/home/ReferenceGuide/configure.sh.html
+We would like to thank Mongo for finding and subsequently reporting this
+issue.
+
+- PowerDNS Security Advisory 2016-04: Insufficient validation of TSIG
+signatures
+CVE: CVE-2016-7073 CVE-2016-7074
+Date: December 15th 2016
+Credit: Mongo
+Affects: PowerDNS Authoritative Server up to and including 3.4.10,
+4.0.1, PowerDNS Recursor from 4.0.0 and up to and including 4.0.3
+Not affected: PowerDNS Authoritative Server 3.4.11, 4.0.2, PowerDNS
+Recursor < 4.0.0, 4.0.4
+Severity: Medium
+Impact: Zone content alteration
+Exploit: This problem can be triggered by an attacker in position of
+man-in-the-middle
+Risk of system compromise: No
+Solution: Upgrade to a non-affected version
+Two issues have been found in PowerDNS Authoritative Server allowing an
+attacker in position of man-in-the-middle to alter the content of an
+AXFR because of insufficient validation of TSIG signatures. The first
+issue is a missing check of the TSIG time and fudge values in
+AXFRRetriever, leading to a possible replay attack. This issue has been
+assigned CVE-2016-7073. The second issue is a missing check that the
+TSIG record is the last one, leading to the possibility of parsing
+records that are not covered by the TSIG signature. This issue has been
+assigned CVE-2016-7074.
+
+PowerDNS Authoritative Server up to and including 3.4.10 and 4.0.1 are
+affected. PowerDNS Recursor from 4.0.0 up to and including 4.0.3 are
+affected.
+
+We would like to thank Mongo for finding and subsequently reporting this
+issue.
+
+- PowerDNS Security Advisory 2016-05: Crafted zone record can cause a
+denial of service
+CVE: CVE-2016-2120
+Date: December 15th 2016
+Credit: Mathieu Lafon
+Affects: PowerDNS Authoritative Server up to and including 3.4.10, 4.0.1
+Not affected: PowerDNS Authoritative Server 3.4.11, 4.0.2
+Severity: Medium
+Impact: Denial of service
+Exploit: This issue can be triggered by inserting a specially crafted
+record in a zone
+Risk of system compromise: No
+Solution: Upgrade to a non-affected version
+An issue has been found in PowerDNS Authoritative Server allowing an
+authorized user to crash the server by inserting a specially crafted
+record in a zone under their control then sending a DNS query for that
+record. The issue is due to an integer overflow when checking if the
+content of the record matches the expected size, allowing an attacker to
+cause a read past the buffer boundary. This issue has been assigned
+CVE-2016-2120.
+
+PowerDNS Authoritative Server up to and including 3.4.10 and 4.0.1 are
+affected. The PowerDNS Recursor is not affected.
+
+We would like to thank Mathieu Lafon for finding and subsequently
+reporting this issue.
 
 -- 
-  Mark Felder
-  feld@...d.me
+Remi Gacogne
+PowerDNS.COM BV - https://www.powerdns.com/
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
