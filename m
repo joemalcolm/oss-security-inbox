@@ -1,54 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/12
-Message-ID: <3947283.bJNloLFQYu@arcadia>
-Date: Sun, 01 Jan 2017 21:11:42 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/15/4
+Message-ID: <20170115234731.GA25474@openwall.com>
+Date: Mon, 16 Jan 2017 00:47:31 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: libtiff: multiple heap-based buffer overflow
+Subject: Re: linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 01 January 2017 12:51:35 cve-assign@...re.org wrote:
-> > https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer
-> > -overflow
-> At the moment, we will assign IDs to the issues listed with a write
-> impact. We will later look at the issues listed with a read or
-> undefined impact, but this has some complexity. 
-
-> Another example is that a "READ of size 1" within the source
-> code of a command-line tool (not part of the library code that could
-> be used in an arbitrary application) may have no risk.
-
-Yes, we know that sometimes command line tools with issues like READ of size 1 
-cannot create damage.
-However, for completeness and for people/packagers that want to have them 
-fixed in they repository, I shared the details as well.
-
-> > AddressSanitizer: heap-buffer-overflow ... WRITE of size 2048 at
-> > tiff-4.0.7/libtiff/tif_next.c:64:9
-> > 
-> >> http://bugzilla.maptools.org/show_bug.cgi?id=2624
+On Sun, Jan 15, 2017 at 11:48:46AM -0700, Kurt Seifried wrote:
+> On Sat, Jan 14, 2017 at 7:37 PM, Solar Designer <solar@...nwall.com> wrote:
+> > I also notice you've been on oss-security for half a year.  That's good.
+> > However, I wasn't able to find any record of your past participation in
+> > this specific community.  You might want to get more involved first.
 > 
-> The vendor response was "I cannot reproduce with CVS head. But I
-> reproduce with 4.0.7 so this has been fixed by recent commits. Could
-> you track CVS head for your next fuzzing sessions so as to avoid
-> wasting our time to both of us ?"
+> The problem is how do they do that? There are very few meaningful on ramps
+> to information security, especially at the distribution level. If anyone
+> has good answers for this please post here.
 
-For some reasons I like to fuzz on a stable releases. Since libtiff ships some 
-binaries, I take time to test each binary. So, there was a situation where a 
-bug filed against an issue reproducible via tiffcp was fixed from a commit 
-which addressed an issue filed against tiffcrop.
-But as you have pointed out, there were cases where a commit addressed a READ 
-issue and later on it was discovered that it fixed a WRITE issue too.
+One way to do it could be through doing occasional security reviews of
+upstream software that is also of relevance to other distros, and
+sharing the findings (or even mere concerns and questions) in here (or
+actually via the (linux-)distros list, if the findings are bad enough
+and there's an expectation that a fix would be developed soon enough for
+a few days of embargo to make a difference).
 
+Arguably, the expertise that the above requires is not absolutely
+necessary for pure downstream distros that could nevertheless benefit
+their users through preparing security updates sooner (if accepted onto
+the distros list).  Another way to get somewhat involved is what Sona
+demonstrated through participation in and starting on-topic discussions
+(beyond the membership requests), e.g.:
 
-> If there is additional information from bisection, please let us know.
+http://www.openwall.com/lists/oss-security/2016/12/14/16
+http://www.openwall.com/lists/oss-security/2016/12/14/1
+http://www.openwall.com/lists/oss-security/2016/10/10/3
+http://www.openwall.com/lists/oss-security/2016/08/17/1
+http://www.openwall.com/lists/oss-security/2016/08/14/5
+http://www.openwall.com/lists/oss-security/2014/10/16/10
+http://www.openwall.com/lists/oss-security/2014/10/05/3
+http://www.openwall.com/lists/oss-security/2014/10/03/2
+http://www.openwall.com/lists/oss-security/2014/10/02/26
 
-The commit that addresses the specific issue seems to be 
-9657bbe3cdce4aaa90e07d50c1c70ae52da0ba6a.
-However the process seems to fails to exit and went into a loop, but that's a 
-different issue and needs to be reported upstream.
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Alexander
