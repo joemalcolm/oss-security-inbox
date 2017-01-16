@@ -1,79 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/7
-Message-ID: <22681.50976.676169.341220@tree.ty.sabi.co.uk>
-Date: Tue, 7 Feb 2017 13:09:52 +0000
-From: pg@...ern.for.sabi.co.UK (Peter Grandi)
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: a simple replacement for setuid and confinement systems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/5
+Message-ID: <1672685.X2bF2OodFF@blackgate>
+Date: Mon, 16 Jan 2017 12:00:26 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
 Content-Type: text/plain; charset=utf-8
 
-This message is "for the public record" so if in the future
-someone tries to patent something like the below mechanism this
-message can be cited as prior art.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-The mechanism would be to add to each process, along with its
-"effective" id (user/group) what I would now call a preventive id
-with the following rules:
+Another round of fuzzing shows that a crafted image causes an invalid memory 
+read.
 
-  * The access given to a program is that common to both the
-    effective id and the preventive id (the intersection of the
-    permissions for the effective and preventive ids), which can
-    be no access.
-  * Both effective and preventive id are inherited on fork.
-  * On exec the preventive id (user/group) of a process is set
-    to the id of the executed file.
-  * Files are created as in regular UNIX/Linux semantics with the
-    effective id of the creating process.
-  * A program in a process may set the preventive id to the same
-    value as the effective id (or to any value if the preventive
-    id is zero). This results in the current UNIX/Linux non-set-id
-    semantics.
-  * A program in a process may set the effective id to the same
-    value as the preventive id (or to any value if the effective
-    id is zero). This results in the the current UNIX/Linux set-id
-    semantics.
-  * If the effective id of a process and its preventive id are
-    different, the process is "confined" to the set of resources
-    accessible by both. Therefore a user that does not fully trust
-    an executable can give access to just the resources it
-    strictly needs to access, by setting permissions so that the
-    id of the file containing the executable can access only
-    those resources.
+The complete ASan output:
 
-Note: there are some other details to take care of, like
-apposite rules for access to a process via a debugger. The logic
-of the mechanism is that it is safe to let a process operate
-under the preventive id of its executable, because the program
-logic of the executable is under the control of the owner of the
-executable, and that should not be subverted.
+# imginfo -f $FILE
+==26941==ERROR: AddressSanitizer: SEGV on unknown address 0x62c80000a400 (pc 
+0x7f28c74e48ee bp 0x7ffcececdb70 sp 0x7ffcececdaf0 T0)
+==26941==The signal is caused by a READ memory access.
+    #0 0x7f28c74e48ed in jas_matrix_asl /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
+    #1 0x7f28c7545f0e in jpc_dec_tiledecode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1107:6
+    #2 0x7f28c7536cdf in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
+    #3 0x7f28c75406b3 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
+    #4 0x7f28c75406b3 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
+    #5 0x7f28c74a2b84 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
+    #6 0x509eed in main /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
+    #7 0x7f28c65aa61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #8 0x419978 in _init (/usr/bin/imginfo+0x419978)
 
-The overall logic is that in the UNIX/Linux semantics for a
-process to work across two protection domains it must play between
-the user and group ids; but it is simpler and more general to have
-the two protection domains identified directly by two separate ids
-for the running process.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11 
+in jas_matrix_asl
+==26941==ABORTING
 
-The mechanism above is not quite backwards compatible with the
-UNIX/Linux semantics because it makes changes in the effective or
-preventive ids depend on explicit process actions, but it can be
-revised to be backwards compatible with the following alternative
-rules:
+Affected version:
+1.900.27
 
-  * Only if exec if for an executable file with the "sticky" bit
-    set the preventive id of the process is set to the id of that
-    executable file. The sticky bit in effect becomes the
-    confinement bit.
-  * If exec is for an executable file with the set-id (user/group)
-    bit set, then the effective id of the process is set to the
-    preventive id after this has been set to the id of the
-    executable file.
-  * This is probably not strictly necessary because almost all
-    system-provided executables on a typical UNIX/Linux system are
-    in files owned by id 0, so preventive ids would be 0 thus
-    resulting in no confinement like in traditional UNIX/Linux
-    semantics.
+Fixed version:
+N/A
 
-Note: the implementation of either variant of the mechanism is
-trivial, and in particular adding preventive id fields to a
-process does not require backward incompatible changes as process
-attributes are not persistent.
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00053-jasper-invalidread-jas_matrix_asl
+
+Timeline:
+2016-11-20: bug discovered and reported upstream
+2017-01-16: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas_matrix_asl-jas_seq-c
+
+--
+Agostino
