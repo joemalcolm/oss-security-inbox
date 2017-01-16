@@ -1,42 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/10
-Message-ID: <099ea9a5-1f74-b837-bcae-aaba2c109a02@redhat.com>
-Date: Tue, 30 May 2017 15:05:34 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Daniel Micay <danielmicay@...il.com>, oss-security@...ts.openwall.com
-Cc: Roee Hay <roeehay@...il.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/4
+Message-ID: <2287406.W50YOaXYaS@blackgate>
+Date: Mon, 16 Jan 2017 11:59:06 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: jasper: invalid memory read in jpc_undo_roi (jpc_dec.c)
 Content-Type: text/plain; charset=utf-8
 
-On 05/30/2017 03:02 PM, Daniel Micay wrote:
-> On Tue, 2017-05-30 at 14:52 +0200, Florian Weimer wrote:
->> On 05/30/2017 01:51 PM, Daniel Micay wrote:
->>> It's unreasonable to consider the kernel line untrusted. A CVE being
->>> issued for one of these issues didn't make sense.
->>
->> It's a potential Secure Boot bypass, so it matters in some theoretical
->> sense to some downstreams which carry those Secure Boot patches.
->>
->> (Although I have yet to see anyone to revoke a signature on a kernel
->> with known root-to-ring-0 escalations, so the practical impact isn't
->> large because an attack could still downgrade to a kernel with an
->> exploitable vulnerability.)
->>
->> Florian
-> 
-> How is it a secure boot bypass? If the secure boot implementation
-> doesn't cover the kernel line it's already broken.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-That's not how the Secure Boot patches work.  They restrict some
-features so that they cannot be selected from the kernel command line
-(or later from userland), and they do not rely on a bootloader which
-does not provide any means for editing the kernel command line.
+Another round of fuzzing shows that a crafted image causes an invalid memory 
+read.
 
-> The provided example was treated as a verified boot vulnerability by
-> Google and fixed. It isn't supposed to be possible to set the kernel
-> line with a locked bootloader on Nexus/Pixel devices. It was a bug.
+The complete ASan output:
 
-I don't know how Google's user lockout works, so I can't comment on that.
+# imginfo -f $FILE
+==22872==ERROR: AddressSanitizer: SEGV on unknown address 0x7f8a4a950800 (pc 
+0x7f8e4a543b93 bp 0x7ffe29bfdcd0 sp 0x7ffe29bfdb80 T0)
+==22872==The signal is caused by a READ memory access.
+    #0 0x7f8e4a543b92 in jpc_undo_roi /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10
+    #1 0x7f8e4a543b92 in jpc_dec_tiledecode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1104
+    #2 0x7f8e4a534cdf in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
+    #3 0x7f8e4a53e6b3 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
+    #4 0x7f8e4a53e6b3 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
+    #5 0x7f8e4a4a0b84 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
+    #6 0x509eed in main /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
+    #7 0x7f8e495a861f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #8 0x419978 in _init (/usr/bin/imginfo+0x419978)
 
-Thanks,
-Florian
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10 
+in jpc_undo_roi
+==22872==ABORTING
+
+Affected version:
+1.900.27
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00054-jasper-invalidread-jpc_undo_roi
+
+Timeline:
+2016-11-20: bug discovered and reported upstream
+2017-01-16: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jpc_undo_roi-jpc_dec-c
+
+--
+Agostino
