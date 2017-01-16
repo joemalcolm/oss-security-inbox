@@ -1,4 +1,9 @@
-Received: (qmail 5772 invoked by uid 550); 26 May 2026 23:49:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2112" "Monday" "16" "January" "2017" "21:16:21" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170116201621.h7ywb7fa6t72jcpc@eldamar.local>" "50" "[oss-security] CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors" "^Cc:" nil nil "1" "2017011620:16:21" "[oss-security] CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors" (number mark "        carnil@debia Jan 16   50/2112  " thread-indent "\"[oss-security] CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 13912 invoked by uid 550); 16 Jan 2017 20:16:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,78 +11,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11732 invoked from network); 26 May 2026 22:49:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779835786;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Ui/eFzjBUWBAWj8OePjVEB3FpqCTHW+nN2fFv5OwHTc=;
-	b=StEUdvQs7SY5fIxWlbzLd08xQaos5xSIDSTOLJ5StBYf3WLH5x5uSHttNX6kzwsvkoIj+c
-	p0zNci2nrNvHKaq2GXvz4eEzwgVnCtpGDIndgo0y5U5u7KKQWzQ0jSsrGyqypPgz0T4jc5
-	Zn4FF0zoarYFmZZ9Bd1IU1sFYpP0hjMoZOpSRCs+wCCS1UYpdeewsJDXK4GMo+KlE7Wx//
-	/fq/fUMU4r3yuS0LDU23c26oM6lkIssHYRKQHbzskPakXpuLbMdd6KMxmIiJNnAX9VVXg7
-	W4zrhuouWHS7YNBDdh3z7RW5FJ4IpdwUv2vuxe1yu2nn+uON4jze6zHjZT1K4Q==
-Message-ID: <3474d514-d316-49bc-adad-5d1ec4deb970@cpansec.org>
-Date: Tue, 26 May 2026 23:49:45 +0100
+Received: (qmail 13887 invoked from network); 16 Jan 2017 20:16:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=2MYHf74HgimdaJ1b8DdTqTguW8LSjiC2p5oqoxopN1M=;
+        b=IOdIC0UF810KbhtRMfhq62he1BUvpyPptkTiIIo+K6gvDQsYl0Ww+cwtaSFA8bgiZq
+         CaU93p4y3JK9UliLrBKxnNF0Fj91ON6B7HqIaOkoFFWX9IqyT1PLx+Unq9gcE17LpY1e
+         f9srxU0eXnLDZOjuvkKqIMqnbqlRBTsOy83r8O50Rqp5MlWrRB48R+12HG3YgzVKvb+o
+         OnEpP4HOgHY7KYPMRzUOjy4YW8y6QGdH0BhEO+d6xUBS/skD2+ewq5bgt+8++ayc2aWL
+         0Snbz9KvjalhWooqAs2ejZM3hEiOgKFRPWb0WIZB4WM/UodhDTOoET7gLe1w2FKKEX29
+         9kWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=2MYHf74HgimdaJ1b8DdTqTguW8LSjiC2p5oqoxopN1M=;
+        b=Fl4/9rHKJNdp8ejjl32SlDRjZxJbUO2Hq6sPPT3mEvj8hGjk1DbA4qHeXaL4D28zX1
+         wibIS9IIsHuFtg4t77a23sJ0vSTR6fTsU8kIFfMc/KU5gT8FMwSkr1/5W8IcLT7hmp0P
+         apCTfSM3ADQ4PUwiPDaSILR4GoE5nG361XC9Rizp12uva5O8smPFTk1T9A6ItDCX1i9W
+         lsIEyJGi0ExoxYt7wy6+EbFYBFC4S7dAbL0vEz+2hxoj98uECOHZNxGQkf5Q9aYdFDV9
+         kA/ZaW0h3ZN2bgvky1O8WWbV/3rMzfD5/LySbO5h6RmX5xBZZOOe45trDVBoxbRkfphM
+         8Kiw==
+X-Gm-Message-State: AIkVDXJuieTM9r6a8iTQowlJS2rhV56KcqA7L29CC2dsTKP+QwMnLfGC9UyOtJmPGj1RYQ==
+X-Received: by 10.28.25.134 with SMTP id 128mr12615554wmz.37.1484597783959;
+        Mon, 16 Jan 2017 12:16:23 -0800 (PST)
+Message-ID: <20170116201621.h7ywb7fa6t72jcpc@eldamar.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFIQy+D82bRigV1ywzSEFPBTZOjoPHfd2BZrBqyhhRsWhZ+XMYHF8UvK3HgEaIX7CFDNga2u/uGdyU3luPIBq+SnUk70ovWfbNrcvzakFZhNkQjPGWtp+7tx+c46q5iqseXj51aQK0/f8GFZf1qIsy8F45/aDOqj3tnYeMVc4kLynGnabi0WuNEUcm2OYiOJLCtKYZsdHbqNiujvuniP3rywx+NoIWfW91Fj0Z8/rTQpPnGxJJO+uftQb3Cm6IeC/f7bty9nCGM6RguK6ocHxy6gsrkKI6cOAC7k4cAo0+N6mcFwvgT3XgmPYThvDAJZZHQldLtCY+jbYfGM0EwQL8YENSiyGcs6rMYz+XG0JKbEnI+SDbt1V7lbY+tDy3AmB7cnL1fgfiZ0cTMeBMhUZRSNwsXqv9p1u9myRepUDu3bm7yJmck6sSDQAuGzykX9ts7HKc7sVVb/qf57L+ntzjzhPaa98+SY5s9FFCsAQsOocqk/HsMd+tGPBfawjhOLqaCYP2HoBhNq9GnOx99IXSYF5f7vkn5VSkohcLrN0N303fCHIG/aapC3pW6FatRu7ilklNXGKQQ7r9jxxYynqFKwTetedcF2DzSPmL/mEeDNOmPx8ypZWv+ly8aGKGS3vphseIeRgO+KTYxwHnF2JWpSlbFW7tRXG87hgNJeWEm9g
-Subject: [oss-security] CVE-2026-46740: Mojolicious::Plugin::Statsd versions through 0.04 for
- Perl allowed metric injections
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+Cc: Bastien =?iso-8859-1?Q?ROUCARI=C8S?= <roucaries.bastien+debian@gmail.com>
+Date: Mon, 16 Jan 2017 21:16:21 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Subject: [oss-security] CVE Request: Imagemagick: various flaws: memory corruption,
+ out-of-bounds writes, memory leaks, double-frees, off-by-one errors
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
-========================================================================
-CVE-2026-46740                                       CPAN Security Group
-========================================================================
+Hi
 
-         CVE ID:  CVE-2026-46740
-   Distribution:  Mojolicious-Plugin-Statsd
-       Versions:  through 0.04
+The Debian package maintainer for ImageMagick reported several flaws
+in the Debian bugtracker, which might warrant an identifier. It is
+planned to fix those at least for the unstable distribution. I'm
+listing those with the given references by Bastien. Please include him
+in case of questions needed.
 
-       MetaCPAN: https://metacpan.org/dist/Mojolicious-Plugin-Statsd
-       VCS Repo: https://github.com/robrwo/perl-Mojolicious-Plugin-Statsd
+- coders/ipl.c: "ipl file missing malloc check"
+Debian Bug: https://bugs.debian.org/851485
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/97566cf2806c0a5a86e884c96831a0c3b1ec6c20
 
+- coders/wpg.c: off-by-one error
+Debian Bug: https://bugs.debian.org/851483
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/d23beebe7b1179fb75db1e85fbca3100e49593d9
 
-Mojolicious::Plugin::Statsd versions through 0.04 for Perl allowed
-metric injections
+- magick/profile.c: double-free memory corruption
+Debian Bug: https://bugs.debian.org/851383
+Upstream Bug: https://github.com/ImageMagick/ImageMagick/issues/354
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/6235f1f7a9f7b0f83b197f6cd0073dbb6602d0fb
 
-Description
------------
-Mojolicious::Plugin::Statsd versions through 0.04 for Perl allowed
-metric injections.
+- coders/mpc.c: memory leak in mpc file handling
+Debian Bug: https://bugs.debian.org/851382
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4493d9ca1124564da17f9b628ef9d0f1a6be9738
 
-The metric names and set values were not checked for newlines, colons
-or pipes. Metrics generated from untrusted sources could inject
-additional statsd metrics.
+- PushQuantumPixel heap buffer-overflow
+Debian Bug: https://bugs.debian.org/851381
+Upstream report: https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=31161
 
-Version 0.06 changes the module from being a statsd client to using a
-separate statsd client. It defaults to using a version of
-Net::Statsd::Tiny that fixes a similar issue (CVE-2026-46720).
+- memory leak in caption and label handling
+Debian Bug: https://bugs.debian.org/851380
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/aeff00de228bc5a158c2a975ab47845d8a1db456
 
-Problem types
--------------
-- CWE-93 Improper Neutralization of CRLF Sequences
+- coders/psd.c: out-of-bounds write flaw in psd file handling
+Debian Bug: https://bugs.debian.org/851377
+Upstream report: https://github.com/ImageMagick/ImageMagick/issues/350
 
-Solutions
----------
-Upgrade to Mojolicious::Plugin::Statsd version 0.06 or later.
+- coders/psd.c: out-of-bounds write flaw in psd file handling
+(different issue from the above)
+Debian Bug: https://bugs.debian.org/851376
+Upstream report: https://github.com/ImageMagick/ImageMagick/issues/348
 
+- coders/psd.c: memory corruption heap overflow
+Debian Bug: https://bugs.debian.org/851374
+Upstream report: https://github.com/ImageMagick/ImageMagick/issues/347
 
-References
-----------
-https://metacpan.org/release/RRWO/Mojolicious-Plugin-Statsd-0.06/changes
-https://github.com/robrwo/perl-Mojolicious-Plugin-Statsd/commit/f049156982a2c0b8050f173e24a04a29ddd64853.patch
-https://www.cve.org/CVERecord?id=CVE-2026-46720
+Could you assign identifiers for those issues?
 
-
-
+Regards,
+Salvatore
