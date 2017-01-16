@@ -1,35 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/7
-Message-ID: <alpine.LFD.2.20.1703011206260.1553@wniryva>
-Date: Wed, 1 Mar 2017 12:08:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-6386 Virglrenderer: memory leakage while in vrend_create_vertex_elements_state
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/2
+Message-ID: <1817798.vB5Z0p8x99@blackgate>
+Date: Mon, 16 Jan 2017 11:56:08 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: jasper: multiple crashes with UBSAN
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
-a guest tries to create vertex elements via 'VIRGL_OBJECT_VERTEX_ELEMENTS' 
-command.
+With the undefined behavior sanitizer enabled, jasper crashes showing some 
+left shift and some signed integer overflow.
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+Affected version / Tested on:
+1.900.17
+Fixed version:
+N/A
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00017-jasper-leftshift-jas_math_h
+Relevant part of the stacktrace:
 
-Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=737c3350850ca4dbc5633b3bdb4118176ce59920
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11: 
+runtime error: left shift of negative value -185
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1427472
+#################################################
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Affected version / Tested on:
+1.900.17
+Fixed version:
+N/A
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00018-jasper-signedintoverflow-jpc_dec_c
+Relevant part of the stacktrace:
 
-'CVE-2017-6386' assigned via -> http://cveform.mitre.org/
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9: 
+runtime error: signed integer overflow: -64356352 * 6359082673847140352 cannot 
+be represented in type 'long'
 
-Thank you.
+#################################################
+
+Affected version / Tested on:
+1.900.17
+Fixed version:
+N/A
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00019-jasper-leftshift-jpc_dec_c
+Relevant part of the stacktrace:
+
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40: 
+runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t' 
+(aka 'long')
+
+#################################################
+
+Affected version / Tested on:
+1.900.17
+Fixed version:
+N/A
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00022-jasper-signedintoverflow-jpc_tsfb_c
+Relevant part of the stacktrace:
+
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35: 
+runtime error: signed integer overflow: 2013306369 + 251691968 cannot be 
+represented in type 'int'
+
+#################################################
+
+Affected version / Tested on:
+1.900.17
+Fixed version:
+N/A
+Commit fix:
+N/A
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00030-jasper-leftshift-jp2_dec_c
+Relevant part of the stacktrace:
+
+# imginfo -f $FILE
+/tmp/portage/media-
+libs/jasper-1.900.17/work/jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49: 
+runtime error: left shift of negative value -26
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2016-10-28: bug discovered and reported to upstream
+2017-01-16: blog post about the issues
+
+Note:
+These bugs were found with American Fuzzy Lop.
+
+Permalink:
+http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Agostino
