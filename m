@@ -1,45 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/2
-Message-ID: <20171003112709.GA30134@kroah.com>
-Date: Tue, 3 Oct 2017 13:27:09 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/3
+Message-ID: <2047603.jilSxc2Osk@blackgate>
+Date: Mon, 16 Jan 2017 11:57:55 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Subject: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2017 at 05:37:21PM -0400, Brad Spengler wrote:
-> > > CVE-2017-0605:
-> > > --------------
-> > > https://security-tracker.debian.org/tracker/CVE-2017-0605
-> > > upstream: (4.12-rc1) [e09e28671cda63e6308b31798b997639120e2a21]
-> > > 
-> > > is e.g. includedin 3.16.44 (a1141b19b23a0605d46f3fab63fd2d76207096c4),
-> > > 3.2.89 (e39e64193a8a611d11d4c62579a7246c1af70d1c) but not in 4.9.
-> > > 
-> > > (afaics not Cc'ed to stable).
-> > 
-> > Ouch, thanks for letting me know, that's not good, we don't want to get
-> > the trees out of sync for obvious reasons.
-> 
-> The above CVE shouldn't exist; the patch doesn't fix any vulnerability
-> as the upstream commit message itself notes, and didn't need to be
-> backported to any of the kernels it was backported to.  Not only that, the
-> above advisory marked it as a remote vulnerability with critical severity.
-> It looks like Debian and Ubuntu released updated kernels, while Red Hat and
-> SuSE marked it as WONTFIX and unaffected, respectively.  I am not sure why
-> neither simply rejected the CVE.
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Yeah, this one keeps trying to get re-introduced as a "fix", when it
-really isn't (see the archives of the stable@...r mailing list for
-details.
+Another round of fuzzing shows that a crafted image causes an invalid memory 
+write.
 
-I don't know how you can "reject" a CVE, is there a proceedure
-somewhere?  There's lots of CVEs out there that people create against
-the kernel that just aren't issues at all, but I've been ignoring them
-as it makes people happy to assign and track them for no reason.
+The complete ASan output:
 
-Is there some way a project can get them rejected?
+# imginfo -f $FILE
+==24746==ERROR: AddressSanitizer: SEGV on unknown address 0x7ef94fe46c88 (pc 
+0x7efd4faa510d bp 0x7ffde2235af0 sp 0x7ffde2235900 T0)
+==24746==The signal is caused by a WRITE memory access.
+    #0 0x7efd4faa510c in dec_clnpass /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
+    #1 0x7efd4faa510c in jpc_dec_decodecblk /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:283
+    #2 0x7efd4fa9ef89 in jpc_dec_decodecblks /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:177:11
+    #3 0x7efd4fa394f1 in jpc_dec_tiledecode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1085:6
+    #4 0x7efd4fa2acdf in jpc_dec_process_sod /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:658:7
+    #5 0x7efd4fa346b3 in jpc_dec_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:425:10
+    #6 0x7efd4fa346b3 in jpc_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:262
+    #7 0x7efd4f996b84 in jas_image_decode /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/base/jas_image.c:444:16
+    #8 0x509eed in main /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/appl/imginfo.c:219:16
+    #9 0x7efd4ea9e61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419978 in _init (/usr/bin/imginfo+0x419978)
 
-thanks,
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+libs/jasper-1.900.27/work/jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4 
+in dec_clnpass
+==24746==ABORTING
 
-greg k-h
+Affected version:
+1.900.27
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00055-jasper-invalidwrite-dec_clnpass
+
+Timeline:
+2016-11-20: bug discovered and reported upstream
+2017-01-16: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-dec_clnpass-jpc_t1dec-c
+
+--
+Agostino
