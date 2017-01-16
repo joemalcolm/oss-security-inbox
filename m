@@ -1,38 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/2
-Message-ID: <20170127061304.GA12270@lorien.valinor.li>
-Date: Fri, 27 Jan 2017 07:13:04 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/16/6
+Message-ID: <20170116201621.h7ywb7fa6t72jcpc@eldamar.local>
+Date: Mon, 16 Jan 2017 21:16:21 +0100
 From: Salvatore Bonaccorso <carnil@...ian.org>
 To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues
+Cc: Bastien ROUCARIÈS <roucaries.bastien+debian@...il.com>
+Subject: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors
 Content-Type: text/plain; charset=utf-8
 
 Hi
 
-Wordpress has released 4.7.2 as security release. Quoting from the
-advisory there seem to be three issues fixed (full quoting for the
-list archives):
+The Debian package maintainer for ImageMagick reported several flaws
+in the Debian bugtracker, which might warrant an identifier. It is
+planned to fix those at least for the unstable distribution. I'm
+listing those with the given references by Bastien. Please include him
+in case of questions needed.
 
-WordPress 4.7.2 is now available. This is a security release for all previous
-versions and we strongly encourage you to update your sites immediately.
+- coders/ipl.c: "ipl file missing malloc check"
+Debian Bug: https://bugs.debian.org/851485
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/97566cf2806c0a5a86e884c96831a0c3b1ec6c20
 
-WordPress versions 4.7.1 and earlier are affected by three security issues:
+- coders/wpg.c: off-by-one error
+Debian Bug: https://bugs.debian.org/851483
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/d23beebe7b1179fb75db1e85fbca3100e49593d9
 
- 1/ The user interface for assigning taxonomy terms in Press This is shown to
-users who do not have permissions to use it. Reported by David Herrera of Alley
-Interactive.
+- magick/profile.c: double-free memory corruption
+Debian Bug: https://bugs.debian.org/851383
+Upstream Bug: https://github.com/ImageMagick/ImageMagick/issues/354
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/6235f1f7a9f7b0f83b197f6cd0073dbb6602d0fb
 
- 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
-WordPress core is not directly vulnerable to this issue, but we’ve added
-hardening to prevent plugins and themes from accidentally causing a
-vulnerability. Reported by Mo Jangda (batmoo).
+- coders/mpc.c: memory leak in mpc file handling
+Debian Bug: https://bugs.debian.org/851382
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4493d9ca1124564da17f9b628ef9d0f1a6be9738
 
- 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
-table. Reported by Ian Dunn of the WordPress Security Team.
+- PushQuantumPixel heap buffer-overflow
+Debian Bug: https://bugs.debian.org/851381
+Upstream report: https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=31161
 
-https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+- memory leak in caption and label handling
+Debian Bug: https://bugs.debian.org/851380
+Fixed by: https://github.com/ImageMagick/ImageMagick/commit/aeff00de228bc5a158c2a975ab47845d8a1db456
 
-Could you please assign CVEs for those issues?
+- coders/psd.c: out-of-bounds write flaw in psd file handling
+Debian Bug: https://bugs.debian.org/851377
+Upstream report: https://github.com/ImageMagick/ImageMagick/issues/350
+
+- coders/psd.c: out-of-bounds write flaw in psd file handling
+(different issue from the above)
+Debian Bug: https://bugs.debian.org/851376
+Upstream report: https://github.com/ImageMagick/ImageMagick/issues/348
+
+- coders/psd.c: memory corruption heap overflow
+Debian Bug: https://bugs.debian.org/851374
+Upstream report: https://github.com/ImageMagick/ImageMagick/issues/347
+
+Could you assign identifiers for those issues?
 
 Regards,
 Salvatore
