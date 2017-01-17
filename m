@@ -1,67 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/19
-Message-ID: <7514610.NxtJqOQEcv@blackgate>
-Date: Thu, 09 Feb 2017 14:50:18 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/6
+Message-ID: <2831124.Ha61dFcUh2@blackgate>
+Date: Tue, 17 Jan 2017 11:30:36 +0100
 From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: zziplib: load of misaligned address in memdisk.c
+Subject: Re: Re: jasper: multiple crashes with UBSAN
 Content-Type: text/plain; charset=utf-8
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+On Monday 16 January 2017 19:06:47 cve-assign@...re.org wrote:
+> > http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
+> > 
+> > [] jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11
+> > runtime error: left shift of negative value -185
+> 
+> Use CVE-2017-5498.
+> 
+> > [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9
+> > runtime error: signed integer overflow: -64356352 * 
+6359082673847140352
+> > cannot be represented in type 'long'
+> 
+> Use CVE-2017-5499.
+> 
+> > [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40
+> > runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t'
+> > (aka 'long')
+> 
+> Use CVE-2017-5500.
+> 
+> > [] jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35
+> > runtime error: signed integer overflow: 2013306369 + 251691968 
+cannot be
+> > represented in type 'int'
+> 
+> Use CVE-2017-5501.
+> 
+> > [] jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49
+> > runtime error: left shift of negative value -26
+> 
+> Use CVE-2017-5502.
+> 
+> 
+> --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
 
-A fuzz on it discovered the load of a misaligned address. It can cause 
-undefined behavior.
+The previous mail clearly state:
+> Timeline:
+> 2016-10-28: bug discovered and reported to upstream
 
-The complete ASan output:
+Why CVE-2017-* ?
 
-# unzzipcat-mem $FILE
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:250:33: runtime error: load of 
-misaligned address 0x00000295d17d for type 'uint16_t' (aka 'unsigned short'), 
-which requires 2 byte alignment
-0x00000295d17d: note: pointer points here
- 5a 45 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff 
-ff ff 42 00 00 00  b1
-             ^ 
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:256:22: runtime error: load of 
-misaligned address 0x00000295d17f for type 'uint16_t' (aka 'unsigned short'), 
-which requires 2 byte alignment
-0x00000295d17f: note: pointer points here
- 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff ff ff 
-42 00 00 00  b1 01 00
-             ^
+--
+Agostino
 
-Affected version:
-0.13.62
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00160-zziplib-misalignedadd-memdisk_c
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-load-of-misaligned-address-in-memdisk-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
