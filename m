@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/7
-Message-ID: <3933984.tAXUzh7mVD@blackgate>
-Date: Mon, 13 Mar 2017 10:38:56 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/16
+Message-ID: <CAL8hw9Et3-hdcmJPZk7cY+Z87Ggk3+yGpbbVZgMXJbuQ9CAdrw@mail.gmail.com>
+Date: Tue, 17 Jan 2017 09:06:10 -0600
+From: Nathan Van Gheem <nathan.van.gheem@...ne.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: audiofile: divide-by-zero in BlockCodec::reset1 (BlockCodec.cpp)
+Subject: CVE Request: Plone Sandbox escape vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 26 February 2017 11:55:03 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/02/20/audiofile-divide-by-zero-in-blockcod
-> ecreset1-blockcodec-cpp
+Dear oss-security List,
 
-This is CVE-2017-6835
+Please provide a CVE for the following issue:
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Sandbox escape
+    Accessing private content via `str.format` in through-the-web templates
+and scripts. See this blog post by Armin Ronacher (
+http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/) for the
+general idea. Since the `format` method was introduced in Python 2.6, this
+part of the hotfix is only relevant for Plone 4 and 5, not Plone 3.
+    Credit: Plone security team, Armin Ronacher
+    Reference: https://plone.org/security/hotfix/20170117/sandbox-escape
+
+
+Versions Affected:
+4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+
+Code fixes:
+https://pypi.python.org/pypi/Products.PloneHotfix20170117
+
+Recommended action:
+Install the https://pypi.python.org/pypi/Products.PloneHotfix20170117
+package.
+
+
+Thank you,
+Nathan Van Gheem
+Plone Security Team
+
