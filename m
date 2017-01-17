@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["472" "Sunday" "24" "January" "2016" "16:37:43" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160124153743.GA19655@eldamar.local>" "18" "[oss-security] CVE Request: tiff: potential out-of-bound write in NeXTDecode()" nil nil nil "1" "2016012415:37:43" "[oss-security] CVE Request: tiff: potential out-of-bound write in NeXTDecode()" (number mark "U       carnil@debia Jan 24   18/472   " thread-indent "\"[oss-security] CVE Request: tiff: potential out-of-bound write in NeXTDecode()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3140" "Monday" "16" "January" "2017" "19:13:04" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<95cf924f96704145a7123025342907fa@imshyb01.MITRE.ORG>" "91" "[oss-security] Re: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors" "^CC:" nil nil "1" "2017011700:13:04" "[oss-security] Re: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors" (number mark "U       cve-assign@m Jan 16   91/3140  " thread-indent "\"[oss-security] Re: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors\"\n") "<20170116201621.h7ywb7fa6t72jcpc@eldamar.local>" ("<20170116201621.h7ywb7fa6t72jcpc@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32474 invoked by uid 550); 24 Jan 2016 15:37:58 -0000
+Received: (qmail 5684 invoked by uid 550); 17 Jan 2017 00:13:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32441 invoked from network); 24 Jan 2016 15:37:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=LrwWe8TD3NQxcWpu2sdkgkXrWbqMqOFxtK9P/B9zaHY=;
-        b=00a7CX4nDkuU/h3t46Pbfo1iupou1+1JaONS4zNmDEwcqqi8KUaKkEvjwwcDHLsWq4
-         1rpTfBDWI9jhPxUFSzQ7iJMtz29onMTabXrs7QZScgvtXql42gtOQHx3CRiOoJWOgMbi
-         pcz0SHxCsYhS/74NsCKFpfsV5NU2dOD0P2UMITFvLRncxOKqeneIjmPKg+V/XLEhLEI6
-         LsStWlCoRQ39dQVtTNVKHoXmSEyW/drdX9TSTe12X0ec8mOF96A+MKcBfmduhDkTflRS
-         lGdNr0WZWc7dD1VYDpOvYGIFweicAePfLozQqglJ1MBS7VrNOR8usj6JV2nif+k1veel
-         XhsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-type:content-disposition:user-agent;
-        bh=LrwWe8TD3NQxcWpu2sdkgkXrWbqMqOFxtK9P/B9zaHY=;
-        b=h5K0TZUbOir6qxuNubeoJK9iiNvCtMrGWKzg78D8ofmbuHzv0DO5VrF3MFudpdC72l
-         4HQ0mIC7mFtJeHNLbwwxGIbyeCgez6YvLr+Co01w3S3T3fGOQIL6d2a0TNB8+PxEUZrC
-         42iwkh3m/fDWUN7bvV1bP/ZK9WdLpC8aCgeRxTNvb5UqDgGZevnzaNDw8+dBy2Byvw4R
-         eDPcKoJ6Z75wWAycy6zwAs3LFz/kReH/8q8E3p+P4DM/KRf+339CxH2pMrfIDA3nWkRW
-         4N1SbOWv/6lwivqhheZD7wJiynblvS76wI8xMHEZDLWGz1ZfLrC26Otro1REcpwoRTek
-         IuZg==
-X-Gm-Message-State: AG10YOTIJFhfkVI1ufkTwPAldxoPSXU+KQuA78/U+tX20/yU7mzLoreD5TjpxL8i0SQ7/A==
-X-Received: by 10.194.216.35 with SMTP id on3mr12807210wjc.107.1453649865894;
-        Sun, 24 Jan 2016 07:37:45 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 24 Jan 2016 16:37:43 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20160124153743.GA19655@eldamar.local>
+Received: (qmail 5589 invoked from network); 17 Jan 2017 00:13:16 -0000
+In-Reply-To: <20170116201621.h7ywb7fa6t72jcpc@eldamar.local>
+Message-ID: <95cf924f96704145a7123025342907fa@imshyb01.MITRE.ORG>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: tiff: potential out-of-bound write in NeXTDecode()
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<roucaries.bastien+debian@gmail.com>
+Date: Mon, 16 Jan 2017 19:13:04 -0500
+From: <cve-assign@mitre.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors
+To: <carnil@debian.org>
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Could you assign a CVE for the following issue in tiff:
+> [] coders/ipl.c: "ipl file missing malloc check"
+> Debian Bug: https://bugs.debian.org/851485
+> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/97566cf2806c0a5a86e884c96831a0c3b1ec6c20
 
-http://bugzilla.maptools.org/show_bug.cgi?id=2508
+Use CVE-2016-10144.
 
-> 2015-12-27  Even Rouault <even.rouault at spatialys.com>
-> 
->         * libtiff/tif_next.c: fix potential out-of-bound write in NeXTDecode()
->         triggered by http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
->         (bugzilla #2508)
 
-Fixing commit:
+> [] coders/wpg.c: off-by-one error
+> Debian Bug: https://bugs.debian.org/851483
+> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/d23beebe7b1179fb75db1e85fbca3100e49593d9
 
-https://github.com/vadz/libtiff/commit/b18012dae552f85dcc5c57d3bf4e997a15b1cc1c
+Use CVE-2016-10145.
 
-Regards,
-Salvatore
+
+> [] magick/profile.c: double-free memory corruption
+> Debian Bug: https://bugs.debian.org/851383
+> Upstream Bug: https://github.com/ImageMagick/ImageMagick/issues/354
+> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/6235f1f7a9f7b0f83b197f6cd0073dbb6602d0fb
+
+Use CVE-2017-5506.
+
+
+> [] coders/mpc.c: memory leak in mpc file handling
+> Debian Bug: https://bugs.debian.org/851382
+> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4493d9ca1124564da17f9b628ef9d0f1a6be9738
+
+Use CVE-2017-5507.
+
+
+> [] PushQuantumPixel heap buffer-overflow
+> Debian Bug: https://bugs.debian.org/851381
+> Upstream report: https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=31161
+> https://github.com/ImageMagick/ImageMagick/commit/c073a7712d82476b5fbee74856c46b88af9c3175
+
+Use CVE-2017-5508.
+
+
+> [] memory leak in caption and label handling
+> Debian Bug: https://bugs.debian.org/851380
+> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/aeff00de228bc5a158c2a975ab47845d8a1db456
+
+Use CVE-2016-10146.
+
+
+> [] coders/psd.c: out-of-bounds write flaw in psd file handling
+> Debian Bug: https://bugs.debian.org/851377
+> Upstream report: https://github.com/ImageMagick/ImageMagick/issues/350
+
+Use CVE-2017-5509.
+
+
+> [] coders/psd.c: out-of-bounds write flaw in psd file handling
+> (different issue from the above)
+> Debian Bug: https://bugs.debian.org/851376
+> Upstream report: https://github.com/ImageMagick/ImageMagick/issues/348
+
+Use CVE-2017-5510.
+
+
+> [] coders/psd.c: memory corruption heap overflow
+> Debian Bug: https://bugs.debian.org/851374
+> Upstream report: https://github.com/ImageMagick/ImageMagick/issues/347
+
+Use CVE-2017-5511.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYfV+eAAoJEHb/MwWLVhi2QIcQALYMUMbHIVzC/24Y52Ew+i4A
+r5V0YSNAC0vPdKoF4zbpOeeOfQjrvPhdM4t0cvcRZnzNvlig81CyB4O72791d6Gz
+g6HJ0Gnmkl9evckmw4vT9zVknf1FZ+q3bMe1rRR2b8JfhI4ZMLaPQcc9r7KapN9C
+pMh/Am+PT+h3OZN+GQQnPj5MHgr2znYROM1tiqi9roj4E5HTBJmGoDypd503TTI8
+ljbje8cmCykJsy+te/qft5avhYujLkiVABu/jOgfxL+8lWXPWS8rRjgspgpt34Hl
+S7J+L5FX5U2AAutwLxmzTM7sI+eyLWZtAJOBJ0tS0/mhQ236F1T7zwQRzSlhKxBY
+1u/SbXLckTlXaeKqzxglSUUgJCFeCFLdMfT0jwlrP7wbMD8BxhHBAuiEulNRJOFA
+JOrZAClEJv4toG2+Cd9CxDFosqaih2PB0uDIantimLB50zWBrytcNel7UMxrpH1K
+QXYxUpuzc/Odr7KvuFS0n1QislNiRzdEIt9VnvF8RWrgBwYe/Xh78YGFgB8K0GdW
+9gHoI9FOAAqP1g/+6Rwh2NJvIAraEthQQzPNNvazCKrCYeyCflMlc4uypAkFxyQS
+Pw6B5RNiWcH1UewKJnglJpgMboXkEFMRjZg3ccLYTet9qn4M4bbn5m2iQGJQYzwn
+6HF+uhc12KUYrnrDbJp2
+=Io2X
+-----END PGP SIGNATURE-----
