@@ -1,24 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/11
-Message-ID: <CA+aC4kuK7Cqhn3iRvAC7yoqDNBMUM2ekZEnc3gXtTcpY=vBRHg@mail.gmail.com>
-Date: Sun, 2 Jul 2017 13:58:39 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: k_f@...too.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/10
+Message-ID: <20170117111107.GA5591@inutil.org>
+Date: Tue, 17 Jan 2017 12:11:07 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
 Content-Type: text/plain; charset=utf-8
 
-On Jul 2, 2017 1:38 PM, "Kristian Fiskerstrand"<k_f@...too.org> wrote:
-> The immediate thought that springs to mind is the [lack of OpenPGP
-> support in bugzilla] which makes it difficult to ensure confidentiality
-> unless disabling all email warnings.
+On Tue, Jan 17, 2017 at 11:33:28AM +0100, Agostino Sarubbo wrote:
+> On Monday 16 January 2017 19:08:48 cve-assign@...re.org wrote:
+> > > []
+> > > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-de
+> > > c_clnpass-jpc_t1dec-c
+> > > 
+> > > AddressSanitizer: SEGV on unknown address
+> > > The signal is caused by a WRITE memory access.
+> > > 
+> > > dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
+> > 
+> > Use CVE-2017-5503.
+> > 
+> > 
+> > --
+> > CVE Assignment Team
+> > M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> > [ A PGP key is available for encrypted communications at
+> >   http://cve.mitre.org/cve/request_id.html ]
+> 
+> The previous mail clearly state:
+> > Timeline:
+> > 2016-11-20: bug discovered and reported to upstream
+> 
+> Why a CVE-2017-* ?
 
-I would just assume all email is disabled.  I don't know of a tool that
-does this right so for security sensitive things, I think disabling email
-notification is a best practice.
+Where was that reported upstream? Please add the bug numbers to your
+advisories.
 
-Regards,
-
-Anthony Liguori
-
-
+Cheers,
+        Moritz
