@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/3
-Message-ID: <20170717065129.snmhfal5wdsny4yy@scully.more-magic.net>
-Date: Mon, 17 Jul 2017 08:51:29 +0200
-From: Peter Bex <peter@...e-magic.net>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2017-11343 CHICKEN Scheme: algorithmic complexity attack in hash tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/3
+Message-ID: <09d7ec25ba894f319c2e8257965b0ea0@imshyb01.MITRE.ORG>
+Date: Mon, 16 Jan 2017 19:10:08 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: invalid memory read in jpc_undo_roi (jpc_dec.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I just received the CVE-2017-11343 assignment for an issue in
-CHICKEN Scheme.  An attacker is able to cause O(n) lookup for
-hash tables by predicting the buckets in which interned symbols
-will end up, due to a partially incorrect fix for CVE-2012-6125
-where the randomization factor was determined before initializing
-the PRNG with a seed state.
+> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jpc_undo_roi-jpc_dec-c
+> 
+> AddressSanitizer: SEGV on unknown address
+> The signal is caused by a READ memory access.
+> 
+> jpc_undo_roi ... jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10
 
-This issue affects only the Scheme symbol table, not user-created
-hash tables.  All CHICKEN releases up to and including 4.12.0 are
-affected.
+Use CVE-2017-5504.
 
-More info:
-http://lists.nongnu.org/archive/html/chicken-announce/2017-07/msg00000.html
 
-Cheers,
-Peter Bex
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+iQIcBAEBCAAGBQJYfV+TAAoJEHb/MwWLVhi2BnoP/iX2MWVoRd5spNVOMwFfsnw+
+RzFqjbJfb9tiiVrUkmsvadvJ65waV8WYhiUag9eWzSi0NboaY0P4CtybFbPr2jf6
+W7hZXmbxVqUgKLnOi3dwc5L2wHedMAe2BN0euz/Grh3jgCVdw0vT8GA5L+i/+jMG
+j6J1JV5JhMlsqdLC3BnzBLvxXVkY3ctUMaoVf74WZiA2l9unsQDHqRo3Kuya4v6A
+lDOYbkEkO1DQqkmxURhxKIfGJM0a4hUNzB4WtJjoq2L3UGq+gTuvxzwcEuBOBZuf
+rnLjPKaAaLISAMU3hzlvWcMcGag16YvT78OAaY7szurBcl+BPPJeJqe9tFxQZ/cf
+HrYEdF/Xr/lTD2T/s7JsxaNtJ2mnnVWB4OzJLCE0EuZtoD6/C1OiH5T5mPPbix2v
+Vm1EEHhx/CiFUvtCS8e8ZirGfSRklJGqgjimBMgM/3cheGVgIzVKdxyD07WQCITV
+kY1Q4FFCE2vDZ8boFRWcsJnuae7kJ/kRn4/9G3oYB1XygH6GZ+RB1TG0dF1qYW2z
+uum/6YYhhAX4G7xX/DeUoUcaqzC4nuB8TRmVmm05TW8pr/NL0d68KZN1Bjm3eipa
+/bf/MQP5hE3fkpEBYYTJMaaaVZBBw8PzvWbE54ncqvZ3a+Q/bfq7JM3uMHZmeIuQ
+yRP72ZaDoxvPZvugXtsr
+=RGe1
+-----END PGP SIGNATURE-----
