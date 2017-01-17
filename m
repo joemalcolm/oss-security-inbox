@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/7
-Message-ID: <9235377.E4Xv9CnOap@blackgate>
-Date: Tue, 17 Jan 2017 11:33:21 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/14
+Message-ID: <20170117133351.12825381@bahia.lan>
+Date: Tue, 17 Jan 2017 13:33:51 +0100
+From: Greg Kurz <groug@...d.org>
+To: P J P <ppandit@...hat.com>
+Cc: oss security list <oss-security@...ts.openwall.com>, Jann Horn <jannh@...gle.com>
+Subject: Re: CVE-2016-9602 Qemu: 9p: virtfs allows guest to access host filesystem
 Content-Type: text/plain; charset=utf-8
 
-On Monday 16 January 2017 19:11:33 cve-assign@...re.org wrote:
-> > []
-> > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas
-> > _matrix_asl-jas_seq-c
-> > 
-> > AddressSanitizer: SEGV on unknown address
-> > The signal is caused by a READ memory access.
-> > 
-> > jas_matrix_asl ... jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
+On Tue, 17 Jan 2017 17:48:59 +0530 (IST)
+P J P <ppandit@...hat.com> wrote:
+
+>    Hello,
 > 
-> Use CVE-2017-5505.
+> Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+> File System(9pfs) support, is vulnerable to an improper link following issue. 
+> It could occur while accessing symbolic link files on a shared host directory.
+> 
+> A privileged user inside guest could use this flaw to access host file system 
+> beyond the shared folder and potentially escalating their privileges on a 
+> host.
+> 
+> Reference:
+> ----------
+>    -> http://wiki.qemu.org/Documentation/9psetup
+>    -> https://bugzilla.redhat.com/show_bug.cgi?id=1413929  
 > 
 > 
+> Please see a proposed patch to fix this issue attached herein.
+> 
+
+The proposed patch DOES NOT fix the vulnerability because of a TOCTTOU
+issue. Please ignore it. I'm working on another fix I hope to complete
+this week.
+
+> This issue was discovered by Jann Horn of Google Project Zero.
+> 
+> 'CVE-2016-9602' has been assigned to this issue by Red Hat Inc.
+> 
+> Thank you.
 > --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-
-The previous mail clearly state:
-> Timeline:
-> 2016-11-20: bug discovered and reported to upstream
-
-Why a CVE-2017-* ?
-
---
-Agostino
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
