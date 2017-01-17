@@ -1,125 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/8
-Message-ID: <CA+fCnZfP83sn2biq-=5x23Kfgzv_0YFKKDNpntrH89TwLRCEjw@mail.gmail.com>
-Date: Mon, 6 Nov 2017 14:45:01 +0100
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/9
+Message-ID: <2971422.7a4hKthq7I@blackgate>
+Date: Tue, 17 Jan 2017 11:33:28 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
-Subject: Linux kernel: multiple vulnerabilities in the USB subsystem
+Subject: Re: Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Monday 16 January 2017 19:08:48 cve-assign@...re.org wrote:
+> > []
+> > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-de
+> > c_clnpass-jpc_t1dec-c
+> > 
+> > AddressSanitizer: SEGV on unknown address
+> > The signal is caused by a WRITE memory access.
+> > 
+> > dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
+> 
+> Use CVE-2017-5503.
+> 
+> 
+> --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
 
-Below are the details for 14 vulnerabilities found with syzkaller in
-the Linux kernel USB subsystem. All of them can be triggered with a
-crafted malicious USB device in case an attacker has physical access
-to the machine.
+The previous mail clearly state:
+> Timeline:
+> 2016-11-20: bug discovered and reported to upstream
 
-There's quite a lot more similar bugs reported [1] but not yet fixed.
+Why a CVE-2017-* ?
 
-[1] https://github.com/google/syzkaller/blob/master/docs/linux/found_bugs_usb.md
+--
+Agostino
 
-### CVEs
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16525
-
-The usb_serial_console_disconnect function in
-drivers/usb/serial/console.c in the Linux kernel before 4.13.8 allows
-local users to cause a denial of service (use-after-free and system
-crash) or possibly have unspecified other impact via a crafted USB
-device, related to disconnection and failed setup.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16526
-
-drivers/uwb/uwbd.c in the Linux kernel before 4.13.6 allows local
-users to cause a denial of service (general protection fault and
-system crash) or possibly have unspecified other impact via a crafted
-USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16527
-
-sound/usb/mixer.c in the Linux kernel before 4.13.8 allows local users
-to cause a denial of service (snd_usb_mixer_interrupt use-after-free
-and system crash) or possibly have unspecified other impact via a
-crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16528
-
-sound/core/seq_device.c in the Linux kernel before 4.13.4 allows local
-users to cause a denial of service (snd_rawmidi_dev_seq_free
-use-after-free and system crash) or possibly have unspecified other
-impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16529
-
-The snd_usb_create_streams function in sound/usb/card.c in the Linux
-kernel before 4.13.6 allows local users to cause a denial of service
-(out-of-bounds read and system crash) or possibly have unspecified
-other impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16530
-
-The uas driver in the Linux kernel before 4.13.6 allows local users to
-cause a denial of service (out-of-bounds read and system crash) or
-possibly have unspecified other impact via a crafted USB device,
-related to drivers/usb/storage/uas-detect.h and
-drivers/usb/storage/uas.c.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16531
-
-drivers/usb/core/config.c in the Linux kernel before 4.13.6 allows
-local users to cause a denial of service (out-of-bounds read and
-system crash) or possibly have unspecified other impact via a crafted
-USB device, related to the USB_DT_INTERFACE_ASSOCIATION descriptor.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16532
-
-The get_endpoints function in drivers/usb/misc/usbtest.c in the Linux
-kernel through 4.13.11 allows local users to cause a denial of service
-(NULL pointer dereference and system crash) or possibly have
-unspecified other impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16533
-
-The usbhid_parse function in drivers/hid/usbhid/hid-core.c in the
-Linux kernel before 4.13.8 allows local users to cause a denial of
-service (out-of-bounds read and system crash) or possibly have
-unspecified other impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16534
-
-The cdc_parse_cdc_header function in drivers/usb/core/message.c in the
-Linux kernel before 4.13.6 allows local users to cause a denial of
-service (out-of-bounds read and system crash) or possibly have
-unspecified other impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16535
-
-The usb_get_bos_descriptor function in drivers/usb/core/config.c in
-the Linux kernel before 4.13.10 allows local users to cause a denial
-of service (out-of-bounds read and system crash) or possibly have
-unspecified other impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16536
-
-The cx231xx_usb_probe function in
-drivers/media/usb/cx231xx/cx231xx-cards.c in the Linux kernel through
-4.13.11 allows local users to cause a denial of service (NULL pointer
-dereference and system crash) or possibly have unspecified other
-impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16537
-
-The imon_probe function in drivers/media/rc/imon.c in the Linux kernel
-through 4.13.11 allows local users to cause a denial of service (NULL
-pointer dereference and system crash) or possibly have unspecified
-other impact via a crafted USB device.
-
-* http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-16538
-
-drivers/media/usb/dvb-usb-v2/lmedm04.c in the Linux kernel through
-4.13.11 allows local users to cause a denial of service (general
-protection fault and system crash) or possibly have unspecified other
-impact via a crafted USB device, related to a missing warm-start check
-and incorrect attach timing (dm04_lme2510_frontend_attach versus
-dm04_lme2510_tuner).
