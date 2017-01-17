@@ -1,4 +1,9 @@
-Received: (qmail 17673 invoked by uid 550); 14 May 2025 17:50:15 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["841" "Tuesday" "17" "January" "2017" "11:33:28" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2971422.7a4hKthq7I@blackgate>" "34" "Re: [oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)" nil nil nil "1" "2017011710:33:28" "[oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)" (number mark "U       ago@gentoo.o Jan 17   34/841   " thread-indent "\"Re: [oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)\"\n") "<6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>" ("<6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20223 invoked by uid 550); 17 Jan 2017 10:33:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,35 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7729 invoked from network); 14 May 2025 11:30:13 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 20073 invoked from network); 17 Jan 2017 10:33:44 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-From: "gmane.io" <wwd.smartmachine.stp@posteo.org>
-Date: Wed, 14 May 2025 13:24:13 +0200
-Message-ID: <1001ugt$3p9$1@ciao.gmane.io>
-References: <A398F21D-1899-4061-A56A-8CDD5A31904E@graemef.net>
- <3f3dottw366msbyl7vknhxldyftyvkdz2an2iw5i5rdk24fc6k@drfe7sruxmtc>
- <8166ca15-3db7-40f3-ba07-42cf14102b05@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101
- Firefox/128.0 SeaMonkey/2.53.20
-In-Reply-To: <8166ca15-3db7-40f3-ba07-42cf14102b05@web.de>
-Subject: [oss-security] Re: EU Vulnerability Database
+Date: Tue, 17 Jan 2017 11:33:28 +0100
+Message-ID: <2971422.7a4hKthq7I@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>
+References: <6a99e3df9a9449dcb2ea3a4358c469b0@imshyb01.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="nextPart2001436.pLm7yc0Z7P"
+Content-Transfer-Encoding: 7Bit
+Subject: Re: [oss-security] Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
 
-Rolf Reintjes schrieb:
-> Am 13.05.2025 um 21:01 schrieb Stuart Henderson:
->> On 2025/05/13 19:43, Graeme Fowler wrote:
+--nextPart2001436.pLm7yc0Z7P
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
->> 403 Forbidden
->> Microsoft-Azure-Application-Gateway/v2
+On Monday 16 January 2017 19:08:48 cve-assign@mitre.org wrote:
+> > []
+> > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-write-in-de
+> > c_clnpass-jpc_t1dec-c
+> > 
+> > AddressSanitizer: SEGV on unknown address
+> > The signal is caused by a WRITE memory access.
+> > 
+> > dec_clnpass ... jasper-1.900.27/src/libjasper/jpc/jpc_t1dec.c:869:4
+> 
+> Use CVE-2017-5503.
+> 
+> 
+> --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
 
-Huh, indipendent from America and based on Azure? Great Deal, what?
+The previous mail clearly state:
+> Timeline:
+> 2016-11-20: bug discovered and reported to upstream
 
--- 
-Wolfram Wadepohl
-Plattform Technology
-Storopack Deutschland GmbH & Co. KG
+Why a CVE-2017-* ?
+
+--
+Agostino
+
+--nextPart2001436.pLm7yc0Z7P--
 
