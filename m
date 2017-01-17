@@ -1,67 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/18/1
-Message-Id: <E384AC07-136D-426C-B71C-49099D6CCF86@beckweb.net>
-Date: Sat, 18 Nov 2017 08:22:51 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/11
+Message-ID: <1658086.vtNz3b7LKK@blackgate>
+Date: Tue, 17 Jan 2017 12:17:41 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple vulnerabilities in Jenkins
+Subject: Re: Re: jasper: invalid memory write in dec_clnpass (jpc_t1dec.c)
 Content-Type: text/plain; charset=utf-8
 
+On Tuesday 17 January 2017 12:11:07 Moritz Muehlenhoff wrote:
+> Where was that reported upstream? Please add the bug numbers to your
+> advisories.
 
-> On 11. Oct 2017, at 18:21, Daniel Beck <ml@...kweb.net> wrote:
-> 
-> SECURITY-478
-> Users with permission to create or configure agents in Jenkins could 
-> configure a launch method called Launch agent via execution of command on 
-> master. This allowed them to run arbitrary shell commands on the master 
-> node whenever the agent was supposed to be launched.
+https://github.com/mdadams/jasper/issues 
 
-CVE-2017-1000393
-
-> SECURITY-514
-> Information about Jenkins user accounts is generally available to anyone 
-> with Overall/Read permissions via the /user/(username)/api remote API. This 
-> included e.g. Jenkins users' email addresses if the Mailer Plugin is 
-> installed.
-
-CVE-2017-1000395
-
-> SECURITY-555
-> Jenkins bundled a version of the commons-httpclient library with the 
-> vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, 
-> making it susceptible to man-in-the-middle attacks.
-
-CVE-2017-1000396
-
-> SECURITY-611
-> The remote API at /computer/(agent-name)/api showed information about tasks 
-> (typically builds) currently running on that agent. This included 
-> information about tasks that the current user otherwise has no access to, 
-> e.g. due to lack of Job/Read permission.
-
-CVE-2017-1000398
-
-> SECURITY-618
-> The remote API at /queue/item/(ID)/api showed information about tasks in 
-> the queue (typically builds waiting to start). This included information 
-> about tasks that the current user otherwise has no access to, e.g. due to 
-> lack of Job/Read permission.
-
-CVE-2017-1000399
-
-> SECURITY-617
-> The remote API at /job/(job-name)/api contained information about upstream 
-> and downstream projects. This included information about tasks that the 
-> current user otherwise has no access to, e.g. due to lack of Job/Read 
-> permission.
-
-CVE-2017-1000400
-
-> SECURITY-616
-> The Jenkins default form control for passwords and other secrets, 
-> <f:password/>, supports form validation (e.g. for API keys). The form 
-> validation AJAX requests were sent via GET, which could result in secrets 
-> being logged to a HTTP access log in non-default configurations of 
-> Jenkins, and made available to users with access to these log files.
-
-CVE-2017-1000401
