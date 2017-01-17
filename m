@@ -1,24 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/7
-Message-ID: <CAJmbs8hMpqer5DmaZYyjj_XJ0deqZ4FTYrd9-MjHzhHn+fMruQ@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:23:37 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7666 - Apache OpenMeetings Missing Secure Headers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/1
+Message-ID: <8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>
+Date: Mon, 16 Jan 2017 19:06:47 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: multiple crashes with UBSAN
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+> http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
 
-Versions Affected: Apache OpenMeetings 1.0.0
+> [] jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11
+> runtime error: left shift of negative value -185
 
-Description: Apache Openmeetings is vulnerable to Cross-Site Request
-Forgery (CSRF) attacks, XSS attacks, click-jacking, and MIME based
-attacks
-CVE-2017-7666
+Use CVE-2017-5498.
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
 
-Credit: This issue was identified by Security Innovation
+> [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9
+> runtime error: signed integer overflow: -64356352 * 6359082673847140352 cannot
+> be represented in type 'long'
+
+Use CVE-2017-5499.
+
+
+> [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40
+> runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t'
+> (aka 'long')
+
+Use CVE-2017-5500.
+
+
+> [] jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35
+> runtime error: signed integer overflow: 2013306369 + 251691968 cannot be
+> represented in type 'int'
+
+Use CVE-2017-5501.
+
+
+> [] jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49
+> runtime error: left shift of negative value -26
+
+Use CVE-2017-5502.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYfV+HAAoJEHb/MwWLVhi29L0P/RqDlicXsi+o1z9ZFsl+bmfO
+yChkhBebWjCWyRlvQjce8JlYxpwK1sRSD1j+7tkoSkRbkBwuDPswg07l7xx4/N74
+B0MJpzC0XZe+7QmngkB5M29L8UY/qJ4E1WNu9ztMvbZCAimW9JR9Kbar3ptzIlD8
+C0bMFhIRiPkhrnxqzSkQHLVUXVr5I3KC4RHh6qWkFa9TnEUyD52MAjYb4sSPjmMH
+sqz9omf5+mt3g0gfjC/UMOwXx2j+s8EwQ9sslFhqKz+CCvj17zXlpXZt6yVpltBl
+beZ6amDVoEQ4lSjoLoI5tfpCAD5DdgXQHDaNFcyCcgUd8uCqhbpPFngbWPnISgDY
+tdify6oI9K5t1hnEkYjE2RLLexB6DoQ3l7xOv98lY5YN3isoxliA76AYS+74/sJ5
+d2/bVoeybQ/T/0BFbNOKP1fEUjoVVv/XCR6+fJOu0ABQ10ELWBPqzNNzd6fcvLon
+suXIQ7xwQfb3vRbwY8uERZugs9W04SxWe8FIHjmjskCSDgnPRgIGPki+yUvg1WwO
+s9Xq9GCrdwsnFH0PwCHpAF/AHcuuFJBda0W9NzEKXHNKuSFhvWqr1OK8lpwXSBut
+OfkwPU+zbyYX2z8h1lNaS6smZCRT7ys8m1SJ5BGzABBu8Zl9OtXwYKdRBKw10kgb
+hrjK/+wlvlxwNxlHUK0R
+=tuOh
+-----END PGP SIGNATURE-----
