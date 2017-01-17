@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/05/4
-Message-Id: <da74bef7-e0dc-4fff-a44e-8fd51bc2d012@googlegroups.com>
-Date: Tue, 5 Sep 2017 09:30:23 -0700 (PDT)
-From: Tim Graham <timograham@...il.com>
-To: django-announce <django-announce@...glegroups.com>
-Cc: django-users@...glegroups.com, django-developers@...glegroups.com, oss-security@...ts.openwall.com
-Subject: Django security releases issued: 1.11.5 and 1.10.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/8
+Message-ID: <2348308.pih3DINQSq@blackgate>
+Date: Tue, 17 Jan 2017 11:33:24 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: jasper: invalid memory read in jpc_undo_roi (jpc_dec.c)
 Content-Type: text/plain; charset=utf-8
 
-Today the Django team issued 1.11.5 and 1.10.8 as part of our security 
-process. These releases address a security issue, and we encourage all 
-users to upgrade as soon as possible:
+On Monday 16 January 2017 19:10:08 cve-assign@...re.org wrote:
+> > []
+> > https://blogs.gentoo.org/ago/2017/01/16/jasper-invalid-memory-read-in-jpc
+> > _undo_roi-jpc_dec-c
+> > 
+> > AddressSanitizer: SEGV on unknown address
+> > The signal is caused by a READ memory access.
+> > 
+> > jpc_undo_roi ... jasper-1.900.27/src/libjasper/jpc/jpc_dec.c:1925:10
+> 
+> Use CVE-2017-5504.
+> 
+> 
+> --
+> CVE Assignment Team
+> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+> [ A PGP key is available for encrypted communications at
+>   http://cve.mitre.org/cve/request_id.html ]
 
-https://www.djangoproject.com/weblog/2017/sep/05/security-releases/
+The previous mail clearly state:
+> Timeline:
+> 2016-11-20: bug discovered and reported to upstream
 
-As a reminder, we ask that potential security issues be reported via 
-private email to security@...ngoproject.com and not via Django's Trac 
-instance or the django-developers list. Please see 
-https://www.djangoproject.com/security for further information.
+Why a CVE-2017-* ?
 
-Content of type "text/html" skipped
+--
+Agostino
+
