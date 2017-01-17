@@ -1,24 +1,216 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/5
-Message-ID: <20171129044658.mkrtl3nhjuhxw6k7@matica.foolinux.mooo.com>
-Date: Tue, 28 Nov 2017 20:46:58 -0800
-From: Ian Zimmerman <itz@...y.loosely.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing ...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/18
+Message-ID: <0addb39a-c336-e38c-e2e7-0215fa888222@igalia.com>
+Date: Tue, 17 Jan 2017 20:08:30 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0001
 Content-Type: text/plain; charset=utf-8
 
-On 2017-11-28 21:05, Michael Orlitzky wrote:
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0001
+------------------------------------------------------------------------
 
-> Editing a file in-place should not create *another* file in the
-> current directory with a different name/suffix. I realize that's
-> subjective, but a lot of (even long time) users will tell you that no
-> way in hell did they expect that to happen.
+Date reported      : January 17, 2017
+Advisory ID        : WSA-2017-0001
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0001.html
+CVE identifiers    : CVE-2016-4692, CVE-2016-4743, CVE-2016-7586,
+                     CVE-2016-7587, CVE-2016-7589, CVE-2016-7592,
+                     CVE-2016-7598, CVE-2016-7599, CVE-2016-7610,
+                     CVE-2016-7611, CVE-2016-7623, CVE-2016-7632,
+                     CVE-2016-7635, CVE-2016-7639, CVE-2016-7640,
+                     CVE-2016-7641, CVE-2016-7642, CVE-2016-7645,
+                     CVE-2016-7646, CVE-2016-7648, CVE-2016-7649,
+                     CVE-2016-7652, CVE-2016-7654, CVE-2016-7656.
 
-Maybe, but I think editors have done this from time immemorial.  Compare
-for instance the comments on the limits of locking on p. 456 of Stevens
-& Rago.
+Several vulnerabilities were discovered in WebKitGTK+.
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+CVE-2016-4692
+    Versions affected: WebKitGTK+ before 2.14.1.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
+
+CVE-2016-4743
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Alan Cutter.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of process memory. Description: A memory corruption issue
+    was addressed through improved input validation.
+
+CVE-2016-7586
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Boris Zbarsky.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of user information. Description: A validation issue was
+    addressed through improved state management.
+
+CVE-2016-7587
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Adam Klein.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7589
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed through improved state management.
+
+CVE-2016-7592
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to xisigr of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may compromise
+    user information. Description: An issue existed in handling of
+    JavaScript prompts. This was addressed through improved state
+    management.
+
+CVE-2016-7598
+    Versions affected: WebKitGTK+ before 2.14.0.
+    Credit to Samuel Groß.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of process memory. Description: An uninitialized memory
+    access issue was addressed through improved memory initialization.
+
+CVE-2016-7599
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Muneaki Nishimura (nishimunea) of Recruit Technologies
+    Co., Ltd.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of user information. Description: An issue existed in the
+    handling of HTTP redirects. This issue was addressed through
+    improved cross origin validation.
+
+CVE-2016-7610
+    Versions affected: WebKitGTK+ before 2.14.1.
+    Credit to Zheng Huang of the Baidu Security Lab working with Trend
+    Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7611
+    Versions affected: WebKitGTK+ before 2.14.2.
+    Credit to an anonymous researcher working with Trend Micro's Zero
+    Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7623
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to xisigr of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Visiting a maliciously crafted website may compromise user
+    information. Description: An issue existed in the handling of blob
+    URLs. This issue was addressed through improved URL handling.
+
+CVE-2016-7632
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Jeonghoon Shin.
+    Impact: Visiting a maliciously crafted webpage may lead to an
+    unexpected application termination or arbitrary code execution.
+    Description: A memory corruption issue was addressed through
+    improved state management.
+
+CVE-2016-7635
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
+
+CVE-2016-7639
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Tongbo Luo of Palo Alto Networks.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7640
+    Versions affected: WebKitGTK+ before 2.14.2.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7641
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7642
+    Versions affected: WebKitGTK+ before 2.14.2.
+    Credit to Tongbo Luo of Palo Alto Networks.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7645
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7646
+    Versions affected: WebKitGTK+ before 2.14.2.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7648
+    Versions affected: WebKitGTK+ before 2.14.2.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7649
+    Versions affected: WebKitGTK+ before 2.14.2.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7652
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Apple.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
+
+CVE-2016-7654
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Keen Lab working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved state management.
+
+CVE-2016-7656
+    Versions affected: WebKitGTK+ before 2.14.3.
+    Credit to Keen Lab working with Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed through improved state management.
+
+
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+January 17, 2017
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
