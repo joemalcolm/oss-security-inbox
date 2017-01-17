@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/14
-Message-ID: <20171101180222.5j6wqmmqakwvu72q@jwilk.net>
-Date: Wed, 1 Nov 2017 19:02:22 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/12
+Message-ID: <alpine.LFD.2.20.1701171743330.22483@wniryva>
+Date: Tue, 17 Jan 2017 17:48:59 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jann Horn <jannh@...gle.com>, Greg Kurz <groug@...d.org>
+Subject: CVE-2016-9602 Qemu: 9p: virtfs allows guest to access host filesystem
 Content-Type: text/plain; charset=utf-8
 
-* Jeffrey Walton <noloader@...il.com>, 2017-11-01, 11:31:
->Code and scripts certainly need to check TMPDIR
+   Hello,
 
-Unfortunately, glibc's implementation of tmpfile(3), which is the most 
-fool-proof interface for dealing with temporary files that the C library 
-offers, doesn't honour TMPDIR. :(
+Quick Emulator(Qemu) built with the VirtFS, host directory sharing via Plan 9 
+File System(9pfs) support, is vulnerable to an improper link following issue. 
+It could occur while accessing symbolic link files on a shared host directory.
 
-BTW, there's a preloadable library that catches writes to /tmp:
-https://github.com/paultag/tmperamental
+A privileged user inside guest could use this flaw to access host file system 
+beyond the shared folder and potentially escalating their privileges on a 
+host.
 
--- 
-Jakub Wilk
+Reference:
+----------
+   -> http://wiki.qemu.org/Documentation/9psetup
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1413929
+
+
+Please see a proposed patch to fix this issue attached herein.
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+'CVE-2016-9602' has been assigned to this issue by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+View attachment "qemu-9pfs-only-allow-directories-during-walk.patch" of type "text/plain" (1785 bytes)
