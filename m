@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/4
-Message-ID: <87y3qjhd2q.fsf@fifthhorseman.net>
-Date: Wed, 16 Aug 2017 09:11:41 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Insecure DNS dependency in many Kerberos deployments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/13
+Message-ID: <510000852.12772202.1484662871690.JavaMail.zimbra@redhat.com>
+Date: Tue, 17 Jan 2017 09:21:11 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- linux kernel: crash by spawning mcrypt(alg) with incompatible algorithm
 Content-Type: text/plain; charset=utf-8
 
-On Wed 2017-08-16 10:50:33 +0200, Florian Weimer wrote:
-> By default, Kerberos clients perform host name canonicalization (search
-> path resolution, CNAME chain chasing and PTR lookups) to obtain a
-> service principal name.  This allows service impersonification:
+Hello,
 
-This is a long-standing security flaw in kerberos, and i think it has
-probably been stumbled across by anyone who has tried to deploy a new
-kerberos environment.  (i know, because i did, many many years ago)
+Algorithms not compatible with mcryptd could be spawned by mcryptd with a direct
+crypto_alloc_tfm invocation using a "mcryptd(alg)" name construct. This causes
+mcryptd to crash the kernel if an arbitrary "alg" is incompatible and not intended
+to be used with mcryptd.
 
-It's particularly bad that this is the default for new deployments
-because novices deploying a new kerberos domain are unlikely to deviate
-from the defaults out of fear of breaking something.  The result is that
-nearly every single krb5 deployment has this bug.
+This could be a potential attack to crash the kernel by user program using AF_ALG
+to request an invalid algorithm such as mcryptd(md5).
 
-The band-aid needs to have been pulled off ages ago so that it's fixed
-for new deployments, and legacy deployments need to explicitly enable it
-if they need it.
+Initial discussion:
 
-Alas, I don't know how to make this transition happen smoothly :(
+https://marc.info/?l=dm-devel&m=148063708010538&w=2
 
-> Some deployments have implemented compatibility with
-> dns_canonicalize_hostname = false by moving the canonicalization to the
-> application instead, which is of course equally insecure:
+Suggested Patch:
 
-Thanks for noticing these, Florian.  This is a disturbing trend:
-backflow of security flaws as they get fixed in one place for
-"compatibility" in another. :/
+http://marc.info/?l=linux-crypto-vger&m=148096718218312&w=2
 
-      --dkg
+Upstream patch:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=48a992727d82cb7db076fa15d372178743b1f4cd
+
+Red Hat Product Security Bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1404200
+
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
