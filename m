@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1341" "Tuesday" "19" "April" "2016" "22:48:31" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160420024831.4B62452E008@smtpvbsrv1.mitre.org>" "35" "[oss-security] Re: CVE Request: Privilege escalation in webdav - Plone" "^Cc:" nil nil "4" "2016042002:48:31" "[oss-security] Re: CVE Request: Privilege escalation in webdav - Plone" (number mark "U       cve-assign@m Apr 19   35/1341  " thread-indent "\"[oss-security] Re: CVE Request: Privilege escalation in webdav - Plone\"\n") "<CAL8hw9GTBixuPdUDvyanNNGPp3_tFAad=QWfFX3FEhjPyaAMhw@mail.gmail.com>" ("<CAL8hw9GTBixuPdUDvyanNNGPp3_tFAad=QWfFX3FEhjPyaAMhw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3096" "Wednesday" "18" "January" "2017" "11:33:57" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0133192437e54518a5616bc3c8d074e2@imshyb01.MITRE.ORG>" "70" "[oss-security] Re: CVE Request: Plone Sandbox escape vulnerability" nil nil nil "1" "2017011816:33:57" "[oss-security] Re: CVE Request: Plone Sandbox escape vulnerability" (number mark "U       cve-assign@m Jan 18   70/3096  " thread-indent "\"[oss-security] Re: CVE Request: Plone Sandbox escape vulnerability\"\n") "<CAL8hw9Et3-hdcmJPZk7cY+Z87Ggk3+yGpbbVZgMXJbuQ9CAdrw@mail.gmail.com>" ("<CAL8hw9Et3-hdcmJPZk7cY+Z87Ggk3+yGpbbVZgMXJbuQ9CAdrw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5770 invoked by uid 550); 20 Apr 2016 02:48:44 -0000
+Received: (qmail 30635 invoked by uid 550); 18 Jan 2017 16:34:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,28 +11,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5749 invoked from network); 20 Apr 2016 02:48:43 -0000
-In-Reply-To: <CAL8hw9GTBixuPdUDvyanNNGPp3_tFAad=QWfFX3FEhjPyaAMhw@mail.gmail.com>
-Message-Id: <20160420024831.4B62452E008@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 19 Apr 2016 22:48:31 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Privilege escalation in webdav - Plone
-To: vangheem@gmail.com
+Received: (qmail 30617 invoked from network); 18 Jan 2017 16:34:09 -0000
+From: <cve-assign@mitre.org>
+To: <nathan.van.gheem@plone.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CAL8hw9Et3-hdcmJPZk7cY+Z87Ggk3+yGpbbVZgMXJbuQ9CAdrw@mail.gmail.com>
+Message-ID: <0133192437e54518a5616bc3c8d074e2@imshyb01.MITRE.ORG>
+Date: Wed, 18 Jan 2017 11:33:57 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: Plone Sandbox escape vulnerability
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://plone.org/security/20160419/privilege-escalation-in-webdav
+> [] Accessing private content via `str.format` in through-the-web templates
+> and scripts. See this blog post by Armin Ronacher (
+> http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/) for the
+> general idea. Since the `format` method was introduced in Python 2.6, this
+> part of the hotfix is only relevant for Plone 4 and 5, not Plone 3.
+>     Credit: Plone security team, Armin Ronacher
+>     Reference: https://plone.org/security/hotfix/20170117/sandbox-escape
 > 
-> An missing webdav security declaration would allow unauthorized webdav
-> access.
+> Versions Affected:
+> 4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
 > 
-> Dexterity content is missing security declarations for webdav
-> requests. This only affects dexterity objects.
+> Code fixes:
+> https://pypi.python.org/pypi/Products.PloneHotfix20170117
 
-Use CVE-2016-4041.
+Use CVE-2017-5524.
+
+The scope of this CVE does not include the "reflected Cross Site
+Scripting attack (XSS) in the ZMI (manage_findResult)" mentioned on
+the PloneHotfix20170117 page. If that still needs a CVE ID, please let
+us know.
+
+In the http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/ post,
+the exploitation scenarios are:
+
+>     untrusted translators on string files. This is a big one because
+>     many applications that are translated into multiple languages will
+>     use new-style Python string formatting and not everybody will vet
+>     all the strings that come in.
+
+We do not feel that a CVE would have been needed if this were the only
+exploitation scenario. We do not think there is a security boundary
+between "people who can contribute arbitrary code to a product" and
+"people who can contribute code that expresses translations." However,
+it is possible that an open-source project exists somewhere with a
+completely untrusted channel for translators.
+
+>     user exposed configuration. One some systems users might be
+>     permitted to configure some behavior and that might be exposed as
+>     format strings. In particular I have seen it where users can
+>     configure notification mails, log message formats or other basic
+>     templates in web applications.
+
+This one seems completely valid, and might be the primary exploitation
+scenario for CVE-2017-5524.
 
 - -- 
 CVE Assignment Team
@@ -42,17 +79,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXFu1jAAoJEHb/MwWLVhi2XhYP/iEuDLHpK0yAlUanQ84JR7Vo
-5zjA4X6t1QjROK85TZ0rrL/BsFPjIFFFlF3ZxrmmB9cdH4ivcmCHJdFyiH9jQtAZ
-rnbvoiHv9f1/6Uk+FV2JdPUBM52f8Kn7AwFoAvq7qG+PMmStrSdzWWgoTi0YUC6E
-KjbguUminpBefepZAYJ+Y5QWeE6gD++7SUsqIG5GUzcBnRjp0GYAGiRmHmJLq2tm
-4aXMMnTgjRiKvyhbT/uwy9DknVDTUS2UOqwLlqF5XnN/VdBLWU9um1yj9mwtMUPe
-b2Gcz/dKiw2DSTB5DyPHiXla53fbnP5e3vDj50SXRzm9aVy31EmXD7WYmqmU7dnu
-Lg4xULG/eFklNqu71xCJeNrXBHlyS3LkYmeSMbvAUfMBuQkwzNzjD3ZsQUnrN5uF
-Qn6GuZdR8CB0zxL0pEMlPhR966/FioAA3mULL/4nb9y6S06WJK3rLGyNibIYSpLz
-LpYOqAC0/Ypy6+hZw8V7f74MX1NFdK2CdwQImbznpQsBPSdVLS4Q+Y8zzXO+Jost
-8Lu103QwF2qnCgtg3zF5QZoe+Pc9E2UK68qwT6b7X69AFqKIFEHIMjU6r+pmm8D5
-301MleHJvUC0ENJP8m/qLrbcLv0GLri9CNIjDWLEMX8/YhJuzTSvuIQaDd49A4VH
-W5gNwEwkSEmqpjCZ/Rjw
-=vUyo
+iQIcBAEBCAAGBQJYf5iGAAoJEHb/MwWLVhi27kcQAJHT6gBPBNBX+bevBoRdfS2h
+NtBgjZrd1s2KVCPnCdZGfnayAFz4nhtaSPul1riqH4on/krV9QkxZmRXxV/8R8ic
+IfmTWjg4DRuzYYwSGKKhrlNQa4OVWFVT/us4Rv4XDJwPTOXpf5qKFGjisp7udw8i
+SmFFTEYUV6r26ons2Q5u5RQenmiml3gdiS48XTQ5RFVXRNRKpCeswM1E+kG+S6bV
+G4Bx8QYUcRvCrRV2W1gEEjxBiI65FyOBQTX3jDg/N7DSn9v4dX4gZaSrbUaHIqLB
+YAzuTD4liH/G3ABAUQf3C2uiGEYbDUjGb4v5DFptcGr+xHMx3gtak3sJS+BS2mXq
+nrClrpO9BBoYFgQxV6QRTAEpuDoiAfcv6lB/Uj4/90Ub+hrqf94uqyS6XlGzyaxq
+r8kWPiVuUf8YbUVfT5H5YSeRZVH1gMK16Mci/4EWw3Al25CuK+HwrIZT/oA7ljez
+BL+zGzDGMPoIsHmge+PIS9yEbRvZ05Bim8p4yCE/0nFpWhipALEhNshADgVpkLME
+338NhrrW1fyNQoOCggacrcHp51hqpaAVRzJ5yM8DTmMz+SmAGhq2vemqFageQkyr
+B+P3VsnBCEFofULAXPgYYN1+Ub4tkWaO3enYCZ2YJIFe/Zj6ysKLnEW42l2edRNz
+T2eqS7U/9gxzMdHRkqIn
+=97Au
 -----END PGP SIGNATURE-----
