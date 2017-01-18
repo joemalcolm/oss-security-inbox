@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2327" "Wednesday" "1" "February" "2017" "14:08:50" "-0500" "Velmurugan Periasamy" "vel@apache.org" "<630EBE51-95AF-46C9-B51F-AA3D1D584A10@apache.org>" "50" "[oss-security] CVE update - fixed in Apache Ranger 0.6.3" nil nil nil "2" "2017020119:08:50" "[oss-security] CVE update - fixed in Apache Ranger 0.6.3" (number mark "U       vel@apache.o Feb  1   50/2327  " thread-indent "\"[oss-security] CVE update - fixed in Apache Ranger 0.6.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["758" "Wednesday" "18" "January" "2017" "08:59:21" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701180857430.10484@wniryva>" "24" "[oss-security] CVE request Qemu: audio: memory leakage in es1370 device" nil nil nil "1" "2017011803:29:21" "[oss-security] CVE request Qemu: audio: memory leakage in es1370 device" (number mark "U       ppandit@redh Jan 18   24/758   " thread-indent "\"[oss-security] CVE request Qemu: audio: memory leakage in es1370 device\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3402 invoked by uid 550); 1 Feb 2017 19:09:08 -0000
+Received: (qmail 14247 invoked by uid 550); 18 Jan 2017 03:29:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3334 invoked from network); 1 Feb 2017 19:09:05 -0000
-From: Velmurugan Periasamy <vel@apache.org>
-Content-Type: multipart/alternative; boundary="Apple-Mail=_3B88B459-9D4E-4C5C-B2E9-A05CE861717D"
-Date: Wed, 1 Feb 2017 14:08:50 -0500
-Message-Id: <630EBE51-95AF-46C9-B51F-AA3D1D584A10@apache.org>
-Cc: private@ranger.apache.org,
- dev@ranger.apache.org,
- user@ranger.apache.org
-To: security <security@apache.org>,
- oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Subject: [oss-security] CVE update - fixed in Apache Ranger 0.6.3
+Received: (qmail 14224 invoked from network); 18 Jan 2017 03:29:40 -0000
+Date: Wed, 18 Jan 2017 08:59:21 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1701180857430.10484@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Wed, 18 Jan 2017 03:29:30 +0000 (UTC)
+Subject: [oss-security] CVE request Qemu: audio: memory leakage in es1370 device
 
---Apple-Mail=_3B88B459-9D4E-4C5C-B2E9-A05CE861717D
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+   Hello,
 
-Hello:
+Quick Emulator(Qemu) built with the ES1370 audio device emulation support is 
+vulnerable to a memory leakage issue. It could occur while doing a device 
+unplug operation; Doing so repeatedly would result in leaking host memory, 
+affecting other services on the host.
 
-Please find below details on CVEs fixed in Ranger 0.6.3 release. Release de=
-tails can be found at https://cwiki.apache.org/confluence/display/RANGER/0.=
-6.3+Release+-+Apache+Ranger <https://cwiki.apache.org/confluence/display/RA=
-NGER/0.6.3+Release+-+Apache+Ranger>
+A privileged user inside guest could use this flaw to cause a DoS and/or 
+potentially crash the Qemu process on the host.
 
-Thank you,
-Velmurugan Periasamy
+Upstream patch:
+---------------
+  -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01742.html
 
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------------------------------------
-CVE-2016-8746: Apache Ranger path matching issue in policy evaluation
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
-Users affected: All users of ranger policy admin tool
-Description: Ranger policy engine incorrectly matches paths in certain cond=
-itions when policy does not contain wildcards and has recursion flag set to=
- true.
-Fix detail: Fixed policy evaluation logic.
-Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger=
- with the fix.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------------------------------------
-CVE-2016-8751: Apache Ranger stored cross site scripting issue
-Severity: Normal
-Vendor: The Apache Software Foundation
-Versions Affected: 0.5.x and 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
-Users affected: All users of ranger policy admin tool
-Description: Apache Ranger was found to be vulnerable to a Stored Cross-Sit=
-e Scripting in when entering custom policy conditions. Admin users can stor=
-e=20
-some arbitrary javascript code to be executed when normal users login and a=
-ccess policies.
-Fix detail: Added logic to sanitize the user input.
-Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger=
- with the fix.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------------------------------------=
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1414209
 
---Apple-Mail=_3B88B459-9D4E-4C5C-B2E9-A05CE861717D--
+This issue was reported by Mr Lo Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
