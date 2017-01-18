@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1515" "Wednesday" "27" "September" "2017" "14:51:49" "+0200" "Solar Designer" "solar@openwall.com" "<20170927125149.GA2500@openwall.com>" "29" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092712:51:49" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        solar@openwa Sep 27   29/1515  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<20170926073214.GA8108@kroah.com>" "<4188502.8b3PN4uBSd@wanheda>" "<20170926150446.GA11530@kroah.com>" "<CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1000" "Wednesday" "18" "January" "2017" "16:22:20" "+0100" "Cedric Buissart" "cbuissar@redhat.com" "<CAKG8Do54HFg5=COMtYKowz+9ZJg6WK67EqeQavSNCFb_uUVssg@mail.gmail.com>" "40" "[oss-security] CVE-2017-2591 389 Directory Server: DoS via OOB heap read in \"attribute uniqueness\" plugin" nil nil nil "1" "2017011815:22:20" "[oss-security] CVE-2017-2591 389 Directory Server: DoS via OOB heap read in \"attribute uniqueness\" plugin" (number mark "U       cbuissar@red Jan 18   40/1000  " thread-indent "\"[oss-security] CVE-2017-2591 389 Directory Server: DoS via OOB heap read in \"attribute uniqueness\" plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19731 invoked by uid 550); 27 Sep 2017 12:52:44 -0000
+Received: (qmail 13827 invoked by uid 550); 18 Jan 2017 15:22:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19472 invoked from network); 27 Sep 2017 12:52:00 -0000
-Message-ID: <20170927125149.GA2500@openwall.com>
-References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov> <1978278.8CZP0B31Sj@wanheda> <20170926073214.GA8108@kroah.com> <4188502.8b3PN4uBSd@wanheda> <20170926150446.GA11530@kroah.com> <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAADPF4OszZShcGb+x79UZQzBT3XONwNH6E970MVwrUdXyJDmiw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 27 Sep 2017 14:51:49 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
+Received: (qmail 13807 invoked from network); 18 Jan 2017 15:22:52 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+feCQ8zWZFY6MEWi0uAD/k1W5WVJiAiUuznautcBNV4=;
+        b=L7P3Ayv/3iLchWypyQnpwJwdW6FiUOgPCCY5pva16XK1fKTc6bgIWTjQxpS2h8XY/U
+         qzFS144TvmJWG8Mmcz7ugbNBoegVMe0la2CxRZlv0mNVDrbwMEfg7A6cIaV29lMBBGum
+         yAJvdMzpka/1sbQajqzkOQWjfLUztl6oDEoAMsc6hHKcYwDpIPZGPlD3SQw9pekmPfKE
+         Yd0g4j0n5LSQJMZ11NJVT2O6NwrhlNY9nryPerd65FdZwM1a6eeIeNGgt5SVgGdqXc/Y
+         RHS2bFUzOhlS3ERMdaYY8CQzrwnusK3ZLmhbcDncqJihg4sPpczVuEmxKA5kS20E/CJo
+         PhHw==
+X-Gm-Message-State: AIkVDXJLBg0Iiq4zlkLqtF/Y7gZwtq41rSI7yWqw3jvrrcQ6mGFIP+Xxn0WNiP6JyhPxMB3Pb6xQFKikN9oPLOX5
+X-Received: by 10.176.18.206 with SMTP id o14mr2148649uac.58.1484752961125;
+ Wed, 18 Jan 2017 07:22:41 -0800 (PST)
+MIME-Version: 1.0
+From: Cedric Buissart <cbuissar@redhat.com>
+Date: Wed, 18 Jan 2017 16:22:20 +0100
+Message-ID: <CAKG8Do54HFg5=COMtYKowz+9ZJg6WK67EqeQavSNCFb_uUVssg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=f403043613eed40a7305465ffc1b
+Subject: [oss-security] CVE-2017-2591 389 Directory Server: DoS via OOB heap read in
+ "attribute uniqueness" plugin
 
-On Wed, Sep 27, 2017 at 10:14:04AM +0100, Muhammed Mustapha Abiola wrote:
-> Isn't this exactly what Vendor-Sec tried to solve?
+--f403043613eed40a7305465ffc1b
+Content-Type: text/plain; charset=UTF-8
 
-No.  Not even similar.
+Hi,
 
-vendor-sec was / linux-distros is solely about the subset of issues that
-are initially embargoed, but OTOH not limited to the Linux kernel.
-So there wasn't / isn't meant to be more than a slight overlap between
-issues handled on those lists vs. all Linux kernel security issues/fixes.
+This is to disclose the following CVE:
 
-Besides, Greg focuses on the problem that some ignore the stable kernels
-or the "curated and tested stream of fixes" that could be seen in there,
-whereas another concern mentioned earlier in the thread is that the
-stream is also incomplete because some security fixes are not marked as
-such and not CC'ed to stable.  So that's two problems mentioned in the
-thread, but vendor-sec was not / linux-distros is not related to either.
+CVE-2017-2591 389 Directory Server: DoS via OOB heap read
 
-Alexander
+Description :
 
-> On Tue, Sep 26, 2017 at 4:04 PM, Greg KH <greg@kroah.com> wrote:
-> > The rule for the kernel is, "if a distro/company/user is not following
-> > the stable kernel updates, they are on their own".  I recommend either
-> > using the stable kernels, or paying for a company that knows what they
-> > are doing in this area and provides support (Red Hat, SuSE, etc.)
-> >
-> > And if you try to argue "just tell us what needs to be fixed", well, we
-> > are, am, we are providing about 10-12 patches a day that people should
-> > be incorporating into their kernels.  Why they ignore that curated and
-> > tested stream of fixes is beyond me...
+The "attribute uniqueness" plugin did not properly NULL-terminate an array
+when building up its configuration, if a so called 'old-style'
+configuration, was being used (Using nsslapd-pluginarg<X> parameters) .
+
+A attacker, authenticated, but possibly also unauthenticated, could
+possibly force the plugin to read beyond allocated memory and trigger a
+segfault.
+
+The crash could also possibly be triggered accidentally.
+
+Upstream patch :
+https://fedorahosted.org/389/changeset/ffda694dd622b31277da07be76d3469fad86150f/
+Affected versions : from 1.3.4.0
+
+Fixed version : 1.3.6
+
+Impact: Low
+CVSS3 scoring : 3.7 -- CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L
+
+Upstream bug report : https://fedorahosted.org/389/ticket/48986
+
+Best Regards,
+
+
+-- 
+Cedric Buissart,
+Product Security
+
+--f403043613eed40a7305465ffc1b--
