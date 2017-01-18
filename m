@@ -1,104 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/7
-Message-ID: <591403.244153725-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:50:44 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/4
+Message-ID: <0b70c55a935d4fcca2218cf08c4e7317@imshyb01.MITRE.ORG>
+Date: Wed, 18 Jan 2017 00:57:15 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: php-gettext: Arbitrary code execution in select_string, ngettext and npgettext count parameter
 Content-Type: text/plain; charset=utf-8
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzz on it discovered an heap overflow.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1367462
+> https://lwn.net/Alerts/708838/
+> http://seclists.org/fulldisclosure/2016/Aug/76
 
-The complete ASan output:
+>> Evaluating the plural form formula in ngettext family of calls can
+>> execute arbitrary code if number is passed unsanitized from the
+>> untrusted user.
 
-# sfconvert @@ out.mp3 format aiff
-==2480==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f5eb894d800 at pc 0x7f5eb85a699f bp 0x7ffe19064df0 sp 0x7ffe19064de8
-WRITE of size 2 at 0x7f5eb894d800 thread T0
-    #0 0x7f5eb85a699e in alaw2linear_buf(unsigned char const*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:54:13
-    #1 0x7f5eb85a699e in G711::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:209
-    #2 0x7f5eb858d05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
-    #3 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
-    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
-    #5 0x7f5eb766278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+Use CVE-2015-8980.
 
-0x7f5eb894d800 is located 0 bytes to the right of 393216-byte region [0x7f5eb88ed800,0x7f5eb894d800)
-allocated by thread T0 here:
-    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x50bb48 in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:327:17
-    #2 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
-    #3 0x7f5eb766278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:54:13 in alaw2linear_buf(unsigned char 
-const*, short*, int)
-Shadow bytes around the buggy address:
-  0x0fec57121ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fec57121ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fec57121ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fec57121ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0fec57121af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0fec57121b00:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fec57121b10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fec57121b20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fec57121b30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fec57121b40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0fec57121b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==2480==ABORTING
-
-Affected version:
-0.3.6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00184-audiofile-heapoverflow-alaw2linear_buf
-
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-alaw2linear_buf-g711-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+iQIcBAEBCAAGBQJYfwJmAAoJEHb/MwWLVhi2EogP/RSoLH7GjRuEq4W4w1tSDC2o
+1j//YMmSunj/52WvKBQfjk8BG/3EdJWjpFeYwiPc4d3JhDINlXN3rO1FEaYuq8wN
+ldX5QaluBuPJoUvTUhF18SsQ8Y+7YEZV1uyrpsSgm+Eq8oqKp2IxjersimKDAsir
+bKcnYQ3WPE7k6YS02h/cImU8dF3eH9qmDFe/xRpqvz/A8QWUG1SiW3/Mp+gsraTS
+6rrPmiMoYII3mROs+hKwglCSYYBM6SPzAYAy+c247cxG6F6+X27Wb3a2MxX3kWMl
+wmtXhTaJwuX1p0b5/8ic23Gwmh9phlgxqVSLqQLqVcAofma35OziN+MdwER4/9Tg
+GiShgUt3j4ixWLy9PBcBtXmys63DrUZm/baBiALKPllwpwnGjfhNKtE8IKUFyCqs
+rt2PcwFewQHo+ax4OSmHKjZ681zFsKXgSxl4mzoJ8YjWrybvaRJnKamy500NMLps
+emwEEA1xjoHE5X2P60rRm5fROuorwa5HxT/VVwNbQVmfQ3pE5Bf7BE/tdO4HcMKC
+vGzV8PxItZnx5Bu2528xEOKVcqoLVSB1kdwk6sdA6hnb/sZucsxrSHRdZUFYzI4Q
+u1W/TPYK+SyowOGECxyLnXCBlrUM4WfupYUq6PNPlT5WvwQEHFP+p5UqTnyeQ6zh
+wQWKw6vPjjBKc/Gw3v+z
+=9cK3
+-----END PGP SIGNATURE-----
