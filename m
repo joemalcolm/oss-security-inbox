@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2303" "Wednesday" "22" "April" "2020" "08:12:59" "+0100" "Mark J Cox" "mark@openssl.org" "<CABU6YOY2Ttdr9eS2j_bBbwE1Tt8uvVxHfSojXY496Wtg5vJX-Q@mail.gmail.com>" "62" "[oss-security] [CVE-2020-1967] OpenSSL 1.1.1d+ Segmentation fault in SSL_check_chain" nil nil nil "4" "2020042207:12:59" "[oss-security] [CVE-2020-1967] OpenSSL 1.1.1d+ Segmentation fault in SSL_check_chain" (number mark "U       mark@openssl Apr 22   62/2303  " thread-indent "\"[oss-security] [CVE-2020-1967] OpenSSL 1.1.1d+ Segmentation fault in SSL_check_chain\"\n") "<CABU6YOYv53PEmzhpM_9LsqpscC6onzNrexE=q5SnxUNscOkTMA@mail.gmail.com>" ("<20200421132524.GA5046@openssl.org>" "<CABU6YOZ5mgnnVzttpkbD48nCCM_bTUWF_GbNsj7vMfPDY8uy5g@mail.gmail.com>" "<CABU6YOYv53PEmzhpM_9LsqpscC6onzNrexE=q5SnxUNscOkTMA@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1967] OpenSSL 1.1.1d+ Segmentation fault in SSL_check_chain" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1770" "Wednesday" "18" "January" "2017" "11:36:50" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<27e8b0704a65446bb5165cc0785caa69@imshyb01.MITRE.ORG>" "40" "[oss-security] Re: CVE request Qemu: audio: memory leakage in es1370 device" nil nil nil "1" "2017011816:36:50" "[oss-security] Re: CVE request Qemu: audio: memory leakage in es1370 device" (number mark "U       cve-assign@m Jan 18   40/1770  " thread-indent "\"[oss-security] Re: CVE request Qemu: audio: memory leakage in es1370 device\"\n") "<alpine.LFD.2.20.1701180857430.10484@wniryva>" ("<alpine.LFD.2.20.1701180857430.10484@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10116 invoked by uid 550); 22 Apr 2020 07:18:48 -0000
+Received: (qmail 20175 invoked by uid 550); 18 Jan 2017 16:37:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1170 invoked from network); 22 Apr 2020 07:13:21 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=rHjG/B0tFd/9fadXIhmObOdygJ6/lln3TxKl26yLC/M=;
-        b=ja40h00NX2c6ExLRfMgLYSrgxk52f8ZbEbb9578HQ2KlLIWVQE+xc146kHGPLf69Fa
-         nRIrwGnTokNaGONZE7EdJ7NXxQQv5gOLJfjwjHkroafNKJJOZeRK7+cH8iydhDBePMOT
-         XXF5mPm4/Cpr0feQeA9dGcLqhJOfdO+gOYn8yQXSgfD/8QUd1oJfchUgNmjViQlg6+Oq
-         HlR+SgInAXIEDe6KDJRycrb6r/rJEhXUJl/xTEVY54vqHVDHYc1kn3t6NL6Ph2SG3z7s
-         Mj43N4MA2SmV3YVY2sgZ0j+6W62jEdKglGiKIA9BQ+p/a8jOYmIpK+Ndk+Na/NhzuAGf
-         rwYA==
-X-Gm-Message-State: AGi0Pua35YiBIhfRC3/1k28r80EwaIAuW5plgvh5RAAO/aeYz5Xs5UKq
-	Ngd6em3zPzejbBtp9WWqOeh1eC023xyIfiNCSlOxdyiA
-X-Google-Smtp-Source: APiQypIziA7Tsqcd/chf3RmW0YZQJhBrwA5Hm2mEXXU/8NvwLDCYmrjX4xyTZWrUQQuOcXaPGZ/hq0nOzX68HX8/IE8=
-X-Received: by 2002:a5d:944c:: with SMTP id x12mr24149654ior.100.1587539589964;
- Wed, 22 Apr 2020 00:13:09 -0700 (PDT)
+Received: (qmail 20154 invoked from network); 18 Jan 2017 16:37:02 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1701180857430.10484@wniryva>
+Message-ID: <27e8b0704a65446bb5165cc0785caa69@imshyb01.MITRE.ORG>
+Date: Wed, 18 Jan 2017 11:36:50 -0500
 MIME-Version: 1.0
-References: <20200421132524.GA5046@openssl.org> <CABU6YOZ5mgnnVzttpkbD48nCCM_bTUWF_GbNsj7vMfPDY8uy5g@mail.gmail.com>
- <CABU6YOYv53PEmzhpM_9LsqpscC6onzNrexE=q5SnxUNscOkTMA@mail.gmail.com>
-In-Reply-To: <CABU6YOYv53PEmzhpM_9LsqpscC6onzNrexE=q5SnxUNscOkTMA@mail.gmail.com>
-From: Mark J Cox <mark@openssl.org>
-Date: Wed, 22 Apr 2020 08:12:59 +0100
-Message-ID: <CABU6YOY2Ttdr9eS2j_bBbwE1Tt8uvVxHfSojXY496Wtg5vJX-Q@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [CVE-2020-1967] OpenSSL 1.1.1d+ Segmentation fault in SSL_check_chain
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: audio: memory leakage in es1370 device
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-OpenSSL Security Advisory [21 April 2020]
-=========================================
+> [] Quick Emulator(Qemu) built with the ES1370 audio device emulation support is
+> vulnerable to a memory leakage issue. It could occur while doing a device
+> unplug operation; Doing so repeatedly would result in leaking host memory,
+> affecting other services on the host.
+> 
+> A privileged user inside guest could use this flaw to cause a DoS and/or
+> potentially crash the Qemu process on the host.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01742.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1414209
+> http://git.qemu.org/?p=qemu.git;a=commit;h=069eb7b2b8fc47c7cb52e5a4af23ea98d939e3da
 
-Segmentation fault in SSL_check_chain (CVE-2020-1967)
-=====================================================
+Use CVE-2017-5526 for this (i.e., a memory consumption issue, not an
+information disclosure issue).
 
-Severity: High
-
-Server or client applications that call the SSL_check_chain() function during or
-after a TLS 1.3 handshake may crash due to a NULL pointer dereference as a
-result of incorrect handling of the "signature_algorithms_cert" TLS extension.
-The crash occurs if an invalid or unrecognised signature algorithm is received
-from the peer. This could be exploited by a malicious peer in a Denial of
-Service attack.
-
-OpenSSL version 1.1.1d, 1.1.1e, and 1.1.1f are affected by this issue.  This
-issue did not affect OpenSSL versions prior to 1.1.1d.
-
-Affected OpenSSL 1.1.1 users should upgrade to 1.1.1g
-
-This issue was found by Bernd Edlinger and reported to OpenSSL on 7th April
-2020. It was found using the new static analysis pass being implemented in GCC,
-- -fanalyzer. Additional analysis was performed by Matt Caswell and Benjamin
-Kaduk.
-
-Note
-=====
-
-This issue did not affect OpenSSL 1.0.2 however these versions are out of
-support and no longer receiving public updates. Extended support is available
-for premium support customers: https://www.openssl.org/support/contracts.html
-
-This issue did not affect OpenSSL 1.1.0 however these versions are out of
-support and no longer receiving updates.
-
-Users of these versions should upgrade to OpenSSL 1.1.1.
-
-References
-==========
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20200421.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAl6e8uwACgkQ2cTSbQ5g
-RJHHRgf+J8iVBuK6EoOvf9xm9geiDgYVFse9ckMXH92gdGbwsW4uhTNk9fCyNC+t
-vsf6YGT6nKJarB5+N+LC4QB7VLo/DjlYcN9zP3mubV0eEyKHSoW6tDOWPpJ0gsbt
-2Z9iTA4GnofvhBcWLiPGgv4IUHknsOaPkRmEppSF0fDTSKuYOerfNRh9jTKHulis
-Ph6dCOXE3kb5HfMwVj3UN2sP92XTig4FzpIQaZ1/2jKZaRXtzJD7pvu1fDCTkUGl
-aeta5jHNypYyRKJLuJ1+1DiBtbWTFAWMUCHlkg/kgdU4hIl/lo3vgAyFs/9mQxZQ
-vj2rIjoJHRj0EXqXhHoABqBHedilJQ==
-=AXyP
+iQIcBAEBCAAGBQJYf5h4AAoJEHb/MwWLVhi2em4P/1KkgoHvZ6YoAHAjNTBDT4A3
+3dnuGXztJxMWal2PD92HA7CLCFxalqtIn6Xjs3I6a6FIcYjQ3SZpByTLb/8qOBPa
+waoDJJ3LLgErTZnUyQhUbNrS/zNNZkYAYjx2W6/OfgukaEQviZ3RsVYG58EUPqmi
+HZli1xdiqKnB7D/8Wa26XjVx2bxJK4npGK51zx8SDDqEmk99BGaJjYJhEJbBSMbl
+6L5u0Epw94I+JGpFo+qoCWJZ2n8Zhn22yNCMS1fsiqWkjhHF0EPlR/h/nZrfh/Yt
+CUnyQN6LBJXB/L9xQ09tnSNYpTb1AoyB5DtPZxz+uytP8TpboeexhbLA1Qv5MLH7
+q2zBJwyl7HIeNqWtgnQ7PQdVCrVSRjDgWwkvAEM6QbtxD3eIIXF9REKApsHdl5om
+kd90UocZmLNDZEiTZ8ATaDJnrotPyi0F+4YNEyA30F4j2eiZpVv4ndoGFOQ7UF9Y
+64InaVmTmHNosBCDw1FTysuNeVPKXaZ8hc7XlL0zWAYaga/1Skr8DpTFwOVF1r6d
+NjsV/8QQETHUslEm6T/Xo9TXPytchlonkc4+ZGd4eodjrEYxYnOCS7XbLG2z3+Xf
+LpBv1rKtt7ybp1GdVb/DaiVZO1oEMCDfJbza6z8gDXqB6+f53vnNb8x9UulmlpT0
+GQ6KSrEdRU6cR9koa1zT
+=vGTC
 -----END PGP SIGNATURE-----
