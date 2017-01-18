@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7219" "Tuesday" "2" "August" "2016" "16:09:46" "+0200" "Marcus Meissner" "meissner@suse.de" "<20160802140946.GC25831@suse.de>" "278" "Re: [oss-security] Ruby:HTTP Header injection in 'net/http'" nil nil nil "8" "2016080214:09:46" "[oss-security] Ruby:HTTP Header injection in 'net/http'" (number mark "U       meissner@sus Aug  2  278/7219  " thread-indent "\"Re: [oss-security] Ruby:HTTP Header injection in 'net/http'\"\n") "<CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>" ("<CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6948" "Wednesday" "18" "January" "2017" "09:17:15" "+0100" "Michal Hrusecky" "Michal.Hrusecky@nic.cz" "<20170118081715.wbv34nzrvicm6vxb@workbook.ipv6.hrusecky.net>" "166" "Re: [oss-security] linux-distros subscription" nil nil nil "1" "2017011808:17:15" "[oss-security] linux-distros subscription" (number mark "U       Michal.Hruse Jan 18  166/6948  " thread-indent "\"Re: [oss-security] linux-distros subscription\"\n") "<20170115023720.GA21220@openwall.com>" ("<20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>" "<20170115023720.GA21220@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18390 invoked by uid 550); 2 Aug 2016 14:10:01 -0000
+Received: (qmail 9238 invoked by uid 550); 18 Jan 2017 17:21:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,299 +12,193 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18372 invoked from network); 2 Aug 2016 14:10:00 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 2 Aug 2016 16:09:46 +0200
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 1552 invoked from network); 18 Jan 2017 08:17:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nic.cz; s=default;
+	t=1484727436; bh=opeNds5kSxzZ1FpFhhhld39bzoJhuW6sF61opDtD2cs=;
+	h=Date:From:To;
+	b=IcE0ZhlCWD6VDUGL7bboQbl18wPs6Oa77Wr7y9ZkBHdKTYJai+xi7vtKY11iQyCeW
+	 k18yDiJEOuChqPb/4NLi5VWhHidqZtf2/+fjz31wsVkveDUe1q32nW7mskqrOsxYEU
+	 zflpiM1z3owXBCbENYGEN8zjDqfG9XrdtS3Qm+UQ=
+Date: Wed, 18 Jan 2017 09:17:15 +0100
+From: Michal Hrusecky <Michal.Hrusecky@nic.cz>
 To: oss-security@lists.openwall.com
-Message-ID: <20160802140946.GC25831@suse.de>
-References: <CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>
+Message-ID: <20170118081715.wbv34nzrvicm6vxb@workbook.ipv6.hrusecky.net>
+References: <20170113093611.ztx4osufhxtcgany@workbook.ipv6.hrusecky.net>
+ <20170115023720.GA21220@openwall.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="cjkob5jco4n2csqh"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPGxrc-M3V_ok8DFmu3fOogpX-Sr-eoy9zCMYqNGgCp73hu05Q@mail.gmail.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: Re: [oss-security] Ruby:HTTP Header injection in 'net/http'
+In-Reply-To: <20170115023720.GA21220@openwall.com>
+X-Operating-System: Linux
+User-Agent: Mutt/1.6.2 (2016-07-01)
+X-Virus-Scanned: clamav-milter 0.99.2 at mail
+X-Virus-Status: Clean
+Subject: Re: [oss-security] linux-distros subscription
 
-Hi,
+--cjkob5jco4n2csqh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-was this ever accepted by the Ruby upstream team as valid bug?
+Solar Designer -  3:37 15.01.17 wrote:
+> Hi Michal,
+>=20
+> On Fri, Jan 13, 2017 at 10:36:11AM +0100, Michal Hrusecky wrote:
+> > I would like to request subscription to linux-distros mailing list. I'm=
+ one of
+> > the maintainers of Turris OS - OpenWRT fork used on Turris and Turris O=
+mnia
+> > routers[1].
+> >=20
+> > Not sure what has to be part of application, on wiki[2] I found only th=
+at I
+> > should request it here.
+>=20
+> Right.  This basically tells us there's interest, and from whom and for
+> what reasons.  That's useful, so thanks for posting your request.
+>=20
+> However, in practice the list membership has been frozen since the last
+> distro addition in April 2014, so for almost 3 years now.  Since then,
+> there were only removals and changes in who's subscribed for the
+> previously accepted distros.
 
-You seem to quote some bugtracker, where is it and is the bug public there?
+Thanks for the info.
 
-Ciao, Marcus
-On Sat, Jun 25, 2016 at 12:18:42PM +0800, redrain root wrote:
-> TIMELINE
-> rootredrain submitted a report to Ruby.
-> 
-> show raw
-> Jun 22nd
-> 
-> Hi,
-> 
-> I would like to report a HTTP Header injection vulnerability in
-> 'net/http' that allows attackers to inject arbitrary headers in
-> request even create a new evil request.
-> 
-> PoC
-> 
-> require 'net/http'
-> http = Net::HTTP.new('192.168.30.214','80')
-> res = http.get("/r.php HTTP/1.1\r\nx-injection: memeda")
-> 
-> Example
-> 
-> Server Code:
-> 
-> #!/usr/bin/env ruby
-> require 'sinatra'
-> require 'uri'
-> require 'net/http'
-> 
-> get '/' do
->   'hello world'
-> end
-> 
-> post '/' do
->   ip = params[:ip]
->   port = params[:port]
->   path = params[:path]
-> 
->   # do what you want
->   http = Net::HTTP.new ip, port.to_i
->   res = http.get path
-> 
->   res.body
-> 
-> end
-> 
-> post data:
-> 
-> ip=192.168.30.214&port=80&path=/r.php%20HTTP/1.1%0d%0ax-injection: memeda
-> 
-> print_r all HTTP Headers：
-> 
-> Create an evil request
-> 
-> post data:
-> 
-> server log:
-> 
-> Suggestion:
-> 
-> Should validate URI legality before send request
-> 
-> btw，
-> 
-> Cloud I have a CVEID with this vulnerability? reported by
-> @redrain(rootredrain@gmail.com) and@ztz(ztz5651483@gmail.com)
-> 
-> 4 attachments:
-> F100918: 123123.png
-> F100919: 222333.png
-> F100920: 4444.png
-> F100921: 5555.png
-> 
-> rootredrain posted a comment.
-> Jun 22nd (2 days ago)
-> 
-> The problem is this line in lib/net/http/generic_request.rb:324
-> 
->   def write_header(sock, ver, path)
->     buf = "#{@method} #{path} HTTP/#{ver}\r\n"
->     each_capitalized do |k,v|
->       buf << "#{k}: #{v}\r\n"
->     end
->     buf << "\r\n"
->     sock.write buf
->   end
-> 
-> "#{@method} #{path} HTTP/#{ver}\r\n" should be checked here to avoid
-> malicious input
-> 
-> shugo posted a comment.
-> Jun 24th (8 hrs ago)
-> 
-> Thanks for your report.
-> 
-> We don't consider this a vulnerability because Net::HTTP#get is not
-> designed to accept malicious input.
-> Applications have responsibility to verify input syntactically and
-> semantically (accepting all RFC2616-compliant input would not be a
-> good idea).
-> 
-> So we would like to handle this as a normal issue.
-> 
-> rootredrain posted a comment.
-> Jun 24th (2 hrs ago)
-> 
-> Hi shugo,
-> 
-> Thanks for the reply. Please don't leave this problem to developers,
-> they have uneven level at developing.
-> 
-> For example, assume we have a demo website, the only thing do is
-> generate a new HTTP request:
-> 
-> #!/usr/bin/env ruby
-> require 'sinatra'
-> 
-> get '/' do
->   'hello world'
-> end
-> 
-> post '/' do
->   ip = params[:ip]
->   port = params[:port]
->   path = params[:path]
-> 
->   # send the request to another site
->   http = Net::HTTP.new ip, port.to_i
->   res = http.get path
-> 
->   res.body
-> end
-> 
-> It's a common demand, right ?
-> 
-> But web developer may not realized that sinatra will auto decode url.
-> Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
-> decode url to \r\n and pass to thepath, finally cause a HTTP Header
-> Injection or CRLF Injection.
-> 
-> Please assume all input is malicious. Here is a similar vulnerability
-> in python: CVE-2016-5699
-> 
-> Here is what another HTTP lib Faraday do may change your mind.
-> 
-> lib/faraday/connection.rb:308
-> 
-> def url_prefix=(url, encoder = nil)
->   uri = url_prefix = Utils.URI(url)
->   self.path_prefix = uri.path
->   # ... ... ...
->   uri
-> end
-> 
-> uri = url_prefix = Utils.URI(url) try to convert url to URI, It will
-> raise an error whenurl is invalid.
-> 
-> lib/faraday/connection.rb:399
-> 
-> def build_exclusive_url(url = nil, params = nil, params_encoder = nil)
->   url = nil if url.respond_to?(:empty?) and url.empty?
->   base = url_prefix
->   # ... ... ...
->   uri = url ? base + url : base
->   # ... ... ...
-> end
-> 
-> uri = url ? base + url : base will trigger another examination convert_to_uri:
-> 
-> def convert_to_uri(uri)
->   if uri.is_a?(URI::Generic)
->     uri
->   elsif uri = String.try_convert(uri)
->     parse(uri)
->   else
->     raise ArgumentError,
->           "bad argument (expected URI object or URI string)"
->   end
-> end
-> 
-> If url is invalid, it will raise an error.
-> 
-> Please let me know if you need more info.
-> 
-> tenderlove posted a comment.
-> Jun 24th (2 hrs ago)
-> 
-> It's a common demand, right ?
-> 
-> I'm not sure about that.
-> 
-> I think this is a bug we should probably address, but I don't think we
-> should consider this a vulnerability. Fetching arbitrary paths from
-> user input seems pretty dubious.
-> 
-> rootredrain posted a comment.
-> Jun 24th (about 1 hr ago)
-> 
-> Hi tenderlove,
-> 
-> Here is my point :
-> All input can not be trusted.
-> 
-> We should validate url in Net::HTTP
-> 
-> tenderlove posted a comment.
-> Jun 24th (about 1 hr ago)
-> 
-> All input can not be trusted.
-> 
-> Yes, people should be whitelisting paths passed in. An open proxy is
-> already a vulnerability, regardless of header injection.
-> 
-> As I said, we should treat this as a bug. But since an open proxy is
-> already a security problem (that we cannot fix), then I don't think
-> this bug should be treated as a security issue.
-> 
-> shugo posted a comment.
-> Jun 24th (34 mins ago)
-> 
-> But web developer may not realized that sinatra will auto decode url.
-> Attacker can encode \r\n to %0a%0d, send to the sinatra, sinatra will
-> decode url to \r\n and pass to the path, finally cause a HTTP Header
-> Injection or CRLF Injection.
-> 
-> In that case, it seems to be a bug of that application, not Net::HTTP#get.
-> 
-> I'm not against adding argument verification to Net::HTTP#get, though.
-> 
-> rootredrain posted a comment.
-> Jun 24th (29 mins ago)
-> 
-> But since an open proxy is already a security problem
-> 
-> Yes, an open proxy is already a vulnerability and you can't fix that,
-> but attack scenarios is not only include an open proxy, but also
-> include many other parts.
-> 
-> A site like google image, user can paste image url on it, then site
-> will request the resource. It's possible to suffer this attack.
-> 
-> Some video sites allow user reference outside resource. It's possible
-> to suffer this attack.
-> 
-> So you can not treat it occur in an unusual scenarios. I still
-> consider it was a security issue.
-> 
-> rootredrain posted a comment.
-> Jun 24th (27 mins ago)
-> 
-> If you believe this is not a issue, please allow the public disclosure.
-> 
-> tenderlove closed the report and changed the status to Informative.
-> Jun 24th (23 mins ago)
-> 
-> I've closed as informative, and I'll allow public disclosure.
-> 
-> tenderlove requested to disclose this report publicly.
-> Jun 24th (20 mins ago)
-> 
-> rootredrain has requested mediation from HackerOne Support.
-> Jun 24th (15 mins ago)
-> 
-> The HTTP scheme handler accepts percent-encoded values as part of the URL.
-> 
-> The generic_request.rb allows unsafe characters, it dosen't have any
-> safe filtration, attackers can cause actual security threat. so we
-> consider it is a vulnerability
-> 
+> Perhaps we'll be forced to re-open this can of worms, or shut down these
+> lists for good.  Simply keeping them frozen is unfair to new distros
+> requesting membership now.  Simply accepting all who request membership
+> based on mostly objective criteria yet without introducing distro's
+> userbase size as a criterion is, in my opinion, going to make things
+> worse overall (in terms of balance of benefit to users vs. risk of
+> leaks).  Yet we might, as long as the benefit-risk is still deemed to be
+> positive (even if less than now).  Just to be fair.
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+Ok, what I forgot to mention is a user-base. Our distribution is quite smal=
+l, we
+have about 7 thousand users. Our distribution runs on routers we gave away =
+in
+the past and new ones that we are selling and both have by default automatic
+updates enabled - so they get updates including security ones quite soon af=
+ter
+we release them.
+
+> Here's a thread from 2015 with some half-baked thoughts on the issues:
+>=20
+> http://www.openwall.com/lists/oss-security/2015/03/20/5
+
+Thanks for the context, I understand it is a hard decision.
+
+> Here are some recent requests:
+>=20
+> http://www.openwall.com/lists/oss-security/2016/10/21/2
+> http://www.openwall.com/lists/oss-security/2016/10/25/2
+>=20
+> What's common about the timing of these: they were triggered by
+> vulnerabilities that attracted a lot of media attention.  This may be
+> primarily about publicity and checklists ("our competitors are on that
+> list, we should be too") and only secondarily about security.  I do
+> value the persistence of some distros/people reminding me about their
+> requests, though - suggesting their interest is more likely genuine.
+> And your request isn't nearly that "badly" timed. ;-)
+>=20
+> > Probably you will need some proof that I'm who I claim to be. You can s=
+ee bunch
+> > of commits on our gitlab[3] (signed by the same key I'm using to sign t=
+his
+> > mail) and you can reach me and some of my colleagues on security@turris=
+.cz
+> > e-mail alias that is also listed as security contact on our web[4].
+> >=20
+> > We have infrastructure in place to work on embargoed issues without dis=
+closing
+> > them to public. Not sure whether there are any other requirements to me=
+et. If
+> > so, please let me know.
+> >=20
+> > [1] https://omnia.turris.cz/en/
+> > [2] http://oss-security.openwall.org/wiki/mailing-lists/distros
+> > [3] https://gitlab.labs.nic.cz/turris/openwrt/commits/test
+> > [4] https://www.turris.cz/en/contacts
+>=20
+> What would have been some recent issue likely handled via the distros
+> list (this is often stated in the follow-up postings on oss-security,
+> albeit not always) where the advance notification would have helped your
+> project release a fix substantially sooner?
+
+Hard to guess what is there. But basically before we release anything we do
+test it, so from the point when we learn about the issue, it takes days to
+release a fix (after commiting fix, we build binaries, do some testing and =
+only
+after that we release it for everybody). What is most important for us is I
+would remotely exploitable kernel issues (here testing takes even more time=
+),
+openssl, openssh and lighttpd.
+
+> I notice you fixed OpenSSL CVE-2016-7056 promptly:
+>=20
+> https://gitlab.labs.nic.cz/turris/openwrt/commit/9aa88e76e70250dd219e8e22=
+8162bde045ade4f9
+>=20
+> However, that issue wasn't on the distros list.
+>=20
+> I also notice you've been on oss-security for half a year.  That's good.
+> However, I wasn't able to find any record of your past participation in
+> this specific community.  You might want to get more involved first.
+
+Yep, using it as one source of information about vulnerabilities we need to
+fix. Was thinking how to respond to the contribution part, other mails help=
+ed
+me to get some idea what can I do to improve. I admit that I'm new to this
+field and I'm here mostly to learn about potential threads to our users.
+
+Company I work for contributes to security in general, but probably not in =
+this
+specific community. I'm from CZ.NIC which among other stuff runs Czech CSIRT
+team. But that is even different department. What we do in our team regardi=
+ng
+security is probably nothing that would help us to discover new
+vulnerabilities. What we do is provide people option to send us firewall lo=
+gs
+and we use the results to build greylist[1] and we allow people to check
+whether their IP tried to attack any of our users[2].
+
+[1] https://www.turris.cz/en/greylist
+[2] https://amihacked.turris.cz/
+
+Personally, I'm not involved in those projects as I'm working most of the t=
+ime
+on our distribution. I asked for the membership as I would be the one handl=
+ing
+the issues on our end and I understand the need to limit the audience as mu=
+ch
+as possible.
+
+> And if/when we do re-open the list for additional distros, you'll be
+> able to re-request membership.
+
+Thank you, I will reapply when that happens and in the meantime will think
+about suggestions others posted about how to contribute back.
+
+--cjkob5jco4n2csqh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEo5WdE9VMgau/ozp2sqowqJRyn7MFAlh/JIYACgkQsqowqJRy
+n7O4mxAAjK1WLNwAEDOYej4GJjglUsVp9y+JB35uJomU3iEFl5ZWZtVB5LyvOwTe
+3+Jc6T1uUwBPVtmuG3UlnkHKn+VsE0HZ2DG7FoGUh9LEjjGpexFoiq4nEf5wNZpX
+53GMkJs8wBsuPG4Y+itTZp/DPTwi7RpUmK7NXKPJ5uF2D93XtSZAtB3tjzWaLVnL
+OCESJ3pLo66nmos6wcovI6nPmp1YNn2G/LfaIaOJEhzc5xwo2TnfAa+C63cxbsUQ
+Icz8nKzt7U2ds8k2bVzd/PX+pRLlFPH6r0NWh7GEjN3S5wShjbGjk1k+V80/mv/u
+ehOUogkKyu9wdzhaRlnmo4rdeu0CmmTFXqndLxBcZR+tSGog3U797TGdpJQhDa2r
+W/MYUR5OyfTqrB0inGma5foubIjnssrm6c065mSQIE+1GrrOnAJUaa6bNdwxmHo1
+D/TfbLT2mOmE7wMeADZgkILLxMahEDFyM0JJxBS0UM8/udbWinVIC6Co2Hwz9QzO
+ykphACQ2JUIOUa8P9LlgYYrkZhIvIU/1jqi/HhrvluolVCEsQ1NV7ukW6DU7hxuC
+GjdZWOjWnJqPnn5NrTZlOt2SUZbCPUkIs7xPm4bClIdF0zQolkOG2iay41xNHevz
+Q8Z4AjZ76egMU3C5+qdStI0TJrOR3Wh4+FOgYTFTfDyrbNq7zOQ=
+=LFEi
+-----END PGP SIGNATURE-----
+
+--cjkob5jco4n2csqh--
