@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/8
-Message-ID: <20171107202237.GA10679@kroah.com>
-Date: Tue, 7 Nov 2017 21:22:37 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/1
+Message-ID: <alpine.LFD.2.20.1701180857430.10484@wniryva>
+Date: Wed, 18 Jan 2017 08:59:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: audio: memory leakage in es1370 device
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 07, 2017 at 03:14:56PM -0500, Vladis Dronov wrote:
-> Heololo,
-> 
-> A race condition exists in Linux kernel since year 2003 through version 4.9-rc1
-> in [legousbtower] driver which allows a null pointer dereference caused by
-> not removing a device file interface on an error when the probe function is called.
-> This can cause a write-what-where condition by remapping dev->interrupt_out_buffer
-> in tower_write(), leading to privilege escalation.
-> 
-> References:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1505905
-> 
-> An upstream patch:
-> 
-> https://github.com/torvalds/linux/commit/2fae9e5a7babada041e2e161699ade2447a01989
+   Hello,
 
-I hate to ask, but why are you getting CVEs for bugs fixed over a year
-ago, and are already in all stable kernel releases a year ago?  Why does
-it matter?
+Quick Emulator(Qemu) built with the ES1370 audio device emulation support is 
+vulnerable to a memory leakage issue. It could occur while doing a device 
+unplug operation; Doing so repeatedly would result in leaking host memory, 
+affecting other services on the host.
 
-Unless you happen to have a product that doesn't ever do kernel updates
-from the stable trees, and well, then you know what you are doing and
-don't need CVEs assigned either, right?  :)
+A privileged user inside guest could use this flaw to cause a DoS and/or 
+potentially crash the Qemu process on the host.
 
-thanks,
+Upstream patch:
+---------------
+  -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01742.html
 
-greg k-h
+Reference:
+----------
+  -> https://bugzilla.redhat.com/show_bug.cgi?id=1414209
+
+This issue was reported by Mr Lo Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
