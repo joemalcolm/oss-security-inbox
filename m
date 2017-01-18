@@ -1,24 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/20/1
-Message-ID: <a2152d8b-5716-db81-9668-c04e70cd744f@blindspotsecurity.com>
-Date: Mon, 20 Feb 2017 08:22:42 -0800
-From: "Timothy D. Morgan" <tim.advisories@...ndspotsecurity.com>
-To: oss-security@...ts.openwall.com
-Subject: Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/2
+Message-ID: <339fe63d242a449eafb9b435b3557137@imshyb01.MITRE.ORG>
+Date: Wed, 18 Jan 2017 00:54:21 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: jasper: multiple crashes with UBSAN
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Recently, an vulnerability in Java's FTP URL handling code has been published which allows for protocol stream injection. It has been shown[1] that this flaw could be used to leverage existing XXE or SSRF vulnerabilities to send unauthorized email from Java applications via the SMTP protocol. While technically interesting, the full impact of this protocol stream injection has not been fully accounted for in existing public analysis.
+> The previous mail clearly state:
+>> Timeline:
+>> 2016-10-28: bug discovered and reported to upstream
 
-Protocol injection flaws like this have been an area of research of mine for the past few couple of years and as it turns out, this FTP protocol injection allows one to fool a victim's firewall into allowing TCP connections from the Internet to the vulnerable host's system on any "high" port (1024-65535). A nearly identical vulnerability exists in Python's urllib2 and urllib libraries. In the case of Java, this attack can be carried out against desktop users even if those desktop users do not have the Java browser plugin enabled.
+> Why CVE-2017-* ?
 
-As of 2017-02-20, the vulnerabilities discussed here have not been patched by the associated vendors, despite advance warning and ample time to do so.
-...
+The year portion of a CVE ID does not necessarily correspond to a
+vulnerability discovery date. To obtain a CVE-2016-* ID, at least one
+of the following must be true:
 
-For the rest of the advisory, please see:
-  http://blog.blindspotsecurity.com/2017/02/advisory-javapython-ftp-injections.html
+  - the original CVE ID request occurred during 2016
 
+or
 
+  - the original CVE ID request mentioned a specific vulnerability
+    reference URL that was a publicly accessible URL before the end of
+    2016 (although a Reproducer URL is very useful, we do not consider
+    it a vulnerability reference URL)
 
+These criteria were not met, and therefore a CVE-2017-* ID was
+assigned, and remains the correct ID.
 
-1. https://shiftordie.de/blog/2017/02/18/smtp-over-xxe/
+For the other CVE-2017-* numbers associated with similar timelines,
+the CVE-2017-* number remains valid. We do not change them to
+CVE-2016-* numbers.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYfwJ+AAoJEHb/MwWLVhi2SroQAKl5y+adO9sOb86mXQIznunB
+lxZusAsBZ4UzKDw8hzzF+pxPcJoQujEa1Dbr+0TJhJ+LMHvIF9fdqFVTfUk3HizH
+yIRWiQtKDLkt3971DzpSPIZOg4af2BhPLwUMW7hToGB94tUKvtdSHEquaRSMZFLF
+WDs+hAuLgeF5SzhjC49MDNbUt9Xbn+m79rTBayxvCD3p1CpePJ5cuvPscdLmhvuS
+qXNzYdtjRIVf9puO2kEcr+5vt8gSKggWmgUt6hSWsVMCj16wrliGfaUYwvhFqybN
+qnNW83aC28xIUpHSrpFQ1LEc5vosOmQJ9Q5uvHfWplbw5BZR0YwZaN7gKyVmS7NB
+cpTFGktRwwl0bHEMY+q13Z2Mc/vc67GGw4sBy/A2gGvvn505pWyaCgKK90Wu+93u
+ztPYKHguUR/47C6XwMCmJXCLXvZU5zTil7nemw/DZqQ5/fy2v44gef0Fad23lCL0
+JU9qw2CJ/1Xh6H6zSlVbeGcoFAanrq4ePOs9yINWl8GpCMJCBgX+WGU7mKbp3L7d
+8kWO90F/JkSLDrb52EyTkyqI8npeKSMRybG2tpcyyKzgkAJK9WvcHNvtrVIAro0f
+89oxDrNmPv9PIth0Gvr0pyTRlaWN6V40x+GGeIu17gTCoSb0zpJIueydhnJuIhaE
+V8c9BHJtVjtdd1LHa9vM
+=pEew
+-----END PGP SIGNATURE-----
