@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["561" "Tuesday" "11" "August" "2015" "17:33:59" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2Ds54oOBLOoPVXPAqt20JShR9=ckh_Mq-yHo=AuvR75A@mail.gmail.com>" "22" "[oss-security] Processor side channels using out of order execution" nil nil nil "8" "2015081123:33:59" "[oss-security] Processor side channels using out of order execution" (number mark "        kseifried@re Aug 11   22/561   " thread-indent "\"[oss-security] Processor side channels using out of order execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["639" "Wednesday" "18" "January" "2017" "23:10:19" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701182308090.22270@wniryva>" "21" "[oss-security] CVE request Kernel: kvm: use-after-free issue while creating devices" nil nil nil "1" "2017011817:40:19" "[oss-security] CVE request Kernel: kvm: use-after-free issue while creating devices" (number mark "U       ppandit@redh Jan 18   21/639   " thread-indent "\"[oss-security] CVE request Kernel: kvm: use-after-free issue while creating devices\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5124 invoked by uid 550); 11 Aug 2015 23:34:12 -0000
+Received: (qmail 9309 invoked by uid 550); 18 Jan 2017 17:40:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4082 invoked from network); 11 Aug 2015 23:34:11 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=Rw20PcdVCM5uaw89SY+fqfsj/qDhsOmocr/jZR7RNMs=;
-        b=gzHAK2NbQXe5a53k1dGhvRuhetWQqp3oJZW5TO36GuKw35kwv1l9RRwbMpSpJkyEcK
-         LSdCGCAZuxMRmeMGyyAtNqUrTYYywCET89c+TZMaa5EyiFNFcO4bs5jYCTPlXQwI31Vb
-         dY2Br5mfnSlOxXlUG9vLRu2oSWakSQvaGR5QxYx6jv9me2KL0ku2z2XZUn9W2oQWp8yo
-         ri2eQav4jlnE0k5Mb+8SL5FUWe3unPbSuh9wuWR7XkW6Oq9qxqO8D1/IICfoMCkCr+in
-         djM4uHxiqFSwr48szJEhdNX64SwrnpnrjbygO18Na/+e/ajID25F/whNi3S47Z3FTb79
-         HSBw==
-X-Gm-Message-State: ALoCoQkRdVnyRF2SgdBL3IfsJNJpLORvjLm9lx/7XzRPePSi+MQvmoxvRqeEQcWMT9RHS7T9pEYn
-MIME-Version: 1.0
-X-Received: by 10.129.103.5 with SMTP id b5mr11805709ywc.55.1439336039803;
- Tue, 11 Aug 2015 16:33:59 -0700 (PDT)
-Message-ID: <CANO=Ty2Ds54oOBLOoPVXPAqt20JShR9=ckh_Mq-yHo=AuvR75A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11490c145da1fe051d1189ac
-Date: Tue, 11 Aug 2015 17:33:59 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Processor side channels using out of order execution
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 9286 invoked from network); 18 Jan 2017 17:40:36 -0000
+Date: Wed, 18 Jan 2017 23:10:19 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: NCSC Security <security@ncsc.gov.uk>
+Message-ID: <alpine.LFD.2.20.1701182308090.22270@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Wed, 18 Jan 2017 17:40:25 +0000 (UTC)
+Subject: [oss-security] CVE request Kernel: kvm: use-after-free issue while creating
+ devices
 
---001a11490c145da1fe051d1189ac
-Content-Type: text/plain; charset=UTF-8
+   Hello,
 
-Some interesting work in line with that CAIN thing from last week:
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable to a use-after-free flaw. It could occur while creating devices, 
+via ioctl('/dev/kvm', ...) calls.
 
-https://blog.trailofbits.com/2015/07/21/hardware-side-channels-in-the-cloud/
-http://sophia.re/cache.pdf
-http://sophia.re/RECON/
+A user/process could use this flaw to crash the host kernel resulting in DoS 
+or potentially escalate their privileges on a system.
 
-not sure if this needs a CVE or not, since CAIN got one I'm thinking a
-strong maybe?
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/a0f1d21c1ccb1da66629627a74059dd7f5ac9c61
 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1414506
 
-
--- 
-
+Thank you.
 --
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a11490c145da1fe051d1189ac--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
