@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/2
-Message-ID: <20170717044104.j3gqgmkwgvekdedu@lorien.valinor.li>
-Date: Mon, 17 Jul 2017 06:41:04 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: yadm: CVE-2017-11353: race condition allows access to SSH and PGP keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/11
+Message-ID: <20170118220535.GA21362@gmail.com>
+Date: Wed, 18 Jan 2017 23:05:36 +0100
+From: Jelle van der Waa <jelle@...aa.nl>
+To: oss-security@...ts.openwall.com
+Subject: CVE request Weblate: information disclosure in password reset form
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Weblate contains an information disclosure issue in it's password reset
+form. When entering an arbitrary email address in the password reset
+form Weblate will report back "User with this email address was not
+found." this makes it possible to figure out which user accounts exist
+on the weblate instance.
 
-As reported by Daniel Shahaf in the Debian bugtracker at
+Affected: weblate 2.10 and earlier.
 
-https://bugs.debian.org/868300
+Upstream patch:
+https://github.com/WeblateOrg/weblate/commit/abe0d2a29a1d8e896bfe829c8461bf8b391f1079
 
-yadm (Yet Another Dotfile Manager) 1.10.0 has a race condition
-(related to the behavior of git commands in setting permissions for
-new files and directories), which potentially allows access to SSH and
-PGP keys.
+Bug report:
+https://github.com/WeblateOrg/weblate/issues/1317
 
-Quoting his report:
-
-> Dear Maintainer,
-> 
-> In its default configuration, yadm ensures that .ssh/ and .gnupg/ files are
-> readable by the owner only.  That is implemented by running 'chmod' on the
-> files after they have been created:
-> 
->     https://sources.debian.net/src/yadm/1.10.0-1/yadm/#L671
-> 
-> That way has a race condition: whilst the git worktree is being checked out,
-> the .ssh and .gnupg files have the permissions of the user's umask.  I added a
-> debug printf just before the 'chmod' and it showed .ssh/ and .ssh/config having
-> permissions «u=rwX,go=rX», i.e., world readable.
-
-Upstream bugreport: https://github.com/TheLocehiliosan/yadm/issues/74
-
-MITRE has assigned CVE-2017-11353 for this issue.
-
-Regards,
-Salvatore
+-- 
+Jelle van der Waa
