@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3613" "Thursday" "15" "June" "2017" "12:38:01" "-0700" "Ritwik Ghoshal" "ritwik.ghoshal@oracle.com" "<984d5eb4-ff73-b7ba-fe21-81db3c28f77e@oracle.com>" "93" "Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd" "^Date:" nil nil "6" "2017061519:38:01" "[oss-security] Berkeley DB reads DB_CONFIG from cwd" (number mark "        ritwik.ghosh Jun 15   93/3613  " thread-indent "\"Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd\"\n") "<20170615144050.GA25094@openwall.com>" ("<20170610220613.mfmmpjey2l4aptcj@jwilk.net>" "<20170615144050.GA25094@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1363" "Wednesday" "18" "January" "2017" "00:57:15" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0b70c55a935d4fcca2218cf08c4e7317@imshyb01.MITRE.ORG>" "35" "[oss-security] Re: CVE Request: php-gettext: Arbitrary code execution in select_string, ngettext and npgettext count parameter" nil nil nil "1" "2017011805:57:15" "[oss-security] Re: CVE Request: php-gettext: Arbitrary code execution in select_string, ngettext and npgettext count parameter" (number mark "U       cve-assign@m Jan 18   35/1363  " thread-indent "\"[oss-security] Re: CVE Request: php-gettext: Arbitrary code execution in select_string, ngettext and npgettext count parameter\"\n") "<20170117183420.pmc5la5zsljyzh5s@eldamar.local>" ("<20170117183420.pmc5la5zsljyzh5s@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26349 invoked by uid 550); 15 Jun 2017 19:48:04 -0000
+Received: (qmail 1568 invoked by uid 550); 18 Jan 2017 05:57:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,114 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19878 invoked from network); 15 Jun 2017 19:37:38 -0000
-References: <20170610220613.mfmmpjey2l4aptcj@jwilk.net>
- <20170615144050.GA25094@openwall.com>
-Organization: Oracle Corporation
-Message-ID: <984d5eb4-ff73-b7ba-fe21-81db3c28f77e@oracle.com>
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <20170615144050.GA25094@openwall.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
-Date: Thu, 15 Jun 2017 12:38:01 -0700
-From: Ritwik Ghoshal <ritwik.ghoshal@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Berkeley DB reads DB_CONFIG from cwd
-To: oss-security@lists.openwall.com
+Received: (qmail 1544 invoked from network); 18 Jan 2017 05:57:27 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170117183420.pmc5la5zsljyzh5s@eldamar.local>
+Message-ID: <0b70c55a935d4fcca2218cf08c4e7317@imshyb01.MITRE.ORG>
+Date: Wed, 18 Jan 2017 00:57:15 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: php-gettext: Arbitrary code execution in select_string, ngettext and npgettext count parameter
 
-On 6/15/2017 7:40 AM, Solar Designer wrote:
-> On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
->> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
->> current working directory by default[*]. This is surprising and AFAICT 
->> undocumented.
->>
->> Here's how to exploit it against pam_ccreds:
->>
->>    $ cat /etc/shadow
->>    cat: /etc/shadow: Permission denied
->>    $ ln -sf /etc/shadow DB_CONFIG
->>    $ /sbin/ccreds_chkpwd moo < /dev/null
->>    BDB1584 line 1: 
->>    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
->>    name-value pair
->>
->> (The above was tested on Debian jessie.)
->>
->> In the past, nss_db was also exploitable:
->> CVE-2010-0826
->>
->>
->> [*] More precisely, this seem to happen when you call db_create() with 
->> dbenv=NULL; or if you use the dbm_open() function.
-> Besides possibly updating Postfix, what are distros going to do about
-> this?  
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1367462
+> https://lwn.net/Alerts/708838/
+> http://seclists.org/fulldisclosure/2016/Aug/76
 
-> What is upstream going to do?  Have they been contacted?
+>> Evaluating the plural form formula in ngettext family of calls can
+>> execute arbitrary code if number is passed unsanitized from the
+>> untrusted user.
 
-Oracle is aware of this issue, and we are investigating.
+Use CVE-2015-8980.
 
---
-Thanks,
--Ritwik
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
->
-> In the source code, it isn't necessarily as simple as commenting out the
-> undocumented functionality.  There doesn't appear to be any code
-> specific to the undocumented functionality, since it is documented that
-> the DB_CONFIG file is read from the environment's home directory and the
-> code is there primarily for that purpose.  Problems arise when the
-> environment is uninitialized, and it is unclear to me whether this was
-> possibly meant to imply the environment's home directory is the current
-> directory (but even if so, this behavior is dangerous and needs to go).
->
-> At first, I tried checking for dbenv being NULL in __dbenv_config(),
-> which is where the hard-coded DB_CONFIG file name is found.  However, at
-> least when testing with Postfix' postmap program (without the recent
-> workaround), dbenv is non-NULL there, and per strace postmap does indeed
-> try to open DB_CONFIG in the current directory.  Thus, for now I opted
-> for this patch checking for and curing the symptom:
->
-> --- db-4.3.29/env/env_open.c.orig       2004-12-23 02:58:21 +0000
-> +++ db-4.3.29/env/env_open.c    2017-06-15 13:59:43 +0000
-> @@ -500,7 +500,7 @@ __dbenv_config(dbenv, db_home, flags)
->         if (p == NULL)
->                 fp = NULL;
->         else {
-> -               fp = fopen(p, "r");
-> +               fp = strcmp(p, "DB_CONFIG") ? fopen(p, "r") : NULL;
->                 __os_free(dbenv, p);
->         }
->
-> This passes the postmap test for me (postmap no longer tries to open the
-> file), but I wonder if it possibly broke db's own tests.  I can't easily
-> run the tests as --enable-test says it needs TCL, which we don't
-> package.
->
-> While at it, I found that rep/rep_backup.c has a comment saying it skips
-> DB_CONFIG, but the code actually skips DB_CONFIG* (that is, any filename
-> starting with DB_CONFIG) due to use of strncmp():
->
->                 /*
->                  * Skip DB-owned files: ., ..,  __db*, DB_CONFIG, log*
->                  */
->                 if (strcmp(names[i], ".") == 0)
->                         continue;
->                 if (strcmp(names[i], "..") == 0)
->                         continue;
->                 if (strncmp(names[i], "__db", 4) == 0)
->                         continue;
->                 if (strncmp(names[i], "DB_CONFIG", 9) == 0)
->                         continue;
->                 if (strncmp(names[i], "log", 3) == 0)
->                         continue;
->
-> Either the comment or the code is wrong (I think the code is wrong), but
-> this is unimportant.
->
-> Alexander
-
+iQIcBAEBCAAGBQJYfwJmAAoJEHb/MwWLVhi2EogP/RSoLH7GjRuEq4W4w1tSDC2o
+1j//YMmSunj/52WvKBQfjk8BG/3EdJWjpFeYwiPc4d3JhDINlXN3rO1FEaYuq8wN
+ldX5QaluBuPJoUvTUhF18SsQ8Y+7YEZV1uyrpsSgm+Eq8oqKp2IxjersimKDAsir
+bKcnYQ3WPE7k6YS02h/cImU8dF3eH9qmDFe/xRpqvz/A8QWUG1SiW3/Mp+gsraTS
+6rrPmiMoYII3mROs+hKwglCSYYBM6SPzAYAy+c247cxG6F6+X27Wb3a2MxX3kWMl
+wmtXhTaJwuX1p0b5/8ic23Gwmh9phlgxqVSLqQLqVcAofma35OziN+MdwER4/9Tg
+GiShgUt3j4ixWLy9PBcBtXmys63DrUZm/baBiALKPllwpwnGjfhNKtE8IKUFyCqs
+rt2PcwFewQHo+ax4OSmHKjZ681zFsKXgSxl4mzoJ8YjWrybvaRJnKamy500NMLps
+emwEEA1xjoHE5X2P60rRm5fROuorwa5HxT/VVwNbQVmfQ3pE5Bf7BE/tdO4HcMKC
+vGzV8PxItZnx5Bu2528xEOKVcqoLVSB1kdwk6sdA6hnb/sZucsxrSHRdZUFYzI4Q
+u1W/TPYK+SyowOGECxyLnXCBlrUM4WfupYUq6PNPlT5WvwQEHFP+p5UqTnyeQ6zh
+wQWKw6vPjjBKc/Gw3v+z
+=9cK3
+-----END PGP SIGNATURE-----
