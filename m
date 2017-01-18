@@ -1,48 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/1
-Message-ID: <CACO5Y4zUyP7-znomom9NJFTxAzG+_RjmjCqeF0CQoogVMzL9Dg@mail.gmail.com>
-Date: Tue, 25 Apr 2017 18:16:11 -0700
-From: Chris Douglas <cdouglas@...che.org>
-To: user@...oop.apache.org,  "common-dev@...oop.apache.org" <common-dev@...oop.apache.org>,  "general@...oop.apache.org" <general@...oop.apache.org>, "security@...che.org" <security@...che.org>,  full-disclosure@...ts.grok.org.uk, bugtraq <bugtraq@...urityfocus.com>,  oss-security@...ts.openwall.com,  "<security@...oop.apache.org>" <security@...oop.apache.org>
-Subject: CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/6
+Message-ID: <0133192437e54518a5616bc3c8d074e2@imshyb01.MITRE.ORG>
+Date: Wed, 18 Jan 2017 11:33:57 -0500
+From: <cve-assign@...re.org>
+To: <nathan.van.gheem@...ne.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Plone Sandbox escape vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
-CVE-2017-3162: Apache Hadoop DataNode web UI vulnerability
+> [] Accessing private content via `str.format` in through-the-web templates
+> and scripts. See this blog post by Armin Ronacher (
+> http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/) for the
+> general idea. Since the `format` method was introduced in Python 2.6, this
+> part of the hotfix is only relevant for Plone 4 and 5, not Plone 3.
+>     Credit: Plone security team, Armin Ronacher
+>     Reference: https://plone.org/security/hotfix/20170117/sandbox-escape
+> 
+> Versions Affected:
+> 4.3.11 and any earlier 4.x version, 5.0.6 and any earlier 5.x version
+> 
+> Code fixes:
+> https://pypi.python.org/pypi/Products.PloneHotfix20170117
 
-Severity: Important
+Use CVE-2017-5524.
 
-Vendor: The Apache Software Foundation
+The scope of this CVE does not include the "reflected Cross Site
+Scripting attack (XSS) in the ZMI (manage_findResult)" mentioned on
+the PloneHotfix20170117 page. If that still needs a CVE ID, please let
+us know.
 
-Versions affected: Hadoop 2.6.x and earlier
+In the http://lucumr.pocoo.org/2016/12/29/careful-with-str-format/ post,
+the exploitation scenarios are:
 
-Description:
-HDFS clients interact with a servlet on the DataNode to browse the
-HDFS namespace. The NameNode is provided as a query parameter that is
-not validated.
+>     untrusted translators on string files. This is a big one because
+>     many applications that are translated into multiple languages will
+>     use new-style Python string formatting and not everybody will vet
+>     all the strings that come in.
 
-Mitigation:
-Users of Apache Hadoop 2.6.x and earlier should upgrade to Hadoop
-2.7.0 or later.
+We do not feel that a CVE would have been needed if this were the only
+exploitation scenario. We do not think there is a security boundary
+between "people who can contribute arbitrary code to a product" and
+"people who can contribute code that expresses translations." However,
+it is possible that an open-source project exists somewhere with a
+completely untrusted channel for translators.
 
-Credit:
-This issue was discovered by Sunil Yadav.
+>     user exposed configuration. One some systems users might be
+>     permitted to configure some behavior and that might be exposed as
+>     format strings. In particular I have seen it where users can
+>     configure notification mails, log message formats or other basic
+>     templates in web applications.
+
+This one seems completely valid, and might be the primary exploitation
+scenario for CVE-2017-5524.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCgAGBQJY//MFAAoJEPrQXCrFJpS4ZVYQAJ2BcBuaX/vV8brWXEsMH25L
-cUCKbyhdbKaq5m3vcGF6S8H+RAzurZSoy/xxP2Xc9oKKtwcUV/TEphMmYK/xEfTU
-iSMs84gV7rLPiCg20YwCSi0DbFjpfvFiLrX/K9YoIHD8ZoWOTxrGmf9JGaGWTsv8
-gi7N8iCSja2adc88WoqdbdQg/cTPFdv2OKjQeo0Axg63Vt4UFxdrWpGL7oyXPuHD
-df2mJR09jvuprzhyACDL2l4O3YO/Q8BMffHu5XVdnewYUS8K3lOEBsNkdbsJx5YG
-8XXUYQEZ8RpnAADaeInI6g5e3qEqISrvtLxp/QXARUgpFYoPY2te+3hBQZADnBiq
-JlXtM+UD7iY+bs0c+/AJNTn/JRLqiaRe745E/kkYJ8mjvzFEjko5Eaq1xTuzER42
-euH5GDr3tkGXsoGPDrCv+ns9MMMZz9qmMqZOayKNN3oN3gZYg00w6Jm8f4BA5qWs
-8tPfgaLGoGnEySoGPZdZPVdwFIOcS16+5Wr2JpvMCv8bTQOPR/H2yAFO4K1mmUEh
-HB7T67lBCbNa1LrOFQJIWVRMAx9iR63UzCLpRfiTCKSHei2GFuGzat5gRXly3goF
-iZqu2AugMFf93KW9x8koVOyoXYOYcIlhLNyRkBPkpgsYY2LZ96plNkNEPOSD+EGC
-FlCf1icS+h2DK/F059f5
-=TSqN
+iQIcBAEBCAAGBQJYf5iGAAoJEHb/MwWLVhi27kcQAJHT6gBPBNBX+bevBoRdfS2h
+NtBgjZrd1s2KVCPnCdZGfnayAFz4nhtaSPul1riqH4on/krV9QkxZmRXxV/8R8ic
+IfmTWjg4DRuzYYwSGKKhrlNQa4OVWFVT/us4Rv4XDJwPTOXpf5qKFGjisp7udw8i
+SmFFTEYUV6r26ons2Q5u5RQenmiml3gdiS48XTQ5RFVXRNRKpCeswM1E+kG+S6bV
+G4Bx8QYUcRvCrRV2W1gEEjxBiI65FyOBQTX3jDg/N7DSn9v4dX4gZaSrbUaHIqLB
+YAzuTD4liH/G3ABAUQf3C2uiGEYbDUjGb4v5DFptcGr+xHMx3gtak3sJS+BS2mXq
+nrClrpO9BBoYFgQxV6QRTAEpuDoiAfcv6lB/Uj4/90Ub+hrqf94uqyS6XlGzyaxq
+r8kWPiVuUf8YbUVfT5H5YSeRZVH1gMK16Mci/4EWw3Al25CuK+HwrIZT/oA7ljez
+BL+zGzDGMPoIsHmge+PIS9yEbRvZ05Bim8p4yCE/0nFpWhipALEhNshADgVpkLME
+338NhrrW1fyNQoOCggacrcHp51hqpaAVRzJ5yM8DTmMz+SmAGhq2vemqFageQkyr
+B+P3VsnBCEFofULAXPgYYN1+Ub4tkWaO3enYCZ2YJIFe/Zj6ysKLnEW42l2edRNz
+T2eqS7U/9gxzMdHRkqIn
+=97Au
 -----END PGP SIGNATURE-----
