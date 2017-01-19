@@ -1,105 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/12
-Message-ID: <773106.230746151-sendEmail@localhost>
-Date: Sun, 26 Feb 2017 11:55:48 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: audiofile: heap-based buffer overflow in Expand3To4Module::run (SimpleModule.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/6
+Message-ID: <4574c9ede05943b4bed89cb18f288ac3@imshyb01.MITRE.ORG>
+Date: Thu, 19 Jan 2017 16:50:29 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <security@...c.gov.uk>
+Subject: Re: CVE request Kernel: kvm: use-after-free issue while creating devices
 Content-Type: text/plain; charset=utf-8
 
-Description:
-audiofile is a C-based library for reading and writing audio files in many common formats.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzz on it discovered an heap overflow.
+> Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support
+> is vulnerable to a use-after-free flaw. It could occur while creating devices, 
+> via ioctl('/dev/kvm', ...) calls.
+> 
+> A user/process could use this flaw to crash the host kernel resulting in DoS 
+> or potentially escalate their privileges on a system.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1414506
+> https://git.kernel.org/linus/a0f1d21c1ccb1da66629627a74059dd7f5ac9c61
 
-The complete ASan output:
+>> KVM: use after free in kvm_ioctl_create_device()
+>> 
+>> We should move the ops->destroy(dev) after the list_del(&dev->vm_node)
+>> so that we don't use "dev" after freeing it.
+>> 
+>> virt/kvm/kvm_main.c
 
-# sfconvert @@ out.mp3 format aiff
-==1731==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fd325141800 at pc 0x7fd324dab3e7 bp 0x7fff5fd78e20 sp 0x7fff5fd78e18                                                                                                                                       
-WRITE of size 4 at 0x7fd325141800 thread T0                                                                                                                                                                                                                                    
-    #0 0x7fd324dab3e6 in void Expand3To4Module::run(unsigned char const*, int*, int) 
-/tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/SimpleModule.h:268:14                                                                           
-    #1 0x7fd324dab3e6 in Expand3To4Module::run(Chunk&, Chunk&) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/SimpleModule.h:241                                                                                                         
-    #2 0x7fd324d8105a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14                                                                                                                                             
-    #3 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29                                                                                                                                                 
-    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
-    #5 0x7fd323e5678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
-    #6 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                               
-0x7fd325141800 is located 0 bytes to the right of 524288-byte region [0x7fd3250c1800,0x7fd325141800)                                                                                                                                                                           
-allocated by thread T0 here:                                                                                                                                                                                                                                                   
-    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                                                                                                       
-    #1 0x50bb48 in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:327:17                                                                                                                                                 
-    #2 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
-    #3 0x7fd323e5678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
-                                                                                                                                                                                                                                                                               
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/SimpleModule.h:268:14 in void 
-Expand3To4Module::run(unsigned char const*, int*, int)                                                 
-Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
-  0x0ffae4a202b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
-  0x0ffae4a202c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
-  0x0ffae4a202d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
-  0x0ffae4a202e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
-  0x0ffae4a202f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
-=>0x0ffae4a20300:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0ffae4a20310: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0ffae4a20320: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0ffae4a20330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0ffae4a20340: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-  0x0ffae4a20350: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
-Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
-  Addressable:           00                                                                                                                                                                                                                                                    
-  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                                                                                  
-  Heap left redzone:       fa                                                                                                                                                                                                                                                  
-  Heap right redzone:      fb                                                                                                                                                                                                                                                  
-  Freed heap region:       fd                                                                                                                                                                                                                                                  
-  Stack left redzone:      f1                                                                                                                                                                                                                                                  
-  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1731==ABORTING
+Use CVE-2016-10150.
 
-Affected version:
-0.3.6
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00190-audiofile-heapoverflow-Expand3To4Module-run
-
-Timeline:
-2017-02-20: bug discovered and reported to upstream
-2017-02-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-expand3to4modulerun-simplemodule-h
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+iQIcBAEBCAAGBQJYgTPgAAoJEHb/MwWLVhi2d54P/1HdOI1khdv+N0Xl8/6HEHsI
+Fw7DGd9i1o74vbcFSaqkWLLPD1py1bo0Vc2rzYHhuLR9snJ6c+q/Zcrf5JAkCi2R
++pmTznsfb82uTSX69RlQidv6aDHE15kGWh99iKaRmSyl3zx5WynfrmBQwBziUVVi
+6yBcnQc5VRC8lyaTh2iLdW/m/fjzBieQKfKTlbdTGc7hkoEWyTvSmxksmTN5cQyU
+AbJjID50vjXdKpS7vxQ88LGuy/BWT74V0Nb2lIU7YCqX8nGcnfcTiM0HQM7nOQRb
+uX3XrQfzE5OrbotTZmj59+lf5dpsKxeE1RJvpdA33XFgtEoYs6nRZwnBIDtJPL0v
+8OMUhPLhSd3aikOPZ2WKTD/vqv1nxjpOo/mMJA5T6PlMi/7+XTYXrHlRd08e5JJc
+BM1m6NuvTUoU2DV0ixicAUWRHd2MOx0i+BPubGrZeCYlACjPkI/SoJn8JqjsBvN0
+EkX8am20G6RJxTGtplhjnhqGc0ZoT1XBi9fwpmEtFAD8lKI53DLPVzw0Yy2KMlOw
+wwW94nMmo0KcXGPDf58aG2j+20cGkgPHaK4vKUaRC2ISsx++MYfRFFREo2wC4dyW
+cAs0lb8ka9SFbiLZ6KiHVq3+uXs77HMBRPbT9wrS1z7QGapzB/5f2t46SYX2eCWD
+P+hlTEh26mdh5anV0jew
+=0y5u
+-----END PGP SIGNATURE-----
