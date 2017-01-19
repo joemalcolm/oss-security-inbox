@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/13
-Message-ID: <20170624163950.GA405@openwall.com>
-Date: Sat, 24 Jun 2017 18:39:50 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: distros list archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/2
+Message-ID: <alpine.LFD.2.20.1701191634580.5307@wniryva>
+Date: Thu, 19 Jan 2017 16:42:09 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Xiaohan Zhang <zhangxiaohan1@...wei.com>
+Subject: CVE-2017-2583 Kernel: Kvm: vmx/svm potential privilege escalation inside guest
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-I've just set up these archives of the private lists up until June 19:
+Linux kernel built with the Kernel-based Virtual Machine(CONFIG_KVM) support 
+is vulnerable an incorrect segment selector(SS) value error. It could occur 
+loading values into SS register in long mode.
 
-http://www.openwall.com/lists/linux-distros/
-http://www.openwall.com/lists/distros/
+A user/process inside guest could use this flaw to crash the guest resulting 
+in DoS or potentially escalate their privileges inside guest.
 
-I did not decrypt the actual messages, but the statistics and the
-message headers should provide some visibility into how much and roughly
-what was discussed and when.
+Upstream patch:
+---------------
+   -> https://git.kernel.org/linus/33ab91103b3415e12457e3104f0e4517ce12d0f3
 
-The messages appearing on distros should be strictly a subset of those
-appearing on linux-distros, as per the description of the lists here:
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1414735
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros
+Note: On Intel CPUs it'd corrupt the guest state resulting in DoS; Whereas on
+       AMD CPUs it could potentially escalate privileges inside guest.
 
-As you may notice, the Subject lines sometimes contain [vs] and other
-times [vs-plain].  This reflects whether the messages traveled to the
-list exploder in encrypted or plaintext form, respectively.  They
-traveled to the list members in re-encrypted form either way.  The
-[vs-plain] case commonly occurs on messages CC'ed to other parties, for
-which the sender might not have had the keys.  MUAs generally don't
-allow a message to be encrypted to a subset of the addressees and sent
-in plaintext to others.
+This issue was discovered by Xiaohan Zhang of Huawei Inc.
 
-Enjoy.
+'CVE-2017-2583' was assigned to this issue by Red Hat Inc.
 
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
