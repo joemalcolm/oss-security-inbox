@@ -1,52 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/9
-Message-Id: <63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>
-Date: Wed, 22 Nov 2017 15:27:11 -0700
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Bram Moolenaar <Bram@...lenaar.net>
-Subject: Re: Re: Security risk of server side text editing ...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/5
+Message-ID: <5a73a86bba0443d0bf2ddfba52218ecb@imshyb01.MITRE.ORG>
+Date: Thu, 19 Jan 2017 12:34:48 -0500
+From: <cve-assign@...re.org>
+To: <dmoppert@...hat.com>, <seb@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: python-pysaml2 XML external entity attack
 Content-Type: text/plain; charset=utf-8
 
-Can you post a summary of the issues, it sounds like more than one CVE will be needed, thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+>> Use CVE-2016-10127
+> I think this CVE needs some clarification.
 
--Kurt
+We agree. Here is a rewrite of our entire earlier message that made this
+CVE ID assignment.
 
+REPLACE ALL OF THIS EARLIER TEXT:
 
+   > python-pysaml2 does
+   > not sanitize SAML XML requests or responses:
+   >
+   >   https://github.com/rohe/pysaml2/issues/366
+   >   https://github.com/rohe/pysaml2/pull/379
+   >   https://bugs.debian.org/850716
+   >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
+   
+   Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
+   parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
+   
+   The scope of this CVE does not include the various other issues that
+   may be found in the above references:
+   
+    - it does not include any aspect of
+      https://bugzilla.gnome.org/show_bug.cgi?id=772726
+   
+    - it does not include any vulnerabilities in the XML Security Library
+      (xmlsec), such as ones that are now, or previously were, listed at
+      https://github.com/lsh123/xmlsec/issues
+   
+    - it does not include any CWE-776 (Entity Expansion) issues that may
+      have been fixed as a side effect of
+      6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
+      test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
 
+WITH THIS REWRITE:
 
+   > python-pysaml2 does
+   > not sanitize SAML XML requests or responses:
+   >
+   >   https://github.com/rohe/pysaml2/issues/366
+   >   https://github.com/rohe/pysaml2/pull/379
+   >   https://bugs.debian.org/850716
+   >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
+   
+   Use CVE-2016-10127 for any XXE vulnerability that exists within the
+   pysaml2 code (i.e., not in an underlying library). This vulnerability
+   is described in the "Oct 6, 2016" portion of the
+   https://github.com/rohe/pysaml2/issues/366 reference. There isn't yet
+   a complete rationale for why the pysaml2 code itself should be
+   considered responsible for XXE, or about what changes to the pysaml2
+   code itself would resolve XXE. However, it is still potentially useful
+   to track XXE at the pysaml2 level.
+   
+   The scope of this CVE does not include the various other issues that
+   may be found in the above references:
+   
+    - it does not include any aspect of
+      https://bugzilla.gnome.org/show_bug.cgi?id=772726 (CVE-2016-9318
+      is applicable to that XXE discussion)
+   
+    - it does not include any vulnerabilities in the XML Security Library
+      (xmlsec), such as ones that are now, or previously were, listed at
+      https://github.com/lsh123/xmlsec/issues
+   
+    - it does not include any CWE-776 (Entity Expansion) issue fixed
+      in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b. The ID for this
+      CWE-776 problem in pysaml2 is CVE-2016-10149.
 
-> On Nov 22, 2017, at 15:17, Solar Designer <solar@...nwall.com> wrote:
-> 
->> On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
->> Please check out patch 8.0.1300.
-> 
-> Thanks.  Personally, I don't have much to add.  This continues to do
-> what I find are weird and wrong things, so any implementation issues are
-> secondary to that.  I suppose you have some rationale for preserving the
-> old behavior of propagating the edited file's permissions onto related
-> temporary files, but I'm unaware of good reasons for that.
-> 
-> If it's about users' collaboration, then I don't see a good reason for
-> other users in the group, even if they could access the original file
-> via group permissions, to also have access to recovery and backup files.
-> 
-> As to the patch itself, aside from it propagating the possibly unsafe
-> permissions on purpose (I mean unsafe such as in Hanno's original
-> example, but also applying to backup files), it's also risky in
-> temporarily setting umask to 0.  On some systems, this could mean libc
-> or the kernel creating files with unsafe permissions if anything goes
-> very wrong during this time - e.g., a coredump.  Checking st_ino is OK
-> as a hardening measure, but might not always be sufficient: inode number
-> reuse is possible if the original file could have been deleted.
-> I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
-> guess Vim can be built on systems without working O_NOFOLLOW as well?
-> 
-> In case anyone wants to review the patch for real, I've attached it to
-> this message, and here it is on GitHub (for expanding of the context):
-> 
-> https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
-> 
-> Alexander
-> <8.0.1300>
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYgPg3AAoJEHb/MwWLVhi2P5kP/i5lCVmVMrE8LyRe7thLApfH
+i+T4cuyt3ydZOXJCWgirp5/jEKXhjA5FLMZNpo1J1iinkIW9gJeP3XgJcmaVRr1K
+iY/lKkf98Pcd5G1xNKurb+CqlE/wPYLT58pLxaolSVHj9oFPuhFfC/3ECMv8FKdV
+ealV3n7pQ/0CJCORqL/mVA30jGJblCVRWv9uNFAEXRSAvGnAzJbu3sCsc2zmWmtp
+aeJsgr7giNgNQX/nufUysm1t8xSH/1LQlwbRrEisn8pIgek4pjRa1jJyXs0WPb//
+tbrzL7maBVQJPIxLGID4dHMY3d33rkaeAHyfFc/nddzAP1REbamxOTDHnZdqWwAl
+uHSNhMpM+WSfiOl2khP0YID6mPNywbFXjHyGas70E2Cob9biwc4qdl94qz4x5VeI
+O1Iae59q829zwOZlo1PtYqX8d7X3DSuB4opXaZR3CT58pIg68Q7HfgFhppEEUPF3
+c+vdGNOIP6bTrqXraibMGya5IAYTZqmqg6Bjc+Kul+DGNFbnDD41OfcTin6PWFSt
+o1a3xVy6qJ0lQMC2QUvPXWNO4Q2SpnAQdTJv3A8rV6fg4bJ4d4vAeYmIO4xyyym0
+mszWpmX1CcpHd+HyN4bQsG7VpqX3k5M3DZWP0nDnKFPlhDxjTt69PfhCTP8MXdFi
+p3Dt50ewDtHBNqBWConl
+=jh5c
+-----END PGP SIGNATURE-----
