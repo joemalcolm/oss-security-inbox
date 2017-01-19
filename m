@@ -1,25 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/1
-Message-ID: <20170416043146.6443.20A4EFC1@matica.foolinux.mooo.com>
-Date: Sat, 15 Apr 2017 21:33:18 -0700
-From: Ian Zimmerman <itz@...mate.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: libsamplerate: global buffer overflow in calc_output_single (src_sinc.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/5
+Message-ID: <0b4f01d2726f$d3b693e0$7b23bba0$@gmail.com>
+Date: Fri, 20 Jan 2017 00:19:34 +0800
+From: "idl3r" <idler1984@...il.com>
+To: <oss-security@...ts.openwall.com>
+Cc: "'Anarcheuz Fritz'" <anarcheuz@...il.com>, <cve-assign@...re.org>
+Subject: RE: CVE Request - Samsung Exynos GPU driver OOB read
 Content-Type: text/plain; charset=utf-8
 
-On 2017-04-15 14:38, Nick Boyce wrote:
+Unfortunately, there is no official git for tracking from Samsung, so I
+can't give a pointer to the particular commit.
 
-> there is no reference to any version numbers of the form 1.0.x, but
-> only numbers such as 0.1.8 (the last release [dated 15.Aug.2011]
-> mentioned in the changelog as I write)
-> http://www.mega-nerd.com/SRC/ChangeLog
-> and 0.1.9 (the latest version actually available for download):
-> http://www.mega-nerd.com/SRC/download.html
+The bug itself resides in
+<root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
+function kbase_dispatch which is the main ioctl dispatcher of the driver:
 
-The stable gentoo version is also 0.1.9
+static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
+args, u32 args_size)
+{
+...
+    /* setup complete, perform normal operation */
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+    switch (id) {
+...
+	case KBASE_FUNC_TMU_SKIP:
+		{
+/* MALI_SEC_INTEGRATION */
+#ifdef CONFIG_SENSORS_SEC_THERMISTOR
+#ifdef CONFIG_USE_VSYNC_SKIP
+			struct kbase_uk_tmu_skip *tskip = args;
+			int thermistor = sec_therm_get_ap_temperature();
+			u32 i, t_index = tskip->num_ratiometer;
+
+			for (i = 0; i < tskip->num_ratiometer; i++)
+<== missing of boundary check
+				if (thermistor >= tskip->temperature[i])
+					t_index = i;
+
+tskip->temperature is a uint32 array of static size(10 elements) and
+tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
+check is missing, OOB read may happen leading to possible memory corruption.
+
+-----Original Message-----
+From: Greg KH [mailto:greg@...ah.com] 
+Sent: Thursday, January 19, 2017 10:37 PM
+To: oss-security@...ts.openwall.com
+Cc: Anarcheuz Fritz <anarcheuz@...il.com>; cve-assign@...re.org
+Subject: Re: [oss-security] CVE Request - Samsung Exynos GPU driver OOB read
+
+On Thu, Jan 19, 2017 at 02:38:31PM +0800, Idler wrote:
+> Hello,
+> 
+> I'd like to request CVE for the following security issue:
+> 
+> Security bulletin: 
+> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
+> 
+> SVE-2016-6362: out of bound read in gpu driver
+> 
+> Severity: Low
+> Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets 
+> Reported on: May 31, 2016 Disclosure status: Privately disclosed.
+> Vulnerability in gpu driver does not properly check the boundary of 
+> buffers leading to a possible memory corruption.
+> The applied patch avoids an illegal access to memory by checking the
+boundary.
+> 
+> Source code:
+> Source code of the affected GPU drivers (as part of the Linux kernel
+> source) can be downloaded from Samsung Opensource Resource center:
+> http://opensource.samsung.com/
+> 
+> The particular model of phone we used to reproduce this issue is:
+> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub
+> =F&searchValue=SM-G9200
+
+Any pointer to the commit(s) that happened to resolve this issue?
+
+thanks,
+
+greg k-h
+
