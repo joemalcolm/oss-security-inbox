@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/5
-Message-ID: <8c1cd983-c3ec-c821-0e11-b8dd6bed1387@suse.com>
-Date: Tue, 10 Jan 2017 11:31:37 +0100
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, cmn@...m.me
-Subject: CVE Request: two security fixes in libgit2 0.25.1, 0.24.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/3
+Message-ID: <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>
+Date: Thu, 19 Jan 2017 14:38:31 +0800
+From: Idler <idler1984@...il.com>
+To: oss-security@...ts.openwall.com, Anarcheuz Fritz <anarcheuz@...il.com>,  cve-assign@...re.org
+Subject: CVE Request - Samsung Exynos GPU driver OOB read
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-libgit2 released:
+I'd like to request CVE for the following security issue:
 
-https://github.com/libgit2/libgit2/releases/tag/v0.25.1
-https://github.com/libgit2/libgit2/releases/tag/v0.24.6
+Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
 
-with the following two fixes:
+SVE-2016-6362: out of bound read in gpu driver
 
-[...] performs extra sanitization for some edge cases in the Git Smart
-Protocol which can lead to attempting to parse outside of the buffer.
+Severity: Low
+Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets
+Reported on: May 31, 2016
+Disclosure status: Privately disclosed.
+Vulnerability in gpu driver does not properly check the boundary of
+buffers leading to a possible memory corruption.
+The applied patch avoids an illegal access to memory by checking the boundary.
 
-https://github.com/libgit2/libgit2/commit/66e3774d279672ee51c3b54545a79d20d1ada834
-https://github.com/libgit2/libgit2/commit/2fdef641fd0dd2828bd948234ae86de75221a11a
+Source code:
+Source code of the affected GPU drivers (as part of the Linux kernel
+source) can be downloaded from Samsung Opensource Resource center:
+http://opensource.samsung.com/
 
+The particular model of phone we used to reproduce this issue is:
+http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
 
-[...] fix affects the certificate check callback. It provides a valid
-parameter to indicate whether the native cryptographic library
-considered the certificate to be correct. This parameter is always
-1/true before this fix leading to a possible MITM.
-
-This does not affect you if you do not use the custom certificate
-callback or if you do not take this value into account. This does affect
-you if you use pygit2 or git2go regardless of whether you specify a
-certificate check callback.
-
-https://github.com/libgit2/libgit2/commit/9a64e62f0f20c9cf9b2e1609f037060eb2d8eb22
-https://github.com/libgit2/libgit2/commit/98d66240ecb7765e191da19b535c75c92ccc90fe
-https://github.com/libgit2/libgit2/commit/3829ba2e710553893faf6336cc6b2f3fc17a293e
-https://github.com/libgit2/libgit2/commit/2ac57aa89bde788173b54bd153430369deec64c0
+License:
+GPL
 
 
-Could CVEs please be assigned?
-
-Thanks,
-
-Andreas
-
--- 
-
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thanks.
+James
