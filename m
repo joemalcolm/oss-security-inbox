@@ -1,111 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/13
-Message-ID: <1843.42902818457-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:38:26 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: elfutils: heap-based buffer overflow in check_symtab_shndx (elflint.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/1
+Message-ID: <20170119073444.GA14027@sin.redhat.com>
+Date: Thu, 19 Jan 2017 18:04:45 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: seb@...ian.org, cve-assign@...re.org
+Subject: Re: Re: CVE request: python-pysaml2 XML external entity attack
 Content-Type: text/plain; charset=utf-8
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+I think this CVE needs some clarification.
 
-A fuzz on eu-elflint showed an heap overflow.
+On Jan 10 2017, cve-assign@...re.org wrote:
+> > python-pysaml2 does
+> > not sanitize SAML XML requests or responses:
+> > 
+> >   https://github.com/rohe/pysaml2/issues/366
+> >   https://github.com/rohe/pysaml2/pull/379
+> >   https://bugs.debian.org/850716
+> >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
 
-The complete ASan output:
+issues/376 identifies an XML External Entity flaw (CWE-611), but the
+"related commit" 6e09a25d and pull request 379 addresses only Billion
+Laughs vulnerabilities (CWE-776).
 
-# eu-elflint -d $FILE
-==14342==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efd0 at pc 0x0000004267ec bp 0x7ffdf36a7ad0 sp 0x7ffdf36a7ac8
-READ of size 4 at 0x60200000efd0 thread T0
-    #0 0x4267eb in check_symtab_shndx /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:1961
-    #1 0x4267eb in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4114
-    #2 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #3 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #4 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #5 0x7f625ef4678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #6 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
+While the patch's commit message seems to be incorrect in mentioning
+XXE, it does not claim to fix issues/379, which is (correctly) still
+open.
 
-0x60200000efd2 is located 0 bytes to the right of 2-byte region [0x60200000efd0,0x60200000efd2)
-allocated by thread T0 here:
-    #0 0x7f6260633288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f626028fb46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f626028fb46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f6260290662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f6260290776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x7f62602bc035 in elf32_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf32_getchdr.c:72
-    #6 0x7f62602bc55c in gelf_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/gelf_getchdr.c:52
-    #7 0x420edf in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3911
-    #8 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #9 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #10 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #11 0x7f625ef4678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+Thus the below description of CVE-2016-10127 is inconsistent - the
+vulnerability addressed by 6e09a25 is CWE-776, which is excluded from
+the CVE's coverage by the third list item.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:1961 in check_symtab_shndx
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa[02]fa fa fa 00 01
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==14342==ABORTING
-Affected version:
-0.168
+> Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
+> parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
+> 
+> The scope of this CVE does not include the various other issues that
+> may be found in the above references:
+> 
+>  - it does not include any aspect of
+>    https://bugzilla.gnome.org/show_bug.cgi?id=772726
+> 
+>  - it does not include any vulnerabilities in the XML Security Library
+>    (xmlsec), such as ones that are now, or previously were, listed at
+>    https://github.com/lsh123/xmlsec/issues
+> 
+>  - it does not include any CWE-776 (Entity Expansion) issues that may
+>    have been fixed as a side effect of
+>    6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
+>    test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
 
-Fixed version:
-0.169 (not released atm)
+This can be seen also by noticing that the patch substitues
+"defusedxml.ElementTree" for "xml.etree.ElementTree" (and its native
+code equivalent cElementTree), and consulting the table and note #1 at:
 
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00129.html
+https://docs.python.org/2/library/xml.html#xml-vulnerabilities
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+which points out that "etree" is vulnerable to CWE-776 but not to
+CWE-611.
 
-CVE:
-CVE-2017-7611
+The CWE-611 vulnerability in libxml2 (CVE-2016-9318) is still exposed in
+pysaml2, via its use of lxml and xmlsec.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00234-elfutils-heapoverflow-check_symtab_shndx
+The exposure via lxml may be mitigable by disabling entity resolution
+altogether (resolve_entities=False), but xmlsec seems to lack any such
+switch.
 
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
+-- 
+Doran Moppert
+Red Hat Product Security
 
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_symtab_shndx-elflint-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Content of type "application/pgp-signature" skipped
