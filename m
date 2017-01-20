@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/19
-Message-ID: <20170223183658.zqlncw72y6hyhjil@eldamar.local>
-Date: Thu, 23 Feb 2017 19:36:58 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Dmitry Vyukov <dvyukov@...gle.com>, Eric Dumazet <edumazet@...gle.com>, Willy Tarreau <w@....eu>, "David S. Miller" <davem@...emloft.net>
-Subject: Linux: CVE-2017-6214: ipv4/tcp: infinite loop in tcp_splice_read()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/14
+Message-ID: <alpine.LFD.2.20.1701202004350.14113@wniryva>
+Date: Fri, 20 Jan 2017 20:06:20 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb
 Content-Type: text/plain; charset=utf-8
 
-Hi
+   Hello,
 
-CVE-2017-6214 has been assigned for the following commit in Linux by
-MITRE (via the webform):
+Quick Emulator(Qemu) built with the virtual hardware watchdog 'wdt_i6300esb' 
+support is vulnerable to a memory leakage issue. It could occur while doing a 
+device unplug operation; Doing so repeatedly would result in leaking host 
+memory, affecting other services on the host.
 
-https://git.kernel.org/linus/ccf7abb93af09ad0868ae9033d1ca8108bdaec82
+A privileged user inside guest could use this flaw to cause a DoS and/or 
+potentially crash the Qemu process on the host.
 
-as included in v4.10-rc8:
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2016-12/msg03104.html
 
->     tcp: avoid infinite loop in tcp_splice_read()
->     
->     Splicing from TCP socket is vulnerable when a packet with URG flag is
->     received and stored into receive queue.
->     
->     __tcp_splice_read() returns 0, and sk_wait_data() immediately
->     returns since there is the problematic skb in queue.
->     
->     This is a nice way to burn cpu (aka infinite loop) and trigger
->     soft lockups.
->     
->     Again, this gem was found by syzkaller tool.
->     
->     Fixes: 9c55e01c0cc8 ("[TCP]: Splice receive support.")
->     Signed-off-by: Eric Dumazet <edumazet@...gle.com>
->     Reported-by: Dmitry Vyukov  <dvyukov@...gle.com>
->     Cc: Willy Tarreau <w@....eu>
->     Signed-off-by: David S. Miller <davem@...emloft.net>
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415199
 
-The fix was backported to 4.9.11
-(0f895f51a831d73ce24158534784aba5b2a72a9e).
+This issue was reported by Mr Li Qiang of 360.cn Inc.
 
-Regards,
-Salvatore
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
