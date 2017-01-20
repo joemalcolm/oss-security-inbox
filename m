@@ -1,90 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/15/3
-Message-ID: <20170615144050.GA25094@openwall.com>
-Date: Thu, 15 Jun 2017 16:40:50 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/4
+Message-ID: <1484880112.11949.24.camel@redhat.com>
+Date: Fri, 20 Jan 2017 13:41:52 +1100
+From: Harshula <harshula@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Berkeley DB reads DB_CONFIG from cwd
+Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
+Subject: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 11, 2017 at 12:06:13AM +0200, Jakub Wilk wrote:
-> Apparently Berkeley DB reads the DB_CONFIG configuration file from the 
-> current working directory by default[*]. This is surprising and AFAICT 
-> undocumented.
-> 
-> Here's how to exploit it against pam_ccreds:
-> 
->    $ cat /etc/shadow
->    cat: /etc/shadow: Permission denied
->    $ ln -sf /etc/shadow DB_CONFIG
->    $ /sbin/ccreds_chkpwd moo < /dev/null
->    BDB1584 line 1: 
->    root:$1$QRCEVRMX$sPppjXE42AZnUPuEWf87D.:17327:0:99999:7:::: incorrect 
->    name-value pair
-> 
-> (The above was tested on Debian jessie.)
-> 
-> In the past, nss_db was also exploitable:
-> CVE-2010-0826
-> 
-> 
-> [*] More precisely, this seem to happen when you call db_create() with 
-> dbenv=NULL; or if you use the dbm_open() function.
+Hi Folks,
 
-Besides possibly updating Postfix, what are distros going to do about
-this?  What is upstream going to do?  Have they been contacted?
+Red Hat Product Security has been notified of a kernel vulnerability
+that a local attacker can exploit to crash/panic the kernel and cause a
+denial of service.
 
-In the source code, it isn't necessarily as simple as commenting out the
-undocumented functionality.  There doesn't appear to be any code
-specific to the undocumented functionality, since it is documented that
-the DB_CONFIG file is read from the environment's home directory and the
-code is there primarily for that purpose.  Problems arise when the
-environment is uninitialized, and it is unclear to me whether this was
-possibly meant to imply the environment's home directory is the current
-directory (but even if so, this behavior is dangerous and needs to go).
+This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
+rt411016):
 
-At first, I tried checking for dbenv being NULL in __dbenv_config(),
-which is where the hard-coded DB_CONFIG file name is found.  However, at
-least when testing with Postfix' postmap program (without the recent
-workaround), dbenv is non-NULL there, and per strace postmap does indeed
-try to open DB_CONFIG in the current directory.  Thus, for now I opted
-for this patch checking for and curing the symptom:
+"A process that is in the same process group as the ``init'' process
+(group id zero) can crash the Linux 2 kernel with several system calls
+by passing in a process ID or process group ID of zero. The value zero
+is a special value that indicates the current process ID or process
+group. However, in this case it is also the process group ID of the
+process."
 
---- db-4.3.29/env/env_open.c.orig       2004-12-23 02:58:21 +0000
-+++ db-4.3.29/env/env_open.c    2017-06-15 13:59:43 +0000
-@@ -500,7 +500,7 @@ __dbenv_config(dbenv, db_home, flags)
-        if (p == NULL)
-                fp = NULL;
-        else {
--               fp = fopen(p, "r");
-+               fp = strcmp(p, "DB_CONFIG") ? fopen(p, "r") : NULL;
-                __os_free(dbenv, p);
-        }
+I've been testing whether RHEL is vulnerable and found the following:
 
-This passes the postmap test for me (postmap no longer tries to open the
-file), but I wonder if it possibly broke db's own tests.  I can't easily
-run the tests as --enable-test says it needs TCL, which we don't
-package.
+* Upstream/mainline is not vulnerable
+* RHEL 7 is not vulnerable
+* RHEL 6 is vulnerable
+* RHEL 5 is partially vulnerable
 
-While at it, I found that rep/rep_backup.c has a comment saying it skips
-DB_CONFIG, but the code actually skips DB_CONFIG* (that is, any filename
-starting with DB_CONFIG) due to use of strncmp():
+A very specific set of circumstances are required in order for the
+vulnerability to be exploited. The default configuration of RHEL 5 and
+RHEL 6 are not exploitable.
 
-                /*
-                 * Skip DB-owned files: ., ..,  __db*, DB_CONFIG, log*
-                 */
-                if (strcmp(names[i], ".") == 0)
-                        continue;
-                if (strcmp(names[i], "..") == 0)
-                        continue;
-                if (strncmp(names[i], "__db", 4) == 0)
-                        continue;
-                if (strncmp(names[i], "DB_CONFIG", 9) == 0)
-                        continue;
-                if (strncmp(names[i], "log", 3) == 0)
-                        continue;
+The risk is that a non-root user can trigger a kernel crash on a
+modified RHEL 6 system where the kernel runs a process that can be
+exploited. Perhaps on an embedded device.
 
-Either the comment or the code is wrong (I think the code is wrong), but
-this is unimportant.
+Thanks,
+Harshula
 
-Alexander
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1358840
+
+Patches:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
+?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
+?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
+?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
