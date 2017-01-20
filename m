@@ -1,41 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/5
-Message-ID: <BD9EEBEB-7C45-4F5E-BF5D-7C403CDEC3C9@gmail.com>
-Date: Mon, 08 May 2017 08:31:41 -0400
-From: Ryan Munz <gcoc.devops@...il.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/8
+Message-ID: <20170120082635.GB28326@kroah.com>
+Date: Fri, 20 Jan 2017 09:26:35 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
+Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
 Content-Type: text/plain; charset=utf-8
 
-iTerm2 would be another excellent test target as it is very popular.
+On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
+> Hi Folks,
+> 
+> Red Hat Product Security has been notified of a kernel vulnerability
+> that a local attacker can exploit to crash/panic the kernel and cause a
+> denial of service.
+> 
+> This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
+> rt411016):
+> 
+> "A process that is in the same process group as the ``init'' process
+> (group id zero) can crash the Linux 2 kernel with several system calls
+> by passing in a process ID or process group ID of zero. The value zero
+> is a special value that indicates the current process ID or process
+> group. However, in this case it is also the process group ID of the
+> process."
+> 
+> I've been testing whether RHEL is vulnerable and found the following:
+> 
+> * Upstream/mainline is not vulnerable
 
-On 5/7/17, 10:03 PM, "Shiz" <hi@...z.me> wrote:
+Is this true for the mainline kernel tree that RHEL 6 was based on?
 
-    > On 1 May 2017, at 18:44, Solar Designer <solar@...nwall.com> wrote:
-    > 
-    > Unfortunately, I did not record which terminal emulators did not crash
-    > for me.  However, Jason recorded both kinds of results for him, coming
-    > up with:
-    > 
-    > Konsole: no crash
-    > Xterm: no crash
-    > rxvt: crash
-    > Yakuake: no crash
-    > Mosh (which is a terminal emulator, after all): no crash
-    > Screen: 100% CPU usage --> DoS
-    > rxvt-unicode: no crash
-    > Qterminal: no crash
-    > putty: no crash
-    > 
-    > This adds "screen" to terminal emulators with problematic processing of
-    > terminal escapes.  Due to minor known impact, we did not handle this
-    > under embargo - it should be investigated and fixed now, in public.
-    
-    Despite not being open source and thus unfit for the list, I can confirm this
-    also causes high CPU usage for macOS Terminal.app, version 2.7.1 (387),
-    as shipped on macOS 10.12.1.
-    
-    - Shiz
-    
+> * RHEL 7 is not vulnerable
+> * RHEL 6 is vulnerable
+> * RHEL 5 is partially vulnerable
 
+So this is only due to a specific set of patches that were added to RHEL
+6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
+some of the older LTS mainline kernels might be affected and it would be
+good to ensure they are not.
 
+thanks,
+
+greg k-h
