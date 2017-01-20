@@ -1,35 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/15
-Message-id: <FEB98110-2F76-4716-84F8-3F26EC9D91DA@me.com>
-Date: Wed, 05 Jul 2017 11:22:54 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: File upload vulnerability in Kindeditor <= 4.1.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/13
+Message-ID: <20170120140117.GA11396@grsecurity.net>
+Date: Fri, 20 Jan 2017 09:01:17 -0500
+From: Brad Spengler <spender@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
+Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
 Content-Type: text/plain; charset=utf-8
 
-Title: File upload vulnerability in Kindeditor <= 4.1.12
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-06-14
-CVE-ID:[CVE-2017-1002024]
-Download Site: http://kindeditor.org/ https://github.com/kindsoft/kindeditor/
-Vendor: KindSoft
-Vendor Notified: 2017-06-15
-Vendor Contact:
-Advisory: http://www.vapidlabs.com/advisory.php?v=195
-Description: KindEditor is a lightweight, Open Source(LGPL), cross browser, web based WYSIWYG HTML editor. KindEditor has the ability to convert standard text areas to rich text editing.
-Vulnerability:
-It appears there is a remote file upload vulnerability in kindeditor<= 4.1.12 specifically in kindeditor/php/upload_json.php. The file doesn't sanitize user input or check that a user should be uploading files to the system.  It appears it doesn't allow .php, phtml, shtml or other executable extensions. You can upload .html and call it as its uploaded to the web server path. But no server side code exec.
+Hi Greg,
 
-Exploit Code:
-	• A simple curl request to kindeditor/php/upload_json.php?dir=file with the data filename=test.html set via POST request is all that's require to exploit this vulnerability:
-	•  
-	• $ curl -F "imgFile=@...t.html" http://example.com/kindeditor/php/upload_json.php?dir=file
-	•  
-	• {"error":0,"url":"/kindeditor/php/../attached/file/20170613/20170613203236_37481.html"}
+Much like you feel it's not your job to inform your own users of 
+vulnerabilities you've silently fixed, it's not the job of distros (who 
+are actually informing their own users) to do your job of determining 
+what kernels a particular fix affects, particularly when you just use it 
+as a way of getting your advertisement out there that people should be 
+running the latest Linux kernels.  Of course, what you're missing is 
+that when it's the distros themselves requesting the CVEs, this skews 
+the discussion of vulnerabilities to older kernels, not the much higher 
+number present in the latest upstream "stable".
 
+While we're here, how about a CVE for a recent kernel, for a vulnerability
+not fixed in any stable kernel yet, and introduced for a pointless mitigation
+no less:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c4e490cf148e85ead0d1b1c2caaba833f1d5b29f
+This affects upstream >= 4.8 when CONFIG_SLAB_FREELIST_RANDOM is enabled
+("for those following along at home")
 
-This vulnerability is being actively exploited in the wild to deface sites.  The software vendor has not responded to the issue I posted three weeks ago.
+Or, since VMAP_STACK was introduced haphazardly in 4.9 without doing any 
+static analysis beyond a simple grep or smatch it seems, there are probably a 
+dozen or so DoSes when CONFIG_DEBUG_SG or CONFIG_DEBUG_VIRTUAL is 
+enabled, or potential silent or not so silent memory corruption when 
+it's not, as a scatterlist crossing a virtual page boundary will then 
+end up accessing a totally unrelated adjacent physical page if a stack 
+address was passed into the scatterlist, and these vulnerabilities will 
+continue to pop up until something comprehensive is done to prevent 
+them.  Emese's written an IPA GCC plugin to find all the ones you've missed,
+so we know there still are many that haven't been fixed.
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6d104af38b570d37aa32a5803b04c354f8ed513d 
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a45f795c65b479b4ba107b6ccde29b896d51ee98
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=06deeec77a5a689cc94b21a8a91a76e42176685d
+0day alert, not fixed in 4.9 yet:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05a974efa4bdf6e2a150e3f27dc6fcf0a9ad5655
+Not to mention the bugs introduced via fixes for VMAP_STACK:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=146cc8a17a3b4996f6805ee5c080e7101277c410
 
-https://github.com/kindsoft/kindeditor/issues/249
+Or how about a CVE for this huge heap infoleak (and while I'm at it, congrats to
+Al for not covering it up for once, maybe he's learning!):
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9dc6f65bc5e232d1c05fe34b5daadc7e8bbf1fb
+Or this (sgid bit not cleared on tmpfs):
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=497de07d89c1410d76a15bec2bb41f24a2a89f31
 
+So be careful, if you keep advertising the superiority of upstream LTS 
+kernels in this passive aggressive way, you may soon find yourself on 
+the other end of such advertisement ;)
 
+-Brad
+
+On Fri, Jan 20, 2017 at 09:26:35AM +0100, Greg KH wrote:
+> On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
+> > Hi Folks,
+> > 
+> > Red Hat Product Security has been notified of a kernel vulnerability
+> > that a local attacker can exploit to crash/panic the kernel and cause a
+> > denial of service.
+> > 
+> > This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
+> > rt411016):
+> > 
+> > "A process that is in the same process group as the ``init'' process
+> > (group id zero) can crash the Linux 2 kernel with several system calls
+> > by passing in a process ID or process group ID of zero. The value zero
+> > is a special value that indicates the current process ID or process
+> > group. However, in this case it is also the process group ID of the
+> > process."
+> > 
+> > I've been testing whether RHEL is vulnerable and found the following:
+> > 
+> > * Upstream/mainline is not vulnerable
+> 
+> Is this true for the mainline kernel tree that RHEL 6 was based on?
+> 
+> > * RHEL 7 is not vulnerable
+> > * RHEL 6 is vulnerable
+> > * RHEL 5 is partially vulnerable
+> 
+> So this is only due to a specific set of patches that were added to RHEL
+> 6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
+> some of the older LTS mainline kernels might be affected and it would be
+> good to ensure they are not.
+> 
+> thanks,
+> 
+> greg k-h
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
