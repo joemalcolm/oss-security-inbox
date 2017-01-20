@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/11
-Message-ID: <452d9ee52081437e940914230d7641db@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 01:07:10 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: podofo: signed integer overflow in PdfParser.cpp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/17
+Message-ID: <alpine.LFD.2.20.1701202351250.18165@wniryva>
+Date: Fri, 20 Jan 2017 23:52:42 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> https://blogs.gentoo.org/ago/2017/02/01/podofo-signed-integer-overflow-in-pdfparser-cpp
-> base/PdfParser.cpp:757:23
-> signed integer overflow: 9223372036854775807 + 9 cannot be represented in type 'long'
+Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
+vulnerable to a memory leakage issue. It could occur while processing 
+'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
 
-Use CVE-2017-5853.
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00154.html
 
-iQIcBAEBCAAGBQJYksccAAoJEHb/MwWLVhi2KtcP/RPXFhE/48/qEcYDPurBglJ1
-lr8iO0O4kxomYc824syNx3W9DiVPTCl1b/V9w8kmKcYv5ST/Jau+jK8L/Ru1shCA
-munHxDPKJ6aLtbITZClfw8Xaxm4aN+Kw31ymk8p07SDsxnleRtIrD2ycikFuRfE4
-6m9grxkGSSCuom2LKeYQxdvc12WkyXYUXCrPw9j/psGv9qPcVJFbg/HGXRqPlyCX
-b8b4yPj44/e6aIEm+xlIArAdHv13SHm9Y5yD48VKDYsHuN4a29l23MW3C2iUUTpX
-vkW/TVfGY+/posT4UZBaRo79O4Yg7sjwQlWgCA94oyzFdWycQ2jWuBul8dlFsYBv
-oxzJdeohLdzsXnYMHaStfF8V4a1co1sFbrAWsqvpV7ZVaXqqYx6WfWHTRIVjkjZF
-xEW/7y1SSxnX3hHZHO79931OD9IserWTjQdCTXvkI2+ZW5vEJRdn6WLkN8kqeypS
-a+75z5vr+CkY3ilYDiTI4dSq2KHfWrXZkkSHdZd1FQWjlZNElOLQOSAnDEk0zCxr
-sZbkKu0Ik6eS27HsOpqhrobYqujxPiXUwh+MG/7m7zEEOCnL9dbFw7BPOpXKFf7s
-q5AG9gW9J+Y/iSJJ2FHTnkxUp6nbNklYSqrqqYsTL801Ae5l3d0KaCp4UqLhKqhD
-AObpfPPx/2QbA1pZXYIG
-=cD7a
------END PGP SIGNATURE-----
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415281
+
+This issue was reported by Mr Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
