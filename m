@@ -1,119 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/17/13
-Message-ID: <497688.036269636-sendEmail@localhost>
-Date: Thu, 17 Aug 2017 20:19:01 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libfpx: heap-based buffer overflow in OLEStream::WriteVT_LPSTR (olestrm.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/2
+Message-ID: <d4c6f05d1ba0416597c2d4e0a901091a@imshyb01.MITRE.ORG>
+Date: Thu, 19 Jan 2017 20:17:47 -0500
+From: <cve-assign@...re.org>
+To: <idler1984@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <anarcheuz@...il.com>
+Subject: Re: CVE Request - Samsung Exynos GPU driver OOB read
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libfpx is a library for manipulating FlashPIX images.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
-again.
-Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
-are only accepting patches and push new releases.
-This issue was found using the gm command line tool of graphicsmagick.
+> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
+> SVE-2016-6362: out of bound read in gpu driver
+> 
+> Vulnerability in gpu driver does not properly check the boundary of
+> buffers leading to a possible memory corruption.
 
-The complete ASan output of the issue:
+> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
+>> there is no official git for tracking from Samsung
 
-# gm identify $FILE
-==11148==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000001cd1 at pc 0x00000043ebe2 bp 0x7ffc6fa94b20 sp 0x7ffc6fa942d0
-READ of size 2 at 0x602000001cd1 thread T0
-    #0 0x43ebe1 in __interceptor_strlen /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:284
-    #1 0x7fd59be76493 in OLEStream::WriteVT_LPSTR(char*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1472
-    #2 0x7fd59be72e06 in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:477
-    #3 0x7fd59be73101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
-    #4 0x7fd59be4da36 in PFlashPixFile::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:581
-    #5 0x7fd59be4da8f in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:276
-    #6 0x7fd59be4db78 in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:306
-    #7 0x7fd59be79ed3 in PHierarchicalImage::~PHierarchicalImage() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ri_image/ph_image.cpp:168
-    #8 0x7fd59be49c38 in PFileFlashPixIO::~PFileFlashPixIO() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxio.cpp:277
-    #9 0x7fd59be536a5 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:519
-    #10 0x7fd59be536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
-    #11 0x7fd59be5529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
-    #12 0x7fd59c0c7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
-    #13 0x7fd5a193ee2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #14 0x7fd5a193be8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
-    #15 0x7fd5a1807ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
-    #16 0x7fd5a180e065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #17 0x7fd5a18b97fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #18 0x7fd5a18b6931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #19 0x7fd5a0121680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #20 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+>> The bug itself resides in
+>> <root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
+>> function kbase_dispatch which is the main ioctl dispatcher of the driver:
+>> 
+>> static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
+>> args, u32 args_size)
+>> {
+>> ...
+>>     /* setup complete, perform normal operation */
+>> 
+>>     switch (id) {
+>> ...
+>>         case KBASE_FUNC_TMU_SKIP:
+>>                 {
+>> /* MALI_SEC_INTEGRATION */
+>> #ifdef CONFIG_SENSORS_SEC_THERMISTOR
+>> #ifdef CONFIG_USE_VSYNC_SKIP
+>>                         struct kbase_uk_tmu_skip *tskip = args;
+>>                         int thermistor = sec_therm_get_ap_temperature();
+>>                         u32 i, t_index = tskip->num_ratiometer;
+>> 
+>>                         for (i = 0; i < tskip->num_ratiometer; i++) <== missing boundary check
+>>                                 if (thermistor >= tskip->temperature[i])
+>>                                         t_index = i;
+>> 
+>> tskip->temperature is a uint32 array of static size(10 elements) and
+>> tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
+>> check is missing, OOB read may happen leading to possible memory corruption.
 
-0x602000001cd1 is located 0 bytes to the right of 1-byte region [0x602000001cd0,0x602000001cd1)
-allocated by thread T0 here:
-    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fd59bac5337 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libstdc++.so.6+0xb2337)
+Use CVE-2017-5538.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:284 in __interceptor_strlen
-Shadow bytes around the buggy address:
-  0x0c047fff8340: fa fa 01 fa fa fa 00 06 fa fa fd fa fa fa fd fa
-  0x0c047fff8350: fa fa fd fa fa fa 00 fa fa fa 00 05 fa fa fd fa
-  0x0c047fff8360: fa fa fd fa fa fa 00 00 fa fa 04 fa fa fa fd fd
-  0x0c047fff8370: fa fa fd fa fa fa fd fa fa fa fd fd fa fa fd fa
-  0x0c047fff8380: fa fa fd fa fa fa fd fd fa fa 01 fa fa fa 00 00
-=>0x0c047fff8390: fa fa fd fa fa fa fd fa fa fa[01]fa fa fa fd fd
-  0x0c047fff83a0: fa fa 00 00 fa fa 00 04 fa fa fa fa fa fa fa fa
-  0x0c047fff83b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff83c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff83d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff83e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==11148==ABORTING
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Affected version:
-1.3.1_p6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12919
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00309-libfpx-heapoverflow-OLEStream_WriteVT_LPSTR
-
-Timeline:
-2017-08-01: bug discovered
-2017-08-09: blog post about the issue
-2017-08-17: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/09/libfpx-heap-based-buffer-overflow-in-olestreamwritevt_lpstr-olestrm-cpp/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+iQIcBAEBCAAGBQJYgWRyAAoJEHb/MwWLVhi2PZMP/1ehua8X9WteUieeSsh1ppVl
+qpofa9xWnyAikurp7B7Yg4WNnYWrR5+pxMw7yuwtGJfBr49mmaE9WN+vEOYMAL49
+sCCWudmieEYv8ZW+cKMawkWFGbRxdwBxGnWqeVCyBB9ktIKGC3t7PIeUadLwn6kr
+Hi8lKdczXK9Na59jct/HDQoFKmfETKyuWiFhe+c6cbcmowLrEMFP9z83LgTCP0/M
+a4lLwGo9quR7qyJK78wws7vyVE8R56OWKanKzIa7ok3pPk+c1lqwveyg0M23uD8A
+KO+tkplmt1FNuQ2yjjHo3KYMq7fUchIBi4zo1AAUp56oPrzUbbEJDab+A+DZl3hy
+5vVjYcZtjYigZroWX8Cqu9nYEsMNx/u2yclDFdwzlmdLa/gDcdEPIBOzlHVtAlog
+y6T1vTCBKRE7S2bmKqROnij2u+8d7D/0Mm77+9ra50VVVbVJEzXkT3fkuKrBhUBA
+gwSvWmOXTK7E0ZfPTzX1Tc5aqcQebwmPadW/MHazuWS1evmzdRUN6w75ZZ/eDlRw
+RJvvp4eRRIXvh5UxQ+a5QlzFhP5mlGtVDnQ1WpuO02lo5el3MpRWxKbXOssqoBQg
+vrTkiBMo0rES5OurfiX4Pn5IGIP4ykNke0cGuX4lldiQvMRBHtUNTJPAMTAHMowI
+j+zyr2GFgnVpaWgBEGow
+=UjQq
+-----END PGP SIGNATURE-----
