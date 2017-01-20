@@ -1,25 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/18/11
-Message-ID: <20170118220535.GA21362@gmail.com>
-Date: Wed, 18 Jan 2017 23:05:36 +0100
-From: Jelle van der Waa <jelle@...aa.nl>
-To: oss-security@...ts.openwall.com
-Subject: CVE request Weblate: information disclosure in password reset form
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/10
+Message-ID: <1484908781.11949.37.camel@redhat.com>
+Date: Fri, 20 Jan 2017 21:39:41 +1100
+From: Harshula <harshula@...hat.com>
+To: oss-security@...ts.openwall.com, Greg KH <greg@...ah.com>
+Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
+Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
 Content-Type: text/plain; charset=utf-8
 
-Weblate contains an information disclosure issue in it's password reset
-form. When entering an arbitrary email address in the password reset
-form Weblate will report back "User with this email address was not
-found." this makes it possible to figure out which user accounts exist
-on the weblate instance.
+Hi Greg,
 
-Affected: weblate 2.10 and earlier.
+On Fri, 2017-01-20 at 09:26 +0100, Greg KH wrote:
+> On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
+> > Hi Folks,
+> > 
+> > Red Hat Product Security has been notified of a kernel vulnerability
+> > that a local attacker can exploit to crash/panic the kernel and cause a
+> > denial of service.
+> > 
+> > This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
+> > rt411016):
+> > 
+> > "A process that is in the same process group as the ``init'' process
+> > (group id zero) can crash the Linux 2 kernel with several system calls
+> > by passing in a process ID or process group ID of zero. The value zero
+> > is a special value that indicates the current process ID or process
+> > group. However, in this case it is also the process group ID of the
+> > process."
+> > 
+> > I've been testing whether RHEL is vulnerable and found the following:
+> > 
+> > * Upstream/mainline is not vulnerable
+> 
+> Is this true for the mainline kernel tree that RHEL 6 was based on?
+> 
+> > * RHEL 7 is not vulnerable
+> > * RHEL 6 is vulnerable
+> > * RHEL 5 is partially vulnerable
+> 
+> So this is only due to a specific set of patches that were added to RHEL
+> 6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
+> some of the older LTS mainline kernels might be affected and it would be
+> good to ensure they are not.
 
-Upstream patch:
-https://github.com/WeblateOrg/weblate/commit/abe0d2a29a1d8e896bfe829c8461bf8b391f1079
+Good questions, I had not looked at it from a mainline timeline
+perspective.
 
-Bug report:
-https://github.com/WeblateOrg/weblate/issues/1317
+1) Mainline kernels containing patches [a], [b] and [c] are not
+vulnerable.
 
--- 
-Jelle van der Waa
+2) The vulnerability is *NOT* due to non-upstream patches that went
+into RHEL 5 and/or 6.
+
+3) I suspect some older LTS mainline kernels that branched off
+mainline/upstream at around the same time as RHEL 6 would be
+vulnerable. Check if the data structure fields, corresponding to the
+initialization changes in patch [a], [b] and [c], are initialized the
+same way in the LTS mainline kernels you maintain.
+
+4) For any RHEL 5 vintage LTS mainline kernels, see if task_struct's
+thread_group field is not initialised. If so, it is likely partially
+vulnerable and could do with a strong dose of patch [c].
+
+Regards,
+Harshula
+
+[a] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
+mit/?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
+
+[b] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
+mit/?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
+
+[c] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/com
+mit/?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
