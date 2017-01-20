@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1090" "Sunday" "7" "June" "2015" "12:25:31" "-0500" "Eric W. Biederman" "ebiederm@xmission.com" "<87pp57v3as.fsf@x220.int.ebiederm.org>" "34" "Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" nil nil nil "6" "2015060717:25:31" "[oss-security] Re: CVE request Linux kernel: ns: user namespaces panic" (number mark "        ebiederm@xmi Jun  7   34/1090  " thread-indent "\"Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic\"\n") "<alpine.LFD.2.11.1506072243170.5813@wniryva>" ("<20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>" "<alpine.LFD.2.11.1506051728280.15797@wniryva>" "<87r3pq2has.fsf@x220.int.ebiederm.org>" "<alpine.LFD.2.11.1506072243170.5813@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2202" "Friday" "20" "January" "2017" "11:55:01" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>" "70" "Re: [oss-security] CVE-2016-9584: heap use-after-free on libical" nil nil nil "1" "2017012014:55:01" "[oss-security] CVE-2016-9584: heap use-after-free on libical" (number mark "U       gustavo.grie Jan 20   70/2202  " thread-indent "\"Re: [oss-security] CVE-2016-9584: heap use-after-free on libical\"\n") "<20170120112604.cga6fjvktcveo46g@home.ouaza.com>" ("<CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>" "<CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com>" "<20170120112604.cga6fjvktcveo46g@home.ouaza.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32370 invoked by uid 550); 7 Jun 2015 17:30:51 -0000
+Received: (qmail 17552 invoked by uid 550); 20 Jan 2017 14:55:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32344 invoked from network); 7 Jun 2015 17:30:50 -0000
-References: <20150604135744.3617A6C0050@smtpvmsrv1.mitre.org>
-	<alpine.LFD.2.11.1506051728280.15797@wniryva>
-	<87r3pq2has.fsf@x220.int.ebiederm.org>
-	<alpine.LFD.2.11.1506072243170.5813@wniryva>
-In-Reply-To: <alpine.LFD.2.11.1506072243170.5813@wniryva> (P. J. P.'s message
-	of "Sun, 7 Jun 2015 22:51:38 +0530 (IST)")
-Message-ID: <87pp57v3as.fsf@x220.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-AID: U2FsdGVkX1+q5l6hLomuznD1o7MzdLxli/tblU7colI=
-X-SA-Exim-Connect-IP: 67.3.205.90
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-X-Spam-DCC: XMission; sa04 1397; Body=1 Fuz1=1 Fuz2=1 
-X-Spam-Combo: **;P J P <ppandit@redhat.com>
-X-Spam-Relay-Country: 
-X-Spam-Timing: total 235 ms - load_scoreonly_sql: 0.06 (0.0%),
-	signal_user_changed: 4.7 (2.0%), b_tie_ro: 3.3 (1.4%), parse: 1.20 (0.5%),
-	extract_message_metadata: 14 (5.9%), get_uri_detail_list: 1.33 (0.6%),
-	tests_pri_-1000: 5 (2.2%), tests_pri_-950: 1.14 (0.5%), tests_pri_-900: 0.93
-	(0.4%), tests_pri_-400: 16 (6.6%), check_bayes: 15 (6.2%), b_tokenize: 4.0
-	(1.7%), b_tok_get_all: 4.4 (1.9%), b_comp_prob: 1.72 (0.7%), b_tok_touch_all:
-	2.5 (1.1%), b_finish: 0.70 (0.3%), tests_pri_0: 183 (77.8%), tests_pri_500: 6
-	(2.7%), rewrite_mail: 0.00 (0.0%)
-X-SA-Exim-Version: 4.2.1 (built Wed, 24 Sep 2014 11:00:52 -0600)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
-Cc: oss security list <oss-security@lists.openwall.com>,  cve-assign@mitre.org
-Date: Sun, 07 Jun 2015 12:25:31 -0500
-From: ebiederm@xmission.com (Eric W. Biederman)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request Linux kernel: ns: user namespaces panic
-To: P J P <ppandit@redhat.com>
+Received: (qmail 17522 invoked from network); 20 Jan 2017 14:55:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=HYsucBZR6e42MYK7p0ijaKWQ1s/NMZZ7fzbznUahczU=;
+        b=dEPxZffOxeMY48BlAQr85deKBAFInbPiGt4GFj5PTgNziDMSuZejCLNBy+jgrTM8K6
+         OM8VvrKQpotCsRaNtl2wTGbtX0Nvmcq5rze9VrS5EEKkBvkp3MLX8iU5mMdI6eCPlXHA
+         LzO8pmxK0zwAGCpAU9S6S+GScReicQL2f5S/9ml1loHE9VhYfTkFNuCrdYW7FyiBhkPj
+         Qmi6x1sWs+8yEqQvUVbwxSg0RKTupjRN5U0cwBpph6tgWHP27V7jFOrU1Y+THUbdpZgG
+         j482YabQHFFiA10BgJQAWhbSdlw+0sWYmJLuXjFQt3NoMgkVJcmEKao4heDMmNiLToID
+         5htg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=HYsucBZR6e42MYK7p0ijaKWQ1s/NMZZ7fzbznUahczU=;
+        b=kFyvt9U+HEec+Hdtr8DVkYfMZadUNCtqtu7aphO+vipiQOYzH4jTo/MvVoNSMZTT50
+         yxM3O0/xA3U3Y/4gIK89FivwC34p3v/2d5BK2JclUZclPiYI9wBxFc7EptrsvLYqy4hA
+         otPnJ3+/u8cZqULCELMSRvyZmXTIbwIuY+3ncIVNt2Zq7JxJ91NYyT9N0FEOa33NPVm5
+         6hCO5pdxHCpTHGDwC+2MTCt/hWlN09NXS4nHMBPQWdK/ohw/Tnsu/QvVTXiBE/fEgV3t
+         TAdOUMkTX4ztA/3DnL3H+MzF3U3l7iR00BeRbgV3TShkvGVHU3EaxK6WeuFtqpI7/R0b
+         mUdQ==
+X-Gm-Message-State: AIkVDXINB16/1IJW222+PkKSH7GFihQ+Y2K/EL6mtLijBbqZkVVure93+9dOZeChn3/ijHDSWBYSpCXaqgfLIA==
+X-Received: by 10.107.6.30 with SMTP id 30mr13027300iog.78.1484924101774; Fri,
+ 20 Jan 2017 06:55:01 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <20170120112604.cga6fjvktcveo46g@home.ouaza.com>
+References: <CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>
+ <CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com> <20170120112604.cga6fjvktcveo46g@home.ouaza.com>
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Fri, 20 Jan 2017 11:55:01 -0300
+Message-ID: <CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2016-9584: heap use-after-free on libical
 
-P J P <ppandit@redhat.com> writes:
+2017-01-20 8:26 GMT-03:00 Raphael Hertzog <hertzog@debian.org>:
+> Hello,
 
->   Hello Eric,
->
-> +-- On Fri, 5 Jun 2015, Eric W. Biederman wrote --+
-> | There are no dependencies between
-> | e0c9c0afd2fc958ffa34b697972721d81df8a56f and
-> | cd4a40174b71acd021877341684d8bb1dc8ea4ae
->
->   Sorry if I misunderstood; I was referring to
->
-> || >> From: ebiederm@xmission.com (Eric W. Biederman)
-> || >> So I believe cd4a40174b71acd021877341684d8bb1dc8ea4ae prevents a
-> || >> difficult to trigger crash if you have
-> || >> e0c9c0afd2fc958ffa34b697972721d81df8a56f applied.
-> |
->
->   And also that, commit 'e0c9c0afd2' improvises upon 'ce07d891a089'; So unless 
-> 'ce07d891a089' is present, 'e0c9c0afd2' would not apply cleanly.
->
-> | Neither commit (cec9c... or cd4a4017...) missing is a problem unless
-> | ce07d891a0891d3c0d0c2d73d577490486b809e1 is present.
-> | 
-> | Commits (cec9c... and cd4a4017...) are harmless on their own.
-> | 
-> | I hope that clarifies things.
->
->   Did you mean commit 'e0c9c0afd2'? (couldn't find commit 'cec9c...')
+Hello Raphael,
 
-Yes.  I was referrig to one of the two commits you called out. Typos are
-wonderful.
+I'm working with Agust=C3=ADn to report this issues (he is our student in
+fact), but he
+is on holidays now, so I will answer your questions.
 
-Eric
+>
+> On Thu, 15 Dec 2016, Agustin Mista wrote:
+>> We found a heap use-after-free in a recent revision of libical (
+>> f3688b444f820cecf51b1539b0856a392c0fdb0f),
+>> using a specially crafted ics file. This bugs looks particularly dangero=
+us
+>> since it allows to read a big chunk of the heap memory.
+>
+> I see you reported multiple bugs on github's libical issues page:
+> https://github.com/libical/libical/issues/251
+> https://github.com/libical/libical/issues/252
+> https://github.com/libical/libical/issues/253
+>
+> Looking at the backtrace, it seems that #253 is the same as this one.
+> Do you confirm?
 
+Yes, it is.
+
+>
+> Any reason why you did not request a CVE for #251?
+
+Yes. It was already reported here:
+
+https://bugzilla.mozilla.org/show_bug.cgi?id=3D1275400 (CVE-2016-5824)
+
+but it was never officially reported upstream (and therefore, never fixed).
+
+>
+>> It is worth to mention there is a very similar bug found (CVE-2016-5824)=
+ on
+>> the libical version used by
+>> Thunderbird but we think is *not* the same as this one. In fact, we've
+>> tested it on Thunderbird and it does *not* crash.
+>>
+>> The reproducer is available upon request.
+>
+> #253 has a reproducer here:
+> https://github.com/libical/libical/files/627392/heap-use-after-free.ical.=
+txt
+>
+> Is this the same file?
+
+It is not the same file in fact. We found a variation of the original
+input that trigger this
+read out-of-bounds to read more than 60 bytes. This looks more serious
+than usual (maybe you can read as much as you want) .
+We had some complains in the past for making public test cases ..
+
+>
+> If it's a different file, then I'd like to have access to the file but I
+> would prefer if it was just available publicly and not to me only.
+
+Feel free to make the file public if you want.
+
+>
+> Cheers,
+> --
+> Rapha=C3=ABl Hertzog =E2=97=88 Debian Developer
+>
+> Support Debian LTS: http://www.freexian.com/services/debian-lts.html
+> Learn to master Debian: http://debian-handbook.info/get/
