@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3588" "Thursday" "28" "July" "2016" "12:22:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160728162220.B178134EAE6@smtpvbsrv1.mitre.org>" "78" "[oss-security] Re: CVE Request: redis: World readable .rediscli_history" "^Cc:" nil nil "7" "2016072816:22:20" "[oss-security] Re: CVE Request: redis: World readable .rediscli_history" (number mark "        cve-assign@m Jul 28   78/3588  " thread-indent "\"[oss-security] Re: CVE Request: redis: World readable .rediscli_history\"\n") "<20160728073234.GA8817@lorien.valinor.li>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2687" "Thursday" "19" "January" "2017" "20:17:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d4c6f05d1ba0416597c2d4e0a901091a@imshyb01.MITRE.ORG>" "65" "[oss-security] Re: CVE Request - Samsung Exynos GPU driver OOB read" nil nil nil "1" "2017012001:17:47" "[oss-security] Re: CVE Request - Samsung Exynos GPU driver OOB read" (number mark "U       cve-assign@m Jan 19   65/2687  " thread-indent "\"[oss-security] Re: CVE Request - Samsung Exynos GPU driver OOB read\"\n") "<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>" ("<CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29883 invoked by uid 550); 28 Jul 2016 16:22:33 -0000
+Received: (qmail 19987 invoked by uid 550); 20 Jan 2017 01:18:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29865 invoked from network); 28 Jul 2016 16:22:32 -0000
-In-Reply-To: <20160728073234.GA8817@lorien.valinor.li>
-Message-Id: <20160728162220.B178134EAE6@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 28 Jul 2016 12:22:20 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: redis: World readable .rediscli_history
-To: carnil@debian.org
+Received: (qmail 19967 invoked from network); 20 Jan 2017 01:17:59 -0000
+From: <cve-assign@mitre.org>
+To: <idler1984@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<anarcheuz@gmail.com>
+In-Reply-To: <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>
+Message-ID: <d4c6f05d1ba0416597c2d4e0a901091a@imshyb01.MITRE.ORG>
+Date: Thu, 19 Jan 2017 20:17:47 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request - Samsung Exynos GPU driver OOB read
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> https://bugs.debian.org/832460
+> http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
+> SVE-2016-6362: out of bound read in gpu driver
+> 
+> Vulnerability in gpu driver does not properly check the boundary of
+> buffers leading to a possible memory corruption.
 
->> redis-cli stores its history in ~/.rediscli_history, this file is
->> created with permissions 0644. Home folders are world readable as well
->> in debian, so any user can access other users' redis history, including
->> AUTH commands, which include credentials.
->>
->> I've contacted upstream on 2016-05-30 without any reaction at all and
->> discovered this bug was first reported 3 years ago, still unfixed.
->> @RedisLabs keeps referring to their paid support on twitter.
->>
->> Demo: `cat /home/*/.rediscli_history`
+> http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
+>> there is no official git for tracking from Samsung
 
-> Upstream report: https://github.com/antirez/redis/issues/3284
+>> The bug itself resides in
+>> <root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
+>> function kbase_dispatch which is the main ioctl dispatcher of the driver:
+>> 
+>> static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
+>> args, u32 args_size)
+>> {
+>> ...
+>>     /* setup complete, perform normal operation */
+>> 
+>>     switch (id) {
+>> ...
+>>         case KBASE_FUNC_TMU_SKIP:
+>>                 {
+>> /* MALI_SEC_INTEGRATION */
+>> #ifdef CONFIG_SENSORS_SEC_THERMISTOR
+>> #ifdef CONFIG_USE_VSYNC_SKIP
+>>                         struct kbase_uk_tmu_skip *tskip = args;
+>>                         int thermistor = sec_therm_get_ap_temperature();
+>>                         u32 i, t_index = tskip->num_ratiometer;
+>> 
+>>                         for (i = 0; i < tskip->num_ratiometer; i++) <== missing boundary check
+>>                                 if (thermistor >= tskip->temperature[i])
+>>                                         t_index = i;
+>> 
+>> tskip->temperature is a uint32 array of static size(10 elements) and
+>> tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
+>> check is missing, OOB read may happen leading to possible memory corruption.
 
->>> https://github.com/antirez/redis/pull/3322
->>> https://github.com/antirez/redis/pull/1418
-
-> Could you please assign a CVE for this issue in redis?
-
-As far as we can tell, this is being presented as a vulnerability in
-Redis, not a vulnerability in Linenoise.
-https://github.com/antirez/linenoise/blob/master/README.markdown says
-"A minimal, zero-config, BSD licensed, readline replacement used in
-Redis, MongoDB, and Android." Because it has a "minimal" design goal,
-it seems reasonable to argue that the linenoiseHistorySave function
-itself should not be making umask changes, because it cannot know
-whether history elements are potentially sensitive information within
-an arbitrary application that uses Linenoise. Also, the "History"
-section of README.markdown says "Linenoise has direct support for
-persisting the history into an history file. The functions
-linenoiseHistorySave and linenoiseHistoryLoad do just that. Both
-functions return -1 on error and 0 on success." It does not offer any
-guidance about whether this is typically safe.
-
-Admittedly, there is a counterargument that command history is always
-sensitive information, and that the design of the linenoiseHistorySave
-function is fundamentally wrong. We are not currently using that
-perspective for CVE ID assignments. (Also,
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#20 suggests
-that there isn't a huge amount of affected code.)
-
-Use CVE-2013-7458 for the Redis vulnerability.
-
-If there are other issues (such as in the
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=832460#25 report)
-that also need CVE IDs, please send a message about the others.
-Separate CVE IDs are also useful for host-based vulnerability
-scanning, e.g., a vulnerability check for a readable
-~/.rediscli_history file completely covers CVE-2013-7458. A check for
-a readable ~/.dbshell file (if that is indeed a vulnerability) would
-map to a different CVE ID.
+Use CVE-2017-5538.
 
 - -- 
 CVE Assignment Team
@@ -85,17 +75,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXmjBnAAoJEHb/MwWLVhi2XbUP/0Hx1N1IVhL3BJH+Ja5IBWrO
-b7EhDkUl/31ZdT+iSJFbyt1VYLt2K+x54SwyDE3qhcXriU+kzOGJzgHep1TwAUbD
-/vVKaNiLS6yAM9NRNpLI/IPL2Z6Xzt54cgYxYW/d7btRctFJKza9vKCkQeuIWtEN
-oR9Gfq3901wPxskRSKgzo6n5run1SfvRQ+icx8QO/7pqtPXfWiwweZXQYH/vIENe
-VdG5Hc/BFiJoPaWBQnP9z/Wmp1e9vtJjxzVZmFSWI8mq7MLCZgXqsBTpuxgrR+uB
-SUg5RexMz9zIfUmCZJ966SuDzc7Pg2FcmknrZcWmD2gZORZxRFJ4PXpya6znRaCU
-HCwh7dn+956EVs+UqOS0z1zBPKA3iOyVBSV7P4uwZ9X17UF2rVnVUTW2/NnR5zaA
-4hO+dtDMcHN43ESv3gakwPcvazsSkix+ACiWYJqwdR76EnAZIPtv+kscGtgq7sC/
-oQts0akBLAF49ppNCoHyJx87w8aOJ2jzcM7D41Yr8y0nVDFwux8zniw51N7i0/LX
-r27waQaRkrGSGCTPyovCAVrN9sh3qK/8TKGHpvN9z4wO4fi89PK/ZadixWpDTZFd
-neI9zWY1h/AMuT1oPay2lWy5Kj3G5Px253wX7DPDJTgreCbZN2Iupac7hULA28oG
-qEIvs2HrpjkHZZxW5NMN
-=Xa5w
+iQIcBAEBCAAGBQJYgWRyAAoJEHb/MwWLVhi2PZMP/1ehua8X9WteUieeSsh1ppVl
+qpofa9xWnyAikurp7B7Yg4WNnYWrR5+pxMw7yuwtGJfBr49mmaE9WN+vEOYMAL49
+sCCWudmieEYv8ZW+cKMawkWFGbRxdwBxGnWqeVCyBB9ktIKGC3t7PIeUadLwn6kr
+Hi8lKdczXK9Na59jct/HDQoFKmfETKyuWiFhe+c6cbcmowLrEMFP9z83LgTCP0/M
+a4lLwGo9quR7qyJK78wws7vyVE8R56OWKanKzIa7ok3pPk+c1lqwveyg0M23uD8A
+KO+tkplmt1FNuQ2yjjHo3KYMq7fUchIBi4zo1AAUp56oPrzUbbEJDab+A+DZl3hy
+5vVjYcZtjYigZroWX8Cqu9nYEsMNx/u2yclDFdwzlmdLa/gDcdEPIBOzlHVtAlog
+y6T1vTCBKRE7S2bmKqROnij2u+8d7D/0Mm77+9ra50VVVbVJEzXkT3fkuKrBhUBA
+gwSvWmOXTK7E0ZfPTzX1Tc5aqcQebwmPadW/MHazuWS1evmzdRUN6w75ZZ/eDlRw
+RJvvp4eRRIXvh5UxQ+a5QlzFhP5mlGtVDnQ1WpuO02lo5el3MpRWxKbXOssqoBQg
+vrTkiBMo0rES5OurfiX4Pn5IGIP4ykNke0cGuX4lldiQvMRBHtUNTJPAMTAHMowI
+j+zyr2GFgnVpaWgBEGow
+=UjQq
 -----END PGP SIGNATURE-----
