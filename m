@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/20/3
-Message-ID: <b31ce992-8cb7-15c7-397f-7408bb459027@redhat.com>
-Date: Thu, 20 Apr 2017 16:26:16 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/6
+Message-ID: <20170120081301.962@usenet.piggo.com>
+Date: Fri, 20 Jan 2017 07:20:33 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-2575 libbpg: NULL pointer dereference in image_alloc
+Subject: CVE request: cgiemail multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello folks,
+Hello,
 
-While going through our assigned CVEs it was found that this one was
-allocated but never reported by the original researcher to the public
-list. I am going to list as much information as possible below. Credits
-for the findings go to "Meifang, Yang @VARAS of IIE". I advised the
-researcher to report this issue upstream, however, it seems the
-communication failed.
+the Debian security team would like to request CVEs for the following
+vulnerabilities in cgiemail, all discovered by the cPanel Security Team,
+and made public in their TSR-2017-0001 advisory[0]:
 
-A vulnerability was found while fuzzing libbpg 0.9.7. It is a NULL
-pointer dereference issue due to missing check of the return value of
-function malloc in the BPG encoder. This vulnerability appeared while
-converting a malicious JPEG file to BPG.
+  * SEC-212 Format string injection
 
-The problem seems to be line 717 in function image_alloc. Due to the
-missing check, value of img->data[i] could be NULL and crash the program.
+    The ability to supply arbitrary format strings to cgiemail and
+    cgiecho allowed code execution whenever a user was able to provide a
+    cgiemail template file.
+    
+  * SEC-214 Open redirect
 
-Unfortunately, I don't have access to the reproducer.
+    The cgiemail and cgiecho binaries served as an open redirect due to
+    their handling of the “success” and “failure” parameters.
 
-Best Regards,
+  * SEC-215 HTTP header injection
 
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+    The handling of redirects in cgiemail and cgiecho did not protect
+    against the injection of additional HTTP headers.
 
+  * Reflected XSS vulnerability
 
+    The "addendum" parameter was reflected without any escaping in
+    success and error messages produced by cgiemail and cgiecho.
 
+Cheers,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+--Seb
+
+[0] https://news.cpanel.com/tsr-2017-0001-full-disclosure
+
