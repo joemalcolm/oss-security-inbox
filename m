@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/20/1
-Message-ID: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
-Date: Sat, 20 May 2017 09:26:32 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/7
+Message-ID: <20170120082438.GA28326@kroah.com>
+Date: Fri, 20 Jan 2017 09:24:38 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: 'Anarcheuz Fritz' <anarcheuz@...il.com>, cve-assign@...re.org
+Subject: Re: CVE Request - Samsung Exynos GPU driver OOB read
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Fri, Jan 20, 2017 at 12:19:34AM +0800, idl3r wrote:
+> Unfortunately, there is no official git for tracking from Samsung, so I
+> can't give a pointer to the particular commit.
+> 
+> The bug itself resides in
+> <root>/drivers/gpu/arm/t7xx/r5p0/mali_kbase_core_linux.c of the src tree, in
+> function kbase_dispatch which is the main ioctl dispatcher of the driver:
 
-Chris Evans discovered that ImageMagick uses unitialized memory in the
-RLE decoder, allowing an attacker to leak sensitive information from
-process memory space. There is missing initialization in the
-ReadRLEImage function.
+Ah, so this isn't upstream in the main kernel tree, thanks for letting
+me know, that's what I was most concerned about.
 
-Original article at:
+Hopefully Samsung figures a way to push this change out to all of their
+users... :)
 
-https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-file-14k-bounty.html
+> static mali_error kbase_dispatch(struct kbase_context *kctx, void * const
+> args, u32 args_size)
+> {
+> ...
+>     /* setup complete, perform normal operation */
+> 
+>     switch (id) {
+> ...
+> 	case KBASE_FUNC_TMU_SKIP:
+> 		{
+> /* MALI_SEC_INTEGRATION */
+> #ifdef CONFIG_SENSORS_SEC_THERMISTOR
+> #ifdef CONFIG_USE_VSYNC_SKIP
+> 			struct kbase_uk_tmu_skip *tskip = args;
+> 			int thermistor = sec_therm_get_ap_temperature();
+> 			u32 i, t_index = tskip->num_ratiometer;
+> 
+> 			for (i = 0; i < tskip->num_ratiometer; i++)
+> <== missing of boundary check
+> 				if (thermistor >= tskip->temperature[i])
+> 					t_index = i;
+> 
+> tskip->temperature is a uint32 array of static size(10 elements) and
+> tskip->num_ratiometer a uint32 which is user controlled. Since the boundary
+> check is missing, OOB read may happen leading to possible memory corruption.
 
-Upstream fix:
+It's "user controlled" through the drm interface?  Or something else?
 
-https://github.com/ImageMagick/ImageMagick/commit/1c358ffe0049f768dd49a8a889c1cbf99ac9849b
+Anyway, no need for more details, this was great, thank you very much
+for the quick response.
 
-For reference and for list archivng purpose I'm attaching the text
-part of the finding.
-
-Regards,
-Salvatore
-
-View attachment "CVE-2017-9098.txt" of type "text/plain" (14990 bytes)
+gre k-h
