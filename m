@@ -1,119 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/9
-Message-ID: <398132.043981121-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:28:26 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: elfutils: heap-based buffer overflow in ebl_object_note_type_name (eblobjnotetypename.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/1
+Message-ID: <4b31462747644c479fb2e956ccbc3a73@imshyb01.MITRE.ORG>
+Date: Thu, 19 Jan 2017 20:16:01 -0500
+From: <cve-assign@...re.org>
+To: <jelle@...aa.nl>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request Weblate: information disclosure in password reset form
 Content-Type: text/plain; charset=utf-8
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A fuzz on eu-readelf showed an heap overflow. Will follow a feedback from upstream:
+> Weblate contains an information disclosure issue in its password reset
+> form. When entering an arbitrary email address in the password reset
+> form Weblate will report back "User with this email address was not
+> found." this makes it possible to figure out which user accounts exist
+> on the weblate instance.
+> 
+> https://github.com/WeblateOrg/weblate/commit/abe0d2a29a1d8e896bfe829c8461bf8b391f1079
+> https://github.com/WeblateOrg/weblate/issues/1317
 
-Nice find. The issue is with notes that have a zero sized name (and also no descriptor data at the end of a note section).
-“The system reserves note information with no name (namesz==0) and with a zero-length name (name[0]==’\0′) but currently defines no types. All other names must have at least one non-null character.”
-So we must explicitly check for namesz == 0 before using the name data in the note.
+Use CVE-2017-5537.
 
-The complete ASan output:
+The scope of this CVE does not include the issues/1317 comment of "The
+login form also does not seem to implement any rate-limiting which
+makes it easy to bruteforce."
 
-# eu-readelf -a $FILE
-==29866==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000ef9c at pc 0x7f910ac17150 bp 0x7fff92f7ed90 sp 0x7fff92f7e540
-READ of size 1 at 0x60200000ef9c thread T0
-    #0 0x7f910ac1714f  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x4514f)
-    #1 0x4f63a7 in ebl_object_note_type_name /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libebl/eblobjnotetypename.c:48
-    #2 0x461251 in handle_notes_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:9372
-    #3 0x47209d in handle_notes /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:9455
-    #4 0x47209d in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:916
-    #5 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #6 0x7f910a730094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #7 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #8 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #9 0x7f9108d4e78f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #10 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-0x60200000ef9c is located 0 bytes to the right of 12-byte region [0x60200000ef90,0x60200000ef9c)
-allocated by thread T0 here:
-    #0 0x7f910ac94288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f910a10af48 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f910a10af48 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f910a10c9ba in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f910a10ccae in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x471fe7 in handle_notes /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:9455
-    #6 0x471fe7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:916
-    #7 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #8 0x7f910a730094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #9 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #10 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #11 0x7f9108d4e78f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0x4514f) 
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa 00[04]fa fa 00 02 fa fa 00 02 fa fa 00 01
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==29866==ABORTING
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00111.html
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7608
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00226-elfutils-heapoverflow-ebl_object_note_type_name
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-ebl_object_note_type_name-eblobjnotetypename-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+iQIcBAEBCAAGBQJYgWSEAAoJEHb/MwWLVhi2ST0P+wQSbBTkZPtExrWkqyGADC+F
+H0yp97rEg4imgEbLmHbzIpVG5xEd2htr6k1iaeE1WP8zUHNYmb6+mFM/wfDFl/nQ
+lwMCYcMTN+fhSpoX88NBsiO1T4o6wZSZAPqxIYTS/R6QqI6jPnpaeJDH67ch7wyG
++jYFDDV2x44VcckepPoKiPBUiNGaVtdoXx4b68h1+1QK2sGMM1wERsDp4TyplTmT
+UYwuQb4ZSDUhFokkzzuaKgvqijbe7TuMKMAKDtYdzeVXvmovkUXYK24ajObCyrmd
+R1VC49uCsnXjgD8DqQSV3J4RlAv4JOKRBRQloZieU7BzL2pA5uGyWVJ4v4X60RN6
+0Rl9P61hySg/BALNU8DgEPtesa0wlTOob/6h11rfelL6Ay14Vo4AyHcN1cKQgYft
+Xwu65ycWMNY5qzX51UaGMXobUJEZ3RmzKe/jhbKy79+p5QSGNycEABBts29c9M9a
+DJncB5xzagzAUdYSJWYnAL/iXdV8IbAbdlpFO0MiMcmHQINPGryqED78jWA0ldBp
+PxGuKVuCIATsAI4/CYmGzCoNwgKH5+6cAy78cjHrv1UlSBIdkyts4X7aYbg0o49F
+r6QiKeI780UTn8pATRGbFri5O0jd1fWLAYZ4XYFg4evJ4XGMbgN2lJpFUnJX0Fm2
+IM1vExStvObk1QdRbg8R
+=fAJo
+-----END PGP SIGNATURE-----
