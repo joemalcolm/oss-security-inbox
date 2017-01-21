@@ -1,98 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/4
-Message-ID: <20170324123201.GA24912@openwall.com>
-Date: Fri, 24 Mar 2017 13:32:01 +0100
-From: Solar Designer <solar@...nwall.com>
-To: James Morris <jmorris@...ei.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [ANNOUNCE] Linux Security Summit 2017 - CFP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/2
+Message-ID: <efc56aaa73c84094b27e5500557388a2@imshyb01.MITRE.ORG>
+Date: Fri, 20 Jan 2017 22:22:43 -0500
+From: <cve-assign@...re.org>
+To: <harshula@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <Jesse.Hertz@...group.trust>, <wmealing@...hat.com>
+Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash
 Content-Type: text/plain; charset=utf-8
 
-Hi James,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-With all due respect to you and recognition of the importance of this
-event, as I had pointed out last year, I wish you either informed
-oss-security of the outcomes of each year's LSS or didn't post the CFPs
-in here.  Posting only a CFP and then nothing until next year's CFP
-sort of works on other lists, but not on oss-security.  Please re-read:
-
-http://www.openwall.com/lists/oss-security/2016/03/25/7
-
-Unless there's anything from LSS besides this CFP posted to here until
-next year's, I am going to reject next year's LSS CFP, as we should have
-been doing per the published oss-security guidelines in the first place.
-
-The same applies to other events focused on open source security,
-including non-Linux ones: CFPs only "no", generally useful material from
-such events "probably yes", CFPs from events for which there were other
-accepted postings "possibly yes".  Currently I don't recall any events
-with relevant focus that bothered communicating their materials to here,
-but they should have (if any of the substance could be provided in
-text/plain; for videos only, no).  For events not focused on open source
-security, I intend to make no exceptions regarding CFPs, not even if
-some materials were relevant and discussed in here.  So overall our "no
-CFPs" policy is still in place.
-
-This applies to oss-security only.  Having this same CFP on the
-kernel-hardening list is OK and desirable.  (And it's already there.)
-
-On Fri, Mar 24, 2017 at 12:26:43PM +1100, James Morris wrote:
->   Topic areas include, but are not limited to:
+> [] "A process that is in the same process group as the ``init'' process
+> (group id zero) can crash the Linux 2 kernel with several system calls
+> by passing in a process ID or process group ID of zero. The value zero
+> is a special value that indicates the current process ID or process
+> group. However, in this case it is also the process group ID of the
+> process."
 > 
->     * Kernel self-protection
->     * Access control
->     * Cryptography and key management
->     * Integrity control
->     * Hardware Security
->     * Iot and embedded security
->     * Virtualization and containers
->     * System-specific system hardening
->     * Case studies
->     * Security tools
->     * Security UX
->     * Emerging technologies, threats & techniques 
+> The risk is that a non-root user can trigger a kernel crash on a
+> modified RHEL 6 system where the kernel runs a process that can be
+> exploited.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1358840
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
 
-diff from last year's:
+>> all of these showed up in the 2.6.35-rc1 release. Any distro
+>> based on something older than that needs to worry here.
 
--    * Trust systems
--    * Storage and file systems
--    * Identity management
--    * Code analysis
--    * Security analytics
--    * Secure development and operational practices
+Use CVE-2010-5328.
 
-+    * Iot and embedded security
-+    * System-specific system hardening
-+    * Security tools
-+    * Security UX
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-To make my posting useful, let me inform those not on kernel-hardening,
-but interested in how the project is doing, that it's been doing OK at
-least(*) in terms of activity lately, with last month being the busiest
-month so far by number of messages posted:
-
-http://www.openwall.com/lists/kernel-hardening/
-http://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project
-
-(*) I say "at least" because I know that opinions vary as to the utility
-of such activity.
-
-Another good resource are Kees Cook's blog posts on "security things" in
-each new Linux kernel release:
-
-https://outflux.net/blog/archives/2017/02/27/security-things-in-linux-v4-10/
-https://outflux.net/blog/archives/2016/12/12/security-things-in-linux-v4-9/
-https://outflux.net/blog/archives/2016/10/04/security-things-in-linux-v4-8/
-https://outflux.net/blog/archives/2016/10/03/security-things-in-linux-v4-7/
-https://outflux.net/blog/archives/2016/09/30/security-things-in-linux-v4-6/
-https://outflux.net/blog/archives/2016/09/28/security-things-in-linux-v4-5/
-https://outflux.net/blog/archives/2016/09/27/security-things-in-linux-v4-4/
-https://outflux.net/blog/archives/2016/09/26/security-things-in-linux-v4-3/
-
-and his other blog posts as well, such as on security bugs' lifetime.
-
-These are so much more useful (or rather, to more people) than a CFP
-with no follow-ups.  I wish Kees, James, and others posted this kind of
-material in here in text/plain, in addition to blogging.
-
-Alexander
+iQIcBAEBCAAGBQJYgtL6AAoJEHb/MwWLVhi2U7sP/i3aar2nWzZFv4OfmS3fhGCQ
+65QcUWol3gv5BN4dLKgOaWLWMUNisXadbewf1KeICkBXgCtAChIiXf1KCAd4Qerm
+ehCGtAD89s4Enc7DqTJFn/vgzcJr6JrQBuYKUf/IMbrixV008ZOogIWlORxCJYbc
+vIeOFLRIFvnGmpPj3m9+G8XtWmM+AJKQWTlXiSDSrSkHKEBbPgaZNSMvK/poa8EY
+1m9GCMqPepvysqkQHsjbZnxL//C0SY/aqREuyCZzgTvBeyLlzxijud9B9y0Afm69
+sj79efvTBywCyr9d1sjZiI1XBaGLQ+oLacQcNfHKJP6GadQ8yUj7OP7Djasm/RZe
+EEAn4mzvyQ0nGCGvRAMUrv1SV7EECpidEa1rslbBKYngTYR/vxm1I0LRNorpwe7J
+p+1hIWFI8n6uf0QRJV4PyWMVbz3QwGbzwDLTNieuWUQ5A9HxufS0lj3aTN61VVC4
+OxVDXpyXeC7Rx0pJRXrgWjOJZc4gblBMUG18qfnV9s5xARo/SsChtkvuv36fzAYj
+ewZeS+ez9cK4OsFQsjFSgnPL2zqbbOxh/gDLFs4P3gqRCJz6zFFH+PxXLCvw6xUI
+dfibuQbUyCWR048NY3pu05tj7PwoOliqSfxHyYxLKfAqI76E026EaGGQdu7aSJ1k
+dfDhxcid2Tl7PBW1WdFp
+=m6b1
+-----END PGP SIGNATURE-----
