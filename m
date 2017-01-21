@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1880" "Thursday" "23" "April" "2020" "15:28:48" "+0200" "Jasper Lievisse Adriaanse" "j@jasper.la" "<CDC3220B-901E-4A8C-B297-C39451934DE0@jasper.la>" "49" "[oss-security] Exuberant Ctags and x2vpn format string vulnerabilities" nil nil nil "4" "2020042313:28:48" "[oss-security] Exuberant Ctags and x2vpn format string vulnerabilities" (number mark "U       j@jasper.la  Apr 23   49/1880  " thread-indent "\"[oss-security] Exuberant Ctags and x2vpn format string vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Exuberant Ctags and x2vpn format string vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1782" "Friday" "20" "January" "2017" "22:25:27" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e5990a8df9974dd6b9a11601e84de16a@imshyb01.MITRE.ORG>" "40" "[oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb" nil nil nil "1" "2017012103:25:27" "[oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb" (number mark "U       cve-assign@m Jan 20   40/1782  " thread-indent "\"[oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb\"\n") "<alpine.LFD.2.20.1701202004350.14113@wniryva>" ("<alpine.LFD.2.20.1701202004350.14113@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32206 invoked by uid 550); 23 Apr 2020 13:30:00 -0000
+Received: (qmail 15806 invoked by uid 550); 21 Jan 2017 03:25:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 15788 invoked from network); 21 Jan 2017 03:25:39 -0000
+In-Reply-To: <alpine.LFD.2.20.1701202004350.14113@wniryva>
+Message-ID: <e5990a8df9974dd6b9a11601e84de16a@imshyb01.MITRE.ORG>
+MIME-Version: 1.0
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+Date: Fri, 20 Jan 2017 22:25:27 -0500
+From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31751 invoked from network); 23 Apr 2020 13:29:04 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jasper.la; h=from
-	:content-type:content-transfer-encoding:mime-version:subject
-	:message-id:date:to; s=dkim; bh=lDrAcu00LNDU4MQ+LjJQcZuENy4=; b=
-	jYkhNe0K2uzkq48l6mT1AVvXDKIaA+kjRGxkpD6KdAj9PzbhmRhO0mN2GqzX06xn
-	aj8Lvy/4e5s6j6LfofVbIa1JGz3Dazpcdkn0zbcoe+cEqSo5LKwszZiolVIYXR14
-	UxRXhcTppuLSyQIcnRkAyUjbYKe2Y70XiUwyfdQ0Lzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=jasper.la; h=from
-	:content-type:content-transfer-encoding:mime-version:subject
-	:message-id:date:to; q=dns; s=dkim; b=PI8IC2LpIw3lx2kUssGaXREPeK
-	zczAM02eJx7fDCw1E/q/5J3XtmV/fefI07yI+eCoK1PBcwijUoluwKRBeEpKT4RU
-	f0l0URM/438zfyj9+HqNWLrDiCkV/oJESuxAZtnKLjXHOkZ7sHx40K8beuijfAWi
-	lm1iEhSxTOBu1jcEA=
-From: Jasper Lievisse Adriaanse <j@jasper.la>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Message-Id: <CDC3220B-901E-4A8C-B297-C39451934DE0@jasper.la>
-Date: Thu, 23 Apr 2020 15:28:48 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
-Subject: [oss-security] Exuberant Ctags and x2vpn format string vulnerabilities
+Subject: [oss-security] Re: CVE request Qemu: watchdog: memory leakage in virtual hardware watchdog wdt_i6300esb
+To: <ppandit@redhat.com>
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I noticed two format string vulnerabilities in Exuberant Ctags and x2vpn, b=
-oth of these were fixed back in 2009 and 2012 however they don't appear to =
-have been picked up widely.
-(Note this concerns Excuberant Ctags and not Universalt Ctags which is a co=
-ntinuation for the former.)
+> [] Quick Emulator(Qemu) built with the virtual hardware watchdog 'wdt_i6300esb'
+> support is vulnerable to a memory leakage issue. It could occur while doing a
+> device unplug operation; Doing so repeatedly would result in leaking host
+> memory, affecting other services on the host.
+> 
+> A privileged user inside guest could use this flaw to cause a DoS and/or
+> potentially crash the Qemu process on the host.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2016-12/msg03104.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415199
+> http://git.qemu.org/?p=qemu.git;a=commit;h=eb7a20a3616085d46aa6b4b4224e15587ec67e6e
 
-For example the issue in ctags was fixed in 2009 by the original author in =
-the upstream subversion repository, but a proper release was never made aft=
-er the affected 5.8 version was released.
-Some distributions (most notably Debian, Centos 8) have switched to distrib=
-uting a version based on an svn checkout, whereas others (OpenBSD, FreeBSD,=
- pkgsrc, CentOS < 8, Homebrew, etc) were still using the actual 5.8 release.
+Use CVE-2016-10155 for this (i.e., a memory consumption issue, not an
+information disclosure issue).
 
-For ctags it can be triggered by specifying an existent but unreadable rege=
-x file with the following proof-of-concept:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-$ touch "%p %p"; chmod 000 "%p %p"; ectags --regex-c=3D"@%p %p"
-ectags: Warning: 0x0 0x189fa32db1da : Permission denied
-ectags: No files specified. Try "ectags --help".
-$
-
-Or a simple crasher:
-
-$ touch %n; chmod 000 %n; ectags --regex-c=3D@%n
-ectags: Warning: zsh: segmentation fault (core dumped)  ectags --regex-c=3D=
-@%n
-$
-
-and for x2vpn it relies on overwriting argv[0]:
-
-tau:2011 ctags % ARGV0=3D"%08x %08x" x2vnc localhost:0
-00000010 1e950c0a: ConnectToTcpAddr: connect: Connection refused
-%08x %08x: unable to connect to VNC server
-tau:2012 ctags %
-
-I described some more details in https://blog.jasper.la/poking-old-format-s=
-tring-bugs.html
-
-I'm posting to this list to make sure other vendors are aware of these issu=
-es in ctags and x2vnc because eventhough there were fixed in 2009/2012, man=
-y vendors are still shipping the vulnerable code.
-If CVEs were to be allocated from the 2009 and 2012 ranges for ctags and x2=
-vnc respectively to make tracking these issues easier, that wouldn't hurt I=
- guess.
-
-Cheers,
-Jasper=
+iQIcBAEBCAAGBQJYgtMJAAoJEHb/MwWLVhi23iYP/0M7c/5IxIOs6ejY6ctVyWwk
+X82bhgKruTtEl9/+QUrBcajqDZTo+n2yPt8SM0OurkAKaFNpxFL2P5L6395yQQHr
+YYdBCRGF3eNHLJvDDFZ0THOy9H4OUtge2cmtS1krMUSup2v7RsSK+Bg5WbrWOlPX
+sr17IPrV9r3eZTWLwDWQiZLGcmao/CordQ9TuUqU/TPLiEQJ6H5i1R9p2tGSktPq
+eNMo4VCTuIZl9PKQessKJpuJIzen7t9RN/Ldhn6cws41tzlhbqloJ5v1hmXrpGYZ
+846f6TdhyWOJZVSqpaLFqOsWbkY8EukMaTXashkh0geIjANpaYvwehUzkB4IoMVm
+hlZMf1YH+6Swb1y1RdrhtjRfgDPz2dnkjfbfOTShkrnfA9lJ0te6pl25FIGy2/Mn
+4jHR8ZloDLgrS2AEuMS/gUa5mSFrdJOfUiqCamEIHtuTQy570uSetce0U2jpTSz5
+yNh+ismsGYJatsdASrvWz6dRFbMqgp7m7A0L8Et8b2J8DEczqp05m8is7SMf7PKF
+nL1kmcXp+dzASgHyiQxd2rygJjS3uQY8/2wJ49r5U3SpDV9P6zbHwv7E4rD0UtrP
+n5FEOIZLh9I7GLXUcprWF5D27ZNCS/eLj0s0oJLuwVD2R+pAwD7ODs1hpa0yWtPL
+KJJTWGKN1M6fvKI9GpTf
+=UoYR
+-----END PGP SIGNATURE-----
