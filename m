@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11106" "Tuesday" "25" "July" "2017" "14:42:55" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<31b16718-a4f7-8b38-20fe-d7636b36d049@igalia.com>" "250" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0006" nil nil nil "7" "2017072512:42:55" "[oss-security] WebKitGTK+ Security Advisory WSA-2017-0006" (number mark "U       clopez@igali Jul 25  250/11106 " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2017-0006\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3429" "Friday" "20" "January" "2017" "22:24:00" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<352058745dfd4118bd6d669968fb21cd@imshyb01.MITRE.ORG>" "84" "[oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" "^CC:" nil nil "1" "2017012103:24:00" "[oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel" (number mark "        cve-assign@m Jan 20   84/3429  " thread-indent "\"[oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel\"\n") "<20170120140117.GA11396@grsecurity.net>" ("<20170120140117.GA11396@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 1971 invoked by uid 550); 25 Jul 2017 12:43:25 -0000
+Received: (qmail 5635 invoked by uid 550); 21 Jan 2017 03:24:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,279 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1924 invoked from network); 25 Jul 2017 12:43:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=X8VInK29dSpao7elEIhPtn7GXLtf42HwD7uc0qUX7b0=;
-	b=JBSXqFLN+YilXC3qpjrWEYVdEBARgh5Yc8DVISD4O49fZG4mpcDgoralDs7FKqqg99smFPMNpgU97cuwHqwQ3W33Pzy4nVoZ68U6UuI46TssL8/Ny44j9syn+mQVsk7fLug08TPFDc5gOLOtImLqSu9/bp84WoDUnQO7wsHJAGzlMchVUWqLZvqvw4dZ8feEd/VngBIYJb4CjN9EON5oJms+ut8uD76eTGw8ru6EEGWYtSdMApzIFHiUy3XBD4heVzjzHyFKZacrGjlORPQ5wrprhSuycsgk74gRvxgziPl4qgzfT6GmR4mAKGDwTxirYMRy5Xv8cCJu/dSJ+g8xDw==;
-To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
- url=http://key.neutrino.es
-Organization: Igalia S.L.
-Mail-Followup-To: "webkit-gtk@lists.webkit.org"
- <webkit-gtk@lists.webkit.org>, security@webkit.org,
- distributor-list@gnome.org, oss-security@lists.openwall.com,
- bugtraq@securityfocus.com
-Message-ID: <31b16718-a4f7-8b38-20fe-d7636b36d049@igalia.com>
-Date: Tue, 25 Jul 2017 14:42:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+Received: (qmail 5616 invoked from network); 21 Jan 2017 03:24:12 -0000
+In-Reply-To: <20170120140117.GA11396@grsecurity.net>
+Message-ID: <352058745dfd4118bd6d669968fb21cd@imshyb01.MITRE.ORG>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="6mHq5dXjiVHEx3CLeLEgxex7vcxSsHiTh"
-Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2017-0006
+Content-Type: text/plain
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+Date: Fri, 20 Jan 2017 22:24:00 -0500
+From: <cve-assign@mitre.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+To: <spender@grsecurity.net>
 
---6mHq5dXjiVHEx3CLeLEgxex7vcxSsHiTh
-Content-Type: multipart/mixed; boundary="NTQovIXxeeTEN0MPxGcAn1NApK0H7Vsao";
- protected-headers="v1"
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-To: "webkit-gtk@lists.webkit.org" <webkit-gtk@lists.webkit.org>
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-ID: <31b16718-a4f7-8b38-20fe-d7636b36d049@igalia.com>
-Subject: WebKitGTK+ Security Advisory WSA-2017-0006
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---NTQovIXxeeTEN0MPxGcAn1NApK0H7Vsao
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+> [] how about a CVE for a recent kernel, for a vulnerability
+> not fixed in any stable kernel yet, and introduced for a pointless mitigation
+> no less:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c4e490cf148e85ead0d1b1c2caaba833f1d5b29f
+> This affects upstream >= 4.8 when CONFIG_SLAB_FREELIST_RANDOM is enabled
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0006
-------------------------------------------------------------------------
-
-Date reported      : July 25, 2017
-Advisory ID        : WSA-2017-0006
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0006.html
-CVE identifiers    : CVE-2017-7006, CVE-2017-7011, CVE-2017-7012,
-                     CVE-2017-7018, CVE-2017-7019, CVE-2017-7020,
-                     CVE-2017-7030, CVE-2017-7034, CVE-2017-7037,
-                     CVE-2017-7038, CVE-2017-7039, CVE-2017-7040,
-                     CVE-2017-7041, CVE-2017-7042, CVE-2017-7043,
-                     CVE-2017-7046, CVE-2017-7048, CVE-2017-7049,
-                     CVE-2017-7052, CVE-2017-7055, CVE-2017-7056,
-                     CVE-2017-7059, CVE-2017-7061, CVE-2017-7064.
-
-Several vulnerabilities were discovered in WebKitGTK+.
-
-CVE-2017-7006
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to David Kohlbrenner of UC San Diego, an anonymous
-    researcher.
-    Impact: A malicious website may exfiltrate data cross-origin.
-    Description: Processing maliciously crafted web content may allow
-    cross-origin data to be exfiltrated by using SVG filters to conduct
-    a timing side-channel attack. This issue was addressed by not
-    painting the cross-origin buffer into the frame that gets filtered.
-
-CVE-2017-7011
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to xisigr of Tencent's Xuanwu Lab (tencent.com).
-    Impact: Visiting a malicious website may lead to address bar
-    spoofing. Description: A state management issue was addressed with
-    improved frame handling.
-
-CVE-2017-7012
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Apple.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7018
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7019
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Zhiyang Zeng of Tencent Security Platform Department.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7020
-    Versions affected: WebKitGTK+ before 2.16.1.
-    Credit to likemeng of Baidu Security Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7030
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to chenqin of Ant-financial Light-Year Security Lab
-    (=E8=9A=82=E8=9A=81=E9=87=91=E6=9C=8D=E5=B7=B4=E6=96=AF=E5=85=89=E5=B9=
-=B4=E5=AE=89=E5=85=A8=E5=AE=9E=E9=AA=8C=E5=AE=A4).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7034
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to chenqin of Ant-financial Light-Year Security Lab
-    (=E8=9A=82=E8=9A=81=E9=87=91=E6=9C=8D=E5=B7=B4=E6=96=AF=E5=85=89=E5=B9=
-=B4=E5=AE=89=E5=85=A8=E5=AE=9E=E9=AA=8C=E5=AE=A4).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7037
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7038
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Neil Jenkins of FastMail Pty Ltd, Egor Karbutov
-    (@ShikariSenpai) of Digital Security and Egor Saltykov
-    (@ansjdnakjdnajkd) of Digital Security.
-    Impact: Processing maliciously crafted web content with DOMParser
-    may lead to cross site scripting. Description: A logic issue existed
-    in the handling of DOMParser. This issue was addressed with improved
-    state management.
-
-CVE-2017-7039
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7040
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7041
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7042
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7043
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7046
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7048
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7049
-    Versions affected: WebKitGTK+ before 2.16.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed through improved memory handling.
-
-CVE-2017-7052
-    Versions affected: WebKitGTK+ before 2.16.4.
-    Credit to cc working with Trend Micro's Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7055
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to The UK's National Cyber Security Centre (NCSC).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7056
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7059
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content with DOMParser
-    may lead to cross site scripting. Description: A logic issue existed
-    in the handling of DOMParser. This issue was addressed with improved
-    state management.
-
-CVE-2017-7061
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2017-7064
-    Versions affected: WebKitGTK+ before 2.16.6.
-    Credit to lokihardt of Google Project Zero.
-    Impact: An application may be able to read restricted memory.
-    Description: A memory initialization issue was addressed through
-    improved memory handling.
+Use CVE-2017-5546.
 
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+> since VMAP_STACK was introduced haphazardly in 4.9 without doing any 
+> static analysis beyond a simple grep or smatch it seems, there are probably a 
+> dozen or so DoSes when CONFIG_DEBUG_SG or CONFIG_DEBUG_VIRTUAL is 
+> enabled, or potential silent or not so silent memory corruption when 
+> it's not, as a scatterlist crossing a virtual page boundary will then 
+> end up accessing a totally unrelated adjacent physical page if a stack 
+> address was passed into the scatterlist, and these vulnerabilities will 
+> continue to pop up until something comprehensive is done to prevent 
+> them. Emese's written an IPA GCC plugin to find all the ones you've missed,
+> so we know there still are many that haven't been fixed.
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
+> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6d104af38b570d37aa32a5803b04c354f8ed513d 
 
-The WebKitGTK+ team,
-July 25, 2017
+Use CVE-2017-5547.
 
 
---NTQovIXxeeTEN0MPxGcAn1NApK0H7Vsao--
+> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a45f795c65b479b4ba107b6ccde29b896d51ee98
 
---6mHq5dXjiVHEx3CLeLEgxex7vcxSsHiTh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Use CVE-2016-10153.
 
+
+> [] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=06deeec77a5a689cc94b21a8a91a76e42176685d
+
+Use CVE-2016-10154.
+
+
+> [] 0day alert, not fixed in 4.9 yet:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05a974efa4bdf6e2a150e3f27dc6fcf0a9ad5655
+
+Use CVE-2017-5548.
+
+
+> [] Not to mention the bugs introduced via fixes for VMAP_STACK:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=146cc8a17a3b4996f6805ee5c080e7101277c410
+
+Use CVE-2017-5549.
+
+
+> [] Or how about a CVE for this huge heap infoleak (and while I'm at it, congrats to
+> Al for not covering it up for once, maybe he's learning!):
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9dc6f65bc5e232d1c05fe34b5daadc7e8bbf1fb
+
+Use CVE-2017-5550.
+
+
+> [] Or this (sgid bit not cleared on tmpfs):
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=497de07d89c1410d76a15bec2bb41f24a2a89f31
+
+Use CVE-2017-5551.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
+Version: GnuPG v1
 
-iQIzBAEBCgAdFiEEtdK1C8SOx/HukNmrllCJzmuV+IIFAll3PM8ACgkQllCJzmuV
-+ILRjg/+OH4gH3DNyrOEVtgE+5JgLrhQI1eC6F35esU1IqGLDt+xV4nGhYX+RRiZ
-HbVaRVcCZFZ37ssx8khnPVZHlDCwoXKxy1XfoL5iSSpehkLAG87huism588YO2Vl
-YKYrV84MWcBXr1WlJ78jH6zIqCq2DawOmLLM4/NVSiizRQue3tWf+WMNAVULBBbB
-lCWotYmrF9gGxcg0XaMEAuXbqTv9ypVk0cf9LUC/ls1Et4EpPsmhrnSzTubZbW4L
-mezDNWRllV7T6RpgXGbEWIAB07XfeZMOFxMPC/qNbAI0aNwqyrVXlX3VPwQlsiaI
-rJ2iMLD6J9r2/MWzfI9ZoX1VrovZYLlh8uMU+9HoFUOOB/LkpmVygn4EfaFMWdnJ
-/6hSEofv/4Z6wW7rP8Gj9uV7Gw2zZJWo96hJ9KN9tkNZaZ56KNFRIZvMivhhtKIu
-83hjN+GPqXXDpVBsrg/Nb4DOngTXNrUg8gvU1BhaiPcwejnHxe17qYaL/OEU16Nd
-WmhM2CJo9E44C9YNrQzDkd9gLjoTz/hjfhVGOvkS0beLfHPbueisPOAANZzZvsRK
-JvioyhADuUUx2RiKgHT5cdZ2aHI0uYUdEKySyEi4Rn8fYHDPrGkZJbtMedHCCFvP
-aEsVp3fwVAPvhcA2J8X91EJ/qKmloUk/+gAiWY/CwGaW6/zzkzA=
-=8LgB
+iQIbBAEBCAAGBQJYgtMDAAoJEHb/MwWLVhi22oYP+IqRCDGdu0kTOWAwWBBmU1sg
+wgrB5sfjm3in2XxfWv5KDVzkNu2lCL5h58Ft3yR+gINPj/Ujpxawqpybcxy5Djnd
+EtwdKoasIjnd4UMda93KUphRFBsXsmtjyFD6ON2obYuQAVvOs+OZi+eJddtUKrZO
+jqpWTTydmNLkZzuPD0KCSrweFOiOe8oqFk2MfrnSED3X0jPSxIf7eZSn3BI0xot8
+GRVfUmi2gMok5/Stt+KGqR8VEw+1bu2wCZcd5JYNTWfH94S89DtpttF91ZXbjy/n
+kvFLfMNN7EtJFo7GttT6DALefc/JOitr7mx+f062Avbx9N+Rcg7FPMoiVeY+CZfV
+022xI9IFCW0hxAnPCUBFHyTqPwLX2w2oNajEB4ZCpYETNAoo2tjBCiKwU5wzboR+
+Ciqo0DMNmPONDiHh2OrwFRV1TgfiegWK+209KaWkNfTar5vQwCQvyYJgls7gs+US
++E4/J7CX/0gWQqFlpVCQ4zBovap0sJGigpmD0wI2jgvTJADrQcjU09I+AkhP2Was
+ztQ0JwOBL5F5SaMx6bQw/BKKzenikzAdQ6nanlOmywwLNUaRVp8V9rPMbAub9h7F
+r7rfcqJwyvirUTlxmesn+zt0pyT0WK6qSwy+K1X9l/C5DcZtPl2iJ/HiuB7dWTFh
+tcLtUrLLY/vly/hTAbM=
+=y6Ka
 -----END PGP SIGNATURE-----
-
---6mHq5dXjiVHEx3CLeLEgxex7vcxSsHiTh--
