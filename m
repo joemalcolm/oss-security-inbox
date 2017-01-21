@@ -1,106 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/8
-Message-ID: <bfe85c7d-6886-fdfe-2dbe-6b86ee6a5a80@crc.id.au>
-Date: Thu, 23 Feb 2017 20:59:12 +1100
-From: Steven Haigh <netwiz@....id.au>
-To: Roger Pau Monné <roger.pau@...rix.com>, "Xen.org security team" <security@....org>
-Cc: xen-users@...ts.xen.org, xen-announce@...ts.xen.org, oss-security@...ts.openwall.com, xen-devel@...ts.xen.org
-Subject: Re: Xen Security Advisory 209 (CVE-2017-2620) - cirrus_bitblt_cputovideo does not check if memory region is safe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/1
+Message-ID: <baa23ad23afb49f580f7678fc08a9212@imshyb01.MITRE.ORG>
+Date: Fri, 20 Jan 2017 22:20:58 -0500
+From: <cve-assign@...re.org>
+To: <dmoppert@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: two flaws in hesiod permitting privilege elevation
 Content-Type: text/plain; charset=utf-8
 
-On 23/02/17 20:43, Roger Pau Monné wrote:
-> On Tue, Feb 21, 2017 at 12:00:03PM +0000, Xen.org security team wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->>             Xen Security Advisory CVE-2017-2620 / XSA-209
->>                               version 3
->>
->>    cirrus_bitblt_cputovideo does not check if memory region is safe
->>
->> UPDATES IN VERSION 3
->> ====================
->>
->> Public release.
->>
->> ISSUE DESCRIPTION
->> =================
->>
->> In CIRRUS_BLTMODE_MEMSYSSRC mode the bitblit copy routine
->> cirrus_bitblt_cputovideo fails to check wethehr the specified memory
->> region is safe.
->>
->> IMPACT
->> ======
->>
->> A malicious guest administrator can cause an out of bounds memory
->> write, very likely exploitable as a privilege escalation.
->>
->> VULNERABLE SYSTEMS
->> ==================
->>
->> Versions of qemu shipped with all Xen versions are vulnerable.
->>
->> Xen systems running on x86 with HVM guests, with the qemu process
->> running in dom0 are vulnerable.
->>
->> Only guests provided with the "cirrus" emulated video card can exploit
->> the vulnerability.  The non-default "stdvga" emulated video card is
->> not vulnerable.  (With xl the emulated video card is controlled by the
->> "stdvga=" and "vga=" domain configuration options.)
->>
->> ARM systems are not vulnerable.  Systems using only PV guests are not
->> vulnerable.
->>
->> For VMs whose qemu process is running in a stub domain, a successful
->> attacker will only gain the privileges of that stubdom, which should
->> be only over the guest itself.
->>
->> Both upstream-based versions of qemu (device_model_version="qemu-xen")
->> and `traditional' qemu (device_model_version="qemu-xen-traditional")
->> are vulnerable.
->>
->> MITIGATION
->> ==========
->>
->> Running only PV guests will avoid the issue.
->>
->> Running HVM guests with the device model in a stubdomain will mitigate
->> the issue.
->>
->> Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
->> in the xl domain configuration) will avoid the vulnerability.
->>
->> CREDITS
->> =======
->>
->> This issue was discovered by Gerd Hoffmann of Red Hat.
->>
->> RESOLUTION
->> ==========
->>
->> Applying the appropriate attached patch resolves this issue.
->>
->> xsa209-qemuu.patch       qemu-xen, qemu upstream
->> (no backport yet)        qemu-xen-traditional
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> [] Weak SUID check allowing privilege elevation
 > 
-> It would be nice to mention that (at least on QEMU shipped with 4.7) the
-> following patch is also needed for the XSA-209 fix to build correctly:
+> Hesiod unsafely checks EUID vs UID in a few places, consulting
+> environment variables for configuration if they match. This could be
+> used for privilege elevation under some circumstances. The fix uses
+> secure_getenv() in place of getenv().
 > 
-> 52b7f43c8fa185ab856bcaacda7abc9a6fc07f84
-> display: cirrus: ignore source pitch value as needed in blit_is_unsafe
+> https://bugzilla.redhat.com/show_bug.cgi?id=1332508
+> https://github.com/achernya/hesiod/pull/9
 
-I did request that an updated XSA be issued with this patch - as at the
-moment, nobody will be able to apply the XSA only patch to any other
-version of Xen.
-
--- 
-Steven Haigh
-
-Email: netwiz@....id.au
-Web: https://www.crc.id.au
-Phone: (03) 9001 6090 - 0412 935 897
+Use CVE-2016-10151.
 
 
+> [] Use of hard-coded DNS domain if configuration file cannot be read
+> 
+> If opening the configuration file fails, hesiod falls back on a default
+> domain ".athena.mit.edu" to retrieve managed information. A local
+> attacker with the opportunity to poison DNS cache could potentially
+> elevate their privileges to root by causing fopen() to fail.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1332493
+> https://github.com/achernya/hesiod/pull/10
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Use CVE-2016-10152.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYgtL0AAoJEHb/MwWLVhi2PDQQAJdi7nsPsB1xxrd++RQ2UUMW
+L7cvq12NOEPommq0pLUjPYWM2/IqOGj56H7HSJIyBEtw+knSXM5xMUpKbdSbwa2N
+gVNVcw+wu5fHQkGUzJJ0rvwsQANZDATb0NDpp1GCzSdc90V08Jok80QOlCm7FUY3
+TvqefiuQBcGtF45nhPm7x2NRVkQbeU4t7ewOofBdRpRidbzHHxLC0ts0gBmZpEAR
+CCv+fKOO1dLY2PIk/+jo7qczV1oqvrIgetQE9dZHp+p01NsHLdKg+Uge7/sK9k5F
+dp6Zqf+Upzfg78II9cAZJwpWTOyd8zFyQRvtp82qz3DH74c2u1/lgVH2VqZtLIWn
+XLoZxhKLjL/ADM9QvJFvqEIrs7nC0QGJrgoQpihGohszGTtt3l3k+b6DmPt28OIn
+clgHS4z1quEqJT/YKHaFfbDVyLqjWvRQXFo4YfAUtHXur4SNzXBKy3VnPssmw+Kd
+jL4gYvzrTJRlV0cG2wvHEAMb9yqTAtqPCVU7ujS+sosfBN8ADvALuQ0U9ag1JW9Q
+1oSq/mQ1ZKi+07Y6GiCQBflkIYM7EIKIHQJDj2DrtZc3gM5W4ee6ilpQ83ZdJduE
+JJRmwqbPwsxq4q5L2mqslIfklmUR+Fatodji7bbXpxHjqiafBXR8UdDNx+L3x0fp
+bMErFJVq6SNHHilpwa6a
+=J/Hc
+-----END PGP SIGNATURE-----
