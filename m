@@ -1,24 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/9
-Message-ID: <CAJmbs8irN98436UDsFDeqpj-FMKC5pRi476Xgaq9LGyMQmLGUA@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:24:59 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7680 - Apache OpenMeetings - Insecure crossdomain.xml policy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/5
+Message-ID: <e36d328405be4573a772886c8af4f31b@imshyb01.MITRE.ORG>
+Date: Fri, 20 Jan 2017 22:26:54 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor: The Apache Software Foundation
+> [] Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
+> vulnerable to a memory leakage issue. It could occur while processing
+> 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
+> 
+> A guest user/process could use this flaw to leak host memory resulting in DoS.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00154.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415281
+> http://git.qemu.org/?p=qemu.git;a=commit;h=33243031dad02d161225ba99d782616da133f689
 
-Versions Affected: Apache OpenMeetings 1.0.0
+Use CVE-2017-5552 for this (i.e., a memory consumption issue, not an
+information disclosure issue).
 
-Description: Apache OpenMeetings has an overly permissive
-crossdomain.xml file. This allows for flash content to be loaded from
-untrusted domains.
-CVE-2017-7680
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
-
-Credit: This issue was identified by Security Innovation
+iQIcBAEBCAAGBQJYgtMQAAoJEHb/MwWLVhi2Z6IP/3+ft1EpX+/Dn7Ja15Ss8CvI
+JBMEN+BQmrDJhNbGEGIUGectfmW4lB2cIyz4BsCbCx8Pxq13vRB2UxIytncBDyEz
+GPtRRp1eC5iLBfJwWXYLftOYDkst7yqbXenLavjoPu2VtvWnD412W+63BhR/fRGe
+105WM3tY1Tx7DcCi6Bnhv9cNDIazlgjFQ9YbKdjL99dkLwZo8EIlJD/rcHI82K1f
+ugotHzcZ3kw2f/W4lf4kNH1+bCGU3Te0osyNlSgXrAYzWAulnDWwW+F32Syzqnk0
+jQ5d0yDBuFOlu1uzb5kpI1Vv1M69lwOYf9XPhCxZ6mDub0BCq1JvNC9CRNNE5Yub
+V4CEM6Grgy/OhQs8ZEbGL7H7Sq2gwTGEC5lWKpyxKSpPpitnfOV+aXSaHw494Sl9
+LO5BmJvqImD8EjBfyLS+cJD3JLj0k1WIqbzlnGrNMg9kYURa0PJTnUSrNK3m/TpU
+KnqwodxLI/sX378ECCkPzz4ibMD5dgAIkyH1qJr/PS2f+LPjFhY9+40wGe5haUGa
+a0ibuJ2RNf7SfEDGRytkugwwk2mOs1DtNDhTDf/d3dPVwDywOYHu+WeT2zz6bZ51
+0l+576HoGuNtBj8UjofYGtcNIJk2LSe5/oNEd9kR+lzsWM+2jRuqWJSAaZ1p+XOG
+SfnRN1+bCmCMywfG4gYb
+=Z6dJ
+-----END PGP SIGNATURE-----
