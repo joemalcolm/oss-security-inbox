@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/17
-Message-ID: <CADxEXOjnuSxVo=vr4zzQmGcJ5qQE4NtL4HghAgVsbG0nVn+qPw@mail.gmail.com>
-Date: Thu, 2 Feb 2017 09:31:30 +0100
-From: Pierre Kim <pierre.kim.sec@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE requests: OpenBSD httpd - 2 DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/21/7
+Message-ID: <f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>
+Date: Sun, 22 Jan 2017 10:26:36 +1300
+From: Murray McAllister <murray.mcallister@...omniasec.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
->[...]
+This issue affects the VC4_SUBMIT_CL IOCTL in the VideoCore DRM driver,
+so probably only affects devices like the Raspberry Pi.
 
->> DoS: CPU exhaustion with SSL client-initiated renegotiation,
->
->Is this a public vulnerability? It does not have any obvious match with the
->latest https://github.com/openbsd/src/commits/master/usr.sbin/httpd commits.
+Quoting from Eric Anholt's post:
 
->From OpenBSD team:
+""
+We copy the unvalidated ioctl arguments from the user into kernel
+temporary memory to run the validation from, to avoid a race where the
+user updates the unvalidate contents in between validating them and
+copying them into the validated BO.
 
-> o High CPU usage is a well-known issue of client-initiated
-> renegotiation.  While this can cause higher than normal CPU usage, the
-> processes are still able to service requests.
-> As httpd uses LibreSSL's libtls, a sane TLS API on top of libssl, we
-> decided to disable client-initiated renegotiation for libtls servers
-> in -current. This change was already planned and has now been
-> committed to LibreSSL.
->
-> libssl http://marc.info/?l=openbsd-cvs&m=148587695222112&w=2
-> libtls http://marc.info/?l=openbsd-cvs&m=148587827322528&w=2
+However, in setting up the layout of the kernel side, we failed to
+check one of the additions (the roundup() for shader_rec_offset)
+against integer overflow, allowing a nearly MAX_UINT value of
+bin_cl_size to cause us to under-allocate the temporary space that we
+then copy_from_user into.
+""
 
+https://lkml.org/lkml/2017/1/17/761
+https://lkml.org/lkml/2017/1/17/759 (discovered by Ingo Molnar)
 
-If you think it doesn't deserve a CVE, then I will publish the advisory without.
->From my tests, during an attack, the httpd has some difficulties to
-provide replies to clients.
+I am not subscribed to the list so please mail me if you have any issues.
 
-Regards,
-
--- 
-Pierre Kim
-pierre.kim.sec@...il.com
-@PierreKimSec
-https://pierrekim.github.io/
+Chur
