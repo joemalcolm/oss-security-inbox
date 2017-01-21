@@ -1,4 +1,9 @@
-Received: (qmail 1071 invoked by uid 550); 1 Jun 2026 10:16:59 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1654" "Friday" "20" "January" "2017" "22:26:54" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e36d328405be4573a772886c8af4f31b@imshyb01.MITRE.ORG>" "38" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing" nil nil nil "1" "2017012103:26:54" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing" (number mark "U       cve-assign@m Jan 20   38/1654  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing\"\n") "<alpine.LFD.2.20.1701202351250.18165@wniryva>" ("<alpine.LFD.2.20.1701202351250.18165@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25990 invoked by uid 550); 21 Jan 2017 03:27:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,46 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15477 invoked from network); 1 Jun 2026 09:59:24 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Shuxin Pan <psxjoy@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <71a042cd-6f30-e38d-9d1a-5fccc68a3b14@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 01 Jun 2026 09:59:11 +0000
+Received: (qmail 25969 invoked from network); 21 Jan 2017 03:27:06 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1701202351250.18165@wniryva>
+Message-ID: <e36d328405be4573a772886c8af4f31b@imshyb01.MITRE.ORG>
+Date: Fri, 20 Jan 2017 22:26:54 -0500
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-49328: Apache Fesod (Incubating): Improper validation of
- user-supplied URLs leading to SSRF 
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: memory leakage in virgl_resource_attach_backing
 
-Severity: important=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> [] Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
+> vulnerable to a memory leakage issue. It could occur while processing
+> 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
+> 
+> A guest user/process could use this flaw to leak host memory resulting in DoS.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00154.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415281
+> http://git.qemu.org/?p=qemu.git;a=commit;h=33243031dad02d161225ba99d782616da133f689
 
-- Apache Fesod (Incubating) (org.apache.fesod:fesod-sheet) before 2.0.2-inc=
-ubating
+Use CVE-2017-5552 for this (i.e., a memory consumption issue, not an
+information disclosure issue).
 
-Description:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Server-Side Request Forgery (SSRF) in the UrlImageConverter component of Ap=
-ache Fesod (Incubating) fesod-sheet before 2.0.2-incubating allows attacker=
-s to cause outbound network requests to internal or otherwise restricted re=
-sources via a user-supplied image URL. Users are recommended to upgrade to =
-version 2.0.2-incubating, which fixes this issue.
-
-This issue is being tracked as apache/fesod#917=20
-
-Credit:
-
-Xu Han (finder)
-
-References:
-
-https://github.com/apache/fesod/pull/917
-https://github.com/apache/fesod/releases/tag/2.0.2-incubating
-https://fesod.apache.org/docs/download
-https://fesod.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2026-49328
-https://issues.apache.org/jira/browse/apache/fesod#917
-
+iQIcBAEBCAAGBQJYgtMQAAoJEHb/MwWLVhi2Z6IP/3+ft1EpX+/Dn7Ja15Ss8CvI
+JBMEN+BQmrDJhNbGEGIUGectfmW4lB2cIyz4BsCbCx8Pxq13vRB2UxIytncBDyEz
+GPtRRp1eC5iLBfJwWXYLftOYDkst7yqbXenLavjoPu2VtvWnD412W+63BhR/fRGe
+105WM3tY1Tx7DcCi6Bnhv9cNDIazlgjFQ9YbKdjL99dkLwZo8EIlJD/rcHI82K1f
+ugotHzcZ3kw2f/W4lf4kNH1+bCGU3Te0osyNlSgXrAYzWAulnDWwW+F32Syzqnk0
+jQ5d0yDBuFOlu1uzb5kpI1Vv1M69lwOYf9XPhCxZ6mDub0BCq1JvNC9CRNNE5Yub
+V4CEM6Grgy/OhQs8ZEbGL7H7Sq2gwTGEC5lWKpyxKSpPpitnfOV+aXSaHw494Sl9
+LO5BmJvqImD8EjBfyLS+cJD3JLj0k1WIqbzlnGrNMg9kYURa0PJTnUSrNK3m/TpU
+KnqwodxLI/sX378ECCkPzz4ibMD5dgAIkyH1qJr/PS2f+LPjFhY9+40wGe5haUGa
+a0ibuJ2RNf7SfEDGRytkugwwk2mOs1DtNDhTDf/d3dPVwDywOYHu+WeT2zz6bZ51
+0l+576HoGuNtBj8UjofYGtcNIJk2LSe5/oNEd9kR+lzsWM+2jRuqWJSAaZ1p+XOG
+SfnRN1+bCmCMywfG4gYb
+=Z6dJ
+-----END PGP SIGNATURE-----
