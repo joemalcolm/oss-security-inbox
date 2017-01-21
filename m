@@ -1,4 +1,9 @@
-Received: (qmail 21533 invoked by uid 550); 23 Dec 2024 15:57:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["888" "Sunday" "22" "January" "2017" "10:26:36" "+1300" "Murray McAllister" "murray.mcallister@insomniasec.com" "<f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>" "26" "[oss-security] CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow" nil nil nil "1" "2017012121:26:36" "[oss-security] CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow" (number mark "U       murray.mcall Jan 22   26/888   " thread-indent "\"[oss-security] CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13559 invoked by uid 550); 21 Jan 2017 22:53:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23840 invoked from network); 23 Dec 2024 14:34:43 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AOJu0Yy0zz6+Yqeftkv3NhH2CCjp4VNr7WdsLTBhTDdrq1J/XugNReRt
-	MYpssvRzWdpTygbTTpgqv6FivWuKfXCEpHC04cKQWEtQYj9KCfeBcK8V3GXTqlV2ljv5F92Axru
-	vPv2rCw//X1zmiDfSITI7DaEQxDY=
-X-Google-Smtp-Source: AGHT+IFwpAxpNnf7oJ6Ek4N+5Vtud9pRsFgw0ntH8e9y9/F0tLx3ezzLFFIyjwpplDy2l0iTXJMALZUq8SdOewg4sHM=
-X-Received: by 2002:a05:6402:2805:b0:5d0:bcdd:ffa1 with SMTP id
- 4fb4d7f45d1cf-5d81dd66e5fmr12029452a12.2.1734964386342; Mon, 23 Dec 2024
- 06:33:06 -0800 (PST)
-MIME-Version: 1.0
-From: Stamatis Zampetakis <zabetak@apache.org>
-Date: Mon, 23 Dec 2024 15:32:55 +0100
-X-Gmail-Original-Message-ID: <CAFQnWdYMsAR7PXSYRBn_jfcLfV-XYDoWAauBKaxJQrjfyBpNjQ@mail.gmail.com>
-Message-ID: <CAFQnWdYMsAR7PXSYRBn_jfcLfV-XYDoWAauBKaxJQrjfyBpNjQ@mail.gmail.com>
+Received: (qmail 9710 invoked from network); 21 Jan 2017 21:26:56 -0000
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE-2024-23945: Apache Hive and Spark: CookieSigner exposes the
- correct signature when message verification fails
+From: Murray McAllister <murray.mcallister@insomniasec.com>
+Message-ID: <f7ba24cc-1b0e-7ea8-fd2d-d062c817d55d@insomniasec.com>
+Date: Sun, 22 Jan 2017 10:26:36 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE request: Linux kernel: vc4: int overflow leading to heap-based
+ buffer overflow
 
-Severity: important
+Hi,
 
-Affected versions:
+This issue affects the VC4_SUBMIT_CL IOCTL in the VideoCore DRM driver,
+so probably only affects devices like the Raspberry Pi.
 
-- Apache Hive 1.2.0 before 4.0.0
-- Apache Spark 2.0.0 before 3.0.0
-- Apache Spark 3.0.0 before 3.3.4
-- Apache Spark 3.4.0 before 3.4.2
-- Apache Spark 3.5.0
+Quoting from Eric Anholt's post:
 
-Description:
+""
+We copy the unvalidated ioctl arguments from the user into kernel
+temporary memory to run the validation from, to avoid a race where the
+user updates the unvalidate contents in between validating them and
+copying them into the validated BO.
 
-Signing cookies is an application security feature that adds a digital
-signature to cookie data to verify its authenticity and integrity. The
-signature helps prevent malicious actors from modifying the cookie
-value, which can lead to security vulnerabilities and exploitation.
-Apache Hive=E2=80=99s service component accidentally exposes the signed coo=
-kie
-to the end user when there is a mismatch in signature between the
-current and expected cookie. Exposing the correct cookie signature can
-lead to further exploitation.
+However, in setting up the layout of the kernel side, we failed to
+check one of the additions (the roundup() for shader_rec_offset)
+against integer overflow, allowing a nearly MAX_UINT value of
+bin_cl_size to cause us to under-allocate the temporary space that we
+then copy_from_user into.
+""
 
-The vulnerable CookieSigner logic was introduced in Apache Hive by
-HIVE-9710 (1.2.0) and in Apache Spark by SPARK-14987 (2.0.0). The
-affected components are the following:
-* org.apache.hive:hive-service
-* org.apache.spark:spark-hive-thriftserver_2.11
-* org.apache.spark:spark-hive-thriftserver_2.12
+https://lkml.org/lkml/2017/1/17/761
+https://lkml.org/lkml/2017/1/17/759 (discovered by Ingo Molnar)
 
-Credit:
+I am not subscribed to the list so please mail me if you have any issues.
 
-Kostya Kortchinsky (reporter)
-Hamza Tahmi (reporter)
-
-References:
-
-https://github.com/apache/hive
-https://github.com/apache/spark
-https://github.com/apache/spark/commit/cf59b1f51c16301f689b4e0f17ba4dbd140e=
-1b19
-https://github.com/apache/hive/commit/7638cb1a3b07713cc490aa2909a37037f89e0=
-8b4
-https://issues.apache.org/jira/browse/HIVE-9710
-https://issues.apache.org/jira/browse/SPARK-14987
-https://hive.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-23945
+Chur
