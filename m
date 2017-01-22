@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/13/5
-Message-ID: <20171113151524.GA16983@kroah.com>
-Date: Mon, 13 Nov 2017 16:15:24 +0100
-From: Greg KH <greg@...ah.com>
-To: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/22/1
+Message-ID: <01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>
+Date: Sat, 21 Jan 2017 22:25:38 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: Pierre Ossman <ossman@...dio.se>, tigervnc-devel@...glegroups.com
 Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+Subject: Re: [tigervnc-announce] TigerVNC 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 13, 2017 at 10:07:00AM -0500, Vladis Dronov wrote:
-> Hello, Greg, all,
-> 
-> My fault here was indeed not stating that a Red Hat's product is
-> vulnerable (thus, a CVE was assigned), but stating that only Linux
-> kernel is vulnerable (while indeed it was fixed a long ago). Please,
-> accept my apologies.
+Is there a CVE assigned to this issue that we should use when passing this
+fix through to our packages/distros?  I don't see one mentioned in the commit
+or pull requests:
 
-Ok, not a problem, thanks for the apology.
+https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
+https://github.com/TigerVNC/tigervnc/pull/399
 
-> > I hate to ask, but why are you getting CVEs for bugs fixed over a year
-> > ago, and are already in all stable kernel releases a year ago?  Why does
-> > it matter?
-> 
-> I'm afraid, you won't like the answer, but in a short word, the Red Hat
-> is a CNA (CVE Numbering Authority) for Red Hat's products and the Linux
-> kernel and we've decided to assign this CVE.
+Thanks,
 
-So the answer is just "we've decided to", right?
+	-alan-
 
-If so, that's fine, you are allowed to do so being a CNA, but what is
-keeping you from doing the same for the thousands of other bugs that
-have been fixed since this one that is in a specific Red Hat product?
+On 01/20/17 01:00 AM, Pierre Ossman wrote:
+> This is a security update for TigerVNC 1.7.0 which fixes a memory overflow issue
+> via the RRE decoder. A malicious server could possibly use this issue to take
+> control of the TigerVNC viewer.
+>
+> Users are advised to upgrade as soon as possible.
+>
+> Binaries are available from bintray:
+>
+> https://bintray.com/tigervnc/stable/tigervnc/1.7.1
+>
+> Regards
+> The TigerVNC Developers
+>
 
-It's the arbitrarily nature here that I am curious about, it feels like
-it should be "all or nothing", for CVEs to mean much here.  Right now it
-seems like it is just, "all that we care to track"?  :)
 
-thanks,
-
-greg k-h
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
