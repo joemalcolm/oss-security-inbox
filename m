@@ -1,91 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/5
-Message-ID: <CA+aC4ktR00GiL3H-E9g2YP9bdecQvioWXonXEPpFumMEoXdWaA@mail.gmail.com>
-Date: Sat, 23 Sep 2017 07:11:36 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/22/2
+Message-ID: <20170122132251.GA11536@pepper.home.stoeckmann.org>
+Date: Sun, 22 Jan 2017 14:22:51 +0100
+From: Tobias Stoeckmann <tobias@...eckmann.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: CVE Request: libXpm < 3.5.12 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 23, 2017 at 6:56 AM, Levente Polyak
-<levente@...entepolyak.net> wrote:
-> On 09/23/2017 01:44 PM, Hanno Böck wrote:
->> My understanding is that the purpose of the distros list is that
->> updates can be prepared so after a disclosure the time between "vuln is
->> known" and "patch is available" is short.
->> However from all I can see this largely didn't happen.
->>
->
-> [...]
->
->> The only distro I'm aware of that prepared packages and pushed them
->> right after disclosure is Gentoo.
->>
->
-> For Arch Linux I tested the patch beforehand and prepared the changed
-> buildscripts locally. The final build/release/publication process was
-> invoked just minutes after the public disclosure and the final artifact
-> was signed and hit the repository just 20 minutes after the disclosure.
-> The advisories were sent ~4 hours later once gone through a
-> peer-reviewing process (yes this could have been done even faster).
+SUMMARY
+=======
+An out of boundary write has been found in libXpm < 3.5.12 which can be
+exploited by an attacker through maliciously crafted XPM files.
 
-Just as an FYI, we (Amazon Linux AMI) also did all of the preparation
-during the embargo period published shortly after embargo lift.
+PREREQUISITE
+============
+For this vulnerability to step in, a program must explicitly request
+to also parse XPM extensions while reading files. The motif toolkit and
+xdm are two among some programs that set the flag (XpmReturnExtensions).
+It can only be exploited on 64 bit systems.
 
-> But that's not actually the primary goal of your mail, so lets focus on
-> answering the more important questions below from my personal point of view.
->
->> All of this makes me wonder if the distros list serves its purpose.
->>
->> I'd be curious to hear:
->>
->> a) if any people felt that pre-disclosure of optionsbleed was helpful
->> to them and in which way (after all - even if it only helps minor
->> distros and major distros ignore it it may still be a good thing).
+DETAILS
+=======
+The affected code is prone to two 32 bit integer overflows while parsing
+extensions: the amount of extensions and their concatenated length. The
+fact that two such overflows exist makes it possible to have full
+control of the memory management. The attacker can choose:
 
-The pre-disclosure period gives us an opportunity to take the time to
-analyze the problem and run through testing of the reported fix.  It's
-super valuable for us.
+- how much heap space is allocated
+- how many bytes will overflow
+- the content of the bytes that overflow
 
-Regards,
+Due to the integrated gzip compression in XPM files, the file can be
+as small as 4 MB to trigger this issue, and doesn't need to be larger
+than 8 MB for a fully arbitrary attack.
 
-Anthony Liguori
+PROOF OF CONCEPT
+================
+I have attached two files: poc.c is a vulnerable program that uses
+libXpm to parse an XPM file, including its extensions. The second file
+is a maliciously crafted XPM file, which is gzip-compressed thrice to
+reduce its size to be friendlier for e-mail transmissions. You have to
+gunzip it twice, which increases its size back to 4 MB. If used with a
+vulnerable version, the program will trigger a segmentation fault.
 
->> b) if people think that they'd usually prepare a fixed package, however
->> they didn't consider optionsbleed important enough. (Naturally I
->> probably have a bias seeing my findings as more important as other
->> people, but I could live with that.)
->>
->
-> I think everyone should have come to the conclusion that this is
-> potentially pretty bad for a shared hosting environment or anywhere
-> where non-privileged users are able to fulfill the needed pre-requirements.
->
-> Anyway, my personal believe is that the list is important, useful and in
-> fact definitively helps preparing coordinated releases and doing all
-> needed work before a final fixed package can be deployed for security
-> relevant fixes.
-> Most of the time the provided information (at least for me :P) helps to
-> analyze and understand the underlying problem and its impact beforehand.
-> If patches are available (like for optionbleed) those can be tested and
-> possibly slightly adjusted or discussed when not fitting a specific
-> version/branch.
-> All this is part of the whole process before a problem is
-> analyzed/understood, prioritized, build-requirements adjusted, artifacts
-> prepared and finally released so being able to do the first steps in a
-> coordinated way definitively helps.
->
-> However, I indeed see your point and understand the frustration and the
-> reason for your mail demonstrated via the optionbleed case. I neither
-> say nor believe that every entity did perfectly to provide the users
-> with fixed packages as that's obviously not the case.
-> What I try to point out is that the list is IMO far from being useless
-> and indeed serves its purpose. I think blaming or questioning the list
-> itself is the wrong conclusion. Instead every entity on its own should
-> rethink their process, prioritization and possibly lack of resources (I
-> include myself to do this). This is not meant to anyone as blaming but
-> we all share the goal to protect the users as good as possible and I
-> believe that the distros list aids in doing so.
->
-> cheers,
-> Levente
+SOLUTION
+========
+It is recommend to update to the released libXpm version 3.5.12.
+
+The commit that fixes the issue can be found here:
+https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
+
+View attachment "poc.c" of type "text/plain" (586 bytes)
+
+Download attachment "poc.xpm.gz.gz.gz" of type "application/x-gunzip" (1058 bytes)
