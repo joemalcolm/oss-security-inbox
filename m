@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9296" "Monday" "20" "August" "2018" "09:47:42" "+0000" "Xen.org security team" "security@xen.org" "<E1frgmk-0003h1-Hq@xenbits.xenproject.org>" "237" "[oss-security] Xen Security Advisory 272 v3 (CVE-2018-15470) - oxenstored does not apply quota-maxentity" nil nil nil "8" "2018082009:47:42" "[oss-security] Xen Security Advisory 272 v3 (CVE-2018-15470) - oxenstored does not apply quota-maxentity" (number mark "U       security@xen Aug 20  237/9296  " thread-indent "\"[oss-security] Xen Security Advisory 272 v3 (CVE-2018-15470) - oxenstored does not apply quota-maxentity\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["880" "Saturday" "21" "January" "2017" "22:25:38" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" "<01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>" "30" "[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1" nil nil nil "1" "2017012206:25:38" "[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1" (number mark "U       alan.coopers Jan 21   30/880   " thread-indent "\"[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1\"\n") "<51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>" ("<51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8029 invoked by uid 550); 20 Aug 2018 09:48:03 -0000
+Received: (qmail 14277 invoked by uid 550); 22 Jan 2017 06:26:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,254 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7887 invoked from network); 20 Aug 2018 09:48:02 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 14244 invoked from network); 22 Jan 2017 06:26:00 -0000
+To: Pierre Ossman <ossman@cendio.se>, tigervnc-devel@googlegroups.com
+References: <51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>
+Cc: oss-security@lists.openwall.com
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Message-ID: <01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>
+Date: Sat, 21 Jan 2017 22:25:38 -0800
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:45.0) Gecko/20100101
+ Thunderbird/45.3.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1frgmk-0003h1-Hq@xenbits.xenproject.org>
-Date: Mon, 20 Aug 2018 09:47:42 +0000
-Subject: [oss-security] Xen Security Advisory 272 v3 (CVE-2018-15470) - oxenstored does
- not apply quota-maxentity
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+In-Reply-To: <51f32d01-f8ef-889c-1fac-6f6d06ddab76@cendio.se>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Source-IP: userv0021.oracle.com [156.151.31.71]
+Subject: [oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Is there a CVE assigned to this issue that we should use when passing this
+fix through to our packages/distros?  I don't see one mentioned in the commit
+or pull requests:
 
-            Xen Security Advisory CVE-2018-15470 / XSA-272
-                              version 3
+https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
+https://github.com/TigerVNC/tigervnc/pull/399
 
-               oxenstored does not apply quota-maxentity
+Thanks,
 
-UPDATES IN VERSION 3
-====================
+	-alan-
 
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-The logic in oxenstored for handling writes depended on the order of
-evaluation of expressions making up a tuple.
-
-As indicated in section 7.7.3 "Operations on data structures" of the
-OCaml manual:
-
-  http://caml.inria.fr/pub/docs/manual-ocaml/expr.html
-
-the order of evaluation of subexpressions is not specified.  In
-practice, different implementations behave differently.
-
-IMPACT
-======
-
-oxenstored may not enforce the configured quota-maxentity.
-
-This allows a malicious or buggy guest to write as many xenstore entries
-as it wishes, causing unbounded memory usage in oxenstored.  This can
-lead to a system-wide DoS.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.1 and later are potentially vulnerable.
-
-Only systems using the OCaml xenstored implementation are potentially
-vulnerable.  Systems using the C xenstored implementation are not
-vulnerable.
-
-Whether the compiled oxenstored binary is vulnerable depends on which
-compiler was used.  OCaml can be compiled either as bytecode (with
-ocamlc) or as a native binary (with ocamlopt).
-
-The following OCaml program demonstrates the issue, and identifies
-whether the resulting oxenstored binary will skip the quota enforcement.
-
-  $ cat order.ml
-  let check () =
-    let flag = ref false in
-    let update _ = flag := true; () in
-    List.iter update [1;2;3], !flag
-
-  let main () =
-    let _, flag = check () in
-    if flag then
-    print_endline "This code is not vulnerable!"
-    else
-    print_endline "This code is vulnerable!"
-
-  let () = main ()
-
-  $ ocamlc order.ml -o order.bytecode
-  $ ./order.bytecode
-  This code is vulnerable!
-  $ ocamlopt order.ml -o order.native
-  $ ./order.native
-  This code is not vulnerable!
-
-To confirm whether an OCaml binary is bytecode or native, use file.
-
-  $ file order.bytecode
-  order.bytecode: a /usr/bin/ocamlrun script executable (binary data)
-  $ file order.native
-  order.native: ELF 64-bit LSB executable, ...
-
-NOTE: These results are applicable to OCaml 4.01.0-5 as distributed in
-Debian Jessie.  These results are not representative of other versions
-of OCaml, or of other OS distributions.
-
-MITIGATION
-==========
-
-There are no mitigations available.
-
-CREDITS
-=======
-
-This issue was discovered by Christian Lindig of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa272.patch           All versions of Xen
-
-$ sha256sum xsa272*
-0da953ca48d0cf0688ecff6a074304a9d2217871809a76ef26b9addeb66ecb3e  xsa272.meta
-6e0359d89bf65794f16d39198cc90f5c3137bce4eb850e54625ab00e2c568c2c  xsa272.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+On 01/20/17 01:00 AM, Pierre Ossman wrote:
+> This is a security update for TigerVNC 1.7.0 which fixes a memory overflow issue
+> via the RRE decoder. A malicious server could possibly use this issue to take
+> control of the TigerVNC viewer.
+>
+> Users are advised to upgrade as soon as possible.
+>
+> Binaries are available from bintray:
+>
+> https://bintray.com/tigervnc/stable/tigervnc/1.7.1
+>
+> Regards
+> The TigerVNC Developers
+>
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbeo4OAAoJEIP+FMlX6CvZCO8H/Rj7Z+rFSuQAVEUKXvvV3lvJ
-rytocZDTAIduyiBundcbdkcxfCuun6Tqw8ScPJXtml82P8YE+R/ix1hMLcQdYblt
-tj3qftb6KtjFibctoc0sSLsfjhl2oJC2VjQR3HdixfMlSxEzLkCC3I21fteYs9fp
-ahO7dByNHFTufbb9GpB+DANmIJ5hwMXxCinvts/L2MP/CCRfb4w5+aTARCQ3UHpX
-3/r2wJxLnf4sNpBhHNsArROy8wS+ad0i4XC2fef/Bdye+NRbeICJNqof9fcGjWwE
-fZRyeNVSk33DuuRz2HI4aoEKAQ/v3b3KLXnfVZY5F5z6Z8j9rie42RI8VDO8Mzc=
-=Y10L
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa272.meta"
-Content-Disposition: attachment; filename="xsa272.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyNzIsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIsCiAgICAiNC45IiwK
-ICAgICI0LjgiLAogICAgIjQuNyIsCiAgICAiNC42IgogIF0sCiAgIlRyZWVz
-IjogWwogICAgInhlbiIKICBdLAogICJSZWNpcGVzIjogewogICAgIjQuMTAi
-OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
-ICAgICAiU3RhYmxlUmVmIjogIjg3YzgzYWYzMzNlMDI0OGFkYTJlNjU2MDk2
-NWFjYTYwOTZlYzdmMmIiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
-ICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAgICBdLAogICAg
-ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzIucGF0Y2gi
-CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQu
-MTEiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAg
-ICAgICAgICAiU3RhYmxlUmVmIjogIjMzY2VkNzI1ZTExYWY0ZWFiZDMzMzRk
-MTJmNTNlZDgwN2U5ZTI1ODYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAg
-ICAgICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAgICBdLAog
-ICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EyNzIucGF0
-Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAg
-IjQuNiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsK
-ICAgICAgICAgICJTdGFibGVSZWYiOiAiOThkNzk0OGI1MGI0ZTkxZWM0ZWZh
-ODYwZGEzMmQ5YWM0ZmU2OTMwMCIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsK
-ICAgICAgICAgICAgMjY4LAogICAgICAgICAgICAyNjkKICAgICAgICAgIF0s
-CiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTI3Mi5w
-YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
-ICAiNC43IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjog
-ewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI5MWNhODRjODYyYjE1ZmU3NGFi
-OWI1ODcwZTY2OTAzYWVjNGY4NmRkIiwKICAgICAgICAgICJQcmVyZXFzIjog
-WwogICAgICAgICAgICAyNjgsCiAgICAgICAgICAgIDI2OQogICAgICAgICAg
-XSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjcy
-LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwK
-ICAgICI0LjgiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4i
-OiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImFhNDUwMTUzZjJkOTYwYzIx
-NzE0OWIzMWI2OGE4YjU3YzVhOGU1OTUiLAogICAgICAgICAgIlByZXJlcXMi
-OiBbCiAgICAgICAgICAgIDI2OCwKICAgICAgICAgICAgMjY5CiAgICAgICAg
-ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ey
-NzIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
-LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhl
-biI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYTFiMjIzYjc1NmYzNTQ4
-OTU1MjUwNjBiZDNmOWYxZjA3ODk5YTA4MiIsCiAgICAgICAgICAiUHJlcmVx
-cyI6IFsKICAgICAgICAgICAgMjY4LAogICAgICAgICAgICAyNjkKICAgICAg
-ICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhz
-YTI3Mi5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAg
-IH0sCiAgICAibWFzdGVyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAg
-ICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJhY2QwMGEzMDMz
-NzhjZTQ4YmQ2YmJkOGE1NzlmMWZlMmYxYjIxYTdkIiwKICAgICAgICAgICJQ
-cmVyZXFzIjogWwogICAgICAgICAgICAyNjgsCiAgICAgICAgICAgIDI2OQog
-ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
-ICAieHNhMjcyLnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
-fQogICAgfQogIH0KfQ==
-
---=separator
-Content-Type: application/octet-stream; name="xsa272.patch"
-Content-Disposition: attachment; filename="xsa272.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQ2hyaXN0aWFuIExpbmRpZyA8Y2hyaXN0aWFuLmxpbmRpZ0BjaXRy
-aXguY29tPgpTdWJqZWN0OiB0b29scy9veGVuc3RvcmVkOiBNYWtlIGV2YWx1
-YXRpb24gb3JkZXIgZXhwbGljaXQKCkluIFN0b3JlLnBhdGhfd3JpdGUoKSwg
-UGF0aC5hcHBseV9tb2RpZnkoKSB1cGRhdGVzIHRoZSBub2RlX2NyZWF0ZWQK
-cmVmZXJlbmNlIGFuZCBib3RoIHRoZSB2YWx1ZSBvZiBhcHBseV9tb2RpZnko
-KSBhbmQgbm9kZV9jcmVhdGVkIGFyZQpyZXR1cm5lZCBieSBwYXRoX3dyaXRl
-KCkuCgpBdCBsZWFzdCB3aXRoIE9DYW1sIDQuMDYuMSB0aGlzIGxlYWRzIHRv
-IHRoZSB2YWx1ZSBvZiBub2RlX2NyZWF0ZWQgYmVpbmcKcmV0dXJuZWQgKmJl
-Zm9yZSogaXQgaXMgdXBkYXRlZCBieSBhcHBseV9tb2RpZnkoKS4gIFRoaXMg
-aW4gdHVybiBsZWFkcwp0byB0aGUgcXVvdGEgZm9yIGEgZG9tYWluIG5vdCBi
-ZWluZyB1cGRhdGVkIGluIFN0b3JlLndyaXRlKCkuICBIZW5jZSwgYQpndWVz
-dCBjYW4gY3JlYXRlIGFuIHVubGltaXRlZCBudW1iZXIgb2YgZW50cmllcyBp
-biB4ZW5zdG9yZS4KClRoZSBmaXggaXMgdG8gbWFrZSBldmFsdWF0aW9uIG9y
-ZGVyIGV4cGxpY2l0LgoKVGhpcyBpcyBYU0EtMjcyLgoKU2lnbmVkLW9mZi1i
-eTogQ2hyaXN0aWFuIExpbmRpZyA8Y2hyaXN0aWFuLmxpbmRpZ0BjaXRyaXgu
-Y29tPgpSZXZpZXdlZC1ieTogUm9iIEhvZXMgPHJvYi5ob2VzQGNpdHJpeC5j
-b20+CgpkaWZmIC0tZ2l0IGEvdG9vbHMvb2NhbWwveGVuc3RvcmVkL3N0b3Jl
-Lm1sIGIvdG9vbHMvb2NhbWwveGVuc3RvcmVkL3N0b3JlLm1sCmluZGV4IDlm
-NjE5YjhmZDUuLjhiMDcyN2Y4YTggMTAwNjQ0Ci0tLSBhL3Rvb2xzL29jYW1s
-L3hlbnN0b3JlZC9zdG9yZS5tbAorKysgYi90b29scy9vY2FtbC94ZW5zdG9y
-ZWQvc3RvcmUubWwKQEAgLTI1Nyw3ICsyNTcsOCBAQCBsZXQgcGF0aF93cml0
-ZSBzdG9yZSBwZXJtIHBhdGggdmFsdWUgPQogCQlOb2RlLmNoZWNrX3Blcm0g
-c3RvcmUucm9vdCBwZXJtIFBlcm1zLldSSVRFOwogCQlOb2RlLnNldF92YWx1
-ZSBzdG9yZS5yb290IHZhbHVlLCBmYWxzZQogCSkgZWxzZQotCQlQYXRoLmFw
-cGx5X21vZGlmeSBzdG9yZS5yb290IHBhdGggZG9fd3JpdGUsICFub2RlX2Ny
-ZWF0ZWQKKwkJbGV0IHJvb3QgPSBQYXRoLmFwcGx5X21vZGlmeSBzdG9yZS5y
-b290IHBhdGggZG9fd3JpdGUgaW4KKwkJcm9vdCwgIW5vZGVfY3JlYXRlZAog
-CiBsZXQgcGF0aF9ybSBzdG9yZSBwZXJtIHBhdGggPQogCWxldCBkb19ybSBu
-b2RlIG5hbWUgPQo=
-
---=separator--
+-- 
+	-Alan Coopersmith-              alan.coopersmith@oracle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
