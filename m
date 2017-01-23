@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/18
-Message-ID: <2426429.B1xlvDATVC@blackgate>
-Date: Wed, 01 Feb 2017 16:35:02 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/23/1
+Message-ID: <20170123030704.GA404@sin.redhat.com>
+Date: Mon, 23 Jan 2017 13:38:24 +1030
+From: Doran Moppert <dmoppert@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: podofo: multiple crashes
+Subject: CVE request: lcms2 heap OOB read parsing crafted ICC profile
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 01 February 2017 16:17:35 Hanno Böck 
-wrote:
-> FWIW I have a note here that says that in may 2015 I 
-reported privately
-> two issues to podofo, also never got a reply.
-> 
-> Thanks for making these issues public.
+Originally disclosed on this list in August by Ibrahim El-Sayed, but the
+CVE request was unclear so I guess it got lost:
 
-If what I reported here is something already discovered 
-by you, I would acknowledge you as well into the posts.
+http://seclists.org/oss-sec/2016/q3/288
+
+An out-of-bounds heap read in lcms2 ("Little Colour Management System"),
+in the function Type_MLU_Read in cmstypes.c.  This could be triggered by
+an untrusted image with a crafted ICC profile.
+
+Fixed in commit:
+
+https://github.com/mm2/Little-CMS/commit/5ca71a7b
+
+lcms2 is fairly bundled in various OpenJDK releases, so distributions
+should check carefully whether they use bundled versions, and if so,
+whether those have picked up the patch.
+
+Some more information at Red Hat bugzilla:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1367357
+
+
+Thanks,
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Doran Moppert
+Red Hat Product Security
 
+Content of type "application/pgp-signature" skipped
