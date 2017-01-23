@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/16
-Message-ID: <006d8bdc-f460-0572-b584-8271c9c11056@gentoo.org>
-Date: Tue, 31 Jan 2017 19:21:58 +0100
-From: Thomas Deutschmann <whissi@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Firejail local root exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/23/2
+Message-ID: <e8f1b5ae-9fa7-f985-4448-1305174fadea@cendio.se>
+Date: Mon, 23 Jan 2017 09:34:39 +0100
+From: Pierre Ossman <ossman@...dio.se>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>, tigervnc-devel@...glegroups.com
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [tigervnc-devel] Re: [tigervnc-announce] TigerVNC 1.7.1
 Content-Type: text/plain; charset=utf-8
 
-On 2017-01-29 14:14, Ion Ionescu wrote:
-> The first fix for CVE-2017-5180 in Firejail version 0.9.44.4 and
-> 0.9.38.8 (LTS) was incomplete. Changing .Xauthority to .bashrc in the
-> exploit code, the problem is still there - credit Sebastian Krahmer. 
-> New releases are out: 0.9.44.8 and 0.9.38.10 (LTS). Please assign a
-> new CVE.
+On 22/01/17 07:25, Alan Coopersmith wrote:
+> Is there a CVE assigned to this issue that we should use when passing this
+> fix through to our packages/distros?  I don't see one mentioned in the
+> commit
+> or pull requests:
+>
+> https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
+>
+> https://github.com/TigerVNC/tigervnc/pull/399
+>
 
-Associated commits which already appeared in v0.9.44.6:
+Not to my knowledge, no.
 
-https://github.com/netblue30/firejail/commit/38d418505e9ee2d326557e5639e8da49c298858f
-https://github.com/netblue30/firejail/commit/b8a4ff9775318ca5e679183884a6a63f3da8f863
-
-Backport for v0.9.38.10:
-
-https://github.com/netblue30/firejail/commit/903fd8a0789ca3cc3c21d84cd0282481515592ef
-
-
+Regards
 -- 
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+Pierre Ossman           Software Development
+Cendio AB               https://cendio.com
+Teknikringen 8          https://twitter.com/ThinLinc
+583 30 Linköping        https://facebook.com/ThinLinc
+Phone: +46-13-214600    https://plus.google.com/+CendioThinLinc
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
