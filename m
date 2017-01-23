@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1896" "Tuesday" "9" "February" "2021" "16:48:29" "+0100" "Solar Designer" "solar@openwall.com" "<20210209154829.GA4167@openwall.com>" "41" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "2" "2021020915:48:29" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       solar@openwa Feb  9   41/1896  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201019112249.GA14339@openwall.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>" "<51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net>" "<20201019112249.GA14339@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1811" "Monday" "23" "January" "2017" "13:38:24" "+1030" "Doran Moppert" "dmoppert@redhat.com" "<20170123030704.GA404@sin.redhat.com>" "55" "[oss-security] CVE request: lcms2 heap OOB read parsing crafted ICC profile" nil nil nil "1" "2017012303:08:24" "[oss-security] CVE request: lcms2 heap OOB read parsing crafted ICC profile" (number mark "U       dmoppert@red Jan 23   55/1811  " thread-indent "\"[oss-security] CVE request: lcms2 heap OOB read parsing crafted ICC profile\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7541 invoked by uid 550); 9 Feb 2021 15:49:00 -0000
+Received: (qmail 18093 invoked by uid 550); 23 Jan 2017 03:08:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7433 invoked from network); 9 Feb 2021 15:48:50 -0000
-Date: Tue, 9 Feb 2021 16:48:29 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 18075 invoked from network); 23 Jan 2017 03:08:39 -0000
+Date: Mon, 23 Jan 2017 13:38:24 +1030
+From: Doran Moppert <dmoppert@redhat.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20210209154829.GA4167@openwall.com>
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com> <20201005204820.GA8410@openwall.com> <51adb874-f967-5cf7-ffff-a2b871a5455b@spamtrap.tnetconsulting.net> <20201019112249.GA14339@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <20170123030704.GA404@sin.redhat.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tjCHc7DPkfUGtrlw"
 Content-Disposition: inline
-In-Reply-To: <20201019112249.GA14339@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
+X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Mon, 23 Jan 2017 03:08:28 +0000 (UTC)
+Subject: [oss-security] CVE request: lcms2 heap OOB read parsing crafted ICC profile
 
-Hi,
+--tjCHc7DPkfUGtrlw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Here are a couple of updates on what was said in this thread earlier.
+Originally disclosed on this list in August by Ibrahim El-Sayed, but the
+CVE request was unclear so I guess it got lost:
 
-Things started changing regarding home directory permissions on Ubuntu:
+http://seclists.org/oss-sec/2016/q3/288
 
-https://lists.ubuntu.com/archives/ubuntu-devel-discuss/2020-November/018842.html
-https://discourse.ubuntu.com/t/private-home-directories-for-ubuntu-21-04-onwards/19533
+An out-of-bounds heap read in lcms2 ("Little Colour Management System"),
+in the function Type_MLU_Read in cmstypes.c.  This could be triggered by
+an untrusted image with a crafted ICC profile.
 
-Alex Murray from Canonical proposed "that it is time we moved ahead and
-stopped creating home directories as world-readable on Ubuntu".  Later
-he added: "since there was no opposition to this proposal, I have
-uploaded updated adduser and shadow packages to hirsute-proposed to
-support setting the mode of home directories to 750 by default when they
-are created via either adduser or useradd."
+Fixed in commit:
 
-On Mon, Oct 19, 2020 at 01:22:49PM +0200, Solar Designer wrote:
-> > On 10/5/20 2:48 PM, Solar Designer wrote:
-> > > Then there's the trend towards having a desktop-like Linux system on
-> > > mobile devices again.  Before Android, we had e.g. Maemo and MeeGo.  Now
-> > > we have e.g. Ubuntu Touch, postmarketOS, and Sailfish OS.  As far as I'm
-> > > aware, so far this means lack of isolation between the apps just like we
-> > > have on the desktop.
-> 
-> BTW, there's a Russian security-hardened fork of Sailfish OS called
-> Aurora.  I've skimmed and searched its user's manual (in Russian) for
-> any mentions of isolation between the apps - found nothing, so I assume
-> there's none.  (This isn't to say they haven't implemented any security
-> changes - I think they have.  An interview I read with their CEO
-> looked surprisingly reasonable.  However, it appears that addressing
-> cross-app attacks is completely out of their focus.)
+https://github.com/mm2/Little-CMS/commit/5ca71a7b
 
-The release notes for Sailfish OS 4.0.1 include this:
+lcms2 is fairly bundled in various OpenJDK releases, so distributions
+should check carefully whether they use bundled versions, and if so,
+whether those have picked up the patch.
 
-"Contributions from Aurora OS
-[...]
-Security: Isolation of applications (a.k.a. application sandboxing)
-implemented for the platform (core) apps, based on Firejail app
-sandboxing."
+Some more information at Red Hat bugzilla:
 
-Alexander
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1367357
+
+
+Thanks,
+
+--=20
+Doran Moppert
+Red Hat Product Security
+
+--tjCHc7DPkfUGtrlw
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBCgAGBQJYhXOnAAoJEGohqWcZR7qpMFYP/AtBMFbMJWN1QRGmgHTFUacS
+p56xOrt0A6CavAQpdt4wmonlL2VJOucM/42w5HqGgZQILPs3xNLb2x7id+g/1vS1
+bBjnaYYv4xVE2z0Iwtmbb0883z45yhNXqD71jDNpwgBT4pT9ourF/jJobrxrS2Xt
+r3ZW8swtgrXJY6lvg7NJ4n27R+n/Pk2kz0sQ3ze8JsUQrQsrJxaSLRwso+9+iAOO
+H8SY8pOzo6XwN6PkWDxfEoBdb3Mimb7gqekVhu9wZxRHZp75mLMWSQGN8qChlf1h
+tGq+2wnQYlzZUMTLgJWF57JDZFZwulD19PotTYvHaUlHmqGAG3fpgWBvwY7d0HYS
+mI01CgURVseA7+E4+IDy0vaiL8SwMyk//umyLSBhHJcHXwK2HdlEZqrdrQiQ/3c9
+tTtuln2FyjGm3zhslI6oWm/ehWXAQsuochGcJYFxANwrFJ1Nw/sqphEEwPT1TgHU
+Ko2KS3uaTHLUlvEGeyqlvU0gLhJlo9osc82LIyXBqoqTMrmaG9KzI3Jk3LR+Qm6M
+XhjVfAP7E5lSiV5kH6Luyy3AvFEXKzsOlWy+V5JjPi6o69jqlv6QdgMS74YzGa/R
+c33F79hUC35o1kjzwwwr4cpuY4pfpMZuHDvYOZLnD6Ult4u/xurcqnAN1DSOZYTM
+OjUmtZk+ujOkfLeXbJI8
+=qXZ5
+-----END PGP SIGNATURE-----
+
+--tjCHc7DPkfUGtrlw--
