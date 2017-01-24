@@ -1,4 +1,9 @@
-Received: (qmail 30565 invoked by uid 550); 20 Dec 2025 18:07:14 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["160" "Tuesday" "24" "January" "2017" "22:28:56" "+0100" "Moritz Muehlenhoff" "jmm@debian.org" "<20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>" "7" "[oss-security] CVE request: GNU screen escalation" "^Cc:" nil nil "1" "2017012421:28:56" "[oss-security] CVE request: GNU screen escalation" (number mark "        jmm@debian.o Jan 24    7/160   " thread-indent "\"[oss-security] CVE request: GNU screen escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 22130 invoked by uid 550); 24 Jan 2017 21:29:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,116 +11,26 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11840 invoked from network); 20 Dec 2025 09:18:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1766222297; x=1766827097; i=aros@gmx.com;
-	bh=KGFMhpPciOsW9n6XH6pqWpqqgItb1zK/ltTbqbU4LXI=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=nAJ7BP+gGT4IZzG5TaIGgWQ9SVba1cSzMmCW78c6XVICL+yZSupyGnfZyaBfkXx7
-	 ryP2IzbMDCtM+5cjFSSmLYfpnMB7dbIFMtR0eu0RcS+XQ5AuYyvXKe2vtVwkijZNa
-	 xq3KOwzqJ8kZvWz67oQH+ZDIJ/KIBBpJ1HvDAjdtWRI52kfft0wkjPfRi3QzCHN2Y
-	 wlYseaiuWl0kHKNVi2e5KeVhF0hZ+76tmr1GlymKYNJWjSLc1dzENhpvQiDt9yq+f
-	 /zF3p/DdfYNaspOiBw3+uxyUOai+ezz4hNZy9UKRfx5Q3BUtP9PjhTKeLmoUU3Zxz
-	 jdnGCkSKq8WsI9HKIg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Message-ID: <83d523c8-2f3a-4176-847a-cb1530694e19@gmx.com>
-Date: Sat, 20 Dec 2025 09:18:16 +0000
+Received: (qmail 22109 invoked from network); 24 Jan 2017 21:29:11 -0000
+Message-ID: <20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>
 MIME-Version: 1.0
-To: security@kernel.org, oss-security@lists.openwall.com
-From: "Artem S. Tashkinov" <aros@gmx.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:Qr6tLbPQLZzeJGMU7sG2I82s1tekEqGEb8hoMh235jonPgJ79dg
- 9QyfEzKEVl7t5CLZ/Q+ZJvvjPoWZiJ4YC6NA7+lfk+MuKm164jKqN0wmrQR1Ea19TuDWNEC
- 3awABwXsv3WHRgMWT3Cj9Y9r2OWHmYDxygfoF8Nr0g5L2KXbEDyNTxuvefso8cO7CGIOArd
- frzpxS/NiA3b2GfFe1xFg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tDTf5Xlhh6U=;8T8bd3uBHYuJStuKBSRVbwffPKy
- 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
- 6lVMnXT+nu2UZs7dHEjnaila+U=
-Subject: [oss-security] A couple of security issues?
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-SA-Exim-Connect-IP: 93.204.219.35
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Cc: abe@debian.org
+Date: Tue, 24 Jan 2017 22:28:56 +0100
+From: Moritz Muehlenhoff <jmm@debian.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] CVE request: GNU screen escalation
+To: oss-security@lists.openwall.com
 
 Hi,
+please assign a CVE ID for this vulnerability in GNU screen:
+https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
 
-Could anyone please check them?
+Cheers,
+        Moritz
 
-https://bugzilla.kernel.org/show_bug.cgi?id=220879
-https://bugzilla.kernel.org/show_bug.cgi?id=220877
-https://bugzilla.kernel.org/show_bug.cgi?id=220875
-
-Regards,
-Artem
