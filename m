@@ -1,68 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/09/4
-Message-ID: <747001.945364417-sendEmail@localhost>
-Date: Tue, 9 May 2017 08:20:53 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lrzip: NULL pointer dereference in join_pthread (stream.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/9
+Message-ID: <CAN_LGv1TvwzDnsOSrEos7zuKbsqEsZHB5ahnONK-63CotmUKkA@mail.gmail.com>
+Date: Wed, 25 Jan 2017 01:20:49 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Headsup: systemd v228 local root exploit (CVE-2016-10156)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lrzip is a compression utility that excels at compressing large files.
+2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@...e.com>:
+> Hi
+>
+> This is a heads up for a trivial systemd local root exploit, that
+> was silently fixed in the upstream git as:
+>
+> commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
+> Author: ....
+> Date:   Fri Jan 29 23:36:08 2016 +0200
+>
+>     basic: fix touch() creating files with 07777 mode
 
-The complete ASan output of the issue:
+That's important for users of Arch Linux and other rolling distributions.
 
-# lrzip -t $FILE
-==1329==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000002d0 (pc 0x7fa931ad7660 bp 0x7ffff4a30c30 sp 0x7ffff4a309f8 T0)
-==1329==The signal is caused by a READ memory access.
-==1329==Hint: address points to the zero page.
-    #0 0x7fa931ad765f  /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_join.c:34
-    #1 0x53ee0d in join_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:147:6
-    #2 0x53ee0d in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1697
-    #3 0x53ee0d in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #4 0x531075 in unzip_literal /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:162:16
-    #5 0x531075 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:320
-    #6 0x531075 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #9 0x7fa930d3a78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #10 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
+If the system has booted the vulnerable version of systemd at least
+once, then the files with dangerous permissions will be there. There
+is no code in systemd that fixes permissions on already existing stamp
+files. There is no postinstall script in Arch that does it, either.
+So, you have to fix permissions to 0644 or remove the stamp files
+manually, once, even though the commit appeared in Arch repositories
+long time ago.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_join.c:34 
-==1329==ABORTING
-
-Affected version:
-0.631
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8843
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00231-lrzip-nullptr-join_pthread
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-05-07: blog post about the issue
-2017-05-08: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/07/lrzip-null-pointer-dereference-in-join_pthread-stream-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+-- 
+Alexander E. Patrakov
