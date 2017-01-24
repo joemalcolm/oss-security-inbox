@@ -1,130 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/2
-Message-Id: <E1eOjEH-0002D4-Bh@xenbits.xenproject.org>
-Date: Tue, 12 Dec 2017 12:00:09 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 249 - broken x86 shadow mode refcount overflow check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/11
+Message-ID: <1485294749.1902.0.camel@gmail.com>
+Date: Tue, 24 Jan 2017 16:52:29 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Headsup: systemd v228 local root exploit (CVE-2016-10156)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, 2017-01-25 at 01:20 +0500, Alexander E. Patrakov wrote:
+> 2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@...e.com>:
+> > Hi
+> > 
+> > This is a heads up for a trivial systemd local root exploit, that
+> > was silently fixed in the upstream git as:
+> > 
+> > commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
+> > Author: ....
+> > Date:   Fri Jan 29 23:36:08 2016 +0200
+> > 
+> >     basic: fix touch() creating files with 07777 mode
+> 
+> That's important for users of Arch Linux and other rolling
+> distributions.
+> 
+> If the system has booted the vulnerable version of systemd at least
+> once, then the files with dangerous permissions will be there. There
+> is no code in systemd that fixes permissions on already existing stamp
+> files. There is no postinstall script in Arch that does it, either.
+> So, you have to fix permissions to 0644 or remove the stamp files
+> manually, once, even though the commit appeared in Arch repositories
+> long time ago.
 
-                    Xen Security Advisory XSA-249
-                              version 2
-
-            broken x86 shadow mode refcount overflow check
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-Provide metadata file.
-
-ISSUE DESCRIPTION
-=================
-
-Pages being used to run x86 guests in shadow mode are reference counted
-to track their uses.  Unfortunately the overflow check when trying to
-obtain a new reference used a mask one bit wider than the reference
-count actually is, rendering the entire check ineffective.
-
-IMPACT
-======
-
-A malicious or buggy guest may cause a hypervisor crash, resulting in
-a Denial of Service (DoS) affecting the entire host, or cause hypervisor
-memory corruption.  We cannot rule out a guest being able to escalate
-its privilege.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.1 and later are affected.  Xen versions 4.0 and earlier
-are not affected.
-
-x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only guests run in shadow mode can exploit the vulnerability.
-
-PV guests typically only run in shadow mode during live migration, as
-well as for features like VM snapshot.
-
-Note that save / restore does *not* use shadow mode, and so does not
-expose this vulnerability.  Some downstreams also include a "non-live
-migration" feature, which also does not use shadow mode (and thus does
-not expose this vulnerability).
-
-HVM guests run in shadow mode on hardware without HAP support, or when
-HAP is disabled (globally or in the VM configuration file).  Live
-migration does not affect an HVM guest's use of shadow mode.
-
-MITIGATION
-==========
-
-For HVM guest explicitly configured to use shadow paging (e.g. via the
-`hap=0' xl domain configuration file parameter), changing to HAP (e.g.
-by setting `hap=1') will avoid exposing the vulnerability to those
-guests.  HAP is the default (in upstream Xen), where the hardware
-supports it; so this mitigation is only applicable if HAP has been
-disabled by configuration.
-
-For PV guests, avoiding their live migration avoids the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa249.patch           xen-unstable, Xen 4.9.x ... 4.5.x
-
-$ sha256sum xsa249*
-38a4b8033d634e22939ad42b882c35e46482782619e3e03b968a2f6489e459c9  xsa249.meta
-e99066b0171d4757c6a66e1223aabe01e990de2d0dc50416936e064e6e750d00  xsa249.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlovuNkMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZD0AIAJN95Z7d9zV07qt4q1iPyyvmBnhusedCvZmTnJTr
-+nfYb/mg9H7C8Re3Fsf0RA66P+nA8a76HVC3kqBBuqUvE+QNHteWmVWZ6K7QbtlG
-cCW6CtjeT0be98G1KyvIhL6rLYjpB/4LWAeXusof6ckcbtxHBRtGL3kQhv3MN91q
-u/R9nHKUyIYS/G4J39ApHk0XOFJFFg9mx66HhZuMjJMjBDevT+EG516YerXlSWr9
-bskfxPICFSC7g8z5I2mYdrAxinJ2QHpzurw2Q3T+adb2ag+ClkZRu3gS9jNHuC3F
-vqQr0r0LE68t77A2uD7UKyXuU5+kQ61yBE780I6BkhiG4PI=
-=0o90
------END PGP SIGNATURE-----
-
-Download attachment "xsa249.meta" of type "application/octet-stream" (2153 bytes)
-
-Download attachment "xsa249.patch" of type "application/octet-stream" (1656 bytes)
+/run is a tmpfs
+Download attachment "signature.asc" of type "application/pgp-signature" (867 bytes)
