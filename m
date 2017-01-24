@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5106" "Friday" "3" "April" "2015" "22:06:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150404020609.3DD176C0030@smtpvmsrv1.mitre.org>" "122" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" nil nil nil "4" "2015040402:06:09" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" (number mark "        cve-assign@m Apr  3  122/5106  " thread-indent "\"[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability\"\n") "<20150403172223.GA5593@shiftout.net>" ("<20150403172223.GA5593@shiftout.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["688" "Tuesday" "24" "January" "2017" "15:49:53" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701241547390.10545@wniryva>" "23" "[oss-security] CVE request Virglrenderer: OOB access while parsing texture instruction" nil nil nil "1" "2017012410:19:53" "[oss-security] CVE request Virglrenderer: OOB access while parsing texture instruction" (number mark "U       ppandit@redh Jan 24   23/688   " thread-indent "\"[oss-security] CVE request Virglrenderer: OOB access while parsing texture instruction\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32749 invoked by uid 550); 4 Apr 2015 02:06:41 -0000
+Received: (qmail 17845 invoked by uid 550); 24 Jan 2017 10:20:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,135 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32469 invoked from network); 4 Apr 2015 02:06:21 -0000
-In-Reply-To: <20150403172223.GA5593@shiftout.net>
-Message-Id: <20150404020609.3DD176C0030@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  3 Apr 2015 22:06:09 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Request CVE for LinuxNode - DoS vulnerability
-To: irl@fsfe.org
+Received: (qmail 17825 invoked from network); 24 Jan 2017 10:20:10 -0000
+Date: Tue, 24 Jan 2017 15:49:53 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1701241547390.10545@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Tue, 24 Jan 2017 10:19:59 +0000 (UTC)
+Subject: [oss-security] CVE request Virglrenderer: OOB access while parsing texture
+ instruction
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello,
 
-> https://bugs.debian.org/777013
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
+when parsing texture instructions in parse_instruction().
 
-> our package ax25-node
+A guest user/process could use this flaw to crash the Qemu process instance 
+resulting DoS.
 
-Here are some comments that may help to determine the correct number
-of CVE IDs for this report.
+Upstream patch:
+---------------
+   -> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
 
-> The SIGQUIT routine fails to close the app leaving the IP sockets open and in
-> some cases DDOS the remote site if a user "ctrl-]+q" out of a telnet session.
-> Also the app fails to close and more can be spawned by a crafty malicious user
-> thus bringing the system to a point of no memory available.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
 
-We found this within the node 0.3.2 download:
+This issue was reported by Li Qiang of 360.cn Inc.
 
-  Node is intended to be called from ax25d or inetd.
-
-  /etc/inetd.conf could have something like this in it:
-
-    # Set up LinuxNode to listen at telnet port
-    telnet  stream  tcp     nowait  root    /usr/bin/node     node
-
-As far as we can tell, "if a user "ctrl-]+q" out of a telnet session"
-means that the client side is attempting to close the TCP connection
-in an unsupported way (the supported way is the "bye" command). We
-think that "leaving the IP sockets open" means that the TCP connection
-transitions to CLOSE_WAIT for a while, and thus TCP data is still
-being transmitted outbound. (The specific TCP state isn't critical -
-the continued data transmission is what is of interest.) For node
-(unlike, say, a generic telnetd), this is a relatively important
-vulnerability because a TCP connection usually occurs over a very
-low-bandwidth radio path. We think "DDOS the remote site" does not
-really mean DDOS, and instead means "occasionally sends TCP packets
-from one source IP address to one destination IP address." Also, for
-purposes of defining the vulnerability, it isn't a self-DoS in which
-the client can omit the bye command and thereby suffer a loss of
-bandwidth that the client otherwise could have used for something
-else. Instead, the client has an "attacker" role in which it can omit
-the bye command and thereby cause the server to waste bandwidth that
-the server otherwise could have used for something else.
-
-777013 adds "Found this was the situation in ALL linux-based ax25 node
-packages. Patched this in URONode and informed ax25-node upstream in
-2007." As far as we can tell, there are no independent codebases, and
-thus any CVE ID would be shared among all related packages. The
-SIGQUIT routine in node ends up doing:
-
-  void logout(char *reason)
-  {
-          axio_end_all();
-          logout_user();
-          ipc_close();
-          log(L_LOGIN, "%s @ %s logged out: %s", User.call, User.ul_name, reason);
-          free_cmdlist(Nodecmds);
-          Nodecmds = NULL;
-          exit(0);
-  }
-
-whereas the SIGQUIT routine in URONode ends up doing:
-
-  void node_logout(char *reason)
-  {
-    axio_flush(NodeIo);
-    axio_end_all();
-    logout_user();
-    ipc_close();
-    node_log(LOGLVL_LOGIN, "%s @ %s logged out", User.call, User.ul_name);
-    node_log(LOGLVL_LOGIN, "%s %s", NodeId, reason);
-    free_cmdlist(Nodecmds);
-    Nodecmds = NULL;
-    exit(0);
-  }
-
-showing that "derivative work" is a reasonable conclusion.
-
-The only problem being reported in the SIGQUIT routine is that it is
-implemented incorrectly in a way that causes TCP connections to spend
-too much time in an undesired state, such as CLOSE_WAIT. The report is
-not about other issues in the signal handler such as
-https://cwe.mitre.org/data/definitions/479.html issues.
-
-The remaining concern is "more can be spawned by a crafty malicious
-user thus bringing the system to a point of no memory available." This
-suggests that there was an intended protection mechanism within node
-itself for cases where multiple clients wished to connect at the same
-time. (In other words, node was not letting inetd take responsibility
-for controlling the number of simultaneous invocations of the
-service.) Also, "crafty malicious user" suggests that there was an
-unstated way to bypass this protection mechanism. If so, then this
-would need a different CVE ID than the one for the
-bandwidth-consumption problem.
-
-So, the questions are:
-
-1. Is the above reasonable, i.e., there was (at one time) a single
-vulnerability affecting both node and URONode in which a client could
-use "quit" within telnet, and thereby cause the server to waste
-network bandwidth on a radio path?
-
-2. If the "crafty malicious user" attack could occur separately, are
-there any available details about what "crafty" action would occur?
-Also, did this issue affect at least one older version of URONode in
-addition to node?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVH0ZAAAoJEKllVAevmvmsPMwIALD5TDUbZvz1fQZzO+pu2ZYa
-yGRXXHFtOgz1x3jKsjX9dBkUvzJH7HRZAqRb83ysuzo+Guxh11pw7aZGWCCHch3m
-Bh9uSxOygCm0nicdCKZ5Bc36YFxBEkCpi+Bz5Xcen+/plMb0ZFcZfslW5IG5r7zL
-Spea+4sG1jseiFM194KY5BGMvduRhtDqxjKcZGC9xQGC1+vq+33evQa0fIKUrRxj
-IfL4xPuwCS+kA8oypw/zoyoieDvyiuAmxO5jXPVZw6ouCrhagMZZZhVBLTbJii/T
-KuQKKanqzKrmomPPzXAEpWIae/J83AJCTFoIV6DE+e1wj6syzAu6vrX7POWdLhQ=
-=PJ/W
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
