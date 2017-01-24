@@ -1,136 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/8
-Message-ID: <1484223894.26049.11.camel@gmail.com>
-Date: Thu, 12 Jan 2017 13:24:54 +0100
-From: Ailin Nemui <ailin.nemui@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Irssi out of bounds read in format string
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/5
+Message-ID: <alpine.LFD.2.20.1701241547390.10545@wniryva>
+Date: Tue, 24 Jan 2017 15:49:53 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Virglrenderer: OOB access while parsing texture instruction
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-can you please check whether the following Irssi issue needs a CVE
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
+when parsing texture instructions in parse_instruction().
 
-- Printing the value %[ leads to oob read
+A guest user/process could use this flaw to crash the Qemu process instance 
+resulting DoS.
 
-This has been reported to the Irssi project by Hanno Böck and is
-already fixed as part of the last CVE request, however I failed to
-include this issue in the initial report. Hanno has blogged about this
-at [1] and linked it to the other issue which we credited him for (but
-it is in fact a separate issue).
+Upstream patch:
+---------------
+   -> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
 
-Thanks,
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
 
-[1] https://blog.fuzzing-project.org/55-Fuzzing-Irssi-with-Perl-Scripts.html
+This issue was reported by Li Qiang of 360.cn Inc.
 
-
-On Thu, 2017-01-05 at 15:45 +0100, Ailin Nemui wrote:
-> Dear oss-security List,
-> 
-> Please provide some CVEs for the following issues.
-> 
-> Thanks,
-> 
-> 
-> Multiple vulnerabilities in Irssi [1]
-> =====================================
-> 
-> 
-> Description
-> -----------
-> 
-> Four vulnerabilities have been located in Irssi.
-> 
-> (a) A NULL pointer dereference in the nickcmp function found by Joseph
->     Bisch. (CWE-690)
-> 
-> (b) Use after free when receiving invalid nick message (Issue #466, CWE-146)
-> 
-> (c) Out of bounds read in certain incomplete control codes found by
->     Joseph Bisch. (CWE-126)
-> 
-> (d) Out of bounds read in certain incomplete character sequences found
->     by Hanno Böck and independently by J. Bisch. (CWE-126)
-> 
-> 
-> Impact
-> ------
-> 
-> These issues may result in denial of service (remote crash).
-> 
-> 
-> Affected versions
-> -----------------
-> 
-> (a) All Irssi versions that we observed
-> (b) All Irssi versions that we observed
-> (c) Irssi 0.8.17 and later
-> (d) Irssi 0.8.18 and later
-> 
-> 
-> Fixed in
-> --------
-> 
-> Irssi 0.8.21, Irssi 1.0.0
-> 
-> 
-> Recommended action
-> ------------------
-> 
-> Upgrade to Irssi 0.8.21. Irssi 0.8.21 is a maintenance release
-> without any new features.
-> 
-> After installing the updated packages, one can issue the /upgrade
-> command to load the new binary. TLS connections will require
-> /reconnect.
-> 
-> 
-> A Note to Distributors
-> ----------------------
-> 
-> First of all, thanks to every maintainer for their awesome job in
-> packaging Irssi and backporting security fixes.
-> 
-> When we had to release a security advisory last year with Irssi
-> 0.8.20, we noticed there was a huge confusion amongst Ubuntu users
-> about whether their Irssi version was safe to use.
-> 
-> Since all our releases 0.8.19, 0.8.20 and 0.8.21 have been bug
-> fix only, we think distributions should just ship the release.
-> 
-> But if the security fixes only are backported on top of an old
-> version, we would like to urge distributions to consider indicating
-> this in a way that is visible inside Irssi. One way to do this would
-> be to manually overwrite the PACKAGE_VERSION and marking your package
-> as patched. This can be done for example like this:
-> 
->   ./configure PACKAGE_VERSION=0.8.17-sa201701
-> 
-> 
-> You can then check the version from inside Irssi with /eval echo $J
-> 
-> As an added benefit over relying on dpkg, this will also correctly
-> report whether you had /upgrade done or not. We are looking for a ways
-> to make this easier to handle for both packagers and us, so if you
-> have a good idea on this matter please speak forth.
-> 
-> 
-> Mitigating facts
-> ----------------
-> 
-> (a) requires control over the ircd
-> 
-> (b), (d) require control over the ircd or otherwise can be triggered /
->     avoided by the user themselves
-> 
-> 
-> Patch
-> -----
-> 
-> https://github.com/irssi/irssi/commit/6c6c42e3d1b49d90aacc0b67f8540471cae02a1d
-> 
-> 
-> References
-> ----------
-> 
-> [1] https://irssi.org/security/irssi_sa_2017_01.txt
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
