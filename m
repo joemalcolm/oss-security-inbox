@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/17
-Message-ID: <CAJmbs8jRHuRRiZFh1r0ygbVKdiZMd_gHbxp7X8Gq-Op-D-_aaw@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:22:36 +0700
-From: Maxim Solodovnik <solomax666@...il.com>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7664 - Apache OpenMeetings - Missing XML Validation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/7
+Message-ID: <CAGW7fdtioEUEY19WukZQmKn0PDd-rsmHHS_N87nQswFdMnrBhg@mail.gmail.com>
+Date: Tue, 24 Jan 2017 12:15:48 -0500
+From: Max Veytsman <max@...canary.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: rubygem minitar: directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+Rubygem minitar allows attackers to overwrite arbitrary files during
+archive extraction via a .. (dot dot) in an extracted filename.
 
-Vendor: The Apache Software Foundation
+Issue:
+https://github.com/halostatue/minitar/issues/16
 
-Versions Affected: Apache OpenMeetings 3.1.0
+Upstream patch:
+https://github.com/halostatue/minitar/commit/e25205ecbb6277ae8a3df1e6a306d7ed4458b6e4
 
-Description: Uploaded XML documents were not correctly validated
-CVE-2017-7664
+The same issue exists in rubygem archive-tar-minitar
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+I believe they're based on the same codebase, and minitar is the officially
+supported fork, so I'm not sure if this warrants two CVEs or just one.
 
-Credit: This issue was identified by Security Innovation
+Thanks,
+--
+Max Veytsman
+Co-founder appcanary.com
+@mveytsman <https://twitter.com/mveytsman>
 
-
--- 
-WBR
-Maxim aka solomax
