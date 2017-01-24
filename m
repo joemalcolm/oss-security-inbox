@@ -1,63 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/8
-Message-ID: <a49425b0-4404-d570-a94d-fe92b59864b6@Z5T1.com>
-Date: Sun, 5 Nov 2017 13:19:43 -0500
-From: Scott Court <z5t1@...1.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/12
+Message-ID: <1485294901.1902.2.camel@gmail.com>
+Date: Tue, 24 Jan 2017 16:55:01 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Headsup: systemd v228 local root exploit (CVE-2016-10156)
 Content-Type: text/plain; charset=utf-8
 
-Just want to point out that even if we do set 0600 permissions on all
-.swp files, it still may allow for a form of the attack Hanno originally
-pointed out if vim is ever run as the httpd user. In reality, this is
-far less likely to occur but it's still worth pointing out.
+On Wed, 2017-01-25 at 01:20 +0500, Alexander E. Patrakov wrote:
+> 2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@...e.com>:
+> > Hi
+> > 
+> > This is a heads up for a trivial systemd local root exploit, that
+> > was silently fixed in the upstream git as:
+> > 
+> > commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
+> > Author: ....
+> > Date:   Fri Jan 29 23:36:08 2016 +0200
+> > 
+> >     basic: fix touch() creating files with 07777 mode
+> 
+> That's important for users of Arch Linux and other rolling
+> distributions.
+> 
+> If the system has booted the vulnerable version of systemd at least
+> once, then the files with dangerous permissions will be there. There
+> is no code in systemd that fixes permissions on already existing stamp
+> files. There is no postinstall script in Arch that does it, either.
+> So, you have to fix permissions to 0644 or remove the stamp files
+> manually, once, even though the commit appeared in Arch repositories
+> long time ago.
 
-Storing the .swp files in a separate directory prevents this from
-potentially being a problem as well. However, universally setting the
-.swp files to 0600 is probably a better solution than that patch
-(https://github.com/vim/vim/releases/tag/v8.0.1263).
+Ah, sorry, I didn't see that it did this for /var/lib timer files too.
 
-
-On 11/05/2017 12:59 PM, Solar Designer wrote:
-> On Sun, Nov 05, 2017 at 06:17:04PM +0100, Christian Brabandt wrote:
->> On Fr, 03 Nov 2017, Jakub Wilk wrote:
->>
->>> In general, what vim does (copying mode bits) in not enough to ensure that
->>> the swapfile is readable only by the users who had access to the original
->>> file. It would have to copy also group ownership and ACLs.
->> I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
->> the group ownership problem.
-> That's some effort and code complexity for a fix that is not even trying
-> to address the problem Hanno pointed out. :-(  What we really need is
-> simply forcing the permissions to 0600 no matter what.  I do notice that,
-> non-surprisingly, Bram said:
->
-> | Why would a web server expose and serve such a file?  That clearly is
-> | the problem, not that Vim happens to create swap files (and undo and
-> | backup files, depending on your configuration).
-> | 
-> | You probably also create new files and copies of files that should not
-> | be served.  If you care about security, the web server must always use
-> | whitelisting, only serve files that were intentionally made public.
->
-> This makes sense, yet Vim can and should also do its part to make things
-> safer when that does not conflict with its other goals nor introduce
-> complexity.  Simply using mode 0600 is a win-win: addresses the problem
-> Hanno reported for the common special case of web server running as a
-> different user than the file owner, does not break any functionality,
-> and makes Vim's code simpler.
->
-> Yes, let's also force 0600 for "undo and backup files", please.
->
-> Even without a web server or whatever other external interaction
-> aspects, copying the original file's permissions and/or obeying umask is
-> just wrong in this case because those files are created implicitly,
-> often without the user's intent and knowledge, and because they might
-> stay around for longer than the original file does.
->
-> Alexander
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+It does seem to recreate them if the timers are still around at least.
+Download attachment "signature.asc" of type "application/pgp-signature" (867 bytes)
