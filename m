@@ -1,76 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/16
-Message-ID: <5447042.sAN2qLRxXj@storm.m.i2n>
-Date: Thu, 14 Sep 2017 14:45:44 +0200
-From: Thomas Jarosch <thomas.jarosch@...ra2net.com>
-To: oss-security@...ts.openwall.com
-Cc: Andrey Konovalov <andreyknvl@...il.com>
-Subject: Re: Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/3
+Message-ID: <c66b6384d0834cb09b4c472e15f2131c@imshyb01.MITRE.ORG>
+Date: Tue, 24 Jan 2017 03:12:09 -0500
+From: <cve-assign@...re.org>
+To: <murray.mcallister@...omniasec.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Linux kernel: vc4: int overflow leading to heap-based buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hi Andrey,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sunday, 13 August 2017 18:21:55 CEST Andrey Konovalov wrote:
-> ### Exploitation
-> 
-> The bug can be exploited by an unprivileged user if:
-> 
-> 1. User can set up an interface with UFO enabled and MTU < 65535 or
-> such interface is already present in the system. The former is
-> possible from inside a user namespace.
+> [PATCH 1/2] drm/vc4: Fix an integer overflow in temporary allocation layout.
+> https://lkml.org/lkml/2017/1/17/761
 
-the aftermath of this bug is that UFO is scheduled
-to be removed in the kernel. According to David Miller
-it's too much code complexity for little gain.
-(https://www.spinics.net/lists/netdev/msg443815.html)
+Use CVE-2017-5576.
 
-An easy security fix for old kernels is therefore to prevent UFO
-from becoming enabled. This is done by masking the UFO feature
-inside net/core/dev.c:netdev_fix_features(), which gets called
-during register_netdevice() and also when someone tries to
-re-enable UFO f.e. with ethtool later on.
 
-I'm sharing my "one line" patch here in case it's useful to someone
-else stuck on old kernel versions, f.e. Android phones.
-Also please correct me if I'm wrong on this fix.
+> [PATCH 2/2] drm/vc4: Return -EINVAL on the overflow checks failing.
+> https://lkml.org/lkml/2017/1/17/759
 
-Cheers,
-Thomas
+Use CVE-2017-5577.
 
-------------------------
-Disable UFO support in the kernel. Prevents CVE-2017-1000112.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Upstream UFO removal:
-https://www.spinics.net/lists/netdev/msg443815.html
-
-Signed-off-by: Thomas Jarosch <thomas.jarosch@...ra2net.com>
-diff -u -r -p linux-3.14/net/core/dev.c linux.disable_ufo/net/core/dev.c
---- linux-3.14/net/core/dev.c	2014-03-31 05:40:15.000000000 +0200
-+++ linux.disable_ufo/net/core/dev.c	2017-09-14 12:29:01.958899810 +0200
-@@ -5658,23 +5658,8 @@ static netdev_features_t netdev_fix_feat
- 		features &= ~NETIF_F_GSO;
- 	}
- 
--	/* UFO needs SG and checksumming */
--	if (features & NETIF_F_UFO) {
--		/* maybe split UFO into V4 and V6? */
--		if (!((features & NETIF_F_GEN_CSUM) ||
--		    (features & (NETIF_F_IP_CSUM|NETIF_F_IPV6_CSUM))
--			    == (NETIF_F_IP_CSUM|NETIF_F_IPV6_CSUM))) {
--			netdev_dbg(dev,
--				"Dropping NETIF_F_UFO since no checksum offload features.\n");
--			features &= ~NETIF_F_UFO;
--		}
--
--		if (!(features & NETIF_F_SG)) {
--			netdev_dbg(dev,
--				"Dropping NETIF_F_UFO since no NETIF_F_SG feature.\n");
--			features &= ~NETIF_F_UFO;
--		}
--	}
-+	/* Disable UFO to prevent CVE-2017-1000112. UFO support is removed upstream */
-+	features &= ~NETIF_F_UFO;
- 
- 	return features;
- }
-
+iQIcBAEBCAAGBQJYhwunAAoJEHb/MwWLVhi2S/wP/jt59qeY74I02n9My1lTZEYd
+jy7AWveL6n8B/Z3JTcJq+70wVn8wQ0j+oKI+Hd4PdQzK0inBYINgRvuPnrtFaY0R
+yNgJhfrOHyw+FRwrAqgjQeo/0iiWmmOus3iQeK/4z4snHFdo3nXkQULAS3hh5J0y
+U0EEubTWGp8czySRj325Lz05ZyRsTW8A3oIm/mtbocuh85r2OdHrisE8SxRvzmdM
+plXtCFqLzwnw4ay23VB7AsZOjJUknyxwohARgyQBLjIyRD/GGhKhblfAzbsJ1GeS
+C43os7VZkxlkZMIJJMt/C4iZJdihzVSuQ9sA70exo8bwBMcAs6Fa1IG8HuZTPQH5
+bU1sBzKu55b/Iyo2CK3+fTDkNbvAggF0RzJkTUZ7FDuqupbpDgCCPOxqFc67cnkY
+0sS4iVJRQctUSV2DCcbGvlxL3SMA1raBGzVszoPuhrM1KQP6cHGEj6Zkx/q2/UKh
+sCD9dV7ZUXo/HRGGfdgWmkMC1quhQ0Vbh7KQYna2Sb6CrUFVPfyyAymv4daF4xe/
+HjjxrtLcsr75GbI4m7z7HvMHuR3Ec2ok6cx3NMM/G1ya8nhbjDJkgOd87DFohgYV
+OHvBTQbk1g955spSJsQNsI0W9UcORJ2/b7N0PR9JP4Xtn/61A1VNdZSUKijFl/s/
+F6HMPX7zYdSE8i9NWJ7D
+=vnRT
+-----END PGP SIGNATURE-----
