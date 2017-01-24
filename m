@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/01/1
-Message-ID: <CAMopvkMSV-qpfw9nEY7GNvdVN4PeZxH_kbfJTxZ78fd=cA7Bhg@mail.gmail.com>
-Date: Fri, 1 Dec 2017 09:06:55 +0100
-From: Lukasz Lenart <lukaszlenart@...che.org>
-To: Struts Users Mailing List <user@...uts.apache.org>
-Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, David Dillard <David.Dillard@...itas.com>,  Chenhuijun <chenhuijun@...wei.com>
-Subject: [ANN] Apache Struts 2.5.14.1 GA with Security Fixes Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/8
+Message-ID: <alpine.LFD.2.20.1701242332030.18573@wniryva>
+Date: Tue, 24 Jan 2017 23:37:45 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: serial: host memory leakage in 16550A UART emulation
 Content-Type: text/plain; charset=utf-8
 
-The Apache Struts group is pleased to announce that Struts 2.5.14.1 is
-available as a “General Availability” release. The GA designation is
-our highest quality grade.
+   Hello,
 
-Apache Struts 2 is an elegant, extensible framework for creating
-enterprise-ready Java web applications. The framework is designed to
-streamline the full development cycle, from building, to deploying, to
-maintaining applications over time.
+Quick Emulator(Qemu) built with the 16550A UART serial device emulation 
+support is vulnerable to a memory leakage issue. It could occur while doing a 
+device unplug operation; Doing so repeatedly would result in leaking host 
+memory, affecting other services on the host.
 
-This release contains fixes for the following potential security
-vulnerabilities:
-- S2-054 A crafted JSON request can be used to perform a DoS attack
-when using the Struts REST plugin
-  https://cwiki.apache.org/confluence/display/WW/S2-054
-- S2-055 Vulnerability in the Jackson JSON library
-  https://cwiki.apache.org/confluence/display/WW/S2-055
+A privileged user inside guest could use this flaw to cause a DoS and/or 
+potentially crash the Qemu process on the host.
 
-Please read the Version Notes to find more details about performed bug
-fixes and improvements.
-https://cwiki.apache.org/confluence/display/WW/Version+Notes+2.5.14.1
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01945.html
 
-All developers are strongly advised to perform this action.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1416157
 
-The 2.5.x series of the Apache Struts framework has a minimum
-requirement of the following specification versions: Servlet API 2.4,
-JSP API 2.0, and Java 7.
+This issue was reported by Li Qiang of 360.cn Inc.
 
-Should any issues arise with your use of any version of the Struts
-framework, please post your comments to the user list, and, if
-appropriate, file a tracking ticket.
-
-You can download this version from our download page.
-http://struts.apache.org/download.cgi#struts-ga
-
-
-Kind regards
--- 
-Łukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
