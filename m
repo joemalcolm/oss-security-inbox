@@ -1,165 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/30/6
-Message-ID: <20170630132209.GA4625@openwall.com>
-Date: Fri, 30 Jun 2017 15:22:09 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/24/4
+Message-ID: <20170124085501.GA9322@suse.de>
+Date: Tue, 24 Jan 2017 09:55:01 +0100
+From: Sebastian Krahmer <krahmer@...e.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: Headsup: systemd v228 local root exploit (CVE-2016-10156)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
-> I came up with many current tasks/roles that a new or existing member
-> could usefully help with, thereby contributing to the team effort.
-> Currently the wiki page lists a total of 18 such items: 5 technical and
-> 13 administrative.  I'd prefer that new membership requests include
-> specifics on what the new member will contribute - this can be work on
-> some of these 18 items or/and something else.
+Hi
 
-This is now up to 22 items: I've split one in two, and added three more.
-The full list is at:
+This is a heads up for a trivial systemd local root exploit, that
+was silently fixed in the upstream git as:
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
+Author: ....
+Date:   Fri Jan 29 23:36:08 2016 +0200
 
-No volunteers so far?  I know some of you are actually helping with
-these, but I'd prefer that you explicitly take responsibility for them.
+    basic: fix touch() creating files with 07777 mode
+    
+    mode_t is unsigned, so MODE_INVALID < 0 can never be true.
+    
+    This fixes a possible DoS where any user could fill /run by writing to
+    a world-writable /run/systemd/show-status.
 
-We got to improve how we run these lists in order to counter-balance the
-possible negative effects of embargoes and of new members joining.  The
-alternative, you know, is shutting the lists down.
+The analysis says that is a "possible DoS", but its a local root
+exploit indeed. Mode 07777 also contains the suid bit, so files
+created by touch() are world writable suids, root owned. Such
+as /var/lib/systemd/timers/stamp-fstrim.timer thats found on a non-nosuid mount.
 
-> Right now, most of these things I listed are everyone's and thus no
-> one's responsibility (and they often fall back on me as list admin).
-> I want this to change.  Ideally, we'd list specific distros for each one
-> of these tasks/roles... and if something required is not done or goes
-> wrong per one of those roles, we'll ask them to explain why and correct
-> that for further occasions.  This will also serve to verify that they're
-> still active and paying attention, replacing my responsiveness tests.
-> 
-> Here are the current tasks/roles to choose from or/and add to:
-> 
-> Technical (in arbitrary order):
+This is trivially exploited by something like:
 
-> 4. Generalize the reported issues to see if other closely related issues
-> exist (e.g., if a bug is reported against one implementation of X, see
-> if a similar bug exists in another implementation of X and inform the
-> list of either result)
+http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/CreateSetgidBinary.c
 
-I split the above one in two:
+with minimal changes, so I wont provide a PoC here.
 
-4. Check if related issues exist in the same piece of software (e.g.,
-same bug class common across the software, or other kinds of bugs exist
-in its problematic component), and inform the list either way
+The bug was possibly introduced via:
 
-5. Check if related issues exist in implementations of similar
-functionality in other software (e.g., forked code including the same
-bug, or the same error made independently), and inform the list either way
+commit ee735086f8670be1591fa9593e80dd60163a7a2f
+Author: ...
+Date:   Wed Nov 11 22:54:56 2015 +0100
 
-This is significant amount of work, and with so many distro members (as
-we already have) I'd be OK with different (sets of) distros volunteering
-for these two sub-tasks.
+    util-lib: use MODE_INVALID as invalid value for mode_t everywhere
 
-> Administrative (roughly in chronological order, although many of these
-> activities overlap):
 
-> 4. Evaluate relevance to other parties, such as the upstream, other
-> affected distros (not present here), and other Open Source projects, see
-> if the report mentions notifying any of these, communicate your findings
-> and possible concerns to the reporter and the list, and stay on top of
-> the resulting discussion until a decision is made on who else to
-> possibly notify (or not) and any such notifications are in fact made
+So we believe that this mostly affects v228 of systemd, but its recommended
+that distributors cross-check their systemd versions for vulnerable
+touch_*() functions. We requested
+a CVE for this issue from MITRE by ourselfs: CVE-2016-10156
 
-The above item should have partially addressed Simon's feedback: yes, we
-do intend to notify upstreams (and have been doing so), but we need a
-decision and at least the reporter's approval for this first.  I've now
-revised the wording to:
+We would like to see that systemd upstream retrieves CVE's themself
+for their own bugs, even if its believed that its just a local DoS.
+This would make distributors life much easier when we read the git logs
+to spot potential issues. The systemd git log is really huge, with
+lots of commits each week ("new services as a service").
 
-4. Evaluate relevance to other parties such as the upstream, other
-affected distros (not present on the (sub-)list), and other Open Source
-projects, see if the report mentions notifying any of these, communicate
-your findings and possible concerns to the reporter and the list, and
-stay on top of the resulting discussion until a decision is made on who
-else to possibly notify (or not) and any such notifications are in fact
-made (with the reporter's approval)
+Sebastian
 
-The change from "not present here" to "not present on the (sub-)list" is
-to address the special case of someone sending to linux-distros an issue
-that would also be relevant to the distros list (which currently includes
-two *BSD's).  If this happens, we'll need to notice, decide, get the
-reporter's approval, and finally move the discussion from linux-distros
-to distros.  This certainly sounds overly complicated and formalized to
-me, but I hope we'll be doing it quickly in practice, like I think we
-have been already - but I also hope someone in particular will take
-responsibility for this happening.
+-- 
 
-And I've also added explicit "with the reporter's approval", because in
-any such cases the ultimate say is the reporter's.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
-Having considered the special case mentioned above made me realize we
-also have this task, newly inserted into the list:
-
-5. Determine if the reported issues are Linux-specific, and if so help
-ensure that (further) private discussion goes on the linux-distros
-sub-list only (thus, not spamming and unnecessary disclosing to the
-non-Linux distros)
-
-We have been trying to do this already, but like with most of these
-tasks it was everyone's and no one's responsibility.  This got to change.
-
-I also listed this new task, reusing number 13:
-
-13. Keep track of per-report and per-issue handling and disclosure
-timelines (at least times of notification of the private list and of
-actual public disclosure), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-raw data (except on issues that are still under embargo) by posting to
-oss-security
-
-> 12. Help evaluate new (linux-)distros list membership requests per the
-> current criteria (participating in the corresponding oss-security
-> threads)
-> 
-> 13. Vouch for people wanting to join in on behalf of a new distro member
-> as long as you are confident of their trustworthiness, expected proper
-> use of the list, and contributions
-
-The above are now the only two items on their own sub-list of
-"Administrative tasks not strictly requiring (linux-)distros list
-membership (thus, open for contributions by the wider community)".
-
-And there's another new sub-list, currently with just one item:
-
-Administrative tasks mostly unrelated to (linux-)distros lists (but
-relevant to the wider community)
-
-1. Help ensure that each message posted to oss-security contains the
-most essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or by
-creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a "reply" posting when necessary
-
-> Finally, I also came up with specific policy on handling of embargoed
-> information.  Most of this was taken for granted so far, and this worked
-> well, but there were a few gray areas.  The currently proposed policy,
-> which list members have to agree to, is as follows:
-> 
-> Aside from your participation in discussions with the reporter and on
-> the (linux-)distros lists (including possibly continuing to CC other
-> prior recipients of the information), the information you receive
-> through the (linux-)distros lists must not be made public, shared, nor
-> even hinted at anywhere beyond the need-to-know within your distro's
-> team, until the agreed upon public disclosure date/time, the reporter's
-> explicit approval, or substantially complete publication by others.
-
-To hopefully address Simon's feedback, I moved "the reporter's explicit
-approval" to the beginning of list, so that it stands out.  The current
-wording is:
-
-[...] except with the reporter's explicit approval, until the agreed upon
-public disclosure date/time or substantially complete publication by others.
-
-The beginning of this paragraph and further paragraphs are unchanged.
-
-Alexander
