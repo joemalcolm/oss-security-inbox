@@ -1,4 +1,9 @@
-Received: (qmail 16217 invoked by uid 550); 15 Apr 2026 15:32:41 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2218" "Tuesday" "24" "January" "2017" "16:52:29" "-0500" "Daniel Micay" "danielmicay@gmail.com" "<1485294749.1902.0.camel@gmail.com>" "56" "Re: [oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)" "^Date:" nil nil "1" "2017012421:52:29" "[oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)" (number mark "        danielmicay@ Jan 24   56/2218  " thread-indent "\"Re: [oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)\"\n") "<CAN_LGv1TvwzDnsOSrEos7zuKbsqEsZHB5ahnONK-63CotmUKkA@mail.gmail.com>" ("<20170124085501.GA9322@suse.de>" "<CAN_LGv1TvwzDnsOSrEos7zuKbsqEsZHB5ahnONK-63CotmUKkA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 17639 invoked by uid 550); 24 Jan 2017 21:52:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,83 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 17617 invoked from network); 24 Jan 2017 21:52:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version;
+        bh=WQeZTxxVC5G63Di+nCCMVZNnu4YDNn9G8LD7Wt0mscI=;
+        b=WD9FqUwcxoHZ7VeP8fB18fFbIDTyky65NjyJKBpGxEh4GNVpXqwvpLkNq/z264AN9q
+         3gw76LfCTaJKQAcCBQoxyDRmk9g4liJmfF5luqXK6QnMxpFOiRv9IMXKesHIsjScBF0K
+         3Z6LJEzZ1EzwiMMA6ZnQP0MiG6EcXAdUGI5AFrL0SnbBKREpfQw2DDLGsXLjO8rrnlEz
+         E8X4D+rJOiQiGxP5iNjuYSY7c+WqLmxv4Zr6GJZJUMNvNi53ctKNxX3KDYzJ8jU0hUeX
+         ObKYy/ENVcBd2aYfs+tjjTMNS/4RjcKvMuiIWtocrrUaZRK+F3Is3t6Gv9HDMBfW3Flz
+         DqWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version;
+        bh=WQeZTxxVC5G63Di+nCCMVZNnu4YDNn9G8LD7Wt0mscI=;
+        b=VkpJdvtJMEbAEoB8vlQKinf1CrTPgSmZN5N1SqAzQBzh8YDrwQQUhLzEUzrK6hmtve
+         siRwtqML3fpjIo/bddCDYaTomXYZJh8RGBPqGA6yjuvc24+fvFYbi6fhn07tt+e+DtST
+         o3dc0W8S+im+UzsDiUgeh9td5HRmDad1Huuq3pjMGvTzcKx/pQzIztyBwRoS/wQvIpEB
+         Hj8c5Z+FZgufNvuG8oD1l1MBhEY3brer/8hG43YXwuPryOpzAf5BqThu6n8W1sAcw/np
+         +2Z9KQu9kKCTC0eB5/mWBKxwjeZjAamS/hq+rKbXMPlxEa3o/d7GvCJjsyV7ElEYcPjl
+         Mrfg==
+X-Gm-Message-State: AIkVDXK95r3VXkcvbp/H3tApdeSHOEn+FqNdSCKkJkoSeANe+oUh3lPpR8TiqLRxnHBjtw==
+X-Received: by 10.36.246.5 with SMTP id u5mr21497987ith.48.1485294762289;
+        Tue, 24 Jan 2017 13:52:42 -0800 (PST)
+Message-ID: <1485294749.1902.0.camel@gmail.com>
+In-Reply-To: <CAN_LGv1TvwzDnsOSrEos7zuKbsqEsZHB5ahnONK-63CotmUKkA@mail.gmail.com>
+References: <20170124085501.GA9322@suse.de>
+	 <CAN_LGv1TvwzDnsOSrEos7zuKbsqEsZHB5ahnONK-63CotmUKkA@mail.gmail.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-9DTs0RTYTj25EIjnYe8o"
+X-Mailer: Evolution 3.22.4 
+Mime-Version: 1.0
+Date: Tue, 24 Jan 2017 16:52:29 -0500
+From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21522 invoked from network); 15 Apr 2026 07:06:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1776236762;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=fkguP19pt7yNjs988qW/LUpIpD18ULM0pVA3sAqt6IY=;
-	b=hfY2qoyX7ckuDMqUlBFIdINbybcB+lro1yv3GZrLTljMVsIkMToYwxmDiHyyWYajQLqnm9
-	phg3THtPHxqmQ/u+Ib1f/iENgCRxe0WpcHa+GArtRBgddOB9R8VokdB+N7Gv7FqENJiohD
-	/LDGcxGYOxfatCovTXQkyiUHo7lQgTjU3+Atv2Ezmv3v+o46s/Tj3Pg+m5GrK9aJJfi82Z
-	0rt+jwZZrmIznlfLz1HlYb3XPvwtqdtAgz+CzxZwUOvb/f0Sb170bTAb/tGnvvwfYL9pU+
-	2nGvM3xWtb1iaSEyRV73eUtwSsVPkoDHnaHxhzaxQMdZyB86ALUknurfaNWFMQ==
-Message-ID: <7ffc338d-5285-444f-87fd-0c86a5672fe8@cpansec.org>
-Date: Wed, 15 Apr 2026 08:06:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTGCR/a3QyAk6DamSvsz9sPz3DGMmHdFoTUsIsm/H1JzNSjdgUk3f6qz2g684fjbQD+env4FXwZx5F0kKdLouiG+lRgL9gMvVLEO1aU1N/l11OpMK5Gdson8POzL8gqOF1S46hGtAIFCEvB1TmRMFJhpK9yAlqZvGg0mnZPUbA6xfHjSU1Cri73b20P6dzNVUxy03oSegGl7x76Qmd4dGEAOSzkmWZHU9IDlRkeU2TgVSR2R63/v4umlMZO3QoseoyxPxW8JC2wYZirQriZu1EkxVPFRR79hUK2r1hV8RgkS/CzWvMEqihKpHdkZEaBirAfwdYfUpI4WrgCHCnU4SXHcHp6cdUuO6YPYAdYFkiFVYXkMZzAvNy939+vcYPUYb2UsuNBK/V//bqoitF29KgGqHdyE4SGoPU8iHxI+aFlTjbEvK8LG5CLIjWtkEDcEg55O3sKpxaQHG3iWKngP7COHTyQljg+gwXEwxBY05aqfcAGvqvIl089oO0PHllLc/VG1xu8VVenW2LwoEImjQ0BYT6ETHRIStVqdQLF09ZkLWAys3GPFpkNC8wqfhCjRNAw1XJyeuyTkzifPClEXU0NqmO8Iinl52LJtfM8T7DPkgN0rDU1sc7hedrXW12c10uYNWFqJXy8bfERILknJ7kJcgmA/mFrcnuo5YSoocVPSZg
-X-GND-State: clean
-X-GND-Score: 0
-Subject: [oss-security] CVE-2026-5088: Apache::API::Password versions through v0.5.2 for Perl
- can generate insecure random values for salts
+Subject: Re: [oss-security] Headsup: systemd v228 local root exploit
+ (CVE-2016-10156)
+To: oss-security@lists.openwall.com
 
-========================================================================
-CVE-2026-5088                                        CPAN Security Group
-========================================================================
+--=-9DTs0RTYTj25EIjnYe8o
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-         CVE ID:  CVE-2026-5088
-   Distribution:  Apache2-API
-       Versions:  through v0.5.2
+On Wed, 2017-01-25 at 01:20 +0500, Alexander E. Patrakov wrote:
+> 2017-01-24 13:55 GMT+05:00 Sebastian Krahmer <krahmer@suse.com>:
+> > Hi
+> >=20
+> > This is a heads up for a trivial systemd local root exploit, that
+> > was silently fixed in the upstream git as:
+> >=20
+> > commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
+> > Author: ....
+> > Date:=C2=A0=C2=A0=C2=A0Fri Jan 29 23:36:08 2016 +0200
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0basic: fix touch() creating files with 07777 mo=
+de
+>=20
+> That's important for users of Arch Linux and other rolling
+> distributions.
+>=20
+> If the system has booted the vulnerable version of systemd at least
+> once, then the files with dangerous permissions will be there. There
+> is no code in systemd that fixes permissions on already existing stamp
+> files. There is no postinstall script in Arch that does it, either.
+> So, you have to fix permissions to 0644 or remove the stamp files
+> manually, once, even though the commit appeared in Arch repositories
+> long time ago.
 
-       MetaCPAN:  https://metacpan.org/dist/Apache2-API
-       VCS Repo:  https://gitlab.com/jackdeguest/Apache2-API
+/run is a tmpfs=
 
+--=-9DTs0RTYTj25EIjnYe8o
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-Apache::API::Password versions through v0.5.2 for Perl can generate
-insecure random values for salts
+-----BEGIN PGP SIGNATURE-----
 
-Description
------------
-Apache::API::Password versions through v0.5.2 for Perl can generate
-insecure random values for salts.
+iQJKBAABCAA0FiEEZe7+AiEI4rcIy/z3+ecS5Zr18ioFAliHzJ0WHGRhbmllbG1p
+Y2F5QGdtYWlsLmNvbQAKCRD55xLlmvXyKpduD/0Y5BFLa4fBPOSWWXCT7BP6iaiQ
+IPPjBGekX8ilzxMn8U2Fsj1nAeGFkfpKmK+E6dAJtdPaCgNG7zpl624mAGcAJ/I/
+TL5wpBtLbv1QHjU2seHtFveoOKtTrqs3jxxsbOZRuJY8rZh/Psfft/PbF64NPGvj
+cPR9arzDVHtBY361EObQPtUtzsee3UG/4ySdNh3KoDIcP51xdRbRJKv5EouoieAP
+P6qnXfVkBJzHvqIzFTBXBZOTgAf1fsatiyqRnzy8gReG5dstxzijFcgYDUSKKD1u
+IQiEglsMWOVP3Ti1qcVZ9M9MNcsI7bYABR7I6blw/qTfbXM0tE7OYRkqKYkxiKv/
+V8TsnZqbnfDq40W7sLxDpTA4H7X5r1XPq4Tx3CgGQGBM0vrfQdd/LGtX6Hi12KfH
+mDvH5OHo7JgawMy2ZrPzGGwXPPrckq6tg8EbIrSIZZrQoQWSabaBRCXNu2wd+Vje
+pHBPtKiTA5+GbEEOH6wcqHl0gsr9pX7ThpipG3bzlrmpfEfYOh1y0jucwtK5PKkf
+8Wc1dP+4x+OCK8aODGiphSXZBpJL+iMb3ji8YiEMCfjr1PWy97P7+BAFkAwN6LGU
+D/tkUxyWy1/ec1oiaFNfJoh3euR1e/ZjNSz37V3TLV5j5Lhd7FL/9Zw2BoixcJ4a
+At2aN0hCHTECfXfFwQ==
+=O3Jq
+-----END PGP SIGNATURE-----
 
-The _make_salt and _make_salt_bcrypt methods will attept to load
-Crypt::URandom and then Bytes::Random::Secure to generate random bytes
-for the salt.  If those modules are unavailable, it will simply return
-16 bytes generated with Perl's built-in rand function.
-
-The rand function is unsuitable for cryptographic use.
-
-These salts are used for password hashing.
-
-Problem types
--------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Workarounds
------------
-Install Crypt::URandom.
-
-
-Solutions
----------
-Upgrade to version v0.5.3 or later, and install Crypt::URandom.
-
-
-References
-----------
-https://metacpan.org/release/JDEGUEST/Apache2-API-v0.5.3/changes
-https://metacpan.org/release/JDEGUEST/Apache2-API-v0.5.2/view/lib/Apache2/API/Password.pod
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-https://metacpan.org/pod/Crypt::URandom
+--=-9DTs0RTYTj25EIjnYe8o--
 
