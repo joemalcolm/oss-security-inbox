@@ -1,4 +1,9 @@
-Received: (qmail 30564 invoked by uid 550); 27 Feb 2024 17:17:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1362" "Wednesday" "25" "January" "2017" "03:48:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e79b63144d4c451291ba0a0c5776be8f@imshyb01.MITRE.ORG>" "34" "[oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow" nil nil nil "1" "2017012508:48:17" "[oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow" (number mark "U       cve-assign@m Jan 25   34/1362  " thread-indent "\"[oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow\"\n") "<20170122132251.GA11536@pepper.home.stoeckmann.org>" ("<20170122132251.GA11536@pepper.home.stoeckmann.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14047 invoked by uid 550); 25 Jan 2017 08:48:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27913 invoked from network); 27 Feb 2024 16:40:02 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Brahma Reddy Battula <brahma@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <0cc3cf0e-4b5c-287d-c157-f606d7f15cb2@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 27 Feb 2024 16:42:32 +0000
+Received: (qmail 14021 invoked from network); 25 Jan 2017 08:48:29 -0000
+From: <cve-assign@mitre.org>
+To: <tobias@stoeckmann.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170122132251.GA11536@pepper.home.stoeckmann.org>
+Message-ID: <e79b63144d4c451291ba0a0c5776be8f@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:48:17 -0500
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-50380: Apache Ambari: authenticated users could perform
- XXE to read arbitrary files on the server 
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: libXpm < 3.5.12 heap overflow
 
-Severity: important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
+> 
+> through maliciously crafted XPM files.
+> 
+> The affected code is prone to two 32 bit integer overflows while parsing
+> extensions: the amount of extensions and their concatenated length.
 
-- Apache Ambari 2.7.0 through 2.7.7
+Use CVE-2016-10164.
 
-Description:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-XML External Entity injection in apache ambari versions <=3D 2.7.7,=C2=A0Us=
-ers are recommended to upgrade to version 2.7.8, which fixes this issue.
-
-More Details:
-
-Oozie Workflow Scheduler had a vulnerability that allowed for root-level fi=
-le reading and privilege escalation from low-privilege users. The vulnerabi=
-lity was caused through lack of proper user input validation.
-
-This vulnerability is known as an XML External Entity (XXE) injection attac=
-k. Attackers can exploit XXE vulnerabilities to read arbitrary files on the=
- server, including sensitive system files. In theory, it might be possible =
-to use this to escalate privileges.
-
-References:
-
-https://ambari.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-50380
-
+iQIcBAEBCAAGBQJYiGPYAAoJEHb/MwWLVhi2nUQP/0LQAMNgcfikDFbTd0j6xWyF
+O1qAdm8ok5jnJaV4VR5ivn68LxV98eL3uBI6dKzxNrSf7wl/Xj8YdxtdYr5KgF6W
+38IfyWLLNwt2GHhqAkHFUE4CUoZQMoAmffdpexZuJ5FuD7q4IGX3raV8/nhFg4bG
+zuUPuJD+7FMXYzFBy/t6yk+1VwqQVhCY4RxzX5J/Np2XYGHi2yOhtfSCoZ5OWAKV
+1GFYbxAUqYZn1HvqrCbVFGi0PEejpORm4Z+R8plxnImgQAwEXImscxuc3L1nxGZB
+SOMNfRmSKQ2VGhsk0LEfJvwk8ZdwWv18iHNGyMCDw1rnIu1KzVVAMyF6/IwtkOk4
+VHIWP9SkUs1w20xznzSdGF1CQN5sSfRGkxwqwavCbK4h/2iFpsN/VEmbHbdkGmc6
+y/dhmGf6WPJezXbPafcLOY5o9BZayzSgSN5+lpJvaGrW+CYKZUU2IsnNJ1P5txs1
+c9OvaGKHXfnC57aLPEybSrkTlJDQghqTLTVFGUR7wIrOhVPrpM1MtXVHXbonPUtp
+J7qc6h3TpEbCWa/KhmvvDbrlzhO4cnOptIx57z2b6UxLRjVhNP26X+YRtH/NxzPh
+TRBmJ7MwdU32Ngpr1LiPhBsyZ5ECO4M/G2JUmStOVpuaXHmKQTYU6do4MD/UlgVz
+GKnveQt+Y4sDCrQa6sDX
+=T2kK
+-----END PGP SIGNATURE-----
