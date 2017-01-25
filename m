@@ -1,4 +1,9 @@
-Received: (qmail 13466 invoked by uid 550); 17 Mar 2023 09:57:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1700" "Wednesday" "25" "January" "2017" "03:44:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6b21533852d44795ba8d3bc376692029@imshyb01.MITRE.ORG>" "41" "[oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction" nil nil nil "1" "2017012508:44:30" "[oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction" (number mark "U       cve-assign@m Jan 25   41/1700  " thread-indent "\"[oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction\"\n") "<alpine.LFD.2.20.1701241547390.10545@wniryva>" ("<alpine.LFD.2.20.1701241547390.10545@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20162 invoked by uid 550); 25 Jan 2017 08:44:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13445 invoked from network); 17 Mar 2023 09:57:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description:In-Reply-To:References;
-	bh=R7p4TToqMPJw339bjPt2Kt04L3GxoiND9Zm7tJMgipw=; b=JNKbvxEj84HRtHQNWYdjGZ+3Cy
-	9rInoHlaGI7T83HUiyFGoKmP7MwAMU/JlvqN+NSuP5BQlUaKxa8SCi47kRTMBldYWQo4dRZQ1Y+Kv
-	5oMQhp+hMC75x7uE9Y2XWCW3sA1ujxf5OaKO56gNauTqsNji9xjJuGBzMipxeF0j+3FY4+uqBf0R/
-	+CQK5FRcr7BZ/6oE+QKB68ZIgTbtCVpA1HCChDgGgCGSV6F1cgI9rlJg76u8DWeLwHMgjYBTOZqrR
-	25GhTJoqE3tLvx+G1VKHkfng8c52dthHaGf/gYr89WSijiQCcuyhZq/40oGTtqEsm4igfj2EIClk8
-	UWWfvdBw==;
-Date: Fri, 17 Mar 2023 09:56:55 +0000
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZBQ5Z9wfWqONphtz@momentum.pseudorandom.co.uk>
+Received: (qmail 20097 invoked from network); 25 Jan 2017 08:44:42 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1701241547390.10545@wniryva>
+Message-ID: <6b21533852d44795ba8d3bc376692029@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:44:30 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Debian-User: smcv
-Subject: [oss-security] flatpak: CVE-2023-28100: TIOCLINUX can send commands outside sandbox
- if running on a virtual console
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Virglrenderer: OOB access while parsing texture instruction
 
-https://github.com/flatpak/flatpak/security/advisories/GHSA-7qpw-3vjv-xrqp
-Vulnerable: all < 1.10.8, 1.12.x < 1.12.8, 1.14.x < 1.14.4, 1.15.x < 1.15.4
-Fixed: 1.15.4, 1.14.x >= 1.14.4, 1.12.x >= 1.12.8, 1.10.x >= 1.10.8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Flatpak is a system for building, distributing, and running sandboxed
-desktop applications on Linux.
+> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
+> for the virtio GPU, is vulnerable to an OOB array access issue. It could occur
+> when parsing texture instructions in parse_instruction().
+> 
+> A guest user/process could use this flaw to crash the Qemu process instance
+> resulting DoS.
+> 
+> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
 
-Jakub Wilk mentioned on the oss-security mailing list that various
-projects' mitigations for the problematic design of the TIOCSTI ioctl
-are not sufficient in all cases, because Linux virtual terminals
-implement copy/paste via the TIOCLINUX ioctl, which can have a similar
-effect. Flatpak is one of the projects affected by this.
+Use CVE-2017-5580.
 
-If a malicious Flatpak app is run on a Linux virtual console such as
-/dev/tty1, it can copy text from the virtual console and paste it back
-into the virtual console's input buffer, from which the command might
-be run by the user's shell after the Flatpak app has exited. This is
-similar to CVE-2017-5226, but using the TIOCLINUX ioctl command instead
-of TIOCSTI.
+This is not yet available at
+https://cgit.freedesktop.org/virglrenderer/log/src/gallium/auxiliary/tgsi/tgsi_text.c
+but that may be an expected place for a later update.
 
-This has been fixed in Flatpak upstream releases 1.14.4, 1.15.4, 1.12.8
-and 1.10.8 by preventing the TIOCLINUX ioctl via a seccomp filter,
-in the same way that was already done for the TIOCSTI ioctl.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Mitigation: ordinary graphical terminal emulators like xterm,
-gnome-terminal and Konsole are unaffected. This vulnerability is specific
-to the Linux virtual consoles /dev/tty1, /dev/tty2 and so on, which are
-not commonly used to run Flatpak apps: Flatpak is primarily designed
-to be used in a Wayland or X11 graphical environment, either with no
-controlling terminal (the most common case) or from a graphical terminal
-emulator (while debugging or developing).
-
-Workaround: avoid running untrusted Flatpak apps (`flatpak run ...`)
-from the text-mode virtual consoles.
+iQIcBAEBCAAGBQJYiGPKAAoJEHb/MwWLVhi2438P/AtuBKdNEJ5lVOpdCtO3qU8B
+OywpoakBGGu0+b3pbeQ7zshonl5YeVnguaxmV7TNMej3cEgiXOtsdIW1pcwRjnxE
+H7vTGK3Lw1OPvJQZpcdYUf1NAJQRcNiYJ/x26dRK5D2vhBut5WaAylN4EXpuX9sw
+jU3wKXa9KvPfw8Iald1VB/sZWMc8HclhUTVxNVacA2PbdSnHYH27RT+jWLR9K+vV
+jE8m+vZrGvuUlEoPVhxwQ2x096+hadiQXlWEK/q50iLGIw/GMMLO17Jd7+Sbi8zH
+PNjFt5TR/bb9obHrABGg9DUHUv+/65UevkyKeuj5NI9ZoZneKvbR+NCLXm3wOdMb
+3BrlFe26wQRmA379YnWdlPeH65p7pMYeUDpddocGoV0O2Ile4y1E0RL9kz3NCLgn
+F2IVNTqZIyHwDxIgRprqd/WMWfu+azn62mnYoheCOrFealenyZBq8Z8A7Al6hF7P
+VXcanbg11IhZD/AACZUrDrids7xz5TujmA+Yt09I5GReHYmEmWZlJeHFcXaZP+iM
+dMW1i98cStTbMMv42a1QG0hQaGuYAWEN2J/JnMZP4YYsfx+Wq/vReHhyhmeoBsTV
+4dz/XLAXTdXD1v8//Gff0wXnTRm3dDUiLuQCegVSdruZmdUy7pdm5mn2v9CqTszL
+WPlCZPkCAUA7uSEe6srn
+=+9vv
+-----END PGP SIGNATURE-----
