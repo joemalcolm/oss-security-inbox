@@ -1,47 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/4
-Message-ID: <c71c229030bc42aa80a7bf11d56f215e@imshyb02.MITRE.ORG>
-Date: Wed, 8 Feb 2017 23:58:06 -0500
-From: <cve-assign@...re.org>
-To: <ppandit@...hat.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
-Subject: Re: CVE request virglrenderer: null pointer dereference in vrend_clear
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/12
+Message-ID: <20170125093956.GB30424@lorien.valinor.li>
+Date: Wed, 25 Jan 2017 10:39:56 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: jasper: invalid memory read in jas_matrix_bindsub (jas_seq.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
-> for the virtio GPU, is vulnerable to a null pointer dereference issue. It
-> could occur when a guest invokes a virgl 'VIRGL_CCMD_CLEAR' command.
+On Wed, Jan 25, 2017 at 10:12:23AM +0100, Agostino Sarubbo wrote:
+> Description:
+> jasper is an open-source initiative to provide a free software-based reference 
+> implementation of the codec specified in the JPEG-2000 Part-1 standard.
 > 
-> A guest user/process could use this flaw to crash Qemu process resulting in
-> DoS.
+> Another round of fuzzing shows that a crafted image causes an invalid memory 
+> read.
 > 
-> https://cgit.freedesktop.org/virglrenderer/commit/?id=48f67f60967f963b698ec8df57ec6912a43d6282
-> https://bugzilla.redhat.com/show_bug.cgi?id=1420246
+> The complete ASan output:
+> 
+> # imginfo -f $FILE
+> warning: ignoring unknown marker segment (0xff59)
+> type = 0xff59 (UNKNOWN); len = 20;00 40 40 00 00 00 00 69 00 00 00 00 00 00 00 
+> 00 00 00 warning: ignoring unknown marker segment (0xff46)
+> type = 0xff46 (UNKNOWN); len = 20;01 40 40 00 00 00 00 00 00 00 00 00 00 00 12 
+> 00 94 7f ASAN:DEADLYSIGNAL
+> =================================================================
+> ==22653==ERROR: AddressSanitizer: SEGV on unknown address 0x60180000ec30 (pc 
+> 0x7f410df421b7 bp 0x7ffdc80abaf0 sp 0x7ffdc80aba60 T0)
+> ==22653==The signal is caused by a READ memory access.
+>     #0 0x7f410df421b6 in jas_matrix_bindsub /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_seq.c:254:18
+>     #1 0x7f410df951a1 in jpc_dec_tileinit /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:835:5
+>     #2 0x7f410df951a1 in jpc_dec_process_sod /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:594
+>     #3 0x7f410dfa1853 in jpc_dec_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
+>     #4 0x7f410dfa1853 in jpc_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
+>     #5 0x7f410df71231 in jp2_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
+>     #6 0x7f410df33214 in jas_image_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
+>     #7 0x50a3be in main /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
+>     #8 0x7f410d01378f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+> r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+>     #9 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
+> 
+> AddressSanitizer can not provide additional info.
+> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_seq.c:254:18 in 
+> jas_matrix_bindsub
+> ==22653==ABORTING
+> 
+> Affected version:
+> 2.0.10
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> N/A
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> N/A
+> 
+> Reproducer:
+> https://github.com/asarubbo/poc/blob/master/00125-jasper-invalidread-jas_matrix_bindsub
+> 
+> Timeline:
+> 2017-01-21: bug discovered and reported upstream
+> 2017-01-25: blog post about the issue
+> 
+> Note:
+> This bug was found with American Fuzzy Lop.
+> 
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/01/25/jasper-invalid-memory-read-in-jas_matrix_bindsub-jas_seq-c
 
-Use CVE-2017-5937.
+This one should be https://github.com/mdadams/jasper/issues/113
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYm/MpAAoJEHb/MwWLVhi2olMP/03Sgb3VBpQscAXgMLt+92R2
-KUi+w+uiGtDsbV4s/P+QQmPyLdACf1hkuKeTxN8/LUGkKDuzQAjnYrsjnXl1blL9
-F5Xgm0vAtTKJhBvaO56rcO8ZjqT/JxVktJ4aBI1MXtcmvY0ARbvA+7EZcMKZfkJQ
-7+THPkMRCWDj+E6SCwGeYM2I4DHlfytQWA+qw3HOMFU8oRoKOCZXkusA+jiuwZ6J
-vXcGTbGEwmiFu9+TLx0okr2L+PpA2m2OwlzbfR8wzfRK9em5GQmKMhCf7hSDcm94
-PlaYVm5XYwLTisZg+D5RUUW7CVHbg/BPyLagPdDZ/ZIe2YshJoC2Y2LAvU7XLgG4
-MhjleujVv8qbKhcG1B6v5nhkOlUrbEPlshsh5Vp8bJAIfG9JBz3R9DvG5kMhGhZm
-FFQY6rWDnCAJ5EAd0GjUqN31smIZvVVSgXhikNtQFFT9MBfDxdtzPzbiIQXM/5kJ
-C2vjAlUhA/9qrrdQhICH0Lt5WzXU9NuNI+/0dAZRcGN8APF4jHfPCki2Dao+i9M/
-n5dyZnocqak9JPS++ACBAxm3h4cvFaKzQMO+somiSpJttqd9li/6HfvZPXHGmUse
-p56y/ooUsUaM6kub22o+kGkVM8qGc/ZEHIcVDNhk87BFxxgFxQ6snJPMgHxHe62G
-5WnbJ/gEBRGS5w9LAKQR
-=aRRv
------END PGP SIGNATURE-----
+Regards,
+Salvatore
