@@ -1,4 +1,9 @@
-Received: (qmail 11275 invoked by uid 550); 3 Apr 2026 03:24:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6218" "Wednesday" "25" "January" "2017" "10:41:17" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170125094117.GC30424@lorien.valinor.li>" "137" "Re: [oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)" nil nil nil "1" "2017012509:41:17" "[oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)" (number mark "U       carnil@debia Jan 25  137/6218  " thread-indent "\"Re: [oss-security] jasper: heap-based buffer overflow in jpc_dec_decodepkt (jpc_t2dec.c)\"\n") "<2979113.NTRsFXjtRy@blackgate>" ("<2979113.NTRsFXjtRy@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3680 invoked by uid 550); 25 Jan 2017 09:41:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,454 +12,180 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 10157 invoked from network); 3 Apr 2026 03:24:47 -0000
-Date: Thu, 2 Apr 2026 23:24:37 -0400
-From: Rich Felker <dalias@libc.org>
+Received: (qmail 3608 invoked from network); 25 Jan 2017 09:41:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=j5RgOHGZGfXp7pG/lPk3tPDJM+OsuNGRc3oj3dX96XU=;
+        b=q1dcu31nr3CqWmxTkXnGWr3tV1U9ePO5UWAJCEUICYn/JL0RyQsOn1FlYU4P+Ev6pY
+         /Cmpq80YEo5og3FhKyOMd/FwS6dXWVb9kNJ9WJZiVtrw6XAjqGlts0h4iKZpygJwGNIU
+         ynk1+UPBU7N16ktH4B0ZLyUj2J0yQ7JqgR6M55P6RKPgMUcQeygADRdHNOTG+fFGB7T9
+         fNpNNM0M4PmDZcTTXHpM2EkA49c4wieZ/gyPyPlh2df43i6t4Kr2YxvVPC44/xjoSi1s
+         gOUKGXTxziaTySeDE0/qj/MnytHJUVFhYTXc1YAPqFuqlf4Vl9Ud4WcHhVxTFmt05i/6
+         eHAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=j5RgOHGZGfXp7pG/lPk3tPDJM+OsuNGRc3oj3dX96XU=;
+        b=kRYHqIpzfiYA/9kr30C6hHQ97uB4RVV0MKfRtDDwDoeeqWEiaLrDFxQxECxYZOo5hh
+         sz/rTaiXJiFkU0PT/78CfPLVtqASMKaI+w3AtP3iljvQ2+sOIgJJBdgFrmux/7YsvdIJ
+         qc2Ki6kSg5zRtP/i1syld2CqMNaNlYoAhHmSNSOtwjqBUe/slMAzcgwYFgNTHpxc3CSw
+         7fF3cXJ6HlWlxYRhIAlD96e4mBjyQZgSTjcMD5c+2KmsdJq/gKhvzSrQz5YeawPWba5u
+         FsGGcJKBOTQccA/2JVXz9H/X1ORpFB18UEwnZmRs5E2gp9CJ2+nbeMgpAokwyDtb4TPU
+         skwA==
+X-Gm-Message-State: AIkVDXIBbxjpSXJkNbzgMYHEU4CGJfJdCDftbVrF13U05SYSf1J/h6eQ9AANVZEJ2MEiQA==
+X-Received: by 10.37.104.193 with SMTP id d184mr29340783ybc.148.1485337279984;
+        Wed, 25 Jan 2017 01:41:19 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 25 Jan 2017 10:41:17 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20260403032437.GB23840@brightrain.aerifal.cx>
-References: <D88F611E-18F2-4250-9726-5BC891A1073E@nesten.eu>
- <20260403004556.GA23840@brightrain.aerifal.cx>
+Message-ID: <20170125094117.GC30424@lorien.valinor.li>
+References: <2979113.NTRsFXjtRy@blackgate>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="LZvS9be/3tNcYl/X"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260403004556.GA23840@brightrain.aerifal.cx>
-User-Agent: Mutt/1.9.5 (2018-04-13)
-Subject: Re: [oss-security] [libc musl] - Algorithmic complexity DoS in iconv
- GB18030 decoder
-
---LZvS9be/3tNcYl/X
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-
-On Thu, Apr 02, 2026 at 08:45:57PM -0400, Rich Felker wrote:
-> On Thu, Apr 02, 2026 at 10:27:38PM +0200, Jens Jarl Nestén Hansen-Nord wrote:
-> > ==========================================
-> > libc musl Security Advisory: April 2, 2026
-> > ==========================================
-> > Description:
-> > The GB18030 4-byte decoder in musl libc's iconv() implementation
-> > contains a gap-skipping loop that performs a full linear scan of the
-> > gb18030126 lookup table (23,940 entries) on each iteration of an
-> > outer loop whose iteration count is input-dependent. For 4-byte
-> > sequences whose linear index falls just below the dense CJK Unified
-> > Ideographs range, the outer loop executes approximately 20,905
-> > times, resulting in approximately 500 million comparisons per input
-> > character.
-> > Classification:
-> > Inefficient Algorithmic Complexity (CWE-407)
-> > Impact:
-> > This allows a remote attacker to cause denial of service via CPU
-> > exhaustion by sending a crafted GB18030 payload to any network
-> > service that uses musl's iconv() for character encoding conversion.
-> > Measured on musl 1.2.6 and 1.2.5: a single 4-byte input character
-> > (bytes 0x82 0x35 0x8F 0x33) takes approximately 260ms to decode,
-> > compared to approximately 13 microseconds for a benign character — a
-> > 19,000x slowdown. A payload of 40kB will take ~43 minutes to decode.
-> > 
-> > Versions affected: 
-> > musl 0.8.0 to 1.2.6
-> > 
-> > Status:
-> > The issue has been confirmed and fixed by maintainer, Rich Felker. 
-> > A CVE has been requested and is pending assignment.
-> > 
-> > Reported by:
-> > Jens Jarl Nestén Hansen-Nord
-> > 
-> > Upstream fix:
-> > Iconv-gb18030-fix.diff
-> > 
-> > diff --git a/src/locale/iconv.c b/src/locale/iconv.c
-> > index 52178950..e559aa4c 100644
-> > --- a/src/locale/iconv.c
-> > +++ b/src/locale/iconv.c
-> > @@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] = {
-> >  #include "gb18030.h"
-> >  };
-> >  
-> > +static const unsigned short gb18030utf[][2] = {
-> > +#include "gb18030utf.h"
-> > +};
-> > +
-> >  static const unsigned short big5[89][157] = {
-> >  #include "big5.h"
-> >  };
-> > @@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
-> >     }
-> >  }
-> >  
-> > +#define countof(a) (sizeof (a) / sizeof *(a))
-> > +
-> >  size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restrict out, size_t *restrict outb)
-> >  {
-> >     size_t x=0;
-> > @@ -430,16 +436,14 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restri
-> >                 d = *((unsigned char *)*in + 3);
-> >                 if (d-'0'>9) goto ilseq;
-> >                 c += d-'0';
-> > -               c += 128;
-> > -               for (d=0; d<=c; ) {
-> > -                   k = 0;
-> > -                   for (int i=0; i<126; i++)
-> > -                       for (int j=0; j<190; j++)
-> > -                           if (gb18030[i][j]-d <= c-d)
-> > -                               k++;
-> > -                   d = c+1;
-> > -                   c += k;
-> > +               for (int i=0; i<countof(gb18030utf); i++) {
-> > +                   if (c<gb18030utf[i][1]) {
-> > +                       c += gb18030utf[i][0];
-> > +                       break;
-> > +                   }
-> > +                   c -= gb18030utf[i][1];
-> >                 }
-> > +               c += 0x10000;
-> >                 break;
-> >             }
-> >             d -= 0x40;
-> > 
-> > 
-> > 
-> > 
-> 
-> The above patch was a proposal for testing. It should mitigate the
-> extreme slowness for characters encoded in GB18030's UTF, but it does
-> not work correctly and has not been confirmed not to have other
-> problems. I will follow up with a correct patch.
-
-The attached patch has now been tested to work. Compared to the
-previous version above, it corrects one value in the table, an
-erroneous += 0x10000 above, and missing logic for characters U+10000
-and up.
-
-Rich
-
---LZvS9be/3tNcYl/X
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="0001-fix-pathological-slowness-incorrect-mappings-in-icon.patch"
+Content-Disposition: inline
+In-Reply-To: <2979113.NTRsFXjtRy@blackgate>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] jasper: heap-based buffer overflow in
+ jpc_dec_decodepkt (jpc_t2dec.c)
 
-From 67219f0130ec7c876ac0b299046460fad31caabf Mon Sep 17 00:00:00 2001
-From: Rich Felker <dalias@aerifal.cx>
-Date: Mon, 30 Mar 2026 16:00:50 -0400
-Subject: [PATCH] fix pathological slowness & incorrect mappings in iconv
- gb18030 decoder
+On Wed, Jan 25, 2017 at 10:16:01AM +0100, Agostino Sarubbo wrote:
+> Description:
+> jasper is an open-source initiative to provide a free software-based reference 
+> implementation of the codec specified in the JPEG-2000 Part-1 standard.
+> 
+> Another round of fuzzing shows that a crafted image causes a read overflow.
+> 
+> The complete ASan output:
+> 
+> # imginfo -f $FILE
+> warning: ignoring unknown marker segment (0xff70)
+> type = 0xff70 (UNKNOWN); len = 35;00 01 43 72 65 61 74 6f 74 3a 30 4a 61 73 50 
+> 65 72 00 01 00 00 73 69 6f 6e 20 31 2e 39 30 30 2e 39 warning: trailing 
+> garbage in marker segment (3 bytes)
+> warning: trailing garbage in marker segment (8 bytes)
+> warning: trailing garbage in marker segment (6 bytes)
+> =================================================================
+> ==30315==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+> 0x61a00001f808 at pc 0x7fb7b2667e54 bp 0x7ffd0a9ab890 sp 0x7ffd0a9ab888
+> READ of size 8 at 0x61a00001f808 thread T0
+>     #0 0x7fb7b2667e53 in jpc_dec_decodepkt /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:245:14
+>     #1 0x7fb7b2667e53 in jpc_dec_decodepkts /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:454
+>     #2 0x7fb7b25ccd37 in jpc_dec_process_sod /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:628:6
+>     #3 0x7fb7b25d6853 in jpc_dec_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
+>     #4 0x7fb7b25d6853 in jpc_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
+>     #5 0x7fb7b25a6231 in jp2_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
+>     #6 0x7fb7b2568214 in jas_image_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
+>     #7 0x50a3be in main /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
+>     #8 0x7fb7b164878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+> r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+>     #9 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
+> 
+> 0x61a00001f808 is located 48 bytes to the right of 1368-byte region 
+> [0x61a00001f280,0x61a00001f7d8)
+> allocated by thread T0 here:
+>     #0 0x4d2a98 in malloc /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/asan_malloc_linux.cc:64
+>     #1 0x7fb7b2575160 in jas_malloc /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_malloc.c:242:11
+>     #2 0x7fb7b2575160 in jas_alloc2 /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_malloc.c:275
+>     #3 0x7fb7b25ca2bf in jpc_dec_tileinit /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:841:24
+>     #4 0x7fb7b25ca2bf in jpc_dec_process_sod /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:594
+>     #5 0x7fb7b25d6853 in jpc_dec_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:425:10
+>     #6 0x7fb7b25d6853 in jpc_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_dec.c:262
+>     #7 0x7fb7b25a6231 in jp2_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:218:21
+>     #8 0x7fb7b2568214 in jas_image_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
+>     #9 0x50a3be in main /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
+>     #10 0x7fb7b164878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+> r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+> 
+> SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jpc/jpc_t2dec.c:245:14 in 
+> jpc_dec_decodepkt
+> Shadow bytes around the buggy address:
+>   0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c347fffbee0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>   0x0c347fffbef0: 00 00 00 00 00 00 00 00 00 00 00 fa fa fa fa fa
+> =>0x0c347fffbf00: fa[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffbf40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+>   0x0c347fffbf50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+> Shadow byte legend (one shadow byte represents 8 application bytes):
+>   Addressable:           00
+>   Partially addressable: 01 02 03 04 05 06 07 
+>   Heap left redzone:       fa
+>   Heap right redzone:      fb
+>   Freed heap region:       fd
+>   Stack left redzone:      f1
+>   Stack mid redzone:       f2
+>   Stack right redzone:     f3
+>   Stack partial redzone:   f4
+>   Stack after return:      f5
+>   Stack use after scope:   f8
+>   Global redzone:          f9
+>   Global init order:       f6
+>   Poisoned by user:        f7
+>   Container overflow:      fc
+>   Array cookie:            ac
+>   Intra object redzone:    bb
+>   ASan internal:           fe
+>   Left alloca redzone:     ca
+>   Right alloca redzone:    cb
+> ==30315==ABORTING
+> 
+> Affected version:
+> 2.0.10
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> N/A
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> N/A
+> 
+> Reproducer:
+> https://github.com/asarubbo/poc/blob/master/00126-jasper-heapoverflow-jpc_dec_decodepkt
+> 
+> Timeline:
+> 2017-01-25: bug discovered and reported upstream
+> 2017-01-25: blog post about the issue
+> 
+> Note:
+> This bug was found with American Fuzzy Lop.
+> 
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/01/25/jasper-heap-based-buffer-overflow-in-jpc_dec_decodepkt-jpc_t2dec-c
 
-in order to implement the "UTF" aspect of gb18030 (ability to
-represent arbitrary unicode characters not present in the 2-byte
-mapping), we have to apply the index obtained from the encoded 4-byte
-sequence into the set of unmapped characters. this was done by
-scanning repeatedly over the table of mapped characters and counting
-off mapped characters below a running index by which to adjust the
-running index by on each iteration. this iterative process eventually
-leaves us with the value of the Nth unmapped character replacing the
-index, but depending on which particular character that is, the number
-of iterations needed to find it can be in the tens of thousands, and
-each iteration traverses the whole 126x190 table in the inner loop.
-this can lead to run times exceeding an entire second per character on
-moderate-speed machines.
+This one should be https://github.com/mdadams/jasper/issues/114
 
-on top of that, the transformation logic produced wrong results for
-BMP characters above the the surrogate range, as a result of not
-correctly accounting for it being excluded, and for characters outside
-the BMP, as a result of a misunderstanding of how gb18030 encodes
-them.
-
-this patch replaces the unmapped character lookup with a single linear
-search of a list of unmapped ranges. there are only 206 such ranges,
-and these are permanently assigned and unchangeable as a consequence
-of the character encoding having to be stable, so a simple array of
-16-bit start/length values for each range consumes only 824 bytes, a
-very reasonable size cost here.
-
-this new table accounts for the previously-incorrect surrogate
-handling, and non-BMP characters are handled correctly by a single
-offset, without the need for any unmapped-range search.
-
-there are still a small number of mappings that are incorrect due to
-late changes made in the definition of gb18030, swapping PUA
-codepoints with proper Unicode characters. correcting these requires a
-postprocessing step that will be added later.
----
- src/locale/gb18030utf.h | 206 ++++++++++++++++++++++++++++++++++++++++
- src/locale/iconv.c      |  33 +++++--
- 2 files changed, 230 insertions(+), 9 deletions(-)
- create mode 100644 src/locale/gb18030utf.h
-
-diff --git a/src/locale/gb18030utf.h b/src/locale/gb18030utf.h
-new file mode 100644
-index 00000000..322a2440
---- /dev/null
-+++ b/src/locale/gb18030utf.h
-@@ -0,0 +1,206 @@
-+{ 0x80, 36 },
-+{ 0xa5, 2 },
-+{ 0xa9, 7 },
-+{ 0xb2, 5 },
-+{ 0xb8, 31 },
-+{ 0xd8, 8 },
-+{ 0xe2, 6 },
-+{ 0xeb, 1 },
-+{ 0xee, 4 },
-+{ 0xf4, 3 },
-+{ 0xf8, 1 },
-+{ 0xfb, 1 },
-+{ 0xfd, 4 },
-+{ 0x102, 17 },
-+{ 0x114, 7 },
-+{ 0x11c, 15 },
-+{ 0x12c, 24 },
-+{ 0x145, 3 },
-+{ 0x149, 4 },
-+{ 0x14e, 29 },
-+{ 0x16c, 98 },
-+{ 0x1cf, 1 },
-+{ 0x1d1, 1 },
-+{ 0x1d3, 1 },
-+{ 0x1d5, 1 },
-+{ 0x1d7, 1 },
-+{ 0x1d9, 1 },
-+{ 0x1db, 1 },
-+{ 0x1dd, 28 },
-+{ 0x1fa, 87 },
-+{ 0x252, 15 },
-+{ 0x262, 101 },
-+{ 0x2c8, 1 },
-+{ 0x2cc, 13 },
-+{ 0x2da, 183 },
-+{ 0x3a2, 1 },
-+{ 0x3aa, 7 },
-+{ 0x3c2, 1 },
-+{ 0x3ca, 55 },
-+{ 0x402, 14 },
-+{ 0x450, 1 },
-+{ 0x452, 7102 },
-+{ 0x2011, 2 },
-+{ 0x2017, 1 },
-+{ 0x201a, 2 },
-+{ 0x201e, 7 },
-+{ 0x2027, 9 },
-+{ 0x2031, 1 },
-+{ 0x2034, 1 },
-+{ 0x2036, 5 },
-+{ 0x203c, 112 },
-+{ 0x20ad, 86 },
-+{ 0x2104, 1 },
-+{ 0x2106, 3 },
-+{ 0x210a, 12 },
-+{ 0x2117, 10 },
-+{ 0x2122, 62 },
-+{ 0x216c, 4 },
-+{ 0x217a, 22 },
-+{ 0x2194, 2 },
-+{ 0x219a, 110 },
-+{ 0x2209, 6 },
-+{ 0x2210, 1 },
-+{ 0x2212, 3 },
-+{ 0x2216, 4 },
-+{ 0x221b, 2 },
-+{ 0x2221, 2 },
-+{ 0x2224, 1 },
-+{ 0x2226, 1 },
-+{ 0x222c, 2 },
-+{ 0x222f, 5 },
-+{ 0x2238, 5 },
-+{ 0x223e, 10 },
-+{ 0x2249, 3 },
-+{ 0x224d, 5 },
-+{ 0x2253, 13 },
-+{ 0x2262, 2 },
-+{ 0x2268, 6 },
-+{ 0x2270, 37 },
-+{ 0x2296, 3 },
-+{ 0x229a, 11 },
-+{ 0x22a6, 25 },
-+{ 0x22c0, 82 },
-+{ 0x2313, 333 },
-+{ 0x246a, 10 },
-+{ 0x249c, 100 },
-+{ 0x254c, 4 },
-+{ 0x2574, 13 },
-+{ 0x2590, 3 },
-+{ 0x2596, 10 },
-+{ 0x25a2, 16 },
-+{ 0x25b4, 8 },
-+{ 0x25be, 8 },
-+{ 0x25c8, 3 },
-+{ 0x25cc, 2 },
-+{ 0x25d0, 18 },
-+{ 0x25e6, 31 },
-+{ 0x2607, 2 },
-+{ 0x260a, 54 },
-+{ 0x2641, 1 },
-+{ 0x2643, 2110 },
-+{ 0x2e82, 2 },
-+{ 0x2e85, 3 },
-+{ 0x2e89, 2 },
-+{ 0x2e8d, 10 },
-+{ 0x2e98, 15 },
-+{ 0x2ea8, 2 },
-+{ 0x2eab, 3 },
-+{ 0x2eaf, 4 },
-+{ 0x2eb4, 2 },
-+{ 0x2eb8, 3 },
-+{ 0x2ebc, 14 },
-+{ 0x2ecb, 293 },
-+{ 0x2ffc, 4 },
-+{ 0x3004, 1 },
-+{ 0x3018, 5 },
-+{ 0x301f, 2 },
-+{ 0x302a, 20 },
-+{ 0x303f, 2 },
-+{ 0x3094, 7 },
-+{ 0x309f, 2 },
-+{ 0x30f7, 5 },
-+{ 0x30ff, 6 },
-+{ 0x312a, 246 },
-+{ 0x322a, 7 },
-+{ 0x3232, 113 },
-+{ 0x32a4, 234 },
-+{ 0x3390, 12 },
-+{ 0x339f, 2 },
-+{ 0x33a2, 34 },
-+{ 0x33c5, 9 },
-+{ 0x33cf, 2 },
-+{ 0x33d3, 2 },
-+{ 0x33d6, 113 },
-+{ 0x3448, 43 },
-+{ 0x3474, 298 },
-+{ 0x359f, 111 },
-+{ 0x360f, 11 },
-+{ 0x361b, 765 },
-+{ 0x3919, 85 },
-+{ 0x396f, 96 },
-+{ 0x39d1, 14 },
-+{ 0x39e0, 147 },
-+{ 0x3a74, 218 },
-+{ 0x3b4f, 287 },
-+{ 0x3c6f, 113 },
-+{ 0x3ce1, 885 },
-+{ 0x4057, 264 },
-+{ 0x4160, 471 },
-+{ 0x4338, 116 },
-+{ 0x43ad, 4 },
-+{ 0x43b2, 43 },
-+{ 0x43de, 248 },
-+{ 0x44d7, 373 },
-+{ 0x464d, 20 },
-+{ 0x4662, 193 },
-+{ 0x4724, 5 },
-+{ 0x472a, 82 },
-+{ 0x477d, 16 },
-+{ 0x478e, 441 },
-+{ 0x4948, 50 },
-+{ 0x497b, 2 },
-+{ 0x497e, 4 },
-+{ 0x4984, 1 },
-+{ 0x4987, 20 },
-+{ 0x499c, 3 },
-+{ 0x49a0, 22 },
-+{ 0x49b8, 703 },
-+{ 0x4c78, 39 },
-+{ 0x4ca4, 111 },
-+{ 0x4d1a, 148 },
-+{ 0x4daf, 81 },
-+{ 0x9fa6, 14426 },
-+{ 0xe76c, 1 },
-+{ 0xe7c8, 1 },
-+{ 0xe7e7, 13 },
-+{ 0xe815, 1 },
-+{ 0xe819, 5 },
-+{ 0xe81f, 7 },
-+{ 0xe827, 4 },
-+{ 0xe82d, 4 },
-+{ 0xe833, 8 },
-+{ 0xe83c, 7 },
-+{ 0xe844, 16 },
-+{ 0xe856, 14 },
-+{ 0xe865, 4295 },
-+{ 0xf92d, 76 },
-+{ 0xf97a, 27 },
-+{ 0xf996, 81 },
-+{ 0xf9e8, 9 },
-+{ 0xf9f2, 26 },
-+{ 0xfa10, 1 },
-+{ 0xfa12, 1 },
-+{ 0xfa15, 3 },
-+{ 0xfa19, 6 },
-+{ 0xfa22, 1 },
-+{ 0xfa25, 2 },
-+{ 0xfa2a, 1030 },
-+{ 0xfe32, 1 },
-+{ 0xfe45, 4 },
-+{ 0xfe53, 1 },
-+{ 0xfe58, 1 },
-+{ 0xfe67, 1 },
-+{ 0xfe6c, 149 },
-+{ 0xff5f, 129 },
-+{ 0xffe6, 26 },
-diff --git a/src/locale/iconv.c b/src/locale/iconv.c
-index 52178950..4151411d 100644
---- a/src/locale/iconv.c
-+++ b/src/locale/iconv.c
-@@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] = {
- #include "gb18030.h"
- };
- 
-+static const unsigned short gb18030utf[][2] = {
-+#include "gb18030utf.h"
-+};
-+
- static const unsigned short big5[89][157] = {
- #include "big5.h"
- };
-@@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
- 	}
- }
- 
-+#define countof(a) (sizeof (a) / sizeof *(a))
-+
- size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restrict out, size_t *restrict outb)
- {
- 	size_t x=0;
-@@ -430,15 +436,24 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restri
- 				d = *((unsigned char *)*in + 3);
- 				if (d-'0'>9) goto ilseq;
- 				c += d-'0';
--				c += 128;
--				for (d=0; d<=c; ) {
--					k = 0;
--					for (int i=0; i<126; i++)
--						for (int j=0; j<190; j++)
--							if (gb18030[i][j]-d <= c-d)
--								k++;
--					d = c+1;
--					c += k;
-+				/* Starting at 90 30 81 30 (189000), mapping is
-+				 * linear without gaps, to U+10000 and up. */
-+				if (c >= 189000) {
-+					c -= 189000;
-+					c += 0x10000;
-+					if (c >= 0x110000) goto ilseq;
-+					break;
-+				}
-+				/* Otherwise we must process an index into set
-+				 * of characters unmapped by 2-byte table. */
-+				for (int i=0; ; i++) {
-+					if (i==countof(gb18030utf))
-+						goto ilseq;
-+					if (c<gb18030utf[i][1]) {
-+						c += gb18030utf[i][0];
-+						break;
-+					}
-+					c -= gb18030utf[i][1];
- 				}
- 				break;
- 			}
--- 
-2.21.0
-
-
---LZvS9be/3tNcYl/X--
+Regards,
+Salvatore
