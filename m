@@ -1,39 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/23
-Message-ID: <20170209142600.GJ12842@openstack.org>
-Date: Thu, 9 Feb 2017 14:26:01 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/17
+Message-ID: <20170125211427.GA1002@notk.org>
+Date: Wed, 25 Jan 2017 22:14:27 +0100
+From: Adrien Nader <adrien@...k.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: Re: Windows ports of Linux software bundling outdated libraries (Gajim / PyCurl)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-02-09 09:10:23 +0000 (+0000), Simon McVittie wrote:
-[...]
-> The CVE form requires specifying a vendor on the "products and
-> sources list". I'm sure this works fine for proprietary software,
-> where everyone obtains Microsoft Office from Microsoft. For open
-> source it seems impractical: for instance, I'm a maintainer of both
-> D-Bus and ikiwiki, neither of which has any particular allegiance
-> to any larger legal entity than the individual maintainers.
-[...]
+Hi,
 
-Agreed, having tried to figure out the form it seems geared toward
-requesting CVE IDs for vulnerabilities you've found in someone
-else's software, and not for maintainers of software to request CVE
-IDs for vulnerabilities which have been disclosed to them. The
-little detail callout icons for the vendor and product fields link
-to the CNA coverage list[0] which in turn instructs, "For open
-source software products not listed below, request a CVE ID through
-the Distributed Weakness Filing Project[1] CNA." So I guess that's
-what our project will be using in the future, or maybe just stop
-bothering to obtain CVEs on our own and let the various downstream
-redistributors of our software who are themselves CNAs issue them as
-needed and then fight over whose is the correct one.
+This topic has already brought me in despair several times. I am
+actually surprised this is news so I'll try to give an overview.
+Unfortunately it will probably also sound like a psychotherapy for me.
 
-[0] http://cve.mitre.org/cve/request_id.html#cna_coverage
-[1] https://docs.google.com/forms/d/e/1FAIpQLSeiY7ldJAx-fjU6eSnXDaX5TB--L1ujCQpmGAKnqBSJOcBShw/viewform
+There are so many of these issues that merely filling bug reports for
+them is a full-time job. This is without taking into account the origin
+of these binaries which is usually unclear.
+
+You won't find many projects which do this correctly. At least Wireshark
+and VLC fare much much better than others but they're a drop in the
+ocean.
+
+I won't blame any of the free software developers. The mindset of
+Windows users isn't exactly centered around collaboration. It doesn't
+help and also takes a toll on the will of any maintainer who doesn't
+typically run Windows (i.e. who isn't already doing builds for himself
+anyway). Obviously the difficulty to build and ship for that OS is also
+a big hindrance.
+
+My experience comes from my win-builds.org project (among others); it
+tried to fix all of these. In the process I've had to deal with
+developers of Windows software and that was very painful since they have
+a very hit-and-run attitude.
+Asking them how they handle dependencies and build-time dependency
+discovery is fun. The last answer I got was that you'd copy your
+dependencies' headers and .dll files somewhere, provide the paths to
+your compiler and skip updates unless you really need them. You can
+probably thank Microsoft's compiler for that tactic.
+
+The other disheartening part is the syndrome of "built by Fo01337 with
+-funroll-loops -O42". Some people have been making Windows builds of OSS
+software for years, usually distributing them through more-or-less
+random file hosting services or forum attachments. The builds are often
+"optimized" or "light" or "all features" and people exchange words on
+which builds are the best. It's especially depressing because these
+builders are usually not very knowledgeable.
+Moreover, simply because they provide binaries, many of these people
+have gotten a crowd that follows them; they have apparently gotten quite
+proud and territorial. They might see your efforts at making something
+cleaner as... competition.
+
+Overall, good luck staying in such an environment.
+
+So what can be done?
+
+Win-builds is slightly stalled by lack of time and the need to rework
+part of the infrastructure.
+I hope to get back to it fairly soon but unlike for the last version, I
+won't spend more time helping the typical Windows developer.
+
+Redhat (you'll probably want Fedora rather than RHEL) and Opensuse have
+teams that tackle this too, purely from the Linux side through
+distribution packages and cross-compilation. Their package collection is
+really large and well-maintained with good teams (around 300 packages;
+keep in mind that on Windows you need less than a dozen libs to get GTK+
+2).
+
+Debian/Ubuntu also see some work here but it's nowhere near RH/Suse
+which have commercial needs to make Windows builds.
+
+Arch Linux is... well, AUR has hundreds of packages. Way too many for it
+to be honest and up-to-date. That would be more than RH/Suse. Approach
+with care.
+
+There are some projects I'm not mentioning on purpose. Either I'm not
+familiar enough with them or I consider them as outright regressions for
+these issues. If you want details, meet me at FOSDEM; that's also where
+I know I won't meet anyone involved in the latter category.
+
+tl:dr; use Fedora or OpenSuse and their mingw-w64* packages to
+cross-compile and package from Linux; if you use Windows or OS X or
+anything else, use one of these in a VM.
+
 -- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Adrien Nader
