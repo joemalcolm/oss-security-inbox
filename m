@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/18/8
-Message-ID: <1214526844.7781030.1505767448635@mail.yahoo.com>
-Date: Mon, 18 Sep 2017 20:44:08 +0000 (UTC)
-From: Nicholas Prowse <nick5990@...oo.co.uk>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: [OSSN-0081] sha512_crypt is insufficient for password hashing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/7
+Message-ID: <e79b63144d4c451291ba0a0c5776be8f@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:48:17 -0500
+From: <cve-assign@...re.org>
+To: <tobias@...eckmann.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: libXpm < 3.5.12 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-40000 iterations of PBKDF2 algorithm according to Sophia's Naked Security as of last month.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-https://nakedsecurity.sophos.com/2013/11/20/serious-security-how-to-store-your-users-passwords-safely/
+> https://cgit.freedesktop.org/xorg/lib/libXpm/commit/?id=d1167418f0fd02a27f617ec5afd6db053afbe185
+> 
+> through maliciously crafted XPM files.
+> 
+> The affected code is prone to two 32 bit integer overflows while parsing
+> extensions: the amount of extensions and their concatenated length.
 
-Google is your friend.
+Use CVE-2016-10164.
 
---------------------------------------------
-On Mon, 18/9/17, Jordan Glover <Golden_Miller83@...tonmail.ch> wrote:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
- Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
- To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
- Date: Monday, 18 September, 2017, 19:00
- 
- What number of iterations is
- considered secure for sha512crypt/pbkdf2 these days?
- 
+iQIcBAEBCAAGBQJYiGPYAAoJEHb/MwWLVhi2nUQP/0LQAMNgcfikDFbTd0j6xWyF
+O1qAdm8ok5jnJaV4VR5ivn68LxV98eL3uBI6dKzxNrSf7wl/Xj8YdxtdYr5KgF6W
+38IfyWLLNwt2GHhqAkHFUE4CUoZQMoAmffdpexZuJ5FuD7q4IGX3raV8/nhFg4bG
+zuUPuJD+7FMXYzFBy/t6yk+1VwqQVhCY4RxzX5J/Np2XYGHi2yOhtfSCoZ5OWAKV
+1GFYbxAUqYZn1HvqrCbVFGi0PEejpORm4Z+R8plxnImgQAwEXImscxuc3L1nxGZB
+SOMNfRmSKQ2VGhsk0LEfJvwk8ZdwWv18iHNGyMCDw1rnIu1KzVVAMyF6/IwtkOk4
+VHIWP9SkUs1w20xznzSdGF1CQN5sSfRGkxwqwavCbK4h/2iFpsN/VEmbHbdkGmc6
+y/dhmGf6WPJezXbPafcLOY5o9BZayzSgSN5+lpJvaGrW+CYKZUU2IsnNJ1P5txs1
+c9OvaGKHXfnC57aLPEybSrkTlJDQghqTLTVFGUR7wIrOhVPrpM1MtXVHXbonPUtp
+J7qc6h3TpEbCWa/KhmvvDbrlzhO4cnOptIx57z2b6UxLRjVhNP26X+YRtH/NxzPh
+TRBmJ7MwdU32Ngpr1LiPhBsyZ5ECO4M/G2JUmStOVpuaXHmKQTYU6do4MD/UlgVz
+GKnveQt+Y4sDCrQa6sDX
+=T2kK
+-----END PGP SIGNATURE-----
