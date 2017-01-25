@@ -1,65 +1,148 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/28/2
-Message-ID: <547957.629987167-sendEmail@localhost>
-Date: Tue, 28 Mar 2017 13:54:49 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: imagemagick: memory allocation failure in AcquireMagickMemory (memory.c) (incomplete fix for CVE-2016-8862 and CVE-2016-8866)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/1
+Message-ID: <20170125062303.GA2590@openwall.com>
+Date: Wed, 25 Jan 2017 07:23:03 +0100
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: abe@...ian.org
+Subject: Re: CVE request: GNU screen escalation
 Content-Type: text/plain; charset=utf-8
 
-It is probably one of the last issues reported by me on imagemagick because it is always a fight make upstream able to reproduce the issue, however I'm not doing anything special.
+On Tue, Jan 24, 2017 at 10:28:56PM +0100, Moritz Muehlenhoff wrote:
+> please assign a CVE ID for this vulnerability in GNU screen:
+> https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap images.
+Per oss-security list content guidelines:
 
-Another round of fuzzing pointed out that the memory allocation failure I discovered, known as CVE-2016-8862 and CVE-2016-8866 is still reproducible in the 7.0.4.9 version.
-As usual, the upstream security policy are enabled.
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-The interesting part of the ASan stacktrace(not full because is a copy past of the one in the previous post):
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should remain
+valuable even with all of the external resources gone."
 
-# identify $FILE
-    #8 0x7f2aeaea2812 in AcquireMagickMemory /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/memory.c:460:10
-    #9 0x7f2aeaea2812 in AcquireVirtualMemory /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/memory.c:642
-    #10 0x7f2ae32d941a in ReadPCXImage /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/coders/pcx.c:400:16
-    #11 0x7f2aea9cdb26 in ReadImage /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/constitute.c:497:13
-    #12 0x7f2aeb3a2df9 in ReadStream /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/stream.c:1013:9
-    #13 0x7f2aea9cb3a6 in PingImage /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/constitute.c:226:9
-    #14 0x7f2aea9cc2a6 in PingImages /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickCore/constitute.c:327:10
-    #15 0x7f2ae97a6118 in IdentifyImageCommand /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickWand/identify.c:319:18
-    #16 0x7f2ae98f800a in MagickCommandGenesis /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/MagickWand/mogrify.c:183:14
-    #17 0x50a389 in MagickMain /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/utilities/magick.c:149:10
-    #18 0x50a389 in main /tmp/portage/media-gfx/imagemagick-7.0.4.9/work/ImageMagick-7.0.4-9/utilities/magick.c:180
-    #19 0x7f2ae7dda78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #20 0x419da8 in _init (/usr/bin/magick+0x419da8)
+let's be including the actual content in here, in addition to links.
 
-Affected version:
-7.0.4.9
+The screen-devel above is:
 
-Fixed version:
-N/A
+---
+From:	anonymous
+Subject: 	[screen-devel] [bug #50142] root exploit 4.5.0
+Date: 	Tue, 24 Jan 2017 19:05:10 +0000 (UTC)
 
-Commit fix:
-N/A
+URL:
+  <http://savannah.gnu.org/bugs/?50142>
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+                 Summary: root exploit 4.5.0
+                 Project: GNU Screen
+            Submitted by: None
+            Submitted on: Tue 24 Jan 2017 07:05:09 PM UTC
+                Category: Program Logic
+                Severity: 3 - Normal
+                Priority: 5 - Normal
+                  Status: None
+                 Privacy: Private
+             Assigned to: None
+             Open/Closed: Open
+         Discussion Lock: Any
+                 Release: None
+           Fixed Release: None
+         Planned Release: None
+           Work Required: None
 
-CVE:
-CVE-2017-7275
+    _______________________________________________________
 
-Timeline:
-2017-02-19: bug re-discovered and re-reported upstream
-2017-03-27: blog post about the issue
-2017-03-27: CVE assigned
+Details:
 
-Note:
-This bug was found with American Fuzzy Lop.
+Commit f86a374 ("screen.c: adding permissions check for the logfile
+name",
+2015-11-04)
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/03/27/imagemagick-memory-allocation-failure-in-acquiremagickmemory-memory-c-incomplete-fix-for-cve-2016-8862-and-cve-2016-8866
+The check opens the logfile with full root privileges. This allows us to
+truncate any file or create a root-owned file with any contents in any
+directory and can be easily exploited to full root access in several
+ways.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+> address@...den:~$ screen --version
+> Screen version 4.05.00 (GNU) 10-Dec-16
+> address@...den:~$ id
+> uid=125(buczek) gid=125(buczek)
+groups=125(buczek),15(users),19(adm),42(admin),154(Omp3grp),200(algrgrp),209(cdgrp),242(gridgrp),328(nchemgrp),407(hoeheweb),446(spwgrp),453(helpdesk),512(twikigrp),584(zmgrp),598(edv),643(megamgrp),677(greedgrp),5000(abt_srv),16003(framesgr),16012(chrigrp),17001(priv_cpw)
+> address@...den:~$ cd /etc
+> address@...den:/etc (master)$ screen -D -m -L bla.bla echo fail
+> address@...den:/etc (master)$ ls -l bla.bla
+> -rw-rw---- 1 root buczek 6 Jan 24 19:58 bla.bla
+> address@...den:/etc (master)$ cat bla.bla
+> fail
+> address@...den:/etc (master)$ 
 
+Donald Buczek <address@...den>
+---
 
+There are some follow-ups, notably Axel Beckert pointing out that the
+issue appears to have been introduced on 2016-11-04 (not 2015-11-04):
+
+---
+> Commit f86a374 ("screen.c: adding permissions check for the logfile name",
+> 2015-11-04)
+
+There is no such commit id, neither in the master branch nor in the
+screen-v4 branch.
+
+I assume you meant one of these two commits instead:
+
+master: 
+http://git.savannah.gnu.org/cgit/screen.git/commit/?id=c575c40c9bd7653470639da32e06faed0a9b2ec4
+screen-v4: 
+http://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=5460f5d28c01a9a58e021eb1dffef2965e629d58
+
+The latter is the one included in Screen 4.5.0.
+---
+
+The commits add this code:
+
+---
++              FILE *w_check;
++              if ((w_check = fopen(screenlogfile, "w")) == NULL)
++                Panic(0, "-L: logfile name access problem");
++              else
++                fclose(w_check);
+---
+
+apparently into command-line option parsing in main(), thus apparently
+prior to dropping the privileges.  (I didn't review this in context.)
+
+Last but not least, I hope distros don't install screen SUID root these
+days.  If any distro does, this is yet another reminder to reconsider.
+
+Some install it SGID utmp.  Some take it a step further - Owl and ALT
+Linux install it SGID to group screen, which only grants the ability to
+invoke utempter (SGID utmp) and tcp_chkpwd (SGID shadow).  Thus, it'd
+take a vulnerability in those other tools to make much use of a screen
+vulnerability.  Here's an excerpt from ALT Linux's spec file:
+
+%post
+ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
+ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+
+%preun
+if [ $1 -eq 0 ]; then
+rm -f %_libexecdir/screen/{tcb_chkpwd,utempter}
+fi
+
+%triggerin -- pam_tcb >= 0.9.7.1
+ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
+
+%triggerin -- libutempter >= 1.0.6
+ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+
+%files
+%attr(2711,root,screen) %_bindir/screen
+%attr(710,root,screen) %dir %_libexecdir/screen
+%attr(2711,root,shadow) %ghost %_libexecdir/screen/tcb_chkpwd
+%attr(2711,root,utmp) %ghost %_libexecdir/screen/utempter
+%attr(775,root,screen) %dir /var/run/screen/
+
+Alexander
