@@ -1,57 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/2
-Message-ID: <CANO=Ty2T4=wPUVuDQcO59Pgvq7j_agZnT0TUmAa_0Fkk4Laafw@mail.gmail.com>
-Date: Mon, 25 Sep 2017 19:41:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/8
+Message-ID: <4852597.N8d9Bx2SxP@blackgate>
+Date: Wed, 25 Jan 2017 10:10:35 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2017 at 3:50 PM, Priedhorsky, Reid <reidpr@...l.gov> wrote:
->
->
-> My questions:
->
-> 1. Is oss-security’s coverage of security issues in open-source software
-> intended to be comprehensive? If so, this appears not to be true for the
-> Linux kernel.
->
+Description:
+jasper is an open-source initiative to provide a free software-based reference 
+implementation of the codec specified in the JPEG-2000 Part-1 standard.
 
-Nope. To quote the web site: 'Open Source software security discussions "
-http://www.openwall.com/lists/ the fact that it has turned into a security
-announce list with limited discussion is  just how things go I guess. Also
-it's tough because the Linux Kernel has explicitly said they won't get
-CVE's for all their security issues, they simply fix and move on, their
-culture is "run something current, if not, to bad" (which part of me agrees
-with, but that doesn't work so well for IoT/enterprise/people needing a
-high degree of stability/assurance).
+Another round of fuzzing shows that a crafted image causes a NULL pointer 
+access.
 
+The complete ASan output:
 
->
-> 2. Is there another source of comprehensive coverage of vulnerabilities in
-> the Linux kernel, including but not necessarily limited to all CVEs issued
-> for it?
->
+# imginfo -f $FILE
+cannot parse box data
+ASAN:DEADLYSIGNAL
+=================================================================
+==6697==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000041da35 bp 0xbebebebebebebeae sp 0x7fff60ad6480 T0)
+    #0 0x41da34 in atomic_compare_exchange_strong /tmp/portage/sys-
+devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81
+    #1 0x41da34 in 
+__asan::Allocator::AtomicallySetQuarantineFlagIfAllocated(__asan::AsanChunk*, 
+void*, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-
+devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:468
+    #2 0x41da34 in __asan::Allocator::Deallocate(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType) /tmp/portage/sys-
+devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:522
+    #3 0x41da34 in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
+__asan::AllocType) /tmp/portage/sys-
+devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:725
+    #4 0x4d271c in free /tmp/portage/sys-
+devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+rt/lib/asan/asan_malloc_linux.cc:50
+    #5 0x7f86ef11c995 in jp2_cdef_destroy /tmp/portage/media-
+libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:230:3
+    #6 0x7f86ef11e18e in jp2_box_destroy /tmp/portage/media-
+libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:212:3
+    #7 0x7f86ef11e18e in jp2_box_get /tmp/portage/media-
+libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:319
+    #8 0x7f86ef1219f6 in jp2_decode /tmp/portage/media-
+libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:159:16
+    #9 0x7f86ef0e4214 in jas_image_decode /tmp/portage/media-
+libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
+    #10 0x50a3be in main /tmp/portage/media-
+libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
+    #11 0x7f86ee1c478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #12 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
 
-There are commercial security information vendors that claim to provide
-this, I won't name names as I don't know how good they are. Step 1 here for
-the open source community would be making sure Kernel issues get CVEs, and
-then that those CVEs get into the CVE database so people are aware of them.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-
+devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
+atomic_compare_exchange_strong
+==6697==ABORTING
 
+Affected version:
+2.0.10
 
->
-> I appreciate everyone’s time and effort on all this stuff. This post
-> should not be interpreted as singling out Debian for criticism.
->
-> Thanks,
-> Reid
+Fixed version:
+N/A
 
+Commit fix:
+N/A
 
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00124-jasper-nullptr-jp2_cdef_destroy
+
+Timeline:
+2017-01-18: bug discovered and reported upstream
+2017-01-25: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/25/jasper-null-pointer-dereference-in-jp2_cdef_destroy-jp2_cod-c
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+Agostino Sarubbo
+Gentoo Linux Developer
