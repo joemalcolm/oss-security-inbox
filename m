@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3709" "Thursday" "18" "June" "2015" "11:02:00" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20150618110200.7c5d78b2@redhat.com>" "86" "Re: [oss-security] Re: CVE Request: various issues in PHP" nil nil nil "6" "2015061809:02:00" "[oss-security] Re: CVE Request: various issues in PHP" (number mark "        thoger@redha Jun 18   86/3709  " thread-indent "\"Re: [oss-security] Re: CVE Request: various issues in PHP\"\n") "<20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>" ("<20150529170751.482ad9f4@redhat.com>" "<20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1552" "Wednesday" "25" "January" "2017" "03:43:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<a5d4cb3c0ee94490ae2c932b076f42a6@imshyb01.MITRE.ORG>" "37" "[oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context" nil nil nil "1" "2017012508:43:30" "[oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context" (number mark "U       cve-assign@m Jan 25   37/1552  " thread-indent "\"[oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context\"\n") "<alpine.LFD.2.20.1701241256280.7971@wniryva>" ("<alpine.LFD.2.20.1701241256280.7971@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9761 invoked by uid 550); 18 Jun 2015 09:02:26 -0000
+Received: (qmail 13371 invoked by uid 550); 25 Jan 2017 08:43:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9736 invoked from network); 18 Jun 2015 09:02:25 -0000
-Message-ID: <20150618110200.7c5d78b2@redhat.com>
-In-Reply-To: <20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>
-References: <20150529170751.482ad9f4@redhat.com>
-	<20150616172456.ADCE052E1F7@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Cc: oss-security@lists.openwall.com, kaplanlior@gmail.com, security@php.net
-Date: Thu, 18 Jun 2015 11:02:00 +0200
-From: Tomas Hoger <thoger@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: various issues in PHP
-To: cve-assign@mitre.org
+Received: (qmail 13312 invoked from network); 25 Jan 2017 08:43:42 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1701241256280.7971@wniryva>
+Message-ID: <a5d4cb3c0ee94490ae2c932b076f42a6@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:43:30 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Virglrenderer: host memory leakage when creating decode context
 
-On Tue, 16 Jun 2015 13:24:56 -0400 (EDT) cve-assign@mitre.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> In this type of situation, CVEs are assigned on a per-discoverer basis.
-> CVE-2015-4025 is for thoger@redhat.com discoveries, whereas
-> CVE-2015-4026 is for yohgaki@php.net. See:
+> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
+> for the virtio GPU, is vulnerable to memory leakage issue. It could occur when
+> a guest tries to create decode context via 'VIRTIO_GPU_CMD_CTX_CREATE'
+> command.
 > 
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4025
->   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4026
+> A guest user/process could use this flaw to leak host memory resulting in DoS.
 > 
-> > dir()/opendir() and chroot()
-> 
-> Four weeks ago, we asked security@php.net to contact us if those other
-> changed functions were associated with vulnerability fixes. They have
-> not contacted us about this.
-> 
-> Are you reporting that some or all of them had vulnerabilities?
+> https://cgit.freedesktop.org/virglrenderer/commit/?id=747a293ff6055203e529f083896b823e22523fe7
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415944
 
-With all these CVE-2006-7243-like issues, it's bit tricky.  Many of
-those that got corrected recently seem rather unlikely to be used with
-untrusted inputs.  However, if you think hard, you may be able to come
-up with some convoluted use case where they matter.  So it may not be
-easy to draw the line between those that may still qualify as security
-fixes and those that don't.  The recent approach was to handle them as
-security (e.g. upstream bugs were changed to security bugs and made
-private until they were fixed).
- 
-> For example, is it reasonable to expect that a PHP application may
-> want the client to make a choice of a chroot directory, and the
-> intended behavior is to restrict the choice to a name ending in ".d"
-> but this can be bypassed by something like a
-> "/usr/local/var/x/does-not-end-in-dot-d\0.d" value?
+Use CVE-2016-10163.
 
-With chroot requiring root privileges, the function should not be used
-in typical PHP use cases at all.  So the above example does not seem
-likely.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> > More unserialize issues.
-> 
-> > https://bugs.php.net/bug.php?id=69152
-> > http://git.php.net/?p=php-src.git;a=commitdiff;h=51856a76f87ecb24fe1385342be43610fb6c86e4
-> 
-> Use CVE-2015-4599 for the taoguangchen@icloud.com discovery fixed in
-> 51856a76f87ecb24fe1385342be43610fb6c86e4.
-> 
-> 
-> > http://git.php.net/?p=php-src.git;a=commitdiff;h=0c136a2abd49298b66acb0cad504f0f972f5bfe8
-> 
-> Use CVE-2015-4600 for the taoguangchen@icloud.com discoveries in bug
-> 69152 that were fixed in 0c136a2abd49298b66acb0cad504f0f972f5bfe8 -
-> SoapClient::__getLastRequest, SoapClient::__getLastResponse,
-> SoapClient::__getLastRequestHeaders,
-> SoapClient::__getLastResponseHeaders, SoapClient::__getCookies, and
-> SoapClient::__setCookie.
-> 
-> Use CVE-2015-4601 for the other vulnerabilities fixed in
-> 0c136a2abd49298b66acb0cad504f0f972f5bfe8, with the exception that the
-> issue involving the uri property in do_soap_call is already covered by
-> CVE-2015-4148.
-> 
-> 
-> > http://git.php.net/?p=php-src.git;a=commitdiff;h=fb83c76deec58f1fab17c350f04c9f042e5977d1
-> 
-> Use CVE-2015-4602 for this issue mentioned at [2015-03-20 14:58 UTC]
-> in bug 69152.
-> 
-> 
-> > https://bugs.php.net/bug.php?id=69152 [2015-03-03 04:30 UTC]
-> 
-> Use CVE-2015-4603 for the exception::getTraceAsString issue. As
-> mentioned at [2015-03-25 09:57 UTC], the affected versions for this
-> issue are different from those of other issues discussed in bug 69152.
-
-Out of curiosity, why all the splits here?  E.g. CVE-2015-4599 and
-CVE-2015-4600 have same reporter, same type, same affected (released)
-versions, and the same PHP extension.  I assume CVE-2015-4601 is
-separate because of different / unclear reporter.  CVE-2015-4601 and
-CVE-2015-4602 seem like possible candidate for merging with
-CVE-2015-4599 / CVE-2015-4600 as they also have the same reporter and
-versions.  There's benefit of having them separate as they don't affect
-SOAP extension, but issue affecting different module of the code base
-is not a typical reason for split.
-
-Thank you!
-
--- 
-Tomas Hoger / Red Hat Product Security
+iQIcBAEBCAAGBQJYiGPEAAoJEHb/MwWLVhi2YPwP/1lOP3BYfiiEYcQIfnmTdDII
+r9Vh3OY9OQGN1gpUepaTGOgINwO5Pue9JI7mQaBEf7aV2eWnQjmqs+HDHhqAT2RA
+vPo+LeRqDKwe8kMRF/cxW0HYHo3lw8mIE6dXiwQNYz2R0vGmNMfLwpx1F5oPzqFP
+YDcBFqhonAVcHZwAtfnqqD0RmFLCv9kn6MEH0J5Pjzc3aE7nrefynPyjtoIfKWb3
+PuahXTdR458uq8GodQemjoamesqEFBCdWim3ycTQrNF6Z5TzBTtzdjuWAhUJ8fN0
+GRrDHpVtSSiJcUqlZziz3W0tv1LPUtYutcG1bluxOrCHEATJSrvpkRaP70hp0E94
+sOcYQ7Gs+uBWgYOKkurG0msq+/Hn60KwNr4omciA2LD3X3ehPl3BcN1YvRBxTt6r
+c4wNfEpZAZasz1A6GRnhDBmtTg/KXf30y+/FY5WQ6X6QEkd9elSD0reNAyL+y/Ul
+kx4djZxCGd0mBkp95n90QOZEwXvlxj9wagqGJaz9DF93Y5vBrTop33gRW6pszbid
+JqPf1HuGb0I/azGvKLSZNQzHzTJ57QESGJhjiNTk9rdc0sw4notWd4qTZ4P/tt73
+1dYooaV31dFKqe1LUm6iaLCG0/FU5xYOHTFe+MeUZDxeo332Cw431+JNgyv7ZuDy
+o7wPhJVeTbxHkNmYV/tm
+=ak6W
+-----END PGP SIGNATURE-----
