@@ -1,24 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/6
-Message-ID: <20170624122820.GB29096@openwall.com>
-Date: Sat, 24 Jun 2017 14:28:20 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/16
+Message-ID: <e0f40b5d-6d9b-561e-7e3f-bf146ec26e9a@securify.nl>
+Date: Wed, 25 Jan 2017 19:28:07 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE for the TSIG issue in knot?
+Subject: Multiple PHP object injection vulnerabilities affecting three WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 24, 2017 at 01:58:23PM +0200, Yves-Alexis Perez wrote:
-> I noticed the recent issue in knot with TSIG bypass
-> (https://lists.nic.cz/pipermail/knot-dns-users/2017-June/001144.html)
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Is is inappropriate to post only a link in here.  In cases like this,
-please also quote at least the most essential portion of the content
-you're referring to, which is:
 
-"CZ.NIC has released Knot DNS 2.5.2 and Knot DNS 2.4.5. Beside several fixes and improvements,
-these versions fix a flaw within the TSIG protocol implementation that would allow an attacker
-with a valid key name and algorithm to bypass the TSIG authentication if no additional ACL
-restrictions is set. This vulnerability was discovered by security experts from Synacktiv.
-Special thanks to them!"
 
-Alexander
+
+
+
+
+
+View attachment "cms_commander_client_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3305 bytes)
+
+View attachment "google_forms_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3124 bytes)
+
+View attachment "infinitewp_client_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3667 bytes)
