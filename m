@@ -1,51 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/3
-Message-ID: <20170628065826.GA4865@nautica>
-Date: Wed, 28 Jun 2017 08:58:26 +0200
-From: Dominique Martinet <asmadeus@...ewreck.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CoreOS membership to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/4
+Message-ID: <a5d4cb3c0ee94490ae2c932b076f42a6@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:43:30 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Virglrenderer: host memory leakage when creating decode context
 Content-Type: text/plain; charset=utf-8
 
-Sven Dowideit wrote on Wed, Jun 28, 2017:
-> I'm responsible for RancherOS, and think that both I, and my users
-> would prefer that I had access to the embargoed information earlier,
-> so preparing a response would have been less of a rush.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I can relate to the rush feeling, even with few users/"private" distro
-here, having a custom kernel makes this kind of fixes annoying...
-But given the delayed exploit release I'd say it does not really matter
-if you take a few days for this, especially in this case with the low
-success rate on 64bit linux. As soon as reasonably possible does not
-necessarily mean rush.
+> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
+> for the virtio GPU, is vulnerable to memory leakage issue. It could occur when
+> a guest tries to create decode context via 'VIRTIO_GPU_CMD_CTX_CREATE'
+> command.
+> 
+> A guest user/process could use this flaw to leak host memory resulting in DoS.
+> 
+> https://cgit.freedesktop.org/virglrenderer/commit/?id=747a293ff6055203e529f083896b823e22523fe7
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415944
 
-As a rhel/centos spin-off though we would have liked the bug brought up
-here ( https://bugzilla.redhat.com/show_bug.cgi?id=1463241 ) to have its
-fix published faster though, it's apparently been ready for a week but
-not been published... I don't mind bugs, but if it's fixed it's annoying
-to keep it behind closed doors.
+Use CVE-2016-10163.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> One of the things that would have made my last week less worrying, is
-> to have some access to exploit code - so as to verify the changes
-> actually had a useful effect.
-
-You don't need an actual exploit to test this. You're not the first
-person who have told me this so I actually took some time this morning
-to whip up a "tester" -- it's probably far from perfect but will run
-successfully on older debian/rhel and crash with a patched kernel as
-expected, and is as inoffensive as it can get.
-
-I'm sure there are other better testers online, I didn't try looking as
-I don't get much chance to play with this kind of stuff :)
-
-
-Qualys gave a lot of details in their report (kudos to well written
-advisories like that!), I agree having everything on a golden plate is
-better but it really isn't much work left for smaller distros if you
-trust the big ones or even just upstream, once bugs got steamed out.
-
--- 
-Asmadeus | Dominique Martinet
-
-View attachment "teststackclash.c" of type "text/x-csrc" (1551 bytes)
+iQIcBAEBCAAGBQJYiGPEAAoJEHb/MwWLVhi2YPwP/1lOP3BYfiiEYcQIfnmTdDII
+r9Vh3OY9OQGN1gpUepaTGOgINwO5Pue9JI7mQaBEf7aV2eWnQjmqs+HDHhqAT2RA
+vPo+LeRqDKwe8kMRF/cxW0HYHo3lw8mIE6dXiwQNYz2R0vGmNMfLwpx1F5oPzqFP
+YDcBFqhonAVcHZwAtfnqqD0RmFLCv9kn6MEH0J5Pjzc3aE7nrefynPyjtoIfKWb3
+PuahXTdR458uq8GodQemjoamesqEFBCdWim3ycTQrNF6Z5TzBTtzdjuWAhUJ8fN0
+GRrDHpVtSSiJcUqlZziz3W0tv1LPUtYutcG1bluxOrCHEATJSrvpkRaP70hp0E94
+sOcYQ7Gs+uBWgYOKkurG0msq+/Hn60KwNr4omciA2LD3X3ehPl3BcN1YvRBxTt6r
+c4wNfEpZAZasz1A6GRnhDBmtTg/KXf30y+/FY5WQ6X6QEkd9elSD0reNAyL+y/Ul
+kx4djZxCGd0mBkp95n90QOZEwXvlxj9wagqGJaz9DF93Y5vBrTop33gRW6pszbid
+JqPf1HuGb0I/azGvKLSZNQzHzTJ57QESGJhjiNTk9rdc0sw4notWd4qTZ4P/tt73
+1dYooaV31dFKqe1LUm6iaLCG0/FU5xYOHTFe+MeUZDxeo332Cw431+JNgyv7ZuDy
+o7wPhJVeTbxHkNmYV/tm
+=ak6W
+-----END PGP SIGNATURE-----
