@@ -1,122 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/3
-Message-ID: <1875168.fojZKPVITU@arcadia>
-Date: Sun, 01 Jan 2017 16:46:12 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/11
+Message-ID: <20170125093901.GA30424@lorien.valinor.li>
+Date: Wed, 25 Jan 2017 10:39:01 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: multiple divide-by-zero
+Subject: Re: jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
+Hi Agostino
 
-Some crafted images, through a fuzzing revealed multiple division by zero. 
-Since the number of the issues, I will post the relevant part of the 
-stacktrace.
+On Wed, Jan 25, 2017 at 10:10:35AM +0100, Agostino Sarubbo wrote:
+> Description:
+> jasper is an open-source initiative to provide a free software-based reference 
+> implementation of the codec specified in the JPEG-2000 Part-1 standard.
+> 
+> Another round of fuzzing shows that a crafted image causes a NULL pointer 
+> access.
+> 
+> The complete ASan output:
+> 
+> # imginfo -f $FILE
+> cannot parse box data
+> ASAN:DEADLYSIGNAL
+> =================================================================
+> ==6697==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+> 0x00000041da35 bp 0xbebebebebebebeae sp 0x7fff60ad6480 T0)
+>     #0 0x41da34 in atomic_compare_exchange_strong /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81
+>     #1 0x41da34 in 
+> __asan::Allocator::AtomicallySetQuarantineFlagIfAllocated(__asan::AsanChunk*, 
+> void*, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/asan_allocator.cc:468
+>     #2 0x41da34 in __asan::Allocator::Deallocate(void*, unsigned long, 
+> __sanitizer::BufferedStackTrace*, __asan::AllocType) /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/asan_allocator.cc:522
+>     #3 0x41da34 in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
+> __asan::AllocType) /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/asan_allocator.cc:725
+>     #4 0x4d271c in free /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/asan_malloc_linux.cc:50
+>     #5 0x7f86ef11c995 in jp2_cdef_destroy /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:230:3
+>     #6 0x7f86ef11e18e in jp2_box_destroy /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:212:3
+>     #7 0x7f86ef11e18e in jp2_box_get /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:319
+>     #8 0x7f86ef1219f6 in jp2_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:159:16
+>     #9 0x7f86ef0e4214 in jas_image_decode /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
+>     #10 0x50a3be in main /tmp/portage/media-
+> libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
+>     #11 0x7f86ee1c478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+> r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+>     #12 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
+> 
+> AddressSanitizer can not provide additional info.
+> SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-
+> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
+> rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
+> atomic_compare_exchange_strong
+> ==6697==ABORTING
+> 
+> Affected version:
+> 2.0.10
+> 
+> Fixed version:
+> N/A
+> 
+> Commit fix:
+> N/A
+> 
+> Credit:
+> This bug was discovered by Agostino Sarubbo of Gentoo.
+> 
+> CVE:
+> N/A
+> 
+> Reproducer:
+> https://github.com/asarubbo/poc/blob/master/00124-jasper-nullptr-jp2_cdef_destroy
+> 
+> Timeline:
+> 2017-01-18: bug discovered and reported upstream
 
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/438274f938e046d33cb0e1230b41da32ffe223e1
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00064-libtiff-fpe-TIFFReadEncodedStrip
-Relevant part of the stacktrace:
+This should be: https://github.com/mdadams/jasper/issues/112
 
-# tiffcp $FILE /tmp/foo
-==12079==ERROR: AddressSanitizer: FPE on unknown address 0x7fd319436251 (pc 
-0x7fd319436251 bp 0x7fff851e3d80 sp 0x7fff851e3d30 T0)
-    #0 0x7fd319436250 in TIFFReadEncodedStrip /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_read.c:351:22
+Could you please reference as well the upstream issues, if they are
+reported in an upstream issue tracker? That would help much in
+tracking the issues.
 
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/43bc256d8ae44b92d2734a3c5bc73957a4d7c1ec
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00083-libtiff-fpe-OJPEGDecodeRaw
-Relevant part of the stacktrace:
-
-# tiffmedia $FILE /tmp/foo
-==28106==ERROR: AddressSanitizer: FPE on unknown address 0x7faeae7f744e (pc 
-0x7faeae7f744e bp 0x7ffceab45e40 sp 0x7ffceab45ce0 T0)
-    #0 0x7faeae7f744d in OJPEGDecodeRaw /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_ojpeg.c:816:8
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/d3c5426395dc53e3345712ac7246c29db9fed8fa
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00099-libtiff-fpe-readSeparateStripsIntoBuffer
-Relevant part of the stacktrace:
-
-# tiffcrop $FILE /tmp/foo
-==19098==ERROR: AddressSanitizer: FPE on unknown address 0x000000523acf (pc 
-0x000000523acf bp 0x7ffcb22ada30 sp 0x7ffcb22ad780 T0)
-    #0 0x523ace in readSeparateStripsIntoBuffer /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcrop.c:4841:36
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/a87eb62049f446204ed62c939f965eb76bd98001
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00065-libtiff-fpe-readSeparateTilesIntoBuffer
-Relevant part of the stacktrace:
-
-# tiffcp $FILE /tmp/foo
-==13262==ERROR: AddressSanitizer: FPE on unknown address 0x00000051c43b (pc 
-0x00000051c43b bp 0x7ffdc8d81d70 sp 0x7ffdc8d81b20 T0)
-    #0 0x51c43a in readSeparateTilesIntoBuffer /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1434:9
-
-###############################################
-
-Affected version / Tested on:
-4.0.7
-Fixed version:
-N/A
-Commit fix:
-https://github.com/vadz/libtiff/commit/296803e79542f5523be1009d64574507b9acc239
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00073-libtiff-fpe-writeBufferToSeparateTiles
-Relevant part of the stacktrace:
-
-# tiffcp -i $FILE /tmp/foo
-==3614==ERROR: AddressSanitizer: FPE on unknown address 0x00000051650a (pc 
-0x00000051650a bp 0x7fff41587d30 sp 0x7fff41587b00 T0)
-    #0 0x516509 in writeBufferToSeparateTiles /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffcp.c:1591:13
-
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2016-11-20: started to post the issues to upstream
-2017-01-01: blog post about the issue
-
-Note:
-These bugs were found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-divide-by-zero
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Regards,
+Salvatore
