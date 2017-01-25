@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3491" "Thursday" "6" "February" "2020" "15:04:18" "+0100" "Solar Designer" "solar@openwall.com" nil "110" nil "^Cc:" nil nil "2" nil nil (number mark "        solar@openwa Feb  6  110/3491  " thread-indent "\"[oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] GNU screen \"out of bounds access when setting w_xtermosc after OSC 49\"" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1692" "Wednesday" "25" "January" "2017" "03:42:16" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b78bd7f6e37e44beb66433715efe0717@imshyb01.MITRE.ORG>" "39" "[oss-security] Re: CVE request Qemu: serial: host memory leakage in 16550A UART emulation" nil nil nil "1" "2017012508:42:16" "[oss-security] Re: CVE request Qemu: serial: host memory leakage in 16550A UART emulation" (number mark "U       cve-assign@m Jan 25   39/1692  " thread-indent "\"[oss-security] Re: CVE request Qemu: serial: host memory leakage in 16550A UART emulation\"\n") "<alpine.LFD.2.20.1701242332030.18573@wniryva>" ("<alpine.LFD.2.20.1701242332030.18573@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24386 invoked by uid 550); 6 Feb 2020 14:04:35 -0000
+Received: (qmail 3513 invoked by uid 550); 25 Jan 2017 08:42:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,126 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24300 invoked from network); 6 Feb 2020 14:04:25 -0000
-Message-ID: <20200206140418.GA26959@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Cc: Amadeusz Slawinski <amade@asmblr.net>
-Date: Thu, 6 Feb 2020 15:04:18 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] GNU screen "out of bounds access when setting w_xtermosc after OSC 49"
-To: oss-security@lists.openwall.com
+Received: (qmail 3487 invoked from network); 25 Jan 2017 08:42:27 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1701242332030.18573@wniryva>
+Message-ID: <b78bd7f6e37e44beb66433715efe0717@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:42:16 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: serial: host memory leakage in 16550A UART emulation
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-GNU screen 4.8.0 was released yesterday with a documented security fix
-in it:
+> Quick Emulator(Qemu) built with the 16550A UART serial device emulation
+> support is vulnerable to a memory leakage issue. It could occur while doing a
+> device unplug operation; Doing so repeatedly would result in leaking host
+> memory, affecting other services on the host.
+> 
+> A privileged user inside guest could use this flaw to cause a DoS and/or
+> potentially crash the Qemu process on the host.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01945.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1416157
+> http://git.qemu.org/?p=qemu.git;a=commit;h=8409dc884a201bf74b30a9d232b6bbdd00cb7e2b
 
-https://lists.gnu.org/archive/html/screen-devel/2020-02/msg00007.html
+Use CVE-2017-5579.
 
----
-From: 	Amadeusz Slawinski
-Subject: 	[screen-devel] GNU Screen v.4.8.0
-Date: 	Wed, 5 Feb 2020 21:45:35 +0100
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Hello everyone,
- 
-I'm announcing availability of GNU Screen v.4.8.0
-
-Screen is a full-screen window manager that multiplexes a physical
-terminal between several processes, typically interactive shells. 
-
-This release
-  * Improves startup time by only polling for already open files to
-    close
-  * Fixes:
-       - Fix for segfault if termcap doesn't have Km entry
-       - Make screen exit code be 0 when checking --version
-       - Fix potential memory corruption when using OSC 49
-
-As last fix, fixes potential memory overwrite of quite big size (~768
-bytes), and even though I'm not sure about potential exploitability of
-that issue, I highly recommend everyone to upgrade as soon as possible.
-This issue is present at least since v.4.2.0 (haven't checked earlier).
-Thanks to pippin who brought this to my attention.
-
-For full list of changes see
-https://git.savannah.gnu.org/cgit/screen.git/log/?h=v.4.8.0
-
-For more information about GNU screen visit:
-https://savannah.gnu.org/projects/screen/
-
-Release is available for download at:
-https://ftp.gnu.org/gnu/screen/
-or your closest mirror (may have some delay)
-https://ftpmirror.gnu.org/screen/
-
-Please report any bugs or regressions.
-
-Cheers!
-Amadeusz on behalf of GNU Screen Team
----
-
-The fix commit is:
-
----
-commit 68386dfb1fa33471372a8cd2e74686758a2f527b
-Author: Amadeusz Slawinski <amade@asmblr.net>
-Date:   Thu Jan 30 17:56:27 2020 +0100
-
-    Fix out of bounds access when setting w_xtermosc after OSC 49
-    
-    echo -e "\e]49\e;                                    \n\ec"
-    crashes screen.
-    
-    This happens because 49 is divided by 10 and used as table index
-    resulting in access to w_xtermosc[4], which is out of bounds with table
-    itself being size 4. Increase size of table by 1 to 5, which is enough
-    for all current uses.
-    
-    As this overwrites memory based on user input it is potential security
-    issue.
-    
-    Reported-by: pippin@gimp.org
-    Signed-off-by: Amadeusz Slawinski <amade@asmblr.net>
----
-
-This is followed by another related commit:
-
----
-commit 0dd53533e20d2948351a99ec5336fbc9b82b226a
-Author: Amadeusz Slawinski <amade@asmblr.net>
-Date:   Wed Feb 5 21:05:28 2020 +0100
-
-    Increase permitted length of OSC
-    
-    hyperlink feature used by some terminals requires lots of characters
-    https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda#length-limits
-    mentions around 2083 characters, set it to a bit more.
-    
-    Bug: 57718
-    
-    Signed-off-by: Amadeusz Slawinski <amade@asmblr.net>
----
-
-Combined, these two commits change:
-
-  char   w_xtermosc[4][MAXSTR]; /* special xterm/rxvt escapes */
-
-(where MAXSTR is 768) to:
-
-  char   w_xtermosc[5][2560];   /* special xterm/rxvt escapes */
-
-These are as seen on the screen-v4 branch.  On that branch, and thus in
-all screen releases so far, the bug appears to be exposed only when
-building with the "--enable-rxvt_osc" option.  Builds and packages made
-without that option appear to be safe.  Amadeusz, can you confirm this?
-
-On master branch, the functionality is always enabled (and the option is
-dropped), thus (not too ancient) builds from that branch are vulnerable
-(until the above fixes, which were also made to that branch).
-
-Alexander
+iQIcBAEBCAAGBQJYiGO9AAoJEHb/MwWLVhi2pMwQAJ8+hQLeRu4ralJGGyn9AL2t
+wmUkA4A/QH5e1MjsxFoiFOICw691NlmXYk3kEGlK8VMJsRRXQv82N4IboniW1X42
+tTu7+ovYK4FCgsngX0r15gxFHe7AoyYQ0RpCQm/ugUe1IdQbLLIK2B5tAOxArCFx
+pac/+/Av6JK0gP+C9Fc3HYP8Rm0VWYf8DqDcK+ndrIlet0Y/G2BDTrO+vm3R2Yos
+LrT1qfMScVUhqmGZrVVLyB2B4wMHRYOdWmECN7c3owwrpWc3zHG5NetwyjWBMGRy
+yyJ5u1x+7FbPIDn4mq2bTqJY9/3Gq2AqA60bTJdu2sbTp78hI+4xqBeRrTwpQtIN
+nCVoyAXhcbPJMXy0vbpkOwaH3LuMg/SWJpsC3wyjxwxYwldkvvuYzkrS6YyAesPz
+rTPG341iFHowh3XrR3WmZGE52l/IZU2iXJjeXKxoO4hjjpgIdP4e+oXTNxm1Jweu
+EMjepn3hzICKPCfhrAlUV7a+k9ukGjlSguudMFmceImd3nxqoVp2uBCB58Ft5nfn
+0amrCFUsFgv5xVABrWAX6WR+2EjygEjmRhTeW7ItL1mMQpZElD7k4NeARNiUnhve
++W5/fQPuNAMK79iYKkmRgbYYxBqD9XFGH3N8VscQ+mRz4nl5YkTUNlSQcA20+AcV
+Pc5WY/s2U82JKsjWc67Y
+=DDIw
+-----END PGP SIGNATURE-----
