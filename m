@@ -1,36 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/11/1
-Message-ID: <1731133438.6882472.1494519713367.JavaMail.zimbra@redhat.com>
-Date: Thu, 11 May 2017 12:21:53 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7472 Linux kernel: KEYS: fix keyctl_set_reqkey_keyring() to not leak thread keyrings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/5
+Message-ID: <6b21533852d44795ba8d3bc376692029@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 03:44:30 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Virglrenderer: OOB access while parsing texture instruction
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A vulnerability was found in the Linux kernel from v2.6.29-rc1 (since
-commit d84f4f992cbd) upto v4.11-rc8 (commit c9f838d104). It was found
-that keyctl_set_reqkey_keyring() function leaks thread keyring which
-allows unprivileged local user to exhaust kernel memory and thus to
-cause DoS.
+> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
+> for the virtio GPU, is vulnerable to an OOB array access issue. It could occur
+> when parsing texture instructions in parse_instruction().
+> 
+> A guest user/process could use this flaw to crash the Qemu process instance
+> resulting DoS.
+> 
+> https://lists.freedesktop.org/archives/virglrenderer-devel/2017-January/000105.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1415986
 
-cvss3=5.5/CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
-cwe=CWE-400
+Use CVE-2017-5580.
 
-References:
+This is not yet available at
+https://cgit.freedesktop.org/virglrenderer/log/src/gallium/auxiliary/tgsi/tgsi_text.c
+but that may be an expected place for a later update.
 
-https://lkml.org/lkml/2017/4/1/235
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://lkml.org/lkml/2017/4/3/724
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1442086
-
-https://bugzilla.novell.com/show_bug.cgi?id=1034862
-
-Upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c9f838d104fed6f2f61d68164712e3204bf5271b
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+iQIcBAEBCAAGBQJYiGPKAAoJEHb/MwWLVhi2438P/AtuBKdNEJ5lVOpdCtO3qU8B
+OywpoakBGGu0+b3pbeQ7zshonl5YeVnguaxmV7TNMej3cEgiXOtsdIW1pcwRjnxE
+H7vTGK3Lw1OPvJQZpcdYUf1NAJQRcNiYJ/x26dRK5D2vhBut5WaAylN4EXpuX9sw
+jU3wKXa9KvPfw8Iald1VB/sZWMc8HclhUTVxNVacA2PbdSnHYH27RT+jWLR9K+vV
+jE8m+vZrGvuUlEoPVhxwQ2x096+hadiQXlWEK/q50iLGIw/GMMLO17Jd7+Sbi8zH
+PNjFt5TR/bb9obHrABGg9DUHUv+/65UevkyKeuj5NI9ZoZneKvbR+NCLXm3wOdMb
+3BrlFe26wQRmA379YnWdlPeH65p7pMYeUDpddocGoV0O2Ile4y1E0RL9kz3NCLgn
+F2IVNTqZIyHwDxIgRprqd/WMWfu+azn62mnYoheCOrFealenyZBq8Z8A7Al6hF7P
+VXcanbg11IhZD/AACZUrDrids7xz5TujmA+Yt09I5GReHYmEmWZlJeHFcXaZP+iM
+dMW1i98cStTbMMv42a1QG0hQaGuYAWEN2J/JnMZP4YYsfx+Wq/vReHhyhmeoBsTV
+4dz/XLAXTdXD1v8//Gff0wXnTRm3dDUiLuQCegVSdruZmdUy7pdm5mn2v9CqTszL
+WPlCZPkCAUA7uSEe6srn
+=+9vv
+-----END PGP SIGNATURE-----
