@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1576" "Sunday" "14" "August" "2016" "12:50:11" "+0200" "Peter Bex" "peter@more-magic.net" "<20160814105011.GQ3971@scully.more-magic.net>" "45" "[oss-security] CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures" nil nil nil "8" "2016081410:50:11" "[oss-security] CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures" (number mark "U       peter@more-m Aug 14   45/1576  " thread-indent "\"[oss-security] CVE request for buffer overrun in CHICKEN process-execute and process-spawn posix procedures\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3581" "Wednesday" "25" "January" "2017" "22:14:27" "+0100" "Adrien Nader" "adrien@notk.org" "<20170125211427.GA1002@notk.org>" "77" "Re: [oss-security] Windows ports of Linux software bundling outdated libraries (Gajim / PyCurl)" "^Date:" nil nil "1" "2017012521:14:27" "[oss-security] Windows ports of Linux software bundling outdated libraries (Gajim / PyCurl)" (number mark "U z     adrien@notk. Jan 25   77/3581  " thread-indent "\"Re: [oss-security] Windows ports of Linux software bundling outdated libraries (Gajim / PyCurl)\"\n") "<20170124134604.0b4e5ba1@pc1>" ("<20170124134604.0b4e5ba1@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 1000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8028 invoked by uid 550); 14 Aug 2016 10:49:13 -0000
+Received: (qmail 25967 invoked by uid 550); 25 Jan 2017 21:22:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8007 invoked from network); 14 Aug 2016 10:49:12 -0000
-Date: Sun, 14 Aug 2016 12:50:11 +0200
-From: Peter Bex <peter@more-magic.net>
-To: Open Source Security <oss-security@lists.openwall.com>
-Message-ID: <20160814105011.GQ3971@scully.more-magic.net>
-Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 13726 invoked from network); 25 Jan 2017 21:14:38 -0000
+Message-ID: <20170125211427.GA1002@notk.org>
+References: <20170124134604.0b4e5ba1@pc1>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="A+KtNVtgI4x4SWvL"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-X-PGP-Key: http://www.more-magic.net/peter-bex.asc
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request for buffer overrun in CHICKEN process-execute and
- process-spawn posix procedures
+In-Reply-To: <20170124134604.0b4e5ba1@pc1>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Date: Wed, 25 Jan 2017 22:14:27 +0100
+From: Adrien Nader <adrien@notk.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Windows ports of Linux software bundling outdated
+ libraries (Gajim / PyCurl)
+To: oss-security@lists.openwall.com
 
---A+KtNVtgI4x4SWvL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi,
 
-Hello all,
+This topic has already brought me in despair several times. I am
+actually surprised this is news so I'll try to give an overview.
+Unfortunately it will probably also sound like a psychotherapy for me.
 
-I would like to request a CVE for a buffer overrun that
-was detected in CHICKEN Scheme's "process-execute" and
-"process-spawn" procedures from the posix unit.
+There are so many of these issues that merely filling bug reports for
+them is a full-time job. This is without taking into account the origin
+of these binaries which is usually unclear.
 
-CHICKEN preallocated an argument array of ARG_MAX items (or 256 if
-that was undefined), and an environment array of ENV_MAX items
-(or 1024 if that was undefined), and did not verify that the arguments
-or environment lists were less than this size, resulting in a buffer
-overrun if these lists were longer.
+You won't find many projects which do this correctly. At least Wireshark
+and VLC fare much much better than others but they're a drop in the
+ocean.
 
-The full announcement can be found here:
-http://lists.nongnu.org/archive/html/chicken-announce/2016-08/msg00001.html
+I won't blame any of the free software developers. The mindset of
+Windows users isn't exactly centered around collaboration. It doesn't
+help and also takes a toll on the will of any maintainer who doesn't
+typically run Windows (i.e. who isn't already doing builds for himself
+anyway). Obviously the difficulty to build and ship for that OS is also
+a big hindrance.
 
-The bugfix also fixed a memory leak in the same piece of code, which
-could potentially be used to cause resource exhaustion/denial of
-service situation.  Does this warrant another CVE?
+My experience comes from my win-builds.org project (among others); it
+tried to fix all of these. In the process I've had to deal with
+developers of Windows software and that was very painful since they have
+a very hit-and-run attitude.
+Asking them how they handle dependencies and build-time dependency
+discovery is fun. The last answer I got was that you'd copy your
+dependencies' headers and .dll files somewhere, provide the paths to
+your compiler and skip updates unless you really need them. You can
+probably thank Microsoft's compiler for that tactic.
 
-The bug affects all releases of CHICKEN up to and including 4.11.
+The other disheartening part is the syndrome of "built by Fo01337 with
+-funroll-loops -O42". Some people have been making Windows builds of OSS
+software for years, usually distributing them through more-or-less
+random file hosting services or forum attachments. The builds are often
+"optimized" or "light" or "all features" and people exchange words on
+which builds are the best. It's especially depressing because these
+builders are usually not very knowledgeable.
+Moreover, simply because they provide binaries, many of these people
+have gotten a crowd that follows them; they have apparently gotten quite
+proud and territorial. They might see your efforts at making something
+cleaner as... competition.
 
-Cheers,
-Peter Bex
+Overall, good luck staying in such an environment.
 
---A+KtNVtgI4x4SWvL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+So what can be done?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Win-builds is slightly stalled by lack of time and the need to rework
+part of the infrastructure.
+I hope to get back to it fairly soon but unlike for the last version, I
+won't spend more time helping the typical Windows developer.
 
-iQEcBAEBAgAGBQJXsEzjAAoJEBEdufnLRYmwAFoH/jrjVsFBkuUql4fxpX10kXLJ
-/zEoL3E+HQuDuhbRltsZF0KG9i+nT9ha++ug1pHQOe37EkJGzX6/M10U6DaIorZy
-biFmikw/MAvfDb3QQAUa8qJLTVD8HHoiPAwm91kIkCssA4A98sk+Ls3qlp7PD1so
-LzXlnkWkax4dHB9isKLD3PezXOwf4gMzSpoDlJpB7fKe+2ayBFSWEYwY9wFU+H63
-p2eT7STbmMIFInkHpaznqBTMCCRrzAihcvw/uqjbXdGiifn7upfQkqrPTUzfy9jV
-6Ymk2u0bTVAte0m/uzGKE9Kxpr0suRhtA6H4Kfcxs2j/5N/GSSREQ6oJGBBsO60=
-=P0hI
------END PGP SIGNATURE-----
+Redhat (you'll probably want Fedora rather than RHEL) and Opensuse have
+teams that tackle this too, purely from the Linux side through
+distribution packages and cross-compilation. Their package collection is
+really large and well-maintained with good teams (around 300 packages;
+keep in mind that on Windows you need less than a dozen libs to get GTK+
+2).
 
---A+KtNVtgI4x4SWvL--
+Debian/Ubuntu also see some work here but it's nowhere near RH/Suse
+which have commercial needs to make Windows builds.
+
+Arch Linux is... well, AUR has hundreds of packages. Way too many for it
+to be honest and up-to-date. That would be more than RH/Suse. Approach
+with care.
+
+There are some projects I'm not mentioning on purpose. Either I'm not
+familiar enough with them or I consider them as outright regressions for
+these issues. If you want details, meet me at FOSDEM; that's also where
+I know I won't meet anyone involved in the latter category.
+
+tl:dr; use Fedora or OpenSuse and their mingw-w64* packages to
+cross-compile and package from Linux; if you use Windows or OS X or
+anything else, use one of these in a VM.
+
+-- 
+Adrien Nader
