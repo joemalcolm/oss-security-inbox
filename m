@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/15/3
-Message-ID: <CA++9HO9fwy-w1HqYF3Jpu_+makXOf1_dzy=U0KQjzQ=r20shnQ@mail.gmail.com>
-Date: Fri, 15 Sep 2017 12:40:06 +0000
-From: Ben Seri <ben@...is.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux BlueBorne vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/15
+Message-ID: <c653003f75544875890faf69aa90562a@imshyb01.MITRE.ORG>
+Date: Wed, 25 Jan 2017 12:36:07 -0500
+From: <cve-assign@...re.org>
+To: <sandeepk.l337@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Please assign CVE to PageKit Remote Password Reset Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-I agree. And I wish all vendors had such short time frames for releasing
-patches.
-Unfortunately this is not the case.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On top of this, it was unclear to us whether the linux-distros mailing list
-would be able to coordinate the kernel patch, so we chose to contact both
-lists, which required the 7 day embargo period.
+> https://securelayer7.net/download/pdf/SecureLayer7-Pentest-report-Pagekit-CMS.pdf
+> https://securelayer7.net/download/poc/password-reset-vulnerability-exploit-ruby-pagekit-cms.rb.txt
+> https://github.com/pagekit/pagekit/commit/e0454f9c037c427a5ff76a57e78dbf8cc00c268b
 
-In any case, we respect the need for a short embargo period, and in this
-case we disclosed the issues 7 days prior to publication.
+Use CVE-2017-5594.
 
-Ben.
+The scope of this CVE is only SL7_PGKT_01 in the PDF.
 
-On Fri, Sep 15, 2017 at 3:31 PM Solar Designer <solar@...nwall.com> wrote:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> On Fri, Sep 15, 2017 at 12:28:11PM +0000, Ben Seri wrote:
-> > Our thought is that since these issues affect multi vendors that are
-> using
-> > Linux, the longer the embargo period, the better chance there is a
-> > coordinated patch goes out to as many users as possible once the embargo
-> is
-> > lifted.
->
-> Indeed, but it's 2017, not 1997.  14 days is considered a long embargo
-> period now.  Unnecessarily long embargoes hurt more than they help.
->
-> Alexander
->
-
+iQIcBAEBCAAGBQJYiOF9AAoJEHb/MwWLVhi2LIUP/0lqqF1H5+610HMuNwOUtszA
+4LRdcemLVhe23rF8NknoqzYrU5yn3i0L2aHA9Pr73d/8qfHorlzUuXr+MWWkWSm8
+SLsNZMNtV9RvDCrHlzGgj7TTXgEIqQt9ZIT3fB60D0U1MNgJjzLdi9BjXZBj2gnV
+91hcwgoSfbpG0V6STrTjOWX+kD154gfgP9V2ODE06KSDGmhW5vEGA4Zg4imB/jJW
+txp7dnbnUZvNFeCB0M51XTTfh/1jUFU6zKEtIQBVhrW4XDtPr4iz8Fw4ULctIZbw
+xmfQz21L6h7Lm7+4VvGSgz6bQD49Bu1DHa3aw9vujGNORvNJtlGF28ZncptrCWmM
+L6k4TjiAKkmpHxi6WfoJEx8V5nChsYU1lrxBqHPe35D/GAK/wM1RmqSaTNgLRk5X
+DNZ2E4aYGK5X4JBGHkVX9IZvpuJOwNyg6nlON7+xQUGBCBtAlje2K6Pog82Y2Cok
+QaqBloctKTsMjV/MeX4az4g2cEUkkSW/XOGcIOdzLBwX6S+MdWI6xri6KJ9J/ArM
+G1horfrsbhyBOMzNFp3egmUZ8bsLJd2u2YghkJD7Nx04wt/e+dtMn9RIm+QvgGb/
+QmhuscXIb9gU4uBsIGZlJVO4XxNLrjzQ59hjEusVIXLzIEj9k3dRXNPWPGupvTqx
+QQRuBMUuSrx0R/ryXHMu
+=ltpz
+-----END PGP SIGNATURE-----
