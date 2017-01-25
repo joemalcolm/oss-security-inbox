@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2133" "Monday" "26" "February" "2018" "12:18:58" "+0700" "Maxim Solodovnik" "solomax666@gmail.com" "<CAJmbs8gqAfP0QPTSggDLSHwXzpv3H1rsuuo9wE024MzwhTSXTg@mail.gmail.com>" "92" "[oss-security] Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls" nil nil nil "2" "2018022605:18:58" "[oss-security] Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls" (number mark "U       solomax666@g Feb 26   92/2133  " thread-indent "\"[oss-security] Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls\"\n") "<CA+=eHdR-Ym0O0kpxbjSPpNYqMhp3nCKUBHQh8GtjV4AKbJavUg@mail.gmail.com>" ("<CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>" "<CA+=eHdTkJv3e+=M_oUEhiQk8tXxrNJohHMytNTskvkcbG9tieA@mail.gmail.com>" "<CAJmbs8iN5uwxxs3wWvJGkBsbe026yiyeGup1w=UrmtxnV-Orfg@mail.gmail.com>" "<CA+=eHdR-Ym0O0kpxbjSPpNYqMhp3nCKUBHQh8GtjV4AKbJavUg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4883" "Wednesday" "25" "January" "2017" "07:23:03" "+0100" "Solar Designer" "solar@openwall.com" "<20170125062303.GA2590@openwall.com>" "138" "Re: [oss-security] CVE request: GNU screen escalation" "^Cc:" nil nil "1" "2017012506:23:03" "[oss-security] CVE request: GNU screen escalation" (number mark "        solar@openwa Jan 25  138/4883  " thread-indent "\"Re: [oss-security] CVE request: GNU screen escalation\"\n") "<20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>" ("<20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24013 invoked by uid 550); 26 Feb 2018 12:41:59 -0000
+Received: (qmail 3641 invoked by uid 550); 25 Jan 2017 06:23:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,140 +11,156 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3437 invoked from network); 25 Jan 2017 06:23:14 -0000
+Message-ID: <20170125062303.GA2590@openwall.com>
+References: <20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>
+User-Agent: Mutt/1.4.2.3i
+Cc: abe@debian.org
+Date: Wed, 25 Jan 2017 07:23:03 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28662 invoked from network); 26 Feb 2018 05:19:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=EeAV1rsAZvDnsGIbWV3hrfUD0pwTn8PnE7/b0AQhTwY=;
-        b=Yb3onpqJNOaAPCOQfiqy4jDgaiphtttfzFM2oOh5nd7sSD7cA/aFSF+gH5xBVfXj/h
-         ECK1HYnfaXvaapMGa7+CoXQFYBnUKCv7Yrudbz3dYkCBCDyf1D/yyT/U14ITnGquoQmv
-         YhDsDDs0YjbZSk++1/DgohOz4E4IwaQ/OCDvBuT2rMwBtx1FLAuPba+UbqtDbtLcZLMA
-         cCZPndjssaelopJemeHGZlbVlmueSAQZio8Q7G+fYZAGeFGB1yCQa87k1/NxgW+XWZDp
-         d3LMD1RvdADGdj+bR827NOd/TGMm/XBuW+wUZLpr8ujXIF0hZYD4Gd3BszimndfoQFTH
-         YFGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=EeAV1rsAZvDnsGIbWV3hrfUD0pwTn8PnE7/b0AQhTwY=;
-        b=Y4I6BKgh6lNjTLsbpyXcznKX+G4+Dr6CevS43E9n5F2fKx5ZoerQ/OA5PlJ1IdV7ve
-         pe4TYUH16eTrgYZWvotK1toumvZsA6rMSkzUe/Bz3iXGyYosiOIQ172kTMQBR8y0jKHL
-         ipHzJ15lsM37iUmGDourSSE2wtnck9ZE8XYCPd74DVX64PCMpjM08WBQRkRObR4xWerV
-         m/li/jPVUym6qxE6Vs7iStbLP+fYP7KyLl96Ci38XuItMmpkl/4/WnhJd038sxYxGvgB
-         c+9MI+6Bm3CbQm+JW4iYtsDPV+isyFj3FyuEzM15tThYmdQ5hCV+ckr5L4Fe6lZ5AmOt
-         RicQ==
-X-Gm-Message-State: APf1xPCIvXBpuqWmH7gSyVQtOx+t5a1wvhYOY4Kmqo2226AOWmxqbfBp
-	WlVo0cIc5EoAWYb8E4LRh/jab20C5/rvPDN5RtrvqA==
-X-Google-Smtp-Source: AG47ELvCcvxytOwLH6EESIFfdm8LAzYMGdCe30iJfK+Ns8JvV9kx2iVplZeMtm8G6zd6hek80ejSTnUZ1i2vLZGwdjg=
-X-Received: by 10.36.76.69 with SMTP id a66mr11180522itb.148.1519622338648;
- Sun, 25 Feb 2018 21:18:58 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CA+=eHdR-Ym0O0kpxbjSPpNYqMhp3nCKUBHQh8GtjV4AKbJavUg@mail.gmail.com>
-References: <CAJmbs8i241-OvnTKwC=Z-GmaNaV5BB9PwmXw668BKsamLiwntQ@mail.gmail.com>
- <CA+=eHdTkJv3e+=M_oUEhiQk8tXxrNJohHMytNTskvkcbG9tieA@mail.gmail.com>
- <CAJmbs8iN5uwxxs3wWvJGkBsbe026yiyeGup1w=UrmtxnV-Orfg@mail.gmail.com> <CA+=eHdR-Ym0O0kpxbjSPpNYqMhp3nCKUBHQh8GtjV4AKbJavUg@mail.gmail.com>
-From: Maxim Solodovnik <solomax666@gmail.com>
-Date: Mon, 26 Feb 2018 12:18:58 +0700
-Message-ID: <CAJmbs8gqAfP0QPTSggDLSHwXzpv3H1rsuuo9wE024MzwhTSXTg@mail.gmail.com>
-To: Sahil Dhar <sdhar@securityinnovation.com>
-Cc: security@openmeetings.apache.org, 
-	Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	user-russian@openmeetings.apache.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: [ANNOUNCE] CVE-2018-1286 - Apache OpenMeetings - Insufficient
- Access Controls
+Subject: Re: [oss-security] CVE request: GNU screen escalation
+To: oss-security@lists.openwall.com
 
-Make sense,
-I'll change it in a moment :)
+On Tue, Jan 24, 2017 at 10:28:56PM +0100, Moritz Muehlenhoff wrote:
+> please assign a CVE ID for this vulnerability in GNU screen:
+> https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
 
-On Mon, Feb 26, 2018 at 12:17 PM, Sahil Dhar
-<sdhar@securityinnovation.com> wrote:
-> Hi Maxim,
->
-> I got your point, however, the description seems to be stating that only
-> version 3.0.0 is affected instead of <=4.0.1.
->
->
-> CVE-2018-1286 - Apache OpenMeetings - Insufficient Access Controls
-> Severity: Medium
->
-> Vendor: The Apache Software Foundation
->
-> Versions Affected: Apache OpenMeetings 3.0.0
-> Versions Affected: <= 4.0.1  (Corrected)
->
-> Description: CRUD operations on privileged users are not password protected
-> allowing an authenticated attacker to deny service for privileged users.
-> CVE-2018-1286
->
-> The issue was fixed in 4.0.2
-> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
->
->
-> Thanks,
-> ~ Sahil
->
-> On Mon, Feb 26, 2018 at 10:43 AM, Maxim Solodovnik <solomax666@gmail.com>
-> wrote:
->>
->> I have analyzed the code
->> Wysiwyg editor was introduced in 3.0.0
->> and it was vulnerable from the very beginning
->> So all versions are affected :(
->>
->> On Mon, Feb 26, 2018 at 12:10 PM, Sahil Dhar
->> <sdhar@securityinnovation.com> wrote:
->> > Hi Maxim,
->> >
->> >
->> > I just noticed that there is a typo in the CVE-2018-1286 description, as
->> > it
->> > states that the affected version is 3.0.0. However, the vulnerability
->> > was
->> > reported for 4.0.1 release. Can you please update it?
->> >
->> > Thanks,
->> > ~ Sahil
->> >
->> >
->> >
->> >
->> >
->> >
->> > On Sun, Feb 25, 2018 at 5:20 PM, Maxim Solodovnik <solomax@apache.org>
->> > wrote:
->> >>
->> >> Severity: Medium
->> >>
->> >> Vendor: The Apache Software Foundation
->> >>
->> >> Versions Affected: Apache OpenMeetings 3.0.0
->> >>
->> >> Description: CRUD operations on privileged users are not password
->> >> protected allowing an authenticated attacker to deny service for
->> >> privileged users.
->> >>
->> >>
->> >> The issue was fixed in 4.0.2
->> >> All users are recommended to upgrade to Apache OpenMeetings 4.0.2
->> >>
->> >> Credit: This issue was identified by Sahil Dhar of Security Innovation
->> >> Inc
->> >
->> >
->>
->>
->>
->> --
->> WBR
->> Maxim aka solomax
->
->
+Per oss-security list content guidelines:
 
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should remain
+valuable even with all of the external resources gone."
 
--- 
-WBR
-Maxim aka solomax
+let's be including the actual content in here, in addition to links.
+
+The screen-devel above is:
+
+---
+From:	anonymous
+Subject: 	[screen-devel] [bug #50142] root exploit 4.5.0
+Date: 	Tue, 24 Jan 2017 19:05:10 +0000 (UTC)
+
+URL:
+  <http://savannah.gnu.org/bugs/?50142>
+
+                 Summary: root exploit 4.5.0
+                 Project: GNU Screen
+            Submitted by: None
+            Submitted on: Tue 24 Jan 2017 07:05:09 PM UTC
+                Category: Program Logic
+                Severity: 3 - Normal
+                Priority: 5 - Normal
+                  Status: None
+                 Privacy: Private
+             Assigned to: None
+             Open/Closed: Open
+         Discussion Lock: Any
+                 Release: None
+           Fixed Release: None
+         Planned Release: None
+           Work Required: None
+
+    _______________________________________________________
+
+Details:
+
+Commit f86a374 ("screen.c: adding permissions check for the logfile
+name",
+2015-11-04)
+
+The check opens the logfile with full root privileges. This allows us to
+truncate any file or create a root-owned file with any contents in any
+directory and can be easily exploited to full root access in several
+ways.
+
+> address@hidden:~$ screen --version
+> Screen version 4.05.00 (GNU) 10-Dec-16
+> address@hidden:~$ id
+> uid=125(buczek) gid=125(buczek)
+groups=125(buczek),15(users),19(adm),42(admin),154(Omp3grp),200(algrgrp),209(cdgrp),242(gridgrp),328(nchemgrp),407(hoeheweb),446(spwgrp),453(helpdesk),512(twikigrp),584(zmgrp),598(edv),643(megamgrp),677(greedgrp),5000(abt_srv),16003(framesgr),16012(chrigrp),17001(priv_cpw)
+> address@hidden:~$ cd /etc
+> address@hidden:/etc (master)$ screen -D -m -L bla.bla echo fail
+> address@hidden:/etc (master)$ ls -l bla.bla
+> -rw-rw---- 1 root buczek 6 Jan 24 19:58 bla.bla
+> address@hidden:/etc (master)$ cat bla.bla
+> fail
+> address@hidden:/etc (master)$ 
+
+Donald Buczek <address@hidden>
+---
+
+There are some follow-ups, notably Axel Beckert pointing out that the
+issue appears to have been introduced on 2016-11-04 (not 2015-11-04):
+
+---
+> Commit f86a374 ("screen.c: adding permissions check for the logfile name",
+> 2015-11-04)
+
+There is no such commit id, neither in the master branch nor in the
+screen-v4 branch.
+
+I assume you meant one of these two commits instead:
+
+master: 
+http://git.savannah.gnu.org/cgit/screen.git/commit/?id=c575c40c9bd7653470639da32e06faed0a9b2ec4
+screen-v4: 
+http://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=5460f5d28c01a9a58e021eb1dffef2965e629d58
+
+The latter is the one included in Screen 4.5.0.
+---
+
+The commits add this code:
+
+---
++              FILE *w_check;
++              if ((w_check = fopen(screenlogfile, "w")) == NULL)
++                Panic(0, "-L: logfile name access problem");
++              else
++                fclose(w_check);
+---
+
+apparently into command-line option parsing in main(), thus apparently
+prior to dropping the privileges.  (I didn't review this in context.)
+
+Last but not least, I hope distros don't install screen SUID root these
+days.  If any distro does, this is yet another reminder to reconsider.
+
+Some install it SGID utmp.  Some take it a step further - Owl and ALT
+Linux install it SGID to group screen, which only grants the ability to
+invoke utempter (SGID utmp) and tcp_chkpwd (SGID shadow).  Thus, it'd
+take a vulnerability in those other tools to make much use of a screen
+vulnerability.  Here's an excerpt from ALT Linux's spec file:
+
+%post
+ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
+ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+
+%preun
+if [ $1 -eq 0 ]; then
+rm -f %_libexecdir/screen/{tcb_chkpwd,utempter}
+fi
+
+%triggerin -- pam_tcb >= 0.9.7.1
+ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
+
+%triggerin -- libutempter >= 1.0.6
+ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+
+%files
+%attr(2711,root,screen) %_bindir/screen
+%attr(710,root,screen) %dir %_libexecdir/screen
+%attr(2711,root,shadow) %ghost %_libexecdir/screen/tcb_chkpwd
+%attr(2711,root,utmp) %ghost %_libexecdir/screen/utempter
+%attr(775,root,screen) %dir /var/run/screen/
+
+Alexander
