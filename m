@@ -1,25 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/02/4
-Message-ID: <c7133f03-d720-b208-5805-8d767dad84ec@pipping.org>
-Date: Wed, 2 Aug 2017 21:37:27 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/26/4
+Message-ID: <20170126202602.GZ12842@openstack.org>
+Date: Thu, 26 Jan 2017 20:26:02 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-11742 - Expat 2.2.{1,2} LoadLibrary DLL hijacking vulnerability on Windows
+Subject: [OSSA-2017-001] CatchErrors leaks sensitive values in oslo.middleware (CVE-2017-2592)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+====================================================================
+OSSA-2017-001: CatchErrors leaks sensitive values in oslo.middleware
+====================================================================
+
+:Date: January 26, 2017
+:CVE: CVE-2017-2592
 
 
-Just a quick note that Expat 2.2.3 [1] released today fixes
-CVE-2017-11742 [2][3], a DLL hijacking vulnerability on Windows.
-
-Best
-
+Affects
+~~~~~~~
+- Oslo.middleware: <=3.8.0, >=3.9.0 <=3.19.0, >=3.20.0 <=3.23.0
 
 
-Sebastian
+Description
+~~~~~~~~~~~
+Divya K Konoor with IBM reported a vulnerability in oslo.middleware.
+Software using the CatchError class may include sensitive values in
+the error message accompanying a Traceback, resulting in their
+disclosure. For example, complete API requests (including keystone
+tokens in their headers) may leak into neutron error logs.
 
 
-[1] https://github.com/libexpat/libexpat/blob/master/expat/Changes
-[2] https://www.cvedetails.com/cve/CVE-2017-11742/
-[3] https://github.com/libexpat/libexpat/issues/82
+Patches
+~~~~~~~
+- https://review.openstack.org/425734 (Mitaka)
+- https://review.openstack.org/425732 (Newton)
+- https://review.openstack.org/425730 (Ocata)
+
+
+Credits
+~~~~~~~
+- Divya K Konoor from IBM (CVE-2017-2592)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1628031
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-2592
+
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
