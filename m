@@ -1,31 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/2
-Message-ID: <nycvar.YSQ.7.76.1712051252001.29623@wniryva>
-Date: Tue, 5 Dec 2017 12:54:12 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: zhangboxian <zhangboxian@...wei.com>
-Subject: CVE-2017-17381 Qemu: virtio: divide by zero exception while updating rings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/26/3
+Message-ID: <CAA_Lw39mq10gPSpsFTvCgvug-Ewgjeisj14bDrwvftV-QTeuSg@mail.gmail.com>
+Date: Thu, 26 Jan 2017 18:35:12 +0100
+From: Noryungi <noryungi@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Does not work on centos 7.1 (unpatched) running stock openssh.
 
-Virtio Vring implementation in Quick Emulator(QEMU) is vulnerable to an 
-arithmetic exception issue. It could occur if a guest was to unset vring 
-alignment while updating Virtio rings.
+TTY capture works, /tmp/sh is created but user is unprivileged.
 
-A guest user/process could use this flaw to crash Qemu process resulting in 
-DoS.
+On Jan 26, 2017 5:52 PM, <up201407890@...nos.dcc.fc.up.pt> wrote:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-12/msg00166.html
+> Hi list,
+>
+> I know I'm late to the party, but I was bored, so I decided to write an
+> exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
+> It is mostly considered to be a "DoS", even though Jann Horn publicly told
+> how it could be exploited for local privilege escalation, but I guess its
+> either PoC||GTFO for users to update.
+>
+> From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
+>
+> "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
+> devices, which allows local users to cause a denial of service (terminal
+> disruption) or possibly have unspecified other impact by writing to a
+> device, as demonstrated by writing an escape sequence."
+>
+> I think the description should be updated.
+>
+> $ gcc not_an_sshnuke.c -o not_an_sshnuke
+> $ ./not_an_sshnuke /dev/pts/3
+> [*] Waiting for slave device /dev/pts/3
+> [+] Got PTY slave /dev/pts/3
+> [+] Making PTY slave the controlling terminal
+> [+] SUID shell at /tmp/sh
+> $ /tmp/sh --norc --noprofile -p
+> # id
+> euid=0(root) groups=0(root)
+>
+> Thanks,
+> Federico Bento.
+>
+>
+>
+> ----------------------------------------------------------------
+> This message was sent using IMP, the Internet Messaging Program.
+>
 
-This issue was reported by Huawei Alpha Labs.
-
-'CVE-2017-17381' assigned via -> https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
