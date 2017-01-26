@@ -1,113 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/10
-Message-Id: <E1cdL8t-0007j3-EY@xenbits.xenproject.org>
-Date: Mon, 13 Feb 2017 18:14:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/1
+Message-ID: <20170126215243.58355x6p4o9cc7ks@webmail.alunos.dcc.fc.up.pt>
+Date: Thu, 26 Jan 2017 21:52:43 +0100
+From: up201407890@...nos.dcc.fc.up.pt
+To: oss-security@...ts.openwall.com, Noryungi <noryungi@...il.com>
+Subject: Re: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Quoting Noryungi <noryungi@...il.com>:
 
-            Xen Security Advisory CVE-2017-2615 / XSA-208
-                              version 2
+The PTY slave must be root owned to get root obviously, for example  
+when root logs in via ssh.
 
-                   oob access in cirrus bitblt copy
-
-UPDATES IN VERSION 2
-====================
-
-Included backport for qemu-xen versions 4.7 (and earlier); fixed
-qemu-xen-traditional patch.  Also included proper (non-obscured)
-e-mail addresses from upstream patch.
-
-Removed "possibly" from Impact.
-
-3 patches updated
-
-ISSUE DESCRIPTION
-=================
-
-When doing bitblt copy backwards, qemu should negate the blit width.
-This avoids an oob access before the start of video memory.
-
-IMPACT
-======
-
-A malicious guest administrator can cause an out of bounds memory
-access, leading to information disclosure or privilege escalation.
-
-VULNERABLE SYSTEMS
-==================
-
-Versions of qemu shipped with all Xen versions are vulnerable.
-
-Xen systems running on x86 with HVM guests, with the qemu process
-running in dom0 are vulnerable.
-
-Only guests provided with the "cirrus" emulated video card can exploit
-the vulnerability.  The non-default "stdvga" emulated video card is
-not vulnerable.  (With xl the emulated video card is controlled by the
-"stdvga=" and "vga=" domain configuration options.)
-
-ARM systems are not vulnerable.  Systems using only PV guests are not
-vulnerable.
-
-For VMs whose qemu process is running in a stub domain, a successful
-attacker will only gain the privileges of that stubdom, which should
-be only over the guest itself.
-
-Both upstream-based versions of qemu (device_model_version="qemu-xen")
-and `traditional' qemu (device_model_version="qemu-xen-traditional")
-are vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid the issue.
-
-Running HVM guests with the device model in a stubdomain will mitigate
-the issue.
-
-Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
-in the xl domain configuration) will avoid the vulnerability.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa208-qemuu.patch       mainline qemu, qemu-xen master,4.8
-xsa208-qemuu-4.7.patch   qemu-xen 4.4, 4.5, 4.6, 4.7
-xsa208-qemut.patch       qemu-xen-traditional
-
-$ sha256sum xsa208*
-afde3e9d4bf5225f92c36dec9ff673b0b1b0bad4452d406f0c12edc85e2fec72  xsa208-qemut.patch
-e492d528141be5899d46c2ac0bcd0c40ca9d9bfc40906a8e7a565361f17ce38d  xsa208-qemuu.patch
-09471b66c9d9fc5616e7b96ab67bbb51987e7d9520d1b81cb27cbbb168659ad5  xsa208-qemuu-4.7.patch
-$
+> Does not work on centos 7.1 (unpatched) running stock openssh.
+>
+> TTY capture works, /tmp/sh is created but user is unprivileged.
+>
+> On Jan 26, 2017 5:52 PM, <up201407890@...nos.dcc.fc.up.pt> wrote:
+>
+>> Hi list,
+>>
+>> I know I'm late to the party, but I was bored, so I decided to write an
+>> exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
+>> It is mostly considered to be a "DoS", even though Jann Horn publicly told
+>> how it could be exploited for local privilege escalation, but I guess its
+>> either PoC||GTFO for users to update.
+>>
+>> From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
+>>
+>> "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
+>> devices, which allows local users to cause a denial of service (terminal
+>> disruption) or possibly have unspecified other impact by writing to a
+>> device, as demonstrated by writing an escape sequence."
+>>
+>> I think the description should be updated.
+>>
+>> $ gcc not_an_sshnuke.c -o not_an_sshnuke
+>> $ ./not_an_sshnuke /dev/pts/3
+>> [*] Waiting for slave device /dev/pts/3
+>> [+] Got PTY slave /dev/pts/3
+>> [+] Making PTY slave the controlling terminal
+>> [+] SUID shell at /tmp/sh
+>> $ /tmp/sh --norc --noprofile -p
+>> # id
+>> euid=0(root) groups=0(root)
+>>
+>> Thanks,
+>> Federico Bento.
+>>
+>>
+>>
+>> ----------------------------------------------------------------
+>> This message was sent using IMP, the Internet Messaging Program.
+>>
+>
 
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
 
-This issue has already been publicly disclosed.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
 
-iQEcBAEBAgAGBQJYofdiAAoJEIP+FMlX6CvZ3UEIAMJUV177OqZ0O7436zYpM9S+
-fEku8b/G7npRcm0L9PtD8PG39IVtqrtIDHIpzMxHA0qbMx3PqWp1G3iBVwFnj21e
-ALtKjdNaoDA8nqFEQ3/AbyZ7jn91oYWwmJ7+pKGds+Q+juFof6FVOXCjhNp0XSA6
-EDvsz8vOI4fWTtEuVGbg1GnvgEAjKLE9/bE/4zdkWo2WSiWRRCj/yEAr5n0v0R5n
-0EEvk21H0XESk2zBk0/UxompNuqbHwOZhBkQ65DxNSkWMIA9hUgqyinR674luHKC
-mDkAq8bXar6n1TBQCbWq5f/+50FOApEs0EvJuzWAG7MEkFPaeDSilFb6obhxHjo=
-=294C
------END PGP SIGNATURE-----
-
-Download attachment "xsa208-qemut.patch" of type "application/octet-stream" (1919 bytes)
-
-Download attachment "xsa208-qemuu.patch" of type "application/octet-stream" (1916 bytes)
-
-Download attachment "xsa208-qemuu-4.7.patch" of type "application/octet-stream" (1860 bytes)
