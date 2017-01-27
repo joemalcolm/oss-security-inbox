@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["550" "Monday" "8" "October" "2018" "12:54:34" "-0400" "Nick Roessler" "nicholas.e.roessler@gmail.com" "<e6e0b960-faf3-175a-3730-46823ee69d3f@gmail.com>" "16" "[oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts" nil nil nil "10" "2018100816:54:34" "[oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts" (number mark "U       nicholas.e.r Oct  8   16/550   " thread-indent "\"[oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1104" "Friday" "27" "January" "2017" "07:13:04" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170127061304.GA12270@lorien.valinor.li>" "29" "[oss-security] CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues" nil nil nil "1" "2017012706:13:04" "[oss-security] CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues" (number mark "U       carnil@debia Jan 27   29/1104  " thread-indent "\"[oss-security] CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19964 invoked by uid 550); 8 Oct 2018 17:37:06 -0000
+Received: (qmail 26101 invoked by uid 550); 27 Jan 2017 06:13:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11810 invoked from network); 8 Oct 2018 16:54:49 -0000
+Received: (qmail 26077 invoked from network); 27 Jan 2017 06:13:18 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=uXwXF+WRgB07PxW7y5RZazueSExTPpHx47SREwVsRqQ=;
-        b=mGGZEsVY1HqnBJQKPslR3AzoxjhUKaBFmQh6J7PH4FqVWlkqDOUzLyoW2ojfIt7fBB
-         t7XokZoTLzrtcT6Z66SPAAMvTa4DETAPUaKe5tSlN5HloxsFJtMH+EwA2S64if9lY6iK
-         n7CNjEyPQY5ngBoNA6xLsWErOI41wuNKrf6exc3t39YEfUcW/mCBtNNbe1IcGmqkJEen
-         B9X3EnOHL7UroUoBXjbVGsX9H05rRNd2Vx+30YD7N18icOug0dlnUhBIMqH6zAJN5XVF
-         Jrz9i744MAunxhlurUnqq4q1zyCF6AGsXETejnMZmGC0+QLI9/mNaalWiHWdmGwFylCi
-         PNCQ==
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=FIAgTNxcdrm4YLxPZI5ZDYK2IML1c3IdWABvKr5v7mc=;
+        b=IwGiqx1VQ+gcj/ipaBtK5RrIffXxbvMEXCM3GFTyOH2gNuapWYLmWVxXmfuE5h9KL/
+         xymL8vnGxm6MWGbRw/2bxKxxySG9WXccG22pOWLbDc3iV6ePgMYXbKaks2QAW+HgO9Xz
+         5HeSkxWht5wPlhGC8ZcT3YG4ecP/ouDu94TkkHYIVMsZePfJ4nZ3nn1Uo9T30bey/B4D
+         yqMiig/HW43J0WyMUoz1x3yLTmKJpgy0SEx4m/XvfHsyyolSXfVDtoD3nPAA4MNviIcz
+         4W0WcQP/wISvZH082VjHkwvIdvxpQEyhLOkvklcRwudcczPnle97+xvIqrUVQYLHtIKa
+         TY8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=uXwXF+WRgB07PxW7y5RZazueSExTPpHx47SREwVsRqQ=;
-        b=H30XS5JRjwfae97m2H15463ICnDLI3Ko6qOanJ/P63YFhZHauFD7IDygFcBayzitdS
-         D7U5P/mw2Hot1CoDK1btLa6/d6L+fW1ebP7uDzPbqUlFYPHPVtwr9nRUW156E2NL+PFU
-         5XJ2gGr7hC2PC2o+xe5brQEruOAHeka8dIHOqrHkNm3zaSOlFngZWNpoUHqgv+jkxtYH
-         cn9vRIa2n4xAfxDYB+Lc4voeOfDkR8srs8KP6dn6wHjcZpfk3Ni6vsiOpVnarRknlNe9
-         S2Ta2sKbhZeed2YbeXhlzakaT2Dk/6Lq19sgN0YwQQvwpIw/dTejzBHamRWsHD43q0BT
-         pGzA==
-X-Gm-Message-State: ABuFfog/balWiJcKBdF758P2mmlALQ9z9yYETP2xNF/s9YzoGlLoofKR
-	Juk9qjD3RvigGm7NI4fFXCfeB44=
-X-Google-Smtp-Source: ACcGV62EIZIKUQDh1EBD6cCLK4EP3jegFDAX4D9oEHRJ7VtTONO674nGKYjk0vNYu/xzKy+abXADSg==
-X-Received: by 2002:a37:6cc3:: with SMTP id h186-v6mr7284812qkc.49.1539017677109;
-        Mon, 08 Oct 2018 09:54:37 -0700 (PDT)
-To: oss security list <oss-security@lists.openwall.com>
-From: Nick Roessler <nicholas.e.roessler@gmail.com>
-Message-ID: <e6e0b960-faf3-175a-3730-46823ee69d3f@gmail.com>
-Date: Mon, 8 Oct 2018 12:54:34 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:content-transfer-encoding
+         :user-agent;
+        bh=FIAgTNxcdrm4YLxPZI5ZDYK2IML1c3IdWABvKr5v7mc=;
+        b=WyLo0yn51ChajdHLCdbFmTNKpcgnrdbrF+xxNSZAipmWv7zDvKcKY8uPtLtS8YcRf1
+         p6Nx14Ok0JfeevfQ8vi+FJSw9ErcM3JmmbAS0YHH+LL4ItJK+Wo7NRQFrhp5+iT/rHX+
+         I7zpKr0bSNyBHDvnnFC/RKSMKhJ6M1iqjOfjwuEybfknaN54fXwE0rocYdVwLnHZZ4n/
+         nXCk7YyFjnP96m4AqxI0No7bsjReVEDLZXt45YJER4yBubrU/KpH7Bp5G2vtdDRtVylC
+         rTCPcJfabJzoEHzlfZfwrxR/5s0ZPdQRLbYdef9Fh5WsYpyacCwoKB3WydZTAp09bjSs
+         YhEQ==
+X-Gm-Message-State: AIkVDXJ45G/NYIKd/mXizw7RYoP5hIzGCCwcp96oMliaM3eO0PuoY/M/7scXddKOnY6anA==
+X-Received: by 10.107.18.12 with SMTP id a12mr6980847ioj.155.1485497586278;
+        Thu, 26 Jan 2017 22:13:06 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Fri, 27 Jan 2017 07:13:04 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170127061304.GA12270@lorien.valinor.li>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Subject: [oss-security] CVE-2018-17407: Tex-Live buffer overflow in handling of Type 1 fonts
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: [oss-security] CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass,
+ SQL injection, cross-site scripting issues
 
-Hey all,
+Hi
 
-     I wanted to make everyone aware of a security update for TeX Live, 
-a distribution of the TeX document preparation software. A buffer 
-overflow in the handling of Type 1 fonts (.pfb files) allows arbitrary 
-local code execution without privilege escalation when a malicious font 
-is loaded by one of the vulnerable tools (pdflatex, pdftex, luatex, dvips).
+Wordpress has released 4.7.2 as security release. Quoting from the
+advisory there seem to be three issues fixed (full quoting for the
+list archives):
 
-     The patch was rolled out on Sept 21.  See:
+WordPress 4.7.2 is now available. This is a security release for all previous
+versions and we strongly encourage you to update your sites immediately.
 
-https://www.debian.org/security/2018/dsa-4299
-https://security-tracker.debian.org/tracker/CVE-2018-17407
+WordPress versions 4.7.1 and earlier are affected by three security issues:
 
-Thanks,
---
-Nick
+ 1/ The user interface for assigning taxonomy terms in Press This is shown to
+users who do not have permissions to use it. Reported by David Herrera of Alley
+Interactive.
+
+ 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
+WordPress core is not directly vulnerable to this issue, but we’ve added
+hardening to prevent plugins and themes from accidentally causing a
+vulnerability. Reported by Mo Jangda (batmoo).
+
+ 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
+table. Reported by Ian Dunn of the WordPress Security Team.
+
+https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+
+Could you please assign CVEs for those issues?
+
+Regards,
+Salvatore
