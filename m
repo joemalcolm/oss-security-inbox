@@ -1,20 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/9
-Message-Id: <9CBECC6C-8428-4C2C-B3F6-CB6768B9C706@oracle.com>
-Date: Mon, 3 Jul 2017 19:55:06 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/2
+Message-ID: <20170127061304.GA12270@lorien.valinor.li>
+Date: Fri, 27 Jan 2017 07:13:04 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-> On 3 Jul 2017, at 19:18, Solar Designer <solar@...nwall.com> wrote:
-> 
->> PS For contributing back I have given myself a "must try harder" mark.
-> 
-> Thanks.  Please let us know at which specific tasks you'll try harder.
+Wordpress has released 4.7.2 as security release. Quoting from the
+advisory there seem to be three issues fixed (full quoting for the
+list archives):
 
+WordPress 4.7.2 is now available. This is a security release for all previous
+versions and we strongly encourage you to update your sites immediately.
 
-Will do.   I’m in the middle of a house move at the moment so everything is a little chaotic so I’ll get back to you next week when, hopefully, the dust has settled somewhat.
+WordPress versions 4.7.1 and earlier are affected by three security issues:
 
-jch
+ 1/ The user interface for assigning taxonomy terms in Press This is shown to
+users who do not have permissions to use it. Reported by David Herrera of Alley
+Interactive.
+
+ 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
+WordPress core is not directly vulnerable to this issue, but we’ve added
+hardening to prevent plugins and themes from accidentally causing a
+vulnerability. Reported by Mo Jangda (batmoo).
+
+ 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
+table. Reported by Ian Dunn of the WordPress Security Team.
+
+https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+
+Could you please assign CVEs for those issues?
+
+Regards,
+Salvatore
