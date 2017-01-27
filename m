@@ -1,71 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/6
-Message-ID: <CAA=AuEezYNSg-yia-8m=sp+BT+7JdFJGTdYHnYAXLaXqZxBuyA@mail.gmail.com>
-Date: Thu, 16 Mar 2017 18:32:17 +0300
-From: Jerome Athias <athiasjerome@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/3
+Message-ID: <60bcff1f-fa22-502f-8b1e-95a662a52f0d@yandex.ru>
+Date: Fri, 27 Jan 2017 10:51:09 +0300
+From: Luc Lynx <luc.lynx@...dex.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: Dealing with CVEs that apply to unspecified package versions
+Subject: SSRF issue in the svgsalamander library
 Content-Type: text/plain; charset=utf-8
 
-Note for later (for going further into automation) for potential candidate
-for schema reuse
-https://github.com/sarif-standard
+Hello,
 
-On Thu, Mar 16, 2017 at 12:29 PM, Jerome Athias <athiasjerome@...il.com>
-wrote:
+There is a java library for processing svg files called svgSalamander:
 
-> Yes the CVE form could help. (from my experience, first versions of a CVE
-> sometimes do not include the exact CPE versions, the CPE are (or should be
-> used as) at that time a pattern (e.g. "starts with") (still helpful) and
-> are then sometimes (and we should understand/recognize the time/effort
-> needed) revised/detailed over time
-> OVAL could help to circumvent that issue (e.g. patterns/regex, hashes,
-> etc.)
->
-> imho, the root cause (or main issue) is:
-> CVRF (or OASIS CSAF/CVRF) or CVE schema are lacking in their
-> models/schemas/trees what is needed to automatically handle software
-> components/dependencies
-> e.g. of what would be needed: http://schemas.dmtf.
-> org/wbem/cim-html/2.46.0+/CIM_SoftwareElement.html
->
->
->
->
-> On Wed, Mar 15, 2017 at 11:47 PM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
->
->> On Wed, Mar 15, 2017 at 2:05 PM, Leo Famulari <leo@...ulari.name> wrote:
->>
->> > On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
->> > > I suspect the solution is for people who rely upon these scanning
->> tools
->> > to
->> > > do the leg work themselves on the packages they care about. (i.e., the
->> > > packages that annoy them the most.)
->> >
->> > I think those of us who find these tools useful should work to improve
->> > the CVE database by adding the "fixed-in-version" information as it
->> > becomes available.
->> >
->>
->> This is a major goal of
->>
->> 1) using the JSON format with richer data [a]
->> 2) allowing other people (e.g. CVE Mentors) to edit the data
->>
->> [a]
->> https://github.com/CVEProject/automation-working-group/blob/
->> master/cve_json_schema/DRAFT-JSON-file-format-v4.md
->>
->>
->>
->> --
->>
->> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->> Red Hat Product Security contact: secalert@...hat.com
->>
->
->
+https://github.com/blackears/svgSalamander
 
+It can also be found in maven:
+
+http://search.maven.org/#search%7Cga%7C1%7Csvg-salamander
+
+If the library is used in a web application, SSRF isssue is possible. I
+created a ticket on github:
+https://github.com/blackears/svgSalamander/issues/11
+
+The issue seems to be in all versions of the library.
+
+--
+LL
