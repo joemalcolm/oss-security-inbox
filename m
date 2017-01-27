@@ -1,4 +1,9 @@
-Received: (qmail 5164 invoked by uid 550); 25 Apr 2025 15:48:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1590" "Friday" "27" "January" "2017" "22:59:47" "+0100" "KARBOWSKI Piotr" "piotr.karbowski@gmail.com" "<8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>" "34" "[oss-security] Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example." nil nil nil "1" "2017012721:59:47" "[oss-security] Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example." (number mark "U       piotr.karbow Jan 27   34/1590  " thread-indent "\"[oss-security] Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22076 invoked by uid 550); 28 Jan 2017 12:14:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21927 invoked from network); 25 Apr 2025 07:18:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deepin.org;
-	s=ukjg2408; t=1745565474;
-	bh=dBrfyZKuRQNFhzqv9R6awPV3UBnBHxlUWLEHiczLHZs=;
-	h=From:To:Subject:Mime-Version:Date:Message-ID;
-	b=ubb0yWVpcBOAhxVd7S2spNTeyybsrJ3EukMux5tKy1SJfICwZznn77TfcPMQSp6vU
-	 nwrqZ7hBemT+cMKpURKEFjjKIxPwX3BzIpO5dLNN9rhHAtf1ZnxyZgpOtWntFgYUjg
-	 VipZPluIuoK6Eg7P2UuGKdCYNWAZ4dpYrykiCz+Y=
-EX-QQ-RecipientCnt: 1
-X-QQ-GoodBg: 2
-X-QQ-SSF: 0040000000000010
-X-QQ-FEAT: D4aqtcRDiqS1uDIXxvn4gK/xYrdr6vDfpwOuPrOIIuM=
-X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-Originating-IP: 8TNrPM/KJcGKHh8i/1C525hgq2xEL1Sj30Ktqc/clXSYQkc/we7ODjaq0T+ikPmR
-X-Originating-IP: 255.255.247.166
-X-QQ-STYLE: 
-X-QQ-mid: lv3sz3a-0t1745565473t4f3381f8
-From: "=?utf-8?B?eGlhb2xpbg==?=" <dongxiaolin@deepin.org>
-To: "=?utf-8?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_680B3720_CB665340_3C9675ED"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 25 Apr 2025 15:17:52 +0800
-X-Priority: 3
-Message-ID: <tencent_43AA27D65C46DEB244310CDB@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-BIZMAIL-ID: 17727276734540088166
-X-QQ-SENDSIZE: 520
-Feedback-ID: lv:deepin.org:qybglogicsvrgz:qybglogicsvrgz8a-0
-X-QQ-XMAILINFO: N+v2p8NjVRtQ1RHehmX8f/9qhj8L7ZauGemFn480hy5hFRr2c4y5MGF/
-	ZE9gJCJDiu4iw2rQv5kthKVl7QI0JN2pPJfHGgBVnXvBmuZrUJxAtkTMeIIM0uAKBsfLEhe
-	RpKU7xQBWStEO6deMER0iE6IVyyCSw2gqQoRSLzGezF0l330/aiCQN7wv75/ylC8wm5yPI0
-	wRH7QedVvUoDI2vvv9Q37c6GpbHoI64/v7t64B4YH9XOzP8imgxWpW9py6icQPVDbj7/zDD
-	DvYUnL5YwhvjuilrZqVMqYSFN050VG3JMcXwsyz7duh3eyzIAf8gq/PJSs5g0MyXFM0sEfc
-	JkHy+gNVXlh/dmiFamLkJsocwlLLquU7r+cAtIrlcfdrFUvfLzjqBnkofUvV6Bkh5u5lwiu
-	MxP83sLhZ9PNiqI7SF+xewxxZY5PfBOP3pJ4PayzQQWzUtlikRleNJW0dbD1wjjx4/1S4zp
-	N7s4DVmqD4w9RRmZtZkH/DIA6El8noT9j0xtrQkDLUeMshEAetcd109IlRpTZ8X3kjBJvxw
-	ekrDr36NpQtZ/7vkFO22kjJk13pZ/gLhHN23R2Y/pf+SRefWYsH1YtSdhsic0uK4I3xrftD
-	jdDRYD/r6R0Mw+XyQq/mRwKM5NOkHEZsqzVQDhbZTLbWNCA0ShKRDiYg1Sc0kXzOlXu0Tcy
-	XPi/K2Z6ZoNdBuAKTIrwC3qt9KeSsNeWAMaWl/g6RXJiUsD6KweviuCtNizOoge6JA0RRqm
-	b1K5HgY9uAPm/Z7F/mq26UnoWcA9oZZQlmIfXE+MhjhdgHpcEVuvbjgr5cPzgq4ExOJqXBM
-	3GtWGaDI5WYZElXcc4B1L25MsnnS40UVVy20eDTq55Ii7TteXUc5SJeE/uxujkXId2erH39
-	PVQS0DcSHzosDM4XhXCGROsSma9u+oz85MMa2K4oY6iLSMyFjBolRKgZ67h9EpmfURqja4k
-	gmg3BfZVm21gJTG3ceBCFZL4QabM4XlXrXKbSHGNgmR3C+HNZGbJCo6e5f7pUapsuXCoYqX
-	n+X4vEAlHpNV4W7g1KdAwERCUicjxcQPWeAEMGTg==
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
-X-QQ-RECHKSPAM: 0
-Subject: [oss-security] CVE-2024-56431: libtheora: incorrect bitwise shift in huffdec.c
-X-Spam: Yes
+Received: (qmail 20355 invoked from network); 27 Jan 2017 22:00:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=mmjgqc2W/N1kwoEs7aBxmpc9jDUV+Avr58OVJTGxCjw=;
+        b=tq/5TmwIoAX9EJLa7dME26Q6Xk6BslKhd26C8e5BcGpX14o/q132bGt6ml3cg+TAu7
+         2+/EDGDI92grlpPiVmyqg4foqiWrA7Tg/afP8L/ygjGJl441dTsl11M8Qu+ik18kD4Ir
+         SSq2m969sikE3tunnOOJ65db3aWWf17jA+7bjE0v3mCF7qLpbYrhXwI+Ussevz/JWYe9
+         eK3Mut+67HaGtHmeyv791DE+qg1T7A3qX/0KYlmfLV1ewXD7VpHLJKp0EvKE5DLbQBPg
+         TI37J0lZF4DDsYhGkT2MNEEFAwilcPmgPaWSht57reotPAlGCEXlFJWzzxskiOA2hhZq
+         r1SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=mmjgqc2W/N1kwoEs7aBxmpc9jDUV+Avr58OVJTGxCjw=;
+        b=lqsA78SYKPsPdEihK9Wz+JPQZsvkKPsvKN0FfVZMFgww7Aq19gv7oMWe83imb0YNfy
+         UCj3iV2vRjs7qVUe9J06Zz0dMOake5jxlug+F5WRHpqcme+VS3CsleOaAKOFqXPrE5Jb
+         ILK2vF8DiCUH6oa1x3Bb5vR7Loosz3uQOG2XP2SOTyQ7TLa83ise9G+AnudkkaZAQYnD
+         jsao6B1u3wuKM2e50EcUi3HORMMjNkzWP6Bd3D19NinfJ0uExtQvx6BZdjQkEIncYOXK
+         Mt+NVaKYpcy0tOafDMrl9gySDH1aPAUCzYzfLIGQmUqE179uY3oAwkSPpqoEbIK9C/sw
+         bWPg==
+X-Gm-Message-State: AIkVDXLPBi28aeWIuy0RHmZ/mWbCsTioxi1et9lsJAE/aWxX0q+K8r3KlWhxFHdj/wpHxQ==
+X-Received: by 10.28.16.211 with SMTP id 202mr5295610wmq.133.1485554389125;
+        Fri, 27 Jan 2017 13:59:49 -0800 (PST)
+To: oss-security@lists.openwall.com
+Cc: security-audit@gentoo.org
+From: KARBOWSKI Piotr <piotr.karbowski@gmail.com>
+Message-ID: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
+Date: Fri, 27 Jan 2017 22:59:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Gentoo: order of installed packages may result in vary directories
+ permissions, leading to crontab not requiring cron group membership as
+ example.
 
-------=_NextPart_680B3720_CB665340_3C9675ED
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi,
 
-U2V2ZXJpdHk6Jm5ic3A7DQotIG1vZGVyYXRlDQoNCg0KQWZmZWN0ZWQgdmVyc2lvbnM6DQotIGxp
-YnRoZW9yYSB0aHJvdWdoIDEuMi4wDQoNCg0KRml4ZWQgc29mdHdhcmU6DQotIHYxLjIuMA0KDQoN
-CkRlc2NyaXB0aW9uOg0KQSBmbGF3IHdhcyBmb3VuZCBpbiBUaGVvcmEgKGxpYnRoZW9yYSkuIEFu
-IGluY29ycmVjdCBiaXR3aXNlIHNoaWZ0IG1heSBiZSB0cmlnZ2VyZWQgdmlhIHNwZWNpYWxseS1j
-cmFmdGVkIGlucHV0LCBwb3RlbnRpYWxseSByZXN1bHRpbmcgaW4gYW4gYXBwbGljYXRpb24gY3Jh
-c2guDQoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0KUmVmZXJlbmNlczoNCmh0dHBzOi8vZ2l0aHViLmNvbS9hZHZpc29yaWVz
-L0dIU0EtOHhwOC1nbW1qLXhjOHcNCmh0dHBzOi8vZ2l0aHViLmNvbS9VbmlvblRlY2gtU29mdHdh
-cmUvb3BlbmZoZS1Qb0MNCmh0dHBzOi8vZ2l0bGFiLnhpcGgub3JnL3hpcGgvdGhlb3JhLy0vbWVy
-Z2VfcmVxdWVzdHMvMjgNCmh0dHBzOi8vZ2l0bGFiLnhpcGgub3JnL3hpcGgvdGhlb3JhLy0vY29t
-bWl0LzU2NjVmODZiOGZkODM0NWJiMDk0Njk5OTBlNzkyMjE1NjJhYzIwNGI=
+The packages in Gentoo often utilizes Portage's functions like keepdir 
+to create a directories, with specified permissions. One of the examples 
+is 'cronbase', which the only purpose is to setup 
+/etc/cron.{hourly,daily,weekly,monthly} and /var/spool/cron.
 
-------=_NextPart_680B3720_CB665340_3C9675ED--
+The /var/spool/cron is meant to have root:cron 750, which makes the 
+crontab usable only for the users that are members of cron group.
 
+As for the /etc/cron.{hourly,daily,weekly,monthly} they're meant to be 
+root:root 750.
+
+If, for instance, a mlocate package will be installed before cronbase, 
+due to installing /etc/cron.daily/mlocate, the /etc/cron.daily will end 
+up with 755 permissions. After than when crontab package is installed, 
+due to usage of portage's keepdir function, the directory in temporary 
+directory will be installed as root:cron 750, but during the merge 
+process to rootfs no directory permissions will be merged, leaving the 
+/etc/cron.daily as 755.
+
+On one system after installing set of packages, the /var/spool/cron 
+ended up being cron:root 755, which results in possibility for any local 
+user to actually create the crontabs (including system users like nginx, 
+mysql, and so on).
+
+The way a (directory) ownership and permissions are handled in Gentoo 
+seems to be flawed, it's not clear to me whatever Portage should 
+provided a soluton to that, or the ebuilds authors should make sure to 
+always depends, in case of touching cronbase directories, on the 
+cronbase package, to ensure that it's installed prior to installing 
+them. Nonetheless I do believe this issue is worth CVE.
+
+-- Piotr.
