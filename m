@@ -1,4 +1,9 @@
-Received: (qmail 27792 invoked by uid 550); 2 Sep 2022 10:53:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3571" "Friday" "27" "January" "2017" "23:53:29" "+0100" "pali@cpan.org" "pali@cpan.org" "<201701272353.40452@pali>" "78" "[oss-security] Use after free in libmysqlclient.so" nil nil nil "1" "2017012722:53:29" "[oss-security] Use after free in libmysqlclient.so" (number mark "U       pali@cpan.or Jan 27   78/3571  " thread-indent "\"[oss-security] Use after free in libmysqlclient.so\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3487 invoked by uid 550); 28 Jan 2017 07:05:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,101 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27774 invoked from network); 2 Sep 2022 10:53:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=x4GNHUwxrG2V3UmE/2+lCyhekPs9Tw0jHPRZy8Tr/K4=; b=nbf9xX9JLucOV0IpA82HgopzZo
-	42S3rXM3jIw0Kr79LgeKJzwZdNiFs6PXOufB71IrM/WkCWslmDXDHdt8q5EzWQ9B4KIN9NqsznVZ1
-	BD5Ao54+iJ0VaK/EbHyDzVoFBjEKslGh477/l4+mPIv/RvAgBEU8cCXfpMsPHJ9hlS3qrWEvpGtQ4
-	Ezqbxj+mPwD2qy7sccWNoxPU6bAJ1WU1pHPfAaER+pqrmAM5yB2gzA1v1UwP7N4Rj2bKxDnTCSAJ+
-	NjUN6iio+nurkpMYknCyQ8Shv08YEYo8YKC/qYWMhwykzsOWaurUY4sbIuizLyOg30DHzeyAvqM5v
-	Kr+nuLOw==;
-Message-ID: <f1fef6f7-fadb-d9d4-e1cb-9fbcb9e1f881@igalia.com>
-Date: Fri, 2 Sep 2022 12:53:29 +0200
+Received: (qmail 29795 invoked from network); 27 Jan 2017 22:53:53 -0000
+X-Envelope-From: pali@cpan.org
+From: pali@cpan.org
+To: oss-security@lists.openwall.com
+Date: Fri, 27 Jan 2017 23:53:29 +0100
+User-Agent: KMail/1.13.7 (Linux/3.13.0-107-generic; KDE/4.14.2; x86_64; ; )
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Content-Language: es
-To: oss-security@lists.openwall.com,
- Demi Marie Obenour <demi@invisiblethingslab.com>,
- John Helmert III <ajak@gentoo.org>
-References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
- <YwhTtN8duEhxo1hY@gentoo.org>
- <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
- <Ywz/hDw3dwvhYlua@itl-email>
- <e9e07db7-9456-4015-5241-8a7e6e80ab0a@igalia.com>
- <YxEuR+oRpNUVhiOs@itl-email>
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Organization: Igalia S.L.
-Mail-Followup-To: oss-security@lists.openwall.com,
- Demi Marie Obenour <demi@invisiblethingslab.com>,
- John Helmert III <ajak@gentoo.org>
-In-Reply-To: <YxEuR+oRpNUVhiOs@itl-email>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
- WSA-2022-0008
+Message-Id: <201701272353.40452@pali>
+Subject: [oss-security] Use after free in libmysqlclient.so
 
-On 02/09/2022 00:11, Demi Marie Obenour wrote:
-> On Thu, Sep 01, 2022 at 10:31:16PM +0200, Carlos Alberto Lopez Perez wrote:
->> On 29/08/2022 20:03, Demi Marie Obenour wrote:
->>>> We (maintainers of Linux WebKit ports) don't have access to the security
->>>> issues affecting Apple products until those issues are made public by them.
->>> That is unfortunate.  I thought you would have access to embargoed
->>> bugzilla tickets.
->>>
->>
->> We do have access to the tickets on WebKit bugzilla that are marked as
->> security-related and are hidden from other users by default.
-> 
-> Okay, that makes sense.  As an aside, why are these tickets kept hidden
-> indefinitely even after patches have been available for a long time?
-> 
+Hello, I would like to report problem related to MySQL/MariaDB and 
+possibly asking for assigning CVE if this list is the right place.
 
-I don't know the reason.
+C client library for MySQL (libmysqlclient.so) has use-after-free defect 
+which can cause crash of applications using that MySQL client.
 
-But I suspect it maybe has something to do how bugzilla works, since the
-whole "Security" category on the WebKit bugzilla is private.
-And I'm unsure if Bugzilla allows access to a private issue based on the
-age and status (closed/open) of the issue.
+Defect occurs by calling mysql_close() function from libmysqlclient.so. 
+If mysql_close() is called before calling all mysql_stmt_close() (for 
+all allocated stmts), then following mysql_stmt_close() call try to 
+write to already released memory. mysql_close() let dangling pointer 
+exist for prepared statements. Real problem is in function 
+mysql_prune_stmt_list() which incorrectly iterate over elements. 
+Function list_add() overwrite ->next pointer of current element which 
+overwrite next element for iteration.
 
->> However, we don't receive the information about which WebKit fixes will
->> be included in any Apple security update until those advisories are public.
->>
->>
->>>> So, we didn't knew until August 17th of this issue. Also you can see
->>>> that the bug report itself or the patch doesn't has any indication that
->>>> it fixes a security-related problem.
->>>>
->>>> Therefore, the time it took us to notice the issue, backport the fix and
->>>> do a new release was just 7-8 days (from 17th to 24-25th of August).
->>>> Which, honestely, it is quite good taking into account that: 1)
->>>> back-porting the fix was not straightforward since it required
->>>> back-porting also a few previous patches in order to be able to merge it
->>>> properly and that 2) we are in August and people is usually on holidays.
->>> Was backporting needed, as opposed to shipping a new minor version?
->>>
->>
->> It was. Fixes land in the master (main) branch. Those fixes don't
->> necessarely apply or work on the branch of the last webkitgtk-stable branch.
-> 
-> I see.  Have you considered using the same branch of WebKit that Apple
-> does, or backporting security patches as soon as they land in main
-> without waiting for an upstream release?  Presumably you know which
-> commits are security fixes.
+Basically it is just wrong usage of linked list structure.
 
-We have considered using the same stable branches that them, but in the
-end it didn't fit well our release process. We aim at a 6-month release
-cadence for major stable releases in order to align with the GNOME
-release process. And Apple has a differente release cadence than that.
+Languages in which is not guaranteed order of executing destructor of 
+created objects have a big problem as such writing to memory pointed by 
+dangling can cause crash of whole application.
 
-We also monitor patches landing on master (main) that are tagged as
-security releated and sometimes we backport them even when those don't
-have (still) assigned a CVE.
+E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of 
+whole perl process with simple script:
 
-In the case of this CVE (CVE-2022-32893) the patch fixing it was not
-marked as security related.
+perl -MDBI -e '
+$dbh = DBI->connect("dbi:mysql:", "root", undef,
+                    {RaiseError => 1, mysql_server_prepare => 1});
+$sth1 = $dbh->prepare("SELECT 1");
+$sth2 = $dbh->prepare("USE mysql");
+$dbh->disconnect;
+$dbh = undef;
+'
+Segmentation fault
+
+Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce change 
+username, password and host where is running mysql server. Valgrind can 
+prove that memory corruption really occurs.
+
+This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But is 
+present in all MySQL 5.5 versions (and also older) and appropriate older 
+5.6 and 5.7 versions. MySQL 5.5 is still used, supported and included in 
+lot of linux distributions.
+
+Moreover this defect is present also in MariaDB releases. I tested all 
+last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all those are 
+affected.
+
+MySQL and MariaDB provides also standalone package with only C client 
+library libmysqlclient.so (without server) under name "Connector/C" and 
+so appropriate versions of it are affected too. 
+
+I found that this defected was fixed in MySQL git repository by commit:
+https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc552424132806f46e93
+
+That commit can be easily applied to last MySQL 5.5.54 version and fixes 
+this defect.
+
+Looks like problem was already reported and is publically available in 
+MySQL bug tracker, see more details on links:
+https://bugs.mysql.com/bug.php?id=70429
+https://bugs.mysql.com/bug.php?id=63363
+(tickets are closed despite fact that MySQL 5.5 and older are not fixed)
+
+---
+
+I reported this problem to Oracle secalert_us@oracle.com two months ago, 
+but they did absolutely nothing for fixing it in MySQL 5.5. Instead they 
+started resending this problem to some random people with @cpan.org 
+address for unknown reason. And told me to not disclose information 
+about this defect. Resending does not look like normal handling of 
+security related problem! Therefore I suggest other people to not 
+wasting time reporting problems to Oracle for open source applications.
+
+As two months is really long time to fix such problem which was already 
+fixed in new versions; it is already publically disclosed in MySQL bug 
+tracker; fix available in public git; problem is in major MariaDB 
+versions; fix is small; and this is open source product included in many 
+linux distributions I decided to send information to oss-security.
