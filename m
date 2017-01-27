@@ -1,71 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/6
-Message-ID: <899078.172023536-sendEmail@localhost>
-Date: Thu, 2 Mar 2017 16:35:37 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: podofo: NULL pointer dereference in PoDoFo::PdfColor::operator= (PdfColor.cpp)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/6
+Message-ID: <e7775dec-2573-d6d6-ddbd-063640a1b4f0@suse.com>
+Date: Fri, 27 Jan 2017 16:01:25 +0100
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: linux kernel - local DoS with cgroup offline code
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+On 11/05/2016 04:59 PM, cve-assign@...re.org wrote:
+> > A malicious user who can run an arbitrary image with a
+> non-privileged user
+> > in a Container-as-a-service cloud environment could use the exploit to
+> > deadlock the container nodes to deny the service for other users.
+>
+> > container> $ trinity -D --disable-fds=memfd --disable-fds=timerfd \
+> >              --disable-fds=pipes --disable-fds=testfile \
+> >              --disable-fds=sockets --disable-fds=perf \
+> >              --disable-fds=epoll --disable-fds=eventfd \
+> >              --disable-fds=drm
+>
+> > # systemctl status docker
+> > <hang...>
+>
+> > task kworker/45:4:146035 blocked for more than 120 seconds.
+>
+> > "cgroup is trying to offline a cpuset css, which
+> > takes place under cgroup_mutex. The offlining ends up trying to drain
+> > active usages of a sysctl table which apparently is not happening."
+> There is
+> > no fix at this time as far as I can tell.
+>
+> Use CVE-2016-9191.
+>
 
-The complete ASan output:
+Fix:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=93362fa47fe98b62e4a34ab408c4a418432e7939
 
-# podofocolor dummy $FILE foo
-==9554==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000004ca47d bp 0x7fff58eb6bb0 sp 0x7fff58eb6330 T0)
-==9554==The signal is caused by a READ memory access.
-==9554==Hint: address points to the zero page.
-    #0 0x4ca47c in AddressIsPoisoned /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_mapping.h:321
-    #1 0x4ca47c in QuickCheckForUnpoisonedRegion /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:43
-    #2 0x4ca47c in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #3 0x7f5fc924b58d in PoDoFo::PdfColor::operator=(PoDoFo::PdfColor const&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfColor.cpp:575:9
-    #4 0x52d31f in GraphicsStack::TGraphicsStackElement::operator=(GraphicsStack::TGraphicsStackElement const&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.h:46:29
-    #5 0x52d31f in GraphicsStack::TGraphicsStackElement::TGraphicsStackElement(GraphicsStack::TGraphicsStackElement const&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.h:41
-    #6 0x52c46a in GraphicsStack::Push() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/graphicsstack.cpp:40:27
-    #7 0x522005 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:187:35
-    #8 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
-    #9 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
-    #10 0x7f5fc7d3261f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #11 0x428718 in _start (/usr/bin/podofocolor+0x428718)
+Introduced by:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f0c3b5093addc8bfe9fe3a5b01acb7ec7969eafa
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_mapping.h:321 in AddressIsPoisoned
-==9554==ABORTING
+v3.11-rc1...v4.10-rc4
 
-Affected version:
-0.9.4
+Andreas
 
-Fixed version:
-N/A
 
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00172-podofo-nullptr-PoDoFo-PdfColor-operator
-
-Timeline:
-2017-02-13: bug discovered
-2017-03-02: bug reported to upstream
-2017-03-02: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfcoloroperator-pdfcolor-cpp
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
 
 
