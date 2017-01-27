@@ -1,73 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/5
-Message-ID: <568660.939901264-sendEmail@localhost>
-Date: Wed, 4 Oct 2017 15:43:42 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: NULL pointer dereference in concat_filename (dwarf2.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/2
+Message-ID: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
+Date: Fri, 27 Jan 2017 22:59:47 +0100
+From: KARBOWSKI Piotr <piotr.karbowski@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: security-audit@...too.org
+Subject: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example.
 Content-Type: text/plain; charset=utf-8
 
-Description:
-binutils is a set of tools necessary to build programs.
+Hi,
 
-The complete ASan output of the issue:
+The packages in Gentoo often utilizes Portage's functions like keepdir 
+to create a directories, with specified permissions. One of the examples 
+is 'cronbase', which the only purpose is to setup 
+/etc/cron.{hourly,daily,weekly,monthly} and /var/spool/cron.
 
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==3765==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000006a7376 bp 0x7ffd5f9a3d50 sp 0x7ffd5f9a3d20 T0)
-==3765==The signal is caused by a READ memory access.
-==3765==Hint: address points to the zero page.
-    #0 0x6a7375 in concat_filename /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8
-    #1 0x696e83 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2258:44
-    #2 0x6a2ab8 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3642:26
-    #3 0x6a2ab8 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3677
-    #4 0x6a0104 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4789:11
-    #5 0x5f330e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
-    #6 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #11 0x7f0f4a74b680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
+The /var/spool/cron is meant to have root:cron 750, which makes the 
+crontab usable only for the users that are members of cron group.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8 in concat_filename
-==3765==ABORTING
+As for the /etc/cron.{hourly,daily,weekly,monthly} they're meant to be 
+root:root 750.
 
-Affected version:
-2.29.51.20170924 and maybe past releases
+If, for instance, a mlocate package will be installed before cronbase, 
+due to installing /etc/cron.daily/mlocate, the /etc/cron.daily will end 
+up with 755 permissions. After than when crontab package is installed, 
+due to usage of portage's keepdir function, the directory in temporary 
+directory will be installed as root:cron 750, but during the merge 
+process to rootfs no directory permissions will be merged, leaving the 
+/etc/cron.daily as 755.
 
-Fixed version:
-N/A
+On one system after installing set of packages, the /var/spool/cron 
+ended up being cron:root 755, which results in possibility for any local 
+user to actually create the crontabs (including system users like nginx, 
+mysql, and so on).
 
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=c361faae8d964db951b7100cada4dcdc983df1bf
+The way a (directory) ownership and permissions are handled in Gentoo 
+seems to be flawed, it's not clear to me whatever Portage should 
+provided a soluton to that, or the ebuilds authors should make sure to 
+always depends, in case of touching cronbase directories, on the 
+cronbase package, to ensure that it's installed prior to installing 
+them. Nonetheless I do believe this issue is worth CVE.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-15023
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00374-binutils-NULLptr-concat_filename
-
-Timeline:
-2017-09-25: bug discovered and reported to upstream
-2017-09-25: upstream released a patch
-2017-10-03: blog post about the issue
-2017-10-04: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core
-Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/03/binutils-null-pointer-dereference-in-concat_filename-dwarf2-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+-- Piotr.
