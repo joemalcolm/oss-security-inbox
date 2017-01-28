@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1313" "Tuesday" "3" "May" "2016" "18:00:39" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160504010039.GB2319@hunt>" "36" "Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Cc:" nil nil "5" "2016050401:00:39" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        seth.arnold@ May  3   36/1313  " thread-indent "\"Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") "<CAC_overhfzw39AL6+0r5hq8JhHb8AOD6-+-V-+ejfDE8OPZb7A@mail.gmail.com>" ("<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "<20160503181505.GA8195@openwall.com>" "<57292879.7050303@gmail.com>" "<20160503232637.GA2319@hunt>" "<20160503235110.GD1250@sentinelchicken.org>" "<CAC_overhfzw39AL6+0r5hq8JhHb8AOD6-+-V-+ejfDE8OPZb7A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1734" "Saturday" "28" "January" "2017" "16:11:08" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b825d561daf34e27a0d6cc601350cc89@imshyb01.MITRE.ORG>" "47" "[oss-security] Re: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c" nil nil nil "1" "2017012821:11:08" "[oss-security] Re: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c" (number mark "U       cve-assign@m Jan 28   47/1734  " thread-indent "\"[oss-security] Re: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c\"\n") "<20170126123155.fquerqnvgz7frque@lorien.valinor.li>" ("<20170126123155.fquerqnvgz7frque@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30521 invoked by uid 550); 4 May 2016 01:00:53 -0000
+Received: (qmail 6114 invoked by uid 550); 28 Jan 2017 21:11:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30503 invoked from network); 4 May 2016 01:00:53 -0000
-Message-ID: <20160504010039.GB2319@hunt>
-Mail-Followup-To: Brandon Dees <brandon@rietta.com>,
-	oss-security@lists.openwall.com
-References: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
- <20160503181505.GA8195@openwall.com>
- <57292879.7050303@gmail.com>
- <20160503232637.GA2319@hunt>
- <20160503235110.GD1250@sentinelchicken.org>
- <CAC_overhfzw39AL6+0r5hq8JhHb8AOD6-+-V-+ejfDE8OPZb7A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kORqDWCi7qDJ0mEj"
-Content-Disposition: inline
-In-Reply-To: <CAC_overhfzw39AL6+0r5hq8JhHb8AOD6-+-V-+ejfDE8OPZb7A@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: oss-security@lists.openwall.com
-Date: Tue, 3 May 2016 18:00:39 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
-To: Brandon Dees <brandon@rietta.com>
+Received: (qmail 6088 invoked from network); 28 Jan 2017 21:11:19 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170126123155.fquerqnvgz7frque@lorien.valinor.li>
+Message-ID: <b825d561daf34e27a0d6cc601350cc89@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 16:11:08 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c
 
---kORqDWCi7qDJ0mEj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Wed, May 04, 2016 at 12:05:16AM +0000, Brandon Dees wrote:
-> is it appropriate to ask if the same issues are present in GraphicsMagick
-> as well?
+> [] 1/ Fix potential unsigned underflow
+> https://github.com/libgd/libgd/commit/60bfb401ad5a4a8ae995dcd36372fe15c71e1a35
 
-I haven't investigated deeply but it seems very plausible to me:
-Here's the delegates.xml work-alike:
-https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/config/delegates.mgk.in
+Use CVE-2016-10166.
 
-This appears to be executed via:
-https://sourceforge.net/p/graphicsmagick/code/ci/default/tree/magick/delegate.c
-which tries to escape arguments using UnixShellTextEscape(). This function
-appears to replace \`"$ chars with backslash-escaped versions. I'm not
-sure this is a safe mechanism either.
 
-Thanks
+> [] 2/ Fix DOS vulnerability in gdImageCreateFromGd2Ctx()
+> https://github.com/libgd/libgd/commit/fe9ed49dafa993e3af96b6a5a589efeea9bfb36f
 
---kORqDWCi7qDJ0mEj
-Content-Type: application/pgp-signature; name="signature.asc"
+Use CVE-2016-10167.
 
+
+> [] 3/ Fix #354: Signed Integer Overflow gd_io.c
+> https://github.com/libgd/libgd/commit/69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6
+> https://github.com/libgd/libgd/issues/354
+
+Use CVE-2016-10168.
+
+(This CVE is for all of 69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6.
+In other words, "make sure that either chunk count is actually greater
+than zero" does not have a separate CVE.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJXKUm3AAoJEPMhclmdjS6XW3kIAISQtPMmRqe6DkZiQQJLaDXv
-unSMlgXGxHqtDsWpPwIwg4zMMDgGSsNHcGBsB/nXe8i07kyB9tksOpvMTFaqtzAz
-aUidLFglBkxyvXxmQI2znFQcOW8JHOcA98XbYqdI4MPfYftg7RqsV1SzeQu9o0qe
-OZE+d4kaIrf7QNXKwnosgXr8AxunCnzpcGKO/D2zevrtkKpWErEP/BDAlh/4YgJG
-MFGGcZ8tiMUPuDX4DvoiiLvtZHajjG5Sred/EC/oVFkz8uMjxmnYsSeLuXMs/Gy1
-KJegDuihM0x9MejzZbkWBW0zLPXjr1JuRQD0Eu4qlmQ3dbfG8w/sUHyaYh7So4E=
-=kXmR
+iQIcBAEBCAAGBQJYjQh9AAoJEHb/MwWLVhi28DkP/1UJZHspmA032vVka4pObsGo
+lLM852CBs8cY/sL3MYmi0DIQTdxK70D1qVuwo/xtCBZYI6DK8+cwc8iNGg8/Fl9x
+RwHvmIG20uO61xkLtQt2un9eBqnJ/KRafiIOgReTHywIUnZ3b5QfqZuFppJZtSUg
+vUsg8Y/0e1IwU3iuNg5OGCnS8nC3z7rTfJcxXq6Kt6jbIhv4nQqCcNXsS9POMYBl
+Su8G5+0Qumc+hd3jC1yGie9oy3UvbgxoeOPkkhB6SqQ2qeWj5qdYDyq/AwQk3klF
+43CidiXqcAQRT3bx4Li2W9q/zaomzXv/1VaRQKQ0OHfY/z/JYFK6aLmu6LylDOW9
+WDwJHJBnX7D/keRdJYUlGTsxU8c+Ou7gju7X+Vjvn+OIedNp8GXqnge8btJxSt7H
+BmODX5XKsT81WCJMZNFsph3z6wO1NNbMqyP4Nx4do3fS8FVg+FILy8Yyh2hIm4pT
+YVkz9b7HVJdhfX01ARzLqCYVx47mFcwqztxxKBoYrKQueCNJ0cOmCrt5llvU0VoO
+QSXT4xk8zROLfHtjGR9cxLxO9DdZLEAifcCrXR4AqBinUO4gg+FfY/Tgjp61ijM+
+dIbi4PqdxaWOJu3rsyxXRth0+LQxIV9DChi1cIugckc50Uq50vXBKioUeAIhgjGn
+gOIdogXwdM1ye+bHKUD6
+=3sHC
 -----END PGP SIGNATURE-----
-
---kORqDWCi7qDJ0mEj--
