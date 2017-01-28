@@ -1,20 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/26/11
-Message-ID: <CAO5O-EJzHLMaKCHSnqzGeNMY_t8w9V=OwMF-a9QNcrAVqVo9wg@mail.gmail.com>
-Date: Mon, 26 Jun 2017 23:31:44 +0200
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: OpenVPN fuzzers released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/9
+Message-ID: <810345fbbe3d4999b8f707cf17113204@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 18:14:31 -0500
+From: <cve-assign@...re.org>
+To: <hanno@...eck.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: wavpack: multiple out of bounds memory reads
 Content-Type: text/plain; charset=utf-8
 
-I've published the fuzzers that I used to find the recent set of
-vulnerabilities in OpenVPN:
-https://github.com/guidovranken/openvpn/tree/fuzzing
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Not all of OpenVPN's code is covered by this set of fuzzers. It is
-entirely conceivable that more vulnerabilities exist, but more fuzzers
-have to be written in order to find them. The helper functions and IO
-abstractions I've written should simplify this effort. So here is your
-opportunity to find more juicy stuff.
+> All of them have been fixed with a single commit:
+> https://github.com/dbry/WavPack/commit/4bc05fc490b66ef2d45b1de26abf1455b486b0dc
 
-Guido
+> [] global buffer overread in read_code / read_words.c
+> https://sourceforge.net/p/wavpack/mailman/message/35557889/
+>> read_code ... wavpack-5.0.0/src/read_words.c:576:14
+
+Use CVE-2016-10169.
+
+
+> [] heap out of bounds read in WriteCaffHeader / caff.c
+> https://sourceforge.net/p/wavpack/mailman/message/35561921/
+>> WriteCaffHeader ... wavpack-5.0.0/cli/caff.c:699:61
+
+Use CVE-2016-10170.
+
+
+> [] heap out of bounds read in unreorder_channels / wvunpack.c
+> https://sourceforge.net/p/wavpack/mailman/message/35561939/
+>> unreorder_channels ... wavpack-5.0.0/cli/wvunpack.c:2142:27
+
+Use CVE-2016-10171.
+
+
+> [] heap oob read in read_new_config_info / open_utils.c
+> https://sourceforge.net/p/wavpack/mailman/message/35561951/
+>> read_new_config_info ... wavpack-5.0.0/src/open_utils.c:573:45
+
+Use CVE-2016-10172.
+
+
+Note that http://openwall.com/lists/oss-security/2017/01/23/4 had an
+incorrect URL for the open_utils.c issue. (It was a duplicate of the
+previous URL.) The correct URL is in the quoted text above. Also, the
+vendor response of "I am pretty confident that these particular
+failures are not exploitable, although I am not an expert in that
+area" is on the
+https://sourceforge.net/p/wavpack/mailman/message/35618215/ page.
+
+We are assigning the four CVE IDs to the individual reports even
+though it is possible that
+4bc05fc490b66ef2d45b1de26abf1455b486b0dc implies that there were
+only three independent issues.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYjSVxAAoJEHb/MwWLVhi22ScP/04u+ZLeBYlmyv36NiriDF3a
+wGHD/tLrOidlT7BvyW6iFgJO2rJiO1/4YzMT6/w6JFSwhioKWkJQMtOnMu2gp+ZY
+l7M0qdTHduEE3oNt5mxwXy7yLraJKjz6DRy7ZlFJcp6wyO48lrWi08Uf9EG0d+mD
+vZUXy0wgMeieGsDF3grSfSWkh3djmIbvygo3dpucFce/oexcfED/3R6WhxGPi3ix
+U1fc6XB4rKmsSmTxbmOC+XYE7elOgBYhElvZ0RiJLhBVc9fRil91VfUQqSGZcbQa
+dYxdV+dpFEkLuQBYWRiWshiN46RO1TdvWr8oLAbwjGLn8roOc1bDN2pQsB9DS8uf
+BOLYQ6A8DVuvtGRqYf1QyP53TgHg90BDjYMz7jUt9nkl+FozkMv5/Ncj/Luy9Jj6
+AHb/n644Q1dtLZBUiP/j4v1otHYZz4ixZamahRL+SmlRAaj9hDW+YHDUVf1syIpS
+KsjWkeAgi5gBZdC7xpoiyJ3NQddwKCVWbGtYR+mXetnb1uvOCW7MGnI8vt9yLSF7
+4mX8xTA1SBrJNfm2SjjhKLhM/Z3XvLqmHdqoMQSDlj1Pv+KUJmjr9PsXDO4aWV7h
+HaM34KzSfvBFmwpBycig3YU+sIw8SXRYwvKVgJoom2ZUsq5nSpE8QDoctixr2JEe
+Hz0uj8YntzJ26TxAskiL
+=MiV2
+-----END PGP SIGNATURE-----
