@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/16
-Message-ID: <2558042.rxMoaMk3FX@wanheda>
-Date: Wed, 28 Jun 2017 22:02:43 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/4
+Message-ID: <94274cdb-f6de-cb48-da2f-7696df89ff74@securify.nl>
+Date: Sat, 28 Jan 2017 16:15:04 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>, "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-Subject: Re: lame: multiple vulnerabilities
+Subject: Multiple vulnerabilities affecting two WordPress Plugins (XSS, CSRF & SQLi)
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 28 June 2017 20:33:43 Hanno Böck wrote:
-> None of Agostinos samples trigger anything in an asan build of 
-mpg123
-> 1.25.0 here. However I was quickly able to get afl to find another 
-bug,
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Great!
+View attachment "cross_site_request_forgery_vulnerability_in_formbuilder_wordpress_plugin_allows_plugin_permissions_modification.txt" of type "text/plain" (4719 bytes)
 
-I found also something else which I will report to the bt, but seems 
-there is a null pointer dereference by default without any crafted 
-input.
+View attachment "multiple_blind_sql_injection_vulnerabilities_in_formbuilder_wordpress_plugin.txt" of type "text/plain" (4050 bytes)
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
-
+View attachment "persistent_cross_site_scripting_vulnerability_in_user_access_manager_wordpress_plugin.txt" of type "text/plain" (4854 bytes)
