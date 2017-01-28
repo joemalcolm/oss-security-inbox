@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["563" "Tuesday" "16" "November" "2021" "13:51:52" "-0700" "Zach Hoffman" "zrhoffman@apache.org" nil "20" "[oss-security] Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection vulnerability in Traffic Ops" nil nil nil "11" nil nil (number mark "U       zrhoffman@ap Nov 16   20/563   " thread-indent "\"[oss-security] Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection vulnerability in Traffic Ops\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection vulnerability in Traffic Ops" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2100" "Saturday" "28" "January" "2017" "15:47:39" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<ed10da959b8b4d51bdfc70e3820c6a89@imshyb01.MITRE.ORG>" "52" "[oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues" nil nil nil "1" "2017012820:47:39" "[oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues" (number mark "U       cve-assign@m Jan 28   52/2100  " thread-indent "\"[oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues\"\n") "<20170127061304.GA12270@lorien.valinor.li>" ("<20170127061304.GA12270@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16076 invoked by uid 550); 17 Nov 2021 10:33:43 -0000
+Received: (qmail 15989 invoked by uid 550); 28 Jan 2017 20:47:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17561 invoked from network); 16 Nov 2021 20:52:06 -0000
-Message-ID: <3ba4a13789030965b7bf6aa7258cfd830db1d63c.camel@apache.org>
-From: Zach Hoffman <zrhoffman@apache.org>
-To: oss-security@lists.openwall.com
-Date: Tue, 16 Nov 2021 13:51:52 -0700
-In-Reply-To: <eca64e9e-5f1f-ef56-b5f3-0b8f3a83be4a@apache.org>
-References: <eca64e9e-5f1f-ef56-b5f3-0b8f3a83be4a@apache.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.1 
+Received: (qmail 15971 invoked from network); 28 Jan 2017 20:47:52 -0000
+From: <cve-assign@mitre.org>
+To: <carnil@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170127061304.GA12270@lorien.valinor.li>
+Message-ID: <ed10da959b8b4d51bdfc70e3820c6a89@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 15:47:39 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection
- vulnerability in Traffic Ops
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues
 
-CORRECTION:
-This issue was discovered by Apache Traffic Control user zhouxufeng@bytedance.com.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, 2021-11-11 at 20:45 +0000, Zach Hoffman wrote:
-> Severity: critical
-> 
-> Description:
-> 
-> An unauthenticated Apache Traffic Control Traffic Ops user can send a request with a specially-crafted username to the POST /login endpoint of any API version to inject unsanitized content into the LDAP filter.
-> 
-> 
-> Credit:
-> 
-> This issue was discovered by Apache Traffic Control user pupiles.
-> 
-> References:
-> 
-> https://trafficcontrol.apache.org/security/
-> 
+> https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+> https://codex.wordpress.org/Version_4.7.2
 
+> [] 1/ The user interface for assigning taxonomy terms in Press This is shown to
+> users who do not have permissions to use it. Reported by David Herrera of Alley
+> Interactive.
+> https://github.com/WordPress/WordPress/commit/21264a31e0849e6ff793a06a17de877dd88ea454
+
+Use CVE-2017-5610.
+
+
+> [] 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
+> WordPress core is not directly vulnerable to this issue, but we've added
+> hardening to prevent plugins and themes from accidentally causing a
+> vulnerability. Reported by Mo Jangda (batmoo).
+> https://github.com/WordPress/WordPress/commit/85384297a60900004e27e417eac56d24267054cb
+
+Use CVE-2017-5611.
+
+
+> [] 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
+> table. Reported by Ian Dunn of the WordPress Security Team.
+> https://github.com/WordPress/WordPress/commit/4482f9207027de8f36630737ae085110896ea849
+
+Use CVE-2017-5612.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYjQMaAAoJEHb/MwWLVhi29sYP/jzIGOAGx8INCPLVLnadqphE
+VDvhcdL6uWZEy5ykTVydja6UmUqSQ3rJULtE2+R86Nfl5EXpmPSvqTJRxaoWgJSu
+w0a+v/ZJMb6WNFx2DlR24EN8fKSWHRYR8eu9pquHJwqTgLHH2YKd4WeXCtGmraAg
+FOh4Dxecayh22RR2WrGN2oALW5vFz6CNnc3MhQWAzgEWvqBwm8VMznrT8NlvjLrA
+IyxaVbfUcKLw0cWPmHw0b/054wlXCfTLuFKlCp9QEjeF8+B7L5XlhEkEueV8a0Ir
+Cg1J+PVbPDpmp686rZWfULyI0WODOOpUIBFnXUOs529knkQxUyKY5ZB6j6a1Kaj6
+JbMh10sPSPVnGUAWH5I9fzOzwqkSqtqNGXKOOBTllGIW3WsKARckmex7eqJXydhD
+xef8UEFOYxVUbUDAUAUlSVvRXmKh6lFUE7iYG5drxRtOVeNkmdX7F4zOfl3Dkc9H
+G3nXPzPRJ1EiAMHzO0wHDrT1Y2tsvVrPGEYoNCgMPMpwIiCx9DUBEjhYqz/IytXd
+U23Zd2YRLn4LQ2RNkVlKgLKZj5wP1aHRA+NXow3VYNf9L66w/5zw7ouxg+c8aPEd
+G5UqJ3Bl3pUtOP5BsciINs5aXFXdIJvPcny4zg6Ta6/d+Jk/w9q1TX3nQ7xhcfff
+d3Jj+zNCED6LUCSRPtde
+=dkka
+-----END PGP SIGNATURE-----
