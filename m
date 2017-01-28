@@ -1,19 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/17
-Message-ID: <5754753.zXRKsoZEEs@blackgate>
-Date: Mon, 13 Mar 2017 11:12:22 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/8
+Message-ID: <72e4041404044830a9451428dfc81eba@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 17:40:36 -0500
+From: <cve-assign@...re.org>
+To: <seb@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: cgiemail multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 02 March 2017 16:36:23 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-p
-> odofopdfvariantdelayedload-pdfvariant-h
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is CVE-2017-6847
+> https://news.cpanel.com/tsr-2017-0001-full-disclosure
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+It is possible that the upstream distribution is unmaintained because the
+latest release is from about 19 years ago:
+
+  http://web.mit.edu/wwwdev/cgiemail/webmaster.html#1.6
+
+> [] SEC-212 Format string injection
+>
+> The ability to supply arbitrary format strings to cgiemail and
+> cgiecho allowed code execution whenever a user was able to provide a
+> cgiemail template file.
+
+Use CVE-2017-5613.
+
+
+> [] SEC-214 Open redirect
+>
+> The cgiemail and cgiecho binaries served as an open redirect due to
+> their handling of the success and failure parameters.
+
+Use CVE-2017-5614.
+
+
+> [] SEC-215 HTTP header injection
+>
+> The handling of redirects in cgiemail and cgiecho did not protect
+> against the injection of additional HTTP headers.
+
+Use CVE-2017-5615.
+
+
+> [] Reflected XSS vulnerability
+>
+> The "addendum" parameter was reflected without any escaping in
+> success and error messages produced by cgiemail and cgiecho.
+
+Use CVE-2017-5616.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYjR2WAAoJEHb/MwWLVhi2TIsQAIJf9c1Txc5RZd1IfaRu/Hll
+nGPmkbzxzb8ZRTzI0pkgwGEnt0oFgjOamkFY3xL52glZp9ptvqs/aKRl0DXFI3U5
+8DzEhOHUOZEr4JGGswyIIhopz1rMXaOQXfQj/Uv3Z6097L7BLOMMHn/3SYSSltan
+yRy1j1Noa/RP2fmb1VgznewEnXeO+wOwX4j2Oq/PBh+glNkx2VDZnZM+cEF4H2sN
+FrsDmd6r1vupzBj7Ret/SfgUMTXYkkIO0r3LafeaeOrvC5+dJI/U+pezUCj9aDIZ
+spb6lMUkBrz9njFBzEP4XYvyNGtnIFcM8UJIrU1t+XVihqBgiRb0HGpogGuXmmf3
+N3prECUA5JQdk3co8MTgK+6Vo7glmJxlEwJJelq4Pksckra0oygMJdpRKxnMva04
+eOhb4NcfRtZxeRxo/Cl1IWEVV8oc0QK2MQMjtWMNDMck9cWrcdcoTKt7KlBxcfg1
+5Yzi2ZBzgfH2tGMJQD12+UhHMEDDL2SLSFNGU3j6z2ZPOuq0AzmM1ul+Mt3OoPla
+yz3wrPJtKlj9N3sUYzO4g+vZvLbEJr+g0DgnYJK0tDXN90gjxUBU4DRA50YOXLKR
+wnTs21ncGqEPlpRQ3TjXptbqZ0bdbFnIugRjqn6AIqmEQgaQsmKveDYq+gvHt0PH
+Y+94UdCb9f/0Hi04Ouqz
+=fGzB
+-----END PGP SIGNATURE-----
