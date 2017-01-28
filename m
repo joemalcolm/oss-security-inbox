@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1244" "Monday" "22" "May" "2017" "12:00:56" "-0500" "Jodie Cunningham" "jodie.cunningham@gmail.com" "<CABfY0L1Xz4QHXCzdO1-DNcdDqFgAXYzGr1woSAKW5j7_0RD8cA@mail.gmail.com>" "21" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Date:" nil nil "5" "2017052217:00:56" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        jodie.cunnin May 22   21/1244  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<20170520175436.GA30962@jasmine>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "<20170520175436.GA30962@jasmine>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2608" "Saturday" "28" "January" "2017" "18:14:31" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<810345fbbe3d4999b8f707cf17113204@imshyb01.MITRE.ORG>" "69" "[oss-security] Re: wavpack: multiple out of bounds memory reads" nil nil nil "1" "2017012823:14:31" "[oss-security] Re: wavpack: multiple out of bounds memory reads" (number mark "U       cve-assign@m Jan 28   69/2608  " thread-indent "\"[oss-security] Re: wavpack: multiple out of bounds memory reads\"\n") "<20170123193803.4abc7401@pc1>" ("<20170123193803.4abc7401@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30134 invoked by uid 550); 22 May 2017 17:01:09 -0000
+Received: (qmail 30408 invoked by uid 550); 28 Jan 2017 23:14:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30116 invoked from network); 22 May 2017 17:01:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=PD1TlbUHMyCnwDQQ/SqOWdD7GE46z8U793btXD212EA=;
-        b=hbDdD3iEdwR4fL9Rb9NHntrD28Pi6aSweUQwulZjpg7QneFo1qiuB4LTuzZckGk3BU
-         hFjFo1pxPqcCMG2N/FSw4oP+3lSyGt/zXzkDqNk+JKTFMKMVJdVqHI2uhUXKNiCi2v/r
-         i5tjbLvXZzmf2yf2kFouIQdntcPRl42r3kajhDz41strSZK5sCV/PxZr1H5mh3cF4Z5P
-         Ue5ekXIDprJCALVm2wptsGNhnMEGF7oul5Exl3swf74WnGik6JN1UpNSr0WhEAro7Pju
-         ugfoohgIkMc0bhcujoDOxRVpZtfIl6VqmUDr3+2Neocu0ZOOdR6G6j+VeVixh2rQXicA
-         ZOEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=PD1TlbUHMyCnwDQQ/SqOWdD7GE46z8U793btXD212EA=;
-        b=cyDau3hW1Zd0P0FCcHTIxaO49U+UmYkOzMSDf9IRbhUiUtZS9wTs70TpDfQGHUXccT
-         e44RELl9Ln/nxKpUpfMUJ0z+y6NLNlozgDhQuD0oky+7UYobnyuqgcXxOcbUgTz37Oti
-         F3panBo/mdhevEQYxHjJRCBZOYPLKZ32n3wz775/73b95UrGByM9+CAngDRVLOxs1cKv
-         uoeA+/el0VZ0fstm2knQorvBWDtZnHD6NF9jJYdlKWF7aU3ymIbjuSXuKI2BTKyPBUpZ
-         bFMJTypcLEhbz8oW54Fuuomm5HdDYEsD5nqQ26ajOL6DPqj5rJWL8hLlr6hKU8GYFloo
-         Q/pg==
-X-Gm-Message-State: AODbwcBAOBKWLwvODu2UXBEdynArKVOo/kOm7Lv9DlUvjk4Auoszxf24
-	H38iFUrFWrm+D4qLG7fLShMU/F4mscw5
-X-Received: by 10.176.74.66 with SMTP id r2mr13065347uae.39.1495472457051;
- Mon, 22 May 2017 10:00:57 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170520175436.GA30962@jasmine>
-References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
- <20170520152406.2339.3B884775@matica.foolinux.mooo.com> <20170520175436.GA30962@jasmine>
-Message-ID: <CABfY0L1Xz4QHXCzdO1-DNcdDqFgAXYzGr1woSAKW5j7_0RD8cA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 22 May 2017 12:00:56 -0500
-From: Jodie Cunningham <jodie.cunningham@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of
- uninitialized memory in RLE decoder
-To: oss-security@lists.openwall.com
+Received: (qmail 30373 invoked from network); 28 Jan 2017 23:14:43 -0000
+From: <cve-assign@mitre.org>
+To: <hanno@hboeck.de>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170123193803.4abc7401@pc1>
+Message-ID: <810345fbbe3d4999b8f707cf17113204@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 18:14:31 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: wavpack: multiple out of bounds memory reads
 
-On Sat, May 20, 2017 at 12:54 PM, Leo Famulari <leo@famulari.name> wrote:
->
-> Chris Evans' report (copied in the email you replied to) says this:
->
-> GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
-> GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tucked
-> away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
-> coders/rle.c:633:39" (see the second memset()). This is another case where tons
-> of vulnerabilities are being found and fixed in both GraphicsMagick and
-> ImageMagick with little co-ordination. This seems like a waste of effort and a
-> risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
-> corruption I referenced in my previous blog post was only fixed in
-> GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
-> Dec 2014.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I've worked with the GM team before - it's trivial as a researcher to
-keep Bob up to date on what you're coming across in IM.
-This problem doesn't stop at IM/GM - there are probably bugs you find
-in IM/GM that also trip up other software, and little effort is made
-to see the impact in other image software. We could probably benefit
-from a curated centralized corpus for this kind of thing.
+> All of them have been fixed with a single commit:
+> https://github.com/dbry/WavPack/commit/4bc05fc490b66ef2d45b1de26abf1455b486b0dc
+
+> [] global buffer overread in read_code / read_words.c
+> https://sourceforge.net/p/wavpack/mailman/message/35557889/
+>> read_code ... wavpack-5.0.0/src/read_words.c:576:14
+
+Use CVE-2016-10169.
+
+
+> [] heap out of bounds read in WriteCaffHeader / caff.c
+> https://sourceforge.net/p/wavpack/mailman/message/35561921/
+>> WriteCaffHeader ... wavpack-5.0.0/cli/caff.c:699:61
+
+Use CVE-2016-10170.
+
+
+> [] heap out of bounds read in unreorder_channels / wvunpack.c
+> https://sourceforge.net/p/wavpack/mailman/message/35561939/
+>> unreorder_channels ... wavpack-5.0.0/cli/wvunpack.c:2142:27
+
+Use CVE-2016-10171.
+
+
+> [] heap oob read in read_new_config_info / open_utils.c
+> https://sourceforge.net/p/wavpack/mailman/message/35561951/
+>> read_new_config_info ... wavpack-5.0.0/src/open_utils.c:573:45
+
+Use CVE-2016-10172.
+
+
+Note that http://openwall.com/lists/oss-security/2017/01/23/4 had an
+incorrect URL for the open_utils.c issue. (It was a duplicate of the
+previous URL.) The correct URL is in the quoted text above. Also, the
+vendor response of "I am pretty confident that these particular
+failures are not exploitable, although I am not an expert in that
+area" is on the
+https://sourceforge.net/p/wavpack/mailman/message/35618215/ page.
+
+We are assigning the four CVE IDs to the individual reports even
+though it is possible that
+4bc05fc490b66ef2d45b1de26abf1455b486b0dc implies that there were
+only three independent issues.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYjSVxAAoJEHb/MwWLVhi22ScP/04u+ZLeBYlmyv36NiriDF3a
+wGHD/tLrOidlT7BvyW6iFgJO2rJiO1/4YzMT6/w6JFSwhioKWkJQMtOnMu2gp+ZY
+l7M0qdTHduEE3oNt5mxwXy7yLraJKjz6DRy7ZlFJcp6wyO48lrWi08Uf9EG0d+mD
+vZUXy0wgMeieGsDF3grSfSWkh3djmIbvygo3dpucFce/oexcfED/3R6WhxGPi3ix
+U1fc6XB4rKmsSmTxbmOC+XYE7elOgBYhElvZ0RiJLhBVc9fRil91VfUQqSGZcbQa
+dYxdV+dpFEkLuQBYWRiWshiN46RO1TdvWr8oLAbwjGLn8roOc1bDN2pQsB9DS8uf
+BOLYQ6A8DVuvtGRqYf1QyP53TgHg90BDjYMz7jUt9nkl+FozkMv5/Ncj/Luy9Jj6
+AHb/n644Q1dtLZBUiP/j4v1otHYZz4ixZamahRL+SmlRAaj9hDW+YHDUVf1syIpS
+KsjWkeAgi5gBZdC7xpoiyJ3NQddwKCVWbGtYR+mXetnb1uvOCW7MGnI8vt9yLSF7
+4mX8xTA1SBrJNfm2SjjhKLhM/Z3XvLqmHdqoMQSDlj1Pv+KUJmjr9PsXDO4aWV7h
+HaM34KzSfvBFmwpBycig3YU+sIw8SXRYwvKVgJoom2ZUsq5nSpE8QDoctixr2JEe
+Hz0uj8YntzJ26TxAskiL
+=MiV2
+-----END PGP SIGNATURE-----
