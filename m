@@ -1,121 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/3
-Message-Id: <E1cdyLO-0001Ot-Rk@xenbits.xenproject.org>
-Date: Wed, 15 Feb 2017 12:05:58 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 207 - memory leak when destroying guest without PT devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/6
+Message-ID: <b825d561daf34e27a0d6cc601350cc89@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 16:11:08 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Requests: libgd: potential unsigned onderflow, denial-of-service in gdImageCreateFromGd2Ctx and signed overflow in gd_io.c
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-                    Xen Security Advisory XSA-207
-                              version 2
+> [] 1/ Fix potential unsigned underflow
+> https://github.com/libgd/libgd/commit/60bfb401ad5a4a8ae995dcd36372fe15c71e1a35
 
-         memory leak when destroying guest without PT devices
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Certain internal state is set up, during domain construction, in
-preparation for possible pass-through device assignment.  On ARM and
-AMD V-i hardware this setup includes memory allocation.  On guest
-teardown, cleanup was erroneously only performed when the guest
-actually had a pass-through device assigned.
-
-IMPACT
-======
-
-A malicious guest may, by frequently rebooting over extended periods
-of time, run the system out of memory, resulting in a Denial of
-Service (DoS).
-
-The leak is no more than 4kbytes per guest boot.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 3.3 and later are affected.
-
-ARM systems, and x86 AMD systems, are affected.  Intel systems, and
-systems without IOMMU/SMMU hardware, are unaffected.
-
-All guest kinds can exploit this vulnerability.
-
-MITIGATION
-==========
-
-Limiting the frequency with which a guest is able to reboot, will
-limit the memory leak.
-
-Rebooting each host (after migrating its guests) periodically will
-reclaim the leaked space.
-
-CREDITS
-=======
-
-This issue was discovered by Oleksandr Tyshchenko of EPAM Systems.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa207.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
-xsa207-4.4.patch       Xen 4.4.x
-
-$ sha256sum xsa207*
-e9bcf807b3785ac4d78b621fba4a9395cd713d6e57cdaa66559bccf95ded1cd9  xsa207.patch
-5f391cc621d619ee33c90398bda24588ebf8320750db4545677bb5222150ae6d  xsa207-4.4.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above is permitted during the
-embargo, as is the mitigation of migrating a VM which has no devices
-assigned from IOMMU-capable hardware to IOMMU-incapable hardware, even
-on public-facing systems with untrusted guest users and administrators.
-
-HOWEVER, moving a VM from AMD to Intel hardware, in response to this
-vulnerability, is *not* permitted.  This is because such a change is
-visible to guests, and would not normally be expected.
-
-Furthermore: Distribution of updated software is prohibited (except to
-other members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Use CVE-2016-10166.
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+> [] 2/ Fix DOS vulnerability in gdImageCreateFromGd2Ctx()
+> https://github.com/libgd/libgd/commit/fe9ed49dafa993e3af96b6a5a589efeea9bfb36f
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+Use CVE-2016-10167.
+
+
+> [] 3/ Fix #354: Signed Integer Overflow gd_io.c
+> https://github.com/libgd/libgd/commit/69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6
+> https://github.com/libgd/libgd/issues/354
+
+Use CVE-2016-10168.
+
+(This CVE is for all of 69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6.
+In other words, "make sure that either chunk count is actually greater
+than zero" does not have a separate CVE.)
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJYpEP+AAoJEIP+FMlX6CvZPrMIAL7ULaO/oOicZzGHzMO0f1r6
-MZDBPeLAg5EQ3oGl1oZenlEEQgSflzj2YHdwjdps2kZpJBaRJjNPmqOC3ZxetlyF
-+cEJWpw6u0IDRzukEWkQlFGQS68ShLjRcKWDi5+ftjo4rFh34uybrgRv7/nKtiuG
-ZLX7dqKZuqYBSYvSXjA8UejB//psGOu4jqNh15t0bxtQqc5BlgdJebOkKlgrxL2M
-BqI/kiZoRuKkDVBu2786oo3w8BCjyBktDR0B9dzRY6MEdTXqb+mE8IO7G492KQTk
-/ZW9rKeijauKLNgsSkZlqtA0TPTp7tujh9XxE/JfB8UcYFez86NWoBBY4g+Q3SQ=
-=kwFG
+iQIcBAEBCAAGBQJYjQh9AAoJEHb/MwWLVhi28DkP/1UJZHspmA032vVka4pObsGo
+lLM852CBs8cY/sL3MYmi0DIQTdxK70D1qVuwo/xtCBZYI6DK8+cwc8iNGg8/Fl9x
+RwHvmIG20uO61xkLtQt2un9eBqnJ/KRafiIOgReTHywIUnZ3b5QfqZuFppJZtSUg
+vUsg8Y/0e1IwU3iuNg5OGCnS8nC3z7rTfJcxXq6Kt6jbIhv4nQqCcNXsS9POMYBl
+Su8G5+0Qumc+hd3jC1yGie9oy3UvbgxoeOPkkhB6SqQ2qeWj5qdYDyq/AwQk3klF
+43CidiXqcAQRT3bx4Li2W9q/zaomzXv/1VaRQKQ0OHfY/z/JYFK6aLmu6LylDOW9
+WDwJHJBnX7D/keRdJYUlGTsxU8c+Ou7gju7X+Vjvn+OIedNp8GXqnge8btJxSt7H
+BmODX5XKsT81WCJMZNFsph3z6wO1NNbMqyP4Nx4do3fS8FVg+FILy8Yyh2hIm4pT
+YVkz9b7HVJdhfX01ARzLqCYVx47mFcwqztxxKBoYrKQueCNJ0cOmCrt5llvU0VoO
+QSXT4xk8zROLfHtjGR9cxLxO9DdZLEAifcCrXR4AqBinUO4gg+FfY/Tgjp61ijM+
+dIbi4PqdxaWOJu3rsyxXRth0+LQxIV9DChi1cIugckc50Uq50vXBKioUeAIhgjGn
+gOIdogXwdM1ye+bHKUD6
+=3sHC
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa207.patch" of type "application/octet-stream" (1026 bytes)
-
-Download attachment "xsa207-4.4.patch" of type "application/octet-stream" (1052 bytes)
