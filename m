@@ -1,39 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/15
-Message-ID: <20170928213721.GA5119@grsecurity.net>
-Date: Thu, 28 Sep 2017 17:37:21 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/7
+Message-ID: <20398bb624f64da8b11f520c02b57cc7@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 17:12:19 -0500
+From: <cve-assign@...re.org>
+To: <piotr.karbowski@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example.
 Content-Type: text/plain; charset=utf-8
 
-> > CVE-2017-0605:
-> > --------------
-> > https://security-tracker.debian.org/tracker/CVE-2017-0605
-> > upstream: (4.12-rc1) [e09e28671cda63e6308b31798b997639120e2a21]
-> > 
-> > is e.g. includedin 3.16.44 (a1141b19b23a0605d46f3fab63fd2d76207096c4),
-> > 3.2.89 (e39e64193a8a611d11d4c62579a7246c1af70d1c) but not in 4.9.
-> > 
-> > (afaics not Cc'ed to stable).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> [] On one system after installing set of packages, the
+> /var/spool/cron ended up being cron:root 755
+> ...
+> https://bugs.gentoo.org/show_bug.cgi?id=607430
+> https://bugs.gentoo.org/show_bug.cgi?id=607426
 > 
-> Ouch, thanks for letting me know, that's not good, we don't want to get
-> the trees out of sync for obvious reasons.
+> https://bugs.gentoo.org/show_bug.cgi?id=396153
+> https://bugs.gentoo.org/show_bug.cgi?id=141619
+> https://bugs.gentoo.org/show_bug.cgi?id=58611
 
-The above CVE shouldn't exist; the patch doesn't fix any vulnerability
-as the upstream commit message itself notes, and didn't need to be
-backported to any of the kernels it was backported to.  Not only that, the
-above advisory marked it as a remote vulnerability with critical severity.
-It looks like Debian and Ubuntu released updated kernels, while Red Hat and
-SuSE marked it as WONTFIX and unaffected, respectively.  I am not sure why
-neither simply rejected the CVE.
+Use CVE-2004-2778.
 
-The MSM fix not only is wrong (truncates too early) but seemed to involve a
-naive strcpy -> strlcpy conversion and assumed it was somehow fixing some
-exploitable vulnerability (perhaps the cause of the CVE).  All methods of
-setting task->comm ensure nul termination since forever.  If nul termination
-wasn't guaranteed, there would be much bigger problems all over the tree.
 
--Brad
+This CVE is for the general issue that permissions can end up weaker
+than intended because of the state of the filesystem at the time an
+ebuild is installed. (It is not exclusively a CVE about directories
+for cron.) As mentioned in the 607430 description, "it's not clear to
+me whether Portage should provide a solution to that, or the ebuilds
+authors should make sure to always depends, in case of touching
+cronbase directories, on the cronbase package, to ensure that it's
+installed prior to installing them." In other words, it is conceivable
+that this could be considered a documentation problem, if the final
+decision is that each ebuild author needs to be responsible for
+letting the "correct" entity determine the appropriate permissions.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYjRbyAAoJEHb/MwWLVhi2E34P+waV8WI6umzx8yqTW76C32ti
+332tDNFVAtD2w1gsdwJeFhO6LiQ9tF71FplmF9OEhGyIcg5o0AGh+EdvL+dYDP6i
+gX4d5p6XFIHtWe4WfIa5DJXtT0lB8pI2PRy9lXsVK9C8asOueBkNLnHy2zB/+dXL
+VCX1z1wzpcDysIUivlnI4spwWxbS65Zm2DHpUxhs7vCz9nAFSPstu/FnKWLKFe1d
+fhNayuRvb0f3zUAaJwDzDJ2yoIui550eiJ+6TmUlhY8jCkOuxNGdD7hwpURG/1Wi
+TvrCzH1YYJgHnCz8QT6WB5SrbQfYsZmLnB+SbQwbJNDKbL8+kaHbwl/lRY8hphsC
+PW+oP8QBOh902JtREOqMBtSlReozvJEGC0yNtS6V9Dysu5vmn5nK+YkW4KHbAHCv
+6ZSRDBZKr53UKBoaOqEoKxoDNgMGpYB4l2p6Cjp9a3eEXVR7Py4u/A1flVVD/pAi
+SXFhSi0IKAuk1BqFf6g1KlbVpXaec7cPRrnGOToXpYcGKw1A9H1sNmnxVDYhXRqH
+zW1V9hhTxhn+7zTuGhRtd0AfCYKsmBWOppGvyhDyo2HW3Fepp9UzTS5EqcqjYwf2
++45CObb2v77ZTsNDRi8YWZ79ABa3DnvYWSRJR9kB/kxTDBX2WaaamrEVH6omr/uJ
+ZW3voevSL9UA648rf/OQ
+=mgyN
+-----END PGP SIGNATURE-----
