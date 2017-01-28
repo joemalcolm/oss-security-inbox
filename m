@@ -1,46 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/15
-Message-ID: <20171101181209.GB22752@openwall.com>
-Date: Wed, 1 Nov 2017 19:12:09 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/5
+Message-ID: <ed10da959b8b4d51bdfc70e3820c6a89@imshyb01.MITRE.ORG>
+Date: Sat, 28 Jan 2017 15:47:39 -0500
+From: <cve-assign@...re.org>
+To: <carnil@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Wordpress: 4.7.2 security release: unauthorized bypass, SQL injection, cross-site scripting issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 01, 2017 at 07:02:22PM +0100, Jakub Wilk wrote:
-> Unfortunately, glibc's implementation of tmpfile(3), which is the most 
-> fool-proof interface for dealing with temporary files that the C library 
-> offers, doesn't honour TMPDIR. :(
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We've been carrying a patch for this for ages:
+> https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+> https://codex.wordpress.org/Version_4.7.2
 
-* Sun Dec 07 2003 Solar Designer <solar-at-owl.openwall.com> 2.1.3-owl37
-- Allow tmpfile(3) to use $TMPDIR, thanks to the report and patch by
-(GalaxyMaster).  Certain other implementations are known to do the same.
+> [] 1/ The user interface for assigning taxonomy terms in Press This is shown to
+> users who do not have permissions to use it. Reported by David Herrera of Alley
+> Interactive.
+> https://github.com/WordPress/WordPress/commit/21264a31e0849e6ff793a06a17de877dd88ea454
 
-diff -uNrp glibc-2.3.2.orig/libio/oldtmpfile.c glibc-2.3.2/libio/oldtmpfile.c
---- glibc-2.3.2.orig/libio/oldtmpfile.c	2002-04-08 07:02:09 +0000
-+++ glibc-2.3.2/libio/oldtmpfile.c	2004-03-08 08:07:57 +0000
-@@ -35,7 +35,7 @@ __old_tmpfile (void)
-   int fd;
-   FILE *f;
- 
--  if (__path_search (buf, FILENAME_MAX, NULL, "tmpf", 0))
-+  if (__path_search (buf, FILENAME_MAX, NULL, "tmpf", 1))
-     return NULL;
-   fd = __gen_tempname (buf, __GT_FILE);
-   if (fd < 0)
-diff -uNrp glibc-2.3.2.orig/sysdeps/generic/tmpfile.c glibc-2.3.2/sysdeps/generic/tmpfile.c
---- glibc-2.3.2.orig/sysdeps/generic/tmpfile.c	2002-06-12 20:57:46 +0000
-+++ glibc-2.3.2/sysdeps/generic/tmpfile.c	2004-03-08 08:21:53 +0000
-@@ -43,7 +43,7 @@ tmpfile (void)
-   int fd;
-   FILE *f;
- 
--  if (__path_search (buf, FILENAME_MAX, NULL, "tmpf", 0))
-+  if (__path_search (buf, FILENAME_MAX, NULL, "tmpf", 1))
-     return NULL;
-   fd = __gen_tempname (buf, GEN_THIS);
-   if (fd < 0)
+Use CVE-2017-5610.
 
-Alexander
+
+> [] 2/ WP_Query is vulnerable to a SQL injection (SQLi) when passing unsafe data.
+> WordPress core is not directly vulnerable to this issue, but we've added
+> hardening to prevent plugins and themes from accidentally causing a
+> vulnerability. Reported by Mo Jangda (batmoo).
+> https://github.com/WordPress/WordPress/commit/85384297a60900004e27e417eac56d24267054cb
+
+Use CVE-2017-5611.
+
+
+> [] 3/ A cross-site scripting (XSS) vulnerability was discovered in the posts list
+> table. Reported by Ian Dunn of the WordPress Security Team.
+> https://github.com/WordPress/WordPress/commit/4482f9207027de8f36630737ae085110896ea849
+
+Use CVE-2017-5612.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYjQMaAAoJEHb/MwWLVhi29sYP/jzIGOAGx8INCPLVLnadqphE
+VDvhcdL6uWZEy5ykTVydja6UmUqSQ3rJULtE2+R86Nfl5EXpmPSvqTJRxaoWgJSu
+w0a+v/ZJMb6WNFx2DlR24EN8fKSWHRYR8eu9pquHJwqTgLHH2YKd4WeXCtGmraAg
+FOh4Dxecayh22RR2WrGN2oALW5vFz6CNnc3MhQWAzgEWvqBwm8VMznrT8NlvjLrA
+IyxaVbfUcKLw0cWPmHw0b/054wlXCfTLuFKlCp9QEjeF8+B7L5XlhEkEueV8a0Ir
+Cg1J+PVbPDpmp686rZWfULyI0WODOOpUIBFnXUOs529knkQxUyKY5ZB6j6a1Kaj6
+JbMh10sPSPVnGUAWH5I9fzOzwqkSqtqNGXKOOBTllGIW3WsKARckmex7eqJXydhD
+xef8UEFOYxVUbUDAUAUlSVvRXmKh6lFUE7iYG5drxRtOVeNkmdX7F4zOfl3Dkc9H
+G3nXPzPRJ1EiAMHzO0wHDrT1Y2tsvVrPGEYoNCgMPMpwIiCx9DUBEjhYqz/IytXd
+U23Zd2YRLn4LQ2RNkVlKgLKZj5wP1aHRA+NXow3VYNf9L66w/5zw7ouxg+c8aPEd
+G5UqJ3Bl3pUtOP5BsciINs5aXFXdIJvPcny4zg6Ta6/d+Jk/w9q1TX3nQ7xhcfff
+d3Jj+zNCED6LUCSRPtde
+=dkka
+-----END PGP SIGNATURE-----
