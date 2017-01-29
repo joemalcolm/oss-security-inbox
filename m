@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["606" "Saturday" "6" "October" "2018" "13:40:04" "+0200" "joernchen" "joernchen@phenoelit.de" "<20181006113958.GA29967@derpz>" "23" "[oss-security] CVE-2018-17456 Git RCE via .gitmodules" "^Date:" nil nil "10" "2018100611:40:04" "[oss-security] CVE-2018-17456 Git RCE via .gitmodules" (number mark "U       joernchen@ph Oct  6   23/606   " thread-indent "\"[oss-security] CVE-2018-17456 Git RCE via .gitmodules\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1932" "Sunday" "29" "January" "2017" "17:51:29" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2944552.SWHvZueMFW@arcadia>" "63" "[oss-security] mp3splt: invalid free in free_options (options_manager.c)" nil nil nil "1" "2017012916:51:29" "[oss-security] mp3splt: invalid free in free_options (options_manager.c)" (number mark "U       ago@gentoo.o Jan 29   63/1932  " thread-indent "\"[oss-security] mp3splt: invalid free in free_options (options_manager.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23968 invoked by uid 550); 6 Oct 2018 11:53:14 -0000
+Received: (qmail 24496 invoked by uid 550); 29 Jan 2017 16:51:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18157 invoked from network); 6 Oct 2018 11:40:29 -0000
-Message-ID: <20181006113958.GA29967@derpz>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:lkeMv2gaGujCypBVG5qxblbN4cTVKz5sifbfOASa3L5VgWZppX9
- cyud0neM5rIR5XG3G1sgwit76/8AazHK5wZ/rc/Nxu9B3Z1EbV9RlJli7nllU8n6QDjKIki
- OWs39pZfcsMcMSh5rFhRjLxtXIj/p3oNrvv8k8jFUnqylgOZaDuALfvY/ELQTcpM8Jx6QOf
- 7fVjn8CYjqHcX4xPAysfg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kYsyhIw4FO8=:Ib6vZM29hlDKAnZj8y74XM
- UjfUSh1CUbJ+vYWDSqepbDOw08j/wuV86fuDtK9qhrIg7TuXHyelKzEaZAEcKo0XQYazoQSH1
- BXD6mKvfWXJKHc8cBtT/OZmtU5YS2SF729r5zmV44RhBM9XmXHJFJwKPitYk5MwXb5/1zmqgT
- mDg8a7kn22Zo2deV1sPhdvwAC1Gf2aIi/28I5n1FHC+eEh5o/ZkA0aPYySGocECV/GmKXCbkk
- 5e3y3+08//pRnRUnvqQ/7XteU8WnJIIlklziVffdb2H05K1E5P6znoiqH9HRJ2xLvyZVQAs26
- 3a+0t5jBi7ydzm8Ukcgr2dcp5m9/6njs06HCyS7KOhFK8LV+mO3q+j1E5SOi4SMbDtKD3j1ma
- jLbRABHvJUcGzZJW+LN7IXCWlfUiLpbS0y88LWeghwQ041iVUY6UcsWYd7HnRFWeH6xSYGj9I
- +LodkEh0xInFg++FF1Thga7+2gVeC96ZKKxsZwCsESGv2bcZxrcuMXYJNo+PnXmXd0kYSlhbs
- Iv8nEld4Q2RDPF57zr93shgxxNNHu7SZ6KCJSYJuJN9QHhj6IQFu6FLGn6NcGW1Hxo53Awr7x
- fvzbvuZ/HDMvvnrr3zk0OK0Lx57YO31SbmnQo0LGyQs9A3wM5nLiENhv/fUXj5t1R8AYbrDOu
- X3ZEQWuPi1GEi0JdjCsqWqjr94cJZak3x9uv1J6lcOww2zGOOUb+o8rJBHwWXD8pwTyU=
-Date: Sat, 6 Oct 2018 13:40:04 +0200
-From: joernchen <joernchen@phenoelit.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-17456 Git RCE via .gitmodules
+Received: (qmail 24306 invoked from network); 29 Jan 2017 16:51:46 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Date: Sun, 29 Jan 2017 17:51:29 +0100
+Message-ID: <2944552.SWHvZueMFW@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] mp3splt: invalid free in free_options (options_manager.c)
 
-Hey,
+Description:
+mp3splt is a command line utility to split mp3 and ogg files without decoding.
 
-just a short heads up to oss-sec:
+A fuzz on it discovered an invalid free.
 
-Git has just [0] released Versions 2.14.5, 2.15.3, 2.16.5, 2.17.2,
-2.18.1, and 2.19.1 which mitigate CVE-2018-17456, an RCE issue I found
-within the handling of Git submodules.
+The complete ASan output:
 
-More specifically this issue allows execution of arbitrary commands via
-a argument injection to subsequent `git clone` operations using the
-`url` parameter in the `.gitmodules` file. 
+# mp3splt -P -f -t 0.1 -a $FILE
+==2631==ERROR: AddressSanitizer: attempting free on address which was not 
+malloc()-ed: 0x000000d3ef65 in thread T0
+    #0 0x4d3770 in free /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47
+    #1 0x50dbaa in free_options /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/options_manager.c:67:9
+    #2 0x515623 in free_main_struct /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/data_manager.c:74:7
+    #3 0x50ffa5 in process_confirmation_error /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/print_utils.c:266:7
+    #4 0x51df29 in main /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:873:9
+    #5 0x7f783aba361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
 
+AddressSanitizer can not describe address in more detail (wild memory access 
+suspected).
+SUMMARY: AddressSanitizer: bad-free /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47 
+in free
+==2631==ABORTING
 
-Cheers,
+Affected version:
+0.9.2
 
-joernchen
+Fixed version:
+N/A
 
-[0] https://marc.info/?l=git&m=153875888916397&w=2
+Commit fix:
+N/A
 
---
-joernchen ~ Phenoelit
-<joernchen@phenoelit.de> ~ C776 3F67 7B95 03BF 5344
-http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00130-mp3splt-badfree-free_options
+
+Timeline:
+2017-01-01: private report to upstream via mail
+2017-01-29: public upstream report on sourceforge
+2017-01-29: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/29/mp3splt-invalid-free-in-free_options-options_manager-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
