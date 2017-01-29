@@ -1,46 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/23/4
-Message-ID: <20170523011349.GA10335@wopr>
-Date: Mon, 22 May 2017 18:13:49 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/5
+Message-ID: <9288234.IgCNv62ja1@arcadia>
+Date: Sun, 29 Jan 2017 17:50:41 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: How to request a CVE for open source projects
+Subject: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 22, 2017 at 06:53:42PM -0600, Kurt Seifried wrote:
-> 
-> 
-> On 2017-05-22 5:44 PM, Kurt H Maier wrote:
-> Neither, that's part of what I'm figuring out. Most likely it'll look
-> like a trusted pool of people (aka CVE Mentors) that can either
-> contribute or more easily gatekeep). Also the doc are out of date and
-> the process is evolving rapidly so I haven't really bothered updating
-> them since things keep changing.
+Description:
+mp3splt is a command line utility to split mp3 and ogg files without decoding.
 
-It might be worth noting that in the README file on the documentation
-repo.  It wouldn't take long and may prevent confusion in the meantime.
+A fuzz on it discovered a NULL pointer access.
 
-> Good question. What exactly is it you want to input? CVE requests? CVE
-> assignments? Modify existing CVE entries?
+The complete ASan output:
 
-Primarily, freeform discussion of the sort that occurred on this list as
-a natural outcropping of the CVE request process led to people linking
-to verification code, temporary mitigations, highlighting of incomplete
-fixes, and the sort of information that was requested earlier in this
-thread.  This ability to easily chip in to ongoing situations wasn't
-just useful for mitre staff doing CVE work, it was also useful for the
-"community of practice" looking for the latest information regarding
-self-defense.  I've prevented more than one attack thanks to a one-off
-reply from someone in response to a CVE request.  
+# mp3splt -P -f -t 0.1 -a $FILE
+==2581==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f36fb0a159a bp 0x7ffdc2708cb0 sp 0x7ffdc2708438 T0)
+==2581==The signal is caused by a READ memory access.
+==2581==Hint: address points to the zero page.
+    #0 0x7f36fb0a1599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x47a571 in __interceptor_fopen64 /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:5167
+    #2 0x7f36fbf0d27e in splt_cue_export_to_file /tmp/portage/media-
+libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/cue.c:725
+    #3 0x7f36fbf0911b in mp3splt_export /tmp/portage/media-
+libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/mp3splt.c:1665
+    #4 0x51d5f0 in main /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:901:13
+    #5 0x7f36fb04061f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
 
-The CVE assignment process was more than just a collaborative
-database-population effort.  With the shift to webforms and javascript
-the natural environment which promoted that discourse is being removed.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==2581==ABORTING
 
-> Not really. the docs are out of date and I'm more concerned about
-> evolving this right now then updating documentation.
+Affected version:
+0.9.2
 
-Again, I strongly suggest you note on the README that this is the case.
-As matters stand the documentation represents itself as accurate.
+Fixed version:
+N/A
 
-khm
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00129-mp3splt-nullptr-splt_cue_export_to_file
+
+Timeline:
+2017-01-01: private report to upstream via mail
+2017-01-29: public upstream report on sourceforge
+2017-01-29: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
