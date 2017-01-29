@@ -1,86 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/23/2
-Message-Id: <D63A4457-CF66-4203-BBA2-F2D432A2DBE0@beckweb.net>
-Date: Mon, 23 Oct 2017 14:20:30 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/1
+Message-ID: <2c120680243249b2a86b85883b8c4cb4@imshyb01.MITRE.ORG>
+Date: Sun, 29 Jan 2017 07:07:04 -0500
+From: <cve-assign@...re.org>
+To: <max@...canary.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: rubygem minitar: directory traversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-* Active Choices (uno-choice) Plugin 2.0
-* Build-Publisher Plugin 1.22
-* Dependency Graph Viewer Plugin 0.13
-* global-build-stats Plugin 1.5
-* Multijob Plugin 1.26
+> Rubygem minitar allows attackers to overwrite arbitrary files during
+> archive extraction via a .. (dot dot) in an extracted filename.
+> 
+> https://github.com/halostatue/minitar/issues/16
+> https://github.com/halostatue/minitar/commit/e25205ecbb6277ae8a3df1e6a306d7ed4458b6e4
+> https://bugzilla.opensuse.org/show_bug.cgi?id=1021740
+> 
+> The same issue exists in rubygem archive-tar-minitar
+> 
+> I believe they're based on the same codebase, and minitar is the officially
+> supported fork, so I'm not sure if this warrants two CVEs or just one.
 
-Additionally, we announce a vulnerability in SCP publisher plugin without fix.
+Use CVE-2016-10173 for both minitar and archive-tar-minitar.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-10-23/
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-470
-Active Choices plugin allowed users with Job/Configure permission to
-provide arbitrary HTML to be shown on the Build With Parameters page
-through the Active Choices Reactive Reference Parameter type. This could
-include, for example, arbitrary JavaScript.
-
-
-SECURITY-50
-Some URLs provided by global-build-stats plugin returned a JSON response 
-that contained request parameters. These responses had the 
-Content-Type: text/html, so could have been interpreted as HTML by clients,
-resulting in a potential reflected cross-site scripting vulnerability.
-
-Additionally, some URLs provided by global-build-stats plugin that modify 
-data did not require POST requests to be sent, resulting in a potential 
-cross-site request forgery vulnerability.
-
-
-SECURITY-57
-Dependency Graph Viewer plugin did not perform permission checks for the 
-API endpoint that modifies the dependency graph, allowing anyone with 
-Overall/Read permission to modify this data.
-
-
-SECURITY-374
-SCP publisher plugin stores credentials to other Jenkins instances in the 
-file be.certipost.hudson.plugin.SCPRepositoryPublisher.xml in the Jenkins 
-master home directory. These credentials are stored unencrypted, allowing 
-anyone with local file system access to access them.
-
-Additionally, the credentials are also transmitted in plain text as part 
-of the configuration form. This could result in exposure of the credentials 
-through browser extensions, cross-site scripting vulnerabilities, and 
-similar situations.
-
-
-SECURITY-378
-Build-Publisher plugin stores credentials to other Jenkins instances in the 
-file hudson.plugins.build_publisher.BuildPublisher.xml in the Jenkins 
-master home directory. These credentials were stored unencrypted, allowing 
-anyone with local file system access to access them.
-
-Additionally, the credentials were also transmitted in plain text as part 
-of the configuration form. This could result in exposure of the API key 
-through browser extensions, cross-site scripting vulnerabilities, and 
-similar situations.
-
-
-JENKINS-36333
-Multijob plugin did not check permissions in the Resume Build action, 
-allowing anyone with Job/Read permission to resume the build.
-
+iQIcBAEBCAAGBQJYjdlmAAoJEHb/MwWLVhi2CSsP/izDwh+T5DR5ms7134ihHYzW
+bMGXiHY273TjJmBdg3EjXbmuhydzVXIe6rOKc+kZZ8CmMW6Xm8M8cQ0aV19h5pnm
+jC8jdLkD3zhN4Gb5kTFVHzGxdDP0jTiWamsrt1r9hKTpnP4hLia5oeB2EZhqPp0W
+LBkeVSwAzNhK1WjRZ0hKOKA5t55djzNO6YzwPx9541a2Ec1fr7wYCbb5VPrG0JIj
+8K8xjE7sjuxh+agknZPHgXLhj/YDk07sEKmMnLhnJy4IyyPWvgYDa46C11CWJc/T
+DfNWIJx6OMDkRDnxduNl/WQ3g1s00hcR6Wn1TEldELz9YdpkNG7HKpz1+cC1QtYX
+ICjtcm2xaJ3KkMW0SyalZ8gRzGhjfti7Gvf3JEopIDYJtBy3Kkf9ozDLpwPbo49l
+tLCZSuTVkRgdlAlFAaJLn56qx9eHv6TpZt+QgVVVjEWbGy3E8i4DZhcTtjZTQA7X
+m5Ud76iDK5b6qxZjNhZEf5pqdN+d8nXAnnn1vdb8GVJmIJ4uJK/hMksL7kvWp96U
+pQmwWM20N1i3uWcMJb14asAJXJWrwxwWavFgnLUbVOG1pipNwBxsA9VqrwgMLSQb
+OXFoBzNSJEmRj+zt1H8B9Dq6GHT0ZvuxGlkGlff3rENxuKYLpBO7bSOeCmOhNY0j
+Q1MA3pDnDnn4wLy7m58b
+=IIhb
+-----END PGP SIGNATURE-----
