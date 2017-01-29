@@ -1,140 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/14
-Message-Id: <E1e2cPk-0007GA-Pi@xenbits.xenproject.org>
-Date: Thu, 12 Oct 2017 12:16:36 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 244 - x86: Incorrect handling of IST settings during CPU hotplug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/7
+Message-ID: <70750590.5axfNR7Pl0@arcadia>
+Date: Sun, 29 Jan 2017 17:52:34 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: mp3splt: NULL pointer dereference in main (mp3splt.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+mp3splt is a command line utility to split mp3 and ogg files without decoding.
 
-                    Xen Security Advisory XSA-244
-                              version 2
+A fuzz on it discovered a NULL pointer access.
 
-      x86: Incorrect handling of IST settings during CPU hotplug
+The complete ASan output:
 
-UPDATES IN VERSION 2
-====================
+# mp3splt -P -f -t 0.1 -a $FILE
+==3081==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000046dbd9 bp 0x7ffc4cdabdb0 sp 0x7ffc4cdab520 T0)
+==3081==The signal is caused by a READ memory access.
+==3081==Hint: address points to the zero page.
+    #0 0x46dbd8 in __interceptor_strncmp /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302
+    #1 0x51d727 in main /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:906:11
+    #2 0x7f8512cf061f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #3 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
 
-Public release.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:302 in 
+__interceptor_strncmp
+==3081==ABORTING
 
-ISSUE DESCRIPTION
-=================
+Affected version:
+0.9.2
 
-The x86-64 architecture allows interrupts to be run on distinct stacks.
-The choice of stack is encoded in a field of the corresponding
-interrupt descriptor in the Interrupt Descriptor Table (IDT).  That
-field selects an entry from the active Task State Segment (TSS).
+Fixed version:
+N/A
 
-Since, on AMD hardware, Xen switches to an HVM guest's TSS before
-actually entering the guest, with the Global Interrupt Flag still set,
-the selectors in the IDT entry are switched when guest context is
-loaded/unloaded.
+Commit fix:
+N/A
 
-When a new CPU is brought online, its IDT is copied from CPU0's IDT,
-including those selector fields.  If CPU0 happens at that moment to be
-in HVM context, wrong values for those IDT fields would be installed
-for the new CPU.  If the first guest vCPU to be run on that CPU
-belongs to a PV guest, it will then have the ability to escalate its
-privilege or crash the hypervisor.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-IMPACT
-======
+CVE:
+N/A
 
-A malicious or buggy x86 PV guest could escalate its privileges or
-crash the hypervisor.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00128-mp3splt-nullptr-main
 
-VULNERABLE SYSTEMS
-==================
+Timeline:
+2017-01-01: private report to upstream via mail
+2017-01-29: public upstream report on sourceforge
+2017-01-29: blog post about the issue
 
-All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
-versions have not been checked.
+Note:
+This bug was found with American Fuzzy Lop.
 
-Only PV guests can exploit the vulnerability.  HVM guests cannot
-exploit the vulnerability, but their presence is necessary for the
-exposure of the vulnerability to PV guests.
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-mp3splt-c
 
-Only x86 systems using SVM (AMD virtualisation extensions) rather than
-VMX (Intel virtualisation extensions) are vulnerable.  Therefore AMD
-x86 hardware is vulnerable; Intel hardware is not vulnerable.
-
-ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Avoiding to online CPUs at runtime will avoid this vulnerability.
-
-Running only HVM or only PV guests on any individual host will also
-avoid this vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa244.patch           xen-unstable, Xen 4.9.x, Xen 4.8.x
-xsa244-4.7.patch       Xen 4.7.x
-xsa244-4.6.patch       Xen 4.6.x
-xsa244-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa244*
-5b663620a1b0d5f07e7ae4d1d3506d925515d5f85830ca49dda75cab1218506f  xsa244.meta
-bcf22b332bf3f6fe8c86e4de67f82628c9b8e257d9513c3bf5c7f5dd71d86c33  xsa244.patch
-4c4543fdfd25b4a8ea7d53f3f45011ec137798e7d4e690d8f3ea58d77afb5f06  xsa244-4.5.patch
-eaa3ba303980d783813db7aee948a9cb2723328da5fa5650ffca7b825c21bab6  xsa244-4.6.patch
-4d8cf754f760ef05488e9fb25a7ebd9a7e46f3742e91eee1a8385fd1e611ea8c  xsa244-4.7.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZ31wEAAoJEIP+FMlX6CvZixEIALXqWn6ShR2MCMeiGHy1ewsX
-S80m2OFqHYgZuawTuA3TN3mYfQONLNpobpchU5Y/RoWxS70sfV5PqLf6IHYPlSSC
-3VI+U+Q3nhPhudQo4RFkyFeDGg6dKEnver+Bfik1pHsTBB0o0ojAdgqbW+K4HEoE
-flqPaXuQSFSFE5mYzQ+UxI7nE9I7IwDRD+eDSE/JRtTmXuoJPB8bC4De68dM4BbM
-+nfaNR95PvyNTToKluYdcST7pq/jRal5/O8GSxNsolgcd6C4IZrX1wB2ibMoa1wh
-ElLmcw/gyT/DfvO0STjvVQ/Ryaoj3ZLjMrNRt7pA8IQ1gig312f7vCGpF0/EeYM=
-=9+du
------END PGP SIGNATURE-----
-
-Download attachment "xsa244.meta" of type "application/octet-stream" (2483 bytes)
-
-Download attachment "xsa244.patch" of type "application/octet-stream" (2366 bytes)
-
-Download attachment "xsa244-4.5.patch" of type "application/octet-stream" (2069 bytes)
-
-Download attachment "xsa244-4.6.patch" of type "application/octet-stream" (2072 bytes)
-
-Download attachment "xsa244-4.7.patch" of type "application/octet-stream" (2052 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
