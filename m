@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/3
-Message-Id: <201703171154.35368@pali>
-Date: Fri, 17 Mar 2017 11:54:35 +0100
-From: Pali Rohár <pali.rohar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-3305 - The Riddle vulnerability in MySQL client (public disclosure)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/2
+Message-ID: <a01c4fba9f0e467688e24a4738d21f6f@imshyb01.MITRE.ORG>
+Date: Sun, 29 Jan 2017 07:08:58 -0500
+From: <cve-assign@...re.org>
+To: <luc.lynx@...dex.ru>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: SSRF issue in the svgsalamander library
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-There is a new vulnerability in MySQL client versions 5.5 and 5.6 which 
-is related to SSL/TLS encryption and to older BACKRONYM vulnerability.
+> https://github.com/blackears/svgSalamander/issues/11
+> 
+> <svg ...
+> <image xlink:href="https://host-in-the-trusted-network.com/test.jpg" ...
 
-As it is common, new vulnerability should have a name, logo and website. 
-So enjoy the *Riddle* at http://riddle.link/
+Use CVE-2017-5617.
 
-Affected are only Oracle's MySQL clients in all versions 5.5 and 5.6 
-when SSL/TLS encryption is used. Verification of encryption parameters 
-and existence of SSL/TLS layer by MySQL client is done *after* client 
-successfully finish authentication.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-For more details including mitigation, look at Technical section on 
-vulnerability website: http://riddle.link/
-
--- 
-Pali Rohár
-pali.rohar@...il.com
-
-Download attachment "signature.asc " of type "application/pgp-signature" (199 bytes)
+iQIcBAEBCAAGBQJYjdlWAAoJEHb/MwWLVhi2lBAP/AmEC5U0G/8Cy1a6By1nTYMC
+wdzp7WTuV3rAoSoK7+xkaucNG8zw/clt35a4ngYhN8DQ4IzGRyg078c/UaLt8r/S
+flc5I7rR+x9Mdje2M6Z/G8mIh8vnyhFzIIA9s3QFjUu3x5jNSynnLoPfKg/AcJaX
+7ZEdeG+30o/6qHQcbCLN/cA4UaShsxwcleuyfe6/O/aSOHPyvEf2arv+N5VmFKyZ
+V0MHek+5tqJN+U+mwIk7dj27Vn4kpa1874FwH41+pmE9cfM4oxnLngVlhNUgacgh
+oNJY6nGQwp4pudTUfu+i3xRBROYqqhGT6a+e/d/GeTUBqKn36WyFLIZQS4Sltsc0
+85TeQgCd2MvkdMGbD7yXV1qu+KssLRBBRmyje3XboF492hzUlFkWy222ZFFKTyrH
+nF01Xr9PrzfZh9MYP0ajxJcvdUZq6YmVuso+Y4tiOvuqckJTBDbuMuvM6uW7yl6Q
+5nP+ab8tq4EPGjWSy42apEz/h6aQLYXhKlCsdS20RIDbr8XOODPIfcqFC719aG3P
++2TatG980NtI7zYngUYbMy1hNiC5uo9Qx4oRsS1Gp8Z8MxzAgqQsrjbG1vKRzYwn
+VtGZrQKV15TyeFPnZJFMQFYnJ1gOW2JjRbe3NXCxpAXYHJMNJvXOohG1onbsNo2C
+tmyxTVXIiWa3ptHBeaI6
+=UYBx
+-----END PGP SIGNATURE-----
