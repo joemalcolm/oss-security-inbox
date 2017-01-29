@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7247" "Saturday" "28" "November" "2015" "00:00:07" "+0200" "Andrey Utkin" "andrey.od.utkin@gmail.com" "<5658D267.5020605@gmail.com>" "170" "[oss-security] [RFC] Keychain for GPG, SSH, X.509 etc. (inspired by Split GPG)" nil nil nil "11" "2015112722:00:07" "[oss-security] [RFC] Keychain for GPG, SSH, X.509 etc. (inspired by Split GPG)" (number mark "U       andrey.od.ut Nov 28  170/7247  " thread-indent "\"[oss-security] [RFC] Keychain for GPG, SSH, X.509 etc. (inspired by Split GPG)\"\n") "<5658D146.2070403@gmail.com>" ("<5658D146.2070403@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2080" "Sunday" "29" "January" "2017" "17:50:41" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<9288234.IgCNv62ja1@arcadia>" "64" "[oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)" nil nil nil "1" "2017012916:50:41" "[oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)" (number mark "U       ago@gentoo.o Jan 29   64/2080  " thread-indent "\"[oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32536 invoked by uid 550); 28 Nov 2015 07:39:36 -0000
+Received: (qmail 18008 invoked by uid 550); 29 Jan 2017 16:50:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,202 +12,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15782 invoked from network); 27 Nov 2015 22:00:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:references:to:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type;
-        bh=wQjxaikjvy2zUxvadWqoGvGART8ff9o388S2JWP9H8I=;
-        b=jNXXTg5Be4WimBgc4Rqsmk+dmfoxHBZWuk9lzFTiGNlQxTEDx1GJDOMO+gE82Fcqji
-         Go0X2B2/aWQLRpl2uZ2Qc5oU0f2HXwM1UMst5p1nb2mHBZZ4gJh6SAG9FuH5uM8yZXoC
-         XoaSCA4P2brtoKgeE1AY0XrKAsZjIqsjSgTM9HP8LWlUUWGO+RAOQ4+ZCZ2TuAIxoEYb
-         kDD31J3jkw1KvD9ogIVGWcPsKbIEWU/h6Tmfleamn8hKRsetKv8xqDy9NSMS4ldCFKNk
-         3BHUGsux/WW150tKo1b6ae1xmXA1z2XBWWPYtptTmhoTcdV6qH9rEoj4FQrtmqlhV1zm
-         LFjA==
-X-Received: by 10.112.130.138 with SMTP id oe10mr21069817lbb.54.1448661609082;
-        Fri, 27 Nov 2015 14:00:09 -0800 (PST)
-References: <5658D146.2070403@gmail.com>
+Received: (qmail 17972 invoked from network); 29 Jan 2017 16:50:58 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-From: Andrey Utkin <andrey.od.utkin@gmail.com>
-X-Forwarded-Message-Id: <5658D146.2070403@gmail.com>
-Message-ID: <5658D267.5020605@gmail.com>
-Date: Sat, 28 Nov 2015 00:00:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Date: Sun, 29 Jan 2017 17:50:41 +0100
+Message-ID: <9288234.IgCNv62ja1@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-In-Reply-To: <5658D146.2070403@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="gKdqxHLrOXXg2x04N8MJSA3tmKiwjLIxb"
-Subject: [oss-security] [RFC] Keychain for GPG, SSH, X.509 etc. (inspired by Split GPG)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
 
---gKdqxHLrOXXg2x04N8MJSA3tmKiwjLIxb
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Description:
+mp3splt is a command line utility to split mp3 and ogg files without decoding.
 
-TL;DR: Generalization of "Split GPG" concept.
-Any comments?
-Anybody likes the idea?
-Ready to join development or early adoption?
+A fuzz on it discovered a NULL pointer access.
 
+The complete ASan output:
 
-What is this: Concept of flexible solution for usage of private keys
-without disclosing them. Key usage is always confirmed by user (as a
-form of AnyNumber-factor auth).
+# mp3splt -P -f -t 0.1 -a $FILE
+==2581==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x7f36fb0a159a bp 0x7ffdc2708cb0 sp 0x7ffdc2708438 T0)
+==2581==The signal is caused by a READ memory access.
+==2581==Hint: address points to the zero page.
+    #0 0x7f36fb0a1599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x47a571 in __interceptor_fopen64 /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:5167
+    #2 0x7f36fbf0d27e in splt_cue_export_to_file /tmp/portage/media-
+libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/cue.c:725
+    #3 0x7f36fbf0911b in mp3splt_export /tmp/portage/media-
+libs/libmp3splt-0.9.2/work/libmp3splt-0.9.2/src/mp3splt.c:1665
+    #4 0x51d5f0 in main /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:901:13
+    #5 0x7f36fb04061f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
 
-What is planned to guard: OpenPGP keys, SSH keys, X.509 client certificates.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==2581==ABORTING
 
-Inspiration: Split GPG (https://www.qubes-os.org/doc/split-gpg/),
-PGP-smartcards, SSH-smartcards.
+Affected version:
+0.9.2
 
-Implementation form: portable libraries/toolkit.
+Fixed version:
+N/A
 
-Elements:
- - keychain server (KS): the process which is accessible via specified
-protocols and has access to the unprotected keys, so that it can use them:
- --- encrypt/decrypt/sign;
- --- create challenge responses;
- - keychain key usage client (KUC): the process which makes requests for
-key usage;
- - keychain confirmation server (KCS): the process conveying User's
-decision (approval or rejection) to each key usage request;
+Commit fix:
+N/A
 
-The following elements must run in trusted environment (including
-trusted physical security system, trusted hypervisor, trusted machine OS);
- - keychain server;
- - keychain confirmation server.
-Keychain key usage client can work in entirely hostile environment.
-Keychain usage client (KUC) may be entirely spoofed by attacker, no data
-from KUC is trusted and it must be verified by User.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-The above restriction is not a show-stopper ("oh, too much restricted
-scheme - how to get such trusted environments?"). It is an improvement
-comparing to default scheme, which supposes secret keys exposition in
-same hostile environment. The point is in decoupling these three
-essential entities of key material, key usage agent (gpg-agent,
-ssh-agent) and key control (usually underdeveloped in mainstream systems
-- you just MAY get asked to enter passphrase if you use it).
-This scheme is an improvement comparing to hardware smartcard usage
-because it brings flexiblility and fine-grained control to key usage
-confirmation procedure.
+CVE:
+N/A
 
-Q: How confirmation happens?
-A: This function is outsourced to plugin system. Different systems would
-find different ways as most fit. Used/allowed plugins configuration is
-set up in keychain server. It possibly will look similar to Linux PAM.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00129-mp3splt-nullptr-splt_cue_export_to_file
 
-Q: How to have keychain server data encrypted?
-A: As long as KS must actually use the keys in their unencrypted form,
-it is required that safety of KS is trusted. If we cannot assume KS
-environment trusted, then keys are compromised as soon as they get
-loaded in unencrypted form. See http://blog.invisiblethings.org/keys/ "I
-proudly use empty passphrases on all of my private keys...". Encryption
-of KS data is out of scope of this scheme, but it may be implemented as
-the adopter decides, as additional safety measure.
+Timeline:
+2017-01-01: private report to upstream via mail
+2017-01-29: public upstream report on sourceforge
+2017-01-29: blog post about the issue
 
-Q: How to ensure unspoofability of confirmation dialog?
-A: Confirmation app must run in trusted environment, so this is not
-needed. If environment is not trusted, the unspoofability of
-confirmation dialog is only one of countless unresonvable security issues.
+Note:
+This bug was found with American Fuzzy Lop.
 
-Q: Which protocols are used to convey key usage dialogs and confirmation
-dialogs?
-A: The ones that can be considered handy and trusted in specific case.
-The following ones are offered for adopters consideration:
- - SSH;
- - other end-to-end (KUC-KS, KS-KCS, KUC-KCS) encrypted connections:
- --- XMPP via TLS chat with PGP or OTR encryption;
- --- HTTPS online session with realtime notifications;
- --- encrypted VoIP or VVoIP call communication (smart audio
-synthesis/recognition software are probably required);
- --- confirmation HTTPS link in encrypted email;
- - NFC (near-field communication protocol, hardware) - NFC crypto chip
-prepares signature which shows approval to KS;
- - (bad, use as fallback) SMS, PSTN call;
-It should be stated that KC may want to gather more than one approval,
-by more than one communication channel (thus we have multi-factor
-authorization). Or system may query several confirmation channels in
-parallel or serial fashion.
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
 
-
-Examples of viable platforms for trusted elements (KC, KCS), review of
-potential risks:
- - Android device: so-so to bad (depending on whether the system is
-fully dedicated, and on system configuration):
- --- risk for KC: vendor-provided OS system services tend to spy on user;
- --- risk for KC: normally every app has its kernel-guarded storage, but
-processes with system privilegee (gained by exploit or by user
-permission) may access this data;
- --- risk for KCS: potential spoofing of KCS app dialogs;
-
- - Remote sever: bad to so-so to good (depending on whether VPS or owned
-and guarded physical machine):
- --- risk for any component: remote attack (TODO elaborate, review more
-in-depth);
-
- - Pluggable micro-PC with dedicated system (like
-http://inversepath.com/usbarmory.html): potentially good, but there's
-lack of interactive peripheral for dialog, a gadget like androids
-without bloatware would be nice.
-
- - Virtual machines: good, but must be used properly - untrusted env
-mustn't be supervising trusted env.
-
- - Different UNIX system accounts from untrusted component: bad, trusted
-elements are owned on privilege escalating exploitation.
-
- - LXC: same as with UNIX accounts (kernel exploit owns everything)?
-
-
-Example elements layouts:
-
- - keychain server (KC) and confirmation server (KCS) on Android device,
-keychain usage client (KUC) on a workstation: simple, affordable, bad
-security;
- - keycnain server (KC) on remote server, usage client (KUC) on a
-workstation, confirmation client (KCS) on another, trusted workstation:
-pretty good, if remote server is safe;
-
-
-Further expansion of this scheme:
- - X.509 client cert auth challenge forwarding (using browser plugin);
- - HTTP DIGEST auth challenges forwarding from KUC (using browser
-plugin) to KS;
- - forwarding requests for file access, i.e. implementation of
-filesystem in userspace, with manual access control on sensitive data
-exposed to untrusted environment.
-
---=20
-OpenPGP usage is appreciated (it also helps your letter to bypass spam
-filters). To email me with encryption easily, go
-https://encrypt.to/0xC6FCDB11
-
-
-
-
-
-
---gKdqxHLrOXXg2x04N8MJSA3tmKiwjLIxb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJWWNJnAAoJENVqfNDG/NsRWjEP/j9xjoofx0G8JssgHxHvrkxd
-jF73p8ZTwyXW6kOTIqUGQZ/gjfCieNbSUZTdI5iHt6kzEZlHRAnbFj/5rWACP6P4
-Jl6xME7M+r0o2fe4q4vnpN6pmDU/9ixOVFq6WrA7A5mW80zymmPzysz1jA2z+OdC
-N0rG6X8559qDLlcjACroC9Yx7ZFhN05ynfEzyyqAL4oe2wabkdyeC++Rp8UtNRmC
-ffA8MeB7BIpqeafTxjzf/13oNvj7W+S77DpqIm5rjDYorzjxr/foNVlRpIrN62WP
-amAb0IEUCgG0Y/Fen6dqeEpjOyCycnd4I/mHLMZ5spuItINS+OjF87F3H5d08/L1
-IoHk3bBLrEn3sovyWuc2BDXDNRBGjnnCtJL1OehneDijxX5XbLFPxlxPBeB/6cCq
-5oewPkQFqAbXDzMNlxKt9FBV4OxPYVId6dFv5TxIQD7glcEvD9KBqIiN0SsYh3b5
-SUUHEElpOtxSJDS8SiZ70FupaF8KHK9SIMGEDT00VuzX4543ZDbJOxv6pez2AR1f
-3IJUHWrFzG+hTk/kgrKIoN2LD/nvRwjXhY8FrHfqq0Swycz79Fq7WtMyjGxcW4+c
-MIMIJL8hiIBdZcVhELfOWCkij82N/2XH31Vymrp2lbZzpyrsfzg84Snx4fwFu3vy
-YhQb1mF/Gzynd/HIyL/1
-=bhkW
------END PGP SIGNATURE-----
-
---gKdqxHLrOXXg2x04N8MJSA3tmKiwjLIxb--
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
