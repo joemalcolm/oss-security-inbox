@@ -1,96 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/8
-Message-ID: <6ce499a4-c9bb-ad62-aa85-4a67f77b2a19@securify.nl>
-Date: Tue, 7 Mar 2017 00:04:44 +0100
-From: Summer of Pwnage <lists@...urify.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/6
+Message-ID: <2944552.SWHvZueMFW@arcadia>
+Date: Sun, 29 Jan 2017 17:51:29 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: WordPress audio playlist functionality is affected by Cross-Site Scripting
+Subject: mp3splt: invalid free in free_options (options_manager.c)
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WordPress audio playlist functionality is affected by Cross-Site
-Scripting
-------------------------------------------------------------------------
-Yorick Koster, July 2016
+Description:
+mp3splt is a command line utility to split mp3 and ogg files without decoding.
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-Two Cross-Site Scripting vulnerabilities exists in the playlist
-functionality of WordPress. These issues can be exploited by convincing
-an Editor or Administrator into uploading a malicious MP3 file. Once
-uploaded the issues can be triggered by a Contributor or higher using
-the playlist shortcode.
+A fuzz on it discovered an invalid free.
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160717-0003
+The complete ASan output:
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on the WordPress [2] version 4.5.3.
+# mp3splt -P -f -t 0.1 -a $FILE
+==2631==ERROR: AddressSanitizer: attempting free on address which was not 
+malloc()-ed: 0x000000d3ef65 in thread T0
+    #0 0x4d3770 in free /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47
+    #1 0x50dbaa in free_options /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/options_manager.c:67:9
+    #2 0x515623 in free_main_struct /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/data_manager.c:74:7
+    #3 0x50ffa5 in process_confirmation_error /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/print_utils.c:266:7
+    #4 0x51df29 in main /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:873:9
+    #5 0x7f783aba361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-These issues are resolved in WordPress version 4.7.3. [3]
+AddressSanitizer can not describe address in more detail (wild memory access 
+suspected).
+SUMMARY: AddressSanitizer: bad-free /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47 
+in free
+==2631==ABORTING
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress is web software you can use to create a website, blog, or
-app. Two Cross-Site Scripting vulnerabilities exists in the playlist
-functionality of WordPress. These issues can be exploited by convincing
-an Editor or Administrator into uploading a malicious MP3 file. Once
-uploaded the issues can be triggered by a Contributor or higher using
-the playlist shortcode.
+Affected version:
+0.9.2
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-It was discovered that meta information (ID3) stored in audio files are
-not properly sanitized in case they are uploaded by a user with the
-unfiltered_html (generally an Editor or Administrator).
+Fixed version:
+N/A
 
-The first Cross-Site Scripting vulnerability exists in the function that
-processes the playlist shortcode, which is done in the
-wp_playlist_shortcode() method (/wp-includes/media.php). This method
-creates a <noscript> block for users with JavaScript disabled.
+Commit fix:
+N/A
 
-https://www.securify.nl/advisory/SFY20160742/noscript_unfiltered_html.png
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-The method wp_get_attachment_link() does not perform any output encoding
-on the link text. Meta information from the audio file is used in the
-link text, rendering wp_playlist_shortcode() vulnerable to Cross-Site
-Scripting.
+CVE:
+N/A
 
-The second Cross-Site Scripting issue is DOM-based and exists in the
-JavaScript file /wp-includes/js/mediaelement/wp-playlist.js (or
-/wp-includes/js/mediaelement/wp-playlist.min.js). The WPPlaylistView
-object is used to render a audio player client side. The method
-renderTracks() uses the meta information from the audio file in a call
-to jQuery's append() method. No output encoding is used on the meta
-information, resulting in a Cross-Site Scripting vulnerability.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00130-mp3splt-badfree-free_options
 
-https://www.securify.nl/advisory/SFY20160742/renderTracks-dom-based_xss.png
+Timeline:
+2017-01-01: private report to upstream via mail
+2017-01-29: public upstream report on sourceforge
+2017-01-29: blog post about the issue
 
-------------------------------------------------------------------------
-Proof of concept
-------------------------------------------------------------------------
-The following MP3 file can be used to reproduce this issue:
+Note:
+This bug was found with American Fuzzy Lop.
 
-https://www.securify.nl/advisory/SFY20160742/xss.mp3
+Permalink:
+https://blogs.gentoo.org/ago/2017/01/29/mp3splt-invalid-free-in-free_options-options_manager-c
 
-1) upload MP3 file to the Media Library (as Editor or Administrator).
-2) Insert an Audio Playlist in a Post containing this MP3 (Create Audio
-Playlist).
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
-[2] https://wordpress.org/
-[3] 
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
