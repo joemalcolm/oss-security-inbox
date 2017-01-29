@@ -1,4 +1,9 @@
-Received: (qmail 15481 invoked by uid 550); 31 Jan 2024 14:56:09 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1417" "Sunday" "29" "January" "2017" "17:34:44" "+0100" "Martin Pitt" "mpitt@debian.org" "<20170129163444.GA1097@donald>" "42" "[oss-security] Requesting CVE for calibre file disclosure" nil nil nil "1" "2017012916:34:44" "[oss-security] Requesting CVE for calibre file disclosure" (number mark "U       mpitt@debian Jan 29   42/1417  " thread-indent "\"[oss-security] Requesting CVE for calibre file disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18268 invoked by uid 550); 29 Jan 2017 16:56:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,59 +12,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13345 invoked from network); 31 Jan 2024 07:51:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1706687615; bh=XFCvwuyOIwVUDiM52d+58KmjcqF5r6urRogiybIMbjU=;
-	h=From:To:Cc:Subject:Date;
-	b=Xt0pbzIE2zgKf+EjCFqHJ8VVFCcjO3H9BwBJthZ+jKESdloKltBOkoh2orC7qwAFy
-	 paD7rVI1IE4vKZIU37xQE14AJMbLnkyuVYYkeLvaH3czW1wvZ4Aw1Bae7A7w6ZC8TE
-	 WUKG4esXwIsvChLQyef+pSdYFoWMQM4ZSrtE8w2c=
-X-QQ-FEAT: 0LWSjAOnH4EqDtMzSJIdDA==
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
-X-QQ-XMAILINFO: NhuZ2EUUEDkwY/2A8mxStt7+H2f7/ftqFuJECU3MeoqbHYrT1jgOYP3KTEMo3Z
-	 FLfDefdz2FMUj62immSvluitJjuyHx1AX59aSCZcUK4P3uGul0uHsgKccQSMODpZALLM20MJWZC0+
-	 VfP+YVsELIHpZyjJzXtdsurqF23kAgD/w7wq/K75/ci39oTRgBxGyreV7+MqswC0hdkkJHMG/U4BC
-	 iSqdIQkWqavIU8RBOTVmgFmY1Ud3gr0LSg1k9zKnRWFjcLdQfbVsn+Uj7H19SB3a612+J7eixzo2V
-	 JMmv81Pfb2s8wvrytqoGSHHrNJQl0KHFOyMCZ2MchyYhThJD5yoOmeCu873Civ6kWZM6UTDCxb9nC
-	 O/TC76i8jgscujcUZH6S+QHLJGXL4aga17BirVEM7nS32d2hFR6E5A2f9fgsCZNGkzeR1lTYW6nI7
-	 BTX5M/dkTaSdn1oONnAS93SyWhhLVdSrNaRp8v+qsnPrEJClekE17RgLjmb7hTF8f4eOfcVLJ62+9
-	 aUgSuDR+dx8rfxZVk9W3M0UiF1mg7Lo9/ZLFyJ/2D/BIXf9IKRfGsB8eghECYhKX1QLWpNr09MBzf
-	 8fnC7NyhItrd1AffsFyhkLYMiaTqLTw3UOw1xS6XIvga1JuAsuUJkkLKgCkjrdIw4GzJfLIkHTbi9
-	 1+kUS5m1LYWgaX1xOnaIcoUUccoi17Ga4H9mYHSQwdXHHC0G4qQMnjQWxESUXbthqld+7s2NESZvE
-	 o0IFU7CO9zMu+ep3tbll10pXD/LZMslQq//f/H80ZSu2f65WshAlzzrKh4Yiv53y5C8GVGpbDrBd0
-	 d2OXvUTdpIERTq5XBX8rtTgV1YsLw7T06zZk/FRBEFW1gWeCW9uhJJPppE2m6TtxbpuOhUQSU0SgW
-	 J5bgeV1JOuXmGCvqzljP2s4wz2I2BLc1h+OSdrIZsDkuOX9MVUjYLOiTeP983dkoonCYT5FR+mEt9
-	 BCjCbjHA==
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 119.8.203.210
-X-QQ-STYLE: 
-X-QQ-mid: webmail343t1706687614t2181894
-From: "=?gb18030?B?YmlzbXk=?=" <bismy@qq.com>
-To: "=?gb18030?B?b3NzLXNlY3VyaXR5?=" <oss-security@lists.openwall.com>
-Cc: "=?gb18030?B?ZGV2?=" <dev@servicecomb.apache.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-Date: Wed, 31 Jan 2024 15:53:34 +0800
-X-Priority: 3
-Message-ID: <tencent_5A06E31044B20EDA2BA45A251E45B1286A06@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-Subject: [oss-security] CVE-2023-44312: Apache ServiceComb Service-Center: attacker can query all environment variables of the service-center server 
+Received: (qmail 28265 invoked from network); 29 Jan 2017 16:34:51 -0000
+Date: Sun, 29 Jan 2017 17:34:44 +0100
+From: Martin Pitt <mpitt@debian.org>
+To: oss-security@lists.openwall.com
+Cc: Kovid Goyal <kovid@kovidgoyal.net>,
+	Antoine =?iso-8859-1?Q?Beaupr=E9?= <anarcat@debian.org>
+Message-ID: <20170129163444.GA1097@donald>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
+Content-Disposition: inline
+User-Agent: Mutt/1.7.1 (2016-10-04)
+Subject: [oss-security] Requesting CVE for calibre file disclosure
 
-QWZmZWN0ZWQgdmVyc2lvbnM6CgotIEFwYWNoZSBTZXJ2aWNlQ29tYiBTZXJ2
-aWNlLUNlbnRlciB0aHJvdWdoIDIuMS4wCgpEZXNjcmlwdGlvbjoKCkV4cG9z
-dXJlIG9mIFNlbnNpdGl2ZSBJbmZvcm1hdGlvbiB0byBhbiBVbmF1dGhvcml6
-ZWQgQWN0b3IgaW4gQXBhY2hlIFNlcnZpY2VDb21iIFNlcnZpY2UtQ2VudGVy
-LlRoaXMgaXNzdWUgYWZmZWN0cyBBcGFjaGUgU2VydmljZUNvbWIgU2Vydmlj
-ZS1DZW50ZXIgYmVmb3JlIDIuMS4wIChpbmNsdWRlKS4KClVzZXJzIGFyZSBy
-ZWNvbW1lbmRlZCB0byB1cGdyYWRlIHRvIHZlcnNpb24gMi4yLjAsIHdoaWNo
-IGZpeGVzIHRoZSBpc3N1ZS4KCkNyZWRpdDoKCsvVILCyIDxzdWFud2VsbEBo
-b3RtYWlsLmNvbT4gKGZpbmRlcikKClJlZmVyZW5jZXM6CgpodHRwczovL3Nl
-cnZpY2Vjb21iLmFwYWNoZS5vcmcvCmh0dHBzOi8vd3d3LmN2ZS5vcmcvQ1ZF
-UmVjb3JkP2lkPUNWRS0yMDIzLTQ0MzEyPC9zdWFud2VsbEBob3RtYWlsLmNv
-bT4=
+--a8Wt8u1KmwUX3Y2C
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hello all,
+
+Calibre 2.75 fixed what looks like a local data disclosure vulnerability:
+
+  https://github.com/kovidgoyal/calibre/commit/3a89718664cb8c
+
+@Kovid: Would you mind making the original Launchpad bug
+https://launchpad.net/bugs/1651728 public?
+
+@osssec: Can you please assign a CVE on this one?
+
+Thanks to Antoine for pointing this out, this deserves an update in stable
+distro releases.
+
+Martin
+
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJYjhmdAAoJENFO8V2v4RNHEoUP/j9YpvYGBHdy8+Sz4ppRmmQz
+6Xd0AE1c+Z092fqEdFi1h1xrJNra7oDEJzLfNuWhhi1zstBvs3WvpLdCqkv7TvBt
+jls37dLr/R88cVB/FJRlqpgbTOprvk1bKDDrohhDKtCMbh5j2L7Xb9qsDmEn5aEp
+j5vKHZ3ldZKggXTZCWcwRR4TCdwDyWFG31/218BNZzKZIOKedS5WJaVxnWQLdGso
+WhSSR00/XYjuiIaSiYvuuH9Rf2ThRO8SrokXnfXWroQSJZht633GIZ8Ex98goGcM
+LWHSeHRARJ3rKPMXsUvoYoI7Qsqtv7W8Zb/paXr8hVl3eKqjgBYSLdkVpaTteS0J
+Nffo1VD6+LRXM+804Z3YXZInrQ/IIptX0pPqLhr0ymJt4eN/FoVGfFjGaz2U0fZQ
+JLf/qYB+usVpws7Uj4QMNoXJ5saeiQsJXTJoxTKQiwQl0CB3dZQxLX7NRvZ1xOEb
+0boivZqppPAfyOMb52l/8eRYvjQXuUxFE3pzJoCyBr1nNJQThyuy27aH+2VOjP3S
+WIBbxqYl4ueo16JYaKKTdzZD2bqDZjm8JMIDH3eqf29hEkMvDFYK353QJ8/ze7CT
+Yt2L6SBJrX0uTyVK8HC6Ps8BmunlCBA0unr0i/9HMEhiLTcmbhSg22k+JmGdV387
+h0WKZ0MCUGQDOKiJuDwA
+=nyb9
+-----END PGP SIGNATURE-----
+
+--a8Wt8u1KmwUX3Y2C--
