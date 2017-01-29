@@ -1,107 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/13/2
-Message-ID: <646c39e1-31e9-0178-3fd2-54fae31b6559@redhat.com>
-Date: Thu, 13 Apr 2017 08:32:38 +0200
-From: Andrej Nemec <anemec@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request - XStream: DoS when unmarshalling void
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/4
+Message-ID: <1207006894.2769604.1485695665647@mail.yahoo.com>
+Date: Sun, 29 Jan 2017 13:14:25 +0000 (UTC)
+From: Ion Ionescu <netblue30@...oo.com>
+To: Sebastian Krahmer <krahmer@...e.com>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hello Jörg,
+Hello,
+The first fix for CVE-2017-5180 in Firejail version 0.9.44.4 and 0.9.38.8 (LTS) was incomplete. Changing .Xauthority to .bashrc in the exploit code, the problem is still there - credit Sebastian Krahmer.
+New releases are out: 0.9.44.8 and 0.9.38.10 (LTS). Please assign a new CVE.
+Thank you,
+Ion Ionescu
 
-Unfortunately, CVE assignments are not done through this list anymore.
-You need to visit [1] and request a CVE by filing out the form. Could
-you please look at it and let the list know about the assigned CVE?
+      From: Sebastian Krahmer <krahmer@...e.com>
+ To: oss-security@...ts.openwall.com 
+Cc: netblue30@...oo.com
+ Sent: Wednesday, January 4, 2017 8:12 AM
+ Subject: Firejail local root exploit
+   
+Hi
 
-Thanks!
+Please find attached PoC for firejail, which seems to be quite
+popular sandboxing tool.
 
-Best Regards,
-
-[1] https://cveform.mitre.org/
+Sebastian
 
 -- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
 
-On 04/03/2017 01:55 PM, Jörg Schaible wrote:
-> Hello,
->
-> XStream is a Java library basically to marshal Java objects into XML and 
-> back.
->
-> Huawei engineers reported a reproducible crash of the Java VM (DoS) feeding 
-> XStream with a specially crafted XML (note, that Stream also supports JSON, 
-> that one can be used equally).
->
-> Issue Description
-> =================
->
-> The processed stream at unmarshalling type contains type information to 
-> recreate the formerly written objects. XStream creates therefore new 
-> instances based on these type information. The crash occurrs if this 
-> information advices XStream to create an instance of the primitive type 
-> 'void'. This situation can only happen if an attacker was able to manipulate 
-> the incoming data, since such an instance does not exist.
->
-> Steps to Reproduce:
-> ===================
->
-> The simplest way to demonstrate the problem is with this snippet:
->
-> XStream xstream = new XStream();
-> xstream.fromXML("<void/>");
->
-> If XStream is configured to read JSON, the equivalent line is:
->
-> xstream.fromXML("{'void':null}");
->
-> However, the problematic type information can be injected at any position in 
-> the provided stream, in XML just by adding a class attribute:
->
-> xstream.fromXML("<string class='void'>Hello, world!</string>");
->
-> Impact:
-> =======
-> The vulnerability may allow a remote attacker to cause a crash on the target 
-> system resulting in a denial of service only by manipulating the processed 
-> input stream.
->
-> Affected Versions:
-> ==================
-> Currently all versions until and including version 1.4.9 are affected, but 
-> workarounds exist.
->
-> Workarounds:
-> ============
-> XStream contains since version 1.4.7 a security framework to prevent an 
-> attack described in CVE-2013-7285. This framework can also be used to 
-> suppress the current vulnerability by setting:
->
-> xstream.denyTypes(void.class, Void.class);
->
-> Users of older XStream releases can register an own converter for the 'void' 
-> type, that also protects against this attack:
->
-> xstream.registerConverter(new Converter() {
->   public boolean canConvert(Class type) {
->     return Void.class == type || void.class == type;
->   }
->   public Object unmarshal(HierarchicalStreamReader reader, 
-> UnmarshallingContext context) {
->     throw new ConversionException("Type void cannot have an instance");
->   }
->   public void marshal(Object source, HierarchicalStreamWriter writer, 
-> MarshallingContext context) {
->     throw new ConversionException("Type void cannot have an instance");
->   }
-> }, XStream.PRIORITY_VERY_HIGH);
->
-> Regards,
-> Jörg Schaible
->
-> Maintainer of XStream.
->
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+   
