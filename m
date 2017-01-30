@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10075" "Friday" "7" "October" "2016" "08:35:33" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1610070832040.3266@freddy.simplesystems.org>" "182" "[oss-security] GraphicsMagick CVE Request - WPG Reader Issues" nil nil nil "10" "2016100713:35:33" "[oss-security] GraphicsMagick CVE Request - WPG Reader Issues" (number mark "U       bfriesen@sim Oct  7  182/10075 " thread-indent "\"[oss-security] GraphicsMagick CVE Request - WPG Reader Issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4622" "Sunday" "29" "January" "2017" "20:21:37" "-0500" "Leo Famulari" "leo@famulari.name" "<20170130012137.GA20854@jasmine>" "109" "[oss-security] FW: [DSA 3775-1] tcpdump security update]" "^Date:" nil nil "1" "2017013001:21:37" "[oss-security] FW: [DSA 3775-1] tcpdump security update]" (number mark "        leo@famulari Jan 29  109/4622  " thread-indent "\"[oss-security] FW: [DSA 3775-1] tcpdump security update]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13481 invoked by uid 550); 7 Oct 2016 13:35:47 -0000
+Received: (qmail 20390 invoked by uid 550); 30 Jan 2017 09:44:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,198 +11,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13463 invoked from network); 7 Oct 2016 13:35:46 -0000
-Date: Fri, 7 Oct 2016 08:35:33 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
-X-X-Sender: bfriesen@freddy.simplesystems.org
-To: oss-security@lists.openwall.com
-Message-ID: <alpine.GSO.2.20.1610070832040.3266@freddy.simplesystems.org>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+Received: (qmail 7949 invoked from network); 30 Jan 2017 01:21:49 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
+	content-type:date:from:message-id:mime-version:subject:to
+	:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=mesmtp; bh=1sZ
+	EaTr2ZlDJOknu2b7He2sqHk4=; b=0vceWPPmEsSCJZHfLNI6rDADtg30zKqX5aS
+	/wzWhgOcxfqXDLxbVdFh1kbnFencDqBNVCGGYksAuhTZhLqNKFFK2zfXRORzvBww
+	23DQ8GnXVhgBN/RbSJepWWRiuGSHkzakt0QEUAAga0CdVE/qrTek+AkSiBqxo9YQ
+	Xj+//I1w=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:message-id
+	:mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=smtpout; bh=1sZEaTr2ZlDJOknu2b7He2sqHk4=; b=efGBg
+	1S15g7MkMfAjjZ3uXNOBRMTjkxh80aZBb9J3fcu0bOMs5LtWZK6wpCB90DBIfq1b
+	ewXkPQ/utXpb7vX5vie5F9tuGmr6S5LHdTg/guvGxSWiRMyjyxXbgr0KefpxXYK/
+	qgKzjUXspZtmi6vRIcR2Vq5pUqPXYXtB8oHEyE=
+X-ME-Sender: <xms:IpWOWEWqHWLzVdttswkCC-vI5he7FtdzCrj-V3_mceyiR8QwNCwBDA>
+X-Sasl-enc: G8TprZWPut+2VA3GkBCQN9EtREt804oUezlFQwLTK27k 1485739298
+Message-ID: <20170130012137.GA20854@jasmine>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="-559023410-1936695736-1475847334=:3266"
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Fri, 07 Oct 2016 08:35:34 -0500 (CDT)
-Subject: [oss-security] GraphicsMagick CVE Request - WPG Reader Issues
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="fUYQa+Pmc3FrFX/N"
+Content-Disposition: inline
+User-Agent: Mutt/1.7.2 (2016-11-26)
+Date: Sun, 29 Jan 2017 20:21:37 -0500
+From: Leo Famulari <leo@famulari.name>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] FW: [DSA 3775-1] tcpdump security update]
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
----559023410-1936695736-1475847334=:3266
-Content-Type: text/plain; format=flowed; charset=US-ASCII
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Two security issues have been discovered in the WPG format reader in
-GraphicsMagick 1.3.25 (and earlier):
+I'm forwarding a Debian security advisory regarding tcpdump.
 
-1. In a build with QuantumDepth=8 (the default), there is no check
-    that the provided colormap is not larger than 256 entries,
-    resulting in potential heap overflow.  This problem does not occur
-    with larger QuantumDepth values.
+The reason that I'm forwarding it is that I'm unable to find an upstream
+source for this new release, 4.9.0.
 
-2. The assertion:
+It doesn't appear on tcpdump web page nor has it been tagged in their
+public Git repo:
 
-    ReferenceBlob: Assertion `blob != (BlobInfo *) NULL' failed.
+http://www.tcpdump.org/#latest-release
+https://github.com/the-tcpdump-group/tcpdump/tags
 
-    is thrown (causing a crash) for some files due to a logic error
-    which leads to passing a NULL pointer where a NULL pointer is not
-    allowed.
+Can anyone provide some insight?
 
-These issues were discovered using American Fuzzy Lop by fuzzing with
-the corpus by Moshe Kaplan discovered on Github at
-https://github.com/moshekaplan/FuzzGraphicsMagick.
+----- Forwarded message from Moritz Muehlenhoff <jmm@debian.org> -----
 
-A patch resolving the two above issues is attached.
+Date: Sun, 29 Jan 2017 18:24:15 +0100
+From: Moritz Muehlenhoff <jmm@debian.org>
+To: debian-security-announce@lists.debian.org
+Subject: [SECURITY] [DSA 3775-1] tcpdump security update
+User-Agent: NeoMutt/20161126 (1.7.1)
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
----559023410-1936695736-1475847334=:3266
-Content-Type: text/plain; charset=US-ASCII; name=wpg.c.patch
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.GSO.2.20.1610070835330.3266@freddy.simplesystems.org>
-Content-Description: 
-Content-Disposition: attachment; filename=wpg.c.patch
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-ZGlmZiAtciAxYzA3ZjcwZTVkZDkgY29kZXJzL3dwZy5jDQotLS0gYS9jb2Rl
-cnMvd3BnLmMJTW9uIFNlcCAwNSAxNDoxNjo0MiAyMDE2IC0wNTAwDQorKysg
-Yi9jb2RlcnMvd3BnLmMJRnJpIE9jdCAwNyAwODozMjo1OCAyMDE2IC0wNTAw
-DQpAQCAtMjEsNyArMjEsNyBAQA0KICUgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICUNCiAlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-U29mdHdhcmUgRGVzaWduICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAlDQogJSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEphcm9zbGF2
-IEZvanRpayAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJQ0KLSUg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBKdW5lIDIwMDAgLSAyMDE1
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICUNCislICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgSnVuZSAyMDAwIC0gMjAxNiAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAlDQogJSAgICAgICAgICAgICAgICAg
-ICAgICAgICBSZXdvcmsgZm9yIEdyYXBoaWNzTWFnaWNrICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgJQ0KICUgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBCb2IgRnJpZXNlbmhhaG4gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICUNCiAlICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEZl
-Yi1NYXkgMjAwMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAl
-DQpAQCAtOTM1LDYgKzkzNSw3IEBADQogDQogICB1bnNpZ25lZCBjaGFyDQog
-ICAgICpCSW1nQnVmZjsNCisgIEJsb2JJbmZvICpUbXBCbG9iOw0KIA0KICAg
-dENUTSBDVE07ICAgICAgICAgLypjdXJyZW50IHRyYW5zZm9ybSBtYXRyaXgq
-Lw0KIA0KQEAgLTExMzEsMTIgKzExMzIsMTIgQEANCiAgICAgICAgICAgICAg
-ICAgICBpZihCaXRtYXBIZWFkZXIyLlJvdEFuZ2xlICYgMHg4MDAwKQ0KICAg
-ICAgICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAgICBy
-b3RhdGVkX2ltYWdlID0gRmxvcEltYWdlKGltYWdlLCBleGNlcHRpb24pOw0K
-LSAgICAgICAgICAgICAgICAgICAgICBpZiAocm90YXRlZF9pbWFnZSAhPSAo
-SW1hZ2UgKikgTlVMTCkNCisgICAgICAgICAgICAgICAgICAgICAgaWYgKHJv
-dGF0ZWRfaW1hZ2UgIT0gKEltYWdlICopTlVMTCkNCiAgICAgICAgICAgICAg
-ICAgICAgICAgICB7DQorICAgICAgICAgICAgICAgICAgICAgICAgICBUbXBC
-bG9iID0gcm90YXRlZF9pbWFnZS0+YmxvYjsNCiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHJvdGF0ZWRfaW1hZ2UtPmJsb2IgPSBpbWFnZS0+YmxvYjsN
-Ci0gICAgICAgICAgICAgICAgICAgICAgICAgIGltYWdlLT5ibG9iID0gTlVM
-TDsNCi0gICAgICAgICAgICAgICAgICAgICAgICAgICh2b2lkKSBSZW1vdmVM
-YXN0SW1hZ2VGcm9tTGlzdCgmaW1hZ2UpOw0KLSAgICAgICAgICAgICAgICAg
-ICAgICAgICAgQXBwZW5kSW1hZ2VUb0xpc3QoJmltYWdlLHJvdGF0ZWRfaW1h
-Z2UpOw0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgaW1hZ2UtPmJsb2Ig
-PSBUbXBCbG9iOw0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgUmVwbGFj
-ZUltYWdlSW5MaXN0KCZpbWFnZSxyb3RhdGVkX2ltYWdlKTsNCiAgICAgICAg
-ICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAgICAgICB9DQog
-ICAgICAgICAgICAgICAgICAgLyogZmxpcCBjb21tYW5kICovDQpAQCAtMTE0
-NSwxMCArMTE0NiwxMCBAQA0KICAgICAgICAgICAgICAgICAgICAgICByb3Rh
-dGVkX2ltYWdlID0gRmxpcEltYWdlKGltYWdlLCBleGNlcHRpb24pOw0KICAg
-ICAgICAgICAgICAgICAgICAgICBpZiAocm90YXRlZF9pbWFnZSAhPSAoSW1h
-Z2UgKikgTlVMTCkNCiAgICAgICAgICAgICAgICAgICAgICAgICB7DQorICAg
-ICAgICAgICAgICAgICAgICAgICAgICBUbXBCbG9iID0gcm90YXRlZF9pbWFn
-ZS0+YmxvYjsNCiAgICAgICAgICAgICAgICAgICAgICAgICAgIHJvdGF0ZWRf
-aW1hZ2UtPmJsb2IgPSBpbWFnZS0+YmxvYjsNCi0gICAgICAgICAgICAgICAg
-ICAgICAgICAgIGltYWdlLT5ibG9iID0gTlVMTDsNCi0gICAgICAgICAgICAg
-ICAgICAgICAgICAgICh2b2lkKSBSZW1vdmVMYXN0SW1hZ2VGcm9tTGlzdCgm
-aW1hZ2UpOw0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgQXBwZW5kSW1h
-Z2VUb0xpc3QoJmltYWdlLHJvdGF0ZWRfaW1hZ2UpOwkJDQorICAgICAgICAg
-ICAgICAgICAgICAgICAgICBpbWFnZS0+YmxvYiA9IFRtcEJsb2I7DQorICAg
-ICAgICAgICAgICAgICAgICAgICAgICBSZXBsYWNlSW1hZ2VJbkxpc3QoJmlt
-YWdlLHJvdGF0ZWRfaW1hZ2UpOw0KICAgICAgICAgICAgICAgICAgICAgICAg
-IH0NCiAgICAgICAgICAgICAgICAgICAgIH0NCiAJCQ0KQEAgLTExNjAsMTAg
-KzExNjEsMTAgQEANCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIGV4Y2VwdGlvbik7DQogICAgICAgICAgICAg
-ICAgICAgICAgIGlmIChyb3RhdGVkX2ltYWdlICE9IChJbWFnZSAqKSBOVUxM
-KQ0KICAgICAgICAgICAgICAgICAgICAgICAgIHsNCisgICAgICAgICAgICAg
-ICAgICAgICAgICAgIFRtcEJsb2IgPSByb3RhdGVkX2ltYWdlLT5ibG9iOw0K
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgcm90YXRlZF9pbWFnZS0+Ymxv
-YiA9IGltYWdlLT5ibG9iOw0KLSAgICAgICAgICAgICAgICAgICAgICAgICAg
-aW1hZ2UtPmJsb2IgPSBOVUxMOw0KLSAgICAgICAgICAgICAgICAgICAgICAg
-ICAgKHZvaWQpIFJlbW92ZUxhc3RJbWFnZUZyb21MaXN0KCZpbWFnZSk7DQot
-ICAgICAgICAgICAgICAgICAgICAgICAgICBBcHBlbmRJbWFnZVRvTGlzdCgm
-aW1hZ2Uscm90YXRlZF9pbWFnZSk7DQorICAgICAgICAgICAgICAgICAgICAg
-ICAgICBpbWFnZS0+YmxvYiA9IFRtcEJsb2I7DQorICAgICAgICAgICAgICAg
-ICAgICAgICAgICBSZXBsYWNlSW1hZ2VJbkxpc3QoJmltYWdlLHJvdGF0ZWRf
-aW1hZ2UpOw0KICAgICAgICAgICAgICAgICAgICAgICAgIH0NCiAgICAgICAg
-ICAgICAgICAgICAgIH0gICAgICAgICAgICAgICAgDQogICAgICAgICAgICAg
-ICAgIH0NCkBAIC0xMjEwLDcgKzEyMTEsNyBAQA0KIA0KICAgICAgICAgICBI
-ZWFkZXIuRGF0YU9mZnNldD1UZWxsQmxvYihpbWFnZSkrUmVjMi5SZWNvcmRM
-ZW5ndGg7DQogDQotICAgICAgICAgIGlmIChsb2dnaW5nKSAodm9pZClMb2dN
-YWdpY2tFdmVudChDb2RlckV2ZW50LEdldE1hZ2lja01vZHVsZSgpLA0KKyAg
-ICAgICAgICBpZihsb2dnaW5nKSAodm9pZClMb2dNYWdpY2tFdmVudChDb2Rl
-ckV2ZW50LEdldE1hZ2lja01vZHVsZSgpLA0KICAgICAgICAgICAgICJQYXJz
-aW5nIG9iamVjdDogJVgiLCBSZWMyLlJlY1R5cGUpOw0KIA0KICAgICAgICAg
-ICBzd2l0Y2goUmVjMi5SZWNUeXBlKQ0KQEAgLTEyMjQsMTggKzEyMjUsMjAg
-QEANCiAgICAgICAgICAgICAgIFdQR19QYWxldHRlLlN0YXJ0SW5kZXg9UmVh
-ZEJsb2JMU0JTaG9ydChpbWFnZSk7DQogICAgICAgICAgICAgICBXUEdfUGFs
-ZXR0ZS5OdW1PZkVudHJpZXM9UmVhZEJsb2JMU0JTaG9ydChpbWFnZSk7DQog
-DQorCQkJLyogU2FuaXR5IGNoZWNrIGZvciBhbW91bnQgb2YgcGFsZXR0ZSBl
-bnRyaWVzLiAqLw0KKyAgICAgICAgICAgICAgaWYoIChXUEdfUGFsZXR0ZS5O
-dW1PZkVudHJpZXMtV1BHX1BhbGV0dGUuU3RhcnRJbmRleCkgPiAoUmVjMi5S
-ZWNvcmRMZW5ndGgtMi0yKSAvIDMpDQorICAgICAgICAgICAgICAgICBUaHJv
-d1JlYWRlckV4Y2VwdGlvbihDb3JydXB0SW1hZ2VFcnJvcixJbnZhbGlkQ29s
-b3JtYXBJbmRleCxpbWFnZSk7ICAgICAgICAgICAgICAgICANCisgDQogICAg
-ICAgICAgICAgICBpbWFnZS0+Y29sb3JzPVdQR19QYWxldHRlLk51bU9mRW50
-cmllczsNCiAgICAgICAgICAgICAgIGlmICghQWxsb2NhdGVJbWFnZUNvbG9y
-bWFwKGltYWdlLGltYWdlLT5jb2xvcnMpKQ0KICAgICAgICAgICAgICAgICBU
-aHJvd1JlYWRlckV4Y2VwdGlvbihSZXNvdXJjZUxpbWl0RXJyb3IsTWVtb3J5
-QWxsb2NhdGlvbkZhaWxlZCxpbWFnZSk7DQorDQogICAgICAgICAgICAgICBm
-b3IgKGk9V1BHX1BhbGV0dGUuU3RhcnRJbmRleDsNCiAgICAgICAgICAgICAg
-ICAgICAgaSA8IChpbnQpV1BHX1BhbGV0dGUuTnVtT2ZFbnRyaWVzOyBpKysp
-DQogICAgICAgICAgICAgICAgIHsNCi0gICAgICAgICAgICAgICAgICBpbWFn
-ZS0+Y29sb3JtYXBbaV0ucmVkPQ0KLSAgICAgICAgICAgICAgICAgICAgU2Nh
-bGVDaGFyVG9RdWFudHVtKFJlYWRCbG9iQnl0ZShpbWFnZSkpOw0KLSAgICAg
-ICAgICAgICAgICAgIGltYWdlLT5jb2xvcm1hcFtpXS5ncmVlbj0NCi0gICAg
-ICAgICAgICAgICAgICAgIFNjYWxlQ2hhclRvUXVhbnR1bShSZWFkQmxvYkJ5
-dGUoaW1hZ2UpKTsNCi0gICAgICAgICAgICAgICAgICBpbWFnZS0+Y29sb3Jt
-YXBbaV0uYmx1ZT0NCi0gICAgICAgICAgICAgICAgICAgIFNjYWxlQ2hhclRv
-UXVhbnR1bShSZWFkQmxvYkJ5dGUoaW1hZ2UpKTsNCisgICAgICAgICAgICAg
-ICAgICBpbWFnZS0+Y29sb3JtYXBbaV0ucmVkPVNjYWxlQ2hhclRvUXVhbnR1
-bShSZWFkQmxvYkJ5dGUoaW1hZ2UpKTsNCisgICAgICAgICAgICAgICAgICBp
-bWFnZS0+Y29sb3JtYXBbaV0uZ3JlZW49U2NhbGVDaGFyVG9RdWFudHVtKFJl
-YWRCbG9iQnl0ZShpbWFnZSkpOw0KKyAgICAgICAgICAgICAgICAgIGltYWdl
-LT5jb2xvcm1hcFtpXS5ibHVlPVNjYWxlQ2hhclRvUXVhbnR1bShSZWFkQmxv
-YkJ5dGUoaW1hZ2UpKTsNCiAgICAgICAgICAgICAgICAgICAodm9pZCkgUmVh
-ZEJsb2JCeXRlKGltYWdlKTsgICAvKk9wYWNpdHk/PyovDQogICAgICAgICAg
-ICAgICAgIH0NCiAgICAgICAgICAgICAgIGJyZWFrOw0KQEAgLTEzMTQsMTAg
-KzEzMTcsMTAgQEANCiAJCSAgcm90YXRlZF9pbWFnZSA9IEZsb3BJbWFnZShp
-bWFnZSwgZXhjZXB0aW9uKTsNCiAgICAgICAgICAgICAgICAgICBpZiAocm90
-YXRlZF9pbWFnZSAhPSAoSW1hZ2UgKikgTlVMTCkNCiAgICAgICAgICAgICAg
-ICAgICAgIHsNCisgICAgICAgICAgICAgICAgICAgICAgVG1wQmxvYiA9IHJv
-dGF0ZWRfaW1hZ2UtPmJsb2I7DQogICAgICAgICAgICAgICAgICAgICAgIHJv
-dGF0ZWRfaW1hZ2UtPmJsb2IgPSBpbWFnZS0+YmxvYjsNCi0gICAgICAgICAg
-ICAgICAgICAgICAgaW1hZ2UtPmJsb2IgPSBOVUxMOw0KLSAgICAgICAgICAg
-ICAgICAgICAgICAodm9pZCkgUmVtb3ZlTGFzdEltYWdlRnJvbUxpc3QoJmlt
-YWdlKTsNCi0gICAgICAgICAgICAgICAgICAgICAgQXBwZW5kSW1hZ2VUb0xp
-c3QoJmltYWdlLHJvdGF0ZWRfaW1hZ2UpOw0KKyAgICAgICAgICAgICAgICAg
-ICAgICBpbWFnZS0+YmxvYiA9IFRtcEJsb2I7DQorICAgICAgICAgICAgICAg
-ICAgICAgIFJlcGxhY2VJbWFnZUluTGlzdCgmaW1hZ2Uscm90YXRlZF9pbWFn
-ZSk7DQogICAgICAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICAgICAg
-ICAgLyogVHJ5IHRvIGNoYW5nZSBDVE0gYWNjb3JkaW5nIHRvIEZsaXAgLSBJ
-IGFtIG5vdCBzdXJlLCBtdXN0IGJlIGNoZWNrZWQuCQkgIA0KICAgICAgICAg
-ICAgICAgICAgICAgIFR4KDAsMCk9LTE7ICAgICAgVHgoMSwwKT0wOyAgIFR4
-KDIsMCk9MDsNCkBAIC0xMzMwLDEwICsxMzMzLDEwIEBADQogCQkgIHJvdGF0
-ZWRfaW1hZ2UgPSBGbGlwSW1hZ2UoaW1hZ2UsIGV4Y2VwdGlvbik7DQogICAg
-ICAgICAgICAgICAgICAgaWYgKHJvdGF0ZWRfaW1hZ2UgIT0gKEltYWdlICop
-IE5VTEwpDQogICAgICAgICAgICAgICAgICAgICB7DQorICAgICAgICAgICAg
-ICAgICAgICAgIFRtcEJsb2IgPSByb3RhdGVkX2ltYWdlLT5ibG9iOw0KICAg
-ICAgICAgICAgICAgICAgICAgICByb3RhdGVkX2ltYWdlLT5ibG9iID0gaW1h
-Z2UtPmJsb2I7DQotICAgICAgICAgICAgICAgICAgICAgIGltYWdlLT5ibG9i
-ID0gTlVMTDsNCi0gICAgICAgICAgICAgICAgICAgICAgKHZvaWQpIFJlbW92
-ZUxhc3RJbWFnZUZyb21MaXN0KCZpbWFnZSk7DQotICAgICAgICAgICAgICAg
-ICAgICAgIEFwcGVuZEltYWdlVG9MaXN0KCZpbWFnZSxyb3RhdGVkX2ltYWdl
-KTsNCisgICAgICAgICAgICAgICAgICAgICAgaW1hZ2UtPmJsb2IgPSBUbXBC
-bG9iOw0KKyAgICAgICAgICAgICAgICAgICAgICBSZXBsYWNlSW1hZ2VJbkxp
-c3QoJmltYWdlLHJvdGF0ZWRfaW1hZ2UpOw0KICAgICAgICAgICAgICAgICAg
-ICAgfQ0KICAgICAgICAgICAgICAgICAgIC8qIFRyeSB0byBjaGFuZ2UgQ1RN
-IGFjY29yZGluZyB0byBGbGlwIC0gSSBhbSBub3Qgc3VyZSwgbXVzdCBiZSBj
-aGVja2VkLg0KICAgICAgICAgICAgICAgICAgICAgIGZsb2F0X21hdHJpeCBU
-eCgzLDMpOw0K
+- -------------------------------------------------------------------------
+Debian Security Advisory DSA-3775-1                   security@debian.org
+https://www.debian.org/security/                       Moritz Muehlenhoff
+January 29, 2017                      https://www.debian.org/security/faq
+- -------------------------------------------------------------------------
 
----559023410-1936695736-1475847334=:3266--
+Package        : tcpdump
+CVE ID         : CVE-2016-7922 CVE-2016-7923 CVE-2016-7924 CVE-2016-7925=20
+                 CVE-2016-7926 CVE-2016-7927 CVE-2016-7928 CVE-2016-7929=20
+                 CVE-2016-7930 CVE-2016-7931 CVE-2016-7932 CVE-2016-7933=20
+                 CVE-2016-7934 CVE-2016-7935 CVE-2016-7936 CVE-2016-7937=20
+                 CVE-2016-7938 CVE-2016-7939 CVE-2016-7940 CVE-2016-7973=20
+                 CVE-2016-7974 CVE-2016-7975 CVE-2016-7983 CVE-2016-7984=20
+                 CVE-2016-7985 CVE-2016-7986 CVE-2016-7992 CVE-2016-7993=20
+                 CVE-2016-8574 CVE-2016-8575 CVE-2017-5202 CVE-2017-5203=20
+                 CVE-2017-5204 CVE-2017-5205 CVE-2017-5341 CVE-2017-5342=20
+                 CVE-2017-5482 CVE-2017-5483 CVE-2017-5484 CVE-2017-5485=20
+                 CVE-2017-5486
+
+Multiple vulnerabilities have been discovered in tcpdump, a command-line
+network traffic analyzer. These vulnerabilities might result in denial
+of service or the execution of arbitrary code.
+
+For the stable distribution (jessie), these problems have been fixed in
+version 4.9.0-1~deb8u1.
+
+For the testing distribution (stretch), these problems have been fixed
+in version 4.9.0-1.
+
+For the unstable distribution (sid), these problems have been fixed in
+version 4.9.0-1.
+
+We recommend that you upgrade your tcpdump packages.
+
+Further information about Debian Security Advisories, how to apply
+these updates to your system and frequently asked questions can be
+found at: https://www.debian.org/security/
+
+Mailing list: debian-security-announce@lists.debian.org
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEtuYvPRKsOElcDakFEMKTtsN8TjYFAliOJGUACgkQEMKTtsN8
+TjY54w//TQtKeoBF3uzCtMTKExAzKCZKkVnTLkFKu0Ybcr6ooTQ+Vyy81t0WlHa7
+L4i31RavlQerBK3euGLhg679Bcv6Wrtgc1dC6caaDQTWF3+IWrZ/KO3LHJdgLMoj
+y10zBMLBdr2rTB4cItXCYcCkzXWGGoDjFyAf9h61O6SAHa9qZthGXCzOY7G0eQfX
+GCN7LW2rY+H3NuUo0UYVhiru9poflehxArdQnoeZGU//8uZ5qaD2XeUILQI+gOo8
+rwBnYpF7YvrrFGaleVrHgXuLN6t/7HOkMxaIQtn9zmigZfWkOUjPGOAkn8xLKhk3
+zgRBT7n+pd+N82TK4B6+RhDilY9Ec2btJ5EDHIJAnmVAATwoULPtgzQwLSrziN9a
+DCsusuWxPFcvmyGMy4ooEWpKsZ2MgXusR/As84g5ZeWl9qOuZ9U0aeJtThhl37zA
+wNH+KIgWEUoQNmoVrOCUchtbiKeHEbIDUWR1PNpgl3Cb7Fbp3be3AFPJiiTE/r+7
+UUmtFXdWKGNK6nzLV0yo4TWDXyNLJMu+SP6JiZNsbkYntmUgqFw0iotWNoqgajPQ
+U4cmAeDMJMDFTU6Or1Tam+Njv71mIZNGCsplZa2gAHHsmXHeqYiI+vEp5ZljFOkY
+SgoWuuERDtFv4FGL5oBxP/Z+SYOrt8ME+rRqsLUWfgXD+tDCE6I=3D
+=3DsV/2
+-----END PGP SIGNATURE-----
+
+
+----- End forwarded message -----
+
+--fUYQa+Pmc3FrFX/N
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAliOlSEACgkQJkb6MLrK
+fwiyvw/+JU1s0uwuuEcKOvNG0wsiRTWTC4/LBfXdmvVr73U39iz0bs+prV9h53Dk
+VDtFf/KGqCCKZ2WE3ZpwWQKBgnSjdk8RxHqbBED3g4MqQQQ4sI+w2RpHARRFWjRY
+wmBvHXQiQjg1sk6BWC/X2/94BZdASr+LsiY1uHZWti9p016rWe29yM5NxFdkGq3Z
++bWZ+M7z7YyXMNCqz2fn5jPDP74KRXwemPArrr7/kYn5BbZEJGgMCyJfjaa/SBf5
+tfCdGW9K75voD7vi3UaKgnuVcVzJJ7mlmFrcbgAeLCgwHQVAQ8D7zuVjcMVh/vwI
+leRmTfQHiBQnRbFQX9kB8WdtBRHAxxjtQqaWZNc1VbuYm1jKIu2UGjWMVD4aTH9J
+bb8Z/fFRTfbJFwMNYpGvwTd+fAmpGRvStDcpVAxAupjNvvaDe0IWlLCIdYTYDnR2
+Pr/UQnzrJpb5XScp57MsqIQg+1RKWqHCE+qZSwDE1kQ41VbRGE+iZvK8e7eheqjY
++tGVuG/plSozrMgNjMv/Z2/+7O6K90mqxoaBD51P1JVQBK0Bozw/ooyXQQwaC34H
+Tv30UxSefeEHBSu900G97SuH1c6Dw+K3ODOgniqJuk5G6Z0RhUDNZRnpKTmKR+Gr
+yMSIXB0UpqJxHGi6D2KhKBqdAM+lhIPqne+QWniinqxNTCjAWl0=
+=sirK
+-----END PGP SIGNATURE-----
+
+--fUYQa+Pmc3FrFX/N--
