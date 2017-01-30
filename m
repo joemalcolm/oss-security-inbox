@@ -1,4 +1,9 @@
-Received: (qmail 26304 invoked by uid 550); 8 Oct 2023 21:33:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6071" "Monday" "30" "January" "2017" "15:36:37" "-0300" "dequis" "dx@dxzone.com.ar" "<CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>" "203" "[oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee" nil nil nil "1" "2017013018:36:37" "[oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee" (number mark "U       dx@dxzone.co Jan 30  203/6071  " thread-indent "\"[oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29901 invoked by uid 550); 30 Jan 2017 18:39:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,175 +12,241 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3165 invoked from network); 8 Oct 2023 20:56:39 -0000
+Received: (qmail 28201 invoked from network); 30 Jan 2017 18:37:09 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696798587; x=1697403387; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zdslnbVcmXyzIdrBeK58FCORTGZk7Wj5a7Aa9Z5Hau8=;
-        b=A6G+L8zBe0/FH9ax/SzrITA5EBkc22hA2oaY90lJfucpUuww0NHlcVe9MWR5XPQulR
-         bJjKBwZMQ38uojAPF4cYc5AUVKpO2eGTytjJ4j5GPzpgAcrZjj1vDylpvMyjUVI0XJWz
-         89t+lGoBAS/41VxR+P5+9SLvRn4qhDO29goVErrBIP+Y5aYeQHxHxeT8ueRNuF/pVb89
-         l+eWFo9xbWpxb/cFEMRsU9jecyiXx9qS8rwZvCJtpMAWdneQKbDHkobpzLdBy1XUQOg6
-         V3NSe5Y194ohax0hM65/MASAfsmx43Wex7FNfPiGK0lyfbx31IwjM2i1OcxSrHJmQgMN
-         KQ7g==
+        d=kiace-com-ar.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=RyFbFfjMM+D1Bhdc/QOEz87vVrbmDi+FQ4wdz4nBhLg=;
+        b=Ast7SrYjRYUGvCZYyJh08kf3Ruy1BrXToeoEE3JUfVJ9RXnk+wUzD8Pt4kbBBVUjuO
+         pd9JVA892SZyaE1bAUSr0ov1Uk607DLegm5BnQrK2sgJRQWNempbl52hhNba1Z1O2/p4
+         0nqsztghU7P0LAoeuudscqUoxpG1TRM4lJbgGQXVRBJoM6Fr1rgzObmJi/zuQ27FYELo
+         OXl+AD3M/PpNaElPQe/4DxImXyV61vyf8uFIFCUJtZ/bM2SijzLQ5rnQ0gDktzqPIysV
+         mL95bA/B5hdDNfpvit/Qd44hL9c83ndE3o1S/4BnEtN88zZmyeziHsnGMI8q2gvFwS1+
+         WkkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696798587; x=1697403387;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zdslnbVcmXyzIdrBeK58FCORTGZk7Wj5a7Aa9Z5Hau8=;
-        b=ud66lJUrRxvOYFQsoHLr3kYUNP9CYXllgY4IV/3dtC1fLQO8G/FyzhETl4au/sKoAF
-         WectIf4cMaaZQtxSQsyPkESUxnCjgtNI2YPByuqusENpD+94GFaCqKURJs9eMhJDnzoc
-         Af6ouIxcS3p6NEczBc7D9WT04o44U9J9LA+dFyco0yejNVsBvqZR3zOQTmBBssL8TU2r
-         DgiDSuzwiXln9Ib/CYP9cOPA+Ie+57KpM5l8HyyIA+lBgJ4g2AOFOfvmcsqHv86cDI40
-         BEgS3iULMcLdrk0SQq4rT0Cc6pB/TMCU2bp2p6jGfdUTHJYoq5MKj+R1PmWHcnJoly+V
-         GRag==
-X-Gm-Message-State: AOJu0YwAG2g5cYfRwEr6cr5vvCgjKLNfLgl2vK544xCYXAjuBb4K5mAH
-	fKLaZAiNJtujMhb0pmM17StfNVt9AJm5TkQLDWdAo6iE
-X-Google-Smtp-Source: AGHT+IFvKrZhnEXlFkq61MityJAf4UgwW7HGLQWVrNS9xE/PF/z4KGpfYNMRLnS5tg91AinZwZ4U2XVdrFfRx4zW8tc=
-X-Received: by 2002:a81:a1ca:0:b0:59e:8888:f80f with SMTP id
- y193-20020a81a1ca000000b0059e8888f80fmr13860388ywg.20.1696798586807; Sun, 08
- Oct 2023 13:56:26 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=RyFbFfjMM+D1Bhdc/QOEz87vVrbmDi+FQ4wdz4nBhLg=;
+        b=XKvE5Tkjavux/vXCQggCKxSvZtH93RkA/BUvaejXiL0Xv5dFx/kx4lbur4q7w6a3QK
+         lvdXkBPy3GdQY49vnS+LTZZBfFbs0C/7dJL5Yx75Guq/4GL82K3shXjeFVAKsA53BLG5
+         d2vfBWgum/n0Zxi5KOa18gL4eioW96JGHCjhATes+BRcTRgl3PJuwz0tXKS8hxcCO5pM
+         plQyNm+8S6GU/aXumK0epZ/pqH3WcZG1DmBBZiCUW1JdfbvrRQzjSNETiGQIhJLtBrYw
+         NduMNA+6KKtkQ73U7dFdPLMU2yXQELcDr/5SkK4YXaQNexYJxOcKPBBrIOxI8r7+FcBV
+         NDng==
+X-Gm-Message-State: AIkVDXIvevrR7VQheGcKcsGXBHJ1hGbO87GI4dqsWkdZOqK6LTgXKdBNemV9XNucCt+0RPrQs66Riv1olcMe9w==
+X-Received: by 10.200.35.6 with SMTP id a6mr21446226qta.210.1485801417861;
+ Mon, 30 Jan 2017 10:36:57 -0800 (PST)
 MIME-Version: 1.0
-References: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com> <20231008101808.54aa75f7@fabiankeil.de>
-In-Reply-To: <20231008101808.54aa75f7@fabiankeil.de>
-From: Jean Luc Picard <atari2600a@gmail.com>
-Date: Sun, 8 Oct 2023 13:56:15 -0700
-Message-ID: <CADxcaYWJSr58Jt4AurxpvMCk3-K_SvfgExn_jnAZ7wyFWQ8ouQ@mail.gmail.com>
+Sender: hola@kiace.com.ar
+From: dequis <dx@dxzone.com.ar>
+Date: Mon, 30 Jan 2017 15:36:37 -0300
+X-Google-Sender-Auth: 6LNOZmkubO24idXbSFKD9KU-ea0
+Message-ID: <CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000005ab8606073ab57a"
-Subject: Re: [oss-security] European Union Cyber Resilience Act (CRA)
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] CVE Request - Remote DoS vulnerabilities in BitlBee
 
---00000000000005ab8606073ab57a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi oss-security,
 
-These people are not developers live & govern a part of earth ripe with
-anti-communist/socialist sentiment.  If you were to explain to them that
-their cellphones security is protected by things like 'community' &
-'sharing', they'd likely blow a gasket.  It appears it's too late to bring
-in the real industry experts into the committee meetings but not too late
-to make a meaningful difference.  That said, the community at large needs
-to prepare for a lull in rights & freedoms.  Perhaps if it got to a point
-to where, like the cookie law, some vital repositories start geoip blocking
-in protest, things might move along.  One thing for sure, things are about
-to get weird.
+I've just released BitlBee 3.5.1 which includes fixes for these issues:
 
-On Sun, Oct 8, 2023 at 1:21=E2=80=AFAM Fabian Keil <freebsd-listen@fabianke=
-il.de>
-wrote:
+a) bitlbee-libpurple: Use after free when expiring file transfer requests.
+b) Null pointer dereference with file transfer request from unknown contacts.
+c) Incomplete fix for issue (b), which left bitlbee-libpurple affected.
 
-> "David A. Wheeler" <dwheeler@dwheeler.com> wrote on 2023-10-05 at
-> 11:08:51:
->
-> > Solar Designed posted on October 1, 2023:
-> > > The talk... starts with a mention of the European Union Cyber
-> Resiliance Act (CRA)
-> > > and how it is problematic for Open Source...
-> > > (If we want to discuss in here, which I'm not sure of, please start a
-> > > separate thread for this sub-topic, do not just reply to this one.)
-> >
-> > Fair enough. The CRA *definitely* impacts open source software,
-> > and it includes security-related requirements. So it seems on-topic for
-> this mailing list, at
-> > least to note that *many* people find the CRA concerning & to point to
-> more information.
->
-> I agree that it's on-topic.
->
-> > I think a good place to start is "Understanding the Cyber Resilience Ac=
-t:
-> > What Everyone involved in Open Source Development Should Know" from the
-> Linux Foundation:
-> >
-> https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-a=
-ct
->
-> I tried to access this URL but it seems to be "protected" by
-> ClownFlare and as a Tor user I'm apparently not allowed to
-> access the page without executing proprietary JavaScript,
-> for details see [0].
->
-> Maybe someone from the "Linux Foundation" could fix this
-> as it looks a bit ridiculous to me.
->
-> If their GNU/Linux servers can't handle the load anymore
-> they could probably simply use a BSD instead ...
->
-> > The Linux Foundation EU has a page about the CRA:
-> > https://linuxfoundation.eu/cyber-resilience-act
-> > ... it has many links, and is urging people work to #FixTheCRA.
->
-> Sounds somewhat interesting but accessing it seems to require
-> the execution of proprietary JavaScript as well so I didn't read
-> it either.
->
-> > Many organizations *have* been trying to get EU regulators
-> > to fix the CRA. This isn't a case where no one spoke up.
-> > The problem is that for the most part their concerns have
-> > been ignored by regulators:
-> >
-> https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Ec=
-lipse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-=
-to-European-Commission-Regarding-the-Cyber-Resilience-Act.html
->
-> Great, a link that actually works.
->
-> The "demands" seem somewhat reasonable to me:
->
-> | Moving forward, we urge you to engage with the open source
-> | community and take our concerns into account as you consider the
-> | implementation of the Cyber Resilience Act. Specifically, moving
-> | forward, we urge you to:
-> |
-> | 1. Recognise the unique characteristics of open source software
-> |    and ensure that the Cyber Resilience Act does not
-> |    unintentionally harm the open source ecosystem.
-> | 2. Consult with the open source community during the co-legislative
-> |    process.
-> | 3. Ensure that any development under the CRA takes into account
-> |    the diversity of open and transparent open source software
-> |    development practices.
-> | 4. Establish a mechanism for ongoing dialogue and collaboration
-> |    between the European institutions and the open source community,
-> |    to ensure that future legislation and policy decisions are informed.
->
-> Of course the organisations that wrote the letter don't actually
-> represent the whole "open source community" which I assume includes
-> the free software community as well but I assume the "demands" will
-> be ignored anyway so it probably doesn't make a difference.
->
-> > I think the overall *goals* of the CRA are laudable.
->
-> I must confess that I still haven't figured out what the goals
-> are supposed to be. The article you posted above doesn't seem
-> to mention the goals or maybe I just overlooked them.
->
-> Anyway:
->
-> >                                                      However,
-> > when evaluating laws & regulations you should always IGNORE
-> > their goals, because their goals are IRRELEVANT. What matters
-> > is what the laws and regulations will actually *CAUSE*. Put
-> > another way, RESULTS are the *only* legitimate basis for
-> > evaluating laws and regulations.
->
-> Agreed.
->
-> > In this case, I think too many regulators are focused on
-> > theoretical goals while ignoring what will actually happen.
->
-> Given that we are talking about the EU I also wouldn't
-> rule out the possibility that at least some regulators
-> have already been bought by "lobbyists" and thus aren't
-> interested in doing "the right thing" anyway and then
-> there are probably a fair amount of regulators who are
-> simply to stupid to understand reasonable arguments ...
->
-> Happy hacking,
-> Fabian
->
-> [0] <https://curl.se/mail/lib-2023-09/0056.html>
->
+I have already requested three CVEs to the distros mailing list when
+the issue was not public, but did not receive any reply at the time of
+this writing. If it is appropriate, I'd like to request them in this
+list instead.
 
---00000000000005ab8606073ab57a--
+The first two were already public (fixed in 3.5, released 2017-01-08) but were
+not considered security issues before. The third issue is what 3.5.1
+fixes.
+
+Distros that do not ship the bitlbee-libpurple variant can ignore
+3.5.1 if they already have 3.5.
+
+The full advisories (without attachments) follow, with links to the
+full version in the tracker:
+
+----------------------------------------------------------------------
+
+https://bugs.bitlbee.org/ticket/1281
+
+# bitlbee-libpurple: Use after free when expiring file transfer requests
+
+## Description
+
+Pending file transfer requests expire after 120 seconds, which may
+result in use after free if the corresponding account is disconnected.
+A malicious remote server could force this disconnection.
+
+## Impact
+
+This results in denial of service (remote crash of the BitlBee
+instance), or remote code execution (theoretically).
+
+For BitlBee servers configured in ForkDaemon mode (default) or inetd
+mode, the crash is limited to one user connection, who may just
+reconnect.
+
+* Access Vector: Network
+* Access Complexity: High
+* Authentication: None
+* Confidentiality Impact: None
+* Integrity Impact: None
+* Availability Impact: Partial
+* Exploitability: Functional Exploit Exists
+* Remediation Level: Official Fix
+* Report Confidence: Confirmed
+* Target Distribution: Medium
+* CVSS v2 score: 1.6
+
+## Affected versions
+
+bitlbee-libpurple 3.4.2 or older
+
+## Unaffected versions
+
+bitlbee (non-libpurple builds), any version
+
+bitlbee-libpurple 3.5
+
+## Resolution
+
+* Upgrade to 3.5 (released 2017-01-08)
+
+* For 3.4.2 see the attached
+0001-purple-fix-file-transfer-memory-management-3.4.2.patch [not
+included in this email]
+
+* For 3.4.1 and 3.4 see the attached
+0001-purple-fix-file-transfer-memory-management-3.4-3.4.1.patch [not
+included in this email]
+
+* For earlier versions upgrading is strongly recommended because of
+the amount of accumulated bugfixes, but the following line may be
+removed from `protocols/purple/purple.c` to prevent any processing of
+incoming file transfers:
+
+    purple_xfers_set_ui_ops(&bee_xfer_uiops);
+
+## Discussion
+
+This affects any libpurple protocol when used through BitlBee. It does
+not affect other libpurple-based clients such as pidgin.
+
+This is a very visible issue - all file transfer request attempts and
+all disconnections will be logged in the control channel and visible
+by the targeted user. File transfer requests look like this:
+
+    <@root> [account] - File transfer request from [username] for
+[filename] (0 kb).
+    <@root> Accept the file transfer if you'd like the file. If you
+don't, issue the 'transfer reject' command.
+
+Cancelling the file transfer request using the "transfer reject"
+command before the disconnection happens can prevent this. However,
+using that command after the account is disconnected will result in an
+immediate crash.
+
+## References
+
+Original bugfix commit:
+
+https://github.com/bitlbee/bitlbee/commit/ea902752503fc5b356d6513911081ec932d804f2
+
+
+----------------------------------------------------------------------
+
+https://bugs.bitlbee.org/ticket/1282
+
+# Null pointer dereference with file transfer request from unknown contacts
+
+## Description
+
+Receiving a file transfer request from a contact not in the contact
+list results in a null pointer dereference, leading to remote DoS by
+malicious remote clients.
+
+Additionally, due to an incomplete fix of the issue above in BitlBee
+3.5, the bitlbee-libpurple variant is still affected in 3.5.
+
+## Impact
+
+This results in denial of service (remote crash of the BitlBee
+instance). Remote code execution does not seem to be possible (fixed
+offset)
+
+For BitlBee servers configured in ForkDaemon mode (default) or inetd
+mode, the crash is limited to one user connection, who may just
+reconnect.
+
+CVSS for bitlbee 3.4.2 and lower:
+
+* Access Vector: Network
+* Access Complexity: Low
+* Authentication: None
+* Confidentiality Impact: None
+* Integrity Impact: None
+* Availability Impact: Partial
+* Exploitability: Functional Exploit Exists
+* Remediation Level: Official Fix
+* Report Confidence: Confirmed
+* Target Distribution: High
+* CVSS v2 score: 4.1
+
+CVSS for bitlbee-libpurple 3.5:
+
+* Target Distribution: Medium
+* CVSS v2 score: 3.1
+
+## Affected versions
+
+bitlbee-libpurple 3.5 or older
+
+bitlbee (non-libpurple builds) 3.4.2 or older
+
+## Unaffected versions
+
+bitlbee-libpurple 3.5.1 or newer
+
+bitlbee (non-libpurple builds) 3.5 or newer
+
+## Resolution
+
+* Upgrade to 3.5.1 (released 2017-01-30)
+
+* For 3.5 see the attached
+0001-Fix-null-pointer-dereference-on-ft-attempts-3.5.patch [not
+included in this email]
+
+* For 3.4.2, 3.4.1 and 3.4 see the attached
+0001-Fix-null-pointer-dereference-on-ft-attempts-3.4.x.patch [not
+included in this email]
+
+* For 3.2.x and 3.2.x see the attached
+0001-Fix-null-pointer-dereference-on-ft-attempts-3.0.x-3.2.x.patch
+[not included in this email]
+
+## Discussion
+
+The issue from 3.4.2 and older only affects the jabber protocol, which
+is the only non-purple protocol which implements file transfers.
+
+The issue that is still present in 3.5 affects any libpurple protocol
+that implements file transfers when used through BitlBee. It does not
+affect other libpurple-based clients such as pidgin.
+
+There's no visible effect of the issue other than the crash.
+
+## References
+
+Incomplete fix commit included in 3.5:
+
+https://github.com/bitlbee/bitlbee/commit/701ab8129ba9ea64f569daedca9a8603abad740f
+
+Libpurple specific bugfix commit included in 3.5.1:
+
+https://github.com/bitlbee/bitlbee/commit/30d598ce7cd3f136ee9d7097f39fa9818a272441
