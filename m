@@ -1,19 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/9
-Message-ID: <20170201085009.uoqpalmceraia4xt@workbook.ipv6.hrusecky.net>
-Date: Wed, 1 Feb 2017 09:50:09 +0100
-From: Michal Hrusecky <Michal.Hrusecky@....cz>
-To: oss-security@...ts.openwall.com
-Subject: Re: FW: [DSA 3775-1] tcpdump security update]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/30/2
+Message-ID: <alpine.LFD.2.20.1701301524160.12782@wniryva>
+Date: Mon, 30 Jan 2017 15:27:59 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Jiang Xin <jiangxin1@...wei.com>
+Subject: CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer
 Content-Type: text/plain; charset=utf-8
 
-Henri Salo - 10:31  1.02.17 wrote:
-> On Wed, Feb 01, 2017 at 09:24:45AM +0100, Michal Hrusecky wrote:
-> > Having source on someones personal repo is nice, but I would be also interested
-> > why there is no mention of new release on upstream website and nothing in their
-> > git although git seems active and alive. Anybody with some insight?
-> 
-> Please see:
->     https://github.com/the-tcpdump-group/tcpdump/issues/584
+   Hello,
 
-Ah, so no-one knows, but there is an issue to watch. Thanks!
+Quick emulator(Qemu) built with the SDHCI device emulation support is 
+vulnerable to an OOB heap access issue. It could occur while doing a multi 
+block SDMA transfer via 'sdhci_sdma_transfer_multi_blocks' routine.
+
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS or potentially execute arbitrary code with privileges of the 
+Qemu process on the host.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg06191.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1417559
+
+This issue was reported by Jiang Xin of Huawei PSIR team.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
