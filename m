@@ -1,200 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/8
-Message-ID: <fd338a37-b8c0-6bea-ff0d-ec2e182ed638@yahoo.fr>
-Date: Thu, 2 Nov 2017 23:30:38 +0100
-From: Lionel Debroux <lionel_debroux@...oo.fr>
-To: oss-security@...ts.openwall.com
-Subject: Many issues in "module" / "track" music decoders...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/30/1
+Message-ID: <20170130012137.GA20854@jasmine>
+Date: Sun, 29 Jan 2017 20:21:37 -0500
+From: Leo Famulari <leo@...ulari.name>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: FW: [DSA 3775-1] tcpdump security update]
 Content-Type: text/plain; charset=utf-8
 
+I'm forwarding a Debian security advisory regarding tcpdump.
+
+The reason that I'm forwarding it is that I'm unable to find an upstream
+source for this new release, 4.9.0.
+
+It doesn't appear on tcpdump web page nor has it been tagged in their
+public Git repo:
+
+http://www.tcpdump.org/#latest-release
+https://github.com/the-tcpdump-group/tcpdump/tags
+
+Can anyone provide some insight?
+
+----- Forwarded message from Moritz Muehlenhoff <jmm@...ian.org> -----
+
+Date: Sun, 29 Jan 2017 18:24:15 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: debian-security-announce@...ts.debian.org
+Subject: [SECURITY] [DSA 3775-1] tcpdump security update
+User-Agent: NeoMutt/20161126 (1.7.1)
+
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
-Hi,
+- -------------------------------------------------------------------------
+Debian Security Advisory DSA-3775-1                   security@...ian.org
+https://www.debian.org/security/                       Moritz Muehlenhoff
+January 29, 2017                      https://www.debian.org/security/faq
+- -------------------------------------------------------------------------
 
-Summary
-=======
-Another family of decoders for a bunch of old, complex binary music
-formats, whose code bases are written in C/C++ and originate in the
-1990s, has received more or less advertised fixes for many security
-issues over the past few years.
-The issues are mostly DoS (divide by zero, heap-based / wild OOB
-reads), but a number of stack-based and heap-based memory corruptions
-can be found in the mix. Some issues remain unfixed.
-These decoders usually run outside a sandbox, one of them is widely
-distributed (not just on *nix). Patching (especially backports of
-fixed versions to older, still maintained distros) is insufficient,
-as is usage and packaging of the newer, more secure and more accurate
-decoders (libopenmpt, libxmp). That might be partially because few of
-the "recently" fixed issues received CVEs.
+Package        : tcpdump
+CVE ID         : CVE-2016-7922 CVE-2016-7923 CVE-2016-7924 CVE-2016-7925 
+                 CVE-2016-7926 CVE-2016-7927 CVE-2016-7928 CVE-2016-7929 
+                 CVE-2016-7930 CVE-2016-7931 CVE-2016-7932 CVE-2016-7933 
+                 CVE-2016-7934 CVE-2016-7935 CVE-2016-7936 CVE-2016-7937 
+                 CVE-2016-7938 CVE-2016-7939 CVE-2016-7940 CVE-2016-7973 
+                 CVE-2016-7974 CVE-2016-7975 CVE-2016-7983 CVE-2016-7984 
+                 CVE-2016-7985 CVE-2016-7986 CVE-2016-7992 CVE-2016-7993 
+                 CVE-2016-8574 CVE-2016-8575 CVE-2017-5202 CVE-2017-5203 
+                 CVE-2017-5204 CVE-2017-5205 CVE-2017-5341 CVE-2017-5342 
+                 CVE-2017-5482 CVE-2017-5483 CVE-2017-5484 CVE-2017-5485 
+                 CVE-2017-5486
 
+Multiple vulnerabilities have been discovered in tcpdump, a command-line
+network traffic analyzer. These vulnerabilities might result in denial
+of service or the execution of arbitrary code.
 
-Detailed description
-====================
-The "old, complex binary music formats" I'm referring to are module /
-track files. Most of these formats were created in the 1980s and 1990s,
-sometimes as part of intros / demos; the most popular formats are MOD,
-S3M, XM and IT.
-Track music is less popular nowadays, but they can still be decoded by
-many Windows, MacOS X, Linux, *BSD desktop computers thanks to VLC,
-GStreamer and others. There are large collections of freely downloadable
-modules, e.g. ModArchive.
+For the stable distribution (jessie), these problems have been fixed in
+version 4.9.0-1~deb8u1.
 
-Portable C/C++ code bases readily usable on modern Linux / *BSD distros
-which deal with these formats include:
-* players: libmodplug, libmikmod, libxmp, libopenmpt, libdumb, Open
-Cubic Player, as well as the closed-source libbass;
-* trackers (editors + players): OpenMPT (through Wine), Milky Tracker,
-Schism Tracker.
-All of the open source code bases are maintained by volunteers on their
-spare time, AFAICT.
+For the testing distribution (stretch), these problems have been fixed
+in version 4.9.0-1.
 
-Decoders for popular image, music and video formats have received, and
-still receive, their share of fuzzing work, yielding a steady stream of
-fixes. Likewise, fuzzing is behind many of the recent fixes on module
-decoders.
+For the unstable distribution (sid), these problems have been fixed in
+version 4.9.0-1.
 
-Sadly, the availability of:
-* fixed versions of libmodplug (0.8.9.0 + fixes in Git), libmikmod
-(3.3.11+), libxmp (nowadays 4.4.x) and libdumb (2.0.x);
-* libopenmpt (nowadays 0.3), which was derived from the original ModPlug
-as well, loses several minor features, but provides better rendering
-accuracy than libmodplug, higher robustness as a result of design +
-implementation changes followed by long, deep fuzzing rounds, and also a
-perfect compatibility layer for libmodplug's C API (I gather that
-deviations in the C API compat layer would be considered bugs by
-libopenmpt maintainers)
-remains limited downstream, especially on older distros.
-Many projects still depend on libmodplug (VLC, GStreamer, etc.) or
-libmikmod, whereas, as mentioned above, libopenmpt and nowadays libxmp
-do better jobs. FWIW (the data is imperfect), the popularity of
-libmodplug in Debian's popcon rivaled that of the X server libraries in
-late 2016...
+We recommend that you upgrade your tcpdump packages.
 
+Further information about Debian Security Advisories, how to apply
+these updates to your system and frequently asked questions can be
+found at: https://www.debian.org/security/
 
-Summary of the timeline
-=======================
-* 2015, 2016: libxmp received multiple fuzzing rounds, at least by
-myself (zzuf for the first round, afl later) and Jonathan Neuschäfer
-(afl); the hard-working maintainer Claudio Matsuoka made fixes for
-issues uncovered by fuzzing and issues reported by Coverity Scan. He
-also improved the rendering accuracy further, beating libmodplug at e.g.
-Saga Musix's (one of the OpenMPT maintainers) complex IT files;
-
-* probably 2015: I tried several broken files generated by old fuzzing
-rounds on Open Cubic Player, found a crash but failed to report it;
-
-* November 2016: Hanno Böck sent a patch for issues in libmodplug found
-by using an asan build;
-
-* December 2016 - January 2017: I fuzzed libxmp, libmodplug, libmikmod
-and libopenmpt with afl, and the closed-source libbass with afl and
-honggfuzz in dumb mode. I reported the issues upstream.
-Only libopenmpt didn't segfault; the only issue I had with it was when
-it attempted to commit (not just allocate) 5+ GB of RAM to play a broken
-file... fortunately, the Linux OOM killer kicked in quickly, and the
-host computer didn't suffer much, but that was still DoS. It doesn't
-seem to occur anymore in newer versions on that sample.
-There were few libxmp crashes, too. However, libmikmod crashed quite a
-bit, and libmodplug crashed more, with evidence of memory corruption
-(bitter complaints from the memory allocator and valgrind). At some
-point, afl-fuzz's map coverage suddenly jumped to 100%; this was the
-only time I experienced such behaviour in core-years of fuzzing runs,
-and libmodplug definitely wasn't the only memory-corrupting code base.
-
-* January 2017: I wrote privately to Debian Security + package
-maintainers, SUSE Security, VLC Security, GStreamer Security, Hanno Böck
-about libmodplug's issues. In February, to avoid potential fuzzing work
-duplication before fixes appeared, I notified Agostino Sarubbo.
-One of the visible effects was the packaging of libopenmpt's libmodplug
-compat layer, and the Debian VLC package being switched to build against
-that compat layer, in time for the Stretch release - AFAICT (and
-unsurprisingly) without ill effects. libmodplug's popularity dropped a
-hundred spots in Debian popcon (number of installs), but it's still
-within the top 1000, on nearly half of the small subset of Debian-
-running computers which report to popcon.
-Under the current Debian sid, the libavformat57 package depends on
-libopenmpt0, i.e. FFmpeg seems to have switched to libopenmpt.
-
-* 2017: new releases of libmodplug, libmikmod containing fixes for
-issues I reported. The libmodplug Git repository contains a bunch of
-additional fixes for less severe issues, not yet part of a release.
-
-* April 2017: I requested CVEs to DWF for a subset of the issues fixed
-by libmodplug 0.8.9.0. For multiple reasons, including my own sloppiness
-(in August, sitting for ~3 weeks on Kurt Seifried's e-mail requesting
-commit IDs for the fixes, hoping that the libmodplug maintainer would
-have some time to push a new release in the meantime), they don't seem
-to have been assigned yet.
-
-* August - September 2017: I used afl on the original, unmaintained
-libdumb packaged by Debian and others, and kode54's newer libdumb fork
-packaged basically nowhere. kode54 quickly fixed the crashes I reported
-and produced new releases. Allegro depends on libdumb. I do not yet have
-data on the accuracy of kode54/libdumb.
-
-* early October 2017: I tried some broken files from old fuzzing rounds
-in Milky Tracker and Schism Tracker, and sure enough, they don't like it
-either: segfaults, memory allocator aborts upon corruption. Reported
-upstream alongside the crash in Open Cubic Player.
-The Schism Tracker and Milky Tracker maintainers acknowledged receipt.
-The latter pointed to Jonathan Neuschäfer's issue from over two years
-ago: https://github.com/milkytracker/MilkyTracker/issues/35
-A month later, no fixes have appeared yet in any of the Git
-repositories.
-
-* early November 2017: this post, only ~30 days after the initial
-reports to three upstreams, but 300+ days after the initial reports to
-the most popular upstreams, and more than 120 days after versions of
-libmodplug and libmikmod fixing the most pressing issues were released.
-
-
-Several notes
-=============
-* unsurprisingly, the well-known FLOSS maintainership sustainability
-problem occurs for module / track handling code as well: while
-maintainers do try to go out of their way to fix issues, they can only
-spend so much time on the FLOSS projects they're maintaining. Large
-batches of issues found by fuzzers usually represent a significant,
-sometimes too large, strain on their resources;
-* more patching is needed, especially for older distros, which consumes
-packager and security maintainer resources;
-* more fuzzing is warranted, especially for the most popular targets,
-which have stripped-down load-only modes, and could efficiently be
-integrated into the likes of OSS-Fuzz. However, fuzzing does limited
-good when maintainers can't spend enough time to deal with the fallout;
-* sandboxing would arguably be useful, and lack thereof is partially,
- well, a maintainer resource issue...
-
-
-Thanks
-======
-* Sam Hocevar and others for zzuf, Michal Zalewski for afl, Robert
-Święcki for honggfuzz;
-* Hanno Böck for TFP and associated work, as well as the disclosure
-process for one of the first batches of vulnerabilities I found with
-a fuzzer, in Oracle Berkeley DB;
-* the upstream maintainers, and downstream packagers, of the libraries
-and programs I fuzzed;
-* security teams;
-* other persons who were part of / aware of this journey :)
-
-
-Regards,
-Lionel Debroux.
+Mailing list: debian-security-announce@...ts.debian.org
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEE3bt9Bno1p6KT7q/zE2Z0SUsm6A4FAln7m1sACgkQE2Z0SUsm
-6A6KZQ//WBv5pqXK/GjewCvwz2SZd9t717pNGf10gDHxTpynAI4dd1fQx/NXo+Q/
-LcFg12JDaC0QRZ0uJxhk81N+T+YNzRKqzV3JHV8OJRFwpiT+WjvUa3Qym03bGVU7
-1FJXHT3qYGNAuKPQWRBp2iouTXpzECJu+G52DFwPn5n/XoRal3ijDSBGCddk8BzJ
-BsKNeM+tHh88Z6C1uVhMTa+hvnKW87wbxiZ/PVktxxlm0T5ZJ0oN/0qkxMBsnVBX
-4o/8pHNOFOnKxflGVyOfoTjMosxr2s7K3Bmayik4essDv1+JOBaHo1AYi5Gl47dz
-wL8+TTiOTHOJO43pK61XS+KRXFONE6bGQdkBC1gyjAlU+OTYJXWRjdkeW61Y0qF8
-22BXPaYv+Ynr+egY0CqLqUlLE5zK+Ww3tdq5MsPGXyMfaQGwjl0EInnVZTIWJ7jl
-BJmkuC2K3QLpwSWjVdSTPq2g4Ay5CX2BqmQsTGBsHncLxU/s/8Ylm6ZFtN5MkJVa
-CWMEKCm5b5Y2OcPqFKaqG2ULjJFBiZqUSdcmG80gsefBEHFVRC//Z46nTnP5tJq5
-wsa94pXzFigvjfQPW1t3n3ZQJ5ATSxMp0XMlpcyOTvEUkYP+GaFdik9cbwsdLi60
-WnruiiJcch6EssscK+FwAZZBOU4DpOedqSesBwuKNeKNiX8hAPk=
-=3ueK
+iQIzBAEBCAAdFiEEtuYvPRKsOElcDakFEMKTtsN8TjYFAliOJGUACgkQEMKTtsN8
+TjY54w//TQtKeoBF3uzCtMTKExAzKCZKkVnTLkFKu0Ybcr6ooTQ+Vyy81t0WlHa7
+L4i31RavlQerBK3euGLhg679Bcv6Wrtgc1dC6caaDQTWF3+IWrZ/KO3LHJdgLMoj
+y10zBMLBdr2rTB4cItXCYcCkzXWGGoDjFyAf9h61O6SAHa9qZthGXCzOY7G0eQfX
+GCN7LW2rY+H3NuUo0UYVhiru9poflehxArdQnoeZGU//8uZ5qaD2XeUILQI+gOo8
+rwBnYpF7YvrrFGaleVrHgXuLN6t/7HOkMxaIQtn9zmigZfWkOUjPGOAkn8xLKhk3
+zgRBT7n+pd+N82TK4B6+RhDilY9Ec2btJ5EDHIJAnmVAATwoULPtgzQwLSrziN9a
+DCsusuWxPFcvmyGMy4ooEWpKsZ2MgXusR/As84g5ZeWl9qOuZ9U0aeJtThhl37zA
+wNH+KIgWEUoQNmoVrOCUchtbiKeHEbIDUWR1PNpgl3Cb7Fbp3be3AFPJiiTE/r+7
+UUmtFXdWKGNK6nzLV0yo4TWDXyNLJMu+SP6JiZNsbkYntmUgqFw0iotWNoqgajPQ
+U4cmAeDMJMDFTU6Or1Tam+Njv71mIZNGCsplZa2gAHHsmXHeqYiI+vEp5ZljFOkY
+SgoWuuERDtFv4FGL5oBxP/Z+SYOrt8ME+rRqsLUWfgXD+tDCE6I=
+=sV/2
 -----END PGP SIGNATURE-----
+
+
+----- End forwarded message -----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
