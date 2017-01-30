@@ -1,33 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/2
-Message-ID: <alpine.LFD.2.20.1703141704180.24688@wniryva>
-Date: Tue, 14 Mar 2017 17:30:01 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Gerd Hoffmann <kraxel@...hat.com>
-Subject: CVE-2016-9603 Qemu: cirrus: heap buffer overflow via vnc connection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/30/3
+Message-ID: <CAJEJqRw=B_7TCQpR5rye09p45rOQ7o5hC2cxWyVJwtxiNy2DGg@mail.gmail.com>
+Date: Mon, 30 Jan 2017 08:09:27 -0500
+From: David Manouchehri <david@...idmanouchehri.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: FW: [DSA 3775-1] tcpdump security update]
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+The source along with samples can be found over here.
 
-Quick Emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator and the VNC 
-display driver support is vulnerable to a heap buffer overflow issue. It could 
-occur when Vnc client attempts to update its display after a vga operation is 
-performed by a guest.
+https://anonscm.debian.org/cgit/users/rfrancoise/tcpdump.git/commit/?id=b4f4a803b9b5f9d507201cd1c48ddd992a62aee2
 
-A privileged user/process inside guest could use this flaw to crash the Qemu 
-process resulting in DoS OR potentially leverage it to execute arbitrary code 
-on the host with privileges of the Qemu process.
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1430056
-
-* 'CVE-2016-9603' has been assigned to this issue by Red Hat Inc.
-* Attached herein is a proposed upstream patch to fix this issue.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-View attachment "0001-cirrus-vnc-zap-bitblit-support-from-console-code.patch" of type "text/plain" (10141 bytes)
