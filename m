@@ -1,4 +1,9 @@
-Received: (qmail 14103 invoked by uid 550); 19 Jul 2022 11:05:39 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["649" "Tuesday" "31" "January" "2017" "13:17:43" "+0800" "chunibalon" "chunibalon@gmail.com" "<CAN6_dU-=Z2bXnXSnkjTx6F6-So6gju2QnWWMoAdS-yENVWLY+g@mail.gmail.com>" "19" "[oss-security] CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)" nil nil nil "1" "2017013105:17:43" "[oss-security] CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)" (number mark "U       chunibalon@g Jan 31   19/649   " thread-indent "\"[oss-security] CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26242 invoked by uid 550); 31 Jan 2017 07:17:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,34 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27842 invoked from network); 19 Jul 2022 02:14:55 -0000
-From: "Weigang (Jimmy)" <weigang12@huawei.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "openeuler-security@openeuler.org" <openeuler-security@openeuler.org>
-Thread-Topic: CVE-2021-33656: When setting font with malicous data by ioctl
- cmd PIO_FONT,kernel will write memory out of bounds.(<5.10.127)
-Thread-Index: AdibFQUVQupUgkBgSuWnh1k4f9BAjA==
-Date: Tue, 19 Jul 2022 02:14:27 +0000
-Message-ID: <22bea0b4f2b4411682adf3fdd8883afb@huawei.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.94.143.157]
-Content-Type: multipart/alternative;
-	boundary="_000_22bea0b4f2b4411682adf3fdd8883afbhuaweicom_"
+Received: (qmail 7714 invoked from network); 31 Jan 2017 05:17:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=H11wO0PrccUu/pTFpmz1lXAOQVHMjoGpM3Jb8RrPsdw=;
+        b=jbknGxRnuGXD5hmaiH0uhdwwwrzRQiI7mmwyWRl2nEUETHrDLoqYjYt96PUYe8DElY
+         MBO6E66WG6nVk2oFm1+u1A7wNFHs445/OL4S3GHSuN5fU+WD8TyFUUHjasaxtwL28jRg
+         FjsshdUGlaR7/i9d38Afm8Xkeic4HTnF0gIcSX7QKO7zzzI3/dFyAu1VI2kmM5GwO811
+         ayNjuN3JYBUckFi6Tgr3Lmu0lT7wRHhmeQ+lKpVyCY2zjfxsR6OCvhDdSjaF9LsNly3v
+         GK3N9bVEXH7I8Z5Sk+w2KRvpfUW8/S4xlxHPvJ4rcalxqEqiZqDcecQ9zpDRA/WYfUS/
+         j3Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=H11wO0PrccUu/pTFpmz1lXAOQVHMjoGpM3Jb8RrPsdw=;
+        b=T93Wj8uNr48KpUwTYxMzA+LYY7eKKeVKiRTCGJVa5Cqe2chhz2TIi0zZh1QZr1eYc9
+         +UFFhNcU56XTIV9U1uIQCZDiqS+lMNYY9W72yWRQJA5eACf+Y71ibPPYIDM71MrYS0pO
+         6VKtC4NHzOzPJW3Wfa7jlg9nV/ypJ7vjnO2j3ZGT3Lfq9dtLg/OhXJbqSNA6YU4vGA/5
+         AuiuT/dM/JKqOu6XivjyuVplRbHQLq3/NyFAzgFa3vOnSmTV0NE2fUWpoHvzODgfddMm
+         goLhKLNo2pnojhlDcTMS1n7e+0jYkGhX2SZjJPhUDZksYM0IIMVXdp6LQMNyEKjRHwl0
+         0Deg==
+X-Gm-Message-State: AIkVDXIWaMiTBejChhOys/LNSetxrcmZsT7llN5qeV2F+35qU/hLneVaSSaM0ZFwf8UTIrI9gB6eA+v+JRrGgQ==
+X-Received: by 10.107.160.140 with SMTP id j134mr25071543ioe.180.1485839863935;
+ Mon, 30 Jan 2017 21:17:43 -0800 (PST)
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-Subject: [oss-security] CVE-2021-33656: Linux kernel: When setting font with malicous data by ioctl cmd
- PIO_FONT,kernel will write memory out of bounds.(<5.10.127)
+From: chunibalon <chunibalon@gmail.com>
+Date: Tue, 31 Jan 2017 13:17:43 +0800
+Message-ID: <CAN6_dU-=Z2bXnXSnkjTx6F6-So6gju2QnWWMoAdS-yENVWLY+g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.org
+Content-Type: multipart/alternative; boundary=001a11407f6e487bbb05475d0d55
+Subject: [oss-security] CVE request: Out-of-Bound read and write issues in
+ put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
 
---_000_22bea0b4f2b4411682adf3fdd8883afbhuaweicom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--001a11407f6e487bbb05475d0d55
+Content-Type: text/plain; charset=UTF-8
 
-Rml4IGhhcyBiZWVuIHJlbGVhc2VkIGluIExpbnV4IGtlcm5lbCBzdGFibGUg
-dHJlZTogaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tl
-cm5lbC9naXQvc3RhYmxlL3N0YWJsZS1xdWV1ZS5naXQvdHJlZS9yZWxlYXNl
-cy81LjEwLjEyNy92dC1kcm9wLW9sZC1mb250LWlvY3Rscy5wYXRjaC4NCg==
+Hi:
 
---_000_22bea0b4f2b4411682adf3fdd8883afbhuaweicom_--
+        These issues were discovered via libtiff 4.0.7, however after
+upstream analysis they were found that they are in netpbm(10.47.63)
+       The url of bug tracker:
+        http://bugzilla.maptools.org/show_bug.cgi?id=2654
+        http://bugzilla.maptools.org/show_bug.cgi?id=2655
+        Then I mailed the maintainer of netpbm and he promised fix them in
+the next Netpbm Super Stable release (the release series I tested) at the
+end of March.
+       Could you please assign CVE id's for these?
+
+Best Regards,
+chunibalon of VARAS@IIE
+
+--001a11407f6e487bbb05475d0d55--
