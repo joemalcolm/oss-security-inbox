@@ -1,21 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/3
-Message-ID: <20171106070849.GB9438@256bit.org>
-Date: Mon, 6 Nov 2017 08:08:49 +0100
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/18
+Message-ID: <20170131191958.GC16979@jasmine>
+Date: Tue, 31 Jan 2017 14:19:58 -0500
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Cc: Эмиль Лернер <neex.emil@...il.com>
+Subject: Re: CVE Request: ffmpeg remote exploitaion results code execution
 Content-Type: text/plain; charset=utf-8
 
+In case anyone else is curious, here are the corresponding commits
+reachable from the n3.2.2 release tag:
 
-On So, 05 Nov 2017, Jakub Wilk wrote:
+On Wed, Feb 01, 2017 at 12:40:54AM +0900, Paul Cher wrote:
+> --[ 1 - libavformat/http.c  ]
+> 
+> After executing of http_read_stream we read each http header, where we pass "Transfer-Encoding: chunked” header, and we come into http_buf_read function [1]. Due to incorrect use of strtoll function and integer sizes (chunk_size in int64_t)[2], it was possible to pass negative chunk_size in chunk encoding, so after computing final size using FFMIN function later on it would be passed as argument to avio_read function. This results a heap-overflow which we found out to be exploitable, because overflowed buffer is allocated right next to the AVIOContext structure[3]. Overflowing function pointer in this structure immediately results rip control and then code execution.
+> 
+> * [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166>
+> * [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259>
+> * [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899>
+> 
+> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa <https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa>
 
-> Couldn't vim create swapfiles with mode 0600 and be done with it?
+https://github.com/FFmpeg/FFmpeg/commit/0e0a413725e0221e1a9d0b7595e22bf57e23a09c
 
-Because then users of the group could not recover the file anymore, 
-although they are able to read the original file.
+> --[ 2 - libavformat/rtmppkt.c ]
+> 
+> Issue is connected with buffer overflow on the heap in RTMP protocol. After a bit of reverse engineering of RTMP protocol you can notice that it uses chunk (of max 0x80 bytes) to _transfer_ data, but chunks of more size could be used to _store_ the data. Because size of packet is not check that it is the same as it was in the same transmission you can first send packet with smaller size and then bigger size, and this results heap-overflow[1]. If you can align chunks right you can achieve white-what-where condition and that results and RCE.
+> 
+> * [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268 <https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268>
+> 
+> The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7 <https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7>
 
-Christian
--- 
-Was macht ein Ostfriese mit dem Messer auf dem Deich? 
-Er will in See stechen! 
+https://github.com/FFmpeg/FFmpeg/commit/32b95471a86ae383c0f76361d954aec511f7043a
+
+> --[ 3 - ffserver.c ]
+> 
+> This issue is completely like the first one and it results heap overflow.
+> 
+> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156 <https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156>
+
+https://github.com/FFmpeg/FFmpeg/commit/c12ee64e80af2517005231388fdf4ea78f16bb0e
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
