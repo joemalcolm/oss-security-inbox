@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1072" "Thursday" "13" "December" "2018" "11:39:29" "+0100" "Solar Designer" "solar@openwall.com" "<20181213103929.GA16401@openwall.com>" "23" "Re: [oss-security] libvnc and tightvnc vulnerabilities" "^Cc:" nil nil "12" "2018121310:39:29" "[oss-security] libvnc and tightvnc vulnerabilities" (number mark "        solar@openwa Dec 13   23/1072  " thread-indent "\"Re: [oss-security] libvnc and tightvnc vulnerabilities\"\n") "<20181210185721.GA4259@openwall.com>" ("<9396dbd0a417440abe9bbb830e7b612f@kaspersky.com>" "<20181210154020.GA2063@openwall.com>" "<200f245d2ec342c3bc05586d3f277b42@kaspersky.com>" "<20181210185721.GA4259@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["998" "Tuesday" "31" "January" "2017" "11:59:11" "-0500" "Max Veytsman" "max@appcanary.com" "<CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>" "39" "[oss-security] CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r" nil nil nil "1" "2017013116:59:11" "[oss-security] CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r" (number mark "U       max@appcanar Jan 31   39/998   " thread-indent "\"[oss-security] CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7872 invoked by uid 550); 13 Dec 2018 10:39:49 -0000
+Received: (qmail 5133 invoked by uid 550); 31 Jan 2017 17:11:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7709 invoked from network); 13 Dec 2018 10:39:33 -0000
-Message-ID: <20181213103929.GA16401@openwall.com>
-References: <9396dbd0a417440abe9bbb830e7b612f@kaspersky.com> <20181210154020.GA2063@openwall.com> <200f245d2ec342c3bc05586d3f277b42@kaspersky.com> <20181210185721.GA4259@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181210185721.GA4259@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Thu, 13 Dec 2018 11:39:29 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] libvnc and tightvnc vulnerabilities
-To: Pavel Cheremushkin <Pavel.Cheremushkin@kaspersky.com>
+Received: (qmail 32162 invoked from network); 31 Jan 2017 16:59:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=appcanary.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=xvr35ZOB8U6AJ0fadTo/zlcw90LZhoDckI00dfEyz24=;
+        b=pdR8lW7lQzEukePr+ul3JQn2eMW0mvf65HlAZWwe62IbN233JV25jXG9XiRV+cLe2P
+         SlUrrH/AFqiv0XO7pXvlpBJgQC+RKqDmdHFwOxHvVS/dt7VQqp2JkOjfs8K9LMTNfsd7
+         028gytiIScNODxMGzqoRwpveoDcCO87xEP8acw586OZ+tZ6nYQxJ9SVc/ODTph0UEfBk
+         YnPqSI7hxAIhfbwCCwVjY0JWuj8jusn/S2tIqHyArAVgKyaqMcJrFQ3hV11l7arNOy1/
+         uuddAq52OPY1T+BW6YpQn+vpzPpoBXrlKBB96dKf00dr/4bA6naPz8CgHJ7O5tpUpcQ5
+         3M4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=xvr35ZOB8U6AJ0fadTo/zlcw90LZhoDckI00dfEyz24=;
+        b=llN0dPJPECLq80kS2fng+TsPZvBABSQc7EDELeJoduSbLnla33amVdY1KABCVcnJn7
+         MLhXAoeiJVnHW9q3Rsm2Hi/FuioEs2DkyfnAtecheSDPjwVF08DW2G+hmbp+/VVjW/5u
+         FRYqWE3tVuJXNWfN8QaswqaW3rezCBoiIbUYWTeTzPslEUFsZA/lAoNWuKlZaSVgJfvM
+         Dx14ggvxdM2FDG17AvIlVRIwpNgDb1OLIT49SJrUHUv0KAe253lImSSJBurWzDkhMA+L
+         9emBuBMNbL0CeLUmCw3KDxYMADjo+0isXSl2OWGkI+g7w3q3JXHbKZ2F0rnGz7queq0b
+         WRyA==
+X-Gm-Message-State: AIkVDXJUsg/BbW0hHfSlENXwzkUbqheG3U/zgopRAnfdXfLAjhqSiq1pRrXj6s6zOVGGwadsHmeiIuli9u0n4g==
+X-Received: by 10.55.153.130 with SMTP id b124mr27122364qke.82.1485881971901;
+ Tue, 31 Jan 2017 08:59:31 -0800 (PST)
+MIME-Version: 1.0
+From: Max Veytsman <max@appcanary.com>
+Date: Tue, 31 Jan 2017 11:59:11 -0500
+Message-ID: <CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=94eb2c07b19c1d1f9d054766db95
+Subject: [oss-security] CVE requests: code injection in rubygem espeak-ruby and code
+ injection in rubygem festivaltts4r
 
-On Mon, Dec 10, 2018 at 07:57:21PM +0100, Solar Designer wrote:
-> https://github.com/LibVNC/libvncserver/issues/247
-> 
-> Upstream's fix appears to be to add casts to (uint64_t) before adding 1
-> in those many malloc() calls.  On platforms with larger than 32-bit
-> size_t, this should be sufficient against integer overflows since the
-> sizes are read from 32-bit protocol fields, but it isn't sufficient to
-> prevent maliciously large memory allocation on the client by a rogue
-> server.  On a platform with 32-bit size_t, this isn't even sufficient to
-> prevent the integer overflows.  If I haven't missed anything, it'd be
-> great if you open a new issue suggesting introduction of safety limits
-> prior to those malloc() lines.
+--94eb2c07b19c1d1f9d054766db95
+Content-Type: text/plain; charset=UTF-8
 
-> [...] per the commits referenced in issue #247 above, there are many more
-> instances of the "malloc(... + 1)" pattern, which were patched similarly
-> incompletely.
+Two similar vulnerabilities in ruby text-to-speech libraries.
 
-I've just created this issue:
+1) espeak-ruby
 
-SECURITY: malloc((uint64_t)length + 1) is unsafe, especially on 32-bit systems
-https://github.com/LibVNC/libvncserver/issues/273
+Rubygem espeak-ruby passes user modifiable strings directly to a shell
+command.
 
-Alexander
+An attacker can execute malicious commands by modifying the strings that
+are passed as arguments to the speak, save, bytes and bytes_wav methods in
+the lib/espeak/speech.rb.
+
+https://github.com/dejan/espeak-ruby/issues/7
+
+Patched in 1.0.3
+https://github.com/spejman/festivaltts4r/issues/1
+
+2) festivaltts4r
+
+Rubygem festivaltts4r passes user modifiable strings directly to a shell
+command.
+
+An attacker can execute malicious commands by modifying the strings that
+are passed as arguments to the to_speech and and to_mp3 methods in
+lib/festivaltts4r/festival4r.rb.
+
+https://github.com/spejman/festivaltts4r/issues/1
+
+No patch
+Credit: Brendan Coles
+
+--
+Max Veytsman
+Co-founder appcanary.com
+@mveytsman <https://twitter.com/mveytsman>
+
+--94eb2c07b19c1d1f9d054766db95--
