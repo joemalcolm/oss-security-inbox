@@ -1,85 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/27/2
-Message-ID: <20170227120706.3entdizfnyz5iwrf@lorien.valinor.li>
-Date: Mon, 27 Feb 2017 13:07:06 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Linux: CVE-2017-6353: sctp: deny peeloff operation on asocs with threads sleeping on it
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/12
+Message-Id: <835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>
+Date: Wed, 1 Feb 2017 00:40:54 +0900
+From: Paul Cher <paulcher@...lab.cs.msu.su>
+To: oss-security@...ts.openwall.com
+Cc: Эмиль Лернер <neex.emil@...il.com>
+Subject: CVE Request: ffmpeg remote exploitaion results code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi
+This letter is a result of research made by Emil Lerner <neex.emil@...il.com <mailto:neex.emil@...il.com>> and Pavel Cheremushkin <paulcher@...lab.cs.msu.su <mailto:paulcher@...lab.cs.msu.su>> and it is supposed to disclosed multiple issues we managed to find and exploit in FFmpeg software. Despite that all vulnerabilities have been successfully patched by FFmpeg developers this letter is supposed to clarify all these issues and show that they are exploitable.
 
-Via the CVE webform, MITRE has assigned CVE-2017-6353 for:
+--[ 1 - libavformat/http.c  ]
 
-https://marc.info/?l=linux-netdev&m=148785309416337&w=2
+After executing of http_read_stream we read each http header, where we pass "Transfer-Encoding: chunked” header, and we come into http_buf_read function [1]. Due to incorrect use of strtoll function and integer sizes (chunk_size in int64_t)[2], it was possible to pass negative chunk_size in chunk encoding, so after computing final size using FFMIN function later on it would be passed as argument to avio_read function. This results a heap-overflow which we found out to be exploitable, because overflowed buffer is allocated right next to the AVIOContext structure[3]. Overflowing function pointer in this structure immediately results rip control and then code execution.
 
->Subject:    [PATCH net] sctp: deny peeloff operation on asocs with threads sleeping on it
->From:       Marcelo Ricardo Leitner <marcelo.leitner () gmail ! com>
->Date:       2017-02-23 12:31:18
->
->commit 2dcab5984841 ("sctp: avoid BUG_ON on sctp_wait_for_sndbuf")
->attempted to avoid a BUG_ON call when the association being used for a
->sendmsg() is blocked waiting for more sndbuf and another thread did a
->peeloff operation on such asoc, moving it to another socket.
->
->As Ben Hutchings noticed, then in such case it would return without
->locking back the socket and would cause two unlocks in a row.
->
->Further analysis also revealed that it could allow a double free if the
->application managed to peeloff the asoc that is created during the
->sendmsg call, because then sctp_sendmsg() would try to free the asoc
->that was created only for that call.
->
->This patch takes another approach. It will deny the peeloff operation
->if there is a thread sleeping on the asoc, so this situation doesn't
->exist anymore. This avoids the issues described above and also honors
->the syscalls that are already being handled (it can be multiple sendmsg
->calls).
->
->Joint work with Xin Long.
->
->Fixes: 2dcab5984841 ("sctp: avoid BUG_ON on sctp_wait_for_sndbuf")
->Cc: Alexander Popov <alex.popov@...ux.com>
->Cc: Ben Hutchings <ben@...adent.org.uk>
->Signed-off-by: Marcelo Ricardo Leitner <marcelo.leitner@...il.com>
->Signed-off-by: Xin Long <lucien.xin@...il.com>
->---
->Hi, please consider this one for -stable too. Thanks
->
-> net/sctp/socket.c | 8 ++++++--
-> 1 file changed, 6 insertions(+), 2 deletions(-)
->
->diff --git a/net/sctp/socket.c b/net/sctp/socket.c
->index 1b5d669e30292a57ed57dd920d81be2a57f97b22..d04a8b66098c8a574642b026bff990ac64c21468 100644
->--- a/net/sctp/socket.c
->+++ b/net/sctp/socket.c
->@@ -4734,6 +4734,12 @@ int sctp_do_peeloff(struct sock *sk, sctp_assoc_t id, struct socket **sockp)
-> 	if (!asoc)
-> 		return -EINVAL;
-> 
->+	/* If there is a thread waiting on more sndbuf space for
->+	 * sending on this asoc, it cannot be peeled.
->+	 */
->+	if (waitqueue_active(&asoc->wait))
->+		return -EBUSY;
->+
-> 	/* An association cannot be branched off from an already peeled-off
-> 	 * socket, nor is this supported for tcp style sockets.
-> 	 */
->@@ -7426,8 +7432,6 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
-> 		 */
-> 		release_sock(sk);
-> 		current_timeo = schedule_timeout(current_timeo);
->-		if (sk != asoc->base.sk)
->-			goto do_error;
-> 		lock_sock(sk);
-> 
-> 		*timeo_p = current_timeo;
->-- 
->2.9.3
+* [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166>
+* [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259>
+* [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899 <https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899>
 
-This was found while reviewing the fix of CVE-2017-5986 (2dcab5984841
-("sctp: avoid BUG_ON on sctp_wait_for_sndbuf"))
+This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa <https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa>
 
-Regards,
-Salvatore
+--[ 2 - libavformat/rtmppkt.c ]
+
+Issue is connected with buffer overflow on the heap in RTMP protocol. After a bit of reverse engineering of RTMP protocol you can notice that it uses chunk (of max 0x80 bytes) to _transfer_ data, but chunks of more size could be used to _store_ the data. Because size of packet is not check that it is the same as it was in the same transmission you can first send packet with smaller size and then bigger size, and this results heap-overflow[1]. If you can align chunks right you can achieve white-what-where condition and that results and RCE.
+
+* [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268 <https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268>
+
+The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7 <https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7>
+
+--[ 3 - ffserver.c ]
+
+This issue is completely like the first one and it results heap overflow.
+
+This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156 <https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156>
+
+--[ Conclusion ]
+
+We are currently continue our research on FFmpeg security and hope to contribute more later on. These issues where fixed quite long ago, so I find it acceptable to attach links to exploits:
+* https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6 <https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6>
+* https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913 <https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913>
+
+Thanks in advance,
+Paul
