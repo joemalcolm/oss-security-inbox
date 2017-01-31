@@ -1,54 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/3
-Message-ID: <466141472.14007261.1506337465946.JavaMail.zimbra@redhat.com>
-Date: Mon, 25 Sep 2017 07:04:25 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-14489: Linux kernel: scsi: nlmsg is not properly parsed in iscsi_if_rx()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/4
+Message-ID: <alpine.LFD.2.20.1701311317010.32735@wniryva>
+Date: Tue, 31 Jan 2017 13:23:56 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-2596 Kernel: kvm: page reference leakage in handle_vmon
 Content-Type: text/plain; charset=utf-8
 
-heololo,
+   Hello,
 
-an additional research shows that the very latest kernels are not showing
-a crash with a reproducer. git bisect showed that:
+Linux kernel built with the KVM virtualisation support(CONFIG_KVM), with 
+nested virtualisation(nVMX) feature enabled(nested=1), is vulnerable to host 
+memory leakage issue. It could occur while emulating VMXON instruction in 
+'handle_vmon'.
 
-commit 7f564528a480084e2318cd48caba7aef4a54a77f (between v4.11 and v4.12-rc1)
-is the first commit a crash is not reproduced with:
+A L1 guest user could use this flaw to leak host memory potentially resulting 
+in DoS.
 
-commit 7f564528a480084e2318cd48caba7aef4a54a77f
-Author: Steffen Klassert <steffen.klassert@...unet.com>
-Date:   Sat Apr 8 20:36:24 2017 +0200
-skbuff: Extend gso_type to unsigned int.
+Upstream patch:
+---------------
+   -> https://www.spinics.net/lists/kvm/msg144319.html
 
-i.e. this is commit which fixed the crash. checking the code, it looks like
-struct skb_shared_info's fields were reordered, so a field which overwrite
-was causing a panic has been moved. nevertheless, the buffer overwrite is still
-there, so a suggested patch 9923803 (or its later version) is still needed.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1417812
 
-for a proof compare a flaw description:
+'CVE-2017-2596' is assigned to this issue by Red Hat Inc.
 
-> ev = nlmsg_data(nlh) will acutally get skb_shinfo(SKB) instead and set a
-> new value to skb_shinfo(SKB)->nr_frags by ev->type.
-
-and the commit message:
-
->    The remaining two byte hole is moved to the
->    beginning of the structure, this protects us
->    from immediate overwites on out of bound writes
->    to the sk_buff head.
-> 
->    Structure layout on x86-64 before the change:
-> 
->    struct skb_shared_info {
->            unsigned char              nr_frags;
->            __u8                       tx_flags;
-> 
->    Structure layout on x86-64 after the change:
-> 
->    struct skb_shared_info {
->            short unsigned int         _unused;
->            unsigned char              nr_frags;
->            __u8                       tx_flags;
-
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
