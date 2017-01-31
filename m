@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/7
-Message-ID: <20170830170415.GA5594@suse.de>
-Date: Wed, 30 Aug 2017 19:04:15 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/15
+Message-ID: <CADxEXOgSQWqbWcQaK9cZjckN+QC-pOXSzdj+meNs5KUEm=jn+g@mail.gmail.com>
+Date: Tue, 31 Jan 2017 20:00:29 +0100
+From: Pierre Kim <pierre.kim.sec@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RubyGems flaws
+Subject: CVE requests: OpenBSD httpd - 2 DoS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 30, 2017 at 10:30:19AM -0600, Kurt Seifried wrote:
-> Does anyone know if these got CVEs?
-> 
-> https://www.ruby-lang.org/en/news/2017/08/29/multiple-vulnerabilities-in-rubygems/
-> http://blog.rubygems.org/2017/08/27/2.6.13-released.html
-> 
-> Security fixes:
-> 
-> *Fix a DNS request hijacking vulnerability. Discovered by Jonathan
-> Claudius, fix by Samuel Giddins.
-> *Fix an ANSI escape sequence vulnerability. Discovered by Yusuke Endoh, fix
-> by Evan Phoenix.
-> *Fix a DOS vulernerability in the query command. Discovered by Yusuke
-> Endoh, fix by Samuel Giddins.
-> *Fix a vulnerability in the gem installer that allowed a malicious gem to
-> overwrite arbitrary files. Discovered by Yusuke Endoh, fix by Samuel
-> Giddins.
-> 
-> Affected Versions
-> 
-> *Ruby 2.2 series: 2.2.7 and earlier
-> *Ruby 2.3 series: 2.3.4 and earlier
-> *Ruby 2.4 series: 2.4.1 and earlier
-> *prior to trunk revision 59672
+Hello,
 
-Mitre communicated to me the following CVEs on query:
+Can you assign 2 CVE entries regarding OpenBSD httpd ?
 
-CVE-2017-0899  ANSI escape issue
+- DoS: CPU exhaustion with SSL client-initiated renegotiation,
+- DoS: Memory exhaustion by sending crafted HTTP requests with Bytes-range.
 
-CVE-2017-0900  query command
+Errata for 6.0/5.9 is in progress, the memory exhaustion has been
+patched today in -current
+(see http://marc.info/?l=openbsd-cvs&m=148587359420912&w=2 ).
+The advisory will be posted when
+http://www.openbsd.org/errata{59,60}.html are updated.
 
-CVE-2017-0901  overwrite any file
+Thank you,
 
-CVE-2017-0902  DNS issue
+Regards,
 
-Ciao, Marcus
+-- 
+Pierre Kim
+pierre.kim.sec@...il.com
+@PierreKimSec
+https://pierrekim.github.io/
