@@ -1,17 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/17/3
-Message-ID: <0b51611b-36c2-3dc6-2a69-b9b49fdd2700@redhat.com>
-Date: Sat, 17 Jun 2017 11:40:34 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-Subject: Re: two vulns in uClibc-0.9.33.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/8
+Message-ID: <ab6ef47f6e244a0cb7571b8b9e4c304a@imshyb01.MITRE.ORG>
+Date: Tue, 31 Jan 2017 10:17:27 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: mp3splt: invalid free in free_options (options_manager.c)
 Content-Type: text/plain; charset=utf-8
 
-On 06/17/2017 04:02 AM, Bob Friesenhahn wrote:
-> Uclibc is a C library like GNU libc.  Why would a JS engine not use it?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Javascript has 16-bit strings, like Java, Windows, and some UNIX
-variants.  GNU/Linux C libraries typically offer only 8-bit (multi-byte)
-or 32-bit (wchar_t) strings, so they are a poor match.
+> https://blogs.gentoo.org/ago/2017/01/29/mp3splt-invalid-free-in-free_options-options_manager-c
+> 
+> AddressSanitizer: attempting free on address which was not 
+> malloc()-ed
 
-Florian
+> free_options mp3splt-2.6.2/src/options_manager.c:67:9
+
+Use CVE-2017-5666.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYkKj6AAoJEHb/MwWLVhi2I5IQAKIqRlQDOlDi3vBVbyHS/7uj
+rVKO/et4VVkB5+vh3mAt7TmeuU9kvkUefMlnGe6MREI1aqQhxEXJkspLGZsr2vWJ
+wLFPlvbb1c5+bC194ZSGn1Ad29DbqxLVFJ8569Mxggo314RjzDEXn1deMLybIlx2
+e6SRJ8c6YRAtoIvTQ9e+yr3YXMKTGnqzjpbdbuu/bX6AS/Th5/OLqWBBvkdX9hic
++JiPyL0V5D0XAdTRuZbKf8SZQ6FoigR+oMbAPznQ51Ewgcxu+WVbWi16OzvWzjYM
+/j6ksokUlJ4vUOHkzr/Mm/h0+agYrJWIbZzVRaX/8WVlmUCMHXiErzHLO5WQCTE4
+ebPbR1bQ31a3EbClP/B8U3CfWsQI7v4jdCAIMpsO5t+JTSqOw+1pQZ0CelPgIpRF
+z/QbW0AU4WCcztglgMfAN0SRe2Osa9KICNJi4x+b9nyhyGDz89CU0GFyNJP9rQ08
+HsK0bs+MAtlI/zg+x2KUeFuAn5/KsyZk4UxIWaArD/hFNy/8ZMxu1t82dCjzMoBt
+q0731wugv1T8TdVuQE295KyZ2g1960FHHH/UQGTondbloZYbPaw+EtHHlrkk/Ce0
+r2/mL14FmCWoqWulZlKNnPebDJtKEpnwwR332Jkfumk1fAuDP/QQScBmewYHRKls
+7MyqXS/LzRjMYU+GDmlw
+=qRBe
+-----END PGP SIGNATURE-----
