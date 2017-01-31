@@ -1,46 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/4
-Message-ID: <e62a5dd0e9b34b509b3fb4b671a5c992@imshyb02.MITRE.ORG>
-Date: Tue, 7 Feb 2017 01:57:39 -0500
-From: <cve-assign@...re.org>
-To: <wapiflapi@...oo.fr>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: s-nail local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/2
+Message-ID: <CAN6_dU-=Z2bXnXSnkjTx6F6-So6gju2QnWWMoAdS-yENVWLY+g@mail.gmail.com>
+Date: Tue, 31 Jan 2017 13:17:43 +0800
+From: chunibalon <chunibalon@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi:
 
-> https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
+        These issues were discovered via libtiff 4.0.7, however after
+upstream analysis they were found that they are in netpbm(10.47.63)
+       The url of bug tracker:
+        http://bugzilla.maptools.org/show_bug.cgi?id=2654
+        http://bugzilla.maptools.org/show_bug.cgi?id=2655
+        Then I mailed the maintainer of netpbm and he promised fix them in
+the next Netpbm Super Stable release (the release series I tested) at the
+end of March.
+       Could you please assign CVE id's for these?
 
-> vulnerability in the setuid root helper binary
+Best Regards,
+chunibalon of VARAS@IIE
 
-> The problem is that an O_EXCL file is created with a user controlled
-> path because the di.di_hostname and di.di_randstr are never checked.
-> This means that using s-nail-privsep a normal user can create a file
-> anywhere on the filesystem, which is a security problem.
-
-Use CVE-2017-5899.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYmW4QAAoJEHb/MwWLVhi2+zMQAKcTkP5qlPXpyAw1J0pbVHdH
-Y9Gr2MYjAux/jFSo0M5ClF8RngazEBNBpidzHTaVAZ2evZiv3QT5piMVIxi0oIR6
-HG7G+kuUHuO16G6X9y6/joOr92ZRxJwUnXtN64MN59rOg6UBhKWE1dk5MORbFTee
-EWoEAAgG7MPk0cjdZbdDoRjZYlTmyuyC5J1WXdc6a2Vy8IiS2YXEjFfEGyMIbGgH
-+rVHZPWmbX/hmngnuuXq6LmCDtlQJce+e2abochLRx4diM1BH65X3OKfHp1JiV8X
-DI6W/XH13nwiiFscSakqNbhMFbbSf5ed3ogQ+LPgz62aD8Cj69zbuuA9HpnWb8ow
-iow8YKYj+dHoVIohQK7OtnSw42GW7ZyQGUYiz8XrYPb8snZo348WmMWP1m5h7mGc
-dr3mLWlCQam3PDQugjQ7G/Q9CgJjq+HBQPuskdVy5MnHsi+toU0Uc/np3WM2eQHG
-Huu/3hCTGQUJ0hyku2u/q6Xb0HKec9ugDVNvHNsOe8701Xxsg5kD5cCm49455sYS
-k2jpb0GHTfGEkwXDQjb0tHL7nxDxlERrbfx73qmF99k8ZvZOI9NUYCJUqQOhr7RZ
-vx0zo0PlqyFhK910ph0WCe8KnAD4JHlERyxljCMLem7iCapH62VSfbJJzy5d8Z5h
-AwjzJgsIKufVTXR4E0VF
-=gzVM
------END PGP SIGNATURE-----
