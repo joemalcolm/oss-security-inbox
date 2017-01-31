@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/24/5
-Message-ID: <20170424181756.GA2236@openwall.com>
-Date: Mon, 24 Apr 2017 20:17:56 +0200
-From: Solar Designer <solar@...nwall.com>
-To: "Jason A. Donenfeld" <Jason@...c4.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: remote heap overflow in linux networking stack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/16
+Message-ID: <006d8bdc-f460-0572-b584-8271c9c11056@gentoo.org>
+Date: Tue, 31 Jan 2017 19:21:58 +0100
+From: Thomas Deutschmann <whissi@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Hi Jason,
+On 2017-01-29 14:14, Ion Ionescu wrote:
+> The first fix for CVE-2017-5180 in Firejail version 0.9.44.4 and
+> 0.9.38.8 (LTS) was incomplete. Changing .Xauthority to .bashrc in the
+> exploit code, the problem is still there - credit Sebastian Krahmer. 
+> New releases are out: 0.9.44.8 and 0.9.38.10 (LTS). Please assign a
+> new CVE.
 
-On Mon, Apr 24, 2017 at 08:00:10PM +0200, Jason A. Donenfeld wrote:
-> Requesting a CVE for [1], a heap overflow I found in Linux.
+Associated commits which already appeared in v0.9.44.6:
 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=4d6fa57b4dab0d77f4d8e9d9c73d1e63f6fe8fee
+https://github.com/netblue30/firejail/commit/38d418505e9ee2d326557e5639e8da49c298858f
+https://github.com/netblue30/firejail/commit/b8a4ff9775318ca5e679183884a6a63f3da8f863
 
-Thank you for bringing this in here.
+Backport for v0.9.38.10:
 
-I've attached the above URL's content in text/plain form, as required by
-oss-security content guidelines (actual content must be on the list, not
-only included by reference).
+https://github.com/netblue30/firejail/commit/903fd8a0789ca3cc3c21d84cd0282481515592ef
 
-The bug is in drivers/net/macsec.c implementing IEEE 802.1AE (MACsec).
-I hope it is rarely used and thus rarely exposed, and Linux kernel
-support for it is rather new, right?
 
-oss-security is no longer a place to request CVE IDs.  You may request a
-CVE ID directly from MITRE:
+-- 
+Regards,
+Thomas Deutschmann / Gentoo Security Team
+C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
 
-https://cveform.mitre.org
 
-Once you have the CVE ID, please post it to this same thread in here.
 
-(For non-public issues, it is also still possible to request CVE IDs
-along with notification to the (linux-)distros lists, as long as the
-primary purpose of giving advance notice to the distros is providing
-them with actionable information.  A few of the distros are CNAs, so
-they'd assign CVE IDs from their pools.)
-
-Alexander
-
-View attachment "linux-drivers-net-macsec.txt" of type "text/plain" (3175 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
