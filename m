@@ -1,102 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/8
-Message-ID: <998404.854533391-sendEmail@localhost>
-Date: Wed, 7 Jun 2017 12:56:02 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ytnef: heap-based buffer overflow in DecompressRTF (ytnef.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/13
+Message-ID: <20170131155609.GB30714@suse.de>
+Date: Tue, 31 Jan 2017 16:56:09 +0100
+From: Sebastian Krahmer <krahmer@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux
 Content-Type: text/plain; charset=utf-8
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+Hi
 
-The complete ASan output of the issue:
 
-# ytnefprint $FILE
-==22808==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61800000039e at pc 0x7f6b57c2fcb8 bp 0x7ffd8ca179d0 sp 0x7ffd8ca179c8
-READ of size 1 at 0x61800000039e thread T0
-    #0 0x7f6b57c2fcb7 in DecompressRTF /tmp/ytnef-1.9.2/lib/ytnef.c:1549:31
-    #1 0x7f6b57c20195 in MAPIPrint /tmp/ytnef-1.9.2/lib/ytnef.c:1417:39
-    #2 0x508f50 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:169:5
-    #3 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
-    #4 0x7f6b56d3f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #5 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
+On Thu, Jan 26, 2017 at 06:35:12PM +0100, Noryungi wrote:
+> Does not work on centos 7.1 (unpatched) running stock openssh.
+> 
+> TTY capture works, /tmp/sh is created but user is unprivileged.
 
-0x61800000039e is located 0 bytes to the right of 798-byte region [0x618000000080,0x61800000039e)
-allocated by thread T0 here:
-    #0 0x4cf7e0 in calloc /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/asan_malloc_linux.cc:74
-    #1 0x7f6b57c1a527 in TNEFFillMapi /tmp/ytnef-1.9.2/lib/ytnef.c:513:26
-    #2 0x7f6b57c15384 in TNEFMapiProperties /tmp/ytnef-1.9.2/lib/ytnef.c:396:7
-    #3 0x7f6b57c2ab47 in TNEFParse /tmp/ytnef-1.9.2/lib/ytnef.c:1184:15
-    #4 0x7f6b57c299d3 in TNEFParseFile /tmp/ytnef-1.9.2/lib/ytnef.c:1042:10
-    #5 0x508814 in main /tmp/ytnef-1.9.2/ytnefprint/main.c:80:9
-    #6 0x7f6b56d3f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+I can confirm that the exploit is working on a vanilla 4.1.6 kernel
+with openssh 6.8. I was a bit puzzled because wrong modes on ttys by itself
+should no longer be exploitable on Linux.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/ytnef-1.9.2/lib/ytnef.c:1549:31 in DecompressRTF
-Shadow bytes around the buggy address:
-  0x0c307fff8020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c307fff8030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c307fff8040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c307fff8050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c307fff8060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c307fff8070: 00 00 00[06]fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c307fff8080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c307fff8090: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c307fff80a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c307fff80b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c307fff80c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==22808==ABORTING
+Here are my 2ct:
 
-Affected version:
-1.9.2
+1) Exploit evades the controlling-tty entry-check inside kernels tiocsti()
+   that was introduced to cope with hijacking of tty's based on wrong
+   modes. Obviously that 'hardening' failed here. Why?
+2) Because of glibc's openpty() as called by openssh opens
+   the slave device with O_NOCTTY (it has to do so). This leaves
+   tiocsti() with pants down, since there is no "controlling owner"
+   for this tty yet and the attacker is free to catch on it.
+3) The wrong mode (0622) is set, and later openssh calls ioctl(TIOCSCTTY)
+   to claim it as the controlling tty for the shell.
+   -> The race happens in between them and its just a few syscalls
 
-Fixed version:
-N/A
+So the race that needs to be won is actually against the kernels
+tiocsti() check, as the wrong mode stays much longer. If the race is
+lost, its likely that the open still succeeds, but the injection of
+commands is no longer possible. That might explain why the bug was
+flagged as "local DoS".
 
-Commit fix:
-N/A
+If the race fails, the exploit loop could be tightened to close any fd's in the child,
+so the open() automatically gets it as controlling tty and the race
+is easier to win.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Kudos to the exploit dev who has PoC||GTFO'ed us.
 
-CVE:
-CVE-2017-9474
+Sebastian
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00244-ytnef-heapoverflow-DecompressRTF
 
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
 
-Note:
-This bug was found with American Fuzzy Lop.
+> 
+> On Jan 26, 2017 5:52 PM, <up201407890@...nos.dcc.fc.up.pt> wrote:
+> 
+> > Hi list,
+> >
+> > I know I'm late to the party, but I was bored, so I decided to write an
+> > exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
+> > It is mostly considered to be a "DoS", even though Jann Horn publicly told
+> > how it could be exploited for local privilege escalation, but I guess its
+> > either PoC||GTFO for users to update.
+> >
+> > From https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-6565
+> >
+> > "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
+> > devices, which allows local users to cause a denial of service (terminal
+> > disruption) or possibly have unspecified other impact by writing to a
+> > device, as demonstrated by writing an escape sequence."
+> >
+> > I think the description should be updated.
+> >
+> > $ gcc not_an_sshnuke.c -o not_an_sshnuke
+> > $ ./not_an_sshnuke /dev/pts/3
+> > [*] Waiting for slave device /dev/pts/3
+> > [+] Got PTY slave /dev/pts/3
+> > [+] Making PTY slave the controlling terminal
+> > [+] SUID shell at /tmp/sh
+> > $ /tmp/sh --norc --noprofile -p
+> > # id
+> > euid=0(root) groups=0(root)
+> >
+> > Thanks,
+> > Federico Bento.
+> >
+> >
+> >
+> > ----------------------------------------------------------------
+> > This message was sent using IMP, the Internet Messaging Program.
+> >
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-heap-based-buffer-overflow-in-decompressrtf-ytnef-c/
+-- 
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.com - SuSE Security Team
 
