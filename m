@@ -1,76 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/22/3
-Message-ID: <CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>
-Date: Wed, 22 Feb 2017 14:28:35 +0100
-From: Andrey Konovalov <andreyknvl@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/7
+Message-ID: <56fb00f92d6f4f429556c5b5424c6388@imshyb01.MITRE.ORG>
+Date: Tue, 31 Jan 2017 10:16:06 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: mp3splt: NULL pointer dereference in splt_cue_export_to_file (cue.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is an announcement about CVE-2017-6074 [1] which is a double-free
-vulnerability I found in the Linux kernel. It can be exploited to gain
-kernel code execution from an unprivileged processes.
+> https://blogs.gentoo.org/ago/2017/01/29/mp3splt-null-pointer-dereference-in-splt_cue_export_to_file-cue-c
+> 
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+> 
+> splt_cue_export_to_file libmp3splt-0.9.2/src/cue.c:725
 
-Fixed on Feb 17, 2017:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
+Use CVE-2017-5665.
 
-The oldest version that was checked is 2.6.18 (Sep 2006), which is
-vulnerable. However, the bug was introduced before that, probably in
-the first release with DCCP support (2.6.14, Oct 2005).
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The kernel needs to be built with CONFIG_IP_DCCP for the vulnerability
-to be present. A lot of modern distributions enable this option by
-default.
-
-The bug was found with syzkaller [2].
-
-### Bug details
-
-In the current DCCP implementation an skb for a DCCP_PKT_REQUEST
-packet is forcibly freed via __kfree_skb in dccp_rcv_state_process if
-dccp_v6_conn_request successfully returns [3].
-
-However, if IPV6_RECVPKTINFO is set on a socket, the address of the
-skb is saved to ireq->pktopts and the ref count for skb is incremented
-in dccp_v6_conn_request [4], so skb is still in use. Nevertheless, it
-still gets freed in dccp_rcv_state_process.
-
-The fix is to call consume_skb, which accounts for skb->users,
-instead of doing goto discard and therefore calling __kfree_skb.
-
-To exploit this double-free, it can be turned into a use-after-free:
-
-//  The first free:
-kfree(dccp_skb)
-// Another object allocated on the same place as dccp_skb:
-some_object = kmalloc()
-// The second free, effectively frees some_object
-kfree(dccp_skb)
-
-As this point we have a use-after-free on some_object. An attacker can
-control what object that would be and overwrite it's content with
-arbitrary data by using some of the kernel heap spraying techniques.
-If the overwritten object has any triggerable function pointers, an
-attacker gets to execute arbitrary code within the kernel.
-
-I'll publish an exploit in a few days, giving people time to update.
-
-New Ubuntu kernels are out so please update as soon as possible.
-
-### Timeline
-
-2017-02-15: Bug reported to security@...nel.org
-2017-02-16: Patch submitted to netdev
-2017-02-17: Patch committed to mainline kernel
-2017-02-18: Notification sent to linux-distros
-2017-02-22: Public announcement
-
-### Links
-
-[1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-6074
-[2] https://github.com/google/syzkaller
-[3] http://lxr.free-electrons.com/source/net/dccp/input.c?v=4.9#L606
-[4] http://lxr.free-electrons.com/source/net/dccp/ipv6.c?v=4.9#L351
-[5] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
+iQIcBAEBCAAGBQJYkKj0AAoJEHb/MwWLVhi2chAP/2AbNCqqgNqb+SVg15pzegAy
+4kFc436rib1t18uFrm6gxIXHlQA0BLVgex8DISdUEXRr503uOzwsTjDDgwFHwbHl
+E7PmvzcfyhnZ1sujcfbd87pm6qf9Jv8eAlNr1DZTYu0VkFH0HkAIO3dzACNlTDDE
+9tXV2kMBEfyZfdXY8Fha4KZdG7NUCKUQqns1rdm2JGa583VLC984YiEvGPIv1xFf
+zmxURxRDRkgNPmhPmfRun3rPJbx0dqRDJqlxOsRxL1W+Axb+ogSxAu79WpEn4jvN
+2doXQnZujQudiusVkqK4QXfzmcQMncQIN0fOygsJIySI38iJYHh3wBzWwPNDhI3x
+H9r/nakhrBRiE/29r+4fzQvyOU3iARvh04iJlikXLEFz8GrER4kg+8rUI4wIDpn/
+Vum4k7o+N0nni1FcAUEaL2JtRRuj55ikWzG+BwqhBzmSW3TG4UinyRu35Yu16aTI
+YHPjJQKPziVFtn2Q8TH/nPlnIcshc4zcqRD8m4B/7usRsFMJuSOStx1gA2SBanLG
+2bPFXCXhZX/Hv4hHl8Yzw7HKI8W3dxWcNBtBXcsvx6XRuTHXUhTEc6m0fHRyLU+i
+O7jzRx+7qaqP4UnYwOAH0J2HA9Pp9XY2UGW7K9BbSw4Z/6vzNC10QWU4lf0Cg7FC
+myDnoBgiEOuCOOfErLrK
+=Ip7W
+-----END PGP SIGNATURE-----
