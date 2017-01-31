@@ -1,112 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/5
-Message-ID: <250758.429381193-sendEmail@localhost>
-Date: Wed, 28 Jun 2017 12:04:54 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lame: global-buffer-overflow in II_step_one (layer2.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/11
+Message-ID: <5a83fed905374f2fa03babb6c7c1da61@imshyb01.MITRE.ORG>
+Date: Tue, 31 Jan 2017 10:22:47 -0500
+From: <cve-assign@...re.org>
+To: <dx@...one.com.ar>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request - Remote DoS vulnerabilities in BitlBee
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+> I've just released BitlBee 3.5.1 which includes fixes for these issues:
+> 
+> a) bitlbee-libpurple: Use after free when expiring file transfer requests.
+> b) Null pointer dereference with file transfer request from unknown contacts.
+> c) Incomplete fix for issue (b), which left bitlbee-libpurple affected.
+> 
+> I have already requested three CVEs to the distros mailing list when
+> the issue was not public, but did not receive any reply at the time of
+> this writing. If it is appropriate, I'd like to request them in this
+> list instead.
+> 
+> The first two were already public (fixed in 3.5, released 2017-01-08) but were
+> not considered security issues before. The third issue is what 3.5.1
+> fixes.
 
-The complete ASan output of the issue:
+> https://bugs.bitlbee.org/ticket/1281
+> 
+> # bitlbee-libpurple: Use after free when expiring file transfer requests
+> 
+> Pending file transfer requests expire after 120 seconds, which may
+> result in use after free if the corresponding account is disconnected.
+> A malicious remote server could force this disconnection.
+> 
+> This results in denial of service (remote crash of the BitlBee
+> instance), or remote code execution (theoretically).
+> 
+> * Authentication: None
+> 
+> ## Unaffected versions
+> 
+> bitlbee (non-libpurple builds), any version
+> 
+> bitlbee-libpurple 3.5
+> 
+> This affects any libpurple protocol when used through BitlBee. It does
+> not affect other libpurple-based clients such as pidgin.
+> 
+> This is a very visible issue - all file transfer request attempts and
+> all disconnections will be logged in the control channel and visible
+> by the targeted user. File transfer requests look like this:
+> 
+>     <@root> [account] - File transfer request from [username] for [filename] (0 kb).
+>     <@root> Accept the file transfer if you'd like the file. If you don't, issue the 'transfer reject' command.
+> 
+> Cancelling the file transfer request using the "transfer reject"
+> command before the disconnection happens can prevent this. However,
+> using that command after the account is disconnected will result in an
+> immediate crash.
 
-# lame -f -V 9 $FILE out.wav
-==27479==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f598d317f20 at pc 0x7f598d2b246b bp 0x7ffe780cf310 sp 0x7ffe780cf308
-READ of size 2 at 0x7f598d317f20 thread T0
-    #0 0x7f598d2b246a in II_step_one /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer2.c:144:36
-    #1 0x7f598d2b246a in decode_layer2_frame /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer2.c:375
-    #2 0x7f598d29b377 in decodeMP3_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:611:13
-    #3 0x7f598d298c13 in decodeMP3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/interface.c:696:12
-    #4 0x7f598d259092 in decode1_headersB_clipchoice /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:149:11
-    #5 0x7f598d25e94a in hip_decode1_headersB /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:436:16
-    #6 0x7f598d25e94a in hip_decode1_headers /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/mpglib_interface.c:379
-    #7 0x51e984 in lame_decode_fromfile /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:2089:11
-    #8 0x51e984 in read_samples_mp3 /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:877
-    #9 0x51e984 in get_audio_common /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:785
-    #10 0x51e4fa in get_audio /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:688:16
-    #11 0x50f776 in lame_encoder_loop /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:456:17
-    #12 0x50f776 in lame_encoder /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:531
-    #13 0x50c43f in lame_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/lame_main.c:707:15
-    #14 0x510793 in c_main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:470:15
-    #15 0x510793 in main /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/main.c:438
-    #16 0x7f598be51680 in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #17 0x41c998 in _init (/usr/bin/lame+0x41c998)
+> [] Original bugfix commit:
+> 
+> https://github.com/bitlbee/bitlbee/commit/ea902752503fc5b356d6513911081ec932d804f2
 
-0x7f598d317f20 is located 0 bytes to the right of global variable 'alloc_2' defined in 
-'/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/l2tables.h:118:24' (0x7f598d317de0) of size 320
-SUMMARY: AddressSanitizer: global-buffer-overflow /var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/mpglib/layer2.c:144:36 in 
-II_step_one
-Shadow bytes around the buggy address:
-  0x0febb1a5af90: 00 00 00 00 00 00 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0febb1a5afa0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0febb1a5afb0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0febb1a5afc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5afd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0febb1a5afe0: 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9 00 00 00 00
-  0x0febb1a5aff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5b000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5b010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0febb1a5b020: 00 00 00 00 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0febb1a5b030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27479==ABORTING
-
-Affected version:
-3.99.5
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9869
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00290-lame-globaloverflow-II_step_one
-
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
-2017-06-25: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-global-buffer-overflow-in-ii_step_one-layer2-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Use CVE-2016-10188.
 
 
+> https://bugs.bitlbee.org/ticket/1282
+> 
+> # Null pointer dereference with file transfer request from unknown contacts
+> 
+> Receiving a file transfer request from a contact not in the contact
+> list results in a null pointer dereference, leading to remote DoS by
+> malicious remote clients.
+> 
+> * Authentication: None
+> 
+> ## Unaffected versions
+> 
+> bitlbee-libpurple 3.5.1 or newer
+> 
+> bitlbee (non-libpurple builds) 3.5 or newer
+> 
+> The issue from 3.4.2 and older only affects the jabber protocol, which
+> is the only non-purple protocol which implements file transfers.
+> 
+> The issue that is still present in 3.5 affects any libpurple protocol
+> that implements file transfers when used through BitlBee. It does not
+> affect other libpurple-based clients such as pidgin.
+> 
+> There's no visible effect of the issue other than the crash.
+
+> [] Incomplete fix commit included in 3.5:
+> 
+> https://github.com/bitlbee/bitlbee/commit/701ab8129ba9ea64f569daedca9a8603abad740f
+
+Use CVE-2016-10189 for the issue with Jabber file transfers that was
+fixed by this commit.
+
+
+> [] Libpurple specific bugfix commit included in 3.5.1:
+> 
+> https://github.com/bitlbee/bitlbee/commit/30d598ce7cd3f136ee9d7097f39fa9818a272441
+
+Use CVE-2017-5668.
+
+CVE-2017-5668 exists because of an incomplete fix for CVE-2016-10189.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYkKkNAAoJEHb/MwWLVhi2n7sP/iWiXN3EZmIeerbEEWv9chVf
+JZD3ly+EoNbnY0YsVl1HE0XJ0L6FQ3ZLQYqP2dcuqh6dn0mI/oosMOS8lC/Hs+GW
+fhDpu0TbLNMyu187/NZNfFg638voaEjvqkjM7xgb5xPlyk7ZfmqjIRvGBe/F4XfE
+O/0+B/1llLgs5nWxUhhk3KfhQpRc27oH+qa2eKnmRn69GkeV1wMl04Od4D8y5IYY
+OvUdv1WsFsgzw6Ls+QBJrw1nFeaT4nf7pST7pv+ufZmI0eyDG55Bi7e74qsEaowm
+2Xv8erIPGKTB2keQFCptaX0IjxU8XrdwZPkQ2pCycFQirCbfCzsUNTwchDbz5RKG
+h3nOwI0wexQaaphZE1oeCqBqla7GScTCimSPhfv7JY4nm8zAeGu5bQwaxWOOtEm9
+YcDVRWFkIYJlOIrAxywR4bw/t28wfI9EMiUMec3XpkuJdJ+VuGkMuTYjWS9Iuwpm
+tSgThfWipSAyiaR6vzIomHo7nX8+PE/N5sA5IfGVFsoav1ebtCzUNiukh2fCkSAW
+k09zwGWVwqZlvtoEKMqWdxhSjMKCzo7RkoUDxILL9QODEbCH+pvzSkv4/rf/FTfI
+V1jrlx+UqwfLO2mFySEUpNFC+lofz+mz+/RqyQe0H4cUwxY/3stH18ce5pCOj1/Z
+9uHI/HHKLDmYKe5N+7jD
+=oUx2
+-----END PGP SIGNATURE-----
