@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["707" "Thursday" "25" "July" "2019" "21:23:24" "+0200" "Solar Designer" "solar@openwall.com" "<20190725192324.GA17297@openwall.com>" "18" "Re: [oss-security] Statistics for distros lists updated for 2019Q2" "^Date:" nil nil "7" "2019072519:23:24" "[oss-security] Statistics for distros lists updated for 2019Q2" (number mark "        solar@openwa Jul 25   18/707   " thread-indent "\"Re: [oss-security] Statistics for distros lists updated for 2019Q2\"\n") "<3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>" ("<3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>") nil nil nil nil nil nil nil "Re: [oss-security] Statistics for distros lists updated for 2019Q2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2649" "Tuesday" "31" "January" "2017" "19:21:58" "+0100" "Thomas Deutschmann" "whissi@gentoo.org" "<006d8bdc-f460-0572-b584-8271c9c11056@gentoo.org>" "69" "Re: [oss-security] Re: Firejail local root exploit" nil nil nil "1" "2017013118:21:58" "[oss-security] Re: Firejail local root exploit" (number mark "U       whissi@gento Jan 31   69/2649  " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<1207006894.2769604.1485695665647@mail.yahoo.com>" ("<20170104131248.GA28596@suse.de>" "<1207006894.2769604.1485695665647@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17711 invoked by uid 550); 25 Jul 2019 19:23:44 -0000
+Received: (qmail 3797 invoked by uid 550); 31 Jan 2017 19:26:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +11,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17415 invoked from network); 25 Jul 2019 19:23:28 -0000
-Message-ID: <20190725192324.GA17297@openwall.com>
-References: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3f0c3f11-4b6d-8c61-b527-306cbb76639f@gentoo.org>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 25 Jul 2019 21:23:24 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Statistics for distros lists updated for 2019Q2
+Received: (qmail 17709 invoked from network); 31 Jan 2017 18:22:22 -0000
 To: oss-security@lists.openwall.com
+References: <20170104131248.GA28596@suse.de>
+ <1207006894.2769604.1485695665647@mail.yahoo.com>
+From: Thomas Deutschmann <whissi@gentoo.org>
+Message-ID: <006d8bdc-f460-0572-b584-8271c9c11056@gentoo.org>
+Date: Tue, 31 Jan 2017 19:21:58 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <1207006894.2769604.1485695665647@mail.yahoo.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="l8x8RGVhLk18kGt5FRmi6FQ7Xv3Nu220m"
+Subject: Re: [oss-security] Re: Firejail local root exploit
 
-Hi,
+--l8x8RGVhLk18kGt5FRmi6FQ7Xv3Nu220m
+Content-Type: multipart/mixed; boundary="bw1KARmEEVc40auijIcsxK2loR01JV8nM";
+ protected-headers="v1"
+From: Thomas Deutschmann <whissi@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <006d8bdc-f460-0572-b584-8271c9c11056@gentoo.org>
+Subject: Re: [oss-security] Re: Firejail local root exploit
+References: <20170104131248.GA28596@suse.de>
+ <1207006894.2769604.1485695665647@mail.yahoo.com>
+In-Reply-To: <1207006894.2769604.1485695665647@mail.yahoo.com>
 
-On Thu, Jul 25, 2019 at 08:54:55PM +0200, Kristian Fiskerstrand wrote:
-> Apologies for the delay, and a short notice that the statistics for the
-> distros list have been updated for the 2nd quarter of 2019 at
-> http://oss-security.openwall.org/wiki/mailing-lists/distros/stats
+--bw1KARmEEVc40auijIcsxK2loR01JV8nM
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-You have two entries for Exim CVE-2019-10149, which is wrong.  Also,
-some of the dates are wrong (e.g., the date of Exim's pre-announcement
-to oss-security is irrelevant).  Please combine this into one entry and
-update the dates.  I guess the range of dates should be from 2019-05-28
-(initial notification to distros) to 2019-06-05 (full publication).
+On 2017-01-29 14:14, Ion Ionescu wrote:
+> The first fix for CVE-2017-5180 in Firejail version 0.9.44.4 and
+> 0.9.38.8 (LTS) was incomplete. Changing .Xauthority to .bashrc in the
+> exploit code, the problem is still there - credit Sebastian Krahmer.=20
+> New releases are out: 0.9.44.8 and 0.9.38.10 (LTS). Please assign a
+> new CVE.
 
-Correcting this will probably affect the averages.
+Associated commits which already appeared in v0.9.44.6:
 
-Thanks,
+https://github.com/netblue30/firejail/commit/38d418505e9ee2d326557e5639e8da=
+49c298858f
+https://github.com/netblue30/firejail/commit/b8a4ff9775318ca5e679183884a6a6=
+3f3da8f863
 
-Alexander
+Backport for v0.9.38.10:
+
+https://github.com/netblue30/firejail/commit/903fd8a0789ca3cc3c21d84cd02824=
+81515592ef
+
+
+--=20
+Regards,
+Thomas Deutschmann / Gentoo Security Team
+C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+
+
+--bw1KARmEEVc40auijIcsxK2loR01JV8nM--
+
+--l8x8RGVhLk18kGt5FRmi6FQ7Xv3Nu220m
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0
+
+iQJ8BAEBCgBmBQJYkNXKXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
+NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/Ik84QAJqULAkWUYptmZ0yXEk/aU0g
+4eo95UQJOkqsnEMvzcbRWSfM2Pqkxq1iVcI0PpiongvsSuChoxTGIB8y1GNKpC9k
+G2xR/7csdhdatucu7Fz2zLGniP4shVJnFgnzSpfwQy85MwSW8NzJs0NSustBxPYk
+lBoyt5ktqVK3Sbamc5Q3q/NGUCEdqUsYpZHjYquvf79jR/+2vP5PdLWLn6dM8ZF4
+P7noiueRd5DktLIAIXoGOSIEGvM97eD1j5+aJY1+k5BRwm5q30Zy83cDeM99fo36
+4dAYqpCRNUXfL0yAwKgJ7+H4dje1rafyAXTX7kEPkCzX3gRxOyR9l2p9izycNRsC
+oww2KvmQG3SmxyMLdtHpHAXUKOIj3z2tDWUwQ9sjVvG24bdJ0xTfNkFX3TqV/LGT
+yqio5ecAkjEFGjfhBupoh1jP/gW6MZypZLTxf7IzwUJIBuCajNvdbed8MEiq6H9k
+wR7RGCygpWaGoJbf1evEu1AfRqG5uD8qC+et5tb7AUekVUtXr6Q4hkaSOHnCrXru
+8NT/inl332UDtlpU8EiJBWHjrd0pSRvtMeQ9f7u1U5KEp777qG3o7bisAS6Q5PzM
+NgTfRrNZbsG4AKAu50Xfu97ME3Nb29d09ml720cTdgB07vNJqM+PNXMisMw6g5Tp
+z8OEbsl/+wG+w7oWS9H4
+=2b0N
+-----END PGP SIGNATURE-----
+
+--l8x8RGVhLk18kGt5FRmi6FQ7Xv3Nu220m--
