@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/02/1
-Message-ID: <87o9ol4r7k.fsf@frougon.crabdance.com>
-Date: Wed, 01 Nov 2017 22:35:59 +0100
-From: Florent Rougon <f.rougon@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/1
+Message-ID: <CAN6_dU-+NxBLRrn4_W4myHh0hEBsC-dh=DrSkt_mDfd6fAC2_w@mail.gmail.com>
+Date: Tue, 31 Jan 2017 12:58:41 +0800
+From: chunibalon <chunibalon@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fw: Security risk of vim swap files
+Cc: cve-assign@...re.com
+Subject: CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
 Content-Type: text/plain; charset=utf-8
 
-Michael Orlitzky <michael@...itzky.com> wrote:
+Hi:
 
-> This is what I used to do in emacs before I disabled the backups
-> completely. I was wondering if there were any problems with it. If there
-> aren't, it seems like a better default to me, for both emacs and vim.
+        These issues were discovered via libtiff 4.0.7, however after
+upstream analysis they were found that they are in netpbm(10.47.63)
+       The url of bug tracker:
+        http://bugzilla.maptools.org/show_bug.cgi?id=2654
+        http://bugzilla.maptools.org/show_bug.cgi?id=2655
+        Then I mailed the maintainer of netpbm and he promised fix them in
+the next Netpbm Super Stable release (the release series I tested) at the
+end of March.
+       Could you please assign CVE id's for those?
+Best Regards,
+chunibalon of VARAS@IIE
 
-On Emacs, this has been possible for a loooong time, and in a way that
-prevents collisions due to the same basename:
-
-  (setq backup-directory-alist '(("." . "/some/path")))
-
-This saves backup files in /some/path with names such as
-'!home!me!some-subdir!some-basename~'.
-
-It's also possible to programmatically disable the backup feature for
-specific files:
-
-  ;; For `some',
-  ;; cf. <http://stackoverflow.com/questions/5902847/how-do-i-apply-or-to-a-list-in-elisp>.
-  (require 'cl)
-  (defun my-backup-enable-predicate (fullpath)
-    (and (not (some #'(lambda (file)
-                         (string-equal fullpath (expand-file-name file)))
-                    '("~/.zsh_history"
-                      "~/.local/share/mc/history")))
-         (normal-backup-enable-predicate fullpath)))
-
-  (setq backup-enable-predicate 'my-backup-enable-predicate)
-
-Finally, an easier but non-programmatic solution when you can afford to
-write comments directly to the file: use “file variables”, e.g., with
-this at the beginning of the file you want to never be backed up:
-
--*- make-backup-files: nil -*-
-
-Regards
-
--- 
-Florent
