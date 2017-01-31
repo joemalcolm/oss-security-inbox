@@ -1,4 +1,9 @@
-Received: (qmail 12252 invoked by uid 550); 30 May 2026 12:13:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4564" "Tuesday" "31" "January" "2017" "10:22:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<5a83fed905374f2fa03babb6c7c1da61@imshyb01.MITRE.ORG>" "122" "[oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee" nil nil nil "1" "2017013115:22:47" "[oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee" (number mark "U       cve-assign@m Jan 31  122/4564  " thread-indent "\"[oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee\"\n") "<CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>" ("<CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13814 invoked by uid 550); 31 Jan 2017 15:23:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,66 +12,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25791 invoked from network); 30 May 2026 08:32:12 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Thomas Wolf <twolf@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <e16ac0e5-7504-4d3e-65dc-2d57a62cae86@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 30 May 2026 08:31:07 +0000
+Received: (qmail 13784 invoked from network); 31 Jan 2017 15:22:59 -0000
+From: <cve-assign@mitre.org>
+To: <dx@dxzone.com.ar>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CABAA10T31CKTgskyX78JBp_kmw9TyVOAa8XzS=ba2t3YC=TVMw@mail.gmail.com>
+Message-ID: <5a83fed905374f2fa03babb6c7c1da61@imshyb01.MITRE.ORG>
+Date: Tue, 31 Jan 2017 10:22:47 -0500
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-48827: Apache MINA SSHD: Path traversal in
- org.apache.sshd:sshd-git 
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request - Remote DoS vulnerabilities in BitlBee
 
-Severity: moderate=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+> I've just released BitlBee 3.5.1 which includes fixes for these issues:
+> 
+> a) bitlbee-libpurple: Use after free when expiring file transfer requests.
+> b) Null pointer dereference with file transfer request from unknown contacts.
+> c) Incomplete fix for issue (b), which left bitlbee-libpurple affected.
+> 
+> I have already requested three CVEs to the distros mailing list when
+> the issue was not public, but did not receive any reply at the time of
+> this writing. If it is appropriate, I'd like to request them in this
+> list instead.
+> 
+> The first two were already public (fixed in 3.5, released 2017-01-08) but were
+> not considered security issues before. The third issue is what 3.5.1
+> fixes.
 
-- Apache MINA SSHD (org.apache.sshd:sshd-git) 2.0.0 through 2.17.1
-- Apache MINA SSHD (org.apache.sshd:sshd-git) 3.0.0-M1 through 3.0.0-M3
+> https://bugs.bitlbee.org/ticket/1281
+> 
+> # bitlbee-libpurple: Use after free when expiring file transfer requests
+> 
+> Pending file transfer requests expire after 120 seconds, which may
+> result in use after free if the corresponding account is disconnected.
+> A malicious remote server could force this disconnection.
+> 
+> This results in denial of service (remote crash of the BitlBee
+> instance), or remote code execution (theoretically).
+> 
+> * Authentication: None
+> 
+> ## Unaffected versions
+> 
+> bitlbee (non-libpurple builds), any version
+> 
+> bitlbee-libpurple 3.5
+> 
+> This affects any libpurple protocol when used through BitlBee. It does
+> not affect other libpurple-based clients such as pidgin.
+> 
+> This is a very visible issue - all file transfer request attempts and
+> all disconnections will be logged in the control channel and visible
+> by the targeted user. File transfer requests look like this:
+> 
+>     <@root> [account] - File transfer request from [username] for [filename] (0 kb).
+>     <@root> Accept the file transfer if you'd like the file. If you don't, issue the 'transfer reject' command.
+> 
+> Cancelling the file transfer request using the "transfer reject"
+> command before the disconnection happens can prevent this. However,
+> using that command after the account is disconnected will result in an
+> immediate crash.
 
-Description:
+> [] Original bugfix commit:
+> 
+> https://github.com/bitlbee/bitlbee/commit/ea902752503fc5b356d6513911081ec932d804f2
 
-Path traversal vulnerability in Apache MINA SSHD bundle sshd-git. Lack of p=
-ath validation in git-upload-pack, git-receive-pack, and other git operatio=
-ns allows users authenticated over SSH access to git repositories outside t=
-he configured git server root directory.
-
+Use CVE-2016-10188.
 
 
+> https://bugs.bitlbee.org/ticket/1282
+> 
+> # Null pointer dereference with file transfer request from unknown contacts
+> 
+> Receiving a file transfer request from a contact not in the contact
+> list results in a null pointer dereference, leading to remote DoS by
+> malicious remote clients.
+> 
+> * Authentication: None
+> 
+> ## Unaffected versions
+> 
+> bitlbee-libpurple 3.5.1 or newer
+> 
+> bitlbee (non-libpurple builds) 3.5 or newer
+> 
+> The issue from 3.4.2 and older only affects the jabber protocol, which
+> is the only non-purple protocol which implements file transfers.
+> 
+> The issue that is still present in 3.5 affects any libpurple protocol
+> that implements file transfers when used through BitlBee. It does not
+> affect other libpurple-based clients such as pidgin.
+> 
+> There's no visible effect of the issue other than the crash.
 
-Applications are affected if they use org.apache.sshd:sshd-git. Application=
-s not using sshd-git are not affected.
+> [] Incomplete fix commit included in 3.5:
+> 
+> https://github.com/bitlbee/bitlbee/commit/701ab8129ba9ea64f569daedca9a8603abad740f
+
+Use CVE-2016-10189 for the issue with Jabber file transfers that was
+fixed by this commit.
 
 
+> [] Libpurple specific bugfix commit included in 3.5.1:
+> 
+> https://github.com/bitlbee/bitlbee/commit/30d598ce7cd3f136ee9d7097f39fa9818a272441
 
+Use CVE-2017-5668.
 
-Users are advised to upgrade affected applications to Apche MINA SSHD 2.18.=
-0, which fixes the issue.
+CVE-2017-5668 exists because of an incomplete fix for CVE-2016-10189.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-
-The issue also is present in the pre-release milestones 3.0.0-M1 to 3.0.0-M=
-3 for a new upcoming new major version 3.0.0. Again, applications are affec=
-ted only if they use sshd-git. Upgrade affected applications to 3.0.0-M4.
-
-
-
-
-We would like to point out that a professional git server should not rely s=
-olely on file system layout and permissions, but should implement additiona=
-l security controls to govern access to git repositories and operations all=
-owed on particular git repositories.
-
-Credit:
-
-j0hndo (dohyun4466@gmail.com) (finder)
-
-References:
-
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-48827
-
+iQIcBAEBCAAGBQJYkKkNAAoJEHb/MwWLVhi2n7sP/iWiXN3EZmIeerbEEWv9chVf
+JZD3ly+EoNbnY0YsVl1HE0XJ0L6FQ3ZLQYqP2dcuqh6dn0mI/oosMOS8lC/Hs+GW
+fhDpu0TbLNMyu187/NZNfFg638voaEjvqkjM7xgb5xPlyk7ZfmqjIRvGBe/F4XfE
+O/0+B/1llLgs5nWxUhhk3KfhQpRc27oH+qa2eKnmRn69GkeV1wMl04Od4D8y5IYY
+OvUdv1WsFsgzw6Ls+QBJrw1nFeaT4nf7pST7pv+ufZmI0eyDG55Bi7e74qsEaowm
+2Xv8erIPGKTB2keQFCptaX0IjxU8XrdwZPkQ2pCycFQirCbfCzsUNTwchDbz5RKG
+h3nOwI0wexQaaphZE1oeCqBqla7GScTCimSPhfv7JY4nm8zAeGu5bQwaxWOOtEm9
+YcDVRWFkIYJlOIrAxywR4bw/t28wfI9EMiUMec3XpkuJdJ+VuGkMuTYjWS9Iuwpm
+tSgThfWipSAyiaR6vzIomHo7nX8+PE/N5sA5IfGVFsoav1ebtCzUNiukh2fCkSAW
+k09zwGWVwqZlvtoEKMqWdxhSjMKCzo7RkoUDxILL9QODEbCH+pvzSkv4/rf/FTfI
+V1jrlx+UqwfLO2mFySEUpNFC+lofz+mz+/RqyQe0H4cUwxY/3stH18ce5pCOj1/Z
+9uHI/HHKLDmYKe5N+7jD
+=oUx2
+-----END PGP SIGNATURE-----
