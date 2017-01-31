@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1855" "Friday" "23" "April" "2021" "01:40:00" "-0700" "Kurt H Maier" "khm@sciops.net" nil "39" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       khm@sciops.n Apr 23   39/1855  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["648" "Tuesday" "31" "January" "2017" "12:58:41" "+0800" "chunibalon" "chunibalon@gmail.com" "<CAN6_dU-+NxBLRrn4_W4myHh0hEBsC-dh=DrSkt_mDfd6fAC2_w@mail.gmail.com>" "18" "[oss-security] CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)" nil nil nil "1" "2017013104:58:41" "[oss-security] CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)" (number mark "U       chunibalon@g Jan 31   18/648   " thread-indent "\"[oss-security] CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11875 invoked by uid 550); 23 Apr 2021 08:40:18 -0000
+Received: (qmail 25687 invoked by uid 550); 31 Jan 2017 07:17:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11852 invoked from network); 23 Apr 2021 08:40:18 -0000
-Date: Fri, 23 Apr 2021 01:40:00 -0700
-From: Kurt H Maier <khm@sciops.net>
-To: oss-security@lists.openwall.com
-Message-ID: <YIKH4FHGjJ0d4p4n@wopr>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20210422065959.GI13079@scully.more-magic.net>
- <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
- <20210422095945.GA2495@scully.more-magic.net>
- <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
- <659r691-on94-p2nq-p9p4-845811pnn7q6@vanv.qr>
+Received: (qmail 11698 invoked from network); 31 Jan 2017 04:58:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=BT55/h3NQZUhQJgPwdKKaq7FKJcxhMpGoEzKqOb5rVM=;
+        b=PrYlDOD4/gegHJ6PKCjDI+/JU9uQ+ETkdb/riev3tk3OQ/FWgyd+27lZe9UWkdMLqX
+         z5SHre3TaC+tXIXOHBJUQEXhrIv1edV8uzjJeBr/5qUUDGHAAed2LrZmtpvxb/XSbVAq
+         uEKEXVUIHN3iDy9bsy0Q2z5DCf5YMdsMoIIGexWFJ5wZxO9A2jXLfLZZgjqkdL1AAgpK
+         T3148/8OO2nZr6/63EupAA/zzKO9Aud1DbHphazqv7VWIX24kGXuozB77+I7HWRRVOlL
+         oPw2gOCYvJmok1ps8Wc+hIanumAkwn/jV4PcsJ1ylABND4puIRH3qmUma28CLOHb3hDu
+         g8uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=BT55/h3NQZUhQJgPwdKKaq7FKJcxhMpGoEzKqOb5rVM=;
+        b=ZCuIqceqwZ5A3rH2XZMkprTfNnRjUfsvPpHv38GEzOSpOKYks3ySEVGBJySpiD6TPf
+         URj/mz2sNSAGT3uw6qK1X1OA1Cl3Q9FNebiqEfLnEvxUFuk09SVQZf9oj1Qz5SXNPp/h
+         Q5ObtcMD8MdeBkpCqkiLUV0jjEFAKBwxQLu+6rfh7EnKizX708p8QD+alNjrxGqHJw2/
+         zOdwkd/hBcf3hF5czsZRV/eg9lj9eMdemRSl0QtNa0zJKdJM3YBLTZ0zKeuKWKYEtyjd
+         B1P3J34VYi181LdpXV3eKNaL01EPDoQRiyZ4FBzFFgLBs/1+DV6g6HvzpoGMH1+SuShn
+         QmEg==
+X-Gm-Message-State: AIkVDXLQNoqv0kpuyDCXYdwvT0vEwbrAb1CVNRcDRs4T0EzcAxixTZbq4LNhU0KqXYvY94i3B7SLf49TePNdQA==
+X-Received: by 10.36.64.198 with SMTP id n189mr18739133ita.6.1485838721792;
+ Mon, 30 Jan 2017 20:58:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <659r691-on94-p2nq-p9p4-845811pnn7q6@vanv.qr>
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+From: chunibalon <chunibalon@gmail.com>
+Date: Tue, 31 Jan 2017 12:58:41 +0800
+Message-ID: <CAN6_dU-+NxBLRrn4_W4myHh0hEBsC-dh=DrSkt_mDfd6fAC2_w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: cve-assign@mitre.com
+Content-Type: multipart/alternative; boundary=001a1134f06234c19105475cc941
+Subject: [oss-security] CVE request: Out-of-Bound read and write issues in
+ put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
 
-On Fri, Apr 23, 2021 at 01:02:36AM +0200, Jan Engelhardt wrote:
-> 
-> If you alert the crowd that something is about to happen, you can no 
-> longer observe how the crowd acts in an unalerted state, dooming the 
-> research effort.
+--001a1134f06234c19105475cc941
+Content-Type: text/plain; charset=UTF-8
 
-This could have been coordinated with kernel maintainers who were
-willing to participate, for instance by placing sabotaged code in a
-time-locked escrow to be revealed after a set window.  This is not
-an all-or-nothing proposition.  Red team protocols vary, but none of
-them start with "first, pick an unsuspecting cadre of strangers trying to
-build something, then attack it."
+Hi:
 
-> Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
-> (let alone Youtube) are a much more severe intrusion, but somehow those 
-> shows still run.
+        These issues were discovered via libtiff 4.0.7, however after
+upstream analysis they were found that they are in netpbm(10.47.63)
+       The url of bug tracker:
+        http://bugzilla.maptools.org/show_bug.cgi?id=2654
+        http://bugzilla.maptools.org/show_bug.cgi?id=2655
+        Then I mailed the maintainer of netpbm and he promised fix them in
+the next Netpbm Super Stable release (the release series I tested) at the
+end of March.
+       Could you please assign CVE id's for those?
+Best Regards,
+chunibalon of VARAS@IIE
 
-Those prank shows are generally not produced with money from the
-National Science Foundation.
-
-> What's more, with the pitchfork way this incident is being responded to, 
-> future researchers may choose to operate more stealthily; no more 
-> mailings from an edu mail address, more elaborate internet avatars (did 
-> we ever prove who George Spelvin was?), up to the point that the 
-> identities become indistinguishable from a foreign malignent elite 
-> hacker group.
-
-"Someone else might be even more unethical later" is a horrible reason
-to refrain from calling out unethical research methods.  This community
-needs to make it absolutely clear that nonconsensual adversarial
-"research" is completely unacceptable, or next year you'll see five
-hundred grant applications intending to throw government-sponsored
-wrenches into every piece of collaboratively-written software on Earth.
-
-I'm more disappointed with the IEEE S&P for accepting this paper than I
-am with the researchers who wrote it, but giving them a pass sets the
-worst possible standards for future work.
-
-khm
+--001a1134f06234c19105475cc941--
