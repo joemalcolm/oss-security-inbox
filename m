@@ -1,88 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/05/1
-Message-ID: <CAMopvkNPG--EVqRtg4rO0G1bYrJ0cgYiBh=P=o2poEZq8kvdtQ@mail.gmail.com>
-Date: Tue, 5 Sep 2017 15:17:09 +0200
-From: Lukasz Lenart <lukaszlenart@...che.org>
-To: Struts Users Mailing List <user@...uts.apache.org>
-Cc: "announcements@...uts.apache.org" <announcements@...uts.apache.org>,  Struts Developers List <dev@...uts.apache.org>, announce@...che.org,  "security@...uts.apache.org" <security@...uts.apache.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com, Jonathan Bullock <jonbullock@...il.com>,  Man Yue Mo <mmo@...mle.com>, Bas van Schaik <bas@...mle.com>, Adam Cazzolla <acazzolla@...atype.com>,  chenhuijun <874892484@...com>
-Subject: [ANN] Apache Struts 2.5.13 GA with Security Fixes Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/14
+Message-ID: <CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>
+Date: Tue, 31 Jan 2017 11:59:11 -0500
+From: Max Veytsman <max@...canary.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r
 Content-Type: text/plain; charset=utf-8
 
-The Apache Struts group is pleased to announce that Struts 2.5.13 is
-available as a “General Availability” release. The GA designation is
-our highest quality grade.
+Two similar vulnerabilities in ruby text-to-speech libraries.
 
-Apache Struts 2 is an elegant, extensible framework for creating
-enterprise-ready Java web applications. The framework is designed to
-streamline the full development cycle, from building, to deploying, to
-maintaining applications over time.
+1) espeak-ruby
 
-This release contains fixes for the following potential security
-vulnerabilities:
+Rubygem espeak-ruby passes user modifiable strings directly to a shell
+command.
 
-- S2-050 A regular expression Denial of Service when using
-URLValidator (similar to S2-044 & S2-047)
-    http://struts.apache.org/docs/s2-050.html
-- S2-051 A remote attacker may create a DoS attack by sending crafted
-xml request when using the Struts REST plugin
-    http://struts.apache.org/docs/s2-051.html
-- S2-052 Possible Remote Code Execution attack when using the Struts
-REST plugin with XStream handler to handle XML payloads
-    http://struts.apache.org/docs/s2-050.html
+An attacker can execute malicious commands by modifying the strings that
+are passed as arguments to the speak, save, bytes and bytes_wav methods in
+the lib/espeak/speech.rb.
 
-Except the above this release also contains several improvements just
-to mention few of them:
+https://github.com/dejan/espeak-ruby/issues/7
 
-Except the above this release also contains several improvements just
-to mention few of them:
+Patched in 1.0.3
+https://github.com/spejman/festivaltts4r/issues/1
 
-- Struts2 JSON Plugin: Send Map with Strings as Key to JSON Action is
-ignored, Numeric Keys will work and mapped
-- NP with TextProvider and wildcardmapping
-- Threads get blocked due to unnecessary synchronization in OgnlRuntime
-- Default Multipart validation regex is invalid
-- Not fully initialized ObjectFactory tries to create beans
-- http://struts.apache.org/dtds/struts-2.5.dtd missing
-- Set a global resource bundle in class
-- Override TextProvider doesnot work in struts 2.5.12
-- Array-of-null parameters are converted to string “null”
-- JakartaStreamMultiPartRequest Should Honor “struts.multipart.maxSize”
-- Build Fails Due to Unused com.sun Import
-- Struts2.5.12 - NPE in DeligatingValidatorContext
-- Struts 2 Fails to Initialize with JRebel
-- Allow define more than one Action suffix
-- Remove jQuery from debugging interceptor views
-- update dependencies page on the struts site
-- Improve RegEx used to validate URLs
-- Make REST ContentHandlers configurable
-- expose Freemarker incompatible_improvements into FreemarkerManager
-and StrutsBeansWrapper
-- Upgrade Commons Collections to 3.2.2
-- Upgrade Commons IO to 2.5
-- Upgrade to ASM version 5.2
-- Upgrade to OGNL 3.1.15
-- Upgrade xstream to the latest version
-- Upgrade to struts-master 11
+2) festivaltts4r
 
-Please read the Version Notes to find more details about performed bug
-fixes and improvements.
-http://struts.apache.org/docs/version-notes-2513.html
+Rubygem festivaltts4r passes user modifiable strings directly to a shell
+command.
 
-All developers are strongly advised to perform this action.
+An attacker can execute malicious commands by modifying the strings that
+are passed as arguments to the to_speech and and to_mp3 methods in
+lib/festivaltts4r/festival4r.rb.
 
-The 2.5.x series of the Apache Struts framework has a minimum
-requirement of the following specification versions: Servlet API 2.4,
-JSP API 2.0, and Java 7.
+https://github.com/spejman/festivaltts4r/issues/1
 
-Should any issues arise with your use of any version of the Struts
-framework, please post your comments to the user list, and, if
-appropriate, file a tracking ticket.
+No patch
+Credit: Brendan Coles
 
-You can download this version from our download page.
-http://struts.apache.org/download.cgi#struts-ga
+--
+Max Veytsman
+Co-founder appcanary.com
+@mveytsman <https://twitter.com/mveytsman>
 
-
-Regards
--- 
-Łukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
