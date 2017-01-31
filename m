@@ -1,26 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/3
-Message-ID: <20171218152702.GD30706@suse.de>
-Date: Mon, 18 Dec 2017 16:27:02 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: overly broad IPC details sharing on Linux Kernel?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/17
+Message-ID: <20170131190550.GA16979@jasmine>
+Date: Tue, 31 Jan 2017 14:05:50 -0500
+From: Leo Famulari <leo@...ulari.name>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Bugs fixed in libevent 2.1.6
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Libevent 2.1.6 fixed three bugs that may have security implications. Can
+you assign CVE IDs as appropriate?
 
-spotted by one of our customers...
+Below I quote from the upstream bug reports:
 
-shmctl(id, IPC_STAT, &buf)
+1) libevent dns remote stack overread vulnerability
+------
+the name_parse() function in libevent's DNS code is vulnerable to a
+buffer overread.
 
-returns the STAT information _only_ if the calling user has read-access to the "id" shared memory segment.
+971         if (cp != name_out) {
+972             if (cp + 1 >= end) return -1;
+973             *cp++ = '.';
+974         }
+975         if (cp + label_len >= end) return -1;
+976         memcpy(cp, packet + j, label_len);
+977         cp += label_len;
+978         j += label_len;
 
-However, the proc entries in /proc/sysvipc/shm  return the entries for all users shared memory segments,
-even if there is no read permission.
+No check is made against length before the memcpy occurs.
+[...]
+azat closed this in 96f64a0 on Feb 1, 2016
+------
+https://github.com/libevent/libevent/issues/317
 
-There is a bit of information leakage in the access times, but I currently do not see
-any direct exploitability.
+2) libevent (stack) buffer overflow in evutil_parse_sockaddr_port()
+------
+in evutil.c:
 
-Regardless ... should the /proc/sysvipc/* files be restricted?
+1798     char buf[128];
+...
+...
+1809     cp = strchr(ip_as_string, ':');
+1810     if (*ip_as_string == '[') {
+1811         int len;
+1812         if (!(cp = strchr(ip_as_string, ']'))) {
+1813             return -1;
+1814         }
+1815         len = (int) ( cp-(ip_as_string + 1) );
+1816         if (len > (int)sizeof(buf)-1) {
+1817             return -1;
+1818         }
+1819         memcpy(buf, ip_as_string+1, len);
 
-Ciao, Marcus
+Length between '[' and ']' is cast to signed 32 bit integer on line
+1815. Is the length is more than 2<<31 (INT_MAX), len will hold a
+negative value. Consequently, it will pass the check at line 1816.
+Segfault happens at line 1819.
+[...]
+azat closed this in 329acc1 on Feb 1, 2016
+------
+https://github.com/libevent/libevent/issues/318
+
+3) out-of-bounds read in search_make_new()
+------
+The DNS code of Libevent contains this rather obvious OOB read:
+
+3122 static char *
+3123 search_make_new(const struct search_state *const state, int n, const char *const base_name) {
+3124     const size_t base_len = strlen(base_name);
+3125     const char need_to_append_dot = base_name[base_len - 1] == '.' ? 0 : 1;
+
+If the length of base_name is 0, then line 3125 reads 1 byte before the
+buffer. This will trigger a crash on ASAN-protected builds.
+[...]
+azat closed this in ec65c42 on Mar 24, 2016
+------
+https://github.com/libevent/libevent/issues/332
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
