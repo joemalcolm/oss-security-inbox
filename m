@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/8
-Message-ID: <51f7a1977f294a68846e574193cabf17@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:59:24 -0500
-From: <cve-assign@...re.org>
-To: <ago@...too.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: mp3splt: NULL pointer dereference in free_options (options_manager.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/18
+Message-ID: <2426429.B1xlvDATVC@blackgate>
+Date: Wed, 01 Feb 2017 16:35:02 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: podofo: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://blogs.gentoo.org/ago/2017/02/01/mp3splt-null-pointer-dereference-in-free_options-options_manager-c
+On Wednesday 01 February 2017 16:17:35 Hanno Böck 
+wrote:
+> FWIW I have a note here that says that in may 2015 I 
+reported privately
+> two issues to podofo, also never got a reply.
 > 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
-> 
-> free_options ... mp3splt-2.6.2/src/options_manager.c:61:9
+> Thanks for making these issues public.
 
-Use CVE-2017-5851.
+If what I reported here is something already discovered 
+by you, I would acknowledge you as well into the posts.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-iQIcBAEBCAAGBQJYkscIAAoJEHb/MwWLVhi2QuMQAI1wmYRXOAdKbWAu3qbjyjAb
-T6US40viwx/oHi6vz/LMSeZOEOdBpCVb+p67SoZbCWtKVPkBDBdoQX6luiMM64Or
-mkR1rzVD99EX+9LrNM6SGVn1JM3O/9G3WYMnPx7fkXldic/1hx826fXlV8fzQ0VN
-mzxPSi60y62c9FE9oacn9gcyasI678uKkEKeEA8WzJckkyRTDkvL/See/V7krPo8
-GhGy1M5yh+SUK2v5h5bgM4vgSzKECfKSeIqFS3Ziv0exOltoBmHU85HB+dDHQeLr
-Zg+sQeTwn6lJ23K+lr63gQNiPW2V9zuqpK5HSsA4wP56Ri/HFh+bKJfH13Y9THdU
-K0ErdvQI/29qC/FnSYpGnWmLByQWCNCBl7wjFu9fWvYz7wdNeCmnWSONoU44U2PY
-p5ueXHMQHVenw5+R9a/NwsSZjo2bx9qvTnGWqtptBuw/Lo4XoVhlqu5lMd8qAzoy
-pQXL9ufZU7EsMZkY97SkVhe0BumTnNhzama6gJD13EaaqSw1xSJF0qrL5cbFmY01
-RsmkN+N2nsA8CNZddEkbpo2nU/DhKIs+lphd3n7alUT8x5kIfvbCP5V5cUuDdhzU
-aia9elERz3ZTiJHYoa9bzjiQOaqcZmiM+IEo5S0R/eZYDZE8eAw5AiKMIzKDVbaX
-w6TyohVjszylCxwbnomj
-=E74c
------END PGP SIGNATURE-----
