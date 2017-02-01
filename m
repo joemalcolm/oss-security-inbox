@@ -1,34 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/12/2
-Message-ID: <20170312164149.4ivltlh32pglgfgm@eldamar.local>
-Date: Sun, 12 Mar 2017 17:41:49 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Roundcube: CVE-2017-6820: XSS issue in handling of a style tag inside of an svg element
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/9
+Message-ID: <20170201085009.uoqpalmceraia4xt@workbook.ipv6.hrusecky.net>
+Date: Wed, 1 Feb 2017 09:50:09 +0100
+From: Michal Hrusecky <Michal.Hrusecky@....cz>
+To: oss-security@...ts.openwall.com
+Subject: Re: FW: [DSA 3775-1] tcpdump security update]
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Henri Salo - 10:31  1.02.17 wrote:
+> On Wed, Feb 01, 2017 at 09:24:45AM +0100, Michal Hrusecky wrote:
+> > Having source on someones personal repo is nice, but I would be also interested
+> > why there is no mention of new release on upstream website and nothing in their
+> > git although git seems active and alive. Anybody with some insight?
+> 
+> Please see:
+>     https://github.com/the-tcpdump-group/tcpdump/issues/584
 
-I have requested a CVE for the following Roundcube issue, wich got
-assigned CVE-2017-6820[*].
-
-rcube_utils.php in Roundcube before 1.1.8 and before 1.2.4 is
-susceptible to a cross-site scripting vulnerability via a crafted
-Cascading Style Sheets (CSS) token sequence within an SVG element..
-
-https://github.com/roundcube/roundcubemail/releases/tag/1.1.8
-https://github.com/roundcube/roundcubemail/releases/tag/1.2.4
-https://roundcube.net/news/2017/03/10/updates-1.2.4-and-1.1.8-released
-
-Upstream fix (sequence of two commits):
-
-https://github.com/roundcube/roundcubemail/commit/fa2824fdcd44af3f970b2797feb47652482c8305
-https://github.com/roundcube/roundcubemail/commit/cbd35626f7db7855f3b5e2db00d28ecc1554e9f4
-
-Regards,
-Salvatore
-
- [*] ideally that would be done by the upstream project on it's own
- before publishing an issue in case it was privately reported, since
- it was not immediately clear to me if one was already requested or
- some other vendors/distributors have done it.
+Ah, so no-one knows, but there is an issue to watch. Thanks!
