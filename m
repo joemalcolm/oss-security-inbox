@@ -1,65 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/16/7
-Message-ID: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
-Date: Wed, 16 Aug 2017 12:10:09 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/1
+Message-ID: <20170201082445.ckuebicrxk6xep2e@workbook.ipv6.hrusecky.net>
+Date: Wed, 1 Feb 2017 09:24:45 +0100
+From: Michal Hrusecky <Michal.Hrusecky@....cz>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-12847: nagios-core privilege escalation via PID file manipulation
+Subject: Re: FW: [DSA 3775-1] tcpdump security update]
 Content-Type: text/plain; charset=utf-8
 
-Product: Nagios Core
-Versions-affected: 4.3.2 and earlier
-Fixed-in: commits 1b19734 and 3baffa7, version 4.3.3
-Bug-report: https://github.com/NagiosEnterprises/nagioscore/issues/404
-Author: Michael Orlitzky
-Acknowledgments: Bryan Heden (upstream) for his fast response and help
+David Manouchehri -  8:09 30.01.17 wrote:
+> The source along with samples can be found over here.
+> 
+> https://anonscm.debian.org/cgit/users/rfrancoise/tcpdump.git/commit/?id=b4f4a803b9b5f9d507201cd1c48ddd992a62aee2
 
-== Summary ==
-
-The nagios daemon should create its PID file before dropping
-privileges. This represents a minor security issue; additional factors
-are needed to make it exploitable.
-
-== Details ==
-
-The purpose of the PID file is to hold the PID of the running daemon,
-so that later it can be stopped, restarted, or otherwise signalled
-(many daemons reload their configurations in response to a SIGHUP).
-To fulfill that purpose, the contents of the PID file need to be
-trustworthy. If the PID file is writable by a non-root user, then he
-can replace its contents with the PID of a root process. Afterwards,
-any attempt to signal the PID contained in the PID file will instead
-signal a root process chosen by the non-root user (a vulnerability).
-
-This is commonly exploitable by init scripts that are run as root and
-which blindly trust the contents of their PID files. Nagios itself ships
-such an init script (daemon-init.in), so the risk is not theoretical in
-this case.
-
-== Exploitation ==
-
-An example scenario involving an init script would be,
-
-1. I run "/etc/init.d/nagios start" to start the daemon.
-
-2. nagios drops to the "nagios" user.
-
-3. nagios writes its PID file, now owned by the "nagios" user.
-
-4. Someone compromises the daemon, which sits on the network.
-
-5. The attacker is generally limited in what he can do because the
-   daemon doesn't run as root. However, he can write "1" into the
-   PID file, and he does.
-
-6. I run "/etc/init.d/nagios stop" to stop the daemon while I
-   investigate the weird behavior resulting from the hack.
-
-7. The machine reboots, because I killed PID 1 (this is normally
-   restricted to root).
-
-== Resolution ==
-
-The problem is avoided by creating the PID file as root, before dropping
-privileges.
-
+Having source on someones personal repo is nice, but I would be also interested
+why there is no mention of new release on upstream website and nothing in their
+git although git seems active and alive. Anybody with some insight?
