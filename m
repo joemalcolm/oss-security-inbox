@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1320" "Thursday" "23" "April" "2015" "03:54:34" "+0300" "Solar Designer" "solar@openwall.com" "<20150423005433.GA31697@openwall.com>" "28" "Re: [oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042300:54:34" "[oss-security] USBCreator D-Bus service" (number mark "        solar@openwa Apr 23   28/1320  " thread-indent "\"Re: [oss-security] USBCreator D-Bus service\"\n") "<CAJ_zFkJP2uMp6mGROdWC3pE9-V6FMbykvK1V=1d3p+nYgvPJMg@mail.gmail.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" "<20150423000423.GA31439@openwall.com>" "<CAJ_zFkJP2uMp6mGROdWC3pE9-V6FMbykvK1V=1d3p+nYgvPJMg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2521" "Wednesday" "1" "February" "2017" "11:56:16" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170201115616.08660970@pc1>" "80" "[oss-security] Multiple memory access issues in gstreamer" nil nil nil "2" "2017020110:56:16" "[oss-security] Multiple memory access issues in gstreamer" (number mark "U       hanno@hboeck Feb  1   80/2521  " thread-indent "\"[oss-security] Multiple memory access issues in gstreamer\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14129 invoked by uid 550); 23 Apr 2015 00:54:37 -0000
+Received: (qmail 17696 invoked by uid 550); 1 Feb 2017 10:56:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14111 invoked from network); 23 Apr 2015 00:54:36 -0000
-Message-ID: <20150423005433.GA31697@openwall.com>
-References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com> <20150423000423.GA31439@openwall.com> <CAJ_zFkJP2uMp6mGROdWC3pE9-V6FMbykvK1V=1d3p+nYgvPJMg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJ_zFkJP2uMp6mGROdWC3pE9-V6FMbykvK1V=1d3p+nYgvPJMg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 23 Apr 2015 03:54:34 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] USBCreator D-Bus service
+Received: (qmail 17666 invoked from network); 1 Feb 2017 10:56:30 -0000
+Date: Wed, 1 Feb 2017 11:56:16 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20170201115616.08660970@pc1>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Multiple memory access issues in gstreamer
 
-On Wed, Apr 22, 2015 at 05:09:48PM -0700, Tavis Ormandy wrote:
-> On Wed, Apr 22, 2015 at 5:04 PM, Solar Designer <solar@openwall.com> wrote:
-> > On Wed, Apr 22, 2015 at 04:50:08PM -0700, Tavis Ormandy wrote:
-> >> [as-per previous discussion on the vendors list, skipping closed
-> >> discussion of low-severity issue]
-> >
-> > What "vendors list" do you mean?  Do you possibly mean "vendor's" rather
-> > than "vendors" - that is, upstream's list?  (I do not recall seeing this
-> > on the linux-distros list.)
-> 
-> Actually, I was referring to the discussion on linux-distros about
-> apport and abrt.
-> 
-> > Either way, it sounds weird to keep a low severity issue private.  Low
-> > severity usually means not needing an embargo in the first place.  But I
-> > guess it was the vendor's preference?
-> 
-> Sure, I didn't mention it for the benefit of anyone actually working
-> on linux security. I just wanted to be clear this was expected, as
-> unfortunately my posts tend to get undesired attention.
+Hi,
 
-Oh, I hope I see what you meant now.  You're saying you're skipping
-making this low severity issue closed, and you are instead posting it to
-oss-security right away.  I initially read it almost the other way
-around, that there's also some other low severity issue that you're not
-mentioning on oss-security yet.
+https://gstreamer.freedesktop.org/releases/1.10/#1.10.3
 
-Alexander
+gstreamer 1.10.3 got released, from the release notes:
+"Various fixes for crashes, assertions, deadlocks and memory leaks on
+fuzzed input files and in other situations"
+
+Here they are (at least the ones I reported):
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D775450
+gst-plugins-good/aacparse: invalid memory read in
+gst_aac_parse_sink_setcaps
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D775451
+gst-plugins-good/qtdemux: out of bounds read in qtdemux_tag_add_str_full
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777262
+gst-plugins-base/riff-media: floating point exception in
+gst_riff_create_audio_caps
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777263
+gstreamer core/datetime: out of bounds read in
+gst_date_time_new_from_iso8601_string()
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777265
+gst-plugins-base/riff: stack overflow in gst_riff_create_audio_caps
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777469
+gst-plugins-good/qtdemux: out of bounds heap read in
+qtdemux_parse_samples
+
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777500
+gst-plugins-good/avidemux: gst_avi_demux_parse_ncdt heap out of bounds
+read
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777502
+gst-plugins-base/samiparse: heap oob in html_context_handle_element
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777503
+gst-plugins-bad/mxfdemux: use after free in gst_mini_object_unref /
+gst_tag_list_unref / gst_mxf_demux_update_essence_tracks
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777525
+gst-plugins-base: floating point exception in gst_riff_create_audio_caps
+(different than #777262)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777532
+gst-plugins-good/avidemux: invalid memory read in
+gst_avi_demux_parse_ncdt
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777937
+gst-plugins-ugly/asfdemux: invalid memory read in
+gst_asf_demux_process_ext_stream_props()
+
+
+
+And more that didn't make it into 1.10.3:
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777955
+gst-plugins-ugly/asfdemux: out of bounds read in
+gst_asf_demux_process_ext_content_desc
+
+https://bugzilla.gnome.org/show_bug.cgi?id=3D777957
+gst-plugins-bad/mpegdemux: Invalid memory read in gst_ps_demux_parse_psm
+
+
+(example files are always attached or linked in the bug reports)
+
+I also reported multiple other issues like memory leaks or hangs which
+I consider have no security relevance.
+
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
