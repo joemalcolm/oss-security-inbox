@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["915" "Wednesday" "11" "March" "2020" "12:32:54" "+0800" "Chen QingYang" "chenqingyang@apache.org" "<CAMNRR76nvdbR33WNWP-Rag0V7pFs-WFCLWv+=saSX0AsqgPC7w@mail.gmail.com>" "38" "[oss-security] [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability" nil nil nil "3" "2020031104:32:54" "[oss-security] [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability" (number mark "U       chenqingyang Mar 11   38/915   " thread-indent "\"[oss-security] [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1891" "Wednesday" "1" "February" "2017" "16:13:57" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<5047388.q5AdsWxC1J@blackgate>" "66" "[oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)" nil nil nil "2" "2017020115:13:57" "[oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)" (number mark "U       ago@gentoo.o Feb  1   66/1891  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13802 invoked by uid 550); 11 Mar 2020 09:19:43 -0000
+Received: (qmail 1400 invoked by uid 550); 1 Feb 2017 15:14:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9253 invoked from network); 11 Mar 2020 04:33:17 -0000
-X-Gm-Message-State: ANhLgQ1G83vNtV+onD5gg4tCh0xl5DvMBUiX0yyxWuERL4wBf6lVdqDK
-	Og1vIEM/JZlBjQHbpjd6n2Z2Ipya0zrprScwxss=
-X-Google-Smtp-Source: ADFU+vu202ZAqVjS0WLnGJQu4L/ctHw/A5rorPlXj5J+BPHTshRpccFxUpIxetg2TdzOQomiEwcwkfYvA/mzpVkXqaI=
-X-Received: by 2002:a37:6411:: with SMTP id y17mr1064805qkb.437.1583901185051;
- Tue, 10 Mar 2020 21:33:05 -0700 (PDT)
-MIME-Version: 1.0
-From: Chen QingYang <chenqingyang@apache.org>
-Date: Wed, 11 Mar 2020 12:32:54 +0800
-X-Gmail-Original-Message-ID: <CAMNRR76nvdbR33WNWP-Rag0V7pFs-WFCLWv+=saSX0AsqgPC7w@mail.gmail.com>
-Message-ID: <CAMNRR76nvdbR33WNWP-Rag0V7pFs-WFCLWv+=saSX0AsqgPC7w@mail.gmail.com>
+Received: (qmail 32444 invoked from network); 1 Feb 2017 15:14:13 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000007e91fb05a08cbb01"
-Subject: [oss-security] [CVE-2020-1947] Apache ShardingSphere(incubator) deserialization vulnerability
-
---0000000000007e91fb05a08cbb01
-Content-Type: text/plain; charset="UTF-8"
-
-CVE-2020-1947: Apache ShardingSphere(incubator) deserialization
-vulnerability
-
-Severity: low
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-ShardingSphere 4.0.0-RC3, 4.0.0
+Date: Wed, 01 Feb 2017 16:13:57 +0100
+Message-ID: <5047388.q5AdsWxC1J@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)
 
 Description:
-Apache ShardingSphere's web console uses the SnakeYAML library for parsing
-YAML inputs to load datasource configuration. SnakeYAML allows to unmarshal
-data to a Java type By using the YAML tag. Unmarshalling untrusted data can
-lead to security flaws of RCE.
+podofo is a C++ library to work with the PDF file format.
 
-Mitigation:
-4.0.0-RC3 and 4.0.0 users should upgrade to 4.0.1
+A fuzz on it discovered a NULL pointer access. The upstream project denies =
+me=20
+to open a new ticket. So, I=E2=80=99m unable to communicate with them.
 
-Example:
-An attacker can use untrusted data to fill in the DataSource Config after
-login the sharding-ui.
+The complete ASan output:
+
+# podofopdfinfo $FILE
+=3D=3D24654=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x0000000=
+00000 (pc=20
+0x0000005149a7 bp 0x7ffe59e91e70 sp 0x7ffe59e91d80 T0)
+=3D=3D24654=3D=3DThe signal is caused by a READ memory access.
+=3D=3D24654=3D=3DHint: address points to the zero page.
+    #0 0x5149a6 in PdfInfo::GuessFormat() /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:210:19
+    #1 0x512351 in PdfInfo::OutputDocumentInfo(std::ostream&)=20
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:40:35
+    #2 0x522132 in main /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/podofopdfinfo.cpp:1=
+17:18
+    #3 0x7fcaaf4b861f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x41e8f8 in _start (/usr/bin/podofopdfinfo+0x41e8f8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:210:19 =
+in=20
+PdfInfo::GuessFormat()
+=3D=3D24654=3D=3DABORTING
+
+Affected version:
+0.9.4
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
 
 Credit:
-This issue was discovered by WuXiong of QI`ANXIN YUNYING Labs.
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-References:
-https://shardingsphere.apache.org/community/en/security/
+CVE:
+N/A
 
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00133-podofo-nullptr-pdfinfo-cpp
 
-Chen QingYang
-Apache ShardingSphere
+Timeline:
+2017-01-05: bug discovered
+2017-02-01: blog post about the issue
 
---0000000000007e91fb05a08cbb01--
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-=
+pdfinfoguessformat-pdfinfo-cpp
+
+--=20
+Agostino Sarubbo
+Gentoo Linux Developer
