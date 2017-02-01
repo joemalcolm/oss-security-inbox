@@ -1,49 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/05/6
-Message-ID: <20171105175959.GA13011@openwall.com>
-Date: Sun, 5 Nov 2017 18:59:59 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/4
+Message-ID: <21545601.TvTXDKVynH@blackgate>
+Date: Wed, 01 Feb 2017 10:18:08 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Bram@...lenaar.net
-Subject: Re: Fw: Security risk of vim swap files
+Subject: pax-utils: scanelf: out of bounds read in scanelf_file_textrel (scanelf.c)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 05, 2017 at 06:17:04PM +0100, Christian Brabandt wrote:
-> On Fr, 03 Nov 2017, Jakub Wilk wrote:
-> 
-> > In general, what vim does (copying mode bits) in not enough to ensure that
-> > the swapfile is readable only by the users who had access to the original
-> > file. It would have to copy also group ownership and ACLs.
-> 
-> I think patch https://github.com/vim/vim/releases/tag/v8.0.1263 fixes 
-> the group ownership problem.
+Description:
+pax-utils is a set of tools that check files for security relevant properties.
 
-That's some effort and code complexity for a fix that is not even trying
-to address the problem Hanno pointed out. :-(  What we really need is
-simply forcing the permissions to 0600 no matter what.  I do notice that,
-non-surprisingly, Bram said:
+A fuzz on scanelf exposed an out-of bound read. It was reported to vapier 
+which fixed the issue immediately.
+Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
+the useful part of both asan and gdb.
 
-| Why would a web server expose and serve such a file?  That clearly is
-| the problem, not that Vim happens to create swap files (and undo and
-| backup files, depending on your configuration).
-| 
-| You probably also create new files and copies of files that should not
-| be served.  If you care about security, the web server must always use
-| whitelisting, only serve files that were intentionally made public.
+# scanelf -s '*' -axetrnibSDIYZB $FILE
+==1853==ERROR: AddressSanitizer: unknown-crash on address 0x7f4099d25008 at pc 
+0x00000053586e bp 0x7fff335cb8b0 sp 0x7fff335cb8a8
+READ of size 8 at 0x7f4099d25008 thread T0
+    #0 0x53586d  (/usr/bin/scanelf+0x53586d)
+    #1 0x51f526  (/usr/bin/scanelf+0x51f526)
+    #2 0x51b97e  (/usr/bin/scanelf+0x51b97e)
+    #3 0x51ad43  (/usr/bin/scanelf+0x51ad43)
+    #4 0x51922e  (/usr/bin/scanelf+0x51922e)
+    #5 0x7f4098afd61f  (/lib64/libc.so.6+0x2061f)
+    #6 0x41a008  (/usr/bin/scanelf+0x41a008) 
 
-This makes sense, yet Vim can and should also do its part to make things
-safer when that does not conflict with its other goals nor introduce
-complexity.  Simply using mode 0600 is a win-win: addresses the problem
-Hanno reported for the common special case of web server running as a
-different user than the file owner, does not break any functionality,
-and makes Vim's code simpler.
+(gdb) bt
+#8  0x000000000053586e in scanelf_file_textrel (elf=, found_textrel=) at 
+scanelf.c:560
+#9  0x000000000051f527 in scanelf_elfobj (elf=) at scanelf.c:1536
+#10 0x000000000051b97f in scanelf_elf (filename=0x7fffffffe50e 
+"/tmp/afl/scanelf/report/crashes/2.crashes", fd=, len=) at scanelf.c:1612
+#11 scanelf_fileat (dir_fd=, filename=, st_cache=) at scanelf.c:1679
+#12 0x000000000051ad44 in scanelf_dirat (dir_fd=, path=) at scanelf.c:1713
+#13 0x000000000051922f in scanelf_dir (path=) at scanelf.c:1763
+#14 parseargs (argc=5, argv=0x7fffffffe258) at scanelf.c:2273
+#15 main (argc=5, argv=) at scanelf.c:2361
 
-Yes, let's also force 0600 for "undo and backup files", please.
+Affected version:
+1.2
 
-Even without a web server or whatever other external interaction
-aspects, copying the original file's permissions and/or obeying umask is
-just wrong in this case because those files are created implicitly,
-often without the user's intent and knowledge, and because they might
-stay around for longer than the original file does.
+Fixed version:
+1.2.1
 
-Alexander
+Commit fix:
+https://github.com/gentoo/pax-utils/commit/95e5489534ac9e9324c5096286899b688e19ae00
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00132-pax-utils-scanelf-oobread-scanelf_file_textrel
+
+Timeline:
+2017-01-23: bug discovered and reported to upstream
+2017-01-24: upstream realeased a patch and 1.2.1
+2017-02-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+I’d suggest to go to 1.2.2 because of a functionality bug(s) in 1.2.1
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_textrel-scanelf-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
