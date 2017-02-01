@@ -1,32 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/3
-Message-ID: <20170704123718.GA28787@openwall.com>
-Date: Tue, 4 Jul 2017 14:37:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/12
+Message-ID: <2630972.8N57SaZZCj@blackgate>
+Date: Wed, 01 Feb 2017 16:09:29 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Leonid Kanter <lkanter@...udlinux.com>
-Subject: Re: linux-distros list membership application - CloudLinux
+Subject: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 04, 2017 at 02:10:24AM +0300, Dmitry V. Levin wrote:
-> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-> [...]
-> > 9. Have someone already on the private list, or at least someone else
-> > who has been active on oss-security for years but is not affiliated with
-> > your distro nor your organization, vouch for at least one of the people
-> > requesting membership on behalf of your distro (then that one
-> > vouched-for person will be able to vouch for others on your team, in
-> > case you'd like multiple people subscribed)
-> > Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
-> > for Leonid Kanter.
-> 
-> I acknowledge this.  I have no doubts that Leonid can handle
-> embargoed information according to the list's policy.
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Thank you, Dmitry!
+A fuzz on it discovered an infinite loop. The upstream project denies me to 
+open a new ticket. So, I’m unable to communicate with them.
 
-Leonid, am I correct to assume that you vouch for the rest of CloudLinux
-team joining linux-distros - namely, Igor Seletskiy (now) and Konstantin
-Olshanov (once I have his public key)?  Please confirm.  Thanks!
+The complete ASan output:
 
-Alexander
+# podofopdfinfo $FILE
+==8407==ERROR: AddressSanitizer: stack-overflow on address 0x7ffcff058fe0 (pc 
+0x000000425a5f bp 0x6400000003f0 sp 0x7ffcff058fe0 T0)
+    #0 0x425a5e in GenericScopedLock /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_mutex.h:179
+    #1 0x425a5e in __sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>::PopulateFreeList(__sanitizer::AllocatorStats*, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, __sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>::RegionInfo*) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:540
+    #2 0x426297 in __sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>::AllocateBatch(__sanitizer::AllocatorStats*, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:359
+    #3 0x4262f6 in 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>::Refill(__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>*, unsigned long) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1003
+    #4 0x4298ed in 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>::Allocate(__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>*, unsigned long) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:952
+    #5 0x4298ed in 
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
+__asan::AsanMapUnmapCallback>, 
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>, __sanitizer::LargeMmapAllocator 
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
+>*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1324
+    #6 0x4298ed in __asan::Allocator::Allocate(unsigned long, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:368
+    #7 0x50e8b8 in operator new(unsigned long) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_new_delete.cc:78
+    #8 0x7f2e77512621 in PoDoFo::PdfVariant::PdfVariant(PoDoFo::PdfDictionary 
+const&) /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.cpp:151:20
+    #9 0x7f2e77495f6d in PoDoFo::PdfObject::PdfObject(PoDoFo::PdfReference 
+const&, char const*) /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfObject.cpp:62:7
+    #10 0x7f2e7751dcf8 in 
+PoDoFo::PdfVecObjects::GetObject(PoDoFo::PdfReference const&) const 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVecObjects.cpp:151:15
+    #11 0x7f2e7749afe1 in PoDoFo::PdfObject::GetIndirectKey(PoDoFo::PdfName 
+const&) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfObject.cpp:237:30
+    #12 0x7f2e77741533 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char 
+const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:230:26
+    #13 0x7f2e777415a4 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char 
+const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:232:20
+    [.....]
+    #254 0x7f2e777415a4 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char 
+const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:232:20
+
+SUMMARY: AddressSanitizer: stack-overflow /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_mutex.h:179 in GenericScopedLock
+==8407==ABORTING
+
+Affected version:
+0.9.4
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00145-podofo-infiniteloop-PdfPage
+
+Timeline:
+2017-01-05: bug discovered
+2017-02-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
