@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/03/10
-Message-ID: <20171003170820.GA27650@localhost.localdomain>
-Date: Tue, 3 Oct 2017 10:08:20 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/22
+Message-Id: <630EBE51-95AF-46C9-B51F-AA3D1D584A10@apache.org>
+Date: Wed, 1 Feb 2017 14:08:50 -0500
+From: Velmurugan Periasamy <vel@...che.org>
+To: security <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: private@...ger.apache.org, dev@...ger.apache.org, user@...ger.apache.org
+Subject: CVE update - fixed in Apache Ranger 0.6.3
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello:
 
-On Tue, Sep 26, 2017 at 08:08:25AM -0700, Qualys Security Advisory wrote:
-> As a proof-of-concept, we will publish CVE-2017-1000253.c
+Please find below details on CVEs fixed in Ranger 0.6.3 release. Release details can be found at https://cwiki.apache.org/confluence/display/RANGER/0.6.3+Release+-+Apache+Ranger <https://cwiki.apache.org/confluence/display/RANGER/0.6.3+Release+-+Apache+Ranger>
 
-Since CentOS 7 patched this vulnerability on September 13, 2017 (release
-1708), we attached our CVE-2017-1000253.c exploit for CentOS-7 kernel
-versions "3.10.0-514.21.2.el7.x86_64" and "3.10.0-514.26.1.el7.x86_64"
-to this email (alternatively, this exploit is also available at
-https://www.qualys.com/research/security-advisories/).
+Thank you,
+Velmurugan Periasamy
 
-Thank you very much!  With best regards,
-
--- 
-the Qualys Security Advisory team
-
-View attachment "CVE-2017-1000253.c" of type "text/plain" (15548 bytes)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CVE-2016-8746: Apache Ranger path matching issue in policy evaluation
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Ranger policy engine incorrectly matches paths in certain conditions when policy does not contain wildcards and has recursion flag set to true.
+Fix detail: Fixed policy evaluation logic.
+Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger with the fix.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CVE-2016-8751: Apache Ranger stored cross site scripting issue
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: 0.5.x and 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Apache Ranger was found to be vulnerable to a Stored Cross-Site Scripting in when entering custom policy conditions. Admin users can store 
+some arbitrary javascript code to be executed when normal users login and access policies.
+Fix detail: Added logic to sanitize the user input.
+Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger with the fix.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
