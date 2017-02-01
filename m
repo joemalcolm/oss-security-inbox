@@ -1,65 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/5
-Message-ID: <DM5PR11MB1643FD13FC37124F61525567AAB30@DM5PR11MB1643.namprd11.prod.outlook.com>
-Date: Tue, 1 Aug 2017 17:33:05 +0000
-From: Mikhail Utin <mikhailutin@...mail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Syslog forwarding with IP spoofing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/23
+Message-ID: <CAK0OdpzgDzedff7xC=bEiSoG69QzHfPSjhWQLUaMdJA5UNXO2g@mail.gmail.com>
+Date: Wed, 1 Feb 2017 20:35:01 +0100
+From: Bálint Réczey <balint@...intreczey.hu>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Use after free in libmysqlclient.so (was: Re: Use after free in libmysqlclient.so)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-Indeed, it is our of this list topic.
+I'm adjusting the subject to reflect the content in case the request
+was accidentally missed.
 
-Options for The Alexander:
+Thanks for the report!
 
-  1.  Normal SIEM will work with syslog as it is widely supported format and will know where the log comes from by data source configuration.
-  2.  The "open source tool" is Perl, you can create any log format from any data sources and then send to SIEM.
-  3.  Talk to SIEM tech support. Good vendor will advise. If you do not have SIEM, buy LogRhythm. That should work. Freeware OSSIM I would bet will work with syslog as well.
-  4.  Alexander can email me mikhailutin@...mail.com for details.
+Cheers,
+Balint
 
-
-Mikhail Utin, CISSP
-
-
-________________________________
-From: Solar Designer <solar@...nwall.com>
-Sent: Tuesday, August 1, 2017 13:06
-To: Александр Носарев
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] Syslog forwarding with IP spoofing
-
-Hi all,
-
-On Tue, Aug 01, 2017 at 05:27:26PM +0300, Александр Носарев wrote:
-> I need to recive syslog messages, filter them and send them forward to the
-> SIEM.
+2017-01-27 23:53 GMT+01:00  <pali@...n.org>:
+> Hello, I would like to report problem related to MySQL/MariaDB and
+> possibly asking for assigning CVE if this list is the right place.
 >
-> Also HOST field is not represented in syslog, so i need to spoof IP of
-> forwarding
-> packets to bind messages recived by SIEM to it's original source IP.
+> C client library for MySQL (libmysqlclient.so) has use-after-free defect
+> which can cause crash of applications using that MySQL client.
 >
-> If i will try to add some marks to syslog message, I will need to override
-> parsers for each syslog source type, so it seems like abad idea.
+> Defect occurs by calling mysql_close() function from libmysqlclient.so.
+> If mysql_close() is called before calling all mysql_stmt_close() (for
+> all allocated stmts), then following mysql_stmt_close() call try to
+> write to already released memory. mysql_close() let dangling pointer
+> exist for prepared statements. Real problem is in function
+> mysql_prune_stmt_list() which incorrectly iterate over elements.
+> Function list_add() overwrite ->next pointer of current element which
+> overwrite next element for iteration.
 >
-> Is there any open source tool for that task?
-
-Somehow we almost didn't have this sort of messages - someone seeking an
-open source security tool - sent in here so far.  Do we want them in
-here going forward?  The current list content guidelines do not address
-this possibility, as it certainly wasn't the purpose of the oss-security
-list so far.  Is there another mailing list where the above message
-would have been more appropriate?
-
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
-mailing-lists:oss-security [OSS-Security]<http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines>
-oss-security.openwall.org
-The purpose of the Open Source Security (oss-security) group is to encourage public discussion of security flaws, concepts, and practices in the Open Source community.
-
-
-
-Meanwhile, please feel free to address the actual question about the
-tool.  (I don't know of such a tool.)
-
-Alexander
-
+> Basically it is just wrong usage of linked list structure.
+>
+> Languages in which is not guaranteed order of executing destructor of
+> created objects have a big problem as such writing to memory pointed by
+> dangling can cause crash of whole application.
+>
+> E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
+> whole perl process with simple script:
+>
+> perl -MDBI -e '
+> $dbh = DBI->connect("dbi:mysql:", "root", undef,
+>                     {RaiseError => 1, mysql_server_prepare => 1});
+> $sth1 = $dbh->prepare("SELECT 1");
+> $sth2 = $dbh->prepare("USE mysql");
+> $dbh->disconnect;
+> $dbh = undef;
+> '
+> Segmentation fault
+>
+> Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce change
+> username, password and host where is running mysql server. Valgrind can
+> prove that memory corruption really occurs.
+>
+> This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But is
+> present in all MySQL 5.5 versions (and also older) and appropriate older
+> 5.6 and 5.7 versions. MySQL 5.5 is still used, supported and included in
+> lot of linux distributions.
+>
+> Moreover this defect is present also in MariaDB releases. I tested all
+> last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all those are
+> affected.
+>
+> MySQL and MariaDB provides also standalone package with only C client
+> library libmysqlclient.so (without server) under name "Connector/C" and
+> so appropriate versions of it are affected too.
+>
+> I found that this defected was fixed in MySQL git repository by commit:
+> https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc552424132806f46e93
+>
+> That commit can be easily applied to last MySQL 5.5.54 version and fixes
+> this defect.
+>
+> Looks like problem was already reported and is publically available in
+> MySQL bug tracker, see more details on links:
+> https://bugs.mysql.com/bug.php?id=70429
+> https://bugs.mysql.com/bug.php?id=63363
+> (tickets are closed despite fact that MySQL 5.5 and older are not fixed)
+>
+> ---
+>
+> I reported this problem to Oracle secalert_us@...cle.com two months ago,
+> but they did absolutely nothing for fixing it in MySQL 5.5. Instead they
+> started resending this problem to some random people with @cpan.org
+> address for unknown reason. And told me to not disclose information
+> about this defect. Resending does not look like normal handling of
+> security related problem! Therefore I suggest other people to not
+> wasting time reporting problems to Oracle for open source applications.
+>
+> As two months is really long time to fix such problem which was already
+> fixed in new versions; it is already publically disclosed in MySQL bug
+> tracker; fix available in public git; problem is in major MariaDB
+> versions; fix is small; and this is open source product included in many
+> linux distributions I decided to send information to oss-security.
