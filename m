@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/11
-Message-ID: <20170927181238.GA5036@openwall.com>
-Date: Wed, 27 Sep 2017 20:12:38 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/2
+Message-ID: <20170201083107.GA28673@tunkki>
+Date: Wed, 1 Feb 2017 10:31:07 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory - Linux PIE/stack corruption (CVE-2017-1000253)
+Subject: Re: FW: [DSA 3775-1] tcpdump security update]
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2017 at 08:08:25AM -0700, Qualys Security Advisory wrote:
-> We thank Red Hat and the members of the linux-distros@...nwall list.
+On Wed, Feb 01, 2017 at 09:24:45AM +0100, Michal Hrusecky wrote:
+> Having source on someones personal repo is nice, but I would be also interested
+> why there is no mention of new release on upstream website and nothing in their
+> git although git seems active and alive. Anybody with some insight?
 
-FWIW, the timeline is much better this time:
+Please see:
+    https://github.com/the-tcpdump-group/tcpdump/issues/584
 
-September 15 - advisory sent to Red Hat (according to Qualys)
-September 20 - advisory sent to linux-distros
-September 26 - public disclosure
-
-Thanks, Qualys!
-
-Alexander
+-- 
+Henri Salo
