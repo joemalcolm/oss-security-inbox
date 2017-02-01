@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/2
-Message-ID: <325653ee-81e0-c12e-bcc5-2c8bef66e6bf@suse.com>
-Date: Fri, 11 Aug 2017 10:10:18 +0200
-From: Andreas Stieger <astieger@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVS and ssh command injection (see CVE-2017-1000117, etc.)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/21
+Message-ID: <alpine.LFD.2.20.1702012244320.601@wniryva>
+Date: Wed, 1 Feb 2017 22:46:16 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: display: virtio-gpu-3d: host memory leakage in virgl_cmd_resource_unref
 Content-Type: text/plain; charset=utf-8
 
-On 08/11/2017 01:32 AM, Hank Leininger wrote:
-> SSH command injection via -o... impacts CVS 1.12.x as well
-> [...]
-> I don't know if these were discussed on a private list prior to publication, and whether that discussion included CVS.
+   Hello,
 
-cvs did not come up in the private discussions that I am aware of,
-thanks for pointing it out.
+Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
+vulnerable to a host memory leakage issue. It could occur while processing 
+'VIRTIO_GPU_CMD_RESOURCE_UNREF' command.
 
-Andreas
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
--- 
-Andreas Stieger <astieger@...e.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG Nürnberg)
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg04615.html
 
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1418382
+
+This issue was reported by Mr Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
