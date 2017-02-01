@@ -1,60 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/11
-Message-Id: <20170714175201.7C393138544@mail.altsci.com>
-Date: Fri, 14 Jul 2017 17:52:01 -0000
-From: Javantea <jvoss@...sci.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Estimate for the total number of exploitable bugs in large linux distro?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/6
+Message-ID: <alpine.LFD.2.20.1702011514510.25859@wniryva>
+Date: Wed, 1 Feb 2017 15:20:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 14 Jul 2017 11:45:20 +0200, Greg KH wrote:
-> On Fri, Jul 14, 2017 at 12:34:01PM +0300, Georgi Guninski wrote:
->> What is an estimate for the total number of exploitable bugs in large
->> linux distro?
-> 
-> Define "exploitable" please.
-> 
-Let's assume exploitable means CVSS exploitability score >= 1.6. Therefore network attacks, and easy local attacks are acceptable.
+   Hello,
 
-> Define "large Linux Distro".
-> 
-Let's say Gentoo, Ubuntu, or Fedora.
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to an out-of-bounds access issue. It could occur while copying VGA 
+data via bitblt copy in backward mode.
 
->> Also, does the total number decrease, increase or change in other way
->> over time?
-> 
-> The world changes over time, why would the number not also change?
-> 
-> What exactly are you trying to determine here, and what kind of research
-> have you done to try to answer it yourself?
-> 
-> thanks,
-> 
-> greg k-h
-> 
-> 
-First you must accept that the most well-reasoned answer you will get will probably be off by an order of magnitude. One method of answering this question is to take the number of GLSAs, RHSAs, and USNs depending on which distro you want to track. If you multiply that number by 2, you'll have a reasonable guess. There's no guarantee that this number will be accurate because many bugs will last years or decades and many never become CVEs and thus won't become RHSAs, GLSAs, or USNs. Many bugs that are fixed in 2017 were present in 2016. Some fixed in 2017 weren't there in 2016.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS OR potentially execute arbitrary code on the host with 
+privileges of Qemu process on the host.
 
-https://security.gentoo.org/glsa
-https://access.redhat.com/security/
-https://www.ubuntu.com/usn/
+Upstream patch
+--------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg00015.html
 
-Here is the code for Gentoo:
-for year in 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016; do echo -n "$year "; ls -1 /usr/portage/metadata/glsa/glsa-"$year"* |wc -l; done
-2007 264
-2008 208
-2009 153
-2010 43
-2011 47
-2012 149
-2013 98
-2014 242
-2015 97
-2016 162
+It fixes
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=d3532a0db02296e687711b8cdc7791924efccea0
 
-This shows that GLSAs are neither increasing nor decreasing within the margin of error over the past 10 years.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1418200
 
-Regards,
-Javantea
+This issue was reported by Li Qiang of 360.cn Inc.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+CVE-2017-2615 was assigned to this issue by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
