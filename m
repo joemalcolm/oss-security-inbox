@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["941" "Thursday" "16" "February" "2017" "15:16:45" "-0200" "Fabio Olive Leite" "fleite@redhat.com" "<b4e968ce-5baf-5bb5-8ccb-6dc07ed09ee8@redhat.com>" "20" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021617:16:45" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       fleite@redha Feb 16   20/941   " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170211233541.GA6315@openwall.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" "<20170211233541.GA6315@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2327" "Wednesday" "1" "February" "2017" "14:08:50" "-0500" "Velmurugan Periasamy" "vel@apache.org" "<630EBE51-95AF-46C9-B51F-AA3D1D584A10@apache.org>" "50" "[oss-security] CVE update - fixed in Apache Ranger 0.6.3" nil nil nil "2" "2017020119:08:50" "[oss-security] CVE update - fixed in Apache Ranger 0.6.3" (number mark "U       vel@apache.o Feb  1   50/2327  " thread-indent "\"[oss-security] CVE update - fixed in Apache Ranger 0.6.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1692 invoked by uid 550); 16 Feb 2017 18:24:55 -0000
+Received: (qmail 3402 invoked by uid 550); 1 Feb 2017 19:09:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1636 invoked from network); 16 Feb 2017 17:17:00 -0000
-To: oss-security@lists.openwall.com
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
- <20170211233541.GA6315@openwall.com>
-From: Fabio Olive Leite <fleite@redhat.com>
-Message-ID: <b4e968ce-5baf-5bb5-8ccb-6dc07ed09ee8@redhat.com>
-Date: Thu, 16 Feb 2017 15:16:45 -0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
-MIME-Version: 1.0
-In-Reply-To: <20170211233541.GA6315@openwall.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Thu, 16 Feb 2017 17:16:49 +0000 (UTC)
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+Received: (qmail 3334 invoked from network); 1 Feb 2017 19:09:05 -0000
+From: Velmurugan Periasamy <vel@apache.org>
+Content-Type: multipart/alternative; boundary="Apple-Mail=_3B88B459-9D4E-4C5C-B2E9-A05CE861717D"
+Date: Wed, 1 Feb 2017 14:08:50 -0500
+Message-Id: <630EBE51-95AF-46C9-B51F-AA3D1D584A10@apache.org>
+Cc: private@ranger.apache.org,
+ dev@ranger.apache.org,
+ user@ranger.apache.org
+To: security <security@apache.org>,
+ oss-security@lists.openwall.com,
+ bugtraq@securityfocus.com
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] CVE update - fixed in Apache Ranger 0.6.3
 
-On 02/11/2017 09:35 PM, Solar Designer wrote:
->> C5. I want MITRE to send the https://cveform.mitre.org form data, and
->> the CVE ID, to the oss-security list at the same time that these are
->> sent to the requester.
->>
->> R5. We have had internal discussions within MITRE about this. We are
->> able to implement this easily if the community requires this approach.
->> At the moment, we are expecting the requester to resend this
->> information to oss-security once they accept their CVE ID assignment.
-> 
-> MITRE - can you please implement that, and we'll see how it goes and
-> whether we need it adjusted or possibly discontinued if things go wrong
-> or if there's opposition (so far, there's almost none)?
+--Apple-Mail=_3B88B459-9D4E-4C5C-B2E9-A05CE861717D
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Was there any response from Mitre to this request?  I believe a lot of
-people would feel better if they confirmed they will do it.
+Hello:
 
--- 
-Fábio Olivé Leite, Red Hat Product Security
-F1C1 1876 3922 1906 6631  0C31 92A5 9276 250D 8380
+Please find below details on CVEs fixed in Ranger 0.6.3 release. Release de=
+tails can be found at https://cwiki.apache.org/confluence/display/RANGER/0.=
+6.3+Release+-+Apache+Ranger <https://cwiki.apache.org/confluence/display/RA=
+NGER/0.6.3+Release+-+Apache+Ranger>
+
+Thank you,
+Velmurugan Periasamy
+
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+-----------------------------------------------------------
+CVE-2016-8746: Apache Ranger path matching issue in policy evaluation
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Ranger policy engine incorrectly matches paths in certain cond=
+itions when policy does not contain wildcards and has recursion flag set to=
+ true.
+Fix detail: Fixed policy evaluation logic.
+Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger=
+ with the fix.
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+-----------------------------------------------------------
+CVE-2016-8751: Apache Ranger stored cross site scripting issue
+Severity: Normal
+Vendor: The Apache Software Foundation
+Versions Affected: 0.5.x and 0.6.0/0.6.1/0.6.2 versions of Apache Ranger
+Users affected: All users of ranger policy admin tool
+Description: Apache Ranger was found to be vulnerable to a Stored Cross-Sit=
+e Scripting in when entering custom policy conditions. Admin users can stor=
+e=20
+some arbitrary javascript code to be executed when normal users login and a=
+ccess policies.
+Fix detail: Added logic to sanitize the user input.
+Mitigation: Users should upgrade to 0.6.3 or later version of Apache Ranger=
+ with the fix.
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+-----------------------------------------------------------=
+
+--Apple-Mail=_3B88B459-9D4E-4C5C-B2E9-A05CE861717D--
