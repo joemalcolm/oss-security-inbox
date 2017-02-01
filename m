@@ -1,28 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/2
-Message-ID: <20170114071900.lxx3d4qoibwvgru7@eldamar.local>
-Date: Sat, 14 Jan 2017 08:19:00 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Duplicates of CVE-2015-8789 CVE-2015-8790 for libebml from TALOS reports?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/16
+Message-ID: <5047388.q5AdsWxC1J@blackgate>
+Date: Wed, 01 Feb 2017 16:13:57 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-CVE-2015-8789: following some downstream reports, this leads to commit
-https://github.com/Matroska-Org/libebml/commit/88409e2a94dd3b40ff81d08bf6d92f486d036b24
-which mentions Cisco TALOS-CAN-0037 report. Looking at
-http://www.talosintelligence.com/reports/TALOS-2016-0037/ . That
-mentions CVE-2016-1515. So I guess CVE-2016-1515 is a duplicate of the
-CVE-2015-8789 assignment.
+A fuzz on it discovered a NULL pointer access. The upstream project denies me 
+to open a new ticket. So, I’m unable to communicate with them.
 
-Similarly:
+The complete ASan output:
 
-CVE-2015-8790: leads to
-https://github.com/Matroska-Org/libebml/commit/ababb64e0c792ad2a314245233db0833ba12036b
-referring to Cisco TALOS-CAN-0036,
-http://www.talosintelligence.com/reports/TALOS-2016-0036/ which in
-turns has the CVE-2016-1514 mentioned. 
+# podofopdfinfo $FILE
+==24654==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x0000005149a7 bp 0x7ffe59e91e70 sp 0x7ffe59e91d80 T0)
+==24654==The signal is caused by a READ memory access.
+==24654==Hint: address points to the zero page.
+    #0 0x5149a6 in PdfInfo::GuessFormat() /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:210:19
+    #1 0x512351 in PdfInfo::OutputDocumentInfo(std::ostream&) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:40:35
+    #2 0x522132 in main /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/podofopdfinfo.cpp:117:18
+    #3 0x7fcaaf4b861f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x41e8f8 in _start (/usr/bin/podofopdfinfo+0x41e8f8)
 
-Regards,
-Salvatore
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:210:19 in 
+PdfInfo::GuessFormat()
+==24654==ABORTING
+
+Affected version:
+0.9.4
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00133-podofo-nullptr-pdfinfo-cpp
+
+Timeline:
+2017-01-05: bug discovered
+2017-02-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-pdfinfoguessformat-pdfinfo-cpp
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
