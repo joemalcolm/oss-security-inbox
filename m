@@ -1,54 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/05/5
-Message-ID: <20171205165034.GU28203@yuggoth.org>
-Date: Tue, 5 Dec 2017 16:50:34 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/15
+Message-ID: <3276079.yIt2lEYvmd@blackgate>
+Date: Wed, 01 Feb 2017 16:13:01 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2017-006] Nova FilterScheduler doubles resource allocations during rebuild with new image (CVE-2017-17051)
+Subject: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
 Content-Type: text/plain; charset=utf-8
 
-==============================================================================================
-OSSA-2017-006: Nova FilterScheduler doubles resource allocations during rebuild with new image
-==============================================================================================
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-:Date: December 05, 2017
-:CVE: CVE-2017-17051
+A fuzz on it discovered a NULL pointer access. The upstream project denies me 
+to open a new ticket. So, I’m unable to communicate with them.
 
+The complete ASan output:
 
-Affects
-~~~~~~~
-- Nova: ==16.0.3
+# podofopdfinfo $FILE
+==9418==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000000d8 (pc 
+0x7f496cb0ab76 bp 0x7ffff028f9d0 sp 0x7ffff028f148 T0)                                                                                                                                             
+==9418==The signal is caused by a WRITE memory access.                                                                                                                                                                                                                         
+==9418==Hint: address points to the zero page.                                                                                                                                                                                                                                 
+    #0 0x7f496cb0ab75  /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:1989                                                                                                                                     
+    #1 0x4c063e in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413                                                                                                                               
+    #2 0x7f496dde143c in void std::_Construct(PoDoFo::PdfParser::TXRefEntry*, 
+PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-
+gnu/4.9.3/include/g++-v4/bits/stl_construct.h:83:38             
+    #3 0x7f496dde143c in void 
+std::__uninitialized_fill_n::__uninit_fill_n(PoDoFo::PdfParser::TXRefEntry*, 
+unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-
+linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:202                                                                                                                                                                                                                       
+    #4 0x7f496dde143c in void 
+std::uninitialized_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, 
+PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-
+gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:244                                                                                                                                                                                                                                                 
+    #5 0x7f496dde143c in void 
+std::__uninitialized_fill_n_a(PoDoFo::PdfParser::TXRefEntry*, unsigned long, 
+PoDoFo::PdfParser::TXRefEntry const&, std::allocator&) /usr/lib/gcc/x86_64-pc-
+linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:355                                                                                                                                                              
+    #6 0x7f496dde143c in std::vector<PoDoFo::PdfParser::TXRefEntry, 
+std::allocator 
+>::_M_fill_insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, 
+std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, unsigned long, 
+PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-
+gnu/4.9.3/include/g++-v4/bits/vector.tcc:496                                                                                                                                 
+    #7 0x7f496ddd4a67 in std::vector<PoDoFo::PdfParser::TXRefEntry, 
+std::allocator 
+>::insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, 
+std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, unsigned long, 
+PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-
+gnu/4.9.3/include/g++-v4/bits/stl_vector.h:1073:9                                                                                                                                    
+    #8 0x7f496ddd4a67 in std::vector<PoDoFo::PdfParser::TXRefEntry, 
+std::allocator >::resize(unsigned long, PoDoFo::PdfParser::TXRefEntry) 
+/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:716                          
+    #9 0x7f496ddd4a67 in PoDoFo::PdfParser::ReadXRefSubsection(long&, long&) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:772                                                                                                                   
+    #10 0x7f496ddc60bd in PoDoFo::PdfParser::ReadXRefContents(long, bool) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:725:17                                                                                                                   
+    #11 0x7f496ddbfaae in PoDoFo::PdfParser::ReadDocumentStructure() 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:337:9                                                                                                                         
+    #12 0x7f496ddbce1f in 
+PoDoFo::PdfParser::ParseFile(PoDoFo::PdfRefCountedInputDevice const&, bool) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:220:9                                                                                        
+    #13 0x7f496ddbb1e4 in PoDoFo::PdfParser::ParseFile(char const*, bool) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:164:11                                                                                                                   
+    #14 0x7f496e018393 in PoDoFo::PdfMemDocument::Load(char const*) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:186:16                                                                                                                     
+    #15 0x7f496e018062 in PoDoFo::PdfMemDocument::PdfMemDocument(char const*) 
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:88:11                                                                                                            
+    #16 0x511b44 in PdfInfo::PdfInfo(std::string const&) /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/pdfinfo.cpp:25:16                                                                                                                            
+    #17 0x521ac8 in main /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/tools/podofopdfinfo/podofopdfinfo.cpp:110:15                                                                                                                                                     
+    #18 0x7f496c9f461f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                       
+    #19 0x41e8f8 in _start (/usr/bin/podofopdfinfo+0x41e8f8)                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/multiarch/memcpy-ssse3-back.S:1989                                                                                                                            
+==9418==ABORTING
 
+Affected version:
+0.9.4
 
-Description
-~~~~~~~~~~~
-Matt Riedemann from Huawei reported a vulnerability in OpenStack
-Nova's default FilterScheduler. By repeatedly rebuilding an instance
-with new images, an authenticated user may consume untracked resources
-on a hypervisor host leading to a denial of service. This regression
-was introduced with the fix for OSSA-2017-005 (CVE-2017-16239),
-however, only Nova stable/pike or later deployments with that fix
-applied and relying on the default FilterScheduler are affected.
+Fixed version:
+N/A
 
+Commit fix:
+N/A
 
-Patches
-~~~~~~~
-- https://review.openstack.org/523214 (Pike)
-- https://review.openstack.org/521662 (Queens)
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
-Credits
-~~~~~~~
-- Matt Riedemann from Huawei (CVE-2017-17051)
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00134-podofo-nullptr-pdfparser-cpp
 
+Timeline:
+2017-01-05: bug discovered
+2017-02-01: blog post about the issue
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1732976
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-17051
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
 
 -- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
