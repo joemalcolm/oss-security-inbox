@@ -1,50 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/8
-Message-ID: <20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>
-Date: Wed, 8 Feb 2017 14:32:29 -0800
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/11
+Message-ID: <5703568.KIEfz9fMEU@blackgate>
+Date: Wed, 01 Feb 2017 16:08:01 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)
+Subject: podofo: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-On 2016-11-05 10:04, Gustavo Grieco wrote:
+Hello all,
 
-> We found a null pointer dereference when parsing a xml file using recover
-> mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
-> 
-> $ xmllint --recover crash-libxml2-recover.xml
-> 
-> ==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-> (pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
->     #0 0x4fbd87 in xmlDumpElementContent
-> /home/g/Work/Code/libxml2-2.9.4/valid.c:1181
->     #1 0x4fbcd5 in xmlDumpElementContent
-> /home/g/Work/Code/libxml2-2.9.4/valid.c:1177
->     #2 0x4fe5ff in xmlDumpElementDecl
-> /home/g/Work/Code/libxml2-2.9.4/valid.c:1706
->     #3 0x72e714 in xmlBufDumpElementDecl
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
->     #4 0x73048f in xmlNodeDumpOutputInternal
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
->     #5 0x72fc47 in xmlNodeListDumpOutput
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
->     #6 0x72f6d5 in xmlDtdDumpOutput
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
->     #7 0x73038f in xmlNodeDumpOutputInternal
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
->     #8 0x732412 in xmlDocContentDumpOutput
-> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
->     #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1936
->     #10 0x40ba0f in parseAndPrintFile
-> /home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
->     #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
->     #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
->     #13 0x4032b9 in _start
-> (/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
+I discovered multiple crashes on podofo which is a library that works with the 
+PDF file format.
 
-Where did this one ever go?  Is there a CVE?  Is there a patch?
+Unfortunately, I'm unable to open tickets on their sourceforge space because 
+of admin's restriction.
+
+Upstream was poked privately but never answered, so if you have a way to 
+report the bugs I will share here, would be great.
+
+For completeness, since I add the git commit and the fixed version, if you 
+know that something has been fixed, please let me know.
+Thanks in advance
 
 -- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+Agostino Sarubbo
+Gentoo Linux Developer
