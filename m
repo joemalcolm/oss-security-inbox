@@ -1,86 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/11
-Message-Id: <416E8C5A-A926-4C7E-94F3-AFBB169C383A@jirutka.cz>
-Date: Thu, 27 Apr 2017 20:58:10 +0200
-From: Jakub Jirutka <jakub@...utka.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/5
+Message-ID: <3334481.1M2hnby0EQ@blackgate>
+Date: Wed, 01 Feb 2017 10:18:51 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-8301: TLS verification vulnerability in LibreSSL 2.5.1 - 2.5.3
+Subject: pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability Type: Missing TLS Certificate Validation
-Affected Product Code Base: LibreSSL - 2.5.1 - 2.5.3
-Vendor of Product: OpenBSD
-Affected Component: SSL_set_verify, SSL_CTX_set_verify, SSL_get_verify_result
+Description:
+pax-utils is a set of tools that check files for security relevant properties.
 
+A fuzz on scanelf exposed an out-of bound read. It was reported to vapier 
+which fixed the issue immediately.
+Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
+the useful part of both asan and gdb.
 
-## Summary
+# scanelf -s '*' -axetrnibSDIYZB $FILE
+==32758==ERROR: AddressSanitizer: unknown-crash on address 0x7f8f9fa252dc at 
+pc 0x00000053c6a0 bp 0x7ffe93a19910 sp 0x7ffe93a19908 
+READ of size 4 at 0x7f8f9fa252dc thread T0                                                                                                                                                                                                                                      
+   #0 0x53c69f  (/usr/bin/scanelf+0x53c69f) 
+   #1 0x51d649  (/usr/bin/scanelf+0x51d649) 
+   #2 0x51b97e  (/usr/bin/scanelf+0x51b97e) 
+   #3 0x51ad43  (/usr/bin/scanelf+0x51ad43) 
+   #4 0x51922e  (/usr/bin/scanelf+0x51922e) 
+   #5 0x7f8f9e7fd61f  (/lib64/libc.so.6+0x2061f) 
+   #6 0x41a008  (/usr/bin/scanelf+0x41a008) 
 
-LibreSSL 2.5.1 to 2.5.3 lacks TLS certificate verification if
-SSL_get_verify_result is relied upon for a later check of a
-verification result, in a use case where a user-provided verification
-callback returns 1, as demonstrated by acceptance of invalid
-certificates by nginx.
+(gdb) bt
+#8  0x000000000053c6a0 in scanelf_file_get_symtabs (elf=, sym=0x7fffffffcc00, 
+str=0x7fffffffcc20) at scanelf.c:357
+#9  0x000000000051d64a in scanelf_file_sym (elf=0x60700000de60, found_sym=) at 
+scanelf.c:1327
+#10 scanelf_elfobj (elf=) at scanelf.c:1547
+#11 0x000000000051b97f in scanelf_elf (filename=0x7fffffffe50e "1.crashes", 
+fd=, len=) at scanelf.c:1612
+#12 scanelf_fileat (dir_fd=, filename=, st_cache=) at scanelf.c:1679
+#13 0x000000000051ad44 in scanelf_dirat (dir_fd=, path=) at scanelf.c:1713
+#14 0x000000000051922f in scanelf_dir (path=) at scanelf.c:1763
+#15 parseargs (argc=5, argv=0x7fffffffe258) at scanelf.c:2273
+#16 main (argc=5, argv=) at scanelf.c:2361
 
+Affected version:
+1.2
 
-## Additional Information
+Fixed version:
+1.2.1
 
-LibreSSL versions from 2.5.1 until 2.5.3 suffer from a lack of TLS certificate
-verification if the user-provided callback for verification returns 1.
-This bug was introduced in commit ddd98f8ea741a122952185a36c1396c14c2fda74 [1]
-(libcrypto/x509/x509_vfy.c, version 1.58) and has not been fixed upstream yet.
+Commit fix:
+https://github.com/gentoo/pax-utils/commit/95e5489534ac9e9324c5096286899b688e19ae00
 
-If the user verification callback returns 1, LibreSSL will force the
-verification result to X509_V_OK resulting in, contrary to the documentation,
-any later checks by the API user through SSL_get_verify_result() to be useless,
-as it will always return X509_V_OK instead of any earlier error that occurred
-in the verification process.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-As such, any API user that matches the following prerequisites:
+CVE:
+N/A
 
-* Installs a verification callback that always returns 1, or returns 1 even
-  when the first parameter (preverify_ok) is 0;
-* Intends to check the verification result later using SSL_get_verify_result()
-  in order to abort the connection at that point;
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00131-pax-utils-scanelf-oobread-scanelf_file_get_symtabs
 
-will be lead into thinking that the verification succeeded and thus possibly
-allow connections to peers with invalid certificates, despite this clearly
-not being the intention and in violation of the documentation of the original
-OpenSSL API:
+Timeline:
+2017-01-23: bug discovered and reported to upstream
+2017-01-24: upstream realeased a patch and 1.2.1
+2017-02-01: blog post about the issue
 
-> If verify_callback always returns 1, the TLS/SSL handshake will not be
-> terminated with respect to verification failures and the connection will be
-> established. The calling process can however retrieve the error code of the
-> last verification error using SSL_get_verify_result(3) or by maintaining
-> its own error storage managed by verify_callback. -- [2]
+Note:
+This bug was found with American Fuzzy Lop.
+I’d suggest to go to 1.2.2 because of a functionality bug(s) in 1.2.1
 
-An example of real-world software affected by this is nginx [3], bypassing
-certificate verification entirely and InspIRCd [4], bypassing the option
-of requiring trusted clients upon connect (<connect requiressl="trusted">).
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c
 
-This issue was discovered by Jakub Jirutka <jakub@...utka.cz> from Alpine Linux
-using the nginx automated test suite [5] and further investigated by
-Duncan Overbruck <duncaen@...dlinux.eu> from Void Linux and Shiz <hi@...z.me>
-from Alpine Linux.
-
-Not fixed upstream yet, verified by vendor here [6].
-
-This issue got assigned CVE-2017-8301 [7].
-
-
-## Attack Vectors
-
-Connect to an affected service over TLS using an arbitrary client
-certificate, or an affected client connecting to a service that
-presents an arbitrary server certificate.
-
-
-## References
-
-[1]: https://github.com/libressl-portable/openbsd/commit/ddd98f8ea741a122952185a36c1396c14c2fda74
-[2]: https://wiki.openssl.org/index.php/Manual:SSL_CTX_set_verify(3)
-[3]: https://trac.nginx.org/nginx/ticket/1257
-[4]: https://github.com/inspircd/inspircd/blob/5366dd2abd8fdeecf4a6ff173faf1f241d185628/src/modules/extra/m_ssl_openssl.cpp#L536
-[5]: http://hg.nginx.org/nginx-tests/
-[6]: https://github.com/libressl-portable/portable/issues/307#issuecomment-297469867
-[7]: https://nvd.nist.gov/vuln/detail/CVE-2017-8301
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
