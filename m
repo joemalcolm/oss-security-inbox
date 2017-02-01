@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["754" "Tuesday" "6" "March" "2018" "14:07:43" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhTFmGV=uM0NUxE1Bs5fG3nmMATEOW=bJ6jzO2XzePNaQw@mail.gmail.com>" "25" "[oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash." nil nil nil "3" "2018030604:07:43" "[oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash." (number mark "U       wmealing@red Mar  6   25/754   " thread-indent "\"[oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2 response client crash.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6141" "Wednesday" "1" "February" "2017" "16:09:29" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2630972.8N57SaZZCj@blackgate>" "152" "[oss-security] podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)" nil nil nil "2" "2017020115:09:29" "[oss-security] podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)" (number mark "U       ago@gentoo.o Feb  1  152/6141  " thread-indent "\"[oss-security] podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28152 invoked by uid 550); 6 Mar 2018 04:07:57 -0000
+Received: (qmail 30379 invoked by uid 550); 1 Feb 2017 15:09:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,166 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28119 invoked from network); 6 Mar 2018 04:07:56 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Lc1FGE5Jnr1jGg8Z8GznSyDjFqa2Z2NOXyELVxXmLb4=;
-        b=fzGnGRxZ8jwt2+yWFmJFwzTOjv/Ly3auQJSGlFe663wqQpjiZUDXaf0dx7w1M+6UEm
-         B+3LiztCdXIo4wJX0hDXjoN/W8r5h69X2bkjBjielDBTQqhMUkUQcjKvIVK1kbJYGo7/
-         Ov9w7pAvDd5jLf5q3la8gCETh5Hu9Va32gPBoKwAY4dBnDcwhRJyuqymHT5+0BNYOF1b
-         F0uEwSRmoLAtQ53wgOmIK5wM4OsVCBDIIKJOCnsIANkIIeqaqDqwvHRRWZ+/YByE4sA9
-         1iX4zw9iu7YxpOm2V5590t3v3vuQrukp14geEw6I2Jyk/+jAWHxlNBaZxgz7Anu/xbux
-         puBg==
-X-Gm-Message-State: APf1xPACDxprnyHVbVtKva16G6XMEI1Pg8b8PBMI18y2Hy30PGHik51d
-	I6KmsGn2SdLfiNknvwT4lAOwglDSEKhxcmnWv71Hwu1giNo=
-X-Google-Smtp-Source: AG47ELtrXWLRBawgmVDQYhHVnMUJ1uj4yNVFLezp3RQ44vp1CrgjFPOkA+e4o4vK7wyKFBGk4i+EgeK5l0+VXTPVRS4=
-X-Received: by 10.107.187.65 with SMTP id l62mr20364232iof.1.1520309264254;
- Mon, 05 Mar 2018 20:07:44 -0800 (PST)
-MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Tue, 6 Mar 2018 14:07:43 +1000
-Message-ID: <CALJHwhTFmGV=uM0NUxE1Bs5fG3nmMATEOW=bJ6jzO2XzePNaQw@mail.gmail.com>
+Received: (qmail 30327 invoked from network); 1 Feb 2017 15:09:45 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-1066 : kernel - CIFS - Null pointer dereference in ntlmv2
- response client crash.
+Date: Wed, 01 Feb 2017 16:09:29 +0100
+Message-ID: <2630972.8N57SaZZCj@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)
 
-Gday,
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Dan Aloni reported to Red Hat that there was a flaw in the CIFS client
-implementation in kernel that could cause a null pointer dereference
-and panic the a Linux CIFS client.  It would require the server to
-implement the CIFS protocol incorrectly or momentarily impersonate the
-CIFS server during session recovery (such as when the server was shut
-down, or the network conditions were bad). The attacker would need to
-return an empty "TargetInfo" in the NTLMSSP setup negotiation response
-causing the null pointer dereference when interpreted by the client.
+A fuzz on it discovered an infinite loop. The upstream project denies me to=
+=20
+open a new ticket. So, I=E2=80=99m unable to communicate with them.
 
+The complete ASan output:
 
-Report ( and patch )
+# podofopdfinfo $FILE
+=3D=3D8407=3D=3DERROR: AddressSanitizer: stack-overflow on address 0x7ffcff=
+058fe0 (pc=20
+0x000000425a5f bp 0x6400000003f0 sp 0x7ffcff058fe0 T0)
+    #0 0x425a5e in GenericScopedLock /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_mutex.h:179
+    #1 0x425a5e in __sanitizer::SizeClassAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>::PopulateFreeList(__sanitizer::AllocatorStats=
+*,=20
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
+<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>*, unsigned long, __sanitizer::SizeClassAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>::RegionInfo*) /tmp/portage/sys-devel/llvm-3.9=
+.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:540
+    #2 0x426297 in __sanitizer::SizeClassAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>::AllocateBatch(__sanitizer::AllocatorStats*,=
+=20
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
+<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>*, unsigned long) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:359
+    #3 0x4262f6 in=20
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
+<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>::Refill(__sanitizer::SizeClassAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>*, unsigned long) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1003
+    #4 0x4298ed in=20
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
+<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>::Allocate(__sanitizer::SizeClassAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>*, unsigned long) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:952
+    #5 0x4298ed in=20
+__sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<1055531162=
+66496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap,=20
+__asan::AsanMapUnmapCallback>,=20
+__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64=
+<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>, __sanitizer::LargeMmapAllocator=20
+>::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClas=
+sAllocator64<105553116266496ul,=20
+4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallba=
+ck>=20
+>*, unsigned long, unsigned long, bool, bool) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1324
+    #6 0x4298ed in __asan::Allocator::Allocate(unsigned long, unsigned long=
+,=20
+__sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:368
+    #7 0x50e8b8 in operator new(unsigned long) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_new_delete.cc:78
+    #8 0x7f2e77512621 in PoDoFo::PdfVariant::PdfVariant(PoDoFo::PdfDictiona=
+ry=20
+const&) /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.cpp:151:20
+    #9 0x7f2e77495f6d in PoDoFo::PdfObject::PdfObject(PoDoFo::PdfReference=
+=20
+const&, char const*) /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfObject.cpp:62:7
+    #10 0x7f2e7751dcf8 in=20
+PoDoFo::PdfVecObjects::GetObject(PoDoFo::PdfReference const&) const=20
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVecObjects.cpp:151:15
+    #11 0x7f2e7749afe1 in PoDoFo::PdfObject::GetIndirectKey(PoDoFo::PdfName=
+=20
+const&) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfObject.cpp:237:30
+    #12 0x7f2e77741533 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char=20
+const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:230:26
+    #13 0x7f2e777415a4 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char=20
+const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:232:20
+    [.....]
+    #254 0x7f2e777415a4 in PoDoFo::PdfPage::GetInheritedKeyFromObject(char=
+=20
+const*, PoDoFo::PdfObject const*) const /tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfPage.cpp:232:20
 
-https://patchwork.kernel.org/patch/10187633/
+SUMMARY: AddressSanitizer: stack-overflow /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_mutex.h:179 in GenericScopedLock
+=3D=3D8407=3D=3DABORTING
 
+Affected version:
+0.9.4
 
-RedHat Bugzilla:
+Fixed version:
+N/A
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1539599
+Commit fix:
+N/A
 
-Thanks,
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Wade Mealing
-Red Hat Product Security
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00145-podofo-infiniteloop-PdfPa=
+ge
+
+Timeline:
+2017-01-05: bug discovered
+2017-02-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpa=
+gegetinheritedkeyfromobject-pdfpage-cpp
+
+--=20
+Agostino Sarubbo
+Gentoo Linux Developer
