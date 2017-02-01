@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/5
-Message-ID: <20170112121405.563ee9ee@pc1>
-Date: Thu, 12 Jan 2017 12:14:05 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: invalid free in GNU ed before 1.14.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/19
+Message-ID: <alpine.LFD.2.20.1702012104590.32078@wniryva>
+Date: Wed, 1 Feb 2017 21:06:39 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: scsi: megasas: host memory leakage in megasas_handle_dcmd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+   Hello,
 
-ed 1.14.1 fixes an invalid free, reported here:
-https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
+Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
+emulation support is vulnerable to a memory leakage issue. It could occur 
+while processing MegaRAID Firmware Interface(MFI) command in 
+'megasas_handle_dcmd' routine.
 
-Reproducer:
-echo -e "H\n?\{" | ed
+A privileged user inside guest could use this flaw to leak host memory 
+resulting DoS issue.
 
-Found with afl. ed 1.14.1 didn't show any more issues with afl/asan
-fuzzing.
+Upstream patch:
+---------------
+   -> http://git.qemu.org/?p=qemu.git;a=commit;h=765a707000e838c30b18d712fe6cb3dd8e0435f3
 
-Not sure if there's any scenario where ed is used with untrusted input.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1418342
 
-ed isn't developed in a version control system, therefore I can't link
-to a commit, but the patch to fix it is this:
+This issue was reported by Mr Li Qiang of 360.cn Inc.
 
---- a/regex.c	2017-01-06 02:06:04.000000000 +0100
-+++ b/regex.c	2017-01-09 17:09:51.000000000 +0100
-@@ -135,7 +135,6 @@ static regex_t * get_compiled_regex( con
-     char buf[80];
-     regerror( n, exp, buf, sizeof buf );
-     set_error_msg( buf );
--    free( exp );
-     exp = 0;
-     }
-   return exp;
-
-
-
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
