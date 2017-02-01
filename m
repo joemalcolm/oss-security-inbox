@@ -1,78 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/03/2
-Message-ID: <20170103120642.GA7083@al>
-Date: Tue, 3 Jan 2017 13:06:42 +0100
-From: Peter Wu <peter@...ensteyn.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/7
+Message-ID: <20170201115616.08660970@pc1>
+Date: Wed, 1 Feb 2017 11:56:16 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Ludovic Rousseau <ludovic.rousseau@...e.fr>
-Subject: CVE Request: pcsc-lite use-after-free and double-free
+Subject: Multiple memory access issues in gstreamer
 Content-Type: text/plain; charset=utf-8
 
-Vulnerability type:
-CWE-415, CWE-416
+Hi,
 
-Vendor:
-Muscle
+https://gstreamer.freedesktop.org/releases/1.10/#1.10.3
 
-Affected Versions:
-PCSC-Lite >= 1.6.0, < 1.8.20
+gstreamer 1.10.3 got released, from the release notes:
+"Various fixes for crashes, assertions, deadlocks and memory leaks on
+fuzzed input files and in other situations"
 
-Description:
-PCSC-Lite[1] is a middleware to access a smart card using the SCard API (PC/SC).
-It can be used with GnuPG, OpenSC and others for hardware like the Nitrokey and
-Yubikey. These software use a client library (libpcsclite) which communicate
-with a daemon (pcscd) that actually accesses the hardware.
+Here they are (at least the ones I reported):
 
-The SCardReleaseContext function normally releases resources associated with the
-given handle (including "cardsList") and clients should cease using this handle.
-A malicious client can however make the daemon invoke SCardReleaseContext and
-continue issuing other commands that use "cardsList", resulting in a
-use-after-free.  When SCardReleaseContext is invoked multiple times, it
-additionally results in a double-free of "cardsList".
+https://bugzilla.gnome.org/show_bug.cgi?id=775450
+gst-plugins-good/aacparse: invalid memory read in
+gst_aac_parse_sink_setcaps
 
-The issue allows a local attacker to cause a Denial of Service, but can
-potentially result in Privilege Escalation since the daemon is running as root
-while any local user can connect to the Unix socket.
+https://bugzilla.gnome.org/show_bug.cgi?id=775451
+gst-plugins-good/qtdemux: out of bounds read in qtdemux_tag_add_str_full
 
-Fixed by patch "SCardReleaseContext: prevent use-after-free of cardsList"[2]
-which is released with hpcsc-lite 1.8.20 on 30 December 2016[3].
+https://bugzilla.gnome.org/show_bug.cgi?id=777262
+gst-plugins-base/riff-media: floating point exception in
+gst_riff_create_audio_caps
 
-Credit:
-This issue was discovered and fixed by Peter Wu (peter@...ensteyn.nl).
+https://bugzilla.gnome.org/show_bug.cgi?id=777263
+gstreamer core/datetime: out of bounds read in
+gst_date_time_new_from_iso8601_string()
 
-Additional information:
-The issue is confirmed for:
-Arch Linux (1.8.18-1)
-CentOS 7 (1.8.8-6.el7)
-Debian Jessie (1.8.13-1)
-using the PoC from https://lekensteyn.nl/files/pcscd-doublefree-poc.py
+https://bugzilla.gnome.org/show_bug.cgi?id=777265
+gst-plugins-base/riff: stack overflow in gst_riff_create_audio_caps
 
-    $ python pcscd-doublefree-poc.py run/pcscd.comm
-    [*] Sending SCARD_RELEASE_CONTEXT
-    [*] Request succeeded, possible vulnerable
-    [*] Sending SCARD_RELEASE_CONTEXT (2)
-    [+] Daemon crashed, it is vulnerable!
+https://bugzilla.gnome.org/show_bug.cgi?id=777469
+gst-plugins-good/qtdemux: out of bounds heap read in
+qtdemux_parse_samples
 
-    $ sbin/pcscd --foreground --debug
-    ...
-    00000167 winscard_svc.c:337:ContextThread() Authorized PC/SC client
-    00000011 winscard_svc.c:341:ContextThread() Thread is started: dwClientID=6, threadContext @0x610000007f40
-    00000009 winscard_svc.c:359:ContextThread() Received command: RELEASE_CONTEXT from client 6
-    00000008 winscard.c:226:SCardReleaseContext() Releasing Context: 0x0
-    00000008 winscard_svc.c:470:ContextThread() RELEASE_CONTEXT rv=0x0 for client 6
-    00000088 winscard_svc.c:359:ContextThread() Received command: RELEASE_CONTEXT from client 6
-    00000012 winscard.c:226:SCardReleaseContext() Releasing Context: 0x0
-    =================================================================
-    ==11540==ERROR: AddressSanitizer: heap-use-after-free on address 0x60300000d728 at pc 0x000000410490 bp 0x7f34ab4dd920 sp 0x7f34ab4dd910
-    READ of size 8 at 0x60300000d728 thread T2
-        #0 0x41048f in list_clear src/simclist.c:634
-        #1 0x4108ba in list_destroy src/simclist.c:303
-        #2 0x41843e in MSGRemoveContext src/winscard_svc.c:884
-        #3 0x4194f3 in ContextThread src/winscard_svc.c:468
-        ...
 
- [1]: https://pcsclite.alioth.debian.org/
- [2]: https://anonscm.debian.org/cgit/pcsclite/PCSC.git/commit/?id=697fe05967af7ea215bcd5d5774be587780c9e22
- [3]: http://lists.alioth.debian.org/pipermail/pcsclite-muscle/Week-of-Mon-20161226/000779.html
+https://bugzilla.gnome.org/show_bug.cgi?id=777500
+gst-plugins-good/avidemux: gst_avi_demux_parse_ncdt heap out of bounds
+read
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://bugzilla.gnome.org/show_bug.cgi?id=777502
+gst-plugins-base/samiparse: heap oob in html_context_handle_element
+
+https://bugzilla.gnome.org/show_bug.cgi?id=777503
+gst-plugins-bad/mxfdemux: use after free in gst_mini_object_unref /
+gst_tag_list_unref / gst_mxf_demux_update_essence_tracks
+
+https://bugzilla.gnome.org/show_bug.cgi?id=777525
+gst-plugins-base: floating point exception in gst_riff_create_audio_caps
+(different than #777262)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=777532
+gst-plugins-good/avidemux: invalid memory read in
+gst_avi_demux_parse_ncdt
+
+https://bugzilla.gnome.org/show_bug.cgi?id=777937
+gst-plugins-ugly/asfdemux: invalid memory read in
+gst_asf_demux_process_ext_stream_props()
+
+
+
+And more that didn't make it into 1.10.3:
+
+https://bugzilla.gnome.org/show_bug.cgi?id=777955
+gst-plugins-ugly/asfdemux: out of bounds read in
+gst_asf_demux_process_ext_content_desc
+
+https://bugzilla.gnome.org/show_bug.cgi?id=777957
+gst-plugins-bad/mpegdemux: Invalid memory read in gst_ps_demux_parse_psm
+
+
+(example files are always attached or linked in the bug reports)
+
+I also reported multiple other issues like memory leaks or hangs which
+I consider have no security relevance.
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
