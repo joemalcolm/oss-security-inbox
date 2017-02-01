@@ -1,53 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/7
-Message-ID: <20170111045354.GA9514@sin.redhat.com>
-Date: Wed, 11 Jan 2017 15:23:55 +1030
-From: Doran Moppert <dmoppert@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: python-pysaml2 XML external entity attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/20
+Message-ID: <20170201164321.3c06ae76@pc1>
+Date: Wed, 1 Feb 2017 16:43:21 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Agostino Sarubbo <ago@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: podofo: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-On Jan 10 2017, cve-assign@...re.org wrote:
-> > python-pysaml2 does
-> > not sanitize SAML XML requests or responses:
-> > 
-> >   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
-> 
-> Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
-> parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
+On Wed, 01 Feb 2017 16:35:02 +0100
+Agostino Sarubbo <ago@...too.org> wrote:
 
-> The scope of this CVE does not include the various other issues that
-> may be found in the above references:
-> 
->  - it does not include any aspect of
->    https://bugzilla.gnome.org/show_bug.cgi?id=772726
+> If what I reported here is something already discovered 
+> by you, I would acknowledge you as well into the posts.
 
-This (libxml2 XXE) has already been assigned CVE-2016-9318.
+I just re-checked, seems I reported them on the mailing list back then,
+too:
+https://sourceforge.net/p/podofo/mailman/message/34205419/
 
-I have proposed a(n incomplete) patch on that ticket, but do not have
-sufficient familiarity with libxml2 to be sure it is sound (and thus
-worth completing with proper tests and docs).  If it is, it's possible
-that downstream projects could apply a similar patch in client code
-while remaining compatible with current (unpatched) libxml2.
-
-Even if this gets into libxml2, client code will need to enable a new
-option explicitly to prevent XXE.  There's an argument to make NOXXE
-default behaviour, but this could potentially impact a lot of projects
-that silently rely on some form of external entity resolution.
-
-
->  - it does not include any vulnerabilities in the XML Security Library
->    (xmlsec), such as ones that are now, or previously were, listed at
->    https://github.com/lsh123/xmlsec/issues
-
-xmlsec is exposed to CVE-2016-9318, but considers this a bug in libxml2
-and at present has no plans to provide a workaround.  I expect a CVE
-assignment for xmlsec will only be needed if it is fixed/worked around
-in that project.
-
+And they got fixed, so probably different issues. You may try to post
+your issues to the mailing list, too.
 
 -- 
-Doran Moppert
-Red Hat Product Security
+Hanno Böck
+https://hboeck.de/
 
-Content of type "application/pgp-signature" skipped
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
