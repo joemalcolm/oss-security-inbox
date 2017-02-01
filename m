@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/19/3
-Message-ID: <CACCOJE3K5aEk_frgRr7_pt3T635=9OgnVagn+jOj-v1YetE74A@mail.gmail.com>
-Date: Thu, 19 Jan 2017 14:38:31 +0800
-From: Idler <idler1984@...il.com>
-To: oss-security@...ts.openwall.com, Anarcheuz Fritz <anarcheuz@...il.com>,  cve-assign@...re.org
-Subject: CVE Request - Samsung Exynos GPU driver OOB read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/13
+Message-ID: <5355415.NrOqTsZ7u2@blackgate>
+Date: Wed, 01 Feb 2017 16:11:32 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: podofo: signed integer overflow in PdfParser.cpp
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-I'd like to request CVE for the following security issue:
+A fuzz on it with the UBSAN discovered a signed integer overflow. The upstream 
+project denies me to open a new ticket. So, I’m unable to communicate with 
+them.
 
-Security bulletin: http://security.samsungmobile.com/smrupdate.html#SMR-JAN-2017
+The complete UBSan output:
 
-SVE-2016-6362: out of bound read in gpu driver
+# podofopdfinfo $FILE
+/tmp/portage/app-
+text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:757:23: runtime 
+error: signed integer overflow: 9223372036854775807 + 9 cannot be represented 
+in type 'long'
 
-Severity: Low
-Affected versions: M(6.0), N(7.0) devices with Exynos AP chipsets
-Reported on: May 31, 2016
-Disclosure status: Privately disclosed.
-Vulnerability in gpu driver does not properly check the boundary of
-buffers leading to a possible memory corruption.
-The applied patch avoids an illegal access to memory by checking the boundary.
+Affected version:
+0.9.4
 
-Source code:
-Source code of the affected GPU drivers (as part of the Linux kernel
-source) can be downloaded from Samsung Opensource Resource center:
-http://opensource.samsung.com/
+Fixed version:
+N/A
 
-The particular model of phone we used to reproduce this issue is:
-http://opensource.samsung.com/reception/receptionSub.do?method=sub&sub=F&searchValue=SM-G9200
+Commit fix:
+N/A
 
-License:
-GPL
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
-Thanks.
-James
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00144-podofo-signintoverflow-PdfParser
+
+Timeline:
+2017-01-05: bug discovered
+2017-02-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/podofo-signed-integer-overflow-in-pdfparser-cpp
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
