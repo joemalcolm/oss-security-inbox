@@ -1,46 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/3
-Message-ID: <8a06802e079a484ab1e93eba1be86b9c@imshyb02.MITRE.ORG>
-Date: Thu, 12 Jan 2017 21:51:26 -0500
-From: <cve-assign@...re.org>
-To: <hanno@...eck.de>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: invalid free in GNU ed before 1.14.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/3
+Message-ID: <1903146.QE5K2f7Vg6@blackgate>
+Date: Wed, 01 Feb 2017 10:09:19 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: mp3splt: NULL pointer dereference in free_options (options_manager.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+mp3splt is a command line utility to split mp3 and ogg files without decoding.
 
-> Reproducer:
-> echo -e "H\n?\{" | ed
+A fuzz on it discovered a NULL pointer access.
 
-> regex.c
+The complete ASan output:
 
-> https://lists.gnu.org/archive/html/bug-ed/2017-01/msg00000.html
+# mp3splt -P -f -t 0.1 -a $FILE
+==3026==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000041ea65 bp 0x331bdacc2c238b55 sp 0x7fff34d2c400 T0)                                                                                                                                         
+    #0 0x41ea64 in atomic_compare_exchange_strong /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81                                                          
+    #1 0x41ea64 in 
+__asan::Allocator::AtomicallySetQuarantineFlagIfAllocated(__asan::AsanChunk*, 
+void*, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:468                         
+    #2 0x41ea64 in __asan::Allocator::Deallocate(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*, __asan::AllocType) /tmp/portage/sys-
+devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/asan_allocator.cc:522                                       
+    #3 0x41ea64 in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
+__asan::AllocType) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:725                                                                  
+    #4 0x4d374c in free /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:50                                                                                                                                         
+    #5 0x50db0e in free_options /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/options_manager.c:61:9                                                                                                                                                           
+    #6 0x515623 in free_main_struct /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/data_manager.c:74:7                                                                                                                                                          
+    #7 0x50ffa5 in process_confirmation_error /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/print_utils.c:266:7                                                                                                                                                
+    #8 0x51df29 in main /tmp/portage/media-
+sound/mp3splt-2.6.2/work/mp3splt-2.6.2/src/mp3splt.c:873:9                                                                                                                                                                          
+    #9 0x7f8a687f861f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #10 0x41ad08 in _init (/usr/bin/mp3splt+0x41ad08)                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-
+rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
+atomic_compare_exchange_strong                                          
+==3026==ABORTING
 
->> AddressSanitizer: attempting free on address which was not malloc()-ed
+Affected version:
+0.9.2
 
-Use CVE-2017-5357.
+Fixed version:
+N/A
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Commit fix:
+N/A
 
-iQIcBAEBCAAGBQJYeEBbAAoJEHb/MwWLVhi2hdIP/2rMN3IGuLZtCtyVTrzgrBpp
-sl4OhNcEXzUGurEXVVKEnPrfVmxYN5oh9wSStmEVYJihVnSqM+QjnogbcIEAv/HO
-YvhnDcED/PiQUf++YftLw3phrRetGxYcnYowIsqLQKYjV7pzmog8KvEb/SesKmb3
-tjcyyGRoproc/GHSAsoxR7Ogl0KUHUrlS4f74cUGK+eBj//n5j9vzpsz3IvklrCZ
-xkmMShar9OnnIV6ctmHf9wgRUoJGudn3IJflOWa+jkkGaoTBeqFgeD1ik8zgXTFi
-NDMILwwUTQ+gt2r8UWHqh3oNekbOMCKTP247KEMsZNIj3yWoqAO30z1vvNAFSDF3
-rCmnrizLIRX7eKtpzuLNaoAOV7XNCw5HZrmXnRUMbOyFi/WxK1Ukzk8MyoILr56Z
-LED/+N0CNHy9Ah8dDh+m7k0PwDREoPPSC/L+pSqqk2B8OfJzACrilJZb6oygkdpR
-ijFgki262csSSoiRMxjRU0YOs+rG0NW/QTPxo2MJpot9DhX3Nx9VRplH43k42H2m
-d4dGz6p5VyqxylnIUnRmErd7GhIbsiCc3ANxxuNz3YruNe+lcVtjhTzO3wsO242i
-wmajPlqv6uuOgYMDJY9viWJdzERA+kAJHrnpi1fUNDpOsjkH+80MigQ4dSfNBSEn
-nLRgu4i8m2hr6YWi29Sm
-=m+vX
------END PGP SIGNATURE-----
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00127-mp3splt-nullptr-free_options
+
+Timeline:
+2017-01-01: privately poked upstream about
+2017-02-01: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/01/mp3splt-null-pointer-dereference-in-free_options-options_manager-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
