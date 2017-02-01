@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["81" "Saturday" "29" "April" "2017" "15:48:46" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<6467708.4LXslZihWG@arcadia>" "5" "Re: [oss-security] libming: listmp3: left shift in listmp3.c" nil nil nil "4" "2017042913:48:46" "[oss-security] libming: listmp3: left shift in listmp3.c" (number mark "U       ago@gentoo.o Apr 29    5/81    " thread-indent "\"Re: [oss-security] libming: listmp3: left shift in listmp3.c\"\n") "<2147367.62QfxKV9DH@blackgate>" ("<2147367.62QfxKV9DH@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["534" "Wednesday" "1" "February" "2017" "16:08:01" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<5703568.KIEfz9fMEU@blackgate>" "18" "[oss-security] podofo: multiple crashes" nil nil nil "2" "2017020115:08:01" "[oss-security] podofo: multiple crashes" (number mark "U       ago@gentoo.o Feb  1   18/534   " thread-indent "\"[oss-security] podofo: multiple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24234 invoked by uid 550); 29 Apr 2017 13:49:15 -0000
+Received: (qmail 18411 invoked by uid 550); 1 Feb 2017 15:08:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,20 +12,31 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24051 invoked from network); 29 Apr 2017 13:49:14 -0000
+Received: (qmail 18367 invoked from network); 1 Feb 2017 15:08:18 -0000
 From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Date: Sat, 29 Apr 2017 15:48:46 +0200
-Message-ID: <6467708.4LXslZihWG@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.4.52-gentoo; KDE/4.14.29; x86_64; ; )
-In-Reply-To: <2147367.62QfxKV9DH@blackgate>
-References: <2147367.62QfxKV9DH@blackgate>
+Date: Wed, 01 Feb 2017 16:08:01 +0100
+Message-ID: <5703568.KIEfz9fMEU@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
-Subject: Re: [oss-security] libming: listmp3: left shift in listmp3.c
+Subject: [oss-security] podofo: multiple crashes
 
-This is fixed in the 0.4.8 release.
+Hello all,
+
+I discovered multiple crashes on podofo which is a library that works with the 
+PDF file format.
+
+Unfortunately, I'm unable to open tickets on their sourceforge space because 
+of admin's restriction.
+
+Upstream was poked privately but never answered, so if you have a way to 
+report the bugs I will share here, would be great.
+
+For completeness, since I add the git commit and the fixed version, if you 
+know that something has been fixed, please let me know.
+Thanks in advance
 
 -- 
 Agostino Sarubbo
