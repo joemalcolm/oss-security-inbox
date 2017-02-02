@@ -1,42 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/21/6
-Message-ID: <CAOfWR+E5EBSOe5kbSFh2zwUXKAahDXi6Dpax6dr9FLVkT1pY3g@mail.gmail.com>
-Date: Sat, 21 Oct 2017 15:57:52 -0400
-From: Robert Watson <robertcwatson1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/21
+Message-ID: <1641443.IP7Ml1jyav@blackgate>
+Date: Thu, 02 Feb 2017 12:54:12 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync
+Subject: Re: podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Thank You for tolerating my questions. I've read the wikis and pages
-you've suggested, and am attempting to format this reply as required.
-Please advise if anything is still wrong.
+On Wednesday 01 February 2017 16:13:57 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-p
+> dfinfoguessformat-pdfinfo-cpp
+
+@Mitre,
+
+since you assigned a CVE to the other similar issues in podofo, 
+was it missed or do you think that it is not worthy for a CVE?
+Thanks.
 
 
-On Sat, Oct 21, 2017 at 6:58 AM, Solar Designer <solar@...nwall.com> wrote:
->
->
-> On Fri, Oct 20, 2017 at 11:08:14PM +0000, Robert Watson wrote:
-> > Okay, so a script adds a symlink to /etc/shadow or something else
-> > confidential. Unless they're root, what good does it do them? They can't
-> > read it.
->
-> I think this specific question had already been addressed by Ben in:
->
-> http://www.openwall.com/lists/oss-security/2017/10/18/12
-> ...
+Agostino Sarubbo
+Gentoo Linux Developer
 
-I didn't see how revealing configuration details was anything more
-than "security by obscurity" but that's not a discussion for this
-forum. Mea Culpa.
-
-> While we're at it, I also recommend that you avoid top-posting and
-> over-quoting.  Here's how to format your messages better:
-
-Believe it or not, this is first occasion using the "Plain text"
-feature in the browser version of Gmail and editing the included text.
-Was using Google Inbox on a tablet before. I write programs. Really
-pretty naive when it comes to skillfully using software.
-
-Will use this in the future.
-
-Robert
