@@ -1,53 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/31/2
-Message-ID: <20170731152410.GA8881@openwall.com>
-Date: Mon, 31 Jul 2017 17:24:10 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: sohu0106 <sohu0106@....com>
-Subject: Re: Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/6
+Message-ID: <7e6f78b11fd1464ab075e4b7d8b959e3@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:56:33 -0500
+From: <cve-assign@...re.org>
+To: <pierre.kim.sec@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE requests: OpenBSD httpd - 2 DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 31, 2017 at 04:03:57PM +0100, John Haxby wrote:
-> On 30/07/17 05:47, sohu0106 wrote:
-> > net/irda/af_irda.c
-> > 
-> > Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
-> > userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
-> > 
-> > https://github.com/torvalds/linux/pull/440
-> 
-> Have you requested a CVE for this?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Both messages sohu0106 posted initially had the Subject of "CVE request:
-kernel stack infoleaks", which I changed to the two more specific
-Subjects before approving the messages.  (I do that to especially
-non-descriptive Subjects from time to time, as long as the messages were
-not CC'ed to elsewhere.  I leave message bodies entirely intact.)
+> DoS: Memory exhaustion by sending crafted HTTP requests with Bytes-range.
+> http://marc.info/?l=openbsd-cvs&m=148587359420912&w=2
+> https://github.com/openbsd/src/commit/142cfc82b932bc211218fbd7bdda8c7ce83f19df
 
-Thus, sohu0106 wanted to request the CVEs from this list, and apparently
-didn't request them elsewhere.  sohu0106, this list is no longer a place
-to request CVEs from, but we appreciate the vulnerability notifications.
-You may request the CVEs from https://cveform.mitre.org and then post
-them in here, "replying" to your own messages on the list.
+Use CVE-2017-5850.
 
-sohu0106, have you also reported these issues upstream?  For the
-net/irda/af_irda.c issue, from the MAINTAINERS file:
 
-IRDA SUBSYSTEM
-M:      Samuel Ortiz <samuel@...tiz.org>
-L:      irda-users@...ts.sourceforge.net (subscribers-only)
-L:      netdev@...r.kernel.org
-W:      http://irda.sourceforge.net/
-S:      Maintained
-T:      git git://git.kernel.org/pub/scm/linux/kernel/git/sameo/irda-2.6.git
-F:      Documentation/networking/irda.txt
-F:      drivers/net/irda/
-F:      include/net/irda/
-F:      net/irda/
+> DoS: CPU exhaustion with SSL client-initiated renegotiation,
 
-For the driver/video/fbdev/aty/atyfb_base.c issue I guess it's
-linux-fbdev@...r.kernel.org, although there's no perfect match for that
-filename.  In both cases, CC the messages to LKML.
+Is this a public vulnerability? It does not have any obvious match with the
+latest https://github.com/openbsd/src/commits/master/usr.sbin/httpd commits.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYksb8AAoJEHb/MwWLVhi2SNEQAJJI0g5obeSlVRVpbEFOv9N9
+6DONiCVXnQrM+yvLCS5lxbM3i8Sipzi4IMgm9nWP4rRZ2KyrxnxQChxgc3Ogc7wE
+NvvDadF5OkRv/VFooEroINkx9pO9PelvsC4k+57b/q/mxCi1CT9N6PWbt/K9WmKJ
+KJap6hYzbCpcCsiLl7oqyYC/xzlYWBLkt/41Amsg5SjM2CfZlm8dPJElMuO++LF9
+XYm0+GxbpvoQtApOwvqcTGI57Ip/oi4LFjpzq8tcJI88HTx6cmij232D3zPPNeFg
+R1MsrsiFvjwoh6ltz/VNhEMj1Mtd9ZKcRZjmr2fEsJiX8H659qkI/bwvEdQiLyOB
+xtF2Vlzhpfp7h2ubySdh7JMGQ80xy35s08Rn5NPCLqPVy3n7QcV3yISkL7LJBI+W
+ya1nR4w7y8tZk2q2QCEXYuTL8g1uXy7sPEPYIwKCkDG6MwV4NM993m0UH2cBD9em
+ghWSD9JciaJfmxvPD5WPnVSId62q7DeOQKeci9rR+3J7COitx1qR6RX8v2fM7goz
+NAN1F7eTxk37hmfQnVhmxc4L6x1xFP4UQzBu9AdlWHf0fWECzJwI9wANHn80Xmkz
+iPu9UUwyrp6bkElEmF4Ap0u4uw1Ib7Q/4PsvhMMz2vQi4+7ZsNKiaThuF8Z9na8Q
+ETptVJ36GBgs7OP35yG3
+=WYRf
+-----END PGP SIGNATURE-----
