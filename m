@@ -1,112 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/28/4
-Message-Id: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
-Date: Tue, 28 Nov 2017 14:19:59 +0100
-From: Bram Moolenaar <Bram@...lenaar.net>
-To: Scott Court <z5t1@...1.com>
-Cc: oss-security@...ts.openwall.com, Bram@...lenaar.net
-Subject: Re: Re: Security risk of server side text editing ...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/11
+Message-ID: <452d9ee52081437e940914230d7641db@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:07:10 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: podofo: signed integer overflow in PdfParser.cpp
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Here's the summary you asked for. As far as I've been able to tell,
-> there are three vulnerabilities being discussed here:
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-signed-integer-overflow-in-pdfparser-cpp
+> base/PdfParser.cpp:757:23
+> signed integer overflow: 9223372036854775807 + 9 cannot be represented in type 'long'
 
-Thanks.  I'll give my comments.
+Use CVE-2017-5853.
 
->     1. CVE-2017-1000382
-> 
-> This vulnerability was discovered by Hanno Böck. When editing a text
-> file in Vim, a .swp file is created in the same directory (if you edit
-> "foo", the swap file will be ".foo.swp"). Hanno pointed out that this
-> could create a security vulnerability on PHP enabled webservers as follows:
-> 
-> If a user goes to edit a .php file in the public_html directory (say
-> "foo.php"), a swap file will be created in the public_html directory
-> called ".foo.php.swp". This then exposes the contents of the PHP script
-> foo.php to the world. All someone has to do is go to
-> "http://example.com/.foo.php.swp" and he can view the .swp file which
-> contains the contents of the original foo.php file.
-> 
-> Hanno pointed out that this causes a problem with Wordpress sites if the
-> site administrator edits the wp-config.php file in Vim: he exposes all
-> of the database credentials. This is made worse if Vim crashes while he
-> is editing it as then the .wp-config.php.swp file sticks around. He
-> claims he has found 750 websites that are vulnerable to this.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-This is a problem with the configuration of the web server.  It should
-not publish files it doesn't know about.  The problem also happens for
-any other file manipulation, e.g. "cp file.php file.php.orig" if you
-want to make some temporary changes.  A .orig and .rej file may also
-appear when applying a patch.  There are many other reasons why one
-should not edit files under public_html directly, but have a separate
-work space and only copy those files to public_html that belong there
-(ideally with a script to run tests).
-
-This is defenitely not a problem specific to Vim and it's not going to
-change.
-
- 
->     2. Vim .swp file group (Doesn't have a CVE ID)
-> 
-> This vulnerability was discovered by me. When Vim creates a .swp file,
-> the .swp file is created with the owner and group set to the editor and
-> editor's primary group respectively. The .swp file is the set to the
-> same permissions as the original file (i.e. chmod 640). This creates a
-> security vulnerability when the editor's primary group is not the same
-> as the original file's group.
-> 
-> For example, say the root user's primary group is "users", which every
-> user is a member of. If root goes to edit /etc/shadow, the
-> /etc/.shadow.swp file is created with permissions 640 and user:group set
-> to root:users. The original /etc/shadow file had user:group set to
-> root:shadow though; this now exposes the /etc/shadow file (which mind
-> you contains hashes of every user's password) to every user on the system.
-> 
-> Originally, I thought this was an extension of CVE-2017-1000382 so I
-> didn't bother trying to get a CVE ID for it; however, upon looking at it
-> for a second time, it seems that this is indeed a different
-> vulnerability. It is possible to patch this vulnerability without
-> patching CVE-2017-1000382.
-
-This is a problem with the default group.  If every file that root
-creates is readable by not trusted users, this will happen all the time,
-for any file the root copies or creates.
-
-Anyway, we don't want to give the swap file wider permissions than the
-original file, so this was changed in patch 8.0.1263.
-
->     3. Vim.tiny race condition (Doesn't have a CVE ID as far as I know)
-> 
-> I'm not quite sure who discovered this vulnerability (I don't use or
-> follow vim.tiny); however, it has been discussed on here so I will
-> include my limited knowledge of it for completeness sake. This is a race
-> condition in which a world writable SUID binary is temporarily created.
-> This could (or course) theoretically allow an arbitrary user to write to
-> that binary and execute arbitrary code as root; however, there is debate
-> as to whether or not doing this is actually feasible.
-
-I don't think this is feasible.  There was an example of a symlink
-attack with several steps that are tricky but possible, with the result
-of root creating a world writable config file.  Could also be used to
-truncate an existing file.  This was fixed in patch 8.0.1300.
-
-> I believe these are the three big ones; however, I may have missed
-> something. There has been a lot of discussion about this family of
-> vulnerabilities lately. There are definitely at least these three
-> though. I'm sure if I've missed anything everyone else on this mailing
-> list will be more than happy to let me know.
-
-There was also a race condition in creating the viminfo file, which was
-taken care of in 8.0.1345.
-
-In my opinion all of these are small issues, because they are difficult
-to exploit and require login access to the system in the first place.
-
--- 
-Don't believe everything you hear or anything you say.
-
- /// Bram Moolenaar -- Bram@...lenaar.net -- http://www.Moolenaar.net   \\\
-///        sponsor Vim, vote for features -- http://www.Vim.org/sponsor/ \\\
-\\\  an exciting new programming language -- http://www.Zimbu.org        ///
- \\\            help me help AIDS victims -- http://ICCF-Holland.org    ///
+iQIcBAEBCAAGBQJYksccAAoJEHb/MwWLVhi2KtcP/RPXFhE/48/qEcYDPurBglJ1
+lr8iO0O4kxomYc824syNx3W9DiVPTCl1b/V9w8kmKcYv5ST/Jau+jK8L/Ru1shCA
+munHxDPKJ6aLtbITZClfw8Xaxm4aN+Kw31ymk8p07SDsxnleRtIrD2ycikFuRfE4
+6m9grxkGSSCuom2LKeYQxdvc12WkyXYUXCrPw9j/psGv9qPcVJFbg/HGXRqPlyCX
+b8b4yPj44/e6aIEm+xlIArAdHv13SHm9Y5yD48VKDYsHuN4a29l23MW3C2iUUTpX
+vkW/TVfGY+/posT4UZBaRo79O4Yg7sjwQlWgCA94oyzFdWycQ2jWuBul8dlFsYBv
+oxzJdeohLdzsXnYMHaStfF8V4a1co1sFbrAWsqvpV7ZVaXqqYx6WfWHTRIVjkjZF
+xEW/7y1SSxnX3hHZHO79931OD9IserWTjQdCTXvkI2+ZW5vEJRdn6WLkN8kqeypS
+a+75z5vr+CkY3ilYDiTI4dSq2KHfWrXZkkSHdZd1FQWjlZNElOLQOSAnDEk0zCxr
+sZbkKu0Ik6eS27HsOpqhrobYqujxPiXUwh+MG/7m7zEEOCnL9dbFw7BPOpXKFf7s
+q5AG9gW9J+Y/iSJJ2FHTnkxUp6nbNklYSqrqqYsTL801Ae5l3d0KaCp4UqLhKqhD
+AObpfPPx/2QbA1pZXYIG
+=cD7a
+-----END PGP SIGNATURE-----
