@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1659" "Sunday" "10" "January" "2016" "12:43:58" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160110174358.54BB66C000F@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter" nil nil nil "1" "2016011017:43:58" "[oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter" (number mark "U       cve-assign@m Jan 10   43/1659  " thread-indent "\"[oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter\"\n") "<20160110143712.GA13963@eldamar.local>" ("<20160110143712.GA13963@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1074" "Thursday" "2" "February" "2017" "09:31:30" "+0100" "Pierre Kim" "pierre.kim.sec@gmail.com" "<CADxEXOjnuSxVo=vr4zzQmGcJ5qQE4NtL4HghAgVsbG0nVn+qPw@mail.gmail.com>" "34" "[oss-security] Re: CVE requests: OpenBSD httpd - 2 DoS" nil nil nil "2" "2017020208:31:30" "[oss-security] Re: CVE requests: OpenBSD httpd - 2 DoS" (number mark "U       pierre.kim.s Feb  2   34/1074  " thread-indent "\"[oss-security] Re: CVE requests: OpenBSD httpd - 2 DoS\"\n") "<7e6f78b11fd1464ab075e4b7d8b959e3@imshyb01.MITRE.ORG>" ("<CADxEXOgSQWqbWcQaK9cZjckN+QC-pOXSzdj+meNs5KUEm=jn+g@mail.gmail.com>" "<7e6f78b11fd1464ab075e4b7d8b959e3@imshyb01.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21638 invoked by uid 550); 10 Jan 2016 17:44:10 -0000
+Received: (qmail 3339 invoked by uid 550); 2 Feb 2017 08:42:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21617 invoked from network); 10 Jan 2016 17:44:10 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, dmn@debian.org
-In-Reply-To: <20160110143712.GA13963@eldamar.local>
-Message-Id: <20160110174358.54BB66C000F@smtpvmsrv1.mitre.org>
-Date: Sun, 10 Jan 2016 12:43:58 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: FireBird RDBMS: authenticated clients crash FireBird when running gbak with invalid parameter
+Received: (qmail 29767 invoked from network); 2 Feb 2017 08:31:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sRcJGCpUVb6xDqpX5aZ+p/dUgx0Oyk2LO4CwgT7v9yM=;
+        b=bBqryOkm6XN8Z+SjdUWbTI8pkGjChGy5oNYg2sUu7yS1X1/GOW5CXAXbxnTRwx/C3C
+         +WctQh/lHQJWcCsgU9J2GQukBy7woKpSndE+w88h8r7/ksvYkKl7wiPztVP+da71Isbf
+         Xg848wFg1DKvFhleNjrfq4vefKXFq9FOcBEhaydiOK75ayiET5JvkiO+e2I3ZiqSWatC
+         uRlFfUdS3TILdvCP+3hnWk7cYBECXSn8gEeJo+tw3KGOk5L5X7lOMHaNFDhR05JAa9vA
+         62wSXlpHftFBJYYCQJKIN7fo+DHJ0TpENAkYvKbfoiL9xFa+OyVrelJD4sI3Rq3S3Q5U
+         w4vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sRcJGCpUVb6xDqpX5aZ+p/dUgx0Oyk2LO4CwgT7v9yM=;
+        b=IFmilE83B35WcCaqb9ID8P/FMJnVPTLnJS4S1axVGd21rI2mFu6sjCP4eXs7Is+4fg
+         Lf26jbM7Sw6GK3bpgJ9nBBN/hZtFmQpO7+djl8hsC1xLvxkrhOSV4k+hpDXh/Hr+A4Wb
+         BpbVBnULa7UFE2qLsjhhmMgPJ8Y07O3y97r5S3YKCr+r9LUpLIiYgtrwmo8m3nWAupRs
+         kS/9EF0wtidLOe8sHNWp9apYbOGywND0+IIT6gACmG4Ea+J44jcXt6Dilpe9R/O4sK4N
+         XFAYoDLH9lgKWcdJo8jCuF6eX0CpYHOb4crBwgWbX8sjRje2K8BIbKvakroOKd1A+ucR
+         E+iQ==
+X-Gm-Message-State: AIkVDXJvbXqdd1b0dhMNsE/mTTAzdyt6dq8MWhajIvcYwawD+5v2kpwbSLR8WyB8I/B3r5VckaUbOd1y1hFZhQ==
+X-Received: by 10.202.98.212 with SMTP id w203mr3743590oib.33.1486024291208;
+ Thu, 02 Feb 2017 00:31:31 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <7e6f78b11fd1464ab075e4b7d8b959e3@imshyb01.MITRE.ORG>
+References: <CADxEXOgSQWqbWcQaK9cZjckN+QC-pOXSzdj+meNs5KUEm=jn+g@mail.gmail.com>
+ <7e6f78b11fd1464ab075e4b7d8b959e3@imshyb01.MITRE.ORG>
+From: Pierre Kim <pierre.kim.sec@gmail.com>
+Date: Thu, 2 Feb 2017 09:31:30 +0100
+Message-ID: <CADxEXOjnuSxVo=vr4zzQmGcJ5qQE4NtL4HghAgVsbG0nVn+qPw@mail.gmail.com>
+To: cve-assign@mitre.org
+Cc: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] Re: CVE requests: OpenBSD httpd - 2 DoS
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> The FireBird RDBMS can be crashed remotely by an authenticated client
-> by invoking gbak via the service manager using invalid command line
-> switch and lead to denial of service.
-> 
-> http://tracker.firebirdsql.org/browse/CORE-5068
-> http://sourceforge.net/p/firebird/code/62783/
-> https://bugs.debian.org/810599
+>[...]
 
->> Typo in gbak's command line parameter causes Firebird process to crash
+>> DoS: CPU exhaustion with SSL client-initiated renegotiation,
+>
+>Is this a public vulnerability? It does not have any obvious match with the
+>latest https://github.com/openbsd/src/commits/master/usr.sbin/httpd commits.
 
->> Bug happens only when backup\restore is made using services and when wrong switch is passed. 
+>From OpenBSD team:
 
->>> burp/burp.cpp
->>> - BURP_print(true, 137, sw.c_str());
->>> + BURP_error(137, true, sw.c_str());
+> o High CPU usage is a well-known issue of client-initiated
+> renegotiation.  While this can cause higher than normal CPU usage, the
+> processes are still able to service requests.
+> As httpd uses LibreSSL's libtls, a sane TLS API on top of libssl, we
+> decided to disable client-initiated renegotiation for libtls servers
+> in -current. This change was already planned and has now been
+> committed to LibreSSL.
+>
+> libssl http://marc.info/?l=openbsd-cvs&m=148587695222112&w=2
+> libtls http://marc.info/?l=openbsd-cvs&m=148587827322528&w=2
 
-Use CVE-2016-1569.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If you think it doesn't deserve a CVE, then I will publish the advisory without.
+>From my tests, during an attack, the httpd has some difficulties to
+provide replies to clients.
 
-iQIcBAEBCAAGBQJWkpewAAoJEL54rhJi8gl5JdUP/1Nf5ObCY4KGqcm2AAHx43a0
-8f9TWuE/FVfNNVVsfAHqLRacUte+KHvVCY7+UUiIYsXRymoJeKc+JqaqgDIhBW0L
-0/5FUiDt8YG4eGFLm3jDlfOz8em9Mk2lvOnFxh98rDwjn7HTh/B8rutnbIUeNE8X
-W5pKo/GzO3N68UcSZrJnzy6oPvO2aoWbt1fXiJEnvh9Ff2NEaPkFG4yE3fvPDmLO
-cR6O3ZCVJNhRJMEbayIqwpeTF6susR7BjRQBSB5XXR4weN9ulIXmKb29pJz9Ioqx
-WxrDPvD3Z4LaEMdFRkylEo4lTEiAJQVlSt316xFoqVmh7kPri7DdzJmU7920i7YH
-Gh8lOXO4yzW30ek3jRRs5FBbyrEUPjqwRP2ejnJ7fwB4jQwauSU98yt0MpEztOHr
-I59XcF0TpyEHe3fK8CLdeRMVVBveJKmsbmIUzzA37jLoYoZim1VuQB3CbSQPE7k5
-RBOGUWTa/npMrWkANojT5DTmfGb/oFfsculXDDc1svILWy+CQxxK8/qg4w8Gm+al
-XccUo7ZVV2JeNKX8F7Chmw6jPhWSpJgrl1i7HoXA/DRKUMnM+R13gXbcX/yR+dyO
-VWViItsI/eY/d7LRJ5vP8OHNJuYYxYmTF6dlXWXjemUMs9/m42qBaIzI+hGD9c8d
-iXS62wvm5sQXtNWmIm4P
-=tXFp
------END PGP SIGNATURE-----
+Regards,
+
+-- 
+Pierre Kim
+pierre.kim.sec@gmail.com
+@PierreKimSec
+https://pierrekim.github.io/
