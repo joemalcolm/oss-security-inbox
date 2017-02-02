@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/7
-Message-ID: <20170703181857.GA24978@openwall.com>
-Date: Mon, 3 Jul 2017 20:18:57 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/17
+Message-ID: <CADxEXOjnuSxVo=vr4zzQmGcJ5qQE4NtL4HghAgVsbG0nVn+qPw@mail.gmail.com>
+Date: Thu, 2 Feb 2017 09:31:30 +0100
+From: Pierre Kim <pierre.kim.sec@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE requests: OpenBSD httpd - 2 DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 03, 2017 at 02:51:27PM +0100, John Haxby wrote:
-> What I would say though is that embargoed issues that go on a bug
-> tracker should be not be visible to anyone that doesn't have an actual
-> need to know.  If an internal bug tracker is generally open to anyone
-> internal then for the purposes of embargo it might as well be public.
+Hello,
 
-I think "might as well be public" is an exaggeration, but this would in
-fact be against distros list policy.
+>[...]
 
-> It _should_ be self-evident that "need to know" includes making sure
-> entries in internal bug trackers need to be similarly restricted but I
-> do wonder if it's worth calling that out explicitly?
+>> DoS: CPU exhaustion with SSL client-initiated renegotiation,
+>
+>Is this a public vulnerability? It does not have any obvious match with the
+>latest https://github.com/openbsd/src/commits/master/usr.sbin/httpd commits.
 
-You're right.  I'm not sure.  This isn't the only thing we could call
-out explicitly.  If we start listing examples of what's allowed and
-what's not, then another one or two would be about testing/QA of fixes,
-which Gentoo's internal "Pre-Release Disclosure of Vulnerability
-Information" policy mentions explicitly:
+>From OpenBSD team:
 
-https://wiki.gentoo.org/wiki/Project:Security/Pre-Release-Disclosure
+> o High CPU usage is a well-known issue of client-initiated
+> renegotiation.  While this can cause higher than normal CPU usage, the
+> processes are still able to service requests.
+> As httpd uses LibreSSL's libtls, a sane TLS API on top of libssl, we
+> decided to disable client-initiated renegotiation for libtls servers
+> in -current. This change was already planned and has now been
+> committed to LibreSSL.
+>
+> libssl http://marc.info/?l=openbsd-cvs&m=148587695222112&w=2
+> libtls http://marc.info/?l=openbsd-cvs&m=148587827322528&w=2
 
-I added a link to it to the distros list wiki page yesterday, referring
-to it as an example.
 
-If we include such examples directly in the list policy specification,
-it'd become lengthy and redundant, and I don't want it to be.  Maybe
-this should be a set of examples clarifying yet separate from the list
-policy specification.
+If you think it doesn't deserve a CVE, then I will publish the advisory without.
+>From my tests, during an attack, the httpd has some difficulties to
+provide replies to clients.
 
-> PS For contributing back I have given myself a "must try harder" mark.
+Regards,
 
-Thanks.  Please let us know at which specific tasks you'll try harder.
-
-Alexander
+-- 
+Pierre Kim
+pierre.kim.sec@...il.com
+@PierreKimSec
+https://pierrekim.github.io/
