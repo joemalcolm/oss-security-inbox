@@ -1,65 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/28/3
-Message-ID: <d5fa87a7-b2b0-a8f5-35d6-61b82a1bb9da@gentoo.org>
-Date: Fri, 27 Jan 2017 23:49:09 +0100
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: KARBOWSKI Piotr <piotr.karbowski@...il.com>, oss-security@...ts.openwall.com
-Cc: security-audit@...too.org
-Subject: Re: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/15
+Message-ID: <f5961b71dfd547828623397055e86a78@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:13:43 -0500
+From: <cve-assign@...re.org>
+To: <hanno@...eck.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: podofo: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-On 01/27/2017 10:59 PM, KARBOWSKI Piotr wrote:
-> Hi,
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hi Piotr,
+> https://sourceforge.net/p/podofo/mailman/message/34205419/
+> http://sourceforge.net/p/podofo/code/1672
+> heap overflow in the function ReadXRefSubsection
 
-> The packages in Gentoo often utilizes Portage's functions like keepdir
-> to create a directories, with specified permissions. One of the examples
-> is 'cronbase', which the only purpose is to setup
-> /etc/cron.{hourly,daily,weekly,monthly} and /var/spool/cron.
-> 
-> The /var/spool/cron is meant to have root:cron 750, which makes the
-> crontab usable only for the users that are members of cron group.
-> 
-> As for the /etc/cron.{hourly,daily,weekly,monthly} they're meant to be
-> root:root 750.
-> 
-> If, for instance, a mlocate package will be installed before cronbase,
-> due to installing /etc/cron.daily/mlocate, the /etc/cron.daily will end
-> up with 755 permissions. After than when crontab package is installed,
-> due to usage of portage's keepdir function, the directory in temporary
-> directory will be installed as root:cron 750, but during the merge
-> process to rootfs no directory permissions will be merged, leaving the
-> /etc/cron.daily as 755.
-> 
-> On one system after installing set of packages, the /var/spool/cron
-> ended up being cron:root 755, which results in possibility for any local
-> user to actually create the crontabs (including system users like nginx,
-> mysql, and so on).
-> 
-> The way a (directory) ownership and permissions are handled in Gentoo
-> seems to be flawed, it's not clear to me whatever Portage should
-> provided a soluton to that, or the ebuilds authors should make sure to
-> always depends, in case of touching cronbase directories, on the
-> cronbase package, to ensure that it's installed prior to installing
-> them. Nonetheless I do believe this issue is worth CVE.
-> 
-> -- Piotr.
+Use CVE-2015-8981.
 
-Tracking this in https://bugs.gentoo.org/show_bug.cgi?id=607430
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-please keep in mind that this is already discussed in (at least)
-https://bugs.gentoo.org/show_bug.cgi?id=396153
-https://bugs.gentoo.org/show_bug.cgi?id=141619
-https://bugs.gentoo.org/show_bug.cgi?id=58611
-
-You might want to work with the portage team on a solution
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+iQIcBAEBCAAGBQJYksc5AAoJEHb/MwWLVhi2L68P+gLZAoW7wWrVatCgj1ZwSlAY
+jrcaqQreswFQOe2yTkK4XFJkqk35eRgQCTPtUJnO7FtowLqW2PTGynMOFswLtV2A
+6X+LBpVDAbDb9VgOi/55Zb7CchNr9OPPujMw6GEyn9fP4wLttFQL0IHw+umFtdzB
+4MTDg0vWp/3oBDu5dzHitCHTWX4cGG6NnmjYGgsL7XBqSWpknIxnnG04+lL/YERx
+SzxKCUQN6NpHuU+1n6N485dZaWJhDP2hj7sdEj8wzLZDIJ21O/wMEUjEnpLP8shn
+dreosNrl8FXaxVqFVXEPqPhOCkkbbPkkZ3CtvWy3Vye4pvVrnm4rwRwkFV9Sswsl
+NauJjxGxsicOSWwicy2rL4/83HbJ6RLg+QJG/SOoXfq80UKZvCqxquO9zfR8Gjut
+WCm9qKSBbao0xeSI9TwZGrT7KRoriGe6isqcW8vpMOFllF1DTkxTViCMPnPJ1M0h
+pVUKroGpp/Fw0RYpwiS8qhj9LTyDdu4uosLkyHnFpbuS/Limq0iuvAxx868FamkA
+B5/iiLZUztJ2sJggH5Gqpo1BXUzcarmNdmPJR/ptPEl6No5DgIOrJBuGOYM0oUtE
+U0GGpp4vuvof8Lkvh5JtFhTUKQUKwH3nAZoKYGntJvZuyOa9x4AQcnW9E4Dh5NMi
+7//LWxuMxC2wDeajjK7T
+=yYRH
+-----END PGP SIGNATURE-----
