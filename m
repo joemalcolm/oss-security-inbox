@@ -1,4 +1,9 @@
-Received: (qmail 9512 invoked by uid 550); 29 Apr 2026 19:36:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1273" "Thursday" "2" "February" "2017" "01:08:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6894c38550b74c359fe000e3a47fbdfc@imshyb01.MITRE.ORG>" "31" "[oss-security] Re: podofo: NULL pointer dereference in PdfOutputStream.cpp" nil nil nil "2" "2017020206:08:48" "[oss-security] Re: podofo: NULL pointer dereference in PdfOutputStream.cpp" (number mark "U       cve-assign@m Feb  2   31/1273  " thread-indent "\"[oss-security] Re: podofo: NULL pointer dereference in PdfOutputStream.cpp\"\n") "<1546901.H7UEmAlt5H@blackgate>" ("<1546901.H7UEmAlt5H@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13599 invoked by uid 550); 2 Feb 2017 06:09:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,32 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13904 invoked from network); 29 Apr 2026 17:56:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=default; bh=uNaa39ZdvT
-	tuTzSxu0Ak58BTLnIp5BZN3/vLTqXCGYg=; h=in-reply-to:from:references:to:
-	subject:date; d=allard.it; b=cYL2ea9ZjICA8QTGFlLGScbpndQkYe/N3mR2DuYax
-	vyKIZCG/AsoTcYJ9F0Z82yl3AEq4E9u6l1m+3cQiQ0Cy/FsN8OFmazfiRxz1hmPHZuwiWP
-	32b9YrYOgdA4r3JacoVCMvdI6+4bRplos7Hu+30o6DvqGMTi8EmXTAz8Kpos+HXJKkw3ZP
-	A3vCk28zH4iHudbeUkPKNz+EZiNeYLMos1D4lKbrtGY63dQ0uzmDO4DaTHIlMbXWkl2IFl
-	+MaRWWAqi531uSyED0etxrCHeuKAqoyDR0xRawTAeXBqE8mqEpLsuPeOikB5MsOJvpGlnF
-	AP2ugNvUlZBHMMA9iCmYg==
-Message-ID: <1e1968a6-0f39-468e-ad5e-43a47eaed64c@allard.it>
-Date: Wed, 29 Apr 2026 19:56:42 +0200
+Received: (qmail 13536 invoked from network); 2 Feb 2017 06:09:00 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <1546901.H7UEmAlt5H@blackgate>
+Message-ID: <6894c38550b74c359fe000e3a47fbdfc@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:08:48 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <521d0295-6a93-4a28-be55-332d663ec457@gmail.com> <afI-PPAr7EP8SEsu@1wt.eu>
-From: Renaud Allard <renaud@allard.it>
-In-Reply-To: <afI-PPAr7EP8SEsu@1wt.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+Content-Type: text/plain
+Subject: [oss-security] Re: podofo: NULL pointer dereference in PdfOutputStream.cpp
 
-On 29/04/2026 19:22, Willy Tarreau wrote:
-> Embargoes now play against security, for all the time we don't act,
-> users stay exposed to anyone having the luck to find the same problem.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It has always been like this, embargoes have always been a very poor idea.
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-pdfoutputstream-cpp
+> base/PdfOutputStream.cpp:116:33
+> null pointer passed as argument 2, which is declared to never be null
+
+Use CVE-2017-5854.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYkscmAAoJEHb/MwWLVhi2n5QQALNRqal5Rg2zsFOPzryh+zyD
+f+rk+2P/wXRHWKsTDD36YHrePJWu9f4sdcawq5SLQ5E4dLmqhCkFcKxrlf66Y2b5
+kFDOvNicb/X0CcJ4TLj/XH5J26v3x1CI+sacRU4WuEy7U1yOTqgSuIycrlxysOaQ
+4ze/4RYT6hwkdESM6PHwO2KGEOJ9ZLvMXGJaVtXHEsycqya4FgQlbbHabNhfWBDv
+HRKiUnBukaSmRd+82ZU21u4CmYz/3vDp9vjkWPTnrfZ0kPQlgO+vsanGAd1UZLZu
+nZXb++ApsB3yZm2qJ2LUuMuw6scxfp/baDJtOeRZKq/17DarGSQ/jb2Z+cN5ZEoj
+VAT1AOoPIymK7H46erniJYL1gIsCPq47lmhfVyjBAL3zHAYeMeuPHxBT/lUwYh/I
+5fWi46WL08x1nOo2H6EXkMq76YIEHXMS+SXIf+O7VGGxy46lYS2e0Wucemr/PGGP
+l7hKdY8uPaFsWLMyBDDhTY/2K+wbOSP1JipCxCCc/MMTBqypArtshBwXJoONWGme
+yglZBhO6cjv1dxfidYO+eBzz5lTV6efxaIGoX/DHqZwVoAKL9jsR1UOpRM71DiEY
+KKJmm5xpyJ6CB77Ca042VlxJU5WpH1g26rcTuErnY9D5LNe622ix1//pvZ39cqqz
+yunPm/rZRwmZKIKwikVH
+=DC0Z
+-----END PGP SIGNATURE-----
