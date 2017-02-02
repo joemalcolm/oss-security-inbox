@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/08/6
-Message-ID: <20170508090005.7bdb847b@jabberwock.cb.piermont.com>
-Date: Mon, 8 May 2017 09:00:05 -0400
-From: "Perry E. Metzger" <perry@...rmont.com>
-To: <oss-security@...ts.openwall.com>
-Subject: libetpan: NULL dereference vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/13
+Message-ID: <8619e46d084d47baba68c51d666c5ec3@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:10:01 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
 Content-Type: text/plain; charset=utf-8
 
-A NULL dereference vulnerability has been found in the MIME handling
-code of LibEtPan, a C language mail access and handling library that
-is used in a number of MUAs.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Versions 1.7.2 and earlier are affected.
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
+> AddressSanitizer: SEGV on unknown address 0x0000000000d8
+> podofo-0.9.4/src/base/PdfParser.cpp:772
 
-This bug has been assigned CVE-2017-8825.
+Use CVE-2017-5855.
 
-Hoa Viet Dinh, the author of the library, has released LibEtPan 1.8,
-which fixes the bug. It may be found at:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-https://github.com/dinhviethoa/libetpan/releases
-
-See:
-https://github.com/dinhviethoa/libetpan/issues/274
-for details on the vulnerability.
-
-Upstream users that wish to patch only this particular problem may
-find the fix at:
-
-https://github.com/dinhviethoa/libetpan/commit/1fe8fbc032ccda1db9af66d93016b49c16c1f22d
-
-Thanks to Ryan Whitworth for uncovering this problem with
-American Fuzzy Lop.
-
-
--- 
-Perry E. Metzger		perry@...rmont.com
+iQIcBAEBCAAGBQJYkscsAAoJEHb/MwWLVhi20V4P/RspGoWe2F1kbNHTP1GrHFq1
+EqHsL9aI3gBcVb2fpkdDspdOeoBFOdIv7E1ua5AMRb6uhBc1SFNiMHt/cHRKYPHu
+GQz/Ju9UkhTplmU2jZCAA+p5hV68fI0q6quF5vW7nMCPGJNVihZRfu4E9vr3AEoi
+vxT1vRDPoHxVAKLdxTBlCSkWAbTTzL4OnaMR7c7GQY3X//EqwGKINLYrsThs17pN
+lmYqsTgDM/P61dngmmkjo9NUtd36QqxXlLQbdKTerXugnnY7QreNbxENtGjo+jN0
+Ia98dTVQ1+vBTzhN26wgxx+rufNxX9t47e8u1c8zG+aY4skrnpb3Lb3rGFosWpCO
+s//lch5e0rk9pCuH/qm21HaAICt56XTv9Iuw4jjMaXSKsceyigR6ZUnWnd8lD/UQ
+7Y9XW8ZS2FaP1y4SPT0a5tusf4t48+9MfZq1Xc/b+mwhE2Og4Jn/J9f9qBogMZDN
+eK9vqWxchU7nv1ZwA+dML3VhSMOqoeHMWUA3AwuoowFZLco4HlKvigSo/+/QrE+A
+iuCnbuz/uZAdsV3GuqR5CRr8lIxZ06vbQ8eUqCZg0CuhFrHsbvu4+NCoP9hs4yRg
+k810ls3MQabMNbX+aF+fqfsWo4/i3wSOjrjm6lvipXEjvXtgGvRnyz9L0S3AHptK
+wgLZyQc7yKFA5c0BeYn3
+=4jw5
+-----END PGP SIGNATURE-----
