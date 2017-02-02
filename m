@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1664" "Friday" "25" "August" "2017" "12:15:47" "+0000" "=?utf-8?B?d2luc29ubGl1KOWImOenkSk=?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F712D4B94F@EXMBX-TJ002.tencent.com>" "28" "RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG" "^CC:" nil nil "8" "2017082512:15:47" "[oss-security] CVE Request: Multiple security issues in OpenJPEG" (number mark "        winsonliu@te Aug 25   28/1664  " thread-indent "\"RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1268" "Thursday" "2" "February" "2017" "01:02:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3d6e79c054e549a9962c037935bdb1b0@imshyb01.MITRE.ORG>" "31" "[oss-security] Re: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)" nil nil nil "2" "2017020206:02:48" "[oss-security] Re: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)" (number mark "U       cve-assign@m Feb  2   31/1268  " thread-indent "\"[oss-security] Re: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)\"\n") "<2630972.8N57SaZZCj@blackgate>" ("<2630972.8N57SaZZCj@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 4078 invoked by uid 550); 25 Aug 2017 12:16:01 -0000
+Received: (qmail 15728 invoked by uid 550); 2 Feb 2017 06:03:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4054 invoked from network); 25 Aug 2017 12:16:00 -0000
-Thread-Topic: [oss-security] CVE Request: Multiple security issues in
- OpenJPEG
-Thread-Index: AdMdm9LZkvpT+9uJR0OOB9s4cG/cRQ==
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4B94F@EXMBX-TJ002.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.8]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-CC: cve-assign <cve-assign@mitre.org>
-Date: Fri, 25 Aug 2017 12:15:47 +0000
-From: =?utf-8?B?d2luc29ubGl1KOWImOenkSk=?= <winsonliu@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: RE: [oss-security] CVE Request: Multiple security issues in OpenJPEG
-To: Vladis Dronov <vdronov@redhat.com>, "oss-security@lists.openwall.com"
-	<oss-security@lists.openwall.com>, Alan Coopersmith
-	<alan.coopersmith@oracle.com>
+Received: (qmail 15647 invoked from network); 2 Feb 2017 06:03:00 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <2630972.8N57SaZZCj@blackgate>
+Message-ID: <3d6e79c054e549a9962c037935bdb1b0@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:02:48 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)
 
-SGVsbG8sDQoNCkknbGwgc3VibWl0IHRoZW0gdG8gY3ZlZm9ybSBuZXh0IHdl
-ZWsuIEFuZCBJJ2xsIHVwZGF0ZSB0aGlzIHRocmVhZCB3aGVuIG1vcmUgaW5m
-b3JtYXRpb24gaXMgYXZhaWxhYmxlLg0KDQpSZWdhcmRzLA0KS2UNCg0KLS0t
-LS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IHdpbnNvbmxpdSjliJjn
-p5EpIA0KU2VudDogMjAxN+W5tDjmnIgyNOaXpSA5OjI2DQpUbzogJ1ZsYWRp
-cyBEcm9ub3YnIDx2ZHJvbm92QHJlZGhhdC5jb20+OyBvc3Mtc2VjdXJpdHlA
-bGlzdHMub3BlbndhbGwuY29tOyAnQWxhbiBDb29wZXJzbWl0aCcgPGFsYW4u
-Y29vcGVyc21pdGhAb3JhY2xlLmNvbT4NCkNjOiBjdmUtYXNzaWduIDxjdmUt
-YXNzaWduQG1pdHJlLm9yZz4NClN1YmplY3Q6IFJFOiBbb3NzLXNlY3VyaXR5
-XSBDVkUgUmVxdWVzdDogTXVsdGlwbGUgc2VjdXJpdHkgaXNzdWVzIGluIE9w
-ZW5KUEVHDQoNCkknbSBhZnJhaWQgbm8gQ1ZFcyB3ZXJlIGFzc2lnbmVkLiBB
-dCBsZWFzdCBJIGRpZCBub3Qgc3VibWl0IHRoZXNlIGlzc3VlcyB0byBodHRw
-czovL2N2ZWZvcm0ubWl0cmUub3JnLyANCg0KUmVnYXJkcywNCktlDQoNCi0t
-LS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBWbGFkaXMgRHJvbm92
-IFttYWlsdG86dmRyb25vdkByZWRoYXQuY29tXSANClNlbnQ6IDIwMTflubQ4
-5pyIMjPml6UgMTk6NTMNClRvOiBvc3Mtc2VjdXJpdHlAbGlzdHMub3Blbndh
-bGwuY29tDQpDYzogd2luc29ubGl1KOWImOenkSkgPHdpbnNvbmxpdUB0ZW5j
-ZW50LmNvbT47IGN2ZS1hc3NpZ24gPGN2ZS1hc3NpZ25AbWl0cmUub3JnPg0K
-U3ViamVjdDogUmU6IFtvc3Mtc2VjdXJpdHldIENWRSBSZXF1ZXN0OiBNdWx0
-aXBsZSBzZWN1cml0eSBpc3N1ZXMgaW5PcGVuSlBFRyhJbnRlcm5ldCBtYWls
-KQ0KDQo+IE1vc3Qgb2YgdGhlc2Ugc2VlbSB0byBiZSBmaXhlZCBub3cgaW4g
-T3BlbkpQRUcncyByZWNlbnQgMi4yLjAgcmVsZWFzZS4NCj4gRGlkIENWRSBp
-ZCdzIGV2ZXIgZ2V0IGFzc2lnbmVkIGZvciB0aGVtPw0KDQpJZiBubyBvbmUg
-cmVwb3J0ZWQgdGhlbSBhbmQgcmVxdWVzdGVkIENWRS1pZHMgdmlhIGh0dHBz
-Oi8vY3ZlZm9ybS5taXRyZS5vcmcvIHRoZW4gSSBzdXBwb3NlIG5vdCwgbm8g
-Q1ZFLWlkcyB3ZXJlIGFzc2lnbmVkLg0KDQpCZXN0IHJlZ2FyZHMsDQpWbGFk
-aXMgRHJvbm92IHwgUmVkIEhhdCwgSW5jLiB8IFByb2R1Y3QgU2VjdXJpdHkg
-RW5naW5lZXINCg0K
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp
+> AddressSanitizer: stack-overflow
+> podofo-0.9.4/src/base/PdfVariant.cpp:151:20
+
+Use CVE-2017-5852.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYkscVAAoJEHb/MwWLVhi2hy4P/1YzMOcoVFBE7j0E1WraZt9p
+WZmGqpJMH/5IPc+cFMn/wGnMPssMn3G+mMOp9u1/f6+dqhSaShM7kBE2U3tYuLsX
+trcvaH3cxQy39uAxje2JUZ32de4s4fYoAJnydN4fCDLVtLK7DgRRwmB0LN8xbB9r
+D8eC16ISD2WBbqWshkW+w8cjIqZ6B+hOl4Z7iJDgYvm5YF/oXt3h8p8pjnnvlbd+
+BGKbukI59xcqamyxQmftO+14BcrjJBGgOHN8V8Xu8uf7JppS50FS4IAYk5ikV4eZ
+WEDuZNIey9vuxIAFY29yPc4ZfQYu7ngCGeSgXSAqKLYyUlcrTnLBDRxxuCyhd65V
+ul03poDIG/6kAF7zjFA6sKSVNhpRPOoRNTTqvrEXSKZK7GxqYNlHXQM/gtXjF2rY
+ZpWaXeaGBnHKOOxCWjdErZfriIB91Cd2UBiSSUw1kmF46uthFcuhUhQCVhSA2MVa
+jX9LkI6gKrdAZjDu8IND9sDHxZiiUtL/QX4zeIh80ZtDVD7HfDp+ukZRKRz3d1Me
+rdHOcQWkEGiZFwi4ErJ3LBr2oSag1DDR89jgCo3euu4LqCZ9ighv1WQkc8sGVnO1
+qsboBNp+eXYf9aCzMl/tNA5qp6qmefowOCFxqE1476QP6PRuDG10F/XisQRjeGJq
+hzk+CuS03nK65fnN+Vu8
+=2dWy
+-----END PGP SIGNATURE-----
