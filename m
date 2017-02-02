@@ -1,4 +1,9 @@
-Received: (qmail 24399 invoked by uid 550); 28 Jan 2025 09:47:18 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["513" "Thursday" "2" "February" "2017" "12:54:12" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1641443.IP7Ml1jyav@blackgate>" "22" "Re: [oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)" nil nil nil "2" "2017020211:54:12" "[oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)" (number mark "U       ago@gentoo.o Feb  2   22/513   " thread-indent "\"Re: [oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)\"\n") "<5047388.q5AdsWxC1J@blackgate>" ("<5047388.q5AdsWxC1J@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30138 invoked by uid 550); 2 Feb 2017 11:54:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,68 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24371 invoked from network); 28 Jan 2025 09:47:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1738057628;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9Fa9Gn2j6uwU2eerTqX1yvVSQJ17+O0mUDbHeKKK0s8=;
-	b=GHmrFGEmf4BvMnjxejYTexSXwwOFu3Y8XfrJu+PIp9kX7k6zIn01d9VIbR7HQmouOzsGsM
-	NbVViiz/gyhGOa23JuXjK73PAbMXaUB5L7J0IlBHCcUdMLtfiq6ysR3kcHuKRL8np0GCE5
-	wGS/nhe6cHuVO1SYKly5Y3EQFqMQEsQ=
-X-MC-Unique: QUCZuTIQOP-HcrGeVw5ryw-1
-X-Mimecast-MFC-AGG-ID: QUCZuTIQOP-HcrGeVw5ryw
-From: Florian Weimer <fweimer@redhat.com>
-To: Pete Allor <pallor@redhat.com>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <CAEFCzXXNvs6vLnqv+1y4Ob9=j9CHms5LMYHkXBQhcOcwd_0T-w@mail.gmail.com>
-	(Pete Allor's message of "Mon, 27 Jan 2025 18:02:35 -0500")
-References: <Z4__rJ3_SmmtEIsG@netmeister.org>
-	<0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
-	<2025012512-likely-strainer-4e6d@gregkh>
-	<CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
-	<87bjvssr2k.fsf@oldenburg3.str.redhat.com>
-	<CAEFCzXXNvs6vLnqv+1y4Ob9=j9CHms5LMYHkXBQhcOcwd_0T-w@mail.gmail.com>
-Date: Tue, 28 Jan 2025 10:47:01 +0100
-Message-ID: <87sep3jmne.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 30117 invoked from network); 2 Feb 2017 11:54:33 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Thu, 02 Feb 2017 12:54:12 +0100
+Message-ID: <1641443.IP7Ml1jyav@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <5047388.q5AdsWxC1J@blackgate>
+References: <5047388.q5AdsWxC1J@blackgate>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: cumA0TJcKTZKXEt03qJXDJzxcdkY66ovoQMrzzqSDS8_1738057626
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Node.js EOL CVEs: CVE-2025-23087,
- CVE-2025-23088, CVE-2025-23089
+Content-Type: multipart/alternative; boundary="nextPart2612744.meQXf7C0B0"
+Content-Transfer-Encoding: 7Bit
+Subject: Re: [oss-security] podofo: NULL pointer dereference in PdfInfo::GuessFormat (pdfinfo.cpp)
 
-* Pete Allor:
+--nextPart2612744.meQXf7C0B0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-> It is why I would advocate for a CVSS review (as we do at Red Hat) and
-> then assign a 'Severity Rating' as that now involves how the component
-> is used within our software which changes HOW a
-> customer/downstream/user should actually view that CVE.
+On Wednesday 01 February 2017 16:13:57 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-p
+> dfinfoguessformat-pdfinfo-cpp
 
-But is this really how it works these days?  For example, if we use a
-component to render the in-program documentation (traditionally called
-=E2=80=9Conline help=E2=80=9D, but we would consider this offline today), a=
-nd the
-upstream for this component documents publicly that a vulnerability is
-being actively exploited for (user-initiated) remote code execution, we
-must fix the component even if it's just used in an offline
-documentation viewer.  CVSS impact review does not change that, as far
-as I know.
+@Mitre,
 
-Hence the suggestion of a fork, so that upstream's exploitation
-announcements do not carry over 1:1 to the product.
+since you assigned a CVE to the other similar issues in podofo, 
+was it missed or do you think that it is not worthy for a CVE?
+Thanks.
 
-I think this fix-regardless-of-impact requirement is new.
-Legitimate-looking sources for inflated impact ratings have been around
-for more than a decade, on the other hand.
 
-Thanks,
-Florian
+Agostino Sarubbo
+Gentoo Linux Developer
+
+--nextPart2612744.meQXf7C0B0--
 
