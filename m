@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["707" "Wednesday" "30" "August" "2017" "15:34:51" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1708301533140.5404@wniryva>" "23" "[oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during display update" nil nil nil "8" "2017083010:04:51" "[oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during display update" (number mark "U       ppandit@redh Aug 30   23/707   " thread-indent "\"[oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during display update\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1296" "Thursday" "2" "February" "2017" "01:10:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8619e46d084d47baba68c51d666c5ec3@imshyb01.MITRE.ORG>" "31" "[oss-security] Re: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)" nil nil nil "2" "2017020206:10:01" "[oss-security] Re: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)" (number mark "U       cve-assign@m Feb  2   31/1296  " thread-indent "\"[oss-security] Re: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)\"\n") "<3276079.yIt2lEYvmd@blackgate>" ("<3276079.yIt2lEYvmd@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11619 invoked by uid 550); 30 Aug 2017 10:05:43 -0000
+Received: (qmail 25662 invoked by uid 550); 2 Feb 2017 06:10:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10177 invoked from network); 30 Aug 2017 10:05:06 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 0445C4A707
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=ppandit@redhat.com
-Date: Wed, 30 Aug 2017 15:34:51 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: David Buchanan <d@vidbuchanan.co.uk>
-Message-ID: <nycvar.YSQ.7.76.1708301533140.5404@wniryva>
+Received: (qmail 24525 invoked from network); 2 Feb 2017 06:10:13 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <3276079.yIt2lEYvmd@blackgate>
+Message-ID: <8619e46d084d47baba68c51d666c5ec3@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:10:01 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 30 Aug 2017 10:04:55 +0000 (UTC)
-Subject: [oss-security] CVE-2017-13673 Qemu: vga: reachable assert failure during during
- display update
+Content-Type: text/plain
+Subject: [oss-security] Re: podofo: NULL pointer dereference in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Quick emulator(Qemu) built with the VGA display emulator support is vulnerable 
-to an assert failure issue. It could occur while updating graphics display, 
-due to miscalculating region for dirty bitmap snapshot in split screen mode.
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
+> AddressSanitizer: SEGV on unknown address 0x0000000000d8
+> podofo-0.9.4/src/base/PdfParser.cpp:772
 
-A privileged user/process inside guest could use this flaw to crash the Qemu 
-process on the host resulting in DoS.
+Use CVE-2017-5855.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04685.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486588
-
-This issue was reported by David Buchanan.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+iQIcBAEBCAAGBQJYkscsAAoJEHb/MwWLVhi20V4P/RspGoWe2F1kbNHTP1GrHFq1
+EqHsL9aI3gBcVb2fpkdDspdOeoBFOdIv7E1ua5AMRb6uhBc1SFNiMHt/cHRKYPHu
+GQz/Ju9UkhTplmU2jZCAA+p5hV68fI0q6quF5vW7nMCPGJNVihZRfu4E9vr3AEoi
+vxT1vRDPoHxVAKLdxTBlCSkWAbTTzL4OnaMR7c7GQY3X//EqwGKINLYrsThs17pN
+lmYqsTgDM/P61dngmmkjo9NUtd36QqxXlLQbdKTerXugnnY7QreNbxENtGjo+jN0
+Ia98dTVQ1+vBTzhN26wgxx+rufNxX9t47e8u1c8zG+aY4skrnpb3Lb3rGFosWpCO
+s//lch5e0rk9pCuH/qm21HaAICt56XTv9Iuw4jjMaXSKsceyigR6ZUnWnd8lD/UQ
+7Y9XW8ZS2FaP1y4SPT0a5tusf4t48+9MfZq1Xc/b+mwhE2Og4Jn/J9f9qBogMZDN
+eK9vqWxchU7nv1ZwA+dML3VhSMOqoeHMWUA3AwuoowFZLco4HlKvigSo/+/QrE+A
+iuCnbuz/uZAdsV3GuqR5CRr8lIxZ06vbQ8eUqCZg0CuhFrHsbvu4+NCoP9hs4yRg
+k810ls3MQabMNbX+aF+fqfsWo4/i3wSOjrjm6lvipXEjvXtgGvRnyz9L0S3AHptK
+wgLZyQc7yKFA5c0BeYn3
+=4jw5
+-----END PGP SIGNATURE-----
