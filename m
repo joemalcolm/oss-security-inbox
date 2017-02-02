@@ -1,22 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/8
-Message-Id: <F4BD9382-D7C5-4322-BCDA-F555472B08F9@apache.org>
-Date: Mon, 17 Apr 2017 16:13:04 -0700
-From: Bryan Call <bcall@...che.org>
-To: dev <dev@...fficserver.apache.org>, users@...fficserver.apache.org, announce@...fficserver.apache.org, security@...fficserver.apache.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, persia@...che.org
-Subject: [ANNOUNCE] Chunking and content-length vulnerability in ATS - CVE-2017-5659
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/8
+Message-ID: <51f7a1977f294a68846e574193cabf17@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:59:24 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: mp3splt: NULL pointer dereference in free_options (options_manager.c)
 Content-Type: text/plain; charset=utf-8
 
-There is a vulnerability in ATS with chunking and content-length that can lead to a DoS attack.  Versions 6.2.0 and prior are affected.  Please upgrade to ATS 6.2.1 or 7.0.0.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Downloads:
-	https://trafficserver.apache.org/downloads
+> https://blogs.gentoo.org/ago/2017/02/01/mp3splt-null-pointer-dereference-in-free_options-options_manager-c
+> 
+> AddressSanitizer: SEGV on unknown address 0x000000000000
+> 
+> free_options ... mp3splt-2.6.2/src/options_manager.c:61:9
 
-Jira Ticket:
-	https://issues.apache.org/jira/browse/TS-4819
+Use CVE-2017-5851.
 
-CVE:
-	https://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-5659
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
--Bryan
+iQIcBAEBCAAGBQJYkscIAAoJEHb/MwWLVhi2QuMQAI1wmYRXOAdKbWAu3qbjyjAb
+T6US40viwx/oHi6vz/LMSeZOEOdBpCVb+p67SoZbCWtKVPkBDBdoQX6luiMM64Or
+mkR1rzVD99EX+9LrNM6SGVn1JM3O/9G3WYMnPx7fkXldic/1hx826fXlV8fzQ0VN
+mzxPSi60y62c9FE9oacn9gcyasI678uKkEKeEA8WzJckkyRTDkvL/See/V7krPo8
+GhGy1M5yh+SUK2v5h5bgM4vgSzKECfKSeIqFS3Ziv0exOltoBmHU85HB+dDHQeLr
+Zg+sQeTwn6lJ23K+lr63gQNiPW2V9zuqpK5HSsA4wP56Ri/HFh+bKJfH13Y9THdU
+K0ErdvQI/29qC/FnSYpGnWmLByQWCNCBl7wjFu9fWvYz7wdNeCmnWSONoU44U2PY
+p5ueXHMQHVenw5+R9a/NwsSZjo2bx9qvTnGWqtptBuw/Lo4XoVhlqu5lMd8qAzoy
+pQXL9ufZU7EsMZkY97SkVhe0BumTnNhzama6gJD13EaaqSw1xSJF0qrL5cbFmY01
+RsmkN+N2nsA8CNZddEkbpo2nU/DhKIs+lphd3n7alUT8x5kIfvbCP5V5cUuDdhzU
+aia9elERz3ZTiJHYoa9bzjiQOaqcZmiM+IEo5S0R/eZYDZE8eAw5AiKMIzKDVbaX
+w6TyohVjszylCxwbnomj
+=E74c
+-----END PGP SIGNATURE-----
