@@ -1,49 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/17/6
-Message-ID: <CAO5O-E+EWmdjwLEkwnD4moZdZxh2ikj8dkynwq7WJSGKbCXz6A@mail.gmail.com>
-Date: Mon, 17 Jul 2017 15:09:53 +0200
-From: Guido Vranken <guidovranken@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: 11 remote vulnerabilities (inc. 2x RCE) in FreeRADIUS packet parsers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/4
+Message-ID: <3c8af77457d54e9181fa84bb9646ce40@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:52:34 -0500
+From: <cve-assign@...re.org>
+To: <nikola.sc@...mail.me>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: multiples vulnerabilities in libplist
 Content-Type: text/plain; charset=utf-8
 
-"FreeRADIUS is the most widely deployed RADIUS server in the world. It
-is the basis for multiple commercial offerings. It supplies the AAA
-needs of many Fortune-500 companies and Tier 1 ISPs. "
-(http://freeradius.org)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-FreeRADIUS asked me to fuzz their DHCP and RADIUS packet parsers in
-version 3.0.x (stable branch) and version 2.2.x (EOL, but receives
-security updates). 11 distinct issues that can be triggered remotely
-were found.
+> [] heap-buffer-overflow in parse_dict_node
+> https://github.com/libimobiledevice/libplist/issues/89
 
-The following is excerpted from
-freeradius.org/security/fuzzer-2017.html which I advise you to consult
-for more detailed descriptions of the issues at hand.
+Use CVE-2017-5834.
 
-"There are about as many issues disclosed in this page as in the
-previous ten years combined."
 
-v2, v3: CVE-2017-10978. No remote code execution is possible. A denial
-of service is possible.
-v2: CVE-2017-10979. Remote code execution is possible. A denial of
-service is possible.
-v2: CVE-2017-10980. No remote code execution is possible. A denial of
-service is possible.
-v2: CVE-2017-10981. No remote code execution is possible. A denial of
-service is possible.
-v2: CVE-2017-10982. No remote code execution is possible. A denial of
-service is possible.
-v2, v3: CVE-2017-10983. No remote code execution is possible. A denial
-of service is possible.
-v3: CVE-2017-10984. Remote code execution is possible. A denial of
-service is possible.
-v3: CVE-2017-10985. No remote code execution is possible. A denial of
-service is possible.
-v3: CVE-2017-10986. No remote code execution is possible. A denial of
-service is possible.
-v3: CVE-2017-10987. No remote code execution is possible. A denial of
-service is possible.
-v3: CVE-2017-10988. No remote code execution is possible. No denial of
-service is possible. Exploitation does not cross a privilege boundary
-in a correct and realistic product deployment.
+> [] memory allocation error
+> https://github.com/libimobiledevice/libplist/issues/88
+
+Use CVE-2017-5835.
+
+
+> [] issue in plist_free_data plist.c:185
+> https://github.com/libimobiledevice/libplist/issues/86
+
+Use CVE-2017-5836.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYksbsAAoJEHb/MwWLVhi2rGUQAKodAn16yldAnWkPkpBE5pEr
+r1/v83CCzMhnlA4UyBjpPXi4hXuUJzW8epmMCPNpgGyvc/4QV4SYOM9pymd+QoLk
+iXnWolB4tKszk3vquL81P871rXzkWHNNIybWpKsPCDRXjoAKJxicma3Rmk8otBWd
+fzH8gBUQtShmMojeewPtGZWTubX15sCfXGp7YHczmcSj3k+XdsYf9rfYI5BFaue9
+TFypQYqnkCzpkDf/aB7cA3p4kmHieRtkhceY7L2WuP+/kOQ24ABt8y4AJdspA/uH
+ufVUgJwWe5/EVJjQDMJCIip5vfJMCTlg1ngz23NcaEhSRQl26zg9nqpDJpLrY+ck
+ja22LUfVIbFuZLsj94rl65bMY4sGNXb0VkNSeBIg/HP9ZfiFZPY02uMI0IdIy+6t
+T4/HnAUWxdSky9GjlCPl/8kPU5o9O7DRZTiYXbYnYKL/0jKXIHNpJIJVUCq3l8Ty
+nH9OwlVBCnq6pcQCIAcwsf5uhgzusjItF2+ufAHL9GeGBN5DtGQP1aAt7b6qEFeC
+6ociWZT9megQgGxI/QC+yty75BWszxQw7muqYaEKHUmI3FS/Mu9k53LyM+j+jukd
+AIaieeDbNvKzNTM77ECYX5BirD7S8ESb56gyLydt+x2LbtkW9W2Z/6gd8gLbAYEu
+ulBMECeaiMBpWZWXOfpp
+=Kyb9
+-----END PGP SIGNATURE-----
