@@ -1,66 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/3
-Message-ID: <59519DCF.16680.8BD89DD3@pageexec.freemail.hu>
-Date: Tue, 27 Jun 2017 01:50:39 +0200
-From: "PaX Team" <pageexec@...email.hu>
-To: oss-security <oss-security@...ts.openwall.com>, kseifried@...hat.com
-CC: spender@...ecurity.net
-Subject: Re: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit meth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/2
+Message-ID: <53d3fa6071944c4cabf555a4d5741b38@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:49:41 -0500
+From: <cve-assign@...re.org>
+To: <chunibalon@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Out-of-Bound read and write issues in put1bitbwtile()(tiff-4.0.7/libtiff/tif-getimage.c:1352) and putgreytile()(tiff-4.0.7/libtiff/tif-getimage.c:1288)
 Content-Type: text/plain; charset=utf-8
 
-On 26 Jun 2017 at 16:59, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> they are in netpbm(10.47.63)
+
+> http://bugzilla.maptools.org/show_bug.cgi?id=2654
+> http://bugzilla.maptools.org/show_bug.cgi?id=2655
+
+> netpbm calls TIFFRGBAImageGet with width and
+> height parameters switched because it looks at the TIFF orientation tag and
+> thinks that TIFFRGBAImageGet will do a transposition
 > 
-> On 2017-06-26 3:50 PM, PaX Team wrote:
-> > On 26 Jun 2017 at 13:47, Kurt Seifried wrote:
-> >
-> >> I think we can agree as a community of professionals that insults and name
-> >> calling are unnecessary and also not very effective.
-> > I completely agree with you but then I can't explain why you chose to insult
-> > our projects last week and still have not remedied it (both the CVE and your
-> > insulting tweet are still up). I find it curious how you can preach about
-> > professionalism after being the very instigator of the recent splat (heck,
-> > instead of answering, you called it a conspiracy theory when I asked you in
-> > private why you issued the CVE to begin with which then forced us to take
-> > the issue public).
-> So as per the private email thread we had previously I'm not going to be
-> interacting with you beyond what is strictly neccesary for CVE and other
-> professional purposes.
+> assumption is violated here when switching width and height as the width passed
+> to TIFFRGBAImageGet becomes 32800 which is greater than the original width of
+> 32
 
-Since your professional job is to issue CVEs and you did so in our case based
-on an erroneous judgement call, I believe it falls into this category.
+Use CVE-2017-5849 for both 2654 and 2655.
 
-> One the CVE REJECT side, CVE-2017-1000377 looks legitimate,
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-You have yet to explain why it is so. The Qualys advisory and their explicit
-reject requests state the exact opposite.
-
-> although I'm inclined to agree with Qualys and REJECT it so that you stop emailing.
-
-I will stop emailing you when you live up to your professional obligation
-and make sure that the CVE you issued in error is rescinded.
-
-> I did contact MITRE, I haven't had time to reply to them yet (they are
-> also wondering why the CVE needs REJECT'ing), as such I think it may be
-> best to recuse myself from this specific CVE and let you handle this
-> with MITRE. I have also previously told you how to go about doing this.
-
-You said that the requestor has to ask for the rejection. Since you are the
-requestor, only you can do so though you tried to drag Qualys into this.
-They still made the reject request a week ago but you haven't acted on it
-yet despite your promise to do so. Now you're telling us that we have yet
-something else to do? Please elaborate as your past communications didn't
-explain any further.
-
-> I will say that CVE identifiers doesn't just cover full code execution
-> flaws, but also covers situations where for example a security property
-> is claimed but is not as effective as we thought (e.g. the stackguard
-> page size in this case). Many CVE's are not fully exploitable on their
-> own but are part of an exploit chain.
-
-What security property did we claim for the kernel enforced heap-stack
-gap size? Can you recite anything we said anywhere about that supports
-your claim?
-
-cheers,
-  PaX Team
-
+iQIcBAEBCAAGBQJYksbdAAoJEHb/MwWLVhi2mgoP/j2QykW5WoefH+BF9ah0jCGD
+KoDC6fM9Xcz5dH0pr3bYSDC6X8nwUJKmRCRZSNJ1Y4ATP4JmqoG7kLcZNxF1q1YK
+l9cWoqdn14JpiLH125y5IcQTbMjsIU4ED2OnfJ65u3vuRizyDmmsrcWHExcFGjS5
++EJmZK1CLsStTZTNBlxc3m2/aObxSTYR5eFvgza1Regk2q+GmIZWQd3VRQBuMDAm
+nK32FOWt4Ace9djcxrqkWz4+bdz70JoQZaBBloe/DFkqwE3/TBBbWMf+bn584vLr
+nP7gxrjfI9M/B2/Ac7WBT8POw//bo25C0X0LJlSnLjVmIiTcXjGnlMe87thNHJkQ
+Lxsg5OnZOhZZvQgpz61567eDX5h9xv7U51ebS59qFpD4yp63znV9tA8DtiZ9WKxn
+5e28tfxAABzDWclUJEx6/kobNKytgyTvvPbIrKo75b9FvoYE9lXDLW0eR6fk745Q
+0GyP4wptvbPga5aNZpCOBbq9IwXm2yNCGbUvSLNMm+ZPPo80Fs1sBdX26bvTqV0k
+FRC0jbp/bcGdC7vSWja3XS9YJSHAZdhlNXFF1sxf+H1Ia5SiYMFWNTyYYER34DZN
+EW4RxC0I+pEBsvV6fbznEKo2Abn8AqiyIxJ5orKsie5KOg73vHCx3KMWLPP2HOaW
+RZ1j4Wy9tBaf0S+AMiFc
+=wfq9
+-----END PGP SIGNATURE-----
