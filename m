@@ -1,4 +1,9 @@
-Received: (qmail 30404 invoked by uid 550); 10 Nov 2024 19:39:14 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1402" "Thursday" "2" "February" "2017" "00:52:34" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3c8af77457d54e9181fa84bb9646ce40@imshyb01.MITRE.ORG>" "43" "[oss-security] Re: CVE request: multiples vulnerabilities in libplist" nil nil nil "2" "2017020205:52:34" "[oss-security] Re: CVE request: multiples vulnerabilities in libplist" (number mark "U       cve-assign@m Feb  2   43/1402  " thread-indent "\"[oss-security] Re: CVE request: multiples vulnerabilities in libplist\"\n") "<Kbor4aA--3-0@keemail.me>" ("<Kbor4aA--3-0@keemail.me>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3899 invoked by uid 550); 2 Feb 2017 05:52:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32548 invoked from network); 10 Nov 2024 16:46:22 -0000
-X-KPN-MessageId: 4aba6aa0-9f83-11ef-9dde-00505699b430
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=xs4all.nl; s=xs4all01;
-	h=content-type:mime-version:message-id:subject:to:from:date;
-	bh=sbrRiNYN5IRmE54q1P9Q+was8BKUhGzXidm9eacSuiw=;
-	b=dPWrNKfezKdQgQk1jKeGWiZg55iWdvvMcRY3gXbrAEkkBROSpH4bQLHvFbvovS+1bfPWW/SpyJRIT
-	 mERWeiTEps9s9EOMhqa7advw1WS31a7Yt3E5c+GhguAVD0Baj9wBJMzIAgM2cNqQwOr6jSsK7UR31i
-	 uMOvYgrwLFSYFVJr7Z3em2K4Dy2yRLNxYs0fl3Iv6toSf5B0gdShL7n9ibO4LiApgDD/R9iAUiPviH
-	 RsvLFRDpK2BIB+J8jrPs+RzUqJnoet8udyGMSs5NI6zBTcTCTqvcBOerZd9vxYwxzdgFXlQZoH1D2s
-	 n32WbygNotukujQmfDRxoWBhJCXKnyQ==
-X-KPN-MID: 33|Tx7wzVZKxLeLP91RSre9fz1aiYLhchHJwAleiptukujORrcTsNex/u1Piusvhmr
- armwrcY+lFWRDhk1AIwtyFf5qpxZKQxi/gvxcbRn+mBk=
-X-KPN-VerifiedSender: Yes
-X-CMASSUN: 33|938hONayXbGAVfuFPBHziNdDwWa7KDuDnHgAlQMLW2npj655W4rIQ04aNdKX7XN
- 0GyVF/JJ2nJYOMme3l2bQ7w==
-X-Originating-IP: 82.169.217.143
-Date: Sun, 10 Nov 2024 17:46:13 +0100
-From: Jeroen Roovers <jer@xs4all.nl>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20241110174613.5d6f5282@del.fritz.box>
-In-Reply-To: <21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
-References: <20241106041215.GA4432@openwall.com>
-	<CAGUWgD_T4vUhBfkmjm+8ELcuiOD9dx1vSC4HnKG88Py7ip+zPw@mail.gmail.com>
-	<CABEVAa0+EE0M3Q2wwpOSX0-VCw95xSjZV-1S4u7hSYY9K=YK7w@mail.gmail.com>
-	<21a818cc-d665-43a7-8ff0-c23769f6da04@gentoo.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
+Received: (qmail 3863 invoked from network); 2 Feb 2017 05:52:46 -0000
+From: <cve-assign@mitre.org>
+To: <nikola.sc@keemail.me>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <Kbor4aA--3-0@keemail.me>
+Message-ID: <3c8af77457d54e9181fa84bb9646ce40@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:52:34 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: multiples vulnerabilities in libplist
 
-On Sat, 9 Nov 2024 18:59:01 -0500
-Eli Schwartz <eschwartz@gentoo.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> The earliest version of the Bash Pitfalls guide that includes a
-> warning about the topic, per the Wayback Machine:
-> 
-> https://web.archive.org/web/20090426020027/https://mywiki.wooledge.org/BashPitfalls#Filenames_with_leading_dashes
+> [] heap-buffer-overflow in parse_dict_node
+> https://github.com/libimobiledevice/libplist/issues/89
 
-Also available on that very site:
-
-https://mywiki.wooledge.org/BashPitfalls?action=recall&rev=329#Filenames_with_leading_dashes
-
-and specifically as those changes you mentioned, on that site:
-
-https://mywiki.wooledge.org/BashPitfalls?action=diff&rev1=326&rev2=327
+Use CVE-2017-5834.
 
 
-Kind regards,
-     jer
+> [] memory allocation error
+> https://github.com/libimobiledevice/libplist/issues/88
+
+Use CVE-2017-5835.
+
+
+> [] issue in plist_free_data plist.c:185
+> https://github.com/libimobiledevice/libplist/issues/86
+
+Use CVE-2017-5836.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYksbsAAoJEHb/MwWLVhi2rGUQAKodAn16yldAnWkPkpBE5pEr
+r1/v83CCzMhnlA4UyBjpPXi4hXuUJzW8epmMCPNpgGyvc/4QV4SYOM9pymd+QoLk
+iXnWolB4tKszk3vquL81P871rXzkWHNNIybWpKsPCDRXjoAKJxicma3Rmk8otBWd
+fzH8gBUQtShmMojeewPtGZWTubX15sCfXGp7YHczmcSj3k+XdsYf9rfYI5BFaue9
+TFypQYqnkCzpkDf/aB7cA3p4kmHieRtkhceY7L2WuP+/kOQ24ABt8y4AJdspA/uH
+ufVUgJwWe5/EVJjQDMJCIip5vfJMCTlg1ngz23NcaEhSRQl26zg9nqpDJpLrY+ck
+ja22LUfVIbFuZLsj94rl65bMY4sGNXb0VkNSeBIg/HP9ZfiFZPY02uMI0IdIy+6t
+T4/HnAUWxdSky9GjlCPl/8kPU5o9O7DRZTiYXbYnYKL/0jKXIHNpJIJVUCq3l8Ty
+nH9OwlVBCnq6pcQCIAcwsf5uhgzusjItF2+ufAHL9GeGBN5DtGQP1aAt7b6qEFeC
+6ociWZT9megQgGxI/QC+yty75BWszxQw7muqYaEKHUmI3FS/Mu9k53LyM+j+jukd
+AIaieeDbNvKzNTM77ECYX5BirD7S8ESb56gyLydt+x2LbtkW9W2Z/6gd8gLbAYEu
+ulBMECeaiMBpWZWXOfpp
+=Kyb9
+-----END PGP SIGNATURE-----
