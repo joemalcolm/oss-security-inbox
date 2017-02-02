@@ -1,78 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/6
-Message-ID: <20170810220125.GA22552@openwall.com>
-Date: Fri, 11 Aug 2017 00:01:25 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/22
+Message-ID: <20170202131156.GB3585@f195.suse.de>
+Date: Thu, 2 Feb 2017 14:11:56 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Brad Spengler <spender@...ecurity.net>, Vladis Dronov <vdronov@...hat.com>
-Subject: Re: [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()
+Subject: CVE request tigervnc: vnc server can crash when TLS handshake terminates early
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-Thank you for asking the right questions, Brad.  Thank you for providing
-additional detail, Vladis.  I'll add some more:
+the Xvnc server from tigervnc can crash when a client terminates a TLS
+connection early. This is due to invalid initialization/deinitialization
+order of the GnuTLS library.
 
-On Mon, Aug 07, 2017 at 09:55:36AM -0400, Vladis Dronov wrote:
-> As for the timeline as we understand it, we were notified about the flaw, we've discovered the flaw
-> being actually already fixed in the upstream, we've notified linux-distros@ and in a week we've made
-> this public announce.
+Upstream commit:
 
-For linux-distros, cases like this are a gray area.  On one hand, we
-state that the list is for non-public security issues only, and if
-anything already public is wrongly sent to that list then it should be
-posted to oss-security right away.  On the other hand, sometimes it
-happens that (at least) the reporter considers the issue semi-public
-rather than fully public - typically when public information about the
-issue is incomplete, relatively obscure, or/and is in a relatively
-obscure place.  Then it's sometimes tough to decide between insisting on
-immediate posting to oss-security or leaving distros some time to
-prepare updates before the issue turns from semi-public to fully public
-(if this is even a valid distinction, on which opinions vary).
-Sometimes the issue being semi-public results in a shorter
-(semi-)embargo period than what would normally be used for a similar
-issue that is considered fully private.
+https://github.com/TigerVNC/tigervnc/commit/8aa4bc53206c2430bbf0c8f4b642f59a379ee649
 
-In this specific case, the issue itself was never sent to the
-linux-distros list itself.  Instead, Red Hat posted the following on
-July 26:
+Reference:
 
-| we've been informed of a local privilege escalation issue in the Linux
-| kernel. CVE-2017-7533 has been assigned to this issue. The unembargo
-| date is set to August 3rd (Thursday next week) 15:00 UTC.
-|  
-| For detailed information please email Vladis Dronov [1]
-|  
-|   [1] vdronov@...hat.com
-|       http://pgp.mit.edu/pks/lookup?op=vindex&search=0x716C2F9F0F3B68F8
+https://bugzilla.suse.com/show_bug.cgi?id=1023012
 
-This kind of indirect disclosure is unusual, but it happens from time to
-time.  I did e-mail Vladis for the detail, and learned from the helpful
-reply that the issue was actually semi-public.  There was no discussion
-(that I am aware of) on whether this specific issue being semi-public
-required bringing it to oss-security earlier than initially proposed.
-Even if there were, it'd only affect the last one week out of two months.
+This issue was reported/found by Ruediger Meier, Michal Srb (SUSE
+Linux).
 
-We could insist that semi-public issues being brought to (linux-)distros
-be posted to oss-security right away, but this would result in distros
-who learn of such issues from elsewhere choosing not to inform their
-fellow distros, or at least not via the (linux-)distros list, as the
-distros would not want to make things worse for themselves and for most
-of their users (except for some advanced users, who could apply
-workarounds) by making issues fully public before updates are ready.
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Telefon: +49 911 740 53 290
 
-My reconstruction of the timeline is as follows:
+SUSE Linux GmbH 
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
 
-2017-05-31 postings to linux-fsdevel by Leilei Lin of Alibaba Group
-2017-07-06 private Bug created in Red Hat Bugzilla (now public, edited)
-2017-07-07 upstream fix
-2017-07-26 notification to linux-distros
-2017-08-03 posting to oss-security, full-disclosure, Bugtraq
-
-Indeed, I am unhappy about a two-month timeline like this and about
-semi-public issues in general (the worst state an issue can be in),
-but I think the last week was actually the least problematic: multiple
-distros were finally aware and could work on fixes, still before the
-issue got widespread attention.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
