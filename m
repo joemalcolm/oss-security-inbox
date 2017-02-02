@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1051" "Tuesday" "9" "May" "2017" "23:19:54" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20170510061953.GA3445@hunt>" "30" "Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton" nil nil nil "5" "2017051006:19:54" "[oss-security] CVE Request: Denial of Service in Dropbox lepton" (number mark "U       seth.arnold@ May  9   30/1051  " thread-indent "\"Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton\"\n") "<CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>" ("<CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3636" "Thursday" "2" "February" "2017" "01:00:44" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<bac88113395e44908ac254e6bcf773ec@imshyb01.MITRE.ORG>" "123" "[oss-security] Re: Multiple memory access issues in gstreamer" nil nil nil "2" "2017020206:00:44" "[oss-security] Re: Multiple memory access issues in gstreamer" (number mark "U       cve-assign@m Feb  2  123/3636  " thread-indent "\"[oss-security] Re: Multiple memory access issues in gstreamer\"\n") "<20170201115616.08660970@pc1>" ("<20170201115616.08660970@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11505 invoked by uid 550); 10 May 2017 06:20:08 -0000
+Received: (qmail 32150 invoked by uid 550); 2 Feb 2017 06:00:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,137 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11481 invoked from network); 10 May 2017 06:20:07 -0000
-Date: Tue, 9 May 2017 23:19:54 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
-To: Insu Yun <wuninsu@gmail.com>
-Cc: oss-security@lists.openwall.com,
-	Yeongjin Jang <Yeongjin.jang@gatech.edu>
-Message-ID: <20170510061953.GA3445@hunt>
-Mail-Followup-To: Insu Yun <wuninsu@gmail.com>,
-	oss-security@lists.openwall.com,
-	Yeongjin Jang <Yeongjin.jang@gatech.edu>
-References: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
+Received: (qmail 31967 invoked from network); 2 Feb 2017 06:00:56 -0000
+From: <cve-assign@mitre.org>
+To: <hanno@hboeck.de>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <20170201115616.08660970@pc1>
+Message-ID: <bac88113395e44908ac254e6bcf773ec@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:00:44 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="SUOF0GtieIMvvwua"
-Content-Disposition: inline
-In-Reply-To: <CAGoFzNekm3g7bFwOAktu0i+BAif6ej=StbHh5M9ZOwswNQNqZw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] CVE Request: Denial of Service in Dropbox lepton
+Content-Type: text/plain
+Subject: [oss-security] Re: Multiple memory access issues in gstreamer
 
---SUOF0GtieIMvvwua
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, May 09, 2017 at 11:55:10PM -0400, Insu Yun wrote:
-> Please help assign a CVE to this vulnerability.
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=775450
+> gst-plugins-good/aacparse: invalid memory read in
+> gst_aac_parse_sink_setcaps
 
-Hello Insu, CVE assignment is now handled via the web form at
-https://cveform.mitre.org/ -- fill out the details that you can, and
-when you get a response from the MITRE team (often within a dozen hours)
-please forward details about open source tools to this list.
+Use CVE-2016-10198.
 
-Thanks
 
---SUOF0GtieIMvvwua
-Content-Type: application/pgp-signature; name="signature.asc"
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=775451
+> gst-plugins-good/qtdemux: out of bounds read in qtdemux_tag_add_str_full
 
+Use CVE-2016-10199.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777262
+> gst-plugins-base/riff-media: floating point exception in
+> gst_riff_create_audio_caps
+
+Use CVE-2017-5837.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777263
+> gstreamer core/datetime: out of bounds read in
+> gst_date_time_new_from_iso8601_string()
+
+Use CVE-2017-5838.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777265
+> gst-plugins-base/riff: stack overflow in gst_riff_create_audio_caps
+
+Use CVE-2017-5839.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777469
+> gst-plugins-good/qtdemux: out of bounds heap read in
+> qtdemux_parse_samples
+
+Use CVE-2017-5840.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777500
+> gst-plugins-good/avidemux: gst_avi_demux_parse_ncdt heap out of bounds
+> read
+
+Use CVE-2017-5841.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777502
+> gst-plugins-base/samiparse: heap oob in html_context_handle_element
+
+Use CVE-2017-5842.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777503
+> gst-plugins-bad/mxfdemux: use after free in gst_mini_object_unref /
+> gst_tag_list_unref / gst_mxf_demux_update_essence_tracks
+
+Use CVE-2017-5843.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777525
+> gst-plugins-base: floating point exception in gst_riff_create_audio_caps
+> (different than #777262)
+
+Use CVE-2017-5844.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777532
+> gst-plugins-good/avidemux: invalid memory read in
+> gst_avi_demux_parse_ncdt
+
+Use CVE-2017-5845.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777937
+> gst-plugins-ugly/asfdemux: invalid memory read in
+> gst_asf_demux_process_ext_stream_props()
+
+Use CVE-2017-5846.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777955
+> gst-plugins-ugly/asfdemux: out of bounds read in
+> gst_asf_demux_process_ext_content_desc
+
+Use CVE-2017-5847 for what is fixed by the entire
+https://bugzilla.gnome.org/show_bug.cgi?id=777955#c3 change, which is
+in the
+https://github.com/GStreamer/gst-plugins-ugly/commit/d21017b52a585f145e8d62781bcc1c5fefc7ee37
+commit.
+
+
+> [] https://bugzilla.gnome.org/show_bug.cgi?id=777957
+> gst-plugins-bad/mpegdemux: Invalid memory read in gst_ps_demux_parse_psm
+
+Use CVE-2017-5848 for what is fixed by the entire
+https://bugzilla.gnome.org/show_bug.cgi?id=777957#c3 change.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCgAGBQJZErEJAAoJEPMhclmdjS6XsNMIAJywrkRwtCacd8aTNF5fwEb9
-+OIGFaleALMCQwdtGc78/Q3ltKiydDExtnYHotBrx0Qb5F+I68tGbq6eCL43TYAd
-7Fn/Xd1K7+eFW2VTw5Rto6VgswxCymCk2Mzx7q7c5INgg0YxW3HLcLGh5dEA8U46
-UHx1xcHB+yXRoDpaeZQ3DHBMTR/BpjzPWROr89Cha74aUcl1jiavCxj5k/qQqIBN
-DlHpekBgBCRfUF/MwLF01QCoaBMaFDq+m1GZPwIK72ttP1zvLtFgLCM8L4qzSb34
-rNkFz4W8zOHmgdmFMKW4UUEEQhzbcDTELEpoxAFysVgtPOFKhcsntkR5I/G8yVA=
-=qcG0
+iQIcBAEBCAAGBQJYkscPAAoJEHb/MwWLVhi2tzkP/jI2Ui/LE7gj+Oavyvd4t/5f
+hYs4xbPajwkTqf+y4IAuVGYKweGeU6VaegzQ/MugkzRTw74EoVYRYY7bXYU0HeRI
+U7hynEHV+W6lKMjRdoCatWl/zCittE3AWImA1/k+W3RF4FCjANmGMMBY438YSNeU
+Qch6Ls2VwjUPkG1/fh4Z9oiYEN/wZYBOhp0oGflqzqWsWpWXTcI5Nz9WlzUcM7Dd
+JoTJnkzHEDhA+Z4FjadD8ynidKMG28mG0y0ycLg7UQj1JOqCihvqrIjHPeb/FNbU
+3GdmrIHcb3g8A3K+WY9bEmNHo7kMg4RDm7TtoyY3lh9rBeiTCzHz6HFA5kduuLvw
+FD4++M65t9VDTU+fhVNK8+4R3+lCu/0E0c6oZ0oQA2yMrmRzut8KTbpYWCnP7oI5
+jRpN0lFaJe7N+3cgeqrkyU+Dx9F9WVPEJBYejipa27gM+MwCzZKEDerEUuLAzBOl
+7jdqGOk5O+oV3z38KBzLC6wNFAiI/fnKU4UmAexowOfADnGuP2jTN+h3SPIg7FDn
+Gs9Hf3S+64H9pl479JELBv/Yj9IE0OyGhT2BW3ENpC6gxgfK8ofdgryxvehOKKLE
+ASxB8jAw6LUL+4pXRgNP7YeWTeXAwyYGW1Wkk+DwG4nwIUrnxgjNV7NNf9Q7/XuB
+TBBjRhvJ93HkdYfGCsN4
+=6wqV
 -----END PGP SIGNATURE-----
-
---SUOF0GtieIMvvwua--
