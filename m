@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/14
-Message-ID: <CAPNiXbHGAzwC69b4pYbqyF2+kL+EH5HSRBeJaYa4fHtwQSBq2Q@mail.gmail.com>
-Date: Tue, 26 Sep 2017 16:55:22 +0200
-From: Alex R <alexr@...che.org>
-To: dev <dev@...os.apache.org>, user <user@...os.apache.org>,  Amon Flair <amon@...dynarwhals.org>, Lyon Yang <lyon.yang.s@...il.com>,  security <security@...che.org>, oss-security@...ts.openwall.com
-Subject: CVE-2017-7687: Libprocess might crash when decoding a malformed request.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/7
+Message-ID: <52e2df07020643ae977e2f5fd739fe04@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:58:00 -0500
+From: <cve-assign@...re.org>
+To: <leo@...ulari.name>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Bugs fixed in libevent 2.1.6
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Vendor:
-The Apache Software Foundation
+> [] https://github.com/libevent/libevent/issues/317
+> libevent dns remote stack overread vulnerability
 
-Versions Affected:
-Apache Mesos 1.1.0 to 1.3.0
-The unsupported Apache Mesos 1.0.x as well as 0.x versions may be also
-affected.
+Use CVE-2016-10195.
 
-Description:
-When handling a decoding failure for a malformed URL path of an HTTP
-request, libprocess might crash because the code accidentally calls
-inappropriate function. A malicious actor can therefore cause a denial
-of service of Mesos masters rendering the Mesos-controlled cluster
-inoperable.
 
-Mitigation:
-pre-1.1.x users should upgrade to at least 1.1.3
-1.1.x users should upgrade to 1.1.3
-1.2.x users should upgrade to 1.2.2
-1.3.0 users should upgrade to 1.3.1
-1.4.0-dev users should obtain Mesos 1.4.0
+> [] https://github.com/libevent/libevent/issues/318
+> libevent (stack) buffer overflow in evutil_parse_sockaddr_port()
 
-Credit:
-This issue was discovered by Lyon Yang and Jeremy Heng
+Use CVE-2016-10196.
 
-Alex on behalf of Mesos PMC.
 
+> [] https://github.com/libevent/libevent/issues/332
+> out-of-bounds read in search_make_new()
+
+Use CVE-2016-10197.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYkscCAAoJEHb/MwWLVhi2YewP/1u5OS30qLHSRq1rCr7C9kDL
+DE8/09mH0y5dgW0DPYllVLv6tUdQT9QwKoYQI/rWUYZ9j5oxEEeKo/Kr+klhTQLY
+cpvNrtZGhwTXynq/BC69s74n3mi8lXxxnV+XRwQgDKkdYSvaT19yrVG337WZKZq+
+A03c78NJQEn6Gw/p7hyhGmQZA2AKO/DhqccSX4YlSKfarH3yhCd0rvionaclxyPa
+2O+ldYbDElwFD1nfSBW8HLvjl3YeUgKFl0r1mqQSg/rCvYoEcXBfqJ5KmCFNI+3C
+eTkSZ2q7yWQBPIEkldQBEJAGP5LxXxAm0FWfuoj2VHFFl6I3Pm7R7oNULiEqKDeD
+rQ6SRQ43H0Qf8E6c3HkPGhRS9OI+pfcFrbX4hAtCwMVpWhdKwv4gYNI3yg9Mjnnp
+gfj7Uu0BESQupGBOPi9Ex2Am7k6JQSFUyz6Fzy3eHumCj4WxxjtWljVY8uevlu57
+sL8P3esH15174t/iMhXw0SS+DEs4CiCk0vH1M2Qd2tEqoLHZ2TCNDoska9KdUifh
+hsJU9vxEn+uIZIKpffx/OIMntzoqCoRHlCgDNMiKZPW4oi6FYARzhLVnhkB/ayY0
+f2ha9TBXUtm8m/S4KU0MKPfZWjiudFbS5yqYNJFfpVCT8GG04SFc4Zd4WYEo3Vih
+Nc8R5cRbqqFTMK1ZCcK9
+=VKif
+-----END PGP SIGNATURE-----
