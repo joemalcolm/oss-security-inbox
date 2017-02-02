@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8558" "Thursday" "22" "February" "2018" "19:29:26" "+0100" "Solar Designer" "solar@openwall.com" "<20180222182926.GA4275@openwall.com>" "259" "[oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c" nil nil nil "2" "2018022218:29:26" "[oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c" (number mark "U       solar@openwa Feb 22  259/8558  " thread-indent "\"[oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3507" "Thursday" "2" "February" "2017" "00:48:06" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<9734ca76ee5140c0b81410555e2a85f5@imshyb01.MITRE.ORG>" "78" "[oss-security] Re: CVE Request: ffmpeg remote exploitaion results code execution" nil nil nil "2" "2017020205:48:06" "[oss-security] Re: CVE Request: ffmpeg remote exploitaion results code execution" (number mark "U       cve-assign@m Feb  2   78/3507  " thread-indent "\"[oss-security] Re: CVE Request: ffmpeg remote exploitaion results code execution\"\n") "<835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>" ("<835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7830 invoked by uid 550); 22 Feb 2018 18:30:38 -0000
+Received: (qmail 31898 invoked by uid 550); 2 Feb 2017 05:48:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,274 +12,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5722 invoked from network); 22 Feb 2018 18:29:42 -0000
-Date: Thu, 22 Feb 2018 19:29:26 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Dietmar Maurer <dietmar@proxmox.com>
-Message-ID: <20180222182926.GA4275@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] review of LibVNCServer/vncterm proxmox/vncterm proxmox/spiceterm xenserver/vncterm qemu/ui/console.c
+Received: (qmail 31868 invoked from network); 2 Feb 2017 05:48:18 -0000
+From: <cve-assign@mitre.org>
+To: <paulcher@seclab.cs.msu.su>, <neex.emil@gmail.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <835F27A3-C4DD-4E9F-B6ED-8D271C083B42@seclab.cs.msu.su>
+Message-ID: <9734ca76ee5140c0b81410555e2a85f5@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:48:06 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: ffmpeg remote exploitaion results code execution
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Well, this is not a proper review.  Rather, I just took a quick look at
-more of these today.
+> links to exploits:
+> https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6
+> https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913
 
-Turns out there are at least 3 (sub-)projects named vncterm, and
-apparently they aren't even forks of each other: there's a vncterm that
-used to be part of LibVNCServer and is now maintained in a nearby repo,
-another vncterm in xenserver derived from QEMU's ui/console.c, and yet
-another one in proxmox.  There's also spiceterm in proxmox, which
-duplicates code from their vncterm (or vice versa).
+> [ 1 - libavformat/http.c  ]
+> 
+> After executing of http_read_stream we read each http header, where we
+> pass "Transfer-Encoding: chunked. header, and we come into
+> http_buf_read function [1]. Due to incorrect use of strtoll function
+> and integer sizes (chunk_size in int64_t)[2], it was possible to pass
+> negative chunk_size in chunk encoding, so after computing final size
+> using FFMIN function later on it would be passed as argument to
+> avio_read function. This results a heap-overflow which we found out to
+> be exploitable, because overflowed buffer is allocated right next to
+> the AVIOContext structure[3]. Overflowing function pointer in this
+> structure immediately results in rip control and then code execution.
+> 
+> * [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166
+> * [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259
+> * [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899
+> 
+> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa
 
-I already pointed out one issue with LibVNCServer's vncterm in here a
-few days ago:
+Use CVE-2016-10190.
 
-http://www.openwall.com/lists/oss-security/2018/02/18/2
 
-and I also opened a GitHub issue with them suggesting that they
-"Document that the code is unsafe for future extension":
+> [ 2 - libavformat/rtmppkt.c ]
+> 
+> Issue is connected with buffer overflow on the heap in RTMP protocol.
+> After a bit of reverse engineering of RTMP protocol you can notice
+> that it uses chunk (of max 0x80 bytes) to _transfer_ data, but chunks
+> of more size could be used to _store_ the data. Because size of packet
+> is not checked that it is the same as it was in the same transmission
+> you can first send packet with smaller size and then bigger size, and
+> this results in heap-overflow[1]. If you can align chunks right you can
+> achieve write-what-where condition and that results in RCE.
+> 
+> * [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268
+> 
+> The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7
 
-https://github.com/LibVNC/vncterm/issues/7
+Use CVE-2016-10191.
 
-To me, the code only appears to dodge other issues because of its
-presently limited functionality - more limited than that of the
-alternatives that the rest of this message is about.
 
-proxmox/vncterm and proxmox/spiceterm look the worst to me.  One issue
-is that vncterm_putchar() case ESgetpars appears to be willing to
-increase vt->esc_count indefinitely, and that's a signed int variable,
-which (despite of this being UB in C) may eventually (e.g., after two
-gigabytes of semicolons?) wraparound to negative and then pass one of
-the many "vt->esc_count < MAX_ESC_PARAMS" checks present throughout the
-code, resulting in an out-of-bounds write or/and read relative to the
-vt->esc_buf[] array:
+> [ 3 - ffserver.c ]
+> 
+> This issue is completely like the first one and it results in heap overflow.
+> 
+> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156
 
-  case ESgetpars:
-    if (ch >= '0' && ch <= '9') {
-      vt->esc_has_par = 1;
-      if (vt->esc_count < MAX_ESC_PARAMS) {
-        vt->esc_buf[vt->esc_count] = vt->esc_buf[vt->esc_count] * 10 + ch - '0';
-      }
-      break;
-    } else if (ch == ';') {
-      vt->esc_count++;
-      break;
-    } else {
-      if (vt->esc_has_par) {
-        vt->esc_count++;
-      }
-      vt->tty_state = ESgotpars;
-    }
+Use CVE-2016-10192.
 
-Notice that the "vt->esc_count < MAX_ESC_PARAMS" check here does not
-prevent the two instances of "vt->esc_count++;" from being reached.
 
-The relevant excerpts from vncterm.h are:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-#define MAX_ESC_PARAMS 16
-
-  int esc_buf[MAX_ESC_PARAMS];
-  int esc_count;
-
-If you'd like to track this unconfirmed issue (I only skimmed the code -
-I didn't try to trigger the issue), please use OVE-20180222-0001.
-
-Also seen above is the lack of sanity limits on the values that
-vt->esc_buf[] elements can get.  (The math above can also overflow,
-formally speaking triggering UB.)  A consequence of this is that they
-can become negative, too.  Then some cursor movement commands assume
-that the values are non-negative nor can overflow the math, e.g.:
-
-    case 'A':
-      /* move cursor up */
-      if (vt->esc_buf[0] == 0) {
-        vt->esc_buf[0] = 1;
-      }
-      vt->cy -= vt->esc_buf[0];
-      if (vt->cy < 0) {
-        vt->cy = 0;
-      }
-      break;
-    case 'B':
-    case 'e':
-      /* move cursor down */
-      if (vt->esc_buf[0] == 0) {
-        vt->esc_buf[0] = 1;
-      }
-      vt->cy += vt->esc_buf[0];
-      if (vt->cy >= vt->height) {
-        vt->cy = vt->height - 1;
-      }
-      break;
-    case 'C':
-    case 'a':
-      /* move cursor right */
-      if (vt->esc_buf[0] == 0) {
-        vt->esc_buf[0] = 1;
-      }
-      vt->cx += vt->esc_buf[0];
-      if (vt->cx >= vt->width) {
-        vt->cx = vt->width - 1;
-      }
-      break;
-    case 'D':
-      /* move cursor left */
-      if (vt->esc_buf[0] == 0) {
-        vt->esc_buf[0] = 1;
-      }
-      vt->cx -= vt->esc_buf[0];
-      if (vt->cx < 0) {
-        vt->cx = 0;
-      }
-      break;
-
-Notice how these only perform sanity checks in the expected direction of
-the cursor movement, but not in the opposite direction (which can occur
-with a negative value in vt->esc_buf[0], or with a value large enough to
-cause integer wraparound right here).  This unconfirmed issue is
-OVE-20180222-0002.
-
-There might or might not be more problematic commands like this.
-However, some look OK, e.g.:
-
-    case 'G':
-    case '`':
-      /* move cursor to column */
-      vncterm_gotoxy (vt, vt->esc_buf[0] - 1, vt->cy);
-      break;
-    case 'd':
-      /* move cursor to row */
-      vncterm_gotoxy (vt, vt->cx , vt->esc_buf[0] - 1);
-      break;
-    case 'f':
-    case 'H':
-      /* move cursor to row, column */
-      vncterm_gotoxy (vt, vt->esc_buf[1] - 1,  vt->esc_buf[0] - 1);
-      break;
-
-where vncterm_gotoxy() performs all the necessary sanity checks.
-
-There are also many places that are difficult to review.  At first, this
-looked like it'd overflow vt->esc_buf[] over multiple invocations:
-
-  case ESpalette:
-    if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'F')
-        || (ch >= 'a' && ch <= 'f')) {
-      vt->esc_buf[vt->esc_count++] = (ch > '9' ? (ch & 0xDF) - 'A' + 10 : ch - '0');
-      if (vt->esc_count == 7) {
-        // fixme: this does not work - please test
-        rfbColourMap *cmap =&vt->screen->colourMap;
-
-        int i = color_table[vt->esc_buf[0]] * 3, j = 1;
-        cmap->data.bytes[i] = 16 * vt->esc_buf[j++];
-        cmap->data.bytes[i++] += vt->esc_buf[j++];
-        cmap->data.bytes[i] = 16 * vt->esc_buf[j++];
-        cmap->data.bytes[i++] += vt->esc_buf[j++];
-        cmap->data.bytes[i] = 16 * vt->esc_buf[j++];
-        cmap->data.bytes[i] += vt->esc_buf[j];
-
-        //set_palette(vc); ?
-
-        vt->tty_state = ESnormal;
-      }
-    } else
-       vt->tty_state = ESnormal;
-    break;
-
-However, upon a closer look "vt->tty_state = ESnormal;" prevents this
-code from being reached again without having vt->esc_count reset to 0 as
-the only place setting vt->tty_state to ESpalette is:
-
-  case ESnonstd: /* Operating System Controls */
-    vt->tty_state = ESnormal;
-
-    switch (ch) {
-    case 'P':   /* palette escape sequence */
-      for(i = 0; i < MAX_ESC_PARAMS; i++) {
-        vt->esc_buf[i] = 0;
-      }
-
-      vt->esc_count = 0;
-      vt->tty_state = ESpalette;
-      break;
-
-so in the end this looks OK to me.  It's just I would have preferred an
-explicit range check or resetting of vt->esc_count right in or after the
-ESpalette code.
-
-Perhaps there are more issues than those I noticed.  The numbered issues
-above are both also present in proxmox/spiceterm/spiceterm.[ch].  (Same
-OVE IDs apply.)
-
-xenserver/vncterm looks the best to me.  Apparently, it's been hardened
-over time relative to the QEMU-derived original.  For example, it does:
-
-static int handle_params(TextConsole *s, int ch)
-{
-    int i;
-
-    dprintf("putchar csi %02x '%c'\n", ch, ch > 0x1f ? ch : ' ');
-    if (ch >= '0' && ch <= '9') {
-        if (s->nb_esc_params < MAX_ESC_PARAMS && (s->esc_params[s->nb_esc_params] < 10000)) {
-            s->esc_params[s->nb_esc_params] =
-                s->esc_params[s->nb_esc_params] * 10 + ch - '0';
-        }
-        s->has_esc_param = 1;
-        return 0;
-    } else {
-        if (s->has_esc_param && s->nb_esc_params < MAX_ESC_PARAMS)
-            s->nb_esc_params++;
-        s->has_esc_param = 0;
-        if (ch == '?') {
-            s->has_qmark = 1;
-            return 0;
-        }
-        if (ch == ';')
-            return 0;
-
-Notice that s->nb_esc_params is never increased to/beyond
-MAX_ESC_PARAMS, and s->esc_params[] values are limited to at most ~100k.
-
-The cursor movement commands use set_cursor(), which invokes clip_xy(),
-which in turn performs all the needed range checks.
-
-QEMU's ui/console.c looks OK'ish, but not nearly as hardened:
-
-    case TTY_STATE_CSI: /* handle escape sequence parameters */
-        if (ch >= '0' && ch <= '9') {
-            if (s->nb_esc_params < MAX_ESC_PARAMS) {
-                int *param = &s->esc_params[s->nb_esc_params];
-                int digit = (ch - '0');
-
-                *param = (*param <= (INT_MAX - digit) / 10) ?
-                         *param * 10 + digit : INT_MAX;
-            }
-        } else {
-            if (s->nb_esc_params < MAX_ESC_PARAMS)
-                s->nb_esc_params++;
-            if (ch == ';' || ch == '?') {
-                break;
-            }
-
-s->nb_esc_params is also never increased to/beyond MAX_ESC_PARAMS, and
-integer overflow of s->esc_params[] values right here is prevented, but
-they are not sanity-limited.  This allows for integer overflows
-(normally benign, albeit formally UB) e.g. in:
-
-            case 'B':
-                /* move cursor down */
-                if (s->esc_params[0] == 0) {
-                    s->esc_params[0] = 1;
-                }
-                set_cursor(s, s->x, s->y + s->esc_params[0]);
-                break;
-
-but then set_cursor()'s range checks prevent any out-of-bounds values
-from staying in s->x and s->y.
-
-Alexander
+iQIcBAEBCAAGBQJYksbXAAoJEHb/MwWLVhi2UgcQAJP5bl4pfmex1h/9mVfFlvaX
+J+k0EeXJnyaKyofaE3Xz/Hy4WRlzEjO7DZML+hbilTwinojlvUuhTUqBrvEGkP6L
+jbBQc3+diHBbYFTCqUccQdssUmJargBPj5pFtrrge4do/brPS1oBqWEcLEN2D2Hm
+vTVw4tlG2CYRMDcoin6LWkmcPOaB6kXh6kig36aUA/8NlHay9LFEWMGDsZdxtyq4
+lDhiEmokYJ9adeZISw0gIEtjAh/phsHfQHJBkkgyuiufZqyVzLOVPxUx4aqUcG8F
+GvRtgaH6WW1uBj6zArRjz6O95vK62jbv0FA29cXTglV9ZNniCDNnBJAy7pnr6Co9
+MdpB0vI+GNvbyHFKXLOIQZbaIFP7eHGYJzDBNLXpRwBZLJGhTj4RecoWPo6Mvnl+
+KF7w8LZs38nWsCZL8uaovksHv7KZHbJu3xbSLdj/NGMfh7PKi9XPP3PMNluWjpzd
+hW0MC3EpSL1l+7zV39kpES+m31sKZA4+/y4iS6A58nt3hIyzRQBjbxVEA7bt5rKQ
++j/msNvwUUqn0TeAg3VCjnEtsGoJXpjrwxW8re5nNDKkstfwLLEVgUrK5mGBgw9Y
+JCEUnAvGDspVW7fBNKw+aq7OQ52kWQCfrjmIRNmtZqSm5FSJZXt79WmgCppTLKb+
+wORuhMtK5Dtn1Sv05NwM
+=TZVr
+-----END PGP SIGNATURE-----
