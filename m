@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4211" "Thursday" "6" "August" "2015" "16:23:19" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150806202319.542C06C0129@smtpvmsrv1.mitre.org>" "98" "[oss-security] Re: CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution." nil nil nil "8" "2015080620:23:19" "[oss-security] Re: CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution." (number mark "        cve-assign@m Aug  6   98/4211  " thread-indent "\"[oss-security] Re: CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution.\"\n") "<55C27568.8070503@xiphosresearch.co.uk>" ("<55C27568.8070503@xiphosresearch.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1849" "Thursday" "2" "February" "2017" "00:55:01" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<2ac0c9bbb12f40eda8a5a359d865e4a0@imshyb01.MITRE.ORG>" "55" "[oss-security] Re: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r" nil nil nil "2" "2017020205:55:01" "[oss-security] Re: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r" (number mark "U       cve-assign@m Feb  2   55/1849  " thread-indent "\"[oss-security] Re: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r\"\n") "<CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>" ("<CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32729 invoked by uid 550); 6 Aug 2015 20:23:32 -0000
+Received: (qmail 17980 invoked by uid 550); 2 Feb 2017 05:55:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,111 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32706 invoked from network); 6 Aug 2015 20:23:31 -0000
-In-Reply-To: <55C27568.8070503@xiphosresearch.co.uk>
-Message-Id: <20150806202319.542C06C0129@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  6 Aug 2015 16:23:19 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: SuiteCRM Post-Auth Race Condition Shell Upload Remote Code Execution.
-To: darren.martyn@xiphosresearch.co.uk
+Received: (qmail 17959 invoked from network); 2 Feb 2017 05:55:13 -0000
+From: <cve-assign@mitre.org>
+To: <max@appcanary.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <CAGW7fdsN9uyoMX7YtLn1=9k+LtYN12cQOnRpvz6DEMbatiR=Gw@mail.gmail.com>
+Message-ID: <2ac0c9bbb12f40eda8a5a359d865e4a0@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:55:01 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> I am requesting a CVE to be issued for the SuiteCRM product. There
-> exists a race condition in the image upload verification component which
-> leads to a race condition wherein an uploaded piece of PHP code exists
-> on disc temporarily before being deleted, which can be leveraged to gain
-> code execution. This vulnerability was introduced in version 7.2.2, as a
-> patch to fix a prior code execution issue found in 7.2.1.
+> Two similar vulnerabilities in ruby text-to-speech libraries.
+
+> [] 1) espeak-ruby
 > 
-> Github issue: https://github.com/salesagility/SuiteCRM/issues/333
-> https://github.com/salesagility/SuiteCRM/commit/b1b3fd61c7697ad2073cd253d31c9462929e7bb5
-
-> https://github.com/XiphosResearch/exploits/tree/master/suiteshell
+> Rubygem espeak-ruby passes user modifiable strings directly to a shell
+> command.
 > 
-> SuiteCRM suffers a post-authentication shell upload vulnerability in
-> its "Upload Company Logo" functionality, wherin it uses a blacklist in
-> an attempt to prevent the upload of executable code. Furthermore, its
-> "check for valid image" test leaves uploaded files in a tempdir that
-> is web accessible. It is possible to bypass the blacklist to upload
-> executable PHP code with the "phtml" extension to this temporary
-> directory and thus gain code execution under the context of the
-> webserver user
-
-Use CVE-2015-5946 for the original incomplete blacklist vulnerability
-in which an authenticated attacker could, at any time, upload an
-executable file (such as a phtml file) to a location from which the
-web server serves files.
-
-The blacklist was:
-
-        'php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py',
-        'asp', 'cfm', 'js', 'vbs', 'html', 'htm' 
-
-
-Use CVE-2015-5947 for the other original issue in which the:
-
-  if(!verify_uploaded_image
-
-code block does not attempt to restrict access after an "unverified"
-file is detected. CVE-2015-5946 and CVE-2015-5947 seem to be
-independently relevant, although possibly that depends on the "Found
-{$m[0]} in $path, not allowing upload" code.
-
-
-> The Post-Auth RCE allegedly "fixed" in Commit b1b3fd6 is not fixed.
+> An attacker can execute malicious commands by modifying the strings that
+> are passed as arguments to the speak, save, bytes and bytes_wav methods in
+> the lib/espeak/speech.rb.
 > 
-> The fix simply makes the bug slightly harder to exploit, turning it
-> from a straight-shot file upload bug into a lovely race condition.
+> https://github.com/dejan/espeak-ruby/issues/7
+
+Use CVE-2016-10193.
+
+
+> [] 2) festivaltts4r
 > 
-> Do note, this fix could lead to the file being there for a short
-> period of time leading to a race condition wherin the attacker simply
-> has to beat the unlink to the punch and spawn a reverse shell/drop
-> further malicious files/whatever.
+> Rubygem festivaltts4r passes user modifiable strings directly to a shell
+> command.
+> 
+> An attacker can execute malicious commands by modifying the strings that
+> are passed as arguments to the to_speech and and to_mp3 methods in
+> lib/festivaltts4r/festival4r.rb.
+> 
+> https://github.com/spejman/festivaltts4r/issues/1
 
-Use CVE-2015-5948 for the race condition that exists because of the
-incomplete fix for CVE-2015-5947.
+Use CVE-2016-10194.
 
-
-> vulnerability in
-> its "Upload Company Logo" functionality, wherin it uses a blacklist in
-> an attempt to prevent the upload of executable code.
-
-There is no CVE ID specifically for the concept of using blacklisting
-rather than whitelisting. In practice, a large blacklist can be
-constructed that results in a negligible chance that an allowed file
-would be executable on a customer system with a realistic
-configuration. This may be considered an unrecommended or overly risky
-design, but the issue is not included in CVE.
-
-> its
-> "check for valid image" test leaves uploaded files in a tempdir that
-> is web accessible.
-
-There is no CVE ID specifically for the concept of using a temporary
-directory that is web accessible. The same directory could be used,
-without the race condition, in a number of ways -- possibly including
-renaming files before initial storage, or some type of access control
-for the directory. A web-accessible temporary directory is sometimes
-unavoidable if the goal is to support installation in the widest
-possible set of web-hosting environments.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJVw8GqAAoJEKllVAevmvmsIMoH/ibuwat8qEV1KMrGg/p5E3H8
-uZNJnUWTqfkasLAT2UY/QHtmb1NAwBRAPHH39ex0dM2i2Kja4SkqSEGBO9fdGYfI
-Li6Bgc5EuwD5v4Al89IJMe4paiOsRtXyT/AKcVFtKIqNkCvTQs60p0b7CrQVQmzC
-3rOOch7xFm8qMV3Dwda0+DPtjFANTqdHcUpnmRYPtZORk3YGgIXhT1gA/XeHbBjH
-/lmIcK98SLOr4WHHPAgRpZ6HRmclQr0lvQQqx96dxZEZwtNoEcG/ru8piEstej7c
-nHU2eIddiuLo/ClSazb+ZBkBkFtXcynkJjosnYgMOCY47sUK6igwZvLTV2HbgVQ=
-=fz7X
+iQIcBAEBCAAGBQJYksb0AAoJEHb/MwWLVhi2mkEQALLyH6VlcdSpoQJaTgu9Rb3m
+7E5nG6xJpQOgaSGnG7app8LBgGkXDxpO8O02tqHpjvriq+WrstxgepvohYEh71z7
+AgahTWdBRThSx8hRFxQE0ixj0RuIa0895ic82H0c7uD6RESGkfDJf+YgYis4wvoF
+APYmog4LJ8AbqN0khPh7ug0w/jpqV/RQAtddcC5PXqbgcl7K+RjFpSWHL4R9feS/
+aq3tBEJ7grXfJ+juUE1OvuXDRLO9RJbWMHeVHHghvwL37gUJ13sUtjlvPBTztYeJ
+h9VQ7WH67TSYI+OqsA09U0SzG9lagVerffgPXU3Fe62DeV3JQouto0KqraUpDmZa
++Ucz3orTsJ/QKRIlxJimC3/RDwWz/WhJv0SdjdbqPaCehXCiGWs5QbakVYa+R1H6
++UNmHA5FlxB/zCiAltgviL+OdaxNUCT1dhSuXW7JnFmrujQ4PdknYy0UVV+KWwxp
+OdRXJVkbLDj53FxXi1MIq1P3qQDr74U60+eJHE0hbg7UYGqED5DQ5zrgpZEv97kd
+ldr8XnS3zgxOqsNMGxvGKUIKjLxEGqqHRPWzYJFtk946WC49upbkmsezGRx7F0Hr
+KxYXqnjLm28oBCI4q8jA8KtgapnxnbMjw1SWQvOOQnltmbwRbEEAVa53B6dCoCGT
+03ZXu+SVo5UqQbGCBmcM
+=np+3
 -----END PGP SIGNATURE-----
