@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["759" "Wednesday" "26" "October" "2016" "02:04:30" "+0200" "Solar Designer" "solar@openwall.com" "<20161026000430.GA18890@openwall.com>" "22" "Re: [oss-security] Addition to linux-distros for Arch Linux" nil nil nil "10" "2016102600:04:30" "[oss-security] Addition to linux-distros for Arch Linux" (number mark "U       solar@openwa Oct 26   22/759   " thread-indent "\"Re: [oss-security] Addition to linux-distros for Arch Linux\"\n") "<f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>" ("<f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1635" "Thursday" "2" "February" "2017" "01:15:48" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<da71bd1ba8f644a7b81827c5dcdedd60@imshyb01.MITRE.ORG>" "40" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: host memory leakage in virgl_cmd_resource_unref" nil nil nil "2" "2017020206:15:48" "[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: host memory leakage in virgl_cmd_resource_unref" (number mark "U       cve-assign@m Feb  2   40/1635  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: host memory leakage in virgl_cmd_resource_unref\"\n") "<alpine.LFD.2.20.1702012244320.601@wniryva>" ("<alpine.LFD.2.20.1702012244320.601@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 6078 invoked by uid 550); 26 Oct 2016 00:05:38 -0000
+Received: (qmail 32402 invoked by uid 550); 2 Feb 2017 06:16:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5841 invoked from network); 26 Oct 2016 00:05:05 -0000
-Date: Wed, 26 Oct 2016 02:04:30 +0200
-From: Solar Designer <solar@openwall.com>
-To: Allan McRae <allan@archlinux.org>
-Cc: oss-security@lists.openwall.com,
-	Levente Polyak <anthraxx@archlinux.org>
-Message-ID: <20161026000430.GA18890@openwall.com>
-References: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Addition to linux-distros for Arch Linux
+Received: (qmail 32371 invoked from network); 2 Feb 2017 06:16:00 -0000
+From: <cve-assign@mitre.org>
+To: <ppandit@redhat.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<liqiang6-s@360.cn>
+In-Reply-To: <alpine.LFD.2.20.1702012244320.601@wniryva>
+Message-ID: <da71bd1ba8f644a7b81827c5dcdedd60@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:15:48 -0500
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request Qemu: display: virtio-gpu-3d: host memory leakage in virgl_cmd_resource_unref
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Sat, Oct 22, 2016 at 09:18:11PM +1000, Allan McRae wrote:
-> Can Levente Polyak (CCed) please be added to the linux-distros list
-> representing Arch Linux [1]?  He leads the Arch Linux Security team,
-> which monitors and fixes all security issues in our packages [2].
+> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
+> vulnerable to a host memory leakage issue. It could occur while processing
+> 'VIRTIO_GPU_CMD_RESOURCE_UNREF' command.
 > 
-> His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
+> A guest user/process could use this flaw to leak host memory resulting in DoS.
 > 
-> Thanks,
-> Allan
-> 
-> [1] https://www.archlinux.org/people/developers/#anthraxx
-> [2] https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.html
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg04615.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1418382
 
-Added.  Note that Levente's key expires 2016-12-31.
+Use CVE-2017-5857.
 
-To others requesting membership: it's still frozen for now.  Allan's
-request was much simpler since it's about changes in who's subscribed
-for a distro that is already subscribed.
+This is not yet available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/virtio-gpu-3d.c but
+that may be an expected place for a later update.
 
-Alexander
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYksc/AAoJEHb/MwWLVhi2dlwP/jHC0lg6fIrzdhSon1pxLzFJ
+yRd3QxpiGOTt+zwK8T4L899ToWxQZDHLwV2QWz1+UGBf5IC1PaEtj03h5tlAWJte
+TUoAPT03STXKle3HDxqGuqohUqTeZ27EnEY78z5YIS8ok9txh2Mjy/Mg9GIR9st6
+ef1DHl7CwWObMurL//kPInWEFfYQ9/zMpq2KG/xtbBAmmKQlcmTTG+gnTbMy5lZ4
+mRWC4PPcUMlHt/wU1QQohIYvRcNKDj2bppvXeOX54TqY2m4hnMspPERIrpfvzX0N
+SAUORuztcL7zg5fXtv9d2RFdr1RGD9EVR8kTqv+lcpMWLl1Xgok6P+TNhIXRFiQw
+rHY/KEGBgplk0cDPpiT+pLrtntQgUp4nE5Dr18EjVEiju77/js6N19+IzwD/WWV3
+i0uN8YMZFrwRuKSUjH27mU1WvmP4vOtwlb+xDVbIdKp7llHxYL9wAViTn+AE6SvM
+0Lxi5gwIrnCox7ozz0wBSj8z2CPv9d0UY0ts+dSSljqbGG02eE3QYGAodUifJzv1
+EY6lUAfgimzRGTKM32Pt3xkRccEjslaKj1tJopPJd2Ptfgv9CXZ03w2O86/niJY7
+dExg6W4ZBYrPMAiAx2mm+V0sHGOAyaEQmKjhYMbHAPe+KizsBJ4LcA1JxXTojULe
+KzkJsxObG7XYsmYA/0Vi
+=kzd3
+-----END PGP SIGNATURE-----
