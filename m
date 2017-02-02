@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/9
-Message-ID: <20170621122001.GA3350@intrepid>
-Date: Wed, 21 Jun 2017 14:20:01 +0200
-From: Alexander Bergmann <abergmann@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: unrar: VMSF_DELTA filter allows arbitrary memory write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/10
+Message-ID: <3d6e79c054e549a9962c037935bdb1b0@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 01:02:48 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: podofo: infinite loop in PoDoFo::PdfPage::GetInheritedKeyFromObject (PdfPage.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It was reported that unrar fixed a VMSF_DELTA memory corruption issue in
-there latest version unrarsrc-5.5.5.tar.gz. This problem was reported to
-Sophos AV in 2012 but never reach upstream rar.
+> https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp
+> AddressSanitizer: stack-overflow
+> podofo-0.9.4/src/base/PdfVariant.cpp:151:20
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1286&desc=6#maincol
+Use CVE-2017-5852.
 
-Reproducer:
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Base64-encoded RAR file to trigger the VMSF_DELTA issue:
-
-UmFyIRoHAPlOcwAADgAAAAAAAAAAMAh0AAAmAI4AAAAAAAAAAhBBUiEAAAAAHQAGAAAAACBzdGRv
-dXQgIVUMzRDNmBGByDAda+AXaSv4KvQr1K/oejL05mXmXmww5tEk8gA9k8nmieyeyeswuOR6cx69
-a2Hd6zQwu3aoMDDwMEswADAAMD4P938w+dydoRFwAmwAAAAAvv////+/////+9W3QFgAAQAGAAAA
-Ooimhd12AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-As far as I can tell no CVE was assigned to this issue so far.
-
-
-Regrads,
-Alex~
-
--- 
-Alexander Bergmann <abergmann@...e.com>, Security Engineer, GPG:9FFA4886
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nürnberg)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBCAAGBQJYkscVAAoJEHb/MwWLVhi2hy4P/1YzMOcoVFBE7j0E1WraZt9p
+WZmGqpJMH/5IPc+cFMn/wGnMPssMn3G+mMOp9u1/f6+dqhSaShM7kBE2U3tYuLsX
+trcvaH3cxQy39uAxje2JUZ32de4s4fYoAJnydN4fCDLVtLK7DgRRwmB0LN8xbB9r
+D8eC16ISD2WBbqWshkW+w8cjIqZ6B+hOl4Z7iJDgYvm5YF/oXt3h8p8pjnnvlbd+
+BGKbukI59xcqamyxQmftO+14BcrjJBGgOHN8V8Xu8uf7JppS50FS4IAYk5ikV4eZ
+WEDuZNIey9vuxIAFY29yPc4ZfQYu7ngCGeSgXSAqKLYyUlcrTnLBDRxxuCyhd65V
+ul03poDIG/6kAF7zjFA6sKSVNhpRPOoRNTTqvrEXSKZK7GxqYNlHXQM/gtXjF2rY
+ZpWaXeaGBnHKOOxCWjdErZfriIB91Cd2UBiSSUw1kmF46uthFcuhUhQCVhSA2MVa
+jX9LkI6gKrdAZjDu8IND9sDHxZiiUtL/QX4zeIh80ZtDVD7HfDp+ukZRKRz3d1Me
+rdHOcQWkEGiZFwi4ErJ3LBr2oSag1DDR89jgCo3euu4LqCZ9ighv1WQkc8sGVnO1
+qsboBNp+eXYf9aCzMl/tNA5qp6qmefowOCFxqE1476QP6PRuDG10F/XisQRjeGJq
+hzk+CuS03nK65fnN+Vu8
+=2dWy
+-----END PGP SIGNATURE-----
