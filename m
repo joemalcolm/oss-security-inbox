@@ -1,48 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/01/6
-Message-ID: <20170401204457.GA12965@openwall.com>
-Date: Sat, 1 Apr 2017 22:44:57 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/1
+Message-ID: <9734ca76ee5140c0b81410555e2a85f5@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:48:06 -0500
+From: <cve-assign@...re.org>
+To: <paulcher@...lab.cs.msu.su>, <neex.emil@...il.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: ffmpeg remote exploitaion results code execution
 Content-Type: text/plain; charset=utf-8
 
-To Red Hat folks:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
-> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
-> > CVE-2017-7308 [1] was assigned to the following issue:
-> >
-> > The packet_set_ring function in net/packet/af_packet.c in the Linux
-> > kernel through 4.10.6 does not properly validate certain block-size
-> > data, which allows local users to cause a denial of service (overflow)
-> > or possibly have unspecified other impact via crafted system calls.
-> >
-> > The fix is sent upstream [2].
+> links to exploits:
+> https://gist.github.com/PaulCher/324690b88db8c4cf844e056289d4a1d6
+> https://gist.github.com/PaulCher/9acf4dc47c95a8b40b456ba03b05a913
+
+> [ 1 - libavformat/http.c  ]
 > 
-> Update: the fix actually consists of 3 patches:
+> After executing of http_read_stream we read each http header, where we
+> pass "Transfer-Encoding: chunked. header, and we come into
+> http_buf_read function [1]. Due to incorrect use of strtoll function
+> and integer sizes (chunk_size in int64_t)[2], it was possible to pass
+> negative chunk_size in chunk encoding, so after computing final size
+> using FFMIN function later on it would be passed as argument to
+> avio_read function. This results a heap-overflow which we found out to
+> be exploitable, because overflowed buffer is allocated right next to
+> the AVIOContext structure[3]. Overflowing function pointer in this
+> structure immediately results in rip control and then code execution.
 > 
-> https://patchwork.ozlabs.org/patch/744811/
-> https://patchwork.ozlabs.org/patch/744813/
-> https://patchwork.ozlabs.org/patch/744812/
+> * [1] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1166
+> * [2] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/http.c#L1259
+> * [3] - https://github.com/FFmpeg/FFmpeg/blob/51020adcecf4004c1586a708d96acc6cbddd050a/libavformat/aviobuf.c#L899
 > 
-> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
-> >
-> > [2] https://patchwork.ozlabs.org/patch/744811/
+> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/2a05c8f813de6f2278827734bf8102291e7484aa
 
-Red Hat currently says all RHEL starting with RHEL5 are affected:
+Use CVE-2016-10190.
 
-https://access.redhat.com/security/cve/cve-2017-7308
 
-However, the corresponding Bugzilla entry has no mention of that:
+> [ 2 - libavformat/rtmppkt.c ]
+> 
+> Issue is connected with buffer overflow on the heap in RTMP protocol.
+> After a bit of reverse engineering of RTMP protocol you can notice
+> that it uses chunk (of max 0x80 bytes) to _transfer_ data, but chunks
+> of more size could be used to _store_ the data. Because size of packet
+> is not checked that it is the same as it was in the same transmission
+> you can first send packet with smaller size and then bigger size, and
+> this results in heap-overflow[1]. If you can align chunks right you can
+> achieve write-what-where condition and that results in RCE.
+> 
+> * [1] - https://github.com/FFmpeg/FFmpeg/blob/d903b4e3ad4a81b3dd79f12c2f3b9cb16e511173/libavformat/rtmppkt.c#L268
+> 
+> The issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/7d57ca4d9a75562fa32e40766211de150f8b3ee7
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1437404
+Use CVE-2016-10191.
 
-So is it just a better-safe-than-sorry default to list products as
-affected until known otherwise?  If so, maybe Unknown would be better?
 
-RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
+> [ 3 - ffserver.c ]
+> 
+> This issue is completely like the first one and it results in heap overflow.
+> 
+> This issue was fixed in https://github.com/FFmpeg/FFmpeg/commit/a5d25faa3f4b18dac737fdb35d0dd68eb0dc2156
 
-https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
+Use CVE-2016-10192.
 
-Alexander
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYksbXAAoJEHb/MwWLVhi2UgcQAJP5bl4pfmex1h/9mVfFlvaX
+J+k0EeXJnyaKyofaE3Xz/Hy4WRlzEjO7DZML+hbilTwinojlvUuhTUqBrvEGkP6L
+jbBQc3+diHBbYFTCqUccQdssUmJargBPj5pFtrrge4do/brPS1oBqWEcLEN2D2Hm
+vTVw4tlG2CYRMDcoin6LWkmcPOaB6kXh6kig36aUA/8NlHay9LFEWMGDsZdxtyq4
+lDhiEmokYJ9adeZISw0gIEtjAh/phsHfQHJBkkgyuiufZqyVzLOVPxUx4aqUcG8F
+GvRtgaH6WW1uBj6zArRjz6O95vK62jbv0FA29cXTglV9ZNniCDNnBJAy7pnr6Co9
+MdpB0vI+GNvbyHFKXLOIQZbaIFP7eHGYJzDBNLXpRwBZLJGhTj4RecoWPo6Mvnl+
+KF7w8LZs38nWsCZL8uaovksHv7KZHbJu3xbSLdj/NGMfh7PKi9XPP3PMNluWjpzd
+hW0MC3EpSL1l+7zV39kpES+m31sKZA4+/y4iS6A58nt3hIyzRQBjbxVEA7bt5rKQ
++j/msNvwUUqn0TeAg3VCjnEtsGoJXpjrwxW8re5nNDKkstfwLLEVgUrK5mGBgw9Y
+JCEUnAvGDspVW7fBNKw+aq7OQ52kWQCfrjmIRNmtZqSm5FSJZXt79WmgCppTLKb+
+wORuhMtK5Dtn1Sv05NwM
+=TZVr
+-----END PGP SIGNATURE-----
