@@ -1,31 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/4
-Message-ID: <e1b68b54-0644-cca7-84dc-ca92dd915358@oracle.com>
-Date: Tue, 25 Jul 2017 17:13:41 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: Henri Salo <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/5
+Message-ID: <2ac0c9bbb12f40eda8a5a359d865e4a0@imshyb01.MITRE.ORG>
+Date: Thu, 2 Feb 2017 00:55:01 -0500
+From: <cve-assign@...re.org>
+To: <max@...canary.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE requests: code injection in rubygem espeak-ruby and code injection in rubygem festivaltts4r
 Content-Type: text/plain; charset=utf-8
 
-On 25/07/17 17:00, Henri Salo wrote:
-> On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
->> I do expect that we (I) will become more active on linux-distros as
->> well.   Speaking of which, has it been unusually quiet or do I need to
->> beat up the mail admin people again?   I haven't seen anything since
->> Bastille Day (14 July).
-> Some admins are currently travelling and enjoying vacation time. Everything
-> should be back to normal after this week. Please no beating up, my leg hurts
-> already..
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-:)
+> Two similar vulnerabilities in ruby text-to-speech libraries.
 
-I suspect this doesn't affect just Oracle, but messages send to distros
-and oss-security often raise eyebrows because they're talking about
-vulnerabilities.   I ranted and raved(*) last time and it seemed to do
-the trick.
+> [] 1) espeak-ruby
+> 
+> Rubygem espeak-ruby passes user modifiable strings directly to a shell
+> command.
+> 
+> An attacker can execute malicious commands by modifying the strings that
+> are passed as arguments to the speak, save, bytes and bytes_wav methods in
+> the lib/espeak/speech.rb.
+> 
+> https://github.com/dejan/espeak-ruby/issues/7
 
-jch
+Use CVE-2016-10193.
 
 
-(*) slight exaggeration.
+> [] 2) festivaltts4r
+> 
+> Rubygem festivaltts4r passes user modifiable strings directly to a shell
+> command.
+> 
+> An attacker can execute malicious commands by modifying the strings that
+> are passed as arguments to the to_speech and and to_mp3 methods in
+> lib/festivaltts4r/festival4r.rb.
+> 
+> https://github.com/spejman/festivaltts4r/issues/1
+
+Use CVE-2016-10194.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYksb0AAoJEHb/MwWLVhi2mkEQALLyH6VlcdSpoQJaTgu9Rb3m
+7E5nG6xJpQOgaSGnG7app8LBgGkXDxpO8O02tqHpjvriq+WrstxgepvohYEh71z7
+AgahTWdBRThSx8hRFxQE0ixj0RuIa0895ic82H0c7uD6RESGkfDJf+YgYis4wvoF
+APYmog4LJ8AbqN0khPh7ug0w/jpqV/RQAtddcC5PXqbgcl7K+RjFpSWHL4R9feS/
+aq3tBEJ7grXfJ+juUE1OvuXDRLO9RJbWMHeVHHghvwL37gUJ13sUtjlvPBTztYeJ
+h9VQ7WH67TSYI+OqsA09U0SzG9lagVerffgPXU3Fe62DeV3JQouto0KqraUpDmZa
++Ucz3orTsJ/QKRIlxJimC3/RDwWz/WhJv0SdjdbqPaCehXCiGWs5QbakVYa+R1H6
++UNmHA5FlxB/zCiAltgviL+OdaxNUCT1dhSuXW7JnFmrujQ4PdknYy0UVV+KWwxp
+OdRXJVkbLDj53FxXi1MIq1P3qQDr74U60+eJHE0hbg7UYGqED5DQ5zrgpZEv97kd
+ldr8XnS3zgxOqsNMGxvGKUIKjLxEGqqHRPWzYJFtk946WC49upbkmsezGRx7F0Hr
+KxYXqnjLm28oBCI4q8jA8KtgapnxnbMjw1SWQvOOQnltmbwRbEEAVa53B6dCoCGT
+03ZXu+SVo5UqQbGCBmcM
+=np+3
+-----END PGP SIGNATURE-----
