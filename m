@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/13
-Message-ID: <20171106201553.GA20542@openwall.com>
-Date: Mon, 6 Nov 2017 21:15:53 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Bram@...lenaar.net
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/5
+Message-ID: <1486115842.8276.10.camel@redhat.com>
+Date: Fri, 03 Feb 2017 10:57:22 +0100
+From: Adam Maris <amaris@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request for two input validation flaws in gtk-vnc
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 05, 2017 at 07:03:07PM -0700, Kurt Seifried wrote:
-> Also you're all still ignoring umask =(. Please, when you create a new
-> file, check the umask and subtract it to make sure you're abiding by the
-> user's wishes.
+Hello,
 
-Ignoring umask may be OK if the program sets the most restrictive
-permissions it can work with, and I suppose in this case that's 0600.
+Could you please allocate CVE IDs for these input validation issues in
+gtk-vnc?
 
-On Mon, Nov 06, 2017 at 08:08:49AM +0100, Christian Brabandt wrote:
-> On So, 05 Nov 2017, Jakub Wilk wrote:
-> > Couldn't vim create swapfiles with mode 0600 and be done with it?
->
-> Because then users of the group could not recover the file anymore,
-> although they are able to read the original file.
+https://bugzilla.gnome.org/show_bug.cgi?id=778048
+https://bugzilla.gnome.org/show_bug.cgi?id=778050
 
-That's the behavior I would expect.
+Thank you!
 
-On Mon, Nov 06, 2017 at 08:11:58AM +0100, Christian Brabandt wrote:
-> On So, 05 Nov 2017, Solar Designer wrote:
-> > Yes, let's also force 0600 for "undo and backup files", please.
-> 
-> Backup files and undo files are not created by default, only when Vim is 
-> configured to do so. Also the undofile does not leak any information, 
-> because as soon as the original file has been slightly altered, the undo 
-> information is discarded.
+Best Regards,
 
-Thanks for the additional detail.  None of this feels like a reason not
-to set all of those files to 0600.
-
-Alexander
+-- 
+Adam Mariš, Red Hat Product Security
+1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
