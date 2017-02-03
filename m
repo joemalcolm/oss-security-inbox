@@ -1,29 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/04/1
-Message-ID: <20170504005520.GD12174@hunt>
-Date: Wed, 3 May 2017 17:55:20 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/3
+Message-ID: <20170203082635.7htlwilcixrd4l3p@diablo>
+Date: Fri, 3 Feb 2017 18:26:35 +1000
+From: Justin Steven <justin@...tinsteven.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: rpcbomb: remote rpcbind denial-of-service
+Subject: Re: curiosity for CVE-2016-10000
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
-> This vulnerability allows an attacker to allocate any amount of bytes
-> (up to 4 gigabytes per attack) on a remote rpcbind host, and the
-> memory is never freed unless the process crashes or the administrator
-> halts or restarts the rpcbind service.
-> [...]
-> An extensive write-up can be found here:
-> https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
-> 
-> Exploit + patches: https://github.com/guidovranken/rpcbomb/
+As I understand, it is indeed DWF which I believe is a bona fide CNA.
 
-Hello Guido, nice find. Have CVE numbers been requested for this issue
-yet? Have you investigated if ntirpc is affected too? Much of the code
-looks similar:
+See
+<https://github.com/distributedweaknessfiling/DWF-Database/blob/master/DWF-Database-2016.csv>
 
-http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
+Do these allcoations (as well as the 2015 and 2017 allocations) need to be
+pushed upstream and synced with Mitre's dataset?
 
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+-- 
+Justin
