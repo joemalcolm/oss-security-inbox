@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/13
-Message-ID: <CAJmbs8jKczMSw5RZ2NkSx3z-9+cTRg50w-VO9nneRyhMOFLSKQ@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:27:43 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7684 - Apache OpenMeetings - Insecure File Upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/9
+Message-ID: <51722bb1-e4c8-4aa3-0008-0994c35ff2ce@suse.com>
+Date: Fri, 3 Feb 2017 18:02:53 +0100
+From: Andreas Stieger <astieger@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low
+Hello,
 
-Vendor: The Apache Software Foundation
 
-Versions Affected: Apache OpenMeetings 1.0.0
+On 02/03/2017 12:29 PM, John Haxby wrote:
+> On 03/02/17 05:52, Wade Mealing wrote:
+>> Mounting a crafted EXT4 image read-only leads to a memory corruption and
+>> SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
+>> procedure is a privileged operation, an attacker is probably not able
+>> to trigger this vulnerability on the commandline.
+>> Instead the automatic mounting feature of the GUI via a crafted
+>> USB-device is required.
+>>
+>> From full disclosure at:
+>>
+>> http://seclists.org/fulldisclosure/2016/Nov/75
+>>
+>> If it has been assigned elsewhere, I am unable to see it.
+> The bugzilla link from the above isn't accessible.  Are we missing any
+> useful information?
 
-Description: Apache OpenMeetings doesn't check contents of files being
-uploaded. An attacker can cause a denial of service by uploading
-multiple large files to the server
-CVE-2017-7684
 
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
+https://bugzilla.suse.com/show_bug.cgi?id=1023377#c1
 
-Credit: This issue was identified by Security Innovation
+RH: https://bugzilla.redhat.com/show_bug.cgi?id=1395190
+ML: http://www.spinics.net/lists/linux-ext4/msg54572.html
+
+Introduced in:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=952fc18ef9ec707ebdc16c0786ec360295e5ff15
+(first in v3.6-rc1...)
+
+Fix:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3a4b77cd47bb837b8557595ec7425f281f2ca1fe
+(first in v4.10-rc1)
+
+
+Andreas
+
+-- 
+Andreas Stieger <astieger@...e.com>
+Project Manager Security
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton,
+HRB 21284 (AG Nürnberg)
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
