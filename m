@@ -1,22 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/28/3
-Message-ID: <20170328144904.GA12627@mail.hallyn.com>
-Date: Tue, 28 Mar 2017 09:49:04 -0500
-From: "Serge E. Hallyn" <serge@...lyn.com>
-To: oss-security@...ts.openwall.com
-Cc: "857295@...s.debian.org" <857295@...s.debian.org>, Stéphane Graber <stgraber@...ntu.com>, serge.hallyn@...ntu.com
-Subject: Re: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/8
+Message-ID: <CANO=Ty0VtEX2Csom+EvprzU4wBS8d2=Yu1Y85+pPWqdbnhCVow@mail.gmail.com>
+Date: Fri, 3 Feb 2017 09:07:26 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: curiosity for CVE-2016-10000
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 28, 2017 at 06:45:34AM -0400, Stiepan wrote:
-> Thanks to the 2.0.7-2 update by Evgeni Golov and his crystal-clear instructions on how to use lxcbr0 with this version, I could confirm that the issue with the host's routing table being affected by changes in the containers' routing tables is not there anymore when using that version (lxc 2.0.7-2 from jessie-backports), which includes the fixes to CVE-2017-5985 which were brought in LXC 2.0.7 (upstream).
-> 
-> This was thus basically a variation of said CVE, which probably doesn't need to be separately numbered as such, the core problem at stake being the same:
-> network namespace ownership was not respected by a setuid-root program enabling the user to configure networks as non-root, which is now solved.
-> This leads me to a suggestion to the upstream developers: couldn't the same be achieved using specific network-related capabilities, instead of setuid-root, thereby further reducing the risk of lxc-user-nic being exploited and hence, reducing overall attack surface (in unprivileged mode)?
-> I have read in https://wiki.ubuntu.com/UserNamespace that the approach of using "targeted capabilities" was then considered. This is probably the closest to what I am suggesting (specifically for lxc-user-nic - the current approach with 1-1 uid mappings seems fine for network-unrelated things).
+On Fri, Feb 3, 2017 at 1:26 AM, Justin Steven <justin@...tinsteven.com>
+wrote:
 
-The targeted capabilities wouldn't help here, because in fact
-lxc-user-nic requires privilege against the parent namespace.
+> As I understand, it is indeed DWF which I believe is a bona fide CNA.
+>
 
--serge
+Indeed it is
+
+https://cve.mitre.org/cve/cna.html
+
+
+>
+> See
+> <https://github.com/distributedweaknessfiling/DWF-
+> Database/blob/master/DWF-Database-2016.csv>
+>
+> Do these allcoations (as well as the 2015 and 2017 allocations) need to be
+> pushed upstream and synced with Mitre's dataset?
+>
+> --
+> Justin
+>
+
+Yes, but we're in the process of creating a JSON data format and finalizing
+it (already on v.4, rapid iteration for the win), once that is done
+(hopefully another month or so to nail it down) the DWF will start to
+publish data in that format so MITRE can consume it and as time goes on the
+DWF will ramp up (there's a lot to do if you want to build a system that
+will assign a few hundred thousand CVEs efficiently =). We'll be making
+some announcements at RSA in 2 weeks.
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
