@@ -1,60 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/4
-Message-ID: <CAA=AuEeu87z+zx=xf+yy6+4et6jWLF+8v+_rktO-uM_bNtgOMA@mail.gmail.com>
-Date: Thu, 16 Mar 2017 12:29:39 +0300
-From: Jerome Athias <athiasjerome@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/03/2
+Message-ID: <20170203071134.GB5666@suse.de>
+Date: Fri, 3 Feb 2017 08:11:35 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Dealing with CVEs that apply to unspecified package versions
+Subject: Re: curiosity for CVE-2016-10000
 Content-Type: text/plain; charset=utf-8
 
-Yes the CVE form could help. (from my experience, first versions of a CVE
-sometimes do not include the exact CPE versions, the CPE are (or should be
-used as) at that time a pattern (e.g. "starts with") (still helpful) and
-are then sometimes (and we should understand/recognize the time/effort
-needed) revised/detailed over time
-OVAL could help to circumvent that issue (e.g. patterns/regex, hashes, etc.)
+Hi,
 
-imho, the root cause (or main issue) is:
-CVRF (or OASIS CSAF/CVRF) or CVE schema are lacking in their
-models/schemas/trees what is needed to automatically handle software
-components/dependencies
-e.g. of what would be needed:
-http://schemas.dmtf.org/wbem/cim-html/2.46.0+/CIM_SoftwareElement.html
+This might just be a blocked empty CVE as it is a prefix for the DWF(?) range.
 
+Ciao Marcus
+On Thu, Feb 02, 2017 at 05:18:06AM -0500, Vladis Dronov wrote:
+> hello, MITRE, all,
+> 
+> i'm asking just out of curiosity about CVE-2016-10000. afaiu, it is in
+> a range allocated to some CNA, but it is not yet(?) allocated. can you
+> please, tell what CNA CVE-2016-10000 is allocated to (i was not able to
+> find this info at mirte.org) so i can ask them directly about this CVE status?
+> 
+> best regards,
+> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+> 
 
-
-
-On Wed, Mar 15, 2017 at 11:47 PM, Kurt Seifried <kseifried@...hat.com>
-wrote:
-
-> On Wed, Mar 15, 2017 at 2:05 PM, Leo Famulari <leo@...ulari.name> wrote:
->
-> > On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
-> > > I suspect the solution is for people who rely upon these scanning tools
-> > to
-> > > do the leg work themselves on the packages they care about. (i.e., the
-> > > packages that annoy them the most.)
-> >
-> > I think those of us who find these tools useful should work to improve
-> > the CVE database by adding the "fixed-in-version" information as it
-> > becomes available.
-> >
->
-> This is a major goal of
->
-> 1) using the JSON format with richer data [a]
-> 2) allowing other people (e.g. CVE Mentors) to edit the data
->
-> [a]
-> https://github.com/CVEProject/automation-working-group/blob/
-> master/cve_json_schema/DRAFT-JSON-file-format-v4.md
->
->
->
-> --
->
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@...hat.com
->
-
+-- 
+Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@...e.de>
