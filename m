@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["643" "Monday" "23" "January" "2017" "23:54:25" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701232352210.20901@wniryva>" "22" "[oss-security] CVE request Qemu: display: virtio-gpu: host memory leakage in virtio_gpu_resource_attach_backing" nil nil nil "1" "2017012318:24:25" "[oss-security] CVE request Qemu: display: virtio-gpu: host memory leakage in virtio_gpu_resource_attach_backing" (number mark "U       ppandit@redh Jan 23   22/643   " thread-indent "\"[oss-security] CVE request Qemu: display: virtio-gpu: host memory leakage in virtio_gpu_resource_attach_backing\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["298" "Friday" "3" "February" "2017" "05:35:03" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<200809938.18717488.1486118103043.JavaMail.zimbra@redhat.com>" "9" "Re: [oss-security] curiosity for CVE-2016-10000" nil nil nil "2" "2017020310:35:03" "[oss-security] curiosity for CVE-2016-10000" (number mark "U       vdronov@redh Feb  3    9/298   " thread-indent "\"Re: [oss-security] curiosity for CVE-2016-10000\"\n") "<20170203071134.GB5666@suse.de>" ("<834080593.18312469.1486030496674.JavaMail.zimbra@redhat.com>" "<1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com>" "<20170203071134.GB5666@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 31817 invoked by uid 550); 23 Jan 2017 18:24:45 -0000
+Received: (qmail 5645 invoked by uid 550); 3 Feb 2017 10:35:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,29 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31793 invoked from network); 23 Jan 2017 18:24:44 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1701232352210.20901@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Mon, 23 Jan 2017 18:24:33 +0000 (UTC)
-cc: Li Qiang <liqiang6-s@360.cn>
-Date: Mon, 23 Jan 2017 23:54:25 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request Qemu: display: virtio-gpu: host memory leakage in
- virtio_gpu_resource_attach_backing
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 5618 invoked from network); 3 Feb 2017 10:35:14 -0000
+Date: Fri, 3 Feb 2017 05:35:03 -0500 (EST)
+From: Vladis Dronov <vdronov@redhat.com>
+To: oss-security@lists.openwall.com
+Message-ID: <200809938.18717488.1486118103043.JavaMail.zimbra@redhat.com>
+In-Reply-To: <20170203071134.GB5666@suse.de>
+References: <834080593.18312469.1486030496674.JavaMail.zimbra@redhat.com> <1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com> <20170203071134.GB5666@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.40.1.136]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF50 (Linux)/8.0.6_GA_5922)
+Thread-Topic: curiosity for CVE-2016-10000
+Thread-Index: iwjk6dW0DIPE/11DguUB8Ykki5GoKw==
+Subject: Re: [oss-security] curiosity for CVE-2016-10000
 
-   Hello,
+hei hai,
 
-Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is 
-vulnerable to a memory leakage issue. It could occur while processing 
-'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
+> This might just be a blocked empty CVE as it is a prefix for the DWF(?) range.
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+afaik, dwf range starts from a million (CVE-2016-1000000), for example,
+https://security-tracker.debian.org/tracker/CVE-2016-1000023
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg00151.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1415795
-
-This issue was reported by Li Qiang of 360.cn Inc.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
