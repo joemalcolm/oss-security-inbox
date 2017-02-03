@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1671" "Monday" "25" "January" "2016" "02:53:49" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160125075349.450551BE0EA@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: Linux kernel : Denial of service with specially crafted key file." nil nil nil "1" "2016012507:53:49" "[oss-security] Re: Linux kernel : Denial of service with specially crafted key file." (number mark "U       cve-assign@m Jan 25   47/1671  " thread-indent "\"[oss-security] Re: Linux kernel : Denial of service with specially crafted key file.\"\n") "<628131663.11879492.1453704093304.JavaMail.zimbra@redhat.com>" ("<628131663.11879492.1453704093304.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1213" "Friday" "3" "February" "2017" "09:07:26" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0VtEX2Csom+EvprzU4wBS8d2=Yu1Y85+pPWqdbnhCVow@mail.gmail.com>" "43" "Re: [oss-security] curiosity for CVE-2016-10000" nil nil nil "2" "2017020316:07:26" "[oss-security] curiosity for CVE-2016-10000" (number mark "U       kseifried@re Feb  3   43/1213  " thread-indent "\"Re: [oss-security] curiosity for CVE-2016-10000\"\n") "<20170203082635.7htlwilcixrd4l3p@diablo>" ("<834080593.18312469.1486030496674.JavaMail.zimbra@redhat.com>" "<1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com>" "<20170203071134.GB5666@suse.de>" "<20170203082635.7htlwilcixrd4l3p@diablo>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14026 invoked by uid 550); 25 Jan 2016 07:54:01 -0000
+Received: (qmail 23742 invoked by uid 550); 3 Feb 2017 16:07:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14004 invoked from network); 25 Jan 2016 07:54:00 -0000
-From: cve-assign@mitre.org
-To: wmealing@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <628131663.11879492.1453704093304.JavaMail.zimbra@redhat.com>
-Message-Id: <20160125075349.450551BE0EA@smtpvbsrv1.mitre.org>
-Date: Mon, 25 Jan 2016 02:53:49 -0500 (EST)
-Subject: [oss-security] Re: Linux kernel : Denial of service with specially crafted key file.
+Received: (qmail 23721 invoked from network); 3 Feb 2017 16:07:39 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=X7tUrP8MaeEsJNNo2xpHqARWEGME56Ssugs3+Lp9NhY=;
+        b=pLN4LfgkcqeNZOdhRzxeqR1qg97+lYdGOUcniQwTwTSMtC2JhRsBzQjAhaFkCjMO9a
+         ks2EHFStkHy6IR1bxW8FR8OaCcEoduFocvh4+60WDoZaREa8aMHzto41eB1sJxI3XwCy
+         Ydy0EMusdFnOLmZObPujiTl8Tu0q2PUhlpyFMj9/kV7hYY3laKto/oImsm4wbpfBkWkS
+         T6SBX5+9KdqePdM8hrnusMHVEgjJ2AFzppH42M07RJ8njSjSjxl9uCHvReU8LFcK88Uq
+         G2Ixjz8PvlisklNGbCG5eIz22oKKDYPaWsHTq/yrwp7p2YY6Aj0QPc0cjeBAdY1ZEnic
+         SkmA==
+X-Gm-Message-State: AMke39mFv3xshvmDhbknkLus4tLQRNTl8BgHakfwrDpUpPaMXQEtU9w+DXGj2P8aV6IrQ3ydSXBtr0cNDee4SyxV
+X-Received: by 10.157.41.200 with SMTP id g8mr6583923otd.247.1486138047072;
+ Fri, 03 Feb 2017 08:07:27 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <20170203082635.7htlwilcixrd4l3p@diablo>
+References: <834080593.18312469.1486030496674.JavaMail.zimbra@redhat.com>
+ <1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com>
+ <20170203071134.GB5666@suse.de> <20170203082635.7htlwilcixrd4l3p@diablo>
+From: Kurt Seifried <kseifried@redhat.com>
+Date: Fri, 3 Feb 2017 09:07:26 -0700
+Message-ID: <CANO=Ty0VtEX2Csom+EvprzU4wBS8d2=Yu1Y85+pPWqdbnhCVow@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a113e28ae621b760547a27a38
+Subject: Re: [oss-security] curiosity for CVE-2016-10000
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a113e28ae621b760547a27a38
+Content-Type: text/plain; charset=UTF-8
 
-> An issue with ASN1.1 DER decoder was reported that a specially created
-> key can lead to a kernel panic via x509 certificate DER signature
-> parsing.
-> 
-> Vulnerable code:
+On Fri, Feb 3, 2017 at 1:26 AM, Justin Steven <justin@justinsteven.com>
+wrote:
 
->> crypto/asymmetric_keys/public_key.c
+> As I understand, it is indeed DWF which I believe is a bona fide CNA.
+>
 
-> int public_key_verify_signature(const struct public_key *pk,
->                                 const struct public_key_signature *sig)
-> {
->         const struct public_key_algorithm *algo;
-> 
->         BUG_ON(!pk);
->         BUG_ON(!pk->mpi[0]);
-> 
-> An attacker could craft a BER file without a public key and panic the system.
+Indeed it is
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1300237
+https://cve.mitre.org/cve/cna.html
 
-Use CVE-2016-2053.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+>
+> See
+> <https://github.com/distributedweaknessfiling/DWF-
+> Database/blob/master/DWF-Database-2016.csv>
+>
+> Do these allcoations (as well as the 2015 and 2017 allocations) need to be
+> pushed upstream and synced with Mitre's dataset?
+>
+> --
+> Justin
+>
 
-iQIcBAEBCAAGBQJWpdMuAAoJEL54rhJi8gl5SRMP/3rjH4bN46xreT6aN9KS6CR6
-PzOg7gaoVxRKQb6Ygc8NoxLCoSpnetUv14T3CSlN7J6RgVz6jy+CBOyIbkzMgm7S
-Le8DttB6hiv0shB+LqZhVnajET7r6mGyrYYiJ0rgsNaupI1QZMnwHGv2yySvSkWY
-SSp65kpmNqQ4J9SWxJ9EiMYjrhCEa9q9hsTmglosTwVVqR87wyIWFvmvyDCZlt+f
-9or4hrfJjPCLK9q9iJU18SlczTK/VNsJJMHOI6ZQb0lZEjX9MvnwherHnVe5VE1y
-a5ABDMFNgEiFeQWOm+pViwoGDG2EtDOHEqd2ZplPdW9MUwFKMeqAlZ+xy6M/r477
-Wqw25I9iwAVnKJ2c9a/JLQr4vFWXoLGjYmaT3dp8F7NrQO2VB/W0vG2VWlYltrgp
-drRvy0P10xFGsN/CxjgTw9v8CNkRUSRI4wgVNsm+SBS+PNnLwH+FgFOhS6XNFPRy
-R4EvIOec0WHrkPQRfL0qIlqA6sUfNuwQfQO4CvksEtpOPeeDVUwDVXwkMULWWSzL
-3yOE3eMGgP7ALJ88TS2uzMGH0U5AfaBAnDmepo3RI7a4kbqHJt68pKkf3uuF1HIw
-dp35mQ7gGJHtWoPAVZ/F7DdJkgU2hEecTle4ZP3D2c5rTpYQCS0gDkMEqjDvZ+BF
-jbbGSEREYy5xgjenLML7
-=NE0Y
------END PGP SIGNATURE-----
+Yes, but we're in the process of creating a JSON data format and finalizing
+it (already on v.4, rapid iteration for the win), once that is done
+(hopefully another month or so to nail it down) the DWF will start to
+publish data in that format so MITRE can consume it and as time goes on the
+DWF will ramp up (there's a lot to do if you want to build a system that
+will assign a few hundred thousand CVEs efficiently =). We'll be making
+some announcements at RSA in 2 weeks.
+
+
+-- 
+
+--
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a113e28ae621b760547a27a38--
