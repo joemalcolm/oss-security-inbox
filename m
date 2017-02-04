@@ -1,138 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/10
-Message-Id: <E1cgvh1-00026E-Rs@xenbits.xenproject.org>
-Date: Thu, 23 Feb 2017 15:52:31 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 209 (CVE-2017-2620) - cirrus_bitblt_cputovideo does not check if memory region is safe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/04/2
+Message-ID: <3275935.MH2SCY44WS@arcadia>
+Date: Sat, 04 Feb 2017 13:19:37 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: pax-utils: dumpelf: out of bounds read in dump_notes (dumpelf.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Description:
+pax-utils is a set of tools that check files for security relevant properties.
 
-            Xen Security Advisory CVE-2017-2620 / XSA-209
-                              version 4
+A fuzz on dumpelf an out of bounds read. It was reported to vapier which fixed 
+the issue immediately.
+Unfortunately I can’t get a symbolized ASan stacktrace, so I will show only 
+the useful part of both asan and gdb.
+This is not CVE-worthy because of the “READ of size 1” in a command-line tool. 
+I’m sharing it because some distro/packagers may want to have the patch 
+aboard.
 
-   cirrus_bitblt_cputovideo does not check if memory region is safe
+# dumpelf $FILE
+unknown-crash on address 0x7fc30f701000 at pc 0x000000520111 bp 0x7ffdc3db8eb0 
+sp 0x7ffdc3db8ea8
+READ of size 1 at 0x7fc30f701000 thread T0
 
-UPDATES IN VERSION 4
-====================
+(gdb)
+#0  dump_notes (B=B@...ry=64, memory=memory@...ry=0x7ffff7ff428c, 
+memory_end=0x7ffff7ff42ac, elf=0x60d8e0, elf=0x60d8e0) at dumpelf.c:245
+#1  0x0000000000405636 in dump_phdr (elf=elf@...ry=0x60d8e0, 
+phdr_void=phdr_void@...ry=0x7ffff7ff4158, phdr_cnt=phdr_cnt@...ry=5) at 
+dumpelf.c:324
+#2  0x0000000000401dd9 in dumpelf (file_cnt=0, filename=) at dumpelf.c:91
+#3  parseargs (argv=0x7fffffffe1a8, argc=2) at dumpelf.c:557
+#4  main (argc=2, argv=0x7fffffffe1a8) at dumpelf.c:566
 
-Include a prerequisite patch for qemu-upstream, correct statement
-regarding the availability of a qemu-traditional patch.
+Affected version:
+1.2.2
 
-ISSUE DESCRIPTION
-=================
+Fixed version:
+N/A
 
-In CIRRUS_BLTMODE_MEMSYSSRC mode the bitblit copy routine
-cirrus_bitblt_cputovideo fails to check wethehr the specified memory
-region is safe.
+Commit fix:
+https://github.com/gentoo/pax-utils/commit/10a9643d90a1ba6058a66066803fac6cf43f6917
 
-IMPACT
-======
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-A malicious guest administrator can cause an out of bounds memory
-write, very likely exploitable as a privilege escalation.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00142-pax-utils-dumpelf-oob1
 
-VULNERABLE SYSTEMS
-==================
+Timeline:
+2017-01-30: bug discovered and reported to upstream
+2017-02-01: upstream released a patch
+2017-02-04: blog post about the issue
 
-Versions of qemu shipped with all Xen versions are vulnerable.
+Note:
+This bug was found with American Fuzzy Lop.
 
-Xen systems running on x86 with HVM guests, with the qemu process
-running in dom0 are vulnerable.
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/04/pax-utils-dumpelf-out-of-bounds-read-in-dump_notes-dumpelf-c
 
-Only guests provided with the "cirrus" emulated video card can exploit
-the vulnerability.  The non-default "stdvga" emulated video card is
-not vulnerable.  (With xl the emulated video card is controlled by the
-"stdvga=" and "vga=" domain configuration options.)
-
-ARM systems are not vulnerable.  Systems using only PV guests are not
-vulnerable.
-
-For VMs whose qemu process is running in a stub domain, a successful
-attacker will only gain the privileges of that stubdom, which should
-be only over the guest itself.
-
-Both upstream-based versions of qemu (device_model_version="qemu-xen")
-and `traditional' qemu (device_model_version="qemu-xen-traditional")
-are vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid the issue.
-
-Running HVM guests with the device model in a stubdomain will mitigate
-the issue.
-
-Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
-in the xl domain configuration) will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Gerd Hoffmann of Red Hat.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa209-qemuu/*.patch     qemu-xen, qemu upstream
-xsa209-qemut.patch       qemu-xen-traditional
-
-$ sha256sum xsa209* xsa209*/*
-167af9ed7163fa7cf4abb52f865290ced3163c7684151bdc1324eb5e534faf13  xsa209-qemut.patch
-e698b73d8de24af0fe33968a43561e5e1d094f4caf2443caa447b552677d2683  xsa209-qemuu/0001-display-cirrus-ignore-source-pitch-value-as-needed-i.patch
-50c60e45151ef2265cce4f92b204e9fd75f8bc8952f097e77ab4fe1c1446bc98  xsa209-qemuu/0002-cirrus-add-blit_is_unsafe-call-to-cirrus_bitblt_cput.patch
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-However, deployment of the "stdvga" mitigation (changing the video
-card emulation to stdvga) is NOT permitted (except where all the
-affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.  This is because this produces a guest-visible
-change which will indicate which component contains the vulnerability.
-
-Additionally, distribution of updated software is prohibited (except
-to other members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJYrwN/AAoJEIP+FMlX6CvZQoQIAK9UiN9VwXv1I0E7X1TL2TjE
-P9SNXkI5wKiwCq22pbz9pjBO//ia3M5UoxpDMwaMAQzn9bEThHnki8x2njRxIEF7
-frxm6B8DpHLCoRHiqgwi018JHLLcSbr+KQrZqBns1j5BfOF0in89A8cgBmQrziyX
-bj9853Q8dHSUNW1vi8vZkMacIwxMCg4sBLjSRUoqiWmoyfU6XodRwZ3LoglsofTj
-/jk/G5OiitqXDBPzvclPRddQ53xiN9eN3fV8IdG6QpX6F+C2qQVDyS8kAqqFmmm6
-Vn6yl9UxrmP0OmvQ5CgUw8GWQoY3OqObjiPgfNUdbN+CLjdhdGfF3kGuYIniqd4=
-=I92f
------END PGP SIGNATURE-----
-
-Download attachment "xsa209-qemut.patch" of type "application/octet-stream" (1937 bytes)
-
-Download attachment "xsa209-qemuu/0001-display-cirrus-ignore-source-pitch-value-as-needed-i.patch" of type "application/octet-stream" (2607 bytes)
-
-Download attachment "xsa209-qemuu/0002-cirrus-add-blit_is_unsafe-call-to-cirrus_bitblt_cput.patch" of type "application/octet-stream" (2042 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
