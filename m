@@ -1,51 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/16
-Message-ID: <712547.523991333-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:47:33 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: binutils: two NULL pointer dereference in elflink.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/04/3
+Message-ID: <5995128.rBqAYY1dqO@arcadia>
+Date: Sat, 04 Feb 2017 13:20:17 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: pax-utils: dumpelf: multiple divide-by-zero in dumpelf.c
 Content-Type: text/plain; charset=utf-8
 
 Description:
-binutils are a collection of binary tools necessary to build programs.
+pax-utils is a set of tools that check files for security relevant properties.
 
-An updated clang version were able to discover two null pointer dereference in the following simple way:
+A fuzz on dumpelf shows multiple divide-by-zero . They was reported to vapier 
+which fixed the issues immediately.
+Unfortunately I can’t get the ASan stacktrace, so I will show only the 
+useful(not at all) part of the crash.
 
-# echo "int main () { return 0; }" > test.c
-# cc test.c -o test
-/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:124:12: runtime error: member access within null pointer of type 'struct elf_link_hash_entry'                            
+# dumpelf $FILE
+ FPE on unknown address 0x00000051ca65 (pc 0x00000051ca65 bp 0x7ffc31bb6f80 sp 
+0x7ffc31bb6e40 T0)
 
-/tmp/portage/sys-devel/binutils-2.28/work/binutils-2.28/bfd/elflink.c:11979:58: runtime error: member access within null pointer of type 'elf_section_list' (aka 'struct elf_section_list')  
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00137-pax-utils-dumpelf-fpe1
+
+# dumpelf $FILE
+  FPE on unknown address 0x00000051d335 (pc 0x00000051d335 bp 0x7ffc17babf80 
+sp 0x7ffc17babe40 T0)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00138-pax-utils-dumpelf-fpe2
+
+# dumpelf $FILE
+  FPE on unknown address 0x00000051db76 (pc 0x00000051db76 bp 0x7ffdf90fff80 
+sp 0x7ffdf90ffe40 T0)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00139-pax-utils-dumpelf-fpe3
+
 Affected version:
-2.28
+1.2.2
 
 Fixed version:
 N/A
 
 Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=ad32986fdf9da1c8748e47b8b45100398223dba8
+https://github.com/gentoo/pax-utils/commit/4609f57a690b4a5670baeb93167dab5300d07d4e
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
 CVE:
-CVE-2017-7614
+N/A
 
 Timeline:
-2017-04-01: bug discovered and reported to upstream
-2017-04-04: upstream released a patch
-2017-04-05: blog post about the issue
-2017-04-09: CVE assigned
+2017-01-30: bug discovered and reported to upstream
+2017-02-01: upstream released a patch
+2017-02-04: blog post about the issue
 
 Note:
-This bug was found with clang’s Undefined Behavior Sanitizer.
+These bugs were found with American Fuzzy Lop.
 
 Permalink:
-https://blogs.gentoo.org/ago/2017/04/05/binutils-two-null-pointer-dereference-in-elflink-c/
+https://blogs.gentoo.org/ago/2017/02/04/pax-utils-dumpelf-multiple-divide-by-zero-in-dumpelf-c
 
---
+-- 
 Agostino Sarubbo
 Gentoo Linux Developer
-
-
