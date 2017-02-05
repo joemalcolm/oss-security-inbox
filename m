@@ -1,4 +1,9 @@
-Received: (qmail 3252 invoked by uid 550); 23 Jun 2023 09:49:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1346" "Saturday" "4" "February" "2017" "21:37:33" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b5c385d79e4a496c93b95cd3e1f543b8@imshyb01.MITRE.ORG>" "33" "[oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)" nil nil nil "2" "2017020502:37:33" "[oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)" (number mark "U       cve-assign@m Feb  4   33/1346  " thread-indent "\"[oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)\"\n") "<1611643.gXHh0u0goj@blackgate>" ("<1611643.gXHh0u0goj@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24377 invoked by uid 550); 5 Feb 2017 02:37:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,87 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17908 invoked from network); 23 Jun 2023 08:36:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687509386; x=1690101386;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fhvyO0YMCnHcqkw1VOMb3IbXQiOHwelTd5A3TkWWXGY=;
-        b=mWS2f8Ky3StITos0B6vPjs9Y0UKr4KWzwJllrZ0Q5Y5pj/HmZlJEFI3baldal9u5wg
-         HDkuCCZhemXo651DeiweivD6824HzzAu/zy9d08WVA+gTpQ7E5StEGrshbMKmDnnDFvr
-         erlXNrJGPAy/IxjqJn51+0pIPrhqzYxBZfkoK6YWBt9WRGvUf3XFZ3B96NJxpYZZUexv
-         8gJaVZbExcerzWQjckZAnHcLpjMlvRszm+k0z3/XyySgIQ3c6LxcmNLNipCFXlu5b2ye
-         Hj+g6Hn8ASM5Y3n32F9EuUr4zCCRuEmrnjJGI3/k/bpg7seffGbiQekQS4Mwa4JUHCJj
-         5X7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687509386; x=1690101386;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fhvyO0YMCnHcqkw1VOMb3IbXQiOHwelTd5A3TkWWXGY=;
-        b=dZdpC9/XbU0y6+8i/iYq0elpxLAzK8H7OkgFjTf+N9E7Cq8RNKbn7uQ16M3AmAPMFd
-         1ZQ9mbuh2MmgK4871cAeP/QlUxErkf8seIZ5tsJeUPlE3JLEecVmQG74tvuzzAW7gr1x
-         uxoA18oi1DmRjJzudKzUivn2epc7PZq8slvVvWjZ7zYV5tWsP3sBzZqMeE96DUCbNqJ4
-         1EMxjo0a7vgRFSWtDo2O1mwPJYjdFXeqVKhKhhu1iQrKKCxyszGWp5AtzYFDBVJOsxKf
-         l1uLbD3EffQt9wlPzfoi8PqzS+RoGEU5XJyyvXcNlGXX56u6C1C3/mAaQnGk54qSTZ1P
-         2FoQ==
-X-Gm-Message-State: AC+VfDwSIa4LsoeLi6IRxL1DZWwIWbNdIXyHdXvsJuJut0x3RX++VoPT
-	isOSTPfxE+eEPgd+AIsFmD9ain2/Fl9uPlQILJVkHAUF7qs=
-X-Google-Smtp-Source: ACHHUZ48XsMXovGX8xHnVDbUxmljo/J6NrR6zFFhfg7xW3YZegWUUsutUxcIczpGKKZQkeg3TT9IOuNH2Cs2Cs3JAuM=
-X-Received: by 2002:a05:6a20:8f19:b0:121:8c15:8c04 with SMTP id
- b25-20020a056a208f1900b001218c158c04mr12584436pzk.27.1687509385972; Fri, 23
- Jun 2023 01:36:25 -0700 (PDT)
+Received: (qmail 24351 invoked from network); 5 Feb 2017 02:37:45 -0000
+From: <cve-assign@mitre.org>
+To: <ago@gentoo.org>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <1611643.gXHh0u0goj@blackgate>
+Message-ID: <b5c385d79e4a496c93b95cd3e1f543b8@imshyb01.MITRE.ORG>
+Date: Sat, 4 Feb 2017 21:37:33 -0500
 MIME-Version: 1.0
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Fri, 23 Jun 2023 11:34:28 +0300
-Message-ID: <CAGUWgD83Q_Sce+Zcwni33yjcx9bzFv=XUhKPJK1_v226Odj1ZA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Opinion: Governments don't want IT security, they want to have cyber weapons
+Content-Type: text/plain
+Subject: [oss-security] Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)
 
-Some time ago i posted this on my blog [1] and on linkedin [2]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-What the security community thinks about it?
+> https://blogs.gentoo.org/ago/2017/02/03/podofo-heap-based-buffer-overflow-in-podofopdftokenizergetnexttoken-pdftokenizer-cpp
+> 
+> AddressSanitizer: heap-buffer-overflow ... WRITE of size 1
+> PoDoFo::PdfTokenizer::GetNextToken
+> podofo-0.9.4/src/base/PdfTokenizer.cpp:319:35
 
-Inline:
+Use CVE-2017-5886.
 
-Tue Aug 17 14:35:14 EEST 2021
-Opinion: Governments don't want IT security, they want to have cyber weapons
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-
-Support for the above claim:
-
-    In 2015 exploits of NSA were leaked by Shadow crew. Search terms:
-nsa leak shadow crew. E.g. see NSA Hacked? 'Shadow Brokers' Crew
-Claims Compromise Of Surveillance Op
-    From 2015 search terms "hacking team" leak, E.g. Hacking Team Leak
-Shows How Secretive Zero-Day Exploit Sales Work
-
-    It provides both the exploits and RCS to government intelligence
-and law enforcement agencies around the world, and has come under
-attack for selling to repressive regimes, who've used them to target
-political activists and dissidents. But more interesting than the fact
-that the company possessed zero days---this was already known---is the
-correspondence around how Hacking Team acquired these valuable tools,
-prized equally by criminal hackers and government intelligence
-agencies.
-
-    From 2021: Search terms pegasus spying scandal. The allegations
-that spy software known as Pegasus may have been used to carry out
-surveillance on journalists, activists - and even perhaps political
-leaders - highlights that surveillance is now for sale.
-
-If governments wanted security, they would report the bugs to the vendors.
-
-Like in traditional warfare, cyber warfare requires weapons. It is
-very hard to construct physical nuclear bomb, but to construct cyber
-nuclear bomb requires just skills and zero budget. Some drunk skilled
-kid may do a lot of damage in the real world.
-
-Who watches the watchers?
-
-
-[1]:  https://j.ludost.net/blog/archives/2021/08/17/opinion_governments_dont_want_it_security_they_want_to_have_cyber_weapons/index.html
-[2] https://www.linkedin.com/pulse/opinion-governments-dont-want-security-have-cyber-weapons-guninski
-
--- 
-guninski https://j.ludost.net/resumegg.pdf
+iQIcBAEBCAAGBQJYlo4QAAoJEHb/MwWLVhi2T54P/3G4AZvxhRQ/saMpglz/74oO
+pJJlK/9Jyz2XS6dVOtl9TvZEKeoBDMBRVLSn/pmmd0+4Xc6xJH6jHOFJ7aj3uBYa
+zsezTQ//REBWTqGj4KzVv5rDnWzHgjxQOVXKlgpE7Hjk33Qj0MpBFOMLohhcJvRb
+hQDDVX5ESBPd8QqId3LeH7Shvuwmc2BdzmnmPIKIQhyhX0Bko15cv6HNkMi3Glwm
+iNKyLBYfAG6SqxL79+R6nA1Lwwuiggei1o+D0KCJnbNyseSmN5+3/BwEYV1NCKk+
+gOBVFQzQZCNEDhOjm4jniIvayq7Xz9CcdU2UrNw9zz8Wqbo2zpDnOK45/Bc8A0VK
+6PT8E+4ZIRHCpawKI6ahLa/2R4JX+0cbgVvBAsXi8ag0hv/GaCB07tpwmNixUGpU
+gAGiTdhLkYgaggFxl/Lhy98YJ+nylxda53X+p5oufLKeNDNG++eNoCdK/G4Xe1cs
+DDO2NO+bJgVuS1F3LnUkPKICAOB2oX3uyTvNZYf4HyT1siE5xAexW74aPgzgBBAo
+XHop6F9+UfPXoirsjYYf7eXg11/nsgWOMaQGMhOiTRtmO1vCtnvPivzQQFddOzAo
+dzVyY4vauylo3u3uHvGZ55cdGQlOI3zqCfuxMrTiy/5oeDAUm0gJbY+8JZ8gQa55
+WhzHoLiuILdVj/UH9Uo7
+=Si1S
+-----END PGP SIGNATURE-----
