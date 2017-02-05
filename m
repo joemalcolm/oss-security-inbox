@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/8
-Message-ID: <20170818210437.muhtss4jzu2gf6dw@eldamar.local>
-Date: Fri, 18 Aug 2017 23:04:37 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: cacti: CVE-2017-12927: XSS vulnerability in spikekill.php via method parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/8
+Message-ID: <1486328074.8813.2.camel@gmail.com>
+Date: Sun, 05 Feb 2017 21:54:34 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Irssi 1.0.0 minor remote memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-MITRE has assigned CVE-2017-12927 for the following cross-site
-scripting vulnerablity in cacti in spikekill.php via the method
-parameter:
+Joseph Bisch has detected a remote memory leak in some cases where a
+hostile server would send certain incomplete SASL replies. According to
+his calculations, the server would need to send 13 times the amount of
+memory it wants to leak. The issue is a missing free of the base64
+data. Please advise whether that issue needs a CVE?  
 
-https://github.com/Cacti/cacti/issues/907
+Patch: https://github.com/irssi/irssi/commit/19c51789967a2f63da033e60f6
+ef08848b9cd144
 
-with upstream fix in
+Furthermore, Hanno Böck found the issue of a missing NULL sentinel when
+initialising Perl, which crashes under ASan. Since this happens only on
+boot and is not exposed to the net, we have no reason to believe that
+there is any issue here. Also, that bug has been around since the
+inception of Perl scripting module.
 
-https://github.com/Cacti/cacti/commit/a032ce0be6a4ea47862c594e40a619ac8de1ef99
+Patch: https://github.com/irssi/irssi/pull/619/commits/677fb1f55ca52d0e
+43c93f7d8361d333ff5bffd6
 
-Regards,
-Salvatore
+In any case, those issues have been addressed in Irssi 1.0.1
+
+Thanks for your attention,
