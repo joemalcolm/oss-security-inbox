@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1128" "Thursday" "22" "October" "2015" "23:41:39" "-0400" "Daniel Kahn Gillmor" "dkg@fifthhorseman.net" "<87r3km9rpo.fsf@alice.fifthhorseman.net>" "30" "Re: [oss-security] Prime example of a can of worms" nil nil nil "10" "2015102303:41:39" "[oss-security] Prime example of a can of worms" (number mark "        dkg@fifthhor Oct 22   30/1128  " thread-indent "\"Re: [oss-security] Prime example of a can of worms\"\n") "<CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>" ("<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "<CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com>" "<20151019193411.GA15710@hunt>" "<87eggqmta9.fsf@alice.fifthhorseman.net>" "<20151021170113.128d3a8e@silentmaxx>" "<CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com>" "<562869CF.3060106@internot.info>" "<CANO=Ty3ii2MXgtpxVx0w-Vqd+yVSppauA8Qt4xFa7+uKddybSg@mail.gmail.com>" "<8737x2bjjp.fsf@alice.fifthhorseman.net>" "<CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1760" "Saturday" "4" "February" "2017" "21:32:29" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<69c817560b7e40d0995ab6ed8b2e8f32@imshyb01.MITRE.ORG>" "67" "[oss-security] Re: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues" nil nil nil "2" "2017020502:32:29" "[oss-security] Re: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues" (number mark "U       cve-assign@m Feb  4   67/1760  " thread-indent "\"[oss-security] Re: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues\"\n") "<ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>" ("<ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24429 invoked by uid 550); 23 Oct 2015 03:41:56 -0000
+Received: (qmail 25828 invoked by uid 550); 5 Feb 2017 02:32:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24405 invoked from network); 23 Oct 2015 03:41:55 -0000
-In-Reply-To: <CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>
-References: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com> <CAFRnB2Wrz=zexGonV5fHosVqfiOhNvA6Ya2YsCYyDkt7UE_0mw@mail.gmail.com> <20151019193411.GA15710@hunt> <87eggqmta9.fsf@alice.fifthhorseman.net> <20151021170113.128d3a8e@silentmaxx> <CANO=Ty0eLFpezes_WfNTN0eKj6u5BinhwBQkM6BR7PZPg3eCiA@mail.gmail.com> <562869CF.3060106@internot.info> <CANO=Ty3ii2MXgtpxVx0w-Vqd+yVSppauA8Qt4xFa7+uKddybSg@mail.gmail.com> <8737x2bjjp.fsf@alice.fifthhorseman.net> <CANO=Ty3BGrXMkocF2Vp-wXJVE_oo5K4dSA4+H-son_dzuMo4ZQ@mail.gmail.com>
-User-Agent: Notmuch/0.20.2 (http://notmuchmail.org) Emacs/24.5.1 (x86_64-pc-linux-gnu)
-Message-ID: <87r3km9rpo.fsf@alice.fifthhorseman.net>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 25796 invoked from network); 5 Feb 2017 02:32:41 -0000
+From: <cve-assign@mitre.org>
+To: <advisories@foxmole.com>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <ad74ed31-dcff-24b7-ae84-2421ad10b7ef@foxmole.com>
+Message-ID: <69c817560b7e40d0995ab6ed8b2e8f32@imshyb01.MITRE.ORG>
+Date: Sat, 4 Feb 2017 21:32:29 -0500
 MIME-Version: 1.0
 Content-Type: text/plain
-Cc: oss-security <oss-security@lists.openwall.com>
-Date: Thu, 22 Oct 2015 23:41:39 -0400
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Prime example of a can of worms
-To: Kurt Seifried <kseifried@redhat.com>
+Subject: [oss-security] Re: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
 
-On Thu 2015-10-22 19:37:49 -0400, Kurt Seifried wrote:
-> Sorry when I said a "large" pool I meant more then the current 5 or so that
-> seem to be in popular use, but certainly not more than a few hundred.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-ok, that's a relief :) but, running the numbers, even 100 hundred
-2048-bit groups comes out to a quarter MiB of RAM.  (i figure 256 bytes
-per prime, a well-known, shared generator)
+> https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
+> The following findings are only examples there are quite more.
 
-Larger groups (or more groups) inflate the size even further.  I know
-RAM is cheap these days but for embedded devices a quarter meg or more
-of RAM is still not insignificant.
+> 1)Cross Site Scripting (XSS)
 
-> Basically we're in agreement, I think nothing under 2048 should even be
-> considered, and we probably need to bump that up in a few years anyways.
+> [] index.php?view=request&
+> request=log&
+> task=download&
+> key=a9fef1f4&
+> format=[XSS]
 
-yep, agreed.
+Use CVE-2016-10201.
 
-> I've also been going through source code to see how people use dh
-> params/treat them, and I have some worrying results (basically what I
-> expected though, everything is terrible as usual)
 
-:/
+> [] index.php/[XSS]
 
-> I'm going to be writing this up as an article rather than a long email as I
-> have a few more sticky points to raise (security rabbit holes are so much
-> fun).
+Use CVE-2016-10202.
 
-I look forward to reading it.
 
-  --dkg
+> [] Creating a new monitor using [XSS in] the name
+
+Use CVE-2016-10203.
+
+
+> [] 2)SQL Injection
+> Parameter: limit (POST)
+
+Use CVE-2016-10204.
+
+
+> [] 3)Session Fixation
+> After a successful authentication the Session Cookie ZMSESSID remains the same.
+
+Use CVE-2016-10205.
+
+
+> [] 4)No CSRF Protection
+> A possible CSRF attack form, which changes the password of the admin
+
+Use CVE-2016-10206.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYlo37AAoJEHb/MwWLVhi2nWEP/219hKMVosSqRw9bj9SbRjbL
+bRGYYuYjwbE7/JWLFL0o0IdjoO3Rndkwg39SAn4Bf92ZbSk+mrTLDHyM+sOI0JBD
+5m9/yE1Oh/Nnlw0dwNSL74Qo1LeHlj6Dq1WbALwQy+Nr46PYrKTeK2RyOFtX2mXF
+ogzDiPv6vzkRaAp90T5eVkTLUm6WUhvo0lsE0w2B5iJLDXZ9JWyCyRiagJhwTqCa
+pRfvRG/0k6rar7lsyxVVC1LhAAhKiJUo7ZKH+3RAcvd+0S0FOWUH2SEhiDpqvnQS
+WAx8Y/iE6Ijuymlmd0U+CeEg3dIpnqFu6haof/m+g5pNFXJlQbnElwW80rH2b56n
+rhG8xNx+hd9tUKqtfTIX+T4dXkGcWEe5A9dqBN6BNmzNXWJ6tmSuFyGTDfsyMWxH
+ima3jgZVmoIYlVxfUXNrUMetsdD1nDr1bGFsecN+WV8JaTf9lo1vEum1NHMr4ruC
+hxFmDVGsmxJa2VEmqcRrAGs6JYvJKiQT0gu7y8g2EeYzRiprdlh9sLaPnG9aXgQa
+M+OD0M2tgcc4hFCbS65jxyf8NmaIKBR2UuApkDQxIO4uv7neuIuBvJr16STE2baZ
+jkWbYAtZDyXtJ5Vs5+Nb6IhdYcq6eW6/2qfz7AI48cSZHWop6l8o6q01VkgrLU/h
+0pxDmijjxjLENgyn6Mg0
+=jw7Y
+-----END PGP SIGNATURE-----
