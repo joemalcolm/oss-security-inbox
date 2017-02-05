@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/5
-Message-ID: <4375de127e2d48fd8cba3125c00de83c@imshyb02.MITRE.ORG>
-Date: Tue, 10 Jan 2017 22:39:40 -0500
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/3
+Message-ID: <b44c7133952c41e598c801ee468cf44c@imshyb01.MITRE.ORG>
+Date: Sat, 4 Feb 2017 21:35:41 -0500
 From: <cve-assign@...re.org>
-To: <seb@...ian.org>
+To: <wmealing@...hat.com>
 CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: python-pysaml2 XML external entity attack
+Subject: Re: Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-> python-pysaml2 does
-> not sanitize SAML XML requests or responses:
+> http://seclists.org/fulldisclosure/2016/Nov/75
+> https://bugzilla.redhat.com/show_bug.cgi?id=1332503
+
+>> OS-S Security Advisory 2016-22
+
+> I'd like to ask for a CVE for the flaw the EXT4 filesystem as described as:
 > 
->   https://github.com/rohe/pysaml2/issues/366
->   https://github.com/rohe/pysaml2/pull/379
->   https://bugs.debian.org/850716
->   https://github.com/rohe/pysaml2/commit/6e09a25d9b4b7aa7a506853210a9a14100b8bc9b
+> Mounting a crafted EXT4 image read-only leads to a memory corruption and
+> SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
+> procedure is a privileged operation, an attacker is probably not able
+> to trigger this vulnerability on the commandline.
+> Instead the automatic mounting feature of the GUI via a crafted
+> USB-device is required.
 
-Use CVE-2016-10127 for the vulnerability addressed by "Fix XXE in XML
-parsing" in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b.
+> https://bugzilla.suse.com/show_bug.cgi?id=1023377
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1395190
+> http://www.spinics.net/lists/linux-ext4/msg54572.html
+> 
+> Introduced in:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=952fc18ef9ec707ebdc16c0786ec360295e5ff15
+> (first in v3.6-rc1...)
+> 
+> Fix:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3a4b77cd47bb837b8557595ec7425f281f2ca1fe
+> (first in v4.10-rc1)
 
-The scope of this CVE does not include the various other issues that
-may be found in the above references:
-
- - it does not include any aspect of
-   https://bugzilla.gnome.org/show_bug.cgi?id=772726
-
- - it does not include any vulnerabilities in the XML Security Library
-   (xmlsec), such as ones that are now, or previously were, listed at
-   https://github.com/lsh123/xmlsec/issues
-
- - it does not include any CWE-776 (Entity Expansion) issues that may
-   have been fixed as a side effect of
-   6e09a25d9b4b7aa7a506853210a9a14100b8bc9b (possibly there are new
-   test cases in 6e09a25d9b4b7aa7a506853210a9a14100b8bc9b for CWE-776)
-
-If the references need more CVE IDs related to any of these other
-topics, please let us know.
+Use CVE-2016-10208.
 
 - -- 
 CVE Assignment Team
@@ -48,17 +48,17 @@ M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYdacpAAoJEHb/MwWLVhi2dU4QAJC8fNO+tSEsFjLxhpwerqp2
-dqGm/ZfdGZ717A9BROlsycopbF9nVuuTp22PMEaNgJtO+sESnVdSJomVA6XvbGsk
-kd7iq+r3opeplMuyuYkuqQaw585N6MRc27WBh21Cpis8ExlU/bYH3qapTkfV1G88
-h6BqmhBJ2Yzae/FfOfG/kMCbh9Nbwem7gxB1tIHmWBxvKm/TXknH/tO4hOUsZlyt
-sb9SSwYLmqZHbqdv3rBvdoHHS7LwBSL0niKSCpPmyYKwI3P3lrEn+C6DmqqfZpsS
-0wmMse7ILe7/u28IutqCNjA5aDzaiclEE+P7KLgl/xyyGt80icM+tzBSXXwYbzMB
-YTxOiBhCiXKVlkgkNFPpq9wXBU/L5eNqsntKiuqGhFeLZIOGIpE8dSXss1ERVifG
-KL1TOLCj9jPnburB0g7f6FpDB4pSiWvhL47uMdNOSDKFBCT/SP+JiqzfH0PycspT
-v1OrRvQXA08xGX/2kD94os/6yrZwbFe65AdKHui/rHgbAjXLwiKSe9R86ppGJ5OV
-4mAG3qgh3ZJOqX6kPPOMCM7XCxN6/KpQsnLi17Va7fIhr4nq1zAjGTPJw1PhusnZ
-98NJtjIpkXLk5dCxJY3w9RWAykY26HI2k8HPsAPMPClGtJU0EeOUTkbt4Nv4Q0cF
-XZiw9PXbEwe75koEvajV
-=s3t6
+iQIcBAEBCAAGBQJYlo4JAAoJEHb/MwWLVhi22rMP/RUDRCffQOyJu3QkMjLn/ow6
+1prWa6Sf1M9nNsrSobp/QcKFqQv39lFImxKmZMf0k5LGS0l6oZvMvHNo2h+4WznY
+KopRkP4iivAJHP60IKv9QxaVqHuxy3jeOj+HZSro/pH7gAfVg9uv0V+V0aFZq3Lf
+CdoQ5WUwsfIvRnIWnJE3AIv7iWc92WBqIdhC1Dg5bxPR8y9zT124yr1Cob9sH7oK
+DkmqS/gTpmj7i1W6gtM5ZAtuC4teSNXDkg+ejA73CO7hDja1vN+JpD3iYQX+c1vr
+MJHcOUYfYJBg9zbJ+SunDUbLlTkNoTuL/8HYX4vK5VszV+Hw6jf2Axx22KSbL43I
+Y+QR3w/AAEatVjY28RKEYqjSF+eB3ta8s2cIZcLYbsCN2EK4vDzOnd04/agjuPi6
+73vplncZVAz4KziKW5+nu1dNNXD7AKXm/vBnlW0t8n2YZvEGeAHilueljGh8NeI8
+BibqPpHQHUbrnX8+z5hFUb77DbZnz5CKUjvv5FU/wPbtEaHAW97uuDJ92H7Fyi7L
+M5aVys6Q7Q5mkg9mj/lfHvJ2ypORgSp1+WnDld5lbleb9rLliS/jCxS+pFMXFwId
+MpwHyLrm5jiMG5Wn4y2l/aDwZV5cqrqo5G9RihPK2Jdf+HN4gxC1jeE2DH77htP8
+rXarPPmuW69GO+jmJtZz
+=ZWjb
 -----END PGP SIGNATURE-----
