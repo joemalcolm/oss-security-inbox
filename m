@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/21
-Message-ID: <9786871.DjNlDLY9Ns@blackgate>
-Date: Thu, 09 Feb 2017 15:02:50 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/9
+Message-ID: <1486328960.8813.4.camel@gmail.com>
+Date: Sun, 05 Feb 2017 22:09:20 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: A note about the multiple crashes in zziplib
+Subject: Re: Irssi 1.0.0 minor remote memory leak
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+On Sun, 2017-02-05 at 21:54 +0100, Ailin Nemui wrote:
+> memory it wants to leak. The issue is a missing free of the base64
+> data. Please advise whether that issue needs a CVE?  
 
-I posted several crashes about zziplib.
-
-The latest release was done ~5 years ago and the upstream bugs place seems to 
-be dead. However, I will forward them on their website.
-
-I didn't receive any type of feedback from the maintainer so I don't know if 
-some of them are duplicates.
-In any case there are problems where the same codebase was used in more 
-places, e.g.:
-
-http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c/ shows a null ptr at: unzzipcat.c:94
-
-and
-
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/ shows a null ptr at: unzzipcat-mem.c:94
-
-Both C file have the same code at line 94:
-printf ("%s\n", name);
-
-So, while in the past, sometimes, we saw that one 'change' in the code was 
-able to fix more than one issue, in this case, the issue is the same but it 
-duplicate in more '.c' file
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Note that, a malicious server would have many ways to exhaust Irssi
+resources which we see no urgency to protect against, for example by
+force joining people to an endless number of channels, open many
+queries etc.
