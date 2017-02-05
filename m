@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/16/5
-Message-ID: <877f3p8lh2.fsf@dell.be.48ers.dk>
-Date: Thu, 16 Mar 2017 13:17:13 +0100
-From: Peter Korsgaard <peter@...sgaard.com>
-To: Adam Maris <amaris@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for unchecked size argument in malloc() in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/4
+Message-ID: <b5c385d79e4a496c93b95cd3e1f543b8@imshyb01.MITRE.ORG>
+Date: Sat, 4 Feb 2017 21:37:33 -0500
+From: <cve-assign@...re.org>
+To: <ago@...too.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: podofo: heap-based buffer overflow in PoDoFo::PdfTokenizer::GetNextToken (PdfTokenizer.cpp)
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Peter" == Peter Bex <peter@...e-magic.net> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
- > On Thu, Mar 16, 2017 at 10:31:17AM +0100, Adam Maris wrote:
- >> Hi Peter,
- >> 
- >> oss-security mailing is no longer a place for requesting CVEs. Please,
- >> request CVE from MITRE via https://cveform.mitre.org/ or also possibly
- >> from DWF project via http://iwantacve.org/
+> https://blogs.gentoo.org/ago/2017/02/03/podofo-heap-based-buffer-overflow-in-podofopdftokenizergetnexttoken-pdftokenizer-cpp
+> 
+> AddressSanitizer: heap-buffer-overflow ... WRITE of size 1
+> PoDoFo::PdfTokenizer::GetNextToken
+> podofo-0.9.4/src/base/PdfTokenizer.cpp:319:35
 
- > Oh yeah, I forgot about that.  I've filled out the form, and I hope I've
- > done this correctly.
+Use CVE-2017-5886.
 
-Please don't forget to forward the form details to this list once a CVE
-has been assigned. Thanks.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Bye, Peter Korsgaard
+iQIcBAEBCAAGBQJYlo4QAAoJEHb/MwWLVhi2T54P/3G4AZvxhRQ/saMpglz/74oO
+pJJlK/9Jyz2XS6dVOtl9TvZEKeoBDMBRVLSn/pmmd0+4Xc6xJH6jHOFJ7aj3uBYa
+zsezTQ//REBWTqGj4KzVv5rDnWzHgjxQOVXKlgpE7Hjk33Qj0MpBFOMLohhcJvRb
+hQDDVX5ESBPd8QqId3LeH7Shvuwmc2BdzmnmPIKIQhyhX0Bko15cv6HNkMi3Glwm
+iNKyLBYfAG6SqxL79+R6nA1Lwwuiggei1o+D0KCJnbNyseSmN5+3/BwEYV1NCKk+
+gOBVFQzQZCNEDhOjm4jniIvayq7Xz9CcdU2UrNw9zz8Wqbo2zpDnOK45/Bc8A0VK
+6PT8E+4ZIRHCpawKI6ahLa/2R4JX+0cbgVvBAsXi8ag0hv/GaCB07tpwmNixUGpU
+gAGiTdhLkYgaggFxl/Lhy98YJ+nylxda53X+p5oufLKeNDNG++eNoCdK/G4Xe1cs
+DDO2NO+bJgVuS1F3LnUkPKICAOB2oX3uyTvNZYf4HyT1siE5xAexW74aPgzgBBAo
+XHop6F9+UfPXoirsjYYf7eXg11/nsgWOMaQGMhOiTRtmO1vCtnvPivzQQFddOzAo
+dzVyY4vauylo3u3uHvGZ55cdGQlOI3zqCfuxMrTiy/5oeDAUm0gJbY+8JZ8gQa55
+WhzHoLiuILdVj/UH9Uo7
+=Si1S
+-----END PGP SIGNATURE-----
