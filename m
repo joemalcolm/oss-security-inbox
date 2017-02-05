@@ -1,37 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/6
-Message-ID: <20170706113336.GI5923@suse.de>
-Date: Thu, 6 Jul 2017 13:33:36 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: X.Org X Server stack overflow and information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/1
+Message-ID: <69c817560b7e40d0995ab6ed8b2e8f32@imshyb01.MITRE.ORG>
+Date: Sat, 4 Feb 2017 21:32:29 -0500
+From: <cve-assign@...re.org>
+To: <advisories@...mole.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: [FOXMOLE SA 2016-07-05] ZoneMinder - Multiple Issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This issue got lost under the Qualys noise :(
+> https://www.foxmole.com/advisories/foxmole-2016-07-05.txt
+> The following findings are only examples there are quite more.
 
-https://bugzilla.suse.com/show_bug.cgi?id=1035283
+> 1)Cross Site Scripting (XSS)
 
-CVE-2017-10971:
-	The endianess handling for X Events assumed a fixed size of X Event structures and
-	had a specific 32 byte stack buffer for that. 
+> [] index.php?view=request&
+> request=log&
+> task=download&
+> key=a9fef1f4&
+> format=[XSS]
 
-	However "GenericEvents" can have any size, so if the events were sent in the wrong
-	endianess, this stack buffer could be overflowed easily.
-
-	So authenticated X users could overflow the stack in the X Server and with the X 
-	server usually running as root gaining root prileveges.
-
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=ba336b24052122b136486961c82deac76bbde455
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=8caed4df36b1f802b4992edcfd282cbeeec35d9d
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=215f894965df5fb0bb45b107d84524e700d2073c
+Use CVE-2016-10201.
 
 
-CVE-2017-10972:
-	https://cgit.freedesktop.org/xorg/xserver/commit/?id=05442de962d3dc624f79fc1a00eca3ffc5489ced
+> [] index.php/[XSS]
 
-	An information leak out of the X server due to an uninitialized stack area when swapping
-	event endianess.
+Use CVE-2016-10202.
 
-Ciao, Marcus
+
+> [] Creating a new monitor using [XSS in] the name
+
+Use CVE-2016-10203.
+
+
+> [] 2)SQL Injection
+> Parameter: limit (POST)
+
+Use CVE-2016-10204.
+
+
+> [] 3)Session Fixation
+> After a successful authentication the Session Cookie ZMSESSID remains the same.
+
+Use CVE-2016-10205.
+
+
+> [] 4)No CSRF Protection
+> A possible CSRF attack form, which changes the password of the admin
+
+Use CVE-2016-10206.
+
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYlo37AAoJEHb/MwWLVhi2nWEP/219hKMVosSqRw9bj9SbRjbL
+bRGYYuYjwbE7/JWLFL0o0IdjoO3Rndkwg39SAn4Bf92ZbSk+mrTLDHyM+sOI0JBD
+5m9/yE1Oh/Nnlw0dwNSL74Qo1LeHlj6Dq1WbALwQy+Nr46PYrKTeK2RyOFtX2mXF
+ogzDiPv6vzkRaAp90T5eVkTLUm6WUhvo0lsE0w2B5iJLDXZ9JWyCyRiagJhwTqCa
+pRfvRG/0k6rar7lsyxVVC1LhAAhKiJUo7ZKH+3RAcvd+0S0FOWUH2SEhiDpqvnQS
+WAx8Y/iE6Ijuymlmd0U+CeEg3dIpnqFu6haof/m+g5pNFXJlQbnElwW80rH2b56n
+rhG8xNx+hd9tUKqtfTIX+T4dXkGcWEe5A9dqBN6BNmzNXWJ6tmSuFyGTDfsyMWxH
+ima3jgZVmoIYlVxfUXNrUMetsdD1nDr1bGFsecN+WV8JaTf9lo1vEum1NHMr4ruC
+hxFmDVGsmxJa2VEmqcRrAGs6JYvJKiQT0gu7y8g2EeYzRiprdlh9sLaPnG9aXgQa
+M+OD0M2tgcc4hFCbS65jxyf8NmaIKBR2UuApkDQxIO4uv7neuIuBvJr16STE2baZ
+jkWbYAtZDyXtJ5Vs5+Nb6IhdYcq6eW6/2qfz7AI48cSZHWop6l8o6q01VkgrLU/h
+0pxDmijjxjLENgyn6Mg0
+=jw7Y
+-----END PGP SIGNATURE-----
