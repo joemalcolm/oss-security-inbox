@@ -1,110 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/20/7
-Message-Id: <E1dNHpJ-0006BC-Uo@xenbits.xenproject.org>
-Date: Tue, 20 Jun 2017 12:00:09 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 225 - arm: vgic: Out-of-bound access when sending SGIs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/2
+Message-ID: <9ad7c260eb4d45c79d58b0160f7c7103@imshyb01.MITRE.ORG>
+Date: Sat, 4 Feb 2017 21:34:03 -0500
+From: <cve-assign@...re.org>
+To: <mgerstner@...e.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request tigervnc: vnc server can crash when TLS handshake terminates early
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-                    Xen Security Advisory XSA-225
-                              version 2
+> the Xvnc server from tigervnc can crash when a client terminates a TLS
+> connection early. This is due to invalid initialization/deinitialization
+> order of the GnuTLS library.
+> 
+> Upstream commit:
+> 
+> https://github.com/TigerVNC/tigervnc/commit/8aa4bc53206c2430bbf0c8f4b642f59a379ee649
 
-           arm: vgic: Out-of-bound access when sending SGIs
+>> Proper global init/deinit of GnuTLS 
 
-UPDATES IN VERSION 2
-====================
+> https://bugzilla.suse.com/show_bug.cgi?id=1023012
 
-Public release.
+Use CVE-2016-10207.
 
-ISSUE DESCRIPTION
-=================
+The scope of this CVE does not include
+https://bugzilla.suse.com/show_bug.cgi?id=1023012#c11
 
-ARM guests can send SGI (i.e. IPI) targeting a list of vCPUs using the
-MMIO register GICD_SGIR (GICv2) or System Register ICC_SGI1R (GICv3).
-However, the emulation code does not sanitize the list and will
-directly access an array without checking whether the array index is
-within bounds.
-
-IMPACT
-======
-
-A guest may cause a hypervisor crash, resulting in a Denial of Service
-(DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.6 and onwards are affected.  Xen versions 4.5 and
-earlier are not affected.
-
-Only ARM systems are affected.  x86 systems are not affected.
-
-MITIGATION
-==========
-
-On systems where the guest kernel is controlled by the host rather than
-guest administrator, running only kernels which only send sane IPIs
-(i.e. targeting valid CPUs) will prevent untrusted guest users from
-exploiting this issue.  However untrusted guest administrators can
-still trigger it unless further steps are taken to prevent them from
-loading code into the kernel (e.g by disabling loadable modules etc) or
-from using other mechanisms which allow them to run code at kernel
-privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa225.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x
-
-$ sha256sum xsa225*
-a52d90a2586b74d6dd0d17390c940bf414c1332a6b4ccb87f10b7d97af3b3877  xsa225.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBCAAGBQJZSQ3mAAoJEIP+FMlX6CvZ/TAH/Role6HA+csMGO/DshXbfuhN
-/S+DOPKU7NwynExZhf43Afj37EI4cw3xUcpRrZJbRExhGtlnBInsjUq8V9kmWcZL
-pJOgVcTOMyeR6Mc3B/tLqamH49uJdEGoi3zHVtckXY/A8a8+iyT5faSibmsWgl1t
-mYylB33xg9JmQ6gEa4NtbXOFi/f7BHjXUqVr8+P/KAyqvEramxoH+lp21Wrc1JZd
-wvpeEVnIlXjNBJB3ERqIENc/E0jlHY73mTLPK1br8OkkrJPnwkbC246Nd1cIosVt
-v8fe/Lin8yq2K+dPU6VFk/ZawDmOUtOtwJCL8klteIs6iiT+m2F3nGHMoQAGaBk=
-=lwE9
+iQIcBAEBCAAGBQJYlo4DAAoJEHb/MwWLVhi25I8P/2B7bVNkmS9zQsDaRGvcAiuL
+U84Xq5w9mhbN5yXoSxYwBXaIYrj6u/taDdjvBawg6qDVPEOGeKL/DpPLWRTF86PH
+46UOEVnsSYqov03fTp111E21OTjfoqetvYe8ES/rz1SRvYB4hOHFlDqlKjYafXlm
+Y97kXu8SaMiL5218a+smIpEM78nyu5b8IalQMh9yZpEdwr549gNQR8TmSBfb7e0C
+EkIVRHSHTX4j7pjRCg0TmfvCohsaDQ7kiXPFhUN+lqNwpr0porVh4hBH2wgwHult
+OFBTIQ4DMCmXu9+mJX6RCQWq3/S0FqeRZ0NzFQlaSUZCGC6ouDRIyFizLJr4OnOb
+cZNaiCWknBQ96ftg2qNVjuulPZuteCdt7J0WOsLNel/8YGM/ovqCZgcu0jL9Vv+g
+5GCZSK6sUKCAv6yuBtwkAyccPv98nWvWVvjgBBvd/wZLPOEFfp07uV8k/Wz9NX/2
+sghtxXv5k8/zsVuFhk5Ry0RyTKx2YGGraTgdzukRikE1ZqvUr99DjAqkALYhnXYc
+9zxqZRkBU7AepN3K2T0sil8niPRUb54AUw3xfpzvbcQtOhx4IoTHNLES9CEliE9m
+fAuvPL+18/UGZ72e9OwLMU1ET3vfEgeN+nbAhy+kmkM5S3d9FtNl22Gd44F3R/Pt
+P/sdVfWREufsGbgVNeKA
+=j2T3
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa225.patch" of type "application/octet-stream" (1491 bytes)
