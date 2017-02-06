@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1134" "Friday" "8" "June" "2018" "21:36:09" "+0200" "Yves-Alexis Perez" "corsac@debian.org" "<167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>" "38" "[oss-security] CVE-2018-12020 in GnuPG" "^Date:" nil nil "6" "2018060819:36:09" "[oss-security] CVE-2018-12020 in GnuPG" (number mark "        corsac@debia Jun  8   38/1134  " thread-indent "\"[oss-security] CVE-2018-12020 in GnuPG\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2847" "Monday" "6" "February" "2017" "16:40:32" "+0100" "Egidio Romano" "research@karmainsecurity.com" "<bb1c0dd8-17bc-945a-5048-e38b6a81f86f@karmainsecurity.com>" "80" "[oss-security] [KIS-2017-01] PEAR HTML_AJAX <= 0.5.7 (PHP Serializer) PHP Object Injection Vulnerability" nil nil nil "2" "2017020615:40:32" "[oss-security] [KIS-2017-01] PEAR HTML_AJAX <= 0.5.7 (PHP Serializer) PHP Object Injection Vulnerability" (number mark "U       research@kar Feb  6   80/2847  " thread-indent "\"[oss-security] [KIS-2017-01] PEAR HTML_AJAX <= 0.5.7 (PHP Serializer) PHP Object Injection Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8059 invoked by uid 550); 8 Jun 2018 19:36:28 -0000
+Received: (qmail 2037 invoked by uid 550); 6 Feb 2017 16:28:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8038 invoked from network); 8 Jun 2018 19:36:27 -0000
-Message-ID: <167bc7e898d02f7bd13c43d272d64178f00e7e23.camel@debian.org>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.2-1 
-Mime-Version: 1.0
-Date: Fri, 08 Jun 2018 21:36:09 +0200
-From: Yves-Alexis Perez <corsac@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2018-12020 in GnuPG
-To: oss-security@lists.openwall.com
+Received: (qmail 32467 invoked from network); 6 Feb 2017 15:40:44 -0000
+To: bugtraq@securityfocus.com, fulldisclosure@seclists.org,
+ oss-security@lists.openwall.com
+From: Egidio Romano <research@karmainsecurity.com>
+Message-ID: <bb1c0dd8-17bc-945a-5048-e38b6a81f86f@karmainsecurity.com>
+Date: Mon, 6 Feb 2017 16:40:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - srv-hp7.netsons.net
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - karmainsecurity.com
+X-Get-Message-Sender-Via: srv-hp7.netsons.net: authenticated_id: research@karmainsecurity.com
+X-Authenticated-Sender: srv-hp7.netsons.net: research@karmainsecurity.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Subject: [oss-security] [KIS-2017-01] PEAR HTML_AJAX <= 0.5.7 (PHP Serializer) PHP Object
+ Injection Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+---------------------------------------------------------------------------
+PEAR HTML_AJAX <= 0.5.7 (PHP Serializer) PHP Object Injection Vulnerability
+---------------------------------------------------------------------------
 
-Hi everybody,
 
-just a heads up, since we weren't notified in advance and it's Friday eveni=
-ng
-(in Europe at least).
+[-] Software Link:
 
-There's a nasty vulnerability in GnuPG which can be apparently used to bypa=
-ss
-signature verification when a program calls gpg to verify a signature and
-parses the output:
+https://pear.php.net/package/HTML_AJAX
 
-https://lists.gnupg.org/pipermail/gnupg-announce/2018q2/000425.html
-https://dev.gnupg.org/T4012
 
-It might be worth checking whether package managers signature verification =
-is
-affected.
+[-] Affected Versions:
 
-Apt doesn't seems affected at first sight (it uses gpgv) but we'll double
-check.
+All versions from 0.3.0 to 0.5.7.
 
-Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAlsa2qkACgkQ3rYcyPpX
-RFv/vAf+MVxGn1N+UT1W6HLMnR2BJLcRI0emIAdYOW+HNoXGgAnRckQa2vbLv645
-bKdrpjGR8vsMMiCNmk2vUUOuV5lhfX4XN7ik9wyLpJhJWrxTZ+OdfIPwWE7dOj3x
-bsw+8gYi2gK6v274nUtFXbU2XcTCkgAlqcIfeJlhh8MLDqJ7Fka8YJO02EsW+pRa
-Bu2fblFm5P4TcTMOBjoX4zRHob4S2po57vCIgbA0GKLAzzjB8vWzPbo73waozvQR
-OAL69guzAFKIdVNZ4x4WOcgNoZt6/sx1DWs1+oYfhWC5TNlrK5HcfUmmZ5bq1ov3
-S8SJhFB1Q7c5xyCcmza8mQSwkBrpfA=3D=3D
-=3DAI6O
------END PGP SIGNATURE-----
+[-] Vulnerability Description:
+
+The vulnerable code is located within the HTML_AJAX_Serializer_PHP class defined into
+the /AJAX/Serializer/PHP.php script. Such a class uses the unserialize() PHP function
+with user-controlled input unless a class name which is not in the provided array
+of allowed classes is found within the serialized string. Class names are
+extracted by using the _getSerializedClassNames() method:
+
+68.	    function _getSerializedClassNames($string) {
+69.	        // Strip any string representations (which might contain object syntax)
+70.	        while (($pos = strpos($string, 's:')) !== false) {
+71.	            $pos2 = strpos($string, ':', $pos + 2);
+72.	            if ($pos2 === false) {
+73.	                // invalidly serialized string
+74.	                return false;
+75.	            }
+76.	            $end = $pos + 2 + substr($string, $pos + 2, $pos2) + 1;
+77.	            $string = substr($string, 0, $pos) . substr($string, $end);
+78.	        }
+79.	
+80.	        // Pull out the class names
+81.	        preg_match_all('/O:[0-9]+:"(.*)"/U', $string, $matches);
+82.	
+83.	        // Make sure names are unique (same object serialized twice)
+84.	        return array_unique($matches[1]);
+85.	    }
+
+By default the array of allowed classes is empty, meaning that no classes are allowed
+to be unserialized. However, due to the faulty regular expression used at line 81, it
+might be possible to bypass such a restriction by replacing "O:X" with "O:+X" from
+within the serialized string, where X is the length of the class name. This can be
+exploited by unauthenticated attackers to inject arbitrary PHP objects into the
+application scope, allowing to perform "POP chain" attacks or exploit memory
+corruption vulnerabilities within the PHP's serialization internals, potentially
+leading to execution of arbitrary code on the web server.
+
+
+[-] Solution:
+
+Update to version 0.5.8 or disable the PHP Serializer.
+
+
+[-] Disclosure Timeline:
+
+[19/01/2017] - Issue reported to https://pear.php.net/bugs/bug.php?id=21165
+[01/02/2017] - CVE number requested
+[01/02/2017] - CVE number assigned
+[02/02/2017] - Version 0.5.8 released: http://blog.pear.php.net/2017/02/02/security
+[06/02/2017] - Public disclosure
+
+
+[-] CVE Reference:
+
+The Common Vulnerabilities and Exposures project (cve.mitre.org)
+has assigned the name CVE-2017-5677 to this vulnerability.
+
+
+[-] Credits:
+
+Vulnerability discovered by Egidio Romano.
+
+
+[-] Original Advisory:
+
+http://karmainsecurity.com/KIS-2017-01
