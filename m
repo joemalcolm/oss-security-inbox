@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/01/12
-Message-ID: <1496341589723.65404@amazon.com>
-Date: Thu, 1 Jun 2017 18:26:29 +0000
-From: "Liguori, Anthony" <aliguori@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: unresponsive distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/06/3
+Message-ID: <5243964.BbMhzSCKag@blackgate>
+Date: Mon, 06 Feb 2017 12:32:21 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: mupdf: heap-based buffer overflow in fz_subsample_pixmap
 Content-Type: text/plain; charset=utf-8
 
-To be a bit more transparent.  The ideal thing for us would be to use a non-personally owned key for decryption so we could automate ingestion.  Encryption is fine but I will not tie my personal key into Amazon infrastructure.
+Hello,
 
-Normally what we do with disclosure lists is have automation that pages people on every message.  As an example, I get paged for every email sent to the Xen disclosure list.
+there in an heap overflow in fz_subsample_pixmap.
 
-Regards,
+The bug was discovered by Kamil Frankowicz which said to have tested it 
+against the current git head.
+The same testcase does not crash the current stable 1.10a, but I can confirm 
+(with a round of fuzzing on 1.10a) that stable is affected.
 
-Anthony Liguori
+No fix atm.
 
-________________________________________
-From: Liguori, Anthony
-Sent: Thursday, June 1, 2017 11:23 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] unresponsive distros
+Details:
+https://bugs.ghostscript.com/show_bug.cgi?id=697515
 
-Hi Solar,
+Reproducer for 1.10a:
+https://github.com/asarubbo/poc/blob/master/00148-mupdf-heapoverflow-fz_subsample_pixmap
 
-The encrypted thread is a single thread with a high volume of messages.  The later part of the thread loses the context of you explicitly asking for a response.
-
-Coupled with the holiday weekend, that meant when I read through the thread I read too quickly and missed your explicit request.
-
-Had you changed the subject of the thread for the request, it would have been noticed immediately but I don't mean to point too many fingers here.
-
-Regards,
-
-Anthony Liguori
-________________________________________
-From: Solar Designer <solar@...nwall.com>
-Sent: Thursday, June 1, 2017 11:19 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] unresponsive distros
-
-Anthony,
-
-On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
-> Hrm, I've been following the thread but apparently missed your request Solar.
-
-Wow, that was quick.  I don't see how you could have been following the
-thread, including in the period since May 27, and miss the request,
-since most other distros replied to that very same thread.  With the
-replies quoting parts of my request, it was many messages.  I mentioned
-the 3 non-responsive distros by name in two messages - yesterday and
-today (a few hours before bringing this to oss-security).
-
-What was it about the oss-security posting that made you notice it,
-unlike the many messages on the distros list?
-
-Is it the encryption that causes you not to read some messages, or to
-postpone doing so (for days)?
-
-With such selective reading, you'd also miss some new issues that are
-being brought up as part of this same thread.  The Subject stays since
-it's unencrypted, but discussion deviates and expands to new topics.
-
-Thanks,
-
-Alexander
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
