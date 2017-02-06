@@ -1,142 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/04/9
-Message-ID: <084a2018-ecd5-186d-dba2-0cc051001019@chbi.eu>
-Date: Wed, 4 Oct 2017 20:18:40 +0200
-From: chbi@...i.eu
-To: oss-security@...ts.openwall.com
-Subject: Several Privilege Escalation issues in Kanboard <= 1.0.46
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/06/4
+Message-ID: <CAAeHK+xqSzMxjrs=DX9RVxiJrRKkWq22tLybcKMmFs4ZQZz=Ag@mail.gmail.com>
+Date: Mon, 6 Feb 2017 13:02:34 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Cc: Dmitry Vyukov <dvyukov@...gle.com>, Eric Dumazet <edumazet@...gle.com>,  syzkaller <syzkaller@...glegroups.com>, Kostya Serebryany <kcc@...gle.com>
+Subject: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()
 Content-Type: text/plain; charset=utf-8
-
 
 Hi,
 
-I've discovered several security issues in Kanboard <= 1.0.46
-(https://kanboard.net)
+There's a bug in the Linux kernel ipv6 implementation which allows a
+remote attacker to trigger an out-of-bounds access.
 
+Upsteam fix:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=7892032cfe67f4bde6fc2ee967e45a8fbaf33756
 
+Could you assign a CVE for this?
 
-1)
-By altering form data an authenticated user can edit Name, Email,
-Identifier, Description,... of a private project of another user.
-
-
-2)
-By altering form data an authenticated user can add a new task to a
-private project of another user.
-
-
-3)
-By altering form data an authenticated user can edit columns of a
-private project of another user.
-
-
-4)
-By altering form data an authenticated user can add a new category to a
-private project of another user.
-
-
-5)
-By altering form data an authenticated user can edit a category of a
-private project of another user.
-
-
-6)
-By altering form data an authenticated user can edit swimlanes of a
-private project of another user.
-
-
-7)
-By altering form data an authenticated user can edit tags of a private
-project of another user.
-
-
-8)
-By altering form data an authenticated user can add automatic actions to
-a private project of another user.
-
-
-9)
-By altering form data an authenticated user can remove columns from a
-private project of another user.
-
-
-10)
-By altering form data an authenticated user can remove categories from a
-private project of another user.
-
-
-11)
-By altering form data an authenticated user can at least see the name of
-tags of a private project of another user.
-
-
-12)
-By altering form data an authenticated user can remove automatic actions
-from a private project of another user.
-
-
-13)
-By altering form data an authenticated user can edit tasks of a private
-project of another user.
-
-
-14)
-By altering form data an authenticated user can add a external link to a
-private project of another user.
-
-
-15)
-By altering form data an authenticated user can add a internal link to a
-private project of another user.
-
-
-Fix:
-https://github.com/kanboard/kanboard/commit/074f6c104f3e49401ef0065540338fc2d4be79f0
-https://github.com/kanboard/kanboard/commit/3e0f14ae2b0b5a44bd038a472f17eac75f538524
-
-
-
-
-16)
-By altering form data an authenticated user can download attachments
-from a private project of another user.
-
-
-17)
-By altering form data an authenticated user can see thumbnails of
-pictures from a private project of another user.
-
-
-18)
-By altering form data an authenticated user can remove attachments from
-a private project of another user.
-
-
-Fix:
-https://github.com/kanboard/kanboard/commit/7100f6de8a1f566e260b3e65312767e4cde112b1
-
-
-
-The issues are fixed in Kanboard 1.0.47.
-
-https://kanboard.net/news/version-1.0.47
-
-
-
-
-Should I request a CVE ID for each issue or one CVE ID for all issues?
-
-What is the recommended method?
-
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Thanks!
