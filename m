@@ -1,65 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/7
-Message-ID: <20170928145302.smwgiqa4n76cjp75@eldamar.local>
-Date: Thu, 28 Sep 2017 16:53:02 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Advisory: Git cvsserver OS Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/06/6
+Message-ID: <alpine.LFD.2.20.1702070101020.4225@wniryva>
+Date: Tue, 7 Feb 2017 01:02:31 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE request Qemu: usb: integer overflow in emulated_apdu_from_guest
 Content-Type: text/plain; charset=utf-8
 
-Hi
+   Hello,
 
-On Tue, Sep 26, 2017 at 11:03:49AM +0200, joernchen wrote:
-> Hi,
-> 
-> 
-> see attached advisory.
-> 
-> Cheers,
-> 
-> joernchen
-> -- 
-> joernchen ~ Phenoelit
-> <joernchen@...noelit.de> ~ C776 3F67 7B95 03BF 5344
-> http://www.phenoelit.de  ~ A46A 7199 8B7B 756A F5AC
+Quick Emulator(Qemu) built with the CCID Card device emulator support is 
+vulnerable to an integer overflow flaw. It could occur while passing message 
+via command/responses packets to and from the host.
 
-> Phenoelit Advisory <wir-haben-auch-mal-was-gefunden #0815 ++--->
-> 
-> [ Authors ]
->         joernchen       <joernchen () phenoelit de>
-> 
->         Phenoelit Group (http://www.phenoelit.de)
-> 
-> [ Affected Products ]
->         Git before 2.14.2, 2.13.6, 2.12.5, 2.11.4 and 2.10.5 (git-cvsserver)
->         https://git-scm.com
-> 
-> [ Vendor communication ]
->         2017-09-08 Sent vulnerability details to the git-security list
->         2017-09-09 Acknowledgement of the issue, git maintainers ask if
->                    a patch could be provided
->         2017-09-10 Patch is provided
->         2017-09-11 Further backtick operations are patched by the git
->                    maintainers, corrections on the provided patch
->         2017-09-11 Revised patch is sent out
->         2017-09-11 Jeff King proposes to drop `git-cvsserver`'s default
->                    invocation from `git-shell`
->         2017-09-22 Draft release for git 2.14.2 is created including the
->                    fixes
->         2017-09-26 Release of this advisory, release of fixed git versions
-> 
-> [ Description ]
-> 	The `git` subcommand `cvsserver` is a Perl script which makes excessive
-> 	use of the backtick operator to invoke `git`. Unfortunately user input
->         is used within some of those invocations.
-> 
-> 
-> 	It should be noted, that `git-cvsserver` will be invoked by `git-shell`
->         by default without further configuration.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+on host resulting in DoS.
 
-FTR, this has been assigned CVE-2017-14867.
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg01075.html
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-14867
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1419699
 
-Regards,
-Salvatore
+This issue was reported by Mr Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
