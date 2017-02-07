@@ -1,4 +1,9 @@
-Received: (qmail 5451 invoked by uid 550); 6 Feb 2025 16:30:01 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1697" "Wednesday" "8" "February" "2017" "10:27:46" "+1030" "Doran Moppert" "dmoppert@redhat.com" "<20170207235746.GA13577@sin.redhat.com>" "44" "Re: [oss-security] CVE request: XXE in Openpyxl" nil nil nil "2" "2017020723:57:46" "[oss-security] CVE request: XXE in Openpyxl" (number mark "U       dmoppert@red Feb  8   44/1697  " thread-indent "\"Re: [oss-security] CVE request: XXE in Openpyxl\"\n") "<20170207104854.331@usenet.piggo.com>" ("<20170207104854.331@usenet.piggo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9492 invoked by uid 550); 7 Feb 2017 23:58:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24130 invoked from network); 6 Feb 2025 08:08:05 -0000
-Authentication-Results: ext-mx-out013.mykolab.com (amavis);
- dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
- header.d=kolabnow.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-	in-reply-to:content-disposition:content-type:content-type
-	:mime-version:references:message-id:subject:subject:from:from
-	:date:date:received:received:received; s=dkim20240523; t=
-	1738829275; x=1740643676; bh=StnAITiTGkwrlJbKqoN7tRSZJV3B1xg3QUf
-	a7xUWshw=; b=WgtUpuaWp5SfJc5jQx535DD61N4bvIPKUyl3dZYgBGPOBMEUvCt
-	ty+fWxetXVduYJp8ZoDrWm+WqP2R2KcnBmD070GU3FTxXo5xtlLhcdyUcRHJ2ICt
-	bRzOkcEySZtrpVGxE6A2yJfjRwzzUbJk6VOS0wIi9j+MZo+3l8kwwqUfMbvG9vYd
-	Ru+Wj+KkQ7sqiwXQSZkumdqj4OeU80GrqIiMgPFVPq8lp0O0cniZa3ufXXFhzLMP
-	jtypiYuhBr4JFzbHASlv9jvHgkHodmMK4eF+i0/UvqGj/Xdl6KAx0PgDBZe3BO4p
-	XBA9iTu+CN3s6T1C0UdR/qZ9lwO8wqQYacQ==
-X-Virus-Scanned: amavis at mykolab.com
-Date: Wed, 5 Feb 2025 21:14:03 +0100
-From: Fay Stegerman <flx@obfusk.net>
+Received: (qmail 9463 invoked from network); 7 Feb 2017 23:58:02 -0000
+Date: Wed, 8 Feb 2017 10:27:46 +1030
+From: Doran Moppert <dmoppert@redhat.com>
 To: oss-security@lists.openwall.com
-Cc: Daniel Stenberg <daniel@haxx.se>
-Message-ID: <Z6PGi6NEnJWK4xeF@nihonium>
-References: <9s413pp0-or33-59o0-pq82-40s270002npp@unkk.fr>
+Message-ID: <20170207235746.GA13577@sin.redhat.com>
+References: <20170207104854.331@usenet.piggo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
 Content-Disposition: inline
-In-Reply-To: <9s413pp0-or33-59o0-pq82-40s270002npp@unkk.fr>
-Subject: Re: [oss-security] [SECURITY ADVISORY] curl: CVE-2025-0725: gzip
- integer overflow
+In-Reply-To: <20170207104854.331@usenet.piggo.com>
+X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 07 Feb 2017 23:57:52 +0000 (UTC)
+Subject: Re: [oss-security] CVE request: XXE in Openpyxl
 
-* Daniel Stenberg <daniel@haxx.se> [2025-02-05 09:21]:
-[...]
-> This problem can only trigger when using a run-time zlib version 1.2.0.3 or
-> older. zlib 1.2.0.4 was relased on August 10, 2003. This means zlib versions
-> that do not trigger this problem have been available and used for more than
-> twenty-one years already. A zlib version 1.2.0.3 or earlier still in use is
-> vulnerable to a wide range of security problems and a user using this is
-> already in a spectacularly bad position.
-> 
-> libcurl featured code that at run-time takes a different code path for zlib
-> versions before 1.0.2.4 because of lack of functionality in those old
-> versions, and this rarely used piece of code contained the vulnerable code
-> path.
+--a8Wt8u1KmwUX3Y2C
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I assume this last version should have been 1.2.0.4 as before and not 1.0.2.4?
+On Feb 07 2017, S=C3=A9bastien Delafond wrote:
+> the Debian Security Team would like to request a CVE for an XML XEE
+> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
+> resolves external entities by default:
+>=20
+>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D854442
+>   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
 
-[...]
-> SOLUTION
-> ------------
-> 
-> Starting in version 8.12.0, libcurl no longer supports zlib < 1.2.0.4. Using
-> such a version will now instead cause a run-time error.
-> 
-> - Fixed-in: https://github.com/curl/curl/commit/76f83f0db23846e254d940ec7
-[...]
+This is yet another instance of CVE-2016-9318.  As already observed on
+the Debian tracker, disabling entity resolution altogether is probably
+going to make openpyxl fail on well-formed Excel documents using
+standard entities such as &lt;.
 
-Looking at the patch it seems the version check is using a string comparison
-instead of a proper numeric one on the version tuple (major, minor, revision,
-subrevison):
+--=20
+Doran Moppert
+Red Hat Product Security
 
-  if(strcmp(v, "1.2.0.4") >= 0) {
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature
 
-Which, whilst I doubt we'll see such a zlib version any time soon if ever
-(though zlib-ng compat might get there a lot faster), would give an incorrect
-result for e.g. version "1.10.0.0".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-- Fay
+iQIcBAEBCgAGBQJYml75AAoJEGohqWcZR7qpVoYQAKtwkUBiwN5mGMJ/qCr8Banb
+5+hhcD3UtKISJ2wz+hB0pQmcMRr1OYhnKMhSN2rA1oqQZWyeI8en8vnOJjrU+VsU
+AXP+05vDpDqtAq0qMEVQwRsbL2a+TIm8yFqvCu2I7+uHqz873L5QaootNtf6Ngn+
+UhW7RgU5XD4U1OZuToDM0HpRznd6vMsonWNSe7e+59spcPUd11ycMVeNWOcOMxwu
+V7QCw2kchhR1ffrX026yKw1jgMPjJxMQc0qvzCdEA+Aaast3TX+NpI1m6JJ7f52Z
+kW+ybTHbzRDkdSsQx9RqmSvvJyWBGFTcKo+KjcmQVm60LRLUoYXIv6Yc366nHUav
+WRoj/gZKI3S5J6Ski2dXVhgsByBcw1cDXdQHCRHCtnkwlRyAGr3+4SUUSPZ2yIc4
++OuPgDecm2fSg0RoC1efKOtFmj2uJpztezyk/+UyIPpk00+MMlJCBJw4PM/ipXbg
+vT2yK0jNjAE0a/R6X9kUTCuCcKozXwDxRYDAjVb8dhiHSkbxWXj12iGiW6VCWi0G
+95lrpgWT2zJti8aUzU7/zgzgSIEBJFBKoEGvkmWtlmwEcoCdEdB1fpZ8APTYVfdg
+Flzjt9FhH9JWXpzqnSPwUijhrSUIbyihh8ktQqIb84U8bsGSYljnHT+VA4qDNbjV
+cyOaGi3hfQOXnCOHMwEI
+=hWIM
+-----END PGP SIGNATURE-----
+
+--a8Wt8u1KmwUX3Y2C--
