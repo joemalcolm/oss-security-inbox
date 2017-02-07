@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["715" "Tuesday" "31" "October" "2017" "10:54:08" "-0700" "Tim" "tim-security@sentinelchicken.org" "<20171031175407.jcniviupwyab6qcl@sentinelchicken.org>" "20" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "10" "2017103117:54:08" "[oss-security] Fw: Security risk of vim swap files" (number mark "        tim-security Oct 31   20/715   " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171031132352.2df6d2ad@pc1>" ("<20171031132352.2df6d2ad@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3440" "Tuesday" "7" "February" "2017" "13:09:52" "+0000" "Peter Grandi" "pg@lxkern.for.sabi.co.UK" "<22681.50976.676169.341220@tree.ty.sabi.co.uk>" "70" "[oss-security] a simple replacement for setuid and confinement systems" nil nil nil "2" "2017020713:09:52" "[oss-security] a simple replacement for setuid and confinement systems" (number mark "U       pg@lxkern.fo Feb  7   70/3440  " thread-indent "\"[oss-security] a simple replacement for setuid and confinement systems\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20407 invoked by uid 550); 31 Oct 2017 17:54:28 -0000
+Received: (qmail 19798 invoked by uid 550); 7 Feb 2017 17:38:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +11,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20374 invoked from network); 31 Oct 2017 17:54:27 -0000
-Message-ID: <20171031175407.jcniviupwyab6qcl@sentinelchicken.org>
-References: <20171031132352.2df6d2ad@pc1>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171031132352.2df6d2ad@pc1>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Tue, 31 Oct 2017 10:54:08 -0700
-From: Tim <tim-security@sentinelchicken.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
-To: oss-security@lists.openwall.com
+Received: (qmail 26011 invoked from network); 7 Feb 2017 13:10:14 -0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-ID: <22681.50976.676169.341220@tree.ty.sabi.co.uk>
+Date: Tue, 7 Feb 2017 13:09:52 +0000
+To: OSS Security <oss-security@lists.openwall.com>
+X-Mailer: VM 8.1.2 under 24.3.1 (x86_64-pc-linux-gnu)
+From: pg@lxkern.for.sabi.co.UK (Peter Grandi)
+X-Disclaimer: This message contains only personal opinions
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - azure.uno.uk.net
+X-AntiAbuse: Original Domain - lists.openwall.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - lxkern.for.sabi.co.uk
+X-Get-Message-Sender-Via: azure.uno.uk.net: authenticated_id: sabity@sabi.unospace.net
+X-Authenticated-Sender: azure.uno.uk.net: sabity@sabi.unospace.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+Subject: [oss-security] a simple replacement for setuid and confinement systems
 
-On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
-> I just sent this to the vim dev list, but I guess it's interesting for
-> oss-security, too.
-> ...
+This message is "for the public record" so if in the future
+someone tries to patent something like the below mechanism this
+message can be cited as prior art.
 
-Good thing to point out.  Same goes for other editors that drop ~ and
-#...# files and the like.  The default location shouldn't be an
-exposure.
+The mechanism would be to add to each process, along with its
+"effective" id (user/group) what I would now call a preventive id
+with the following rules:
 
-Sure, you can argue that maybe some systems should ignore these files,
-block access, etc, but it is pretty absurd to expect every other piece
-of software in the universe to work around very unsafe defaults of text
-editors.  
+  * The access given to a program is that common to both the
+    effective id and the preventive id (the intersection of the
+    permissions for the effective and preventive ids), which can
+    be no access.
+  * Both effective and preventive id are inherited on fork.
+  * On exec the preventive id (user/group) of a process is set
+    to the id of the executed file.
+  * Files are created as in regular UNIX/Linux semantics with the
+    effective id of the creating process.
+  * A program in a process may set the preventive id to the same
+    value as the effective id (or to any value if the preventive
+    id is zero). This results in the current UNIX/Linux non-set-id
+    semantics.
+  * A program in a process may set the effective id to the same
+    value as the preventive id (or to any value if the effective
+    id is zero). This results in the the current UNIX/Linux set-id
+    semantics.
+  * If the effective id of a process and its preventive id are
+    different, the process is "confined" to the set of resources
+    accessible by both. Therefore a user that does not fully trust
+    an executable can give access to just the resources it
+    strictly needs to access, by setting permissions so that the
+    id of the file containing the executable can access only
+    those resources.
 
-Also, it almost never makes sense to put things in /tmp, for several
-reasons pointed out by others.  Making ~/.vim/... the default location
-clearly is the best solution.
+Note: there are some other details to take care of, like
+apposite rules for access to a process via a debugger. The logic
+of the mechanism is that it is safe to let a process operate
+under the preventive id of its executable, because the program
+logic of the executable is under the control of the owner of the
+executable, and that should not be subverted.
 
-Cheers,
-tim
+The overall logic is that in the UNIX/Linux semantics for a
+process to work across two protection domains it must play between
+the user and group ids; but it is simpler and more general to have
+the two protection domains identified directly by two separate ids
+for the running process.
+
+The mechanism above is not quite backwards compatible with the
+UNIX/Linux semantics because it makes changes in the effective or
+preventive ids depend on explicit process actions, but it can be
+revised to be backwards compatible with the following alternative
+rules:
+
+  * Only if exec if for an executable file with the "sticky" bit
+    set the preventive id of the process is set to the id of that
+    executable file. The sticky bit in effect becomes the
+    confinement bit.
+  * If exec is for an executable file with the set-id (user/group)
+    bit set, then the effective id of the process is set to the
+    preventive id after this has been set to the id of the
+    executable file.
+  * This is probably not strictly necessary because almost all
+    system-provided executables on a typical UNIX/Linux system are
+    in files owned by id 0, so preventive ids would be 0 thus
+    resulting in no confinement like in traditional UNIX/Linux
+    semantics.
+
+Note: the implementation of either variant of the mechanism is
+trivial, and in particular adding preventive id fields to a
+process does not require backward incompatible changes as process
+attributes are not persistent.
