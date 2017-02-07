@@ -1,99 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/03/5
-Message-ID: <CAPGxrc8ERFkDD=+x3qo2rkWPZ_3SxMGdJaAgUsEkcrBsZZ0ovg@mail.gmail.com>
-Date: Wed, 3 May 2017 20:49:28 +0800
-From: redrain root <rootredrain@...il.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Cc: security@...assian.com
-Subject: Sourcetree arbitrary command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/3
+Message-ID: <cfbff1a9c0f2415692d5eb80113b00bf@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 01:56:16 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liqiang6-s@....cn>
+Subject: Re: CVE request Qemu: usb: integer overflow in emulated_apdu_from_guest
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I would report a sourcetree arbitrary command execution
+> Quick Emulator(Qemu) built with the CCID Card device emulator support is
+> vulnerable to an integer overflow flaw. It could occur while passing message
+> via command/responses packets to and from the host.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> on host resulting in DoS.
+> 
+> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg01075.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1419699
+> http://git.qemu-project.org/?p=qemu.git;a=commit;h=c7dfbf322595ded4e70b626bf83158a9f3807c6a
 
-Sourcetree is a popular git gui client,and I found a command execution two
-month ago,
-and I report to the official atlassian but the told me they have known this
-vulnerability internal tracker and they will fix it in next version but
-sourcetree has upgrade several version, this vulnerability still alive.
-So I want to disclose this vulnerability and make a copy for atlassian
-again.
+Use CVE-2017-5898.
 
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Author: redrain, hongyu-s@....cn
-Date: 2017-03-02
-Version:2.5c and prior
-Platform: macOS, Windows, Linux Desktop
-Site: https://www.sourcetreeapp.com
-Vendor: Atlassian
-Vendor Notified: 2017-03-02
-
-
-Technical Details:
-========================================
-
-SourceTree v2.5c and prior are affected by a command injection in the
-handling of sourcetree:// scheme.
-The cloneRepo action with ‘ext’ is base on git-remote-ext, The git team’s
-description of the bug was:
-Some protocols (like git-remote-ext) can execute arbitrary code found in
-the URL.
-
-PoC:
-sourcetree://cloneRepo/ext::[command injection]
-Even attacker can exploit it through the browser
-
-<html>
-<head></head>
-<body>
-	<a href=sourcetree://checkoutRef/ext::id>a</a>
-</body>
-</html>
-
-There is a simple demo video:
-https://youtu.be/SQ1_Ht-0Bdo
-
-
-Other:
-============================================
-and there is the last bugtrack I reported:
-
-
-```
-Activity
-Your request status changed to Resolved with resolution Tracked Elsewhere.
-03/Mar/17 5:35 PMLATEST
-Alexander Minozhenko
-Alexander Minozhenko03/Mar/17 5:34 PM
-Hi rootredrain,
-Thank you for sending this notification to Atlassian. This is indeed a
-vulnerability and an issue has been filed on an internal tracker.
-The issue is SRCTREE-4632. Unfortunately, this issue is not accessible
-externally, so you will not be able to monitor its progress. Feel free to
-check with us for updates.
-redrain
-redrain02/Mar/17 5:43 PM
-sourcetree_vuln.7z (9.62 MB)
-Details02/Mar/17 5:43 PM
-Product or Service
-Other
-Product Version
-2.4.1a and earlier
-Description
-SourceTree v2.4.1a and earlier are affected by a command injection in the
-handling of sourcetree:// scheme.
-The cloneRepo action with ‘ext’ is base on git-remote-ext, The git team’s
-description of the bug was:
-Some protocols (like git-remote-ext) can execute arbitrary code found in
-the URL.
-PoC:
-sourcetree://cloneRepo/ext::[command injection]
-Even attacker can exploit it through the browser
-there is a simple demo in the attachment.
-```
-
-
-Regards,
-redrain
-
+iQIcBAEBCAAGBQJYmW4LAAoJEHb/MwWLVhi2SCUP/j/Oy+K8VNyjXK+10PXCEw5E
+GYZn60Ni+f7hbyH6qfj8/Mut1hfNUzDaWasJtqYggHYfywRYzDNSpXhmAReNWgY7
+0gWMkcPArwUX/JntGKt24jFJV+VA7QPxXFIVrXhk8bTuvT4o9rzpWg5K12u7WLb6
+gJpQVqLm2hVNZCHNbD8Bp5oBkE24X2uYK4FKuHfDr525/zVXci1jjPrqFd476wMy
+1gZuDMPoCNmctslDMNOZp+BxSicHK69r8Wg0Y8y0A/N0zOZqNGwqXTfeuj+Fc1cG
+jqYa+YaWVyaVzH85rtlZmg5Y0+oyUHenpnm5JgdKqHq6gGMYMd2+q8YQISFBBBSm
+Wwkh3859/qreQUGwxa8WWhb866FJL+U37gY6ZuyWzRwwOyKnHwiwDojgimXn7JZU
+k5kz1AC/I0Kno9tdunv1sfr3ZrepD765unrL69LoimZxpd0I+0gDFoUVsWNIb9gK
+z1Mhbn6o/SF1b8Vp1onBSlti58/94eMj8YRlryBb9PIv/zIpNomaqVwAEqgKxR56
+LQD+Xg8yQ5tYtCiGHO/dpzX2b7Zh2T9mo6X5O2Rx9w3qa42P43LwNkzlz4FT75yO
+zduqoMugISuJsrL2H53vXcHKL6ZRAknBRgWK9gMAJ1NwF7fJedQzQPtAUXUE9Tx6
+fpL9MSGOs1Br827mKz3Q
+=JS1o
+-----END PGP SIGNATURE-----
