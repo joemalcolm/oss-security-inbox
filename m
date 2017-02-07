@@ -1,4 +1,9 @@
-Received: (qmail 15771 invoked by uid 550); 21 Jul 2023 11:24:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1473" "Tuesday" "7" "February" "2017" "01:57:39" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<e62a5dd0e9b34b509b3fb4b671a5c992@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: CVE Request: s-nail local root" nil nil nil "2" "2017020706:57:39" "[oss-security] Re: CVE Request: s-nail local root" (number mark "U       cve-assign@m Feb  7   36/1473  " thread-indent "\"[oss-security] Re: CVE Request: s-nail local root\"\n") "<c227f38a-f873-fbf8-b4bc-220df1b31066@yahoo.fr>" ("<c227f38a-f873-fbf8-b4bc-220df1b31066@yahoo.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9364 invoked by uid 550); 7 Feb 2017 06:57:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30364 invoked from network); 21 Jul 2023 02:46:44 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=geeklan;
-	 bh=pKB47l8RKwxpzMsdDT6amPS+rn4=; b=P9EYyJUt7gLNL1B3GTdtdTN1XslY
-	Zz1SvvZur1KJojODEnjrwnr4Xsr/nPFVG6jx0TFKS4ClKL72RKcH97ngo3b5MdUK
-	m6O1WUCG2NYXpARqEmUALJENnNpy98B43o5NbOIBgRNH+UOKv4oV7kTHSojX3UH7
-	NmQEAyPxAhQNbKq8CeIRxJGNUrnoceLT+dPOARxaCuMpeS3Fl87XOOALW5qVZtXT
-	2XCV/XZ/aMjWCvzvi0wY4x0XIpiQC2eDEMyLdXPidwO/m8a2VZt4sQv0dTppJdd4
-	8JygHdjKWXEV0QseZ9a+XRqxK5kQVLx/jlGO71U9zoSRImcD4C3HfbSIRg==
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
-	:date:mime-version:subject:to:references:from:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=geeklan; b=WMd
-	P4NsYBQYcTqNF7cnRmL5T723ySLcB4lO+zqHuO3TRHcZIL/fl0nL6CAzY1VwMmA4
-	iO/gspsV+D80zT+sXPEA66KUojVqaXxZ+jJJkYOxq6bkEpcUZ0ls4icgpn5HMWnQ
-	58Q/OKCep8p2qWpZivYtPf9lGsmniXHkofrSifoSuXh5Bx5Oi8QDMLpC1JJs3NOl
-	icSgAEiQUAHDQTwJ/ymjQdrohl80D8TiUIo5/V21HQsfrfUDFXeRq9yIhPd7eoOu
-	G74U9mk9ooLT3cs0pzOpMbHeq3igRG8rBSY6QlKTTRo2Wg5Uh/ZRbk0AeLI7qyyl
-	8JK7yTjb1VVwAtNmv+w==
-Message-ID: <806c9e2b-a090-8b03-4da7-b58ab040a251@geeklan.co.uk>
-Date: Fri, 21 Jul 2023 03:46:28 +0100
+Received: (qmail 9344 invoked from network); 7 Feb 2017 06:57:50 -0000
+From: <cve-assign@mitre.org>
+To: <wapiflapi@yahoo.fr>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <c227f38a-f873-fbf8-b4bc-220df1b31066@yahoo.fr>
+Message-ID: <e62a5dd0e9b34b509b3fb4b671a5c992@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 01:57:39 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-References: <e9c022742fc07cee@cvs.openbsd.org> <ZLk1hSUEt00caovk@itl-email>
- <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
- <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
-From: Sevan Janiyan <venture37@geeklan.co.uk>
-In-Reply-To: <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request: s-nail local root
 
-On 21/07/2023 02:04, Matthew Fernandez wrote:
-> I don’t think this helps much though, right? The Qualys research that
->  motivated this found an exploit chain using only libs present in 
-> /usr/lib in a default Ubuntu install.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Yes, you're right, but, you can be a bit more granular in the paths that
-you allow without introducing more knobs for when you forward your
-agent. e.g Ubuntu & Debian install the relevant libraries into
-/usr/lib/$ARCH-linux-gnu/pkcs11. Rather than permitting anything from
-/usr/lib, only load from the pkcs11 directory.
-Looking into it, it looks like both distros (inherited from Debian?)
-install some libraries into /usr/lib/$ARCH-linux-gnu and symlink into
-/usr/lib/$ARCH-linux-gnu/pkcs11 so that would need to change to go the
-other way. e.g opensc-pkcs11.so is symlinked as such.
+> https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
 
-> If you want to lock down loading to a specific non-/usr/lib path that
-> you have control over, this suggests you know and are in control of
-> the PKCS#11 providers you’re going to support. In which case, why not
-> avoid dynamic loading to begin with? I guess the allowlist and new
-> defaults are the answer to this conundrum though.
-I was thinking how you would address the issue if you were responsible 
-for the OS/distro build rather than on the user/operator side and that 
-it would be easier to insure that the PKCS#11 libraries you are 
-packaging get installed into a specific directory and only permit the 
-ssh-agent to load from that directory, avoiding the need to maintain an 
-allowlist. The number of shared libraries you would then need to analyse 
-would be significantly smaller too (60,000? yikes)
+> vulnerability in the setuid root helper binary
 
+> The problem is that an O_EXCL file is created with a user controlled
+> path because the di.di_hostname and di.di_randstr are never checked.
+> This means that using s-nail-privsep a normal user can create a file
+> anywhere on the filesystem, which is a security problem.
 
-Sevan
+Use CVE-2017-5899.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYmW4QAAoJEHb/MwWLVhi2+zMQAKcTkP5qlPXpyAw1J0pbVHdH
+Y9Gr2MYjAux/jFSo0M5ClF8RngazEBNBpidzHTaVAZ2evZiv3QT5piMVIxi0oIR6
+HG7G+kuUHuO16G6X9y6/joOr92ZRxJwUnXtN64MN59rOg6UBhKWE1dk5MORbFTee
+EWoEAAgG7MPk0cjdZbdDoRjZYlTmyuyC5J1WXdc6a2Vy8IiS2YXEjFfEGyMIbGgH
++rVHZPWmbX/hmngnuuXq6LmCDtlQJce+e2abochLRx4diM1BH65X3OKfHp1JiV8X
+DI6W/XH13nwiiFscSakqNbhMFbbSf5ed3ogQ+LPgz62aD8Cj69zbuuA9HpnWb8ow
+iow8YKYj+dHoVIohQK7OtnSw42GW7ZyQGUYiz8XrYPb8snZo348WmMWP1m5h7mGc
+dr3mLWlCQam3PDQugjQ7G/Q9CgJjq+HBQPuskdVy5MnHsi+toU0Uc/np3WM2eQHG
+Huu/3hCTGQUJ0hyku2u/q6Xb0HKec9ugDVNvHNsOe8701Xxsg5kD5cCm49455sYS
+k2jpb0GHTfGEkwXDQjb0tHL7nxDxlERrbfx73qmF99k8ZvZOI9NUYCJUqQOhr7RZ
+vx0zo0PlqyFhK910ph0WCe8KnAD4JHlERyxljCMLem7iCapH62VSfbJJzy5d8Z5h
+AwjzJgsIKufVTXR4E0VF
+=gzVM
+-----END PGP SIGNATURE-----
