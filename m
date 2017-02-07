@@ -1,82 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/25/6
-Message-ID: <957f2bdc-6603-3e86-1d63-8e33c8df768a@redhat.com>
-Date: Mon, 25 Sep 2017 14:52:13 +0100
-From: Cliff Perry <cperry@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/10
+Message-ID: <20170207235746.GA13577@sin.redhat.com>
+Date: Wed, 8 Feb 2017 10:27:46 +1030
+From: Doran Moppert <dmoppert@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: Re: CVE request: XXE in Openpyxl
 Content-Type: text/plain; charset=utf-8
 
-On 23/09/17 12:44, Hanno Böck wrote:
-> Hi,
+On Feb 07 2017, Sébastien Delafond wrote:
+> the Debian Security Team would like to request a CVE for an XML XEE
+> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
+> resolves external entities by default:
 > 
-> A few days have passed since the optionsbleed disclosure. Some
-> interesting things have surfaced, e.g. the fact that it was apparently
-> discovered already in 2014, but nobody noticed it was a security bug.
-> 
-> 
-> But I'd like to discuss something else:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
-> 
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2]. I see no sign that any work on a fix began before the
-> disclosure.
-> 
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
-> opensuse packages.
-> 
-> The only distro I'm aware of that prepared packages and pushed them
-> right after disclosure is Gentoo.
-> 
-> All of this makes me wonder if the distros list serves its purpose.
-> 
-> I'd be curious to hear:
-> 
-> a) if any people felt that pre-disclosure of optionsbleed was helpful
-> to them and in which way (after all - even if it only helps minor
-> distros and major distros ignore it it may still be a good thing).
-> 
-> b) if people think that they'd usually prepare a fixed package, however
-> they didn't consider optionsbleed important enough. (Naturally I
-> probably have a bias seeing my findings as more important as other
-> people, but I could live with that.)
-> 
-> c) other things?
-> 
-> 
-> 
-> [1] https://arxiv.org/pdf/1405.2330.pdf
-> https://blog.fuzzing-project.org/61-How-Optionsbleed-wasnt-found-in-2014.html
-> [2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=876109
-> [3] https://access.redhat.com/security/cve/cve-2017-9798
-> 
+>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
+>   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
 
-Hi Hanno,
-The detail of your report was good quality and I'm sure appreciated by
-everyone who needed to review it. I know that for Red Hat the
-pre-disclosure was useful.
-
-During analysis, like SUSE, we rated it as having a security impact of
-Moderate (https://access.redhat.com/security/updates/classification);
-and not highly impacting that required expedited preparation of packages
-for the embargo date. Additional information is contained within the
-bugzilla linked off our CVE page
-(https://bugzilla.redhat.com/show_bug.cgi?id=1490344).
-
-We look forward to working with you again in the future.
-
-Regards,
-Cliff
+This is yet another instance of CVE-2016-9318.  As already observed on
+the Debian tracker, disabling entity resolution altogether is probably
+going to make openpyxl fail on well-formed Excel documents using
+standard entities such as &lt;.
 
 -- 
-Senior Engineering Manager
-
+Doran Moppert
 Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
