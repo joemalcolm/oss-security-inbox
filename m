@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/7
-Message-ID: <20170228162802.5rmgjzynfz7r7e7c@eldamar.local>
-Date: Tue, 28 Feb 2017 17:28:02 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: Linux: net/llc: avoid BUG_ON() in skb_orphan() (CVE-2017-6345)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/4
+Message-ID: <e62a5dd0e9b34b509b3fb4b671a5c992@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 01:57:39 -0500
+From: <cve-assign@...re.org>
+To: <wapiflapi@...oo.fr>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: s-nail local root
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-CVE-2017-6345 was assigned by MITRE to the following (via
-https://cveform.mitre.org/):
+> https://www.mail-archive.com/s-nail-users@lists.sourceforge.net/msg00551.html
 
-https://git.kernel.org/linus/8b74d439e1697110c5e5c600643e823eb1dd0762
+> vulnerability in the setuid root helper binary
 
-> net/llc: avoid BUG_ON() in skb_orphan()
-> 
-> It seems nobody used LLC since linux-3.12.
-> 
-> Fortunately fuzzers like syzkaller still know how to run this code,
-> otherwise it would be no fun.
-> 
-> Setting skb->sk without skb->destructor leads to all kinds of
-> bugs, we now prefer to be very strict about it.
-> 
-> Ideally here we would use skb_set_owner() but this helper does not exist yet,
-> only CAN seems to have a private helper for that.
+> The problem is that an O_EXCL file is created with a user controlled
+> path because the di.di_hostname and di.di_randstr are never checked.
+> This means that using s-nail-privsep a normal user can create a file
+> anywhere on the filesystem, which is a security problem.
 
-The fix was backported to 4.9.13 as well.
+Use CVE-2017-5899.
 
-Regards,
-Salvatore
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYmW4QAAoJEHb/MwWLVhi2+zMQAKcTkP5qlPXpyAw1J0pbVHdH
+Y9Gr2MYjAux/jFSo0M5ClF8RngazEBNBpidzHTaVAZ2evZiv3QT5piMVIxi0oIR6
+HG7G+kuUHuO16G6X9y6/joOr92ZRxJwUnXtN64MN59rOg6UBhKWE1dk5MORbFTee
+EWoEAAgG7MPk0cjdZbdDoRjZYlTmyuyC5J1WXdc6a2Vy8IiS2YXEjFfEGyMIbGgH
++rVHZPWmbX/hmngnuuXq6LmCDtlQJce+e2abochLRx4diM1BH65X3OKfHp1JiV8X
+DI6W/XH13nwiiFscSakqNbhMFbbSf5ed3ogQ+LPgz62aD8Cj69zbuuA9HpnWb8ow
+iow8YKYj+dHoVIohQK7OtnSw42GW7ZyQGUYiz8XrYPb8snZo348WmMWP1m5h7mGc
+dr3mLWlCQam3PDQugjQ7G/Q9CgJjq+HBQPuskdVy5MnHsi+toU0Uc/np3WM2eQHG
+Huu/3hCTGQUJ0hyku2u/q6Xb0HKec9ugDVNvHNsOe8701Xxsg5kD5cCm49455sYS
+k2jpb0GHTfGEkwXDQjb0tHL7nxDxlERrbfx73qmF99k8ZvZOI9NUYCJUqQOhr7RZ
+vx0zo0PlqyFhK910ph0WCe8KnAD4JHlERyxljCMLem7iCapH62VSfbJJzy5d8Z5h
+AwjzJgsIKufVTXR4E0VF
+=gzVM
+-----END PGP SIGNATURE-----
