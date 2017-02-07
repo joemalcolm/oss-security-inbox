@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/30/4
-Message-ID: <nycvar.YSQ.7.76.1708301533140.5404@wniryva>
-Date: Wed, 30 Aug 2017 15:34:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: David Buchanan <d@...buchanan.co.uk>
-Subject: CVE-2017-13673 Qemu: vga: reachable assert failure during during display update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/5
+Message-ID: <20170207104854.331@usenet.piggo.com>
+Date: Tue, 7 Feb 2017 09:57:39 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: XXE in Openpyxl
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello,
 
-Quick emulator(Qemu) built with the VGA display emulator support is vulnerable 
-to an assert failure issue. It could occur while updating graphics display, 
-due to miscalculating region for dirty bitmap snapshot in split screen mode.
+the Debian Security Team would like to request a CVE for an XML XEE
+discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
+resolves external entities by default:
 
-A privileged user/process inside guest could use this flaw to crash the Qemu 
-process on the host resulting in DoS.
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
+  https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg04685.html
+Cheers,
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486588
+--Seb
 
-This issue was reported by David Buchanan.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
