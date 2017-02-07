@@ -1,56 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/10/5
-Message-ID: <CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>
-Date: Thu, 10 Aug 2017 22:55:29 +0200
-From: Andrey Konovalov <andreyknvl@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/6
+Message-ID: <6796510.KACISFJ7AR@tux.boltz.de.vu>
+Date: Tue, 07 Feb 2017 13:52:23 +0100
+From: Christian Boltz <oss-security@...ltz.de>
 To: oss-security@...ts.openwall.com
-Cc: willemdebruijn.kernel@...il.com, Dmitry Vyukov <dvyukov@...gle.com>,  Kostya Serebryany <kcc@...gle.com>
-Subject: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch
+Subject: CVE request: PostfixAdmin allows to delete protected aliases
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello,
 
-syzkaller found an exploitable memory corruption in UFO code in the
-Linux kernel, the details are below.
+[I'm not subscribed, so please CC me in your replies.]
 
-### Bug details
+I'd like to request a CVE ID for Postfixadmin.
 
-When building a UFO packet with MSG_MORE __ip_append_data() calls
-ip_ufo_append_data() to append. However in between two send() calls,
-the append path can be switched from UFO to non-UFO one, which leads
-to a memory corruption.
+Thanks to a missing permission check, domain admins can delete aliases 
+they are not allowed to delete (for example abuse@, which the server 
+admin might have setup so that he gets all abuse mails).
 
-In case UFO packet lengths exceeds MTU, copy = maxfraglen - skb->len
-becomes negative on the non-UFO path and the branch to allocate new
-skb is taken. This triggers fragmentation and computation of fraggap =
-skb_prev->len - maxfraglen. Fraggap can exceed MTU, causing copy =
-datalen - transhdrlen - fraggap to become negative. Subsequently
-skb_copy_and_csum_bits() writes out-of-bounds.
+This can only be exploited by authentificated domain admins.
 
-A similar issue is present in IPv6 code.
+See https://github.com/postfixadmin/postfixadmin/pull/23 for a detailed 
+description.
 
-The bug was introduced in e89e9cf539a2 ("[IPv4/IPv6]: UFO
-Scatter-gather approach") on Oct 18 2005.
+Affected versions:
+- PostfixAdmin 3.0 and 3.0.1
+- PostfixAdmin 2.91, 2.92 and 2.93 (which actually are 3.0 beta releases)
 
-The fix has been submitted to netdev [1] and should be committed to
-mainline and to stable kernels soon. David has also sent an RFC series
-to remove UFO completely [2], which should be merged in 4.14.
+Older PostfixAdmin releases (2.3.x and older) are not affected.
 
-If unprivileged user namespaces are available, this bug can be
-exploited to gain root privileges. I'll share the details and the
-exploit in a few days.
+PostfixAdmin 3.0.2 will fix this issue - I'll release it in the next days.
 
-Thanks!
 
-### Timeline
+Regards,
 
-2017.08.03 - Bug reported to security@...nel.org
-2017.08.04 - Bug reported to linux-distros@
-2017.08.10 - Patch submitted to netdev
-2017.08.10 - Announcement on oss-security@
+Christian Boltz
+-- 
+Immerwieder der gleiche Anfaengerfehler:
+/dev/null ist fuer Backup,
+/dev/zero ist fuer Restore.
+[J. P. Meier]
 
-### Links
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=85f1bd9a7b5a79d5baa8bf44af19658f7bf77bfa
-
-[2] https://www.spinics.net/lists/netdev/msg443815.html
