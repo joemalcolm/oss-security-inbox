@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/11
-Message-ID: <20170622143402.GN32005@suse.de>
-Date: Thu, 22 Jun 2017 16:34:02 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/07/2
+Message-ID: <01c737d94fde43458d9fe0850eedd23b@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 01:54:17 -0500
+From: <cve-assign@...re.org>
+To: <andreyknvl@...gle.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <dvyukov@...gle.com>, <edumazet@...gle.com>, <kcc@...gle.com>
+Subject: Re: CVE Request: Linux: ip6_gre: invalid reads in ip6gre_err()
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 22, 2017 at 09:38:13PM +0800, Greg KH wrote:
-> On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
-> > Hi,
-> > 
-> > Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> There's a bug in the Linux kernel ipv6 implementation which allows a
+> remote attacker to trigger an out-of-bounds access.
 > 
-> The patches upstream in Linus's tree should resolve these crashes,
-> correct?  If not, please let the kernel developers know, as we ended up
-> going with a different set of changes than the distros shipped, and are
-> still working on getting these backported to older stable kernels at the
-> moment.
+> Upstream fix:
+> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=7892032cfe67f4bde6fc2ee967e45a8fbaf33756
 
-For a bit of history...
+>> net/ipv6/ip6_gre.c
 
-We used the patch developed by Michal Hocko, which was apparently adjusted/rewritten
-by Hugh Dickins for upstream inclusion.
+Use CVE-2017-5897.
 
-We are working on the improvements on those for our 3.0 kernel, but take
-a backport of the mainline fix for 3.12 and 4.4 kernels.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Ciao, Marcus
+iQIcBAEBCAAGBQJYmW4FAAoJEHb/MwWLVhi2uhYP/2pSKh6yFBK9CK6Jw2o653a8
+d7ye2bn4LW0eJhGCU/00ivQ3tZeQXBKxDis6AtTGlDIFdf6GWoITttPAYRDzkhka
+CYvzuca1hn2jv2euRaDWzICwaFIe0YFAO2iinJz18UPns4ufHnO2gQIrZ04HoR2b
+Rje1k/kVaQu7ppqrqZA260ONyAYerRYQzUipDGlBOVBsOf+Suu/ld4z+ehvo8p7x
+rINrW14YpOi44g5i+mArD0337X82Yq+VHq/t03jkCluceiIJf1lHaojjv8wsOV2v
+CS1K49EEZiK9RcwN61ZJSU5oGo0IrHU5WcJDW+tx45nshmcbUHDkQd2i4+xFTeGW
+BrO/qBlQlj0GVz0FbprWv4GzgteJ7RM5cQZqJx6xVoZXszFALcYoDc+mLrjjgaYT
+xIJjOgcyMYcPfR+GGDwMBvovV4QjsiWYccRADIBBH9TQ2mqfs9CAOaZxo6/dIouA
+R8z6PlpXE5WYu4iUacgQe8U/Mli4VQrOIpe8kU42ZgLjGZJTvIHclO7uvK4FwIYS
+njPf4Gkq+ozrNnZ2lyfvtpRlAXMz58skCI3FgzajeE3CjFW2T7re8aovSb2CwsB8
+OzCdWzJZbhWI5/2v+SXndQEtKf4tUQBI4ed0I0UJc6uADTMz6j+QnD+opUFrslCH
+B2rYgdMDYarkGw3Dv9zo
+=k7MF
+-----END PGP SIGNATURE-----
