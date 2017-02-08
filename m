@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["500" "Sunday" "14" "May" "2017" "12:41:20" "+0200" "Greg KH" "greg@kroah.com" "<20170514104120.GA29066@kroah.com>" "13" "Re: [oss-security] Kernel 4.1.y might not contain patches for CVE-2016-10229" nil nil nil "5" "2017051410:41:20" "[oss-security] Kernel 4.1.y might not contain patches for CVE-2016-10229" (number mark "U       greg@kroah.c May 14   13/500   " thread-indent "\"Re: [oss-security] Kernel 4.1.y might not contain patches for CVE-2016-10229\"\n") "<F98F0BB5-6485-45D0-BF61-186895EAAA33@technologysecure.com>" ("<F98F0BB5-6485-45D0-BF61-186895EAAA33@technologysecure.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1369" "Tuesday" "7" "February" "2017" "20:12:24" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3e64c619103643dbb1b3ea622b3fa4c6@imshyb02.MITRE.ORG>" "35" "[oss-security] Re: CVE request: PostfixAdmin allows to delete protected aliases" nil nil nil "2" "2017020801:12:24" "[oss-security] Re: CVE request: PostfixAdmin allows to delete protected aliases" (number mark "U       cve-assign@m Feb  7   35/1369  " thread-indent "\"[oss-security] Re: CVE request: PostfixAdmin allows to delete protected aliases\"\n") "<6796510.KACISFJ7AR@tux.boltz.de.vu>" ("<6796510.KACISFJ7AR@tux.boltz.de.vu>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14035 invoked by uid 550); 14 May 2017 10:41:41 -0000
+Received: (qmail 30502 invoked by uid 550); 8 Feb 2017 01:12:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14002 invoked from network); 14 May 2017 10:41:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=aCeSb0QbJa7dNo8Xfr
-	+pR1a+aUfHwLYCYeuNgJjbpp4=; b=B+GGPv+/FGRBj1wkBwAp6qkodE6qZt9TwE
-	/QIR7AlPApPrKTcU861O3NkkYo0DDjIsN2ipmqIOapJVc6L6EjjhL7784nRl2TX0
-	20zbfU11f1E1fRv5KFdeN0dZvOX+714MYCs0ijVPiO5QG+lesSI3Rbjq573eYRBh
-	yGw2AkWed6c5+f5XnCQzS1USJgLQgMOHa1UTWAjfYBXQeKy5qOGNbAFeZueYl9eN
-	Fwyit22xWBOKx4te1Ei9SMus2rgV6XNSRowg41pWrm1ND53KpZUaVrJ6v5UARRIf
-	pNeXy+oVNIktePw4nmWyusBA4ZifDbFiKz7e0mp68F6+gGPXrvOQ==
-X-ME-Sender: <xms:VzQYWXIWpyKTFVzFqHoLquu5CEOprwiVO31pWtxCHYK8Fj0YTHfItg>
-X-Sasl-enc: COdKv5Z9FHEfyNXYlq8CsxemOuZ6dqaeN7kDlSvstaoR 1494758487
-Date: Sun, 14 May 2017 12:41:20 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20170514104120.GA29066@kroah.com>
-References: <F98F0BB5-6485-45D0-BF61-186895EAAA33@technologysecure.com>
+Received: (qmail 30484 invoked from network); 8 Feb 2017 01:12:37 -0000
+From: <cve-assign@mitre.org>
+To: <oss-security@cboltz.de>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
+In-Reply-To: <6796510.KACISFJ7AR@tux.boltz.de.vu>
+Message-ID: <3e64c619103643dbb1b3ea622b3fa4c6@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 20:12:24 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <F98F0BB5-6485-45D0-BF61-186895EAAA33@technologysecure.com>
-User-Agent: Mutt/1.8.2 (2017-04-18)
-Subject: Re: [oss-security] Kernel 4.1.y might not contain patches for
- CVE-2016-10229
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE request: PostfixAdmin allows to delete protected aliases
 
-On Sat, May 13, 2017 at 10:44:44PM -0400, Yury German wrote:
-> This is just a small notice that Linux Kernel 4.1.y might not contain
-> patches to CVE-2016-10229 [1]. This is a reference to the Vanilla
-> Linux sources without any distribution specific patching. Typically a
-> number of distributions apply their own patches to the standard
-> vanilla Kernel. 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Given that the last 4.1.y kernel was released on March 13, there are
-lots of things missing in that tree at the moment :)
+> https://github.com/postfixadmin/postfixadmin/pull/23
+> 
+> Thanks to a missing permission check, domain admins can delete aliases
+> they are not allowed to delete (for example abuse@, which the server
+> admin might have setup so that he gets all abuse mails).
 
-thanks,
+>> Fix security hole in AliasHandler
 
-greg k-h
+Use CVE-2017-5930.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYmm+uAAoJEHb/MwWLVhi2PnsQALB+ZtPjFD1KdFcnEe/hPD8f
+FaB3+gIRWODdVVbr3Z2EPX8QSI0ZxfG0IN1oVqv6WTp4ikJZ0uzHqguA8ldBYaJH
+ThkW2H9ay+72KaWXG3tc/JM51q6ybxlNSNehaXcBoLbYxFbo4A6FxCXO7q1nt+Ou
+0mPpZXxWnrNcpMyk0xRMyHvZZ6vuor9o/qLFKWaKOdptXqzRjBCU21qtntLVByoQ
+/VJeLbZj27ixHKjmqsZjChYb49JpV4y2Q7banoSEUJbatDWSv1pvXkYwBjsyxj5a
+3xIoIEGCxRk4k05egyn1gaPEUb7ZRroxYbnAq29vVAPx3XyKLRR6NJVV90HlrN2W
+Qw1ueNlVgdkBM17dZM5ODc9a8J0kjN95aCwWnKqQcU7rOhCM0zjpdjueHLVI3aJu
+vEFut6s/6GKT2oH+AdXODr7AeoUHhA0MYfJ+7g9TEFSwar09Tu9eV1mSYbN6eyUb
+oS3fWGEA2CthacUg5arw/egSrQik3wLH+vkbepqQpgIkceYQQp9GYNaPUEdohFhN
+/tDGfNwnY0JtpCJE4tHvAQEbD2z2M9bK8U/m+rtaWJfoH+7e2qSUOV+aoAmzYQRw
+8dPdrIQWI302HNJma8L8yJevyJ/6lIvG3tNNVwnJogKNjn7QMVMy39ZfU8o7q7eK
+BVNqH7trlLm8k6yp2nHY
+=zNk8
+-----END PGP SIGNATURE-----
