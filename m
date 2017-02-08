@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/5
-Message-ID: <20171217151745.53c23a7b@elisabeth>
-Date: Sun, 17 Dec 2017 15:17:45 +0100
-From: Stefano Brivio <sbrivio@...hat.com>
-To: Raphael Geissert <atomo64@...il.com>
-Cc: oss-security@...ts.openwall.com, security@...atype.com
-Subject: Re: Sonatype Nexus Repository Manager 2.x weak password encryption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/1
+Message-ID: <3e64c619103643dbb1b3ea622b3fa4c6@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 20:12:24 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ltz.de>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: PostfixAdmin allows to delete protected aliases
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 17 Dec 2017 13:53:47 +0100
-Raphael Geissert <atomo64@...il.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hi,
+> https://github.com/postfixadmin/postfixadmin/pull/23
 > 
-> The Nexus Repository Manager in at least version 2.14.5 [0] (latest of
-> the 2.x series), stores the LDAP bind password in an on-disk file
-> using PBE (bouncy castle's implementation of PBEWithSHAAnd128BitRC4).
-> 
-> This is all great except for:
-> - it using only 23 iterations[1]
-> - it using a hard-coded and weak password[2]
-> 
-> Therefore offering as much protection as a rot13 would.
-> 
-> Given that the same PasswordHelper containing the weak password is
-> present elsewhere in the code, it is very likely that this weak crypto
-> issue affects other passwords stored by Nexus:
-> 
-> - components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java[3]
-> - components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java[4]
-> 
-> It appears that this code is no longer used by the 3.x series.
-> 
-> FWIW, the on-file password is:
-> 
-> base64(SALT_SIZE || SALT || PBE_OUTPUT )
-> 
-> SALT_SIZE always being 8 (hard-coded).
-> 
-> N.b. I'll be filing a CVE request in a moment.
-> N.b. I have not contacted sonatype. I couldn't find an email address.
+> Thanks to a missing permission check, domain admins can delete aliases
+> they are not allowed to delete (for example abuse@, which the server
+> admin might have setup so that he gets all abuse mails).
 
-The page at https://www.sonatype.com/contactus says:
+>> Fix security hole in AliasHandler
 
-	1. Send urgent or sensitive reports to security@...atype.com.
-	2. Use our public key to keep your message safe.
-	3. Provide us with a secure way to respond.
-	4. We’ll get back to you as soon as we can. Usually within 24 hours.
+Use CVE-2017-5930.
 
-> [0] https://help.sonatype.com/display/NXRM2/2017+Release+Notes
-> [1] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/upgrade/cipher/DefaultPlexusCipher.java#L64
-> [2] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-ldap-common/src/main/java/org/sonatype/security/ldap/realms/persist/DefaultPasswordHelper.java
-> [3] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-core/src/main/java/org/sonatype/nexus/configuration/PasswordHelper.java
-> [4] https://github.com/sonatype/nexus-public/blob/nexus-2.x/components/nexus-security/src/main/java/org/sonatype/security/configuration/source/PasswordHelper.java
-> 
-> Cheers,
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
--- 
-Stefano
+iQIcBAEBCAAGBQJYmm+uAAoJEHb/MwWLVhi2PnsQALB+ZtPjFD1KdFcnEe/hPD8f
+FaB3+gIRWODdVVbr3Z2EPX8QSI0ZxfG0IN1oVqv6WTp4ikJZ0uzHqguA8ldBYaJH
+ThkW2H9ay+72KaWXG3tc/JM51q6ybxlNSNehaXcBoLbYxFbo4A6FxCXO7q1nt+Ou
+0mPpZXxWnrNcpMyk0xRMyHvZZ6vuor9o/qLFKWaKOdptXqzRjBCU21qtntLVByoQ
+/VJeLbZj27ixHKjmqsZjChYb49JpV4y2Q7banoSEUJbatDWSv1pvXkYwBjsyxj5a
+3xIoIEGCxRk4k05egyn1gaPEUb7ZRroxYbnAq29vVAPx3XyKLRR6NJVV90HlrN2W
+Qw1ueNlVgdkBM17dZM5ODc9a8J0kjN95aCwWnKqQcU7rOhCM0zjpdjueHLVI3aJu
+vEFut6s/6GKT2oH+AdXODr7AeoUHhA0MYfJ+7g9TEFSwar09Tu9eV1mSYbN6eyUb
+oS3fWGEA2CthacUg5arw/egSrQik3wLH+vkbepqQpgIkceYQQp9GYNaPUEdohFhN
+/tDGfNwnY0JtpCJE4tHvAQEbD2z2M9bK8U/m+rtaWJfoH+7e2qSUOV+aoAmzYQRw
+8dPdrIQWI302HNJma8L8yJevyJ/6lIvG3tNNVwnJogKNjn7QMVMy39ZfU8o7q7eK
+BVNqH7trlLm8k6yp2nHY
+=zNk8
+-----END PGP SIGNATURE-----
