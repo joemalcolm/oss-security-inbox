@@ -1,39 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/08/3
-Message-ID: <20171208094854.GA9289@kroah.com>
-Date: Fri, 8 Dec 2017 10:48:54 +0100
-From: Greg KH <greg@...ah.com>
-To: Dan Carpenter <dan.carpenter@...cle.com>
-Cc: at zhou <zhouat2017@...il.com>, security@...nel.org, secalert@...hat.com, security@...e.com, tglx@...utronix.de, oss-security@...ts.openwall.com, linux-distros@...openwall.org
-Subject: Re: signed integer overflow in common_timer_get on linux 4.15.0-rc1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/8
+Message-ID: <20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>
+Date: Wed, 8 Feb 2017 14:32:29 -0800
+From: Ian Zimmerman <itz@...mate.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 08, 2017 at 12:09:50PM +0300, Dan Carpenter wrote:
-> On Thu, Dec 07, 2017 at 12:17:18PM +0100, Greg KH wrote:
-> > On Thu, Dec 07, 2017 at 06:01:43PM +0800, at zhou wrote:
-> > > Hi all,
-> > > 
-> > > credit   to   L5@...vulcan team
-> > > 
-> > > I fuzzed the linux kernel and find signed integer overflow on linux
-> > > 4.15.0-rc1+.
-> > > the crash log can see below, the .config and the poc file ,please see the
-> > > attachments.
-> > 
-> > Odd, doesn't seem to affect a 4.9 or 4.15-rc2 kernel here on my
-> > machines, is there something specific in the .config that might be
-> > triggering this?
-> > 
+On 2016-11-05 10:04, Gustavo Grieco wrote:
+
+> We found a null pointer dereference when parsing a xml file using recover
+> mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
 > 
-> Greg, you're running with UBSAN?
+> $ xmllint --recover crash-libxml2-recover.xml
+> 
+> ==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+> (pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
+>     #0 0x4fbd87 in xmlDumpElementContent
+> /home/g/Work/Code/libxml2-2.9.4/valid.c:1181
+>     #1 0x4fbcd5 in xmlDumpElementContent
+> /home/g/Work/Code/libxml2-2.9.4/valid.c:1177
+>     #2 0x4fe5ff in xmlDumpElementDecl
+> /home/g/Work/Code/libxml2-2.9.4/valid.c:1706
+>     #3 0x72e714 in xmlBufDumpElementDecl
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
+>     #4 0x73048f in xmlNodeDumpOutputInternal
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
+>     #5 0x72fc47 in xmlNodeListDumpOutput
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
+>     #6 0x72f6d5 in xmlDtdDumpOutput
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
+>     #7 0x73038f in xmlNodeDumpOutputInternal
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
+>     #8 0x732412 in xmlDocContentDumpOutput
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
+>     #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1936
+>     #10 0x40ba0f in parseAndPrintFile
+> /home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
+>     #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
+>     #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
+>     #13 0x4032b9 in _start
+> (/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
 
-Ah, missed that one.  No, I'm not crazy :)
+Where did this one ever go?  Is there a CVE?  Is there a patch?
 
-Makes a bit more sense.
-
-at zhou, care to make up a patch for this as it seems you can test it
-easily?
-
-thanks,
-
-greg k-h
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
