@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1030" "Monday" "17" "August" "2015" "21:14:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150818011441.24C4C72E04B@smtpvbsrv1.mitre.org>" "28" "[oss-security] Re: CVE request: conntrackd denial of service with unusual network traffic" nil nil nil "8" "2015081801:14:41" "[oss-security] Re: CVE request: conntrackd denial of service with unusual network traffic" (number mark "        cve-assign@m Aug 17   28/1030  " thread-indent "\"[oss-security] Re: CVE request: conntrackd denial of service with unusual network traffic\"\n") "<55CE087A.1040706@redhat.com>" ("<55CE087A.1040706@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["697" "Wednesday" "8" "February" "2017" "15:49:04" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702081546460.30815@wniryva>" "22" "[oss-security] CVE request virglrenderer: host memory leak issue in virgl_resource_attach_backing " nil nil nil "2" "2017020810:19:04" "[oss-security] CVE request virglrenderer: host memory leak issue in virgl_resource_attach_backing" (number mark "U       ppandit@redh Feb  8   22/697   " thread-indent "\"[oss-security] CVE request virglrenderer: host memory leak issue in virgl_resource_attach_backing \"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26418 invoked by uid 550); 18 Aug 2015 01:14:53 -0000
+Received: (qmail 19468 invoked by uid 550); 8 Feb 2017 10:19:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +11,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26400 invoked from network); 18 Aug 2015 01:14:53 -0000
-In-Reply-To: <55CE087A.1040706@redhat.com>
-Message-Id: <20150818011441.24C4C72E04B@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 17 Aug 2015 21:14:41 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: conntrackd denial of service with unusual network traffic
-To: fweimer@redhat.com
+Received: (qmail 18426 invoked from network); 8 Feb 2017 10:19:19 -0000
+Date: Wed, 8 Feb 2017 15:49:04 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liq3ea@gmail.com>
+Message-ID: <alpine.LFD.2.20.1702081546460.30815@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Wed, 08 Feb 2017 10:19:09 +0000 (UTC)
+Subject: [oss-security] CVE request virglrenderer: host memory leak issue in
+ virgl_resource_attach_backing 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+   Hello,
 
-> http://bugzilla.netfilter.org/show_bug.cgi?id=910
-> https://git.netfilter.org/conntrack-tools/commit/?id=c392c159605956c7bd4a264ab4490e2b2704c0cd
-> 
-> Fix a possible crash if conntrackd sees DCCP, SCTP and ICMPv6 traffic
-> and the corresponding kernel modules that track this traffic are not
-> available.
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
+a guest invokes a 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
 
-Use CVE-2015-6496.
+A guest user/process could use this flaw to leak host memory leading to DoS.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=40b0e7813325b08077b6f541b3989edb2d86d837
 
-iQEcBAEBCAAGBQJV0oadAAoJEKllVAevmvmsQgkH/ieW5t3vSrq5+QSEUjze7vc5
-NY379H8HaE6DqhSblA98HXNZMan4xP4olqfGEQlnsvKJPqM9HhtNyTPqZJuWgxsj
-sYYqHue98tBLsGnr3PucfvwwAq8r04f+YCmH0Sgi1Gt+raFmDHt+LLT7wy1MrrBK
-1w4fxJk05cZXeZ+SNTkZ0DtEz3wHbH4d3C5Pu9fkRzHDSQ9QY0dT4u0bVJUnYNnu
-hBEgZHVmdHkKJRB5Nwve8ajYdVR9OYtx5a8dLtFsVlqaWbeWN1SYJlUhHYO3jmEH
-dMf7qOtJrUWuMEOr2PUCp81rMJSxrvio/fd2M5wbEgJtfD0upldKCxygXKGxMIo=
-=iUf7
------END PGP SIGNATURE-----
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1420266
+
+This issue was reported by Mr Li Qiang of 360.cn Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
