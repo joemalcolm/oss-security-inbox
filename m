@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/14
-Message-ID: <alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>
-Date: Mon, 22 May 2017 17:58:31 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: Thomas Deutschmann <whissi@...too.org>
-cc: oss-security@...ts.openwall.com
-Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/7
+Message-ID: <20170208203850.538@usenet.piggo.com>
+Date: Wed, 8 Feb 2017 19:40:52 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: XSS in viewvc
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 22 May 2017, Thomas Deutschmann wrote:
+Hello,
 
-> Hi,
->
-> let me take the opportunity to jump into this.
->
-> Bob, do you have any PoC you can share with ImageMagick project
-> regarding CVE-2017-6335?
->
-> Your fix was
-> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
->
-> I asked ImageMagick project about that issue but they don't know without
-> a PoC, see https://github.com/ImageMagick/ImageMagick/issues/391
+the Debian Security Team would like to request a CVE for an XSS
+vulnerability in viewc, that was fixed in release 1.1.26 by the
+following change:
 
-I have attached the problematic TIFF file.  I don't know if binary 
-attachments are accepted by this list.  I can provide the full 
-original report which included a PDF file if you need it.
+  https://github.com/viewvc/viewvc/commit/9dcfc7daa4c940992920d3b2fbd317da20e44aad
 
-The fix was made in code which is specific to GraphicsMagick and the 
-problem may be specific to GraphicsMagick.
+Cheers,
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+--Seb
+
