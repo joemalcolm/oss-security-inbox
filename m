@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1191" "Monday" "31" "October" "2016" "11:48:45" "+0100" "Florian Weimer" "fweimer@redhat.com" "<14b76703-8185-dadb-7605-10496331452c@redhat.com>" "45" "[oss-security] Stack guard canary massaging" nil nil nil "10" "2016103110:48:45" "[oss-security] Stack guard canary massaging" (number mark "U       fweimer@redh Oct 31   45/1191  " thread-indent "\"[oss-security] Stack guard canary massaging\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1457" "Tuesday" "7" "February" "2017" "20:19:19" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<3cd6d83d8565413891ad2de83f725a6f@imshyb02.MITRE.ORG>" "34" "[oss-security] Re: CVE Request - Code execution vulnerability in GNU/bash v4.4 autocompletion" nil nil nil "2" "2017020801:19:19" "[oss-security] Re: CVE Request - Code execution vulnerability in GNU/bash v4.4 autocompletion" (number mark "U       cve-assign@m Feb  7   34/1457  " thread-indent "\"[oss-security] Re: CVE Request - Code execution vulnerability in GNU/bash v4.4 autocompletion\"\n") "<38c661a9-5631-2bc0-a4eb-7821733d0f24@cispa.saarland>" ("<38c661a9-5631-2bc0-a4eb-7821733d0f24@cispa.saarland>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24374 invoked by uid 550); 31 Oct 2016 10:49:00 -0000
+Received: (qmail 21687 invoked by uid 550); 8 Feb 2017 01:19:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24339 invoked from network); 31 Oct 2016 10:48:59 -0000
-To: kernel-hardening@lists.openwall.com, oss-security@lists.openwall.com
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <14b76703-8185-dadb-7605-10496331452c@redhat.com>
-Date: Mon, 31 Oct 2016 11:48:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+Received: (qmail 21669 invoked from network); 8 Feb 2017 01:19:31 -0000
+From: <cve-assign@mitre.org>
+To: <jens.heyens@cispa.saarland>
+CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
+	<stock@cs.uni-saarland.de>
+In-Reply-To: <38c661a9-5631-2bc0-a4eb-7821733d0f24@cispa.saarland>
+Message-ID: <3cd6d83d8565413891ad2de83f725a6f@imshyb02.MITRE.ORG>
+Date: Tue, 7 Feb 2017 20:19:19 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 31 Oct 2016 10:48:47 +0000 (UTC)
-Subject: [oss-security] Stack guard canary massaging
+Content-Type: text/plain
+Subject: [oss-security] Re: CVE Request - Code execution vulnerability in GNU/bash v4.4 autocompletion
 
-Sorry for cross-posting.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-glibc does this to set up the stack canary:
+> https://github.com/jheyens/bash_completion_vuln/raw/master/2017-01-17.bash_completion_report.pdf
+> http://git.savannah.gnu.org/cgit/bash.git/commit/?id=4f747edc625815f449048579f6e65869914dd715
 
-static inline uintptr_t __attribute__ ((always_inline))
-_dl_setup_stack_chk_guard (void *dl_random)
-{
-   union
-   {
-     uintptr_t num;
-     unsigned char bytes[sizeof (uintptr_t)];
-   } ret = { 0 };
+Use CVE-2017-5932.
 
-   if (dl_random == NULL)
-     {
-       ret.bytes[sizeof (ret) - 1] = 255;
-       ret.bytes[sizeof (ret) - 2] = '\n';
-     }
-   else
-     {
-       memcpy (ret.bytes, dl_random, sizeof (ret));
-#if BYTE_ORDER == LITTLE_ENDIAN
-       ret.num &= ~(uintptr_t) 0xff;
-#elif BYTE_ORDER == BIG_ENDIAN
-       ret.num &= ~((uintptr_t) 0xff << (8 * (sizeof (ret) - 1)));
-#else
-# error "BYTE_ORDER unknown"
-#endif
-     }
-   return ret.num;
-}
+The scope of this CVE is the single vulnerability resulting from the
+combination of the "Double dequoting of dirname" issue and the "Flags
+not being forwarded in expand_word_internal" issue.
 
-This is an elaborate way of setting ret.bytes[0] = '\0'.
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The intent (determined from an old commit message) is to make it harder 
-to obtain the canary value through a read buffer overflow of a 
-NUL-terminated string: The read overflow will stop at the NUL byte and 
-not include the random canary value, reducing the risk of inappropriate 
-disclosure.
-
-But this reduces entropy of the canary to 24 bits on 32-bit systems, so 
-I wonder if this is the right trade-off here.
-
-Thanks,
-Florian
+iQIcBAEBCAAGBQJYmm+6AAoJEHb/MwWLVhi2m+gP/A9e0TfQWk4soMJkiZCQAOBt
+yGI3xQtDUWGqMBvKTajCNufdRRU3mTjWmf5RDZNmF6HRbinwqiMSxUDpWC/+Rofk
+CD/8u0VHRVuZ1DLiN1mbhjLlbZxWxzCX4uJgU5fabYTXxvbnIK36mxNS+MSa9dr/
+zUBMs7eOM19wcNcbVr53sURjEqroEKB7qX+JxE1kSvh8BxDi/mLDM5AAQk8cOXPh
+qK+cPhejya1QMq16iozxZsOdd7gsiPE63TGBYjXeoN40ypmfNDduPe474gnIyChc
+kfKpjWT9+8SwyC8MPmteEJkdgTtJymmoxh7u9Z13KPNjZrafvbVH1HokwwGRkzGo
+J5rg6wWE0JOF72t3f+v3abZYaoETuGjeSWKU/v0qTdQQnFYOVN7s6VvDTd/Uc0lD
+0a/ZZl4QvQ/gl5gczAU8rElVTZcQ/DnEwGy2vkbs9vu1/Baxf+v7Hs6r2oaGLbgN
+HixcoyE9P0ftuqXqEjnS6juXGijl7Yrg/lbWKidbuL+G+u09XY6qzI03+2MPNScA
+xtDxwQHXY7htROuvWuWW1kSFwAL28hvdA4b0Qi3s7OfgW+X6obaVR5JTeAvPNFQN
+2LU3ZS5Qi5yjBX9iB1/nuybLCxN/5JCBQgvAij6dV1PAD2IiO4Kz3wC8uPV5D+eb
+NuHugptNphEzgZaSOI5u
+=v+0f
+-----END PGP SIGNATURE-----
