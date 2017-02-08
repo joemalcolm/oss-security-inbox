@@ -1,152 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/6
-Message-ID: <20170622121330.GA18550@openwall.com>
-Date: Thu, 22 Jun 2017 14:13:30 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/1
+Message-ID: <2429368.YF0b0QFtOe@tux.boltz.de.vu>
+Date: Thu, 09 Feb 2017 00:47:08 +0100
+From: Christian Boltz <oss-security@...ltz.de>
 To: oss-security@...ts.openwall.com
-Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: stackguard fix in Red Hat and Ubuntu kernels
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: PostfixAdmin allows to delete protected aliases
 Content-Type: text/plain; charset=utf-8
 
-I think the below should be in here regardless of whether it was already
-known or not, so forwarding.
+Hello,
 
-I've re-attached the reproducer program.
+Am Dienstag, 7. Februar 2017, 20:12:24 CET schrieb cve-assign@...re.org:
+> > https://github.com/postfixadmin/postfixadmin/pull/23
+> > 
+> > Thanks to a missing permission check, domain admins can delete
+> > aliases they are not allowed to delete (for example abuse@, which
+> > the server admin might have setup so that he gets all abuse mails).
+> > 
+> >> Fix security hole in AliasHandler
+> 
+> Use CVE-2017-5930.
 
-Thanks, Vasily and Konstantin.
+Thanks!
 
-(And yes, I've verified that both Vasily's and Konstantin's e-mail
-addresses here were already publicly known.  It's something everyone
-should do before forwarding stuff to a public mailing list.)
+I released PostfixAdmin 3.0.2 which includes the fix for this bug (and 
+some non-security bugs).
 
------ Forwarded message from Vasily Averin <vvs@...tuozzo.com> -----
-
-From: Vasily Averin <vvs@...tuozzo.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: stackguard fix in RedHat and Ubuntu kernels
-Date: Thu, 22 Jun 2017 14:40:02 +0300
-
-Dear Alexander,
-probably it is already known,
-otherwise please share it in oss-security@
-I've noticed the problem on Red Hat kernels first, and reported to Red Hat already,
-but now I've found the same problem on Ubuntu kernels.
-It does not affect mainline patch "mm: larger stack guard gap, between vmas"
-but seems distributors have used some other incorrect patch (shared in linux-distros@ ??? )
-
-Description of problem:
-mmap(MAP_GROUWSDOWN) works incorrectly on Red Hat and Ubuntu kernels with stackguard fix.
-
-We have application that creates stack by using MAP_GROUWSDOWN , provide this area into clone(), 
-where it fails on access to mapped area.
-
-Steps to Reproduce:
-execute attached reproducer.
-It maps 2 pages with MAP_GROUWSDOWN, an access to 2nd page mapped page triggers SIGBUS or SIGSEGV
-
-Actual results:
-- access to end of mapped area generated SIGBUS or SIGSEGV
-- /proc/<pid>/maps shows incorrect start address for allocated area
-please see details below
-
-Expected results:
-on previous Ubuntu/RHEL kernels this testcase works well without crashes
-http://man7.org/linux/man-pages/man2/mmap.2.html
-
-       MAP_GROWSDOWN
-              This flag is used for stacks.  It indicates to the kernel
-              virtual memory system that the mapping should extend downward
-              in memory.  The return address is one page lower than the
-              memory area that is actually created in the process's virtual
-              address space.  Touching an address in the "guard" page below
-              the mapping will cause the mapping to grow by a page.  This
-              growth can be repeated until the mapping grows to within a
-              page of the high end of the next lower mapping, at which point
-              touching the "guard" page will result in a SIGSEGV signal.
-
-On new Ubuntu kernel 4.4.0-81-generic (with stackguard fix)
-
-20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-(gdb) n
-
-(changes in /proc/<pid>/maps)
- 7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
- 7ffff7dd7000-7ffff7dfd000 r-xp 00000000 fc:00 524776                     /lib/x86_64-linux-gnu/ld-2.23.so
- 7ffff7feb000-7ffff7fee000 rw-p 00000000 00:00 0 
-+7ffff80f4000-7ffff7ff6000 rw-p 00000000 00:00 0  <<<< incorrect start address is shown here 
- 7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
- 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
- 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
-
-23		printf("stack = %p\n", stack);
-(gdb) n
-stack = 0x7ffff7ff4000
-24		end = stack + STACK_SIZE - 8;
-(gdb) n
-25		printf("end = %p\n", end);
-(gdb) n
-end = 0x7ffff7ff5ff8
-26		printf("write to *end\n");
-(gdb) n
-write to *end
-27		*end = 0;
-(gdb) n
-
-Program received signal SIGSEGV, Segmentation fault.
-0x000000000040062f in main () at sk.c:27
+I also submitted updated packages to openSUSE Tumbleweed, Leap 42.2 and 
+42.1. (Tracking bug: https://bugzilla.opensuse.org/1024211 )
 
 
-on Ubuntu 4.4.0-79-generic  -- works as expected
+Regards,
 
-mmap return address of guard page,
-access to end of mapped area works works correctly,
-touch on guard page grows stack down,
-then touch of previous page grows stack down again.
+Christian Boltz
+-- 
+In most cases, XSLT is good enough. But I agree, for some parts
+you need Aspirin. ;-)        [Thomas Schraitle in opensuse-doc]
 
-20	        unsigned char *stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
-(gdb) n
-23		printf("stack = %p\n", stack);
-(gdb) n
-stack = 0x7ffff7ff4000
-
- 7ffff7dd3000-7ffff7dd7000 rw-p 00000000 00:00 0 
- 7ffff7dd7000-7ffff7dfd000 r-xp 00000000 08:01 27001906                   /lib/x86_64-linux-gnu/ld-2.23.so
- 7ffff7fc8000-7ffff7fcb000 rw-p 00000000 00:00 0 
-+7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
- 7ffff7ff6000-7ffff7ff8000 rw-p 00000000 00:00 0 
- 7ffff7ff8000-7ffff7ffa000 r--p 00000000 00:00 0                          [vvar]
- 7ffff7ffa000-7ffff7ffc000 r-xp 00000000 00:00 0                          [vdso]
-
-24		end = stack + STACK_SIZE - 8;
-(gdb) n
-25		printf("end = %p\n", end);
-(gdb) n
-end = 0x7ffff7ff5ff8
-26		printf("write to *end\n");
-(gdb) n
-write to *end
-27		*end = 0;
-(gdb) n
-28		printf("write to *stack\n");
-(gdb) n
-write to *stack
-29		*(stack) = 0;
-(gdb) n
-
--7ffff7ff5000-7ffff7ff6000 rw-p 00000000 00:00 0 
-+7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0   <<<< Stack grow down
-
-30		printf("write to *(stack-1)\n");
-(gdb) n
-write to *(stack-1)
-31		*(stack-1) = 0;
-(gdb) n
-32	}
-
--7ffff7ff4000-7ffff7ff6000 rw-p 00000000 00:00 0 
-+7ffff7ff3000-7ffff7ff6000 rw-p 00000000 00:00 0 <<<< Stack grows down again
-
------ End forwarded message -----
-
-View attachment "sk.c" of type "text/x-c" (652 bytes)
