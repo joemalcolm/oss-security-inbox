@@ -1,42 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/22/8
-Message-ID: <20171122221706.GA26704@openwall.com>
-Date: Wed, 22 Nov 2017 23:17:06 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Bram Moolenaar <Bram@...lenaar.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security risk of server side text editing ...
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/6
+Message-ID: <alpine.LFD.2.20.1702081546460.30815@wniryva>
+Date: Wed, 8 Feb 2017 15:49:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liq3ea@...il.com>
+Subject: CVE request virglrenderer: host memory leak issue in virgl_resource_attach_backing 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
-> Please check out patch 8.0.1300.
+   Hello,
 
-Thanks.  Personally, I don't have much to add.  This continues to do
-what I find are weird and wrong things, so any implementation issues are
-secondary to that.  I suppose you have some rationale for preserving the
-old behavior of propagating the edited file's permissions onto related
-temporary files, but I'm unaware of good reasons for that.
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
+a guest invokes a 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
 
-If it's about users' collaboration, then I don't see a good reason for
-other users in the group, even if they could access the original file
-via group permissions, to also have access to recovery and backup files.
+A guest user/process could use this flaw to leak host memory leading to DoS.
 
-As to the patch itself, aside from it propagating the possibly unsafe
-permissions on purpose (I mean unsafe such as in Hanno's original
-example, but also applying to backup files), it's also risky in
-temporarily setting umask to 0.  On some systems, this could mean libc
-or the kernel creating files with unsafe permissions if anything goes
-very wrong during this time - e.g., a coredump.  Checking st_ino is OK
-as a hardening measure, but might not always be sufficient: inode number
-reuse is possible if the original file could have been deleted.
-I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
-guess Vim can be built on systems without working O_NOFOLLOW as well?
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=40b0e7813325b08077b6f541b3989edb2d86d837
 
-In case anyone wants to review the patch for real, I've attached it to
-this message, and here it is on GitHub (for expanding of the context):
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1420266
 
-https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
+This issue was reported by Mr Li Qiang of 360.cn Inc.
 
-Alexander
-
-View attachment "8.0.1300" of type "text/plain" (12152 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
