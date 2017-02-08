@@ -1,4 +1,9 @@
-Received: (qmail 6003 invoked by uid 550); 25 Sep 2025 19:09:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1832" "Wednesday" "8" "February" "2017" "14:32:29" "-0800" "Ian Zimmerman" "itz@primate.net" "<20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>" "41" "[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)" nil nil nil "2" "2017020822:32:29" "[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)" (number mark "U       itz@primate. Feb  8   41/1832  " thread-indent "\"[oss-security] Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)\"\n") "<CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>" ("<CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20106 invoked by uid 550); 8 Feb 2017 22:42:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,88 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5966 invoked from network); 25 Sep 2025 19:09:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758827340; x=1759432140; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pCNfCRyWnmWZNpbiJjKAYxipHFBiVnZ7MyNhkGXTSok=;
-        b=Xd7cvqVmiNpaaes0lYvoOQpfRv98/bmBB0QS1E3JlLHYnJBuhGI1MNTx0SMAxBB+78
-         BQh5E+TerxqiR2OBEoQcziSGid1a721ugCP2oV3fq1bjfK8qA0wMAY7YhRPlX+u6xDYM
-         Bkx/P62ZjiWu6lvke0Ugkyh8QObt8U20usmHmBy3gWZBHLgiTzsmR8IYdJEkkfWJrjXg
-         pk/PF2TRnbqP2S9scKRYC4skKwmnWtNA54MvP3O5V+jTRa86zWC8ZrsxzfowdeBqBGK8
-         CzfAeuNyw5PkEOlx24/IVPozRVup6bttHYUgPd+NFb9v6fWLQEgV8WMody/OxNsFmS6C
-         9cQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758827340; x=1759432140;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pCNfCRyWnmWZNpbiJjKAYxipHFBiVnZ7MyNhkGXTSok=;
-        b=imFUnYIb2RNdfEyt0AXRY1kl6LnhjikE4Re47qKVc6EMcM1X1I2BLadEWNk5LG+zHg
-         LPDuu//OZRFGEtTFgIf2GyR44iiN/03Ek7DCNXwad0D/1qWilUC3aePO0rcWVG6BbZoI
-         nbyr0MsRxnNODWCpY1xRSc/aQB8fE1tk109dIDmcKnJjt3SIOcwRCGmaSo3HRbDA3IhA
-         3Q7x1xt0R//mIl6qO0W6A2rgNcjBAuyzjwv7f2/xKEQ95mi4MlF9H6B74CS4+EcGG8Gh
-         j/YrM/mnF4QDs2NCFJOy8/r66NchNmZ7fR+wk5BR4w38xngD7nh/3ylX5QAmD9/xIIWi
-         aw6Q==
-X-Gm-Message-State: AOJu0YxrlEh3UGcEQggxzZ8IzY+naSTZpA8PUPjl/IgwPwbpu2mM75UR
-	TaFfNJ6rgqYCoDJRjID+cNlTILqKMgRWmFCHPziPzrNAMXdYsi0kBt1TPe/G8w==
-X-Gm-Gg: ASbGncv9VhlYudvBaG9OPBpqgMS9F1ho59t+zRuqkZdvLWP8df3Q53xOVh56wt0Ltt7
-	OvMwI438EJCHLlhjs0YUaJyJ8ICYyg81o8YjTEAvhiGlK1Youv8bBue83Mc8ornGNFkYBe9MXKR
-	0QQ392UGh9NfWQlpOqOC7IvAiXRINY3DOuX8i9EGe6YB5Dyvy/rL/0UvJFc5XOUvXmN4K/ZBTnN
-	pbrhFDRk+ybUhm9Bh3Ahq4QHEIASaCJqHj4bGllw3BLwZqvz6OabdUwk0Ns23GLwQNbCpVl8Fgl
-	oA3EO2sMFsSvpFwKVUxllqm8AhLxWDDiYHCVvui0+JUBqu92DkxFdunGYV4BMfS/+HEYwfKql4f
-	j78qn6EsFOuucZhC4AXXmF5Zv0e8WoSZNRobgf8TLKbmKSloUvobQEeHSNMwV+ZkOD1IJ4KuCtt
-	WJ
-X-Google-Smtp-Source: AGHT+IHswYa/acexWnZ5EsAFBgfLTZheBtWV1X20XU8k/8cCwm4wlM5/FwhbA8y0I62s4h8RcXyUHA==
-X-Received: by 2002:a17:902:db06:b0:261:cb35:5a08 with SMTP id d9443c01a7336-27ed4a30d42mr48278025ad.38.1758827339724;
-        Thu, 25 Sep 2025 12:08:59 -0700 (PDT)
-Message-ID: <2e423790-d7f1-4873-a840-9af284c3576f@gmail.com>
-Date: Thu, 25 Sep 2025 12:08:58 -0700
+Received: (qmail 12280 invoked from network); 8 Feb 2017 22:32:44 -0000
+X-Authentication-Warning: acedia.primate.net: itz set sender to itz@primate.net using -f
+Date: Wed, 8 Feb 2017 14:32:29 -0800
+From: Ian Zimmerman <itz@primate.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20170208223043.15051.2370DCC3@matica.foolinux.mooo.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, vmware.psirt@broadcom.com
-References: <CADOAh9cRx64wR8a7X7918ma_nkYDXzQ8uK6Jsp0q4oe-ECr3Eg@mail.gmail.com>
- <20250513015957.GA29601@openwall.com> <20250924023739.GA21012@openwall.com>
- <CAL2zhBTvrV3kpq9u-RaF87CtsD+SCtERcjNWwah8EW1wNPEwng@mail.gmail.com>
-Content-Language: en-US
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-In-Reply-To: <CAL2zhBTvrV3kpq9u-RaF87CtsD+SCtERcjNWwah8EW1wNPEwng@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2025-22247 - Insecure file handling
- vulnerability in open-vm-tools
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACn5sdQKBq6cDXY_OAp6a+7dYWXtjE6=hSQps5g5aMxtiCTZHQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: [oss-security] Re: CVE request: Null pointer derefence parsing xml file using
+ libxml 2.9.4 (in recover mode)
 
+On 2016-11-05 10:04, Gustavo Grieco wrote:
 
-
-On 9/24/25 23:38, VMware PSIRT wrote:
-> Hi Alexander,
+> We found a null pointer dereference when parsing a xml file using recover
+> mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
 > 
-> We somehow missed your previous e-mail. Thank you for reviving this thread.
+> $ xmllint --recover crash-libxml2-recover.xml
 > 
-> Please see our responses below:
-> 
->> Skimming the code changes, I see that the second part - "disallow
-> unexpected symlinks in file paths" - is implemented by calling
-> realpath() (or a Windows function on that platform) and seeing whether
-> that changed the pathname or (almost) not.  However, this will not
-> disallow a symlink that appears after the realpath() call but before
-> subsequent use of the pathname.
-> 
-> Thanks you for raising this. You are right about realpath() and
-> symlink usage in general. However, as you can see we are performing
-> realpath() check after we completed the open() but before we read
-> anything from the file. So, there is no use of pathname after realpath()
-> call here.
+> ==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+> (pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
+>     #0 0x4fbd87 in xmlDumpElementContent
+> /home/g/Work/Code/libxml2-2.9.4/valid.c:1181
+>     #1 0x4fbcd5 in xmlDumpElementContent
+> /home/g/Work/Code/libxml2-2.9.4/valid.c:1177
+>     #2 0x4fe5ff in xmlDumpElementDecl
+> /home/g/Work/Code/libxml2-2.9.4/valid.c:1706
+>     #3 0x72e714 in xmlBufDumpElementDecl
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
+>     #4 0x73048f in xmlNodeDumpOutputInternal
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
+>     #5 0x72fc47 in xmlNodeListDumpOutput
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
+>     #6 0x72f6d5 in xmlDtdDumpOutput
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
+>     #7 0x73038f in xmlNodeDumpOutputInternal
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
+>     #8 0x732412 in xmlDocContentDumpOutput
+> /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
+>     #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1936
+>     #10 0x40ba0f in parseAndPrintFile
+> /home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
+>     #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
+>     #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
+>     #13 0x4032b9 in _start
+> (/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
 
-Is this not now simply vulnerable to the opposite race?
+Where did this one ever go?  Is there a CVE?  Is there a patch?
 
-   1. Attacker creates unexpected symlink
-   2. open()
-   3. Attacker overwrites symlink with something benign
-   4. realpath(), sees nothing suspicious
-
-You now have an open FD through the unexpected symlink without having 
-detected it.
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
