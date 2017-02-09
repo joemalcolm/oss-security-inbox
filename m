@@ -1,146 +1,221 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/22/1
-Message-ID: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-Date: Sat, 22 Apr 2017 11:02:21 +0800
-From: Xiaobo Xiang <xiangxb2112@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/29
+Message-ID: <AM5PR0401MB2449A3DB7B25A878F97A1ECFF4450@AM5PR0401MB2449.eurprd04.prod.outlook.com>
+Date: Thu, 9 Feb 2017 17:06:16 +0000
+From: Georg Lukas <lukas@...solutions.de>
+To: "'bugtraq@...urityfocus.com'" <bugtraq@...urityfocus.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "jdev@...ber.org" <jdev@...ber.org>
+Subject: CVE-2017-5589+ Multiple XMPP Clients User Impersonation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Summary
+-------
 
-There is a infinite recursion in
-PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
-In the ReadDocumentStructure function, it calls ReadXRefContents several
-time, for exmple in the end of ReadDocumentStructure:.
-    try {
-        ReadXRefContents( m_nXRefOffset );
-    } catch( PdfError & e ) {
-        e.AddToCallstack( __FILE__, __LINE__, "Unable to load xref
-entries." );
-        throw e;
-    }
+An incorrect implementation of XEP-0280: Message Carbons[0] in multiple
+XMPP clients allows a remote attacker to impersonate any user, including
+contacts, in the vulnerable application's display. This allows for
+various kinds of social engineering attacks.
 
-The ReadXRefContents and ReadXRefStreamContents will call each other if it
-meet some conditions. Just as below.
+Classification
+--------------
 
-void PdfParser::ReadXRefStreamContents( pdf_long lOffset, bool
-bReadOnlyTrailer )
-{
-    m_device.Device()->Seek( lOffset );
-    //....
-    if(xrefObject.HasPrevious())
-    {
-        try {
-            m_nIncrementalUpdates++;
+  - CWE-304: Missing Critical Step in Authentication
+  - CWE-940: Improper Verification of Source of a Communication Channel
+  - CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N (score 7.1)
 
-            // PDFs that have been through multiple PDF tools may have a
-mix of xref tables (ISO 32000-1 7.5.4)
-            // and XRefStm streams (ISO 32000-1 7.5.8.1) and in the Prev
-chain,
-            // so call ReadXRefContents (which deals with both) instead of
-ReadXRefStreamContents
-            ReadXRefContents( xrefObject.GetPreviousOffset(),
-bReadOnlyTrailer );
-        } catch(PdfError &e) {
-            //....
-        }
-    }
-}
+Affected Applications
+---------------------
 
-void PdfParser::ReadXRefContents( pdf_long lOffset, bool bPositionAtEnd )
-{
-    pdf_int64 nFirstObject = 0;
-    pdf_int64 nNumObjects  = 0;
+  - CVE-2017-5589: yaxim and Bruno (0.8.6 - 0.8.8; Android)
+  - CVE-2017-5590: ChatSecure (3.2.0 - 4.0.0; only iOS) and Zom (all
+versions up to 1.0.11; only iOS)
+  - CVE-2017-5591: poezio (0.8 - 0.10)
+  - CVE-2017-5592: profanity (0.4.7 - 0.5.0)
+  - CVE-2017-5593: Psi+ (0.16.563.580 - 0.16.571.627)
+  - CVE-2017-5602: jappix (1.0.0 to 1.1.6)
+  - CVE-2017-5603: Jitsi (2.5.5061 - 2.9.5544)
+  - CVE-2017-5604: mcabber (1.0.0 - 1.0.4)
+  - CVE-2017-5605: Movim (0.8 - 0.10)
+  - CVE-2017-5606: Xabber (only if manually enabled: 1.0.30, 1.0.30 VIP,
+beta 1.0.3 - 1.0.74; Android)
+  - CVE-2017-5858: Converse.js (0.8.0 - 1.0.6, 2.0.0 - 2.0.4)
 
-    if( !this->IsNextToken( "xref" ) )
-    {
-//      if( m_ePdfVersion < ePdfVersion_1_5 )
-//        Ulrich Arnold 19.10.2009, found linearized 1.3-pdf's with
-trailer-info in xref-stream
-        if( m_ePdfVersion < ePdfVersion_1_3 )
-        {
-            PODOFO_RAISE_ERROR( ePdfError_NoXRef );
-        }
-        else
-        {
-            ReadXRefStreamContents( lOffset, bPositionAtEnd );
-            return;
-        }
-    }
+Affected Libraries
+------------------
 
-The crash log is just as follows:
+  - CVE-2017-5591: SleekXMPP unknown up to 1.3.1
+  - CVE-2017-5591: Slixmpp all versions up to 1.2.3
 
-./podofofuzzer: Running 1 inputs 1 time(s) each.
-Running: crash-5aac275479284034b46368c836564266b0ed3694
-ASAN:DEADLYSIGNAL
-=================================================================
-==30073==ERROR: AddressSanitizer: stack-overflow on address 0x7ffc70e74f18
-(pc 0x0000004e6119 bp 0x7ffc70e75790 sp 0x7ffc70e74f20 T0)
-    #0 0x4e6118  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x4e6118)
-    #1 0x8a75c1  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x8a75c1)
-    #2 0x4e6efc  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x4e6efc)
-    #3 0x7fdbbe094277  (/usr/lib/x86_64-linux-gnu/libstdc++.so.6+0x121277)
-    #4 0x61085e  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x61085e)
+Details
+-------
 
-when debugging with gdb and checking the stack backtrace, it showed the
-program runs out of the stack as below :
+The XMPP protocol extension "XEP-0280: Message Carbons"[0] allows
+a user to run multiple clients on their XMPP account by sending "carbon
+copies" of outgoing and incoming messages to the user's other devices
+(besides the one that directly sent or received the original message).
 
-#6884 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-(this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
-    at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-#6885 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-(this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
-/home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-#6886 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-(this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
-    at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-#6887 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-(this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
-/home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-#6888 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-(this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
-    at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-#6889 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-(this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
-/home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-#6890 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-(this=0x617000000080, lOffset=5923, bReadOnlyTrailer=false)
-    at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-#6891 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-(this=0x617000000080, lOffset=5923, bPositionAtEnd=false) at
-/home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-#6892 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-(this=0x617000000080, lOffset=116, bReadOnlyTrailer=false)
-    at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-#6893 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-(this=0x617000000080, lOffset=116, bPositionAtEnd=false) at
-/home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-#6894 0x00000000006303bf in PoDoFo::PdfParser::ReadDocumentStructure
-(this=0x617000000080) at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:337
-#6895 0x000000000062e252 in PoDoFo::PdfParser::ParseFile
-(this=0x617000000080, rDevice=..., bLoadOnDemand=true) at
-/home/name/podofo-0.9.5/src/base/PdfParser.cpp:220
-#6896 0x000000000062ce49 in PoDoFo::PdfParser::ParseFile
-(this=0x617000000080, pszFilename=0x8ca380 <.str> "tempinput.pdf",
-bLoadOnDemand=true)
-    at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:164
-#6897 0x00000000005cdc65 in PoDoFo::PdfMemDocument::Load
-(this=0x7fffffffbfe0, pszFilename=0x8ca380 <.str> "tempinput.pdf",
-bForUpdate=false)
-    at /home/name/podofo-0.9.5/src/doc/PdfMemDocument.cpp:256
-#6898 0x00000000005cd682 in PoDoFo::PdfMemDocument::PdfMemDocument
-(this=0x7fffffffbfe0, pszFilename=0x8ca380 <.str> "tempinput.pdf",
-bForUpdate=false)
-    at /home/name/podofo-0.9.5/src/doc/PdfMemDocument.cpp:102
+This feature must be supported by the user's server and must be
+explicitly enabled by the client. Carbon copies are always generated by
+the user's server and originate from the user's bare JID (their account
+address).
 
-Thus,causing denial of service.
-​
- crash-5aac275479284034b46368c836564266b0ed3694
-<https://drive.google.com/file/d/0B_D2GM9VAVyvanRadmhWd1RKM0U/view?usp=drive_web>
-​
+For example, the following is message "Hi!", sent by Alice
+(`alice@...p.example`) to Bob's client 1 (`bob@...p.example/client1`):
 
-Best Regards,​​
-Xiang Xiaobo
+	<message from="alice@...p.example" to="bob@...p.example/client1">
+	    <body>Hi!</body>
+	</message>
 
+Bob is also logged in with carbons-enabled client 2, which receives the
+following carbon-copy of the message:
+
+	<message from="bob@...p.example" to="bob@...p.example/client2">
+	    <received xmlns='urn:xmpp:carbons:2'><forwarded
+xmlns='urn:xmpp:forward:0'>
+		<message from="alice@...p.example"
+to="bob@...p.example/client1">
+		    <body>Hi!</body>
+		</message>
+	    </forwarded></received>
+	</message>
+
+Now, client 2 can extract the original message from the carbon copy and
+display it accordingly. The "Security Considerations" section of
+XEP-0280 explicitly states that:
+
+| Any forwarded copies received by a Carbons-enabled client MUST be from
+| that user's bare JID; any copies that do not meet this requirement
+| MUST be ignored.
+
+The Carbons implementation in the affected clients was lacking this
+test. It simply checked all incoming messages for presence of a Carbon
+element (`<received/>` or `<sent/>`), extracted and parsed it like a
+regular message.
+
+Therefore, it was possible for Mallory to send the following specially
+crafted message to Bob:
+
+	<message from="mallory@...l.example" to="b@...p.example">
+	    <received xmlns='urn:xmpp:carbons:2'><forwarded
+xmlns='urn:xmpp:forward:0'>
+		<message from="alice@...p.example"
+to="bob@...p.example/client1">
+		    <body>Please come to Creepy Valley tonight,
+alone!</body>
+		</message>
+	    </forwarded></received>
+	</message>
+
+This would appear as an authentic message from Alice, including Alice'
+proper screen name, allowing Mallory to perform social engineering
+attacks on Bob.
+
+Mitigation
+----------
+
+While the attacker can send messages in the name of somebody else, they
+can not see your responses. Therefore, if you receive a phony message
+while using an affected client, reinsure with the message sender by
+either challenging them with a question that can not be guessed by the
+attacker, or by using out-of-band means.
+
+Xabber: disable the experimental Carbons feature in the app settings.
+
+yaxim: Disabling Message Carbons under "Settings" / "Edit account" /
+"Message Carbons (XEP-0280)" will not solve the problem, as the
+malicious messages still will be interpreted.
+
+Timeline
+--------
+
+  - 2017-01-20 Discovery of vulnerability
+  - 2017-01-23 - 26 Notification of developers
+  - 2017-01-25 Release of ChatSecure 4.0.1
+    fix commit:
+https://github.com/ChatSecure/ChatSecure-iOS/commit/a340b4bb519227d89f85f271
+6a10a197a65d4856
+  - 2017-01-26 Release of jappix 1.1.7
+    fix commit:
+https://github.com/jappix/jappix/commit/ea6de7c65b80880bdf85df47c1a8a5d3d684
+91af
+  - 2017-01-28 Release of Psi+ 0.16.571.630
+    fix commit:
+https://github.com/psi-im/iris/pull/47/commits/02e976d4426a1319a7af7d26d7aba
+9d8c6077570
+  - 2017-01-29 Release of profanity 0.5.1
+    fix commit:
+https://github.com/boothj5/profanity/commit/8e75437a7e43d4c55e861691f74892e6
+66e29b0b
+  - 2017-01-29 Release of mcabber 1.0.5
+    fix commit: https://mcabber.com/hg/rev/2a9569fd7644
+  - 2017-01-30 Release of poezio 0.11 with slixmpp 1.2.4
+    slixmpp fix commit:
+https://github.com/poezio/slixmpp/commit/22664ee7b86c8e010f312b66d12590fb471
+60ad8
+  - 2017-01-31 Release of yaxim and Bruno 0.9.0
+    fix commit:
+https://github.com/ge0rg/yaxim/commit/65a38dc77545d9568732189e86089390f0ceaf
+9f
+  - 2017-01-31 Release of Movim 0.11alpha1
+    fix commit:
+https://github.com/movim/moxl/commit/838b0a42efc3b67cc17d63e25ae1d0ea849cd89
+b
+  - 2017-01-31 Notification of Debian Security Team
+  - 2017-02-01 Release of profanity 0.4.7.patch1 and 0.5.0.patch1 (backports
+of the fix)
+  - 2017-02-01 Release of Converse.js 1.07 and 2.05
+    fix commit:
+https://github.com/jcbrand/converse.js/commit/42f249cabbbf5c026398e6d3b350f6
+f9536ea572
+  - 2017-02-05 Release of Jitsi 2.10
+    fix commit:
+https://github.com/jitsi/jitsi/commit/7d66da61b316c9480b63000f831b6de723b873
+15
+  - 2017-02-08 Release of Zom 1.0.12
+    fix commit:
+https://github.com/zom/Zom-iOS/commit/880051eaa8ba32d1b257c87a7d8798a93561bf
+d3
+  - 2017-02-09 Publication of this advisory
+
+Acknowledgements
+----------------
+
+  - Daniel Gultsch for CVE-2015-8688: Gajim Roster Push Attack / Message
+    Interception[1]
+  - Sam Whited for CVE-2016-9928 (same as above in mcabber)[2]
+  - Thijs Alkemade for being an awesome XMPP security researcher (and
+    for proof-reading this)[3]
+
+Links
+-----
+
+[0] https://xmpp.org/extensions/xep-0280.html
+[1] https://gultsch.de/gajim_roster_push_and_message_interception.html
+[2] http://www.openwall.com/lists/oss-security/2016/12/09/5
+[3] https://blog.thijsalkema.de/
+
+HTML version of advisory:
+https://rt-solutions.de/en/2017/02/CVE-2017-5589_xmpp_carbons/
+PDF version of advisory:
+https://rt-solutions.de/wp-content/uploads/2017/02/CVE-2017-5589_xmpp_carbon
+s.pdf
+
+
+-- 
+Dr.-Ing. Georg Lukas
+rt-solutions.de GmbH
+Oberländer Ufer 190a
+D-50968 Köln
+
+Tel. : (+49)221 93724 16
+Fax : (+49)221 93724 50
+Mobil: (+49)179 4176591
+Web : www.rt-solutions.de
+rt-solutions.de
+experts you can trust.
+
+Sitz der Gesellschaft: Köln
+Eingetragen beim Amtsgericht Köln: HRB 52645
+Geschäftsführer: Prof. Dr. Ralf Schumann, Dr. Stefan Schemmer
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4809 bytes)
