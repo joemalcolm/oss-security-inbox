@@ -1,4 +1,9 @@
-Received: (qmail 7341 invoked by uid 550); 9 May 2026 04:22:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4003" "Thursday" "9" "February" "2017" "14:42:25" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<23235157.DjIO37ESfJ@blackgate>" "107" "[oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)" nil nil nil "2" "2017020913:42:25" "[oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)" (number mark "U       ago@gentoo.o Feb  9  107/4003  " thread-indent "\"[oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25643 invoked by uid 550); 9 Feb 2017 13:42:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +12,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 6097 invoked from network); 8 May 2026 12:17:58 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1778242667; bh=7am6SoNvhepJpshoY1FoUEMaH4Ughga0KIVBVeC241s=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=Ofihel/puiIjCQQavBhSZuRwK+ATX27nYuma0SYZFP/3J/GRrbrE2crlM1IGndB4Y
-	 1TlMp8aqNMCiqpC5wcZNGWw/QiwOn4tfKqBMdAYqW/wt8lXo2RaRUmORavtj5w9uzW
-	 /rBJ3qv22Yb505ecJa2GpSLTmJK0GK4Q9/xVLrBANZO59+AQYM9GTSKSiQcyBFuXkn
-	 Z/BS3pu23NY1/bOqo29tSoEWqyP22w9yzb9MOEad3Ne4qNvM97uJLuXricYbkJofb/
-	 SL17sSqL2FeyzRkvr6lYPgAL+KNQpSc6qIDQ+wIZayv6GNGfT8oguFQdMi8/zTHDhj
-	 AxvM18ebjDzCw==
-Message-ID: <de79607e-b1df-487e-a4d5-d8d23da3bda0@apache.org>
-Date: Fri, 8 May 2026 14:17:44 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 24567 invoked from network); 9 Feb 2017 13:42:42 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-From: "Piotr P. Karwasz" <pkarwasz@apache.org>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-69233: Apache CloudStack: Domain/account resources limits
- not honored
-
-Severity: moderate
-
-Affected versions:
-
-- Apache CloudStack 4.0.0 through 4.20.2.0
-- Apache CloudStack 4.21.0.0 through 4.22.0.0
+Date: Thu, 09 Feb 2017 14:42:25 +0100
+Message-ID: <23235157.DjIO37ESfJ@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] zziplib: heap-based buffer overflow in __zzip_get64 (fetch.c)
 
 Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-Due to multiple time-of-check time-of-use race conditions in the
-resource count check and increment logic, as well as missing
-validations, users of the platform are able to exceed the allocation
-limits configured for their accounts/domains. This can be used by an
-attacker to degrade the infrastructure's resources and lead to denial of
-service conditions.
+A fuzz on it discovered an heap overflow.
 
-Users are recommended to upgrade to Apache CloudStack versions 4.20.3.0
-or 4.22.0.1, or later, which fixes this issue.
+The complete ASan output:
+
+# unzzipcat-mem $FILE
+READ of size 1 at 0x60400000dff3 thread T0
+    #0 0x7ff28ab675dc in __zzip_get64 /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/fetch.c:59:10
+    #1 0x7ff28ab64968 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:221:30
+    #2 0x7ff28ab64968 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
+    #3 0x7ff28ab638b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
+    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
+    #5 0x7ff289ca361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
+
+0x60400000dff3 is located 0 bytes to the right of 35-byte region 
+[0x60400000dfd0,0x60400000dff3)
+allocated by thread T0 here:
+    #0 0x4d2508 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7ff28ab64187 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:200:25
+    #2 0x7ff28ab64187 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
+    #3 0x7ff28ab638b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
+    #4 0x7ff289ca361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fetch.c:59:10 in 
+__zzip_get64
+Shadow bytes around the buggy address:
+  0x0c087fff9ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c087fff9bf0: fa fa fa fa fa fa fa fa fa fa 00 00 00 00[03]fa
+  0x0c087fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9c20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9c30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c087fff9c40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==7924==ABORTING
+
+Affected version:
+0.13.62
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
 
 Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-Fernando Oliveira <ferolicar82@gmail.com> (reporter)
-Gustavo Viana <viana.gust@gmail.com> (reporter)
+CVE:
+N/A
 
-References:
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00151-zziplib-heapoverflow-__zzip_get64
 
-https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
-https://cloudstack.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-69233
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get64-fetch-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
