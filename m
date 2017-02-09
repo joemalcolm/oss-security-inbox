@@ -1,78 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/23/3
-Message-ID: <5af4f41e-2cd6-c40e-16ef-736961903579@leventepolyak.net>
-Date: Sat, 23 Sep 2017 15:56:02 +0200
-From: Levente Polyak <levente@...entepolyak.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/17
+Message-ID: <4623205.KGy1lP8IPD@blackgate>
+Date: Thu, 09 Feb 2017 14:48:10 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Why send bugs embargoed to distros?
+Subject: zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)
 Content-Type: text/plain; charset=utf-8
 
-On 09/23/2017 01:44 PM, Hanno Böck wrote:
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
-> 
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-[...]
+A fuzz on it discovered an NULL pointer access.
 
-> The only distro I'm aware of that prepared packages and pushed them
-> right after disclosure is Gentoo.
-> 
+The complete ASan output:
 
-For Arch Linux I tested the patch beforehand and prepared the changed
-buildscripts locally. The final build/release/publication process was
-invoked just minutes after the public disclosure and the final artifact
-was signed and hit the repository just 20 minutes after the disclosure.
-The advisories were sent ~4 hours later once gone through a
-peer-reviewing process (yes this could have been done even faster).
+# unzzipcat-mem $FILE
+==7955==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000001a (pc 
+0x7fcfc78e3c50 bp 0x7ffdf55d4f70 sp 0x7ffdf55d4e40 T0)
+==7955==The signal is caused by a READ memory access.
+==7955==Hint: address points to the zero page.
+    #0 0x7fcfc78e3c4f in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21
+    #1 0x7fcfc78e3c4f in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
+    #2 0x7fcfc78e38b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
+    #3 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
+    #4 0x7fcfc6a2361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #5 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
 
-But that's not actually the primary goal of your mail, so lets focus on
-answering the more important questions below from my personal point of view.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21 in zzip_mem_entry_new
+==7955==ABORTING
 
-> All of this makes me wonder if the distros list serves its purpose.
-> 
-> I'd be curious to hear:
-> 
-> a) if any people felt that pre-disclosure of optionsbleed was helpful
-> to them and in which way (after all - even if it only helps minor
-> distros and major distros ignore it it may still be a good thing).
-> 
-> b) if people think that they'd usually prepare a fixed package, however
-> they didn't consider optionsbleed important enough. (Naturally I
-> probably have a bias seeing my findings as more important as other
-> people, but I could live with that.)
-> 
+also, the undefined behavior sanitizer says about:
 
-I think everyone should have come to the conclusion that this is
-potentially pretty bad for a shared hosting environment or anywhere
-where non-privileged users are able to fulfill the needed pre-requirements.
+# unzzipcat-mem $FILE
+/tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21: runtime error: member access 
+within null pointer of type 'struct zzip_file_header'
 
-Anyway, my personal believe is that the list is important, useful and in
-fact definitively helps preparing coordinated releases and doing all
-needed work before a final fixed package can be deployed for security
-relevant fixes.
-Most of the time the provided information (at least for me :P) helps to
-analyze and understand the underlying problem and its impact beforehand.
-If patches are available (like for optionbleed) those can be tested and
-possibly slightly adjusted or discussed when not fitting a specific
-version/branch.
-All this is part of the whole process before a problem is
-analyzed/understood, prioritized, build-requirements adjusted, artifacts
-prepared and finally released so being able to do the first steps in a
-coordinated way definitively helps.
+Affected version:
+0.13.62
 
-However, I indeed see your point and understand the frustration and the
-reason for your mail demonstrated via the optionbleed case. I neither
-say nor believe that every entity did perfectly to provide the users
-with fixed packages as that's obviously not the case.
-What I try to point out is that the list is IMO far from being useless
-and indeed serves its purpose. I think blaming or questioning the list
-itself is the wrong conclusion. Instead every entity on its own should
-rethink their process, prioritization and possibly lack of resources (I
-include myself to do this). This is not meant to anyone as blaming but
-we all share the goal to protect the users as good as possible and I
-believe that the distros list aids in doing so.
+Fixed version:
+N/A
 
-cheers,
-Levente
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00154-zziplib-nullptr-zzip_mem_entry_new
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-zzip_mem_entry_new-memdisk-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
