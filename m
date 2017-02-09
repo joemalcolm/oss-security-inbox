@@ -1,39 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/14
-Message-ID: <03350a09-72ae-6feb-9d2f-982f1de6fe63@redhat.com>
-Date: Wed, 21 Jun 2017 10:06:39 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Stuart Henderson <stu@...cehopper.org>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/10
+Message-ID: <1850762.GB9BvVVKKV@blackgate>
+Date: Thu, 09 Feb 2017 14:41:45 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: zziplib: heap-based buffer overflow in __zzip_get32 (fetch.c)
 Content-Type: text/plain; charset=utf-8
 
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
+A fuzz on it discovered an heap overflow.
 
-On 06/21/2017 09:15 AM, Stuart Henderson wrote:
-> On 2017/06/21 16:36, Solar Designer wrote:
->>                                                 Granted, they can now
->> prepare their updates within hours or days due to the work done by SUSE,
->> Red Hat, and others on the distros list, hopefully in time before
->> attacks using the Qualys findings start or become widespread, but
->> nevertheless they are at a disadvantage.
-> 
-> People doing this might want to note that Icinga ran into problems
-> with the fix in RHEL/Centos kernels when using setrlimit to restrict
-> the stack size below the default.
-> 
-> The Red Hat ticket is currently locked but there's some information at
-> https://bugs.centos.org/view.php?id=13453.
+The complete ASan output:
 
-Ah sorry about that, I've made
+# unzzipcat-mem $FILE
+==7574==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60300000ef9f at pc 0x7f98d2d1d3bf bp 0x7fff57e59e20 sp 0x7fff57e59e18                                                                                                                                       
+READ of size 1 at 0x60300000ef9f thread T0                                                                                                                                                                                                                                     
+    #0 0x7f98d2d1d3be in __zzip_get32 /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/fetch.c:32:24                                                                                                                                                         
+    #1 0x7f98d2d1a9d9 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:224:34                                                                                                                                                
+    #2 0x7f98d2d1a9d9 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137                                                                                                                                                   
+    #3 0x7f98d2d198b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5                                                                                                                                                  
+    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12                                                                                                                                                               
+    #5 0x7f98d1e5961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+0x60300000ef9f is located 1 bytes to the right of 30-byte region 
+[0x60300000ef80,0x60300000ef9e)                                                                                                                                                                               
+allocated by thread T0 here:                                                                                                                                                                                                                                                   
+    #0 0x4d2508 in malloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                                                                                                       
+    #1 0x7f98d2d1a260 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:208:25                                                                                                                                                
+    #2 0x7f98d2d1a260 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137                                                                                                                                                   
+    #3 0x7f98d2d198b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5                                                                                                                                                  
+    #4 0x7f98d1e5961f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+                                                                                                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fetch.c:32:24 in 
+__zzip_get32                                                                                                                               
+Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
+  0x0c067fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+=>0x0c067fff9df0: 00 00 00[06]fa fa 00 00 00 02 fa fa 00 00 00 fa                                                                                                                                                                                                              
+  0x0c067fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
+  Addressable:           00                                                                                                                                                                                                                                                    
+  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                                                                                  
+  Heap left redzone:       fa                                                                                                                                                                                                                                                  
+  Heap right redzone:      fb                                                                                                                                                                                                                                                  
+  Freed heap region:       fd                                                                                                                                                                                                                                                  
+  Stack left redzone:      f1                                                                                                                                                                                                                                                  
+  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
+  Stack right redzone:     f3                                                                                                                                                                                                                                                  
+  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
+  Stack after return:      f5                                                                                                                                                                                                                                                  
+  Stack use after scope:   f8                                                                                                                                                                                                                                                  
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==7574==ABORTING
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1463241
+Affected version:
+0.13.62
 
-public, kernel bugs default to private and then typically get opened up
-(mostly because people have a tendency to put traces/dumps with
-sensitive information in them and we don't want someone accidentally
-exposing their SSH host keys or whatever).
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00150-zziplib-heapoverflow-__zzip_get32
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get32-fetch-c
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Agostino Sarubbo
+Gentoo Linux Developer
