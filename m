@@ -1,43 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/08/5
-Message-ID: <20171108120538.GA31417@openwall.com>
-Date: Wed, 8 Nov 2017 13:05:38 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/12
+Message-ID: <1647177.aZQByZBLXH@blackgate>
+Date: Thu, 09 Feb 2017 14:43:08 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Andrey Konovalov <andreyknvl@...il.com>, Dmitry Vyukov <dvyukov@...gle.com>, Kostya Serebryany <kcc@...gle.com>
-Subject: Re: Linux kernel: multiple vulnerabilities in the USB subsystem
+Subject: zziplib: heap-based buffer overflow in zzip_mem_entry_extra_block (memdisk.c)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 06, 2017 at 02:45:01PM +0100, Andrey Konovalov wrote:
-> Below are the details for 14 vulnerabilities found with syzkaller in
-> the Linux kernel USB subsystem. All of them can be triggered with a
-> crafted malicious USB device in case an attacker has physical access
-> to the machine.
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-Perhaps not only in that case, but also in case an attacker has remote
-access to a USB device (perhaps most commonly via remote access to the
-machine, with privileges to access the USB device) sufficient to replace
-that device's firmware (thereby crafting a malicious device).
+A fuzz on it discovered an heap overflow.
 
-For example, many USB-connected FPGA boards, Bitcoin miners ("ASICs"),
-etc. may reasonably be made available to a non-root user (such as via
-udev rules), and they commonly permit microcontroller firmware update to
-be performed via USB as well.  John the Ripper bleeding-jumbo currently
-loads firmware into MCUs on ZTEX 1.15y boards at startup (if the
-firmware in EEPROM is different), and we recommend running it as
-non-root with udev rules setup to grant access to non-root users in
-group "ztex" (this setup is described in doc/README-ZTEX).
+The complete ASan output:
 
-Many mainstream devices (mice, etc.) probably permit firmware update via
-USB as well.  Hopefully, it's uncommon to have them directly accessible
-by non-root.
+# unzzipcat-mem $FILE
+==7970==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60300000f2c8 at pc 0x7f59277fd153 bp 0x7fff136e1e30 sp 0x7fff136e1e28                                                                                                                                       
+READ of size 2 at 0x60300000f2c8 thread T0                                                                                                                                                                                                                                     
+    #0 0x7f59277fd152 in zzip_mem_entry_extra_block /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20                                                                                                                                        
+    #1 0x7f59277fd152 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:218                                                                                                                                                   
+    #2 0x7f59277fd152 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137                                                                                                                                                   
+    #3 0x7f59277fb8b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5                                                                                                                                                  
+    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12                                                                                                                                                               
+    #5 0x7f592693b61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+AddressSanitizer can not describe address in more detail (wild memory access 
+suspected).                                                                                                                                                                                       
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20 in 
+zzip_mem_entry_extra_block                                                                                                              
+Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
+  0x0c067fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+=>0x0c067fff9e50: fa fa fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
+  Addressable:           00                                                                                                                                                                                                                                                    
+  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                                                                                  
+  Heap left redzone:       fa                                                                                                                                                                                                                                                  
+  Heap right redzone:      fb                                                                                                                                                                                                                                                  
+  Freed heap region:       fd                                                                                                                                                                                                                                                  
+  Stack left redzone:      f1                                                                                                                                                                                                                                                  
+  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
+  Stack right redzone:     f3                                                                                                                                                                                                                                                  
+  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
+  Stack after return:      f5                                                                                                                                                                                                                                                  
+  Stack use after scope:   f8                                                                                                                                                                                                                                                  
+  Global redzone:          f9                                                                                                                                                                                                                                                  
+  Global init order:       f6                                                                                                                                                                                                                                                  
+  Poisoned by user:        f7                                                                                                                                                                                                                                                  
+  Container overflow:      fc                                                                                                                                                                                                                                                  
+  Array cookie:            ac                                                                                                                                                                                                                                                  
+  Intra object redzone:    bb                                                                                                                                                                                                                                                  
+  ASan internal:           fe                                                                                                                                                                                                                                                  
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==7970==ABORTING
 
-And no, I don't think these vulnerabilities should be a reason to run
-programs as root instead of granting access to non-root.  Rather, this
-is a reminder that by granting access we expose more of the kernel's
-attack surface (and particularly fragile parts of it), so access should
-be granted to sufficiently trusted (pseudo-)user accounts only.  Such
-direct access is often also sufficient to backdoor or brick the devices,
-which should be a concern anyway.
+Affected version:
+0.13.62
 
-Alexander
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00152-zziplib-heapoverflow-zzip_mem_entry_extra_block
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-zzip_mem_entry_extra_block-memdisk-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
