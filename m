@@ -1,4 +1,9 @@
-Received: (qmail 7351 invoked by uid 550); 9 Mar 2025 14:49:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["951" "Thursday" "9" "February" "2017" "15:02:50" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<9786871.DjNlDLY9Ns@blackgate>" "28" "[oss-security] A note about the multiple crashes in zziplib" nil nil nil "2" "2017020914:02:50" "[oss-security] A note about the multiple crashes in zziplib" (number mark "U       ago@gentoo.o Feb  9   28/951   " thread-indent "\"[oss-security] A note about the multiple crashes in zziplib\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5850 invoked by uid 550); 9 Feb 2017 14:03:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,62 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 8001 invoked from network); 9 Mar 2025 10:40:14 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Andrea Cosentino <acosentino@apache.org>
+Received: (qmail 5795 invoked from network); 9 Feb 2017 14:03:07 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <3b2d9efb-42ae-925c-bc05-c167d40bdd90@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 09 Mar 2025 10:40:03 +0000
+Date: Thu, 09 Feb 2017 15:02:50 +0100
+Message-ID: <9786871.DjNlDLY9Ns@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-27636: Apache Camel: Camel Message Header Injection via
- Improper Filtering 
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] A note about the multiple crashes in zziplib
 
-Severity: moderate
+Hello all,
 
-Affected versions:
+I posted several crashes about zziplib.
 
-- Apache Camel 4.10.0 before 4.10.2
-- Apache Camel 4.8.0 before 4.8.5
-- Apache Camel 3.10.0 before 3.22.4
+The latest release was done ~5 years ago and the upstream bugs place seems to 
+be dead. However, I will forward them on their website.
 
-Description:
+I didn't receive any type of feedback from the maintainer so I don't know if 
+some of them are duplicates.
+In any case there are problems where the same codebase was used in more 
+places, e.g.:
 
-Bypass/Injection vulnerability in Apache Camel.
+http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c/ shows a null ptr at: unzzipcat.c:94
 
-This issue affects Apache Camel: from 4.10.0 through <=3D 4.10.1, from 4.8.=
-0 through <=3D 4.8.4, from 3.10.0 through <=3D 3.22.3.
+and
 
-Users are recommended to upgrade to version 4.10.2 for 4.10.x LTS, 4.8.5 fo=
-r 4.8.x LTS and 3.22.4 for 3.x releases.
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/ shows a null ptr at: unzzipcat-mem.c:94
 
-The vulnerability arises due to a bug in the default filtering mechanism th=
-at only blocks headers starting with "Camel", "camel", or "org.apache.camel=
-.". Attackers can bypass this filter by altering the casing of letters. Thi=
-s allows attackers to inject headers which can be exploited to invoke arbit=
-rary methods from the Bean registry and also supports using Simple Expressi=
-on Language (or OGNL in some cases) as part of the method parameters passed=
- to the bean. It's important to note that only methods in the same bean dec=
-lared in the bean URI could be invoked.
+Both C file have the same code at line 94:
+printf ("%s\n", name);
 
+So, while in the past, sometimes, we saw that one 'change' in the code was 
+able to fix more than one issue, in this case, the issue is the same but it 
+duplicate in more '.c' file
 
-Mitigation:=C2=A0You can easily work around this in your Camel applications=
- by removing the=C2=A0headers in your Camel routes. There are many ways of =
-doing this, also=C2=A0globally or per route. This means you could use the r=
-emoveHeaders EIP, to filter out anything like "cAmel, cAMEL" etc, or in gen=
-eral everything not starting with "Camel", "camel" or "org.apache.camel.".
-
-This issue is being tracked as CAMEL-21838=20
-
-Credit:
-
-Mark Thorson (finder)
-
-References:
-
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-27636
-https://issues.apache.org/jira/browse/CAMEL-21838
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
