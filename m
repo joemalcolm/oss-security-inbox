@@ -1,4 +1,9 @@
-Received: (qmail 11765 invoked by uid 550); 25 May 2023 08:22:02 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1579" "Thursday" "9" "February" "2017" "14:50:18" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<7514610.NxtJqOQEcv@blackgate>" "58" "[oss-security] zziplib: load of misaligned address in memdisk.c" nil nil nil "2" "2017020913:50:18" "[oss-security] zziplib: load of misaligned address in memdisk.c" (number mark "U       ago@gentoo.o Feb  9   58/1579  " thread-indent "\"[oss-security] zziplib: load of misaligned address in memdisk.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 14205 invoked by uid 550); 9 Feb 2017 13:50:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1522 invoked from network); 24 May 2023 20:41:38 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AC+VfDxZw5r9T27WcehRrA846YC9Q3vPt2H59kCasTncNZQi0j0lJyoI
-	+i8YWcyEUQwZcvstqwhhsah2vGKxJaJ51F46vzY=
-X-Google-Smtp-Source: ACHHUZ5QVvXqMiioxKf8NE8byxNmX/Mnl15e83UziL+F/x2/9Y4y1hDdplBZZz5qqEGkrwQSp+efnEA9mUdlxnd9TSY=
-X-Received: by 2002:a05:6808:aad:b0:394:3f93:ce0e with SMTP id
- r13-20020a0568080aad00b003943f93ce0emr9192214oij.24.1684960883770; Wed, 24
- May 2023 13:41:23 -0700 (PDT)
+Received: (qmail 14053 invoked from network); 9 Feb 2017 13:50:35 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
+To: oss-security@lists.openwall.com
+Date: Thu, 09 Feb 2017 14:50:18 +0100
+Message-ID: <7514610.NxtJqOQEcv@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
-Date: Wed, 24 May 2023 22:41:12 +0200
-X-Gmail-Original-Message-ID: <CAMufup70iLuSiaCbJEajdridr0-v6suxjnCXuZYecbmvGFn2_A@mail.gmail.com>
-Message-ID: <CAMufup70iLuSiaCbJEajdridr0-v6suxjnCXuZYecbmvGFn2_A@mail.gmail.com>
-To: announce@apache.org, Apache Security Team <security@apache.org>, dev@jspwiki.apache.org, 
-	user@jspwiki.apache.org, oss-security@lists.openwall.com, 
-	"Eugene LIM (GOVTECH)" <Eugene_LIM@tech.gov.sg>, 
-	"Jay Kai SNG from.TP (GOVTECH)" <Jay_Kai_SNG_from.TP@tech.gov.sg>
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2022-46907: Apache JSPWiki Cross-site scripting on several plugins
-
-Severity: moderate
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] zziplib: load of misaligned address in memdisk.c
 
 Description:
-A carefully crafted request on several JSPWiki plugins could trigger
-an XSS vulnerability on Apache JSPWiki, which could allow the attacker
-to execute javascript in the victim's browser and get some sensitive
-information about the victim.
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-Mitigation:
-Apache JSPWiki users should upgrade to 2.12.0 or later.
+A fuzz on it discovered the load of a misaligned address. It can cause 
+undefined behavior.
+
+The complete ASan output:
+
+# unzzipcat-mem $FILE
+/tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:250:33: runtime error: load of 
+misaligned address 0x00000295d17d for type 'uint16_t' (aka 'unsigned short'), 
+which requires 2 byte alignment
+0x00000295d17d: note: pointer points here
+ 5a 45 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff 
+ff ff 42 00 00 00  b1
+             ^ 
+/tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:256:22: runtime error: load of 
+misaligned address 0x00000295d17f for type 'uint16_t' (aka 'unsigned short'), 
+which requires 2 byte alignment
+0x00000295d17f: note: pointer points here
+ 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff ff ff 
+42 00 00 00  b1 01 00
+             ^
+
+Affected version:
+0.13.62
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
 
 Credit:
-This issue was discovered by Eugene Lim and Sng Jay Kai from
-Government Technology Agency of Singapore
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-References:
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-46907
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00160-zziplib-misalignedadd-memdisk_c
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-load-of-misaligned-address-in-memdisk-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
