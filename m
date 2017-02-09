@@ -1,19 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/17
-Message-ID: <b8e50542-153b-27c0-b75a-b46f119cfaf9@redhat.com>
-Date: Fri, 14 Jul 2017 12:40:18 -0600
-From: "kseifried@...hat.com" <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/18
+Message-ID: <2211995.q60Yp6Jerj@blackgate>
+Date: Thu, 09 Feb 2017 14:49:10 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: zziplib: NULL pointer dereference in main (unzzipcat.c)
 Content-Type: text/plain; charset=utf-8
 
-Sorry I thought I'd replied earlier to this thread (phone email clients,
-how do they work?) Red Hat will continue to help (let's pick #1 and #2
-explicitly), I know we already have more than 2 people on the list so I
-don't think we need to nominate a backup?
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
+
+A fuzz on it discovered an a NULL pointer access.
+
+The complete ASan output:
+
+# unzzipcat $FILE
+==22686==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 
+0x7f6de98b259a bp 0x7ffddc25a080 sp 0x7ffddc259f98 T0)
+==22686==The signal is caused by a READ memory access.
+==22686==Hint: address points to the zero page.
+    #0 0x7f6de98b2599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x7f6de989b7ab in _IO_puts /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/libio/ioputs.c:36
+    #2 0x509d73 in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat.c:94:6
+    #3 0x7f6de985161f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x419848 in _init (/usr/bin/unzzipcat+0x419848)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==22686==ABORTING
+
+Affected version:
+0.13.62
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00158-zziplib-nullptr-main
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+Agostino Sarubbo
+Gentoo Linux Developer
