@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8226" "Monday" "13" "February" "2017" "15:47:23" "+0000" "Radzykewycz, T (Radzy)" "radzy@windriver.com" "<33006C99F5A5194A9B7A7715DFA3E383011E4B506E@ALA-MBC.corp.ad.wrs.com>" "200" "[oss-security] RE: [security-vendor] [oss-security] Re: MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021315:47:23" "[oss-security] RE: [security-vendor] [oss-security] Re: MITRE is adding data intake to its CVE ID process" (number mark "U       radzy@windri Feb 13  200/8226  " thread-indent "\"[oss-security] RE: [security-vendor] [oss-security] Re: MITRE is adding data intake to its CVE ID process\"\n") "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2050" "Thursday" "9" "February" "2017" "08:07:49" "-0800" "Steven R. Loomis" "srl@icu-project.org" "<f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>" "50" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017020916:07:49" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        srl@icu-proj Feb  9   50/2050  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170209145409.GE2569@scully.more-magic.net>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>" "<20170209142600.GJ12842@openstack.org>" "<20170209145409.GE2569@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32098 invoked by uid 550); 13 Feb 2017 16:18:41 -0000
+Received: (qmail 19566 invoked by uid 550); 9 Feb 2017 17:35:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,226 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17461 invoked from network); 13 Feb 2017 15:47:35 -0000
-From: "Radzykewycz, T (Radzy)" <radzy@windriver.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Thread-Topic: [security-vendor] [oss-security] Re: MITRE is adding data
- intake to its CVE ID process
-Thread-Index: AQHShBtxm5ks4CQux0ejMe1G2mFFAqFnGHIn
-Date: Mon, 13 Feb 2017 15:47:23 +0000
-Message-ID: <33006C99F5A5194A9B7A7715DFA3E383011E4B506E@ALA-MBC.corp.ad.wrs.com>
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>,<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
-In-Reply-To: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [147.11.216.77]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Received: (qmail 15475 invoked from network); 9 Feb 2017 16:09:22 -0000
+x-originating-ip: 208.109.101.195
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
+ <20170209142600.GJ12842@openstack.org>
+ <20170209145409.GE2569@scully.more-magic.net>
+Message-ID: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
+ Gecko/20100101 Thunderbird/45.7.0
 MIME-Version: 1.0
-Subject: [oss-security] RE: [security-vendor] [oss-security] Re: MITRE is adding data
- intake to its CVE ID process
-
-> C6. I want MITRE to send the https://cveform.mitre.org form data
-> to the oss-security list as soon as that data is entered (i.e.,
-> before a CVE ID exists).
-
-This was one of the thoughts I had originally, but I decided
-against actually proposing it.  (See below.)
-
-> R6. We have had internal discussions within MITRE about this. We
-> are not yet able to implement this easily. We may work on this if
-> the community requires this approach. However, our understanding
-> of CVE consumers is that they look to MITRE as a source of
-> vulnerability information after a CVE ID number exists, not before.
-
-Without commenting about the possible difficulty to implement
-this, it might make sense to have this under the control of
-the reporter: Add a check button for the requestor to send the
-contents automatically.
-
-(Note that if the check button is not checked, then the sender can
-send the data manually if they wish.  So no need to consider any
-"what if they change their mind" type of question.)
-
-I suppose that one difficulty would be for the message to be sent
-apparently from the reporter's email address.  Not doing this
-might be a way to subvert some email restrictions, which might
-be considered improper.  So I suspect that this would actually
-require an email confirmation ("follow this link to have the
-message sent to the list").  But if that is required, then it's
-probably almost as easy to simply send a confirmation email to
-the reporter, which includes a brief comment about forwarding to
-the list.
-
-So on consideration, I suspect it would be best not to do this.  I
-don't think that a "proper" implementation would actually save
-the reporter significant time/effort.
-
-Enjoy!
-
--- radzy
-
-________________________________________
-From: cve-assign@mitre.org [cve-assign@mitre.org]
-Sent: Friday, February 10, 2017 7:59 PM
+In-Reply-To: <20170209145409.GE2569@scully.more-magic.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3"
+X-CMAE-Envelope: MS4wfCH3toI+vIvvO/NGWIqwiPEVnjuBh73oWS7NdCVJRDV1Kkt4g25weFteF7dtG8/D7xwuRMGlEpWAZ+faEfP/4XbwrHeTSOnATMMaz2VnkjhZ1lnZ3459
+ 3SWrrtlxs30K1V0zWpIDN2Md9YEBnINJwNt5qcL3l6GMRx2uwFP0ebhjr3Q+saUYYpLSe/Tk0Jyp1hG/wnW7alIhwi4eafPIuNU=
+Date: Thu, 9 Feb 2017 08:07:49 -0800
+From: "Steven R. Loomis" <srl@icu-project.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Subject: [security-vendor] [oss-security] Re: MITRE is adding data intake t=
-o its CVE ID process
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3
+Content-Type: multipart/mixed; boundary="19awqkkwi1HNmhE2lDxR2i1bofwX47npI";
+ protected-headers="v1"
+From: "Steven R. Loomis" <srl@icu-project.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
+ <20170209142600.GJ12842@openstack.org>
+ <20170209145409.GE2569@scully.more-magic.net>
+In-Reply-To: <20170209145409.GE2569@scully.more-magic.net>
 
-All,
+--19awqkkwi1HNmhE2lDxR2i1bofwX47npI
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-Thanks to all who have provided constructive and meaningful feedback
-on this change up to this point. This reply will hopefully answer all
-of the concerns so far. We are hearing 11 distinct concerns, listed
-below as C1 through C11, along with our responses of R1 through R11.
-If you have any ideas or suggestions for improvements to the CVE web
-form, we are completely open to this.
+On 2/9/17 6:54 AM, Peter Bex wrote:
+> In an ideal world, free software project leaders should be
+> able to request a CVE ID _before_ announcing a vulnerability to their
+> user base.  If there were some way to register people as project leaders,
+> the "proof" should not be necessary, they should be able to request a
+> CVE ID with authority.
+Peter,
+ I actually wondered about this very thing, if it was possible to
+request an ID before the details were fully available. From your note,
+it sounds like this is not the case currently.
 
-
-C1. What exactly has changed after MITRE's 2017-02-09 announcement?
-
-R1. There are two changes. Each of the two changes is about the case
-where an oss-security participant is immediately ready to make a
-public disclosure, and wants an accompanying CVE ID. First, the person
-must visit https://cveform.mitre.org to make the CVE request (but can
-also send the vulnerability information to oss-security at the same
-time). Second, we would like a vulnerability description (i.e., a
-sentence or two about the product name, affected versions, problem
-type, impact, and attack methodology) so that we can publish the CVE
-on https://cve.mitre.org much more quickly. We recognize that, in a
-fraction of the cases (e.g., unanalyzed fuzzer results), a description
-would have very limited information.
-
-
-C2. Can I still obtain a CVE ID if I'm not yet willing to disclose
-what the vulnerability is, and cannot offer any public reference URL?
-
-R2. Yes, simply visit https://cveform.mitre.org and leave the
-"Reference(s)" box blank. Alternatively, you can enter a reference
-URL, and use the "Additional information" box to clarify that neither
-the reference nor the CVE should be public yet. This is not a change
-to how the oss-security list has be used. The oss-security list has
-always been about only public vulnerabilities.
+Steven
 
 
-C3. MITRE currently has documentation such as
-https://cve.mitre.org/cve/request_id.html that recommends contacting
-DWF if an Open Source product does not appear on a certain list.
+--19awqkkwi1HNmhE2lDxR2i1bofwX47npI--
 
-R3. In all cases where our documentation suggests contacting DWF,
-please use https://cveform.mitre.org instead at this time. DWF is
-currently ramping up their operations. CVE is covering all Open Source
-software. There is no list that is excluding anything.
+--t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-
-C4. I have historically obtained CVE IDs from the CNA of a specific
-Linux distribution (e.g., Debian, Ubuntu, or Red Hat) and they are
-still willing to provide CVE IDs to me. May I continue?
-
-R4. Yes.
-
-
-C5. I want MITRE to send the https://cveform.mitre.org form data, and
-the CVE ID, to the oss-security list at the same time that these are
-sent to the requester.
-
-R5. We have had internal discussions within MITRE about this. We are
-able to implement this easily if the community requires this approach.
-At the moment, we are expecting the requester to resend this
-information to oss-security once they accept their CVE ID assignment.
-Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
-for an example.
-
-
-C6. I want MITRE to send the https://cveform.mitre.org form data to
-the oss-security list as soon as that data is entered (i.e., before a
-CVE ID exists).
-
-R6. We have had internal discussions within MITRE about this. We are
-not yet able to implement this easily. We may work on this if the
-community requires this approach. However, our understanding of CVE
-consumers is that they look to MITRE as a source of vulnerability
-information after a CVE ID number exists, not before.
-
-
-C7. When using the https://cveform.mitre.org site, it is unclear what
-a "vendor" is, e.g., must it be the name of a Linux distribution?
-
-R7. The vendor is the name of the upstream project or organization
-that maintains the Open Source software. If there isn't any project
-name or organization name, then the name of the software can be used
-as the vendor name.
-
-
-C8. A CAPTCHA makes it difficult to do high-volume vulnerability
-reporting.
-
-R8. We agree. The https://cveform.mitre.org use case is persons with
-low-volume reporting needs. We will announce other solutions for
-high-volume reporting. You can contact us, using the
-https://cveform.mitre.org "request type: Other" option, if you need a
-high-volume workaround now.
-
-
-C9. I want to obtain CVE IDs faster in the future. Is there a plan for
-that?
-
-R9. Yes, we anticipate that, in the future, hundreds of Open Source
-projects will become CNAs for their own vulnerabilities. This will be
-coordinated under DWF. In other words, an individual Open Source
-project will have a "sub-CNA" role. The initial documentation is on
-the
-https://github.com/distributedweaknessfiling/DWF-Documentation/blob/master/=
-README.md
-web page.
-
-
-C10. I do not want to use Google docs. Is there any other option?
-
-R10. First, Google docs is applicable only to DWF, which is currently
-ramping up their operations, and is not a required entity for any CVE
-ID requests at present. Also, we do not expect that Google docs will
-be applicable to persons or organizations with a higher level of DWF
-participation, such as sub-CNA participation. At the higher levels,
-DWF currently uses GitHub, not Google docs.
-
-
-C11. The https://cveform.mitre.org X.509 certificate chain is
-incomplete.
-
-R11. Yes, we realize this and will be adding the missing item (Entrust
-Certification Authority - L1K) soon.
-
-
-Regards,
-
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYnolXAAoJEHb/MwWLVhi25U8P/iFmLFMukKWRgurASnqee1IR
-hQTaRfu+KPn3yDPe7/PDhnGSirPJQoZ85GS954ac7/xTCmS/fnbRVIqCIsr8WhVe
-OpwAYHY2XyLKRCPslv7yMhXIOdK1mf9xak51A19nWgiDxxCToUOcJvxC9Gq0dmez
-+MhXDLfo2yy+LSsw1BNJhxVFqeI6Xpr007aIzedvUUXa4Q8oD1ifkSaVKFI0JONQ
-sbRpBBc4UJ2OyYcrj4nVDiH2/wHo1YzTFP09YwMXIL9cZuNUqX1ZXj5RDFfIFf4E
-FUUq4DU938TFJXl30YxIlYWu98physJ2MBtHIqXHaN6Q0RZQlv8esuLSfnN00Y2t
-j+Ki5biol4Eff8Zt+LGHdkpZj7JZHei6IDWsPVaaLdPWYwsR5MiZO2F/fm0Fb8zv
-ORbZHtCwnjl26OGqh08W/jxHKfoGPlruZHNHMHiYh84YOhMhjrtY4M/U6lxVB/rC
-6q2PleMmh6/jfBWCQgM3N+c1luwXwY6MEdkEbt9U+X6fxXNQlNy8S5EbEPzx1U4J
-4TTyWat4JsW/AKwAAjcI7R1qBPqkNvVEoKeKqIRpHKOnfKcqhtUTrq92KozNiVbH
-uKnsvuaxVWtjCc30onR0PUbi7ENeJZfVTQlAtBl3TN2Ku9ReASP/23KjTk4jnCZA
-Da1WB50SGz0ynSMY/fBZ
-=3DGKwE
+iQEcBAEBCAAGBQJYnJPbAAoJEKyl2+H9j6vx048IAMZW7+2lBvBNkxMogfPLddJB
+CK0RQyDBJ5WJgp32hFLH2WLdmTsGUDkhq+4O5fWVvS7CGRZDtx2sc9o846p1IpCr
+5mx++sqwSYqo1qKtJEcdhdXou/G4pOIta2ONoSLNJGuPpvI1OvAt2F8gnEewuEP2
+QCK7e3ZJHdsbTqGrnDvRiqccg3qRlC7JePKIddNZE1SicYRWCkrY0qFBVMURRBIH
++91slQcjJjLCcq0Dh9ssZSc8NXGuakTxTosfy/FbETtY7T7ULEfzaRUJIm66wY+8
+uXvz2+leniqchtGGPs9P2aLQZnERToDN+SbEovEtxtzs3cav5Ks4MPIxLo2ATzA=
+=KUgA
 -----END PGP SIGNATURE-----
+
+--t77IUQX78rbNDRt8V4aTX5AGeQ3moGcT3--
