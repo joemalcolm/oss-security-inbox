@@ -1,52 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/2
-Message-ID: <20170818132450.GE13079@suse.de>
-Date: Fri, 18 Aug 2017 15:24:50 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/13
+Message-ID: <4365957.OJeqqsgQBT@blackgate>
+Date: Thu, 09 Feb 2017 14:45:49 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ***UNCHECKED*** UnRAR: directory traversal + memory safety bugs
+Subject: zziplib: NULL pointer dereference in main (unzzipcat-mem.c)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 15, 2017 at 12:39:48AM +0200, Jakub Wilk wrote:
-> (I'm not sure UnRAR bugs are on-topic here. UnRAR is not free software, even
-> though the source is available. But the last time UnRAR was discussed nobody
-> objected, so hey, let me try too.)
-> 
-> I found directory traversal and a few memory safety bugs in UnRAR 5.5.6.
-> These bugs have been fixed in UnRAR 5.5.7.
-> 
-> The memory safety bugs were found using American Fuzzy Lop.
-> 
-> Here are details of the bugs:
-> 
-> * Directory traversal
-> 
-> The PoC (traversal.rar) contains two symlinks and a regular file:
-> 
->   cur -> .
->   cur/par -> ..
->   par/moo
-> 
-> This setup defeats UnRAR's directory traversal protections:
-> 
->   $ ls ../moo
->   /bin/ls: cannot access '../moo': No such file or directory
-> 
->   $ unrar x traversal.rar
->   ...
->   Extracting  cur                                                       OK
->   Extracting  cur/par                                                   OK
->   Extracting  par/moo                                                   OK
->   All OK
-> 
->   $ ls ../moo
->   ../moo
-> 
-> The code that was used to generate the PoC is available here:
-> https://github.com/jwilk/path-traversal-samples
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-The directory traversal has been assigned CVE-2017-12938.
+A fuzz on it discovered an a NULL pointer access.
 
-(My request just yielded this 1 CVE, i replied requesting also for the other issues.)
+The complete ASan output:
 
-Ciao, Marcus
+# unzzipcat-mem $FILE
+==7919==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 
+0x7f9a138fb59a bp 0x7ffe1c0b0050 sp 0x7ffe1c0aff78 T0)
+==7919==The signal is caused by a READ memory access.
+==7919==Hint: address points to the zero page.
+    #0 0x7f9a138fb599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x7f9a138e47ab in _IO_puts /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/libio/ioputs.c:36
+    #2 0x509c8b in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:94:6
+    #3 0x7f9a1389a61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==7919==ABORTING
+
+Affected version:
+0.13.62
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00155-zziplib-nullptr-main
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
