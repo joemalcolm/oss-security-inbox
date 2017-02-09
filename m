@@ -1,47 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/11/5
-Message-Id: <15F70552-0CCA-437A-947E-E6442FA282DB@beckweb.net>
-Date: Wed, 11 Oct 2017 18:25:10 +0200
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/5
+Message-ID: <d18ca7c8134b41a4806e395b18ffa346@imshyb02.MITRE.ORG>
+Date: Wed, 8 Feb 2017 23:58:39 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request virglrenderer: host memory leak issue in virgl_resource_attach_backing
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around 
-the world to reliably build, test, and deploy their software. The following 
-plugin releases contain fixes for security vulnerabilities:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-* Maven Plugin 3.0
-* Swarm Plugin (Client) 3.5
+> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
+> for the virtio GPU, is vulnerable to memory leakage issue. It could occur when
+> a guest invokes a 'VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING' command.
+> 
+> A guest user/process could use this flaw to leak host memory leading to DoS.
+> 
+> https://cgit.freedesktop.org/virglrenderer/commit/?id=40b0e7813325b08077b6f541b3989edb2d86d837
+> https://bugzilla.redhat.com/show_bug.cgi?id=1420266
 
-A vulnerability in the Speaks! Plugin has no fix; its distribution has been
-suspended.
+Use CVE-2016-10214.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2017-10-11/
+This is not exactly the same as CVE-2017-5578 (from the
+http://www.openwall.com/lists/oss-security/2017/01/25/2 post).
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-If you find security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-557
-Maven Plugin bundled a version of the commons-httpclient library with the 
-vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, 
-making it susceptible to man-in-the-middle attacks.
-
-SECURITY-597
-Swarm Plugin Client bundled a version of the commons-httpclient library 
-with the vulnerability CVE-2012-6153 that incorrectly verified SSL 
-certificates, making it susceptible to man-in-the-middle attacks.
-
-SECURITY-623
-Speaks! Plugin allows users with Job/Configure permission to run arbitrary 
-Groovy code inside the Jenkins JVM, effectively elevating privileges to 
-Overall/Run Scripts.
-
+iQIcBAEBCAAGBQJYm/MvAAoJEHb/MwWLVhi2A+gP/0kbCwh8jpQOSzRwlB24UF/2
+NgP17KXlmr/hfHEjilX4w+0z0TvJMUpd58otvLFJiu+ZruJtveoY6qcZ65vc4j2W
+bSRqmSvpwLRRYCVgsgXpCXItyjuxcGtpGUTEDsUeam6N6aOw1UCeBS472C0/j4cO
+QRqlQWfxJpccUlwGKV4BcvlqE6Dw+NonJq3HXuVdw4M8fJHz4DMEtjKqIT+M8ied
+n8bYgEl1czHCdkopD5IxbFuOPZRKBVIVvnIFN9+F9bb6IuyQfHr1staZzTa49Nub
++J4PjLFSeWDkDxSKKVMvCfkxTQ+WV+uXWxL7X2/KaNfJSS5oxNw4pSvuUj8kSe9f
+qRQDamEdpSDZD8jW2ziKLjNTe2rRXKOl7i+Uzq0UU4hSteVlsSXSWynN5Hav5oae
+GJZKQb4mbAmiVZ3uStERpWfR6xCNhgbuh0P7pb4hI91fGyelMNK693a2YbC0F0k8
+dnHhVNxrKzwNeMBxvqlfkeK37y1VgawVivdMJY6SbVWo+2C0Wwo1+FiUMug+mnYH
+uY0GNcgRJ+FfpwG8L8odEAjXD4YsrR7KY9q53kMCQ8ZBt/pTEuIaDPV9lmB87RGU
+3iy32pnus/u/bmIM48UUU0OQ1H4uVJatiqssjoGGgtAehFFx9wNjRaMFXZusPU7K
+o/ARln99V0GyjXav57Y9
+=nWDl
+-----END PGP SIGNATURE-----
