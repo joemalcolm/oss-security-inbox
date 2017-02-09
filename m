@@ -1,4 +1,9 @@
-Received: (qmail 3696 invoked by uid 550); 6 Sep 2022 14:24:21 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2667" "Thursday" "9" "February" "2017" "14:26:01" "+0000" "Jeremy Stanley" "jeremy@openstack.org" "<20170209142600.GJ12842@openstack.org>" "59" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Cc:" nil nil "2" "2017020914:26:01" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        jeremy@opens Feb  9   59/2667  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9770 invoked by uid 550); 9 Feb 2017 14:36:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,47 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1596 invoked from network); 6 Sep 2022 13:27:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date;
-        bh=v52mRCzOmfK+Fx0rJ1l2D84GDzDKn7rwoT3EYA1gF64=;
-        b=D9GoC6Y3fO2av3vEV26Oz+HIOojt1MicxieIMLjz7IXXndlkZUQ8rxkrh3xwBLXQWO
-         toBYxIcKP3Bqo97/51dxcppe4mGACTXytAdgtdVlO3yqQrJLd3RVd0A54G/e8isggUN9
-         4saPSU/7zBq+da2tojEuYxFOQX5/Zel92q09M50mPbR0iW3PWVAAgliRbziyoMrIGP0s
-         bCYSQC/TtleF1Ofb62nsFWu/Ro3PbRDc/ONeHn0uBZpF3i0TmdGHVS6rP7/KzbLbvWu6
-         Grt01zmrQosD/6w88wr57OAmuJEiryLs8WkjWWPj601fer5LtwN7Rogx2imZM9kNd4rG
-         ADcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=v52mRCzOmfK+Fx0rJ1l2D84GDzDKn7rwoT3EYA1gF64=;
-        b=KhfghL9j+PogNZW7vZva0O292eru9rvrSaFSRelhMnkfiD/thDmzsOdtmyxsuIQ+1J
-         dGKDYK6B4bh7Z3CaeiI5tO0vOhpLDyodu6Wy6uFDX0AUTz5MTTX6f0lm3SKDs/ogzILK
-         N4NNnP/st4IblIHCINCrfRi87PwWbb/OrxZZDAyuWFkmPAT5c6VfWpIRhqXPdDCb29UM
-         qBjwNVgqnVdwxQXPSjzDWKpRW6gBgBhX6xhCbp3/4pZoUi1jtnILoUkhBhDqBQDNk3jd
-         4TxuC53wLq7MUffoI+TS814W1Ip9YVSN16z24Mp0O2j5gGKpzUww75TUlpTMLUR59Fec
-         pmOA==
-X-Gm-Message-State: ACgBeo0K3nshzrUMxTnpw6A1a9UaD+wqcICQljT1uFWeEuYSuUWx2zIo
-	rhYlyad1eBtu0sp8n8Sk+1d/bwlIwd4UjMwqMCseTuEqXOE=
-X-Google-Smtp-Source: AA6agR50ETNp4rRAyT7Cd2eRAJQGRQuBLlPBYXHDw08UAqRJ80zuah+oBX9ztbsqVkWGKOSEhlV55xEc9SmE2oGbWxY=
-X-Received: by 2002:a05:6000:15c6:b0:228:de49:dade with SMTP id
- y6-20020a05600015c600b00228de49dademr105091wry.28.1662470830638; Tue, 06 Sep
- 2022 06:27:10 -0700 (PDT)
+Received: (qmail 1477 invoked from network); 9 Feb 2017 14:26:14 -0000
+X-Auth-ID: jeremy@openstack.org
+X-Sender-Id: jeremy@openstack.org
+Message-ID: <20170209142600.GJ12842@openstack.org>
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
 MIME-Version: 1.0
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
- <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
-In-Reply-To: <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Tue, 6 Sep 2022 16:26:58 +0300
-Message-ID: <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="O3WNCzIuUImKerqE"
+Content-Disposition: inline
+In-Reply-To: <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: cve-assign@mitre.org
+Date: Thu, 9 Feb 2017 14:26:01 +0000
+From: Jeremy Stanley <jeremy@openstack.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
 
-If you can crash the python interpreter without syscalls and without
-the kernel killing it for OOM, would you call this DoS?
+--O3WNCzIuUImKerqE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2017-02-09 09:10:23 +0000 (+0000), Simon McVittie wrote:
+[...]
+> The CVE form requires specifying a vendor on the "products and
+> sources list". I'm sure this works fine for proprietary software,
+> where everyone obtains Microsoft Office from Microsoft. For open
+> source it seems impractical: for instance, I'm a maintainer of both
+> D-Bus and ikiwiki, neither of which has any particular allegiance
+> to any larger legal entity than the individual maintainers.
+[...]
+
+Agreed, having tried to figure out the form it seems geared toward
+requesting CVE IDs for vulnerabilities you've found in someone
+else's software, and not for maintainers of software to request CVE
+IDs for vulnerabilities which have been disclosed to them. The
+little detail callout icons for the vendor and product fields link
+to the CNA coverage list[0] which in turn instructs, "For open
+source software products not listed below, request a CVE ID through
+the Distributed Weakness Filing Project[1] CNA." So I guess that's
+what our project will be using in the future, or maybe just stop
+bothering to obtain CVEs on our own and let the various downstream
+redistributors of our software who are themselves CNAs issue them as
+needed and then fight over whose is the correct one.
+
+[0] http://cve.mitre.org/cve/request_id.html#cna_coverage
+[1] https://docs.google.com/forms/d/e/1FAIpQLSeiY7ldJAx-fjU6eSnXDaX5TB--L1u=
+jCQpmGAKnqBSJOcBShw/viewform
+--=20
+Jeremy Stanley
+
+--O3WNCzIuUImKerqE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQJ8BAEBCgBmBQJYnHv4XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
+OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpxxwP/RkaiXSkyK9K/EYA1ZtBlJHy
+2mkz7nWAtShuXrsRs7bFM2vQOt0SfhW1eY0DmbZNRcgeHuTlbsswvH7iXg2PdRyf
+35KqX3eF/Rg2CP/M0kAU1DkG3n+AWH+ilbDGaETNbD27jwEA8tImihACVRX5KEv1
+2c9u4WyfGxcQGjE7ZEW2Z9TYZjq9IMiR8f85omAbcVeH+lUd0m+CLssCMXx5aLRD
+8wRyJzz5vKqb8Wa75/3wv9iWFcOS5SeCu0a729p6g9v+nPALrYocRDYXaGpDP2Ci
+UkFkCrfJ93DWyJ4gzfMVmQ2UP/vz5jATGpEdRpQ5ZML/TYOymigL47OEN0Bk8NpJ
+P4hPMbN386Zq5ixNjp7aoLVY5vRYJe5YSnVr0s8Tk0Ft5B30NBRturNLWhS+GDtH
+9H2UGJLRs/sROV7nQDkS7wYSFeJnWBlWiMZzarziBs1WDqNiq+hAFEr8WGRAU5eC
+5rZea7m3NGb1r2CPmnxZ/d3+lXxmnVQm+3cxPRu/3pik6/ur9CpJARCn85/oievJ
+VKYzgq9Jw8xSFH/GeKvreIDVqpjEnzc+lcuJs+/067+kyH3v2osf8QHUDmdJsJ9l
+GSqt9VAwthRKse9iy434WODJ1D1SkC6LWup5YNSAmhWk5rcYY1N2g2PrwPr3SQzw
+FJdZo+Y3y4w41pAbI5Ld
+=RmgO
+-----END PGP SIGNATURE-----
+
+--O3WNCzIuUImKerqE--
