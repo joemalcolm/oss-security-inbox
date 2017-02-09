@@ -1,34 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/11/1
-Message-ID: <CAB6KFYBj3Jz2ZL1oeyH2RJmm43PNuroH_-5EiLptTdEs8qvN_Q@mail.gmail.com>
-Date: Tue, 10 Jan 2017 17:58:56 -0800
-From: Nathan McCauley <nathan.mccauley@...ker.com>
-To: docker-user@...glegroups.com, docker-dev@...glegroups.com,  fulldisclosure@...lists.org, oss-security@...ts.openwall.com,  vuln@...unia.com, bugtraq@...urityfocus.com
-Subject: Docker 1.12.6 - Security Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/27
+Message-ID: <CACn5sdQ4SaFqZDxhE5_s6x2L68Gf66Hq0MWjfN4=0T9zb3rSxw@mail.gmail.com>
+Date: Thu, 9 Feb 2017 14:24:58 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
+To: oss-security@...ts.openwall.com, Agustin Mista <mista.agustin@...il.com>
+Subject: Multiple DoS parsing and executing extended regex expressions in GNU libc
 Content-Type: text/plain; charset=utf-8
 
-Docker Engine version 1.12.6 has been released to address a vulnerability
-and is immediately available for all supported platforms. Users are advised
-to upgrade existing installations of the Docker Engine and use 1.12.6 for
-new installations.
+Hello,
 
-Please send any questions to security@...ker.com.
+We found a few extended regex expressions in GNU libc that will crash or
+abort the execution of regcomp or regexec. For instance:
+
+\a?{1,32767}
+
+will immediately exhaust the stack calling calc_eclosure_iter in the
+compilation. A small variation of this regex is:
+
+\a?{0,32767}
+
+will consume a very large amount of memory: it seems to eat 16GB in less
+than a minute. It is also possible to exhaust the stack memory trying to
+parse:
+
+(((((((( ... repeated 15000 times
+
+this issue is caused because regcomp will call the parse_expression,
+parse_branch and parse_reg_exp functions over and over again.
+Finally, the following regex will trigger an abort or invalid free when
+regexec is called:
+
+/S^^|\0|()//S^^|\0|()//S^^|\1|()/
+
+I don't think these issues can be used to execute arbitrary code, but it
+seems quite easy to produce a DoS if a remote application is parsing
+untrusted regex expressions.
+In fact, we asked one of our students, Agustín Mista, to create a simple PoC
+to show how to crash a proFTP server if you can write a .ftpaccess file.
+You can find the script attached.
+
+These issues were tested in GNU libc 2.19 (Ubuntu 14.04) and 2.24 (ArchLinux).
+
+I think it should affect the last version of GNU libc as well. Can someone
+confirm it?
+
+I'm investigating how to submit these issues in the new CVE form...
 
 
-==============================================================
-[CVE-2016-9962] Insecure opening of file-descriptor allows privilege
-escalation
+Regards,
+Gustavo.
 
-==============================================================
+Content of type "text/html" skipped
 
-RunC allowed additional container processes via `runc exec` to be ptraced
-by the pid 1 of the container.  This allows the main processes of the
-container, if running as root, to gain access to file-descriptors of these
-new processes during the initialization and can lead to container escapes
-or modification of runC state before the process is fully placed inside the
-container
-
-
-Credit for this discovery goes to Aleksa Sarai from SUSE and Tõnis Tiigi
-from Docker.
-
+View attachment "PoC.hs" of type "text/x-haskell" (1087 bytes)
