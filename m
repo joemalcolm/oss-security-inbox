@@ -1,75 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/6
-Message-Id: <38CA08B7-2456-4D56-AF60-BE1168ECE522@apache.org>
-Date: Wed, 27 Sep 2017 09:05:46 -0400
-From: Rob Tompkins <chtompki@...che.org>
-To: announce@...che.org, Commons Developers List <dev@...mons.apache.org>, Commons Users List <user@...mons.apache.org>, Luca Carettoni <luca@...ensec.com>, oss-security@...ts.openwall.com
-Cc: security@...che.org, "<private@...mons.apache.org>" <private@...mons.apache.org>
-Subject: [SECURITY] CVE-2017-12621 Apache Commons Jelly connects to URL with custom doctype definitions.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/7
+Message-ID: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+Date: Thu, 9 Feb 2017 00:00:09 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-12621: Apache Commons Jelly connects to URL with custom doctype definitions.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Severity: Medium
+oss-security Mailing List Members,
 
-Vendor:
-The Apache Software Foundation
+To more efficiently assign and publish CVE IDs and to enable
+automation and data sharing within CVE operations, MITRE is changing
+the way it accepts CVE ID requests on the oss-security mailing list.
+Starting today, please direct CVE ID requests to this web form
+<https://cveform.mitre.org/>. Through this form, you can request a new
+CVE ID, update a CVE ID that was already assigned, and submit
+questions or feedback to the CVE Team.
 
-Versions Affected:
-commons-jelly-1.0 (core), namely commons-jelly-1.0.jar
+The Distributed Weakness Filing (DWF) Project
+<https://distributedweaknessfiling.org/> is the root CVE Numbering
+Authority (CNA, described more at
+<https://cve.mitre.org/cve/cna.html>) that handles open-source
+software vulnerability requests. Please note that the DWF CNA is not
+yet ready to handle volume assignments, however they are actively
+working towards this in the coming weeks and months. Once ready, they
+will be responsible for the assignment of CVE IDs for open-source
+software (not covered by another CNA) through their own structured
+intake web form. At that time, we will inform the community of the
+change and direct them to the DWF web form. Until that time, MITRE
+will continue to handle any requests for CVE IDs from oss-security
+list users who submit them through the web form at
+<https://cveform.mitre.org/>.
 
-Description:
-During Jelly (xml) file parsing with Apache Xerces, if a custom doctype entity is declared with a “SYSTEM” entity with a URL and that entity is used in the body of the Jelly file, during parser instantiation the parser will attempt to connect to said URL. This could lead to XML External Entity (XXE) attacks. The Open Web Application Security Project suggests that the fix be https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Prevention_Cheat_Sheet#XMLReader
+We understand that oss-security is for vulnerabilities that should
+have immediate public disclosure. You can continue to send details to
+oss-security and propose that a CVE ID should exist. To actually
+obtain the CVE ID, please also visit the web form at
+<https://cveform.mitre.org/>. When you enter a vulnerability
+description on the web form, the CVE and description will typically be
+available on the NVD and CVE web sites at the same time or shortly
+after we email the CVE ID to you. Because of this, we strongly prefer
+that you enter a complete description (including the product name and
+affected versions) that can be published as-is. Please do not submit
+only a link URL or only code.
 
-Mitigation:
-1.0 users should migrate to 1.0.1.
+The CVE team will continue to watch the oss-security list for any
+disputes or clarifications about whether a CVE ID should exist or is a
+duplicate. (More specifically, you can use the oss-security forum to
+quickly downvote a CVE ID proposal before the CVE ID ever exists.) The
+CVE team will track this information and include it when considering a
+CVE assignment. CVE is not abandoning the substantial crowdsourcing
+value that the mailing list traffic has been providing.
 
-Example:
+If you have had trouble using the <https://cveform.mitre.org/> site,
+please let us know specifically what happened and how it did not meet
+your expectations. We would also like to hear your thoughts about what
+vulnerability information should appear both in an oss-security
+posting and in the CVE List, and whether some types of information
+should be in one of these but not the other (e.g., if you want the CVE
+List to specify the impact whenever possible but not list every
+exploitation step).
+  
+For more information or questions regarding this change, you can
+contact MITRE at cve@...re.org, submit a comment at
+<https://cveform.mitre.org/>, or visit us at <https://cve.mitre.org/>.
 
-example.jelly
---------------
-<?xml version="1.0"?>
-<!---
- Licensed to the Apache Software Foundation (ASF) under one or more
- contributor license agreements.  See the NOTICE file distributed with
- this work for additional information regarding copyright ownership.
- The ASF licenses this file to You under the Apache License, Version 2.0
- (the "License"); you may not use this file except in compliance with
- the License.  You may obtain a copy of the License at
-      http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
-<!DOCTYPE r [
-        <!ELEMENT r ANY >
-        <!ENTITY sp SYSTEM "http://127.0.0.1:4444/">
-        ]>
-<r>&sp;</r>
-<j:jelly trim="false" xmlns:j="jelly:core"
-         xmlns:x="jelly:xml"
-         xmlns:html="jelly:html">
-</j:jelly>
---------------
+Regards,
 
-ExampleParser.java
-------------------
-public class ExampleParser {
-	
-	public static void main(String[] args) throws JellyException, IOException, 
-					NoSuchMethodException, IllegalAccessException,IllegalArgumentException, 
-					InvocationTargetException {
-		JellyContext context = new JellyContext();
-		context.runScript("example.jelly", null);
-	}
-}
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Credit:
-This was discovered by Luca Carettoni of Doyensec.
-
-References:
-[1] http://commons.apache.org/jelly/security-reports.html
-[2] https://issues.apache.org/jira/browse/JELLY-293
-
+iQIcBAEBCAAGBQJYm/ZBAAoJEHb/MwWLVhi2SfwP/i77jANJyU3F5dvy+4rcrjIE
+xZRgCDUzBxz+ZMFiMuk1SqBDTNy1Rw0gE6mhRvWZQ6IDGSDBQHaE5T1eQCbgWkyp
+3vpFshLUnbMVv+xy/Qvfv9E2jsSyq/lrDPzWCBmBUKT43s7hM+2VLvmtNWlbNyj6
+1JwbHMqxdJzqfvr5a3tPJY8T/kwq6IWxNYNmUEXX7qHMqslhCd7bTMxVJYyJiwXh
+bvynBCYY8PsOXxonfQ8mEZWdrKTwcGgaHcrhH1ugOyOlDa65FUsHAxH4Fo4g0UfB
+txseo1ID3i0eRH85nPyvPmBU+gSqnGLgX5Apl+09gVqejfAom51/elRmFZMZxpkX
+caT+PHY3iryJyeYPklujnpp69F+CyQH/tWLCWn8CoEePmbUfM7QCom+tlJKIelrr
+Mhz5YYJiISBl1UgCwJrgF8P0xEaMR7eL2hA8LddQBaDAAxiaHdjJ4PjyA5uylfXz
+x7KCWstR6+LgVezML6nS16bMWS5F9/rYVU4ZR8/c/B7B7+0K53lnRfjoIuqTizPC
+zemXxV+K/5hRBAjgXbjq8yewtOxhUMrGrNlacQYlJf/auhWWLvvvaMdigJdQf+Ba
+xlOo3BzE/Rkj0zBXlTqevpGsMK7Sj1wNvtqBK6Tc7spjlSSb8724H4Rksg9jToCn
+JR3Cc2QWqDTEQfyWUKid
+=v+Dk
+-----END PGP SIGNATURE-----
