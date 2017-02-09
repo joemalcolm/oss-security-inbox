@@ -1,61 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/8
-Message-ID: <20171031142034.GJ31388@io.lakedaemon.net>
-Date: Tue, 31 Oct 2017 14:20:34 +0000
-From: Jason Cooper <osssecurity@...edaemon.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/2
+Message-ID: <CACn5sdRJfTeyHky2mxgPvt4+sW6U9K2GqHXZpqprKNqjzeJ=oA@mail.gmail.com>
+Date: Wed, 8 Feb 2017 22:47:37 -0300
+From: Gustavo Grieco <gustavo.grieco@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+Subject: Re: Re: CVE request: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)
 Content-Type: text/plain; charset=utf-8
 
-Hi Hanno,
+2017-02-08 19:32 GMT-03:00 Ian Zimmerman <itz@...mate.net>:
 
-On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno Böck wrote:
-> I think vim should change the behavior of swap files:
-> 1. they should be stored in /tmp by default
+> On 2016-11-05 10:04, Gustavo Grieco wrote:
+>
+> > We found a null pointer dereference when parsing a xml file using recover
+> > mode. It was tested in libxml 2.9.4 (ArchLinux x86_64). To reproduce:
+> >
+> > $ xmllint --recover crash-libxml2-recover.xml
+> >
+> > ==27646==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+> > (pc 0x0000004fbd88 bp 0x7ffc3345dff0 sp 0x7ffc3345dfd0 T0)
+> >     #0 0x4fbd87 in xmlDumpElementContent
+> > /home/g/Work/Code/libxml2-2.9.4/valid.c:1181
+> >     #1 0x4fbcd5 in xmlDumpElementContent
+> > /home/g/Work/Code/libxml2-2.9.4/valid.c:1177
+> >     #2 0x4fe5ff in xmlDumpElementDecl
+> > /home/g/Work/Code/libxml2-2.9.4/valid.c:1706
+> >     #3 0x72e714 in xmlBufDumpElementDecl
+> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:501
+> >     #4 0x73048f in xmlNodeDumpOutputInternal
+> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:939
+> >     #5 0x72fc47 in xmlNodeListDumpOutput
+> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:825
+> >     #6 0x72f6d5 in xmlDtdDumpOutput
+> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:749
+> >     #7 0x73038f in xmlNodeDumpOutputInternal
+> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:931
+> >     #8 0x732412 in xmlDocContentDumpOutput
+> > /home/g/Work/Code/libxml2-2.9.4/xmlsave.c:1234
+> >     #9 0x735883 in xmlSaveDoc /home/g/Work/Code/libxml2-2.9.
+> 4/xmlsave.c:1936
+> >     #10 0x40ba0f in parseAndPrintFile
+> > /home/g/Work/Code/libxml2-2.9.4/xmllint.c:2712
+> >     #11 0x411eb6 in main /home/g/Work/Code/libxml2-2.9.4/xmllint.c:3767
+> >     #12 0x7f23dcd4c290 in __libc_start_main (/usr/lib/libc.so.6+0x20290)
+> >     #13 0x4032b9 in _start
+> > (/home/g/Work/Code/libxml2-2.9.4/xmllint+0x4032b9)
+>
+> Where did this one ever go?  Is there a CVE?  Is there a patch?
+>
 
-This opens up a host of other issues, which others have highlighted.
+AFAIK: no patch, no CVE.
 
-> 2. they should have secure permissions (tmp file security is
-> a tricky thing and needs careful consideration to avoid symlink attacks
-> and the like, but there are dedicated functions for this like mkstemp).
 
-This is only if you move to /tmp.
+>
+> --
+> Please *no* private Cc: on mailing lists and newsgroups
+> Personal signed mail: please _encrypt_ and sign
+> Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+>
 
-> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
-> they shouldn't be called /tmp/.test.txt.swp, but more something
-> like /tmp/.vim_swap.123782173)
-
-Adding this requirement begs for a Rube Goldberg solution.  :-)  Since
-vim needs a deterministic name to search for when it opens the file the
-next time.  And next time could be after a reboot.
-
-Maybe we just need to change the default backup pattern to something
-that isn't hidden by default?  e.g. wp-config.php.swp (no leading
-period), or wp-config.php~ ?  Thus, it's more likely to be caught by the
-developer.
-
-Honestly, The real problem is just webserver design in general.  In
-order to have automatic reboot/restart, you need to grossly compromise
-security in several ways.
-
-  a) store the server ssl key on disk without a password.
-  b) store passwords in the clear in config files, readable by the
-     running server user.
-
-The real answer is "Don't do that."  Which, years ago, was really
-infeasible since most servers were physically hosted and redundancy was
-expensive.
-
-But we're not there anymore.  Wether you use a caching provider like
-cloudflare, or a hosting service using VMs, there's plenty of cheap
-redundancy.  Having an individual box down doesn't mean your site is
-down.  So, this gives us some wiggle room to ask for a password to
-decrypt the key (or, load from remote), and provide credentials for the
-server to access other resources.
-
-But, I digress.  Yes, vim swap files are a problem.  But only because
-we've built stupid decisions (necessary at one time) into the design.
-
-thx,
-
-Jason.
