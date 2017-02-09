@@ -1,32 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/24/1
-Message-ID: <D54B5DB5.A159F%vgumashta@hortonworks.com>
-Date: Wed, 24 May 2017 22:56:38 +0000
-From: Vaibhav Gumashta <vgumashta@...tonworks.com>
-To: "security@...e.apache.org" <security@...e.apache.org>, "bcrawford@...tco.com" <bcrawford@...tco.com>
-CC: "announce@...che.org" <announce@...che.org>, "bugtraq@...urityfocus.com" <bugtraq@...urityfocus.com>, "dev@...e.apache.org" <dev@...e.apache.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "user@...e.apache.org" <user@...e.apache.org>
-Subject: CVE-2016-3083: Apache Hive SSL vulnerability bug disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/25
+Message-ID: <9917317.bvZ6nie1ul@blackgate>
+Date: Thu, 09 Feb 2017 16:38:23 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: mupdf: heap-based buffer overflow in fz_subsample_pixmap
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important
+The upstream commit which fixes the issue:
 
-Vendor: The Apache Software Foundation
+http://www.ghostscript.com/cgi-bin/findgit.cgi?
+2c4e5867ee699b1081527bc6c6ea0e99a35a5c27
 
-Versions Affected:
-Apache Hive 0.13.x
-Apache Hive 0.14.x
-Apache Hive 1.0.0 - 1.0.1
-Apache Hive 1.1.0 - 1.1.1
-Apache Hive 1.2.0 - 1.2.1
-Apache Hive 2.0.0
-
-Description:
-
-Apache Hive (JDBC + HiveServer2) implements SSL for plain TCP and HTTP connections (it supports both transport modes). While validating the server's certificate during the connection setup, the client doesn't seem to be verifying the common name attribute of the certificate. In this way, if a JDBC client sends an SSL request to server abc.com, and the server responds with a valid certificate (certified by CA) but issued to xyz.com, the client will accept that as a valid certificate and the SSL handshake will go through.
-
-Mitigation:
-
-Upgrade to Apache Hive 1.2.2 for 1.x release line, or to Apache Hive 2.0.1 or later for 2.0.x release line, or to Apache Hive 2.1.0 and later for 2.1.x release line.
-
-Credit: This issue was discovered by Branden Crawford from Inteco Systems Limited (inetco.com).
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
