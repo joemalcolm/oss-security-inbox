@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2461" "Monday" "4" "January" "2021" "16:20:28" "+0100" "Pietro Albini" "pietro@pietroalbini.org" "<74012016-4a10-f216-cb42-0426d698c048@pietroalbini.org>" "62" "[oss-security] CVE-2020-26297: mdBook XSS" nil nil nil "1" "2021010415:20:28" "[oss-security] CVE-2020-26297: mdBook XSS" (number mark "U       pietro@pietr Jan  4   62/2461  " thread-indent "\"[oss-security] CVE-2020-26297: mdBook XSS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-26297: mdBook XSS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1727" "Thursday" "9" "February" "2017" "14:49:10" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2211995.q60Yp6Jerj@blackgate>" "59" "[oss-security] zziplib: NULL pointer dereference in main (unzzipcat.c)" nil nil nil "2" "2017020913:49:10" "[oss-security] zziplib: NULL pointer dereference in main (unzzipcat.c)" (number mark "U       ago@gentoo.o Feb  9   59/1727  " thread-indent "\"[oss-security] zziplib: NULL pointer dereference in main (unzzipcat.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5226 invoked by uid 550); 4 Jan 2021 15:42:40 -0000
+Received: (qmail 7329 invoked by uid 550); 9 Feb 2017 13:49:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,114 +12,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30546 invoked from network); 4 Jan 2021 15:20:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	pietroalbini.org; h=to:from:subject:message-id:date:mime-version
-	:content-type:content-transfer-encoding; s=fm1; bh=mfKpp6/0xqms3
-	SFK8zFvrl+4ZiZZeDzq3P7Iq3RtBhk=; b=Cnwtp4EjQTQv70H3TpQXjgCbtDsnz
-	h88PJZ5Y3/dkZK4RRIRGlSmw0S/b1blwn+7p51DrJuZguwUNHgZwz1+QmgYDqzRA
-	eWR2bFhMuPoefqBGCMMmGuvaRGnNBBW9Wp68Krch7DLbPGCNUat7NpKJHsmqqoor
-	tvUvzmlEQvLB806ovurvtG+jpEQCJgS5YmsWjpQ4E/5c1pZ1VntSqnXKTcp/wVQg
-	1SAQUNln4gZtHYA/IqZKixPVAB/VldyRer7bcEMIE3ZE4Dx+i6k/QbMcUpJnnhhg
-	wg9p8149YNHeDgoNRINyeBWpomwcrr/izOLsEYEAhJbhiun39YCo4WLaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=mfKpp6
-	/0xqms3SFK8zFvrl+4ZiZZeDzq3P7Iq3RtBhk=; b=I6AX9tMomiycspDpxvZILO
-	Svg1nyBGONZ903zpFJEL15WRIOrDs1xzeW3d21agA5DAYN9hil6aUirCfdCfw/xr
-	09ka/XVdiaVwK6h/z4NXV7WI5tucosiTScgVW1hBMLaW3awveJiN+1c9KEmiyDYq
-	5hPNLVoRG5z52cu1Ywzxv+Am4aK5bDKbF4B+uSEOprecqbHk5SFv+Pec4dizcWMo
-	f9GNYB2G1M3SceV81Riq7fypS9chCWVsu2RjNu5C6OFPDR1lahp2j7nFWRDjFueb
-	/CJYrfuUJitI1sJ7YdknBd+1eZe6Psehjl2vNGgGE/Zmapm8PpFbM50JrZ50eQNw
-	==
-X-ME-Sender: <xms:PTLzX7U6JcEpcSrYMKjCV74wejC-C7iRFZj1WPOh21eUOG8DUZXVSA>
-    <xme:PTLzXzm5agxm8xZus4boBZFeKHm7nrHaj8o1muWR_5_6dyCOCdbp0eAReiL9PPfBD
-    5DyiIxv3nBPFeplYWs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdeffedgjeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefvhffukffffgggtgfgsehtjeertd
-    dtfeejnecuhfhrohhmpefrihgvthhrohcutehlsghinhhiuceophhivghtrhhosehpihgv
-    thhrohgrlhgsihhnihdrohhrgheqnecuggftrfgrthhtvghrnhepffdvieejleehgfduke
-    eijeehhfefheekjeffjedvleelfffhleehfeeglefhgedunecuffhomhgrihhnpehmihht
-    rhgvrdhorhhgpdhruhhsthdqlhgrnhhgrdhorhhgnecukfhppeduhedurdegvddrudejie
-    drvddvtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehpihgvthhrohesphhivghtrhhorghlsghinhhirdhorhhg
-X-ME-Proxy: <xmx:PTLzX3ZrxlHr2GfV-d0mj_OY0a7AOSVn4hEeubgTD_nN0nIRksnNaw>
-    <xmx:PTLzX2Uxs79eEZQorgp3b90pZP5AS-V6xBkjTeRG7O2nQlRvmV2RYA>
-    <xmx:PTLzX1mKDPn9tvotVhCOqFZy3g8AE7m9uTwoyqmVwPZC-4nUMJaoTg>
-    <xmx:PjLzXxxnvHinow5KgJb3sNO1R333UlqTNZ6jSvEcvq-rfmySl0R6mQ>
+Received: (qmail 5239 invoked from network); 9 Feb 2017 13:49:27 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-From: Pietro Albini <pietro@pietroalbini.org>
-Message-ID: <74012016-4a10-f216-cb42-0426d698c048@pietroalbini.org>
-Date: Mon, 4 Jan 2021 16:20:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+Date: Thu, 09 Feb 2017 14:49:10 +0100
+Message-ID: <2211995.q60Yp6Jerj@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2020-26297: mdBook XSS
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] zziplib: NULL pointer dereference in main (unzzipcat.c)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-The Rust Security Response Working Group was recently notified of a security
-issue affecting the search feature of mdBook, which could allow an attacker to
-execute arbitrary JavaScript code on the page.
+A fuzz on it discovered an a NULL pointer access.
 
-The CVE for this vulnerability is [CVE-2020-26297][1].
+The complete ASan output:
 
-## Overview
+# unzzipcat $FILE
+==22686==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 
+0x7f6de98b259a bp 0x7ffddc25a080 sp 0x7ffddc259f98 T0)
+==22686==The signal is caused by a READ memory access.
+==22686==Hint: address points to the zero page.
+    #0 0x7f6de98b2599 in strlen /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76
+    #1 0x7f6de989b7ab in _IO_puts /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/libio/ioputs.c:36
+    #2 0x509d73 in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat.c:94:6
+    #3 0x7f6de985161f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #4 0x419848 in _init (/usr/bin/unzzipcat+0x419848)
 
-The search feature of mdBook (introduced in version 0.1.4) was affected by a
-cross site scripting vulnerability that allowed an attacker to execute
-arbitrary JavaScript code on an user's browser by tricking the user into typing
-a malicious search query, or tricking the user into clicking a link to the
-search page with the malicious search query prefilled.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.22-
+r4/work/glibc-2.22/string/../sysdeps/x86_64/strlen.S:76 in strlen
+==22686==ABORTING
 
-mdBook 0.4.5 fixes the vulnerability by properly escaping the search query.
+Affected version:
+0.13.62
 
-## Mitigations
+Fixed version:
+N/A
 
-Owners of websites built with mdBook have to upgrade to mdBook 0.4.5 or greater
-and rebuild their website contents with it. It's possible to install mdBook
-0.4.5 on the local system with:
+Commit fix:
+N/A
 
-```
-cargo install mdbook --version 0.4.5 --force
-```
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-## Acknowledgements
+CVE:
+N/A
 
-Thanks to Kamil Vavra for responsibly disclosing the vulnerability to us
-according to [our security policy][2].
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00158-zziplib-nullptr-main
 
-## Timeline of events
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
 
-All times are listed in UTC.
+Note:
+This bug was found with American Fuzzy Lop.
 
-* 2020-12-30 20:14 - The issue is reported to the Rust Security Response WG
-* 2020-12-30 20:32 - The issue is acknowledged and the investigation began
-* 2020-12-30 21:21 - Found the cause of the vulnerability and prepared the patch
-* 2021-01-04 15:00 - Patched version released and vulnerability disclosed
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c
 
-[1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26297
-[2]: https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAl/zJ2oACgkQ77mGCudS
-DaxtCRAAwRayTKHncQjLla6SG0HwUYX5q3Q2zsDOhrMNnQmPb4Db0hBI4tuYy6O3
-hQO0yOIuhvJKS17aMzsGL1qCYrc50d8Em3OW758FYP/VtsfJh0rvbqRl4hDvEcx1
-ZBcNlrbf5y7esrsAFneeezxKbYqkWB1RnSjc87Rbs0Yph7shGKDA/aURZb83vCCr
-28aEBaFUpCYP+mNzTVfhh2ZsPJ9J5xaLbFbz2kune0QrrAlUzR2rj+yz0wuKOMi5
-nvL5akfpqq1eV4XkV1pheo+FeZVW797VmNTmOfW1V2q+sMhZhpwjJTb4D2b/6k4m
-s1IUfCZbL2FqR8NkGybb2yoPAInDh6NQcj8v2RM0N2MHFgx25CATuQHg+oHshBv4
-ycuLHzzEtSkg1YcPjzqmBOSi8zRHY5cAJnZQc36bXqzoKtkQxDdyhP2sLvaXLhJj
-H8nQq80TKkWHgZGDTTR2QUw/D6z2SF8YFYKRz4stuP4H1bOBLwyqFrAl+4HTeheW
-B/3LEL7ObvaENXGagfampNuCru7XXcPpuhwSacs8azKrcSKa7MSnT/ALyTSZ4hAP
-Uy/PuQPaX4gVCYL4QYD4xlY6T+QMLzY07CRTcuDuA+M0b4cHrMfBRNWX0SA9Hi1a
-6sXVC5cWuOWzDso7hRSjpvkkG5MRXfU+MgHn3C/ZOjmuLfjO0V0=
-=sM0q
------END PGP SIGNATURE-----
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
