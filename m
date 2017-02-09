@@ -1,26 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/07/7
-Message-ID: <alpine.GSO.2.20.1708070802050.24919@freddy.simplesystems.org>
-Date: Mon, 7 Aug 2017 08:04:30 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/19
+Message-ID: <7514610.NxtJqOQEcv@blackgate>
+Date: Thu, 09 Feb 2017 14:50:18 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cve issue discussion
+Subject: zziplib: load of misaligned address in memdisk.c
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 7 Aug 2017, Glenn Randers-Pehrson wrote:
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-> It's not causing a crash, just a delay.  You'll safely get either an OOM
-> message or an EOF message.and no memory leak.
+A fuzz on it discovered the load of a misaligned address. It can cause 
+undefined behavior.
 
-On some systems, the memory is not returned from the running process 
-to the OS so this results in continued high memory usage.  Allocations 
-done using mmap() may be returned to the OS.
+The complete ASan output:
 
-For a device like a printer a 2GB allocation might be rejected 
-outright, but a smaller allocation might be accepted.
+# unzzipcat-mem $FILE
+/tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:250:33: runtime error: load of 
+misaligned address 0x00000295d17d for type 'uint16_t' (aka 'unsigned short'), 
+which requires 2 byte alignment
+0x00000295d17d: note: pointer points here
+ 5a 45 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff 
+ff ff 42 00 00 00  b1
+             ^ 
+/tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:256:22: runtime error: load of 
+misaligned address 0x00000295d17f for type 'uint16_t' (aka 'unsigned short'), 
+which requires 2 byte alignment
+0x00000295d17f: note: pointer points here
+ 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff ff ff 
+42 00 00 00  b1 01 00
+             ^
 
-Bob
+Affected version:
+0.13.62
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00160-zziplib-misalignedadd-memdisk_c
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-load-of-misaligned-address-in-memdisk-c
+
 -- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Agostino Sarubbo
+Gentoo Linux Developer
