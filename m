@@ -1,18 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/19
-Message-ID: <1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com>
-Date: Thu, 2 Feb 2017 05:18:06 -0500 (EST)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/24
+Message-ID: <20170209145409.GE2569@scully.more-magic.net>
+Date: Thu, 9 Feb 2017 15:54:09 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Subject: curiosity for CVE-2016-10000
+Cc: cve-assign@...re.org
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-hello, MITRE, all,
+On Thu, Feb 09, 2017 at 02:26:01PM +0000, Jeremy Stanley wrote:
+> Agreed, having tried to figure out the form it seems geared toward
+> requesting CVE IDs for vulnerabilities you've found in someone
+> else's software, and not for maintainers of software to request CVE
+> IDs for vulnerabilities which have been disclosed to them. The
+> little detail callout icons for the vendor and product fields link
+> to the CNA coverage list[0]
 
-i'm asking just out of curiosity about CVE-2016-10000. afaiu, it is in
-a range allocated to some CNA, but it is not yet(?) allocated. can you
-please, tell what CNA CVE-2016-10000 is allocated to (i was not able to
-find this info at mirte.org) so i can ask them directly about this CVE status?
+I'm also concerned about this.  Last time I asked a MITRE employee
+about this as a result of the automated mail that oss-security
+sends out when it detects a CVE request, and I did not receive a
+reply.
 
-best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+So far I've only requested CVE IDs for projects that have no
+obvious CNA.
+
+> which in turn instructs, "For open
+> source software products not listed below, request a CVE ID through
+> the Distributed Weakness Filing Project[1] CNA." So I guess that's
+> what our project will be using in the future, or maybe just stop
+> bothering to obtain CVEs on our own and let the various downstream
+> redistributors of our software who are themselves CNAs issue them as
+> needed and then fight over whose is the correct one.
+> [0] http://cve.mitre.org/cve/request_id.html#cna_coverage
+> [1] https://docs.google.com/forms/d/e/1FAIpQLSeiY7ldJAx-fjU6eSnXDaX5TB--L1ujCQpmGAKnqBSJOcBShw/viewform
+
+For me, having to use a Google docs form is unacceptable.  I try to
+avoid Google in my life as much as possible.  I'd rather avoid
+requesting a CVE ID, or let someone else do it, if that's the only
+remaining option for non-listed free software projects.
+
+The oss-security list was a reasonably good solution for me.  The only
+disadvantage is that time passes between initial announcement and the
+CVE ID, because (AFAIK) a CVE request needs to contain a reference to
+the announcement as "proof" that the vulnerability is real and not a
+duplicate.  In an ideal world, free software project leaders should be
+able to request a CVE ID _before_ announcing a vulnerability to their
+user base.  If there were some way to register people as project leaders,
+the "proof" should not be necessary, they should be able to request a
+CVE ID with authority.
+
+This delay between announcement and getting a CVE ID has always bothered
+me about CVE requests via oss-security.  On the other hand, I like the
+fact that there's a somewhat centralised place to watch for important
+and early(!) free software security information.
+
+Cheers,
+Peter Bex
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
