@@ -1,62 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/10/4
-Message-ID: <20170110062713.GB10582@lorien.valinor.li>
-Date: Tue, 10 Jan 2017 07:27:13 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/23
+Message-ID: <20170209142600.GJ12842@openstack.org>
+Date: Thu, 9 Feb 2017 14:26:01 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, Colin Watson <cjwatson@...ark.greenend.org.uk>
-Subject: Re: Re: CVE Request: icoutils: exploitable crash in wrestool programm
+Cc: cve-assign@...re.org
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2017-02-09 09:10:23 +0000 (+0000), Simon McVittie wrote:
+[...]
+> The CVE form requires specifying a vendor on the "products and
+> sources list". I'm sure this works fine for proprietary software,
+> where everyone obtains Microsoft Office from Microsoft. For open
+> source it seems impractical: for instance, I'm a maintainer of both
+> D-Bus and ikiwiki, neither of which has any particular allegiance
+> to any larger legal entity than the individual maintainers.
+[...]
 
-On Sun, Jan 08, 2017 at 02:47:40PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > an exploitable crash in wrestool from the icoutils
->
-> > https://bugs.debian.org/850017
-> > https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
->
-> >> wrestool/fileread.c
->
-> >> On 64-bit systems, the result of subtracting two pointers exceeds the
-> >> size of int
->
-> Use CVE-2017-5208.
+Agreed, having tried to figure out the form it seems geared toward
+requesting CVE IDs for vulnerabilities you've found in someone
+else's software, and not for maintainers of software to request CVE
+IDs for vulnerabilities which have been disclosed to them. The
+little detail callout icons for the vendor and product fields link
+to the CNA coverage list[0] which in turn instructs, "For open
+source software products not listed below, request a CVE ID through
+the Distributed Weakness Filing Project[1] CNA." So I guess that's
+what our project will be using in the future, or maybe just stop
+bothering to obtain CVEs on our own and let the various downstream
+redistributors of our software who are themselves CNAs issue them as
+needed and then fight over whose is the correct one.
 
-Thanks for the CVE assignment. Ftr, this was upstreamed as
+[0] http://cve.mitre.org/cve/request_id.html#cna_coverage
+[1] https://docs.google.com/forms/d/e/1FAIpQLSeiY7ldJAx-fjU6eSnXDaX5TB--L1ujCQpmGAKnqBSJOcBShw/viewform
+-- 
+Jeremy Stanley
 
-http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=0d569f458f306b88f60156d60c9cf058125cf173
-
-It turns out that this is not enough, so upstream has issued
-
-http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=4fbe9222fd79ee31b7ec031b0be070a9a400d1d3
-
-to make the checks more stringent. Quoting a reply from upstream to the Debian
-maintainer "But as I see it there are still combinations of the arguments which
-make the test succeed even though the the memory block identified by
-offset&size is not fully inside memory&total_size ??? e.g. offset < memory, but
-size is larger than the difference.  I have attached another patch (applies on
-top of yours) that more stringently checks all the memory bounds. Hopefully
-that will preempt shenanigans with specially crafted files containing weird
-offsets and sizes."
-
-Could you please assign a further CVE for this follow up fix?
-
-Furthermore I would like to ask if the following two commits from upstream,
-can have as well an identifier assigned:
-
-http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=1aa9f28f7bcbdfff6a84a15ac8d9a87559b1596a
-http://git.savannah.gnu.org/cgit/icoutils.git/commit/?id=1a108713ac26215c7568353f6e02e727e6d4b24a
-
-They relate to the Red Hat bugzilla entry at
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1249276
-
-All the three followup commits are included in Debian with the recent
-upload to Debian unstable, versioned as 0.31.1-1.
-
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
