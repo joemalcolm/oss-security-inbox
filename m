@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/12
-Message-ID: <4188502.8b3PN4uBSd@wanheda>
-Date: Tue, 26 Sep 2017 16:50:10 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Greg KH <greg@...ah.com>
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/6
+Message-ID: <25d7b5cb2bae4fa0a13334e37fa0ad48@imshyb02.MITRE.ORG>
+Date: Wed, 8 Feb 2017 23:59:30 -0500
+From: <cve-assign@...re.org>
+To: <seb@...ian.org>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: XSS in viewvc
 Content-Type: text/plain; charset=utf-8
 
-On martedì 26 settembre 2017 09:32:14 CEST Greg KH wrote:
-> > I guess this would be benefit for all.
-> 
-> Define "all" 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-You know, for example in Gentoo we are following the upstream releases. So 
-from time to time we stabilize a newer kernel that "syncs" with upstream.
-This does not happen for non-rolling (release) distros that may want to patch/
-backport the security fix.
+> https://github.com/viewvc/viewvc/commit/9dcfc7daa4c940992920d3b2fbd317da20e44aad
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+>> Escape some raw path data before handing off to templates
+>>   lib/viewvc.py
+>>   (nav_path): Escape the 'name' property of navigation path components
+>>    the same way we escape that of the 'root' path component.
+
+Use CVE-2017-5938.
+
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYm/M1AAoJEHb/MwWLVhi2ydkP/iZePnJAdB7POw86HhGs/KEl
+WyFuBzilrKz11Yn5hGFX/fDPld9Qlc5BKF8AyLeX5NjKonLyvNOSk8uHjUS0uzlh
+LR7Lzbo+V9+An+17PFbLu0P8BLbFtvMyPvbOloN6MrIJhavB8UAwIROamQONwlxA
+WtI+YjB0Y4DrRcxX7tx9G2hL6pMUhiLomDC8ZI9NcPHH1ycL6DypPXM7FhUKfayv
+JnYhR9owZAVBDq3U43D3kbsm7aKMPa6qJKCtXTGlplxXs+QtglQmg421u9NNRWHg
+Z887uIVuk0sjUZL0YwFGhwfLNy0IXKQr6mEkZU+topPmgWODt/Cqc4lMUS5c/uCj
++ZmpqVQ5sEj26cnEh21FhyIvMSdt8Phht3CTbPkIjnL9ZwAZ6TWzQlsOPKMZANYK
+IJDNjVSgdumCc2HllO/7AqnDqKeXYmKC/nt8GCLRmtlX+8+ugCnkD5+NFx4C49Kx
+G2zDXt9jbmIITHLIyxmJwHKXOglwebANi9l6+K7tcOOzxQb6zAPdd0s1VxM43WMO
+V1FcOufegbkp+4Jd4clYhJTLFHutw0KQQx0BDyjHmodZrpMHy0Y5GKygCsxsvh77
+oH53yMp3AZeHuMQS0kgzK2RQoEVW0U2+tqpQVglnJ2irHmjs9CSKKYRKGN8FqdKz
+pD5vwyqr7SXdOymWK+vu
+=LX6c
+-----END PGP SIGNATURE-----
