@@ -1,64 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/4
-Message-ID: <CAJxmC71oB_uSqrZ0RJXqsWRa9qXUMHqHzbezUZCOR_SAfgOCcA@mail.gmail.com>
-Date: Sun, 10 Dec 2017 19:31:41 +0530
-From: Isuru Udana <isudana@...che.org>
-To: security <security@...che.org>, dev@...apse.apache.org, user@...apse.apache.org,  jianan huang <sevcks@...il.com>, oss-security@...ts.openwall.com
-Subject: [CVE-2017-15708] Apache Synapse Remote Code Execution Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/16
+Message-ID: <4817444.ggVtDkFeZg@blackgate>
+Date: Thu, 09 Feb 2017 14:47:14 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: zziplib: NULL pointer dereference in prescan_entry (fseeko.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-CVE-2017-15708: Apache Synapse Remote Code Execution Vulnerability
-
-Severity: Important
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-3.0.0, 2.1.0, 2.0.0, 1.2, 1.1.2, 1.1.1
-
 Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-Due to the presence of Apache Commons Collections 3.2.1
-(commons-collections-3.2.1.jar) or previous versions,
-Apache Synapse 3.0.0 or all previous releases allows remote code
-execution attacks that can be performed by
-injecting specially crafted serialized objects.
+The unzzipcat-seeko utility provided by the package, by default, without any 
+crafted zip shows a NULL pointer access. For completeness I’m attaching my 
+reproducer.
 
-Mitigation:
-Upgrade to 3.0.1 version.
-    In Synapse 3.0.1 version, Commons Collection has been updated to
-3.2.2 version which contains
-    the fix for the above mentioned vulnerability.
+The complete ASan output:
+
+# unzzipcat-seeko $FILE
+==3376==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
+0x00000041f8da bp 0xbebebebebebebeae sp 0x7ffe6020c2a0 T0)                                                                                                                                         
+==3376==The signal is caused by a READ memory access.                                                                                                                                                                                                                          
+==3376==Hint: address points to the zero page.                                                                                                                                                                                                                                 
+    #0 0x41f8d9 in __asan::Allocator::Reallocate(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:550                                                          
+    #1 0x41f8d9 in __asan::asan_realloc(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*) /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:748                                                                   
+    #2 0x4d29a1 in __interceptor_realloc /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:85                                                                                                                        
+    #3 0x7f21bce0f146 in prescan_entry /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/fseeko.c:189:25                                                                                                                                                      
+    #4 0x7f21bce0f146 in zzip_entry_findfirst /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/fseeko.c:324                                                                                                                                                  
+    #5 0x509cb3 in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-seeko.c:79:22                                                                                                                                                             
+    #6 0x7f21bbf5261f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #7 0x4197e8 in _init (/usr/bin/unzzipcat-seeko+0x4197e8)                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.0-
+r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_allocator.cc:550 in 
+__asan::Allocator::Reallocate(void*, unsigned long, 
+__sanitizer::BufferedStackTrace*)                                          
+==3376==ABORTING
+
+Affected version:
+0.13.62
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
 
 Credit:
-This issue was discovered by QingTeng cloud Security of Minded Security
-Researcher jianan.huang
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
-References:
-https://commons.apache.org/proper/commons-collections/security-reports.html
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00157-zziplib-nullptr-prescan_entry
 
-Isuru Udana
-VP, Apache Synapse
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
 
------BEGIN PGP SIGNATURE-----
-Comment: MacGPG2 - http://www.gpgtools.org/macgpg2.html
+Note:
+This bug was found with Address Sanitizer.
 
-iQIzBAEBCgAdFiEE3kfhRbRVsOy2YlAnVEJWkuNs5sMFAlotO40ACgkQVEJWkuNs
-5sN+xg/+P/iHhK3JAULQy6JlLt7T2oUmd9EjEfpp6VimVTARPzywAzH39ZdeNEnq
-dd7eCjadE2CCR5QVcLNgTxyKIL6KDqOtBrJFksiZi5Q2kx0rMzbs1cz48POUd0NK
-DNFWngbLqMvY9kkkm7ioS3aXpZ99pdIpr9e11tqMj6ds2OOqUn5KpbEJvlBi3Htr
-QpD+Rp42myuHE6kHl5g9CR9fo42WyUvihuutpBv1+aWwR6CJaBSuN+H6tkrJQUqj
-StFk7nNG/RfsNHmlwCFORk3JYsaao8p1f4o4YTQAsaAu6u3frj29kt2RnSDyjt6m
-uQEkuRlmlb82xDh/3WxNbjoAIYGjrlEKEJxJtW6x0pZ9w3Hl7ccLRglclFmrenjx
-T0+aBF4S5DaYixaMZAS3OMFe86e+9MXLtdCUopWmq9Je+dDeLovfYvzTL6j4vyEF
-NsAfSpz9yJQ/e/3uYAyyaR31XoS5kmtQSDclGijR4YhPIc25P5/yVjwc63CNO2sv
-kb/wAecK+zVPJOIXYloW+IrLwUxmgz/UTd3Ogqg6xP+ClCTIIz4z9fsght0aULBV
-0YR6bmzigYthMFWdFiQDsDvWYFXVyJjeyVFfyyxOUlUjIY5pqZq+moWYQJ90dV+B
-J3Bi10tFhyZBNzyAe1R4unBISx6WOE+wCdkoexTpmx6XGce63iU=
-=Z+d2
------END PGP SIGNATURE-----
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-prescan_entry-fseeko-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
