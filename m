@@ -1,89 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/6
-Message-ID: <CA+-XxSHKPnd0mEx+nk832TOs4om6BX=8w=gnSXZjrWak1zszwQ@mail.gmail.com>
-Date: Sun, 2 Jul 2017 21:29:23 +0300
-From: Igor Seletskiy <i@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/26
+Message-ID: <7ab551aa-36d6-b99f-175f-5ea8b01c6eeb@gentoo.org>
+Date: Thu, 9 Feb 2017 16:33:11 +0100
+From: Thomas Deutschmann <whissi@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+Subject: Re: Re: Firejail local root exploit
 Content-Type: text/plain; charset=utf-8
 
-Thank you Alexander,
+Hi,
 
-Please, see my answers bellow.
-
-On Sun, Jul 2, 2017 at 9:07 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> Hi all,
->
-> I am inclined to add CloudLinux to the linux-distros list unless there
-> are well-reasoned objections.  I'd appreciate any comments.
->
-> On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-> > I would like to apply for membership in linux-distros list for CloudLinux
-> > OS. Please, see application attached.
->
-> Thank you for posting this, Igor.
->
-> I am most concerned about your answer to:
->
-> > 4. Not be (only) downstream or a rebuild of another distro (or else we
-> > need convincing additional justification of how the list membership
-> > would enable you to release fixes sooner, presumably not relying on the
-> > upstream distro having released their fixes first?)
->
-> > Our kernel has significant amount of changes comparing to OpenVZ kernel
-> > We also do slight modifications to Apache web server, ship customized
-> > versions of PHP (multiple versions), python, ruby, MySQL and MariaDB that
-> > are  packaged by us, and not taken from upstream.
->
-> So are you saying that you'll release fixes sooner (once you're on the
-> linux-distros list) only for this subset of packages that are modified
-> or packaged by you?  What about the rest?
->
-We would be fixing any security issues that can affect our customers asap.
-We have everything setup to do that, and we did it a couple of times.
-For packages that are not used by wast majority of our customers, we might
-wait
-for upstream, and repackage it within 24 hours or so (our typical timeframe
-today).
+I just received the CVE for the incomplete fix from MITRE via new
+webform. Please see the forwarded message below:
 
 
+-------- Forwarded Message --------
+Subject: Re: [scr292978] firejail - Affected <0.9.44.6
+Date: Thu, 9 Feb 2017 10:18:58 -0500
 
-> > We would be happy to help with administrative tasks:
-> >
-> >    1. Promptly review new issue reports for meeting the list's
-> requirements
-> >    and confirm receipt of the report and, when necessary, inform the
-> reporter
-> >    of any issues with their report (e.g., obviously not actionable by the
-> >    distros) and request and/or propose any required yet missing
-> information
-> >    (most notably, a tentative public disclosure date)
-> >    2. If the proposed public disclosure date is not within list policy,
-> >    insist on getting this corrected and propose a suitable earlier date
-> >
-> > And possibly more in the future, as we have a better understanding of the
-> > amount of work needed to handle those tasks.
-> > We will need some handholding at first to make sure we do things
-> correctly.
->
-> OK.  You'll likely need to choose additional/other tasks very soon since
-> these trivial ones will likely transfer to another new distro joining,
-> if one requests membership and meets the criteria shortly after you.
->
-Of course. Happy to do any tasks, as long as we are guided on what exactly
-needs to be done.
+The CVE ID is provided below, after the text associated with your
+https://cveform.mitre.org submission. The text reflects the current
+status of the CVE at MITRE, and may already have minor changes
+relative to your form entry. Changes are made in order to capture the
+information in the intended presentation format; changes are not an
+attempt to revise the results of vulnerability research.
 
->
-> > Please, find PGP related info
->
-> Thanks.  Out of the people you listed, you and Konstantin appear to have
-> been on oss-security for a long while, but Leonid doesn't appear to be
-> subscribed - or is he?  If not, he probably needs to subscribe now.
->
-I will double check with him, and ask him to join.
+You may republish or redistribute this text. We think that you have
+already posted to oss-security about this vulnerability. To make
+oss-security list members aware of the CVE ID assignment, you could
+reply to your own oss-security post and include pertinent information
+below along with the CVE ID.
 
->
-> Alexander
->
+> [Suggested description]
+> firejail before 0.9.44.6 and 0.9.38.x LTS before 0.9.38.10 LTS
+> does not comprehensively address dotfile cases during its
+> attempt to prevent accessing user files with an euid of zero,
+> which allows local users to conduct sandbox-escape attacks
+> via vectors involving a symlink and the --private option.
+> NOTE: this vulnerability exists because of an incomplete
+> fix for CVE-2017-5180.
+> 
+> ------------------------------------------
+> [Additional Information]
+> This is a fix for the incomplete fix of CVE-2017-5180.
+> 
+> I already tried to request a new CVE on OSS-Sec which wasn't answered
+> yet: http://www.openwall.com/lists/oss-security/2017/01/31/16
+> 
+> ------------------------------------------
+> 
+> [VulnerabilityType Other]
+> Incomplete fix of CVE-2017-5180
+> 
+> ------------------------------------------
+> 
+> [Vendor of Product]
+> https://firejail.wordpress.com/
+> 
+> ------------------------------------------
+> 
+> [Affected Product Code Base]
+> firejail - Affected <0.9.44.6
+> firejail-lts - Affected <0.9.38.10
+> 
+> ------------------------------------------
+> 
+> [Attack Type]
+> Local
+> 
+> ------------------------------------------
+> 
+> [Impact Escalation of Privileges]
+> true
+> 
+> ------------------------------------------
+> 
+> [Reference]
+> https://firejail.wordpress.com/download-2/release-notes/
+> https://github.com/netblue30/firejail/commit/38d418505e9ee2d326557e5639e8da49c298858f
+> https://github.com/netblue30/firejail/commit/b8a4ff9775318ca5e679183884a6a63f3da8f863
+> https://github.com/netblue30/firejail/commit/903fd8a0789ca3cc3c21d84cd0282481515592ef
+> 
+> ------------------------------------------
+> 
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+> 
+> ------------------------------------------
+> 
+> [Discoverer]
+> Sebastian Krahmer
 
+Use CVE-2017-5940.
+
+
+
+-- 
+Regards,
+Thomas Deutschmann / Gentoo Security Team
+C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (952 bytes)
