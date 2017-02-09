@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/09/8
-Message-Id: <5C79EC72-2D96-4919-853D-27690491137C@apache.org>
-Date: Wed, 9 Aug 2017 15:22:55 -0400
-From: "P. Taylor Goetz" <ptgoetz@...che.org>
-To: user@...rm.apache.org, dev@...rm.apache.org
-Cc: security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [CVE-2017-9799] Apache Storm Possible Code Execution As A Different User 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/31
+Message-ID: <72ad0aa8-88c8-cba1-84d4-35cc69fc86af@treenet.co.nz>
+Date: Fri, 10 Feb 2017 08:23:18 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
+To: oss-security@...ts.openwall.com
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+On 10/02/2017 5:07 a.m., Steven R. Loomis wrote:
+> On 2/9/17 6:54 AM, Peter Bex wrote:
+>> In an ideal world, free software project leaders should be
+>> able to request a CVE ID _before_ announcing a vulnerability to their
+>> user base.  If there were some way to register people as project leaders,
+>> the "proof" should not be necessary, they should be able to request a
+>> CVE ID with authority.
+> Peter,
+>  I actually wondered about this very thing, if it was possible to
+> request an ID before the details were fully available. From your note,
+> it sounds like this is not the case currently.
+> 
+> Steven
+> 
 
-Vendor: The Apache Software Foundation
+I used to request CVE with a brief description suitable for the CVE
+record and reference URL(s) eg. where the upstream advisory was going to
+be located. Nowdays someone at mitre seems to be waiting for the URL to
+go public before assignment :-(.
 
-Versions Affected:
-Apache Storm 1.0.0, 1.0.1, 1.0.2, 1.0.3
-Apache Storm 1.1.0
-
-Description:
-It was found that under some situations and configurations of storm it is theoretically possible for the owner of a topology to trick the supervisor to launch a worker as a different, non-root, user. In the worst case this could lead to secure credentials of the other user being compromised.  This vulnerability only applies to Apache Storm installations with security components enabled.
-
-Mitigation:
-Users of the affected versions should apply one of the following mitigations:
-
-- Upgrade to Apache Storm 1.0.4 or later
-- Upgrade to Apache Storm 1.1.1 or later
-
-Apache Storm 1.1.1 and 1.0.4 can be downloaded here:
-
-http://storm.apache.org/downloads.html
-
-Credit:
-This issue was identified by the Apche Storm PMC
-
-References:
-https://github.com/apache/storm/blob/v1.1.1/SECURITY.md <https://github.com/apache/storm/blob/v1.1.1/SECURITY.md>
-https://github.com/apache/storm/blob/v1.0.4/SECURITY.md <https://github.com/apache/storm/blob/v1.0.4/SECURITY.md>
+AYJ
 
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
