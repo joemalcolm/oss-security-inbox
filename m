@@ -1,32 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/8
-Message-ID: <20170927150918.GA3037@openwall.com>
-Date: Wed, 27 Sep 2017 17:09:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/30
+Message-ID: <20170209184530.darj47kpt4sg3mrw@jwilk.net>
+Date: Thu, 9 Feb 2017 19:45:30 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+Subject: Re: Multiple DoS parsing and executing extended regex expressions in GNU libc
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2017 at 09:50:59PM +0000, Priedhorsky, Reid wrote:
-> 1. Is oss-security's coverage of security issues in open-source software intended to be comprehensive?
+* Gustavo Grieco <gustavo.grieco@...il.com>, 2017-02-09, 14:24:
+>We found a few extended regex expressions in GNU libc that will crash or abort 
+>the execution of regcomp or regexec. For instance:
+>
+>\a?{1,32767}
+>
+>will immediately exhaust the stack calling calc_eclosure_iter in the 
+>compilation.
 
-As others have said, no.  (I think that would be an unrealistic goal.
-It could also result in so much traffic we'd have to think of splitting
-the list e.g. into notifications vs. discussions, but arguably that
-would be a good problem to have.)
+FWIW, glibc's policy seems to be that DoS via crafted regexp is not considered 
+a security problem: https://sourceware.org/glibc/wiki/Security%20Exceptions
 
-However, I would like the coverage to increase.  When e.g. Debian
-sends out a security advisory, they shouldn't literally post it in here.
-We had asked (in list content guidelines) for distro-specific advisories
-not to be sent in here, for good reasons.  However, if Debian and any
-other distros doing similar have the resources, I'd appreciate it if
-they bring in here info on vulnerabilities in Open Source software that
-they're tracking / are about to patch / have already patched / have even
-issued advisories on, but that haven't been mentioned in here before.
+"[...] resource exhaustion issues which can be triggered only with crafted 
+patterns (either during compilation or execution) are not treated as security 
+bugs. (This does not mean we do not intend to fix such issues as regular bugs 
+if possible.)
 
-Many distros (and/or people from distros' security teams) have been
-doing just that from time to time, but certainly not consistently.
+However, during execution, crashes, infinite loops, buffer overflows and 
+reading past buffers (read-only buffer overruns), memory leaks and other, 
+similar bugs should be treated as security vulnerabilities, assuming that the 
+pattern is trusted and reasonably structured."
 
-Maybe my encouragement above will help improve this?
-
-Alexander
+-- 
+Jakub Wilk
