@@ -1,4 +1,9 @@
-Received: (qmail 21992 invoked by uid 550); 17 Mar 2023 10:48:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2155" "Thursday" "9" "February" "2017" "14:48:10" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4623205.KGy1lP8IPD@blackgate>" "68" "[oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)" nil nil nil "2" "2017020913:48:10" "[oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)" (number mark "U       ago@gentoo.o Feb  9   68/2155  " thread-indent "\"[oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28370 invoked by uid 550); 9 Feb 2017 13:48:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,142 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21974 invoked from network); 17 Mar 2023 10:48:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1679050126; bh=NOip+7xIt0GMjRMButpiF3C3GycxfvdxgLAXkXbzzj8=;
-	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=HbsYZMxBTtxh5+WRS9woQ7AUdoEu19yXpcDbmzd/fQIw+yioPQDD6vTyTSJMyYu3V
-	 yFWFlQoWl0hfhUIvQ/MsLrZ/fqcqfjiey5yBGwOXqBqfJ6/WHQw8N8qWKJ8UZgdmgi
-	 QuOCsRwV2Vcj5S3TyliyyxGRIH+HuDIjJFC9polg2dhtPjLB2pAMkG7ARnGEUQj7rR
-	 TwLdaasm+Jmy7TAB/iMLiViuxqGIjW5RBOUEs1m1jLS88VrJvifQlDw3PXa+BAI2IZ
-	 5ux9fbTwiFsRs5jfeu8LBT8ywLVCSlBGebFyYnz38G42PL36oi1uHvz+J7w65kefNs
-	 1wk83TADZC/Nw==
-Original-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
-Author: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-Date: Fri, 17 Mar 2023 11:48:44 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Received: (qmail 28118 invoked from network); 9 Feb 2017 13:48:27 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20230317114844.21563d9a.hanno@hboeck.de>
-In-Reply-To: <20230314103626.3ucbt2rjdfhjbe6t@jwilk.net>
-References: <20230314095103.1ed76cc0.hanno@hboeck.de>
-	<20230314103626.3ucbt2rjdfhjbe6t@jwilk.net>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+Date: Thu, 09 Feb 2017 14:48:10 +0100
+Message-ID: <4623205.KGy1lP8IPD@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] zziplib: NULL pointer dereference in zzip_mem_entry_new (memdisk.c)
 
-On Tue, 14 Mar 2023 11:36:26 +0100
-Jakub Wilk <jwilk@jwilk.net> wrote:
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-> On Linux virtual terminals, it's possible to achieve pretty much the=20
-> same effect using TIOCLINUX, the ioctl used by gpm to implement=20
-> copy&pasting.
+A fuzz on it discovered an NULL pointer access.
 
-This is interesting.
+The complete ASan output:
 
-Given this works only on "virtual terminals" (aka not in a terminal
-window on X, not over SSH), I think the severity is much lower than the
-TIOCSTI issue. Still it should be fixed.
+# unzzipcat-mem $FILE
+==7955==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000001a (pc 
+0x7fcfc78e3c50 bp 0x7ffdf55d4f70 sp 0x7ffdf55d4e40 T0)
+==7955==The signal is caused by a READ memory access.
+==7955==Hint: address points to the zero page.
+    #0 0x7fcfc78e3c4f in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21
+    #1 0x7fcfc78e3c4f in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
+    #2 0x7fcfc78e38b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
+    #3 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
+    #4 0x7fcfc6a2361f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #5 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
 
-I've created a patch for the Linux kernel very similar to the patch
-that allows disabling TIOCSTI. I'll send that to the kernel devs soon,
-but maybe people here want to test and comment.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21 in zzip_mem_entry_new
+==7955==ABORTING
 
----
- drivers/tty/Kconfig  | 16 ++++++++++++++++
- drivers/tty/tty.h    |  1 +
- drivers/tty/tty_io.c |  7 +++++++
- drivers/tty/vt/vt.c  |  5 +++++
- 4 files changed, 29 insertions(+)
+also, the undefined behavior sanitizer says about:
 
-diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index d35fc068d..f808e4ee7 100644
---- a/drivers/tty/Kconfig
-+++ b/drivers/tty/Kconfig
-@@ -168,6 +168,22 @@ config LEGACY_TIOCSTI
- 	  dev.tty.legacy_tiocsti sysctl. This configuration option sets
- 	  the default value of the sysctl.
-=20
-+config LEGACY_TIOCLINUX
-+	bool "Allow legacy TIOCLINUX usage"
-+	default y
-+	help
-+	  The TIOCLINUX ioctl allows implementing copy-and-paste and
-+	  mouse operations in virtual terminals, used by tools like
-gpm.
-+	  However, it can be abused by a low privilege process when
-+	  called with tools like su or sudo to inject content on the
-+	  root shell.
-+
-+	  Say Y here if you use tools like gpm.
-+
-+	  This functionality can be changed at runtime with the
-+	  dev.tty.legacy_tioclinux sysctl. This configuration option
-sets
-+	  the default value of the sysctl.
-+
- config LDISC_AUTOLOAD
- 	bool "Automatically load TTY Line Disciplines"
- 	default y
-diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
-index f45cd683c..3e4f1e094 100644
---- a/drivers/tty/tty.h
-+++ b/drivers/tty/tty.h
-@@ -94,6 +94,7 @@ int __must_check tty_ldisc_init(struct tty_struct
-*tty); void tty_ldisc_deinit(struct tty_struct *tty);
-=20
- extern int tty_ldisc_autoload;
-+extern bool tty_legacy_tioclinux;
-=20
- /* tty_audit.c */
- #ifdef CONFIG_AUDIT
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 36fb945fd..badd1f909 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3602,6 +3602,13 @@ static struct ctl_table tty_table[] =3D {
- 		.mode		=3D 0644,
- 		.proc_handler	=3D proc_dobool,
- 	},
-+	{
-+		.procname	=3D "legacy_tioclinux",
-+		.data		=3D &tty_legacy_tioclinux,
-+		.maxlen		=3D sizeof(tty_legacy_tioclinux),
-+		.mode		=3D 0644,
-+		.proc_handler	=3D proc_dobool,
-+	},
- 	{
- 		.procname	=3D "ldisc_autoload",
- 		.data		=3D &tty_ldisc_autoload,
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index 57a5c23b5..3bc0d9149 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -3119,6 +3119,8 @@ static struct console vt_console_driver =3D {
-  *	Handling of Linux-specific VC ioctls
-  */
-=20
-+bool tty_legacy_tioclinux __read_mostly =3D
-IS_ENABLED(CONFIG_LEGACY_TIOCLINUX); +
- /*
-  * Generally a bit racy with respect to console_lock();.
-  *
-@@ -3137,6 +3139,9 @@ int tioclinux(struct tty_struct *tty, unsigned
-long arg) int lines;
- 	int ret;
-=20
-+	if (!tty_legacy_tioclinux)
-+		return -EIO;
-+
- 	if (current->signal->tty !=3D tty && !capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 	if (get_user(type, p))
---=20
-2.40.0
+# unzzipcat-mem $FILE
+/tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:182:21: runtime error: member access 
+within null pointer of type 'struct zzip_file_header'
 
+Affected version:
+0.13.62
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00154-zziplib-nullptr-zzip_mem_entry_new
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-zzip_mem_entry_new-memdisk-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
