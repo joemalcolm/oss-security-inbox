@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/26/13
-Message-ID: <20170926150446.GA11530@kroah.com>
-Date: Tue, 26 Sep 2017 17:04:46 +0200
-From: Greg KH <greg@...ah.com>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/8
+Message-ID: <alpine.LFD.2.20.1702091150030.8306@wniryva>
+Date: Thu, 9 Feb 2017 11:58:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2017 at 04:50:10PM +0200, Agostino Sarubbo wrote:
-> On martedì 26 settembre 2017 09:32:14 CEST Greg KH wrote:
-> > > I guess this would be benefit for all.
-> > 
-> > Define "all" 
-> 
-> You know, for example in Gentoo we are following the upstream releases. So 
-> from time to time we stabilize a newer kernel that "syncs" with upstream.
-> This does not happen for non-rolling (release) distros that may want to patch/
-> backport the security fix.
++-- On Thu, 9 Feb 2017, cve-assign@...re.org wrote --+
+| To more efficiently assign and publish CVE IDs and to enable
+| automation and data sharing within CVE operations, MITRE is changing
+| the way it accepts CVE ID requests on the oss-security mailing list.
+| Starting today, please direct CVE ID requests to this web form
+| <https://cveform.mitre.org/>. Through this form, you can request a new
+| CVE ID, update a CVE ID that was already assigned, and submit
+| questions or feedback to the CVE Team.
+| 
+| We understand that oss-security is for vulnerabilities that should
+| have immediate public disclosure. You can continue to send details to
+| oss-security and propose that a CVE ID should exist. To actually
+| obtain the CVE ID, please also visit the web form at
+| <https://cveform.mitre.org/>.
 
-I understand the issue well, I talk to companies all the time about this :)
+Boy, a web form with captcha wouldn't be really efficient to obtain CVE-IDs. 
+Especially when there is huge influx of issues. It might help structure data 
+and automate, but for requesting CVEs, it's not really. :(
 
-The rule for the kernel is, "if a distro/company/user is not following
-the stable kernel updates, they are on their own".  I recommend either
-using the stable kernels, or paying for a company that knows what they
-are doing in this area and provides support (Red Hat, SuSE, etc.)
-
-And if you try to argue "just tell us what needs to be fixed", well, we
-are, am, we are providing about 10-12 patches a day that people should
-be incorporating into their kernels.  Why they ignore that curated and
-tested stream of fixes is beyond me...
-
-Anyway, this is getting a bit off-topic here, sorry for the noise.
-
-Best of luck,
-
-greg k-h
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
