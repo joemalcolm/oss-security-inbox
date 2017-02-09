@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1870" "Friday" "29" "January" "2021" "11:09:28" "+0100" "Marcus Meissner" "meissner@suse.de" "<20210129100928.GD6548@suse.de>" "46" "[oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil "1" "2021012910:09:28" "[oss-security] Linux Kernel: local priv escalation via futexes" (number mark "U       meissner@sus Jan 29   46/1870  " thread-indent "\"[oss-security] Linux Kernel: local priv escalation via futexes\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel: local priv escalation via futexes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["12594" "Thursday" "9" "February" "2017" "14:43:08" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1647177.aZQByZBLXH@blackgate>" "97" "[oss-security] zziplib: heap-based buffer overflow in zzip_mem_entry_extra_block (memdisk.c)" nil nil nil "2" "2017020913:43:08" "[oss-security] zziplib: heap-based buffer overflow in zzip_mem_entry_extra_block (memdisk.c)" (number mark "U       ago@gentoo.o Feb  9   97/12594 " thread-indent "\"[oss-security] zziplib: heap-based buffer overflow in zzip_mem_entry_extra_block (memdisk.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30362 invoked by uid 550); 29 Jan 2021 10:09:38 -0000
+Received: (qmail 27988 invoked by uid 550); 9 Feb 2017 13:43:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30326 invoked from network); 29 Jan 2021 10:09:37 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Fri, 29 Jan 2021 11:09:28 +0100
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 27919 invoked from network); 9 Feb 2017 13:43:25 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20210129100928.GD6548@suse.de>
+Date: Thu, 09 Feb 2017 14:43:08 +0100
+Message-ID: <1647177.aZQByZBLXH@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
- =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
- =?iso-8859-1?Q?g?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] Linux Kernel: local priv escalation via futexes
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] zziplib: heap-based buffer overflow in zzip_mem_entry_extra_block (memdisk.c)
 
-Hi,
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-Yesterday a patchset was merged to Linux Kernel mainline, which could be used
-to execute code in the kernel due to bugs in PI futexes.
+A fuzz on it discovered an heap overflow.
 
-I am filing a CVE request just now.
+The complete ASan output:
 
-Ciao, Marcus
+# unzzipcat-mem $FILE
+==7970==ERROR: AddressSanitizer: heap-buffer-overflow on address 
+0x60300000f2c8 at pc 0x7f59277fd153 bp 0x7fff136e1e30 sp 0x7fff136e1e28                                                                                                                                       
+READ of size 2 at 0x60300000f2c8 thread T0                                                                                                                                                                                                                                     
+    #0 0x7f59277fd152 in zzip_mem_entry_extra_block /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20                                                                                                                                        
+    #1 0x7f59277fd152 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:218                                                                                                                                                   
+    #2 0x7f59277fd152 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137                                                                                                                                                   
+    #3 0x7f59277fb8b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5                                                                                                                                                  
+    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12                                                                                                                                                               
+    #5 0x7f592693b61f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                                                                                                        
+    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+AddressSanitizer can not describe address in more detail (wild memory access 
+suspected).                                                                                                                                                                                       
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20 in 
+zzip_mem_entry_extra_block                                                                                                              
+Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
+  0x0c067fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+=>0x0c067fff9e50: fa fa fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9e90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+  0x0c067fff9ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa                                                                                                                                                                                                              
+Shadow byte legend (one shadow byte represents 8 application bytes):                                                                                                                                                                                                           
+  Addressable:           00                                                                                                                                                                                                                                                    
+  Partially addressable: 01 02 03 04 05 06 07                                                                                                                                                                                                                                  
+  Heap left redzone:       fa                                                                                                                                                                                                                                                  
+  Heap right redzone:      fb                                                                                                                                                                                                                                                  
+  Freed heap region:       fd                                                                                                                                                                                                                                                  
+  Stack left redzone:      f1                                                                                                                                                                                                                                                  
+  Stack mid redzone:       f2                                                                                                                                                                                                                                                  
+  Stack right redzone:     f3                                                                                                                                                                                                                                                  
+  Stack partial redzone:   f4                                                                                                                                                                                                                                                  
+  Stack after return:      f5                                                                                                                                                                                                                                                  
+  Stack use after scope:   f8                                                                                                                                                                                                                                                  
+  Global redzone:          f9                                                                                                                                                                                                                                                  
+  Global init order:       f6                                                                                                                                                                                                                                                  
+  Poisoned by user:        f7                                                                                                                                                                                                                                                  
+  Container overflow:      fc                                                                                                                                                                                                                                                  
+  Array cookie:            ac                                                                                                                                                                                                                                                  
+  Intra object redzone:    bb                                                                                                                                                                                                                                                  
+  ASan internal:           fe                                                                                                                                                                                                                                                  
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==7970==ABORTING
 
-merge commit:
+Affected version:
+0.13.62
 
-commit c64396cc36c6e60704ab06c1fb1c4a46179c9120
-Merge: e5ff2cb9cf67 34b1a1ce1458
-Author: Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu Jan 28 11:18:43 2021 -0800
+Fixed version:
+N/A
 
-    Pull locking fixes from Thomas Gleixner:
-     "A set of PI futex fixes:
+Commit fix:
+N/A
 
-       - Address a longstanding issue where the user space part of the PI
-         futex is not writeable. The kernel returns with inconsistent state
-         which can in the worst case result in a UAF of a tasks kernel
-         stack.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-         The solution is to establish consistent kernel state which makes
-         future operations on the futex fail because user space and kernel
-         space state are inconsistent. Not a problem as PI futexes
-         fundamentaly require a functional RW mapping and if user space
-         pulls the rug under it, then it can keep the pieces it asked for.
+CVE:
+N/A
 
-       - Address an issue where the return value is incorrect in case that
-         the futex was acquired after a timeout/signal made the waiter drop
-         out of the rtmutex wait.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00152-zziplib-heapoverflow-zzip_mem_entry_extra_block
 
-         In one of the corner cases the kernel returned an error code
-         despite having successfully acquired the futex"
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
 
-    * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
-      futex: Handle faults correctly for PI futexes
-      futex: Simplify fixup_pi_state_owner()
-      futex: Use pi_state_update_owner() in put_pi_state()
-      rtmutex: Remove unused argument from rt_mutex_proxy_unlock()
-      futex: Provide and use pi_state_update_owner()
-      futex: Replace pointless printk in fixup_owner()
-      futex: Ensure the correct return value from futex_lock_pi()
+Note:
+This bug was found with American Fuzzy Lop.
 
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-zzip_mem_entry_extra_block-memdisk-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
