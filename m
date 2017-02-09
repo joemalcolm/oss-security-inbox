@@ -1,64 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/01/11
-Message-ID: <20171101161136.GA20860@openwall.com>
-Date: Wed, 1 Nov 2017 17:11:36 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/09/15
+Message-ID: <1759408.Gi8KIJCgpj@blackgate>
+Date: Thu, 09 Feb 2017 14:44:44 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: 16362505@...com
-Subject: Re: CVE-2017-16231: PCRE 8.41 match() stack overflow; CVE-2017-16232: LibTIFF 4.0.8 memory leaks
+Subject: zziplib: invalid memory read in zzip_mem_entry_extra_block (memdisk.c)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 01, 2017 at 04:29:32PM +0100, Agostino Sarubbo wrote:
-> On mercoled?? 1 novembre 2017 03:26:56 CET ?????? wrote:
-> > > [Suggested description]
-> > > In PCRE 8.41,
-> > > after compiling, a pcretest load test PoC produces a crash overflow
-> > > in the function match() in pcre_exec.c because of a self-recursive call.
-[...]
-> > Use CVE-2017-16231.
-> 
-> I guess that this bug is similar or the same described here:
-> https://bugs.exim.org/show_bug.cgi?id=2047
-> 
-> Based on the upstream comment I'd suggest to reject the CVE.
+Description:
+zziplib is an intentionally lightweight library that offers the ability to 
+easily extract data from files archived in a single zip file.
 
-Let's quote that comment in here for discussion and archival:
+A fuzz on it discovered an invalid memory read.
 
-"Philip Hazel 2017-02-24 15:53:50 GMT
+The complete ASan output:
 
-It is very easy to write patterns that have extremely large search
-trees, and these can consume a lot of time and/or stack in the current
-implementation of pcre2_match(). There are options (*LIMIT_MATCH) and
-(*LIMIT_RECURSION) that can be used to limit the amount of stack that is
-used. The limits can also be set from pcretest and from programs that
-call the library directly. This is all well documented. Fuzzers should
-always set these limits much lower than the defaults. See, for example,
-the file src/pcre2_fuzzsupport.c in PCRE2.
+# unzzipcat-mem $FILE
+==7950==ERROR: AddressSanitizer: SEGV on unknown address 0x603000014e32 (pc 
+0x7f414b4c8693 bp 0x7fff48f3ff70 sp 0x7fff48f3fe40 T0)
+==7950==The signal is caused by a READ memory access.
+    #0 0x7f414b4c8692 in zzip_mem_entry_extra_block /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20
+    #1 0x7f414b4c8692 in zzip_mem_entry_new /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:218
+    #2 0x7f414b4c8692 in zzip_mem_disk_load /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:137
+    #3 0x7f414b4c78b7 in zzip_mem_disk_open /tmp/portage/dev-
+libs/zziplib-0.13.62-r1/work/zziplib-0.13.62/zzip/memdisk.c:89:5
+    #4 0x50982d in main /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/bins/unzzipcat-mem.c:82:12
+    #5 0x7f414a60761f in __libc_start_main /var/tmp/portage/sys-
+libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x419748 in _init (/usr/bin/unzzipcat-mem+0x419748)
 
-Also, as I have said several times recently on the list, there will soon
-be a new implementation of pcre2_match() that uses heap storage rather
-than the stack. The same limits are available to control the amount of
-resource used. This should avoid stack overflows, but there will always
-be patterns that will take a lot of resources if you don't limit them."
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/zziplib-0.13.62-
+r1/work/zziplib-0.13.62/zzip/memdisk.c:248:20 in zzip_mem_entry_extra_block
+==7950==ABORTING
 
-I'm not sure I agree with Philip on this.  Based on the comment above,
-this is documented behavior and there are limits in place that a program
-could use.  However, the suggestion that "Fuzzers should always set
-these limits much lower than the defaults." might mean that the defaults
-are inadequate for safe production use as well, if a pattern might be
-untrusted.  If fuzzers could hit stack overflow with default limits,
-then so could untrusted patterns in production, no?  If so, that would
-keep this a security issue, and probably a CVE-worthy one, unless the
-documentation also states that only trusted patterns are supported.
+Affected version:
+0.13.62
 
-Alexander
+Fixed version:
+N/A
 
-P.S. The original message arrived to oss-security with a Subject of
-"Re: [scr412063] PCRE; LibTIFF" preceded by some probably Chinese
-characters.  As a moderator, I edited the Subject to what it currently
-is before approving the message.  I regret that the message combines
-issues in two unrelated packages, but I never edit message bodies as me
-doing so would certainly be too much and potentially inappropriate
-(misrepresentation of what someone else posted; even fixing the Subjects
-is borderline in that respect).  I can only hope that future postings by
-16362505 will be better, given this little note. ;-)
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00153-zziplib-invalidread-zzip_mem_entry_extra_block
+
+Timeline:
+2017-01-17: bug discovered and poked upstream
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/zziplib-invalid-memory-read-in-zzip_mem_entry_extra_block-memdisk-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
