@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1675" "Wednesday" "24" "February" "2016" "13:58:57" "-0700" "Eric Blake" "eblake@redhat.com" "<56CE1991.2030906@redhat.com>" "41" "Re: [oss-security] CVE Request: bash-completion: dequote command injection" "^Date:" nil nil "2" "2016022420:58:57" "[oss-security] CVE Request: bash-completion: dequote command injection" (number mark "        eblake@redha Feb 24   41/1675  " thread-indent "\"Re: [oss-security] CVE Request: bash-completion: dequote command injection\"\n") "<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>" ("<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11877" "Friday" "10" "February" "2017" "09:37:08" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2944459.te4kZvfeBN@blackgate>" "173" "[oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)" nil nil nil "2" "2017021008:37:08" "[oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)" (number mark "U       ago@gentoo.o Feb 10  173/11877 " thread-indent "\"[oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5307 invoked by uid 550); 24 Feb 2016 20:59:13 -0000
+Received: (qmail 26440 invoked by uid 550); 10 Feb 2017 08:37:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,64 +11,190 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5268 invoked from network); 24 Feb 2016 20:59:12 -0000
-References: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
-Openpgp: url=http://people.redhat.com/eblake/eblake.gpg
-Organization: Red Hat, Inc.
-Message-ID: <56CE1991.2030906@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Wed, 24 Feb 2016 13:58:57 -0700
-From: Eric Blake <eblake@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: bash-completion: dequote command
- injection
+Received: (qmail 26408 invoked from network); 10 Feb 2017 08:37:25 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Date: Fri, 10 Feb 2017 09:37:08 +0100
+Message-ID: <2944459.te4kZvfeBN@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+X-PRIORITY: 2 (High)
+Priority: urgent
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: [oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)
 
---EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Description:
+mupdf is a lightweight PDF viewer and toolkit written in portable C.
 
-On 02/24/2016 12:08 PM, Fernando Mu=C3=B1oz wrote:
-> Marcelo Echeverria and Fernando Mu=C3=B1oz discovered that the dequote
-> function included in bash-completion allows to execute arbitrary
-> commands since it uses the eval function to call printf and perform
-> the actual dequoting. bash-completion is included on Debian, Ubuntu
-> OpenSuse [1] and probably other distros.
+A fuzzing through mutool revealed a use-after-free. It seems that a fix for 
+the recent heap overflow in fz_subsample_pixmap fixes this issue too.
 
-But what is the privilege escalation?  This is no different than
-incorrectly using 'eval' in a shell script - you may have buggy code,
-and have an easy-to-trigger bug, but if you can't escalate privileges,
-how it is a CVE?
+The complete ASan output:
 
---=20
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+ # mutool draw $FILE
+==17100==ERROR: AddressSanitizer: heap-use-after-free on address 
+0x60c00000abb6 at pc 0x7fba6a8cee53 bp 0x7ffedf859700 sp 0x7ffedf8596f8                                                                                                                                       
+READ of size 1 at 0x60c00000abb6 thread T0                                                                                                                                                                                                                                     
+    #0 0x7fba6a8cee52 in fz_subsample_pixmap /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/pixmap.c:1210:12                                                                                                                                            
+    #1 0x7fba6a8d4dfa in fz_get_pixmap_from_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:686:3                                                                                                                                          
+    #2 0x7fba6a88cfae in fz_draw_fill_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/draw-device.c:1292:11                                                                                                                                        
+    #3 0x7fba6a7915f8 in fz_fill_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/device.c:319:3                                                                                                                                                    
+    #4 0x7fba6a8b6ab4 in fz_run_display_list /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/list-device.c:1651:6                                                                                                                                        
+    #5 0x51d503 in drawband /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:562:4                                                                                                                                                              
+    #6 0x51b026 in dodrawpage /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:918:6                                                                                                                                                            
+    #7 0x51edba in drawpage /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1173:3                                                                                                                                                             
+    #8 0x51825b in drawrange /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1190:5                                                                                                                                                            
+    #9 0x514aa1 in mudraw_main /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1733:7                                                                                                                                                          
+    #10 0x50eded in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/source/tools/mutool.c:110:12                                                                                                                                                                
+    #11 0x7fba6973278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                    
+    #12 0x41e1a8 in _init (/usr/bin/mutool+0x41e1a8)                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                               
+0x60c00000abb6 is located 1 bytes to the right of 117-byte region 
+[0x60c00000ab40,0x60c00000abb5)                                                                                                                                                                              
+freed by thread T0 here:                                                                                                                                                                                                                                                       
+    #0 0x4d6c10 in free /tmp/portage/sys-devel/llvm-3.9.1-
+r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47                                                                                                                                         
+    #1 0x7fba6a810878 in fz_free /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/memory.c:187:2                                                                                                                                                          
+    #2 0x7fba6a8d0a0c in fz_decomp_image_from_stream /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:330:3                                                                                                                                       
+    #3 0x7fba6a8d7cdc in compressed_image_get_pixmap /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:468:10
+    #4 0x7fba6a8d4a1f in fz_get_pixmap_from_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:677:9
+    #5 0x7fba6a88cfae in fz_draw_fill_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/draw-device.c:1292:11
+    #6 0x7fba6a7915f8 in fz_fill_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/device.c:319:3
+    #7 0x7fba6a8b6ab4 in fz_run_display_list /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/list-device.c:1651:6
+    #8 0x51d503 in drawband /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:562:4
+    #9 0x51b026 in dodrawpage /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:918:6
+    #10 0x51edba in drawpage /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1173:3
+    #11 0x51825b in drawrange /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1190:5
+    #12 0x514aa1 in mudraw_main /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1733:7
+    #13 0x50eded in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/source/tools/mutool.c:110:12
+    #14 0x7fba6973278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
+previously allocated by thread T0 here:
+    #0 0x4d6f68 in malloc /tmp/portage/sys-devel/llvm-3.9.1-
+r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fba6a80c08f in do_scavenging_malloc /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/memory.c:17:7
+    #2 0x7fba6a80c08f in fz_malloc_array /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/memory.c:80
+    #3 0x7fba6a8cfd40 in fz_decomp_image_from_stream /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:268:13
+    #4 0x7fba6a8d7cdc in compressed_image_get_pixmap /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:468:10
+    #5 0x7fba6a8d4a1f in fz_get_pixmap_from_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:677:9
+    #6 0x7fba6a88cfae in fz_draw_fill_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/draw-device.c:1292:11
+    #7 0x7fba6a7915f8 in fz_fill_image /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/device.c:319:3
+    #8 0x7fba6a8b6ab4 in fz_run_display_list /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/list-device.c:1651:6
+    #9 0x51d503 in drawband /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:562:4
+    #10 0x51b026 in dodrawpage /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:918:6
+    #11 0x51edba in drawpage /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1173:3
+    #12 0x51825b in drawrange /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1190:5
+    #13 0x514aa1 in mudraw_main /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1733:7
+    #14 0x50eded in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/source/tools/mutool.c:110:12
+    #15 0x7fba6973278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
---EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+SUMMARY: AddressSanitizer: heap-use-after-free /tmp/portage/app-
+text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/pixmap.c:1210:12 in 
+fz_subsample_pixmap
+Shadow bytes around the buggy address:
+  0x0c187fff9520: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c187fff9530: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c187fff9540: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c187fff9550: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c187fff9560: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+=>0x0c187fff9570: fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa fa fa
+  0x0c187fff9580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 fa
+  0x0c187fff9590: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x0c187fff95a0: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x0c187fff95b0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c187fff95c0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==17100==ABORTING
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Public key at http://people.redhat.com/eblake/eblake.gpg
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Affected version:
+1.10a
 
-iQEcBAEBCAAGBQJWzhmSAAoJEKeha0olJ0NqLbYH/A61k0CN/yXtU2XZ3ufODF8U
-529TNFwLAw8Z63yLlD8deIJhuepxcW5UsAK06DX4Zch+l7m9J0hNx1oNUe83IVJ8
-3xSLG8eV9dDXVgZC6d7jYr7XSIkM90Lp+jTbqeg9WXe/FkTmv+SV7CJ7Nd6TqkII
-fupunYEOpJf8ta7Lo71VW9n+UxQ+L0f4z9ofJRNnGngdeJIFTbs0AR2l2tnb7iSH
-C5gJgpmwIkUth5lsNEikJCbT/zFKb4Z5HS6NlNM1oCMVnyyMowbboyr9hJOsFfD7
-nEdMgFfYxxPgl0xJFPPEHtmN0AMvsX3m1upTpJK6USC3/PGvCyXx7XG39b5Cq+8=
-=VVHU
------END PGP SIGNATURE-----
+Fixed version:
+1.11 (that will be released in march)
 
---EcLFL5Cu0fIo9hleD3qpbwWH1W50FH0Fj--
+Commit fix:
+http://git.ghostscript.com/?p=mupdf.git;h=2c4e5867ee699b1081527bc6c6ea0e99a35a5c27
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00149-mupdf-UAF-fz_subsample_pixmap
+
+Timeline:
+2017-02-06: bug discovered and reported to upstream
+2017-02-09: upstream released a patch
+2017-02-09: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/09/mupdf-use-after-free-in-fz_subsample_pixmap-pixmap-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
