@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/1
-Message-ID: <alpine.LFD.2.20.1702161854530.12665@wniryva>
-Date: Fri, 17 Feb 2017 10:39:38 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: Re: CVE-2017-6000 Qemu: crypto: memory leakage in qcrypto_ivgen_essiv_init
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/13
+Message-ID: <20170210205916.GB28439@hunt>
+Date: Fri, 10 Feb 2017 12:59:16 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 16 Feb 2017, P J P wrote --+
-| A guest user/process could use this flaw to leak host memory resulting in 
-| DoS.
-| 
-| Upstream patch:
-| ---------------
-|   -> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg00295.html
-|   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422656
-| 
-| This issue was reported by Li Qiang of 360.cn Inc.
+On Fri, Feb 10, 2017 at 03:40:45PM +0000, Priedhorsky, Reid wrote:
+> I’ve been using the CVE requests on oss-security to maintain a
+> reasonably comprehensive and timely list of vulnerabilities for specific
+> products. It’s not clear to me how to do this when CVE requests happen
+> offline in a web form.
+> 
+> Has this use case been considered? Is there an alternate way to
+> accomplish my goal?
 
-This one turned out to be a non security issue, as guest could not trigger 
-this memory leak.
+Another part of the email from MITRE included "When you enter a
+vulnerability description on the web form, the CVE and description will
+typically be available on the NVD and CVE web sites at the same time or
+shortly after we email the CVE ID to you."
 
-| 'CVE-2017-6000' assigned via -> https://cveform.mitre.org/
+While the oss-security list has been the best resource of information for
+CVEs for us, part of our CVE ingestion is to download data from NVD and
+MITRE directly:
 
-CVE has been cancelled
-  -> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6000
+https://nvd.nist.gov/download
+https://cve.mitre.org/data/downloads/allitems.xml
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Debian's database is also very useful to us:
+https://anonscm.debian.org/viewvc/secure-testing/data/CVE/
+
+And of course our database is freely available as well:
+https://code.launchpad.net/~ubuntu-security/ubuntu-cve-tracker/master
+
+I hope this can help you adapt your processes as MITRE adapts theirs.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
