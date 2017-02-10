@@ -1,104 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/25/1
-Message-ID: <719404.939885379-sendEmail@localhost>
-Date: Sat, 25 Feb 2017 11:23:43 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/4
+Message-ID: <5c4b27b2-ce77-2495-5f11-46beef5cda0b@igalia.com>
+Date: Fri, 10 Feb 2017 14:36:56 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: "webkit-gtk@...ts.webkit.org" <webkit-gtk@...ts.webkit.org>
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK+ Security Advisory WSA-2017-0002
 Content-Type: text/plain; charset=utf-8
 
-Description:
-pax-utils is a set of tools that check files for security relevant properties.
+------------------------------------------------------------------------
+WebKitGTK+ Security Advisory                               WSA-2017-0002
+------------------------------------------------------------------------
 
-A fuzz on scanelf exposed that the out-of bound read already reported at 
-https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c was unfixed.
+Date reported      : February 10, 2017
+Advisory ID        : WSA-2017-0002
+Advisory URL       : https://webkitgtk.org/security/WSA-2017-0002.html
+CVE identifiers    : CVE-2017-2350, CVE-2017-2354, CVE-2017-2355,
+                     CVE-2017-2356, CVE-2017-2362, CVE-2017-2363,
+                     CVE-2017-2364, CVE-2017-2365, CVE-2017-2366,
+                     CVE-2017-2369, CVE-2017-2371, CVE-2017-2373.
 
-The complete ASan output:
+Several vulnerabilities were discovered in WebKitGTK+.
 
-# scanelf -s '*' -axetrnibSDIYZB $FILE
-==1093==ERROR: AddressSanitizer: unknown-crash on address 0x7f4ddab2c3a0 at pc 0x000000524a77 bp 0x7fffcd2bc320 sp 0x7fffcd2bc318
-READ of size 4 at 0x7f4ddab2c3a0 thread T0
-    #0 0x524a76 in scanelf_file_get_symtabs /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:357:3
-    #1 0x514af2 in scanelf_file_sym /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1282:2
-    #2 0x514af2 in scanelf_elfobj /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1502
-    #3 0x5137f8 in scanelf_elf /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1567:8
-    #4 0x5137f8 in scanelf_fileat /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1634
-    #5 0x512d9b in scanelf_dirat /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1668:10
-    #6 0x511d9d in scanelf_dir /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1718:9
-    #7 0x511d9d in parseargs /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:2228
-    #8 0x511d9d in main /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:2316
-    #9 0x7f4dd9b4e61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419b28 in getenv (/usr/bin/scanelf+0x419b28)
+CVE-2017-2350
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Gareth Heyes of Portswigger Web Security.
+    Impact: Processing maliciously crafted web content may exfiltrate
+    data cross-origin. Description: A prototype access issue was
+    addressed through improved exception handling.
 
-AddressSanitizer can not describe address in more detail (wild memory access suspected).
-SUMMARY: AddressSanitizer: unknown-crash /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:357:3 in scanelf_file_get_symtabs
-Shadow bytes around the buggy address:
-  0x0fea3b55d820: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d830: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d840: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d850: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d860: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-=>0x0fea3b55d870: fe fe fe fe[fe]fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d880: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d890: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d8a0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d8b0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-  0x0fea3b55d8c0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1093==ABORTING
+CVE-2017-2354
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Neymar of Tencent's Xuanwu Lab (tencent.com) working with
+    Trend Micro's Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
 
-Affected version:
-1.2.2
+CVE-2017-2355
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Team Pangu and lokihardt at PwnFest 2016.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory initialization issue
+    was addressed through improved memory handling.
 
-Fixed version:
-1.2.3 (not released atm)
+CVE-2017-2356
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Team Pangu and lokihardt at PwnFest 2016.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved input validation.
 
-Commit fix:
-https://github.com/gentoo/pax-utils/commit/e577c5b7e230c52e5fc4fa40e4e9014c634b3c1d
-https://github.com/gentoo/pax-utils/commit/858939ea6ad63f1acb4ec74bba705c197a67d559
+CVE-2017-2362
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Ivan Fratric of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+CVE-2017-2363
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may exfiltrate
+    data cross-origin. Description: Multiple validation issues existed
+    in the handling of page loading. This issue was addressed through
+    improved logic.
 
-CVE:
-N/A
+CVE-2017-2364
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may exfiltrate
+    data cross-origin. Description: Multiple validation issues existed
+    in the handling of page loading. This issue was addressed through
+    improved logic.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00169-pax-utils-scanelf-oobread1
+CVE-2017-2365
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to lokihardt of Google Project Zero.
+    Impact: Processing maliciously crafted web content may exfiltrate
+    data cross-origin. Description: A validation issue existed in
+    variable handling. This issue was addressed through improved
+    validation.
 
-Timeline:
-2017-02-09: bug discovered and reported to upstream
-2017-02-11: upstream realeased a patch
-2017-02-25: blog post about the issue
+CVE-2017-2366
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Kai Kang of Tencent's Xuanwu Lab (tencent.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved input validation.
 
-Note:
-This bug was found with American Fuzzy Lop.
+CVE-2017-2369
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Ivan Fratric of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved input validation.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/25/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c-2
+CVE-2017-2371
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to lokihardt of Google Project Zero.
+    Impact: A malicious website can open popups. Description: An issue
+    existed in the handling of blocking popups. This was addressed
+    through improved input validation.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+CVE-2017-2373
+    Versions affected: WebKitGTK+ before 2.14.4.
+    Credit to Ivan Fratric of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed through improved memory handling.
 
 
+We recommend updating to the last stable version of WebKitGTK+. It is
+the best way of ensuring that you are running a safe version of
+WebKitGTK+. Please check our website for information about the last
+stable releases.
+
+Further information about WebKitGTK+ Security Advisories can be found
+at: https://webkitgtk.org/security.html
+
+The WebKitGTK+ team,
+February 10, 2017
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
