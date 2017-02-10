@@ -1,44 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/12/6
-Message-ID: <20171212161834.3818cdd2@pc1>
-Date: Tue, 12 Dec 2017 16:18:34 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/9
+Message-ID: <DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>
+Date: Fri, 10 Feb 2017 13:09:43 -0500
+From: Stiepan <stie@....swiss>
 To: oss-security@...ts.openwall.com
-Subject: ROBOT attack (WolfSSL, Bouncy Castle, Erlang)
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Same concern here; I second your suggestion, John.
 
-I published details about the ROBOT attack today, it's a couple of
-minor variations of the old Bleichenbacher attack.
-(Return Of Bleichenbacher's Oracle Threat)
+By the way, I have just tried the OVE ID alternative:
+good idea, but perhaps one button is a bit too frugal.
+What about adding at least the possibility of a title?
+This would probably encourage people to use OVEs.
+Of course, a catpcha might be needed in that event.
 
-https://robotattack.org/
+Stiepan
 
-It is mostly about proprietary appliances, but also affects three FOSS
-TLS stacks.
+P.S.: While we're at it, let's use the two OVEs I have just wasted,
+OVE-20170210-0001 (forward CVE web request+ID to oss-sec)
+OVE-20170210-0002 (add a title option field to OVE web form),
+for the two aforementioned issues!
 
-The attack is based on the fact that an attacker can distinguish valid
-and invalid RSA PKCS #1 v1.5 paddings based on different server
-responses.
 
-Erlang (CVE-2017-1000385):
-http://erlang.org/pipermail/erlang-questions/2017-November/094257.html
-http://erlang.org/pipermail/erlang-questions/2017-November/094256.html
-http://erlang.org/pipermail/erlang-questions/2017-November/094255.html
+-------- Original Message --------
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+Local Time: 10 February 2017 5:08 PM
+UTC Time: 10 February 2017 16:09
+From: john.haxby@...cle.com
+To: oss-security@...ts.openwall.com
 
-WolfSSL (CVE-2017-13099):
-https://github.com/wolfSSL/wolfssl/pull/1229
-(only a pull req for now, no new release yet)
+On 10/02/17 15:40, Priedhorsky, Reid wrote:
+> To more efficiently assign and publish CVE IDs and to enable
+> automation and data sharing within CVE operations, MITRE is changing
+> the way it accepts CVE ID requests on the oss-security mailing list.
+> Starting today, please direct CVE ID requests to this web form
+> <https://cveform.mitre.org/>
+>
+> I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
+>
+> Has this use case been considered? Is there an alternate way to accomplish my goal?
 
-Bouncy Castle (CVE-2017-13098):
-https://github.com/bcgit/bc-java/commit/a00b684465b38d722ca9a3543b8af8568e6bad5c
-1.59 beta 9 contains the fix:
-https://downloads.bouncycastle.org/betas/
+I'm glad someone else mentioned this -- I've been wondering too.
 
--- 
-Hanno Böck
-https://hboeck.de/
+What would be nice is if the web form forwarded the request and CVE-ID
+(suitably formatted) to oss-security or a similar list.
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+jch
