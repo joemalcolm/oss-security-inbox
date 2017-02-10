@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/3
-Message-ID: <20170927102015.GH26375@macbook42.flashner.co.il>
-Date: Wed, 27 Sep 2017 13:20:15 +0300
-From: Efraim Flashner <efraim@...shner.co.il>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/14
+Message-ID: <CABMkiz4fe2_ze2_PAo-MEMjVGpRj99cozh4V1tMyN6rrTE-kEQ@mail.gmail.com>
+Date: Fri, 10 Feb 2017 21:04:15 +0000
+From: Ben Tasker <ben@...tasker.co.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: binutils: heap-based buffer overflow in _bfd_x86_elf_get_synthetic_symtab (elfxx-x86.c)
+Subject: RE: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 26, 2017 at 07:03:41AM +0000, Agostino Sarubbo wrote:
-> 
-> Affected version:
-> 2.29.51.20170921 and maybe past releases
-> 
+On 10 Feb 2017 20:40, "Maier, Kurt H" <kurt.maier@...l.gov> wrote:
+>
+> This is why I am subscribed to oss-security, and I'd appreciate it if
+there were
+> an alternate solution in place before the CVE system disappears behind an
+> inscrutable web form.
+>
+> Thanks,
+> khm
 
-As best as I can see, it looks like the bug was introduced after the
-2.28 series was frozen/split-off, and there is no part of the patch that
-applies to the 2.28.1 release.
+Me too. I'd definitely prefer a solution where things still end up on this
+list, it's a good source of early warning that pulling direct from the web
+just doesn't fill (as it's not in my inbox by default)
 
-I have not, however, tried the reproducer.
+Ben
 
--- 
-Efraim Flashner   <efraim@...shner.co.il>   אפרים פלשנר
-GPG key = A28B F40C 3E55 1372 662D  14F7 41AA E7DC CA3D 8351
-Confidentiality cannot be guaranteed on emails sent or received unencrypted
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
