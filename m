@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/02/10
-Message-ID: <647ec3a7-f2f0-b090-007a-65286b815fa0@gentoo.org>
-Date: Sun, 2 Jul 2017 22:38:29 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Anthony Liguori <anthony@...emonkey.ws>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/12
+Message-ID: <D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>
+Date: Fri, 10 Feb 2017 19:59:52 +0000
+From: "Maier, Kurt H" <kurt.maier@...l.gov>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: RE: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On 07/02/2017 10:20 PM, Anthony Liguori wrote:
-> I've been thinking about this list of items and also some of the
-> challenges of Stack Clash.  Something that frequently came up was
-> uncertainty about what the current set of patches were and there was
-> also lack of clarity on dates.
-
-...
+> From: Priedhorsky, Reid [mailto:reidpr@...l.gov]
+> I’ve been using the CVE requests on oss-security to maintain a reasonably
+> comprehensive and timely list of vulnerabilities for specific products. It’s
+> not clear to me how to do this when CVE requests happen offline in a web
+> form.
 > 
-> What do you think about having a public bugzilla (or similar system)
-> where tracked issues are kept as private bugs? 
-
-...
-
-> 
-> Thoughts?
-
-The immediate thought that springs to mind is the [lack of OpenPGP
-support in bugzilla] which makes it difficult to ensure confidentiality
-unless disabling all email warnings.
-
-For an organization it is possible to ensure a level of security as they
-control all email endpoints (and disable email forwarding), so
-information never leaves a secured zone, but for multiple parties
-involved it would need to be fixed or configured to only send e.g "Bug
-XXX has been updated, please log in to see details", which can make the
-workflow inconvenient.
-
-Notes:
-[lack of OpenPGP support in bugzilla] I say lack of OpenPGP support as
-the current implementation is too flawed to be used, this is elaborated
-on in http://www.openwall.com/lists/oss-security/2016/02/13/8
-
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+> Has this use case been considered? Is there an alternate way to accomplish
+> my goal?
 
 
+This is why I am subscribed to oss-security, and I'd appreciate it if there were
+an alternate solution in place before the CVE system disappears behind an
+inscrutable web form.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Thanks,
+khm
