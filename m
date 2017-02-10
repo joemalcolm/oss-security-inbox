@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2516" "Friday" "8" "July" "2016" "10:07:10" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160708140710.C1C3F6FCE57@smtpvmsrv1.mitre.org>" "55" "[oss-security] Re: CVE Request: perl: XSLoader: could load shared library from incorrect location" nil nil nil "7" "2016070814:07:10" "[oss-security] Re: CVE Request: perl: XSLoader: could load shared library from incorrect location" (number mark "U       cve-assign@m Jul  8   55/2516  " thread-indent "\"[oss-security] Re: CVE Request: perl: XSLoader: could load shared library from incorrect location\"\n") "<20160707114924.GA15061@eldamar.local>" ("<20160707114924.GA15061@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["587" "Friday" "10" "February" "2017" "21:04:15" "+0000" "Ben Tasker" "ben@bentasker.co.uk" "<CABMkiz4fe2_ze2_PAo-MEMjVGpRj99cozh4V1tMyN6rrTE-kEQ@mail.gmail.com>" "20" "RE: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021021:04:15" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        ben@bentaske Feb 10   20/587   " thread-indent "\"RE: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 22177 invoked by uid 550); 8 Jul 2016 14:07:23 -0000
+Received: (qmail 7826 invoked by uid 550); 10 Feb 2017 21:10:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,58 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 3814 invoked from network); 10 Feb 2017 21:04:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bentasker.co.uk; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=JpoTdtWkWLsn3tHjHKrxrAd9ry2oKejqED+wl2HwyM0=;
+        b=XO7A/Pl/8bBk97T/R3ZSYRPRHtfeIw6pDtNHcVEM/0XK6V2iNEJTYNc/rHpMpQWMeM
+         nH16z5UASsC29zeuBEdAWgZgF3sbzIc0Yl/CEumN6+j18TiAM7FfldZTprDVIbEF6alB
+         6SanJ4Bwzjfm6/eOOdzSILJgGBBgvaYCFCXNc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=JpoTdtWkWLsn3tHjHKrxrAd9ry2oKejqED+wl2HwyM0=;
+        b=V9Rjd1X6/BjJynBzbZorNvXW1i7ItJcHaCqKf/SpTKN1z4oDD2UpY2dejZY4RAlFUP
+         PhtJDwim97SNEkLysJDfxRWzFezTW4na+wmwTW/VNvBybTUIErwvMt4lYCcLE2LmnkIW
+         3wwPc5+zCEyQzLreImk663Y35ku8KFkbalUKTDE7TJMs3EEWzuEJ5G/4mMwu9qB7lRLm
+         GqoXkV3ncVieuDu4QFgzY3CUbBvUZdBicflpj4uFW/9eoKkuDEryHmQ5jawN3oZ4Ra79
+         bvtoSC04HYRfCqzFkbjeezZZ3yhwQ4aGCQavalSZzqzGgKfKDLhgL4tfInaED7dQpiyk
+         vGvw==
+X-Gm-Message-State: AMke39m4CtvfdLP1kq7iMlbwEJSGqS0TLUROX1MgtdLGU1sSZsJUirCsecgfpqUKXIDoC2rSjpuEEuuDEtJWaA==
+X-Received: by 10.107.19.196 with SMTP id 65mr11145467iot.185.1486760656047;
+ Fri, 10 Feb 2017 13:04:16 -0800 (PST)
+MIME-Version: 1.0
+X-Originating-IP: [178.62.118.116]
+In-Reply-To: <D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov> <D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>
+Message-ID: <CABMkiz4fe2_ze2_PAo-MEMjVGpRj99cozh4V1tMyN6rrTE-kEQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary=001a113f9c6cc5270f05483370b5
+Date: Fri, 10 Feb 2017 21:04:15 +0000
+From: Ben Tasker <ben@bentasker.co.uk>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22151 invoked from network); 8 Jul 2016 14:07:23 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160707114924.GA15061@eldamar.local>
-Message-Id: <20160708140710.C1C3F6FCE57@smtpvmsrv1.mitre.org>
-Date: Fri,  8 Jul 2016 10:07:10 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: perl: XSLoader: could load shared library from incorrect location
+Subject: RE: [oss-security] MITRE is adding data intake to its CVE ID process
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a113f9c6cc5270f05483370b5
+Content-Type: text/plain; charset=UTF-8
 
-> Jakub Wilk reported in [1] that the Perl module List::MoreUtils tried
-> to load code from a subdirectory of the current working directory
-> despite explicitly removing the current directory from @INC, which
-> could lead to the execution of arbitrary code if cwd is untrusted, as
-> demonstrated in the bugreport.
-> 
-> While analyzing the issue[2], it turns out that the issue is actually in
-> XSLoader, which uses caller() information to locate the .so file to
-> load. This can be incorrect if XSLoader::load() is called in a string
-> eval. The fix commited upstream is [3].
-> 
-> @MITRE: Could you please assign a CVE for this issue in XSLoader? Do
-> you think List::MoreUtils needs a separate CVE as well, despite the
-> underlying issue lying in XSLoader[4]?
-> 
->  [1] https://bugs.debian.org/829138
->  [2] https://rt.cpan.org/Ticket/Display.html?id=115808
->  [3] http://perl5.git.perl.org/perl.git/commit/08e3451d7b3b714ad63a27f1b9c2a23ee75d15ee
->  [4] https://bugs.debian.org/829578
+On 10 Feb 2017 20:40, "Maier, Kurt H" <kurt.maier@pnnl.gov> wrote:
+>
+> This is why I am subscribed to oss-security, and I'd appreciate it if
+there were
+> an alternate solution in place before the CVE system disappears behind an
+> inscrutable web form.
+>
+> Thanks,
+> khm
 
-Use CVE-2016-6185 for the XSLoader vulnerability.
+Me too. I'd definitely prefer a solution where things still end up on this
+list, it's a good source of early warning that pulling direct from the web
+just doesn't fill (as it's not in my inbox by default)
 
-There is not currently a separate CVE for List::MoreUtils. As far as
-we can tell, the "Sun Jul 03 14:20:04 2016" section of 115808 gives
-possible reasons for List::MoreUtils to be fixed independently, but
-doesn't directly argue that List::MoreUtils was responsible for a
-vulnerability on its own. Actually, it might imply the opposite, with
-the "Even if List::MoreUtils is not at fault, I think this patch is
-helpful" wording.
+Ben
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXf7JGAAoJEHb/MwWLVhi2cTEP/3GVbvUCtrt1qhknJqIsOkBk
-hM6MiFHbF2Au0x3BoLT982ivdZmzTHSWgFzJhmEqo59Q3tbfvtsBsrqxmjaDhKoM
-6JQHbafMtd9HsgPfn6lzd20nWDc8Z+TW+yPigWT9cnXWJ+GGqGtU4shE/Bd0RWqU
-SHuO5TVA4veZdcXyUNlmGxar7NtEbjH2/Yfa10hE3CgRyWSKc8xZBP68/qNKSGnU
-E+dP4G1nbB/8KTlDXB7JcWGiqWXI704h0PoAbgTD4v/JizZmz4gZWoKgoeXfukOf
-SMES/QmVH8sEUIjgwstuf0VPjzQlJ+yLHDzJspODtCeGNvgcmZCA/O0HY0oQjpLA
-W8+EWNhkMS6j641owiNwhgok2xpWe39crqK1EzIBWcZijByTB7SZwDcuvzxq8rhH
-st3k10lF+VT26t4e8D6wFSi44xld+Qc2ngIUMAyrGmEp01p3jppnnpAMtpSpKRQ4
-hJN19AkiIAyMPIEHbuv19yMvWYnfBu34rW3ZleYsl1ZTqPz8wxTdsbthYfhPz1L7
-NauVi4xlVKYqNrD8O4hV0OFolYXzn8o5WKVWaSby+nszL/mELzQCPlog5QUnqmSy
-5+Pl5a7Ae8eZCAlsI8iuvDBcFeMHzNojHIJEk0m06riTB3uiDug9X5Cgp7QZ6AbN
-T5OSd5vKksMXgbMqIKIi
-=NaWX
------END PGP SIGNATURE-----
+--001a113f9c6cc5270f05483370b5--
