@@ -1,26 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/14
-Message-ID: <60f799fd-829c-98e4-85d0-c740b74175fa@chbi.eu>
-Date: Thu, 28 Sep 2017 21:40:09 +0200
-From: chbi@...i.eu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/3
+Message-Id: <201702101200.00422@pali>
+Date: Fri, 10 Feb 2017 11:59:59 +0100
+From: pali@...n.org
 To: oss-security@...ts.openwall.com
-Subject: Re: CSRF vulnerability in Tiki <= 17.0, 16.2, 15.4 LTS and 12.11 LTS
+Subject: Re: Use after free in libmysqlclient.so
 Content-Type: text/plain; charset=utf-8
 
+Hello, are you going to assign CVE for this particular defect?
 
-Sorry I've forgot to write:
-
-
-I've requested two CVE IDs (MITRE) but I have not received any yet.
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On Friday 27 January 2017 23:53:29 pali@...n.org wrote:
+> Hello, I would like to report problem related to MySQL/MariaDB and
+> possibly asking for assigning CVE if this list is the right place.
+> 
+> C client library for MySQL (libmysqlclient.so) has use-after-free
+> defect which can cause crash of applications using that MySQL
+> client.
+> 
+> Defect occurs by calling mysql_close() function from
+> libmysqlclient.so. If mysql_close() is called before calling all
+> mysql_stmt_close() (for all allocated stmts), then following
+> mysql_stmt_close() call try to write to already released memory.
+> mysql_close() let dangling pointer exist for prepared statements.
+> Real problem is in function
+> mysql_prune_stmt_list() which incorrectly iterate over elements.
+> Function list_add() overwrite ->next pointer of current element which
+> overwrite next element for iteration.
+> 
+> Basically it is just wrong usage of linked list structure.
+> 
+> Languages in which is not guaranteed order of executing destructor of
+> created objects have a big problem as such writing to memory pointed
+> by dangling can cause crash of whole application.
+> 
+> E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
+> whole perl process with simple script:
+> 
+> perl -MDBI -e '
+> $dbh = DBI->connect("dbi:mysql:", "root", undef,
+>                     {RaiseError => 1, mysql_server_prepare => 1});
+> $sth1 = $dbh->prepare("SELECT 1");
+> $sth2 = $dbh->prepare("USE mysql");
+> $dbh->disconnect;
+> $dbh = undef;
+> '
+> Segmentation fault
+> 
+> Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce
+> change username, password and host where is running mysql server.
+> Valgrind can prove that memory corruption really occurs.
+> 
+> This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But
+> is present in all MySQL 5.5 versions (and also older) and
+> appropriate older 5.6 and 5.7 versions. MySQL 5.5 is still used,
+> supported and included in lot of linux distributions.
+> 
+> Moreover this defect is present also in MariaDB releases. I tested
+> all last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all
+> those are affected.
+> 
+> MySQL and MariaDB provides also standalone package with only C client
+> library libmysqlclient.so (without server) under name "Connector/C"
+> and so appropriate versions of it are affected too.
+> 
+> I found that this defected was fixed in MySQL git repository by
+> commit:
+> https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc5
+> 52424132806f46e93
+> 
+> That commit can be easily applied to last MySQL 5.5.54 version and
+> fixes this defect.
+> 
+> Looks like problem was already reported and is publically available
+> in MySQL bug tracker, see more details on links:
+> https://bugs.mysql.com/bug.php?id=70429
+> https://bugs.mysql.com/bug.php?id=63363
+> (tickets are closed despite fact that MySQL 5.5 and older are not
+> fixed)
+> 
+> ---
+> 
+> I reported this problem to Oracle secalert_us@...cle.com two months
+> ago, but they did absolutely nothing for fixing it in MySQL 5.5.
+> Instead they started resending this problem to some random people
+> with @cpan.org address for unknown reason. And told me to not
+> disclose information about this defect. Resending does not look like
+> normal handling of security related problem! Therefore I suggest
+> other people to not wasting time reporting problems to Oracle for
+> open source applications.
+> 
+> As two months is really long time to fix such problem which was
+> already fixed in new versions; it is already publically disclosed in
+> MySQL bug tracker; fix available in public git; problem is in major
+> MariaDB versions; fix is small; and this is open source product
+> included in many linux distributions I decided to send information
+> to oss-security.
