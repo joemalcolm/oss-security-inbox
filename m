@@ -1,41 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/19/3
-Message-ID: <20170519185858.mbilbjdi3fafgl2j@kamui.lair>
-Date: Fri, 19 May 2017 21:58:58 +0300
-From: Yui Hirasawa <yui@...k.li>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/11
+Message-ID: <8fd9649e-08a4-2141-0d1e-624d9b344f1b@reactos.org>
+Date: Fri, 10 Feb 2017 20:10:47 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: terminal emulators' processing of escape sequences
+Cc: cve-assign@...re.org
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 17, 2017 at 02:25:52AM +0200, Robert Święcki wrote:
-> Hi,
->
-> 2017-05-17 0:03 GMT+02:00 Solar Designer <solar@...nwall.com>:
-> >
-> > Jason, Robert -
-> >
-> > On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> > > A harmless example from rxvt - pushing back the new-line character:
-> > >
-> > > $ echo -ne "\eGQ;"
-> > > ;$ 0
-> > > bash: 0: command not found
-> >
-> > Does this also affect rxvt-unicode?
->
-> Yes,
->
-> Tested with rxvt-unicode-9.22
->
-> $ echo -ne "\eGQ;"
-> ;$ 0
-> bash: 0: command not found
-> $
+Hi,
 
-For me on rxvt-unicode 9.22 this command goes into command mode and
-executes the first command in the history, thanks to vi-mode in bash.
+I agree with John as well (regarding his suggestion).
 
-In clear history it of course goes into infinite loop of re-executing
-itself.
+As a side remark, would it be possible to properly configure the
+webserver of https://cveform.mitre.org? In environements that perform
+strict TLS checking, it cannot work, due to missing certificates chain.
 
-Also works with the more portable `printf "\033GQ;"`
+Cheers,
+Pierre
+
+Le 10/02/2017 à 19:09, Stiepan a écrit :
+> Same concern here; I second your suggestion, John.
+> 
+> By the way, I have just tried the OVE ID alternative:
+> good idea, but perhaps one button is a bit too frugal.
+> What about adding at least the possibility of a title?
+> This would probably encourage people to use OVEs.
+> Of course, a catpcha might be needed in that event.
+> 
+> Stiepan
+> 
+> P.S.: While we're at it, let's use the two OVEs I have just wasted,
+> OVE-20170210-0001 (forward CVE web request+ID to oss-sec)
+> OVE-20170210-0002 (add a title option field to OVE web form),
+> for the two aforementioned issues!
+> 
+> 
+> -------- Original Message --------
+> Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+> Local Time: 10 February 2017 5:08 PM
+> UTC Time: 10 February 2017 16:09
+> From: john.haxby@...cle.com
+> To: oss-security@...ts.openwall.com
+> 
+> On 10/02/17 15:40, Priedhorsky, Reid wrote:
+>> To more efficiently assign and publish CVE IDs and to enable
+>> automation and data sharing within CVE operations, MITRE is changing
+>> the way it accepts CVE ID requests on the oss-security mailing list.
+>> Starting today, please direct CVE ID requests to this web form
+>> <https://cveform.mitre.org/>
+>>
+>> I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
+>>
+>> Has this use case been considered? Is there an alternate way to accomplish my goal?
+> 
+> I'm glad someone else mentioned this -- I've been wondering too.
+> 
+> What would be nice is if the web form forwarded the request and CVE-ID
+> (suitably formatted) to oss-security or a similar list.
+> 
+> jch
+> 
+
+
+-- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
