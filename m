@@ -1,68 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/14
-Message-ID: <CANO=Ty2nEW431bvaktfre7e7VXh4OzHqa2ffhrv7oaxxG+LSTg@mail.gmail.com>
-Date: Mon, 13 Feb 2017 14:36:59 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/8
+Message-ID: <20170210162058.lsxxabktorrk6uxf@perpetual.pseudorandom.co.uk>
+Date: Fri, 10 Feb 2017 16:20:58 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Use after free in libmysqlclient.so
 Content-Type: text/plain; charset=utf-8
 
-so longer term (like starting now) the master database for DWF:
+On Fri, 10 Feb 2017 at 11:59:59 +0100, pali@...n.org wrote:
+> On Friday 27 January 2017 23:53:29 pali@...n.org wrote:
+> > C client library for MySQL (libmysqlclient.so) has use-after-free
+> > defect which can cause crash of applications using that MySQL
+> > client.
 
-https://github.com/distributedweaknessfiling/DWF-Master-CVE-Database
+Is this a security vulnerability, or just a bug?
 
-will have a list of blocks (generally 1000) and the url they are at (git
-link to clone), I want to shard the database otherwise a git repo with 100k
-cve's being updated will get unwieldy, and this also makes life a bit
-simpler for larger CNAs.
+How would an attacker cause this to happen in the application
+that they wish to target?
 
-As for the old tyle CSV representation of the data we'll probably do that
-as well since it is what people are used to consuming, but ideally we'll
-get the DWF data being imported into MITRE and processed fast enough that
-people can just consume MITRE's CSV feed (and resulting NVD feed and
-whatnot).
-
-So for now I'm focusing on some back end things like the CVE Mentor
-process/CNA training, the JSON data format so MITRE can consume data and so
-on.
-
-
-
-On Mon, Feb 13, 2017 at 12:56 PM, Ian Zimmerman <itz@...mate.net> wrote:
-
-> On 2017-02-12 11:23, Kurt Seifried wrote:
->
-> > As for the DWF it's simple: we're using git, so I guess if people really
-> > want up to the minute updates they can simply subscribe to the repos in
-> > GitHub, or pull and do it on their own end.
->
-> This?
->
-> https://github.com/distributedweaknessfiling/DWF-Database
->
-> Quoting:
->
->  IMPORTANT NOTE
->
->  There is a good chance this database (and indeed repo) will be phased
->  out in favor of the JSON database. If there is enough demand for it
->  there may be a CSV representation of all the data, but if there isn't
->  enough demand then we will simply drop it in 2017. So speak up if you
->  want/need this.
->
-> Is there a separate place for the JSON data?  Where?
->
-> --
-> Please *no* private Cc: on mailing lists and newsgroups
-> Personal signed mail: please _encrypt_ and sign
-> Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
->
-
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+    S
