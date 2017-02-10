@@ -1,69 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/9
-Message-ID: <CANO=Ty2o9kXFFMmnDJu3hsY3G84CyJmA_Tnt3dR2-vHyxsdMfw@mail.gmail.com>
-Date: Mon, 22 May 2017 13:16:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/7
+Message-ID: <94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>
+Date: Fri, 10 Feb 2017 16:09:12 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 22, 2017 at 12:05 PM, Michael Catanzaro <mcatanzaro@...lia.com>
-wrote:
+On 10/02/17 15:40, Priedhorsky, Reid wrote:
+> To more efficiently assign and publish CVE IDs and to enable
+> automation and data sharing within CVE operations, MITRE is changing
+> the way it accepts CVE ID requests on the oss-security mailing list.
+> Starting today, please direct CVE ID requests to this web form
+> <https://cveform.mitre.org/>
+> 
+> I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
+> 
+> Has this use case been considered? Is there an alternate way to accomplish my goal?
 
-> Hi,
->
-> I'm aware that the CVE form [1] can now be used to request CVEs. However,
-> it does not seem to be designed for requesting CVEs in open source
-> products. The field "Vendor of the product(s)" says "Please ensure vendors
-> are on the products and sources list," indicating the intent of MITRE to
-> restrict usage of the form to specific products. This list [2] says "For
-> open source software products not listed below, request a CVE ID through
-> the Distributed Weakness Filing Project CNA." So, clearly we are supposed
-> to request a CVE through the DWF project. (Or perhaps via Red Hat, since it
-> seems like it's willing to allocate CVEs for miscellaneous Linux-related
-> issues.)
->
-> Anyway, I attempted to request a CVE using the DWF project's request form
-> [3] several months ago, but have not yet received any response [4]. So I am
-> hesitant to request further CVEs from the DWF project, for fear that I
-> won't receive a response and will wind up needing to make a duplicate CVE
-> request somewhere else.
->
+I'm glad someone else mentioned this -- I've been wondering too.
 
-Ah, I recently did a large number of CVE assignments, I haven't emailed out
-to the sequesters yet, yours was
-https://github.com/distributedweaknessfiling/DWF-CVE-2017-1000000/blob/f2e15ac3468dd382d9ffa3d5acc032c106f3248c/CVE-2017-1000025.json
-I believe.
+What would be nice is if the web form forwarded the request and CVE-ID
+(suitably formatted) to oss-security or a similar list.
 
-
-
->
-> How are other people getting open source CVEs right now? Has anybody else
-> had luck getting a CVE via DWF? Should I be trying to do this through Red
-> Hat instead? Or just by filling out MITRE's CVE form even though we're not
-> really supposed to be using it?
->
-
-Part of the challenge of the DWF is this is more of an experiment to figure
-out what we need/how to do it, mostly so I can scale it out/up to the
-entire Open Source world. So CVEs are a bit slow right now, but that should
-get better over the next few months.
-
-
->
-> Michael
->
-> [1] https://cveform.mitre.org/
-> [2] http://cve.mitre.org/cve/request_id.html#cna_coverage
-> [3] http://iwantacve.org/
-> [4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
->
->
-
-
--- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+jch
