@@ -1,44 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/9
-Message-ID: <CAPjdKBx8U9iX5WfSyPG5AAnODMdJGfKuS713kok3RpFCM1f6kw@mail.gmail.com>
-Date: Thu, 12 Jan 2017 20:44:12 +0530
-From: Dileep Kumar <dileep.chinu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/19
+Message-ID: <20170210222953.GA30129@hal>
+Date: Fri, 10 Feb 2017 23:29:53 +0100
+From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: MUJS null pointer dereference and Heap buffer overflow write
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Seth Arnold <seth.arnold@...onical.com> [2017-02-10 21:59]:
+> On Fri, Feb 10, 2017 at 03:40:45PM +0000, Priedhorsky, Reid wrote:
+> > I’ve been using the CVE requests on oss-security to maintain a
+> > reasonably comprehensive and timely list of vulnerabilities for specific
+> > products. It’s not clear to me how to do this when CVE requests happen
+> > offline in a web form.
+> > 
+> > Has this use case been considered? Is there an alternate way to
+> > accomplish my goal?
+> 
+> Another part of the email from MITRE included "When you enter a
+> vulnerability description on the web form, the CVE and description will
+> typically be available on the NVD and CVE web sites at the same time or
+> shortly after we email the CVE ID to you."
+> 
+> While the oss-security list has been the best resource of information for
+> CVEs for us, part of our CVE ingestion is to download data from NVD and
+> MITRE directly:
+> 
+> https://nvd.nist.gov/download
+> https://cve.mitre.org/data/downloads/allitems.xml
+> 
+> Debian's database is also very useful to us:
+> https://anonscm.debian.org/viewvc/secure-testing/data/CVE/
+> 
+> And of course our database is freely available as well:
+> https://code.launchpad.net/~ubuntu-security/ubuntu-cve-tracker/master
+> 
+> I hope this can help you adapt your processes as MITRE adapts theirs.
 
-The details of the two bugs found in MUJS (https://github.com/ccxvii/mujs)
-are as follows :
-
-1. Null pointer dereference in regexp.c
-
-    The return value from malloc is not properly checked before
-dereferencing it which can result in a crash.
-
-     More details on the bug in the bug report at:
-     https://bugs.ghostscript.com/show_bug.cgi?id=697381
-
-     This has been fixed by the MUJS team in the commit:
-http://git.ghostscript.com/?p=mujs.git;h=fd003eceda531e13fbdd1aeb6e9c73
-156496e569
-
-2. Heap buffer overflow write in jsrun.c: js_stackoverflow()
-
-    There was a logical error in the code which can be used to trigger a
-heap overflow write.
-
-    More details on the bug in the bug report at:
-    https://bugs.ghostscript.com/show_bug.cgi?id=697401
-
-    The same has been fixed by the MUJS team in the commit:
-http://git.ghostscript.com/?p=mujs.git;a=commit;h=
-77ab465f1c394bb77f00966cd950650f3f53cb24
-
-Both bugs are found by Dileep Kumar Jallepalli using AFL. Please kindly
-assign CVEs if suitable.
-
-Thanks,
-Dileep Kumar Jallepalli
-
+One significant advantage of monitoring this list was that requests
+were immediately visible and there are sometimes significant
+delays between a CVE request and the response from MITRE. Or in some
+cases requests were rejected with a rationale or did not receive a
+response at all -- with the web form such cases will now just
+disappear in a black hole.
+-- 
+Guido Berhoerster
