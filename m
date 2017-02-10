@@ -1,4 +1,9 @@
-Received: (qmail 19642 invoked by uid 550); 6 Mar 2025 05:56:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1203" "Friday" "10" "February" "2017" "16:58:30" "-0700" "Mats Wichmann" "mats@wichmann.us" "<84318934-d1c8-8b9a-afe1-641e47d166d2@wichmann.us>" "31" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021023:58:30" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        mats@wichman Feb 10   31/1203  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<20170210205916.GB28439@hunt>" "<D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>" "<20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>" "<MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 8179 invoked by uid 550); 11 Feb 2017 00:01:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,105 +11,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1847 invoked from network); 6 Mar 2025 05:51:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741240251; x=1741845051; darn=lists.openwall.com;
-        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OPHJVx69Rqd75SfhjuURsZXqEKsXNIVgatpbV1xWW8U=;
-        b=DFh1YcEi5aPeDwF0Bzla26QTXh6GubAIs1fTnCS1AQn3mEb9EajjYG8UsuWqR2Mb2Z
-         Wjlgjv6oVPjPlrQ+KMdGqagTh+Um/hil6O34FYCeTxN9Y+jBYiiRdIHTFLZgbmof9DPM
-         kZ5QPThomhRvdnNHQVl0STO8m013VVH9H7ym9zhgly4r/Rg0YfPq/Ez6QQsBvwih+iRP
-         It8CYnsBqLoKE+kSFOkLfd+sRbhmExk3dLubK9fmjLW/LoWgr5hKXbvJJkRY3IRulkyL
-         /fDKUCioVTfBLq9uZzRYGRed+LJnNH9tOAAMx1s+A2wISw+C+kJZKrsPSXIRtoF/xu8T
-         h5tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741240251; x=1741845051;
-        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OPHJVx69Rqd75SfhjuURsZXqEKsXNIVgatpbV1xWW8U=;
-        b=LbFu0pmwfx+g6pXf76IHMMOqqhdPaeIKOFde6YlcbmU5bmpodrWdq+1ab1BQaZVP6i
-         nvShthHxLkD/7Vnn6Nu5sVA+Np1fo7rXI84boftI/A0+fwCfoBESXyfuOpH5MF/JrMom
-         dWs0t7ZvmmPYgmx0yikVfiG6a8NckV4yCywXHtFFS3sIug+sIvZdVklRT5NoWf4g8gXv
-         jV44PQv4/OkQ5sAhXZPKGSFR3iIiFo6z5d+8mXV/ilmwIDOnGA0HpyuZbhKOj7UWNDgG
-         Y1JuDWS9FIa9R/6drbReS66g4cPXRdbMkj6zhiRSL8/JqvoiD4rMdSBUjzdZAFI+M+RT
-         igOg==
-X-Gm-Message-State: AOJu0YwyxWtHkGnv/8crGtBM1cNK+lHIz20kr8sPnXYCa1327o3X2NDq
-	8HKXchAjyaG3Bxayw17wTwokNQehOqO2Zoe+01v4HvWWpyBYUiG1
-X-Gm-Gg: ASbGncuASWof4xsNzRRpUHXc/T9k9KZsSZzgDa3otQ/TiTwGRZadldGV3Ewx4jy4VGd
-	6Uv4y02CW/LIw9aeO7TVxyIQLgC453TVZSsJelA2Oi0aX0f4RWd0UJFdW3XyNYiLdb9GbWA32oc
-	rW0LcvHn+yZDG0YxSbCBOfaLJ4fV6w58NGg7NZoTpkukpUKY7+MxtW3AhzbC00CTcRORlcJnLyu
-	gLJsL91nzOn/b3emc7HzeJtPgzEdO98VbNS3Ss6PySWRZBVyb82an8Dohs2RZXZXOY4qUiH1A5q
-	nJJTglJrcli8hFGfr+8rm7h4M3rFAVSDkMCFywFsbA==
-X-Google-Smtp-Source: AGHT+IF8DMML3c8d9RgyrTx3+YQTc8To+7etDiPH0TU2UcoDdtuf89XhNNEBJ3hzStanBoVFJymydg==
-X-Received: by 2002:a05:6830:2696:b0:72a:1143:85fb with SMTP id 46e09a7af769-72a1fcada3fmr3667805a34.20.1741240250926;
-        Wed, 05 Mar 2025 21:50:50 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------2Edlm06aSLqUWq4KbDfX2O0C"
-Message-ID: <97c9b035-2a68-4182-93c8-0495abdd193f@gmail.com>
-Date: Wed, 5 Mar 2025 23:50:45 -0600
+Received: (qmail 5661 invoked from network); 10 Feb 2017 23:58:43 -0000
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov> <20170210205916.GB28439@hunt>
+ <D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>
+ <20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>
+ <MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>
+Message-ID: <84318934-d1c8-8b9a-afe1-641e47d166d2@wichmann.us>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com, Tavis Ormandy <taviso@gmail.com>
-References: <Z5BYg9WPFBF7JBEB@thinkstation.cmpxchg8b.net>
- <Z5B2PA7DHTBbvbOq@itl-email> <Z5EUUMd1xkSSKAEM@thinkstation.cmpxchg8b.net>
- <20250204101028.GA20864@openwall.com> <20250306033000.GA4987@openwall.com>
- <6f9ffc49-ad46-45eb-9d6f-7d58769c3671@gmail.com>
- <20250306053416.GA6682@openwall.com>
-Content-Language: en-US
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-In-Reply-To: <20250306053416.GA6682@openwall.com>
-Subject: Re: [oss-security] AMD Microcode Signature Verification Vulnerability
+In-Reply-To: <MWHPR01MB2237C510B601793B63595572F1440@MWHPR01MB2237.prod.exchangelabs.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Date: Fri, 10 Feb 2017 16:58:30 -0700
+From: Mats Wichmann <mats@wichmann.us>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+To: oss-security@lists.openwall.com
 
---------------2Edlm06aSLqUWq4KbDfX2O0C
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On 02/10/2017 04:39 PM, Williams, Ken wrote:
+> Tim,
+> 
+> Your perception is incorrect.  I can assure you there is no 
+> CVE-related bias whatsoever towards commercial software, or against 
+> OSS.  Never has been any CVE-related bias against OSS, and I can't 
+> imagine there ever will be.
+> 
+> I'm a big OSS fan and advocate, and although I will only speak for 
+> myself, I'd be willing to bet that everybody else involved with the 
+> CVE project is too.
+> 
+> As far as sending copies of CVE web form submissions to oss-sec, or 
+> posting anywhere else, keep in mind that much of that info needs to 
+> be embargoed until a vendor security advisory is published.
+> 
+> Regards,
+> Ken Williams
+> 
+> Disclaimer: I've been on the CVE Board for 17 years.
 
-On 3/5/25 23:34, Solar Designer wrote:
-> On Wed, Mar 05, 2025 at 11:03:49PM -0600, Jacob Bachmeyer wrote:
->>> [...]
->>>> Forging On
->>>> We noticed that the key from an old Zen 1 CPU was the example key of the
->>>> NIST SP 800-38B publication (Appendix D.1 2b7e1516 28aed2a6 abf71588
->>>> 09cf4f3c) and was reused until at least Zen 4 CPUs. [...]
->> They... used... the... example... key... in... a... real...
->> production... system...
->>
->> [I have no words.]
-> It appears they didn't realize the key's secrecy would matter for their
-> use case (or else they probably wouldn't use CMAC in the first place),
-> so it "made sense" to stick with a "standard" tested key.  Given that
-> misunderstanding, I wouldn't blame them for choosing an example key.
-
-The purpose of "keys" in cryptosystems is to concentrate the need for 
-secrecy in a small, easily-guarded value, and assume the attacker knows 
-everything else about the system.
-
-> [...]
-> The real issue is the use of CMAC without understanding its properties,
-> not the key choice.
-
-The fact that it is called a "key" (and not a "public key") should be 
-the hint that it must be kept secret, which means do not use an example 
-value, just like you do not set your password to "password" or your PIN 
-to 1-2-3-4-5 unless you really mean to have no security on that system.
-
-> Indeed, HMAC wouldn't be any weaker than its underlying hash on its own
-> even when used with a publicly known example key.  So I can see how they
-> could have (wrongly) expected the same from CMAC.
-
-If the system is no weaker if the HMAC key is known, then you should not 
-be using HMAC and you should be using a plain digest instead.  (Or am I 
-missing something?  What would HMAC with a known key give you that a 
-plain digest does not?)
+It's hard to see how this change doesn't completely cut the legs out
+from under this list... for those things which were sent here, and thus
+subject to discussion on the list (a lot of which in my simplistic world
+view has often been very useful), now in order to get any attention it
+has to go to a web form, and those submissions are immediately caught in
+the "embargo" net, and thus won't come here at all.  Am I
+misunderstanding this completely?
 
 
--- Jacob
 
-
---------------2Edlm06aSLqUWq4KbDfX2O0C--
