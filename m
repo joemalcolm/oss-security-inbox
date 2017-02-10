@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4591" "Thursday" "2" "August" "2018" "20:57:07" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>" "108" "[oss-security] Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem" "^Cc:" nil nil "8" "2018080218:57:07" "[oss-security] Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem" (number mark "        andreyknvl@g Aug  2  108/4591  " thread-indent "\"[oss-security] Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the timer subsystem\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1208" "Friday" "10" "February" "2017" "21:16:28" "+0000" "Maier, Kurt H" "kurt.maier@pnnl.gov" "<D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>" "20" "RE: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021021:16:28" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        kurt.maier@p Feb 10   20/1208  " thread-indent "\"RE: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170210205916.GB28439@hunt>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<20170210205916.GB28439@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 24288 invoked by uid 550); 2 Aug 2018 18:57:19 -0000
+Received: (qmail 28258 invoked by uid 550); 10 Feb 2017 21:24:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,149 +11,45 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24270 invoked from network); 2 Aug 2018 18:57:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=dlyEbXlmmpADLdzWZHDCYzWZ7EI17iwvi3rIjOeLIu8=;
-        b=lR35G5oowZcyyn9hDgDsv+o11i0qCWEkUaNw7p3uW2HFXLBQTcoE6bDsiOQVQUPRgJ
-         oK7sj01w0WISJDe1zxbTmkQbasa0vyCagW8j4tUTtfLrXRWxj+Vyl23dSTD8zAl5HV/q
-         dLxAbteoEhm8i+3zyFrJOACgm4H3dsRHadFAWE6fsof0rE2YgEXP0nLegYU3N0D7tqm6
-         qLwlMHUELDXFnM3RjvvdgWQTtrAtvMvYxyzAL7MLfgaF9NaZ+hRrC8wiG6gLbM2hiiKo
-         nQCoD4QEXPo0Q+y22iIp+eAGdHavXV/SZDy59ZadxhFs8PLkcnrt1VpYnajmIErstkiK
-         eG9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=dlyEbXlmmpADLdzWZHDCYzWZ7EI17iwvi3rIjOeLIu8=;
-        b=LzX7o9yJw3OrbeFhMbFiWgX3FvIGQOACV58yNUBJh1PHBIdGnozcMu4uEYOidgFp5l
-         maXyT0J2A1NYS0TPm8O28CbGf0gb7/8EVwNUrlG/EzHGTP+KpshjWQm6bZYpPoqGl0sG
-         5pNGLWeI0XElYU/e05wCnjLaOf8wl+ZgTyIvFhwRuOD48ISsknxmLv2TB7sesdeKO6OW
-         6SXxcq1UVpnnhqZ2dV+s0cu0wv/lIXOTIRl14FUeCcrlSS4KFHfTU5KWkPTXK2FWY2Qt
-         6EedXE6J+yT6jGZWgxE6zKXIXkx7eEHDPHPJMHNK4+IN2oq40+M5yH4PKo0QKQX8CK1B
-         duiw==
-X-Gm-Message-State: AOUpUlFwCY6rR/DYNgN2lnHuiw65gQdJppWJrLa9mB05fJHdOxi32fR9
-	FeUlVCj/musL3Y9QXovYwgY0gMnkyNgl8szzq1H10sUm
-X-Google-Smtp-Source: AAOMgpefLMRLzSbKxT+JGk1YXmd0kxyYTnWfp4eDgwrIivwBuP0tSgFXrylsrrmfr+ukBAekTC4J/GPWGzS14xK+UuQ=
-X-Received: by 2002:a19:df43:: with SMTP id q3-v6mr2460205lfj.53.1533236227362;
- Thu, 02 Aug 2018 11:57:07 -0700 (PDT)
+Received: (qmail 22293 invoked from network); 10 Feb 2017 21:16:42 -0000
+Thread-Topic: [oss-security] MITRE is adding data intake to its CVE ID
+ process
+Thread-Index: AQHSgpHuBhadoUgs+0K+toFqcyRtsaFi2D+AgABpzQD//32eQA==
+Message-ID: <D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov> <20170210205916.GB28439@hunt>
+In-Reply-To: <20170210205916.GB28439@hunt>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [130.20.128.10]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Message-ID: <CA+fCnZcE=6dyUeU9CazgUR_yHTerNYXiK0gQNzjFSwjG=G-1uQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Kostya Serebryany <kcc@google.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Alexander Potapenko <glider@google.com>, keescook@google.com
-Date: Thu, 2 Aug 2018 20:57:07 +0200
-From: Andrey Konovalov <andreyknvl@gmail.com>
+Date: Fri, 10 Feb 2017 21:16:28 +0000
+From: "Maier, Kurt H" <kurt.maier@pnnl.gov>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux kernel: CVE-2017-18344: arbitrary-read vulnerability in the
- timer subsystem
-To: oss-security@lists.openwall.com
+Subject: RE: [oss-security] MITRE is adding data intake to its CVE ID process
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Hi!
-
-Syzkaller/syzbot found a global-out-of-bounds bug in the timer
-subsystem of the Linux kernel [1], that is exploitable and can be used
-to gain an arbitrary-read primitive. This allows to access kernel
-memory and leak keys, credentials or other sensitive information that
-is stored there (so the bug has a similar impact to Meltdown). I'll
-share a PoC exploit in a week.
-
-The bug was introduced in commit 57b8015e ("posix-timers: Show
-sigevent info in proc file") [2] in 3.10 and fixed by commit cef31d9a
-("posix-timer: Properly check sigevent->sigev_notify") [3] in
-4.15-rc4. The bug only affects kernels that have CONFIG_POSIX_TIMERS
-and CONFIG_CHECKPOINT_RESTORE enabled, which is done by a lot of
-modern distros.
-
-This bug has been fixed in Ubuntu 16.04 [7], but still affects at
-least CentOS 7 at this moment (at least 3.10.0-862.9.1.el7.x86_64 that
-I've checked). I haven't checked the other distros.
-
-I've contacted linux-distros@ today and was asked to post to
-oss-security@ right away, since the issue is already public (and has
-been for the last 8 months, see the timeline below).
-
-======
-
-Description from MITRE [4]:
-
-The timer_create syscall implementation in kernel/time/posix-timers.c
-in the Linux kernel before 4.14.8 doesn't properly validate the
-sigevent->sigev_notify field, which leads to out-of-bounds access in
-the show_timer function (called when /proc/$PID/timers is read). This
-allows userspace applications to read arbitrary kernel memory (on a
-kernel built with CONFIG_POSIX_TIMERS and CONFIG_CHECKPOINT_RESTORE).
-
-======
-
-I thought it would be quite interesting to see when some Linux distros
-fixed this bug, since there was no CVE requested and assigned until
-recently.
-
-Initially I was only looking at Ubuntu 16.04, here's the related timeline:
-
-* Nov 30, 2017 - the bug reported by syzbot [5]
-* Dec 15, 2017 - the fix committed upstream [3]
-* Feb 17, 2018 - the fix backported to the 4.4 stable kernel branch [6]
-* Mar 15, 2018 - the fix added to the Ubuntu Xenial 4.4 kernel branch [7]
-* Jul 25, 2018 - CVE requested
-* Aug 2, 2018 - notified linux-distros@
-* Aug 2, 2018 - announcement on oss-security@
-
-In this particular case of a somewhat "scary" bug there was a window
-of 3.5 months between the bug being reported and the fixing commit
-reaching the Ubuntu Xenial 4.4 kernel branch. This gives some insight
-into how much time it usually takes for a fix to travel from upstream
-through stable into a distro kernel when there's no CVE. Compared to
-the 14 days, that distros are usually given to fix a security bug
-reported through linux-distros@, that seems rather long.
-
-Then I decided to take a look at the CentOS kernel. I was quite
-surprised to find out that this bug hasn't been fixed there at all. I
-was under the impression that most Linux distros either follow stable
-kernel branches or monitor upstream commits for security related fixes
-themselves. It seems that this is not the case. Perhaps this fix was
-missed because CentOS 7 kernel is based on the 3.10 kernel version,
-and the 3.10 stable kernel release stopped being supported in November
-2017.
-
-This is just one bug though. Right now there are 700+ fixed bugs
-reported by syzbot [8] and 200+ more, which are still not fixed [9].
-Almost none of them have CVEs (if anybody want to practice requesting
-CVEs, go for it). There are also ~9000 fixes backported to 4.4 stable
-kernel. Some of them are security relevant and don't have CVEs. On top
-of that apparently there are ~700 fixes that are missing in the 4.4
-stable kernel [10].
-
-It seems that a CVE is required for a particular security related fix
-to end up in distro kernels, but there are no CVEs requested for most
-of the bugs that are being fixed. So there's this inconsistency
-between the Linux kernel community that just fixes the bugs without
-bothering about CVEs and the distros, which require CVEs to apply
-fixes to their kernels.
-
-Just some thoughts :)
-
-Thanks!
-
-======
-
-[1] https://syzkaller.appspot.com/bug?id=e4cd90db60c4517094c0ffcb9468de1bf86809e7
-
-[2] https://github.com/torvalds/linux/commit/57b8015e07a70301e9ec9f324db1a8b73b5a1e2b
-
-[3] https://github.com/torvalds/linux/commit/cef31d9af908243421258f1df35a4a644604efbe
-
-[4] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-18344
-
-[5] https://groups.google.com/d/msg/syzkaller-bugs/9mUyHIix2ys/bTLPoT-kAgAJ
-
-[6] https://lkml.org/lkml/2018/2/17/139
-
-[7] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1756121
-
-[8] https://syzkaller.appspot.com/
-
-[9] https://syzkaller.appspot.com/?fixed=upstream
-
-[10] https://twitter.com/grsecurity/status/1022599945604526087
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBTZXRoIEFy
+bm9sZCBbbWFpbHRvOnNldGguYXJub2xkQGNhbm9uaWNhbC5jb21dDQo+IA0K
+PiBXaGlsZSB0aGUgb3NzLXNlY3VyaXR5IGxpc3QgaGFzIGJlZW4gdGhlIGJl
+c3QgcmVzb3VyY2Ugb2YgaW5mb3JtYXRpb24gZm9yDQo+IENWRXMgZm9yIHVz
+LCBwYXJ0IG9mIG91ciBDVkUgaW5nZXN0aW9uIGlzIHRvIGRvd25sb2FkIGRh
+dGEgZnJvbSBOVkQgYW5kDQo+IE1JVFJFIGRpcmVjdGx5Og0KDQpUaGlzIGlz
+IGEgZmluZSBzdXBwbGVtZW50IHRvIHRoZSBvc3Mtc2VjdXJpdHkgbGlzdCwg
+YnV0IGl0IGNvbXBsZXRlbHkNCnJlbW92ZXMgdGhlIHBvc3NpYmlsaXR5IG9m
+IG5hdHVyYWwgZGlzY3Vzc2lvbiBvZiBDVkVzIGJ5IG1lbWJlcnMNCm9mIHRo
+ZSBsaXN0LiAgVmFsdWFibGUgaW5zaWdodHMgbWlnaHQgbmV2ZXIgc3VyZmFj
+ZSB1bmxlc3MgZXZlcnkgbGlzdCANCm1lbWJlciBtYW51YWxseSBtb25pdG9y
+cyB0aGUgZGF0YWJhc2UgYW5kIGRlY2lkZXMgdG8gc2VuZCBhIA0KbWVzc2Fn
+ZSByZWdhcmRpbmcgYSBnaXZlbiBkYXRhYmFzZSBlbnRyeS4NCg0KSW4gc2hv
+cnQsIGl0IHJlbW92ZXMgdGhlIGJlc3QgYXZlbnVlIHRvd2FyZCB0aGUgY29s
+bGFib3JhdGlvbiB1cG9uDQp3aGljaCBhbGwgT1NTIGRldmVsb3BtZW50IGlz
+IGJhc2VkIGluIHRoZSBmaXJzdCBwbGFjZS4gIEkgZG9uJ3QgbWluZA0KaWYg
+TUlUUkUgcmVxdWlyZXMgc3VibWl0dGVycyB0byB1c2UgdGhlaXIgd2ViIHN0
+dWZmLCBidXQgbWVzc2FnZXMNCmdlbmVyYXRlZCBieSB0aGF0IHRvb2wgc2hv
+dWxkIGFsc28gYXBwZWFyIG9uIHRoaXMgbGlzdCwgb3Igc29tZXRoaW5nDQp2
+ZXJ5IHZhbHVhYmxlIHdpbGwgYmUgbG9zdC4NCg0Ka2htDQo=
