@@ -1,4 +1,9 @@
-Received: (qmail 29808 invoked by uid 550); 10 Jul 2024 21:33:53 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4365" "Friday" "10" "February" "2017" "15:23:03" "+0100" "Solar Designer" "solar@openwall.com" "<20170210142302.GA23293@openwall.com>" "99" "Re: [oss-security] Use after free in libmysqlclient.so" "^Cc:" nil nil "2" "2017021014:23:03" "[oss-security] Use after free in libmysqlclient.so" (number mark "        solar@openwa Feb 10   99/4365  " thread-indent "\"Re: [oss-security] Use after free in libmysqlclient.so\"\n") "<201702101200.00422@pali>" ("<201701272353.40452@pali>" "<201702101200.00422@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 24206 invoked by uid 550); 10 Feb 2017 14:23:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,202 +11,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20439 invoked from network); 10 Jul 2024 21:15:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1720646136;
-	bh=41XI4DsMMQqV2nkUGESEofAIlQKquDtIl4wOPdDJFyo=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=VnbF4kM2xnnr7oK2z0P9T4vdKPUnh4RaVBWF1URiXy3Qi3gmVwo1j0iQuN/z55STB
-	 YpS7526aVUVIcYmgFjP87jAjP4vWCV0XJ/fyEiFlbmgOLhAF4nMOLZ2TC+S8+IMFXB
-	 B9g6LHbNsMKiPv5R6AhU3H6Bx1sWb9TkXULkXEI48jD3IwGnY0YDyxE5O2mDUAaJCd
-	 tQSZn0ZFVer0hCZ7qzdE5FCpAiQYvnbYAe5VtQZfHkf6fic7+FYaiqHFx8v7Rrxhwp
-	 ixLeaPWUjdqBBlQx4yDZiEvvi4VO5S6CQ3TlYhrvUQFkr+74UUMRtKv2Ix8+JMcfsH
-	 xFmDEdfsn7ffQ==
-Date: Wed, 10 Jul 2024 16:15:33 -0500
-From: Mark Esler <mark.esler@canonical.com>
-To: oss-security@lists.openwall.com
-Message-ID: <Zo759RRNseuva6zO@aeon>
-References: <Zo61nFk8VulWf7_J@michel-fedora-PC198L6J>
- <Zo7mU_N9joNTZ4gV@itl-email>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="keuPC7vnSO5+L3WC"
-Content-Disposition: inline
-In-Reply-To: <Zo7mU_N9joNTZ4gV@itl-email>
-Subject: Re: [oss-security] linux-distros application for CentOS Project's
- Hyperscale SIG
-
---keuPC7vnSO5+L3WC
+Received: (qmail 24034 invoked from network); 10 Feb 2017 14:23:10 -0000
+Message-ID: <20170210142302.GA23293@openwall.com>
+References: <201701272353.40452@pali> <201702101200.00422@pali>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <201702101200.00422@pali>
+User-Agent: Mutt/1.4.2.3i
+Cc: oss-security@lists.openwall.com
+Date: Fri, 10 Feb 2017 15:23:03 +0100
+From: Solar Designer <solar@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Use after free in libmysqlclient.so
+To: pali@cpan.org
 
-On Wed, Jul 10, 2024 at 03:51:44PM -0400, Demi Marie Obenour wrote:
-> On Wed, Jul 10, 2024 at 11:23:56AM -0500, Michel Lind wrote:
-> > I am submitting this application on behalf of CentOS Project's Hypersca=
-le SIG.
-> >=20
-> > Myself (Michel Lind), as well as Davide Cavalca and Neal Gompa (SIG co-=
-chairs), would be joining if approved.
-> >   https://sigs.centos.org/hyperscale/sig/membership/
-> >=20
-> >=20
-> > 1. Be an actively maintained Unix-like operating system distro with sub=
-stantial use of Open Source components
-> >=20
-> >   We actively maintain CentOS Stream Hyperscale https://sigs.centos.org=
-/hyperscale/communication/reports/. It is based on CentOS Stream with key p=
-ackages upgraded or rebuilt with additional features enabled, intended for =
-large-scale enterprise deployments but also potentially on modern desktops.
-> >=20
-> > Hyperscale can be installed on x86_64 and aarch64 desktops via https://=
-mirror.stream.centos.org/SIGs/9-stream/hyperscale/images/experimental/ - an=
-d CentOS Stream installations can be converted in place (see https://sigs.c=
-entos.org/hyperscale/content/repositories/main/).
-> >=20
-> > 2. Have a userbase not limited to your own organization
-> >=20
-> >   Our membership and deliverables are open to anyone who wishes to join=
-; contributors have included companies such as Meta, Datto, Twitter/X, and =
-Intel, as well as individuals
-> >=20=20=20
-> > 3. Have a publicly verifiable track record, dating back at least 1 year=
- and continuing to present day, of fixing security issues (including some t=
-hat had been handled on (linux-)distros, meaning that membership would have=
- been relevant to you) and releasing the fixes within 10 days (and preferab=
-ly much less than that) of the issues being made public (if it takes you ag=
-es to fix an issue, your users wouldn't substantially benefit from the addi=
-tional time, often around 7 days and sometimes up to 14 days, that list mem=
-bership could give you)
-> >=20
-> >   Since we provide an overlay on top of CentOS Stream and EPEL, we gene=
-rally inherit updates as they became available - and monitor issues as soon=
- as they are disclosed.
-> >=20
-> > Between the three of us we have a track record of pushing EPEL security=
- updates: https://bodhi.fedoraproject.org/updates/?search=3D&releases=3DEPE=
-L-8&releases=3DEPEL-9&releases=3DEPEL-9N&releases=3DEPEL-8N&type=3Dsecurity=
-&user=3Dsalimma%2C+dcavalca%2C+ngompa
-> >=20
-> >   We are increasingly provided updates that our users need before they =
-are fixed in CentOS Stream, for example:
-> >=20=20=20
-> >   - pmix: https://cbs.centos.org/koji/buildinfo?buildID=3D50809 built o=
-n Sep 15 2023 addressing https://nvd.nist.gov/vuln/detail/CVE-2023-41915 fr=
-om Sep 9 2023 (commit pushed for c9s on Nov 2 2023 - https://gitlab.com/red=
-hat/centos-stream/rpms/pmix/-/commit/d674de0cb5d716940f01e937f2a7bb79fbd81f=
-5c)
-> >   - openssh: https://cbs.centos.org/koji/buildinfo?buildID=3D54523 buil=
-t on Jul 2 2024 addressing CVE-2024-6387 from Jul 1 2024 (fixed in Stream J=
-ul 4)
-> >=20
-> > 4. Not be (only) downstream or a rebuild of another distro (or else we =
-need convincing additional justification of how the list membership would e=
-nable you to release fixes sooner, presumably not relying on the upstream d=
-istro having released their fixes first?)
-> >=20
-> > Our user base uses CentOS Stream in production, while the upstream proj=
-ect mostly uses it for integrating changes into upcoming RHEL releases; as =
-such we not only ship newer packages (e.g. kernel, systemd, qemu) with feat=
-ures not enabled in CentOS Stream and RHEL (e.g. Btrfs) but we also need to=
- patch security issues faster, given Stream receives urgent security fixes =
-only after they are released for RHEL.
-> >=20
-> > See examples in previous points for some issues we fixed independently =
-of upstream distro - as we ship more packages in the future to support more=
- use cases, the need to release security fixes faster will only grow.
-> >=20
-> > 5. Be a participant and preferably an active contributor in relevant pu=
-blic communities (most notably, if you're not watching for issues being mad=
-e public on oss-security, which are a superset of those that had been handl=
-ed on (linux-)distros, then there's no valid reason for you to be on (linux=
--)distros)
-> >=20
-> > We are individually members of oss-security, in addition to various dis=
-tribution development lists
-> >=20
-> > 6. Accept the list policy (see above)
-> >=20
-> > accepted
-> >=20
-> > 7. Be able and willing to contribute back (see above), preferably in sp=
-ecific ways announced in advance (so that you're responsible for a specific=
- area and so that we know what to expect from which member), and demonstrat=
-e actual contributions once you've been a member for a while
-> >=20
-> > The three of us handle security related issues, with Neal Gompa focusin=
-g on issues related to release engineering, and Davide and I on updates in =
-general especially those that are built with specific customizations.
-> >=20
-> > 8. Be able and willing to handle PGP-encrypted e-mail
-> >=20
-> > We are able and willing
-> >=20
-> > 9. Have someone already on the private list, or at least someone else w=
-ho has been active on oss-security for years but is not affiliated with you=
-r distro nor your organization, vouch for at least one of the people reques=
-ting membership on behalf of your distro (then that one vouched-for person =
-will be able to vouch for others on your team, in case you'd like multiple =
-people subscribed)
-> >=20
-> > Jonathan Wright from AlmaLinux can vouch for us
-> >=20
-> > Best regards,
-> >=20
-> > --=20
-> >  _o) Michel Lind
-> > _( ) identities: https://keyoxide.org/5dce2e7e9c3b1cffd335c1d78b229d2f7=
-ccc04f2
->=20
-> I know that at least Neal Gompa is also a Fedora developer.  Would it
-> be permissible for him to also handle security patches for Fedora, if
-> Fedora is also affected?
-> --=20
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+On Fri, Feb 10, 2017 at 11:59:59AM +0100, pali@cpan.org wrote:
+> Hello, are you going to assign CVE for this particular defect?
 
-Hi,
+MITRE has recently switched to accepting CVE requests via a web form.
+Please see this thread:
 
-I am curious what this could mean for Fedora Asahi Remix [0], as the
-applicants maintain both distros.
+http://www.openwall.com/lists/oss-security/2017/02/09/7
 
-Is there interest in the Asahi SIG applying as well?
+I guess it means that since they didn't get back to you on your CVE
+request yet, you probably need to resubmit it via the web form now.
 
-I heartily endorse the applicants membership request and appreciate
-their work. Hooray for ARM \o/
+Alexander
 
-Mark Esler
-
-n.b. to clarify scopes: Asahi Linux [1] is an upstream to Fedora Asahi
-Remix. Asahi Linux has partnered with and has members in the Asahi SIG
-[2] to make Fedora Asahi Remix the flagship Asahi distro [3].
-
-[0] https://fedora-asahi-remix.org/
-[1] https://asahilinux.org/
-[2] https://fedoraproject.org/wiki/SIGs/Asahi
-[3] https://asahilinux.org/2023/08/fedora-asahi-remix/
-
---keuPC7vnSO5+L3WC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE0ZC278nRi4l3b3GjszvZgG6FIMYFAmaO+fIACgkQszvZgG6F
-IMbd6Q/9EwROBchdAka9nfmE0ZxcGFILgZY0x2p32z6gVanjELV8406MTDMCuSpm
-MxI4G5jMJmVn/jlF8LnZfoT4PjQRSJSm/FCl0zfRUDPIGMRmqJNHFhrowj1FC+8J
-l23WsY+3Pr3s+VUlEwdoCEkGQrOApG2TLOYIaDpAHX73KYRzsk9V8q40+iPYbkKz
-/3eQO+cirLGbQnQdiNbetdoUUkXb2JnZEbQ/wRvPNLFlJ6X5nA9ULGSBOyuUyLUX
-xFn/gEQyTlU3bjI3iQdiLlfbgq5lUw1H/W4Mp4WA6GYA3j1/+bgFJb0fcesAQOGW
-HuGelwlr7tunr4d5l64scuR47UwoCmzrTJzV+7ReBHuywZaN3Aj3NBZQXHkuKX2C
-zH9uMwgqYaZJTvAjTM04da7LrEKfA9memRITsYtF8LbiL67OEFAkv2bjGITB4mXA
-qRVL677n/3ztyd5dg+nLLjVMOzq+iq8bu8ILUAzEq4hWIGv98HiSd8YGHyrWb/IG
-+ssmIvFCM02cIf6w8NxqcqokHeaHRMaiUVR3n1MaQz9eIkqaIWnRiMoux+EvCRBG
-EJlonUDPTnx+gZ0zMBYSyM/fVq7lN2oRlWuUI7uETXT/WiJhA/SP4ibJPiyxSC8x
-snH4Nyy1lIH6trg1kwAsYkPYrh8LuMvjenusAw4ORy2+BvKaX7Y=
-=c3jD
------END PGP SIGNATURE-----
-
---keuPC7vnSO5+L3WC--
+> On Friday 27 January 2017 23:53:29 pali@cpan.org wrote:
+> > Hello, I would like to report problem related to MySQL/MariaDB and
+> > possibly asking for assigning CVE if this list is the right place.
+> > 
+> > C client library for MySQL (libmysqlclient.so) has use-after-free
+> > defect which can cause crash of applications using that MySQL
+> > client.
+> > 
+> > Defect occurs by calling mysql_close() function from
+> > libmysqlclient.so. If mysql_close() is called before calling all
+> > mysql_stmt_close() (for all allocated stmts), then following
+> > mysql_stmt_close() call try to write to already released memory.
+> > mysql_close() let dangling pointer exist for prepared statements.
+> > Real problem is in function
+> > mysql_prune_stmt_list() which incorrectly iterate over elements.
+> > Function list_add() overwrite ->next pointer of current element which
+> > overwrite next element for iteration.
+> > 
+> > Basically it is just wrong usage of linked list structure.
+> > 
+> > Languages in which is not guaranteed order of executing destructor of
+> > created objects have a big problem as such writing to memory pointed
+> > by dangling can cause crash of whole application.
+> > 
+> > E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
+> > whole perl process with simple script:
+> > 
+> > perl -MDBI -e '
+> > $dbh = DBI->connect("dbi:mysql:", "root", undef,
+> >                     {RaiseError => 1, mysql_server_prepare => 1});
+> > $sth1 = $dbh->prepare("SELECT 1");
+> > $sth2 = $dbh->prepare("USE mysql");
+> > $dbh->disconnect;
+> > $dbh = undef;
+> > '
+> > Segmentation fault
+> > 
+> > Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce
+> > change username, password and host where is running mysql server.
+> > Valgrind can prove that memory corruption really occurs.
+> > 
+> > This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But
+> > is present in all MySQL 5.5 versions (and also older) and
+> > appropriate older 5.6 and 5.7 versions. MySQL 5.5 is still used,
+> > supported and included in lot of linux distributions.
+> > 
+> > Moreover this defect is present also in MariaDB releases. I tested
+> > all last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all
+> > those are affected.
+> > 
+> > MySQL and MariaDB provides also standalone package with only C client
+> > library libmysqlclient.so (without server) under name "Connector/C"
+> > and so appropriate versions of it are affected too.
+> > 
+> > I found that this defected was fixed in MySQL git repository by
+> > commit:
+> > https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc5
+> > 52424132806f46e93
+> > 
+> > That commit can be easily applied to last MySQL 5.5.54 version and
+> > fixes this defect.
+> > 
+> > Looks like problem was already reported and is publically available
+> > in MySQL bug tracker, see more details on links:
+> > https://bugs.mysql.com/bug.php?id=70429
+> > https://bugs.mysql.com/bug.php?id=63363
+> > (tickets are closed despite fact that MySQL 5.5 and older are not
+> > fixed)
+> > 
+> > ---
+> > 
+> > I reported this problem to Oracle secalert_us@oracle.com two months
+> > ago, but they did absolutely nothing for fixing it in MySQL 5.5.
+> > Instead they started resending this problem to some random people
+> > with @cpan.org address for unknown reason. And told me to not
+> > disclose information about this defect. Resending does not look like
+> > normal handling of security related problem! Therefore I suggest
+> > other people to not wasting time reporting problems to Oracle for
+> > open source applications.
+> > 
+> > As two months is really long time to fix such problem which was
+> > already fixed in new versions; it is already publically disclosed in
+> > MySQL bug tracker; fix available in public git; problem is in major
+> > MariaDB versions; fix is small; and this is open source product
+> > included in many linux distributions I decided to send information
+> > to oss-security.
