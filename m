@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1587" "Thursday" "5" "May" "2016" "22:40:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160506024039.D27F78BC1B1@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS" nil nil nil "5" "2016050602:40:39" "[oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS" (number mark "U       cve-assign@m May  5   43/1587  " thread-indent "\"[oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS\"\n") "<1afe70a0.13380.154810ba449.Coremail.pengdawei521@163.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3828" "Friday" "10" "February" "2017" "11:59:59" "+0100" "pali@cpan.org" "pali@cpan.org" "<201702101200.00422@pali>" "88" "[oss-security] Re: Use after free in libmysqlclient.so" nil nil nil "2" "2017021010:59:59" "[oss-security] Re: Use after free in libmysqlclient.so" (number mark "U       pali@cpan.or Feb 10   88/3828  " thread-indent "\"[oss-security] Re: Use after free in libmysqlclient.so\"\n") "<201701272353.40452@pali>" ("<201701272353.40452@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9725 invoked by uid 550); 6 May 2016 02:40:51 -0000
+Received: (qmail 7544 invoked by uid 550); 10 Feb 2017 13:28:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +12,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9703 invoked from network); 6 May 2016 02:40:51 -0000
-From: cve-assign@mitre.org
-To: pengdawei521@163.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1afe70a0.13380.154810ba449.Coremail.pengdawei521@163.com>
-Message-Id: <20160506024039.D27F78BC1B1@smtpvmsrv1.mitre.org>
-Date: Thu,  5 May 2016 22:40:39 -0400 (EDT)
-Subject: [oss-security] Re: CVE request - samsumg android phone TvoutService_C binder service DoS
+Received: (qmail 26537 invoked from network); 10 Feb 2017 11:00:13 -0000
+X-Envelope-From: pali@cpan.org
+From: pali@cpan.org
+To: oss-security@lists.openwall.com
+Date: Fri, 10 Feb 2017 11:59:59 +0100
+User-Agent: KMail/1.13.7 (Linux/3.13.0-108-generic; KDE/4.14.2; x86_64; ; )
+References: <201701272353.40452@pali>
+In-Reply-To: <201701272353.40452@pali>
+MIME-Version: 1.0
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Message-Id: <201702101200.00422@pali>
+Subject: [oss-security] Re: Use after free in libmysqlclient.so
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello, are you going to assign CVE for this particular defect?
 
-> When a app send a evil data to com. TvoutService_C service by service
-> command (Android system command) , can cause to TvoutService_C service
-> crash.
-
-> adb shell;
-
-> service call TvoutService_C 22 i32 1090056453 i32 1428574234 i32
-> 836766018 i32 779588542
-
-> Fix:
-> http://security.samsungmobile.com/smrupdate.html#SMR-FEB-2016
-> SVE-2016-5134: TvoutService_C service DoS
-
->> A vulnerability without appropriate exception handling allows
->> attackers to make a system crash easily through such as a DoS attack.
-
-Use CVE-2016-4547.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXLAAhAAoJEHb/MwWLVhi2qBsQAKkQv8L6AdrgxVNJGTdN5nLI
-kiR1mtMcKmUb4IBnjH3D2O7TlDTzMf57bnyfIIVB/qeae9nZRZEwqTgBrXBq4ouu
-/o77fWmcuxa4F5uF8O9cG7zFoTljoLF4kUD0WhSA5lFn0BUqig2vWia4trKIdflT
-4C3QhVVwvLeR4kZiwiMwn8sA44NnXZMhCfOHdqxNRaXZNdVDiAPn9uxQhOhME6fy
-z4uwSJoc+CckCPY3HviYy65FJ4lRESU2sK9vfuXm41x1sBtXJSg/IUkwO6x7aJBs
-t0+9rE0xOXacscEP/WMhwuquBUGvK6HglmXMogW7kL6WLAc2BetrckPbWqu71K2J
-O4N6iqJ3tv+fgVC1ATW2KjmjotABavZ/rR5I9uCN5J7fLTi6u9G5Dy5oJwZTY7wq
-fIHwk9Ku8l89jt8h5yr+X+ab6UcBOuzIU8Qh3m8ssY66tbge+ZAzcVDhHBrjW7XA
-EstiyR5GKkxGS0g/oyd7GbH+2FBlUTMETu2KQh2xQNt0v8tjT4exLeMgqtgk1plz
-q4ToF7uB32prXLFFkrX5ooS9RkEL4oSuKqr9n7c9rdofr2jy5Ob8PO6VJAuZ2MOZ
-LfgvDQWOHZlmBTFwqCSQnaou5FT+yTLXWIHOuR0n0r0ZDTNsGmsPd2dv85x1/gHJ
-V1JOoJChFUcX4gdluv83
-=tNLr
------END PGP SIGNATURE-----
+On Friday 27 January 2017 23:53:29 pali@cpan.org wrote:
+> Hello, I would like to report problem related to MySQL/MariaDB and
+> possibly asking for assigning CVE if this list is the right place.
+> 
+> C client library for MySQL (libmysqlclient.so) has use-after-free
+> defect which can cause crash of applications using that MySQL
+> client.
+> 
+> Defect occurs by calling mysql_close() function from
+> libmysqlclient.so. If mysql_close() is called before calling all
+> mysql_stmt_close() (for all allocated stmts), then following
+> mysql_stmt_close() call try to write to already released memory.
+> mysql_close() let dangling pointer exist for prepared statements.
+> Real problem is in function
+> mysql_prune_stmt_list() which incorrectly iterate over elements.
+> Function list_add() overwrite ->next pointer of current element which
+> overwrite next element for iteration.
+> 
+> Basically it is just wrong usage of linked list structure.
+> 
+> Languages in which is not guaranteed order of executing destructor of
+> created objects have a big problem as such writing to memory pointed
+> by dangling can cause crash of whole application.
+> 
+> E.g. libmysqlclient.so used by perl DBD::mysql driver cause crash of
+> whole perl process with simple script:
+> 
+> perl -MDBI -e '
+> $dbh = DBI->connect("dbi:mysql:", "root", undef,
+>                     {RaiseError => 1, mysql_server_prepare => 1});
+> $sth1 = $dbh->prepare("SELECT 1");
+> $sth2 = $dbh->prepare("USE mysql");
+> $dbh->disconnect;
+> $dbh = undef;
+> '
+> Segmentation fault
+> 
+> Tested on amd64 Ubuntu 12.04 LTS with perl 5.14.2. To reproduce
+> change username, password and host where is running mysql server.
+> Valgrind can prove that memory corruption really occurs.
+> 
+> This defect was fixed in MySQL 5.6.21 and MySQL 5.7.5 releases. But
+> is present in all MySQL 5.5 versions (and also older) and
+> appropriate older 5.6 and 5.7 versions. MySQL 5.5 is still used,
+> supported and included in lot of linux distributions.
+> 
+> Moreover this defect is present also in MariaDB releases. I tested
+> all last major versions 10.2.3, 10.1.21, 10.0.29, 5.5.54 and all
+> those are affected.
+> 
+> MySQL and MariaDB provides also standalone package with only C client
+> library libmysqlclient.so (without server) under name "Connector/C"
+> and so appropriate versions of it are affected too.
+> 
+> I found that this defected was fixed in MySQL git repository by
+> commit:
+> https://github.com/mysql/mysql-server/commit/4797ea0b772d5f4c5889bc5
+> 52424132806f46e93
+> 
+> That commit can be easily applied to last MySQL 5.5.54 version and
+> fixes this defect.
+> 
+> Looks like problem was already reported and is publically available
+> in MySQL bug tracker, see more details on links:
+> https://bugs.mysql.com/bug.php?id=70429
+> https://bugs.mysql.com/bug.php?id=63363
+> (tickets are closed despite fact that MySQL 5.5 and older are not
+> fixed)
+> 
+> ---
+> 
+> I reported this problem to Oracle secalert_us@oracle.com two months
+> ago, but they did absolutely nothing for fixing it in MySQL 5.5.
+> Instead they started resending this problem to some random people
+> with @cpan.org address for unknown reason. And told me to not
+> disclose information about this defect. Resending does not look like
+> normal handling of security related problem! Therefore I suggest
+> other people to not wasting time reporting problems to Oracle for
+> open source applications.
+> 
+> As two months is really long time to fix such problem which was
+> already fixed in new versions; it is already publically disclosed in
+> MySQL bug tracker; fix available in public git; problem is in major
+> MariaDB versions; fix is small; and this is open source product
+> included in many linux distributions I decided to send information
+> to oss-security.
