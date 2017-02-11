@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/13
-Message-ID: <20170210205916.GB28439@hunt>
-Date: Fri, 10 Feb 2017 12:59:16 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/12
+Message-Id: <201702111846.47434@pali>
+Date: Sat, 11 Feb 2017 18:46:43 +0100
+From: pali@...n.org
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Cc: Solar Designer <solar@...nwall.com>, Simon McVittie <smcv@...ian.org>
+Subject: Re: Re: Use after free in libmysqlclient.so
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 10, 2017 at 03:40:45PM +0000, Priedhorsky, Reid wrote:
-> I’ve been using the CVE requests on oss-security to maintain a
-> reasonably comprehensive and timely list of vulnerabilities for specific
-> products. It’s not clear to me how to do this when CVE requests happen
-> offline in a web form.
+On Friday 10 February 2017 17:39:45 Solar Designer wrote:
+> As far as I can tell, pali@...n.org is not subscribed.
+
+No, I'm not. I hope it is not a requirement.
+
+> ----- Forwarded message from Simon McVittie <smcv@...ian.org> -----
 > 
-> Has this use case been considered? Is there an alternate way to
-> accomplish my goal?
+> Mailing-List: contact oss-security-help@...ts.openwall.com; run by
+> ezmlm Reply-To: oss-security@...ts.openwall.com
+> Date: Fri, 10 Feb 2017 16:20:58 +0000
+> From: Simon McVittie <smcv@...ian.org>
+> To: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] Re: Use after free in libmysqlclient.so
+> 
+> On Fri, 10 Feb 2017 at 11:59:59 +0100, pali@...n.org wrote:
+> > On Friday 27 January 2017 23:53:29 pali@...n.org wrote:
+> > > C client library for MySQL (libmysqlclient.so) has use-after-free
+> > > defect which can cause crash of applications using that MySQL
+> > > client.
+> 
+> Is this a security vulnerability, or just a bug?
 
-Another part of the email from MITRE included "When you enter a
-vulnerability description on the web form, the CVE and description will
-typically be available on the NVD and CVE web sites at the same time or
-shortly after we email the CVE ID to you."
+It is bug for sure and I think it is security vulnerability.
 
-While the oss-security list has been the best resource of information for
-CVEs for us, part of our CVE ingestion is to download data from NVD and
-MITRE directly:
+> How would an attacker cause this to happen in the application
+> that they wish to target?
 
-https://nvd.nist.gov/download
-https://cve.mitre.org/data/downloads/allitems.xml
+First, it needs that target application does not manually free 
+structures for prepared statement and let this for mysql_close() (also 
+applicable for languages where is order of executing destructors not 
+defined or could not be predicable). Triggering this bug is possible if 
+there stay allocated structure for at least one statement which is 
+initialized, but not prepared on server yet. MySQL server has upper 
+limit for prepared statements. So if attacker can hit this limit (e.g. 
+when target application can be triggered to prepare lot of statements on 
+server) and target application start closing connection to MySQL server 
+then use-after-free happen in target application and it can crash. If 
+attacker is able to repeat this procedure then target application is 
+under denial-of-service attack. Or triggering this bug is also possible 
+when connection with MySQL server is lost after preparing statement. If 
+attacker is able to let target application to prepare some statement and 
+after that execute another which will cause lost connection (e.g. some 
+large/slow computation) then target application try to reconnect (close 
++ open) and bug is triggered.
 
-Debian's database is also very useful to us:
-https://anonscm.debian.org/viewvc/secure-testing/data/CVE/
+Probably easier for attacker would be to combine this defect with 
+another application specific.
 
-And of course our database is freely available as well:
-https://code.launchpad.net/~ubuntu-security/ubuntu-cve-tracker/master
-
-I hope this can help you adapt your processes as MITRE adapts theirs.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+>     S
+> 
+> ----- End forwarded message -----
