@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/14/1
-Message-Id: <F98F0BB5-6485-45D0-BF61-186895EAAA33@technologysecure.com>
-Date: Sat, 13 May 2017 22:44:44 -0400
-From: Yury German <yury@...hnologysecure.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/10
+Message-ID: <alpine.GSO.2.20.1702110917490.2297@freddy.simplesystems.org>
+Date: Sat, 11 Feb 2017 09:20:55 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: Kernel 4.1.y might not contain patches for CVE-2016-10229
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-This is just a small notice that Linux Kernel 4.1.y might not contain patches to CVE-2016-10229 [1]. This is a reference to the Vanilla Linux sources without any distribution specific patching. Typically a number of distributions apply their own patches to the standard vanilla Kernel. 
+On Sat, 11 Feb 2017, Moritz Muehlenhoff wrote:
+>
+> Having CVEs assigned is of lesser importance, this was never primarily
+> why we posted security vulnerabilities here. Obtaining CVE IDs caused
+> little overhead on our side, but if that changes (and the announced
+> changes sound like that), then there will simply be less CVE coverage
+> I'm afraid.
 
-The patches might also not be needed for 4.1.y sources as were discussed on the mailing list [see [2]]. 
+In my perhaps limited experience, Debian package maintainers do not 
+take action to correct a security issue in stable distributions unless 
+a CVE is assigned.  They do not usually act merely based on the 
+upstream package developer/maintainer reporting that they discovered 
+and fixed a security issue.  If it is more challenging to get a CVE 
+assigned, then many more security issues in stable distributions will 
+remain unfixed.
 
-Please check with the distribution you are using to see if the patches for CVE-2016-10229 have been applied to the kernel 4.1.y tree for the distribution that you are using. 
-
-[1] http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-10229
-[2] https://www.spinics.net/lists/stable/msg167674.html
-
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
