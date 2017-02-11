@@ -1,143 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/15/4
-Message-ID: <1513231666@halfdog.net>
-Date: Thu, 14 Dec 2017 06:18:23 +0000
-From: halfdog <me@...fdog.net>
-To: oss-security@...chelkaktus.net
-cc: oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/5
+Message-ID: <CAFJuDmNbvyh=qy__VTjOP9PuL158E8ENeRN+Fx7ciSCwTCoc4w@mail.gmail.com>
+Date: Fri, 10 Feb 2017 22:44:48 -0500
+From: Adam Caudill <adam@...mcaudill.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-> Hello,
- 
-> for the gpg scenario on initrd I use:
-> echo $PASSWORD |/bin/gpg -d --passphrase-fd 0 --lock-never
-> --no-auto-check-trustdb --no-tty -q --no-keyring --batch --yes
-> --no-permission-warning /etc/a_key.gpg
-
-Yes, that is quite similar to my use, only the "echo" is missing -
-but taking into account your knowledge about KDFs, I guess you
-have it just in here for demonstration purposes, knowing the security
-implications.
-
-> To fix the "--s2k-count" problem I've added argon2 before using the pipe
-> for gpg.
+On Fri, Feb 10, 2017 at 7:10 PM, Tim <tim-security@...tinelchicken.org> wrote:
+> - The fact that so many lesser known researchers couldn't get an ID
+>   for so long when they asked for one.
 >
-> Its not great but it works for me.
+> - As already discussed, the web form's "Please ensure vendor or
+>   product exists in the Products and Sources list".  For an open
+>   source project, they give up and outsource the process, which then
+>   can't be used for obtaining an ID before release.
 
-Thanks for the hint. "argon2" seems to be what, what I'm looking
-for. This solves the issues also in a more "UNIX-like" way, as
-it can be combined with any, where high-cost KDFs are wanted.
+Once it's completely up and running, DWF should address these issues.
+Researchers and organizations can easily become CNAs under DWF, with
+assigned CVE blocks. For OSS, the process of getting a CVE (including
+pre-publication) should be much simpler than it has been, especially
+in recent years. It's not quite there yet, but Kurt and team have put
+a lot of effort into laying the groundwork for a much better solution
+than the ad-hoc "send an email and hope" process that we've become
+accustomed to.
 
-hd
+The old system was far from perfect, as is the interim MITRE web form
+- hopefully with the help of the community, DWF will be able to
+provide a better process for all involved. For OSS, DWF is the
+solution we need to be focused on, and helping it to evolve to suit
+the needs of everyone.
 
-PS: sorry about the delayed reply: when in bad mood I just do
-not manage to open my mailbox for weeks or month.
+> - The most telling though is the entire CNA program, particularly when
+>   it allowed only commercial vendors.  If a vendor decides something
+>   isn't a problem, they can block or slow CVE assignment.  It's a
+>   corruption of service that ought to be for the public benefit.  (And
+>   yes, this does happen.)
 
-> On 12/07/2017 07:32 AM, halfdog wrote:
-> > Hello list,
-> > 
-> > Are there recommendations for open-source light-weight replacements
-> > of GnuPG2 suitable for use on Debian? I would like discontinue
-> > using GnuPG project, as the GnuPG design regarding security seems
-> > to be moving in a direction, that does not match my personal security
-> > needs any more.
-> > 
-> > The two main events causing me considering the change were related
-> > to the Debian Jessie to Stretch switch - thus giving a small
-> > impression on the current needs:
-> > 
-> > Event 1:
-> > 
-> > While gpg1 was a light-weight tool, just doing what said, the
-> > new gpg2 cannot really work without gpg-agent, pinentry frontend.
-> > Both are very nice for desktop usecases. As I also used it during
-> > machine setup for generating material related to disk encryption,
-> > the agent first did not want to start -- the primitive /dev/ttyX
-> > via openvt was not the environment gpg tools were expecting
-> > for password input, thus failing. gpg2 by default will not ask
-> > the passphrase any more on the terminal, it was started from,
-> > but tries to work out using various information, where passphrase
-> > input should be delegated to.
-> > 
-> > After getting gpg and agent running, I noticed, that not reliably
-> > stopping the gpg-agent on initrd would introduce a private key
-> > data leak via /proc from early boot process to running system
-> > when stopping fails. This is also more annoying as it is not possible
-> > to instruct gpg, that a single private key should NOT be cached,
-> > and you have to configure gpg-agent beforehand, something not
-> > quite funny and little error prone on limited functionality systems
-> > like on an initrd systems.
-> > 
-> > Thus the Debian switch from gpg1 to gpg2 just introduced efforts
-> > fiddling with functionality I do not need and cannot disable,
-> > provides a keymanagement that cannot be configured easily to
-> > protect against the threats it should mitigate (theft of key material)
-> > and creating additional attack surface without any recognizable
-> > benefit.
-> > 
-> > Event 2:
-> > 
-> > After getting everything working, which was little anoying as
-> > building of initrds, testing via QEmu is not very user friendly
-> > regarding debugging for less experienced users - but at least not
-> > GnuPG's fault at any reason - I noticed, that the password protection
-> > of the key was significantly lower than expected. Getting back
-> > to the developers, we found out, that the specification of the
-> > "--s2k-count" parameter, which specifies the number of rounds
-> > of key deriviation function to unlock the private key, has changed
-> > from gpgv1 to gpgv2, so that it is ignored in gpg2 but does not
-> > cause any warning or error. Thus previous audited procedures continue
-> > to work but do not produce the same results any more. Of course,
-> > I could have compared documentation of all parameters of (at least
-> > security-related) programs after Jessie to Stretch upgrade, but
-> > I assumed, that security critical parameters would not change
-> > their meaning without any noticable effect - so just my fault.
-> > 
-> > Still, this would just be a minor mishap, but what reduced my
-> > trust in GPG, was the comment of a developer: it was assumed,
-> > that they know better, where there software will be run without
-> > specifying that "where" in the documentation. Also his replies
-> > matched that picture, e.g. "(gpg-agent will) ... calibrate the
-> > S2K count to match the current machine", assuming that this is
-> > good reason to change "--s2k-count" meaning and ignore the parameter.
-> > I had the impression, that it did not come to mind, that someone
-> > might have used such a parameter for a reason, e.g. because speed
-> > calibration might not be the best idea, while the system is taking
-> > in data at the maximum speed the ethernet adapter, disk controller
-> > can do during system setup.
-> > 
-> > Another bonmot on the mathematical complexity of private key
-> > unlocking: "For user experience 100ms is a good value; your
-> > suggested 1000ms is an annoying long delay which would most user
-> > only increase the cache time." But the discussion was not on
-> > user defaults. If I deem it a good idea to requirea longer KDF
-> > computation time for material with higher sensitivity, e.g. to
-> > to unlock data storage once at startup, and therefore tell the
-> > software to perform that computation, it should accept that
-> > decision. Thus someone not understanding or accepting the
-> > existance of such choices in alternative usecase might not be
-> > the right person to develop the software, I want to use.
-> > 
-> > 
-> > Result:
-> > 
-> > For all steps regarding system startup, I switched to LUKS only,
-> > using detached headers for special features. For release signing,
-> > mail sign/encrypt, a good light-weight solution is still needed.
-> > 
-> > hd
-> > 
-> > PS: I do not know, how much the gpg-agent calibration under
-> > increased system load reduced the KDF complexity, as I failed
-> > to extract the KDF rounds value from the gpg data structures,
-> > but the value seems to be at least below 70ms due to total time
-> > measurements for gpg-agent (math, interprocess communication,
-> > filesystem) to unlock a key on an idle system.
-> > 
-> > 
-> 
-
-
+While I believe that DWF represents a substantial step forward for
+OSS, and getting CVEs to those that need them, when they need them; my
+feelings on CVEs for commercial software remain rather negative. I've
+stopped requesting CVEs for commercial software due to all of the
+issues - if I discover something where I believe a CVE is especially
+important, I direct the request through CERT/CC or another
+origination. But, this is getting off-topic.
