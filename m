@@ -1,29 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/06/3
-Message-ID: <5243964.BbMhzSCKag@blackgate>
-Date: Mon, 06 Feb 2017 12:32:21 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: mupdf: heap-based buffer overflow in fz_subsample_pixmap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/15
+Message-ID: <20170211200124.GA2784@openwall.com>
+Date: Sat, 11 Feb 2017 21:01:24 +0100
+From: Solar Designer <solar@...nwall.com>
+To: pali@...n.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: posting without being subscribed
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+I think this is no longer of sufficient relevance to oss-security
+subscribers for us to continue this sub-thread CC'ing the list, so it's
+probably/hopefully the last message one of us sends on this in here.
 
-there in an heap overflow in fz_subsample_pixmap.
+On Sat, Feb 11, 2017 at 08:14:50PM +0100, pali@...n.org wrote:
+> On Saturday 11 February 2017 19:14:52 Solar Designer wrote:
+> > Another issue is that now that you brought the reply back to the
+> > list, you almost broke the thread.  I fixed that by manually editing
+> > the headers on your message before approving it (as a list admin).
+> > Sometimes I do that, although I don't consider it to be part of my
+> > "job".  If a co-moderator were to approve your message first, then
+> > your message would have started a new thread rather than being added
+> > to the existing thread.  That's not great.
+> 
+> Hm... breaking thread should not happen... at least with non-broken 
+> email clients. If everybody in discussion correctly set In-Reply-To 
+> header then whole thread (correctly tree) will be preserved. And if 
+> everybody correctly set References header then even missing emails does 
+> not break threading visualization. Information from References headers 
+> provide transitive closure of thread tree from which original tree can 
+> be reconstructed... But if somebody does not fill References or In-
+> Reply-To headers then thread will be broken independently of 
+> subscription to list.
+> 
+> Now I see that message to which I replied was without In-Reply-To and 
+> also without References headers. So thread was already broken.
+> 
+> I understand that breaking threading is bad and cause problems, but in 
+> lot of times it is problem of broken email clients which do not fill 
+> needed headers :-(
 
-The bug was discovered by Kamil Frankowicz which said to have tested it 
-against the current git head.
-The same testcase does not crash the current stable 1.10a, but I can confirm 
-(with a round of fuzzing on 1.10a) that stable is affected.
+There are several issues here (besides those you mention):
 
-No fix atm.
+1. Threads get broken when someone forwards an e-mail, rather than
+replies.  In a sense, I am at fault for forwarding you Simon's reply,
+instead of "replying" to his reply, over-quoting it, and CC'ing you on
+that.  I'd introduce an extra layer of quoting (unless I were to undo
+it prior to sending), but at least the References headers could have a
+chance of maintaining the thread.
 
-Details:
-https://bugs.ghostscript.com/show_bug.cgi?id=697515
+2. The blists software we use for the official oss-security archives
+currently only uses In-Reply-To or one entry from References; it does
+not fully parse the References.  And fixing this in the code amounts to
+more than just parsing that header more fully.
 
-Reproducer for 1.10a:
-https://github.com/asarubbo/poc/blob/master/00148-mupdf-heapoverflow-fz_subsample_pixmap
+What this means is that to maintain the thread I should have probably
+CC'ed you _and_ the list on that "reply" to Simon's message, where I'd
+merely quote the entire message for you.  That's not great indeed, but
+since Simon's message was such that I could reasonably have expected you
+wanting to reply to the list, maybe I should have done that.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Alexander
