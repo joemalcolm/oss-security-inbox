@@ -1,78 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/10/6
-Message-ID: <599292.645088525-sendEmail@localhost>
-Date: Mon, 10 Apr 2017 07:19:35 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libaacplus: signed integer overflow, left shift and assertion failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/9
+Message-ID: <CAA=iMULG2UP6XV7voESqSE3gVOxvb4z+uYL_GoqLdETyVFpWcg@mail.gmail.com>
+Date: Sat, 11 Feb 2017 11:50:40 +0200
+From: Eyal Itkin <eyal.itkin@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE publication request - CVE 2016-8636
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libaacplus is a HE-AAC+ v2 library, based on the reference implementation.
+Hello,
 
-While fuzzing it I found some crashes. Upstream was poked on 2017-03-12, but no response from him.
+The security patch was deployed 3 days ago in the official git repository
+of linux, after the fix was reviewed and approved by me.
+Therefore, CVE 2016-8636 can now be publicly disclosed.
 
-# aacplusenc $FILE out.aac 24000 s
-au_channel.h:31:91: runtime error: signed integer overflow: 2147483647 + 8 cannot be represented in type 'int'
-Affected version:
-2.0.2
-Fixed version:
-N/A
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00254-libaacplus-signedintoverflow
-CVE:
-CVE-2017-7603
+Commit id of the mainline merge:
+   647bf3d8a8e5777319da92af672289b2a6c4dc66
 
-##############################################
+https://github.com/torvalds/linux/commit/647bf3d8a8e5777319da92af672289b2a6c4dc66
 
-# aacplusenc $FILE out.aac 24000 s
-au_channel.h:31:83: runtime error: left shift of 241 by 24 places cannot be represented in type 'int'
-Affected version:
-2.0.2
-Fixed version:
-N/A
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00255-libaacplus-leftshift
-CVE:
-CVE-2017-7604
+Public disclosure details in my security blog:
 
-##############################################
+https://eyalitkin.wordpress.com/2017/02/11/cve-publication-cve-2016-8636/
 
-# aacplusenc $FILE out.aac 24000 s
-aacplusenc: aacplusenc.c:67: aacplusEncHandle aacplusEncOpen(unsigned long, unsigned int, unsigned long *, unsigned long *): Assertion `numChannels <= MAX_CHANNELS' failed.
-Affected version:
-2.0.2
-Fixed version:
-N/A
-Commit fix:
-N/A
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00256-libaacplus-assertion-failure
-CVE:
-CVE-2017-7605
+P.S. The CVE id was received from the security team of ubuntu, which
+directed me to publicly disclose it with the oss-security mailing list.
 
-##############################################
-
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
-
-Timeline:
-2017-03-12: bug discovered and poked upstream about
-2017-04-01: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/01/libaacplus-signed-integer-overflow-left-shift-and-assertion-failure
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Thanks for your help,
+Eyal Itkin.
 
