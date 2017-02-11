@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/20
-Message-ID: <20170201164321.3c06ae76@pc1>
-Date: Wed, 1 Feb 2017 16:43:21 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/13
+Message-ID: <20170211181452.GA2514@openwall.com>
+Date: Sat, 11 Feb 2017 19:14:52 +0100
+From: Solar Designer <solar@...nwall.com>
+To: pali@...n.org
 Cc: oss-security@...ts.openwall.com
-Subject: Re: podofo: multiple crashes
+Subject: posting without being subscribed (was: Use after free in libmysqlclient.so)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 01 Feb 2017 16:35:02 +0100
-Agostino Sarubbo <ago@...too.org> wrote:
+On Sat, Feb 11, 2017 at 06:46:43PM +0100, pali@...n.org wrote:
+> On Friday 10 February 2017 17:39:45 Solar Designer wrote:
+> > As far as I can tell, pali@...n.org is not subscribed.
+> 
+> No, I'm not. I hope it is not a requirement.
 
-> If what I reported here is something already discovered 
-> by you, I would acknowledge you as well into the posts.
+Not a requirement, but you should expect to miss replies if you're not
+subscribed, especially if you didn't state so in your posting.
 
-I just re-checked, seems I reported them on the mailing list back then,
-too:
-https://sourceforge.net/p/podofo/mailman/message/34205419/
+Another issue is that now that you brought the reply back to the list,
+you almost broke the thread.  I fixed that by manually editing the
+headers on your message before approving it (as a list admin).
+Sometimes I do that, although I don't consider it to be part of my
+"job".  If a co-moderator were to approve your message first, then your
+message would have started a new thread rather than being added to the
+existing thread.  That's not great.
 
-And they got fixed, so probably different issues. You may try to post
-your issues to the mailing list, too.
+So we'd appreciate it if you do subscribe to the list for the duration
+of discussions you participate in, or at least explicitly state when
+you're posting without being subscribed (ask to be CC'ed on replies).
 
--- 
-Hanno Böck
-https://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Alexander
