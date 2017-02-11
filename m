@@ -1,53 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/14
-Message-Id: <201702112015.20098@pali>
-Date: Sat, 11 Feb 2017 20:14:50 +0100
-From: pali@...n.org
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: posting without being subscribed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/6
+Message-ID: <20170211044344.tcni4punke6z2a5v@sentinelchicken.org>
+Date: Fri, 10 Feb 2017 20:43:45 -0800
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 11 February 2017 19:14:52 Solar Designer wrote:
-> On Sat, Feb 11, 2017 at 06:46:43PM +0100, pali@...n.org wrote:
-> > On Friday 10 February 2017 17:39:45 Solar Designer wrote:
-> > > As far as I can tell, pali@...n.org is not subscribed.
-> > 
-> > No, I'm not. I hope it is not a requirement.
+
+> Once it's completely up and running, DWF should address these issues.
+> Researchers and organizations can easily become CNAs under DWF, with
+> assigned CVE blocks. For OSS, the process of getting a CVE (including
+> pre-publication) should be much simpler than it has been, especially
+> in recent years. It's not quite there yet, but Kurt and team have put
+> a lot of effort into laying the groundwork for a much better solution
+> than the ad-hoc "send an email and hope" process that we've become
+> accustomed to.
 > 
-> Not a requirement, but you should expect to miss replies if you're
-> not subscribed, especially if you didn't state so in your posting.
+> The old system was far from perfect, as is the interim MITRE web form
+> - hopefully with the help of the community, DWF will be able to
+> provide a better process for all involved. For OSS, DWF is the
+> solution we need to be focused on, and helping it to evolve to suit
+> the needs of everyone.
 
-Understand.
+Thanks for the update on where that is going.  I'm cautiously hopeful
+that this will be what open source folks need in the future.
 
-> Another issue is that now that you brought the reply back to the
-> list, you almost broke the thread.  I fixed that by manually editing
-> the headers on your message before approving it (as a list admin).
-> Sometimes I do that, although I don't consider it to be part of my
-> "job".  If a co-moderator were to approve your message first, then
-> your message would have started a new thread rather than being added
-> to the existing thread.  That's not great.
 
-Hm... breaking thread should not happen... at least with non-broken 
-email clients. If everybody in discussion correctly set In-Reply-To 
-header then whole thread (correctly tree) will be preserved. And if 
-everybody correctly set References header then even missing emails does 
-not break threading visualization. Information from References headers 
-provide transitive closure of thread tree from which original tree can 
-be reconstructed... But if somebody does not fill References or In-
-Reply-To headers then thread will be broken independently of 
-subscription to list.
-
-Now I see that message to which I replied was without In-Reply-To and 
-also without References headers. So thread was already broken.
-
-I understand that breaking threading is bad and cause problems, but in 
-lot of times it is problem of broken email clients which do not fill 
-needed headers :-(
-
-> So we'd appreciate it if you do subscribe to the list for the
-> duration of discussions you participate in, or at least explicitly
-> state when you're posting without being subscribed (ask to be CC'ed
-> on replies).
+> > - The most telling though is the entire CNA program, particularly when
+> >   it allowed only commercial vendors.  If a vendor decides something
+> >   isn't a problem, they can block or slow CVE assignment.  It's a
+> >   corruption of service that ought to be for the public benefit.  (And
+> >   yes, this does happen.)
 > 
-> Alexander
+> While I believe that DWF represents a substantial step forward for
+> OSS, and getting CVEs to those that need them, when they need them; my
+> feelings on CVEs for commercial software remain rather negative. I've
+> stopped requesting CVEs for commercial software due to all of the
+> issues - if I discover something where I believe a CVE is especially
+> important, I direct the request through CERT/CC or another
+> origination. But, this is getting off-topic.
+
+I'm glad I'm not the only one who is frustrated with this.  I too have
+given up on putting my effort into getting CVEs for most things.  If
+someone else gets it assigned in a timely manner and I happen to
+notice, fine I'll put it in an advisory, but I'm no longer requesting
+CVEs for vulns in commercial software.  (Were this resignation to be
+widespread, it should be a huge red flag for MITRE.)
+
+Corporate vendor vuln assignment does seem like this is a completely
+different animal than open source assignment now, based on how MITRE
+is (and has been) structuring things.  The fact that the two are
+treated differently is a big source of my loss of faith in their
+ability to run the program.
+
+tim
