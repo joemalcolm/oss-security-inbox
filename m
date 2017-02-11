@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2395" "Friday" "31" "March" "2017" "14:09:49" "-0500" "Mark Felder" "feld@feld.me" "<1490987389.392790.930214152.29A71F3D@webmail.messagingengine.com>" "76" "[oss-security] CVE Request -- mapr: information disclosure vulnerability" nil nil nil "3" "2017033119:09:49" "[oss-security] CVE Request -- mapr: information disclosure vulnerability" (number mark "U       feld@feld.me Mar 31   76/2395  " thread-indent "\"[oss-security] CVE Request -- mapr: information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2141" "Saturday" "11" "February" "2017" "08:49:54" "+0000" "Roger Pau =?iso-8859-1?Q?Monn=E9?=" "roger.pau@citrix.com" "<20170211084954.xxo6puddj5b6jq6f@MacBook-Pro-de-Roger.local>" "68" "[oss-security] Re: [Xen-users] Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy" nil nil nil "2" "2017021108:49:54" "[oss-security] Re: [Xen-users] Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy" (number mark "U       roger.pau@ci Feb 11   68/2141  " thread-indent "\"[oss-security] Re: [Xen-users] Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy\"\n") "<E1ccAXl-0000Q3-Dy@xenbits.xenproject.org>" ("<E1ccAXl-0000Q3-Dy@xenbits.xenproject.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21764 invoked by uid 550); 31 Mar 2017 19:29:54 -0000
+Received: (qmail 30262 invoked by uid 550); 11 Feb 2017 09:41:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +12,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11580 invoked from network); 31 Mar 2017 19:10:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-	mesmtp; bh=tsjUN4aMGNLFfNPfOMU42THwBKiycLphR0PJdvgM090=; b=WBnkR
-	DgqFoyopWZuR25SreslI+vTs+Chs1U3snrHynx2MiFIMnNPR+ICO8a+DyiFZ43Bj
-	nmTOsRwduvTNR8xvPexreOwgkb72vRhRiKVlz7yaY2Mv+mngrpJntlnMq0FbQlGw
-	IJgQvsCharJks6uF4qFTtfOcSSbw4McjrotHxg=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; bh=tsjUN4aMGNLFfNPfOMU42THwBKiyc
-	LphR0PJdvgM090=; b=Hs7l5pv3YX2D6ZaS3cFZFb1/F92HgM5rzz/pid7e1hTAk
-	rsb8r22rUe9MHLj6z4wlEZOKdBEu+WL6RShSL/kVpBBTwHNZJjMGiAFVuO1qzoVI
-	i5N98LHxWieydF+lWquJYpsstMwihcAKKowe3fcXmjDxVaU/Nbhvl5SGf5CGTKuU
-	MEEV7ZKN0CLAhzKtSB3M4RPE+HtPWGuusQodwQqaPidovM2XwH7jl8WyG8O0MEvh
-	gcLZ3s+mAl5X7XAHCfgGu6T43vPvsG0Bmdh9ToM/FSLZ0jEiyv8RQFqrZ07dc2ci
-	NNoM8SpLPEFYuPRnZJ/6u7cSVzib/7tstZlX4K9UQ==
-X-ME-Sender: <xms:faneWD0MrF568giL4Kk5A_bQlSOMJmaGScN_W3KPxylRFkB4qXOLQQ>
-Message-Id: <1490987389.392790.930214152.29A71F3D@webmail.messagingengine.com>
-From: Mark Felder <feld@feld.me>
-To: oss-security@lists.openwall.com
+Received: (qmail 32640 invoked from network); 11 Feb 2017 08:50:23 -0000
+X-IronPort-AV: E=Sophos;i="5.35,145,1484006400"; 
+   d="scan'208";a="40600151"
+Date: Sat, 11 Feb 2017 08:49:54 +0000
+From: Roger Pau =?iso-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>
+To: Xen.org security team <security@xen.org>
+CC: <xen-announce@lists.xen.org>, <xen-devel@lists.xen.org>,
+	<xen-users@lists.xen.org>, <oss-security@lists.openwall.com>
+Message-ID: <20170211084954.xxo6puddj5b6jq6f@MacBook-Pro-de-Roger.local>
+References: <E1ccAXl-0000Q3-Dy@xenbits.xenproject.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-6cc8b445
-Date: Fri, 31 Mar 2017 14:09:49 -0500
-Subject: [oss-security] CVE Request -- mapr: information disclosure vulnerability
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <E1ccAXl-0000Q3-Dy@xenbits.xenproject.org>
+User-Agent: NeoMutt/20170206 (1.7.2)
+X-ClientProxiedBy: AMSPEX02CAS01.citrite.net (10.69.22.112) To
+ AMSPEX02CL02.citrite.net (10.69.22.126)
+Subject: [oss-security] Re: [Xen-users] Xen Security Advisory 208 (CVE-2017-2615) - oob
+ access in cirrus bitblt copy
 
-Hello,
+On Fri, Feb 10, 2017 at 12:43:17PM +0000, Xen.org security team wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>             Xen Security Advisory CVE-2017-2615 / XSA-208
+> 
+>                    oob access in cirrus bitblt copy
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> When doing bitblt copy backwards, qemu should negate the blit width.
+> This avoids an oob access before the start of video memory.
+> 
+> IMPACT
+> ======
+> 
+> A malicious guest administrator can cause an out of bounds memory
+> access, possibly leading to information disclosure or privilege
+> escalation.
+> 
+> VULNERABLE SYSTEMS
+> ==================
+> 
+> Versions of qemu shipped with all Xen versions are vulnerable.
+> 
+> Xen systems running on x86 with HVM guests, with the qemu process
+> running in dom0 are vulnerable.
+> 
+> Only guests provided with the "cirrus" emulated video card can exploit
+> the vulnerability.  The non-default "stdvga" emulated video card is
+> not vulnerable.  (With xl the emulated video card is controlled by the
+> "stdvga=" and "vga=" domain configuration options.)
+> 
+> ARM systems are not vulnerable.  Systems using only PV guests are not
+> vulnerable.
+> 
+> For VMs whose qemu process is running in a stub domain, a successful
+> attacker will only gain the privileges of that stubdom, which should
+> be only over the guest itself.
+> 
+> Both upstream-based versions of qemu (device_model_version="qemu-xen")
+> and `traditional' qemu (device_model_version="qemu-xen-traditional")
+> are vulnerable.
+> 
+> MITIGATION
+> ==========
+> 
+> Running only PV guests will avoid the issue.
+> 
+> Running HVM guests with the device model in a stubdomain will mitigate
+> the issue.
+> 
+> Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
+> in the xl domain configuration) will avoid the vulnerability.
+> 
+> RESOLUTION
+> ==========
+> 
+> Applying the appropriate attached patch resolves this issue.
+> 
+> xsa208-qemuu.patch    qemu-xen, mainline qemu
 
-The mapr web frontend component creates an information disclosure
-vulnerability.  During the setup of mapr the configure.sh script calls a
-function ConfigureWSRole:
+The patch doesn't apply cleanly against the QEMU-upstream found in Xen 4.7.1:
 
-function ConfigureWSRole() {
-  if [ $clientOnly -eq 0 -a $dontChangeSecurityPermissionsOn -eq 0 ];
-  then
-    ConfigureRunUserForWS
-  fi
+http://beefy9.nyi.freebsd.org/data/110amd64-default/433828/logs/xen-tools-4.7.1_2.log
 
-This calls ConfigureRunUserForWS from configure-common.sh:
-
-function ConfigureRunUserForWS() {
-  local val=`getent group shadow 2>/dev/null`
-  if [ "$?" != "0" -o "$val" = "" ]; then
-    # Create a group named shadow
-    groupadd shadow  >> $logFile 2>&1
-  fi
-  # Add CURR_USER to the group wheel
-  if [ -f /etc/SuSE-release ]; then
-      # Add CURR_USER to the group wheel for SUSE
-      usermod -A shadow $MAPR_USER >> $logFile 2>&1
-      STATUS=$?
-      #
-      # The '-A' option has been removed from SuSE 12 
-      #
-      if [ $STATUS -ne 0 ]; then
-          usermod -a -G shadow $MAPR_USER  >> $logFile 2>&1
-      fi
-  else
-      usermod -a -G $MAPR_GROUP,shadow $MAPR_USER  >> $logFile 2>&1
-  fi
-  # Change group-owner of /etc/shadow
-  chgrp shadow /etc/shadow  >> $logFile 2>&1
-  # Allow read permissions for user shadow
-  chmod ug+r /etc/shadow >> $logFile 2>&1
-}
-
-This results in a shadow file that is now readable to the application:
-
-# ls -la /etc/shadow
--r--r-----. 1 root shadow 657 Mar 30 16:09 /etc/shadow
-# grep shadow /etc/group
-shadow:x:1000:mapr
-
-The option to disable this codepath, -no-auto-permission-update,  is not
-recommended by Mapr and comes with a warning in the script as it will
-break the webserver's ability to authenticate the local mapr user, which
-is used to administer the cluster:
-
-        echo "    -no-auto-permission-update - do not update the system
-        security permissions automatically"
-        echo "                             Warn: Features like WebServer
-        might not work properly"
-        echo "                             default: disabled"
-
-The website docs[1] casually describe the option, "Pass this option to
-prevent MapR from silently altering permissions in /etc/shadow."
-
-These files are part of the mapr-core-internal package:
-
-# rpm -fq /opt/mapr/server/configure.sh
-mapr-core-internal-5.2.0.39122.GA-1.x86_64
-# rpm -fq /opt/mapr/server/configure-common.sh
-mapr-core-internal-5.2.0.39122.GA-1.x86_64
-
-
-Thanks
-
-[1] http://maprdocs.mapr.com/home/ReferenceGuide/configure.sh.html
-
--- 
-  Mark Felder
-  feld@feld.me
+Roger.
