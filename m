@@ -1,53 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/03/13
-Message-ID: <b5dbcc41-76a7-be99-df63-2b600d22151a@Z5T1.com>
-Date: Fri, 3 Nov 2017 13:03:57 -0400
-From: Scott Court <z5t1@...1.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/8
+Message-ID: <20170211094224.qbecethlziyj5i43@pisco.westfalen.local>
+Date: Sat, 11 Feb 2017 10:42:24 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fw: Security risk of vim swap files
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-I pointed this out yesterday on the Vim mailing list. It is currently
-being discussed there
-(https://groups.google.com/forum/#!topic/vim_dev/sRT9BtjLWMk). Some
-people are calling for more restrictive permissions on .swp files;
-however, I believe that using a separate directory for .swp files is the
-best solution for a multitude of reasons I've discussed here and there.
-I have refined the vimrc changes that I originally posted (with the help
-of Christian) and have found appending the following to your vimrc be a
-decent way to mitigate against all known forms of this attack until a
-proper patch is released:
+On Fri, Feb 10, 2017 at 04:09:12PM +0000, John Haxby wrote:
+> On 10/02/17 15:40, Priedhorsky, Reid wrote:
+> > To more efficiently assign and publish CVE IDs and to enable
+> > automation and data sharing within CVE operations, MITRE is changing
+> > the way it accepts CVE ID requests on the oss-security mailing list.
+> > Starting today, please direct CVE ID requests to this web form
+> > <https://cveform.mitre.org/>
+> > 
+> > I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
+> > 
+> > Has this use case been considered? Is there an alternate way to accomplish my goal?
+> 
+> I'm glad someone else mentioned this -- I've been wondering too.
+> 
+> What would be nice is if the web form forwarded the request and CVE-ID
+> (suitably formatted) to oss-security or a similar list.
 
-" Move the swap file location to protect against CVE-2017-1000382
-" More information at http://security.cucumberlinux.com/security/details.php?id=120
-" A big thanks goes to Christian Brabandt (cb@...bit.org)
-" for helping with this fix.
-if ! isdirectory("~/.vim/swap/")
-        silent !install -d -m 700 ~/.vim/swap/ 2>&1 > /dev/null
-endif
-set directory=~/.vim/swap//
+For me the value of the oss-security mailing list to have a public
+mailing list which is read by all the relevant open source security
+stakeholders. Thats's why we're bringing all non-critical vulnerabilities
+reported privately to the Debian security team to the attention of
+this mailing list.
 
-The only drawback to this approach is that it eliminates the warning
-when multiple users attempt to edit the same file at the same time;
-however, this seems preferable to the alternative of being vulnerable.
+Having CVEs assigned is of lesser importance, this was never primarily
+why we posted security vulnerabilities here. Obtaining CVE IDs caused
+little overhead on our side, but if that changes (and the announced
+changes sound like that), then there will simply be less CVE coverage
+I'm afraid.
 
-On 11/03/2017 12:39 PM, Jakub Wilk wrote:
-> * Christian Brabandt <cb@...bit.org>, 2017-11-02, 22:29:
->> Vim copies the permission from the file being edited. Although the
->> swap file is readable by others this does not leak any information
->> here, since the file being edited is already readable by others.
->
-> In general, what vim does (copying mode bits) in not enough to ensure
-> that the swapfile is readable only by the users who had access to the
-> original file. It would have to copy also group ownership and ACLs.
->
-> Also, keep in mind how this thread started. Somebody edited
-> wp-config.php, which was readable by the web server, of course; then
-> vim created .wp-config.php.swp with the same-ish permissions, which
-> made the file readable to the whole (external) world. Oops.
->
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers,
+        Moritz
