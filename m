@@ -1,4 +1,9 @@
-Received: (qmail 14188 invoked by uid 550); 6 Jun 2023 17:18:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1569" "Saturday" "11" "February" "2017" "10:42:24" "+0100" "Moritz Muehlenhoff" "jmm@debian.org" "<20170211094224.qbecethlziyj5i43@pisco.westfalen.local>" "31" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021109:42:24" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       jmm@debian.o Feb 11   31/1569  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 8133 invoked by uid 550); 11 Feb 2017 09:42:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9817 invoked from network); 6 Jun 2023 17:12:45 -0000
-Authentication-Results: apache.org; auth=none
-Message-ID: <ac30264b-daba-2c9f-95bd-224cdccee419@apache.org>
-Date: Tue, 6 Jun 2023 10:12:29 -0700
+Received: (qmail 8115 invoked from network); 11 Feb 2017 09:42:37 -0000
+Date: Sat, 11 Feb 2017 10:42:24 +0100
+From: Moritz Muehlenhoff <jmm@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20170211094224.qbecethlziyj5i43@pisco.westfalen.local>
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>
+ <94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-From: Michael Jumper <mjumper@apache.org>
-Content-Language: en-US
-To: announce@apache.org, announce@guacamole.apache.org,
- dev@guacamole.apache.org, user@guacamole.apache.org
-Cc: security@guacamole.apache.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2023-30576: Apache Guacamole: Use-after-free in
- handling of RDP audio input buffer
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-SA-Exim-Connect-IP: 93.204.222.111
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
 
-Severity: moderate
-Base CVSS Score: 6.8 (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N)
+On Fri, Feb 10, 2017 at 04:09:12PM +0000, John Haxby wrote:
+> On 10/02/17 15:40, Priedhorsky, Reid wrote:
+> > To more efficiently assign and publish CVE IDs and to enable
+> > automation and data sharing within CVE operations, MITRE is changing
+> > the way it accepts CVE ID requests on the oss-security mailing list.
+> > Starting today, please direct CVE ID requests to this web form
+> > <https://cveform.mitre.org/>
+> > 
+> > I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
+> > 
+> > Has this use case been considered? Is there an alternate way to accomplish my goal?
+> 
+> I'm glad someone else mentioned this -- I've been wondering too.
+> 
+> What would be nice is if the web form forwarded the request and CVE-ID
+> (suitably formatted) to oss-security or a similar list.
 
-Affected versions:
+For me the value of the oss-security mailing list to have a public
+mailing list which is read by all the relevant open source security
+stakeholders. Thats's why we're bringing all non-critical vulnerabilities
+reported privately to the Debian security team to the attention of
+this mailing list.
 
-- Apache Guacamole 0.9.10 through 1.5.1
+Having CVEs assigned is of lesser importance, this was never primarily
+why we posted security vulnerabilities here. Obtaining CVE IDs caused
+little overhead on our side, but if that changes (and the announced
+changes sound like that), then there will simply be less CVE coverage
+I'm afraid.
 
-Description:
-
-Apache Guacamole 0.9.10 through 1.5.1 may continue to reference a freed 
-RDP audio input buffer. Depending on timing, this may allow an attacker 
-to execute arbitrary code with the privileges of the guacd process.
-
-Mitigation:
-
-Users of versions of Apache Guacamole 1.5.1 and older should upgrade to 
-the 1.5.2 release.
-
-Credit:
-
-We would like to thank Stefan Schiller (Sonar) for reporting this issue.
-
-References:
-
-https://guacamole.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-30576
-
-Timeline:
-
-2023-04-11: Reported to security@guacamole.apache.org
-2023-04-11: Report acknowledged by project
-2023-04-12: Report confirmed by project
-2023-05-09: Fix completed and merged
-2023-05-09: Fix tested and confirmed by reporter
-2023-05-25: Fix released
+Cheers,
+        Moritz
