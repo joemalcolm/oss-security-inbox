@@ -1,53 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/14/8
-Message-ID: <1510683715.18312.1.camel@pnnl.gov>
-Date: Tue, 14 Nov 2017 18:21:56 +0000
-From: "Maier, Kurt H" <kurt.maier@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2017-15102: Linux kernel: usb: NULL-deref due to a race condition in [legousbtower] driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/14
+Message-Id: <201702112015.20098@pali>
+Date: Sat, 11 Feb 2017 20:14:50 +0100
+From: pali@...n.org
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: posting without being subscribed
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2017-11-14 at 08:37 +0100, Greg KH wrote:
+On Saturday 11 February 2017 19:14:52 Solar Designer wrote:
+> On Sat, Feb 11, 2017 at 06:46:43PM +0100, pali@...n.org wrote:
+> > On Friday 10 February 2017 17:39:45 Solar Designer wrote:
+> > > As far as I can tell, pali@...n.org is not subscribed.
+> > 
+> > No, I'm not. I hope it is not a requirement.
 > 
-> But really, this isn't even a "good start", it's identifying a bug
-> fixed over a year ago for a kernel that only one company seems to
-> care about because they are _not_ following the recommended upstream
-> stable kernel patches because they "know better" :)
+> Not a requirement, but you should expect to miss replies if you're
+> not subscribed, especially if you didn't state so in your posting.
 
-First you objected to a specific bug, then it turned into "do
-everything or give up," now we're back to a specific bug, and each
-iteration is more unrealistic "just run whatever we release immediately
-across all devices" advice.
+Understand.
 
-Please, this is not productive.
+> Another issue is that now that you brought the reply back to the
+> list, you almost broke the thread.  I fixed that by manually editing
+> the headers on your message before approving it (as a list admin).
+> Sometimes I do that, although I don't consider it to be part of my
+> "job".  If a co-moderator were to approve your message first, then
+> your message would have started a new thread rather than being added
+> to the existing thread.  That's not great.
 
-And without rancor, jibes like the "know better" line are basically
-just trash-talking people who actually run systems for a living and the
-organizations that provide support and development for those systems. 
-You're welcome to hold them in contempt but your weird persistence in
-ensuring that contempt is explicitly expressed in every message you
-post to the list is distracting at best, obnoxious as a baseline, and
-toxic as a rule.  Consider taking it for granted that you're possessed
-of wisdom unattained by the masses; we've all received this message by
-now.
+Hm... breaking thread should not happen... at least with non-broken 
+email clients. If everybody in discussion correctly set In-Reply-To 
+header then whole thread (correctly tree) will be preserved. And if 
+everybody correctly set References header then even missing emails does 
+not break threading visualization. Information from References headers 
+provide transitive closure of thread tree from which original tree can 
+be reconstructed... But if somebody does not fill References or In-
+Reply-To headers then thread will be broken independently of 
+subscription to list.
 
-> That's my objection here.
+Now I see that message to which I replied was without In-Reply-To and 
+also without References headers. So thread was already broken.
 
-Your objections are not accompanied by any advice that can be followed
-by the vast majority of people responsible for linux systems.  The rest
-of us are just trying to do our jobs, and the CVE process is an
-important tool.  Please stop trying to make the kernel immune to CVE
-reporting without any actual path forward for those of us who need this
-tool. 
+I understand that breaking threading is bad and cause problems, but in 
+lot of times it is problem of broken email clients which do not fill 
+needed headers :-(
 
-I want to stress that I don't see a need for kernel maintainers to
-change their approach in this regard and I have no problem with the
-policies as they stand.  But I am profoundly confused as to why you
-feel the need to post to oss-sec essentially telling people to pack it
-in and go home.  It's not going to happen unless and until we have an
-even more reliable and comprehensive method of tracking vulnerabilities
-in packaged kernels, regardless of the blessed nature of the
-immacualate LTS.
-
-Thanks for your time,
-khm
+> So we'd appreciate it if you do subscribe to the list for the
+> duration of discussions you participate in, or at least explicitly
+> state when you're posting without being subscribed (ask to be CC'ed
+> on replies).
+> 
+> Alexander
