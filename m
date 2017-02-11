@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/6
-Message-ID: <CAJmbs8hXVqrKdGi92K=m08wJ0iaZunMan5cZ=XYuhuLErx0j9Q@mail.gmail.com>
-Date: Thu, 13 Jul 2017 23:21:51 +0700
-From: Maxim Solodovnik <solomax@...che.org>
-To: Openmeetings user-list <user@...nmeetings.apache.org>, dev <dev@...nmeetings.apache.org>,  security@...nmeetings.apache.org,  Joe Basirico <jbasirico@...urityinnovation.com>,  Sharath Unni <sunni@...urityinnovation.com>,  Dinesh Shetty <dshetty@...urityinnovation.com>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: CVE-2017-7663 - Apache OpenMeetings - XSS in chat
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/3
+Message-ID: <871sv52z88.fsf@gnu.org>
+Date: Fri, 10 Feb 2017 22:16:55 -0500
+From: Mike Gerwitz <mtg@....org>
+To: "'oss-security\@lists.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+On Fri, Feb 10, 2017 at 19:59:52 +0000, Maier, Kurt H wrote:
+> This is why I am subscribed to oss-security, and I'd appreciate it if
+> there were an alternate solution in place before the CVE system
+> disappears behind an inscrutable web form.
 
-Vendor: The Apache Software Foundation
+I second this.
 
-Versions Affected: Apache OpenMeetings 3.2.0
+-- 
+Mike Gerwitz
+Free Software Hacker+Activist | GNU Maintainer & Volunteer
+GPG: D6E9 B930 028A 6C38 F43B  2388 FEF6 3574 5E6F 6D05
+Old: 2217 5B02 E626 BC98 D7C0  C2E5 F22B B815 8EE3 0EAB
+https://mikegerwitz.com
 
-Description: Both global and Room chat are vulnerable to XSS attack
-CVE-2017-7663
-
-The issue was fixed in 3.3.0
-All users are recommended to upgrade to Apache OpenMeetings 3.3.0
-
-Credit: This issue was identified by Security Innovation
+Download attachment "signature.asc" of type "application/pgp-signature" (819 bytes)
