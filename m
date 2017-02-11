@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1550" "Thursday" "18" "June" "2015" "08:17:21" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150618121721.7DCB47BC098@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request: various issues in PHP" nil nil nil "6" "2015061812:17:21" "[oss-security] Re: CVE Request: various issues in PHP" (number mark "        cve-assign@m Jun 18   37/1550  " thread-indent "\"[oss-security] Re: CVE Request: various issues in PHP\"\n") "<20150618110200.7c5d78b2@redhat.com>" ("<20150618110200.7c5d78b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1454" "Friday" "10" "February" "2017" "22:16:55" "-0500" "Mike Gerwitz" "mtg@gnu.org" "<871sv52z88.fsf@gnu.org>" "39" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021103:16:55" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        mtg@gnu.org  Feb 10   39/1454  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26498 invoked by uid 550); 18 Jun 2015 12:17:34 -0000
+Received: (qmail 13398 invoked by uid 550); 11 Feb 2017 03:25:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26477 invoked from network); 18 Jun 2015 12:17:33 -0000
-In-Reply-To: <20150618110200.7c5d78b2@redhat.com>
-Message-Id: <20150618121721.7DCB47BC098@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, kaplanlior@gmail.com, security@php.net
-Date: Thu, 18 Jun 2015 08:17:21 -0400 (EDT)
-From: cve-assign@mitre.org
+Received: (qmail 11539 invoked from network); 11 Feb 2017 03:24:11 -0000
+In-Reply-To: <D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>
+	(Kurt H. Maier's message of "Fri, 10 Feb 2017 19:59:52 +0000")
+Message-ID: <871sv52z88.fsf@gnu.org>
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+	<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>
+	<D999895D83BF47489B7647E60E228B4702FE5B8A@EX10MBOX05.pnnl.gov>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.2.x-3.x [generic]
+X-Received-From: 2001:4830:134:3::e
+Date: Fri, 10 Feb 2017 22:16:55 -0500
+From: Mike Gerwitz <mtg@gnu.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: various issues in PHP
-To: thoger@redhat.com
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+To: "'oss-security\@lists.openwall.com'" <oss-security@lists.openwall.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-> same reporter, same type, same affected (released)
-> versions, and the same PHP extension
+On Fri, Feb 10, 2017 at 19:59:52 +0000, Maier, Kurt H wrote:
+> This is why I am subscribed to oss-security, and I'd appreciate it if
+> there were an alternate solution in place before the CVE system
+> disappears behind an inscrutable web form.
 
-Vulnerabilities with different disclosure dates aren't merged. (This
-doesn't mean that we would want to have separate CVEs for a
-developer's efforts to completely fix one type of problem in a single
-piece of code, before any changes were in a release, even if the
-efforts took a while. However, even in the case of a single piece of
-code, multiple CVEs can occur if there is a CVE assignment at a time
-when development work seems finished, and then this work continues.)
+I second this.
 
-> issue affecting different module of the code base
-> is not a typical reason for split.
+--=20
+Mike Gerwitz
+Free Software Hacker+Activist | GNU Maintainer & Volunteer
+GPG: D6E9 B930 028A 6C38 F43B  2388 FEF6 3574 5E6F 6D05
+Old: 2217 5B02 E626 BC98 D7C0  C2E5 F22B B815 8EE3 0EAB
+https://mikegerwitz.com
 
-"different module" would be relevant if it were known that the code in
-one module was originally introduced in one version, and this was not
-the same version as for the other code.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJVgrW7AAoJEKllVAevmvmsUz4H/0sh6svZ2GQV4/docwDrfdZA
-JVV7P8NFja6XlKMQsGDvSrsollGjA2TZf7y7D56mXIjK6hv57tS5bzTcH2ofQSfY
-Au0IOyM+/MDu8pnt1pXAyBvYbwaMQOvZRFMA96imL46/KPwnKPUACrnXfu6BpXU4
-u186I9Na+8RKc47yajjg3ddUjTl1aMGjXXbEXK1c9XtnKjU1zk7Gd0HCRqcMRW6b
-+4ojMyyPigXNbPXb1YtFUS3BZ25p7jLVzNHvaBeKEddJuHtyyq7lHZbAYDbi0Ykb
-K7h1uCtg9XpzkRvEQnJzBEFCsgEMQs9PURNhWd2S+wVSCzSL+AxgPm0a/hbpZ5o=
-=QwlQ
+iQIcBAEBCgAGBQJYnoIqAAoJEIyRe39dxRuiXeUQAIgUkkQh3Y30dMlG1ZHnwwEx
+6kDUUkEndYQYWKyMMGJFQvxyUHQLo1fyPGh18eML2nh4HOweVYY/e0hnZPNRDYPn
+l86BAbso94o3wmtQOM6h5DjK57WqzWGdSx53sffkZxPVkp8MR2+MPhzrxFe7QxtM
+qpxJWgXV20CEt8iZnUEpI/bGDeBNCiW++fRyW+2tYf8/dlJSZCvr7LFPhuVeogIb
+fY/acQsrugYEDJ98lRcWMSMTIjhNPMhDmxD8JE1qHQjB7MJDBYM78eGKjFmw0y78
+Y6waDDVcaaJFu3V/VoxjcDXfJL6LQcaz2toxqoJOOeQrbXzEEs42k+IYfKcAwry/
+cKkuqw1/s9pLqhjhibzMxMGuB11EX4jHiE2LyVw8mVSr6vcEmPIM3oo+3Ix9DO8/
+St+FhUJegUOMnDsTcOaODNcWxmTM2R57ZobBll75d9ct5Wkdc91w4ije7JUNTmWY
+dRnmYX555AvUoLVF5rFPUKj0aXIP4DjtPojmcX7vbgETC6fXhfkVFoVTUvy7iQ8f
+bixDlyMC52uiyivYPQlrh74Se+s2erMGyr3fAgYIQp3ilV8LV1n2/o2G1G3xTvIP
+lVl5gmAQFjOExGbFYAPIZGTlAcHtpHoUiupE43aK8yGdEPjwIEAxY6MBA6fit48H
+1nxg5rNv9zDgl2y3R4fE
+=8Wua
 -----END PGP SIGNATURE-----
+--=-=-=--
