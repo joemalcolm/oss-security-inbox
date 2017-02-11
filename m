@@ -1,45 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/1
-Message-ID: <20171218062832.GB9249@suse.de>
-Date: Mon, 18 Dec 2017 07:28:32 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: security@...e.de
-Subject: Re: Portus, missing LDAP server authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/11/7
+Message-ID: <20170211084954.xxo6puddj5b6jq6f@MacBook-Pro-de-Roger.local>
+Date: Sat, 11 Feb 2017 08:49:54 +0000
+From: Roger Pau Monné <roger.pau@...rix.com>
+To: Xen.org security team <security@....org>
+CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, <oss-security@...ts.openwall.com>
+Subject: Re: [Xen-users] Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Feb 10, 2017 at 12:43:17PM +0000, Xen.org security team wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>             Xen Security Advisory CVE-2017-2615 / XSA-208
+> 
+>                    oob access in cirrus bitblt copy
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> When doing bitblt copy backwards, qemu should negate the blit width.
+> This avoids an oob access before the start of video memory.
+> 
+> IMPACT
+> ======
+> 
+> A malicious guest administrator can cause an out of bounds memory
+> access, possibly leading to information disclosure or privilege
+> escalation.
+> 
+> VULNERABLE SYSTEMS
+> ==================
+> 
+> Versions of qemu shipped with all Xen versions are vulnerable.
+> 
+> Xen systems running on x86 with HVM guests, with the qemu process
+> running in dom0 are vulnerable.
+> 
+> Only guests provided with the "cirrus" emulated video card can exploit
+> the vulnerability.  The non-default "stdvga" emulated video card is
+> not vulnerable.  (With xl the emulated video card is controlled by the
+> "stdvga=" and "vga=" domain configuration options.)
+> 
+> ARM systems are not vulnerable.  Systems using only PV guests are not
+> vulnerable.
+> 
+> For VMs whose qemu process is running in a stub domain, a successful
+> attacker will only gain the privileges of that stubdom, which should
+> be only over the guest itself.
+> 
+> Both upstream-based versions of qemu (device_model_version="qemu-xen")
+> and `traditional' qemu (device_model_version="qemu-xen-traditional")
+> are vulnerable.
+> 
+> MITIGATION
+> ==========
+> 
+> Running only PV guests will avoid the issue.
+> 
+> Running HVM guests with the device model in a stubdomain will mitigate
+> the issue.
+> 
+> Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
+> in the xl domain configuration) will avoid the vulnerability.
+> 
+> RESOLUTION
+> ==========
+> 
+> Applying the appropriate attached patch resolves this issue.
+> 
+> xsa208-qemuu.patch    qemu-xen, mainline qemu
 
-On Sun, Dec 17, 2017 at 02:36:42PM +0100, Raphael Geissert wrote:
-> Hi,
-> 
-> Portus 2.2 and older provides LDAP integration for authenticating the
-> users. However, in spite of it providing advice on configuring it to
-> "to setup LDAP over SSL/TLS"[1], the implementation does not verify
-> the server's identity at all.
-> 
-> I'm writing about it here mainly because there appears to be some
-> intention of TLS support. Users might expect it to actually provide
-> some kind of security.
-> 
-> Interestingly enough, the documentation and the config file comments
-> say  'the recommended [method] is "starttls".'[2] I don't know where
-> they got that from.
-> 
-> CC'ing SUSE's security team.
-> 
-> I have not yet reported it to the portus team directly, nor requested
-> a CVE id (though I'm tempted to request one, to err on the side of
-> safety).
-> 
-> 
-> [1]http://port.us.org/docs/Configuring-Portus.html
-> [2]https://github.com/SUSE/Portus/blob/master/config/config.yml#L49
-> 
-> Cheers,
+The patch doesn't apply cleanly against the QEMU-upstream found in Xen 4.7.1:
 
-I have opened
-https://bugzilla.suse.com/show_bug.cgi?id=1073232
-for this issue.
+http://beefy9.nyi.freebsd.org/data/110amd64-default/433828/logs/xen-tools-4.7.1_2.log
 
-Ciao, Marcus
+Roger.
