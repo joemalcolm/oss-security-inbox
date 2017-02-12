@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1453" "Friday" "6" "May" "2016" "16:10:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160506201059.165AF332055@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack" nil nil nil "5" "2016050620:10:59" "[oss-security] Re: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack" (number mark "U       cve-assign@m May  6   36/1453  " thread-indent "\"[oss-security] Re: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack\"\n") "<20160506193041.GA4287@eldamar.local>" ("<20160506193041.GA4287@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["867" "Sunday" "12" "February" "2017" "11:23:49" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0PmeERNq+=vPhL=UM-LWVarr_Ry06NPc_OhpzXztZLbg@mail.gmail.com>" "24" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021218:23:49" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       kseifried@re Feb 12   24/867   " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170211233541.GA6315@openwall.com>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" "<20170211233541.GA6315@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23983 invoked by uid 550); 6 May 2016 20:11:11 -0000
+Received: (qmail 24156 invoked by uid 550); 12 Feb 2017 18:24:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23961 invoked from network); 6 May 2016 20:11:11 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160506193041.GA4287@eldamar.local>
-Message-Id: <20160506201059.165AF332055@smtpvbsrv1.mitre.org>
-Date: Fri,  6 May 2016 16:10:59 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: ikiwiki: HTML-escape error messages to prevent cross-site scripting attack
+Received: (qmail 24107 invoked from network); 12 Feb 2017 18:24:01 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=UJs7k2SzK4DpXBZS9oTruSivqOYikjI+x6UNUiv3K2M=;
+        b=rETaiyeGc3bI/35LnFW92N/Q1SpmJXhCC4RDOe2SfnD6+6K/JYCz6mwLWzoFM4Sbyp
+         Q4hQ/BnXRwzifxLWbV6jX10OSx+ObV6qXEGPepE2GY1vo3c7rTZBzuIZaKB8jWt2brqF
+         6tJv2o4BHjFb1YjHZMzpxHsp3NuQB0XopRyQklIHGd/hHh3LNvt/83JTCfsCDQG9KMlj
+         489BcEX5OZsaE0uOyJbGwuWp512aVHT8GwMIXtYM520ctu03K2pZ/qo5zbNGVWCxK926
+         F3IyuDQGMmsIPV7c/1IfPjzumR+2aBAyckkhunaC/FT6spsJt/uBDA6eTL5Vw1zvI74O
+         2rkA==
+X-Gm-Message-State: AMke39kzYYN2pPZ9MhrzxUl7YFdsQsYlF5E8HxagcY54be24X5HemIpArQZgDpRicsnvuulXXYm8ViTmax3RXrzu
+X-Received: by 10.202.75.76 with SMTP id y73mr10410814oia.16.1486923829887;
+ Sun, 12 Feb 2017 10:23:49 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <20170211233541.GA6315@openwall.com>
+References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
+ <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG> <20170211233541.GA6315@openwall.com>
+From: Kurt Seifried <kseifried@redhat.com>
+Date: Sun, 12 Feb 2017 11:23:49 -0700
+Message-ID: <CANO=Ty0PmeERNq+=vPhL=UM-LWVarr_Ry06NPc_OhpzXztZLbg@mail.gmail.com>
+To: oss-security <oss-security@lists.openwall.com>
+Content-Type: multipart/alternative; boundary=001a11c183b2b058bd0548596ed1
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a11c183b2b058bd0548596ed1
+Content-Type: text/plain; charset=UTF-8
 
-> http://source.ikiwiki.branchable.com/?p=source.git;a=commit;h=32ef584dc5abb6ddb9f794f94ea0b2934967bba7
+Daily update stuff already exists:
 
-> The instance in cgierror() is a potential cross-site scripting attack,
-> because an attacker could conceivably cause some module to raise an
-> exception that includes attacker-supplied HTML in its message, for
-> example via a crafted filename. (OVE-20160505-0012)
+https://cve.mitre.org/cve/data_updates.html
 
->> CGI.pm
+We could also have the MITRE CVE ID feed new stuff into oss-security but it
+would include non open source stuff.
 
-Use CVE-2016-4561.
+As for the DWF it's simple: we're using git, so I guess if people really
+want up to the minute updates they can simply subscribe to the repos in
+GitHub, or pull and do it on their own end. I don't have plans for a
+notification service yet, on of my main goals it to make the data more
+easily available and then see what people need/do with it (and of course
+co-opt the useful ideas and use them!).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
 
-iQIcBAEBCAAGBQJXLPn2AAoJEHb/MwWLVhi2ALMQAIlovh1Sl+fuQdZIQBAzRJfg
-f4IgcFMZxk6MFeTzDXmrdDlRHSPqI/BDAaSPz96thHjURMVet/CCSNkbA1G8CIVB
-r04BTvqNhDaL2tP/KxZ/bha9q4BM9BpO+6L8+aRK4sjiRbr21Q/PlvicEus3B20e
-1e/jyMX/69oX4O8mqkm9UoQtsft2nlI13TOwM9yKKgQ61eMkjkDpDFMkAOaj25wP
-qJ7pXPHWIYv5ic0Wg0KacF+BRlrFckN0RXfody4pzya7ND0yck/41F1y6h0isn4c
-MHkwvKJ29qTeccflgF4FoB2YSD8E0dZkQU9CYpo95hdsyeVMj7O4wRE5bd5kPCZs
-HIF8KEKzzvvZZ01xGxNeIgAFEDqBu0rnUQ9JC9bfVDYDSNFKkiHZE039lL/vr/3A
-+y03HSvSZAjX7ZiALfRgcFvdAdqQfi6RPT6awU0X1HOfJChDJO9RG4UJf4qdK2/X
-lM8T0bqeWA/975ftkZUfIPNxYy4UI/jrKkdK7MeVLe1JcXfbqO4BiCRRSx34MaNS
-AqREZahOpL29UfRPysWYBJce30SCI/I4YBgn4xhe1KEu0Ud33+UirvIcSTeXM9I1
-PViZrkuTUDAhACg9sYpvVxhnqyfd6+t7mJ0nqrs7UiF+1ZYwCQKWgyiqr7FN64lu
-JvZf7sCAq3oE9ULBEP9d
-=Y0cq
------END PGP SIGNATURE-----
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@redhat.com
+
+--001a11c183b2b058bd0548596ed1--
