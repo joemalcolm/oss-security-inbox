@@ -1,33 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/6
-Message-ID: <7c8bc649-317c-cf85-4bc8-0759919c6960@oracle.com>
-Date: Tue, 25 Jul 2017 22:16:41 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/12/3
+Message-ID: <CAAeHK+wyDjXzJ==B6NtmAiin9n2haTrkB_sge0pQS0BM=hGUFQ@mail.gmail.com>
+Date: Sun, 12 Feb 2017 19:46:49 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: Fwd: [scr293903] Linux kernel - upstream
 Content-Type: text/plain; charset=utf-8
 
-On 25/07/17 19:04, Solar Designer wrote:
-> On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
->> However, put me down as backup for "1. Promptly review new issue reports
->> for meeting the list's requirements and confirm receipt..."
-> 
-> OK, although I'd rather have the old-timers choose trickier tasks.
-> 
-
-Sorry.  I'll pick up things where I can and when I have time.
+---------- Forwarded message ----------
+From:  <cve-request@...re.org>
+Date: Sun, Feb 12, 2017 at 7:45 PM
+Subject: Re: [scr293903] Linux kernel - upstream
+To: andreyknvl@...gle.com
+Cc: cve-request@...re.org
 
 
->> I do expect that we (I) will become more active on linux-distros as
->> well.   Speaking of which, has it been unusually quiet or do I need to
->> beat up the mail admin people again?   I haven't seen anything since
->> Bastille Day (14 July).
-> 
-> It has been unusually quiet.  (And this is totally unrelated to the
-> travel and vacations that Henri mentioned.  If anything is sent to the
-> (linux-)distros list, it should get through without a delay anyway.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thanks for confirming.
+The CVE ID is below. Please clarify whether you want this added to the
+public CVE List immediately. You have provided
+https://patchwork.ozlabs.org/patch/724136/ as a public reference that
+appears to disclose this as a vulnerability, at least if the attacker
+can run a local application to make arbitrary system calls. The public
+reference does not directly suggest a remote attack: that detail could
+be omitted from the public CVE List.
 
-jch
 
+> [Additional Information]
+> It's possible to cause a denial of server by sending bad IP options on a socket.
+> Potentially this can be triggered remotely.
+>
+> ------------------------------------------
+>
+> [VulnerabilityType Other]
+> Denial of service
+>
+> ------------------------------------------
+>
+> [Vendor of Product]
+> Linux kernel
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> Linux kernel - upstream
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Impact Denial of Service]
+> true
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://patchwork.ozlabs.org/patch/724136/
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+
+Use CVE-2017-5970.
+
+
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYoK07AAoJEHb/MwWLVhi28REP/id92tkREqUYayj/GcZUN67r
+swVR6fvnO0vP7lfVR4iPg5tKRCfM9FkIBU2+OHEXFGzvsXA/jHaabADqqkWOHfGA
+QcXx4dz1HJEwGr+ALRVW6YDl7clWIKW9u6zP2Md6EKYPxl5IeeJHvQwCCFGhW4CW
+zTdxYnPaSVs8PixpYpF5ZpiVzGL2KM13Ccwbsj7Jkjzz4YzNjWXz5Si3DsDkrD9v
+NwGN1DG9q8p+Nab29di55oRSMsx9NqAXzbIKzH93aoykO5gU7PsvwszsAg98NsAY
+mcwj/3s+HaZkH6i2Q8UyRfqvZ6JWNr3FGGhfZX+pEnYZ28RF93Ven8+8MrlrSEkm
+B/tx0gf7Y3RPvb686ppDpkPK0x5JeOEsMhRHRSF5GKm24Ltev0c+vyEts2KJeAoq
+f+8PiFz3T2DIrs3356/sa7ovsQl2+X10vQj/Ai0G4CFC1J+3e9cdqkYPvOR5PlVB
+PMArIFpd2FLD/Rt9SmbtWlA6Crtcx/2Ijz29T1BlHIWSxmni1nz1bgnzg3+XhFwL
+fnoCy/Wl1b/9Er6+VmY0jzlr66IOAr+5GycnjSfKqQFBEAejuH/vuGQVXP4w3F4q
+6Uc1uDVE1onZPIuRgzhEUienWlRnoOOwD1Bdwa1BLEKf0sx+6zr+2gvsvr1dAI27
+P8bNrk2iD7/BEvo/GY5O
+=Esbo
+-----END PGP SIGNATURE-----
