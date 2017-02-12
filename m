@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/1
-Message-ID: <20170516153945.GA4717@openwall.com>
-Date: Tue, 16 May 2017 17:39:45 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: NetBSD/pkgsrc membership on distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/12/2
+Message-ID: <CANO=Ty0PmeERNq+=vPhL=UM-LWVarr_Ry06NPc_OhpzXztZLbg@mail.gmail.com>
+Date: Sun, 12 Feb 2017 11:23:49 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Daily update stuff already exists:
 
-A few individuals from/for NetBSD/pkgsrc joined the non-public distros
-list a while ago.  Unfortunately, lately they appear to have become
-inactive.  Thus, I am likely to remove NetBSD/pkgsrc from the distros
-list soon unless the membership is "renewed" through demonstrated
-interest and vulnerability response by specific people from there.
+https://cve.mitre.org/cve/data_updates.html
 
-I notice NetBSD security team is still active in terms of issuing of
-public security advisories (latest one posted on March 24), but the way
-the situation looks to me (and I admit I could be wrong) those
-advisories are not produced by the same people who had joined distros.
-So maybe NetBSD needs to nominate their currently active security people
-for distros membership on behalf of their project.
+We could also have the MITRE CVE ID feed new stuff into oss-security but it
+would include non open source stuff.
 
-I could figure out who the active NetBSD security people are now and
-approach them, but that's mostly not how distros membership applications
-worked so far - specifically, I'd like membership to be requested by
-each distros' security team.  I don't want to be pinging them about it
-myself, as that could result in some joining just because they were
-invited/reminded like that rather than because of genuine interest.
+As for the DWF it's simple: we're using git, so I guess if people really
+want up to the minute updates they can simply subscribe to the repos in
+GitHub, or pull and do it on their own end. I don't have plans for a
+notification service yet, on of my main goals it to make the data more
+easily available and then see what people need/do with it (and of course
+co-opt the useful ideas and use them!).
 
-Similarly, I intentionally don't CC this posting to anyone - if someone
-(perhaps from NetBSD) is not in here, then even if they're doing
-security response for their distro they are not an ideal representative
-for their distro on the distros list.  That's because we assume that the
-distro also keeps track of whatever issues are being made public on
-oss-security (with most of those issues never having been brought up on
-the distros list, so by being only on distros the person would miss most
-issues they might need to deal with).
+-- 
 
-If anyone from NetBSD who is on oss-security has anything relevant to
-say on this, please speak up.
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
-Thanks,
-
-Alexander
