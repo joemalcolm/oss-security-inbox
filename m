@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/19/1
-Message-ID: <57017841-788f-5012-bc78-b70328d349a5@oracle.com>
-Date: Sat, 18 Mar 2017 18:42:51 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/12/1
+Message-ID: <20170212141301.GA7814@jasmine>
+Date: Sun, 12 Feb 2017 09:13:01 -0500
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-3631 - libtiff 4.0.6 illegel read
+Cc: ppandit@...hat.com, cve-assign@...re.org, jiangxin1@...wei.com
+Subject: Re: Re: CVE request Qemu: sd: sdhci OOB access during multi block SDMA transfer
 Content-Type: text/plain; charset=utf-8
 
-On 04/ 8/16 12:12 AM, 张开翔 wrote:
-> Details
-> =======
->
-> Product: libtiff
-> Affected Versions: <= 4.0.6
-> Vulnerability Type: Illegel read
-> Vendor URL: http://www.libtiff.org/
-> CVE ID: CVE-2016-3631
-> Credit: Kaixiang Zhang of the Cloud Security Team, Qihoo 360
->
-> Introduction
->
-> Illegal read occurs in the cpStrips and cpTiles function in thumbnail.c in thumbnail allows attackers to exploit this issue to cause denial-of-service.
+On Tue, Jan 31, 2017 at 10:20:47AM -0500, cve-assign@...re.org wrote:
+> > Quick emulator(Qemu) built with the SDHCI device emulation support is
+> > vulnerable to an OOB heap access issue. It could occur while doing a multi
+> > block SDMA transfer via 'sdhci_sdma_transfer_multi_blocks' routine.
+> > 
+> > A privileged user inside guest could use this flaw to crash the Qemu process
+> > resulting in DoS or potentially execute arbitrary code with privileges of the
+> > Qemu process on the host.
+> > 
+> > https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg06191.html
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1417559
+> 
+> Use CVE-2017-5667.
+> 
+> This is not yet available at
+> http://git.qemu.org/?p=qemu.git;a=history;f=hw/sd/sdhci.c but
+> that may be an expected place for a later update.
 
-While this CVE is not listed in the libtiff 4.0.7 release notes, that
-version appears to resolve it via this release note item:
-    'The libtiff tools rgb2ycbcr and thumbnail are only built in the build
-     tree for testing.'
+This commit appears to address CVE-2017-5667:
 
-I still can't find a bug id specifically for this one in the libtiff bug
-tracker, but for the similar CVE-2016-3634 this removal is listed as the
-resolution in http://bugzilla.maptools.org/show_bug.cgi?id=2547 .
+http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=42922105beb14c2fc58185ea022b9f72fb5465e9
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
