@@ -1,87 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/03/1
-Message-ID: <20170103110615.GA22538@suse.de>
-Date: Tue, 3 Jan 2017 12:06:15 +0100
-From: Sebastian Krahmer <krahmer@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/12
+Message-ID: <20170213193049.12259.240D02CC@matica.foolinux.mooo.com>
+Date: Mon, 13 Feb 2017 11:46:10 -0800
+From: Ian Zimmerman <itz@...mate.net>
 To: oss-security@...ts.openwall.com
-Cc: jfrickson@...ios.com
-Subject: Re: Nagios Core < 4.2.4 Root Privilege Escalation [CVE-2016-9566]
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 2017-02-12 11:23, Kurt Seifried wrote:
 
-On Tue, Dec 20, 2016 at 05:16:39PM -0200, Dawid Golunski wrote:
-> Vulnerability:
-> Nagios Core < 4.2.4  Root Privilege Escalation CVE-2016-9566
+> Daily update stuff already exists:
 > 
-> Discovered by: Dawid Golunski (@dawid_golunski)
-> https://legalhackers.com
-> 
-> Severity: High
+> https://cve.mitre.org/cve/data_updates.html
 
-[...]
-
-> 
-> Nagios daemon was found to open the log file before dropping its root 
-> privileges on startup:
-> 
-> 8148  open("/usr/local/nagios/var/nagios.log",
-> O_RDWR|O_CREAT|O_APPEND, 0666) = 4
-> 8148  fcntl(4, F_SETFD, FD_CLOEXEC)     = 0
-> 8148  fchown(4, 1001, 1001)             = 0
-> 8148  getegid()                         = 0
-> 8148  setgid(1001)                      = 0
-> 8148  geteuid()                         = 0
-> [...]
-
-I have had a look at the upstream patch:
-
-https://github.com/NagiosEnterprises/nagioscore/commit/c29557dec91eba2306f5fb11b8da4474ba63f8c4
-
-I think the patch is insufficient in many ways.
-
-
-Basically the patch is introducing a O_NOFOLLOW and an fstat()
-afterwards. O_NOFOLLOW only works for symlinks, but attackers
-may also create hardlinks (on the same FS, lets put
-Linux link restrictions aside since it may affects other OS's too).
-
-The fstat() check comes too late, the open() already happened
-and may caused side-effects (driver files etc.). OTOH, a stat()
-before open would be racy. Then, any of the path components
-of the logdir may be nagios owned and flipped with symlinks inside subdirs,
-since O_NOFOLLOW only fails on the last component being a symlink.
-
-Then, IMHO its not a good idea to have the fix_log_file_owner(uid, gid)
-call inside drop_privileges(), since when drop_privileges() fails,
-for example because nagios attacker is spawning many zombies,
-making setuid() fail, the following logit() call may be invoked as root, ending again in
-open_log_file():
-
-597 if(drop_privileges(nagios_user, nagios_group) == ERROR) {
-598      logit(NSLOG_PROCESS_INFO | NSLOG_RUNTIME_ERROR,...  Aborting.");
-
-Also, the fix_log_file_owner(uid, gid); call may fail and no error
-is checked on return. The call may fail because its calling
-open_log_file(). IMHO, dropping privs and setting up the logfiles
-should really be separated.
- 
-There is also this prctl(PR_SET_DUMPABLE, 1) call which may
-be dangerous as its a potential attack vector for ptrace injections.
-
-TL;DR: there is no safe way of creating/chowning files inside user owned
-directories when running as root. Theres almost in all cases a race, since you
-have no fix point. Or at least making some fix point creates a lot
-of effort and headache. Its much cleaner to drop to user and then doing
-the file-related work. Since the logdir is nagios owned anyway,
-I dont see why there is this root/chown approach.
-
-
-Sebastian
+I checked the Purdue data for CVE-2017-2615, which was announced here on
+Feb. 1st and discussed more recently.  I cannot find it there, what am I
+doing wrong?  I checked both the February and January lists.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
-
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
