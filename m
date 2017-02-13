@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9006" "Sunday" "12" "March" "2017" "20:34:23" "+0000" "Craig Small" "csmall@debian.org" "<CALy8Cw58FYZobXa7G5MGoPbfJ4T9w1XHu3BYL1sGeBM-voBSkA@mail.gmail.com>" "352" "[oss-security] Fwd: [scr305104] wordpress before 4.7.3" nil nil nil "3" "2017031220:34:23" "[oss-security] Fwd: [scr305104] wordpress before 4.7.3" (number mark "U       csmall@debia Mar 12  352/9006  " thread-indent "\"[oss-security] Fwd: [scr305104] wordpress before 4.7.3\"\n") "<068d48a6cb3e4d18962514f233b7ef94@imshyb02.MITRE.ORG>" ("<068d48a6cb3e4d18962514f233b7ef94@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3401" "Monday" "13" "February" "2017" "16:40:29" "+0000" "Priedhorsky, Reid" "reidpr@lanl.gov" "<FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>" "59" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021316:40:29" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       reidpr@lanl. Feb 13   59/3401  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" ("<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1920 invoked by uid 550); 12 Mar 2017 21:12:59 -0000
+Received: (qmail 28309 invoked by uid 550); 13 Feb 2017 16:50:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,383 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15764 invoked from network); 12 Mar 2017 20:34:46 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Dz25k4vz0FTdycbWSpb4vRJpDbhnlpdI5hlIL3v0MBs=;
-        b=SOJMfKPblOuZY+8k7Wz/MGeKUJntQWs8jM0+p27pXJm52Immw/Yey80hRUrDU66dya
-         C3SdA5W6TmK7wWXix7gPE1726pdAwYTC/GdliOa1GRZWGQWnNCX4B2hYTx2YbofJMjD2
-         Vg9ZmY7n6wAO2EpOmvjc7hmRJdoA3v7hqe/JFMSInJBaQPqSSpoSisHQD3OWnd08qbjl
-         EJ4z/fKjQEi2ByuExcF44PueGswzOFjqILAov1yCr93iErUJW4E0Qs9pNAceNBlM5o1B
-         hWPzIlfTr9heDICsamlIJ3P06u2Lqt/DUNPDRIa2d42TdBEZNqWk3PqKRGZTopVaRJXf
-         /83Q==
-X-Gm-Message-State: AMke39mhToWSGT1C8/GxRVABI1as6w/8BkCQxp3le/tML0InZCob1O9ylQsGrgi/oMK1pg==
-X-Received: by 10.25.219.18 with SMTP id s18mr7055888lfg.174.1489350874923;
-        Sun, 12 Mar 2017 13:34:34 -0700 (PDT)
-X-Received: by 10.25.216.28 with SMTP id p28mr7612934lfg.164.1489350874416;
- Sun, 12 Mar 2017 13:34:34 -0700 (PDT)
+Received: (qmail 24138 invoked from network); 13 Feb 2017 16:40:43 -0000
+X-NIE-2-Virus-Scanner: amavisd-new at mailrelay1.lanl.gov
+From: "Priedhorsky, Reid" <reidpr@lanl.gov>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
+Thread-Topic: [oss-security] MITRE is adding data intake to its CVE ID process
+Thread-Index: AQHShhfisFMf901310evO+WOtuaDhA==
+Date: Mon, 13 Feb 2017 16:40:29 +0000
+Message-ID: <FD3A509F-A961-430D-AB60-EFCC2E4185C3@lanl.gov>
+References: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
+In-Reply-To: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [128.165.106.201]
+Content-Type: multipart/alternative;
+	boundary="_000_FD3A509FA961430DAB60EFCC2E4185C3lanlgov_"
 MIME-Version: 1.0
-References: <068d48a6cb3e4d18962514f233b7ef94@imshyb02.MITRE.ORG>
-In-Reply-To: <068d48a6cb3e4d18962514f233b7ef94@imshyb02.MITRE.ORG>
-From: Craig Small <csmall@debian.org>
-Date: Sun, 12 Mar 2017 20:34:23 +0000
-X-Gmail-Original-Message-ID: <CALy8Cw58FYZobXa7G5MGoPbfJ4T9w1XHu3BYL1sGeBM-voBSkA@mail.gmail.com>
-Message-ID: <CALy8Cw58FYZobXa7G5MGoPbfJ4T9w1XHu3BYL1sGeBM-voBSkA@mail.gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary=001a1140eab4d0e2cd054a8e856d
-Subject: [oss-security] Fwd: [scr305104] wordpress before 4.7.3
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.15.154,1.0.8,0.0.0000
+ definitions=2017-02-13_09:2017-02-13,2017-02-13,1970-01-01 signatures=0
+Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
 
---001a1140eab4d0e2cd054a8e856d
-Content-Type: text/plain; charset=UTF-8
+--_000_FD3A509FA961430DAB60EFCC2E4185C3lanlgov_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-FYI, The 6 wordpress CVE ids from Mitre.
+DQpPbiBGZWIgMTAsIDIwMTcsIGF0IDg6NTkgUE0sIGN2ZS1hc3NpZ25AbWl0
+cmUub3JnPG1haWx0bzpjdmUtYXNzaWduQG1pdHJlLm9yZz4gd3JvdGU6DQoN
+CkM1LiBJIHdhbnQgTUlUUkUgdG8gc2VuZCB0aGUgaHR0cHM6Ly9jdmVmb3Jt
+Lm1pdHJlLm9yZzxodHRwczovL2N2ZWZvcm0ubWl0cmUub3JnLz4gZm9ybSBk
+YXRhLCBhbmQNCnRoZSBDVkUgSUQsIHRvIHRoZSBvc3Mtc2VjdXJpdHkgbGlz
+dCBhdCB0aGUgc2FtZSB0aW1lIHRoYXQgdGhlc2UgYXJlDQpzZW50IHRvIHRo
+ZSByZXF1ZXN0ZXIuDQoNClI1LiBXZSBoYXZlIGhhZCBpbnRlcm5hbCBkaXNj
+dXNzaW9ucyB3aXRoaW4gTUlUUkUgYWJvdXQgdGhpcy4gV2UgYXJlDQphYmxl
+IHRvIGltcGxlbWVudCB0aGlzIGVhc2lseSBpZiB0aGUgY29tbXVuaXR5IHJl
+cXVpcmVzIHRoaXMgYXBwcm9hY2guDQpBdCB0aGUgbW9tZW50LCB3ZSBhcmUg
+ZXhwZWN0aW5nIHRoZSByZXF1ZXN0ZXIgdG8gcmVzZW5kIHRoaXMNCmluZm9y
+bWF0aW9uIHRvIG9zcy1zZWN1cml0eSBvbmNlIHRoZXkgYWNjZXB0IHRoZWly
+IENWRSBJRCBhc3NpZ25tZW50Lg0KUGxlYXNlIHNlZSBodHRwOi8vd3d3Lm9w
+ZW53YWxsLmNvbS9saXN0cy9vc3Mtc2VjdXJpdHkvMjAxNy8wMi8wOS8yNg0K
+Zm9yIGFuIGV4YW1wbGUuDQoNCg0KQzYuIEkgd2FudCBNSVRSRSB0byBzZW5k
+IHRoZSBodHRwczovL2N2ZWZvcm0ubWl0cmUub3JnPGh0dHBzOi8vY3ZlZm9y
+bS5taXRyZS5vcmcvPiBmb3JtIGRhdGEgdG8NCnRoZSBvc3Mtc2VjdXJpdHkg
+bGlzdCBhcyBzb29uIGFzIHRoYXQgZGF0YSBpcyBlbnRlcmVkIChpLmUuLCBi
+ZWZvcmUgYQ0KQ1ZFIElEIGV4aXN0cykuDQoNClI2LiBXZSBoYXZlIGhhZCBp
+bnRlcm5hbCBkaXNjdXNzaW9ucyB3aXRoaW4gTUlUUkUgYWJvdXQgdGhpcy4g
+V2UgYXJlDQpub3QgeWV0IGFibGUgdG8gaW1wbGVtZW50IHRoaXMgZWFzaWx5
+LiBXZSBtYXkgd29yayBvbiB0aGlzIGlmIHRoZQ0KY29tbXVuaXR5IHJlcXVp
+cmVzIHRoaXMgYXBwcm9hY2guIEhvd2V2ZXIsIG91ciB1bmRlcnN0YW5kaW5n
+IG9mIENWRQ0KY29uc3VtZXJzIGlzIHRoYXQgdGhleSBsb29rIHRvIE1JVFJF
+IGFzIGEgc291cmNlIG9mIHZ1bG5lcmFiaWxpdHkNCmluZm9ybWF0aW9uIGFm
+dGVyIGEgQ1ZFIElEIG51bWJlciBleGlzdHMsIG5vdCBiZWZvcmUuDQoNCkni
+gJltIGdsYWQgdG8gc2VlIHRoZSBmZWVkYmFjayB0YWtlbiBzZXJpb3VzbHkg
+YXMgd2VsbC4NCg0KUmVjYWxsIHRoYXQgbXkgb3NzLXNlY3VyaXR5IHVzZSBj
+YXNlIHdhcyB0byBtYWludGFpbiBhIHJlYXNvbmFibHkgY29tcHJlaGVuc2l2
+ZSBsaXN0IG9mIHZ1bG5lcmFiaWxpdGllcyBmb3Igc3BlY2lmaWMgcHJvZHVj
+dHMuIFRoaXMgd29ya2Zsb3cgbG9va2VkIGxpa2U6DQoNCjEuIFNlZSBhIG5v
+dGlmaWNhdGlvbiAod2hldGhlciBDVkUgcmVxdWVzdCBvciBub3QpIG9uIG9z
+cy1zZWN1cml0eSByZWdhcmRpbmcgcHJvZHVjdHMgSeKAmW0gaW50ZXJlc3Rl
+ZCBpbi4NCjIuIEFkZCB0aGUgdnVsbmVyYWJpbGl0eSB0byBteSBsaXN0Lg0K
+My4gTW9uaXRvciB0aGUgdGhyZWFkIGZvciBhZGRpdGlvbmFsIGluZm9ybWF0
+aW9uIChwYXRjaCwgQ1ZFIGFzc2lnbm1lbnQsIGV0Yy4pDQoNCkxpa2Ugb3Ro
+ZXJzLCB0aW1lbHkgbm90aWZpY2F0aW9uIGlzIG1vcmUgaW1wb3J0YW50IGZv
+ciBtZSB0aGFuIHRoZSBDVkUgaXRzZWxmLCBidXQgdGhlIENWRSBkb2VzIGhl
+bHAgYmVjYXVzZSBpdCBtZWFucyBsaXN0IGVudHJpZXMgZXZlbnR1YWxseSBn
+ZXQgYSB1bmlxdWUgSUQuDQoNCkkgd291bGQgbGlrZSB0byBzZWUgYm90aCBD
+NSBhbmQgQzYgaW1wbGVtZW50ZWQgYXMgc29vbiBhcyBwcmFjdGljYWwuDQoN
+CkFzIGZvciB3aGV0aGVyIGl04oCZcyBhcHByb3ByaWF0ZSB0byBzZW5kIGZv
+cm0gZGF0YSB0byBvc3Mtc2VjdXJpdHkgaW1tZWRpYXRlbHksIEkgYmVsaWV2
+ZSB0aGUgcmlnaHQgYXBwcm9hY2ggaXMgdG8gc2ltcGx5IGFkZCB0aGUgc2Vu
+ZC9ub3Qgc2VuZCBjaG9pY2UgdG8gdGhlIHdlYiBmb3JtLCByZXF1aXJlZCwg
+d2l0aCBubyBkZWZhdWx0LCBzbyBwZW9wbGUgbXVzdCBtYWtlIGEgZGVsaWJl
+cmF0ZSBjaG9pY2UuDQoNClRoZSBhbHRlcm5hdGl2ZXMgSeKAmXZlIHNlZW4g
+cmFpc2VkIHdvdWxkIG5vdCBiZSBhZGVxdWF0ZSBmb3IgbWUuIFNwZWNpZmlj
+YWxseSwgZGVwZW5kaW5nIG9uIHBlb3BsZSB0byBmb3J3YXJkIHRoZWlyIHN0
+dWZmIHRvIHRoZSBsaXN0IGlzIHRvbyBicml0dGxlIChwZW9wbGUgd29u4oCZ
+dCBkbyBpdCByZWxpYWJseSksIGFuZCB3YXRjaGluZyBhbiBYTUwgZmVlZCBy
+ZXF1aXJlcyBzZXR0aW5nIHVwIGFuZCBtYWludGFpbmluZyBzb2Z0d2FyZSBm
+b3IgYSBuZXcgZGF0YSBmZWVkLg0KDQpUaGFua3MsDQpSZWlkDQo=
 
- - Craig
-
----------- Forwarded message ---------
-From: <cve-request@mitre.org>
-Date: Sun, Mar 12, 2017 at 11:32 AM
-Subject: Re: [scr305104] wordpress before 4.7.3
-To: <csmall@debian.org>
-Cc: <cve-request@mitre.org>
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> [Suggested description]
-> In WordPress before 4.7.3,
-> there is
-> authenticated Cross-Site Scripting (XSS) via Media File Metadata. This is
-demonstrated by both
-> (1) mishandling of
-> the playlist shortcode in the wp_playlist_shortcode function in
-wp-includes/media.php
-> and (2) mishandling of meta information in the renderTracks function in
-> wp-includes/js/mediaelement/wp-playlist.js.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Cross Site Scripting (XSS)
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> wordpress - 3.6.0-4.7.2
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Two Cross-Site Scripting vulnerabilities exists in the playlist
-> functionality of WordPress. These issues can be exploited by
-> convincing an Editor or Administrator into uploading a malicious MP3
-> file. Once uploaded the issues can be triggered by a Contributor or
-> higher using the playlist shortcode.
->
-> ------------------------------------------
->
-> [Reference]
->
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
->
-https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
-> https://codex.wordpress.org/Version_4.7.3
->
-https://github.com/WordPress/WordPress/commit/28f838ca3ee205b6f39cd2bf23eb4e5f52796bd7
-> http://openwall.com/lists/oss-security/2017/03/06/8
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Chris Andre Dale, Yorick Koster, and Simon P. Briggs
-
-Use CVE-2017-6814.
-
-
-> [Suggested description]
-> In WordPress before 4.7.3 (wp-includes/pluggable.php),
-> control characters can trick redirect URL validation.
->
-> ------------------------------------------
->
-> [VulnerabilityType Other]
-> Trick the URL validation
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> wordpress - 2.8.1-4.7.2
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Reference]
-> https://codex.wordpress.org/Version_4.7.3
->
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
->
-https://github.com/WordPress/WordPress/commit/288cd469396cfe7055972b457eb589cea51ce40e
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Daniel Chatfield
-
-Use CVE-2017-6815.
-
-
-> [Suggested description]
-> In WordPress before 4.7.3 (wp-admin/plugins.php),
-> unintended files can be deleted by administrators using the plugin
-deletion functionality.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Insecure Permissions
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> wordpress - 4.7.0-4.7.2
->
-> ------------------------------------------
->
-> [Affected Component]
-> wp-admin/plugins.php
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Impact Escalation of Privileges]
-> true
->
-> ------------------------------------------
->
-> [Reference]
-> https://codex.wordpress.org/Version_4.7.3
->
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
->
-https://github.com/WordPress/WordPress/commit/4d80f8b3e1b00a3edcee0774dc9c2f4c78f9e663
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> TrigInc and xuliang
-
-Use CVE-2017-6816.
-
-
-> [Suggested description]
-> In WordPress before 4.7.3 (wp-includes/embed.php),
-> there is
-> authenticated Cross-Site Scripting (XSS) in YouTube URL Embeds.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Cross Site Scripting (XSS)
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> wordpress - 4.0-4.7.2
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Reference]
-> https://codex.wordpress.org/Version_4.7.3
->
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
->
-https://github.com/WordPress/WordPress/commit/419c8d97ce8df7d5004ee0b566bc5e095f0a6ca8
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Marc Montpas
-
-Use CVE-2017-6817.
-
-
-> [Suggested description]
-> In WordPress before 4.7.3 (wp-admin/js/tags-box.js),
-> there is
-> cross-site scripting (XSS) via taxonomy term names.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Cross Site Scripting (XSS)
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> wordpress - 4.7-4.7.2
->
-> ------------------------------------------
->
-> [Affected Component]
-> Taxonomy names
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Reference]
-> https://codex.wordpress.org/Version_4.7.3
->
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
->
-https://github.com/WordPress/WordPress/commit/9092fd01e1f452f37c313d38b18f9fe6907541f9
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Delta
-
-Use CVE-2017-6818.
-
-
-> [Suggested description]
-> In WordPress before 4.7.3,
-> there is
-> cross-site request forgery (CSRF) in Press This
-> (wp-admin/includes/class-wp-press-this.php), leading to excessive use of
-server resources.
-> The CSRF can trigger an outbound HTTP request for a large file that is
-then parsed by Press This.
->
-> ------------------------------------------
->
-> [Vulnerability Type]
-> Cross Site Request Forgery (CSRF)
->
-> ------------------------------------------
->
-> [Affected Product Code Base]
-> wordpress - 4.2-4.7.2
->
-> ------------------------------------------
->
-> [Affected Component]
-> Press This module
->
-> ------------------------------------------
->
-> [Attack Type]
-> Remote
->
-> ------------------------------------------
->
-> [Impact Denial of Service]
-> true
->
-> ------------------------------------------
->
-> [Attack Vectors]
-> Craft a html file on a remote server and get admin to visit it using
-Press This module
->
-> ------------------------------------------
->
-> [Reference]
-> https://codex.wordpress.org/Version_4.7.3
->
-https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
->
-https://github.com/WordPress/WordPress/commit/263831a72d08556bc2f3a328673d95301a152829
->
-https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_press_this_function_allows_dos.html
-> http://openwall.com/lists/oss-security/2017/03/06/7
->
-> ------------------------------------------
->
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->
-> ------------------------------------------
->
-> [Discoverer]
-> Sipke Mellema
-
-Use CVE-2017-6819.
-
-
-- --
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYxJWeAAoJEHb/MwWLVhi2siMQAKXaKOf5BZpRfjzAX6cg9hr6
-NeDP3Pw/LyrWlQNQIX0jg7v0L8WNg1AJ1qU3rnW3y+9Nn9HL2QB6FX5j+TCkmWQQ
-9Jufvcl742xqQEGqkROyYjE04uh9WZjp2VOKDJe64edyiJ5hdIO3WH8OrZ5L08WF
-jd6YD6jEpuroqyUoY+36un/M8AKP/AFOHOcMknsu4v6WOPCm4D7RX2HifL2pqNar
-7k29sxTt727PHlZkDfbs0sOhPy1icrhZ0NzWJ34u42099j6sGUc9Cz/P2OjySYdP
-JwB9q2JwWmgbP8HxYNnnFGvdzE6hAZUOvjJiLgU07Y/6T8RrKJpozzzknAZ/fvst
-ZM0oCWZxCzleIg0cpk+2FF/l6YJ4scBfITJq/wrpzPbA+UskYk7v2R41T83oli5j
-PFqFAZXVg8pOL7VUpwPx6W1dR77HXJe9aOoslgM2SToXBf7amsaJCk3wn0/ysP41
-eiNA6x9QHqBQmv4F27GD1F9rX0SYcsnb8L/uUVnnKzTrJiU3wvqeSLeDGhEKi+A7
-kzfYX9SVwQod3wKyNg1B+WtlRZc+AV3zg5OThfUIbv+Y6jmowyGUIQXyAkuzsu1b
-jmDfdY7X0dD9vaKNOy2W4kBfycRBUH7lB61EIQR3stq1S5v1+GvRLsZh1NBjXQX6
-PvQbSfQLSAyPY9xY6/NF
-=yD6/
------END PGP SIGNATURE-----
--- 
-Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
-Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
-GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
-
---001a1140eab4d0e2cd054a8e856d--
+--_000_FD3A509FA961430DAB60EFCC2E4185C3lanlgov_--
