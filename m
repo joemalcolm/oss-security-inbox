@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/4
-Message-ID: <tencent_91300EF1F4508712395C10A9DF9431CDFC08@qq.com>
-Date: Mon, 9 Oct 2017 15:52:06 +0800
-From: "NOIRFATE" <noirfate@....qq.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: OpenEXR : CVE-2017-14988 : DOS in Header::readfrom
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/3
+Message-ID: <alpine.LFD.2.20.1702131041330.18948@wniryva>
+Date: Mon, 13 Feb 2017 10:45:42 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-5957 Virglrenderer: stack overflow in vrend_decode_set_framebuffer_state
 Content-Type: text/plain; charset=utf-8
 
-Description:
-The Header::readfrom function may allocate any size of memory specified by user via a crafted exr image file, and cause DOS.
+   Hello,
 
-Affected version:
-openexr 2.2.0
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to an stack buffer overflow issue. It could 
+occur when in vrend_decode_set_framebuffer_state.
 
-Fixed version:
-No upstream fix available
+A guest user/process could use this flaw to crash the Qemu process instance 
+resulting DoS.
 
-Details:
-https://github.com/openexr/openexr/issues/248
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=926b9b3460a48f6454d8bbe9e44313d86a65447f
 
-Credit:
-This bug was discovered by Yihan Lian of GearTeam at Qihoo360
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1421126
 
-CVE:
-CVE-2017-14988
+This issue was reported by Li Qiang of 360.cn Inc.
+
+'CVE-2017-5957' assigned via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
