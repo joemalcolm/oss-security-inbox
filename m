@@ -1,4 +1,9 @@
-Received: (qmail 20100 invoked by uid 550); 7 May 2023 21:16:07 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["731" "Tuesday" "14" "February" "2017" "00:45:22" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702140042040.10163@wniryva>" "25" "[oss-security] CVE-2017-5973 Qemu: usb: infinite loop while doing control transfer in xhci_kick_epctx" nil nil nil "2" "2017021319:15:22" "[oss-security] CVE-2017-5973 Qemu: usb: infinite loop while doing control transfer in xhci_kick_epctx" (number mark "U       ppandit@redh Feb 14   25/731   " thread-indent "\"[oss-security] CVE-2017-5973 Qemu: usb: infinite loop while doing control transfer in xhci_kick_epctx\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27710 invoked by uid 550); 13 Feb 2017 19:15:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,37 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23638 invoked from network); 7 May 2023 17:03:08 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Pierre Jeambrun <pierrejeambrun@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <9cb8f8f7-e532-c9df-3e6b-511067d921a9@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 07 May 2023 17:02:53 +0000
+Received: (qmail 27676 invoked from network); 13 Feb 2017 19:15:39 -0000
+Date: Tue, 14 Feb 2017 00:45:22 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1702140042040.10163@wniryva>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-29247: Stored XSS on Apache Airflow 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 13 Feb 2017 19:15:28 +0000 (UTC)
+Subject: [oss-security] CVE-2017-5973 Qemu: usb: infinite loop while doing control transfer
+ in xhci_kick_epctx
 
-Severity: important
+   Hello,
 
-Affected versions:
+Quick emulator(Qemu) built with the USB xHCI controller emulator support is 
+vulnerable to an infinite loop issue. It could occur while processing control 
+transfer descriptor's sequence in xhci_kick_epctx.
 
-- Apache Airflow before 2.6.0
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-Description:
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg01101.html
 
-Task instance details page in the UI is vulnerable to a stored XSS.This iss=
-ue affects Apache Airflow: before 2.6.0.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1421626
 
-Credit:
+This issue was reported by Mr Li Qiang of 360.cn Inc.
 
-taidh from VNPT - VCI (finder)
-kuteminh11 (finder)
+'CVE-2017-5973' assigned via -> https://cveform.mitre.org/
 
-References:
-
-https://github.com/apache/airflow/pull/30447
-https://github.com/apache/airflow/pull/30779
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-29247
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
