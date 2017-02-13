@@ -1,22 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/3
-Message-ID: <a6f98d7e-7cc4-46f4-3cb9-743950c90a86@redhat.com>
-Date: Thu, 22 Jun 2017 12:19:35 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Daniel Micay <danielmicay@...il.com>, Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/6
+Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABB33320994@EX02.corp.qihoo.net>
+Date: Mon, 13 Feb 2017 12:21:52 +0000
+From: 李强 <liqiang6-s@....cn>
+To: oss security list <oss-security@...ts.openwall.com>
+CC: P J P <ppandit@...hat.com>
+Subject: RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode
 Content-Type: text/plain; charset=utf-8
 
-On 06/22/2017 08:00 AM, Daniel Micay wrote:
-> Is it planned to have glibc use a larger 1M gap for secondary stacks
-> rather than a single guard page? That would be a *lot* easier than it
-> was to set it up for the main thread stack. It follows the main thread
-> stack rlimit as a guideline so it seems to make sense to use the same
-> guard region size too. If it ends up exposed as a sysctl, it could read
-> the current value from there.
+Hello all,
 
-On the glibc side, we are waiting for the kernel interface for the
-configurable gap size to materialize upstream.
+This is Li Qiang from the Gear Team, Qihoo 360 inc. I have discovered this vulnerability and make a patch for this, though 
+not complete. When I send patch to fix this issue, I did know the Cirrus vga is not the default vga in qemu. So I 
+just treat this as a normal issue. But afterwards we discovered that the libvirt and xen use this vga as default.
+We tested a lot of cloud platform in China, every of them uses the Cirrus vga as default. Most of them is affected by this
+issue. The only one doesn't be affected I think have fixed this issue. So we think this issue should be got more attention. We 
+strongly commend every cloud platform treat this issue seriously. Though this vulnerability has been fixed for 10+ days,
+For responsible vulnerability disclosure, we will not public the PoC in this email. The PoC will be public later.
 
-Thanks,
-Florian
+Thanks.
+
+--
+Li Qiang / the Gear Team, Qihoo 360 Inc.
+
+
+> -----Original Message-----
+> From: P J P [mailto:ppandit@...hat.com]
+> Sent: Wednesday, February 01, 2017 5:50 PM
+> To: oss security list
+> Cc: 李强
+> Subject: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt
+> copy backward mode
+> 
+>    Hello,
+> 
+> Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
+> vulnerable to an out-of-bounds access issue. It could occur while copying VGA
+> data via bitblt copy in backward mode.
+> 
+> A privileged user inside guest could use this flaw to crash the Qemu process
+> resulting in DoS OR potentially execute arbitrary code on the host with
+> privileges of Qemu process on the host.
+> 
+> Upstream patch
+> --------------
+>    -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg00015.html
+> 
+> It fixes
+>    ->
+> http://git.qemu.org/?p=qemu.git;a=commit;h=d3532a0db02296e687711b8cdc
+> 7791924efccea0
+> 
+> Reference:
+> ----------
+>    -> https://bugzilla.redhat.com/show_bug.cgi?id=1418200
+> 
+> This issue was reported by Li Qiang of 360.cn Inc.
+> 
+> CVE-2017-2615 was assigned to this issue by Red Hat Inc.
+> 
+> Thank you.
+> --
+> Prasad J Pandit / Red Hat Product Security Team 47AF CE69 3A90 54AA 9045
+> 1053 DD13 3D32 FE5B 041F
