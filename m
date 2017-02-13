@@ -1,66 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/2
-Message-ID: <427445.19640425-sendEmail@localhost>
-Date: Thu, 14 Sep 2017 07:00:25 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/14
+Message-ID: <CANO=Ty2nEW431bvaktfre7e7VXh4OzHqa2ffhrv7oaxxG+LSTg@mail.gmail.com>
+Date: Mon, 13 Feb 2017 14:36:59 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
+so longer term (like starting now) the master database for DWF:
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+https://github.com/distributedweaknessfiling/DWF-Master-CVE-Database
 
-The complete ASan output of the issue:
+will have a list of blocks (generally 1000) and the url they are at (git
+link to clone), I want to shard the database otherwise a git repo with 100k
+cve's being updated will get unwieldy, and this also makes life a bit
+simpler for larger CNAs.
 
-# aacgain -f $FILE
-ASAN:DEADLYSIGNAL                                                                                                                                                                                                 
-=================================================================                                                                                                                                                 
-==23063==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000010 (pc 0x0000008aafe0 bp 0x7ffe06c66450 sp 0x7ffe06c663f0 T0)
-    #0 0x8aafdf in sync_buffer /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:393
-    #1 0x8ae64c in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:665
-    #2 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #3 0x7fa37f734680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #4 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+As for the old tyle CSV representation of the data we'll probably do that
+as well since it is what people are used to consuming, but ideally we'll
+get the DWF data being imported into MITRE and processed fast enough that
+people can just consume MITRE's CSV feed (and resulting NVD feed and
+whatnot).
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:393 in sync_buffer
-==23063==ABORTING
+So for now I'm focusing on some back end things like the CVE Mentor
+process/CNA training, the JSON data format so MITRE can consume data and so
+on.
 
-Affected version:
-1.5.2
 
-Fixed version:
-N/A
 
-Commit fix:
-N/A
+On Mon, Feb 13, 2017 at 12:56 PM, Ian Zimmerman <itz@...mate.net> wrote:
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+> On 2017-02-12 11:23, Kurt Seifried wrote:
+>
+> > As for the DWF it's simple: we're using git, so I guess if people really
+> > want up to the minute updates they can simply subscribe to the repos in
+> > GitHub, or pull and do it on their own end.
+>
+> This?
+>
+> https://github.com/distributedweaknessfiling/DWF-Database
+>
+> Quoting:
+>
+>  IMPORTANT NOTE
+>
+>  There is a good chance this database (and indeed repo) will be phased
+>  out in favor of the JSON database. If there is enough demand for it
+>  there may be a CSV representation of all the data, but if there isn't
+>  enough demand then we will simply drop it in 2017. So speak up if you
+>  want/need this.
+>
+> Is there a separate place for the JSON data?  Where?
+>
+> --
+> Please *no* private Cc: on mailing lists and newsgroups
+> Personal signed mail: please _encrypt_ and sign
+> Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
+>
 
-CVE:
-CVE-2017-14406
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00347-aacgain-NULLptr-sync_buffer
 
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
+-- 
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-null-pointer-dereference-in-sync_buffer-mpglibdblinterface-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
 
