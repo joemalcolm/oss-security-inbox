@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/07/4
-Message-ID: <20171107165127.GA1693@weckbecker.name>
-Date: Tue, 7 Nov 2017 17:51:27 +0100
-From: Matthias Weckbecker <matthias@...kbecker.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/13
+Message-ID: <20170213195423.13018.16C44946@matica.foolinux.mooo.com>
+Date: Mon, 13 Feb 2017 11:56:41 -0800
+From: Ian Zimmerman <itz@...mate.net>
 To: oss-security@...ts.openwall.com
-Subject: Net::Ping::External command injections
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2017-02-12 11:23, Kurt Seifried wrote:
 
-Net::Ping::External [0] is prone to command injection vulnerabilities.
+> As for the DWF it's simple: we're using git, so I guess if people really
+> want up to the minute updates they can simply subscribe to the repos in
+> GitHub, or pull and do it on their own end.
 
-The issues are roughly 10 (!) years old [1], but the code is still being
-shipped these days (e.g. in ubuntu artful and debian stretch [2]).
+This?
 
-I had contacted the author of the code a few days ago, but obviously did
-not get any reaction.
+https://github.com/distributedweaknessfiling/DWF-Database
 
-A patch is available here:
+Quoting:
 
-  http://matthias.sdfeu.org/devel/net-ping-external-cmd-injection.patch
+ IMPORTANT NOTE
 
-Maybe time to just patch it downstream? Or drop this pkg. altogether?
+ There is a good chance this database (and indeed repo) will be phased
+ out in favor of the JSON database. If there is enough demand for it
+ there may be a CSV representation of all the data, but if there isn't
+ enough demand then we will simply drop it in 2017. So speak up if you
+ want/need this.
 
-Thanks,
-Matthias
+Is there a separate place for the JSON data?  Where?
 
---
-[0] https://metacpan.org/pod/Net::Ping::External
-[1] https://rt.cpan.org/Public/Dist/Display.html?Name=Net-Ping-External
-    (id #33230)
-[2] https://packages.debian.org/stable/perl/libnet-ping-external-perl \
-    https://launchpad.net/ubuntu/+source/libnet-ping-external-perl
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
