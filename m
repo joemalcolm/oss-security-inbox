@@ -1,44 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/13
-Message-ID: <63607fd4-70b6-dc8f-6aae-82148d38880b@apache.org>
-Date: Mon, 19 Jun 2017 15:15:26 -0700
-From: Jacob Champion <jchampion@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-3167: Apache httpd 2.x ap_get_basic_auth_pw authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/10
+Message-Id: <E1cdL8t-0007j3-EY@xenbits.xenproject.org>
+Date: Mon, 13 Feb 2017 18:14:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 208 (CVE-2017-2615) - oob access in cirrus bitblt copy
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-3167: ap_get_basic_auth_pw authentication bypass
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Severity: Important
+            Xen Security Advisory CVE-2017-2615 / XSA-208
+                              version 2
 
-Vendor: The Apache Software Foundation
+                   oob access in cirrus bitblt copy
 
-Versions Affected:
-httpd 2.2.0 to 2.2.32
-httpd 2.4.0 to 2.4.25
+UPDATES IN VERSION 2
+====================
 
-Description:
-Use of the ap_get_basic_auth_pw() by third-party modules outside of the
-authentication phase may lead to authentication requirements being
-bypassed.
+Included backport for qemu-xen versions 4.7 (and earlier); fixed
+qemu-xen-traditional patch.  Also included proper (non-obscured)
+e-mail addresses from upstream patch.
 
-Mitigation:
-2.2.x users should either apply the patch available at
-https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-3167.patch
-or upgrade in the future to 2.2.33, which is currently unreleased.
+Removed "possibly" from Impact.
 
-2.4.x users should upgrade to 2.4.26.
+3 patches updated
 
-Third-party module writers SHOULD use ap_get_basic_auth_components(),
-available in 2.2.33 and 2.4.26, instead of ap_get_basic_auth_pw().
-Modules which call the legacy ap_get_basic_auth_pw() during the
-authentication phase MUST either immediately authenticate the user after
-the call, or else stop the request immediately with an error response,
-to avoid incorrectly authenticating the current request.
+ISSUE DESCRIPTION
+=================
 
-Credit:
-The Apache HTTP Server security team would like to thank Emmanuel
-Dreyfus for reporting this issue.
+When doing bitblt copy backwards, qemu should negate the blit width.
+This avoids an oob access before the start of video memory.
 
-References:
-https://httpd.apache.org/security_report.html
+IMPACT
+======
+
+A malicious guest administrator can cause an out of bounds memory
+access, leading to information disclosure or privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Versions of qemu shipped with all Xen versions are vulnerable.
+
+Xen systems running on x86 with HVM guests, with the qemu process
+running in dom0 are vulnerable.
+
+Only guests provided with the "cirrus" emulated video card can exploit
+the vulnerability.  The non-default "stdvga" emulated video card is
+not vulnerable.  (With xl the emulated video card is controlled by the
+"stdvga=" and "vga=" domain configuration options.)
+
+ARM systems are not vulnerable.  Systems using only PV guests are not
+vulnerable.
+
+For VMs whose qemu process is running in a stub domain, a successful
+attacker will only gain the privileges of that stubdom, which should
+be only over the guest itself.
+
+Both upstream-based versions of qemu (device_model_version="qemu-xen")
+and `traditional' qemu (device_model_version="qemu-xen-traditional")
+are vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid the issue.
+
+Running HVM guests with the device model in a stubdomain will mitigate
+the issue.
+
+Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
+in the xl domain configuration) will avoid the vulnerability.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa208-qemuu.patch       mainline qemu, qemu-xen master,4.8
+xsa208-qemuu-4.7.patch   qemu-xen 4.4, 4.5, 4.6, 4.7
+xsa208-qemut.patch       qemu-xen-traditional
+
+$ sha256sum xsa208*
+afde3e9d4bf5225f92c36dec9ff673b0b1b0bad4452d406f0c12edc85e2fec72  xsa208-qemut.patch
+e492d528141be5899d46c2ac0bcd0c40ca9d9bfc40906a8e7a565361f17ce38d  xsa208-qemuu.patch
+09471b66c9d9fc5616e7b96ab67bbb51987e7d9520d1b81cb27cbbb168659ad5  xsa208-qemuu-4.7.patch
+$
+
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue has already been publicly disclosed.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYofdiAAoJEIP+FMlX6CvZ3UEIAMJUV177OqZ0O7436zYpM9S+
+fEku8b/G7npRcm0L9PtD8PG39IVtqrtIDHIpzMxHA0qbMx3PqWp1G3iBVwFnj21e
+ALtKjdNaoDA8nqFEQ3/AbyZ7jn91oYWwmJ7+pKGds+Q+juFof6FVOXCjhNp0XSA6
+EDvsz8vOI4fWTtEuVGbg1GnvgEAjKLE9/bE/4zdkWo2WSiWRRCj/yEAr5n0v0R5n
+0EEvk21H0XESk2zBk0/UxompNuqbHwOZhBkQ65DxNSkWMIA9hUgqyinR674luHKC
+mDkAq8bXar6n1TBQCbWq5f/+50FOApEs0EvJuzWAG7MEkFPaeDSilFb6obhxHjo=
+=294C
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa208-qemut.patch" of type "application/octet-stream" (1919 bytes)
+
+Download attachment "xsa208-qemuu.patch" of type "application/octet-stream" (1916 bytes)
+
+Download attachment "xsa208-qemuu-4.7.patch" of type "application/octet-stream" (1860 bytes)
