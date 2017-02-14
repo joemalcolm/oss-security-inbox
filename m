@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/7
-Message-ID: <alpine.LFD.2.20.1702152327070.29340@wniryva>
-Date: Wed, 15 Feb 2017 23:29:21 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-5993 Virglrenderer: host memory leakage when initialising blitter context
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/4
+Message-ID: <1493423850.22912433.1487077339134.JavaMail.zimbra@redhat.com>
+Date: Tue, 14 Feb 2017 08:02:19 -0500 (EST)
+From: Vladis Dronov <vdronov@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: Reachable BUG_ON from userspace in sctp_wait_for_sndbuf()
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hello,
 
-Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
-for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
-a guest tries to initialise blitter context via 'VIRGL_CCMD_BLIT' command.
+I'm not sure if now I should be posting this on os-sec@ after requesting
+a CVE-ID via MITRE's web-form. Anyway.
 
-A guest user/process could use this flaw to leak host memory resulting in DoS.
+It was reported that with Linux kernel, earlier than version v4.10-rc8, an application
+may trigger a BUG_ON() in sctp_wait_for_sndbuf() if the socket TX buffer is full, a thread
+is waiting on it to queue more data, and meanwhile another thread peels off the association
+being used by the first thread.
+
+References:
+
+https://lkml.org/lkml/2017/1/30/238
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1420276
 
 Upstream patch:
----------------
-   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=6eb13f7a2dcf391ec9e19b4c2a79e68305f63c22
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422438
+https://github.com/torvalds/linux/commit/2dcab598484185dea7ec22219c76dcdd59e3cb90
 
-This issue was reported by Li Qiang of 360.cn Inc.
-
-'CVE-2017-5993' assigned via -> https://cveform.mitre.org/
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Best regards,
+Vladis Dronov | Red Hat, Inc. | Product Security Engineer
