@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/10/2
-Message-ID: <20170510061953.GA3445@hunt>
-Date: Tue, 9 May 2017 23:19:54 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Insu Yun <wuninsu@...il.com>
-Cc: oss-security@...ts.openwall.com, Yeongjin Jang <Yeongjin.jang@...ech.edu>
-Subject: Re: CVE Request: Denial of Service in Dropbox lepton
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/7
+Message-ID: <20170214161014.2182.0AAC08B5@matica.foolinux.mooo.com>
+Date: Tue, 14 Feb 2017 08:12:48 -0800
+From: Ian Zimmerman <itz@...mate.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: A note about the multiple crashes in zziplib
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 09, 2017 at 11:55:10PM -0400, Insu Yun wrote:
-> Please help assign a CVE to this vulnerability.
+On 2017-02-14 10:50, Agostino Sarubbo wrote:
 
-Hello Insu, CVE assignment is now handled via the web form at
-https://cveform.mitre.org/ -- fill out the details that you can, and
-when you get a response from the MITRE team (often within a dozen hours)
-please forward details about open source tools to this list.
+> All CVEs where assigned via https://cveform.mitre.org
 
-Thanks
+Thank you very much for posting this.  Until (unless?) the new CVE
+requesting process is smoothed out, posts like this will keep the list
+useful.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+-- 
+Please *no* private Cc: on mailing lists and newsgroups
+Personal signed mail: please _encrypt_ and sign
+Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
