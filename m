@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1104" "Tuesday" "19" "May" "2015" "07:33:19" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<555B1F7F.5000902@canonical.com>" "36" "Re: [oss-security] CVE reject request CVE-2015-8146/8147" nil nil nil "5" "2015051911:33:19" "[oss-security] CVE reject request CVE-2015-8146/8147" (number mark "        marc.deslaur May 19   36/1104  " thread-indent "\"Re: [oss-security] CVE reject request CVE-2015-8146/8147\"\n") "<20150519090559.56944c45@redhat.com>" ("<CAEDdjHdR4LYTL_3BUibrYbiBfB2==aJXXLF0RKxcHQgep_SNSw@mail.gmail.com>" "<20150519090559.56944c45@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["384" "Tuesday" "14" "February" "2017" "15:15:08" "+0200" "Henri Salo" "henri@nerv.fi" "<20170214131508.GA10489@tunkki>" "10" "Re: [oss-security] Linux kernel: Reachable BUG_ON from userspace in sctp_wait_for_sndbuf()" nil nil nil "2" "2017021413:15:08" "[oss-security] Linux kernel: Reachable BUG_ON from userspace in sctp_wait_for_sndbuf()" (number mark "U       henri@nerv.f Feb 14   10/384   " thread-indent "\"Re: [oss-security] Linux kernel: Reachable BUG_ON from userspace in sctp_wait_for_sndbuf()\"\n") "<1493423850.22912433.1487077339134.JavaMail.zimbra@redhat.com>" ("<984594319.22911409.1487077208310.JavaMail.zimbra@redhat.com>" "<1493423850.22912433.1487077339134.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5729 invoked by uid 550); 19 May 2015 11:33:34 -0000
+Received: (qmail 15756 invoked by uid 550); 14 Feb 2017 13:15:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5702 invoked from network); 19 May 2015 11:33:33 -0000
-Message-ID: <555B1F7F.5000902@canonical.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <CAEDdjHdR4LYTL_3BUibrYbiBfB2==aJXXLF0RKxcHQgep_SNSw@mail.gmail.com> <20150519090559.56944c45@redhat.com>
-In-Reply-To: <20150519090559.56944c45@redhat.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-CC: Pedro Ribeiro <pedrib@gmail.com>
-Date: Tue, 19 May 2015 07:33:19 -0400
-From: Marc Deslauriers <marc.deslauriers@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE reject request CVE-2015-8146/8147
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 15735 invoked from network); 14 Feb 2017 13:15:26 -0000
+X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
+Date: Tue, 14 Feb 2017 15:15:08 +0200
+From: Henri Salo <henri@nerv.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <20170214131508.GA10489@tunkki>
+References: <984594319.22911409.1487077208310.JavaMail.zimbra@redhat.com>
+ <1493423850.22912433.1487077339134.JavaMail.zimbra@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1493423850.22912433.1487077339134.JavaMail.zimbra@redhat.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] Linux kernel: Reachable BUG_ON from userspace in
+ sctp_wait_for_sndbuf()
 
-On 2015-05-19 03:05 AM, Tomas Hoger wrote:
-> On Tue, 5 May 2015 09:19:20 +0100 Pedro Ribeiro wrote:
-> 
->> tl;dr heap and integer overflows in ICU, many packages affected,
->> unknown if these can be exploited or not - everyone names vulns
->> nowadays, so I name these I-C-U-FAIL.
-> 
-> ...
-> 
->> #1 Vulnerability: Heap overflow
->> CVE-2014-8146
-> 
-> ...
-> 
->> #2 Vulnerability: Integer overflow
->> CVE-2014-8147
-> 
-> Apparently a typo was made when fixing these issues in Ubuntu and
-> subsequently in Debian when ids with year 2015 were used instead of
-> 2014.  Incorrect ids are used in patch names and changelogs, but e.g.
-> USN-2605-1 was released with correct ids.  I assume it's still prudent
-> to consider 2015 ids for rejection, it's likely they have not been
-> allocated yet.
-> 
-> http://www.ubuntu.com/usn/usn-2605-1/
-> https://launchpad.net/ubuntu/+source/icu/52.1-3ubuntu0.3
-> https://launchpad.net/ubuntu/+source/icu/52.1-6ubuntu0.3
-> https://launchpad.net/ubuntu/+source/icu/52.1-8ubuntu0.1
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=784773
-> 
+On Tue, Feb 14, 2017 at 08:02:19AM -0500, Vladis Dronov wrote:
+> I'm not sure if now I should be posting this on os-sec@ after requesting
+> a CVE-ID via MITRE's web-form. Anyway.
 
-Ah, crud. Sorry about that.
+Yes you should since there is no automated way that CVE requests are posted to
+any list and I haven't seen MITRE posting the requests nor the assigments here.
+A bit problematic situation.
 
-Marc.
-
+-- 
+Henri Salo
