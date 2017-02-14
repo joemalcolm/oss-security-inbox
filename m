@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["765" "Tuesday" "29" "August" "2017" "12:46:24" "+0300" "Alexander Popov" "alex.popov@linux.com" "<50169957-6b4a-9e6e-e8d2-8e09918e6cbc@linux.com>" "21" "Re: [oss-security] Linux kernel: fixed bug in net/core/flow_dissector.c" nil nil nil "8" "2017082909:46:24" "[oss-security] Linux kernel: fixed bug in net/core/flow_dissector.c" (number mark "U       alex.popov@l Aug 29   21/765   " thread-indent "\"Re: [oss-security] Linux kernel: fixed bug in net/core/flow_dissector.c\"\n") "<20170824180314.GA9813@hunt>" ("<459c5905-fded-264c-ac85-c5a456aa836e@linux.com>" "<20170824180314.GA9813@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2305" "Tuesday" "14" "February" "2017" "19:43:32" "+0100" "Moritz Muehlenhoff" "jmm@debian.org" "<20170214184332.z5goeazi2kvqsaor@pisco.westfalen.local>" "60" "Re: [oss-security] Pending CVE requests for glibc" nil nil nil "2" "2017021418:43:32" "[oss-security] Pending CVE requests for glibc" (number mark "U       jmm@debian.o Feb 14   60/2305  " thread-indent "\"Re: [oss-security] Pending CVE requests for glibc\"\n") "<55EE8F1C.605@redhat.com>" ("<55EE8F1C.605@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30317 invoked by uid 550); 29 Aug 2017 10:40:49 -0000
+Received: (qmail 1976 invoked by uid 550); 14 Feb 2017 18:43:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28068 invoked from network); 29 Aug 2017 09:46:38 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:reply-to:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=uCZAHH/Iod13HRuB3u/eO5Gtr3XQKd0FzFAFWkNTMqw=;
-        b=llxVGkiVWJJon7PTdRNkA6CT3C9f0Rl54cqyvWPr7oqI3o9dpaD42PFicZZElxKpnp
-         p2sucnJy/IrgYupqxttOdFlTDI2ZAzZBFrZnWOc2a25MyYbUxf8mRecy8QgDrulVbsxo
-         NdLibMB640vlUHCr6PQ8o8sm5ptfy8AhcQSeOQeYo+30P8IVbAkngXz5Juy7nxw1XlEP
-         aQRk/a2sG9+s6bhd4pknjVamp1sxetr44VCmdJJteu9AzUqiR7TFlfyse6Rn5IS5QvfJ
-         mGibhPVT+eS9W0YxHcyX8iCejTHeULhpjByOLedlXTEbEyqhde6FioFf4eH5woOFDcmm
-         NvpQ==
-X-Gm-Message-State: AHYfb5hmh3dR7G1Ldh7vfWdoZkXIn5LyK4cnHVpjUBAkWGCkoG4CVb+x
-	zAZRlKmSKnNFnvet6mE=
-X-Received: by 10.25.221.216 with SMTP id w85mr1334468lfi.36.1503999986506;
-        Tue, 29 Aug 2017 02:46:26 -0700 (PDT)
-To: Seth Arnold <seth.arnold@canonical.com>, oss-security@lists.openwall.com
-References: <459c5905-fded-264c-ac85-c5a456aa836e@linux.com>
- <20170824180314.GA9813@hunt>
-From: Alexander Popov <alex.popov@linux.com>
-Message-ID: <50169957-6b4a-9e6e-e8d2-8e09918e6cbc@linux.com>
-Date: Tue, 29 Aug 2017 12:46:24 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+Received: (qmail 1955 invoked from network); 14 Feb 2017 18:43:46 -0000
+Date: Tue, 14 Feb 2017 19:43:32 +0100
+From: Moritz Muehlenhoff <jmm@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20170214184332.z5goeazi2kvqsaor@pisco.westfalen.local>
+References: <55EE8F1C.605@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20170824180314.GA9813@hunt>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Linux kernel: fixed bug in
- net/core/flow_dissector.c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <55EE8F1C.605@redhat.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-SA-Exim-Connect-IP: 93.204.221.190
+X-SA-Exim-Mail-From: jmm@inutil.org
+X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Pending CVE requests for glibc
 
-On 24.08.2017 21:03, Seth Arnold wrote:
-> On Thu, Aug 24, 2017 at 05:52:45PM +0300, Alexander Popov wrote:
->> I was asked to investigate a suspicious kernel crash on some Linux
->> server. It is at least a remote DoS (and maybe RCE): Linux is crashed by
->> receiving a single special MPLS packet.
->>
->> I bisected and found out that the bug was introduced in
->> commit b3baa0fbd02a1a9d493d8cb92ae4a4491b9e9d13
->> And was later fixed it in
->> commit a6e544b0a88b53114bfa5a57e21b7be7a8dfc9d0
+On Tue, Sep 08, 2015 at 01:02:44PM +0530, Huzaifa Sidhpurwala wrote:
+> Hi MITRE,
 > 
->> Is it worth requesting a CVE ID for that issue?
+> I could not help but notice, some glibc security issues were not
+> assigned CVE ids.
+
+Blast from the past :-)
+
+I re-submitted this via the new MITRE webform and this got assigned
+within a few hours. Here's the assignments looped back to oss-security:
+
+> 1. glibc: multiple overflows in strxfrm()
+> Integer overflow when computing memory allocation sizes (similar to
+> CVE-2012-4412) was reported [1] in glibc strxfrm() function. Attached
+> strxfrm-int32.c should trigger this issue on a 32-bit systems.
+> Additionally, it was discovered [1] that strxfrm() falls back to an
+> unbounded alloca if malloc fails making it vulnerable to stack-based
+> buffer overflows (similar to CVE-2012-4424). Attached strxfrm-alloca.c
+> should trigger this issue.
 > 
-> I think it is, it's an easy way to make sure all downstream consumers
-> are alerted to the issue.
+> Previously a request was made via:
+> http://seclists.org/oss-sec/2015/q1/540
 
-I've requested a CVE ID at https://cveform.mitre.org/ and got
-CVE-2017-13715 for this issue.
+CVE-2015-8982
 
-Best regards,
-Alexander
+> 2. glibc: _IO_wstr_overflow integer overflow
+> An integer overflow flaw, leading to a heap-based buffer overflow, was
+> found in glibc's _IO_wstr_overflow() function. If an application used
+> this function, it could cause the application to crash or, potentially,
+> execute arbitrary code with the privileges of the user running the
+> application.
+> 
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17269
+> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=bdf1ff052a8e23d637f2c838fa5642d78fcedc33
+
+CVE-2015-8983
+
+> 3. glibc: potential denial of service in internal_fnmatch()
+> It was reported [1] that when processing certain malformed patterns,
+> fnmatch can skip over the NUL byte terminating the pattern.  This can
+> potentially result in an application crash if fnmatch hits an unmapped
+> page before encountering a NUL byte.
+> 
+> https://sourceware.org/bugzilla/show_bug.cgi?id=18032
+> https://sourceware.org/git/gitweb.cgi?p=glibc.git;h=4a28f4d55a6cc33474c0792fe93b5942d81bf185
+> 
+> Previously a request was made via:
+> http://seclists.org/oss-sec/2015/q1/689
+
+CVE-2015-8984
+
+> 4. glibc: potential denial of service in pop_fail_stack()
+> A crash was reported [1] during glibc extended regular expression
+> processing. No known patch exists at the time of writing.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779392
+
+CVE-2015-8985
+
+Cheers,
+        Moritz
