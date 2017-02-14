@@ -1,88 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/12
-Message-ID: <20170113172640.GB18334@khazad-dum.debian.net>
-Date: Fri, 13 Jan 2017 15:26:40 -0200
-From: Henrique de Moraes Holschuh <hmh@....eng.br>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/2
+Message-ID: <20170214102635.329@usenet.piggo.com>
+Date: Tue, 14 Feb 2017 09:29:48 +0000 (UTC)
+From: Sébastien Delafond <seb@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-0357: iucode-tool (v1.4 to v2.1): heap buffer overflow on -tr loader
+Subject: Re: CVE request: XXE in Openpyxl
 Content-Type: text/plain; charset=utf-8
 
+On 2017-02-14, Doran Moppert <dmoppert@...hat.com> wrote:
+> My mistake - thanks for bringing this up!
+>
+> It appears that resolve_entities=False (ie. options &=
+> ~XML_PARSE_NOENT) does *not* affect the expansion of predefined
+> entities or character entities.  See [1], [2] and parser.c +
+> HTMLparser.c in libxml source.
+>
+> 1: https://www.xml.com/pub/a/98/08/xmlqna1.html
+> 2: https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
+>
+> These flags *do* control the expansion of internal entities, but I
+> expect that most common protocols and file formats should not rely on
+> those - including Excel.  As long as openpyxl has no need to resolve
+> internal entities, nor perform DTD validation, CVE-2016-9318 is not
+> relevant and the proposed patch looks correct.
+>
+>
+> So yes, the original CVE request was valid and should go ahead:
 
-CVE-2017-0357: iucode-tool: heap buffer overflow on -tr loader
+@MITRE, can you assign one directly, since this request pre-dates the
+requirement of going through the web form, or should I resubmit there
+anyway ?
 
-Project URL:
-https://gitlab.com/iucode-tool/iucode-tool
+>> the Debian Security Team would like to request a CVE for an XML XEE
+>> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
+>> resolves external entities by default:
+>> 
+>>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
+>>   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
+>
+> Also: https://bitbucket.org/openpyxl/openpyxl/issues/749
 
-Tracker for this Issue:
-https://gitlab.com/iucode-tool/iucode-tool/issues/3
+> Sorry about muddying the water with misunderstanding(s).  The tricky
+> part of CVE-2016-9318 seems to be particular requirements of
+> components like xmlsec that want internal entity resolution without
+> XXE, or DTD validation without exposing the whole filesystem.
 
-Versions affected:
-iucode_tool 1.4, up to and including 2.1
+No problem at all, the overall implications of CVE-2016-9318 and entity
+resolution are indeed pretty complex.
 
+Cheers,
 
-iucode_tool is a program to manipulate microcode update collections for
-Intel(R) i686 and X86-64 system processors, and prepare them for use by
-the Linux kernel.
+--Seb
 
-This bug affects a somewhat obscure feature of iucode_tool, the
-microcode recovery loader, accessed through the "-tr" command line
-switch.  The microcode recovery loader is typically used to inspect or
-extract microcodes directly from kernel images, initramfs images, etc.
-
-This loader works by reading the entire datafile in memory (it imposes a
-hard limit of 1GiB worth of data), then scanning that memory forwards
-for microcode regions (a region is one or more microcodes adjacent to
-each other), and packing any it finds at the beginning of the memory
-buffer to create a single microcode region.  When it finishes, it
-realloc()s the memory buffer to its new (likely smaller) size.
-
-When a valid microcode is present at the end of the data file and there
-is no extra data after it, intel_ucode_scan_for_microcode() would fail
-to detect the end-of-buffer situation, and read data past the end of the
-memory buffer looking for an *adjacent* valid microcode.
-
-This is usually harmless, as typically there will not be a valid
-microcode update exactly right past the end of the memory buffer.
-
-Unfortunately, should there be a valid microcode exactly after the
-memory buffer, iucode_tool will misbehave.  A SIGSEGV is the best result
-one could expect.  Heap corruption can happen if further, non-adjacent
-microcodes are found in memory as iucode_tool will use memmove() to
-compact them into a single region, possibly overwiting the heap memory
-past the end of the buffer.
-
-The heap buffer overflow (but not the heap corruption) is trivially
-triggered by using the -tr (recovery) loader on proper binary microcode
-data files:
-
-"iucode_tool -tr /lib/firmware/intel-ucode"
-
-The heap buffer overflow can be detected by Valgrind's memcheck, or by
-instrumenting iucode_tool using -fsanitize=address under gcc or clang.
-
-
-Exploiting the bug:
--------------------
-
-It might be possible for an attacker to force a heap corruption with
-attacker-supplied data by using a number of specially crafted data
-files.  This might also require tricking the user into using a specially
-crafted command line.
-
-The number of specially crafted data files required is a minimum of two,
-but it depends on how unpredictable the data written by glibc's heap
-implementation is.  It could be quite large, or quite small.
-
-If iucode_tool is linked to a libc that won't change data in the free'd
-or realloc'd heap chunks the way modern glibc typically does by default,
-triggering the attacker-controlled heap corruption might be trivial.
-Tuning glibc's malloc() behavior might also change things.
-
-I am no expert in exploiting glibc heap corruption.  I have assumed it
-is possible to leverage it into shellcode execution in the name of
-caution.
-
--- 
-  Henrique Holschuh
-
-View attachment "iucode-tool_fix-cve-2017-0357.patch" of type "text/x-diff" (1270 bytes)
