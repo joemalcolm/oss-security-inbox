@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/1
-Message-ID: <20170320055348.lsc6oxie7gu4leo5@lorien.valinor.li>
-Date: Mon, 20 Mar 2017 06:53:48 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: git: CVE-2014-9938: does not sanitize branch names in $PS1 allowing command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/8
+Message-ID: <alpine.LFD.2.20.1702142342450.4918@wniryva>
+Date: Tue, 14 Feb 2017 23:49:05 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Wjjzhang <wjjzhang@...cent.com>, Jiang Xin <jiangxin1@...wei.com>
+Subject: CVE-2017-5987 Qemu: sd: infinite loop issue in multi block transfers
 Content-Type: text/plain; charset=utf-8
 
-Hi
+   Hello,
 
-MITRE has assigned CVE-2014-9938 for an older issue in the contrib
-script in git, where git-prompt.sh did not sanitize branch name in
-$PS1 exploitable for command execution by a malicious repository.
+Quick emulator(Qemu) built with the SDHCI device emulation support is 
+vulnerable to an infinite loop issue. It could occur while doing a multi block 
+SDMA transfer via 'sdhci_sdma_transfer_multi_blocks' routine.
 
-The upstream fix is
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS.
 
-https://github.com/git/git/commit/8976500cbbb13270398d3b3e07a17b8cc7bff43f
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg02776.html
 
-Regards,
-Salvatore
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1421995
+
+This issue was independently reported by Mr Jiang Xin of Huawei.com and 
+Wjjzhang of Tencent.com.
+
+'CVE-2017-5987' assigned via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
