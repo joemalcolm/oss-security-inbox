@@ -1,20 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/20/1
-Message-ID: <4b681520-4526-29ae-bc6a-d11a4a60d247@debian.org>
-Date: Tue, 19 Sep 2017 20:45:39 -0400
-From: Luciano Bello <luciano@...ian.org>
-To: hosein.askari@....com
-Cc: team@...urity.debian.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE-2017-14266] tcprewrite Heap-Based Buffer Overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/14/1
+Message-ID: <20170214012459.GA11244@sin.redhat.com>
+Date: Tue, 14 Feb 2017 11:55:00 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: XXE in Openpyxl
 Content-Type: text/plain; charset=utf-8
 
-On 09/19/2017 07:40 AM, hosein.askari@....com wrote:
-> First of all, I realy appreciate for sen­ding me an email abo­ut the mentioned vul­nerability. I have examined the vulnerab­ility
-> again on Ubuntu 16.04 due to your sent email. I have not tri­ed this vulnerability on the distributio­ns that you mentione­d. 
-> The screenshot which illustrates differe­nt steps (POC) is se­nt via this email for your kind consider­ations and uploaded on this link:
-> https://www.photobox­.co.uk/my/photo/full­?photo_id=9959498468
+On Feb 13 2017, Sébastien Delafond wrote:
+> On 2017-02-07, Doran Moppert <dmoppert@...hat.com> wrote:
+> > This is yet another instance of CVE-2016-9318.  As already observed
+> > on the Debian tracker, disabling entity resolution altogether is
+> > probably going to make openpyxl fail on well-formed Excel documents
+> > using standard entities such as &lt;.
+> 
+> we do not see this issue being technically the same thing as
+> CVE-2016-9318. openpyxl shouldn't need to resolve *external* XML
+> entities, and the initial reporter of the Debian bug tested that the
+> upstream patch doesn't break reglar entities like "&lt"; and
+> "&gt;". What do you think ?
 
-The link is 404ing. I might be creating the pcap wrongly. Can you make a
-input pcap available?
+My mistake - thanks for bringing this up!
 
-thanks! /luciano
+It appears that resolve_entities=False (ie. options &= ~XML_PARSE_NOENT)
+does *not* affect the expansion of predefined entities or character
+entities.  See [1], [2] and parser.c + HTMLparser.c in libxml source.
+
+1: https://www.xml.com/pub/a/98/08/xmlqna1.html
+2: https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
+
+These flags *do* control the expansion of internal entities, but I
+expect that most common protocols and file formats should not rely on
+those - including Excel.  As long as openpyxl has no need to resolve
+internal entities, nor perform DTD validation, CVE-2016-9318 is not
+relevant and the proposed patch looks correct.
+
+
+So yes, the original CVE request was valid and should go ahead:
+
+> the Debian Security Team would like to request a CVE for an XML XEE
+> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
+> resolves external entities by default:
+> 
+>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=854442
+>   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
+
+Also: https://bitbucket.org/openpyxl/openpyxl/issues/749
+
+
+Sorry about muddying the water with misunderstanding(s).  The tricky
+part of CVE-2016-9318 seems to be particular requirements of components
+like xmlsec that want internal entity resolution without XXE, or DTD
+validation without exposing the whole filesystem.
+
+-- 
+Doran Moppert
+Red Hat Product Security
+
+Content of type "application/pgp-signature" skipped
