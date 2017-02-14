@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2063" "Thursday" "29" "December" "2016" "20:29:40" "+0000" "Simon McVittie" "smcv@debian.org" "<20161229202940.ma4dsc7qrj57nghk@perpetual.pseudorandom.co.uk>" "55" "[oss-security] ikiwiki: CVE-2016-9645 (incomplete fix for CVE-2016-10026), CVE-2016-9646 (commit metadata forgery)" nil nil nil "12" "2016122920:29:40" "[oss-security] ikiwiki: CVE-2016-9645 (incomplete fix for CVE-2016-10026), CVE-2016-9646 (commit metadata forgery)" (number mark "U       smcv@debian. Dec 29   55/2063  " thread-indent "\"[oss-security] ikiwiki: CVE-2016-9645 (incomplete fix for CVE-2016-10026), CVE-2016-9646 (commit metadata forgery)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1736" "Tuesday" "14" "February" "2017" "10:50:59" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3424828.aBMPeXRjiz@blackgate>" "71" "Re: [oss-security] A note about the multiple crashes in zziplib" nil nil nil "2" "2017021409:50:59" "[oss-security] A note about the multiple crashes in zziplib" (number mark "U       ago@gentoo.o Feb 14   71/1736  " thread-indent "\"Re: [oss-security] A note about the multiple crashes in zziplib\"\n") "<DB5PR07MB1157469E31E3CB0C84756223B8580@DB5PR07MB1157.eurprd07.prod.outlook.com>" ("<9786871.DjNlDLY9Ns@blackgate>" "<DB5PR07MB1157469E31E3CB0C84756223B8580@DB5PR07MB1157.eurprd07.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3247 invoked by uid 550); 29 Dec 2016 20:29:58 -0000
+Received: (qmail 21575 invoked by uid 550); 14 Feb 2017 09:51:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3229 invoked from network); 29 Dec 2016 20:29:58 -0000
-Date: Thu, 29 Dec 2016 20:29:40 +0000
-From: Simon McVittie <smcv@debian.org>
+Received: (qmail 21557 invoked from network); 14 Feb 2017 09:51:17 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20161229202940.ma4dsc7qrj57nghk@perpetual.pseudorandom.co.uk>
+Date: Tue, 14 Feb 2017 10:50:59 +0100
+Message-ID: <3424828.aBMPeXRjiz@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
+In-Reply-To: <DB5PR07MB1157469E31E3CB0C84756223B8580@DB5PR07MB1157.eurprd07.prod.outlook.com>
+References: <9786871.DjNlDLY9Ns@blackgate> <DB5PR07MB1157469E31E3CB0C84756223B8580@DB5PR07MB1157.eurprd07.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20161126 (1.7.1)
-Subject: [oss-security] ikiwiki: CVE-2016-9645 (incomplete fix for CVE-2016-10026),
- CVE-2016-9646 (commit metadata forgery)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] A note about the multiple crashes in zziplib
 
-ikiwiki is a static site generator with some dynamic features,
-used for wikis, blogs and other websites.
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get32-fetch-c/
 
-Version 3.20161229 fixes two minor vulnerabilities in earlier
-ikiwiki versions:
+This is CVE-2017-5974.
 
-----
 
-CVE-2016-9645: authorization bypass
 
-Reference: https://ikiwiki.info/security/#cve-2016-9645
-Vulnerable versions: >= 3.20161219 but < 3.20161229
-Fixed versions: >= 3.20161229
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-__zzip_get64-fetch-c/
 
-intrigeri discovered that on sites with the git and recentchanges
-plugins and the CGI interface enabled, the revert links on the
-RecentChanges page could revert changes on a page the logged-in user
-cannot legitimately edit, if the change being reverted was made before
-the page was renamed from a location that the logged-in user *could*
-legitimately edit. CVE-2016-10026 was assigned to this vulnerability,
-and it was intended to be fixed in 3.20161219.
+This is CVE-2017-5975.
 
-The changes that were intended to address this in 3.20161219 were not
-sufficient when ikiwiki is used with git versions before 2.8.0rc0.
-CVE-2016-9645 was assigned to this incomplete fix. In version
-3.20161229, the incomplete fix has been reverted and replaced with a
-different solution that should work for all git versions.
 
-----
 
-CVE-2016-9646: commit metadata forgery
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-heap-based-buffer-overflow-in-zzip_mem_entry_extra_block-memdisk-c/
 
-Reference: https://ikiwiki.info/security/#cve-2016-9646
-Vulnerable versions: < 3.20161229
-Fixed versions: >= 3.20161229
+This is CVE-2017-5976.
 
-CGI::FormBuilder->field has a context-dependent API, similar to
-the CGI->param API that led to Bugzilla's CVE-2014-1572. Parts of
-ikiwiki incorrectly called this method in list context when a scalar
-result, which could lead to two relatively minor attacks:
 
-* In the comments plugin, an attacker who was able to post a comment
-  could give it a user-specified author and author-URL even if the wiki
-  configuration did not allow for that, by crafting multiple values
-  to other fields.
-* In the editpage plugin, an attacker who was able to edit a page
-  could potentially forge commit authorship by crafting multiple values
-  for the rcsinfo field.
 
-----
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-invalid-memory-read-in-zzip_mem_entry_extra_block-memdisk-c/
 
-Thanks to the Debian security team for allocating CVE IDs for these.
+This is CVE-2017-5977.
 
-Regards,
-    smcv
+
+
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/
+
+This is a functionality bug in a command-line program. There is
+no CVE ID at this time.
+
+
+
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-out-of-bounds-read-in-zzip_mem_entry_new-memdisk-c/
+
+This is CVE-2017-5978.
+
+
+
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-prescan_entry-fseeko-c/
+
+This is CVE-2017-5979.
+
+
+
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-zzip_mem_entry_new-memdisk-c/
+
+This is CVE-2017-5980.
+
+
+
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-c/
+
+This is a functionality bug in a command-line program. There is
+no CVE ID at this time.
+
+
+
+> http://blogs.gentoo.org/ago/2017/02/09/zziplib-assertion-failure-in-seeko-c/
+
+This is CVE-2017-5981.
+
+
+> https://blogs.gentoo.org/ago/2017/02/09/zziplib-load-of-misaligned-address-in-memdisk-c/
+Please consider this a duplicate of:
+http://blogs.gentoo.org/ago/2017/02/09/zziplib-null-pointer-dereference-in-main-unzzipcat-mem-c/
+
+
+All CVEs where assigned via https://cveform.mitre.org
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
