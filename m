@@ -1,33 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/05/2
-Message-ID: <alpine.LFD.2.20.1706051704190.26243@wniryva>
-Date: Mon, 5 Jun 2017 17:06:51 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-9375 Qemu: usb: xhci infinite recursive call via xhci_kick_ep
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/1
+Message-ID: <20170215082822.GA1054@tunkki>
+Date: Wed, 15 Feb 2017 10:28:22 +0200
+From: Henri Salo <henri@...v.fi>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Mon, Feb 13, 2017 at 04:40:29PM +0000, Priedhorsky, Reid wrote:
+> However, our understanding of CVE consumers is that they look to MITRE as a
+> source of vulnerability information after a CVE ID number exists, not before.
 
-Quick emulator(Qemu) built with the USB xHCI controller emulator support is 
-vulnerable to an infinite recursive call loop issue. It could occur while 
-processing control transfer descriptors' sequence in xhci_kick_epctx.
+Lots of users are also fetching the CVE database and try to match it with their
+installed software to get notified of new vulnerabilities affecting their infra
+and used products.
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
-
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=96d87bdda3919bb16f754b3d3fd1227e1f38f13c
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1458744
-
-This issue was reported by Li Qiang Qihoo 360 Gear Team.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Henri Salo
