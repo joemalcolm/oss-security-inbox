@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/16/3
-Message-ID: <CAN5gJXpLO-FEsQ=EDjok1_9=K3OW91LG_CyxUWsx8Z88A0pvNw@mail.gmail.com>
-Date: Tue, 16 May 2017 10:04:12 -0700
-From: Alistair Crooks <agc@...src.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: NetBSD/pkgsrc membership on distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/7
+Message-ID: <alpine.LFD.2.20.1702152327070.29340@wniryva>
+Date: Wed, 15 Feb 2017 23:29:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-5993 Virglrenderer: host memory leakage when initialising blitter context
 Content-Type: text/plain; charset=utf-8
 
-Yeah, we're here, we are the same as previously, still trying to go
-about our business with maximum effect and minimal fuss, and we're
-listening.
+   Hello,
 
-We haven't contributed anything (much) recently, but we don't really
-go in for massive "me too"s, and had kinda hoped that the "no drama"
-approach would work here. It seems my assumptions were wrong. I will
-attempt to do a better job at posting - sorry about that, mea culpa.
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
+a guest tries to initialise blitter context via 'VIRGL_CCMD_BLIT' command.
 
-What are we doing these days? We're looking into the pre-announcement
-that everyone else is looking at for NetBSD, and pkgsrc is even more
-vibrant than ever, runs on a huge number of platforms, and is still
-reporting CVEs in the usual way - we were told some minor Linux
-distributions use the pkgsrc notification mechanism, so, for their
-sakes, I'd ask that you continue to keep us in the loop, please.
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
-With thanks (for the support you give),
-Alistair
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=6eb13f7a2dcf391ec9e19b4c2a79e68305f63c22
 
-On 16 May 2017 at 08:39, Solar Designer <solar@...nwall.com> wrote:
-> Hi,
->
-> A few individuals from/for NetBSD/pkgsrc joined the non-public distros
-> list a while ago.  Unfortunately, lately they appear to have become
-> inactive.  Thus, I am likely to remove NetBSD/pkgsrc from the distros
-> list soon unless the membership is "renewed" through demonstrated
-> interest and vulnerability response by specific people from there.
->
-> I notice NetBSD security team is still active in terms of issuing of
-> public security advisories (latest one posted on March 24), but the way
-> the situation looks to me (and I admit I could be wrong) those
-> advisories are not produced by the same people who had joined distros.
-> So maybe NetBSD needs to nominate their currently active security people
-> for distros membership on behalf of their project.
->
-> I could figure out who the active NetBSD security people are now and
-> approach them, but that's mostly not how distros membership applications
-> worked so far - specifically, I'd like membership to be requested by
-> each distros' security team.  I don't want to be pinging them about it
-> myself, as that could result in some joining just because they were
-> invited/reminded like that rather than because of genuine interest.
->
-> Similarly, I intentionally don't CC this posting to anyone - if someone
-> (perhaps from NetBSD) is not in here, then even if they're doing
-> security response for their distro they are not an ideal representative
-> for their distro on the distros list.  That's because we assume that the
-> distro also keeps track of whatever issues are being made public on
-> oss-security (with most of those issues never having been brought up on
-> the distros list, so by being only on distros the person would miss most
-> issues they might need to deal with).
->
-> If anyone from NetBSD who is on oss-security has anything relevant to
-> say on this, please speak up.
->
-> Thanks,
->
-> Alexander
->
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422438
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+'CVE-2017-5993' assigned via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
