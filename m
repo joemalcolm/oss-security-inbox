@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5371" "Wednesday" "25" "March" "2020" "16:58:05" "+0100" "Daniel Beck" "ml@beckweb.net" "<579B47F2-8375-43AB-A0C2-A0382BCE48B8@beckweb.net>" "137" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "3" "2020032515:58:05" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       ml@beckweb.n Mar 25  137/5371  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["763" "Wednesday" "15" "February" "2017" "23:29:21" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702152327070.29340@wniryva>" "24" "[oss-security] CVE-2017-5993 Virglrenderer: host memory leakage when initialising blitter context" nil nil nil "2" "2017021517:59:21" "[oss-security] CVE-2017-5993 Virglrenderer: host memory leakage when initialising blitter context" (number mark "U       ppandit@redh Feb 15   24/763   " thread-indent "\"[oss-security] CVE-2017-5993 Virglrenderer: host memory leakage when initialising blitter context\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21881 invoked by uid 550); 25 Mar 2020 15:58:18 -0000
+Received: (qmail 5714 invoked by uid 550); 15 Feb 2017 17:59:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,154 +12,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21863 invoked from network); 25 Mar 2020 15:58:17 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <579B47F2-8375-43AB-A0C2-A0382BCE48B8@beckweb.net>
-Date: Wed, 25 Mar 2020 16:58:05 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1585151897;005a41ac;
-X-HE-SMSGID: 1jH8Pu-0004GA-4R
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+Received: (qmail 5687 invoked from network); 15 Feb 2017 17:59:40 -0000
+Date: Wed, 15 Feb 2017 23:29:21 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1702152327070.29340@wniryva>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.26]); Wed, 15 Feb 2017 17:59:29 +0000 (UTC)
+Subject: [oss-security] CVE-2017-5993 Virglrenderer: host memory leakage when initialising
+ blitter context
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+   Hello,
 
-The following releases contain fixes for security vulnerabilities:
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to memory leakage issue. It could occur when 
+a guest tries to initialise blitter context via 'VIRGL_CCMD_BLIT' command.
 
-* Jenkins 2.228
-* Jenkins LTS 2.204.6 and 2.222.1
-* Artifactory Plugin 3.6.0 and 3.6.1
-* Azure Container Service Plugin 1.0.2
-* OpenShift Pipeline Plugin 1.0.57
-* Pipeline: AWS Steps Plugin 1.41
-* Queue cleanup Plugin 1.4
-* RapidDeploy Plugin 4.2.1
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=6eb13f7a2dcf391ec9e19b4c2a79e68305f63c22
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-03-25/
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422438
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+This issue was reported by Li Qiang of 360.cn Inc.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+'CVE-2017-5993' assigned via -> https://cveform.mitre.org/
 
----
-
-SECURITY-1774 / CVE-2020-2160
-An extension point in Jenkins allows selectively disabling cross-site
-request forgery (CSRF) protection for specific URLs.
-
-Implementations of that extension point received a different representation
-of the URL path than the Stapler web framework uses to dispatch requests in
-Jenkins 2.227 and earlier, LTS 2.204.5 and earlier. This discrepancy
-allowed attackers to craft URLs that would bypass the CSRF protection of
-any target URL.
-
-
-SECURITY-1781 / CVE-2020-2161
-Users with Agent/Configure permissions can define labels for nodes. These
-labels can be referenced in job configurations to restrict where a job can
-be run.
-
-In Jenkins 2.227 and earlier, LTS 2.204.5 and earlier, the form validation
-for label expressions in job configuration forms did not properly escape
-label names, resulting in a stored cross-site scripting (XSS) vulnerability
-exploitable by users able to define node labels.
-
-
-SECURITY-1793 / CVE-2020-2162
-Jenkins 2.227 and earlier, LTS 2.204.5 and earlier served files uploaded as
-file parameters to a build without specifying appropriate
-`Content-Security-Policy` HTTP headers. This resulted in a stored
-cross-site scripting (XSS) vulnerability exploitable by users with
-permissions to build a job with file parameters.
-
-
-SECURITY-1796 / CVE-2020-2163
-Jenkins 2.227 and earlier, LTS 2.204.5 and earlier processed HTML embedded
-in list view column headers. This resulted in a stored cross-site scripting
-(XSS) vulnerability exploitable by users able to control the content of
-column headers.
-
-The following plugins are known to allow users to define column headers:
-
-* Warnings NG
-* Maven Info
-* Link Column
-
-Further plugins may also allow users to define column headers.
-
-
-SECURITY-1542 (1) / CVE-2020-2164
-Artifactory Plugin 3.5.0 and earlier stores its Artifactory server password
-in plain text in the global configuration file
-`org.jfrog.hudson.ArtifactoryBuilder.xml`. This password can be viewed by
-users with access to the Jenkins master file system.
-
-
-SECURITY-1542 (2) / CVE-2020-2165
-Artifactory Plugin stores Artifactory server passwords in its global
-configuration file `org.jfrog.hudson.ArtifactoryBuilder.xml` on the Jenkins
-master as part of its configuration.
-
-While the password is stored encrypted on disk since Artifactory Plugin
-3.6.0, it is transmitted in plain text as part of the configuration form by
-Artifactory Plugin 3.6.0 and earlier. This can result in exposure of the
-password through browser extensions, cross-site scripting vulnerabilities,
-and similar situations.
-
-
-SECURITY-1741 / CVE-2020-2166
-Pipeline: AWS Steps Plugin 1.40 and earlier does not configure its YAML
-parser to prevent the instantiation of arbitrary types. This results in a
-remote code execution (RCE) vulnerability exploitable by users able to
-provide YAML input files to Pipeline: AWS Steps Plugin's build steps.
-
-
-SECURITY-1739 / CVE-2020-2167
-OpenShift Pipeline Plugin 1.0.56 and earlier does not configure its YAML
-parser to prevent the instantiation of arbitrary types. This results in a
-remote code execution (RCE) vulnerability exploitable by users able to
-provide YAML input files to OpenShift Pipeline Plugin's build step.
-
-
-SECURITY-1732 / CVE-2020-2168
-Azure Container Service Plugin 1.0.1 and earlier does not configure its
-YAML parser to prevent the instantiation of arbitrary types. This results
-in a remote code execution (RCE) vulnerability exploitable by users able to
-provide YAML input files to Azure Container Service Plugin's build step.
-
-
-SECURITY-1724 / CVE-2020-2169
-A form validation HTTP endpoint in Queue cleanup Plugin 1.3 and earlier
-does not escape a query parameter displayed in an error message. This
-results in a reflected cross-site scripting vulnerability (XSS).
-
-
-SECURITY-1676 / CVE-2020-2170
-RapidDeploy Plugin 4.2 and earlier does not escape package names in its
-displayed table of packages obtained from a remote server. This results in
-a stored cross-site scripting (XSS) vulnerability exploitable by users able
-to configure jobs.
-
-
-SECURITY-1677 / CVE-2020-2171
-RapidDeploy Plugin 4.2 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for the 'RapidDeploy
-deployment package build' build or post-build step to have Jenkins parse a
-crafted file that uses external entities for extraction of secrets from the
-Jenkins master, server-side request forgery, or denial-of-service attacks.
-
-
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
