@@ -1,51 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/31/6
-Message-ID: <20171031134530.GA12340@openwall.com>
-Date: Tue, 31 Oct 2017 14:45:30 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Security risk of vim swap files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/2
+Message-ID: <alpine.LFD.2.20.1702151522560.17523@wniryva>
+Date: Wed, 15 Feb 2017 15:26:03 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Eric Blake <eblake@...hat.com>
+Subject: CVE-2017-2630 Qemu: nbd: oob stack write in client routine drop_sync
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 31, 2017 at 01:50:36PM +0100, Stefan B??hler wrote:
-> On 10/31/2017 01:37 PM, Solar Designer wrote:
-> > On Tue, Oct 31, 2017 at 01:23:52PM +0100, Hanno B??ck wrote:
-> >> I think vim should change the behavior of swap files:
-> >> 1. they should be stored in /tmp by default
-> >> 2. they should have secure permissions (tmp file security is
-> >> a tricky thing and needs careful consideration to avoid symlink attacks
-> >> and the like, but there are dedicated functions for this like mkstemp).
-> >> 3. Ideally they also shouldn't leak currently edited filenames (e.g.
-> >> they shouldn't be called /tmp/.test.txt.swp, but more something
-> >> like /tmp/.vim_swap.123782173)
-> > 
-> > Out of these, I think only 2 should be done: the files should be mode
-> > 0600 or 0400 even if the original file's permissions and/or the umask
-> > are more relaxed.
-> > 
-> > 1 and 3 go against intended use for these files - recovery of an edit in
-> > progress if the editor or the entire system crashes (and comes back up
-> > e.g. after a power-cycle).  /tmp contents might not survive a reboot,
-> > and randomized filenames would prevent vim itself from detecting the
-> > problem and offering recovery, which it does now.
-> 
-> You could keep the .test.txt.swp file, but make it a symlink and encode
-> information where to find the real swap file (/var/tmp/, /tmp, ...) in
-> the symlink.
-> 
-> It shouldn't link directly to the swap file, but perhaps look like
-> "swap:///var/tmp/.vim_swap.random_id".
-> 
-> Instead of a symlink you could of course just create a normal text file
-> with the real swap filename in it, but then it might be easier for an
-> attacker to find the real filename and read that file.
+   Hello,
 
-We could do a lot of things, but that doesn't mean those are good things
-to do.  What you describe solves one of the problems I mentioned, but I
-see little reason to go for this extra complexity, partial breakage of
-vim's feature by default (/tmp and /var/tmp are commonly volatile), and
-added risks (and extra complexity to deal with them - checking the
-/var/tmp file's ownership and permissions in case it's been replaced by
-someone else after a reboot).
+Quick Emulator(Qemu) built with the Network Block Device(NBD) client support 
+is vulnerable to a stack buffer overflow issue. It could occur while 
+processing server's response to a 'NBD_OPT_LIST' request.
 
-Alexander
+A malicious NBD server could use this issue to crash remote NBD client 
+resulting in DoS or potentially execute arbitrary code on client host with 
+privileges of the Qemu process.
+
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg01246.html
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422415
+
+'CVE-2017-2630' is assigned to this issue by Red Hat Inc.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
