@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/17/4
-Message-ID: <20170516221628.GA29020@nautica>
-Date: Wed, 17 May 2017 00:16:28 +0200
-From: Dominique Martinet <asmadeus@...ewreck.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: terminal emulators' processing of escape sequences
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/5
+Message-ID: <CAA7hUgF5wi+ECx7=xycRfQib8X+j0n+6Mxopnd67x62K9YfnWw@mail.gmail.com>
+Date: Wed, 15 Feb 2017 15:03:24 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote on Wed, May 17, 2017:
-> On Tue, May 02, 2017 at 12:05:27AM +0200, Robert ??wi??cki wrote:
-> > A harmless example from rxvt - pushing back the new-line character:
-> > 
-> > $ echo -ne "\eGQ;"
-> > ;$ 0
-> > bash: 0: command not found
-> 
-> Does this also affect rxvt-unicode?
+Hi,
 
-Yes (at least on rxvt-unicode 9.21 and 9.22)
+On 12 February 2017 at 00:35, Solar Designer <solar@...nwall.com> wrote:
+> On Fri, Feb 10, 2017 at 10:59:27PM -0500, cve-assign@...re.org wrote:
+>> C5. I want MITRE to send the https://cveform.mitre.org form data, and
+>> the CVE ID, to the oss-security list at the same time that these are
+>> sent to the requester.
+>>
+>> R5. We have had internal discussions within MITRE about this. We are
+>> able to implement this easily if the community requires this approach.
+>> At the moment, we are expecting the requester to resend this
+>> information to oss-security once they accept their CVE ID assignment.
+[...]
+> MITRE - can you please implement that, and we'll see how it goes and
+> whether we need it adjusted or possibly discontinued if things go wrong
+> or if there's opposition (so far, there's almost none)?
+>
+>> Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
+>> for an example.
+>
+> This is also an example of how the change breaks threading.  First,
+> there was a thread about the issue on the list.  Then there was CVE
+> request and assignment off-list.  And then there's this new thread on
+> the CVE assignment.
 
-Actually, on rxvt 2.7.10 this will try to execute the command '1'
-instead so I'd wager they meant urxvt from the start... But both are
-similarily affected anyhow.
+If this was to be implemented, the submitter could also just include
+the message-id of the related oss-sec post.
+The mail by MITRE could then set a In-Reply-To accordingly to avoid
+thread breaking.
 
+Cheers,
 -- 
-Dominique Martinet
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
