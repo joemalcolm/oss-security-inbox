@@ -1,92 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/28/10
-Message-ID: <231037.144406827-sendEmail@localhost>
-Date: Wed, 28 Jun 2017 12:08:58 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: lame: multiple left shift
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/15/3
+Message-Id: <E1cdyLO-0001Ot-Rk@xenbits.xenproject.org>
+Date: Wed, 15 Feb 2017 12:05:58 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 207 - memory leak when destroying guest without PT devices
 Content-Type: text/plain; charset=utf-8
 
-Description:
-lame is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Few notes before the details of this bug. Time ago a fuzz was done by Brian Carpenter and Jakub Wilk which posted the results on the debian 
-bugtracker. In cases like this, when upstream is not active and people do not post on the upstream bugzilla is easy discover duplicates, so I 
-downloaded all available testcases, and noone of the bug you will see on my blog is a duplicate of an existing issue. Upstream seems a bit 
-dead, latest release was into 2011, so this blog post will probably forwarded on the upstream bugtracker just for the record.
+                    Xen Security Advisory XSA-207
+                              version 2
 
-The complete ASan output of the issue:
+         memory leak when destroying guest without PT devices
 
-# lame -f -V 9 $FILE out.wav
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:263:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:265:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:266:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:267:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:268:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:269:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:271:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:272:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:273:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:274:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:276:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:277:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:278:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:279:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/VbrTag.c:280:5: runtime error: left shift of negative value -1
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:845:48: runtime error: left shift of negative value -18
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:848:52: runtime error: left shift of negative value -10
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00295-lame-leftshift1
-CVE:
-N/A
+UPDATES IN VERSION 2
+====================
 
-#######################################
+Public release.
 
-# lame -f -V 9 $FILE out.wav
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:848:52: runtime error: left shift of negative value -29398
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/libmp3lame/bitstream.c:181:50: runtime error: left shift of 45389699 by 6 places 
-cannot be represented in type 'int'
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00296-lame-leftshift2
-CVE:
-N/A
+ISSUE DESCRIPTION
+=================
 
-#######################################
+Certain internal state is set up, during domain construction, in
+preparation for possible pass-through device assignment.  On ARM and
+AMD V-i hardware this setup includes memory allocation.  On guest
+teardown, cleanup was erroneously only performed when the guest
+actually had a pass-through device assigned.
 
-# lame -f -V 9 $FILE out.wav
-/var/tmp/portage/media-sound/lame-3.99.5-r1/work/lame-3.99.5/frontend/get_audio.c:1195:52: runtime error: left shift of 255 by 24 places 
-cannot be represented in type 'int'
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00297-lame-leftshift3
-CVE:
-N/A
+IMPACT
+======
 
-#######################################
+A malicious guest may, by frequently rebooting over extended periods
+of time, run the system out of memory, resulting in a Denial of
+Service (DoS).
 
-Affected version:
-3.99.5
+The leak is no more than 4kbytes per guest boot.
 
-Fixed version:
-N/A
+VULNERABLE SYSTEMS
+==================
 
-Commit fix:
-N/A
+Xen versions 3.3 and later are affected.
 
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
+ARM systems, and x86 AMD systems, are affected.  Intel systems, and
+systems without IOMMU/SMMU hardware, are unaffected.
 
-Timeline:
-2017-06-01: bug discovered
-2017-06-17: blog post about the issue
+All guest kinds can exploit this vulnerability.
 
-Note:
-These bugs were found with American Fuzzy Lop.
+MITIGATION
+==========
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/06/17/lame-multiple-left-shift/
+Limiting the frequency with which a guest is able to reboot, will
+limit the memory leak.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Rebooting each host (after migrating its guests) periodically will
+reclaim the leaked space.
+
+CREDITS
+=======
+
+This issue was discovered by Oleksandr Tyshchenko of EPAM Systems.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa207.patch           xen-unstable, Xen 4.8.x, Xen 4.7.x, Xen 4.6.x, Xen 4.5.x
+xsa207-4.4.patch       Xen 4.4.x
+
+$ sha256sum xsa207*
+e9bcf807b3785ac4d78b621fba4a9395cd713d6e57cdaa66559bccf95ded1cd9  xsa207.patch
+5f391cc621d619ee33c90398bda24588ebf8320750db4545677bb5222150ae6d  xsa207-4.4.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above is permitted during the
+embargo, as is the mitigation of migrating a VM which has no devices
+assigned from IOMMU-capable hardware to IOMMU-incapable hardware, even
+on public-facing systems with untrusted guest users and administrators.
+
+HOWEVER, moving a VM from AMD to Intel hardware, in response to this
+vulnerability, is *not* permitted.  This is because such a change is
+visible to guests, and would not normally be expected.
+
+Furthermore: Distribution of updated software is prohibited (except to
+other members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYpEP+AAoJEIP+FMlX6CvZPrMIAL7ULaO/oOicZzGHzMO0f1r6
+MZDBPeLAg5EQ3oGl1oZenlEEQgSflzj2YHdwjdps2kZpJBaRJjNPmqOC3ZxetlyF
++cEJWpw6u0IDRzukEWkQlFGQS68ShLjRcKWDi5+ftjo4rFh34uybrgRv7/nKtiuG
+ZLX7dqKZuqYBSYvSXjA8UejB//psGOu4jqNh15t0bxtQqc5BlgdJebOkKlgrxL2M
+BqI/kiZoRuKkDVBu2786oo3w8BCjyBktDR0B9dzRY6MEdTXqb+mE8IO7G492KQTk
+/ZW9rKeijauKLNgsSkZlqtA0TPTp7tujh9XxE/JfB8UcYFez86NWoBBY4g+Q3SQ=
+=kwFG
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa207.patch" of type "application/octet-stream" (1026 bytes)
+
+Download attachment "xsa207-4.4.patch" of type "application/octet-stream" (1052 bytes)
