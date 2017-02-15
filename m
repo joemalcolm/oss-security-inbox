@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2767" "Friday" "13" "November" "2015" "12:45:13" "+0530" "Dis close" "disclose@cybersecurityworks.com" "<CAMWaY3P-bJSw2B2mEs2iDBgoZbuWNNg-AaUJxsPyGu1mOC+Ewg@mail.gmail.com>" "97" "[oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20" nil nil nil "11" "2015111307:15:13" "[oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20" (number mark "U       disclose@cyb Nov 13   97/2767  " thread-indent "\"[oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6016" "Wednesday" "15" "February" "2017" "11:26:32" "+0100" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<05917198-0341-0542-858e-e475797c9636@x41-dsec.de>" "197" "[oss-security] Advisory X41-2017-002: Multiple Vulnerabilities in ytnef" nil nil nil "2" "2017021510:26:32" "[oss-security] Advisory X41-2017-002: Multiple Vulnerabilities in ytnef" (number mark "U       advisories@x Feb 15  197/6016  " thread-indent "\"[oss-security] Advisory X41-2017-002: Multiple Vulnerabilities in ytnef\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22303 invoked by uid 550); 13 Nov 2015 13:02:58 -0000
+Received: (qmail 22019 invoked by uid 550); 15 Feb 2017 12:25:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,134 +12,215 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5679 invoked from network); 13 Nov 2015 07:15:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks_com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=+paa82DFz4+Lmgf2nS7r1fhuvO7z4lUMcuBuiXvKo+E=;
-        b=V85+L8GSIbJn0gWTAoOHbp/wIz/rROJ5JqdBR4Uwiy6C+SkjZWolmLA4d7q8DZB+nK
-         es7BQwkgUNpzbe86+eKS/Cwsh/h6Q3vUFFmAZbKTRVINOqOGvCUBG6oYRaLvSxKAS2to
-         iFqd0fQJkMm9o5Y0BABjaB2rP2pQZHOaXtu493BxpSfZZeZyLtXPDvNnWL21THv8LvcU
-         mwe42ne6AK0e2BpMowx+nZp7rWOo5s9m/dKBvuO8Cgg9XAkB1K/WyXykNtGw0yNTnQCl
-         N6X4kcLpg+OaNMR+5HqlG9dsSORAhBPnC4A7/XNv9jnpjjA0zkmb7ytRGLqb4t/Bni+D
-         p7LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=+paa82DFz4+Lmgf2nS7r1fhuvO7z4lUMcuBuiXvKo+E=;
-        b=QVDWc0w6k9SxV0lH/5lxxjJ8ZR3zNrhAC7ctkQFcH8aqUyapr7WRFb8iQUm7vHG7v0
-         lI1U+mHW/7hMVuTVvSFjQPCeqnXznhq9ekfFv23qBkc2exztslIB61ZL08NGcHc0n9R1
-         YjpXpzUUI6bb82/so3jK3v1rJzuz0unsyON2isMRUrrL94XJe4UC4aSLVBgWd/Dodaek
-         VHtL4Zl2wODCTj8eOG/hiSGEzFqvDsEvUtxqBKlo4TJ+RETXczDA7czHFc8UyP01ct2y
-         acN33s8DqqtlryHFEn+zmKyGv6KGzy49cA9fz8yvLTk8s/mhjotvftfpE/PLLTP2ob4T
-         zGLA==
-X-Gm-Message-State: ALoCoQk8Pt84n0ytsTdMWECPRFhMpfTGOCFWJvhMiuzxCvTSx36SkuA3F5JSjTujJlKd4i97BI9G
+Received: (qmail 20209 invoked from network); 15 Feb 2017 10:27:48 -0000
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+To: oss-security@lists.openwall.com, fulldisclosure@seclists.org,
+ bugtraq@securityfocus.com, distros@vs.openwall.org
+Organization: X41 D-Sec GmbH
+Message-ID: <05917198-0341-0542-858e-e475797c9636@x41-dsec.de>
+Date: Wed, 15 Feb 2017 11:26:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-X-Received: by 10.50.13.42 with SMTP id e10mr1731546igc.72.1447398913082; Thu,
- 12 Nov 2015 23:15:13 -0800 (PST)
-Date: Fri, 13 Nov 2015 12:45:13 +0530
-Message-ID: <CAMWaY3P-bJSw2B2mEs2iDBgoZbuWNNg-AaUJxsPyGu1mOC+Ewg@mail.gmail.com>
-From: Dis close <disclose@cybersecurityworks.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=089e013c66d4102156052466d256
-Subject: [oss-security] CVE request: Reflected XSS in OcPortal CMS 9.0.20
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="PhsrblgVsIkArouwseIUmObsHM8KvTGVx"
+Subject: [oss-security] Advisory X41-2017-002: Multiple Vulnerabilities in ytnef
 
---089e013c66d4102156052466d256
-Content-Type: text/plain; charset=UTF-8
+--PhsrblgVsIkArouwseIUmObsHM8KvTGVx
+Content-Type: multipart/mixed; boundary="9d98Xrln07hFNifOXTqhTSg7828UxMvfC";
+ protected-headers="v1"
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+To: oss-security@lists.openwall.com, fulldisclosure@seclists.org,
+ bugtraq@securityfocus.com, distros@vs.openwall.org
+Message-ID: <05917198-0341-0542-858e-e475797c9636@x41-dsec.de>
+Subject: Advisory X41-2017-002: Multiple Vulnerabilities in ytnef
+
+--9d98Xrln07hFNifOXTqhTSg7828UxMvfC
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hello List:
 
-Can a CVE be assigned to the following ?
+X41 D-Sec GmbH Security Advisory: X41-2017-002
 
-Details
+Multiple Vulnerabilities in ytnef
 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-Title                              :Reflected cross-site scripting
-vulnerability in *OcPortal CMS*
-Version                         : 9.0.20
-Vendor Homepage         :http://ocportal.com/start.htm
-Vulnerability Type          :Reflected cross-site scripting vulnerability
-(XSS)
-Risk                             :High
-Status                          :Fixed
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-OcPortal CMS 9.0.20 is prone to a cross-site scripting vulnerability
-because it fails to properly sanitize user-supplied input.A value in a
-template that is not meant to contain HTML is marked as an escaped value
-({VALUE*}). This meant that =E2=80=98html entities=E2=80=99 are put in repl=
-acement of HTML
-control characters.
+Overview
+--------
+Severity Rating: High
+Confirmed Affected Versions: 1.9 and earlier
+Confirmed Patched Versions: 1.9.1
+Vendor: Yerase
+Vendor URL: https://github.com/Yeraze/ytnef
+Vector: Via file
+Credit: X41 D-Sec GmbH, Eric Sesterhenn
+Status: public
+CVE: not yet assigned
+CVSS Score: 7.4
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2017-002-ytnef/
 
 
-
-Vulnerable Parameter
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-[*FIELD_NAME*]
-
-
-Remote Exploitable
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-*Yes*
-
-Technical Details
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-
-https://github.com/cybersecurityworks/Disclosed/issues/11
+Summary and Impact
+------------------
+Multiple Heap Overflows, out of bound writes and reads, NULL pointer
+dereferences and infinite loops have been discovered in ytnef 1.9 an
+earlier.
+These could be exploited by tricking a user into opening a malicious
+winmail.dat file.
 
 
+Product Description
+-------------------
+ytnef offers a library and utilities to extract the files from winmail.dat
+files. winmail.dat files are send by Microsoft Outlook when forwarding files
+via e-mail. The vendor was very responsive in providing a patched version.
 
 
-Solution
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-Upgrade to latest version 9.0.21
-https://ocportal.com/site/sites.htm
+Analysis
+--------
+Due to the big amount of issues found no detailed analysis is given here.
+Almost all allocations were unchecked and out of bounds checks rarely
+performed in the code.
 
-OR
+In total 9 patches were generated for the following issues:
 
-Vendor has released patch for this issue, please refer below link
-http://ocportal.com/site/news/view/security_issues/security-patch-for-xss.h=
-tm?filter=3D1%2C2%2C3%2C29%2C30
+1. Null Pointer Deref / calloc return value not checked
+2. Infinite Loop / DoS
+3. Buffer Overflow in version field
+4. Out of Bound Reads
+5. Integer Overflow
+6. Invalid Write and Integer Overflow
+7. Out of Bounds read
+8. Out of Bounds read and write
+9. Directory Traversal using the filename
 
 
+To detail some of the findings, here are excerpts from the quickly written
+patch, which was send to the vendor:
+
+Missing out of bounds checks:
+
+	diff --git a/lib/ytnef.c b/lib/ytnef.c
+	index ad92f15..5dd07a7 100644
+	--- a/lib/ytnef.c
+	+++ b/lib/ytnef.c
+	@@ -55,6 +55,7 @@
+	 #define MIN(x,y) (((x)<(y))?(x):(y))
+=09
+ 	#define ALLOCCHECK(x) { if(!x) { printf("Out of Memory\n"); exit(-1); } }
+=09
+	+#define SIZECHECK(x) { if ((((char *)d - (char *)data) + x) >=3D size) {
+ printf("Corrupted file\n"); exit(-1); } }
+
+	 void TNEFFillMapi(TNEFStruct *TNEF, BYTE *data, DWORD size, MAPIProps *p);
+ 	void SetFlip(void);
+	@@ -427,9 +428,11 @@ void TNEFFillMapi(TNEFStruct *TNEF, BYTE *data,
+DWORD size, MAPIProps *p) {
+	       length =3D -1;
+	       if (PROP_ID(mp->id) >=3D 0x8000) {
+	         // Read the GUID
+	+        SIZECHECK(16);
+	         memcpy(&(mp->guid[0]), d, 16);
+	         d +=3D 16;
+
+	+        SIZECHECK(4);
+	         length =3D SwapDWord((BYTE*)d, 4);
+
+Infinite Loop:
+
+	diff --git a/lib/ytnef.c b/lib/ytnef.c
+	index 328e605..43b0e56 100644
+	--- a/lib/ytnef.c
+	+++ b/lib/ytnef.c
+	@@ -546,6 +546,9 @@ void TNEFFillMapi(TNEFStruct *TNEF, BYTE *data,
+DWORD size, MAPIProps *p) {
+	         memcpy(vl->data, d, vl->size);
+	         d+=3D16;
+	         break;
+	+      default:
+	+        printf("Bad file\n");
+	+        exit(-1);
+	     }
+=09
+	     switch (PROP_ID(mp->id)) {
+
+
+Buffer Overflow:
+
+	diff --git a/lib/tnef-types.h b/lib/tnef-types.h
+	index 7b6ad01..2a9709a 100644
+	--- a/lib/tnef-types.h
+	+++ b/lib/tnef-types.h
+	@@ -103,7 +103,7 @@ typedef struct {
+ 	} TNEFMemInfo;
+=20=09
+	 typedef struct {
+	-  char version[10];
+	+  char version[16];
+	   variableLength from;
+	   variableLength subject;
+	   dtr dateSent;
+
+Workarounds
+-----------
+
+Update to version 1.9.1 as released on https://github.com/yeraze/ytnef
+
+
+About X41 D-Sec GmbH
+--------------------
+X41 D-Sec is a provider of application security services. We focus
+on application code reviews, design review and security testing. X41 D-Sec
+GmbH was founded in 2015 by Markus Vervier.
+We support customers in various industries such as finance, software
+development and public institutions.
 
 Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-2015-11-06 - First Contact
-2015-11-06 - Vendor Response
-2015-11-07 - Vendor Fixed
-2015-11-13 - Public Disclosure
-
-Credits & Author
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-Arjun Basnet from Cyber Security Works Pvt. Ltd (
-http://www.cybersecurityworks.com/)
-
-About Cybersecurityworks
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-Cybersecurity Works is basically an auditing company passionate working on
-findings & reporting security flaws & vulnerabilities on web application
-and network. As professionals, we handle each client differently based on
-their unique requirements. Visit our website
-http://www.cybersecurityworks.com/ for more information.
-
+--------
+2017-02-10	Issues found
+2016-02-12	Vendor contacted
+2016-02-12	Vendor replied
+2016-02-12	CVE ID requested
+2016-02-13	Pull request for patch send as per vendor request
+2016-02-13	Issue 9 / Directory Traversal reported
+2016-02-14	Issues fixed, 1.9.1 released
+2016-02-15	Advisory release
 
 --=20
-----------
-Cheers !!!
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Gesch=C3=A4ftsf=C3=BChrer: Markus Vervier
 
-Team CSW
 
---089e013c66d4102156052466d256--
+
+
+
+--9d98Xrln07hFNifOXTqhTSg7828UxMvfC--
+
+--PhsrblgVsIkArouwseIUmObsHM8KvTGVx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlikLN4ACgkQo5Klpg50
+CxBpUA/+P95J+H7zPI23dZJm4zIjQ7vSjpZe8c3JmExuqBlzDAYaOkScJNWxaiOJ
+BdPEH3DIPSmC5pz1bhAUXgTE+RHXtDRPgvOluBVc/BBK4AqfZ7jpIQHK1Vyx69Ih
+ASibV9XiKTSusYP51RLpK3kGmkuz0uydZcCUMzBFGCAY9oPn+jgRrYdaF6UbG477
+rMSjzLi0Kft4qOMK5hZjh8vjfQCcx0qrknHPrNfeewOBACjCWD2dJi9alZoGKDyu
+FAuW0oAAE89Ra75O/DtOXo7WiN+xcmFA1tarJtZZHAOUak6shSRBei07JLzKtBxO
+AB+jhPHe5r0gkRwIs7SOliMn6S+xRNo3oMsbXBudie3ehC2csCYLH/hBvQPQsMiC
+YFrVMv8OWwl0kyNO0MA0CzbyFzg2j1XdSRqeN9q1To/aXJ6KvEcdSs1k9504HQlp
+meH6ZACOpK3hXbvgmcJeH7RHosMNuzKMqVws/QTXfEtTZNOC5lxmmXu24J/JhEok
+kG0KULayVvOO/z+vaiSUhMJ2vzhH3IVaZBS66EFJ4EZ4A5WoWcM0IqWrWnU4BCe4
+ttlJR4sh/6xt9YzfyFftZJ6KlMQjQadDW4VJvWIn3GIsJOg+yOMW0YLBoh+5rjqf
+eOuHJURT1RvJ2lpUGvIVZwl4ZsoRF5/DmuuMPFeWHB7uzyD3oJc=
+=n+R9
+-----END PGP SIGNATURE-----
+
+--PhsrblgVsIkArouwseIUmObsHM8KvTGVx--
