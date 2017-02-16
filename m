@@ -1,36 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/17/3
-Message-ID: <CAJouXQntfKK9r8T5HtxHCeVGhdYjwW_Wk_SSa4n-KsbM5qAFZA@mail.gmail.com>
-Date: Mon, 17 Apr 2017 10:35:51 -0700
-From: Kenton Varda <kenton@...udflare.com>
-To: Tom Lee <debian@...lee.co>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Cap'n Proto: Bounds check elided by compiler optimization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/4
+Message-ID: <20170216155547.z3ddx43uzzubj6wu@perpetual.pseudorandom.co.uk>
+Date: Thu, 16 Feb 2017 15:55:47 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com, dbus@...ts.freedesktop.org
+Subject: fd.o #99828: two symlink attacks fixed in dbus 1.10.16
 Content-Type: text/plain; charset=utf-8
 
-Whoops, apparently I'm supposed to use the web form now. Sorry!
+D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
+asynchronous inter-process communication system, commonly used
+for system services or within a desktop session on Linux and other
+operating systems.
 
--Kenton
+The latest dbus release 1.10.16 fixes two symlink attacks in
+non-production-suitable configurations. I am treating these as bugs
+rather than practical vulnerabilities, and very much hope neither of
+these is going to affect any real users, but I'm reporting them to
+oss-security in case there's an attack vector that I've missed.
 
-On Mon, Apr 17, 2017 at 10:32 AM, Kenton Varda <kenton@...udflare.com>
-wrote:
+Please reference fd.o #99828 or
+<https://bugs.freedesktop.org/show_bug.cgi?id=99828> in any notices
+that refer to these.
 
-> Hi oss-security and cve-assign,
->
-> Can you assign a CVE for the following issue?
->
-> Full details and fix covered here: https://github.com/sandstorm-i
-> o/capnproto/blob/master/security-advisories/2017-04-17-0-
-> apple-clang-elides-bounds-check.md
->
-> > Discovered by Kenton Varda
->
-> > Some bounds checks are elided by Apple's compiler and possibly others,
-> leading to a possible attack especially in 32-bit builds.
->
-> > Although triggered by a compiler optimization, this is a bug in Cap'n
-> Proto, not the compiler.
->
-> Thanks,
-> -Kenton
->
+I have already released 1.10.16 for the stable branch. For the
+development branch, 1.11.10 will have the same fixes. For the old
+stable branch 1.8.x, I'm going to apply the same fixes, but I am
+not planning to do a release just for this unless a vendor asks me
+to - they will be released next time there is a 1.8.x release for some
+other reason.
 
+Symlink attack in nonce-tcp transport
+-------------------------------------
+
+Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
+Versions affected: dbus >= 1.4.10
+Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
+Exploitable by: local users on inadvisably configured Unix systems
+Impact: overwrite a file named "nonce" in an attacker-chosen directory
+  with random contents known only to the victim
+Reporter: Simon McVittie, Collabora Ltd.
+
+The nonce-tcp transport writes a file to a randomly-named subdirectory
+of a system-wide temporary directory. It does not check whether the
+directory already exists (EEXIST from mkdir is ignored); so if the
+chosen directory is a symlink to an attacker-chosen directory, it
+would proceed to write a file named "nonce" to that directory.
+The file is created safely (O_EXCL, 0600 permissions, atomic-overwrite)
+and has random contents not chosen by the attacker.
+
+The reimplementation of this transport in GDBus does not have this bug.
+
+Mitigations include:
+
+* The nonce-tcp transport is only enabled if you ask for it when
+  configuring dbus-daemon or a DBusServer. It was added as a workaround
+  for Windows' lack of AF_UNIX sockets, and the only reason it is
+  available on Unix is to be able to test it. Even on Windows, it should
+  never be used on connections other than loopback (there is no
+  confidentiality or integrity protection).
+
+* The directory has a random name with approximately 35 bits of entropy,
+  so an attacker would have to either create a massive number of symlinks
+  or be very lucky.
+
+* The attacker cannot choose the file contents.
+
+* The attacker cannot read the file contents.
+
+* Versions before 1.4.10 were unaffected by this bug because nonce-tcp
+  didn't work on Unix at all.
+
+Workaround: do not use nonce-tcp. If you must use it, set the environment
+variable TMPDIR to a directory you control.
+
+Symlink attack in unit tests
+----------------------------
+
+Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
+Versions affected: >= 1.1.3
+Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
+Exploitable by: local users sharing a system with a dbus developer
+Impact: unlikely file overwrite
+Reporter: Simon McVittie, Collabora Ltd.
+
+One of the "embedded tests" accessed a system-wide temporary directory
+in an inadvisable manner. It is probably vulnerable to a symlink
+attack due to a time-of-check/time-of-use error.
+
+Mitigations: the "embedded tests" are not compiled in by default, are
+only intended to be used by dbus developers on trusted systems, and if they
+are enabled, ./configure specifically warns that they are insecure. The
+directory used is random with approximately 35 bits of entropy, so an
+attacker would have to either create a massive number of symlinks or
+be very lucky.
+
+Workaround: if you are testing older dbus versions, use a trusted
+machine, VM or container or set the environment variable TMPDIR to a
+directory you control.
+
+----
+
+Regards,
+    S
+-- 
+Simon McVittie
+Collabora Ltd. <https://www.collabora.com/> / Debian <https://www.debian.org/>
