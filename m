@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/29/2
-Message-ID: <CAJ_zFkLfOaQEkD+o8j7GMiXFxcZ-ANA4aYA13NjtN6iOUWfDuQ@mail.gmail.com>
-Date: Fri, 28 Apr 2017 22:36:16 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/6
+Message-ID: <20170216201616.GA26922@openwall.com>
+Date: Thu, 16 Feb 2017 21:16:16 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-8291 ghostscript remote code execution
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 28, 2017 at 7:43 PM, redrain root <rootredrain@...il.com> wrote:
->
-> what a awkward??
-> I have discovered a part of my vulns about ghostscript last year and
-> exploited in fulldisclosure early!
-> and these vulns are part of mine I was going to discovered these in defcon
-> or other conference...WTF...
-> u guys are logo designer???
->
-> there are two demos last year
-> Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack Imagick
-> through Ghostscript https://youtu.be/tPGm_ANDyOw
->
+On Thu, Feb 16, 2017 at 03:16:45PM -0200, Fabio Olive Leite wrote:
+> On 02/11/2017 09:35 PM, Solar Designer wrote:
+> >> C5. I want MITRE to send the https://cveform.mitre.org form data, and
+> >> the CVE ID, to the oss-security list at the same time that these are
+> >> sent to the requester.
+> >>
+> >> R5. We have had internal discussions within MITRE about this. We are
+> >> able to implement this easily if the community requires this approach.
+> >> At the moment, we are expecting the requester to resend this
+> >> information to oss-security once they accept their CVE ID assignment.
+> > 
+> > MITRE - can you please implement that, and we'll see how it goes and
+> > whether we need it adjusted or possibly discontinued if things go wrong
+> > or if there's opposition (so far, there's almost none)?
+> 
+> Was there any response from Mitre to this request?  I believe a lot of
+> people would feel better if they confirmed they will do it.
 
-I don't think so, that is CVE-2016-7976 and is entirely unrelated to
-the issue being discussed, other than superficial similarity of the
-exploit.
+I saw no response from MITRE.
 
-That issue was reported by me, and we discussed the ImageMagick and
-evince attack vectors at the time, you can check the archives if
-you're interested.
+Kurt, who is not with MITRE but who presumably knows what he's saying,
+implied it'd be non-trivial for MITRE to separate issues in open source
+vs. other software:
 
-http://seclists.org/oss-sec/2016/q4/29
+http://www.openwall.com/lists/oss-security/2017/02/12/2
 
-This issue (CVE-2017-8291) is a type confusion vulnerability (well,
-technically two vulnerabilities), and was found in the wild.
+"We could also have the MITRE CVE ID feed new stuff into oss-security but it
+would include non open source stuff."
 
-Tavis.
+MITRE - is this difficulty the reason for the lack of response so far?
+If so, should we consider workarounds such as setting up another mailing
+list to which all assigned CVE IDs would be posted?
+
+Alexander
