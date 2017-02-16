@@ -1,4 +1,9 @@
-Received: (qmail 25606 invoked by uid 550); 23 Jul 2024 16:31:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4063" "Thursday" "16" "February" "2017" "15:55:47" "+0000" "Simon McVittie" "smcv@debian.org" "<20170216155547.z3ddx43uzzubj6wu@perpetual.pseudorandom.co.uk>" "98" "[oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16" nil nil nil "2" "2017021615:55:47" "[oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16" (number mark "U       smcv@debian. Feb 16   98/4063  " thread-indent "\"[oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12003 invoked by uid 550); 16 Feb 2017 15:56:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +12,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9955 invoked from network); 23 Jul 2024 16:23:12 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Andrew Lamb <alamb@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <325aa1fb-ab3d-5f76-b9d6-b57dfaac80d6@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 23 Jul 2024 16:21:24 +0000
+Received: (qmail 11969 invoked from network); 16 Feb 2017 15:56:06 -0000
+Date: Thu, 16 Feb 2017 15:55:47 +0000
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com, dbus@lists.freedesktop.org
+Message-ID: <20170216155547.z3ddx43uzzubj6wu@perpetual.pseudorandom.co.uk>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-41178: Apache Arrow Rust Object Store: AWS
- WebIdentityToken exposure in log files 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16
 
-Severity: moderate
+D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
+asynchronous inter-process communication system, commonly used
+for system services or within a desktop session on Linux and other
+operating systems.
 
-Affected versions:
+The latest dbus release 1.10.16 fixes two symlink attacks in
+non-production-suitable configurations. I am treating these as bugs
+rather than practical vulnerabilities, and very much hope neither of
+these is going to affect any real users, but I'm reporting them to
+oss-security in case there's an attack vector that I've missed.
 
-- Apache Arrow Rust Object Store 0.5.0 through 0.10.1
+Please reference fd.o #99828 or
+<https://bugs.freedesktop.org/show_bug.cgi?id=99828> in any notices
+that refer to these.
 
-Description:
+I have already released 1.10.16 for the stable branch. For the
+development branch, 1.11.10 will have the same fixes. For the old
+stable branch 1.8.x, I'm going to apply the same fixes, but I am
+not planning to do a release just for this unless a vendor asks me
+to - they will be released next time there is a 1.8.x release for some
+other reason.
 
-Exposure of temporary credentials in logs=C2=A0in Apache Arrow Rust Object =
-Store, version 0.10.1 and earlier on all platforms using AWS WebIdentityTok=
-ens.=20
+Symlink attack in nonce-tcp transport
+-------------------------------------
 
-On certain error conditions, the logs may contain the OIDC token passed to =
- AssumeRoleWithWebIdentity https://docs.aws.amazon.com/STS/latest/APIRefere=
-nce/API_AssumeRoleWithWebIdentity.html . This allows someone with access to=
- the logs to impersonate that identity, including performing their own call=
-s to AssumeRoleWithWebIdentity, until the OIDC token expires. Typically OID=
-C tokens are valid for up to an hour, although this will vary depending on =
-the issuer.
+Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
+Versions affected: dbus >= 1.4.10
+Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
+Exploitable by: local users on inadvisably configured Unix systems
+Impact: overwrite a file named "nonce" in an attacker-chosen directory
+  with random contents known only to the victim
+Reporter: Simon McVittie, Collabora Ltd.
 
-Users are recommended to use a different AWS authentication mechanism, disa=
-ble logging or upgrade to version 0.10.2, which fixes this issue.
+The nonce-tcp transport writes a file to a randomly-named subdirectory
+of a system-wide temporary directory. It does not check whether the
+directory already exists (EEXIST from mkdir is ignored); so if the
+chosen directory is a symlink to an attacker-chosen directory, it
+would proceed to write a file named "nonce" to that directory.
+The file is created safely (O_EXCL, 0600 permissions, atomic-overwrite)
+and has random contents not chosen by the attacker.
 
-Details:
+The reimplementation of this transport in GDBus does not have this bug.
 
-When using AWS WebIdentityTokens with the object_store crate, in the event =
-of a failure and automatic retry, the underlying reqwest error, including t=
-he full URL with the credentials, potentially in the parameters, is written=
- to the logs.=C2=A0
+Mitigations include:
 
-Thanks to Paul=C2=A0Hatcherian for reporting this vulnerability
+* The nonce-tcp transport is only enabled if you ask for it when
+  configuring dbus-daemon or a DBusServer. It was added as a workaround
+  for Windows' lack of AF_UNIX sockets, and the only reason it is
+  available on Unix is to be able to test it. Even on Windows, it should
+  never be used on connections other than loopback (there is no
+  confidentiality or integrity protection).
 
-Credit:
+* The directory has a random name with approximately 35 bits of entropy,
+  so an attacker would have to either create a massive number of symlinks
+  or be very lucky.
 
-Paul=C2=A0Hatcherian (finder)
+* The attacker cannot choose the file contents.
 
-References:
+* The attacker cannot read the file contents.
 
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-41178
+* Versions before 1.4.10 were unaffected by this bug because nonce-tcp
+  didn't work on Unix at all.
 
+Workaround: do not use nonce-tcp. If you must use it, set the environment
+variable TMPDIR to a directory you control.
+
+Symlink attack in unit tests
+----------------------------
+
+Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
+Versions affected: >= 1.1.3
+Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
+Exploitable by: local users sharing a system with a dbus developer
+Impact: unlikely file overwrite
+Reporter: Simon McVittie, Collabora Ltd.
+
+One of the "embedded tests" accessed a system-wide temporary directory
+in an inadvisable manner. It is probably vulnerable to a symlink
+attack due to a time-of-check/time-of-use error.
+
+Mitigations: the "embedded tests" are not compiled in by default, are
+only intended to be used by dbus developers on trusted systems, and if they
+are enabled, ./configure specifically warns that they are insecure. The
+directory used is random with approximately 35 bits of entropy, so an
+attacker would have to either create a massive number of symlinks or
+be very lucky.
+
+Workaround: if you are testing older dbus versions, use a trusted
+machine, VM or container or set the environment variable TMPDIR to a
+directory you control.
+
+----
+
+Regards,
+    S
+-- 
+Simon McVittie
+Collabora Ltd. <https://www.collabora.com/> / Debian <https://www.debian.org/>
