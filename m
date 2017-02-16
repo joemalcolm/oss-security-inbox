@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/03/8
-Message-ID: <20170703183749.GA25197@openwall.com>
-Date: Mon, 3 Jul 2017 20:37:49 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/16/2
+Message-ID: <alpine.LFD.2.20.1702161016040.1918@wniryva>
+Date: Thu, 16 Feb 2017 10:17:54 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-6000 Qemu: crypto: memory leakage in qcrypto_ivgen_essiv_init
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 03, 2017 at 08:31:05AM +0200, Mark Hatle wrote:
-> We effectively have one person monitoring the list, with two backup in case of
-> vacations.  Occasionally all people are out at the same time (usually national
-> holidays.)  I'm happy to offer our help, but as long as my limitations are
-> understood then I think this will be beneficial.
+   Hello,
 
-OK, let's do it this way: you list some tasks and say whether you'd like
-to be "primary" or "backup" for them (could be different for each task),
-and we find other distros to fill the other role for each task.
+Quick Emulator(Qemu) built with the Crypto block IV generator - essiv support 
+is vulnerable to a host memory leakage issue. It could occur while 
+initialising the crypto device in 'qcrypto_ivgen_essiv_init'.
 
-Other distros are welcome to state what they volunteer for in the same
-way: choose "primary" or "backup", as long as neither is taken yet.
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
-> Unfortunately I'm on vacation through the end of this week (as are many of us
-> that are located in North America.)  So I can get back with what we can help
-> with next week.  (If tasks are gone, that is fine.)
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2017-01/msg00295.html
 
-OK.  (If tasks are gone, we may nevertheless find some for you, but
-you'll have less freedom of choice.)
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1422656
 
-Thanks,
+This issue was reported by Li Qiang of 360.cn Inc.
 
-Alexander
+'CVE-2017-6000' assigned via -> https://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
