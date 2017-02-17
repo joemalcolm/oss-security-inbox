@@ -1,4 +1,9 @@
-Received: (qmail 17991 invoked by uid 550); 14 Apr 2022 19:40:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["746" "Friday" "17" "February" "2017" "13:03:11" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702171300440.22691@wniryva>" "27" "[oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping" nil nil nil "2" "2017021707:33:11" "[oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping" (number mark "U       ppandit@redh Feb 17   27/746   " thread-indent "\"[oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10174 invoked by uid 550); 17 Feb 2017 07:33:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5927 invoked from network); 14 Apr 2022 19:20:20 -0000
-Message-ID: <4027574e-ba23-10c4-0f2a-364f05d38cb8@enst-bretagne.fr>
-Date: Thu, 14 Apr 2022 21:20:08 +0200
+Received: (qmail 10156 invoked from network); 17 Feb 2017 07:33:28 -0000
+Date: Fri, 17 Feb 2017 13:03:11 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+Message-ID: <alpine.LFD.2.20.1702171300440.22691@wniryva>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-References: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
-From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-In-Reply-To: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Browser-mediated attacks on WebDriver servers
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Fri, 17 Feb 2017 07:33:17 +0000 (UTC)
+Subject: [oss-security] CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when
+ doing vlan stripping
 
-Hi,
+   Hello,
 
- > * Selenium server/Grid CSRF vulnerability;
- > * Selenium server/Grid DNS-rebinding vulnerability.
+Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
+vulnerable to an out-of-bounds access issue. It could occur while stripping 
+VLAN header from 'eth_buf' buffer in receiving packets.
 
-I have tried requesting CVE IDs for those three times (first request was 
-done in 2021-06-12) and failed so far.
+A remote user/process could use this issue to crash Qemu process resulting in 
+DoS.
 
-All three attempts were rejected for the following reasons:
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg03527.html
 
- > The Jenkins CNA is responsible for assigning CVE IDs to
- > vulnerabilities in this product. Please contact the Jenkins CNA
- > to get a CVE ID assigned to this issue.
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1423358
 
-However, as a far as I understand this not the case. Here is the scope 
-of the Jenkins CNA [1]:
+Note:- It requires 'VLANSTRIP' feature to be enabled on the vmxnet3 device.
 
- > The Jenkins project is a CVE Numbers Authority (CNA) for Jenkins
- > and Jenkins plugins published by the Jenkins project (listed
- > on plugins.jenkins.io and/or hosted in the jenkinsci
- > GitHub organization). This means that the Jenkins project assigns
- > CVE IDs for vulnerabilities in these components.
 
-A Selenium plugin [2,3] in indeed included in the list of Jenkins
-plugins. This plugin includes [4] selenium-standalone-server but is
-different from selenium-standalone-server [5] itself.
+'CVE-2017-6058' assigned via -> https://cveform.mitre.org/
 
-I asked the Jenkins CNA:
 
- > I have been redirected to you by MITRE concerning the allocation of
- > CVE IDs for several vulnerabilities in Selenium standalone server /
- > Selenium Grid [...]
- >
- > I believe this is a mistake as I do not see any clue indicating
- > that Jenkins CNA might be responsible for assigning CVE IDs
- > to vulnerabilities in this product. Could you confirm me that this
- > is an error by MITRE ?
-
-Here is the answer from the Jenkins CNA:
-
- > You are correct: Selenium is not in the scope of the Jenkins CNA.
- > That said, we assigned CVE IDs in the past for Jenkins plugins
- > integrating Jenkins and Selenium in some way (CVE-2021-21672,
- > CVE-2020-2196). Those are in our scope. Perhaps this is the source
- > of the confusion?
-
-In my third CVE request attempt, I explicitly stated:
-
- > [Additional Information]
- > This was previously reported and denied with the following reason:
- >
- > > The Jenkins CNA is responsible for assigning CVE IDs to
- > > vulnerabilities in this product. Please contact the Jenkins CNA to
- > > get a CVE ID assigned to this issue.
- >
- > I asked Jenkins CNA about this and they denied being responsible
- > for Selenium itself :
- >
- > > You are correct: Selenium is not in the scope of the Jenkins CNA.
- > > That said, we assigned CVE IDs in the past for Jenkins plugins
- > > integrating Jenkins and Selenium in some way (CVE-2021-21672,
- > > CVE-2020-2196). Those are in our scope. Perhaps this is the
- > > source of the confusion?
-
-However, the request is still rejected for the same reason.
-
-Any idea how to proceed from there?
-
-[1] https://www.jenkins.io/security/cna/
-[2] https://plugins.jenkins.io/selenium/
-[3] https://github.com/jenkinsci/selenium-plugin
-[4] https://github.com/jenkinsci/selenium-plugin/blob/master/pom.xml
-[5] 
-https://github.com/SeleniumHQ/selenium/tree/trunk/java/src/org/openqa/selenium/grid
-
-Gabriel
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
