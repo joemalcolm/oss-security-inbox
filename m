@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1318" "Thursday" "20" "October" "2016" "18:36:42" "-0700" "Alex Crawford" "alex.crawford@coreos.com" "<20161021013642.GA23643@buzz.coreos.systems>" "37" "[oss-security] Requesting membership to linux-distros" nil nil nil "10" "2016102101:36:42" "[oss-security] Requesting membership to linux-distros" (number mark "U       alex.crawfor Oct 20   37/1318  " thread-indent "\"[oss-security] Requesting membership to linux-distros\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5029" "Friday" "17" "February" "2017" "12:03:44" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsuT8+3N7181RX3-i-c4xyOjjNEPcBLBNTnkTx62hbuPMA@mail.gmail.com>" "131" "Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]" nil nil nil "2" "2017021714:03:44" "[oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]" (number mark "U       dawid@legalh Feb 17  131/5029  " thread-indent "\"Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]\"\n") "<20170217135245.5717fc91@redhat.com>" ("<CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>" "<20170217135245.5717fc91@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7721 invoked by uid 550); 21 Oct 2016 01:44:47 -0000
+Received: (qmail 7360 invoked by uid 550); 17 Feb 2017 14:03:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +12,173 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3435 invoked from network); 21 Oct 2016 01:36:57 -0000
+Received: (qmail 7336 invoked from network); 17 Feb 2017 14:03:56 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coreos.com; s=google;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=E1OrKE5oa6GlKd22a9kNFK3fuDamVlffvFNOD2WFcdk=;
-        b=qpLJ2J2TKWkT0JdAouPKsvF34ryZYLxUObV0XePNVeeM229AA3tAjNm7n5ez0cx9L4
-         0+sEtbG7vbZ/HGgjqbEKu+a2mP0nH0ElFAVN6wQROUzSe3PHx1djkUpe+wJbM8H3wnue
-         8y38ZWB993H9N/KIx7+mchhAZz8BOR/qcRE48=
+        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Ow4IoWTJGK4DfFvxWWqSkB9yHAXNF9vRXkHVAGKTDuE=;
+        b=ZE9zgq0NlM0qQdRrmdRm56GQ2UyBDXW/TCPdhFD1wSelSvyB5gTdhQot9caShwdlMM
+         YvWSnKboxfIeYLdn3TDlnXp6xQnshxQh+Y3v1Ygb+SAiGrAE+4Tt2kx1ufk7dzezTprc
+         dLJ6DqlR4BO0T/dvN+cSrAaBIu5hZ5AcBkT/xLHUQ0HN2JSvgupToEgJ0+j+PGxqv5Ck
+         jzjR1fz/DRYPV0swu8G7BJw0kBOHAEHHD6e/8qvbNPKoAf1+CXhndQwq99bebJvnWqAz
+         FEaBf7UIYvfdWBqWhm7QsM/+yPFhc6CC7IHyxIi6x346sAb+ZlPA0wsUpGgGVJlsNj+9
+         u3RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=E1OrKE5oa6GlKd22a9kNFK3fuDamVlffvFNOD2WFcdk=;
-        b=Cg6KUI1tabU7MfigJAi4W0V2o2omSPebv7mTJPzpO9nfinuIjw/fDRRGUv6TaLROGN
-         NQbC8wqg6zq6i7RmquWGIwBo4A/Z2j2BRfbZsJr1t4aPbamMvwt9v11oTPPijpOg/U26
-         uZKulYy1eRB8f+AJY7LBlpUEgqxUoWKDYm0bCAZsv3irtoTZrbI3qrlAo7VnhojOoVCx
-         ls6p0pkCAEvw0HZOq+PviyjcB4f8KuekooLsGTcsWFnvyjb8mQjOB/5h9KHstt55lRJl
-         rRcHMWtqirHy/ZELYoqdGHZgGrwiLQzGWuDXhPuRo281hj45b5RpUmfYH/qdFmLlqLZF
-         cwpA==
-X-Gm-Message-State: AA6/9RmBygRRz+7F5XnBOVdL+ET9aS5Ql4qQ4c3qZC11DZNg8Tqy2+a8aFdGmx8EMrDjj91D
-X-Received: by 10.98.141.217 with SMTP id p86mr6494912pfk.109.1477013805567;
-        Thu, 20 Oct 2016 18:36:45 -0700 (PDT)
-Date: Thu, 20 Oct 2016 18:36:42 -0700
-From: Alex Crawford <alex.crawford@coreos.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20161021013642.GA23643@buzz.coreos.systems>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Ow4IoWTJGK4DfFvxWWqSkB9yHAXNF9vRXkHVAGKTDuE=;
+        b=e3A12INJ8jBS6ybNRBCJGbGHNUAeWBAnPxHGTGcUpT3eCYaANOoFqTtSi7AbCNkKFW
+         N6efyGpI7Qzd9cH5U92QEWxtEMk0hE9RIFh3CZ5zzmLsOKlO2JcfNV3fd15udTv2V7Oi
+         /dNaEH+1LycCHN7rRfu/IWaLMHrpF1mDRpdcE5/BSO1qGrWmffA53/ihHaewZ5vHs6KK
+         utMBw+hS7NnsTuASPbSh+OiVickFRqj2YrTgV9SSivOmwuzvOg+i2UGEqmsbHPiDgAmK
+         yKZOW2/k+PyqrdcciiQ1FG9g51+0NgNliNuJg9M2QzYcCDjGbluzTLfLz6JeqwQGyBRU
+         tv0Q==
+X-Gm-Message-State: AMke39lnRavyqmYM/paSRACtt+mDJtfZeZpjhIG2a+UPIQgtq/3BSEizdfNuDhfkffaKDZ/L39SHoIuEVeZHhw==
+X-Received: by 10.159.37.193 with SMTP id 59mr4023923uaf.9.1487340224404; Fri,
+ 17 Feb 2017 06:03:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] Requesting membership to linux-distros
+In-Reply-To: <20170217135245.5717fc91@redhat.com>
+References: <CADSYzstzBNkz6hmpw_4CDyFWR_aQaa-T5yHSTEcVK_Bj-p2ndg@mail.gmail.com>
+ <20170217135245.5717fc91@redhat.com>
+From: Dawid Golunski <dawid@legalhackers.com>
+Date: Fri, 17 Feb 2017 12:03:44 -0200
+Message-ID: <CADSYzsuT8+3N7181RX3-i-c4xyOjjNEPcBLBNTnkTx62hbuPMA@mail.gmail.com>
+To: Tomas Hoger <thoger@redhat.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Subject: Re: [oss-security] MySQL / MariaDB / Percona - Root Privilege
+ Escalation Exploit [ CVE-2016-6664 / CVE-2016-5617 ]
 
---liOOAslEiF7prFVr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hi Tomas,
 
-Hello, I run the CoreOS Linux team for CoreOS, Inc [1]. I thought I
-requested membership in the past, but after double-checking I definitely
-did not. Shoot. DirtyCOW reminded me to actually get this set up. Is
-anything else needed from me?
+Yes, I have reported the insufficient fixes to Oracle and related vendors.
+
+I wanted to allow some more time for patching before making these public.
+I will make my advisories and exploits public soon.
 
 Thanks.
 
--Alex
 
-[1]: https://coreos.com/
+On Fri, Feb 17, 2017 at 10:52 AM, Tomas Hoger <thoger@redhat.com> wrote:
+> On Mon, 14 Nov 2016 14:36:16 -0200 Dawid Golunski wrote:
+>
+>> Vulnerability: MySQL / MariaDB / PerconaDB - Root Privilege Escalation
+>> CVE-2016-6664 / (Oracle)CVE-2016-5617
+>
+> The original MySQL fix for this issue was quite incomplete and easy to
+> bypass.  It had the following problems:
+>
+> - Symlink check was racy - it was easy to replace log file created by
+>   touch by a symlink before chmod and chown was used.
+>
+> - You could avoid the symlink check completely by directly setting
+>   log-error to the path name of the file you want to corrupt, such as:
+>
+>   log-error = /etc/ld.so.preload
+>
+> - Symlink check did not cover hardlinks (this is a variant of the
+>   previous, sort of).
+>
+> - Existing symlinks were used even if they were not chmoded / chowned
+>   any more, so it was possible to corrupt files with myslqd_safe's log
+>   messages.
+>
+> I reported these problems to Oracle, and they assigned CVE-2017-3312
+> for the incomplete fix.  They were addressed in the following commit:
+>
+> https://github.com/mysql/mysql-server/commit/1f93f4381b60e3a8012ba36a4dec920416073759
+>
+> Note that the commit pre-dates Oct 2016 CPU, when Oracle first
+> mentioned CVE-2016-6664 / CVE-2016-5617 as fixed, but it was only
+> included in MySQL 5.5.54, 5.6.35, and 5.7.17 released mid-Dec 2016, and
+> hence listed in Jan 2017 CPU.  The fix also pre-dates my report.
+>
+> Dawid, I assume you were aware of these problems and reported them
+> too.  You're acknowledged as a reporter of (at least) one of the issues
+> in the Jan 2017 CPU:
+>
+> http://www.oracle.com/technetwork/security-advisory/cpujan2017-2881727.html
+>
+> and also in Percona Server release notes:
+>
+> https://www.percona.com/doc/percona-server/LATEST/release-notes/Percona-Server-5.7.17-11.html
+>
+>   mysqld_safe now limits the use of rm and chown to avoid privilege
+>   escalation. chown can now be used only for /var/log directory. Bug
+>   fixed #1660265. Thanks to Dawid Golunski (https://legalhackers.com).
+>
+> Linked Percona bug is not public, but the above text matches MySQL
+> commit linked above.
+>
+> As Oracle is refusing to publicly share any information about their
+> CVEs, can you, Dawid, provide information on what CVE or CVEs were
+> given to you by Oracle in response to your reports, and for what
+> issues?  If you've not received that information yet, would you mind
+> asking?  I suspect you may have some info to share on CVE-2017-3317 and
+> CVE-2017-3318.
+>
+>
+> Besides the above, I also reported the following issues.  CVEs below
+> were assigned by Oracle.
+>
+>
+> CVE-2017-3265 unsafe chmod/chown use in the init script
+>
+> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L97
+> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/packaging/rpm-oel/mysql.init#L73
+>
+> These may allow mysql -> root privilege escalation similar to
+> CVE-2016-6664.  Fixed in:
+>
+> https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-5fccc3d0e109e8f9ad0653728bd1d975
+>
+>
+> CVE-2017-3291 was assigned to two independent issues
+>
+> - unrestricted mysqld_safe's ledir
+>
+> By setting ledir to say /tmp in my.cnf, you could make mysqld_safe
+> execute mysqld from there rather than some expected location
+> under /usr.  Besides mysql -> root escalation, this also could have
+> been used by non-mysql local users in combination with the
+> CVE-2016-6662 issue against MySQL versions that do not support
+> malloc-lib (e.g. MySQL 5.1).  Fixed in:
+>
+> https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247ea
+>
+> - insecure path use in mysqld_safe
+>
+> This code tries to find my_print_defaults command:
+>
+> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L466
+>
+> It first tries relative to $MY_BASEDIR_VERSION, which could have been
+> set to $PWD:
+>
+> https://github.com/mysql/mysql-server/blob/mysql-5.6.34/scripts/mysqld_safe.sh#L402
+>
+> If root ran mysqld_safe while their $PWD was /tmp, arbitrary code
+> controlled by some unprivileged local (not necessarily mysql) user
+> could have been executed.  This was fixed in:
+>
+> https://github.com/mysql/mysql-server/commit/53230ba274a37fa13d65e802c6ef3766cd0c6d91#diff-144aa2f11374843c969d96b7b84247eaL397
+>
+>
+> There are few more related problems fixed in Jan 2017 CPU, but as noted
+> above, Oracle refuses to acknowledge mapping to CVEs publicly.
+>
+> https://github.com/mysql/mysql-server/commit/76e9d7e5b30365e8b167e2070ee00f81cb115b8b
+> https://github.com/mysql/mysql-server/commit/7a5145e445ee802241957eb5290a3e65ea4da70c
+>
+> --
+> Tomas Hoger / Red Hat Product Security
 
---liOOAslEiF7prFVr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
------BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCgAGBQJYCXElAAoJEKYk4DxZNSlCUzgQAMLdjclxWZBkVbNAVKJNzDbx
-r5y86JlK038E8Te4v4+t7h+7mRzAMWoNGHh7+HVaguBV0o8ZoXKcKrXkXDKp+BUy
-or0GCukSqFlNmnPr4pumar00SJzwoiAtXHa5MbjYV6U6uZdEXc3MYwavAWxkA3SQ
-M97tEhiYTjujTVQs+tBt6JhFaawfYhkRP0DnKlM8sJU2v5zDc0EpXoZjjsCRkCM+
-fgDNNvCRk9Kuo8toLhhptFimsV/Vm4v885HXIBhSkR0EQbZNDn5P8KWbUGb3a1PX
-mONvH4YsJ3B7/IP7Ck4qTVTkssVtmiTLMrNjiesJInMe3LiDgXe3Kwo+p9Og2G/f
-YoswdN4ISj39qxF82wkjd0oPLBeIpgC/QKhKaAc7S+eVoF9BZSRr35jqejbiImFk
-NGWQqzomn7VVMd1EO62SaCWDSdImijukJWsCZSty85LXHBvtoeH/jHWnJcUi+Kc3
-RKl3TlLV3XBbxUX741QexFUJGc1Iqulunja3vkOr2TggM/U5jamcFD4aTHbVojJg
-zV+Vgn7PfiP6Jc4TAbYwzFKstP1kjROPWGJk4JZO6hM19K7efa5JlRCJao6tM3du
-4jXfJVUiv3xosnpkreGXjNPM/oV5GKMKXFvOG4ZYncmEu7g7VHnCb4zcpKuUP6tQ
-iKmgkjrYXmvB7OMKQ7dW
-=pSnh
------END PGP SIGNATURE-----
-
---liOOAslEiF7prFVr--
+-- 
+Regards,
+Dawid Golunski
+https://legalhackers.com
+t: @dawid_golunski
