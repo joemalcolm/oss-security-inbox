@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/13/9
-Message-ID: <2ECE9D9EEF1F524185270138AE23265955AB06DE@S0MSMAIL112.arc.local>
-Date: Tue, 13 Jun 2017 16:42:06 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "fweimer@...hat.com" <fweimer@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Vixie/ISC Cron group crontab to root escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/6
+Message-ID: <20170217202319.o47gjtnty37vvubb@eldamar.local>
+Date: Fri, 17 Feb 2017 21:23:19 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: OpenID Connect authentication module for Apache: CVE-2017-6059 CVE-2017-6062
 Content-Type: text/plain; charset=utf-8
 
-> Von: Florian Weimer [mailto:fweimer@...hat.com]
->
-> On 06/13/2017 02:32 PM, Fiedler Roman wrote:
-> > Well, partially: what O_PATH can do, you could also do before O_PATH
-> using
-> > repeated single-level open(NO_FOLLOW)/fstat-checks. So you had to do
-> all the
-> > verification by yourself.
->
-> That's not completely accurate because open/close on device nodes can
-> have side effects (the classic example is a rewinding tape device).
-> O_PATH gives you an opportunity to perform these policy checks before
-> the side effect happens.
+Hi
 
-So true, I know about this case. But my initial messages was not intended to 
-compare subtle differences O_PATH with other OS file access functionality 
-already available but - prove me wrong - to argue for extending open 
-functionality in general using features O_PATH to my knowledge cannot provide. 
-But all that content was removed in the first reply to the message.
+MITRE has assigned two CVEs for the OpenID Connect authentication
+module for Apache (https://github.com/pingidentity/mod_auth_openidc):
 
-LG Roman
+CVE-2017-6059:
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4814 bytes)
+https://github.com/pingidentity/mod_auth_openidc/issues/212
+
+mod_auth_openidc showss user-supplied content on error pages.
+
+CVE-2017-6062:
+
+https://github.com/pingidentity/mod_auth_openidc/issues/222
+
+OIDCUnAuthAction pass does not scrub request headers
+
+Regards,
+Salvatore
