@@ -1,168 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/24/9
-Message-ID: <20170624151504.GA25902@grsecurity.net>
-Date: Sat, 24 Jun 2017 11:15:04 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: Linus Torvalds <torvalds@...ux-foundation.org>
-Cc: oss-security@...ts.openwall.com, pageexec@...email.hu
-Subject: Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/2
+Message-ID: <alpine.LFD.2.20.1702171300440.22691@wniryva>
+Date: Fri, 17 Feb 2017 13:03:11 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2017-6058 Qemu: net: vmxnet3: OOB NetRxPkt::ehdr_buf access when doing vlan stripping
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 23, 2017 at 06:04:00PM -0700, Linus Torvalds wrote:
-> On Fri, Jun 23, 2017 at 5:50 PM, Brad Spengler <spender@...ecurity.net> wrote:
-> >
-> > BTW, we're happy to go toe-to-toe with you here in public on actual facts
-> > instead of pathetic ad hominems.
-> 
+   Hello,
 
-Linus,
+Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support is 
+vulnerable to an out-of-bounds access issue. It could occur while stripping 
+VLAN header from 'eth_buf' buffer in receiving packets.
 
-Are you backing down from providing any actual facts from your claims? (Wouldn't
-be the first time) Let me provide some facts then.
+A remote user/process could use this issue to crash Qemu process resulting in 
+DoS.
 
-https://grsecurity.net/~spender/stack_gap_fix.txt
-(and since posting just the URL isn't enough):
-Pulled in the 4.11 upstream fixes for the stack gap problem:
+Upstream patch:
+---------------
+   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-02/msg03527.html
 
-Unmerged paths:
-  (use "git add <file>..." to mark resolution)
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1423358
 
-	both modified:   arch/arm/mm/mmap.c
-	both modified:   arch/frv/mm/elf-fdpic.c
-	both modified:   arch/mips/mm/mmap.c
-	both modified:   arch/powerpc/mm/slice.c
-	both modified:   arch/sh/mm/mmap.c
-	both modified:   arch/sparc/kernel/sys_sparc_64.c
-	both modified:   arch/sparc/mm/hugetlbpage.c
-	both modified:   arch/x86/kernel/sys_x86_64.c
-	both modified:   arch/x86/mm/hugetlbpage.c
-	both modified:   fs/hugetlbfs/inode.c
-	both modified:   mm/mmap.c
+Note:- It requires 'VLANSTRIP' feature to be enabled on the vmxnet3 device.
 
-Huh, this sure is a whole lot of merge conflicts, generally only
-happens when someone's copy+pasting code and renaming things.
-Let's take a look at some of these rejects (HEAD is PaX, the ugly vm_start_gap
-is the upstream fix):
 
-fs/hugetlbfs/inode.c:
-<<<<<<< HEAD
-                if (TASK_SIZE - len >= addr && check_heap_stack_gap(vma, addr, len))
-=======
-                if (TASK_SIZE - len >= addr &&
-                    (!vma || addr + len <= vm_start_gap(vma)))
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
+'CVE-2017-6058' assigned via -> https://cveform.mitre.org/
 
-arch/arm/mm/mmap.c:
-<<<<<<< HEAD
-                if (TASK_SIZE - len >= addr && check_heap_stack_gap(vma, addr, len))
-=======
-                if (TASK_SIZE - len >= addr &&
-                    (!vma || addr + len <= vm_start_gap(vma)))
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
 
-arch/sh/mm/mmap.c:
-<<<<<<< HEAD
-                if (TASK_SIZE - len >= addr && check_heap_stack_gap(vma, addr, len))
-=======
-                if (TASK_SIZE - len >= addr &&
-                    (!vma || addr + len <= vm_start_gap(vma)))
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
-
-arch/x86/kernel/sys_x86_64.c:
-<<<<<<< HEAD
-                if (end - len >= addr && check_heap_stack_gap(vma, addr, len))
-=======
-                if (end - len >= addr &&
-                    (!vma || addr + len <= vm_start_gap(vma)))
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
-
-arch/powerpc/mm/slice.c:
-<<<<<<< HEAD
-        return check_heap_stack_gap(vma, addr, len);
-=======
-        return (!vma || (addr + len) <= vm_start_gap(vma));
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
-
-arch/frv/mm/elf-fdpic.c:
-<<<<<<< HEAD
-                if (TASK_SIZE - len >= addr && check_heap_stack_gap(vma, addr, len))
-=======
-                if (TASK_SIZE - len >= addr &&
-                    (!vma || addr + len <= vm_start_gap(vma)))
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
-
-arch/mips/mm/mmap.c:
-<<<<<<< HEAD
-                if (TASK_SIZE - len >= addr && check_heap_stack_gap(vma, addr, len))
-=======
-                if (TASK_SIZE - len >= addr &&
-                    (!vma || addr + len <= vm_start_gap(vma)))
->>>>>>> 9f3069116ed29013d0eb89e02def9effb038f850
-
-(the rest are all the same kinds of rejects)
-
-Let's look at our check_heap_stack_gap():
-
-bool check_heap_stack_gap(const struct vm_area_struct *vma, unsigned long addr, unsigned long len)
-{
-        if (!vma) {
-#ifdef CONFIG_STACK_GROWSUP
-                if (addr > sysctl_heap_stack_gap)
-                        vma = find_vma(current->mm, addr - sysctl_heap_stack_gap);
-                else
-                        vma = find_vma(current->mm, 0);
-                if (vma && (vma->vm_flags & VM_GROWSUP))
-                        return false;
-#endif
-                return true;
-        }
-
-        if (addr + len > vma->vm_start)
-                return false;
-
-        if (vma->vm_flags & VM_GROWSDOWN)
-                return sysctl_heap_stack_gap <= vma->vm_start - addr - len;
-#ifdef CONFIG_STACK_GROWSUP
-        else if (vma->vm_prev && (vma->vm_prev->vm_flags & VM_GROWSUP))
-                return addr - vma->vm_prev->vm_end >= sysctl_heap_stack_gap;
-#endif
-
-        return true;
-}
-
-Amazing, it took them 4 whole weeks just to rip off PaX's fix from 2010.
-
-So Linus, you called the patches garbage when someone asked how we fixed the heap
-stack gap issue 7 years ago when you failed to.  Can you provide any technical details
-demonstrating why that fix is garbage, the fix that looks very similar in form and
-function to what's present upstream now finally (in some of the kernels at least, and
-minus ours being configurable and cleaner)?
-Can you explain how our fix breaks userland and how your 2010 fix didn't?
-
-If not, I'd suggest you keep your lies and FUD to yourself.  No one but lackeys for
-your cult of personality are buying it.  You and others trot out the same old tired
-excuse about "breaking userland" and never offer up any real facts.  If it were the
-case, it wouldn't be possible to run grsec on anything but distros with recompiled
-userland, and yet we work just fine on any distro.  It's a meaningless crutch for
-people apparently have never looked at any kernel code of ours who refuse to accept
-the simple facts:
-1) You're not security experts
-2) You view security as an annoyance
-3) The Linux kernel's security track record is terrible
-
-It's the only way they can justify it in their minds -- the problem surely can't
-be that you've ignored the problem for years and lied to people telling them it's
-the best that can be done.  When some outside group proves you wrong, you have to
-pretend there's no way you could have done what they did, because you care so much
-about code quality.  How can you explain the verbatim copy+pasting of our code if
-that's the case?  Please explain to the world how if our code is such garbage, you
-haven't been able to come up with any significant security improvements without it?
-
-Put up or shut up, for once.
-
-> Please.
-Please.
-
--Brad
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
