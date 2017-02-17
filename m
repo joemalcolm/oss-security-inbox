@@ -1,64 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/28/3
-Message-ID: <1380.82969667153-sendEmail@localhost>
-Date: Mon, 28 Aug 2017 14:29:32 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: openjpeg: invalid memory write in tgatoimage (convert.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/17/5
+Message-ID: <65b06dc7fec741e9a6d301142f20705d@imshyb01.MITRE.ORG>
+Date: Fri, 17 Feb 2017 12:25:17 -0500
+From: <cve-assign@...re.org>
+To: <oss-security@...ts.openwall.com>
+CC: <cve-assign@...re.org>
+Subject: Re: MITRE is adding data intake to its CVE ID process
 Content-Type: text/plain; charset=utf-8
 
-Description:
-openjpeg is an open-source JPEG 2000 library.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The complete ASan output of the issue:
+> C11. The https://cveform.mitre.org X.509 certificate chain is
+> incomplete.
+>
+> R11. Yes, we realize this and will be adding the missing item (Entrust
+> Certification Authority - L1K) soon.
 
-# opj_compress -r 20,10,1 -jpip -EPH -SOP -cinema2K 24 -n 1 -i $FILE -o null.j2k
-ASAN:DEADLYSIGNAL                                                                                                                                                                                                 
-=================================================================                                                                                                                                                 
-==13239==ERROR: AddressSanitizer: SEGV on unknown address 0x7f4f2e9b4800 (pc 0x00000052264a bp 0x7ffff176def0 sp 0x7ffff176dde0 T0)                                                                               
-==13239==The signal is caused by a WRITE memory access.                                                                                                                                                           
-    #0 0x522649 in tgatoimage /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:928:45                                                                                           
-    #1 0x50b4e6 in main /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/opj_compress.c:1881:21                                                                                           
-    #2 0x7f5de2316680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                    
-    #3 0x41bc18 in _start (/usr/bin/opj_compress+0x41bc18)                                                                                                                                                        
-                                                                                                                                                                                                                  
-AddressSanitizer can not provide additional info.                                                                                                                                                                 
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-libs/openjpeg-9999/work/openjpeg-9999/src/bin/jp2/convert.c:928:45 in tgatoimage                                                                           
-==13239==ABORTING                                                                                                                                                                                                 
-CINEMA 2K profile activated                                                                                                                                                                                       
-Other options specified could be overridden
+Our current maintenance schedule for resolving this is 2017-02-21 at 
+2300 to 2359 UTC.
 
-Affected version:
-Master at 2017-08-17 and maybe paste releases
+> C5. I want MITRE to send the https://cveform.mitre.org form data, and
+> the CVE ID, to the oss-security list at the same time that these are
+> sent to the requester.
+>
+> R5. We have had internal discussions within MITRE about this. We are
+> able to implement this easily if the community requires this approach.
+> At the moment, we are expecting the requester to resend this
+> information to oss-security once they accept their CVE ID assignment.
 
-Fixed version:
-N/A
+We apologize for the delayed response on this topic. The CVE Team has 
+been considering deeper details of how this could be implemented. The 
+advantage is that oss-security readers would obtain vulnerability 
+details faster. The main disadvantage is that it would discourage some 
+people from ever making CVE requests with public vulnerability 
+information, and thus might make the overall information flow worse. 
+The reasons it could discourage people include:
 
-Commit fix:
-https://github.com/uclouvain/openjpeg/commit/2cd30c2b06ce332dede81cccad8b334cde997281
+  - At the time of their CVE request, they have a rough draft that
+    proves that a CVE should exist, but they haven't edited it for
+    full technical accuracy and/or spelling/grammar. They do not want
+    unedited text to be publicly attached to their name.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+  - People sometimes rely on their request remaining non-public, and
+    provide a great variety of information to us when requesting a CVE
+    ID for an already-disclosed vulnerability. They would need to
+    spend extra time on redactions, or MITRE would need to allocate
+    staff time to assess what part of the request seems non-public,
+    and redact it before making the oss-security post. Examples
+    include: (A) some people provide their work email address that
+    they don't ever use on public mailing lists, (B) some people
+    forward email threads with personal email addresses of the
+    vendor's PSIRT staff who responded to them, (C) some people
+    include non-public credentials for a demo site or a download of an
+    unreleased build with an experimental fix, (D) some people refer
+    to embargoed vulnerabilities when clarifying that they have a new
+    request that is different from related embargoed vulnerabilities.
+    
+In general, there's a common case (the requester only provides a
+basic technical outline of the vulnerability and the commit URL)
+where implementation is easy. There are several corner cases where
+implementation is hard. The simple solution is to always ask the
+requester to make their own (correctly threaded) oss-security post
+that contains any or all of the response from MITRE. Until we have a
+better understanding of why that simple solution is incorrect, we are
+continuing to go with that simple solution. Thus far, every
+https://cveform.mitre.org user (who we recognize as being an
+oss-security participant) has made their own subsequent oss-security
+post with at least the CVE ID. In other words, we haven't noticed a 
+problem at this point. We will continue to monitor open-source requests 
+for this situation and may reconsider this position if the problem 
+presents itself.
 
-CVE:
-Waiting for a CVE assignment
+One final note: if the person declines to make their own oss-security
+post, this does NOT mean that the vulnerability becomes impossible to
+find. The CVE Team does publish entries on https://cve.mitre.org for
+these public vulnerabilities, and this may happen very quickly when
+the requester writes the description.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00326-openjpeg-invalidwrite-tgatoimage
+- -- 
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Timeline:
-2017-08-17: bug discovered and reported to upstream
-2017-08-28: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/28/openjpeg-invalid-memory-write-in-tgatoimage-convert-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+iQIcBAEBCAAGBQJYpy7yAAoJEHb/MwWLVhi2ol4QAJvLHwhli8Xn4Ib9QfHbD+GN
+xCtdhEaJ7hjt6iHWIxgS/k1kTQN0HLPH8z3ubvN9Uc1dW0UYuaVphxaXJ1vXuVqJ
+/YKrUPw7WdIVWPSPfhLnmisBAI9+8YNhffRP8QAe8FyFSAyDCPYRzpJNo3kpP7s8
+/JO2eJFgB9zVbIfNYGtshdEL/F34UDLbldfC3ihOmFCnGeMpp3+xm/ZJo/XjX6Yv
+k9P9vZEbl3meylrn1UW9314aSDt7kydcNsP6UvtH9mmXKn4ROtKW3+FmyuUX1G4L
+NXkvHCqOVnL3ht0n1ZcTxvCCOACMjYF3WJDgvTJMU7af+sW7KE9FwhCwnVtIJXcd
+Z3xaVOlIsVwkHjntS2+6L0YWeG6fRO9diiNmRajmn5DUbyAShNwtW+zauaA7CrqZ
+meClRv+ndXBjbK2x4n15wJ6ml5R93E3Iq3HdlSf27zS9lNAHLxvq1cQF0WcDMAoG
+SZX0+lVCQtAMXiNJG5AMIY5y933n29Q1h/mVqoml2jwNpq7vlyIeunGAkZ4jzchD
+eRci0wcVboVRp4pMmbT0mvt6pFwStypyFchm/bv+JN1f0o/F0YZegA4rZ6vwtyN6
+NVxa70Sg+gjVx12YIgtwBDaq2Lpfaijcsqf+5kL74XJrCO3lChoQeirmELRzK4gH
+4Jxus+DnasYSrVlsJ9Wq
+=VpXe
+-----END PGP SIGNATURE-----
