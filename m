@@ -1,40 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/19/11
-Message-ID: <d95393cd-f9f9-4ddf-d8bd-9bb972214230@apache.org>
-Date: Mon, 19 Jun 2017 15:17:03 -0700
-From: Jacob Champion <jchampion@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/18/1
+Message-ID: <3712113.HmbQZlNGGF@arcadia>
+Date: Sat, 18 Feb 2017 12:38:45 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7668: Apache httpd 2.x ap_find_token buffer overread
+Subject: mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7668: ap_find_token buffer overread
-
-Severity: Important
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-httpd 2.2.32
-httpd 2.4.24 (unreleased)
-httpd 2.4.25
-
 Description:
-The HTTP strict parsing changes added in 2.2.32 and 2.4.24 introduced a
-bug in token list parsing, which allows ap_find_token() to search past
-the end of its input string. By maliciously crafting a sequence of
-request headers, an attacker may be able to cause a segmentation fault,
-or to force ap_find_token() to return an incorrect value.
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-Mitigation:
-2.2.32 users should either apply the patch available at
-https://www.apache.org/dist/httpd/patches/apply_to_2.2.32/CVE-2017-7668.patch
-or upgrade in the future to 2.2.33, which is currently unreleased.
+A crafted image posted early for another issue, causes a stack overflow.
 
-2.4.25 users should upgrade to 2.4.26.
+The complete ASan output:
+
+# mujstest $FILE
+==32127==ERROR: AddressSanitizer: stack-buffer-overflow on address 
+0x7fff29560b00 at pc 0x00000047cbf3 bp 0x7fff29560630 sp 0x7fff2955fde0
+WRITE of size 1453 at 0x7fff29560b00 thread T0
+    #0 0x47cbf2 in __interceptor_strcpy /tmp/portage/sys-devel/llvm-3.9.1-
+r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:548
+    #1 0x50e903 in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/platform/x11/jstest_main.c:358:7
+    #2 0x7f68df3c578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #3 0x41bc18 in _init (/usr/bin/mujstest+0x41bc18)
+
+Address 0x7fff29560b00 is located in stack of thread T0 at offset 1056 in 
+frame
+    #0 0x50c45f in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/platform/x11/jstest_main.c:293
+
+  This frame has 7 object(s):
+    [32, 1056) 'path'
+    [1184, 2208) 'text' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2336, 2340) 'w' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2352, 2356) 'h' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2368, 2372) 'x' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2384, 2388) 'y' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2400, 2404) 'b' 0x1000652a4160:[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 
+f2 f2
+  0x1000652a4170: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a4180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a4190: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a41a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a41b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==32127==ABORTING
+
+Affected version:
+1.10a
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
 
 Credit:
-The Apache HTTP Server security team would like to thank Javier Jiménez
-(javijmor@...il.com) for reporting this issue.
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-References:
-https://httpd.apache.org/security_report.html
+CVE:
+CVE-2017-6060
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00147-mupdf-mujstest-stackoverflow-main
+
+Timeline:
+2017-02-05: bug discovered and reported to upstream
+2017-02-17: blog post about the issue
+2017-02-17: CVE assigned via cveform.mitre.org
+
+Note:
+This bug was found with Address Sanitizer.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/17/mupdf-mujstest-stack-based-buffer-overflow-in-main-jstest_main-c
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
