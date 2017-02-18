@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1940" "Monday" "16" "January" "2017" "19:06:47" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>" "60" "[oss-security] Re: jasper: multiple crashes with UBSAN" nil nil nil "1" "2017011700:06:47" "[oss-security] Re: jasper: multiple crashes with UBSAN" (number mark "U       cve-assign@m Jan 16   60/1940  " thread-indent "\"[oss-security] Re: jasper: multiple crashes with UBSAN\"\n") "<1817798.vB5Z0p8x99@blackgate>" ("<1817798.vB5Z0p8x99@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3261" "Saturday" "18" "February" "2017" "12:38:45" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3712113.HmbQZlNGGF@arcadia>" "98" "[oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)" nil nil nil "2" "2017021811:38:45" "[oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)" (number mark "U       ago@gentoo.o Feb 18   98/3261  " thread-indent "\"[oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28463 invoked by uid 550); 17 Jan 2017 00:07:04 -0000
+Received: (qmail 9900 invoked by uid 550); 18 Feb 2017 11:39:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28431 invoked from network); 17 Jan 2017 00:07:02 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <1817798.vB5Z0p8x99@blackgate>
-Message-ID: <8a5a04a665204da0b2ed5ad2766b05b3@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:06:47 -0500
+Received: (qmail 9875 invoked from network); 18 Feb 2017 11:39:03 -0000
+Message-ID: <3712113.HmbQZlNGGF@arcadia>
+User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: jasper: multiple crashes with UBSAN
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Date: Sat, 18 Feb 2017 12:38:45 +0100
+From: Agostino Sarubbo <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
 
-> http://blogs.gentoo.org/ago/2017/01/16/jasper-multiple-crashes-with-ubsan/
+A crafted image posted early for another issue, causes a stack overflow.
 
-> [] jasper-1.900.17/src/libjasper/include/jasper/jas_math.h:156:11
-> runtime error: left shift of negative value -185
+The complete ASan output:
 
-Use CVE-2017-5498.
+# mujstest $FILE
+==32127==ERROR: AddressSanitizer: stack-buffer-overflow on address 
+0x7fff29560b00 at pc 0x00000047cbf3 bp 0x7fff29560630 sp 0x7fff2955fde0
+WRITE of size 1453 at 0x7fff29560b00 thread T0
+    #0 0x47cbf2 in __interceptor_strcpy /tmp/portage/sys-devel/llvm-3.9.1-
+r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:548
+    #1 0x50e903 in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/platform/x11/jstest_main.c:358:7
+    #2 0x7f68df3c578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
+r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #3 0x41bc18 in _init (/usr/bin/mujstest+0x41bc18)
 
+Address 0x7fff29560b00 is located in stack of thread T0 at offset 1056 in 
+frame
+    #0 0x50c45f in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
+source/platform/x11/jstest_main.c:293
 
-> [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1838:9
-> runtime error: signed integer overflow: -64356352 * 6359082673847140352 cannot
-> be represented in type 'long'
+  This frame has 7 object(s):
+    [32, 1056) 'path'
+    [1184, 2208) 'text' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2336, 2340) 'w' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2352, 2356) 'h' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2368, 2372) 'x' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2384, 2388) 'y' <== Memory access at offset 1056 partially underflows 
+this variable
+    [2400, 2404) 'b' 0x1000652a4160:[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 
+f2 f2
+  0x1000652a4170: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a4180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a4190: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a41a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x1000652a41b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==32127==ABORTING
 
-Use CVE-2017-5499.
+Affected version:
+1.10a
 
+Fixed version:
+N/A
 
-> [] jasper-1.900.17/src/libjasper/jpc/jpc_dec.c:1819:40
-> runtime error: shift exponent 117 is too large for 64-bit type 'jpc_fix_t'
-> (aka 'long')
+Commit fix:
+N/A
 
-Use CVE-2017-5500.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+CVE-2017-6060
 
-> [] jasper-1.900.17/src/libjasper/jpc/jpc_tsfb.c:233:35
-> runtime error: signed integer overflow: 2013306369 + 251691968 cannot be
-> represented in type 'int'
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00147-mupdf-mujstest-stackoverflow-main
 
-Use CVE-2017-5501.
+Timeline:
+2017-02-05: bug discovered and reported to upstream
+2017-02-17: blog post about the issue
+2017-02-17: CVE assigned via cveform.mitre.org
 
+Note:
+This bug was found with Address Sanitizer.
 
-> [] jasper-1.900.17/src/libjasper/jp2/jp2_dec.c:485:49
-> runtime error: left shift of negative value -26
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/17/mupdf-mujstest-stack-based-buffer-overflow-in-main-jstest_main-c
 
-Use CVE-2017-5502.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYfV+HAAoJEHb/MwWLVhi29L0P/RqDlicXsi+o1z9ZFsl+bmfO
-yChkhBebWjCWyRlvQjce8JlYxpwK1sRSD1j+7tkoSkRbkBwuDPswg07l7xx4/N74
-B0MJpzC0XZe+7QmngkB5M29L8UY/qJ4E1WNu9ztMvbZCAimW9JR9Kbar3ptzIlD8
-C0bMFhIRiPkhrnxqzSkQHLVUXVr5I3KC4RHh6qWkFa9TnEUyD52MAjYb4sSPjmMH
-sqz9omf5+mt3g0gfjC/UMOwXx2j+s8EwQ9sslFhqKz+CCvj17zXlpXZt6yVpltBl
-beZ6amDVoEQ4lSjoLoI5tfpCAD5DdgXQHDaNFcyCcgUd8uCqhbpPFngbWPnISgDY
-tdify6oI9K5t1hnEkYjE2RLLexB6DoQ3l7xOv98lY5YN3isoxliA76AYS+74/sJ5
-d2/bVoeybQ/T/0BFbNOKP1fEUjoVVv/XCR6+fJOu0ABQ10ELWBPqzNNzd6fcvLon
-suXIQ7xwQfb3vRbwY8uERZugs9W04SxWe8FIHjmjskCSDgnPRgIGPki+yUvg1WwO
-s9Xq9GCrdwsnFH0PwCHpAF/AHcuuFJBda0W9NzEKXHNKuSFhvWqr1OK8lpwXSBut
-OfkwPU+zbyYX2z8h1lNaS6smZCRT7ys8m1SJ5BGzABBu8Zl9OtXwYKdRBKw10kgb
-hrjK/+wlvlxwNxlHUK0R
-=tuOh
------END PGP SIGNATURE-----
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
