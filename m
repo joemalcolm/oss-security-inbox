@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8676" "Saturday" "20" "February" "2021" "02:42:38" "+0000" "ISC Security Officer" "security-officer@isc.org" nil "193" "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17" nil nil nil "2" nil nil (number mark "U       security-off Feb 20  193/8676  " thread-indent "\"[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] BIND Operational Notification: Zone journal (.jnl) file incompatibility,after upgrading to BIND 9.16.12 and 9.17" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["264" "Sunday" "19" "February" "2017" "17:43:59" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170219164359.a35hj2hnwriqyqfr@eldamar.local>" "13" "[oss-security] TCPDF: CVE-2017-6100: LFI posting internal files externally abusing default parameter" nil nil nil "2" "2017021916:43:59" "[oss-security] TCPDF: CVE-2017-6100: LFI posting internal files externally abusing default parameter" (number mark "U       carnil@debia Feb 19   13/264   " thread-indent "\"[oss-security] TCPDF: CVE-2017-6100: LFI posting internal files externally abusing default parameter\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11345 invoked by uid 550); 20 Feb 2021 07:46:13 -0000
+Received: (qmail 13825 invoked by uid 550); 19 Feb 2017 16:44:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,227 +12,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29795 invoked from network); 20 Feb 2021 02:42:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1613788963; bh=yyVfmGLCSHRfvLbPnJiguadZq4GISIegTb0hmMQn/oU=;
-	h=To:Cc:From:Subject:Date;
-	b=oMwlCcE/XXW+8egiMCk7Pvia781Zz0EIU8N4mMzrLBEk9oE2hs+joSNWrFBGwmGZv
-	 LYAoOBaOTPhE+coEJovT3n7UemIfDJ/ER9DArFkOhP67dbGLUTBEE5sfjbEVa6ec52
-	 aUaPOHUm4WMIBBsF1fUoZouQ368ux5g9/n10kdcs=
-DKIM-Filter: OpenDKIM Filter v2.9.2 zmx1.isc.org CFD23160086
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1613788962;
-	bh=Zn7++YQ/RHn35bHHa4oTpSy+gJ2h1K8OTpMCQhwlYBE=;
-	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=E/tbAEDOhZQVC1wYV1GSYxbjIrNMt5HebBVqiixCJ7amZwlT/nRGiXNsN5PLc2sAb
-	 nKzDE+dV35Qv/VYdD/PhlYalZw/EIsKQj/DrcgfdSXXysXR153PyX4+t3Mu4MTf3Vr
-	 CozpYMtnKMACrz2mbtW0eKD5gfTQIUWi1fgxHFQQ=
-To: oss-security@lists.openwall.com
-Cc: ISC Security Officer <security-officer@isc.org>
-From: ISC Security Officer <security-officer@isc.org>
-Organization: Internet Systems Consortium
-Message-ID: <3a4ed73f-854b-539b-67df-422a808b0ce8@isc.org>
-Date: Sat, 20 Feb 2021 02:42:38 +0000
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
+Received: (qmail 13807 invoked from network); 19 Feb 2017 16:44:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=G8+SsR2i+eY6h1qOOrW39SraxmxoHal0vFSdoIKR/RA=;
+        b=MGx0PwYPv3vqUZmbZEI/6hZCQcmjPk5DWZF+qTg8Mz4P1b/M6P0g0xNuWPfccfMIrO
+         cE/dPdaCtjM5s0vVaqknQc7WZkUHwMdNnODRH66fRslYLXKjnRWBs2/kUJ+igOaQCL7R
+         tWDVp1bKiZWF3+XlgUhn+k44+UEExNRcOuH6CaJHVd/WA8rk2sLZkHN95/aR8NnCwyOZ
+         ESHatPtmyz7piYhTjCmJxJ5nSk7ODH7kbsO3zE0O7SLY+fci/JHr6AfxToirlP95wRe9
+         74u0dKXZJPFeX4z0M0iFU1+V8WNIdjTB60SP/iHcZMOyRsUPYryeOsBRsQSz90rh7QhO
+         Gu1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:content-transfer-encoding
+         :user-agent;
+        bh=G8+SsR2i+eY6h1qOOrW39SraxmxoHal0vFSdoIKR/RA=;
+        b=svRCwQf2KpZnKCTGs0GeJVg4IzV+yKrMdKP7QhV7/epg9XZuFL6wxXMOXdDPqbRBlU
+         Ahsgvs1uqu6WQvhn8Buh0g2KXguL5pZpq6CKZy02OrCDlbnoYIniW0InyvMIh7SdEzED
+         24g6khauNbjz0B4YK3HtBRNP9P/vmXLgya1tuH6aVHjz+RjW09KH4YpKPaq6lJ/LVNRm
+         Doj585xBCAEu0JcqUSHutqVTp9uMzd57cb0e1lbPYNQTfxe00k7HZkBv9rSESZM2oBUb
+         LTCmkLjD87a1PnQV0kyIse+2W6sb+rpFvt95g9zKcmm9WOarcRWjrviPLfiD7ZCAa/VA
+         80jA==
+X-Gm-Message-State: AMke39k1KzKVfU2aDaD3ybN6f5N+ekIW8dINGf4umXReK0QbV+WKbxehsXyLPZupM5HUYw==
+X-Received: by 10.28.132.2 with SMTP id g2mr14107988wmd.103.1487522640967;
+        Sun, 19 Feb 2017 08:44:00 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 19 Feb 2017 17:43:59 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170219164359.a35hj2hnwriqyqfr@eldamar.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] BIND Operational Notification: Zone journal (.jnl) file
- incompatibility,after upgrading to BIND 9.16.12 and 9.17
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] TCPDF: CVE-2017-6100: LFI posting internal files externally abusing
+ default parameter
 
-To the packagers and redistributors of BIND --
+Hi
 
-To our great embarrassment and sincere regret, another serious problem
-has been found affecting servers upgrading to BIND 9.16.12.
+CVE-2017-6100 has been assigned for the following issue in TCPDF:
 
-If you have not already distributed packages based on 9.16.12 but
-planned to do so, we recommend that you change your plans and instead
-issue an updated package based on 9.16.11 plus the CVE-2020-8625 patch
-found at
-https://downloads.isc.org/isc/bind9/9.16.12/patches/CVE-2020-8625.patch.
+https://sourceforge.net/p/tcpdf/bugs/1005/
 
-If you already HAVE distributed packages based on BIND 9.16.12 -- we are
-really sorry, and here is what you will need to know.
+tcpdf allows to upload files from the server generating PDF-files to
+an external FTP.
 
-Cathy Almond
-(for ISC Security Officer)
+The issue was discovered by  Frans Rosén.
 
------
-
-Operational Notification: Zone journal (.jnl) file incompatibility
-after upgrading to BIND 9.16.12 and 9.17
-
-Posting date:        19 February 2021
-Program impacted:    BIND
-Versions affected:   BIND 9.16.12, BIND 9.16.12-S1 (Supported Preview
-                     Edition) and versions 9.17.0 -> 9.17.10 of the 9.17
-                     development branch.
-
-Description:
-
-   All changes made to a zone using dynamic updates or inbound
-   incremental zone update (IXFR) are stored in the zone's journal file.
-   This journal (.jnl) file is automatically created and maintained by
-   named, and will be used when named is re-started after a shutdown or
-   crash to roll-forward (replay) any zone updates that were not yet in
-   the version of the zone on disk when named stopped. A zone's journal
-   file is also used to provide incremental updates (IXFRs) to other
-   servers. DNSSEC-signed zones using inline-signing will also have
-   journal files associated with the signed version of the zone.
-
-   In BIND 9.17.0, we introduced the max-ixfr-ratio option, which is a
-   percentage representing the ratio of IXFR size to the size of the
-   entire zone. This sets the size threshold (expressed as a percentage
-   of the size of the full zone) beyond which named chooses to use an
-   AXFR response rather than IXFR when answering zone transfer requests.
-   This feature has now been back-ported to BIND 9.16, making its debut
-   in the 9.16.12 releases.
-
-   Unfortunately, one feature of this change escaped our notice, both
-   when writing the release documentation for BIND 9.17.0, and then
-   later on, adding the max-ixfr-ratio option to BIND 9.16.12. A small
-   change was required to the format of the journal (.jnl) file format
-   in order to support the calculation of an IXFR size during its
-   preparation. The old format .jnl file is incompatible with the
-   versions of BIND that support the new max-ixfr-ratio option.
-
-   When BIND is upgraded to 9.16.12, 9.16.12-S1 or 9.17 (any version)
-   and then started with journal (.jnl) files present that were created
-   by earlier versions, then the zone load will fail because the journal
-   roll-forward step will not recognise the older format.
-
-Impact:
-
-   This problem can affect BIND servers whose authoritative zones are
-   maintained via dynamic updates, or by editing the zone file and
-   reloading on a server with option 'ixfr-from-differences' enabled.
-   Secondary zones that are maintained using incremental updates (IXFR)
-   are similarly at risk. The 'ixfr-from-differences' option may also be
-   used in some environments to generate journal files following an
-   inbound AXFR.
-
-Workarounds:
-
-   We do not have a tool available to convert the journal files to the
-   new format, therefore on upgrading, it is necessary to start named
-   with the old format journal files removed.
-
-   (Options if you have not yet upgraded:)
-
-   1.  Before upgrading, ensure that named is stopped using rndc stop.
-   This will ensure that all zones are written to disk during the
-   shutdown processing. After named has stopped, delete or relocate all
-   the associated .jnl files so that they are not accessed when named is
-   restarted. named will generate new .jnl files as needed.
-
-   Warning: Do not stop named using rndc halt before upgrading
-   --
-     Using rndc halt instead of rndc stop will stop the server
-     immediately.  Recent changes made through dynamic update or
-     IXFR are not saved to the zone files on disk first (and will
-     need to be rolled-forward from the journal files when named is
-     restarted; this is what you need to prevent so that you can
-     delete them before upgrading).
-   --
-
-   2.  For a provisioning/primary authoritative server, you have another
-   option for ensuring that the zones are written to disk and that the
-   journal files are removed. First, ensure that all dynamic updates are
-   paused, then issue command:
-
-      rndc sync -clean
-
-   Then stop named as normal (you should not need to remove the .jnl
-   files manually as the 'rndc sync -clean' will have taken care of this
-   step).
-
-   (Options if you have already upgraded:)
-
-   3.  If named was stopped before you upgraded using rndc stop and you
-   know that this completed successfully, then removing or relocating
-   the .jnl files will be all that you need to do.
-
-   4.  If you are not sure if your zone files on disk were updated when
-   you stopped named and you have a large number of zones to recover,
-   then it may be easiest to back-out the update, start named to do the
-   roll-forward and load, and then shutdown again (rndc stop) before
-   following option 1. above.
-
-   5.  If you have only a small number of zones to recover, then you may
-   prefer to recover (or build) named-checkzone from your pre-upgrade
-   version of BIND and use that to regenerate the zone files from
-   the .jnl files.
-
-   For example, to create a new zone file 'example.com.new' for zone
-   'example.com' by rolling forward from 'example.com.jnl' and
-   'example.com', you would type:
-
-      named-checkzone -jD -o example.com.new example.com example.com
-
-   And then you would:
-
-   - remove files 'example.com.jnl' and 'example.com'
-   - rename 'example.com.new' to 'example.com'.
-
-   Note: Use -f and -F options if your zone files are not in text
-   format. BIND supports several formats of zone file - check which
-   format you need first.
-
-   Hint: Make backup copies of the zone and .jnl files before you run
-   named-compilezone.  The named-checkzone utility, when run with the
-   -jD  options, will apply the journal file changes to the zone and
-   then delete it afterwards. If you make a mistake with the options,
-   you may want to start again; having a backup copy in that situation
-   is essential!
-
-Solution:
-
-   Code changes to support roll-forward from the older format of .jnl
-   files are planned for the March 2021 maintenance releases (due
-   17 March 2021) but until then the measures suggested in the
-   "Workarounds" section should prevent or resolve post-upgrade zone
-   loading problems for Authoritative BIND server operators.
-
-Do you still have questions?
-Questions regarding this notification should go to security-
-officer@isc.org. To report a new issue, please encrypt your message
-using security-officer@isc.org's PGP key which can be found here:
-https://www.isc.org/pgpkey/. If you are unable to use encrypted email,
-you may also report new issues at: https://www.isc.org/reportbug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected. (For current information on which
-   versions are actively supported, please see:
-   https://www.isc.org/download/.)
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can be
-   found in the ISC Software Defect and Security Vulnerability
-   Disclosure Policy at https://kb.isc.org/docs/aa-00861.
-
-This Knowledgebase article, found at
-https://kb.isc.org/v1/docs/operational-notification-zone-journal-jnl-file-i=
-ncompatibility-after-upgrading-to-bind-91612-and-917
-is the complete and official
-operational notification document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on an "AS
-   IS" basis. No warranty or guarantee of any kind is expressed in this
-   notice and none should be implied. ISC expressly excludes and
-   disclaims any warranties regarding this notice or materials referred
-   to in this notice, including, without limitation, any implied
-   warranty of merchantability, fitness for a particular purpose,
-   absence of hidden defects, or of non-infringement. Your use or
-   reliance on this notice or materials referred to in this notice is at
-   your own risk. ISC may change this notice at any time. A stand-alone
-   copy or paraphrase of the text of this document that omits the
-   document URL is an uncontrolled copy. Uncontrolled copies may lack
-   important information, be out of date, or contain factual errors.
+Regards,
+Salvatore
