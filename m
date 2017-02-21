@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2115" "Wednesday" "9" "December" "2015" "10:15:46" "+0000" "=?gb2312?B?ufk=?==?gb2312?B?08C41Q==?=" "guoyonggang@360.cn" "<2166DED8C457614D95A6AAC18B144F082B530E@EX02.corp.qihoo.net>" "38" "[oss-security] CVE request - Android kernel - IPv6 connect cause a denial of service" nil nil nil "12" "2015120910:15:46" "[oss-security] CVE request - Android kernel - IPv6 connect cause a denial of service" (number mark "U       guoyonggang@ Dec  9   38/2115  " thread-indent "\"[oss-security] CVE request - Android kernel - IPv6 connect cause a denial of service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["637" "Tuesday" "21" "February" "2017" "19:06:00" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702211905270.17805@wniryva>" "16" "Re: [oss-security] CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo" nil nil nil "2" "2017022113:36:00" "[oss-security] CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo" (number mark "U       ppandit@redh Feb 21   16/637   " thread-indent "\"Re: [oss-security] CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo\"\n") "<alpine.LFD.2.20.1702211647360.13950@wniryva>" ("<alpine.LFD.2.20.1702211647360.13950@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9405 invoked by uid 550); 9 Dec 2015 14:07:15 -0000
+Received: (qmail 1399 invoked by uid 550); 21 Feb 2017 13:36:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1419 invoked from network); 9 Dec 2015 10:16:04 -0000
-From: =?gb2312?B?ufnTwLjV?= <guoyonggang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE request - Android kernel - IPv6 connect cause a denial of
- service
-Thread-Index: AdEyanfIFNSYh438QRqxVwLI/A36ng==
-Date: Wed, 9 Dec 2015 10:15:46 +0000
-Message-ID: <2166DED8C457614D95A6AAC18B144F082B530E@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.32.47]
-Content-Type: multipart/alternative;
-	boundary="_000_2166DED8C457614D95A6AAC18B144F082B530EEX02corpqihoonet_"
+Received: (qmail 1380 invoked from network); 21 Feb 2017 13:36:18 -0000
+Date: Tue, 21 Feb 2017 19:06:00 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Stefano Stabellini <sstabellini@kernel.org>, 
+    Gerd Hoffmann <ghoffman@redhat.com>
+In-Reply-To: <alpine.LFD.2.20.1702211647360.13950@wniryva>
+Message-ID: <alpine.LFD.2.20.1702211905270.17805@wniryva>
+References: <alpine.LFD.2.20.1702211647360.13950@wniryva>
 MIME-Version: 1.0
-Subject: [oss-security] CVE request - Android kernel - IPv6 connect cause a denial of
- service
+Content-Type: text/plain; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Tue, 21 Feb 2017 13:36:07 +0000 (UTC)
+Subject: Re: [oss-security] CVE-2017-2620 Qemu: display: cirrus: out-of-bounds
+ access issue while in cirrus_bitblt_cputovideo
 
---_000_2166DED8C457614D95A6AAC18B144F082B530EEX02corpqihoonet_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
++-- On Tue, 21 Feb 2017, P J P wrote --+
+| Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
+| vulnerable to an out-of-bounds access issue. It could occur while copying VGA
+| data in cirrus_bitblt_cputovideo.
+| 
+| A privileged user inside guest could use this flaw to crash the Qemu process
+| resulting in DoS OR potentially execute arbitrary code on the host with
+| privileges of Qemu process on the host.
 
-DQpQT0M6DQojaW5jbHVkZSA8bGludXgvdHlwZXMuaD4NCiNpbmNsdWRlIDxz
-dGRsaWIuaD4NCiNpbmNsdWRlIDxzdGRpby5oPg0KI2luY2x1ZGUgPHN5cy9z
-dGF0Lmg+DQojaW5jbHVkZSA8ZmNudGwuaD4NCiNpbmNsdWRlIDxlcnJuby5o
-Pg0KI2luY2x1ZGUgPHB0aHJlYWQuaD4NCiNpbmNsdWRlIDxzeXMvc29ja2V0
-Lmg+DQojaW5jbHVkZSA8c3lzL3VuLmg+DQojaW5jbHVkZSA8bmV0aW5ldC9p
-bi5oPg0KaW50IG1haW4odm9pZCl7DQoNCiAgICAgICAgIGludCBzb2NrZXRf
-ZmQ7DQogICAgICAgICBzdHJ1Y3Qgc29ja2FkZHJfaW4gYWRkcjsNCiAgICAg
-ICAgIGFkZHIuc2luX3BvcnQgPSAwOw0KICAgICAgICAgYWRkci5zaW5fYWRk
-ci5zX2FkZHIgPSBJTkFERFJfQU5ZOw0KICAgICAgICAgYWRkci5zaW5fZmFt
-aWx5ID0gMTA7DQoNCiAgICAgICAgIHNvY2tldF9mZCA9IHNvY2tldCgxMCwz
-LDB4NDAwMDAwMDApOw0KICAgICAgICAgY29ubmVjdChzb2NrZXRfZmQgLCAm
-YWRkciwxNik7DQoNCiAgICAgICAgIHJldHVybiAwOw0KDQp9DQoNCkFuYWx5
-c2lzIG9mIGNhdXNlczoNCkluIHRoZSBmaWxlIG5ldC9pcHY0L2FmX2luZXQu
-YyAsIEl0IHdpbGwgY2F1c2UgcGMgaXMgMHgwICAsIGlmIHRoZSBzay0+c2tf
-cHJvdC0+Z2V0X3BvcnQgaXMgTlVMTC4NCnN0YXRpYyBpbnQgaW5ldF9hdXRv
-YmluZChzdHJ1Y3Qgc29jayAqc2spDQp7DQogICAgICAgICBzdHJ1Y3QgaW5l
-dF9zb2NrICppbmV0Ow0KICAgICAgICAgLyogV2UgbWF5IG5lZWQgdG8gYmlu
-ZCB0aGUgc29ja2V0LiAqLw0KICAgICAgICAgbG9ja19zb2NrKHNrKTsNCiAg
-ICAgICAgIGluZXQgPSBpbmV0X3NrKHNrKTsNCiAgICAgICAgIGlmICghaW5l
-dC0+aW5ldF9udW0pIHsNCiAgICAgICAgICAgICAgICAgICBpZiAoc2stPnNr
-X3Byb3QtPmdldF9wb3J0KHNrLCAwKSkgew0KICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHJlbGVhc2Vfc29jayhzayk7DQogICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgcmV0dXJuIC1FQUdBSU47DQogICAgICAgICAgICAgICAg
-ICAgfQ0KICAgICAgICAgICAgICAgICAgIGluZXQtPmluZXRfc3BvcnQgPSBo
-dG9ucyhpbmV0LT5pbmV0X251bSk7DQogICAgICAgICB9DQogICAgICAgICBy
-ZWxlYXNlX3NvY2soc2spOw0KICAgICAgICAgcmV0dXJuIDA7DQp9DQoNClNv
-bHV0aW9uOg0KDQogICAgICAgICBBZGQgY2hlY2sgYXMgZm9sbG93Og0KICAg
-ICAgICAgICAgICAgICAgaWYgKHNrLT5za19wcm90LT5nZXRfcG9ydCAmJnNr
-LT5za19wcm90LT5nZXRfcG9ydChzaywgMCkpIHsNCiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICByZWxlYXNlX3NvY2soc2spOw0KICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIHJldHVybiAtRUFHQUlOOw0KICAgICAgICAgICAg
-ICAgICAgIH0NCg0K
+Upstream patch:
+  -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg04700.html
 
---_000_2166DED8C457614D95A6AAC18B144F082B530EEX02corpqihoonet_--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
