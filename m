@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1503" "Saturday" "23" "December" "2017" "09:09:16" "+0530" "Dhiru Kholia" "dhiru.kholia@gmail.com" "<20171223033916.GA10696@lonestar>" "35" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017122303:39:16" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        dhiru.kholia Dec 23   35/1503  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<20171222195252.GA6497@openwall.com>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<20171222195252.GA6497@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1565" "Tuesday" "21" "February" "2017" "15:42:35" "-0500" "Leo Famulari" "leo@famulari.name" "<20170221204235.GA26169@jasmine>" "44" "Re: [oss-security] CVE Request - Multiple vulnerabilities in gdk-pixbuf" nil nil nil "2" "2017022120:42:35" "[oss-security] CVE Request - Multiple vulnerabilities in gdk-pixbuf" (number mark "U       leo@famulari Feb 21   44/1565  " thread-indent "\"Re: [oss-security] CVE Request - Multiple vulnerabilities in gdk-pixbuf\"\n") "<CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>" ("<CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11405 invoked by uid 550); 23 Dec 2017 03:43:58 -0000
+Received: (qmail 19675 invoked by uid 550); 21 Feb 2017 20:47:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7929 invoked from network); 23 Dec 2017 03:39:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0xkCq342u+XhgaxX8iErSamnH9Hl9jAAZtI4dL+LtHo=;
-        b=aUCM/jLwjeCy9O5oA0UCFKATnNdOtQ+fveOra4axvRK2qPHmt5O6pzyiYdnrMb7oJ8
-         BFpdE0V242XtkOhgj3dweuSA4OdcMU6jXQEd3BoQs91EEusK3t8+0/LWHuzmNQx5c0rR
-         G4ltE3lYJJ3SSXK3z6OoLMM4SreS3YeXv6dp6FKNRktTMdS1Sv2yhE2nAxQGjy0OjSW6
-         h2eK9jNkOkGXgOrPSMAaIkF+ZqRSHUt80BcMBve41zwrPPKnSTZSNf+rJpaH50OF2bRt
-         0UDWhpDa75fnb4O+Ur/Y83IlKY4rLa6my4tAqIa10TsoSVD4nSHeFRqwhjhJoi8s/fAW
-         VEmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0xkCq342u+XhgaxX8iErSamnH9Hl9jAAZtI4dL+LtHo=;
-        b=jGWuiqMoNXme56EWD8F8tXOEayweSGn/+UG6Bkns+UE/k6Q17ATPAToT3GtUJ2xYE0
-         kYP6M8hbSYtrs/Z1SiwtXaUpVog7r3HYTeHviHo0CODoj+VIRg1bQnjCbVwkoNyUzbSy
-         1OLspUgqkcg/AzCoLDmyhiJGRbqKfP4RQuaGLawMJIBjsREMCIWPtejT2NBYkR35zRw6
-         pvGekQ5cu0lJGWZQdoGqmf0uRZcDSyC5+wGKjmRYY8pRBsa8C9dldoBUHL0GqFbd6m+Z
-         OtoolCrvfLNmNZQvBOZe9wWoS8t7P3O915Zv7dGWvSzwKWv9JjQOJnYcPoeyJtMmqaXU
-         +ycQ==
-X-Gm-Message-State: AKGB3mIuE1BlevhhzzocJXF6CdYSbIjv0x7unw7QBbCIlamWgWKb+sv5
-	1tjMMVTFALE/gS4ADGaJGgHzq/2x
-X-Google-Smtp-Source: ACJfBotRf36qoGH20dFJ4yj/Ojt3lN834D7hrrjCbNp8U+CcCx1TsOla2FtTeE0vYFgJaAh6LwJc5w==
-X-Received: by 10.84.133.131 with SMTP id f3mr16489392plf.204.1514000358856;
-        Fri, 22 Dec 2017 19:39:18 -0800 (PST)
-Message-ID: <20171223033916.GA10696@lonestar>
-References: <20171207210134.GA7079@openwall.com>
- <2172-1513501568.968862@pLoG.Le7g.f3CQ>
- <20171222195252.GA6497@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 16310 invoked from network); 21 Feb 2017 20:42:50 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
+	content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+	:x-sasl-enc; s=mesmtp; bh=NtJ3KZVvNfzuWKY/IqLPmcZMoDY=; b=FFJHkg
+	oKRmax1dwFcc0fqg2LUoCM3B2IlQ9BA9m2j+zV1LOvmWTdPDiCC7cNFls3UGMTV8
+	4ItAgnx+SCpwggJ8m7PtvXtEiffbLBvZDlbHP+eTG4VE5L4qUsI1vR4dhOoLTXfF
+	P9F2j+04KJLyNSNzq7HeuxYNRlBmPHBz2IdUI=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-sender
+	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=NtJ3KZVvNfzuWK
+	Y/IqLPmcZMoDY=; b=OcYrlDxhI6E8VCDnpqnKM0FARinl1IjM04FTSxfHmVaFX4
+	E0FoWn3lnJMK8p/afc2E87SUniCQRVssnrKmOywKCm55F/+BH7oDkiS2Kk1cZ5g7
+	tJMXb3hR14o7ScjDC4vRLiWI4w2V3VpDC44PxW0TbpUEaQ/8c4eoccDhzBwAU=
+X-ME-Sender: <xms:PKasWLnjek_hCQJeozc16b_IahVn3nxCw6xB4C60OPgjUqkZ5kV2Gg>
+X-Sasl-enc: etGnAPloTsIxFKZJWpRYBPANTtv5KPe0pELuRIGKSxKl 1487709756
+Date: Tue, 21 Feb 2017 15:42:35 -0500
+From: Leo Famulari <leo@famulari.name>
+To: oss-security@lists.openwall.com
+Message-ID: <20170221204235.GA26169@jasmine>
+References: <CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
+Content-Disposition: inline
+In-Reply-To: <CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>
+User-Agent: Mutt/1.7.2 (2016-11-26)
+Subject: Re: [oss-security] CVE Request - Multiple vulnerabilities in
+ gdk-pixbuf
+
+--yrj/dFKFPuw6o+aM
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171222195252.GA6497@openwall.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-Date: Sat, 23 Dec 2017 09:09:16 +0530
-From: Dhiru Kholia <dhiru.kholia@gmail.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
-To: oss-security@lists.openwall.com
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 22, 2017 at 08:52:52PM +0100, Solar Designer wrote:
-> On Sun, Dec 17, 2017 at 09:06:08AM +0000, halfdog wrote:
->
-> > > You may process the private key file with gpg2john, then try to crack it
-> > > with john.  This will output the actual value, as well as show you the
-> > > speed at which passphrases can be tested against that key on your system
-> > > and with that version of JtR.  To use a GPU, add "--format=gpg-opencl".
-> > > Please use latest bleeding-jumbo off GitHub for all of this.
-> >
-> > Done that, but still fighting how to use "gpg2john" with the new
-> > gpgv2 "private-keys-v1.d" key format. Exporting the private keys
-> > using gpgv2 does not help as that requires the passphrase already,
-> > thus removing the gpgv2-encryption, we want to test.
->
-> I tried asking a JtR jumbo contributor to look into this, but
-> unfortunately I got no response yet, and I had no time to look into it
-> myself.  This is something we ought to have an answer to, but I
-> currently don't.
+On Tue, Feb 21, 2017 at 05:20:11PM +0200, Ariel Zelivanski wrote:
+> Hello,
+>=20
+> I just reported several vulnerabilities in gdk-pixbuf. I am adding the
+> relevant details but you can also refer to the bug reports in the links. =
+If
+> suitable please assign CVEs.
 
-Please see https://github.com/magnumripper/JohnTheRipper/issues/847 (Add
-support for the new GPG 2.1 "format") regarding this topic.
+As announced previously [0], MITRE is no longer assigning CVEs based on
+messages to this list. Will you request the CVE IDs via the new web
+form? [1]
 
-To summarize,
+[0]
+http://seclists.org/oss-sec/2017/q1/351
 
-* Currently, gpg2john does not understand the "private-keys-v1.d" key
-  format.
+[1]
+https://cveform.mitre.org/
 
-* We have a very rough cracking implementation for "private-keys-v1.d"
-  key format at the moment. See "filter.c" on that GitHub issue.
+--yrj/dFKFPuw6o+aM
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I can start working on a proper native cracking implementation (with GPU
-support likely), if there is interest in this stuff.
+-----BEGIN PGP SIGNATURE-----
 
---
-Dhiru
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlispjcACgkQJkb6MLrK
+fwiEkA//RoghGrWq90CKZGMaH6MjVnSHjEWrQzTK0Fki9EgVT70NPkwyUrsJZHE/
+MwJ4cNtsxgpeEpgQevp2BB0yLoQ9aRKLmuAbuxyCPzdhOtwiFK/tuxLmjNj/IxZ9
++z+/G9tBA4xpH35DVWM5ugYhGmK65YreVtWM1PJ82Jk0YuSt8uKjLEcNxwKsl4la
+PJ4ddx7y6Ps7KtPzHQRI7o2PTWD30KbG/mU8APBrZZqj3oZ6Az/D4ds6r7nW3XbJ
+dipxW80JuLw+6/YszZ8lqSIsQIAUWromJpYYoP5ztkBZ0N/oHguL1aGBAp2GXFrA
+Nw+26lf4tA6REhucMjXZvneKSs/PciSEnRrX5E876JjwMuVvWYyiFoFU723+CtyI
+OAR0LYySyoPgZq43Mb3RiXSHmuwSj91FgmRNDs2WBMVsr/EGqZHMjXaXomiQJDgp
+bhj3pF0v4R6qenPm71UtiipxPkQtqRnvEKoX1RdcsFhMLF1ZhpxFvCUHOciisZfM
+ltjKQXr91JFutK6e7UXkrKKBgvuhXwyM00XokGPisRd7/x4Ce7piGGDu0tTjOV2J
+QKGnfleuztqYKa6npNXekUBmcNVskLKsF84mCHqueCi/pJ7/iV6kztwA+zrrVETi
+JV2/IhFJ2ejG/kMFnPYfA9cQFTZHztiPUVFa1NWD5abjwbFfyhU=
+=FTxv
+-----END PGP SIGNATURE-----
+
+--yrj/dFKFPuw6o+aM--
