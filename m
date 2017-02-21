@@ -1,26 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/3
-Message-ID: <alpine.LFD.2.20.1702211905270.17805@wniryva>
-Date: Tue, 21 Feb 2017 19:06:00 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Stefano Stabellini <sstabellini@...nel.org>,  Gerd Hoffmann <ghoffman@...hat.com>
-Subject: Re: CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/6
+Message-ID: <alpine.DEB.2.20.1702220042370.24142@tvnag.unkk.fr>
+Date: Wed, 22 Feb 2017 00:43:28 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY]: curl SSL_VERIFYSTATUS ignored
 Content-Type: text/plain; charset=utf-8
 
-+-- On Tue, 21 Feb 2017, P J P wrote --+
-| Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is
-| vulnerable to an out-of-bounds access issue. It could occur while copying VGA
-| data in cirrus_bitblt_cputovideo.
-| 
-| A privileged user inside guest could use this flaw to crash the Qemu process
-| resulting in DoS OR potentially execute arbitrary code on the host with
-| privileges of Qemu process on the host.
+SSL_VERIFYSTATUS ignored
+========================
 
-Upstream patch:
-  -> https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg04700.html
+Project curl Security Advisory, February 22, 2017 -
+[Permalink](https://curl.haxx.se/docs/adv_20170222.html)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+VULNERABILITY
+-------------
+
+curl and libcurl support "OCSP stapling", also known as the TLS Certificate
+Status Request extension (using the `CURLOPT_SSL_VERIFYSTATUS` option). When
+telling curl to use this feature, it uses that TLS extension to ask for a
+fresh proof of the server's certificate's validity. If the server doesn't
+support the extension, or fails to provide said proof, curl is expected to
+return an error.
+
+Due to a coding mistake, the code that checks for a test success or failure,
+ends up always thinking there's valid proof, even when there is none or if the
+server doesn't support the TLS extension in question. Contrary to how it used
+to function and contrary to how this feature is documented to work.
+
+This could lead to users not detecting when a server's certificate goes
+invalid or otherwise be mislead that the server is in a better shape than it
+is in reality.
+
+This flaw also exists in the command line tool
+([--cert-status](https://curl.haxx.se/docs/manpage.html#--cert-status)).
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The mistake happened in a large code merge for the HTTPS proxy feature (commit
+cb4e2be7c6d42ca0780) and went unnoticed primarily because we have no automated
+tests for this feature!
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2017-2629 to this issue.
+
+AFFECTED VERSIONS
+-----------------
+
+curl has supported this option since version 7.41.0.
+
+This flaw exists in the following curl and libcurl versions.
+
+- Affected versions: 7.52.0 to and including 7.52.1
+- Not affected versions: < 7.52.0 and >= 7.53.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+In version 7.53.0, the actual result of the check is properly used.
+
+A [patch for CVE-2017-2629](https://curl.haxx.se/CVE-2017-2629.patch) is
+available.
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.53.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Do not use the cert status feature
+
+TIME LINE
+---------
+
+It was first reported to the curl project on January 12.
+
+We contacted distros@...nwall on February XX.
+
+curl 7.53.0 was released on February 22 2017, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+Reported by Marcus Hoffmann
+
+-- 
+
+  / daniel.haxx.se
