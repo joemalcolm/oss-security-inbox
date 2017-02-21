@@ -1,40 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/5
-Message-Id: <1495476334.15944.2@mail.igalia.com>
-Date: Mon, 22 May 2017 13:05:34 -0500
-From: Michael Catanzaro <mcatanzaro@...lia.com>
-To: oss-security@...ts.openwall.com
-Subject: How to request a CVE for open source projects
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/21/2
+Message-Id: <E1cg96x-0006uk-4m@xenbits.xenproject.org>
+Date: Tue, 21 Feb 2017 12:00:03 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 209 (CVE-2017-2620) - cirrus_bitblt_cputovideo does not check if memory region is safe
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm aware that the CVE form [1] can now be used to request CVEs. 
-However, it does not seem to be designed for requesting CVEs in open 
-source products. The field "Vendor of the product(s)" says "Please 
-ensure vendors are on the products and sources list," indicating the 
-intent of MITRE to restrict usage of the form to specific products. 
-This list [2] says "For open source software products not listed below, 
-request a CVE ID through the Distributed Weakness Filing Project CNA." 
-So, clearly we are supposed to request a CVE through the DWF project. 
-(Or perhaps via Red Hat, since it seems like it's willing to allocate 
-CVEs for miscellaneous Linux-related issues.)
+            Xen Security Advisory CVE-2017-2620 / XSA-209
+                              version 3
 
-Anyway, I attempted to request a CVE using the DWF project's request 
-form [3] several months ago, but have not yet received any response 
-[4]. So I am hesitant to request further CVEs from the DWF project, for 
-fear that I won't receive a response and will wind up needing to make a 
-duplicate CVE request somewhere else.
+   cirrus_bitblt_cputovideo does not check if memory region is safe
 
-How are other people getting open source CVEs right now? Has anybody 
-else had luck getting a CVE via DWF? Should I be trying to do this 
-through Red Hat instead? Or just by filling out MITRE's CVE form even 
-though we're not really supposed to be using it?
+UPDATES IN VERSION 3
+====================
 
-Michael
+Public release.
 
-[1] https://cveform.mitre.org/
-[2] http://cve.mitre.org/cve/request_id.html#cna_coverage
-[3] http://iwantacve.org/
-[4] https://bugzilla.gnome.org/show_bug.cgi?id=752738#c15
+ISSUE DESCRIPTION
+=================
 
+In CIRRUS_BLTMODE_MEMSYSSRC mode the bitblit copy routine
+cirrus_bitblt_cputovideo fails to check wethehr the specified memory
+region is safe.
+
+IMPACT
+======
+
+A malicious guest administrator can cause an out of bounds memory
+write, very likely exploitable as a privilege escalation.
+
+VULNERABLE SYSTEMS
+==================
+
+Versions of qemu shipped with all Xen versions are vulnerable.
+
+Xen systems running on x86 with HVM guests, with the qemu process
+running in dom0 are vulnerable.
+
+Only guests provided with the "cirrus" emulated video card can exploit
+the vulnerability.  The non-default "stdvga" emulated video card is
+not vulnerable.  (With xl the emulated video card is controlled by the
+"stdvga=" and "vga=" domain configuration options.)
+
+ARM systems are not vulnerable.  Systems using only PV guests are not
+vulnerable.
+
+For VMs whose qemu process is running in a stub domain, a successful
+attacker will only gain the privileges of that stubdom, which should
+be only over the guest itself.
+
+Both upstream-based versions of qemu (device_model_version="qemu-xen")
+and `traditional' qemu (device_model_version="qemu-xen-traditional")
+are vulnerable.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid the issue.
+
+Running HVM guests with the device model in a stubdomain will mitigate
+the issue.
+
+Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
+in the xl domain configuration) will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Gerd Hoffmann of Red Hat.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa209-qemuu.patch       qemu-xen, qemu upstream
+(no backport yet)        qemu-xen-traditional
+
+$ sha256sum xsa209*
+167af9ed7163fa7cf4abb52f865290ced3163c7684151bdc1324eb5e534faf13  xsa209-qemut.patch
+297578aa43c3e6b21333f1b859fd1d3e68aaaae77b3cadbadd20cfeca8426df3  xsa209-qemuu.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+However, deployment of the "stdvga" mitigation (changing the video
+card emulation to stdvga) is NOT permitted (except where all the
+affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.  This is because this produces a guest-visible
+change which will indicate which component contains the vulnerability.
+
+Additionally, distribution of updated software is prohibited (except
+to other members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYrBl3AAoJEIP+FMlX6CvZ6LMIALETwnX9w8SifkvuYY3jotwp
+nQWY8ztJkMnai9X10RN6SeVf2dCpXLhATPuPGORgRiZJEuBaGHEsHa00i63FQBSL
+PaOAgzN1GY+u16Ygv2e3vPcN8mO55A6zcFErF2oLsrfdNsG4pJTwn7bMEjZiqSyG
+R9xIC6KiA1nojsZO+ynmRvHxFP6epySRayO0PZAGS75LdmEKVxClE3dAeMW77WNv
+dAs3Qi14hB5BmdryK5f1STk8r2b3UsN1pbvao8odiEWFaB9tPo273gj5RdfnEV3t
+EzTvH37Q3C4YFoTFx8p6fY5ejHNh4AeSyi9yE7lWtKhDZw56UhdfMmYIgDaKpig=
+=RBpg
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa209-qemut.patch" of type "application/octet-stream" (1937 bytes)
+
+Download attachment "xsa209-qemuu.patch" of type "application/octet-stream" (1934 bytes)
