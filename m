@@ -1,4 +1,9 @@
-Received: (qmail 28159 invoked by uid 550); 14 Apr 2024 19:12:47 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2630" "Wednesday" "22" "February" "2017" "14:28:35" "+0100" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>" "67" "[oss-security] Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)" nil nil nil "2" "2017022213:28:35" "[oss-security] Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)" (number mark "U       andreyknvl@g Feb 22   67/2630  " thread-indent "\"[oss-security] Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30166 invoked by uid 550); 22 Feb 2017 14:16:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,104 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26075 invoked from network); 14 Apr 2024 19:12:01 -0000
-Date: Sun, 14 Apr 2024 21:08:55 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5323 invoked from network); 22 Feb 2017 13:28:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZGFAdJS8YdW1IGuA25MGVvZ2ga0yoeN4Go4zTFcOTnI=;
+        b=RFEt+5hLg4jKdT4qIxiaAdGcNL+4ikW5d4WybZS5FzEQhtADwn889eJ84ESTTM0/Xw
+         lGNl+KdfXChOIAIDWo0Nmsx5fQjTScn6yWDzwEdVQoSxOcUGrh9Gzkd6OWct6qYtNDXc
+         8SyLhHn4PUwY2Sab6xB5XBtWPmei3an06z8e0kq/u0W1Xg9LQVPC+1PuK/9FvELCAnG2
+         NReCx9CwYcfpLM3WjqIDmfhJ+GHogXZRtSPXA+ha/cHkCNBCp2y4Ysp1OMKhB6YuE8mi
+         RDCzVMBozp8NdOEUAScNTkQoDRWXjPRDp8txTgCU83xLaCfkuZDqkJIMEinNwreSFR/f
+         qCNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZGFAdJS8YdW1IGuA25MGVvZ2ga0yoeN4Go4zTFcOTnI=;
+        b=unCH7X5E42ALxEVPhGaSNTC2BUAMCEylsBimdB8e0cq8MqAUM+6FNTlX2Z3MaGpzGD
+         tVNaml1rogkcRmbnL7Xuwot0xk6k4Mo+8JhwLk76YMeHU7syuV00h8ia/Lh+IHKTwTPr
+         lPoHa34uFRYHIIlMo5qkxGCDQQpwmUJcQ/yySFy99eBOAxYsFy0kQXWbBVTwEYd+6HDD
+         y9NQJ/v/g0USkV7HVVjM9BV0YZMZekjDTC48zvs8l9AKILu5yqS8YX4/dZiJW+o3IjQQ
+         eMruu+WttiTcY4MubdkV6SFaJQjqwJBUqnJKX0385tZPhwoLlkZ6ECR7v4AgRROnE/i7
+         q9NQ==
+X-Gm-Message-State: AMke39niyxdzT6LHebY/3rJ6NLBs/z0AKL9W7Dj7zQNPTOz3it//+MGVM3ArHwWpT93LAKY1L5f+vImht90YyfUs
+X-Received: by 10.223.162.133 with SMTP id s5mr26452086wra.157.1487770115993;
+ Wed, 22 Feb 2017 05:28:35 -0800 (PST)
+MIME-Version: 1.0
+From: Andrey Konovalov <andreyknvl@google.com>
+Date: Wed, 22 Feb 2017 14:28:35 +0100
+Message-ID: <CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20240414190855.GA12716@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Linux: Disabling network namespaces
+Content-Type: text/plain; charset=UTF-8
+Subject: [oss-security] Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)
 
 Hi,
 
-Many Linux kernel vulnerabilities including the recently exploited
-Netfilter CVE-2024-1086 require CAP_NET_ADMIN in a namespace, yet a
-typically recommended mitigation is to disable user namespaces (not just
-network namespaces).
+This is an announcement about CVE-2017-6074 [1] which is a double-free
+vulnerability I found in the Linux kernel. It can be exploited to gain
+kernel code execution from an unprivileged processes.
 
-Further, while on Debian/Ubuntu it is possible to disable just
-unprivileged user namespaces with the Debian-specific sysctl
-kernel.unprivileged_userns_clone=0, on other distros we'd have to use
-user.max_user_namespaces=0, which (unnecessarily) prevents starting of
-containers even by root.
+Fixed on Feb 17, 2017:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
 
-Fredrik Nystrom on Rocky Linux Mattermost channel Security pointed out
-that it is reasonable to disable just network namespaces with
-user.max_net_namespaces=0 instead, and that the negative effects of
-doing so and how to cope with them are well-documented for Apptainer,
-with its documentation also covering Docker, Podman, and systemd:
+The oldest version that was checked is 2.6.18 (Sep 2006), which is
+vulnerable. However, the bug was introduced before that, probably in
+the first release with DCCP support (2.6.14, Oct 2005).
 
-https://apptainer.org/docs/admin/latest/user_namespace.html#disabling-network-namespaces
+The kernel needs to be built with CONFIG_IP_DCCP for the vulnerability
+to be present. A lot of modern distributions enable this option by
+default.
 
-I hope some of us in here find this useful, and maybe we (including
-distros) will start recommending this milder mitigation when sufficient.
+The bug was found with syzkaller [2].
 
-I include this section of the Apptainer documentation below, as taken
-from its source at
-https://github.com/apptainer/apptainer-admindocs/blob/main/user_namespace.rst
+### Bug details
 
----
-******************************
- Disabling network namespaces
-******************************
+In the current DCCP implementation an skb for a DCCP_PKT_REQUEST
+packet is forcibly freed via __kfree_skb in dccp_rcv_state_process if
+dccp_v6_conn_request successfully returns [3].
 
-There have been many Linux kernel exploits that have made use of
-unprivileged user namespaces as a point of entry, but almost all of them
-in the last few years have been in combination with network namespaces.
-Therefore even though the Apptainer project recommends enabling
-unprivileged user namespaces, it recommends disabling network namespaces
-when possible in order to substantially reduce the risk profile
-and need for urgent updates when vulnerabilities are announced.
+However, if IPV6_RECVPKTINFO is set on a socket, the address of the
+skb is saved to ireq->pktopts and the ref count for skb is incremented
+in dccp_v6_conn_request [4], so skb is still in use. Nevertheless, it
+still gets freed in dccp_rcv_state_process.
 
-Network namespaces can be disabled on most Linux-based systems
-like this:
+The fix is to call consume_skb, which accounts for skb->users,
+instead of doing goto discard and therefore calling __kfree_skb.
 
-.. code:: bash
+To exploit this double-free, it can be turned into a use-after-free:
 
-   echo "user.max_net_namespaces = 0" \
-        >/etc/sysctl.d/90-max_net_namespaces.conf
-   sysctl -p /etc/sysctl.d/90-max_net_namespaces.conf
+//  The first free:
+kfree(dccp_skb)
+// Another object allocated on the same place as dccp_skb:
+some_object = kmalloc()
+// The second free, effectively frees some_object
+kfree(dccp_skb)
 
-Apptainer does not by default make use of network namespaces, but it
-does have some little-used privileged options beginning with ``--net``
-that do.
-Those options will not work when network namespaces are disabled.
-Unfortunately it is not possible to disable only unprivileged
-network namespaces, so this will affect programs that use them
-even if run as root.
+As this point we have a use-after-free on some_object. An attacker can
+control what object that would be and overwrite it's content with
+arbitrary data by using some of the kernel heap spraying techniques.
+If the overwritten object has any triggerable function pointers, an
+attacker gets to execute arbitrary code within the kernel.
 
-Some other container runtimes such as Docker and Podman do make use
-of network namespaces by default.
-Those two runtimes can still work when network namespaces are disabled
-by adding the ``--net=host`` option.
+I'll publish an exploit in a few days, giving people time to update.
 
-Disabling network namespaces also blocks the systemd PrivateNetwork
-feature.
-To find services that use it, look for ``PrivateNetwork=true``
-or ``PrivateNetwork=yes`` in ``/lib/systemd/system/*.service``.
-This can be turned off for each service through a
-``/etc/systemd/system/<service>.d/*.conf`` file, for example for
-``systemd-hostnamed``:
+New Ubuntu kernels are out so please update as soon as possible.
 
-.. code:: bash
+### Timeline
 
-   cd /etc/systemd/system
-   mkdir -p systemd-hostnamed.service.d
-   (echo "[Service]"; echo "PrivateNetwork=no") \
-        >systemd-hostnamed.service.d/no-private-network.conf
+2017-02-15: Bug reported to security@kernel.org
+2017-02-16: Patch submitted to netdev
+2017-02-17: Patch committed to mainline kernel
+2017-02-18: Notification sent to linux-distros
+2017-02-22: Public announcement
 
-If the service is enabled (that is, actively used) then restart it
-and check its status:
+### Links
 
-.. code:: bash
-
-   systemctl status systemd-hostnamed
-   systemctl daemon-reload
-   systemctl restart systemd-hostnamed
-   systemctl status systemd-hostnamed
----
-
-Alexander
+[1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-6074
+[2] https://github.com/google/syzkaller
+[3] http://lxr.free-electrons.com/source/net/dccp/input.c?v=4.9#L606
+[4] http://lxr.free-electrons.com/source/net/dccp/ipv6.c?v=4.9#L351
+[5] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
