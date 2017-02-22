@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["753" "Friday" "15" "June" "2018" "19:28:36" "+0200" "Jakub Wilk" "jwilk@jwilk.net" "<20180615172836.7tlljvthvyzjxrma@jwilk.net>" "22" "Re: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" "^Date:" nil nil "6" "2018061517:28:36" "[oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" (number mark "        jwilk@jwilk. Jun 15   22/753   " thread-indent "\"Re: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)\"\n") "<e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>" ("<c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>" "<20180614222021.6jguso4l7vqbjqyk@jwilk.net>" "<e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4592" "Wednesday" "22" "February" "2017" "03:43:06" "+0000" "=?gb2312?B?wO7Hvw==?=" "liqiang6-s@360.cn" "<143C0AFC63FC204CB0C55BB88F3A8ABB33336204@EX02.corp.qihoo.net>" "76" "[oss-security] RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode" nil nil nil "2" "2017022203:43:06" "[oss-security] RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode" (number mark "U       liqiang6-s@3 Feb 22   76/4592  " thread-indent "\"[oss-security] RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode\"\n") "<alpine.LFD.2.20.1702011514510.25859@wniryva>" ("<alpine.LFD.2.20.1702011514510.25859@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29748 invoked by uid 550); 15 Jun 2018 17:28:52 -0000
+Received: (qmail 9788 invoked by uid 550); 22 Feb 2017 07:21:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +11,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29730 invoked from network); 15 Jun 2018 17:28:51 -0000
-Message-ID: <20180615172836.7tlljvthvyzjxrma@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>
- <20180614222021.6jguso4l7vqbjqyk@jwilk.net>
- <e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <e7583e33-54d9-6548-d55e-531f3fc4a040@ruhr-uni-bochum.de>
-User-Agent: NeoMutt/20180512
-X-Ovh-Tracer-Id: 17818210450981312422
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedthedrleeigddutdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecufedttdenuc
-Date: Fri, 15 Jun 2018 19:28:36 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-12356 Breaking signature verification in
- pass (Simple Password Store)
-To: oss-security@lists.openwall.com
+Received: (qmail 5164 invoked from network); 22 Feb 2017 03:43:19 -0000
+From: =?gb2312?B?wO7Hvw==?= <liqiang6-s@360.cn>
+To: oss security list <oss-security@lists.openwall.com>
+CC: P J P <ppandit@redhat.com>
+Thread-Topic: CVE-2017-2615 Qemu: display: cirrus: oob access while doing
+ bitblt copy backward mode
+Thread-Index: AQHSfHCYEmNUp0hPbEKCerSd7nyw0aFm7cRggA2Uz1A=
+Date: Wed, 22 Feb 2017 03:43:06 +0000
+Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABB33336204@EX02.corp.qihoo.net>
+References: <alpine.LFD.2.20.1702011514510.25859@wniryva> 
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [10.18.213.16]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Subject: [oss-security] RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing
+ bitblt copy backward mode
 
-* Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>, 2018-06-15, 16:43:
->>There's apparently more software that uses unachored "\[GNUPG:\]":
->>https://codesearch.debian.net/search?q=%5B%5E%5E%5D%5C%5C%5C%5BGNUPG%3A%5C%5C%5C%5D
->Yes. I did two weeks of due diligence on the important package 
->managers, Git, and anything I could think of that is critical. But I am 
->not saying what I looked at, because there might be something I missed, 
->and I want everybody to join in and have a fresh look. It is too much 
->for a single person.
-
-Thanks for doing this. I didn't mean to imply that you were not diligent 
-enough.
-
->You reporting these?
-
-I was hoping somebody else would take care of this.
-
->If not, I can do it.
-
-Please do! :-)
-
--- 
-Jakub Wilk
+RllJDQoNClRoZSBQb0MgZm9yIHRoaXMgaXMgYmVsb3c6DQoNCi8qDQogKiAg
+Q1ZFLTIwMTctMjYxNSBQb0MNCiAqDQogKiAgUWlhbmcgTGkgb2YgdGhlIEdl
+YXIgVGVhbSwgUWlob28gMzYwIEluYy4NCiAqDQogKiAgI2djYyBwb2MuYyAt
+byBwb2MNCiAqICAjLi9wb2MNCiAqDQoqLw0KI2luY2x1ZGUgPHN5cy9pby5o
+Pg0KI2luY2x1ZGUgPHN0ZGlvLmg+DQoNCnZvaWQgd3JpdGVfc3IoaW50IGlk
+eCxpbnQgdmFsKQ0Kew0KICAgICAgb3V0YihpZHgsMHgzYzQpOw0KCW91dGIo
+dmFsLDB4M2M1KTsNCn0NCnZvaWQgd3JpdGVfZ3IoaW50IGlkeCxpbnQgdmFs
+KQ0Kew0KCW91dGIoaWR4LDB4M2NlKTsNCglvdXRiKHZhbCwweDNjZik7DQp9
+DQoNCg0KaW50IG1haW4oKQ0Kew0KCWlvcGwoMyk7DQoJd3JpdGVfc3IoMHgw
+NywxKTsNCgl3cml0ZV9ncigweDMxLDB4ODApOw0KCXdyaXRlX2dyKDB4MjYs
+MHhmZik7DQoJd3JpdGVfZ3IoMHgyNywweGZmKTsNCgl3cml0ZV9ncigweDI0
+LDEpOw0KCXdyaXRlX2dyKDB4MjAsMHhmZik7DQoJd3JpdGVfZ3IoMHgyMSww
+eGZmKTsNCgl3cml0ZV9ncigweDIyLDB4MCk7DQoJd3JpdGVfZ3IoMHgyMyww
+eDApOw0KDQoJd3JpdGVfZ3IoMHgyOCwwKTsNCgl3cml0ZV9ncigweDI5LDAp
+Ow0KCXdyaXRlX2dyKDB4MmEsMCk7DQoJd3JpdGVfZ3IoMHgyYywweGZmKTsN
+Cgl3cml0ZV9ncigweDJkLDB4ZmYpOw0KCXdyaXRlX2dyKDB4MmUsMHhmZik7
+DQoNCgl3cml0ZV9ncigweDMwLDEpOw0KCXdyaXRlX2dyKDB4MmEsMCk7DQoN
+CiAgICByZXR1cm4gMDsNCn0NCg0KDQpUaGFua3MuDQoNCi0tDQpMaSBRaWFu
+ZyAvIHRoZSBHZWFyIFRlYW0sIFFpaG9vIDM2MCBJbmMNCg0KPiAtLS0tLU9y
+aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiDA7se/DQo+IFNlbnQ6IE1v
+bmRheSwgRmVicnVhcnkgMTMsIDIwMTcgODoyMiBQTQ0KPiBUbzogb3NzIHNl
+Y3VyaXR5IGxpc3QNCj4gQ2M6ICdQIEogUCcNCj4gU3ViamVjdDogUkU6IENW
+RS0yMDE3LTI2MTUgUWVtdTogZGlzcGxheTogY2lycnVzOiBvb2IgYWNjZXNz
+IHdoaWxlIGRvaW5nIGJpdGJsdA0KPiBjb3B5IGJhY2t3YXJkIG1vZGUNCj4g
+DQo+IEhlbGxvIGFsbCwNCj4gDQo+IFRoaXMgaXMgTGkgUWlhbmcgZnJvbSB0
+aGUgR2VhciBUZWFtLCBRaWhvbyAzNjAgaW5jLiBJIGhhdmUgZGlzY292ZXJl
+ZCB0aGlzDQo+IHZ1bG5lcmFiaWxpdHkgYW5kIG1ha2UgYSBwYXRjaCBmb3Ig
+dGhpcywgdGhvdWdoIG5vdCBjb21wbGV0ZS4gV2hlbiBJIHNlbmQNCj4gcGF0
+Y2ggdG8gZml4IHRoaXMgaXNzdWUsIEkgZGlkIGtub3cgdGhlIENpcnJ1cyB2
+Z2EgaXMgbm90IHRoZSBkZWZhdWx0IHZnYSBpbiBxZW11Lg0KPiBTbyBJIGp1
+c3QgdHJlYXQgdGhpcyBhcyBhIG5vcm1hbCBpc3N1ZS4gQnV0IGFmdGVyd2Fy
+ZHMgd2UgZGlzY292ZXJlZCB0aGF0IHRoZQ0KPiBsaWJ2aXJ0IGFuZCB4ZW4g
+dXNlIHRoaXMgdmdhIGFzIGRlZmF1bHQuDQo+IFdlIHRlc3RlZCBhIGxvdCBv
+ZiBjbG91ZCBwbGF0Zm9ybSBpbiBDaGluYSwgZXZlcnkgb2YgdGhlbSB1c2Vz
+IHRoZSBDaXJydXMgdmdhIGFzDQo+IGRlZmF1bHQuIE1vc3Qgb2YgdGhlbSBp
+cyBhZmZlY3RlZCBieSB0aGlzIGlzc3VlLiBUaGUgb25seSBvbmUgZG9lc24n
+dCBiZSBhZmZlY3RlZA0KPiBJIHRoaW5rIGhhdmUgZml4ZWQgdGhpcyBpc3N1
+ZS4gU28gd2UgdGhpbmsgdGhpcyBpc3N1ZSBzaG91bGQgYmUgZ290IG1vcmUg
+YXR0ZW50aW9uLg0KPiBXZSBzdHJvbmdseSBjb21tZW5kIGV2ZXJ5IGNsb3Vk
+IHBsYXRmb3JtIHRyZWF0IHRoaXMgaXNzdWUgc2VyaW91c2x5LiBUaG91Z2gN
+Cj4gdGhpcyB2dWxuZXJhYmlsaXR5IGhhcyBiZWVuIGZpeGVkIGZvciAxMCsg
+ZGF5cywgRm9yIHJlc3BvbnNpYmxlIHZ1bG5lcmFiaWxpdHkNCj4gZGlzY2xv
+c3VyZSwgd2Ugd2lsbCBub3QgcHVibGljIHRoZSBQb0MgaW4gdGhpcyBlbWFp
+bC4gVGhlIFBvQyB3aWxsIGJlIHB1YmxpYyBsYXRlci4NCj4gDQo+IFRoYW5r
+cy4NCj4gDQo+IC0tDQo+IExpIFFpYW5nIC8gdGhlIEdlYXIgVGVhbSwgUWlo
+b28gMzYwIEluYy4NCj4gDQo+IA0KPiA+IC0tLS0tT3JpZ2luYWwgTWVzc2Fn
+ZS0tLS0tDQo+ID4gRnJvbTogUCBKIFAgW21haWx0bzpwcGFuZGl0QHJlZGhh
+dC5jb21dDQo+ID4gU2VudDogV2VkbmVzZGF5LCBGZWJydWFyeSAwMSwgMjAx
+NyA1OjUwIFBNDQo+ID4gVG86IG9zcyBzZWN1cml0eSBsaXN0DQo+ID4gQ2M6
+IMDux78NCj4gPiBTdWJqZWN0OiBDVkUtMjAxNy0yNjE1IFFlbXU6IGRpc3Bs
+YXk6IGNpcnJ1czogb29iIGFjY2VzcyB3aGlsZSBkb2luZw0KPiA+IGJpdGJs
+dCBjb3B5IGJhY2t3YXJkIG1vZGUNCj4gPg0KPiA+ICAgIEhlbGxvLA0KPiA+
+DQo+ID4gUXVpY2sgZW11bGF0b3IoUWVtdSkgYnVpbHQgd2l0aCB0aGUgQ2ly
+cnVzIENMR0QgNTR4eCBWR0EgRW11bGF0b3INCj4gPiBzdXBwb3J0IGlzIHZ1
+bG5lcmFibGUgdG8gYW4gb3V0LW9mLWJvdW5kcyBhY2Nlc3MgaXNzdWUuIEl0
+IGNvdWxkIG9jY3VyDQo+ID4gd2hpbGUgY29weWluZyBWR0EgZGF0YSB2aWEg
+Yml0Ymx0IGNvcHkgaW4gYmFja3dhcmQgbW9kZS4NCj4gPg0KPiA+IEEgcHJp
+dmlsZWdlZCB1c2VyIGluc2lkZSBndWVzdCBjb3VsZCB1c2UgdGhpcyBmbGF3
+IHRvIGNyYXNoIHRoZSBRZW11DQo+ID4gcHJvY2VzcyByZXN1bHRpbmcgaW4g
+RG9TIE9SIHBvdGVudGlhbGx5IGV4ZWN1dGUgYXJiaXRyYXJ5IGNvZGUgb24g
+dGhlDQo+ID4gaG9zdCB3aXRoIHByaXZpbGVnZXMgb2YgUWVtdSBwcm9jZXNz
+IG9uIHRoZSBob3N0Lg0KPiA+DQo+ID4gVXBzdHJlYW0gcGF0Y2gNCj4gPiAt
+LS0tLS0tLS0tLS0tLQ0KPiA+ICAgIC0+DQo+ID4gaHR0cHM6Ly9saXN0cy5n
+bnUub3JnL2FyY2hpdmUvaHRtbC9xZW11LWRldmVsLzIwMTctMDIvbXNnMDAw
+MTUuaHRtbA0KPiA+DQo+ID4gSXQgZml4ZXMNCj4gPiAgICAtPg0KPiA+DQo+
+IGh0dHA6Ly9naXQucWVtdS5vcmcvP3A9cWVtdS5naXQ7YT1jb21taXQ7aD1k
+MzUzMmEwZGIwMjI5NmU2ODc3MTFiOGNkYw0KPiA+IDc3OTE5MjRlZmNjZWEw
+DQo+ID4NCj4gPiBSZWZlcmVuY2U6DQo+ID4gLS0tLS0tLS0tLQ0KPiA+ICAg
+IC0+IGh0dHBzOi8vYnVnemlsbGEucmVkaGF0LmNvbS9zaG93X2J1Zy5jZ2k/
+aWQ9MTQxODIwMA0KPiA+DQo+ID4gVGhpcyBpc3N1ZSB3YXMgcmVwb3J0ZWQg
+YnkgTGkgUWlhbmcgb2YgMzYwLmNuIEluYy4NCj4gPg0KPiA+IENWRS0yMDE3
+LTI2MTUgd2FzIGFzc2lnbmVkIHRvIHRoaXMgaXNzdWUgYnkgUmVkIEhhdCBJ
+bmMuDQo+ID4NCj4gPiBUaGFuayB5b3UuDQo+ID4gLS0NCj4gPiBQcmFzYWQg
+SiBQYW5kaXQgLyBSZWQgSGF0IFByb2R1Y3QgU2VjdXJpdHkgVGVhbSA0N0FG
+IENFNjkgM0E5MCA1NEFBDQo+ID4gOTA0NQ0KPiA+IDEwNTMgREQxMyAzRDMy
+IEZFNUIgMDQxRg0K
