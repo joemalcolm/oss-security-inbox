@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1171" "Tuesday" "12" "November" "2019" "13:17:50" "+0100" "pgajdos" "pgajdos@suse.cz" "<20191112121750.GA15193@laura.suse.cz>" "16" "Re: [oss-security] CVE-2019-2201: libjpeg-turbo: code execution" "^Date:" nil nil "11" "2019111212:17:50" "[oss-security] CVE-2019-2201: libjpeg-turbo: code execution" (number mark "        pgajdos@suse Nov 12   16/1171  " thread-indent "\"Re: [oss-security] CVE-2019-2201: libjpeg-turbo: code execution\"\n") "<2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>" ("<2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-2201: libjpeg-turbo: code execution" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["365" "Wednesday" "22" "February" "2017" "20:08:49" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170222190849.qdh65xvhpsu5pao7@eldamar.local>" "11" "[oss-security] munin: CVE-2017-6188: Local file write vulnerability" nil nil nil "2" "2017022219:08:49" "[oss-security] munin: CVE-2017-6188: Local file write vulnerability" (number mark "U       carnil@debia Feb 22   11/365   " thread-indent "\"[oss-security] munin: CVE-2017-6188: Local file write vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27732 invoked by uid 550); 12 Nov 2019 12:56:29 -0000
+Received: (qmail 32576 invoked by uid 550); 22 Feb 2017 19:09:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9656 invoked from network); 12 Nov 2019 12:18:02 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20191112121750.GA15193@laura.suse.cz>
-References: <2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 32555 invoked from network); 22 Feb 2017 19:09:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=bsHMTLLakmjiboihRIJb8Kb8KB+muVQnGKiinjf2nI4=;
+        b=qNO5NiqiBke0ZSWUeGlj1uCaTl0mEBth6cKChIxD/t1gtxPLo0kijUs3wQNKdZ3QsJ
+         lIpsO+3ZOvK+Zyp/uHNGKT6XOQ0Ra5tMs6UJAeuwSEDQIMNd1jER3nIItZEP3+UPutlI
+         lmkKJdifuX2hCnCpFdObXq8nh0CmWyn98qp3vPo54pYJJf3v9vk8IAnMHWNj3mtW/dt0
+         poBDs+SorwAO2o6xuvVvN/2QC6RwH6EToZ5bYPDFx029E9ciimfpTQoEA2N9wZD+bpib
+         OF2RnKVfGAgaiuKlWmMx72XMyXRdrLYtCmkAQWor4t6wAznO4ZDF/UzzGNp6jdTdPpD8
+         Mo+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=bsHMTLLakmjiboihRIJb8Kb8KB+muVQnGKiinjf2nI4=;
+        b=pkvhW0PLxrmdWqy8xnOmRagBr02J8avegioFKC+ynNRWuRe8ilSWiV2Gjim95Yo97J
+         6aUbz3qQoCgRlqHUA8a+20+moEyih6SbzJMNL4y3LBmbNceLe5ZghbdJUGTU1Ev0m4q+
+         rXbwvYProcG2EA6v9TNrh68qpt92VTs+b2GTGmZDx5nrxxVEkT300R1JmQv28BBBevN8
+         U+yTlF8dYrCijtQSA+3ACVe6yjtKrcmkmJC9w7FT6iTHFjznH3DzQpTKyUzUAbE2MtWU
+         bpXs/TL0DMqpTVFvuUKlytI5l+0eZ1sFWO0A90PSSPuYO0VKPzsixmwV/UwWaIkpcUi7
+         HJuw==
+X-Gm-Message-State: AMke39nQ1AZlEq7fMkzCC60m/1blbVkRnwEohJH1Uzqw5llLgRp0IGQU5yCQNTkgyfdS1g==
+X-Received: by 10.28.199.206 with SMTP id x197mr3610090wmf.5.1487790531121;
+        Wed, 22 Feb 2017 11:08:51 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 22 Feb 2017 20:08:49 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170222190849.qdh65xvhpsu5pao7@eldamar.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2eb0be7f-bd31-e304-1787-09e47007d32a@suse.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
-Date: Tue, 12 Nov 2019 13:17:50 +0100
-From: pgajdos <pgajdos@suse.cz>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-2201: libjpeg-turbo: code execution
-To: oss-security@lists.openwall.com
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] munin: CVE-2017-6188: Local file write vulnerability
 
-On Mon, Nov 11, 2019 at 05:49:45PM +0100, Wolfgang Frisch wrote:
-> > Program received signal SIGSEGV, Segmentation fault.
-> > 0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> > (gdb) bt
-> > #0  0x00007ffff7d44d9d in __memset_avx2_erms () from /lib64/libc.so.6
-> > #1  0x0000555555558f7a in memset (__len=18446744071562074395, __ch=127, __dest=<optimized out>) at /usr/include/bits/string_fortified.h:71
-> > #2  decomp (srcBuf=0x0, jpegBuf=0x7fffffffd8e0, jpegSize=0x7fffffffd8e8, dstBuf=<optimized out>, w=26755, h=26755, subsamp=2, jpegQual=0, 
-> >     fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755", tilew=26755, tileh=26755) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:174
-> > #3  0x0000555555557103 in decompTest (fileName=0x7fffffffdfaa "CVE-2019-2201-reproducer-SEGFAULT-26755x26755") at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:712
-> > #4  main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/libjpeg-turbo-2.0.3-56.1.x86_64/tjbench.c:1003
-> 
-> We identified that it crashed on writing to a libc.so mapping.
+Munin, at least up to 2.0.30 is prone to a local file write
+vulnerability, when CGI graphs are enabled. Setting mutliple
+'upper_limit' GET parameters allow overwriting any file (accessible by
+the user running the cgi-process).
 
-https://github.com/libjpeg-turbo/libjpeg-turbo/issues/388
+Upstream bug: https://github.com/munin-monitoring/munin/issues/721
 
-Petr
+MITRE has assigned CVE-2017-6188 for this issue.
+
+Regards,
+Salvatore
