@@ -1,23 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/10
-Message-ID: <58d40b9e-35ab-6576-d190-774c869c2a58@redhat.com>
-Date: Wed, 1 Mar 2017 17:57:23 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/22/3
+Message-ID: <CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>
+Date: Wed, 22 Feb 2017 14:28:35 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2016-10228: glibc iconv program can hang when invoked with the -c option
+Subject: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)
 Content-Type: text/plain; charset=utf-8
 
-The iconv program (not the iconv function) provided by glibc can hang 
-(enter an infinite loop) when invoked with the -c option and an invalid 
-multi-byte sequence is encountered in the input:
+Hi,
 
-   https://sourceware.org/bugzilla/show_bug.cgi?id=19519
+This is an announcement about CVE-2017-6074 [1] which is a double-free
+vulnerability I found in the Linux kernel. It can be exploited to gain
+kernel code execution from an unprivileged processes.
 
-We have received an independent report of this issue, so we are treating 
-this as a (minor) security bug now on the glibc upstream side.
+Fixed on Feb 17, 2017:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
 
-(Note to Red Hat Product Security: We already have a couple of product 
-bugs for this.)
+The oldest version that was checked is 2.6.18 (Sep 2006), which is
+vulnerable. However, the bug was introduced before that, probably in
+the first release with DCCP support (2.6.14, Oct 2005).
 
-Thanks,
-Florian
+The kernel needs to be built with CONFIG_IP_DCCP for the vulnerability
+to be present. A lot of modern distributions enable this option by
+default.
+
+The bug was found with syzkaller [2].
+
+### Bug details
+
+In the current DCCP implementation an skb for a DCCP_PKT_REQUEST
+packet is forcibly freed via __kfree_skb in dccp_rcv_state_process if
+dccp_v6_conn_request successfully returns [3].
+
+However, if IPV6_RECVPKTINFO is set on a socket, the address of the
+skb is saved to ireq->pktopts and the ref count for skb is incremented
+in dccp_v6_conn_request [4], so skb is still in use. Nevertheless, it
+still gets freed in dccp_rcv_state_process.
+
+The fix is to call consume_skb, which accounts for skb->users,
+instead of doing goto discard and therefore calling __kfree_skb.
+
+To exploit this double-free, it can be turned into a use-after-free:
+
+//  The first free:
+kfree(dccp_skb)
+// Another object allocated on the same place as dccp_skb:
+some_object = kmalloc()
+// The second free, effectively frees some_object
+kfree(dccp_skb)
+
+As this point we have a use-after-free on some_object. An attacker can
+control what object that would be and overwrite it's content with
+arbitrary data by using some of the kernel heap spraying techniques.
+If the overwritten object has any triggerable function pointers, an
+attacker gets to execute arbitrary code within the kernel.
+
+I'll publish an exploit in a few days, giving people time to update.
+
+New Ubuntu kernels are out so please update as soon as possible.
+
+### Timeline
+
+2017-02-15: Bug reported to security@...nel.org
+2017-02-16: Patch submitted to netdev
+2017-02-17: Patch committed to mainline kernel
+2017-02-18: Notification sent to linux-distros
+2017-02-22: Public announcement
+
+### Links
+
+[1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-6074
+[2] https://github.com/google/syzkaller
+[3] http://lxr.free-electrons.com/source/net/dccp/input.c?v=4.9#L606
+[4] http://lxr.free-electrons.com/source/net/dccp/ipv6.c?v=4.9#L351
+[5] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
