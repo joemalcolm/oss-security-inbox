@@ -1,59 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/4
-Message-ID: <20170406103245.67949bfc@pc1>
-Date: Thu, 6 Apr 2017 10:32:45 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/17
+Message-ID: <46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>
+Date: Thu, 23 Feb 2017 17:53:54 +0100
+From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: libxslt math.random issue
+Subject: Advisory X41-2017-004: Multiple Vulnerabilities in tnef
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On Thu, 6 Apr 2017 07:44:00 +0200
-Marcus Meissner <meissner@...e.de> wrote:
+X41 D-Sec GmbH Security Advisory: X41-2017-004
 
-> CVE-2015-9019 has been assigned to use of libexslt (in libxslt) usage
-> of "math.random" without initializing the randomseed.
-> 
-> https://bugzilla.gnome.org/show_bug.cgi?id=758400
-> https://bugzilla.suse.com/show_bug.cgi?id=934119
+Multiple Vulnerabilities in tnef
+================================
 
-I have some questions and comments:
+Overview
+--------
+Confirmed Affected Versions: 1.4.12 and earlier
+Confirmed Patched Versions:
+Vendor: verdammelt
+Vendor URL: https://github.com/verdammelt/tnef/
+Vector: File
+Credit: X41 D-Sec GmbH, Eric Sesterhenn
+Status: Public
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2017-004-tnef/
 
-1. What's the use of the random number and what's the security impact
-if it's not random? That's not explained
-In case of the bugreport.
-In case a cryptographically secure random number is required then using
-rand()/srand() is a bad idea anyway.
-(Unfortunately there's no secure random in the standard libc, but at
-least glibc now has getrandom.).
 
-2. This part of the patch looks a bit strange:
+Summary and Impact
+------------------
+Multiple Integer Overflows, Type Confusions and Out of Band Reads and
+Writes have been discovered in tnef 1.4.12 and earlier. These could
+be exploited by tricking a user into opening a malicious winmail.dat file.
 
-+	seed = time(NULL); /* just in case /dev/urandom is not there */
-+	if (fd == -1) {
-+		read (fd, &seed, sizeof(seed));
-+		close (fd);
-+	}
 
-You're calling time() unconditionally, although it's kinda just a
-fallback. Why not
-+	if (fd == -1) {
-+		read (fd, &seed, sizeof(seed));
-+		close (fd);
-+	} else {
-+		seed = time(NULL);
-+	}
-?
+Product Description
+-------------------
+From the Readme.md:
+TNEF is a program for unpacking MIME attachments of type
+"application/ms-tnef". This is a Microsoft only attachment. Due to the
+proliferation of Microsoft Outlook and Exchange mail servers, more and
+more mail is encapsulated into this format. The TNEF program allows one
+to unpack the attachments which were encapsulated into the TNEF
+attachment. Thus alleviating the need to use Microsoft Outlook to view
+the attachment. TNEF is mainly tested and used on GNU/Linux and CYGWIN
+systems. It 'should' work on other UNIX and UNIX-like systems.
 
-(obviously using time is not a secure way to do random numbers, if
-secure numbers are required cross-plattform you need to do this
-otherwise anyway)
 
+
+Integer Overflows in Memory Allocator
+=====================================
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: 7.0
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Several Integer Overflows, which can lead to Heap Overflows have been
+identified in the functions, which wrap memory allocation.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+
+Type Confusion in src/tnef.c:parse_file()
+=========================================
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: 7.0
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Two type confusions have been identified in the parse_file() function.
+These might lead to invalid read and write operations, controlled by an
+attacker.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+
+OOB Writes in src/mapi_attr.c:mapi_attr_read()
+==============================================
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: High
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Two OOB Writes have been identified in src/mapi_attr.c:mapi_attr_read().
+These might lead to invalid read and write operations, controlled by an
+attacker.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+Type Confusion in src/file.c:file_add_mapi_attrs()
+==================================================
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: 7.0
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Four type confusions have been identified in the file_add_mapi_attrs()
+function. These might lead to invalid read and write operations,
+controlled by an attacker.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+About X41 D-Sec GmbH
+--------------------
+X41 D-Sec is a provider of application security services. We focus on
+application code reviews, design review and security testing. X41 D-Sec
+GmbH was founded in 2015 by Markus Vervier. We support customers in
+various industries such as finance, software development and public
+institutions.
+
+Timeline
+--------
+2017-02-17	Issue found
+2017-02-19	Vendor contacted
+2017-02-20	CVE IDs requested
+2017-02-21	Vendor Reply
+2017-02-23	Vendor releases patched version
+2017-02-23	Advisory released
 
 -- 
-Hanno Böck
-https://hboeck.de/
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Geschäftsführer: Markus Vervier
 
-mail/jabber: hanno@...eck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
