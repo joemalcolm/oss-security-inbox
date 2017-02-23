@@ -1,63 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/2
-Message-ID: <alpine.GSO.2.20.1702280817550.12318@freddy.simplesystems.org>
-Date: Tue, 28 Feb 2017 08:19:36 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: GraphicsMagick heap out of bounds write issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/12
+Message-Id: <E1cgwFe-0005Mf-Pk@xenbits.xenproject.org>
+Date: Thu, 23 Feb 2017 16:28:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 210 - arm: memory corruption when freeing p2m pages
 Content-Type: text/plain; charset=utf-8
 
-This problem has been issued CVE-2017-6335.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The original reporter has tried to post CVE-assignment information to 
-the list but the mail has not made it through yet.
+                    Xen Security Advisory XSA-210
 
-Bob
+             arm: memory corruption when freeing p2m pages
 
-On Fri, 24 Feb 2017, Bob Friesenhahn wrote:
+ISSUE DESCRIPTION
+=================
 
-> I would like to ammend this report in that the situation is a read beyond an 
-> allocated heap buffer rather than a write beyond the end of an allocated heap 
-> buffer as was originally reported.  The application may crash but should not 
-> be otherwise compromised.
->
-> Bob
->
-> On Thu, 23 Feb 2017, Bob Friesenhahn wrote:
->
->> GraphicsMagick versions up to 1.3.25 encounter a write beyond an allocated 
->> heap buffer when reading CMYKA TIFF files which claim to offer fewer 
->> samples per pixel than required.
->> 
->> This is the tiffinfo description of the problematic TIFF file:
->> 
->> TIFF Directory at offset 0x808 (2056)
->>  Image Width: 34 Image Length: 48
->>  Bits/Sample: 8
->>  Sample Format: unsigned integer
->>  Compression Scheme: None
->>  Photometric Interpretation: separated
->>  Extra Samples: 1<unassoc-alpha>
->>  Orientation: row 0 top, col 0 lhs
->>  Samples/Pixel: 2
->>  Rows/Strip: 32
->>  Planar Configuration: single image plane
->> 
->> The fix for this is Mercurial changeset 14998:6156b4c2992d which may be 
->> viewed at SourceForge via this link:
->> 
->> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
->> 
->> A minimal patch to correct the problem is attached.
->> 
->> This issue was reported to us on February 15, 2017 by Valon Chu.
->> 
->> Bob
->> 
->
->
+When freeing pages used for stage-2 page tables, the freeing routine
+failed to remove these pages from an internally managed list they were
+put on during allocation.  The same list node elements are also
+used by the hypervisor's page allocator.  Subsequent manipulation of
+ARM's private P2M list could therefore corrupt the lists maintained by
+the page allocator.  The buggy code is exposed to guests via the
+XENMEM_decrease_reservation hypercall.
 
--- 
-Bob Friesenhahn
-bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+IMPACT
+======
+
+A malicious or buggy guest may corrupt hypervisor state, commonly
+leading to a host crash (Denial of Service).  Privilege escalation or
+information leaks cannot be excluded.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Xen version 4.8 is affected.  Xen versions 4.7 and earlier are not
+vulnerable.
+
+Only ARM systems are vulnerable.  X86 based systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+The issue was discussed publicly before being recognized as a security
+issue.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa210.patch           xen-unstable, Xen 4.8.x
+
+$ sha256sum xsa210*
+10e26c017c916dcac261c6a3c92656831f0ad037f792940e6faf6905c6e23861  xsa210.patch
+$
+
+CREDITS
+=======
+
+The initial bug was discovered by Vijay Kilari of Cavium and the
+security aspect was diagnosed by Julien Grall of ARM.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJYrw2aAAoJEIP+FMlX6CvZuw4H/34z2io/65h2RLDL3bx4w//A
+nWNcrceKrxyvtZmTss56RHrUeiOOKOeuCXWMx5CSihBcSRXqyZa79IDul9t1b7fB
+m6NUPerILGueF3uOYTRUvvSiWKWRzVPOCgqSxlCmd7YTrkjHZkq/x2Gb9Acj3hrl
+yE0fFdD/hTIN9wZtHWY+gTIXMIGHBJ4/xieZeYZvylbnmu9nDC0WIupTExonWqie
+sG0DICl+eKJMt3ioSzaGd9117Xk1P7JWvcr7MJQvzn/2VDTG2TjC4kZE1iDHHVPz
++txQh2G2Luf+jX5VQSqWnlv7I9zuGlqYEpAMQacjrLzGejuqPSC2kbzliOEoCaE=
+=1k3w
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa210.patch" of type "application/octet-stream" (1480 bytes)
