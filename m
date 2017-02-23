@@ -1,106 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/3
-Message-ID: <alpine.LRH.2.20.1703241217250.10825@namei.org>
-Date: Fri, 24 Mar 2017 12:26:43 +1100 (AEDT)
-From: James Morris <jmorris@...ei.org>
-To: linux-security-module@...r.kernel.org, linux-kernel@...r.kernel.org
-cc: lwn@....net, fedora-selinux-list@...hat.com, selinux@...ho.nsa.gov, Linux Security Summit Program Committee <lss-pc@...ts.linuxfoundation.org>, ubuntu-hardened@...ts.ubuntu.com, netfilter-devel@...r.kernel.org, linux-crypto@...r.kernel.org, Audit-ML <linux-audit@...hat.com>, gentoo-hardened@...too.org, keyrings@...ux-nfs.org, tpmdd-devel@...ts.sourceforge.net, kernel-hardening@...ts.openwall.com, oss-security@...ts.openwall.com, openxt@...glegroups.com, tee-dev@...ts.linaro.org
-Subject: [ANNOUNCE] Linux Security Summit 2017 - CFP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/15
+Message-ID: <20170223162028.GA14624@mail.hallyn.com>
+Date: Thu, 23 Feb 2017 10:20:28 -0600
+From: "Serge E. Hallyn" <serge@...lyn.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Feb 23, 2017 at 05:08:48PM +0100, Hanno Böck wrote:
+> On Thu, 23 Feb 2017 07:56:51 -0500
+> Assaf Gordon <assafgordon@...il.com> wrote:
+> 
+> > GNU Coreutils stopped installing 'su' by default in 2007,
+> > and completely removed 'su' (including the 'su.c' source file)
+> > in 2012.
+> 
+> That's good to know, so now there are only 2 competing versions of su
+> instead of 3 in major packages :-)
+> 
+> Anyone have a good idea who is using shadow vs. util-linux su? Do they
+> have specific advantages/disadvantages, would it be reasonable to try
+> to get all distros to use them same one?
 
-==============================================================================
-		   ANNOUNCEMENT AND CALL FOR PARTICIPATION
-
-			  LINUX SECURITY SUMMIT 2017
-                         
-			       14-15 September
-			       LOS ANGELES, USA
-==============================================================================
-
-
-DESCRIPTION
-
-  The Linux Security Summit (LSS) is a technical forum for collaboration
-  between Linux developers, researchers, and end users. Its primary aim is to
-  foster community efforts in analyzing and solving Linux security challenges.
-
-  LSS this year will be co-located with the Open Source Summit and the Linux
-  Plumbers Conference.
-
-  The program committee currently seeks proposals for:
-
-    * Refereed Presentations:
-      45 minutes in length, including at least 10 minutes of discussion.
-
-    * Discussion Topics:
-      30 minutes in length.
-
-  Topic areas include, but are not limited to:
-
-    * Kernel self-protection
-    * Access control
-    * Cryptography and key management
-    * Integrity control
-    * Hardware Security
-    * Iot and embedded security
-    * Virtualization and containers
-    * System-specific system hardening
-    * Case studies
-    * Security tools
-    * Security UX
-    * Emerging technologies, threats & techniques 
-
-  Proposals should be submitted via:
-    http://events.linuxfoundation.org/events/linux-security-summit/program/cfp
-
-
-DATES
-
-  * CFP Close: June 5, 2017
-  * CFP Notifications: June 12, 2017
-  * Schedule Announced: June 19, 2017
-  * Slide Submission: August 31, 2017
-
-
-WHO SHOULD ATTEND
-
-  We're seeking a diverse range of attendees, and welcome participation by
-  people involved in Linux security development, operations, and research.
-
-  The LSS is a unique global event which provides the opportunity to present
-  and discuss your work or research with key Linux security community members
-  and maintainers.  It’s also useful for those who wish to keep up with the
-  latest in Linux security development, and to provide input to the
-  development process.
-
-
-WEB SITE
-
-  http://events.linuxfoundation.org/events/linux-security-summit
-
-
-TWITTER
-
-  For event updates and announcements, follow:
-
-    https://twitter.com/LinuxSecSummit
-  
-
-PROGRAM COMMITTEE
-
-  The program committee for LSS 2017 is:
-
-    * James Morris, Oracle
-    * Serge Hallyn, Canonical
-    * Paul Moore, Red Hat
-    * Stephen Smalley, NSA
-    * Elena Reshetova, Intel
-    * John Johansen, Canonical
-    * Kees Cook, Google
-    * Casey Schaufler, Intel
-    * Mimi Zohar, IBM
-    * David A. Wheeler, Institute for Defense Analyses
-
-  The program committee may be contacted as a group via email:
-    lss-pc () lists.linuxfoundation.org
+There is a debian bug to switch over to the util-linux version of su.
