@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/16/3
-Message-ID: <od089o$htq$1@blaine.gmane.org>
-Date: Sun, 16 Apr 2017 19:06:07 +0200
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/5
+Message-ID: <20170223104054.42060545@pc1>
+Date: Thu, 23 Feb 2017 10:40:54 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: MantisBT - Full admin access vulnerability - CVE-2017-7615
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-> A vulnerability exists in MantisBT where any users password can be reset:
+Hi,
 
-This is registered as CVE-2017-7615. It was discovered and reported to
-us by John Page aka hyp3rlinx from ApparitionSec
-(http://hyp3rlinx.altervista.org).
+On Thu, 23 Feb 2017 08:46:30 +0100
+Marcus Meissner <meissner@...e.de> wrote:
 
-We didn't post it here before, as due to the severity of the issue we
-wanted to give the opportunity to our users to patch their systems
-before full public disclosure, so we notified them via private e-mail.
+> util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed
+> local users to kill other processes.
 
-Unfortunately someone decided to post it here (anonymously, too...) in
-spite of our request to keep the embargo, so here's the rest of the story.
+I just reported this in Gentoo [1], yet I was informed that we're not
+using su from util-linux, but from shadow. So depending on the
+distribution you may not use this implementation of su.
 
-The issue will be fixed in versions 1.3.10, 2.2.4, and 2.3.1, to be
-released shortly.
+I haven't digged deeper into this, can you say if this issue is
+generic enough to be expected in other implementations as well? (Not
+sure if the implementations of su in shadow and util-linux share a
+common codebase, seems to be quite old stuff.)
 
-Until then, all MantisBT administrators are advised to patch their
-system immediately. Fixes are availble from our GitHub repository:
+[1] https://bugs.gentoo.org/show_bug.cgi?id=610664
+-- 
+Hanno Böck
+https://hboeck.de/
 
-- 2.3.x https://github.com/mantisbt/mantisbt/commit/cfbc5e54
-- 2.2.x https://github.com/mantisbt/mantisbt/commit/46880ef6
-- 1.3.x https://github.com/mantisbt/mantisbt/commit/14c61a8c
-
-MantisBT issue tracker reference:
-https://mantisbt.org/bugs/view.php?id=22690
-
-Best regards
-D. Regad
-MantisBT developer
-
-
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
