@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3823" "Friday" "8" "June" "2018" "19:38:27" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>" "83" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" nil nil nil "6" "2018060817:38:27" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" (number mark "U       glider@googl Jun  8   83/3823  " thread-indent "\"[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6024" "Thursday" "23" "February" "2017" "17:53:54" "+0100" "X41 D-Sec GmbH Advisories" "advisories@x41-dsec.de" "<46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>" "184" "[oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef" nil nil nil "2" "2017022316:53:54" "[oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef" (number mark "U       advisories@x Feb 23  184/6024  " thread-indent "\"[oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13628 invoked by uid 550); 8 Jun 2018 17:38:52 -0000
+Received: (qmail 32222 invoked by uid 550); 23 Feb 2017 17:23:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +12,201 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13605 invoked from network); 8 Jun 2018 17:38:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Fe97+x+PLAfNn95earKzfw/FHwgfYQNQ/zchO5YdWXY=;
-        b=Ac7166AiGJ9XAub//mjePTanxqV1pg0kte1gmF76Q5l1xOEdq3+kWfHM25eG58Uh7v
-         h3UaxgKPWOIxGFxIbxJ5AylBf6UwQoch7E23NOBn0PjUZyqGWVnFIQhHZhacYrlery0i
-         C87h6uEuwrozZ5lAhlPOjbP/NvOTKVkzUzRgam/FkMrZp/nN2j9ddG3hes9SDCcLCU1U
-         GgIiLnfTFmFeeD+rokXVlP4V5mEauRylfLN6aiLO+MpSbLBnwEokJxvZzwFWdSgILsTn
-         WsT82Ol4ql+IA2E+LRnyIDni8iARhVRo6KwLqUfzfZvu9ucv6M5P7LKKIPmsaQCaTZEo
-         BTYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Fe97+x+PLAfNn95earKzfw/FHwgfYQNQ/zchO5YdWXY=;
-        b=J7EgWRsCoLQBlGx8PIF5ucB+QhzivRIyD7YKV9pbF6Awm3jhciwMjAd7wurCQBsq6p
-         F2bfevcWw522yblnbQKjf5BMRAhLQn5+3TkarZD70A2RHM9Jms1BTJxwTEiofG1NLR7A
-         T8d4rLsH8FKiFR9KrWK9ixijNS/h86YZbPpk7KiXdgesH/yHJ/EPvfVYxzsJHaceVcTx
-         R7JGxtDEstVWTJWQyw9JmP2W1aFZ0YbeGjvOmJicIame2ihHva8qzcxzbh9fNoBmkTOm
-         wuacvDhKLXendmaoL2UZNHNm1D5HjM1MgFWS/LeCwXTEdBdhVwSgOzaczqkrQDiWHNeK
-         jkfQ==
-X-Gm-Message-State: APt69E2bbAL+iXYb2Ti1UFJjlxPOHUZ748HEqPDoeOUGSP70AmHu3pIr
-	w895m6/T0vddRDU/KZhgQBEvT3OUsY3gQPOmwOI+xjR7n4E=
-X-Google-Smtp-Source: ADUXVKJ1e1ixb51GoUMyJltA0q2gwVyuPFyUbqlbFutGDVbEyqz6Br8c7b6s/hB/eAa7nbLrr5FLATCmYZ92LOcQjV0=
-X-Received: by 2002:ab0:11e3:: with SMTP id q35-v6mr4784693uac.162.1528479519389;
- Fri, 08 Jun 2018 10:38:39 -0700 (PDT)
-MIME-Version: 1.0
-From: Alexander Potapenko <glider@google.com>
-Date: Fri, 8 Jun 2018 19:38:27 +0200
-Message-ID: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>
+Received: (qmail 9604 invoked from network); 23 Feb 2017 16:55:13 -0000
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary="000000000000cd5739056e24de81"
-Subject: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect
- handling of SG_IO ioctl
+Organization: X41 D-Sec GmbH
+Message-ID: <46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>
+Date: Thu, 23 Feb 2017 17:53:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi"
+Subject: [oss-security] Advisory X41-2017-004: Multiple Vulnerabilities in tnef
 
---000000000000cd5739056e24de81
-Content-Type: text/plain; charset="UTF-8"
+--oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi
+Content-Type: multipart/mixed; boundary="u6l3JJcOejQhsQasde24nPPJnQSXXO6bs";
+ protected-headers="v1"
+From: X41 D-Sec GmbH Advisories <advisories@x41-dsec.de>
+To: oss-security@lists.openwall.com
+Message-ID: <46fe3e2c-05b5-f574-4bd6-eb62ad99b68c@x41-dsec.de>
+Subject: Advisory X41-2017-004: Multiple Vulnerabilities in tnef
+
+--u6l3JJcOejQhsQasde24nPPJnQSXXO6bs
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi all,
 
-Linux Kernel version 3.18 to 4.16 incorrectly handles an SG_IO ioctl
-on /dev/sg0 (or any other SCSI device) with
-dxfer_direction=3DSG_DXFER_FROM_DEV and an empty 6-byte cmdp.
-This may lead to copying up to 1000 kernel heap pages to the userspace.
-See the PoC exploit attached.
+X41 D-Sec GmbH Security Advisory: X41-2017-004
 
-This bug has been fixed in the upstream kernel already:
-https://github.com/torvalds/linux/commit/a45b599ad808c3c982fdcdc12b0b8611c2=
-f92824,
-and CVE-2018-1000204 has been assigned to it.
+Multiple Vulnerabilities in tnef
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
 
-The problem has limited scope, as users don't usually have permissions
-to access SCSI devices. On the other hand, e.g. the Nero user manual
-suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
+Overview
+--------
+Confirmed Affected Versions: 1.4.12 and earlier
+Confirmed Patched Versions:
+Vendor: verdammelt
+Vendor URL: https://github.com/verdammelt/tnef/
+Vector: File
+Credit: X41 D-Sec GmbH, Eric Sesterhenn
+Status: Public
+Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2017-004-tnef/
+
+
+Summary and Impact
+------------------
+Multiple Integer Overflows, Type Confusions and Out of Band Reads and
+Writes have been discovered in tnef 1.4.12 and earlier. These could
+be exploited by tricking a user into opening a malicious winmail.dat file.
+
+
+Product Description
+-------------------
+=46rom the Readme.md:
+TNEF is a program for unpacking MIME attachments of type
+"application/ms-tnef". This is a Microsoft only attachment. Due to the
+proliferation of Microsoft Outlook and Exchange mail servers, more and
+more mail is encapsulated into this format. The TNEF program allows one
+to unpack the attachments which were encapsulated into the TNEF
+attachment. Thus alleviating the need to use Microsoft Outlook to view
+the attachment. TNEF is mainly tested and used on GNU/Linux and CYGWIN
+systems. It 'should' work on other UNIX and UNIX-like systems.
+
+
+
+Integer Overflows in Memory Allocator
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: 7.0
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Several Integer Overflows, which can lead to Heap Overflows have been
+identified in the functions, which wrap memory allocation.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+
+Type Confusion in src/tnef.c:parse_file()
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: 7.0
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Two type confusions have been identified in the parse_file() function.
+These might lead to invalid read and write operations, controlled by an
+attacker.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+
+OOB Writes in src/mapi_attr.c:mapi_attr_read()
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: High
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Two OOB Writes have been identified in src/mapi_attr.c:mapi_attr_read().
+These might lead to invalid read and write operations, controlled by an
+attacker.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+Type Confusion in src/file.c:file_add_mapi_attrs()
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity Rating: High
+Vector: Local
+CVE: Not yet assigned
+CVSS Score: 7.0
+CVSS Vector: CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+
+Summary and Impact
+------------------
+Four type confusions have been identified in the file_add_mapi_attrs()
+function. These might lead to invalid read and write operations,
+controlled by an attacker.
+
+Workarounds
+-----------
+None, X41 D-Sec GmbH recommends to update to the latest version.
+
+
+About X41 D-Sec GmbH
+--------------------
+X41 D-Sec is a provider of application security services. We focus on
+application code reviews, design review and security testing. X41 D-Sec
+GmbH was founded in 2015 by Markus Vervier. We support customers in
+various industries such as finance, software development and public
+institutions.
+
+Timeline
+--------
+2017-02-17	Issue found
+2017-02-19	Vendor contacted
+2017-02-20	CVE IDs requested
+2017-02-21	Vendor Reply
+2017-02-23	Vendor releases patched version
+2017-02-23	Advisory released
 
 --=20
-Alexander Potapenko
-Software Engineer
+X41 D-SEC GmbH, Dennewartstr. 25-27, D-52068 Aachen
+T: +49 241 9809418-0, Fax: -9
+Unternehmenssitz: Aachen, Amtsgericht Aachen: HRB19989
+Gesch=C3=A4ftsf=C3=BChrer: Markus Vervier
 
-Google Germany GmbH
-Erika-Mann-Stra=C3=9Fe, 33
-80636 M=C3=BCnchen
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
 
---000000000000cd5739056e24de81
-Content-Type: text/x-csrc; charset="US-ASCII"; name="sg_io_leak.c"
-Content-Disposition: attachment; filename="sg_io_leak.c"
-Content-Transfer-Encoding: base64
-Content-ID: <f_ji6956sg0>
-X-Attachment-Id: f_ji6956sg0
 
-I2luY2x1ZGUgPGZjbnRsLmg+CiNpbmNsdWRlIDxwdGhyZWFkLmg+CiNpbmNs
-dWRlIDxzY3NpL3NnLmg+CiNpbmNsdWRlIDxzdGRpby5oPgojaW5jbHVkZSA8
-c3RkbGliLmg+CiNpbmNsdWRlIDxzdHJpbmcuaD4KI2luY2x1ZGUgPHN5cy9p
-b2N0bC5oPgoKI2RlZmluZSBDTURfU0laRSA2CgojZGVmaW5lIE1JTl9TVFJM
-RU4gMQpwdGhyZWFkX211dGV4X3Qgb3V0X211dGV4ID0gUFRIUkVBRF9NVVRF
-WF9JTklUSUFMSVpFUjsKCnZvaWQgZHVtcF9idWYodW5zaWduZWQgY2hhciAq
-YnVmLCBpbnQgbGVuKSB7CiAgaW50IGksIG56ID0gMDsKICBmb3IgKGkgPSAw
-OyBpIDwgbGVuOyBpKyspIHsKICAgIGlmIChidWZbaV0pIHsKICAgICAgbnog
-PSAxOwogICAgICBicmVhazsKICAgIH0KICB9CiAgaWYgKCFueikKICAgIC8v
-IFRoZSBidWZmZXIgaXMgZW1wdHkuCiAgICByZXR1cm47CgogIHB0aHJlYWRf
-bXV0ZXhfbG9jaygmb3V0X211dGV4KTsKICBmb3IgKGkgPSAwOyBpIDwgbGVu
-OyBpKyspIHsKICAgIGlmIChidWZbaV0pIHsKICAgICAgaW50IHN0cl9sZW4g
-PSBzdHJsZW4oJmJ1ZltpXSk7CiAgICAgIC8vIFNob3J0IHN0cmluZyBwaWVj
-ZXMgYXJlIHRvbyBib3JpbmcuCiAgICAgIGlmIChzdHJfbGVuID49IE1JTl9T
-VFJMRU4pIHsKICAgICAgICB1bnNpZ25lZCBjaGFyICpjOwogICAgICAgIGZv
-ciAoYyA9ICZidWZbaV07IGMgPCAmYnVmW2kgKyBzdHJfbGVuXTsgYysrKSB7
-CiAgICAgICAgICBpZiAoKCpjID4gMTI3KSB8fCAoKCpjIDwgMzIpICYmICgq
-YyAhPSAxMCkgJiYgKCpjICE9IDEzKSkpICB7CiAgICAgICAgICAgICpjID0g
-JyAnOwogICAgICAgICAgICBjb250aW51ZTsKICAgICAgICAgIH0KICAgICAg
-ICB9CiAgICAgICAgLy8gRHVtcCB0aGUgYnVmZmVyLgogICAgICAgIGZwcmlu
-dGYoc3RkZXJyLCAiJXNcbiIsICZidWZbaV0pOwogICAgICB9CiAgICAgIGkg
-Kz0gc3RyX2xlbjsKICAgIH0KICB9CiAgcHRocmVhZF9tdXRleF91bmxvY2so
-Jm91dF9tdXRleCk7Cn0KCmludCBtYWluKGludCBhcmdjLCBjaGFyICphcmd2
-W10pCnsKICBpbnQgbnBhZ2VzID0gMTI4LCBwYWdlczsKICBpZiAoYXJnYyA+
-IDEpIHsKICAgIHBhZ2VzID0gYXRvaShhcmd2WzFdKTsKICAgIGlmIChwYWdl
-cyA+IDAgJiYgcGFnZXMgPCAxMDI0KQogICAgICBucGFnZXMgPSBwYWdlczsK
-ICB9CiAgaW50IGJ1Zl9zaXplID0gNDA5NiAqIG5wYWdlczsKCiAgaW50IGZk
-ID0gb3BlbigiL2Rldi9zZzAiLCBPX1JET05MWSk7CiAgaWYgKGZkID09IC0x
-KSB7CiAgICBmcHJpbnRmKHN0ZGVyciwgIm9wZW4gZmFpbGVkIVxuIik7CiAg
-ICByZXR1cm4gMTsKICB9CgogIGNoYXIgKm91dF9idWYgPSBjYWxsb2MoMSwg
-YnVmX3NpemUpOwogIGlmICghb3V0X2J1ZikgewogICAgZnByaW50ZihzdGRl
-cnIsICJjYWxsb2MgZmFpbGVkIVxuIik7CiAgICByZXR1cm4gMTsKICB9Cgog
-IGNoYXIgY21kW0NNRF9TSVpFXSA9IHt9OwogIHN0cnVjdCBzZ19pb19oZHIg
-aGRyOwogIG1lbXNldCgmaGRyLCAwLCBzaXplb2YoaGRyKSk7CiAgaGRyLmlu
-dGVyZmFjZV9pZCA9ICdTJzsKICBoZHIuZHhmZXJfZGlyZWN0aW9uID0gU0df
-RFhGRVJfRlJPTV9ERVY7CiAgaGRyLmNtZF9sZW4gPSBDTURfU0laRTsKICBo
-ZHIuZHhmZXJfbGVuID0gYnVmX3NpemU7CiAgaGRyLmR4ZmVycCA9IG91dF9i
-dWY7CiAgaGRyLmNtZHAgPSBjbWQ7CgogIGludCByZXQgPSBpb2N0bChmZCwg
-U0dfSU8sICZoZHIpOwogIGlmIChyZXQgPT0gLTEpIHsKICAgIGZwcmludGYo
-c3RkZXJyLCAiaW9jdGwgZmFpbGVkIVxuIik7CiAgfQogIGR1bXBfYnVmKG91
-dF9idWYsIGJ1Zl9zaXplKTsKICByZXR1cm4gMDsKfQo=
+--u6l3JJcOejQhsQasde24nPPJnQSXXO6bs--
 
---000000000000cd5739056e24de81--
+--oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEpwxVTgxAIcUvTugIo5Klpg50CxAFAlivE6IACgkQo5Klpg50
+CxCWSg/9EH5A9b2zWNtj5E5wE5Q/asS18QeG7TO45UK1eCXB8BCpCTx1aYd3uBEm
+ECLyYLvC7Ol7+ouq3UVaPayOAE/G12vOM6PsYuXeWZkZEn1zCAypjAMb7hSc3kwN
+Oh7TEJZNWioSwDx3hd9UoWoFW2wiCjKcMj+/NILkDwaZN6oTt9zysfTb3cUTuyet
+4N8txEMan5pGOMN20qWKp7J7VaRwqG8/NDKo0MnJllZzV5HjuIhkN1ZFLiHM65Q8
+r3Xpt3zeIyxAZq4zwK+wTcXFlYFE+d19s+JtD6pO4x+IrjGuDar8eTJ0F4NY0ISC
+/TYlSDmmLW9d7+EJ17IPWHxxAXPbRsVCYPhwrrwSG3tGb2D0NDaFoWQBkkL9+yf9
+J9KgBWgGOCkTj8OWeyoA2us6OMYh6JsJ1HiuSs2LgVtRymQz8Mz/eYWHz78hvIsm
+RLVcCWBS9QXGxNJgGcqhv/fnYUwze+0lhN6rE6lmPIqI0IgboyxfcjfQ1nXoOZlt
+xgG6jonoZ0aROolWRvQP51ZhkzeNpVWVk8JCshaLpIlYaUPxACpg2f0zb5E/UWVJ
+IDpBADp6nVry6XxFM2Y26dVF9sx3jK+n3qemTlBYvHcagYraeMVRpXiutyDobk14
+43pJ4MF0DYTgLZNqnfJk4dRZhD7yakP7W3uX7zJ+/r1XUSO6Q8Q=
+=xcka
+-----END PGP SIGNATURE-----
+
+--oDTPXL0oDqVeWW79NAjdUG3MoIrom7iVi--
