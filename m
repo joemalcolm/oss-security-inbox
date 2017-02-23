@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/27/7
-Message-ID: <20170627134404.GA19110@openwall.com>
-Date: Tue, 27 Jun 2017 15:44:04 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Mikhail Utin <mikhailutin@...mail.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: malicious hypervisor threat was ignored but it is real
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/18
+Message-ID: <a3beb7ec-c3e0-6506-cbbc-18a7f92eeca4@stoeckmann.org>
+Date: Thu, 23 Feb 2017 19:10:51 +0100
+From: Tobias Stöckmann <tobias@...eckmann.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-Hi Mikhail,
+Hello,
 
-The concern is legitimate and there are relevant PoC's (perhaps starting
-with Joanna Rutkowska's Blue Pill), but as a moderator for oss-security
-I find your message inappropriate for this list: no focus on Open Source
-(relevance yes, focus no), effectively no substance (only references to
-others' work and general reasoning about how the attacks are possible),
-promotion of your company and resource, a couple of instances of "patent
-pending" on your recent slides, and a cross-post (you also brought this
-at least to full-disclosure, where it is in fact more on topic).
+as I have discovered the issue, I can confirm that su of util-linux as
+well as shadow are affected.
 
-On Tue, Jun 27, 2017 at 02:52:16AM +0000, Mikhail Utin wrote:
-> Around 2007 ? 2008 a hypervisor has been found in Intel Corporation motherboards which have been shipped to Russia for the development of a special computer system. Russian scientist published the article describing how he found the malware in BMC BIOS flash memory. The article is available in English now.
+I have supplied patches to both maintainers and the shadow patch has
+been pushed now, too.
 
-It's been a long while, but if you're referring to the same thing I read
-in Russian back then (and it looks so), I can say that IMO it lacked
-substance too.  From the text, I couldn't discern whether the author
-wrote a fine piece of science fiction (with sufficiently good knowledge
-of the underlying "science") or a documentary, but either way there were
-no specifics that would enable anyone else to reproduce the findings.
+The code shares a common origin but differs slightly, which in fact made
+the patch for shadow a bit trickier.
 
-Unless anyone has anything on-topic (focus on Open Source) and specific
-(ideally, reproducible) to add, let's end this oss-security thread here.
+But as the code bases are so close to each other, I don't think that it
+takes another CVE-ID for this one.
 
-Alexander
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
