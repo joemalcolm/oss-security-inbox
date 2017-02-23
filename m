@@ -1,136 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/02/3
-Message-Id: <E1d5WTa-0005JS-EP@xenbits.xenproject.org>
-Date: Tue, 02 May 2017 12:00:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 213 - x86: 64bit PV guest breakout via pagetable use-after-mode-change
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/7
+Message-ID: <20170223094353.hrdgcxjsqdoy3v5l@dhcp-3-221.uk.xensource.com>
+Date: Thu, 23 Feb 2017 09:43:53 +0000
+From: Roger Pau Monné <roger.pau@...rix.com>
+To: Xen.org security team <security@....org>
+CC: <xen-announce@...ts.xen.org>, <xen-devel@...ts.xen.org>, <xen-users@...ts.xen.org>, <oss-security@...ts.openwall.com>
+Subject: Re: [Xen-devel] Xen Security Advisory 209 (CVE-2017-2620) - cirrus_bitblt_cputovideo does not check if memory region is safe
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Feb 21, 2017 at 12:00:03PM +0000, Xen.org security team wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>             Xen Security Advisory CVE-2017-2620 / XSA-209
+>                               version 3
+> 
+>    cirrus_bitblt_cputovideo does not check if memory region is safe
+> 
+> UPDATES IN VERSION 3
+> ====================
+> 
+> Public release.
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> In CIRRUS_BLTMODE_MEMSYSSRC mode the bitblit copy routine
+> cirrus_bitblt_cputovideo fails to check wethehr the specified memory
+> region is safe.
+> 
+> IMPACT
+> ======
+> 
+> A malicious guest administrator can cause an out of bounds memory
+> write, very likely exploitable as a privilege escalation.
+> 
+> VULNERABLE SYSTEMS
+> ==================
+> 
+> Versions of qemu shipped with all Xen versions are vulnerable.
+> 
+> Xen systems running on x86 with HVM guests, with the qemu process
+> running in dom0 are vulnerable.
+> 
+> Only guests provided with the "cirrus" emulated video card can exploit
+> the vulnerability.  The non-default "stdvga" emulated video card is
+> not vulnerable.  (With xl the emulated video card is controlled by the
+> "stdvga=" and "vga=" domain configuration options.)
+> 
+> ARM systems are not vulnerable.  Systems using only PV guests are not
+> vulnerable.
+> 
+> For VMs whose qemu process is running in a stub domain, a successful
+> attacker will only gain the privileges of that stubdom, which should
+> be only over the guest itself.
+> 
+> Both upstream-based versions of qemu (device_model_version="qemu-xen")
+> and `traditional' qemu (device_model_version="qemu-xen-traditional")
+> are vulnerable.
+> 
+> MITIGATION
+> ==========
+> 
+> Running only PV guests will avoid the issue.
+> 
+> Running HVM guests with the device model in a stubdomain will mitigate
+> the issue.
+> 
+> Changing the video card emulation to stdvga (stdvga=1, vga="stdvga",
+> in the xl domain configuration) will avoid the vulnerability.
+> 
+> CREDITS
+> =======
+> 
+> This issue was discovered by Gerd Hoffmann of Red Hat.
+> 
+> RESOLUTION
+> ==========
+> 
+> Applying the appropriate attached patch resolves this issue.
+> 
+> xsa209-qemuu.patch       qemu-xen, qemu upstream
+> (no backport yet)        qemu-xen-traditional
 
-                    Xen Security Advisory XSA-213
-                              version 2
+It would be nice to mention that (at least on QEMU shipped with 4.7) the
+following patch is also needed for the XSA-209 fix to build correctly:
 
-   x86: 64bit PV guest breakout via pagetable use-after-mode-change
+52b7f43c8fa185ab856bcaacda7abc9a6fc07f84
+display: cirrus: ignore source pitch value as needed in blit_is_unsafe
 
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-Added email header syntax to patches, for e.g. git-am.
-
-ISSUE DESCRIPTION
-=================
-
-64-bit PV guests typically use separate (root) page tables for their
-kernel and user modes.  Hypercalls are accessible to guest kernel
-context only, which certain hypercall handlers make assumptions on.
-The IRET hypercall (replacing the identically name CPU instruction)
-is used by guest kernels to transfer control from kernel mode to user
-mode.  If such an IRET hypercall is placed in the middle of a multicall
-batch, subsequent operations invoked by the same multicall batch may
-wrongly assume the guest to still be in kernel mode.  If one or more of
-these subsequent operations involve operations on page tables, they may
-be using the wrong root page table, confusing internal accounting.  As
-a result the guest may gain writable access to some of its page tables.
-
-IMPACT
-======
-
-A malicious or buggy 64-bit PV guest may be able to access all of
-system memory, allowing for all of privilege escalation, host crashes,
-and information leaks.
-
-VULNERABLE SYSTEMS
-==================
-
-All 64-bit Xen versions are vulnerable.
-
-Only x86 systems are affected.  ARM systems are not vulnerable.
-
-The vulnerability is only exposed to 64-bit PV guests.  HVM guests and
-32-bit PV guests can't exploit the vulnerability.
-
-MITIGATION
-==========
-
-Running only HVM or 32-bit PV guests will avoid the vulnerability.
-
-The vulnerability can be avoided if the guest kernel is controlled by
-the host rather than guest administrator, provided that further steps
-are taken to prevent the guest administrator from loading code into
-the kernel (e.g. by disabling loadable modules etc) or from using
-other mechanisms which allow them to run code at kernel privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Jann Horn of Google Project Zero.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa213.patch           xen-unstable
-xsa213-4.8.patch       Xen 4.8.x
-xsa213-4.7.patch       Xen 4.7.x
-xsa213-4.6.patch       Xen 4.6.x
-xsa213-4.5.patch       Xen 4.5.x
-
-$ sha256sum xsa213*
-cddea5eac2ad1f5a68b561da4e98afce891189a2fdedf93087a03889e9df6e99  xsa213.patch
-fce9bbc9fc30769dfbab4d1830d87d220000b2742e5e70aac22f3e9d013b7614  xsa213-4.5.patch
-dce026ed1a02db1cf22de89120e7129839f656d041379c450e7403ae909e7b99  xsa213-4.6.patch
-d8202db5981e2f13d9942332cd3fefded98a5cbc302caee431c7a15051887e7f  xsa213-4.7.patch
-20c12810ac73809ba74cfde811d420b1b544a07f759c393380afde1a09eb5274  xsa213-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJZCGr/AAoJEIP+FMlX6CvZ+s8IALroAx1MO5vn6Z0LY2noH+B3
-LP32EfS6jzA210jXT1txfjEIFta7In03nCv3KQZZmvFWjIiDTBD/N8THg9XQHC0r
-R+FC0yTFXnLNluBY5FqOXf7C7pd3+N+onAMsRIJkaJiDMIL+xtfnLOTFpr9FrVSy
-pemRRr1vZuekeph7G446R04lXBCn5pRMj/v1abXjhAFq1leW9hI3vZII/oRpPUCF
-BCJysglvQEgk7Qh3Iqhi8nuqAj+IHxGD3udhsruwruzQ+u2XCLA5FeYo0GK+e9AF
-aSf+GL9lZIfVj+2v754Gh6xXSe2K/+Ok/8S5FRJQrGD+vQL+UUGT7GTfJEAPvYg=
-=meSL
------END PGP SIGNATURE-----
-
-Download attachment "xsa213.patch" of type "application/octet-stream" (5626 bytes)
-
-Download attachment "xsa213-4.5.patch" of type "application/octet-stream" (5760 bytes)
-
-Download attachment "xsa213-4.6.patch" of type "application/octet-stream" (5760 bytes)
-
-Download attachment "xsa213-4.7.patch" of type "application/octet-stream" (5749 bytes)
-
-Download attachment "xsa213-4.8.patch" of type "application/octet-stream" (5628 bytes)
+Roger.
