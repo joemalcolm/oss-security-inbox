@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1126" "Friday" "6" "July" "2018" "20:35:43" "+0800" "zrlw@sina.com" "zrlw@sina.com" "<20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>" "25" "[oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook" nil nil nil "7" "2018070612:35:43" "[oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook" (number mark "U       zrlw@sina.co Jul  6   25/1126  " thread-indent "\"[oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1037" "Thursday" "23" "February" "2017" "11:01:48" "+0100" "Marcus Meissner" "meissner@suse.de" "<20170223100148.GA23394@suse.de>" "29" "Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616" nil nil nil "2" "2017022310:01:48" "[oss-security] util-linux 2.29.2 fixes CVE-2017-2616" (number mark "U       meissner@sus Feb 23   29/1037  " thread-indent "\"Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616\"\n") "<20170223104054.42060545@pc1>" ("<20170223074630.GB26098@suse.de>" "<20170223104054.42060545@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26498 invoked by uid 550); 6 Jul 2018 12:44:28 -0000
+Received: (qmail 29932 invoked by uid 550); 23 Feb 2017 10:02:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10109 invoked from network); 6 Jul 2018 12:35:58 -0000
-X-Sender: zrlw@sina.com
-X-SMAIL-MID: 4924976685008
-Date: Fri, 06 Jul 2018 20:35:43 +0800
-From: <zrlw@sina.com>
-To: "oss-security" <oss-security@lists.openwall.com>
+Received: (qmail 29890 invoked from network); 23 Feb 2017 10:01:59 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Thu, 23 Feb 2017 11:01:48 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20170223100148.GA23394@suse.de>
+References: <20170223074630.GB26098@suse.de>
+ <20170223104054.42060545@pc1>
 MIME-Version: 1.0
-X-Priority: 3
-X-MessageID: 5b3f621f23065568_201807
-X-Originating-IP: [172.16.187.112]
-X-Mailer: Sina WebMail 4.0
-Content-Type: multipart/alternative;
-	 boundary="=-sinamail_alt_7754bbed390ff72d19b22afc8432cb8a"
-Message-Id: <20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>
-Subject: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
-
---=-sinamail_alt_7754bbed390ff72d19b22afc8432cb8a
-Content-Type: text/plain;
-	charset=GBK
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170223104054.42060545@pc1>
+Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
+ =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
+ =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Subject: Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616
 
-SGkgYWxsLGkgZm91bmQgYSB2dWxuZXJhYmlsaXR5IGluIG1vdGlvbiBleWUg
-dmlkZW80bGludXggZHJpdmVyIGZvciBTb255IFZhaW8gUGljdHVyZUJvb2ss
-aXQgZGVzbid0IHZhbGlkYXRlIHVzZXItY29udHJvbGxlZCBwYXJhbWV0ZXIg
-J3ZtYS0+dm1fcGdvZmYnLCBhIG1hbGljaW91cyBwcm9jZXNzIG1pZ2h0IGFj
-Y2VzcyBhbGwgb2Yga2VybmVsIG1lbW9yeSBmcm9tIHVzZXIgc3BhY2UgYnkg
-dHJ5aW5nIHBhc3MgZGlmZmVyZW50IGFyYml0cmFyeSBhZGRyZXNzLgovdXNy
-L3NyYy9saW51eC00LjQuMjEtNjkvZHJpdmVycy9tZWRpYS9wY2kvbWV5ZS9t
-ZXllLmM6CnN0YXRpYyBpbnQgbWV5ZV9tbWFwKHN0cnVjdCBmaWxlICpmaWxl
-LCBzdHJ1Y3Qgdm1fYXJlYV9zdHJ1Y3QgKnZtYSkKLi4uICAgICAgICB1bnNp
-Z25lZCBsb25nIG9mZnNldCA9IHZtYS0+dm1fcGdvZmYgPDwgUEFHRV9TSElG
-VDsKLi4uICAgICAgICBwb3MgPSAodW5zaWduZWQgbG9uZyltZXllLmdyYWJf
-ZmJ1ZmZlciArIG9mZnNldDsKICAgICAgICB3aGlsZSAoc2l6ZSA+IDApIHsK
-ICAgICAgICAgICAgICAgIHBhZ2UgPSB2bWFsbG9jX3RvX3Bmbigodm9pZCAq
-KXBvcyk7CiAgICAgICAgICAgICAgICBpZiAocmVtYXBfcGZuX3JhbmdlKHZt
-YSwgc3RhcnQsIHBhZ2UsIFBBR0VfU0laRSwgUEFHRV9TSEFSRUQpKSB7Li4u
-Cg==
+On Thu, Feb 23, 2017 at 10:40:54AM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> On Thu, 23 Feb 2017 08:46:30 +0100
+> Marcus Meissner <meissner@suse.de> wrote:
+> 
+> > util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed
+> > local users to kill other processes.
+> 
+> I just reported this in Gentoo [1], yet I was informed that we're not
+> using su from util-linux, but from shadow. So depending on the
+> distribution you may not use this implementation of su.
+> 
+> I haven't digged deeper into this, can you say if this issue is
+> generic enough to be expected in other implementations as well? (Not
+> sure if the implementations of su in shadow and util-linux share a
+> common codebase, seems to be quite old stuff.)
+> 
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=610664
 
---=-sinamail_alt_7754bbed390ff72d19b22afc8432cb8a--
+coreutils uses the same su.c codebase, so it is also affected.
 
+
+Looking at shadow su.c code, it calls waitpid ... and does not handle
+the pid_child exiting case after calling waitpid.
+
+So I would think it is affected without digging deeper.
+
+Ciao, Marcus
