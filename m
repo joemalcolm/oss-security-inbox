@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/7
-Message-ID: <CANO=Ty3bb11TipJamp2ahk8FSy3+gvSrPp0y7-Yx3XmxJbdwpA@mail.gmail.com>
-Date: Wed, 15 Mar 2017 14:47:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Dealing with CVEs that apply to unspecified package versions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/11
+Message-ID: <20170223170848.17d43fb3@pc1>
+Date: Thu, 23 Feb 2017 17:08:48 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 15, 2017 at 2:05 PM, Leo Famulari <leo@...ulari.name> wrote:
+On Thu, 23 Feb 2017 07:56:51 -0500
+Assaf Gordon <assafgordon@...il.com> wrote:
 
-> On Wed, Mar 15, 2017 at 12:27:47PM -0700, Seth Arnold wrote:
-> > I suspect the solution is for people who rely upon these scanning tools
-> to
-> > do the leg work themselves on the packages they care about. (i.e., the
-> > packages that annoy them the most.)
->
-> I think those of us who find these tools useful should work to improve
-> the CVE database by adding the "fixed-in-version" information as it
-> becomes available.
->
+> GNU Coreutils stopped installing 'su' by default in 2007,
+> and completely removed 'su' (including the 'su.c' source file)
+> in 2012.
 
-This is a major goal of
+That's good to know, so now there are only 2 competing versions of su
+instead of 3 in major packages :-)
 
-1) using the JSON format with richer data [a]
-2) allowing other people (e.g. CVE Mentors) to edit the data
-
-[a]
-https://github.com/CVEProject/automation-working-group/blob/master/cve_json_schema/DRAFT-JSON-file-format-v4.md
-
-
+Anyone have a good idea who is using shadow vs. util-linux su? Do they
+have specific advantages/disadvantages, would it be reasonable to try
+to get all distros to use them same one?
 
 -- 
+Hanno Böck
+https://hboeck.de/
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
-
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
