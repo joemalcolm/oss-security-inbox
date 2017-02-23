@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/10
-Message-ID: <CANLc_9KJTmetFt6MrsFQm+adr-1w2VeGYyMJMVVZ281-3UmJKw@mail.gmail.com>
-Date: Mon, 9 Oct 2017 10:09:37 -0700
-From: Patrick Hunt <phunt@...che.org>
-To: DevZooKeeper <dev@...keeper.apache.org>, UserZooKeeper <user@...keeper.apache.org>,  announce@...che.org, security <security@...che.org>, security@...keeper.apache.org,  oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2017-5637: DOS attack on wchp/wchc four letter words (4lw)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/21
+Message-ID: <alpine.LFD.2.20.1702240015030.19005@wniryva>
+Date: Fri, 24 Feb 2017 00:17:08 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-6210 Virglrenderer: null pointer dereference in vrend_decode_reset
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-5637: DOS attack on wchp/wchc four letter words (4lw)
+   Hello,
 
-Severity: moderate
-Vendor:
-The Apache Software Foundation
-Versions Affected:
-ZooKeeper 3.4.0 to 3.4.9
-ZooKeeper 3.5.0 to 3.5.2
-The unsupported ZooKeeper 1.x through 3.3.x versions may be also affected
-Note: The 3.5 branch is still beta at this time.
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to a null pointer dereference flaw. It could 
+occur when destroying renderer context zero(0) in 'vrend_decode_reset'.
 
-Description:
-Two four letter word commands “wchp/wchc” are CPU intensive and could cause
-spike of CPU utilization on ZooKeeper server if abused,
-which leads to the server unable to serve legitimate client requests. There
-is no known compromise which takes advantage of this vulnerability.
+A guest user/process could use this flaw to crash the Qemu process instance 
+resulting DoS.
 
-Mitigation:
-This affects ZooKeeper ensembles whose client port is publicly accessible,
-so it is recommended to protect ZooKeeper ensemble with firewall.
-Documentation has also been updated to clarify on this point. In addition,
-a patch (ZOOKEEPER-2693) is provided to disable "wchp/wchc” commands
-by default.
-- ZooKeeper 3.4.x users should upgrade to 3.4.10 or apply the patch.
-- ZooKeeper 3.5.x users should upgrade to 3.5.3 or apply the patch.
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=0a5dff15912207b83018485f83e067474e818bab
 
-References
-[1] https://issues.apache.org/jira/browse/ZOOKEEPER-2693
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1426170
 
+This issue was reported by Li Qiang of 360.cn Inc.
+
+'CVE-2017-6210' assigned via -> http://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
