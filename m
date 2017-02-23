@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/02/2
-Message-ID: <2395094.PLkjrNgCai@tony>
-Date: Fri, 02 Jun 2017 09:16:06 +0200
-From: Marek Hulán <mhulan@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: foreman-security@...glegroups.com
-Subject: CVE-2017-7505: User scoped in organization with permissions for user management can manage administrators that are not assigned to any organization on Foreman 1.5+
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/19
+Message-ID: <20170223183658.zqlncw72y6hyhjil@eldamar.local>
+Date: Thu, 23 Feb 2017 19:36:58 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Dmitry Vyukov <dvyukov@...gle.com>, Eric Dumazet <edumazet@...gle.com>, Willy Tarreau <w@....eu>, "David S. Miller" <davem@...emloft.net>
+Subject: Linux: CVE-2017-6214: ipv4/tcp: infinite loop in tcp_splice_read()
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-7505: User scoped in organization with permissions for user 
-management can manage administrators that are not assigned to any organization 
-on Foreman 1.5+
+Hi
 
-It has been found that user with user management permission who is assigned to 
-some organization(s) can do all operations granted by these permissions on all 
-administrator user objects.
+CVE-2017-6214 has been assigned for the following commit in Linux by
+MITRE (via the webform):
 
-Affects Foreman 1.5 and higher.
+https://git.kernel.org/linus/ccf7abb93af09ad0868ae9033d1ca8108bdaec82
 
-Patch available at https://github.com/theforeman/foreman/pull/4545
-Fix will be released in Foreman 1.15.1 (to be released)
-For more information please see the Redmine issue http://
-projects.theforeman.org/issues/19612
+as included in v4.10-rc8:
 
---
-Marek
+>     tcp: avoid infinite loop in tcp_splice_read()
+>     
+>     Splicing from TCP socket is vulnerable when a packet with URG flag is
+>     received and stored into receive queue.
+>     
+>     __tcp_splice_read() returns 0, and sk_wait_data() immediately
+>     returns since there is the problematic skb in queue.
+>     
+>     This is a nice way to burn cpu (aka infinite loop) and trigger
+>     soft lockups.
+>     
+>     Again, this gem was found by syzkaller tool.
+>     
+>     Fixes: 9c55e01c0cc8 ("[TCP]: Splice receive support.")
+>     Signed-off-by: Eric Dumazet <edumazet@...gle.com>
+>     Reported-by: Dmitry Vyukov  <dvyukov@...gle.com>
+>     Cc: Willy Tarreau <w@....eu>
+>     Signed-off-by: David S. Miller <davem@...emloft.net>
+
+The fix was backported to 4.9.11
+(0f895f51a831d73ce24158534784aba5b2a72a9e).
+
+Regards,
+Salvatore
