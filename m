@@ -1,4 +1,9 @@
-Received: (qmail 9765 invoked by uid 550); 23 Jan 2026 16:14:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["803" "Thursday" "23" "February" "2017" "10:40:54" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170223104054.42060545@pc1>" "24" "Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616" nil nil nil "2" "2017022309:40:54" "[oss-security] util-linux 2.29.2 fixes CVE-2017-2616" (number mark "U       hanno@hboeck Feb 23   24/803   " thread-indent "\"Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616\"\n") "<20170223074630.GB26098@suse.de>" ("<20170223074630.GB26098@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1945 invoked by uid 550); 23 Feb 2017 09:41:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,51 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16297 invoked from network); 23 Jan 2026 16:12:21 -0000
-From: "Olle E. Johansson" <oej@edvina.net>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_72F8094A-3438-40C7-95F9-528226F48949"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Date: Fri, 23 Jan 2026 17:12:01 +0100
-References: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net>
- <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+Received: (qmail 1906 invoked from network); 23 Feb 2017 09:41:08 -0000
+Date: Thu, 23 Feb 2017 10:40:54 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-In-Reply-To: <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
-Message-Id: <8A740407-A3EC-4625-A703-A6CD2B38AD82@edvina.net>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Subject: Re: [oss-security] Vulnerability management and Open Source: FOSDEM
- BoF
-
---Apple-Mail=_72F8094A-3438-40C7-95F9-528226F48949
+Message-ID: <20170223104054.42060545@pc1>
+In-Reply-To: <20170223074630.GB26098@suse.de>
+References: <20170223074630.GB26098@suse.de>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Subject: Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616
 
+Hi,
 
+On Thu, 23 Feb 2017 08:46:30 +0100
+Marcus Meissner <meissner@suse.de> wrote:
 
-> On 23 Jan 2026, at 14:51, Peter Gutmann <pgut001@cs.auckland.ac.nz> wrote:
->=20
-> Olle E. Johansson <oej@edvina.net> writes:
->=20
->> If you are heading to Brussels next week, please mark this session in yo=
-ur
->> calendar:
->=20
-> For those of us who are nowhere near Brussels, will any of it be streamed?
-I know that FOSDEM streams a lot of sessions, but I am not sure if the BOFs=
- are=20
-included. A link will show up on the web page. If I discover any news about=
- it, I will
-update the list.
+> util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed
+> local users to kill other processes.
 
-The GVIP project just announced two GVIP Community meetings that are virtual
-and scheduled to fit different time zones. We invite everyone to register a=
-nd participate!
+I just reported this in Gentoo [1], yet I was informed that we're not
+using su from util-linux, but from shadow. So depending on the
+distribution you may not use this implementation of su.
 
-https://www.gvip-project.org/blog/2026/community-feb/
+I haven't digged deeper into this, can you say if this issue is
+generic enough to be expected in other implementations as well? (Not
+sure if the implementations of su in shadow and util-linux share a
+common codebase, seems to be quite old stuff.)
 
-/Olle
+[1] https://bugs.gentoo.org/show_bug.cgi?id=3D610664
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
 
-
---Apple-Mail=_72F8094A-3438-40C7-95F9-528226F48949--
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
