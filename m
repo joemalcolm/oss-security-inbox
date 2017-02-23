@@ -1,50 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/3
-Message-ID: <73f91775-3811-b90e-66a3-69620c3b5349@canonical.com>
-Date: Thu, 30 Mar 2017 09:17:45 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
-To: Lokesh Ubuntu <lokesh.ubuntu@...il.com>, oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/14
+Message-ID: <89dcadc4-9895-a6e2-36ed-ac3195137978@debian.org>
+Date: Thu, 23 Feb 2017 17:17:28 +0100
+From: Emilio Pozuelo Monfort <pochu@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-A PoC is not publicly available for this issue.
+On 23/02/17 17:08, Hanno Böck wrote:
+> On Thu, 23 Feb 2017 07:56:51 -0500
+> Assaf Gordon <assafgordon@...il.com> wrote:
+> 
+>> GNU Coreutils stopped installing 'su' by default in 2007,
+>> and completely removed 'su' (including the 'su.c' source file)
+>> in 2012.
+> 
+> That's good to know, so now there are only 2 competing versions of su
+> instead of 3 in major packages :-)
+> 
+> Anyone have a good idea who is using shadow vs. util-linux su?
 
-Tyler
+Debian is using shadow's, fwiw.
 
-On 03/29/2017 10:18 PM, Lokesh Ubuntu wrote:
-> Is there any POC for this to conclude? Thanks.
-> 
-> Regards, Lokesh
-> 
-> On Mar 30, 2017 03:14, "Tyler Hicks" <tyhicks@...onical.com
-> <mailto:tyhicks@...onical.com>> wrote:
-> 
->     A security issue was reported by ZDI, on behalf of Chaitin Security
->     Research Lab, against the Linux kernel in Ubuntu. It also affected the
->     upstream kernel.
-> 
->     Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
->     as called by xfrm_new_ae(), did not verify that the user-specified
->     replay_window was within the replay state buffer.
-> 
->     This allowed for out-of-bounds reads and writes of kernel memory.
->     Chaitin Security showed that this can lead to local privilege escalation
->     by using user namespaces in order to configure XFRM. XFRM configuration
->     requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
->     not enable user namespaces by default.
-> 
->     Fixes:
->     -
->     https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a <https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a>
->     -
->     https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df <https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df>
-> 
->     Tyler
-> 
-> 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Emilio
