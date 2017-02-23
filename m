@@ -1,82 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/07/3
-Message-ID: <CANBt6Y0=kqkJZGhhxCtBwwpgY3YQW+U-DxbpOg1GJRb3ZdFf4w@mail.gmail.com>
-Date: Thu, 7 Dec 2017 17:57:32 +0800
-From: at zhou <zhouat2017@...il.com>
-To: security@...nel.org, secalert@...hat.com, security@...e.com,  linux-kernel@...r.kernel.org, tglx@...utronix.de,  oss-security@...ts.openwall.com, linux-distros@...openwall.org
-Subject: signed integer overflow in common_timer_get on linux 4.15.0-rc1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/2
+Message-ID: <20170223074630.GB26098@suse.de>
+Date: Thu, 23 Feb 2017 08:46:30 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-credit   to   L5@...vulcan team
+util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed local users
+to kill other processes.
 
-I fuzzed the linux kernel and find signed integer overflow on linux
-4.15.0-rc1+.
-the crash log can see below, the .config and the poc file ,please see the
-attachments.
+https://www.kernel.org/pub/linux/utils/util-linux/v2.29/v2.29.2-ReleaseNotes
 
-(1) test environment
-branch 4.15.0-rc1
-git log --oneline
-43570f0 Merge branch 'linus' of git://
-git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6
+"
+  It is possible for any local user to send SIGKILL to other processes with root
+  privileges.  To exploit this, the user must be able to perform su with a
+  successful login.  SIGKILL can only be sent to processes which were executed
+  after the su process.  It is not possible to send SIGKILL to processes which
+  were already running.
+"
 
-(2)steps to reproduce
-0. use the config file to compile linux kernel 4.15.0-rc1+
-1. gcc poc_timer_gettime.c -o poc_timer_gettime
-2. ./poc_timer_gettime
-3. crash can reproduce then.
+Root cause of the flaw that a regular exit of the child process and the su ctrl-c kill of the
+child PID could race and so you would be able to later started process with this specific PID.
 
+The fix is here:
+https://github.com/karelzak/util-linux/commit/dffab154d29a288aa171ff50263ecc8f2e14a891
 
-[ 2647.574621] UBSAN: Undefined behaviour in
-/home/l5/KERNEL/kernel/time/posix-timers.c:699:20
-[ 2647.578402] signed integer overflow:
-[ 2647.580095] 2041919421 + 2044944045 cannot be represented in type 'int'
-[ 2647.583508] CPU: 0 PID: 2763 Comm: OF_timer_gettim Not tainted
-4.15.0-rc1+ #1
-[ 2647.587105] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-Ubuntu-1.8.2-1ubuntu1 04/01/2014
-[ 2647.591523] Call Trace:
-[ 2647.592627]  dump_stack+0x104/0x1c0
-[ 2647.594427]  ? _atomic_dec_and_lock+0x2c0/0x2c0
-[ 2647.596747]  ubsan_epilogue+0xe/0x81
-[ 2647.598226]  handle_overflow+0x1f1/0x25f
-[ 2647.600570]  ? __ubsan_handle_negate_overflow+0x198/0x198
-[ 2647.603496]  ? ktime_get+0x2c0/0x2c0
-[ 2647.605333]  ? lock_release+0xca0/0xca0
-[ 2647.607408]  ? lock_release+0xca0/0xca0
-[ 2647.609217]  ? calibrate_delay+0x16e4/0x1cda
-[ 2647.611266]  common_timer_get+0x633/0x7d0
-[ 2647.613150]  ? posix_get_coarse_res+0x60/0x60
-[ 2647.615184]  ? do_timer_gettime+0x180/0x180
-[ 2647.617399]  ? posix_get_coarse_res+0x60/0x60
-[ 2647.619631]  do_timer_gettime+0xe4/0x180
-[ 2647.621438]  ? __lock_timer+0x6d0/0x6d0
-[ 2647.623134]  ? SyS_timer_getoverrun+0x100/0x100
-[ 2647.624774]  SyS_timer_gettime+0x6c/0xd0
-[ 2647.626665]  ? compat_SyS_timer_create+0x100/0x100
-[ 2647.628828]  ? trace_hardirqs_on_caller+0x3d0/0x690
-[ 2647.631318]  ? entry_SYSCALL_64_fastpath+0x1f/0x96
-[ 2647.633534]  entry_SYSCALL_64_fastpath+0x1f/0x96
-[ 2647.635766] RIP: 0033:0x7f0624690b79
-[ 2647.637456] RSP: 002b:00007ffd25121f58 EFLAGS: 00000217 ORIG_RAX:
-00000000000000e0
-[ 2647.641579] RAX: ffffffffffffffda RBX: 0000000000000000 RCX:
-00007f0624690b79
-[ 2647.645100] RDX: 00007f0624690b79 RSI: 0000000020000fe0 RDI:
-0000000000000000
-[ 2647.648448] RBP: 00007ffd25121f70 R08: 0000000000000000 R09:
-0000000000000000
-[ 2647.651741] R10: 0000000000000000 R11: 0000000000000217 R12:
-0000000000400450
-[ 2647.655101] R13: 00007ffd25122070 R14: 0000000000000000 R15:
-0000000000000000
-[ 2647.658058]
-================================================================================
-
-Content of type "text/html" skipped
-
-Download attachment "config" of type "application/octet-stream" (119337 bytes)
-
-View attachment "poc_timer_gettime.c" of type "text/x-csrc" (1451 bytes)
+Ciao, Marcus
