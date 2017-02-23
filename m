@@ -1,139 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/6
-Message-ID: <20170818141300.GH13079@suse.de>
-Date: Fri, 18 Aug 2017 16:13:00 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/13
+Message-ID: <CAK0OdpxiQO7Mt6TCSn-92D+nwnj3iJCwU4OTiuZ1=Kn5Rx_-xg@mail.gmail.com>
+Date: Thu, 23 Feb 2017 17:31:42 +0100
+From: Bálint Réczey <balint@...intreczey.hu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ***UNCHECKED*** UnRAR: directory traversal + memory safety bugs
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-Quoting from MITRE:
+Hi,
 
->> There is also a memory overread / corruption issues, are you going to assign
->> more CVEs?
+2017-02-23 17:08 GMT+01:00 Hanno Böck <hanno@...eck.de>:
+> On Thu, 23 Feb 2017 07:56:51 -0500
+> Assaf Gordon <assafgordon@...il.com> wrote:
+>
+>> GNU Coreutils stopped installing 'su' by default in 2007,
+>> and completely removed 'su' (including the 'su.c' source file)
+>> in 2012.
+>
+> That's good to know, so now there are only 2 competing versions of su
+> instead of 3 in major packages :-)
+>
+> Anyone have a good idea who is using shadow vs. util-linux su? Do they
+> have specific advantages/disadvantages, would it be reasonable to try
+> to get all distros to use them same one?
 
-Yes, we looked further and it appears that all of the other issues can
-have CVEs.
+In Debian we are looking into switching to util-linux from shadow for
+commands provided by both packages:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833256
 
-Specifically, the UnRAR license says "UnRAR source code may be used in
-any software to handle RAR archives without limitations free of
-charge, but cannot be used to develop RAR (WinRAR) compatible archiver
-and to re-create RAR compression algorithm, which is proprietary."
-Also, the makefile can be used to build libraries from the code
-(libunrar.a, etc.). Therefore, someone might have a long-running
-process executing the UnRAR code, and any arbitrary crash
-(out-of-bounds read, etc.) could be a denial of service.
-
-Although this scenario may be unlikely, here are the three CVE IDs
-anyway.
-
-
-> [Suggested description]
-> libunrar.a in UnRAR before 5.5.7 has an out-of-bounds read in the EncodeFileName::Decode
-> call within the Archive::ReadHeader15 function.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Someone else might have requested CVEs.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> memory safety
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> unrar
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> unrar - 5.5.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://seclists.org/oss-sec/2017/q3/290
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-
-Use CVE-2017-12940.
-
-
-> [Suggested description]
-> libunrar.a in UnRAR before 5.5.7 has an out-of-bounds read in the Unpack::Unpack20
-> function.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Someone else might have requested CVEs.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> memory safety
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> unrar
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> unrar - 5.5.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://seclists.org/oss-sec/2017/q3/290
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-
-Use CVE-2017-12941.
-
-
-> [Suggested description]
-> libunrar.a in UnRAR before 5.5.7 has a buffer overflow in the Unpack::LongLZ
-> function.
-> 
-> ------------------------------------------
-> 
-> [Additional Information]
-> Someone else might have requested CVEs.
-> 
-> ------------------------------------------
-> 
-> [Vulnerability Type]
-> memory safety
-> 
-> ------------------------------------------
-> 
-> [Vendor of Product]
-> unrar
-> 
-> ------------------------------------------
-> 
-> [Affected Product Code Base]
-> unrar - 5.5.7
-> 
-> ------------------------------------------
-> 
-> [Reference]
-> http://seclists.org/oss-sec/2017/q3/290
-> 
-> ------------------------------------------
-> 
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
-
-Use CVE-2017-12942.
+Cheers,
+Balint
