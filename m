@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4779" "Thursday" "9" "February" "2017" "16:33:11" "+0100" "Thomas Deutschmann" "whissi@gentoo.org" "<7ab551aa-36d6-b99f-175f-5ea8b01c6eeb@gentoo.org>" "139" "Re: [oss-security] Re: Firejail local root exploit" nil nil nil "2" "2017020915:33:11" "[oss-security] Re: Firejail local root exploit" (number mark "U       whissi@gento Feb  9  139/4779  " thread-indent "\"Re: [oss-security] Re: Firejail local root exploit\"\n") "<0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>" ("<0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["484" "Thursday" "23" "February" "2017" "17:17:28" "+0100" "Emilio Pozuelo Monfort" "pochu@debian.org" "<89dcadc4-9895-a6e2-36ed-ac3195137978@debian.org>" "16" "Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616" nil nil nil "2" "2017022316:17:28" "[oss-security] util-linux 2.29.2 fixes CVE-2017-2616" (number mark "U       pochu@debian Feb 23   16/484   " thread-indent "\"Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616\"\n") "<20170223170848.17d43fb3@pc1>" ("<20170223074630.GB26098@suse.de>" "<20170223104054.42060545@pc1>" "<20170223100148.GA23394@suse.de>" "<D7FFF88A-2AA9-432A-9830-0DF662E32524@gmail.com>" "<20170223170848.17d43fb3@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11574 invoked by uid 550); 9 Feb 2017 15:51:33 -0000
+Received: (qmail 22413 invoked by uid 550); 23 Feb 2017 17:22:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,158 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9352 invoked from network); 9 Feb 2017 15:33:35 -0000
-References: <0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>
-In-Reply-To: <0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>
+Received: (qmail 32571 invoked from network); 23 Feb 2017 16:17:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:subject:to:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=OceBeS7tGLUomy2xZUkbfFOzuiXcx4LszWWyUbqqDPY=;
+        b=YxXqT5ckB+JrhYlMnEIrMXhF1TeQ7Dqk4f4AL9nTQXvqIhvUdGLM6SJvqZy2xfipln
+         /hEaR3c3KfLTds8qmODYspAboiDmtOKvvyX74soT5HaRfht3XyRp5B49ch+sJ4cNj5QA
+         btQ2SCV2nhMShvTU5mA61xcAjtKuD6k4JudLuk3OoPbWvreDTgTu3+BaheSEczCanM+t
+         v9qJnZX6BVFYqtp9Vhn0z0KERndukarSVIa8QUy2j8yxeT9MW/32wdQrwcnPf/gZ4KgX
+         CZK/j700qemjKBnSFiPRNnCjhG5UgaT195/v2NuNIR62YbZEEEnScbTXPzb1CwiDK00q
+         Mw/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:subject:to:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=OceBeS7tGLUomy2xZUkbfFOzuiXcx4LszWWyUbqqDPY=;
+        b=IPD3bSPAoCa79XL0pKYPoaBgE7/TJ1i+RbsL6qWfSqHRhnsbBsSAqadp/Y1KoGJuAy
+         To7Mj88BZKrwr5der3kBuIFEE2tngONTB0gv+aSKZesqsVEHmnQJEAi6sd32BuoIB6k8
+         U8Fkr0JoZ5cWXLuCR+kphsUljbW22Lk20XHML4lLyGVexCcd6YgAOxLoHfLEPVN8PTRS
+         xdpAp3gs7JptL/SPiBtYYBP3xA3KjOblC0OFDdILbQF4U2ng0mBTQPRAhN3HiU3G0lrS
+         aCJ8Y+v9X9odDDoj5g25fNfor1CvpfT+rFQvnEr997huFD5PcDIQYYaw0LZBL40XlD3W
+         oCrw==
+X-Gm-Message-State: AMke39k1mN7+O6JpDwF3MOUkDgydhgEP+yUaLREYqagAxamXxuqI0BPT6+erWkfQNVvstQ==
+X-Received: by 10.28.13.20 with SMTP id 20mr5379361wmn.24.1487866649671;
+        Thu, 23 Feb 2017 08:17:29 -0800 (PST)
+Sender: Emilio Pozuelo Monfort <pochu27@gmail.com>
 To: oss-security@lists.openwall.com
-From: Thomas Deutschmann <whissi@gentoo.org>
-X-Forwarded-Message-Id: <0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>
-Message-ID: <7ab551aa-36d6-b99f-175f-5ea8b01c6eeb@gentoo.org>
-Date: Thu, 9 Feb 2017 16:33:11 +0100
+References: <20170223074630.GB26098@suse.de> <20170223104054.42060545@pc1>
+ <20170223100148.GA23394@suse.de>
+ <D7FFF88A-2AA9-432A-9830-0DF662E32524@gmail.com>
+ <20170223170848.17d43fb3@pc1>
+From: Emilio Pozuelo Monfort <pochu@debian.org>
+Message-ID: <89dcadc4-9895-a6e2-36ed-ac3195137978@debian.org>
+Date: Thu, 23 Feb 2017 17:17:28 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="n00TDgESUPPiJuE3irceUNRD9BvcL5Fu3"
-Subject: Re: [oss-security] Re: Firejail local root exploit
+In-Reply-To: <20170223170848.17d43fb3@pc1>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] util-linux 2.29.2 fixes CVE-2017-2616
 
---n00TDgESUPPiJuE3irceUNRD9BvcL5Fu3
-Content-Type: multipart/mixed; boundary="9WIlrqPD7Q6NOwA0sA1LaCVSifxf2k23O";
- protected-headers="v1"
-From: Thomas Deutschmann <whissi@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <7ab551aa-36d6-b99f-175f-5ea8b01c6eeb@gentoo.org>
-Subject: Re: [oss-security] Re: Firejail local root exploit
-References: <0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>
-In-Reply-To: <0812e16da18b4aa6ab4f7ca077368fb4@imshyb02.MITRE.ORG>
+On 23/02/17 17:08, Hanno Böck wrote:
+> On Thu, 23 Feb 2017 07:56:51 -0500
+> Assaf Gordon <assafgordon@gmail.com> wrote:
+> 
+>> GNU Coreutils stopped installing 'su' by default in 2007,
+>> and completely removed 'su' (including the 'su.c' source file)
+>> in 2012.
+> 
+> That's good to know, so now there are only 2 competing versions of su
+> instead of 3 in major packages :-)
+> 
+> Anyone have a good idea who is using shadow vs. util-linux su?
 
---9WIlrqPD7Q6NOwA0sA1LaCVSifxf2k23O
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Debian is using shadow's, fwiw.
 
-Hi,
-
-I just received the CVE for the incomplete fix from MITRE via new
-webform. Please see the forwarded message below:
-
-
--------- Forwarded Message --------
-Subject: Re: [scr292978] firejail - Affected <0.9.44.6
-Date: Thu, 9 Feb 2017 10:18:58 -0500
-
-The CVE ID is provided below, after the text associated with your
-https://cveform.mitre.org submission. The text reflects the current
-status of the CVE at MITRE, and may already have minor changes
-relative to your form entry. Changes are made in order to capture the
-information in the intended presentation format; changes are not an
-attempt to revise the results of vulnerability research.
-
-You may republish or redistribute this text. We think that you have
-already posted to oss-security about this vulnerability. To make
-oss-security list members aware of the CVE ID assignment, you could
-reply to your own oss-security post and include pertinent information
-below along with the CVE ID.
-
-> [Suggested description]
-> firejail before 0.9.44.6 and 0.9.38.x LTS before 0.9.38.10 LTS
-> does not comprehensively address dotfile cases during its
-> attempt to prevent accessing user files with an euid of zero,
-> which allows local users to conduct sandbox-escape attacks
-> via vectors involving a symlink and the --private option.
-> NOTE: this vulnerability exists because of an incomplete
-> fix for CVE-2017-5180.
->=20
-> ------------------------------------------
-> [Additional Information]
-> This is a fix for the incomplete fix of CVE-2017-5180.
->=20
-> I already tried to request a new CVE on OSS-Sec which wasn't answered
-> yet: http://www.openwall.com/lists/oss-security/2017/01/31/16
->=20
-> ------------------------------------------
->=20
-> [VulnerabilityType Other]
-> Incomplete fix of CVE-2017-5180
->=20
-> ------------------------------------------
->=20
-> [Vendor of Product]
-> https://firejail.wordpress.com/
->=20
-> ------------------------------------------
->=20
-> [Affected Product Code Base]
-> firejail - Affected <0.9.44.6
-> firejail-lts - Affected <0.9.38.10
->=20
-> ------------------------------------------
->=20
-> [Attack Type]
-> Local
->=20
-> ------------------------------------------
->=20
-> [Impact Escalation of Privileges]
-> true
->=20
-> ------------------------------------------
->=20
-> [Reference]
-> https://firejail.wordpress.com/download-2/release-notes/
-> https://github.com/netblue30/firejail/commit/38d418505e9ee2d326557e5639e8=
-da49c298858f
-> https://github.com/netblue30/firejail/commit/b8a4ff9775318ca5e679183884a6=
-a63f3da8f863
-> https://github.com/netblue30/firejail/commit/903fd8a0789ca3cc3c21d84cd028=
-2481515592ef
->=20
-> ------------------------------------------
->=20
-> [Has vendor confirmed or acknowledged the vulnerability?]
-> true
->=20
-> ------------------------------------------
->=20
-> [Discoverer]
-> Sebastian Krahmer
-
-Use CVE-2017-5940.
-
-
-
---=20
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
-
-
-
---9WIlrqPD7Q6NOwA0sA1LaCVSifxf2k23O--
-
---n00TDgESUPPiJuE3irceUNRD9BvcL5Fu3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0
-
-iQJ8BAEBCgBmBQJYnIu8XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
-NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/IqagQAJk8Iyb28e2eT9x8rO2xLMCJ
-G7GHOwRVRv1WW8FyMjbFHZCGFDhE6hkv/1LweADcv2eStQ0tNWDej4PHRQSKDGMS
-f92ipG2c5S8Q51RahP+U3WVZTnGvJJ94SaOsvyPhZSJcT5lVpwHvh0SIrCBoncGp
-PppWOXRA0tT9lh9UaOWBwQII6mrxYoxx4O10hlrHgvZcfsXpEJgkuONidFgRFE7b
-R2eaemgtNsjPmEZg6BbFZ0bWxg5LCHJhHaSXeXlTqoH0elH1vBAfSukU/j84MQmb
-SwTATvI43D1tL1Pit5ourZDNQzFayiY9gOTUGDxODXXkkHy0q/rXofFhBiY+uEB1
-+U4dzq/lXYNx11As1FDMr2oIYzyip16wGmza8xbcbMKxKow7H20MaACXuaYjPF4O
-DJG6dhqIp9S6E9hnpDSbWJ9xV5L+0YANOaH5lijblP450jEZ1Vsj/hPkyMQTAkGu
-GRWktz5TWg81i/uyKKJFKitT+kbJLN71CyvVgL2Rcy04MomKqCva1mhbq/hZjsNj
-8sXkqMz56Bw/4FQFFfPrdgvyKwNqjOhQ7UCqYjeEF/T10sWJbdjAtQ8HBdMYS5F4
-wdHyDebuvJqUXzUm4zxa6PhlsKn1wWv3SPfO08U5gvTztFGFxjUmrUGDzvxAl4Pn
-lZO8GP1niksCMffOJMWW
-=kLcC
------END PGP SIGNATURE-----
-
---n00TDgESUPPiJuE3irceUNRD9BvcL5Fu3--
+Emilio
