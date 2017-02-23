@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/16/1
-Message-ID: <20170916180518.GB28963@curry>
-Date: Sat, 16 Sep 2017 21:05:18 +0300
-From: Alexander Batischev <eual.jp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/16
+Message-ID: <20170223165139.GA11848@jasmine>
+Date: Thu, 23 Feb 2017 11:51:39 -0500
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Podbeuter podcast fetcher: remote code execution
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-Podbeuter is a podcast fetcher and player that's developed alongside 
-with Newsbeuter, an RSS/Atom feed reader for text consoles.
+On Thu, Feb 23, 2017 at 05:08:48PM +0100, Hanno Böck wrote:
+> Anyone have a good idea who is using shadow vs. util-linux su? Do they
+> have specific advantages/disadvantages, would it be reasonable to try
+> to get all distros to use them same one?
 
-Versions 0.3 through 2.9 are vulnerable to remote code execution. An 
-attacker can craft an RSS item where the name of media enclosure
-(the podcast file) contains shell code. When user plays the file in 
-Podbeuter, the shell code will be executed.
+Debian uses shadow, but is discussing a switch to util-linux:
+https://packages.debian.org/sid/login
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833256
 
-A commit fixing the vulnerability in Git: 
-https://github.com/akrennmair/newsbeuter/commit/c8fea2f60c18ed30bdd1bb6f798e994e51a58260
+GuixSD is using shadow:
+https://git.savannah.gnu.org/cgit/guix.git/tree/gnu/system.scm#n579
 
-A patch for Podbeuter 2.9: 
-https://github.com/akrennmair/newsbeuter/commit/26f5a4350f3ab5507bb8727051c87bb04660f333
-
-Upstream issue: https://github.com/akrennmair/newsbeuter/issues/598
-
-I've requested a CVE from MITRE on August 27th, but haven't heard back 
-yet, so decided to disclose without a number.
-
--- 
-Regards,
-Alexander Batischev
-
-PGP key 356961A20C8BFD03
-Fingerprint: CE6C 4307 9348 58E3 FD94  A00F 3569 61A2 0C8B FD03
-
+I'm also interested to learn the pros and cons of the two
+implementations.
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
