@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/6
-Message-ID: <1496145073.1459.1.camel@gmail.com>
-Date: Tue, 30 May 2017 07:51:13 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/9
+Message-Id: <D7FFF88A-2AA9-432A-9830-0DF662E32524@gmail.com>
+Date: Thu, 23 Feb 2017 07:56:51 -0500
+From: Assaf Gordon <assafgordon@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Roee Hay <roeehay@...il.com>
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2017-05-30 at 12:41 +0100, Simon McVittie wrote:
-> On Tue, 30 May 2017 at 08:17:54 +0400, Ilya Matveychikov wrote:
-> > When using get_options() it's possible to specify a range of
-> > numbers,
-> > like 1-100500. The problem is that it doesn't track array size while
-> > calling internally to get_range() which iterates over the range and
-> > fills the memory with numbers.
-> 
-> Is there a realistic way in which an attacker can provide Linux kernel
-> command-line arguments, without being able to achieve arbitrary code
-> execution via those command-line arguments?
-> 
-> In other words, is this a security vulnerability, or just a bug?
-> 
-> (If the attacker can already achieve arbitrary code execution then
-> this bug does not give them any capability they do not already have.)
-> 
->     S
+Hello,
 
-It's unreasonable to consider the kernel line untrusted. A CVE being
-issued for one of these issues didn't make sense.
+> On Feb 23, 2017, at 05:01, Marcus Meissner <meissner@...e.de> wrote:
+> 
+> On Thu, Feb 23, 2017 at 10:40:54AM +0100, Hanno Böck wrote:
+>> 
+>>> util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed
+>>> local users to kill other processes.
+> 
+> coreutils uses the same su.c codebase, so it is also affected.
+> 
 
-If there's verified boot, it needs to cover the kernel command-line. If
-it doesn't, that's a vulnerability. Memory corruption bugs aren't needed
-for an attacker to make use of the kernel line.
+GNU Coreutils stopped installing 'su' by default in 2007,
+and completely removed 'su' (including the 'su.c' source file)
+in 2012.
 
-Fixing these bugs makes sense, but treating them as vulnerabilities is
-just going to turn off the Linux kernel developers to security people
-even more since it's pretty much nonsense.
+See:
+https://git.savannah.gnu.org/cgit/coreutils.git/commit/?id=928dd737
+
+regards,
+ - assaf
