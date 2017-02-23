@@ -1,85 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/21/27
-Message-ID: <6cf5d7b3-6d5c-7209-f634-d02a22f21c72@redhat.com>
-Date: Wed, 21 Jun 2017 17:30:22 -0600
-From: Jeff Law <law@...hat.com>
-To: oss-security@...ts.openwall.com, Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: Qualys Security Advisory - The Stack Clash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/3
+Message-ID: <20170223075619.GA10527@sin.redhat.com>
+Date: Thu, 23 Feb 2017 18:26:20 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: spice-server: CVE-2016-9577, CVE-2016-9578: remote DoS and buffer overflow from crafted messages
 Content-Type: text/plain; charset=utf-8
 
-On 06/21/2017 03:40 PM, Qualys Security Advisory wrote:
+Two vulnerabilities in the server component of SPICE
+<https://spice-space.org/> were recently assigned CVEs by Red Hat -
+distros got notified during embargo, but I neglected to follow up here:
 
-> 
-> The first problem was that 1MB is not enough on all architectures;  the
-> second problem was that -fstack-check does not always "touch" all pages;
-> and Red Hat's analysis was an extensive report about the fixes needed in
-> the kernel, the glibc, and gcc.
-And just one data point here.  We (Red Hat) had hoped to be able to drop
-in a compiler update with an improved -fstack-check and rebuild at least
-glibc with that compiler.
+ - CVE-2016-9577 spice: Buffer overflow in main_channel_alloc_msg_rcv_buf
+   <https://bugzilla.redhat.com/show_bug.cgi?id=1401603>
 
-However, the further we dug, the more significant problems we found,
-particularly as we started looking at other architectures.
+ - CVE-2016-9578 spice: Remote DoS via crafted message
+   <https://bugzilla.redhat.com/show_bug.cgi?id=1399566>
 
-As late at June 8, we were still internally debating the pros/cons of
-updating GCC and rebuilding GLIBC with the new compiler, even if only
-certain platforms were covered.  The ultimate decision was to play it
-safe and defer integration of the GCC work to a later update.
+Both of these attacks are accessible to unauthenticated attackers that
+can make connections to the SPICE server.  CVE-2016-9577 may lead to
+code execution (heap overflow), while the impact of CVE-2016-9578 is
+limited to denial of service.
 
-The embargo extension may have been painful, but it gave us the time to
-look deeply at the GCC situation and come to a well reasoned technical
-conclusion.
+Both issues were reported by Frediano Ziglio, and fixed in the following
+upstream commits:
 
-Had we done forward in May per the original schedule we well could have
-made an incorrect technical decision under the significant time
-pressure.  The consequences of getting that decision wrong are
-potentially greater than the impact of this particular security issue.
-That would also have put other distros that use GCC at as disadvantage
-as the in-progress GCC bits were not "upstream ready" and thus would
-have been dropped into Red Hat's GCC sources which would likely have
-been fairly difficult for other distros that use GCC to consume.
+https://cgit.freedesktop.org/spice/spice/commit/?id=ec124b982abcd23364963ffcd4c370b1ec962fc9
+https://cgit.freedesktop.org/spice/spice/commit/?id=e16eee1d8be00b186437bf61e4e1871cd8d0211a
+https://cgit.freedesktop.org/spice/spice/commit/?id=1d3e26c0ee75712fa4bbbcfa09d8d5866b66c8af
 
 
+-- 
+Doran Moppert
+Red Hat Product Security
 
-
-> 
-> All of this, plus the third reason mentioned above, and our own
-> assessment of the situation, helped us make our decision to extend the
-> embargo.
-Understood and thanks for evaluating the situation as a whole and coming
-to a well reasoned decision WRT the embargo.
-
---
-
-
-I don't speak for anyone but myself, but I strongly believe in making
-reasonable, rational decisions based on the best information available
-rather than following policy blindly.  Don't get me wrong, policy is
-important as it often encodes years of hard learned lessons and often
-policy is a good default position.
-
-
-> 
->> I understand
->> it's rare for companies to do quality security research, and I didn't
->> want my action to have hampered the stream of quality security research
->> we're seeing from Qualys lately.
-> 
-> Thank you very much.  However, we must admit that this coordinated
-> release has been one of the most stressful and painful experiences we
-> ever had:  we were torn between those who wanted to publish early and
-> those who wanted to publish later, and in the middle of all this
-> coordination we were trying to complete our research (we had not
-> successfully exploited 64-bit Linux yet when we first contacted
-> distros@).
-Understood.  I'd like to point out that knowing 64bit exploits had not
-been completed, but looked reasonably possible was very helpful in our
-internal discussions about the breadth of the problem.
-
-And more generally thanks for all the work in this space!  Don't ever
-hesitate to contact me with any questions/concerns WRT GCC's code
-generation in this space or others.
-
-
-jeff
-
+Content of type "application/pgp-signature" skipped
