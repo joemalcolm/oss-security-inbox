@@ -1,70 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/20/5
-Message-ID: <280519.226656423-sendEmail@localhost>
-Date: Mon, 20 Mar 2017 10:28:08 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/23/6
+Message-ID: <20170223100148.GA23394@suse.de>
+Date: Thu, 23 Feb 2017 11:01:48 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: util-linux 2.29.2 fixes CVE-2017-2616
 Content-Type: text/plain; charset=utf-8
 
-Description:
-libpcre is a perl-compatible regular expression library.
+On Thu, Feb 23, 2017 at 10:40:54AM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> On Thu, 23 Feb 2017 08:46:30 +0100
+> Marcus Meissner <meissner@...e.de> wrote:
+> 
+> > util-linux 2.29.2 fixes CVE-2017-2616, a race condition which allowed
+> > local users to kill other processes.
+> 
+> I just reported this in Gentoo [1], yet I was informed that we're not
+> using su from util-linux, but from shadow. So depending on the
+> distribution you may not use this implementation of su.
+> 
+> I haven't digged deeper into this, can you say if this issue is
+> generic enough to be expected in other implementations as well? (Not
+> sure if the implementations of su in shadow and util-linux share a
+> common codebase, seems to be quite old stuff.)
+> 
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=610664
 
-A fuzz on libpcre1 through the pcretest utility revealed two stack overflow write. Upstream says that these bugs are fixed by one of the previous commit. However I’m providing as usual the stacktrace 
-and the reproducer, so if you are not running the latest upstream release, like happen on debian/rhel based distros, you may want to check better the status of this bug.
-
-The complete ASan output:
-
-# pcretest -32 -d $FILE
-==29686==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f58f32026a0 at pc 0x7f58f6f90a24 bp 0x7ffea3aa3b30 sp 0x7ffea3aa3b28
-WRITE of size 4 at 0x7f58f32026a0 thread T0
-    #0 0x7f58f6f90a23 in pcre32_copy_substring /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:358:15
-    #1 0x528220 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5333:13
-    #2 0x7f58f5ea778f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #3 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00207-pcre-stackoverflow-pcre32_copy_substring
-
-# pcretest -32 -d $FILE
-==21399==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f83734026a0 at pc 0x0000004bd2ac bp 0x7ffdda673b30 sp 0x7ffdda6732e0
-WRITE of size 268 at 0x7f83734026a0 thread T0
-    #0 0x4bd2ab in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x7f8377118925 in pcre32_copy_substring /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:357:1
-    #2 0x528220 in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5333:13
-    #3 0x7f837602f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00209-pcre-stackoverflow2-read_capture_name32
-
-Affected version:
-8.40
-
-Fixed version:
-8.41 (not released atm)
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2017-02-24: bug discovered and reported to upstream
-2017-03-20: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/20/libpcre-two-stack-based-buffer-overflow-write-in-pcre32_copy_substring-pcre_get-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+coreutils uses the same su.c codebase, so it is also affected.
 
 
+Looking at shadow su.c code, it calls waitpid ... and does not handle
+the pid_child exiting case after calling waitpid.
+
+So I would think it is affected without digging deeper.
+
+Ciao, Marcus
