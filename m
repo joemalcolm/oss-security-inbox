@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1305" "Thursday" "15" "September" "2016" "16:51:26" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8k=G2OFp+9v53Lno-UATnXdG563oN3-JkGhxDGoFSuNPw@mail.gmail.com>" "30" "[oss-security] Does a documentation bug elevate to CVE status?" "^Date:" nil nil "9" "2016091520:51:26" "[oss-security] Does a documentation bug elevate to CVE status?" (number mark "        noloader@gma Sep 15   30/1305  " thread-indent "\"[oss-security] Does a documentation bug elevate to CVE status?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2963" "Thursday" "23" "February" "2017" "21:18:17" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>" "68" "[oss-security] GraphicsMagick heap out of bounds write issue" nil nil nil "2" "2017022403:18:17" "[oss-security] GraphicsMagick heap out of bounds write issue" (number mark "U       bfriesen@sim Feb 23   68/2963  " thread-indent "\"[oss-security] GraphicsMagick heap out of bounds write issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5349 invoked by uid 550); 15 Sep 2016 21:12:37 -0000
+Received: (qmail 5387 invoked by uid 550); 24 Feb 2017 03:18:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29753 invoked from network); 15 Sep 2016 20:51:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=3QJAq1881F7x8rp6Y8je8fB23068lNShqeGuR0pPYN0=;
-        b=osc2VWQuXGb9kJiACxLalrc+HXfvbiH8U2Y4DmxrBX1iWYoC9IaNZR1UndCnlyxiJt
-         13kAnHTfRES4t0C9dx49gcINBviZZ1B7sy0+Tyl5eaeMEKoV2h8b5VoHUWaUpXCg0gps
-         Ad3QNNAurZ7CQCsoAIzzboFVce0svXsIkQZS5hR7KME+kDT4tb9o09oLRvvSF4lX4FMI
-         0ppbF0fXPKI3w1ezh0hNytexUON1EohiDKGQ8NtHT8UOQWBsygejbrgIMsVe7dQYAp2G
-         x//6hDC/sCQxG3RlqPfmdyS9zbbh0KSTP4A6OBl5trziLFN+VvTjEDs0TRA1X2wNJs4m
-         P7PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=3QJAq1881F7x8rp6Y8je8fB23068lNShqeGuR0pPYN0=;
-        b=FMeVL5Pb81pG8qBUCfZzjkSVtnWVpUEdZVPw8EbehQK7vqdsu6cVF8yg8l8yxEq5B5
-         qz6Jdd9e3bhOnvKFVmmfymGwMOrYbrhhOmtadqO9SwlQj3TeOG1QNM98F7VUm6sUjkn5
-         shN70vCQDa/hDyFP6A2iFQGMB7wZv1md0SCR2w+3AEXaY6EWodbGm7dy5pNzvbh2CUuc
-         8mGAD92gXsBF7mKSwb/WYXMksXwqm5s5D9feogS649WasWfEgsZ8b8vGHX1LC9cUF8Kx
-         icMtrRS4uJaFjY/rQleHS6rrp5CLcA6sifD3VLunamVz9wh7NLXyp/RIaC0UfK6TqXtU
-         n8Fw==
-X-Gm-Message-State: AE9vXwOINCVLkJ2A12ucDzTtdoachWLks2EmwPgjxKlqlySrSSWUBzFW998tn7LldyZM3ltgTicLekD4//hnsg==
-X-Received: by 10.107.156.129 with SMTP id f123mr18726549ioe.112.1473972686435;
- Thu, 15 Sep 2016 13:51:26 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAH8yC8k=G2OFp+9v53Lno-UATnXdG563oN3-JkGhxDGoFSuNPw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 15 Sep 2016 16:51:26 -0400
-From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Does a documentation bug elevate to CVE status?
+Received: (qmail 5357 invoked from network); 24 Feb 2017 03:18:30 -0000
+Date: Thu, 23 Feb 2017 21:18:17 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@freddy.simplesystems.org
 To: oss-security@lists.openwall.com
+Message-ID: <alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="-559023410-537896204-1487906297=:9710"
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Thu, 23 Feb 2017 21:18:17 -0600 (CST)
+Subject: [oss-security] GraphicsMagick heap out of bounds write issue
 
-Hi Everyone,
+---559023410-537896204-1487906297=:9710
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 
-Please forgive my ignorance and hair splitting. We were talking with
-the Debian Security Team and FW alerted us to a gap in our
-documentation. The gap is simple: we handle sensitive information and
-did not tell users that they must define -DNDEBUG when using alternate
-build systems, like Autotools or CMake. The project's supported build
-system, [GNU] Make, adds the define.
+GraphicsMagick versions up to 1.3.25 encounter a write beyond an 
+allocated heap buffer when reading CMYKA TIFF files which claim to 
+offer fewer samples per pixel than required.
 
-The higher level concern is assert is a debugging and diagnostic aide
-that eventually raises a SIGABRT. We use them for debugging and
-diagnostics for development. During production, the assert is expected
-to be removed with NDEBUG and a C++ throw() follows.
+This is the tiffinfo description of the problematic TIFF file:
 
-If the assert is _not_ removed, then machinery could engage that
-egresses the sensitive information to the file system (core files and
-the like). On some platforms, like Ubuntu with Apport, Apple with
-CrashReporter, and Windows with Windows Error Reporting, the sensitive
-information is egressed to a third party (multiple; the platform
-provider and the developer).
+TIFF Directory at offset 0x808 (2056)
+   Image Width: 34 Image Length: 48
+   Bits/Sample: 8
+   Sample Format: unsigned integer
+   Compression Scheme: None
+   Photometric Interpretation: separated
+   Extra Samples: 1<unassoc-alpha>
+   Orientation: row 0 top, col 0 lhs
+   Samples/Pixel: 2
+   Rows/Strip: 32
+   Planar Configuration: single image plane
 
-We know entities like Apple, Google, Microsoft and  app developers
-receive the information; see for example, the comment at
-https://github.com/weidai11/cryptopp/pull/172#issuecomment-218705068.
+The fix for this is Mercurial changeset 14998:6156b4c2992d which may 
+be viewed at SourceForge via this link:
 
-So my question is, does a documentation bug elevate to CVE status?
+https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
 
-Thanks in advance,
+A minimal patch to correct the problem is attached.
 
-Jeff
+This issue was reported to us on February 15, 2017 by Valon Chu.
+
+Bob
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+---559023410-537896204-1487906297=:9710
+Content-Type: text/plain; charset=US-ASCII; name=tiff.c.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.GSO.2.20.1702232118170.9710@freddy.simplesystems.org>
+Content-Description: 
+Content-Disposition: attachment; filename=tiff.c.patch
+
+ZGlmZiAtciAwMzkyYzQzMDVhNDMgLXIgNjE1NmI0YzI5OTJkIGNvZGVycy90
+aWZmLmMNCi0tLSBhL2NvZGVycy90aWZmLmMJU3VuIEphbiAyOSAxMDowNDo1
+NyAyMDE3IC0wNjAwDQorKysgYi9jb2RlcnMvdGlmZi5jCVRodSBGZWIgMjMg
+MjE6MDY6NTAgMjAxNyAtMDYwMA0KQEAgLTEyMzAsOCArMTIzMCw4IEBADQog
+ICAgICAgICAgICAgICAgICAgY2FzZSAwOg0KICAgICAgICAgICAgICAgICAg
+ICAgaWYgKHNhbXBsZXNfcGVyX3BpeGVsID09IDEpDQogICAgICAgICAgICAg
+ICAgICAgICAgICpxdWFudHVtX3R5cGU9R3JheVF1YW50dW07DQotICAgICAg
+ICAgICAgICAgICAgICAgIGVsc2UNCi0gICAgICAgICAgICAgICAgICAgICAg
+ICAqcXVhbnR1bV90eXBlPVJlZFF1YW50dW07DQorICAgICAgICAgICAgICAg
+ICAgICBlbHNlDQorICAgICAgICAgICAgICAgICAgICAgICpxdWFudHVtX3R5
+cGU9UmVkUXVhbnR1bTsNCiAgICAgICAgICAgICAgICAgICAgIGJyZWFrOw0K
+ICAgICAgICAgICAgICAgICAgIGNhc2UgMToNCiAgICAgICAgICAgICAgICAg
+ICAgICpxdWFudHVtX3R5cGU9R3JlZW5RdWFudHVtOw0KQEAgLTE0MTEsMTIg
+KzE0MTEsMTIgQEANCiAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgICBl
+bHNlDQogICAgICAgICAgICAgICB7DQotICAgICAgICAgICAgICAgIGlmIChp
+bWFnZS0+bWF0dGUpDQorICAgICAgICAgICAgICAgIGlmIChpbWFnZS0+bWF0
+dGUgJiYgc2FtcGxlc19wZXJfcGl4ZWwgPj0gNSkNCiAgICAgICAgICAgICAg
+ICAgICB7DQogICAgICAgICAgICAgICAgICAgICAqcXVhbnR1bV90eXBlPUNN
+WUtBUXVhbnR1bTsNCiAgICAgICAgICAgICAgICAgICAgICpxdWFudHVtX3Nh
+bXBsZXM9NTsNCiAgICAgICAgICAgICAgICAgICB9DQotICAgICAgICAgICAg
+ICAgIGVsc2UNCisgICAgICAgICAgICAgICAgZWxzZSBpZiAoc2FtcGxlc19w
+ZXJfcGl4ZWwgPj0gNCkNCiAgICAgICAgICAgICAgICAgICB7DQogICAgICAg
+ICAgICAgICAgICAgICAqcXVhbnR1bV90eXBlPUNNWUtRdWFudHVtOw0KICAg
+ICAgICAgICAgICAgICAgICAgKnF1YW50dW1fc2FtcGxlcz00Ow0K
+
+---559023410-537896204-1487906297=:9710--
