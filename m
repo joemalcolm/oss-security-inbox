@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2211" "Friday" "13" "November" "2015" "08:58:05" "+0100" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<5645980D.9010105@gmail.com>" "47" "Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Date:" nil nil "11" "2015111307:58:05" "[oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        gsunde.orang Nov 13   47/2211  " thread-indent "\"Re: [oss-security] CVE-Request: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" "<5640442C.1050501@redhat.com>" "<20151109215303.GN1213@sentinelchicken.org>" "<5641360D.8070102@eenterphace.org>" "<20151111002307.GP1213@sentinelchicken.org>" "<56431D4F.7090006@eenterphace.org>" "<20151111160641.GQ1213@sentinelchicken.org>" "<56445609.9050301@gmail.com>" "<1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1421" "Friday" "24" "February" "2017" "08:23:21" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>" "43" "[oss-security] Re: GraphicsMagick heap out of bounds write issue" "^Date:" nil nil "2" "2017022414:23:21" "[oss-security] Re: GraphicsMagick heap out of bounds write issue" (number mark "U       bfriesen@sim Feb 24   43/1421  " thread-indent "\"[oss-security] Re: GraphicsMagick heap out of bounds write issue\"\n") "<alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26576 invoked by uid 550); 13 Nov 2015 07:58:11 -0000
+Received: (qmail 5180 invoked by uid 550); 24 Feb 2017 14:23:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26555 invoked from network); 13 Nov 2015 07:58:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=B1BR5tobQrQD12cntaIuCPN4kciOJZzAhJLt9ESlUws=;
-        b=j/3vyx30SOIF6DpCjMJRpp607Bu65LWKcteABEJGO+98ZEVCG4rVmbCF1218anYxsg
-         YdSe37m0idoOjEIre+9FhKwAtDGN93dPSYtu31cf+amPufmVJkYxBl6zptPBXIudybMc
-         d9puYZjdyXVv/UOj13gz+y/wawiyCfSSnLei0g0c5gqB57dqm3dj2xi3ZYoxeyp7XP6u
-         I2wJlxfaRZSMMF9nKU2Gn/o7h1fkmB0HV39NEmYveV4fIWszF974KJ96TBbPgZv3njNV
-         iJ1BCH4s0iF4NloGWAR+Y/Iyd/+AFMoYnAkd8asgeHA0QL80mm+gZE5I2ysHltagMjtK
-         saSQ==
-X-Received: by 10.28.131.11 with SMTP id f11mr1917118wmd.59.1447401479145;
-        Thu, 12 Nov 2015 23:57:59 -0800 (PST)
-References: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
- <5640442C.1050501@redhat.com> <20151109215303.GN1213@sentinelchicken.org>
- <5641360D.8070102@eenterphace.org>
- <20151111002307.GP1213@sentinelchicken.org>
- <56431D4F.7090006@eenterphace.org>
- <20151111160641.GQ1213@sentinelchicken.org> <56445609.9050301@gmail.com>
- <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <5645980D.9010105@gmail.com>
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+Received: (qmail 5154 invoked from network); 24 Feb 2017 14:23:33 -0000
+X-X-Sender: bfriesen@freddy.simplesystems.org
+In-Reply-To: <alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>
+Message-ID: <alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <1447365167.1146869.438300073.116F736D@webmail.messagingengine.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 8bit
-Date: Fri, 13 Nov 2015 08:58:05 +0100
-From: Gsunde Orangen <gsunde.orangen@gmail.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Fri, 24 Feb 2017 08:23:21 -0600 (CST)
+Date: Fri, 24 Feb 2017 08:23:21 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-Request: Assign CVE for common-collections
- remote code execution on deserialisation flaw
+Subject: [oss-security] Re: GraphicsMagick heap out of bounds write issue
 To: oss-security@lists.openwall.com
 
-On 2015-11-12, 22:52 Mark Felder wrote:
-> 
-> 
-> On Thu, Nov 12, 2015, at 03:04, Gsunde Orangen wrote:
->> CVE-Request:
->> I appreciate this general discussion around deserialization issues and
->> hope this will make a jump-start for sustainable improvements on both
->> Java and application level in the long run.
->> Aside of that however, I'd like to go back to Jason's original request
->> to Mitre to get a CVE ID assigned to this particular issue with the
->> Apache Commons Collections functors package (specifically in the
->> InvokerTransformer class).
-> 
-> Is there any proof that Apache Commons Collections functors package
-> isn't doing what it's intended to be doing? Everything I'm reading
-> indicates that the problem is with applications believing they can
-> *trust* the input, not that there's a bug in the functors package, ie,
-> bad design.
-I agree, and Florian stated similar concerns already in the beginning of
-this thread [1]. However, what the functors package does seems to be
-very easily to exploit through untrusted input. So the "bug" I would
-assign to Commons-Collections is that it allows deserialization by
-default while it shouldn't by default.
+I would like to ammend this report in that the situation is a read 
+beyond an allocated heap buffer rather than a write beyond the end of 
+an allocated heap buffer as was originally reported.  The application 
+may crash but should not be otherwise compromised.
 
-> 
->> So people (esp. Java applications developers) have a unique reference
->> when analysing and fixing this particluar one (by e.g. removing the
->> class, make it non-serializable or wait for a new Commons Collections
->> release that includes that fix - whatever is most appropriate to their
->> application's context).
->>
-> 
-> The currently proposed "fix"[1] is to disable functionality that is
-> being used. This will break applications that need them.
-> 
-> [1] https://issues.apache.org/jira/browse/COLLECTIONS-580
-I share Tim's view [2] and a dozen of (own) applications we checked
-won't break. A property that re-enables deserialization of course would
-help additionally: allow applications that really *need* this to get it
-working; but that requires an explicit step - so latest by that time:
-those, whose applications break after including a "fixed" version of
-Commons-Collections would (hopefully) start to think about their design.
+Bob
 
-Gsunde
+On Thu, 23 Feb 2017, Bob Friesenhahn wrote:
 
-[1] http://seclists.org/oss-sec/2015/q4/238
-[2] http://seclists.org/oss-sec/2015/q4/263
+> GraphicsMagick versions up to 1.3.25 encounter a write beyond an allocated 
+> heap buffer when reading CMYKA TIFF files which claim to offer fewer samples 
+> per pixel than required.
+>
+> This is the tiffinfo description of the problematic TIFF file:
+>
+> TIFF Directory at offset 0x808 (2056)
+>  Image Width: 34 Image Length: 48
+>  Bits/Sample: 8
+>  Sample Format: unsigned integer
+>  Compression Scheme: None
+>  Photometric Interpretation: separated
+>  Extra Samples: 1<unassoc-alpha>
+>  Orientation: row 0 top, col 0 lhs
+>  Samples/Pixel: 2
+>  Rows/Strip: 32
+>  Planar Configuration: single image plane
+>
+> The fix for this is Mercurial changeset 14998:6156b4c2992d which may be 
+> viewed at SourceForge via this link:
+>
+> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+>
+> A minimal patch to correct the problem is attached.
+>
+> This issue was reported to us on February 15, 2017 by Valon Chu.
+>
+> Bob
+>
+
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
