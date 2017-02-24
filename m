@@ -1,58 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/28/10
-Message-ID: <20170928182541.r7dzm3epg7txsplh@tunkki.bugs.fi>
-Date: Thu, 28 Sep 2017 21:25:41 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/4
+Message-ID: <alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>
+Date: Fri, 24 Feb 2017 08:23:21 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
 To: oss-security@...ts.openwall.com
-Subject: The Internet Bug Bounty: Data Processing (hackerone.com)
+Subject: Re: GraphicsMagick heap out of bounds write issue
 Content-Type: text/plain; charset=utf-8
 
-Since these open-source software projects have been actively fixing security
-issues and some of the issues has been announced in oss-security mailing list I
-am writing about this hackerone project here as well:
+I would like to ammend this report in that the situation is a read 
+beyond an allocated heap buffer rather than a write beyond the end of 
+an allocated heap buffer as was originally reported.  The application 
+may crash but should not be otherwise compromised.
 
-https://hackerone.com/ibb-data
+Bob
 
-Policy:
+On Thu, 23 Feb 2017, Bob Friesenhahn wrote:
 
-The Internet Bug Bounty is offering rewards to security researchers who resolve
-critical vulnerabilities in core infrastructure data processing libraries.
-Critical vulnerabilities in these libraries have widespread consequences to the
-internet community.
-
-Bounty Qualification:
-
-- Only Critical vulnerabilities that demonstrate unambiguous remote code
-  execution are eligible under this program. Findings with alternative impact
-  or severity are not in scope at this time.
-
-- Your Proof of Concept MUST demonstrate that remote exploitation can be
-  easily, actively, and reliably achieved.
-
-- Only versions currently supported by the upstream project are eligible.
-  Please verify your issue is present in a current release before submission.
-
-- The individual library maintainers have final decision on which issues
-  constitute security vulnerabilities. The Panel will respect their decision,
-  and we ask that you do as well. It's important to keep in mind that not all
-  submissions will qualify for a bounty, and that the decision to award a
-  bounty is entirely at the discretion of the Panel.
-
-In scope projects currently:
-
-https://github.com/the-tcpdump-group/libpcap
-https://github.com/ImageMagick/ImageMagick
-https://github.com/glennrp/libpng
-http://hg.code.sf.net/p/graphicsmagick/code/
-https://github.com/curl/curl
-https://github.com/the-tcpdump-group/tcpdump
-
-I hope to motivate people with this email. I understand that oss-security
-mailing list is not meant to announce these in regular basis, but I consider
-this hackerone project highly relevant for the researchers reading this list.
-
-Also if you have spare time please help projects like Google's oss-fuzz
-https://github.com/google/oss-fuzz to get us more safer internet for everyone.
+> GraphicsMagick versions up to 1.3.25 encounter a write beyond an allocated 
+> heap buffer when reading CMYKA TIFF files which claim to offer fewer samples 
+> per pixel than required.
+>
+> This is the tiffinfo description of the problematic TIFF file:
+>
+> TIFF Directory at offset 0x808 (2056)
+>  Image Width: 34 Image Length: 48
+>  Bits/Sample: 8
+>  Sample Format: unsigned integer
+>  Compression Scheme: None
+>  Photometric Interpretation: separated
+>  Extra Samples: 1<unassoc-alpha>
+>  Orientation: row 0 top, col 0 lhs
+>  Samples/Pixel: 2
+>  Rows/Strip: 32
+>  Planar Configuration: single image plane
+>
+> The fix for this is Mercurial changeset 14998:6156b4c2992d which may be 
+> viewed at SourceForge via this link:
+>
+> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+>
+> A minimal patch to correct the problem is attached.
+>
+> This issue was reported to us on February 15, 2017 by Valon Chu.
+>
+> Bob
+>
 
 -- 
-Henri Salo
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
