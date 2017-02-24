@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/14/13
-Message-ID: <18140748.47rzSOn8yn@wanheda>
-Date: Thu, 14 Sep 2017 13:12:20 +0200
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/2
+Message-ID: <20170224100342.GA3592@f195.suse.de>
+Date: Fri, 24 Feb 2017 11:03:42 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-Subject: Re: mp3gain: NULL pointer dereference in sync_buffer (mpglibDBL/interface.c)
+Subject: Re: CVE-2017-5956 virglrenderer: Virglrenderer: OOB access while in vrend_draw_vbo
 Content-Type: text/plain; charset=utf-8
 
-On giovedì 14 settembre 2017 11:51:42 CEST Dr. Thomas Orgis wrote:
-> I disagree. I am considering cleaning up mp3gain and omitting nearly
-> all of the vulnerabilities by removing the decoder fork. Reason: rgain
-> does not do what mp3gain did. Mp3gain can directly modify the MPEG
-> frames so that the gain is changed also for decoders that do not
-> support the added metadata (it additionally stores metadata to be able
-> to revert the changes).
-> 
-> While I am not regularily using this myself, I do think that it's a
-> nifty hack that should not disappear. Maybe it can re-enter distros if
-> it does not rely on an outdated internal decoder …
-> 
-> This is becoming a bit off-topic … but I just wanted to note that the
-> bug reports do serve a purpose in alerting me to that other copy of
-> mpg123 code in the wild.
-> 
-> 
-> Alrighty then,
-> 
-> Thomas
+> Upstream patch:
+> ---------------
+>   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=a5ac49940c40ae415eac0cf912eac7070b4ba95d
 
-Hello Thomas,
+Please note that the fix for this issue opens a memory leak, because it
+forgets to free the 've' structure from this line:
 
-the suggestion of removal was because of the dead status of the upstream 
-project.
-If there will be people that fix the issues, will be great.
+  ve = calloc(num_elements, sizeof(struct pipe_vertex_element));
 
-Feel free to update this thread when you have news about.
+A possible follow-up patch is attached.
+
+I've already informed the reporter of this issue but there seems to be
+no upstream fix yet.
+
+Regards
+
+Matthias
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+
+SUSE Linux GmbH 
+GF: Felix Imendörffer, Jane Smithard, Graham Norton
+HRB 21284 (AG Nuernberg)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
