@@ -1,58 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/11
-Message-ID: <20170120111438.GA1582@kroah.com>
-Date: Fri, 20 Jan 2017 12:14:38 +0100
-From: Greg KH <greg@...ah.com>
-To: Harshula <harshula@...hat.com>
-Cc: oss-security@...ts.openwall.com, Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
-Subject: Re: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/24/5
+Message-ID: <alpine.LFD.2.20.1702250026160.1436@wniryva>
+Date: Sat, 25 Feb 2017 00:28:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-6317 Virglrenderer: memory leakage issue in add_shader_program
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 20, 2017 at 09:39:41PM +1100, Harshula wrote:
-> Hi Greg,
-> 
-> On Fri, 2017-01-20 at 09:26 +0100, Greg KH wrote:
-> > On Fri, Jan 20, 2017 at 01:41:52PM +1100, Harshula wrote:
-> > > Hi Folks,
-> > > 
-> > > Red Hat Product Security has been notified of a kernel vulnerability
-> > > that a local attacker can exploit to crash/panic the kernel and cause a
-> > > denial of service.
-> > > 
-> > > This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-> > > rt411016):
-> > > 
-> > > "A process that is in the same process group as the ``init'' process
-> > > (group id zero) can crash the Linux 2 kernel with several system calls
-> > > by passing in a process ID or process group ID of zero. The value zero
-> > > is a special value that indicates the current process ID or process
-> > > group. However, in this case it is also the process group ID of the
-> > > process."
-> > > 
-> > > I've been testing whether RHEL is vulnerable and found the following:
-> > > 
-> > > * Upstream/mainline is not vulnerable
-> > 
-> > Is this true for the mainline kernel tree that RHEL 6 was based on?
-> > 
-> > > * RHEL 7 is not vulnerable
-> > > * RHEL 6 is vulnerable
-> > > * RHEL 5 is partially vulnerable
-> > 
-> > So this is only due to a specific set of patches that were added to RHEL
-> > 6 and RHEL 5 yet never made it upstream?  I ask as we want to make sure
-> > some of the older LTS mainline kernels might be affected and it would be
-> > good to ensure they are not.
-> 
-> Good questions, I had not looked at it from a mainline timeline
-> perspective.
-> 
-> 1) Mainline kernels containing patches [a], [b] and [c] are not
-> vulnerable.
+   Hello,
 
-Ah, nice, all of these showed up in the 2.6.35-rc1 release.  Any distro
-based on something older than that needs to worry here.
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to a memory leakage issue. It could occur 
+in case of an error in add_shader_program().
 
-Thanks for the details.
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
-greg k-h
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=a2f12a1b0f95b13b6f8dc3d05d7b74b4386394e4
+
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1426756
+
+This issue was reported by Li Qiang of 360.cn Inc.
+
+'CVE-2017-6317' assigned via -> http://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
