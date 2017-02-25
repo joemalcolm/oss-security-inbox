@@ -1,4 +1,9 @@
-Received: (qmail 23829 invoked by uid 550); 23 Feb 2026 08:28:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4354" "Saturday" "25" "February" "2017" "11:23:43" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<719404.939885379-sendEmail@localhost>" "102" "[oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)" "^Date:" nil nil "2" "2017022511:23:43" "[oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)" (number mark "U       ago@gentoo.o Feb 25  102/4354  " thread-indent "\"[oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32238 invoked by uid 550); 25 Feb 2017 11:24:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,42 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23757 invoked from network); 23 Feb 2026 08:28:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Reply-To:Cc
-	:Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=2tC+QB230bXx5ZTcP55lEIGBAOt5KvHEEw+ER1OdXQM=;
-	i=9cdceae8c7b5bf2d4c2c643b5341fa4197f0c084@notcom.org; t=1771835309;
-	x=1772483309; b=KvCU7A3X5TANO65bXwJGwLDk/hZsMM55kIp9NGuJtbL+18GT5ldHD9Sm80JW7
-	X1L3xUJ8k70TTxbJznvDGj+tfnDh55bS5whSgoMAgV68qJWuf7Feiup0ozrIHXnntKXESgGxG/LD6
-	uRa0d+Gg9Zdzm4GGS56cmXemI81bZwp94d9TWF+PICbrPb1rDsR+rhSKonelib2ONubmpsXrAQ8SR
-	F4T4ljlmCGwJzEChTaHZxqgvEBllQZ1w2w4OrPEF/ngkxlS+TP8nVvm1GJYHK/60Yt/B3rDVvOFNK
-	4tJfDREZkJk5ScFjY/Bk+eGCyUUsy+1lcYcghVesleUSXOa7Aw==;
-Date: Mon, 23 Feb 2026 17:28:14 +0900
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aZwNSZDGJM_qKMb3@donburi.himad.notcom.org>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 32206 invoked from network); 25 Feb 2017 11:24:03 -0000
+Message-ID: <719404.939885379-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20251211-3-1d6324
-Subject: [oss-security] CVE-2026-26079/CVE-2026-25916: Roundcube vulns prior to 1.5.13/1.6.13
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-167816.381043853"
+Date: Sat, 25 Feb 2017 11:23:43 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] pax-utils: scanelf: out of bounds read in scanelf_file_get_symtabs (scanelf.c)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Roundcube, a PHP-based webmail frontend, released a series of security updates
-on Feb 8, again with little fanfare. From the release announcement:
+------MIME delimiter for sendEmail-167816.381043853
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
- * Fix CSS injection vulnerability reported by CERT Polska.
+Description:
+pax-utils is a set of tools that check files for security relevant properties.
 
- * Fix remote image blocking bypass via SVG content reported by nullcathedral.
+A fuzz on scanelf exposed that the out-of bound read already reported at 
+https://blogs.gentoo.org/ago/2017/02/01/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c was unfixed.
 
-There are fixed in the newly-released versions 1.5.13 and 1.6.13. While not
-mentioned in the official annoucement, these appear to be CVE-2026-26079 (4.7)
-and CVE-2026-25916 (4.3) respectively.
+The complete ASan output:
 
-Full announcement:
-https://roundcube.net/news/2026/02/08/security-updates-1.6.13-and-1.5.13
+# scanelf -s '*' -axetrnibSDIYZB $FILE
+==1093==ERROR: AddressSanitizer: unknown-crash on address 0x7f4ddab2c3a0 at pc 0x000000524a77 bp 0x7fffcd2bc320 sp 0x7fffcd2bc318
+READ of size 4 at 0x7f4ddab2c3a0 thread T0
+    #0 0x524a76 in scanelf_file_get_symtabs /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:357:3
+    #1 0x514af2 in scanelf_file_sym /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1282:2
+    #2 0x514af2 in scanelf_elfobj /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1502
+    #3 0x5137f8 in scanelf_elf /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1567:8
+    #4 0x5137f8 in scanelf_fileat /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1634
+    #5 0x512d9b in scanelf_dirat /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1668:10
+    #6 0x511d9d in scanelf_dir /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:1718:9
+    #7 0x511d9d in parseargs /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:2228
+    #8 0x511d9d in main /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:2316
+    #9 0x7f4dd9b4e61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #10 0x419b28 in getenv (/usr/bin/scanelf+0x419b28)
 
- -Valtteri
+AddressSanitizer can not describe address in more detail (wild memory access suspected).
+SUMMARY: AddressSanitizer: unknown-crash /tmp/portage/app-misc/pax-utils-1.2.2/work/pax-utils-1.2.2/scanelf.c:357:3 in scanelf_file_get_symtabs
+Shadow bytes around the buggy address:
+  0x0fea3b55d820: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d830: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d840: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d850: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d860: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+=>0x0fea3b55d870: fe fe fe fe[fe]fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d880: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d890: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d8a0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d8b0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+  0x0fea3b55d8c0: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1093==ABORTING
+
+Affected version:
+1.2.2
+
+Fixed version:
+1.2.3 (not released atm)
+
+Commit fix:
+https://github.com/gentoo/pax-utils/commit/e577c5b7e230c52e5fc4fa40e4e9014c634b3c1d
+https://github.com/gentoo/pax-utils/commit/858939ea6ad63f1acb4ec74bba705c197a67d559
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00169-pax-utils-scanelf-oobread1
+
+Timeline:
+2017-02-09: bug discovered and reported to upstream
+2017-02-11: upstream realeased a patch
+2017-02-25: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/25/pax-utils-scanelf-out-of-bounds-read-in-scanelf_file_get_symtabs-scanelf-c-2
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-167816.381043853--
+
