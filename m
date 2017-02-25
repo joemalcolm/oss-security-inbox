@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/08/4
-Message-ID: <ddadc77b-f3fe-1c7b-fd44-513b11d2f0cf@canonical.com>
-Date: Wed, 8 Feb 2017 02:10:05 -0600
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/25/3
+Message-Id: <598330B5-3AE7-49CD-B826-3FFEAA7C5048@gmail.com>
+Date: Sat, 25 Feb 2017 12:49:12 -0500
+From: Assaf Gordon <assafgordon@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: James Page <james.page@...ntu.com>, security@...ntu.com
-Subject: CVE Request: Nova-LXD incorrectly applied Neutron security group rules
+Subject: Re: gnu-paxutils: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-Neutron security group rules were not being applied to Nova-LXD
-instances due to improperly named veth pairs. This resulted in network
-traffic to/from external hosts being incorrectly allowed.
+Hello,
 
-Bug: https://launchpad.net/bugs/1656847
-Fix:
-https://github.com/openstack/nova-lxd/commit/1b76cefb92081efa1e88cd8f330253f857028bd2
+> On Feb 25, 2017, at 06:36, Agostino Sarubbo <ago@...too.org> wrote:
+> 
+> Description:
+> GNU paxutils is a suite of archive utilities [...]
+> A fuzzing on tar and pax shows multiple crashes.
+[...]
+> Note:
+> The email to upstream was rejected.
 
-Thank you!
+Not sure what "rejected" means (did the email delivery failed or the maintainer rejected your input, etc).
 
-Tyler
+But generally for GNU Software,
+If you don't get timely response from the maintainer,
+you can send an email to "security@....org" ,
+and if that doesn't help, escalate to "maintainers@....org".
+see https://www.gnu.org/software/security/ 
 
+regards,
+ - assaf
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
