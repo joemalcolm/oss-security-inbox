@@ -1,4 +1,9 @@
-Received: (qmail 7224 invoked by uid 550); 3 Jun 2026 06:36:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6187" "Saturday" "25" "February" "2017" "11:36:05" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<670171.970592008-sendEmail@localhost>" "133" "[oss-security] gnu-paxutils: multiple crashes" "^Date:" nil nil "2" "2017022511:36:05" "[oss-security] gnu-paxutils: multiple crashes" (number mark "U       ago@gentoo.o Feb 25  133/6187  " thread-indent "\"[oss-security] gnu-paxutils: multiple crashes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17575 invoked by uid 550); 25 Feb 2017 11:36:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,82 +11,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5166 invoked from network); 3 Jun 2026 00:32:29 -0000
-Date: Wed, 3 Jun 2026 02:32:19 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjcj.net; s=dkim;
-	t=1780446740;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=4g6j42x5+SStaLu3s5bpxR0gOUzPXqom1NZVGK+dv8Q=;
-	b=ZJOgrWTzl1a/R+KFLuetT8dykF1Nu7LGa68CZULb4XZpeltvZ3ec42Ax6hVr6CD95NdVde
-	s60vBz9UDNh3ok2k+TcStXmn6L/XJ0O368LQZ8MGZEWUky3rm/7EyYoRQjSmZANn52r7FC
-	ynBc1IMTheDCaFyNmCnAGsRzlXl8NB6Q2KIwopZGjGbgTV6SVWF7t+uBcJDw4P+nv9K0aj
-	Y5y761xXTwI4qrASJGeh6UL/AtWtsUN/yVMg3V0zskuXcqRcfVpEZqkVtdQnopsXj3BBLE
-	x043xV/ZNpYsKbA2YNy2GrpUVrXCalh2HD94vbV7ykTnlRZDrUugzbHo1TMhNg==
-Authentication-Results: pjcj.com;
-	auth=pass smtp.mailfrom=paul@pjcj.net
-From: Paul Johnson <paul@pjcj.net>
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Message-ID: <ah91fEAGU7F3q-EW@pjcj.com>
+Received: (qmail 17543 invoked from network); 25 Feb 2017 11:36:23 -0000
+Message-ID: <670171.970592008-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] CVE-2026-9334: Cpanel::JSON::XS versions before 4.41 for Perl allow
- type confusion via duplicate object keys when dupkeys_as_arrayref is enabled
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-181156.18809043"
+Date: Sat, 25 Feb 2017 11:36:05 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] gnu-paxutils: multiple crashes
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-========================================================================
-CVE-2026-9334                                        CPAN Security Group
-========================================================================
+------MIME delimiter for sendEmail-181156.18809043
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-        CVE ID:  CVE-2026-9334
-  Distribution:  Cpanel-JSON-XS
-      Versions:  before 4.41
+Description:
+GNU paxutils is a suite of archive utilities: it will provide cpio, tar and POSIX pax archivers.
 
-      MetaCPAN:  https://metacpan.org/dist/Cpanel-JSON-XS
-      VCS Repo:  https://github.com/rurban/Cpanel-JSON-XS
+A fuzzing on tar and pax shows multiple crashes.
+I really don’t know if atm those tools are used somewhere.
+
+Details:
+
+# tar -t -f $FILE
+buffer.c:1480:40: runtime error: index 7168 out of bounds for type 'char [512]'
+SUMMARY: AddressSanitizer: undefined-behavior buffer.c:1480:40 in 
+/bins/tar: Record size of archive appears to be 14 blocks (20 expected)
+/bins/tar: Hmm, this doesn't look like a tar archive
+/bins/tar: Skipping to next file header
+
+reading.c:327:19: runtime error: member access within null pointer of type 'union block'
+SUMMARY: AddressSanitizer: undefined-behavior reading.c:327:19 in 
+reading.c:327:19: runtime error: member access within null pointer of type 'struct sparse_header'
+SUMMARY: AddressSanitizer: undefined-behavior reading.c:327:19 in 
+
+ASAN:DEADLYSIGNAL
+=================================================================
+==9542==ERROR: AddressSanitizer: SEGV on unknown address 0x0000000001f8 (pc 0x000000570b4a bp 0x7ffd7ab13eb0 sp 0x7ffd7ab13e90 T0)
+==9542==The signal is caused by a READ memory access.
+==9542==Hint: address points to the zero page.
+    #0 0x570b49 in skip_extended_headers /root/paxutils-2.4h/src/reading.c:327:33
+    #1 0x55721d in list_archive /root/paxutils-2.4h/src/list.c:120:7
+    #2 0x5718ef in read_and /root/paxutils-2.4h/src/reading.c:406:5
+    #3 0x57c746 in main /root/paxutils-2.4h/src/./tar.c:1508:7
+    #4 0x7f5c524fc78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x41a498 in _start (/root/bins/tar+0x41a498)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /root/paxutils-2.4h/src/reading.c:327:33 in skip_extended_headers
+==9542==ABORTING
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00178-gnupaxutils-tar-segv
+
+Obviously, the runtime error “member access within null pointer…” is the ubsan’s way to print what asan subsequently said as SEGV, so it is the same issue.
+
+# pax -f $FILE
+==10938==ERROR: AddressSanitizer: global-buffer-overflow on address 0x00000141615f at pc 0x00000052853e bp 0x7ffed94bdc30 sp 0x7ffed94bdc28
+READ of size 1 at 0x00000141615f thread T0
+    #0 0x52853d in read_in_tar_header /root/paxutils-2.4h/src/fmttar.c:363:8
+    #1 0x50dd65 in read_in_header /root/paxutils-2.4h/src/copyin.c:99:7
+    #2 0x50f675 in process_copy_in /root/paxutils-2.4h/src/copyin.c:236:7
+    #3 0x50d164 in main /root/paxutils-2.4h/src/./pax.c:485:3
+    #4 0x7fd70e06478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x41a448 in _start (/usr/bin/pax+0x41a448)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00179-gnupaxutils-pax-globaloverflow
+
+# pax -f $FILE
+==21061==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efb9 at pc 0x00000048041a bp 0x7ffea3351e10 sp 0x7ffea33515c0
+READ of size 10 at 0x60200000efb9 thread T0
+    #0 0x480419 in __interceptor_strcmp 
+/tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:284
+    #1 0x50f969 in process_copy_in /root/paxutils-2.4h/src/copyin.c:261:11
+    #2 0x50d164 in main /root/paxutils-2.4h/src/./pax.c:485:3
+    #3 0x7fe2d680178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x41a448 in _start (/usr/bin/pax+0x41a448)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00180-gnupaxutils-pax-heapoverflow
+
+# pax -f $FILE
+fmttar.c:450:11: runtime error: index 6 out of bounds for type 'char [6]'                                                                                                                      
+SUMMARY: AddressSanitizer: undefined-behavior fmttar.c:450:11
+
+==7159==ERROR: AddressSanitizer: memcpy-param-overlap: memory ranges [0x7fe6f8001420,0x7fe6f800161f) and [0x7fe6f8001421, 0x7fe6f8001620) overlap
+    #0 0x4bc091 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x526da0 in read_in_tar_header /root/paxutils-2.4h/src/fmttar.c:265:4
+    #2 0x50dd65 in read_in_header /root/paxutils-2.4h/src/copyin.c:99:7
+    #3 0x50f675 in process_copy_in /root/paxutils-2.4h/src/copyin.c:236:7
+    #4 0x50d164 in main /root/paxutils-2.4h/src/./pax.c:485:3
+    #5 0x7fe6fae7178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x41a448 in _start (/usr/bin/pax+0x41a448)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00181-gnupaxutils-pax-memcpyparoverlap
+
+# pax -f $FILE
+==11514==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7f8b47900220 at pc 0x00000053bf25 bp 0x7ffd949d5cc0 sp 0x7ffd949d5cb8
+READ of size 1 at 0x7f8b47900220 thread T0
+    #0 0x53bf24 in otoa /root/paxutils-2.4h/lib/octal.c:33:10
+    #1 0x5287f5 in is_tar_header /root/paxutils-2.4h/src/fmttar.c:427:3
+    #2 0x50d8d4 in read_in_header /root/paxutils-2.4h/src/copyin.c:74:27
+    #3 0x50f675 in process_copy_in /root/paxutils-2.4h/src/copyin.c:236:7
+    #4 0x50d164 in main /root/paxutils-2.4h/src/./pax.c:485:3
+    #5 0x7f8b4a75378f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x41a448 in _start (/usr/bin/pax+0x41a448)
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00182-gnupaxutils-pax-stackoverflow
+
+Affected version:
+2.4h
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
+
+Timeline:
+2017-02-17: bugs discovered
+2017-02-21: bugs reported to upstream
+2017-02-21: blog post about the issue
+
+Note:
+These bugs were found with American Fuzzy Lop.
+The email to upstream was rejected.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/21/gnu-paxutils-multiple-crashes
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Cpanel::JSON::XS versions before 4.41 for Perl allow type confusion via
-duplicate object keys when dupkeys_as_arrayref is enabled
+------MIME delimiter for sendEmail-181156.18809043--
 
-Description
------------
-Cpanel::JSON::XS versions before 4.41 for Perl allow type confusion via
-duplicate object keys when dupkeys_as_arrayref is enabled.
-
-decode_hv() collapses duplicate object keys into an array reference
-under dupkeys_as_arrayref. The branch reached for a duplicate key tests
-`SvTYPE (old_value) != SVt_RV && SvTYPE (SvRV (old_value)) !=
-SVt_PVAV`, which evaluates SvRV(old_value) before establishing that
-old_value is a reference. When the existing value is a plain scalar
-rather than an array reference, a non-reference scalar is dereferenced
-as a reference.
-
-A caller decoding untrusted JSON with dupkeys_as_arrayref enabled is
-crashed, and the incompatible access follows a pointer taken from
-attacker controlled scalar contents.
-
-Problem types
--------------
-- CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
-
-Solutions
----------
-Upgrade to Cpanel::JSON::XS 4.41 or later.
-
-
-References
-----------
-https://github.com/rurban/Cpanel-JSON-XS/commit/11a7c550a0d8fac2f84414f24d5df9b2bfe346e2.patch
-https://metacpan.org/release/RURBAN/Cpanel-JSON-XS-4.41/changes
-
-Timeline
---------
-- 2026-02-24: Issue reported.
-- 2026-05-27: Version 4.41 released with fix.
-- 2026-05-28: Fix verified.
-
--- 
-Paul Johnson - paul@pjcj.net
