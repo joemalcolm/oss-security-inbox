@@ -1,110 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/16/5
-Message-ID: <0271829c-ec94-244b-21db-d8804d6ace1a@redhat.com>
-Date: Fri, 16 Jun 2017 08:15:59 +0200
-From: Andrej Nemec <anemec@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: two vulns in uClibc-0.9.33.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/5
+Message-ID: <869975.355078594-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:46:23 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-Unfortunately, CVE assignments are not done through this list anymore.
-You need to visit [1] and request the CVEs by filing out the form. Could
-you please look at it and let the list know about the assigned CVEs?
+A fuzz with a wav file as input produced an heap overflow.
 
-Thanks!
+The complete ASan output:
 
-[1] https://cveform.mitre.org/
+# sfinfo $FILE
+==6051==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004513de bp 0x7ffc71379b20 sp 0x7ffc713792d0
+WRITE of size 2 at 0x61a00001f708 thread T0
+    #0 0x4513dd in read /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
+    #1 0x7fd944373b2c in bool readValue(File*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:353:12
+    #2 0x7fd944373b2c in bool readSwap(File*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:375
+    #3 0x7fd944373b2c in _init /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:397
+    #4 0x7fd94439ce2f in WAVEFile::parseFormat(Tag const&, unsigned int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:5
+    #5 0x7fd9443a1568 in WAVEFile::readInit(_AFfilesetup*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:733:13
+    #6 0x7fd9443b4fb9 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:356:15
+    #7 0x7fd9443b6331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6
+    #8 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22
+    #9 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4
+    #10 0x7fd94347f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #11 0x419b68 in _init (/usr/bin/sfinfo+0x419b68)
 
-Best Regards,
+0x61a00001f708 is located 0 bytes to the right of 1160-byte region [0x61a00001f280,0x61a00001f708)
+allocated by thread T0 here:
+    #0 0x4d2928 in malloc /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fd942ede687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)
+    #2 0x7fd9443b4d63 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:337:15
+    #3 0x7fd9443b6331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6
+    #4 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22
+    #5 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4
+    #6 0x7fd94347f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
--- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
+Shadow bytes around the buggy address:
+  0x0c347fffbe90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c347fffbee0: 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbef0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==6051==ABORTING
 
+Affected version:
+0.3.6
 
-On 06/16/2017 05:53 AM, fefe wrote:
-> I found two vulns in  uClibc-0.9.33.2 (https://uclibc.org/)
->
->
-> one is about line 2682 of get_subexp.c :
->
->
-> 		if (BE (bkref_str_off >= mctx->input.valid_len, 0))
-> 		{
-> 		  /* If we are at the end of the input, we cannot match.  */
-> 		  if (bkref_str_off >= mctx->input.len)
-> 		    break;
->
->
-> 		  err = extend_buffers (mctx);
-> 		  if (BE (err != REG1_NOERROR, 0))
-> 		    return err;
->
->
-> 		  buf = (const char *) re_string_get_buffer (&mctx->input);
-> 		}
-> 	      if (buf [bkref_str_off++] != buf[sl_str - 1])
-> 		break; /* We don't need to search this sub expression
-> 		
-> "bkref_str_off >= mctx->input.valid_len" , when  bkref_str_off == mctx->input.valid_len, "buf [bkref_str_off++] != buf[sl_str - 1]" case Out of one bit bounds read
->
->
-> The poc code like:
-> 	
-> 	if(regcomp (&regtmp,"(.+)upper\\1^", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-> 	{		
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "upperupperupperx",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
->
->
->
->
->
->
-> The another is aout line 1837 of regexce.c :
->
->
-> 		check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
-> 			     int subexp_idx, int from_node, int bkref_idx)
->                 .......
->
->
-> 		  cpos =
-> 		    check_dst_limits_calc_pos_1 (mctx, boundaries, subexp_idx,
-> 						 dst, bkref_idx);
->
->
-> 		
-> check_dst_limits_calc_pos_1 recursive calls case DDOS, because of stack exhaustion.
->
->
-> The poc code like:	
-> 	
-> 	if(regcomp (&regtmp,"\x28\x2E\x3F\x3F\x28\x2E\x3F\x29\x5C\x42\x44\x3F\x3F\x28\x2E\x5C\x32\x29\x2A\x5C\x32\x28\x2E\x3F\x29\x5C\x32\x29\x2A\x5C\x32\xBD", REG_EXTENDED|REG_ICASE | REG_NOSUB )==0)
-> 	{		
->         	reg1match_t pmatch[1];
-> 		regexec(&regtmp, "\x72\xFF\xFF\xFF\xFF\xBD",1, pmatch, 0);
-> 		regfree(&regtmp);
-> 	}
->
->
->
->
-> A large number of embedded devices uses uclibc instead of glibc.
-> Could you assign CVE id for those?
->
->
-> Thank you
->
->
-> Benjin Liu
-> Codesafe Team of Qihoo 360
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00135-audiofile-heapoverflow-readValue
+
+Timeline:
+2017-01-30: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-readvalue-filehandle-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
