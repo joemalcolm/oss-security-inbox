@@ -1,57 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/02/3
-Message-ID: <186c4777cf1647a9a5c24cb153bc39b5@imshyb01.MITRE.ORG>
-Date: Thu, 2 Feb 2017 00:51:06 -0500
-From: <cve-assign@...re.org>
-To: <nicolas.gregoire@...rri.fr>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: multiples vulnerabilities in Revive Adserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/9
+Message-ID: <285721.180818172-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:53:02 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-> https://www.revive-adserver.com/security/revive-sa-2017-001/
+A fuzz on it discovered an heap overflow.
 
-> [] Vulnerability 1 - Deserialization of Untrusted Data
+The complete ASan output:
 
-Use CVE-2017-5830.
+# sfconvert @@ out.mp3 format aiff
+==2512==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62d00001c45a at pc 0x7fe7476f387d bp 0x7ffc3b0e3bf0 sp 0x7ffc3b0e3be8
+WRITE of size 2 at 0x62d00001c45a thread T0
+    #0 0x7fe7476f387c in MSADPCM::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:222:14
+    #1 0x7fe7476c1ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3
+    #2 0x7fe7476fac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3
+    #3 0x7fe7476ab05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
+    #4 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
+    #5 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #6 0x7fe74678078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+
+0x62d00001c45a is located 0 bytes to the right of 32858-byte region [0x62d000014400,0x62d00001c45a)
+allocated by thread T0 here:
+    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fe746419687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)
+    #2 0x7fe7476af43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41
+    #3 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #5 0x7fe74678078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:222:14 in 
+MSADPCM::decodeBlock(unsigned char const*, short*)
+Shadow bytes around the buggy address:
+  0x0c5a7fffb830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb840: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb850: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb860: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb870: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c5a7fffb880: 00 00 00 00 00 00 00 00 00 00 00[02]fa fa fa fa
+  0x0c5a7fffb890: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2512==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00186-audiofile-heapoverflow-MSADPCM-decodeBlock
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-msadpcmdecodeblock-msadpcm-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-> [] Vulnerability 2 - Session Fixation
-
-Use CVE-2017-5831.
-
-
-> [] Vulnerability 3 - Persistent XSS
-
-Use CVE-2017-5832.
-
-
-> [] Vulnerability 4 - Reflected XSS
-
-Use CVE-2017-5833.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYksbmAAoJEHb/MwWLVhi2f34P/1kd2i9lAh5KBzvbp/iskyU5
-FXdYXOfov1Kty7Tu8o6jnwjjQxqobA9pQFOVPfDhmBzZfZdk58UVp59NA2J6lhgS
-xWF42C6pnFpgV+aM4UxjaI7fWeB3wtx6ceySU9CWYDVhjGcCsD8SXlxpo7IHpNFE
-yznDrDAZPjTplAJ67lkciep5RgBUYjrZxaY54aFNCJqqEKz723xsXY0uA3Q5H+Ih
-v7wpxPCWjo8oFLzpFsybWLrADKZ4Nuu6RcbYPyUrupmkIpkjakYSun7PhaBJ+Vbk
-edw9zALYloJ4a8k00SQM5+n/Y3iR2hbmiWAoqiFhNjKqxv5skEgW0bfwgypkUsmh
-PNi86FPrj4f8TmqIlwM59gqbSb9Mjqyr/XW64wDnR545XZp16IBxb046dlgvDmjl
-zFJ+LBMb2ui8ggdPWEPAjzni/EDeS+OC6o4Ocp0kXv8kWw3QbvMfX0LE8oVX/XVx
-FO80/46JKbxqCS22NICP/t/qOumC+Ar1XiJ1aLOJjPx1GJtkUV9JxeRUr/FCP2op
-m29U66J9gHg/5R7yacDIukwvZ+zUX3CxecIDG69SV0EKhNcRM3lEY1sQH2sgKVyT
-r16cax1/GiATMwyZrrXCJYJ2KQ26rHghIS5CPjfbXN/rJ4O7t+mVAglxZCnnILtQ
-dgIG+cUHF2Ei1OBynPXy
-=e5Rh
------END PGP SIGNATURE-----
