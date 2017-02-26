@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1509" "Tuesday" "21" "April" "2020" "12:52:28" "-0400" "Santiago Torres" "torresariass@gmail.com" "<20200421165227.exhxkcqe4nhzzkes@LykOS.localdomain>" "40" "Re: [oss-security] Pacman package manager - taking untrusted input" "^Date:" nil nil "4" "2020042116:52:28" "[oss-security] Pacman package manager - taking untrusted input" (number mark "        torresariass Apr 21   40/1509  " thread-indent "\"Re: [oss-security] Pacman package manager - taking untrusted input\"\n") "<HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>" ("<HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["8849" "Sunday" "26" "February" "2017" "11:52:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<690695.219530852-sendEmail@localhost>" "106" "[oss-security] audiofile: heap-based buffer overflow in IMA::decodeBlockWAVE (IMA.cpp)" "^Date:" nil nil "2" "2017022611:52:23" "[oss-security] audiofile: heap-based buffer overflow in IMA::decodeBlockWAVE (IMA.cpp)" (number mark "U       ago@gentoo.o Feb 26  106/8849  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in IMA::decodeBlockWAVE (IMA.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10093 invoked by uid 550); 21 Apr 2020 16:53:32 -0000
+Received: (qmail 17429 invoked by uid 550); 26 Feb 2017 11:52:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +11,120 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9704 invoked from network); 21 Apr 2020 16:52:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IlH1NCIHNJn998NHbKLbjrKLytOk1GrHunWTbtg0imQ=;
-        b=uZtylD/wKrSymlY/4Os9F13LFzqJm/ZtShB7VuAUZoafiTY83fsInedlvAN+2+YMSS
-         Fjj+PVElpILp0IbGTaGkVopBZgH6VpSTbGMnyMV0n63D6nR0jptgyLgEpAEHPncfpHXQ
-         87/koQVLWb5jmSCAuko5ZB7WNawb8kMzcu1WeSzF7GcVv7rDyxs99+iOkZsoN7rbqodz
-         wm94abgod89GtKN6I0LD5Vxw1hpTg1d+61BibWt6H19n/uLUirKRy3gMu49i3C4G5IiK
-         g1jEYaqJhhDa+IaKST1TJ8gBKSa/Jox71mQ2dyq12F9xoGJ4vKBZIMYAzCzXgNs08ATW
-         rnBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IlH1NCIHNJn998NHbKLbjrKLytOk1GrHunWTbtg0imQ=;
-        b=GGS3xeYe54GWaX7OsvXUwwRl/k3ks/DkdkZH072UnZMIJDtVgb+AB0AwE58Azq5rRh
-         /zo6FWeLMvsjiZqtW2kuRvwBnPUX2s6pNhBJTIR+QNJYONehom30sHSxxP9Ezth1LkpZ
-         RcLo97AFFkpTuZ5HoVGkQiCrY21LsJRuqtIOvPeWoaRbSA9+wD+Oo64/KA+/CkWkKSeF
-         NrmWKSNmBnSs5p5LjnWIhbx27SP0Uqlo56t04BR6U7uDkjvjvifS8yvX7uX8CmdcDbEf
-         v6N3sWskar3J/uO+NQgEckbYFRyvrCqaLyOM93MuEbKa0IJt/xHtMGPdo/ra2As8FieA
-         p44w==
-X-Gm-Message-State: AGi0Pua06j/b4lfFCvNx2F/H8brgt1IP0mvIhW2DAZjS+ULYKiBL1teX
-	cys8qndgZgkgyVOl6XpGnAm3qJuhl9w=
-X-Google-Smtp-Source: APiQypKb+I4KLMJluvx/YhlLBoo4WROuMHv49U7S1YhW53o1dXlFmF/2rEL2tCy/zLSdyuIBeRDbig==
-X-Received: by 2002:ac8:33f9:: with SMTP id d54mr22820281qtb.239.1587487949244;
-        Tue, 21 Apr 2020 09:52:29 -0700 (PDT)
-Message-ID: <20200421165227.exhxkcqe4nhzzkes@LykOS.localdomain>
-References: <HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>
+Received: (qmail 16332 invoked from network); 26 Feb 2017 11:52:40 -0000
+Message-ID: <690695.219530852-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="hcvfibjlixkolbbq"
-Content-Disposition: inline
-In-Reply-To: <HVOfwapPoUpExeEC6pUVJFD81vMaCFIGaNo0Uodnx5Sk40Z5SD2JmPGp-IWcmnvIX1Qswb0Kif33n0bqakSLFndsMqYgjY4lTVIRwN_MSfw=@protonmail.com>
-Date: Tue, 21 Apr 2020 12:52:28 -0400
-From: Santiago Torres <torresariass@gmail.com>
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-665161.998550506"
+Date: Sun, 26 Feb 2017 11:52:23 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Pacman package manager - taking untrusted input
-To: oss-security@lists.openwall.com
+Subject: [oss-security] audiofile: heap-based buffer overflow in IMA::decodeBlockWAVE (IMA.cpp)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---hcvfibjlixkolbbq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------MIME delimiter for sendEmail-665161.998550506
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 21, 2020 at 04:27:08PM +0000, jellicent@protonmail.com wrote:
-> The Pacman package manager, used by Arch Linux and its 10+ derivatives,
-> introduces a critical security flaw in its current state.
-> ... The database, however, is not signed.
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-Or
-=20
-> The code supports database signatures, so the real issue is the distro
-> infrastructure.
+A fuzz on it discovered an heap overflow.
 
-Pick one please.
+The complete ASan output:
 
-> [1] https://wiki.archlinux.org/index.php/Pacman/Package_signing
+# sfconvert @@ out.mp3 format aiff
+==2486==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62f0000286e8 at pc 0x7fc5db36626e bp 0x7ffcecb1cbf0 sp 0x7ffcecb1cbe8                                                                                                                                       
+WRITE of size 2 at 0x62f0000286e8 thread T0                                                                                                                                                                                                                                    
+    #0 0x7fc5db36626d in IMA::decodeBlockWAVE(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:188:13                                                                                                
+    #1 0x7fc5db365671 in IMA::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:110:10                                                                                                    
+    #2 0x7fc5db361ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3                                                                                                                        
+    #3 0x7fc5db39ac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3                                                                                                               
+    #4 0x7fc5db34b05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14                                                                                                                                             
+    #5 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29                                                                                                                                                 
+    #6 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
+    #7 0x7fc5da42078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
+    #8 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                                               
+0x62f0000286e8 is located 0 bytes to the right of 49896-byte region [0x62f00001c400,0x62f0000286e8)                                                                                                                                                                            
+allocated by thread T0 here:                                                                                                                                                                                                                                                   
+    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                                                                                                       
+    #1 0x7fc5da0b9687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)                                                                                                                                                           
+    #2 0x7fc5db34f43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41                                                                                                                                        
+    #3 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29                                                                                                                                                 
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
+    #5 0x7fc5da42078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:188:13 in IMA::decodeBlockWAVE(unsigned 
+char const*, short*)                                                                      
+Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
+  0x0c5e7fffd080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
+  0x0c5e7fffd090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5e7fffd0a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5e7fffd0b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5e7fffd0c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c5e7fffd0d0: 00 00 00 00 00 00 00 00 00 00 00 00 00[fa]fa fa
+  0x0c5e7fffd0e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd0f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2486==ABORTING
 
---hcvfibjlixkolbbq
-Content-Type: application/pgp-signature; name="signature.asc"
+Affected version:
+0.3.6
 
------BEGIN PGP SIGNATURE-----
+Fixed version:
+N/A
 
-iQIzBAABCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAl6fJMsACgkQRo8SLOgW
-IpXuSw//Uor1X1xygq9ttv6aZV6dFH14Hw/ci5EG+HCG6TVgYACB+Ix3Occim1rS
-xotHvwYb9V9oRYW/HVYUdUWo0tf9Yu5Pbf77b0VuHHRM+FlpNIuSJYVlRIa9b077
-YK6i0Vom5zWXkQOD0AhXAk0RWM1WHTD+G4SR+Hb6CbOFLVb6AJGUC5z0q8GRYyys
-mF8Nm3+TMeadysCGSpJuYF3VNJZU2ap+QNtAccrgi4s+PL9Igeemo+m6mTMpo99o
-HB1eJ7IiyC8Ybe0F9Ljffzb20YF1FwK2Mg6Rxh96rVgPB6btJMIRUQPdfkdBAi/x
-589aSD7r6pGYoiKkVkODx7Ucxu/Vmar+dd6R1gysd6E+/GKsas8G1jw36o5JSmJ4
-jtdG4WYvJXawpCw1Asq3D+6qh1a5lV5nApSSHn/pKyzkQvZyd34CvkqAZEmFOStu
-3pAzygh4r+Un0XUDyHU6a/6to/1w4aMF9nRXFJbbm242zntmgYLvf3B5qi5mlPcr
-XfaL1fPukUyoLtjivBLaydVES240PPqTN6FSP8UGAiCYuGu0BH4zXf+KMbSBa8wj
-gIA2V7O8HdcO9X8xRRClil9UAij3T/MI6okZ8ZqSxVQ6CnmSNzZmCNcbWtAWW/ii
-Fno9Vx80psmo0U6wSQC1PxiZiBP5ni7+Dgv9VHW2llI7PAt9qdo=
-=XWa3
------END PGP SIGNATURE-----
+Commit fix:
+N/A
 
---hcvfibjlixkolbbq--
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00185-audiofile-heapoverflow-IMA-decodeBlockWAVE
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-imadecodeblockwave-ima-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-665161.998550506--
+
