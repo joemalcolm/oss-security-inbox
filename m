@@ -1,74 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/27/7
-Message-ID: <20170927145713.GA2847@openwall.com>
-Date: Wed, 27 Sep 2017 16:57:13 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel CVEs not mentioned on oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/10
+Message-ID: <10347.2849327488-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:53:42 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: divide-by-zero in BlockCodec::runPull (BlockCodec.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 27, 2017 at 03:04:24PM +0200, Greg KH wrote:
-> I've not ever really run into any "known security
-> fix" not being cc:ed to stable.  Do you have any known examples where I
-> can go poke the maintainers to do better?
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-I haven't been keeping track, but as you're aware Brad Spengler brought
-these up from time to time, including recently on this list:
+A fuzz on it discovered a division by zero.
 
-http://www.openwall.com/lists/oss-security/2017/08/05/1
+The complete ASan output:
 
-> We have plenty of the normal "bugfix was merged that a few years later
-> turned out to be a 'security' issue, but no one realized it at the time"
-> changes that get merged.
+# sfconvert @@ out.mp3 format aiff
+==2529==ERROR: AddressSanitizer: FPE on unknown address 0x7ff06b121920 (pc 0x7ff06b121920 bp 0x7ffd0ddf2d90 sp 0x7ffd0ddf2d00 T0)                                                                                                                                              
+    #0 0x7ff06b12191f in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:50:46                                                                                                                       
+    #1 0x7ff06b15ac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3                                                                                                               
+    #2 0x7ff06b10b05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14                                                                                                                                             
+    #3 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29                                                                                                                                                 
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
+    #5 0x7ff06a1e078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
+    #6 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                                               
+AddressSanitizer can not provide additional info.                                                                                                                                                                                                                              
+SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:50:46 in BlockCodec::runPull()                                                                                                              
+==2529==ABORTING
 
-It feels unlikely Al Viro didn't realize the commit on 2017-07-07 was a
-security fix, given the description of the race condition and the kernel
-panic triggerable by an unprivileged user posted to linux-fsdevel on
-2017-05-31, and the Red Hat private Bug created on 2017-07-06.  Rather,
-it could have been intended to give distros some time to patch (4 weeks
-to Red Hat, 1 week to the rest?) before drawing even more attention to
-the problem.  But this also resulted in stable not CC'ed on the commit.
+Affected version:
+0.3.6
 
-I am not blaming anyone - it's a tough tradeoff.  For an already public
-issue (since 2017-05-31 on linux-fsdevel), the committed fix doesn't
-literally leak it (can't leak what's already public), although it does
-create some additional exposure (minimized by not mentioning security
-relevance and not CC'ing stable).  I am also not blaming Red Hat for
-giving linux-distros less time - that's possibly caused by linux-distros
-policy of 14 days max, 7 days preferred.  I think the 7 or 8 days was
-just right.  I think Red Hat should learn to handle such issues much
-quicker, though, so that up to 14 days would be comfortable for their
-own handling as well.  Especially for semi-public issues (in this case
-technically public, but obscure).
+Fixed version:
+N/A
 
-I am primarily saying that we should admit that such cases exist, I
-suppose for varying reasons, when stable is not CC'ed on what's known to
-be a security issue at time of commit.
+Commit fix:
+N/A
 
-I don't know if you should "go poke" Al Viro "to do better".  While many
-would disagree with resolving the tradeoff like that, some would support
-that.  As an option, you could acknowledge that such cases will come up
-from time to time, and ask to be notified of them by means other than
-CC'ing stable.  Maybe this was already in place for that one occasion?
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-> And to help combat that, we are doing more and
-> more "smart mining"[1] of the kernel commits to try to catch patches
-> that match those types of fixes and get them merged into the stable
-> kernels.
-> 
-> You can see the initial results of this work with the huge increase in
-> patches being merged to the 4.9 and 4.4 stable kernels vs. any older
-> stable kernel trees in the past.
-> 
-> thanks,
-> 
-> greg k-h
-> 
-> [1] yes, we know people have been doing this for years, but they almost
->     never notify upstream about this for various reasons.
+CVE:
+N/A
 
-Sounds great.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00187-audiofile-fpe-BlockCodec-runPull
 
-Thanks,
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
 
-Alexander
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-divide-by-zero-in-blockcodecrunpull-blockcodec-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
