@@ -1,96 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/14/1
-Message-ID: <alpine.DEB.2.20.1706140819140.16652@tvnag.unkk.fr>
-Date: Wed, 14 Jun 2017 08:20:27 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: URL file scheme drive letter buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/14
+Message-ID: <267855.691348331-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:56:31 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: multiple ubsan crashes
 Content-Type: text/plain; charset=utf-8
 
-URL file scheme drive letter buffer overflow
-============================================
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-Project curl Security Advisory, June 14th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_20170614.html)
+A fuzz on it discovered multiple crashes because of undefined behavior.
 
-VULNERABILITY
--------------
+The complete UBsan output:
 
-When libcurl is given either
+# sfconvert @@ out.mp3 format aiff
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:14: runtime error: index 256 out of bounds for type 'int16_t [256][2]'
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:290:14: runtime error: index 256 out of bounds for type 'int16_t [256][2]'
 
-  1. a file: URL that doesn't use two slashes following the colon, or
-  2. is told that file is the default scheme to use for URLs without scheme
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00191-audiofile-indexoob
 
-... and the given path starts with a drive letter and libcurl is built for
-Windows or DOS, then libcurl would copy the path with a wrong offset, so that
-the end of the given path would write beyond the malloc buffer. Up to seven
-bytes too much.
+##########################################
 
-We are not aware of any exploit of this flaw.
+# sfconvert @@ out.mp3 format aiff
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfconvert.c:327:42: runtime error: signed integer overflow: 65536 * 252936 cannot be represented in type 
+'int'
 
-INFO
-----
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00192-audiofile-signintoverflow-sfconvert
 
-This flaw also affects the curl command line tool. It was introduced in commit
-[1d4202ade602](https://github.com/curl/curl/commit/1d4202ade602), discussed in
-[issue #1124](https://github.com/curl/curl/pull/1124).
+##########################################
 
-HTTP redirects to file: URLs are not affected.
+# sfconvert @@ out.mp3 format aiff
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:115:27: runtime error: signed integer overflow: 5512570 * 409 cannot be represented in 
+type 'int'
 
-For version 7.54.1, the function that cleans up the file: URLs is fixed to not
-copy things out of the buffer!
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00193-audiofile-signintoverflow-MSADPCM
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-9502 to this issue.
+##########################################
 
-AFFECTED VERSIONS
------------------
+Affected version:
+0.3.6
 
-This bug is present on libcurl builds that accept drive letters in file names,
-which is limited to Windows and DOS builds, including cygwin.
+Fixed version:
+N/A
 
-- Affected versions: libcurl 7.53.0 to and including 7.54.0
-- Not affected versions: libcurl < 7.53.0 and >= 7.54.1
+Commit fix:
+N/A
 
-libcurl is used by many applications, but not always advertised as such!
+Credit:
+These bugs were discovered by Agostino Sarubbo of Gentoo.
 
-THE SOLUTION
-------------
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
 
-The function now takes better care to allocate memory enough to store what's
-copied and to copy the strings to the correct output offsets.
+Note:
+These bugs were found with American Fuzzy Lop.
 
-A [patch for CVE-2017-9502](https://curl.haxx.se/CVE-2017-9502.patch) is
-available.
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-multiple-ubsan-crashes
 
-RECOMMENDATIONS
----------------
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-We suggest you take one of the following actions immediately, in order of
-preference:
 
-  A - Upgrade curl and libcurl to version 7.54.1
-
-  B - Apply the patch to your version and rebuild
-
-  C - Do not use file URLs on Windows
-
-TIME LINE
----------
-
-It was reported to the curl project on June 4, 2017.  We contacted MITRE on
-June 7.
-
-libcurl 7.54.1 was released on June 14 2017, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Reported by Marcel Raad. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
