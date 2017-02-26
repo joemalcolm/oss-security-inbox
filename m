@@ -1,4 +1,9 @@
-Received: (qmail 17668 invoked by uid 550); 25 Jan 2024 18:44:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5072" "Sunday" "26" "February" "2017" "01:45:54" "+0100" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+yy0A9M73-vx+B5VtMQo3hH88h_jvmJ=0-UiRhd9rh6xA@mail.gmail.com>" "111" "[oss-security] Re: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)" "^Date:" nil nil "2" "2017022600:45:54" "[oss-security] Re: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)" (number mark "U       andreyknvl@g Feb 26  111/5072  " thread-indent "\"[oss-security] Re: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)\"\n") "<CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>" ("<CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22111 invoked by uid 550); 26 Feb 2017 09:16:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,103 +11,151 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15508 invoked from network); 25 Jan 2024 18:42:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1706208299; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=h/T4h7AjjPL2oNdmMHUJvWxBpidXkwZ2lNduIiRJimY=;
-	b=Ydv/fQr+Ue57BTZJlW1le0AG6VEHwBoNbcA+OkNnmPU8sILd6oIssgTV4xLCkUFXmdsS8y
-	FijbFv5ZmsynX4leh1lNfZNuS/HDy+R89zsFOutcJjdHUc0AbMyHg9c7YzKd3QhrDywE3B
-	LsXQoxmIbzb7ePgut6Uz/5ULuc5WeLrMr9sYefUdCNodbnrEuoXd1pcCGtTNVmAy31CW92
-	tfDAw4U93Xp3NujiCWjM9niiOzsC6oOLsmjCYofF4SPvOFy73/Mm41w/pddq6JjeNI8+rE
-	oiFhBqdbaL35fz2zFlOjXMHCpvCI+pDqVlQCz3e/uELfvEJSfAwvKHLABmoPzg==
-Date: Thu, 25 Jan 2024 18:44:59 +0000
-From: Matt Caswell <matt@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZbKsK90vOQePnHQV@openssl.org>
+Received: (qmail 32613 invoked from network); 26 Feb 2017 00:46:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=Bdvluhpl6hPuoYNZNMAjnO/NWSsP67LHJIvbo4GBH4g=;
+        b=DNxx8NCv4iGjlutdIVMpgEwTQplqY5mX90WzejG/sjb/nTlkklakYghfaFe7qPVkkX
+         rrCZefmcGfd4X/Da+C1Y/IWiQkO/jHM4sp0XXiWJh2AnPtyWb0UVQjcKNd3AH3V1nQSF
+         om0hFmo5+a9U6g/oOCx8BEntmKiDtvUkz81hPppcYYlEwPHedFHcyHGy60eFQMNgvDvZ
+         6NmT2fMvmoi9Lj56qdvoinJBJCnHi9BKti7DOZ+2dHJX55biSEl54VkdKf2FPxOJFItC
+         F7zIPJuYbzd3XBCzqKz/lGqlwd47ipaeytY2wtm4R51qXidMYDQNMSn5cWxHZ4DAox4Q
+         7uyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=Bdvluhpl6hPuoYNZNMAjnO/NWSsP67LHJIvbo4GBH4g=;
+        b=dSdqN9sxhJ/WLEMZX9wLJE1UGsoSjaDn1hdkK48ajMBDQYkHvYlDJpAGIkmKG8qdh5
+         jjRzAtCIb4Glu989aaYxfx6mAtq8NCUzwaW1HqgiKp4SFQSSYKsEcsaemKz9l86sSx31
+         z9qCTuqLLmktr7j4zPCZjisvlTx/yTg7m7nYeyIW0Gnz2g5TFIHJskiUFwpsYbunjFRG
+         TlTucbtnwbKwJQNUDKgRq6XjJho/NWEDpdQAayZxjzhXsGmfCv2tRT6ugrmaNRQNY/P/
+         CkVabqrQEnVocAKH1wS8DKUb9wvEv2BBKU8GvJ+xPZnSYNR6D/s8geEsL6f0F25sOIeJ
+         SSOg==
+X-Gm-Message-State: AMke39mq+sK5VhiNCfIbVIwk6CG6SajTkG2U446kgnPYsa8KPTqu/8F/s8T0fHUoWNO3leqXLlfmbFXkRxq9yBd+
+X-Received: by 10.28.16.211 with SMTP id 202mr8590336wmq.133.1488069954817;
+ Sat, 25 Feb 2017 16:45:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+In-Reply-To: <CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>
+References: <CAAeHK+xECAFQigwhfNWhrQBronMHWKxcLkWAfnqKo4WEtquPTg@mail.gmail.com>
+Message-ID: <CAAeHK+yy0A9M73-vx+B5VtMQo3hH88h_jvmJ=0-UiRhd9rh6xA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 26 Feb 2017 01:45:54 +0100
+From: Andrey Konovalov <andreyknvl@google.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability
+ (local root)
+To: oss-security@lists.openwall.com
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+I've uploaded the proof-of-concept exploit here:
+https://github.com/xairy/kernel-exploits/tree/master/CVE-2017-6074
 
-OpenSSL Security Advisory [25th January 2024]
-=============================================
+It includes a SMEP/SMAP bypass, however it's not very reliable. The
+exploit was tested on Ubuntu 16.04 with 4.4.0-62-generic kernel. It
+will most likely crash on anything else, unless you at least update
+the offsets.
 
-PKCS12 Decoding crashes (CVE-2024-0727)
-=======================================
+A little detail that's missing from the initial announcement is that
+this bug is technically a use-after-free followed by a double-free.
+The kernel frees skb in dccp_rcv_state_process and then again when
+destroying the socket due to inet6_destroy_sock. There's actually a
+lot more stuff going on under the hood, but that's the essential part.
 
-Severity: Low
+The use-after-free happens on skb and skb->data (they are allocated
+and freed separately though one right after another). Exploiting this
+would allow us to overwrite skb or skb->data with arbitrary data. The
+double-free, however, allows us to control what object we overwrite by
+doing the trick I mentioned in the previous email.
 
-Issue summary: Processing a maliciously formatted PKCS12 file may lead OpenSSL
-to crash leading to a potential Denial of Service attack
+To get execution control we can overwrite skb->data, since it has
+skb_shared_info struct at the end, and
+shinfo->destructor_arg->callback is a function pointer, which is
+triggered by skb_release_data. The exploit puts ubuf_info struct and
+the payload to get root in userspace, so this will be detected by SMAP
+and SMEP.
 
-Impact summary: Applications loading files in the PKCS12 format from untrusted
-sources might terminate abruptly.
+To disable SMEP and SMAP I used the idea from the CVE-2016-8655
+exploit by Philip Pettersson. We can overwrite packet_sock struct,
+which has a timer_list field deep inside it, which contains a callback
+and it's argument. We allocate this struct, overwrite the time_list
+field and schedule the timer. I used native_write_cr4 as the callback
+and a value with SMEP and SMAP bits disabled for it's argument. Note,
+that CVE-2016-8655 by itself resulted in a use-after-free on the
+packet_sock struct, but in this case we make a use-after-free happen
+by exploiting a double-free.
 
-A file in PKCS12 format can contain certificates and keys and may come from an
-untrusted source. The PKCS12 specification allows certain fields to be NULL, but
-OpenSSL does not correctly check for this case. This can lead to a NULL pointer
-dereference that results in OpenSSL crashing. If an application processes PKCS12
-files from an untrusted source using the OpenSSL APIs then that application will
-be vulnerable to this issue.
+As I mentioned, the exploit is not very reliable, but I don't want to
+spend any more time on it. The kernel can crash due to a memory
+corruption if we fail to reallocate some objects in time or in the
+correct order. However I've managed to make it work on three different
+environments I have set up (including two vms and a real machine).
 
-OpenSSL APIs that are vulnerable to this are: PKCS12_parse(),
-PKCS12_unpack_p7data(), PKCS12_unpack_p7encdata(), PKCS12_unpack_authsafes()
-and PKCS12_newpass().
-
-We have also fixed a similar issue in SMIME_write_PKCS7(). However since this
-function is related to writing data we do not consider it security significant.
-
-The FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue.
-
-OpenSSL 3.2, 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-OpenSSL 3.2 users should upgrade to OpenSSL 3.2.1 once it is released.
-
-OpenSSL 3.1 users should upgrade to OpenSSL 3.1.5 once it is released.
-
-OpenSSL 3.0 users should upgrade to OpenSSL 3.0.13 once it is released.
-
-OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1x once it is released
-(premium support customers only).
-
-OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zj once it is released
-(premium support customers only).
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit x (for 3.2),
-commit x (for 3.1) and commit x (for 3.0) in the OpenSSL git
-repository. It is available to premium support customers in commit
-x (for 1.1.1) and in commit
-x (for 1.0.2).
-
-This issue was reported on 23rd November 2023 by Bahaa Naamneh (Crosspoint
-Labs). The fix was developed by Matt Caswell.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20240125.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.htm
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmWyq2gACgkQ2cTSbQ5g
-RJFubAf/QN+25L2Kmev6Lk9P1BK8E2jZG+l9sa2O82tJwOyjRIimPQ0BW7KXwnKx
-M+oEr952wwiCu/1I7dECn3/BOtQ/TDBVaELvS2W40RVyn4gGd2jD3igkrMsNb+Xu
-U5oAu+kwfHp+PHhhCBxiGHVxj9cea17H3qH5DQZ4YK/X0ygdq16vvOBjNwkP8WTV
-adfnWr107NvqUGCxhCDexyx1+YUWAdKuVfaKjkw6jBfR/MUPwH6qqBttfpqPUr1Z
-o6bptN12iCuK9pQxFrUypL1OjsV83IMuxsBr0SOkrOH8+J7E9n33/xJZ7USRGSDY
-rTBsL12SFQ8nxODAzgJOVT5QOp5Ayg==
-=BQuZ
------END PGP SIGNATURE-----
+On Wed, Feb 22, 2017 at 2:28 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
+> Hi,
+>
+> This is an announcement about CVE-2017-6074 [1] which is a double-free
+> vulnerability I found in the Linux kernel. It can be exploited to gain
+> kernel code execution from an unprivileged processes.
+>
+> Fixed on Feb 17, 2017:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
+>
+> The oldest version that was checked is 2.6.18 (Sep 2006), which is
+> vulnerable. However, the bug was introduced before that, probably in
+> the first release with DCCP support (2.6.14, Oct 2005).
+>
+> The kernel needs to be built with CONFIG_IP_DCCP for the vulnerability
+> to be present. A lot of modern distributions enable this option by
+> default.
+>
+> The bug was found with syzkaller [2].
+>
+> ### Bug details
+>
+> In the current DCCP implementation an skb for a DCCP_PKT_REQUEST
+> packet is forcibly freed via __kfree_skb in dccp_rcv_state_process if
+> dccp_v6_conn_request successfully returns [3].
+>
+> However, if IPV6_RECVPKTINFO is set on a socket, the address of the
+> skb is saved to ireq->pktopts and the ref count for skb is incremented
+> in dccp_v6_conn_request [4], so skb is still in use. Nevertheless, it
+> still gets freed in dccp_rcv_state_process.
+>
+> The fix is to call consume_skb, which accounts for skb->users,
+> instead of doing goto discard and therefore calling __kfree_skb.
+>
+> To exploit this double-free, it can be turned into a use-after-free:
+>
+> //  The first free:
+> kfree(dccp_skb)
+> // Another object allocated on the same place as dccp_skb:
+> some_object = kmalloc()
+> // The second free, effectively frees some_object
+> kfree(dccp_skb)
+>
+> As this point we have a use-after-free on some_object. An attacker can
+> control what object that would be and overwrite it's content with
+> arbitrary data by using some of the kernel heap spraying techniques.
+> If the overwritten object has any triggerable function pointers, an
+> attacker gets to execute arbitrary code within the kernel.
+>
+> I'll publish an exploit in a few days, giving people time to update.
+>
+> New Ubuntu kernels are out so please update as soon as possible.
+>
+> ### Timeline
+>
+> 2017-02-15: Bug reported to security@kernel.org
+> 2017-02-16: Patch submitted to netdev
+> 2017-02-17: Patch committed to mainline kernel
+> 2017-02-18: Notification sent to linux-distros
+> 2017-02-22: Public announcement
+>
+> ### Links
+>
+> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-6074
+> [2] https://github.com/google/syzkaller
+> [3] http://lxr.free-electrons.com/source/net/dccp/input.c?v=4.9#L606
+> [4] http://lxr.free-electrons.com/source/net/dccp/ipv6.c?v=4.9#L351
+> [5] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
