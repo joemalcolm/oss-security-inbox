@@ -1,42 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/10/2
-Message-ID: <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
-Date: Fri, 10 Mar 2017 07:03:32 -0500
-From: Stiepan <stie@....swiss>
-To: oss-security@...ts.openwall.com
-Cc: Stéphane Graber <stgraber@...ntu.com>
-Subject: Re: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/8
+Message-ID: <690695.219530852-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:52:23 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: heap-based buffer overflow in IMA::decodeBlockWAVE (IMA.cpp)
 Content-Type: text/plain; charset=utf-8
 
-I don't know whether that is the same bug, or a related one, but on Debian8 using LXC from jessie-backports, setting the default route in a container affects the host - namely, from an unpriv. container, setting the route sets the host's route as well.
-lxc-info --version outputs 2.0.6 and no update is currently available (on Debian).
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-Stiepan
+A fuzz on it discovered an heap overflow.
+
+The complete ASan output:
+
+# sfconvert @@ out.mp3 format aiff
+==2486==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62f0000286e8 at pc 0x7fc5db36626e bp 0x7ffcecb1cbf0 sp 0x7ffcecb1cbe8                                                                                                                                       
+WRITE of size 2 at 0x62f0000286e8 thread T0                                                                                                                                                                                                                                    
+    #0 0x7fc5db36626d in IMA::decodeBlockWAVE(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:188:13                                                                                                
+    #1 0x7fc5db365671 in IMA::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:110:10                                                                                                    
+    #2 0x7fc5db361ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3                                                                                                                        
+    #3 0x7fc5db39ac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3                                                                                                               
+    #4 0x7fc5db34b05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14                                                                                                                                             
+    #5 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29                                                                                                                                                 
+    #6 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
+    #7 0x7fc5da42078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
+    #8 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                                               
+0x62f0000286e8 is located 0 bytes to the right of 49896-byte region [0x62f00001c400,0x62f0000286e8)                                                                                                                                                                            
+allocated by thread T0 here:                                                                                                                                                                                                                                                   
+    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                                                                                                       
+    #1 0x7fc5da0b9687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)                                                                                                                                                           
+    #2 0x7fc5db34f43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41                                                                                                                                        
+    #3 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29                                                                                                                                                 
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17                                                                                                                                                          
+    #5 0x7fc5da42078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                     
+                                                                                                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:188:13 in IMA::decodeBlockWAVE(unsigned 
+char const*, short*)                                                                      
+Shadow bytes around the buggy address:                                                                                                                                                                                                                                         
+  0x0c5e7fffd080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00                                                                                                                                                                                                              
+  0x0c5e7fffd090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5e7fffd0a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5e7fffd0b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5e7fffd0c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c5e7fffd0d0: 00 00 00 00 00 00 00 00 00 00 00 00 00[fa]fa fa
+  0x0c5e7fffd0e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd0f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5e7fffd120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2486==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00185-audiofile-heapoverflow-IMA-decodeBlockWAVE
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-imadecodeblockwave-ima-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-
--------- Original Message --------
-Subject: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
-Local Time: 9 March 2017 5:54 PM
-UTC Time: 9 March 2017 16:55
-From: tyhicks@...onical.com
-To: oss-security@...ts.openwall.com
-Stéphane Graber <stgraber@...ntu.com>
-
-Jann Horn discovered that the lxc-user-nic program could be tricked into
-operating on a network namespace over which the caller did not hold
-privilege.
-
-The behavior didn't follow what was documented in the lxc-user-nic(1)
-man page:
-
-It ensures that the calling user is privileged over the network
-namespace to which the interface will be attached.
-
-This issue is CVE-2017-5985.
-
-https://lists.linuxcontainers.org/pipermail/lxc-users/2017-March/012925.html
-https://launchpad.net/bugs/1654676
-https://github.com/lxc/lxc/commit/16af238036a5464ae8f2420ed3af214f0de875f9
-
-Tyler
