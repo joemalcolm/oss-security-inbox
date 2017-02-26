@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["372" "Thursday" "7" "May" "2015" "22:45:33" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87d22c2k2a.fsf@mid.deneb.enyo.de>" "10" "[oss-security] CVE-2015-0847 in nbd-server" nil nil nil "5" "2015050720:45:33" "[oss-security] CVE-2015-0847 in nbd-server" (number mark "        fw@deneb.eny May  7   10/372   " thread-indent "\"[oss-security] CVE-2015-0847 in nbd-server\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7404" "Sunday" "26" "February" "2017" "11:45:35" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<923996.603905351-sendEmail@localhost>" "111" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)" "^Date:" nil nil "2" "2017022611:45:35" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)" (number mark "U       ago@gentoo.o Feb 26  111/7404  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30520 invoked by uid 550); 7 May 2015 20:45:49 -0000
+Received: (qmail 3377 invoked by uid 550); 26 Feb 2017 11:45:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,24 +11,125 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30485 invoked from network); 7 May 2015 20:45:45 -0000
-Message-ID: <87d22c2k2a.fsf@mid.deneb.enyo.de>
+Received: (qmail 3345 invoked from network); 26 Feb 2017 11:45:52 -0000
+Message-ID: <923996.603905351-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 07 May 2015 22:45:33 +0200
-From: Florian Weimer <fw@deneb.enyo.de>
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-236637.957002134"
+Date: Sun, 26 Feb 2017 11:45:35 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-0847 in nbd-server
-To: oss-security@lists.openwall.com
+Subject: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-nbd-server uses signal handlers incorrectly, which leads to a denial
-of service vulnerability.  We have assigned CVE-2015-0847 to this
-vulnerability.
+------MIME delimiter for sendEmail-236637.957002134
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-This was first reported to the Debian security team by Tuomas R=E4s=E4nen,
-but we did not think this warranted an embargo.
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-More details are available upstream:
+A fuzz with a wav file as input produced an heap overflow.
 
-  <http://sourceforge.net/p/nbd/mailman/message/34091218/>
+The complete ASan output:
+
+# sfinfo $FILE
+==6096==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004bbc35 bp 0x7ffd65dbabf0 sp 0x7ffd65dba3a0                                                       
+READ of size 33872 at 0x61a00001f708 thread T0                                                                                                                                                 
+    #0 0x4bbc34 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413                                                  
+    #1 0x7efec209d7df in MSADPCM::initializeCoefficients() /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:369:3                              
+    #2 0x7efec209d7df in MSADPCM::createDecompress(Track*, File*, bool, bool, long*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:387      
+    #3 0x7efec2070da7 in ModuleState::initFileModule(_AFfilehandle*, Track*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/ModuleState.cpp:72:18        
+    #4 0x7efec207189d in ModuleState::init(_AFfilehandle*, Track*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/ModuleState.cpp:98:6                   
+    #5 0x7efec2053969 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:396:18
+    #6 0x7efec2054331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6                                                           
+    #7 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22                                                                  
+    #8 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4                                                                              
+    #9 0x7efec111d78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                     
+    #10 0x419b68 in _init (/usr/bin/sfinfo+0x419b68)                                                                                                                                           
+                                                                                                                                                                                               
+0x61a00001f708 is located 0 bytes to the right of 1160-byte region [0x61a00001f280,0x61a00001f708)                                                                                             
+allocated by thread T0 here:                                                                                                                                                                   
+    #0 0x4d2928 in malloc /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                          
+    #1 0x7efec0b7c687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)                                                                           
+    #2 0x7efec2052d63 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:337:15
+    #3 0x7efec2054331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6                                                           
+    #4 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22                                                                  
+    #5 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4                                                                              
+    #6 0x7efec111d78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                     
+                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy                  
+Shadow bytes around the buggy address:                                                                                                                                                         
+  0x0c347fffbe90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c347fffbee0: 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbef0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==6096==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00136-audiofile-heapoverflow-MSADPCM-initializeCoefficients
+
+Timeline:
+2017-01-30: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-msadpcminitializecoefficients-msadpcm-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-236637.957002134--
+
