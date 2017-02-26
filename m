@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/25/15
-Message-ID: <c653003f75544875890faf69aa90562a@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 12:36:07 -0500
-From: <cve-assign@...re.org>
-To: <sandeepk.l337@...il.com>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Please assign CVE to PageKit Remote Password Reset Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/1
+Message-ID: <CAE-_4r1+bd+5utcah-_TEh3CiDWdj=030=COQjtg57GTx997pQ@mail.gmail.com>
+Date: Sun, 26 Feb 2017 11:07:10 +0200
+From: Ariel Zelivansky <ariel.zelivans@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Multiple vulnerabilities in gdk-pixbuf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+To keep all the information in one place, the following CVE IDs had been
+assigned by MITRE:
+CVE-2017-6313 for [1]
+CVE-2017-6314 for [2]
+CVE-2017-6312 for [3]
+CVE-2017-6311 for [4]
 
-> https://securelayer7.net/download/pdf/SecureLayer7-Pentest-report-Pagekit-CMS.pdf
-> https://securelayer7.net/download/poc/password-reset-vulnerability-exploit-ruby-pagekit-cms.rb.txt
-> https://github.com/pagekit/pagekit/commit/e0454f9c037c427a5ff76a57e78dbf8cc00c268b
 
-Use CVE-2017-5594.
 
-The scope of this CVE is only SL7_PGKT_01 in the PDF.
+On Thu, Feb 23, 2017 at 10:26 AM, Ariel Zelivansky <ariel.zelivans@...il.com
+> wrote:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> Leo, thanks for the reference.
+>
+> I have requested a CVE via the web form and haven't heard from MITRE so
+> far. Do they usually take time in responding?
+> Or am I supposed to contact some other CNA?
+>
+> On Tue, Feb 21, 2017 at 10:42 PM, Leo Famulari <leo@...ulari.name> wrote:
+>
+>> On Tue, Feb 21, 2017 at 05:20:11PM +0200, Ariel Zelivanski wrote:
+>> > Hello,
+>> >
+>> > I just reported several vulnerabilities in gdk-pixbuf. I am adding the
+>> > relevant details but you can also refer to the bug reports in the
+>> links. If
+>> > suitable please assign CVEs.
+>>
+>> As announced previously [0], MITRE is no longer assigning CVEs based on
+>> messages to this list. Will you request the CVE IDs via the new web
+>> form? [1]
+>>
+>> [0]
+>> http://seclists.org/oss-sec/2017/q1/351
+>>
+>> [1]
+>> https://cveform.mitre.org/
+>>
+>
+>
+>
+> --
+> *Ariel Zelivansky *— 0503990401 <050-399-0401>
+>
 
-iQIcBAEBCAAGBQJYiOF9AAoJEHb/MwWLVhi2LIUP/0lqqF1H5+610HMuNwOUtszA
-4LRdcemLVhe23rF8NknoqzYrU5yn3i0L2aHA9Pr73d/8qfHorlzUuXr+MWWkWSm8
-SLsNZMNtV9RvDCrHlzGgj7TTXgEIqQt9ZIT3fB60D0U1MNgJjzLdi9BjXZBj2gnV
-91hcwgoSfbpG0V6STrTjOWX+kD154gfgP9V2ODE06KSDGmhW5vEGA4Zg4imB/jJW
-txp7dnbnUZvNFeCB0M51XTTfh/1jUFU6zKEtIQBVhrW4XDtPr4iz8Fw4ULctIZbw
-xmfQz21L6h7Lm7+4VvGSgz6bQD49Bu1DHa3aw9vujGNORvNJtlGF28ZncptrCWmM
-L6k4TjiAKkmpHxi6WfoJEx8V5nChsYU1lrxBqHPe35D/GAK/wM1RmqSaTNgLRk5X
-DNZ2E4aYGK5X4JBGHkVX9IZvpuJOwNyg6nlON7+xQUGBCBtAlje2K6Pog82Y2Cok
-QaqBloctKTsMjV/MeX4az4g2cEUkkSW/XOGcIOdzLBwX6S+MdWI6xri6KJ9J/ArM
-G1horfrsbhyBOMzNFp3egmUZ8bsLJd2u2YghkJD7Nx04wt/e+dtMn9RIm+QvgGb/
-QmhuscXIb9gU4uBsIGZlJVO4XxNLrjzQ59hjEusVIXLzIEj9k3dRXNPWPGupvTqx
-QQRuBMUuSrx0R/ryXHMu
-=ltpz
------END PGP SIGNATURE-----
