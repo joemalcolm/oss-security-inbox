@@ -1,4 +1,9 @@
-Received: (qmail 27925 invoked by uid 550); 20 May 2025 15:25:16 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4309" "Sunday" "26" "February" "2017" "11:50:44" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<591403.244153725-sendEmail@localhost>" "102" "[oss-security] audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)" "^Date:" nil nil "2" "2017022611:50:44" "[oss-security] audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)" (number mark "U       ago@gentoo.o Feb 26  102/4309  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3814 invoked by uid 550); 26 Feb 2017 11:51:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,284 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25950 invoked from network); 20 May 2025 09:49:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eurephia.org;
-	s=protonmail3; t=1747734533; x=1747993733;
-	bh=aRBuFmLnRKqBB7R2lZpJV+QSgg1JlWSzlm+XH9PTO1A=;
-	h=Message-ID:Date:From:To:Subject:Cc:From:To:Cc:Date:Subject:
-	 Reply-To:Feedback-ID:Message-ID:BIMI-Selector:List-Unsubscribe:
-	 List-Unsubscribe-Post;
-	b=rUKNntd9lWM7R4u7URoqd1250dan/riu+RuP+E8+4Ig2/x6RckwsoPEIrDPEN1OfJ
-	 W5vE5nZiCsjBuVp+VVBEnpBqzBbSmZtTQbfk6OtmoB3yhygplrMUq01amEosIHRIIj
-	 UFt/reTPAmV4PfRZXiMZ/wz9D+BZ9CruBqFDhRZk9B/okyDOTFE+pUIFbk+CGTdtUM
-	 /Zi6lSX7qV7S7GfDpEL5CU/SFcddLYOH2TeTYWFXb/MKk4aaeVIgi402ouaErbWrxl
-	 OX5XD421RvkfnGFR849+2efpmQdVCZpNWImWXp80nzVQvz6B/jajvU6krONuZZfU16
-	 zS9mv9WSZ8JAA==
-Message-ID: <65ddb8ca-0ea5-43bc-8f7a-15ed4281ccc3@eurephia.org>
-Date: Tue, 20 May 2025 11:48:24 +0200
+Received: (qmail 3720 invoked from network); 26 Feb 2017 11:51:01 -0000
+Message-ID: <591403.244153725-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-From: David Sommerseth <dazo@eurephia.org>
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-Cc: SUSE Security <security@suse.de>, Wolfgang Frisch <wfrisch@suse.de>,
- "security@openvpn.net" <security@openvpn.net>
-Autocrypt: addr=dazo@eurephia.org; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------wAmluUYYhVuRJ2JTioaJHOu6"
-Subject: [oss-security] CVE-2025-3908: OpenVPN 3 Linux v24.1 released
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-768989.968885766"
+Date: Sun, 26 Feb 2017 11:50:44 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---------------wAmluUYYhVuRJ2JTioaJHOu6
-Content-Type: multipart/mixed; boundary="------------fN3CEmqq4ewB3TI4g02D00xi";
- protected-headers="v1"
-From: David Sommerseth <dazo@eurephia.org>
-To: oss-security@lists.openwall.com
-Cc: SUSE Security <security@suse.de>, Wolfgang Frisch <wfrisch@suse.de>,
- "security@openvpn.net" <security@openvpn.net>
-Message-ID: <65ddb8ca-0ea5-43bc-8f7a-15ed4281ccc3@eurephia.org>
-Subject: CVE-2025-3908: OpenVPN 3 Linux v24.1 released
-Autocrypt-Gossip: addr=security@suse.de; keydata=
- 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
- Ow==
-Autocrypt-Gossip: addr=wfrisch@suse.de; keydata=
- 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
- 8EkeLjVeq9OfvZuaWJgQnBubH8J3LV8=
-Autocrypt-Gossip: addr=security@openvpn.net; keydata=
- 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
- pKU1qpYEhYE1nn9MNOjLNV7n
+------MIME delimiter for sendEmail-768989.968885766
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
---------------fN3CEmqq4ewB3TI4g02D00xi
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
+
+A fuzz on it discovered an heap overflow.
+
+The complete ASan output:
+
+# sfconvert @@ out.mp3 format aiff
+==2480==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f5eb894d800 at pc 0x7f5eb85a699f bp 0x7ffe19064df0 sp 0x7ffe19064de8
+WRITE of size 2 at 0x7f5eb894d800 thread T0
+    #0 0x7f5eb85a699e in alaw2linear_buf(unsigned char const*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:54:13
+    #1 0x7f5eb85a699e in G711::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:209
+    #2 0x7f5eb858d05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
+    #3 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #5 0x7f5eb766278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+
+0x7f5eb894d800 is located 0 bytes to the right of 393216-byte region [0x7f5eb88ed800,0x7f5eb894d800)
+allocated by thread T0 here:
+    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x50bb48 in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:327:17
+    #2 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #3 0x7f5eb766278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:54:13 in alaw2linear_buf(unsigned char 
+const*, short*, int)
+Shadow bytes around the buggy address:
+  0x0fec57121ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fec57121b00:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2480==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00184-audiofile-heapoverflow-alaw2linear_buf
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-alaw2linear_buf-g711-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-OpenVPN 3 Linux v24.1 was released 2025-05-19 which includes a fix for
-CVE-2025-3908.
+------MIME delimiter for sendEmail-768989.968885766--
 
-The OpenVPN 3 Linux v20 introduced a new command, openvpn3-admin
-init-config, to help getting an initial base configuration adopted to
-the currently running host. This command must be run as root.
-
-It was discovered that this tool will follow symlinks when changing
-ownership and permissions on two of the directories the OpenVPN 3 Linux
-D-Bus services depends on.
-
-All versions from v20 through v24 are affected. This has been resolved
-in OpenVPN 3 Linux v24.1.
-
-<https://community.openvpn.net/Security%20Announcements/CVE-2025-3908>
-<https://www.cve.org/CVERecord?id=3DCVE-2025-3908>
-
-We want to thank Wolfgang Frisch from the SUSE Security team for
-reporting this issue.
-
-
---=20
-kind regards,
-
-David Sommerseth
-OpenVPN Inc
-
---------------fN3CEmqq4ewB3TI4g02D00xi--
-
---------------wAmluUYYhVuRJ2JTioaJHOu6
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEnylUfHhQTb0DHdN4iHbdgDNp7xQFAmgsT+gACgkQiHbdgDNp
-7xRZFQ/9HoR3z2yerjCltcuFoevkjYdBomCuZ5nmjkRSWoV0lE5wscoXhQX6DvYY
-fM6NH3W6u66+fNzAjma+8HbMyxddEG2j6gpoz1whYcdIYe6m3y2ahOFz3LIAwGtz
-jLnKlsrmIoDOCFhHGWGmyPmrvKYzYhtiat9quaZjBOKQONYgl/g2B4cZM02omhZH
-LH23p/+8j18rPqIUxcPs2CZa2gKSIc029ZlCFUhPBqySnn9EI+6RuO9CJL8DvzqM
-z4szhRh3MnJ7rCmlzZgnEH2/NheP9Dkjla0g4LQ1CgXnfvImfSLCxHt/UERPwLtk
-Cgmmg01t3rOA3ys9FHtGrYIH0fBAs/WRTpf5w+k8s/XOY09PCB7NGqt0YIHKm/xV
-dKiZpaH2d2c7F/PQHuNezLlOeSjxmzUnDVOB2jnwYm5dcZ43xqxpNZhzsPeNAPYy
-Wuj1V20A5e26zcmsELaam5U9P1h7LTNq3lLNRvju71ByqcAAWj0qk1Tu1ENZbf43
-csDCfLbm56248AsSJ/ESek4F3b6+7NI47rDV9lTFG5tflY0P/v0d4cQuff7smfrg
-5QD7QI/j/5Ia3jdHvZ9tAuqnfPLv2/YwnAWPeDRpFhZWn27BIFuLFCaKJipnj85b
-or+kfpeTwVLjT9NeDfWGh3jHSd8/Djtd02BBiCsYWnUndrzNRG4=
-=J80v
------END PGP SIGNATURE-----
-
---------------wAmluUYYhVuRJ2JTioaJHOu6--
