@@ -1,34 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/15/5
-Message-ID: <20170315192747.GA4073@hunt>
-Date: Wed, 15 Mar 2017 12:27:47 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Dealing with CVEs that apply to unspecified package versions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/4
+Message-ID: <923996.603905351-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:45:35 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 15, 2017 at 06:12:52PM +0100, Ludovic Courtès wrote:
-> I can think of two actions that could perhaps be taken:
-> 
->   1. The software behind the CVE form could force submitters to specify
->      version numbers.
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-"No fix is currently available" would be difficult to accurately describe.
-Sometimes the software is abaondware, and no fix will ever be available.
-Sometimes the software is a hobby and only fun features get implemented
-but difficult fixes do not. Sometimes the fix will be in the next release.
+A fuzz with a wav file as input produced an heap overflow.
 
->   2. For recent entries (say, 2 years old at most), a bot could email
->      the original submitters kindly asking them to provide the missing
->      version info.
+The complete ASan output:
 
-I know some submitters who would probably have to invest in new /dev/null
-procmail entries if we mailed them once for every CVE they've been issued. :)
+# sfinfo $FILE
+==6096==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004bbc35 bp 0x7ffd65dbabf0 sp 0x7ffd65dba3a0                                                       
+READ of size 33872 at 0x61a00001f708 thread T0                                                                                                                                                 
+    #0 0x4bbc34 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413                                                  
+    #1 0x7efec209d7df in MSADPCM::initializeCoefficients() /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:369:3                              
+    #2 0x7efec209d7df in MSADPCM::createDecompress(Track*, File*, bool, bool, long*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:387      
+    #3 0x7efec2070da7 in ModuleState::initFileModule(_AFfilehandle*, Track*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/ModuleState.cpp:72:18        
+    #4 0x7efec207189d in ModuleState::init(_AFfilehandle*, Track*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/ModuleState.cpp:98:6                   
+    #5 0x7efec2053969 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:396:18
+    #6 0x7efec2054331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6                                                           
+    #7 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22                                                                  
+    #8 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4                                                                              
+    #9 0x7efec111d78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                     
+    #10 0x419b68 in _init (/usr/bin/sfinfo+0x419b68)                                                                                                                                           
+                                                                                                                                                                                               
+0x61a00001f708 is located 0 bytes to the right of 1160-byte region [0x61a00001f280,0x61a00001f708)                                                                                             
+allocated by thread T0 here:                                                                                                                                                                   
+    #0 0x4d2928 in malloc /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64                                                          
+    #1 0x7efec0b7c687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)                                                                           
+    #2 0x7efec2052d63 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:337:15
+    #3 0x7efec2054331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6                                                           
+    #4 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22                                                                  
+    #5 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4                                                                              
+    #6 0x7efec111d78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                     
+                                                                                                                                                                                               
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy                  
+Shadow bytes around the buggy address:                                                                                                                                                         
+  0x0c347fffbe90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c347fffbee0: 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbef0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==6096==ABORTING
 
-I suspect the solution is for people who rely upon these scanning tools to
-do the leg work themselves on the packages they care about. (i.e., the
-packages that annoy them the most.)
+Affected version:
+0.3.6
 
-Thanks
+Fixed version:
+N/A
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00136-audiofile-heapoverflow-MSADPCM-initializeCoefficients
+
+Timeline:
+2017-01-30: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-msadpcminitializecoefficients-msadpcm-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
