@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/04/1
-Message-ID: <20170703231023.GA16022@altlinux.org>
-Date: Tue, 4 Jul 2017 02:10:24 +0300
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/15
+Message-ID: <1839589.Shjyq5iZ1H@arcadia>
+Date: Sun, 26 Feb 2017 21:09 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CloudLinux
+Subject: Re: gnu-paxutils: multiple crashes
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 02, 2017 at 05:29:25PM +0300, Igor Seletskiy wrote:
-[...]
-> 9. Have someone already on the private list, or at least someone else
-> who has been active on oss-security for years but is not affiliated with
-> your distro nor your organization, vouch for at least one of the people
-> requesting membership on behalf of your distro (then that one
-> vouched-for person will be able to vouch for others on your team, in
-> case you'd like multiple people subscribed)
-> Dmitry V. Levin <ldv@...linux.org>, Chief Architect, ALT Linux can vouch
-> for Leonid Kanter.
+On Saturday 25 February 2017 12:49:12 Assaf Gordon wrote:
+> Not sure what "rejected" means (did the email delivery failed or the
+> maintainer rejected your input, etc).
+delivery failed
 
-I acknowledge this.  I have no doubts that Leonid can handle
-embargoed information according to the list's policy.
+> But generally for GNU Software,
+> If you don't get timely response from the maintainer,
+> you can send an email to "security@....org" ,
+> and if that doesn't help, escalate to "maintainers@....org".
+> see https://www.gnu.org/software/security/
+sent to security@....org.
 
+However not all crashes are security relevant.
 
 -- 
-ldv
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
