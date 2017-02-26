@@ -1,4 +1,9 @@
-Received: (qmail 29721 invoked by uid 550); 16 May 2023 09:39:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4849" "Sunday" "26" "February" "2017" "11:49:46" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<278043.289060832-sendEmail@localhost>" "102" "[oss-security] audiofile: global buffer overflow in decodeSample (IMA.cpp)" "^Date:" nil nil "2" "2017022611:49:46" "[oss-security] audiofile: global buffer overflow in decodeSample (IMA.cpp)" (number mark "U       ago@gentoo.o Feb 26  102/4849  " thread-indent "\"[oss-security] audiofile: global buffer overflow in decodeSample (IMA.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26584 invoked by uid 550); 26 Feb 2017 11:50:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,192 +11,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 26555 invoked from network); 26 Feb 2017 11:50:03 -0000
+Message-ID: <278043.289060832-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-896087.224668921"
+Date: Sun, 26 Feb 2017 11:49:46 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28537 invoked from network); 16 May 2023 09:39:21 -0000
-Date: Tue, 16 May 2023 11:39:16 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: "Andrew G. Morgan" <morgan@kernel.org>
-Message-ID: <20230516093916.GA25040@openwall.com>
-References: <CALQRfL40s=knwPCFNDHrAxFtcU_-O2jeLe3xyFf4DFvT2QZzfQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALQRfL40s=knwPCFNDHrAxFtcU_-O2jeLe3xyFf4DFvT2QZzfQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] libcap-2.69 addresses 2 CVEs
+Subject: [oss-security] audiofile: global buffer overflow in decodeSample (IMA.cpp)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+
+------MIME delimiter for sendEmail-896087.224668921
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
+
+A fuzz on it discovered a global overflow.
+
+The complete ASan output:
+
+# sfconvert @@ out.mp3 format aiff                                                                                                                                                                                                                                               
+==1779==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f0add7e6a7a at pc 0x7f0add77c221 bp 0x7ffe13caabf0 sp 0x7ffe13caabe8
+READ of size 2 at 0x7f0add7e6a7a thread T0
+    #0 0x7f0add77c220 in decodeSample(adpcmState&, unsigned char) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:144:13
+    #1 0x7f0add77c220 in IMA::decodeBlockWAVE(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:186
+    #2 0x7f0add77b671 in IMA::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:110:10
+    #3 0x7f0add777ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3
+    #4 0x7f0add7b0c20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3
+    #5 0x7f0add76105a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
+    #6 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
+    #7 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #8 0x7f0adc83678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #9 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+
+0x7f0add7e6a7a is located 6 bytes to the left of global variable 'indexTable' defined in 
+'/tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:116:21' (0x7f0add7e6a80) of size 16
+0x7f0add7e6a7a is located 40 bytes to the right of global variable 'stepTable' defined in 
+'/tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:122:22' (0x7f0add7e69a0) of size 178
+SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/IMA.cpp:144:13 in decodeSample(adpcmState&, 
+unsigned char)
+Shadow bytes around the buggy address:
+  0x0fe1dbaf4cf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe1dbaf4d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 07 f9 f9
+  0x0fe1dbaf4d10: f9 f9 f9 f9 00 00 00 00 00 00 00 04 f9 f9 f9 f9
+  0x0fe1dbaf4d20: 00 00 00 00 00 00 01 f9 f9 f9 f9 f9 00 00 01 f9
+  0x0fe1dbaf4d30: f9 f9 f9 f9 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fe1dbaf4d40: 00 00 00 00 00 00 00 00 00 00 02 f9 f9 f9 f9[f9]
+  0x0fe1dbaf4d50: 00 00 f9 f9 f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9
+  0x0fe1dbaf4d60: 00 00 05 f9 f9 f9 f9 f9 00 00 00 00 00 00 00 00
+  0x0fe1dbaf4d70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fe1dbaf4d80: 00 00 00 00 01 f9 f9 f9 f9 f9 f9 f9 00 00 00 00
+  0x0fe1dbaf4d90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1779==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00183-audiofile-globaloverflow-decodeSample
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-global-buffer-overflow-in-decodesample-ima-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-On Mon, May 15, 2023 at 08:45:33AM -0700, Andrew G. Morgan wrote:
-> The release of libcap-2.69, announced here:
-> 
->   https://sites.google.com/site/fullycapable/release-notes-for-libcap#h.iuvg7sbjg8pe
-> 
-> addresses the following:
-> 
-> - LCAP-CR-23-01 (SEVERITY) LOW (CVE-2023-2602) - found by David Gstir
-> - LCAP-CR-23-02 (SEVERITY) MEDIUM (CVE-2023-2603) - found by Richard Weinberger
-> 
-> The full details of both issues are provided in this audit report:
-> 
->   https://www.x41-dsec.de/static/reports/X41-libcap-Code-Review-2023-OSTIF-Final-Report.pdf
 
-Here's plain text export of the relevant part from the PDF file above:
+------MIME delimiter for sendEmail-896087.224668921--
 
----
-    4.1.1        LCAP-CR-23-01: Memory Leak on pthread_create() Error
-
-        Severity:                   LOW
-        CWE:                      401 - Improper Release of Memory Before Removing Last Reference
-                                  ('Memory Leak')
-        Affected Component:        libcap/psx/psx.c:__wrap_pthread_create()
-
-
-
-    4.1.1.1       Description
-
-    X41 found that the error handling in __wrap_pthread_create() function is wrong and will leak mem-
-    ory in case of an error.
-
-    Function libpsx hooks the pthread_create() function and replaces it with __wrap_pthread_create().
-    This wrapping function will then register the required signal handler and call the actual pthread_create()
-    (__real_pthread_create()). Here, the error handling for __real_pthread_create() is faulty as it checks
-    for a negative return value which cannot happen. Instead, pthread_create() will return a value
-    > 0 in case of an error1 . Thus, for every error in __real_pthread_create() where the tread routine
-    (_psx_start_fn) is not called, the buffer starter will not be freed and thus this memory will be leaked
-    once __wrap_pthread_create() returns.
-
-    A malicious actor who is in the position to cause __real_pthread_create() to return an error, can
-    potentially abuse this to exhaust the process memory. As libpsx hooks all pthread_create() calls
-    of a process, this affects every thread.
-
-
-1    *
-2    * __wrap_pthread_create is the wrapped destination of all regular
-3    * pthread_create calls.
-4    */
-5   int __wrap_pthread_create(pthread_t *thread, const pthread_attr_t *attr,
-6                 void *(*start_routine) (void *), void *arg) {
-7       psx_starter_t *starter = calloc(1, sizeof(psx_starter_t));
-8
-
-9           // [...]
-
-        1   https://man7.org/linux/man-pages/man3/pthread_create.3.html
-
-
-
-    X41 D-Sec GmbH                                     PUBLIC                                           Page 14 of 28
-    Source Code Audit on libcap                                    for Open Source Technology Improvement Fund (OSTIF)
-
-
-
-
-10
-
-11        int ret = __real_pthread_create(thread, attr, _psx_start_fn, starter);
-12        if (ret == -1) {
-13            psx_new_state(_PSX_CREATE, _PSX_IDLE);
-14            memset(starter, 0, sizeof(*starter));
-15            free(starter);
-16        } /* else unlock happens in _psx_start_fn */
-17
-
-18        /* the parent can once again receive psx interrupt signals */
-19        pthread_sigmask(SIG_SETMASK, &orig_sigbits, NULL);
-20
-
-21        return ret;
-22   }
-
-
-
-                     Listing 4.1: Code Snippet Showing the Affected Part of __wrap_pthread_create()
-
-
-
-
-     4.1.1.2     Solution Advice
-
-     While not critical, X41 advises fixing the error handling code to prevent any abuse from being
-     possible.
-
-
-
-
-     X41 D-Sec GmbH                                     PUBLIC                                            Page 15 of 28
-     Source Code Audit on libcap                                      for Open Source Technology Improvement Fund (OSTIF)
-
-
-
-
-     4.1.2       LCAP-CR-23-02: Integer Overflow in _libcap_strdup()
-
-         Severity:                  MEDIUM
-         CWE:                      190 - Integer Overflow or Wraparound
-         Affected Component:        libcap/cap_alloc.c:_libcap_strdup()
-
-
-
-     4.1.2.1     Description
-
-     X41 found that in 32 bits execution mode, where sizeof(size_t) equals 4, the _libcap_strdup() func-
-     tion can suffer from an integer overflow of the input string is close to a length of 4GiB. In this
-     case len = strlen(old) + 1 + 2*sizeof(__u32); will overflow and results into a value much smaller than
-     4GiB.
-
-     As consequence the overflow check len & 0xffffffff) != len will have no effect and the strcpy() func-
-     tion at the end of the function will overwrite the heap.
-
-1    __attribute__((visibility ("hidden"))) char *_libcap_strdup(const char *old)
-2    {
-3        struct _cap_alloc_s *header;
-4        char *raw_data;
-5        size_t len;
-6
-
-7    [...]
-8
-
-9          len = strlen(old) + 1 + 2*sizeof(__u32);
-10         if (len < sizeof(struct _cap_alloc_s)) {
-11             len = sizeof(struct _cap_alloc_s);
-12         }
-13         if ((len & 0xffffffff) != len) {
-14             _cap_debug("len is too long for libcap to manage");
-15             errno = EINVAL;
-16             return NULL;
-17         }
-18
-
-19         raw_data = calloc(1, len);
-20
-
-21   [...]
-22
-
-23         strcpy(raw_data, old);
-24         return raw_data;
-25   }
-
-
-
-                          Listing 4.2: Code Snippet Showing the Affected Part of _libcap_strdup()
-
-
-
-
-     X41 D-Sec GmbH                                       PUBLIC                                            Page 16 of 28
-     Source Code Audit on libcap                             for Open Source Technology Improvement Fund (OSTIF)
-
-
-
-
-4.1.2.2     Solution Advice
-
-While the overflow is impossible to exploit on a pure 32 bits system because no user space ap-
-plication can use the whole 32 bits address space it might be possible on a 64 bits kernel in 32
-bits compat mode. In this mode user space is allowed to use the full 32 bits address space. X41
-advises checking whether strlen() returns a sufficient large number to overflow the addition.
----
-
-Alexander
