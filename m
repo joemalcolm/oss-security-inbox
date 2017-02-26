@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3131" "Wednesday" "8" "August" "2018" "17:22:47" "+0300" "Jouni Malinen" "j@w1.fi" "<20180808142247.GB15601@w1.fi>" "72" "[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" nil nil nil "8" "2018080814:22:47" "[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" (number mark "U       j@w1.fi      Aug  8   72/3131  " thread-indent "\"[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5522" "Sunday" "26" "February" "2017" "11:46:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<869975.355078594-sendEmail@localhost>" "112" "[oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)" "^Date:" nil nil "2" "2017022611:46:23" "[oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)" (number mark "U       ago@gentoo.o Feb 26  112/5522  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29770 invoked by uid 550); 8 Aug 2018 14:31:05 -0000
+Received: (qmail 10040 invoked by uid 550); 26 Feb 2017 11:46:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21718 invoked from network); 8 Aug 2018 14:23:02 -0000
-X-Virus-Scanned: Debian amavisd-new at w1.fi
-Date: Wed, 8 Aug 2018 17:22:47 +0300
-From: Jouni Malinen <j@w1.fi>
-To: oss-security@lists.openwall.com
-Message-ID: <20180808142247.GB15601@w1.fi>
+Received: (qmail 9961 invoked from network); 26 Feb 2017 11:46:40 -0000
+Message-ID: <869975.355078594-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-124607.380786077"
+Date: Sun, 26 Feb 2017 11:46:23 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] audiofile: heap-based buffer overflow in readValue (FileHandle.cpp)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
-Published: August 8, 2018
-Identifiers:
-- CVE-2018-14526
-Latest version available from: https://w1.fi/security/2018-1/
+------MIME delimiter for sendEmail-124607.380786077
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Vulnerability
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-A vulnerability was found in how wpa_supplicant processes EAPOL-Key
-frames. It is possible for an attacker to modify the frame in a way that
-makes wpa_supplicant decrypt the Key Data field without requiring a
-valid MIC value in the frame, i.e., without the frame being
-authenticated. This has a potential issue in the case where WPA2/RSN
-style of EAPOL-Key construction is used with TKIP negotiated as the
-pairwise cipher. It should be noted that WPA2 is not supposed to be used
-with TKIP as the pairwise cipher. Instead, CCMP is expected to be used
-and with that pairwise cipher, this vulnerability is not applicable in
-practice.
+A fuzz with a wav file as input produced an heap overflow.
 
-When TKIP is negotiated as the pairwise cipher, the EAPOL-Key Key Data
-field is encrypted using RC4. This vulnerability allows unauthenticated
-EAPOL-Key frames to be processed and due to the RC4 design, this makes
-it possible for an attacker to modify the plaintext version of the Key
-Data field with bitwise XOR operations without knowing the contents.
-This can be used to cause a denial of service attack by modifying
-GTK/IGTK on the station (without the attacker learning any of the keys)
-which would prevent the station from accepting received group-addressed
-frames. Furthermore, this might be abused by making wpa_supplicant act
-as a decryption oracle to try to recover some of the Key Data payload
-(GTK/IGTK) to get knowledge of the group encryption keys.
+The complete ASan output:
 
-Full recovery of the group encryption keys requires multiple attempts
-(128 connection attempts per octet) and each attempt results in
-disconnection due to a failure to complete the 4-way handshake. These
-failures can result in the AP/network getting disabled temporarily or
-even permanently (requiring user action to re-enable) which may make it
-impractical to perform the attack to recover the keys before the AP has
-already changes the group keys. By default, wpa_supplicant is enforcing
-at minimum a ten second wait time between each failed connection
-attempt, i.e., over 20 minutes waiting to recover each octet while
-hostapd AP implementation uses 10 minute default for GTK rekeying when
-using TKIP. With such timing behavior, practical attack would need large
-number of impacted stations to be trying to connect to the same AP to be
-able to recover sufficient information from the GTK to be able to
-determine the key before it gets changed.
+# sfinfo $FILE
+==6051==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004513de bp 0x7ffc71379b20 sp 0x7ffc713792d0
+WRITE of size 2 at 0x61a00001f708 thread T0
+    #0 0x4513dd in read /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765
+    #1 0x7fd944373b2c in bool readValue(File*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:353:12
+    #2 0x7fd944373b2c in bool readSwap(File*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:375
+    #3 0x7fd944373b2c in _init /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/FileHandle.cpp:397
+    #4 0x7fd94439ce2f in WAVEFile::parseFormat(Tag const&, unsigned int) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:289:5
+    #5 0x7fd9443a1568 in WAVEFile::readInit(_AFfilesetup*) /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/WAVE.cpp:733:13
+    #6 0x7fd9443b4fb9 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:356:15
+    #7 0x7fd9443b6331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6
+    #8 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22
+    #9 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4
+    #10 0x7fd94347f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #11 0x419b68 in _init (/usr/bin/sfinfo+0x419b68)
+
+0x61a00001f708 is located 0 bytes to the right of 1160-byte region [0x61a00001f280,0x61a00001f708)
+allocated by thread T0 here:
+    #0 0x4d2928 in malloc /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fd942ede687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)
+    #2 0x7fd9443b4d63 in _afOpenFile(int, File*, char const*, _AFfilehandle**, _AFfilesetup*) 
+/tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:337:15
+    #3 0x7fd9443b6331 in afOpenFile /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/openclose.cpp:217:6
+    #4 0x50a278 in printfileinfo /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/printinfo.c:45:22
+    #5 0x509f98 in main /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/sfcommands/sfinfo.c:113:4
+    #6 0x7fd94347f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow 
+/tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:765 in read
+Shadow bytes around the buggy address:
+  0x0c347fffbe90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbea0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbeb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbec0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c347fffbed0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c347fffbee0: 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbef0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c347fffbf30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==6051==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00135-audiofile-heapoverflow-readValue
+
+Timeline:
+2017-01-30: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-readvalue-filehandle-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Vulnerable versions/configurations
+------MIME delimiter for sendEmail-124607.380786077--
 
-All wpa_supplicant versions.
-
-
-Acknowledgments
-
-Thanks to Mathy Vanhoef of the imec-DistriNet research group of KU
-Leuven for discovering and reporting this issue.
-
-
-Possible mitigation steps
-
-- Remove TKIP as an allowed pairwise cipher in RSN/WPA2 networks. This
-  can be done also on the AP side.
-
-- Merge the following commits to wpa_supplicant and rebuild:
-
-  WPA: Ignore unauthenticated encrypted EAPOL-Key data
-
-  This patch is available from https://w1.fi/security/2018-1/
-
-- Update to wpa_supplicant v2.7 or newer, once available
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
