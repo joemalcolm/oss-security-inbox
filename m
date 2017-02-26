@@ -1,31 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/09/8
-Message-ID: <79563dbb-b139-8ead-0dbf-4c0334b86809@chbi.eu>
-Date: Mon, 9 Oct 2017 19:47:58 +0200
-From: chbi@...i.eu
-To: "Henri S." <henri@...v.fi>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Several Privilege Escalation issues in Kanboard <= 1.0.46
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/7
+Message-ID: <591403.244153725-sendEmail@localhost>
+Date: Sun, 26 Feb 2017 11:50:44 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)
 Content-Type: text/plain; charset=utf-8
 
-> I usually request one CVE identifier per issue type if they are fixed in the
-> same version and reported by the same person. Could you notify the list when
-> you have received the CVEs, thanks.
-> 
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-Thank you for your answer.
+A fuzz on it discovered an heap overflow.
 
-In the meantime I've requested one CVE ID for each issue, but I would
-also be happy if I get one for all issues. (I'm waiting on MITRE)
+The complete ASan output:
+
+# sfconvert @@ out.mp3 format aiff
+==2480==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f5eb894d800 at pc 0x7f5eb85a699f bp 0x7ffe19064df0 sp 0x7ffe19064de8
+WRITE of size 2 at 0x7f5eb894d800 thread T0
+    #0 0x7f5eb85a699e in alaw2linear_buf(unsigned char const*, short*, int) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:54:13
+    #1 0x7f5eb85a699e in G711::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:209
+    #2 0x7f5eb858d05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
+    #3 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #5 0x7f5eb766278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+
+0x7f5eb894d800 is located 0 bytes to the right of 393216-byte region [0x7f5eb88ed800,0x7f5eb894d800)
+allocated by thread T0 here:
+    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x50bb48 in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:327:17
+    #2 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #3 0x7f5eb766278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/G711.cpp:54:13 in alaw2linear_buf(unsigned char 
+const*, short*, int)
+Shadow bytes around the buggy address:
+  0x0fec57121ab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121ac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121ad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121ae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fec57121af0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fec57121b00:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fec57121b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2480==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00184-audiofile-heapoverflow-alaw2linear_buf
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-alaw2linear_buf-g711-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
