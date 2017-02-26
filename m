@@ -1,47 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/24/2
-Message-ID: <2085299843.33841899.1500904419181.JavaMail.zimbra@redhat.com>
-Date: Mon, 24 Jul 2017 09:53:39 -0400 (EDT)
-From: Vladis Dronov <vdronov@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/26/2
+Message-ID: <CAAeHK+yy0A9M73-vx+B5VtMQo3hH88h_jvmJ=0-UiRhd9rh6xA@mail.gmail.com>
+Date: Sun, 26 Feb 2017 01:45:54 +0100
+From: Andrey Konovalov <andreyknvl@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7541: Linux kernel: Memory corruption due to a buffer overflow in brcmf_cfg80211_mgmt_tx()
+Subject: Re: Linux kernel: CVE-2017-6074: DCCP double-free vulnerability (local root)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+I've uploaded the proof-of-concept exploit here:
+https://github.com/xairy/kernel-exploits/tree/master/CVE-2017-6074
 
-Kernel memory corruption due to a buffer overflow was found in brcmf_cfg80211_mgmt_tx()
-function in Linux kernels from v3.9-rc1 to v4.13-rc1. It can be triggered by sending
-crafted NL80211_CMD_FRAME packet via netlink.
+It includes a SMEP/SMAP bypass, however it's not very reliable. The
+exploit was tested on Ubuntu 16.04 with 4.4.0-62-generic kernel. It
+will most likely crash on anything else, unless you at least update
+the offsets.
 
-There was a research if this flaw could be triggered remotely, by sending packets on
-the air, the result follows:
+A little detail that's missing from the initial announcement is that
+this bug is technically a use-after-free followed by a double-free.
+The kernel frees skb in dccp_rcv_state_process and then again when
+destroying the socket due to inet6_destroy_sock. There's actually a
+lot more stuff going on under the hood, but that's the essential part.
 
-RX notification is regarding event send to a userspace program, which is
-usually the "wpa_supplicant" or "hostapd". The userspace can register
-in kernel via NL80211_CMD_REGISTER_FRAME to pass management frames to it.
-This flaw would be remote exploitable if a userspace program registers to
-receive some management frames and then pass it back to a kernel without
-a modification. I'm not sure if any user space program do that, I think
-"hostapd" or "wpa_supplicant" don't, but to be sure, it will require to
-fully analyze theirs source code.
-(Stanislaw Gruszka <sgruszka@...hat.com>)
+The use-after-free happens on skb and skb->data (they are allocated
+and freed separately though one right after another). Exploiting this
+would allow us to overwrite skb or skb->data with arbitrary data. The
+double-free, however, allows us to control what object we overwrite by
+doing the trick I mentioned in the previous email.
 
-So, this flaw is unlikely to be triggered remotely, as certain userspace code is needed
-for this. An unprivileged local user could use this flaw to induce kernel memory corruption
-on the system, leading to a crash. Due to the nature of the flaw, privilege escalation
-cannot be fully ruled out, although we believe it is unlikely.
+To get execution control we can overwrite skb->data, since it has
+skb_shared_info struct at the end, and
+shinfo->destructor_arg->callback is a function pointer, which is
+triggered by skb_release_data. The exploit puts ubuf_info struct and
+the payload to get root in userspace, so this will be detected by SMAP
+and SMEP.
 
-cvss3=6.8/CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H
-cwe=CWE-120
+To disable SMEP and SMAP I used the idea from the CVE-2016-8655
+exploit by Philip Pettersson. We can overwrite packet_sock struct,
+which has a timer_list field deep inside it, which contains a callback
+and it's argument. We allocate this struct, overwrite the time_list
+field and schedule the timer. I used native_write_cr4 as the callback
+and a value with SMEP and SMAP bits disabled for it's argument. Note,
+that CVE-2016-8655 by itself resulted in a use-after-free on the
+packet_sock struct, but in this case we make a use-after-free happen
+by exploiting a double-free.
 
-References:
+As I mentioned, the exploit is not very reliable, but I don't want to
+spend any more time on it. The kernel can crash due to a memory
+corruption if we fail to reallocate some objects in time or in the
+correct order. However I've managed to make it work on three different
+environments I have set up (including two vms and a real machine).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1473198
-
-https://bugzilla.novell.com/show_bug.cgi?id=1049645
-
-https://www.spinics.net/lists/stable/msg180994.html
-
-Upstream patch:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8f44c9a41386729fea410e688959ddaa9d51be7c
+On Wed, Feb 22, 2017 at 2:28 PM, Andrey Konovalov <andreyknvl@...gle.com> wrote:
+> Hi,
+>
+> This is an announcement about CVE-2017-6074 [1] which is a double-free
+> vulnerability I found in the Linux kernel. It can be exploited to gain
+> kernel code execution from an unprivileged processes.
+>
+> Fixed on Feb 17, 2017:
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
+>
+> The oldest version that was checked is 2.6.18 (Sep 2006), which is
+> vulnerable. However, the bug was introduced before that, probably in
+> the first release with DCCP support (2.6.14, Oct 2005).
+>
+> The kernel needs to be built with CONFIG_IP_DCCP for the vulnerability
+> to be present. A lot of modern distributions enable this option by
+> default.
+>
+> The bug was found with syzkaller [2].
+>
+> ### Bug details
+>
+> In the current DCCP implementation an skb for a DCCP_PKT_REQUEST
+> packet is forcibly freed via __kfree_skb in dccp_rcv_state_process if
+> dccp_v6_conn_request successfully returns [3].
+>
+> However, if IPV6_RECVPKTINFO is set on a socket, the address of the
+> skb is saved to ireq->pktopts and the ref count for skb is incremented
+> in dccp_v6_conn_request [4], so skb is still in use. Nevertheless, it
+> still gets freed in dccp_rcv_state_process.
+>
+> The fix is to call consume_skb, which accounts for skb->users,
+> instead of doing goto discard and therefore calling __kfree_skb.
+>
+> To exploit this double-free, it can be turned into a use-after-free:
+>
+> //  The first free:
+> kfree(dccp_skb)
+> // Another object allocated on the same place as dccp_skb:
+> some_object = kmalloc()
+> // The second free, effectively frees some_object
+> kfree(dccp_skb)
+>
+> As this point we have a use-after-free on some_object. An attacker can
+> control what object that would be and overwrite it's content with
+> arbitrary data by using some of the kernel heap spraying techniques.
+> If the overwritten object has any triggerable function pointers, an
+> attacker gets to execute arbitrary code within the kernel.
+>
+> I'll publish an exploit in a few days, giving people time to update.
+>
+> New Ubuntu kernels are out so please update as soon as possible.
+>
+> ### Timeline
+>
+> 2017-02-15: Bug reported to security@...nel.org
+> 2017-02-16: Patch submitted to netdev
+> 2017-02-17: Patch committed to mainline kernel
+> 2017-02-18: Notification sent to linux-distros
+> 2017-02-22: Public announcement
+>
+> ### Links
+>
+> [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-6074
+> [2] https://github.com/google/syzkaller
+> [3] http://lxr.free-electrons.com/source/net/dccp/input.c?v=4.9#L606
+> [4] http://lxr.free-electrons.com/source/net/dccp/ipv6.c?v=4.9#L351
+> [5] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5edabca9d4cff7f1f2b68f0bac55ef99d9798ba4
