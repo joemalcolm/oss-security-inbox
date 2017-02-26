@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2126" "Wednesday" "25" "July" "2018" "13:00:39" "-0500" "Matthew Thode" "prometheanfire@gentoo.org" "<20180725180039.figvv6qq4ivqdnj5@gentoo.org>" "66" "[oss-security] [OSSA-2018-002] GET /v3/OS-FEDERATION/projects leaks project information (CVE-2018-14432)" nil nil nil "7" "2018072518:00:39" "[oss-security] [OSSA-2018-002] GET /v3/OS-FEDERATION/projects leaks project information (CVE-2018-14432)" (number mark "U       prometheanfi Jul 25   66/2126  " thread-indent "\"[oss-security] [OSSA-2018-002] GET /v3/OS-FEDERATION/projects leaks project information (CVE-2018-14432)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4753" "Sunday" "26" "February" "2017" "11:53:02" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<285721.180818172-sendEmail@localhost>" "105" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)" "^Date:" nil nil "2" "2017022611:53:02" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)" (number mark "U       ago@gentoo.o Feb 26  105/4753  " thread-indent "\"[oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18290 invoked by uid 550); 25 Jul 2018 18:03:03 -0000
+Received: (qmail 21989 invoked by uid 550); 26 Feb 2017 11:53:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17419 invoked from network); 25 Jul 2018 18:00:54 -0000
-Date: Wed, 25 Jul 2018 13:00:39 -0500
-From: Matthew Thode <prometheanfire@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <20180725180039.figvv6qq4ivqdnj5@gentoo.org>
+Received: (qmail 21883 invoked from network); 26 Feb 2017 11:53:19 -0000
+Message-ID: <285721.180818172-sendEmail@localhost>
+X-Mailer: sendEmail-1.56
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7jlbrqqo55psrimk"
-Content-Disposition: inline
-User-Agent: NeoMutt/20180622
-Subject: [oss-security] [OSSA-2018-002] GET /v3/OS-FEDERATION/projects leaks project
- information (CVE-2018-14432)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-222416.723686369"
+Date: Sun, 26 Feb 2017 11:53:02 +0000
+From: "Agostino Sarubbo" <ago@gentoo.org>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::decodeBlock (MSADPCM.cpp)
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
 
---7jlbrqqo55psrimk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+------MIME delimiter for sendEmail-222416.723686369
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-=======================================================================
-OSSA-2018-002: GET /v3/OS-FEDERATION/projects leaks project information
-=======================================================================
+Description:
+audiofile is a C-based library for reading and writing audio files in many common formats.
 
-:Date: July 25, 2018
-:CVE: CVE-2018-14432
+A fuzz on it discovered an heap overflow.
+
+The complete ASan output:
+
+# sfconvert @@ out.mp3 format aiff
+==2512==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62d00001c45a at pc 0x7fe7476f387d bp 0x7ffc3b0e3bf0 sp 0x7ffc3b0e3be8
+WRITE of size 2 at 0x62d00001c45a thread T0
+    #0 0x7fe7476f387c in MSADPCM::decodeBlock(unsigned char const*, short*) /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:222:14
+    #1 0x7fe7476c1ac9 in BlockCodec::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/BlockCodec.cpp:55:3
+    #2 0x7fe7476fac20 in RebufferModule::runPull() /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/RebufferModule.cpp:122:3
+    #3 0x7fe7476ab05a in afReadFrames /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/data.cpp:222:14
+    #4 0x50bbeb in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:340:29
+    #5 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #6 0x7fe74678078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #7 0x419f48 in _init (/usr/bin/sfconvert+0x419f48)
+
+0x62d00001c45a is located 0 bytes to the right of 32858-byte region [0x62d000014400,0x62d00001c45a)
+allocated by thread T0 here:
+    #0 0x4d2d08 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
+    #1 0x7fe746419687 in operator new(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xb2687)
+    #2 0x7fe7476af43c in afGetFrameCount /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/format.cpp:205:41
+    #3 0x50bb5c in copyaudiodata /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:329:29
+    #4 0x50b050 in main /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/sfcommands/sfconvert.c:248:17
+    #5 0x7fe74678078f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-libs/audiofile-0.3.6-r1/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:222:14 in 
+MSADPCM::decodeBlock(unsigned char const*, short*)
+Shadow bytes around the buggy address:
+  0x0c5a7fffb830: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb840: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb850: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb860: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c5a7fffb870: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c5a7fffb880: 00 00 00 00 00 00 00 00 00 00 00[02]fa fa fa fa
+  0x0c5a7fffb890: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c5a7fffb8d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==2512==ABORTING
+
+Affected version:
+0.3.6
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00186-audiofile-heapoverflow-MSADPCM-decodeBlock
+
+Timeline:
+2017-02-20: bug discovered and reported to upstream
+2017-02-20: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow-in-msadpcmdecodeblock-msadpcm-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
 
-Affects
-~~~~~~~
-- Keystone: <11.0.4, ==12.0.0, ==13.0.0
+------MIME delimiter for sendEmail-222416.723686369--
 
-
-Description
-~~~~~~~~~~~
-Kristi Nikolla with Boston University reported a vulnerability in
-Keystone federation. By doing GET /v3/OS-FEDERATION/projects an
-authenticated user may discover projects they have no authority to
-access, leaking all projects in the deployment and their attributes.
-Only Keystone with the /v3/OS-FEDERATION endpoint enabled via
-policy.json is affected.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/585802 (Ocata)
-- https://review.openstack.org/585792 (Pike)
-- https://review.openstack.org/585788 (Queens)
-- https://review.openstack.org/585782 (Rocky)
-
-
-Credits
-~~~~~~~
-- Kristi Nikolla from Boston University (CVE-2018-14432)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1779205
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14432
-
---7jlbrqqo55psrimk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEExFR3cOKGRpGbcMHPZKN76q4ZpOgFAltYusYACgkQZKN76q4Z
-pOjxGxAA0jvnCJOZjIwBZyolLi0Xbkv5X0Y4ggC2XDFISHa2BGIkOhYoGnW/CyF3
-LyBQLvS/YdrxhBE3mmciCLbWzvBzGQcnM624MX7PhLGTSaGLpNryUSSWWzpVUTT6
-pF+HeuTaUzzf6mpkml6F5Sx1tE1D1o5WLd7M8RNP3FNl8M/lQCagN0BxsegmN89Q
-oz2sQZenMfwT4PWMZEPROCbJM35ll20xIahLtCrWMBDlQx6DSs5yqL7nScLVGM1J
-JbwxiwkwZjnQwQ/OSfZsH69pLqBTg7ssOajAjFdKZTO1QqYlddkS9+HnW0p/x0Gt
-cxKAqMqKW+mipuaE3sr8eb+ja1Qti+TVHRJyXcVI+lL68eDR8UOgUCSvvkWS+a6/
-HAn2QdynhigarCMxQtCho7WLY90uU+9ur/GP1Y8RF4ntodRGSUUTndbkuROa0Ejo
-yt4faq6GzKzLUeQT9khsUHC3K4ZkzZqjlNAlRd0hK+qkhm5Biu/j/qjldb5PzylQ
-w6N7s6LXsrcaSouVmaGrqaqbLqcuTrqgVOyx2btpFtjHI+4lK2FoveCMWJshp/E7
-A2q5h+WD8EVSQWDFX64R7HjkrEP6T/KlAasCPIgR1B+3VJvwKIyoV6MTS4GPqpN4
-9KV/QIoEB+LYaX+yTI+1W/caYOD6SFFZh+S6YZVYQBNWqR3Ec5s=
-=WfUS
------END PGP SIGNATURE-----
-
---7jlbrqqo55psrimk--
