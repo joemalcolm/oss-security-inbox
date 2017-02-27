@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/30/1
-Message-ID: <CAFE48uQg-zUyjYNjf150uFqdMJV0M5Q8RPbr827OFK9H=Y=gtw@mail.gmail.com>
-Date: Thu, 30 Mar 2017 08:48:21 +0530
-From: Lokesh Ubuntu <lokesh.ubuntu@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: Re: CVE-2017-7184: kernel: Local privilege escalation in XFRM framework
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/27/3
+Message-ID: <alpine.LFD.2.20.1702272324550.10165@wniryva>
+Date: Mon, 27 Feb 2017 23:26:54 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-6355 Virglrenderer: integer overflow while creating shader object
 Content-Type: text/plain; charset=utf-8
 
-Is there any POC for this to conclude? Thanks.
+   Hello,
 
-Regards, Lokesh
+Virgil 3d project, used by Quick Emulator(Qemu) to implement 3D GPU support 
+for the virtio GPU, is vulnerable to an integer overflow issue. It could occur 
+when creating a shader object in vrend_create_shader().
 
-On Mar 30, 2017 03:14, "Tyler Hicks" <tyhicks@...onical.com> wrote:
+A guest user/process could use this flaw to crash the Qemu process resulting 
+DoS.
 
-> A security issue was reported by ZDI, on behalf of Chaitin Security
-> Research Lab, against the Linux kernel in Ubuntu. It also affected the
-> upstream kernel.
->
-> Chaitin Security Research Lab discovered that xfrm_replay_verify_len(),
-> as called by xfrm_new_ae(), did not verify that the user-specified
-> replay_window was within the replay state buffer.
->
-> This allowed for out-of-bounds reads and writes of kernel memory.
-> Chaitin Security showed that this can lead to local privilege escalation
-> by using user namespaces in order to configure XFRM. XFRM configuration
-> requires CAP_NET_ADMIN so this issue is mitigated in kernels which do
-> not enable user namespaces by default.
->
-> Fixes:
-> - https://git.kernel.org/linus/677e806da4d916052585301785d847c3b3e6186a
-> - https://git.kernel.org/linus/f843ee6dd019bcece3e74e76ad9df0155655d0df
->
-> Tyler
->
->
->
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/virglrenderer/commit/?id=93761787b29f37fa627dea9082cdfc1a1ec608d6
 
+This issue was reported by Li Qiang of 360.cn Inc.
+
+'CVE-2017-6355' assigned via -> http://cveform.mitre.org/
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
