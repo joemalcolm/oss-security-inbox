@@ -1,101 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/17/5
-Message-ID: <95cf924f96704145a7123025342907fa@imshyb01.MITRE.ORG>
-Date: Mon, 16 Jan 2017 19:13:04 -0500
-From: <cve-assign@...re.org>
-To: <carnil@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <roucaries.bastien+debian@...il.com>
-Subject: Re: CVE Request: Imagemagick: various flaws: memory corruption, out-of-bounds writes, memory leaks, double-frees, off-by-one errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/27/2
+Message-ID: <20170227120706.3entdizfnyz5iwrf@lorien.valinor.li>
+Date: Mon, 27 Feb 2017 13:07:06 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Linux: CVE-2017-6353: sctp: deny peeloff operation on asocs with threads sleeping on it
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> [] coders/ipl.c: "ipl file missing malloc check"
-> Debian Bug: https://bugs.debian.org/851485
-> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/97566cf2806c0a5a86e884c96831a0c3b1ec6c20
+Via the CVE webform, MITRE has assigned CVE-2017-6353 for:
 
-Use CVE-2016-10144.
+https://marc.info/?l=linux-netdev&m=148785309416337&w=2
 
+>Subject:    [PATCH net] sctp: deny peeloff operation on asocs with threads sleeping on it
+>From:       Marcelo Ricardo Leitner <marcelo.leitner () gmail ! com>
+>Date:       2017-02-23 12:31:18
+>
+>commit 2dcab5984841 ("sctp: avoid BUG_ON on sctp_wait_for_sndbuf")
+>attempted to avoid a BUG_ON call when the association being used for a
+>sendmsg() is blocked waiting for more sndbuf and another thread did a
+>peeloff operation on such asoc, moving it to another socket.
+>
+>As Ben Hutchings noticed, then in such case it would return without
+>locking back the socket and would cause two unlocks in a row.
+>
+>Further analysis also revealed that it could allow a double free if the
+>application managed to peeloff the asoc that is created during the
+>sendmsg call, because then sctp_sendmsg() would try to free the asoc
+>that was created only for that call.
+>
+>This patch takes another approach. It will deny the peeloff operation
+>if there is a thread sleeping on the asoc, so this situation doesn't
+>exist anymore. This avoids the issues described above and also honors
+>the syscalls that are already being handled (it can be multiple sendmsg
+>calls).
+>
+>Joint work with Xin Long.
+>
+>Fixes: 2dcab5984841 ("sctp: avoid BUG_ON on sctp_wait_for_sndbuf")
+>Cc: Alexander Popov <alex.popov@...ux.com>
+>Cc: Ben Hutchings <ben@...adent.org.uk>
+>Signed-off-by: Marcelo Ricardo Leitner <marcelo.leitner@...il.com>
+>Signed-off-by: Xin Long <lucien.xin@...il.com>
+>---
+>Hi, please consider this one for -stable too. Thanks
+>
+> net/sctp/socket.c | 8 ++++++--
+> 1 file changed, 6 insertions(+), 2 deletions(-)
+>
+>diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+>index 1b5d669e30292a57ed57dd920d81be2a57f97b22..d04a8b66098c8a574642b026bff990ac64c21468 100644
+>--- a/net/sctp/socket.c
+>+++ b/net/sctp/socket.c
+>@@ -4734,6 +4734,12 @@ int sctp_do_peeloff(struct sock *sk, sctp_assoc_t id, struct socket **sockp)
+> 	if (!asoc)
+> 		return -EINVAL;
+> 
+>+	/* If there is a thread waiting on more sndbuf space for
+>+	 * sending on this asoc, it cannot be peeled.
+>+	 */
+>+	if (waitqueue_active(&asoc->wait))
+>+		return -EBUSY;
+>+
+> 	/* An association cannot be branched off from an already peeled-off
+> 	 * socket, nor is this supported for tcp style sockets.
+> 	 */
+>@@ -7426,8 +7432,6 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc, long *timeo_p,
+> 		 */
+> 		release_sock(sk);
+> 		current_timeo = schedule_timeout(current_timeo);
+>-		if (sk != asoc->base.sk)
+>-			goto do_error;
+> 		lock_sock(sk);
+> 
+> 		*timeo_p = current_timeo;
+>-- 
+>2.9.3
 
-> [] coders/wpg.c: off-by-one error
-> Debian Bug: https://bugs.debian.org/851483
-> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/d23beebe7b1179fb75db1e85fbca3100e49593d9
+This was found while reviewing the fix of CVE-2017-5986 (2dcab5984841
+("sctp: avoid BUG_ON on sctp_wait_for_sndbuf"))
 
-Use CVE-2016-10145.
-
-
-> [] magick/profile.c: double-free memory corruption
-> Debian Bug: https://bugs.debian.org/851383
-> Upstream Bug: https://github.com/ImageMagick/ImageMagick/issues/354
-> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/6235f1f7a9f7b0f83b197f6cd0073dbb6602d0fb
-
-Use CVE-2017-5506.
-
-
-> [] coders/mpc.c: memory leak in mpc file handling
-> Debian Bug: https://bugs.debian.org/851382
-> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/4493d9ca1124564da17f9b628ef9d0f1a6be9738
-
-Use CVE-2017-5507.
-
-
-> [] PushQuantumPixel heap buffer-overflow
-> Debian Bug: https://bugs.debian.org/851381
-> Upstream report: https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=31161
-> https://github.com/ImageMagick/ImageMagick/commit/c073a7712d82476b5fbee74856c46b88af9c3175
-
-Use CVE-2017-5508.
-
-
-> [] memory leak in caption and label handling
-> Debian Bug: https://bugs.debian.org/851380
-> Fixed by: https://github.com/ImageMagick/ImageMagick/commit/aeff00de228bc5a158c2a975ab47845d8a1db456
-
-Use CVE-2016-10146.
-
-
-> [] coders/psd.c: out-of-bounds write flaw in psd file handling
-> Debian Bug: https://bugs.debian.org/851377
-> Upstream report: https://github.com/ImageMagick/ImageMagick/issues/350
-
-Use CVE-2017-5509.
-
-
-> [] coders/psd.c: out-of-bounds write flaw in psd file handling
-> (different issue from the above)
-> Debian Bug: https://bugs.debian.org/851376
-> Upstream report: https://github.com/ImageMagick/ImageMagick/issues/348
-
-Use CVE-2017-5510.
-
-
-> [] coders/psd.c: memory corruption heap overflow
-> Debian Bug: https://bugs.debian.org/851374
-> Upstream report: https://github.com/ImageMagick/ImageMagick/issues/347
-
-Use CVE-2017-5511.
-
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYfV+eAAoJEHb/MwWLVhi2QIcQALYMUMbHIVzC/24Y52Ew+i4A
-r5V0YSNAC0vPdKoF4zbpOeeOfQjrvPhdM4t0cvcRZnzNvlig81CyB4O72791d6Gz
-g6HJ0Gnmkl9evckmw4vT9zVknf1FZ+q3bMe1rRR2b8JfhI4ZMLaPQcc9r7KapN9C
-pMh/Am+PT+h3OZN+GQQnPj5MHgr2znYROM1tiqi9roj4E5HTBJmGoDypd503TTI8
-ljbje8cmCykJsy+te/qft5avhYujLkiVABu/jOgfxL+8lWXPWS8rRjgspgpt34Hl
-S7J+L5FX5U2AAutwLxmzTM7sI+eyLWZtAJOBJ0tS0/mhQ236F1T7zwQRzSlhKxBY
-1u/SbXLckTlXaeKqzxglSUUgJCFeCFLdMfT0jwlrP7wbMD8BxhHBAuiEulNRJOFA
-JOrZAClEJv4toG2+Cd9CxDFosqaih2PB0uDIantimLB50zWBrytcNel7UMxrpH1K
-QXYxUpuzc/Odr7KvuFS0n1QislNiRzdEIt9VnvF8RWrgBwYe/Xh78YGFgB8K0GdW
-9gHoI9FOAAqP1g/+6Rwh2NJvIAraEthQQzPNNvazCKrCYeyCflMlc4uypAkFxyQS
-Pw6B5RNiWcH1UewKJnglJpgMboXkEFMRjZg3ccLYTet9qn4M4bbn5m2iQGJQYzwn
-6HF+uhc12KUYrnrDbJp2
-=Io2X
------END PGP SIGNATURE-----
+Regards,
+Salvatore
