@@ -1,17 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/1
-Message-ID: <20170201082445.ckuebicrxk6xep2e@workbook.ipv6.hrusecky.net>
-Date: Wed, 1 Feb 2017 09:24:45 +0100
-From: Michal Hrusecky <Michal.Hrusecky@....cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/1
+Message-ID: <20170228110806.GA541@sliver.coydogsoftware.net>
+Date: Tue, 28 Feb 2017 05:08:06 -0600
+From: php-dev@...dogsoftware.net
 To: oss-security@...ts.openwall.com
-Subject: Re: FW: [DSA 3775-1] tcpdump security update]
+Subject: Re: CVE Request: PHP with Zend OPCache code permission/sensitive data protection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-David Manouchehri -  8:09 30.01.17 wrote:
-> The source along with samples can be found over here.
+On Mon, Feb 27, 2017 at 04:52:58PM -0600, php-dev@...dogsoftware.net wrote:
 > 
-> https://anonscm.debian.org/cgit/users/rfrancoise/tcpdump.git/commit/?id=b4f4a803b9b5f9d507201cd1c48ddd992a62aee2
+> To briefly summarize, in PHP SAPI's where PHP interpreters share a
+> common parent process (eg. Apache mod_php and PHP-FPM), Zend OpCache
+> creates a shared memory object owned by the common parent during
+> initialization. Child PHP processes inherit the SHM descriptor, using it
+> to cache and retrieve compiled script bytecode ("opcode" in PHP jargon).
+> Cache keys vary depending on configuration, but filename is a central
+> key component, and compiled opcode can generally be run if a script's
+> filename is known or can be guessed.
+> 
+> Many common shared hosting configurations change EUID in child processes
+> to enforce privilege separation among hosted users. In these scenarios,
+> default Zend OpCache behavior defeats script file permissions by sharing
+> a single SHM cache among all child PHP processes.
+> 
+> PHP scripts often contain sensitive information: Think of CMS
+> configurations where reading or running another user's script usually
+> means gaining privileges to the CMS database.
+> 
+>  
+> AFFECTED VERSIONS:
+> PHP7 < 7.0.14 and PHP5 < 5.6.29. Later versions are still vulnerable by
+> default unless opcache.validate_permission=1 is enabled.
+> 
+> AFFECTED COMPONENT:
+> Zend OpCache
+> 
+> VULNERABILITY TYPE:
+> Code permission/sensitive information disclosure
+> 
+> IMPACT:
+> Cross-user compromise of PHP web applications in shared hosting
+> environments.
+> 
+> REFERENCES:
+> http://marc.info/?l=php-internals&m=147921016724565&w=2
+> https://bugs.php.net/bug.php?id=69090
+> http://seclists.org/oss-sec/2016/q4/343
 
-Having source on someones personal repo is nice, but I would be also interested
-why there is no mention of new release on upstream website and nothing in their
-git although git seems active and alive. Anybody with some insight?
+This has been assigned CVE-2015-8994 via cveform.mitre.org.
+
+--
+php-dev at coydogsoftware dot net
