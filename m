@@ -1,107 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/13/13
-Message-ID: <59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>
-Date: Fri, 13 Jan 2017 19:26:33 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/5
+Message-ID: <20170228162309.e22hyhgw4id7dgdn@eldamar.local>
+Date: Tue, 28 Feb 2017 17:23:09 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Linux: ip: fix IP_CHECKSUM handling (CVE-2017-6347)
 Content-Type: text/plain; charset=utf-8
 
-On 13/01/17 16:02, Thomas Deutschmann wrote:
-> Hi,
-> 
-> Carlos Alberto Lopez Perez wrote:
->>> --------[ /etc/logrotate.d/nginx ]--------
->>>
->>> /var/log/nginx/*.log {
->>> 	daily
->>> 	missingok
->>> 	rotate 52
->>> 	compress
->>> 	delaycompress
->>> 	notifempty
->>> 	create 0640 www-data adm
->>> 	sharedscripts
->>> 	prerotate
->>> 		if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
->>> 			run-parts /etc/logrotate.d/httpd-prerotate; \
->>> 		fi \
->>> 	endscript
->>> 	postrotate
->>> 		invoke-rc.d nginx rotate >/dev/null 2>&1
->>> 	endscript
->>> }
->>>
->>> ------------------------------------------
->>
->> This looks to me like an issue on the logrotate side rather than on the nginx one..
->>
->> If I have:
->>
->> /var/log/nginx/error.log -> /etc/ld.so.preload
->>
->> Why does logrotate "create 0640 www-data adm" over /var/log/nginx/error.log
->> removes and creates /etc/ld.so.preload ??? That is shocking!
->>
->> It should do that on /var/log/nginx/error.log, by removing that symlink
->> and creating a new empty standard file on /var/log/nginx/error.log !!
->>
->> Dont you agree??
-> 
-> No, please read the advisory again.
-> 
-> Please notice that logrotate doesn't do some magic. The config tells
-> logrotate to do that (logrotate itself BTW ignores symlinked files since
-> v3.8.2 [1]).
-> 
-> It is important to understand that logrotate is only used in that
-> example to trigger nginx behavior. And attacker could also just wait for
-> the system administrator to do similar actions with nginx (just a
-> question of time).
-> 
-> So the real "problem" is that the nginx master process runs as root and
-> will change ACLs of existing files which allows an user to escalate
-> privileges if that user can create files nginx will touch.
-> 
-> See https://trac.nginx.org/nginx/ticket/376 for more details.
-> 
-> Now, given that multiple maintainers created the same problem, one could
-> argue that such a change in permissions is unexpected. Nevertheless it
-> is documented, so I don't blame upstream.
-> 
-> 
-> See also:
-> =========
-> [1]
-> https://github.com/logrotate/logrotate/commit/9f19aba75079a61a913eb06748cf9aa83802c24c
-> 
-> 
+Hi
 
-You're right. I did some tests and log-rotate refuses to rotate a symlink file
+CVE-2017-6347 was assigned by MITRE to the following (via
+https://cveform.mitre.org/):
 
-# ls -l /var/log/nginx/*
-lrwxrwxrwx 1 www-data adm 16 Jan 13 18:56 /var/log/nginx/error.log -> /etc/ld.so.conf
+https://git.kernel.org/linus/ca4ef4574f1ee5252e2cd365f8f5d5bafd048f32
 
-# logrotate --verbose /etc/logrotate.d/nginx 
-reading config file /etc/logrotate.d/nginx
-Handling 1 logs
-rotating pattern: /var/log/nginx/*.log  after 1 days (52 rotations)
-empty log files are not rotated, old logs are removed
-considering log /var/log/nginx/error.log
-  log /var/log/nginx/error.log is symbolic link. Rotation of symbolic links is not allowed to avoid security issues -- skipping.
-not running prerotate script, since no logs will be rotated
-not running postrotate script, since no logs were rotated
+> ip: fix IP_CHECKSUM handling
+> 
+> The skbs processed by ip_cmsg_recv() are not guaranteed to
+> be linear e.g. when sending UDP packets over loopback with
+> MSGMORE.
+> Using csum_partial() on [potentially] the whole skb len
+> is dangerous; instead be on the safe side and use skb_checksum().
+> 
+> Thanks to syzkaller team to detect the issue and provide the
+> reproducer.
 
+The issue was introduced in 4.0 by commit ad6f939ab193. The fix as
+well backported to 4.9.13.
 
-So the issue is than when in var/log/nginx/ there are standard logs (non symlinked)
-that need to be rotated (appart from the malicious symlinked one), then logrotate
-will rotate those ones, finally running the post-rotate script that send SIGURSR1
-to the nginx pid.
-
-Then nginx upon USR1 receive does the wrong thing... https://trac.nginx.org/nginx/ticket/376
- 
-
-/me happy to know that logrotate has a sane behaviour and avoids trying to rotate symlinks.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Regards,
+Salvatore
