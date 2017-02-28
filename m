@@ -1,4 +1,9 @@
-Received: (qmail 27690 invoked by uid 550); 22 Oct 2023 00:09:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["673" "Tuesday" "28" "February" "2017" "17:28:02" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170228162802.5rmgjzynfz7r7e7c@eldamar.local>" "24" "[oss-security] Linux: net/llc: avoid BUG_ON() in skb_orphan() (CVE-2017-6345)" nil nil nil "2" "2017022816:28:02" "[oss-security] Linux: net/llc: avoid BUG_ON() in skb_orphan() (CVE-2017-6345)" (number mark "U       carnil@debia Feb 28   24/673   " thread-indent "\"[oss-security] Linux: net/llc: avoid BUG_ON() in skb_orphan() (CVE-2017-6345)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21868 invoked by uid 550); 28 Feb 2017 16:28:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,114 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24366 invoked from network); 22 Oct 2023 00:06:58 -0000
-Date: Sun, 22 Oct 2023 02:06:49 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20231022000649.GA14340@openwall.com>
-References: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
-Mime-Version: 1.0
+Received: (qmail 21802 invoked from network); 28 Feb 2017 16:28:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=nWpXHZa8PWFH9NgLPMqIzE9IqW8GuhXQ97qx4TdxHUo=;
+        b=HgRfikk0tam96HkQp0UYIf6Ty4iabtqS4EuQ8Rw33UMAqHQvU5xOztzykv4QJSvgR8
+         q9jvyYe5u0vCVjCXwadQn4XQckf4rzctenRCSI3hBKHR9XzHvr0btINnsEpj9DLVHCqV
+         g/xDJPxC8EuScIbtFV7neBztJdtpwiwrV8WTmsWD0iCZqW505Uan2USjcdLa8r7rtRvQ
+         ZGA74OI7WvFtNk/U7sWki9IvWGta9iKsLW8f7cmAJ7U5fPEIirvv/eodKkFN+BCq4veW
+         Gz2N0KutMnp1+K66vu3SaqRc6oFrBKUNR+ylHaBOWHLQx0dK5PUNonCgumSvai/B+3DO
+         5OCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=nWpXHZa8PWFH9NgLPMqIzE9IqW8GuhXQ97qx4TdxHUo=;
+        b=WaxIIdR6I8/HhuRC0HWC8FXl39MmJONv6WfUbXKrnI+5j976HpUn+vq8xkSXRRRnNx
+         IQ3/K/Hxzi8okJmDRv47111QyEcJCWyqYOOEFueOLMzgX/8si8pTYWyIILMI+cnLMUUN
+         aMjKLlmLvGJlh/gM304CzPG7D0qMRatUXVJlRdLuJcYOVHFpxLhF2qesE7T5aanJjyJe
+         iRLxv+MWIZ+s4+MS4ruwCKL+43WAXVuW0Aw6pYlQs0lPBfFSMKz1jOEoqdBMMg9O7pDl
+         YSVsemOiMGgs71r1JUmbuYUjSZVkNxAl+bxjXP6KRx8A4hxNvQsRWfQS4dBu40Bu1+pj
+         5R1Q==
+X-Gm-Message-State: AMke39ksH2ri7h0V7J1OtNpq2/2MuB1U9GPUI8/YRmAzDg++iidsRw2ycl6VCJhh6ltFqg==
+X-Received: by 10.28.131.132 with SMTP id f126mr19829882wmd.61.1488299283697;
+        Tue, 28 Feb 2017 08:28:03 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 28 Feb 2017 17:28:02 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170228162802.5rmgjzynfz7r7e7c@eldamar.local>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <56c8798b-0ad7-652b-d034-90229b6768f7@gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] sandboxing,of upstream programs by distros
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] Linux: net/llc: avoid BUG_ON() in skb_orphan() (CVE-2017-6345)
 
-Hi Matt,
+Hi
 
-I'm sorry I didn't follow up on this sooner.
+CVE-2017-6345 was assigned by MITRE to the following (via
+https://cveform.mitre.org/):
 
-On Sat, Oct 14, 2023 at 06:39:49PM +1100, Matthew Fernandez wrote:
-> Is there interest/solutions within the Rock Security SIG or other 
-> distro's security teams for sandboxing that package upstreams can opt 
-> into?
+https://git.kernel.org/linus/8b74d439e1697110c5e5c600643e823eb1dd0762
 
-For Rocky Linux Security SIG, the only relevant thing mentioned so far
-was possibly offering an OpenBSD pledge()-alike that other packages
-could use.  However, I am skeptical any actually would, unless we also
-introduce such uses ourselves and maintain own "override" packages
-(replacing RHEL rebuild ones or those coming from EPEL, etc.) of such
-software.  Initially, we are going to only create "override' packages
-for core or very commonly used/exposed components, and to do so only for
-specific good reasons.  So stuff like e.g. ImageMagick/GraphicsMagick
-coming from EPEL and with most of its dependency libraries coming from
-AppStream repos, or e.g. GraphViz coming from AppStream, is unlikely to
-make the cut, at least not initially.
-
-Also, continuing these examples, it's probably more realistic to sandbox
-their command-line tools, whereas the underlying libraries are probably
-more exposed via language bindings.  Would we be introducing creation of
-child processes into the libraries?  That's tricky as it could violate
-expectations of programs using such libraries.  (Yet at Openwall we did
-a similar thing in pam_tcb, albeit limiting this maybe-unexpected
-behavior to setups that opted-in to it with the "fork" option in the PAM
-configuration file.  So it's not completely out of consideration.)
-
-Speaking of pledge() for Linux, there's this project by Justine Tunney:
-
-https://justine.lol/pledge/
-https://github.com/jart/cosmopolitan/blob/master/libc/calls/pledge-linux.c
-
-This is part of Justine's libc implementation, but a comment says:
-
- * This file contains only the minimum amount of Linux-specific code
- * that's necessary to get a pledge() policy installed. This file is
- * designed to not use static or tls memory or libc depnedencies, so
- * it can be transplanted into codebases and injected into programs.
-
-Are there already other projects using this?  Any distros offering it?
-
-> To step this out a bit... we have a large, old code base that was written 
-> decades prior to current best practices. It has numerous known memory 
-> safety issues and ever-dwindling maintainer capacity. It is also a 
-> dependency, either directly or indirectly, of a significant fraction of 
-> the world's software. I am guessing this scenario sounds uncomfortably 
-> familiar/common to many on this list.
+> net/llc: avoid BUG_ON() in skb_orphan()
 > 
-> We (the maintainers) have discussed sandboxing as a way of mitigating 
-> the risk of known bugs. However, one of the problems is that we don't 
-> know the complete set of required privileges of our dependencies. The 
-> software can be configured with or without various libraries and also 
-> has a plugin mechanism for dynamic code loading. Basically if a 
-> sandboxing solution like seccomp wants to know our full set of system 
-> calls, we ourselves don't know it.
-
-With pledge(), you could provide coarse-grained "promises" rather than
-constrain yourself to individual syscalls.  Maybe that would work for
-you?  However, it'd only be reliably used by packages if those introduce
-a build-time dependency on whatever package provides pledge().  So e.g.
-if we add a package providing pledge() in Rocky Linux Security SIG repo,
-that won't be picked up by my example packages above built as part of
-EPEL (not part of Rocky Linux project) or AppStream (part of the
-project, but currently unlikely to be overridden in the SIG).
-
-OTOH, you could even integrate the pledge-linux.c file in your project,
-in which case it could become a standard feature used by many Linux
-distros and extra package repos once they update to your newer version.
-
-> The downstream maintainer packaging the software for, e.g. Rocky, does 
-> though. They have a complete picture of which libraries/features are 
-> enabled and how locked down the plugin stuff is.
+> It seems nobody used LLC since linux-3.12.
 > 
-> So, where I'm going with this, is that if the various packaging 
-> ecosystems could (or do) offer sandboxing to upstream, people like us 
-> would gladly opt in to it. Of course, these downstream maintainers can 
-> already seccomp our software today. But expecting them to reverse 
-> engineer our exact needs seems a bit much.
+> Fortunately fuzzers like syzkaller still know how to run this code,
+> otherwise it would be no fun.
+> 
+> Setting skb->sk without skb->destructor leads to all kinds of
+> bugs, we now prefer to be very strict about it.
+> 
+> Ideally here we would use skb_set_owner() but this helper does not exist yet,
+> only CAN seems to have a private helper for that.
 
-I find the above two paragraphs somewhat contradictory - the downstream
-maintainer packaging the software does have technical ability to figure
-out the exact set of syscalls the software will use on their distro with
-current versions of other packages, but OTOH "expecting them to reverse
-engineer our exact needs seems a bit much."  I'd say that figuring out
-that exact set _is_ this kind of reverse-engineering, and is too much to
-expect from a typical package maintainer, who is not focusing on just
-this one package.  Besides, the exact set of syscalls may also change as
-other packages get updated; this is not something guaranteed to stay
-stable within what's normally considered a stable ABI.  So that person
-would also need to identify and introduce extra explicit package version
-dependencies, and to do extra package rebuilds to keep those satisfied.
+The fix was backported to 4.9.13 as well.
 
-Maybe a coarse-grained pledge() would make this more realistic, or not.
-
-Alexander
+Regards,
+Salvatore
