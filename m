@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["858" "Friday" "16" "April" "2021" "16:53:50" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "23" "Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation" nil nil nil "4" nil nil (number mark "U       carnil@debia Apr 16   23/858   " thread-indent "\"Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1695" "Tuesday" "28" "February" "2017" "08:19:36" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1702280817550.12318@freddy.simplesystems.org>" "54" "Re: [oss-security] Re: GraphicsMagick heap out of bounds write issue" nil nil nil "2" "2017022814:19:36" "[oss-security] Re: GraphicsMagick heap out of bounds write issue" (number mark "U       bfriesen@sim Feb 28   54/1695  " thread-indent "\"Re: [oss-security] Re: GraphicsMagick heap out of bounds write issue\"\n") "<alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>" ("<alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org>" "<alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30682 invoked by uid 550); 16 Apr 2021 14:54:05 -0000
+Received: (qmail 11828 invoked by uid 550); 28 Feb 2017 14:19:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30664 invoked from network); 16 Apr 2021 14:54:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GP8AsJzhlEwuvW3ycZmv28llRI1zjAWHjS2xdF/TzFk=;
-        b=eiZRdTCpnsufF4HvZ3UdqAAG4aucs8oNnHcZZlJbVTsqyuOwLolU2bE/am7aLtckVu
-         yuN+VLZTxUicYDoxJqUgMQ7ePnAz7qTNG/oHek+PdSnU232ACvy8dYzzysGR87XJDH3X
-         mAHB3u4kVQRTYf5alopdxuRp3Yvix3ZQ/qKNJUaJHpA4UTk9hT8QGuSd2A1yp+vy+UqT
-         DnFNN6VgompKEJuXcTBrCiKrvhEifuxyAvHJBccq9EA+GWxeISIudVtnShkHukpPw+Os
-         3PRzFOTk1M3ETXbwTtLnUZUhYWGRIao3KyTGaF4835W8PG5gruh7EDdyqO388Hc/sK4j
-         zXWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=GP8AsJzhlEwuvW3ycZmv28llRI1zjAWHjS2xdF/TzFk=;
-        b=CDr2sQhdqGLE0b7GFMnGIa+6Om/SqXRtnDmpOMyJHVOQ5W+dmSiXDGh3RIRYs3eL24
-         ZaAQ3SCi3pV+GZnK2vh1+ls8O/ZY3NZ1FI7ROjZV0sSQ8VA11L+sF/NHMsQ5E6VmucYh
-         RdO6AvQ4OhB3DQsGWrjg30tJnMdDueTTloIYefhHf3QwjQwfvtiuEAOV9NkmwAjDiRcb
-         Gv4axvoqkDJB2QJdgOe3L9tnBk2D6eF+73TibA68kxmFDVKvz9DcKHKiGLTnrIYSjkwl
-         6hsD2sBSg2VMKhgldRlYSi7ZnwduI21Bj4FIMYCrze0b1EznOeEClOrsc931cjZYDBRb
-         xdKA==
-X-Gm-Message-State: AOAM531dFfAUQjWmwZ2ALWylzVxb3QREs4WIU2u08SYXY39d5Zx9hjWu
-	BACDDGUDAC+k+ydDWbotzl07PB/2j570kw0u
-X-Google-Smtp-Source: ABdhPJyLvbbRT86761L4/3/4aqMYPrcIzPCmh6pszw4btchP4xvNgPA09Qq/aBPMsVhOCYDewGOo5w==
-X-Received: by 2002:a17:906:7016:: with SMTP id n22mr8604860ejj.23.1618584832902;
-        Fri, 16 Apr 2021 07:53:52 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Fri, 16 Apr 2021 16:53:50 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 11810 invoked from network); 28 Feb 2017 14:19:49 -0000
+Date: Tue, 28 Feb 2017 08:19:36 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
+X-X-Sender: bfriesen@freddy.simplesystems.org
 To: oss-security@lists.openwall.com
-Message-ID: <YHmk/nNvde4ohgSP@eldamar.lan>
-References: <20210415213114.GA5315@nxnw.org>
+In-Reply-To: <alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>
+Message-ID: <alpine.GSO.2.20.1702280817550.12318@freddy.simplesystems.org>
+References: <alpine.GSO.2.20.1702232109380.9710@freddy.simplesystems.org> <alpine.GSO.2.20.1702240821470.9710@freddy.simplesystems.org>
+User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210415213114.GA5315@nxnw.org>
-Subject: Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs
- caps privilege escalation
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 28 Feb 2017 08:19:36 -0600 (CST)
+Subject: Re: [oss-security] Re: GraphicsMagick heap out of bounds write
+ issue
 
-Hi Steve,
+This problem has been issued CVE-2017-6335.
 
-On Thu, Apr 15, 2021 at 02:31:14PM -0700, Steve Beattie wrote:
-> Hello,
-> 
-> An independent security researcher reported via the SSD Secure
-> Disclosure program that the overlayfs stacking file system within the
-> Linux kernel as used within Ubuntu did not properly validate the
-> application of file capabilities against user namespaces.
-> 
-> This issue is likely Ubuntu specific, as Ubuntu carries a patch to
-> enable unprivileged overlayfs mounts. The combination of that patch
-> plus allowing unprivileged user namespaces by default in Ubuntu allows
-> an unprivileged attacker to gain elevated privileges.
-> 
-> A commit that addresses the issue was applied in the upstream kernel:
-> 
->   7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
+The original reporter has tried to post CVE-assignment information to 
+the list but the mail has not made it through yet.
 
-For completeness, this though was in v5.11-rc1 right?
+Bob
 
-Regards,
-Salvatore
+On Fri, 24 Feb 2017, Bob Friesenhahn wrote:
+
+> I would like to ammend this report in that the situation is a read beyond an 
+> allocated heap buffer rather than a write beyond the end of an allocated heap 
+> buffer as was originally reported.  The application may crash but should not 
+> be otherwise compromised.
+>
+> Bob
+>
+> On Thu, 23 Feb 2017, Bob Friesenhahn wrote:
+>
+>> GraphicsMagick versions up to 1.3.25 encounter a write beyond an allocated 
+>> heap buffer when reading CMYKA TIFF files which claim to offer fewer 
+>> samples per pixel than required.
+>> 
+>> This is the tiffinfo description of the problematic TIFF file:
+>> 
+>> TIFF Directory at offset 0x808 (2056)
+>>  Image Width: 34 Image Length: 48
+>>  Bits/Sample: 8
+>>  Sample Format: unsigned integer
+>>  Compression Scheme: None
+>>  Photometric Interpretation: separated
+>>  Extra Samples: 1<unassoc-alpha>
+>>  Orientation: row 0 top, col 0 lhs
+>>  Samples/Pixel: 2
+>>  Rows/Strip: 32
+>>  Planar Configuration: single image plane
+>> 
+>> The fix for this is Mercurial changeset 14998:6156b4c2992d which may be 
+>> viewed at SourceForge via this link:
+>> 
+>> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+>> 
+>> A minimal patch to correct the problem is attached.
+>> 
+>> This issue was reported to us on February 15, 2017 by Valon Chu.
+>> 
+>> Bob
+>> 
+>
+>
+
+-- 
+Bob Friesenhahn
+bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
