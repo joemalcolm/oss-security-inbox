@@ -1,70 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/18/4
-Message-ID: <815123.168143572-sendEmail@localhost>
-Date: Fri, 18 Aug 2017 13:54:45 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: graphicsmagick: invalid memory read in SetImageColorCallBack (image.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/7
+Message-ID: <20170228162802.5rmgjzynfz7r7e7c@eldamar.local>
+Date: Tue, 28 Feb 2017 17:28:02 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Linux: net/llc: avoid BUG_ON() in skb_orphan() (CVE-2017-6345)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+Hi
 
-The complete ASan output of the issue:
+CVE-2017-6345 was assigned by MITRE to the following (via
+https://cveform.mitre.org/):
 
-# gm convert -clip -negate $FILE out
-==11324==ERROR: AddressSanitizer: SEGV on unknown address 0x7f9ccac18000 (pc 0x7f9dbacf58ce bp 0x7ffec95349c0 sp 0x7ffec9534980 T0)
-    #0 0x7f9dbacf58cd in SetImageColorCallBack /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2090:15
-    #1 0x7f9dbaf16bbd in .omp_outlined..4 /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:378:23
-    #2 0x7f9dbaf11873 in PixelIterateMonoModifyImplementation /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:348:33
-    #3 0x7f9dbaf111be in PixelIterateMonoSet /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/pixel_iterator.c:415:10
-    #4 0x7f9dbacf379b in SetImageEx /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2125:10
-    #5 0x7f9db448bc86 in ReadMNGImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/png.c:5016:26
-    #6 0x7f9dbaa14e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #7 0x7f9dba8a7f18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #8 0x7f9dba8e40c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #9 0x7f9dba98f85b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #10 0x7f9dba98c991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #11 0x7f9db91f7680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+https://git.kernel.org/linus/8b74d439e1697110c5e5c600643e823eb1dd0762
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/image.c:2090:15 in SetImageColorCallBack
-==11324==ABORTING
+> net/llc: avoid BUG_ON() in skb_orphan()
+> 
+> It seems nobody used LLC since linux-3.12.
+> 
+> Fortunately fuzzers like syzkaller still know how to run this code,
+> otherwise it would be no fun.
+> 
+> Setting skb->sk without skb->destructor leads to all kinds of
+> bugs, we now prefer to be very strict about it.
+> 
+> Ideally here we would use skb_set_owner() but this helper does not exist yet,
+> only CAN seems to have a private helper for that.
 
-Affected version:
-1.3.26
+The fix was backported to 4.9.13 as well.
 
-Fixed version:
-N/A
-
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/cd699a44f188
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-12935
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00303-graphicsmagick-invalidread-SetImageColorCallBack
-
-Timeline:
-2017-07-12: bug discovered and reported to upstream
-2017-07-26: upstream released a fix
-2017-08-05: blog post about the issue
-2017-08-18: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-invalid-memory-read-in-setimagecolorcallback-image-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
+Regards,
+Salvatore
