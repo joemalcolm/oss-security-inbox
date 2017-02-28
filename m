@@ -1,53 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/17/2
-Message-ID: <7J5Ty2vgO1xgwQfuBuNdOk_66l2D-0tR4x-V9y9H5SSXjFG6W6BrvMZ0Q4CCv3vtXL6Z01B-vuXX_roq-cfb3JjF6m-If5ib8B9Z8KkYqgw=@protonmail.com>
-Date: Sun, 17 Dec 2017 02:14:16 -0500
-From: Qhdwns123 <qhdwns123@...tonmail.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: The Internet Bug Bounty: Data Processing (hackerone.com)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/2
+Message-ID: <alpine.GSO.2.20.1702280817550.12318@freddy.simplesystems.org>
+Date: Tue, 28 Feb 2017 08:19:36 -0600 (CST)
+From: Bob Friesenhahn <bfriesen@...ple.dallas.tx.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: GraphicsMagick heap out of bounds write issue
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+This problem has been issued CVE-2017-6335.
 
-I think this project is a good idea.
+The original reporter has tried to post CVE-assignment information to 
+the list but the mail has not made it through yet.
 
-However, there is a difficulty.
+Bob
 
-Most of the bugs reported are only PoC files and ASan logs.
+On Fri, 24 Feb 2017, Bob Friesenhahn wrote:
 
-Because it takes a lot of analysis time to analyze the bugs and make the RCE (Exploit).
-
-As a result, other bugs are delayed.
-
-Thanks.
-
-> -------- Original Message --------
-> Subject: Re: [oss-security] The Internet Bug Bounty: Data Processing (hackerone.com)
-> Local Time: October 9, 2017 5:04 PM
-> UTC Time: October 9, 2017 8:04 AM
-> From: reed@...dloden.com
-> To: oss-security@...ts.openwall.com
+> I would like to ammend this report in that the situation is a read beyond an 
+> allocated heap buffer rather than a write beyond the end of an allocated heap 
+> buffer as was originally reported.  The application may crash but should not 
+> be otherwise compromised.
 >
-> On Sun, Oct 8, 2017 at 11:24 PM Michael Niedermayer michael@...dermayer.cc
-> wrote:
+> Bob
 >
->>> We’d love to have FFmpeg in-scope, but the simple reason is that they
->>> don’t
->>> reply to our e-mails. All projects participating must explicitly opt-in,
->>> and we can’t get anybody at FFmpeg to let us know their thoughts on if
->>> they
->>> would like to be added or not.
->>
->> Your mails where misidentified as spam on my side at least, and while
->> i admit i saw them and wanted to reply later i forgot and somehow
->> apparently everyone else forgot to reply too.
->> Finally replied and yes of course FFmpeg wants to participate
+> On Thu, 23 Feb 2017, Bob Friesenhahn wrote:
 >
-> Awesome! Thanks for getting back to us.
+>> GraphicsMagick versions up to 1.3.25 encounter a write beyond an allocated 
+>> heap buffer when reading CMYKA TIFF files which claim to offer fewer 
+>> samples per pixel than required.
+>> 
+>> This is the tiffinfo description of the problematic TIFF file:
+>> 
+>> TIFF Directory at offset 0x808 (2056)
+>>  Image Width: 34 Image Length: 48
+>>  Bits/Sample: 8
+>>  Sample Format: unsigned integer
+>>  Compression Scheme: None
+>>  Photometric Interpretation: separated
+>>  Extra Samples: 1<unassoc-alpha>
+>>  Orientation: row 0 top, col 0 lhs
+>>  Samples/Pixel: 2
+>>  Rows/Strip: 32
+>>  Planar Configuration: single image plane
+>> 
+>> The fix for this is Mercurial changeset 14998:6156b4c2992d which may be 
+>> viewed at SourceForge via this link:
+>> 
+>> https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b3b93c3229fc4b8/
+>> 
+>> A minimal patch to correct the problem is attached.
+>> 
+>> This issue was reported to us on February 15, 2017 by Valon Chu.
+>> 
+>> Bob
+>> 
 >
-> We've added FFmpeg to the scope at the bottom of
-> https://hackerone.com/ibb-data.
 >
-> Happy hacking,
-> ~reed
-> (for the IBB)
+
+-- 
+Bob Friesenhahn
+bfriesen@...ple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
+GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
