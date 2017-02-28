@@ -1,4 +1,9 @@
-Received: (qmail 3361 invoked by uid 550); 21 May 2026 17:53:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["623" "Tuesday" "28" "February" "2017" "17:25:24" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170228162524.47jesr3zopycriir@eldamar.local>" "23" "[oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)" nil nil nil "2" "2017022816:25:24" "[oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)" (number mark "U       carnil@debia Feb 28   23/623   " thread-indent "\"[oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 10002 invoked by uid 550); 28 Feb 2017 16:25:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,91 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32212 invoked from network); 21 May 2026 17:19:55 -0000
+Received: (qmail 9984 invoked from network); 28 Feb 2017 16:25:37 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779383985; x=1779988785; darn=lists.openwall.com;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xgmbORoPC4vqrJBtnEhXcZ9Nw2HZwSU7PMf/QiEIXlo=;
-        b=XSzwoQ7O14BPJVdPLexScCsT0XengBkDSqMYBoXhF4KtDvj8s1KNGnm18oJjO1eipk
-         mZ/InZAJtEswGNTYYWu237R2+q98lEDqY8OcwSU5XSb9lDSDj3x9WvMCQ5nVR9ltuaF5
-         zwZ3AP7APz8r0VNoniVLgMof5t3MMkRT2IoN+jh6TwUcHH417ObpQpFeN7wUrxOBfaln
-         KPD65RFwOc+aIIrGWsacro1Nh+cuITiiWC2LSlJEwKLb/DMA+Eg5/jiRtKVlSVjoWCEk
-         EwOmG9kV0/eEKg36n6RVNH5UWDqJgRA9Ft1vP1cvVkeKHowq5dxRg4M34o3BHuTExh4d
-         a0Wg==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=byNyKYMgGNRpSghBJRd48Z4l6ImQCO11PFcFt+3r+8s=;
+        b=hoXjfdXp4nOSLVs6EnWzLkl0ScjPlJudmEQdrgmZVFp2BpikOlQD/AZlEB4GmFaWYT
+         3KoV2F1MAHqBAar85CjK9k4vTb6/2mJsDwXMCHfjyd9tm4M6+CL36Hsi10a8sD/JhE6g
+         Ce3yp3q0gq6GgAS7elkd9UMROmMlX8YGYEsfttQCJ9uFaOFLtqmstF3ObR+wHW7a3sgT
+         RoFAN1C9gKy4ANp8FsDGGfW/J9ZNnFIu2OnG7wMH7dLZVxFV8eZlTA55+A+oy2Q8s38/
+         DOc2Hvr+ppA63HTW3Qs6LAC/SzXpYbsgXBDIufi1bfHL/uO1C1Gpbtg9EKxucYjMw2ei
+         D4Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779383985; x=1779988785;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xgmbORoPC4vqrJBtnEhXcZ9Nw2HZwSU7PMf/QiEIXlo=;
-        b=Kp2RRpH8Ys66N++2Ff8CcOIzCk1Dz5OJwG3SXCQ/aUkK8zjR/gTwPeJNfWqjhCtp+0
-         9zZttFTCPBYYrikBopB2OjgkpHIyKzF4VyxMUQglp/tgS3MT7MXXf6IexqpCQWE9sND3
-         KEkqO1G6tI+sEzEbVj33mzcWnjZH6Nh8rQY4SOueJAX3MkNu1hyZVRghN8OhtTZzZ6Ku
-         u/FAasD4SS7l3BFAFM1WZaQyfRjtdw1fSr83jlj2/+zRJbzMosWQcYOojGkiVrE/IDth
-         kZuy0x0r4DS0TY1ZtQOzXEwuR/dxcFgt0BMv+JkSX4FFD6wwVjxUXSlIKi8zUUkusCmr
-         A2tw==
-X-Gm-Message-State: AOJu0Yxz7kQkBN1Z19P/5TjA/UtqKl03A7MARiblFjbYtKgybOaz9kOT
-	zGSkaCwx62pKR6gP3+jlob4rIXypxzuBPNsPim4W1T47ZwJFNi9K0rCKJDus7Q==
-X-Gm-Gg: Acq92OGKHmUyQT/L+xsIc/3pg8evuQs/PwqxSTSgni3Z6B4VhGFun8EBD7Vd9QtukwG
-	4b6h/uPT0zLa3pvOEzclSCJW+cv5A51tTj8y2nh7Svd9larx96WTfm1tUrHr6pOeuOe+1eCe2ts
-	nrcQeG6TXyanj6m4MkTligfzvV9HGT2rRKWZQymLMXcQKqsuhoP+wv27AFpR60Tqzb4cjjuLHtl
-	UG+eEuYomLsct5hfIZJGIqdzgSWZ6K47vq0p6KWO4WE8awEAqCJzDAQxffA2Prn+RiGMPhnj3V1
-	ueOoAYBmGBosypD56R4+cPTTWzqrA3NwAZgdS4uXNynYN+PwLQCpj8vaEqpM1aT+TK56rP33H7F
-	rBorLYD4jEc2V2BbCCGZMRDioySaZgkzuwN3Ko8rrtzocax1eL6Ur2gdcTTCASOBB/V6iulqziU
-	o7flLMF6I9pyE4qtznCw+HzgQQ/OIBR+ucfF3tVuTrEeHsOYlU0q1Z/A==
-X-Received: by 2002:a17:902:e78c:b0:2ba:3e2f:6883 with SMTP id d9443c01a7336-2bea3379cb5mr40769975ad.19.1779383985369;
-        Thu, 21 May 2026 10:19:45 -0700 (PDT)
-Date: Fri, 22 May 2026 02:19:42 +0900
-From: Hyunwoo Kim <imv4bel@gmail.com>
-To: oss-security@lists.openwall.com
-Cc: imv4bel@gmail.com
-Message-ID: <ag8-rm91DYcl7uxz@v4bel>
-In-Reply-To: <agXllSDnfFBIo7xh@eldamar.lan>
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=byNyKYMgGNRpSghBJRd48Z4l6ImQCO11PFcFt+3r+8s=;
+        b=XROMpbiNAiHG7maWg7Kr9P22RQswQ4ZFH0NSM55xAqXRNXTeN4To9+eiTo89PBhC3h
+         /1si9y84/S6jRJUoPhwNzVo/f1sYhR0+n3exwRdHHmg1WByE0MI0ekhoIrp5M39DjQD8
+         dclZZOEiVdk6AOrWNdftWlkBB06peZfFLVIwQuL2wujqV+jjUIve+53CDiyoolTdeYOT
+         3fp7Yo5lE+jDhbquZc8AOezF7T5vv3P8bN1ZF556pLHtJgNukSfVLv6XqtvWEEwFuKMN
+         JcMww3Z/Y62lC0MPNQML2ElZK3b3R45N5J7hvxwowuzwRpkziRywtV3ycrnaLfeSghov
+         qAHQ==
+X-Gm-Message-State: AMke39kiR5eTFosoUqhqshYNu3WM4t9B1Mi8GkPsStUTERQmxdFR4TQEHOjDvHDyHj7mzQ==
+X-Received: by 10.223.164.9 with SMTP id d9mr3169421wra.146.1488299126426;
+        Tue, 28 Feb 2017 08:25:26 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 28 Feb 2017 17:25:24 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170228162524.47jesr3zopycriir@eldamar.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Subject: [oss-security] Linux kernel: Dirty Frag =?utf-8?Q?variant?= =?utf-8?B?cyDigJQ=?=
- fix merged into netdev
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] Linux: packet: fix races in fanout_add() (CVE-2017-6346)
 
-Hi,
+Hi
 
-With the help of several maintainers and developers, a v5 patch
-resolving the "publicly disclosed" Dirty Frag variants other than the
-CVE-2026-46300 (fragnesia) variant has been merged into netdev:
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=48f6a5356a33dd78e7144ae1faef95ffc990aae0
+CVE-2017-6346 was assigned by MITRE to the following (via
+https://cveform.mitre.org/):
 
-Separately, the patch resolving CVE-2026-46300 alone has been split
-into its own patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=f84eca5817390257cef78013d0112481c503b4a3
+https://git.kernel.org/linus/d199fab63c11998a602205f7ee7ff7c05c97164b
 
-This 48f6a5356a33 patch addresses four "publicly disclosed" variants:
+> packet: fix races in fanout_add()
+> 
+> Multiple threads can call fanout_add() at the same time.
+> 
+> We need to grab fanout_mutex earlier to avoid races that could
+> lead to one thread freeing po->rollover that was set by another thread.
+> 
+> Do the same in fanout_release(), for peace of mind, and to help us
+> finding lockdep issues earlier.
 
-1. https://lore.kernel.org/all/agRhFtawP06hWyRa@v4bel/  (2026-05-13)
-2. https://lore.kernel.org/all/agSx78pXBFCdn08p@v4bel/  (2026-05-13)
-3. https://lore.kernel.org/all/agVpIsaSherjHTYg@sultan-box/  (2026-05-14)
-4. https://github.com/v12-security/pocs/tree/main/fragnesia-5db89c99566fc  (2026-05-15)
+Since 4.2 the races can lead to a use-after-free.
 
-Note that the fourth PoC was confirmed to be blocked as well by the v3
-fix (skb_gro_receive) [1] that resolves the third PoC, and the v4 [2]
-and v5 [3] changes address potential issues.
+The fix was backported to 4.9.13 as well.
 
-As long as the in-place path in esp remains, further variants of this
-kind are expected to be found in the esp module. As mentioned
-previously, I recommend keeping the mitigation in place for the time
-being.
-
-This patch has been verified against various selftests and stress
-tests without issues, but it would be appreciated if distro
-maintainers could additionally test whether this patch introduces any
-regressions.
-
-
-Best regards,
-Hyunwoo Kim
-
-
-[1]: https://lore.kernel.org/all/agW4vC0r8QOUKtRT@v4bel/
-[2]: https://lore.kernel.org/all/aga1VyHpHaUhnGZa@v4bel/
-[3]: https://lore.kernel.org/all/ageeJfJHwgzmKXbh@v4bel/
+Regards,
+Salvatore
