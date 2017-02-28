@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/8
-Message-Id: <D1EB28A9-7BC2-49FF-96F0-4C6309839864@redhat.com>
-Date: Sun, 17 Sep 2017 15:25:53 -0600
-From: Kurt Seifried <kseifrie@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Alexander Batischev <eual.jp@...il.com>
-Subject: Re: Podbeuter podcast fetcher: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/28/4
+Message-ID: <20170228162034.qlety2rdz2skpomr@eldamar.local>
+Date: Tue, 28 Feb 2017 17:20:34 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Linux: irda: Fix lockdep annotations in hashbin_delete() (CVE-2017-6348)
 Content-Type: text/plain; charset=utf-8
 
-I never spoke or advocated about delaying things or timelines and CVEs except in the sense I'd like to make it easier and get CVEs attached to things fast so that issues can be disclosed ASAP, ideally with a CVE. I want to have my cake, and eat it, and share it with everyone else.
+Hi
 
+CVE-2017-6348 was assigned by MITRE to the following (via
+https://cveform.mitre.org/):
 
--Kurt
+https://git.kernel.org/linus/4c03b862b12f980456f9de92db6d508a4999b788
 
-
-
-
-
-> On Sep 17, 2017, at 10:23, Solar Designer <solar@...nwall.com> wrote:
+> irda: Fix lockdep annotations in hashbin_delete().
 > 
->> On Sun, Sep 17, 2017 at 09:59:11AM -0600, Kurt Seifried wrote:
->> many orgs (probably not open source distros run by
->> volunteers, but more big corps) literally do have a clock start ticking
->> when a CVE comes to light
+> A nested lock depth was added to the hasbin_delete() code but it
+> doesn't actually work some well and results in tons of lockdep splats.
 > 
-> I think that's not a reason to delay disclosing an issue to everyone
-> else until there's a CVE ID.  If those orgs have such poor, limited, or
-> maybe cost-saving processes (saving on not needing to bother with issues
-> lacking CVE IDs, no matter how serious), it's their problem and their
-> users'.  They deliberately put themselves at a competitive disadvantage.
-> So be it.  This only reaffirms me in my suggested approach: public
-> disclosure first, CVE next.  So those big corps will have a reason to
-> fix the issues anyway, just with their self-imposed delay.
-> 
-> Alexander
+> Fix the code instead to properly drop the lock around the operation
+> and just keep peeking the head of the hashbin queue.
+
+Quoting a note from Ben Hutchins: "This actually changes locking, not just
+lockdep annotations. So I think it fixes a potential deadlock."
+
+The fix was as well backported to 4.9.13.
+
+Regards,
+Salvatore
