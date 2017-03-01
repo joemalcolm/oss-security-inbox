@@ -1,23 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/10/6
-Message-ID: <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>
-Date: Fri, 10 Feb 2017 15:40:45 +0000
-From: "Priedhorsky, Reid" <reidpr@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: Re: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/1
+Message-ID: <20170301003129.GB4851@sin.redhat.com>
+Date: Wed, 1 Mar 2017 11:01:30 +1030
+From: Doran Moppert <dmoppert@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: three issues in xorg (CVE-2016-2624, CVE-2016-2625, CVE-2016-2626)
 Content-Type: text/plain; charset=utf-8
 
+Vulnerabilities in xorg (server, libXdmcp, libICE) were recently
+reported by Eric Sesterhenn of X41, and assigned CVEs by Red Hat.
 
-To more efficiently assign and publish CVE IDs and to enable
-automation and data sharing within CVE operations, MITRE is changing
-the way it accepts CVE ID requests on the oss-security mailing list.
-Starting today, please direct CVE ID requests to this web form
-<https://cveform.mitre.org/>
 
-I’ve been using the CVE requests on oss-security to maintain a reasonably comprehensive and timely list of vulnerabilities for specific products. It’s not clear to me how to do this when CVE requests happen offline in a web form.
+> CVE-2017-2624 xorg-x11-server: timing attack against MIT Cookie
 
-Has this use case been considered? Is there an alternate way to accomplish my goal?
+mitauth.c uses memcmp() to check the validity of MIT cookies, exposing a
+possible timing attack on some platforms.
 
-Thanks,
-Reid
+https://bugzilla.redhat.com/show_bug.cgi?id=1424984
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=856398
+https://bugzilla.novell.com/show_bug.cgi?id=1025029
+
+
+> CVE-2017-2625 libXdmcp: weak entropy usage for session keys
+
+In the absence of arc4random(), xdmcp session keys are generated based
+on getpid() and time(), which may allow a local attacker to brute-force
+the key.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1424987
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=856399
+https://bugzilla.novell.com/show_bug.cgi?id=1025046
+
+
+> CVE-2017-2626 libICE: weak entropy usage in session keys
+
+In the absence of arc4random(), the Inter-Client Exchange session keys
+are generated based on gettimeofday(), which may allow a local attacker
+to brute-force the key.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1424992
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=856400
+https://bugzilla.novell.com/show_bug.cgi?id=1025068
+
+
+The first issue is mitigated with recent glibc's memcmp, particularly
+with -D_FORTIFY_SOURCE=2, and the other two by providing an
+implementation of arc4random at compile time, such as libbsd.
+
+I expect these to be announced shortly at
+<https://www.x.org/wiki/Development/Security/>.
+
+
+
+-- 
+Doran Moppert
+Red Hat Product Security
