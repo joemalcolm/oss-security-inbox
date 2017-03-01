@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/9
-Message-ID: <D999895D83BF47489B7647E60E228B4702FE796D@EX10MBOX05.pnnl.gov>
-Date: Mon, 13 Feb 2017 17:53:49 +0000
-From: "Maier, Kurt H" <kurt.maier@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>
-Subject: RE: MITRE is adding data intake to its CVE ID process
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/10
+Message-ID: <58d40b9e-35ab-6576-d190-774c869c2a58@redhat.com>
+Date: Wed, 1 Mar 2017 17:57:23 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2016-10228: glibc iconv program can hang when invoked with the -c option
 Content-Type: text/plain; charset=utf-8
 
+The iconv program (not the iconv function) provided by glibc can hang 
+(enter an infinite loop) when invoked with the -c option and an invalid 
+multi-byte sequence is encountered in the input:
 
-________________________________________
-> From: Priedhorsky, Reid [reidpr@...l.gov], Monday, February 13, 2017 8:40 AM
+   https://sourceware.org/bugzilla/show_bug.cgi?id=19519
 
->The alternatives I’ve seen raised would not be adequate for me. Specifically, 
->depending on people to forward their stuff to the list is too brittle (people won’t 
->do it reliably), and watching an XML feed requires setting up and maintaining 
->software for a new data feed.
+We have received an independent report of this issue, so we are treating 
+this as a (minor) security bug now on the glibc upstream side.
 
-I am in full agreement with Reid's message, with the added suggestion that any
-such messages that don't wind up on the mailing list won't be available for the
-insightful discussion that frequently occurs here, and replacing this list with an
-XML feed torpedoes most hope for same.
+(Note to Red Hat Product Security: We already have a couple of product 
+bugs for this.)
 
-khm
+Thanks,
+Florian
