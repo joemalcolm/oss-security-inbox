@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/25/5
-Message-ID: <alpine.LFD.2.20.1704251521270.24794@wniryva>
-Date: Tue, 25 Apr 2017 15:23:42 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-8086 Qemu: 9pfs: host memory leakage via v9pfs_list_xattr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/5
+Message-ID: <32f3823a-56ce-f384-03dc-7c813169cf38@securify.nl>
+Date: Wed, 1 Mar 2017 07:17:51 +0100
+From: Summer of Pwnage <lists@...urify.nl>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities affecting various WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
-Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable 
-to a memory leakage issue. It could occur while querying file system extended 
-attributes via 9pfs_list_xattr() routine.
 
-A privileged user/process inside guest could use this flaw to leak host memory 
-resulting in Dos.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=4ffcdef4277a91af15a3c09f7d16af072c29f3f2
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1444781
+View attachment "analytics_stats_counter_statistics_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3420 bytes)
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+View attachment "simple_ads_manager_wordpress_plugin_unauthenticated_php_object_injection_vulnerability.txt" of type "text/plain" (3175 bytes)
 
-'CVE-2017-8086' assigned via -> http://cveform.mitre.org/
+View attachment "vaultpress___remote_code_execution_via_man_in_the_middle_attack.txt" of type "text/plain" (7387 bytes)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+View attachment "wordpress_adminer_plugin_allows_public__local__database_login.txt" of type "text/plain" (4299 bytes)
