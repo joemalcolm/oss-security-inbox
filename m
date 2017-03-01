@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/07/1
-Message-ID: <4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>
-Date: Sat, 7 Oct 2017 08:56:48 +0200
-From: chbi@...i.eu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/4
+Message-ID: <63175610-a850-72d6-b3b1-928908d4d608@securify.nl>
+Date: Wed, 1 Mar 2017 07:17:14 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: Stored XSS vulnerabilities in Flyspray
+Subject: Multiple Cross-Site Request Forgery vulnerabilities affecting various WordPress Plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-I've discovered two security issues in Flyspray (http://www.flyspray.org/)
-
-
-A stored XSS vulnerability in Flyspray before 1.0-rc6 allows an
-authenticated user to inject JavaScript to gain administrator privileges.
-
-Fix:
-https://github.com/Flyspray/flyspray/commit/754ec5d04348ef7ecb8cb02ade976dc412b031f8
-
-
-A stored XSS vulnerability in Flyspray between 1.0-rc4 and 1.0-rc6
-allows an authenticated user to inject JavaScript to gain administrator
-privileges and also to execute JavaScript against other users (including
-unauthenticated users).
-
-Fix
-https://github.com/Flyspray/flyspray/commit/00cfae5661124f9d67ac6733db61b2bfee34dccc
-
-
-Both issues are fixed in Flyspray 1.0-rc6.
-
-https://github.com/Flyspray/flyspray/releases/tag/v1.0-rc6
-
-
-I've requested CVE IDs (MITRE).
-
-
--- 
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
+Please see attached advisories for more information. These issues were 
+found during Summer of Pwnage (https://sumofpwn.nl), a Dutch community 
+project. Its goal is to contribute to the security of popular, widely 
+used OSS projects in a fun and educational way.
 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+View attachment "cross_site_request_forgery_in_atahualpa_wordpress_theme.txt" of type "text/plain" (4875 bytes)
+
+View attachment "cross_site_request_forgery_in_file_manager_wordpress_plugin.txt" of type "text/plain" (3812 bytes)
+
+View attachment "cross_site_request_forgery_in_global_content_blocks_wordpress_plugin.txt" of type "text/plain" (4080 bytes)
+
+View attachment "cross_site_request_forgery_in_wordpress_download_manager_plugin.txt" of type "text/plain" (4933 bytes)
+
+View attachment "gwolle_guestbook_mass_action_vulnerable_for_cross_site_request_forgery.txt" of type "text/plain" (4195 bytes)
+
+View attachment "popup_by_supsystic_wordpress_plugin_vulnerable_to_cross_site_request_forgery.txt" of type "text/plain" (14673 bytes)
