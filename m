@@ -1,4 +1,9 @@
-Received: (qmail 32721 invoked by uid 550); 5 Oct 2023 16:28:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["787" "Wednesday" "1" "March" "2017" "23:38:14" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1703012335480.15645@wniryva>" "25" "[oss-security] CVE-2017-6414 Qemu: libcacard: host memory leakage while creating new APDU" nil nil nil "3" "2017030118:08:14" "[oss-security] CVE-2017-6414 Qemu: libcacard: host memory leakage while creating new APDU" (number mark "U       ppandit@redh Mar  1   25/787   " thread-indent "\"[oss-security] CVE-2017-6414 Qemu: libcacard: host memory leakage while creating new APDU\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5489 invoked by uid 550); 1 Mar 2017 18:08:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,90 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32700 invoked from network); 5 Oct 2023 16:28:30 -0000
-Date: Thu, 5 Oct 2023 18:28:18 +0200
-From: Fabian Keil <freebsd-listen@fabiankeil.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20231005182818.64a446f0@fabiankeil.de>
-In-Reply-To: <20231005135411.dw3mfr2zigmx2h5e@mutt-hbsd>
-References: <20231005081449.GA20205@unix-ag.uni-kl.de>
-	<20231005135411.dw3mfr2zigmx2h5e@mutt-hbsd>
+Received: (qmail 5468 invoked from network); 1 Mar 2017 18:08:31 -0000
+Date: Wed, 1 Mar 2017 23:38:14 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1703012335480.15645@wniryva>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: Nzc1MDY3
-Subject: Re: [oss-security] There is a curl "severity HIGH security problem"
- pre-announcement on GitHub
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Wed, 01 Mar 2017 18:08:20 +0000 (UTC)
+Subject: [oss-security] CVE-2017-6414 Qemu: libcacard: host memory leakage while creating
+ new APDU
 
-Shawn Webb <shawn.webb@hardenedbsd.org> wrote on 2023-10-05 at 09:54:11:
+   Hello,
 
-> On Thu, Oct 05, 2023 at 10:14:49AM +0200, Erik Auerswald wrote:
+The CAC(Common Access Card) library, used by Quick Emulator(Qemu) to implement 
+smartcard support, is vulnerable to a host memory leakage issue. It could 
+occur while allocating a new APDU object using guest supplied raw byte stream 
+in 'vcard_apdu_new'.
 
-> > there is a pre-announcement of a curl security problem with high severity
-> > that can be found on GitHub:
-> > 
-> >  - https://github.com/curl/curl/discussions
-> >  - https://github.com/curl/curl/discussions/12026
-> 
-> I wonder if this could also be coordinated through CERT VINCE since
-> there will be a wider impact than those on the distros mailing list.
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
-I wondered what "CERT VINCE" is supposed to mean so I tried to
-search the English Wikipedia but was unsuccessful. Probably
-even the English Wikipedia can't keep up with all the "CERTS"
-that are available now.
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/spice/libcacard/commit/?id=9113dc6a303604a2d9812ac70c17d076ef11886c
 
-Anyway, after a proper web search I ended at [0] which says:
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1427833
 
-| Welcome to the Vulnerability Information and Coordination
-| Environment (VINCE). If you are a vendor and would like to
-| communicate with us about a vulnerability or update your
-| contact information, please create an account or sign in. You
-| can also report a vulnerability to us, with or without a VINCE
-| account. For more information see the VINCE Documentation site
+This issue was reported by Li Qiang of 360.cn Inc.
 
-There doesn't seem to be a period after the last sentence,
-but maybe that's art or the page is still under construction.
+'CVE-2017-6414' assigned via -> http://cveform.mitre.org/
 
-Apparently they are "Sponsored by CISA." and apparently
-CISA is "America's Cyber Defence Agency" [1] which seems
-to be relying a bit too much on computers without lower
-caps, otherwise their website would probably look a bit
-more professional.
-
-Luckily I use ElectroBSD [2] so I was able to spell their
-name using lower caps anyway.
-
-I also briefly looked at the "VINCE"
-"Vulnerability Disclosure Guidance" [3] and read:
-
-| A vulnerability is difficult to define. It can be thought of as
-| a flaw in software or hardware components that allows an
-| attacker to perform actions that wouldn't normally be
-| allowed. The impact of such vulnerabilities varies
-| greatly. They may allow the attacker to learn someone's private
-| email address, take control of a computer, or even cause
-| physical damage and bodily injury.
-
-My first impression is that they may be targeting children
-below ten and I wish them the best of luck in their endeavors.
-I'm already a bit older than ten and I already have enough
-accounts for somewhat dubious sites that could leak my data
-at any minute.
-
-Anyway, I suppose nobody on this list will stop you, Shawn,
-from personally giving "CERT VINCE" a heads-up that a somewhat
-important curl [4] patch will probably be published around
-2023-10-11.
-
-If they ask you what curl is you should probably use simple
-words when you explain it.
-
-Happy hacking
-Fabian
-
-[0] <https://kb.cert.org/vince/>
-[1] <https://www.cisa.gov/>
-[2] <https://www.fabiankeil.de/gehacktes/electrobsd/>
-[3] <https://kb.cert.org/vuls/guidance/>
-[4] <https://curl.se/>
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
