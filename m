@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/28
-Message-ID: <65f3c8fc-60f9-a678-1ed4-6461fa7a31f5@gentoo.org>
-Date: Thu, 6 Jul 2017 00:12:37 +0200
-From: Kristian Fiskerstrand <k_f@...too.org>
-To: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/9
+Message-id: <2DC459E9-2A8F-45E1-8D1C-7AC78F3BCADB@me.com>
+Date: Wed, 01 Mar 2017 04:39:21 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Persistent XSS Vulnerability in Wordpress plugin AnyVar v0.1.1
 Content-Type: text/plain; charset=utf-8
 
-On 07/06/2017 12:02 AM, Kristian Fiskerstrand wrote:
-> On 07/05/2017 11:58 PM, Simon McVittie wrote:
->> systemd does have a (public, and publically-archived) mailing list, which
->> has a current thread on the subject of this issue.
->>
->> In particular the mail in that thread from Felipe Sateler, and some of
->> the discussion on the upstream bug, touches on reasons why neither
->> "if anything is not as expected, reject the whole unit" nor the current
->> behaviour is right. I suspect the resolution is likely to be something
->> in between.
-> 
-> It would be useful with a reference to the thread in question so this
-> can be further looked into.
-> 
+Title: Persistent XSS Vulnerability in Wordpress plugin AnyVar v0.1.1
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-02-21
+Download Site: https://wordpress.org/plugins/anyvar
+Vendor: https://profiles.wordpress.org/matt_dev/
+Vendor Notified: 2017-02-28
+Vendor Contact: plugins@...dpress.org
+Description: AnyVar is a simple search and replace plugin. It lets you add changeable variables (text snippets) to posts, sidebars, widgets, links & themes.
+Vulnerability:
+$var_name and $var_text aren't sanitized before being sent to the webpage.  $var_name only can contain text so only $var_text is exploitable
+In file ./anyvar/anyvar.php:
 
-I expect this is the post in question:
-https://lists.freedesktop.org/archives/systemd-devel/2017-July/039168.html
-,
+202                         echo "<tr id='anyvar-$var_name' $class>
+203                                 <th scope='row' class='check-column'><input     type='checkbox' name='delete[]' value='$var_name' /></th>
+204                                 <td><a class='row-title' href='?page=".$_GET    ['page']."&action=edit&amp;var=$var_name' title='Edit &quot;$var_name&quot;'    > $var_name</a></td>
+205                                 <td>[$var_name]</td>
+206                                 <td><textarea name='anyvar_text_$var_name' i    d='anyvar_text_$var_name' cols='60' rows='3' readonly>$var_text</textarea></    td>
 
-The post seems to be arguing, without much ambiguity, for a fatal error
-on username not existing or not considered valid (which seems like
-sensible behavior to me)
-
--- 
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+CVE-ID: CVE-2017-6103
+Exploit Code:
+	• In the text field box the following will trigger a JS alert popup:
+	•  
+	• </textarea><script>alert(1);</script><textarea>
+Screen Shots: [http://www.vapidlabs.com/m/xssvar.png]
+Advisory: http://www.vapidlabs.com/advisory.php?v=177
