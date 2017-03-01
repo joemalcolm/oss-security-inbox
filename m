@@ -1,25 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/25/5
-Message-ID: <20170725180432.GA4946@openwall.com>
-Date: Tue, 25 Jul 2017 20:04:33 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/2
+Message-ID: <20170301003700.GC4851@sin.redhat.com>
+Date: Wed, 1 Mar 2017 11:07:01 +1030
+From: Doran Moppert <dmoppert@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+Subject: Re: three issues in xorg (CVE-*2017*-2624, CVE-*2017*-2625, CVE-*2017*-2626)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 25, 2017 at 04:46:19PM +0100, John Haxby wrote:
-> However, put me down as backup for "1. Promptly review new issue reports
-> for meeting the list's requirements and confirm receipt..."
+Of course, the subject should have read 2017 where it read 2016 ..
 
-OK, although I'd rather have the old-timers choose trickier tasks.
-
-> I do expect that we (I) will become more active on linux-distros as
-> well.   Speaking of which, has it been unusually quiet or do I need to
-> beat up the mail admin people again?   I haven't seen anything since
-> Bastille Day (14 July).
-
-It has been unusually quiet.  (And this is totally unrelated to the
-travel and vacations that Henri mentioned.  If anything is sent to the
-(linux-)distros list, it should get through without a delay anyway.)
-
-Alexander
+-- 
+Doran Moppert
+Red Hat Product Security
