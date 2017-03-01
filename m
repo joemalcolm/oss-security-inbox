@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/03/6
-Message-ID: <20170603131919.GA18438@openwall.com>
-Date: Sat, 3 Jun 2017 15:19:20 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/01/11
+Message-ID: <alpine.LFD.2.20.1703012335480.15645@wniryva>
+Date: Wed, 1 Mar 2017 23:38:14 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Li Qiang <liqiang6-s@....cn>
+Subject: CVE-2017-6414 Qemu: libcacard: host memory leakage while creating new APDU
 Content-Type: text/plain; charset=utf-8
 
-Oh, and there I was hoping this thread had ended.
+   Hello,
 
-On Sat, Jun 03, 2017 at 08:30:18AM -0400, Daniel Micay wrote:
-> On Sat, 2017-06-03 at 12:06 +0200, Florian Weimer wrote:
-> > I'm not a Red Hat spokesperson, and I did not speak for Red Hat.
+The CAC(Common Access Card) library, used by Quick Emulator(Qemu) to implement 
+smartcard support, is vulnerable to a host memory leakage issue. It could 
+occur while allocating a new APDU object using guest supplied raw byte stream 
+in 'vcard_apdu_new'.
 
-> If you don't want to act as a Red Hat spokesperson, use a
-> personal email address
+A guest user/process could use this flaw to leak host memory resulting in DoS.
 
-Daniel, I think that's too much.
+Upstream patch:
+---------------
+   -> https://cgit.freedesktop.org/spice/libcacard/commit/?id=9113dc6a303604a2d9812ac70c17d076ef11886c
 
-> > Part of the problem with UEFI Secure Boot is that no one
-> > has documented clear security objectives for UEFI Secure Boot.  Fedora
-> > sort of evolved into "no unsigned code running in ring 0 without
-> > virtualization".  From what I can tell, Microsoft picked that up and
-> > urged other distributions under their trust root to implement that as
-> > well.
-> 
-> So, no meaningful security objective
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1427833
 
-This might be right.  Maybe there's a compliance objective: Microsoft
-would let distros use their trust root under some conditions, and from
-distros' point of view it doesn't matter much whether those conditions
-are meaningful or not as long as they're easy to meet.  Then maybe
-treating those bypasses as non-security is a risk, as it draws attention
-to the current convenient terms of Microsoft not making security sense,
-and thus a risk of those terms changing to something more demanding.
-If so, it's technically off-topic for oss-security (and probably for
-CVE), but with the different opinions and without certainty about this
-interpretation I am not going to use this for moderation decisions just
-yet.  I will not be rejecting messages on new (non-)issues in this area.
-I just ask that we please refrain from lengthy threads on each and every
-such (non-)issue.  I will be pushing them from the (linux-)distros list
-to the public right away, if any more are brought to the private lists.
+This issue was reported by Li Qiang of 360.cn Inc.
 
-I haven't participated in past discussions on this, nor had any interest
-in them.  (I am dragged into this now as list admin/moderator; if
-someone else ran the list, I would not be posting to this thread.)
-I might very well be wrong in the above paragraph (which is a reason why
-no decision to reject new (non-)issues).
+'CVE-2017-6414' assigned via -> http://cveform.mitre.org/
 
-Alexander
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
