@@ -1,36 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/26/5
-Message-ID: <alpine.LFD.2.20.1704261248200.8206@wniryva>
-Date: Wed, 26 Apr 2017 12:52:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: YY Z <bigbird475958471@...il.com>, Li Qiang <liqiang6-s@....cn>
-Subject: CVE-2017-8112 Qemu: scsi: vmw_pvscsi: infinite loop in pvscsi_log2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/9
+Message-ID: <393990.264830308-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:36:42 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: NULL pointer dereference in PoDoFo::PdfXObject::PdfXObject (PdfXObject.cpp)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Quick Emulator(Qemu) built with the VMWARE PVSCSI paravirtual SCSI bus 
-emulation support is vulnerable to an infinite loop issue. It could occur 
-while initialising SCSI message ring buffer in pvscsi_ring_init_msg().
+A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-A privileged user inside guest could use this flaw to consume host cpu cycles 
-or crash the Qemu process resulting in DoS.
+The complete ASan output:
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg04578.html
+# podofocolor dummy $FILE foo
+==21036==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fc5cfd94743 bp 0x7ffc1eaffe50 sp 0x7ffc1eaffd40 T0)
+==21036==The signal is caused by a READ memory access.
+==21036==Hint: address points to the zero page.
+    #0 0x7fc5cfd94742 in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfXObject.cpp:264:74
+    #1 0x529308 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:137:28
+    #2 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
+    #3 0x7fc5cd8d178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #4 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1445621
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfXObject.cpp:264:74 in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*)
+==21036==ABORTING
 
-This issue was independently reported by Li Qiang of Qihoo 360 Gear 
-Team and YY Z(CC'd).
+Affected version:
+0.9.5
 
-'CVE-2017-8112' assigned via -> http://cveform.mitre.org/
+Fixed version:
+N/A
 
-Thank you.
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00214-podofo-nullptr-PdfXObject-cpp
+
+Timeline:
+2017-03-01: bug discovered
+2017-03-02: bug reported upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfxobjectpdfxobject-pdfxobject-cpp
+
 --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
