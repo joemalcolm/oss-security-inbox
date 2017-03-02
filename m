@@ -1,4 +1,9 @@
-Received: (qmail 13413 invoked by uid 550); 14 Feb 2024 15:56:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2391" "Thursday" "2" "March" "2017" "16:36:23" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<910426.377874927-sendEmail@localhost>" "64" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)" nil nil nil "3" "2017030216:36:23" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)" (number mark "U       ago@gentoo.o Mar  2   64/2391  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26427 invoked by uid 550); 2 Mar 2017 16:36:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7323 invoked from network); 14 Feb 2024 15:53:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1707926187;
-	bh=Xf6Z28JyezytVN1lX6dTXsXl681Cx/G0kDDkP2ePkl0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type;
-	b=Z7UkdenCoD32kyyyASLN+H8W1ljYhRrYkDtZseJKQfVQinQPZ57CFJvAL+bRbdjlX
-	 byWqTyf76/Ghu/+RnrOo3Uss5Qb0vSs+ncCdGUgQqKVJZRyDkj2qyDJ4iGEnjR4Z5q
-	 A21ZT66VdC5aeo+XfPTl3rqMgiBK2Gq0rkNwCHBvXF0BdGWkoErJMArPVxLGl8ijBU
-	 wrKAYOLAvPY46Qwu5VKFhBjz4bb6acaVKotc1eEXuRfv9wUI1BsWT6CFVcOA34gZXU
-	 ky9VLmypDPNofEKZDUuxFg5ufrjNGRk0zfXe2LJ/dxUgjuZeLjXLDYcj7l4xZdRVgX
-	 uzSQSEMwDaL1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707926186; x=1708530986;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xf6Z28JyezytVN1lX6dTXsXl681Cx/G0kDDkP2ePkl0=;
-        b=me1ozmY73f52TGuYRx6wj0TbfPmqQpKjYoj8kfqEhgiBAjvjdBGtBfkNtvKIunw6p5
-         s9bIGmR0FAIFubEi1yjcvMT3Jz+Qjt2vkSN4wSoxDbP35mnMusGNXylGKvzfxKejbwoY
-         3Qnbk3dodZwX49HcH5xCbLt9cUvfEUgwaDXGqndkedx0seeUCeUWAEIRenY0RvHgDCn5
-         ivPJ/lJp6YTGLoI6J2DbI7Y5X3srEwePYtwbuCFim959wr/moB6G2e0LDBbZA+AT5c38
-         9TE+sF4vKEadtPvRG0Jcx3qf4L415j6CaT9UHY6t1eWAC2YqGEp0EvV/yK8xhXEhXP80
-         807w==
-X-Forwarded-Encrypted: i=1; AJvYcCXPLbbet4/b0/iNZByTb1I+jKylqJjJ0V4msvlCpQ1OEunUUQdASLFlLhP2XBMPyyBNn51tRgJR2GNqcTyPGlPB4V/YGlaSIy5hkZeUk8Rc
-X-Gm-Message-State: AOJu0Yyqx6YwnU1NHBjclqdfW/y8HhyhFwU8v22ljQfRDTp4Q9PH3qC/
-	zPCILo38VVLknQip8HdFmJCq7+YlH38REjA3DqvGgB+opc+SpudtVtE4PRb1w0Z5w6qBbYiTD/8
-	dPqk3zu8SjhzG4Pxp2Rd0UlqRTnQlwpNuTR1qv0OExNE+ja3h+bpru2YQMLp50dD9gxmruFqfLb
-	b8kqZCdag+vhLZsM5+KBKoP+MiHQS6gcFlwE/spnZ7U/Sgqmd/BEQNSvAY
-X-Received: by 2002:a4a:e615:0:b0:59d:d416:3372 with SMTP id f21-20020a4ae615000000b0059dd4163372mr2924839oot.0.1707926185968;
-        Wed, 14 Feb 2024 07:56:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEo1F8I3y4AisH+iCWpTnqgUCPDe1vF9185K/yRG7Tho/BQzK+fkddWTnEjF6uwTPcbZp77UMznIjGRA/0wYPk=
-X-Received: by 2002:a4a:e615:0:b0:59d:d416:3372 with SMTP id
- f21-20020a4ae615000000b0059dd4163372mr2924832oot.0.1707926185697; Wed, 14 Feb
- 2024 07:56:25 -0800 (PST)
+Received: (qmail 26250 invoked from network); 2 Mar 2017 16:36:40 -0000
+Message-ID: <910426.377874927-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 2 Mar 2017 16:36:23 +0000
 MIME-Version: 1.0
-References: <CAAfJHtpMWco6y_wRRzrgQfJZmwzsMG6P8D5FFWLMAOihuc2dZw@mail.gmail.com>
- <ZczfqLnI23SC-A7Q@corsac.net> <CAAfJHtrrtWXmZzUbNhTKP9aXyu90ZsfcOa_cZhBkKS4uUign9Q@mail.gmail.com>
- <ZczhrQT3b1y6c5Dy@corsac.net>
-In-Reply-To: <ZczhrQT3b1y6c5Dy@corsac.net>
-From: Mate Kukri <mate.kukri@canonical.com>
-Date: Wed, 14 Feb 2024 15:56:15 +0000
-Message-ID: <CAAfJHtqy8hp6imxP=S+98RDJ=5YR0a8sN3hdTMtp8SotT7BBJA@mail.gmail.com>
-To: corsac@debian.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Secure Boot bypass in EDK2 based Virtual Machine firmware
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-370246.599734859"
+Subject: [oss-security] podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
 
-In the case of these OVMF/AAVMF images I believe the only other
-built-in application accessible is the firmware setup utility and boot
-selector.
-These obviously provide many capabilities, but require a user present
-at the console to access, and to the best of my knowledge not
-vulnerable to this attack.
-For firmware images provided by other vendors or distributors, I have no id=
-ea.
+------MIME delimiter for sendEmail-370246.599734859
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 14, 2024 at 3:52=E2=80=AFPM Yves-Alexis Perez <corsac@debian.or=
-g> wrote:
->
-> On Wed, Feb 14, 2024 at 03:47:23PM +0000, Mate Kukri wrote:
-> > That is correct in the general case, but here the issue comes from the
-> > fact that a copy of the Shell was included in the firmware image
-> > itself, and as a built-in application was implicitly trusted.
->
-> Ah, thanks for the clarification, I didn't know about the implicit trust
-> on "built-in applications". Out of curiosity, are there other such
-> applications, which could be abused?
->
-> Regards,
-> --
-> Yves-Alexis Perez
+Description:
+podofo is a C++ library to work with the PDF file format.
+
+A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+
+The complete ASan output:
+
+# podofocolor dummy $FILE foo
+==5768==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000018 (pc 0x7f6504f1742c bp 0x7fffc41a0df0 sp 0x7fffc41a0d00 T0)
+==5768==The signal is caused by a READ memory access.
+==5768==Hint: address points to the zero page.
+    #0 0x7f6504f1742b in PoDoFo::PdfVariant::DelayedLoad() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10
+    #1 0x7f6504f1742b in PoDoFo::PdfVariant::GetArray() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:795
+    #2 0x7f6504f1742b in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfXObject.cpp:264
+    #3 0x51ff55 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:137:28
+    #4 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
+    #5 0x7f650358c61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x428718 in _start (/usr/bin/podofocolor+0x428718)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10 in PoDoFo::PdfVariant::DelayedLoad() const
+==5768==ABORTING
+
+Affected version:
+0.9.4
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00174-podofo-nullptr-PoDoFo-PdfVariant-DelayedLoad
+
+Timeline:
+2017-02-13: bug discovered
+2017-03-02: bug reported to upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfvariantdelayedload-pdfvariant-h
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-370246.599734859--
+
