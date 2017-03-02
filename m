@@ -1,38 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/14/5
-Message-ID: <4157335.rtgyRqVO9G@tjmaciei-mobl1>
-Date: Sat, 14 Jan 2017 09:39:24 -0800
-From: Thiago Macieira <thiago@...ieira.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: security@...project.org, oss-security@...ts.openwall.com
-Subject: Re: [Security] Qt QXmlSimpleReader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/8
+Message-ID: <910426.377874927-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:36:23 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: NULL pointer dereference in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
 Content-Type: text/plain; charset=utf-8
 
-On sábado, 14 de janeiro de 2017 17:42:11 PST Solar Designer wrote:
-> > No, there's no such limitation, but many classes will impose 2 GB limits
-> > due to array sizes. The only problem is that getting close to that limit
-> > will already run into code we don't usually test. There are also some
-> > problems with UB on signed overflow on Qt 4.8 and in early Qt 5 versions
-> > (I think I fixed it in 5.4 or 5.5).
-> 
-> In general, are applications using Qt supposed to sanity-check the sizes
-> to be significantly below 2 GiB before passing such data on to Qt?
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Normal applications are supposed to be designed to use the Qt containers with, 
-in the extreme, a couple hundred thousand items. If you're using them with 
-upwards of a billion elements, you should redesign.
+A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-If you're dealing with untrusted data, then you're supposed to sanity check it 
-before passing to any container. That's true for even the Standard Library 
-containers: you don't ask it to allocate 6 GB just because you got that size 
-from the network or some file, because it may succeed and that would still be a 
-DoS due to high swap usage.
+The complete ASan output:
 
-As for QXmlSimpleReader and for the whole QtXml module, it is in Done state. 
-We're not working on it. We will fix security issues, though, so we need to 
-analyse the details that you've supplied.
+# podofocolor dummy $FILE foo
+==5768==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000018 (pc 0x7f6504f1742c bp 0x7fffc41a0df0 sp 0x7fffc41a0d00 T0)
+==5768==The signal is caused by a READ memory access.
+==5768==Hint: address points to the zero page.
+    #0 0x7f6504f1742b in PoDoFo::PdfVariant::DelayedLoad() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10
+    #1 0x7f6504f1742b in PoDoFo::PdfVariant::GetArray() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:795
+    #2 0x7f6504f1742b in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfXObject.cpp:264
+    #3 0x51ff55 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:137:28
+    #4 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
+    #5 0x7f650358c61f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #6 0x428718 in _start (/usr/bin/podofocolor+0x428718)
 
--- 
-Thiago Macieira - thiago (AT) macieira.info - thiago (AT) kde.org
-   Software Architect - Intel Open Source Technology Center
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfVariant.h:545:10 in PoDoFo::PdfVariant::DelayedLoad() const
+==5768==ABORTING
+
+Affected version:
+0.9.4
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00174-podofo-nullptr-PoDoFo-PdfVariant-DelayedLoad
+
+Timeline:
+2017-02-13: bug discovered
+2017-03-02: bug reported to upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfvariantdelayedload-pdfvariant-h
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
