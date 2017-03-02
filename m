@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1965" "Sunday" "1" "January" "2017" "21:11:42" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3947283.bJNloLFQYu@arcadia>" "44" "Re: [oss-security] Re: libtiff: multiple heap-based buffer overflow" nil nil nil "1" "2017010120:11:42" "[oss-security] Re: libtiff: multiple heap-based buffer overflow" (number mark "U       ago@gentoo.o Jan  1   44/1965  " thread-indent "\"Re: [oss-security] Re: libtiff: multiple heap-based buffer overflow\"\n") "<a5c8bd5fcbf94dfe83238915b480add2@imshyb02.MITRE.ORG>" ("<a5c8bd5fcbf94dfe83238915b480add2@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2525" "Thursday" "2" "March" "2017" "16:33:47" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<313929.373256059-sendEmail@localhost>" "64" "[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)" nil nil nil "3" "2017030216:33:47" "[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)" (number mark "U       ago@gentoo.o Mar  2   64/2525  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11855 invoked by uid 550); 1 Jan 2017 20:12:00 -0000
+Received: (qmail 7851 invoked by uid 550); 2 Mar 2017 16:34:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11837 invoked from network); 1 Jan 2017 20:12:00 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sun, 01 Jan 2017 21:11:42 +0100
-Message-ID: <3947283.bJNloLFQYu@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
-In-Reply-To: <a5c8bd5fcbf94dfe83238915b480add2@imshyb02.MITRE.ORG>
-References: <a5c8bd5fcbf94dfe83238915b480add2@imshyb02.MITRE.ORG>
+Received: (qmail 7638 invoked from network); 2 Mar 2017 16:34:04 -0000
+Message-ID: <313929.373256059-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 2 Mar 2017 16:33:47 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: Re: [oss-security] Re: libtiff: multiple heap-based buffer overflow
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-964812.880921276"
+Subject: [oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)
 
-On Sunday 01 January 2017 12:51:35 cve-assign@mitre.org wrote:
-> > https://blogs.gentoo.org/ago/2017/01/01/libtiff-multiple-heap-based-buffer
-> > -overflow
-> At the moment, we will assign IDs to the issues listed with a write
-> impact. We will later look at the issues listed with a read or
-> undefined impact, but this has some complexity. 
+------MIME delimiter for sendEmail-964812.880921276
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> Another example is that a "READ of size 1" within the source
-> code of a command-line tool (not part of the library code that could
-> be used in an arbitrary application) may have no risk.
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Yes, we know that sometimes command line tools with issues like READ of size 1 
-cannot create damage.
-However, for completeness and for people/packagers that want to have them 
-fixed in they repository, I shared the details as well.
+A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-> > AddressSanitizer: heap-buffer-overflow ... WRITE of size 2048 at
-> > tiff-4.0.7/libtiff/tif_next.c:64:9
-> > 
-> >> http://bugzilla.maptools.org/show_bug.cgi?id=2624
-> 
-> The vendor response was "I cannot reproduce with CVS head. But I
-> reproduce with 4.0.7 so this has been fixed by recent commits. Could
-> you track CVS head for your next fuzzing sessions so as to avoid
-> wasting our time to both of us ?"
+The complete ASan output:
 
-For some reasons I like to fuzz on a stable releases. Since libtiff ships some 
-binaries, I take time to test each binary. So, there was a situation where a 
-bug filed against an issue reproducible via tiffcp was fixed from a commit 
-which addressed an issue filed against tiffcrop.
-But as you have pointed out, there were cases where a commit addressed a READ 
-issue and later on it was discovered that it fixed a WRITE issue too.
+# podofocolor dummy $FILE foo
+==7677==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000054b701 bp 0x7ffe64ec7cb0 sp 0x7ffe64ec7c80 T0)
+==7677==The signal is caused by a READ memory access.
+==7677==Hint: address points to the zero page.
+    #0 0x54b700 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11
+    #1 0x55b772 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::pop_back() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/stl_deque.h:1459:4
+    #2 0x52c84d in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:190:35
+    #3 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
+    #4 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
+    #5 0x7fc9a444f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement()
+==7677==ABORTING
 
-> If there is additional information from bisection, please let us know.
+Affected version:
+0.9.5
 
-The commit that addresses the specific issue seems to be 
-9657bbe3cdce4aaa90e07d50c1c70ae52da0ba6a.
-However the process seems to fails to exit and went into a loop, but that's a 
-different issue and needs to be reported upstream.
+Fixed version:
+N/A
 
--- 
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00216-podofo-nullptr-graphicsstack-h
+
+Timeline:
+2017-03-01: bug discovered
+2017-03-02: bug reported to upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-graphicsstacktgraphicsstackelementtgraphicsstackelement-graphicsstack-h
+
+--
 Agostino Sarubbo
 Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-964812.880921276--
+
