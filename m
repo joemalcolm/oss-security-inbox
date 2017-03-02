@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1438" "Thursday" "14" "June" "2018" "23:46:38" "+0200" "Marcus Brinkmann" "marcus.brinkmann@ruhr-uni-bochum.de" "<c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>" "32" "[oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" nil nil nil "6" "2018061421:46:38" "[oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)" (number mark "U       marcus.brink Jun 14   32/1438  " thread-indent "\"[oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple Password Store)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6072" "Thursday" "2" "March" "2017" "16:34:57" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<707094.299697445-sendEmail@localhost>" "110" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)" nil nil nil "3" "2017030216:34:57" "[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)" (number mark "U       ago@gentoo.o Mar  2  110/6072  " thread-indent "\"[oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20120 invoked by uid 550); 14 Jun 2018 21:52:31 -0000
+Received: (qmail 15605 invoked by uid 550); 2 Mar 2017 16:35:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14139 invoked from network); 14 Jun 2018 21:46:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ruhr-uni-bochum.de;
-	s=mail-2017; t=1529012799;
-	bh=T6uQbMT8eYvTi2GcZrPeFBiA+shnZObMJUUJPsI5QdQ=;
-	h=To:From:Subject:Date:From;
-	b=ikrF/A1cOBrpzs75Kel0742LSlTb8MDttTUD6jH9h/szxkYMFdS99Zjutbhy/5WoD
-	 KR78UJnZ7EcV58zhXLRkazNKraVw6fPOe8kfcLdAusLaRsTnfzKnSiXTvLJIQIXzTS
-	 yGvth1I13oEXQfNP+JzyXtjONXslG3yPaf/bwjGc=
-X-Envelope-Sender: <marcus.brinkmann@ruhr-uni-bochum.de>
-X-RUB-Notes: Internal origin=134.147.42.227
-To: oss-security@lists.openwall.com
-From: Marcus Brinkmann <marcus.brinkmann@ruhr-uni-bochum.de>
-Openpgp: preference=signencrypt
-Message-ID: <c0e1a287-f18b-252e-3509-131db823264c@ruhr-uni-bochum.de>
-Date: Thu, 14 Jun 2018 23:46:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+Received: (qmail 15503 invoked from network); 2 Mar 2017 16:35:14 -0000
+Message-ID: <707094.299697445-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Thu, 2 Mar 2017 16:34:57 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
-X-Virus-Status: Clean
-Subject: [oss-security] CVE-2018-12356 Breaking signature verification in pass (Simple
- Password Store)
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-124726.739552901"
+Subject: [oss-security] podofo: heap-based buffer overflow in PoDoFo::PdfVariant::DelayedLoad (PdfVariant.h)
 
-This is the third (and for now last) in my series of GnuPG signature
-spoof exploits.
+------MIME delimiter for sendEmail-124726.739552901
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-First, a cautious note:
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-In the course of my 2 week investigation, I went through a lot of
-applications using gpg. There were a couple of "near misses" in critical
-infrastructure projects which were not vulnerable, but where I am not
-sure if that was due to conscious design choices or just by pure chance.
+A fuzz on it discovered an heap overflow. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-It would be prudent for everybody who knows a script or package using
-gpg to have a look for issues with status-fd, regular expressions and/or
-"gpg -d | some-other-program" patterns.
+The complete ASan output:
 
-Now, the details about CVE-2018-12356:
+# podofocolor dummy $FILE foo
+==5749==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x62500000a0f8 at pc 0x000000529e84 bp 0x7ffee90e1ad0 sp 0x7ffee90e1ac8
+READ of size 1 at 0x62500000a0f8 thread T0
+    #0 0x529e83 in PoDoFo::PdfVariant::DelayedLoad() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/podofo/base/../../src/base/PdfVariant.h:545:10
+    #1 0x529e83 in PoDoFo::PdfVariant::GetReal() const /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/podofo/base/../../src/base/PdfVariant.h:675
+    #2 0x52887e in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:423:33
+    #3 0x525d4b in ColorChanger::ProcessColor(ColorChanger::EKeywordType, int, std::vector<PoDoFo::PdfVariant, std::allocator >&, GraphicsStack&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:449:28
+    #4 0x521b3c in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:214:31
+    #5 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
+    #6 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
+    #7 0x7f6c2623561f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #8 0x428718 in _start (/usr/bin/podofocolor+0x428718)
 
-I found a critical vulnerability in pass, the Simple Password Store:
+0x62500000a0f8 is located 8 bytes to the left of 8192-byte region [0x62500000a100,0x62500000c100)
+allocated by thread T0 here:
+    #0 0x518700 in operator new(unsigned long) /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_new_delete.cc:78
+    #1 0x52aa18 in __gnu_cxx::new_allocator::allocate(unsigned long, void const*) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/ext/new_allocator.h:104:27
+    #2 0x52aa18 in __gnu_cxx::__alloc_traits<std::allocator >::allocate(std::allocator&, unsigned long) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/ext/alloc_traits.h:182
+    #3 0x52aa18 in std::_Vector_base<PoDoFo::PdfVariant, std::allocator >::_M_allocate(unsigned long) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:170
+    #4 0x52aa18 in std::vector<PoDoFo::PdfVariant, std::allocator >::_M_insert_aux(__gnu_cxx::__normal_iterator<PoDoFo::PdfVariant*, std::vector<PoDoFo::PdfVariant, std::allocator > >, PoDoFo::PdfVariant const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/vector.tcc:353
+    #5 0x521bdd in std::vector<PoDoFo::PdfVariant, std::allocator >::push_back(PoDoFo::PdfVariant const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:925:4
+    #6 0x521bdd in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:170
+    #7 0x51ed8e in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:120:15
+    #8 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
+    #9 0x7f6c2623561f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
 
-CVE-2018-12356: An issue was discovered in password-store.sh in pass in
-Simple Password Store 1.7 through 1.7.1. The signature verification
-routine parses the output of GnuPG with an incomplete regular
-expression, which allows remote attackers to spoof file signatures on
-configuration files and extensions scripts. Modifying the configuration
-file allows the attacker to inject additional encryption keys under
-their control, thereby disclosing passwords to the attacker. Modifying
-the extension scripts allows the attacker arbitrary code execution.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/podofo/base/../../src/base/PdfVariant.h:545:10 in PoDoFo::PdfVariant::DelayedLoad() const
+Shadow bytes around the buggy address:
+  0x0c4a7fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff93e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff93f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a7fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c4a7fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa[fa]
+  0x0c4a7fff9420: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff9430: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff9440: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff9450: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c4a7fff9460: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==5749==ABORTING
 
-I am also calling out the missing integrity protection in pass for
-password files, making pass users potentially vulnerable to a broad
-range of attacks.
+Affected version:
+0.9.4
 
-https://neopg.io/blog/pass-signature-spoof/
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00170-podofo-heapoverflow-PoDoFo-PdfTokenizer-GetNextToken
+
+Timeline:
+2017-02-13: bug discovered
+2017-03-02: bug reported to upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-heap-based-buffer-overflow-in-podofopdfvariantdelayedload-pdfvariant-h
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-124726.739552901--
+
