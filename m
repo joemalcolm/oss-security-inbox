@@ -1,104 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/09/17/5
-Message-ID: <CANO=Ty2OcX_fGqfShcWzGA4h=-UPkN-KhN58a382VgkFWQEuFw@mail.gmail.com>
-Date: Sun, 17 Sep 2017 09:59:11 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Alexander Batischev <eual.jp@...il.com>
-Subject: Re: Podbeuter podcast fetcher: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/5
+Message-ID: <847337.788527028-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:35:17 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 17, 2017 at 9:21 AM, Solar Designer <solar@...nwall.com> wrote:
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-> On Sun, Sep 17, 2017 at 02:55:12PM +0300, Alexander Batischev wrote:
-> > On Sat, Sep 16, 2017 at 09:05:44PM +0200, Solar Designer wrote:
-> > >"Instead, please start by posting about the (to be made) public issue
-> > >to oss-security (without a CVE ID), request a CVE ID from MITRE
-> > >directly, and finally "reply" to your own posting when you also have
-> > >the CVE ID to add."
-> >
-> > I was under impression that having a CVE ID speeds up processes in
-> > distros, and fixes are released quicker.
->
+A fuzz on it discovered a global overflow. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-While this should not be the case, it often is. And TBH this is one of the
-reasons I'm trying to make CVE easier.
+The complete ASan output:
 
+# podofocolor dummy $FILE foo
+==15599==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000014a5838 at pc 0x0000004ca58c bp 0x7ffebe3248b0 sp 0x7ffebe324060
+WRITE of size 24 at 0x0000014a5838 thread T0
+    #0 0x4ca58b in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+    #1 0x7efe75862464 in void std::_Construct(PoDoFo::PdfParser::TXRefEntry*, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_construct.h:83:38
+    #2 0x7efe75862464 in void std::__uninitialized_fill_n::__uninit_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&) 
+/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:202
+    #3 0x7efe75862464 in void std::uninitialized_fill_n(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:244
+    #4 0x7efe75862464 in void std::__uninitialized_fill_n_a(PoDoFo::PdfParser::TXRefEntry*, unsigned long, PoDoFo::PdfParser::TXRefEntry const&, std::allocator&) 
+/usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_uninitialized.h:355
+    #5 0x7efe75862464 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::_M_fill_insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, 
+unsigned long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/vector.tcc:496
+    #6 0x7efe75855a47 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::insert(__gnu_cxx::__normal_iterator<PoDoFo::PdfParser::TXRefEntry*, std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator > >, unsigned 
+long, PoDoFo::PdfParser::TXRefEntry const&) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:1073:9
+    #7 0x7efe75855a47 in std::vector<PoDoFo::PdfParser::TXRefEntry, std::allocator >::resize(unsigned long, PoDoFo::PdfParser::TXRefEntry) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.3/include/g++-v4/bits/stl_vector.h:716
+    #8 0x7efe75855a47 in PoDoFo::PdfParser::ReadXRefSubsection(long&, long&) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:772
+    #9 0x7efe758470ad in PoDoFo::PdfParser::ReadXRefContents(long, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:725:17
+    #10 0x7efe75840a9e in PoDoFo::PdfParser::ReadDocumentStructure() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:337:9
+    #11 0x7efe7583de0f in PoDoFo::PdfParser::ParseFile(PoDoFo::PdfRefCountedInputDevice const&, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:220:9
+    #12 0x7efe7583c1d4 in PoDoFo::PdfParser::ParseFile(char const*, bool) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfParser.cpp:164:11
+    #13 0x7efe75a993f3 in PoDoFo::PdfMemDocument::Load(char const*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:186:16
+    #14 0x7efe75a990c2 in PoDoFo::PdfMemDocument::PdfMemDocument(char const*) /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfMemDocument.cpp:88:11
+    #15 0x51e96d in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/colorchanger.cpp:110:20
+    #16 0x51c06d in main /tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/tools/podofocolor/podofocolor.cpp:116:12
+    #17 0x7efe7424861f in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+    #18 0x428718 in _start (/usr/bin/podofocolor+0x428718)
 
-> This might be the case for some issues and some distros, such as when
-> having a CVE ID is deemed to indicate the issue is serious or has to be
-> patched for publicity reasons.  It may be that it's easier to ignore an
-> issue that doesn't yet have a CVE ID, publicity-wise.
->
-> While CVE IDs are helpful for tracking, they should not be required, so
-> if a distro technically can't promptly process issues without CVE IDs (I
-> am unaware of such cases), they need to revise their processes anyhow.
->
+0x0000014a5838 is located 0 bytes to the right of global variable 'PoDoFo::PODOFO_BUILTIN_FONTS' defined in '/tmp/portage/app-text/podofo-0.9.4/work/podofo-0.9.4/src/doc/PdfFontFactoryBase14Data.h:4460:33' (0x14a4aa0) of size 
+3480
+SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/sys-devel/llvm-3.9.0-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
+Shadow bytes around the buggy address:
+  0x00008028cab0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x00008028cac0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x00008028cad0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x00008028cae0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x00008028caf0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x00008028cb00: 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9 f9
+  0x00008028cb10: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x00008028cb20: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x00008028cb30: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x00008028cb40: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+  0x00008028cb50: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==15599==ABORTING
 
-This is also not true, many orgs (probably not open source distros run by
-volunteers, but more big corps) literally do have a clock start ticking
-when a CVE comes to light, I know for Red Hat it doesn't matter if the
-issue has a CVE or not (we obviously prefer to have one as it makes talking
-about it and coordinating a response easier), but I can't speak for others
-obviously.
+Affected version:
+0.9.4
 
+Fixed version:
+N/A
 
->
-> > Was my impression wrong?
->
-> I'm unaware of statistics to confirm or disprove your impression.  If
-> someone has such data and analysis, please share.
->
-> Intuitively, I'd expect having or lacking a CVE ID to affect priority
-> more than it affects capability to track.  Ideally it shouldn't affect
-> either, but realistically I expect that it sometimes does.
->
+Commit fix:
+N/A
 
-Yup.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
+CVE:
+N/A
 
->
-> > I just want to do things "right", so that
-> > attackers have as little time as possible to exploit users. (I do
-> > realize this all is best-effort and distros might still take time to
-> > release, and then users might take ages to upgrade.)
->
-> You're talking about the window of exposure: time period since public
-> disclosure of an issue and until it gets patched.  However, this metric
-> varies across users and distros, and it's not the only metric.  It's
-> also desirable to get the issue known and fixed sooner.  Now, an extra
-> three weeks (as in your most recent case) isn't unacceptably bad as long
-> as the chances of abuse or leaks during this period are low, but you do
-> slightly increase this risk by reporting to MITRE.  Although I'm unaware
-> of evidence there's ever been abuse by or leaks from MITRE, and there
-> have been fairly convincing statements to the contrary, I think it's
-> good practice to avoid or at least minimize the pre-public-disclosure
-> exposure to MITRE as it serves no other purpose than getting CVE IDs
-> assigned, which in my opinion does not justify even minor risk.
->
-> > Now that I had an experience of waiting for three weeks, I'll also
-> > re-consider if I want to become a CNA for my project. Previously it
-> > seemed like a hassle; I'm not so sure now.
->
-> This does seem like a hassle to me.  Probably not worth it.  Publicly
-> disclosing without CVE IDs and adding them later is probably better.
-> You can always use your own tracking IDs to add clarify (so that e.g.
-> different issues are not erroneously lumped together), or use OVE IDs:
->
-> http://www.openwall.com/ove/
->
-> then associate them with CVE IDs when you have those, such as in a
-> revision of your advisory.  See e.g. how Xen publishes revised versions
-> of their advisories when they add CVE IDs.
->
-> Alexander
->
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00171-podofo-globaloverflow-PoDoFo-PdfParser-ReadXRefSubsection
 
+Timeline:
+2017-02-13: bug discovered
+2017-03-02: bug reported to upstream
+2017-03-02: blog post about the issue
 
+Note:
+This bug was found with American Fuzzy Lop.
 
--- 
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-global-buffer-overflow-in-podofopdfparserreadxrefsubsection-pdfparser-cpp
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@...hat.com
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
