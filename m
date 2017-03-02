@@ -1,29 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/10/12/5
-Message-ID: <CAPshzHa=n0hn+JSdb+D4WZqXQjcFF0D8ffepOqjtysHAb3=W9Q@mail.gmail.com>
-Date: Thu, 12 Oct 2017 12:52:05 +0200
-From: Hunger <hunger@...ger.hu>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: nix-devel@...glegroups.com, Graham Christensen <graham@...hamc.com>,  Franz Pletz <fpletz@...rdicwalking.de>, Domen Kožar <domen@....si>,  Rob Vermaas <rob.vermaas@...il.com>
-Subject: Re: Privilege escalation with kill(-1, SIGKILL) in XNU kernel of macOS High Sierra
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/1
+Message-ID: <921525.047483982-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:33:13 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: invalid memory read in ColorChanger::GetColorFromStack (colorchanger.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 12, 2017 at 4:00 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-> So I normally wouldn't accept this posting (and no doubt Solar will be
-> annoyed because this isn't Open Source per se, and he's 100% right) but
-> this posting does provide a good teachable moment.
->
+A fuzz on it discovered an invalid memory read. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
+The complete ASan output:
 
-And here's the teachable moment for you...
+# podofocolor dummy $FILE foo
+==9073==ERROR: AddressSanitizer: SEGV on unknown address 0xffffffffffffffe0 (pc 0x000000537d67 bp 0x7ffc54cb3c50 sp 0x7ffc54cb3ba0 T0)
+==9073==The signal is caused by a READ memory access.
+    #0 0x537d66 in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:416:32
+    #1 0x530d50 in ColorChanger::ProcessColor(ColorChanger::EKeywordType, int, std::vector<PoDoFo::PdfVariant, std::allocator >&, GraphicsStack&) 
+/tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:449:28
+    #2 0x52c2a9 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:214:31
+    #3 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
+    #4 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
+    #5 0x7f36fe7fe78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
 
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:416:32 in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&)
+==9073==ABORTING
 
-The XNU kernel is Open Source:
+Affected version:
+0.9.5
 
-https://opensource.apple.com/source/xnu/xnu-4570.1.46/
+Fixed version:
+N/A
 
-The Apple Public Source License 2.0 approved by the OSI:
+Commit fix:
+N/A
 
-https://opensource.org/licenses/APSL-2.0
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00215-podofo-invalidread-colorchanger-cpp
+
+Timeline:
+2017-03-01: bug discovered
+2017-03-02: bug reported upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-invalid-memory-read-in-colorchangergetcolorfromstack-colorchanger-cpp
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
