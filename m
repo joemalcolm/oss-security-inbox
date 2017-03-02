@@ -1,18 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/31/5
-Message-ID: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>
-Date: Wed, 31 May 2017 06:39:12 -0400
-From: Qhdwns123 <qhdwns123@...tonmail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/11
+Message-ID: <775652.980522381-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:40:57 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: I found Crash in tcpdump and radare2.
+Subject: another bunch of crashes in podofo
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Hello,
 
-I found Crash in tcpdump and radare2.
+I discovered other crashes in podofo, I forwarded them to upstream via the -users mailing list.
+To avoid duplicates (i.e. bugs with different stacktrace but with the same root cause), I will probably stop the fuzz on it until I see an upstream reaction.
 
-It points to the heap overflow as the result of analysis by ASAN.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-What steps should I take to report this issue?
 
-Thanks.
