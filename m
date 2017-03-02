@@ -1,33 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/2
-Message-ID: <CA+zp4VN23BSr2aCjrZohXM94UCFXdK8s5z81DLodSjbkDoMwUw@mail.gmail.com>
-Date: Fri, 17 Mar 2017 09:08:39 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Advisory: XSS in MantisBT Source Integration Plugin (CVE-2017-6958)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/2
+Message-ID: <313929.373256059-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:33:47 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)
 Content-Type: text/plain; charset=utf-8
 
-A cross-site scripting (XSS) vulnerability in the MantisBT Source
-Integration plugin search result page allows remote attackers to inject
-arbitrary HTML or JavaScript (the latter, only if MantisBT's CSP settings
-permit it) by crafting any valid parameter.
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-Affected versions: 2.0.0-beta.1 through 2.0.1
-Fixed in versions: 2.0.2 (released 2017-03-16)
+A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-Patch:
-https://github.com/mantisbt-plugins/source-integration/commit/b014da5687ec37c571105627bf090cb6f270ec35
+The complete ASan output:
 
-Credits:
-Reported by Dmitry Ivanov (d1m0ck) https://twitter.com/d1m0ck
-Fixed by Damien Regad
+# podofocolor dummy $FILE foo
+==7677==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000054b701 bp 0x7ffe64ec7cb0 sp 0x7ffe64ec7c80 T0)
+==7677==The signal is caused by a READ memory access.
+==7677==Hint: address points to the zero page.
+    #0 0x54b700 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11
+    #1 0x55b772 in std::deque<GraphicsStack::TGraphicsStackElement, std::allocator >::pop_back() /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/stl_deque.h:1459:4
+    #2 0x52c84d in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:190:35
+    #3 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
+    #4 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
+    #5 0x7fc9a444f78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #6 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
 
-References:
-- Initial report http://openbugbounty.org/incidents/218993/
-- Issue tracker https://github.com/mantisbt-plugins/source-integration/
-issues/205
-- Release
-https://github.com/mantisbt-plugins/source-integration/releases/tag/v2.0.2
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/graphicsstack.h:29:11 in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement()
+==7677==ABORTING
 
-<http://www.mantisbt.org/bugs/view.php?id=22486>
+Affected version:
+0.9.5
+
+Fixed version:
+N/A
+
+Commit fix:
+N/A
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00216-podofo-nullptr-graphicsstack-h
+
+Timeline:
+2017-03-01: bug discovered
+2017-03-02: bug reported to upstream
+2017-03-02: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-graphicsstacktgraphicsstackelementtgraphicsstackelement-graphicsstack-h
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
 
