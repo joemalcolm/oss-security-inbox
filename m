@@ -1,124 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/18/7
-Message-ID: <871sjrpw9r.fsf@fifthhorseman.net>
-Date: Mon, 18 Dec 2017 16:21:36 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: halfdog <me@...fdog.net>, oss-security@...ts.openwall.com
-Subject: Re: Recommendations GnuPG-2 replacement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/02/3
+Message-ID: <201613.082873763-sendEmail@localhost>
+Date: Thu, 2 Mar 2017 16:34:17 +0000
+From: "Agostino Sarubbo" <ago@...too.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: podofo: NULL pointer dereference in ColorChanger::GetColorFromStack (colorchanger.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Mon 2017-12-18 20:21:56 +0000, halfdog wrote:
-> The features you describe are a clear must for desktop/enduser
-> usecases, that require frequent access to the key. It is clear
-> to me, that those features are required, no discussion to this
-> point.
->
-> The point in starting this thread was, that GnuPG does NOT conveniently
-> cover usecases for headless or scripting operation. Thus it seems
-> that the time has come to look for replacement, as GnuPG is moving
-> more in the "desktop" direction, as also your comments indicate.
+Description:
+podofo is a C++ library to work with the PDF file format.
 
-I find that gpg works fine in a headless operation, but it does so
-mainly without a password.  If your headless operation has access to the
-secret key and the password, that's basically equivalent, afaict, so
-it's not clear to me what benefit password protection gives you.  If you
-don't want to deal with pinentry, how do you propose protecting the
-secret key material?
+A fuzz on it discovered a null pointer access. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
 
-I'm not asking this to be contrary -- i'm trying to understand your
-threat model.  Why do you need a passphrase for your secret key that you
-use in headless/scripting operation?  and what security benefit do you
-expect to gain from it?
+The complete ASan output:
 
-> That's really a strange argument. You fear PTRACING for key extraction
-> of a short-lived, per-key instance of gpg1 process and solve that
-> by putting all the key material into a single long-lived gpg-agent
-> process, not even providing convenient commands to flush the keys
-> from there? Hence not even PTRACING is needed, you can just access
-> the socket to make the process give you the keys (directly or
-> by requesting decrypts/signatures - I did not check on that).
+# podofocolor dummy $FILE foo
+==18954==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x00000052302d bp 0x7fc24b8e2000 sp 0x7ffcaaf21810 T0)
+==18954==The signal is caused by a READ memory access.
+==18954==Hint: address points to the zero page.
+    #0 0x52302c in getVtablePrefix /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_type_hash_itanium.cc:198
+    #1 0x52302c in __ubsan::checkDynamicType(void*, void*, unsigned long) /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_type_hash_itanium.cc:221
+    #2 0x521082 in HandleDynamicTypeCacheMiss /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_handlers_cxx.cc:37
+    #3 0x521922 in __ubsan_handle_dynamic_type_cache_miss /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_handlers_cxx.cc:87
+    #4 0x538eb2 in ColorChanger::GetColorFromStack(int, std::vector<PoDoFo::PdfVariant, std::allocator >&) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:430:33
+    #5 0x530d50 in ColorChanger::ProcessColor(ColorChanger::EKeywordType, int, std::vector<PoDoFo::PdfVariant, std::allocator >&, GraphicsStack&) 
+/tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:449:28
+    #6 0x52c2a9 in ColorChanger::ReplaceColorsInPage(PoDoFo::PdfCanvas*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:214:31
+    #7 0x526921 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:120:15
+    #8 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
+    #9 0x7fc2490df78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #10 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
 
-You should look into gpg-agent's restricted socket.  i believe it's
-intended to provide very similar constraints to what you're looking
-for.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/ubsan/ubsan_type_hash_itanium.cc:198 in getVtablePrefix
+==18954==ABORTING
 
-> Even with namespaces, PTRACE is still allowed unless you are running
-> the agent as SUID-binary, causing other risks again.
+Affected version:
+0.9.5
 
-fwiw, gpg-agent upstream provides no ptrace protection, but in debian we
-have a minor defense-in-depth patch applied:
+Fixed version:
+N/A
 
-    https://anonscm.debian.org/git/pkg-gnupg/gnupg2.git/tree/debian/patches/block-ptrace-on-secret-daemons/Avoid-simple-memory-dumps-via-ptrace.patch
+Commit fix:
+N/A
 
-I welcome any suggested improvements on these changes, even if upstream
-isn't willing to apply them directly.
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
 
-> In my opinion, for server operation both schemes would not improve
-> security the same way as on desktops: if the automated tasks is
-> implemented to be run as root, PTRACE and namespaces do not help in
-> any way.
+CVE:
+N/A
 
-sure, but maybe we can acknowledge that automated tasks running as root
-are already in a pretty dangerous position?  I'm not aware of any of the
-solutions offered in this thread as a "replacement for GnuPG-2" other
-than hardware tokens themselves that provide any real resistence to an
-automated task running as root on the machine in question.
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00217-podofo-nullptr-colorchanger-cpp
 
-> If run as distinct user, there are only two usecases:
->
-> * The service just does encryption/signature verification: here
->   the unavoidable agent just provides additional attack surface,
->   e.g. by replacing verification keys in the agent only, thus
->   everything looks nice on disk but your signature verification
->   is broken.
+Timeline:
+2017-03-01: bug discovered
+2017-03-02: bug reported upstream
+2017-03-02: blog post about the issue
 
-eh?  the agent does not handle verification keys (i.e. public keys) --
-it only handles private keys.  if the service in question only does
-public key operation, then the agent is irrelevant.
+Note:
+This bug was found with American Fuzzy Lop.
 
-> * The service does signing/decryption: the key is passwordless
->   (or password is within user-readable configuration) or HW-token.
->   In both cases, the initial security of the key material before
->   being transfered to gpg-agent only depends on file system level
->   access restrictions. Gaining access to UID or PTRACE is already
->   equivalent to full key material compromise. So also here the
->   agent only adds attack surface and that's it.
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-colorchangergetcolorfromstack-colorchanger-cpp
 
-I agree with you that the safest case would be to isolate the secret key
-material in a different UID and filesystem namespace.  If the agent is
-running as a dedicated user account, and accessed by a different user
-account talking specifically to its restricted socket, then access to
-UID is not a given, and PTRACE isn't possible.
+--
+Agostino Sarubbo
+Gentoo Linux Developer
 
-This kind of privilege isolation is (i think) what you're looking for,
-and it is *only* possible with the agent (or some similar architecture).
-While this is not a common deployment of gpg-agent today, and it might
-have bugs in it for current deployment, it seems you're arguing *for*
-using an agent, rather than against it.
 
-If you try this particular use case, i'd be happy to help you iron out
-any bugs to make sure it's safe to use this way.
-
-> To reduce the attack surface, a "gpg --one-shot" argument could
-> be added, which will terminate the agent immediately after use,
-> maybe not even exposing it via sockets visible to other processes
-> but only connected to its "parent" gpg process via pipes.
-
-this approach would lose the benefit of long-running processes that you
-can get from things like dirmngr, and it would fail in the event that
-your agent was acting across a privilege boundary (you'd have to launch
-a constrained agent somehow).  wouldn't it be better to improve on the
-user-isolated processes instead?
-
-that said, i do agree that having an anonymous socketpair()-connected
-agent that lives and dies with the parent process would be a nice option
--- but each option incurs a support burden, and i am not sure that the
-burden is worth the tradeoff when it is compared with the other
-isolate-and-constrain-the-agent proposals, so i'm more likely to work on
-the latter myself.
-
-All the best,
-
-                  --dkg
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
