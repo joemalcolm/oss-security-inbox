@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["852" "Sunday" "25" "October" "2015" "00:12:38" "+0900" "Mamoru TASAKA" "mtasaka@fedoraproject.org" "<562B9FE6.605@fedoraproject.org>" "28" "[oss-security] CVE request: xscreensaver aborts when unpluging second monitor cable when asking password" nil nil nil "10" "2015102415:12:38" "[oss-security] CVE request: xscreensaver aborts when unpluging second monitor cable when asking password" (number mark "        mtasaka@fedo Oct 25   28/852   " thread-indent "\"[oss-security] CVE request: xscreensaver aborts when unpluging second monitor cable when asking password\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4572" "Friday" "3" "March" "2017" "11:10:14" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<244976.792574988-sendEmail@localhost>" "105" "[oss-security] potrace: heap-based buffer overflow in bm_readbody_bmp (bitmap_io.c) (incomplete fix for CVE-2016-8698)" nil nil nil "3" "2017030311:10:14" "[oss-security] potrace: heap-based buffer overflow in bm_readbody_bmp (bitmap_io.c) (incomplete fix for CVE-2016-8698)" (number mark "U       ago@gentoo.o Mar  3  105/4572  " thread-indent "\"[oss-security] potrace: heap-based buffer overflow in bm_readbody_bmp (bitmap_io.c) (incomplete fix for CVE-2016-8698)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26284 invoked by uid 550); 24 Oct 2015 15:12:56 -0000
+Received: (qmail 5219 invoked by uid 550); 3 Mar 2017 11:10:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26266 invoked from network); 24 Oct 2015 15:12:54 -0000
-Message-ID: <562B9FE6.605@fedoraproject.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Content-Transfer-Encoding: 7bit
-Cc: secalert@redhat.com, Mamoru Tasaka <mtasaka@fedoraproject.org>
-Date: Sun, 25 Oct 2015 00:12:38 +0900
-From: Mamoru TASAKA <mtasaka@fedoraproject.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: xscreensaver aborts when unpluging second monitor cable
- when asking password
-To: oss-security@lists.openwall.com
+Received: (qmail 5200 invoked from network); 3 Mar 2017 11:10:32 -0000
+Message-ID: <244976.792574988-sendEmail@localhost>
+From: "Agostino Sarubbo" <ago@gentoo.org>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Date: Fri, 3 Mar 2017 11:10:14 +0000
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-794983.07577251"
+Subject: [oss-security] potrace: heap-based buffer overflow in bm_readbody_bmp (bitmap_io.c) (incomplete fix for CVE-2016-8698)
 
-Hello, all:
+------MIME delimiter for sendEmail-794983.07577251
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-I received a Fedora bug report
-https://bugzilla.redhat.com/show_bug.cgi?id=1274452
-that on XFCE,
+Description:
+potrace is a utility that transforms bitmaps into vector graphics.
 
-* using VGA and HDMI dual monitor (for example)
-* lock the screen with $ xscreensaver-command -lock
-* move mouse, password dialog appears
-* during the time password dialog still appears, unplug HDMI cable
+A fuzz on 1.14 showed that an overflow previously reported as CVE-2016-8698 was not really fixed. Since there isn’t a public git repository, I uploaded the patch on my ‘poc’ repository on github. The patch was sent from the 
+upstream maintainer, Mr. Peter Selinger.
 
-then xscreensaver abort()s (actually it abort()s,
-not segv, however I guess it is not important)
-(at the line 420 in xscreensaver-5.33/driver/subprocs.c)
+The complete ASan output:
 
-100% reproducible. This issue is already in public as
-https://twitter.com/Thaolia/status/656823859304398848
+# potrace $FILE
+==7325==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efd0 at pc 0x00000051dc51 bp 0x7ffc766b1a30 sp 0x7ffc766b1a28
+READ of size 8 at 0x60200000efd0 thread T0
+    #0 0x51dc50 in bm_readbody_bmp /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/bitmap_io.c:754:4
+    #1 0x51dc50 in bm_read /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/bitmap_io.c:138
+    #2 0x510a45 in process_file /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/main.c:1058:9
+    #3 0x50dd56 in main /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/main.c:1214:7
+    #4 0x7f6c7333e78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+    #5 0x419b68 in getenv (/usr/bin/potrace+0x419b68)
 
-I and the upstream developer already tracked down the cause
-and the upstream send me a patch, which seems to be
-working. hopefully the upstream
-will release the new version soon.
+0x60200000efd1 is located 0 bytes to the right of 1-byte region [0x60200000efd0,0x60200000efd1)
+allocated by thread T0 here:
+    #0 0x4d2b25 in calloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:72
+    #1 0x519776 in bm_new /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/bitmap.h:121:30
+    #2 0x519776 in bm_readbody_bmp /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/bitmap_io.c:574
+    #3 0x519776 in bm_read /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/bitmap_io.c:138
+    #4 0x510a45 in process_file /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/main.c:1058:9
+    #5 0x50dd56 in main /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/main.c:1214:7
+    #6 0x7f6c7333e78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
 
-Please assign a CVE ID for this.
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-gfx/potrace-1.14/work/potrace-1.14/src/bitmap_io.c:754:4 in bm_readbody_bmp
+Shadow bytes around the buggy address:
+  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa[01]fa fa fa 04 fa
+  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==7325==ABORTING
 
-Best regards,
-Mamoru TASAKA <mtasaka@fedoraproject.org>
+Affected version:
+1.14
+
+Fixed version:
+1.15
+
+Commit fix:
+https://github.com/asarubbo/poc/blob/master/00219-potrace-heapoverflow-bm_readbody_bmp-PATCH
+
+Credit:
+This bug was discovered by Agostino Sarubbo of Gentoo.
+
+CVE:
+N/A
+
+Reproducer:
+https://github.com/asarubbo/poc/blob/master/00210-potrace-heapoverflow-bm_readbody_bmp
+
+Timeline:
+2017-02-26: bug discovered and reported to upstream
+2017-02-28: upstream released a patch
+2017-03-03: blog post about the issue
+
+Note:
+This bug was found with American Fuzzy Lop.
+
+Permalink:
+https://blogs.gentoo.org/ago/2017/03/03/potrace-heap-based-buffer-overflow-in-bm_readbody_bmp-bitmap_io-c-incomplete-fix-for-cve-2016-8698
+
+--
+Agostino Sarubbo
+Gentoo Linux Developer
+
+
+------MIME delimiter for sendEmail-794983.07577251--
 
