@@ -1,35 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/12/2
-Message-ID: <20170112005153.hxfvrwwyywq2szvq@perpetual.pseudorandom.co.uk>
-Date: Thu, 12 Jan 2017 00:51:53 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: ikiwiki: CVE-2017-0356: Authentication bypass via repeated parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/04/1
+Message-ID: <20170304164823.3fb862c4@pc1>
+Date: Sat, 4 Mar 2017 16:48:23 +0100
+From: Hanno Böck <hanno@...eck.de>
+To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: One byte stack buffer overflow in keepassxc / zxcvbn-c
 Content-Type: text/plain; charset=utf-8
 
-Reference: https://ikiwiki.info/security/#cve-2017-0356
-Affected versions: >= 2.11
-Fixed versions: >= 3.20170111
-Fixed versions (3.20141016.x branch): >= 3.20141016.4
+Hi,
 
-ikiwiki is a static site generator with some dynamic features,
-used for wikis, blogs and other websites.
+I recently reported a one byte buffer overflow in keepassxc [1] [2].
+It's a pretty typical C bug: An array supposed to hold a string of a
+certain size plus a trailing zero byte is one byte too small (i.e. the
+size doesn't consider the trailing zero).
+Given that the overflow happens right at the application's startup I
+doubt it's exploitable in a meaningful way.
+The bug was discovered simply by compiling with asan and running
+keepassxc.
 
-The ikiwiki maintainers discovered two related flaws in the
-passwordauth plugin's use of CGI::FormBuilder, involving API design
-issues similar to those that led to CVE-2014-1572. Impact:
+The code comes from zxcvbn-c (a checker for password quality), where
+I've also reported it [3] (together with another minor bug regarding a
+misuse of new [] / delete).
 
-* An attacker who can log in to a site with a password can log in
-  as a different and potentially more privileged user.
-* An attacker who can create a new account can set arbitrary fields
-  in the user database for that account.
+keepassxc is a fork of keepassx. However keepassx is not affected, as
+it doesn't contain the zxcvbn password quality checking code.
 
-Sites that enable the CGI script (cgi_wrapper) and do not disable the
-simple password authentication plugin (passwordauth, enabled by default)
-are affected.
+One takeaway of this is that even amongst developers of security tools
+the use of address sanitizer is still not a standard practice
+everyone's using to test their C code.
 
-For current releases, this is fixed in ikiwiki >= 3.20170111.
-For the Debian 8 branch, it is fixed in ikiwiki 3.20141016.4.
 
-Regards,
-    S
+[1] https://github.com/keepassxreboot/keepassxc/pull/363
+[2] https://github.com/keepassxreboot/keepassxc/pull/365
+[3] https://github.com/tsyrogit/zxcvbn-c/pull/11
+
+-- 
+Hanno Böck
+https://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
