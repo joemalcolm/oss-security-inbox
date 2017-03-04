@@ -1,4 +1,9 @@
-Received: (qmail 13732 invoked by uid 550); 17 May 2026 19:54:13 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1203" "Saturday" "4" "March" "2017" "16:48:23" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20170304164823.3fb862c4@pc1>" "33" "[oss-security] One byte stack buffer overflow in keepassxc / zxcvbn-c" nil nil nil "3" "2017030415:48:23" "[oss-security] One byte stack buffer overflow in keepassxc / zxcvbn-c" (number mark "U       hanno@hboeck Mar  4   33/1203  " thread-indent "\"[oss-security] One byte stack buffer overflow in keepassxc / zxcvbn-c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9257 invoked by uid 550); 4 Mar 2017 15:48:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7956 invoked from network); 17 May 2026 18:50:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779043847;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=fTxul90MIPxU7xuyHqX+YmYGW+v3v5tdBt1M4aKClCw=;
-	b=jBlzy33pa8I4EFgOui88LgqupqwJohT1FJW+BR/yKKC5i3MsP+jroSqNPH/rC3AUjecQ76
-	XnlhIGoF2H6kPuEtci0/TO1tjWJq9jqitjWwbVy0qY3RAyR+dVafexOG4WYXFn1Tkg8cdY
-	yApDo/JNOfeGCi0esU2KDT/iNdfsTyaU0j+qDvdOA/i8sgaf+NLfe9PNllwz/DXwbTzFog
-	2YOjnQb3XwL/C9n//Z/NxQcxfChIkBQ2TE7coVPA9ac10uPE8YFkmuuZAbRrRyyrlpyXaL
-	mlLeF0wswiFRXtPkbRuKs6k6fsyaem1aL5YSueGm10LDZRBhmoJLgmbBN+FIlw==
+Received: (qmail 9233 invoked from network); 4 Mar 2017 15:48:36 -0000
+Date: Sat, 4 Mar 2017 16:48:23 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To:
+  "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <20170304164823.3fb862c4@pc1>
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Date: Sun, 17 May 2026 15:50:47 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
- <oss-security@lists.openwall.com>
-Message-ID: <804e09e7d8f96e8f3f16bc1c0c5b1fe2@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: dmFkZTGDiIZmUoUPYJJwrdaeiUljckAlfYMyxk4QEkSl7UNkbg+L5YZ3X4rcthRVIzvVb4EeJ5JL4OOtC7zfm5lGxII1Q/ZW6xtW6IENEP/ZCnfndAUJK4QmOQxr+P8trbtFiCZ+y+Dqk0aKrlMb830Y/HnE1ToSb96sTm33YTKmD8QDCnRiTKyuAq3PXpE999LfNWONsS+aJwjR2zaerOKvIbCyTaGKbcsqp4gGSvjfwQyvlgYFmecobA6W7LrQrwqkQPL8WLGHQFV80IXaCRFWb6MEu9iw9BRd2rXvAPk/0KYrP2k7bDv/6KDOIyR8+wqHyiMIZCkdunuv7bJDVto6q+muVcLeDNairBfUGxiIOP7KuZGmMw+JSDsc2iR0IzrEeIqpDdkFxK52kzRb9obJqoEZNsnXLl9twMQHf+WEVgAe98T1eWRar5oLFoNxhA6BJQ0N47b5jx3TU0+9kkMxQAbw+R02rUQurPWEkBu/rRyRzYLc18FZ5UXoFEwcd8G1WbjvlSh08SHtivOaOtjp5GH3iWjybZE7oMorfnypWPuPubctY/b7haA5w0KZGAzhM6VL5acLOe/osYGkUXICq/cGA2YZaBWIsJbdD7ciy0IhtGoFWZn/TMj++9e3hnfLDvPoNVpCtPAY0HH01YCDTO0gdxKlZX6EG9xEIWBmdX9szA
-Subject: [oss-security] CVE-2026-8721: Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl
- truncates passwords with embedded NULLs
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] One byte stack buffer overflow in keepassxc / zxcvbn-c
 
-========================================================================
-CVE-2026-8721                                        CPAN Security Group
-========================================================================
+Hi,
 
-         CVE ID:  CVE-2026-8721
-   Distribution:  Crypt-OpenSSL-PKCS12
-       Versions:  through 1.94
+I recently reported a one byte buffer overflow in keepassxc [1] [2].
+It's a pretty typical C bug: An array supposed to hold a string of a
+certain size plus a trailing zero byte is one byte too small (i.e. the
+size doesn't consider the trailing zero).
+Given that the overflow happens right at the application's startup I
+doubt it's exploitable in a meaningful way.
+The bug was discovered simply by compiling with asan and running
+keepassxc.
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-OpenSSL-PKCS12
-       VCS Repo:  https://github.com/dsully/perl-crypt-openssl-pkcs12
+The code comes from zxcvbn-c (a checker for password quality), where
+I've also reported it [3] (together with another minor bug regarding a
+misuse of new [] / delete).
 
+keepassxc is a fork of keepassx. However keepassx is not affected, as
+it doesn't contain the zxcvbn password quality checking code.
 
-Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl truncates
-passwords with embedded NULLs
-
-Description
------------
-Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl truncates
-passwords with embedded NULLs.
-
-Password parameters in PKCS12.xs are declared char *, which routes
-through Perl's default typemap to SvPV_nolen.  The Perl length is
-discarded.
-
-The C code (or OpenSSL internally) calls strlen() on the buffer.  Any
-password byte at or after the first NULL is silently dropped. Binary /
-KDF-derived / HMAC-derived passwords lose entropy without any warnings.
-
-Problem types
--------------
-- CWE-170 Improper Null Termination
-
-Solutions
----------
-Upgrade to 1.95 or later.
+One takeaway of this is that even amongst developers of security tools
+the use of address sanitizer is still not a standard practice
+everyone's using to test their C code.
 
 
-References
-----------
-https://metacpan.org/release/JONASBN/Crypt-OpenSSL-PKCS12-1.95/view/Changes.md
+[1] https://github.com/keepassxreboot/keepassxc/pull/363
+[2] https://github.com/keepassxreboot/keepassxc/pull/365
+[3] https://github.com/tsyrogit/zxcvbn-c/pull/11
 
-Timeline
---------
-- 2026-05-13: CPANSec identified issue
-- 2026-05-13: Author was notified
-- 2026-05-17: Maintainer released patch version
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
+
+mail/jabber: hanno@hboeck.de
+GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
