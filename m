@@ -1,40 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/31/2
-Message-ID: <99e7d55b-3743-4237-9d98-58e0f674c70b.tony.sh@alibaba-inc.com>
-Date: Thu, 31 Aug 2017 10:03:29 +0800
-From: "孙浩" <tony.sh@...baba-inc.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Cc: "Bob Friesenhahn" <bfriesen@...ple.dallas.tx.us>, "张洪亮(望初)" <wangchu.zhl@...baba-inc.com>, "曲富平(杭特)" <fuping.qfp@...baba-inc.com>
-Subject: CVE-2017-13776: GraphicsMagick 1.3.26 Denial of Service issue in ReadXBMImage() in coders/xbm.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/05/1
+Message-ID: <20170305105226.smsiuiqnhkrjnh6j@eldamar.local>
+Date: Sun, 5 Mar 2017 11:52:26 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: TeX Live: CVE-2016-10243: whitelists a insecure binary/utility to be run as external program
 Content-Type: text/plain; charset=utf-8
 
-Hi all.
-Description:graphicsmagick is a collection of tools and libraries for many image formats.
-We found a denial of service (DoS) issue in xbm.c at line 322, GraphicsMagick-1.3.26.The vulnerable code snippet is shown as below.    322     for (i=0; i < (long) (bytes_per_line*image->rows); i++)
-    323     {
-    324       value=XBMInteger(image,hex_digits);
-    325       *p++=(unsigned char) value;
-    326     }When a crafted XBM image file, which claims large image->rows and image->columns but does not contains sufficient backing data, is provided,the
- loop at line 322 would consume huge CPU and memroy 
-resources, since there is no EOF (End of File) check inside the loop.It is worth noting that variable bytes_per_line is computed based on image->columns earlier.In our test, we used a machine with Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz, 4 CPU cores and 16GB RAM.This bug casued 100% CPU and up to 2GB RAM consumption.
-This process lasted for about 6 minutes.
-Affected version:
-1.3.26
+Hi
 
-Fixed version:
-N/A
+Via http://cveform.mitre.org/ CVE-2016-10243 was assigned for the
+following issue in the TeX Live system:
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/233a720bfd5eCredit:
-This bug was discovered by Xiaohei and Wangchu from Alibaba Security Team.
+> The TeX system allows for calling external programs from within the
+> TeX source code (called \write18). This has been restricted to a
+> small set of programs since a long time ago.
+>
+> Unfortunately it turned out that one program in the list, mpost
+> (also shipped with TeX Live), allows in turn to specify other
+> programs to be run, which allows arbitrary code execution when
+> compiling a TeX document.
 
-CVE:
-CVE-2017-13776
+Upstream commit addressing the issue:
 
-Reproducer:
-https://github.com/shqking/graphicsmagick-poc/blob/master/poc-322.xbmThe command we was using is     gm convert poc-322.xbm test.jpg
+https://www.tug.org/svn/texlive?view=revision&revision=42605
 
-Timeline:
-2017-08-24: bug discovered and reported to upstream privately
-2017-08-26: upstream released a fix
-2017-08-30: CVE assigned
+Report on the issue:
+
+https://scumjr.github.io/2016/11/28/pwning-coworkers-thanks-to-latex/
+
+Regards,
+Salvatore
