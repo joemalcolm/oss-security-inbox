@@ -1,20 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/1
-Message-ID: <20170213044533.GA24586@tunkki>
-Date: Mon, 13 Feb 2017 06:45:33 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-5969: Null pointer derefence parsing xml file using libxml 2.9.4 (in recover mode)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/2
+Message-Id: <5B4851DB-DCE6-4F85-97C7-05605441C2FD@apache.org>
+Date: Mon, 6 Mar 2017 15:15:27 -0800
+From: Andy LoPresto <alopresto@...che.org>
+To: security@...i.apache.org, dev@...i.apache.org, users@...i.apache.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: [ANNOUNCE] CVE-2017-5635 and CVE-2017-5636
 Content-Type: text/plain; charset=utf-8
 
-> Where did this one ever go?  Is there a CVE?  Is there a patch?
+Apache NiFi PMC would like to announce the discovery and resolution of CVE-2017-5635 and CVE-2017-5636. These issues have been resolved and new versions of the Apache NiFi project were released in accordance with the Apache Release Process.
 
-CVE-2017-5969 has been assigned to this issue by MITRE with their comments
-attached to the bug report.
+Fixed in Apache NiFi 0.7.2 and 1.1.2
 
-Upstream bug report: https://bugzilla.gnome.org/show_bug.cgi?id=778519
+CVE-2107-5635: Apache NiFi Unauthorized Data Access In Cluster Environment
 
-Debian is going to publish DSA for libxml.
+Severity: Important
 
--- 
-Henri Salo
+Versions Affected:
+
+Apache NiFi 0.7.0
+Apache NiFi 0.7.1
+Apache NiFi 1.1.0
+Apache NiFi 1.1.1
+Description: In a cluster environment, if an anonymous user request is replicated to another node, the originating node identity is used rather than the “anonymous” user.
+
+Mitigation: A fix has been provided (removing the negative check for anonymous user before building the proxy chain and throwing an exception, and evaluating each user in the proxy chain iteration and comparing against a static constant anonymous user). This fix was applied in NIFI-3487 and released in Apache NiFi 0.7.2 and 1.1.2. 1.x users running a clustered environment should upgrade to 1.1.2. 0.x users running a clustered environment should upgrade to 0.7.2.
+
+Credit: This issue was discovered by Leonardo Dias in conjunction with Matt Gilman.
+
+CVE-2107-5636: Apache NiFi User Impersonation In Cluster Environment
+
+Severity: Moderate
+
+Versions Affected:
+
+Apache NiFi 0.7.0
+Apache NiFi 0.7.1
+Apache NiFi 1.1.0
+Apache NiFi 1.1.1
+Description: In a cluster environment, the proxy chain serialization/deserialization is vulnerable to an injection attack where a carefully crafted username could impersonate another user and gain their permissions on a replicated request to another node.
+
+Mitigation: A fix has been provided (modification of the tokenization code and sanitization of user-provided input). This fix was applied in NIFI-3487 and released in Apache NiFi 0.7.2 and 1.1.2. 1.x users running a clustered environment should upgrade to 1.1.2. 0.x users running a clustered environment should upgrade to 0.7.2.
+
+Credit: This issue was discovered by Andy LoPresto.
+
+Andy LoPresto
+alopresto@...che.org
+alopresto.apache@...il.com
+PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
