@@ -1,54 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/17/1
-Message-ID: <CAMNd5sse8gHbyjf+eAx+1hQgf6d1VQH0vDQRy3f_YxKtA6noEw@mail.gmail.com>
-Date: Fri, 17 Mar 2017 12:56:55 +0800
-From: Thuan Pham <thuanpv@...p.nus.edu.sg>
-To: Agostino Sarubbo <ago@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/5
+Message-id: <4EBCE262-F53E-4DAC-90E4-913D8E81C063@me.com>
+Date: Mon, 06 Mar 2017 12:32:30 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote file upload vulnerabilities in multiple wordpress plugins
 Content-Type: text/plain; charset=utf-8
 
-Dear Agostino,
-Thank you very much for your prompt reply. I will choose the suitable bugs
-based on your advice and submit to MITRE directly.
-Many thanks,
-Thuan
 
-On Fri, Mar 17, 2017 at 4:15 AM, Agostino Sarubbo <ago@...too.org> wrote:
+Hello,
 
-> On Friday 17 March 2017 00:58:05 Thuan Pham wrote:
-> > Could you please check whether these bugs are suitable for CVEs?
->
-> Thuan,
-> thanks for sharing.
->
-> Since few time the cve requests happens on https://cveform.mitre.org
-> instead
-> of here.
->
-> From some time of fuzz experience, from multiple cve requests and multiple
-> feedback from mitre I'd say:
-> - In any way you are able to crash a library, it needs a cve because it is
-> supposed to receive multiple inputs.
-> - Undefined behavior in a library also needs a cve.
-> - while the bug is in a command line tool:
-> 1) if it is a simple crash like fpe / segv, it is considered just an
-> inconvenience.
-> 2) if it is an overflow with read of size 1 is also considered an
-> inconveniece
-> unless you can demostrate any evidence of damage.
-> The mentioned cases are not just an inconvenience unless there are common
-> cases where you know that for example a webapp relies on this command line
-> tool.
-> 3) if it is an overflow with write access it should have a cve.
->
->
-> @everyone, if you think it is wrong or I missed something feel free to
-> correct
-> me.
->
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
->
+All of these plugins include unlicensed software developed by http://www.invedion.com/ that is vulnerable, I am unable to get 
+more details from the vendor as to what the software name and version are and therefor can't issue a CVE for just
+that software.  I've issued CVEs for the impacted plugins I know of:
 
+CVE-2017-1002000
+Remote file upload vulnerability in Wordpress Plugin mobile-friendly-app-builder-by-easytouch v3.0
+Example: http://example.com/wordpress/wp-content/plugins/mobile-friendly-app-builder-by-easytouch/server/images.php
+http://www.vapidlabs.com/advisory.php?v=179
+
+CVE-2017-1002001
+Remote file upload vulnerability in Wordpress Plugin mobile-app-builder-by-appress v1.05
+Example: http://example.com/wordpress/wp-content/plugins/mobile-app-builder-by-wappress/server/images.php
+http://www.vapidlabs.com/advisory.php?v=180
+
+CVE-2017-1002002
+Remote file upload vulnerability in Wordpress Plugin webapp-builder v2.0
+Example: http://example.com/wordpress/wp-content/plugins/webapp-builder/server/images.php
+http://www.vapidlabs.com/advisory.php?v=181
+
+
+CVE-2017-1002003
+Remote file upload vulnerability in Wordpress Plugin wp2android-turn-wp-site-into-android-app v1.1.4
+Example: http://example.com/wordpress/wp-content/plugins/wp2android-turn-wp-site-into-android-app/server/images.php
+http://www.vapidlabs.com/advisory.php?v=182
+
+@muntopia provided an exploit for all of them here:
+https://github.com/alienwithin/Scripts-Sploits/blob/master/zen_app_mobile_wp_rfu.py
