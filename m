@@ -1,46 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/30/23
-Message-ID: <1496168173.9871.1.camel@gmail.com>
-Date: Tue, 30 May 2017 14:16:13 -0400
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/8
+Message-ID: <6ce499a4-c9bb-ad62-aa85-4a67f77b2a19@securify.nl>
+Date: Tue, 7 Mar 2017 00:04:44 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack buffer overflow with controlled payload in get_options() function
+Subject: WordPress audio playlist functionality is affected by Cross-Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-> This might or might not be a valid point, but I think handling the
-> issue
-> via the distros list (and thus with an embargo) was wrong.  It would
-> have been better to have this discussion (if we must) on oss-security
-> right away, rather than only now when a second related issue is
-> brought
-> in here later same month.
+------------------------------------------------------------------------
+WordPress audio playlist functionality is affected by Cross-Site
+Scripting
+------------------------------------------------------------------------
+Yorick Koster, July 2016
 
-init= is just an example. Can also do things like enabling kernel kgdb /
-other debugging via headphone port / usb. Can mess with a lot of things
-via the kernel line. Disable the IOMMU, get full DMA access via USB-C
-perhaps. There are so many things that can be messed with and it really
-makes no sense to consider them vulnerabilities without doing something
-like *whitelisting* kernel cmdline arguments. Another easy one: disable
-dm-verity or change the dm-verity key, bypassing verified boot for the
-rest of the OS.
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+Two Cross-Site Scripting vulnerabilities exists in the playlist
+functionality of WordPress. These issues can be exploited by convincing
+an Editor or Administrator into uploading a malicious MP3 file. Once
+uploaded the issues can be triggered by a Contributor or higher using
+the playlist shortcode.
 
-Obtaining CVEs for these bugs presumes that the kernel line is not
-absolutely trusted by design, which it is. A CVE wouldn't be accepted
-for each of a hundred cmdline arguments that puts intentional trust in
-the cmdline, so it really shouldn't be accepted for ones that put
-unintentional trust in it. They are memory corruption bugs and should
-probably be fixed... but it's about as important as fixing the code
-style, not a security fix.
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160717-0003
 
-The security fix for Android was CVE-2016-10277 in
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on the WordPress [2] version 4.5.3.
 
-https://source.android.com/security/bulletin/2017-05-01
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+These issues are resolved in WordPress version 4.7.3. [3]
 
-I really don't buy into the idea the arbitrarily chosen methods to gain
-code exec via the cmdline are vulnerabilities themselves because there
-are many that don't even require bugs...
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+WordPress is web software you can use to create a website, blog, or
+app. Two Cross-Site Scripting vulnerabilities exists in the playlist
+functionality of WordPress. These issues can be exploited by convincing
+an Editor or Administrator into uploading a malicious MP3 file. Once
+uploaded the issues can be triggered by a Contributor or higher using
+the playlist shortcode.
 
-Might as well consider disabling NX, kernel rodata protection, setting
-up the IOMMU, setting memory region addresses (including breaking it /
-corrupting memory), etc. to be mitigation bypasses / vulnerabilities if
-these count.
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+It was discovered that meta information (ID3) stored in audio files are
+not properly sanitized in case they are uploaded by a user with the
+unfiltered_html (generally an Editor or Administrator).
+
+The first Cross-Site Scripting vulnerability exists in the function that
+processes the playlist shortcode, which is done in the
+wp_playlist_shortcode() method (/wp-includes/media.php). This method
+creates a <noscript> block for users with JavaScript disabled.
+
+https://www.securify.nl/advisory/SFY20160742/noscript_unfiltered_html.png
+
+The method wp_get_attachment_link() does not perform any output encoding
+on the link text. Meta information from the audio file is used in the
+link text, rendering wp_playlist_shortcode() vulnerable to Cross-Site
+Scripting.
+
+The second Cross-Site Scripting issue is DOM-based and exists in the
+JavaScript file /wp-includes/js/mediaelement/wp-playlist.js (or
+/wp-includes/js/mediaelement/wp-playlist.min.js). The WPPlaylistView
+object is used to render a audio player client side. The method
+renderTracks() uses the meta information from the audio file in a call
+to jQuery's append() method. No output encoding is used on the meta
+information, resulting in a Cross-Site Scripting vulnerability.
+
+https://www.securify.nl/advisory/SFY20160742/renderTracks-dom-based_xss.png
+
+------------------------------------------------------------------------
+Proof of concept
+------------------------------------------------------------------------
+The following MP3 file can be used to reproduce this issue:
+
+https://www.securify.nl/advisory/SFY20160742/xss.mp3
+
+1) upload MP3 file to the Media Library (as Editor or Administrator).
+2) Insert an Audio Playlist in a Post containing this MP3 (Create Audio
+Playlist).
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
+[2] https://wordpress.org/
+[3] 
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
