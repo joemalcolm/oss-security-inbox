@@ -1,35 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/13/13
-Message-ID: <20170213195423.13018.16C44946@matica.foolinux.mooo.com>
-Date: Mon, 13 Feb 2017 11:56:41 -0800
-From: Ian Zimmerman <itz@...mate.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/1
+Message-ID: <CAH468doehvXuMkgF3caMFmia4K+dXJp5=6JFRTrkNGkHFiNoow@mail.gmail.com>
+Date: Sun, 5 Mar 2017 21:16:22 -0500
+From: Anthony Sasadeusz <sasadeu1@...c.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: MITRE is adding data intake to its CVE ID process
+Subject: CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
 Content-Type: text/plain; charset=utf-8
 
-On 2017-02-12 11:23, Kurt Seifried wrote:
+admin@...172-31-13-10:~/jasper/build-asan/src/appl$ ./jasper --input
+../../../build-afl/src/appl/findings/crashes/id\:000000\,sig\:11\,src\:000002\,op\:havoc\,rep\:16
+--output /dev/null --output-format jp2
+ASAN:SIGSEGV
+=================================================================
+==16088==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+(pc 0x7f45f3104fe6 sp 0x7ffcd24052c0 bp 0x7ffcd24063d0 T0)
+    #0 0x7f45f3104fe5 in jp2_encode
+/home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119
+    #1 0x7f45f30de187 in jas_image_encode
+/home/admin/jasper/src/libjasper/base/jas_image.c:471
+    #2 0x402494 in main /home/admin/jasper/src/appl/jasper.c:277
+    #3 0x7f45f2a1eb44 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
+    #4 0x401908 (/home/admin/jasper/build-asan/src/appl/jasper+0x401908)
 
-> As for the DWF it's simple: we're using git, so I guess if people really
-> want up to the minute updates they can simply subscribe to the repos in
-> GitHub, or pull and do it on their own end.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV
+/home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119 jp2_encode
+==16088==ABORTING
 
-This?
 
-https://github.com/distributedweaknessfiling/DWF-Database
+This also happens on the latest master branch.
+The repo: https://github.com/mdadams/jasper
 
-Quoting:
+Crashing inputs found with afl:
+https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes
 
- IMPORTANT NOTE
-
- There is a good chance this database (and indeed repo) will be phased
- out in favor of the JSON database. If there is enough demand for it
- there may be a CSV representation of all the data, but if there isn't
- enough demand then we will simply drop it in 2017. So speak up if you
- want/need this.
-
-Is there a separate place for the JSON data?  Where?
-
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign: http://cr.yp.to/smtp/8bitmime.html
