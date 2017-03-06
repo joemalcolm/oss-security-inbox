@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2247" "Tuesday" "18" "October" "2016" "14:14:26" "+0200" "Remi Collet" "remi@fedoraproject.org" "<58a56ff2-6a32-cbfb-514f-afca19b97d39@fedoraproject.org>" "75" "Re: [oss-security] CVE assignment for PHP 5.6.27 and 7.0.12" nil nil nil "10" "2016101812:14:26" "[oss-security] CVE assignment for PHP 5.6.27 and 7.0.12" (number mark "U       remi@fedorap Oct 18   75/2247  " thread-indent "\"Re: [oss-security] CVE assignment for PHP 5.6.27 and 7.0.12\"\n") "<45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>" ("<CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>" "<45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1526" "Monday" "6" "March" "2017" "12:32:30" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<4EBCE262-F53E-4DAC-90E4-913D8E81C063@me.com>" "40" "[oss-security] Remote file upload vulnerabilities in multiple wordpress plugins" nil nil nil "3" "2017030617:32:30" "[oss-security] Remote file upload vulnerabilities in multiple wordpress plugins" (number mark "U       larry0@me.co Mar  6   40/1526  " thread-indent "\"[oss-security] Remote file upload vulnerabilities in multiple wordpress plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17900 invoked by uid 550); 18 Oct 2016 13:33:47 -0000
+Received: (qmail 7426 invoked by uid 550); 6 Mar 2017 17:32:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,96 +12,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26365 invoked from network); 18 Oct 2016 12:14:43 -0000
-X-Virus-Scanned: Debian amavisd-new at mfilter40-d.gandi.net
-X-Originating-IP: 90.109.100.243
-To: oss-security@lists.openwall.com
-References: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
- <45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>
-From: Remi Collet <remi@fedoraproject.org>
-Message-ID: <58a56ff2-6a32-cbfb-514f-afca19b97d39@fedoraproject.org>
-Date: Tue, 18 Oct 2016 14:14:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="KT1xkT21HDogMPVp0QhwF8F5AtOp1AebI"
-Subject: Re: [oss-security] CVE assignment for PHP 5.6.27 and 7.0.12
-
---KT1xkT21HDogMPVp0QhwF8F5AtOp1AebI
-Content-Type: multipart/mixed; boundary="tU9hkbUlhtdL4I2TdRUdgmi7pMn416iv2";
- protected-headers="v1"
-From: Remi Collet <remi@fedoraproject.org>
-To: oss-security@lists.openwall.com
-Message-ID: <58a56ff2-6a32-cbfb-514f-afca19b97d39@fedoraproject.org>
-Subject: Re: [oss-security] CVE assignment for PHP 5.6.27 and 7.0.12
-References: <CAEsznC7n7U35nHEx64ma39PtbqKd6TjPyvAWJMBaP6YRacJEog@mail.gmail.com>
- <45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>
-In-Reply-To: <45c3eba1-d26d-7137-f1e6-fb29322fa610@redhat.com>
-
---tU9hkbUlhtdL4I2TdRUdgmi7pMn416iv2
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-Le 18/10/2016 =C3=A0 14:06, Adam Maris a =C3=A9crit :
-> On 18/10/16 09:42, Lior Kaplan wrote:
->> Hi,
->>
->> Please assign a CVE for the following issue:
->>
->> Bug #73147    Use After Free in unserialize()
->> https://bugs.php.net/bug.php?id=3D73147
->> http://git.php.net/?p=3Dphp-src.git;a=3Dcommit;h=3D0e6fe3a4c96be2d3e8838=
-9a5776f878021b4c59f
->>
->>
->> Thanks,
->>
->> Kaplan
->>
-> 16 bugs marked as 'security' were fixed in php 5.6.27 of which only one
-> has CVE assigned.
-> Here you request CVE for another one issue (even the documentation says
-> it's unsafe to use
-> unserialize on untrusted input).
->=20
-> Are you planning to obtain CVEs also for other security bugs or do you
-> treat the rest as
-> CVE-unworthy? Or are reporters/community supposed to do it?
-
-All the remaining bugs, despite reported as security issue, involved
-some very big strings to reproduce (~2GB)
-
-Which is prevented by any decent memory_limit value
-And by max_input_size for remote access.
+Received: (qmail 7405 invoked from network); 6 Mar 2017 17:32:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
+	t=1488821551; bh=ZkwC1j5WQfzQMjpWp+VqPW5hrne8saTrxvXm6ju388I=;
+	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
+	b=Fx6S4pj/ZIo/QumwCTFuS1/2AYGjczwTg4gLzeSomUEiJ2rlOqQu3UojNxaY5ipSd
+ BXLG4DVeAKrLQN/vY4z1c1KKu+8BP8QMXUI5e8hGlSGcCoap654BiwkeDMdov4l5Ts
+ G1mrfo0n6L9cWIsTzeD5cbqb3oPCYu6BkdoQueRUKPXjRnbqxQ8IBGh02nPFUHuY6x
+ 8/veNq/9cMeOwg9jnu/EIhVfDAoDfJTiPu2KaaWiP+1YJQn/UgL0HG3n6dEPA/k/n6
+ GlmvrLG2w3dLPupOakqeU+zCe5qDU7j4/k5Oh+gMNlHx5l4VH490hdOpiJPsGCrDuo
+ TmwNV6OhfU+hw==
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
+ definitions=2017-03-06_17:,, signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ clxscore=1034 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.0.1-1701120000 definitions=main-1703060143
+From: "Larry W. Cashdollar" <larry0@me.com>
+Content-type: text/plain; charset=us-ascii
+Content-transfer-encoding: quoted-printable
+Message-id: <4EBCE262-F53E-4DAC-90E4-913D8E81C063@me.com>
+Date: Mon, 06 Mar 2017 12:32:30 -0500
+To: Open Source Security <oss-security@lists.openwall.com>
+MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+Subject: [oss-security] Remote file upload vulnerabilities in multiple wordpress plugins
 
 
-Remi
+Hello,
+
+All of these plugins include unlicensed software developed by http://www.in=
+vedion.com/ that is vulnerable, I am unable to get=20
+more details from the vendor as to what the software name and version are a=
+nd therefor can't issue a CVE for just
+that software.  I've issued CVEs for the impacted plugins I know of:
+
+CVE-2017-1002000
+Remote file upload vulnerability in Wordpress Plugin mobile-friendly-app-bu=
+ilder-by-easytouch v3.0
+Example: http://example.com/wordpress/wp-content/plugins/mobile-friendly-ap=
+p-builder-by-easytouch/server/images.php
+http://www.vapidlabs.com/advisory.php?v=3D179
+
+CVE-2017-1002001
+Remote file upload vulnerability in Wordpress Plugin mobile-app-builder-by-=
+appress v1.05
+Example: http://example.com/wordpress/wp-content/plugins/mobile-app-builder=
+-by-wappress/server/images.php
+http://www.vapidlabs.com/advisory.php?v=3D180
+
+CVE-2017-1002002
+Remote file upload vulnerability in Wordpress Plugin webapp-builder v2.0
+Example: http://example.com/wordpress/wp-content/plugins/webapp-builder/ser=
+ver/images.php
+http://www.vapidlabs.com/advisory.php?v=3D181
 
 
-P.S. just my 0,02=E2=82=AC, but indeed, CVE-unworthy
+CVE-2017-1002003
+Remote file upload vulnerability in Wordpress Plugin wp2android-turn-wp-sit=
+e-into-android-app v1.1.4
+Example: http://example.com/wordpress/wp-content/plugins/wp2android-turn-wp=
+-site-into-android-app/server/images.php
+http://www.vapidlabs.com/advisory.php?v=3D182
 
-> Thanks!
->=20
-
-
-
---tU9hkbUlhtdL4I2TdRUdgmi7pMn416iv2--
-
---KT1xkT21HDogMPVp0QhwF8F5AtOp1AebI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iEYEARECAAYFAlgGEiIACgkQYUppBSnxahjtNgCbBj1nsAL1ycl9h0T9WyFGpLZ5
-5swAn3T++JiAuihuB+8X5vSmli+APv7c
-=Cvqm
------END PGP SIGNATURE-----
-
---KT1xkT21HDogMPVp0QhwF8F5AtOp1AebI--
+@muntopia provided an exploit for all of them here:
+https://github.com/alienwithin/Scripts-Sploits/blob/master/zen_app_mobile_w=
+p_rfu.py=
