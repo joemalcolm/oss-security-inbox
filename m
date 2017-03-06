@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2138" "Thursday" "10" "March" "2016" "03:16:36" "-0800" "Steve Beattie" "steve@nxnw.org" "<20160310111636.GA15133@nxnw.org>" "59" "Re: [oss-security] CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption" nil nil nil "3" "2016031011:16:36" "[oss-security] CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption" (number mark "U       steve@nxnw.o Mar 10   59/2138  " thread-indent "\"Re: [oss-security] CVE Request: Linux Kernel: Linux netfilter IPT_SO_SET_REPLACE memory corruption\"\n") "<20160310092549.GB4470@suse.de>" ("<20160310092549.GB4470@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1290" "Sunday" "5" "March" "2017" "21:16:22" "-0500" "Anthony Sasadeusz" "sasadeu1@umbc.edu" "<CAH468doehvXuMkgF3caMFmia4K+dXJp5=6JFRTrkNGkHFiNoow@mail.gmail.com>" "32" "[oss-security] CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)" nil nil nil "3" "2017030602:16:22" "[oss-security] CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)" (number mark "U       sasadeu1@umb Mar  5   32/1290  " thread-indent "\"[oss-security] CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9284 invoked by uid 550); 10 Mar 2016 11:16:52 -0000
+Received: (qmail 11487 invoked by uid 550); 6 Mar 2017 04:16:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9263 invoked from network); 10 Mar 2016 11:16:51 -0000
-Date: Thu, 10 Mar 2016 03:16:36 -0800
-From: Steve Beattie <steve@nxnw.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20160310111636.GA15133@nxnw.org>
-References: <20160310092549.GB4470@suse.de>
+Received: (qmail 19896 invoked from network); 6 Mar 2017 02:16:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umbc-edu.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=dY8oTkUFTVXM5sVI0p6vhWe8Z8oMoWtzJv2ErDhGEkE=;
+        b=jphGmTotpzV26U+owDPvemxQoE9CIs3QA3J73smcLZ3Hvulk2CD/f2iyPOhzX4d43Q
+         SKcMdulb3qDXJqoAAMflN2uHIU/rSkbtkGgxDio2WF+xdN5agcO4YT6ulMjr3LscibzV
+         AK4lflszGkNVTeRkrKqPTf4rBfR7aaVvQugPmPJqIAorNTaGCtBN+nlnGer59aZFKQDh
+         Vvoh7iaNceAV8nu3mnxHuM7w4Y87rVOWKfzzc/FCyNF9WkQUTdro8U2/UNrJ0leWTkeX
+         32RC9/Xk4VJ/aKVL5GwhYavI9SQ8ktkQZjP927yHSiAcSORx/E2/9xH4NsGfnXvSpNv7
+         LjtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=dY8oTkUFTVXM5sVI0p6vhWe8Z8oMoWtzJv2ErDhGEkE=;
+        b=LDqpv9tTE/SsKmG3mliBPy4pjBHkcwOHXBn4KUPd+z5SCDhv9ukMVIwY9X+OKxmkHE
+         hx9A9sqEVlVlvdsgov1tAcAMpjEfa+XZ5aYkZNLucia5/jathctCbTvDheop1l4D0bqy
+         EUzxEadjfmZvF2rhcpYagcFHNIAV/HuMVdlCfTD7XrOIgldF7QVLJWEPPJsPxGZldFQW
+         1AWI7su2tef4HeP4CKaRVqqomPQlbPcEbUHWGVFc46kZT9m9+c5rzugNgA4xUtJ78NKx
+         nBoc2wU2hCc3C7ohrSH4KIbWf/AZUL7t4Pfat/7/M4Eu3E0jmVGSaYfm3NpX8bP5BbFA
+         894A==
+X-Gm-Message-State: AMke39mKj/vCZQioDL7VrgAQjVjI1CrBJ0pOslCkgEp/zwyKwOrJbvTJHF/eeKp+vlHt+zlfmDKZPFFsk3ZqY4Bc
+X-Received: by 10.31.148.71 with SMTP id w68mr4503983vkd.87.1488766582767;
+ Sun, 05 Mar 2017 18:16:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ikeVEW9yuYc//A+q"
-Content-Disposition: inline
-In-Reply-To: <20160310092549.GB4470@suse.de>
-Organization: North by Northwest Consolidated Industries, LLC
-X-Paranoia: Greetings CIA, FBI, MI5, NSA, ATF, Immigration!
-X-Message-Flag: Repeal the DMCA! Real security is only possible  when subject
- to open critical review.
-X-PGP-Key: http://www.NxNW.org/~steve/005E81F4.txt
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] CVE Request: Linux Kernel: Linux netfilter
- IPT_SO_SET_REPLACE memory corruption
+From: Anthony Sasadeusz <sasadeu1@umbc.edu>
+Date: Sun, 5 Mar 2017 21:16:22 -0500
+Message-ID: <CAH468doehvXuMkgF3caMFmia4K+dXJp5=6JFRTrkNGkHFiNoow@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1142619051f50f054a067bc4
+Subject: [oss-security] CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
 
---ikeVEW9yuYc//A+q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--001a1142619051f50f054a067bc4
+Content-Type: text/plain; charset=UTF-8
 
-Hi,
+admin@ip-172-31-13-10:~/jasper/build-asan/src/appl$ ./jasper --input
+../../../build-afl/src/appl/findings/crashes/id\:000000\,sig\:11\,src\:000002\,op\:havoc\,rep\:16
+--output /dev/null --output-format jp2
+ASAN:SIGSEGV
+=================================================================
+==16088==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+(pc 0x7f45f3104fe6 sp 0x7ffcd24052c0 bp 0x7ffcd24063d0 T0)
+    #0 0x7f45f3104fe5 in jp2_encode
+/home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119
+    #1 0x7f45f30de187 in jas_image_encode
+/home/admin/jasper/src/libjasper/base/jas_image.c:471
+    #2 0x402494 in main /home/admin/jasper/src/appl/jasper.c:277
+    #3 0x7f45f2a1eb44 in __libc_start_main
+(/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
+    #4 0x401908 (/home/admin/jasper/build-asan/src/appl/jasper+0x401908)
 
-On Thu, Mar 10, 2016 at 10:25:49AM +0100, Marcus Meissner wrote:
-> >>From the P0 team at Google:
->
-> https://code.google.com/p/google-security-research/issues/detail?id=3D758
->
-> A memory corruption vulnerability exists in the IPT_SO_SET_REPLACE
-> ioctl in the netfilter code for iptables support. This ioctl is can be
-> triggered by an unprivileged user on PF_INET sockets when unprivileged
-> user namespaces are available (CONFIG_USER_NS=3Dy). Android does not
-> enable this option, but desktop/server distributions and Chrome OS
-> will commonly enable this to allow for containers support or sandboxing.
->
-> ...
->=20
-> I think this needs a CVE.
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV
+/home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119 jp2_encode
+==16088==ABORTING
 
-It likely needs two, one for the issue above,
-which has been proposed to be addressed by
-http://marc.info/?l=3Dnetfilter-devel&m=3D145757134822741&w=3D2
 
-and one for the unsigned integer overflow on 32bit kernels
-mentioned as an aside at the end of the original report. Proposed
-fix is http://marc.info/?l=3Dnetfilter-devel&m=3D145757136822750&w=3D2
+This also happens on the latest master branch.
+The repo: https://github.com/mdadams/jasper
 
-Thanks.
---=20
-Steve Beattie
-<sbeattie@ubuntu.com>
-http://NxNW.org/~steve/
+Crashing inputs found with afl:
+https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes
 
---ikeVEW9yuYc//A+q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJW4VeUAAoJEC8Jno0AXoH0SusQAILppZvYGeY7dX17OSbjFwSI
-AwTH1ZfKTMVnTLsbW2HgsFPajrlgClemdEkKnGNbZIOX2aaY5FQF2SSI5KEjF3xG
-E/Inxj/0DU6Ju72Fy14t0TekDqKhG3jfxRgLFTmoo9K/LFA5iDAr0WTllYhWoRS1
-gNtNBcGlXfoKvzZ0Tw2uKKmzGKywiPBU/eQakpLbfId3Y6WE7iDLijtAKTCNNSBa
-LDIYdRszRArVVAIWqFjD1ipN1/qlV/yCLz3Sz4KwCs+tVpBbQ8uvb7ca0l6l8BLi
-08qtnR/S03yseGjQp/T+3fJ15JJz/V+E2dj1cpwLatzt97YS18cJbpPMqwdi6Y4r
-7cu2D2fdHODK7pIwlq07Je/rYyoG/GNDRtJUF3tr/xooYhpeqoyj8STZW8DudEF9
-G0A7ZDofQdYI38VvMToxGpQEdaJstTZaTUsdHmSwYzdOUiDMCNsaSpQEAeI18pK9
-iTVoE/zMrXTU+oNTCyipd/NUHme9A9mzQuubl/gPEUro2M3RuOAgJi2yMUB+SeBh
-flsAg3hhDLFA6IZ968XoXiX1czTtQFyu4vivc5NZFsK0yZHQs7B2jlP6MqtCQpMD
-kEQIjcBvicydz/LHQTS3jMLhv331eKZw5iTGwhE40IqQ5zJiU4oYW6kCb304vFzc
-b5d6azFVy9Jz4b78IVT2
-=adZv
------END PGP SIGNATURE-----
-
---ikeVEW9yuYc//A+q--
+--001a1142619051f50f054a067bc4--
