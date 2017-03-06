@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/15/5
-Message-ID: <20170515165657.GA25897@hal>
-Date: Mon, 15 May 2017 18:56:57 +0200
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
-To: oss-security@...ts.openwall.com
-Cc: Yao Wei <mwei@...e.org>
-Subject: Re: CVE-2017-8934 pcmanfm: single instance socket may be blocked by another user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/4
+Message-ID: <20170306153855.7eb0672f@redhat.com>
+Date: Mon, 6 Mar 2017 15:38:55 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: Emilio Pozuelo Monfort <pochu27@...il.com>
+Cc: oss-security@...ts.openwall.com, Anthony Sasadeusz <sasadeu1@...c.edu>
+Subject: Re: CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
 Content-Type: text/plain; charset=utf-8
 
-* Yao Wei <mwei@...e.org> [2017-05-15 17:37]:
-> The socket placed in /tmp is predictable and public-writable. Therefore
-> if one user placed a symlink to another socket instead of socket for
-> another user then said another user will either be unable to use
-> pcmanfm, or may send requests to the first user's pcmanfm.
-> 
-> This bug has been assigned to CVE-2017-8934 [1].  A fix has been
-> committed to pcmanfm's git repository [2].  LXDE developers are
-> working on a release which fixes the problem.
-> 
-> [1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-8934
-> [2]: https://git.lxde.org/gitweb/?p=lxde/pcmanfm.git;a=commitdiff;h=bc8c3d871e9ecc67c47ff002b68cf049793faf08
+On Mon, 6 Mar 2017 09:06:00 +0100 Emilio Pozuelo Monfort wrote:
 
-The "fix" is ifdef'd for glib >= 2.28.0, so the vulnerability
-still exists when compiling against an older version of glib.
+> > This also happens on the latest master branch.
+> > The repo: https://github.com/mdadams/jasper
+> > 
+> > Crashing inputs found with afl:
+> > https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes  
+> 
+> You should request CVEs at http://cveform.mitre.org/ these days.
+> 
+> Also it'd be good if you opened an upstream bug report about this.
+
+Looks like that was already done:
+
+https://github.com/mdadams/jasper/issues/120
+
 -- 
-Guido Berhoerster
+Tomas Hoger / Red Hat Product Security
