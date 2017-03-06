@@ -1,4 +1,9 @@
-Received: (qmail 19635 invoked by uid 550); 7 May 2024 17:13:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["722" "Monday" "6" "March" "2017" "23:51:41" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1703062349510.6862@wniryva>" "25" "[oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in ohci_service_ed_list" nil nil nil "3" "2017030618:21:41" "[oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in ohci_service_ed_list" (number mark "U       ppandit@redh Mar  6   25/722   " thread-indent "\"[oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in ohci_service_ed_list\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7757 invoked by uid 550); 6 Mar 2017 18:21:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,142 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19562 invoked from network); 7 May 2024 17:13:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=bjJTywfWaY2JlU0ugZOq5fY/zAJLvPujOreQwU8D4R4=; b=X1KAGgf7pWupjNkulgkUiPk5f5
-	OxvAaTXUYiW8WuXBN42V0BNdpswxKPcrlUVMLfd/VH5Is0O0MZISmDKqa9aaq4l17pKCJrcCuGsJ1
-	UwnDNkDtHEupN/LOfx5MVAhTGN23ZE5TFJBIvnXnR06qvqJpRiS1Izo+9N3iLr53658Y=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 7736 invoked from network); 6 Mar 2017 18:21:57 -0000
+Date: Mon, 6 Mar 2017 23:51:41 +0530 (IST)
+From: P J P <ppandit@redhat.com>
+X-X-Sender: pjp@javelin
+To: oss security list <oss-security@lists.openwall.com>
+cc: Li Qiang <liqiang6-s@360.cn>
+Message-ID: <alpine.LFD.2.20.1703062349510.6862@wniryva>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1s4ON4-0002CG-9R@xenbits.xenproject.org>
-Date: Tue, 07 May 2024 17:12:54 +0000
-Subject: [oss-security] Xen Security Advisory 457 v1 - Linux/xen-netback: Memory leak due
- to missing cleanup function
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.28]); Mon, 06 Mar 2017 18:21:47 +0000 (UTC)
+Subject: [oss-security] CVE-2017-6505 Qemu: usb: an infinite loop issue in
+ ohci_service_ed_list
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+   Hello,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Quick Emulator built with the USB OHCI Emulation support is vulnerable to an 
+infinite loop issue. It could occur while processing an endpoint list 
+descriptor in ohci_service_ed_list().
 
-                    Xen Security Advisory XSA-457
+A guest user/process could use this flaw to crash Qemu process resulting in 
+DoS.
 
-    Linux/xen-netback: Memory leak due to missing cleanup function
+Upstream patch:
+---------------
+   -> http://git.qemu-project.org/?p=qemu.git;a=commitdiff;h=95ed56939eb2eaa4e2f349fe6dcd13ca4edfd8fb
 
-ISSUE DESCRIPTION
-=================
+Reference:
+----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1429432
 
-In netback, xennet_alloc_one_rx_buffer() failed to call the
-appropriate clean-up function, resulting in a memory leak.
+This issue was reported by Li Qiang of 360.cn Inc.
 
-IMPACT
-======
+'CVE-2017-6505' allocated via -> http://cveform.mitre.org/
 
-A malicious guest userspace process can exhaust memory resources
-within the guest kernel, potentially leading to a system crash (Denial
-of Service). It is not known whether it can be triggered remotely.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems with guests running Linux 5.9 and later with Xen PV network
-devices are affected.
-
-MITIGATION
-==========
-
-For HVM guests, using emulated network devices will avoid this issue.
-
-RESOLUTION
-==========
-
-The following patch in Linux resolves the issue:
-
-https://git.kernel.org/torvalds/c/037965402a010898d34f4e35327d22c0a95cd51f
-
-A copy of which has attached.
-
-xsa457.patch           Linux 5.9
-
-$ sha256sum xsa457*
-9d6ae3da27f1ff92f9f45c800822beecda603d6dea6726207cee6c768416114c  xsa457.patch
-$
-
-
-NOTE ON THE LACK OF EMBARGO
-===========================
-
-The issue was reported initially on a public bug tracker and fixed in
-public before it was realized that there was a security aspect.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmY6YN8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZq4kH/0BcaF/4dKqxQ/hYMMoLxcE1kzHn2kAdFPcvxcuu
-Csk1yLugbvxHgwgp0lI9JjiqzSMt68pN8B9mWbcMBBvA7jGGsJ6Vjp25kQnUToLe
-FPiAhW/TY+1YXOnhsfn9dHHk1Tv0W5D69QuUuj6zGUvRMdV+WPyA/mGPWnBrJgT+
-5s6tKFxls1JiLdFxuJKqi8Ok8HrX1zE9unSWEUri8SNE2k3h5i29X2v+S8yBv2y0
-XBnzr16kL9KKim0sNSErB1QU5BThnDBCFk+7FKAAYGAv5H6N3VLv66DLARCYfPhP
-iXJU3/+yvAjwZjp5oYtbqHXzdd/m0b/IrF/0ZMLBaoDs0s4=
-=vfs6
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa457.patch"
-Content-Disposition: attachment; filename="xsa457.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSAwMzc5NjU0MDJhMDEwODk4ZDM0ZjRlMzUzMjdkMjJjMGE5NWNkNTFm
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKZXNwZXIgRGFuZ2Fh
-cmQgQnJvdWVyIDxoYXdrQGtlcm5lbC5vcmc+CkRhdGU6IFdlZCwgMjcgTWFy
-IDIwMjQgMTM6MTQ6NTYgKzAxMDAKU3ViamVjdDogeGVuLW5ldGZyb250OiBB
-ZGQgbWlzc2luZyBza2JfbWFya19mb3JfcmVjeWNsZQoKTm90aWNlIHRoYXQg
-c2tiX21hcmtfZm9yX3JlY3ljbGUoKSBpcyBpbnRyb2R1Y2VkIGxhdGVyIHRo
-YW4gZml4ZXMgdGFnIGluCmNvbW1pdCA2YTViY2Q4NGU4ODYgKCJwYWdlX3Bv
-b2w6IEFsbG93IGRyaXZlcnMgdG8gaGludCBvbiBTS0IgcmVjeWNsaW5nIiku
-CgpJdCBpcyBiZWxpZXZlZCB0aGF0IGZpeGVzIHRhZyB3ZXJlIG1pc3Npbmcg
-YSBjYWxsIHRvIHBhZ2VfcG9vbF9yZWxlYXNlX3BhZ2UoKQpiZXR3ZWVuIHY1
-LjkgdG8gdjUuMTQsIGFmdGVyIHdoaWNoIGlzIHNob3VsZCBoYXZlIHVzZWQg
-c2tiX21hcmtfZm9yX3JlY3ljbGUoKS4KU2luY2UgdjYuNiB0aGUgY2FsbCBw
-YWdlX3Bvb2xfcmVsZWFzZV9wYWdlKCkgd2VyZSByZW1vdmVkIChpbgpjb21t
-aXQgNTM1YjljNjFiZGVmICgibmV0OiBwYWdlX3Bvb2w6IGhpZGUgcGFnZV9w
-b29sX3JlbGVhc2VfcGFnZSgpIikKYW5kIHJlbWFpbmluZyBjYWxsZXJzIGNv
-bnZlcnRlZCAoaW4gY29tbWl0IDZiZmVmMmVjMDE3MiAoIk1lcmdlIGJyYW5j
-aAonbmV0LXBhZ2VfcG9vbC1yZW1vdmUtcGFnZV9wb29sX3JlbGVhc2VfcGFn
-ZSciKSkuCgpUaGlzIGxlYWsgYmVjYW1lIHZpc2libGUgaW4gdjYuOCB2aWEg
-Y29tbWl0IGRiYTFiOGE3YWI2OCAoIm1tL3BhZ2VfcG9vbDogY2F0Y2gKcGFn
-ZV9wb29sIG1lbW9yeSBsZWFrcyIpLgoKQ2M6IHN0YWJsZUB2Z2VyLmtlcm5l
-bC5vcmcKRml4ZXM6IDZjNWFhNmZjNGRlZiAoInhlbiBuZXR3b3JraW5nOiBh
-ZGQgYmFzaWMgWERQIHN1cHBvcnQgZm9yIHhlbi1uZXRmcm9udCIpClJlcG9y
-dGVkLWJ5OiBMZW9uaWRhcyBTcHlyb3BvdWxvcyA8YXJ0YWZpbmRlQGFyY2hs
-aW51eC5jb20+Ckxpbms6IGh0dHBzOi8vYnVnemlsbGEua2VybmVsLm9yZy9z
-aG93X2J1Zy5jZ2k/aWQ9MjE4NjU0ClJlcG9ydGVkLWJ5OiBBcnRodXIgQm9y
-c2Jvb20gPGFydGh1cmJvcnNib29tQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1i
-eTogSmVzcGVyIERhbmdhYXJkIEJyb3VlciA8aGF3a0BrZXJuZWwub3JnPgpM
-aW5rOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9yLzE3MTE1NDE2NzQ0Ni4y
-NjcxMDYyLjkxMjcxMDUzODQ1OTEyMzczNjMuc3RnaXRAZmlyZXNvdWwKU2ln
-bmVkLW9mZi1ieTogSmFrdWIgS2ljaW5za2kgPGt1YmFAa2VybmVsLm9yZz4K
-LS0tCiBkcml2ZXJzL25ldC94ZW4tbmV0ZnJvbnQuYyB8IDEgKwogMSBmaWxl
-IGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspCgpkaWZmIC0tZ2l0IGEvZHJpdmVy
-cy9uZXQveGVuLW5ldGZyb250LmMgYi9kcml2ZXJzL25ldC94ZW4tbmV0ZnJv
-bnQuYwppbmRleCBhZDI5ZjM3MDAzNGU0Zi4uOGQyYWVlODg1MjZjNjkgMTAw
-NjQ0Ci0tLSBhL2RyaXZlcnMvbmV0L3hlbi1uZXRmcm9udC5jCisrKyBiL2Ry
-aXZlcnMvbmV0L3hlbi1uZXRmcm9udC5jCkBAIC0yODUsNiArMjg1LDcgQEAg
-c3RhdGljIHN0cnVjdCBza19idWZmICp4ZW5uZXRfYWxsb2Nfb25lX3J4X2J1
-ZmZlcihzdHJ1Y3QgbmV0ZnJvbnRfcXVldWUgKnF1ZXVlKQogCQlyZXR1cm4g
-TlVMTDsKIAl9CiAJc2tiX2FkZF9yeF9mcmFnKHNrYiwgMCwgcGFnZSwgMCwg
-MCwgUEFHRV9TSVpFKTsKKwlza2JfbWFya19mb3JfcmVjeWNsZShza2IpOwog
-CiAJLyogQWxpZ24gaXAgaGVhZGVyIHRvIGEgMTYgYnl0ZXMgYm91bmRhcnkg
-Ki8KIAlza2JfcmVzZXJ2ZShza2IsIE5FVF9JUF9BTElHTik7Ci0tIApjZ2l0
-IDEuMi4zLWtvcmcKCg==
-
---=separator--
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
