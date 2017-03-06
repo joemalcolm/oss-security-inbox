@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["418" "Thursday" "18" "October" "2018" "05:32:18" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>" "17" "Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" "^Cc:" nil nil "10" "2018101812:32:18" "[oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284" (number mark "        taviso@googl Oct 18   17/418   " thread-indent "\"Re: [oss-security] Re: ghostscript: 1Policy operator gives access to .forceput CVE-2018-18284\"\n") "<9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>" ("<CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>" "<CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com>" "<9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4132" "Tuesday" "7" "March" "2017" "00:04:44" "+0100" "Summer of Pwnage" "lists@securify.nl" "<6ce499a4-c9bb-ad62-aa85-4a67f77b2a19@securify.nl>" "87" "[oss-security] WordPress audio playlist functionality is affected by Cross-Site Scripting" nil nil nil "3" "2017030623:04:44" "[oss-security] WordPress audio playlist functionality is affected by Cross-Site Scripting" (number mark "U       lists@securi Mar  7   87/4132  " thread-indent "\"[oss-security] WordPress audio playlist functionality is affected by Cross-Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24280 invoked by uid 550); 18 Oct 2018 12:32:41 -0000
+Received: (qmail 32506 invoked by uid 550); 6 Mar 2017 23:04:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24259 invoked from network); 18 Oct 2018 12:32:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+TwixlkEtrUUnTX9ouDVFsc6Lw9P/aJ03GpEKgsn4E8=;
-        b=GuQHL6ICxKbAyKJrqOIQEFTezzVYvaW1O4EnIecDSioNlhjwdOeOwlm7QD/EtD4vNJ
-         sZUMeCre95idJLKtPjUlbzH5jwyRIYKKa4APeNXHVrsnjRgkx0/y2FOvL00LlZF6f+nR
-         soi1SNy0VC0o6aux6co78DTeGc9MTEv0cNCZu9qfld1y3609XsobdSmi3glWaN3ibZTY
-         NM8RfUKTXrOqI8LCPpoDgstxSEHng5wwMUtCtCASYeG0Ful25fLvWPVXkYLxE41vauHm
-         cHYXUgxu16kXpM7fUE9S0tiEzmyv7S/4KjYJwv7cqiSizTML8s0JcIMg7n3VIA4UZFiZ
-         Fr3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+TwixlkEtrUUnTX9ouDVFsc6Lw9P/aJ03GpEKgsn4E8=;
-        b=fgKtfhQTQQVElr7B3AWHtXHxwSPd/C79Lx+FedMoNDzA21EAFK5fRxdXyhcl3D5nk7
-         8pR5sgkVKyUG9ysHej8wgo4kb8gt2sHxRy+Tg8AZQ7z+1aNFm+B5u5S4ZHUHDQONjxGs
-         6Tkjrox7UoyIkwB0fWnH7U+ndMw9VIsy6Bi/7uFXaclxTpFr0wmijDy4Ug+77+AtAJxr
-         0cvdmCv8yAh3tnR0iMtKlrTYISZy7MTIRZb0mBxq6GaW7WbA9A6BqNEiv8mRhhzzquad
-         /R0tgoDXVItD355ft2cPxbTjOK594jrK24V8JRtimcpQiOITinz6uqAAtb1AW6H1Vl2l
-         mN8A==
-X-Gm-Message-State: ABuFfojQxcokFkqRnyous2r8r3GegUgW33RKe9eflrBiGm6WIPo6gaAI
-	r3wA6NkfOegX537N1lI0MI0od71t7dmIw5eYxptxWw==
-X-Google-Smtp-Source: ACcGV634LtIcvcJ7x87pnvE2Wjc9KwDW4IwKknKMMqP6l477er3UrC1DYq5YDmeCHa0Yplqs4C7WhGIq6KCkuGvQHFc=
-X-Received: by 2002:a37:444b:: with SMTP id r72-v6mr27398944qka.332.1539865948500;
- Thu, 18 Oct 2018 05:32:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJ_zFk+P0WurjfHK3bQZ7fSuiFRYeAz+GrpQCn2F3SJPx3z=Cw@mail.gmail.com>
- <CAJ_zFk+Db=VQi14vEfA8AeRbqEfROwApCbgVqPQny7qbhj7nhw@mail.gmail.com> <9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>
-In-Reply-To: <9Oh6Q_oGBdLOE2SpGuy67o4P_ytW1KG0urBaQPvPOskA6d6uwyU_et3aIaNCb0M6mSWw8T90Lb2OQIXkE38PlXk5eSCsQqS3Dr0QZ_2Q2ns=@protonmail.ch>
-Message-ID: <CAJ_zFkJgSzTV8WKRL7OW6ueFibVGvNY-P6sBNBrDeagLrbPfWw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000dd351b05787ffa96"
-Cc: oss-security@lists.openwall.com
-Date: Thu, 18 Oct 2018 05:32:18 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ghostscript: 1Policy operator gives access to
- .forceput CVE-2018-18284
-To: Golden_Miller83@protonmail.ch
+Received: (qmail 32450 invoked from network); 6 Mar 2017 23:04:56 -0000
+X-Virus-Scanned: amavisd-new at edge1.intern.zimbra-login.net
+From: Summer of Pwnage <lists@securify.nl>
+To: oss-security@lists.openwall.com
+Organization: Securify B.V.
+Message-ID: <6ce499a4-c9bb-ad62-aa85-4a67f77b2a19@securify.nl>
+Date: Tue, 7 Mar 2017 00:04:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WordPress audio playlist functionality is affected by Cross-Site
+ Scripting
 
---000000000000dd351b05787ffa96
-Content-Type: text/plain; charset="UTF-8"
+------------------------------------------------------------------------
+WordPress audio playlist functionality is affected by Cross-Site
+Scripting
+------------------------------------------------------------------------
+Yorick Koster, July 2016
 
-On Thu, Oct 18, 2018 at 3:51 AM Jordan Glover <Golden_Miller83@protonmail.ch>
-wrote:
+------------------------------------------------------------------------
+Abstract
+------------------------------------------------------------------------
+Two Cross-Site Scripting vulnerabilities exists in the playlist
+functionality of WordPress. These issues can be exploited by convincing
+an Editor or Administrator into uploading a malicious MP3 file. Once
+uploaded the issues can be triggered by a Contributor or higher using
+the playlist shortcode.
 
-> Do you know if upstream is going to make new release soon or distros
-> should take the
-> pain and backport all of those themselves?
->
+------------------------------------------------------------------------
+OVE ID
+------------------------------------------------------------------------
+OVE-20160717-0003
 
-AFAIK upstream only makes quarterly releases, so I think you need to
-backport.
+------------------------------------------------------------------------
+Tested versions
+------------------------------------------------------------------------
+This issue was successfully tested on the WordPress [2] version 4.5.3.
 
-Tavis.
+------------------------------------------------------------------------
+Fix
+------------------------------------------------------------------------
+These issues are resolved in WordPress version 4.7.3. [3]
 
---000000000000dd351b05787ffa96--
+------------------------------------------------------------------------
+Introduction
+------------------------------------------------------------------------
+WordPress is web software you can use to create a website, blog, or
+app. Two Cross-Site Scripting vulnerabilities exists in the playlist
+functionality of WordPress. These issues can be exploited by convincing
+an Editor or Administrator into uploading a malicious MP3 file. Once
+uploaded the issues can be triggered by a Contributor or higher using
+the playlist shortcode.
+
+------------------------------------------------------------------------
+Details
+------------------------------------------------------------------------
+It was discovered that meta information (ID3) stored in audio files are
+not properly sanitized in case they are uploaded by a user with the
+unfiltered_html (generally an Editor or Administrator).
+
+The first Cross-Site Scripting vulnerability exists in the function that
+processes the playlist shortcode, which is done in the
+wp_playlist_shortcode() method (/wp-includes/media.php). This method
+creates a <noscript> block for users with JavaScript disabled.
+
+https://www.securify.nl/advisory/SFY20160742/noscript_unfiltered_html.png
+
+The method wp_get_attachment_link() does not perform any output encoding
+on the link text. Meta information from the audio file is used in the
+link text, rendering wp_playlist_shortcode() vulnerable to Cross-Site
+Scripting.
+
+The second Cross-Site Scripting issue is DOM-based and exists in the
+JavaScript file /wp-includes/js/mediaelement/wp-playlist.js (or
+/wp-includes/js/mediaelement/wp-playlist.min.js). The WPPlaylistView
+object is used to render a audio player client side. The method
+renderTracks() uses the meta information from the audio file in a call
+to jQuery's append() method. No output encoding is used on the meta
+information, resulting in a Cross-Site Scripting vulnerability.
+
+https://www.securify.nl/advisory/SFY20160742/renderTracks-dom-based_xss.png
+
+------------------------------------------------------------------------
+Proof of concept
+------------------------------------------------------------------------
+The following MP3 file can be used to reproduce this issue:
+
+https://www.securify.nl/advisory/SFY20160742/xss.mp3
+
+1) upload MP3 file to the Media Library (as Editor or Administrator).
+2) Insert an Audio Playlist in a Post containing this MP3 (Create Audio
+Playlist).
+------------------------------------------------------------------------
+References
+------------------------------------------------------------------------
+[1] 
+https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
+[2] https://wordpress.org/
+[3] 
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
