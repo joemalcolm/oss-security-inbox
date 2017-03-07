@@ -1,95 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/29/2
-Message-ID: <alpine.DEB.2.20.1711280938440.30591@tvnag.unkk.fr>
-Date: Wed, 29 Nov 2017 10:34:17 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>, curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: NTLM buffer overflow via integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/4
+Message-ID: <8d300c59-47af-f2ad-2d75-2d38c611491d@gmail.com>
+Date: Tue, 7 Mar 2017 12:16:03 +0100
+From: Emilio Pozuelo Monfort <pochu27@...il.com>
+To: oss-security@...ts.openwall.com, Craig Small <csmall@....com.au>
+Subject: Re: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
 Content-Type: text/plain; charset=utf-8
 
-NTLM buffer overflow via integer overflow
-=========================================
+On 07/03/17 11:44, Craig Small wrote:
+> Hello again,
+>  Wordpress 4.7.3 fixes 6 security issues.  Summer of Pwnage has reported 2
+> here yesterday but here is the list from the wordpress site.
+> 
+> Cross-site scripting (XSS) via media file metadata. Reported by Chris Andrè
+> Dale, Yorick Koster, and Simon P. Briggs.
+> 
+> Control characters can trick redirect URL validation. Reported by Daniel
+> Chatfield.
+> 
+> Unintended files can be deleted by administrators using the plugin deletion
+> functionality. Reported by xuliang.
+> 
+> Cross-site scripting (XSS) via video URL in YouTube embeds. Reported by
+> Marc Montpas.
+> 
+> Cross-site scripting (XSS) via taxonomy term names. Reported by Delta.
+> 
+> Cross-site request forgery (CSRF) in Press This leading to excessive use of
+> server resources. Reported by Sipke Mellema.
+> 
+> 
+> Reference:
+> https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
 
-Project curl Security Advisory, November 29th 2017 -
-[Permalink](https://curl.haxx.se/docs/adv_2017-11e7.html)
+Please report these through http://cveform.mitre.org/ to get CVEs assigned, and
+follow up here with the CVE identifiers after that's done.
 
-VULNERABILITY
--------------
-
-libcurl contains a buffer overrun flaw in the NTLM authentication code.
-
-The internal function `Curl_ntlm_core_mk_ntlmv2_hash` sums up the lengths of
-the user name + password (= SUM) and multiplies the sum by two (= SIZE) to
-figure out how large storage to allocate from the heap.
-
-The SUM value is subsequently used to iterate over the input and generate
-output into the storage buffer. On systems with a 32 bit `size_t`, the math to
-calculate SIZE triggers an integer overflow when the combined lengths of the
-user name and password is larger than 2GB (2^31 bytes). This integer overflow
-usually causes a very small buffer to actually get allocated instead of the
-intended very huge one, making the use of that buffer end up in a buffer
-overrun.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This bug was introduced in commit
-[be285cde3f5](https://github.com/curl/curl/commit/be285cde3f5), April 2006.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2017-8816 to this issue.
-
-AFFECTED VERSIONS
------------------
-
-This is only an issue on 32 bit systems. It also requires the user and
-password fields to use more than 2GB of memory combined, which in itself
-should be rare.
-
-- Affected versions: libcurl 7.15.4 to and including 7.56.1
-- Not affected versions: libcurl < 7.15.4 and >= 7.57.0
-
-curl is used by many applications, but not always advertised as such.
-
-THE SOLUTION
-------------
-
-In libcurl version 7.57.0, the integer overflow is avoided.
-
-A [patch for CVE-2017-8816](https://curl.haxx.se/CVE-2017-8816.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl to version 7.57.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Put length restrictions on the user name and passwords you can pass to
-      libcurl
-
-TIME LINE
----------
-
-It was reported to the curl project on November 6, 2017.  We contacted
-distros@...nwall on November 21.
-
-curl 7.57.10 was released on November 29 2017, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Reported by Alex Nichols. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
+Thanks,
+Emilio
