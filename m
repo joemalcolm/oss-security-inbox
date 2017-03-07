@@ -1,27 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/05/18
-Message-ID: <20170705164711.nbu6ltcyeyfql3ol@perpetual.pseudorandom.co.uk>
-Date: Wed, 5 Jul 2017 17:47:11 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/07/5
+Message-ID: <CANO=Ty0eb=oUz+F5o3jxt=RxXD4WSiDJeGm_m3MmUw0sfdzg_g@mail.gmail.com>
+Date: Tue, 7 Mar 2017 10:45:35 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Craig Small <csmall@....com.au>
+Subject: Re: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 05 Jul 2017 at 11:48:43 -0400, Daniel Micay wrote:
-> It seems some distributions get useradd/userdel from somewhere else.
+So this CVE request raises a good example:
 
-shadow and util-linux have a lot of overlap. Fedora has historically
-used util-linux for as much as possible; Debian has historically used
-shadow, but is gradually moving towards util-linux because in practice
-it's more actively maintained; other distributions I don't know. The
-major user-visible difference has usually been differing su behaviour.
+Wordpress needs CVEs for its security flaws. This is a simple fact.
 
-> Maybe you have adduser from shadow? It'd be funny if they had different
-> rules enforced even for adduser vs. useradd...
+Now ideally the Wordpress team would become a CVE Numbering Authority (CNA)
+and cover it themselves, if they would like to do this then they need to
+reach out to me as the DWF guy and I can make that happen.
 
-In Debian and its derivatives there are certainly different rules. useradd
-is the mechanism layer, and adduser is a Debian-specific policy layer (for
-instance adduser rejects weird/inadvisable usernames unless given an option
-to force them).
+If that doesn't happen then the good news is we have another option now.
+Someone can become a CVEMentor and CNA and take over the Wordpress
+assignments (well until Wordpress becomes a CNA). So if someone wants to
+step up and do this, please contact me as the DWF guy and I can make that
+happen.
 
-    S
+This is also true for other projects/open source products. We need better
+CVE coverage. Ideally these projects/products step up and become CNA's, but
+if they cannot (lack of resources/time/etc) that's ok, because now people
+with an interest can come forwards and do it.
+
+On Tue, Mar 7, 2017 at 4:16 AM, Emilio Pozuelo Monfort <pochu27@...il.com>
+wrote:
+
+> On 07/03/17 11:44, Craig Small wrote:
+> > Hello again,
+> >  Wordpress 4.7.3 fixes 6 security issues.  Summer of Pwnage has reported
+> 2
+> > here yesterday but here is the list from the wordpress site.
+> >
+> > Cross-site scripting (XSS) via media file metadata. Reported by Chris
+> Andrè
+> > Dale, Yorick Koster, and Simon P. Briggs.
+> >
+> > Control characters can trick redirect URL validation. Reported by Daniel
+> > Chatfield.
+> >
+> > Unintended files can be deleted by administrators using the plugin
+> deletion
+> > functionality. Reported by xuliang.
+> >
+> > Cross-site scripting (XSS) via video URL in YouTube embeds. Reported by
+> > Marc Montpas.
+> >
+> > Cross-site scripting (XSS) via taxonomy term names. Reported by Delta.
+> >
+> > Cross-site request forgery (CSRF) in Press This leading to excessive use
+> of
+> > server resources. Reported by Sipke Mellema.
+> >
+> >
+> > Reference:
+> > https://wordpress.org/news/2017/03/wordpress-4-7-3-
+> security-and-maintenance-release/
+>
+> Please report these through http://cveform.mitre.org/ to get CVEs
+> assigned, and
+> follow up here with the CVE identifiers after that's done.
+>
+> Thanks,
+> Emilio
+>
+
+
+
+-- 
+
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Red Hat Product Security contact: secalert@...hat.com
+
