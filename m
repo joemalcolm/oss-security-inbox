@@ -1,48 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/5
-Message-id: <59CD5258-22E2-46F1-83AF-EE4B78EFD88D@me.com>
-Date: Tue, 14 Mar 2017 16:33:34 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/5
+Message-ID: <CY4PR12MB1141518BEAB7E0FAD34D0457DA210@CY4PR12MB1141.namprd12.prod.outlook.com>
+Date: Thu, 9 Mar 2017 17:36:39 +0000
+From: Seth Art <sart@...nskycorp.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)
 Content-Type: text/plain; charset=utf-8
 
-Title: Arbitrary file download vulnerability in Wordpress Plugin Membership Simplified v1.58
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-03-13
-CVE-ID:[CVE-2017-1002008]
-Download Site: https://wordpress.org/plugins/membership-simplified-for-oap-members-only
-Vendor: https://profiles.wordpress.org/williamdeangelis/
-Vendor Notified: 2017-03-13
-Vendor Contact: plugins@...dpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=187
-Description: Membership Simplified allows you to generate membership lessons with templated content to create a unified look and feel throughout your courses.
-Vulnerability:
-The file download code located membership-simplified-for-oap-members-only/download.php does check whether a user is logged in and has download privledges, the code on line 5 that checks the path can be defeated by using a ..././ pattern to get the desired ../ after being passed through the str_replace() function:
+-----------
+Vendor:
+-----------
+FLEXIcontent (http://www.flexicontent.org) is an advanced content management system developed to greatly enhance the native content management of Joomla!
 
- 3 $path = substr(getcwd(), 0, -50). "uploads/membership-simplified-for-oap-members-only/"; // change the path to fit your websites document structure
-  4 $fullPath = $path.$_GET['download_file'];
-  5 $fullPath = str_replace("../","",$fullPath);
-  6 
-  7 if ($fd = fopen($fullPath, "r")) {
-  8     $fsize = filesize($fullPath);
-  9     $path_parts = pathinfo($fullPath);
- 10     $ext = strtolower($path_parts["extension"]);
- 11     switch ($ext) {
- 12         case "pdf":
- 13         header("Content-type: application/pdf"); // add here more headers for d    iff. extensions
- 14         header("Content-Disposition: attachment; filename=\"".$path_parts["base    name"]."\""); // use 'attachment' to force a download
- 15         break;
- 16         default;
- 17         header("Content-type: application/octet-stream");
- 18         header("Content-Disposition: filename=\"".$path_parts["basename"]."\"")    ;
- 19     }
- 20     header("Content-length: $fsize");
- 21     header("Cache-control: private"); //use this to open files directly
- 22     while(!feof($fd)) {
- 23         $buffer = fread($fd, 2048);
- 24         echo $buffer;
+-----------------------------------------
+Affected Products/Versions:
+-----------------------------------------
+flexicontent-cck-3.0.13
+flexicontent-cck-3.1.0-rc
+Note: Previous versions may be affected
 
-Exploit Code:
-	• $ curl http://example.com/wordpress/wp-content/plugins/membership-simplified-for-oap-members-only/download.php?download_file=..././..././..././..././..././..././..././..././etc/passwd
-	•  
+-----------------
+Description:
+-----------------
+Title: Joomla! FLEXIcontent - Incorrect Authorization (Authorization Bypass)
+CWE-863: Incorrect Authorization (https://cwe.mitre.org/data/definitions/863.html)
+Detailed write-up: http://www.openskycorp.com/resource-center/blog/joomla-flexicontent-incorrect-authorization/
+Researcher: Seth Art
+
+CWE-863 Description: "The software performs an authorization check when an actor attempts to access a resource or perform an action, but it does not correctly perform the check. This allows attackers to bypass intended access restrictions."
+
+The FLEXIcontent plugin uses a query string parameter, task, which specifies the action to perform on a FLEXIcontent article.  If an unauthenticated actor provides any value other than edit or a blank value to the task parameter, the actor is able to view the restricted FLEXIcontent article, regardless of the assigned permissions.  Articles are sequentially numbered, which would allow an actor exploiting this vulnerability to gain read-only access to all FLEXIcontent articles by iterating through article identifiers.
+
+---------------
+POC:
+---------------
+http://host/index.php/content_page/#/#?task=abcd
+http://host/index.php/content_page/2/6?task=foo
+http://host/index.php/content_page/2/7?task=foo
+http://host/index.php?option=com_flexicontent&view=item&id=#&task=abcd (if Search Engine Friendly URLs are disabled)
+
+-------------
+Solution:
+-------------
+Upgrade to flexicontent-cck-3.1.1 or greater
+
+-----------------------------
+Disclosure Timeline:
+-----------------------------
+2016-09-28: Notified FLEXIcontent author of vulnerability.
+2016-09-28: FLEXIcontent author acknowledges vulnerability and confirms it will be fixed.
+2016-10-31: FLEXIcontent v3.1.1 is released and silently fixes vulnerability.
+2016-11-30: Researcher tests v3.1.1 and determines vulnerability has been fixed.
+2016-01-31: Researcher asks the author to mention the security issue in release notes (no response).
+2017-03-06: Public disclosure
+
