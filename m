@@ -1,108 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/01/7
-Message-ID: <2609162.lMrVaOLpFB@arcadia>
-Date: Sun, 01 Jan 2017 16:52:34 +0100
-From: Agostino Sarubbo <ago@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/4
+Message-ID: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
+Date: Thu, 9 Mar 2017 10:55:12 -0600
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: libtiff: stack-based buffer overflow in _TIFFVGetField (tif_dir.c)
+Cc: Stéphane Graber <stgraber@...ntu.com>
+Subject: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Libtiff is a software that provides support for the Tag Image File Format 
-(TIFF), a widely used format for storing image data.
+Jann Horn discovered that the lxc-user-nic program could be tricked into
+operating on a network namespace over which the caller did not hold
+privilege.
 
-A crafted tiff file revealed a stack buffer overflow.
+The behavior didn't follow what was documented in the lxc-user-nic(1)
+man page:
 
-The complete ASan output:
+ It ensures that the calling user is privileged over the network
+ namespace to which the interface will be attached.
 
-# tiffsplit $FILE
-TIFFReadDirectory: Warning, Unknown field with tag 317 (0x13d) encountered.
-=================================================================
-==10362==ERROR: AddressSanitizer: stack-buffer-overflow on address 
-0x7f3824f00090 at pc 0x7f3829624fbb bp 0x7fffe0eb1da0 sp 0x7fffe0eb1d98
-WRITE of size 4 at 0x7f3824f00090 thread T0
-    #0 0x7f3829624fba in _TIFFVGetField /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_dir.c:1077:29
-    #1 0x7f382960f202 in TIFFVGetField /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_dir.c:1198:6
-    #2 0x7f382960f202 in TIFFGetField /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/libtiff/tif_dir.c:1182
-    #3 0x50a719 in tiffcp /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffsplit.c:183:2
-    #4 0x50a719 in main /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffsplit.c:89
-    #5 0x7f382871561f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #6 0x419a78 in _init (/usr/bin/tiffsplit+0x419a78)
+This issue is CVE-2017-5985.
 
-Address 0x7f3824f00090 is located in stack of thread T0 at offset 144 in frame
-    #0 0x5099cf in main /tmp/portage/media-
-libs/tiff-4.0.7/work/tiff-4.0.7/tools/tiffsplit.c:59
+https://lists.linuxcontainers.org/pipermail/lxc-users/2017-March/012925.html
+https://launchpad.net/bugs/1654676
+https://github.com/lxc/lxc/commit/16af238036a5464ae8f2420ed3af214f0de875f9
 
-  This frame has 18 object(s):
-    [32, 40) 'bytecounts.i263.i'
-    [64, 72) 'bytecounts.i.i'
-    [96, 98) 'bitspersample.i'
-    [112, 114) 'samplesperpixel.i'
-    [128, 130) 'compression.i'
-    [144, 146) 'shortv.i' 0x0fe7849d8010: 02 f2[02]f2 00 f2 f2 f2 04 f2 04 f2 
-04 f2 00 f2
-  0x0fe7849d8020: f2 f2 04 f2 04 f2 00 f2 f2 f2 00 f2 f2 f2 00 f2
-  0x0fe7849d8030: f2 f2 00 f2 f2 f2 02 f3 00 00 00 00 00 00 00 00
-  0x0fe7849d8040: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
-  0x0fe7849d8050: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
-  0x0fe7849d8060: f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5 f5
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==10362==ABORTING
+Tyler
 
-Affected version:
-4.0.7
 
-Fixed version:
-N/A
 
-Commit fix:
-N/A
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00104-libtiff-stackoverflow-_TIFFVGetField
-
-Timeline:
-2016-12-04: bug discovered and reported to upstream
-2017-01-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/01/01/libtiff-stack-based-buffer-overflow-in-_tiffvgetfield-tif_dir-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
