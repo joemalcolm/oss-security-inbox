@@ -1,26 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/06/4
-Message-ID: <1526811.hv86JBTSL3@merkaba>
-Date: Thu, 06 Jul 2017 09:03:11 +0200
-From: Martin Steigerwald <martin@...htvoll.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/09/1
+Message-ID: <CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>
+Date: Thu, 9 Mar 2017 14:53:52 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: systemd fails to parse user that should run service
+Cc: hosein.askari@....com
+Subject: Concerns about CVE-2017-5972
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton - 05.07.17, 22:12:
-> > systemd is not the one coming up with the restrictions on user names,
-> > and while some distributions are less restrictive, many do enforce the
-> > same restrictions as we do. In order to make systemd unit files
-> > portable between systems we'll hence enforce something that
-> > resembles more the universally accepted set, rather than accept the
-> > most liberal set possible.
-> 
-> systemd is effectively setting policy where it has no business doing so.
+Gday,
 
-I have seen this… and the "not-a-bug" approach with Systemd upstream 
-developers quite often meanwhile. I think this arrogant "we know better than 
-you" attitude is poisonous to security… and to collaboration in the free 
-software world in general.
+>From the original description from Hosein Askari (CC'ed) :
 
--- 
-Martin
+---
+The TCP stack in the Linux kernel 3.x does not properly implement a
+SYN cookie protection mechanism for the case of a fast network
+connection, which allows remote attackers to cause a denial of service
+(CPU consumption) by sending many TCP SYN packets, as demonstrated by
+an attack against the kernel-3.10.0 package in CentOS Linux 7.
+---
+
+This topic was covered by github[1], in which they chose to use
+synsanity as a mitigation process.
+
+After spending some time looking at this allocation, I was unable to
+reproduce the initial findings on either Red Hat Enterprise Linux 6
+(based on 2.6.32) or 7 (based on 3.10) using direct host to host via
+qemu or the e1000 driver as shown in the backtrace.  This with both
+syn cookies enabled and disabled.
+
+The backtrace provided shows that there is a slowpath in transmitting
+ICMP reply packets which does not show the TCP syn cookie function in
+the slowpath/backtrace.
+
+I have attempted to performance profile this and found the syncookie
+generation (under heavy syn attacks from multiple sources) did not
+show significant impact on CPU performance compared to the packet
+handling  in use.  I'm not saying its impossible I'm just saying the
+backtrace doesn't match the events that are shown.
+
+I -have- however been able to artificially recreate a very similar
+backtrace through stuffing fake packets in with a kernel module and
+created a hardening bug, however this seems unrelated as far as I can
+see ( See https://bugzilla.redhat.com/show_bug.cgi?id=1428684 ).
+
+The reproducer code is from a file called called "Trigemini.c" and is
+found in several DDoS kits for at least the last 2 years, although
+it's true origins are probably older, it is not possible to reproduce
+or recreate on any scale I was able to test with.
+
+I give Hosein a chance to talk more about his reproducer, in hope that
+we can get a better understanding on how this was reproduced reliably.
+
+Thank you
+
+Wade Mealing
+Red Hat Product Security
+
+[1] https://githubengineering.com/syn-flood-mitigation-with-synsanity/
+[2] https://github.com/LOLSquad/DDoS-Scripts/blob/master/TriGemini.c
