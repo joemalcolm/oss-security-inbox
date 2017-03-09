@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1470" "Friday" "29" "July" "2016" "12:25:30" "-0400" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160729122530.3574dcaf@pc1>" "41" "Re: [oss-security] CVE request: multiple issues fixed in GNU libidn 1.33" nil nil nil "7" "2016072916:25:30" "[oss-security] CVE request: multiple issues fixed in GNU libidn 1.33" (number mark "U       hanno@hboeck Jul 29   41/1470  " thread-indent "\"Re: [oss-security] CVE request: multiple issues fixed in GNU libidn 1.33\"\n") "<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>" ("<2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["147" "Thursday" "9" "March" "2017" "15:25:00" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQ3biJq_PjSZr6vPCStww78ptMRjzNzj_-BVkX9=UVARQ@mail.gmail.com>" "5" "[oss-security] Re: Concerns about CVE-2017-5972" nil nil nil "3" "2017030905:25:00" "[oss-security] Re: Concerns about CVE-2017-5972" (number mark "U       wmealing@red Mar  9    5/147   " thread-indent "\"[oss-security] Re: Concerns about CVE-2017-5972\"\n") "<CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>" ("<CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27992 invoked by uid 550); 29 Jul 2016 16:25:46 -0000
+Received: (qmail 21704 invoked by uid 550); 9 Mar 2017 05:25:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27970 invoked from network); 29 Jul 2016 16:25:45 -0000
-Date: Fri, 29 Jul 2016 12:25:30 -0400
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Received: (qmail 21680 invoked from network); 9 Mar 2017 05:25:12 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=k5LdXFYclfSrsIJqlQubUz8A+AdZojz/RehrusjXJWs=;
+        b=Q5qPJ8EKSUitnQ62F39Oa6nMusLFmdK8TqJYR+UfLC3gEKTEiwoJsvKYTRp0uHzpL6
+         WgXlliquXQvhN4u4RI0NBJn3xJ8pmjqy88CjHriwuOiyNNta3mILLVo/O5W05is/n92m
+         47OiYallFB570aeh/x8BiWStY2scHVGnoqVLoPFM7IXTUkXTFYRnUHXPc0XnhJBvvEC+
+         xlZwyHZ+dxnVe1EwR25w5sPrkkspRABG5qzbbNIHec/qzYBPvJA7NMgRnaVyYyxK4gYn
+         1QohmaAnMAI9llsVeTAo879mc/jMGXk7W7ASQuYvTatLwl7oWvadlsQUfS2tYd2gueC+
+         2QHw==
+X-Gm-Message-State: AMke39mIU9HtN7WzyzWg6hWpY2ad+sbFwTUyIfCRW72af7jY/NKRfLW7Cb53ZDK8t9uWiODW7XfuXfXlGAnuSJKW
+X-Received: by 10.107.174.220 with SMTP id n89mr10660377ioo.166.1489037100774;
+ Wed, 08 Mar 2017 21:25:00 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>
+References: <CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>
+From: Wade Mealing <wmealing@redhat.com>
+Date: Thu, 9 Mar 2017 15:25:00 +1000
+Message-ID: <CALJHwhQ3biJq_PjSZr6vPCStww78ptMRjzNzj_-BVkX9=UVARQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20160729122530.3574dcaf@pc1>
-In-Reply-To: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
-References: <2fcfb94f-179b-eae1-817a-e940d793b2e9@suse.com>
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-12944-1469809534-0001-2"
-Subject: Re: [oss-security] CVE request: multiple issues fixed in GNU libidn
- 1.33
-
---=_zucker.schokokeks.org-12944-1469809534-0001-2
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: Concerns about CVE-2017-5972
 
-Thanks for raising this.
+A reference which i omitted:
 
-libidn is also bundled in glibc, I have reported those a while ago:
-https://sourceware.org/bugzilla/show_bug.cgi?id=3D19728
-https://sourceware.org/bugzilla/show_bug.cgi?id=3D19729
+https://cxsecurity.com/issue/WLB-2017020112
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-12944-1469809534-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJXm4N6AAoJEKWIAHK7tR5CpZ4P/33A++se/GXVbuyelSDSSCX5
-4owK0nyeKtw0oxO4scnVOyPdQ7RyY1n+DyZW74txwrajniUhTqXlP1noxm0l9A1P
-+RONH7/ybRZBqoHaADvAirO24jYkHNbDbeD93rnfkxmU022aqNBjVBLpUPuotJWp
-cXEEI8cQzA6d1mTvkZbURfAVx8bkLK3HYLuOgPs1VxDmKPxSzuPQ5SfPDQZEIpXt
-v9N99Z4X4nxzf/muxwTI8EwC37hO+AbAtpxaKVV93wbNmUv1wJhyyksQGNjAnihW
-jak93zq2JwTye+IuXXkAxxZg4t4NgkXrLpZD04xRMgtoxTbDiYvsrV+3tjc0Jkqe
-YwZvsb4jKQyCJvg27OjHt2ENnP7gvwhztvFYxwtVhL7Tl6WecGbUhXSSodU1yhrK
-4PkAybiuqFcR7plN/GfBzALt1FFM6AOz1AE5nu7HbRiXHIb4QwnljVN79k2e9Ox2
-flAHhUbjvB7GPm9GrFj/6N59liti4Dy0mkD0PFNfWOg3+9VfNjWDa+VXuv74dtHo
-AzhqmnHVomlg+nhIjSFWeoFmumJgnvQLiNeMiu3hUzlS72gPPgyFV1UUAsAWQbYy
-xpWHMe1q8XvrlaEVjHygHb4qh0dqJ+tSikLbVKKewS0MtfWhWdKmorIsBdetwf79
-QJmXTNPMAN6kLzUGl/eb
-=HoiE
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-12944-1469809534-0001-2--
+This contains the necessary information to show the result of the flaw.
