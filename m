@@ -1,4 +1,9 @@
-Received: (qmail 17611 invoked by uid 550); 28 Dec 2022 16:53:57 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1811" "Friday" "10" "March" "2017" "07:03:32" "-0500" "Stiepan" "stie@itk.swiss" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "35" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" nil nil nil "3" "2017031012:03:32" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "U       stie@itk.swi Mar 10   35/1811  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 6090 invoked by uid 550); 10 Mar 2017 20:53:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,130 +12,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13505 invoked from network); 28 Dec 2022 16:47:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1672246051; x=
-	1672332451; bh=kNEXh77+6wY23ZdF9C0dJh8nBDvRVsFvdpp9oNCrBQA=; b=T
-	QXrNMCJuy72Qyz8a+hAKaJwHniwj+t/33+MUy98/s1jDMTK9TnCzM9PVH7veOxl2
-	abNE3E53WEtzhRFn7rTT9+Nbgu/M2xZoSF3rdWbmlOHBI4tX4vCYEAqZliAn1dQX
-	b3DLhKblswviltyAS+uGGNBV7eutuEOO6RfrmKlnPPEILM9rzuEK3isQaqGlz73u
-	Pg1NwXRVhOaZS10FIPHtlhisbPSzMrQoYsVUwCFqBXHlNzoAhuJk2PnirM4UggJv
-	faeCH6SJmNKSn5mNjjccthJNR0gUvd2zRE8elqKu8aN0dhaAxITW4VJrIbN7FMmf
-	BlbulI98MbufWDvXO994Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1672246051; x=1672332451; bh=kNEXh77+6wY23ZdF9C0dJh8nBDvR
-	VsFvdpp9oNCrBQA=; b=Cm3M6SLAGROnguwnqsMb5REVOQ5WnIndpxqFT1cV0p3B
-	mKlBHKOQzSbGx75r3ZjcNXq9csWpffkW/wAsaXGvTA5IBcHl+4/zzIqVob25kGvn
-	1QekDtW1wM6jF8QwtEBYieJQV0LHIFcCBpabqKU5ntSWNc37jVZVmJi52ZCuyKqk
-	RDh70r7a82gAAMQa1nLUT509oaZ5sb5DsvRznmAtfHlAfBZRlv0hE9LMUBlKLIf3
-	WihKESlR30cejoaJNZB9wsrDERj1rc9z60hqSwoYc3g9BhBZI6NFOA2oSUGtY+p8
-	EVeKXDQJtcKuT9IUdLSPkn4o0vasjacDpW3//t8DJg==
-X-ME-Sender: <xms:I3OsYz5hRhYMEas7y71Sww6BGMce91_3xjYLIrPO8JIKTUVbD3s2IA>
-    <xme:I3OsY443c2iCaPqRY9fawRe_q5ZjpN_leV-Cy4AinN3hXK7aiBoJ5MHBYCgF0Xtq6
-    SWKf3lPGzGxvZ4>
-X-ME-Received: <xmr:I3OsY6eTQE_gPzdh-k8l9cAqw5Fv7jp7seJhFsOBr3OfdYEJOc2VrZfqVEje>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedriedvgdelgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epudeileefueetvdelheeuteffjeegjeegffekleevueelueekjeejudffteejkeetnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
-    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:I3OsY0JU_veQtjYBiC3HniNOTkiOfWiL_4ain8QTEd81lO5O2OtKuQ>
-    <xmx:I3OsY3LwGDztGLd08k5G3RwjsHDxi4uo8e1kg4GIeTEX-9IOEUP7DA>
-    <xmx:I3OsY9xoowRss3v04ct5kDbOZPK7Q94VeH40CloN5IpBecwfYjkLtw>
-    <xmx:I3OsY-XZ0ofbrNrxu-1W5UA3u95zki_rCPi9s1ugav9Q8YW02geH3w>
-Feedback-ID: iac594737:Fastmail
-Date: Wed, 28 Dec 2022 11:47:25 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+Received: (qmail 18141 invoked from network); 10 Mar 2017 12:23:54 -0000
+Date: Fri, 10 Mar 2017 07:03:32 -0500
+Authentication-Results: mail2.protonmail.ch; dkim=none
 To: oss-security@lists.openwall.com
-Cc: Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <Y6xzIR9P+a6uaaEx@itl-email>
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
- <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
+From: Stiepan <stie@itk.swiss>
+Cc: =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>
+Message-ID: <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
+In-Reply-To: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
+References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="r4azVG4BR9kBokFk"
-Content-Disposition: inline
-In-Reply-To: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+Content-Type: multipart/alternative;
+	boundary="b1_4d2fb1b15ead31e67b18517bcdbfbd2d"
+Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
 
---r4azVG4BR9kBokFk
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 28 Dec 2022 11:47:25 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Cc: Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+--b1_4d2fb1b15ead31e67b18517bcdbfbd2d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM=
-) wrote:
-> > Dominique Martinet writes:
-> >=20
-> > > But, really, I just don't see how this can practically be said to be =
-parsable...
-> >=20
-> > In its current form it never will be.  The solution is to place
-> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > to get the command+args part (assuming I counted all those fields
-> > correctly ...)
-> >=20
-> > Of course, this breaks backwards compatability.
->=20
-> It would also break forwards compatibility in the case new fields
-> needed to be added.
->=20
-> The only solution would be a libxo-style feature wherein a
-> machine-parseable format is exposed by virtue of a file extension.
->=20
-> Examples:
->=20
-> 1. /proc/pid/stats.json
-> 2. /proc/pid/stats.xml
-> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+SSBkb24ndCBrbm93IHdoZXRoZXIgdGhhdCBpcyB0aGUgc2FtZSBidWcsIG9y
+IGEgcmVsYXRlZCBvbmUsIGJ1dCBvbiBEZWJpYW44IHVzaW5nIExYQyBmcm9t
+IGplc3NpZS1iYWNrcG9ydHMsIHNldHRpbmcgdGhlIGRlZmF1bHQgcm91dGUg
+aW4gYSBjb250YWluZXIgYWZmZWN0cyB0aGUgaG9zdCAtIG5hbWVseSwgZnJv
+bSBhbiB1bnByaXYuIGNvbnRhaW5lciwgc2V0dGluZyB0aGUgcm91dGUgc2V0
+cyB0aGUgaG9zdCdzIHJvdXRlIGFzIHdlbGwuCmx4Yy1pbmZvIC0tdmVyc2lv
+biBvdXRwdXRzIDIuMC42IGFuZCBubyB1cGRhdGUgaXMgY3VycmVudGx5IGF2
+YWlsYWJsZSAob24gRGViaWFuKS4KClN0aWVwYW4KCgoKLS0tLS0tLS0gT3Jp
+Z2luYWwgTWVzc2FnZSAtLS0tLS0tLQpTdWJqZWN0OiBbb3NzLXNlY3VyaXR5
+XSBMWEM6IENWRS0yMDE3LTU5ODU6IGx4Yy11c2VyLW5pYyBkaWRuJ3QgdmVy
+aWZ5IG5ldHdvcmsgbmFtZXNwYWNlIG93bmVyc2hpcApMb2NhbCBUaW1lOiA5
+IE1hcmNoIDIwMTcgNTo1NCBQTQpVVEMgVGltZTogOSBNYXJjaCAyMDE3IDE2
+OjU1CkZyb206IHR5aGlja3NAY2Fub25pY2FsLmNvbQpUbzogb3NzLXNlY3Vy
+aXR5QGxpc3RzLm9wZW53YWxsLmNvbQpTdMOpcGhhbmUgR3JhYmVyIDxzdGdy
+YWJlckB1YnVudHUuY29tPgoKSmFubiBIb3JuIGRpc2NvdmVyZWQgdGhhdCB0
+aGUgbHhjLXVzZXItbmljIHByb2dyYW0gY291bGQgYmUgdHJpY2tlZCBpbnRv
+Cm9wZXJhdGluZyBvbiBhIG5ldHdvcmsgbmFtZXNwYWNlIG92ZXIgd2hpY2gg
+dGhlIGNhbGxlciBkaWQgbm90IGhvbGQKcHJpdmlsZWdlLgoKVGhlIGJlaGF2
+aW9yIGRpZG4ndCBmb2xsb3cgd2hhdCB3YXMgZG9jdW1lbnRlZCBpbiB0aGUg
+bHhjLXVzZXItbmljKDEpCm1hbiBwYWdlOgoKSXQgZW5zdXJlcyB0aGF0IHRo
+ZSBjYWxsaW5nIHVzZXIgaXMgcHJpdmlsZWdlZCBvdmVyIHRoZSBuZXR3b3Jr
+Cm5hbWVzcGFjZSB0byB3aGljaCB0aGUgaW50ZXJmYWNlIHdpbGwgYmUgYXR0
+YWNoZWQuCgpUaGlzIGlzc3VlIGlzIENWRS0yMDE3LTU5ODUuCgpodHRwczov
+L2xpc3RzLmxpbnV4Y29udGFpbmVycy5vcmcvcGlwZXJtYWlsL2x4Yy11c2Vy
+cy8yMDE3LU1hcmNoLzAxMjkyNS5odG1sCmh0dHBzOi8vbGF1bmNocGFkLm5l
+dC9idWdzLzE2NTQ2NzYKaHR0cHM6Ly9naXRodWIuY29tL2x4Yy9seGMvY29t
+bWl0LzE2YWYyMzgwMzZhNTQ2NGFlOGYyNDIwZWQzYWYyMTRmMGRlODc1ZjkK
+ClR5bGVy
 
-A binary format would be even better.  No risk of ambiguity.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+--b1_4d2fb1b15ead31e67b18517bcdbfbd2d--
 
---r4azVG4BR9kBokFk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmOscyIACgkQsoi1X/+c
-IsHnOA//fT6cVIE4FIMywkI+AqPhk9XiChwWd7FjC1AvRuFHtzRVeZKbsQm5+TvP
-zsyVq80XH79nYyCvOdjUsU6ItgvLFssJhLrgLHsLZLgOBF6aCjcKTGQ/Gt6yksqG
-SYEf2mU5CDAvHiqqimYruOHU7I+4KLozQpk1zhOkb2YyVcl9Jwc6ia4k7p6Fffdi
-K/W851sXSQ4MHRGwu3Acwu014W0OgwCji/0UeFIhktSMMyi/sOQrs9F/hfsCty+q
-F1pCWeclNXERprw5653z5ujLGEUgD4eUX+DLoqxJ1oYQz0MvMITWISSZ8Q1lnPM+
-xpaZZTF2cJG6IF0hBuMWqqudaOvfqKYlyXU2c92FyBKsVruaj1e7WDco60p4iFvX
-rxaPlMsRUYeMYjWdO9Uvhz1GcygbI4eBdQk6+XCNX+jvCHAG2TtKtda5fPa5r2mt
-wpfni8qiaGDJQybqsDqjAjjRlN+AgXQJYYK+GFDXCd7B6qdxpOGSJaTUmjw3Mf+6
-vykA7kPEX2MrF2WCben6ve6pvUKQYI3NjjWUd+R1IDnnFrFMJiC7MdKgaRF2jN/1
-x7w+U7oj6VngCGRWcwlbx01/BTkhJT1AvKF4wjCxffaG7OS9JYlOLfERAZTiXjMh
-PlHFUvAsRpTaqXdVVT3/f4WvXlFMGB7jydW9E/PX1Qd3YZHaOUo=
-=ujCS
------END PGP SIGNATURE-----
-
---r4azVG4BR9kBokFk--
