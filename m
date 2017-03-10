@@ -1,4 +1,9 @@
-Received: (qmail 28602 invoked by uid 550); 29 Sep 2023 16:06:24 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1453" "Friday" "10" "March" "2017" "12:56:25" "+0100" "Damien Regad" "dregad@mantisbt.org" "<CA+zp4VOOxRQqdJzt_ZPK3RDXo2zxmq+xEpnYUThtCoJCtwtEzw@mail.gmail.com>" "51" "[oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6797, CVE-2017-6799)" nil nil nil "3" "2017031011:56:25" "[oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6797, CVE-2017-6799)" (number mark "U       dregad@manti Mar 10   51/1453  " thread-indent "\"[oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6797, CVE-2017-6799)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9274 invoked by uid 550); 10 Mar 2017 16:07:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,104 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28563 invoked from network); 29 Sep 2023 16:06:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=vDP71cqJzgO1v+jNL5CBacrv2TzT7obQGMr5cQy9Pps=; b=uCVn27+TGhtAh6p53TS79J+Qcd
-	BOIvXs3EklplRe3DyV1GCa5Pxua2kXQPRSVBsYu81oZqkuwQWCajR9BXt9f6gixovTyDDmNv0caip
-	vlTKGj1k41bCMB9RccqdT8lv22rbeV7VNKj/vAhXtb5MSWgpMAnmvo8PIucm2nRvn8VgfWZ/Zde31
-	Rtu3d5HHD1Wx552JhDwyMKl/djwCJGgCY7i0H1Z5wD4e59XDfKzhwUVODKEAp04M8Hx6P7XN3B4tX
-	UF7GD+xEnnoKXRJ+fOdvFagqLXmDdbC/nGKwGaqimN7r/1DwBw0VxlXDFFJHOvnaDQYk2YeYaDEpt
-	UdNKlg/Q==;
-Date: Fri, 29 Sep 2023 18:06:11 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
+Received: (qmail 1653 invoked from network); 10 Mar 2017 11:56:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=UdXHY+RjiDOZgi4sSfgq8GfKOviM2C3zv894zMf7G48=;
+        b=Smw9f/XUbH/Ns8++5hLJLXjtfHHIVEuAM42WPG9RC3C2xgzymoQFmLJBvB/x4VIDxr
+         ISHkaofS/HI8gP4kBGHTw+flJsDbt5NGr9FQMzQZFm7zXqXIX7N0rIICZofBCspzreQT
+         MzQ7Ea0lnqVLRF7WJ/h+UsjJcasSNlyMLrnHyzBXs1VTZoTSy34fBNzEjXTv9mHnP5tC
+         UfbWlLIDbsBK4/5aKNeOdXJzJ6r15NXFj3C1gPzKaJ5KNBN52HbMDB+g39N+so9Grjcx
+         ehjV2PG54Gx3vrUHSqX7ArlyU2Rpy4qzUSMRubBlFk6c90FnUSY8n3kl68NewwcEXeyo
+         ppOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=UdXHY+RjiDOZgi4sSfgq8GfKOviM2C3zv894zMf7G48=;
+        b=LTRFWz2fev2CQrqLF29NaMJkrR522oR8RJCqhRYoFifwSo3+1LxBx1r2P2A8V1OQZE
+         Dfo54fdlUvc7oqMGkvOJLz+Z2mLkUmM5sZKjg+pYZov/Ib+BpaltQG6Yyicg/AVyUrZh
+         v2aUINTCwkzI96CrseovgjqKAg6E+sNkaDVM0rRJK+ZUTiCWgwGK1vHp7QC3E5nPCiDr
+         H1CaVVzi/ZDsmm+HiG9aLt8k80UvWvf2wCzkd6hISQgo0KW9r95F8GfSvAPeLT+AcZhh
+         +WG43ax8lA1kpm6Rq1dFm2HCijHJDH0NkddSSTooHbv74aSbQE5nEALuFAV9swlln9/R
+         8XUA==
+X-Gm-Message-State: AMke39noYv51KJHIVjGTyKyH2U6nViGfbcCS2cqaM9hBgmU8iMJ4LMCyZLz1TEHlnsbzZVWUWkxK0dwyNDfPPA==
+X-Received: by 10.200.40.42 with SMTP id 39mr19214845qtq.149.1489146986008;
+ Fri, 10 Mar 2017 03:56:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="K+tSVd7wpZDpMxf8"
-Content-Disposition: inline
-In-Reply-To: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: [oss-security] Exim4 MTA CVEs assigned from ZDI
+Sender: dregad@gmail.com
+From: Damien Regad <dregad@mantisbt.org>
+Date: Fri, 10 Mar 2017 12:56:25 +0100
+X-Google-Sender-Auth: UpZ-XCe79QEEHjQzOoxZpTgoqv4
+Message-ID: <CA+zp4VOOxRQqdJzt_ZPK3RDXo2zxmq+xEpnYUThtCoJCtwtEzw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary=001a1141075c1e9908054a5f0dec
+Subject: [oss-security] Advisory: XSS issues in MantisBT (CVE-2017-6797, CVE-2017-6799)
 
---K+tSVd7wpZDpMxf8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--001a1141075c1e9908054a5f0dec
+Content-Type: text/plain; charset=UTF-8
 
-Hello Exim users,
+Please take note of the following 2 cross-site scripting issues in MantisBT
 
-the ZDI assigned multiple CVEs to the Exim-MTA and published them
-recently:
-
-CVE            Link                                                      Ex=
-im-Bug
---------------+---------------------------------------------------------+--=
----
-CVE-2023-42114 https://www.zerodayinitiative.com/advisories/ZDI-23-1468/  3=
-001 fixed
-CVE-2023-42115 https://www.zerodayinitiative.com/advisories/ZDI-23-1469/  2=
-999 fixed
-CVE-2023-42116 https://www.zerodayinitiative.com/advisories/ZDI-23-1470/  3=
-000 fixed
-CVE-2023-42117 https://www.zerodayinitiative.com/advisories/ZDI-23-1471/
-CVE-2023-42118 https://www.zerodayinitiative.com/advisories/ZDI-23-1472/
-CVE-2023-42119 https://www.zerodayinitiative.com/advisories/ZDI-23-1473/=20
+Best regards
+Damien Regad
+MantisBT developer
 
 
-The ZDI contacted us in June 2022. We asked about details but didn't get
-answers we were able to work with.
+1. CVE-2017-6797: XSS in bug_change_status_page.php
 
-Next contact with ZDI was in May 2023. Right after this contact we
-created project bug tracker for 3 of the 6 issues. 2 high scored of them
-are fixed (OOB access). A minor scored (info leak) is fixed too.
+A cross-site scripting (XSS) vulnerability in bug_change_status_page.php
+allows remote attackers to inject arbitrary JavaScript via the
+'action_type' parameter.
 
-Fixes are available in a protected repository and are ready to be
-applied by the distribution maintainers.
+Affected versions: 1.3.0-beta.3 through 2.2.0
+Fixed in versions: 1.3.7, 2.2.1 (not yet released)
 
-The remaining issues are debatable or miss information we need to fix
-them.
+Patch:
+- 1.3:
+https://github.com/mantisbt/mantisbt/commit/a2d90ecabf3bcf3aa22ed9dbbecfd3d37902956f
+- 2.x:
+https://github.com/mantisbt/mantisbt/commit/c272c3f65da9677e505ff692b1f1e476b3afa56e
 
-We're more than happy to provide fixes for all issues as soon as we
-receive detailed information.
+Credits:
+Reported by Etienne Landais, fixed by Damien Regad (MantisBT developer)
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+References:
+MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22486
 
---K+tSVd7wpZDpMxf8
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+2. CVE-2017-6799 - XSS in view_filters_page.php
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUW9fIACgkQr0zGdqa2
-wUJ/3AgAyYHri33LK6VfV7EKBZ8yrvR1zN6YuuRfHzy/koGWDlOmzVK3PGJAE51m
-WB8Xq9Mz/DG23+2ufYxHrPXUD4RIevvayFPnPIJ2q8Q9qiN2a9o1pNpaLwDOmQr+
-/pdnrdx0T4OKgWMZ0sMOHouZE746kk8n0jXAvXMFFW3jQC4mwNEYGLhZ/q1LJ31M
-7CSEHEQzosShiilz8WYTANhLa1vBZqKky5Awv9E3nsLmna11p3PWzDor7zK0Y811
-JU79ftyvQRPIj7ZPvZdSgUmU+3JEbSF95UkmELuoLT6AC1oBYplYFPffWexmCsKF
-M6/NFh2yqN1Oa2ZYZ2UjIUC0/Fu60g==
-=IdDW
------END PGP SIGNATURE-----
+A cross-site scripting (XSS) vulnerability in view_filters_page.php allows
+remote attackers to inject arbitrary JavaScript via the 'view_type'
+parameter.
 
---K+tSVd7wpZDpMxf8--
+Affected versions: 2.1.0 through 2.2.0; fixed
+Fixed in versions: 2.2.1 (not yet released)
+
+Patch:
+https://github.com/mantisbt/mantisbt/commit/1677251434b6e8b2be8f1d4376a3e78f7be14d95
+
+Credits:
+Reported by Etienne Landais, fixed by Damien Regad (MantisBT developer)
+
+References:
+MantisBT issue tracker http://www.mantisbt.org/bugs/view.php?id=22497
+
+--001a1141075c1e9908054a5f0dec--
