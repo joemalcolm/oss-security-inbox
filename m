@@ -1,77 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/27/5
-Message-ID: <CACn5sdSLT9J13++EfwGZ54-Kd-zaLEkG-8y+-XUHbSURkr2nuw@mail.gmail.com>
-Date: Fri, 27 Jan 2017 08:49:55 -0300
-From: Gustavo Grieco <gustavo.grieco@...il.com>
-To: Raphael Hertzog <hertzog@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2016-9584: heap use-after-free on libical
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/10/2
+Message-ID: <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
+Date: Fri, 10 Mar 2017 07:03:32 -0500
+From: Stiepan <stie@....swiss>
+To: oss-security@...ts.openwall.com
+Cc: Stéphane Graber <stgraber@...ntu.com>
+Subject: Re: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
 Content-Type: text/plain; charset=utf-8
 
-2017-01-27 8:21 GMT-03:00 Raphael Hertzog <hertzog@...ian.org>:
-> On Fri, 20 Jan 2017, Gustavo Grieco wrote:
->> > Any reason why you did not request a CVE for #251?
->>
->> Yes. It was already reported here:
->> https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 (CVE-2016-5824)
->> but it was never officially reported upstream (and therefore, never fixed).
->
-> It was reported in https://github.com/libical/libical/issues/235 but then
-> closed by the submitter.
->
-> You could have stated in #251 that you believed this crash to be the same
-> than the one above. It was not obvious to me, I did it for you.
+I don't know whether that is the same bug, or a related one, but on Debian8 using LXC from jessie-backports, setting the default route in a container affects the host - namely, from an unpriv. container, setting the route sets the host's route as well.
+lxc-info --version outputs 2.0.6 and no update is currently available (on Debian).
 
-Thanks!
+Stiepan
 
->
->> >> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
->> >> the libical version used by
->> >> Thunderbird but we think is *not* the same as this one. In fact, we've
->> >> tested it on Thunderbird and it does *not* crash.
->> >>
->> >> The reproducer is available upon request.
->> >
->> > #253 has a reproducer here:
->> > https://github.com/libical/libical/files/627392/heap-use-after-free.ical.txt
->> >
->> > Is this the same file?
->>
->> It is not the same file in fact. We found a variation of the original
->> input that trigger this
->> read out-of-bounds to read more than 60 bytes. This looks more serious
->> than usual (maybe you can read as much as you want) .
->> We had some complains in the past for making public test cases ..
->
-> Here, I'm lost. You said that this oss-security report (CVE-2016-9584) is
-> the same as #253 but you have another file than the test case
-> submitted in #253.
->
-> Are you sure that this second file is the same underlying issue ?
 
-We only submitted the test case in #253: it was smaller and harmless.
-We sent the other file privately to the security teams of some Linux
-distributions. Both aborts/crashes have a very similar backtraces so
-we think they are the same issue. We are using ASAN to test so we are
-quite sure that there is no previous unsafe memory use before the ones
-reported here. Nevertheless, ASAN is not perfect and we are not the
-developers of libical so cannot be 100% sure.
 
->
->> > If it's a different file, then I'd like to have access to the file but I
->> > would prefer if it was just available publicly and not to me only.
->>
->> Feel free to make the file public if you want.
->
-> You would have to send it to me first :-)
+-------- Original Message --------
+Subject: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+Local Time: 9 March 2017 5:54 PM
+UTC Time: 9 March 2017 16:55
+From: tyhicks@...onical.com
+To: oss-security@...ts.openwall.com
+Stéphane Graber <stgraber@...ntu.com>
 
-Ups, i sent it to a different Raphael (also from Debian). This time I
-won't miss..
+Jann Horn discovered that the lxc-user-nic program could be tricked into
+operating on a network namespace over which the caller did not hold
+privilege.
 
->
-> Cheers,
-> --
-> Raphaël Hertzog ◈ Debian Developer
->
-> Support Debian LTS: https://www.freexian.com/services/debian-lts.html
-> Learn to master Debian: https://debian-handbook.info/get/
+The behavior didn't follow what was documented in the lxc-user-nic(1)
+man page:
+
+It ensures that the calling user is privileged over the network
+namespace to which the interface will be attached.
+
+This issue is CVE-2017-5985.
+
+https://lists.linuxcontainers.org/pipermail/lxc-users/2017-March/012925.html
+https://launchpad.net/bugs/1654676
+https://github.com/lxc/lxc/commit/16af238036a5464ae8f2420ed3af214f0de875f9
+
+Tyler
