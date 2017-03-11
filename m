@@ -1,63 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/07/4
-Message-ID: <569426.726873161-sendEmail@localhost>
-Date: Wed, 7 Jun 2017 12:53:10 +0000
-From: "Agostino Sarubbo" <ago@...too.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: ytnef: NULL pointer dereference in MAPIPrint (ytnef.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/11/2
+Message-ID: <1489267555.30133.7.camel@gmail.com>
+Date: Sat, 11 Mar 2017 22:25:55 +0100
+From: Ailin Nemui <ailin.nemui@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Irssi use after free in netjoin condition (2017/03)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-ytnef is Yeraze’s TNEF Stream Reader – for winmail.dat files.
+Dear CVE Assignment Team,
 
-The complete ASan output of the issue:
+please provide CVE for the following issue:
 
-# ytnefprint $FILE
-==12467==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f59364c62b6 bp 0x7ffe1b8d4af0 sp 0x7ffe1b8d4278 T0)
-==12467==The signal is caused by a READ memory access.
-==12467==Hint: address points to the zero page.
-    #0 0x7f59364c62b5 in strlen /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x43e99c in __interceptor_strlen.part.31 /tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.0/work/compiler-rt-4.0.0.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:282
-    #2 0x7f593734a162 in MAPIPrint /tmp/ytnef-1.9.2/lib/ytnef.c:1437:15
-    #3 0x508f50 in PrintTNEF /tmp/ytnef-1.9.2/ytnefprint/main.c:169:5
-    #4 0x50882e in main /tmp/ytnef-1.9.2/ytnefprint/main.c:84:5
-    #5 0x7f593646878f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #6 0x419c38 in _start (/usr/bin/ytnefprint+0x419c38)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==12467==ABORTING
-Affected version:
-1.9.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-9470
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00241-ytnef-nullptr-MAPIPrint
-
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-05-24: blog post about the issue
-2017-06-07: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/24/ytnef-null-pointer-dereference-in-mapiprint-ytnef-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+use after free condition during netjoin processing [1]
+======================================================
+CWE Classification: CWE-416
 
 
+
+Description
+-----------
+
+Use after free while producing list of netjoins (CWE-416)
+
+This issue was found and reported to us by APic.
+
+
+Impact
+------
+
+This issue usually leads to segmentation faults. Targeted code
+execution should be difficult.
+
+
+Affected versions
+-----------------
+
+Irssi up to and including 1.0.1
+
+We believe Irssi 0.8.21 and prior are not affected since a different
+code path causes the netjoins to be flushed prior to reaching the use
+after free condition.
+
+
+Fixed in
+--------
+
+Irssi 1.0.2
+
+
+Recommended action
+------------------
+
+Upgrade to Irssi 1.0.2. Irssi 1.0.2 is a maintenance release
+without any new features.
+
+
+Patch
+-----
+
+https://github.com/irssi/irssi/commit/77b2631c78461965bc9a7414aae206b5c
+514e1b3
+
+
+References
+----------
+
+[1] https://irssi.org/security/irssi_sa_2017_03.txt
