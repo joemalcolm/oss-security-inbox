@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/8
-Message-ID: <CANn89iK-7r3KozC4K1rmWpJ1jM-bhBqessUrkg8HoftnjOks5g@mail.gmail.com>
-Date: Fri, 24 Mar 2017 15:21:06 -0700
-From: Eric Dumazet <edumazet@...gle.com>
-To: Andrey Konovalov <andreyknvl@...gle.com>
-Cc: oss-security@...ts.openwall.com, "David S. Miller" <davem@...emloft.net>,  Alexey Kuznetsov <kuznet@....inr.ac.ru>, James Morris <jmorris@...ei.org>,  Hideaki YOSHIFUJI <yoshfuji@...ux-ipv6.org>, Patrick McHardy <kaber@...sh.net>,  netdev <netdev@...r.kernel.org>, LKML <linux-kernel@...r.kernel.org>,  Vasily Kulikov <segoon@...nwall.com>
-Subject: Re: Linux kernel ping socket / AF_LLC connect() sin_family race
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/11/1
+Message-ID: <CALy8Cw6aiwPBKyW_ObB8OmBdxwWm5ypFUVCg6hbbJGE4oBuczw@mail.gmail.com>
+Date: Sat, 11 Mar 2017 21:11:30 +0000
+From: Craig Small <csmall@...ian.org>
+To: Kurt Seifried <kseifried@...hat.com>, oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Wordpress: 6 security issues in Wordpress 4.7 2
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 24, 2017 at 1:43 PM, Andrey Konovalov <andreyknvl@...gle.com>
-wrote:
+Hi Kurt,
+  As someone who seems to ask about the CVEs for wordpress the most I'll
+put my hand up to raise the CVEs for wordpress. I am only the Debian
+packager for wordpress so if the wordpress project itself wants to raise
+these CVEs then I'm all for handing it over to them.
 
-> On Fri, Mar 24, 2017 at 9:27 PM, Solar Designer <solar@...nwall.com>
-> wrote:
-> > Hi,
-> >
-> > I haven't fully investigated this issue, and the Subject is provisional
-> > (but will probably get stuck).  I am not yet sure which kernel
-> > subsystem(s) to blame here (ping sockets? LLC sockets? other/more?), and
-> > there might be other ways to trigger the issue.
->
-> Reproduced the crash on current upstream
-> (ebe64824e9de4b3ab3bd3928312b4b2bc57b4b7e).
->
-> Adding kernel maintainers.
->
+Annoyingly, the mitre website breaks if you enter more than 2 requests in
+(or it doesn't like something I typed). Something deep in
+ScriptResource.axd gives a 500 error, so it will take a while to key all 6
+in. This also explains why all 6 were not entered in one go.
 
-Looks easy enough to fix ?
+ - Craig
 
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index
-2af6244b83e27ae384e96cf071c10c5a89674804..ccfbce13a6333a65dab64e4847dd510dfafb1b43
-100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -156,17 +156,18 @@ int ping_hash(struct sock *sk)
- void ping_unhash(struct sock *sk)
- {
-        struct inet_sock *isk = inet_sk(sk);
-+
-        pr_debug("ping_unhash(isk=%p,isk->num=%u)\n", isk, isk->inet_num);
-+       write_lock_bh(&ping_table.lock);
-        if (sk_hashed(sk)) {
--               write_lock_bh(&ping_table.lock);
-                hlist_nulls_del(&sk->sk_nulls_node);
-                sk_nulls_node_init(&sk->sk_nulls_node);
-                sock_put(sk);
-                isk->inet_num = 0;
-                isk->inet_sport = 0;
-                sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
--               write_unlock_bh(&ping_table.lock);
-        }
-+       write_unlock_bh(&ping_table.lock);
- }
- EXPORT_SYMBOL_GPL(ping_unhash);
+>
+> --
+Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
+Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
+GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
 
