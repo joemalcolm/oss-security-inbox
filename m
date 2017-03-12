@@ -1,32 +1,357 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/15/2
-Message-ID: <CALJHwhTK3+YqzhtPLa96QNYTkfDRv_YPc0bieXvLgQDRRoFRWQ@mail.gmail.com>
-Date: Mon, 15 May 2017 15:40:39 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2017-7495 kernel : information leak on ext4 when hardware reset.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/12/3
+Message-ID: <CALy8Cw58FYZobXa7G5MGoPbfJ4T9w1XHu3BYL1sGeBM-voBSkA@mail.gmail.com>
+Date: Sun, 12 Mar 2017 20:34:23 +0000
+From: Craig Small <csmall@...ian.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Fwd: [scr305104] wordpress before 4.7.3
 Content-Type: text/plain; charset=utf-8
 
-When a power failure (or hardware reset) occurs, applications writing to an
-ext4 filesystem system may create a situation in which writes to one file
-may appear in another file (ergo information leak).
+FYI, The 6 wordpress CVE ids from Mitre.
 
-This may be at least data corruption, a controlled attacker may be able to
-leverage this to steal data from writes to the same ext4 subsystem.
+ - Craig
+
+---------- Forwarded message ---------
+From: <cve-request@...re.org>
+Date: Sun, Mar 12, 2017 at 11:32 AM
+Subject: Re: [scr305104] wordpress before 4.7.3
+To: <csmall@...ian.org>
+Cc: <cve-request@...re.org>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+> [Suggested description]
+> In WordPress before 4.7.3,
+> there is
+> authenticated Cross-Site Scripting (XSS) via Media File Metadata. This is
+demonstrated by both
+> (1) mishandling of
+> the playlist shortcode in the wp_playlist_shortcode function in
+wp-includes/media.php
+> and (2) mishandling of meta information in the renderTracks function in
+> wp-includes/js/mediaelement/wp-playlist.js.
+>
+> ------------------------------------------
+>
+> [Vulnerability Type]
+> Cross Site Scripting (XSS)
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> wordpress - 3.6.0-4.7.2
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Attack Vectors]
+> Two Cross-Site Scripting vulnerabilities exists in the playlist
+> functionality of WordPress. These issues can be exploited by
+> convincing an Editor or Administrator into uploading a malicious MP3
+> file. Once uploaded the issues can be triggered by a Contributor or
+> higher using the playlist shortcode.
+>
+> ------------------------------------------
+>
+> [Reference]
+>
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+>
+https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
+> https://codex.wordpress.org/Version_4.7.3
+>
+https://github.com/WordPress/WordPress/commit/28f838ca3ee205b6f39cd2bf23eb4e5f52796bd7
+> http://openwall.com/lists/oss-security/2017/03/06/8
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> Chris Andre Dale, Yorick Koster, and Simon P. Briggs
+
+Use CVE-2017-6814.
 
 
-Reference:
+> [Suggested description]
+> In WordPress before 4.7.3 (wp-includes/pluggable.php),
+> control characters can trick redirect URL validation.
+>
+> ------------------------------------------
+>
+> [VulnerabilityType Other]
+> Trick the URL validation
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> wordpress - 2.8.1-4.7.2
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://codex.wordpress.org/Version_4.7.3
+>
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+>
+https://github.com/WordPress/WordPress/commit/288cd469396cfe7055972b457eb589cea51ce40e
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> Daniel Chatfield
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1450261
+Use CVE-2017-6815.
 
-Upstream patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=06bd3c36a733ac27962fea7d6f47168841376824
 
-Thanks
+> [Suggested description]
+> In WordPress before 4.7.3 (wp-admin/plugins.php),
+> unintended files can be deleted by administrators using the plugin
+deletion functionality.
+>
+> ------------------------------------------
+>
+> [Vulnerability Type]
+> Insecure Permissions
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> wordpress - 4.7.0-4.7.2
+>
+> ------------------------------------------
+>
+> [Affected Component]
+> wp-admin/plugins.php
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Impact Escalation of Privileges]
+> true
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://codex.wordpress.org/Version_4.7.3
+>
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+>
+https://github.com/WordPress/WordPress/commit/4d80f8b3e1b00a3edcee0774dc9c2f4c78f9e663
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> TrigInc and xuliang
 
---
+Use CVE-2017-6816.
 
-Wade Mealing
-Red Hat Product Security
+
+> [Suggested description]
+> In WordPress before 4.7.3 (wp-includes/embed.php),
+> there is
+> authenticated Cross-Site Scripting (XSS) in YouTube URL Embeds.
+>
+> ------------------------------------------
+>
+> [Vulnerability Type]
+> Cross Site Scripting (XSS)
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> wordpress - 4.0-4.7.2
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://codex.wordpress.org/Version_4.7.3
+>
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+>
+https://github.com/WordPress/WordPress/commit/419c8d97ce8df7d5004ee0b566bc5e095f0a6ca8
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> Marc Montpas
+
+Use CVE-2017-6817.
+
+
+> [Suggested description]
+> In WordPress before 4.7.3 (wp-admin/js/tags-box.js),
+> there is
+> cross-site scripting (XSS) via taxonomy term names.
+>
+> ------------------------------------------
+>
+> [Vulnerability Type]
+> Cross Site Scripting (XSS)
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> wordpress - 4.7-4.7.2
+>
+> ------------------------------------------
+>
+> [Affected Component]
+> Taxonomy names
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://codex.wordpress.org/Version_4.7.3
+>
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+>
+https://github.com/WordPress/WordPress/commit/9092fd01e1f452f37c313d38b18f9fe6907541f9
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> Delta
+
+Use CVE-2017-6818.
+
+
+> [Suggested description]
+> In WordPress before 4.7.3,
+> there is
+> cross-site request forgery (CSRF) in Press This
+> (wp-admin/includes/class-wp-press-this.php), leading to excessive use of
+server resources.
+> The CSRF can trigger an outbound HTTP request for a large file that is
+then parsed by Press This.
+>
+> ------------------------------------------
+>
+> [Vulnerability Type]
+> Cross Site Request Forgery (CSRF)
+>
+> ------------------------------------------
+>
+> [Affected Product Code Base]
+> wordpress - 4.2-4.7.2
+>
+> ------------------------------------------
+>
+> [Affected Component]
+> Press This module
+>
+> ------------------------------------------
+>
+> [Attack Type]
+> Remote
+>
+> ------------------------------------------
+>
+> [Impact Denial of Service]
+> true
+>
+> ------------------------------------------
+>
+> [Attack Vectors]
+> Craft a html file on a remote server and get admin to visit it using
+Press This module
+>
+> ------------------------------------------
+>
+> [Reference]
+> https://codex.wordpress.org/Version_4.7.3
+>
+https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+>
+https://github.com/WordPress/WordPress/commit/263831a72d08556bc2f3a328673d95301a152829
+>
+https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_press_this_function_allows_dos.html
+> http://openwall.com/lists/oss-security/2017/03/06/7
+>
+> ------------------------------------------
+>
+> [Has vendor confirmed or acknowledged the vulnerability?]
+> true
+>
+> ------------------------------------------
+>
+> [Discoverer]
+> Sipke Mellema
+
+Use CVE-2017-6819.
+
+
+- --
+CVE Assignment Team
+M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
+[ A PGP key is available for encrypted communications at
+  http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJYxJWeAAoJEHb/MwWLVhi2siMQAKXaKOf5BZpRfjzAX6cg9hr6
+NeDP3Pw/LyrWlQNQIX0jg7v0L8WNg1AJ1qU3rnW3y+9Nn9HL2QB6FX5j+TCkmWQQ
+9Jufvcl742xqQEGqkROyYjE04uh9WZjp2VOKDJe64edyiJ5hdIO3WH8OrZ5L08WF
+jd6YD6jEpuroqyUoY+36un/M8AKP/AFOHOcMknsu4v6WOPCm4D7RX2HifL2pqNar
+7k29sxTt727PHlZkDfbs0sOhPy1icrhZ0NzWJ34u42099j6sGUc9Cz/P2OjySYdP
+JwB9q2JwWmgbP8HxYNnnFGvdzE6hAZUOvjJiLgU07Y/6T8RrKJpozzzknAZ/fvst
+ZM0oCWZxCzleIg0cpk+2FF/l6YJ4scBfITJq/wrpzPbA+UskYk7v2R41T83oli5j
+PFqFAZXVg8pOL7VUpwPx6W1dR77HXJe9aOoslgM2SToXBf7amsaJCk3wn0/ysP41
+eiNA6x9QHqBQmv4F27GD1F9rX0SYcsnb8L/uUVnnKzTrJiU3wvqeSLeDGhEKi+A7
+kzfYX9SVwQod3wKyNg1B+WtlRZc+AV3zg5OThfUIbv+Y6jmowyGUIQXyAkuzsu1b
+jmDfdY7X0dD9vaKNOy2W4kBfycRBUH7lB61EIQR3stq1S5v1+GvRLsZh1NBjXQX6
+PvQbSfQLSAyPY9xY6/NF
+=yD6/
+-----END PGP SIGNATURE-----
+-- 
+Craig Small (@smallsees)   http://dropbear.xyz/     csmall at : enc.com.au
+Debian GNU/Linux           http://www.debian.org/   csmall at : debian.org
+GPG fingerprint:        5D2F B320 B825 D939 04D2  0519 3938 F96B DF50 FEA5
 
