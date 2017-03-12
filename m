@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["857" "Wednesday" "21" "June" "2017" "16:58:46" "+0800" "xiaoqixue_1" "xiaoqixue_1@163.com" "<23e794b8.8add.15cc9e01b87.Coremail.xiaoqixue_1@163.com>" "19" "[oss-security] Re:Re: [oss-security] CVE-request: heap-buffer-overflow in jasper" nil nil nil "6" "2017062108:58:46" "[oss-security] Re:Re: [oss-security] CVE-request: heap-buffer-overflow in jasper" (number mark "U       xiaoqixue_1@ Jun 21   19/857   " thread-indent "\"[oss-security] Re:Re: [oss-security] CVE-request: heap-buffer-overflow in jasper\"\n") "<c8b219b1-2b44-06af-d770-27e02de6359c@debian.org>" ("<1c36c757.6889.15cc43283d4.Coremail.xiaoqixue_1@163.com>" "<c8b219b1-2b44-06af-d770-27e02de6359c@debian.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["988" "Sunday" "12" "March" "2017" "17:41:49" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170312164149.4ivltlh32pglgfgm@eldamar.local>" "25" "[oss-security] Roundcube: CVE-2017-6820: XSS issue in handling of a style tag inside of an svg element" nil nil nil "3" "2017031216:41:49" "[oss-security] Roundcube: CVE-2017-6820: XSS issue in handling of a style tag inside of an svg element" (number mark "U       carnil@debia Mar 12   25/988   " thread-indent "\"[oss-security] Roundcube: CVE-2017-6820: XSS issue in handling of a style tag inside of an svg element\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12195 invoked by uid 550); 21 Jun 2017 10:51:45 -0000
+Received: (qmail 31997 invoked by uid 550); 12 Mar 2017 16:42:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +12,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17951 invoked from network); 21 Jun 2017 08:59:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=iWKp2
-	4m1WTLRfo9qLs9mtuN0eRl5krrlpRLAGNRZdz0=; b=S7SdEjofUTYz3jm/uEQEg
-	D25I455MGYR/0Pivx7q7LDOTsD6QJ7vJzvlddEOioE9MhgXtTS79ku9IZ+Phf1o4
-	vexOBnLYigsP+yKEiDgWPefeGuX8bvtMUnxJ07by1+sWOWLNjWLeIr24deIwqq/l
-	DvE7zyMeryWFtDWS88OWG4=
-X-Originating-IP: [166.111.131.12]
-Date: Wed, 21 Jun 2017 16:58:46 +0800 (CST)
-From: xiaoqixue_1  <xiaoqixue_1@163.com>
-To: "Emilio Pozuelo Monfort" <pochu@debian.org>
-Cc: oss-security@lists.openwall.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20160729(86883.8884) Copyright (c) 2002-2017 www.mailtech.cn 163com
-In-Reply-To: <c8b219b1-2b44-06af-d770-27e02de6359c@debian.org>
-References: <1c36c757.6889.15cc43283d4.Coremail.xiaoqixue_1@163.com>
- <c8b219b1-2b44-06af-d770-27e02de6359c@debian.org>
-X-CM-CTRLDATA: dgVpBGZvb3Rlcl9odG09ODEwOjU2
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_131525_478946267.1498035526535"
+Received: (qmail 31976 invoked from network); 12 Mar 2017 16:42:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=cNMJtzDAfiyouwiOl+I4vdGqJt20vAmC8AEoa7vDn0I=;
+        b=SsybcCMl9A3O8aNooGD+4wEVC+6XJxvDooXviBeqXu4g5Ie+PE8lUPNXgus/Pf6qKD
+         Wngn655vvcsHic74RHcM0ITRdiONqSXRiIBjMYD5cBINMQ1lRF+odeSd8jKxkeSOo0s6
+         43yKcEZBgz0wvhdHHqusKyw3WeWX9m1jCP0+ofpcH/JXAUyyTjNl0KWT4yX/SbYctdV0
+         qTQMRqCCMd7Rj2B+Ze8ovxG6qRw9j1nFPQkwWqof2J1YPPA1iYUhJTI7hDTf7LwlxuyB
+         cZSEd2pWNN4ONA8xnhASJhEEsFOa4mms1uOFkKSyOlLwnpVaPzMpO8GHKwJSPe6Yx6fx
+         MyYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=cNMJtzDAfiyouwiOl+I4vdGqJt20vAmC8AEoa7vDn0I=;
+        b=TpIgLwNeJMidcWnZyPpIYKie0OEGfR5/P0ze8AJfuorgW08oV0lvotC1JILBrk96p1
+         Ov+LdyNqUoi4TWtDFK6i/MC6c1WSEW0wXcFG7rbdf5kbuDOQX6M0QcMSYA930MmJaIpz
+         QrLWX7jcYeZcDvkcKV2lJBgKgHEYeQAYHtpLxNyaA42fLCm9vrgfqidnUTEvXUx0IPeE
+         vMXkWdoIy4YAXUl49IwOGN2QqiTh3yImMWzoVwX0uGedr7KJGWDNLstSxaFFbClL5Fw5
+         /YVuP81lFjMYCDWQ782oeV1ZIWRl585TpjY4+wAwkNpaoUX9G5YGplppIO942bp275gJ
+         jKdw==
+X-Gm-Message-State: AFeK/H36nb+YMvplbzg6q1+BupkianQVlJA4pYEHjStfsz0UgBSCyfp5cUHThg1pXoOjOA==
+X-Received: by 10.28.156.69 with SMTP id f66mr6700104wme.56.1489336911456;
+        Sun, 12 Mar 2017 09:41:51 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 12 Mar 2017 17:41:49 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Message-ID: <20170312164149.4ivltlh32pglgfgm@eldamar.local>
 MIME-Version: 1.0
-Message-ID: <23e794b8.8add.15cc9e01b87.Coremail.xiaoqixue_1@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:g8GowAC3UMtHNUpZW+0QAA--.59166W
-X-CM-SenderInfo: 50ld015l0xvsqr6rljoofrz/1tbiJQf9vVUMFlrRKQAAsP
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] Re:Re: [oss-security] CVE-request: heap-buffer-overflow in jasper
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] Roundcube: CVE-2017-6820: XSS issue in handling of a style tag
+ inside of an svg element
 
-------=_Part_131525_478946267.1498035526535
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+Hi
 
-CkF0IDIwMTctMDYtMjEgMTY6MTk6MzUsICJFbWlsaW8gUG96dWVsbyBNb25m
-b3J0IiA8cG9jaHVAZGViaWFuLm9yZz4gd3JvdGU6Cj5IaSwKPgo+VGhlc2Ug
-ZGF5cyB5b3UgbmVlZCB0byByZXF1ZXN0IENWRXMgYnkgZmlsbGluZyB0aGUg
-Zm9ybSBpbgo+aHR0cHM6Ly9jdmVmb3JtLm1pdHJlLm9yZy8uIFBsZWFzZSBm
-b2xsb3cgdXAgaGVyZSB3aGVuIHlvdSBnZXQgdGhlIENWRS4KPgo+T24gMjAv
-MDYvMTcgMDg6MzEsIHhpYW9xaXh1ZV8xIHdyb3RlOgo+PiBUaW1lbGluZToK
-Pj4gMjAxNy0wNi0xNDogYnVnIGRpc2NvdmVyZWQgYW5kIHJlcG9ydGVkIHVw
-c3RyZWFtCj4KPkhvdyB3YXMgdGhpcyByZXBvcnRlZCB1cHN0cmVhbT8gUGVy
-aGFwcyB5b3UgY291bGQgbGluayB0byB0aGUgYnVnIHJlcG9ydCwgaWYKPnRo
-ZXJlJ3Mgb25lLgoKPgpXZSByZXBvcnRlZCBpdCBvbiBnaXRodWIgOgpodHRw
-czovL2dpdGh1Yi5jb20vbWRhZGFtcy9qYXNwZXIvaXNzdWVzLzE0MAo+Q2hl
-ZXJzLAo+RW1pbGlvCg==
+I have requested a CVE for the following Roundcube issue, wich got
+assigned CVE-2017-6820[*].
 
-------=_Part_131525_478946267.1498035526535--
+rcube_utils.php in Roundcube before 1.1.8 and before 1.2.4 is
+susceptible to a cross-site scripting vulnerability via a crafted
+Cascading Style Sheets (CSS) token sequence within an SVG element..
 
+https://github.com/roundcube/roundcubemail/releases/tag/1.1.8
+https://github.com/roundcube/roundcubemail/releases/tag/1.2.4
+https://roundcube.net/news/2017/03/10/updates-1.2.4-and-1.1.8-released
+
+Upstream fix (sequence of two commits):
+
+https://github.com/roundcube/roundcubemail/commit/fa2824fdcd44af3f970b2797feb47652482c8305
+https://github.com/roundcube/roundcubemail/commit/cbd35626f7db7855f3b5e2db00d28ecc1554e9f4
+
+Regards,
+Salvatore
+
+ [*] ideally that would be done by the upstream project on it's own
+ before publishing an issue in case it was privately reported, since
+ it was not immediately clear to me if one was already requested or
+ some other vendors/distributors have done it.
