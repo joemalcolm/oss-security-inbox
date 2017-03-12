@@ -1,88 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/01/3
-Message-ID: <JDxm3O7NWomNLVgdcsS4bAEEjCWg6EXBzYrfpZkg9d7XEMLDZMtjnnGSLch-kPujtlaLX7Zlg96uQznDA33KitamLs68gnrjAw77uWCWIM8=@itk.swiss>
-Date: Sat, 01 Jul 2017 15:23:07 -0400
-From: Stiepan <stie@....swiss>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: accepting new members to (linux-)distros lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/12/2
+Message-ID: <20170312164149.4ivltlh32pglgfgm@eldamar.local>
+Date: Sun, 12 Mar 2017 17:41:49 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: Roundcube: CVE-2017-6820: XSS issue in handling of a style tag inside of an svg element
 Content-Type: text/plain; charset=utf-8
 
-I have a general remark on the recent developments on this list, in particular in relation with the "distros" list and especially, focusing on Linux kernel security:
-a core issue at hand seems to be the funding of work that follows due diligence, standards and so forth, which is a top priority, and should be given appropriate importance at the top decision-making level. I think that in that line, applying for institutional funding through calls for H2020 public-private partnerships such as https://ec.europa.eu/research/participants/portal/desktop/en/opportunities/h2020/topics/ds-08-2017.html and similar non-European initiatives - if there are any - would be more than appropriate, as Linux is a core privacy-enhancing technology, in addition to the fact that "Open source and externally auditable solutions are encouraged in order to maximise uptake and increase the trustworthiness of proposed solutions.". By the way, the same would apply for BSDs, where I have a more direct interest, although they do not share Linux's European heritage! ;)
-Stiepan Aurélien Kovac
-M Sc in ICT Security
+Hi
 
-IT Kovac, Geneva CH
-stie at itk dot swiss
+I have requested a CVE for the following Roundcube issue, wich got
+assigned CVE-2017-6820[*].
 
-> -------- Original Message --------
-> Subject: Re: [oss-security] accepting new members to (linux-)distros lists
-> Local Time: July 1, 2017 2:07 PM
-> UTC Time: July 1, 2017 2:07 PM
-> From: solar@...nwall.com
-> To: oss-security@...ts.openwall.com
-> On Sat, Jul 01, 2017 at 01:57:55PM +0200, Mark Hatle wrote:
->> We (Wind River) can take a more active role in at least some of the
->> administrative tasks..
-> Thank you!
->> However, I can assure you we don"t have the time or
->> ability to do it ourselves.
-> No "time or ability" to take care of any one (or preferably more) of the
-> administrative micro-roles I listed? This makes no sense to me. All of
-> the administrative tasks combined are far less than one full-time job.
-> With good discipline and focus, they can probably be taken care of with
-> 1 hour of effort per day on average (of course, there will be occasional
-> busy days, but also many days with no work of this type). All of them
-> at once. I think I know this because of me being the fallback person
-> for this type of work so far. OTOH, I do recognize that I listed a few
-> additional tasks now - such as producing statistics - and the extent of
-> work on tasks involving monitoring external resources can vary greatly.
-> So maybe it"s more than 1 hour/day on average with those extra tasks and
-> desired greater extent now. But not much more.
-> What I do understand is needing to temporarily transfer responsibility
-> to another distro if your own team subscribed to the list is small and
-> many of these people may simultaneously go on vacation.
-> A reason why I listed so many administrative micro-tasks/roles is that
-> I"d like to allow for an even (or close to it) distribution of the
-> effort across the distros, where every one of them bears a tiny portion
-> of this small total effort of running the list. This would also serve
-> to ensure and demonstrate to the rest of us that every distro is still
-> an active member, without us needing responsiveness tests.
-> The technical expertise tasks could be worked on to varying extent,
-> including becoming a full-time job for someone or even for several
-> people. There"s no decision on the exact extent yet, but it should be
-> sufficient to almost always avoid things like the recent incomplete fix
-> in Sudo.
->> So the more then one "actor" on an action would definitely be what I suggest.
-> That"s within consideration, but we got to start by listing at least one
-> distro per task. When we eventually have more than one listed for some
-> task, we or they will need to coordinate their activities, and that
-> could create extra work. Perhaps a "primary and backup" arrangement for
-> two distros sharing a task will work best: will not result in "no one"s
-> responsibility" and will have low coordination overhead.
-> The first administrative task of getting back to message senders is so
-> trivial that I think it"d make sense to keep it reserved to the distro
-> who was last to join, perhaps switching responsibility to them from the
-> previous distro once the new member has confirmed they"re successfully
-> receiving messages through the list. The new distro will be "primary"
-> and the previous will be "backup" for that role. Always that way,
-> unless the newly joining distro opts for something less trivial right
-> away. (I know some people would be offended by being asked to
-> participate in this trivial activity. I think they"d be wrong, but we
-> can accommodate their egos, no problem.) This will quickly test each
-> new distro"s responsiveness and get them involved, and hopefully
-> encourage them to pick up several of the less trivial tasks as well
-> (they will need to, or otherwise they"d be left without a task once
-> another distro joins, which would be inappropriate).
->> Unfortunately I really don"t have a good sense (based on the link to the tasks)
->> as to what would be appropriate to volunteer for. I"m open to suggestions.
-> It"s really anything you feel like doing. Perhaps see in which areas
-> you have been helping already, and suggest that you focus on those.
-> If you really want me to narrow down the list for you, let me know.
-> This may also start happening on its own, due to other distros picking
-> up tasks. Once a task is taken by one or two distros, I will want
-> further distros to volunteer for other tasks. So if you want to have
-> more freedom of choice, hurry up.
-> OTOH, with distros not volunteering for specific tasks (like we"ve seen
-> so far), I might just assign tasks to distros myself.
-> Alexander
+rcube_utils.php in Roundcube before 1.1.8 and before 1.2.4 is
+susceptible to a cross-site scripting vulnerability via a crafted
+Cascading Style Sheets (CSS) token sequence within an SVG element..
+
+https://github.com/roundcube/roundcubemail/releases/tag/1.1.8
+https://github.com/roundcube/roundcubemail/releases/tag/1.2.4
+https://roundcube.net/news/2017/03/10/updates-1.2.4-and-1.1.8-released
+
+Upstream fix (sequence of two commits):
+
+https://github.com/roundcube/roundcubemail/commit/fa2824fdcd44af3f970b2797feb47652482c8305
+https://github.com/roundcube/roundcubemail/commit/cbd35626f7db7855f3b5e2db00d28ecc1554e9f4
+
+Regards,
+Salvatore
+
+ [*] ideally that would be done by the upstream project on it's own
+ before publishing an issue in case it was privately reported, since
+ it was not immediately clear to me if one was already requested or
+ some other vendors/distributors have done it.
