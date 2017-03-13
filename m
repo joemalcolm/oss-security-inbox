@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/19/6
-Message-ID: <20170719125900.igfqq3i2bt3qwqep@tunkki>
-Date: Wed, 19 Jul 2017 15:59:00 +0300
-From: Henri Salo <henri@...v.fi>
-To: Matthew Daley <mattd@...fuzz.com>
-Cc: Kurt Seifried <kurt@...fried.org>, oss-security@...ts.openwall.com
-Subject: Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/2
+Message-ID: <3284786.rxzJs1xbWv@blackgate>
+Date: Mon, 13 Mar 2017 10:35:13 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: audiofile: heap-based buffer overflow in alaw2linear_buf (G711.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 19, 2017 at 11:37:28PM +1200, Matthew Daley wrote:
-> On 17 July 2017 at 00:01, Henri Salo <henri@...v.fi> wrote:
-> > Is this assigment somehow related to this oss-security post?
-> > http://www.openwall.com/lists/oss-security/2016/07/01/3
-> 
-> Yes.
+On Sunday 26 February 2017 11:50:44 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow
+> -in-alaw2linear_buf-g711-cpp
 
-Thanks for your reply and clearing this up. One of the points in my email was
-that this is not documented in the DWF item well enough. There is
-description_data with value, but no referer to oss-security, which should also
-use those issue numbers. Should the assigner or requester post this information
-to oss-security aswell or is the point that DWF is followed via GitHub with
-custom scripts? If someone makes a pull request to the item is the information
-populated to MITRE and NVD databases and how often?
+This is CVE-2017-6830
 
 -- 
-Henri Salo
+Agostino Sarubbo
+Gentoo Linux Developer
