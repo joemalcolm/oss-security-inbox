@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/22/9
-Message-ID: <20170622133812.GA1672@kroah.com>
-Date: Thu, 22 Jun 2017 21:38:13 +0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/21
+Message-ID: <4271799.Slv6QYllRs@blackgate>
+Date: Mon, 13 Mar 2017 11:29:12 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Vasily Averin <vvs@...tuozzo.com>, Konstantin Khorenko <khorenko@...tuozzo.com>
-Subject: Re: stackguard fix in Red Hat and Ubuntu kernels
+Subject: Re: mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 22, 2017 at 02:18:33PM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> Yes, we at SUSE are seeing similar crashes. Thanks for the reproducer!
+On Sunday 16 October 2016 20:52:34 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflo
+> w-in-main-jstest_main-c/
 
-The patches upstream in Linus's tree should resolve these crashes,
-correct?  If not, please let the kernel developers know, as we ended up
-going with a different set of changes than the distros shipped, and are
-still working on getting these backported to older stable kernels at the
-moment.
+This is CVE-2016-10246
 
-thanks,
-
-greg k-h
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
