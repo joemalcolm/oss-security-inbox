@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["822" "Tuesday" "11" "August" "2015" "13:10:41" "+0000" "Jeremy Stanley" "jeremy@openstack.org" "<20150811131041.GI2732@openstack.org>" "21" "Re: [oss-security] CVE for crypto_get_random() from libsrtp" nil nil nil "8" "2015081113:10:41" "[oss-security] CVE for crypto_get_random() from libsrtp" (number mark "        jeremy@opens Aug 11   21/822   " thread-indent "\"Re: [oss-security] CVE for crypto_get_random() from libsrtp\"\n") "<55C9F162.8030700@redhat.com>" ("<55BB6E77.1070007@redhat.com>" "<CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>" "<55C9A996.5090705@redhat.com>" "<20150811114801.GA2731@yuggoth.org>" "<55C9F162.8030700@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["432" "Monday" "13" "March" "2017" "11:06:02" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<5267070.4mDNyxnpBX@blackgate>" "20" "Re: [oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)" nil nil nil "3" "2017031310:06:02" "[oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)" (number mark "U       ago@gentoo.o Mar 13   20/432   " thread-indent "\"Re: [oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)\"\n") "<313929.373256059-sendEmail@localhost>" ("<313929.373256059-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9405 invoked by uid 550); 11 Aug 2015 13:10:54 -0000
+Received: (qmail 30353 invoked by uid 550); 13 Mar 2017 10:06:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +11,37 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9387 invoked from network); 11 Aug 2015 13:10:54 -0000
-X-Sender-Id: jeremy@openstack.org
-Message-ID: <20150811131041.GI2732@openstack.org>
-References: <55BB6E77.1070007@redhat.com>
- <CACYkhxiBvVbV-Xg-gM7ZdJzR=xaR2ta_OA-K6Lvftxvo9j3=uA@mail.gmail.com>
- <55C9A996.5090705@redhat.com>
- <20150811114801.GA2731@yuggoth.org>
- <55C9F162.8030700@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55C9F162.8030700@redhat.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Tue, 11 Aug 2015 13:10:41 +0000
-From: Jeremy Stanley <jeremy@openstack.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for crypto_get_random() from libsrtp
+Received: (qmail 30274 invoked from network); 13 Mar 2017 10:06:19 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Date: Mon, 13 Mar 2017 11:06:02 +0100
+Message-ID: <5267070.4mDNyxnpBX@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.52-gentoo; KDE/4.14.29; x86_64; ; )
+In-Reply-To: <313929.373256059-sendEmail@localhost>
+References: <313929.373256059-sendEmail@localhost>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="nextPart2156486.t7WfNKijmD"
+Content-Transfer-Encoding: 7Bit
+Subject: Re: [oss-security] podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement (graphicsstack.h)
 
-On 2015-08-11 14:58:10 +0200 (+0200), Adam Maris wrote:
-> On 11/08/15 13:48, Jeremy Stanley wrote:
-> > On 2015-08-11 09:51:50 +0200 (+0200), Adam Maris wrote:
-> > [...]
-> > > Unless CVE is assigned, we don't plan to ship any patch at the
-> > > moment.
-[...]
-> > if a CVE is assigned for a bug you consider to have minimal
-> > impact, do you release a patch for it anyway just because
-> > there's a CVE?
-[...]
-> If a CVE is assigned for this issue, we will create an entry in
-> our CVE database but the end result will likely be the same,
-> wontfix.
+--nextPart2156486.t7WfNKijmD
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-That makes more sense. I read your initial "Unless CVE is assigned"
-comment to mean that you were going to base your decision on whether
-to distribute a fix on MITRE's classification process rather than on
-your own due diligence. Thanks for clarifying!
+On Thursday 02 March 2017 16:33:47 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-g
+> 
+raphicsstacktgraphicsstackelementtgraphicsstackelement-
+graphicsstack-h
+
+This is CVE-2017-6841
+
 -- 
-Jeremy Stanley
+Agostino Sarubbo
+Gentoo Linux Developer
+
+--nextPart2156486.t7WfNKijmD--
+
