@@ -1,62 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/06/5
-Message-ID: <20170406083928.GE32355@suse.de>
-Date: Thu, 6 Apr 2017 10:39:28 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/14
+Message-ID: <1507101.nareQZ76ga@blackgate>
+Date: Mon, 13 Mar 2017 11:08:20 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libxslt math.random issue
+Subject: Re: podofo: global buffer overflow in PoDoFo::PdfParser::ReadXRefSubsection (PdfParser.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 06, 2017 at 10:32:45AM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> On Thu, 6 Apr 2017 07:44:00 +0200
-> Marcus Meissner <meissner@...e.de> wrote:
-> 
-> > CVE-2015-9019 has been assigned to use of libexslt (in libxslt) usage
-> > of "math.random" without initializing the randomseed.
-> > 
-> > https://bugzilla.gnome.org/show_bug.cgi?id=758400
-> > https://bugzilla.suse.com/show_bug.cgi?id=934119
-> 
-> I have some questions and comments:
-> 
-> 1. What's the use of the random number and what's the security impact
-> if it's not random? That's not explained
-> In case of the bugreport.
-> In case a cryptographically secure random number is required then using
-> rand()/srand() is a bad idea anyway.
-> (Unfortunately there's no secure random in the standard libc, but at
-> least glibc now has getrandom.).
+On Thursday 02 March 2017 16:35:17 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/03/02/podofo-global-buffer-overflow-in-pod
+> ofopdfparserreadxrefsubsection-pdfparser-cpp
 
+This is CVE-2017-6844
 
-It is a bit tricky to find out. I googled some use-cases.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-- UUID generation was looked for by 1 stackoverflow user
-- some harmless randomness in XSLT conversion for selection random pictures
-
-> 2. This part of the patch looks a bit strange:
-> 
-> +	seed = time(NULL); /* just in case /dev/urandom is not there */
-> +	if (fd == -1) {
-> +		read (fd, &seed, sizeof(seed));
-> +		close (fd);
-> +	}
-> 
-> You're calling time() unconditionally, although it's kinda just a
-> fallback. Why not
-> +	if (fd == -1) {
-> +		read (fd, &seed, sizeof(seed));
-> +		close (fd);
-> +	} else {
-> +		seed = time(NULL);
-> +	}
-> ?
-> 
-> (obviously using time is not a secure way to do random numbers, if
-> secure numbers are required cross-plattform you need to do this
-> otherwise anyway)
-
-it should be fd != -1 , my bad :/
-
-Ciaop, Marcus
