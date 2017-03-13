@@ -1,43 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/13/4
-Message-ID: <CACsi250wmYb_CynSUb_JXgtrZfKU5mVt=FKxvGqCV-fqwxq=HA@mail.gmail.com>
-Date: Thu, 13 Jul 2017 08:01:53 -0500
-From: William A Rowe Jr <wrowe@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/16
+Message-ID: <16371207.FHd1oBMIcq@blackgate>
+Date: Mon, 13 Mar 2017 11:11:57 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2017-9788: Uninitialized memory reflection in mod_auth_digest
+Subject: Re: podofo: NULL pointer dereference in GraphicsStack::TGraphicsStackElement::SetNonStrokingColorSpace (graphicsstack.h)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2017-9788: Uninitialized memory reflection in mod_auth_digest
+On Thursday 02 March 2017 16:36:03 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-graphicsstacktgraphicsstackelementsetnonstrokingcolorspa
+ce-graphicsstack-h
 
-Severity: Important
+This is CVE-2017-6846
 
-Vendor: The Apache Software Foundation
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-Versions Affected:
-all versions through 2.2.33 and 2.4.26
-
-Description:
-The value placeholder in [Proxy-]Authorization headers
-of type 'Digest' was not initialized or reset
-before or between successive key=value assignments.
-by mod_auth_digest
-Providing an initial key with no '=' assignment
-could reflect the stale value of uninitialized pool
-memory used by the prior request, leading to leakage
-of potentially confidential information, and a segfault
-
-Mitigation:
-All users of httpd should upgrade to 2.4.27 (or minimally
-2.2.34, which will receive no further security releases.)
-Alternately, the administrator could configure httpd to
-reject requests with a header matching a complex regular
-expression identifing where = character does not occur
-in the first key=value pair, as in the following syntax;
-[Proxy-]Authorization: Digest key[,key=value]
-
-Credit:
-The Apache HTTP Server security team would like to thank Robert Święcki
-for reporting this issue.
-
-References:
-https://httpd.apache.org/security_report.html
