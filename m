@@ -1,55 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/02/01/14
-Message-ID: <1546901.H7UEmAlt5H@blackgate>
-Date: Wed, 01 Feb 2017 16:12:19 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/25
+Message-ID: <26134027.ubZr3Z7UH6@blackgate>
+Date: Mon, 13 Mar 2017 11:40:07 +0100
 From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: podofo: NULL pointer dereference in PdfOutputStream.cpp
+Subject: Re: jasper: use of uninitialized value in jpc_pi_nextcprl (jpc_t2cod.c)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+On Friday 04 November 2016 15:43:31 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/11/04/jasper-use-of-uninitialized-value-in
+> -jpc_pi_nextcprl-jpc_t2cod-c
 
-A fuzz on it with the UBSAN discovered a NULL pointer access. The upstream 
-project denies me to open a new ticket. So, I’m unable to communicate with 
-them.
-
-The complete UBSan output:
-
-# podofopdfinfo $FILE
-/tmp/portage/app-
-text/podofo-0.9.4/work/podofo-0.9.4/src/base/PdfOutputStream.cpp:116:33: 
-runtime error: null pointer passed as argument 2, which is declared to never 
-be null
-
-Affected version:
-0.9.4
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00143-podofo-nullptr-PdfOutputStream
-
-Timeline:
-2017-01-05: bug discovered
-2017-02-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/01/podofo-null-pointer-dereference-in-pdfoutputstream-cpp
+This is CVE-2016-10251
 
 -- 
 Agostino Sarubbo
 Gentoo Linux Developer
+
