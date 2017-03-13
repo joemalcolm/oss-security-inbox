@@ -1,68 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/12/06/3
-Message-ID: <CA++9HO98n_G9zpBh2=wyj_T1osWECrah_vJWz3=TLf=hMS_5aA@mail.gmail.com>
-Date: Wed, 06 Dec 2017 16:23:13 +0000
-From: Armis Security <security@...is.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Info Leak in the Linux Kernel via Bluetooth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/18
+Message-ID: <1742097.gFNMWqBDs8@blackgate>
+Date: Mon, 13 Mar 2017 11:12:54 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: podofo: NULL pointer dereference in PoDoFo::PdfXObject::PdfXObject (PdfXObject.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Thursday 02 March 2017 16:36:42 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-p
+> odofopdfxobjectpdfxobject-pdfxobject-cpp
 
-We are writing to disclose an information leak vulnerability in the
-Bluetooth stack of the Linux Kernel (BlueZ).
-This vulnerability has been disclosed to the Kernel's security team (
-security@...nel.org), and a patch for it is in stages of review.
-This patch is also attached here.
+This is CVE-2017-6848
 
-This vulnerability lies in the processing of incoming L2CAP commands -
-ConfigRequest, and ConfigResponse messages.
-This info leak is a result of uninitialized stack variables that may be
-returned to an attacker in their uninitialized state.
-By manipulating the code flows that precede the handling of these
-configuration messages, an attacker can also gain some control over which
-data will be held in the uninitialized stack variables.
-This can allow him to bypass KASLR, and stack canaries protection - as both
-pointers and stack canaries may be leaked in this manner.
-
-Combining this vulnerability (for example) with the previously disclosed
-RCE vulnerability in L2CAP configuration parsing (CVE-2017-1000251) may
-allow an attacker to exploit the RCE against kernels which were built with
-the above mitigations.
-
-These are the specifics of this vulnerability:
-In the function l2cap_parse_conf_rsp and in the function
-l2cap_parse_conf_req the following variable is declared without
-initialization:
-
-struct l2cap_conf_efs efs;
-
-In addition, when parsing input configuration parameters in both of these
-functions, the switch case for handling EFS elements may skip the memcpy
-call that will write to the efs variable:
-
-...
-case L2CAP_CONF_EFS:
-if (olen == sizeof(efs))
-memcpy(&efs, (void *)val, olen);
-...
-
-The olen in the above if is attacker controlled, and regardless of that if,
-in both of these functions the efs variable would eventually be added to
-the outgoing configuration request that is being built:
-
-l2cap_add_conf_opt(&ptr, L2CAP_CONF_EFS, sizeof(efs), (unsigned long) &efs);
-
-So by sending a configuration request, or response, that contains an
-L2CAP_CONF_EFS element, but with an element length that is not sizeof(efs)
-- the memcpy to the uninitialized efs variable can be avoided,
-and the uninitialized variable would be returned to the attacker (16 bytes).
-
-A simple patch for avoiding this info leak is attached.
-
-Ben Seri,
-Armis
-
-Content of type "text/html" skipped
-
-Download attachment "l2cap_core.c.patch" of type "application/octet-stream" (1398 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
