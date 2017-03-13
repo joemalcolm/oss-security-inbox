@@ -1,27 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/08/01/3
-Message-Id: <1501597646.744346.23695.25373@mail.rambler.ru>
-Date: Tue, 1 Aug 2017 17:27:26 +0300
-From: Александр Носарев <nosarev-ay@...bler.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/26
+Message-ID: <6058659.ly9LUa4Ua5@blackgate>
+Date: Mon, 13 Mar 2017 12:06:58 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Syslog forwarding with IP spoofing
+Subject: Re: jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)
 Content-Type: text/plain; charset=utf-8
 
-Good day!
+On Wednesday 25 January 2017 10:10:35 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/01/25/jasper-null-pointer-dereference-in-j
+> p2_cdef_destroy-jp2_cod-c
 
+This is CVE-2017-6850
 
-I need to recive syslog messages, filter them and send them forward to the SIEM.
-
-Also HOST field is not represented in syslog, so i need to spoof IP of forwarding
-packets to bind messages recived by SIEM to it's original source IP.
-
-If i will try to add some marks to syslog message, I will need to override
-parsers for each syslog source type, so it seems like abad idea.
-
-Is there any open source tool for that task?
-
-
---
-
-.
-
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
