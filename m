@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3020" "Thursday" "1" "June" "2017" "20:00:53" "+0200" "Solar Designer" "solar@openwall.com" "<20170601180053.GA4752@openwall.com>" "62" "[oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060118:00:53" "[oss-security] unresponsive distros" (number mark "        solar@openwa Jun  1   62/3020  " thread-indent "\"[oss-security] unresponsive distros\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["247" "Monday" "13" "March" "2017" "11:29:12" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<4271799.Slv6QYllRs@blackgate>" "10" "Re: [oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)" nil nil nil "3" "2017031310:29:12" "[oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)" (number mark "U       ago@gentoo.o Mar 13   10/247   " thread-indent "\"Re: [oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)\"\n") "<20511243.IiplisyCjp@arcadia>" ("<20511243.IiplisyCjp@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3906 invoked by uid 550); 1 Jun 2017 18:01:19 -0000
+Received: (qmail 7693 invoked by uid 550); 13 Mar 2017 10:29:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +11,27 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3583 invoked from network); 1 Jun 2017 18:00:58 -0000
-Message-ID: <20170601180053.GA4752@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 1 Jun 2017 20:00:53 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] unresponsive distros
+Received: (qmail 7643 invoked from network); 13 Mar 2017 10:29:29 -0000
+From: Agostino Sarubbo <ago@gentoo.org>
 To: oss-security@lists.openwall.com
+Date: Mon, 13 Mar 2017 11:29:12 +0100
+Message-ID: <4271799.Slv6QYllRs@blackgate>
+User-Agent: KMail/4.14.10 (Linux/4.4.52-gentoo; KDE/4.14.29; x86_64; ; )
+In-Reply-To: <20511243.IiplisyCjp@arcadia>
+References: <20511243.IiplisyCjp@arcadia>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [oss-security] mupdf: mujstest: global-buffer-overflow in main (jstest_main.c)
 
-Hi,
+On Sunday 16 October 2016 20:52:34 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/09/24/mupdf-mujstest-global-buffer-overflo
+> w-in-main-jstest_main-c/
 
-A certain issue being handled on the distros list provided for a
-particularly good opportunity for me to test whether/which distros are
-actually paying attention and intend to respond to issues during the
-embargo period.  In the middle of a lengthy thread with a somewhat
-generic Subject (since it travels unencrypted), I asked literally all
-(and I emphasized that) distros to respond to the thread with status
-updates regarding their handling of the issue.  That was on May 27.
-I gave distros time until May 30 (Tuesday) to respond.  I then gave them
-about 2 days more, as you can see.
+This is CVE-2016-10246
 
-Most distros responded, with varying amount of detail.  But 3 did not:
-
-FreeBSD
-Amazon Linux AMI
-MontaVista Software
-
-We had heard from FreeBSD earlier in the thread, although I would have
-expected them to reply to the specific request as well (and I did say so
-explicitly).  Maybe it's fatigue from too many encrypted messages, most
-of which happen to be focusing on Linux-specific aspects of the issue.
-That's not great at all, but it is somewhat understandable.  Part of the
-problem is that when an issue is potentially relevant to both *BSD and
-Linux, we're rarely careful to separate postings and sub-threads between
-the distros and linux-distros lists, resulting in "spamming" (and risk
-of leaks) of the Linux-specific aspects to (and via) the *BSD's.  This
-is something for us all to improve.  (Some of the sub-threads were in
-fact correctly separated to go only to linux-distros in this present
-case, though.)
-
-As to Amazon and MontaVista, it is likely they'll have to leave the
-distros list for inactivity.
-
-As far as I can tell, last posting/reply on the (linux-)distros list by
-Amazon was in July 2016 and before that in November 2014.  As far as I
-can tell, MontaVista never posted to the list.  Being a user of the info
-only, without participation in discussions, is not strictly disallowed,
-but this time it's coupled with lack of response when specifically asked
-to respond, and on an issue that is at least potentially relevant to the
-distros (not just a responsiveness test).
-
-At this point, there will have to be a very good reason to justify
-keeping Amazon and MontaVista on the list.  Is there any?
-
-OTOH, there's just one person subscribed for each of Amazon and
-MontaVista, and all messages are encrypted to the recipient's own keys
-(but of course the headers are unencrypted, including the Subjects).
-So e.g. an unattended mailbox isn't that much of a risk.
-
-I am not going to ping Amazon and MontaVista directly (just like I did
-not ping NetBSD directly last month, although others promptly did
-anyway).  If they missed the messages on the distros list and also miss
-the message here, so be it.
-
-While I am at it: there have been 3624 messages on linux-distros (and a
-subset of those on distros) since the list was setup on April 3, 2011
-and until today.  That's about 1.6 messages per day on average, but
-sometimes there are spikes (like there is now) and sometimes there are
-quiet periods.
-
-Alexander
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
