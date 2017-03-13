@@ -1,30 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/24/2
-Message-ID: <1566168.ji4fmdV5UO@blackgate>
-Date: Fri, 24 Mar 2017 10:50:19 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/5
+Message-ID: <4333819.x0OyyZu41M@blackgate>
+Date: Mon, 13 Mar 2017 10:37:14 +0100
 From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libpcre: two stack-based buffer overflow write in pcre32_copy_substring (pcre_get.c)
+Subject: Re: audiofile: divide-by-zero in BlockCodec::runPull (BlockCodec.cpp)
 Content-Type: text/plain; charset=utf-8
 
-On Monday 20 March 2017 10:28:08 Agostino Sarubbo wrote:
+On Sunday 26 February 2017 11:53:42 Agostino Sarubbo wrote:
 > Permalink:
-> https://blogs.gentoo.org/ago/2017/03/20/libpcre-two-stack-based-buffer-overf
-> low-write-in-pcre32_copy_substring-pcre_get-c
+> https://blogs.gentoo.org/ago/2017/02/20/audiofile-divide-by-zero-in-blockcod
+> ecrunpull-blockcodec-cpp
 
-
-> WRITE of size 4 at 0x7f58f32026a0 thread T0
->     #0 0x7f58f6f90a23 in pcre32_copy_substring
-> /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:358:15
-This is CVE-2017-7245
-
-
-> WRITE of size 268 at 0x7f83734026a0 thread T0
-> #1 0x7f8377118925 in
-> pcre32_copy_substring
-> /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_get.c:357:1
-This is CVE-2017-7246
-
+This is CVE-2017-6833
 
 -- 
 Agostino Sarubbo
