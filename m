@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/22/4
-Message-ID: <CABfY0L1Xz4QHXCzdO1-DNcdDqFgAXYzGr1woSAKW5j7_0RD8cA@mail.gmail.com>
-Date: Mon, 22 May 2017 12:00:56 -0500
-From: Jodie Cunningham <jodie.cunningham@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/8
+Message-ID: <2841123.LNQt9J6edE@blackgate>
+Date: Mon, 13 Mar 2017 10:39:30 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder
+Subject: Re: audiofile: heap-based buffer overflow in Expand3To4Module::run (SimpleModule.h)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, May 20, 2017 at 12:54 PM, Leo Famulari <leo@...ulari.name> wrote:
->
-> Chris Evans' report (copied in the email you replied to) says this:
->
-> GraphicsMagick vs. ImageMagick, again. Well, well, look at this :)
-> GraphicsMagick fixed this issue in March 2016, for the v1.3.24 release, tucked
-> away in a changeset titled "Fix SourceForge bug #371 "out-of-bounds read in
-> coders/rle.c:633:39" (see the second memset()). This is another case where tons
-> of vulnerabilities are being found and fixed in both GraphicsMagick and
-> ImageMagick with little co-ordination. This seems like a waste of effort and a
-> risk of 0-day (or is it 1-day?) exposure. It goes both ways: the RLE memory
-> corruption I referenced in my previous blog post was only fixed in
-> GraphicsMagick in March 2016, having been previously fixed in ImageMagick in
-> Dec 2014.
+On Sunday 26 February 2017 11:55:48 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow
+> -in-expand3to4modulerun-simplemodule-h
 
-I've worked with the GM team before - it's trivial as a researcher to
-keep Bob up to date on what you're coming across in IM.
-This problem doesn't stop at IM/GM - there are probably bugs you find
-in IM/GM that also trip up other software, and little effort is made
-to see the impact in other image software. We could probably benefit
-from a curated centralized corpus for this kind of thing.
+This is CVE-2017-6836
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
