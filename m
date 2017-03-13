@@ -1,54 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/01/20/4
-Message-ID: <1484880112.11949.24.camel@redhat.com>
-Date: Fri, 20 Jan 2017 13:41:52 +1100
-From: Harshula <harshula@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/23
+Message-ID: <4644054.hoH7EUZc3H@blackgate>
+Date: Mon, 13 Mar 2017 11:35:12 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Jesse Hertz <Jesse.Hertz@...group.trust>, Wade Mealing <wmealing@...hat.com>
-Subject: CVE REQUEST: linux kernel: process with pgid zero able to crash kernel
+Subject: Re: jasper: heap-based buffer overflow in jpc_dec_tiledecode (jpc_dec.c)
 Content-Type: text/plain; charset=utf-8
 
-Hi Folks,
+On Sunday 23 October 2016 10:01:07 Agostino Sarubbo 
+wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2016/10/23/jasper-heap-based-buffer-overflow-in
+> -jpc_dec_tiledecode-jpc_dec-c/
 
-Red Hat Product Security has been notified of a kernel vulnerability
-that a local attacker can exploit to crash/panic the kernel and cause a
-denial of service.
+This is CVE-2016-10249
 
-This was reported to Red Hat by Jesse Hertz (CC'd) (reproducer:
-rt411016):
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
 
-"A process that is in the same process group as the ``init'' process
-(group id zero) can crash the Linux 2 kernel with several system calls
-by passing in a process ID or process group ID of zero. The value zero
-is a special value that indicates the current process ID or process
-group. However, in this case it is also the process group ID of the
-process."
-
-I've been testing whether RHEL is vulnerable and found the following:
-
-* Upstream/mainline is not vulnerable
-* RHEL 7 is not vulnerable
-* RHEL 6 is vulnerable
-* RHEL 5 is partially vulnerable
-
-A very specific set of circumstances are required in order for the
-vulnerability to be exploited. The default configuration of RHEL 5 and
-RHEL 6 are not exploitable.
-
-The risk is that a non-root user can trigger a kernel crash on a
-modified RHEL 6 system where the kernel runs a process that can be
-exploited. Perhaps on an embedded device.
-
-Thanks,
-Harshula
-
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1358840
-
-Patches:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
-?id=f106eee10038c2ee5b6056aaf3f6d5229be6dcdd
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
-?id=f20011457f41c11edb5ea5038ad0c8ea9f392023
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/
-?id=fa2755e20ab0c7215d99c2dc7c262e98a09b01df
