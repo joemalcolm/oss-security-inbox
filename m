@@ -1,48 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/04/27/6
-Message-ID: <9d804ae1-0f52-2d83-f3a1-52a97d28e903@redhat.com>
-Date: Thu, 27 Apr 2017 16:14:27 +0200
-From: Andrej Nemec <anemec@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/7
+Message-ID: <3933984.tAXUzh7mVD@blackgate>
+Date: Mon, 13 Mar 2017 10:38:56 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Two memory corruption vulnerabilities ldns 1.7
+Subject: Re: audiofile: divide-by-zero in BlockCodec::reset1 (BlockCodec.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello Stephan,
+On Sunday 26 February 2017 11:55:03 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/20/audiofile-divide-by-zero-in-blockcod
+> ecreset1-blockcodec-cpp
 
-Unfortunately, CVE assignments are not done through this list anymore.
-You need to visit [1] and request a CVE by filing out the form. Could
-you please look at it and let the list know about the assigned CVE?
-
-Thanks!
-
-[1] https://cveform.mitre.org/
-
-Best Regards,
+This is CVE-2017-6835
 
 -- 
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
-
-On 04/27/2017 12:54 PM, Stephan Zeisberg wrote:
-> Hi,
->
-> i discovered two memory corruption vulnerabilities (double free) in ldns
-> 1.7.0:
->
-> * https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=1256
-> * https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=1257
->
-> and reported it to https://www.nlnetlabs.nl/bugs-script/
->
-> Both fixed in upstream (in development branch):
-> * for bug 1256: https://git.nlnetlabs.nl/ldns/commit/?id=c8391790
-> * for bug 1257: https://git.nlnetlabs.nl/ldns/commit/?id=3bdeed02
->
-> Could you please assign CVE(s) for the vulnerabilites?
->
-> Thanks,
-> Stephan
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Agostino Sarubbo
+Gentoo Linux Developer
