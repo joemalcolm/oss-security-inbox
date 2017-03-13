@@ -1,34 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/06/08/1
-Message-ID: <alpine.LFD.2.20.1706081138160.21700@wniryva>
-Date: Thu, 8 Jun 2017 11:40:32 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Zhangyanyu <zyy4013@....ouc.edu.cn>
-Subject: CVE-2017-9503 Qemu: scsi: null pointer dereference while processing megasas command
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/13/1
+Message-ID: <1639079.ZQkYUiMST9@blackgate>
+Date: Mon, 13 Mar 2017 10:34:35 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: audiofile: global buffer overflow in decodeSample (IMA.cpp)
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Sunday 26 February 2017 11:49:46 Agostino Sarubbo wrote:
+> Permalink:
+> https://blogs.gentoo.org/ago/2017/02/20/audiofile-global-buffer-overflow-in-> decodesample-ima-cpp
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to a null pointer dereference issue. It could 
-occur while processing megasas commands via megasas_command_complete().
+This is CVE-2017-6829
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-on the host resulting in DoS.
-
-Upstream patches:
------------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg01313.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-06/msg01309.html
-
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1459477
-
-This issue was reported by Zhangyanyu.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
