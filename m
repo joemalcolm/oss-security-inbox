@@ -1,21 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/07/11/11
-Message-ID: <62d1bbfa-25f2-427c-e5ca-8edadc525800@thiem.email>
-Date: Tue, 11 Jul 2017 14:59:09 +0200
-From: Jonas Thiem <jonas@...em.email>
-To: oss-security@...ts.openwall.com, "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-Subject: Re: mpg123: global buffer overflow in III_i_stereo (layer3.c)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/1
+Message-ID: <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
+Date: Mon, 13 Mar 2017 20:07:14 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
+To: oss-security@...ts.openwall.com
+Cc: Stéphane Graber <stgraber@...ntu.com>, serge.hallyn@...ntu.com
+Subject: Re: LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
 Content-Type: text/plain; charset=utf-8
 
+On 03/10/2017 06:03 AM, Stiepan wrote:
+> I don't know whether that is the same bug, or a related one, but on Debian8 using LXC from jessie-backports, setting the default route in a container affects the host - namely, from an unpriv. container, setting the route sets the host's route as well.
+> lxc-info --version outputs 2.0.6 and no update is currently available (on Debian).
+
+Thanks for the report. I just tried to reproduce the issue on Ubuntu
+16.04 with 2.0.7-0ubuntu1~16.04.2, which is the package patched for the
+issue that I announced in this thread. I couldn't reproduce it.
+
+I then installed an old 2.0.6 based deb (2.0.6-0ubuntu1~ubuntu16.04.1)
+and still couldn't reproduce it.
+
+I'd suggest opening an upstream bug here:
+
+  https://github.com/lxc/lxc/issues/new
+
+(Normally, they prefer private security bugs on Launchpad but your
+report to this list is already public so I don't see a need.)
+
+Tyler
+
+> Stiepan
+> 
+> 
+> 
+> -------- Original Message --------
+> Subject: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+> Local Time: 9 March 2017 5:54 PM
+> UTC Time: 9 March 2017 16:55
+> From: tyhicks@...onical.com
+> To: oss-security@...ts.openwall.com
+> Stéphane Graber <stgraber@...ntu.com>
+> 
+> Jann Horn discovered that the lxc-user-nic program could be tricked into
+> operating on a network namespace over which the caller did not hold
+> privilege.
+> 
+> The behavior didn't follow what was documented in the lxc-user-nic(1)
+> man page:
+> 
+> It ensures that the calling user is privileged over the network
+> namespace to which the interface will be attached.
+> 
+> This issue is CVE-2017-5985.
+> 
+> https://lists.linuxcontainers.org/pipermail/lxc-users/2017-March/012925.html
+> https://launchpad.net/bugs/1654676
+> https://github.com/lxc/lxc/commit/16af238036a5464ae8f2420ed3af214f0de875f9
+> 
+> Tyler
+> 
 
 
-On 11.07.2017 10:02, Dr. Thomas Orgis wrote:
-> My program accesses memory that belongs
-> to my program … unless the compiler inserts forbidden zones in there.
 
-So why do you know for sure that no program would store private keys or
-other sensitive data there? Or is this only static data by the mp3
-library itself?
 
-It seems to me like this could still be a major security issue beyond a
-simple denial of service.
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
