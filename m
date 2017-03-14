@@ -1,4 +1,9 @@
-Received: (qmail 32491 invoked by uid 550); 3 May 2024 10:48:30 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["969" "Tuesday" "14" "March" "2017" "23:00:26" "+0100" "Solar Designer" "solar@openwall.com" "<20170314220026.GA14618@openwall.com>" "16" "Re: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)" "^Date:" nil nil "3" "2017031422:00:26" "[oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)" (number mark "        solar@openwa Mar 14   16/969   " thread-indent "\"Re: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)\"\n") "<923996.603905351-sendEmail@localhost>" ("<923996.603905351-sendEmail@localhost>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 11362 invoked by uid 550); 14 Mar 2017 22:04:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,54 +11,33 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
+Received: (qmail 9262 invoked from network); 14 Mar 2017 22:00:34 -0000
+Message-ID: <20170314220026.GA14618@openwall.com>
+References: <923996.603905351-sendEmail@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <923996.603905351-sendEmail@localhost>
+User-Agent: Mutt/1.4.2.3i
+Date: Tue, 14 Mar 2017 23:00:26 +0100
+From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16182 invoked from network); 3 May 2024 08:03:47 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Stamatis Zampetakis <zabetak@apache.org>
+Subject: Re: [oss-security] audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)
 To: oss-security@lists.openwall.com
-Message-ID: <99f26c7f-4611-6918-23c5-96c401972688@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 03 May 2024 08:03:35 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-35701: Apache Hive: Arbitrary command execution via JDBC
- driver 
 
-Severity: moderate
+On Sun, Feb 26, 2017 at 11:45:35AM +0000, Agostino Sarubbo wrote:
+> ==6096==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004bbc35 bp 0x7ffd65dbabf0 sp 0x7ffd65dba3a0
+> READ of size 33872 at 0x61a00001f708 thread T0
+>     #0 0x4bbc34 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+>     #1 0x7efec209d7df in MSADPCM::initializeCoefficients() /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:369:3
+>     #2 0x7efec209d7df in MSADPCM::createDecompress(Track*, File*, bool, bool, long*)
 
-Affected versions:
+Agostino asked the list moderators to post to this thread that the above
+is CVE-2017-6827.
 
-- Apache Hive 4.0.0-alpha-1 before 4.0.0
+Alexander
 
-Description:
-
-Improper Control of Generation of Code ('Code Injection') vulnerability in =
-Apache Hive.
-
-The vulnerability affects the Hive JDBC driver component and it can potenti=
-ally lead to arbitrary code execution on the machine/endpoint that the JDBC=
- driver (client) is running. The malicious user must have sufficient permis=
-sions to specify/edit JDBC URL(s) in an endpoint relying on the Hive JDBC d=
-river and the JDBC client process must run under a privileged user to fully=
- exploit the vulnerability.=C2=A0
-
-The attacker can setup a malicious HTTP server and specify a JDBC URL point=
-ing towards this server. When a JDBC connection is attempted, the malicious=
- HTTP server can provide a special response with customized payload that ca=
-n trigger the execution of certain commands in the JDBC client.This issue a=
-ffects Apache Hive: from 4.0.0-alpha-1 before 4.0.0.
-
-Users are recommended to upgrade to version 4.0.0, which fixes the issue.
-
-This issue is being tracked as HIVE-27554=20
-
-Credit:
-
-Kostya Kortchinsky (reporter)
-
-References:
-
-https://hive.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-35701
-https://issues.apache.org/jira/browse/HIVE-27554
-
+P.S. Next time I'd prefer another moderator to handle this sort of
+requests, if any, since I don't care about CVEs much.  I mostly care
+about security issues getting brought to this list, which was already
+the case.
