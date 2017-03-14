@@ -1,4 +1,9 @@
-Received: (qmail 19982 invoked by uid 550); 17 Oct 2023 12:02:55 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4808" "Tuesday" "14" "March" "2017" "12:17:53" "-0400" "Stiepan" "stie@itk.swiss" "<9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>" "84" "Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" "^Cc:" nil nil "3" "2017031416:17:53" "[oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership" (number mark "        stie@itk.swi Mar 14   84/4808  " thread-indent "\"Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership\"\n") "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>" ("<8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>" "<Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>" "<831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 30030 invoked by uid 550); 14 Mar 2017 16:19:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,51 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14205 invoked from network); 17 Oct 2023 11:45:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-	t=1697543096; bh=9X/Q2yLoPERHPSCy9+z1j/66s48MdXFXOYlNbHbbaes=;
-	h=From:Subject:To:Message-ID:Date:MIME-Version:
-	 Content-Transfer-Encoding:From;
-	b=QzgxeOM5+dZMnUek01rPTjKP5x1qKZavFLxR1hY56zVKBK1fL1LDdL1kcJZPyviV0
-	 3zDqixioygBOhI3ljzgoezs3jyWxCSyKNgtFlYDUaiz/RnrPYmYTTetOqjTHh+KRit
-	 qjXp7UPM+Li+SiWl9pMFAeVtNP2sUP0SP9GdQOY6NYV59eJHnurbKcUo3c30kXxbKW
-	 AB+/DjQUFss+WjAdzItJD+/mghGlZ4oDvT0de5m8eCZ4iWo4cTqNeV7b9NBBJtBy+G
-	 g4M+PkGDudTtP6FFsiBlVePapKl4/LMt9tUGgfJSL1ZOVxM1F+EpskOcYG9S0B9Psr
-	 fdoQP3RUUvWTQ==
-From: "W. Wadepohl" <w.wadepohl@posteo.de>
-To: oss-security@lists.openwall.com
-References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de>
- <ZSzx4s49HaeHFd/e@jumper.schlittermann.de>
- <20231016230841.639Di%steffen@sdaoden.eu>
-Message-ID: <235eb56c-4f49-b803-fb0a-4765e08b79fd@posteo.de>
-Date: Tue, 17 Oct 2023 11:44:55 +0000
+Received: (qmail 28511 invoked from network); 14 Mar 2017 16:18:09 -0000
+Authentication-Results: mail1.protonmail.ch; dkim=none
+Message-ID: <9C8Q126sS901vkG8mMxgQPigkx5gBFpDrXBZJqzB9mfVVKvASCmxDOcSAiq9IjkGPjKbAm7r44vrPcqypgDoadrQ2Wuo4wYXFHdQ8amAvwk=@itk.swiss>
+In-Reply-To: <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
+References: <8919f274-0c56-2c12-649f-2561d6cd59d8@canonical.com>
+ <Ya92X4yQVrEDADDRD-xy-FeIBfDkxTwkyuxI1ATPJl5YbwqpJDwGpa-5HQzKiS09u8o1yNNyHK9G-fzxNDU5NqURXqe49zTp4--EQYjHh8g=@itk.swiss>
+ <831d5907-bf61-70c2-9501-f57923e5ae07@canonical.com>
+Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
 MIME-Version: 1.0
-In-Reply-To: <20231016230841.639Di%steffen@sdaoden.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Content-Type: multipart/alternative;
+	boundary="b1_bf4fd54a5c88856c0261bfc83dd6b9de"
+Cc: =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>, serge.hallyn@ubuntu.com
+Date: Tue, 14 Mar 2017 12:17:53 -0400
+From: Stiepan <stie@itk.swiss>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] LXC: CVE-2017-5985: lxc-user-nic didn't verify network namespace ownership
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "857295@bugs.debian.org" <857295@bugs.debian.org>
 
-Heiko Schlittermann wrote in
->   |And adhere the spirit of Free and Open Source (as far as I understand it),
->   |that there is no instance that can judge about political, ethical,
->   |religious issues. Free means free. Open means open.
-I acknowledge that linux-distros list is not free as in freedom. The 
-members of linux-distros mostly do business in the U.S. and therfore 
-they have to comply to the rules of the U.S. This rules does not honor 
-the freedom of the open source community. They exclude parts of the free 
-community.
+--b1_bf4fd54a5c88856c0261bfc83dd6b9de
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-That's sad and they do not support the concept of freedom on whose 
-foundation the open source community is built.
+WW91IGFyZSB3ZWxjb21lLiBBcyBzdGF0ZWQgaW4gbXkgcmVwbHkgdG8gU2Vy
+Z2UgSC4gSGFsbHluJ3Mgb2ZmLWxpc3QgbWVzc2FnZSwgaW4gdGhlIG1lYW50
+aW1lIEkgaGF2ZSBpbnN0YWxsZWQgdmVyc2lvbiAyLjAuNyBmcm9tIGplc3Np
+ZS1iYWNrcG9ydHMgYW5kIGFtIHVuYWJsZSB0byByZXByb2R1Y2UgdGhlIGlz
+c3VlLCBhcyBJIGNhbm5vdCBzdGFydCB1bnByaXZpbGVnZWQgY29udGFpbmVy
+cyBhbnltb3JlIChkdWUgdG8gYSBuZXR3b3JrIGVycm9yKS4gQWNjb3JkaW5n
+IHRvIERlYmlhbidzIHRyYWNrZXIgcGFnZSBmb3IgbHhjLCB0aGUgdmVyc2lv
+biB0aGF0IEkgaGF2ZSBpbnN0YWxsZWQgZnJvbSBiYWNrcG9ydHMgaXMgMi4w
+LjctMSwgd2hpY2ggZG9lcyBub3QgaW5jbHVkZSBsYXRlc3QgdXBzdHJlYW0g
+Zml4ZXMuIEkgZ3Vlc3MgdGhhdCBJIGhhdmUgdG8gd2FpdCBmb3IgdGhlIDIu
+MC43LTIgcGFja2FnZSAtIHdoaWNoIGluY2x1ZGVzIGxhdGVzdCB1cHN0cmVh
+bSBmaXhlcyAtIHRvIGxhbmQgaW4gamVzc2llLWJhY2twb3J0cyBmb3IgdGhl
+c2UgaXNzdWVzIChib3RoIHNlY3VyaXR5IGFuZCBmdW5jdGlvbmFsKSB0byBi
+ZSBmaXhlZC4KCkNDLWluZyB0aGUgRGViaWFuIGFkZHJlc3MgZm9yIHRoaXMg
+YnVnLCBhcyB0aGV5IGV4cGxpY2l0bHkgYXNrZWQgdG8gZG8gdGhpcyBpbiBj
+YXNlIHRoZXJlIGlzIGEgbmVlZCB0byByZW9wZW4gdGhlIERlYmlhbiBidWcs
+IHdoaWNoIHNlZW1zIHRvIGJlIHRoZSBjYXNlIGhlcmUgKGF0IGxlYXN0LCBm
+b3IgSmVzc2llLCBzaW5jZSB0aGUgaW50ZXJtZWRpYXJ5IDIuMC43LTEgLmRl
+YiBhcHBhcmVudGx5IGJyZWFrcyB1bnByaXZpbGVnZWQgbmV0d29ya2luZywg
+YmVzaWRlcyBub3QgZml4aW5nIHRoZSBzZWN1cml0eSBpc3N1ZSkuClRvIHRo
+ZSBEZWJpYW4gdGVhbSBpbiBjaGFyZ2Ugb2YgdGhpcyBidWc6CkFzIHVucHJp
+dmlsZWdlZCBtb2RlIGlzIG5vdCBhY3RpdmF0ZWQgYnkgZGVmYXVsdCBvbiBE
+ZWJpYW4sIEkgdW5kZXJzdGFuZCB0aGF0IHRoaXMgaXMgbm90IGEgcHJpb3Jp
+dHksIGJ1dCBpdCB3b3VsZCBzdGlsbCBiZSBuaWNlIHRvIGhhdmUgdGhpcyBm
+aXhlZCBxdWlja2x5LgpCeSB0aGUgd2F5LCBub3QgZGlyZWN0bHkgcmVsYXRl
+ZCB0byB0aGlzIHNwZWNpZmljIGJ1ZywgYnV0IEkgaG9wZSB0aGF0IHNuYXBk
+ICsgTFhEIHNvbWVob3cgZmluZHMgaXRzIHdheSBpbnRvIGplc3NpZS1iYWNr
+cG9ydHM6IHRoYXQgd291bGQgYmUgZ3JlYXQhCgpTdGllcGFuCgoKLS0tLS0t
+LS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0tLQpTdWJqZWN0OiBSZTogW29z
+cy1zZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMg
+ZGlkbid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKTG9j
+YWwgVGltZTogMTQgTWFyY2ggMjAxNyAyOjA2IEFNClVUQyBUaW1lOiAxNCBN
+YXJjaCAyMDE3IDAxOjA3CkZyb206IHR5aGlja3NAY2Fub25pY2FsLmNvbQpU
+bzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQpTdMOpcGhhbmUg
+R3JhYmVyIDxzdGdyYWJlckB1YnVudHUuY29tPiwgc2VyZ2UuaGFsbHluQHVi
+dW50dS5jb20KCk9uIDAzLzEwLzIwMTcgMDY6MDMgQU0sIFN0aWVwYW4gd3Jv
+dGU6Cj4gSSBkb24ndCBrbm93IHdoZXRoZXIgdGhhdCBpcyB0aGUgc2FtZSBi
+dWcsIG9yIGEgcmVsYXRlZCBvbmUsIGJ1dCBvbiBEZWJpYW44IHVzaW5nIExY
+QyBmcm9tIGplc3NpZS1iYWNrcG9ydHMsIHNldHRpbmcgdGhlIGRlZmF1bHQg
+cm91dGUgaW4gYSBjb250YWluZXIgYWZmZWN0cyB0aGUgaG9zdCAtIG5hbWVs
+eSwgZnJvbSBhbiB1bnByaXYuIGNvbnRhaW5lciwgc2V0dGluZyB0aGUgcm91
+dGUgc2V0cyB0aGUgaG9zdCdzIHJvdXRlIGFzIHdlbGwuCj4gbHhjLWluZm8g
+LS12ZXJzaW9uIG91dHB1dHMgMi4wLjYgYW5kIG5vIHVwZGF0ZSBpcyBjdXJy
+ZW50bHkgYXZhaWxhYmxlIChvbiBEZWJpYW4pLgoKVGhhbmtzIGZvciB0aGUg
+cmVwb3J0LiBJIGp1c3QgdHJpZWQgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZSBv
+biBVYnVudHUKMTYuMDQgd2l0aCAyLjAuNy0wdWJ1bnR1MX4xNi4wNC4yLCB3
+aGljaCBpcyB0aGUgcGFja2FnZSBwYXRjaGVkIGZvciB0aGUKaXNzdWUgdGhh
+dCBJIGFubm91bmNlZCBpbiB0aGlzIHRocmVhZC4gSSBjb3VsZG4ndCByZXBy
+b2R1Y2UgaXQuCgpJIHRoZW4gaW5zdGFsbGVkIGFuIG9sZCAyLjAuNiBiYXNl
+ZCBkZWIgKDIuMC42LTB1YnVudHUxfnVidW50dTE2LjA0LjEpCmFuZCBzdGls
+bCBjb3VsZG4ndCByZXByb2R1Y2UgaXQuCgpJJ2Qgc3VnZ2VzdCBvcGVuaW5n
+IGFuIHVwc3RyZWFtIGJ1ZyBoZXJlOgoKaHR0cHM6Ly9naXRodWIuY29tL2x4
+Yy9seGMvaXNzdWVzL25ldwoKKE5vcm1hbGx5LCB0aGV5IHByZWZlciBwcml2
+YXRlIHNlY3VyaXR5IGJ1Z3Mgb24gTGF1bmNocGFkIGJ1dCB5b3VyCnJlcG9y
+dCB0byB0aGlzIGxpc3QgaXMgYWxyZWFkeSBwdWJsaWMgc28gSSBkb24ndCBz
+ZWUgYSBuZWVkLikKClR5bGVyCgo+IFN0aWVwYW4KPgo+Cj4KPiAtLS0tLS0t
+LSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0tCj4gU3ViamVjdDogW29zcy1z
+ZWN1cml0eV0gTFhDOiBDVkUtMjAxNy01OTg1OiBseGMtdXNlci1uaWMgZGlk
+bid0IHZlcmlmeSBuZXR3b3JrIG5hbWVzcGFjZSBvd25lcnNoaXAKPiBMb2Nh
+bCBUaW1lOiA5IE1hcmNoIDIwMTcgNTo1NCBQTQo+IFVUQyBUaW1lOiA5IE1h
+cmNoIDIwMTcgMTY6NTUKPiBGcm9tOiB0eWhpY2tzQGNhbm9uaWNhbC5jb20K
+PiBUbzogb3NzLXNlY3VyaXR5QGxpc3RzLm9wZW53YWxsLmNvbQo+IFN0w6lw
+aGFuZSBHcmFiZXIgPHN0Z3JhYmVyQHVidW50dS5jb20+Cj4KPiBKYW5uIEhv
+cm4gZGlzY292ZXJlZCB0aGF0IHRoZSBseGMtdXNlci1uaWMgcHJvZ3JhbSBj
+b3VsZCBiZSB0cmlja2VkIGludG8KPiBvcGVyYXRpbmcgb24gYSBuZXR3b3Jr
+IG5hbWVzcGFjZSBvdmVyIHdoaWNoIHRoZSBjYWxsZXIgZGlkIG5vdCBob2xk
+Cj4gcHJpdmlsZWdlLgo+Cj4gVGhlIGJlaGF2aW9yIGRpZG4ndCBmb2xsb3cg
+d2hhdCB3YXMgZG9jdW1lbnRlZCBpbiB0aGUgbHhjLXVzZXItbmljKDEpCj4g
+bWFuIHBhZ2U6Cj4KPiBJdCBlbnN1cmVzIHRoYXQgdGhlIGNhbGxpbmcgdXNl
+ciBpcyBwcml2aWxlZ2VkIG92ZXIgdGhlIG5ldHdvcmsKPiBuYW1lc3BhY2Ug
+dG8gd2hpY2ggdGhlIGludGVyZmFjZSB3aWxsIGJlIGF0dGFjaGVkLgo+Cj4g
+VGhpcyBpc3N1ZSBpcyBDVkUtMjAxNy01OTg1Lgo+Cj4gaHR0cHM6Ly9saXN0
+cy5saW51eGNvbnRhaW5lcnMub3JnL3BpcGVybWFpbC9seGMtdXNlcnMvMjAx
+Ny1NYXJjaC8wMTI5MjUuaHRtbAo+IGh0dHBzOi8vbGF1bmNocGFkLm5ldC9i
+dWdzLzE2NTQ2NzYKPiBodHRwczovL2dpdGh1Yi5jb20vbHhjL2x4Yy9jb21t
+aXQvMTZhZjIzODAzNmE1NDY0YWU4ZjI0MjBlZDNhZjIxNGYwZGU4NzVmOQo+
+Cj4gVHlsZXIKPg==
 
-BTW: As I exlained some times ago, the most instances of GNU/Linux are 
-NOT distros, but embedded systems. The embargo of security information 
-to these developers makes the internet more insecure. Maybe the European 
-CRA will change something in the future.
+--b1_bf4fd54a5c88856c0261bfc83dd6b9de--
 
-I'm not happy to get information about security vulnerabilities/fixes 
-with a time lag where my tenthousends of IoT devices are vulnerable.
-
--- 
-Wolfram Wadepohl
