@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/05/18/6
-Message-ID: <20170518080707.635@usenet.piggo.com>
-Date: Thu, 18 May 2017 06:10:57 +0000 (UTC)
-From: Sébastien Delafond <seb@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2017/03/14/6
+Message-ID: <20170314220026.GA14618@openwall.com>
+Date: Tue, 14 Mar 2017 23:00:26 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: libytnef: CVE-2017-9058: heap-based buffer overflow in SIZECHECK (ytnef.c)
+Subject: Re: audiofile: heap-based buffer overflow in MSADPCM::initializeCoefficients (MSADPCM.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sun, Feb 26, 2017 at 11:45:35AM +0000, Agostino Sarubbo wrote:
+> ==6096==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61a00001f708 at pc 0x0000004bbc35 bp 0x7ffd65dbabf0 sp 0x7ffd65dba3a0
+> READ of size 33872 at 0x61a00001f708 thread T0
+>     #0 0x4bbc34 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
+>     #1 0x7efec209d7df in MSADPCM::initializeCoefficients() /tmp/portage/media-libs/audiofile-0.3.6-r3/work/audiofile-0.3.6/libaudiofile/modules/MSADPCM.cpp:369:3
+>     #2 0x7efec209d7df in MSADPCM::createDecompress(Track*, File*, bool, bool, long*)
 
-CVE-2017-9058 has been assigned for the following vulnerability:
+Agostino asked the list moderators to post to this thread that the above
+is CVE-2017-6827.
 
-  https://bugs.debian.org/862556
+Alexander
 
-This was discovered by bingosxs@...com, and leads to a crash because of
-an incorrect boundary check.
-
-Cheers,
-
---Seb
-
+P.S. Next time I'd prefer another moderator to handle this sort of
+requests, if any, since I don't care about CVEs much.  I mostly care
+about security issues getting brought to this list, which was already
+the case.
